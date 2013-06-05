@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_BASE_H
-#define CP_BASE_H
+#pragma once
 
 #include "cp_capacity.h"
 #include "cp_aliencont.h"
@@ -246,5 +245,3 @@ bool PR_ProductionAllowed(const base_t* base);
 bool E_HireAllowed(const base_t* base);
 bool AC_ContainmentAllowed(const base_t* base);
 bool HOS_HospitalAllowed(const base_t* base);
-
-#endif

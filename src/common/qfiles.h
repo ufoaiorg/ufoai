@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef QFILES_H
-#define QFILES_H
+#pragma once
 
 #include "../shared/defines.h"
 
@@ -279,5 +278,3 @@ typedef struct {
 			Sys_Error("Invalid bsp header found (lump overflow %i): '%s'", i, (name)); \
 	} \
 }
-
-#endif /* QFILES_H */

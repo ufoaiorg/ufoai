@@ -24,8 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_NATION_H
-#define CP_NATION_H
+#pragma once
 
 /**
  * @brief Detailed information about the nation relationship (currently per month, but could be used elsewhere).
@@ -97,5 +96,3 @@ void NAT_InitStartup(void);
 void NAT_Shutdown(void);
 
 #define MAX_NATIONS 8
-
-#endif

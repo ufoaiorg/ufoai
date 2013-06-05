@@ -25,9 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
-#ifndef _COMMON_FILESYS_H
-#define _COMMON_FILESYS_H
+#pragma once
 
 #include <stdio.h>
 #include "../shared/ufotypes.h"
@@ -177,5 +175,3 @@ const char *FS_GetFileData(const char *files);
  * @brief cleanup function
  */
 void FS_Shutdown(void);
-
-#endif

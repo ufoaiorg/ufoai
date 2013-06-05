@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _COMMON_NETPACK_H
-#define _COMMON_NETPACK_H
+#pragma once
 
 #define NUMVERTEXNORMALS	162
 extern const vec3_t bytedirs[NUMVERTEXNORMALS];
@@ -78,5 +77,3 @@ void NET_ReadData(dbuffer *buf, void *buffer, int size);
 void NET_vReadFormat(dbuffer *buf, const char *format, va_list ap);
 void NET_ReadFormat(dbuffer *buf, const char *format, ...);
 void NET_SkipFormat(dbuffer *buf, const char *format);
-
-#endif

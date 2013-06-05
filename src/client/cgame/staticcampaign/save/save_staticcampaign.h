@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_MISSIONS_H
-#define SAVE_MISSIONS_H
+#pragma once
 
 #define SAVE_STATICCAMPAIGN "staticcampaign"
 #define SAVE_STATICCAMPAIGN_STAGE "stage"
@@ -42,7 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATICCAMPAIGN_MISSIONCOUNT "count"
 #define SAVE_STATICCAMPAIGN_MISSIONID "missionid"
 #define SAVE_STATICCAMPAIGN_ACTIVEMISSION "activemission"
-#endif
 
 /*
 DTD:

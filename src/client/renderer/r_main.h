@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_MAIN_H
-#define R_MAIN_H
+#pragma once
 
 bool R_Init(void);
 bool R_SetMode(void);
@@ -32,5 +31,3 @@ void R_Shutdown(void);
 void R_BeginFrame(void);
 void R_EndFrame(void);
 void R_RenderFrame(void);
-
-#endif

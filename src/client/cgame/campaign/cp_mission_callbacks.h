@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_MISSION_CALLBACKS_H
-#define CP_MISSION_CALLBACKS_H
+#pragma once
 
 struct missionResults_s;
 
@@ -31,5 +30,3 @@ void MIS_InitResultScreen(const struct missionResults_s *results);
 
 void MIS_InitCallbacks(void);
 void MIS_ShutdownCallbacks(void);
-
-#endif

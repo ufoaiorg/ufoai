@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_ACTIONS_H
-#define CLIENT_UI_UI_ACTIONS_H
+#pragma once
 
 #include "../../common/common.h"
 
@@ -231,5 +230,3 @@ void UI_RemoveListener(uiNode_t* node, const value_t *property, uiNode_t* functi
 
 const char* UI_GetParam(const uiCallContext_t *context, int paramID);
 int UI_GetParamNumber(const uiCallContext_t *context);
-
-#endif

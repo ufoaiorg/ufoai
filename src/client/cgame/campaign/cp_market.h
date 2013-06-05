@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_MARKET_H
-#define CP_MARKET_H
+#pragma once
 
 /** market structure */
 typedef struct market_s {
@@ -57,5 +56,3 @@ bool BS_SellUGV(Employee *robot);
 
 void BS_InitMarket(const struct campaign_s *campaign);
 void CP_CampaignRunMarket(struct campaign_s *campaign);
-
-#endif

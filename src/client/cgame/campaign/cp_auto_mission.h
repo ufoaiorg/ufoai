@@ -23,8 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_AUTO_MISSION_H
-#define CP_AUTO_MISSION_H
+#pragma once
 
 struct aircraft_s;
 struct alienTeamGroup_s;
@@ -37,5 +36,3 @@ void AM_Go(struct mission_s *mission, struct aircraft_s *aircraft, const struct 
 
 void AM_InitStartup(void);
 void AM_Shutdown(void);
-
-#endif

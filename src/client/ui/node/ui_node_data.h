@@ -22,11 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_DATA_H
-#define CLIENT_UI_UI_NODE_DATA_H
+#pragma once
 
 class uiDataNode : public uiNode {
-
 };
 
 struct uiBehaviour_t;
@@ -40,5 +38,3 @@ typedef struct dataExtraData_s {
 	float number;
 	int integer;
 } dataExtraData_t;
-
-#endif

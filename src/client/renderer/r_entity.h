@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_ENTITY_H
-#define R_ENTITY_H
+#pragma once
 
 #define MAX_ANIMLIST	8
 #define MAX_ENTITY_LIGHTS 7
@@ -138,5 +137,3 @@ void R_DrawOpaqueMeshEntities(entity_t *ents);
 void R_DrawBlendMeshEntities(entity_t *ents);
 void R_DrawSpecialEntities(const entity_t *ents);
 void R_DrawNullEntities(const entity_t *ents);
-
-#endif

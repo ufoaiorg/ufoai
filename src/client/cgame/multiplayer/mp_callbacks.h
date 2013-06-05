@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef MP_CALLBACKS_H
-#define MP_CALLBACKS_H
+#pragma once
 
 #define MAX_MESSAGE_TEXT 256
 
@@ -40,5 +39,3 @@ struct cgame_import_s;
 
 void MP_CallbacksInit(const struct cgame_import_s *import);
 void MP_CallbacksShutdown(void);
-
-#endif

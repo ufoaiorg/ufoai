@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_RENDER_H
-#define CLIENT_UI_UI_RENDER_H
+#pragma once
 
 #include "ui_nodes.h"
 #include "../cl_renderer.h"
@@ -46,5 +45,3 @@ void UI_PopClipRect(void);
 
 void UI_EnableFlashing(const vec4_t flashingColor, float speed = 1);
 void UI_DisableFlashing(void);
-
-#endif

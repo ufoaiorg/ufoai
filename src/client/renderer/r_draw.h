@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_DRAW_H
-#define R_DRAW_H
+#pragma once
 
 void R_DrawImage(float x, float y, const image_t *image);
 void R_DrawStretchImage(float x, float y, int w, int h, const image_t *image);
@@ -47,5 +46,3 @@ void R_DrawBoundingBox(const vec3_t absmins, const vec3_t absmaxs);
 void R_DrawBoundingBoxBatched(const vec3_t absmins, const vec3_t absmaxs);
 void R_DrawBoundingBoxes(void);
 void R_DrawTexturedBox(const vec3_t absmins, const vec3_t absmaxs);
-
-#endif

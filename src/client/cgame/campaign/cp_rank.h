@@ -21,8 +21,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CL_RANK_H
-#define CL_RANK_H
+#pragma once
 
 #define MAX_RANKS	32
 
@@ -44,5 +43,3 @@ typedef struct rank_s {
 void CL_ParseRanks(const char *name, const char **text);
 int CL_GetRankIdx(const char *rankID);
 rank_t *CL_GetRankByIdx(const int index);
-
-#endif

@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_KEY_H
-#define CLIENT_KEY_H
+#pragma once
 
 /* these are the key numbers that should be passed to KeyEvent */
 
@@ -206,5 +205,3 @@ const char* Key_GetBinding(const char *binding, keyBindSpace_t space);
 const char *Key_KeynumToString(int keynum);
 int Key_StringToKeynum(const char *str);
 void Key_SetBinding(int keynum, const char *binding, keyBindSpace_t space);
-
-#endif /* CLIENT_KEY_H */

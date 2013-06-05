@@ -25,8 +25,7 @@
 		Boston, MA  02111-1307, USA
 */
 
-#ifndef _MDFOUR_H
-#define _MDFOUR_H
+#pragma once
 
 #include "../shared/ufotypes.h"
 
@@ -40,5 +39,3 @@ struct mdfour {
 };
 
 unsigned Com_BlockChecksum(const void *buffer, int length);
-
-#endif	/* _MDFOUR_H */

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_SPECIAL_H
-#define CLIENT_UI_UI_NODE_SPECIAL_H
+#pragma once
 
 #include "../ui_nodes.h"
 
@@ -45,10 +44,7 @@ class uiCvarNode : public uiNode {
 	void deleteNode(uiNode_t* node);
 };
 
-
 void UI_RegisterConFuncNode(uiBehaviour_t *behaviour);
 void UI_RegisterCvarFuncNode(uiBehaviour_t *behaviour);
 void UI_RegisterFuncNode(uiBehaviour_t *behaviour);
 void UI_RegisterNullNode(uiBehaviour_t *behaviour);
-
-#endif

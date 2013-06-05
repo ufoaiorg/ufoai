@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_TIME_H
-#define CP_TIME_H
+#pragma once
 
 /**
  * @brief Human readable time information in the game.
@@ -58,5 +57,3 @@ date_t Date_Add(date_t a, const date_t &b);
 date_t Date_Substract(date_t a, const date_t &b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);
 const char *Date_GetMonthName(int month);
-
-#endif

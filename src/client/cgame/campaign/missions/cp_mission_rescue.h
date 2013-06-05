@@ -22,10 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_MISSION_RESCUE_H
-#define CP_MISSION_RESCUE_H
+#pragma once
 
 void CP_EndRescueMission(mission_t *mission, aircraft_t *aircraft, bool won);
 void CP_RescueNextStage(mission_t *mission);
-
-#endif

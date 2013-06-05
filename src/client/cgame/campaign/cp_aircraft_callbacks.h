@@ -23,12 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_AIRCRAFT_CALLBACKS_H
-#define CP_AIRCRAFT_CALLBACKS_H
+#pragma once
 
 void AIR_AircraftSelect(aircraft_t *aircraft);
 
 void AIR_InitCallbacks(void);
 void AIR_ShutdownCallbacks(void);
-
-#endif

@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_GEOSCAPE_H
-#define CP_GEOSCAPE_H
+#pragma once
 
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
 
@@ -82,5 +81,3 @@ void GEO_SetOverlay(const char *overlayID);
 void GEO_DeactivateOverlay(const char *overlayID);
 void GEO_UpdateGeoscapeDock(void);
 bool GEO_IsRadarOverlayActivated(void);
-
-#endif

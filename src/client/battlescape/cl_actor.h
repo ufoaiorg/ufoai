@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_ACTOR_H
-#define CLIENT_CL_ACTOR_H
+#pragma once
 
 /* vertical cursor offset */
 #define CURSOR_OFFSET UNIT_HEIGHT * 0.4
@@ -109,4 +108,3 @@ void CL_ActorTargetAlign_f(void);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);
-#endif

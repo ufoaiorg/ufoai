@@ -23,8 +23,7 @@
 
  */
 
-#ifndef STRINGHUNK_H
-#define STRINGHUNK_H
+#pragma once
 
 #include "ufotypes.h"
 
@@ -44,5 +43,3 @@ stringHunk_t *STRHUNK_Create(size_t size);
 void STRHUNK_Delete(stringHunk_t **hunk);
 int STRHUNK_Size(const stringHunk_t *hunk);
 size_t STRHUNK_GetFreeSpace(const stringHunk_t *hunk);
-
-#endif

@@ -1,7 +1,4 @@
-#ifndef R_FLARE_H_
-#define R_FLARE_H_
+#pragma once
 
 void R_CreateSurfaceFlare(mBspSurface_t *surf);
 void R_DrawFlareSurfaces(const mBspSurfaces_t *surfs, GLushort *indexPtr);
-
-#endif /* R_FLARE_H_ */

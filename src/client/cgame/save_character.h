@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_CHARACTER_H
-#define SAVE_CHARACTER_H
+#pragma once
 
 #define SAVE_CHARACTER_NAME "name"
 #define SAVE_CHARACTER_BODY "body"
@@ -87,8 +86,6 @@ static const constListEntry_t saveCharacterConstants[] = {
 
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

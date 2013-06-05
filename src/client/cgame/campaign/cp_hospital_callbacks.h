@@ -23,10 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_HOSPITAL_CALLBACKS_H
-#define CP_HOSPITAL_CALLBACKS_H
+#pragma once
 
 void HOS_InitCallbacks(void);
 void HOS_ShutdownCallbacks(void);
-
-#endif

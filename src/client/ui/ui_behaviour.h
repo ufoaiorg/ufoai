@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_BEHAVIOUR_H
-#define CLIENT_UI_UI_BEHAVIOUR_H
+#pragma once
 
 #include "ui_nodes.h"
 #include "node/ui_node_abstractnode.h"
@@ -133,5 +132,3 @@ const struct value_s *UI_GetPropertyFromBehaviour(const uiBehaviour_t *behaviour
  * @param behaviour Behaviour to initialize
  */
 void UI_InitializeNodeBehaviour(uiBehaviour_t* behaviour);
-
-#endif

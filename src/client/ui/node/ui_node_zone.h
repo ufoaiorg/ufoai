@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ZONE_H
-#define CLIENT_UI_UI_NODE_ZONE_H
+#pragma once
 
 class uiZoneNode : public uiLocatedNode {
 	void onLoading(uiNode_t* node) override;
@@ -40,5 +39,3 @@ typedef struct {
 struct uiBehaviour_t;
 
 void UI_RegisterZoneNode(uiBehaviour_t *behaviour);
-
-#endif

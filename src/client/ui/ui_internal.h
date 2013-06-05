@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_INTERNAL_H
-#define CLIENT_UI_UI_INTERNAL_H
+#pragma once
 
 #define UI_MAX_WINDOWS			128
 #define UI_MAX_COMPONENTS		128
@@ -108,5 +107,3 @@ void *UI_AllocHunkMemory(size_t size, int align, bool reset);
 
 void UI_FinishInit(void);
 void UI_FinishWindowsInit(void);
-
-#endif

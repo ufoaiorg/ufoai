@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_BUILDING_H
-#define CP_BUILDING_H
+#pragma once
 
 #include "../../../shared/shared.h"
 #include "../../../shared/mathlib.h"
@@ -144,5 +143,3 @@ bool B_IsBuildingBuiltUp(const building_t *building);
 float B_GetConstructionTimeRemain(const building_t *building);
 
 bool B_FireEvent(const building_t *buildingTemplate, const struct base_s *base, buildingEvent_t eventType);
-
-#endif

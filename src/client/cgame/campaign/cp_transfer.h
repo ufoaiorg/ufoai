@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_TRANSFER_H
-#define CLIENT_CL_TRANSFER_H
+#pragma once
 
 struct transferData_s;
 
@@ -125,8 +124,5 @@ void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 transfer_t* TR_TransferStart(base_t *srcBase, transferData_t &transData);
 
-
 void TR_InitStartup(void);
 void TR_Shutdown(void);
-
-#endif /* CP_TRANSFER_H */

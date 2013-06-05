@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_INVENTORY_H
-#define CLIENT_CL_INVENTORY_H
+#pragma once
 
 /**
  * @brief A list of filter types in the market and production view.
@@ -68,5 +67,3 @@ itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 bool INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
 invList_t *INV_SearchInInventoryWithFilter(const Inventory* const i, const invDef_t *container, const objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 void INV_ItemDescription(const objDef_t *od);
-
-#endif /* CLIENT_CL_INVENTORY_H */

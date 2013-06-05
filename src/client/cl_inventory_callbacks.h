@@ -22,9 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef INV_CALLBACKS_H
-#define INV_CALLBACKS_H
+#pragma once
 
 void INV_InitCallbacks(void);
-
-#endif

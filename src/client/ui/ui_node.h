@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_H
-#define CLIENT_UI_UI_NODE_H
+#pragma once
 
 /* prototype */
 struct uiNode_t;
@@ -113,6 +112,3 @@ void UI_InsertNode(uiNode_t* node, uiNode_t* prevNode, uiNode_t* newNode);
 void UI_AppendNode(uiNode_t* node, uiNode_t* newNode);
 uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
 void UI_UpdateRoot(uiNode_t *node, uiNode_t *newRoot);
-
-
-#endif

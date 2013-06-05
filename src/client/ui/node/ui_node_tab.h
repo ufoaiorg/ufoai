@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_TAB_H
-#define CLIENT_UI_UI_NODE_TAB_H
+#pragma once
 
 #include "../ui_nodes.h"
 #include "ui_node_abstractoption.h"
@@ -36,5 +35,3 @@ class uiTabNode : public uiAbstractOptionNode {
 };
 
 void UI_RegisterTabNode(uiBehaviour_t *behaviour);
-
-#endif

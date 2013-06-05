@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_IMAGE_H
-#define R_IMAGE_H
+#pragma once
 
 #include "r_gl.h"
 #include "r_material.h"
@@ -119,5 +118,3 @@ extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
 extern image_t *r_dummyTexture;  /**< 1x1 pixel white texture to be used when texturing is required, but texture is not available */
-
-#endif

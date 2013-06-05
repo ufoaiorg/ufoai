@@ -22,13 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_BASEDEFENCE_CALLBACKS_H
-#define CP_BASEDEFENCE_CALLBACKS_H
+#pragma once
 
 aircraftSlot_t *BDEF_SelectBaseSlot(base_t *base, const int airequipID);
 aircraftSlot_t *BDEF_SelectInstallationSlot(installation_t *installation, const int airequipID);
 
 void BDEF_InitCallbacks(void);
 void BDEF_ShutdownCallbacks(void);
-
-#endif

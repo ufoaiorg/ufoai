@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_LIGHTMAP_H
-#define R_LIGHTMAP_H
+#pragma once
 
 #include "r_entity.h"
 
@@ -58,5 +57,3 @@ typedef struct lightmaps_s {
 } lightmaps_t;
 
 extern lightmaps_t r_lightmaps;
-
-#endif

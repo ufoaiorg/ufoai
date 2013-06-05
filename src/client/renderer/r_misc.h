@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_MISC_H
-#define R_MISC_H
+#pragma once
 
 void R_Transform(const vec3_t transform, const vec3_t rotate, const vec3_t scale);
 void R_PopMatrix(void);
@@ -33,5 +32,3 @@ void R_ScreenShot_f(void);
 void R_ScreenShot(int x, int y, int width, int height, const char *filename, const char *ext);
 void R_DumpOpenGlState(void);
 void R_ReinitOpenglContext(void);
-
-#endif

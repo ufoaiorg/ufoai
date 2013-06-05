@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_PARSE_H
-#define CLIENT_UI_UI_PARSE_H
+#pragma once
 
 #include "../../common/scripts.h"
 
@@ -66,5 +65,3 @@ bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const stru
 #define V_CVAR_OR_STRING		(V_UI_CVAR + V_STRING)
 #define V_CVAR_OR_LONGSTRING	(V_UI_CVAR + V_LONGSTRING)
 #define V_REF_OF_STRING			(V_UI_REF + V_STRING)
-
-#endif

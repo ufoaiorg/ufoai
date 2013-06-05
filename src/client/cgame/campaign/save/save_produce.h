@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_PRODUCE_H
-#define SAVE_PRODUCE_H
+#pragma once
 
 #define SAVE_PRODUCE_PRODUCTION "production"
 
@@ -36,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_PRODUCE_UFOIDX "UFOIDX"
 #define SAVE_PRODUCE_AMOUNT "amount"
 #define SAVE_PRODUCE_PROGRESS "progress"
-
-#endif
 
 /*
 DTD:

@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_STATISTICS_H
-#define CP_STATISTICS_H
+#pragma once
 
 typedef struct stats_s {
 	int missions;				/**< number of all missions ever (used for unique idx generation) */
@@ -52,5 +51,3 @@ typedef struct stats_s {
 
 void CP_StatsUpdate_f(void);
 void STATS_InitStartup(void);
-
-#endif

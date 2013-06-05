@@ -15,8 +15,7 @@ originated:
 	http://www.geocities.com/jheyesjones/astar.html
 */
 
-#ifndef __PQUEUE_H
-#define __PQUEUE_H
+#pragma once
 
 #include "../shared/shared.h"
 
@@ -49,5 +48,3 @@ void PQueueFree(priorityQueue_t *pq);
 #define PQueueIsEmpty(pq) ((pq)->currentSize == 0)
 void PQueuePush(priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t rating);
 void PQueuePop(priorityQueue_t *pq, pos4_t item);
-
-#endif /* #ifdef __PQUEUE_H */

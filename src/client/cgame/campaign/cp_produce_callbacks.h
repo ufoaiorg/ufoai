@@ -23,10 +23,7 @@
 
  */
 
-#ifndef CP_PRODUCE_CALLBACKS_H
-#define CP_PRODUCE_CALLBACKS_H
+#pragma once
 
 void PR_InitCallbacks (void);
 void PR_ShutdownCallbacks (void);
-
-#endif

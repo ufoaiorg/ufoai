@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_RESEARCH_H
-#define SAVE_RESEARCH_H
+#pragma once
 
 #define SAVE_RESEARCH_RESEARCH "research"
 #define SAVE_RESEARCH_TECH "tech"
@@ -48,8 +47,6 @@ static const constListEntry_t saveResearchConstants[] = {
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::finished", RS_FINISH},
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

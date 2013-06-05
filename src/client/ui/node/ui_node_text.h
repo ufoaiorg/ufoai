@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_TEXT_H
-#define CLIENT_UI_UI_NODE_TEXT_H
+#pragma once
 
 #include "ui_node_abstractscrollable.h"
 
@@ -77,5 +76,3 @@ typedef struct {
  * must not move, else we can't call scrollable functions.
  */
 CASSERT(offsetof(textExtraData_t, super) == 0);
-
-#endif

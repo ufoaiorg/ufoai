@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_ALIENCONT_H
-#define CP_ALIENCONT_H
+#pragma once
 
 /**
  * Collecting aliens functions.
@@ -35,5 +34,3 @@ void AL_RemoveAliensExceedingCapacity(struct base_s *base);
 
 int AL_CountAll(void);
 void AC_InitStartup(void);
-
-#endif

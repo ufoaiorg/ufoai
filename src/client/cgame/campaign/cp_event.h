@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_EVENT
-#define CLIENT_CL_EVENT
+#pragma once
 
 #define MAX_EVENTMAILS 64
 #define MAX_CAMPAIGNEVENTS 128
@@ -103,5 +102,3 @@ bool CP_TriggerEventLoadXML(xmlNode_t *p);
 bool CP_TriggerEventSaveXML(xmlNode_t *p);
 void CP_TriggerEvent(campaignTriggerEventType_t type, const void *userdata = nullptr);
 const campaignEvents_t *CP_GetEventsByID(const char *name);
-
-#endif /* CLIENT_CL_EVENT */

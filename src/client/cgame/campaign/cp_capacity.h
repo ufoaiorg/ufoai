@@ -21,8 +21,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_CAPACITY_H
-#define CP_CAPACITY_H
+#pragma once
 
 /** @brief All possible capacities in base. */
 typedef enum {
@@ -62,5 +61,3 @@ void CAP_RemoveAntimatterExceedingCapacity(struct base_s *base);
 
 int CAP_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);
 void CAP_CheckOverflow(void);
-
-#endif

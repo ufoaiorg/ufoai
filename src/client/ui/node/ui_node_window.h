@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_WINDOW_H
-#define CLIENT_UI_UI_NODE_WINDOW_H
+#pragma once
 
 #include "../../../shared/mathlib.h"
 #include "ui_node_abstractnode.h"
@@ -83,7 +82,6 @@ typedef struct {
 } windowExtraData_t;
 
 void UI_RegisterWindowNode(uiBehaviour_t *behaviour);
-
 bool UI_WindowIsFullScreen(uiNode_t const* window);
 bool UI_WindowIsDropDown(uiNode_t const* window);
 bool UI_WindowIsModal(uiNode_t const* window);
@@ -94,5 +92,3 @@ vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node);
 uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
 bool UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
 bool UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
-
-#endif

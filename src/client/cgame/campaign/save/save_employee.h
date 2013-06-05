@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_EMPLOYEE_H
-#define SAVE_EMPLOYEE_H
+#pragma once
 
 #define SAVE_EMPLOYEE_EMPLOYEES "employees"
 #define SAVE_EMPLOYEE_TYPE "type"
@@ -44,8 +43,6 @@ static const constListEntry_t saveEmployeeConstants[] = {
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::robot", EMPL_ROBOT},
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

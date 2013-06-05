@@ -23,4 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#pragma once
+
 void R_ModLoadAliasMD3Model(struct model_s *mod, byte *buffer, int bufSize);

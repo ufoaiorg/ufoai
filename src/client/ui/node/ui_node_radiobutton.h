@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_RADIOBUTTON_H
-#define CLIENT_UI_UI_NODE_RADIOBUTTON_H
+#pragma once
 
 #include "../ui_nodes.h"
 
@@ -43,5 +42,3 @@ typedef struct radioButtonExtraData_s {
 } radioButtonExtraData_t;
 
 void UI_RegisterRadioButtonNode(uiBehaviour_t *behaviour);
-
-#endif

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_COMPONENTS_H
-#define CLIENT_UI_UI_COMPONENTS_H
+#pragma once
 
 #include "../../common/common.h"
 
@@ -32,5 +31,3 @@ struct uiNode_t;
 
 void UI_InsertComponent(uiNode_t* component);
 uiNode_t* UI_GetComponent(const char *name);
-
-#endif

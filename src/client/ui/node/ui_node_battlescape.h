@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_BATTLESCAPE_H
-#define CLIENT_UI_UI_NODE_BATTLESCAPE_H
+#pragma once
 
 class uiBattleScapeNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
@@ -37,5 +36,3 @@ class uiBattleScapeNode : public uiLocatedNode {
 struct uiBehaviour_t;
 
 void UI_RegisterBattlescapeNode(uiBehaviour_t *behaviour);
-
-#endif

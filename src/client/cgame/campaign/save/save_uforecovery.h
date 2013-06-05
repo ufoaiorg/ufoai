@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_UFORECOVERY_H
-#define SAVE_UFORECOVERY_H
+#pragma once
 
 #define SAVE_UFORECOVERY_STOREDUFOS "storedUFOs"
 #define SAVE_UFORECOVERY_UFO "UFO"
@@ -41,8 +40,6 @@ static const constListEntry_t saveStoredUFOConstants[] = {
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::transfered", SUFO_TRANSFERED},
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

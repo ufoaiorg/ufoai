@@ -1,4 +1,7 @@
 #ifdef HAVE_BFD_H
+
+#pragma once
+
 #include <bfd.h>
 
 struct output_buffer

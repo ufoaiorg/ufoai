@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSIONS_H
-#define CP_MISSIONS_H
+#pragma once
 
 #include "missions/cp_mission_baseattack.h"
 #include "missions/cp_mission_buildbase.h"
@@ -72,5 +71,3 @@ void CP_MissionEndActions(mission_t *mission, aircraft_t *aircraft, bool won);
 
 void MIS_InitStartup(void);
 void MIS_Shutdown(void);
-
-#endif

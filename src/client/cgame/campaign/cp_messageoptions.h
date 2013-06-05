@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CLIENT_CL_MESSAGEOPTIONS_H
-#define CLIENT_CL_MESSAGEOPTIONS_H
+#pragma once
 
 #include "cp_messages.h"
 
@@ -115,5 +114,3 @@ void MSO_ParseMessageSettings(const char *name, const char **text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands);
 void MSO_Init(void);
 void MSO_Shutdown(void);
-
-#endif /* CLIENT_CL_MESSAGEOPTIONS_H */

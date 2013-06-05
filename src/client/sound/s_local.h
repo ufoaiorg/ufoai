@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SOUND_LOCAL_H
-#define CLIENT_SOUND_LOCAL_H
+#pragma once
 
 #include <SDL_mixer.h>
 #include "../../shared/shared.h"
@@ -75,5 +74,3 @@ extern cvar_t *snd_volume;
 extern cvar_t *snd_distance_scale;
 
 extern s_env_t s_env;
-
-#endif

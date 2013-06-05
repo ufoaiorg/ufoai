@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_FONTS_H
-#define R_FONTS_H
+#pragma once
 
 #include <SDL_ttf.h>
 
@@ -41,5 +40,3 @@ typedef struct font_s {
 void R_FontListCache_f(void);
 font_t *R_GetFont(const char *name);
 void R_FontCleanCache (void);
-
-#endif

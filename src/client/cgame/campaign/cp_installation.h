@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_INSTALLATION_H
-#define CP_INSTALLATION_H
+#pragma once
 
 #define MAX_INSTALLATIONS_PER_BASE 3
 #define MAX_INSTALLATION_TEMPLATES	6
@@ -134,5 +133,3 @@ void INS_SelectInstallation(installation_t *installation);
 
 void INS_InitStartup(void);
 void INS_Shutdown(void);
-
-#endif

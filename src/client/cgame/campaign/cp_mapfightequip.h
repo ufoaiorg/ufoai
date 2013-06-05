@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MAPFIGHTEQUIP_H
-#define CLIENT_CL_MAPFIGHTEQUIP_H
+#pragma once
 
 /**
  * @brief Zone number in airequip menu or base defence menu.
@@ -102,5 +101,3 @@ void BDEF_ReloadBaseWeapons(base_t *base, installation_t *installation);
 
 void AII_SaveOneSlotXML(xmlNode_t *p, const aircraftSlot_t *slot, bool weapon);
 void AII_LoadOneSlotXML(xmlNode_t *node, aircraftSlot_t* slot, bool weapon);
-
-#endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

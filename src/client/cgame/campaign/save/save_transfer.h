@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_TRANSFER_H
-#define SAVE_TRANSFER_H
+#pragma once
 
 #define SAVE_TRANSFER_TRANSFERS "transfers"
 #define SAVE_TRANSFER_TRANSFER "transfer"
@@ -49,8 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_TRANSFER_AIRCRAFT "aircraft"
 #define SAVE_TRANSFER_ID "id"
-
-#endif
 
 /*
 DTD:

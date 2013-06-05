@@ -22,13 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_TOOLTIP_H
-#define CLIENT_UI_UI_TOOLTIP_H
+#pragma once
 
 #include "node/ui_node_window.h"
 #include "ui_nodes.h"
 
 int UI_DrawTooltip(const char *string, int x, int y, int maxWidth);
 void UI_Tooltip(const uiNode_t *node, int x, int y);
-
-#endif

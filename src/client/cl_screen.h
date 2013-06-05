@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SCREEN_H
-#define CLIENT_SCREEN_H
+#pragma once
 
 void SCR_Init(void);
 void SCR_Shutdown(void);
@@ -38,5 +37,3 @@ void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void SCR_RunConsole(void);
 void SCR_DrawLoadingScreen(bool string, int percent);
-
-#endif /* CLIENT_SCREEN_H */

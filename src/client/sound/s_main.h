@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SOUND_MAIN_H
-#define CLIENT_SOUND_MAIN_H
+#pragma once
 
 #include "../../shared/mathlib.h"	/* for vec3_t */
 
@@ -53,5 +52,3 @@ int S_LoadSampleIdx (const char *soundFile);
 bool S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
 void S_SetSampleRepeatRate(int sampleRepeatRate);
 void S_LoadSamples(void);
-
-#endif

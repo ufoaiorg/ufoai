@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_CONTAINER_H
-#define CLIENT_UI_UI_NODE_CONTAINER_H
+#pragma once
 
 /** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
@@ -68,6 +67,3 @@ typedef struct containerExtraData_s {
 	int lastSelectedId;		/**< id oject the object type selected */
 	struct uiAction_s *onSelect;	/**< call when we select an item */
 } containerExtraData_t;
-
-
-#endif

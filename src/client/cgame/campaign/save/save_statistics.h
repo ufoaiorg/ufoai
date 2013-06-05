@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_STATS_H
-#define SAVE_STATS_H
+#pragma once
 
 #define SAVE_STATS_STATS "stats"
 #define SAVE_STATS_MISSIONS "missions"
@@ -47,8 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATS_ALIENBASESBUILT "alienBasesBuilt"
 #define SAVE_STATS_UFOSSTORED "UFOsStored"
 #define SAVE_STATS_AIRCRAFTHAD "aircraftHad"
-
-#endif
 
 /*
 DTD:

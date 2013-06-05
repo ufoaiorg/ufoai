@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_UFO_H
-#define CLIENT_CL_UFO_H
+#pragma once
 
 enum {
 	UFO_IS_NO_TARGET,
@@ -58,5 +57,3 @@ aircraft_t* UFO_GetNext(aircraft_t *lastUFO);
 aircraft_t *UFO_GetNextOnGeoscape(aircraft_t *lastUFO);
 const aircraft_t* UFO_GetTemplate(ufoType_t ufoType);
 aircraft_t* UFO_CreateFromTemplate(const aircraft_t *ufoTemplate);
-
-#endif

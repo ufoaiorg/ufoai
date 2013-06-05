@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_UFOPEDIA_H
-#define CLIENT_CL_UFOPEDIA_H
+#pragma once
 
 #define MAX_PEDIACHAPTERS	16
 
@@ -45,5 +44,3 @@ void UP_OpenCopyWith(const char *name);
 void UP_AircraftItemDescription(const objDef_t *item);
 int UP_GetUnreadMails(void);
 void UP_OpenEventMail(const char *eventMailID);
-
-#endif /* CLIENT_CL_UFOPEDIA_H */

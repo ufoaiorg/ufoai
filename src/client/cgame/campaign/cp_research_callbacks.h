@@ -23,10 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_RESEARCH_CALLBACKS_H
-#define CLIENT_CL_RESEARCH_CALLBACKS_H
+#pragma once
 
 void RS_InitCallbacks(void);
 void RS_ShutdownCallbacks(void);
-
-#endif /* CLIENT_CL_RESEARCH_CALLBACKS_H */

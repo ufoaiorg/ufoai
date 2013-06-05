@@ -22,12 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_FIGHTEQUIP_CALLBACKS_H
-#define CP_FIGHTEQUIP_CALLBACKS_H
+#pragma once
 
 aircraftSlot_t *AII_SelectAircraftSlot(aircraft_t *aircraft, aircraftItemType_t type);
 
 void AIM_InitCallbacks(void);
 void AIM_ShutdownCallbacks(void);
-
-#endif

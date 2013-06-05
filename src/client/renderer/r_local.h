@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_LOCAL_H
-#define R_LOCAL_H
+#pragma once
 
 #include "../../common/common.h"
 #include "../../common/qfiles.h"
@@ -213,5 +212,3 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 bool Rimp_Init(void);
 void Rimp_Shutdown(void);
 bool R_InitGraphics(const viddefContext_t *context);
-
-#endif /* R_LOCAL_H */

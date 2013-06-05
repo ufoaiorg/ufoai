@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_POPUP_H
-#define CLIENT_UI_UI_POPUP_H
+#pragma once
 
 #include "node/ui_node_text.h"
 
@@ -42,5 +41,3 @@ void UI_PopupButton(const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3);
-
-#endif

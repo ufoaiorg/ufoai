@@ -21,8 +21,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef CP_CGAME_CALLBACKS_H
-#define CP_CGAME_CALLBACKS_H
+#pragma once
 
 #include "../cl_game.h"
 
@@ -47,5 +46,3 @@ void GAME_CP_HandleBaseClick(int baseIdx, int key, int col, int row);
 void GAME_CP_DrawBase(int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
 void GAME_CP_DrawBaseTooltip(int baseIdx, int x, int y, int col, int row);
 void GAME_CP_DrawBaseLayout(int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
-
-#endif

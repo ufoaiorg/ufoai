@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_GAME_H
-#define CL_GAME_H
+#pragma once
 
 #include "../cl_shared.h"
 #include "../ui/ui_nodes.h"
@@ -119,6 +118,4 @@ void Com_DPrintf (int level, const char *msg, ...) \
 }
 #else
 #define CGAME_HARD_LINKED_FUNCTIONS
-#endif
-
 #endif

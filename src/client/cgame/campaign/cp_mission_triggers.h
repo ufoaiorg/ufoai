@@ -23,9 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSION_TRIGGERS
-#define CP_MISSION_TRIGGERS
+#pragma once
 
 void CP_ExecuteMissionTrigger(const mission_t *mission, bool won);
-
-#endif

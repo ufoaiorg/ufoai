@@ -23,8 +23,7 @@
 
  */
 
-#ifndef SCP_SHARED_H
-#define SCP_SHARED_H
+#pragma once
 
 #define MAX_REQMISSIONS	4
 #define MAX_ACTMISSIONS	16
@@ -112,5 +111,3 @@ typedef struct staticCampaignData_s {
 } staticCampaignData_t;
 
 extern staticCampaignData_t* scd;
-
-#endif

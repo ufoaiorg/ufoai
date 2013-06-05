@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CLIENT_H
-#define CLIENT_CLIENT_H
+#pragma once
 
 #include "cl_shared.h"
 #include "cl_renderer.h"
@@ -128,5 +127,3 @@ int CL_GetClientState(void);
 void CL_SetClientState(connstate_t state);
 void CL_Disconnect(void);
 void CL_Init(void);
-
-#endif /* CLIENT_CLIENT_H */

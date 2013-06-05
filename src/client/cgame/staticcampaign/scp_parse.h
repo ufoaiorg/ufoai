@@ -23,9 +23,6 @@
 
  */
 
-#ifndef SCP_PARSE_H
-#define SCP_PARSE_H
+#pragma once
 
 void SCP_Parse(void);
-
-#endif

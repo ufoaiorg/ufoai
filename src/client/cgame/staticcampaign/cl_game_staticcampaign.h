@@ -23,11 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_GAME_STATICCAMPAIGN_H
-#define CL_GAME_STATICCAMPAIGN_H
+#pragma once
 
 #ifdef HARD_LINKED_CGAME
 const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import);
-#endif
-
 #endif

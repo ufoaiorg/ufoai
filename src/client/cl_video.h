@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_VID_H
-#define CLIENT_VID_H
+#pragma once
 
 #include "../shared/ufotypes.h"	/* for bool */
 #include "../common/mem.h"		/* for memPool_t */
@@ -104,5 +103,3 @@ void VID_Init(void);
 int VID_GetModeNums(void);
 void VID_Restart_f(void);
 bool VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
-
-#endif /* CLIENT_VID_H */

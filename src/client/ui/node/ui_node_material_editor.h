@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
-#define CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
+#pragma once
 
 class uiMaterialEditorNode : public uiAbstractScrollableNode {
 	void draw(uiNode_t* node) override;
@@ -37,5 +36,3 @@ protected:
 
 struct uiBehaviour_t;
 void UI_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
-
-#endif

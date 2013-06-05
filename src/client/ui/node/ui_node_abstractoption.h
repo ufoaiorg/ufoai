@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ABSTRACTOPTION_H
-#define CLIENT_UI_UI_NODE_ABSTRACTOPTION_H
+#pragma once
 
 #include "../../../shared/shared.h"
 #include "ui_node_abstractscrollable.h"
@@ -61,5 +60,3 @@ void UI_OptionNodeSortOptions(uiNode_t* node);
 uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
 const char *UI_AbstractOptionGetCurrentValue(uiNode_t *node);
 void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char *value);
-
-#endif

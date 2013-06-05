@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef MSG_H
-#define MSG_H
+#pragma once
 
 typedef struct sizebuf_s {
 	byte *data;					/**< pointer to the data in the buffer */
@@ -36,5 +35,3 @@ typedef struct sizebuf_s {
 void SZ_Init(sizebuf_t *buf, byte *data, int length);
 void SZ_Clear(sizebuf_t *buf);
 void SZ_Write(sizebuf_t *buf, const void *data, int length);
-
-#endif

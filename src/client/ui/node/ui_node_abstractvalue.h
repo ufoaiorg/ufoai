@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
-#define CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
+#pragma once
 
 class uiAbstractValueNode : public uiLocatedNode {
 public:
@@ -62,5 +61,3 @@ typedef struct abstractValueExtraData_s {
 struct uiBehaviour_t; /* prototype */
 
 void UI_RegisterAbstractValueNode(uiBehaviour_t *behaviour);
-
-#endif

@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_CONSOLE_H
-#define CLIENT_CL_CONSOLE_H
+#pragma once
 
 void Con_DrawString(const char *text, int x, int y, unsigned int width);
 void Con_Scroll(int scroll);
@@ -46,5 +45,3 @@ void Con_LoadConsoleHistory(void);
 extern const int con_fontHeight;
 extern const int con_fontWidth;
 extern const int con_fontShift;
-
-#endif /* CLIENT_CL_CONSOLE_H */

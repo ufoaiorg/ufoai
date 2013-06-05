@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_MESSAGES_H
-#define SAVE_MESSAGES_H
+#pragma once
 
 #define SAVE_MESSAGES_MESSAGES "messages"
 #define SAVE_MESSAGES_MESSAGE "message"
@@ -57,8 +56,6 @@ static const constListEntry_t saveMessageConstants[] = {
 	{SAVE_MESSAGETYPE_NAMESPACE"::event", MSG_EVENT},
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_CINEMATIC_H
-#define CLIENT_CL_CINEMATIC_H
+#pragma once
 
 #include "../../shared/ufotypes.h"	/* for bool */
 #include "../../common/filesys.h"	/* for MAX_QPATH */
@@ -66,5 +65,3 @@ typedef enum {
 	CIN_STATUS_PLAYING,
 	CIN_STATUS_PAUSE
 } cinStatus_t;
-
-#endif /* CLIENT_CL_CINEMATIC_H */

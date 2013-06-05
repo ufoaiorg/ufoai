@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_TIMER_H
-#define CLIENT_UI_UI_TIMER_H
+#pragma once
 
 struct uiNode_t;
 struct uiTimer_s;
@@ -57,6 +56,4 @@ void UI_HandleTimers(void);
 #ifdef COMPILE_UNITTESTS
 const uiTimer_t *UI_PrivateGetFirstTimer(void);
 void UI_PrivateInsertTimerInActiveList(uiTimer_t* first, uiTimer_t* newTimer);
-#endif
-
 #endif

@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_INPUT_H
-#define CLIENT_INPUT_H
+#pragma once
 
 typedef enum {
 	MS_NULL,
@@ -55,5 +54,3 @@ void IN_SetMouseSpace(mouseSpace_t mouseSpace);
 
 void IN_EventEnqueue(unsigned int key, unsigned short, bool down);
 float CL_GetKeyMouseState(int dir);
-
-#endif /* CLIENT_INPUT_H */

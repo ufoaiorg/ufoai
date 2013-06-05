@@ -1,5 +1,4 @@
-#ifndef AUTOPTR_H
-#define AUTOPTR_H
+#pragma once
 
 template<typename T> class AutoPtr
 {
@@ -55,5 +54,3 @@ template<typename T> class AutoPtr
 		AutoPtr (const AutoPtr&); /* no copy */
 		void operator = (AutoPtr&); /* no assignment */
 };
-
-#endif

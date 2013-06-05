@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_BASEINVENTORY_H
-#define CLIENT_UI_UI_NODE_BASEINVENTORY_H
+#pragma once
 
 #include "ui_node_container.h"
 #include "ui_node_abstractscrollable.h"
@@ -73,5 +72,3 @@ typedef struct baseInventoryExtraData_s {
 CASSERT(offsetof(baseInventoryExtraData_t, super) == 0);
 
 void UI_RegisterBaseInventoryNode(uiBehaviour_t *behaviour);
-
-#endif

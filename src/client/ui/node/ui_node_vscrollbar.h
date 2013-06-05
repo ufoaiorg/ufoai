@@ -22,9 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
-#ifndef CLIENT_UI_UI_NODE_VSCROLLBAR_H
-#define CLIENT_UI_UI_NODE_VSCROLLBAR_H
+#pragma once
 
 class uiVScrollbarNode : public uiAbstractScrollbarNode {
 	void draw(uiNode_t* node) override;
@@ -38,5 +36,3 @@ class uiVScrollbarNode : public uiAbstractScrollbarNode {
 };
 
 void UI_RegisterVScrollbarNode(uiBehaviour_t *behaviour);
-
-#endif

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_GEOSCAPE_H
-#define R_GEOSCAPE_H
+#pragma once
 
 /** @todo these are currently duplicated - remove this defines here */
 /**
@@ -41,5 +40,3 @@ void R_Draw2DMapMarkers(const vec2_t screenPos, float direction, const char *mod
 void R_Draw3DMapMarkers(const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 void R_DrawFlatGeoscape(const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char *map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture);
 void R_DrawBloom(void);
-
-#endif

@@ -23,10 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_PARTICLE_H
-#define R_PARTICLE_H
+#pragma once
 
 extern ptl_t r_particleArray[MAX_PTLS];
 extern int r_numParticles;
-
-#endif

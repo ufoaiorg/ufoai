@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_DRAGNDROP_H
-#define CLIENT_UI_UI_DRAGNDROP_H
+#pragma once
 
 #include "../../shared/ufotypes.h"
 
@@ -52,5 +51,3 @@ uiNode_t* UI_DNDGetTargetNode(void);
 uiNode_t* UI_DNDGetSourceNode(void);
 int UI_DNDGetType(void);
 Item *UI_DNDGetItem(void);
-
-#endif

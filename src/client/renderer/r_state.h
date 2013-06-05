@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_STATE_H
-#define R_STATE_H
+#pragma once
 
 #include "r_program.h"
 #include "r_material.h"
@@ -207,5 +206,3 @@ void R_DisableSpotLight(int index);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, bool enable);
 
 void R_UseMaterial (const material_t *material);
-
-#endif

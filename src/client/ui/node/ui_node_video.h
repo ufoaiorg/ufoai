@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_VIDEO_H
-#define CLIENT_UI_UI_NODE_VIDEO_H
+#pragma once
 
 #include "../ui_nodes.h"
 #include "../../cinematic/cl_cinematic.h"
@@ -49,5 +48,3 @@ typedef struct {
 	bool nosound;
 	struct uiAction_s *onEnd;
 } videoExtraData_t;
-
-#endif

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_LOCALENTITY_H
-#define CLIENT_CL_LOCALENTITY_H
+#pragma once
 
 #include "../renderer/r_entity.h"
 
@@ -318,5 +317,3 @@ trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB &box, const le
 
 void LM_Register(void);
 localModel_t *LM_GetByID(const char *id);
-
-#endif

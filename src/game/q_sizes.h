@@ -1,5 +1,4 @@
-#ifndef Q_SIZES_H
-#define Q_SIZES_H
+#pragma once
 
 /* Sizes of the eye-levels and bounding boxes for actors/units. */
 #define EYE_STAND			15
@@ -27,5 +26,3 @@
 #define BOX_DELTA_WIDTH		11
 #define BOX_DELTA_LENGTH	11
 #define BOX_DELTA_HEIGHT	27
-
-#endif

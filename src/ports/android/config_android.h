@@ -1,5 +1,4 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 
 #define HARD_LINKED_GAME 1
 #define HAVE_THEORA_THEORA_H 1
@@ -19,5 +18,3 @@
 #define HAVE_LINK_H 1
 #define HAVE_CUNIT_BASIC_H 1
 */
-
-#endif

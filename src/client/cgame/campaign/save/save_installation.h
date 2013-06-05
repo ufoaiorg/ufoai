@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_INSTALLATION_H
-#define SAVE_INSTALLATION_H
+#pragma once
 
 #define SAVE_INSTALLATION_INSTALLATIONS "installations"
 #define SAVE_INSTALLATION_INSTALLATION "installation"
@@ -45,8 +44,6 @@ static const constListEntry_t saveInstallationConstants[] = {
 	{SAVE_INSTALLATIONSTATUS_NAMESPACE"::working", INSTALLATION_WORKING},
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:

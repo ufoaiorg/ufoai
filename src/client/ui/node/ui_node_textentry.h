@@ -22,9 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
-#ifndef CLIENT_UI_UI_NODE_TEXT_ENTRY_H
-#define CLIENT_UI_UI_NODE_TEXT_ENTRY_H
+#pragma once
 
 #include "../ui_nodes.h"
 
@@ -49,5 +47,3 @@ typedef struct textEntryExtraData_s {
 } textEntryExtraData_t;
 
 void UI_RegisterTextEntryNode(uiBehaviour_t *behaviour);
-
-#endif

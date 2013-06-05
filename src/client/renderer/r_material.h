@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_MATERIAL_H
-#define R_MATERIAL_H
+#pragma once
 
 /* flags will persist on the stage structures but may also bubble
  * up to the material flags to determine render eligibility */
@@ -170,5 +169,3 @@ extern material_t defaultMaterial;
 
 void R_LoadMaterials(const char *map);
 void R_UpdateDefaultMaterial(const char *cvarName, const char *oldValue, const char *newValue, void *data);
-
-#endif

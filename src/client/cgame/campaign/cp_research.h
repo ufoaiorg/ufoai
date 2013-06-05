@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_RESEARCH
-#define CP_RESEARCH
+#pragma once
 
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
@@ -240,5 +239,3 @@ void UP_UGVDescription(const struct ugv_s *ugvType);
 
 void RS_CheckRequirements(void);
 bool RS_RequirementsMet(const technology_t *tech, const struct base_s *base);
-
-#endif /* CLIENT_CL_RESEARCH_H */

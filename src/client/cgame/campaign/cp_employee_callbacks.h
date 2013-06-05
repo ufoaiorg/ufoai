@@ -22,10 +22,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#ifndef CLIENT_CAMPAIGN_CP_EMPLOYEE_CALLBACKS_H
-#define CLIENT_CAMPAIGN_CP_EMPLOYEE_CALLBACKS_H
+
+#pragma once
 
 void E_InitCallbacks(void);
 void E_ShutdownCallbacks(void);
-
-#endif /* CLIENT_CAMPAIGN_CP_EMPLOYEE_CALLBACKS_H */

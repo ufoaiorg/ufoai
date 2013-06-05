@@ -18,8 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MXML_UFOAI_H
-#define CLIENT_MXML_UFOAI_H
+#pragma once
 
 #include <mxml.h>
 #define xmlNode_t mxml_node_t
@@ -66,5 +65,3 @@ xmlNode_t *XML_GetNode(xmlNode_t *parent, const char *name);
 xmlNode_t *XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);
 
 xmlNode_t *XML_Parse(const char *buffer);
-
-#endif

@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_SOUND_MUSIC_H
-#define CLIENT_SOUND_MUSIC_H
+#pragma once
 
 #include "../../shared/ufotypes.h"	/* for bool & byte */
 
@@ -49,5 +48,3 @@ void M_Frame(void);
 void M_Init(void);
 void M_Shutdown(void);
 void M_Stop(void);
-
-#endif

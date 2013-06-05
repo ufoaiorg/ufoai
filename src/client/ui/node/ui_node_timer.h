@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_TIMER_H
-#define CLIENT_UI_UI_NODE_TIMER_H
+#pragma once
 
 #include "../../../shared/mathlib.h"
 #include "ui_node_abstractnode.h"
@@ -49,5 +48,3 @@ struct timerExtraData_t {
 };
 
 void UI_RegisterTimerNode(uiBehaviour_t *behaviour);
-
-#endif

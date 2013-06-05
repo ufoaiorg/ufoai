@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef SCRIPTS_H
-#define SCRIPTS_H
+#pragma once
 
 #include "common.h"
 
@@ -267,5 +266,3 @@ bool Com_GetCharacterModel(character_t *chr);
 const char* Com_GetActorSound(teamDef_t *td, int gender, actorSound_t soundType);
 const teamDef_t *Com_GetTeamDefinitionByID(const char *team);
 const chrTemplate_t *Com_GetCharacterTemplateByID(const char *chrTemplate);
-
-#endif /* SCRIPTS_H */

@@ -23,8 +23,7 @@
 
  */
 
-#ifndef SCP_MISSIONS_H
-#define SCP_MISSIONS_H
+#pragma once
 
 #include "../../cl_shared.h"
 #include "../campaign/cp_campaign.h"
@@ -34,5 +33,3 @@ void SCP_CampaignActivateFirstStage(void);
 void SCP_CampaignProgress(const missionResults_t *results);
 bool SCP_Save(xmlNode_t *parent);
 bool SCP_Load(xmlNode_t *parent);
-
-#endif

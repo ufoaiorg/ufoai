@@ -2,8 +2,7 @@
  * @file
  */
 
-#ifndef DBUFFER_H
-#define DBUFFER_H
+#pragma once
 
 #include <sys/types.h>
 #include <vector>
@@ -50,5 +49,3 @@ inline size_t dbuffer::length () const
 {
 	return _length;
 }
-
-#endif

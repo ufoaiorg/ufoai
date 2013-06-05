@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_FONT_H
-#define CLIENT_UI_UI_FONT_H
+#pragma once
 
 struct uiNode_t;
 
@@ -42,5 +41,3 @@ bool UI_ParseFont(const char *name, const char **text);
 void UI_InitFonts(void);
 void UI_FontShutdown(void);
 int UI_FontGetHeight(const char *font);
-
-#endif

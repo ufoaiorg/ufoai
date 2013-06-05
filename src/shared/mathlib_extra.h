@@ -35,8 +35,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef MATHLIB_EXTRA_H
-#define MATHLIB_EXTRA_H
+#pragma once
 
 #include "ufotypes.h"
 #include "mathlib.h"
@@ -117,5 +116,3 @@ double FpUcurve_d(const double inpVal, const double hard);
 
 float FpUcurveSc_f(const float inpVal, const float hard, const float scale);
 double FpUcurveSc_d(const double inpVal, const double hard, const double scale);
-
-#endif

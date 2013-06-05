@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ITEM_H
-#define CLIENT_UI_UI_NODE_ITEM_H
+#pragma once
 
 #include "ui_node_model.h"
 
@@ -32,5 +31,3 @@ class uiItemNode : public uiModelNode {
 };
 
 void UI_RegisterItemNode(uiBehaviour_t *behaviour);
-
-#endif

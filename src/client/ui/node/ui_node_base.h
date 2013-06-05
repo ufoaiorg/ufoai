@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_BASE_H
-#define CLIENT_UI_UI_NODE_BASE_H
+#pragma once
 
 class uiAbstractBaseNode : public uiLocatedNode {
 public:
@@ -58,5 +57,3 @@ struct uiBehaviour_t;
 void UI_RegisterAbstractBaseNode(uiBehaviour_t *behaviour);
 void UI_RegisterBaseMapNode(uiBehaviour_t *behaviour);
 void UI_RegisterBaseLayoutNode(uiBehaviour_t *behaviour);
-
-#endif

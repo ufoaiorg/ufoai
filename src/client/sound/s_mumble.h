@@ -1,3 +1,5 @@
+#pragma once
+
 void S_MumbleInit (void);
 void S_MumbleLink (void);
 void S_MumbleUnlink (void);

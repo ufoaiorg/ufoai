@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_MODEL_H
-#define R_MODEL_H
+#pragma once
 
 #include "r_entity.h"
 #include "r_model_alias.h"
@@ -87,5 +86,3 @@ extern int r_numMapTiles;
 
 extern model_t r_modelsInline[MAX_MOD_KNOWN];
 extern int r_numModelsInline;
-
-#endif

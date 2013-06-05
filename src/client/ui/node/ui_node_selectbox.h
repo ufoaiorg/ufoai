@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_SELECTBOX_H
-#define CLIENT_UI_UI_NODE_SELECTBOX_H
+#pragma once
 
 #include "ui_node_abstractoption.h"
 
@@ -37,5 +36,3 @@ class uiSelectBoxNode : public uiAbstractOptionNode {
 };
 
 void UI_RegisterSelectBoxNode(uiBehaviour_t *behaviour);
-
-#endif

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_DATAIDS_H
-#define CLIENT_UI_UI_DATAIDS_H
+#pragma once
 
 /** @brief linked into ui_global.sharedData - defined in UI scripts via dataId property */
 enum uiDataIDs_t {
@@ -110,5 +109,3 @@ enum uiDataIDs_t {
 
 	UI_MAX_DATAID
 };
-
-#endif

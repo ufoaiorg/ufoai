@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_INPUT_H
-#define CLIENT_UI_UI_INPUT_H
+#pragma once
 
 /* prototype */
 struct uiNode_t;
@@ -67,5 +66,3 @@ void UI_MouseRelease(void);
 
 /* all inputs */
 void UI_ReleaseInput(void);
-
-#endif

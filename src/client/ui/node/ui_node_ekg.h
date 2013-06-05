@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_EKG_H
-#define CLIENT_UI_UI_NODE_EKG_H
+#pragma once
 
 #include "ui_node_image.h"
 
@@ -33,7 +32,6 @@ public:
 	void draw(uiNode_t* node) override;
 };
 
-
 typedef struct ekgExtraData_s {
 	imageExtraData_t super;
 	float scrollSpeed;
@@ -41,5 +39,3 @@ typedef struct ekgExtraData_s {
 } ekgExtraData_t;
 
 void UI_RegisterEKGNode(uiBehaviour_t *behaviour);
-
-#endif

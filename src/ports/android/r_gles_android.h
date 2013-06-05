@@ -21,8 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __R_GLES_ANDROID_H__
-#define __R_GLES_ANDROID_H__
+#pragma once
 
 #include <GLES/gl.h>
 #include <GLES/glext.h>
@@ -79,5 +78,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Stub, so that we won't clutter the code with #ifdefs */
 #define glPolygonMode(x, y)
-
-#endif

@@ -25,11 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef IRC_NET_H
-#define IRC_NET_H
+#pragma once
 
 void Irc_Init(void);
 void Irc_Shutdown(void);
 void Irc_Logic_Frame(void);
-
-#endif

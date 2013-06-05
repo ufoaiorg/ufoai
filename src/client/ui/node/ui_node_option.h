@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_OPTION_H
-#define CLIENT_UI_UI_NODE_OPTION_H
+#pragma once
 
 #include "../ui_nodes.h"
 #include "ui_node_abstractnode.h"
@@ -61,5 +60,3 @@ typedef struct optionExtraData_s {
 
 int UI_OptionUpdateCache(uiNode_t* option);
 uiNode_t *UI_AllocOptionNode(const char* name, const char* label, const char* value);
-
-#endif

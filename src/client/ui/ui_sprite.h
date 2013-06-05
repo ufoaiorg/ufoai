@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_SPRITE_H
-#define CLIENT_UI_UI_SPRITE_H
+#pragma once
 
 #define UI_MAX_SPRITES 512
 
@@ -60,5 +59,3 @@ extern const value_t ui_spriteProperties[];
 uiSprite_t* UI_GetSpriteByName(const char* name);
 uiSprite_t* UI_AllocStaticSprite(const char* name) __attribute__ ((warn_unused_result));
 void UI_DrawSpriteInBox(bool flip, const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY);
-
-#endif

@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_HUD_H
-#define CL_HUD_H
+#pragma once
 
 #define ACTOR_HAND_CHAR_RIGHT (char)'r'
 #define ACTOR_HAND_CHAR_LEFT (char)'l'
@@ -44,5 +43,3 @@ void HUD_DisplayMessage(const char * text);
 void HUD_Update(void);
 void HUD_UpdateActorStats(const struct le_s *le);
 void HUD_UpdateCursor(void);
-
-#endif

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_OPTIONTREE_H
-#define CLIENT_UI_UI_NODE_OPTIONTREE_H
+#pragma once
 
 #include "../ui_nodes.h"
 
@@ -41,5 +40,3 @@ class uiOptionTreeNode : public uiAbstractOptionNode {
 };
 
 void UI_RegisterOptionTreeNode(uiBehaviour_t *behaviour);
-
-#endif

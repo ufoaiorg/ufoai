@@ -22,9 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_EVENT_CALLBACKS
-#define CLIENT_CL_EVENT_CALLBACKS
+#pragma once
 
 void CP_CampaignTriggerFunctions(bool add);
-
-#endif

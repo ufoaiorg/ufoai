@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_VIEW_H
-#define CLIENT_CL_VIEW_H
+#pragma once
 
 void CL_ViewRender(void);
 void CL_ViewUpdateRenderData(void);
@@ -67,5 +66,3 @@ extern cvar_t *cl_isometric;
 #define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
 
 extern cvar_t *cl_map_debug;
-
-#endif

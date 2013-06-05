@@ -12,3 +12,5 @@
  * http://colabti.org/irclogger/irclogger_logs/ufoai
  * @author UFO:AI Team
  */
+
+#pragma once

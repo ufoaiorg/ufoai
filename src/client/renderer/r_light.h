@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_LIGHT_H
-#define R_LIGHT_H
+#pragma once
 
 struct entity_s;
 
@@ -58,5 +57,3 @@ void R_DisableLights(void);
 void R_AddStaticLight(const vec3_t origin, float radius, const vec3_t color);
 void R_ClearStaticLights(void);
 void R_UpdateLightList(struct entity_s *ent);
-
-#endif

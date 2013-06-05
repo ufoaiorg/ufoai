@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_MAIN_H
-#define CLIENT_UI_UI_MAIN_H
+#pragma once
 
 #include "ui_data.h"
 #include "ui_windows.h"
@@ -36,5 +35,3 @@ void UI_Reinit(void);
 /* misc */
 void UI_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 int UI_DebugMode(void);
-
-#endif

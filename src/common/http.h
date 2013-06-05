@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef HTTP_H
-#define HTTP_H
+#pragma once
 
 #include "common.h"
 #ifndef CURL_STATICLIB
@@ -69,5 +68,3 @@ size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream);
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream);
 void HTTP_Cleanup(void);
 bool HTTP_ExtractComponents(const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port);
-
-#endif /* HTTP_H */

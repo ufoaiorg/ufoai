@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#pragma once
+
 typedef struct sphere_s {
 	GLint list;			/**< the opengl list id */
 	float *texes;		/**< globe tex coords, points in 2D on the texture to be mapped onto the sphere */

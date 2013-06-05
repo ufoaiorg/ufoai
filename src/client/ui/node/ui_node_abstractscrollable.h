@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_ABSTRACTSCROLLABLE_H
-#define CLIENT_UI_UI_NODE_ABSTRACTSCROLLABLE_H
+#pragma once
 
 #include "../../../shared/mathlib.h"
 #include "ui_node_abstractnode.h"
@@ -74,5 +73,3 @@ typedef struct {
 } abstractScrollableExtraData_t;
 
 void UI_RegisterAbstractScrollableNode(uiBehaviour_t *behaviour);
-
-#endif

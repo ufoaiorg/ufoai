@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_SEQUENCE_H
-#define CLIENT_CL_SEQUENCE_H
+#pragma once
 
 #include "../../shared/mathlib.h"	/* vec2_t */
 
@@ -39,5 +38,3 @@ void SEQ_SendClickEvent(pSequenceContext_t context);
 void SEQ_SetView(pSequenceContext_t context, vec2_t pos, vec2_t size);
 void SEQ_Shutdown(void);
 void CL_ParseSequence(const char *name, const char **text);
-
-#endif

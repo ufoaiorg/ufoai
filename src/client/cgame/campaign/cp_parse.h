@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_PARSE_H
-#define CP_PARSE_H
+#pragma once
 
 #define MAX_COMP	32
 /** Component item count scaled to the disassembled item/UFO's codition */
@@ -49,5 +48,3 @@ typedef struct components_s {
 void CP_ScriptSanityCheck(void);
 components_t *CP_GetComponentsByItem(const objDef_t *item);
 components_t *CP_GetComponentsByID(const char *id);
-
-#endif

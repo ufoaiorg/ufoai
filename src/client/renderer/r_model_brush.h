@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef R_MODEL_BRUSH_H
-#define R_MODEL_BRUSH_H
+#pragma once
 
 /*
 ==============================================================================
@@ -253,5 +252,3 @@ typedef struct mBspModel_s {
 	/* sorted surfaces arrays */
 	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];
 } mBspModel_t;
-
-#endif /* R_MODEL_BRUSH_H */

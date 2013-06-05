@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef MP_SERVERLIST_H
-#define MP_SERVERLIST_H
+#pragma once
 
 #define MAX_BOOKMARKS 16
 
@@ -54,5 +53,3 @@ void CL_ParseServerInfoMessage(dbuffer *msg, const char *hostname);
 
 void MP_ServerListInit(const struct cgame_import_s *import);
 void MP_ServerListShutdown(void);
-
-#endif

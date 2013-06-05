@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_TEAM_H
-#define CLIENT_CL_TEAM_H
+#pragma once
 
 #define MAX_WHOLETEAM			32
 #define MAX_TEAMDATASIZE		32768
@@ -53,5 +52,3 @@ actorSkin_t* CL_AllocateActorSkin(const char *name);
 unsigned int CL_GetActorSkinCount(void);
 
 extern linkedList_t *chrDisplayList;
-
-#endif

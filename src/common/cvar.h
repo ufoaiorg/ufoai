@@ -32,8 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef COMMON_CVAR
-#define COMMON_CVAR
+#pragma once
 
 #include "../shared/shared.h"
 
@@ -257,6 +256,4 @@ void Cvar_Reset(cvar_t *cvar);
 
 #ifdef DEBUG
 void Cvar_PrintDebugCvars(void);
-#endif
-
 #endif

@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_AIRFIGHT_H
-#define CLIENT_CL_AIRFIGHT_H
+#pragma once
 
 #define BULLETS_PER_SHOT	1
 #define MAX_MULTIPLE_PROJECTILES	10
@@ -76,5 +75,3 @@ void AIRFIGHT_RemoveProjectileAimingAircraft(const aircraft_t *aircraft);
 bool AIRFIGHT_SaveXML(xmlNode_t *parent);
 bool AIRFIGHT_LoadXML(xmlNode_t *parent);
 void AIRFIGHT_InitStartup(void);
-
-#endif /* CLIENT_CL_AIRFIGHT_H */

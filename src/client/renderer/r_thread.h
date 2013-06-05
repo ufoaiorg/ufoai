@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#pragma once
+
 void R_InitThreads(void);
 void R_ShutdownThreads(void);
 int R_RunThread(void *p);

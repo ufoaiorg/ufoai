@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_XVI_H
-#define SAVE_XVI_H
+#pragma once
 
 #define SAVE_XVI_XVI "XVI"
 #define SAVE_XVI_WIDTH "width"
@@ -33,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_XVI_X "x"
 #define SAVE_XVI_Y "y"
 #define SAVE_XVI_LEVEL "level"
-
-#endif
 
 /*
 DTD:

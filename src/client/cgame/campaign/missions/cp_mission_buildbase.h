@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSION_BUILDBASE_H
-#define CP_MISSION_BUILDBASE_H
+#pragma once
 
 extern const int STARTING_BASEBUILD_INTEREST;
 
@@ -35,5 +34,3 @@ void CP_BuildBaseMissionIsFailure(mission_t *mission);
 void CP_BuildBaseMissionBaseDestroyed(mission_t *mission);
 void CP_BuildBaseMissionIsSuccess(mission_t *mission);
 void CP_BuildBaseMissionOnSpawn(void);
-
-#endif

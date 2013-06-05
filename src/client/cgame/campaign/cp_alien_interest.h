@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_ALIEN_INTEREST_H
-#define CP_ALIEN_INTEREST_H
+#pragma once
 
 void INT_ResetAlienInterest(void);
 void INT_IncreaseAlienInterest(const campaign_t *campaign);
@@ -36,4 +35,3 @@ const char *INT_InterestCategoryToName(interestCategory_t category);
 
 void INT_InitStartup(void);
 void INT_Shutdown(void);
-#endif

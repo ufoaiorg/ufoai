@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_UFORECOVERY_H
-#define CLIENT_CL_UFORECOVERY_H
+#pragma once
 
 /* time the recovery takes in days */
 #define RECOVERY_DELAY 2.0f
@@ -81,5 +80,3 @@ bool US_TransferUFO(storedUFO_t *ufo, installation_t *ufoyard);
 
 void UR_InitStartup(void);
 void UR_Shutdown(void);
-
-#endif

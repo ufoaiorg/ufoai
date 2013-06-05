@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_DATA_H
-#define CLIENT_UI_UI_DATA_H
+#pragma once
 
 #include "../../shared/ufotypes.h"
 #include "../../shared/shared.h"
@@ -95,5 +94,3 @@ uiNode_t* UI_AddOption(uiNode_t **tree, const char* name, const char* label, con
 
 /* line strip */
 void UI_RegisterLineStrip(int dataId, struct lineStrip_s *text);
-
-#endif

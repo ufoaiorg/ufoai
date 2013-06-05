@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_TBAR_H
-#define CLIENT_UI_UI_NODE_TBAR_H
+#pragma once
 
 #include "ui_node_abstractvalue.h"
 
@@ -39,5 +38,3 @@ typedef struct tbarExtraData_s {
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
 } tbarExtraData_t;
-
-#endif

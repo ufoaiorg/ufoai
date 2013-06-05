@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_RADAR_H
-#define CLIENT_CL_RADAR_H
+#pragma once
 
 #define MAX_UFOONGEOSCAPE	8
 
@@ -58,5 +57,3 @@ void RADAR_AddDetectedUFOToEveryRadar(const struct aircraft_s *ufo);
 bool RADAR_CheckRadarSensored(const vec2_t pos);
 bool RADAR_CheckUFOSensored(radar_t* radar, const vec2_t posRadar, const struct aircraft_s* ufo, bool detected);
 void RADAR_SetRadarAfterLoading(void);
-
-#endif

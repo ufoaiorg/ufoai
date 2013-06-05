@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_CGAME_H
-#define CL_CGAME_H
+#pragma once
 
 #include "../../common/xml.h"
 #include "../../common/http.h"
@@ -346,5 +345,3 @@ typedef struct cgame_import_s {
 extern "C" const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
 
 typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
-
-#endif

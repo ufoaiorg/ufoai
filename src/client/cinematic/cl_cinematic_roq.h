@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_CINEMATIC_ROQ_H
+#pragma once
 
 #include "../../shared/ufotypes.h"	/* just for bool */
 
@@ -34,5 +34,3 @@ void CIN_ROQ_CloseCinematic(struct cinematic_s *cin);
 bool CIN_ROQ_RunCinematic(struct cinematic_s *cin);
 
 void CIN_ROQ_Init(void);
-
-#endif

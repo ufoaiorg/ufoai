@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_CAMPAIGN_H
-#define CP_CAMPAIGN_H
+#pragma once
 
 extern memPool_t *cp_campaignPool;
 
@@ -629,5 +628,3 @@ bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *ter
 void CP_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
 
 bool CP_OnGeoscape(void);
-
-#endif /* CP_CAMPAIGN_H */

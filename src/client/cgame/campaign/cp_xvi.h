@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_XVI_H
-#define CP_XVI_H
+#pragma once
 
 void CP_XVIInit(void);
 void CP_SpreadXVIAtPos(const vec2_t pos);
@@ -36,5 +35,3 @@ int CP_GetAverageXVIRate(void);
 void CP_UpdateXVIMapButton(void);
 void CP_StartXVISpreading_f(void);
 #define CP_IsXVIStarted() ccs.startXVI
-
-#endif

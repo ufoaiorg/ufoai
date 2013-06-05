@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_AIRCRAFT_H
-#define CP_AIRCRAFT_H
+#pragma once
 
 #include "cp_capacity.h"
 
@@ -317,5 +316,3 @@ int AIR_GetRemainingRange(const aircraft_t *aircraft);
 
 void AIR_InitStartup(void);
 void AIR_Shutdown(void);
-
-#endif

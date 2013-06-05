@@ -23,8 +23,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef R_LIGHTING_H
-#define R_LIGHTING_H
+#pragma once
 
 /** @brief lighting structure which contains static and dynamic lighting info for entities */
 typedef struct lighting_s {
@@ -47,5 +46,3 @@ typedef struct lighting_s {
 
 #define LIGHTING_MAX_SHADOW_DISTANCE 128.0
 #define CACHE_CLEAR_TRESHOLD 2.0
-
-#endif

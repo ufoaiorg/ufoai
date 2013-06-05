@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_CONDITION_H
-#define CLIENT_UI_UI_CONDITION_H
+#pragma once
 
 #include "../../common/common.h"
 
@@ -39,5 +38,3 @@ bool UI_GetBooleanFromExpression(struct uiAction_s *expression, const struct uiC
 float UI_GetFloatFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
 const char *UI_GetStringFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
 uiNode_t* UI_GetNodeFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context, const struct value_s **property);
-
-#endif

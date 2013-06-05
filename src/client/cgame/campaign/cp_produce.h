@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_PRODUCE
-#define CP_PRODUCE
+#pragma once
 
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		40
@@ -130,5 +129,3 @@ production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, sig
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
 void PR_QueueNext(struct base_s *base);
-
-#endif

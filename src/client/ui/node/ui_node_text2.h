@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_TEXT2_H
-#define CLIENT_UI_UI_NODE_TEXT2_H
+#pragma once
 
 #include "ui_node_abstractscrollable.h"
 #include "ui_node_text.h"
@@ -56,5 +55,3 @@ typedef struct {
  * @note super must be at 0 else inherited function will crash.
  */
 CASSERT(offsetof(text2ExtraData_t, super) == 0);
-
-#endif

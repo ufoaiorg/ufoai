@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_WINDOWS_H
-#define CLIENT_UI_UI_WINDOWS_H
+#pragma once
 
 #include "../../common/common.h"
 
@@ -55,5 +54,3 @@ const char* UI_GetActiveWindowName(void);
 /** @todo move it on m_nodes, its a common getter/setter */
 void UI_SetNewWindowPos(uiNode_t* window, int x, int y);
 uiNode_t* UI_GetWindow(const char *name);
-
-#endif

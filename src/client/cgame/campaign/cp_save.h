@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_SAVE_H
-#define CP_SAVE_H
+#pragma once
 
 #include "../../../common/msg.h"
 #include "../../../common/xml.h"
@@ -88,5 +87,3 @@ bool AIR_PostLoadInit(void);
 bool PR_PostLoadInit(void);
 
 bool SAV_GameLoad(const char *file, const char **error);
-
-#endif

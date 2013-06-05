@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
-#define CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
+#pragma once
 
 typedef enum msoMenuState_s {
 	MSO_MSTATE_REINIT,
@@ -36,5 +35,3 @@ void MSO_SetMenuState (const msoMenuState_t newState, const bool initNow, const 
 
 void MSO_InitCallbacks(void);
 void MSO_ShutdownCallbacks(void);
-
-#endif /* CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H */

@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_LINECHART_H
-#define CLIENT_UI_UI_NODE_LINECHART_H
+#pragma once
 
 #include "../ui_nodes.h"
 
@@ -54,5 +53,3 @@ typedef struct lineChartExtraData_s {
 } lineChartExtraData_t;
 
 void UI_RegisterLineChartNode(uiBehaviour_t *behaviour);
-
-#endif

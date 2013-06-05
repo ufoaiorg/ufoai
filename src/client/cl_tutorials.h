@@ -22,10 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_TUTORIALS_H
-#define CLIENT_CL_TUTORIALS_H
+#pragma once
 
 void TUT_InitStartup(void);
 void TUT_ParseTutorials(const char *title, const char **text);
-
-#endif

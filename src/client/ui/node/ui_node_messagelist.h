@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_NODE_MESSAGELIST_H
-#define CLIENT_UI_UI_NODE_MESSAGELIST_H
+#pragma once
 
 #include "ui_node_abstractscrollable.h"
 
@@ -45,5 +44,3 @@ void UI_RegisterMessageListNode(uiBehaviour_t *behaviour);
 struct uiMessageListNodeMessage_s* UI_MessageGetStack (void);
 void UI_MessageAddStack(struct uiMessageListNodeMessage_s* message);
 void UI_MessageResetStack(void);
-
-#endif

@@ -22,9 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
-#ifndef CLIENT_UI_UI_NODE_KEY_BINDING_H
-#define CLIENT_UI_UI_NODE_KEY_BINDING_H
+#pragma once
 
 #include "../ui_nodes.h"
 #include "../../../common/common.h"
@@ -48,5 +46,3 @@ typedef struct keyBindingExtraData_s {
 } keyBindingExtraData_t;
 
 void UI_RegisterKeyBindingNode(uiBehaviour_t *behaviour);
-
-#endif

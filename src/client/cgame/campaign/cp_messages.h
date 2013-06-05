@@ -22,8 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CP_MESSAGES_H
-#define CLIENT_CP_MESSAGES_H
+#pragma once
 
 #define MAX_MESSAGE_TEXT 256
 
@@ -75,5 +74,3 @@ uiMessageListNodeMessage_t *MS_AddNewMessage(const char *title, const char *text
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];
-
-#endif /* CLIENT_CP_MESSAGES_H */

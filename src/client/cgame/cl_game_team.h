@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_GAME_TEAM_H
-#define CL_GAME_TEAM_H
+#pragma once
 
 #include "../../common/xml.h"
 
@@ -43,5 +42,3 @@ void GAME_ActorSelect_f(void);
 bool GAME_LoadDefaultTeam(bool force);
 bool GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);
 bool GAME_LoadCharacter(xmlNode_t *p, character_t *chr);
-
-#endif

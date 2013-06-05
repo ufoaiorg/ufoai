@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_AIRCRAFT_H
-#define SAVE_AIRCRAFT_H
+#pragma once
 
 #define SAVE_AIRCRAFT_UFOS "UFOs"
 #define SAVE_AIRCRAFT_PHALANX "aircraft"
@@ -112,8 +111,6 @@ static const constListEntry_t saveAircraftConstants[] = {
 
 	{nullptr, -1}
 };
-
-#endif
 
 /*
 DTD:
