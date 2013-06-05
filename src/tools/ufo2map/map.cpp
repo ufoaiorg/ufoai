@@ -628,7 +628,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
 	do {
-		if (!GetToken())
+		if (Q_strnull(GetToken()))
 			break;
 		if (*parsedToken == '}')
 			break;
@@ -665,28 +665,20 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		}
 		Q_strncpyz(td.name, parsedToken, sizeof(td.name));
 
-		GetToken();
-		td.shift[0] = atof(parsedToken);
-		GetToken();
-		td.shift[1] = atof(parsedToken);
-		GetToken();
-		td.rotate = atof(parsedToken);
-		GetToken();
-		td.scale[0] = atof(parsedToken);
-		GetToken();
-		td.scale[1] = atof(parsedToken);
+		td.shift[0] = atof(GetToken());
+		td.shift[1] = atof(GetToken());
+		td.rotate = atof(GetToken());
+		td.scale[0] = atof(GetToken());
+		td.scale[1] = atof(GetToken());
 
 		/* find default flags and values */
 		const int mt = FindMiptex(td.name);
 		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
-			GetToken();
-			side->contentFlags = atoi(parsedToken);
-			GetToken();
-			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
-			GetToken();
-			td.value = atoi(parsedToken);
+			side->contentFlags = atoi(GetToken());
+			side->surfaceFlags = td.surfaceFlags = atoi(GetToken());
+			td.value = atoi(GetToken());
 		}
 
 		/* if in check or fix mode, let them choose to do this (with command line options),
@@ -954,7 +946,7 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
-	if (!GetToken())
+	if (Q_strnull(GetToken()))
 		return false;
 
 	if (*parsedToken != '{')
@@ -969,7 +961,7 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 	mapent->numbrushes = 0;
 
 	do {
-		if (!GetToken())
+		if (Q_strnull(GetToken()))
 			Sys_Error("ParseMapEntity: EOF without closing brace");
 		if (*parsedToken == '}')
 			break;

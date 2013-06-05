@@ -452,7 +452,7 @@ static entity_t *ParseEntity (void)
 {
 	entity_t *mapent;
 
-	if (!GetToken())
+	if (Q_strnull(GetToken()))
 		return nullptr;
 
 	if (parsedToken[0] != '{')
@@ -465,7 +465,7 @@ static entity_t *ParseEntity (void)
 	num_entities++;
 
 	do {
-		if (!GetToken())
+		if (Q_strnull(GetToken()))
 			Sys_Error("ParseEntity: EOF without closing brace");
 		if (*parsedToken == '}') {
 			break;

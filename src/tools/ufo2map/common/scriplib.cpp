@@ -79,7 +79,8 @@ const char* GetToken ()
 		/* not if the current script is a memory buffer */
 		if (!Q_streq(script.filename, "memory buffer"))
 			Mem_Free(script.buffer);
-		return nullptr;
+		assert(Q_strnull(parsedToken));
+		return parsedToken;
 	}
 
 	return token;
