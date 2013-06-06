@@ -343,16 +343,17 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 
 class ReactionFire
 {
-	bool isEnemy(Edict *shooter, const Edict *target);
-	bool canReact(Edict *shooter, const Edict *target);
-	bool canSee(Edict *shooter, const Edict *target);
+private:
+	bool isEnemy(const Edict *shooter, const Edict *target) const;
+	bool canReact(Edict *shooter, const Edict *target) const;
+	bool canSee(const Edict *shooter, const Edict *target) const;
 	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 public:
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
-	bool isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd);
-	const fireDef_t* getFireDef (const Edict *shooter);
+	bool isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd) const;
+	const fireDef_t* getFireDef (const Edict *shooter) const;
 };
 static ReactionFire rf;
 
@@ -361,7 +362,7 @@ static ReactionFire rf;
  * @param[in] shooter The reaction firing actor
  * @return nullptr if something is wrong
  */
-const fireDef_t* ReactionFire::getFireDef (const Edict *shooter)
+const fireDef_t* ReactionFire::getFireDef (const Edict *shooter) const
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
 	if (!fmSetting->isSaneFiremode())
@@ -380,7 +381,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict *shooter)
 	return nullptr;
 }
 
-bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd)
+bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd) const
 {
 	assert(fd);
 	return fd->range > VectorDist(shooter->origin, target->origin) ? false : true;
@@ -567,7 +568,7 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::isEnemy (Edict *shooter, const Edict *target)
+bool ReactionFire::isEnemy (const Edict *shooter, const Edict *target) const
 {
 	/* an entity can't reaction fire at itself */
 	if (shooter == target)
@@ -595,7 +596,7 @@ bool ReactionFire::isEnemy (Edict *shooter, const Edict *target)
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canReact (Edict *shooter, const Edict *target)
+bool ReactionFire::canReact (Edict *shooter, const Edict *target) const
 {
 	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
 	if (G_IsDazed(shooter))
@@ -621,7 +622,7 @@ bool ReactionFire::canReact (Edict *shooter, const Edict *target)
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canSee (Edict *shooter, const Edict *target)
+bool ReactionFire::canSee (const Edict *shooter, const Edict *target) const
 {
 	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
