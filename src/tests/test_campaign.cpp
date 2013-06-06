@@ -1154,6 +1154,7 @@ static void testBuildingConstruction (void)
 	/* if building->startTime is 0 no buildTime checks done! */
 	ccs.date.day++;
 	base = CreateBase("unittestbuildingconstruction1", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	base = CreateBase("unittestbuildingconstruction2", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
