@@ -397,7 +397,7 @@ static SDL_Surface* Img_LoadJPG(char const* const name)
 		jpeg_mem_src(&cinfo, buf, len);
 #endif
 
-		jpeg_read_header(&cinfo, true);
+		jpeg_read_header(&cinfo, TRUE);
 
 		cinfo.out_color_space = JCS_RGB;
 
