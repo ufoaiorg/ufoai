@@ -318,7 +318,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 	const pos_t length = std::min(G_ActorMoveLength(ent, level.pathingMap, to, false)
 				+ (autoCrouchRequired ? TU_CROUCH : 0), ROUTING_NOT_REACHABLE);
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
-	if (length && (length >= ROUTING_NOT_REACHABLE || length > G_ActorUsableTUs(ent)))
+	if (length && length >= ROUTING_NOT_REACHABLE)
 		return;
 
 	/* this let the footstep sounds play even over network */

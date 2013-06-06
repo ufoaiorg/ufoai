@@ -71,6 +71,8 @@ typedef struct aiAction_s {
 
 #define SCORE_MISSION_OPPONENT_TARGET	50
 #define SCORE_MISSION_TARGET	60
+#define SCORE_MISSION_HOLD		25
+#define MISSION_HOLD_DIST		96
 
 #define SCORE_PANIC_RUN_TO_FRIENDS 300.0
 #define SCORE_PANIC_FLEE_FROM_STRANGERS 500.0
@@ -84,6 +86,7 @@ typedef struct aiAction_s {
 /** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
 #define HERD_DIST			7
+#define HOLD_DIST			3
 
 static pathing_t *hidePathingTable;
 static pathing_t *herdPathingTable;
@@ -977,6 +980,44 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 }
 
 /**
+ * @brief Try to go close to a mission edict
+ * @param[in,out] ent The actor edict.
+ * @param[in] to The target position.
+ * @return @c true if hiding is possible, @c false otherwise
+ */
+static bool AI_FindMissionLocation (Edict *ent, const pos3_t to)
+{
+	const byte minX = std::max(to[0] - HOLD_DIST, 0);
+	const byte minY = std::max(to[1] - HOLD_DIST, 0);
+	const byte maxX = std::min(to[0] + HOLD_DIST, PATHFINDING_WIDTH - 1);
+	const byte maxY = std::min(to[1] + HOLD_DIST, PATHFINDING_WIDTH - 1);
+	int bestDist = ROUTING_NOT_REACHABLE;
+	pos3_t bestPos = {ent->pos[0], ent->pos[1], ent->pos[2]};
+
+	ent->pos[2] = to[2];
+	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ++ent->pos[1]) {
+		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ++ent->pos[0]) {
+			/* Can't walk there */
+			if (G_ActorMoveLength(ent, level.pathingMap, ent->pos, true) == ROUTING_NOT_REACHABLE)
+				continue;
+			/* Don't stand on dangerous terrain! */
+			if (!AI_CheckPosition(ent))
+				continue;
+
+			const int distX = std::abs(ent->pos[0] - to[0]);
+			const int distY = std::abs(ent->pos[1] - to[1]);
+			const int dist = distX + distY + std::max(distX, distY);
+			if (dist < bestDist) {
+				bestDist = dist;
+				VectorCopy(ent->pos, bestPos);
+			}
+		}
+	}
+	VectorCopy(bestPos, ent->pos);
+	return bestDist < ROUTING_NOT_REACHABLE;
+}
+
+/**
  * @brief Searches the map for mission edicts and try to get there
  * @sa AI_PrepBestAction
  * @note The routing table is still valid, so we can still use
@@ -985,13 +1026,13 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction_t *aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
+	int actionScore;
 
 	/* reset any previous given action set */
 	aia->reset();
 
 	if (ent->team == TEAM_CIVILIAN) {
 		Edict *checkPoint = nullptr;
-		int length;
 		int i = 0;
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
@@ -1002,17 +1043,30 @@ static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const pos_t move = G_ActorMoveLength(ent, level.pathingMap, checkPoint->pos, true);
-					i++;
-					if (move == ROUTING_NOT_REACHABLE)
+					if (!AI_FindMissionLocation(ent, checkPoint->pos))
 						continue;
 
-					/* test for time and distance */
-					length = G_ActorUsableTUs(ent) - move;
-					bestActionScore = SCORE_MISSION_TARGET + length;
+					const int length = G_ActorUsableTUs(ent) - G_ActorMoveLength(ent, level.pathingMap, ent->pos, true);
+					i++;
 
-					ent->count = checkPoint->count;
-					VectorCopy(checkPoint->pos, aia->to);
+					/* test for time and distance */
+					actionScore = SCORE_MISSION_TARGET + length;
+
+					G_EdictCalcOrigin(ent);
+					/* Don't walk to enemy ambush */
+					Edict *check = nullptr;
+					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
+						const float dist = VectorDist(ent->origin, check->origin);
+						/* @todo add visibility check here? */
+						if (dist < RUN_AWAY_DIST)
+							actionScore -= SCORE_RUN_AWAY;
+					}
+					if (actionScore > bestActionScore) {
+						bestActionScore = actionScore;
+						ent->count = checkPoint->count;
+						VectorCopy(ent->pos, aia->to);
+						VectorCopy(ent->pos, aia->stop);
+					}
 				}
 			}
 		}
@@ -1024,14 +1078,34 @@ static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction
 		Edict *mission = nullptr;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
 			if (mission->type == ET_MISSION) {
-				VectorCopy(mission->pos, aia->to);
-				aia->target = mission;
+				if (!AI_FindMissionLocation(ent, mission->pos))
+					continue;
 				if (player.getTeam() == mission->team) {
-					bestActionScore = SCORE_MISSION_TARGET;
-					break;
+					actionScore = SCORE_MISSION_TARGET;
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
-					bestActionScore = SCORE_MISSION_OPPONENT_TARGET;
+					actionScore = SCORE_MISSION_OPPONENT_TARGET;
+				}
+
+				G_EdictCalcOrigin(ent);
+				/* Don't cluster everybody in the same place */
+				Edict *check = nullptr;
+				while ((check = G_EdictsGetNextLivingActor(check))) {
+					const float dist = VectorDist(ent->origin, check->origin);
+					if (dist < MISSION_HOLD_DIST) {
+						if (check->team == ent->team)
+							actionScore -= SCORE_MISSION_HOLD;
+						else
+							/* @todo add a visibility check here? */
+							actionScore += SCORE_MISSION_HOLD;
+					}
+				}
+
+				if (actionScore > bestActionScore) {
+					bestActionScore = actionScore;
+					VectorCopy(ent->pos, aia->to);
+					VectorCopy(ent->pos, aia->stop);
+					aia->target = mission;
 				}
 			}
 		}
@@ -1098,14 +1172,14 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 		}
 	}
 
-	VectorCopy(oldPos, ent->pos);
-	VectorCopy(oldOrigin, ent->origin);
-
 	bestActionScore = AI_CheckForMissionTargets(player, ent, &aia);
 	if (bestActionScore > best) {
 		bestAia = aia;
 		best = bestActionScore;
 	}
+
+	VectorCopy(oldPos, ent->pos);
+	VectorCopy(oldOrigin, ent->origin);
 
 	/* nothing found to do */
 	if (best == AI_ACTION_NOTHING_FOUND) {
@@ -1128,7 +1202,6 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 		if (length > G_ActorUsableTUs(ent) || length >= ROUTING_NOT_REACHABLE)
 			break;
 	}
-
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
 		bestAia.reset();
