@@ -291,6 +291,7 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_cameraappear.cpp" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_cameraappear.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.cpp" />
@@ -308,6 +309,7 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.cpp" />
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\aliencargo.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\aliencargo.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\aliencontainment.cpp" />
