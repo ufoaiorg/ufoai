@@ -305,8 +305,8 @@ void BuildLights (void)
 
 	/* surfaces */
 	for (i = 0; i < MAX_MAP_FACES; i++) {
-		const patch_t *p = face_patches[i];
-		while (p) {  /* iterate subdivided patches */
+		/* iterate subdivided patches */
+		for(const patch_t *p = face_patches[i]; p; p = p->next) {
 			if (VectorEmpty(p->light))
 				continue;
 
@@ -322,8 +322,6 @@ void BuildLights (void)
 
 			l->intensity = ColorNormalize(p->light, l->color);
 			l->intensity *= p->area * config.surface_scale;
-
-			p = p->next;
 		}
 	}
 
