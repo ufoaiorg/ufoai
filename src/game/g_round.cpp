@@ -213,6 +213,23 @@ void G_ClientEndRound (Player &player)
 	/* clear any remaining reaction fire */
 	G_ReactionFireOnEndTurn();
 
+	if (!G_IsAIPlayer(&player)) {
+		if (g_lastseen->integer > 0) {
+			Edict *ent = nullptr;
+			while ((ent = G_EdictsGetNextActor(ent))) {
+				if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
+					player.lastSeen = level.actualRound;
+					break;
+				}
+			}
+			if (level.actualRound - player.lastSeen > g_lastseen->integer) {
+				Com_Printf("round end triggered by g_lastseen (player %i (team %i) last seen in round %i of %i rounds)\n",
+						player.getNum(), level.activeTeam, player.lastSeen, level.actualRound);
+				G_MatchEndTrigger(-1, 0);
+			}
+		}
+	}
+
 	/* let all the invisible players perish now */
 	G_CheckVisTeamAll(level.activeTeam, VIS_APPEAR, nullptr);
 
@@ -263,21 +280,6 @@ void G_ClientEndRound (Player &player)
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->getTeam() == level.activeTeam) {
 			p->roundDone = false;
-			if (g_lastseen->integer > 0) {
-				Edict *ent = nullptr;
-				while ((ent = G_EdictsGetNextActor(ent))) {
-					if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
-						p->lastSeen = level.actualRound;
-						break;
-					}
-				}
-				if (level.actualRound - p->lastSeen > g_lastseen->integer) {
-					Com_Printf("round end triggered by g_lastseen (player %i (team %i) last seen in round %i of %i rounds)\n",
-							p->getNum(), level.activeTeam, p->lastSeen, level.actualRound);
-					G_MatchEndTrigger(-1, 0);
-					break;
-				}
-			}
 		}
 	}
 
