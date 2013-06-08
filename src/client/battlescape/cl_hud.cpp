@@ -1146,7 +1146,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	} else {
 		/* Check whether this item uses/has ammo. */
 		if (!selWeapon->ammoDef()) {
-			CL_ActorSetFireDef(actor, nullptr);
+			const fireDef_t *old = nullptr;
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			/* This is supposed to be a weapon or other usable item. */
 			if (def->numWeapons > 0) {
@@ -1154,11 +1154,11 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 					const fireDef_t *fdArray = selWeapon->getFiredefs();
 					if (fdArray != nullptr) {
 						/* Get firedef from the weapon (or other usable item) entry instead. */
-						const fireDef_t *old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
-						CL_ActorSetFireDef(actor, old);
+						old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 					}
 				}
 			}
+			CL_ActorSetFireDef(actor, old);
 		} else {
 			const fireDef_t *fdArray = selWeapon->getFiredefs();
 			if (fdArray != nullptr) {
