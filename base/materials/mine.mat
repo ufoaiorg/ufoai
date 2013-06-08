@@ -1,9 +1,13 @@
 /* grass001: grass dirtmap */
 {
-	material tex_nature/grass001
+	material tex_nature/grass_lush
+	specular 0.1
+	hardness 0.1
+	parallax 0.5
+	bump 1.0
 	{
 		texture tex_nature/grass
-		dirtmap 1.0
+		dirtmap 0.7
 		lightmap
 	}
 }
