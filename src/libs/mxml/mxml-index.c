@@ -116,11 +116,6 @@ mxmlIndexFind(mxml_index_t *ind,	/* I - Index to search */
               const char   *element,	/* I - Element name to find, if any */
 	      const char   *value)	/* I - Attribute value, if any */
 {
-  int		diff,			/* Difference between names */
-		current,		/* Current entity in search */
-		first,			/* First entity in search */
-		last;			/* Last entity in search */
-
 
 #ifdef DEBUG
   printf("mxmlIndexFind(ind=%p, element=\"%s\", value=\"%s\")\n",
@@ -169,9 +164,12 @@ mxmlIndexFind(mxml_index_t *ind,	/* I - Index to search */
 
   if (ind->cur_node == 0)
   {
-   /*
-    * Find the first node using a modified binary search algorithm...
-    */
+	int	first;			/* First entity in search */
+	int last;			/* Last entity in search */
+	int current;		/* Current entity in search */
+	/*
+     * Find the first node using a modified binary search algorithm...
+     */
 
     first = 0;
     last  = ind->num_nodes - 1;
@@ -180,8 +178,9 @@ mxmlIndexFind(mxml_index_t *ind,	/* I - Index to search */
     printf("    find first time, num_nodes=%d...\n", ind->num_nodes);
 #endif /* DEBUG */
 
-    while ((last - first) > 1)
-    {
+	while ((last - first) > 1)
+	{
+	  int diff;			/* Difference between names */
       current = (first + last) / 2;
 
 #ifdef DEBUG
