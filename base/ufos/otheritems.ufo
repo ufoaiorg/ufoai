@@ -124,7 +124,7 @@ item hovernet_plasma
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				"weapons/plasma-medium"
+			firesnd				"weapons/plasma-hoverheavy"
 			impsnd				"impact/plasma-impact"
 			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1300
@@ -170,7 +170,7 @@ item hovernet_adv_plasma
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				"weapons/plasma-medium"
+			firesnd				"weapons/plasma-hoverheavy"
 			impsnd				"impact/plasma-impact"
 			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1300
