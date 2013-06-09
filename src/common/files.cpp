@@ -649,9 +649,9 @@ const char *FS_NextPath (const char *prevpath)
 	return nullptr;
 }
 
-static bool FS_GetHomeDirectory(char *gdir, size_t length)
+static bool FS_GetHomeDirectory (char *gdir, size_t length)
 {
-	char *homedir = Sys_GetHomeDirectory();
+	const char *homedir = Sys_GetHomeDirectory();
 
 	if (homedir) {
 #ifdef _WIN32
