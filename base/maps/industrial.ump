@@ -285,6 +285,15 @@ tile +fr16_5x1
 0		0		0		0		0		0		0
 }
 
+tile +fr17_2x2 //A(5)
+{
+4 4
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		0
+}
+
 // Map Assemblies ---------------------------------------------------
 
 assembly small
@@ -307,6 +316,7 @@ size "6 6"
 +fr14_1x3	"0 4"	// A(1) C(1)
 +fr15_2x1	"0 5"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
++fr17_2x2	"0 1"	// A(5)
 *rm_ufo +craft_ufo_scout		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
@@ -331,6 +341,7 @@ size "8 8"
 +fr14_1x3	"0 2"	// A(1) C(1)
 +fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
++fr17_2x2	"0 1"	// A(5)
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
 }
@@ -355,6 +366,7 @@ size "10 8"
 +fr14_1x3	"0 2"	// A(1) C(1)
 +fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
++fr17_2x2	"0 1"	// A(5)
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
 }
@@ -379,5 +391,6 @@ size "7 7"
 +fr14_1x3	"0 2"	// A(1) C(1)
 +fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"1 1"	// A(2) C(1)
++fr17_2x2	"0 1"	// A(5)
 *rm_drop +craft_drop_firebird "1 1"
 }
