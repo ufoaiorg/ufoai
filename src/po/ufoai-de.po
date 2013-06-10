@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-05-07 15:28+0100\n"
+"PO-Revision-Date: 2013-06-09 21:26+0300\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -45,9 +45,8 @@ msgid "Small cemetery"
 msgstr "Kleiner Friedhof"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outscirt of a big city."
-msgstr "Ein Krankenhaus am Rand der Stadt."
+msgstr "Am Rand der Stadt."
 
 #: ../base/maps/city_disco.ump:65
 msgid "City_disco"
@@ -88,7 +87,7 @@ msgstr "Ein kleiner Bungalow im Wald"
 #: ../base/maps/frozen.ump:729 ../base/maps/frozen.ump:732
 #: ../base/maps/frozen.ump:802
 msgid "Frozen"
-msgstr ""
+msgstr "Gefroren"
 
 #: ../base/maps/frozen.ump:757
 msgid "Multiplayer Coop"
@@ -410,7 +409,7 @@ msgstr "Partikelstrahlwaffe"
 #: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5363
 #, fuzzy
 msgid "Alien Launcher"
-msgstr "Granatwerfer"
+msgstr "Alien Granatwerfer"
 
 #: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5410
 msgid "Antimatter Missile"
@@ -2770,20 +2769,20 @@ msgstr "Keine Sprache"
 #: ../base/ufos/maps.ufo:67 ../base/ufos/maps.ufo:120
 #: ../base/ufos/maps.ufo:175
 msgid "African Village"
-msgstr ""
+msgstr "Afrikanisches Dorf"
 
 #: ../base/ufos/maps.ufo:233
 msgid "Coastal Crash Site"
-msgstr ""
+msgstr "Absturzstelle an der Küste"
 
 #: ../base/ufos/maps.ufo:274
 #, fuzzy
 msgid "Bomber in the City"
-msgstr "Bomber_city"
+msgstr "Bomber in der Stadt"
 
 #: ../base/ufos/maps.ufo:423
 msgid "Urban Periphery"
-msgstr ""
+msgstr "Stadtrand"
 
 #: ../base/ufos/maps.ufo:465
 #, fuzzy
@@ -2797,7 +2796,7 @@ msgstr "Einige Gebäude in der Wüste."
 #: ../base/ufos/maps.ufo:552
 #, fuzzy
 msgid "Country Desert (Crashed Harvester)"
-msgstr "Abgestürzter Sammler"
+msgstr "Wüste (Abgestürzter Sammler)"
 
 #: ../base/ufos/maps.ufo:601 ../base/ufos/maps.ufo:643
 #: ../base/ufos/maps.ufo:682 ../base/ufos/maps.ufo:726
@@ -2817,29 +2816,30 @@ msgid "Snow"
 msgstr "Schnee"
 
 #: ../base/ufos/maps.ufo:1153
+#, fuzzy
 msgid "Snowy Logging Site"
-msgstr ""
+msgstr "Verschneite Holzverarbeitung"
 
 #: ../base/ufos/maps.ufo:1498 ../base/ufos/maps.ufo:1542
 #: ../base/ufos/maps.ufo:1584
 msgid "Suburban Housing"
-msgstr ""
+msgstr "Vorstadthäuser"
 
 #: ../base/ufos/maps.ufo:1631 ../base/ufos/maps.ufo:1670
 #: ../base/ufos/maps.ufo:1713
 msgid "Frozen Landscape"
-msgstr ""
+msgstr "Gefrorene Landschaft"
 
 #: ../base/ufos/maps.ufo:1934 ../base/ufos/maps.ufo:1982
 #: ../base/ufos/maps.ufo:3271
 msgid "East Asian Village"
-msgstr ""
+msgstr "Ostasiatisches Dorf"
 
 #: ../base/ufos/maps.ufo:2292 ../base/ufos/maps.ufo:2333
 #: ../base/ufos/maps.ufo:2374 ../base/ufos/maps.ufo:3426
 #: ../base/ufos/maps.ufo:4628
 msgid "Middle Eastern Suburb"
-msgstr ""
+msgstr "Vorstadt im mittleren Osten"
 
 #: ../base/ufos/maps.ufo:2429
 msgid "Crashed Scout"
@@ -2849,7 +2849,7 @@ msgstr "Abgestürzter Kundschafter"
 #: ../base/ufos/maps.ufo:2554
 #, fuzzy
 msgid "Tropical Jungle"
-msgstr "Tropisch, Drogen"
+msgstr "Tropischer Dschungel"
 
 #: ../base/ufos/maps.ufo:2601
 #, fuzzy
@@ -2873,7 +2873,6 @@ msgid "Cemetery"
 msgstr "Friedhof"
 
 #: ../base/ufos/maps.ufo:2872
-#, fuzzy
 msgid "City High-Rise"
 msgstr "Ein Hochhaus in der Innenstadt"
 
@@ -2883,7 +2882,6 @@ msgid "Urban Disco"
 msgstr "Stadt"
 
 #: ../base/ufos/maps.ufo:2963
-#, fuzzy
 msgid "Community Centre"
 msgstr "Gemeindezentrum"
 
@@ -2894,11 +2892,12 @@ msgstr "Baustelle"
 #: ../base/ufos/maps.ufo:3070
 #, fuzzy
 msgid "Tropical Jungle Estate"
-msgstr "Tropisch, Drogen"
+msgstr "Tropischer Dschungel Anwesen"
 
 #: ../base/ufos/maps.ufo:3130
+#, fuzzy
 msgid "Mountain Estate"
-msgstr ""
+msgstr "Berganwesen"
 
 #: ../base/ufos/maps.ufo:3172
 msgid "Gas Station"
@@ -2906,7 +2905,7 @@ msgstr "Tankstelle"
 
 #: ../base/ufos/maps.ufo:3221
 msgid "Luxury House"
-msgstr ""
+msgstr "Luxuriöses Haus"
 
 #: ../base/ufos/maps.ufo:3324
 msgid "Supermarket"
@@ -2918,17 +2917,18 @@ msgid "Military Convoy Ambush Site"
 msgstr "Militärkonvoy"
 
 #: ../base/ufos/maps.ufo:3478
+#, fuzzy
 msgid "Military Shelter"
-msgstr ""
+msgstr "Militärischer Schutzraum"
 
 #: ../base/ufos/maps.ufo:3533
 #, fuzzy
 msgid "Solar Power Plant"
-msgstr "Kraftwerk"
+msgstr "Solarkraftwerk"
 
 #: ../base/ufos/maps.ufo:3627
 msgid "Basketball Stadium"
-msgstr ""
+msgstr "Basketball Stadion"
 
 #: ../base/ufos/maps.ufo:3679 ../base/ufos/maps.ufo:4582
 msgid "Office Complex"
@@ -2941,26 +2941,26 @@ msgstr "Warenlager"
 #: ../base/ufos/maps.ufo:3782
 #, fuzzy
 msgid "Bungalow"
-msgstr "Bangalore"
+msgstr "Bungalow"
 
 #: ../base/ufos/maps.ufo:3826
 #, fuzzy
 msgid "House"
-msgstr "Houston"
+msgstr "Haus"
 
 #: ../base/ufos/maps.ufo:3872
 #, fuzzy
 msgid "Military Bunker"
-msgstr "Militärkonvoy"
+msgstr "Militärbunker"
 
 #: ../base/ufos/maps.ufo:3921
 msgid "Urban Warehouse"
-msgstr ""
+msgstr "Städische Lagerhalle"
 
 #: ../base/ufos/maps.ufo:3966
 #, fuzzy
 msgid "Rural Village"
-msgstr "Ein kleines Dorf."
+msgstr "Ein kleines ländliches Dorf."
 
 #: ../base/ufos/maps.ufo:4014
 #, fuzzy
@@ -2968,8 +2968,9 @@ msgid "Corrupter UFO Crash Site"
 msgstr "UFO Absturzstelle."
 
 #: ../base/ufos/maps.ufo:4060
+#, fuzzy
 msgid "Hydroelectric Dam"
-msgstr ""
+msgstr "Wasserkraftwerk"
 
 #: ../base/ufos/maps.ufo:4108
 #, fuzzy
@@ -2979,11 +2980,11 @@ msgstr "Ein kleines Dorf."
 #: ../base/ufos/maps.ufo:4157
 #, fuzzy
 msgid "Estate"
-msgstr "Rotatieren"
+msgstr "Anwesen"
 
 #: ../base/ufos/maps.ufo:4202
 msgid "Archaeological Dig"
-msgstr ""
+msgstr "Archäologische Ausgrabungsstätte"
 
 #: ../base/ufos/maps.ufo:4252
 msgid "Ferry"
@@ -3006,7 +3007,7 @@ msgstr "Geheimes Depot"
 #: ../base/ufos/maps.ufo:4439
 #, fuzzy
 msgid "Port"
-msgstr "Portland"
+msgstr "Hafen"
 
 #: ../base/ufos/maps.ufo:4485
 msgid "Old Mine"
@@ -3020,7 +3021,7 @@ msgstr "Nachbarschaft."
 #: ../base/ufos/maps.ufo:4675
 #, fuzzy
 msgid "Sewerage Construction Site"
-msgstr "Unterirdische Rohrleitungsanlage"
+msgstr "Abwasser Baustelle"
 
 #: ../base/ufos/maps.ufo:4722
 msgid "Luxurious Resort"
@@ -3028,16 +3029,17 @@ msgstr "Eine luxuriöse Urlaubsanlage"
 
 #: ../base/ufos/maps.ufo:4768
 msgid "Old Town Center"
-msgstr ""
+msgstr "Kern der Altstadt"
 
 #: ../base/ufos/maps.ufo:4820
 #, fuzzy
 msgid "Small House"
-msgstr "Klein"
+msgstr "Kleines Haus"
 
 #: ../base/ufos/maps.ufo:4853
+#, fuzzy
 msgid "Small Suburban Street"
-msgstr ""
+msgstr "Kleine Vorstadtstraße"
 
 #: ../base/ufos/maps.ufo:4886
 msgid "Subway Station"
@@ -3045,28 +3047,30 @@ msgstr "U-Bahn Station"
 
 #: ../base/ufos/maps.ufo:4979
 msgid "Wilderness"
-msgstr ""
+msgstr "Wildniss"
 
 #: ../base/ufos/maps.ufo:5028
+#, fuzzy
 msgid "City High-Rise (MP)"
-msgstr ""
+msgstr "Ein Hochhaus in der Innenstadt (MP)"
 
 #: ../base/ufos/maps.ufo:5056
+#, fuzzy
 msgid "Frozen Industrial Site (Coop)"
-msgstr ""
+msgstr "Gefrorener Industriekomplex (Coop)"
 
 #: ../base/ufos/maps.ufo:5074
+#, fuzzy
 msgid "Frozen Industrial Site (MP)"
-msgstr ""
+msgstr "Gefrorener Industriekomplex (MP)"
 
 #: ../base/ufos/maps.ufo:5100
-#, fuzzy
 msgid "Alien Base"
 msgstr "Außerirdische Basis"
 
 #: ../base/ufos/maps.ufo:5135
 msgid "PHALANX Craft Crash Site"
-msgstr ""
+msgstr "PHALANX Absturzstelle"
 
 #: ../base/ufos/maps.ufo:5164
 msgid "Training Zone: Alpha"
@@ -12531,10 +12535,13 @@ msgid ""
 "The aliens have barricaded themselves inside this fuel dump. Find a bomb "
 "nearby to destroy the gate and gain entry."
 msgstr ""
+"Die Aliens haben sich in diesem Treibstofflager verschanzt. Finde eine Bombe "
+"in der Nähe und zerstöre das Tor um hinein zu kommen."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:11
 msgid "Kill all the aliens or hold the point in the fuel depot for some time."
 msgstr ""
+"Töte alle Aliens oder halte einen Bereich im Treibstofflager einige Zeit."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:14
 msgid ""
@@ -12549,8 +12556,9 @@ msgid "Kill all the aliens to secure the base."
 msgstr "Töte alle Außerirdischen um die Basis zu sichern."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
+#, fuzzy
 msgid "The dropship has arrived at the crash site."
-msgstr ""
+msgstr "Das Landungsschiff ist an der Absturzstelle angekommen."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:23
 msgid ""
@@ -13835,57 +13843,89 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/msgid/skills.ufo:2
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with any weapon. Soldiers will increase "
 "their accuracy when they use weapons effectively in battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit jeder Waffe. Soldaten "
+"verbessern ihre Treffergenauigkeit wenn Sie Waffen erfolgreich im "
+"Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:5
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with assault weapons. Soldiers will increase "
 "their assault proficiency when they use assault weapons effectively in "
 "battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit Sturmgewehren. Soldaten "
+"verbessern ihre Treffergenauigkeit mit Sturmgewehren wenn Sie diese "
+"erfolgreich im Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:8
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with close-quarters weapons. Soldiers will "
 "increase their close proficiency when they use close-quarters weapons "
 "effectively in battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit Kurzstrecken-Waffen. "
+"Soldaten verbessern ihre Treffergenauigkeit wenn Sie Kurzstrecken-Waffen "
+"erfolgreich im Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:11
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with explosive weapons. Soldiers will "
 "increase their explosive proficiency when they use explosive weapons "
 "effectively in battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit  Explosiv-Waffen. Soldaten "
+"verbessern ihre Treffergenauigkeit wenn Sie Explosiv-Waffen erfolgreich im "
+"Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:14
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with heavy weapons. Soldiers will increase "
 "their heavy proficiency when they use heavy weapons effectively in battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit schweren Waffen. Soldaten "
+"verbessern ihre Treffergenauigkeit wenn Sie schwere Waffen erfolgreich im "
+"Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:17
+#, fuzzy
 msgid ""
 "Determines a soldier's mental endurance and performance. Soldiers will "
 "increase their mental strength when they engage in effective combat "
 "operations."
 msgstr ""
+"Bestimmt die mentale Ausdauer und Leistungsfähigkeit. Soldaten verbessern "
+"ihre mentalen Fähigkeiten wenn Sie sich geschickt auf dem Schlachtfeld "
+"verhalten."
 
 #: ../base/ufos/msgid/skills.ufo:20
+#, fuzzy
 msgid ""
 "Determines the weight a soldier can carry before becoming encumbered on the "
 "battlefield. Soldiers will increase their strength on the battlefield and "
 "will do so more quickly if they carry more weight in battle."
 msgstr ""
+"Bestimmt wie viel Gewicht ein Soldat auf dem Schlachtfeld tragen kann bevor "
+"er Überladen ist. Soldaten werden stärker während des Kampfes und je mehr "
+"Gewicht sie bei sich tragen desto schneller wird es gehen. "
 
 #: ../base/ufos/msgid/skills.ufo:23
+#, fuzzy
 msgid ""
 "Determines a soldier's accuracy with sniper weapons. Soldiers will increase "
 "their sniper proficiency when they use sniper weapons effectively in battle."
 msgstr ""
+"Bestimmt die Treffergenauigkeit des Soldaten mit Scharfschützenwaffen. "
+"Soldaten verbessern ihre Treffergenauigkeit wenn Sie Scharfschützenwaffen "
+"erfolgreich im Schlachtfeld einsetzten."
 
 #: ../base/ufos/msgid/skills.ufo:26
 msgid ""
@@ -22113,12 +22153,18 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1463
+#, fuzzy
 msgid ""
 "Commander, we've recovered a new alien weapon that appears to be a larger "
 "version of the Needler. Please let my men take a look as soon as possible.\n"
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Kommandant, wir konnten einen neue Alien-Waffe bergen. Es scheint eine "
+"größere Version des Nadlers zu sein. Bitte lassen sie meine Männer so früh "
+"wie möglich einen Blick darauf werfen.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1477
 #, fuzzy
@@ -24160,7 +24206,6 @@ msgid "missions"
 msgstr "Missionen"
 
 #: ../base/ufos/msgoptions.ufo:156
-#, fuzzy
 msgid "buildings"
 msgstr "Gebäude"
 
@@ -24242,7 +24287,6 @@ msgid "Basic Concepts (Ground Combat)"
 msgstr "Grundkonzepte (Bodeneinsatz)"
 
 #: ../base/ufos/research.ufo:111
-#, fuzzy
 msgid "Skills and Abilities"
 msgstr "Fähigkeiten"
 
@@ -24315,12 +24359,14 @@ msgid "Reaction Fire"
 msgstr "Reaktionsfeuer"
 
 #: ../base/ufos/research.ufo:185
+#, fuzzy
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Soldaten- und Lastengewicht"
 
 #: ../base/ufos/research.ufo:193
+#, fuzzy
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Gesundheit"
 
 #: ../base/ufos/research.ufo:201
 #, fuzzy
@@ -24412,8 +24458,9 @@ msgid "Alien Artifact - Plasma Rifle"
 msgstr "Außerirdisches Artefakt - Plasmagewehr"
 
 #: ../base/ufos/research.ufo:2104
+#, fuzzy
 msgid "Encased Plasma Rounds"
-msgstr ""
+msgstr "Umhüllte Plasma Patronen"
 
 #: ../base/ufos/research.ufo:2223 ../base/ufos/research.ufo:2315
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -24666,8 +24713,9 @@ msgid "Holger Gellrich (ShipIt)"
 msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
+#, fuzzy
 msgid "Other contributors"
-msgstr ""
+msgstr "Weitere Mitarbeiter:"
 
 #: ../base/ufos/seq_credits.ufo:191
 msgid "Bas Fournier (BTAxis)"
@@ -24734,8 +24782,9 @@ msgid "id Software for the Quake 2 engine"
 msgstr "id Software für die Quake 2 Engine"
 
 #: ../base/ufos/seq_credits.ufo:359
+#, fuzzy
 msgid "NineX for hosting us"
-msgstr ""
+msgstr "NineX für das Hosten von uns"
 
 #: ../base/ufos/seq_credits.ufo:369
 msgid "To the community and everyone who supported us"
@@ -25115,8 +25164,9 @@ msgid "Head"
 msgstr "Kopf"
 
 #: ../base/ufos/tips.ufo:4
+#, fuzzy
 msgid "Use the [Shift] key to aim higher or lower at your target."
-msgstr ""
+msgstr "Benutze die [Schift] Taste um höher oder tiefer zu zielen. "
 
 #: ../base/ufos/tips.ufo:5
 #, fuzzy
@@ -25124,9 +25174,9 @@ msgid ""
 "Use [F5] key to quick save the game. Use [F9] key to quick load the game. "
 "Also, the game saves your state to the quick save before each mission."
 msgstr ""
-"Drücken Sie [F1] um einen Schnellspicherstand anzulegen. Drücken Sie [F2] um "
-"den Schnellspeicherstand zu laden. Achtung: Das Spiel speichert automatisch "
-"vor jeder Schlachtfeldmission im Schnellspeicherstand."
+"Drücken Sie [F5] um einen Schnellspeicherstand anzulegen. Drücken Sie [F9] "
+"um den Schnellspeicherstand zu laden. Achtung: Das Spiel speichert "
+"automatisch vor jeder Schlachtfeldmission im Schnellspeicherstand."
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
@@ -25161,7 +25211,7 @@ msgstr ""
 msgid ""
 "Choose which fire mode to use in reaction fire by ticking the button on the "
 "fire mode panel. Quick fire modes will react faster."
-msgstr ""
+msgstr " "
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
@@ -25193,6 +25243,8 @@ msgid ""
 "Soldiers can pull an item from their belt or holster very quickly, so equip "
 "grenades and other emergency items there."
 msgstr ""
+"Soldaten können Gegenstände an ihrem Gürtel und Holster schnell benutzen. Du "
+"solltest Granaten und anderes Notfallequipment dort unterbringen."
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
@@ -25215,10 +25267,13 @@ msgstr ""
 "Zeiteinheiten."
 
 #: ../base/ufos/tips.ufo:17
+#, fuzzy
 msgid ""
 "When a soldier is standing next to a door, you can open it by clicking on "
 "the soldier. Move the cursor over the soldier and a hand icon will appear."
 msgstr ""
+"Wenn ein Soldat nahe einer Tür steht, kannst du sie öffnen indem du auf den "
+"Soldaten klickst, ein Hand-icon wird erscheinen."
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
@@ -25269,11 +25324,15 @@ msgstr ""
 "einem Bereich vor ihnen sehen."
 
 #: ../base/ufos/tips.ufo:24
+#, fuzzy
 msgid ""
 "To store and disassemble UFOs you will need a workshop in your base and a "
 "UFO Yard. You can build a UFO Yard by accessing the installations button on "
 "the global view."
 msgstr ""
+"Um UFOs zu zerlegen und aufbewahren, brauchst du eine Werkstatt und einen "
+"UFO Hangar in deiner Basis. Du kannst einen UFO Hangar bauen, indem du in "
+"der Global-Ansicht auf das Installationspanel klickst."
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
@@ -25305,10 +25364,13 @@ msgstr ""
 "Mission zu heilen."
 
 #: ../base/ufos/tips.ufo:28
+#, fuzzy
 msgid ""
 "Keep soldiers close so that they can support each other. A lone gunner is "
 "easily killed."
 msgstr ""
+"Lassen Sie ihre Soldaten zusammen so das sie sich gegenseitig helfen, Ein "
+"einsamer Krieger ist leichter getötet."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
@@ -25360,10 +25422,13 @@ msgid "Grenades don't bounce well on sand or dirt."
 msgstr "Granaten springen nicht gut auf sandigem oder matschigen Untergrund."
 
 #: ../base/ufos/tips.ufo:35
+#, fuzzy
 msgid ""
 "You can create your own maps or customize your campaigns. Learn more at "
 "ufoai.org."
 msgstr ""
+"Du kannst deine eigenen Karten erstellen und Kampagnen modifizieren. Lerne "
+"mehr dazu auf ufoai.org."
 
 #: ../base/ufos/tips.ufo:36
 msgid "You can use [space] to cycle between all geoscape items."
@@ -25377,10 +25442,13 @@ msgstr ""
 "Rüsten Sie Ihre Abfangjäger mit Waffen aus, bevor Sie sie starten lassen."
 
 #: ../base/ufos/tips.ufo:38
+#, fuzzy
 msgid ""
 "Some items will slow an aircraft down. Read the equipment specs closely when "
 "equipping your interceptors."
 msgstr ""
+"Einige Gegenstände verlangsamen ein Flugzeug. Beachte die Equipment "
+"Spezifikationen genau beim ausrüsten deines Flugzeugs"
 
 #: ../base/ufos/tips.ufo:39
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -25411,10 +25479,13 @@ msgstr ""
 "kosten würde."
 
 #: ../base/ufos/tips.ufo:42
+#, fuzzy
 msgid ""
 "Don't let too many civilians die during battles. If you don't keep the "
 "nations happy they could pull the plug on your program."
 msgstr ""
+"Lassen Sie nicht zu viele Zivilisten während des Kampfes sterben. Wenn Sie "
+"die Nationen nicht glücklich machen, könnten Sie den Stecker ziehen."
 
 #: ../base/ufos/tips.ufo:43
 #, fuzzy
@@ -25537,10 +25608,13 @@ msgstr ""
 "angegriffen wurde."
 
 #: ../base/ufos/tips.ufo:56
+#, fuzzy
 msgid ""
 "Find the control center and place one of your soldiers next to the console "
 "in order to take advantage of the security cameras."
 msgstr ""
+"Finden Sie das Kontrollzentrum und stellen Sie einen ihrer Soldaten nahe an "
+"die Konsolen um die Überwachungskameras zu benutzen. "
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -27831,8 +27905,9 @@ msgid "GLSL Shaders:"
 msgstr "GLSL shaders:"
 
 #: ../base/ufos/ui/options.ufo:836
+#, fuzzy
 msgid "Set the OpenGL shader quality - or disable them."
-msgstr ""
+msgstr "Bestimme OpenGL Schattenqualität - oder deaktiviere Sie."
 
 #: ../base/ufos/ui/options.ufo:846
 msgid "Disabled"
@@ -27940,7 +28015,7 @@ msgstr "Textur-Normalfilterung:"
 #: ../base/ufos/ui/options.ufo:1006
 #, fuzzy
 msgid "Enable normal-/bumpmapping."
-msgstr "Auch bekannt als Reliefzuordnung."
+msgstr "Aktiviere Reliefzuordnung."
 
 #: ../base/ufos/ui/options.ufo:1017
 msgid "Amount of light emitting from the sun and shining on the earth."
@@ -27991,14 +28066,19 @@ msgid "Enabled by default for compatibility reasons."
 msgstr "Aus Kompatibiltätsgründen standardmäßig aktiviert."
 
 #: ../base/ufos/ui/options.ufo:1122
+#, fuzzy
 msgid "Intel Graphics Hardware Hack:"
-msgstr ""
+msgstr "Intel Grafik Hardware Hack:"
 
 #: ../base/ufos/ui/options.ufo:1128
+#, fuzzy
 msgid ""
 "This hack activates texture compression and deactivates GLSL shaders on "
 "Intel chips. Disable it to be able to turn on advanced rendering features."
 msgstr ""
+"Dieser \"hack\" aktiviert Texturen Kompression und deaktiviert GLSL Schatten "
+"bei Intel Chips.Deaktiviere diesen hack um erweiterte Redering Optionen zu "
+"aktivieren."
 
 #: ../base/ufos/ui/options.ufo:1161
 msgid ""
@@ -28773,8 +28853,9 @@ msgid "Clear"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:490
+#, fuzzy
 msgid "Clear cargo"
-msgstr ""
+msgstr "Ladung löschen"
 
 #: ../base/ufos/ui/transfer.ufo:530
 msgid "Select base to transfer to"
@@ -28814,7 +28895,7 @@ msgstr "Medikit"
 
 #: ../base/ufos/weapons.ufo:28
 msgid "First Aid"
-msgstr ""
+msgstr "Erste Hilfe"
 
 #: ../base/ufos/weapons.ufo:44
 msgid "Stimulants"
@@ -29273,7 +29354,6 @@ msgid "Ball"
 msgstr "Kugel"
 
 #: ../base/ufos/weapons_plasma.ufo:369
-#, fuzzy
 msgid "Assault Rifle EP Magazine"
 msgstr "Sturmgewehrmunition"
 
@@ -29283,9 +29363,8 @@ msgid "Machine Gun EP Magazine"
 msgstr "Maschinengewehrmagazin"
 
 #: ../base/ufos/weapons_plasma.ufo:567
-#, fuzzy
 msgid "Sniper Rifle EP Magazine"
-msgstr "Scharfschützengewehrmagazin"
+msgstr "Schafschützengewehrmagazin"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 #, fuzzy
@@ -29365,7 +29444,7 @@ msgstr "Dieser unbekannte Gegenstand kann nicht nachgeladen werden."
 #: client/battlescape/cl_actor.cpp:1046 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:574
 msgid "This soldier can not carry anything else."
-msgstr ""
+msgstr "Dieser Soldat kann nicht noch mehr tragen."
 
 #: client/battlescape/cl_actor.cpp:1046 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:380
@@ -29644,10 +29723,13 @@ msgid "- Reduced %s\n"
 msgstr "- Verringert %s\n"
 
 #: client/battlescape/cl_hud.cpp:1378 client/cl_inventory_callbacks.cpp:372
+#, fuzzy
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
+"Dieser Soldat hat nicht genug ZE um die folgenden Gegenstände zu benutzen: \n"
+"\n"
 
 #: client/battlescape/cl_hud.cpp:1390 client/cl_inventory_callbacks.cpp:384
 msgid "Kg"
@@ -29763,9 +29845,9 @@ msgid "%s was stunned\n"
 msgstr "%s wurde betäubt\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:95
-#, fuzzy, c-format
+#, c-format
 msgid "%s has died\n"
-msgstr "%s wurde verletzt!"
+msgstr "%s ist gestorben!\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:97
 #, c-format
@@ -29814,7 +29896,7 @@ msgid "A member of team %i was stunned."
 msgstr "Ein Mitglied des Teams %i wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:132
-#, fuzzy, c-format
+#, c-format
 msgid "A member of team %i has died."
 msgstr "Ein Mitglied des Teams %i wurde getötet."
 
@@ -29846,7 +29928,7 @@ msgid "A member of team %i was revitalised."
 msgstr "Ein Mitglied des Teams %i ist wieder bei Sinnen."
 
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:58
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded"
 msgstr "%s wurde verletzt!"
 
@@ -30540,7 +30622,7 @@ msgstr "Zuerst muss ein %s gebaut werden."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "Keine Meldung"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
@@ -30549,7 +30631,7 @@ msgstr "Prozent"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Anzahl"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
@@ -31326,7 +31408,6 @@ msgid "base_attack"
 msgstr "Basenangriff"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:63
-#, fuzzy
 msgid "building_finished"
 msgstr "Konstruktion abgeschlossen"
 
@@ -31352,7 +31433,6 @@ msgid "Alien survivors"
 msgstr "überlebende Aliens"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:123
-#, fuzzy
 msgid "PHALANX soldiers killed in action"
 msgstr "Im Kampf vermisste PHALANX Soldaten"
 
@@ -31369,7 +31449,6 @@ msgid "PHALANX survivors"
 msgstr "PHALANX Überlebende"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:133
-#, fuzzy
 msgid "Civilians killed"
 msgstr "Zivilisten getötet:"
 
@@ -31394,12 +31473,12 @@ msgstr "Abgestürzt"
 #: client/cgame/campaign/cp_missions.cpp:466
 #, fuzzy, c-format
 msgid "Alien terror in %s"
-msgstr "Außerirdische Werkstoffe"
+msgstr "Außerirdischer Terror in %s"
 
 #: client/cgame/campaign/cp_missions.cpp:469
 #, fuzzy, c-format
 msgid "Base attacked: %s"
-msgstr "Basenangriff"
+msgstr "Basenangriff: %s"
 
 #: client/cgame/campaign/cp_missions.cpp:472
 #, fuzzy, c-format
@@ -31412,7 +31491,7 @@ msgid "Landed %s"
 msgstr "Gelandetes UFO"
 
 #: client/cgame/campaign/cp_missions.cpp:491
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity in %s"
 msgstr "Alienaktivitäten gemeldet -- %s"
 
@@ -32865,7 +32944,7 @@ msgstr ""
 "Keine Überlebenden auf beiden Seiten."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:225
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%i of %i enemies killed, %i stunned, %i survived.\n"
@@ -32876,7 +32955,7 @@ msgstr ""
 "%i von %i Gegnern getötet, %i betäubt, %i überlebt.\n"
 "%i von %i Soldaten überlebt, %i getötet durch Aliens, %i getötet durch "
 "PHALANX.\n"
-"%i von %i Zivilisten gerettet, %i getötet druch Aliens, %i getötet durch "
+"%i von %i Zivilisten gerettet, %i getötet durch Aliens, %i getötet durch "
 "PHALANX."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:232
@@ -33047,7 +33126,7 @@ msgstr "Diese Änderung benötigt möglicherweise einen Neustart des Spiels."
 
 #: client/cl_menu.cpp:77
 msgid "^BGlobal bindings"
-msgstr ""
+msgstr "^Globale Tastenbelegung"
 
 #: client/cl_menu.cpp:82
 msgid "^BMenu bindings"
@@ -33284,7 +33363,7 @@ msgstr "Aktion nicht ausführbar - Objekt nicht aktivierbar!"
 #: game/g_combat.cpp:1161
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
-msgstr "Aktion nicht ausführbar - Ziel außer Reichweite!"
+msgstr "Aktion nicht ausführbar - Ziel ist nicht verletzt!"
 
 #: game/g_combat.cpp:1184
 msgid "Can't perform action - target out of range!"
