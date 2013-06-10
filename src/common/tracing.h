@@ -64,6 +64,9 @@ typedef struct trace_s {
 	struct le_s *le;			/**< not set by CM_*() functions */
 	int entNum;					/**< not set by CM_*() functions */
 
+	inline trace_s () {
+		init();
+	}
 	inline void init() {
 		OBJZERO(*this);
 	}

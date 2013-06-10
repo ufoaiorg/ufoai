@@ -1088,7 +1088,6 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
 	cBspHead_t *h;
 	trace_t tr;
 
-	OBJZERO(tr);
 	/* ensure that the first trace is set in every case */
 	tr.fraction = 2.0f;
 
@@ -1127,9 +1126,8 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
  */
 trace_t TR_SingleTileBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject)
 {
-	trace_t tr;
 	/* Trace the whole line against the first tile. */
-	tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
+	trace_t tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
 	tr.mapTile = 0;
 	return tr;
 }
