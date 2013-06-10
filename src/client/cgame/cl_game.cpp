@@ -1310,13 +1310,9 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 
 	LIST_Foreach(team, character_t, chr) {
 		Inventory *inv = &chr->inv;
-		containerIndex_t container;
 
 		/* unlink all temp containers */
-		for (container = 0; container < CID_MAX; container++) {
-			if (INVDEF(container)->temp)
-				inv->resetContainer(container);
-		}
+		inv->resetTempContainers();
 
 		GAME_NetSendCharacter(buf, chr);
 		GAME_NetSendInventory(buf, inv);
