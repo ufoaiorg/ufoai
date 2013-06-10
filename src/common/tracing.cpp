@@ -995,7 +995,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 #endif
 
 	/* fill in a default trace */
-	OBJZERO(traceData.trace);
+	traceData.trace.init();
 	traceData.trace.fraction = std::min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
 	traceData.trace.surface = nullptr;
 

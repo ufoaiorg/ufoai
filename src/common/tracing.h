@@ -63,6 +63,10 @@ typedef struct trace_s {
 	int mapTile;				/**< the map tile we hit something */
 	struct le_s *le;			/**< not set by CM_*() functions */
 	int entNum;					/**< not set by CM_*() functions */
+
+	inline void init() {
+		OBJZERO(*this);
+	}
 } trace_t;
 
 typedef struct mapTiles_s {
