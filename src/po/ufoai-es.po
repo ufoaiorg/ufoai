@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-05-15 15:11-0600\n"
+"PO-Revision-Date: 2013-06-10 14:18-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -222,7 +222,7 @@ msgstr "Aldea"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
-msgstr "Transporte de Tropas clase Firebird"
+msgstr "Transporte clase Firebird"
 
 #: ../base/ufos/aircraftmanagement.ufo:103
 msgid "Firebird D"
@@ -230,15 +230,15 @@ msgstr "Firebird T"
 
 #: ../base/ufos/aircraftmanagement.ufo:143
 msgid "Herakles-class Heavy Lifter"
-msgstr "Transporte Pesado de Tropas clase Herakles"
+msgstr "Transporte Pesado clase Hércules"
 
 #: ../base/ufos/aircraftmanagement.ufo:144
 msgid "Herakles D"
-msgstr "Herakles T"
+msgstr "Hércules T"
 
 #: ../base/ufos/aircraftmanagement.ufo:185
 msgid "Raptor-class Combat Transport"
-msgstr "Transporte Armado de Tropas clase Raptor"
+msgstr "Transporte Armado clase Raptor"
 
 #: ../base/ufos/aircraftmanagement.ufo:186
 msgid "Raptor"
@@ -548,11 +548,11 @@ msgstr "Alojamiento"
 
 #: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:366
 msgid "Dropship Hangar"
-msgstr "Hangar (Transporte)"
+msgstr "Hangar de Transporte"
 
 #: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:348
 msgid "Interceptor Hangar"
-msgstr "Hangar de Interceptores"
+msgstr "Hangar de Intercepción"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3576
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
@@ -12714,11 +12714,11 @@ msgstr ""
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
 msgstr ""
-"Buena suerte comandante. Traiga a de vuelta a nuestros soldados con vida."
+"Buena suerte comandante. Traiga de vuelta a nuestros soldados con vida."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
 msgid "Kill all the aliens."
-msgstr "Matar a todos los alienígenas."
+msgstr "Eliminar a todos los alienígenas."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:8
 msgid ""
@@ -12732,7 +12732,7 @@ msgstr ""
 #: ../base/ufos/msgid/missionbriefing.ufo:11
 msgid "Kill all the aliens or hold the point in the fuel depot for some time."
 msgstr ""
-"Elimina a todos los alienígenas o asegura el punto en el deposito de "
+"Eliminar a todos los alienígenas o asegurar el punto en el deposito de "
 "combustible por un tiempo."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:14
@@ -12750,7 +12750,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:17
 msgid "Kill all the aliens to secure the base."
-msgstr "Elimina a todos los alienígenas para asegurar la base."
+msgstr "Eliminar a todos los alienígenas para asegurar la base."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
 msgid "The dropship has arrived at the crash site."
@@ -12762,10 +12762,10 @@ msgid ""
 "the soldiers on site to eliminate the threat. Security cameras placed around "
 "the base will help you track their locations."
 msgstr ""
-"Los Alienígenas han penetrado las defensas de tu base y se encuentran dentro "
-"del complejo. Reúne a los soldados disponibles para eliminar la amenaza. Las "
-"cámaras de seguridad localizadas alrededor de la base te serán de ayuda para "
-"localizarlos."
+"Los Alienígenas han penetrado las defensas de la base y se encuentran dentro "
+"del complejo. Será necesario reagrupar a los soldados disponibles para "
+"eliminar la amenaza. Las cámaras de seguridad localizadas alrededor de la "
+"base serán de gran ayuda para localizarlos."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -25747,8 +25747,8 @@ msgid ""
 "not hitting your own troops behind your target."
 msgstr ""
 "¡Cuidado con el fuego aliado! Lanzar una granada entre tus propias tropas "
-"puede hará el trabajo de los alienígenas por ellos. Lo mismo puede decirse "
-"de las balas. Asegúrate de que alcances a tus propias tropas detrás de tu "
+"hará el trabajo de los alienígenas por ellos. Lo mismo puede decirse de las "
+"balas. Asegúrate de que no alcances a tus propias tropas detrás de tu "
 "objetivo."
 
 #: ../base/ufos/tips.ufo:50
@@ -29689,7 +29689,7 @@ msgstr "Gatear"
 
 #: client/battlescape/cl_hud.cpp:104
 msgid "Autostand"
-msgstr "Levantarse para caminar"
+msgstr "Levantarse"
 
 #: client/battlescape/cl_hud.cpp:105
 msgid "Walk"
@@ -29894,12 +29894,12 @@ msgstr "Unidades de Tiempo"
 #: client/battlescape/cl_hud.cpp:1338
 #, c-format
 msgid "Damaged %s (deterioration: %i)\n"
-msgstr "Daños en %s (deterioro: %i)\n"
+msgstr "Daño: %s (deterioro: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1338
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
-msgstr "Heridas en %s (sangrado: %i)\n"
+msgstr "%s sangrando (%i)\n"
 
 #: client/battlescape/cl_hud.cpp:1341
 #, c-format
@@ -31645,7 +31645,7 @@ msgstr "Objetos recolectados (tipos/total)"
 #: client/cgame/campaign/cp_missions.cpp:483
 #, c-format
 msgid "Crashed %s"
-msgstr "%s caido"
+msgstr "%s caído"
 
 #: client/cgame/campaign/cp_missions.cpp:466
 #, c-format
