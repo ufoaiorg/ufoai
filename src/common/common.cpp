@@ -228,14 +228,12 @@ TARGETING FUNCTIONS
 float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0)
 {
 	vec3_t delta;
-	float d, h, g, v, alpha, vx, vy;
-	float k, gd2, len;
 
 	/* calculate target distance and height */
-	h = at[2] - from[2];
+	const float h = at[2] - from[2];
 	VectorSubtract(at, from, delta);
 	delta[2] = 0;
-	d = VectorLength(delta);
+	const float d = VectorLength(delta);
 
 	/* check that it's not degenerate */
 	if (d == 0) {
@@ -243,24 +241,24 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool l
 	}
 
 	/* precalculate some useful values */
-	g = GRAVITY;
-	gd2 = g * d * d;
-	len = sqrt(h * h + d * d);
+	const float g = GRAVITY;
+	const float gd2 = g * d * d;
+	const float len = sqrt(h * h + d * d);
 
+	float v, alpha;
 	/* are we rolling? */
 	if (rolled) {
 		const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
-		float theta;
 		alpha = rollAngle * torad;
-		theta = atan2(d, -h) - 2 * alpha;
-		k = gd2 / (len * cos(theta) - h);
+		const float theta = atan2(d, -h) - 2 * alpha;
+		const float k = gd2 / (len * cos(theta) - h);
 		if (k <= 0)	/* impossible shot at any velocity */
 			return 0;
 		v = sqrt(k);
 	} else {
 		/* firstly try with the maximum speed possible */
 		v = speed;
-		k = (v * v * h + gd2) / (v * v * len);
+		const float k = (v * v * h + gd2) / (v * v * len);
 
 		/* check whether the shot's possible */
 		if (launched && k >= -1 && k <= 1) {
@@ -274,8 +272,8 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool l
 	}
 
 	/* calculate velocities */
-	vx = v * cos(alpha);
-	vy = v * sin(alpha);
+	const float vx = v * cos(alpha);
+	const float vy = v * sin(alpha);
 	VectorNormalizeFast(delta);
 	VectorScale(delta, vx, v0);
 	v0[2] = vy;

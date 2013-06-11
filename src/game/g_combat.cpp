@@ -326,6 +326,7 @@ int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
 	}
 	return damage;
 }
+
 /**
  * @brief Deals damage of a give type and amount to a target.
  * @param[in,out] target What we want to damage.
