@@ -1274,6 +1274,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
+			G_ReactionFirePreShot(ent, tusNeeded);  /* if commented out,  this disables the 'draw' situation */
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return false;
