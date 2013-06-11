@@ -134,7 +134,7 @@ item hovernet_plasma
 			shots				1
 			ammo				1
 			delaybetweenshots	8
-			time				10
+			time				16
 			damage				"80 10"
 			dmgweight			"plasma_medium"
 			reaction			true
@@ -180,7 +180,7 @@ item hovernet_adv_plasma
 			shots				3
 			ammo				3
 			delaybetweenshots	8
-			time				10
+			time				16
 			damage				"80 10"
 			dmgweight			"plasma_medium"
 			reaction			true
