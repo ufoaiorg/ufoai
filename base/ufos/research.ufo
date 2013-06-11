@@ -5902,7 +5902,7 @@ tech rs_orbital_ufo_activity
 	}
 
 	provides	orbit
-	time		50000
+	time		20000
 	image		"techs/orbital_ufo_activity"
 	event		"cp_spawn_ufocarrier 105 40"
 }
