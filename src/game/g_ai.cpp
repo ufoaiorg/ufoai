@@ -213,7 +213,7 @@ bool AI_CheckUsingDoor (const Edict *ent, const Edict *door)
 			if (actorVis > ACTOR_VIS_0)
 				return false;
 		}
-		}
+	}
 		break;
 	case TEAM_CIVILIAN:
 		/* don't use any door if no alien is inside the viewing angle  - but
@@ -274,26 +274,24 @@ static bool AI_HideNeeded (const Edict *ent)
 			if (G_IsCivilian(from))
 				continue;
 
-			if (G_IsVisibleForTeam(from, ent->team)) {
-				const Item *item = from->getRightHandItem();
-				const fireDef_t *fd = nullptr;
-				if (item && item->def()) {
+			const Item *item = from->getRightHandItem();
+			const fireDef_t *fd = nullptr;
+			if (item && item->def()) {
+				fd = item->getFiredefs();
+			} else {
+				item = from->getLeftHandItem();
+				if (item && item->def())
 					fd = item->getFiredefs();
-				} else {
-					item = from->getLeftHandItem();
-					if (item && item->def())
-						fd = item->getFiredefs();
-				}
-				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
-				if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
-					const int damageRand = fd->damage[0] + (fd->damage[1] * crand());
-					const int damage = std::max(0, damageRand);
-					if (damage >= ent->HP / 3) {
-						const int hidingTeam = AI_GetHidingTeam(ent);
-						/* now check whether this enemy is visible for this alien */
-						if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
-							return true;
-					}
+			}
+			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
+			if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
+				const int damageRand = fd->damage[0] + (fd->damage[1] * crand());
+				const int damage = std::max(0, damageRand);
+				if (damage >= ent->HP / 3) {
+					const int hidingTeam = AI_GetHidingTeam(ent);
+					/* now check whether this enemy is visible for this alien */
+					if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
+						return true;
 				}
 			}
 		}
@@ -387,9 +385,9 @@ static bool AI_CheckPosition (const Edict *const ent)
  * @param[in] team The team from which actor tries to hide
  * @return @c true if hiding is possible, @c false otherwise
  */
-bool AI_FindHidingLocation (int team, Edict *ent, const pos3_t from, int *tuLeft)
+bool AI_FindHidingLocation (int team, Edict *ent, const pos3_t from, int tuLeft)
 {
-	const int distance = std::min(*tuLeft, HIDE_DIST * 2);
+	const int distance = std::min(tuLeft, HIDE_DIST * 2);
 
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
@@ -402,28 +400,34 @@ bool AI_FindHidingLocation (int team, Edict *ent, const pos3_t from, int *tuLeft
 	const byte maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 	const byte maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
+	int bestScore = AI_ACTION_NOTHING_FOUND;
+	pos3_t bestPos = {from[0], from[1], from[2]};
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* Don't have TUs  to walk there */
 			const pos_t delta = G_ActorMoveLength(ent, hidePathingTable, ent->pos, false);
-			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
+			if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
 			/* If enemies see this position, it doesn't qualify as hiding spot */
 			G_EdictCalcOrigin(ent);
-			if (G_IsVisibleForTeam(ent, team))
+			if (G_TestVis(team, ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 				continue;
 
 			/* Don't stand on dangerous terrain! */
 			if (!AI_CheckPosition(ent))
 				continue;
-
-			*tuLeft -= delta;
-			return true; /** @todo it could be a good idea to return the best spot found, not the the first found */
+			const int score = tuLeft - delta;
+			if (score > bestScore) {
+				bestScore = score;
+				VectorCopy(ent->pos, bestPos);
+			}
 		}
 	}
 
-	return false;
+	if (!VectorCompare(from, bestPos))
+		VectorCopy(bestPos, ent->pos);
+	return bestScore != AI_ACTION_NOTHING_FOUND;
 }
 
 /**
@@ -729,7 +733,7 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 		/* hide */
 		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)) {
 			/* is a hiding spot */
-			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN : 0);
+			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN + SCORE_REACTION_FEAR_FACTOR : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
@@ -740,10 +744,9 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 			 * and only then firing at him */
 			bestActionScore += std::max(SCORE_CLOSE_IN - move, 0);
 
-			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
+			if (!AI_FindHidingLocation(hidingTeam, ent, to, tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
-				/** @todo Try to crouch if no hiding spot was found - randomized */
 			} else {
 				/* found a hiding spot */
 				VectorCopy(ent->pos, aia->stop);
@@ -992,7 +995,7 @@ static bool AI_FindMissionLocation (Edict *ent, const pos3_t to)
 	const byte maxX = std::min(to[0] + HOLD_DIST, PATHFINDING_WIDTH - 1);
 	const byte maxY = std::min(to[1] + HOLD_DIST, PATHFINDING_WIDTH - 1);
 	int bestDist = ROUTING_NOT_REACHABLE;
-	pos3_t bestPos = {ent->pos[0], ent->pos[1], ent->pos[2]};
+	pos3_t bestPos = {to[0], to[1], to[2]};
 
 	ent->pos[2] = to[2];
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ++ent->pos[1]) {
@@ -1013,7 +1016,9 @@ static bool AI_FindMissionLocation (Edict *ent, const pos3_t to)
 			}
 		}
 	}
-	VectorCopy(bestPos, ent->pos);
+	if (!VectorCompare(to, bestPos))
+		VectorCopy(bestPos, ent->pos);
+
 	return bestDist < ROUTING_NOT_REACHABLE;
 }
 

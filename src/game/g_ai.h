@@ -43,7 +43,7 @@ bool AI_CheckUsingDoor(const Edict *ent, const Edict *door);
  * Shared functions (between C AI and LUA AI)
  */
 void AI_TurnIntoDirection(Edict *ent, const pos3_t pos);
-bool AI_FindHidingLocation(int team, Edict *ent, const pos3_t from, int *tuLeft);
+bool AI_FindHidingLocation(int team, Edict *ent, const pos3_t from, int tuLeft);
 bool AI_FindHerdLocation(Edict *ent, const pos3_t from, const vec3_t target, int tu);
 int AI_GetHidingTeam(const Edict *ent);
 const Item *AI_GetItemForShootType(shoot_types_t shootType, const Edict *ent);
