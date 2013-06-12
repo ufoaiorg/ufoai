@@ -89,8 +89,6 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
  */
 void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 {
-	const char *param = nullptr;
-
 	assert(mission->mapDef->map);
 
 	/* set the mapZone - this allows us to replace the ground texture
@@ -101,6 +99,11 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 
 	/* do a quicksave */
 	cgi->Cmd_ExecuteString("game_quicksave");
+
+	if (mission->crashed)
+		cgi->Cvar_Set("sv_hurtaliens", "1");
+	else
+		cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
@@ -120,16 +123,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		return;
 	}
 
-	if (battleParameters->param)
-		param = battleParameters->param;
-	else
-		param = mission->mapDef->param;
-
-	if (mission->crashed)
-		cgi->Cvar_Set("sv_hurtaliens", "1");
-	else
-		cgi->Cvar_Set("sv_hurtaliens", "0");
-
+	const char *param = battleParameters->param ? battleParameters->param : mission->mapDef->param;
 	cgi->Cbuf_AddText(va("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : ""));
 }
