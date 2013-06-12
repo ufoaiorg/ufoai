@@ -577,7 +577,9 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 					/* gun-to-target line free? */
 					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
 					const Edict *trEnt = G_EdictsGetByNum(trace.entNum);
-					if (!trEnt || !(trEnt == check || (G_IsBrushModel(trEnt) && G_IsBreakable(trEnt))))
+					const bool hitBreakable = G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
+					const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
+					if (!trEnt || (trEnt != check && !shotBreakable))
 						return;
 				}
 			}
