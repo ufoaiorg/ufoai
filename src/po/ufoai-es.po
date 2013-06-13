@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-06-12 19:19-0600\n"
+"PO-Revision-Date: 2013-06-22 11:01-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -6943,8 +6943,8 @@ msgstr ""
 "más ligeras. En estas situaciones, los Misiles TR-20 tienen su mejor "
 "desempeño, destrozando el objetivo sin misericordia. Sin embargo, su "
 "limitado rango de alcance y poca precisión me lleva a recomendar que el "
-"Lanza Misiles 'Sparrowhawk' sea preferido en cualquier punto de montaje "
-"capaz de soportar armas pesadas.\n"
+"Lanza Misiles 'Gavilán' sea preferido en cualquier punto de montaje capaz de "
+"soportar armas pesadas.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -7062,8 +7062,8 @@ msgstr ""
 "más ligeras. En estas situaciones, los Misiles TR-20 tienen su mejor "
 "desempeño, destrozando el objetivo sin misericordia. Sin embargo, su "
 "limitado rango de alcance y poca precisión me lleva a recomendar que el "
-"Lanza Misiles 'Sparrowhawk' sea preferido en cualquier punto de montaje "
-"capaz de soportar armas pesadas.\n"
+"Lanza Misiles 'Gavilán' sea preferido en cualquier punto de montaje capaz de "
+"soportar armas pesadas.\n"
 "\n"
 "\n"
 "Apéndices\n"
@@ -24828,7 +24828,7 @@ msgstr "Ares R (VTNT)"
 
 #: ../base/ufos/research.ufo:4852
 msgid "'Raven' ECM Unit"
-msgstr "Unidad CME 'Raven'"
+msgstr "Unidad CME 'Cuervo'"
 
 #: ../base/ufos/research.ufo:5173
 msgid "SHIVA Rotary Cannon"
@@ -24836,11 +24836,11 @@ msgstr "Cañón Giratorio SHIVA"
 
 #: ../base/ufos/research.ufo:5232
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr "Lanzamisiles AA 'Sparrowhawk'"
+msgstr "Lanzamisiles AA 'Gavilán'"
 
 #: ../base/ufos/research.ufo:5249
 msgid "'Sparrowhawk' Missile"
-msgstr "Misil 'Sparrowhawk'"
+msgstr "Misil 'Gavilán'"
 
 #: ../base/ufos/research.ufo:5624
 msgid "Political Situation Before The Invasion"
@@ -32618,7 +32618,7 @@ msgstr "Velocidad máxima"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "ECM"
-msgstr "CEM"
+msgstr "CME"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:150
 msgid "Aircraft damage"
