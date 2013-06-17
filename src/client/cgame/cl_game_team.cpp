@@ -746,7 +746,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 				if (Q_streq(chr->teamDef->bodyTemplate->id(bodyPart), bodyPartId))
 					break;
 		} else {
-			/* @todo Fallback compatibility code for older saves */
+			/** @todo Fallback compatibility code for older saves */
 			Com_Printf("GAME_LoadCharacter: Body part id not found while loading character wounds, must be an old save\n");
 			bodyPart = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDTYPE, NONE);
 		}

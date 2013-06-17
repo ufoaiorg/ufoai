@@ -119,7 +119,7 @@ public:
 
 #define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], Employee, var)
 
-Employee* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
+Employee* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType = nullptr);
 bool E_DeleteEmployee(Employee *employee);
 
 /* count */

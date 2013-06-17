@@ -548,7 +548,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const u
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
 		break;
 	case EMPL_ROBOT:
-		if (!ugvType)
+		if (ugvType == nullptr)
 			cgi->Com_Error(ERR_DROP, "E_CreateEmployee: no type given for generation of EMPL_ROBOT employee.");
 
 		rank = "ugv";
