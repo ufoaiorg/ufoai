@@ -973,6 +973,49 @@ static void testSaveLoad (void)
 	base->founded = false;
 }
 
+static void testSaveMassEmployees (void)
+{
+	ResetCampaignData();
+
+	campaign_t *campaign = GetCampaign();
+
+	SAV_Init();
+
+	ccs.curCampaign = campaign;
+
+	Cvar_Set("save_compressed", "0");
+
+	const vec2_t pos = {0, 0};
+	base_t *base = CreateBase("unittestmassemployees", pos);
+
+	nation_t *nation = NAT_GetNationByID("europe");
+	CU_ASSERT_PTR_NOT_NULL(nation);
+
+	const int employees = 10000;
+	for (int i = 0; i < employees; i++) {
+		Employee *e = E_CreateEmployee(EMPL_SOLDIER, nation);
+		if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) > 0)
+			CU_ASSERT_TRUE(E_HireEmployee(base, e));
+	}
+
+	Cmd_ExecuteString("game_quicksave");
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = false;
+}
+
+static void testLoadMassEmployees (void)
+{
+	ResetCampaignData();
+
+	Cmd_ExecuteString("game_quickload");
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+}
+
 static void testCampaignRun (void)
 {
 	int i;
@@ -1464,6 +1507,12 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testSaveLoad) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testSaveMassEmployees) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testLoadMassEmployees) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testCampaignRun) == NULL)
