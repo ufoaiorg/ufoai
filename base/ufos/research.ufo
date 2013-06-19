@@ -1070,7 +1070,7 @@ tech rs_weapon_shotgun
 // multiplayer only thus not needed at production menu
 //	require_AND
 //	{
-//		tech rs_skill_heavy
+//		tech rs_skill_close
 //	}
 
 	provides	shotgun
@@ -1129,7 +1129,6 @@ tech rs_weapon_bolterrifle
 	require_AND
 	{
 		tech rs_skill_sniper
-		tech rs_skill_assault
 		tech rs_alien_body_armour
 	}
 	provides	bolterrifle
@@ -1280,7 +1279,7 @@ tech rs_weapon_flamer
 
 	require_AND
 	{
-		tech rs_skill_heavy
+		tech rs_skill_close
 	}
 	provides	flamer
 	time	0
@@ -1652,8 +1651,7 @@ tech rs_weapon_heavylaser
 	require_AND
 	{
 		tech rs_laser
-	//	tech rs_skill_sniper
-		tech rs_skill_heavy
+		tech rs_skill_assault
 		tech rs_alien_body_armour
 	}
 	provides	heavylaser
@@ -1830,8 +1828,6 @@ tech rs_weapon_plasatomizer
 	require_AND
 	{
 		tech rs_skill_close
-	//	tech rs_skill_assault
-	//	tech rs_skill_heavy
 		item (plaspistol 1)
 	}
 
@@ -1900,8 +1896,7 @@ tech rs_weapon_plasblaster
 
 	require_AND
 	{
-		tech rs_skill_explosive
-		tech rs_skill_heavy
+		tech rs_skill_close
 		item (plasblaster 1)
 	}
 
@@ -2062,7 +2057,6 @@ tech rs_weapon_plasrifle
 	require_AND
 	{
 		tech rs_skill_assault
-		tech rs_skill_heavy
 		item (plasrifle 1)
 	}
 
@@ -2250,7 +2244,6 @@ tech rs_weapon_needlergun
 
 	require_AND
 	{
-		tech rs_skill_sniper
 		tech rs_skill_assault
 		item (needlergun 1)
 	}
@@ -2296,7 +2289,6 @@ tech rs_weapon_needlerheavy
 
 	require_AND
 	{
-		tech rs_skill_sniper
 		tech rs_skill_assault
 		item (needlerheavy 1)
 	}
@@ -2415,7 +2407,7 @@ tech rs_weapon_shotgun2
 
 	require_AND
 	{
-		tech rs_skill_heavy
+		tech rs_skill_close
 	}
 
 	provides	shotgun2
@@ -2455,7 +2447,7 @@ tech rs_weapon_shotgun_micro
 
 	require_AND
 	{
-		tech rs_skill_heavy
+		tech rs_skill_close
 	}
 
 	provides	shotgun_micro
@@ -2494,7 +2486,7 @@ tech rs_weapon_smg
 
 	require_AND
 	{
-		tech rs_skill_assault
+		tech rs_skill_close
 	}
 
 	provides	smg
@@ -2809,7 +2801,7 @@ tech rs_weapon_pbeamcannon
 	require_AND
 	{
 		tech rs_skill_explosive
-		tech rs_skill_heavy
+		tech rs_skill_assault
 		item (pbeamcannon 1)
 	}
 
