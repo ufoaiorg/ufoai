@@ -55,7 +55,7 @@ private:
 
 	/* Return the rectangle coordinates spanned by the mouse pointer and the starting point
 	 */
-	Rectangle getDeviceArea() const {
+	SelectionRectangle getDeviceArea() const {
 		// get the mouse position relative to the starting point
 		DeviceVector delta(_current - _start);
 
@@ -65,7 +65,7 @@ private:
 		}
 		// ...otherwise return the null area
 		else {
-			Rectangle default_area = { { 0, 0, }, { 0, 0, }, };
+			SelectionRectangle default_area = { { 0, 0, }, { 0, 0, }, };
 			return default_area;
 		}
 	}

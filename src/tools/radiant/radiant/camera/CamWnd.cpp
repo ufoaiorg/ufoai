@@ -105,7 +105,7 @@ static void selection_motion(gdouble x, gdouble y, guint state, void *data) {
 
 namespace {
 
-void camwnd_update_xor_rectangle(CamWnd& self, Rectangle area) {
+void camwnd_update_xor_rectangle(CamWnd& self, SelectionRectangle area) {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));
 	}
@@ -247,7 +247,7 @@ CamWnd::CamWnd() :
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
 
-	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<CamWnd, Rectangle, camwnd_update_xor_rectangle>(*this));
+	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<CamWnd, SelectionRectangle, camwnd_update_xor_rectangle>(*this));
 	m_window_observer->setView(m_view);
 
 	gtk_widget_ref(m_gl_widget);

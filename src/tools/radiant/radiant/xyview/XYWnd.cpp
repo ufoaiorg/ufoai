@@ -109,7 +109,7 @@ XYWnd::XYWnd () :
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
 
-	m_window_observer->setRectangleDrawCallback(MemberCaller1<XYWnd, Rectangle, &XYWnd::updateXORRectangle> (*this));
+	m_window_observer->setRectangleDrawCallback(MemberCaller1<XYWnd, SelectionRectangle, &XYWnd::updateXORRectangle> (*this));
 	m_window_observer->setView(m_view);
 
 	gtk_widget_ref(m_gl_widget);
@@ -1695,7 +1695,7 @@ void XYWnd::draw ()
 	glFinish();
 }
 
-void XYWnd::updateXORRectangle (Rectangle area)
+void XYWnd::updateXORRectangle (SelectionRectangle area)
 {
 	if (GTK_WIDGET_VISIBLE(getWidget())) {
 		m_XORRectangle.set(rectangle_from_area(area.min, area.max, getWidth(), getHeight()));

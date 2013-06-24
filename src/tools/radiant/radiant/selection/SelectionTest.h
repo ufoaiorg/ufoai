@@ -92,7 +92,7 @@ void Scene_TestSelect_Primitive(Selector& selector, SelectionTest& test, const V
 void Scene_TestSelect_Component(Selector& selector, SelectionTest& test, const VolumeTest& volume, SelectionSystem::EComponentMode componentMode);
 void Scene_TestSelect_Component_Selected(Selector& selector, SelectionTest& test, const VolumeTest& volume, SelectionSystem::EComponentMode componentMode);
 
-inline void ConstructSelectionTest(View& view, const Rectangle& selection_box) {
+inline void ConstructSelectionTest(View& view, const SelectionRectangle& selection_box) {
 	view.EnableScissor(selection_box.min[0], selection_box.max[0],
 						selection_box.min[1], selection_box.max[1]);
 }

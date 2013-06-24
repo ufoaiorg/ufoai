@@ -90,7 +90,7 @@ class XYWnd: public CameraObserver, public scene::Graph::Observer
 
 		void mouseToPoint(int x, int y, Vector3& point);
 
-		void updateXORRectangle (Rectangle area);
+		void updateXORRectangle (SelectionRectangle area);
 
 		void beginMove ();
 		void endMove ();
