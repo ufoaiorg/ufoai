@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_FIGHTEQUIP_H
-#define SAVE_FIGHTEQUIP_H
+#pragma once
 
 #define SAVE_SLOT_ITEMID "itemid"
 #define SAVE_SLOT_NEXTITEMID "nextItemid"
@@ -33,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_SLOT_AMMOLEFT "ammoLeft"
 #define SAVE_SLOT_DELAYNEXTSHOT "delayNextShot"
 
-#endif
 
 /**
 DTD:
