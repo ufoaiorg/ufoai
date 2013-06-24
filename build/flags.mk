@@ -16,7 +16,7 @@ endef
 
 
 CFLAGS += -DHAVE_CONFIG_H
-CFLAGS += -ggdb
+CFLAGS += -g
 #CFLAGS += -pipe
 CFLAGS += -Winline
 CFLAGS += -Wcast-qual
