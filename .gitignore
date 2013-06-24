@@ -5,7 +5,7 @@
 /*.dmg
 /.cproject
 /.project
-/config.h
+/*-config.h
 /config.mk
 /debug-*/
 /Makefile.local

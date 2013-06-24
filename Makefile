@@ -1,6 +1,10 @@
 CONFIG ?= Makefile.local
 -include $(CONFIG)
 
+ifneq ($(ADDITIONAL_PATH),)
+PATH        := $(ADDITIONAL_PATH):$(PATH)
+endif
+
 HOST_OS     ?= $(shell uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]')
 TARGET_OS   ?= $(HOST_OS)
 TARGET_ARCH ?= $(shell uname -m | sed -e s/i.86/i386/)
@@ -61,10 +65,11 @@ $(foreach TARGET,$(TARGETS_TMP),$(eval $(call INCLUDE_RULE,$(TARGET))))
 
 .PHONY: clean
 clean: $(addprefix clean-,$(TARGETS)) clean-docs
+	$(Q)rm -rf $(BUILDDIR)
 
 .PHONY: distclean
 distclean: clean
-	$(Q)rm -f config.h Makefile.local
+	$(Q)rm -f $(TARGET_OS)-config.h Makefile.local
 	$(Q)rm -rf $(BUILDDIR)
 
 .PHONY: install
@@ -73,8 +78,10 @@ install: install-pre $(addprefix install-,$(TARGETS))
 .PHONY: strip
 strip: $(addprefix strip-,$(TARGETS))
 
-config.h: configure
+$(TARGET_OS)-config.h: configure
+	@echo "restarting configure for $(TARGET_OS)"
 	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
+	$(Q)$(MAKE)
 
 define BUILD_RULE
 ifndef $(1)_DISABLE
@@ -85,7 +92,7 @@ ifndef $(1)_IGNORE
 # if the target filename differs:
 ifneq ($(1),$($(1)_FILE))
 .PHONY: $(1)
-$(1): $($(1)_FILE)
+$(1): $(TARGET_OS)-config.h $($(1)_FILE)
 endif
 
 $($(1)_FILE): $(BUILDDIR)/$(1)/.dirs build/modules/$(1).mk $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
@@ -97,15 +104,27 @@ $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
 	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
+$(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m $(BUILDDIR)/$(1)/.dirs
+	@echo '===> CC [$(1)] $$<'
+	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+
+$(BUILDDIR)/$(1)/%.mm.o: $(SRCDIR)/%.mm $(BUILDDIR)/$(1)/.dirs
+	@echo '===> CC [$(1)] $$<'
+	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+
 $(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> WINDRES [$(1)] $$<'
 	$(Q)$(CROSS)$(WINDRES) -v $(subst \,\\\,$(subst -DUFO_REVISION,-D UFO_REVISION,$(filter -DUFO_REVISION=%,$(CXXFLAGS)))) $(subst -DDEBUG, -D DEBUG,$(filter -DDEBUG,$(CXXFLAGS))) -D FULL_PATH_RC_FILE -i $$< -o $$@
+
+$(BUILDDIR)/$(1)/%.cc.o: $(SRCDIR)/%.cc $(BUILDDIR)/$(1)/.dirs
+	@echo '===> CXX [$(1)] $$<'
+	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
 	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
-$(BUILDDIR)/$(1)/.dirs: config.h
+$(BUILDDIR)/$(1)/.dirs: $(TARGET_OS)-config.h
 	$(Q)mkdir -p $(foreach i,$($(1)_OBJS),$(dir $(i)))
 	$(Q)touch $$@
 
@@ -137,7 +156,7 @@ $(foreach TARGET,$(TARGETS),$(eval $(call BUILD_RULE,$(TARGET))))
 
 .PHONY: run-configure
 run-configure:
-	$(Q)./configure $(CONFIGURE_OPTIONS)
+	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
 
 include build/data.mk
 include build/install.mk

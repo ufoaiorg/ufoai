@@ -1,8 +1,13 @@
 #! /bin/sh
 
+ARGS=$*
+
+PROGRAM=ufo
+
 #set -e
 #set -x
 
+echo "" > config.log
 CONFIG_H=config.h
 MAKEFILE_LOCAL=Makefile.local
 
@@ -25,6 +30,8 @@ STATIC=
 W2K=
 SSE=
 DISABLE_DEPENDENCY_TRACKING=
+DEFAULT_COMPILER_CC=cc
+DEFAULT_COMPILER_CXX=c++
 
 HOST_OS=`uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]'`
 TARGET_OS=${HOST_OS}
@@ -206,29 +213,9 @@ check_headers() {
 }
 
 check_compiler() {
-	# TODO improve compiler check
-	if [ ! "${CC}" = "" ]; then
-		${CC} --help > /dev/null 2>&1
-		if [ $? -ne 0 ]; then
-			error "Could not find specified compiler: ${CC}"
-		fi
-	fi
-	if [ "${CC}" = "" ]; then
-		for i in cc gcc; do
-			if [ "${CC}" = "" ]; then
-				$i --help > /dev/null 2>&1
-				if [ $? -eq 0 ]; then
-					CC=$i
-				fi
-			fi
-		done
-	fi
-	if [ "${CC}" = "" ]; then
-		error "Could not find a compiler in your path"
-	fi
-
-	# TODO implement compiler check
-	CXX=${CXX:-c++}
+	# TODO Implement compiler check
+	CC=${CC:-${DEFAULT_COMPILER_CC}}
+	CXX=${CXX:-${DEFAULT_COMPILER_CXX}}
 
 	if [ "${TARGET_OS}" = "android" ]; then
 		CROSS="arm-linux-androideabi-"
@@ -247,8 +234,30 @@ check_compiler() {
 	fi
 
 	if [ -n "${CROSS}" ]; then
-		# TODO Add a check for this
-		echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
+		command -v "${CROSS}${CC}" 2>> config.log >> config.log
+		if [ $? -eq 0 ]; then
+			echo "Found ${CROSS}${CC} in the path"
+		else
+			echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
+		fi
+		command -v "${CROSS}pkg-config" 2>> config.log >> config.log
+		if [ $? -eq 0 ]; then
+			echo "Found ${CROSS}pkg-config in the path"
+		else
+			echo "Cross compiling, make sure that ${CROSS}pkg-config is in your path"
+		fi
+	fi
+
+	echo "use c compiler: ${CROSS}${CC}"
+	echo "use c++ compiler: ${CROSS}${CXX}"
+
+	${CROSS}${CC} --help > /dev/null 2>&1
+	if [ $? -ne 0 ]; then
+		error "Could not find the c compiler: ${CROSS}${CC}"
+	fi
+	${CROSS}${CXX} --help > /dev/null 2>&1
+	if [ $? -ne 0 ]; then
+		error "Could not find the c++ compiler: ${CROSS}${CXX}"
 	fi
 }
 
@@ -293,11 +302,11 @@ make_var() {
 }
 
 set_var() {
-	eval $(make_var "$1")=\""$2"\"
+	eval `make_var "$1"`=\""$2"\"
 }
 
 get_var() {
-	eval echo \${$(make_var "$1")}
+	eval echo \${`make_var "$1"`}
 }
 
 get_modules() {
@@ -329,7 +338,7 @@ check_path_characters() {
 
 check_ccache() {
 	if [ "$USE_CCACHE" = "yes" ]; then
-		ccache --help > /dev/null 2>&1
+		ccache --help 2>> config.log >> config.log
 		if [ $? -eq 0 ]; then
 			echo "Use ccache"
 			CC="ccache $CC"
@@ -345,7 +354,7 @@ check_program() {
 	TOOL=${2:-${BINARY}}
 	MANDATORY=${3:-0}
 	HAVE=PROGRAM_`echo ${BINARY%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]'`
-	command -v ${BINARY} > /dev/null 2>&1
+	command -v "${BINARY}" 2>> config.log >> config.log
 	if [ $? -eq 0 ]; then
 		set_var $HAVE "$1"
 	fi
@@ -378,6 +387,21 @@ check_module() {
 	done
 
 	[ $FOUND -eq 0 ] && error "invalid module given: $1"
+}
+
+get_ini_value() {
+	awk -v str="$2" -F '[ \t]*=[ \t]*' '{if (! ($0 ~ /^;/) && $0 ~ str) print $2}' "$1" 2>> config.log
+}
+
+set_path_env() {
+	case ${TARGET_OS} in
+	mingw*)
+		MXE_FILE=~/.mxe.settings
+		set_var "ADDITIONAL_PATH" `get_ini_value "${MXE_FILE}" "PATH"`
+		add_to_makefile_local ADDITIONAL_PATH "Found mxe additional path settings" "Could not get the mxe path from ${MXE_FILE}"
+		PATH="${ADDITIONAL_PATH}:$PATH"
+		;;
+	esac
 }
 
 enable_only() {
@@ -527,11 +551,11 @@ while [ $# -gt 0 ]; do
 	shift
 done
 
+set_path_env
+
 case ${TARGET_OS} in
-mingw32)
+mingw32|mingw64)
 	TARGET_ARCH=i386
-	;;
-mingw64)
 	TARGET_ARCH=i386
 	;;
 mingw64_64)
@@ -543,26 +567,25 @@ android)
 	;;
 html5)
 	if [ -z "$EMSCRIPTEN_ROOT" ]; then
-		EMSCRIPTEN_ROOT=$(python -c "import os, sys, re, json, shutil; exec(open(os.path.expanduser('~/.emscripten'), 'r').read()); print EMSCRIPTEN_ROOT")
+		EMSCRIPTEN_ROOT=`python -c "import os, sys, re, json, shutil; exec(open(os.path.expanduser('~/.emscripten'), 'r').read()); print EMSCRIPTEN_ROOT"`
 		CONFIGURE_PREFIX=${EMSCRIPTEN_ROOT}/emconfigure
+		echo "restart configure ($ARGS)"
 		EMSCRIPTEN_ROOT="${EMSCRIPTEN_ROOT}" CONFIGURE_PREFIX="${EMSCRIPTEN_ROOT}/emconfigure" $CONFIGURE_PREFIX ./configure $ARGS
 		exit
 	else
+		enable_only ${PROGRAM}
 		add_to_makefile_local EMSCRIPTEN_ROOT "Emscripten found at ${EMSCRIPTEN_ROOT}"
 		add_to_makefile_local CONFIGURE_PREFIX "Use ${EMSCRIPTEN_ROOT}/emconfigure"
 	fi
-	enable_only ufo
 	;;
 darwin)
 	USE_SIGNALS=
 	;;
 esac
 
-PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
-PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
-PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
-
-rm -f config.log
+PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/${PROGRAM}/}
+PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin/}
+PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib/}
 
 check_compiler
 check_ccache
@@ -570,6 +593,10 @@ makefile_local
 config_h
 check_programs
 check_headers
+
+if [ "${TARGET_OS}" != "html5" ] && [ "${HAVE_SDL_SDL_H}" = "0" ] && [ "${HAVE_SDL_TTF_SDL_TTF_H}" = "0"  && [ "${HAVE_SDL_MIXER_SDL_MIXER_H}" = "0" ]; then
+	add_line_to_makefile_local "\$(error A required library is missing)"
+fi
 
 cat > ${MAKEFILE_LOCAL} << EOF
 # -------- Automatically generated -----------
@@ -579,11 +606,18 @@ $makefile_local_data
 -include config.mk
 EOF
 
-cat > ${CONFIG_H} << EOF
+cat > ${TARGET_OS}-${CONFIG_H}.tmp << EOF
 /* This file is automatically generated */
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 $config_h_data
-
-#endif
 EOF
+
+if diff ${TARGET_OS}-${CONFIG_H}.tmp ${TARGET_OS}-${CONFIG_H} 2>/dev/null >/dev/null; then
+	if [ configure -nt ${TARGET_OS}-${CONFIG_H} ]; then
+		mv ${TARGET_OS}-${CONFIG_H}.tmp ${TARGET_OS}-${CONFIG_H}
+	else
+		rm -f ${TARGET_OS}-${CONFIG_H}.tmp
+	fi
+else
+	mv ${TARGET_OS}-${CONFIG_H}.tmp ${TARGET_OS}-${CONFIG_H}
+fi
