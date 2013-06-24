@@ -280,7 +280,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 	LIST_Delete(&popupListData);
 
 	/* Add list-entry for deactivation of the reservation. */
-	LIST_AddPointer(&popupListText, _("[0 TU] No reservation"));
+	LIST_AddPointer(&popupListText, (void*)(_("[0 TU] No reservation")));
 	reserveShotData.hand = ACTOR_HAND_NOT_SET;
 	reserveShotData.fireModeIndex = -1;
 	reserveShotData.weaponIndex = NONE;
