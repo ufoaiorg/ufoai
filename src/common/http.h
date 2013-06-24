@@ -24,7 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#ifdef EMSCRIPTEN
+#define NO_HTTP
+#endif
+
 #include "common.h"
+#ifndef NO_HTTP
 #ifndef CURL_STATICLIB
 #define CURL_STATICLIB
 #endif
@@ -53,6 +58,7 @@ typedef struct dlhandle_s {
 	char		URL[576];
 	char		*tempBuffer;
 } dlhandle_t;
+#endif
 
 typedef struct upparam_s {
 	const char *name;

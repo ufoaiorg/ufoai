@@ -84,11 +84,13 @@ typedef struct client_static_s {
 	int downloadPercent;
 
 	bool downloadMaps;
+#ifndef NO_HTTP
 	dlqueue_t* downloadQueue;	/**< queue of paths we need */
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
+	CURL *curl;
+#endif
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
-	CURL *curl;
 
 	/** these models must only be loaded once */
 	model_t *modelPool[MAX_OBJDEFS];

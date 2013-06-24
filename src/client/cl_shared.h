@@ -27,19 +27,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
+#ifdef EMSCRIPTEN
+#define bindtextdomain(IGNORE1, IGNORE2)
+#define bind_textdomain_codeset(IGNORE1, IGNORE2)
+#define textdomain(IGNORE1)
+#define gettext(String) gettext_noop(String)
+#else
+/* i18n support via gettext */
+#include <libintl.h>
+#endif
+#include <locale.h>
+
 /* the used textdomain for gettext */
 #define TEXT_DOMAIN "ufoai"
 #define _(String) gettext(String)
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
-
-#ifndef EMSCRIPTEN
-/* i18n support via gettext */
-#include <libintl.h>
-#else
-#define gettext(String) gettext_noop(String)
-#endif
-#include <locale.h>
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 

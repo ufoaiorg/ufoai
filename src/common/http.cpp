@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "http.h"
+#ifndef NO_HTTP
 #include "../shared/shared.h"
 #include <SDL_thread.h>
 
@@ -253,3 +254,11 @@ void HTTP_Cleanup (void)
 {
 	curl_global_cleanup();
 }
+#else
+void HTTP_GetURL(const char *url, http_callback_t callback) {}
+void HTTP_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params) {}
+size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
+size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
+void HTTP_Cleanup(void) {}
+bool HTTP_ExtractComponents(const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port) {return false;}
+#endif

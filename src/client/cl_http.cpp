@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_http.h"
 #include "battlescape/cl_parse.h"
 
+#ifndef NO_HTTP
+
 static cvar_t *cl_http_downloads;
 static cvar_t *cl_http_filelists;
 static cvar_t *cl_http_max_connections;
@@ -808,3 +810,15 @@ void HTTP_InitStartup (void)
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1");
 }
+#else
+void CL_CancelHTTPDownloads(bool permKill) {}
+bool CL_QueueHTTPDownload(const char *ufoPath) {return false;}
+void CL_RunHTTPDownloads(void) {}
+bool CL_PendingHTTPDownloads(void) {return false;}
+void CL_SetHTTPServer(const char *URL) {}
+void CL_HTTP_Cleanup(void) {}
+void CL_RequestNextDownload(void) {}
+bool CL_CheckOrDownloadFile(const char *filename) {return false;}
+
+void HTTP_InitStartup(void){}
+#endif
