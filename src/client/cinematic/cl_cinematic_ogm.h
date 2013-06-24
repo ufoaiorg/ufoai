@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/ufotypes.h"	/* just for bool */
 
+#ifdef EMSCRIPTEN
+#define NO_OGG
+#endif
+
 struct cinematic_s;
 
 int CIN_OGM_OpenCinematic(struct cinematic_s *cin, const char* filename);

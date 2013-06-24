@@ -8,6 +8,7 @@
  */
 
 #include "cl_cinematic_ogm.h"
+#ifndef NO_OGG
 #include "cl_cinematic.h"
 #include "../client.h"
 #include "../renderer/r_draw.h"
@@ -802,3 +803,9 @@ void CIN_OGM_Init (void)
 		ogmCin_yuvTable.yy[i] = (long)((i << 6) | (i >> 2));
 	}
 }
+#else
+int CIN_OGM_OpenCinematic(struct cinematic_s *cin, const char* filename) {return 0;}
+void CIN_OGM_CloseCinematic(struct cinematic_s *cin) {}
+bool CIN_OGM_RunCinematic(struct cinematic_s *cin) {return false;}
+void CIN_OGM_Init(void) {}
+#endif
