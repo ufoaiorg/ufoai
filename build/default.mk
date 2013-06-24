@@ -1,10 +1,14 @@
-CURL_CONFIG              ?= curl-config
-CURL_LIBS                ?= $(shell $(CURL_CONFIG) $(CONFIG_LIBS_FLAGS))
-CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
-SDL_CONFIG               ?= sdl-config
-SDL_LIBS                 ?= $(shell $(SDL_CONFIG) $(CONFIG_LIBS_FLAGS))
-SDL_CFLAGS               ?= $(shell $(SDL_CONFIG) --cflags)
-PKG_CONFIG               ?= pkg-config
+PKG_CONFIG               ?= PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(CROSS)pkg-config
+CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
+CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
+#CURL_CONFIG              ?= curl-config
+#CURL_LIBS                ?= $(shell $(CURL_CONFIG) $(CONFIG_LIBS_FLAGS))
+#CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
+SDL_LIBS                 ?= $(call PKG_LIBS,sdl)
+SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl)
+#SDL_CONFIG               ?= sdl-config
+#SDL_LIBS                 ?= $(shell $(SDL_CONFIG) $(CONFIG_LIBS_FLAGS))
+#SDL_CFLAGS               ?= $(shell $(SDL_CONFIG) --cflags)
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL_ttf)
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
