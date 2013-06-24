@@ -566,6 +566,8 @@ android)
 	enable_only ufo
 	;;
 html5)
+	HARD_LINKED_GAME=1
+	HARD_LINKED_CGAME=1
 	if [ -z "$EMSCRIPTEN_ROOT" ]; then
 		EMSCRIPTEN_ROOT=`python -c "import os, sys, re, json, shutil; exec(open(os.path.expanduser('~/.emscripten'), 'r').read()); print EMSCRIPTEN_ROOT"`
 		CONFIGURE_PREFIX=${EMSCRIPTEN_ROOT}/emconfigure

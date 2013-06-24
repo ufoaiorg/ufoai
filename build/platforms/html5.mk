@@ -10,9 +10,11 @@ LDFLAGS                  += --jcache
 EMSCRIPTEN               := 1
 EXE_EXT                  ?= .html
 
-ufo_LDFLAGS      += -s DEAD_FUNCTIONS="['_glPushClientAttrib','_glPopClientAttrib','_glPointSize']"
+#ufo_LDFLAGS      += -s DEAD_FUNCTIONS="['_glPushClientAttrib','_glPopClientAttrib','_glPointSize']"
 ufo_LDFLAGS      += --shell-file contrib/installer/html5/shell.html
-ufo_LDFLAGS      += --memory-init-file 1 -s VERBOSE=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s TOTAL_MEMORY=400000000
+ufo_LDFLAGS      += --memory-init-file 1 -s VERBOSE=1 -s WARN_ON_UNDEFINED_SYMBOLS=1
+ufo_LDFLAGS      += -s TOTAL_MEMORY=33554432
+ufo_LDFLAGS      += -O2 -s ASM_JS=1 --minify 1
 ifeq ($(EXE_EXT),.js)
 ufo_LDFLAGS      += $(foreach file,$(shell find base -type f), --embed-file $(file))
 LDFLAGS          += -g

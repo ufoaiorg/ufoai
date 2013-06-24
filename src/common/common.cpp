@@ -1151,8 +1151,10 @@ void Qcommon_Init (int argc, char **argv)
 
 		NET_Init();
 
+#ifndef NO_HTTP
 		curl_global_init(CURL_GLOBAL_NOTHING);
 		Com_Printf("%s initialized.\n", curl_version());
+#endif
 
 		SV_Init();
 

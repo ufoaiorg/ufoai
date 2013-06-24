@@ -72,6 +72,15 @@ typedef int SOCKET;
 # define ioctlsocket ioctl
 #endif /* WIN32 */
 
+#ifdef EMSCRIPTEN
+#define NI_NUMERICHOST 0
+#define NI_NUMERICSERV 0
+#define NI_DGRAM 0
+#define AI_PASSIVE 0
+#define AI_NUMERICHOST 0
+#define INADDR_BROADCAST 0
+#endif
+
 /**
  * @todo Move this into the configure script
  * AI_ADDRCONFIG, AI_ALL, and AI_V4MAPPED are available since glibc 2.3.3.
