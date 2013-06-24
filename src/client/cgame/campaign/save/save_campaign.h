@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_CAMPAIGN_H
-#define SAVE_CAMPAIGN_H
+#pragma once
 
 #define SAVE_CAMPAIGN_CAMPAIGN "campaign"
 
@@ -45,7 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_MAPDEF_ID "id"
 #define SAVE_CAMPAIGN_MAPDEF_COUNT "count"
 
-#endif
 
 /*
 DTD:

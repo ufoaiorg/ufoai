@@ -22,8 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_MISSIONS_H
-#define SAVE_MISSIONS_H
+#pragma once
 
 #define SAVE_MISSIONS "missions"
 #define SAVE_MISSIONS_MISSION "mission"
@@ -69,7 +68,6 @@ static const constListEntry_t saveMissionConstants[] = {
 	{nullptr, -1}
 };
 
-#endif
 
 /*
 DTD:
