@@ -60,8 +60,6 @@
 
  */
 
-#define SDL_MAIN_HANDLED
-
 #include "commands.h"
 #include "version.h"
 #include "radiant_i18n.h"
@@ -99,6 +97,8 @@
 #endif
 
 #include <locale.h>
+
+#undef main
 
 static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
 {
