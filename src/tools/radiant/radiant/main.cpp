@@ -60,6 +60,8 @@
 
  */
 
+#define SDL_MAIN_HANDLED
+
 #include "commands.h"
 #include "version.h"
 #include "radiant_i18n.h"
