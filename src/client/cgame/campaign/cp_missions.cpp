@@ -1986,7 +1986,7 @@ bool MIS_LoadXML (xmlNode_t *parent)
 			break;
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_TERROR_MISSION)
-				mission.data.city = CITY_GetByPos(mission.pos);;
+				mission.data.city = CITY_GetByPos(mission.pos);
 			break;
 		case INTERESTCATEGORY_ALIENBASE:
 		case INTERESTCATEGORY_BUILDING:

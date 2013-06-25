@@ -2340,7 +2340,7 @@ void GEO_NotifyUFODisappear (const aircraft_t* ufo)
  */
 void GEO_SetOverlay (const char *overlayID)
 {
-	const int value = cgi->Cvar_GetInteger("cl_geoscape_overlay");;
+	const int value = cgi->Cvar_GetInteger("cl_geoscape_overlay");
 	if (Q_streq(overlayID, "nations")) {
 		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_NATION);
 		return;
