@@ -135,6 +135,7 @@ static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int cro
  * @brief a struct holding the relevant data to check if we can move between two adjacent cells
  */
 class Step {
+private:
 	/** @todo flier should return true if the actor can fly. */
 	bool flier; /**< This can be keyed into whether an actor can fly or not to allow flying */
 
@@ -160,11 +161,11 @@ public:
 
 	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool init ();
-	bool calcNewPos (void);
+	bool calcNewPos ();
 	void calcNewTUs (const pathing_t *path);
 	bool checkWalkingDirections (const pathing_t *path);
-	bool checkFlyingDirections (void);
-	bool checkVerticalDirections (void);
+	bool checkFlyingDirections () const;
+	bool checkVerticalDirections () const;
 	bool isPossible (const pathing_t *path);
 };
 
@@ -245,11 +246,9 @@ bool Step::calcNewPos (void)
  */
 void Step::calcNewTUs (const pathing_t *path)
 {
-	byte TUsSoFar, TUsForMove;
-
-	TUsSoFar = RT_AREA_POS(path, fromPos, crouchingState);
+	const byte TUsSoFar = RT_AREA_POS(path, fromPos, crouchingState);
 	/* Find the number of TUs used (normally) to move in this direction. */
-	TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
+	const byte TUsForMove = Grid_GetTUsForDirection(dir, crouchingState);
 
 	/* Now add the TUs needed to get to the originating cell. */
 	TUsAfter = TUsSoFar + TUsForMove;
@@ -257,7 +256,7 @@ void Step::calcNewTUs (const pathing_t *path)
 
 /**
  * @brief Checks if we can walk in the given direction
- * First test for opening height availablilty. Then test for stepup compatibility. Last test for fall.
+ * First test for opening height availability. Then test for stepup compatibility. Last test for fall.
  * @note Fliers use this code only when they are walking.
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @return false if we can't fly there
@@ -385,7 +384,7 @@ bool Step::checkWalkingDirections (const pathing_t *path)
  * @brief Checks if we can move in the given flying direction
  * @return false if we can't fly there
  */
-bool Step::checkFlyingDirections (void)
+bool Step::checkFlyingDirections () const
 {
 	const int coreDir = dir % CORE_DIRECTIONS;	/**< The compass direction of this flying move */
 	int neededHeight;
@@ -415,7 +414,7 @@ bool Step::checkFlyingDirections (void)
  * @brief Checks if we can move in the given vertical direction
  * @return false if we can't move there
  */
-bool Step::checkVerticalDirections (void)
+bool Step::checkVerticalDirections () const
 {
 	if (dir == DIRECTION_FALL) {
 		if (flier) {
