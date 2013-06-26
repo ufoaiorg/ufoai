@@ -643,7 +643,6 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
-		int dir;
 		PQueuePop(&pqueue, epos);
 		VectorCopy(epos, pos);
 		count++;
@@ -654,7 +653,7 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 		if (usedTUs >= maxTUs)
 			continue;
 
-		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
+		for (int dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
 			Step step(routing, pos, actorSize, crouchingState, dir);
 			/* Directions 12, 14, and 15 are currently undefined. */
 			if (dir == 12 || dir == 14 || dir == 15)
@@ -666,31 +665,34 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
 			if (!step.init())
 				continue;		/* either dir is irrelevant or something worse happened */
 
-			if (step.isPossible(path)) {
-				/* Is this a better move into this cell? */
-				RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
-				if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
-					continue;	/* This move is not optimum. */
-				}
+			if (!step.isPossible(path))
+				continue;
 
-				/* Test for forbidden (by other entities) areas. */
-				/* Do NOT check the forbiddenList. We might find a multi-turn path. */
-			//	if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
-			//		continue;		/* That spot is occupied. */
-			//	}
+			/* Is this a better move into this cell? */
+			RT_AREA_TEST_POS(path, step.toPos, step.crouchingState);
+			if (RT_AREA_POS(path, step.toPos, step.crouchingState) <= step.TUsAfter) {
+				continue;	/* This move is not optimum. */
+			}
 
-				/* Store move in pathing table. */
-				Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
+			/* Test for forbidden (by other entities) areas. */
+			/* Do NOT check the forbiddenList. We might find a multi-turn path. */
+#if 0
+			if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+				continue;		/* That spot is occupied. */
+			}
+#endif
 
-				pos4_t dummy;
-				int dist = step.TUsAfter + (int) (2 * VectorDist(step.toPos, targetPos));
-				Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
-				PQueuePush(&pqueue, dummy, dist);
+			/* Store move in pathing table. */
+			Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
 
-				if (VectorEqual(step.toPos, targetPos)) {
-					found = true;
-					break;
-				}
+			pos4_t dummy;
+			const int dist = step.TUsAfter + (int) (2 * VectorDist(step.toPos, targetPos));
+			Vector4Set(dummy, step.toPos[0], step.toPos[1], step.toPos[2], step.crouchingState);
+			PQueuePush(&pqueue, dummy, dist);
+
+			if (VectorEqual(step.toPos, targetPos)) {
+				found = true;
+				break;
 			}
 		}
 		if (found)
