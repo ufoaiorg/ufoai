@@ -178,7 +178,8 @@ public:
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  */
 Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) :
-		routing(r), dir(_dir), actorSize(_actorSize), crouchingState(_crouchingState)
+		flier(false), hasLadderToClimb(false), hasLadderSupport(false), actorHeight(0), actorCrouchedHeight(0), routing(
+				r), dir(_dir), actorSize(_actorSize), crouchingState(_crouchingState), TUsAfter(0)
 {
 	VectorCopy(_fromPos, fromPos);
 }
@@ -189,9 +190,6 @@ Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _acto
  */
 bool Step::init ()
 {
-	flier = false;
-	hasLadderToClimb = false;
-	hasLadderSupport = false;
 	/** @note This is the actor's height in QUANT units. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height. */
