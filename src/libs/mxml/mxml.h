@@ -20,8 +20,7 @@
  * Prevent multiple inclusion...
  */
 
-#ifndef _mxml_h_
-#  define _mxml_h_
+#pragma once
 
 /*
  * Include necessary headers...
@@ -300,4 +299,3 @@ extern mxml_type_t	mxml_real_cb(mxml_node_t *node);
 #  ifdef __cplusplus
 }
 #  endif /* __cplusplus */
-#endif /* !_mxml_h_ */
