@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-07 15:12+0200\n"
-"PO-Revision-Date: 2013-06-22 11:01-0600\n"
+"PO-Revision-Date: 2013-07-02 11:24-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -2824,7 +2824,7 @@ msgstr "Paisaje Helado"
 #: ../base/ufos/maps.ufo:1934 ../base/ufos/maps.ufo:1982
 #: ../base/ufos/maps.ufo:3271
 msgid "East Asian Village"
-msgstr "Villa del Esta Asiático"
+msgstr "Villa del Este Asiático"
 
 #: ../base/ufos/maps.ufo:2292 ../base/ufos/maps.ufo:2333
 #: ../base/ufos/maps.ufo:2374 ../base/ufos/maps.ufo:3426
@@ -8957,7 +8957,7 @@ msgstr ""
 "\n"
 "Hemos llamado a esta criatura el Hovernet de Combate en reconocimiento de "
 "sus características mecánicas claramente orientadas al combate. Pero una "
-"pequeña biomasa, incluyendo uan especie de 'cerebro', se aloja en su centro "
+"pequeña biomasa, incluyendo una especie de 'cerebro', se aloja en su centro "
 "y parece controlar la maquina.\n"
 "\n"
 "Toda la criatura ha sido envuelta en blindaje avanzado y los estabilizadores "
