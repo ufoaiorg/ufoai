@@ -353,7 +353,6 @@ void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
  */
 void G_SendInventory (playermask_t playerMask, const Edict &ent)
 {
-	invList_t *ic;
 	int nr = 0;
 
 	/* test for pointless player mask */
@@ -376,10 +375,11 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
 		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
 			continue;
-		for (ic = ent.getContainer(cont->id); ic; ic = ic->getNext()) {
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
 			/* send a single item */
-			assert(ic->def());
-			G_WriteItem(*ic, cont->id, ic->getX(), ic->getY());
+			assert(item->def());
+			G_WriteItem(*item, cont->id, item->getX(), item->getY());
 		}
 	}
 	G_EventEnd();
