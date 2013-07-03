@@ -995,22 +995,39 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 			}
 		}
 
-		/* do damage if the trace hit an entity */
-		if (trEnt && (G_IsActor(trEnt) || (G_IsBreakable(trEnt) && damage > 0))) {
-			VectorCopy(tr.endpos, impact);
-			G_Damage(trEnt, fd, damage, ent, mock, impact);
+		const bool hitEnt = trEnt && (G_IsActor(trEnt) || (G_IsBreakable(trEnt) && damage > 0));
+		/* bounce is checked here to see if the rubber rocket hit walls enough times to wear out*/
+		bounce++;
+		/* stop, we hit something or have bounced enough */
+		if (hitEnt || bounce > fd->bounce || tr.fraction >= 1.0) {
+			if (!mock) {
+				/* spawn the throwable item on the floor but only if it is not depletable */
+				if (fd->ammo && !fd->splrad && weapon->def()->thrown && !weapon->def()->deplete) {
+					pos3_t drop;
 
-			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
-				/* Count this as a hit of this firemode. */
-				G_UpdateHitScore(ent, trEnt, fd, 0);
+					if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
+						VectorCopy(at, drop);
+					} else {
+						impact[2] -= 20; /* a hack: no-gravity items are flying high */
+						VecToPos(impact, drop);
+					}
+
+					G_SpawnItemOnFloor(drop, weapon);
+				}
+			}
+
+			/* do damage if the trace hit an entity */
+			if (hitEnt) {
+				VectorCopy(tr.endpos, impact);
+				G_Damage(trEnt, fd, damage, ent, mock, impact);
+
+				if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
+					/* Count this as a hit of this firemode. */
+					G_UpdateHitScore(ent, trEnt, fd, 0);
+				}
 			}
 			break;
 		}
-
-		/* bounce is checked here to see if the rubber rocket hit walls enough times to wear out*/
-		bounce++;
-		if (bounce > fd->bounce || tr.fraction >= 1.0)
-			break;
 
 		range -= tr.fraction * range;
 		VectorCopy(impact, cur_loc);
@@ -1018,22 +1035,6 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
 		flags |= SF_BOUNCED;
-	}
-
-	if (!mock) {
-		/* spawn the throwable item on the floor but only if it is not depletable */
-		if (fd->ammo && !fd->splrad && weapon->def()->thrown && !weapon->def()->deplete) {
-			pos3_t drop;
-
-			if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
-				VectorCopy(at, drop);
-			} else {
-				impact[2] -= 20; /* a hack: no-gravity items are flying high */
-				VecToPos(impact, drop);
-			}
-
-			G_SpawnItemOnFloor(drop, weapon);
-		}
 	}
 }
 
