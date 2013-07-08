@@ -84,41 +84,43 @@ void INV_ItemDescription (const objDef_t *od)
 	Cvar_Set("mn_item", od->id);
 
 	count = 0;
-	if (od->isAmmo()) {
-		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons
-		 * we are counting the number of weapons that are usable with this ammo */
-		for (i = 0; i < od->numWeapons; i++)
-			if (GAME_ItemIsUseable(od->weapons[i]))
-				count++;
-		if (itemIndex >= od->numWeapons || itemIndex < 0)
-			itemIndex = 0;
-		if (count > 0) {
-			while (!GAME_ItemIsUseable(od->weapons[itemIndex])) {
-				itemIndex++;
-				if (itemIndex >= od->numWeapons)
-					itemIndex = 0;
+	if (GAME_ItemIsUseable(od)) {
+		if (od->isAmmo()) {
+			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons
+			 * we are counting the number of weapons that are usable with this ammo */
+			for (i = 0; i < od->numWeapons; i++)
+				if (GAME_ItemIsUseable(od->weapons[i]))
+					count++;
+			if (itemIndex >= od->numWeapons || itemIndex < 0)
+				itemIndex = 0;
+			if (count > 0) {
+				while (!GAME_ItemIsUseable(od->weapons[itemIndex])) {
+					itemIndex++;
+					if (itemIndex >= od->numWeapons)
+						itemIndex = 0;
+				}
+				Cvar_ForceSet("mn_linkname", _(od->weapons[itemIndex]->name));
 			}
-			Cvar_ForceSet("mn_linkname", _(od->weapons[itemIndex]->name));
-		}
-	} else if (od->weapon) {
-		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
-		 * we are counting the number of ammo that is usable with this weapon */
-		for (i = 0; i < od->numAmmos; i++)
-			if (GAME_ItemIsUseable(od->ammos[i]))
-				count++;
+		} else if (od->weapon) {
+			/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
+			 * we are counting the number of ammo that is usable with this weapon */
+			for (i = 0; i < od->numAmmos; i++)
+				if (GAME_ItemIsUseable(od->ammos[i]))
+					count++;
 
-		if (itemIndex >= od->numAmmos || itemIndex < 0)
-			itemIndex = 0;
+			if (itemIndex >= od->numAmmos || itemIndex < 0)
+				itemIndex = 0;
 
-		/* Only display ammos if at least one has been researched */
-		if (count > 0) {
-			/* We have a weapon that uses ammos */
-			while (!GAME_ItemIsUseable(od->ammos[itemIndex])) {
-				itemIndex++;
-				if (itemIndex >= od->numAmmos)
-					itemIndex = 0;
+			/* Only display ammos if at least one has been researched */
+			if (count > 0) {
+				/* We have a weapon that uses ammos */
+				while (!GAME_ItemIsUseable(od->ammos[itemIndex])) {
+					itemIndex++;
+					if (itemIndex >= od->numAmmos)
+						itemIndex = 0;
+				}
+				Cvar_ForceSet("mn_linkname", _(od->ammos[itemIndex]->name));
 			}
-			Cvar_ForceSet("mn_linkname", _(od->ammos[itemIndex]->name));
 		}
 	}
 
