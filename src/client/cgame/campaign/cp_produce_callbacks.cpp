@@ -379,6 +379,12 @@ static void PR_ProductionInfo (const base_t *base)
 			}
 		}
 	}
+	/* update capacity counters */
+	cgi->UI_ExecuteConfunc("ui_prod_update_caps %d %d %d %d %d %d %d %d", CAP_GetFreeCapacity(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS),
+		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_SMALL), CAP_GetMax(base, CAP_AIRCRAFT_SMALL),
+		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG), CAP_GetMax(base, CAP_AIRCRAFT_BIG),
+		CAP_GetMax(base, CAP_WORKSPACE) - E_CountHired(base, EMPL_WORKER), CAP_GetMax(base, CAP_WORKSPACE)
+	);
 }
 
 /**

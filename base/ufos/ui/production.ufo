@@ -3,17 +3,10 @@
 // ==================
 window production
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/base_bg"
+		background	"background/base_bg"
 	}
+
 	cmpBaseHeader baseHeader {
 	}
 
@@ -27,20 +20,6 @@ window production
 		background	"ui/panel_tab"
 	}
 
-	/**
-	 * @brief function to show/hide storage capacity info
-	 * @todo show hangar capacity when aircraft is selected
-	 */
-	func prod_stores {
-		if ( *cvar:mn_itemtype ne "aircraft" ) {
-			*node:parent.infopanel.txt_prod_storage_caption@invis	= false
-			*node:parent.infopanel.txt_prod_storage@invis	= false
-		} else {
-			*node:parent.infopanel.txt_prod_storage_caption@invis	= true
-			*node:parent.infopanel.txt_prod_storage@invis	= true
-		}
-	}
-
 	tab market_navigation {
 		{
 			pos		"47 106"
@@ -48,7 +27,6 @@ window production
 			cvar	*cvar:mn_itemtype
 			onChange {
 				cmd "prod_type <cvar:mn_itemtype>;"
-				call *node:root.prod_stores
 			}
 		}
 
@@ -127,82 +105,129 @@ window production
 	// ==================
 	// info panel
 	// ==================
-
-	panel infopanel {
+	panel basedescription {
 		{
-			pos		"580 160"
-			size	"420 145"
-			background	"ui/panel_grey_green_large"
+			pos		"588 160"
+			size	"410 135"
+			background	"ui/panel_grey_green"
 		}
 
-		// ==================
-		// workers
-		// ==================
+		string header_capacity {
+			string 		"_Capacity"
+			pos			"15 20"
+			size		"230 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CL
+		}
+		string header_free {
+			string 		"_free"
+			pos			"245 20"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+		string header_all {
+			string 		"_all"
+			pos			"320 20"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
 
-		string txt_prod_workers_caption
-		{
-			string		"_Workers (ready/all):"
-			pos			"30 25"
-			size		"250 20"
+		string storage_caption {
+			string 		"_Storage"
+			pos			"15 40"
+			size		"230 20"
 			font		"f_small"
 		}
-
-		string txt_prod_workers
-		{
-			string		*cvar:mn_production_workers
-			pos			"295 25"
-			size		"100 20"
-			contentalign	ALIGN_UR
+		string storage_free {
+			pos			"245 40"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string storage_all {
+			pos			"320 40"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string interceptor_caption {
+			string 		"_Interceptor Hangar"
+			pos			"15 60"
+			size		"230 20"
 			font		"f_small"
 		}
-
-		// ==================
-		// workshop capacity
-		// ==================
-
-		string txt_prod_basecap_caption
-		{
-			string		"_Workshop capacity:"
-			pos			"30 50"
-			size		"250 20"
+		string interceptor_free {
+			pos			"245 60"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string interceptor_all {
+			pos			"320 60"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string dropship_caption {
+			string 		"_Dropship Hangar"
+			pos			"15 80"
+			size		"230 20"
 			font		"f_small"
 		}
-
-		string txt_prod_basecap
-		{
-			string		*cvar:mn_production_basecap
-			pos			"295 50"
-			size		"100 20"
-			contentalign	ALIGN_UR
+		string dropship_free {
+			pos			"245 80"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string dropship_all {
+			pos			"320 80"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string workshop_caption {
+			string 		"_Workshop space"
+			pos			"15 100"
+			size		"230 20"
 			font		"f_small"
 		}
-
-		// ==================
-		// storage capacity
-		// ==================
-
-		string txt_prod_storage_caption
-		{
-			string		"_Storage capacity:"
-			pos			"30 75"
-			size		"250 20"
+		string workshop_free {
+			pos			"245 100"
+			size		"75 20"
 			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string workshop_all {
+			pos			"320 100"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
 		}
 
-		string txt_prod_storage
-		{
-			string		*cvar:mn_production_storage
-			pos			"295 75"
-			size		"100 20"
-			contentalign	ALIGN_UR
-			font		"f_small"
+		confunc ui_prod_update_caps {
+			*node:parent.storage_free@string = "<1>"
+			*node:parent.storage_all@string = "<2>"
+			*node:parent.interceptor_free@string = "<3>"
+			*node:parent.interceptor_all@string = "<4>"
+			*node:parent.dropship_free@string = "<5>"
+			*node:parent.dropship_all@string = "<6>"
+			*node:parent.workshop_free@string = "<7>"
+			*node:parent.workshop_all@string = "<8>"
+			if ( <7> < 0 ) {
+				*node:parent.workshop_free@color = "1 0 0 1"
+			} else {
+				*node:parent.workshop_free@color = "1 1 1 1"
+			}
 		}
+
 	}
 
 	// ==================
 	// list
 	// ==================
-
 	textlist prodlist
 	{
 		dataid		TEXT_PRODUCTION_LIST
@@ -588,7 +613,6 @@ window production
 	func onWindowOpened
 	{
 		cmd "prod_init; prod_type *cvar:mn_itemtype;"
-		call *node:root.prod_stores
 		*cvar:ui_prreq = ""
 		*cvar:mn_lastsubmenu = "production"
 	}
