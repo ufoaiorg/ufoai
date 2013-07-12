@@ -48,7 +48,7 @@ XVID_LIBS                ?= -lxvidcore
 endif
 ifdef HAVE_BFD_H
 BFD_CFLAGS               ?=
-BFD_LIBS                 ?= -lbfd
+BFD_LIBS                 ?= -lbfd -liberty
 endif
 MUMBLE_LIBS              ?=
 MUMBLE_SRCS               = libs/mumble/libmumblelink.c
