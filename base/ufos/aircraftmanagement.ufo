@@ -451,12 +451,12 @@ aircraft craft_inter_stingray
 
 	slot {
 		type		"weapon"
-		position	"rear_left"
+		position	"nose_left"
 		size		"medium"
 	}
 	slot {
 		type		"weapon"
-		position	"rear_right"
+		position	"nose_right"
 		size		"medium"
 	}
 	slot {
