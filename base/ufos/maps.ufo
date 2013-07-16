@@ -608,14 +608,13 @@ mapdef farm_large
 	aircraft
 	(
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
 	(
 		craft_ufo_bomber
-		craft_ufo_fighter
-		craft_ufo_harvester
-		craft_ufo_scout
 	)
 
 	terrains
@@ -650,6 +649,8 @@ mapdef farm_medium
 	aircraft
 	(
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
