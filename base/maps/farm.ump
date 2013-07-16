@@ -208,6 +208,21 @@ av     +c      +c      +c      +c     av
 0      ah      ah      ah      ah      0
 }
 
+tile +craft_ufo_corrupter
+{
+8 10
+0		0		0		ah		ah		0		0		0
+0		0		av		+c		+c		av		0		0
+0		0		av		+c		+c		av		0		0
+0		ah		ah		+c		+c		ah		ah		0
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+0		ah		ah		ah		ah		ah		ah		0
+}
+
 // ---------------------------------
 // Farmhouse horizontal
 tile +farmhouse_a

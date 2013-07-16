@@ -615,6 +615,7 @@ mapdef farm_large
 	ufos
 	(
 		craft_ufo_bomber
+		craft_ufo_corrupter
 	)
 
 	terrains
