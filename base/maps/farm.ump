@@ -8,7 +8,7 @@
 // a: normal tile.
 // b: dropship tile.
 // c: UFO tile.
-// h: Horysontal road
+// h: horizontal road
 // v: vertical road
 
 
@@ -40,8 +40,9 @@ av     +b      +b      +b      av
 // Raptor dropship
 tile +craft_drop_raptor
 {
-5 4
+5 5
 0      ah       ah      ah       0
+av     +b       +b      +b      av
 av     +b       +b      +b      av
 av     +b       +b      +b      av
 0      ah       ah      ah       0
