@@ -5,27 +5,27 @@
 component cmpHhumanoid_head extends button {
 	color "1 0 0 1"
 	pos			"0 0"
-	size		"15 15"
+	size		"16 16"
 }
 component cmpHhumanoid_torso extends button {
 	color "1 0 0 1"
 	pos			"20 0"
-	size		"15 15"
+	size		"16 16"
 }
 component cmpHhumanoid_arms extends button {
 	color "1 0 0 1"
 	pos			"40 0"
-	size		"15 15"
+	size		"16 16"
 }
 component cmpHhumanoid_legs extends button {
 	color "1 0 0 1"
 	pos			"60 0"
-	size		"15 15"
+	size		"16 16"
 }
 component cmpHdefault_body extends button {
 	color "1 0 0 1"
 	pos			"0 0"
-	size		"15 15"
+	size		"16 16"
 }
 
 component cmpHospitalNamedTbar extends cmpDefNamedTbar {
@@ -152,12 +152,10 @@ window hospital
 	// <4> Tooltip
 	confunc hospital_wounds {
 		call *node:root.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
-		if (<3> >= 0.5) {
-			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_death"
-		} elif (<3> >= 0.15) {
-			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_debug"
+		if (<3> >= 0.3) {
+			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
 		} else {
-			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/message_info"
+			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
 		}
 		*node:root.hos<1>.wounds.wound_<2>@tooltip = "<4>"
 	}

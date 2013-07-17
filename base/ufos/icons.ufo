@@ -381,3 +381,63 @@ sprite icons/number_12 {
 	size	"23 26"
 	pack64	true
 }
+
+sprite icons/humanoid_arms_wound {
+	image	"banks/pack_wounds"
+	texl	"0 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_arms_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"0 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_head_wound {
+	image	"banks/pack_wounds"
+	texl	"16 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_head_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"16 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_legs_wound {
+	image	"banks/pack_wounds"
+	texl	"32 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_legs_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"32 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_torso_wound {
+	image	"banks/pack_wounds"
+	texl	"48 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_torso_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"48 16"
+	size	"16 16"
+}
+
+sprite icons/default_body_wound {
+	image	"banks/pack_wounds"
+	texl	"64 0"
+	size	"16 16"
+}
+
+sprite icons/default_body_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"64 16"
+	size	"16 16"
+}
