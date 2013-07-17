@@ -1050,7 +1050,7 @@ class Import_MD2(bpy.types.Operator, ImportHelper):
 
 	fImportAnimation = BoolProperty(name="Import animation",
 									description="Import all frames",
-									default=False)
+									default=True)
 
 	def __init__(self):
 		if len(bpy.context.selected_objects) > 0:
