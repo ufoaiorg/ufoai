@@ -196,7 +196,7 @@ tileset tunnels
 
 assembly small_noufo
 {
-title		"_The outscirt of a big city."
+title		"_The outskirt of a big city."
 size "6 7"
 tileset buildings	"1 1"
 tileset tunnels		"0 1"

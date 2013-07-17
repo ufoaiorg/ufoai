@@ -267,7 +267,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		const technology_t *tech = RS_GetTechForItem(od);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
-		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), PR_GetPrice(od)), sizeof(productionInfo));
+		Q_strcat(productionInfo, va(_("Cost per item\t%i c\n"), PR_GetPrice(od)), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		cgi->Cvar_Set("mn_item", od->id);
