@@ -800,7 +800,7 @@ static void HUD_DisplayPossibleReaction (const le_t *actor)
  * @param[in] actor the actor to check for his reaction TUs.
  * @return The TUs needed for the reaction fireDef for this actor or -1 if no valid reaction settings
  */
-static int HUD_ReactionFireGetTUs (const le_t *actor)
+int HUD_ReactionFireGetTUs (const le_t *actor)
 {
 	if (!actor)
 		return -1;

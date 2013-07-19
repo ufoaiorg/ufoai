@@ -43,3 +43,4 @@ void HUD_DisplayMessage(const char * text);
 void HUD_Update(void);
 void HUD_UpdateActorStats(const struct le_s *le);
 void HUD_UpdateCursor(void);
+int HUD_ReactionFireGetTUs (const struct le_s *actor);

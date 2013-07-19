@@ -188,8 +188,12 @@ static void HUD_ToggleReaction_f (void)
 		return;
 
 	if (!(actor->state & STATE_REACTION)) {
-		state = STATE_REACTION;
-		HUD_DisplayMessage(_("Reaction fire enabled."));
+		if (actor->inv.holdsReactionFireWeapon() && CL_ActorUsableTUs(actor) >= HUD_ReactionFireGetTUs(actor)) {
+			state = STATE_REACTION;
+			HUD_DisplayMessage(_("Reaction fire enabled."));
+		} else {
+			return;
+		}
 	} else {
 		state = ~STATE_REACTION;
 		HUD_DisplayMessage(_("Reaction fire disabled."));

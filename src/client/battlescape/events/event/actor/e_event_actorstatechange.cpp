@@ -74,13 +74,6 @@ void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
 
 	chr->state = (le->state & STATE_REACTION);
 
-	/* change reaction button state */
-	if (!(le->state & STATE_REACTION)) {
-		UI_ExecuteConfunc("disable_reaction");
-	} else {
-		UI_ExecuteConfunc("startreaction");
-	}
-
 	/* state change may have affected move length */
 	CL_ActorConditionalMoveCalc(le);
 }
