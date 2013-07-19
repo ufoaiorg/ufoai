@@ -220,6 +220,7 @@ window levelbuttons {
 
 window reactionfire_listener {
 	confunc reactionfire_updated { }
+	confunc actor_updated { }
 }
 
 /**
@@ -453,12 +454,20 @@ window firemode_left extends reactionfire_listener {
 
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener l;"
+		cmd "ui_addcvarlistener cl_selected actor_updated;"
+	}
+
+	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener l;"
 	}
 
+	confunc actor_updated {
+		cmd "ui_pop;"
+	}
 }
 
 window firemode_right extends reactionfire_listener {
@@ -482,12 +491,20 @@ window firemode_right extends reactionfire_listener {
 
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener r;"
+		cmd "ui_addcvarlistener cl_selected actor_updated;"
+	}
+
+	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener r;"
 	}
 
+	confunc actor_updated {
+		cmd "ui_pop;"
+	}
 }
 
 window hud_general {
