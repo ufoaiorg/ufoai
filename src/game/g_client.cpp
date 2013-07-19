@@ -501,6 +501,8 @@ void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool c
 				/* Turn off reaction fire. */
 				G_RemoveReaction(ent);
 				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+				if (!G_IsAI(ent))
+					G_EventReactionFireChange(*ent);
 			}
 		}
 		break;
@@ -513,6 +515,8 @@ void G_ClientStateChange (const Player &player, Edict *ent, int reqState, bool c
 			/* Enable requested reaction fire. */
 			G_SetState(ent, reqState);
 		}
+		if (!G_IsAI(ent))
+			G_EventReactionFireChange(*ent);
 		break;
 	default:
 		gi.DPrintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
