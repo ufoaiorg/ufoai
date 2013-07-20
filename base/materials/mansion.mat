@@ -11,6 +11,7 @@
 		anim 6 48
 	}
 }
+
 {
 	material tex_buildings/concrete005
 	{
@@ -21,33 +22,30 @@
 }
 
 
-# main texture for medieval - walls
+// main texture for medieval - walls
 {
 	material tex_mattn/wall079
-	{
 		bump 1.0
 		parallax 1.0
 		specular 0.1
 		hardness 0.1
-	}
+	
 }
-# texture for cliffs and underground
+
+// texture for cliffs and underground
 {
 	material tex_nature/rock007
-	{
 		bump 1.0
 		parallax 1.0
 		specular 0.1
 		hardness 0.1
-	}
 }
-# texture for medieval - floors
+
+// texture for medieval - floors
 {
 	material tex_buildings/floor_se01
-	{
 		bump 1.0
 		parallax 1.0
 		specular 1.0
 		hardness 1.0
-	}
 }
