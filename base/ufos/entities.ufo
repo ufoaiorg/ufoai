@@ -674,6 +674,7 @@ entity trigger_rescue {
 
 	default {
 		spawnflags	"255"
+		team	"1"
 	}
 
 	range {
