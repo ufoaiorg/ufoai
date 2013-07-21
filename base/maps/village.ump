@@ -531,11 +531,13 @@ tile +mart_01
 	// small market, A3, C2
 	// TODO connect to street, add parking site
 {
-4 4
-0		h		h		0
-0		+a		+a		0
-0		+a		+a		0
-0		0		0		0
+5 6
+0		0		0		0		0
+0		h		+h		h		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 /* wip
@@ -808,8 +810,8 @@ assembly test
 size "7 7"
 title "_Village"
 +bungalow			"0 1"
-+bungalow2			"1 1"
-+mart_01			"0 1"
++bungalow2			"0 1"
++mart_01			"1 1"
 +gasstation_01		"0 1"
 +diner_01			"0 1"
 +house_01			"0 1"
@@ -832,5 +834,5 @@ tileset street_02	"0 1"
 tileset street_03	"0 1"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
-*rm_drop +craft_drop_firebird "1 1"
++start				"1 1"
 }
