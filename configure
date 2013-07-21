@@ -150,9 +150,9 @@ makefile_local() {
 
 check_header_cc() {
 	if [ -n "${2}" ]; then
-		( echo "#include <stdlib.h>\n#include <stdio.h>\n#include <${1}>" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
+		( echo -e "#include <stdlib.h>\n#include <stdio.h>\n#include <${1}>" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
 	else
-		( echo "#include <stdlib.h>\n#include <stdio.h>\n#include <${1}>" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
+		( echo -e "#include <stdlib.h>\n#include <stdio.h>\n#include <${1}>" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
 	fi
 }
 
