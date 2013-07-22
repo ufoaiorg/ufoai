@@ -2,6 +2,14 @@
 
 #pragma once
 
+#ifndef PACKAGE
+#define PACKAGE 1
+#endif
+
+#ifndef PACKAGE_VERSION
+#define PACKAGE_VERSION 1
+#endif
+
 #include <bfd.h>
 
 struct output_buffer
