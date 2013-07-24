@@ -13,26 +13,29 @@ base desert/des_
 
 tile +craft_drop_firebird
 {
-5 4
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
+4 5
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		0
 }
 
 tile +craft_drop_herakles
 {
-5 4
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
+4 5
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		0
 }
 
 tile +craft_drop_raptor
 {
-5 4
+5 5
 0		0		0		0		0
+0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
@@ -42,16 +45,14 @@ tile +craft_drop_raptor
 
 tile +craft_crash_harvester
 {
-8 9
+8 7
 
-0		0		0		0		0		0		0		0
-0		+c		+c		+c		+c		+c		+c		x
-0		+c		+c		+c		+c		+c		+c		x
-0		+c		+c		+c		+c		+c		+c		x
-0		+c		+c		+c		+c		+c		+c		x
-0		+c		+c		+c		+c		+c		+c		x
-0		0		0		0		+c		+c		+c		0
-0		0		0		0		+c		+c		+c		0
+0		x		x		x		x		x		x		0
+x		+c		+c		+c		+c		+c		+c		x
+x		+c		+c		+c		+c		+c		+c		x
+x		+c		+c		+c		+c		+c		+c		x
+x		+c		+c		+c		+c		+c		+c		x
+x		+c		+c		+c		+c		+c		+c		x
 0		0		0		0		0		0		0		0
 }
 
@@ -99,12 +100,27 @@ tile +sand05
 0		0		0		0
 }
 
+tile +sand06
+{
+4 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 // Map assemblies --------------------------------------------------*
 
 assembly medium
 {
 title "_Crashed UFO"
-size "6 7"
+size "6 8"
++sand01		"0 2"
++sand02		"0 2"
++sand03		"0 2"
++sand04		"0 2"
++sand05		"0 2"
++sand06		"0 1"
 *rm_ufo +craft_crash_harvester	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
