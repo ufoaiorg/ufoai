@@ -319,17 +319,17 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void *userdata)
 			continue;
 
 		if (event->active) {
-			if (BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata)) {
-				if (Q_strvalid(event->command)) {
-					CP_CampaignTriggerFunctions(true);
-					cgi->Cbuf_AddText(event->command);
-					cgi->Cbuf_Execute();
-					CP_CampaignTriggerFunctions(false);
-				}
+			if (!BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata))
+				continue;
+			if (Q_strvalid(event->command)) {
+				CP_CampaignTriggerFunctions(true);
+				cgi->Cbuf_AddText(event->command);
+				cgi->Cbuf_Execute();
+				CP_CampaignTriggerFunctions(false);
+			}
 
-				if (event->once) {
-					event->active = false;
-				}
+			if (event->once) {
+				event->active = false;
 			}
 		} else {
 			event->active = BEP_Evaluate(event->reactivate, CP_CheckTriggerEvent, userdata);
