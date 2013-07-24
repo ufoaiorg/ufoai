@@ -33,7 +33,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence1
 	{
-		text	"_intro_sentence1"
+		text	"*msgid:intro_sentence1"
 		pos		"512 100"
 		align	"uc"
 		color	"0.2 1 0.5 0"
@@ -45,7 +45,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence2
 	{
-		text	"_intro_sentence2"
+		text	"*msgid:intro_sentence2"
 		pos		"512 120"
 		align	"uc"
 		color	"0.2 1 0.5 0"
@@ -57,7 +57,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence3
 	{
-		text	"_intro_sentence3"
+		text	"*msgid:intro_sentence3"
 		pos		"512 140"
 		align	"uc"
 		color	"0.2 1 0.5 0"
@@ -102,7 +102,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence4
 	{
-		text	"_intro_sentence4"
+		text	"*msgid:intro_sentence4"
 		pos		"512 100"		align	"uc"
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
@@ -120,7 +120,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence5
 	{
-		text	"_intro_sentence5"
+		text	"*msgid:intro_sentence5"
 		pos		"512 120"		align	"uc"
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
@@ -183,7 +183,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence6
 	{
-		text	"_intro_sentence6"
+		text	"*msgid:intro_sentence6"
 		pos		"512 100"		align	"uc"
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
@@ -194,7 +194,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence7
 	{
-		text	"_intro_sentence7"
+		text	"*msgid:intro_sentence7"
 		pos		"512 120"		align	"uc"
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
@@ -205,7 +205,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	obj2d i_sentence8
 	{
-		text	"_intro_sentence8"
+		text	"*msgid:intro_sentence8"
 		pos	"512 140"		align	"uc"
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
