@@ -283,6 +283,8 @@ static const mapDef_t *GAME_SK_MapInfo (int step)
 
 	md = cgi->GAME_GetCurrentSelectedMap();
 
+	Cvar_SetValue("ai_numaliens", md->maxAliens);
+
 	if (md->map[0] == '.')
 		return nullptr;
 
