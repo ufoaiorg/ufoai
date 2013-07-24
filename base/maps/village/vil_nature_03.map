@@ -409,7 +409,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
-"angles" "0 8.4483 0"
+"angles" "0 0 0"
 "origin" "190.022 54.71 15"
 "modelscale_vec" "0.75 0.75 0.75"
 }

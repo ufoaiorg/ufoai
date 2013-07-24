@@ -325,6 +325,6 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
-"angles" "0 -25.0955 0"
+"angles" "0 0 0"
 "origin" "109.189 75.85 18"
 }
