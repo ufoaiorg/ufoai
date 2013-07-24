@@ -161,7 +161,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check that a particular installation type is built already */
 	type = Q_strstart(expression, "installation");
-	if (type != 0) {
+	if (type != nullptr) {
 		if (strlen(type) <= 1)
 			return -1;
 		char value[MAX_VAR];
@@ -175,7 +175,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check whether a particular ufo was detected */
 	type = Q_strstart(expression, "ufo");
-	if (type != 0) {
+	if (type != nullptr) {
 		if (strlen(type) <= 1)
 			return -1;
 		char value[MAX_VAR];
@@ -189,7 +189,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check that the given xvi level is reached in any nation */
 	type = Q_strstart(expression, "xvi");
-	if (type != 0) {
+	if (type != nullptr) {
 		int xvi;
 		if (sscanf(type, "[%i]", &xvi) != 1)
 			return -1;
@@ -206,7 +206,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check that the given tech is already researched */
 	type = Q_strstart(expression, "researched");
-	if (type != 0) {
+	if (type != nullptr) {
 		if (strlen(type) <= 1)
 			return -1;
 		char value[MAX_VAR];
@@ -222,7 +222,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check for nation happiness - also see the lost conditions in the campaign */
 	type = Q_strstart(expression, "nationhappiness");
-	if (type != 0) {
+	if (type != nullptr) {
 		int nationAmount;
 
 		if (sscanf(type, "[%i]", &nationAmount) != 1)
@@ -243,7 +243,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check that the given average xvi level is reached */
 	type = Q_strstart(expression, "averagexvi");
-	if (type != 0) {
+	if (type != nullptr) {
 		int xvipercent;
 		if (sscanf(type, "[%i]", &xvipercent) != 1)
 			return -1;
@@ -256,7 +256,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 	}
 
 	type = Q_strstart(expression, "difficulty");
-	if (type != 0) {
+	if (type != nullptr) {
 		int difficulty;
 		if (sscanf(type, "[%i]", &difficulty) != 1)
 			return -1;
@@ -265,7 +265,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 
 	/* check that these days have passed in the campaign */
 	type = Q_strstart(expression, "days");
-	if (type != 0) {
+	if (type != nullptr) {
 		int days;
 		if (sscanf(type, "[%i]", &days) != 1)
 			return -1;
@@ -277,14 +277,14 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 	}
 
 	type = Q_strstart(expression, "alienscaptured");
-	if (type != 0) {
+	if (type != nullptr) {
 		if (ccs.campaignStats.capturedAliens > 0)
 			return 1;
 		return 0;
 	}
 
 	type = Q_strstart(expression, "samsitearmed");
-	if (type != 0) {
+	if (type != nullptr) {
 		if (!INS_HasType(INSTALLATION_DEFENCE))
 			return 1;
 
