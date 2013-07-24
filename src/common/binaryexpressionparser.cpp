@@ -30,6 +30,9 @@ typedef enum
 	BEPERR_NONE, BEPERR_BRACE, BEPERR_NOEND, BEPERR_NOTFOUND
 } binaryExpressionParserError_t;
 
+/**
+ * @brief Evaluates stuff like this expression <pre>(x & !y) ^ z</pre>
+ */
 class BinaryExpressionParser {
 private:
 	binaryExpressionParserError_t binaryExpressionParserError;
@@ -40,10 +43,13 @@ private:
 
 	inline void SkipWhiteSpaces (const char **s) const
 	{
-		while (**s == ' ')
+		while (**s == ' ' || **s == '\t')
 			(*s)++;
 	}
 
+	/**
+	 * @brief Advance to the next char that is no whitespace
+	 */
 	inline void NextChar (const char **s) const
 	{
 		(*s)++;
@@ -55,37 +61,46 @@ private:
 	{
 		int pos = 0;
 
-		while (**s > 32 && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')') {
+		/* skip non printable chars and special chars that are used to define the binary expression */
+		while (**s > ' ' && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')') {
 			varName[pos++] = **s;
 			(*s)++;
 		}
-		varName[pos] = 0;
+		varName[pos] = '\0';
 
 		return varName;
 	}
 
+	/**
+	 * @brief Evaluates or and xor in the given string. This is the entry point, it delegates to the and checks
+	 * that are done in @c CheckAnd
+	 * @return The result of the evaluation
+	 */
 	bool CheckOR (const char **s)
 	{
 		bool result = false;
-		int goon = 0;
+		enum {
+			BEP_NONE, BEP_OR, BEP_EXCLUSIVE_OR
+		};
+		int goOn = BEP_NONE;
 
 		SkipWhiteSpaces(s);
 		do {
-			if (goon == 2)
+			if (goOn == BEP_EXCLUSIVE_OR)
 				result ^= CheckAND(s);
 			else
 				result |= CheckAND(s);
 
 			if (**s == '|') {
-				goon = 1;
+				goOn = BEP_OR;
 				NextChar(s);
 			} else if (**s == '^') {
-				goon = 2;
+				goOn = BEP_EXCLUSIVE_OR;
 				NextChar(s);
 			} else {
-				goon = 0;
+				goOn = BEP_NONE;
 			}
-		} while (goon && !binaryExpressionParserError);
+		} while (goOn != BEP_NONE && !binaryExpressionParserError);
 
 		return result;
 	}
@@ -94,22 +109,26 @@ private:
 	{
 		bool result = true;
 		bool negate = false;
-		bool goon = false;
+		bool goOn = false;
 
 		do {
+			/* parse all negate chars and swap the flag accordingly */
 			while (**s == '!') {
 				negate ^= true;
 				NextChar(s);
 			}
+			/* handling braces */
 			if (**s == '(') {
 				NextChar(s);
+				/* and the result of the inner clause by calling the entry
+				 * point again (and apply the negate flag) */
 				result &= CheckOR(s) ^ negate;
 				if (**s != ')')
 					binaryExpressionParserError = BEPERR_BRACE;
 				NextChar(s);
 			} else {
-				/* get the variable state */
-				int value = varFunc(GetSwitchName(s), userdata);
+				/* get the variable state by calling the evaluate callback */
+				const int value = varFunc(GetSwitchName(s), userdata);
 				if (value == -1)
 					binaryExpressionParserError = BEPERR_NOTFOUND;
 				else
@@ -117,14 +136,15 @@ private:
 				SkipWhiteSpaces(s);
 			}
 
+			/* check whether there is another and clause */
 			if (**s == '&') {
-				goon = true;
+				goOn = true;
 				NextChar(s);
 			} else {
-				goon = false;
+				goOn = false;
 			}
 			negate = false;
-		} while (goon && !binaryExpressionParserError);
+		} while (goOn && !binaryExpressionParserError);
 
 		return result;
 	}
@@ -136,7 +156,7 @@ public:
 		const char *str = expr;
 		result = CheckOR(&str);
 		/* check for no end error */
-		if (*str && !binaryExpressionParserError)
+		if (Q_strvalid(str) && !binaryExpressionParserError)
 			binaryExpressionParserError = BEPERR_NOEND;
 	}
 
