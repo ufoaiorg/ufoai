@@ -630,6 +630,9 @@ static void testComFilePath (void)
 	CU_ASSERT_STRING_EQUAL(buf, "");
 }
 
+/**
+ * @brief The string 'a' and 'c' evaluates to true - everything else to false
+ */
 static int TEST_BEP (const char *id, const void *userdata)
 {
 	return Q_streq(id, "a") || Q_streq(id, "c");
@@ -637,6 +640,10 @@ static int TEST_BEP (const char *id, const void *userdata)
 
 static void testBinaryExpressionParser (void)
 {
+	CU_ASSERT_TRUE(BEP_Evaluate("", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("a", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("c", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("d", TEST_BEP));
 	CU_ASSERT_TRUE(BEP_Evaluate("a|b", TEST_BEP));
 	CU_ASSERT_FALSE(BEP_Evaluate("a&b", TEST_BEP));
 	CU_ASSERT_TRUE(BEP_Evaluate("a&(b|c)", TEST_BEP));
@@ -644,7 +651,10 @@ static void testBinaryExpressionParser (void)
 	CU_ASSERT_FALSE(BEP_Evaluate("b|(d&c)", TEST_BEP));
 	CU_ASSERT_TRUE(BEP_Evaluate("b|(a&c)", TEST_BEP));
 	CU_ASSERT_FALSE(BEP_Evaluate("a^c", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("a^d", TEST_BEP));
+	CU_ASSERT_TRUE(BEP_Evaluate("!z", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("!!z", TEST_BEP));
+	CU_ASSERT_FALSE(BEP_Evaluate("!a", TEST_BEP));
 }
 
 int UFO_AddGenericTests (void)
