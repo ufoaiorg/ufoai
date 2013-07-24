@@ -2,7 +2,7 @@
 // DESERT THEME
 // *********************************
 
-base desert/
+base desert/des_
 
 //---------------------------------
 //Dropships
@@ -33,7 +33,7 @@ tile +craft_drop_raptor
 0    0    0    0    0
 }
 
-tile +main_harvester
+tile +craft_crash_harvester
 {
 8 9
 
@@ -48,10 +48,10 @@ tile +main_harvester
 0      0      0      0      0      0      0      0
 }
 
-assembly harvester_crash
+assembly medium
 {
-title "_Crashed Harvester"
+title "_Crashed UFO"
 size "6 7"
-+main_harvester "1 1"
-*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_crash_harvester	"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
 }

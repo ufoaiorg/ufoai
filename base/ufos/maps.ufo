@@ -542,15 +542,16 @@ mapdef country_street
 	)
 }
 */
-////////////////////////////////////////
-// DESERT_HARVESTER_CRASH RANDOM MAPS //
-////////////////////////////////////////
 
-mapdef desert_harvester_crash
+////////////////////////
+// DESERT RANDOM MAPS //
+////////////////////////
+
+mapdef desert_medium
 {
 	map				"+desert"
-	param			"harvester_crash"
-	description		"_Country Desert (Crashed Harvester)"
+	param			"medium"
+	description		"_Country Desert"
 	multiplayer		true
 	teams			2
 	gametypes (

@@ -206,10 +206,15 @@ base/maps/country/cy_road_junction_w.map | GNU General Public License 2.0 or lat
 base/maps/country/cy_road_v_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_v_02.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/desert/craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/desert/craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/desert/craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/desert/main_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/desert/des_craft_crash_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/desert/des_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/desert/des_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/desert/des_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/desert/des_sand01.map | GNU General Public License 2.0 or later | tilmanuwe
+base/maps/desert/des_sand02.map | GNU General Public License 2.0 or later | tilmanuwe
+base/maps/desert/des_sand03.map | GNU General Public License 2.0 or later | tilmanuwe
+base/maps/desert/des_sand04.map | GNU General Public License 2.0 or later | tilmanuwe
+base/maps/desert/des_sand05.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/druglord.ump | GNU General Public License 2.0 or later
 base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
