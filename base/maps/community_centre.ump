@@ -58,7 +58,7 @@ tile +craft_drop_raptor
 assembly default
 {
 size "3 6"
-title "_Community_centre"
+title "_Community Centre"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

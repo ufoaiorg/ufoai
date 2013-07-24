@@ -65,7 +65,7 @@ tile +craft_drop_raptor
 assembly default
 {
 size "10 8"
-title "_Bomber_city"
+title "_Bomber in the City"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
