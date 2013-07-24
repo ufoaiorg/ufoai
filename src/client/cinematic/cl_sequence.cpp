@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../renderer/r_misc.h" /* R_PushMatrix, R_PopMatrix */
 #include "../renderer/r_mesh_anim.h"
+#include "../cl_language.h"
 #include "../../shared/parse.h"
 #include "../ui/ui_render.h"
 
@@ -408,7 +409,7 @@ static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
 			int maxWidth = (int) s2d->size[0];
 			if (maxWidth <= 0)
 				maxWidth = VID_NORM_WIDTH;
-			height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text));
+			height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, CL_Translate(s2d->text));
 		}
 	}
 	R_Color(nullptr);
@@ -761,7 +762,6 @@ static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char *name, const
 				data += strlen(data) + 1;
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
-					data++;
 				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(data, &Com_GetValue<char*>(s2d, vp), cl_genericPool, 0);
 					break;
