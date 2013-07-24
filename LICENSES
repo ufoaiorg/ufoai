@@ -215,7 +215,6 @@ base/maps/desert/des_sand02.map | GNU General Public License 2.0 or later | tilm
 base/maps/desert/des_sand03.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand04.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand05.map | GNU General Public License 2.0 or later | tilmanuwe
-base/maps/desert/des_sand06.map | GNU General Public License 2.0 or later | | base/maps/desert/des_craft_crash_harvester.map
 base/maps/druglord.ump | GNU General Public License 2.0 or later
 base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2815,6 +2814,7 @@ base/pics/banks/checkbox_blue.png | GNU General Public License 2.0 or later | MC
 base/pics/banks/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack2.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/banks/pack3.png | GNU General Public License 2.0 or later | Nate Wright | based on pack2.png images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bayo

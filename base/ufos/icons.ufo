@@ -162,6 +162,21 @@ sprite icons/varrow_bottom_top {
 	pack64	true
 }
 
+// plus and minus icons (styled like time icons below)
+sprite icons/plus {
+	image "banks/pack3"
+	texl	"0 0"
+	size	"19 19"
+	pack64	true
+}
+
+sprite icons/minus {
+	image "banks/pack3"
+	texl	"19 0"
+	size	"19 19"
+	pack64	true
+}
+
 // delay time
 
 sprite icons/speed_stop {
