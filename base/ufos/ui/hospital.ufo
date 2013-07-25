@@ -570,13 +570,11 @@ window hospital_employee
 		string lbl
 		{
 			string "_Health:"
-			font "f_normal"
 			longlines LONGLINES_PRETTYCHOP
 		}
 		string val
 		{
 			string *cvar:mn_hp
-			font "f_normal"
 			longlines LONGLINES_PRETTYCHOP
 		}
 	}
