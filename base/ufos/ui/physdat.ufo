@@ -279,28 +279,14 @@ window physdata
 		string val { string *cvar:mn_tcls }
 	}
 
-	image hvy_bar_full
+	image ass_bar_full
 		{
 			pos "224 216"
 			src		"ui/bar_skill_disabled"
 		}
-	cmpPhysNamedTbar hvy {
-		{
-			pos "220 198"
-		}
-		tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
-		string lbl { string "_Heavy Weapons:" }
-		string val { string *cvar:mn_thvy }
-	}
-
-	image ass_bar_full
-		{
-			pos "224 248"
-			src		"ui/bar_skill_disabled"
-		}
 	cmpPhysNamedTbar ass {
 		{
-			pos "220 230"
+			pos "220 198"
 		}
 		tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 		string lbl { string "_Assault Weapons:" }
@@ -309,12 +295,12 @@ window physdata
 
 	image snp_bar_full
 		{
-			pos "224 280"
+			pos "224 248"
 			src		"ui/bar_skill_disabled"
 		}
 	cmpPhysNamedTbar snp {
 		{
-			pos "220 262"
+			pos "220 230"
 		}
 		tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 		string lbl { string "_Sniper Rifles:" }
@@ -323,12 +309,12 @@ window physdata
 
 	image exp_bar_full
 		{
-			pos "224 314"
+			pos "224 280"
 			src		"ui/bar_skill_disabled"
 		}
 	cmpPhysNamedTbar exp {
 		{
-			pos "220 296"
+			pos "220 262"
 		}
 		tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 		string lbl { string "_High-Explosives:" }
