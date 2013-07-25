@@ -281,12 +281,6 @@ window team extends iaircraft
 			string lbl  { string "_Close Combat:" }
 			string val  { string *cvar:mn_tcls }
 		}
-		cmpNamedBar hvy {
-			bar currbar { current *cvar:mn_vhvy }
-			bar initbar { current *cvar:mn_vhvyi }
-			string lbl  { string "_Heavy Weapons:" }
-			string val  { string *cvar:mn_thvy }
-		}
 		cmpNamedBar ass {
 			bar currbar { current *cvar:mn_vass }
 			bar initbar { current *cvar:mn_vassi }
