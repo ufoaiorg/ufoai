@@ -453,28 +453,14 @@ window equipment extends objectinfo
 			string val { string *cvar:mn_tcls }
 		}
 
-		image hvy_bar_full
+		image ass_bar_full
 			{
 				pos "30 210"
 				src		"ui/bar_skill_disabled"
 			}
-		cmpDefNamedTbar hvy {
-			{
-				pos "4 192"
-			}
-			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
-			string lbl { string "_Heavy Weapons:" }
-			string val { string *cvar:mn_thvy }
-		}
-
-		image ass_bar_full
-			{
-				pos "30 245"
-				src		"ui/bar_skill_disabled"
-			}
 		cmpDefNamedTbar ass {
 			{
-				pos "4 227"
+				pos "4 192"
 			}
 			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
@@ -483,12 +469,12 @@ window equipment extends objectinfo
 
 		image snp_bar_full
 			{
-				pos "30 280"
+				pos "30 245"
 				src		"ui/bar_skill_disabled"
 			}
 		cmpDefNamedTbar snp {
 			{
-				pos "4 262"
+				pos "4 227"
 			}
 			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
@@ -497,12 +483,12 @@ window equipment extends objectinfo
 
 		image exp_bar_full
 			{
-				pos "30 315"
+				pos "30 280"
 				src		"ui/bar_skill_disabled"
 			}
 		cmpDefNamedTbar exp {
 			{
-				pos "4 297"
+				pos "4 262"
 			}
 			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 			string lbl { string "_High-Explosives:" }
