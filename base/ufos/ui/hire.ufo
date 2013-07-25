@@ -400,28 +400,14 @@ window employees
 			string val { string *cvar:mn_tcls }
 		}
 
-		image hvy_bar_full
+		image ass_bar_full
 			{
 				pos "31 176"
 				src		"ui/bar_skill_disabled"
 			}
-		cmpDefNamedTbar hvy {
-			{
-				pos "5 158"
-			}
-			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
-			string lbl { string "_Heavy Weapons:" }
-			string val { string *cvar:mn_thvy }
-		}
-
-		image ass_bar_full
-			{
-				pos "31 206"
-				src		"ui/bar_skill_disabled"
-			}
 		cmpDefNamedTbar ass {
 			{
-				pos "5 188"
+				pos "5 158"
 			}
 			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
@@ -430,12 +416,12 @@ window employees
 
 		image snp_bar_full
 			{
-				pos "31 236"
+				pos "31 206"
 				src		"ui/bar_skill_disabled"
 			}
 		cmpDefNamedTbar snp  {
 			{
-				pos "5 218"
+				pos "5 188"
 			}
 			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
@@ -444,12 +430,12 @@ window employees
 
 		image exp_bar_full
 			{
-				pos "31 266"
+				pos "31 236"
 				src		"ui/bar_skill_disabled"
 			}
 		cmpDefNamedTbar exp  {
 			{
-				pos "5 248"
+				pos "5 218"
 			}
 			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 			string lbl { string "_High Explosives:" }
@@ -458,7 +444,7 @@ window employees
 
 		cmpDefNamedTbar hp {
 			{
-				pos "5 283"
+				pos "5 253"
 			}
 			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
 			string lbl { string "_Health:" }
