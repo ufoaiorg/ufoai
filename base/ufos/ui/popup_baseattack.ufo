@@ -213,19 +213,9 @@ window popup_assembleteam
 				string val  { string *cvar:mn_tcls }
 			}
 
-			cmpNamedBar hvy {
-			{
-				pos "9 142"
-			}
-				bar currbar { current *cvar:mn_vhvy }
-				bar initbar { current *cvar:mn_vhvyi }
-				string lbl  { string "_Heavy Weapons:" }
-				string val  { string *cvar:mn_thvy }
-			}
-
 			cmpNamedBar ass {
 			{
-				pos "9 165"
+				pos "9 142"
 			}
 				bar currbar { current *cvar:mn_vass }
 				bar initbar { current *cvar:mn_vassi }
@@ -235,7 +225,7 @@ window popup_assembleteam
 
 			cmpNamedBar snp {
 			{
-				pos "9 188"
+				pos "9 165"
 			}
 				bar currbar { current *cvar:mn_vsnp }
 				bar initbar { current *cvar:mn_vsnpi }
@@ -245,7 +235,7 @@ window popup_assembleteam
 
 			cmpNamedBar exp {
 			{
-				pos "9 211"
+				pos "9 188"
 			}
 				bar currbar { current *cvar:mn_vexp }
 				bar initbar { current *cvar:mn_vexpi }
@@ -255,7 +245,7 @@ window popup_assembleteam
 
 			cmpNamedTbar hp {
 			{
-				pos "9 234"
+				pos "9 211"
 			}
 				tbar bar   {
 					current *cvar:mn_vhp
