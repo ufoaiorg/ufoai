@@ -123,7 +123,13 @@ struct campaign_s;
 /**
  * @brief The length of a single mission spawn cycle
  */
-#define DELAY_BETWEEN_MISSION_SPAWNING 		8
+#define DELAY_BETWEEN_MISSION_SPAWNING 		12
+
+/**
+ * @brief Determines the early game period during which DELAY_BETWEEN_MISSION_SPAWNING is halved.
+ * @note This is done to ensure the player is not bored early in the game. The rush will stop when alien interest reaches this level.
+ */
+#define EARLY_UFO_RUSH_INTEREST 			50
 
 /**
  * @brief The minimum and maximum amount of missions per mission cycle.

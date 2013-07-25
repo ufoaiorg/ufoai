@@ -1569,9 +1569,15 @@ static interestCategory_t CP_SelectNewMissionType (void)
  */
 void CP_SpawnNewMissions (void)
 {
+	int spawn_delay = DELAY_BETWEEN_MISSION_SPAWNING;
 	ccs.lastMissionSpawnedDelay++;
 
-	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
+	/* Halve the spawn delay in the early game so players see UFOs and get right into action */
+	if (ccs.overallInterest < EARLY_UFO_RUSH_INTEREST) {
+		spawn_delay = (int) (spawn_delay / 3);
+	}
+
+	if (ccs.lastMissionSpawnedDelay > spawn_delay) {
 		float nonOccurrence;
 		int newMissionNum, i;
 		/* Select the amount of missions that will be spawned in the next cycle. */
@@ -1601,7 +1607,7 @@ void CP_SpawnNewMissions (void)
 			}
 		}
 
-		ccs.lastMissionSpawnedDelay -= DELAY_BETWEEN_MISSION_SPAWNING;
+		ccs.lastMissionSpawnedDelay -= spawn_delay;
 	}
 }
 
