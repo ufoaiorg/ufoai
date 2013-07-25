@@ -530,18 +530,9 @@ window hospital_employee
 		string val { string *cvar:mn_tcls }
 	}
 
-	cmpHospitalNamedTbar hvy {
-		{
-			pos "690 342"
-		}
-		tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
-		string lbl { string "_Heavy Weapons:" }
-		string val { string *cvar:mn_thvy }
-	}
-
 	cmpHospitalNamedTbar ass {
 		{
-			pos "690 372"
+			pos "690 342"
 		}
 		tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 		string lbl { string "_Assault Weapons:" }
@@ -550,7 +541,7 @@ window hospital_employee
 
 	cmpHospitalNamedTbar snp {
 		{
-			pos "690 402"
+			pos "690 372"
 		}
 		tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 		string lbl { string "_Sniper Rifles:" }
@@ -559,7 +550,7 @@ window hospital_employee
 
 	cmpHospitalNamedTbar exp {
 		{
-			pos "690 432"
+			pos "690 402"
 		}
 		tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 		string lbl { string "_High-Explosives:" }
@@ -568,7 +559,7 @@ window hospital_employee
 
 	cmpHospitalNamedTbar health  {
 		{
-			pos "690 476"
+			pos "690 432"
 		}
 		tbar bar
 		{
