@@ -572,7 +572,10 @@ mapdef desert_medium
 
 	ufos
 	(
+		craft_crash_fighter
+		craft_crash_gunboat
 		craft_crash_harvester
+		craft_crash_scout
 	)
 
 	terrains

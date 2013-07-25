@@ -1,7 +1,7 @@
 {
 	material tex_nature/desert007
 	{
-		texture tex_nature/desert006
+		texture tex_nature/desert008
 		terrain 0 256
 		lightmap
 	}

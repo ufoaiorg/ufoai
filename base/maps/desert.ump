@@ -6,6 +6,7 @@
 // ------
 // a: common tile
 // c: craft, typically a dropship or a UFO
+// 1-4: hill
 
 base desert/des_
 
@@ -14,24 +15,36 @@ base desert/des_
 tile +craft_drop_firebird
 {
 4 5
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
+0			a1234		a1234		0
+a1234		+c			+c			a1234
+a1234		+c			+c			a1234
+a1234		+c			+c			a1234
+0			a1234		a1234		0
 }
 
 tile +craft_drop_herakles
 {
 4 5
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
+0			a1234		a1234		0
+a1234		+c			+c			a1234
+a1234		+c			+c			a1234
+a1234		+c			+c			a1234
+0			a1234		a1234		0
 }
 
 tile +craft_drop_raptor
+{
+5 5
+0			a1234		a1234		a1234		0
+a1234		+c			+c			+c			a1234
+a1234		+c			+c			+c			a1234
+a1234		+c			+c			+c			a1234
+0			a1234		a1234		a1234		0
+}
+
+// UFO tiles -------------------------------------------------------*
+
+tile +craft_crash_fighter
 {
 5 5
 0		0		0		0		0
@@ -41,22 +54,81 @@ tile +craft_drop_raptor
 0		0		0		0		0
 }
 
-// UFO tiles -------------------------------------------------------*
+tile +craft_crash_gunboat
+{
+8 6
+0		0		0		0		0		0		0		0
+0		+c		+c		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		+c		+c		0
+0		0		0		0		0		0		0		0
+}
 
 tile +craft_crash_harvester
 {
 8 7
 
-0		x		x		x		x		x		x		0
-x		+c		+c		+c		+c		+c		+c		x
-x		+c		+c		+c		+c		+c		+c		x
-x		+c		+c		+c		+c		+c		+c		x
-x		+c		+c		+c		+c		+c		+c		x
-x		+c		+c		+c		+c		+c		+c		x
+0		2		2		2		0		0		0		0
+4		+3		+3		+3		+a		+a		+a		x
+4		+3		+3		+3		+c		+c		+a		x
+4		+3		+3		+3		+c		+c		+a		x
+0		+a		+c		+c		+c		+c		+a		x
+0		+a		+a		+a		+a		+a		+a		x
 0		0		0		0		0		0		0		0
 }
 
+tile +craft_crash_scout
+{
+5 5
+0		1		1		1		0
+a		+4		+4		+4		3
+a		+4		+4		+4		3
+a		+4		+4		+4		3
+0		a		a		a		0
+}
+
 // Common tiles ----------------------------------------------------*
+
+tile +hill01_ne
+{
+5 5
+0		0		0		0		0
+1		+2		+2		+2		0
+1		+2		+2		+2		0
+1		+2		+2		+2		0
+0		3		3		3		0
+}
+
+tile +hill01_nw
+{
+5 5
+0		0		0		0		0
+0		+1		+1		+1		2
+0		+1		+1		+1		2
+0		+1		+1		+1		2
+0		4		4		4		0
+}
+
+tile +hill01_se
+{
+5 5
+0		2		2		2		0
+4		+3		+3		+3		0
+4		+3		+3		+3		0
+4		+3		+3		+3		0
+0		0		0		0		0
+}
+
+tile +hill01_sw
+{
+5 5
+0		1		1		1		0
+0		+4		+4		+4		3
+0		+4		+4		+4		3
+0		+4		+4		+4		3
+0		0		0		0		0
+}
 
 tile +sand01
 {
@@ -109,18 +181,43 @@ tile +sand06
 0		0		0		0		0
 }
 
+tile +sand07
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +sand08
+{
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
 // Map assemblies --------------------------------------------------*
 
 assembly medium
 {
 title "_Crashed UFO"
 size "6 8"
++hill01_ne	"0 1"
++hill01_nw	"0 1"
++hill01_se	"0 1"
++hill01_sw	"0 1"
 +sand01		"0 2"
 +sand02		"0 2"
 +sand03		"0 2"
 +sand04		"0 2"
 +sand05		"0 2"
 +sand06		"0 1"
-*rm_ufo +craft_crash_harvester	"1 1"
++sand07		"0 1"
++sand08		"0 1"
+*rm_ufo +craft_crash_gunboat	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }

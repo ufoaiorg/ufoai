@@ -206,16 +206,25 @@ base/maps/country/cy_road_junction_w.map | GNU General Public License 2.0 or lat
 base/maps/country/cy_road_v_01.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/country/cy_road_v_02.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/desert/des_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/desert/des_craft_crash_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/desert/des_craft_crash_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/desert/des_craft_crash_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/desert/des_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/desert/des_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/desert/des_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/desert/des_hill01_ne.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_hill01_nw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_hill01_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_hill01_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
 base/maps/desert/des_sand01.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand02.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand03.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand04.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/desert/des_sand05.map | GNU General Public License 2.0 or later | tilmanuwe
-base/maps/desert/des_sand06.map | GNU General Public License 2.0 or later | | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_sand06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_sand07.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
+base/maps/desert/des_sand08.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/desert/des_craft_crash_harvester.map
 base/maps/druglord.ump | GNU General Public License 2.0 or later
 base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
