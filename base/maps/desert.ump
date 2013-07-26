@@ -88,6 +88,17 @@ a		+4		+4		+4		3
 0		a		a		a		0
 }
 
+tile +craft_crash_supply
+{
+6 6
+0		0		0		0		0		0
+0		0		0		+c		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
 // Common tiles ----------------------------------------------------*
 
 tile +hill01_ne
@@ -218,6 +229,6 @@ size "6 8"
 +sand06		"0 1"
 +sand07		"0 1"
 +sand08		"0 1"
-*rm_ufo +craft_crash_gunboat	"1 1"
+*rm_ufo +craft_crash_supply	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
