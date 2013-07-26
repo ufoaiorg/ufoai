@@ -224,6 +224,158 @@ mapdef africa_small
 	)
 }
 
+mapdef africa_nature_large
+{
+	map				"+africa"
+	param			"nature_large"
+	description		"_African Desert"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		30
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_crash_bomber
+		craft_crash_corrupter
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef africa_nature_medium
+{
+	map				"+africa"
+	param			"nature_medium"
+	description		"_African Desert"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		16
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_crash_gunboat
+		craft_crash_harvester
+		craft_crash_supply
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef africa_nature_small
+{
+	map				"+africa"
+	param			"nature_small"
+	description		"_African Desert"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		8
+
+	civilianteam	africa
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_ufo_scout
+		craft_crash_scout
+		craft_crash_fighter
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
+
+	cultures
+	(
+		"african"
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
 /////////////////////////////
 // BEACH RANDOM MAPS ////////
 /////////////////////////////

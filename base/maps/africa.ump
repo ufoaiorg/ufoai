@@ -730,3 +730,66 @@ tileset rock_a		"0 1"
 *rm_ufo +craft_crash_corrupter	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
+
+assembly nature_small
+{
+size "8 5"
+title "_Africa"
+multiplayer +mp_team2
++empty6				"0 30"
++empty6a			"0 3"
++empty6b			"0 3"
++empty6c			"0 3"
++empty6d			"0 3"
++mountain1a			"0 1"
++mountain1b			"0 1"
++nature_01			"0 1"
++rock1a				"0 1"
++rock1b				"0 1"
++rock2a				"0 1"
++rock2b				"0 1"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_crash_scout		"1 1"
+}
+
+assembly nature_medium
+{
+size "8 8"
+title "_Africa"
+multiplayer +mp_team2
++empty6				"0 30"
++empty6a			"0 3"
++empty6b			"0 3"
++empty6c			"0 3"
++empty6d			"0 3"
++mountain1a			"0 1"
++mountain1b			"0 1"
++nature_01			"0 1"
++rock1a				"0 1"
++rock1b				"0 1"
++rock2a				"0 1"
++rock2b				"0 1"
+*rm_ufo +craft_crash_harvester	"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
+}
+
+assembly nature_large
+{
+size "10 8"
+title "_Africa"
+multiplayer +mp_team2
++empty6				"0 30"
++empty6a			"0 3"
++empty6b			"0 3"
++empty6c			"0 3"
++empty6d			"0 3"
++mountain1a			"0 1"
++mountain1b			"0 1"
++nature_01			"0 1"
++rock1a				"0 1"
++rock1b				"0 1"
++rock2a				"0 1"
++rock2b				"0 1"
+*rm_ufo +craft_crash_corrupter	"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
+}
