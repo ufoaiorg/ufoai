@@ -91,6 +91,7 @@ mapdef africa_large
 		craft_ufo_bomber
 		craft_crash_bomber
 		craft_ufo_corrupter
+		craft_crash_corrupter
 	)
 
 	terrains
