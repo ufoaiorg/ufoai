@@ -2,55 +2,162 @@
 // BASE RESEARCH MENU
 // ===================
 
-component cmpResearchItem extends panel {
+component cmpTechItem extends panel {
 	{
-		size		"590 25"
-	}
+		size		"530 50"
 
-	// use a node icon, instead of a button
-	button img_status {
-		icon		"icons/bordered_question"
-		pos			"0 0"
-		size		"16 16"
-		padding		0
-		onClick		{ cmd "research_select <node:parent@num>;" cmd "mn_show_ufopedia;" }
-		tooltip		"_Open UFOPaedia"
-	}
-
-	string txt_item	{
-		pos			"20 0"
-		size		"365 25"
-		color		"0 .78 0 1"
-		longlines	LONGLINES_PRETTYCHOP
-		onClick		{ cmd "research_select <node:parent@num>;" }
-	}
-
-	string txt_assigned	{
-		pos			"405 0"
-		size		"40 20"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_UR
-	}
-
-	string txt_rsstatus	{
-		pos			"480 0"
-		size		"60 20"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_UR
-	}
-
-	spinner_blue bt_rs_change {
-		tooltip		"_Add/Remove scientist"
-		pos			"450 0"
-		min			0
-		current		10000
-		max			20000
-		delta		1
-		onChange	{
-			cmd "research_select <node:parent@num>;"
-			cmd "mn_rs_change <node:parent@num> <lastdiff>;"
+		onClick	{
+			cmd "ui_research_select <node:this.id@string>;"
 		}
 	}
+
+	data id {
+		integer		-1
+		string		""
+	}
+
+	button pedia {
+		tooltip		"_Open UFOPaedia"
+		icon		"icons/bordered_question"
+		pos			"5 4"
+		size		"16 16"
+		padding		0
+
+		onClick	{
+			cmd "ui_research_select <node:parent.id@string>; ui_push ufopedia <node:parent.id@string>;"
+		}
+	}
+
+	string name {
+		pos			"25 0"
+		size		"345 25"
+		color		"0 .78 0 1"
+		longlines	LONGLINES_PRETTYCHOP
+		ghost		true
+	}
+
+	bar progress {
+		pos			"5 27"
+		size		"224 5"
+		color		"0 0.8 0 1"
+		bordercolor	"0 0.8 0 1"
+		border		1
+		current		0
+		max			100
+		readonly	true
+		ghost		true
+	}
+
+	panel rsrc_control {
+		{
+			pos 	"400 0"
+			size	"130 32"
+			ghost	true
+			invis	true
+		}
+		button stop {
+			tooltip		"_Stop researching this project"
+			icon		"icons/speed_stop"
+			pos			"0 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.parent.id@string>;"
+			}
+		}
+		button less {
+			tooltip		"_Assign less scientists on this project"
+			icon		"icons/minus"
+			pos			"25 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> -1;"
+			}
+		}
+		string scientists {
+			string		"0"
+			pos			"45 4"
+			size		"30 25"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CR
+			ghost		true
+		}
+		button more {
+			tooltip		"_Assign more scientists on this project"
+			icon		"icons/plus"
+			pos			"75 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> 1;"
+			}
+		}
+		button max {
+			tooltip		"_Assign all free scientists on this project"
+			icon		"icons/speed_play3"
+			pos			"100 4"
+			size		"25 25"
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.parent.id@string>;"
+			}
+		}
+	}
+
+	panel rsrc_baselink {
+		{
+			pos 	"350 0"
+			size	"180 32"
+			invis	true
+
+			onclick {
+				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.id@integer>;"
+			}
+		}
+		string basename {
+			string		"0"
+			pos			"0 4"
+			size		"155 25"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CR
+			ghost		true
+
+		}
+		button go {
+			tooltip		"_Go to base"
+			icon		"icons/speed_play1"
+			pos			"155 4"
+			size		"25 25"
+
+			onclick {
+				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.parent.id@integer>;"
+			}
+		}
+	}
+	panel rsrc_missing {
+		{
+			pos 	"350 0"
+			size	"180 32"
+			invis	true
+		}
+		string note {
+			string		"_N/A"
+			tooltip		"_An artifact or prerequisite is missing for this topic"
+			pos			"0 4"
+			size		"155 25"
+			color		"1 0.874 0.294 1"
+			contentalign	ALIGN_CR
+
+		}
+		button show {
+			tooltip		"_Expand/Collapse"
+			icon		"icons/scroll_bottom"
+			pos			"155 4"
+			size		"25 25"
+			invis		true
+		}
+	}
+	/** @TODO implement research requirements listing */
 }
 
 // ================
@@ -59,510 +166,233 @@ component cmpResearchItem extends panel {
 
 window research
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/base_bg"
+		background	"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
 	}
 
-	rows lines {
-		pos			"43 108"
-		size		"564 568"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-
-	// ======================
 	// Techlist Panel (left)
-	// ======================
-
-	panel techlist {
-		pos			"29 93"
-		size		"587 597"
-		background		"ui/panel_grey_green_large2"
-	}
-
-	// ==================
-	// list
-	// ==================
-	// buttons_small - research icons
-	//
-	// under research: 	texl	"32 0"	texh	"48 16"
-	// paused: 		texl	"48 0"	texh	"64 16"
-	// unknown: 		texl	"32 16"	texh	"48 32"
-	// unresearchable: 	texl	"48 16"	texh	"64 32"
-	// ==================
-
-	/**
-	 * @param[in] <1> id of the research
-	 * @param[in] <2> quantity of the item in the base
-	 * @param[in] <3> min value allowed
-	 * @param[in] <4> max value allowed
-	 */
-	confunc research_updateitem {
-		*node:root.item<1>.bt_rs_change@current = <2>
-		*node:root.item<1>.bt_rs_change@max = <3>
-	}
-
-	/**
-	 * @brief Functions to hide a single entry in the list (icons only right now)
-	 * @param[in] <1> Item row
-	 */
-	confunc research_hide {
-		*node:root.item<1>.txt_item@invis = true
-		*node:root.item<1>.img_status@invis = true
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = true
-		*node:root.item<1>.txt_rsstatus@invis = true
-	}
-
-	confunc research_research {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@left = 20
-		*node:root.item<1>.txt_item@color = "0 .78 0 1"
-		*node:root.item<1>.img_status@invis = false
-		*node:root.item<1>.bt_rs_change@invis = false
-		*node:root.item<1>.txt_assigned@invis = false
-		*node:root.item<1>.txt_rsstatus@invis = false
-	}
-
-	confunc research_outterresearch {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@left = 20
-		*node:root.item<1>.txt_item@color = "0 .78 0 1"
-		*node:root.item<1>.img_status@invis = false
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = false
-		*node:root.item<1>.txt_rsstatus@invis = false
-	}
-
-	confunc research_basetitle {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@left = 0
-		*node:root.item<1>.txt_item@color = "1 1 1 1"
-		*node:root.item<1>.img_status@invis = true
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = true
-		*node:root.item<1>.txt_rsstatus@invis = true
-	}
-
-	confunc research_baseinfo {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@color = "0.7 0.7 0.7 1"
-		*node:root.item<1>.txt_item@left = 20
-		*node:root.item<1>.img_status@invis = true
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = false
-		*node:root.item<1>.txt_rsstatus@invis = true
-	}
-
-	confunc research_unresearchableitemtitle {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@color = "1 1 1 1"
-		*node:root.item<1>.txt_item@left = 0
-		*node:root.item<1>.img_status@invis = true
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = true
-		*node:root.item<1>.txt_rsstatus@invis = true
-	}
-
-	confunc research_unresearchableitem {
-		*node:root.item<1>.txt_item@invis = false
-		*node:root.item<1>.txt_item@color = "0 .78 0 1"
-		*node:root.item<1>.txt_item@left = 20
-		*node:root.item<1>.img_status@invis = true
-		*node:root.item<1>.bt_rs_change@invis = true
-		*node:root.item<1>.txt_assigned@invis = true
-		*node:root.item<1>.txt_rsstatus@invis = true
-	}
-
-	/**
-	 * @brief Functions to make a single entry visible again in the list (icons only right now)
-	 * @param[in] <1> Item row
-	 */
-	confunc research_show {
-		*node:root.item<1>.img_status@invis = false
-		*node:root.item<1>.bt_rs_change@invis = false
-	}
-
-	/**
-	 * @param[in] <1> Item row
-	 */
-	confunc research_selected {
-		*node:root.item<1>.txt_item@color = ".3 1 0 1"
-	}
-
-	/**
-	 * @param[in] <1> Item row
-	 */
-	confunc research_changebasetooltype {
-		*node:root.item<1>.txt_item@tooltip = "_Switch to another base"
-	}
-
-	/**
-	 * @param[in] <1> Item row
-	 */
-	confunc research_normal {
-		*node:root.item<1>.img_status@icon = "icons/bordered_magnifying_glass"
-	}
-
-	/**
-	 * @param[in] <1> Item row
-	 */
-	confunc research_running {
-		*node:root.item<1>.img_status@icon	= "icons/bordered_magnifying_glass"
-	}
-
-	/**
-	 * @param[in] <1> Item row
-	 */
-	confunc research_paused {
-		*node:root.item<1>.img_status@icon	= "icons/bordered_sleep"
-	}
-
-	/**
-	 * @brief Switch to another reserch base
-	 * @param[in] <1> New base id
-	 * @param[in] <2> Selected item row
-	 */
-	confunc research_changebase {
-		cmd "ui_pop;ui_pop;mn_base_select <1>;ui_push research;"
-		cmd "research_select <2>;"
-	}
-
-	cmpResearchItem item0 {
-		pos "50 113"
-	}
-	cmpResearchItem item1 {
-		pos	"50 138"
-	}
-
-	cmpResearchItem item2 {
-		pos	"50 163"
-	}
-
-	cmpResearchItem item3 {
-		pos	"50 188"
-	}
-
-	cmpResearchItem item4 {
-		pos	"50 213"
-	}
-
-	cmpResearchItem item5 {
-		pos	"50 238"
-	}
-
-	cmpResearchItem item6 {
-		pos	"50 263"
-	}
-
-	cmpResearchItem item7 {
-		pos	"50 288"
-	}
-
-	cmpResearchItem item8 {
-		pos	"50 313"
-	}
-
-	cmpResearchItem item9 {
-		pos	"50 338"
-	}
-
-	cmpResearchItem item10 {
-		pos	"50 363"
-	}
-
-	cmpResearchItem item11 {
-		pos	"50 388"
-	}
-
-	cmpResearchItem item12 {
-		pos	"50 413"
-	}
-
-	cmpResearchItem item13 {
-		pos	"50 438"
-	}
-
-	cmpResearchItem item14 {
-		pos	"50 463"
-	}
-
-	cmpResearchItem item15 {
-		pos	"50 488"
-	}
-
-	cmpResearchItem item16 {
-		pos	"50 513"
-	}
-
-	cmpResearchItem item17 {
-		pos	"50 538"
-	}
-
-	cmpResearchItem item18 {
-		pos	"50 563"
-	}
-
-	cmpResearchItem item19 {
-		pos	"50 588"
-	}
-
-	cmpResearchItem item20 {
-		pos	"50 613"
-	}
-
-	cmpResearchItem item21 {
-		pos	"50 638"
-	}
-
-	// ===================
-	// Info Panel (right)
-	// ===================
-
-	panel infopanel {
-		pos			"645 93"
-		size		"352 660"
-		background		"ui/panel_grey_green_large"
-	}
-
-	// ===================================
-	// Research infos related to the base
-	// ===================================
-
-	string str_base_info
-	{
-		string		"_Base Research Info"
-		pos			"663 115"
-		size		"317 18"
-		font		"f_small_bold"
-		longlines	LONGLINES_PRETTYCHOP
-		contentalign	ALIGN_CC
-	}
-
-	// free labs in the selected base
-	string txt_base_labs
-	{
-		string		*cvar:mn_research_labs
-		font		"f_verysmall"
-		pos			"663 135"
-		size		"317 18"
-		longlines	LONGLINES_PRETTYCHOP
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CC
-	}
-	image labspace_img
-	{
-		pos			"693 152"
-		src		"ui/bar_rahmen"
-	}
-	bar labspace_bar
-	{
-		pos			"703 157"
-		current		*cvar:mn_current_labspace
-		size		"236 6"
-		color		"0 .8 0 1"
-		max			*cvar:mn_max_labspace
-		ghost		true
-	}
-
-	// free scientists in base
-	string txt_base_scis
-	{
-		string		*cvar:mn_research_scis
-		font		"f_verysmall"
-		pos			"663 170"
-		size		"317 18"
-		longlines	LONGLINES_PRETTYCHOP
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CC
-	}
-	image occ_scientists_img
-	{
-		pos			"693 187"
-		src		"ui/bar_rahmen"
-	}
-	bar occ_scientists_bar
-	{
-		pos			"703 192"
-		current		*cvar:mn_scientists_available
-		size		"236 6"
-		color		"0 .8 0 1"
-		max			*cvar:mn_scientists_hired
-		ghost		true
-	}
-
-	// =========================================================
-	// Informations on research progress and technology details
-	// =========================================================
-
-	string txt_selected_name
-	{
-		string		*cvar:mn_research_selname
-		pos			"663 215"
-		size		"317 18"
-		font		"f_small_bold"
-		longlines	LONGLINES_PRETTYCHOP
-		contentalign	ALIGN_CC
-	}
-
-	// research status
-	string txt_selected_status
-	{
-		string		*cvar:mn_research_selstatus
-		font		"f_verysmall"
-		tooltip		*cvar:mn_research_selstatus_long
-		pos			"663 235"
-		size		"317 18"
-		color		"0 .78 0 1"
-		longlines	LONGLINES_PRETTYCHOP
-		contentalign	ALIGN_CC
-	}
-
-	// research image
-	image image_top
-	{
-		src		*cvar:mn_research_image
-		pos			"663 260"
-		size		"317 350"
-		preventratio	true
-		contentalign	ALIGN_CC
-	}
-
-	// research model
-	model mdl_top
-	{
-		src			*cvar:mn_research_model
-		angles		"0 0 90"
-		pos			"663 260"
-		size		"317 350"
-		autoscale	true
-		omega		"0 -3 0"
-		rotatewithmouse	true
-	}
-
-	// the base this research item is researched in
-	string txt_selected_base
-	{
-		string		*cvar:mn_research_selbase
-		font		"f_verysmall"
-		pos			"663 615"
-		color		"0 .78 0 1"
-		size		"317 18"
-		contentalign	ALIGN_CC
-	}
-
-	// the progress of the selected research topic in percent
-	string txt_selected_time
-	{
-		string		*cvar:mn_research_seltime
-		font		"f_verysmall"
-		pos			"663 635"
-		color		"0 .78 0 1"
-		size		"317 18"
-		contentalign	ALIGN_CC
-	}
-	image progress_img
-	{
-		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"693 652"
-		src		"ui/bar_rahmen"
-	}
-	bar progress_bar
-	{
-		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"703 657"
-		current		*cvar:mn_research_seltimebar
-		size		"236 6"
-		color		"0 .8 0 1"
-		max			100
-		ghost		true
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	button bt_start
-	{
-		tooltip		"_Start research"
-		background	"buttons/big_blue"
-		icon		"icons/research_start"
-		pos			"725 674"
-		size		"59 55"
-		onClick		{ cmd "mn_start_research;" }
-	}
-
-	button bt_stop
-	{
-		tooltip		"_Stop research"
-		background	"buttons/big_blue"
-		icon		"icons/research_stop"
-		pos			"795 674"
-		size		"59 55"
-		onClick		{ cmd "mn_stop_research;" }
-	}
-
-	button bt_pedia
-	{
-		tooltip		"_Show research proposal"
-		background	"buttons/big_blue"
-		icon		"icons/mail"
-		pos			"865 674"
-		size		"59 55"
-		onClick		{ cmd "mn_show_ufopedia;" }
-	}
-
-	// ==================
-	// init
-	// ==================
-	func onWindowOpened
-	{
-		*cvar:i = 0
-		while ( *cvar:i < 22 ) {
-			*node:root.item<cvar:i>@num = <cvar:i>
-			*node:root.item<cvar:i>.img_status@tooltip = *cvar:mn_researchstatus<cvar:i>
-			*node:root.item<cvar:i>.txt_item@string = *cvar:mn_researchitem<cvar:i>
-			*node:root.item<cvar:i>.txt_assigned@string = *cvar:mn_researchassigned<cvar:i>
-			*node:root.item<cvar:i>.txt_rsstatus@string = *cvar:mn_rsstatus<cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
+	panel techlist_border {
+		{
+			pos			"9 120"
+			size		"587 620"
+			bgcolor		"0 0.08 0 1"
+			background		"ui/panel_grey_green_large2"
 		}
-		delete *cvar:i
 
-		cmd "research_init 22;"
+		data selected {
+			string	""
+		}
+
+		string topics {
+			string		"_Topics"
+			pos			"45 25"
+			size		"365 25"
+			font		"f_small_bold"
+		}
+		string scientist {
+			string		"_Scientists"
+			pos			"410 25"
+			size		"150 25"
+			font		"f_small_bold"
+			contentalign	ALIGN_CC
+		}
+
+		panel techlist {
+			pos			"20 50"
+			size		"530 550"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			wheelscrollable	true
+			onViewChange {
+				*node:parent.techlist_scroll@fullsize = <fullsize>
+				*node:parent.techlist_scroll@current = <viewpos>
+				*node:parent.techlist_scroll@viewsize = <viewsize>
+			}
+		}
+		vscrollbar techlist_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"550 41"
+			height		"560"
+			current		0
+			viewsize	21
+			fullsize	21
+			hidewhenunused true
+			onChange {
+				*node:parent.techlist@viewpos = <current>
+			}
+		}
+
+		confunc ui_techlist_clear {
+			call *node:parent.techlist@removeAllchild
+		}
+		confunc ui_research_select {
+			if ( *node:parent.selected@string ne "" ) {
+				*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
+				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
+				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
+			}
+			*node:parent.selected@string = "<1>"
+			*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
+			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
+			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
+			cmd "ui_research_getdetails <1>;"
+		}
+		confunc ui_techlist_add {
+			call *node:parent.techlist@createChild("tech_<1>", "cmpTechItem")
+
+			*node:parent.techlist.tech_<1>.id@string = "<1>"
+			*node:parent.techlist.tech_<1>.name@string = "<2>"
+			*node:parent.techlist.tech_<1>.progress@current = <4>
+			*node:parent.techlist.tech_<1>.progress@tooltip = "<4>%"
+
+			if ( paramCount >= 5 ) {
+				if ( "<5>" eq "base" ) {
+					*node:parent.techlist.tech_<1>.id@integer = <6>
+					*node:parent.techlist.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
+					*node:parent.techlist.tech_<1>.rsrc_baselink@invis = false
+				}
+				if ( "<5>" eq "missing" ) {
+					*node:parent.techlist.tech_<1>.rsrc_missing@invis = false
+				}
+			} else {
+				*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<3>"
+				*node:parent.techlist.tech_<1>.rsrc_control@invis = false
+			}
+
+			if ( *node:parent.selected@string eq "" ) {
+				call *node:parent.ui_research_select ( "<1>" )
+			}
+		}
+		confunc ui_research_update_topic {
+			*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<2>"
+		}
+	}
+
+	// Capacity Box (top right)
+	panel capbox {
+		{
+			pos		"605 120"
+			size	"410 115"
+			background	"ui/panel_grey_green"
+		}
+
+		string header_capacity {
+			string 		"_Capacity"
+			pos			"25 25"
+			size		"210 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CL
+		}
+		string header_free {
+			string 		"_idle"
+			pos			"235 25"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+		string header_all {
+			string 		"_all"
+			pos			"310 25"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+
+		string scientists_caption {
+			string 		"_Scientists"
+			pos			"25 50"
+			size		"230 20"
+			font		"f_small"
+		}
+		string scientists_free {
+			pos			"235 50"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string scientists_all {
+			pos			"310 50"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string labspace_caption {
+			string 		"_Laboratory"
+			pos			"25 70"
+			size		"230 20"
+			font		"f_small"
+		}
+		string labspace_free {
+			pos			"235 70"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string labspace_all {
+			pos			"310 70"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+
+		confunc ui_research_update_caps {
+			*node:parent.scientists_free@string = "<1>"
+			*node:parent.scientists_all@string = "<2>"
+			*node:parent.labspace_free@string = "<3>"
+			*node:parent.labspace_all@string = "<4>"
+		}
+	}
+
+	// Research info box (bottom right)
+	panel researchinfo {
+		{
+			pos			"605 260"
+			size		"410 480"
+			background	"ui/panel_grey_green_large"
+		}
+
+		string name {
+			pos			"25 25"
+			size		"360 20"
+			font		"f_small_bold"
+			longlines	LONGLINES_PRETTYCHOP
+			contentalign	ALIGN_CC
+			ghost		true
+		}
+		image img {
+			pos			"25 50"
+			size		"360 410"
+			preventratio	true
+			contentalign	ALIGN_CC
+			ghost		true
+		}
+		model mdl {
+			angles		"0 0 90"
+			pos			"25 50"
+			size		"360 410"
+			autoscale	true
+			omega		"0 -3 0"
+			rotatewithmouse	true
+		}
+
+		confunc	ui_research_details {
+			*node:parent.name@string = "<1>"
+			*node:parent.img@src = "<2>"
+			*node:parent.mdl@src = "<3>"
+		}
+	}
+
+	func onWindowOpened {
+		*node:root.techlist_border.selected@string = ""
+		cmd "ui_research_fill;"
 		*cvar:mn_lastsubmenu = "research"
 	}
 
-	func onWindowClosed
-	{
+	func onWindowClosed {
 		// call base init function because the amount of workers, scientists and
 		// so on can also change the button state in the base view
 		cmd "base_init;"
-		// delete research window related cvars
-		if ( exists *cvar:mn_research_image ) { delete *cvar:mn_research_image }
-		if ( exists *cvar:mn_research_model ) { delete *cvar:mn_research_model }
-		if ( exists *cvar:mn_research_selname ) { delete *cvar:mn_research_selname }
-		if ( exists *cvar:mn_research_selstatus ) { delete *cvar:mn_research_selstatus }
-		if ( exists *cvar:mn_research_selstatus_long ) { delete *cvar:mn_research_selstatus_long }
-		if ( exists *cvar:mn_research_selbase ) { delete *cvar:mn_research_selbase }
-		if ( exists *cvar:mn_research_seltime ) { delete *cvar:mn_research_seltime }
-		if ( exists *cvar:mn_research_seltimebar ) { delete *cvar:mn_research_seltimebar }
-		if ( exists *cvar:mn_research_labs ) { delete *cvar:mn_research_labs }
-		if ( exists *cvar:mn_current_labspace ) { delete *cvar:mn_current_labspace }
-		if ( exists *cvar:mn_max_labspace ) { delete *cvar:mn_max_labspace }
-		if ( exists *cvar:mn_research_scis ) { delete *cvar:mn_research_scis }
-		if ( exists *cvar:mn_scientists_available ) { delete *cvar:mn_scientists_available }
-		if ( exists *cvar:mn_scientists_hired ) { delete *cvar:mn_scientists_hired }
 	}
 }
