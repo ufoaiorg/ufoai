@@ -622,6 +622,7 @@ mapdef desert_large
 	ufos
 	(
 		craft_crash_bomber
+		craft_crash_corrupter
 		craft_crash_harvester
 	)
 
