@@ -596,6 +596,51 @@ mapdef desert_medium
 	)
 }
 
+mapdef desert_large
+{
+	map				"+desert"
+	param			"large"
+	description		"_Country Desert"
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_crash_bomber
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"rural"
+		"nopopulation"
+	)
+}
+
 //////////////////////
 // FARM RANDOM MAPS //
 //////////////////////

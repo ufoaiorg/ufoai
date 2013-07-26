@@ -44,6 +44,21 @@ a1234		+c			+c			+c			a1234
 
 // UFO tiles -------------------------------------------------------*
 
+tile +craft_crash_bomber
+{
+6 10
+0		0		0		0		0		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		+c		+c		+c		+c		0
+0		0		0		0		0		0
+}
+
 tile +craft_crash_fighter
 {
 5 5
@@ -213,6 +228,26 @@ tile +sand08
 
 // Map assemblies --------------------------------------------------*
 
+assembly large
+{
+title "_Crashed UFO"
+size "10 8"
++hill01_ne	"0 1"
++hill01_nw	"0 1"
++hill01_se	"0 1"
++hill01_sw	"0 1"
++sand01		"0 2"
++sand02		"0 2"
++sand03		"0 2"
++sand04		"0 2"
++sand05		"0 2"
++sand06		"0 1"
++sand07		"0 1"
++sand08		"0 1"
+*rm_ufo +craft_crash_bomber		"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
+}
+
 assembly medium
 {
 title "_Crashed UFO"
@@ -229,6 +264,6 @@ size "6 8"
 +sand06		"0 1"
 +sand07		"0 1"
 +sand08		"0 1"
-*rm_ufo +craft_crash_supply	"1 1"
+*rm_ufo +craft_crash_supply		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
