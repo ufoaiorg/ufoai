@@ -33110,7 +33110,7 @@ msgstr "Größe:\t%i\n"
 #: client/cl_inventory_callbacks.cpp:195
 #, c-format
 msgid "Weight:\t%g Kg\n"
-msgstr "Gewicht:\t%s kg\n"
+msgstr "Gewicht:\t%g kg\n"
 
 #: client/cl_inventory_callbacks.cpp:136
 msgid "^BDamage type:\tProtection:\n"
