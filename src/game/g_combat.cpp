@@ -630,20 +630,14 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
 static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *fd,
 	const vec3_t from, const pos3_t at, int mask, const Item *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
-	vec3_t last, target, temp;
-	vec3_t startV, curV, oldPos, newPos;
-	vec3_t angles;
-	float dt, time, speed;
-	float acc;
-	int bounce;
-	byte flags;
-
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent))
 		return;
 
 	/* get positional data */
+	vec3_t last;
 	VectorCopy(from, last);
+	vec3_t target;
 	gi.GridPosToVec(ent->fieldSize, at, target);
 	/* first apply z_align value */
 	target[2] -= z_align;
@@ -652,7 +646,8 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 	target[2] -= GROUND_DELTA;
 
 	/* calculate parabola */
-	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
+	vec3_t startV;
+	float dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
 	if (!dt) {
 		if (!mock)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - impossible throw!"));
@@ -660,28 +655,48 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 	}
 
 	/* cap start speed */
-	speed = VectorLength(startV);
+	float speed = VectorLength(startV);
 	if (speed > fd->range)
 		speed = fd->range;
 
 	/* add random effects and get new dir */
-	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
+	vec3_t angles;
+	VecToAngles(startV, angles);
+	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
 			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 
-	VecToAngles(startV, angles);
-	/** @todo Remove the 2.0f and use gaussian random number instead of crand() */
-	angles[PITCH] += crand() * 2.0f * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
-	angles[YAW] += crand() * 2.0f * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
+       /* Calculate spread multiplier to give worse precision when HPs are not at max */
+	const float injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+	Com_DPrintf(DEBUG_GAME, "G_ShootSingle: injury spread multiplier = %5.3f (mind %d, HP %d, maxHP %d)\n", injurymultiplier,
+			ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+
+	/* Get 2 gaussian distributed random values */
+	float gauss1;
+	float gauss2;
+	gaussrand(&gauss1, &gauss2);
+
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
+	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
+		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
+		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
+	} else {
+		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
+		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
+	}
 	AngleVectors(angles, startV, nullptr, nullptr);
 	VectorScale(startV, speed, startV);
 
 	/* move */
+	vec3_t oldPos;
 	VectorCopy(last, oldPos);
+	vec3_t curV;
 	VectorCopy(startV, curV);
-	time = 0;
+	float time = 0;
 	dt = 0;
-	bounce = 0;
-	flags = SF_BOUNCING;
+	int bounce = 0;
+	byte flags = SF_BOUNCING;
+	vec3_t newPos;
+	vec3_t temp;
 	for (;;) {
 		/* kinematics */
 		VectorMA(oldPos, GRENADE_DT, curV, newPos);
@@ -838,22 +853,6 @@ static void DumpAllEntities (void)
 static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
 	int mask, const Item *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
-	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
-	vec3_t angles;		/** @todo The random dir-modifier? */
-	vec3_t cur_loc;		/* The current location of the projectile. */
-	vec3_t temp;
-	vec3_t tracefrom;	/* sum */
-	float acc;			/* Accuracy modifier for the angle of the shot. */
-	float range;
-	float gauss1;
-	float gauss2;		/* For storing 2 gaussian distributed random values. */
-	float commonfactor; /* common to pitch and yaw spread, avoid extra multiplications */
-	float injurymultiplier;
-	int bounce;			/* count the bouncing */
-	int damage;			/* The damage to be dealt to the target. */
-	byte flags;
-	int throughWall;	/* shoot through x walls */
-
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent)) {
 		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
@@ -863,7 +862,9 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(ent->fieldSize, at, impact);	/* Get the position of the targeted grid-cell. ('impact' is used only temporary here)*/
 	impact[2] -= z_align;
+	vec3_t cur_loc;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
+	vec3_t dir;
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
@@ -872,24 +873,27 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 	 * Also might need a check if the distance is bigger than the one to the impact location. */
 	/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
 	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
+	vec3_t angles;
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
-	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
+	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
 			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 
 	/* Get 2 gaussian distributed random values */
+	float gauss1;
+	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
 	/* Calculate spread multiplier to give worse precision when HPs are not at max */
-	injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+	const float injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
 	Com_DPrintf(DEBUG_GAME, "G_ShootSingle: injury spread multiplier = %5.3f (mind %d, HP %d, maxHP %d)\n", injurymultiplier,
 		ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
 
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
 	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
@@ -901,11 +905,12 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 	AngleVectors(angles, dir, nullptr, nullptr);
 
 	/* shoot and bounce */
-	throughWall = fd->throughWall;
-	range = fd->range;
-	bounce = 0;
-	flags = 0;
+	int throughWall = fd->throughWall;
+	float range = fd->range;
+	int bounce = 0;
+	byte flags = 0;
 
+	int damage;
 	/* Are we healing? */
 	if (FIRESH_IsMedikit(fd))
 		damage = fd->damage[0] + (fd->damage[1] * crand());
@@ -918,8 +923,10 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
+	vec3_t tracefrom;	/* sum */
 	VectorCopy(cur_loc, tracefrom);
 
+	vec3_t temp;
 	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
 		 * defined by the fireDef_t. This is not really the impact location,
