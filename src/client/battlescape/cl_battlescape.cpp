@@ -175,24 +175,17 @@ static inline bool CL_TestLine (const vec3_t start, const vec3_t stop, const int
  */
 int CL_GetHitProbability (const le_t* actor)
 {
-	vec3_t shooter, target;
-	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance,
-		stdevupdown, stdevleftright, crouch, commonfactor;
-	int distx, disty, n;
-	le_t *le;
-	const character_t *chr;
-	pos3_t toPos;
-
 	assert(actor);
 	assert(actor->fd);
 
+	pos3_t toPos;
 	if (IS_MODE_FIRE_PENDING(actor->actorMode))
 		VectorCopy(actor->mousePendPos, toPos);
 	else
 		VectorCopy(mousePos, toPos);
 
 	/** @todo use LE_FindRadius */
-	le = LE_GetFromPos(toPos);
+	const le_t *le = LE_GetFromPos(toPos);
 	if (!le)
 		return 0;
 
@@ -204,43 +197,46 @@ int CL_GetHitProbability (const le_t* actor)
 	if (LE_IsSelected(le) && !FIRESH_IsMedikit(le->fd))
 		return 0;
 
+	vec3_t shooter;
 	VectorCopy(actor->origin, shooter);
+	vec3_t target;
 	VectorCopy(le->origin, target);
 
 	/* Calculate HitZone: */
-	distx = fabs(shooter[0] - target[0]);
-	disty = fabs(shooter[1] - target[1]);
-	distance = sqrt(distx * distx + disty * disty);
+	const int distx = fabs(shooter[0] - target[0]);
+	const int disty = fabs(shooter[1] - target[1]);
+	const float distance = sqrt(distx * distx + disty * disty);
+	float pseudosin;
 	if (distx > disty)
 		pseudosin = distance / distx;
 	else
 		pseudosin = distance / disty;
-	width = 2 * PLAYER_WIDTH * pseudosin;
-	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
+	float width = 2 * PLAYER_WIDTH * pseudosin;
+	float height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
-	chr = CL_ActorGetChr(actor);
+	const character_t *chr = CL_ActorGetChr(actor);
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY], actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0);
+	const float acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY], actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0);
 
-	crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1.0;
+	const float crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1.0;
 
-	commonfactor = crouch * torad * distance * CL_ActorInjuryModifier(actor, MODIFIER_ACCURACY);
-	stdevupdown = (actor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	stdevleftright = (actor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
+	const float commonfactor = crouch * torad * distance * CL_ActorInjuryModifier(actor, MODIFIER_ACCURACY);
+	const float stdevupdown = (actor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	const float stdevleftright = (actor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	const float hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
 			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
 
 	/* Calculate cover: */
-	n = 0;
+	int n = 0;
 	height = height / 18;
 	width = width / 18;
 	target[2] -= UNIT_HEIGHT / 2;
 	target[2] += height * 9;
-	perpX = disty / distance * width;
-	perpY = 0 - distx / distance * width;
+	float perpX = disty / distance * width;
+	float perpY = 0 - distx / distance * width;
 
 	target[0] += perpX;
 	perpX *= 2;
