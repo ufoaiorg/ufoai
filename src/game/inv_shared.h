@@ -50,8 +50,6 @@ typedef enum {
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define WEAPON_BALANCE 0.5f
 #define SKILL_BALANCE 1.0f
-#define INJURY_BALANCE 0.2f
-#define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
 
 typedef int32_t containerIndex_t;
 #define CID_RIGHT		0

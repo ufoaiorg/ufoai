@@ -662,20 +662,14 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 	/* add random effects and get new dir */
 	vec3_t angles;
 	VecToAngles(startV, angles);
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
-			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
-
-       /* Calculate spread multiplier to give worse precision when HPs are not at max */
-	const float injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
-	Com_DPrintf(DEBUG_GAME, "G_ShootSingle: injury spread multiplier = %5.3f (mind %d, HP %d, maxHP %d)\n", injurymultiplier,
-			ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Get 2 gaussian distributed random values */
 	float gauss1;
 	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
@@ -877,23 +871,17 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0) *
-			G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Get 2 gaussian distributed random values */
 	float gauss1;
 	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
-	/* Calculate spread multiplier to give worse precision when HPs are not at max */
-	const float injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
-	Com_DPrintf(DEBUG_GAME, "G_ShootSingle: injury spread multiplier = %5.3f (mind %d, HP %d, maxHP %d)\n", injurymultiplier,
-		ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
-
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
