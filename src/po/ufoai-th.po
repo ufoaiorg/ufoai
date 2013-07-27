@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-07 15:12+0200\n"
+"POT-Creation-Date: 2013-07-27 20:43+0200\n"
 "PO-Revision-Date: 2010-12-08 21:32+0530\n"
 "Last-Translator: Phakphum Visetnut <shellingford47@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -16,8 +16,9 @@ msgstr ""
 "X-Poedit-Country: THAILAND\n"
 "X-Poedit-Basepath: ../\n"
 
-#: ../base/maps/africa.ump:624 ../base/maps/africa.ump:658
-#: ../base/maps/africa.ump:690
+#: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
+#: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
+#: ../base/maps/africa.ump:758 ../base/maps/africa.ump:779
 msgid "Africa"
 msgstr "แอฟริกา"
 
@@ -27,15 +28,16 @@ msgstr "แอฟริกา"
 msgid "Home"
 msgstr "ศูนย์บัญชาการ PHALANX "
 
-#: ../base/maps/bomber_city.ump:68
-msgid "Bomber_city"
+#: ../base/maps/bomber_city.ump:68 ../base/ufos/maps.ufo:428
+#, fuzzy
+msgid "Bomber in the City"
 msgstr "เมืองบอมเบอร์"
 
-#: ../base/maps/bridge.ump:100 ../base/ufos/maps.ufo:332
+#: ../base/maps/bridge.ump:100 ../base/ufos/maps.ufo:486
 msgid "Bridge"
 msgstr "สะพาน"
 
-#: ../base/maps/bridge.ump:110 ../base/ufos/maps.ufo:372
+#: ../base/maps/bridge.ump:110 ../base/ufos/maps.ufo:526
 #, fuzzy
 msgid "Bridge (MP)"
 msgstr "สะพาน"
@@ -46,25 +48,31 @@ msgstr "สุสานเล็ก"
 
 #: ../base/maps/city3.ump:199
 #, fuzzy
-msgid "The outscirt of a big city."
+msgid "The outskirt of a big city."
 msgstr "กลุ่มอาคารออฟฟิศในพื้นที่รอบนอกของเมือง"
 
-#: ../base/maps/city_disco.ump:65
-msgid "City_disco"
-msgstr "ดิสโก้"
-
-#: ../base/maps/community_centre.ump:61
+#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3259
 #, fuzzy
-msgid "Community_centre"
+msgid "Urban Disco"
+msgstr "เมือง"
+
+#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3309
+#, fuzzy
+msgid "Community Centre"
 msgstr "ศูนย์บัญชาการ"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
 msgstr "การก่อสร้าง"
 
-#: ../base/maps/desert.ump:53
-msgid "Crashed Harvester"
-msgstr "จุดตก"
+#: ../base/maps/desert.ump:247 ../base/maps/desert.ump:267
+#: ../base/maps/ufocrash.ump:12 ../base/maps/ufocrash.ump:31
+#: ../base/maps/ufocrash.ump:50 ../base/maps/ufocrash.ump:69
+#: ../base/maps/ufocrash.ump:88 ../base/maps/ufocrash.ump:108
+#: ../base/maps/ufocrash.ump:128
+#, fuzzy
+msgid "Crashed UFO"
+msgstr "ห้องเก็บของ"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -84,20 +92,20 @@ msgstr "ทหาร"
 msgid "Little bungalo in forest"
 msgstr "ทหาร"
 
-#: ../base/maps/frozen.ump:546 ../base/maps/frozen.ump:570
-#: ../base/maps/frozen.ump:594 ../base/maps/frozen.ump:616
-#: ../base/maps/frozen.ump:638 ../base/maps/frozen.ump:662
-#: ../base/maps/frozen.ump:684 ../base/maps/frozen.ump:707
-#: ../base/maps/frozen.ump:729 ../base/maps/frozen.ump:732
-#: ../base/maps/frozen.ump:802
+#: ../base/maps/frozen.ump:560 ../base/maps/frozen.ump:573
+#: ../base/maps/frozen.ump:597 ../base/maps/frozen.ump:621
+#: ../base/maps/frozen.ump:643 ../base/maps/frozen.ump:665
+#: ../base/maps/frozen.ump:689 ../base/maps/frozen.ump:711
+#: ../base/maps/frozen.ump:734 ../base/maps/frozen.ump:756
+#: ../base/maps/frozen.ump:759 ../base/maps/frozen.ump:829
 msgid "Frozen"
 msgstr ""
 
-#: ../base/maps/frozen.ump:757
+#: ../base/maps/frozen.ump:784
 msgid "Multiplayer Coop"
 msgstr "หลายผู้เล่นช่วยเหลือกัน"
 
-#: ../base/maps/frozen.ump:779
+#: ../base/maps/frozen.ump:806
 msgid "Multiplayer Deathmatch"
 msgstr "หลายผู้เล่นแบบเดธแมตช์"
 
@@ -106,13 +114,13 @@ msgstr "หลายผู้เล่นแบบเดธแมตช์"
 msgid "Gasstation"
 msgstr "ประเทศ"
 
-#: ../base/maps/harbour2.ump:475 ../base/ufos/maps.ufo:1392
-#: ../base/ufos/maps.ufo:1443
+#: ../base/maps/harbour2.ump:480 ../base/ufos/maps.ufo:1648
+#: ../base/ufos/maps.ufo:1699
 #, fuzzy
 msgid "Harbour"
 msgstr "ฮัมบูรก"
 
-#: ../base/maps/harbour2.ump:520
+#: ../base/maps/harbour2.ump:525
 msgid "Pier"
 msgstr ""
 
@@ -126,15 +134,15 @@ msgstr "UFO ลงจอดในพื้นที่หุบเขา"
 msgid "Ice"
 msgstr "เกรนเชน"
 
-#: ../base/maps/industrial.ump:292 ../base/maps/industrial.ump:316
-#: ../base/maps/industrial.ump:340
+#: ../base/maps/industrial.ump:301 ../base/maps/industrial.ump:326
+#: ../base/maps/industrial.ump:351
 #, fuzzy
 msgid "UFO Landed"
 msgstr "จานบินอภิธาน"
 
-#: ../base/maps/industrial.ump:364 ../base/ufos/maps.ufo:1758
-#: ../base/ufos/maps.ufo:1801 ../base/ufos/maps.ufo:1845
-#: ../base/ufos/maps.ufo:1888
+#: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:2014
+#: ../base/ufos/maps.ufo:2057 ../base/ufos/maps.ufo:2101
+#: ../base/ufos/maps.ufo:2144
 #, fuzzy
 msgid "Industrial Site"
 msgstr "เขตอุตสาหกรรม"
@@ -157,14 +165,14 @@ msgid "Harvester"
 msgstr "ยานเก็บเกี่ยว"
 
 #: ../base/maps/laboratory.ump:95 ../base/maps/laboratory.ump:104
-#: ../base/ufos/basemanagement.ufo:201 ../base/ufos/maps.ufo:2034
-#: ../base/ufos/maps.ufo:2085 client/cgame/campaign/cp_base_callbacks.cpp:327
+#: ../base/ufos/basemanagement.ufo:201 ../base/ufos/maps.ufo:2290
+#: ../base/ufos/maps.ufo:2341 client/cgame/campaign/cp_base_callbacks.cpp:327
 msgid "Laboratory"
 msgstr "ห้องวิจัย"
 
 #: ../base/maps/mansion.ump:398 ../base/maps/mansion.ump:442
-#: ../base/maps/mansion1.ump:68 ../base/ufos/maps.ufo:2139
-#: ../base/ufos/maps.ufo:2193 ../base/ufos/maps.ufo:2241
+#: ../base/maps/mansion1.ump:68 ../base/ufos/maps.ufo:2395
+#: ../base/ufos/maps.ufo:2449 ../base/ufos/maps.ufo:2497
 #, fuzzy
 msgid "Mansion"
 msgstr "ภารกิจ"
@@ -228,16 +236,8 @@ msgstr "ยา เขตศูนย์สูตร"
 msgid "Tropical UFO"
 msgstr "ยา เขตศูนย์สูตร"
 
-#: ../base/maps/ufocrash.ump:12 ../base/maps/ufocrash.ump:31
-#: ../base/maps/ufocrash.ump:50 ../base/maps/ufocrash.ump:69
-#: ../base/maps/ufocrash.ump:88 ../base/maps/ufocrash.ump:108
-#: ../base/maps/ufocrash.ump:128
-#, fuzzy
-msgid "Crashed UFO"
-msgstr "ห้องเก็บของ"
-
-#: ../base/maps/village.ump:452 ../base/maps/village.ump:478
-#: ../base/maps/village.ump:505 ../base/maps/village.ump:535
+#: ../base/maps/village.ump:728 ../base/maps/village.ump:755
+#: ../base/maps/village.ump:783 ../base/maps/village.ump:811
 #, fuzzy
 msgid "Village"
 msgstr "หมู่บ้านใหญ่"
@@ -313,7 +313,7 @@ msgstr "ยานอินเตอร์เซปเตอร์ ชั้น�
 msgid "Stingray"
 msgstr "ยิงกระจาย"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3932
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3984
 msgid "UFO - Scout"
 msgstr "จานบินสอดแนม"
 
@@ -321,7 +321,7 @@ msgstr "จานบินสอดแนม"
 msgid "Scout U"
 msgstr "จ. สอดแนม"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:3974
+#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4026
 msgid "UFO - Fighter"
 msgstr "จานบินต่อสู้"
 
@@ -329,7 +329,7 @@ msgstr "จานบินต่อสู้"
 msgid "Fighter U"
 msgstr "จ. ต่อสู้"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4273
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4325
 msgid "UFO - Harvester"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
 
@@ -338,7 +338,7 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 msgid "Harvester U"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
 
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4145
+#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4197
 #, fuzzy
 msgid "UFO - Corrupter"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
@@ -347,7 +347,7 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 msgid "Corrupter U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4017
+#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4069
 msgid "UFO - Supply Ship"
 msgstr "ยานขนส่งทรัพยากรของ UFO"
 
@@ -355,7 +355,7 @@ msgstr "ยานขนส่งทรัพยากรของ UFO"
 msgid "Supply U"
 msgstr "ทรัพยากร"
 
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4188
+#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4240
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "จานบินสอดแนม"
@@ -364,7 +364,7 @@ msgstr "จานบินสอดแนม"
 msgid "Gunboat U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4103
+#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4155
 #, fuzzy
 msgid "UFO - Bomber"
 msgstr "จานบินสอดแนม"
@@ -373,7 +373,7 @@ msgstr "จานบินสอดแนม"
 msgid "Bomber U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4230
+#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4282
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "จานบินต่อสู้"
@@ -383,7 +383,7 @@ msgstr "จานบินต่อสู้"
 msgid "Ripper U"
 msgstr "จานบินต่อสู้"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4060
+#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4112
 #, fuzzy
 msgid "UFO - Carrier"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
@@ -393,7 +393,7 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 msgid "Carrier U"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4316
+#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4368
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
@@ -402,7 +402,7 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 msgid "Mothership U"
 msgstr "ยานแม่"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5123
+#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5175
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "SHIVA Rotary Cannon"
@@ -412,11 +412,11 @@ msgstr "SHIVA Rotary Cannon"
 msgid "Shiva Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5190
+#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5242
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5211
+#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5263
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
@@ -435,83 +435,83 @@ msgstr "'Sparrowhawk' AA Missile Rack"
 msgid "Sparrowhawk Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5270
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5322
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5287
+#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5339
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5306
+#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5358
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5363
+#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5415
 #, fuzzy
 msgid "Alien Launcher"
 msgstr "เครื่องยิงระเบิด"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5410
+#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5462
 #, fuzzy
 msgid "Antimatter Missile"
 msgstr "Antimatter"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5459
+#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5511
 msgid "Hybrid Missile"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5493
+#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5561
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5509
+#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5577
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4869
+#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4921
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4886
+#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4938
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "พบยานต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4928
+#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4980
 #, fuzzy
 msgid "Alien Polymer Armour"
 msgstr "เกราะต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5525
+#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5593
 msgid "Alien Electronic Warfare Suite"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4970
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5022
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Alien Origins"
 
-#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5008
+#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5060
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5046
+#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5098
 #, fuzzy
 msgid "Advanced Alien Propulsion"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5085
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5137
 #, fuzzy
 msgid "Alien Detection"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4821
+#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4873
 msgid "AA51 missile launcher"
 msgstr "เครื่องยิงจรวด AA51"
 
-#: ../base/ufos/aircraftmanagement.ufo:1261 ../base/ufos/research.ufo:248
+#: ../base/ufos/aircraftmanagement.ufo:1261 ../base/ufos/research.ufo:249
 #, fuzzy
 msgid "Base-Defence Laser Turret"
 msgstr "Laser Rifle"
@@ -583,7 +583,8 @@ msgstr "เขตกักกันมนุษย์ต่างดาว"
 msgid "Entrance"
 msgstr "ทางเข้า"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:330
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:335
+#: ../base/ufos/ui/production.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:317
 msgid "Storage"
 msgstr "ห้องเก็บของ"
@@ -601,17 +602,19 @@ msgstr "ศูนย์บัญชาการ"
 msgid "Living Quarters"
 msgstr "เขตพักอาศัย"
 
-#: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:366
+#: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:371
+#: ../base/ufos/ui/production.ufo:174
 #, fuzzy
 msgid "Dropship Hangar"
 msgstr "ทำลายสิ่งก่อสร้าง"
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:348
+#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:353
+#: ../base/ufos/ui/production.ufo:156
 #, fuzzy
 msgid "Interceptor Hangar"
 msgstr "ยานขับไล่"
 
-#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3576
+#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3926
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Workshop"
 msgstr "ห้องช่าง"
@@ -629,7 +632,7 @@ msgstr "เรดาร์ระดับสูง"
 msgid "Hospital"
 msgstr "โรงพยาบาล"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3632
+#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3625
 #, fuzzy
 msgid "Antimatter Storage"
 msgstr "Antimatter"
@@ -2840,7 +2843,7 @@ msgstr "ร่วมมือกัน 3 คน"
 msgid "Coop 4 players"
 msgstr "ร่วมมือกัน 4 คน"
 
-#: ../base/ufos/installation.ufo:7
+#: ../base/ufos/installation.ufo:7 ../base/ufos/research.ufo:3655
 #, fuzzy
 msgid "Radar Tower"
 msgstr "เรดาร์"
@@ -2854,7 +2857,8 @@ msgid ""
 "recommended that radar towers be protected with SAM sites."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:22 ../base/ufos/ui/lostwon.ufo:249
+#: ../base/ufos/installation.ufo:22 ../base/ufos/research.ufo:3667
+#: ../base/ufos/ui/lostwon.ufo:249
 msgid "UFO Yard"
 msgstr "ลาน UFO"
 
@@ -2868,7 +2872,7 @@ msgid ""
 "UFO Yard is from the base."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:37
+#: ../base/ufos/installation.ufo:37 ../base/ufos/research.ufo:3679
 msgid "SAM Site"
 msgstr ""
 
@@ -2883,7 +2887,7 @@ msgid ""
 "forces."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:52
+#: ../base/ufos/installation.ufo:52 ../base/ufos/research.ufo:3691
 #, fuzzy
 msgid "Orbital Rocket Launcher"
 msgstr "เครื่องยิงจรวด"
@@ -3016,320 +3020,307 @@ msgstr "โยกย้าย"
 msgid "No language"
 msgstr "ไม่มีภาษา"
 
-#: ../base/ufos/maps.ufo:67 ../base/ufos/maps.ufo:120
-#: ../base/ufos/maps.ufo:175
+#: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:122
+#: ../base/ufos/maps.ufo:177
 msgid "African Village"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:233
+#: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
+#: ../base/ufos/maps.ufo:332
+#, fuzzy
+msgid "African Desert"
+msgstr "ทะเลทรายอาตาคามา"
+
+#: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:274
-#, fuzzy
-msgid "Bomber in the City"
-msgstr "เมืองบอมเบอร์"
-
-#: ../base/ufos/maps.ufo:423
+#: ../base/ufos/maps.ufo:577
 msgid "Urban Periphery"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:465
+#: ../base/ufos/maps.ufo:619 ../base/ufos/maps.ufo:707
+#: ../base/ufos/maps.ufo:756
 #, fuzzy
 msgid "Country Desert"
 msgstr "ทะเลทราย"
 
-#: ../base/ufos/maps.ufo:509
+#: ../base/ufos/maps.ufo:663
 #, fuzzy
 msgid "Some houses in the desert."
 msgstr "บ้านสักหลังในทะเลทราย"
 
-#: ../base/ufos/maps.ufo:552
-#, fuzzy
-msgid "Country Desert (Crashed Harvester)"
-msgstr "จุดตก"
-
-#: ../base/ufos/maps.ufo:601 ../base/ufos/maps.ufo:643
-#: ../base/ufos/maps.ufo:682 ../base/ufos/maps.ufo:726
+#: ../base/ufos/maps.ufo:807 ../base/ufos/maps.ufo:849
+#: ../base/ufos/maps.ufo:890 ../base/ufos/maps.ufo:934
 msgid "Farm"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:778 ../base/ufos/maps.ufo:818
-#: ../base/ufos/maps.ufo:858 ../base/ufos/maps.ufo:898
+#: ../base/ufos/maps.ufo:986 ../base/ufos/maps.ufo:1026
+#: ../base/ufos/maps.ufo:1066 ../base/ufos/maps.ufo:1106
 #, fuzzy
 msgid "Forest"
 msgstr "ห้องเก็บของ"
 
-#: ../base/ufos/maps.ufo:942 ../base/ufos/maps.ufo:995
-#: ../base/ufos/maps.ufo:1050 ../base/ufos/maps.ufo:1103
-#: ../base/ufos/maps.ufo:1188 ../base/ufos/maps.ufo:1238
-#: ../base/ufos/maps.ufo:1290 ../base/ufos/maps.ufo:1341
-msgid "Snow"
-msgstr "หิมะ"
-
-#: ../base/ufos/maps.ufo:1153
-msgid "Snowy Logging Site"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1498 ../base/ufos/maps.ufo:1542
-#: ../base/ufos/maps.ufo:1584
-msgid "Suburban Housing"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1631 ../base/ufos/maps.ufo:1670
-#: ../base/ufos/maps.ufo:1713
-msgid "Frozen Landscape"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1934 ../base/ufos/maps.ufo:1982
-#: ../base/ufos/maps.ufo:3271
-msgid "East Asian Village"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2292 ../base/ufos/maps.ufo:2333
-#: ../base/ufos/maps.ufo:2374 ../base/ufos/maps.ufo:3426
-#: ../base/ufos/maps.ufo:4628
-msgid "Middle Eastern Suburb"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2429
-#, fuzzy
-msgid "Crashed Scout"
-msgstr "จานบินสอดแนม"
-
-#: ../base/ufos/maps.ufo:2471 ../base/ufos/maps.ufo:2511
-#: ../base/ufos/maps.ufo:2554
-#, fuzzy
-msgid "Tropical Jungle"
-msgstr "ยา เขตศูนย์สูตร"
-
-#: ../base/ufos/maps.ufo:2601
-#, fuzzy
-msgid "UFO Crash Site"
-msgstr "จุดตก UFO"
-
-#: ../base/ufos/maps.ufo:2631 ../base/ufos/maps.ufo:2669
-#: ../base/ufos/maps.ufo:2707 ../base/ufos/maps.ufo:4933
-msgid "Suburban City"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2754 ../base/ufos/maps.ufo:2790
-#: ../base/ufos/maps.ufo:5122
-#, fuzzy
-msgid "PHALANX Base Under Attack"
-msgstr "ฐานถูกโจมตี"
-
-#: ../base/ufos/maps.ufo:2830
-#, fuzzy
-msgid "Cemetery"
-msgstr "สุสานเล็ก"
-
-#: ../base/ufos/maps.ufo:2872
-msgid "City High-Rise"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2913
-#, fuzzy
-msgid "Urban Disco"
-msgstr "เมือง"
-
-#: ../base/ufos/maps.ufo:2963
-#, fuzzy
-msgid "Community Centre"
-msgstr "ศูนย์บัญชาการ"
-
-#: ../base/ufos/maps.ufo:3015
-#, fuzzy
-msgid "Construction Site"
-msgstr "การก่อสร้าง"
-
-#: ../base/ufos/maps.ufo:3070
-#, fuzzy
-msgid "Tropical Jungle Estate"
-msgstr "ยา เขตศูนย์สูตร"
-
-#: ../base/ufos/maps.ufo:3130
-msgid "Mountain Estate"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3172
-#, fuzzy
-msgid "Gas Station"
-msgstr "ประเทศ"
-
-#: ../base/ufos/maps.ufo:3221
-msgid "Luxury House"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3324
-#, fuzzy
-msgid "Supermarket"
-msgstr "เกินมนุษย์"
-
-#: ../base/ufos/maps.ufo:3377
-#, fuzzy
-msgid "Military Convoy Ambush Site"
-msgstr "ยานขนส่งทางการทหาร"
-
-#: ../base/ufos/maps.ufo:3478
-msgid "Military Shelter"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3533
-#, fuzzy
-msgid "Solar Power Plant"
-msgstr "แหล่งผลิตพลังงาน"
-
-#: ../base/ufos/maps.ufo:3627
-msgid "Basketball Stadium"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3679 ../base/ufos/maps.ufo:4582
-msgid "Office Complex"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3734
-msgid "Warehouse"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3782
-#, fuzzy
-msgid "Bungalow"
-msgstr "บังคาลอร์"
-
-#: ../base/ufos/maps.ufo:3826
-#, fuzzy
-msgid "House"
-msgstr "ชื่อโฮสต์:"
-
-#: ../base/ufos/maps.ufo:3872
-#, fuzzy
-msgid "Military Bunker"
-msgstr "ยานขนส่งทางการทหาร"
-
-#: ../base/ufos/maps.ufo:3921
-msgid "Urban Warehouse"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:3966
-#, fuzzy
-msgid "Rural Village"
-msgstr "หมู่บ้านเล็กๆ ในอังกฤษ"
-
-#: ../base/ufos/maps.ufo:4014
-#, fuzzy
-msgid "Corrupter UFO Crash Site"
-msgstr "จุดตก UFO"
-
-#: ../base/ufos/maps.ufo:4060
-msgid "Hydroelectric Dam"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:4108
-#, fuzzy
-msgid "Small Village"
-msgstr "หมู่บ้านเล็กๆ ในอังกฤษ"
-
-#: ../base/ufos/maps.ufo:4157
-#, fuzzy
-msgid "Estate"
-msgstr "ข้อสังเกต"
-
-#: ../base/ufos/maps.ufo:4202
-msgid "Archaeological Dig"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:4252
-#, fuzzy
-msgid "Ferry"
-msgstr "เรือเฟอร์รี่"
-
-#: ../base/ufos/maps.ufo:4302
-#, fuzzy
-msgid "Fighter UFO Crash Site"
-msgstr "จุดตก UFO"
-
-#: ../base/ufos/maps.ufo:4349
+#: ../base/ufos/maps.ufo:1150
 #, fuzzy
 msgid "Fuel Depot"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/maps.ufo:4391
+#: ../base/ufos/maps.ufo:1194 ../base/ufos/maps.ufo:1248
+#: ../base/ufos/maps.ufo:1304 ../base/ufos/maps.ufo:1358
+#: ../base/ufos/maps.ufo:1444 ../base/ufos/maps.ufo:1494
+#: ../base/ufos/maps.ufo:1546 ../base/ufos/maps.ufo:1597
+msgid "Snow"
+msgstr "หิมะ"
+
+#: ../base/ufos/maps.ufo:1409
+msgid "Snowy Logging Site"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:1754 ../base/ufos/maps.ufo:1798
+#: ../base/ufos/maps.ufo:1840
+msgid "Suburban Housing"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:1887 ../base/ufos/maps.ufo:1926
+#: ../base/ufos/maps.ufo:1969
+msgid "Frozen Landscape"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:2190 ../base/ufos/maps.ufo:2238
+#: ../base/ufos/maps.ufo:3621
+msgid "East Asian Village"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:2548 ../base/ufos/maps.ufo:2589
+#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3776
+#: ../base/ufos/maps.ufo:4848
+msgid "Middle Eastern Suburb"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:2685
+#, fuzzy
+msgid "Crashed Scout"
+msgstr "จานบินสอดแนม"
+
+#: ../base/ufos/maps.ufo:2727 ../base/ufos/maps.ufo:2767
+#: ../base/ufos/maps.ufo:2810
+#, fuzzy
+msgid "Tropical Jungle"
+msgstr "ยา เขตศูนย์สูตร"
+
+#: ../base/ufos/maps.ufo:2857
+#, fuzzy
+msgid "UFO Crash Site"
+msgstr "จุดตก UFO"
+
+#: ../base/ufos/maps.ufo:2887
+#, fuzzy
+msgid "Bungalow"
+msgstr "บังคาลอร์"
+
+#: ../base/ufos/maps.ufo:2932
+#, fuzzy
+msgid "House"
+msgstr "ชื่อโฮสต์:"
+
+#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3015
+#: ../base/ufos/maps.ufo:3053 ../base/ufos/maps.ufo:5153
+msgid "Suburban City"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:3100 ../base/ufos/maps.ufo:3136
+#: ../base/ufos/maps.ufo:5342
+#, fuzzy
+msgid "PHALANX Base Under Attack"
+msgstr "ฐานถูกโจมตี"
+
+#: ../base/ufos/maps.ufo:3176
+#, fuzzy
+msgid "Cemetery"
+msgstr "สุสานเล็ก"
+
+#: ../base/ufos/maps.ufo:3218
+msgid "City High-Rise"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:3361
+#, fuzzy
+msgid "Construction Site"
+msgstr "การก่อสร้าง"
+
+#: ../base/ufos/maps.ufo:3416
+#, fuzzy
+msgid "Tropical Jungle Estate"
+msgstr "ยา เขตศูนย์สูตร"
+
+#: ../base/ufos/maps.ufo:3476
+msgid "Mountain Estate"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:3518
+#, fuzzy
+msgid "Gas Station"
+msgstr "ประเทศ"
+
+#: ../base/ufos/maps.ufo:3567
+msgid "Luxury House"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:3674
+#, fuzzy
+msgid "Supermarket"
+msgstr "เกินมนุษย์"
+
+#: ../base/ufos/maps.ufo:3727
+#, fuzzy
+msgid "Military Convoy Ambush Site"
+msgstr "ยานขนส่งทางการทหาร"
+
+#: ../base/ufos/maps.ufo:3828
+msgid "Military Shelter"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:3883
+#, fuzzy
+msgid "Solar Power Plant"
+msgstr "แหล่งผลิตพลังงาน"
+
+#: ../base/ufos/maps.ufo:3977
+msgid "Basketball Stadium"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4029 ../base/ufos/maps.ufo:4802
+msgid "Office Complex"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4084
+msgid "Warehouse"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4134
+#, fuzzy
+msgid "Military Bunker"
+msgstr "ยานขนส่งทางการทหาร"
+
+#: ../base/ufos/maps.ufo:4183
+msgid "Urban Warehouse"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4228
+#, fuzzy
+msgid "Rural Village"
+msgstr "หมู่บ้านเล็กๆ ในอังกฤษ"
+
+#: ../base/ufos/maps.ufo:4276
+#, fuzzy
+msgid "Corrupter UFO Crash Site"
+msgstr "จุดตก UFO"
+
+#: ../base/ufos/maps.ufo:4322
+msgid "Hydroelectric Dam"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4370
+#, fuzzy
+msgid "Small Village"
+msgstr "หมู่บ้านเล็กๆ ในอังกฤษ"
+
+#: ../base/ufos/maps.ufo:4419
+#, fuzzy
+msgid "Estate"
+msgstr "ข้อสังเกต"
+
+#: ../base/ufos/maps.ufo:4464
+msgid "Archaeological Dig"
+msgstr ""
+
+#: ../base/ufos/maps.ufo:4514
+#, fuzzy
+msgid "Ferry"
+msgstr "เรือเฟอร์รี่"
+
+#: ../base/ufos/maps.ufo:4564
+#, fuzzy
+msgid "Fighter UFO Crash Site"
+msgstr "จุดตก UFO"
+
+#: ../base/ufos/maps.ufo:4611
 msgid "Secret Depot"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4439
+#: ../base/ufos/maps.ufo:4659
 #, fuzzy
 msgid "Port"
 msgstr "แหล่งผลิตพลังงาน"
 
-#: ../base/ufos/maps.ufo:4485
+#: ../base/ufos/maps.ufo:4705
 msgid "Old Mine"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4538
+#: ../base/ufos/maps.ufo:4758
 msgid "Residential Neighbourhood"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4675
+#: ../base/ufos/maps.ufo:4895
 #, fuzzy
-msgid "Sewerage Construction Site"
+msgid "Sewage Pipe Construction"
 msgstr "พื้นที่ก่อสร้างท่อใต้ดิน"
 
-#: ../base/ufos/maps.ufo:4722
+#: ../base/ufos/maps.ufo:4942
 #, fuzzy
 msgid "Luxurious Resort"
 msgstr "สถานที่พักผ่อนที่หรูหรามาก"
 
-#: ../base/ufos/maps.ufo:4768
+#: ../base/ufos/maps.ufo:4988
 #, fuzzy
 msgid "Old Town Center"
 msgstr "ศูนย์บัญชาการ"
 
-#: ../base/ufos/maps.ufo:4820
+#: ../base/ufos/maps.ufo:5040
 #, fuzzy
 msgid "Small House"
 msgstr "เล็ก"
 
-#: ../base/ufos/maps.ufo:4853
+#: ../base/ufos/maps.ufo:5073
 msgid "Small Suburban Street"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4886
+#: ../base/ufos/maps.ufo:5106
 #, fuzzy
 msgid "Subway Station"
 msgstr "ประเทศ"
 
-#: ../base/ufos/maps.ufo:4979
+#: ../base/ufos/maps.ufo:5199
 msgid "Wilderness"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5028
+#: ../base/ufos/maps.ufo:5248
 msgid "City High-Rise (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5056
+#: ../base/ufos/maps.ufo:5276
 msgid "Frozen Industrial Site (Coop)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5074
+#: ../base/ufos/maps.ufo:5294
 msgid "Frozen Industrial Site (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5100
+#: ../base/ufos/maps.ufo:5320
 #, fuzzy
 msgid "Alien Base"
 msgstr "มนุษย์ต่างดาว"
 
-#: ../base/ufos/maps.ufo:5135
+#: ../base/ufos/maps.ufo:5355
 msgid "PHALANX Craft Crash Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5164
+#: ../base/ufos/maps.ufo:5384
 msgid "Training Zone: Alpha"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5181
+#: ../base/ufos/maps.ufo:5401
 msgid "Training Zone: Bravo"
 msgstr ""
 
@@ -9653,7 +9644,8 @@ msgid ""
 "Commander, my team and I are happy to report our test weapons are living up "
 "to all our expectations, and I'm submitting a new set of blueprints to your "
 "system for a laser-based defensive facility. You will now be able greenlight "
-"them for construction.\n"
+"a new laser-based weapons facility for construction and produce the laser "
+"battery to install in that facility.\n"
 "\n"
 "Here are the highlights.\n"
 "\n"
@@ -9726,8 +9718,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Our CW laser program has been successful in miniaturising and lightening the "
-"necessary components for a powerful deuterium-fluoride reaction. However, "
-"the advances we've made aren't just useful for mobile weaponry. We want to "
+"necessary components for a powerful deuterium-fluoride reaction. We want to "
 "prototype some of our upgrades in existing surface-to-air laser arrays, "
 "allowing us to track and fire continuous high-powered beams at a power level "
 "that our plants can comfortably handle.\n"
@@ -11794,7 +11785,91 @@ msgid ""
 "and invade the earth. "
 msgstr ""
 
-#: ../base/ufos/msgid/campaigntexts.ufo:13
+#: ../base/ufos/msgid/campaigntexts.ufo:2
+msgid ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time "
+"of relative peace. The violent beginnings of the 21st century are far away "
+"now; distant memories, but not so distant that they've been forgotten. To "
+"most of Earth's people, the Second Cold War is a dark shadow from the past, "
+"much like the World Wars were to the children of the late 20th."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:6
+msgid ""
+"Conflicts have gotten rarer near the end of the century as new technology "
+"and universal health-care finally became available to the third world. Even "
+"the fires of terrorism have cooled in the wake of the Second Cold War, with "
+"its horrors and inhumanities still fresh in the minds of the people, from "
+"the old United States to the ravaged Indian subcontinent. Class struggles "
+"are ascending to the political battlefield now that every nation is "
+"guaranteed fair representation in the UN, and the global standard of living "
+"is slowly on the rise down to the most impoverished corners of the planet. "
+"Countries have solidified, stabilised around a restructured United Nations "
+"that successfully polices the world governments. Fragmented clumps of "
+"smaller nations, frightened at first by the vast power blocks accumulating "
+"around China and the European Union, have banded together into powerful "
+"political leagues of their own -- then found themselves with no neighbours "
+"they could safely fight. For the first time in the history of mankind, there "
+"is law and order across more than three quarters of the world."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:10
+msgid "To many people on Earth, it seems like things are going all right."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:14
+msgid ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six "
+"small UFOs appear out of nowhere and come screaming down from orbit, "
+"undetected by the vast radar installations covering the skies over Mumbai, "
+"and set down in the single most densely-populated city on Earth. They offer "
+"no warning, no explanation. Twenty thousand innocent civilians and three "
+"battalions of elite troops are massacred over the course of twelve brutal "
+"hours before massed Commonwealth soldiers manage to bring the aliens' "
+"advance to a standstill. Then, as suddenly as they appeared, they retreat to "
+"their craft and vanish back into orbit, leaving only the ravaged streets of "
+"Mumbai as evidence."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:18
+msgid ""
+"An emergency meeting of the UN provides no conclusive direction. The "
+"incursions continue faster, larger and more savage than before, this time in "
+"Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending "
+"messages in a thousand different languages to the aliens ravaging across the "
+"countryside. Their words are ignored. Within hours, all three cities are "
+"emptied of human life. The attack is over by the time the various militaries "
+"are given permission to strike back. The aliens leave nothing behind them "
+"but concrete and blood. All the UFOs disappear without a trace -- but no one "
+"doubts they'll be back."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:22
+msgid ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. "
+"For two weeks, the armies of humanity each try to fend off the mysterious "
+"alien attackers to the best of their ability. They score precious few "
+"successes."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:26
+msgid ""
+"Left with only one alternative, the UN takes action. Ancient equipment is "
+"dusted off, some of it more than a century old, and the long-defunct anti-"
+"extraterrestrial agency of the former United States -- PHALANX -- is "
+"resurrected under a new UN banner. Its sworn duty is to combat the alien "
+"threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:30
+msgid ""
+"Funded by all eight of the political powers, and drawing its soldiers from "
+"the elite of their armies, PHALANX is the best of the best. It is Earth's "
+"first and only line of defence. It can't afford to fail; because if it does, "
+"humanity doesn't stand a chance."
+msgstr ""
+
+#: ../base/ufos/msgid/campaigntexts.ufo:45
 msgid ""
 "Great work, Commander. We have fought off the alien horde and kept earth "
 "safe. For now.\n"
@@ -12012,6 +12087,141 @@ msgid ""
 "\n"
 "Incendiary fields cause a small amount of damage to units which pass through "
 "them."
+msgstr ""
+
+#: ../base/ufos/msgid/installations.ufo:34
+msgid ""
+"Blueprints -- Radar Tower\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 18 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"In addition to the base radar facility blueprints I submitted earlier today, "
+"I'd like to submit these blueprints for a smaller off-base installation. Our "
+"in-base facilities will never be able to cover the whole globe, so we'll "
+"need to build some of these Radar Towers to fill any gaps in our coverage.\n"
+"\n"
+"The blueprints provide details to construct a small facility. This means "
+"that each tower will cover only a small range, but they can be erected "
+"quickly and cheaply to rapidly improve our operational capabilities.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The radar tower has a limited range compared to the facilities we've "
+"designed inside the PHALANX bases, so they'll need to be produced quickly "
+"and in large numbers to expand our radar coverage around the world.\n"
+"\n"
+"We should strive to cover as much of the earth as possible, but detecting a "
+"UFO is meaningless if we can't shoot it down. We should concentrate our "
+"construction on areas within range of our interceptors at first.\n"
+"\n"
+"The tower's camouflage is not very effective. Alien craft may detect the "
+"active scanning and attempt to destroy the tower once they find it.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
+msgstr ""
+
+#: ../base/ufos/msgid/installations.ufo:68
+msgid ""
+"Blueprints -- UFO Yard\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 17 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"If we're to survive this war, we'll need to do more than just detect and "
+"knock down UFOs. We'll need to recover these crafts and initiate an active "
+"research program that will investigate the alien technology to apply to our "
+"own aircraft.\n"
+"\n"
+"To do this, we'll need a dedicated storage facility -- one that is far too "
+"large to house on our bases. Please consider the attached blueprints, which "
+"outline plans for how to securely store and camouflage any alien craft we "
+"might recover. We'll be able to transport recovered craft to these "
+"facilities and conduct the necessary research.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"UFOs stored in a UFO Yard can be researched and dismantled from any PHALANX "
+"base with appropriate facilities, but these activities proceed more slowly "
+"the further away the UFO Yard is from the base. UFO Yards should be built "
+"nearby bases which will need access.\n"
+"\n"
+"UFOs can be transferred between different yards.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
+msgstr ""
+
+#: ../base/ufos/msgid/installations.ufo:100
+msgid ""
+"Blueprints -- SAM Site\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 18 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"I hope you've had a chance to read the blueprints I submitted earlier today "
+"for a surface-to-air missile defense facility we can build at PHALANX bases. "
+"We've hastily adapted those blueprints to design an off-base installation "
+"that can run on its own grid.\n"
+"\n"
+"This facility can provide additional defensive hardpoints around key "
+"strategic points. Although they remain vulnerable to detection and "
+"destruction from alien craft, they at least provide additional assurances "
+"that missile launchers won't expose the location of our bases.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Once built you'll need to equip the SAM site with missile batteries before "
+"it will be able to engage alien craft.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 msgstr ""
 
 #: ../base/ufos/msgid/irc.ufo:20
@@ -13628,10 +13838,10 @@ msgid ""
 "An examination of the tanks' contents has given us our first accurate data "
 "on the alien atmosphere. We now have several mixtures on record that we "
 "believe will be able to support various alien lifeforms in our Containment "
-"unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to "
-"our own, but others don't contain any oxygen at all. If all of these "
-"mixtures are actively used by one or more alien species, some of our enemies "
-"seem to breathe an atmosphere of almost pure methane.\n"
+"unit. A few of the mixtures in the device are nitrogen-oxygen compounds, "
+"very similar to our own, but others don't contain any oxygen at all. If all "
+"of these mixtures are actively used by one or more alien species, some of "
+"our enemies seem to breathe an atmosphere of almost pure methane.\n"
 "\n"
 "The vastly different mixtures are actually giving us a bit of a puzzle. "
 "Surely it would be more economical to use segregated crews than to force "
@@ -15702,7 +15912,8 @@ msgid ""
 "all ranges, or it can be used simply as a powerful medium-range assault "
 "weapon.\n"
 "\n"
-"It should be a prime candidate for any soldier with heavy weapons training.\n"
+"It should be a prime candidate for any soldier with assault weapons "
+"training.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -15875,9 +16086,8 @@ msgid ""
 "generating the beam. A series of intelligent lenses then focuses and directs "
 "the beam to the aiming point and even corrects for minor movement by the "
 "shooter or the target. The deuterium waste gas is rammed through our custom-"
-"designed high-pressure filtering system, which catches all toxic or "
-"radioactive molecules before expelling the remaining harmless vapour back "
-"into the atmosphere.\n"
+"designed high-pressure filtering system, which catches all toxic molecules "
+"before expelling the remaining harmless vapour back into the atmosphere.\n"
 "\n"
 "The filter needs to be replaced regularly, but we've designed the system to "
 "make this easy and painless. If the filter system is somehow damaged during "
@@ -22535,22 +22745,21 @@ msgid ""
 "of the item in question. I had no choice but to go to straight to you with "
 "the proposal.\n"
 "\n"
-"As you know, we've yet to capture an alien alive during our tactical "
-"engagements in all the weeks we've been waging this war. Now that we know "
-"how to keep them alive in containment, our lack of specimens is becoming a "
-"serious impediment to our biological and chemical research. We need living "
-"tissue to study, performing its natural functions inside a living body, and "
-"we don't have the ability to simply clone up some aliens to research. We "
-"need prisoners. The sooner the better.\n"
+"Now that we know how to keep captured aliens alive in containment, our lack "
+"of specimens is becoming a serious impediment to our biological and chemical "
+"research. We need living tissue to study, performing its natural functions "
+"inside a living body, and we don't have the ability to simply clone up some "
+"aliens to research. We need prisoners. The sooner the better.\n"
 "\n"
 "That's why I would like to propose a simple but high-powered electrical "
 "shock weapon, not unlike a military stun gun, designed to disable our "
 "enemies without killing them. It would be a two-handed man-portable unit "
 "with a large battery and several charge settings, the highest of which "
-"should be sufficient even to disable alien robots such as the Bloodspider. "
+"should be sufficient to disable the hardiest alien races we may encounter. "
 "We in DivBio believe that any alien subjected to this weapon would be "
 "disabled long enough for our soldiers to take control of the situation and "
-"secure prisoners.\n"
+"secure prisoners. The electrical shock could still be countered by "
+"sophisticated armour and may not be effective on robotic alien devices.\n"
 "\n"
 "Cdr. Navarre, however, feels that such a weapon would be hazardous to our "
 "soldiers and \"a throwback to the 20th century\", and refuses to endorse it. "
@@ -23134,13 +23343,13 @@ msgstr "รัสเซีย"
 msgid "The Commonwealth of Oceania"
 msgstr "เครือจักรภพโอชิเนีย"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:297
-#: ../base/ufos/research.ufo:336
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:298
+#: ../base/ufos/research.ufo:337
 msgid "Antimatter"
 msgstr "Antimatter"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5563
-#: ../base/ufos/research.ufo:5602
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5631
+#: ../base/ufos/research.ufo:5670
 msgid "Alien Materials"
 msgstr "Alien Materials"
 
@@ -23189,7 +23398,7 @@ msgstr "เนื้อหา"
 
 #: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
 #: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
-#: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/production.ufo:58 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:802
 msgid "Aircraft"
@@ -23200,125 +23409,130 @@ msgid "Base Facilities"
 msgstr "สิ่งก่อสร้างในฐาน"
 
 #: ../base/ufos/research.ufo:115
+#, fuzzy
+msgid "Global Installations"
+msgstr "ประเทศ"
+
+#: ../base/ufos/research.ufo:116
 msgid "Research Reports"
 msgstr "รายงานการวิจัย"
 
-#: ../base/ufos/research.ufo:116 ../base/ufos/ui/aircraft.ufo:102
+#: ../base/ufos/research.ufo:117 ../base/ufos/ui/aircraft.ufo:102
 #: ../base/ufos/ui/transfer.ufo:133 ../base/ufos/ui/transfer.ufo:144
 #: ../base/ufos/ui/transfer.ufo:507
 msgid "Equipment"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:118
 msgid "Alien Artifacts"
 msgstr "สมบัติต่างดาว"
 
-#: ../base/ufos/research.ufo:118
+#: ../base/ufos/research.ufo:119
 msgid "Autopsies & Observation"
 msgstr "การชันสูตรศพและข้อสังเกต"
 
-#: ../base/ufos/research.ufo:119
+#: ../base/ufos/research.ufo:120
 msgid "The Alien Threat"
 msgstr "มหันตภัยจากต่างดาว"
 
-#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:146
+#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:146
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Research"
 msgstr "วิจัย"
 
-#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:153
+#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:153
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Production"
 msgstr "การผลิต"
 
-#: ../base/ufos/research.ufo:145
+#: ../base/ufos/research.ufo:146
 #, fuzzy
 msgid "UFO Interception"
 msgstr "การเข้าสกัด"
 
-#: ../base/ufos/research.ufo:153
+#: ../base/ufos/research.ufo:154
 #, fuzzy
 msgid "UFO Disassembly"
 msgstr "เริ่มการผลิต %s"
 
-#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:162
 #, fuzzy
 msgid "Nation Happiness"
 msgstr "ความสุขมวลรวมของประเทศ"
 
-#: ../base/ufos/research.ufo:169
+#: ../base/ufos/research.ufo:170
 #, fuzzy
 msgid "Time Units"
 msgstr "หน่วยเวลา:\t%i\n"
 
-#: ../base/ufos/research.ufo:177
+#: ../base/ufos/research.ufo:178
 #, fuzzy
 msgid "Reaction Fire"
 msgstr "ไม่ยิงโต้ตอบ"
 
-#: ../base/ufos/research.ufo:185
+#: ../base/ufos/research.ufo:186
 msgid "Soldier Weight and Encumbrance"
 msgstr ""
 
-#: ../base/ufos/research.ufo:193
+#: ../base/ufos/research.ufo:194
 msgid "Wounds and Healing"
 msgstr ""
 
-#: ../base/ufos/research.ufo:201
+#: ../base/ufos/research.ufo:202
 #, fuzzy
 msgid "Auxiliary Equipment"
 msgstr "%s auxiliary equipment with\n"
 
-#: ../base/ufos/research.ufo:214
+#: ../base/ufos/research.ufo:215
 msgid "Continuous Wave Laser Operation"
 msgstr "Continuous Wave Laser Operation"
 
-#: ../base/ufos/research.ufo:354
+#: ../base/ufos/research.ufo:355
 msgid "Live Alien"
 msgstr "Live Alien"
 
-#: ../base/ufos/research.ufo:394
+#: ../base/ufos/research.ufo:395
 msgid "Alien Breathing Apparatus"
 msgstr "Alien Breathing Apparatus"
 
-#: ../base/ufos/research.ufo:436
+#: ../base/ufos/research.ufo:437
 msgid "The Alien Mind"
 msgstr "The Alien Mind"
 
-#: ../base/ufos/research.ufo:476
+#: ../base/ufos/research.ufo:477
 msgid "Odd Behaviour"
 msgstr "Odd Behaviour"
 
-#: ../base/ufos/research.ufo:516
+#: ../base/ufos/research.ufo:517
 msgid "Alien Communication"
 msgstr "การสื่อสารของมนุษย์ต่างดาว"
 
-#: ../base/ufos/research.ufo:557 client/cgame/campaign/cp_missions.cpp:474
+#: ../base/ufos/research.ufo:558 client/cgame/campaign/cp_missions.cpp:465
 msgid "Alien base"
 msgstr "ฐานมนุษย์ต่างดาว"
 
-#: ../base/ufos/research.ufo:583
+#: ../base/ufos/research.ufo:584
 msgid "The Universal Serum"
 msgstr ""
 
-#: ../base/ufos/research.ufo:622
+#: ../base/ufos/research.ufo:623
 msgid "Alien Origins"
 msgstr "Alien Origins"
 
-#: ../base/ufos/research.ufo:657
+#: ../base/ufos/research.ufo:658
 msgid "UFO Theory"
 msgstr "ทฤษฏีจานบิน"
 
-#: ../base/ufos/research.ufo:1101 ../base/ufos/weapons_human.ufo:1716
+#: ../base/ufos/research.ufo:1102 ../base/ufos/weapons_human.ufo:1729
 msgid "Electromagnetic Rifle"
 msgstr "Electromagnetic Rifle"
 
-#: ../base/ufos/research.ufo:1141 ../base/ufos/weapons_human.ufo:1738
+#: ../base/ufos/research.ufo:1141 ../base/ufos/weapons_human.ufo:1751
 #, fuzzy
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Electromagnetic Rifle"
 
-#: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1806
+#: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1819
 #, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "Electromagnetic Rifle"
@@ -23335,233 +23549,233 @@ msgstr "Plasma And The Grenade Launcher"
 msgid "Alien Artifact - Kerrblade"
 msgstr "Alien Artifact - Kerrblade"
 
-#: ../base/ufos/research.ufo:1802 ../base/ufos/research.ufo:1849
+#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1846
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Alien Artifact - Plasma Pistol"
 
-#: ../base/ufos/research.ufo:1873 ../base/ufos/research.ufo:1919
+#: ../base/ufos/research.ufo:1870 ../base/ufos/research.ufo:1915
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Alien Artifact - Plasma Blaster"
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:1939
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Alien Artifact - Plasma Blade"
 
-#: ../base/ufos/research.ufo:1989
+#: ../base/ufos/research.ufo:1985
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Alien Artifact - Plasma Grenade"
 
-#: ../base/ufos/research.ufo:2034 ../base/ufos/research.ufo:2080
+#: ../base/ufos/research.ufo:2030 ../base/ufos/research.ufo:2075
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Alien Artifact - Plasma Rifle"
 
-#: ../base/ufos/research.ufo:2104
+#: ../base/ufos/research.ufo:2099
 msgid "Encased Plasma Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2223 ../base/ufos/research.ufo:2315
+#: ../base/ufos/research.ufo:2218 ../base/ufos/research.ufo:2308
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2269 ../base/ufos/weapons_aliens.ufo:28
+#: ../base/ufos/research.ufo:2263 ../base/ufos/weapons_aliens.ufo:28
 msgid "Heavy Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2353 ../base/ufos/research.ufo:2361
+#: ../base/ufos/research.ufo:2346 ../base/ufos/research.ufo:2354
 #: ../base/ufos/weapons_human.ufo:435
 #, fuzzy
 msgid "Coilgun"
 msgstr "เหรียญ"
 
-#: ../base/ufos/research.ufo:2585
+#: ../base/ufos/research.ufo:2578
 msgid "Anti-Alien Gas"
 msgstr "Anti-Alien Gas"
 
-#: ../base/ufos/research.ufo:2632
+#: ../base/ufos/research.ufo:2625
 #, fuzzy
 msgid "Alien Anti-Human Gas"
 msgstr "สมบัติต่างดาว"
 
-#: ../base/ufos/research.ufo:2717 ../base/ufos/research.ufo:2762
+#: ../base/ufos/research.ufo:2710 ../base/ufos/research.ufo:2755
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Alien Artifact - Particle Beam Pistol"
 
-#: ../base/ufos/research.ufo:2781 ../base/ufos/research.ufo:2827
+#: ../base/ufos/research.ufo:2774 ../base/ufos/research.ufo:2820
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Alien Artifact - Particle Beam Cannon"
 
-#: ../base/ufos/research.ufo:2846 ../base/ufos/research.ufo:2891
+#: ../base/ufos/research.ufo:2839 ../base/ufos/research.ufo:2884
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Alien Artifact - Particle Beam Rifle"
 
-#: ../base/ufos/research.ufo:2911
+#: ../base/ufos/research.ufo:2904
 msgid "Man-Portable Particle Beams"
 msgstr "Man-Portable Particle Beams"
 
-#: ../base/ufos/research.ufo:3126
+#: ../base/ufos/research.ufo:3119
 msgid "Blast Damage Type"
 msgstr "ประเภทอาวุธแรงอัด"
 
-#: ../base/ufos/research.ufo:3139
+#: ../base/ufos/research.ufo:3132
 msgid "Fire Damage Type"
 msgstr "ประเภทอาวุธเพลิง"
 
-#: ../base/ufos/research.ufo:3152
+#: ../base/ufos/research.ufo:3145
 msgid "Laser Damage Type"
 msgstr "ประเภทอาวุธเลเซอร์"
 
-#: ../base/ufos/research.ufo:3170
+#: ../base/ufos/research.ufo:3163
 msgid "Impact Damage Type"
 msgstr "ประเภทอาวุธกระแทก"
 
-#: ../base/ufos/research.ufo:3183
+#: ../base/ufos/research.ufo:3176
 msgid "Shock Damage Type"
 msgstr "ประเภทอาวุธช็อต"
 
-#: ../base/ufos/research.ufo:3196
+#: ../base/ufos/research.ufo:3189
 msgid "Plasma Damage Type"
 msgstr "ประเภทอาวุธพลาสมา"
 
-#: ../base/ufos/research.ufo:3217
+#: ../base/ufos/research.ufo:3210
 msgid "Stun Damage Type"
 msgstr "ประเภทอาวุธทำให้ขยับไม่ได้"
 
-#: ../base/ufos/research.ufo:3230
+#: ../base/ufos/research.ufo:3223
 msgid "Particle Beam Damage Type"
 msgstr "ประเภทอาวุธลำแสงอนุภาค"
 
-#: ../base/ufos/research.ufo:3248
+#: ../base/ufos/research.ufo:3241
 msgid "Accuracy Attribute"
 msgstr "คุณสมบัติความแม่นยำ"
 
-#: ../base/ufos/research.ufo:3261
+#: ../base/ufos/research.ufo:3254
 msgid "Assault Guns Proficiency"
 msgstr "ความถนัดด้านปืนจู่โจม"
 
-#: ../base/ufos/research.ufo:3274
+#: ../base/ufos/research.ufo:3267
 msgid "Close Combat Proficiency"
 msgstr "ความถนัดการสู้ระยะประชิด"
 
-#: ../base/ufos/research.ufo:3287
+#: ../base/ufos/research.ufo:3280
 msgid "High-Explosives Proficiency"
 msgstr "ความถนัดด้านระเบิด"
 
-#: ../base/ufos/research.ufo:3300
+#: ../base/ufos/research.ufo:3293
 msgid "Heavy Weapons Proficiency"
 msgstr "ความถนัดด้านอาวุธหนัก"
 
-#: ../base/ufos/research.ufo:3313
+#: ../base/ufos/research.ufo:3306
 msgid "Mind Attribute"
 msgstr "คุณสมบัติด้านจิตใจ"
 
-#: ../base/ufos/research.ufo:3326
+#: ../base/ufos/research.ufo:3319
 msgid "Power Attribute"
 msgstr "คุณสมบัติด้านกำลัง"
 
-#: ../base/ufos/research.ufo:3339
+#: ../base/ufos/research.ufo:3332
 msgid "Sniper Rifles Proficiency"
 msgstr "ความถนัดด้านไรเฟิลซุ่มยิง"
 
-#: ../base/ufos/research.ufo:3352
+#: ../base/ufos/research.ufo:3345
 msgid "Speed Attribute"
 msgstr "คุณสมบัติความเร็ว"
 
-#: ../base/ufos/research.ufo:4364
+#: ../base/ufos/research.ufo:4416
 msgid "Alien Autopsy - Bloodspider"
 msgstr "การชันสูตรศพมุนษย์ต่างดาว -แมงมุมโลหิต"
 
-#: ../base/ufos/research.ufo:4418
+#: ../base/ufos/research.ufo:4470
 #, fuzzy
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "การชันสูตรศพมุนษย์ต่างดาว -แมงมุมโลหิต"
 
-#: ../base/ufos/research.ufo:4474
+#: ../base/ufos/research.ufo:4526
 msgid "Alien Autopsy - Ortnok"
 msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:4518
+#: ../base/ufos/research.ufo:4570
 msgid "Alien Autopsy - Taman"
 msgstr "Alien Autopsy - Taman"
 
-#: ../base/ufos/research.ufo:4562
+#: ../base/ufos/research.ufo:4614
 msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsy - Shevaar"
 
-#: ../base/ufos/research.ufo:4606
+#: ../base/ufos/research.ufo:4658
 #, fuzzy
 msgid "Alien Autopsy - Hovernet"
 msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:4662
+#: ../base/ufos/research.ufo:4714
 #, fuzzy
 msgid "Alien Autopsy - Combat Hovernet"
 msgstr "Alien Autopsy - Taman"
 
-#: ../base/ufos/research.ufo:4724 ../base/ufos/team_humans.ufo:344
+#: ../base/ufos/research.ufo:4776 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4744 ../base/ufos/team_humans.ufo:401
+#: ../base/ufos/research.ufo:4796 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4852
+#: ../base/ufos/research.ufo:4904
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:5173
+#: ../base/ufos/research.ufo:5225
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:5232
+#: ../base/ufos/research.ufo:5284
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:5249
+#: ../base/ufos/research.ufo:5301
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:5624
+#: ../base/ufos/research.ufo:5692
 msgid "Political Situation Before The Invasion"
 msgstr "Political Situation Before The Invasion"
 
-#: ../base/ufos/research.ufo:5637
+#: ../base/ufos/research.ufo:5705
 msgid "After The War"
 msgstr "After The War"
 
-#: ../base/ufos/research.ufo:5650
+#: ../base/ufos/research.ufo:5718
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:5662
+#: ../base/ufos/research.ufo:5730
 msgid "A New Twist"
 msgstr "A New Twist"
 
-#: ../base/ufos/research.ufo:5691
+#: ../base/ufos/research.ufo:5759
 msgid "The Enemy On Earth"
 msgstr "ศัตรูบนโลก"
 
-#: ../base/ufos/research.ufo:5730
+#: ../base/ufos/research.ufo:5798
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5771
+#: ../base/ufos/research.ufo:5839
 #, fuzzy
 msgid "The Alien Strategy"
 msgstr "มหันตภัยจากต่างดาว"
 
-#: ../base/ufos/research.ufo:5810
+#: ../base/ufos/research.ufo:5878
 #, fuzzy
 msgid "Orbital UFO Activity"
 msgstr "ตะวันออกชุดใหญ่"
 
-#: ../base/ufos/research.ufo:5853
+#: ../base/ufos/research.ufo:5921
 #, fuzzy
 msgid "Alien Psi Device"
 msgstr "ฆ่ามนุษย์ต่างดาว\t%i\n"
 
-#: ../base/ufos/research.ufo:5885
+#: ../base/ufos/research.ufo:5953
 #, fuzzy
 msgid "Human Vaccine"
 msgstr ""
@@ -23782,77 +23996,6 @@ msgstr ""
 msgid "To the community and everyone who supported us"
 msgstr "ทุกคนที่ให้การสนัลสนุน"
 
-#: ../base/ufos/seq_intro.ufo:36
-msgid "intro_sentence1"
-msgstr ""
-"ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร ความรุนแรงในตอนต้นศตวรรษที่ "
-"21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ "
-"สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต เหมือนกับที่เด็กในปลายศตวรรษที่ 20 "
-"รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
-
-#: ../base/ufos/seq_intro.ufo:48
-msgid "intro_sentence2"
-msgstr ""
-"ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ "
-"เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด "
-"แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง "
-"ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย "
-"การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ "
-"และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด "
-"หลายประเทศได้มีความมั่นคงและเข้มแข็ง "
-"ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก "
-"ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- "
-"แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต "
-"ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
-
-#: ../base/ufos/seq_intro.ufo:60
-msgid "intro_sentence3"
-msgstr "สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
-
-#: ../base/ufos/seq_intro.ufo:105
-msgid "intro_sentence4"
-msgstr ""
-"การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา "
-"และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ "
-"และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ "
-"พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม "
-"จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ "
-"แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ "
-"โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
-
-#: ../base/ufos/seq_intro.ufo:123
-msgid "intro_sentence5"
-msgstr ""
-"การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง "
-"คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต "
-"โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ "
-"ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด "
-"การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ "
-"มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย "
-"-- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
-
-#: ../base/ufos/seq_intro.ufo:186
-msgid "intro_sentence6"
-msgstr ""
-"แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ "
-"กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ "
-"แต่พวกเขาประสบความสำเร็จไม่มากนัก"
-
-#: ../base/ufos/seq_intro.ufo:197
-msgid "intro_sentence7"
-msgstr ""
-"เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ "
-"แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- "
-"ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว "
-"และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
-
-#: ../base/ufos/seq_intro.ufo:208
-msgid "intro_sentence8"
-msgstr ""
-"ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX "
-"คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ "
-"เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
-
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
 msgid "Gameplay"
 msgstr "การเล่น"
@@ -24054,7 +24197,7 @@ msgstr "ออกสู่เมนูหลัก"
 msgid "How to play multiplayer"
 msgstr "วิธีการเล่นแบบ Multiplayer"
 
-#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:963
+#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:958
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "ตรวจสอบให้มั่นใจว่าคุณเปิดพอร์ต TCP หมายเลข 27910 ในระบบป้องกันไฟร์วอล์ของคุณ"
@@ -24600,7 +24743,7 @@ msgid "Description"
 msgstr "คำอธิบาย:"
 
 #: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:226
-#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:664
+#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:650
 msgid "Pilots"
 msgstr "นักบิน"
 
@@ -24610,7 +24753,7 @@ msgid "Tanks"
 msgstr "โยกย้าย"
 
 #: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:210
-#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:659
+#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:645
 msgid "Soldiers"
 msgstr "ทหาร"
 
@@ -24649,7 +24792,7 @@ msgid "Ammo"
 msgstr "กระสุน"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:220 ../base/ufos/ui/equipment.ufo:239
-#: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:72
+#: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:50
 #: ../base/ufos/ui/team.ufo:219
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
 #: client/cgame/campaign/cp_ufopedia.cpp:146
@@ -24693,9 +24836,9 @@ msgid "Status:"
 msgstr "สถานะ:"
 
 #: ../base/ufos/ui/aircraft_info.ufo:66
-#: ../base/ufos/ui/aircraft_soldiers.ufo:314 ../base/ufos/ui/hire.ufo:464
-#: ../base/ufos/ui/hire.ufo:513 ../base/ufos/ui/hospital.ufo:583
-#: ../base/ufos/ui/popup_baseattack.ufo:265
+#: ../base/ufos/ui/aircraft_soldiers.ufo:308 ../base/ufos/ui/hire.ufo:450
+#: ../base/ufos/ui/hire.ufo:499 ../base/ufos/ui/hospital.ufo:572
+#: ../base/ufos/ui/popup_baseattack.ufo:255
 msgid "Health:"
 msgstr "พลังชีวิต:"
 
@@ -24713,7 +24856,7 @@ msgid "Call back"
 msgstr "เรียกกลับ"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:104
-#: ../base/ufos/ui/aircraft_soldiers.ufo:385 ../base/ufos/ui/hire.ufo:234
+#: ../base/ufos/ui/aircraft_soldiers.ufo:379 ../base/ufos/ui/hire.ufo:234
 #, fuzzy
 msgid "Equip soldiers"
 msgstr "ติดอุปกรณ์ให้ทหารคนนี้"
@@ -24724,98 +24867,91 @@ msgid "Missions info"
 msgstr "ข้อมูลภารกิจ"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:257 ../base/ufos/ui/equipment.ufo:396
-#: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:495
-#: ../base/ufos/ui/physdat.ufo:133 ../base/ufos/ui/popup_baseattack.ufo:176
+#: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:493
+#: ../base/ufos/ui/physdat.ufo:222 ../base/ufos/ui/popup_baseattack.ufo:176
 #: ../base/ufos/ui/team.ufo:371
 msgid "Strength:"
 msgstr "ความแข็งแกร่ง:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:263 ../base/ufos/ui/equipment.ufo:410
-#: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:504
-#: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:147
+#: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:502
+#: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:236
 #: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:380
 msgid "Speed:"
 msgstr "ความเร็ว:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:269 ../base/ufos/ui/equipment.ufo:424
-#: ../base/ufos/ui/hire.ufo:371 ../base/ufos/ui/hospital.ufo:513
-#: ../base/ufos/ui/physdat.ufo:161 ../base/ufos/ui/popup_baseattack.ufo:194
+#: ../base/ufos/ui/hire.ufo:371 ../base/ufos/ui/hospital.ufo:511
+#: ../base/ufos/ui/physdat.ufo:250 ../base/ufos/ui/popup_baseattack.ufo:194
 #: ../base/ufos/ui/team.ufo:389
 msgid "Accuracy:"
 msgstr "ความแม่นยำ:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:275 ../base/ufos/ui/equipment.ufo:438
-#: ../base/ufos/ui/hire.ufo:385 ../base/ufos/ui/hospital.ufo:522
-#: ../base/ufos/ui/physdat.ufo:175 ../base/ufos/ui/popup_baseattack.ufo:203
+#: ../base/ufos/ui/hire.ufo:385 ../base/ufos/ui/hospital.ufo:520
+#: ../base/ufos/ui/physdat.ufo:264 ../base/ufos/ui/popup_baseattack.ufo:203
 #: ../base/ufos/ui/team.ufo:398
 msgid "Mind:"
 msgstr "จิตใจ:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:281 ../base/ufos/ui/equipment.ufo:452
-#: ../base/ufos/ui/hire.ufo:399 ../base/ufos/ui/hospital.ufo:531
-#: ../base/ufos/ui/physdat.ufo:189 ../base/ufos/ui/popup_baseattack.ufo:212
+#: ../base/ufos/ui/hire.ufo:399 ../base/ufos/ui/hospital.ufo:529
+#: ../base/ufos/ui/physdat.ufo:278 ../base/ufos/ui/popup_baseattack.ufo:212
 #: ../base/ufos/ui/team.ufo:407
 msgid "Close Combat:"
 msgstr "ต่อสู้ประชิดตัว:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:287 ../base/ufos/ui/equipment.ufo:466
-#: ../base/ufos/ui/hire.ufo:413 ../base/ufos/ui/hospital.ufo:540
-#: ../base/ufos/ui/physdat.ufo:203 ../base/ufos/ui/popup_baseattack.ufo:222
+#: ../base/ufos/ui/hire.ufo:413 ../base/ufos/ui/hospital.ufo:538
+#: ../base/ufos/ui/physdat.ufo:292 ../base/ufos/ui/popup_baseattack.ufo:222
 #: ../base/ufos/ui/team.ufo:416
-msgid "Heavy Weapons:"
-msgstr "อาวุธหนัก:"
-
-#: ../base/ufos/ui/aircraft_soldiers.ufo:293 ../base/ufos/ui/equipment.ufo:480
-#: ../base/ufos/ui/hire.ufo:427 ../base/ufos/ui/hospital.ufo:549
-#: ../base/ufos/ui/physdat.ufo:217 ../base/ufos/ui/popup_baseattack.ufo:232
-#: ../base/ufos/ui/team.ufo:425
 msgid "Assault Weapons:"
 msgstr "อาวุธจู่โจม:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:299 ../base/ufos/ui/equipment.ufo:494
-#: ../base/ufos/ui/hire.ufo:441 ../base/ufos/ui/hospital.ufo:558
-#: ../base/ufos/ui/physdat.ufo:231 ../base/ufos/ui/popup_baseattack.ufo:242
-#: ../base/ufos/ui/team.ufo:434
+#: ../base/ufos/ui/aircraft_soldiers.ufo:293 ../base/ufos/ui/equipment.ufo:480
+#: ../base/ufos/ui/hire.ufo:427 ../base/ufos/ui/hospital.ufo:547
+#: ../base/ufos/ui/physdat.ufo:306 ../base/ufos/ui/popup_baseattack.ufo:232
+#: ../base/ufos/ui/team.ufo:425
 msgid "Sniper Rifles:"
 msgstr "ไรเฟิลซุ่มยิง:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:305 ../base/ufos/ui/equipment.ufo:508
-#: ../base/ufos/ui/hospital.ufo:567 ../base/ufos/ui/physdat.ufo:245
-#: ../base/ufos/ui/popup_baseattack.ufo:252 ../base/ufos/ui/team.ufo:443
+#: ../base/ufos/ui/aircraft_soldiers.ufo:299 ../base/ufos/ui/equipment.ufo:494
+#: ../base/ufos/ui/hospital.ufo:556 ../base/ufos/ui/physdat.ufo:320
+#: ../base/ufos/ui/popup_baseattack.ufo:242 ../base/ufos/ui/team.ufo:434
 msgid "High-Explosives:"
 msgstr "ระเบิดแรงสูง:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:335
-#: ../base/ufos/ui/popup_baseattack.ufo:287
+#: ../base/ufos/ui/aircraft_soldiers.ufo:329
+#: ../base/ufos/ui/popup_baseattack.ufo:277
 #, fuzzy
 msgid "Missions performed:"
 msgstr "เข้าร่วมภารกิจ:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:338
-#: ../base/ufos/ui/popup_baseattack.ufo:290
+#: ../base/ufos/ui/aircraft_soldiers.ufo:332
+#: ../base/ufos/ui/popup_baseattack.ufo:280
 msgid "Enemies killed:"
 msgstr "ศัตรูถูกฆ่า:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:341
-#: ../base/ufos/ui/popup_baseattack.ufo:293
+#: ../base/ufos/ui/aircraft_soldiers.ufo:335
+#: ../base/ufos/ui/popup_baseattack.ufo:283
 msgid "Civilians killed:"
 msgstr "พลเรือนถูกฆ่า:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:344
-#: ../base/ufos/ui/popup_baseattack.ufo:296
+#: ../base/ufos/ui/aircraft_soldiers.ufo:338
+#: ../base/ufos/ui/popup_baseattack.ufo:286
 msgid "Our team killed:"
 msgstr "ทีมถูกฆ่า:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:356
+#: ../base/ufos/ui/aircraft_soldiers.ufo:350
 msgid "Assign tanks"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:360
+#: ../base/ufos/ui/aircraft_soldiers.ufo:354
 #, fuzzy
 msgid "Assign soldiers"
 msgstr "จัดการทหาร"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:388
+#: ../base/ufos/ui/aircraft_soldiers.ufo:382
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "ไม่ได้ติดตั้งโล่"
@@ -24955,7 +25091,7 @@ msgstr "ประเทศ"
 
 #: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:980
 #: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:315
-#: ../base/ufos/ui/physdat.ufo:348 ../base/ufos/ui/popup_baseattack.ufo:312
+#: ../base/ufos/ui/physdat.ufo:409 ../base/ufos/ui/popup_baseattack.ufo:302
 #: ../base/ufos/ui/popup_installations.ufo:130
 #: ../base/ufos/ui/transfer.ufo:692
 msgid "Close"
@@ -25054,13 +25190,13 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
-#: ../base/ufos/ui/hire.ufo:674
+#: ../base/ufos/ui/hire.ufo:660
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "นักวิทยาศาสตร์"
 
 #: ../base/ufos/ui/bases.ufo:258 ../base/ufos/ui/bases.ufo:265
-#: ../base/ufos/ui/hire.ufo:669
+#: ../base/ufos/ui/hire.ufo:655
 msgid "Workers"
 msgstr "คนงาน"
 
@@ -25079,11 +25215,11 @@ msgid "Select building"
 msgstr "เลือกสิ่งก่อสร้าง"
 
 #: ../base/ufos/ui/buildings.ufo:180 ../base/ufos/ui/geoscape.ufo:560
-#: ../base/ufos/ui/market.ufo:431 client/cgame/campaign/cp_ufopedia.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:636
-#: client/cgame/campaign/cp_ufopedia.cpp:689
-#: client/cgame/campaign/cp_ufopedia.cpp:698
-#: client/cgame/campaign/cp_ufopedia.cpp:864
+#: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:119
+#: client/cgame/campaign/cp_ufopedia.cpp:625
+#: client/cgame/campaign/cp_ufopedia.cpp:678
+#: client/cgame/campaign/cp_ufopedia.cpp:687
+#: client/cgame/campaign/cp_ufopedia.cpp:853
 msgid "UFOpaedia"
 msgstr "จานบินอภิธาน"
 
@@ -25227,65 +25363,66 @@ msgid "Remove all"
 msgstr "ลบ"
 
 #: ../base/ufos/ui/equipment.ufo:223 ../base/ufos/ui/market.ufo:114
-#: ../base/ufos/ui/production.ufo:56 ../base/ufos/ui/team.ufo:203
+#: ../base/ufos/ui/production.ufo:34 ../base/ufos/ui/team.ufo:203
 msgid "Primary"
 msgstr "หลัก"
 
 #: ../base/ufos/ui/equipment.ufo:227 ../base/ufos/ui/market.ufo:118
-#: ../base/ufos/ui/production.ufo:60 ../base/ufos/ui/team.ufo:207
+#: ../base/ufos/ui/production.ufo:38 ../base/ufos/ui/team.ufo:207
 msgid "Secondary"
 msgstr "รอง"
 
 #: ../base/ufos/ui/equipment.ufo:231 ../base/ufos/ui/market.ufo:122
-#: ../base/ufos/ui/production.ufo:64 ../base/ufos/ui/team.ufo:211
+#: ../base/ufos/ui/production.ufo:42 ../base/ufos/ui/team.ufo:211
+#: client/cl_inventory_callbacks.cpp:46
 msgid "Heavy"
 msgstr "หนัก"
 
 #: ../base/ufos/ui/equipment.ufo:235 ../base/ufos/ui/market.ufo:126
-#: ../base/ufos/ui/production.ufo:68 ../base/ufos/ui/team.ufo:215
+#: ../base/ufos/ui/production.ufo:46 ../base/ufos/ui/team.ufo:215
 msgid "Misc"
 msgstr "อื่นๆ"
 
-#: ../base/ufos/ui/equipment.ufo:306 ../base/ufos/ui/market.ufo:486
+#: ../base/ufos/ui/equipment.ufo:306 ../base/ufos/ui/market.ufo:491
 #: ../base/ufos/ui/team.ufo:286 ../base/ufos/ui/ufopedia.ufo:342
 #, fuzzy
 msgid "With:"
 msgstr "ใช้กับกระสุน:"
 
-#: ../base/ufos/ui/equipment.ufo:343 ../base/ufos/ui/market.ufo:523
+#: ../base/ufos/ui/equipment.ufo:343 ../base/ufos/ui/market.ufo:528
 #: ../base/ufos/ui/team.ufo:323 ../base/ufos/ui/ufopedia.ufo:379
 msgid "Firemode:"
 msgstr "วิธีการยิง:"
 
-#: ../base/ufos/ui/equipment.ufo:351 ../base/ufos/ui/market.ufo:531
+#: ../base/ufos/ui/equipment.ufo:351 ../base/ufos/ui/market.ufo:536
 #: ../base/ufos/ui/team.ufo:331 ../base/ufos/ui/ufopedia.ufo:387
 msgid "Previous firemode"
 msgstr "วิธีการยิงก่อนหน้า"
 
-#: ../base/ufos/ui/equipment.ufo:369 ../base/ufos/ui/market.ufo:549
+#: ../base/ufos/ui/equipment.ufo:369 ../base/ufos/ui/market.ufo:554
 #: ../base/ufos/ui/team.ufo:349 ../base/ufos/ui/ufopedia.ufo:405
 msgid "Next firemode"
 msgstr "วิธีการยิงถัดไป"
 
-#: ../base/ufos/ui/equipment.ufo:550 ../base/ufos/ui/team.ufo:484
+#: ../base/ufos/ui/equipment.ufo:536 ../base/ufos/ui/team.ufo:475
 #, fuzzy
 msgid "Soldier Abilities"
 msgstr "ความสามารถผู้ใช้"
 
-#: ../base/ufos/ui/equipment.ufo:554 ../base/ufos/ui/team.ufo:488
+#: ../base/ufos/ui/equipment.ufo:540 ../base/ufos/ui/team.ufo:479
 msgid "Object Info"
 msgstr "ข้อมูลสิ่งของ"
 
-#: ../base/ufos/ui/equipment.ufo:566 ../base/ufos/ui/equipment.ufo:579
+#: ../base/ufos/ui/equipment.ufo:552 ../base/ufos/ui/equipment.ufo:565
 msgid "Rename your unit"
 msgstr "เปลี่ยนชื่อยูนิต"
 
-#: ../base/ufos/ui/equipment.ufo:692 ../base/ufos/ui/inventory.ufo:252
-#: ../base/ufos/ui/team.ufo:622
+#: ../base/ufos/ui/equipment.ufo:678 ../base/ufos/ui/inventory.ufo:252
+#: ../base/ufos/ui/team.ufo:613
 msgid "0/0 Kg"
 msgstr ""
 
-#: ../base/ufos/ui/equipment.ufo:718 ../base/ufos/ui/team.ufo:639
+#: ../base/ufos/ui/equipment.ufo:704 ../base/ufos/ui/team.ufo:630
 msgid "Done"
 msgstr "เสร็จ"
 
@@ -25398,12 +25535,12 @@ msgstr "ภารกิจ"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "เครื่องบินถึงที่หมาย - ต้องการทำอะไร?"
 
-#: ../base/ufos/ui/geoscape.ufo:797 ../base/ufos/ui/popup_baseattack.ufo:440
+#: ../base/ufos/ui/geoscape.ufo:797 ../base/ufos/ui/popup_baseattack.ufo:430
 msgid "Enter"
 msgstr "เข้า"
 
-#: ../base/ufos/ui/geoscape.ufo:798 ../base/ufos/ui/popup_baseattack.ufo:441
-#: ../base/ufos/ui/popup_baseattack.ufo:462
+#: ../base/ufos/ui/geoscape.ufo:798 ../base/ufos/ui/popup_baseattack.ufo:431
+#: ../base/ufos/ui/popup_baseattack.ufo:452
 msgid "Enter the battlefield"
 msgstr "เข้าสู่สนามรบ"
 
@@ -25526,34 +25663,34 @@ msgstr ""
 msgid "Rename employee"
 msgstr "เปลี่ยนชื่อ"
 
-#: ../base/ufos/ui/hire.ufo:455
+#: ../base/ufos/ui/hire.ufo:441
 #, fuzzy
 msgid "High Explosives:"
 msgstr "ระเบิดแรงสูง:"
 
-#: ../base/ufos/ui/hire.ufo:468 ../base/ufos/ui/physdat.ufo:382
+#: ../base/ufos/ui/hire.ufo:454 ../base/ufos/ui/physdat.ufo:444
 msgid "Missions Performed:"
 msgstr "เข้าร่วมภารกิจ:"
 
-#: ../base/ufos/ui/hire.ufo:471 ../base/ufos/ui/physdat.ufo:383
+#: ../base/ufos/ui/hire.ufo:457 ../base/ufos/ui/physdat.ufo:445
 msgid "Enemies Killed:"
 msgstr "ฆ่าศัตรู:"
 
-#: ../base/ufos/ui/hire.ufo:486
+#: ../base/ufos/ui/hire.ufo:472
 #, fuzzy
 msgid "Piloting:"
 msgstr "ซ้อนพื้นผิว:"
 
-#: ../base/ufos/ui/hire.ufo:495
+#: ../base/ufos/ui/hire.ufo:481
 #, fuzzy
 msgid "Targeting:"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/ui/hire.ufo:504
+#: ../base/ufos/ui/hire.ufo:490
 msgid "Evading:"
 msgstr ""
 
-#: ../base/ufos/ui/hire.ufo:529 ../base/ufos/ui/hire.ufo:545
+#: ../base/ufos/ui/hire.ufo:515 ../base/ufos/ui/hire.ufo:531
 #, fuzzy
 msgid "Occupation"
 msgstr "ตัวเลือก"
@@ -25576,32 +25713,32 @@ msgstr "บาดเจ็บปานกลาง"
 msgid "Slightly wounded"
 msgstr "บาดเจ็บเล็กน้อย"
 
-#: ../base/ufos/ui/hospital.ufo:385
+#: ../base/ufos/ui/hospital.ufo:383
 msgid "Scroll up"
 msgstr "เลื่อนขึ้น"
 
-#: ../base/ufos/ui/hospital.ufo:395
+#: ../base/ufos/ui/hospital.ufo:393
 msgid "Scroll down"
 msgstr "เลื่อนลง"
 
-#: ../base/ufos/ui/hospital.ufo:607
+#: ../base/ufos/ui/hospital.ufo:594
 msgid "Implants"
 msgstr "ฝัง"
 
-#: ../base/ufos/ui/hospital.ufo:613 ../base/ufos/ui/popup_baseattack.ufo:398
-#: ../base/ufos/ui/popup_baseattack.ufo:405
-#: ../base/ufos/ui/popup_baseattack.ufo:412
-#: ../base/ufos/ui/popup_baseattack.ufo:419
+#: ../base/ufos/ui/hospital.ufo:600 ../base/ufos/ui/popup_baseattack.ufo:388
+#: ../base/ufos/ui/popup_baseattack.ufo:395
+#: ../base/ufos/ui/popup_baseattack.ufo:402
+#: ../base/ufos/ui/popup_baseattack.ufo:409
 #, fuzzy
 msgid "Not implemented"
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:292
+#: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
 msgstr "พลังชีวิต"
 
-#: ../base/ufos/ui/hud_.ufo:47 ../base/ufos/ui/physdat.ufo:319
-#: ../base/ufos/ui/physdat.ufo:329
+#: ../base/ufos/ui/hud_.ufo:47 ../base/ufos/ui/physdat.ufo:385
+#: ../base/ufos/ui/physdat.ufo:395
 msgid "Morale"
 msgstr "กำลังใจ"
 
@@ -25613,8 +25750,8 @@ msgstr ""
 msgid "Check to use this firemode for reaction fire"
 msgstr "ทำเครื่องหมายเพื่อใช้รูปแบบการยิงนี้ในการยิงตอบโต้"
 
-#: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1391
-#: client/cl_inventory_callbacks.cpp:386
+#: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1389
+#: client/cl_inventory_callbacks.cpp:388
 #, fuzzy
 msgid "TU:"
 msgstr "ปฏิบัติการ:\t%s\n"
@@ -25624,58 +25761,58 @@ msgstr "ปฏิบัติการ:\t%s\n"
 msgid "Shots:"
 msgstr "ยิง: %i"
 
-#: ../base/ufos/ui/hud_.ufo:545
+#: ../base/ufos/ui/hud_.ufo:562
 msgid "Chat"
 msgstr "พูดคุย"
 
-#: ../base/ufos/ui/hud_.ufo:577
+#: ../base/ufos/ui/hud_.ufo:594
 #, fuzzy
 msgid "Party chat"
 msgstr "เปิดระบบสนทนา"
 
-#: ../base/ufos/ui/hud_.ufo:581
+#: ../base/ufos/ui/hud_.ufo:598
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/hud_.ufo:662 ../base/ufos/ui/hud_.ufo:725
+#: ../base/ufos/ui/hud_.ufo:679 ../base/ufos/ui/hud_.ufo:742
 #, fuzzy
 msgid "Say:"
 msgstr "ยิงกระจาย"
 
-#: ../base/ufos/ui/hud_.ufo:733
+#: ../base/ufos/ui/hud_.ufo:750
 #, fuzzy
 msgid "Team chat"
 msgstr "พูดคุยในทีม"
 
-#: ../base/ufos/ui/hud_default.ufo:68 ../base/ufos/ui/multiplayer.ufo:1060
+#: ../base/ufos/ui/hud_default.ufo:68 ../base/ufos/ui/multiplayer.ufo:1055
 msgid "Level 1"
 msgstr "ระดับ 1"
 
-#: ../base/ufos/ui/hud_default.ufo:89 ../base/ufos/ui/multiplayer.ufo:1071
+#: ../base/ufos/ui/hud_default.ufo:89 ../base/ufos/ui/multiplayer.ufo:1066
 msgid "Level 2"
 msgstr "ระดับ 2"
 
-#: ../base/ufos/ui/hud_default.ufo:110 ../base/ufos/ui/multiplayer.ufo:1082
+#: ../base/ufos/ui/hud_default.ufo:110 ../base/ufos/ui/multiplayer.ufo:1077
 msgid "Level 3"
 msgstr "ระดับ 3"
 
-#: ../base/ufos/ui/hud_default.ufo:131 ../base/ufos/ui/multiplayer.ufo:1093
+#: ../base/ufos/ui/hud_default.ufo:131 ../base/ufos/ui/multiplayer.ufo:1088
 msgid "Level 4"
 msgstr "ระดับ 4"
 
-#: ../base/ufos/ui/hud_default.ufo:152 ../base/ufos/ui/multiplayer.ufo:1104
+#: ../base/ufos/ui/hud_default.ufo:152 ../base/ufos/ui/multiplayer.ufo:1099
 msgid "Level 5"
 msgstr "ระดับ 5"
 
-#: ../base/ufos/ui/hud_default.ufo:173 ../base/ufos/ui/multiplayer.ufo:1115
+#: ../base/ufos/ui/hud_default.ufo:173 ../base/ufos/ui/multiplayer.ufo:1110
 msgid "Level 6"
 msgstr "ระดับ 6"
 
-#: ../base/ufos/ui/hud_default.ufo:194 ../base/ufos/ui/multiplayer.ufo:1126
+#: ../base/ufos/ui/hud_default.ufo:194 ../base/ufos/ui/multiplayer.ufo:1121
 msgid "Level 7"
 msgstr "ระดับ 7"
 
-#: ../base/ufos/ui/hud_default.ufo:215 ../base/ufos/ui/multiplayer.ufo:1137
+#: ../base/ufos/ui/hud_default.ufo:215 ../base/ufos/ui/multiplayer.ufo:1132
 msgid "Level 8"
 msgstr "ระดับ 8"
 
@@ -25710,7 +25847,7 @@ msgstr "ส่งข้อความ"
 msgid "Hide rescue zone"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/ui/hud_default.ufo:927 client/battlescape/cl_hud.cpp:906
+#: ../base/ufos/ui/hud_default.ufo:927 client/battlescape/cl_hud.cpp:904
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -25768,7 +25905,7 @@ msgid "Floor"
 msgstr "ชั้น"
 
 #: ../base/ufos/ui/irc.ufo:22 ../base/ufos/ui/multiplayer.ufo:85
-#: ../base/ufos/ui/multiplayer.ufo:156 ../base/ufos/ui/multiplayer.ufo:1467
+#: ../base/ufos/ui/multiplayer.ufo:156 ../base/ufos/ui/multiplayer.ufo:1462
 #: ../base/ufos/ui/multiplayeringame.ufo:48
 msgid "Lobby"
 msgstr "ล็อบบี้"
@@ -25969,7 +26106,7 @@ msgstr "ภาษา:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "คุณต้องตั้งชื่อผู้เล่นและกดปุ่ม 'โอเค'"
 
-#: ../base/ufos/ui/main.ufo:236 ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/main.ufo:236 ../base/ufos/ui/multiplayer.ufo:1410
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
 msgstr "ตกลง"
@@ -26004,17 +26141,17 @@ msgstr "ปิดกรอบนี้"
 msgid "Buy and sell item"
 msgstr "ซื้อหรือขายยานบิน"
 
-#: ../base/ufos/ui/market.ufo:134 ../base/ufos/ui/production.ufo:76
+#: ../base/ufos/ui/market.ufo:134 ../base/ufos/ui/production.ufo:54
 #, fuzzy
 msgid "Craft items"
 msgstr "สร้าง"
 
 #: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:348
-#: ../base/ufos/ui/options.ufo:1151 ../base/ufos/ui/production.ufo:88
+#: ../base/ufos/ui/options.ufo:1151 ../base/ufos/ui/production.ufo:66
 msgid "Other"
 msgstr "อื่นๆ"
 
-#: ../base/ufos/ui/market.ufo:146 ../base/ufos/ui/production.ufo:84
+#: ../base/ufos/ui/market.ufo:146 ../base/ufos/ui/production.ufo:62
 msgid "UGV items"
 msgstr ""
 
@@ -26046,20 +26183,29 @@ msgstr ""
 msgid "Price"
 msgstr "ราคา:"
 
-#: ../base/ufos/ui/market.ufo:308
+#: ../base/ufos/ui/market.ufo:275
+#, fuzzy
+msgid "Item autosell enabled"
+msgstr "ทำการขายอุปกรณ์อัตโนมัติ"
+
+#: ../base/ufos/ui/market.ufo:277
+#, fuzzy
+msgid "Item autosell disabled"
+msgstr "ปิดการขายอุปกรณ์อัตโนมัติ"
+
+#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/production.ufo:116
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Capacity"
 msgstr "ความจุ"
 
-#: ../base/ufos/ui/market.ufo:315 ../base/ufos/ui/popup_installations.ufo:287
+#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
-#: ../base/ufos/ui/transfer.ufo:367
+#: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:322
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:252
+#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/production.ufo:130
 msgid "all"
 msgstr "ทั้งหมด"
 
@@ -26240,7 +26386,7 @@ msgid "Delete this bookmark"
 msgstr "ลบตัวคั่นนี้"
 
 #: ../base/ufos/ui/multiplayer.ufo:64 ../base/ufos/ui/multiplayer.ufo:206
-#: ../base/ufos/ui/popup_baseattack.ufo:430 ../base/ufos/ui/skirmish.ufo:184
+#: ../base/ufos/ui/popup_baseattack.ufo:420 ../base/ufos/ui/skirmish.ufo:184
 msgid "Team"
 msgstr "ทีม"
 
@@ -26325,164 +26471,164 @@ msgstr ""
 msgid "Hostname:"
 msgstr "ชื่อโฮสต์:"
 
-#: ../base/ufos/ui/multiplayer.ufo:615
+#: ../base/ufos/ui/multiplayer.ufo:610
 msgid "Gametype:"
 msgstr "รูปแบบเกม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:652
+#: ../base/ufos/ui/multiplayer.ufo:632
 msgid "Teamplay:"
 msgstr "เล่นเป็นทีม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:676
+#: ../base/ufos/ui/multiplayer.ufo:656
 #, fuzzy
 msgid "Allowed gametype:"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/ui/multiplayer.ufo:702
+#: ../base/ufos/ui/multiplayer.ufo:697
 msgid "Enable morale states:"
 msgstr "เปิดใช้ระดับกำลังใจ:"
 
-#: ../base/ufos/ui/multiplayer.ufo:717 ../base/ufos/ui/skirmish.ufo:406
+#: ../base/ufos/ui/multiplayer.ufo:712 ../base/ufos/ui/skirmish.ufo:406
 #, fuzzy
 msgid "Alien rush:"
 msgstr "มนุษย์ต่างดาว"
 
-#: ../base/ufos/ui/multiplayer.ufo:720 ../base/ufos/ui/skirmish.ufo:409
+#: ../base/ufos/ui/multiplayer.ufo:715 ../base/ufos/ui/skirmish.ufo:409
 #, fuzzy
 msgid "Enemies respawn when killed."
 msgstr "ศัตรูถูกฆ่า:"
 
-#: ../base/ufos/ui/multiplayer.ufo:734
+#: ../base/ufos/ui/multiplayer.ufo:729
 msgid "Max. clients:"
 msgstr "ลูกข่ายสูงสุด:"
 
-#: ../base/ufos/ui/multiplayer.ufo:735
+#: ../base/ufos/ui/multiplayer.ufo:730
 msgid "Sets the max allowed clients to connect"
 msgstr "ตั้งจำนวนสูงสุดลูกข่ายจะเชื่อมต่อได้"
 
-#: ../base/ufos/ui/multiplayer.ufo:760
+#: ../base/ufos/ui/multiplayer.ufo:755
 msgid "Max. soldiers per team:"
 msgstr "ทหารสูงสุดในทีม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:761
+#: ../base/ufos/ui/multiplayer.ufo:756
 msgid "Sets the max allowed soldiers per team"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละทีมมีได้"
 
-#: ../base/ufos/ui/multiplayer.ufo:786
+#: ../base/ufos/ui/multiplayer.ufo:781
 msgid "Max. soldiers per player:"
 msgstr "ทหารสูงสุดต่อผู้เล่น:"
 
-#: ../base/ufos/ui/multiplayer.ufo:787
+#: ../base/ufos/ui/multiplayer.ufo:782
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละผู้เล่นมีได้ ขณะเล่นเป็นทีม"
 
-#: ../base/ufos/ui/multiplayer.ufo:813
+#: ../base/ufos/ui/multiplayer.ufo:808
 msgid "Max. human players per team:"
 msgstr "ผู้เล่นมนุษย์สูงสุดต่อทีม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:838 ../base/ufos/ui/skirmish.ufo:331
+#: ../base/ufos/ui/multiplayer.ufo:833 ../base/ufos/ui/skirmish.ufo:331
 msgid "Max. AI actors:"
 msgstr "จำนวนผู้เล่นคอมพิวเตอร์สูงสุด:"
 
-#: ../base/ufos/ui/multiplayer.ufo:839
+#: ../base/ufos/ui/multiplayer.ufo:834
 msgid "Max AI actors for teamplay mode"
 msgstr "จำนวนสูงสุดของผู้เล่นคอมพิวเตอร์ในแบบทีม"
 
-#: ../base/ufos/ui/multiplayer.ufo:865
+#: ../base/ufos/ui/multiplayer.ufo:860
 msgid "Round time limit in seconds:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:897
+#: ../base/ufos/ui/multiplayer.ufo:892
 msgid "Make this server public:"
 msgstr "เปิดเป็นเซอร์เวอร์สาธาระ:"
 
-#: ../base/ufos/ui/multiplayer.ufo:913
+#: ../base/ufos/ui/multiplayer.ufo:908
 msgid "Server-Password:"
 msgstr "รหัสผ่านเซอร์เวอร์:"
 
-#: ../base/ufos/ui/multiplayer.ufo:936
+#: ../base/ufos/ui/multiplayer.ufo:931
 msgid "RCON-Password:"
 msgstr "รหัสผ่าน RCON:"
 
-#: ../base/ufos/ui/multiplayer.ufo:978
+#: ../base/ufos/ui/multiplayer.ufo:973
 msgid "Start server"
 msgstr "เริ่มเซอร์เวอร์"
 
-#: ../base/ufos/ui/multiplayer.ufo:1157
+#: ../base/ufos/ui/multiplayer.ufo:1152
 #, fuzzy
 msgid "Players connected"
 msgstr "ไม่มีผู้เล่น\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:1211
+#: ../base/ufos/ui/multiplayer.ufo:1206
 msgid "Team selection"
 msgstr "เลือกทีม"
 
-#: ../base/ufos/ui/multiplayer.ufo:1232
+#: ../base/ufos/ui/multiplayer.ufo:1227
 msgid "Team preference:"
 msgstr "การตั้งค่าทีม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1246
+#: ../base/ufos/ui/multiplayer.ufo:1241
 msgid "Next free team"
 msgstr "ทีมว่างถัดไป"
 
-#: ../base/ufos/ui/multiplayer.ufo:1256
+#: ../base/ufos/ui/multiplayer.ufo:1251
 msgid "Previous free team"
 msgstr "ทีมว่างก่อนหน้า"
 
-#: ../base/ufos/ui/multiplayer.ufo:1268
+#: ../base/ufos/ui/multiplayer.ufo:1263
 msgid "Force start"
 msgstr "บังคับให้เริ่ม"
 
-#: ../base/ufos/ui/multiplayer.ufo:1269
+#: ../base/ufos/ui/multiplayer.ufo:1264
 #, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "เริ่มเกมแม้ว่าทุกทีมยังไม่ได้เข้าร่วม"
 
-#: ../base/ufos/ui/multiplayer.ufo:1280 ../base/ufos/ui/multiplayer.ufo:1288
+#: ../base/ufos/ui/multiplayer.ufo:1275 ../base/ufos/ui/multiplayer.ufo:1283
 msgid "Finish the teamselection and start the game"
 msgstr "จบการเลือกทีมและเริ่มเกม"
 
-#: ../base/ufos/ui/multiplayer.ufo:1287
+#: ../base/ufos/ui/multiplayer.ufo:1282
 msgid "Are you ready?"
 msgstr "คุณพร้อมหรือยัง?"
 
-#: ../base/ufos/ui/multiplayer.ufo:1296
+#: ../base/ufos/ui/multiplayer.ufo:1291
 #, fuzzy
 msgid "Invite others"
 msgstr "ทหาร"
 
-#: ../base/ufos/ui/multiplayer.ufo:1298
+#: ../base/ufos/ui/multiplayer.ufo:1293
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1382
+#: ../base/ufos/ui/multiplayer.ufo:1377
 msgid "Enter server password"
 msgstr "ใส่รหัสของเซอร์เวอร์"
 
-#: ../base/ufos/ui/multiplayer.ufo:1395
+#: ../base/ufos/ui/multiplayer.ufo:1390
 msgid "Password:"
 msgstr "รหัส:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1432
+#: ../base/ufos/ui/multiplayer.ufo:1427
 #, fuzzy
 msgid "Game invitation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/ui/multiplayer.ufo:1451
+#: ../base/ufos/ui/multiplayer.ufo:1446
 msgid "Server info"
 msgstr "ข้อมูลเซิร์ฟเวอร์"
 
-#: ../base/ufos/ui/multiplayer.ufo:1452
+#: ../base/ufos/ui/multiplayer.ufo:1447
 #, fuzzy
 msgid "Show server information"
 msgstr "ข้อมูลของฐาน"
 
-#: ../base/ufos/ui/multiplayer.ufo:1468
+#: ../base/ufos/ui/multiplayer.ufo:1463
 #, fuzzy
 msgid "Go into the lobby"
 msgstr "เชื่อมต่อ IP"
 
-#: ../base/ufos/ui/multiplayer.ufo:1480
+#: ../base/ufos/ui/multiplayer.ufo:1475
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -26764,7 +26910,7 @@ msgstr "ปกติ"
 msgid "High"
 msgstr "สูง"
 
-#: ../base/ufos/ui/options.ufo:701 client/battlescape/cl_actor.cpp:121
+#: ../base/ufos/ui/options.ufo:701 client/battlescape/cl_actor.cpp:120
 msgid "Excellent"
 msgstr "ยอดเยี่ยม"
 
@@ -27352,7 +27498,7 @@ msgstr "แสดง key bindings"
 msgid "Key Bindings"
 msgstr "แสดง key bindings"
 
-#: ../base/ufos/ui/physdat.ufo:302
+#: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
 msgstr ""
 
@@ -27361,36 +27507,36 @@ msgstr ""
 msgid "Assemble Team"
 msgstr "จัดตั้งทีมก่อน"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:302
+#: ../base/ufos/ui/popup_baseattack.ufo:292
 #, fuzzy
 msgid "Equip"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:375
+#: ../base/ufos/ui/popup_baseattack.ufo:365
 msgid "Base is under attack"
 msgstr "ฐานถูกโจมตี"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:391
+#: ../base/ufos/ui/popup_baseattack.ufo:381
 #, fuzzy
 msgid "Kill aliens in container"
 msgstr "ฆ่ามนุษย์ต่างดาวในฐานนี้ทั้งหมด"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:403
+#: ../base/ufos/ui/popup_baseattack.ufo:393
 #, fuzzy
 msgid "Lift aircraft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:417
+#: ../base/ufos/ui/popup_baseattack.ufo:407
 #, fuzzy
 msgid "Disable Power Plant"
 msgstr "แหล่งผลิตพลังงาน"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:431
+#: ../base/ufos/ui/popup_baseattack.ufo:421
 #, fuzzy
 msgid "Assemble defend team"
 msgstr "รวมพล หรือจัดขึ้นเครื่อง"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:465
+#: ../base/ufos/ui/popup_baseattack.ufo:455
 #: client/cgame/multiplayer/mp_callbacks.cpp:62
 msgid "Assemble a team first"
 msgstr "จัดตั้งทีมก่อน"
@@ -27487,50 +27633,40 @@ msgstr "ห้องเก็บของ"
 msgid "unknown"
 msgstr "ไม่สามารถระบุได้"
 
-#: ../base/ufos/ui/production.ufo:92
+#: ../base/ufos/ui/production.ufo:70
 #: client/cgame/campaign/cp_produce_callbacks.cpp:295
 #, fuzzy
 msgid "Disassembly"
 msgstr "เริ่มการผลิต %s"
 
-#: ../base/ufos/ui/production.ufo:144
+#: ../base/ufos/ui/production.ufo:192
 #, fuzzy
-msgid "Workers (ready/all):"
-msgstr "Workers (all/ready)"
-
-#: ../base/ufos/ui/production.ufo:165
-#, fuzzy
-msgid "Workshop capacity:"
+msgid "Workshop space"
 msgstr "Base capacity"
 
-#: ../base/ufos/ui/production.ufo:186
-#, fuzzy
-msgid "Storage capacity:"
-msgstr "Base capacity"
-
-#: ../base/ufos/ui/production.ufo:364 ../base/ufos/ui/production.ufo:374
+#: ../base/ufos/ui/production.ufo:389 ../base/ufos/ui/production.ufo:399
 #, fuzzy
 msgid "Change the production amount"
 msgstr "เปลี่ยนค่าความคมชัด"
 
-#: ../base/ufos/ui/production.ufo:385
+#: ../base/ufos/ui/production.ufo:410
 #, fuzzy
 msgid "Start this production"
 msgstr "หยุดการผลิต"
 
-#: ../base/ufos/ui/production.ufo:396
+#: ../base/ufos/ui/production.ufo:421
 msgid "Stop production"
 msgstr "หยุดการผลิต"
 
-#: ../base/ufos/ui/production.ufo:406
+#: ../base/ufos/ui/production.ufo:431
 msgid "Increase priority"
 msgstr "เพิ่มความสำคัญ"
 
-#: ../base/ufos/ui/production.ufo:418
+#: ../base/ufos/ui/production.ufo:443
 msgid "Decrease priority"
 msgstr "ลดความสำคัญ"
 
-#: ../base/ufos/ui/production.ufo:491
+#: ../base/ufos/ui/production.ufo:516
 #, fuzzy
 msgid "Requirements"
 msgstr "ไม่มีข้อจำกัด"
@@ -27881,7 +28017,7 @@ msgstr "ปิดกรอบนี้"
 msgid "Current node:"
 msgstr "มีอยู่ในปัจจุบัน:"
 
-#: ../base/ufos/ui/team.ufo:677
+#: ../base/ufos/ui/team.ufo:668
 #, fuzzy
 msgid "Save your team"
 msgstr "จ้างลูกทีมก่อน"
@@ -28103,8 +28239,8 @@ msgstr "กระสุนไรเฟิลจู่โจม"
 #: ../base/ufos/weapons_human.ufo:384 ../base/ufos/weapons_human.ufo:475
 #: ../base/ufos/weapons_human.ufo:565 ../base/ufos/weapons_human.ufo:653
 #: ../base/ufos/weapons_human.ufo:856 ../base/ufos/weapons_human.ufo:924
-#: ../base/ufos/weapons_human.ufo:952 ../base/ufos/weapons_human.ufo:1562
-#: ../base/ufos/weapons_human.ufo:1757 ../base/ufos/weapons_human.ufo:1825
+#: ../base/ufos/weapons_human.ufo:952 ../base/ufos/weapons_human.ufo:1570
+#: ../base/ufos/weapons_human.ufo:1770 ../base/ufos/weapons_human.ufo:1838
 #: ../base/ufos/weapons_particle.ufo:45 ../base/ufos/weapons_particle.ufo:134
 #: ../base/ufos/weapons_particle.ufo:245 ../base/ufos/weapons_plasma.ufo:45
 #: ../base/ufos/weapons_plasma.ufo:156 ../base/ufos/weapons_plasma.ufo:317
@@ -28132,7 +28268,7 @@ msgstr "อัตโนมัติ"
 #: ../base/ufos/weapons_human.ufo:406 ../base/ufos/weapons_human.ufo:497
 #: ../base/ufos/weapons_human.ufo:586 ../base/ufos/weapons_human.ufo:1134
 #: ../base/ufos/weapons_human.ufo:1178 ../base/ufos/weapons_human.ufo:1223
-#: ../base/ufos/weapons_human.ufo:1781 ../base/ufos/weapons_human.ufo:1849
+#: ../base/ufos/weapons_human.ufo:1794 ../base/ufos/weapons_human.ufo:1862
 #: ../base/ufos/weapons_particle.ufo:66 ../base/ufos/weapons_particle.ufo:177
 #: ../base/ufos/weapons_plasma.ufo:88 ../base/ufos/weapons_plasma.ufo:222
 #: ../base/ufos/weapons_plasma.ufo:453 ../base/ufos/weapons_plasma.ufo:607
@@ -28261,39 +28397,39 @@ msgstr "เครื่องยิงระเบิด"
 msgid "25mm HIT Grenades"
 msgstr "ระเบิด HIT 25มม."
 
-#: ../base/ufos/weapons_human.ufo:1293 ../base/ufos/weapons_human.ufo:1424
-#: ../base/ufos/weapons_human.ufo:1603
+#: ../base/ufos/weapons_human.ufo:1293 ../base/ufos/weapons_human.ufo:1428
+#: ../base/ufos/weapons_human.ufo:1612
 #, fuzzy
 msgid "Snap Shot (Impact)"
 msgstr "ยิงอย่างรวดเร็ว"
 
-#: ../base/ufos/weapons_human.ufo:1319 ../base/ufos/weapons_human.ufo:1451
-#: ../base/ufos/weapons_human.ufo:1629
+#: ../base/ufos/weapons_human.ufo:1320 ../base/ufos/weapons_human.ufo:1456
+#: ../base/ufos/weapons_human.ufo:1639
 #, fuzzy
 msgid "Aimed Shot (Impact)"
 msgstr "เล็งยิง"
 
-#: ../base/ufos/weapons_human.ufo:1345 ../base/ufos/weapons_human.ufo:1478
-#: ../base/ufos/weapons_human.ufo:1654
+#: ../base/ufos/weapons_human.ufo:1347 ../base/ufos/weapons_human.ufo:1484
+#: ../base/ufos/weapons_human.ufo:1665
 #, fuzzy
 msgid "Snap Shot (Timer)"
 msgstr "ยิงอย่างเร็ว - ตั้งเวลา"
 
-#: ../base/ufos/weapons_human.ufo:1374 ../base/ufos/weapons_human.ufo:1508
-#: ../base/ufos/weapons_human.ufo:1682
+#: ../base/ufos/weapons_human.ufo:1377 ../base/ufos/weapons_human.ufo:1515
+#: ../base/ufos/weapons_human.ufo:1694
 #, fuzzy
 msgid "Aimed Shot (Timer)"
 msgstr "เล็งยิง - ตั้งเวลา"
 
-#: ../base/ufos/weapons_human.ufo:1405
+#: ../base/ufos/weapons_human.ufo:1409
 msgid "25mm IC Grenades"
 msgstr "ระบบ  IC 25มม."
 
-#: ../base/ufos/weapons_human.ufo:1543
+#: ../base/ufos/weapons_human.ufo:1551
 msgid "25mm Flechette Grenades"
 msgstr "ระเบิด Flechette 25มม."
 
-#: ../base/ufos/weapons_human.ufo:1584
+#: ../base/ufos/weapons_human.ufo:1593
 msgid "25mm PB Grenades"
 msgstr "ระเบิด PB 25มม."
 
@@ -28525,125 +28661,125 @@ msgstr "ยิงรัว 5 ชุด"
 msgid "Autocannon Module"
 msgstr ""
 
-#: client/battlescape/cl_actor.cpp:107
+#: client/battlescape/cl_actor.cpp:106
 msgid "Poor"
 msgstr "แย่"
 
-#: client/battlescape/cl_actor.cpp:109
+#: client/battlescape/cl_actor.cpp:108
 msgid "Mediocre"
 msgstr "เฉยๆ"
 
-#: client/battlescape/cl_actor.cpp:111
+#: client/battlescape/cl_actor.cpp:110
 msgid "Average"
 msgstr "กลางๆ"
 
-#: client/battlescape/cl_actor.cpp:113
+#: client/battlescape/cl_actor.cpp:112
 msgid "Competent"
 msgstr "พอใช้"
 
-#: client/battlescape/cl_actor.cpp:115
+#: client/battlescape/cl_actor.cpp:114
 msgid "Proficient"
 msgstr "ถนัด"
 
-#: client/battlescape/cl_actor.cpp:117
+#: client/battlescape/cl_actor.cpp:116
 msgid "Very Good"
 msgstr "ดี"
 
-#: client/battlescape/cl_actor.cpp:119
+#: client/battlescape/cl_actor.cpp:118
 msgid "Highly Proficient"
 msgstr "คล่องมาก"
 
-#: client/battlescape/cl_actor.cpp:123
+#: client/battlescape/cl_actor.cpp:122
 msgid "Outstanding"
 msgstr "อัจฉริยะ"
 
-#: client/battlescape/cl_actor.cpp:125
+#: client/battlescape/cl_actor.cpp:124
 #, fuzzy
 msgid "Impressive"
 msgstr "บีบภาพผิวนอก:"
 
-#: client/battlescape/cl_actor.cpp:127
+#: client/battlescape/cl_actor.cpp:126
 msgid "Superhuman"
 msgstr "เกินมนุษย์"
 
-#: client/battlescape/cl_actor.cpp:742
+#: client/battlescape/cl_actor.cpp:741
 #: client/battlescape/events/e_server.cpp:40
 #, fuzzy
 msgid "It is not your turn!"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/battlescape/cl_actor.cpp:1006
+#: client/battlescape/cl_actor.cpp:1005
 #, fuzzy
 msgid "You cannot reload this unknown item."
 msgstr ""
 "ยังใช้ของนี้ไม่ได้\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/battlescape/cl_actor.cpp:1046 client/cl_inventory.cpp:76
+#: client/battlescape/cl_actor.cpp:1045 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:574
 msgid "This soldier can not carry anything else."
 msgstr ""
 
-#: client/battlescape/cl_actor.cpp:1046 client/battlescape/cl_hud.cpp:1386
-#: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:380
+#: client/battlescape/cl_actor.cpp:1045 client/battlescape/cl_hud.cpp:1384
+#: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
 #, fuzzy
 msgid "Warning"
 msgstr "ประเทศ"
 
-#: client/battlescape/cl_actor.cpp:1893
+#: client/battlescape/cl_actor.cpp:1892
 #, fuzzy
 msgid "Unknown alien race"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/battlescape/cl_actor.cpp:2561
+#: client/battlescape/cl_actor.cpp:2559
 #, fuzzy
 msgid "Toggle to next living actor"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.cpp:2562
+#: client/battlescape/cl_actor.cpp:2560
 #, fuzzy
 msgid "Toggle to previous living actor"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.cpp:2563
+#: client/battlescape/cl_actor.cpp:2561
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/battlescape/cl_actor.cpp:2564
+#: client/battlescape/cl_actor.cpp:2562
 #, fuzzy
 msgid "Update an actor"
 msgstr "เปลี่ยนชื่อทหาร"
 
-#: client/battlescape/cl_actor.cpp:2565
+#: client/battlescape/cl_actor.cpp:2563
 #, fuzzy
 msgid "Toggle stand/crouch."
 msgstr "สลับ ยืน/ย่อตัว"
 
-#: client/battlescape/cl_actor.cpp:2566
+#: client/battlescape/cl_actor.cpp:2564
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.cpp:2567
+#: client/battlescape/cl_actor.cpp:2565
 #, fuzzy
 msgid "Use"
 msgstr "Users"
 
-#: client/battlescape/cl_actor.cpp:2568
+#: client/battlescape/cl_actor.cpp:2566
 msgid "Confirm the current action"
 msgstr "ยืนยันการกระทำ"
 
-#: client/battlescape/cl_actor.cpp:2569
+#: client/battlescape/cl_actor.cpp:2567
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.cpp:2571
+#: client/battlescape/cl_actor.cpp:2569
 #, fuzzy
 msgid "Toggle camera to the next visible alien."
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
 
-#: client/battlescape/cl_actor.cpp:2572
+#: client/battlescape/cl_actor.cpp:2570
 #, fuzzy
 msgid "Toggle camera to the previous visible alien."
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
@@ -28714,41 +28850,41 @@ msgstr "ค่าเวลาไม่เพียงพอสำหรับก
 msgid "No reload possible, you don't have backup ammo."
 msgstr "ไม่สามารถบรรจุกระสุนได้, คุณไม่มีกระสุนสำรอง"
 
-#: client/battlescape/cl_hud.cpp:856
+#: client/battlescape/cl_hud.cpp:854
 msgid "Not enough TUs for standing up."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับการยืน"
 
-#: client/battlescape/cl_hud.cpp:859
+#: client/battlescape/cl_hud.cpp:857
 #, fuzzy, c-format
 msgid "Stand up (%i TU)"
 msgstr "บรรจุกระสุน"
 
-#: client/battlescape/cl_hud.cpp:865
+#: client/battlescape/cl_hud.cpp:863
 msgid "Not enough TUs for crouching."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับการก้ม"
 
-#: client/battlescape/cl_hud.cpp:868
+#: client/battlescape/cl_hud.cpp:866
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "ก้ม (%i TU)"
 
-#: client/battlescape/cl_hud.cpp:877
+#: client/battlescape/cl_hud.cpp:875
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:884
+#: client/battlescape/cl_hud.cpp:882
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "เก็บค่าเวลา %i สำหรับการก้ม/ยืน"
 
-#: client/battlescape/cl_hud.cpp:890
+#: client/battlescape/cl_hud.cpp:888
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับเก็บเพื่อการก้ม/ยืน"
 
-#: client/battlescape/cl_hud.cpp:899
+#: client/battlescape/cl_hud.cpp:897
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -28756,16 +28892,16 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:912
+#: client/battlescape/cl_hud.cpp:910
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:937 client/battlescape/cl_hud.cpp:946
+#: client/battlescape/cl_hud.cpp:935 client/battlescape/cl_hud.cpp:944
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "บรรจุกระสุน (%i TU)"
 
-#: client/battlescape/cl_hud.cpp:1175
+#: client/battlescape/cl_hud.cpp:1173
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -28774,7 +28910,7 @@ msgstr ""
 "ไม่สามารถใช้ไอเท็มที่ไม่รู้จัก\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/battlescape/cl_hud.cpp:1196
+#: client/battlescape/cl_hud.cpp:1194
 #, c-format
 msgid ""
 "%s\n"
@@ -28783,19 +28919,19 @@ msgstr ""
 "%s\n"
 "(ไม่มี)\n"
 
-#: client/battlescape/cl_hud.cpp:1214
+#: client/battlescape/cl_hud.cpp:1212
 #, fuzzy, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.cpp:1216
+#: client/battlescape/cl_hud.cpp:1214
 #, c-format
 msgid "Morale  %i"
 msgstr "กำลังใจ %i"
 
-#: client/battlescape/cl_hud.cpp:1221
+#: client/battlescape/cl_hud.cpp:1219
 #, fuzzy, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -28804,7 +28940,7 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.cpp:1225
+#: client/battlescape/cl_hud.cpp:1223
 #, fuzzy, c-format
 msgid ""
 "Morale  %i\n"
@@ -28813,7 +28949,7 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/battlescape/cl_hud.cpp:1255
+#: client/battlescape/cl_hud.cpp:1253
 #, c-format
 msgid ""
 "Time Units\n"
@@ -28822,83 +28958,83 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1298
+#: client/battlescape/cl_hud.cpp:1296
 #, fuzzy
 msgid "accuracy"
 msgstr "ความแม่นยำ"
 
-#: client/battlescape/cl_hud.cpp:1300
+#: client/battlescape/cl_hud.cpp:1298
 #, fuzzy
 msgid "shooting speed"
 msgstr "ความเร็วปกติ"
 
-#: client/battlescape/cl_hud.cpp:1302
+#: client/battlescape/cl_hud.cpp:1300
 msgid "movement speed"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1304
+#: client/battlescape/cl_hud.cpp:1302
 #, fuzzy
 msgid "sight range"
 msgstr "มือขวา"
 
-#: client/battlescape/cl_hud.cpp:1306
+#: client/battlescape/cl_hud.cpp:1304
 #, fuzzy
 msgid "reaction speed"
 msgstr "ไม่ยิงโต้ตอบ"
 
-#: client/battlescape/cl_hud.cpp:1308
+#: client/battlescape/cl_hud.cpp:1306
 #, fuzzy
 msgid "TU"
 msgstr "ปฏิบัติการ:\t%s\n"
 
-#: client/battlescape/cl_hud.cpp:1338
+#: client/battlescape/cl_hud.cpp:1336
 #, c-format
 msgid "Damaged %s (deterioration: %i)\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1338
+#: client/battlescape/cl_hud.cpp:1336
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1341
+#: client/battlescape/cl_hud.cpp:1339
 #, c-format
 msgid "- Reduced %s\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1378 client/cl_inventory_callbacks.cpp:372
+#: client/battlescape/cl_hud.cpp:1376 client/cl_inventory_callbacks.cpp:374
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1390 client/cl_inventory_callbacks.cpp:384
+#: client/battlescape/cl_hud.cpp:1388 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1409
+#: client/battlescape/cl_hud.cpp:1407
 msgid "Currently panics!\n"
 msgstr "ตกใจอยู่!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:84
-#: client/battlescape/cl_hud_callbacks.cpp:248
+#: client/battlescape/cl_hud_callbacks.cpp:252
 #, fuzzy
 msgid "Can't perform action - no item in hand!"
 msgstr "ทำไม่ได้ - ไม่ใช่คนทำ!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:261 game/g_combat.cpp:1176
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1182
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr "ทำไม่ได้ - ไม่มีกระสุน!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1169
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1175
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "ทำไม่ได้ - อาวุธนี้ไม่สามารถยิงด้วยมือเดียว\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:144
-#: client/battlescape/cl_hud_callbacks.cpp:266 game/g_actor.cpp:620
+#: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:620
 #, fuzzy
 msgid "Can't perform action - not enough TUs!"
 msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
@@ -28913,63 +29049,63 @@ msgstr "เก็บค่าเวลา %i สำหรับการก้�
 msgid "Reserved %i TUs for crouching/standing up."
 msgstr "เก็บค่าเวลา %i สำหรับการก้ม/ยืน"
 
-#: client/battlescape/cl_hud_callbacks.cpp:192
+#: client/battlescape/cl_hud_callbacks.cpp:193
 #, fuzzy
 msgid "Reaction fire enabled."
 msgstr "ไม่มีอาวุธไว้ยิงโต้ตอบ\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:195
+#: client/battlescape/cl_hud_callbacks.cpp:199
 #, fuzzy
 msgid "Reaction fire disabled."
 msgstr "ไม่มีอาวุธไว้ยิงโต้ตอบ\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:254
+#: client/battlescape/cl_hud_callbacks.cpp:258
 #, fuzzy
 msgid "Can't perform action - this item is not reloadable!"
 msgstr ""
 "ทำไม่ได้:\n"
 "ของนี้บรรจุกระสุนใหม่ไม่ได้\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:287
+#: client/battlescape/cl_hud_callbacks.cpp:291
 #, fuzzy
 msgid "Left hand weapon reloaded."
 msgstr "อาวุธนี้ไม่สามารถเติมกระสุนได้"
 
-#: client/battlescape/cl_hud_callbacks.cpp:300
+#: client/battlescape/cl_hud_callbacks.cpp:304
 #, fuzzy
 msgid "Right hand weapon reloaded."
 msgstr "บรรจุกระสุนในมือขวา"
 
-#: client/battlescape/cl_hud_callbacks.cpp:341
+#: client/battlescape/cl_hud_callbacks.cpp:345
 msgid "Set selected actor to move mode (it cancels the fire mode)."
 msgstr ""
 
-#: client/battlescape/cl_hud_callbacks.cpp:342
+#: client/battlescape/cl_hud_callbacks.cpp:346
 #, fuzzy
 msgid "Reload the weapon in the soldiers left hand."
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-#: client/battlescape/cl_hud_callbacks.cpp:343
+#: client/battlescape/cl_hud_callbacks.cpp:347
 #, fuzzy
 msgid "Reload the weapon in the soldiers right hand."
 msgstr "บรรจุกระสุนอาวุธมือขวา"
 
-#: client/battlescape/cl_hud_callbacks.cpp:344
+#: client/battlescape/cl_hud_callbacks.cpp:348
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "สลับการยิงตอบโต้"
 
-#: client/battlescape/cl_hud_callbacks.cpp:345
+#: client/battlescape/cl_hud_callbacks.cpp:349
 #, fuzzy
 msgid "Toggle reaction fire."
 msgstr "สลับการยิงตอบโต้"
 
-#: client/battlescape/cl_hud_callbacks.cpp:346
+#: client/battlescape/cl_hud_callbacks.cpp:350
 #, fuzzy
 msgid "Start aiming the weapon."
 msgstr "กระสุนสำหรับอาวุธนี้"
 
-#: client/battlescape/cl_hud_callbacks.cpp:347
+#: client/battlescape/cl_hud_callbacks.cpp:351
 #, fuzzy
 msgid "Execute an action."
 msgstr "เลือกอุปกรณ์"
@@ -28994,82 +29130,82 @@ msgstr "พบศัตรู!\n"
 msgid "Civilian spotted."
 msgstr "พบพลเรือน!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:86
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:88
 #, fuzzy, c-format
 msgid "%s lost a soldier\n"
 msgstr "จัดการทหาร"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:93
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:95
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s ไม่สามารถขยับตัวได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:95
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:97
 #, fuzzy, c-format
 msgid "%s has died\n"
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:97
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:99
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s ถูกฆ่าตาย\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:106
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:108
 #, fuzzy
 msgid "A civilian was stunned."
 msgstr "พลเรือนขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:108
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:110
 #, fuzzy
 msgid "A civilian has died."
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:110
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:112
 #, fuzzy
 msgid "A civilian was killed."
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:114
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:116
 #, fuzzy
 msgid "An alien was stunned."
 msgstr "มนุษย์ต่างดาวขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:116
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:118
 #, fuzzy
 msgid "An alien has died."
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:118
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:120
 #, fuzzy
 msgid "An alien was killed."
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:122
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:124
 #, fuzzy
 msgid "A soldier was stunned."
 msgstr "ทหารขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:124
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:126
 #, fuzzy
 msgid "A soldier has died."
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:126
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:128
 #, fuzzy
 msgid "A soldier was killed."
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:130
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:132
 #, fuzzy, c-format
 msgid "A member of team %i was stunned."
 msgstr "สมาชิกทีม %i ขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:132
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:134
 #, fuzzy, c-format
 msgid "A member of team %i has died."
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:134
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:136
 #, fuzzy, c-format
 msgid "A member of team %i was killed."
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
@@ -29225,8 +29361,8 @@ msgstr "ทีมถูกใช้แล้ว"
 #: client/cgame/campaign/cp_market_callbacks.cpp:193
 #: client/cgame/campaign/cp_market_callbacks.cpp:199
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
-#: client/cgame/campaign/cp_missions.cpp:735
-#: client/cgame/campaign/cp_missions.cpp:1073
+#: client/cgame/campaign/cp_missions.cpp:726
+#: client/cgame/campaign/cp_missions.cpp:1064
 #: client/cgame/campaign/cp_nation.cpp:828
 #: client/cgame/campaign/cp_nation.cpp:846
 #: client/cgame/campaign/cp_nation.cpp:859
@@ -29341,7 +29477,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:196
-#: client/cgame/campaign/cp_ufopedia.cpp:367
+#: client/cgame/campaign/cp_ufopedia.cpp:351
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr ""
@@ -29481,13 +29617,13 @@ msgstr[0] "%i วันในการสร้าง\n"
 msgstr[1] "%i วันในการสร้าง\n"
 
 #: client/cgame/campaign/cp_base.cpp:1456
-#: client/cgame/campaign/cp_ufopedia.cpp:232
+#: client/cgame/campaign/cp_ufopedia.cpp:216
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการทำงาน:\t%i c\n"
 
 #: client/cgame/campaign/cp_base.cpp:1459
-#: client/cgame/campaign/cp_ufopedia.cpp:229
+#: client/cgame/campaign/cp_ufopedia.cpp:213
 #, fuzzy, c-format
 msgid "Needs:\t%s\n"
 msgstr "ขึ้นกับ:\t%s\n"
@@ -29839,7 +29975,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:216
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:619
-#: client/cgame/campaign/cp_ufopedia.cpp:229 client/input/cl_joystick.cpp:278
+#: client/cgame/campaign/cp_ufopedia.cpp:213 client/input/cl_joystick.cpp:278
 msgid "None"
 msgstr "ไม่มี"
 
@@ -29975,21 +30111,21 @@ msgid_plural "pilots"
 msgstr[0] "นักบิน"
 msgstr[1] "นักบิน"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:437
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:434
 #, c-format
 msgid ""
 "%s\n"
 "not operational, depends on %s"
 msgstr ""
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:492
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:489
 #, fuzzy, c-format
 msgid "%3.1f day left"
 msgid_plural "%3.1f days left"
 msgstr[0] "เหลือ %i วัน"
 msgstr[1] "ขาดอีก %i วัน"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:632
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:629
 #, c-format
 msgid "Rank: %s"
 msgstr "ยศ: %s"
@@ -30028,8 +30164,8 @@ msgstr "จ้างพนักงาน"
 #: client/cgame/campaign/cp_messages.cpp:314
 #: client/cgame/campaign/cp_save.cpp:285 client/cgame/campaign/cp_save.cpp:307
 #: client/cgame/campaign/cp_time.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:524
-#: client/cgame/campaign/cp_ufopedia.cpp:529
+#: client/cgame/campaign/cp_ufopedia.cpp:513
+#: client/cgame/campaign/cp_ufopedia.cpp:518
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -30709,60 +30845,60 @@ msgstr ""
 msgid "Gathered items (types/all)"
 msgstr ""
 
-#: client/cgame/campaign/cp_missions.cpp:460
-#: client/cgame/campaign/cp_missions.cpp:483
+#: client/cgame/campaign/cp_missions.cpp:451
+#: client/cgame/campaign/cp_missions.cpp:474
 #, fuzzy, c-format
 msgid "Crashed %s"
 msgstr "ห้องเก็บของ"
 
-#: client/cgame/campaign/cp_missions.cpp:466
+#: client/cgame/campaign/cp_missions.cpp:457
 #, fuzzy, c-format
 msgid "Alien terror in %s"
 msgstr "Alien Materials"
 
-#: client/cgame/campaign/cp_missions.cpp:469
+#: client/cgame/campaign/cp_missions.cpp:460
 #, fuzzy, c-format
 msgid "Base attacked: %s"
 msgstr "การโจมตีขั้นพื้นฐาน"
 
-#: client/cgame/campaign/cp_missions.cpp:472
+#: client/cgame/campaign/cp_missions.cpp:463
 #, fuzzy, c-format
 msgid "Alien base in %s"
 msgstr "ฐานมนุษย์ต่างดาว"
 
-#: client/cgame/campaign/cp_missions.cpp:486
+#: client/cgame/campaign/cp_missions.cpp:477
 #, fuzzy, c-format
 msgid "Landed %s"
 msgstr "จานบินอภิธาน"
 
-#: client/cgame/campaign/cp_missions.cpp:491
+#: client/cgame/campaign/cp_missions.cpp:482
 #, fuzzy, c-format
 msgid "Alien activity in %s"
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
-#: client/cgame/campaign/cp_missions.cpp:493
+#: client/cgame/campaign/cp_missions.cpp:484
 #, fuzzy
 msgid "Alien activity"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: client/cgame/campaign/cp_missions.cpp:702
+#: client/cgame/campaign/cp_missions.cpp:693
 #, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
 
-#: client/cgame/campaign/cp_missions.cpp:706
+#: client/cgame/campaign/cp_missions.cpp:697
 #, fuzzy, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
-#: client/cgame/campaign/cp_missions.cpp:708
+#: client/cgame/campaign/cp_missions.cpp:699
 #, fuzzy
 msgid "Alien activity has been detected."
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
-#: client/cgame/campaign/cp_missions.cpp:1071
+#: client/cgame/campaign/cp_missions.cpp:1062
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
@@ -30943,8 +31079,8 @@ msgstr ""
 #: client/cgame/campaign/cp_produce.cpp:282
 #: client/cgame/campaign/cp_produce.cpp:286
 #: client/cgame/campaign/cp_produce.cpp:291
-#: client/cgame/campaign/cp_produce_callbacks.cpp:634
-#: client/cgame/campaign/cp_produce_callbacks.cpp:682
+#: client/cgame/campaign/cp_produce_callbacks.cpp:640
+#: client/cgame/campaign/cp_produce_callbacks.cpp:688
 msgid "Hangars not ready"
 msgstr ""
 
@@ -30967,8 +31103,8 @@ msgstr ""
 "Not enough space in hangars.\n"
 
 #: client/cgame/campaign/cp_produce.cpp:291
-#: client/cgame/campaign/cp_produce_callbacks.cpp:634
-#: client/cgame/campaign/cp_produce_callbacks.cpp:682
+#: client/cgame/campaign/cp_produce_callbacks.cpp:640
+#: client/cgame/campaign/cp_produce_callbacks.cpp:688
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -31028,8 +31164,8 @@ msgid "No item selected"
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:270
-#, c-format
-msgid "Costs per item\t%i c\n"
+#, fuzzy, c-format
+msgid "Cost per item\t%i c\n"
 msgstr "ต้นทุนต่อชิ้น\t%i c\n"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:271
@@ -31068,48 +31204,48 @@ msgstr "เวลาผลิต\t%ih\n"
 msgid "No aircraft selected."
 msgstr "ไม่ได้เลือกยานบิน"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:654
-#: client/cgame/campaign/cp_produce_callbacks.cpp:671
+#: client/cgame/campaign/cp_produce_callbacks.cpp:660
+#: client/cgame/campaign/cp_produce_callbacks.cpp:677
 #, fuzzy
 msgid "Not enough materials"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:654
+#: client/cgame/campaign/cp_produce_callbacks.cpp:660
 #, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:658
-#: client/cgame/campaign/cp_produce_callbacks.cpp:674
+#: client/cgame/campaign/cp_produce_callbacks.cpp:664
+#: client/cgame/campaign/cp_produce_callbacks.cpp:680
 #, fuzzy
 msgid "Not enough material!"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:658
+#: client/cgame/campaign/cp_produce_callbacks.cpp:664
 #, fuzzy, c-format
 msgid ""
 "You don't have enough material to produce all (%i) additional items. Only %i "
 "could be added."
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:671
+#: client/cgame/campaign/cp_produce_callbacks.cpp:677
 #, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:674
+#: client/cgame/campaign/cp_produce_callbacks.cpp:680
 #, c-format
 msgid ""
 "You don't have enough material to produce all (%i) items. Production will "
 "continue with a reduced (%i) number."
 msgstr ""
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:698
+#: client/cgame/campaign/cp_produce_callbacks.cpp:704
 #, c-format
 msgid "Production of %s started"
 msgstr "เริ่มการผลิต %s"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:699
+#: client/cgame/campaign/cp_produce_callbacks.cpp:705
 msgid "Production started"
 msgstr "เริ่มการผลิต"
 
@@ -31368,7 +31504,7 @@ msgstr ""
 "ถูกโจมตี:\t%i\n"
 
 #: client/cgame/campaign/cp_statistics.cpp:76
-#: client/cgame/campaign/cp_ufopedia.cpp:1199
+#: client/cgame/campaign/cp_ufopedia.cpp:1188
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -31381,7 +31517,7 @@ msgid ""
 msgstr ""
 
 #: client/cgame/campaign/cp_statistics.cpp:98
-#: client/cl_inventory_callbacks.cpp:139
+#: client/cl_inventory_callbacks.cpp:141
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
@@ -31434,7 +31570,7 @@ msgid ""
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cgame/campaign/cp_team.cpp:298
+#: client/cgame/campaign/cp_team.cpp:288
 #, c-format
 msgid "%i of %i"
 msgstr "%i จาก %i"
@@ -31704,118 +31840,106 @@ msgstr "ระยะการยิง"
 msgid "Unknown weapon skill"
 msgstr "ไม่ทราบทักษะอาวุธ"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:170
-msgid "Small"
-msgstr "เล็ก"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:172
-msgid "Large"
-msgstr "ใหญ่"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:174
-msgid "Unknown aircraft size"
-msgstr "ไม่สามารถระบุขนาดได้"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:193
+#: client/cgame/campaign/cp_ufopedia.cpp:177
 msgid "No requirements"
 msgstr "ไม่มีข้อจำกัด"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:227
+#: client/cgame/campaign/cp_ufopedia.cpp:211
 msgid "Error - could not find building"
 msgstr "ผิดพลาด - ไม่พบสิ่งก่อสร้าง"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:230
+#: client/cgame/campaign/cp_ufopedia.cpp:214
 #, fuzzy, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "เวลาสร้าง:\t%i วัน\n"
 msgstr[1] "เวลาสร้าง:\t%i วัน\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:231
+#: client/cgame/campaign/cp_ufopedia.cpp:215
 #, fuzzy, c-format
 msgid "Cost:\t%i c\n"
 msgstr "ต้นทุน:\t%1.0f c\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:266
 #, fuzzy, c-format
 msgid "Weight:\t%s\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:286
+#: client/cgame/campaign/cp_ufopedia.cpp:270
 msgid "Weapon for base defence system\n"
 msgstr ""
 
-#: client/cgame/campaign/cp_ufopedia.cpp:306
+#: client/cgame/campaign/cp_ufopedia.cpp:290
 #, fuzzy, c-format
 msgid "Ammo:\t%i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:308
-#: client/cl_inventory_callbacks.cpp:178
+#: client/cgame/campaign/cp_ufopedia.cpp:292
+#: client/cl_inventory_callbacks.cpp:180
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "ความเสียหาย:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:293
 #, fuzzy, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "เวลาในรอบ:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:326
+#: client/cgame/campaign/cp_ufopedia.cpp:310
 #, fuzzy, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:328
+#: client/cgame/campaign/cp_ufopedia.cpp:312
 #, fuzzy, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:331
-#: client/cgame/campaign/cp_ufopedia.cpp:385
-#: client/cgame/campaign/cp_ufopedia.cpp:387
-#: client/cgame/campaign/cp_ufopedia.cpp:423
-#: client/cgame/campaign/cp_ufopedia.cpp:425
+#: client/cgame/campaign/cp_ufopedia.cpp:315
+#: client/cgame/campaign/cp_ufopedia.cpp:374
+#: client/cgame/campaign/cp_ufopedia.cpp:376
+#: client/cgame/campaign/cp_ufopedia.cpp:412
+#: client/cgame/campaign/cp_ufopedia.cpp:414
 msgid "Unknown - need to research this"
 msgstr "ไม่รู้จัก - ต้องวิจัยก่อน"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:358
-#: client/cgame/campaign/cp_ufopedia.cpp:363
+#: client/cgame/campaign/cp_ufopedia.cpp:342
+#: client/cgame/campaign/cp_ufopedia.cpp:347
 #, fuzzy, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:371
+#: client/cgame/campaign/cp_ufopedia.cpp:355
 #, fuzzy, c-format
 msgid "%s:\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:378
+#: client/cgame/campaign/cp_ufopedia.cpp:367
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr ""
 
-#: client/cgame/campaign/cp_ufopedia.cpp:382
+#: client/cgame/campaign/cp_ufopedia.cpp:371
 #, fuzzy, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:420
+#: client/cgame/campaign/cp_ufopedia.cpp:409
 #, fuzzy, c-format
 msgid ""
 "%s\n"
 "%s"
 msgstr "%s\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:546
+#: client/cgame/campaign/cp_ufopedia.cpp:535
 msgid "Proposal: "
 msgstr "นำเสนอโครงการ: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:549
+#: client/cgame/campaign/cp_ufopedia.cpp:538
 msgid "Re: "
 msgstr "Re: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:563
+#: client/cgame/campaign/cp_ufopedia.cpp:552
 #, fuzzy, c-format
 msgid ""
 "FROM: %s\n"
@@ -31827,47 +31951,47 @@ msgstr ""
 "วันที่: %s\n"
 "หัวข้อ: %s%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:636
+#: client/cgame/campaign/cp_ufopedia.cpp:625
 msgid "(complete)"
 msgstr "(เสร็จสิ้น)"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:695
+#: client/cgame/campaign/cp_ufopedia.cpp:684
 msgid "No pre-research description available."
 msgstr "ไม่มีข้อมูลเกี่ยวกับงานวิจัยก่อนหน้า"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1139
+#: client/cgame/campaign/cp_ufopedia.cpp:1128
 #, fuzzy, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^Bเสนอโครงการ: %s (%s)\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1143
+#: client/cgame/campaign/cp_ufopedia.cpp:1132
 #, fuzzy, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "เสนอโครงการ: %s (%s)\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1154
+#: client/cgame/campaign/cp_ufopedia.cpp:1143
 #, fuzzy, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s (%s)\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1158
+#: client/cgame/campaign/cp_ufopedia.cpp:1147
 #, fuzzy, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1168
-#: client/cgame/campaign/cp_ufopedia.cpp:1180
+#: client/cgame/campaign/cp_ufopedia.cpp:1157
+#: client/cgame/campaign/cp_ufopedia.cpp:1169
 #, fuzzy, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1172
-#: client/cgame/campaign/cp_ufopedia.cpp:1184
+#: client/cgame/campaign/cp_ufopedia.cpp:1161
+#: client/cgame/campaign/cp_ufopedia.cpp:1173
 #, fuzzy, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1196
+#: client/cgame/campaign/cp_ufopedia.cpp:1185
 #, fuzzy, c-format
 msgid "^B%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -32023,12 +32147,12 @@ msgstr "ตั้งจำนวนทหารสูงสุดที่แต
 msgid "Settings doesn't make sense"
 msgstr "การตั้งค่าไม่สมเหตุผล"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:221
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:155
 #, fuzzy, c-format
 msgid "Enemies killed:\t%i"
 msgstr "ฆ่าศัตรู\t%i\n"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:222
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:156
 #, fuzzy, c-format
 msgid "Team survivors:\t%i"
 msgstr ""
@@ -32152,12 +32276,12 @@ msgid ""
 "step"
 msgstr "ใช้ตัวคั่นหมด - ยกเลิกอันที่ไม่ใช่และทำซ้ำอีกครั้ง"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:209
-#: client/cgame/skirmish/cl_game_skirmish.cpp:214
+#: client/cgame/skirmish/cl_game_skirmish.cpp:200
+#: client/cgame/skirmish/cl_game_skirmish.cpp:205
 msgid "Game Drawn!"
 msgstr "เสมอ!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:209
+#: client/cgame/skirmish/cl_game_skirmish.cpp:200
 #, fuzzy
 msgid ""
 "The game was a draw!\n"
@@ -32168,7 +32292,7 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:214
+#: client/cgame/skirmish/cl_game_skirmish.cpp:205
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32178,7 +32302,7 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:225
+#: client/cgame/skirmish/cl_game_skirmish.cpp:216
 #, c-format
 msgid ""
 "\n"
@@ -32187,19 +32311,19 @@ msgid ""
 "%i of %i civilians saved, %i civilian loses, %i friendly fire loses."
 msgstr ""
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:232
+#: client/cgame/skirmish/cl_game_skirmish.cpp:223
 msgid "Congratulations"
 msgstr "ขอแสดงความยินดี"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:232
+#: client/cgame/skirmish/cl_game_skirmish.cpp:223
 msgid "You won the game!"
 msgstr "คุณชนะ!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:234
+#: client/cgame/skirmish/cl_game_skirmish.cpp:225
 msgid "Better luck next time"
 msgstr "ขอให้โชคดีคราวหน้า"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:234
+#: client/cgame/skirmish/cl_game_skirmish.cpp:225
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "คุณแพ้"
@@ -32209,195 +32333,114 @@ msgid "Show/hide ufoconsole."
 msgstr ""
 
 #: client/cl_inventory_callbacks.cpp:44
-msgid "skill_close"
-msgstr ""
-
-#: client/cl_inventory_callbacks.cpp:46
-msgid "skill_heavy"
-msgstr ""
+#, fuzzy
+msgid "Close quarters"
+msgstr "ที่อยู่ไม่พอ"
 
 #: client/cl_inventory_callbacks.cpp:48
 #, fuzzy
-msgid "skill_assault"
-msgstr ""
-"Technical Specifications: AR-80 Assault Rifle\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-"Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their "
-"technology is far more advanced than ours. The complete inability of "
-"Commonwealth troops to make a dent in the Mumbai offensive revealed critical "
-"weaknesses in current military training and equipment. They lost three "
-"battalions just bringing the aliens to a standstill without inflicting "
-"significant casualties. PHALANX has to overcome these odds, and to do that "
-"we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on "
-"Earth by reviewing their manufacturing standards, durability, operational "
-"record, and their combat performance in the situations where we've managed "
-"to bring the aliens to battle.\n"
-"\n"
-"The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most "
-"advantageous mix of range, penetration against alien armour, and magazine "
-"size in the assault rifle class. It is a bullpup design, meaning the "
-"magazine and action of the weapon are located behind the grip to reduce "
-"overall weapon length. The 191 fires a 30-round box magazine of 4.7mm "
-"caseless ammunition, tungsten-cored steel penetrators with impressive armour-"
-"piercing capability over short and medium ranges. The round does not perform "
-"well at long range, but then assault rifles aren't meant for long-range "
-"firefights.\n"
-"\n"
-"Though the design is far from new, first prototyped in 2057, no other rifle "
-"has fully surpassed the 191. It is accurate and quick to reload. Its rugged "
-"construction makes it dependable in combat and unlikely to break or jam. It "
-"is resistant to heat, cold, dust and humidity all at once. Ammunition and "
-"replacement parts are widely available due to the design's maturity and "
-"relative popularity among Earth's armed forces. This is a rifle you can "
-"entrust your life to.\n"
-"\n"
-"For PHALANX use, we have given this rifle the classification AR-80.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"This should be our go-to weapon for medium-range engagements. It can lay "
-"down an impressive amount of fire and is deadly out to far longer ranges "
-"than any pistol or SMG.\n"
-"\n"
-"However, no one should entertain the illusion that the assault rifle is the "
-"end-all be-all of our arsenal. A balance of weapons is required for us to be "
-"able to deal with different situations; while the assault rifle remains a "
-"good weapon at close range, it can be slow to manoeuvre in tight spaces and "
-"is eclipsed by both submachine guns and shotguns at these ranges, weapons "
-"which provide a far greater point-blank punch. Any sweep of an urban "
-"building should be led by close-range weapons, while rifle-equipped soldiers "
-"either secure the perimeter or form a second assault wave to support the "
-"others.\n"
-"\n"
-"If our rifle-equipped troops are caught beyond effective weapon range, they "
-"should make an advance from cover to cover in order to effectively bring "
-"their weapons to bear. Snipers should provide covering fire for the "
-"advancing teams or attempt to take out the enemy at range.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"While the AR-80 is a fine rifle in all respects, it was not designed to "
-"fight an alien invasion force. We should develop our own purpose-built "
-"weapons as soon as it becomes feasible to do so."
+msgid "Assault"
+msgstr "ไรเฟิลจู่โจม"
 
 #: client/cl_inventory_callbacks.cpp:50
-msgid "skill_sniper"
-msgstr ""
+msgid "Sniper"
+msgstr "ซุ่มยิง"
 
 #: client/cl_inventory_callbacks.cpp:52
 #, fuzzy
-msgid "skill_explosive"
-msgstr "ระเบิด"
+msgid "Explosives"
+msgstr "ระเบิดแรงสูง:"
 
-#: client/cl_inventory_callbacks.cpp:131
+#: client/cl_inventory_callbacks.cpp:133
 #, fuzzy, c-format
 msgid "Size:\t%i\n"
 msgstr "โล่:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:132 client/cl_inventory_callbacks.cpp:158
-#: client/cl_inventory_callbacks.cpp:185 client/cl_inventory_callbacks.cpp:189
-#: client/cl_inventory_callbacks.cpp:193
+#: client/cl_inventory_callbacks.cpp:134 client/cl_inventory_callbacks.cpp:160
+#: client/cl_inventory_callbacks.cpp:187 client/cl_inventory_callbacks.cpp:191
+#: client/cl_inventory_callbacks.cpp:195
 #, fuzzy, c-format
 msgid "Weight:\t%g Kg\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:134
+#: client/cl_inventory_callbacks.cpp:136
 #, fuzzy
 msgid "^BDamage type:\tProtection:\n"
 msgstr "ประเภท:\tการปกป้อง / ความแข็ง:\n"
 
-#: client/cl_inventory_callbacks.cpp:147
+#: client/cl_inventory_callbacks.cpp:149
 #, fuzzy, c-format
 msgid "%s weapon\n"
 msgstr "%s อาวุธด้วย\n"
 
-#: client/cl_inventory_callbacks.cpp:147 client/cl_inventory_callbacks.cpp:188
-#: client/cl_inventory_callbacks.cpp:192
+#: client/cl_inventory_callbacks.cpp:149 client/cl_inventory_callbacks.cpp:190
+#: client/cl_inventory_callbacks.cpp:194
 msgid "One-handed"
 msgstr "มือเดียว"
 
-#: client/cl_inventory_callbacks.cpp:147 client/cl_inventory_callbacks.cpp:188
-#: client/cl_inventory_callbacks.cpp:192
+#: client/cl_inventory_callbacks.cpp:149 client/cl_inventory_callbacks.cpp:190
+#: client/cl_inventory_callbacks.cpp:194
 msgid "Two-handed"
 msgstr "สองมือ"
 
-#: client/cl_inventory_callbacks.cpp:149
+#: client/cl_inventory_callbacks.cpp:151
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/cl_inventory_callbacks.cpp:177
+#: client/cl_inventory_callbacks.cpp:179
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:179 client/cl_inventory_callbacks.cpp:197
+#: client/cl_inventory_callbacks.cpp:181 client/cl_inventory_callbacks.cpp:199
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "หน่วยเวลา:\t%i\n"
 
-#: client/cl_inventory_callbacks.cpp:180 client/cl_inventory_callbacks.cpp:198
+#: client/cl_inventory_callbacks.cpp:182 client/cl_inventory_callbacks.cpp:200
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "ขอบเขต:\t%g\n"
 
-#: client/cl_inventory_callbacks.cpp:181
+#: client/cl_inventory_callbacks.cpp:183
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "การกระจาย:\t%g\n"
 
-#: client/cl_inventory_callbacks.cpp:184
+#: client/cl_inventory_callbacks.cpp:186
 #, fuzzy, c-format
 msgid "%s. No detailed info available.\n"
 msgstr "ไม่มีคำอธิบาย"
 
-#: client/cl_inventory_callbacks.cpp:184
+#: client/cl_inventory_callbacks.cpp:186
 msgid "Ammunition"
 msgstr "กระสุนปืน"
 
-#: client/cl_inventory_callbacks.cpp:184
+#: client/cl_inventory_callbacks.cpp:186
 msgid "Weapon"
 msgstr "อาวุธ"
 
-#: client/cl_inventory_callbacks.cpp:188
+#: client/cl_inventory_callbacks.cpp:190
 #, fuzzy, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s อาวุธไม่ใช้กระสุนใช้กับ\n"
 
-#: client/cl_inventory_callbacks.cpp:192
+#: client/cl_inventory_callbacks.cpp:194
 #, fuzzy, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s auxiliary equipment with\n"
 
-#: client/cl_inventory_callbacks.cpp:196
+#: client/cl_inventory_callbacks.cpp:198
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "ปฏิบัติการ:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:205
+#: client/cl_inventory_callbacks.cpp:207
 msgid "Unknown - not useable"
 msgstr "วิทยการที่ยังไม่รู้จัก - ไม่สามารถใช้ได้"
 
-#: client/cl_inventory_callbacks.cpp:385
+#: client/cl_inventory_callbacks.cpp:387
 #, fuzzy
 msgid "Warning: Not enough TUs..."
 msgstr ""
@@ -32626,42 +32669,42 @@ msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr "ทำไม่ได้ - อาวุธมีกระสุนแบบเดียวกันเต็มอยู่แล้ว!\n"
 
-#: game/g_client.cpp:344
+#: game/g_client.cpp:340
 #, fuzzy
 msgid "Can't perform action - object not present!"
 msgstr "ทำไม่ได้ - ไม่มีวัตถุ!\n"
 
-#: game/g_client.cpp:349
+#: game/g_client.cpp:345
 #, fuzzy
 msgid "Can't perform action - not an actor!"
 msgstr "ทำไม่ได้ - ไม่ใช่คนทำ!\n"
 
-#: game/g_client.cpp:354
+#: game/g_client.cpp:350
 #, fuzzy
 msgid "Can't perform action - actor is stunned!"
 msgstr "ทำไม่ได้ - คนทำขยับตัวไม่ได้!\n"
 
-#: game/g_client.cpp:359
+#: game/g_client.cpp:355
 #, fuzzy
 msgid "Can't perform action - actor is dead!"
 msgstr "ทำไม่ได้ - คนทำตายแล้ว!\n"
 
-#: game/g_client.cpp:364
+#: game/g_client.cpp:360
 #, fuzzy
 msgid "Can't perform action - not on same team!"
 msgstr "ทำไม่ได้ - ไม่ใช่ทีมเดียวกัน!\n"
 
-#: game/g_client.cpp:369
+#: game/g_client.cpp:365
 #, fuzzy
 msgid "Can't perform action - no control over allied actors!"
 msgstr "ทำไม่ได้ - ควบคุมพันธมิตรที่ทำไม่ได้!\n"
 
-#: game/g_client.cpp:388
+#: game/g_client.cpp:384
 #, fuzzy
 msgid "Can't perform action - it is not your turn!"
 msgstr "ทำไม่ได้ - ไม่ใช่ตาของคุณ!\n"
 
-#: game/g_client.cpp:503
+#: game/g_client.cpp:499
 #, fuzzy
 msgid "Currently shaken, won't let their guard down."
 msgstr "กำลังหวั่นไหว, ไม่ยอมเลิกป้องกันตัว\n"
@@ -32676,33 +32719,33 @@ msgstr ""
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.cpp:424
+#: game/g_combat.cpp:425
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
 msgstr ""
 
-#: game/g_combat.cpp:657
+#: game/g_combat.cpp:653
 #, fuzzy
 msgid "Can't perform action - impossible throw!"
 msgstr "ทำไม่ได้ - ไม่สามารถโยนได้!\n"
 
-#: game/g_combat.cpp:1132
+#: game/g_combat.cpp:1140
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "ทำไม่ได้ - ไม่มีวัตถุ!\n"
 
-#: game/g_combat.cpp:1161
+#: game/g_combat.cpp:1167
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr "ทำไม่ได้ - เป้าหมายอยู่นอกระยะ!\n"
 
-#: game/g_combat.cpp:1184
+#: game/g_combat.cpp:1190
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr "ทำไม่ได้ - เป้าหมายอยู่นอกระยะ!\n"
 
-#: game/g_combat.cpp:1230
+#: game/g_combat.cpp:1236
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr "ทำไม่ได้ - ไม่มีกระสุนเพียงพอ!\n"
@@ -32740,17 +32783,17 @@ msgstr "%s กำลังโมโหอย่างมาก!\n"
 msgid "%s is currently shaken."
 msgstr "%s กำลังหวั่นไหว\n"
 
-#: game/g_reaction.cpp:498
+#: game/g_reaction.cpp:530
 #, fuzzy
 msgid "No reaction fire enabled weapon."
 msgstr "ไม่มีอาวุธไว้ยิงโต้ตอบ\n"
 
-#: game/g_reaction.cpp:503
+#: game/g_reaction.cpp:535
 #, fuzzy
 msgid "No fire mode selected for reaction fire."
 msgstr "รูปแบบการยิงยังไม่ถูกเลือกเพื่อใช้ในการยิงโต้ตอบ\n"
 
-#: game/g_reaction.cpp:508
+#: game/g_reaction.cpp:540
 #, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
 msgstr "ค่าเวลาไม่เพียงพอสำหรับใช้งานการยิงโต้ตอบ\n"
@@ -32810,6 +32853,193 @@ msgstr "มนุษย์ต่างดาว"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "จับภาพหน้าจอ"
+
+#~ msgid "Bomber_city"
+#~ msgstr "เมืองบอมเบอร์"
+
+#~ msgid "City_disco"
+#~ msgstr "ดิสโก้"
+
+#, fuzzy
+#~ msgid "Community_centre"
+#~ msgstr "ศูนย์บัญชาการ"
+
+#~ msgid "Crashed Harvester"
+#~ msgstr "จุดตก"
+
+#, fuzzy
+#~ msgid "Country Desert (Crashed Harvester)"
+#~ msgstr "จุดตก"
+
+#~ msgid "intro_sentence1"
+#~ msgstr ""
+#~ "ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร "
+#~ "ความรุนแรงในตอนต้นศตวรรษที่ 21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล "
+#~ "แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต "
+#~ "เหมือนกับที่เด็กในปลายศตวรรษที่ 20 รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
+
+#~ msgid "intro_sentence2"
+#~ msgstr ""
+#~ "ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ "
+#~ "เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด "
+#~ "แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง "
+#~ "ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย "
+#~ "การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ "
+#~ "และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด "
+#~ "หลายประเทศได้มีความมั่นคงและเข้มแข็ง "
+#~ "ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก "
+#~ "ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- "
+#~ "แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ "
+#~ "เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต "
+#~ "ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
+
+#~ msgid "intro_sentence3"
+#~ msgstr "สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
+
+#~ msgid "intro_sentence4"
+#~ msgstr ""
+#~ "การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา "
+#~ "และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ "
+#~ "และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ "
+#~ "พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม "
+#~ "จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ "
+#~ "แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ "
+#~ "โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
+
+#~ msgid "intro_sentence5"
+#~ msgstr ""
+#~ "การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง "
+#~ "คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต "
+#~ "โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ "
+#~ "แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด "
+#~ "การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ "
+#~ "มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด "
+#~ "จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย -- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
+
+#~ msgid "intro_sentence6"
+#~ msgstr ""
+#~ "แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ "
+#~ "กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ "
+#~ "แต่พวกเขาประสบความสำเร็จไม่มากนัก"
+
+#~ msgid "intro_sentence7"
+#~ msgstr ""
+#~ "เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ "
+#~ "แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- "
+#~ "ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว "
+#~ "และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
+
+#~ msgid "intro_sentence8"
+#~ msgstr ""
+#~ "ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX "
+#~ "คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ "
+#~ "เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
+
+#~ msgid "Heavy Weapons:"
+#~ msgstr "อาวุธหนัก:"
+
+#, fuzzy
+#~ msgid "Workers (ready/all):"
+#~ msgstr "Workers (all/ready)"
+
+#, fuzzy
+#~ msgid "Storage capacity:"
+#~ msgstr "Base capacity"
+
+#~ msgid "Small"
+#~ msgstr "เล็ก"
+
+#~ msgid "Large"
+#~ msgstr "ใหญ่"
+
+#~ msgid "Unknown aircraft size"
+#~ msgstr "ไม่สามารถระบุขนาดได้"
+
+#, fuzzy
+#~ msgid "skill_assault"
+#~ msgstr ""
+#~ "Technical Specifications: AR-80 Assault Rifle\n"
+#~ "\n"
+#~ "CLASSIFIED LEVEL YELLOW\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technical Document, Delta Clearance\n"
+#~ "\n"
+#~ "Filed: 20 March 2084\n"
+#~ "\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Overview\n"
+#~ "\n"
+#~ "The alien attack on Mumbai made our situation painfully clear. Their "
+#~ "technology is far more advanced than ours. The complete inability of "
+#~ "Commonwealth troops to make a dent in the Mumbai offensive revealed "
+#~ "critical weaknesses in current military training and equipment. They lost "
+#~ "three battalions just bringing the aliens to a standstill without "
+#~ "inflicting significant casualties. PHALANX has to overcome these odds, "
+#~ "and to do that we need the very best human technology has to offer.\n"
+#~ "\n"
+#~ "The Excalibur Program was created to find the most effective weapons on "
+#~ "Earth by reviewing their manufacturing standards, durability, operational "
+#~ "record, and their combat performance in the situations where we've "
+#~ "managed to bring the aliens to battle.\n"
+#~ "\n"
+#~ "The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most "
+#~ "advantageous mix of range, penetration against alien armour, and magazine "
+#~ "size in the assault rifle class. It is a bullpup design, meaning the "
+#~ "magazine and action of the weapon are located behind the grip to reduce "
+#~ "overall weapon length. The 191 fires a 30-round box magazine of 4.7mm "
+#~ "caseless ammunition, tungsten-cored steel penetrators with impressive "
+#~ "armour-piercing capability over short and medium ranges. The round does "
+#~ "not perform well at long range, but then assault rifles aren't meant for "
+#~ "long-range firefights.\n"
+#~ "\n"
+#~ "Though the design is far from new, first prototyped in 2057, no other "
+#~ "rifle has fully surpassed the 191. It is accurate and quick to reload. "
+#~ "Its rugged construction makes it dependable in combat and unlikely to "
+#~ "break or jam. It is resistant to heat, cold, dust and humidity all at "
+#~ "once. Ammunition and replacement parts are widely available due to the "
+#~ "design's maturity and relative popularity among Earth's armed forces. "
+#~ "This is a rifle you can entrust your life to.\n"
+#~ "\n"
+#~ "For PHALANX use, we have given this rifle the classification AR-80.\n"
+#~ "\n"
+#~ "\n"
+#~ "Recommended Doctrine\n"
+#~ "\n"
+#~ "This should be our go-to weapon for medium-range engagements. It can lay "
+#~ "down an impressive amount of fire and is deadly out to far longer ranges "
+#~ "than any pistol or SMG.\n"
+#~ "\n"
+#~ "However, no one should entertain the illusion that the assault rifle is "
+#~ "the end-all be-all of our arsenal. A balance of weapons is required for "
+#~ "us to be able to deal with different situations; while the assault rifle "
+#~ "remains a good weapon at close range, it can be slow to manoeuvre in "
+#~ "tight spaces and is eclipsed by both submachine guns and shotguns at "
+#~ "these ranges, weapons which provide a far greater point-blank punch. Any "
+#~ "sweep of an urban building should be led by close-range weapons, while "
+#~ "rifle-equipped soldiers either secure the perimeter or form a second "
+#~ "assault wave to support the others.\n"
+#~ "\n"
+#~ "If our rifle-equipped troops are caught beyond effective weapon range, "
+#~ "they should make an advance from cover to cover in order to effectively "
+#~ "bring their weapons to bear. Snipers should provide covering fire for the "
+#~ "advancing teams or attempt to take out the enemy at range.\n"
+#~ "\n"
+#~ "\n"
+#~ "Addenda\n"
+#~ "\n"
+#~ "While the AR-80 is a fine rifle in all respects, it was not designed to "
+#~ "fight an alien invasion force. We should develop our own purpose-built "
+#~ "weapons as soon as it becomes feasible to do so."
+
+#, fuzzy
+#~ msgid "skill_explosive"
+#~ msgstr "ระเบิด"
 
 #, fuzzy
 #~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
@@ -36515,14 +36745,6 @@ msgstr "จับภาพหน้าจอ"
 #~ msgstr "ยิงโต้ตอบหนึ่งนัด"
 
 #, fuzzy
-#~ msgid "Item autosell enabled"
-#~ msgstr "ทำการขายอุปกรณ์อัตโนมัติ"
-
-#, fuzzy
-#~ msgid "Item autosell disabled"
-#~ msgstr "ปิดการขายอุปกรณ์อัตโนมัติ"
-
-#, fuzzy
 #~ msgid "Enable mouseover tooltips"
 #~ msgstr "เปิดคำแนะนำเคอร์เซอร์"
 
@@ -37665,9 +37887,6 @@ msgstr "จับภาพหน้าจอ"
 #~ msgid "AI autojoin on free teams"
 #~ msgstr "คอมพิวเตอร์เข้าร่วมทีมที่ว่างอัตโนมัติ"
 
-#~ msgid "Sniper"
-#~ msgstr "ซุ่มยิง"
-
 #, fuzzy
 #~ msgid "Sell ufo"
 #~ msgstr "ขายยาน"
@@ -38616,9 +38835,6 @@ msgstr "จับภาพหน้าจอ"
 #, fuzzy
 #~ msgid "Crashed alien ship"
 #~ msgstr "ยานต่างดาวที่ตก"
-
-#~ msgid "Atacama Desert"
-#~ msgstr "ทะเลทรายอาตาคามา"
 
 #, fuzzy
 #~ msgid "Secure alien ship."
