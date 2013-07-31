@@ -700,7 +700,8 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 		/* trace */
 		trace_t tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
-			Edict *trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+			/* the ent possibly hit by the trace */
+			const Edict *trEnt = G_EdictsGetByNum(tr.entNum);
 			if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
 				dt += GRENADE_DT;
 				VectorCopy(newPos, oldPos);
