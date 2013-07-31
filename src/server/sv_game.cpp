@@ -365,6 +365,7 @@ static const eventNames_t eventNames[] = {
 
 	M(EV_RESULTS),
 	M(EV_CENTERVIEW),
+	M(EV_MOVECAMERA),
 
 	M(EV_ENT_APPEAR),
 	M(EV_ENT_PERISH),

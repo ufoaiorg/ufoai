@@ -85,6 +85,7 @@ typedef enum {
 
 	EV_RESULTS,
 	EV_CENTERVIEW,
+	EV_MOVECAMERA,
 
 	EV_ENT_APPEAR,
 	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le invis to true

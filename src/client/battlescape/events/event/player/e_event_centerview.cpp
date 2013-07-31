@@ -33,3 +33,12 @@ void CL_CenterView (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &pos);
 	CL_ViewCenterAtGridPosition(pos);
 }
+
+void CL_MoveView (const eventRegister_t *self, dbuffer *msg)
+{
+	pos3_t pos, from;
+
+	NET_ReadFormat(msg, self->formatString, &pos);
+	VecToPos(cl.cam.origin, from);
+	CL_CameraRoute(from, pos);
+}

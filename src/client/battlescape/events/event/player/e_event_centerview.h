@@ -27,3 +27,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../e_main.h"
 
 void CL_CenterView(const eventRegister_t *self, dbuffer *msg);
+void CL_MoveView(const eventRegister_t *self, dbuffer *msg);

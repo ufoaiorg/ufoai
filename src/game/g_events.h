@@ -48,6 +48,7 @@ void G_EventActorTurn(const Edict &ent);
 void G_EventAddBrushModel(playermask_t playerMask, const Edict &ent);
 void G_EventCenterView(const Edict &ent);
 void G_EventCenterViewAt(playermask_t playerMask, const pos3_t pos);
+void G_EventMoveCameraTo(playermask_t playerMask, const pos3_t pos);
 void G_EventDoorClose(const Edict &door);
 void G_EventDoorOpen(const Edict &door);
 void G_EventDestroyEdict(const Edict &ent);

@@ -97,6 +97,7 @@ const eventRegister_t events[] = {
 
 	{E(EV_RESULTS), "", CL_ParseResults, CL_ParseResultsTime, nullptr}, /* manually parsed */
 	{E(EV_CENTERVIEW), "g", CL_CenterView, nullptr, nullptr},
+	{E(EV_MOVECAMERA), "g", CL_MoveView, nullptr, nullptr},
 
 	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, CL_EntAppearTime, nullptr},
 	{E(EV_ENT_PERISH), "sb", CL_EntPerish, nullptr, nullptr},
