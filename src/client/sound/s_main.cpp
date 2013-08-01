@@ -245,10 +245,15 @@ void S_Init (void)
 	Com_Printf("... audio channels: %i\n", s_env.numChannels);
 
 #if COMPARE_VERSION(1, 2, 10)
-	if (!(Mix_Init(MIX_INIT_OGG) & MIX_INIT_OGG))
-		Com_Printf("... could not load ogg vorbis support\n");
-	else
+	if (!(Mix_Init(MIX_INIT_OGG) & MIX_INIT_OGG)) {
+		Com_Printf("... could not load ogg vorbis support - sound initialization failed\n");
+		Mix_AllocateChannels(0);
+		Mix_CloseAudio();
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		return;
+	} else {
 		Com_Printf("... loaded ogg vorbis support\n");
+	}
 #endif
 
 	s_env.initialized = true;
