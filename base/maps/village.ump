@@ -5,8 +5,8 @@
 // Tiletypes
 // ------
 // a: common tile
-// b: street horizontally
-// c: street vertically
+// h: street horizontally
+// v: street vertically
 
 base village/vil_
 
@@ -51,6 +51,21 @@ tile +start
 }
 
 // UFOs ------------------------------------------------------------*
+
+tile +craft_ufo_bomber
+{
+6 10
+0		0		a		a		0		0
+0		a		+c		+c		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+h		+hc		+hc		+hc		+hc		h
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
+}
 
 tile +craft_ufo_fighter
 {
@@ -720,6 +735,34 @@ fix +bungalow2		"0 0"
 +start				"1 1"
 tileset nature		"0 1"
 tileset street_h	"0 1"
+}
+
+assembly large
+{
+size "12 8"
+title "_Village"
++bungalow			"0 1"
++bungalow2			"0 1"
++diner_01			"0 1"
++gasstation_01		"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++mart_01			"0 1"
++misc_01			"0 1"
++misc_02			"0 1"
++nature_00			"0 35"
++nature_02			"0 1"
++nature_06			"0 1"
++nature_11			"0 1"
++street_crossing	"0 1"
+tileset garage		"0 2"
+tileset nature		"0 5"
+tileset park		"0 2"
+tileset street_h	"0 6"
+tileset street_v	"0 6"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_bomber "1 1"
 }
 
 assembly medium

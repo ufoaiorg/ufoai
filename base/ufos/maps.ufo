@@ -2970,6 +2970,44 @@ mapdef village_bungalow2
 	)
 }
 
+mapdef village_large
+{
+	map				"+village"
+	param			"large"
+	description		"_Suburban City"
+	multiplayer		false
+	size			"large"
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+	)
+}
+
 mapdef village_medium
 {
 	map				"+village"
