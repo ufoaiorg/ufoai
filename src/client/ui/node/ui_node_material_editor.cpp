@@ -274,9 +274,9 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 				image->material.hardness, image->material.parallax, image->material.specular);
 
 	if (image->normalmap == nullptr)
-		Cvar_Set("me_imagename", image->name);
+		Cvar_Set("me_imagename", "%s", image->name);
 	else
-		Cvar_Set("me_imagename", va("%s (nm)", image->name));
+		Cvar_Set("me_imagename", "%s (nm)", image->name);
 
 	if (!image->material.num_stages) {
 		UI_ExecuteConfunc("hidestages true");

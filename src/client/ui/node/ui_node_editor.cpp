@@ -207,8 +207,8 @@ static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 	if (selected->root == node->root)
 		return;
 	anchoredNode = selected;
-	Cvar_Set("ui_sys_editor_node", anchoredNode->name);
-	Cvar_Set("ui_sys_editor_window", anchoredNode->root->name);
+	Cvar_Set("ui_sys_editor_node", "%s", anchoredNode->name);
+	Cvar_Set("ui_sys_editor_window", "%s", anchoredNode->root->name);
 }
 
 void uiEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)

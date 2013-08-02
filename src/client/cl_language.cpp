@@ -449,7 +449,7 @@ bool CL_LanguageTryToSet (const char *localeID)
 		return false;
 	}
 
-	Cvar_Set("s_language", localeID);
+	Cvar_Set("s_language", "%s", localeID);
 	s_language->modified = false;
 
 	do {

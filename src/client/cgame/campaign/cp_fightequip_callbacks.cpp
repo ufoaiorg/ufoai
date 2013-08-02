@@ -273,9 +273,10 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 					cgi->UI_ExecuteConfunc("airequip_display_slot %i 1", i);
 				}
 				if (slot->item) {
-					cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), RS_GetTechForItem(slot->item)->mdl);
-				} else
+					cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "%s", RS_GetTechForItem(slot->item)->mdl);
+				} else {
 					cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
+				}
 			}
 		}
 	}
@@ -335,7 +336,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(slot);
 
-	cgi->Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
+	cgi->Cvar_Set("mn_equip_itemtype_name", "%s", AIM_AircraftItemtypeName(airequipID));
 	switch (airequipID) {
 	case AC_ITEM_ELECTRONICS:
 		typeName = "item";
@@ -353,7 +354,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 		typeName = "unknown";
 		break;
 	}
-	cgi->Cvar_Set("mn_equip_itemtype", typeName);
+	cgi->Cvar_Set("mn_equip_itemtype", "%s", typeName);
 
 	/* First slot: item currently assigned */
 	if (!slot->item) {

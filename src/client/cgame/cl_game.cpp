@@ -919,26 +919,26 @@ static void UI_MapInfo (int step)
 
 	mapname = md->map;
 	/* skip random map char */
-	Cvar_Set("mn_svmapid", md->id);
+	Cvar_Set("mn_svmapid", "%s", md->id);
 	if (mapname[0] == '+') {
-		Cvar_Set("mn_svmapname", va("%s %s", md->map, md->params ? (const char*)LIST_GetRandom(md->params) : ""));
+		Cvar_Set("mn_svmapname", "%s %s", md->map, md->params ? (const char*)LIST_GetRandom(md->params) : "");
 		mapname++;
 	} else {
-		Cvar_Set("mn_svmapname", md->map);
+		Cvar_Set("mn_svmapname", "%s", md->map);
 	}
 
 	if (R_ImageExists("pics/maps/shots/%s", mapname))
-		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
+		Cvar_Set("mn_mappic", "maps/shots/%s", mapname);
 	else
 		Cvar_Set("mn_mappic", "maps/shots/default");
 
 	if (R_ImageExists("pics/maps/shots/%s_2", mapname))
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2", mapname));
+		Cvar_Set("mn_mappic2", "maps/shots/%s_2", mapname);
 	else
 		Cvar_Set("mn_mappic2", "maps/shots/default");
 
 	if (R_ImageExists("pics/maps/shots/%s_3", mapname))
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
+		Cvar_Set("mn_mappic3", "maps/shots/%s_3", mapname);
 	else
 		Cvar_Set("mn_mappic3", "maps/shots/default");
 }
@@ -1390,7 +1390,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 
 	Cvar_Set("cl_onbattlescape", "1");
 
-	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
+	Cvar_Set("cl_maxworldlevel", "%i", cl.mapMaxLevel - 1);
 	if (list != nullptr && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {

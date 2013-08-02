@@ -118,7 +118,7 @@ cvar_t *Cvar_Get(const char *varName, const char *value = "", int flags = 0, con
 /**
  * @brief will create the variable if it doesn't exist
  */
-cvar_t *Cvar_Set(const char *varName, const char *value);
+cvar_t *Cvar_Set(const char *varName, const char *value, ...) __attribute__((format(__printf__, 2, 3)));
 
 /**
  * @brief will set the variable even if NOSET or LATCH

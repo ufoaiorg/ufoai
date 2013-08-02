@@ -46,8 +46,8 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	tech = aircraftTemplate->tech;
 	assert(tech);
 	UP_AircraftDescription(tech);
-	cgi->Cvar_Set("mn_aircraftname", _(aircraftTemplate->name));
-	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
+	cgi->Cvar_Set("mn_aircraftname", "%s", _(aircraftTemplate->name));
+	cgi->Cvar_Set("mn_item", "%s", aircraftTemplate->id);
 }
 
 /**

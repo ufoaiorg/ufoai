@@ -180,13 +180,13 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	assert(aircraft->homebase == base);
 	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
-	cgi->Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
-	cgi->Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	cgi->Cvar_Set("mn_aircraftname", aircraft->name);
+	cgi->Cvar_Set("mn_aircraftstatus", "%s", AIR_AircraftStatusToName(aircraft));
+	cgi->Cvar_Set("mn_aircraftinbase", "%s", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
+	cgi->Cvar_Set("mn_aircraftname", "%s", aircraft->name);
 	if (!aircraft->tech)
 		cgi->Com_Error(ERR_DROP, "No technology assigned to aircraft '%s'", aircraft->id);
-	cgi->Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
-	cgi->Cvar_Set("mn_aircraft_health", va("%3.0f" , aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0));
+	cgi->Cvar_Set("mn_aircraft_model", "%s", aircraft->tech->mdl);
+	cgi->Cvar_Set("mn_aircraft_health", "%3.0f" , aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0);
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),

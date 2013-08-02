@@ -551,7 +551,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 	if (SAV_VerifyHeader(&header))
-		cgi->Cvar_Set(cvar, header.name);
+		cgi->Cvar_Set(cvar, "%s", header.name);
 	else
 		cgi->Cvar_Set(cvar, "");
 	FS_CloseFile(&f);

@@ -301,10 +301,10 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 		cgi->Cvar_Set("mn_server_need_password", "0");
 
 	Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), hostname);
-	cgi->Cvar_Set("mn_server_ip", hostname);
+	cgi->Cvar_Set("mn_server_ip", "%s", hostname);
 	value = Info_ValueForKey(str, "sv_mapname");
 	assert(value);
-	cgi->Cvar_Set("mn_svmapname", value);
+	cgi->Cvar_Set("mn_svmapname", "%s", value);
 	char buf[256];
 	Q_strncpyz(buf, value, sizeof(buf));
 	const char *token = buf;
@@ -315,7 +315,7 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Map:\t%s\n"), value);
 	if (!cgi->R_ImageExists("pics/maps/shots/%s", token)) {
 		/* store it relative to pics/ dir - not relative to game dir */
-		cgi->Cvar_Set("mn_mappic", va("maps/shots/%s", token));
+		cgi->Cvar_Set("mn_mappic", "maps/shots/%s", token);
 	}
 	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(str, "sv_hostname"));
 	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(str, "sv_enablemorale")));
@@ -448,7 +448,7 @@ static void GAME_MP_BookmarkAdd_f (void)
 	for (int i = 0; i < MAX_BOOKMARKS; i++) {
 		const char *bookmark = cgi->Cvar_GetString(va("adr%i", i));
 		if (bookmark[0] == '\0') {
-			cgi->Cvar_Set(va("adr%i", i), newBookmark);
+			cgi->Cvar_Set(va("adr%i", i), "%s", newBookmark);
 			return;
 		}
 	}

@@ -288,7 +288,7 @@ typedef struct game_import_s {
 
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char* varName, const char* value);
+	cvar_t *(IMPORT *Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 	const char* (IMPORT *Cvar_String) (const char* varName);
 
 	/* ClientCommand and ServerCommand parameter access */

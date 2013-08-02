@@ -854,7 +854,7 @@ static void HUD_UpdateButtons (const le_t *le)
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
-			Cvar_Set("mn_crouchstand_tt", va(_("Stand up (%i TU)"), TU_CROUCH));
+			Cvar_Set("mn_crouchstand_tt", _("Stand up (%i TU)"), TU_CROUCH);
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
@@ -863,7 +863,7 @@ static void HUD_UpdateButtons (const le_t *le)
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
-			Cvar_Set("mn_crouchstand_tt", va(_("Crouch (%i TU)"), TU_CROUCH));
+			Cvar_Set("mn_crouchstand_tt", _("Crouch (%i TU)"), TU_CROUCH);
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
 		}
 	}
@@ -872,14 +872,14 @@ static void HUD_UpdateButtons (const le_t *le)
 	if (CL_ActorReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 		if (crouchReserveButtonState != BUTTON_TURESERVE_CROUCH_RESERVED) {
 			UI_ExecuteConfunc("crouch_checkbox_check");
-			Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
-					CL_ActorReservedTUs(le, RES_CROUCH)));
+			Cvar_Set("mn_crouch_reservation_tt", _("%i TUs reserved for crouching/standing up.\nClick to clear."),
+					CL_ActorReservedTUs(le, RES_CROUCH));
 			crouchReserveButtonState = BUTTON_TURESERVE_CROUCH_RESERVED;
 		}
 	} else if (time >= TU_CROUCH) {
 		if (crouchReserveButtonState != BUTTON_TURESERVE_CROUCH_CLEAR) {
 			UI_ExecuteConfunc("crouch_checkbox_clear");
-			Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
+			Cvar_Set("mn_crouch_reservation_tt", _("Reserve %i TUs for crouching/standing up."), TU_CROUCH);
 			crouchReserveButtonState = BUTTON_TURESERVE_CROUCH_CLEAR;
 		}
 	} else {
@@ -894,8 +894,8 @@ static void HUD_UpdateButtons (const le_t *le)
 	if (CL_ActorReservedTUs(le, RES_SHOT)) {
 		if (shotReserveButtonState != BUTTON_TURESERVE_SHOT_RESERVED) {
 			UI_ExecuteConfunc("reserve_shot_check");
-			Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
-					CL_ActorReservedTUs(le, RES_SHOT)));
+			Cvar_Set("mn_shot_reservation_tt", _("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
+					CL_ActorReservedTUs(le, RES_SHOT));
 			shotReserveButtonState = BUTTON_TURESERVE_SHOT_RESERVED;
 		}
 	} else if (HUD_CheckFiremodeReservation()) {
@@ -932,18 +932,18 @@ static void HUD_UpdateButtons (const le_t *le)
 	const int rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, CID_RIGHT, &reason);
 	if (rightCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
-		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
+		Cvar_Set("mn_reloadright_tt", _("Reload weapon (%i TU)."), rightCanBeReloaded);
 	} else {
-		Cvar_Set("mn_reloadright_tt", reason);
+		Cvar_Set("mn_reloadright_tt", "%s", reason);
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
 	const int leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, CID_LEFT, &reason);
 	if (leftCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
-		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));
+		Cvar_Set("mn_reloadleft_tt", _("Reload weapon (%i TU)."), leftCanBeReloaded);
 	} else {
-		Cvar_Set("mn_reloadleft_tt", reason);
+		Cvar_Set("mn_reloadleft_tt", "%s", reason);
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 	}
 
@@ -1019,9 +1019,9 @@ void HUD_UpdateCursor (void)
 		const int iconSpacing = 2;
 		image_t *image;
 		/* icon width */
-		int iconW = 16;
+		const int iconW = 16;
 		/* icon height. */
-		int iconH = 16;
+		const int iconH = 16;
 		int width = 0;
 		int bgX = mousePosX + iconOffsetX / 2 - 2;
 
@@ -1090,17 +1090,15 @@ static void HUD_MapDebugCursor (const le_t *le)
 	if (!(cl_map_debug->integer & MAPDEBUG_TEXT))
 		return;
 
-	static char topText[UI_MAX_SMALLTEXTLEN];
-	static char bottomText[UI_MAX_SMALLTEXTLEN];
-	static char leftText[UI_MAX_SMALLTEXTLEN];
-
 	/* Display the floor and ceiling values for the current cell. */
+	static char topText[UI_MAX_SMALLTEXTLEN];
 	Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
 			Grid_Ceiling(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
 	/* Save the text for later display next to the cursor. */
 	UI_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
 	/* Display the floor and ceiling values for the current cell. */
+	static char bottomText[UI_MAX_SMALLTEXTLEN];
 	Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n",
 			Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
 	/* Save the text for later display next to the cursor. */
@@ -1108,6 +1106,7 @@ static void HUD_MapDebugCursor (const le_t *le)
 
 	/* Display the floor and ceiling values for the current cell. */
 	const int dvec = Grid_MoveNext(&cl.pathMap, mousePos, 0);
+	static char leftText[UI_MAX_SMALLTEXTLEN];
 	Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dvec), getDVz(dvec));
 	/* Save the text for later display next to the cursor. */
 	UI_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
@@ -1238,8 +1237,6 @@ static int HUD_UpdateActorMove (const le_t *actor)
 
 static void HUD_UpdateActorCvar (const le_t *actor)
 {
-	static char tuTooltipText[UI_MAX_SMALLTEXTLEN];
-
 	Cvar_SetValue("mn_hp", actor->HP);
 	Cvar_SetValue("mn_hpmax", actor->maxHP);
 	Cvar_SetValue("mn_tu", actor->TU);
@@ -1249,27 +1246,25 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 	Cvar_SetValue("mn_moralemax", actor->maxMorale);
 	Cvar_SetValue("mn_stun", actor->STUN);
 
-	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
-		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
-				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
-	Cvar_Set("mn_tu_tooltips", tuTooltipText);
+	Cvar_Set("mn_tu_tooltips", _("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+			actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
 
 	/* animation and weapons */
 	const char *animName = R_AnimGetName(&actor->as, actor->model1);
 	if (animName)
-		Cvar_Set("mn_anim", animName);
+		Cvar_Set("mn_anim", "%s", animName);
 	if (actor->getRightHandItem()) {
 		const Item *item = actor->getRightHandItem();
-		Cvar_Set("mn_rweapon", item->def()->model);
-		Cvar_Set("mn_rweapon_item", item->def()->id);
+		Cvar_Set("mn_rweapon", "%s", item->def()->model);
+		Cvar_Set("mn_rweapon_item", "%s", item->def()->id);
 	} else {
 		Cvar_Set("mn_rweapon", "");
 		Cvar_Set("mn_rweapon_item", "");
 	}
 	if (actor->getLeftHandItem()) {
 		const Item *item = actor->getLeftHandItem();
-		Cvar_Set("mn_lweapon", item->def()->model);
-		Cvar_Set("mn_lweapon_item", item->def()->id);
+		Cvar_Set("mn_lweapon", "%s", item->def()->model);
+		Cvar_Set("mn_lweapon_item", "%s", item->def()->id);
 	} else {
 		Cvar_Set("mn_lweapon", "");
 		Cvar_Set("mn_lweapon_item", "");
@@ -1444,7 +1439,7 @@ static void HUD_UpdateActor (le_t *actor)
 	/* Calculate remaining TUs. */
 	/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
 	time = std::max(0, actor->TU - time);
-	Cvar_Set("mn_turemain", va("%i", time));
+	Cvar_Set("mn_turemain", "%i", time);
 
 	HUD_MapDebugCursor(actor);
 }

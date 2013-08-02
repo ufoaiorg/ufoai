@@ -121,7 +121,7 @@ void SV_NextMapcycle (void)
 
 	/* check whether we want to change the gametype, too */
 	if (gameType && gameType[0] != '\0') {
-		Cvar_Set("sv_gametype", gameType);
+		Cvar_Set("sv_gametype", "%s", gameType);
 		Com_SetGameType();
 		sv_gametype->modified = false;
 	}

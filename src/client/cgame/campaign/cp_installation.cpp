@@ -190,7 +190,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, MSG_CONSTRUCTION);
 
 	cgi->LIST_Remove(&ccs.installations, installation);
-	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
+	cgi->Cvar_Set("mn_installation_count", "%i", INS_GetCount());
 }
 
 /**
@@ -218,8 +218,8 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 
 	if (installation) {
 		B_SetCurrentSelectedBase(nullptr);
-		cgi->Cvar_Set("mn_installation_title", installation->name);
-		cgi->Cvar_Set("mn_installation_type", installation->installationTemplate->id);
+		cgi->Cvar_Set("mn_installation_title", "%s", installation->name);
+		cgi->Cvar_Set("mn_installation_type", "%s", installation->installationTemplate->id);
 	} else {
 		cgi->Cvar_Set("mn_installation_title", "");
 		cgi->Cvar_Set("mn_installation_type", "");
@@ -576,7 +576,7 @@ bool INS_LoadXML (xmlNode_t *p)
 		B_LoadBaseSlotsXML(instp.batteries, instp.numBatteries, ss);
 	}
 	cgi->Com_UnregisterConstList(saveInstallationConstants);
-	cgi->Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
+	cgi->Cvar_Set("mn_installation_count", "%i", INS_GetCount());
 
 	return success;
 }

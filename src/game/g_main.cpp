@@ -300,23 +300,21 @@ static void G_Shutdown (void)
 static void CheckNeedPass (void)
 {
 	if (password->modified) {
-		const char* need = "0";
 		password->modified = false;
 
-		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
-			need = "1";
-
-		gi.Cvar_Set("sv_needpass", need);
+		const int need = Q_strvalid(password->string) && Q_strcasecmp(password->string, "none") ? 1 : 0;
+		gi.Cvar_Set("sv_needpass", "%i", need);
 	}
 }
 
 static void G_SendBoundingBoxes (void)
 {
-	if (sv_send_edicts->integer) {
-		Edict* ent = G_EdictsGetFirst();	/* skip the world */
-		while ((ent = G_EdictsGetNextInUse(ent)))
-			G_EventSendEdict(*ent);
-	}
+	if (!sv_send_edicts->integer)
+		return;
+
+	Edict* ent = G_EdictsGetFirst();	/* skip the world */
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		G_EventSendEdict(*ent);
 }
 
 /**

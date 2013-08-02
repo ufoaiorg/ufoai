@@ -268,7 +268,7 @@ typedef struct cgame_import_s {
 
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
+	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value, ...) __attribute__((format(__printf__, 2, 3)));
 	void (IMPORT *Cvar_SetValue) (const char *varName, float value);
 	const char *(IMPORT *Cvar_GetString) (const char *varName);
 	int (IMPORT *Cvar_GetInteger) (const char *varName);

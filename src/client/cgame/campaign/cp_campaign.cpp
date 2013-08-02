@@ -709,7 +709,7 @@ void CP_UpdateCredits (int credits)
 	if (credits > MAX_CREDITS)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
-	cgi->Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
+	cgi->Cvar_Set("mn_credits", _("%i c"), ccs.credits);
 }
 
 /**

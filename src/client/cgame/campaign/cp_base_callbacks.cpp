@@ -196,7 +196,7 @@ static void B_SetBaseTitle_f (void)
 			Q_strncpyz(baseName, _("Home"), lengthof(baseName));
 		}
 
-		cgi->Cvar_Set("mn_base_title", baseName);
+		cgi->Cvar_Set("mn_base_title", "%s", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."));
 		cgi->UI_PopWindow(false);		/* remove the new base popup */
@@ -263,7 +263,7 @@ static void B_ChangeBaseName_f (void)
 
 	/* basename should not contain " */
 	if (!Com_IsValidName(cgi->Cvar_GetString("mn_base_title"))) {
-		cgi->Cvar_Set("mn_base_title", base->name);
+		cgi->Cvar_Set("mn_base_title", "%s", base->name);
 		return;
 	}
 
@@ -975,7 +975,7 @@ void B_InitCallbacks (void)
 {
 	mn_base_title = cgi->Cvar_Get("mn_base_title", "", 0, "The title of the current base");
 	cl_start_buildings = cgi->Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
-	cgi->Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
+	cgi->Cvar_Set("mn_base_cost", _("%i c"), ccs.curCampaign->basecost);
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	cgi->Cvar_SetValue("mn_base_max", MAX_BASES);
 

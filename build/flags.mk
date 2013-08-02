@@ -32,6 +32,7 @@ CFLAGS += -Wno-unused-parameter
 CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 CFLAGS += -Wno-variadic-macros
+CFLAGS += -Wno-format-zero-length
 
 # clang stuff
 #CFLAGS += -Wno-extended-offsetof

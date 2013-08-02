@@ -207,7 +207,7 @@ static void M_Start (const char *file)
 static void M_Play_f (void)
 {
 	if (Cmd_Argc() == 2)
-		Cvar_Set("snd_music", Cmd_Argv(1));
+		Cvar_Set("snd_music", "%s", Cmd_Argv(1));
 
 	M_Start(Cvar_GetString("snd_music"));
 }
@@ -230,7 +230,7 @@ static void M_RandomTrack_f (void)
 			if (!randomID) {
 				const char *musicTrack = Com_SkipPath(filename);
 				Com_Printf("..playing next music track: '%s'\n", musicTrack);
-				Cvar_Set("snd_music", musicTrack);
+				Cvar_Set("snd_music", "%s", musicTrack);
 			}
 			randomID--;
 		}
@@ -249,7 +249,7 @@ static bool M_PlayRandomByCategory (int category)
 	const int rnd = rand() % musicArrayLength[category];
 	music.category = category;
 	Com_Printf("Music: track changed from %s to %s.\n", music.currentTrack, musicArrays[category][rnd]);
-	Cvar_Set("snd_music", musicArrays[category][rnd]);
+	Cvar_Set("snd_music", "%s", musicArrays[category][rnd]);
 	return snd_music->modified;
 }
 

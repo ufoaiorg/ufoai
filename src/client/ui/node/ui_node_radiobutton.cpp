@@ -134,7 +134,7 @@ void uiRadioButtonNode::onActivate (uiNode_t *node)
 	if (EXTRADATA(node).string == nullptr) {
 		Cvar_SetValue(cvarName, EXTRADATA(node).value);
 	} else {
-		Cvar_Set(cvarName, EXTRADATA(node).string);
+		Cvar_Set(cvarName, "%s", EXTRADATA(node).string);
 	}
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);

@@ -63,8 +63,8 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
 
 	cgi->Cvar_SetValue("ai_numaliens", battleParameters->aliens);
 	cgi->Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
-	cgi->Cvar_Set("ai_civilian", battleParameters->civTeam);
-	cgi->Cvar_Set("ai_equipment", battleParameters->alienEquipment);
+	cgi->Cvar_Set("ai_civilian", "%s", battleParameters->civTeam);
+	cgi->Cvar_Set("ai_equipment", "%s", battleParameters->alienEquipment);
 
 	/* now store the alien teams in the shared cgi->csi->struct to let the game dll
 	 * have access to this data, too */
@@ -95,7 +95,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
 	 * brushes you want the terrain textures on
 	 * @sa R_ModLoadTexinfo */
-	cgi->Cvar_Set("sv_mapzone", battleParameters->zoneType);
+	cgi->Cvar_Set("sv_mapzone", "%s", battleParameters->zoneType);
 
 	/* do a quicksave */
 	cgi->Cmd_ExecuteString("game_quicksave");
@@ -362,17 +362,17 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+' && !cgi->LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
-			cgi->Cvar_Set("rm_ufo", cgi->Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
+			cgi->Cvar_Set("rm_ufo", "%s", cgi->Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
 	}
 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
-			cgi->Cvar_Set("rm_crashed", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
+			cgi->Cvar_Set("rm_crashed", "%s", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
 		if (!cgi->LIST_IsEmpty(mission->mapDef->aircraft))
-			cgi->Cvar_Set("rm_drop", cgi->Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
+			cgi->Cvar_Set("rm_drop", "%s", cgi->Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
 

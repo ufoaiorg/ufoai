@@ -137,7 +137,7 @@ static void GAME_CP_CampaignDescription_f (void)
 	}
 
 	/* Make sure that this campaign is selected */
-	cgi->Cvar_Set("cp_campaign", campaign->id);
+	cgi->Cvar_Set("cp_campaign", "%s", campaign->id);
 
 	if (campaign->team == TEAM_PHALANX)
 		racetype = _("Human");
@@ -176,7 +176,7 @@ static void GAME_CP_Start_f (void)
 	}
 
 	/* Make sure that this campaign is selected */
-	cgi->Cvar_Set("cp_campaign", campaign->id);
+	cgi->Cvar_Set("cp_campaign", "%s", campaign->id);
 
 	CP_CampaignInit(campaign, false);
 
@@ -624,23 +624,20 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 {
 	/* Display rank if the character has one. */
 	if (chr->score.rank >= 0) {
-		char buf[MAX_VAR];
 		const rank_t *rank = CL_GetRankByIdx(chr->score.rank);
-		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
-		cgi->Cvar_Set("mn_chrrank", buf);
-		cgi->Cvar_Set("mn_chrrank_img", rank->image);
-		Com_sprintf(buf, sizeof(buf), "%s ", _(rank->shortname));
-		cgi->Cvar_Set("mn_chrrankprefix", buf);
+		cgi->Cvar_Set("mn_chrrank", _("Rank: %s"), _(rank->name));
+		cgi->Cvar_Set("mn_chrrank_img", "%s", rank->image);
+		cgi->Cvar_Set("mn_chrrankprefix", "%s ", _(rank->shortname));
 	} else {
 		cgi->Cvar_Set("mn_chrrank_img", "");
 		cgi->Cvar_Set("mn_chrrank", "");
 		cgi->Cvar_Set("mn_chrrankprefix", "");
 	}
 
-	cgi->Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
-	cgi->Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
-	cgi->Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
-	cgi->Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
+	cgi->Cvar_Set("mn_chrmis", "%i", chr->score.assignedMissions);
+	cgi->Cvar_Set("mn_chrkillalien", "%i", chr->score.kills[KILLED_ENEMIES]);
+	cgi->Cvar_Set("mn_chrkillcivilian", "%i", chr->score.kills[KILLED_CIVILIANS]);
+	cgi->Cvar_Set("mn_chrkillteam", "%i", chr->score.kills[KILLED_TEAM]);
 }
 
 const char *GAME_CP_GetItemModel (const char *string)

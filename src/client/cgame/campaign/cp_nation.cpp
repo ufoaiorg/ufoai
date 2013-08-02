@@ -595,7 +595,7 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 	funding->numPoints = ptsNumber;
 	if (color < 0) {
 		const nation_t *nation = NAT_GetNationByIDX(selectedNation);
-		cgi->Cvar_Set("mn_nat_symbol", va("nations/%s", nation->id));
+		cgi->Cvar_Set("mn_nat_symbol", "nations/%s", nation->id);
 		Vector4Copy(graphColorSelected, funding->color);
 	} else {
 		Vector4Copy(graphColors[color], funding->color);
@@ -639,8 +639,8 @@ static void CL_NationStatsUpdate_f (void)
 		} else {
 			cgi->UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
-		cgi->Cvar_Set(va("mn_nat_name%i",i), _(nation->name));
-		cgi->Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
+		cgi->Cvar_Set(va("mn_nat_name%i",i), "%s", _(nation->name));
+		cgi->Cvar_Set(va("mn_nat_fund%i",i), _("%i c"), funding);
 
 		if (colorNode) {
 			colorLinePts[usedColPtslists][0].x = 0;

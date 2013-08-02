@@ -110,9 +110,9 @@ static void UR_DialogInit_f (void)
 
 	if (ufoCraft) {
 		if (cond < 1.0)
-			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_GetName(ufoCraft), cond * 100));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", _("\nSecured crashed %s (%.0f%%)\n"), UFO_GetName(ufoCraft), cond * 100);
 		else
-			cgi->Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_GetName(ufoCraft)));
+			cgi->Cvar_Set("mn_uforecovery_actualufo", _("\nSecured landed %s\n"), UFO_GetName(ufoCraft));
 
 		cgi->UI_PushWindow("uforecovery");
 	}
@@ -448,7 +448,7 @@ static void UR_DialogSelectSellNation_f (void)
 	ufoRecovery.nation = nation;
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
-	cgi->Cvar_Set("mission_recoverynation", _(nation->name));
+	cgi->Cvar_Set("mission_recoverynation", "%s", _(nation->name));
 	cgi->UI_ExecuteConfunc("btnatsel enable");
 }
 

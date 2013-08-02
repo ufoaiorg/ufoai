@@ -80,8 +80,8 @@ void INV_ItemDescription (const objDef_t *od)
 	}
 
 	/* select item */
-	Cvar_Set("mn_itemname", _(od->name));
-	Cvar_Set("mn_item", od->id);
+	Cvar_Set("mn_itemname", "%s", _(od->name));
+	Cvar_Set("mn_item", "%s", od->id);
 
 	count = 0;
 	if (GAME_ItemIsUseable(od)) {
@@ -173,7 +173,7 @@ void INV_ItemDescription (const objDef_t *od)
 					fd = &odAmmo->fd[weaponIndex][fireModeIndex];
 
 					/* We always display the name of the firemode for an ammo */
-					Cvar_Set("mn_firemodename", _(fd->name));
+					Cvar_Set("mn_firemodename", "%s", _(fd->name));
 
 					/* We display the characteristics of this firemode */
 					Q_strcat(itemText, sizeof(itemText), _("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill));

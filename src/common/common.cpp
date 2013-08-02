@@ -816,7 +816,7 @@ void Com_SetGameType (void)
 			if (sv_dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
-				Cvar_Set(list->name, list->value);
+				Cvar_Set(list->name, "%s", list->value);
 				if (sv_dedicated->integer)
 					Com_Printf("  %s = %s\n", list->name, list->value);
 			}

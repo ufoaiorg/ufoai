@@ -64,7 +64,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 
 	cgi->Cvar_SetValue("ai_numcivilians", 8);
 	if (md->civTeam != nullptr)
-		cgi->Cvar_Set("ai_civilian", md->civTeam);
+		cgi->Cvar_Set("ai_civilian", "%s", md->civTeam);
 	else
 		cgi->Cvar_Set("ai_civilian", "europe");
 
@@ -163,8 +163,8 @@ static void GAME_SK_ChangeEquip_f (void)
 
 	Com_sprintf(cvarBuf, sizeof(cvarBuf), "%sname", cvarName);
 
-	cgi->Cvar_Set(cvarName, ed->id);
-	cgi->Cvar_Set(cvarBuf, va("_%s", ed->name));
+	cgi->Cvar_Set(cvarName, "%s", ed->id);
+	cgi->Cvar_Set(cvarBuf, "_%s", ed->name);
 }
 
 /**
@@ -237,7 +237,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 		cgi->Cvar_Set("rm_drop", "");
 	} else {
 		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
-		cgi->Cvar_Set("rm_drop", rma);
+		cgi->Cvar_Set("rm_drop", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_DROPSHIPS), dropships);
 		cgi->UI_RegisterOption(OPTION_DROPSHIPS, cgi->UI_GetOption(OPTION_DROPSHIPS));
 
@@ -258,7 +258,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 		cgi->Cvar_Set("rm_ufo", "");
 	} else {
 		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
-		cgi->Cvar_Set("rm_ufo", rma);
+		cgi->Cvar_Set("rm_ufo", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_UFOS), ufos);
 		cgi->UI_RegisterOption(OPTION_UFOS, cgi->UI_GetOption(OPTION_UFOS));
 

@@ -40,10 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void INS_SetInstallationTitle (installationType_t type)
 {
 	const installationTemplate_t *insTemp = INS_GetInstallationTemplateByType(type);
-	char insName[MAX_VAR];
-
-	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
-	cgi->Cvar_Set("mn_installation_title", insName);
+	cgi->Cvar_Set("mn_installation_title", "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
 	if (!insTemp || !Q_strvalid(insTemp->description))
 		cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	else
@@ -65,7 +62,7 @@ void INS_SelectInstallation (installation_t *installation)
 	if (installation->installationStatus == INSTALLATION_WORKING) {
 		cgi->Cvar_Set("mn_installation_timetobuild", "-");
 	} else {
-		cgi->Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
+		cgi->Cvar_Set("mn_installation_timetobuild", ngettext("%d day", "%d days", timetobuild), timetobuild);
 	}
 	INS_SetCurrentSelectedInstallation(installation);
 
@@ -315,7 +312,7 @@ static void INS_SelectType_f (void)
 		GEO_SetOverlay("radar");
 
 	INS_SetInstallationTitle(tpl->type);
-	cgi->Cvar_Set("mn_installation_type", tpl->id);
+	cgi->Cvar_Set("mn_installation_type", "%s", tpl->id);
 }
 
 void INS_InitCallbacks (void)

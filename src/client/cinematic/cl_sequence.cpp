@@ -709,7 +709,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 static int SEQ_ExecuteMusic (sequenceContext_t *context, const char *name, const char *data)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Change music to %s\n", name);
-	Cvar_Set("snd_music", name);
+	Cvar_Set("snd_music", "%s", name);
 	return 1;
 }
 

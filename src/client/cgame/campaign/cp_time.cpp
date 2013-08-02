@@ -110,18 +110,16 @@ void CP_UpdateTime (void)
 
 	/* Update the timelapse text */
 	if (ccs.gameLapse >= 0 && ccs.gameLapse < NUM_TIMELAPSE) {
-		cgi->Cvar_Set("mn_timelapse", _(lapse[ccs.gameLapse].name));
+		cgi->Cvar_Set("mn_timelapse", "%s", _(lapse[ccs.gameLapse].name));
 		ccs.gameTimeScale = lapse[ccs.gameLapse].scale;
 		cgi->Cvar_SetValue("mn_timelapse_id", ccs.gameLapse);
 	}
 
 	/* Update the date */
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
-	cgi->Cvar_Set("mn_mapdate", cp_messageBuffer);
+	cgi->Cvar_Set("mn_mapdate", _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
 
 	/* Update the time. */
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%02i:%02i"), date.hour, date.min);
-	cgi->Cvar_Set("mn_maptime", cp_messageBuffer);
+	cgi->Cvar_Set("mn_maptime", _("%02i:%02i"), date.hour, date.min);
 }
 
 /**

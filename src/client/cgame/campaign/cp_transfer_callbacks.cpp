@@ -646,7 +646,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 
 	/* Set global pointer to current selected base. */
 	td.transferBase = destbase;
-	cgi->Cvar_Set("mn_trans_base_name", destbase->name);
+	cgi->Cvar_Set("mn_trans_base_name", "%s", destbase->name);
 	cgi->Cvar_SetValue("mn_trans_base_id", destbase->idx);
 
 	/* Update stuff-in-base list. */
@@ -719,14 +719,14 @@ static void TR_Init_f (void)
 	TR_TransferBaseSelect(base, td.transferBase);
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase) {
-		cgi->Cvar_Set("mn_trans_base_name", td.transferBase->name);
+		cgi->Cvar_Set("mn_trans_base_name", "%s", td.transferBase->name);
 		cgi->Cvar_SetValue("mn_trans_base_id", td.transferBase->idx);
 	} else {
 		cgi->Cvar_Set("mn_trans_base_id", "");
 	}
 
 	/* Set up cvar used with tabset */
-	cgi->Cvar_Set("mn_itemtype", transferTypeIDs[0]);
+	cgi->Cvar_Set("mn_itemtype", "%s", transferTypeIDs[0]);
 	/* Select first available item */
 	cgi->Cmd_ExecuteString("ui_trans_fill %s", transferTypeIDs[0]);
 }

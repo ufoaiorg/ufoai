@@ -270,7 +270,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Cost per item\t%i c\n"), PR_GetPrice(od));
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Item size\t%i\n"), od->size);
-		cgi->Cvar_Set("mn_item", od->id);
+		cgi->Cvar_Set("mn_item", "%s", od->id);
 
 		PR_RequirementsInfo(base, &tech->requireForProduction);
 		cgi->Cmd_ExecuteString("show_requirements %i", tech->requireForProduction.numLinks);
@@ -308,7 +308,7 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 		Q_strcat(productionInfo, sizeof(productionInfo), "  %s (%i)\n", _(compOd->name), amount);
 	}
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
-	cgi->Cvar_Set("mn_item", ufo->id);
+	cgi->Cvar_Set("mn_item", "%s", ufo->id);
 	cgi->Cmd_ExecuteString("show_requirements 0");
 }
 
@@ -327,7 +327,7 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate));
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
-	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
+	cgi->Cvar_Set("mn_item", "%s", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
 	cgi->Cmd_ExecuteString("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks);
 }
@@ -546,7 +546,7 @@ static void PR_ProductionType_f (void)
 		return;
 
 	produceCategory = cat;
-	cgi->Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
+	cgi->Cvar_Set("mn_itemtype", "%s", INV_GetFilterType(produceCategory));
 
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(base);
@@ -583,9 +583,7 @@ static void PR_ProductionType_f (void)
  */
 static void PR_ProductionList_f (void)
 {
-	char tmpbuf[MAX_VAR];
 	base_t *base = B_GetCurrentSelectedBase();
-
 	/* can be called from everywhere without a started game */
 	if (!base)
 		return;
@@ -595,13 +593,11 @@ static void PR_ProductionList_f (void)
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
 	PR_UpdateProductionCap(base);
 
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		CAP_GetCurrent(base, CAP_WORKSPACE), E_CountHired(base, EMPL_WORKER));
-	cgi->Cvar_Set("mn_production_workers", tmpbuf);
+	cgi->Cvar_Set("mn_production_workers", "%i/%i",
+			CAP_GetCurrent(base, CAP_WORKSPACE), E_CountHired(base, EMPL_WORKER));
 
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
-	cgi->Cvar_Set("mn_production_storage", tmpbuf);
+	cgi->Cvar_Set("mn_production_storage", "%i/%i",
+			CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
 
 	PR_ClearSelected();
 }

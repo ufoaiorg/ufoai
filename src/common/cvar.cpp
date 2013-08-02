@@ -161,7 +161,7 @@ bool Cvar_AssertValue (cvar_t *cvar, float minVal, float maxVal, bool shouldBeIn
 	if (shouldBeIntegral) {
 		if ((int)cvar->value != cvar->integer) {
 			Com_Printf("WARNING: cvar '%s' must be integral (%f)\n", cvar->name, cvar->value);
-			Cvar_Set(cvar->name, va("%d", cvar->integer));
+			Cvar_Set(cvar->name, "%d", cvar->integer);
 			return true;
 		}
 	}
@@ -248,7 +248,7 @@ void Cvar_Reset (cvar_t *cvar)
 		return;
 
 	str = Mem_StrDup(cvar->oldString);
-	Cvar_Set(cvar->name, str);
+	Cvar_Set(cvar->name, "%s", str);
 	Mem_Free(str);
 }
 
@@ -621,9 +621,15 @@ cvar_t *Cvar_ForceSet (const char *varName, const char *value)
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-cvar_t *Cvar_Set (const char *varName, const char *value)
+cvar_t *Cvar_Set (const char *varName, const char *value, ...)
 {
-	return Cvar_Set2(varName, value, false);
+	va_list argptr;
+	char text[512];
+	va_start(argptr, value);
+	Q_vsnprintf(text, sizeof(text), value, argptr);
+	va_end(argptr);
+
+	return Cvar_Set2(varName, text, false);
 }
 
 /**
@@ -675,13 +681,10 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
  */
 void Cvar_SetValue (const char *varName, float value)
 {
-	char val[32];
-
 	if (value == (int) value)
-		Com_sprintf(val, sizeof(val), "%i", (int) value);
+		Cvar_Set(varName, "%i", (int)value);
 	else
-		Com_sprintf(val, sizeof(val), "%1.2f", value);
-	Cvar_Set(varName, val);
+		Cvar_Set(varName, "%1.2f", value);
 }
 
 
@@ -731,7 +734,7 @@ bool Cvar_Command (void)
 		return true;
 	}
 
-	Cvar_Set(v->name, Cmd_Argv(1));
+	Cvar_Set(v->name, "%s", Cmd_Argv(1));
 	return true;
 }
 
@@ -754,7 +757,7 @@ static void Cvar_SetOld_f (void)
 		return;
 	}
 	if (v->oldString)
-		Cvar_Set(Cmd_Argv(1), v->oldString);
+		Cvar_Set(Cmd_Argv(1), "%s", v->oldString);
 }
 
 static void Cvar_Define_f (void)
@@ -769,7 +772,7 @@ static void Cvar_Define_f (void)
 	name = Cmd_Argv(1);
 
 	if (Cvar_FindVar(name) == nullptr)
-		Cvar_Set(name, Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
+		Cvar_Set(name, "%s", Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
 }
 
 /**
@@ -805,8 +808,9 @@ static void Cvar_Set_f (void)
 			arg++;
 		}
 		Cvar_FullSet(Cmd_Argv(1), Cmd_Argv(2), flags);
-	} else
-		Cvar_Set(Cmd_Argv(1), Cmd_Argv(2));
+	} else {
+		Cvar_Set(Cmd_Argv(1), "%s", Cmd_Argv(2));
+	}
 }
 
 /**
@@ -844,7 +848,7 @@ static void Cvar_Switch_f (void)
 		Cvar_FullSet(Cmd_Argv(1), va("%i", !Cvar_GetInteger(Cmd_Argv(1))), flags);
 	} else {
 		Com_Printf("val: %i\n", Cvar_GetInteger(Cmd_Argv(1)));
-		Cvar_Set(Cmd_Argv(1), va("%i", !Cvar_GetInteger(Cmd_Argv(1))));
+		Cvar_Set(Cmd_Argv(1), "%i", !Cvar_GetInteger(Cmd_Argv(1)));
 	}
 }
 
@@ -862,7 +866,7 @@ static void Cvar_Copy_f (void)
 		return;
 	}
 
-	Cvar_Set(Cmd_Argv(1), Cvar_GetString(Cmd_Argv(2)));
+	Cvar_Set(Cmd_Argv(1), "%s", Cvar_GetString(Cmd_Argv(2)));
 }
 
 

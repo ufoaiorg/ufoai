@@ -221,7 +221,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 			cgi->UI_ExecuteConfunc("setautofire %i", installation->batteries[0].autofire);
 
 			if (installation->batteries[0].target)
-				cgi->Cvar_Set("mn_target", UFO_GetName(installation->batteries[0].target));
+				cgi->Cvar_Set("mn_target", "%s", UFO_GetName(installation->batteries[0].target));
 		}
 	} else if (base) {
 		bool autofire = false;
@@ -229,12 +229,12 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		if (base->numBatteries) {
 			autofire |= base->batteries[0].autofire;
 			if (base->batteries[0].target)
-				cgi->Cvar_Set("mn_target", UFO_GetName(base->batteries[0].target));
+				cgi->Cvar_Set("mn_target", "%s", UFO_GetName(base->batteries[0].target));
 		}
 		if (base->numLasers) {
 			autofire |= base->lasers[0].autofire;
 			if (base->lasers[0].target && !base->batteries[0].target)
-				cgi->Cvar_Set("mn_target", UFO_GetName(base->lasers[0].target));
+				cgi->Cvar_Set("mn_target", "%s", UFO_GetName(base->lasers[0].target));
 		}
 		if (base->numBatteries || base->numLasers)
 			cgi->UI_ExecuteConfunc("setautofire %i", autofire);

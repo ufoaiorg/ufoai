@@ -249,10 +249,10 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	tech = RS_GetTechForItem(item);
 	/* select item */
-	cgi->Cvar_Set("mn_item", item->id);
-	cgi->Cvar_Set("mn_itemname", _(item->name));
+	cgi->Cvar_Set("mn_item", "%s", item->id);
+	cgi->Cvar_Set("mn_itemname", "%s", _(item->name));
 	if (tech->mdl)
-		cgi->Cvar_Set("mn_upmodel_top", tech->mdl);
+		cgi->Cvar_Set("mn_upmodel_top", "%s", tech->mdl);
 	else
 		cgi->Cvar_Set("mn_upmodel_top", "");
 
@@ -400,8 +400,8 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	cgi->INV_ItemDescription(nullptr);
 
 	/* Set name of ugv/robot */
-	cgi->Cvar_Set("mn_itemname", _(tech->name));
-	cgi->Cvar_Set("mn_item", tech->provides);
+	cgi->Cvar_Set("mn_itemname", "%s", _(tech->name));
+	cgi->Cvar_Set("mn_item", "%s", tech->provides);
 
 	cgi->Cvar_Set("mn_upmetadata", "1");
 	if (RS_IsResearched_ptr(tech)) {
@@ -462,7 +462,7 @@ int UP_GetUnreadMails (void)
 	}
 
 	/* use strings here */
-	cgi->Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
+	cgi->Cvar_Set("mn_upunreadmail", "%i", ccs.numUnreadMails);
 	return ccs.numUnreadMails;
 }
 
@@ -550,11 +550,11 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	to = cgi->CL_Translate(to);
 	subject = cgi->CL_Translate(subject);
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s"), from, to, dateBuf);
-	cgi->Cvar_Set("mn_mail_sender_head", model ? model : "");
-	cgi->Cvar_Set("mn_mail_from", from);
-	cgi->Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
-	cgi->Cvar_Set("mn_mail_to", to);
-	cgi->Cvar_Set("mn_mail_date", dateBuf);
+	cgi->Cvar_Set("mn_mail_sender_head", "%s", model ? model : "");
+	cgi->Cvar_Set("mn_mail_from", "%s", from);
+	cgi->Cvar_Set("mn_mail_subject", "%s%s", subjectType, _(subject));
+	cgi->Cvar_Set("mn_mail_to", "%s", to);
+	cgi->Cvar_Set("mn_mail_date", "%s", dateBuf);
 	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 
@@ -569,7 +569,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (od->numAmmos > 0) {
 		const technology_t *associated = RS_GetTechForItem(od->ammos[0]);
-		cgi->Cvar_Set("mn_upmodel_bottom", associated->mdl);
+		cgi->Cvar_Set("mn_upmodel_bottom", "%s", associated->mdl);
 	}
 }
 
@@ -585,12 +585,12 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 
 	if (tech) {
 		if (tech->mdl)
-			cgi->Cvar_Set("mn_upmodel_top", tech->mdl);
+			cgi->Cvar_Set("mn_upmodel_top", "%s", tech->mdl);
 		else
 			cgi->Cvar_Set("mn_upmodel_top", "");
 
 		if (tech->image)
-			cgi->Cvar_Set("mn_upimage_top", tech->image);
+			cgi->Cvar_Set("mn_upimage_top", "%s", tech->image);
 		else
 			cgi->Cvar_Set("mn_upimage_top", "");
 
@@ -622,7 +622,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		cgi->UI_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
 			int i;
-			cgi->Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
+			cgi->Cvar_Set("mn_uptitle", _("UFOpaedia: %s (complete)"), _(tech->name));
 			/* If researched -> display research text */
 			cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
 			if (tech->preDescription.numDescriptions > 0) {
@@ -675,7 +675,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* see also UP_TechGetsDisplayed */
 		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->preDescription.numDescriptions > 0)) {
 			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-			cgi->Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
+			cgi->Cvar_Set("mn_uptitle", _("UFOpaedia: %s"), _(tech->name));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->preDescription.numDescriptions > 0) {
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
@@ -684,7 +684,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				cgi->UI_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
 		} else {
-			cgi->Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
+			cgi->Cvar_Set("mn_uptitle", _("UFOpaedia: %s"), _(tech->name));
 			cgi->UI_ResetData(TEXT_UFOPEDIA);
 		}
 	} else {
@@ -1052,7 +1052,7 @@ static void UP_SetMailButtons_f (void)
 				num--;
 			} else {
 				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-				cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+				cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_PRE].icon);
 			}
 			break;
 		case MSG_RESEARCH_FINISHED:
@@ -1062,7 +1062,7 @@ static void UP_SetMailButtons_f (void)
 				num--;
 			} else {
 				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-				cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+				cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 			}
 			break;
 		case MSG_NEWS:
@@ -1071,14 +1071,14 @@ static void UP_SetMailButtons_f (void)
 					num--;
 				} else {
 					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_PRE].icon);
 				}
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (num) {
 					num--;
 				} else {
 					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 				}
 			}
 			break;
@@ -1088,7 +1088,7 @@ static void UP_SetMailButtons_f (void)
 					num--;
 				} else {
 					cgi->Cvar_Set(va("mn_mail_read%i", i), m->eventMail->read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), m->eventMail->icon ? m->eventMail->icon : "");
+					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->eventMail->icon ? m->eventMail->icon : "");
 				}
 			}
 			break;
@@ -1227,7 +1227,7 @@ static void UP_SetAllMailsRead_f (void)
 	}
 
 	ccs.numUnreadMails = 0;
-	cgi->Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
+	cgi->Cvar_Set("mn_upunreadmail", "%i", ccs.numUnreadMails);
 	UP_OpenMail_f();
 }
 

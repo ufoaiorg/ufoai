@@ -60,7 +60,7 @@ static void E_UpdateGUICount_f (void)
 	cgi->Cvar_SetValue("mn_hireworkers", E_CountHired(base, EMPL_WORKER));
 	cgi->Cvar_SetValue("mn_hirescientists", E_CountHired(base, EMPL_SCIENTIST));
 	cgi->Cvar_SetValue("mn_hirepilots", E_CountHired(base, EMPL_PILOT));
-	cgi->Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
+	cgi->Cvar_Set("mn_hirepeople", "%d/%d", E_CountAllHired(base), max);
 }
 
 static void E_EmployeeSelect (Employee *employee)

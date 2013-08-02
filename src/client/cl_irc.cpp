@@ -1607,9 +1607,9 @@ static void Irc_Connect_f (void)
 		if (!irc_connected) {
 			/* not connected yet */
 			if (argc >= 2)
-				Cvar_Set("irc_server", Cmd_Argv(1));
+				Cvar_Set("irc_server", "%s", Cmd_Argv(1));
 			if (argc >= 3)
-				Cvar_Set("irc_port", Cmd_Argv(2));
+				Cvar_Set("irc_port", "%s", Cmd_Argv(2));
 			Com_Printf("Connecting to %s:%s\n", irc_server->string, irc_port->string);
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected && argc >= 4)
@@ -1918,7 +1918,7 @@ static void Irc_UserClick_f (void)
 	cnt -= num + 1;
 
 	name = irc_userListOrdered[cnt];
-	Cvar_Set("irc_send_buffer", va("%s%s: ", irc_send_buffer->string, &name[1]));
+	Cvar_Set("irc_send_buffer", "%s%s: ", irc_send_buffer->string, &name[1]);
 }
 
 /**

@@ -116,19 +116,19 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
 	Cvar_SetValue("mn_vhp", chr->HP);
 	Cvar_SetValue("mn_vhpmax", chr->maxHP);
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_POWER]), score->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_SPEED]), score->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_ACCURACY]), score->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_MIND]), score->skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_CLOSE]), score->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_HEAVY]), score->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_ASSAULT]), score->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_SNIPER]), score->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_EXPLOSIVE]), score->skills[SKILL_EXPLOSIVE]));
-	Cvar_Set("mn_tpil", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_PILOTING]), chr->score.skills[SKILL_PILOTING]));
-	Cvar_Set("mn_ttar", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_TARGETING]), chr->score.skills[SKILL_TARGETING]));
-	Cvar_Set("mn_tevad", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EVADING]), chr->score.skills[SKILL_EVADING]));
-	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
+	Cvar_Set("mn_tpwr", "%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_POWER]), score->skills[ABILITY_POWER]);
+	Cvar_Set("mn_tspd", "%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_SPEED]), score->skills[ABILITY_SPEED]);
+	Cvar_Set("mn_tacc", "%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_ACCURACY]), score->skills[ABILITY_ACCURACY]);
+	Cvar_Set("mn_tmnd", "%s (%i)", CL_ActorGetSkillString(score->skills[ABILITY_MIND]), score->skills[ABILITY_MIND]);
+	Cvar_Set("mn_tcls", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_CLOSE]), score->skills[SKILL_CLOSE]);
+	Cvar_Set("mn_thvy", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_HEAVY]), score->skills[SKILL_HEAVY]);
+	Cvar_Set("mn_tass", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_ASSAULT]), score->skills[SKILL_ASSAULT]);
+	Cvar_Set("mn_tsnp", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_SNIPER]), score->skills[SKILL_SNIPER]);
+	Cvar_Set("mn_texp", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_EXPLOSIVE]), score->skills[SKILL_EXPLOSIVE]);
+	Cvar_Set("mn_tpil", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_PILOTING]), chr->score.skills[SKILL_PILOTING]);
+	Cvar_Set("mn_ttar", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_TARGETING]), chr->score.skills[SKILL_TARGETING]);
+	Cvar_Set("mn_tevad", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EVADING]), chr->score.skills[SKILL_EVADING]);
+	Cvar_Set("mn_thp", "%i (%i)", chr->HP, chr->maxHP);
 }
 
 /**
@@ -149,12 +149,12 @@ static void CL_ActorCvars (const character_t *chr)
 	/* visible equipment */
 	weapon = chr->inv.getRightHandContainer();
 	if (weapon)
-		Cvar_Set("mn_rweapon", weapon->def()->model);
+		Cvar_Set("mn_rweapon", "%s", weapon->def()->model);
 	else
 		Cvar_Set("mn_rweapon", "");
 	weapon = chr->inv.getLeftHandContainer();
 	if (weapon)
-		Cvar_Set("mn_lweapon", weapon->def()->model);
+		Cvar_Set("mn_lweapon", "%s", weapon->def()->model);
 	else
 		Cvar_Set("mn_lweapon", "");
 }
@@ -214,7 +214,7 @@ static void CL_UGVCvars (const character_t *chr)
 	Cvar_Set("mn_lweapon", "");
 	Cvar_Set("mn_rweapon", "");
 	Cvar_Set("mn_vmnd", "0");
-	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
+	Cvar_Set("mn_tmnd", "%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]));
 }
 
 void CL_UpdateCharacterValues (const character_t *chr)

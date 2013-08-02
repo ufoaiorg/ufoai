@@ -138,8 +138,8 @@ bool WEB_Auth (const char *username, const char *password)
 	char combined[512];
 	Com_sprintf(combined, sizeof(combined), "%s%s", user, password);
 	Com_SHA1Buffer((const byte*)combined, strlen(combined), digest);
-	Cvar_Set("web_username", username);
-	Cvar_Set("web_password", digest);
+	Cvar_Set("web_username", "%s", username);
+	Cvar_Set("web_password", "%s", digest);
 	if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
 		Cvar_Set("web_password", "");
 		return false;

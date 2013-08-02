@@ -304,17 +304,17 @@ void CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeTyp
 	assert(aircraft);
 
 	numOnAircraft = AIR_GetTeamSize(aircraft);
-	cgi->Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
-	cgi->Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
-	cgi->Cvar_Set("mn_hired_count", va("%i", numOnAircraft));
+	cgi->Cvar_Set("mn_hired", _("%i of %i"), numOnAircraft, aircraft->maxTeamSize);
+	cgi->Cvar_Set("mn_hirable_count", "%i", aircraft->maxTeamSize - numOnAircraft);
+	cgi->Cvar_Set("mn_hired_count", "%i", numOnAircraft);
 
 	if (pilot) {
 		cgi->Cvar_Set("mn_pilotassigned", "1");
-		cgi->Cvar_Set("mn_pilot_name", pilot->chr.name);
-		cgi->Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&pilot->chr));
-		cgi->Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&pilot->chr));
-		cgi->Cvar_Set("mn_pilot_body_skin", va("%i", pilot->chr.bodySkin));
-		cgi->Cvar_Set("mn_pilot_head_skin", va("%i", pilot->chr.headSkin));
+		cgi->Cvar_Set("mn_pilot_name", "%s", pilot->chr.name);
+		cgi->Cvar_Set("mn_pilot_body", "%s", CHRSH_CharGetBody(&pilot->chr));
+		cgi->Cvar_Set("mn_pilot_head", "%s", CHRSH_CharGetHead(&pilot->chr));
+		cgi->Cvar_Set("mn_pilot_body_skin", "%i", pilot->chr.bodySkin);
+		cgi->Cvar_Set("mn_pilot_head_skin", "%i", pilot->chr.headSkin);
 	} else {
 		cgi->Cvar_Set("mn_pilotassigned", "0");
 		cgi->Cvar_Set("mn_pilot_name", "");

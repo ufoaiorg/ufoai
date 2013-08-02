@@ -997,7 +997,7 @@ void B_BuildingStatus (const building_t* building)
 	case B_STATUS_NOT_SET: {
 		const int numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
 		if (numberOfBuildings >= 0)
-			cgi->Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
+			cgi->Cvar_Set("mn_building_status", _("Already %i in base"), numberOfBuildings);
 		break;
 	}
 	case B_STATUS_UNDER_CONSTRUCTION:
@@ -1008,11 +1008,11 @@ void B_BuildingStatus (const building_t* building)
 		break;
 	case B_STATUS_WORKING:
 		if (B_CheckBuildingDependencesStatus(building)) {
-			cgi->Cvar_Set("mn_building_status", _("Working 100%"));
+			cgi->Cvar_Set("mn_building_status", "%s", _("Working 100%"));
 		} else {
-			assert (building->dependsBuilding);
+			assert(building->dependsBuilding);
 			/** @todo shorten text or provide more space in overview popup */
-			cgi->Cvar_Set("mn_building_status", va("%s %s", _("Not operational, depends on"), _(building->dependsBuilding->name)));
+			cgi->Cvar_Set("mn_building_status",_("Not operational, depends on %s"), _(building->dependsBuilding->name));
 		}
 		break;
 	case B_STATUS_DOWN:
@@ -1452,10 +1452,10 @@ void B_DrawBuilding (const building_t* building)
 		Q_strcat(buildingText, sizeof(buildingText), _("Needs:\t%s\n"), _(building->dependsBuilding->name));
 
 	if (building->name)
-		cgi->Cvar_Set("mn_building_name", _(building->name));
+		cgi->Cvar_Set("mn_building_name", "%s", _(building->name));
 
 	if (building->image)
-		cgi->Cvar_Set("mn_building_image", building->image);
+		cgi->Cvar_Set("mn_building_image", "%s", building->image);
 	else
 		cgi->Cvar_Set("mn_building_image", "base/empty");
 
@@ -1685,7 +1685,7 @@ void B_SetCurrentSelectedBase (const base_t *base)
 
 	if (base) {
 		INS_SetCurrentSelectedInstallation(nullptr);
-		cgi->Cvar_Set("mn_base_title", base->name);
+		cgi->Cvar_Set("mn_base_title", "%s", base->name);
 		cgi->Cvar_SetValue("mn_base_status_id", base->baseStatus);
 	} else {
 		cgi->Cvar_Set("mn_base_title", "");

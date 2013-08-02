@@ -46,7 +46,7 @@ static char popupAction3[UI_MAX_SMALLTEXTLEN];
  */
 void UI_Popup (const char *title, const char *text)
 {
-	Cvar_Set("ui_sys_popup_title", title);
+	Cvar_Set("ui_sys_popup_title", "%s", title);
 	UI_RegisterText(TEXT_POPUP_INFO, text);
 	if (!UI_IsWindowOnStack(POPUP_WINDOW_NAME))
 		UI_PushWindow(POPUP_WINDOW_NAME);
@@ -64,7 +64,7 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *e
 	uiNode_t* window;
 	uiNode_t* listNode;
 
-	Cvar_Set("ui_sys_popup_title", title);
+	Cvar_Set("ui_sys_popup_title", "%s", title);
 	UI_RegisterText(TEXT_POPUP_INFO, headline);
 
 	/* make sure, that we are using the linked list */
@@ -151,7 +151,7 @@ void UI_PopupButton (const char *title, const char *text,
 {
 	uiNode_t* window;
 
-	Cvar_Set("ui_sys_popup_title", title);
+	Cvar_Set("ui_sys_popup_title", "%s", title);
 	if (text)
 		UI_RegisterText(TEXT_POPUP_INFO, text);
 	else
@@ -161,8 +161,8 @@ void UI_PopupButton (const char *title, const char *text,
 	if (!window)
 		Com_Error(ERR_FATAL, "Could not get \"" POPUPBUTTON_WINDOW_NAME "\" window");
 
-	Cvar_Set("ui_sys_popup_button_text1", clickText1);
-	Cvar_Set("ui_sys_popup_button_tooltip1", tooltip1);
+	Cvar_Set("ui_sys_popup_button_text1", "%s", clickText1);
+	Cvar_Set("ui_sys_popup_button_tooltip1", "%s", tooltip1);
 	if (!clickAction1 && !clickText1) {
 		UI_SetOneButton(window, va("%s1", POPUPBUTTON_NODE_NAME),
 			nullptr);
@@ -171,8 +171,8 @@ void UI_PopupButton (const char *title, const char *text,
 			clickAction1 ? clickAction1 : popupAction1);
 	}
 
-	Cvar_Set("ui_sys_popup_button_text2", clickText2);
-	Cvar_Set("ui_sys_popup_button_tooltip2", tooltip2);
+	Cvar_Set("ui_sys_popup_button_text2", "%s", clickText2);
+	Cvar_Set("ui_sys_popup_button_tooltip2", "%s", tooltip2);
 	if (!clickAction2 && !clickText2) {
 		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME), nullptr);
 	} else {
@@ -180,8 +180,8 @@ void UI_PopupButton (const char *title, const char *text,
 			clickAction2 ? clickAction2 : popupAction2);
 	}
 
-	Cvar_Set("ui_sys_popup_button_text3", clickText3);
-	Cvar_Set("ui_sys_popup_button_tooltip3", tooltip3);
+	Cvar_Set("ui_sys_popup_button_text3", "%s", clickText3);
+	Cvar_Set("ui_sys_popup_button_tooltip3", "%s", tooltip3);
 	if (!clickAction3 && !clickText3) {
 		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME), nullptr);
 	} else {

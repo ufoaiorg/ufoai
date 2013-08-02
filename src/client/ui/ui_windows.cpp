@@ -368,14 +368,14 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow)
 	UI_PopWindow(true);
 
 	assert(activeWindow != nullptr);
-	Cvar_Set("ui_sys_active", activeWindow);
+	Cvar_Set("ui_sys_active", "%s", activeWindow);
 	/* prevent calls before UI script initialization */
 	if (ui_global.numWindows != 0) {
 		UI_PushWindow(activeWindow);
 	}
 
 	if (mainWindow)
-		Cvar_Set("ui_sys_main", mainWindow);
+		Cvar_Set("ui_sys_main", "%s", mainWindow);
 }
 
 /**
