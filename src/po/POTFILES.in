@@ -37,7 +37,6 @@
 ./client/cgame/campaign/cp_popup.cpp
 ./client/cgame/campaign/cp_produce_callbacks.cpp
 ./client/cgame/campaign/cp_produce.cpp
-./client/cgame/campaign/cp_research_callbacks.cpp
 ./client/cgame/campaign/cp_research.cpp
 ./client/cgame/campaign/cp_save.cpp
 ./client/cgame/campaign/cp_statistics.cpp

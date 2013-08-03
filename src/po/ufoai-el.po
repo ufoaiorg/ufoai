@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-27 20:43+0200\n"
+"POT-Creation-Date: 2013-08-03 23:16+0200\n"
 "PO-Revision-Date: 2010-05-26 14:54+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
@@ -49,12 +49,12 @@ msgstr ""
 msgid "The outskirt of a big city."
 msgstr ""
 
-#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3259
+#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3298
 #, fuzzy
 msgid "Urban Disco"
 msgstr "Πόλης"
 
-#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3309
+#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3348
 #, fuzzy
 msgid "Community Centre"
 msgstr "Κέντρο Επιχειρήσεων"
@@ -166,8 +166,9 @@ msgid "Harvester"
 msgstr "Harvester U"
 
 #: ../base/maps/laboratory.ump:95 ../base/maps/laboratory.ump:104
-#: ../base/ufos/basemanagement.ufo:201 ../base/ufos/maps.ufo:2290
-#: ../base/ufos/maps.ufo:2341 client/cgame/campaign/cp_base_callbacks.cpp:327
+#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2290
+#: ../base/ufos/maps.ufo:2341 ../base/ufos/ui/research.ufo:322
+#: client/cgame/campaign/cp_base_callbacks.cpp:327
 msgid "Laboratory"
 msgstr "Εργαστήριο"
 
@@ -238,8 +239,9 @@ msgstr "Τροπική βλάστηση"
 msgid "Tropical UFO"
 msgstr "Τροπική βλάστηση"
 
-#: ../base/maps/village.ump:728 ../base/maps/village.ump:755
-#: ../base/maps/village.ump:783 ../base/maps/village.ump:811
+#: ../base/maps/village.ump:758 ../base/maps/village.ump:786
+#: ../base/maps/village.ump:813 ../base/maps/village.ump:841
+#: ../base/maps/village.ump:869
 #, fuzzy
 msgid "Village"
 msgstr "Μεγάλο Χωριό"
@@ -566,69 +568,69 @@ msgstr "Θωράκιση Εξωγήινη Μέσης Κατηγορίας"
 msgid "Alien Containment"
 msgstr "Εξωγήινος Θόλος"
 
-#: ../base/ufos/basemanagement.ufo:51
+#: ../base/ufos/basemanagement.ufo:50
 msgid "Entrance"
 msgstr "Είσοδος"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:335
+#: ../base/ufos/basemanagement.ufo:64 ../base/ufos/ui/market.ufo:335
 #: ../base/ufos/ui/production.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:317
 msgid "Storage"
 msgstr "Αποθήκη"
 
-#: ../base/ufos/basemanagement.ufo:79
+#: ../base/ufos/basemanagement.ufo:78
 msgid "Power Plant"
 msgstr "Γεννήτριες Ρεύματος"
 
-#: ../base/ufos/basemanagement.ufo:94
+#: ../base/ufos/basemanagement.ufo:93
 msgid "Command Centre"
 msgstr "Κέντρο Επιχειρήσεων"
 
-#: ../base/ufos/basemanagement.ufo:110
+#: ../base/ufos/basemanagement.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:337
 msgid "Living Quarters"
 msgstr "Διαμερίσματα"
 
-#: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:371
+#: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/market.ufo:371
 #: ../base/ufos/ui/production.ufo:174
 #, fuzzy
 msgid "Dropship Hangar"
 msgstr "Καταστροφή κτηρίου"
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:353
+#: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/market.ufo:353
 #: ../base/ufos/ui/production.ufo:156
 #, fuzzy
 msgid "Interceptor Hangar"
 msgstr "Αναχαιτιστικά:"
 
-#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3926
+#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:3965
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Workshop"
 msgstr "Μηχανουργείο"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/radar.ufo:35
+#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/radar.ufo:35
 msgid "Radar"
 msgstr "Ραντάρ"
 
-#: ../base/ufos/basemanagement.ufo:185
+#: ../base/ufos/basemanagement.ufo:184
 msgid "Advanced Radar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:216 ../base/ufos/ui/bases.ufo:174
+#: ../base/ufos/basemanagement.ufo:215 ../base/ufos/ui/bases.ufo:165
 #: client/cgame/campaign/cp_base_callbacks.cpp:347
 msgid "Hospital"
 msgstr "Νοσοκομείο"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3625
+#: ../base/ufos/basemanagement.ufo:230 ../base/ufos/research.ufo:3625
 msgid "Antimatter Storage"
 msgstr "Αποθήκευση Αντιύλης"
 
-#: ../base/ufos/basemanagement.ufo:246
+#: ../base/ufos/basemanagement.ufo:245
 #, fuzzy
 msgid "Laser Battery"
 msgstr "Συστοιχία πυραύλων"
 
-#: ../base/ufos/basemanagement.ufo:265
+#: ../base/ufos/basemanagement.ufo:264
 msgid "Missile Battery"
 msgstr "Συστοιχία πυραύλων"
 
@@ -3087,13 +3089,13 @@ msgid "Frozen Landscape"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2190 ../base/ufos/maps.ufo:2238
-#: ../base/ufos/maps.ufo:3621
+#: ../base/ufos/maps.ufo:3660
 msgid "East Asian Village"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2548 ../base/ufos/maps.ufo:2589
-#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3776
-#: ../base/ufos/maps.ufo:4848
+#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3815
+#: ../base/ufos/maps.ufo:4889
 msgid "Middle Eastern Suburb"
 msgstr ""
 
@@ -3122,198 +3124,199 @@ msgstr ""
 msgid "House"
 msgstr "Hostname:"
 
-#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3015
-#: ../base/ufos/maps.ufo:3053 ../base/ufos/maps.ufo:5153
+#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3016
+#: ../base/ufos/maps.ufo:3054 ../base/ufos/maps.ufo:3092
+#: ../base/ufos/maps.ufo:5194
 msgid "Suburban City"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3100 ../base/ufos/maps.ufo:3136
-#: ../base/ufos/maps.ufo:5342
+#: ../base/ufos/maps.ufo:3139 ../base/ufos/maps.ufo:3175
+#: ../base/ufos/maps.ufo:5383
 #, fuzzy
 msgid "PHALANX Base Under Attack"
 msgstr "Η βάση βρίσκεται σε επίθεση"
 
-#: ../base/ufos/maps.ufo:3176
+#: ../base/ufos/maps.ufo:3215
 msgid "Cemetery"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3218
+#: ../base/ufos/maps.ufo:3257
 msgid "City High-Rise"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3361
+#: ../base/ufos/maps.ufo:3400
 #, fuzzy
 msgid "Construction Site"
 msgstr "Κατασκευή"
 
-#: ../base/ufos/maps.ufo:3416
+#: ../base/ufos/maps.ufo:3455
 #, fuzzy
 msgid "Tropical Jungle Estate"
 msgstr "Τροπική βλάστηση"
 
-#: ../base/ufos/maps.ufo:3476
+#: ../base/ufos/maps.ufo:3515
 #, fuzzy
 msgid "Mountain Estate"
 msgstr "Βραχώδη Όρη"
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3557
 #, fuzzy
 msgid "Gas Station"
 msgstr "Έθνος"
 
-#: ../base/ufos/maps.ufo:3567
+#: ../base/ufos/maps.ufo:3606
 msgid "Luxury House"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3674
+#: ../base/ufos/maps.ufo:3713
 #, fuzzy
 msgid "Supermarket"
 msgstr "Υπεράνθρωπο"
 
-#: ../base/ufos/maps.ufo:3727
+#: ../base/ufos/maps.ufo:3766
 msgid "Military Convoy Ambush Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3828
+#: ../base/ufos/maps.ufo:3867
 msgid "Military Shelter"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3883
+#: ../base/ufos/maps.ufo:3922
 #, fuzzy
 msgid "Solar Power Plant"
 msgstr "Γεννήτριες Ρεύματος"
 
-#: ../base/ufos/maps.ufo:3977
+#: ../base/ufos/maps.ufo:4016
 msgid "Basketball Stadium"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4029 ../base/ufos/maps.ufo:4802
+#: ../base/ufos/maps.ufo:4068 ../base/ufos/maps.ufo:4843
 msgid "Office Complex"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4084
+#: ../base/ufos/maps.ufo:4123
 msgid "Warehouse"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4134
+#: ../base/ufos/maps.ufo:4173
 msgid "Military Bunker"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4183
+#: ../base/ufos/maps.ufo:4222
 msgid "Urban Warehouse"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4228
+#: ../base/ufos/maps.ufo:4267
 msgid "Rural Village"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4276
+#: ../base/ufos/maps.ufo:4315
 #, fuzzy
 msgid "Corrupter UFO Crash Site"
 msgstr "Περιοχή κρούσης ΟΥΦΟ"
 
-#: ../base/ufos/maps.ufo:4322
+#: ../base/ufos/maps.ufo:4363
 msgid "Hydroelectric Dam"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4370
+#: ../base/ufos/maps.ufo:4411
 #, fuzzy
 msgid "Small Village"
 msgstr "Μικρό Υπόστεγο"
 
-#: ../base/ufos/maps.ufo:4419
+#: ../base/ufos/maps.ufo:4460
 #, fuzzy
 msgid "Estate"
 msgstr "Σημείωση"
 
-#: ../base/ufos/maps.ufo:4464
+#: ../base/ufos/maps.ufo:4505
 msgid "Archaeological Dig"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4514
+#: ../base/ufos/maps.ufo:4555
 msgid "Ferry"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4564
+#: ../base/ufos/maps.ufo:4605
 #, fuzzy
 msgid "Fighter UFO Crash Site"
 msgstr "Περιοχή κρούσης ΟΥΦΟ"
 
-#: ../base/ufos/maps.ufo:4611
+#: ../base/ufos/maps.ufo:4652
 msgid "Secret Depot"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4659
+#: ../base/ufos/maps.ufo:4700
 #, fuzzy
 msgid "Port"
 msgstr "Γεννήτριες Ρεύματος"
 
-#: ../base/ufos/maps.ufo:4705
+#: ../base/ufos/maps.ufo:4746
 msgid "Old Mine"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4758
+#: ../base/ufos/maps.ufo:4799
 msgid "Residential Neighbourhood"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4895
+#: ../base/ufos/maps.ufo:4936
 #, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "Κατασκευή ολοκληρώθηκε"
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4983
 msgid "Luxurious Resort"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:5029
 #, fuzzy
 msgid "Old Town Center"
 msgstr "Command Center"
 
-#: ../base/ufos/maps.ufo:5040
+#: ../base/ufos/maps.ufo:5081
 #, fuzzy
 msgid "Small House"
 msgstr "all"
 
-#: ../base/ufos/maps.ufo:5073
+#: ../base/ufos/maps.ufo:5114
 msgid "Small Suburban Street"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5106
+#: ../base/ufos/maps.ufo:5147
 #, fuzzy
 msgid "Subway Station"
 msgstr "Έθνος"
 
-#: ../base/ufos/maps.ufo:5199
+#: ../base/ufos/maps.ufo:5240
 msgid "Wilderness"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5248
+#: ../base/ufos/maps.ufo:5289
 msgid "City High-Rise (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5276
+#: ../base/ufos/maps.ufo:5317
 msgid "Frozen Industrial Site (Coop)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5294
+#: ../base/ufos/maps.ufo:5335
 msgid "Frozen Industrial Site (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5320
+#: ../base/ufos/maps.ufo:5361
 #, fuzzy
 msgid "Alien Base"
 msgstr "Εξωγήινοι"
 
-#: ../base/ufos/maps.ufo:5355
+#: ../base/ufos/maps.ufo:5396
 msgid "PHALANX Craft Crash Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5384
+#: ../base/ufos/maps.ufo:5425
 msgid "Training Zone: Alpha"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5401
+#: ../base/ufos/maps.ufo:5442
 msgid "Training Zone: Bravo"
 msgstr ""
 
@@ -24760,7 +24763,7 @@ msgstr "Ικανότητες χαρακτήρα"
 msgid "Background"
 msgstr "Φόντο"
 
-#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:116
 #: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:58 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
@@ -24799,12 +24802,12 @@ msgstr "Αυτοψίες και Παρατηρήσεις"
 msgid "The Alien Threat"
 msgstr "Η Εξωγήινη Απειλή"
 
-#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:146
+#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:137
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Research"
 msgstr "Έρευνα"
 
-#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:153
+#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:144
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Production"
 msgstr "Παραγωγή"
@@ -26154,8 +26157,8 @@ msgstr "Προσθήκη/Αφαίρεση του στρατιώτη"
 msgid "Description"
 msgstr "Περιγραφή:"
 
-#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:226
-#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:650
+#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:217
+#: ../base/ufos/ui/bases.ufo:224 ../base/ufos/ui/hire.ufo:650
 msgid "Pilots"
 msgstr ""
 
@@ -26164,8 +26167,8 @@ msgstr ""
 msgid "Tanks"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:210
-#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:645
+#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:201
+#: ../base/ufos/ui/bases.ufo:208 ../base/ufos/ui/hire.ufo:645
 msgid "Soldiers"
 msgstr "Στρατιώτες"
 
@@ -26376,7 +26379,7 @@ msgstr "Ανάθεση στρατιωτών"
 msgid "No soldiers assigned"
 msgstr "No shield assigned"
 
-#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:340
+#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:321
 #, fuzzy
 msgid "Kill this alien"
 msgstr "Σκοτώστε έναν εξωγήινο"
@@ -26386,30 +26389,30 @@ msgstr "Σκοτώστε έναν εξωγήινο"
 msgid "Start autopsy"
 msgstr "Έναρξη"
 
-#: ../base/ufos/ui/aliencont.ufo:147
+#: ../base/ufos/ui/aliencont.ufo:134
 #, fuzzy
 msgid "Live Alien Containment Info"
 msgstr "Alien Containment"
 
-#: ../base/ufos/ui/aliencont.ufo:154
+#: ../base/ufos/ui/aliencont.ufo:141
 msgid "Base capacity:"
 msgstr "Χωρητικότητα Βάσης:"
 
-#: ../base/ufos/ui/aliencont.ufo:182
+#: ../base/ufos/ui/aliencont.ufo:167
 msgid "Kill all aliens in this base"
 msgstr "Σκοτώστε όλους τους εξωγήινους σε αυτήν την βάση"
 
-#: ../base/ufos/ui/aliencont.ufo:209
+#: ../base/ufos/ui/aliencont.ufo:192
 #, fuzzy
 msgid "Alive:"
 msgstr "Ζωντανός"
 
-#: ../base/ufos/ui/aliencont.ufo:222
+#: ../base/ufos/ui/aliencont.ufo:205
 #, fuzzy
 msgid "Dead:"
 msgstr "Έτοιμο"
 
-#: ../base/ufos/ui/aliencont.ufo:345
+#: ../base/ufos/ui/aliencont.ufo:326
 #, fuzzy
 msgid "Autopsy"
 msgstr "Εξαιρετικό"
@@ -26420,7 +26423,7 @@ msgstr ""
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 #, fuzzy
 msgid "Information"
 msgstr "Πληροφορίες Βάσης"
@@ -26520,42 +26523,43 @@ msgstr "Έθνος"
 #: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:980
 #: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:315
 #: ../base/ufos/ui/physdat.ufo:409 ../base/ufos/ui/popup_baseattack.ufo:302
+#: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130
 #: ../base/ufos/ui/transfer.ufo:692
 msgid "Close"
 msgstr "Κλείσε"
 
-#: ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:81
 msgid "Back to geoscape"
 msgstr "Επιστροφή στο geoscape"
 
-#: ../base/ufos/ui/bases.ufo:118
+#: ../base/ufos/ui/bases.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Buildings"
 msgstr "Κτήρια"
 
-#: ../base/ufos/ui/bases.ufo:119
+#: ../base/ufos/ui/bases.ufo:110
 msgid "Build base facilities"
 msgstr "Χτίσιμο δραστηριοτήτων βάσης"
 
-#: ../base/ufos/ui/bases.ufo:126
+#: ../base/ufos/ui/bases.ufo:117
 #: client/cgame/campaign/cp_base_callbacks.cpp:307
 #, fuzzy
 msgid "Aircraft management and crew equipment"
 msgstr "Διαθέσιμος Εξοπλισμός:"
 
-#: ../base/ufos/ui/bases.ufo:132
+#: ../base/ufos/ui/bases.ufo:123
 #, fuzzy
 msgid "Buy/Sell"
 msgstr "Πώληση"
 
-#: ../base/ufos/ui/bases.ufo:133
+#: ../base/ufos/ui/bases.ufo:124
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
 #, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Αγορά/Πώληση"
 
-#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:306
+#: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/popup_installations.ufo:306
 #: ../base/ufos/ui/popup_installations.ufo:456
 #: ../base/ufos/ui/popup_installations.ufo:650
 #: ../base/ufos/ui/transfer.ufo:472
@@ -26565,65 +26569,66 @@ msgstr "Αγορά/Πώληση"
 msgid "Transfer"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/ui/bases.ufo:140
+#: ../base/ufos/ui/bases.ufo:131
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:147
+#: ../base/ufos/ui/bases.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Research new technology"
 msgstr "Έρευνα νέας τεχνολογίας"
 
-#: ../base/ufos/ui/bases.ufo:154
+#: ../base/ufos/ui/bases.ufo:145
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
 #, fuzzy
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Παράγετε αεροσκάφος"
 
-#: ../base/ufos/ui/bases.ufo:160 ../base/ufos/ui/stats.ufo:96
+#: ../base/ufos/ui/bases.ufo:151 ../base/ufos/ui/stats.ufo:96
 #: ../base/ufos/ui/transfer.ufo:135 ../base/ufos/ui/transfer.ufo:149
 msgid "Employees"
 msgstr "Υπάλληλοι"
 
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:152
 #: client/cgame/campaign/cp_base_callbacks.cpp:335
 #, fuzzy
 msgid "Hire or dismiss employees"
 msgstr "Μίσθωση Ατόμων"
 
-#: ../base/ufos/ui/bases.ufo:167
+#: ../base/ufos/ui/bases.ufo:158
 #: client/cgame/campaign/cp_base_callbacks.cpp:342
 msgid "Containment"
 msgstr "Θόλος Εξωγήινων"
 
-#: ../base/ufos/ui/bases.ufo:168
+#: ../base/ufos/ui/bases.ufo:159
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
 #, fuzzy
 msgid "Manage captured aliens"
 msgstr "Αιχμαλωτίσατε νέους εξωγήινους."
 
-#: ../base/ufos/ui/bases.ufo:175
+#: ../base/ufos/ui/bases.ufo:166
 #: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:181
+#: ../base/ufos/ui/bases.ufo:172
 msgid "Base Summary"
 msgstr "Περίληψη Βάσης"
 
-#: ../base/ufos/ui/bases.ufo:182
+#: ../base/ufos/ui/bases.ufo:173
 msgid ""
 "Information about this base (available storage space, production, research, "
 "etc.)"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
-#: ../base/ufos/ui/hire.ufo:660
+#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/bases.ufo:240
+#: ../base/ufos/ui/hire.ufo:660 ../base/ufos/ui/research.ufo:196
+#: ../base/ufos/ui/research.ufo:304
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "Επιστήμονες"
 
-#: ../base/ufos/ui/bases.ufo:258 ../base/ufos/ui/bases.ufo:265
+#: ../base/ufos/ui/bases.ufo:249 ../base/ufos/ui/bases.ufo:256
 #: ../base/ufos/ui/hire.ufo:655
 msgid "Workers"
 msgstr "Εργάτες"
@@ -27029,6 +27034,7 @@ msgid "SAM defence"
 msgstr "Επιλεγμένη Άμυνα:"
 
 #: ../base/ufos/ui/geoscape.ufo:1082 ../base/ufos/ui/geoscape.ufo:1224
+#: ../base/ufos/ui/popup_capacity.ufo:26
 msgid "Base:"
 msgstr "Βάση:"
 
@@ -27630,19 +27636,22 @@ msgstr "Ενεργοποίηση αυτόματης πώλησης."
 msgid "Item autosell disabled"
 msgstr "Απενεργοποίηση αυτόματης πώλησης."
 
-#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/production.ufo:116
+#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/popup_capacity.ufo:37
+#: ../base/ufos/ui/production.ufo:116 ../base/ufos/ui/research.ufo:282
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Capacity"
 msgstr "Χωρητικότητα"
 
-#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_installations.ufo:287
+#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_capacity.ufo:44
+#: ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/production.ufo:130
+#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:296
 msgid "all"
 msgstr "all"
 
@@ -28983,6 +28992,21 @@ msgstr "Συναθροίστε ή φορτώστε μια ομάδα"
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
+#: ../base/ufos/ui/popup_capacity.ufo:10
+#, fuzzy
+msgid "Capacity Exceeded"
+msgstr "Χωρητικότητα"
+
+#: ../base/ufos/ui/popup_capacity.ufo:14
+msgid ""
+"There is no more room for goods/personel at this base. Free up some space."
+msgstr ""
+
+#: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:127
+#, fuzzy
+msgid "Go to base"
+msgstr "Επιστροφή στη βάση"
+
 #: ../base/ufos/ui/popup_installations.ufo:60
 #, fuzzy
 msgid "New installation"
@@ -29114,37 +29138,52 @@ msgstr "Μείωση προτεραιότητας"
 msgid "Requirements"
 msgstr "Όχι αιτήματα"
 
-#: ../base/ufos/ui/research.ufo:17
+#: ../base/ufos/ui/research.ufo:20
 #, fuzzy
 msgid "Open UFOPaedia"
 msgstr "UFOπαίδεια"
 
-#: ../base/ufos/ui/research.ufo:43
+#: ../base/ufos/ui/research.ufo:59
 #, fuzzy
-msgid "Add/Remove scientist"
-msgstr "Αφαίρεση επιστημόνων"
+msgid "Stop researching this project"
+msgstr "Δεν υπάρχει πρόταση έρευνας για αυτό το έργο."
 
-#: ../base/ufos/ui/research.ufo:209
+#: ../base/ufos/ui/research.ufo:69
 #, fuzzy
-msgid "Switch to another base"
-msgstr "Αλλαγή στην επόμενη βάση"
+msgid "Assign less scientists on this project"
+msgstr "Available scientists in this base: %i"
 
-#: ../base/ufos/ui/research.ufo:346
+#: ../base/ufos/ui/research.ufo:87
 #, fuzzy
-msgid "Base Research Info"
-msgstr "Πληροφορίες Βάσης"
+msgid "Assign more scientists on this project"
+msgstr "Available scientists in this base: %i"
 
-#: ../base/ufos/ui/research.ufo:499
-msgid "Start research"
-msgstr "Έναρξη έρευνας"
+#: ../base/ufos/ui/research.ufo:97
+#, fuzzy
+msgid "Assign all free scientists on this project"
+msgstr "Available scientists in this base: %i"
 
-#: ../base/ufos/ui/research.ufo:509
-msgid "Stop research"
-msgstr "Τερματισμός έρευνας"
+#: ../base/ufos/ui/research.ufo:144
+#, fuzzy
+msgid "N/A"
+msgstr "NA"
 
-#: ../base/ufos/ui/research.ufo:519
-msgid "Show research proposal"
-msgstr "Εμφάνιση πρότασης έρευνας"
+#: ../base/ufos/ui/research.ufo:145
+msgid "An artifact or prerequisite is missing for this topic"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:153
+msgid "Expand/Collapse"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:190
+msgid "Topics"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:289 client/cgame/campaign/cp_aircraft.cpp:429
+#, fuzzy
+msgid "idle"
+msgstr "Αδρανές"
 
 #: ../base/ufos/ui/singleplayer.ufo:71
 #, fuzzy
@@ -30465,12 +30504,12 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1182
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1183
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1175
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1176
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
@@ -30712,11 +30751,6 @@ msgstr "Στη βάση"
 msgid "refuelling"
 msgstr "Ανεφοδιασμός"
 
-#: client/cgame/campaign/cp_aircraft.cpp:429
-#, fuzzy
-msgid "idle"
-msgstr "Αδρανές"
-
 #: client/cgame/campaign/cp_aircraft.cpp:431
 #, fuzzy
 msgid "in transit"
@@ -30792,11 +30826,11 @@ msgstr "Η ομάδα χρησιμοποιήτε ήδη"
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1346
-#: client/cgame/campaign/cp_base.cpp:1396
-#: client/cgame/campaign/cp_base.cpp:2305
-#: client/cgame/campaign/cp_base.cpp:2310
-#: client/cgame/campaign/cp_base.cpp:2961
+#: client/cgame/campaign/cp_base.cpp:1358
+#: client/cgame/campaign/cp_base.cpp:1408
+#: client/cgame/campaign/cp_base.cpp:2317
+#: client/cgame/campaign/cp_base.cpp:2322
+#: client/cgame/campaign/cp_base.cpp:2974
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
@@ -30833,13 +30867,6 @@ msgstr "Η ομάδα χρησιμοποιήτε ήδη"
 #: client/cgame/campaign/cp_produce.cpp:498
 #: client/cgame/campaign/cp_produce.cpp:507
 #: client/cgame/campaign/cp_produce.cpp:518
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
 #: client/cgame/campaign/cp_ufo.cpp:407 client/cgame/campaign/cp_ufo.cpp:860
 #: client/cgame/campaign/cp_ufo.cpp:864 client/cgame/campaign/cp_ufo.cpp:868
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:125
@@ -31040,65 +31067,65 @@ msgstr ""
 msgid "Collected alien bodies"
 msgstr "Μαζέυτηκαν %i πτώματα εξωγήινων"
 
-#: client/cgame/campaign/cp_base.cpp:999
+#: client/cgame/campaign/cp_base.cpp:1011
 msgid "Not set"
 msgstr "Όχι ρυθμισμένο"
 
-#: client/cgame/campaign/cp_base.cpp:1005
+#: client/cgame/campaign/cp_base.cpp:1017
 #, c-format
 msgid "Already %i in base"
 msgstr "Ήδη  %i στη βάση"
 
-#: client/cgame/campaign/cp_base.cpp:1012
+#: client/cgame/campaign/cp_base.cpp:1024
 msgid "Construction finished"
 msgstr "Κατασκευή ολοκληρώθηκε"
 
-#: client/cgame/campaign/cp_base.cpp:1016
+#: client/cgame/campaign/cp_base.cpp:1028
 msgid "Working 100%"
 msgstr "Εργασία 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1020
+#: client/cgame/campaign/cp_base.cpp:1032
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/cgame/campaign/cp_base.cpp:1024
+#: client/cgame/campaign/cp_base.cpp:1036
 msgid "Down"
 msgstr "Κάτω"
 
-#: client/cgame/campaign/cp_base.cpp:1346
+#: client/cgame/campaign/cp_base.cpp:1358
 msgid "Not enough credits to build this\n"
 msgstr "Όχι αρκετά χρήματα για να χτίσετε αυτό\n"
 
-#: client/cgame/campaign/cp_base.cpp:1396
+#: client/cgame/campaign/cp_base.cpp:1408
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/cgame/campaign/cp_base.cpp:1450
+#: client/cgame/campaign/cp_base.cpp:1462
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Κόστη:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1453
+#: client/cgame/campaign/cp_base.cpp:1465
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i ημέρα για χτίσιμο\n"
 msgstr[1] "%i ημέρες για χτίσιμο\n"
 
-#: client/cgame/campaign/cp_base.cpp:1456
+#: client/cgame/campaign/cp_base.cpp:1468
 #: client/cgame/campaign/cp_ufopedia.cpp:216
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Τρέχοντα έξοδα:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1459
+#: client/cgame/campaign/cp_base.cpp:1471
 #: client/cgame/campaign/cp_ufopedia.cpp:213
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Ανάγκες:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -31106,8 +31133,8 @@ msgstr ""
 "Όχι σκάφος σε αυτήν την βάση - Πρέπει πρώτα να αγοράσεις ή να μεταφέρεις ενα "
 "σκάφος\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2074
 #: client/cgame/campaign/cp_market_callbacks.cpp:173
 #: client/cgame/campaign/cp_market_callbacks.cpp:178
 #: client/cgame/campaign/cp_market_callbacks.cpp:183
@@ -31116,49 +31143,49 @@ msgstr ""
 msgid "Note"
 msgstr "Σημείωση"
 
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2074
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Όχι σκάφος στη βάση - Πρέπει πρώτα να αγοράσετε ένα σκάφος\n"
 
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 #, fuzzy
 msgid "Antimatter (current/max):"
 msgstr "Αποθήκευση Αντιύλης"
 
-#: client/cgame/campaign/cp_base.cpp:2241
+#: client/cgame/campaign/cp_base.cpp:2253
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Η κατασκευή του %s ολοκληρώθηκε στη βάση %s."
 
-#: client/cgame/campaign/cp_base.cpp:2242
+#: client/cgame/campaign/cp_base.cpp:2254
 msgid "Building finished"
 msgstr "Κτήριο ολοκληρώθηκε"
 
-#: client/cgame/campaign/cp_base.cpp:2303
+#: client/cgame/campaign/cp_base.cpp:2315
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "By selling %s you gathered %i credits."
 
-#: client/cgame/campaign/cp_base.cpp:2304
+#: client/cgame/campaign/cp_base.cpp:2316
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i collected item"
 msgstr[1] "%i collected items"
 
-#: client/cgame/campaign/cp_base.cpp:2308
+#: client/cgame/campaign/cp_base.cpp:2320
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Not enough storage space in base %s. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2309
+#: client/cgame/campaign/cp_base.cpp:2321
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i item was sold."
 msgstr[1] "%i items were sold."
 
-#: client/cgame/campaign/cp_base.cpp:2959
+#: client/cgame/campaign/cp_base.cpp:2972
 #, fuzzy, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -32816,131 +32843,6 @@ msgstr "Περιγραφή μη διαθέσιμη."
 msgid "No research proposal available."
 msgstr "Πρόταση έρευνας μη διαθέσιμη."
 
-#: client/cgame/campaign/cp_research_callbacks.cpp:92
-#, c-format
-msgid "Laboratory space (used/all): %i/%i"
-msgstr "Χώρος εργαστηρίου (διαθέσιμος/όλος): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:101
-#, c-format
-msgid "Scientists (available/all): %i/%i"
-msgstr "Επιστήμονες (διαθέσιμοι/όλοι): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:110
-msgid "Not researched in any base."
-msgstr "Δεν έχει ερευνηθεί σε καμία βάση."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:116
-#, fuzzy, c-format
-msgid "Researched in %s."
-msgstr "Ερευνήθηκε σε %s"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:118
-msgid "Researched in this base."
-msgstr "Ερευνήθηκε σε αυτή την βάση."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:130
-#, c-format
-msgid "Progress: %.1f%%"
-msgstr "Πρόοδος: %.1f%%"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:133
-#, fuzzy
-msgid "Progress: not available."
-msgstr "Πρόοδος: Μή διαθέσιμη."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:138
-#, fuzzy
-msgid "Status: under research"
-msgstr "Κατάσταση: Υπό έρευνα"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:139
-#, fuzzy
-msgid ""
-"Status: this research topic is currently being processed in laboratories"
-msgstr "Κατάσταση: Έρευνα πάγωσε"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:142
-#, fuzzy
-msgid "Status: research paused"
-msgstr "Κατάσταση: Έρευνα πάγωσε"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:143
-#, fuzzy
-msgid "Status: research topic currently paused"
-msgstr "Κατάσταση: Έρευνα πάγωσε"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:146
-#: client/cgame/campaign/cp_research_callbacks.cpp:147
-#, fuzzy
-msgid "Status: research finished"
-msgstr "Κατάσταση: Έρευνα ολοκληρώθηκε"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:152
-#, fuzzy
-msgid "Status: not possible to research"
-msgstr "Κατάσταση: Υπό έρευνα"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:153
-#, fuzzy
-msgid ""
-"Status: the materials or background knowledge needed to research this topic "
-"are not available yet"
-msgstr ""
-"Κατάσταση: Δέν έχουμε όλα τα υλικά ακόμα ή πρέπει να γίνει έρευνα σε "
-"προηγούμενη γνώση."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:155
-#: client/cgame/campaign/cp_research_callbacks.cpp:156
-#, fuzzy
-msgid "Status: unknown technology"
-msgstr "Κατάσταση:Άγνωστη τεχνολογία"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:271
-#, fuzzy
-msgid "Unassigned scientists"
-msgstr "Μισθώστε Επιστήμονες"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:307
-msgid "Missing an artifact"
-msgstr ""
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:317
-#, fuzzy
-msgid "Unresearchable collected items"
-msgstr "%i collected item"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-msgid "This item is currently under research in another base."
-msgstr "Αυτό το αντικέιμενο βρισκεται υπό έρευνα σε άλλη βάση."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-msgid "The research on this item is complete."
-msgstr "Η έρευνα σε αυτό το αντικέιμενο ολοκληρώθηκε."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-msgid ""
-"The research on this item is not yet possible.\n"
-"You need to research the technologies it's based on first."
-msgstr ""
-"Η έρευνα σε αυτό το αντικέιμενο δεν είανια κομά δυνατή.\n"
-"Πρέπει να ερευνήσετε τις τεχνολογίες που βασίζεται πρώτα."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-msgid "No research proposal available for this project."
-msgstr "Δεν υπάρχει πρόταση έρευνας για αυτό το έργο."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-#, fuzzy
-msgid "Nothing to research."
-msgstr "Τίποτα για έρευνα"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
-#, fuzzy
-msgid "Build a laboratory first."
-msgstr "Χτίστε ένα εργαστήριο πρώτα"
-
 #: client/cgame/campaign/cp_save.cpp:182
 msgid "Error decompressing data"
 msgstr "Λάθος στην αποσυμπίεση των δεδομένων"
@@ -34282,22 +34184,22 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.cpp:1140
+#: game/g_combat.cpp:1141
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Αδυναμία εκτέλεσης - αντικέιμενο όχι παρών!\n"
 
-#: game/g_combat.cpp:1167
+#: game/g_combat.cpp:1168
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.cpp:1190
+#: game/g_combat.cpp:1191
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.cpp:1236
+#: game/g_combat.cpp:1237
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
@@ -34405,6 +34307,116 @@ msgstr "Εξωγήινος"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Πάρτε μία εκτύπωση οθόνης"
+
+#, fuzzy
+#~ msgid "Add/Remove scientist"
+#~ msgstr "Αφαίρεση επιστημόνων"
+
+#, fuzzy
+#~ msgid "Switch to another base"
+#~ msgstr "Αλλαγή στην επόμενη βάση"
+
+#, fuzzy
+#~ msgid "Base Research Info"
+#~ msgstr "Πληροφορίες Βάσης"
+
+#~ msgid "Start research"
+#~ msgstr "Έναρξη έρευνας"
+
+#~ msgid "Stop research"
+#~ msgstr "Τερματισμός έρευνας"
+
+#~ msgid "Show research proposal"
+#~ msgstr "Εμφάνιση πρότασης έρευνας"
+
+#~ msgid "Laboratory space (used/all): %i/%i"
+#~ msgstr "Χώρος εργαστηρίου (διαθέσιμος/όλος): %i/%i"
+
+#~ msgid "Scientists (available/all): %i/%i"
+#~ msgstr "Επιστήμονες (διαθέσιμοι/όλοι): %i/%i"
+
+#~ msgid "Not researched in any base."
+#~ msgstr "Δεν έχει ερευνηθεί σε καμία βάση."
+
+#, fuzzy
+#~ msgid "Researched in %s."
+#~ msgstr "Ερευνήθηκε σε %s"
+
+#~ msgid "Researched in this base."
+#~ msgstr "Ερευνήθηκε σε αυτή την βάση."
+
+#~ msgid "Progress: %.1f%%"
+#~ msgstr "Πρόοδος: %.1f%%"
+
+#, fuzzy
+#~ msgid "Progress: not available."
+#~ msgstr "Πρόοδος: Μή διαθέσιμη."
+
+#, fuzzy
+#~ msgid "Status: under research"
+#~ msgstr "Κατάσταση: Υπό έρευνα"
+
+#, fuzzy
+#~ msgid ""
+#~ "Status: this research topic is currently being processed in laboratories"
+#~ msgstr "Κατάσταση: Έρευνα πάγωσε"
+
+#, fuzzy
+#~ msgid "Status: research paused"
+#~ msgstr "Κατάσταση: Έρευνα πάγωσε"
+
+#, fuzzy
+#~ msgid "Status: research topic currently paused"
+#~ msgstr "Κατάσταση: Έρευνα πάγωσε"
+
+#, fuzzy
+#~ msgid "Status: research finished"
+#~ msgstr "Κατάσταση: Έρευνα ολοκληρώθηκε"
+
+#, fuzzy
+#~ msgid "Status: not possible to research"
+#~ msgstr "Κατάσταση: Υπό έρευνα"
+
+#, fuzzy
+#~ msgid ""
+#~ "Status: the materials or background knowledge needed to research this "
+#~ "topic are not available yet"
+#~ msgstr ""
+#~ "Κατάσταση: Δέν έχουμε όλα τα υλικά ακόμα ή πρέπει να γίνει έρευνα σε "
+#~ "προηγούμενη γνώση."
+
+#, fuzzy
+#~ msgid "Status: unknown technology"
+#~ msgstr "Κατάσταση:Άγνωστη τεχνολογία"
+
+#, fuzzy
+#~ msgid "Unassigned scientists"
+#~ msgstr "Μισθώστε Επιστήμονες"
+
+#, fuzzy
+#~ msgid "Unresearchable collected items"
+#~ msgstr "%i collected item"
+
+#~ msgid "This item is currently under research in another base."
+#~ msgstr "Αυτό το αντικέιμενο βρισκεται υπό έρευνα σε άλλη βάση."
+
+#~ msgid "The research on this item is complete."
+#~ msgstr "Η έρευνα σε αυτό το αντικέιμενο ολοκληρώθηκε."
+
+#~ msgid ""
+#~ "The research on this item is not yet possible.\n"
+#~ "You need to research the technologies it's based on first."
+#~ msgstr ""
+#~ "Η έρευνα σε αυτό το αντικέιμενο δεν είανια κομά δυνατή.\n"
+#~ "Πρέπει να ερευνήσετε τις τεχνολογίες που βασίζεται πρώτα."
+
+#, fuzzy
+#~ msgid "Nothing to research."
+#~ msgstr "Τίποτα για έρευνα"
+
+#, fuzzy
+#~ msgid "Build a laboratory first."
+#~ msgstr "Χτίστε ένα εργαστήριο πρώτα"
 
 #, fuzzy
 #~ msgid "Community_centre"
@@ -39948,9 +39960,6 @@ msgstr "Πάρτε μία εκτύπωση οθόνης"
 #~ msgid "Being transfered"
 #~ msgstr "Μεταφέρεται"
 
-#~ msgid "Back to base"
-#~ msgstr "Επιστροφή στη βάση"
-
 #~ msgid "You've got a new aircraft (a %s) in base %s"
 #~ msgstr "Έχετε ένα νέο σκάφος (a %s) στη βάση %s"
 
@@ -40209,9 +40218,6 @@ msgstr "Πάρτε μία εκτύπωση οθόνης"
 
 #~ msgid "monomolecularblade"
 #~ msgstr "Μονομοριακή Λεπίδα"
-
-#~ msgid "NA"
-#~ msgstr "NA"
 
 #~ msgid "Camera Scroll:"
 #~ msgstr "Κύλιση κάμερας:"
@@ -41066,6 +41072,3 @@ msgstr "Πάρτε μία εκτύπωση οθόνης"
 
 #~ msgid "Scroll down (right click to scroll multiple lines)"
 #~ msgstr "Scroll down (right click to scroll multiple lines)"
-
-#~ msgid "Available scientists in this base: %i"
-#~ msgstr "Available scientists in this base: %i"

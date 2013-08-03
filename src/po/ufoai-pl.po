@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-27 20:43+0200\n"
+"POT-Creation-Date: 2013-08-03 23:16+0200\n"
 "PO-Revision-Date: 2013-05-07 21:31+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
@@ -48,11 +48,11 @@ msgstr "Niewielki cmentarz"
 msgid "The outskirt of a big city."
 msgstr "Peryferie wielkiego miasta"
 
-#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3259
+#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3298
 msgid "Urban Disco"
 msgstr "Miejska dyskoteka"
 
-#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3309
+#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3348
 msgid "Community Centre"
 msgstr "Ośrodek kultury"
 
@@ -151,8 +151,9 @@ msgid "Harvester"
 msgstr "Żniwiarz"
 
 #: ../base/maps/laboratory.ump:95 ../base/maps/laboratory.ump:104
-#: ../base/ufos/basemanagement.ufo:201 ../base/ufos/maps.ufo:2290
-#: ../base/ufos/maps.ufo:2341 client/cgame/campaign/cp_base_callbacks.cpp:327
+#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2290
+#: ../base/ufos/maps.ufo:2341 ../base/ufos/ui/research.ufo:322
+#: client/cgame/campaign/cp_base_callbacks.cpp:327
 msgid "Laboratory"
 msgstr "Laboratorium"
 
@@ -214,8 +215,9 @@ msgstr "Tropikalny narkotyk"
 msgid "Tropical UFO"
 msgstr "UFO w tropikach"
 
-#: ../base/maps/village.ump:728 ../base/maps/village.ump:755
-#: ../base/maps/village.ump:783 ../base/maps/village.ump:811
+#: ../base/maps/village.ump:758 ../base/maps/village.ump:786
+#: ../base/maps/village.ump:813 ../base/maps/village.ump:841
+#: ../base/maps/village.ump:869
 msgid "Village"
 msgstr "Wioska"
 
@@ -523,66 +525,66 @@ msgstr "Średni pancerz obcych"
 msgid "Alien Containment"
 msgstr "Kwarantanna obcych"
 
-#: ../base/ufos/basemanagement.ufo:51
+#: ../base/ufos/basemanagement.ufo:50
 msgid "Entrance"
 msgstr "Wejście"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:335
+#: ../base/ufos/basemanagement.ufo:64 ../base/ufos/ui/market.ufo:335
 #: ../base/ufos/ui/production.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:317
 msgid "Storage"
 msgstr "Magazyn"
 
-#: ../base/ufos/basemanagement.ufo:79
+#: ../base/ufos/basemanagement.ufo:78
 msgid "Power Plant"
 msgstr "Elektrownia"
 
-#: ../base/ufos/basemanagement.ufo:94
+#: ../base/ufos/basemanagement.ufo:93
 msgid "Command Centre"
 msgstr "Centrum Dowodzenia"
 
-#: ../base/ufos/basemanagement.ufo:110
+#: ../base/ufos/basemanagement.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:337
 msgid "Living Quarters"
 msgstr "Kwatery"
 
-#: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:371
+#: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/market.ufo:371
 #: ../base/ufos/ui/production.ufo:174
 msgid "Dropship Hangar"
 msgstr "Hangar dla Desantowca"
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:353
+#: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/market.ufo:353
 #: ../base/ufos/ui/production.ufo:156
 msgid "Interceptor Hangar"
 msgstr "Hangar dla Myśliwca"
 
-#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3926
+#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:3965
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Workshop"
 msgstr "Warsztat"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/radar.ufo:35
+#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/radar.ufo:35
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:185
+#: ../base/ufos/basemanagement.ufo:184
 msgid "Advanced Radar"
 msgstr "Zaawansowany Radar"
 
-#: ../base/ufos/basemanagement.ufo:216 ../base/ufos/ui/bases.ufo:174
+#: ../base/ufos/basemanagement.ufo:215 ../base/ufos/ui/bases.ufo:165
 #: client/cgame/campaign/cp_base_callbacks.cpp:347
 msgid "Hospital"
 msgstr "Szpital"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3625
+#: ../base/ufos/basemanagement.ufo:230 ../base/ufos/research.ufo:3625
 msgid "Antimatter Storage"
 msgstr "Skład Antymaterii"
 
-#: ../base/ufos/basemanagement.ufo:246
+#: ../base/ufos/basemanagement.ufo:245
 msgid "Laser Battery"
 msgstr "Bateria Laserowa"
 
-#: ../base/ufos/basemanagement.ufo:265
+#: ../base/ufos/basemanagement.ufo:264
 msgid "Missile Battery"
 msgstr "Bateria Rakiet"
 
@@ -2824,13 +2826,13 @@ msgid "Frozen Landscape"
 msgstr "Oblodzony teren"
 
 #: ../base/ufos/maps.ufo:2190 ../base/ufos/maps.ufo:2238
-#: ../base/ufos/maps.ufo:3621
+#: ../base/ufos/maps.ufo:3660
 msgid "East Asian Village"
 msgstr "Wschodnioazjatycka wieś"
 
 #: ../base/ufos/maps.ufo:2548 ../base/ufos/maps.ufo:2589
-#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3776
-#: ../base/ufos/maps.ufo:4848
+#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3815
+#: ../base/ufos/maps.ufo:4889
 msgid "Middle Eastern Suburb"
 msgstr "Bliskowschodnie przedmieście"
 
@@ -2855,182 +2857,183 @@ msgstr "Bungalow"
 msgid "House"
 msgstr "Dom"
 
-#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3015
-#: ../base/ufos/maps.ufo:3053 ../base/ufos/maps.ufo:5153
+#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3016
+#: ../base/ufos/maps.ufo:3054 ../base/ufos/maps.ufo:3092
+#: ../base/ufos/maps.ufo:5194
 msgid "Suburban City"
 msgstr "Dzielnica podmiejska"
 
-#: ../base/ufos/maps.ufo:3100 ../base/ufos/maps.ufo:3136
-#: ../base/ufos/maps.ufo:5342
+#: ../base/ufos/maps.ufo:3139 ../base/ufos/maps.ufo:3175
+#: ../base/ufos/maps.ufo:5383
 msgid "PHALANX Base Under Attack"
 msgstr "Baza PHALANX jest atakowana"
 
-#: ../base/ufos/maps.ufo:3176
+#: ../base/ufos/maps.ufo:3215
 msgid "Cemetery"
 msgstr "Cmentarz"
 
-#: ../base/ufos/maps.ufo:3218
+#: ../base/ufos/maps.ufo:3257
 msgid "City High-Rise"
 msgstr "Wysoko rozwinięte miasto"
 
-#: ../base/ufos/maps.ufo:3361
+#: ../base/ufos/maps.ufo:3400
 msgid "Construction Site"
 msgstr "Plac budowy"
 
-#: ../base/ufos/maps.ufo:3416
+#: ../base/ufos/maps.ufo:3455
 msgid "Tropical Jungle Estate"
 msgstr "Posiadłość w tropikalnej dżungli"
 
-#: ../base/ufos/maps.ufo:3476
+#: ../base/ufos/maps.ufo:3515
 msgid "Mountain Estate"
 msgstr "Górska posiadłość"
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3557
 msgid "Gas Station"
 msgstr "Stacja paliwowa"
 
-#: ../base/ufos/maps.ufo:3567
+#: ../base/ufos/maps.ufo:3606
 msgid "Luxury House"
 msgstr "Luksusowy dom"
 
-#: ../base/ufos/maps.ufo:3674
+#: ../base/ufos/maps.ufo:3713
 msgid "Supermarket"
 msgstr "Supermarket"
 
-#: ../base/ufos/maps.ufo:3727
+#: ../base/ufos/maps.ufo:3766
 msgid "Military Convoy Ambush Site"
 msgstr "Zasadzka na konwój wojskowy"
 
-#: ../base/ufos/maps.ufo:3828
+#: ../base/ufos/maps.ufo:3867
 msgid "Military Shelter"
 msgstr "Schron wojskowy"
 
-#: ../base/ufos/maps.ufo:3883
+#: ../base/ufos/maps.ufo:3922
 msgid "Solar Power Plant"
 msgstr "Elektrownia słoneczna"
 
-#: ../base/ufos/maps.ufo:3977
+#: ../base/ufos/maps.ufo:4016
 msgid "Basketball Stadium"
 msgstr "Stadion koszykówki"
 
-#: ../base/ufos/maps.ufo:4029 ../base/ufos/maps.ufo:4802
+#: ../base/ufos/maps.ufo:4068 ../base/ufos/maps.ufo:4843
 msgid "Office Complex"
 msgstr "Kompleks biurowy"
 
-#: ../base/ufos/maps.ufo:4084
+#: ../base/ufos/maps.ufo:4123
 msgid "Warehouse"
 msgstr "Magazyn"
 
-#: ../base/ufos/maps.ufo:4134
+#: ../base/ufos/maps.ufo:4173
 msgid "Military Bunker"
 msgstr "Bunkier wojskowy"
 
-#: ../base/ufos/maps.ufo:4183
+#: ../base/ufos/maps.ufo:4222
 msgid "Urban Warehouse"
 msgstr "Magazyn miejski"
 
-#: ../base/ufos/maps.ufo:4228
+#: ../base/ufos/maps.ufo:4267
 msgid "Rural Village"
 msgstr "Sielska wioska"
 
-#: ../base/ufos/maps.ufo:4276
+#: ../base/ufos/maps.ufo:4315
 msgid "Corrupter UFO Crash Site"
 msgstr "Rozbite UFO Koruptor"
 
-#: ../base/ufos/maps.ufo:4322
+#: ../base/ufos/maps.ufo:4363
 msgid "Hydroelectric Dam"
 msgstr "Tama hydroelektryczna"
 
-#: ../base/ufos/maps.ufo:4370
+#: ../base/ufos/maps.ufo:4411
 msgid "Small Village"
 msgstr "Mała wioska"
 
-#: ../base/ufos/maps.ufo:4419
+#: ../base/ufos/maps.ufo:4460
 msgid "Estate"
 msgstr "Posiadłość"
 
-#: ../base/ufos/maps.ufo:4464
+#: ../base/ufos/maps.ufo:4505
 msgid "Archaeological Dig"
 msgstr "Wykopalisko archeologiczne"
 
-#: ../base/ufos/maps.ufo:4514
+#: ../base/ufos/maps.ufo:4555
 msgid "Ferry"
 msgstr "Prom"
 
-#: ../base/ufos/maps.ufo:4564
+#: ../base/ufos/maps.ufo:4605
 msgid "Fighter UFO Crash Site"
 msgstr "Rozbity myśliwiec UFO"
 
-#: ../base/ufos/maps.ufo:4611
+#: ../base/ufos/maps.ufo:4652
 msgid "Secret Depot"
 msgstr "Tajna składnica"
 
-#: ../base/ufos/maps.ufo:4659
+#: ../base/ufos/maps.ufo:4700
 msgid "Port"
 msgstr "Port"
 
-#: ../base/ufos/maps.ufo:4705
+#: ../base/ufos/maps.ufo:4746
 msgid "Old Mine"
 msgstr "Stara kopalnia"
 
-#: ../base/ufos/maps.ufo:4758
+#: ../base/ufos/maps.ufo:4799
 msgid "Residential Neighbourhood"
 msgstr "Sąsiedzkie rezydencje"
 
-#: ../base/ufos/maps.ufo:4895
+#: ../base/ufos/maps.ufo:4936
 #, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "Kanalizacyjne roboty ziemne"
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4983
 msgid "Luxurious Resort"
 msgstr "Luksusowy kurort"
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:5029
 msgid "Old Town Center"
 msgstr "Stara wieża dowodzenia"
 
-#: ../base/ufos/maps.ufo:5040
+#: ../base/ufos/maps.ufo:5081
 msgid "Small House"
 msgstr "Mały dom"
 
-#: ../base/ufos/maps.ufo:5073
+#: ../base/ufos/maps.ufo:5114
 msgid "Small Suburban Street"
 msgstr "Mała podmiejska ulica"
 
-#: ../base/ufos/maps.ufo:5106
+#: ../base/ufos/maps.ufo:5147
 msgid "Subway Station"
 msgstr "Stacja kolejki podziemnej"
 
-#: ../base/ufos/maps.ufo:5199
+#: ../base/ufos/maps.ufo:5240
 msgid "Wilderness"
 msgstr "Pustkowie"
 
-#: ../base/ufos/maps.ufo:5248
+#: ../base/ufos/maps.ufo:5289
 msgid "City High-Rise (MP)"
 msgstr "Wsokogórskie miasto (MP)"
 
-#: ../base/ufos/maps.ufo:5276
+#: ../base/ufos/maps.ufo:5317
 msgid "Frozen Industrial Site (Coop)"
 msgstr "Mroźna strefa przemysłowa (Coop)"
 
-#: ../base/ufos/maps.ufo:5294
+#: ../base/ufos/maps.ufo:5335
 msgid "Frozen Industrial Site (MP)"
 msgstr "Mroźna strefa przemysłowa (MP)"
 
-#: ../base/ufos/maps.ufo:5320
+#: ../base/ufos/maps.ufo:5361
 msgid "Alien Base"
 msgstr "Baza obcych"
 
-#: ../base/ufos/maps.ufo:5355
+#: ../base/ufos/maps.ufo:5396
 msgid "PHALANX Craft Crash Site"
 msgstr "Rozbity statek PHALANX"
 
-#: ../base/ufos/maps.ufo:5384
+#: ../base/ufos/maps.ufo:5425
 msgid "Training Zone: Alpha"
 msgstr "Strefa treningowa: Alfa"
 
-#: ../base/ufos/maps.ufo:5401
+#: ../base/ufos/maps.ufo:5442
 msgid "Training Zone: Bravo"
 msgstr "Strefa treningowa: Bravo"
 
@@ -23960,7 +23963,7 @@ msgstr "Sprawność i Umiejętności"
 msgid "Background"
 msgstr "Tło wydarzeń"
 
-#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:116
 #: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:58 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
@@ -23999,12 +24002,12 @@ msgstr "Autopsje i obserwacje"
 msgid "The Alien Threat"
 msgstr "Zagrożenie ze strony obcych"
 
-#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:146
+#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:137
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Research"
 msgstr "Badania"
 
-#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:153
+#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:144
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Production"
 msgstr "Produkcja"
@@ -25291,8 +25294,8 @@ msgstr "Dodaj/usuń tego żołnierza"
 msgid "Description"
 msgstr "Opis"
 
-#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:226
-#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:650
+#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:217
+#: ../base/ufos/ui/bases.ufo:224 ../base/ufos/ui/hire.ufo:650
 msgid "Pilots"
 msgstr "Piloci"
 
@@ -25300,8 +25303,8 @@ msgstr "Piloci"
 msgid "Tanks"
 msgstr "Czołgi"
 
-#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:210
-#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:645
+#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:201
+#: ../base/ufos/ui/bases.ufo:208 ../base/ufos/ui/hire.ufo:645
 msgid "Soldiers"
 msgstr "Żołnierze"
 
@@ -25500,7 +25503,7 @@ msgstr "Przydział żołnierzy"
 msgid "No soldiers assigned"
 msgstr "Nie przypisano żadnych żołnierzy"
 
-#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:340
+#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:321
 msgid "Kill this alien"
 msgstr "Zlikwiduj tego obcego"
 
@@ -25508,27 +25511,27 @@ msgstr "Zlikwiduj tego obcego"
 msgid "Start autopsy"
 msgstr "Rozpocznij sekcję zwłok"
 
-#: ../base/ufos/ui/aliencont.ufo:147
+#: ../base/ufos/ui/aliencont.ufo:134
 msgid "Live Alien Containment Info"
 msgstr "Dane Modułu Kwarantanny"
 
-#: ../base/ufos/ui/aliencont.ufo:154
+#: ../base/ufos/ui/aliencont.ufo:141
 msgid "Base capacity:"
 msgstr "Limit bazy:"
 
-#: ../base/ufos/ui/aliencont.ufo:182
+#: ../base/ufos/ui/aliencont.ufo:167
 msgid "Kill all aliens in this base"
 msgstr "Zlikwiduj wszystkich obcych w tej bazie"
 
-#: ../base/ufos/ui/aliencont.ufo:209
+#: ../base/ufos/ui/aliencont.ufo:192
 msgid "Alive:"
 msgstr "Żywych:"
 
-#: ../base/ufos/ui/aliencont.ufo:222
+#: ../base/ufos/ui/aliencont.ufo:205
 msgid "Dead:"
 msgstr "Martwych:"
 
-#: ../base/ufos/ui/aliencont.ufo:345
+#: ../base/ufos/ui/aliencont.ufo:326
 msgid "Autopsy"
 msgstr "Autopsja"
 
@@ -25538,7 +25541,7 @@ msgstr "Wybierz Broń Defensywną"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 msgid "Information"
 msgstr "Informacja"
 
@@ -25626,39 +25629,40 @@ msgstr "Usuń instalację"
 #: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:980
 #: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:315
 #: ../base/ufos/ui/physdat.ufo:409 ../base/ufos/ui/popup_baseattack.ufo:302
+#: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130
 #: ../base/ufos/ui/transfer.ufo:692
 msgid "Close"
 msgstr "Zamknij"
 
-#: ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:81
 msgid "Back to geoscape"
 msgstr "Wróć do widoku globu"
 
-#: ../base/ufos/ui/bases.ufo:118
+#: ../base/ufos/ui/bases.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Buildings"
 msgstr "Budynki"
 
-#: ../base/ufos/ui/bases.ufo:119
+#: ../base/ufos/ui/bases.ufo:110
 msgid "Build base facilities"
 msgstr "Zbuduj moduły bazy"
 
-#: ../base/ufos/ui/bases.ufo:126
+#: ../base/ufos/ui/bases.ufo:117
 #: client/cgame/campaign/cp_base_callbacks.cpp:307
 msgid "Aircraft management and crew equipment"
 msgstr "Samoloty i wyposażenie żołnierzy"
 
-#: ../base/ufos/ui/bases.ufo:132
+#: ../base/ufos/ui/bases.ufo:123
 msgid "Buy/Sell"
 msgstr "Kup/Sprzedaj"
 
-#: ../base/ufos/ui/bases.ufo:133
+#: ../base/ufos/ui/bases.ufo:124
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Kup/sprzedaj wyposażenie, samoloty lub BPN"
 
-#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:306
+#: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/popup_installations.ufo:306
 #: ../base/ufos/ui/popup_installations.ufo:456
 #: ../base/ufos/ui/popup_installations.ufo:650
 #: ../base/ufos/ui/transfer.ufo:472
@@ -25668,51 +25672,51 @@ msgstr "Kup/sprzedaj wyposażenie, samoloty lub BPN"
 msgid "Transfer"
 msgstr "Przesyłka"
 
-#: ../base/ufos/ui/bases.ufo:140
+#: ../base/ufos/ui/bases.ufo:131
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr "Transfer wyposażenia, statków, BPN, obcych i personelu do innej bazy"
 
-#: ../base/ufos/ui/bases.ufo:147
+#: ../base/ufos/ui/bases.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Research new technology"
 msgstr "Badaj nową technologię"
 
-#: ../base/ufos/ui/bases.ufo:154
+#: ../base/ufos/ui/bases.ufo:145
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Produkuj wyposażenie, samoloty lub BPN"
 
-#: ../base/ufos/ui/bases.ufo:160 ../base/ufos/ui/stats.ufo:96
+#: ../base/ufos/ui/bases.ufo:151 ../base/ufos/ui/stats.ufo:96
 #: ../base/ufos/ui/transfer.ufo:135 ../base/ufos/ui/transfer.ufo:149
 msgid "Employees"
 msgstr "Personel"
 
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:152
 #: client/cgame/campaign/cp_base_callbacks.cpp:335
 msgid "Hire or dismiss employees"
 msgstr "Zatrudnij lub zwolnij personel"
 
-#: ../base/ufos/ui/bases.ufo:167
+#: ../base/ufos/ui/bases.ufo:158
 #: client/cgame/campaign/cp_base_callbacks.cpp:342
 msgid "Containment"
 msgstr "Kwarantanna"
 
-#: ../base/ufos/ui/bases.ufo:168
+#: ../base/ufos/ui/bases.ufo:159
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
 msgid "Manage captured aliens"
 msgstr "Zarządzaj pojmanymi obcymi"
 
-#: ../base/ufos/ui/bases.ufo:175
+#: ../base/ufos/ui/bases.ufo:166
 #: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
 "Zajmij się rannymi żołnierzami i przeprowadź zabieg chirurgii implantowej"
 
-#: ../base/ufos/ui/bases.ufo:181
+#: ../base/ufos/ui/bases.ufo:172
 msgid "Base Summary"
 msgstr "Informacje o bazie"
 
-#: ../base/ufos/ui/bases.ufo:182
+#: ../base/ufos/ui/bases.ufo:173
 msgid ""
 "Information about this base (available storage space, production, research, "
 "etc.)"
@@ -25720,13 +25724,14 @@ msgstr ""
 "Informacje o tej bazie (dostępne miejsce w magazynach, produkcja, badania, "
 "itd.)"
 
-#: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
-#: ../base/ufos/ui/hire.ufo:660
+#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/bases.ufo:240
+#: ../base/ufos/ui/hire.ufo:660 ../base/ufos/ui/research.ufo:196
+#: ../base/ufos/ui/research.ufo:304
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "Naukowcy"
 
-#: ../base/ufos/ui/bases.ufo:258 ../base/ufos/ui/bases.ufo:265
+#: ../base/ufos/ui/bases.ufo:249 ../base/ufos/ui/bases.ufo:256
 #: ../base/ufos/ui/hire.ufo:655
 msgid "Workers"
 msgstr "Technicy"
@@ -26109,6 +26114,7 @@ msgid "SAM defence"
 msgstr "Bateria obronna"
 
 #: ../base/ufos/ui/geoscape.ufo:1082 ../base/ufos/ui/geoscape.ufo:1224
+#: ../base/ufos/ui/popup_capacity.ufo:26
 msgid "Base:"
 msgstr "Baza:"
 
@@ -26662,18 +26668,21 @@ msgstr "Automatyczna sprzedaż włączona"
 msgid "Item autosell disabled"
 msgstr "Automatyczna sprzedaż wyłączona"
 
-#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/production.ufo:116
+#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/popup_capacity.ufo:37
+#: ../base/ufos/ui/production.ufo:116 ../base/ufos/ui/research.ufo:282
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Capacity"
 msgstr "Pojemność"
 
-#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_installations.ufo:287
+#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_capacity.ufo:44
+#: ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
 msgstr "Wolny"
 
-#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/production.ufo:130
+#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:296
 msgid "all"
 msgstr "wszystkie"
 
@@ -27940,6 +27949,21 @@ msgstr "Przygotuj drużynę obrońców"
 msgid "Assemble a team first"
 msgstr "Najpierw przydziel drużynę"
 
+#: ../base/ufos/ui/popup_capacity.ufo:10
+#, fuzzy
+msgid "Capacity Exceeded"
+msgstr "Pojemność"
+
+#: ../base/ufos/ui/popup_capacity.ufo:14
+msgid ""
+"There is no more room for goods/personel at this base. Free up some space."
+msgstr ""
+
+#: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:127
+#, fuzzy
+msgid "Go to base"
+msgstr "Wraca do bazy"
+
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
 msgstr "Nowa instalacja"
@@ -28052,33 +28076,50 @@ msgstr "Zmniejsz priorytet"
 msgid "Requirements"
 msgstr "Wymagania"
 
-#: ../base/ufos/ui/research.ufo:17
+#: ../base/ufos/ui/research.ufo:20
 msgid "Open UFOPaedia"
 msgstr "Otwórz UFOpedię"
 
-#: ../base/ufos/ui/research.ufo:43
-msgid "Add/Remove scientist"
-msgstr "Dodaj/Usuń naukowca"
+#: ../base/ufos/ui/research.ufo:59
+#, fuzzy
+msgid "Stop researching this project"
+msgstr "Ten projekt nie posiada dodatkowych informacji."
 
-#: ../base/ufos/ui/research.ufo:209
-msgid "Switch to another base"
-msgstr "Przełącz na inną bazę"
+#: ../base/ufos/ui/research.ufo:69
+#, fuzzy
+msgid "Assign less scientists on this project"
+msgstr "Liczba dostępnych naukowców w tej bazie: %i"
 
-#: ../base/ufos/ui/research.ufo:346
-msgid "Base Research Info"
-msgstr "Informacje Badawcze"
+#: ../base/ufos/ui/research.ufo:87
+#, fuzzy
+msgid "Assign more scientists on this project"
+msgstr "Liczba dostępnych naukowców w tej bazie: %i"
 
-#: ../base/ufos/ui/research.ufo:499
-msgid "Start research"
-msgstr "Rozpocznij badania"
+#: ../base/ufos/ui/research.ufo:97
+#, fuzzy
+msgid "Assign all free scientists on this project"
+msgstr "Liczba dostępnych naukowców w tej bazie: %i"
 
-#: ../base/ufos/ui/research.ufo:509
-msgid "Stop research"
-msgstr "Wstrzymaj badania"
+#: ../base/ufos/ui/research.ufo:144
+#, fuzzy
+msgid "N/A"
+msgstr "NA"
 
-#: ../base/ufos/ui/research.ufo:519
-msgid "Show research proposal"
-msgstr "Pokaż propozycje badań"
+#: ../base/ufos/ui/research.ufo:145
+msgid "An artifact or prerequisite is missing for this topic"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:153
+msgid "Expand/Collapse"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:190
+msgid "Topics"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:289 client/cgame/campaign/cp_aircraft.cpp:429
+msgid "idle"
+msgstr "w gotowości"
 
 #: ../base/ufos/ui/singleplayer.ufo:71
 msgid "Back to the main menu."
@@ -29217,11 +29258,11 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Nie można wykonać - brak przedmiotu w dłoni!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1182
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1183
 msgid "Can't perform action - no ammo!"
 msgstr "Nie można wykonać - brak amunicji!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1175
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1176
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Nie można wykonać - broń nie może być używana jedną ręką!"
 
@@ -29422,10 +29463,6 @@ msgstr "w bazie"
 msgid "refuelling"
 msgstr "tankowanie"
 
-#: client/cgame/campaign/cp_aircraft.cpp:429
-msgid "idle"
-msgstr "w gotowości"
-
 #: client/cgame/campaign/cp_aircraft.cpp:431
 msgid "in transit"
 msgstr "w powietrzu"
@@ -29492,11 +29529,11 @@ msgstr "Nowy %s jest gotowy w %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1346
-#: client/cgame/campaign/cp_base.cpp:1396
-#: client/cgame/campaign/cp_base.cpp:2305
-#: client/cgame/campaign/cp_base.cpp:2310
-#: client/cgame/campaign/cp_base.cpp:2961
+#: client/cgame/campaign/cp_base.cpp:1358
+#: client/cgame/campaign/cp_base.cpp:1408
+#: client/cgame/campaign/cp_base.cpp:2317
+#: client/cgame/campaign/cp_base.cpp:2322
+#: client/cgame/campaign/cp_base.cpp:2974
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
@@ -29533,13 +29570,6 @@ msgstr "Nowy %s jest gotowy w %s"
 #: client/cgame/campaign/cp_produce.cpp:498
 #: client/cgame/campaign/cp_produce.cpp:507
 #: client/cgame/campaign/cp_produce.cpp:518
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
 #: client/cgame/campaign/cp_ufo.cpp:407 client/cgame/campaign/cp_ufo.cpp:860
 #: client/cgame/campaign/cp_ufo.cpp:864 client/cgame/campaign/cp_ufo.cpp:868
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:125
@@ -29733,45 +29763,45 @@ msgstr ""
 msgid "Collected alien bodies"
 msgstr "Zdobyto ciała obcych"
 
-#: client/cgame/campaign/cp_base.cpp:999
+#: client/cgame/campaign/cp_base.cpp:1011
 msgid "Not set"
 msgstr "Brak w bazie"
 
-#: client/cgame/campaign/cp_base.cpp:1005
+#: client/cgame/campaign/cp_base.cpp:1017
 #, c-format
 msgid "Already %i in base"
 msgstr "Zbudowanych w bazie: %i"
 
-#: client/cgame/campaign/cp_base.cpp:1012
+#: client/cgame/campaign/cp_base.cpp:1024
 msgid "Construction finished"
 msgstr "Budowa ukończona"
 
-#: client/cgame/campaign/cp_base.cpp:1016
+#: client/cgame/campaign/cp_base.cpp:1028
 msgid "Working 100%"
 msgstr "Sprawność 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1020
+#: client/cgame/campaign/cp_base.cpp:1032
 msgid "Not operational, depends on"
 msgstr "Nie działa, zależne od"
 
-#: client/cgame/campaign/cp_base.cpp:1024
+#: client/cgame/campaign/cp_base.cpp:1036
 msgid "Down"
 msgstr "Niżej"
 
-#: client/cgame/campaign/cp_base.cpp:1346
+#: client/cgame/campaign/cp_base.cpp:1358
 msgid "Not enough credits to build this\n"
 msgstr "Zbyt mało kredytów do budowy\n"
 
-#: client/cgame/campaign/cp_base.cpp:1396
+#: client/cgame/campaign/cp_base.cpp:1408
 msgid "You must build next to existing buildings."
 msgstr "Musisz budować przy istniejących modułach."
 
-#: client/cgame/campaign/cp_base.cpp:1450
+#: client/cgame/campaign/cp_base.cpp:1462
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Koszta:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1453
+#: client/cgame/campaign/cp_base.cpp:1465
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -29779,19 +29809,19 @@ msgstr[0] "%i dzień do ukończenia\n"
 msgstr[1] "%i dni do ukończenia\n"
 msgstr[2] "%i dni do ukończenia\n"
 
-#: client/cgame/campaign/cp_base.cpp:1456
+#: client/cgame/campaign/cp_base.cpp:1468
 #: client/cgame/campaign/cp_ufopedia.cpp:216
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Opłaty:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1459
+#: client/cgame/campaign/cp_base.cpp:1471
 #: client/cgame/campaign/cp_ufopedia.cpp:213
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Zależy od:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -29799,8 +29829,8 @@ msgstr ""
 "Brak statku powietrznego w bazie - musisz zakupić lub dokonać przesyłu "
 "statku powietrznego\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2074
 #: client/cgame/campaign/cp_market_callbacks.cpp:173
 #: client/cgame/campaign/cp_market_callbacks.cpp:178
 #: client/cgame/campaign/cp_market_callbacks.cpp:183
@@ -29809,29 +29839,29 @@ msgstr ""
 msgid "Note"
 msgstr "Adnotacja"
 
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2074
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Brak statku powietrznego w bazie - musisz najpierw jakiś zamówić.\n"
 
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 msgid "Antimatter (current/max):"
 msgstr "Antymateria (aktualnie/maks.):"
 
-#: client/cgame/campaign/cp_base.cpp:2241
+#: client/cgame/campaign/cp_base.cpp:2253
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Zakończono budowanie %s w %s."
 
-#: client/cgame/campaign/cp_base.cpp:2242
+#: client/cgame/campaign/cp_base.cpp:2254
 msgid "Building finished"
 msgstr "Budowa zakończona"
 
-#: client/cgame/campaign/cp_base.cpp:2303
+#: client/cgame/campaign/cp_base.cpp:2315
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Ze sprzedaży %s uzyskano %i kredytów."
 
-#: client/cgame/campaign/cp_base.cpp:2304
+#: client/cgame/campaign/cp_base.cpp:2316
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -29839,12 +29869,12 @@ msgstr[0] "%i zebranej rzeczy"
 msgstr[1] "%i zebranych rzeczy"
 msgstr[2] "%i zebranych rzeczy"
 
-#: client/cgame/campaign/cp_base.cpp:2308
+#: client/cgame/campaign/cp_base.cpp:2320
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Zabrakło miejsca do przechowywania w %s. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2309
+#: client/cgame/campaign/cp_base.cpp:2321
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -29852,7 +29882,7 @@ msgstr[0] "Sprzedano %i obiekt za %i kredytów."
 msgstr[1] "Sprzedano %i obiektów za %i kredytów."
 msgstr[2] "Sprzedano %i obiektów za %i kredytów."
 
-#: client/cgame/campaign/cp_base.cpp:2959
+#: client/cgame/campaign/cp_base.cpp:2972
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -31372,119 +31402,6 @@ msgstr "Brak opisu."
 msgid "No research proposal available."
 msgstr "Brak propozycji badań."
 
-#: client/cgame/campaign/cp_research_callbacks.cpp:92
-#, c-format
-msgid "Laboratory space (used/all): %i/%i"
-msgstr "Miejsce (wykorzystane/całość): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:101
-#, c-format
-msgid "Scientists (available/all): %i/%i"
-msgstr "Naukowcy (dostępni/wszyscy): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:110
-msgid "Not researched in any base."
-msgstr "Nie badana w żadnej bazie."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:116
-#, c-format
-msgid "Researched in %s."
-msgstr "Badania w %s"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:118
-msgid "Researched in this base."
-msgstr "Badana w tej bazie."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:130
-#, c-format
-msgid "Progress: %.1f%%"
-msgstr "Postęp: %.1f%%"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:133
-msgid "Progress: not available."
-msgstr "Postęp: nieokreślony."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:138
-msgid "Status: under research"
-msgstr "Status: w trakcie badań"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:139
-msgid ""
-"Status: this research topic is currently being processed in laboratories"
-msgstr "Status: badania na zadany temat są obecnie prowadzone w laboratoriach."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:142
-msgid "Status: research paused"
-msgstr "Status: badania wstrzymane"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:143
-msgid "Status: research topic currently paused"
-msgstr "Status: ten temat badań jest obecnie wstrzymany."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:146
-#: client/cgame/campaign/cp_research_callbacks.cpp:147
-msgid "Status: research finished"
-msgstr "Status: badania ukończone"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:152
-msgid "Status: not possible to research"
-msgstr "Status: nie ma możliwości zbadania"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:153
-msgid ""
-"Status: the materials or background knowledge needed to research this topic "
-"are not available yet"
-msgstr ""
-"Status: w chwili obecnej nie mamy materiałów lub technologii potrzebnych w "
-"temacie tych badań."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:155
-#: client/cgame/campaign/cp_research_callbacks.cpp:156
-msgid "Status: unknown technology"
-msgstr "Status: nieznana technologia"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:271
-msgid "Unassigned scientists"
-msgstr "Naukowcy poza projektami"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:307
-msgid "Missing an artifact"
-msgstr "Utracono artefakt"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:317
-msgid "Unresearchable collected items"
-msgstr "Zdobyte przedmioty bez możliwości zbadania"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-msgid "This item is currently under research in another base."
-msgstr "Ten projekt jest aktualnie badany w innej bazie."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-msgid "The research on this item is complete."
-msgstr "Badanie tego projektu zakończone."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-msgid ""
-"The research on this item is not yet possible.\n"
-"You need to research the technologies it's based on first."
-msgstr ""
-"Badania nad tym projektem nie są jeszcze możliwe.\n"
-"Najpierw musisz przebadać technologie, na których ten\n"
-"projekt się opiera."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-msgid "No research proposal available for this project."
-msgstr "Ten projekt nie posiada dodatkowych informacji."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-msgid "Nothing to research."
-msgstr "Nie ma nic do badania."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
-msgid "Build a laboratory first."
-msgstr "Najpierw zbuduj laboratorium."
-
 #: client/cgame/campaign/cp_save.cpp:182
 msgid "Error decompressing data"
 msgstr "Błąd podczas dekompresji danych"
@@ -32771,19 +32688,19 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Nie można wykonać - rzut niemożliwy!"
 
-#: game/g_combat.cpp:1140
+#: game/g_combat.cpp:1141
 msgid "Can't perform action - object not activatable!"
 msgstr "Nie można wykonać - tego obiektu nie można aktywować!"
 
-#: game/g_combat.cpp:1167
+#: game/g_combat.cpp:1168
 msgid "Can't perform action - target is not wounded!"
 msgstr "Nie można wykonać - cel nie jest ranny!"
 
-#: game/g_combat.cpp:1190
+#: game/g_combat.cpp:1191
 msgid "Can't perform action - target out of range!"
 msgstr "Nie można wykonać - cel poza zasięgiem!"
 
-#: game/g_combat.cpp:1236
+#: game/g_combat.cpp:1237
 msgid "Can't perform action - not enough ammo!"
 msgstr "Nie można wykonać - zbyt mało amunicji!"
 
@@ -32878,6 +32795,104 @@ msgstr "Obcy"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Zrzut ekranu [Screenshot]"
+
+#~ msgid "Add/Remove scientist"
+#~ msgstr "Dodaj/Usuń naukowca"
+
+#~ msgid "Switch to another base"
+#~ msgstr "Przełącz na inną bazę"
+
+#~ msgid "Base Research Info"
+#~ msgstr "Informacje Badawcze"
+
+#~ msgid "Start research"
+#~ msgstr "Rozpocznij badania"
+
+#~ msgid "Stop research"
+#~ msgstr "Wstrzymaj badania"
+
+#~ msgid "Show research proposal"
+#~ msgstr "Pokaż propozycje badań"
+
+#~ msgid "Laboratory space (used/all): %i/%i"
+#~ msgstr "Miejsce (wykorzystane/całość): %i/%i"
+
+#~ msgid "Scientists (available/all): %i/%i"
+#~ msgstr "Naukowcy (dostępni/wszyscy): %i/%i"
+
+#~ msgid "Not researched in any base."
+#~ msgstr "Nie badana w żadnej bazie."
+
+#~ msgid "Researched in %s."
+#~ msgstr "Badania w %s"
+
+#~ msgid "Researched in this base."
+#~ msgstr "Badana w tej bazie."
+
+#~ msgid "Progress: %.1f%%"
+#~ msgstr "Postęp: %.1f%%"
+
+#~ msgid "Progress: not available."
+#~ msgstr "Postęp: nieokreślony."
+
+#~ msgid "Status: under research"
+#~ msgstr "Status: w trakcie badań"
+
+#~ msgid ""
+#~ "Status: this research topic is currently being processed in laboratories"
+#~ msgstr ""
+#~ "Status: badania na zadany temat są obecnie prowadzone w laboratoriach."
+
+#~ msgid "Status: research paused"
+#~ msgstr "Status: badania wstrzymane"
+
+#~ msgid "Status: research topic currently paused"
+#~ msgstr "Status: ten temat badań jest obecnie wstrzymany."
+
+#~ msgid "Status: research finished"
+#~ msgstr "Status: badania ukończone"
+
+#~ msgid "Status: not possible to research"
+#~ msgstr "Status: nie ma możliwości zbadania"
+
+#~ msgid ""
+#~ "Status: the materials or background knowledge needed to research this "
+#~ "topic are not available yet"
+#~ msgstr ""
+#~ "Status: w chwili obecnej nie mamy materiałów lub technologii potrzebnych "
+#~ "w temacie tych badań."
+
+#~ msgid "Status: unknown technology"
+#~ msgstr "Status: nieznana technologia"
+
+#~ msgid "Unassigned scientists"
+#~ msgstr "Naukowcy poza projektami"
+
+#~ msgid "Missing an artifact"
+#~ msgstr "Utracono artefakt"
+
+#~ msgid "Unresearchable collected items"
+#~ msgstr "Zdobyte przedmioty bez możliwości zbadania"
+
+#~ msgid "This item is currently under research in another base."
+#~ msgstr "Ten projekt jest aktualnie badany w innej bazie."
+
+#~ msgid "The research on this item is complete."
+#~ msgstr "Badanie tego projektu zakończone."
+
+#~ msgid ""
+#~ "The research on this item is not yet possible.\n"
+#~ "You need to research the technologies it's based on first."
+#~ msgstr ""
+#~ "Badania nad tym projektem nie są jeszcze możliwe.\n"
+#~ "Najpierw musisz przebadać technologie, na których ten\n"
+#~ "projekt się opiera."
+
+#~ msgid "Nothing to research."
+#~ msgstr "Nie ma nic do badania."
+
+#~ msgid "Build a laboratory first."
+#~ msgstr "Najpierw zbuduj laboratorium."
 
 #~ msgid "Bomber_city"
 #~ msgstr "Bombowiec"
@@ -37279,9 +37294,6 @@ msgstr "Zrzut ekranu [Screenshot]"
 #~ msgid "Being transfered"
 #~ msgstr "Podczas transferu"
 
-#~ msgid "Back to base"
-#~ msgstr "Wraca do bazy"
-
 #~ msgid "You've got a new aircraft (a %s) in base %s"
 #~ msgstr "Nowy pojazd powietrzny (%s) w bazie %s"
 
@@ -37457,9 +37469,6 @@ msgstr "Zrzut ekranu [Screenshot]"
 
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Średni Pancerz obcych"
-
-#~ msgid "NA"
-#~ msgstr "NA"
 
 #~ msgid "Camera Scroll:"
 #~ msgstr "Przesuwanie kamery:"
@@ -38151,9 +38160,6 @@ msgstr "Zrzut ekranu [Screenshot]"
 
 #~ msgid "Scroll down (right click to scroll multiple lines)"
 #~ msgstr "Przewiń w dół (prawy przycisk przewija kilka linii)"
-
-#~ msgid "Available scientists in this base: %i"
-#~ msgstr "Liczba dostępnych naukowców w tej bazie: %i"
 
 #~ msgid "pbeam_ammo_txt"
 #~ msgstr "W trakcie tłumaczenia."

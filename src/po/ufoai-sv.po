@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-27 20:43+0200\n"
+"POT-Creation-Date: 2013-08-03 23:16+0200\n"
 "PO-Revision-Date: 2011-03-06 12:23+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -55,12 +55,12 @@ msgstr "Liten kyrkogård"
 msgid "The outskirt of a big city."
 msgstr "Ett kontorsområde i utkanten av staden."
 
-#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3259
+#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3298
 #, fuzzy
 msgid "Urban Disco"
 msgstr "Stadskamo"
 
-#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3309
+#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3348
 #, fuzzy
 msgid "Community Centre"
 msgstr "Kommandocentral"
@@ -168,8 +168,9 @@ msgid "Harvester"
 msgstr "Skördare"
 
 #: ../base/maps/laboratory.ump:95 ../base/maps/laboratory.ump:104
-#: ../base/ufos/basemanagement.ufo:201 ../base/ufos/maps.ufo:2290
-#: ../base/ufos/maps.ufo:2341 client/cgame/campaign/cp_base_callbacks.cpp:327
+#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2290
+#: ../base/ufos/maps.ufo:2341 ../base/ufos/ui/research.ufo:322
+#: client/cgame/campaign/cp_base_callbacks.cpp:327
 msgid "Laboratory"
 msgstr "Laboratorium"
 
@@ -238,8 +239,9 @@ msgstr ""
 msgid "Tropical UFO"
 msgstr "Tropisk flod"
 
-#: ../base/maps/village.ump:728 ../base/maps/village.ump:755
-#: ../base/maps/village.ump:783 ../base/maps/village.ump:811
+#: ../base/maps/village.ump:758 ../base/maps/village.ump:786
+#: ../base/maps/village.ump:813 ../base/maps/village.ump:841
+#: ../base/maps/village.ump:869
 #, fuzzy
 msgid "Village"
 msgstr "By stor"
@@ -568,68 +570,68 @@ msgstr "Utomjordiskt mediumkroppsskydd"
 msgid "Alien Containment"
 msgstr "Utomjordisk förvaringsfacilitet"
 
-#: ../base/ufos/basemanagement.ufo:51
+#: ../base/ufos/basemanagement.ufo:50
 msgid "Entrance"
 msgstr "Ingång"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:335
+#: ../base/ufos/basemanagement.ufo:64 ../base/ufos/ui/market.ufo:335
 #: ../base/ufos/ui/production.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:317
 msgid "Storage"
 msgstr "Lager"
 
-#: ../base/ufos/basemanagement.ufo:79
+#: ../base/ufos/basemanagement.ufo:78
 msgid "Power Plant"
 msgstr "Kraftverk"
 
-#: ../base/ufos/basemanagement.ufo:94
+#: ../base/ufos/basemanagement.ufo:93
 msgid "Command Centre"
 msgstr "Kommandocentral"
 
-#: ../base/ufos/basemanagement.ufo:110
+#: ../base/ufos/basemanagement.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:337
 msgid "Living Quarters"
 msgstr "Bostäder"
 
-#: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/market.ufo:371
+#: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/market.ufo:371
 #: ../base/ufos/ui/production.ufo:174
 #, fuzzy
 msgid "Dropship Hangar"
 msgstr "Förstör hangaren"
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/market.ufo:353
+#: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/market.ufo:353
 #: ../base/ufos/ui/production.ufo:156
 #, fuzzy
 msgid "Interceptor Hangar"
 msgstr "Jagare"
 
-#: ../base/ufos/basemanagement.ufo:153 ../base/ufos/maps.ufo:3926
+#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:3965
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Workshop"
 msgstr "Verkstad"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/radar.ufo:35
+#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/radar.ufo:35
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:185
+#: ../base/ufos/basemanagement.ufo:184
 msgid "Advanced Radar"
 msgstr "Avancerad Radar"
 
-#: ../base/ufos/basemanagement.ufo:216 ../base/ufos/ui/bases.ufo:174
+#: ../base/ufos/basemanagement.ufo:215 ../base/ufos/ui/bases.ufo:165
 #: client/cgame/campaign/cp_base_callbacks.cpp:347
 msgid "Hospital"
 msgstr "Sjukhus"
 
-#: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3625
+#: ../base/ufos/basemanagement.ufo:230 ../base/ufos/research.ufo:3625
 msgid "Antimatter Storage"
 msgstr "Lagring av antimateria"
 
-#: ../base/ufos/basemanagement.ufo:246
+#: ../base/ufos/basemanagement.ufo:245
 msgid "Laser Battery"
 msgstr "Laserbatteri"
 
-#: ../base/ufos/basemanagement.ufo:265
+#: ../base/ufos/basemanagement.ufo:264
 msgid "Missile Battery"
 msgstr "Missilbatteri"
 
@@ -2872,13 +2874,13 @@ msgid "Frozen Landscape"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2190 ../base/ufos/maps.ufo:2238
-#: ../base/ufos/maps.ufo:3621
+#: ../base/ufos/maps.ufo:3660
 msgid "East Asian Village"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2548 ../base/ufos/maps.ufo:2589
-#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3776
-#: ../base/ufos/maps.ufo:4848
+#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3815
+#: ../base/ufos/maps.ufo:4889
 msgid "Middle Eastern Suburb"
 msgstr ""
 
@@ -2908,204 +2910,205 @@ msgstr "Bangalore"
 msgid "House"
 msgstr "Houston"
 
-#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3015
-#: ../base/ufos/maps.ufo:3053 ../base/ufos/maps.ufo:5153
+#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3016
+#: ../base/ufos/maps.ufo:3054 ../base/ufos/maps.ufo:3092
+#: ../base/ufos/maps.ufo:5194
 #, fuzzy
 msgid "Suburban City"
 msgstr "Ett förortsområde."
 
-#: ../base/ufos/maps.ufo:3100 ../base/ufos/maps.ufo:3136
-#: ../base/ufos/maps.ufo:5342
+#: ../base/ufos/maps.ufo:3139 ../base/ufos/maps.ufo:3175
+#: ../base/ufos/maps.ufo:5383
 #, fuzzy
 msgid "PHALANX Base Under Attack"
 msgstr "Basen är under attack"
 
-#: ../base/ufos/maps.ufo:3176
+#: ../base/ufos/maps.ufo:3215
 #, fuzzy
 msgid "Cemetery"
 msgstr "Liten kyrkogård"
 
-#: ../base/ufos/maps.ufo:3218
+#: ../base/ufos/maps.ufo:3257
 msgid "City High-Rise"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3361
+#: ../base/ufos/maps.ufo:3400
 #, fuzzy
 msgid "Construction Site"
 msgstr "Konstruktion"
 
-#: ../base/ufos/maps.ufo:3416
+#: ../base/ufos/maps.ufo:3455
 msgid "Tropical Jungle Estate"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3476
+#: ../base/ufos/maps.ufo:3515
 #, fuzzy
 msgid "Mountain Estate"
 msgstr "Klippiga bergen"
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3557
 #, fuzzy
 msgid "Gas Station"
 msgstr "Bensinstation"
 
-#: ../base/ufos/maps.ufo:3567
+#: ../base/ufos/maps.ufo:3606
 msgid "Luxury House"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3674
+#: ../base/ufos/maps.ufo:3713
 #, fuzzy
 msgid "Supermarket"
 msgstr "Överlägsen"
 
-#: ../base/ufos/maps.ufo:3727
+#: ../base/ufos/maps.ufo:3766
 #, fuzzy
 msgid "Military Convoy Ambush Site"
 msgstr "Militärkonvoj"
 
-#: ../base/ufos/maps.ufo:3828
+#: ../base/ufos/maps.ufo:3867
 msgid "Military Shelter"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3883
+#: ../base/ufos/maps.ufo:3922
 #, fuzzy
 msgid "Solar Power Plant"
 msgstr "Kraftverk"
 
-#: ../base/ufos/maps.ufo:3977
+#: ../base/ufos/maps.ufo:4016
 msgid "Basketball Stadium"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4029 ../base/ufos/maps.ufo:4802
+#: ../base/ufos/maps.ufo:4068 ../base/ufos/maps.ufo:4843
 msgid "Office Complex"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4084
+#: ../base/ufos/maps.ufo:4123
 msgid "Warehouse"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4134
+#: ../base/ufos/maps.ufo:4173
 #, fuzzy
 msgid "Military Bunker"
 msgstr "Militärkonvoj"
 
-#: ../base/ufos/maps.ufo:4183
+#: ../base/ufos/maps.ufo:4222
 msgid "Urban Warehouse"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4228
+#: ../base/ufos/maps.ufo:4267
 #, fuzzy
 msgid "Rural Village"
 msgstr "En liten by i England."
 
-#: ../base/ufos/maps.ufo:4276
+#: ../base/ufos/maps.ufo:4315
 #, fuzzy
 msgid "Corrupter UFO Crash Site"
 msgstr "Nedslagsplats för UFO"
 
-#: ../base/ufos/maps.ufo:4322
+#: ../base/ufos/maps.ufo:4363
 msgid "Hydroelectric Dam"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4370
+#: ../base/ufos/maps.ufo:4411
 #, fuzzy
 msgid "Small Village"
 msgstr "En liten by i England."
 
-#: ../base/ufos/maps.ufo:4419
+#: ../base/ufos/maps.ufo:4460
 #, fuzzy
 msgid "Estate"
 msgstr "Observera"
 
-#: ../base/ufos/maps.ufo:4464
+#: ../base/ufos/maps.ufo:4505
 msgid "Archaeological Dig"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4514
+#: ../base/ufos/maps.ufo:4555
 #, fuzzy
 msgid "Ferry"
 msgstr "En färja."
 
-#: ../base/ufos/maps.ufo:4564
+#: ../base/ufos/maps.ufo:4605
 #, fuzzy
 msgid "Fighter UFO Crash Site"
 msgstr "Nedslagsplats för UFO"
 
-#: ../base/ufos/maps.ufo:4611
+#: ../base/ufos/maps.ufo:4652
 msgid "Secret Depot"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4659
+#: ../base/ufos/maps.ufo:4700
 #, fuzzy
 msgid "Port"
 msgstr "Portland"
 
-#: ../base/ufos/maps.ufo:4705
+#: ../base/ufos/maps.ufo:4746
 msgid "Old Mine"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4758
+#: ../base/ufos/maps.ufo:4799
 msgid "Residential Neighbourhood"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4895
+#: ../base/ufos/maps.ufo:4936
 #, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "Konstruktionen är färdig"
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4983
 #, fuzzy
 msgid "Luxurious Resort"
 msgstr "En lyxig semesterort."
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:5029
 #, fuzzy
 msgid "Old Town Center"
 msgstr "Kommandocentral"
 
-#: ../base/ufos/maps.ufo:5040
+#: ../base/ufos/maps.ufo:5081
 #, fuzzy
 msgid "Small House"
 msgstr "Liten"
 
-#: ../base/ufos/maps.ufo:5073
+#: ../base/ufos/maps.ufo:5114
 msgid "Small Suburban Street"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5106
+#: ../base/ufos/maps.ufo:5147
 #, fuzzy
 msgid "Subway Station"
 msgstr "Mättnad:"
 
-#: ../base/ufos/maps.ufo:5199
+#: ../base/ufos/maps.ufo:5240
 msgid "Wilderness"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5248
+#: ../base/ufos/maps.ufo:5289
 msgid "City High-Rise (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5276
+#: ../base/ufos/maps.ufo:5317
 msgid "Frozen Industrial Site (Coop)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5294
+#: ../base/ufos/maps.ufo:5335
 msgid "Frozen Industrial Site (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5320
+#: ../base/ufos/maps.ufo:5361
 #, fuzzy
 msgid "Alien Base"
 msgstr "Utomjordingar"
 
-#: ../base/ufos/maps.ufo:5355
+#: ../base/ufos/maps.ufo:5396
 msgid "PHALANX Craft Crash Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5384
+#: ../base/ufos/maps.ufo:5425
 msgid "Training Zone: Alpha"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5401
+#: ../base/ufos/maps.ufo:5442
 msgid "Training Zone: Bravo"
 msgstr ""
 
@@ -23931,7 +23934,7 @@ msgstr "Färdigheter"
 msgid "Background"
 msgstr "Bakgrund"
 
-#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/bases.ufo:116
 #: ../base/ufos/ui/geoscape.ufo:1336 ../base/ufos/ui/market.ufo:138
 #: ../base/ufos/ui/production.ufo:58 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:159 client/cgame/campaign/cp_geoscape.cpp:310
@@ -23970,12 +23973,12 @@ msgstr "Obduktioner och observation"
 msgid "The Alien Threat"
 msgstr "Det utomjordiska hotet"
 
-#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:146
+#: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:137
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Research"
 msgstr "Forskning"
 
-#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:153
+#: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:144
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Production"
 msgstr "Produktion"
@@ -25269,8 +25272,8 @@ msgstr "Lägg till/ta bort soldaten"
 msgid "Description"
 msgstr "Beskrivning"
 
-#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:226
-#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:650
+#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:217
+#: ../base/ufos/ui/bases.ufo:224 ../base/ufos/ui/hire.ufo:650
 msgid "Pilots"
 msgstr "Piloter"
 
@@ -25279,8 +25282,8 @@ msgstr "Piloter"
 msgid "Tanks"
 msgstr "Överföring"
 
-#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:210
-#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:645
+#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:201
+#: ../base/ufos/ui/bases.ufo:208 ../base/ufos/ui/hire.ufo:645
 msgid "Soldiers"
 msgstr "Soldater"
 
@@ -25485,7 +25488,7 @@ msgstr "Tilldela soldater"
 msgid "No soldiers assigned"
 msgstr "Ingen sköld tilldelad"
 
-#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:340
+#: ../base/ufos/ui/aliencont.ufo:53 ../base/ufos/ui/aliencont.ufo:321
 msgid "Kill this alien"
 msgstr "Döda denna utomjording"
 
@@ -25493,28 +25496,28 @@ msgstr "Döda denna utomjording"
 msgid "Start autopsy"
 msgstr "Starta obduktion"
 
-#: ../base/ufos/ui/aliencont.ufo:147
+#: ../base/ufos/ui/aliencont.ufo:134
 #, fuzzy
 msgid "Live Alien Containment Info"
 msgstr "Utomjordisk förvaring"
 
-#: ../base/ufos/ui/aliencont.ufo:154
+#: ../base/ufos/ui/aliencont.ufo:141
 msgid "Base capacity:"
 msgstr "Baskapacitet:"
 
-#: ../base/ufos/ui/aliencont.ufo:182
+#: ../base/ufos/ui/aliencont.ufo:167
 msgid "Kill all aliens in this base"
 msgstr "Döda alla utomjordingar i basen"
 
-#: ../base/ufos/ui/aliencont.ufo:209
+#: ../base/ufos/ui/aliencont.ufo:192
 msgid "Alive:"
 msgstr "Levande:"
 
-#: ../base/ufos/ui/aliencont.ufo:222
+#: ../base/ufos/ui/aliencont.ufo:205
 msgid "Dead:"
 msgstr "Döda:"
 
-#: ../base/ufos/ui/aliencont.ufo:345
+#: ../base/ufos/ui/aliencont.ufo:326
 #, fuzzy
 msgid "Autopsy"
 msgstr "Enastående"
@@ -25525,7 +25528,7 @@ msgstr ""
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 msgid "Information"
 msgstr "Information"
 
@@ -25619,41 +25622,42 @@ msgstr "Förstör installation"
 #: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:980
 #: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:315
 #: ../base/ufos/ui/physdat.ufo:409 ../base/ufos/ui/popup_baseattack.ufo:302
+#: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130
 #: ../base/ufos/ui/transfer.ufo:692
 msgid "Close"
 msgstr "Närstrid"
 
-#: ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:81
 msgid "Back to geoscape"
 msgstr "Tillbaka till jordgloben"
 
-#: ../base/ufos/ui/bases.ufo:118
+#: ../base/ufos/ui/bases.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Buildings"
 msgstr "Byggnader"
 
-#: ../base/ufos/ui/bases.ufo:119
+#: ../base/ufos/ui/bases.ufo:110
 msgid "Build base facilities"
 msgstr "Bygg basfaciliteter"
 
-#: ../base/ufos/ui/bases.ufo:126
+#: ../base/ufos/ui/bases.ufo:117
 #: client/cgame/campaign/cp_base_callbacks.cpp:307
 #, fuzzy
 msgid "Aircraft management and crew equipment"
 msgstr "Tillgänglig utrustning:"
 
-#: ../base/ufos/ui/bases.ufo:132
+#: ../base/ufos/ui/bases.ufo:123
 msgid "Buy/Sell"
 msgstr "Köp/Sälj"
 
-#: ../base/ufos/ui/bases.ufo:133
+#: ../base/ufos/ui/bases.ufo:124
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
 #, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Köp/sälj utrustning"
 
-#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:306
+#: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/popup_installations.ufo:306
 #: ../base/ufos/ui/popup_installations.ufo:456
 #: ../base/ufos/ui/popup_installations.ufo:650
 #: ../base/ufos/ui/transfer.ufo:472
@@ -25663,65 +25667,66 @@ msgstr "Köp/sälj utrustning"
 msgid "Transfer"
 msgstr "Överföring"
 
-#: ../base/ufos/ui/bases.ufo:140
+#: ../base/ufos/ui/bases.ufo:131
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:147
+#: ../base/ufos/ui/bases.ufo:138
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Research new technology"
 msgstr "Forska fram ny teknologi"
 
-#: ../base/ufos/ui/bases.ufo:154
+#: ../base/ufos/ui/bases.ufo:145
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
 #, fuzzy
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Producera farkost"
 
-#: ../base/ufos/ui/bases.ufo:160 ../base/ufos/ui/stats.ufo:96
+#: ../base/ufos/ui/bases.ufo:151 ../base/ufos/ui/stats.ufo:96
 #: ../base/ufos/ui/transfer.ufo:135 ../base/ufos/ui/transfer.ufo:149
 msgid "Employees"
 msgstr "Anställda"
 
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:152
 #: client/cgame/campaign/cp_base_callbacks.cpp:335
 #, fuzzy
 msgid "Hire or dismiss employees"
 msgstr "Anställ folk"
 
-#: ../base/ufos/ui/bases.ufo:167
+#: ../base/ufos/ui/bases.ufo:158
 #: client/cgame/campaign/cp_base_callbacks.cpp:342
 msgid "Containment"
 msgstr "Förvaring"
 
-#: ../base/ufos/ui/bases.ufo:168
+#: ../base/ufos/ui/bases.ufo:159
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
 #, fuzzy
 msgid "Manage captured aliens"
 msgstr "Du har fångat nya utomjordingar."
 
-#: ../base/ufos/ui/bases.ufo:175
+#: ../base/ufos/ui/bases.ufo:166
 #: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:181
+#: ../base/ufos/ui/bases.ufo:172
 msgid "Base Summary"
 msgstr "Sammandrag"
 
-#: ../base/ufos/ui/bases.ufo:182
+#: ../base/ufos/ui/bases.ufo:173
 msgid ""
 "Information about this base (available storage space, production, research, "
 "etc.)"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
-#: ../base/ufos/ui/hire.ufo:660
+#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/bases.ufo:240
+#: ../base/ufos/ui/hire.ufo:660 ../base/ufos/ui/research.ufo:196
+#: ../base/ufos/ui/research.ufo:304
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "Forskare"
 
-#: ../base/ufos/ui/bases.ufo:258 ../base/ufos/ui/bases.ufo:265
+#: ../base/ufos/ui/bases.ufo:249 ../base/ufos/ui/bases.ufo:256
 #: ../base/ufos/ui/hire.ufo:655
 msgid "Workers"
 msgstr "Arbetare"
@@ -26123,6 +26128,7 @@ msgid "SAM defence"
 msgstr "Valt försvar:"
 
 #: ../base/ufos/ui/geoscape.ufo:1082 ../base/ufos/ui/geoscape.ufo:1224
+#: ../base/ufos/ui/popup_capacity.ufo:26
 msgid "Base:"
 msgstr "Bas:"
 
@@ -26711,19 +26717,22 @@ msgstr "Automatisk försäljning av objekt aktiverat."
 msgid "Item autosell disabled"
 msgstr "Automatisk försäljning av objekt inaktiverat."
 
-#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/production.ufo:116
+#: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/popup_capacity.ufo:37
+#: ../base/ufos/ui/production.ufo:116 ../base/ufos/ui/research.ufo:282
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 #, fuzzy
 msgid "Capacity"
 msgstr "Kapacitet"
 
-#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_installations.ufo:287
+#: ../base/ufos/ui/market.ufo:320 ../base/ufos/ui/popup_capacity.ufo:44
+#: ../base/ufos/ui/popup_installations.ufo:287
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/production.ufo:130
+#: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:296
 msgid "all"
 msgstr "alla"
 
@@ -28036,6 +28045,21 @@ msgstr "Sätt samman eller läs in ett lag"
 msgid "Assemble a team first"
 msgstr "Sätt samman en grupp först"
 
+#: ../base/ufos/ui/popup_capacity.ufo:10
+#, fuzzy
+msgid "Capacity Exceeded"
+msgstr "Kapacitet"
+
+#: ../base/ufos/ui/popup_capacity.ufo:14
+msgid ""
+"There is no more room for goods/personel at this base. Free up some space."
+msgstr ""
+
+#: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:127
+#, fuzzy
+msgid "Go to base"
+msgstr "På väg tillbaka till basen"
+
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
 msgstr "Ny installation"
@@ -28163,37 +28187,51 @@ msgstr "Minska prioritet"
 msgid "Requirements"
 msgstr "Inga krav"
 
-#: ../base/ufos/ui/research.ufo:17
+#: ../base/ufos/ui/research.ufo:20
 #, fuzzy
 msgid "Open UFOPaedia"
 msgstr "Öppna UFOpedia"
 
-#: ../base/ufos/ui/research.ufo:43
+#: ../base/ufos/ui/research.ufo:59
 #, fuzzy
-msgid "Add/Remove scientist"
-msgstr "Ta bort forskare"
+msgid "Stop researching this project"
+msgstr "Inget forskningsförslag finns tillgängligt för det här projektet."
 
-#: ../base/ufos/ui/research.ufo:209
+#: ../base/ufos/ui/research.ufo:69
 #, fuzzy
-msgid "Switch to another base"
-msgstr "Växla till nästa bas"
+msgid "Assign less scientists on this project"
+msgstr "Tillgängliga forskare i den här basen: %i"
 
-#: ../base/ufos/ui/research.ufo:346
+#: ../base/ufos/ui/research.ufo:87
 #, fuzzy
-msgid "Base Research Info"
-msgstr "Basinfo"
+msgid "Assign more scientists on this project"
+msgstr "Tillgängliga forskare i den här basen: %i"
 
-#: ../base/ufos/ui/research.ufo:499
-msgid "Start research"
-msgstr "Starta forskning"
+#: ../base/ufos/ui/research.ufo:97
+#, fuzzy
+msgid "Assign all free scientists on this project"
+msgstr "Tillgängliga forskare i den här basen: %i"
 
-#: ../base/ufos/ui/research.ufo:509
-msgid "Stop research"
-msgstr "Stoppa forskning"
+#: ../base/ufos/ui/research.ufo:144
+#, fuzzy
+msgid "N/A"
+msgstr "-"
 
-#: ../base/ufos/ui/research.ufo:519
-msgid "Show research proposal"
-msgstr "Visa forskningsförslag"
+#: ../base/ufos/ui/research.ufo:145
+msgid "An artifact or prerequisite is missing for this topic"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:153
+msgid "Expand/Collapse"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:190
+msgid "Topics"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:289 client/cgame/campaign/cp_aircraft.cpp:429
+msgid "idle"
+msgstr "inaktiv"
 
 #: ../base/ufos/ui/singleplayer.ufo:71
 #, fuzzy
@@ -29520,12 +29558,12 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1182
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1183
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr "Kan inte genomföra handlingen - slut på ammunition!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1175
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1176
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Kan inte genomföra handlingen - vapnet kan inte avfyras med en hand!\n"
@@ -29765,10 +29803,6 @@ msgstr "Vid hembasen"
 msgid "refuelling"
 msgstr "Tankar"
 
-#: client/cgame/campaign/cp_aircraft.cpp:429
-msgid "idle"
-msgstr "inaktiv"
-
 #: client/cgame/campaign/cp_aircraft.cpp:431
 #, fuzzy
 msgid "in transit"
@@ -29841,11 +29875,11 @@ msgstr "En ny %s är färdig om %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1346
-#: client/cgame/campaign/cp_base.cpp:1396
-#: client/cgame/campaign/cp_base.cpp:2305
-#: client/cgame/campaign/cp_base.cpp:2310
-#: client/cgame/campaign/cp_base.cpp:2961
+#: client/cgame/campaign/cp_base.cpp:1358
+#: client/cgame/campaign/cp_base.cpp:1408
+#: client/cgame/campaign/cp_base.cpp:2317
+#: client/cgame/campaign/cp_base.cpp:2322
+#: client/cgame/campaign/cp_base.cpp:2974
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
@@ -29882,13 +29916,6 @@ msgstr "En ny %s är färdig om %s"
 #: client/cgame/campaign/cp_produce.cpp:498
 #: client/cgame/campaign/cp_produce.cpp:507
 #: client/cgame/campaign/cp_produce.cpp:518
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
 #: client/cgame/campaign/cp_ufo.cpp:407 client/cgame/campaign/cp_ufo.cpp:860
 #: client/cgame/campaign/cp_ufo.cpp:864 client/cgame/campaign/cp_ufo.cpp:868
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:125
@@ -30090,65 +30117,65 @@ msgstr ""
 msgid "Collected alien bodies"
 msgstr "Samlade in %i döda utomjordiska kroppar"
 
-#: client/cgame/campaign/cp_base.cpp:999
+#: client/cgame/campaign/cp_base.cpp:1011
 msgid "Not set"
 msgstr "Används inte"
 
-#: client/cgame/campaign/cp_base.cpp:1005
+#: client/cgame/campaign/cp_base.cpp:1017
 #, c-format
 msgid "Already %i in base"
 msgstr "Finns redan %i i basen"
 
-#: client/cgame/campaign/cp_base.cpp:1012
+#: client/cgame/campaign/cp_base.cpp:1024
 msgid "Construction finished"
 msgstr "Konstruktionen är färdig"
 
-#: client/cgame/campaign/cp_base.cpp:1016
+#: client/cgame/campaign/cp_base.cpp:1028
 msgid "Working 100%"
 msgstr "Status 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1020
+#: client/cgame/campaign/cp_base.cpp:1032
 msgid "Not operational, depends on"
 msgstr ""
 
-#: client/cgame/campaign/cp_base.cpp:1024
+#: client/cgame/campaign/cp_base.cpp:1036
 msgid "Down"
 msgstr "Landad"
 
-#: client/cgame/campaign/cp_base.cpp:1346
+#: client/cgame/campaign/cp_base.cpp:1358
 msgid "Not enough credits to build this\n"
 msgstr "Inte tillräckligt mycket pengar för att bygga den här\n"
 
-#: client/cgame/campaign/cp_base.cpp:1396
+#: client/cgame/campaign/cp_base.cpp:1408
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Är du säker på att du vill förstöra den här byggnaden?"
 
-#: client/cgame/campaign/cp_base.cpp:1450
+#: client/cgame/campaign/cp_base.cpp:1462
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Kostnad:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1453
+#: client/cgame/campaign/cp_base.cpp:1465
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i dag att bygga\n"
 msgstr[1] "%i dagar att bygga\n"
 
-#: client/cgame/campaign/cp_base.cpp:1456
+#: client/cgame/campaign/cp_base.cpp:1468
 #: client/cgame/campaign/cp_ufopedia.cpp:216
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Löpande kostnader:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1459
+#: client/cgame/campaign/cp_base.cpp:1471
 #: client/cgame/campaign/cp_ufopedia.cpp:213
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Behöver:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
+#: client/cgame/campaign/cp_base.cpp:2072
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -30156,8 +30183,8 @@ msgstr ""
 "Ingen farkost i den här basen - Du måste först köpa eller överföra en "
 "farkost\n"
 
-#: client/cgame/campaign/cp_base.cpp:2060
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2074
 #: client/cgame/campaign/cp_market_callbacks.cpp:173
 #: client/cgame/campaign/cp_market_callbacks.cpp:178
 #: client/cgame/campaign/cp_market_callbacks.cpp:183
@@ -30166,49 +30193,49 @@ msgstr ""
 msgid "Note"
 msgstr "Observera"
 
-#: client/cgame/campaign/cp_base.cpp:2062
+#: client/cgame/campaign/cp_base.cpp:2074
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Ingen farkost i den här basen - Du måste först köpa en farkost\n"
 
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2084
 #, fuzzy
 msgid "Antimatter (current/max):"
 msgstr "Lagring av antimateria"
 
-#: client/cgame/campaign/cp_base.cpp:2241
+#: client/cgame/campaign/cp_base.cpp:2253
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Konstruktion av %s är färdig i basen %s."
 
-#: client/cgame/campaign/cp_base.cpp:2242
+#: client/cgame/campaign/cp_base.cpp:2254
 msgid "Building finished"
 msgstr "Byggnaden är färdig"
 
-#: client/cgame/campaign/cp_base.cpp:2303
+#: client/cgame/campaign/cp_base.cpp:2315
 #, fuzzy, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "du samlade in %i pengar."
 
-#: client/cgame/campaign/cp_base.cpp:2304
+#: client/cgame/campaign/cp_base.cpp:2316
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i insamlade objekt"
 msgstr[1] "%i insamlade objekt"
 
-#: client/cgame/campaign/cp_base.cpp:2308
+#: client/cgame/campaign/cp_base.cpp:2320
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Inte tillräckligt mycket lagringsplats i basen %s. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2309
+#: client/cgame/campaign/cp_base.cpp:2321
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i objekt såldes."
 msgstr[1] "%i objekt såldes."
 
-#: client/cgame/campaign/cp_base.cpp:2959
+#: client/cgame/campaign/cp_base.cpp:2972
 #, fuzzy, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -31769,126 +31796,6 @@ msgstr "Ingen beskrivning tillgänglig."
 msgid "No research proposal available."
 msgstr "Inget forskningsförslag finns tillgängligt."
 
-#: client/cgame/campaign/cp_research_callbacks.cpp:92
-#, c-format
-msgid "Laboratory space (used/all): %i/%i"
-msgstr "Laboratorieutrymme (använt/alla): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:101
-#, c-format
-msgid "Scientists (available/all): %i/%i"
-msgstr "Forskare (tillgängliga/alla): %i/%i"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:110
-msgid "Not researched in any base."
-msgstr "Forskas inte på i den här basen."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:116
-#, fuzzy, c-format
-msgid "Researched in %s."
-msgstr "Forskas på i %s"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:118
-msgid "Researched in this base."
-msgstr "Forskas på i den här basen."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:130
-#, c-format
-msgid "Progress: %.1f%%"
-msgstr "Förlopp: %.1f%%"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:133
-msgid "Progress: not available."
-msgstr "Förlopp: inte tillgängligt."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:138
-msgid "Status: under research"
-msgstr "Status: forskning pågår"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:139
-#, fuzzy
-msgid ""
-"Status: this research topic is currently being processed in laboratories"
-msgstr "Status: Forskningen gör paus"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:142
-#, fuzzy
-msgid "Status: research paused"
-msgstr "Status: Forskningen gör paus"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:143
-#, fuzzy
-msgid "Status: research topic currently paused"
-msgstr "Status: Forskningen gör paus"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:146
-#: client/cgame/campaign/cp_research_callbacks.cpp:147
-#, fuzzy
-msgid "Status: research finished"
-msgstr "Status: Forskningen är färdig"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:152
-#, fuzzy
-msgid "Status: not possible to research"
-msgstr "Status: Forskningen pågår"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:153
-msgid ""
-"Status: the materials or background knowledge needed to research this topic "
-"are not available yet"
-msgstr ""
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:155
-#: client/cgame/campaign/cp_research_callbacks.cpp:156
-#, fuzzy
-msgid "Status: unknown technology"
-msgstr "Status: Okänd teknologi"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:271
-#, fuzzy
-msgid "Unassigned scientists"
-msgstr "Anställ forskare"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:307
-msgid "Missing an artifact"
-msgstr "Saknar en artefakt"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:317
-#, fuzzy
-msgid "Unresearchable collected items"
-msgstr "%i insamlade objekt"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:562
-msgid "This item is currently under research in another base."
-msgstr "Det forskas redan på det här objektet i en annan bas."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:580
-#: client/cgame/campaign/cp_research_callbacks.cpp:625
-msgid "The research on this item is complete."
-msgstr "Forskningen på det här objektet är färdig."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:586
-msgid ""
-"The research on this item is not yet possible.\n"
-"You need to research the technologies it's based on first."
-msgstr ""
-"Forskningen på det här objektet är ännu inte möjlig.\n"
-"Du behöver forska på teknologier som det är baserat på först."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:652
-msgid "No research proposal available for this project."
-msgstr "Inget forskningsförslag finns tillgängligt för det här projektet."
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:812
-#, fuzzy
-msgid "Nothing to research."
-msgstr "Ingenting att forska på"
-
-#: client/cgame/campaign/cp_research_callbacks.cpp:815
-#, fuzzy
-msgid "Build a laboratory first."
-msgstr "Bygg ett laboratorium först"
-
 #: client/cgame/campaign/cp_save.cpp:182
 msgid "Error decompressing data"
 msgstr "Fel vid dekomprimering av data"
@@ -33228,22 +33135,22 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Kan inte genomföra handlingen - omöjligt kast!\n"
 
-#: game/g_combat.cpp:1140
+#: game/g_combat.cpp:1141
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Kan inte genomföra handlingen - objektet är inte aktiverbart!\n"
 
-#: game/g_combat.cpp:1167
+#: game/g_combat.cpp:1168
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
-#: game/g_combat.cpp:1190
+#: game/g_combat.cpp:1191
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
-#: game/g_combat.cpp:1236
+#: game/g_combat.cpp:1237
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr "Kan inte genomföra handlingen - inte tillräckligt med ammunition!\n"
@@ -33353,6 +33260,109 @@ msgstr "utomjordisk"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ta en skärmbild"
+
+#, fuzzy
+#~ msgid "Add/Remove scientist"
+#~ msgstr "Ta bort forskare"
+
+#, fuzzy
+#~ msgid "Switch to another base"
+#~ msgstr "Växla till nästa bas"
+
+#, fuzzy
+#~ msgid "Base Research Info"
+#~ msgstr "Basinfo"
+
+#~ msgid "Start research"
+#~ msgstr "Starta forskning"
+
+#~ msgid "Stop research"
+#~ msgstr "Stoppa forskning"
+
+#~ msgid "Show research proposal"
+#~ msgstr "Visa forskningsförslag"
+
+#~ msgid "Laboratory space (used/all): %i/%i"
+#~ msgstr "Laboratorieutrymme (använt/alla): %i/%i"
+
+#~ msgid "Scientists (available/all): %i/%i"
+#~ msgstr "Forskare (tillgängliga/alla): %i/%i"
+
+#~ msgid "Not researched in any base."
+#~ msgstr "Forskas inte på i den här basen."
+
+#, fuzzy
+#~ msgid "Researched in %s."
+#~ msgstr "Forskas på i %s"
+
+#~ msgid "Researched in this base."
+#~ msgstr "Forskas på i den här basen."
+
+#~ msgid "Progress: %.1f%%"
+#~ msgstr "Förlopp: %.1f%%"
+
+#~ msgid "Progress: not available."
+#~ msgstr "Förlopp: inte tillgängligt."
+
+#~ msgid "Status: under research"
+#~ msgstr "Status: forskning pågår"
+
+#, fuzzy
+#~ msgid ""
+#~ "Status: this research topic is currently being processed in laboratories"
+#~ msgstr "Status: Forskningen gör paus"
+
+#, fuzzy
+#~ msgid "Status: research paused"
+#~ msgstr "Status: Forskningen gör paus"
+
+#, fuzzy
+#~ msgid "Status: research topic currently paused"
+#~ msgstr "Status: Forskningen gör paus"
+
+#, fuzzy
+#~ msgid "Status: research finished"
+#~ msgstr "Status: Forskningen är färdig"
+
+#, fuzzy
+#~ msgid "Status: not possible to research"
+#~ msgstr "Status: Forskningen pågår"
+
+#, fuzzy
+#~ msgid "Status: unknown technology"
+#~ msgstr "Status: Okänd teknologi"
+
+#, fuzzy
+#~ msgid "Unassigned scientists"
+#~ msgstr "Anställ forskare"
+
+#~ msgid "Missing an artifact"
+#~ msgstr "Saknar en artefakt"
+
+#, fuzzy
+#~ msgid "Unresearchable collected items"
+#~ msgstr "%i insamlade objekt"
+
+#~ msgid "This item is currently under research in another base."
+#~ msgstr "Det forskas redan på det här objektet i en annan bas."
+
+#~ msgid "The research on this item is complete."
+#~ msgstr "Forskningen på det här objektet är färdig."
+
+#~ msgid ""
+#~ "The research on this item is not yet possible.\n"
+#~ "You need to research the technologies it's based on first."
+#~ msgstr ""
+#~ "Forskningen på det här objektet är ännu inte möjlig.\n"
+#~ "Du behöver forska på teknologier som det är baserat på först."
+
+#, fuzzy
+#~ msgid "Nothing to research."
+#~ msgstr "Ingenting att forska på"
+
+#, fuzzy
+#~ msgid "Build a laboratory first."
+#~ msgstr "Bygg ett laboratorium först"
 
 #, fuzzy
 #~ msgid "Community_centre"
@@ -37997,9 +38007,6 @@ msgstr "Ta en skärmbild"
 #~ msgid "Being transfered"
 #~ msgstr "Överförs"
 
-#~ msgid "Back to base"
-#~ msgstr "På väg tillbaka till basen"
-
 #~ msgid "You've got a new aircraft (a %s) in base %s"
 #~ msgstr "Du har fått en ny farkost (en %s) i basen %s"
 
@@ -38247,9 +38254,6 @@ msgstr "Ta en skärmbild"
 #, fuzzy
 #~ msgid "steelblade"
 #~ msgstr "Kerrsvärd"
-
-#~ msgid "NA"
-#~ msgstr "-"
 
 #~ msgid "Camera Scroll:"
 #~ msgstr "Kamerarullning:"
@@ -39179,9 +39183,6 @@ msgstr "Ta en skärmbild"
 
 #~ msgid "pbeam_ammo_pre_txt"
 #~ msgstr "Ingen information om tidigare forskning tillgänglig"
-
-#~ msgid "Available scientists in this base: %i"
-#~ msgstr "Tillgängliga forskare i den här basen: %i"
 
 #, fuzzy
 #~ msgid "Hit the lower right button to finish the teamselection"
