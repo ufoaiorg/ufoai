@@ -115,24 +115,13 @@ component cmpAlienContainment extends image {
 
 window aliencont
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-	image background {
-		src		"background/base_bg"
+	{
+		background	"background/base_bg"
 	}
 
-	// ==================
-	// Base header
-	// ==================
 	cmpBaseHeader baseHeader {}
 
-	// =======================
 	// info window (top left)
-	// =======================
 	panel baseinfo {
 		{
 			pos		"11 93"
@@ -140,9 +129,7 @@ window aliencont
 			background	"ui/panel_grey_green_large"
 		}
 
-		// ==================
 		// base info (aliencont capacity)
-		// ==================
 		string txt_base_info {
 			string		"_Live Alien Containment Info"
 			pos			"19 25"
@@ -175,9 +162,7 @@ window aliencont
 		}
 	}
 
-	// ==========================
 	// kill living aliens button
-	// ==========================
 	button bt_alc_killaliens {
 		tooltip		"_Kill all aliens in this base"
 		pos			"275 165"
@@ -189,9 +174,7 @@ window aliencont
 		}
 	}
 
-	// ==============================
 	// alien info window (top right)
-	// ==============================
 	panel raceinfo {
 		{
 			pos		"347 93"
@@ -233,9 +216,7 @@ window aliencont
 		}
 	}
 
-	// ==============================
 	// Alien Containment Slots Panel
-	// ==============================
 	data selected {
 		string	""
 	}
@@ -359,8 +340,14 @@ window aliencont
 	 */
 	confunc ui_aliencont_cap {
 		*node:root.baseinfo.txt_alc_limit@string = "<1> / <2>"
-		*node:root.baseinfo.alc_bar@current = <1>
 		*node:root.baseinfo.alc_bar@max = <2>
+		if ( <1> <= <2>) {
+			*node:root.baseinfo.alc_bar@current = <1>
+			*node:root.baseinfo.alc_bar@color = "0 .8 0 1"
+		} else {
+			*node:root.baseinfo.alc_bar@current = <2>
+			*node:root.baseinfo.alc_bar@color = "1 0 0 1"
+		}
 	}
 
 	// ==========================

@@ -122,34 +122,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 		}
 	}
 	cgi->LIST_Delete(&cargo);
-	AL_RemoveAliensExceedingCapacity(aircraft->homebase);
-}
-
-/**
- * @brief Remove aliens that exceed containment capacity
- * @param[in, out] base Pointer to the base to check
- * @note called on destroying an Alien Containment (from building_ondestroy)
- */
-void AL_RemoveAliensExceedingCapacity (base_t *base)
-{
-	if (!base)
-		return;
-	if (!base->alienContainment)
-		return;
-
-	const int max = CAP_GetMax(base, CAP_ALIENS);
-	int current = CAP_GetCurrent(base, CAP_ALIENS);
-
-	if (current <= max)
-		return;
-
-	linkedList_t *list = base->alienContainment->list();
-	LIST_Foreach(list, alienCargo_t, item) {
-		const int remove = std::min(item->alive, current - max);
-		base->alienContainment->add(item->teamDef, -remove, 0);
-		current = CAP_GetCurrent(base, CAP_ALIENS);
-	}
-	cgi->LIST_Delete(&list);
 }
 
 /**
@@ -261,10 +233,5 @@ bool AC_LoadXML (xmlNode_t *parent)
  */
 bool AC_ContainmentAllowed (const base_t* base)
 {
-	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
-		assert(base->alienContainment);
-		return true;
-	} else {
-		return false;
-	}
+	return base->alienContainment != nullptr;
 }

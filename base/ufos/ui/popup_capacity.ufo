@@ -1,0 +1,111 @@
+window popup_cap_overload
+{
+	{
+		pos				"265 256"
+		size			"492 270"
+		dragbutton		true
+		closebutton		true
+		modal			true				// we can't click out
+		background			"ui/popup_alpha_tile"
+		string			"_Capacity Exceeded"
+	}
+
+	string warning {
+		string			"_There is no more room for goods/personel at this base. Free up some space."
+		pos				"30 60"
+		size			"435 60"
+		longlines		LONGLINES_WRAP
+	}
+
+	data baseid {
+		integer			-1
+		string			""
+	}
+
+	string base_title {
+		string			"_Base:"
+		pos				"50 120"
+		size			"90 20"
+		font			"f_small_bold"
+	}
+	string base {
+		pos				"140 120"
+		size			"290 20"
+	}
+
+	string header_capacity {
+		string 		"_Capacity"
+		pos			"50 150"
+		size		"230 20"
+		font		"f_small_bold"
+		contentalign	ALIGN_CL
+	}
+	string header_free {
+		string 		"_free"
+		pos			"275 150"
+		size		"75 20"
+		font		"f_small_bold"
+		contentalign	ALIGN_CR
+	}
+	string header_all {
+		string 		"_all"
+		pos			"350 150"
+		size		"75 20"
+		font		"f_small_bold"
+		contentalign	ALIGN_CR
+	}
+
+	string storage {
+		pos			"50 170"
+		size		"230 20"
+		font		"f_small"
+	}
+	string free {
+		pos			"275 170"
+		size		"75 20"
+		font		"f_small"
+		contentalign	ALIGN_CR
+	}
+	string all {
+		pos			"350 170"
+		size		"75 20"
+		font		"f_small"
+		contentalign	ALIGN_CR
+	}
+
+	cmpPopupButton close {
+		string		"_Close"
+		pos			"40 210"
+		onclick {
+			cmd "ui_pop;"
+		}
+	}
+	cmpPopupButton go_to_base {
+		string		"_Go to base"
+		pos			"280 210"
+		onclick {
+			if ( *node:root.baseid@string eq "base" ) {
+				cmd		"ui_pop; mn_base_select <node:root.baseid@integer>;"
+			}
+		}
+	}
+
+	func onWindowOpened	{
+		if ( paramCount < 6) {
+			cmd "ui_pop;"
+		} else {
+			*node:root.baseid@string = "<1>"
+			*node:root.baseid@integer = <2>
+			*node:root.base@string = "<3>"
+			*node:root.storage@string = "<4>"
+			*node:root.free@string = "<5>"
+			*node:root.all@string = "<6>"
+
+			if ( <5> < 0 ) {
+				*node:root.free@color = "1 0 0 1"
+			} else {
+				*node:root.free@color = "1 1 1 1"
+			}
+		}
+	}
+}

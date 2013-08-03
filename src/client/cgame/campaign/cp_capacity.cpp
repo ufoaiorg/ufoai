@@ -28,79 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_geoscape.h"
 #include "cp_popup.h"
+#include "cp_time.h"
 #include "cp_ufo.h"
-
-/**
- * @brief Actions to perform when destroying one hangar.
- * @param[in] base Pointer to the base where hangar is destroyed.
- * @param[in] capacity Type of hangar capacity: CAP_AIRCRAFT_SMALL or CAP_AIRCRAFT_BIG
- * @note called when player destroy its building or hangar is destroyed during base attack.
- * @note These actions will be performed after we actually remove the building.
- * @pre we checked before calling this function that all parameters are valid.
- * @pre building is not under construction.
- * @sa B_BuildingDestroy_f
- * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
- */
-void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacity)
-{
-	linkedList_t *awayAircraft = nullptr;
-	int numAwayAircraft;
-	int randomNum;
-
-	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
-	if (CAP_GetFreeCapacity(base, capacity) >= 0)
-		return;
-
-	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	AIR_ForeachFromBase(aircraft, base) {
-		const int aircraftSize = aircraft->size;
-
-		switch (aircraftSize) {
-		case AIRCRAFT_SMALL:
-			if (capacity != CAP_AIRCRAFT_SMALL)
-				continue;
-			break;
-		case AIRCRAFT_LARGE:
-			if (capacity != CAP_AIRCRAFT_BIG)
-				continue;
-			break;
-		default:
-			cgi->Com_Error(ERR_DROP, "B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'", aircraftSize);
-		}
-
-		/* Only aircraft in hangar will be destroyed by hangar destruction */
-		if (!AIR_IsAircraftInBase(aircraft)) {
-			if (AIR_IsAircraftOnGeoscape(aircraft))
-				cgi->LIST_AddPointer(&awayAircraft, (void*)aircraft);
-			continue;
-		}
-
-		/* Remove aircraft and aircraft items, but do not fire employees */
-		AIR_DeleteAircraft(aircraft);
-		cgi->LIST_Delete(&awayAircraft);
-		return;
-	}
-	numAwayAircraft = cgi->LIST_Count(awayAircraft);
-
-	if (!numAwayAircraft)
-		return;
-	/* All aircraft are away from base, pick up one and change it's homebase */
-	randomNum = rand() % numAwayAircraft;
-	if (!CL_DisplayHomebasePopup((aircraft_t*)cgi->LIST_GetByIdx(awayAircraft, randomNum), false)) {
-		aircraft_t *aircraft = (aircraft_t*)cgi->LIST_GetByIdx(awayAircraft, randomNum);
-		/* No base can hold this aircraft */
-		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr)))
-			CP_SpawnRescueMission(aircraft, nullptr);
-		else {
-			/* Destroy the aircraft and everything onboard - the aircraft pointer
-			 * is no longer valid after this point */
-			/* Pilot skills; really kill pilot in this case? */
-			AIR_DestroyAircraft(aircraft);
-		}
-	}
-	cgi->LIST_Delete(&awayAircraft);
-}
 
 /**
  * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
@@ -113,65 +42,6 @@ void CAP_RemoveAntimatterExceedingCapacity (base_t *base)
 		return;
 
 	B_ManageAntimatter(base, amount, false);
-}
-
-/**
- * @brief Remove items until everything fits in storage.
- * @note items will be randomly selected for removal.
- * @param[in] base Pointer to the base
- */
-void CAP_RemoveItemsExceedingCapacity (base_t *base)
-{
-	int i;
-	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int num, cnt;
-
-	if (CAP_GetFreeCapacity(base, CAP_ITEMS) >= 0)
-		return;
-
-	for (i = 0, num = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
-
-		if (!B_ItemIsStoredInBaseStorage(obj))
-			continue;
-
-		/* Don't count item that we don't have in base */
-		if (B_ItemInBase(obj, base) <= 0)
-			continue;
-
-		objIdx[num++] = i;
-	}
-
-	cnt = E_CountHired(base, EMPL_ROBOT);
-	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
-	for (i = 0; i < cnt; i++) {
-		objIdx[num++] = MAX_OBJDEFS;
-	}
-
-	while (num && CAP_GetFreeCapacity(base, CAP_ITEMS) < 0) {
-		/* Select the item to remove */
-		const int randNumber = rand() % num;
-		if (objIdx[randNumber] >= MAX_OBJDEFS) {
-			/* A UGV is destroyed: get first one */
-			Employee* employee = E_GetHiredRobot(base, 0);
-			/* There should be at least a UGV */
-			assert(employee);
-			E_DeleteEmployee(employee);
-		} else {
-			/* items are destroyed. We guess that all items of a given type are stored in the same location
-			 *	=> destroy all items of this type */
-			const int idx = objIdx[randNumber];
-			const objDef_t *od = INVSH_GetItemByIDX(idx);
-			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), false);
-		}
-		REMOVE_ELEM(objIdx, randNumber, num);
-
-		/* Make sure that we don't have an infinite loop */
-		if (num <= 0)
-			break;
-	}
-	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
-		CAP_GetCurrent(base, CAP_ITEMS), CAP_GetMax(base, CAP_ITEMS));
 }
 
 /**
@@ -273,27 +143,27 @@ void CAP_CheckOverflow (void)
 				continue;
 
 			switch (capacityType) {
+			case CAP_ANTIMATTER:
+				CAP_RemoveAntimatterExceedingCapacity(base);
+				break;
 			case CAP_WORKSPACE:
 				PR_UpdateProductionCap(base);
-				break;
-			case CAP_ITEMS:
-				CAP_RemoveItemsExceedingCapacity(base);
-				break;
-			case CAP_ALIENS:
-				AL_RemoveAliensExceedingCapacity(base);
 				break;
 			case CAP_LABSPACE:
 				RS_RemoveScientistsExceedingCapacity(base);
 				break;
 			case CAP_AIRCRAFT_SMALL:
 			case CAP_AIRCRAFT_BIG:
-				CAP_RemoveAircraftExceedingCapacity(base, capacityType);
-				break;
+			case CAP_ALIENS:
 			case CAP_EMPLOYEES:
-				E_DeleteEmployeesExceedingCapacity(base);
-				break;
-			case CAP_ANTIMATTER:
-				CAP_RemoveAntimatterExceedingCapacity(base);
+			case CAP_ITEMS:
+				if (base->baseStatus != BASE_DESTROYED) {
+					const buildingType_t bldgType = B_GetBuildingTypeByCapacity((baseCapacities_t)i);
+					const building_t *bldg = B_GetBuildingTemplateByType(bldgType);
+					CP_GameTimeStop();
+					cgi->Cmd_ExecuteString(va("ui_push popup_cap_overload base %d \"%s\" \"%s\" %d %d",
+						base->idx, base->name, _(bldg->name), cap->max - cap->cur, cap->max));
+				}
 				break;
 			default:
 				/* nothing to do */

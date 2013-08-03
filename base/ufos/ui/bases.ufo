@@ -42,15 +42,6 @@ component cmpBuildingSpace extends panel
 		current	0
 		max		100
 		readonly	true
-
-		/* readd onHover effect of non-readonly bars */
-		/** @todo do we want this? */
-		onMouseEnter {
-			*node:this@color = "0 1 0 1"
-		}
-		onMouseLeave {
-			*node:this@color = "0 0.8 0 1"
-		}
 	}
 }
 
@@ -285,9 +276,15 @@ window bases
 			if (param4 != 0) {
 				call *node:parent.bld_space@createChild ( "<2>", "cmpBuildingSpace" )
 				*node:parent.bld_space.<2>.label@string = "<1>"
-				*node:parent.bld_space.<2>.data@string = <3>/<4>
-				*node:parent.bld_space.<2>.data_bar@current = <3>
+				*node:parent.bld_space.<2>.data@string = "<3>/<4>"
 				*node:parent.bld_space.<2>.data_bar@max = <4>
+				if ( <3> <= <4> ) {
+					*node:parent.bld_space.<2>.data_bar@current = <3>
+				} else {
+					*node:parent.bld_space.<2>.data_bar@current = <4>
+					*node:parent.bld_space.<2>.data_bar@color = "1 0 0 1"
+					*node:parent.bld_space.<2>.data_bar@bordercolor = "1 0 0 1"
+				}
 			}
 		}
 

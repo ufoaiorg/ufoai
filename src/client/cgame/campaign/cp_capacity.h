@@ -55,8 +55,6 @@ void CAP_AddMax(struct base_s* base, baseCapacities_t capacity, int value);
 void CAP_SetCurrent(struct base_s* base, baseCapacities_t capacity, int value);
 void CAP_AddCurrent(struct base_s* base, baseCapacities_t capacity, int value);
 
-void CAP_RemoveAircraftExceedingCapacity(struct base_s* base, baseCapacities_t capacity);
-void CAP_RemoveItemsExceedingCapacity(struct base_s *base);
 void CAP_RemoveAntimatterExceedingCapacity(struct base_s *base);
 
 int CAP_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);

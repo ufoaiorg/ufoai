@@ -43,7 +43,6 @@ building building_aliencontainment
 	tech			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
-	ondisable		"aliencont_killall"
 }
 
 building building_entrance

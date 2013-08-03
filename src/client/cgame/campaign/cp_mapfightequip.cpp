@@ -496,7 +496,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
 			/* Can only remove non-virtual ammo */
 			if (!slot->ammo->isVirtual) {
 				if (base)
-					B_UpdateStorageAndCapacity(base, slot->ammo, 1, false);
+					B_UpdateStorageAndCapacity(base, slot->ammo, 1, true);
 				slot->ammo = nullptr;
 				slot->ammoLeft = 0;
 			}
@@ -506,7 +506,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
 		AII_RemoveItemFromSlot(base, slot, true);
 		if (!slot->item->isVirtual) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->item, 1, false);
+				B_UpdateStorageAndCapacity(base, slot->item, 1, true);
 			/* the removal is over */
 			if (slot->nextItem) {
 				/* there is anoter item to install after this one */
@@ -548,14 +548,14 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
 		if (slot->nextAmmo) {
 			if (!slot->nextAmmo->isVirtual) {
 				if (base)
-					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, false);
+					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, true);
 				slot->nextAmmo = nullptr;
 			}
 		}
 	} else if (slot->nextItem) {
 		/* Remove nextItem */
 		if (base)
-			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, false);
+			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, true);
 		slot->nextItem = nullptr;
 		/* also remove ammo if any */
 		if (slot->nextAmmo)

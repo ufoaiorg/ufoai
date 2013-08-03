@@ -954,6 +954,18 @@ void B_Destroy (base_t *base)
 
 	E_DeleteAllEmployees(base);
 
+	AIR_ForeachFromBase(aircraft, base) {
+		AIR_DeleteAircraft(aircraft);
+	}
+
+	if (base->alienContainment != nullptr) {
+		delete base->alienContainment;
+		base->alienContainment = nullptr;
+	}
+
+	OBJZERO(base->storage);
+	CAP_SetCurrent(base, CAP_ITEMS, 0);
+
 	/** @todo Destroy the base. For this we need to check all the dependencies and references.
 	 * Should be only done after putting bases into a linkedList
 	 */
@@ -2443,10 +2455,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
 
 		if (cap == CAP_ALIENS) {
-			if (base->alienContainment != nullptr && CAP_GetMax(base, CAP_ALIENS) == 0) {
+			const capacities_t *alienCap = CAP_Get(base, CAP_ALIENS);
+			if (base->alienContainment != nullptr && alienCap->max == 0 && alienCap->cur == 0) {
 				delete base->alienContainment;
 				base->alienContainment = nullptr;
-			} else if (base->alienContainment == nullptr && CAP_GetMax(base, CAP_ALIENS) > 0) {
+			} else if (base->alienContainment == nullptr && alienCap->max > 0) {
 				base->alienContainment = new AlienContainment(CAP_Get(base, CAP_ALIENS), nullptr);
 			}
 		}
