@@ -2266,8 +2266,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	int i;
 	int numitems = 0;
 	int gained = 0;
-	int forcedsold = 0;
-	int forcedgained = 0;
 	itemsTmp_t *cargo;
 	base_t *base;
 
@@ -2295,17 +2293,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				gained += BS_GetItemSellingPrice(item) * amount;
 				numitems += amount;
 			} else {
-				int j;
-				/* Check whether there is enough space for adding this item.
-				 * If yes - add. If not - sell. */
-				for (j = 0; j < amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, item, 1, false)) {
-						/* Not enough space, sell item. */
-						BS_SellItem(item, nullptr, 1);
-						forcedgained += BS_GetItemSellingPrice(item);
-						forcedsold++;
-					}
-				}
+				B_UpdateStorageAndCapacity(base, item, amount, true);
 			}
 			continue;
 		}
@@ -2314,11 +2302,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	if (numitems > 0) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("By selling %s you gathered %i credits."),
 			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
-		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
-	}
-	if (forcedsold > 0) {
-		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Not enough storage space in %s. %s"),
-			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	}
 
