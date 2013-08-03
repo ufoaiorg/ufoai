@@ -12791,3 +12791,57 @@
 ( 288 864 88 ) ( 288 832 88 ) ( 288 832 68 ) tex_material/c_black 0 4 0 1 1 402717698 32 0
 }
 }
+// entity 152
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 752 92"
+}
+// entity 153
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1072 784 92"
+"angle" "180"
+}
+// entity 154
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1296 784 92"
+"angle" "180"
+}
+// entity 155
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1360 752 92"
+"angle" "180"
+}
+// entity 156
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "880 816 92"
+}
+// entity 157
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "976 784 92"
+"angle" "-90"
+}
+// entity 158
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1168 784 92"
+"angle" "180"
+}
+// entity 159
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1232 752 92"
+"angle" "180"
+}

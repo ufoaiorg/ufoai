@@ -5855,7 +5855,7 @@
 // entity 61
 {
 "classname" "info_alien_start"
-"origin" "560 528 96"
+"origin" "592 528 96"
 }
 // entity 62
 {
@@ -9482,4 +9482,53 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
+}
+// entity 110
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 528 92"
+}
+// entity 111
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 528 92"
+}
+// entity 112
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 528 92"
+"angle" "90"
+}
+// entity 113
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "688 528 92"
+}
+// entity 114
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 496 92"
+}
+// entity 115
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 496 92"
+}
+// entity 116
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "720 496 92"
+}
+// entity 117
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "656 496 92"
 }

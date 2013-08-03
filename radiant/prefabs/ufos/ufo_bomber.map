@@ -21735,3 +21735,59 @@
 "origin" "564 584 44"
 "spawnflags" "1"
 }
+// entity 358
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 1072 92"
+"angle" "-90"
+}
+// entity 359
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 1072 92"
+"angle" "-90"
+}
+// entity 360
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 1072 92"
+"angle" "-90"
+}
+// entity 361
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 1072 92"
+"angle" "-90"
+}
+// entity 362
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 1136 92"
+"angle" "-90"
+}
+// entity 363
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 1136 92"
+"angle" "-90"
+}
+// entity 364
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 1136 92"
+"angle" "-90"
+}
+// entity 365
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 1136 92"
+"angle" "-90"
+}
