@@ -413,17 +413,11 @@ void GAME_LoadTeam_f (void)
  */
 static void GAME_GetEquipment (void)
 {
-	const equipDef_t *edFromScript;
-	const char *teamID = "phalanx";
-	char equipmentName[MAX_VAR];
-	equipDef_t *ed;
-
-	Com_sprintf(equipmentName, sizeof(equipmentName), "multiplayer_%s", teamID);
-
+	const char *equipmentName = Cvar_GetString("cl_equip");
 	/* search equipment definition */
-	edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
+	const equipDef_t *edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
 
-	ed = GAME_GetEquipmentDefinition();
+	equipDef_t *ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
 	game_inventory.init();

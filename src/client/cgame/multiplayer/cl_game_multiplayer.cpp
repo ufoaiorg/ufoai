@@ -230,6 +230,8 @@ static void GAME_MP_InitStartup (void)
 	const char *max_spp = cgi->Cvar_VariableStringOld("sv_maxsoldiersperplayer");
 
 	cgi->Cvar_ForceSet("sv_maxclients", "2");
+	/** @todo make equipment configurable for multiplayer */
+	cgi->Cvar_Set("cl_equip", "multiplayer_initial");
 
 	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, nullptr);
 	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
