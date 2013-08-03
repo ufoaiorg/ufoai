@@ -1,19 +1,51 @@
+/* Landscape */
 
-/* ufo2: (Harvester, Corrupter, Bomber) */
+{
+material tex_material/c_black
+	bump 0.0
+	hardness 0.0
+}
 
-/* ufo2_01: Outside Hull clean */
+{
+material tex_material/s_wood003
+	bump 1.0
+	hardness 0.1
+}
+
+{
+material tex_nature/desert004
+	bump 1.0
+	hardness 0.0
+}
+
+{
+material tex_nature/desert005
+	bump 1.0
+	hardness 0.0
+}
+
+{
+material tex_nature/desert007
+	bump 1.0
+	hardness 0.0
+}
+
+
+
+/* UFO textures*/
+
+// hull main textures
 {
 	material tex_ufo/ufo2_01
 	bump 1.0
 	hardness 1.0
 	parallax 1.0
-	specular 1.0
+	specular 5.0
 	{
 		lightmap
 	}
 }
 
-/* ufo2_02: Inside Wall like ufo2_03 without reliefs */
 {
 	material tex_ufo/ufo2_02
 	bump 1.0
@@ -25,7 +57,6 @@
 	}
 }
 
-/* ufo2_03: Inside Wall & Outside Hull (Harvester only) with reliefs */
 {
 	material tex_ufo/ufo2_03
 	bump 1.0
@@ -37,7 +68,81 @@
 	}
 }
 
-/* ufo2_12: Engines */
+{
+	material tex_ufo/ufo2_04
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_05
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_06
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_07
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_08
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_09
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_10
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+// engines
 {
 	material tex_ufo/ufo2_12
 	{
@@ -47,20 +152,13 @@
 	}
 }
 
-/* Lights & LightFX (Corrupter) */
-
-/* land_li_green: Small Light (green) (Corrupter) */
-
 {
-	material tex_lights/land_li_green
+	material tex_ufo/ufo2_17
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
 	{
-		texture tex_lights/land_li_orange
-		pulse 0.2
-		rotate 0.3
-	}
-	{
-		flare 2
-		color 0.7 0.7 0.5
-		scale.s 1.3
+		lightmap
 	}
 }
