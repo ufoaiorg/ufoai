@@ -80,13 +80,12 @@ void AL_AddAliens (aircraft_t *aircraft)
 		return;
 	}
 
+	if (aircraft->homebase->alienContainment == nullptr)
+		aircraft->homebase->alienContainment = new AlienContainment(CAP_Get(aircraft->homebase, CAP_ALIENS), nullptr);
+
 	AlienContainment *cont = aircraft->homebase->alienContainment;
-	if (!cont) {
-		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."));
-		delete aircraft->alienCargo;
-		aircraft->alienCargo = nullptr;
+	if (!cont)
 		return;
-	}
 
 	bool messageSent = false;
 	linkedList_t *cargo = aircraft->alienCargo->list();
