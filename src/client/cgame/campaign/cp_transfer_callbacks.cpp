@@ -192,7 +192,7 @@ static void TR_CargoList (void)
 			if (item->dead > 0)
 				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead:%s\" \"%s\" %d", item->teamDef->id, va(_("Corpse of %s"), _(item->teamDef->name)), item->dead);
 			if (item->alive > 0)
-				cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"alive:%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
 		}
 		cgi->LIST_Delete(&cargo);
 	}
