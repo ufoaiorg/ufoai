@@ -306,8 +306,15 @@ $(TARGET)_SRCS = $(sort $($(TARGET)_SRCS_TMP))
 
 ifneq ($(HAVE_CUNIT_BASIC_H), 1)
 	$(TARGET)_IGNORE := yes
+else
+TESTMAPSRC := $(wildcard unittest/maps/*.map)
+TESTBSPS := $(TESTMAPSRC:.map=.bsp)
+$(TESTBSPS): %.bsp: %.map
+	$(UFO2MAP) -gamedir unittest $(UFO2MAPFLAGS) $(<:unittest/%=%)
 endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
 $(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
 $(TARGET)_CCFLAGS  := $($(TARGET)_CFLAGS)
+
+testall: ufo2map unittest/maps/test_routing.bsp unittest/maps/test_game.bsp
