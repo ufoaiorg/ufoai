@@ -2282,7 +2282,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, item, amount, true);
+			B_AddToStorage(base, item, amount);
 			if (amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -2293,7 +2293,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				gained += BS_GetItemSellingPrice(item) * amount;
 				numitems += amount;
 			} else {
-				B_UpdateStorageAndCapacity(base, item, amount, true);
+				B_AddToStorage(base, item, amount);
 			}
 			continue;
 		}
@@ -2819,9 +2819,6 @@ bool B_ItemIsStoredInBaseStorage (const objDef_t *obj)
  * @param[in] obj The item.
  * @param[in] amount Amount to be added to removed
  * @return the added/removed amount
- * @note The main difference between B_AddToStorage and B_UpdateStorageAndCapacity is that
- * B_AddToStorage adds/removes as many items as possible if adding/removing all not possible
- * also B_AddToStorage don't have a reset method
  */
 int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 {
@@ -2835,12 +2832,8 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 
 	cap = CAP_Get(base, CAP_ITEMS);
 	if (amount > 0) {
-		if (obj->size > 0) {
-			const int freeSpace = cap->max - cap->cur;
-			/* correct amount and update capacity */
-			amount = std::min(amount, freeSpace / obj->size);
+		if (obj->size > 0)
 			cap->cur += (amount * obj->size);
-		}
 		base->storage.numItems[obj->idx] += amount;
 	} else if (amount < 0) {
 		/* correct amount */
@@ -2858,61 +2851,6 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 	}
 
 	return amount;
-}
-
-/**
- * @brief Update the storage amount and the capacities for the storages in the base
- * @param[in] base The base which storage and capacity should be updated
- * @param[in] obj The item.
- * @param[in] amount Amount to be added to removed
- * @param[in] ignorecap true if we won't check freespace but will just add items.
- * @sa CL_BaseRansacked
- */
-bool B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, bool ignorecap)
-{
-	capacities_t *cap;
-
-	assert(base);
-	assert(obj);
-
-	if (obj->isVirtual)
-		return true;
-
-	cap = CAP_Get(base, CAP_ITEMS);
-	if (!B_ItemIsStoredInBaseStorage(obj)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
-		return false;
-	}
-
-	if (!ignorecap && amount > 0) {
-		/* Only add items if there is enough room in storage */
-		if (cap->max - cap->cur < (obj->size * amount)) {
-			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
-			return false;
-		}
-	}
-
-	base->storage.numItems[obj->idx] += amount;
-	if (obj->size > 0)
-		cap->cur += (amount * obj->size);
-
-	if (cap->cur < 0) {
-		Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", cap->cur);
-		cap->cur = 0;
-	}
-
-	if (base->storage.numItems[obj->idx] < 0) {
-		Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
-		base->storage.numItems[obj->idx] = 0;
-	}
-
-	if (base->storage.numItems[obj->idx] == 0) {
-		technology_t *tech = RS_GetTechForItem(obj);
-		if (tech->statusResearch == RS_RUNNING && tech->base == base)
-			RS_StopResearch(tech);
-	}
-
-	return true;
 }
 
 /**

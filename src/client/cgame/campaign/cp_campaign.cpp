@@ -1005,7 +1005,7 @@ static void CP_DebugAddItem_f (void)
 	}
 
 	Com_Printf("%s %s %d\n", base->name, obj->id, count);
-	B_UpdateStorageAndCapacity(base, obj, count, true);
+	B_AddToStorage(base, obj, count);
 	if (B_ItemInBase(obj, base) > 0) {
 		technology_t *tech = RS_GetTechForItem(obj);
 		RS_MarkCollected(tech);

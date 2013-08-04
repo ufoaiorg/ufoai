@@ -1070,10 +1070,10 @@ void E_RemoveInventoryFromStorage (Employee *employee)
 		while ((item = cont->getNextItem(item))) {
 			/* Remove ammo */
 			if (item->ammoDef() && item->ammoDef() != item->def())
-				B_UpdateStorageAndCapacity(employee->baseHired, item->ammoDef(), -1, false);
+				B_AddToStorage(employee->baseHired, item->ammoDef(), -1);
 			/* Remove Item */
 			if (item->def())
-				B_UpdateStorageAndCapacity(employee->baseHired, item->def(), -1, false);
+				B_AddToStorage(employee->baseHired, item->def(), -1);
 		}
 	}
 }

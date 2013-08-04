@@ -582,7 +582,7 @@ static void TR_Add_f (void)
 
 		if (amount != 0) {
 			td.trItemsTmp[od->idx] += amount;
-			B_UpdateStorageAndCapacity(base, od, -amount, false);
+			B_AddToStorage(base, od, -amount);
 		}
 	}
 
@@ -611,7 +611,7 @@ static void TR_TransferListClear_f (void)
 			if (Q_streq(od->id, ANTIMATTER_TECH_ID))
 				B_ManageAntimatter(base, itemCargoAmount, true);
 			else
-				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, false);
+				B_AddToStorage(base, od, itemCargoAmount);
 		}
 	}
 	if (td.alienCargo && base->alienContainment) {

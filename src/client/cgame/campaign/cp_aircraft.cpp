@@ -869,13 +869,13 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			const objDef_t *obj = item->def();
-			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
-			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
+			B_AddToStorage(sourceBase, obj, -1);
+			B_AddToStorage(destBase, obj, 1);
 
 			obj = item->ammoDef();
 			if (obj) {
-				B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
-				B_UpdateStorageAndCapacity(destBase, obj, 1, false);
+				B_AddToStorage(sourceBase, obj, -1);
+				B_AddToStorage(destBase, obj, 1);
 			}
 		}
 	}

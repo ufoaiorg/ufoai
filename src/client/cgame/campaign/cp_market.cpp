@@ -337,7 +337,7 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
 
 	BS_RemoveItemFromMarket(ugvWeapon, 1);
 	CP_UpdateCredits(ccs.credits - ugv->price);
-	B_UpdateStorageAndCapacity(base, ugvWeapon, 1, false);
+	B_AddToStorage(base, ugvWeapon, 1);
 
 	return true;
 }
@@ -374,7 +374,7 @@ bool BS_SellUGV (Employee *robot)
 
 	BS_AddItemToMarket(ugvWeapon, 1);
 	CP_UpdateCredits(ccs.credits + ugv->price);
-	B_UpdateStorageAndCapacity(base, ugvWeapon, -1, false);
+	B_AddToStorage(base, ugvWeapon, -1);
 
 	return true;
 }
@@ -404,7 +404,7 @@ bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 	if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size * count)
 		return false;
 
-	B_UpdateStorageAndCapacity(base, od, count, false);
+	B_AddToStorage(base, od, count);
 	BS_RemoveItemFromMarket(od, count);
 	CP_UpdateCredits(ccs.credits - BS_GetItemBuyingPrice(od) * count);
 
@@ -431,7 +431,7 @@ bool BS_SellItem (const objDef_t *od, base_t *base, int count)
 	if (base) {
 		if (B_ItemInBase(od, base) < count)
 			return false;
-		B_UpdateStorageAndCapacity(base, od, -1 * count, false);
+		B_AddToStorage(base, od, -1 * count);
 	}
 
 	BS_AddItemToMarket(od, count);
