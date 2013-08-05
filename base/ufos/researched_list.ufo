@@ -66,7 +66,6 @@ researched rslist_phalanx
 	rs_skill_accuracy
 	rs_skill_mind
 	rs_skill_close
-	rs_skill_heavy
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
@@ -108,7 +107,6 @@ researchable rslist_phalanx
 	rs_skill_accuracy
 	rs_skill_mind
 	rs_skill_close
-	rs_skill_heavy
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
@@ -141,7 +139,6 @@ researched rslist_aliens
 	rs_skill_accuracy
 	rs_skill_mind
 	rs_skill_close
-	rs_skill_heavy
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
@@ -171,7 +168,6 @@ researchable rslist_alien
 	rs_skill_accuracy
 	rs_skill_mind
 	rs_skill_close
-	rs_skill_heavy
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive

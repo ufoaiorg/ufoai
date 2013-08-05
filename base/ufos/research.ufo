@@ -1034,11 +1034,6 @@ tech rs_weapon_chaingun
 		default "*msgid:chaingun_pre_txt"
 	}
 
-//	require_AND
-//	{
-//		tech rs_skill_heavy
-//	}
-
 	provides	chaingun
 	time	-1
 	producetime	-1
@@ -3285,19 +3280,6 @@ tech rs_skill_explosive
 
 	time	0
 //	image	"techs/explosive_skill"
-}
-
-tech rs_skill_heavy
-{
-	type		"tech"
-	name		"_Heavy Weapons Proficiency"
-	up_chapter	skill
-	description {
-		default "*msgid:skill_heavy_txt"
-	}
-
-	time	0
-//	image	"techs/heavy_skill"
 }
 
 tech rs_skill_mind

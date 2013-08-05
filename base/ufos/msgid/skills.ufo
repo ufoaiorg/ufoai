@@ -10,9 +10,6 @@ text "_Determines a soldier's accuracy with close-quarters weapons. Soldiers wil
 msgid skill_explosive_txt {
 text "_Determines a soldier's accuracy with explosive weapons. Soldiers will increase their explosive proficiency when they use explosive weapons effectively in battle."
 }
-msgid skill_heavy_txt {
-text "_Determines a soldier's accuracy with heavy weapons. Soldiers will increase their heavy proficiency when they use heavy weapons effectively in battle."
-}
 msgid skill_mind_txt {
 text "_Determines a soldier's mental endurance and performance. Soldiers will increase their mental strength when they engage in effective combat operations."
 }
