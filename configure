@@ -55,7 +55,12 @@ error() {
 add_to_makefile_local_quote() {
 	VALUE=`get_var $1`
 	if [ -n "$VALUE" ]; then
-		add_line_to_makefile_local "$1 ?= \"$VALUE\""
+		# these are internal make variables and are already set, so don't use ?= here
+		if [ "$1" = "CC" ] || [ "$1" = "CXX" ]; then
+			add_line_to_makefile_local "$1 := \"$VALUE\""
+		else
+			add_line_to_makefile_local "$1 ?= \"$VALUE\""
+		fi
 		[ -n "$2" ] && echo $2
 	else
 		add_line_to_makefile_local "# $1 ?= \"$VALUE\""
@@ -67,7 +72,12 @@ add_to_makefile_local_quote() {
 add_to_makefile_local() {
 	VALUE=`get_var $1`
 	if [ -n "$VALUE" ]; then
-		add_line_to_makefile_local "$1 ?= $VALUE"
+		# these are internal make variables and are already set, so don't use ?= here
+		if [ "$1" = "CC" ] || [ "$1" = "CXX" ]; then
+			add_line_to_makefile_local "$1 := $VALUE"
+		else
+			add_line_to_makefile_local "$1 ?= $VALUE"
+		fi
 		[ -n "$2" ] && echo $2
 	else
 		add_line_to_makefile_local "# $1 ?= $VALUE"
