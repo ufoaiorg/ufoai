@@ -253,7 +253,7 @@ inline static bool R_IsClampedImageType (imagetype_t type)
  */
 void R_UploadTexture (const unsigned *data, int width, int height, image_t* image)
 {
-	unsigned *scaled = 0;
+	unsigned *scaled = nullptr;
 	int scaledWidth, scaledHeight;
 #ifdef GL_VERSION_ES_CM_1_0
 	GLint texFormat = GL_RGB;
