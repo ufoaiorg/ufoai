@@ -695,6 +695,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\PreferenceDialog.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\settings\preferencedictionary.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\settings\Win32Registry.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\JobInfo.h" />
 		<Unit filename="..\..\src\tools\radiant\radiant\sidebar\MapInfo.cpp" />

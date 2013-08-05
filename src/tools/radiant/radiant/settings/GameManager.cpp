@@ -6,6 +6,7 @@
 #include "os/file.h"
 #include "os/path.h"
 #include "gtkutil/messagebox.h"
+#include "Win32Registry.h"
 
 #include <libxml/parser.h>
 
@@ -29,6 +30,10 @@ void GameManager::initialise ()
 #ifdef PKGDATADIR
 	_enginePath = PKGDATADIR;
 #endif
+
+	if (!settingsValid()) {
+		_enginePath = Win32Registry::getKeyValue("Software\\UFOAI", "ufo.exe");
+	}
 
 	// Check loop, continue, till the user specifies a valid setting
 	while (!settingsValid()) {
