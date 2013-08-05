@@ -24,6 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "inventory.h"
 
+InventoryInterface::InventoryInterface () :
+		import(nullptr), _invList(nullptr), csi(nullptr), invName(nullptr)
+{
+}
+
 void InventoryInterface::removeInvList (invList_t *invList)
 {
 	Com_DPrintf(DEBUG_SHARED, "removeInvList: remove one slot (%s)\n", invName);
