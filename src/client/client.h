@@ -111,6 +111,11 @@ typedef struct client_static_s {
 #ifndef HARD_LINKED_CGAME
 	void *cgameLibrary;
 #endif
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_Window *window;
+	SDL_GLContext context;
+#endif
 } client_static_t;
 
 extern client_static_t cls;

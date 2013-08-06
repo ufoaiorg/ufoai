@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/tracing.h"
 #include "../ui/ui_windows.h"
 #include "../../ports/system.h"
+#include "../client.h"
 
 rendererData_t refdef;
 
@@ -437,14 +438,22 @@ void R_EndFrame (void)
 	if (vid_gamma->modified) {
 		if (!vid_ignoregamma->integer) {
 			const float g = vid_gamma->value;
+#if SDL_VERSION_ATLEAST(2,0,0)
+			SDL_SetWindowBrightness(cls.window, g);
+#else
 			SDL_SetGamma(g, g, g);
+#endif
 		}
 		vid_gamma->modified = false;
 	}
 
 	R_ClearScene();
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_GL_SwapWindow(cls.window);
+#else
 	SDL_GL_SwapBuffers();
+#endif
 }
 
 static const cmdList_t r_commands[] = {

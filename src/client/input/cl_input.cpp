@@ -59,6 +59,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* power of two please */
 #define MAX_KEYQ 64
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+#define SDL_keysym SDL_Keysym
+#endif
+
 static struct {
 	unsigned int key;
 	unsigned short unicode;
@@ -606,10 +610,16 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 {
 	if (in_debug->integer) {
 		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
-		if (event->key.keysym.unicode) {
-			Com_Printf(" unicode: %hx", event->key.keysym.unicode);
-			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
-				Com_Printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
+		int unicode;
+#if SDL_VERSION_ATLEAST(2,0,0)
+		unicode = event->key.keysym.sym;
+#else
+		unicode = event->key.keysym.unicode;
+#endif
+		if (unicode) {
+			Com_Printf(" unicode: %hx", unicode);
+			if (unicode >= '0' && unicode <= '~')  /* printable? */
+				Com_Printf(" (%c)", (unsigned char)(unicode));
 		}
 		Com_Printf("\n");
 	}
@@ -621,50 +631,81 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
 {
 	switch (keysym->sym) {
-	case SDLK_KP9:
-		*ascii = K_KP_PGUP;
-		break;
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
+		break;
+#if SDL_VERSION_ATLEAST(2,0,0)
+#else
+	case SDLK_KP9:
+		*ascii = K_KP_PGUP;
 		break;
 	case SDLK_KP3:
 		*ascii = K_KP_PGDN;
 		break;
-	case SDLK_PAGEDOWN:
-		*ascii = K_PGDN;
-		break;
 	case SDLK_KP7:
 		*ascii = K_KP_HOME;
-		break;
-	case SDLK_HOME:
-		*ascii = K_HOME;
 		break;
 	case SDLK_KP1:
 		*ascii = K_KP_END;
 		break;
-	case SDLK_END:
-		*ascii = K_END;
-		break;
 	case SDLK_KP4:
 		*ascii = K_KP_LEFTARROW;
-		break;
-	case SDLK_LEFT:
-		*ascii = K_LEFTARROW;
 		break;
 	case SDLK_KP6:
 		*ascii = K_KP_RIGHTARROW;
 		break;
-	case SDLK_RIGHT:
-		*ascii = K_RIGHTARROW;
-		break;
 	case SDLK_KP2:
 		*ascii = K_KP_DOWNARROW;
 		break;
-	case SDLK_DOWN:
-		*ascii = K_DOWNARROW;
-		break;
 	case SDLK_KP8:
 		*ascii = K_KP_UPARROW;
+		break;
+	case SDLK_LSUPER:
+	case SDLK_RSUPER:
+		*ascii = K_SUPER;
+		break;
+	case SDLK_KP5:
+		*ascii = K_KP_5;
+		break;
+	case SDLK_KP0:
+		*ascii = K_KP_INS;
+		break;
+	case SDLK_COMPOSE:
+		*ascii = K_COMPOSE;
+		break;
+	case SDLK_PRINT:
+		*ascii = K_PRINT;
+		break;
+	case SDLK_BREAK:
+		*ascii = K_BREAK;
+		break;
+	case SDLK_EURO:
+		*ascii = K_EURO;
+		break;
+	case SDLK_SCROLLOCK:
+		*ascii = K_SCROLLOCK;
+		break;
+	case SDLK_NUMLOCK:
+		*ascii = K_KP_NUMLOCK;
+		break;
+#endif
+	case SDLK_PAGEDOWN:
+		*ascii = K_PGDN;
+		break;
+	case SDLK_HOME:
+		*ascii = K_HOME;
+		break;
+	case SDLK_END:
+		*ascii = K_END;
+		break;
+	case SDLK_LEFT:
+		*ascii = K_LEFTARROW;
+		break;
+	case SDLK_RIGHT:
+		*ascii = K_RIGHTARROW;
+		break;
+	case SDLK_DOWN:
+		*ascii = K_DOWNARROW;
 		break;
 	case SDLK_UP:
 		*ascii = K_UPARROW;
@@ -750,18 +791,8 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 	case SDLK_RALT:
 		*ascii = K_ALT;
 		break;
-	case SDLK_LSUPER:
-	case SDLK_RSUPER:
-		*ascii = K_SUPER;
-		break;
-	case SDLK_KP5:
-		*ascii = K_KP_5;
-		break;
 	case SDLK_INSERT:
 		*ascii = K_INS;
-		break;
-	case SDLK_KP0:
-		*ascii = K_KP_INS;
 		break;
 	case SDLK_KP_PLUS:
 		*ascii = K_KP_PLUS;
@@ -778,20 +809,11 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 	case SDLK_MODE:
 		*ascii = K_MODE;
 		break;
-	case SDLK_COMPOSE:
-		*ascii = K_COMPOSE;
-		break;
 	case SDLK_HELP:
 		*ascii = K_HELP;
 		break;
-	case SDLK_PRINT:
-		*ascii = K_PRINT;
-		break;
 	case SDLK_SYSREQ:
 		*ascii = K_SYSREQ;
-		break;
-	case SDLK_BREAK:
-		*ascii = K_BREAK;
 		break;
 	case SDLK_MENU:
 		*ascii = K_MENU;
@@ -799,17 +821,8 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 	case SDLK_POWER:
 		*ascii = K_POWER;
 		break;
-	case SDLK_EURO:
-		*ascii = K_EURO;
-		break;
 	case SDLK_UNDO:
 		*ascii = K_UNDO;
-		break;
-	case SDLK_SCROLLOCK:
-		*ascii = K_SCROLLOCK;
-		break;
-	case SDLK_NUMLOCK:
-		*ascii = K_KP_NUMLOCK;
 		break;
 	case SDLK_CAPSLOCK:
 		*ascii = K_CAPSLOCK;
@@ -822,10 +835,14 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		break;
 	}
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+	*unicode = keysym->sym;
+#else
 	*unicode = keysym->unicode;
+#endif
 
 	if (in_debug->integer)
-		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
+		Com_Printf("unicode: %hx keycode: %i key: %hx\n", *unicode, *ascii, *ascii);
 }
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
@@ -866,12 +883,20 @@ void IN_Frame (void)
 		if (!vid_grabmouse->integer) {
 			/* ungrab the pointer */
 			Com_Printf("Switch grab input off\n");
+#if SDL_VERSION_ATLEAST(2,0,0)
+			SDL_SetWindowGrab(cls.window, SDL_FALSE);
+#else
 			SDL_WM_GrabInput(SDL_GRAB_OFF);
+#endif
 		/* don't allow grabbing the input in fullscreen mode */
 		} else if (!vid_fullscreen->integer) {
 			/* grab the pointer */
 			Com_Printf("Switch grab input on\n");
+#if SDL_VERSION_ATLEAST(2,0,0)
+			SDL_SetWindowGrab(cls.window, SDL_TRUE);
+#else
 			SDL_WM_GrabInput(SDL_GRAB_ON);
+#endif
 		} else {
 			Com_Printf("No input grabbing in fullscreen mode!\n");
 			Cvar_SetValue("vid_grabmouse", 0);
@@ -883,6 +908,11 @@ void IN_Frame (void)
 
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+		case SDL_MOUSEWHEEL:
+			mouse_buttonstate = event.wheel.y > 0 ? K_MWHEELDOWN : K_MWHEELUP;
+			break;
+#endif
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
@@ -895,12 +925,14 @@ void IN_Frame (void)
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
 				break;
+#if !SDL_VERSION_ATLEAST(2,0,0)
 			case SDL_BUTTON_WHEELUP:
 				mouse_buttonstate = K_MWHEELUP;
 				break;
 			case SDL_BUTTON_WHEELDOWN:
 				mouse_buttonstate = K_MWHEELDOWN;
 				break;
+#endif
 			case 6:
 				mouse_buttonstate = K_MOUSE4;
 				break;
@@ -922,8 +954,14 @@ void IN_Frame (void)
 
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
-#ifndef _WIN32
+#ifndef _WIN32 /** @todo: still needed with SDL2? */
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+				const int mask = (SDL_WINDOW_FULLSCREEN_DESKTOP|SDL_WINDOW_FULLSCREEN);
+				const bool isFullScreen = SDL_GetWindowFlags(cls.window) & mask;
+				SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : SDL_WINDOW_FULLSCREEN);
+				if (SDL_GetWindowFlags(cls.window) & mask) {
+#else
 				SDL_Surface *surface = SDL_GetVideoSurface();
 				if (!SDL_WM_ToggleFullScreen(surface)) {
 					int flags = surface->flags ^= SDL_FULLSCREEN;
@@ -931,6 +969,8 @@ void IN_Frame (void)
 				}
 
 				if (surface->flags & SDL_FULLSCREEN) {
+#endif
+
 					Cvar_SetValue("vid_fullscreen", 1);
 					/* make sure, that input grab is deactivated in fullscreen mode */
 					Cvar_SetValue("vid_grabmouse", 0);
@@ -943,8 +983,13 @@ void IN_Frame (void)
 #endif
 
 			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+				const bool grab = SDL_GetWindowGrab(cls.window);
+				Cvar_SetValue("vid_grabmouse", grab ? 0 : 1);
+#else
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
+#endif
 				break; /* ignore this key */
 			}
 
@@ -958,23 +1003,22 @@ void IN_Frame (void)
 			IN_EventEnqueue(key, unicode, true);
 			break;
 
-		case SDL_VIDEOEXPOSE:
-			break;
-
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
 			IN_EventEnqueue(key, unicode, false);
 			break;
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+			/** @todo implement missing events for sdl2 */
+#else
+		case SDL_VIDEOEXPOSE:
+			break;
+
 		case SDL_ACTIVEEVENT:
 			/* make sure the menu no more captures the input when the game window loses focus */
 			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
 				UI_ReleaseInput();
-			break;
-
-		case SDL_QUIT:
-			Cmd_ExecuteString("quit");
 			break;
 
 		case SDL_VIDEORESIZE:
@@ -986,6 +1030,11 @@ void IN_Frame (void)
 			 * so wee need to re-init OpenGL state machine and re-upload all textures */
 			R_ReinitOpenglContext();
 #endif
+			break;
+#endif
+
+		case SDL_QUIT:
+			Cmd_ExecuteString("quit");
 			break;
 		}
 	}

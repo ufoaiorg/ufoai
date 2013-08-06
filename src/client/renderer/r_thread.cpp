@@ -82,5 +82,9 @@ void R_ShutdownThreads (void)
  */
 void R_InitThreads (void)
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+	r_threadstate.thread = SDL_CreateThread(R_RunThread, "RendererThread", nullptr);
+#else
 	r_threadstate.thread = SDL_CreateThread(R_RunThread, nullptr);
+#endif
 }

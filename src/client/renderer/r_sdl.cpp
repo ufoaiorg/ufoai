@@ -27,12 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_main.h"
 #include "r_sdl.h"
 #include "../../ports/system.h"
+#include "../client.h"
 
 r_sdl_config_t r_sdl_config;
 
-#ifndef _WIN32
 static void R_SetSDLIcon (void)
 {
+#ifndef _WIN32
+#if SDL_VERSION_ATLEAST(2,0,0)
+#else
 #include "../../ports/linux/ufoicon.xbm"
 	SDL_Surface *icon;
 	SDL_Color color;
@@ -60,15 +63,14 @@ static void R_SetSDLIcon (void)
 
 	SDL_WM_SetIcon(icon, nullptr);
 	SDL_FreeSurface(icon);
-}
 #endif
+#endif
+}
 
 bool Rimp_Init (void)
 {
 	SDL_version version;
 	int attrValue;
-	const SDL_VideoInfo* info;
-	char videoDriverName[MAX_VAR] = "";
 
 	Com_Printf("\n------- video initialization -------\n");
 
@@ -90,8 +92,21 @@ bool Rimp_Init (void)
 	SDL_VERSION(&version)
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
-	info = SDL_GetVideoInfo();
-	if (info) {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	int screen = 0;
+	int modes = SDL_GetNumDisplayModes(screen);
+	if (modes) {
+		r_sdl_config.modes = Mem_AllocTypeN(rect_t, modes);
+		for (int i = 0; i < modes; i++) {
+			SDL_DisplayMode displayMode;
+			SDL_GetDisplayMode(screen, i, &displayMode);
+			r_sdl_config.modes[i][0] = displayMode.w;
+			r_sdl_config.modes[i][1] = displayMode.h;
+		}
+	}
+#else
+	const SDL_VideoInfo* info = SDL_GetVideoInfo();
+	if (info != nullptr) {
 		SDL_VideoInfo videoInfo;
 		SDL_PixelFormat pixelFormat;
 		SDL_Rect **modes;
@@ -103,42 +118,49 @@ bool Rimp_Init (void)
 		videoInfo.vfmt = &pixelFormat;
 		modes = SDL_ListModes(videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
 		if (modes) {
-			char buf[4096] = "";
-			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
 			if (modes == (SDL_Rect **)-1) {
-				Com_Printf("%s any resolution is supported\n", buf);
+				Com_Printf("I: Available resolutions: any resolution is supported\n");
 				r_sdl_config.modes = nullptr;
 			} else {
-				int i;
 				for (r_sdl_config.numModes = 0; modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {}
 
 				r_sdl_config.modes = Mem_AllocTypeN(rect_t, r_sdl_config.numModes);
-				for (i = 0; i < r_sdl_config.numModes; i++) {
+				for (int i = 0; i < r_sdl_config.numModes; i++) {
 					r_sdl_config.modes[i][0] = modes[i]->w;
 					r_sdl_config.modes[i][1] = modes[i]->h;
-					const char *modeStr = va(" %ix%i", r_sdl_config.modes[i][0], r_sdl_config.modes[i][1]);
-					Q_strcat(buf, modeStr, sizeof(buf));
 				}
-				Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 			}
 		} else {
-			r_sdl_config.modes = nullptr;
 			Com_Printf("I: Could not get list of available resolutions\n");
 		}
-	} else {
-		r_config.videoMemory = 0;
 	}
+	char videoDriverName[MAX_VAR] = "";
 	SDL_VideoDriverName(videoDriverName, sizeof(videoDriverName));
 	Com_Printf("I: video driver: %s\n", videoDriverName);
+#endif
+	if (r_sdl_config.numModes > 0) {
+		char buf[4096] = "";
+		Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
+		for (int i = 0; i < r_sdl_config.numModes; i++) {
+			const char *modeStr = va(" %ix%i", r_sdl_config.modes[i][0], r_sdl_config.modes[i][1]);
+			Q_strcat(buf, modeStr, sizeof(buf));
+		}
+		Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
+	}
 
 	if (!R_SetMode())
 		Com_Error(ERR_FATAL, "Video subsystem failed to initialize");
 
+#if !SDL_VERSION_ATLEAST(2, 0, 0)
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
-#ifndef _WIN32
-	R_SetSDLIcon(); /* currently uses ufoicon.xbm data */
+	/* we need this in the renderer because if we issue an vid_restart we have
+	 * to set these values again, too */
+	SDL_EnableUNICODE(SDL_ENABLE);
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 #endif
+
+	R_SetSDLIcon();
 
 	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &attrValue))
 		Com_Printf("I: got %d bits of stencil\n", attrValue);
@@ -157,11 +179,6 @@ bool Rimp_Init (void)
 	if (!SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &attrValue))
 		Com_Printf("I: got %d multisample buffers\n", attrValue);
 
-	/* we need this in the renderer because if we issue an vid_restart we have
-	 * to set these values again, too */
-	SDL_EnableUNICODE(SDL_ENABLE);
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
 	return true;
 }
 
@@ -172,7 +189,6 @@ bool R_InitGraphics (const viddefContext_t *context)
 {
 	uint32_t flags;
 	int i;
-	SDL_Surface* screen = nullptr;
 
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -189,27 +205,67 @@ bool R_InitGraphics (const viddefContext_t *context)
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 	}
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+	/* valid values are between -1 and 1 */
+	i = std::min(1, std::max(-1, context->swapinterval));
+	Com_Printf("I: set swap control to %i\n", i);
+	SDL_GL_SetSwapInterval(i);
+	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
+	if (context->fullscreen)
+		flags |= SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS;
+
+	const int videoDrivers = SDL_GetNumVideoDrivers();
+	for (int i = 0; i < videoDrivers; ++i) {
+		Com_Printf("available driver: %s\n", SDL_GetVideoDriver(i));
+	}
+
+	SDL_DisplayMode displayMode;
+	SDL_GetDesktopDisplayMode(0, &displayMode);
+	const char *name = SDL_GetPixelFormatName(displayMode.format);
+	Com_Printf("current desktop mode: %dx%d@%dHz (%s)\n",
+			displayMode.w, displayMode.h, displayMode.refresh_rate, name);
+
+	SDL_VideoInit(nullptr);
+
+	Com_Printf("driver: %s\n", SDL_GetCurrentVideoDriver());
+	const int displays = SDL_GetNumVideoDisplays();
+	Com_Printf("found %i display(s)\n", displays);
+	int width = context->width;
+	int height = context->height;
+	if (context->fullscreen && displays > 1) {
+		width = displayMode.w;
+		height = displayMode.h;
+		Com_Printf("use fake fullscreen for the first display: %i:%i\n", width, height);
+	}
+
+	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+	if (!cls.window) {
+		const char *error = SDL_GetError();
+		Com_Printf("SDL SDL_CreateWindow failed: %s\n", error);
+		SDL_ClearError();
+		return -1;
+	}
+
+	cls.context = SDL_GL_CreateContext(cls.window);
+#else
 	/* valid values are between 0 and 2 */
 	i = std::min(2, std::max(0, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
-#if SDL_VERSION_ATLEAST(1,3,0)
-	SDL_GL_SetSwapInterval(1);
-#else
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
-#endif
-
 	flags = SDL_OPENGL;
 	if (context->fullscreen)
 		flags |= SDL_FULLSCREEN;
 	/*flags |= SDL_NOFRAME;*/
 
-	screen = SDL_SetVideoMode(context->width, context->height, 0, flags);
+	SDL_Surface* screen = SDL_SetVideoMode(context->width, context->height, 0, flags);
 	if (!screen) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		SDL_ClearError();
 		return false;
 	}
+#endif
 
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -218,6 +274,10 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 void Rimp_Shutdown (void)
 {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_DestroyWindow(cls.window);
+	SDL_GL_DeleteContext(cls.context);
+#endif
 	/* SDL on Android does not support multiple video init/deinit yet, however calling SDL_SetVideoMode() multiple times works */
 #ifndef ANDROID
 	SDL_ShowCursor(SDL_ENABLE);

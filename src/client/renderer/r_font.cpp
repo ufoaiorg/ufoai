@@ -630,7 +630,11 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	rect.h = textSurface->h;
 
 	/* ignore alpha when blitting - just copy it over */
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_SetSurfaceAlphaMod(textSurface, 255);
+#else
 	SDL_SetAlpha(textSurface, 0, 255);
+#endif
 
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 	SDL_FreeSurface(textSurface);

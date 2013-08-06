@@ -210,9 +210,9 @@ check_headers() {
 	check_header "png.h" "libpng"
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h" "mxml"
-	check_header "SDL.h" "sdl"
-	check_header "SDL_mixer.h" "SDL_mixer"
-	check_header "SDL_ttf.h" "SDL_ttf"
+	check_header "SDL.h" "sdl2"
+	check_header "SDL_mixer.h" "SDL2_mixer"
+	check_header "SDL_ttf.h" "SDL2_ttf"
 	check_header "picomodel.h" "picomodel"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
@@ -614,7 +614,7 @@ config_h
 check_programs
 check_headers
 
-if [ "${TARGET_OS}" != "html5" ] && [ "${HAVE_SDL_SDL_H}" = "0" ] && [ "${HAVE_SDL_TTF_SDL_TTF_H}" = "0"  && [ "${HAVE_SDL_MIXER_SDL_MIXER_H}" = "0" ]; then
+if [ "${TARGET_OS}" != "html5" ] && [ "${HAVE_SDL2_SDL_H}" = "0" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" = "0" && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" = "0" ]; then
 	add_line_to_makefile_local "\$(error A required library is missing)"
 fi
 

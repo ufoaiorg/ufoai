@@ -179,7 +179,6 @@ static int S_CompleteSounds (const char *partial, const char **match)
 void S_Init (void)
 {
 	SDL_version version;
-	char drivername[MAX_VAR];
 
 	Com_Printf("\n------- sound initialization -------\n");
 
@@ -230,9 +229,23 @@ void S_Init (void)
 		return;
 	}
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+	const int n = SDL_GetNumAudioDrivers();
+	if (n == 0) {
+		Com_Printf("... no built-in audio drivers\n");
+	} else {
+		for (int i = 0; i < n; ++i) {
+			Com_Printf("... available audio driver %s\n", SDL_GetAudioDriver(i));
+		}
+	}
+
+	Com_Printf("... actual audio driver: %s\n", SDL_GetCurrentAudioDriver());
+#else
+	char drivername[MAX_VAR];
 	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == nullptr)
 		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
 	Com_Printf("... driver: '%s'\n", drivername);
+#endif
 
 	if (Mix_AllocateChannels(MAX_CHANNELS) != MAX_CHANNELS) {
 		Com_Printf("S_Init: %s\n", Mix_GetError());

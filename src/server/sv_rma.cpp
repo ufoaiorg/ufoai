@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_rma.h"
 #include "../shared/parse.h"
-#include <SDL_thread.h>
+#include <SDL.h>
 
 #define ASSEMBLE_THREADS 2
 /** @brief print some debugging info */
@@ -1789,7 +1789,11 @@ static int SV_ParallelSearch (MapInfo *map)
 	for (i = 0; i < threadno; i++) {
 		maps[i] = Mem_AllocType(MapInfo);
 		memcpy(maps[i], map, sizeof(*map));
+#if SDL_VERSION_ATLEAST(2,0,0)
+		threads[i] = SDL_CreateThread(SV_AssemblyThread, "AssemblyThread", (void*) maps[i]);
+#else
 		threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
+#endif
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
@@ -1810,7 +1814,11 @@ static int SV_ParallelSearch (MapInfo *map)
 			/* start'em again */
 			for (i = 0; i < threadno; i++) {
 				memcpy(maps[i], map, sizeof(*map));
+#if SDL_VERSION_ATLEAST(2,0,0)
+				threads[i] = SDL_CreateThread(SV_AssemblyThread, "AssemblyThread", (void*) maps[i]);
+#else
 				threads[i] = SDL_CreateThread(SV_AssemblyThread, (void*) maps[i]);
+#endif
 			}
 		} else {
 			/* someone finished */

@@ -36,6 +36,10 @@ static cvar_t *in_joystickNo;
 static cvar_t *in_joystickThreshold;
 static cvar_t *in_joystickSpeed;
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+#define SDL_JoystickName SDL_JoystickNameForIndex
+#endif
+
 static struct {
 	bool buttons[16];
 	unsigned int oldaxes;
@@ -277,8 +281,7 @@ void IN_JoystickInitMenu (void)
 	if (total == 0) {
 		UI_AddOption(&joystickOptions, "", _("None"), "0");
 	} else {
-		int i;
-		for (i = 0; i < total; i++)
+		for (int i = 0; i < total; i++)
 			UI_AddOption(&joystickOptions, "", SDL_JoystickName(i), va("%i", i));
 	}
 	UI_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
