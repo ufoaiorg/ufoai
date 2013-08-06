@@ -635,40 +635,76 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		*ascii = K_PGUP;
 		break;
 #if SDL_VERSION_ATLEAST(2,0,0)
-#else
-	case SDLK_KP9:
-		*ascii = K_KP_PGUP;
+	case SDLK_KP_0:
+		*ascii = K_KP_INS;
 		break;
-	case SDLK_KP3:
+	case SDLK_KP_1:
+		*ascii = K_KP_END;
+		break;
+	case SDLK_KP_2:
+		*ascii = K_KP_DOWNARROW;
+		break;
+	case SDLK_KP_3:
 		*ascii = K_KP_PGDN;
 		break;
-	case SDLK_KP7:
+	case SDLK_KP_4:
+		*ascii = K_KP_LEFTARROW;
+		break;
+	case SDLK_KP_5:
+		*ascii = K_KP_5;
+		break;
+	case SDLK_KP_6:
+		*ascii = K_KP_RIGHTARROW;
+		break;
+	case SDLK_KP_7:
 		*ascii = K_KP_HOME;
+		break;
+	case SDLK_KP_8:
+		*ascii = K_KP_UPARROW;
+		break;
+	case SDLK_KP_9:
+		*ascii = K_KP_PGUP;
+		break;
+	case SDLK_PRINTSCREEN:
+		*ascii = K_PRINT;
+		break;
+	case SDLK_SCROLLLOCK:
+		*ascii = K_SCROLLOCK;
+		break;
+#else
+	case SDLK_KP0:
+		*ascii = K_KP_INS;
 		break;
 	case SDLK_KP1:
 		*ascii = K_KP_END;
 		break;
-	case SDLK_KP4:
-		*ascii = K_KP_LEFTARROW;
-		break;
-	case SDLK_KP6:
-		*ascii = K_KP_RIGHTARROW;
-		break;
 	case SDLK_KP2:
 		*ascii = K_KP_DOWNARROW;
 		break;
-	case SDLK_KP8:
-		*ascii = K_KP_UPARROW;
+	case SDLK_KP3:
+		*ascii = K_KP_PGDN;
 		break;
-	case SDLK_LSUPER:
-	case SDLK_RSUPER:
-		*ascii = K_SUPER;
+	case SDLK_KP4:
+		*ascii = K_KP_LEFTARROW;
 		break;
 	case SDLK_KP5:
 		*ascii = K_KP_5;
 		break;
-	case SDLK_KP0:
-		*ascii = K_KP_INS;
+	case SDLK_KP6:
+		*ascii = K_KP_RIGHTARROW;
+		break;
+	case SDLK_KP7:
+		*ascii = K_KP_HOME;
+		break;
+	case SDLK_KP8:
+		*ascii = K_KP_UPARROW;
+		break;
+	case SDLK_KP9:
+		*ascii = K_KP_PGUP;
+		break;
+	case SDLK_LSUPER:
+	case SDLK_RSUPER:
+		*ascii = K_SUPER;
 		break;
 	case SDLK_COMPOSE:
 		*ascii = K_COMPOSE;
