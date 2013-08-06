@@ -38,7 +38,7 @@ static void R_SetSDLIcon (void)
 	SDL_Surface *icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == nullptr)
 		return;
-#if SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_SetColorKey(icon, SDL_TRUE, 0);
 #else
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
@@ -60,7 +60,7 @@ static void R_SetSDLIcon (void)
 		}
 	}
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_SetWindowIcon(cls.window, icon);
 #else
 	SDL_WM_SetIcon(icon, nullptr);
@@ -94,7 +94,7 @@ bool Rimp_Init (void)
 	SDL_VERSION(&version)
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2,0,0)
 	int screen = 0;
 	int modes = SDL_GetNumDisplayModes(screen);
 	if (modes) {
@@ -153,7 +153,7 @@ bool Rimp_Init (void)
 	if (!R_SetMode())
 		Com_Error(ERR_FATAL, "Video subsystem failed to initialize");
 
-#if !SDL_VERSION_ATLEAST(2, 0, 0)
+#if !SDL_VERSION_ATLEAST(2,0,0)
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
 	/* we need this in the renderer because if we issue an vid_restart we have
@@ -276,7 +276,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 void Rimp_Shutdown (void)
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_DestroyWindow(cls.window);
 	SDL_GL_DeleteContext(cls.context);
 #endif

@@ -183,7 +183,7 @@ static void M_Start (const char *file)
 		FS_FreeFile(musicBuf);
 		return;
 	}
-#if SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2,0,0)
 	music.data = Mix_LoadMUS_RW(rw, 1);
 #else
 	music.data = Mix_LoadMUS_RW(rw);
