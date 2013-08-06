@@ -146,16 +146,6 @@ makefile_local() {
 	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
 	add_to_makefile_local_quote LOCALEDIR "Using localedir ${LOCALEDIR}"
 	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
-
-	echo "Build modules:"
-	for i in `get_modules`; do
-		add_to_makefile_local ${i}_DISABLE
-		if [ "`get_var ${i}_DISABLE`" = "yes" ]; then
-			echo "Disable $i"
-		else
-			echo "Build $i"
-		fi
-	done
 }
 
 check_header_cc() {
@@ -210,6 +200,9 @@ check_headers() {
 	check_header "png.h" "libpng"
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h" "mxml"
+	check_header "SDL.h" "sdl"
+	check_header "SDL_mixer.h" "SDL_mixer"
+	check_header "SDL_ttf.h" "SDL_ttf"
 	check_header "SDL.h" "sdl2"
 	check_header "SDL_mixer.h" "SDL2_mixer"
 	check_header "SDL_ttf.h" "SDL2_ttf"
@@ -224,6 +217,24 @@ check_headers() {
 	fi
 	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKSOURCEVIEW_GTKSOURCEVIEW_H" != "1" ] || [ "$HAVE_GTK_GTKGLWIDGET_H" != "1" ]; then
 		set_var "uforadiant_DISABLE" "yes"
+	fi
+
+	if ([ "${HAVE_SDL_SDL_H}" != "1" ] && [ "${HAVE_SDL2_SDL_H}" != "1" ]); then
+		for i in `get_modules`; do
+			if [ "$i" != "uforadiant" ]; then
+				set_var "${i}_DISABLE" "yes"
+			fi
+		done
+	fi
+
+	if ([ "${HAVE_SDL_MIXER_SDL_MIXER_H}" != "1" ] && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]); then
+		set_var "ufo_DISABLE" "yes"
+		set_var "testall_DISABLE" "yes"
+	fi
+
+	if ([ "${HAVE_SDL_TTF_SDL_TTF_H}" != "1" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]); then
+		set_var "ufo_DISABLE" "yes"
+		set_var "testall_DISABLE" "yes"
 	fi
 }
 
@@ -614,9 +625,15 @@ config_h
 check_programs
 check_headers
 
-if [ "${TARGET_OS}" != "html5" ] && [ "${HAVE_SDL2_SDL_H}" = "0" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" = "0" && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" = "0" ]; then
-	add_line_to_makefile_local "\$(error A required library is missing)"
-fi
+echo "Build modules:"
+for i in `get_modules`; do
+	add_to_makefile_local ${i}_DISABLE
+	if [ "`get_var ${i}_DISABLE`" = "yes" ]; then
+		echo "Disable $i"
+	else
+		echo "Build $i"
+	fi
+done
 
 cat > ${MAKEFILE_LOCAL} << EOF
 # -------- Automatically generated -----------
