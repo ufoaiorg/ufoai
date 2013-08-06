@@ -20,5 +20,5 @@ msgid mission_briefing_crashsite {
 	text "_The dropship has arrived at the crash site."
 }
 msgid mission_briefing_baseattack {
-	text "_The aliens penetrated your base defenses and are inside the compound. Rally the soldiers on site to eliminate the threat. Security cameras placed around the base will help you track their locations."
+	text "_The aliens penetrated your base defenses and are inside the compound. Rally the soldiers on site to eliminate the threat. Security cameras placed around the base will help you track their locations as long as a soldier remains inside the camera room of the Command Centre."
 }
