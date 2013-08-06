@@ -1293,7 +1293,8 @@ void AI_ActorThink (Player &player, Edict *ent)
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
-	if (!leftH && !rightH)
+	/** @note we need to re-check the items here because they may have been dropped in the previous step */
+	if (!ent->getLeftHandItem() && !ent->getRightHandItem())
 		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
