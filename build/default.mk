@@ -4,15 +4,34 @@ CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
 #CURL_CONFIG              ?= curl-config
 #CURL_LIBS                ?= $(shell $(CURL_CONFIG) $(CONFIG_LIBS_FLAGS))
 #CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
+ifdef HAVE_SDL2_SDL_H
 SDL_LIBS                 ?= $(call PKG_LIBS,sdl2)
 SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl2)
+else
+SDL_LIBS                 ?= $(call PKG_LIBS,sdl)
+SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl)
+endif
+#ifdef HAVE_SDL2_SDL_H
 #SDL_CONFIG               ?= sdl2-config
+#else
+#SDL_CONFIG               ?= sdl-config
+#endif
 #SDL_LIBS                 ?= $(shell $(SDL_CONFIG) $(CONFIG_LIBS_FLAGS))
 #SDL_CFLAGS               ?= $(shell $(SDL_CONFIG) --cflags)
+ifdef HAVE_SDL2_TTF_SDL_TTF_H
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL2_ttf)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL2_ttf)
+else
+SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf)
+SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL_ttf)
+endif
+ifdef HAVE_SDL2_MIXER_SDL_MIXER_H
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL2_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL2_mixer)
+else
+SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
+SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
+endif
 OPENGL_CFLAGS            ?= $(call PKG_CFLAGS,gl,GL)
 OPENGL_LIBS              ?= $(call PKG_LIBS,gl,GL)
 OPENAL_CFLAGS            ?= $(call PKG_CFLAGS,openal)
