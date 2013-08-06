@@ -27,6 +27,7 @@ MODE=
 CROSS=
 USE_CCACHE=
 STATIC=
+DISABLE_SDL2=
 W2K=
 SSE=
 DISABLE_DEPENDENCY_TRACKING=
@@ -203,9 +204,11 @@ check_headers() {
 	check_header "SDL.h" "sdl"
 	check_header "SDL_mixer.h" "SDL_mixer"
 	check_header "SDL_ttf.h" "SDL_ttf"
-	check_header "SDL.h" "sdl2"
-	check_header "SDL_mixer.h" "SDL2_mixer"
-	check_header "SDL_ttf.h" "SDL2_ttf"
+	if [ "$DISABLE_SDL2" != "1" ]; then
+		check_header "SDL.h" "sdl2"
+		check_header "SDL_mixer.h" "SDL2_mixer"
+		check_header "SDL_ttf.h" "SDL2_ttf"
+	fi
 	check_header "picomodel.h" "picomodel"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
@@ -307,6 +310,7 @@ usage() {
 	fi
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --disable-signals        disable the use of a signal handler"
+	echo " --disable-sdl2           disable the use of SDL2.x and prefer to use SDL1.x"
 	echo
 	echo " --target-os=             specify the target os"
 	(cd build/platforms; for i in *.mk; do echo "  * ${i%.mk}"; done)
@@ -519,6 +523,9 @@ while [ $# -gt 0 ]; do
 		;;
 	--enable-signals)
 		USE_SIGNALS=1
+		;;
+	--disable-sdl2)
+		DISABLE_SDL2=1
 		;;
 	--disable-signals)
 		USE_SIGNALS=
