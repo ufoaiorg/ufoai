@@ -34,36 +34,38 @@ r_sdl_config_t r_sdl_config;
 static void R_SetSDLIcon (void)
 {
 #ifndef _WIN32
-#if SDL_VERSION_ATLEAST(2,0,0)
-#else
 #include "../../ports/linux/ufoicon.xbm"
-	SDL_Surface *icon;
-	SDL_Color color;
-	Uint8 *ptr;
-	unsigned int i, mask;
-
-	icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
+	SDL_Surface *icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == nullptr)
 		return;
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_SetColorKey(icon, SDL_TRUE, 0);
+#else
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
 
+	SDL_Color color;
 	color.r = color.g = color.b = 255;
 	SDL_SetColors(icon, &color, 0, 1); /* just in case */
+
 	color.r = color.b = 0;
 	color.g = 16;
 	SDL_SetColors(icon, &color, 1, 1);
+#endif
 
-	ptr = (Uint8 *)icon->pixels;
-	for (i = 0; i < sizeof(ufoicon_bits); i++) {
-		for (mask = 1; mask != 0x100; mask <<= 1) {
+	Uint8 *ptr = (Uint8 *)icon->pixels;
+	for (unsigned int i = 0; i < sizeof(ufoicon_bits); i++) {
+		for (unsigned int mask = 1; mask != 0x100; mask <<= 1) {
 			*ptr = (ufoicon_bits[i] & mask) ? 1 : 0;
 			ptr++;
 		}
 	}
 
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_SetWindowIcon(cls.window, icon);
+#else
 	SDL_WM_SetIcon(icon, nullptr);
-	SDL_FreeSurface(icon);
 #endif
+	SDL_FreeSurface(icon);
 #endif
 }
 
