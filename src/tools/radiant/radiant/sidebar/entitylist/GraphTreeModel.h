@@ -32,6 +32,8 @@ private:
 
 	// The actual GTK model
 	GtkTreeStore* _model;
+
+	static gint sortName (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer userdata);
 public:
 	GraphTreeModel ();
 

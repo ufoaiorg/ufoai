@@ -25,9 +25,35 @@ inline std::string getNodeName (scene::Node& node)
 
 }
 
+gint GraphTreeModel::sortName (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer userdata)
+{
+	gint ret = 0;
+	gchar *name1, *name2;
+
+	gtk_tree_model_get(model, a, COL_NAME, &name1, -1);
+	gtk_tree_model_get(model, b, COL_NAME, &name2, -1);
+
+	if (name1 == NULL || name2 == NULL) {
+		if (name1 == NULL && name2 == NULL)
+			return ret;
+
+		ret = (name1 == NULL) ? -1 : 1;
+	} else {
+		ret = g_utf8_collate(name1, name2);
+	}
+
+	g_free(name1);
+	g_free(name2);
+
+	return ret;
+}
+
 GraphTreeModel::GraphTreeModel () :
 		_model(gtk_tree_store_new(NUM_COLS, G_TYPE_POINTER, G_TYPE_STRING))
 {
+	GtkTreeSortable *sortable = GTK_TREE_SORTABLE(_model);
+	gtk_tree_sortable_set_sort_func(sortable, COL_NAME, sortName, NULL, NULL);
+	gtk_tree_sortable_set_sort_column_id(sortable, COL_NAME, GTK_SORT_ASCENDING);
 	// Subscribe to the scenegraph to get notified about insertions/deletions
 	GlobalSceneGraph().addSceneObserver(this);
 }
