@@ -5,7 +5,6 @@
 
 namespace routing
 {
-	/** @todo release this shader */
 	Shader *m_routingShader;
 
 	const Colour3 color2 = Colour3(1, 1, 1);
