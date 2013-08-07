@@ -372,16 +372,22 @@ void OpenGLShader::constructNormalShader (const std::string& name)
 		switch (alphafunc) {
 		case IShader::eAlways:
 			state.m_alphafunc = GL_ALWAYS;
+			break;
 		case IShader::eEqual:
 			state.m_alphafunc = GL_EQUAL;
+			break;
 		case IShader::eLess:
 			state.m_alphafunc = GL_LESS;
+			break;
 		case IShader::eGreater:
 			state.m_alphafunc = GL_GREATER;
+			break;
 		case IShader::eLEqual:
 			state.m_alphafunc = GL_LEQUAL;
+			break;
 		case IShader::eGEqual:
 			state.m_alphafunc = GL_GEQUAL;
+			break;
 		}
 	}
 
