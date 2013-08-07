@@ -120,7 +120,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_WOUND), "sbbb", CL_ActorWound, nullptr, nullptr},
 
 	{E(EV_INV_ADD), "s*", CL_InvAdd, CL_InvAddTime, CL_CheckDefault},
-	{E(EV_INV_DEL), "sbbb", CL_InvDel, nullptr, CL_CheckDefault},
+	{E(EV_INV_DEL), "sbbb", CL_InvDel, CL_InvDelTime, CL_CheckDefault},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, nullptr, nullptr},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, CL_InvReloadTime, nullptr},
 	/** @sa G_ReadItem, G_WriteItem */
