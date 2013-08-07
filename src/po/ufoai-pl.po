@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-03 23:16+0200\n"
+"POT-Creation-Date: 2013-08-07 09:04+0200\n"
 "PO-Revision-Date: 2013-05-07 21:31+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
@@ -285,7 +285,7 @@ msgstr "Myśliwiec Stingray"
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3984
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3966
 msgid "UFO - Scout"
 msgstr "UFO - Zwiadowca"
 
@@ -293,7 +293,7 @@ msgstr "UFO - Zwiadowca"
 msgid "Scout U"
 msgstr "Zwiadowca U"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4026
+#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4008
 msgid "UFO - Fighter"
 msgstr "UFO - Myśliwiec"
 
@@ -301,7 +301,7 @@ msgstr "UFO - Myśliwiec"
 msgid "Fighter U"
 msgstr "Myśliwiec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4325
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4307
 msgid "UFO - Harvester"
 msgstr "UFO - Żniwiarz"
 
@@ -309,7 +309,7 @@ msgstr "UFO - Żniwiarz"
 msgid "Harvester U"
 msgstr "Żniwiarz U"
 
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4197
+#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4179
 msgid "UFO - Corrupter"
 msgstr "UFO - Koruptor"
 
@@ -317,7 +317,7 @@ msgstr "UFO - Koruptor"
 msgid "Corrupter U"
 msgstr "Koruptor U"
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4069
+#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4051
 msgid "UFO - Supply Ship"
 msgstr "UFO - Zaopatrzeniowiec"
 
@@ -325,7 +325,7 @@ msgstr "UFO - Zaopatrzeniowiec"
 msgid "Supply U"
 msgstr "Zaopatrzeniowiec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4240
+#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4222
 msgid "UFO - Gunboat"
 msgstr "UFO - Korweta"
 
@@ -333,7 +333,7 @@ msgstr "UFO - Korweta"
 msgid "Gunboat U"
 msgstr "Korweta U"
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4155
+#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4137
 msgid "UFO - Bomber"
 msgstr "UFO - Bombowiec"
 
@@ -341,7 +341,7 @@ msgstr "UFO - Bombowiec"
 msgid "Bomber U"
 msgstr "Bombowiec U"
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4282
+#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4264
 msgid "UFO - Ripper"
 msgstr "UFO - Rozpruwacz"
 
@@ -349,7 +349,7 @@ msgstr "UFO - Rozpruwacz"
 msgid "Ripper U"
 msgstr "Rozpruwacz U"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4112
+#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4094
 msgid "UFO - Carrier"
 msgstr "UFO - Krążownik"
 
@@ -357,7 +357,7 @@ msgstr "UFO - Krążownik"
 msgid "Carrier U"
 msgstr "Krążownik U"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4368
+#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4350
 msgid "UFO - Mothership"
 msgstr "UFO - Okręt Baza"
 
@@ -365,7 +365,7 @@ msgstr "UFO - Okręt Baza"
 msgid "Mothership U"
 msgstr "Okręt Baza U"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5175
+#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5157
 msgid "Aerial Laser Cannon"
 msgstr "Działo laserowe"
 
@@ -373,11 +373,11 @@ msgstr "Działo laserowe"
 msgid "Shiva Rotary Cannon"
 msgstr "Działo SHIVA systemu Gatling"
 
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5242
+#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5224
 msgid "SHIVA 20mm API Rounds"
 msgstr "Pociski penetrujące SHIVA 20 mm"
 
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5263
+#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5245
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "Pociski odłamkowe SHIVA 20 mm"
 
@@ -393,71 +393,71 @@ msgstr "System AA Sparrowhawk"
 msgid "Sparrowhawk Missile"
 msgstr "Rakieta Sparrowhawk"
 
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5322
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5304
 msgid "TR-20 Rocket Pod"
 msgstr "Zasobnik Rakietowy TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5339
+#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5321
 msgid "TR-20 Rocket"
 msgstr "Rakieta TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5358
+#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5340
 msgid "Particle Beam Weapon"
 msgstr "Działo cząsteczkowe"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5415
+#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5397
 msgid "Alien Launcher"
 msgstr "Wyrzutnia obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5462
+#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5444
 msgid "Antimatter Missile"
 msgstr "Pocisk Antymaterii"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5511
+#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5493
 msgid "Hybrid Missile"
 msgstr "Pocisk Hybrydowy"
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5561
+#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5543
 msgid "Targeting Computer"
 msgstr "Komputerowy System Namierzania"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5577
+#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5559
 msgid "Fuel Pod"
 msgstr "Zbiornik paliwa"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4921
+#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4903
 msgid "Polymer Aircraft Armour"
 msgstr "Pancerz Polimerowy"
 
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4938
+#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4920
 msgid "Alien Aircraft Plating"
 msgstr "Pancerz Kształtkowy"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4980
+#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4962
 msgid "Alien Polymer Armour"
 msgstr "Polimerowy pancerz obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5593
+#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5575
 msgid "Alien Electronic Warfare Suite"
 msgstr "Elektroniczny System Zagłuszania obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5022
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5004
 msgid "Alien Astrogation"
 msgstr "Astronawigacja obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5060
+#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5042
 msgid "Alien Propulsion"
 msgstr "Technologia napędu obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5098
+#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5080
 msgid "Advanced Alien Propulsion"
 msgstr "Zaawansowany napęd obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5137
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5119
 msgid "Alien Detection"
 msgstr "Detektory obcych"
 
-#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4873
+#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4855
 msgid "AA51 missile launcher"
 msgstr "Wyrzutnia rakiet AA51"
 
@@ -576,7 +576,7 @@ msgstr "Zaawansowany Radar"
 msgid "Hospital"
 msgstr "Szpital"
 
-#: ../base/ufos/basemanagement.ufo:230 ../base/ufos/research.ufo:3625
+#: ../base/ufos/basemanagement.ufo:230 ../base/ufos/research.ufo:3607
 msgid "Antimatter Storage"
 msgstr "Skład Antymaterii"
 
@@ -2571,7 +2571,7 @@ msgstr "Kooperacja 3 graczy"
 msgid "Coop 4 players"
 msgstr "Kooperacja 4 graczy"
 
-#: ../base/ufos/installation.ufo:7 ../base/ufos/research.ufo:3655
+#: ../base/ufos/installation.ufo:7 ../base/ufos/research.ufo:3637
 msgid "Radar Tower"
 msgstr "Wieża Radarowa"
 
@@ -2590,7 +2590,7 @@ msgstr ""
 "wykryciu. Zalecane jest umieszczanie wież radarowych obok wyrzutni "
 "rakietowych."
 
-#: ../base/ufos/installation.ufo:22 ../base/ufos/research.ufo:3667
+#: ../base/ufos/installation.ufo:22 ../base/ufos/research.ufo:3649
 #: ../base/ufos/ui/lostwon.ufo:249
 msgid "UFO Yard"
 msgstr "Hangar UFO"
@@ -2610,7 +2610,7 @@ msgstr ""
 "zdemontowane przez dowolną bazę PHALANX z odpowiednim zapleczem technicznym. "
 "Czas jaki na to będzie potrzebny zależy od odległosci hangaru od bazy."
 
-#: ../base/ufos/installation.ufo:37 ../base/ufos/research.ufo:3679
+#: ../base/ufos/installation.ufo:37 ../base/ufos/research.ufo:3661
 msgid "SAM Site"
 msgstr "Bateria Rakiet"
 
@@ -2632,7 +2632,7 @@ msgstr ""
 "ulegnie zmasowanym bombardowaniom. Uzupełnienie amunicji następuje "
 "automatyczie z naszych baz."
 
-#: ../base/ufos/installation.ufo:52 ../base/ufos/research.ufo:3691
+#: ../base/ufos/installation.ufo:52 ../base/ufos/research.ufo:3673
 msgid "Orbital Rocket Launcher"
 msgstr "Orbitalna Wyrzutnia Rakiet"
 
@@ -12844,7 +12844,8 @@ msgstr "Desantowiec dotarł na miejsce katastrofy."
 msgid ""
 "The aliens penetrated your base defenses and are inside the compound. Rally "
 "the soldiers on site to eliminate the threat. Security cameras placed around "
-"the base will help you track their locations."
+"the base will help you track their locations as long as a soldier remains "
+"inside the camera room of the Command Centre."
 msgstr ""
 
 #: ../base/ufos/msgid/news.ufo:16
@@ -14034,14 +14035,6 @@ msgstr ""
 
 #: ../base/ufos/msgid/skills.ufo:14
 msgid ""
-"Determines a soldier's accuracy with heavy weapons. Soldiers will increase "
-"their heavy proficiency when they use heavy weapons effectively in battle."
-msgstr ""
-"Określa zdolności żołnierzy do posługiwania się bronią ciężką. Żołnierze "
-"zwiększą swoją sprawność ataku, gdy użyją skutecznie broni ciężkiej w walce."
-
-#: ../base/ufos/msgid/skills.ufo:17
-msgid ""
 "Determines a soldier's mental endurance and performance. Soldiers will "
 "increase their mental strength when they engage in effective combat "
 "operations."
@@ -14050,7 +14043,7 @@ msgstr ""
 "zwiększają swoją siłę psychiczną, gdy zajmują się efektywnymi działaniami na "
 "polu walki."
 
-#: ../base/ufos/msgid/skills.ufo:20
+#: ../base/ufos/msgid/skills.ufo:17
 msgid ""
 "Determines the weight a soldier can carry before becoming encumbered on the "
 "battlefield. Soldiers will increase their strength on the battlefield and "
@@ -14060,7 +14053,7 @@ msgstr ""
 "Żołnierze zwiększają swoją siłę szybcjej, jeśli noszą większy cieżar w "
 "trakcie walki."
 
-#: ../base/ufos/msgid/skills.ufo:23
+#: ../base/ufos/msgid/skills.ufo:20
 msgid ""
 "Determines a soldier's accuracy with sniper weapons. Soldiers will increase "
 "their sniper proficiency when they use sniper weapons effectively in battle."
@@ -14069,7 +14062,7 @@ msgstr ""
 "zwiększą swoją sprawność ataku, gdy użyją skutecznie broni snajperskiej w "
 "walce."
 
-#: ../base/ufos/msgid/skills.ufo:26
+#: ../base/ufos/msgid/skills.ufo:23
 msgid ""
 "Determines the amount of Time Units a soldier has each turn. Soldiers will "
 "increase their speed engaging in standard fire and movement procedures on "
@@ -23916,8 +23909,8 @@ msgstr "Wspólnota Oceanii"
 msgid "Antimatter"
 msgstr "Antymateria"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5631
-#: ../base/ufos/research.ufo:5670
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5613
+#: ../base/ufos/research.ufo:5652
 msgid "Alien Materials"
 msgstr "Materiały obcych"
 
@@ -24084,249 +24077,245 @@ msgstr "Pochodzenie obcych"
 msgid "UFO Theory"
 msgstr "Teoria UFO"
 
-#: ../base/ufos/research.ufo:1102 ../base/ufos/weapons_human.ufo:1729
+#: ../base/ufos/research.ufo:1097 ../base/ufos/weapons_human.ufo:1729
 msgid "Electromagnetic Rifle"
 msgstr "Działo Lorentza"
 
-#: ../base/ufos/research.ufo:1141 ../base/ufos/weapons_human.ufo:1751
+#: ../base/ufos/research.ufo:1136 ../base/ufos/weapons_human.ufo:1751
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Magazynek do Działa Lorentza"
 
-#: ../base/ufos/research.ufo:1159 ../base/ufos/weapons_human.ufo:1819
+#: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1819
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "Magazynek do Działa Lorentza"
 
-#: ../base/ufos/research.ufo:1225
+#: ../base/ufos/research.ufo:1220
 msgid "Monomolecular Blades"
 msgstr "Ostrza monomolekularne"
 
-#: ../base/ufos/research.ufo:1442
+#: ../base/ufos/research.ufo:1437
 msgid "Plasma And The Grenade Launcher"
 msgstr "Wyrzutnia Gratanów i Plazmy"
 
-#: ../base/ufos/research.ufo:1506
+#: ../base/ufos/research.ufo:1501
 msgid "Alien Artifact - Kerrblade"
 msgstr "Artefakt obcych - Kerrnóż"
 
-#: ../base/ufos/research.ufo:1801 ../base/ufos/research.ufo:1846
+#: ../base/ufos/research.ufo:1796 ../base/ufos/research.ufo:1841
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Artefakt obcych - Pistolet plazmowy"
 
-#: ../base/ufos/research.ufo:1870 ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1865 ../base/ufos/research.ufo:1910
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Artefakt obcych - Ręczne działo plazmowe"
 
-#: ../base/ufos/research.ufo:1939
+#: ../base/ufos/research.ufo:1934
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Artefakt obcych - Żagiew plazmowa"
 
-#: ../base/ufos/research.ufo:1985
+#: ../base/ufos/research.ufo:1980
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Artefakt obcych - Granat Plazmowy"
 
-#: ../base/ufos/research.ufo:2030 ../base/ufos/research.ufo:2075
+#: ../base/ufos/research.ufo:2025 ../base/ufos/research.ufo:2070
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Artefakt obcych - Karabin plazmowy"
 
-#: ../base/ufos/research.ufo:2099
+#: ../base/ufos/research.ufo:2094
 msgid "Encased Plasma Rounds"
 msgstr "Mag. pocisków plazmowych"
 
-#: ../base/ufos/research.ufo:2218 ../base/ufos/research.ufo:2308
+#: ../base/ufos/research.ufo:2213 ../base/ufos/research.ufo:2303
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr "Igłowiec"
 
-#: ../base/ufos/research.ufo:2263 ../base/ufos/weapons_aliens.ufo:28
+#: ../base/ufos/research.ufo:2258 ../base/ufos/weapons_aliens.ufo:28
 msgid "Heavy Needler Gun"
 msgstr "Ciężki Igłowiec"
 
-#: ../base/ufos/research.ufo:2346 ../base/ufos/research.ufo:2354
+#: ../base/ufos/research.ufo:2341 ../base/ufos/research.ufo:2349
 #: ../base/ufos/weapons_human.ufo:435
 msgid "Coilgun"
 msgstr "Karabin Gaussa"
 
-#: ../base/ufos/research.ufo:2578
+#: ../base/ufos/research.ufo:2573
 msgid "Anti-Alien Gas"
 msgstr "Gaz na obcych"
 
-#: ../base/ufos/research.ufo:2625
+#: ../base/ufos/research.ufo:2620
 msgid "Alien Anti-Human Gas"
 msgstr "Antyludzki gaz obcych"
 
-#: ../base/ufos/research.ufo:2710 ../base/ufos/research.ufo:2755
+#: ../base/ufos/research.ufo:2705 ../base/ufos/research.ufo:2750
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Artefakt obcych - Pistolet cząsteczkowy"
 
-#: ../base/ufos/research.ufo:2774 ../base/ufos/research.ufo:2820
+#: ../base/ufos/research.ufo:2769 ../base/ufos/research.ufo:2815
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Artefakt obcych - Ręczne działo cząsteczkowe"
 
-#: ../base/ufos/research.ufo:2839 ../base/ufos/research.ufo:2884
+#: ../base/ufos/research.ufo:2834 ../base/ufos/research.ufo:2879
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Artefakt obcych - Karabin cząsteczkowy"
 
-#: ../base/ufos/research.ufo:2904
+#: ../base/ufos/research.ufo:2899
 msgid "Man-Portable Particle Beams"
 msgstr "Ręczna broń cząsteczkowa"
 
-#: ../base/ufos/research.ufo:3119
+#: ../base/ufos/research.ufo:3114
 msgid "Blast Damage Type"
 msgstr "Obrażenia od wybuchu"
 
-#: ../base/ufos/research.ufo:3132
+#: ../base/ufos/research.ufo:3127
 msgid "Fire Damage Type"
 msgstr "Obrażenia od ognia"
 
-#: ../base/ufos/research.ufo:3145
+#: ../base/ufos/research.ufo:3140
 msgid "Laser Damage Type"
 msgstr "Obrażenia od lasera"
 
-#: ../base/ufos/research.ufo:3163
+#: ../base/ufos/research.ufo:3158
 msgid "Impact Damage Type"
 msgstr "Obrażenia od uderzenia"
 
-#: ../base/ufos/research.ufo:3176
+#: ../base/ufos/research.ufo:3171
 msgid "Shock Damage Type"
 msgstr "Obrażenia od wstrząsu elektrycznego"
 
-#: ../base/ufos/research.ufo:3189
+#: ../base/ufos/research.ufo:3184
 msgid "Plasma Damage Type"
 msgstr "Obrażenia od plazmy"
 
-#: ../base/ufos/research.ufo:3210
+#: ../base/ufos/research.ufo:3205
 msgid "Stun Damage Type"
 msgstr "Obrażenia ogłuszające"
 
-#: ../base/ufos/research.ufo:3223
+#: ../base/ufos/research.ufo:3218
 msgid "Particle Beam Damage Type"
 msgstr "Obrażenia od strumienia cząstek"
 
-#: ../base/ufos/research.ufo:3241
+#: ../base/ufos/research.ufo:3236
 msgid "Accuracy Attribute"
 msgstr "Atrybut celności"
 
-#: ../base/ufos/research.ufo:3254
+#: ../base/ufos/research.ufo:3249
 msgid "Assault Guns Proficiency"
 msgstr "Umiejętność obsługi karabinów"
 
-#: ../base/ufos/research.ufo:3267
+#: ../base/ufos/research.ufo:3262
 msgid "Close Combat Proficiency"
 msgstr "Umiejętność walki wręcz"
 
-#: ../base/ufos/research.ufo:3280
+#: ../base/ufos/research.ufo:3275
 msgid "High-Explosives Proficiency"
 msgstr "Umiejętność obsługi materiałów wybuchowych"
 
-#: ../base/ufos/research.ufo:3293
-msgid "Heavy Weapons Proficiency"
-msgstr "Umiejętność obsługi broni ciężkich"
-
-#: ../base/ufos/research.ufo:3306
+#: ../base/ufos/research.ufo:3288
 msgid "Mind Attribute"
 msgstr "Atrybut Umysłu"
 
-#: ../base/ufos/research.ufo:3319
+#: ../base/ufos/research.ufo:3301
 msgid "Power Attribute"
 msgstr "Atrybut siły"
 
-#: ../base/ufos/research.ufo:3332
+#: ../base/ufos/research.ufo:3314
 msgid "Sniper Rifles Proficiency"
 msgstr "Umiejętność obsługi broni snajperskiej"
 
-#: ../base/ufos/research.ufo:3345
+#: ../base/ufos/research.ufo:3327
 msgid "Speed Attribute"
 msgstr "Atrybut szybkości"
 
-#: ../base/ufos/research.ufo:4416
+#: ../base/ufos/research.ufo:4398
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsja obcego - Bloodspider"
 
-#: ../base/ufos/research.ufo:4470
+#: ../base/ufos/research.ufo:4452
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "Autopsja obcego - Bojowy Bloodspider"
 
-#: ../base/ufos/research.ufo:4526
+#: ../base/ufos/research.ufo:4508
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsja obcego - Ortnok"
 
-#: ../base/ufos/research.ufo:4570
+#: ../base/ufos/research.ufo:4552
 msgid "Alien Autopsy - Taman"
 msgstr "Autopsja obcego - Tamanin"
 
-#: ../base/ufos/research.ufo:4614
+#: ../base/ufos/research.ufo:4596
 msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsja obcego - Shevaar"
 
-#: ../base/ufos/research.ufo:4658
+#: ../base/ufos/research.ufo:4640
 msgid "Alien Autopsy - Hovernet"
 msgstr "Autopsja obcego - Hovernet"
 
-#: ../base/ufos/research.ufo:4714
+#: ../base/ufos/research.ufo:4696
 msgid "Alien Autopsy - Combat Hovernet"
 msgstr "Autopsja obcego - Bojowy Hovernet"
 
-#: ../base/ufos/research.ufo:4776 ../base/ufos/team_humans.ufo:344
+#: ../base/ufos/research.ufo:4758 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
 msgstr "BPN Phoenix"
 
-#: ../base/ufos/research.ufo:4796 ../base/ufos/team_humans.ufo:401
+#: ../base/ufos/research.ufo:4778 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
 msgstr "Ares W (BPN)"
 
-#: ../base/ufos/research.ufo:4904
+#: ../base/ufos/research.ufo:4886
 msgid "'Raven' ECM Unit"
 msgstr "Zasobnik ESZ \"Raven\""
 
-#: ../base/ufos/research.ufo:5225
+#: ../base/ufos/research.ufo:5207
 msgid "SHIVA Rotary Cannon"
 msgstr "Działo SHIVA systemu Gatling"
 
-#: ../base/ufos/research.ufo:5284
+#: ../base/ufos/research.ufo:5266
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "System AA \"Sparrowhawk\""
 
-#: ../base/ufos/research.ufo:5301
+#: ../base/ufos/research.ufo:5283
 msgid "'Sparrowhawk' Missile"
 msgstr "Rakieta \"Sparrowhawk\""
 
-#: ../base/ufos/research.ufo:5692
+#: ../base/ufos/research.ufo:5674
 msgid "Political Situation Before The Invasion"
 msgstr "Sytuacja polityczna przed inwazją"
 
-#: ../base/ufos/research.ufo:5705
+#: ../base/ufos/research.ufo:5687
 msgid "After The War"
 msgstr "Po Wojnie"
 
-#: ../base/ufos/research.ufo:5718
+#: ../base/ufos/research.ufo:5700
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX i Następstwa Wydarzeń w Bombaju"
 
-#: ../base/ufos/research.ufo:5730
+#: ../base/ufos/research.ufo:5712
 msgid "A New Twist"
 msgstr "Nowy Kierunek"
 
-#: ../base/ufos/research.ufo:5759
+#: ../base/ufos/research.ufo:5741
 msgid "The Enemy On Earth"
 msgstr "Wróg na Ziemi"
 
-#: ../base/ufos/research.ufo:5798
+#: ../base/ufos/research.ufo:5780
 msgid "XVI Census"
 msgstr "Spis XVI"
 
-#: ../base/ufos/research.ufo:5839
+#: ../base/ufos/research.ufo:5821
 msgid "The Alien Strategy"
 msgstr "Strategia obcych"
 
-#: ../base/ufos/research.ufo:5878
+#: ../base/ufos/research.ufo:5860
 msgid "Orbital UFO Activity"
 msgstr "Aktywność UFO na orbicie"
 
-#: ../base/ufos/research.ufo:5921
+#: ../base/ufos/research.ufo:5903
 msgid "Alien Psi Device"
 msgstr "Urządzenie psioniczne obcych"
 
-#: ../base/ufos/research.ufo:5953
+#: ../base/ufos/research.ufo:5935
 msgid "Human Vaccine"
 msgstr "Ludzka Szczepionka"
 
@@ -24728,23 +24717,23 @@ msgstr "Phalanx"
 msgid "Ares W"
 msgstr "Ares W"
 
-#: ../base/ufos/team_templates.ufo:240
+#: ../base/ufos/team_templates.ufo:228
 msgid "Body"
 msgstr "Ciało"
 
-#: ../base/ufos/team_templates.ufo:249
+#: ../base/ufos/team_templates.ufo:237
 msgid "Torso"
 msgstr "Tułów"
 
-#: ../base/ufos/team_templates.ufo:256
+#: ../base/ufos/team_templates.ufo:244
 msgid "Legs"
 msgstr "Nogi"
 
-#: ../base/ufos/team_templates.ufo:263
+#: ../base/ufos/team_templates.ufo:251
 msgid "Arms"
 msgstr "Ręce"
 
-#: ../base/ufos/team_templates.ufo:271
+#: ../base/ufos/team_templates.ufo:259
 msgid "Head"
 msgstr "Głowa"
 
@@ -29522,18 +29511,16 @@ msgstr "Nowy %s jest gotowy w %s"
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:110
 #: client/cgame/campaign/cp_airfight.cpp:381
 #: client/cgame/campaign/cp_airfight.cpp:401
-#: client/cgame/campaign/cp_aliencont.cpp:85
-#: client/cgame/campaign/cp_aliencont.cpp:105
-#: client/cgame/campaign/cp_aliencont.cpp:118
+#: client/cgame/campaign/cp_aliencont.cpp:104
+#: client/cgame/campaign/cp_aliencont.cpp:117
 #: client/cgame/campaign/cp_auto_mission.cpp:766
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
 #: client/cgame/campaign/cp_base.cpp:1358
 #: client/cgame/campaign/cp_base.cpp:1408
-#: client/cgame/campaign/cp_base.cpp:2317
-#: client/cgame/campaign/cp_base.cpp:2322
-#: client/cgame/campaign/cp_base.cpp:2974
+#: client/cgame/campaign/cp_base.cpp:2305
+#: client/cgame/campaign/cp_base.cpp:2895
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
@@ -29726,18 +29713,11 @@ msgstr "Pilot zabity w akcji"
 msgid "You've lost the battle"
 msgstr "Potyczka przegrana."
 
-#: client/cgame/campaign/cp_aliencont.cpp:85
-msgid ""
-"You cannot process aliens yet. Alien Containment not ready in this base."
-msgstr ""
-"Nie można wykonać działań związanych z obcymi. Brak gotowości kwarantanny w "
-"tej bazie."
-
-#: client/cgame/campaign/cp_aliencont.cpp:105
+#: client/cgame/campaign/cp_aliencont.cpp:104
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Obcy zmarli. Jeszcze nie możemy trzymać ich żywych."
 
-#: client/cgame/campaign/cp_aliencont.cpp:118
+#: client/cgame/campaign/cp_aliencont.cpp:117
 msgid "You've captured new aliens."
 msgstr "Pojmałeś nowych obcych."
 
@@ -29856,12 +29836,12 @@ msgstr "Zakończono budowanie %s w %s."
 msgid "Building finished"
 msgstr "Budowa zakończona"
 
-#: client/cgame/campaign/cp_base.cpp:2315
+#: client/cgame/campaign/cp_base.cpp:2303
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Ze sprzedaży %s uzyskano %i kredytów."
 
-#: client/cgame/campaign/cp_base.cpp:2316
+#: client/cgame/campaign/cp_base.cpp:2304
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -29869,20 +29849,7 @@ msgstr[0] "%i zebranej rzeczy"
 msgstr[1] "%i zebranych rzeczy"
 msgstr[2] "%i zebranych rzeczy"
 
-#: client/cgame/campaign/cp_base.cpp:2320
-#, c-format
-msgid "Not enough storage space in %s. %s"
-msgstr "Zabrakło miejsca do przechowywania w %s. %s"
-
-#: client/cgame/campaign/cp_base.cpp:2321
-#, c-format
-msgid "%i item was sold for %i credits."
-msgid_plural "%i items were sold for %i credits."
-msgstr[0] "Sprzedano %i obiekt za %i kredytów."
-msgstr[1] "Sprzedano %i obiektów za %i kredytów."
-msgstr[2] "Sprzedano %i obiektów za %i kredytów."
-
-#: client/cgame/campaign/cp_base.cpp:2972
+#: client/cgame/campaign/cp_base.cpp:2893
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -30166,7 +30133,7 @@ msgstr "Usuwanie"
 
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:216
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:619
-#: client/cgame/campaign/cp_ufopedia.cpp:213 client/input/cl_joystick.cpp:278
+#: client/cgame/campaign/cp_ufopedia.cpp:213 client/input/cl_joystick.cpp:282
 msgid "None"
 msgstr "Brak"
 
@@ -32475,107 +32442,107 @@ msgstr "^BTryb Taktyczny"
 msgid "Downloading [%s]"
 msgstr "Wgrywanie [%s]"
 
-#: client/input/cl_input.cpp:1045
+#: client/input/cl_input.cpp:1130
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Obróć widok w stronę przeciwną do obrotu wskazówek zegara."
 
-#: client/input/cl_input.cpp:1047
+#: client/input/cl_input.cpp:1132
 msgid "Rotate battlescape camera clockwise"
 msgstr "Obróć widok w stronę zgodną z obrotem wskazówek zegara."
 
-#: client/input/cl_input.cpp:1049
+#: client/input/cl_input.cpp:1134
 msgid "Tilt battlescape camera up"
 msgstr "Przechyl kamerę w górę"
 
-#: client/input/cl_input.cpp:1051
+#: client/input/cl_input.cpp:1136
 msgid "Tilt battlescape camera down"
 msgstr "Pochyl kamerę w dół"
 
-#: client/input/cl_input.cpp:1053
+#: client/input/cl_input.cpp:1138
 msgid "Move battlescape camera"
 msgstr "Przesuń kamerę pola walki"
 
-#: client/input/cl_input.cpp:1055
+#: client/input/cl_input.cpp:1140
 msgid "Move battlescape camera left"
 msgstr "Przesuń kamerę pola walki w lewo"
 
-#: client/input/cl_input.cpp:1057
+#: client/input/cl_input.cpp:1142
 msgid "Move battlescape camera top left"
 msgstr "Przesuń kamerę pola walki w lewo-góra"
 
-#: client/input/cl_input.cpp:1059
+#: client/input/cl_input.cpp:1144
 msgid "Move battlescape camera bottom left"
 msgstr "Przesuń kamerę pola walki w lewo-dół"
 
-#: client/input/cl_input.cpp:1061
+#: client/input/cl_input.cpp:1146
 msgid "Move battlescape camera right"
 msgstr "Przesuń kamerę pola walki w prawo"
 
-#: client/input/cl_input.cpp:1063
+#: client/input/cl_input.cpp:1148
 msgid "Move battlescape camera top right"
 msgstr "Przesuń kamerę pola walki w prawo-góra"
 
-#: client/input/cl_input.cpp:1065
+#: client/input/cl_input.cpp:1150
 msgid "Move battlescape camera bottom right"
 msgstr "Przesuń kamerę pola walki w prawo-dół"
 
-#: client/input/cl_input.cpp:1067
+#: client/input/cl_input.cpp:1152
 msgid "Move battlescape camera forward"
 msgstr "Przesuń kamerę pola walki naprzód"
 
-#: client/input/cl_input.cpp:1069
+#: client/input/cl_input.cpp:1154
 msgid "Move battlescape camera backward"
 msgstr "Przesuń kamerę pola walki w tył"
 
-#: client/input/cl_input.cpp:1071 client/input/cl_input.cpp:1095
+#: client/input/cl_input.cpp:1156 client/input/cl_input.cpp:1180
 msgid "Zoom in"
 msgstr "Przybliż"
 
-#: client/input/cl_input.cpp:1073 client/input/cl_input.cpp:1096
+#: client/input/cl_input.cpp:1158 client/input/cl_input.cpp:1181
 msgid "Zoom out"
 msgstr "Oddal"
 
-#: client/input/cl_input.cpp:1076
+#: client/input/cl_input.cpp:1161
 msgid "Left mouse button click (menu)"
 msgstr "Lewy przycisk myszy (menu)"
 
-#: client/input/cl_input.cpp:1078
+#: client/input/cl_input.cpp:1163
 msgid "Middle mouse button click (menu)"
 msgstr "Środkowy przycisk myszy (menu)"
 
-#: client/input/cl_input.cpp:1080
+#: client/input/cl_input.cpp:1165
 msgid "Right mouse button click (menu)"
 msgstr "Prawy przycisk myszy (menu)"
 
-#: client/input/cl_input.cpp:1082
+#: client/input/cl_input.cpp:1167
 msgid "Mouse wheel up"
 msgstr "Przybliż widok"
 
-#: client/input/cl_input.cpp:1083
+#: client/input/cl_input.cpp:1168
 msgid "Mouse wheel down"
 msgstr "Oddal widok"
 
-#: client/input/cl_input.cpp:1084
+#: client/input/cl_input.cpp:1169
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Wybór obiektu/Przejdź na miejsce/W trybie ognia - wystrzel"
 
-#: client/input/cl_input.cpp:1086
+#: client/input/cl_input.cpp:1171
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "Obróć Mapę Taktyczną/W trybie strzału, anuluj akcję"
 
-#: client/input/cl_input.cpp:1088
+#: client/input/cl_input.cpp:1173
 msgid "Turn soldier toward mouse pointer"
 msgstr "Obraca żołnierza w kierunku wskazanym przez kursor"
 
-#: client/input/cl_input.cpp:1090
+#: client/input/cl_input.cpp:1175
 msgid "Toggles the hud radar mode"
 msgstr "Przełącza wyświetlanie radaru"
 
-#: client/input/cl_input.cpp:1093
+#: client/input/cl_input.cpp:1178
 msgid "Slice through terrain at a higher level"
 msgstr "Przejdź do wyższego poziomu terenu"
 
-#: client/input/cl_input.cpp:1094
+#: client/input/cl_input.cpp:1179
 msgid "Slice through terrain at a lower level"
 msgstr "Przejdź do niższego poziomu terenu"
 
@@ -32795,6 +32762,33 @@ msgstr "Obcy"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Zrzut ekranu [Screenshot]"
+
+#~ msgid ""
+#~ "Determines a soldier's accuracy with heavy weapons. Soldiers will "
+#~ "increase their heavy proficiency when they use heavy weapons effectively "
+#~ "in battle."
+#~ msgstr ""
+#~ "Określa zdolności żołnierzy do posługiwania się bronią ciężką. Żołnierze "
+#~ "zwiększą swoją sprawność ataku, gdy użyją skutecznie broni ciężkiej w "
+#~ "walce."
+
+#~ msgid "Heavy Weapons Proficiency"
+#~ msgstr "Umiejętność obsługi broni ciężkich"
+
+#~ msgid ""
+#~ "You cannot process aliens yet. Alien Containment not ready in this base."
+#~ msgstr ""
+#~ "Nie można wykonać działań związanych z obcymi. Brak gotowości kwarantanny "
+#~ "w tej bazie."
+
+#~ msgid "Not enough storage space in %s. %s"
+#~ msgstr "Zabrakło miejsca do przechowywania w %s. %s"
+
+#~ msgid "%i item was sold for %i credits."
+#~ msgid_plural "%i items were sold for %i credits."
+#~ msgstr[0] "Sprzedano %i obiekt za %i kredytów."
+#~ msgstr[1] "Sprzedano %i obiektów za %i kredytów."
+#~ msgstr[2] "Sprzedano %i obiektów za %i kredytów."
 
 #~ msgid "Add/Remove scientist"
 #~ msgstr "Dodaj/Usuń naukowca"
