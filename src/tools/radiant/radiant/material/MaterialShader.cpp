@@ -81,6 +81,8 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 			}
 		} else if (depth == 2) {
 			if (token == "texture") {
+				if (layerTexture)
+					GlobalTexturesCache().release(layerTexture);
 				layerTexture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + tokeniser.getToken());
 				if (layerTexture->texture_number == 0) {
 					GlobalTexturesCache().release(layerTexture);
