@@ -34,7 +34,7 @@ void MaterialShaderSystem::unrealise ()
 	g_observers.unrealise();
 
 	for (MaterialShaders::iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
-		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan material still referenced");
+		ASSERT_MESSAGE(i->second->refcount() != 0, "orphan material still referenced");
 	}
 	_activeMaterialShaders.clear();
 	_materialDefinitions.clear();

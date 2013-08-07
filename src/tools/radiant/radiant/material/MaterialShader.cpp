@@ -76,6 +76,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 				}
 				color.set(1, 1, 1);
 				addLayer(layer);
+				layerTexture = NULL;
 				break;
 			}
 		} else if (depth == 2) {
@@ -128,6 +129,9 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 		}
 		token = tokeniser.getToken();
 	}
+
+	if (layerTexture)
+		GlobalTexturesCache().release(layerTexture);
 }
 
 // IShaders implementation -----------------
