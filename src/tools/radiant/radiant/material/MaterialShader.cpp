@@ -268,6 +268,8 @@ void MaterialShader::addLayer (MapLayer &layer)
 {
 	if (isLayerValid(layer))
 		m_layers.push_back(layer);
+	else if (layer.getTexture() != 0)
+		GlobalTexturesCache().release(layer.getTexture());
 }
 
 bool MaterialShader::hasLayers() const
