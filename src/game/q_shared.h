@@ -279,7 +279,7 @@ typedef int32_t shoot_types_t;
 #define GET_HP( ab )        (std::min((80 + (ab) * 90/MAX_SKILL), 255))
 #define GET_ENCUMBRANCE_PENALTY(weight, max)	(1.0f - ((weight) > (max) * WEIGHT_HEAVY ? WEIGHT_HEAVY_PENALTY : (weight) > (max) * WEIGHT_LIGHT ? WEIGHT_NORMAL_PENALTY : 0.0f))
 /** @todo Skill-influence needs some balancing. */
-#define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
+#define GET_ACC( ab, sk )   ((1 - (((float)(ab) - 10) / (MAX_SKILL / 2) + ((float)(sk) - 10) / (MAX_SKILL / 2)) / 2))
 #define GET_MORALE( ab )        (std::min((100 + (ab) * 150/MAX_SKILL), 255))
 #define GET_TU( ab, md )		(MIN_TU * (md) + (ab) * 20 / MAX_SKILL)
 
