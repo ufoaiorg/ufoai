@@ -1,9 +1,10 @@
 PKG_CONFIG               ?= PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(CROSS)pkg-config
 CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
 CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
-#CURL_CONFIG              ?= curl-config
-#CURL_LIBS                ?= $(shell $(CURL_CONFIG) $(CONFIG_LIBS_FLAGS))
-#CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
+PNG_LIBS                 ?= -lpng
+PNG_CFLAGS               ?=
+JPEG_LIBS                ?= -ljpeg
+JPEG_CFLAGS              ?=
 ifdef HAVE_SDL2_SDL_H
 SDL_LIBS                 ?= $(call PKG_LIBS,sdl2)
 SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl2)
@@ -72,7 +73,7 @@ endif
 MUMBLE_LIBS              ?=
 MUMBLE_SRCS               = libs/mumble/libmumblelink.c
 MUMBLE_CFLAGS             = -Isrc/libs/mumble
-ifndef HAVE_MXML_H
+ifndef HAVE_MXML_MXML_H
 MXML_SRCS                 = libs/mxml/mxml-attr.c \
                             libs/mxml/mxml-entity.c \
                             libs/mxml/mxml-file.c \
@@ -89,7 +90,7 @@ endif
 else
 MXML_SRCS                 =
 endif
-ifndef HAVE_PICOMODEL_H
+ifndef HAVE_PICOMODEL_PICOMODEL_H
 PICOMODEL_SRCS            = libs/picomodel/picointernal.c \
                             libs/picomodel/picomodel.c \
                             libs/picomodel/picomodules.c \

@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_LDFLAGS  += -lpng -ljpeg -lm -lz $(SDL_LIBS)
-$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS)
+$(TARGET)_LDFLAGS  += $(PNG_LIBS) $(JPEG_LIBS) -lm -lz $(SDL_LIBS)
 
 $(TARGET)_SRCS      = \
 	tools/ufoslicer.cpp \
