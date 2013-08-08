@@ -50,7 +50,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
 	case ABILITY_POWER: {
 		const float weight = chr->scoreMission->carriedWeight / level.actualRound;
 		const float penalty = GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
-		experience = 150 * (weight / chr->score.skills[ABILITY_POWER]) / penalty;
+		experience = 50 * (weight / chr->score.skills[ABILITY_POWER]) / penalty;
 		break;
 	}
 	case ABILITY_SPEED:
@@ -63,27 +63,27 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
 		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
 		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
 			if (i == SKILL_SNIPER)
-				experience += 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				experience += 60 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 			else
-				experience += 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				experience += 40 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 		break;
 	case ABILITY_MIND:
-		experience = 50 + 200 * chr->scoreMission->kills[KILLED_ENEMIES];
+		experience = 50 + 100 * chr->scoreMission->kills[KILLED_ENEMIES];
 		break;
 	case SKILL_CLOSE:
-		experience = 150 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_HEAVY:
-		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_ASSAULT:
-		experience = 100 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_SNIPER:
-		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_EXPLOSIVE:
-		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	default:
 		break;
@@ -171,7 +171,7 @@ static void G_UpdateCharacterExperience (Edict *ent)
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
 	maxXP = G_CharacterGetMaxExperiencePerMission((abilityskills_t)i);
-	gainedXP = std::min(maxXP, totalGainedXP / 2);
+	gainedXP = std::min(maxXP, totalGainedXP / 5);
 	chr->score.experience[i] += gainedXP;
 }
 

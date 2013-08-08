@@ -80,11 +80,11 @@ void CP_UpdateCharacterSkills (character_t *chr)
 	int i;
 	for (i = 0; i < SKILL_NUM_TYPES; ++i)
 		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] +
-			static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 100, 0.6f)));
+			static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 10, 0.6f)));
 	/* Ensure that index for health-experience is correct. */
 	assert(i == SKILL_NUM_TYPES);
 	chr->maxHP = std::min(255, chr->score.initialSkills[i] +
-		static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 100, 0.6f)));
+		static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 10, 0.6f)));
 }
 
 /**
