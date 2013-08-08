@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-07 09:04+0200\n"
-"PO-Revision-Date: 2013-07-27 20:55+0100\n"
+"PO-Revision-Date: 2013-08-08 20:05+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -2902,7 +2902,6 @@ msgid "Tropical Jungle Estate"
 msgstr "Tropischer Dschungel - Anwesen"
 
 #: ../base/ufos/maps.ufo:3515
-#, fuzzy
 msgid "Mountain Estate"
 msgstr "Berganwesen"
 
@@ -12764,7 +12763,6 @@ msgid "Kill all the aliens to secure the base."
 msgstr "Töte alle Außerirdischen um die Basis zu sichern."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
-#, fuzzy
 msgid "The dropship has arrived at the crash site."
 msgstr "Das Landungsschiff ist an der Absturzstelle angekommen."
 
@@ -26461,9 +26459,8 @@ msgid "Belt"
 msgstr "Gürtel"
 
 #: ../base/ufos/ui/equipment.ufo:169
-#, fuzzy
 msgid "Remove all"
-msgstr "Entfernen"
+msgstr "Alle entfernen"
 
 #: ../base/ufos/ui/equipment.ufo:223 ../base/ufos/ui/market.ufo:114
 #: ../base/ufos/ui/production.ufo:34 ../base/ufos/ui/team.ufo:203
@@ -28193,7 +28190,6 @@ msgid "Enabled by default for compatibility reasons."
 msgstr "Aus Kompatibiltätsgründen standardmäßig aktiviert."
 
 #: ../base/ufos/ui/options.ufo:1122
-#, fuzzy
 msgid "Intel Graphics Hardware Hack:"
 msgstr "Intel Grafik Hardware Hack:"
 
@@ -28714,23 +28710,20 @@ msgid "Open UFOPaedia"
 msgstr "UFOpedia öffnen"
 
 #: ../base/ufos/ui/research.ufo:59
-#, fuzzy
 msgid "Stop researching this project"
-msgstr "Kein Forschungsantrag für dieses Projekt vorhanden."
+msgstr "Forschung an diesem Projekt stoppen"
 
 #: ../base/ufos/ui/research.ufo:69
-#, fuzzy
 msgid "Assign less scientists on this project"
-msgstr "Soldaten diesem Flugzeug zuweisen"
+msgstr "Ziehen Sie dem einige Wissenschaftler vom Projekt ab"
 
 #: ../base/ufos/ui/research.ufo:87
-#, fuzzy
 msgid "Assign more scientists on this project"
-msgstr "Weisen Sie dem Flugzeug mehr Soldaten zu."
+msgstr "Weisen Sie dem Projekt mehr Wissenschaftler zu"
 
 #: ../base/ufos/ui/research.ufo:97
 msgid "Assign all free scientists on this project"
-msgstr ""
+msgstr "Alle verfügbaren Wissenschafter diesem Projekt zuweisen"
 
 #: ../base/ufos/ui/research.ufo:144
 msgid "N/A"
