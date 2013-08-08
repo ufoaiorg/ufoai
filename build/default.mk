@@ -91,13 +91,6 @@ else
 SDL_LIBS                 ?= $(call PKG_LIBS,sdl)
 SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl)
 endif
-#ifdef HAVE_SDL2_SDL_H
-#SDL_CONFIG               ?= sdl2-config
-#else
-#SDL_CONFIG               ?= sdl-config
-#endif
-#SDL_LIBS                 ?= $(shell $(SDL_CONFIG) $(CONFIG_LIBS_FLAGS))
-#SDL_CFLAGS               ?= $(shell $(SDL_CONFIG) --cflags)
 ifdef HAVE_SDL2_TTF_SDL_TTF_H
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL2_ttf)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL2_ttf)
