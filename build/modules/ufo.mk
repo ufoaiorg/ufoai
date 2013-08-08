@@ -258,7 +258,11 @@ $(TARGET)_SRCS      = \
 	\
 	$(MXML_SRCS)\
 	\
-	$(MUMBLE_SRCS)
+	$(MUMBLE_SRCS) \
+	\
+	$(PNG_SRCS) \
+	\
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \

@@ -56,7 +56,11 @@ $(TARGET)_SRCS      = \
 	common/unzip.cpp \
 	common/tracing.cpp \
 	common/routing.cpp \
-	common/ioapi.cpp
+	common/ioapi.cpp \
+	\
+	$(PNG_SRCS) \
+	\
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\

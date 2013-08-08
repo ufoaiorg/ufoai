@@ -280,7 +280,11 @@ $(TARGET)_SRCS_TMP      = \
 	\
 	$(MXML_SRCS) \
 	\
-	$(MUMBLE_SRCS)
+	$(MUMBLE_SRCS) \
+	\
+	$(PNG_SRCS) \
+	\
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS_TMP += \
