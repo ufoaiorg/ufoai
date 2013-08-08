@@ -363,8 +363,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	/* shift the x and y values according to their grid width/height and
 	 * their gridX and gridY position */
 	{
-		const float radarLength = std::max(1.0, fabs(gridSize[0]));
-		const float radarHeight = std::max(1.0, fabs(gridSize[1]));
+		const float radarLength = std::max(1.0f, fabsf(gridSize[0]));
+		const float radarHeight = std::max(1.0f, fabsf(gridSize[1]));
 		/* image grid relations */
 		const float gridFactorX = radar.w / radarLength;
 		const float gridFactorY = radar.h / radarHeight;

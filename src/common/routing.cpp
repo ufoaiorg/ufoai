@@ -551,9 +551,9 @@ int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, c
 	top += 2 * DIST_EPSILON;
 	bottomQ = ModelFloorToQuant(bottom); /* Convert to QUANT units to ensure the floor is rounded up to the correct value. */
 	topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
-	fz = floor(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
+	fz = floorf(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
 	/** @note Remember that ceiling values of 1-16 belong to a cell.  We need to adjust topQ by 1 to round to the correct z value. */
-	cz = std::min(z, (int)(floor((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
+	cz = std::min(z, (int)(floorf((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
 
@@ -805,7 +805,7 @@ static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, cons
 {
 	int temp_z, adj_lo;
 
-	temp_z = floor((hi - 1) / CELL_HEIGHT);
+	temp_z = floorf((hi - 1) / CELL_HEIGHT);
 	temp_z = std::min(temp_z, PATHFINDING_HEIGHT - 1);
 	adj_lo = rtd->routing.getFloor(rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
@@ -820,7 +820,7 @@ static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, cons
 	if (adj_lo >= 0 && top - adj_lo >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
 		if (debugTrace)
 			Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
-		return floor(adj_lo / CELL_HEIGHT);
+		return floorf(adj_lo / CELL_HEIGHT);
 	}
 	if (debugTrace)
 		Com_Printf("Skipping found floor in destination cell- not enough opening: %i (%i).\n", adj_lo, temp_z);

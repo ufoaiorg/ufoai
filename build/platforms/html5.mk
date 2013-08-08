@@ -3,7 +3,7 @@ SO_LDFLAGS                = -shared
 SO_CFLAGS                 = -fpic
 SO_LIBS                  := -ldl
 
-CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
+CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE -DNO_I18N -DNO_HTTP
 CFLAGS                   += -Wno-c++11-extensions -Wno-shift-op-parentheses
 CFLAGS                   += --jcache
 LDFLAGS                  += --jcache

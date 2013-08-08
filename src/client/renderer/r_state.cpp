@@ -747,10 +747,10 @@ void R_Setup3D (void)
 		int x, x2, y2, y, w, h;
 
 		/* set up viewport */
-		x = floor(viddef.x * viddef.context.width / viddef.context.width);
-		x2 = ceil((viddef.x + viddef.viewWidth) * viddef.context.width / viddef.context.width);
-		y = floor(viddef.context.height - viddef.y * viddef.context.height / viddef.context.height);
-		y2 = ceil(viddef.context.height - (viddef.y + viddef.viewHeight) * viddef.context.height / viddef.context.height);
+		x = floorf(viddef.x * viddef.context.width / viddef.context.width);
+		x2 = ceilf((viddef.x + viddef.viewWidth) * viddef.context.width / viddef.context.width);
+		y = floorf(viddef.context.height - viddef.y * viddef.context.height / viddef.context.height);
+		y2 = ceilf(viddef.context.height - (viddef.y + viddef.viewHeight) * viddef.context.height / viddef.context.height);
 
 		w = x2 - x;
 		h = y - y2;
@@ -768,9 +768,9 @@ void R_Setup3D (void)
 		float x = viddef.x + (viddef.viewWidth - VID_NORM_WIDTH) / 2.0 - (viddef.virtualWidth - VID_NORM_WIDTH) / 2.0;
 		float y = viddef.y + (viddef.viewHeight - VID_NORM_HEIGHT) / 2.0 - (viddef.virtualHeight - VID_NORM_HEIGHT) / 2.0;
 		/* @todo magic coef, i dont know where it come from */
-		x *=  2.0 / (float) viddef.virtualWidth;
-		y *=  2.0 / (float) viddef.virtualHeight;
-		glTranslatef(x, -y, 0);
+		x *=  2.0f / (float) viddef.virtualWidth;
+		y *=  2.0f / (float) viddef.virtualHeight;
+		glTranslatef(x, -y, 0.0f);
 	}
 	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 

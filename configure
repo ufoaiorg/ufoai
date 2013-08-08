@@ -179,7 +179,11 @@ check_header() {
 	HEADER="`echo ${HEADER} | sed 's,\.,_,g' | sed 's,-,_,g' | tr '[a-z]' '[A-Z]'`"
 
 	HAVE=HAVE_${PACKAGE}${HEADER}_H
-	VALUE=`get_var $HAVE`
+	if [ "${TARGET_OS}" = "android" ]; then
+		VALUE="no"
+	else
+		VALUE=`get_var $HAVE`
+	fi
 	if [ "$VALUE" != "no" ]; then
 		set_var $HAVE `check_header_cc $1 $2`
 		add_to_config_h $HAVE "Found $1" "Could not find $1" $2
@@ -245,10 +249,6 @@ check_compiler() {
 	# TODO Implement compiler check
 	CC=${CC:-${DEFAULT_COMPILER_CC}}
 	CXX=${CXX:-${DEFAULT_COMPILER_CXX}}
-
-	if [ "${TARGET_OS}" = "android" ]; then
-		CROSS="arm-linux-androideabi-"
-	fi
 
 	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 		CROSS="i686-pc-mingw32-"
@@ -599,7 +599,9 @@ mingw64_64)
 	;;
 android)
 	TARGET_ARCH=arm
-	enable_only ufo
+	HARD_LINKED_GAME=1
+	HARD_LINKED_CGAME=1
+	enable_only ${PROGRAM}
 	;;
 html5)
 	HARD_LINKED_GAME=1

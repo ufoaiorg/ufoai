@@ -133,14 +133,16 @@ void uiGeoscapeNode::smoothRotate (uiNode_t* node)
 	} else {
 		const float epsilonZoom = 0.01f;
 		/* when we zoom only */
-		if (fabs(diffZoom) > epsilonZoom) {
+		if (fabsf(diffZoom) > epsilonZoom) {
 			float speed;
 			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
 			 * This allows the globe to zoom at maximum speed when the button is held down. */
-			if (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom > 0.5)
-				speed = std::min(SMOOTHACCELERATION * 2.0, UI_MAPEXTRADATACONST(node).curZoomSpeed + sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION);
-			else {
-				speed = sin(3.05f * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION * 2.0;
+			if (fabsf(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom > 0.5f) {
+				const float maxSpeed = SMOOTHACCELERATION * 2.0f;
+				const float newSpeed = UI_MAPEXTRADATACONST(node).curZoomSpeed + sin(3.05 * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION;
+				speed = std::min(maxSpeed, newSpeed);
+			} else {
+				speed = sin(3.05 * (fabs(diffZoom) / UI_MAPEXTRADATACONST(node).smoothDeltaZoom)) * SMOOTHACCELERATION * 2.0;
 			}
 			UI_MAPEXTRADATA(node).curZoomSpeed = speed;
 			UI_MAPEXTRADATA(node).zoom = UI_MAPEXTRADATACONST(node).zoom + diffZoom * speed;
@@ -586,10 +588,10 @@ static void UI_GeoscapeNodeZoom_f (void)
 
 	switch (cmd[0]) {
 	case 'i':
-		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * pow(0.995, -zoomAmount);
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * powf(0.995, -zoomAmount);
 		break;
 	case 'o':
-		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * pow(0.995, zoomAmount);
+		UI_MAPEXTRADATA(node).smoothFinalZoom = UI_MAPEXTRADATACONST(node).zoom * powf(0.995, zoomAmount);
 		break;
 	default:
 		Com_Printf("UI_GeoscapeNodeZoom_f: Invalid parameter: %s\n", cmd);

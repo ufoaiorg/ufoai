@@ -380,7 +380,7 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
 bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
-	const int position = pow(2, x);
+	const int position = powf(2.0f, (float)x);
 
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
 		Com_Printf("INVSH_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);

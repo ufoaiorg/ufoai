@@ -38,6 +38,9 @@ INSTALL_MAN     ?= $(INSTALL) -m 444
 INSTALL_DATA    ?= $(INSTALL) -m 444
 
 .PHONY: all
+ifeq ($(TARGET_OS),android)
+all: android
+else
 ifeq ($(TARGET_OS),html5)
 ifeq ($(EMSCRIPTEN_CALLED),1)
 all: $(TARGETS)
@@ -46,6 +49,7 @@ all: emscripten
 endif
 else
 all: $(TARGETS)
+endif
 endif
 
 include build/flags.mk
@@ -165,6 +169,62 @@ include build/maps.mk
 include build/models.mk
 include build/various.mk
 
+ifeq ($(TARGET_OS),android)
+.PHONY: clean-android
+clean-android:
+	@echo "===> ANDROID [clean project]"
+	$(Q)rm -rf android-project/assets
+	$(Q)rm -rf android-project/bin
+	$(Q)rm -f android-project/jni/SDL \
+		android-project/jni/SDL_mixer \
+		android-project/jni/SDL_ttf \
+		android-project/jni/libpng \
+		android-project/jni/jpeg \
+		android-project/jni/ogg \
+		android-project/jni/curl \
+		android-project/jni/vorbis \
+		android-project/jni/intl \
+		android-project/jni/zlib \
+		android-project/jni/theora
+	$(Q)cd android-project && ant clean
+
+.PHONY: android-update-project
+android-update-project: clean-android
+	@echo "===> ANDROID [update project]"
+	$(Q)cd android-project && android update project -p . -t android-13
+
+.PHONY: android-copy-assets
+android-copy-assets: clean-android pk3
+	@echo "===> CP [copy assets]"
+	$(Q)mkdir -p android-project/assets/base
+	$(Q)cp -l base/*.pk3 android-project/assets/base
+	$(Q)for i in hdpi ldpi mdpi xhdpi; do mkdir -p android-project/res/drawable-$${i}; cp contrib/installer/ufoai.png android-project/res/drawable-$${i}/icon.png; done
+
+.PHONY: android
+android: android-update-project android-copy-assets
+	$(Q)ln -sf ../../src/libs/SDL android-project/jni/SDL
+	$(Q)ln -sf ../../src/libs/SDL_mixer android-project/jni/SDL_mixer
+	$(Q)ln -sf ../../src/libs/SDL_ttf android-project/jni/SDL_ttf
+	$(Q)ln -sf ../../src/libs/libpng-1.6.2 android-project/jni/libpng
+	$(Q)ln -sf ../../src/libs/jpeg-9 android-project/jni/jpeg
+	$(Q)ln -sf ../../src/libs/curl android-project/jni/curl
+	$(Q)ln -sf ../../src/libs/libogg-1.3.1 android-project/jni/ogg
+	$(Q)ln -sf ../../src/libs/vorbis android-project/jni/vorbis
+	$(Q)ln -sf ../../src/libs/intl android-project/jni/intl
+	$(Q)ln -sf ../../src/libs/theora android-project/jni/theora
+	$(Q)ln -sf ../../src/libs/zlib-1.2.8 android-project/jni/zlib
+	@echo "===> NDK [native build]"
+	$(Q)cd android-project && ndk-build V=1 -j 5
+	@echo "===> ANT [java build]"
+	$(Q)cd android-project && ant debug
+	$(Q)cd android-project && ant installd
+
+android-uninstall:
+	$(Q)cd android-project && ant uninstall org.ufoai
+endif
+
+ifeq ($(TARGET_OS),html5)
 .PHONY: emscripten
 emscripten:
 	$(Q)$(EMSCRIPTEN_ROOT)/emmake $(MAKE) EMSCRIPTEN_CALLED=1
+endif

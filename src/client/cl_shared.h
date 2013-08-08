@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
-#ifdef EMSCRIPTEN
+#ifdef NO_I18N
 #define bindtextdomain(IGNORE1, IGNORE2)
 #define bind_textdomain_codeset(IGNORE1, IGNORE2)
 #define textdomain(IGNORE1)

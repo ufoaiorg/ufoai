@@ -205,7 +205,7 @@ int CL_GetHitProbability (const le_t* actor)
 	/* Calculate HitZone: */
 	const int distx = fabs(shooter[0] - target[0]);
 	const int disty = fabs(shooter[1] - target[1]);
-	const float distance = sqrt(distx * distx + disty * disty);
+	const float distance = sqrtf(distx * distx + disty * disty);
 	float pseudosin;
 	if (distx > disty)
 		pseudosin = distance / distx;

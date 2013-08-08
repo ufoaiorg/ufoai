@@ -34,7 +34,7 @@ extern const pos3_t pos3_origin;
 
 /* Used to compare floats when rounding errors could occur  */
 #ifndef EQUAL
-#define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)
+#define EQUAL(a,b) (fabsf((a)-(b))<0.0000000001f)
 #endif
 
 #define Vector2FromInt(x, y) { static_cast<float>(x), static_cast<float>(y) }
@@ -66,8 +66,8 @@ extern const pos3_t pos3_origin;
 #define Vector2Compare(a,b)     ((a)[0]==(b)[0]?(a)[1]==(b)[1]?true:false:false)
 #define Vector2Equal(a,b)      (EQUAL((a)[0],(b)[0])?EQUAL((a)[1],(b)[1])?true:false:false)
 #define VectorDistSqr(a,b)      (((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2]))
-#define VectorDist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2])))
-#define Vector2Dist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])))
+#define VectorDist(a,b)         (sqrtf(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2])))
+#define Vector2Dist(a,b)         (sqrtf(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])))
 #define VectorLengthSqr(a)      ((a)[0]*(a)[0]+(a)[1]*(a)[1]+(a)[2]*(a)[2])
 #define VectorNotEmpty(a)           (!VectorEmpty((a)))
 #define VectorEmpty(a)           (VectorEqual((a), vec3_origin))
@@ -78,4 +78,4 @@ extern const pos3_t pos3_origin;
 #define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
-#define VectorAbs(a)  (a[0] = fabs(a[0]), a[1] = fabs(a[1]), a[2] = fabs(a[2]))
+#define VectorAbs(a)  (a[0] = fabsf(a[0]), a[1] = fabsf(a[1]), a[2] = fabsf(a[2]))
