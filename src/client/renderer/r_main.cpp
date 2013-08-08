@@ -1190,17 +1190,19 @@ static inline void R_VerifyDriver (void)
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif
-	if (r_intel_hack->integer && R_SearchForVendor("Intel")) {
-		/* HACK: */
-		Com_Printf("Activate texture compression for Intel chips - see cvar r_intel_hack\n");
-		Cvar_Set("r_ext_texture_compression", "1");
-		Com_Printf("Disabling shaders for Intel chips - see cvar r_intel_hack\n");
-		Cvar_Set("r_programs", "0");
-		if (r_maxtexres->integer > INTEL_TEXTURE_RESOLUTION) {
-			Com_Printf("Set max. texture resolution to %i - see cvar r_intel_hack\n", INTEL_TEXTURE_RESOLUTION);
-			Cvar_SetValue("r_maxtexres", INTEL_TEXTURE_RESOLUTION);
+	if (R_SearchForVendor("Intel")) {
+		if (r_intel_hack->integer) {
+			/* HACK: */
+			Com_Printf("Activate texture compression for Intel chips - see cvar r_intel_hack\n");
+			Cvar_Set("r_ext_texture_compression", "1");
+			Com_Printf("Disabling shaders for Intel chips - see cvar r_intel_hack\n");
+			Cvar_Set("r_programs", "0");
+			if (r_maxtexres->integer > INTEL_TEXTURE_RESOLUTION) {
+				Com_Printf("Set max. texture resolution to %i - see cvar r_intel_hack\n", INTEL_TEXTURE_RESOLUTION);
+				Cvar_SetValue("r_maxtexres", INTEL_TEXTURE_RESOLUTION);
+			}
+			r_ext_texture_compression->modified = false;
 		}
-		r_ext_texture_compression->modified = false;
 		r_config.hardwareType = GLHW_INTEL;
 	} else if (R_SearchForVendor("NVIDIA")) {
 		r_config.hardwareType = GLHW_NVIDIA;
