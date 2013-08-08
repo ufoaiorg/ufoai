@@ -102,8 +102,62 @@ ifdef HAVE_SDL2_MIXER_SDL_MIXER_H
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL2_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL2_mixer)
 else
+ifdef HAVE_SDL_MIXER_SDL_MIXER_H
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
+else
+ifdef HAVE_SDL2_SDL_H
+SDL_MIXER_LIBS           ?=
+SDL_MIXER_CFLAGS         ?= -Isrc/libs/vorbis -Isrc/libs/vorbis/src -Isrc/libs/vorbis/include -Isrc/libs/ogg/include -Isrc/libs/SDL_mixer -DOGG_MUSIC -DWAV_MUSIC -DHAVE_SDL_MIXER_H
+SDL_MIXER_SRCS            = \
+	libs/vorbis/src/analysis.c \
+	libs/vorbis/src/bitrate.c \
+	libs/vorbis/src/block.c \
+	libs/vorbis/src/codebook.c \
+	libs/vorbis/src/envelope.c \
+	libs/vorbis/src/floor0.c \
+	libs/vorbis/src/floor1.c \
+	libs/vorbis/src/info.c \
+	libs/vorbis/src/lookup.c \
+	libs/vorbis/src/lpc.c \
+	libs/vorbis/src/lsp.c \
+	libs/vorbis/src/mapping0.c \
+	libs/vorbis/src/mdct.c \
+	libs/vorbis/src/psy.c \
+	libs/vorbis/src/registry.c \
+	libs/vorbis/src/res0.c \
+	libs/vorbis/src/sharedbook.c \
+	libs/vorbis/src/smallft.c \
+	libs/vorbis/src/synthesis.c \
+	libs/vorbis/src/vorbisenc.c \
+	libs/vorbis/src/vorbisfile.c \
+	libs/vorbis/src/window.c \
+	libs/ogg/src/framing.c \
+	libs/ogg/src/bitwise.c \
+	libs/SDL_mixer/dynamic_flac.c \
+	libs/SDL_mixer/dynamic_fluidsynth.c \
+	libs/SDL_mixer/dynamic_mod.c \
+	libs/SDL_mixer/dynamic_mp3.c \
+	libs/SDL_mixer/dynamic_ogg.c \
+	libs/SDL_mixer/effect_position.c \
+	libs/SDL_mixer/effects_internal.c \
+	libs/SDL_mixer/effect_stereoreverse.c \
+	libs/SDL_mixer/fluidsynth.c \
+	libs/SDL_mixer/load_aiff.c \
+	libs/SDL_mixer/load_flac.c \
+	libs/SDL_mixer/load_ogg.c \
+	libs/SDL_mixer/load_voc.c \
+	libs/SDL_mixer/mixer.c \
+	libs/SDL_mixer/music.c \
+	libs/SDL_mixer/music_cmd.c \
+	libs/SDL_mixer/music_flac.c \
+	libs/SDL_mixer/music_mad.c \
+	libs/SDL_mixer/music_mod.c \
+	libs/SDL_mixer/music_modplug.c \
+	libs/SDL_mixer/music_ogg.c \
+	libs/SDL_mixer/wavestream.c
+endif
+endif
 endif
 OPENGL_CFLAGS            ?= $(call PKG_CFLAGS,gl,GL)
 OPENGL_LIBS              ?= $(call PKG_LIBS,gl,GL)

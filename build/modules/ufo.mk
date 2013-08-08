@@ -260,6 +260,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(MUMBLE_SRCS) \
 	\
+	$(SDL_MIXER_SRCS) \
+	\
 	$(PNG_SRCS) \
 	\
 	$(JPEG_SRCS)
