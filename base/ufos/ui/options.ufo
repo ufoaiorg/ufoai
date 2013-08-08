@@ -1125,7 +1125,7 @@ window options
 				}
 				checkbox_blue intelhack
 				{
-					tooltip		"_This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
+					tooltip		"_This hack deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
 					current		*cvar:r_intel_hack
 					pos			"445 535"
 					size		"20 18"
