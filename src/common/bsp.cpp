@@ -595,21 +595,17 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
  */
 static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
 {
-	const char *es;
-	char keyname[256];
-	vec3_t v;
-
 	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given (entitystring: '%s')", entityString ? entityString : "none");
 
 	if (!l->filelen)
-		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO entity lump");
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO entity lump (offset: %u, length: %u, entitystring: '%s')", l->fileofs, l->filelen, entityString ? entityString : "none");
 
 	if (l->filelen + 1 > MAX_MAP_ENTSTRING)
-		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump (offset: %u, length: %u, entitystring: '%s')", l->fileofs, l->filelen, entityString ? entityString : "none");
 
 	/* merge entitystring information */
-	es = (const char *) (base + l->fileofs);
+	const char *es = (const char *) (base + l->fileofs);
 	while (1) {
 		cBspModel_t *model = nullptr;
 		/* parse the opening brace */
@@ -617,7 +613,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 		if (!es)
 			break;
 		if (token[0] != '{')
-			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", token);
+			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting { (offset: %u, length: %u, remaining: '%s')", token, l->fileofs, l->filelen, es);
 
 		/* new entity */
 		Q_strcat(mapData->mapEntityString, "{ ", sizeof(mapData->mapEntityString));
@@ -631,6 +627,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 			if (!es)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
+			char keyname[256];
 			Q_strncpyz(keyname, token, sizeof(keyname));
 
 			/* parse value */
@@ -644,7 +641,9 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 			/* alter value, if needed */
 			if (Q_streq(keyname, "origin")) {
 				/* origins are shifted */
-				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
+				vec3_t v;
+				if (sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2])) != 3)
+					Com_Error(ERR_DROP, "CMod_LoadEntityString: invalid origin token '%s' for keyname %s", token, keyname);
 				VectorAdd(v, shift, v);
 				Q_strcat(mapData->mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), sizeof(mapData->mapEntityString));
 				/* If we have a model, then unadjust it's mins and maxs. */
