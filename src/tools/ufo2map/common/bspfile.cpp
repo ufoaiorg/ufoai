@@ -414,9 +414,17 @@ static void StripTrailingWhitespaces (char *str)
 	}
 }
 
-epair_t *AddEpair (const char *key, const char *value)
+static inline bool IsInvalidEntityToken (const char *token)
+{
+	return Q_streq(token, "}") || Q_streq(token, "{");
+}
+
+epair_t *AddEpair (const char *key, const char *value, int entNum)
 {
 	epair_t	*e = Mem_AllocType(epair_t);
+
+	if (IsInvalidEntityToken(value) || IsInvalidEntityToken(key))
+		Sys_Error("Invalid entity %i found with key '%s' and value '%s'", entNum, key, value);
 
 	if (strlen(key) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
@@ -435,14 +443,14 @@ epair_t *AddEpair (const char *key, const char *value)
  * @sa ParseEntity
  * @sa ParseMapEntity
  */
-epair_t *ParseEpair (void)
+epair_t *ParseEpair (int entNum)
 {
 	StripTrailingWhitespaces(parsedToken);
 	const char *key = Mem_StrDup(parsedToken);
 	GetToken();
 	StripTrailingWhitespaces(parsedToken);
 	const char *value = Mem_StrDup(parsedToken);
-	return AddEpair(key, value);
+	return AddEpair(key, value, entNum);
 }
 
 /**
@@ -470,7 +478,7 @@ static entity_t *ParseEntity (void)
 		if (*parsedToken == '}') {
 			break;
 		} else {
-			epair_t *e = ParseEpair();
+			epair_t *e = ParseEpair(num_entities);
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}
@@ -517,6 +525,8 @@ const char *UnparseEntities (void)
 			Q_strncpyz(value, ep->value, sizeof(value));
 			StripTrailingWhitespaces(value);
 
+			if (IsInvalidEntityToken(value) || IsInvalidEntityToken(key))
+				Sys_Error("Invalid entity %i found with key '%s' and value '%s'", i, key, value);
 			Com_sprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
 			Q_strcat(curTile->entdata, line, sizeof(curTile->entdata));
 		}
