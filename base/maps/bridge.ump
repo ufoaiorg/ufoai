@@ -16,6 +16,7 @@ worldspawn {
 	"maxlevel"		"5"
 	"saturation"	"0.6"
 	"brightness"	"0.8"
+	"ambient_night"	"0.25 0.25 0.35"
 }
 
 // Large bridge tile
