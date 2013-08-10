@@ -244,12 +244,12 @@ components craft_ufo_corrupter_cmp {
 		numbercrash 0
 	}
 	item {
-		id craft_alien_propulsion
+		id craft_alien_propulsion_adv
 		amount 3
 		numbercrash %
 	}
 	item {
-		id craft_alien_astrogation_adv
+		id craft_alien_astrogation
 		amount 3
 		numbercrash %
 	}
