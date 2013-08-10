@@ -3770,6 +3770,10 @@ tech rs_craft_drop_raptor
 	}
 
 	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_propulsion
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
 		tech rs_craft_drop_herakles
 		tech rs_craft_inter_stingray
 	}
@@ -3849,7 +3853,10 @@ tech rs_craft_inter_dragon
 
 	provides	craft_inter_dragon
 	require_AND {
+		tech rs_item_alienmaterials
 		tech rs_craft_alien_propulsion
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
 	}
 	time	14000
 	producetime	400
@@ -3893,6 +3900,9 @@ tech rs_craft_inter_starchaser
 
 	provides	craft_inter_starchaser
 	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
 		tech rs_craft_inter_dragon
 		tech rs_craft_alien_propulsion_adv
 	}
@@ -3902,7 +3912,7 @@ tech rs_craft_inter_starchaser
 	require_for_production
 	{
 	    item (alienmaterials 800)
-		item	(craft_alien_propulsion	2)
+		item	(craft_alien_propulsion_adv	2)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	2)
 	}
@@ -3938,6 +3948,10 @@ tech rs_craft_inter_stingray
 
 	provides	craft_inter_stingray
 	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_propulsion_adv
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
 		tech rs_craft_inter_starchaser
 		tech rs_craft_ufo_gunboat
 	}
@@ -3945,7 +3959,7 @@ tech rs_craft_inter_stingray
 	require_for_production
 	{
 	    item (alienmaterials 1000)
-		item	(craft_alien_propulsion	3)
+		item	(craft_alien_propulsion_adv	3)
 		item	(craft_alien_astrogation	1)
 		item	(craft_alien_detection	2)
 	}
