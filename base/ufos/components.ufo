@@ -249,7 +249,7 @@ components craft_ufo_corrupter_cmp {
 		numbercrash %
 	}
 	item {
-		id craft_alien_astrogation
+		id craft_alien_astrogation_adv
 		amount 3
 		numbercrash %
 	}
