@@ -234,15 +234,15 @@ check_headers() {
 		done
 	fi
 
-	if ([ "${HAVE_SDL_MIXER_SDL_MIXER_H}" != "1" ] && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]); then
-		set_var "ufo_DISABLE" "yes"
-		set_var "testall_DISABLE" "yes"
-	fi
+#	if ([ "${HAVE_SDL_MIXER_SDL_MIXER_H}" != "1" ] && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]); then
+#		set_var "ufo_DISABLE" "yes"
+#		set_var "testall_DISABLE" "yes"
+#	fi
 
-	if ([ "${HAVE_SDL_TTF_SDL_TTF_H}" != "1" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]); then
-		set_var "ufo_DISABLE" "yes"
-		set_var "testall_DISABLE" "yes"
-	fi
+#	if ([ "${HAVE_SDL_TTF_SDL_TTF_H}" != "1" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]); then
+#		set_var "ufo_DISABLE" "yes"
+#		set_var "testall_DISABLE" "yes"
+#	fi
 }
 
 check_compiler() {
