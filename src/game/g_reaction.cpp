@@ -238,13 +238,12 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
  */
 void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 {
-	int i;
 	ReactionFireTargetList *rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
 
-	for (i = 0; i < rfts->count; i++) {
+	for (int i = 0; i < rfts->count; i++) {
 		ReactionFireTarget &t = rfts->targets[i];
 		if (t.target != target)
 			continue;
@@ -271,7 +270,6 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
  */
 int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *target)
 {
-	int i;
 	const ReactionFireTargetList *rfts = find(shooter);
 
 	if (!rfts)
@@ -279,7 +277,7 @@ int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *targe
 
 	assert(target);
 
-	for (i = 0; i < rfts->count; i++) {
+	for (int i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
 		if (t.target == target)
 			return t.triggerTUs;
@@ -297,7 +295,6 @@ int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *targe
  */
 bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target, const int tusTarget)
 {
-	int i;
 	const ReactionFireTargetList *rfts = find(shooter);
 
 	if (!rfts)
@@ -305,7 +302,7 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 
 	assert(target);
 
-	for (i = 0; i < rfts->count; i++) {
+	for (int i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
 		if (t.target == target)
 			return t.triggerTUs >= target->TU - tusTarget;
@@ -322,12 +319,10 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
  */
 void ReactionFireTargets::advance (const Edict *shooter, const int tusShot)
 {
-	int i;
 	ReactionFireTargetList *rfts = find(shooter);
-
 	assert(rfts);
 
-	for (i = 0; i < rfts->count; i++) {
+	for (int i = 0; i < rfts->count; i++) {
 		ReactionFireTarget &t = rfts->targets[i];
 		t.triggerTUs -= tusShot;
 	}
