@@ -48,5 +48,5 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	UI_ExecuteConfunc("reactionfire_addtarget %i %i %i", shooterEntNum, target->entnum, tusUntilTriggered);
+	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i", shooterEntNum, target->entnum, target->model2->name, tusUntilTriggered);
 }
