@@ -946,7 +946,8 @@ void IN_Frame (void)
 		switch (event.type) {
 #if SDL_VERSION_ATLEAST(2,0,0)
 		case SDL_MOUSEWHEEL:
-			mouse_buttonstate = event.wheel.y > 0 ? K_MWHEELDOWN : K_MWHEELUP;
+			mouse_buttonstate = event.wheel.y < 0 ? K_MWHEELDOWN : K_MWHEELUP;
+			IN_EventEnqueue(mouse_buttonstate, 0, true);
 			break;
 #endif
 		case SDL_MOUSEBUTTONDOWN:
@@ -961,20 +962,27 @@ void IN_Frame (void)
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
 				break;
-#if !SDL_VERSION_ATLEAST(2,0,0)
+#if SDL_VERSION_ATLEAST(2,0,0)
+			case SDL_BUTTON_X1:
+				mouse_buttonstate = K_MOUSE4;
+				break;
+			case SDL_BUTTON_X2:
+				mouse_buttonstate = K_MOUSE5;
+				break;
+#else
 			case SDL_BUTTON_WHEELUP:
 				mouse_buttonstate = K_MWHEELUP;
 				break;
 			case SDL_BUTTON_WHEELDOWN:
 				mouse_buttonstate = K_MWHEELDOWN;
 				break;
-#endif
 			case 6:
 				mouse_buttonstate = K_MOUSE4;
 				break;
 			case 7:
 				mouse_buttonstate = K_MOUSE5;
 				break;
+#endif
 			default:
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
