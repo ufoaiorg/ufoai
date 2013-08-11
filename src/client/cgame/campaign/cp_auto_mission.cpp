@@ -82,8 +82,8 @@ typedef struct autoMissionBattle_s {
  * @brief Constants for automission experience gain factors
  * @todo make these scripted in campaign definitions maybe
 */
-#define SKILL_AWARD_SCALE 1.0f
-#define ABILITY_AWARD_SCALE 1.0f
+#define SKILL_AWARD_SCALE 0.3f
+#define ABILITY_AWARD_SCALE 0.06f
 
 #define AM_IsPlayer(type) ((type) == AUTOMISSION_TEAM_TYPE_PLAYER)
 #define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN)
@@ -834,36 +834,50 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
  */
 static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
-	int unit = 0;
-	int battleExperience;
-
 	assert(battle);
 	assert(battle->results);
 
-	battleExperience = std::max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
+	const int battleExperience = std::max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
+	int unit = 0;
 
 	LIST_Foreach(aircraft->acTeam, Employee, soldier) {
-		character_t *chr = &soldier->chr;
-		chrScoreGlobal_t *score = &chr->score;
-		int expCount;
 
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 
 		unit++;
 
+		character_t *chr = &soldier->chr;
 		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
 		if (chr->HP <= 0) {
 			if (battle->results->state == WON)
 				AM_MoveCharacterInventoryIntoItemCargo(aircraft, &soldier->chr);
 			E_RemoveInventoryFromStorage(soldier);
+			continue;
 		}
 
-		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
-			score->experience[expCount] += (int) (battleExperience * ABILITY_AWARD_SCALE * frand());
+		chrScoreGlobal_t *score = &chr->score;
+		for (int expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++) {
+			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
+			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
+			score->experience[expCount] += gainedXP;
+			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+						chr->name, gainedXP, expCount, chr->score.experience[expCount]);
+		}
 
-		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
-			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
+		for (int expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++) {
+			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
+			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * SKILL_AWARD_SCALE * frand()));
+			score->experience[expCount] += gainedXP;
+			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+						chr->name, gainedXP, expCount, chr->score.experience[expCount]);
+		}
+		/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
+		const int maxXP = CP_CharacterGetMaxExperiencePerMission(SKILL_NUM_TYPES);
+		const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
+		score->experience[SKILL_NUM_TYPES] += gainedXP;
+		Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+					chr->name, gainedXP, SKILL_NUM_TYPES, chr->score.experience[SKILL_NUM_TYPES]);
 
 		CP_UpdateCharacterSkills(chr);
 	}
