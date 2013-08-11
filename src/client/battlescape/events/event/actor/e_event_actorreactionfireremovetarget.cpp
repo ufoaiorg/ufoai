@@ -37,14 +37,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorReactionFireRemoveTarget (const eventRegister_t *self, dbuffer *msg)
 {
-	int entNum;
-	int targetNum;
+	int shooterEntNum;
+	int targetEntNum;
 
-	NET_ReadFormat(msg, self->formatString, &entNum, &targetNum);
+	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum);
 
-	const le_t *target = LE_Get(targetNum);
+	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
-		LE_NotFoundError(targetNum);
+		LE_NotFoundError(targetEntNum);
 
-	UI_ExecuteConfunc("reactionfire_removetarget %i", target->entnum);
+	UI_ExecuteConfunc("reactionfire_removetarget %i %i", shooterEntNum, target->entnum);
 }

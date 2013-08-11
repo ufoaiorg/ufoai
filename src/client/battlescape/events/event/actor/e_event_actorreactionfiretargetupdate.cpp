@@ -37,15 +37,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorReactionFireTargetUpdate (const eventRegister_t *self, dbuffer *msg)
 {
-	int entNum;
-	int targetNum;
-	int tus;
+	int shooterEntNum;
+	int targetEntNum;
+	// if these TUs have arrived at 0, the reaction fire is triggered
+	int tusUntilTriggered;
 
-	NET_ReadFormat(msg, self->formatString, &entNum, &targetNum, &tus);
+	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered);
 
-	const le_t *target = LE_Get(targetNum);
+	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
-		LE_NotFoundError(targetNum);
+		LE_NotFoundError(targetEntNum);
 
-	UI_ExecuteConfunc("reactionfire_removetarget %i", target->entnum);
+	UI_ExecuteConfunc("reactionfire_updatetarget %i %i %i", shooterEntNum, target->entnum, tusUntilTriggered);
 }
