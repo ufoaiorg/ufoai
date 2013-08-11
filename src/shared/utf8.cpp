@@ -118,6 +118,60 @@ int UTF8_char_len (unsigned char c)
 }
 
 /**
+ * @brief Get the next utf-8 character from the given string
+ * @param[in] str The source string to get the utf-8 char from. The string is not touched,
+ * but the pointer is advanced by the length of the utf-8 character.
+ * @return The utf-8 character, or -1 on error
+ */
+int UTF8_next (const char **str)
+{
+	size_t len, i;
+	int cp, min;
+	const char *s = *str;
+	const unsigned char *buf = (const unsigned char*)(s);
+
+	if (buf[0] < 0x80) {
+		len = 1;
+		min = 0;
+		cp = buf[0];
+	} else if (buf[0] < 0xC0) {
+		return -1;
+	} else if (buf[0] < 0xE0) {
+		len = 2;
+		min = 1 << 7;
+		cp = buf[0] & 0x1F;
+	} else if (buf[0] < 0xF0) {
+		len = 3;
+		min = 1 << (5 + 6);
+		cp = buf[0] & 0x0F;
+	} else if (buf[0] < 0xF8) {
+		len = 4;
+		min = 1 << (4 + 6 + 6);
+		cp = buf[0] & 0x07;
+	} else {
+		return -1;
+	}
+
+	for (i = 1; i < len; i++) {
+		if (!UTF8_CONTINUATION_BYTE(buf[i]))
+			return -1;
+		cp = (cp << 6) | (buf[i] & 0x3F);
+	}
+
+	if (cp < min)
+		return -1;
+
+	if (0xD800 <= cp && cp <= 0xDFFF)
+		return -1;
+
+	if (0x110000 <= cp)
+		return -1;
+
+	*str += len;
+	return cp;
+}
+
+/**
  * Calculate how long a Unicode code point (such as returned by
  * SDL key events in unicode mode) would be in UTF-8 encoding.
  */
