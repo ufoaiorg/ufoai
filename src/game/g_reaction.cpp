@@ -244,10 +244,11 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 	assert(target);
 
 	for (i = 0; i < rfts->count; i++) {
-		if (rfts->targets[i].target == target) {	/* found it ? */
+		ReactionFireTarget &t = rfts->targets[i];
+		if (t.target == target) {	/* found it ? */
 			if (i != rfts->count - 1) {				/* not the last one ? */
-				rfts->targets[i].target = rfts->targets[rfts->count - 1].target;
-				rfts->targets[i].triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
+				t.target = rfts->targets[rfts->count - 1].target;
+				t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 			}
 			rfts->count--;
 			G_EventReactionFireAddTarget(*shooter, *target);
@@ -276,8 +277,9 @@ int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *targe
 	assert(target);
 
 	for (i = 0; i < rfts->count; i++) {
-		if (rfts->targets[i].target == target)	/* found it ? */
-			return rfts->targets[i].triggerTUs;
+		const ReactionFireTarget &t = rfts->targets[i];
+		if (t.target == target)	/* found it ? */
+			return t.triggerTUs;
 	}
 
 	return -1;	/* the shooter doesn't aim at this target */
@@ -301,8 +303,9 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 	assert(target);
 
 	for (i = 0; i < rfts->count; i++) {
-		if (rfts->targets[i].target == target)	/* found it ? */
-			return rfts->targets[i].triggerTUs >= target->TU - tusTarget;
+		const ReactionFireTarget &t = rfts->targets[i];
+		if (t.target == target)	/* found it ? */
+			return t.triggerTUs >= target->TU - tusTarget;
 	}
 
 	return false;	/* the shooter doesn't aim at this target */
@@ -322,7 +325,8 @@ void ReactionFireTargets::advance (const Edict *shooter, const int tusShot)
 	assert(rfts);
 
 	for (i = 0; i < rfts->count; i++) {
-		rfts->targets[i].triggerTUs -= tusShot;
+		ReactionFireTarget &t = rfts->targets[i];
+		t.triggerTUs -= tusShot;
 	}
 }
 

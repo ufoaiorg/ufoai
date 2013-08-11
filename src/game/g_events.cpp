@@ -263,14 +263,14 @@ void G_EventReactionFireChange (const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventReactionFireAddTarget(const Edict &shooter, const Edict &target)
+void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target)
 {
 	G_EventAdd(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);
 	gi.WriteShort(target.number);
 	G_EventEnd();
 }
 
-void G_EventReactionFireRemoveTarget(const Edict &shooter, const Edict &target)
+void G_EventReactionFireRemoveTarget (const Edict &shooter, const Edict &target)
 {
 	G_EventAdd(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.number);
 	gi.WriteShort(target.number);
