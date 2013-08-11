@@ -266,7 +266,7 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		return true;
 
 	/** get the hardware class of the machine we are running on. */
-	cvar_t *cp_hwclass = Cvar_Get("cp_hwclass", "5");
+	cvar_t *cp_hwclass = cgi->Cvar_Get("cp_hwclass", "5");
 
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
