@@ -141,9 +141,7 @@ static ReactionFireTargets rft;
  */
 void ReactionFireTargets::init (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
+	for (int i = 0; i < MAX_RF_DATA; i++) {
 		rfData[i].init();
 	}
 }
@@ -153,9 +151,7 @@ void ReactionFireTargets::init (void)
  */
 void ReactionFireTargets::reset (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
+	for (int i = 0; i < MAX_RF_DATA; i++) {
 		rfData[i].reset();
 	}
 }
