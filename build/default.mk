@@ -156,6 +156,9 @@ SDL_MIXER_SRCS            = \
 	libs/SDL_mixer/music_modplug.c \
 	libs/SDL_mixer/music_ogg.c \
 	libs/SDL_mixer/wavestream.c
+else
+SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
+SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
 endif
 endif
 endif
