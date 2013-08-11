@@ -158,7 +158,7 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(i));
 			const int gainedXP = std::min(maxXP, c->chrscore.experience[i] - chr->score.experience[i]);
 			chr->score.experience[i] += gainedXP;
-			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d)\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "CP_UpdateCharacterData: Soldier %s earned %d experience points in skill #%d (total experience: %d)\n",
 						chr->name, gainedXP, i, chr->score.experience[SKILL_NUM_TYPES]);
 		}
 

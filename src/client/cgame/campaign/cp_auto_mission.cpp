@@ -841,7 +841,6 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 	int unit = 0;
 
 	LIST_Foreach(aircraft->acTeam, Employee, soldier) {
-
 		if (unit >= MAX_SOLDIERS_AUTOMISSION)
 			break;
 
@@ -861,7 +860,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
 			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
 			score->experience[expCount] += gainedXP;
-			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
 						chr->name, gainedXP, expCount, chr->score.experience[expCount]);
 		}
 
@@ -869,14 +868,14 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
 			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * SKILL_AWARD_SCALE * frand()));
 			score->experience[expCount] += gainedXP;
-			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
 						chr->name, gainedXP, expCount, chr->score.experience[expCount]);
 		}
 		/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 		const int maxXP = CP_CharacterGetMaxExperiencePerMission(SKILL_NUM_TYPES);
 		const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
 		score->experience[SKILL_NUM_TYPES] += gainedXP;
-		Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
+		cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
 					chr->name, gainedXP, SKILL_NUM_TYPES, chr->score.experience[SKILL_NUM_TYPES]);
 
 		CP_UpdateCharacterSkills(chr);
