@@ -59,25 +59,23 @@ static int forbiddenListLength;
  */
 static void G_BuildForbiddenList (int team, const Edict *movingActor)
 {
-	Edict *ent = nullptr;
-	teammask_t teamMask;
-
 	forbiddenListLength = 0;
 
 	/* team visibility */
+	teammask_t teamMask;
 	if (team)
 		teamMask = G_TeamToVisMask(team);
 	else
 		teamMask = TEAM_ALL;
 
+	Edict *ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & teamMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
 			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
-			int j;
-			for (j = 0; j < ent->forbiddenListSize; j++) {
+			for (int j = 0; j < ent->forbiddenListSize; j++) {
 				forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
 				forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 			}
@@ -127,15 +125,14 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const Edict *movingActor, const p
  */
 void G_ActorFall (Edict *ent)
 {
-	Edict *entAtPos;
-	const int oldZ = ent->pos[2];
+	const pos_t oldZ = ent->pos[2];
 
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 
 	if (oldZ == ent->pos[2])
 		return;
 
-	entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
+	Edict *entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
 	if (entAtPos != nullptr && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
@@ -162,29 +159,29 @@ void G_ActorFall (Edict *ent)
 static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t *dvtab, int max)
 {
 	if (visState & VIS_STOP)
-		 return true;
+		return true;
 
-	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
-	  * this might be the case if the edict got visible in mid mode */
-	 if (visState & VIS_APPEAR) {
-		 pos3_t pos;
-		 VectorCopy(ent->pos, pos);
-		 while (max >= 0) {
-			 int tmp = 0;
-			 const Edict *blockEdict;
+	/* check that the appearing unit is not on a grid position the actor wanted to walk to.
+	 * this might be the case if the edict got visible in mid mode */
+	if (visState & VIS_APPEAR) {
+		pos3_t pos;
+		VectorCopy(ent->pos, pos);
+		while (max >= 0) {
+			int tmp = 0;
+			const Edict *blockEdict;
 
-			 PosAddDV(pos, tmp, dvtab[max]);
-			 max--;
-			 blockEdict = G_EdictsGetLivingActorFromPos(pos);
+			PosAddDV(pos, tmp, dvtab[max]);
+			max--;
+			blockEdict = G_EdictsGetLivingActorFromPos(pos);
 
-			 if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
-				 const bool visible = G_IsVisibleForTeam(blockEdict, ent->team);
-				 if (visible)
-					 return true;
-			 }
-		 }
-	 }
-	 return false;
+			if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
+				const bool visible = G_IsVisibleForTeam(blockEdict, ent->team);
+				if (visible)
+					return true;
+			}
+		}
+	}
+	return false;
 }
 
 /**
@@ -248,13 +245,13 @@ pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t t
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
-	int dvec, numSteps = 0;
-	pos3_t pos;
 
 	if (!length || length == ROUTING_NOT_REACHABLE)
 		return length;
 
+	pos3_t pos;
 	VectorCopy(to, pos);
+	int dvec, numSteps = 0;
 	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		++numSteps;
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
@@ -279,9 +276,7 @@ pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t t
  */
 void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t to)
 {
-	int status;
 	pos3_t pos;
-	int oldState;
 	int oldHP;
 	int oldSTUN;
 	bool autoCrouchRequired = false;
@@ -294,7 +289,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 		return;
 
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	oldState = oldHP = oldSTUN = 0;
+	int oldState = oldHP = oldSTUN = 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
@@ -355,7 +350,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 			const int dir = getDVdir(dvec);
 
 			/* turn around first */
-			status = G_ActorDoTurn(ent, dir);
+			int status = G_ActorDoTurn(ent, dir);
 			if ((status & VIS_STOP) && visTeam != 0) {
 				autoCrouchRequired = false;
 				if (ent->moveinfo.steps == 0)
