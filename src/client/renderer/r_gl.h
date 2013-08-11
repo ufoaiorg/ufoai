@@ -42,6 +42,15 @@ inline void R_DrawArrays (GLint first, GLsizei count) {
 #endif
 }
 
+#ifdef GL_VERSION_ES_CM_1_0
+/* glDrawElements() cannot be invoked with GL_UNSIGNED_INT on GLES */
+typedef GLushort glElementIndex_t;
+#define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_SHORT
+#else
+typedef GLuint glElementIndex_t;
+#define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_INT
+#endif
+
 /** @todo update SDL to version that includes these */
 #ifndef GL_READ_FRAMEBUFFER_EXT
 #define GL_READ_FRAMEBUFFER_EXT 0x8CA8

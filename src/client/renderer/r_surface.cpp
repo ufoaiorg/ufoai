@@ -95,7 +95,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
+void R_DrawSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
 {
 	int numSurfaces = surfs->count;
 	mBspSurface_t **surfPtrList = surfs->surfaces;
@@ -124,7 +124,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 		if (batchStart + batchSize != surf->firstTriangle) {
 			/* Cannot continue assembling the batch, draw it and start a new one*/
 			if (batchSize > 0) {
-				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_SHORT, indexPtr + batchStart * 3);
+				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_ELEMENT_INDEX_TYPE, indexPtr + batchStart * 3);
 				refdef.batchCount++;
 			}
 			batchStart = surf->firstTriangle;
@@ -138,7 +138,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 		if (texInfo->image != lastTexture || surf->lightmap_texnum != lastLightMap || surf->deluxemap_texnum != lastDeluxeMap || texFlags != lastFlags) {
 			if (!newBatch) {
 				/* changes in texturing require new batch */
-				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_SHORT, indexPtr + batchStart * 3);
+				glDrawElements(GL_TRIANGLES, batchSize * 3, GL_ELEMENT_INDEX_TYPE, indexPtr + batchStart * 3);
 				refdef.batchCount++;
 				batchStart = surf->firstTriangle;
 				batchSize = 0;
@@ -155,7 +155,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs, GLushort *indexPtr)
 
 	/* finish uncomplete batch, if any */
 	if (batchSize > 0) {
-		glDrawElements(GL_TRIANGLES, batchSize * 3, GL_UNSIGNED_SHORT, indexPtr + batchStart * 3);
+		glDrawElements(GL_TRIANGLES, batchSize * 3, GL_ELEMENT_INDEX_TYPE, indexPtr + batchStart * 3);
 		refdef.batchCount++;
 	}
 

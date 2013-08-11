@@ -44,8 +44,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MIN_GL_CONSTANT_ATTENUATION 0.01
 
-void R_DrawSurfaces(const mBspSurfaces_t *surfs, GLushort *indexPtr);
-void R_DrawMaterialSurfaces(const mBspSurfaces_t *surfs, GLushort *indexPtr);
+void R_DrawSurfaces(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
+void R_DrawMaterialSurfaces(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
 
 void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap, const image_t *specularMap);
 
