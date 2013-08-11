@@ -180,22 +180,20 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict *shooter)
  */
 void ReactionFireTargets::create (const Edict *shooter)
 {
-	int i;
 	ReactionFireTargetList *rfts = find(shooter);
 
 	if (rfts)
 		gi.Error("Entity already has rfData");
 
-	for (i = 0; i < MAX_RF_DATA; i++) {
+	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList& data = rfData[i];
-		if (data.entnum == RF_NO_ENTNUM) {
-			data.entnum = shooter->number;
-			break;
-		}
+		if (data.entnum != RF_NO_ENTNUM)
+			continue;
+		data.entnum = shooter->number;
+		return;
 	}
 
-	if (i == MAX_RF_DATA)
-		gi.Error("Not enough rfData");
+	gi.Error("Not enough rfData");
 }
 
 /**
