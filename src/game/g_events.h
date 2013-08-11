@@ -80,3 +80,5 @@ void G_EventThrow(teammask_t teamMask, const fireDef_t *fd, float dt, byte flags
 void G_EventAdd(playermask_t playerMask, int eType, int entnum);
 void G_EventEnd(void);
 void G_EventActorWound(const Edict &ent, const int bodyPart);
+void G_EventReactionFireAddTarget(const Edict &shooter, const Edict &target);
+void G_EventReactionFireRemoveTarget(const Edict &shooter, const Edict &target);

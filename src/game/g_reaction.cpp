@@ -223,6 +223,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
+	G_EventReactionFireAddTarget(*shooter, *target);
 #if DEBUG_RF
 	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 		Com_Printf("S%i: added\n", shooter->number);
@@ -249,6 +250,7 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 				rfts->targets[i].triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 			}
 			rfts->count--;
+			G_EventReactionFireAddTarget(*shooter, *target);
 #if DEBUG_RF
 			if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 				Com_Printf("S%i: removed\n", shooter->number);
@@ -653,8 +655,8 @@ void ReactionFire::updateAllTargets (const Edict *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		/* check whether reaction fire is possible (friend/foe, LoS */
-		if ( isEnemy(shooter, target)
+		/* check whether reaction fire is possible (friend/foe, LoS) */
+		if (isEnemy(shooter, target)
 		  && canReact(shooter, target)
 		  && canSee(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);

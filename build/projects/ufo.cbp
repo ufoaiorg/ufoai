@@ -244,6 +244,10 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfirechange.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfirechange.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfireaddtarget.cpp" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfireaddtarget.h" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfireremovetarget.cpp" />
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfireremovetarget.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreservationchange.cpp" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreservationchange.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.cpp" />
