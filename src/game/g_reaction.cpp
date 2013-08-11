@@ -255,7 +255,7 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 			t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 		}
 		rfts->count--;
-		G_EventReactionFireAddTarget(*shooter, *target);
+		G_EventReactionFireRemoveTarget(*shooter, *target);
 #if DEBUG_RF
 		if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 			Com_Printf("S%i: removed\n", shooter->number);
