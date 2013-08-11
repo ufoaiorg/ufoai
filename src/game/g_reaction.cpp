@@ -187,8 +187,9 @@ void ReactionFireTargets::create (const Edict *shooter)
 		gi.Error("Entity already has rfData");
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == RF_NO_ENTNUM) {
-			rfData[i].entnum = shooter->number;
+		ReactionFireTargetList& data = rfData[i];
+		if (data.entnum == RF_NO_ENTNUM) {
+			data.entnum = shooter->number;
 			break;
 		}
 	}
