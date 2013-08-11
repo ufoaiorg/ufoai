@@ -95,7 +95,6 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
-
 }
 
 /**

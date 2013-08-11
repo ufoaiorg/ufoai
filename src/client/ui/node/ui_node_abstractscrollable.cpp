@@ -147,28 +147,33 @@ bool uiAbstractScrollableNode::setScrollY (uiNode_t *node, int viewPos, int view
 /**
  * @note pos == -1 is a reserved value, that why we clamp the value
  */
-static void UI_AbstractScrollableNodePageUp (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodePageUp (uiNode_t *node, const uiCallContext_t *context)
+{
 	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, (pos >= 0)?pos:0, -1, -1);
 }
 
-static void UI_AbstractScrollableNodePageDown (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodePageDown (uiNode_t *node, const uiCallContext_t *context)
+{
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
 }
 
-static void UI_AbstractScrollableNodeMoveUp (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodeMoveUp (uiNode_t *node, const uiCallContext_t *context)
+{
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
 }
 
-static void UI_AbstractScrollableNodeMoveDown (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodeMoveDown (uiNode_t *node, const uiCallContext_t *context)
+{
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
 }
 
-static void UI_AbstractScrollableNodeMoveHome (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodeMoveHome (uiNode_t *node, const uiCallContext_t *context)
+{
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, 0, -1, -1);
 }
@@ -176,7 +181,8 @@ static void UI_AbstractScrollableNodeMoveHome (uiNode_t *node, const uiCallConte
 /**
  * @note fullSize is bigger than the "end" position. But the function will clamp it right
  */
-static void UI_AbstractScrollableNodeMoveEnd (uiNode_t *node, const uiCallContext_t *context) {
+static void UI_AbstractScrollableNodeMoveEnd (uiNode_t *node, const uiCallContext_t *context)
+{
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->setScrollY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
 }
