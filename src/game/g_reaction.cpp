@@ -216,8 +216,9 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	assert(target);
 
 	for (i = 0; i < rfts->count; i++) {
-		if (rfts->targets[i].target == target)	/* found it ? */
-			return;								/* shooter already knows that target */
+		/* check if shooter already knows that target */
+		if (rfts->targets[i].target == target)
+			return;
 	}
 	assert(i < MAX_RF_TARGETS);
 	rfts->targets[i].target = target;
@@ -245,18 +246,20 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 
 	for (i = 0; i < rfts->count; i++) {
 		ReactionFireTarget &t = rfts->targets[i];
-		if (t.target == target) {	/* found it ? */
-			if (i != rfts->count - 1) {				/* not the last one ? */
-				t.target = rfts->targets[rfts->count - 1].target;
-				t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
-			}
-			rfts->count--;
-			G_EventReactionFireAddTarget(*shooter, *target);
-#if DEBUG_RF
-			if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
-				Com_Printf("S%i: removed\n", shooter->number);
-#endif
+		if (t.target != target)
+			continue;
+
+		/* not the last one? */
+		if (i != rfts->count - 1) {
+			t.target = rfts->targets[rfts->count - 1].target;
+			t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 		}
+		rfts->count--;
+		G_EventReactionFireAddTarget(*shooter, *target);
+#if DEBUG_RF
+		if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
+			Com_Printf("S%i: removed\n", shooter->number);
+#endif
 	}
 }
 
@@ -278,7 +281,7 @@ int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *targe
 
 	for (i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
-		if (t.target == target)	/* found it ? */
+		if (t.target == target)
 			return t.triggerTUs;
 	}
 
@@ -304,7 +307,7 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 
 	for (i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
-		if (t.target == target)	/* found it ? */
+		if (t.target == target)
 			return t.triggerTUs >= target->TU - tusTarget;
 	}
 
