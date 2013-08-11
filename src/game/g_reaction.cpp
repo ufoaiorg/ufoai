@@ -764,14 +764,15 @@ bool ReactionFire::checkExecution (const Edict *target)
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target);
-		if (tus > 1) {	/* indicates an RF weapon is there */
-			if (rft.hasExpired(shooter, target, 0)) {
-				if (rf.tryToShoot(shooter, target)) {
-					rft.advance(shooter, tus);
-					fired |= true;
-				}
-			}
-		}
+		/* indicates an RF weapon is there */
+		if (tus <= 1)
+			continue;
+		if (!rft.hasExpired(shooter, target, 0))
+			continue;
+		if (!rf.tryToShoot(shooter, target))
+			continue;
+		rft.advance(shooter, tus);
+		fired |= true;
 	}
 	return fired;
 }
@@ -817,7 +818,7 @@ static void G_ReactionFirePrintSituation (Edict *target)
 bool G_ReactionFireOnMovement (Edict *target)
 {
 #if DEBUG_RF
-	G_ReactionFirePrintSituation (target);
+	G_ReactionFirePrintSituation(target);
 #endif
 	/* Check to see whether this resolves any reaction fire */
 	const bool fired = rf.checkExecution(target);

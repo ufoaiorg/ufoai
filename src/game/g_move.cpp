@@ -353,8 +353,9 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 			int status = G_ActorDoTurn(ent, dir);
 			if ((status & VIS_STOP) && visTeam != 0) {
 				autoCrouchRequired = false;
-				if (ent->moveinfo.steps == 0)
+				if (ent->moveinfo.steps == 0) {
 					usedTUs += TU_TURN;
+				}
 				break;
 			}
 
@@ -372,9 +373,10 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 
 			/* decrease TUs */
 			const float div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
-			if ((int) (usedTUs + div + movingModifier) > ent->TU)
+			const int stepTUs = div + movingModifier;
+			if (usedTUs + stepTUs > ent->TU)
 				break;
-			usedTUs += div + movingModifier;
+			usedTUs += stepTUs;
 
 			/* This is now a flag to indicate a change in crouching - we need this for
 			 * the stop in mid move call(s), because we need the updated entity position */
