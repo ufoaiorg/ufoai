@@ -45,8 +45,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/utf8.h"
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+#include <SDL.h>
+#else
 #ifdef ANDROID
 #include <SDL/SDL_screenkeyboard.h>
+#endif
 #endif
 
 #define EXTRADATA_TYPE textEntryExtraData_t
@@ -107,6 +111,13 @@ static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *contex
 	/* remove the focus to show changes */
 	if (!UI_HasFocus(node)) {
 		UI_RequestFocus(node);
+#if SDL_VERSION_ATLEAST(2,0,0)
+		SDL_StartTextInput();
+		vec2_t pos;
+		UI_GetNodeAbsPos(node, pos);
+		SDL_Rect r = {static_cast<int>(pos[0]), static_cast<int>(pos[1]), static_cast<int>(node->box.size[0]), static_cast<int>(node->box.size[1])};
+		SDL_SetTextInputRect(&r);
+#endif
 	}
 }
 
@@ -143,6 +154,8 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = false;
+#if SDL_VERSION_ATLEAST(2,0,0)
+#else
 #ifdef ANDROID
 	char buf[MAX_CVAR_EDITING_LENGTH];
 	Q_strncpyz(buf, editedCvar->string, sizeof(buf));
@@ -150,6 +163,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	Cvar_ForceSet(editedCvar->name, buf);
 	UI_TextEntryNodeValidateEdition(node);
 	UI_RemoveFocus();
+#endif
 #endif
 }
 
@@ -168,6 +182,9 @@ void uiTextEntryNode::onFocusLost (uiNode_t *node)
 	} else {
 		UI_TextEntryNodeValidateEdition(node);
 	}
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_StopTextInput();
+#endif
 }
 
 /**
