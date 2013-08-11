@@ -53,12 +53,6 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
 		experience = 50 * (weight / chr->score.skills[ABILITY_POWER]) / penalty;
 		break;
 	}
-	case ABILITY_SPEED:
-		experience += chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
-		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
-		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
-			experience += (chr->scoreMission->firedTUs[i] + chr->scoreMission->firedSplashTUs[i]) / 10;
-		break;
 	case ABILITY_ACCURACY:
 		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
 		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
@@ -150,16 +144,14 @@ static void G_UpdateCharacterExperience (Edict *ent)
 {
 	character_t *chr = &ent->chr;
 
-	int i;
-	unsigned int maxXP, gainedXP, totalGainedXP;
-
 	/* Robots/UGVs do not get skill-upgrades. */
 	if (chr->teamDef->robot)
 		return;
 
-	totalGainedXP = 0;
-	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		const abilityskills_t skill = (abilityskills_t)i;
+	unsigned int maxXP, gainedXP;
+	unsigned int totalGainedXP = 0;
+	for (int i = 0; i < SKILL_NUM_TYPES; i++) {
+		const abilityskills_t skill = static_cast<abilityskills_t>(i);
 		maxXP = G_CharacterGetMaxExperiencePerMission(skill);
 		gainedXP = G_GetEarnedExperience(skill, ent);
 
@@ -168,11 +160,14 @@ static void G_UpdateCharacterExperience (Edict *ent)
 		totalGainedXP += gainedXP;
 	}
 
-	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
-	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
-	maxXP = G_CharacterGetMaxExperiencePerMission((abilityskills_t)i);
+	/* Speed and health are handled separately */
+	maxXP = G_CharacterGetMaxExperiencePerMission(ABILITY_SPEED);
 	gainedXP = std::min(maxXP, totalGainedXP / 5);
-	chr->score.experience[i] += gainedXP;
+	chr->score.experience[ABILITY_SPEED] += gainedXP;
+	/* This is health */
+	maxXP = G_CharacterGetMaxExperiencePerMission(SKILL_NUM_TYPES);
+	gainedXP = std::min(maxXP, totalGainedXP / 5);
+	chr->score.experience[SKILL_NUM_TYPES] += gainedXP;
 }
 
 /**
