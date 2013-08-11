@@ -80,6 +80,7 @@ $(TARGET)_SRCS_TMP      = \
 	client/battlescape/events/event/actor/e_event_actorreactionfirechange.cpp \
 	client/battlescape/events/event/actor/e_event_actorreactionfireaddtarget.cpp \
 	client/battlescape/events/event/actor/e_event_actorreactionfireremovetarget.cpp \
+	client/battlescape/events/event/actor/e_event_actorreactionfiretargetupdate.cpp \
 	client/battlescape/events/event/actor/e_event_actorrevitalised.cpp \
 	client/battlescape/events/event/actor/e_event_actorshoot.cpp \
 	client/battlescape/events/event/actor/e_event_actorshoothidden.cpp \

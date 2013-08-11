@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
 #include "../../../../ui/ui_main.h"
-#include "e_event_actorreactionfireaddtarget.h"
+#include "e_event_actorreactionfiretargetupdate.h"
 
 /**
  * @brief Network event function for reaction fire target handling. Responsible for updating
@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorReactionFireTargetUpdate (const eventRegister_t *self, dbuffer *msg)
 {
 	int entNum;
 	int targetNum;
@@ -47,5 +47,5 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	if (!target)
 		LE_NotFoundError(targetNum);
 
-	UI_ExecuteConfunc("reactionfire_addtarget %i", target->entnum);
+	UI_ExecuteConfunc("reactionfire_removetarget %i", target->entnum);
 }

@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actorreactionfirechange.h"
 #include "event/actor/e_event_actorreactionfireaddtarget.h"
 #include "event/actor/e_event_actorreactionfireremovetarget.h"
+#include "event/actor/e_event_actorreactionfiretargetupdate.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
 #include "event/actor/e_event_actorrevitalised.h"
@@ -108,8 +109,9 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, nullptr, nullptr},
 	{E(EV_ACTOR_MOVE), "ssss!lg", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, nullptr, nullptr},
-	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ss", CL_ActorReactionFireAddTarget, nullptr, nullptr},
+	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssb", CL_ActorReactionFireAddTarget, nullptr, nullptr},
 	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ss", CL_ActorReactionFireRemoveTarget, nullptr, nullptr},
+	{E(EV_ACTOR_REACTIONFIRETARGETUPDATE), "ssb", CL_ActorReactionFireTargetUpdate, nullptr, nullptr},
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, nullptr},
 	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, nullptr}, /**< @sa NET_WriteDir */

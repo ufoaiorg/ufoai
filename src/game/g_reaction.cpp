@@ -219,7 +219,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
-	G_EventReactionFireAddTarget(*shooter, *target);
+	G_EventReactionFireAddTarget(*shooter, *target, rfts->targets[i].triggerTUs);
 #if DEBUG_RF
 	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 		Com_Printf("S%i: added\n", shooter->number);
@@ -320,6 +320,7 @@ void ReactionFireTargets::advance (const Edict *shooter, const int tusShot)
 	for (int i = 0; i < rfts->count; i++) {
 		ReactionFireTarget &t = rfts->targets[i];
 		t.triggerTUs -= tusShot;
+		G_EventReactionFireTargetUpdate(*shooter, *t.target, t.triggerTUs);
 	}
 }
 
