@@ -850,14 +850,15 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
-			if (entTUs > 1) {	/* indicates an RF weapon is there */
-				if (rft.hasExpired(shooter, target, fdTime)) {
-					if (rf.tryToShoot(shooter, target)) {
-						repeat = true;
-						rft.advance(shooter, fdTime);
-					}
-				}
-			}
+			/* indicates an RF weapon is there */
+			if (entTUs <= 1)
+				continue;
+			if (!rft.hasExpired(shooter, target, fdTime))
+				continue;
+			if (!rf.tryToShoot(shooter, target))
+				continue;
+			repeat = true;
+			rft.advance(shooter, fdTime);
 		}
 	}
 }
