@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 #include "../ui/ui_input.h"
 #include "../ui/node/ui_node_abstractnode.h"
+#include "../../shared/utf8.h"
 
 #include "../../common/tracing.h"
 #include "../renderer/r_misc.h"
@@ -867,12 +868,17 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		*ascii = K_SPACE;
 		break;
 	default:
+#if SDL_VERSION_ATLEAST(2,0,0)
+		/* handled via text input api */
+		*ascii = 0;
+#else
 		*ascii = keysym->sym;
+#endif
 		break;
 	}
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-	*unicode = keysym->sym;
+	*unicode = 0;
 #else
 	*unicode = keysym->unicode;
 #endif
@@ -949,6 +955,22 @@ void IN_Frame (void)
 			mouse_buttonstate = event.wheel.y < 0 ? K_MWHEELDOWN : K_MWHEELUP;
 			IN_EventEnqueue(mouse_buttonstate, 0, true);
 			break;
+		case SDL_TEXTEDITING:
+			/** @todo */
+			break;
+		case SDL_TEXTINPUT: {
+			const char *text = event.text.text;
+			const char **str = &text;
+			for (;;) {
+				const int unicode = UTF8_next(str);
+				if (unicode == -1) {
+					break;
+				}
+				unsigned short keyUnicode = unicode;
+				IN_EventEnqueue(keyUnicode, keyUnicode, true);
+			}
+			break;
+		}
 #endif
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
