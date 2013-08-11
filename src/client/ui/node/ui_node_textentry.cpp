@@ -111,13 +111,6 @@ static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *contex
 	/* remove the focus to show changes */
 	if (!UI_HasFocus(node)) {
 		UI_RequestFocus(node);
-#if SDL_VERSION_ATLEAST(2,0,0)
-		SDL_StartTextInput();
-		vec2_t pos;
-		UI_GetNodeAbsPos(node, pos);
-		SDL_Rect r = {static_cast<int>(pos[0]), static_cast<int>(pos[1]), static_cast<int>(node->box.size[0]), static_cast<int>(node->box.size[1])};
-		SDL_SetTextInputRect(&r);
-#endif
 	}
 }
 
@@ -155,6 +148,11 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = false;
 #if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_StartTextInput();
+	vec2_t pos;
+	UI_GetNodeAbsPos(node, pos);
+	SDL_Rect r = {static_cast<int>(pos[0]), static_cast<int>(pos[1]), static_cast<int>(node->box.size[0]), static_cast<int>(node->box.size[1])};
+	SDL_SetTextInputRect(&r);
 #else
 #ifdef ANDROID
 	char buf[MAX_CVAR_EDITING_LENGTH];
