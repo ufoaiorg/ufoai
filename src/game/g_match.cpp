@@ -87,53 +87,6 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
 }
 
 /**
- * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
- * @param[in] skill The skill for which to fetch the maximum amount of XP.
- * @sa G_UpdateCharacterExperience
- * @sa G_GetEarnedExperience
- * @note Explanation of the values here:
- * There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
- * For example, POWER will, at best, rise 20 points over 100 missions. If the soldier gets max XP every time.
- * Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
- * log 20 / log x = 0.6
- * log x = log 20 / 0.6
- * x = 10 ^ (log 20 / 0.6)
- * x = 214
- * The division by 100 happens in G_UpdateCharacterExperience
- */
-static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
-{
-	switch (skill) {
-	case ABILITY_POWER:
-		return 125;
-	case ABILITY_SPEED:
-		return 91;
-	case ABILITY_ACCURACY:
-		return 450;
-	case ABILITY_MIND:
-		return 450;
-	case SKILL_CLOSE:
-		return 680;
-	case SKILL_HEAVY:
-		return 680;
-	case SKILL_ASSAULT:
-		return 680;
-	case SKILL_SNIPER:
-		return 680;
-	case SKILL_EXPLOSIVE:
-		return 680;
-	case SKILL_NUM_TYPES: /* This is health. */
-		return 360;
-	case SKILL_PILOTING:
-	case SKILL_TARGETING:
-	case SKILL_EVADING:
-		return 0;
-	default:
-		gi.Error("G_GetMaxExperiencePerMission: invalid skill type\n");
-	}
-}
-
-/**
  * @brief Updates character experience after a mission.
  * @param[in,out] ent Pointer to the character that should get the experience updated
  * @sa CP_UpdateCharacterStats
@@ -148,26 +101,19 @@ static void G_UpdateCharacterExperience (Edict *ent)
 	if (chr->teamDef->robot)
 		return;
 
-	unsigned int maxXP, gainedXP;
 	unsigned int totalGainedXP = 0;
 	for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 		const abilityskills_t skill = static_cast<abilityskills_t>(i);
-		maxXP = G_CharacterGetMaxExperiencePerMission(skill);
-		gainedXP = G_GetEarnedExperience(skill, ent);
+		const int gainedXP = G_GetEarnedExperience(skill, ent);
 
-		gainedXP = std::min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
 	}
 
 	/* Speed and health are handled separately */
-	maxXP = G_CharacterGetMaxExperiencePerMission(ABILITY_SPEED);
-	gainedXP = std::min(maxXP, totalGainedXP / 5);
-	chr->score.experience[ABILITY_SPEED] += gainedXP;
+	chr->score.experience[ABILITY_SPEED] += totalGainedXP / 5;
 	/* This is health */
-	maxXP = G_CharacterGetMaxExperiencePerMission(SKILL_NUM_TYPES);
-	gainedXP = std::min(maxXP, totalGainedXP / 5);
-	chr->score.experience[SKILL_NUM_TYPES] += gainedXP;
+	chr->score.experience[SKILL_NUM_TYPES] += totalGainedXP / 5;
 }
 
 /**

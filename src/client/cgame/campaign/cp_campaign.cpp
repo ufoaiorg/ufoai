@@ -72,19 +72,62 @@ typedef struct {
 } updateCharacter_t;
 
 /**
+ * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
+ * @param[in] skill The skill for which to fetch the maximum amount of XP.
+ * @sa G_UpdateCharacterExperience
+ * @sa G_GetEarnedExperience
+ * @note Explanation of the values here:
+ * There is a maximum speed at which skills may rise over the course of the predicted career length of a veteran soldier.
+ * Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
+ * log predictedStatGrowth / log x = 0.6
+ * log x = log predictedStatGrowth / 0.6
+ * x = 10 ^ (log predictedStatGrowth / 0.6)
+ */
+int CP_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
+{
+	switch (skill) {
+	case ABILITY_POWER:
+		return 125;
+	case ABILITY_SPEED:
+		return 91;
+	case ABILITY_ACCURACY:
+		return 450;
+	case ABILITY_MIND:
+		return 450;
+	case SKILL_CLOSE:
+		return 680;
+	case SKILL_HEAVY:
+		return 680;
+	case SKILL_ASSAULT:
+		return 680;
+	case SKILL_SNIPER:
+		return 680;
+	case SKILL_EXPLOSIVE:
+		return 680;
+	case SKILL_NUM_TYPES: /* This is health. */
+		return 360;
+	case SKILL_PILOTING:
+	case SKILL_TARGETING:
+	case SKILL_EVADING:
+		return 0;
+	default:
+		cgi->Com_Error(ERR_DROP, "G_GetMaxExperiencePerMission: invalid skill type");
+		return -1;
+	}
+}
+
+/**
  * @brief Updates the character skills after a mission.
  * @param[in,out] chr Pointer to the character that should get the skills updated.
  */
 void CP_UpdateCharacterSkills (character_t *chr)
 {
-	int i;
-	for (i = 0; i < SKILL_NUM_TYPES; ++i)
+	for (int i = 0; i < SKILL_NUM_TYPES; ++i)
 		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] +
 			static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 10, 0.6f)));
-	/* Ensure that index for health-experience is correct. */
-	assert(i == SKILL_NUM_TYPES);
-	chr->maxHP = std::min(255, chr->score.initialSkills[i] +
-		static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 10, 0.6f)));
+
+	chr->maxHP = std::min(255, chr->score.initialSkills[SKILL_NUM_TYPES] +
+		static_cast<int>(pow(static_cast<float>(chr->score.experience[SKILL_NUM_TYPES]) / 10, 0.6f)));
 }
 
 /**
@@ -95,25 +138,30 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 {
 	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
 		Employee *employee = E_GetEmployeeFromChrUCN(c->ucn);
-		character_t* chr;
-		bool fullHP;
 
 		if (!employee) {
 			Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
 			continue;
 		}
 
-		chr = &employee->chr;
-		fullHP = c->HP >= chr->maxHP;
+		character_t *chr = &employee->chr;
+		const bool fullHP = c->HP >= chr->maxHP;
 		chr->STUN = c->STUN;
 		chr->morale = c->morale;
 
 		memcpy(chr->wounds.treatmentLevel, c->wounds.treatmentLevel, sizeof(chr->wounds.treatmentLevel));
-
-		memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
 		memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
 		memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
 		chr->score.assignedMissions = c->chrscore.assignedMissions;
+
+		for (int i = ABILITY_POWER; i <= SKILL_NUM_TYPES; ++i) {
+			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(i));
+			const int gainedXP = std::min(maxXP, c->chrscore.experience[i] - chr->score.experience[i]);
+			chr->score.experience[i] += gainedXP;
+			Com_Printf("Soldier %s earned %d experience points in skill #%d (total experience: %d)\n",
+						chr->name, gainedXP, i, chr->score.experience[SKILL_NUM_TYPES]);
+		}
+
 		CP_UpdateCharacterSkills(chr);
 		/* If character returned unscratched and maxHP just went up due to experience
 		 * don't send him/her to the hospital */

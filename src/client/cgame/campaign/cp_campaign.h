@@ -621,6 +621,7 @@ bool CP_CheckCredits (int costs);
 void CP_UpdateCredits(int credits);
 
 /* Other functions */
+int CP_CharacterGetMaxExperiencePerMission(const abilityskills_t skill);
 void CP_UpdateCharacterSkills(character_t *chr);
 void CP_UpdateCharacterData(linkedList_t *updateCharacters);
 void CP_ParseCharacterData(dbuffer *msg, linkedList_t **updateCharacters);
