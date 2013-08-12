@@ -1530,14 +1530,13 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  */
 const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, bool onlyWorking)
 {
-	building_t *building = nullptr;
-
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
 	 * is not functional) */
 	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
 		return nullptr;
 
+	building_t *building = nullptr;
 	while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 		return building;
 
