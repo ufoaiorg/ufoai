@@ -286,6 +286,8 @@ static void E_EmployeeDelete_f (void)
 	}
 	E_DeleteEmployee(employee);
 	cgi->Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+
+	cgi->Cbuf_AddText("employee_update_count\n");
 }
 
 /**
