@@ -354,8 +354,7 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 	building++;
 	if (building >= endOfBuildings)
 		return nullptr;
-	else
-		return building;
+	return building;
 }
 
 /**
