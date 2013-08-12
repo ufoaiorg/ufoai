@@ -2637,12 +2637,9 @@ bool B_LoadXML (xmlNode_t *parent)
 
 	cgi->Com_RegisterConstList(saveBaseConstants);
 	FOREACH_XMLNODE(base, bases, SAVE_BASES_BASE) {
-		xmlNode_t *node;
 		const int i = ccs.numBases;
 		base_t *const b = B_GetBaseByIDX(i);
-		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
-
-		if (ccs.numBases >= MAX_BASES)
+		if (b == nullptr)
 			break;
 
 		ccs.numBases++;
@@ -2654,6 +2651,7 @@ bool B_LoadXML (xmlNode_t *parent)
 			return false;
 		}
 		b->founded = true;
+		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
 			cgi->Com_UnregisterConstList(saveBaseConstants);
@@ -2666,7 +2664,7 @@ bool B_LoadXML (xmlNode_t *parent)
 		b->aircraftCurrent = nullptr;
 
 		/* building space*/
-		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
+		xmlNode_t *node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		FOREACH_XMLNODE(snode, node, SAVE_BASES_BUILDING) {
 			/** @todo save it as vec2t if needed, also it's opposite */
 			const int k = cgi->XML_GetInt(snode, SAVE_BASES_X, 0);
