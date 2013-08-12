@@ -169,6 +169,8 @@ OPENAL_LIBS              ?= $(call PKG_LIBS,openal)
 ifdef HAVE_THEORA_THEORA_H
 THEORA_CFLAGS            ?= $(call PKG_CFLAGS,theora)
 THEORA_LIBS              ?= $(call PKG_LIBS,theora)
+else
+
 endif
 GLIB_CFLAGS              ?= $(call PKG_CFLAGS,glib-2.0)
 GLIB_LIBS                ?= $(call PKG_LIBS,glib-2.0)

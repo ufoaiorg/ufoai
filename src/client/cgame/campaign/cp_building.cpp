@@ -55,6 +55,28 @@ float B_GetConstructionTimeRemain (const building_t *building)
 	return diff.day + (float)diff.sec / SECONDS_PER_DAY;
 }
 
+static const struct buildingTypeMapping_s {
+	const char *id;
+	buildingType_t type;
+} buildingTypeMapping[] = {
+	{ "lab", B_LAB },
+	{ "hospital", B_HOSPITAL },
+	{ "aliencont", B_ALIEN_CONTAINMENT },
+	{ "workshop",B_WORKSHOP },
+	{ "storage", B_STORAGE },
+	{ "hangar", B_HANGAR },
+	{ "smallhangar",B_SMALL_HANGAR },
+	{ "quarters", B_QUARTERS },
+	{ "power", B_POWER },
+	{ "command", B_COMMAND },
+	{ "amstorage", B_ANTIMATTER },
+	{ "entrance", B_ENTRANCE },
+	{ "missile", B_DEFENCE_MISSILE },
+	{ "laser", B_DEFENCE_LASER },
+	{ "radar", B_RADAR },
+	{ NULL, MAX_BUILDING_TYPE }
+};
+
 /**
  * @brief Returns the building type for a given building identified by its building id
  * from the ufo script files
@@ -65,37 +87,9 @@ float B_GetConstructionTimeRemain (const building_t *building)
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 {
-	if (Q_streq(buildingID, "lab")) {
-		return B_LAB;
-	} else if (Q_streq(buildingID, "hospital")) {
-		return B_HOSPITAL;
-	} else if (Q_streq(buildingID, "aliencont")) {
-		return B_ALIEN_CONTAINMENT;
-	} else if (Q_streq(buildingID, "workshop")) {
-		return B_WORKSHOP;
-	} else if (Q_streq(buildingID, "storage")) {
-		return B_STORAGE;
-	} else if (Q_streq(buildingID, "hangar")) {
-		return B_HANGAR;
-	} else if (Q_streq(buildingID, "smallhangar")) {
-		return B_SMALL_HANGAR;
-	} else if (Q_streq(buildingID, "quarters")) {
-		return B_QUARTERS;
-	} else if (Q_streq(buildingID, "power")) {
-		return B_POWER;
-	} else if (Q_streq(buildingID, "command")) {
-		return B_COMMAND;
-	} else if (Q_streq(buildingID, "amstorage")) {
-		return B_ANTIMATTER;
-	} else if (Q_streq(buildingID, "entrance")) {
-		return B_ENTRANCE;
-	} else if (Q_streq(buildingID, "missile")) {
-		return B_DEFENCE_MISSILE;
-	} else if (Q_streq(buildingID, "laser")) {
-		return B_DEFENCE_LASER;
-	} else if (Q_streq(buildingID, "radar")) {
-		return B_RADAR;
-	}
+	for (const struct buildingTypeMapping_s *v = buildingTypeMapping; v->id; v++)
+		if (Q_streq(buildingID, v->id))
+			return v->type;
 	return MAX_BUILDING_TYPE;
 }
 
