@@ -2104,22 +2104,21 @@ static void B_PrintCapacities_f (void)
  */
 static void B_BuildingConstructionFinished_f (void)
 {
-	int i;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+	for (int i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		building_t *building = B_GetBuildingByIDX(base->idx, i);
+		if (building->buildingStatus != B_STATUS_UNDER_CONSTRUCTION)
+			continue;
 
-		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
-			building->timeStart.day = 0;
-			building->timeStart.sec = 0;
-			base->buildingCurrent = building;
-			B_FireEvent(building, base, B_ONENABLE);
-		}
+		B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
+		building->timeStart.day = 0;
+		building->timeStart.sec = 0;
+		base->buildingCurrent = building;
+		B_FireEvent(building, base, B_ONENABLE);
 	}
 	/* update menu */
 	B_SelectBase(base);
