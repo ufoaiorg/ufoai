@@ -1294,12 +1294,10 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
  */
 const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 {
-	int i = 0;
-
 	if (!baseTemplateID)
 		return nullptr;
 
-	for (i = 0; i < ccs.numBaseTemplates; i++)
+	for (int i = 0; i < ccs.numBaseTemplates; i++)
 		if (Q_streq(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
