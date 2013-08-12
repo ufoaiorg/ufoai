@@ -1789,14 +1789,33 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilitysk
 }
 
 /**
+ * @brief Assembles a skill indicator for the given items in correlation to the given skill
+ */
+static int CL_GetSkillIndicator (const Item *rightHand, abilityskills_t skill, const fireDef_t *fdRight, const Item *holster, const fireDef_t *fdHolster)
+{
+	const byte fmode1 = 0;
+	const byte fmode2 = 1;
+	int no = 0;
+	if (rightHand != nullptr) {
+		const fireDef_t *fd = rightHand->ammoDef()->fd[fdRight->weapFdsIdx];
+		no += 2 * (skill == fd[fmode1].weaponSkill);
+		no += 2 * (skill == fd[fmode2].weaponSkill);
+	}
+	if (holster != nullptr && holster->isReloadable()) {
+		const fireDef_t *fd = holster->ammoDef()->fd[fdHolster->weapFdsIdx];
+		no += (skill == fd[fmode1].weaponSkill);
+		no += (skill == fd[fmode2].weaponSkill);
+	}
+	return no;
+}
+
+/**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
  * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
 static void CL_SwapSkills (linkedList_t *team)
 {
-	const byte fmode1 = 0;
-	const byte fmode2 = 1;
 	const int teamSize = cgi->LIST_Count(team);
 
 	for (int i = 0; i < teamSize; i++) {
@@ -1822,12 +1841,7 @@ static void CL_SwapSkills (linkedList_t *team)
 					continue;
 				if (fdRightArray == nullptr)
 					continue;
-				const int no1 = 2 * (rightHandCharOne && skill == rightHandCharOne->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
-					+ 2 * (rightHandCharOne && skill == rightHandCharOne->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-					+ (holsterCharOne && holsterCharOne->isReloadable()
-					   && skill == holsterCharOne->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-					+ (holsterCharOne && holsterCharOne->isReloadable()
-					   && skill == holsterCharOne->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
+				const int no1 = CL_GetSkillIndicator(rightHandCharOne, skill, fdRightArray, holsterCharOne, fdHolsterArray);
 
 				for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
 					character_t *cp2 = (character_t*)cp2List->data;
@@ -1846,16 +1860,10 @@ static void CL_SwapSkills (linkedList_t *team)
 					if (fdRightArray == nullptr)
 						continue;
 
-					const int no2 = 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
-						+ 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-						+ (holsterCharTwo && holsterCharTwo->isReloadable()
-						   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-						+ (holsterCharTwo && holsterCharTwo->isReloadable()
-						   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
+					const int no2 = CL_GetSkillIndicator(rightHandCharTwo, skill, fdRightArray, holsterCharTwo, fdHolsterArray);
 
 					if (no1 > no2 /* more use of this skill */
 						 || (no1 && no1 == no2)) { /* or earlier on list */
-
 						CL_DoSwapSkills(cp1, cp2, skill);
 					} else if (no1 < no2) {
 						CL_DoSwapSkills(cp2, cp1, skill);
