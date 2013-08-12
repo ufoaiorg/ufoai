@@ -196,7 +196,7 @@ bool AC_LoadXML (xmlNode_t *parent)
 	if (!aliencont)
 		return true;
 	FOREACH_XMLNODE(contNode, aliencont, SAVE_ALIENCONT_CONT) {
-		int baseIdx = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
+		const int baseIdx = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base) {
 			Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", baseIdx);
@@ -205,8 +205,8 @@ bool AC_LoadXML (xmlNode_t *parent)
 
 		FOREACH_XMLNODE(alienNode, contNode, SAVE_ALIENCONT_ALIEN) {
 			const char *teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
-			int alive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
-			int dead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
+			const int alive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
+			const int dead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
 
 			if (alive == 0 && dead == 0)
 				continue;
