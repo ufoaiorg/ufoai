@@ -2147,7 +2147,7 @@ static void B_CheckCoherency_f (void)
 	base_t *base;
 
 	if (cgi->Cmd_Argc() >= 2) {
-		int i = atoi(cgi->Cmd_Argv(1));
+		const int i = atoi(cgi->Cmd_Argv(1));
 
 		if (i < 0 || i >= B_GetCount()) {
 			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", cgi->Cmd_Argv(0));
