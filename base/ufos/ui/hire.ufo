@@ -197,6 +197,10 @@ window employees
 		*node:root.list_background@current = <1>
 	}
 
+	confunc hire_select {
+		*node:root.employee_list@lineselected = <1>
+	}
+
 	textlist employee_list
 	{
 		dataid		TEXT_LIST

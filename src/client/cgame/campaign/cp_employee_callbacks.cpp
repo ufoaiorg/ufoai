@@ -270,7 +270,7 @@ static void E_EmployeeDelete_f (void)
 	}
 
 	/* num - menu index (line in text) */
-	const int num = employeeScrollPos + atoi(cgi->Cmd_Argv(1));
+	int num = employeeScrollPos + atoi(cgi->Cmd_Argv(1));
 
 	Employee* employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -286,6 +286,10 @@ static void E_EmployeeDelete_f (void)
 	}
 	E_DeleteEmployee(employee);
 	cgi->Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+
+	num = std::max(0, num - 1);
+	cgi->Cbuf_AddText(va("employee_select %i\n", num));
+	cgi->Cbuf_AddText(va("hire_select %i\n", num));
 
 	cgi->Cbuf_AddText("employee_update_count\n");
 }
@@ -347,6 +351,7 @@ static void E_EmployeeHire_f (void)
 		}
 	}
 	E_EmployeeSelect(employee);
+	cgi->Cbuf_AddText(va("hire_select %i\n", num));
 
 	E_UpdateGUICount_f();
 }
