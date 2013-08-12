@@ -389,14 +389,14 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, i
 	/* rotate the vector to switch of reference frame.
 	 * We switch from the static frame of the earth to the local frame of the player */
 	VectorSet(rotationAxis, 0, 0, 1);
-	RotatePointAroundVector(v1, rotationAxis, v, - UI_MAPEXTRADATACONST(node).angles[PITCH]);
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	RotatePointAroundVector(v1, rotationAxis, v, - data.angles[PITCH]);
 
 	VectorSet(rotationAxis, 0, 1, 0);
-	RotatePointAroundVector(v, rotationAxis, v1, - UI_MAPEXTRADATACONST(node).angles[YAW]);
+	RotatePointAroundVector(v, rotationAxis, v1, - data.angles[YAW]);
 
 	/* set mid to the coordinates of the center of the globe */
-	Vector2Set(mid, UI_MAPEXTRADATACONST(node).mapPos[0] + UI_MAPEXTRADATACONST(node).mapSize[0] / 2.0f,
-			UI_MAPEXTRADATACONST(node).mapPos[1] + UI_MAPEXTRADATACONST(node).mapSize[1] / 2.0f);
+	Vector2Set(mid, data.mapPos[0] + data.mapSize[0] / 2.0f, data.mapPos[1] + data.mapSize[1] / 2.0f);
 
 	/* We now convert those coordinates relative to the center of the globe to coordinates of the screen
 	 * (which are relative to the upper left side of the screen) */
@@ -411,9 +411,9 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, i
 		return false;
 
 	/* if the point is outside the screen, the player cannot see it */
-	if (*x < UI_MAPEXTRADATACONST(node).mapPos[0] && *y < UI_MAPEXTRADATACONST(node).mapPos[1]
-			&& *x > UI_MAPEXTRADATACONST(node).mapPos[0] + UI_MAPEXTRADATACONST(node).mapSize[0]
-			&& *y > UI_MAPEXTRADATACONST(node).mapPos[1] + UI_MAPEXTRADATACONST(node).mapSize[1])
+	if (*x < data.mapPos[0] && *y < data.mapPos[1]
+			&& *x > data.mapPos[0] + data.mapSize[0]
+			&& *y > data.mapPos[1] + data.mapSize[1])
 		return false;
 
 	return true;
@@ -430,25 +430,22 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, i
  */
 static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
-	float sx;
-
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	/* get "raw" position */
-	sx = pos[0] / 360 + UI_MAPEXTRADATACONST(node).center[0] - 0.5;
+	float sx = pos[0] / 360 + data.center[0] - 0.5;
 
 	/* shift it on screen */
-	if (sx < -0.5)
-		sx += 1.0;
-	else if (sx > +0.5)
-		sx -= 1.0;
+	if (sx < -0.5f)
+		sx += 1.0f;
+	else if (sx > +0.5f)
+		sx -= 1.0f;
 
-	*x = UI_MAPEXTRADATACONST(node).mapPos[0] + 0.5 * UI_MAPEXTRADATACONST(node).mapSize[0]
-			- sx * UI_MAPEXTRADATACONST(node).mapSize[0] * UI_MAPEXTRADATACONST(node).zoom;
-	*y = UI_MAPEXTRADATACONST(node).mapPos[1] + 0.5 * UI_MAPEXTRADATACONST(node).mapSize[1]
-			- (pos[1] / 180 + UI_MAPEXTRADATACONST(node).center[1] - 0.5) * UI_MAPEXTRADATACONST(node).mapSize[1] * UI_MAPEXTRADATACONST(node).zoom;
+	*x = data.mapPos[0] + 0.5f * data.mapSize[0] - sx * data.mapSize[0] * data.zoom;
+	*y = data.mapPos[1] + 0.5f * data.mapSize[1] - (pos[1] / 180.0f + data.center[1] - 0.5f) * data.mapSize[1] * data.zoom;
 
-	if (*x < UI_MAPEXTRADATACONST(node).mapPos[0] && *y < UI_MAPEXTRADATACONST(node).mapPos[1]
-			&& *x > UI_MAPEXTRADATACONST(node).mapPos[0] + UI_MAPEXTRADATACONST(node).mapSize[0]
-			&& *y > UI_MAPEXTRADATACONST(node).mapPos[1] + UI_MAPEXTRADATACONST(node).mapSize[1])
+	if (*x < data.mapPos[0] && *y < data.mapPos[1]
+			&& *x > data.mapPos[0] + data.mapSize[0]
+			&& *y > data.mapPos[1] + data.mapSize[1])
 		return false;
 	return true;
 }
@@ -464,7 +461,8 @@ static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  */
 static bool GEO_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	if (!data.flatgeoscape)
 		return GEO_3DMapToScreen(node, pos, x, y, z);
 
 	if (z)
@@ -502,10 +500,8 @@ static bool GEO_IsPositionSelected (const uiNode_t* node, const vec2_t pos, int 
  */
 static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		cgi->R_Draw3DMapMarkers(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, UI_MAPEXTRADATACONST(node).angles, pos, theta,
-				GLOBE_RADIUS, model, skin);
-	} else {
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	if (data.flatgeoscape) {
 		int x, y;
 		vec3_t screenPos;
 
@@ -513,6 +509,8 @@ static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, f
 		VectorSet(screenPos, x, y, 0);
 		/* models are used on 2D geoscape for aircraft */
 		cgi->R_Draw2DMapMarkers(screenPos, theta, model, skin);
+	} else {
+		cgi->R_Draw3DMapMarkers(data.mapPos, data.mapSize, data.angles, pos, theta, GLOBE_RADIUS, model, skin);
 	}
 }
 
@@ -619,19 +617,20 @@ static void GEO_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 	/* draw */
 	cgi->R_Color(color);
 	start = 0;
-	old = UI_MAPEXTRADATACONST(node).mapSize[0] / 2;
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	old = data.mapSize[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
 		GEO_MapToScreen(node, line->point[i], &p->x, &p->y);
 
 		/* If we cross longitude 180 degree (right/left edge of the screen), draw the first part of the path */
-		if (i > start && abs(p->x - old) > UI_MAPEXTRADATACONST(node).mapSize[0] / 2) {
+		if (i > start && abs(p->x - old) > data.mapSize[0] / 2) {
 			/* shift last point */
 			int diff;
 
-			if (p->x - old > UI_MAPEXTRADATACONST(node).mapSize[0] / 2)
-				diff = -UI_MAPEXTRADATACONST(node).mapSize[0] * UI_MAPEXTRADATACONST(node).zoom;
+			if (p->x - old > data.mapSize[0] / 2)
+				diff = -data.mapSize[0] * data.zoom;
 			else
-				diff = UI_MAPEXTRADATACONST(node).mapSize[0] * UI_MAPEXTRADATACONST(node).zoom;
+				diff = data.mapSize[0] * data.zoom;
 			p->x += diff;
 
 			/* wrap around screen border */
@@ -662,13 +661,14 @@ static void GEO_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
-	int i, numPoints, start;
+	int numPoints, start;
 
 	start = 0;
+	numPoints = 0;
 
 	/* draw only when the point of the path is visible */
 	cgi->R_Color(color);
-	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
+	for (int i = 0; i < line->numPoints; i++) {
 		if (GEO_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, nullptr))
 			numPoints++;
 		else if (!numPoints)
@@ -708,6 +708,7 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 	PerpendicularVector(rotationAxis, centerPos);
 	RotatePointAroundVector(initialVector, rotationAxis, centerPos, angle);
 
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		bool draw = false;
@@ -716,7 +717,7 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 		VecToPolar(currentPoint, posCircle);
 		if (GEO_AllMapToScreen(node, posCircle, &xCircle, &yCircle, nullptr)) {
 			draw = true;
-			if (UI_MAPEXTRADATACONST(node).flatgeoscape && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
+			if (data.flatgeoscape && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
 				oldDraw = false;
 		}
 
@@ -751,7 +752,6 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
  */
 static float GEO_AngleOfPath3D (const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
-	float angle = 0.0f;
 	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v;
 	const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where the 'up' side is) */
 
@@ -776,9 +776,8 @@ static float GEO_AngleOfPath3D (const vec2_t start, const vec2_t end, vec3_t dir
 	 */
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
-		float dist;
 		VectorSubtract(ortToDest, direction, v);
-		dist = VectorLength(v);
+		const float dist = VectorLength(v);
 		if (dist > 0.01) {
 			vec3_t rotationAxis;
 			CrossProduct(direction, ortToDest, rotationAxis);
@@ -794,7 +793,7 @@ static float GEO_AngleOfPath3D (const vec2_t start, const vec2_t end, vec3_t dir
 	}
 
 	/* calculate the angle the model is making at earth surface with north pole direction */
-	angle = todeg * acos(DotProduct(ortToDest, ortToPole));
+	float angle = todeg * acos(DotProduct(ortToDest, ortToPole));
 	/* with arcos, you only get the absolute value of the angle: get the sign */
 	CrossProduct(ortToDest, ortToPole, v);
 	if (DotProduct(start3D, v) < 0)
@@ -813,7 +812,6 @@ static float GEO_AngleOfPath3D (const vec2_t start, const vec2_t end, vec3_t dir
  */
 static float GEO_AngleOfPath2D (const vec2_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
-	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
 
 	/* calculate the vector tangent to movement */
@@ -831,9 +829,8 @@ static float GEO_AngleOfPath2D (const vec2_t start, const vec2_t end, vec3_t dir
 
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
-		float dist;
 		VectorSubtract(tangentVector, direction, v);
-		dist = VectorLength(v);
+		const float dist = VectorLength(v);
 		if (dist > 0.01) {
 			CrossProduct(direction, tangentVector, rotationAxis);
 			VectorNormalize(rotationAxis);
@@ -852,7 +849,7 @@ static float GEO_AngleOfPath2D (const vec2_t start, const vec2_t end, vec3_t dir
 	RotatePointAroundVector(tangentVector, rotationAxis, v, start[1] + 90.0f);
 
 	/* calculate the orientation angle of the model around axis perpendicular to the screen */
-	angle = todeg * atan(tangentVector[0] / tangentVector[1]);
+	float angle = todeg * atan(tangentVector[0] / tangentVector[1]);
 	if (tangentVector[1] > 0)
 		angle -= 90.0f;
 	else
@@ -874,13 +871,11 @@ float GEO_AngleOfPath (const vec2_t start, const vec2_t end, vec3_t direction, v
 	uiNode_t *node = geoscapeNode;
 	if (!node)
 		return 0.0f;
-	float angle;
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
-		angle = GEO_AngleOfPath3D(start, end, direction, ortVector);
-	else
-		angle = GEO_AngleOfPath2D(start, end, direction, ortVector);
 
-	return angle;
+	const mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	if (!data.flatgeoscape)
+		return GEO_AngleOfPath3D(start, end, direction, ortVector);
+	return GEO_AngleOfPath2D(start, end, direction, ortVector);
 }
 
 /**
@@ -933,31 +928,32 @@ static void GEO_GetUFOAngle (bool flatgeoscape, float *vector, int idx)
  */
 static void GEO_StartCenter (uiNode_t *node)
 {
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		/* case 3D geoscape */
-		vec3_t diff;
-
-		UI_MAPEXTRADATA(node).smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-		VectorSubtract(UI_MAPEXTRADATACONST(node).smoothFinalGlobeAngle, UI_MAPEXTRADATACONST(node).angles, diff);
-		UI_MAPEXTRADATA(node).smoothDeltaLength = VectorLength(diff);
-	} else {
+	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	if (data.flatgeoscape) {
 		/* case 2D geoscape */
 		vec2_t diff;
 
-		Vector2Set(UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter, 0.5f - UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0] / 360.0f,
-				0.5f - UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] / 180.0f);
-		if (UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
-			UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
-		if (UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
-			UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
-		diff[0] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0] - UI_MAPEXTRADATACONST(node).center[0];
-		diff[1] = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] - UI_MAPEXTRADATACONST(node).center[1];
-		UI_MAPEXTRADATA(node).smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+		Vector2Set(data.smoothFinal2DGeoscapeCenter, 0.5f - data.smoothFinal2DGeoscapeCenter[0] / 360.0f,
+				0.5f - data.smoothFinal2DGeoscapeCenter[1] / 180.0f);
+		if (data.smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			data.smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (data.smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			data.smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
+		diff[0] = data.smoothFinal2DGeoscapeCenter[0] - data.center[0];
+		diff[1] = data.smoothFinal2DGeoscapeCenter[1] - data.center[1];
+		data.smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+	} else {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		data.smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(data.smoothFinalGlobeAngle, data.angles, diff);
+		data.smoothDeltaLength = VectorLength(diff);
 	}
 
-	UI_MAPEXTRADATA(node).smoothFinalZoom = ZOOM_LIMIT;
-	UI_MAPEXTRADATA(node).smoothDeltaZoom = fabs(UI_MAPEXTRADATACONST(node).smoothFinalZoom - UI_MAPEXTRADATACONST(node).zoom);
-	UI_MAPEXTRADATA(node).smoothRotation = true;
+	data.smoothFinalZoom = ZOOM_LIMIT;
+	data.smoothDeltaZoom = fabs(data.smoothFinalZoom - data.zoom);
+	data.smoothRotation = true;
 }
 
 /**
@@ -969,12 +965,13 @@ void GEO_CenterPosition (const vec2_t pos)
 	uiNode_t *node = geoscapeNode;
 	if (!node)
 		return;
-	const bool flatgeoscape = UI_MAPEXTRADATACONST(node).flatgeoscape;
+	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	const bool flatgeoscape = data.flatgeoscape;
 	float *vector;
 	if (flatgeoscape)
-		vector = UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter;
+		vector = data.smoothFinal2DGeoscapeCenter;
 	else
-		vector = UI_MAPEXTRADATA(node).smoothFinalGlobeAngle;
+		vector = data.smoothFinalGlobeAngle;
 
 	GEO_ConvertObjectPositionToGeoscapePosition(flatgeoscape, vector, pos);
 	GEO_StartCenter(node);
@@ -996,13 +993,14 @@ static void GEO_SelectObject_f (void)
 
 	const char *type = cgi->Cmd_Argv(1);
 	const int idx = atoi(cgi->Cmd_Argv(2));
-	const bool flatgeoscape = UI_MAPEXTRADATACONST(node).flatgeoscape;
+	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	const bool flatgeoscape = data.flatgeoscape;
 
 	float *vector;
 	if (flatgeoscape)
-		vector = UI_MAPEXTRADATA(node).smoothFinal2DGeoscapeCenter;
+		vector = data.smoothFinal2DGeoscapeCenter;
 	else
-		vector = UI_MAPEXTRADATA(node).smoothFinalGlobeAngle;
+		vector = data.smoothFinalGlobeAngle;
 
 	if (Q_streq(type, "mission"))
 		GEO_GetMissionAngle(flatgeoscape, vector, idx);
@@ -1199,25 +1197,26 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t *missio
 	if (!GEO_AllMapToScreen(node, mission->pos, &x, &y, nullptr))
 		return;
 
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	if (isCurrentSelectedMission) {
 		/* Draw circle around the mission */
-		if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-			if (!mission->active)
-				GEO_MapDrawEquidistantPoints(node, mission->pos, SELECT_CIRCLE_RADIUS, yellow);
-		} else {
+		if (data.flatgeoscape) {
 			if (mission->active) {
 				GEO_RenderImage(x, y, "pics/geoscape/circleactive");
 			} else {
 				GEO_RenderImage(x, y, "pics/geoscape/circle");
 			}
+		} else {
+			if (!mission->active)
+				GEO_MapDrawEquidistantPoints(node, mission->pos, SELECT_CIRCLE_RADIUS, yellow);
 		}
 	}
 
 	/* Draw mission model (this must be called after drawing the selection circle so that the model is rendered on top of it)*/
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
-		GEO_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MIS_GetModel(mission), 0);
-	} else {
+	if (!data.flatgeoscape) {
 		GEO_RenderImage(x, y, "pics/geoscape/mission");
+	} else {
+		GEO_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MIS_GetModel(mission), 0);
 	}
 
 	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, MIS_GetName(mission));
@@ -1244,10 +1243,6 @@ static void GEO_DrawRadarLineCoverage (const uiNode_t* node, const radar_t* rada
  */
 static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, const vec2_t pos)
 {
-	int x, y;
-	const vec4_t color = {1., 1., 1., .3};
-	bool display;
-
 	/* Show radar range zones */
 	GEO_DrawRadarLineCoverage(node, radar, pos);
 
@@ -1255,28 +1250,27 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
 	if (!radar->numUFOs)
 		return;
 
-	/* Set color */
-	cgi->R_Color(color);
-
 	/* Draw lines from radar to ufos sensored */
-	display = GEO_AllMapToScreen(node, pos, &x, &y, nullptr);
-	if (display) {
-		int i;
-		screenPoint_t pts[2];
+	int x, y;
+	const bool display = GEO_AllMapToScreen(node, pos, &x, &y, nullptr);
+	if (!display)
+		return;
 
-		pts[0].x = x;
-		pts[0].y = y;
+	screenPoint_t pts[2];
+	pts[0].x = x;
+	pts[0].y = y;
 
-		for (i = 0; i < radar->numUFOs; i++) {
-			const aircraft_t *ufo = radar->ufos[i];
-			if (UFO_IsUFOSeenOnGeoscape(ufo) && GEO_AllMapToScreen(node, ufo->pos, &x, &y, nullptr)) {
-				pts[1].x = x;
-				pts[1].y = y;
-				cgi->R_DrawLineStrip(2, (int*)pts);
-			}
+	/* Set color */
+	const vec4_t color = {1., 1., 1., .3};
+	cgi->R_Color(color);
+	for (int i = 0; i < radar->numUFOs; i++) {
+		const aircraft_t *ufo = radar->ufos[i];
+		if (UFO_IsUFOSeenOnGeoscape(ufo) && GEO_AllMapToScreen(node, ufo->pos, &x, &y, nullptr)) {
+			pts[1].x = x;
+			pts[1].y = y;
+			cgi->R_DrawLineStrip(2, (int*)pts);
 		}
 	}
-
 	cgi->R_Color(nullptr);
 }
 
@@ -1384,8 +1378,9 @@ static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t *base,
  */
 static void GEO_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft)
 {
-	const int width = 8 * UI_MAPEXTRADATACONST(node).zoom;
-	const int height = 1 * UI_MAPEXTRADATACONST(node).zoom * 0.9;
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const int width = 8 * data.zoom;
+	const int height = 1 * data.zoom * 0.9f;
 	vec4_t color;
 	int centerX;
 	int centerY;
@@ -1396,23 +1391,23 @@ static void GEO_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 	if (aircraft->stats[AIR_STATS_DAMAGE] <= 0)
 		return;
 
-	if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .33) {
+	if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .33f) {
 		Vector4Copy(red, color);
-	} else if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .75) {
+	} else if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .75f) {
 		Vector4Copy(yellow, color);
 	} else {
 		Vector4Copy(green, color);
 	}
 
-	if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+	if (!data.flatgeoscape)
 		visible = GEO_3DMapToScreen(node, aircraft->pos, &centerX, &centerY, nullptr);
 	else
 		visible = GEO_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, nullptr);
 
 	if (visible) {
 		const vec4_t bordercolor = {1, 1, 1, 1};
-		cgi->R_DrawFill(centerX - width / 2 , centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
-		cgi->R_DrawRect(centerX - width / 2, centerY - 5 * UI_MAPEXTRADATACONST(node).zoom, width, height, bordercolor, 1.0, 1);
+		cgi->R_DrawFill(centerX - width / 2 , centerY - 5 * data.zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
+		cgi->R_DrawRect(centerX - width / 2, centerY - 5 * data.zoom, width, height, bordercolor, 1.0, 1);
 	}
 }
 
@@ -1434,6 +1429,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 	if (oneUFOVisible)
 		GEO_MapDrawEquidistantPoints(node, aircraft->pos, aircraft->stats[AIR_STATS_WRANGE] / 1000.0f, red);
 
+	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	/* Draw aircraft route */
 	if (aircraft->status >= AIR_TRANSIT) {
 		/* aircraft is moving */
@@ -1444,7 +1440,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 		if (path.numPoints > 1) {
 			memcpy(path.point, aircraft->pos, sizeof(vec2_t));
 			memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+			if (!data.flatgeoscape)
 				GEO_3DMapDrawLine(node, &path);
 			else
 				GEO_MapDrawLine(node, &path);
@@ -1460,7 +1456,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 		int x;
 		int y;
 
-		if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+		if (!data.flatgeoscape)
 			GEO_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else {
 			GEO_AllMapToScreen(node, aircraft->pos, &x, &y, nullptr);
@@ -1469,7 +1465,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 		/* Draw a circle around the ufo pursued by selected aircraft */
 		if (aircraft->status == AIR_UFO && GEO_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, nullptr)) {
-			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+			if (!data.flatgeoscape)
 				GEO_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
 				GEO_RenderImage(x, y, "pics/geoscape/circleactive");
@@ -1645,13 +1641,15 @@ void GEO_DrawMarkers (const uiNode_t* node)
 #endif
 		{
 			const float angle = GEO_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, nullptr);
+			const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 
-			if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+			if (!data.flatgeoscape)
 				GEO_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, white);
+
 			if (GEO_IsUFOSelected(ufo)) {
-				if (!UI_MAPEXTRADATACONST(node).flatgeoscape)
+				if (!data.flatgeoscape) {
 					GEO_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
-				else {
+				} else {
 					int x, y;
 					GEO_AllMapToScreen(node, ufo->pos, &x, &y, nullptr);
 					GEO_RenderImage(x, y, "pics/geoscape/circleactive");
