@@ -81,9 +81,7 @@ static const struct buildingTypeMapping_s {
  * @brief Returns the building type for a given building identified by its building id
  * from the ufo script files
  * @sa B_ParseBuildings
- * @sa B_GetBuildingType
  * @param[in] buildingID The script building id that should get converted into the enum value
- * @note Do not use B_GetBuildingType here, this is also used for parsing the types!
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 {
