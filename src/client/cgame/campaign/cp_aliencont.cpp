@@ -52,8 +52,7 @@ bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *team
 
 	if (dead)
 		return aircraft->alienCargo->add(teamDef, 0, amount);
-	else
-		return aircraft->alienCargo->add(teamDef, amount, 0);
+	return aircraft->alienCargo->add(teamDef, amount, 0);
 }
 
 /**
@@ -196,9 +195,7 @@ bool AC_LoadXML (xmlNode_t *parent)
 	xmlNode_t *aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
 	if (!aliencont)
 		return true;
-	for (xmlNode_t *contNode = cgi->XML_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
-		contNode = cgi->XML_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT))
-	{
+	FOREACH_XMLNODE(contNode, aliencont, SAVE_ALIENCONT_CONT) {
 		int baseIdx = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base) {
@@ -206,9 +203,7 @@ bool AC_LoadXML (xmlNode_t *parent)
 			continue;
 		}
 
-		for (xmlNode_t *alienNode = cgi->XML_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode;
-			alienNode = cgi->XML_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN))
-		{
+		FOREACH_XMLNODE(alienNode, contNode, SAVE_ALIENCONT_ALIEN) {
 			const char *teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
 			int alive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
 			int dead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
