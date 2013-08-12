@@ -305,27 +305,22 @@ static void INV_DecreaseItem_f (void)
  */
 static void INV_UpdateObject_f (void)
 {
-	int num;
-	const objDef_t *obj;
-	bool changeTab;
-
 	/* check syntax */
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <objectid> <confunc> [mustwechangetab]\n", Cmd_Argv(0));
 		return;
 	}
 
+	bool changeTab = true;
 	if (Cmd_Argc() == 4)
 		changeTab = atoi(Cmd_Argv(3)) >= 1;
-	else
-		changeTab = true;
 
-	num = atoi(Cmd_Argv(1));
+	const int num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs) {
 		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
 		return;
 	}
-	obj = INVSH_GetItemByIDX(num);
+	const objDef_t *obj = INVSH_GetItemByIDX(num);
 
 	/* update tab */
 	if (changeTab) {
@@ -352,42 +347,46 @@ static void INV_UpdateActorLoad_f (void)
 	}
 
 	const character_t *chr = GAME_GetSelectedChr();
-	if (chr != nullptr) {
-		const float invWeight = chr->inv.getWeight();
-		const int maxWeight = GAME_GetChrMaxLoad(chr);
-		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
-		const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
-		const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
-		const int tuPenalty = tus - normalTU;
-		int count = 0;
+	if (chr == nullptr)
+		return;
 
-		const Container *cont = nullptr;
-		while ((cont = chr->inv.getNextCont(cont))) {
-			for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
-				next = invList->getNext();
-				const fireDef_t *fireDef = invList->getFiredefs();
-				if (fireDef == nullptr)
+	const float invWeight = chr->inv.getWeight();
+	const int maxWeight = GAME_GetChrMaxLoad(chr);
+	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
+	const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
+	const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
+	const int tuPenalty = tus - normalTU;
+	int count = 0;
+
+	const Container *cont = nullptr;
+	while ((cont = chr->inv.getNextCont(cont))) {
+		for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
+			next = invList->getNext();
+			const fireDef_t *fireDef = invList->getFiredefs();
+			if (fireDef == nullptr)
+				continue;
+			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+				if (fireDef[i].time <= 0)
 					continue;
-				for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++)
-					if (fireDef[i].time > 0 && fireDef[i].time > tus) {
-						if (count <= 0)
-							Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-						Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
-						++count;
-					}
+				if (fireDef[i].time <= tus)
+					continue;
+				if (count <= 0)
+					Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
+				Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+				++count;
 			}
 		}
-
-		if ((Cmd_Argc() == 2 || atoi(Cmd_Argv(2)) == 0) && count > 0)
-			UI_Popup(_("Warning"), popupText);
-
-		char label[MAX_VAR];
-		char tooltip[MAX_VAR];
-		Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight, maxWeight, _("Kg"),
-				(count > 0 ? _("Warning: Not enough TUs...") : ""));
-		Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
-		UI_ExecuteConfunc("%s \"%s\" \"%s\" %f %i", Cmd_Argv(1), label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 	}
+
+	if ((Cmd_Argc() == 2 || atoi(Cmd_Argv(2)) == 0) && count > 0)
+		UI_Popup(_("Warning"), popupText);
+
+	char label[MAX_VAR];
+	char tooltip[MAX_VAR];
+	Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight, maxWeight, _("Kg"),
+			(count > 0 ? _("Warning: Not enough TUs...") : ""));
+	Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
+	UI_ExecuteConfunc("%s \"%s\" \"%s\" %f %i", Cmd_Argv(1), label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 }
 
 void INV_InitCallbacks (void)
