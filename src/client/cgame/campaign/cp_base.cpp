@@ -393,12 +393,12 @@ bool B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, b
 	building_t *building = nullptr;
 
 	while ((building = B_GetNextBuildingByType(base, building, type))) {
-		if (building->buildingStatus == status) {
-			cntlocal++;
-			/* don't count any further - the caller doesn't want to know the value */
-			if (!cnt)
-				return true;
-		}
+		if (building->buildingStatus != status)
+			continue;
+		cntlocal++;
+		/* don't count any further - the caller doesn't want to know the value */
+		if (!cnt)
+			return true;
 	}
 
 	/* set the cnt pointer if the caller wants to know this value */
