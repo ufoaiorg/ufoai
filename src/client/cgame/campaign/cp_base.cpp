@@ -2070,32 +2070,31 @@ void B_BuildingOpenAfterClick (const building_t *building)
  */
 static void B_PrintCapacities_f (void)
 {
-	int i, j;
-	base_t *base;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(cgi->Cmd_Argv(1));
-	if (i >= B_GetCount()) {
+	const int baseIdx = atoi(cgi->Cmd_Argv(1));
+	if (baseIdx >= B_GetCount()) {
 		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
-	base = B_GetBaseByIDX(i);
-	for (i = 0; i < MAX_CAP; i++) {
+	base_t *base = B_GetBaseByIDX(baseIdx);
+	for (int i = 0; i < MAX_CAP; i++) {
 		const baseCapacities_t cap = (baseCapacities_t)i;
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
-		if (buildingType >= MAX_BUILDING_TYPE)
+		if (buildingType >= MAX_BUILDING_TYPE) {
 			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
-		else {
-			for (j = 0; j < ccs.numBuildingTemplates; j++) {
-				if (ccs.buildingTemplates[j].buildingType == buildingType)
-					break;
-			}
+			continue;
+		}
+		for (int j = 0; j < ccs.numBuildingTemplates; j++) {
+			if (ccs.buildingTemplates[j].buildingType != buildingType)
+				continue;
+
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, cap));
+					ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, cap));
+			break;
 		}
 	}
 }
