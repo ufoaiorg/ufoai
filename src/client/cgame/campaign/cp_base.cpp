@@ -1841,21 +1841,24 @@ static void CL_SwapSkills (linkedList_t *team)
 					if (holsterCharTwo && holsterCharTwo->ammoDef() && holsterCharTwo->def())
 						fdHolsterArray = holsterCharTwo->getFiredefs();
 
-					if (fdHolsterArray != nullptr && fdRightArray != nullptr) {
-						const int no2 = 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
-							+ 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
-							+ (holsterCharTwo && holsterCharTwo->isReloadable()
-							   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
-							+ (holsterCharTwo && holsterCharTwo->isReloadable()
-							   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
+					if (fdHolsterArray == nullptr)
+						continue;
+					if (fdRightArray == nullptr)
+						continue;
 
-						if (no1 > no2 /* more use of this skill */
-							 || (no1 && no1 == no2)) { /* or earlier on list */
+					const int no2 = 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
+						+ 2 * (rightHandCharTwo && skill == rightHandCharTwo->ammoDef()->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
+						+ (holsterCharTwo && holsterCharTwo->isReloadable()
+						   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
+						+ (holsterCharTwo && holsterCharTwo->isReloadable()
+						   && skill == holsterCharTwo->ammoDef()->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
-							CL_DoSwapSkills(cp1, cp2, skill);
-						} else if (no1 < no2) {
-							CL_DoSwapSkills(cp2, cp1, skill);
-						}
+					if (no1 > no2 /* more use of this skill */
+						 || (no1 && no1 == no2)) { /* or earlier on list */
+
+						CL_DoSwapSkills(cp1, cp2, skill);
+					} else if (no1 < no2) {
+						CL_DoSwapSkills(cp2, cp1, skill);
 					}
 				}
 			}
