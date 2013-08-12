@@ -1557,7 +1557,6 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	vec2_t pos;
 	bool map[BASE_SIZE][BASE_SIZE];
 	byte buildingNums[MAX_BUILDINGS];
-	int i;
 
 	/* get token */
 	token = Com_Parse(text);
@@ -1612,7 +1611,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		baseBuildingTile_t* tile = &baseTemplate->buildings[baseTemplate->numBuildings];
 		baseTemplate->numBuildings++;
 
-		for (i = 0; i < ccs.numBuildingTemplates; i++)
+		for (int i = 0; i < ccs.numBuildingTemplates; i++)
 			if (Q_streq(ccs.buildingTemplates[i].id, buildingToken)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
@@ -1641,7 +1640,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t *building = &ccs.buildingTemplates[i];
 		if (building && building->mandatory && !buildingNums[i]) {
 			cgi->Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, baseTemplate->id);
