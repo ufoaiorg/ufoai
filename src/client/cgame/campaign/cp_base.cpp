@@ -1469,9 +1469,6 @@ void B_DrawBuilding (const building_t* building)
  */
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
-	int numberOfBuildings = 0;
-	building_t *building = nullptr;
-
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
 		return -1;
@@ -1488,6 +1485,8 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 		return -1;
 	}
 
+	int numberOfBuildings = 0;
+	building_t *building = nullptr;
 	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->tpl == tpl && building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
@@ -1503,9 +1502,6 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
  */
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
-	int numberOfBuildings = 0;
-	building_t *building = nullptr;
-
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
 		return -1;
@@ -1516,6 +1512,8 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
+	int numberOfBuildings = 0;
+	building_t *building = nullptr;
 	while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 		if (building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
