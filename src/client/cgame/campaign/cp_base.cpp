@@ -1797,13 +1797,13 @@ static void CL_SwapSkills (linkedList_t *team)
 {
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
+	const int teamSize = cgi->LIST_Count(team);
 
-	for (int i = 0; i < cgi->LIST_Count(team); i++) {
-		int x;
+	for (int i = 0; i < teamSize; i++) {
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
-		for (x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
+		for (int x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
 			abilityskills_t skill = (abilityskills_t)x;
 			for (linkedList_t *cp1List = team; cp1List && cp1List->next; cp1List = cp1List->next) {
 				character_t *cp1 = (character_t*)cp1List->data;
