@@ -200,11 +200,9 @@ static bool B_AddBlockedTile (base_t *base, int row, int column)
  */
 static void B_AddBlockedTiles (base_t *base, int count)
 {
-	int placed;
-
 	assert(base);
 
-	for (placed = 0; placed < count; placed++) {
+	for (int placed = 0; placed < count; placed++) {
 		const int x = rand() % BASE_SIZE;
 		const int y = rand() % BASE_SIZE;
 
