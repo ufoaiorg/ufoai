@@ -1917,24 +1917,19 @@ void B_BaseResetStatus (base_t* const base)
  */
 static void B_BuildingList_f (void)
 {
-	base_t *base;
-
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
-		int j;
-
 		Com_Printf("\nBase id %i: %s\n", base->idx, base->name);
 		/** @todo building count should not depend on base->idx. base->idx will not be an array index! */
-		for (j = 0; j < ccs.numBuildings[base->idx]; j++) {
+		for (int j = 0; j < ccs.numBuildings[base->idx]; j++) {
 			const building_t *building = B_GetBuildingByIDX(base->idx, j);
-			int k;
 
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
 				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), base->idx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
 
-			for (k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
+			for (int k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
 				if (k > 1 && k % BASE_SIZE == 0)
 					Com_Printf("\n");
 				Com_Printf("%i ", building->buildingStatus);
