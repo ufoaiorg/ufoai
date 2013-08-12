@@ -2234,19 +2234,16 @@ void B_UpdateBaseData (void)
  */
 static void B_SellOrAddItems (aircraft_t *aircraft)
 {
-	int i;
 	int numitems = 0;
 	int gained = 0;
-	itemsTmp_t *cargo;
-	base_t *base;
 
 	assert(aircraft);
-	base = aircraft->homebase;
+	base_t *base = aircraft->homebase;
 	assert(base);
 
-	cargo = aircraft->itemcargo;
+	itemsTmp_t *cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemTypes; i++) {
+	for (int i = 0; i < aircraft->itemTypes; i++) {
 		const objDef_t *item = cargo[i].item;
 		const int amount = cargo[i].amount;
 		technology_t *tech = RS_GetTechForItem(item);
