@@ -1235,13 +1235,10 @@ void B_SetName (base_t *base, const char *name)
  */
 base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
-	int i;
-	base_t *base = B_GetFirstUnfoundedBase();
-	float level;
-
 	if (!campaign)
 		cgi->Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
+	base_t *base = B_GetFirstUnfoundedBase();
 	if (!base)
 		cgi->Com_Error(ERR_DROP, "Cannot build more bases");
 
@@ -1256,7 +1253,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	ccs.numBases++;
 
 	/* reset capacities */
-	for (i = 0; i < MAX_CAP; i++) {
+	for (int i = 0; i < MAX_CAP; i++) {
 		const baseCapacities_t cap = (baseCapacities_t)i;
 		CAP_SetCurrent(base, cap, 0);
 	}
@@ -1277,7 +1274,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	BDEF_InitialiseBaseSlots(base);
 
 	/* Reset Radar range */
-	level = B_GetMaxBuildingLevel(base, B_RADAR);
+	const float level = B_GetMaxBuildingLevel(base, B_RADAR);
 	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, false);
 	RADAR_InitialiseUFOs(&base->radar);
 
