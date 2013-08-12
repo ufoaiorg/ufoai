@@ -1845,6 +1845,9 @@ static void CL_SwapSkills (linkedList_t *team)
 		for (int x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
 			const abilityskills_t skill = (abilityskills_t)x;
 			LIST_Foreach(team, character_t, cp1) {
+				if (cp1__iter == nullptr)
+					continue;
+
 				const int no1 = CL_GetSkillIndicator(cp1, skill);
 				if (no1 == -1)
 					continue;
