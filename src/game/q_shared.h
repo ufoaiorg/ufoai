@@ -273,6 +273,7 @@ typedef int32_t shoot_types_t;
 #define GRAVITY				500.0
 
 #define MAX_SKILL	100
+#define MAX_MAXHP		255
 #define MIN_TU				39
 #define WEIGHT_LIGHT	0.2f
 #define WEIGHT_HEAVY	0.5f

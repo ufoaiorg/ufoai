@@ -126,7 +126,7 @@ void CP_UpdateCharacterSkills (character_t *chr)
 		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] +
 			static_cast<int>(pow(static_cast<float>(chr->score.experience[i]) / 10, 0.6f)));
 
-	chr->maxHP = std::min(255, chr->score.initialSkills[SKILL_NUM_TYPES] +
+	chr->maxHP = std::min(MAX_MAXHP, chr->score.initialSkills[SKILL_NUM_TYPES] +
 		static_cast<int>(pow(static_cast<float>(chr->score.experience[SKILL_NUM_TYPES]) / 10, 0.6f)));
 }
 
