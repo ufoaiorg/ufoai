@@ -136,22 +136,19 @@ static bool B_IsCoherent (const base_t *base)
  */
 static bool B_AddBlockedTile (base_t *base, int row, int column)
 {
-	int found[BASE_SIZE][BASE_SIZE];
-	linkedList_t *queue = nullptr;
-	int x;
-	int y;
-
 	assert(base);
 
 	if (B_GetBuildingAt(base, column, row) != nullptr)
 		return false;
 
+	int found[BASE_SIZE][BASE_SIZE];
 	OBJZERO(found);
 	found[row][column] = -1;
 
+	linkedList_t *queue = nullptr;
 	/* Get first non blocked tile */
-	for (y = 0; y < BASE_SIZE && cgi->LIST_IsEmpty(queue); y++) {
-		for (x = 0; x < BASE_SIZE && cgi->LIST_IsEmpty(queue); x++) {
+	for (int y = 0; y < BASE_SIZE && cgi->LIST_IsEmpty(queue); y++) {
+		for (int x = 0; x < BASE_SIZE && cgi->LIST_IsEmpty(queue); x++) {
 			if (x == column && y == row)
 				continue;
 			if (!B_IsTileBlocked(base, x, y))
@@ -166,8 +163,8 @@ static bool B_AddBlockedTile (base_t *base, int row, int column)
 	while (!cgi->LIST_IsEmpty(queue)) {
 		baseBuildingTile_t *tile = (baseBuildingTile_t*)queue->data;
 		cgi->LIST_RemoveEntry(&queue, queue);
-		x = tile->posX;
-		y = tile->posY;
+		const int x = tile->posX;
+		const int y = tile->posY;
 
 		found[y][x] = 1;
 		/* West */
@@ -186,8 +183,8 @@ static bool B_AddBlockedTile (base_t *base, int row, int column)
 	cgi->LIST_Delete(&queue);
 
 	/* Check for unreached areas */
-	for (y = 0; y < BASE_SIZE; y++) {
-		for (x = 0; x < BASE_SIZE; x++) {
+	for (int y = 0; y < BASE_SIZE; y++) {
+		for (int x = 0; x < BASE_SIZE; x++) {
 			if (!B_IsTileBlocked(base, x, y) && found[y][x] == 0)
 				return false;
 		}
