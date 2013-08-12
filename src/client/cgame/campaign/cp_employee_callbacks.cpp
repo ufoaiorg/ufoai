@@ -297,10 +297,6 @@ static void E_EmployeeDelete_f (void)
  */
 static void E_EmployeeHire_f (void)
 {
-	/* num - menu index (line in text), button - number of button */
-	int num, button;
-	const char *arg;
-	Employee* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -312,11 +308,13 @@ static void E_EmployeeHire_f (void)
 		return;
 	}
 
-	arg = cgi->Cmd_Argv(1);
+	const char *arg = cgi->Cmd_Argv(1);
 
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than
-	 * maxEmployeesPerPage) possible ... */
+	 * maxEmployeesPerPage) possible ... *
+	 * num - menu index (line in text), button - number of button */
+	int num, button;
 	if (arg[0] == '+') {
 		num = atoi(arg + 1);
 		button = num - employeeScrollPos;
@@ -327,7 +325,7 @@ static void E_EmployeeHire_f (void)
 		num = button + employeeScrollPos;
 	}
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	Employee *employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
 	if (!employee)
 		return;
@@ -358,15 +356,13 @@ static void E_EmployeeHire_f (void)
  */
 static void E_EmployeeSelect_f (void)
 {
-	int num;
-
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
