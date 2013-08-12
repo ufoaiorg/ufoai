@@ -1948,10 +1948,7 @@ static void B_BuildingList_f (void)
  */
 static void B_BaseList_f (void)
 {
-	int row, col, j;
-	base_t *base;
-
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		if (!base->founded) {
 			Com_Printf("Base idx %i not founded\n\n", base->idx);
@@ -1969,17 +1966,17 @@ static void B_BaseList_f (void)
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]:\n");
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  cgi->Cmd AMtr Entr Miss Lasr  Rdr Team\n");
-		for (j = 0; j < MAX_BUILDING_TYPE; j++) {
+		for (int j = 0; j < MAX_BUILDING_TYPE; j++) {
 			const buildingType_t type = (buildingType_t)j;
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, type));
 		}
 		Com_Printf("\n");
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
-		for (row = 0; row < BASE_SIZE; row++) {
+		for (int row = 0; row < BASE_SIZE; row++) {
 			if (row > 0)
 				Com_Printf("\n");
-			for (col = 0; col < BASE_SIZE; col++)
+			for (int col = 0; col < BASE_SIZE; col++)
 				Com_Printf("%2i (%3i: %3i)  ", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
 					base->map[row][col].posX, base->map[row][col].posY);
 		}
