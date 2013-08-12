@@ -1794,6 +1794,8 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilitysk
  * @param[in] skill The skill to get the indicator for
  * @return -1 if the given character does not wear the needed weapons, otherwise a weighted indicator that tell us
  * how good the weapons fit for the given skill.
+ * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
+ * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
 static int CL_GetSkillIndicator (const character_t *chr, abilityskills_t skill)
 {
@@ -1831,8 +1833,6 @@ static int CL_GetSkillIndicator (const character_t *chr, abilityskills_t skill)
 
 /**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
- * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
- * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
 static void CL_SwapSkills (linkedList_t *team)
 {
