@@ -94,7 +94,6 @@ static bool B_IsCoherent (const base_t *base)
 	linkedList_t *queue = nullptr;
 	linkedList_t *neighbours;
 	building_t *bldg = nullptr;
-	int i;
 
 	OBJZERO(found);
 	while ((bldg = B_GetNextBuilding(base, bldg)) != nullptr) {
@@ -120,7 +119,7 @@ static bool B_IsCoherent (const base_t *base)
 	}
 	cgi->LIST_Delete(&queue);
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+	for (int i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		if (found[i] != 1)
 			return false;
 	}
