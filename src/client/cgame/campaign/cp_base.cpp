@@ -2367,12 +2367,7 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
-	int i, capacity = 0, buildingTemplateIDX = -1;
-	buildingType_t buildingType;
-	building_t *building;
-
-	/* Get building type. */
-	buildingType = B_GetBuildingTypeByCapacity(cap);
+	int capacity = 0;
 
 	switch (cap) {
 	case CAP_ALIENS:		/**< Update Aliens capacity in base. */
@@ -2383,10 +2378,14 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
+	{
+		int buildingTemplateIDX = -1;
+		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
+
 		/* Reset given capacity in current base. */
 		CAP_SetMax(base, cap, 0);
 		/* Get building capacity. */
-		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 			const building_t *b = &ccs.buildingTemplates[i];
 			if (b->buildingType == buildingType) {
 				capacity = b->capacity;
@@ -2396,7 +2395,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		/* Finally update capacity. */
-		building = nullptr;
+		building_t *building = nullptr;
 		while ((building = B_GetNextBuildingByType(base, building, buildingType)))
 			if (building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)
 				CAP_AddMax(base, cap, capacity);
@@ -2415,10 +2414,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		break;
+	}
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */
-		for (i = 0; i < cap; i++) {
+		for (int i = 0; i < cap; i++) {
 			const baseCapacities_t cap = (baseCapacities_t) i;
 			B_UpdateBaseCapacities(cap, base);
 		}
