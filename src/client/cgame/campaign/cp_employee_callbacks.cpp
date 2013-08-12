@@ -263,19 +263,16 @@ Employee* E_GetEmployeeByMenuIndex (int num)
  */
 static void E_EmployeeDelete_f (void)
 {
-	/* num - menu index (line in text) */
-	int num;
-	Employee* employee;
-
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	num = employeeScrollPos + atoi(cgi->Cmd_Argv(1));
+	/* num - menu index (line in text) */
+	const int num = employeeScrollPos + atoi(cgi->Cmd_Argv(1));
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	Employee* employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
 	if (!employee)
 		return;
