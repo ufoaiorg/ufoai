@@ -222,53 +222,51 @@ static void B_AddBlockedTiles (base_t *base, int count)
  */
 bool B_IsBuildingDestroyable (const building_t *building)
 {
-	base_t *base;
-
 	assert(building);
-	base = building->base;
+	base_t *base = building->base;
 	assert(base);
 
-	if (base->baseStatus != BASE_DESTROYED) {
-		int found[MAX_BUILDINGS];
-		linkedList_t *queue = nullptr;
-		linkedList_t *neighbours;
-		building_t *bldg = nullptr;
-		int i;
+	if (base->baseStatus == BASE_DESTROYED)
+		return true;
 
-		OBJZERO(found);
-		/* prevents adding building to be removed to the queue */
-		found[building->idx] = 1;
+	linkedList_t *queue = nullptr;
+	building_t *bldg = nullptr;
 
-		while ((bldg = B_GetNextBuilding(base, bldg)) != nullptr) {
-			if (bldg != building) {
-				cgi->LIST_AddPointer(&queue, (void*)bldg);
-				break;
-			}
-		}
-		if (!bldg)
-			return true;
-
-		while (!cgi->LIST_IsEmpty(queue)) {
-			bldg = (building_t*)queue->data;
-			found[bldg->idx] = 1;
-			cgi->LIST_RemoveEntry(&queue, queue);
-
-			neighbours = B_GetNeighbours(bldg);
-			LIST_Foreach(neighbours, building_t, bldg) {
-				if (found[bldg->idx] == 0) {
-					found[bldg->idx] = 1;
-					cgi->LIST_AddPointer(&queue, (void*)bldg);
-				}
-			}
-			cgi->LIST_Delete(&neighbours);
-		}
-		cgi->LIST_Delete(&queue);
-
-		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-			if (found[i] != 1)
-				return false;
+	while ((bldg = B_GetNextBuilding(base, bldg)) != nullptr) {
+		if (bldg != building) {
+			cgi->LIST_AddPointer(&queue, (void*)bldg);
+			break;
 		}
 	}
+	if (!bldg)
+		return true;
+
+	int found[MAX_BUILDINGS];
+	OBJZERO(found);
+	/* prevents adding building to be removed to the queue */
+	found[building->idx] = 1;
+
+	while (!cgi->LIST_IsEmpty(queue)) {
+		bldg = (building_t*)queue->data;
+		found[bldg->idx] = 1;
+		cgi->LIST_RemoveEntry(&queue, queue);
+
+		linkedList_t *neighbours = B_GetNeighbours(bldg);
+		LIST_Foreach(neighbours, building_t, bldg) {
+			if (found[bldg->idx] == 0) {
+				found[bldg->idx] = 1;
+				cgi->LIST_AddPointer(&queue, (void*)bldg);
+			}
+		}
+		cgi->LIST_Delete(&neighbours);
+	}
+	cgi->LIST_Delete(&queue);
+
+	for (int i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		if (found[i] != 1)
+			return false;
+	}
+
 	return true;
 }
 
