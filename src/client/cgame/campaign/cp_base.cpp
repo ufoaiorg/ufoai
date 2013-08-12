@@ -823,10 +823,9 @@ bool B_BuildingDestroy (building_t* building)
 	int const baseIDX = base->idx;
 	building_t* const buildings = ccs.buildings[baseIDX];
 	int const idx = building->idx;
-	int y, x;
 
-	for (y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
-		for (x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
+	for (int y = building->pos[1]; y < building->pos[1] + building->size[1]; y++)
+		for (int x = building->pos[0]; x < building->pos[0] + building->size[0]; x++)
 			base->map[y][x].building = nullptr;
 
 	REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
@@ -835,13 +834,13 @@ bool B_BuildingDestroy (building_t* building)
 	const int cntBldgs = ccs.numBuildings[baseIDX];
 	for (int i = 0; i < cntBldgs; i++) {
 		building_t *bldg = &buildings[i];
-		if (bldg->idx >= idx) {
-			bldg->idx--;
+		if (bldg->idx < idx)
+			continue;
+		bldg->idx--;
 
-			for (y = bldg->pos[1]; y < bldg->pos[1] + bldg->size[1]; y++)
-				for (x = (int)bldg->pos[0]; x < bldg->pos[0] + bldg->size[0]; x++)
-					base->map[y][x].building = bldg;
-		}
+		for (int y = bldg->pos[1]; y < bldg->pos[1] + bldg->size[1]; y++)
+			for (int x = (int)bldg->pos[0]; x < bldg->pos[0] + bldg->size[0]; x++)
+				base->map[y][x].building = bldg;
 	}
 	building = nullptr;
 
