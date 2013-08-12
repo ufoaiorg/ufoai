@@ -1789,10 +1789,30 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilitysk
 }
 
 /**
- * @brief Assembles a skill indicator for the given items in correlation to the given skill
+ * @brief Assembles a skill indicator for the given character and its wore weapons in correlation to the given skill
+ * @param[in] chr The character to get the skill indicator for
+ * @param[in] skill The skill to get the indicator for
+ * @return -1 if the given character does not wear the needed weapons, otherwise a weighted indicator that tell us
+ * how good the weapons fit for the given skill.
  */
-static int CL_GetSkillIndicator (const Item *rightHand, abilityskills_t skill, const fireDef_t *fdRight, const Item *holster, const fireDef_t *fdHolster)
+static int CL_GetSkillIndicator (const character_t *chr, abilityskills_t skill)
 {
+	const fireDef_t *fdRight = nullptr;
+	const fireDef_t *fdHolster = nullptr;
+	const Item *rightHand = chr->inv.getRightHandContainer();
+	const Item *holster = chr->inv.getHolsterContainer();
+
+	if (rightHand && rightHand->ammoDef() && rightHand->def())
+		fdRight = rightHand->getFiredefs();
+	if (holster && holster->ammoDef() && holster->def())
+		fdHolster = holster->getFiredefs();
+	/* disregard left hand, or dual-wielding guys are too good */
+
+	if (fdHolster == nullptr)
+		return -1;
+	if (fdRight == nullptr)
+		return -1;
+
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 	int no = 0;
@@ -1826,41 +1846,15 @@ static void CL_SwapSkills (linkedList_t *team)
 			abilityskills_t skill = (abilityskills_t)x;
 			for (linkedList_t *cp1List = team; cp1List && cp1List->next; cp1List = cp1List->next) {
 				character_t *cp1 = (character_t*)cp1List->data;
-				const fireDef_t *fdRightArray = nullptr;
-				const fireDef_t *fdHolsterArray = nullptr;
-				const Item *rightHandCharOne = cp1->inv.getRightHandContainer();
-				const Item *holsterCharOne = cp1->inv.getHolsterContainer();
-
-				if (rightHandCharOne && rightHandCharOne->ammoDef() && rightHandCharOne->def())
-					fdRightArray = rightHandCharOne->getFiredefs();
-				if (holsterCharOne && holsterCharOne->ammoDef() && holsterCharOne->def())
-					fdHolsterArray = holsterCharOne->getFiredefs();
-				/* disregard left hand, or dual-wielding guys are too good */
-
-				if (fdHolsterArray == nullptr)
+				const int no1 = CL_GetSkillIndicator(cp1, skill);
+				if (no1 == -1)
 					continue;
-				if (fdRightArray == nullptr)
-					continue;
-				const int no1 = CL_GetSkillIndicator(rightHandCharOne, skill, fdRightArray, holsterCharOne, fdHolsterArray);
 
 				for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
 					character_t *cp2 = (character_t*)cp2List->data;
-					fdRightArray = nullptr;
-					fdHolsterArray = nullptr;
-					const Item *rightHandCharTwo = cp2->inv.getRightHandContainer();
-					const Item *holsterCharTwo = cp2->inv.getHolsterContainer();
-
-					if (rightHandCharTwo && rightHandCharTwo->ammoDef() && rightHandCharTwo->def())
-						fdRightArray = rightHandCharTwo->getFiredefs();
-					if (holsterCharTwo && holsterCharTwo->ammoDef() && holsterCharTwo->def())
-						fdHolsterArray = holsterCharTwo->getFiredefs();
-
-					if (fdHolsterArray == nullptr)
+					const int no2 = CL_GetSkillIndicator(cp2, skill);
+					if (no2 == -1)
 						continue;
-					if (fdRightArray == nullptr)
-						continue;
-
-					const int no2 = CL_GetSkillIndicator(rightHandCharTwo, skill, fdRightArray, holsterCharTwo, fdHolsterArray);
 
 					if (no1 > no2 /* more use of this skill */
 						 || (no1 && no1 == no2)) { /* or earlier on list */
