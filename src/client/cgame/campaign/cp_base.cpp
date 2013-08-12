@@ -500,13 +500,14 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 {
 	assert(base);
 
-	if (buildingType == B_MISC)
+	if (buildingType == B_MISC) {
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
-	else if (buildingType < MAX_BUILDING_TYPE) {
+	} else if (buildingType < MAX_BUILDING_TYPE) {
 		base->hasBuilding[buildingType] = newStatus;
 		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
-	} else
+	} else {
 		Com_Printf("B_SetBuildingStatus: Type of building %i does not exist\n", buildingType);
+	}
 }
 
 /**
@@ -724,7 +725,6 @@ static void B_UpdateAntimatterCap (base_t *base)
  */
 void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 {
-	int i;
 	bool test = true;
 
 	assert(base);
@@ -732,7 +732,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 	Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
 
 	/* reset all values of hasBuilding[] */
-	for (i = 0; i < MAX_BUILDING_TYPE; i++) {
+	for (int i = 0; i < MAX_BUILDING_TYPE; i++) {
 		const buildingType_t type = (buildingType_t)i;
 		if (type != B_MISC)
 			B_SetBuildingStatus(base, type, false);
@@ -778,7 +778,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 		B_UpdateAntimatterCap(base);
 
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
-	for (i = 0; i < MAX_CAP; i++) {
+	for (int i = 0; i < MAX_CAP; i++) {
 		const baseCapacities_t cap = (baseCapacities_t)i;
 		if (CAP_GetFreeCapacity(base, cap) < 0)
 			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
