@@ -2624,9 +2624,8 @@ bool B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
  */
 bool B_LoadXML (xmlNode_t *parent)
 {
-	int i;
 	int buildingIdx;
-	xmlNode_t *bases, *base;
+	xmlNode_t *bases;
 
 	bases = cgi->XML_GetNode(parent, "bases");
 	if (!bases) {
@@ -2637,11 +2636,14 @@ bool B_LoadXML (xmlNode_t *parent)
 	ccs.numBases = 0;
 
 	cgi->Com_RegisterConstList(saveBaseConstants);
-	for (base = cgi->XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = cgi->XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
-		xmlNode_t *node, *snode;
+	FOREACH_XMLNODE(base, bases, SAVE_BASES_BASE) {
+		xmlNode_t *node;
+		const int i = ccs.numBases;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
-		int j;
+
+		if (ccs.numBases >= MAX_BASES)
+			break;
 
 		ccs.numBases++;
 
@@ -2665,7 +2667,7 @@ bool B_LoadXML (xmlNode_t *parent)
 
 		/* building space*/
 		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
-		for (snode = cgi->XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+		FOREACH_XMLNODE(snode, node, SAVE_BASES_BUILDING) {
 			/** @todo save it as vec2t if needed, also it's opposite */
 			const int k = cgi->XML_GetInt(snode, SAVE_BASES_X, 0);
 			const int l = cgi->XML_GetInt(snode, SAVE_BASES_Y, 0);
@@ -2688,7 +2690,9 @@ bool B_LoadXML (xmlNode_t *parent)
 		}
 		/* buildings */
 		node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGS);
-		for (j = 0, snode = cgi->XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
+
+		ccs.numBuildings[i] = 0;
+		FOREACH_XMLNODE(snode, node, SAVE_BASES_BUILDING) {
 			const int buildId = cgi->XML_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
 			building_t *building;
 			const building_t *buildingTemplate;
@@ -2733,8 +2737,8 @@ bool B_LoadXML (xmlNode_t *parent)
 			building->buildTime = cgi->XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = cgi->XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			cgi->XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
+			ccs.numBuildings[i]++;
 		}
-		ccs.numBuildings[i] = j;
 
 		BDEF_InitialiseBaseSlots(b);
 		/* read missile battery slots */
