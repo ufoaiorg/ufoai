@@ -1108,12 +1108,13 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hi
 		for (i = 0; i < baseTemplate->numBuildings; i++) {
 			const baseBuildingTile_t *buildingTile = &baseTemplate->buildings[i];
 
-			if (!base->map[buildingTile->posY][buildingTile->posX].building) {
-				vec2_t pos;
-				Vector2Set(pos, buildingTile->posX, buildingTile->posY);
-				B_AddBuildingToBasePos(base, buildingTile->building, hire, pos);
-				freeSpace--;
-			}
+			if (base->map[buildingTile->posY][buildingTile->posX].building)
+				continue;
+
+			vec2_t pos;
+			Vector2Set(pos, buildingTile->posX, buildingTile->posY);
+			B_AddBuildingToBasePos(base, buildingTile->building, hire, pos);
+			freeSpace--;
 		}
 	}
 
@@ -1129,10 +1130,10 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hi
 			const int x = rand() % BASE_SIZE;
 			const int y = rand() % BASE_SIZE;
 			Vector2Set(pos, x, y);
-			if (!base->map[y][x].building) {
-				B_AddBuildingToBasePos(base, building, hire, pos);
-				freeSpace--;
-			}
+			if (base->map[y][x].building)
+				continue;
+			B_AddBuildingToBasePos(base, building, hire, pos);
+			freeSpace--;
 		}
 		/** @todo if there is no more space for mandatory building, remove a non mandatory one
 		 * or build mandatory ones first */
@@ -1142,8 +1143,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hi
 
 	/* set building tile positions */
 	for (i = 0; i < BASE_SIZE; i++) {
-		int j;
-		for (j = 0; j < BASE_SIZE; j++) {
+		for (int j = 0; j < BASE_SIZE; j++) {
 			base->map[i][j].posY = i;
 			base->map[i][j].posX = j;
 		}
@@ -1153,7 +1153,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hi
 	 * The first base never has blocked fields so we skip it. */
 	if (ccs.campaignStats.basesBuilt >= 1) {
 		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
-
 		B_AddBlockedTiles(base, j);
 	}
 }
