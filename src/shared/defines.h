@@ -103,8 +103,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_MODELS          256 /* these are sent over the net as bytes */
 #define	MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
-/* not really max hp - but an initial value */
-#define	MAX_HP 100
+#define	INITIAL_HP 100
 
 /* game print flags */
 #define	PRINT_NONE		-1  /* suppress printing */
