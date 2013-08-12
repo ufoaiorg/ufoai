@@ -55,21 +55,16 @@ static void B_InitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
  */
 static linkedList_t *B_GetNeighbours (const building_t *building)
 {
-	linkedList_t *neighbours = nullptr;
-	base_t *base;
-	int x;
-	int y;
-	int i;
-
 	if (!building || !B_IsBuildingBuiltUp(building))
 		return nullptr;
 
-	x = building->pos[0];
-	y = building->pos[1];
-	base = building->base;
+	const int x = building->pos[0];
+	const int y = building->pos[1];
+	base_t *base = building->base;
+	linkedList_t *neighbours = nullptr;
 
 	assert(base);
-	for (i = x; i < x + building->size[0]; i++) {
+	for (int i = x; i < x + building->size[0]; i++) {
 		/* North */
 		if (y > 0 && B_GetBuildingAt(base, i, y - 1) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y - 1));
@@ -77,7 +72,7 @@ static linkedList_t *B_GetNeighbours (const building_t *building)
 		if (y < BASE_SIZE - building->size[1] && B_GetBuildingAt(base, i, y + building->size[1]) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, i, y + building->size[1]));
 	}
-	for (i = y; i < y + building->size[1]; i++) {
+	for (int i = y; i < y + building->size[1]; i++) {
 		/* West */
 		if (x > 0 && B_GetBuildingAt(base, x - 1, i) != nullptr)
 			cgi->LIST_AddPointer(&neighbours, (void*)B_GetBuildingAt(base, x - 1, i));
