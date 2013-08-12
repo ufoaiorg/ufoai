@@ -1843,15 +1843,13 @@ static void CL_SwapSkills (linkedList_t *team)
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
 		for (int x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
-			abilityskills_t skill = (abilityskills_t)x;
-			for (linkedList_t *cp1List = team; cp1List && cp1List->next; cp1List = cp1List->next) {
-				character_t *cp1 = (character_t*)cp1List->data;
+			const abilityskills_t skill = (abilityskills_t)x;
+			LIST_Foreach(team, character_t, cp1) {
 				const int no1 = CL_GetSkillIndicator(cp1, skill);
 				if (no1 == -1)
 					continue;
 
-				for (linkedList_t *cp2List = cp1List->next; cp2List; cp2List = cp2List->next) {
-					character_t *cp2 = (character_t*)cp2List->data;
+				LIST_Foreach(cp1__iter->next, character_t, cp2) {
 					const int no2 = CL_GetSkillIndicator(cp2, skill);
 					if (no2 == -1)
 						continue;
