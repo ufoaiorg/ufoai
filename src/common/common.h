@@ -264,6 +264,7 @@ extern cvar_t *port;
 extern cvar_t *sys_priority;
 extern cvar_t *sys_affinity;
 extern cvar_t *sys_os;
+extern cvar_t *hwclass;
 
 /* Time information. */
 /**

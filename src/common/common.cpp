@@ -58,6 +58,7 @@ cvar_t *port;
 cvar_t *sys_priority;
 cvar_t *sys_affinity;
 cvar_t *sys_os;
+cvar_t *hwclass;
 
 static qFILE logfile;
 static qFILE pipefile;
@@ -1137,6 +1138,17 @@ void Qcommon_Init (int argc, char **argv)
 		s_language->modified = false;
 		cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
 		Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
+#endif
+
+		// 5 is an i7 with a medium gfx-card
+		// 3 dual core with 2 GB
+		// 2 EeePc with 1 GB
+		// 1 smartphone
+#ifdef __ANDROID__
+		/** get the hardware class of the machine we are running on. */
+		hwclass = Cvar_Get("hwclass", "1", 0, nullptr);
+#else
+		hwclass = Cvar_Get("hwclass", "5", 0, nullptr);
 #endif
 
 		const char *s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);

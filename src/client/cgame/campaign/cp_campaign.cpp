@@ -265,19 +265,12 @@ bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	if (mission->mapDef)
 		return true;
 
-	/** get the hardware class of the machine we are running on. */
-	cvar_t *cp_hwclass = cgi->Cvar_Get("cp_hwclass", "5", 0, nullptr);
-
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
 	mapDef_t *md = nullptr;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))
-			continue;
-
-		/* Skip if the hardware can't handle this map. */
-		if (cp_hwclass->integer < md->hwclass)
 			continue;
 
 		if (minMapDefAppearance < 0 || md->timesAlreadyUsed < minMapDefAppearance) {

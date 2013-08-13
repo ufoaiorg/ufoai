@@ -3372,6 +3372,11 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with invalid maxAlien value\n", name);
 		csi.numMDs--;
 	}
+
+	/* Skip if the hardware can't handle this map. */
+	if (hwclass->integer < md->hwclass) {
+		csi.numMDs--;
+	}
 }
 
 mapDef_t *Com_GetMapDefByIDX (int index)
