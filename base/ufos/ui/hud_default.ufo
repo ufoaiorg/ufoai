@@ -1037,15 +1037,21 @@ window hud_default extends hud
 	 * @param <1> shooter entity number
 	 * @param <2> target entity number
 	 * @param <3> shooter head model
-	 * @param <4> target head model
-	 * @param <5> TUs left until rf is triggered
+	 * @param <4> shooter head skin
+	 * @param <5> target head model
+	 * @param <6> target head skin
+	 * @param <7> TUs left until rf is triggered
 	 */
 	confunc reactionfire_addtarget {
 		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
-		*node:root.reactions.rf<1><2>.timeremaining@max = <5>
-		*node:root.reactions.rf<1><2>.timeremaining@current = <5>
-		*node:root.reactions.rf<1><2>.tu_notice@string = "<5>"
-		*node:root.reactions.rf<1><2>.tu@integer = "<5>"
+		*node:root.reactions.rf<1><2>.head_shooter@src = "<3>"
+		*node:root.reactions.rf<1><2>.head_shooter@skin = "<4>"
+		*node:root.reactions.rf<1><2>.head_target@src = "<5>"
+		*node:root.reactions.rf<1><2>.head_target@skin = "<6>"
+		*node:root.reactions.rf<1><2>.timeremaining@max = <7>
+		*node:root.reactions.rf<1><2>.timeremaining@current = <7>
+		*node:root.reactions.rf<1><2>.tu_notice@string = "<7> TUs"
+		*node:root.reactions.rf<1><2>.tu@integer = "<7>"
 	}
 
 	/**

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	return cl.time;
+	return eventTiming->nextTime;
 }
 
 /**
@@ -56,7 +56,7 @@ void CL_ActorReactionFireRemoveTarget (const eventRegister_t *self, dbuffer *msg
 
 int CL_ActorReactionFireResetTargetsTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	return cl.time;
+	return eventTiming->nextTime;
 }
 
 void CL_ActorReactionFireResetTargets (const eventRegister_t *self, dbuffer *msg)
