@@ -79,6 +79,7 @@ window hud_default extends hud
 			size			"300 400"
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
+			ghost			true
 			invis			true
 		}
 	}
@@ -1039,10 +1040,10 @@ window hud_default extends hud
 			// top down view for robots - sideview of the body isn't very nice
 			*node:root.reactions.rf<1><2>.head_shooter@angles = "0 60 90"
 		}
-		*node:root.reactions.rf<1><2>.timeremaining@max = <9>
-		*node:root.reactions.rf<1><2>.timeremaining@current = <9>
-		*node:root.reactions.rf<1><2>.tu_notice@string = "<9> TUs"
-		*node:root.reactions.rf<1><2>.tu@integer = "<9>"
+		*node:root.reactions.rf<1><2>.timeremaining@max = <6>
+		*node:root.reactions.rf<1><2>.timeremaining@current = <6>
+		*node:root.reactions.rf<1><2>.tu_notice@string = "<6> TUs"
+		*node:root.reactions.rf<1><2>.tu@integer = "<6>"
 	}
 
 	/**
