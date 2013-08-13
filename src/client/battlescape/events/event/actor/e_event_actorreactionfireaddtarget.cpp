@@ -29,8 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfireaddtarget.h"
 
-static void CL_GetReactionFireHead (const le_t *le, const char **model, int *skin)
+static void CL_GetReactionFireHead (const le_t *le, const char **model, int *skin, bool *robot)
 {
+	/* hack for robots, they don't have a head */
 	if (le->teamDef->robot) {
 		*model = le->model1->name;
 		*skin = le->bodySkin;
@@ -38,6 +39,7 @@ static void CL_GetReactionFireHead (const le_t *le, const char **model, int *ski
 		*model = le->model2->name;
 		*skin = le->headSkin;
 	}
+	*robot = le->teamDef->robot;
 }
 
 int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
@@ -70,10 +72,12 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 
 	const char *targetModel;
 	int targetSkin;
+	bool targetRobot;
 	const char *shooterModel;
 	int shooterSkin;
-	CL_GetReactionFireHead(target, &targetModel, &targetSkin);
-	CL_GetReactionFireHead(shooter, &shooterModel, &shooterSkin);
-	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i \"%s\" %i %i", shooterEntNum, target->entnum,
-			shooterModel, shooterSkin, targetModel, targetSkin, tusUntilTriggered);
+	bool shooterRobot;
+	CL_GetReactionFireHead(target, &targetModel, &targetSkin, &targetRobot);
+	CL_GetReactionFireHead(shooter, &shooterModel, &shooterSkin, &shooterRobot);
+	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i \"%s\" %i %i %i", shooterEntNum, target->entnum,
+			shooterModel, shooterSkin, shooterRobot, targetModel, targetSkin, targetRobot, tusUntilTriggered);
 }

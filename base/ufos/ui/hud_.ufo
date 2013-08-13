@@ -322,9 +322,11 @@ window hud extends levelbuttons {
 	 * @param <2> target entity number
 	 * @param <3> shooter head model
 	 * @param <4> shooter head skin
-	 * @param <5> target head model
-	 * @param <6> target head skin
-	 * @param <7> TUs left until rf is triggered
+	 * @param <5> boolean whether shooter is a robot
+	 * @param <6> target head model
+	 * @param <7> target head skin
+	 * @param <8> boolean whether target is a robot
+	 * @param <9> TUs left until rf is triggered
 	 */
 	confunc reactionfire_addtarget { }
 
