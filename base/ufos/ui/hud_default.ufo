@@ -80,7 +80,7 @@ window hud_default extends hud
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
 			ghost			true
-			invis			true
+			invis			false
 		}
 	}
 

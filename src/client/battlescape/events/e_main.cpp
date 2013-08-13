@@ -109,9 +109,9 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, nullptr, nullptr},
 	{E(EV_ACTOR_MOVE), "ssss!lg", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, nullptr, nullptr},
-	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssb", CL_ActorReactionFireAddTarget, CL_ActorReactionFireAddTargetTime, nullptr},
-	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ss", CL_ActorReactionFireRemoveTarget, CL_ActorReactionFireRemoveTargetTime, nullptr},
-	{E(EV_ACTOR_REACTIONFIRETARGETUPDATE), "ssb", CL_ActorReactionFireTargetUpdate, CL_ActorReactionFireTargetUpdateTime, nullptr},
+	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssbb", CL_ActorReactionFireAddTarget, CL_ActorReactionFireAddTargetTime, nullptr},
+	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ssb", CL_ActorReactionFireRemoveTarget, CL_ActorReactionFireRemoveTargetTime, nullptr},
+	{E(EV_ACTOR_REACTIONFIRETARGETUPDATE), "ssbb", CL_ActorReactionFireTargetUpdate, CL_ActorReactionFireTargetUpdateTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIRERESETTARGETS), "", CL_ActorReactionFireResetTargets, CL_ActorReactionFireResetTargetsTime, nullptr},
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, nullptr},

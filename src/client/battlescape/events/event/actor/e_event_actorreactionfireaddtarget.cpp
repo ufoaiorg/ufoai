@@ -44,7 +44,10 @@ static void CL_GetReactionFireHead (const le_t *le, const char **model, int *ski
 
 int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	return eventTiming->nextTime;
+	int unused;
+	int step;
+	NET_ReadFormat(msg, self->formatString, &unused, &unused, &unused, &step);
+	return CL_GetStepTime(eventTiming, step);
 }
 
 /**
@@ -59,8 +62,9 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	int targetEntNum;
 	// if these TUs have arrived at 0, the reaction fire is triggered
 	int tusUntilTriggered;
+	int unused;
 
-	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered);
+	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered, &unused);
 
 	const le_t *shooter = LE_Get(shooterEntNum);
 	if (!shooter)

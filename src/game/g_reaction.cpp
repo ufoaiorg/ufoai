@@ -219,7 +219,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
-	G_EventReactionFireAddTarget(*shooter, *target, tusForShot);
+	G_EventReactionFireAddTarget(*shooter, *target, tusForShot, target->moveinfo.steps);
 #if DEBUG_RF
 	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 		Com_Printf("S%i: added\n", shooter->number);
@@ -249,7 +249,7 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 			t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 		}
 		rfts->count--;
-		G_EventReactionFireRemoveTarget(*shooter, *target);
+		G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps);
 #if DEBUG_RF
 		if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 			Com_Printf("S%i: removed\n", shooter->number);
@@ -303,7 +303,7 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 			if (tusTarget == 0) {
 				/* we are moving */
 				/** @todo this interrupts the move event - and leads to jerky movement */
-				G_EventReactionFireTargetUpdate(*shooter, *target, std::max(0, target->TU - t.triggerTUs));
+				G_EventReactionFireTargetUpdate(*shooter, *target, std::max(0, target->TU - t.triggerTUs), target->moveinfo.steps);
 			}
 			return t.triggerTUs >= target->TU - tusTarget;
 		}

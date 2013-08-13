@@ -269,27 +269,27 @@ void G_EventReactionFireResetTargets (void)
 	G_EventEnd();
 }
 
-void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target, int tus)
+void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target, int tus, int step)
 {
-	G_EventAdd(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);
-	gi.WriteShort(target.number);
-	gi.WriteByte(tus);
-	G_EventEnd();
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);
+	gi.QueueWriteShort(target.number);
+	gi.QueueWriteByte(tus);
+	gi.QueueWriteByte(step);
 }
 
-void G_EventReactionFireRemoveTarget (const Edict &shooter, const Edict &target)
+void G_EventReactionFireRemoveTarget (const Edict &shooter, const Edict &target, int step)
 {
-	G_EventAdd(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.number);
-	gi.WriteShort(target.number);
-	G_EventEnd();
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.number);
+	gi.QueueWriteShort(target.number);
+	gi.QueueWriteByte(step);
 }
 
-void G_EventReactionFireTargetUpdate (const Edict &shooter, const Edict &target, int tus)
+void G_EventReactionFireTargetUpdate (const Edict &shooter, const Edict &target, int tus, int step)
 {
-	G_EventAdd(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIRETARGETUPDATE, shooter.number);
-	gi.WriteShort(target.number);
-	gi.WriteByte(tus);
-	G_EventEnd();
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIRETARGETUPDATE, shooter.number);
+	gi.QueueWriteShort(target.number);
+	gi.QueueWriteByte(tus);
+	gi.QueueWriteByte(step);
 }
 
 /**

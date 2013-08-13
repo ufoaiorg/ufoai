@@ -31,7 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	return eventTiming->nextTime;
+	int unused;
+	int step;
+	NET_ReadFormat(msg, self->formatString, &unused, &unused, &step);
+	return CL_GetStepTime(eventTiming, step);
 }
 
 /**
@@ -44,8 +47,9 @@ void CL_ActorReactionFireRemoveTarget (const eventRegister_t *self, dbuffer *msg
 {
 	int shooterEntNum;
 	int targetEntNum;
+	int unused;
 
-	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum);
+	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &unused);
 
 	const le_t *target = LE_Get(targetEntNum);
 	if (!target)

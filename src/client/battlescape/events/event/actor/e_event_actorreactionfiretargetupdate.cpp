@@ -31,7 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorReactionFireTargetUpdateTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
-	return eventTiming->nextTime;
+	int unused;
+	int step;
+	NET_ReadFormat(msg, self->formatString, &unused, &unused, &unused, &step);
+	return CL_GetStepTime(eventTiming, step);
 }
 
 /**
@@ -46,8 +49,9 @@ void CL_ActorReactionFireTargetUpdate (const eventRegister_t *self, dbuffer *msg
 	int targetEntNum;
 	// if these TUs have arrived at 0, the reaction fire is triggered
 	int tusUntilTriggered;
+	int unused;
 
-	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered);
+	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered, &unused);
 
 	const le_t *shooter = LE_Get(shooterEntNum);
 	if (!shooter)
