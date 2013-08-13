@@ -36,9 +36,6 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 
 	const int eventTime = eventTiming->nextTime;
 	const int number = NET_ReadShort(msg);
-
-	eventTiming->steps = number;
-
 	/* get le */
 	const le_t *le = LE_Get(number);
 	if (!le)
@@ -48,7 +45,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	VectorCopy(le->pos, pos);
 	byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 
-	int step = 0;
+	eventTiming->steps = 0;
 	/* the end of this event is marked with a 0 */
 	while (NET_PeekLong(msg) != 0) {
 		const dvec_t dvec = NET_ReadShort(msg);
@@ -57,10 +54,13 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 		VectorCopy(pos, oldPos);
 		PosAddDV(pos, crouchingState, dvec);
 		const int stepTime = LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
-		eventTiming->stepTimes[step++] = stepTime;
+		eventTiming->stepTimes[eventTiming->steps++] = stepTime;
 		time += stepTime;
 		NET_ReadShort(msg);
 	}
+
+	if (eventTiming->steps >= MAX_ROUTE)
+		Com_Error(ERR_DROP, "route length overflow: %i", eventTiming->steps);
 
 	/* skip the end of move marker */
 	NET_ReadLong(msg);
