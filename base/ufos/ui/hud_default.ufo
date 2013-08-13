@@ -12,6 +12,53 @@ component actorButton extends radiobutton
 	onWheelDown	{ cmd "actor_prev;"}
 }
 
+component rfShooter extends panel
+{
+	{
+		size	"300 25"
+		bgcolor "0 0 0 0.7"
+	}
+	data tu
+	{
+		integer 0
+	}
+	model head_shooter
+	{
+		src		""
+		skin	""
+		angles	"0 60 90"
+		autoscale	true
+		pos		"0 0"
+		size	"25 25"
+		origin	"0 0 0"
+	}
+	bar timeremaining
+	{
+		pos		"30 17"
+		size	"240 8"
+		color	".1 .1 .7 1"
+		current	0
+		max		0
+		disabled	true
+	}
+	string tu_notice
+	{
+		string	""
+		size	"240 17"
+		pos		"30 0"
+	}
+	model head_target
+	{
+		src		""
+		skin	""
+		angles	"0 60 90"
+		autoscale	true
+		pos		"275 0"
+		size	"25 25"
+		origin	"0 0 0"
+	}
+}
+
 window hud_default extends hud
 {
 	{
@@ -29,6 +76,23 @@ window hud_default extends hud
 		size		"1024 768"
 		align		LAYOUTALIGN_FILL
 	}
+
+	// ============================
+	// reaction fire tracking panel
+	// @todo this is currently just a temporary testing panel. remove invis
+	// parameter to display the panel
+	// ============================
+	panel reactions
+	{
+		{
+			pos				"120 60"
+			size			"300 400"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+			invis			true
+		}
+	}
+
 
 	// ==================
 	// floor bar
@@ -962,6 +1026,48 @@ window hud_default extends hud
 	{
 		*node:root.info.bt_reaction_s@texl	= "0 0"
 		*node:root.info.bt_reaction_s@texh	= "31 31"
+	}
+
+	// ==========================
+	// Reaction fire panel events
+	// ==========================
+
+	/**
+	 * @brief Adds a new possible target to the list of reaction fire targets for the given shooter
+	 * @param <1> shooter entity number
+	 * @param <2> target entity number
+	 * @param <3> shooter head model
+	 * @param <4> target head model
+	 * @param <5> TUs left until rf is triggered
+	 */
+	confunc reactionfire_addtarget {
+		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
+		*node:root.reactions.rf<1><2>.timeremaining@max = <5>
+		*node:root.reactions.rf<1><2>.timeremaining@current = <5>
+		*node:root.reactions.rf<1><2>.tu_notice@string = "<5>"
+		*node:root.reactions.rf<1><2>.tu@integer = "<5>"
+	}
+
+	/**
+	 * @brief The target is no longer in the reaction fire scope of the shooter
+	 * @param <1> shooter entity number
+	 * @param <2> target entity number
+	 */
+	confunc reactionfire_removetarget {
+		call *node:root.reactions.rf<1><2>@delete
+	}
+
+	/**
+	 * @brief Called when the amount of TUs that are needed to trigger the reaction fire changed.
+	 * This might e.g. happen if the target is moving in front of the shooter.
+	 * @param <1> shooter entity number
+	 * @param <2> target entity number
+	 * @param <3> TUs left until rf is triggered
+	 */
+	confunc reactionfire_updatetarget {
+		*node:root.reactions.rf<1><2>.timeremaining@current = <3>
+		*node:root.reactions.rf<1><2>.tu_notice@string = "<3> TUs"
+		*node:root.reactions.rf<1><2>.tu@integer = "<3>"
 	}
 
 	// ==================
