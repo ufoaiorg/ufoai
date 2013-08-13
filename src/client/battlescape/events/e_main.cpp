@@ -186,7 +186,8 @@ int CL_GetStepTime (eventTiming_t *eventTiming, int step)
 			delay += eventTiming->stepTimes[i];
 		beforeMovement += eventTiming->stepTimes[i];
 	}
-	return eventTiming->nextTime - beforeMovement + delay;
+	const int eventTime = eventTiming->lastMoveTime - beforeMovement + delay;
+	return eventTime;
 }
 
 int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime)
