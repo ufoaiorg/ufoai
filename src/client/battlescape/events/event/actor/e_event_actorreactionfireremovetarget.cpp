@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfireremovetarget.h"
 
+int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+{
+	return cl.time;
+}
+
 /**
  * @brief Network event function for reaction fire target handling. Responsible for updating
  * the HUD with the information that were received from the server
