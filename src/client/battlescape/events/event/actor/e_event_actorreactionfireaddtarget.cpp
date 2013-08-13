@@ -49,9 +49,13 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered);
 
+	const le_t *shooter = LE_Get(shooterEntNum);
+	if (!shooter)
+		LE_NotFoundError(shooterEntNum);
+
 	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i", shooterEntNum, target->entnum, target->model2->name, tusUntilTriggered);
+	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" \"%s\" %i", shooterEntNum, target->entnum, shooter->model2->name, target->model2->name, tusUntilTriggered);
 }
