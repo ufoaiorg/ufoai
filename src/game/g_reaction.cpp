@@ -302,6 +302,7 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 		if (t.target == target) {
 			if (tusTarget == 0) {
 				/* we are moving */
+				/** @todo this interrupts the move event - and leads to jerky movement */
 				G_EventReactionFireTargetUpdate(*shooter, *target, std::max(0, target->TU - t.triggerTUs));
 			}
 			return t.triggerTUs >= target->TU - tusTarget;

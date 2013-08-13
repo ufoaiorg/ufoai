@@ -47,16 +47,6 @@ component rfShooter extends panel
 		size	"240 17"
 		pos		"30 0"
 	}
-	model head_target
-	{
-		src		""
-		skin	""
-		angles	"0 60 90"
-		autoscale	true
-		pos		"275 0"
-		size	"25 25"
-		origin	"0 0 0"
-	}
 }
 
 window hud_default extends hud
@@ -1039,10 +1029,7 @@ window hud_default extends hud
 	 * @param <3> shooter head model
 	 * @param <4> shooter head skin
 	 * @param <5> boolean whether shooter is a robot
-	 * @param <6> target head model
-	 * @param <7> target head skin
-	 * @param <8> boolean whether target is a robot
-	 * @param <9> TUs left until rf is triggered
+	 * @param <6> TUs left until rf is triggered
 	 */
 	confunc reactionfire_addtarget {
 		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
@@ -1051,12 +1038,6 @@ window hud_default extends hud
 		if ( <5> == 1 ) {
 			// top down view for robots - sideview of the body isn't very nice
 			*node:root.reactions.rf<1><2>.head_shooter@angles = "0 60 90"
-		}
-		*node:root.reactions.rf<1><2>.head_target@src = "<6>"
-		*node:root.reactions.rf<1><2>.head_target@skin = "<7>"
-		if ( <8> == 1 ) {
-			// top down view for robots - sideview of the body isn't very nice
-			*node:root.reactions.rf<1><2>.head_target@angles = "0 60 90"
 		}
 		*node:root.reactions.rf<1><2>.timeremaining@max = <9>
 		*node:root.reactions.rf<1><2>.timeremaining@current = <9>

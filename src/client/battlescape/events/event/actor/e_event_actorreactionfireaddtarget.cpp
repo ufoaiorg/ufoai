@@ -70,14 +70,11 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	const char *targetModel;
-	int targetSkin;
-	bool targetRobot;
 	const char *shooterModel;
 	int shooterSkin;
 	bool shooterRobot;
-	CL_GetReactionFireHead(target, &targetModel, &targetSkin, &targetRobot);
 	CL_GetReactionFireHead(shooter, &shooterModel, &shooterSkin, &shooterRobot);
-	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i \"%s\" %i %i %i", shooterEntNum, target->entnum,
-			shooterModel, shooterSkin, shooterRobot, targetModel, targetSkin, targetRobot, tusUntilTriggered);
+
+	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i %i", shooterEntNum, target->entnum, shooterModel,
+			shooterSkin, shooterRobot, tusUntilTriggered);
 }
