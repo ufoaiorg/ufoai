@@ -10,15 +10,15 @@
  * One of your soldiers is standing next to a house by a street. There is an alien down
  * the street with a gun in snap shot mode (8 TUs). The soldier steps out on street, trying
  * to cross it (and entering the line of sight of that alien). After 4 more paces or spending
- * 8 TUs, your soldier is shot by the alien. Sounds reasonable ? Fine. That's the basic idea
- * of raction fire.
+ * 8 TUs, your soldier is shot by the alien. Sounds reasonable? Fine. That's the basic idea
+ * of reaction fire.
  *
  * Now assume you have 5 soldiers next to that house. They all step out on the street. Nothing
  * happens because they all just entered the line of sight of the alien. The first soldier
  * starts walking and gets shot after 4 paces like above. The second soldier will walk 7 paces
  * unharmed and get shot after 8 paces and the third soldier will be shot after 12 paces/24 TUs.
  * This is because when the alien shoots at one target, all his other targets will receive a
- * bonus equal to the amount of TUs the alien used for his shot. Still sounds reasonable ? Fine.
+ * bonus equal to the amount of TUs the alien used for his shot. Still sounds reasonable? Fine.
  *
  * A slight modification: only one of the 5 soldiers steps out and gets shot after 4 paces.
  * Then the 2nd steps out and gets shot after 4 paces as well. Likewise the 3rd soldier.
@@ -26,7 +26,7 @@
  * and thus don't receive the bonus when the alien shoots,
  *
  * There is also a problem at end of turn. Imagine your sniper is set to react with an aimed
- * shot (18 Tus). An alien steps into his line of sight and fires two snap shots, totalling
+ * shot (18 Tus). An alien steps into his line of sight and fires two snap shots, totaling
  * 16 TUs. Then the alien decides to do nothing for the rest of his round. You would love to
  * see your sniper do his aimed shot, right ? But reaction fire rules don't allow that.
  * On the other hand: if you (were stupid enough to) move one of your soldiers with his last
