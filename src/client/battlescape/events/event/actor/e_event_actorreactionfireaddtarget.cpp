@@ -44,10 +44,17 @@ static void CL_GetReactionFireHead (const le_t *le, const char **model, int *ski
 
 int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
+	int targetEntNum;
 	int unused;
 	int step;
-	NET_ReadFormat(msg, self->formatString, &unused, &unused, &unused, &step);
-	return CL_GetStepTime(eventTiming, step);
+
+	NET_ReadFormat(msg, self->formatString, &unused, &targetEntNum, &unused, &unused);
+
+	const le_t *target = LE_Get(targetEntNum);
+	if (!target)
+		LE_NotFoundError(targetEntNum);
+
+	return CL_GetStepTime(eventTiming, target, step);
 }
 
 /**

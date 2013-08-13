@@ -168,22 +168,22 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
  * @param[in] step The step we want to calculate the time for
  * @return @c -1 on error (invalid input data), otherwise the timestamp the move event was executed for that step
  */
-int CL_GetStepTime (eventTiming_t *eventTiming, int step)
+int CL_GetStepTime (eventTiming_t *eventTiming, const le_t* le, int step)
 {
-	if (step > eventTiming->steps) {
-		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
+	if (step > le->steps) {
+		Com_Printf("invalid step given: %i/%i\n", step, le->steps);
 		return eventTiming->lastMoveTime + eventTiming->lastMoveDuration;
 	}
 	if (step < 0) {
-		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
+		Com_Printf("invalid step given: %i/%i\n", step, le->steps);
 		return eventTiming->lastMoveTime;
 	}
 	int beforeMovement = 0;
 	int delay = 0;
-	for (int i = 0; i < eventTiming->steps; i++) {
+	for (int i = 0; i < le->steps; i++) {
 		if (i < step)
-			delay += eventTiming->stepTimes[i];
-		beforeMovement += eventTiming->stepTimes[i];
+			delay += le->stepTimes[i];
+		beforeMovement += le->stepTimes[i];
 	}
 	const int eventTime = eventTiming->lastMoveTime - beforeMovement + delay;
 	return eventTime;

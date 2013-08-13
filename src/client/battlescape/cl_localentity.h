@@ -119,6 +119,8 @@ typedef struct le_s {
 	int pathContents[MAX_ROUTE];	/**< content flags of the brushes the actor is walking in */
 	int positionContents;			/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
+	int steps;		/**< if we are in a move event, this is the amount of steps that is going to get executed */
+	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
 	int startTime, endTime;
 	int speed[MAX_ROUTE];			/**< the speed the le is moving with */
 	float rotationSpeed;

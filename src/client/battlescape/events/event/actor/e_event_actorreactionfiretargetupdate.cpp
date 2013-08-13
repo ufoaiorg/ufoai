@@ -31,10 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorReactionFireTargetUpdateTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
 {
+	int targetEntNum;
 	int unused;
 	int step;
-	NET_ReadFormat(msg, self->formatString, &unused, &unused, &unused, &step);
-	return CL_GetStepTime(eventTiming, step);
+
+	NET_ReadFormat(msg, self->formatString, &unused, &targetEntNum, &unused, &step);
+
+	const le_t *target = LE_Get(targetEntNum);
+	if (!target)
+		LE_NotFoundError(targetEntNum);
+
+	return CL_GetStepTime(eventTiming, target, step);
 }
 
 /**

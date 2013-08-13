@@ -34,8 +34,6 @@ typedef struct eventTiming_s {
 					 * projectile needs some time to reach its target. */
 	int lastMoveTime;
 	int lastMoveDuration;
-	int steps;		/**< if we are in a move event, this is the amount of steps that is going to get executed */
-	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
 	bool parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
 } eventTiming_t;
 
@@ -79,4 +77,4 @@ typedef struct eventRegister_s {
 
 const eventRegister_t *CL_GetEvent(const event_t eType);
 int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
-int CL_GetStepTime(eventTiming_t *eventTiming, int step);
+int CL_GetStepTime(eventTiming_t *eventTiming, const le_t* le, int step);
