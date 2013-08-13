@@ -127,6 +127,8 @@ public:
 	int getTriggerTUs (const Edict *shooter, const Edict *target);
 	void advance (const Edict *shooter, const int tusShot);
 	void reset();
+	void notifyClientMove(const Edict *target, bool startMove);
+	void notifyClientOnStep (const Edict *target, int step);
 	void create (const Edict *shooter);
 
 private:
@@ -156,15 +158,50 @@ void ReactionFireTargets::reset (void)
 	}
 }
 
+void ReactionFireTargets::notifyClientOnStep (const Edict *target, int step)
+{
+	for (int i = 0; i < MAX_RF_DATA; i++) {
+		ReactionFireTargetList *rfts = &rfData[i];
+		if (rfts->entnum == RF_NO_ENTNUM)
+			continue;
+		const Edict *shooter = G_EdictsGetByNum(rfts->entnum);
+		for (int j = 0; j < rfts->count; j++) {
+			ReactionFireTarget& t = rfts->targets[j];
+			if (t.target != target)
+				continue;
+			const int tus = std::max(0, target->TU - t.triggerTUs);
+			G_EventReactionFireTargetUpdate(*shooter, *target, tus, step);
+		}
+	}
+}
+
+void ReactionFireTargets::notifyClientMove (const Edict *target, bool startMove)
+{
+	for (int i = 0; i < MAX_RF_DATA; i++) {
+		ReactionFireTargetList *rfts = &rfData[i];
+		if (rfts->entnum == RF_NO_ENTNUM)
+			continue;
+		const Edict *shooter = G_EdictsGetByNum(rfts->entnum);
+		for (int j = 0; j < rfts->count; j++) {
+			if (rfts->targets[j].target != target)
+				continue;
+			if (startMove) {
+				const int tus = target->TU - rfts->targets[j].triggerTUs;
+				G_EventReactionFireAddTarget(*shooter, *target, tus, 0);
+			} else {
+				G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps);
+			}
+		}
+	}
+}
+
 /**
  * @brief Find the given edict's table of reaction fire targets.
  * @param[in] shooter The reaction firing actor
  */
 ReactionFireTargetList* ReactionFireTargets::find (const Edict *shooter)
 {
-	int i;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
+	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
 		if (rfts->entnum == shooter->number) {
 			return rfts;
@@ -299,14 +336,8 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 
 	for (int i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
-		if (t.target == target) {
-			if (tusTarget == 0) {
-				/* we are moving */
-				/** @todo this interrupts the move event - and leads to jerky movement */
-				G_EventReactionFireTargetUpdate(*shooter, *target, std::max(0, target->TU - t.triggerTUs), target->moveinfo.steps);
-			}
+		if (t.target == target)
 			return t.triggerTUs >= target->TU - tusTarget;
-		}
 	}
 
 	return false;	/* the shooter doesn't aim at this target */
@@ -354,6 +385,7 @@ private:
 	bool canSee(const Edict *shooter, const Edict *target) const;
 	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 public:
+	void notifyClientOnStep(const Edict *target, int step);
 	bool checkExecution(const Edict *target);
 	void updateAllTargets(const Edict *target);
 	bool tryToShoot(Edict *shooter, const Edict *target);
@@ -745,6 +777,11 @@ bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 	return tookShot;
 }
 
+void ReactionFire::notifyClientOnStep (const Edict *target, int step)
+{
+	rft.notifyClientOnStep(target, step);
+}
+
 /**
  * @brief Check all entities to see whether target has caused reaction fire to resolve.
  * @param[in] target The entity that might be resolving reaction fire
@@ -818,6 +855,8 @@ bool G_ReactionFireOnMovement (Edict *target)
 #endif
 	/* Check to see whether this resolves any reaction fire */
 	const bool fired = rf.checkExecution(target);
+
+	rf.notifyClientOnStep(target, target->moveinfo.steps);
 
 	/* Check to see whether this triggers any reaction fire */
 	rf.updateAllTargets(target);
@@ -893,4 +932,14 @@ void G_ReactionFireReset (int team)
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_RemoveShaken(ent);
 	}
+}
+
+void G_ReactionFireNofityClientStartMove (const Edict *target)
+{
+	rft.notifyClientMove(target, true);
+}
+
+void G_ReactionFireNofityClientEndMove (const Edict *target)
+{
+	rft.notifyClientMove(target, false);
 }

@@ -327,6 +327,8 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 	dvec_t dvtab[MAX_ROUTE];
 	byte numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
 
+	G_ReactionFireNofityClientStartMove(ent);
+
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	G_EventEnd();
 
@@ -461,7 +463,8 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 					G_CheckDeathOrKnockout(ent, nullptr, nullptr, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
 				}
 				G_MatchEndCheck();
-				return;
+				autoCrouchRequired = false;
+				break;
 			}
 
 			if (visTeam != 0 && G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
@@ -488,4 +491,6 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 		/* toggle back to crouched state */
 		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 	}
+
+	G_ReactionFireNofityClientEndMove(ent);
 }

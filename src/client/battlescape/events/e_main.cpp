@@ -112,7 +112,6 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssbb", CL_ActorReactionFireAddTarget, CL_ActorReactionFireAddTargetTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ssb", CL_ActorReactionFireRemoveTarget, CL_ActorReactionFireRemoveTargetTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIRETARGETUPDATE), "ssbb", CL_ActorReactionFireTargetUpdate, CL_ActorReactionFireTargetUpdateTime, nullptr},
-	{E(EV_ACTOR_REACTIONFIRERESETTARGETS), "", CL_ActorReactionFireResetTargets, CL_ActorReactionFireResetTargetsTime, nullptr},
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, nullptr},
 	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, nullptr}, /**< @sa NET_WriteDir */

@@ -57,13 +57,3 @@ void CL_ActorReactionFireRemoveTarget (const eventRegister_t *self, dbuffer *msg
 
 	UI_ExecuteConfunc("reactionfire_removetarget %i %i", shooterEntNum, target->entnum);
 }
-
-int CL_ActorReactionFireResetTargetsTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
-{
-	return eventTiming->nextTime;
-}
-
-void CL_ActorReactionFireResetTargets (const eventRegister_t *self, dbuffer *msg)
-{
-	UI_ExecuteConfunc("reactionfire_resettargets");
-}

@@ -263,12 +263,6 @@ void G_EventReactionFireChange (const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventReactionFireResetTargets (void)
-{
-	G_EventAdd(PM_ALL, EV_ACTOR_REACTIONFIRERESETTARGETS, -1);
-	G_EventEnd();
-}
-
 void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target, int tus, int step)
 {
 	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);

@@ -1070,14 +1070,6 @@ window hud_default extends hud
 		*node:root.reactions.rf<1><2>.tu@integer = "<3>"
 	}
 
-	/**
-	 * @brief Clears the whole reaction fire target list
-	 * This is called on e.g. a roundend
-	 */
-	confunc reactionfire_resettargets {
-		call *node:root.reactions@removeAllChild
-	}
-
 	// ==================
 	// init function
 	// ==================
