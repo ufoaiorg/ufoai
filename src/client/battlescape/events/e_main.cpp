@@ -160,6 +160,31 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
 	Com_Error(ERR_DROP, "Could not get format string for event type %i", eType);
 }
 
+/**
+ * @brief Calculates the time when the given @c step was executed in the event chain
+ * @note There is only one movement event which takes some time and delays other events in the queue. If you want
+ * to execute any other event during this movement event, use this function to get the proper eventTime for doing
+ * so.
+ * @param[in] eventTimining The structure to get the needed data from
+ * @param[in] step The step we want to calculate the time for
+ * @return @c -1 on error (invalid input data), otherwise the timestamp the move event was executed for that step
+ */
+int CL_GetStepTime (eventTiming_t *eventTiming, int step)
+{
+	if (step > eventTiming->steps)
+		return -1;
+	if (step < 0)
+		return -1;
+	int beforeMovement = 0;
+	int delay = 0;
+	for (int i = 0; i < eventTiming->steps; i++) {
+		if (i <= step)
+			delay += eventTiming->stepTimes[i];
+		beforeMovement += eventTiming->stepTimes[i];
+	}
+	return eventTiming->nextTime - beforeMovement + delay;
+}
+
 int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime)
 {
 	if (nextTime < eventTiming->nextTime) {

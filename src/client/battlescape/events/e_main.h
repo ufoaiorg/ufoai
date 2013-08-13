@@ -77,3 +77,4 @@ typedef struct eventRegister_s {
 
 const eventRegister_t *CL_GetEvent(const event_t eType);
 int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
+int CL_GetStepTime(eventTiming_t *eventTiming, int step);
