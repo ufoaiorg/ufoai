@@ -2396,6 +2396,7 @@ mapdef mansion_huge
 	maxaliens		19
 	multiplayer		true
 	teams			4
+	hwclass			3
 	gametypes
 	(
 		fight1on1
