@@ -447,6 +447,8 @@ static void G_Damage (Edict *target, const fireDef_t *fd, int damage, Edict *att
 
 void G_CheckDeathOrKnockout (Edict *target, Edict *attacker, const fireDef_t *fd, int damage)
 {
+	/* Sanity check */
+	target->HP = std::min(std::max(target->HP, 0), target->chr.maxHP);
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
 		G_SendStats(*target);
@@ -466,11 +468,6 @@ void G_CheckDeathOrKnockout (Edict *target, Edict *attacker, const fireDef_t *fd
 		if (damage > 0) {
 			if (mor_panic->integer)
 				G_Morale(ML_WOUND, target, attacker, damage);
-		} else { /* medikit, etc. */
-			const int hp = GET_HP(target->chr.score.skills[ABILITY_POWER]);
-			if (target->HP > hp) {
-				target->HP = std::min(std::max(hp, 0), target->chr.maxHP);
-			}
 		}
 		G_SendStats(*target);
 	}
