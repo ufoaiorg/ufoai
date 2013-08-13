@@ -118,6 +118,8 @@ typedef struct serverInstanceGame_s {
 
 	dbuffer *messageBuffer;			/**< the message buffer that was received from the client. */
 	pending_event_t pendingEvent;
+	pending_event_t eventQueue[64];
+	int eventQueuePos;
 
 	mapData_t mapData;
 

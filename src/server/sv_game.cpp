@@ -319,6 +319,17 @@ static void SV_AbortEvents (void)
 	p->buf = nullptr;
 }
 
+static void SV_SendQueuedEvents (void)
+{
+	for (int i = 0; i < sv->eventQueuePos; i++) {
+		pending_event_t &entry = sv->eventQueue[i];
+		NET_WriteByte(entry.buf, EV_NULL);
+		SV_Multicast(entry.playerMask, *entry.buf);
+		delete entry.buf;
+	}
+	sv->eventQueuePos = 0;
+}
+
 /**
  * @sa gi.EndEvents
  */
@@ -326,14 +337,18 @@ static void SV_EndEvents (void)
 {
 	pending_event_t *p = &sv->pendingEvent;
 
-	if (!p->pending)
+	if (!p->pending) {
+		SV_SendQueuedEvents();
 		return;
+	}
 
 	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, *p->buf);
 	p->pending = false;
 	delete p->buf;
 	p->buf = nullptr;
+
+	SV_SendQueuedEvents();
 }
 
 typedef struct {
@@ -422,6 +437,8 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 	/* finish the last event */
 	if (p->pending)
 		SV_EndEvents();
+	else
+		SV_SendQueuedEvents();
 
 	/* start the new event */
 	p->pending = true;
@@ -435,6 +452,39 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 	NET_WriteByte(p->buf, eType);
 	if (entnum != -1)
 		NET_WriteShort(p->buf, entnum);
+}
+/**
+ * @sa gi.QueueEvent
+ * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
+ */
+static void SV_QueueEvent (unsigned int mask, int eType, int entnum)
+{
+	if (sv->eventQueuePos > lengthof(sv->eventQueue))
+		Com_Error(ERR_DROP, "overflow in SV_QueueEvent");
+
+	pending_event_t &p = sv->eventQueue[sv->eventQueuePos++];
+
+	/* start the new event */
+	p.pending = false;
+	p.playerMask = mask;
+	p.type = eType;
+	p.entnum = entnum;
+	p.buf = new dbuffer();
+	/* write header */
+	NET_WriteByte(p.buf, svc_event);
+	NET_WriteByte(p.buf, eType);
+	if (p.entnum != -1)
+		NET_WriteShort(p.buf, p.entnum);
+}
+
+static void SV_QueueWriteByte (byte c)
+{
+	NET_WriteByte(sv->eventQueue[sv->eventQueuePos - 1].buf, c);
+}
+
+static void SV_QueueWriteShort (int c)
+{
+	NET_WriteShort(sv->eventQueue[sv->eventQueuePos - 1].buf, c);
 }
 
 /**
@@ -751,6 +801,10 @@ void SV_InitGameProgs (void)
 	import.AddEvent = SV_AddEvent;
 	import.GetEvent = SV_GetEvent;
 	import.GetEventEdict = SV_GetEventEdict;
+
+	import.QueueEvent = SV_QueueEvent;
+	import.QueueWriteByte = SV_QueueWriteByte;
+	import.QueueWriteShort = SV_QueueWriteShort;
 
 	import.ReadChar = SV_ReadChar;
 	import.ReadByte = SV_ReadByte;

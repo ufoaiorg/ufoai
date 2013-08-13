@@ -255,6 +255,10 @@ typedef struct game_import_s {
 	int (IMPORT *GetEvent) (void);
 	edict_t *(IMPORT *GetEventEdict) (void);
 
+	void (IMPORT *QueueEvent) (unsigned int mask, int eType, int entnum);
+	void (IMPORT *QueueWriteByte) (byte c);
+	void (IMPORT *QueueWriteShort) (int c);
+
 	/* network messaging (reading) */
 	int (IMPORT *ReadChar) (void);
 	int (IMPORT *ReadByte) (void);
