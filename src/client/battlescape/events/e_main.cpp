@@ -171,10 +171,14 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
  */
 int CL_GetStepTime (eventTiming_t *eventTiming, int step)
 {
-	if (step > eventTiming->steps)
+	if (step > eventTiming->steps) {
+		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
 		return -1;
-	if (step < 0)
+	}
+	if (step < 0) {
+		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
 		return -1;
+	}
 	int beforeMovement = 0;
 	int delay = 0;
 	for (int i = 0; i < eventTiming->steps; i++) {
