@@ -1147,7 +1147,7 @@ void Qcommon_Init (int argc, char **argv)
 		const char *hwclassVal = "5";
 #ifdef __ANDROID__
 		/** get the hardware class of the machine we are running on. */
-		hwclassVal = "1"
+		hwclassVal = "1";
 #endif
 		hwclass = Cvar_Get("hwclass", hwclassVal, 0, "Defines the hardware class of this machine. 1 is the lowest, 5 is the highest.");
 
