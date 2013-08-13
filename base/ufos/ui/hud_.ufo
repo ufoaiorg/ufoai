@@ -345,12 +345,6 @@ window hud extends levelbuttons {
 	 */
 	confunc reactionfire_updatetarget { }
 
-	/**
-	 * @brief Clears the whole reaction fire target list
-	 * This is called on e.g. a roundend
-	 */
-	confunc reactionfire_resettargets { }
-
 	// confuncs to show/hide inventory, physdat and radar windows
 	confunc show_hide_inventory
 	{
