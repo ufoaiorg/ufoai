@@ -1144,12 +1144,12 @@ void Qcommon_Init (int argc, char **argv)
 		// 3 dual core with 2 GB
 		// 2 EeePc with 1 GB
 		// 1 smartphone
+		const char *hwclassVal = "5";
 #ifdef __ANDROID__
 		/** get the hardware class of the machine we are running on. */
-		hwclass = Cvar_Get("hwclass", "1", 0, nullptr);
-#else
-		hwclass = Cvar_Get("hwclass", "5", 0, nullptr);
+		hwclassVal = "1"
 #endif
+		hwclass = Cvar_Get("hwclass", hwclassVal, 0, "Defines the hardware class of this machine. 1 is the lowest, 5 is the highest.");
 
 		const char *s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 		Cvar_Get("version", s, CVAR_NOSET, "Full version string");
