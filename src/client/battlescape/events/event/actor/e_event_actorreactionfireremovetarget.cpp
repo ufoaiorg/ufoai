@@ -61,4 +61,5 @@ int CL_ActorReactionFireResetTargetsTime (const eventRegister_t *self, dbuffer *
 
 void CL_ActorReactionFireResetTargets (const eventRegister_t *self, dbuffer *msg)
 {
+	UI_ExecuteConfunc("reactionfire_resettargets");
 }
