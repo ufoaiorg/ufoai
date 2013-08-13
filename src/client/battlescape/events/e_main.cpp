@@ -182,7 +182,7 @@ int CL_GetStepTime (eventTiming_t *eventTiming, int step)
 	int beforeMovement = 0;
 	int delay = 0;
 	for (int i = 0; i < eventTiming->steps; i++) {
-		if (i <= step)
+		if (i < step)
 			delay += eventTiming->stepTimes[i];
 		beforeMovement += eventTiming->stepTimes[i];
 	}
