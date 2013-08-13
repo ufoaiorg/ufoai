@@ -90,6 +90,7 @@ void TEST_Init (void)
 
 	http_timeout = Cvar_Get("noname");
 	http_proxy = Cvar_Get("noname");
+	hwclass = Cvar_Get("hwclass", "5");
 }
 
 
