@@ -47,7 +47,7 @@ void CL_ActorReactionFireTargetUpdate (const eventRegister_t *self, dbuffer *msg
 {
 	int shooterEntNum;
 	int targetEntNum;
-	// if these TUs have arrived at 0, the reaction fire is triggered
+	// if these TUs have arrived at 0, the reaction fire can be triggered
 	int tusUntilTriggered;
 	int unused;
 
