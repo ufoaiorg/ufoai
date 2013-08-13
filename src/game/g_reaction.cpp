@@ -301,7 +301,10 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 	for (int i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
 		if (t.target == target) {
-			G_EventReactionFireTargetUpdate(*shooter, *target, tusTarget);
+			if (tusTarget == 0) {
+				/* we are moving */
+				G_EventReactionFireTargetUpdate(*shooter, *target, std::max(0, target->TU - t.triggerTUs));
+			}
 			return t.triggerTUs >= target->TU - tusTarget;
 		}
 	}
@@ -323,7 +326,6 @@ void ReactionFireTargets::advance (const Edict *shooter, const int tusShot)
 	for (int i = 0; i < rfts->count; i++) {
 		ReactionFireTarget &t = rfts->targets[i];
 		t.triggerTUs -= tusShot;
-		G_EventReactionFireTargetUpdate(*shooter, *t.target, t.triggerTUs);
 	}
 }
 
