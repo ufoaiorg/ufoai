@@ -49,9 +49,14 @@ void CL_ActorReactionFireTargetUpdate (const eventRegister_t *self, dbuffer *msg
 
 	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered);
 
+	const le_t *shooter = LE_Get(shooterEntNum);
+	if (!shooter)
+		LE_NotFoundError(shooterEntNum);
+
 	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	UI_ExecuteConfunc("reactionfire_updatetarget %i %i %i", shooterEntNum, target->entnum, tusUntilTriggered);
+	const bool outOfRange = CL_ActorIsReactionFireOutOfRange(shooter, target);
+	UI_ExecuteConfunc("reactionfire_updatetarget %i %i %i %i", shooterEntNum, target->entnum, tusUntilTriggered, outOfRange);
 }

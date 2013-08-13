@@ -61,6 +61,7 @@ character_t *CL_ActorGetChr(const le_t *le);
 int CL_ActorUsableTUs(const le_t *le);
 int CL_ActorReservedTUs(const le_t *le, reservation_types_t type);
 void CL_ActorReserveTUs(const le_t *le, reservation_types_t type, int tus);
+bool CL_ActorIsReactionFireOutOfRange(const le_t *shooter, const le_t *target);
 
 int CL_ActorMoveMode(const le_t *le);
 void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);

@@ -1031,6 +1031,7 @@ window hud_default extends hud
 	 * @param <4> shooter head skin
 	 * @param <5> boolean whether shooter is a robot
 	 * @param <6> TUs left until rf is triggered
+	 * @param <7> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_addtarget {
 		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
@@ -1061,6 +1062,7 @@ window hud_default extends hud
 	 * @param <1> shooter entity number
 	 * @param <2> target entity number
 	 * @param <3> TUs left until rf is triggered
+	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
 		*node:root.reactions.rf<1><2>.timeremaining@current = <3>

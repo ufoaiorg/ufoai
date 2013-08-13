@@ -209,6 +209,46 @@ character_t *CL_ActorGetChr (const le_t *le)
 }
 
 /**
+ * @param[in] shooter The local entity to get the reaction fire firedef from
+ * @return The current selected firedef for reaction fire or @c nullptr if there is none
+ */
+static const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
+{
+	const character_t *chr = CL_ActorGetChr(shooter);
+	if (chr == nullptr)
+		return nullptr;
+
+	const FiremodeSettings &fmSetting = chr->RFmode;
+	const Item *weapon = shooter->getHandItem(fmSetting.getHand());
+	if (weapon == nullptr)
+		return nullptr;
+
+	const fireDef_t *fdArray = weapon->getFiredefs();
+	if (fdArray == nullptr)
+		return nullptr;
+
+	const int fmIdx = fmSetting.getFmIdx();
+	if (fmIdx < 0 || fmIdx >= MAX_FIREDEFS_PER_WEAPON)
+		return nullptr;
+
+	const fireDef_t *fd = &fdArray[fmIdx];
+	return fd;
+}
+
+/**
+ * @param[in] shooter The local entity to get the reaction fire definition for the range check for
+ * @param[in] target The target to calculate the distance to
+ * @return @c true if the given @c target is out of range for the @c shooter with the current selected fire mode
+ */
+bool CL_ActorIsReactionFireOutOfRange (const le_t *shooter, const le_t *target)
+{
+	const float distance = VectorDist(shooter->origin, target->origin);
+	const fireDef_t *fd = CL_ActorGetReactionFireFireDef(shooter);
+	const bool outOfRange = fd->range < distance;
+	return outOfRange;
+}
+
+/**
  * @brief Returns the amount of reserved TUs for a certain type.
  * @param[in] le The actor to check.
  * @param[in] type The type to check. Use RES_ALL_ACTIVE to get all reserved TUs that are not "active" (e.g. RF is skipped if disabled). RES_ALL returns ALL of them, no matter what. See reservation_types_t for a list of options.
