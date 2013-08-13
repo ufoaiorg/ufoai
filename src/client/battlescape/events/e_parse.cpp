@@ -185,6 +185,8 @@ static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *ev
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
 
+	eventTiming->steps = 0;
+
 	/* get event time */
 	if (eventTiming->nextTime < cl.time)
 		eventTiming->nextTime = cl.time;
