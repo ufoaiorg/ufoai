@@ -722,9 +722,9 @@ bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!( isEnemy(shooter, target)
+	if (!(isEnemy(shooter, target)
 		&& canReact(shooter, target)
-		&& canSee(shooter, target) )) {
+		&& canSee(shooter, target))) {
 		rft.remove(shooter, target);
 		return false;
 	}
@@ -786,7 +786,7 @@ static void G_ReactionFirePrintSituation (Edict *target)
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
 			continue;
 		char msgHdr[100];
-		sprintf(msgHdr, "S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
+		Com_sprintf(msgHdr, sizeof(msgHdr), "S%i: at %i/%i/%i RF: ", shooter->number, shooter->pos[0], shooter->pos[1], shooter->pos[2]);
 		int ttus = rft.getTriggerTUs(shooter, target);
 		if (ttus == -2)
 			Com_Printf("%s not initialized\n", msgHdr);
