@@ -151,7 +151,6 @@ void ReactionFireTargets::init (void)
  */
 void ReactionFireTargets::reset (void)
 {
-	G_EventReactionFireResetTargets();
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		rfData[i].reset();
 	}

@@ -1281,6 +1281,8 @@ void AI_ActorThink (Player &player, Edict *ent)
 {
 	aiAction_t bestAia;
 
+	G_EventReactionFireResetTargets();
+
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item *rightH = ent->getRightHandItem();
 	Item *leftH = ent->getLeftHandItem();
