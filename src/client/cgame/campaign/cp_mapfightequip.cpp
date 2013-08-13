@@ -1075,16 +1075,17 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 /**
  * @brief Repair aircraft.
  * @note Hourly called.
+ * @note Repairs 1% of a craft's max damage capacity.
  */
 void AII_RepairAircraft (void)
 {
-	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
 	base_t *base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
 		AIR_ForeachFromBase(aircraft, base) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
+			const int REPAIR_PER_HOUR = round(aircraft->stats[AIR_STATS_DAMAGE] / 100); /**< Number of damage points repaired per hour: 1% of aircraft max damage value */
 			aircraft->damage = std::min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
 		}
 	}
