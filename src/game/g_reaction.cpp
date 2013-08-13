@@ -151,6 +151,7 @@ void ReactionFireTargets::init (void)
  */
 void ReactionFireTargets::reset (void)
 {
+	G_EventReactionFireResetTargets();
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		rfData[i].reset();
 	}
@@ -219,7 +220,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
-	G_EventReactionFireAddTarget(*shooter, *target, rfts->targets[i].triggerTUs);
+	G_EventReactionFireAddTarget(*shooter, *target, tusForShot);
 #if DEBUG_RF
 	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 		Com_Printf("S%i: added\n", shooter->number);
@@ -299,8 +300,10 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
 
 	for (int i = 0; i < rfts->count; i++) {
 		const ReactionFireTarget &t = rfts->targets[i];
-		if (t.target == target)
+		if (t.target == target) {
+			G_EventReactionFireTargetUpdate(*shooter, *target, tusTarget);
 			return t.triggerTUs >= target->TU - tusTarget;
+		}
 	}
 
 	return false;	/* the shooter doesn't aim at this target */
