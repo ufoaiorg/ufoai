@@ -32,6 +32,8 @@ typedef struct eventTiming_s {
 	int shootTime;	/**< time when the shoot was fired */
 	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
 					 * projectile needs some time to reach its target. */
+	int lastMoveTime;
+	int lastMoveDuration;
 	int steps;		/**< if we are in a move event, this is the amount of steps that is going to get executed */
 	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
 	bool parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */

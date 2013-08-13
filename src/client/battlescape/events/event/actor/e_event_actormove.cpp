@@ -73,7 +73,8 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	assert(NET_PeekByte(msg) == EV_NULL);
 
 	eventTiming->nextTime += time + 400;
-
+	eventTiming->lastMoveTime = eventTime;
+	eventTiming->lastMoveDuration = time;
 	return eventTime;
 }
 
