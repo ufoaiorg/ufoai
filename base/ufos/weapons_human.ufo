@@ -106,6 +106,7 @@ item assault_ammo
 			time				16
 			damage				"42 5"
 			dmgweight			"normal_medium"
+			reaction	true
 		}
 		firedef
 		{
@@ -126,6 +127,7 @@ item assault_ammo
 			time		16
 			damage		"42 5"
 			dmgweight	"normal_medium"
+			reaction	true
 		}
 	}
 
@@ -195,6 +197,7 @@ item assault_ammo
 			time				16
 			damage				"42 5"
 			dmgweight			"normal_medium"
+			reaction	true
 		}
 		firedef
 		{
@@ -215,6 +218,7 @@ item assault_ammo
 			time		18
 			damage		"42 5"
 			dmgweight	"normal_medium"
+			reaction	true
 		}
 	}
 }
