@@ -173,11 +173,11 @@ int CL_GetStepTime (eventTiming_t *eventTiming, int step)
 {
 	if (step > eventTiming->steps) {
 		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
-		return -1;
+		return eventTiming->lastMoveTime + eventTiming->lastMoveDuration;
 	}
 	if (step < 0) {
 		Com_Printf("invalid step given: %i/%i\n", step, eventTiming->steps);
-		return -1;
+		return eventTiming->lastMoveTime;
 	}
 	int beforeMovement = 0;
 	int delay = 0;
