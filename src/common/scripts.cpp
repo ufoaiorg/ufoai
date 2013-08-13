@@ -3375,6 +3375,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 
 	/* Skip if the hardware can't handle this map. */
 	if (hwclass->integer < md->hwclass) {
+		Com_DPrintf(DEBUG_SHARED, "Com_ParseMapDefinition: mapdef \"%s\" is skipped because hwclass doesn't match\n", name);
 		csi.numMDs--;
 	}
 }
@@ -3395,7 +3396,7 @@ mapDef_t *Com_GetMapDefinitionByID (const char *mapDefID)
 			return md;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
+	Com_DPrintf(DEBUG_SHARED, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
 	return nullptr;
 }
 
