@@ -135,6 +135,8 @@ item stunrod
 	model			"weapons/stunrod/stunrod"
 	weapon			true
 	type			"melee"
+	holdtwohanded	false
+	firetwohanded	true
 	animationindex	2
 	shape			"1 0 4 1"
 	shape			"0 1 3 1"
@@ -217,6 +219,8 @@ item kerrblade
 	model			"weapons/kerrblade/kerrblade"
 	weapon			true
 	type			"melee"
+	holdtwohanded	false
+	firetwohanded	true
 	animationindex	2
 	shape			"2 0 3 1"
 	shape			"0 1 5 1"
