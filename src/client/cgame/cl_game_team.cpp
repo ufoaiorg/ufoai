@@ -571,6 +571,9 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 		/* reset ammo count if ammunition (item) not found */
 		if (!item->ammoDef())
 			item->setAmmoLeft(NONE_AMMO);
+	/* no ammo needed - fire definitions are in the item */
+	} else if (!item->isReloadable()) {
+		item->setAmmoDef(item->def());
 	}
 }
 
