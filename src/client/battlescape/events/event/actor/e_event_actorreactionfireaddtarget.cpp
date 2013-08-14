@@ -48,13 +48,13 @@ int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg
 	int unused;
 	int step;
 
-	NET_ReadFormat(msg, self->formatString, &unused, &targetEntNum, &unused, &unused);
+	NET_ReadFormat(msg, self->formatString, &unused, &targetEntNum, &unused, &step);
 
 	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	return CL_GetStepTime(eventTiming, target, step);
+	return CL_GetStepTime(eventTiming, target, step) - 400;
 }
 
 /**

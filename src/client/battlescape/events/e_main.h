@@ -32,8 +32,6 @@ typedef struct eventTiming_s {
 	int shootTime;	/**< time when the shoot was fired */
 	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
 					 * projectile needs some time to reach its target. */
-	int lastMoveTime;
-	int lastMoveDuration;
 	bool parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
 } eventTiming_t;
 
@@ -77,4 +75,4 @@ typedef struct eventRegister_s {
 
 const eventRegister_t *CL_GetEvent(const event_t eType);
 int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
-int CL_GetStepTime(eventTiming_t *eventTiming, const le_t* le, int step);
+int CL_GetStepTime(const eventTiming_t *eventTiming, const le_t* le, int step);

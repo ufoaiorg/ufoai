@@ -327,8 +327,6 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 	dvec_t dvtab[MAX_ROUTE];
 	byte numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
 
-	G_ReactionFireNofityClientStartMove(ent);
-
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	G_EventEnd();
 
@@ -340,7 +338,9 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 		ent->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
+		ent->moveinfo.steps = 0;
 		while (numdv > 0) {
+			int step = ent->moveinfo.steps;
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
 			const byte oldDir = ent->dir;
@@ -355,7 +355,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 			int status = G_ActorDoTurn(ent, dir);
 			if ((status & VIS_STOP) && visTeam != 0) {
 				autoCrouchRequired = false;
-				if (ent->moveinfo.steps == 0) {
+				if (step == 0) {
 					usedTUs += TU_TURN;
 				}
 				break;
@@ -366,7 +366,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				autoCrouchRequired = false;
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
 				 * send the turn event if this is our first step */
-				if (oldDir != ent->dir && ent->moveinfo.steps == 0) {
+				if (oldDir != ent->dir && step == 0) {
 					G_EventActorTurn(*ent);
 					usedTUs += TU_TURN;
 				}
@@ -449,7 +449,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 			}
 
 			/* check for reaction fire */
-			if (G_ReactionFireOnMovement(ent)) {
+			if (G_ReactionFireOnMovement(ent, step)) {
 				status |= VIS_STOP;
 
 				autoCrouchRequired = false;

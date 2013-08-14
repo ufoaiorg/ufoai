@@ -41,7 +41,7 @@ int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t *self, dbuffer *
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
-	return CL_GetStepTime(eventTiming, target, step);
+	return CL_GetStepTime(eventTiming, target, step) + 200;
 }
 
 /**

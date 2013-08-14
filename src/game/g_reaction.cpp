@@ -160,6 +160,9 @@ void ReactionFireTargets::reset (void)
 
 void ReactionFireTargets::notifyClientOnStep (const Edict *target, int step)
 {
+	if (step == 0)
+		G_ReactionFireNofityClientStartMove(target);
+
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
@@ -256,7 +259,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
-	G_EventReactionFireAddTarget(*shooter, *target, tusForShot, target->moveinfo.steps);
+	G_EventReactionFireAddTarget(*shooter, *target, tusForShot, target->moveinfo.steps - 1);
 #if DEBUG_RF
 	if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 		Com_Printf("S%i: added\n", shooter->number);
@@ -286,7 +289,7 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
 			t.triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
 		}
 		rfts->count--;
-		G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps);
+		G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps - 1);
 #if DEBUG_RF
 		if (!(G_IsAlien(shooter) || G_IsCivilian(shooter)))
 			Com_Printf("S%i: removed\n", shooter->number);
@@ -848,7 +851,7 @@ static void G_ReactionFirePrintSituation (Edict *target)
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-bool G_ReactionFireOnMovement (Edict *target)
+bool G_ReactionFireOnMovement (Edict *target, int step)
 {
 #if DEBUG_RF
 	G_ReactionFirePrintSituation(target);
@@ -856,7 +859,7 @@ bool G_ReactionFireOnMovement (Edict *target)
 	/* Check to see whether this resolves any reaction fire */
 	const bool fired = rf.checkExecution(target);
 
-	rf.notifyClientOnStep(target, target->moveinfo.steps);
+	rf.notifyClientOnStep(target, step);
 
 	/* Check to see whether this triggers any reaction fire */
 	rf.updateAllTargets(target);

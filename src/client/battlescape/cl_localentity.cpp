@@ -457,6 +457,11 @@ void LET_StartIdle (le_t *le)
 	}
 
 	le->pathPos = le->pathLength = 0;
+	if (le->stepList != nullptr) {
+		leStep_t *step = le->stepList->next;
+		Mem_Free(le->stepList);
+		le->stepList = step;
+	}
 
 	/* keep this animation until something happens */
 	LE_SetThink(le, nullptr);

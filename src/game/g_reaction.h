@@ -35,7 +35,7 @@ void G_ReactionFireNofityClientStartMove(const Edict *target);
 void G_ReactionFireNofityClientEndMove(const Edict *target);
 void G_ReactionFireSettingsUpdate(Edict *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
 bool G_ReactionFireSettingsReserveTUs(Edict *ent);
-bool G_ReactionFireOnMovement(Edict *target);
+bool G_ReactionFireOnMovement(Edict *target, int step);
 void G_ReactionFireOnEndTurn(void);
 void G_ReactionFireTargetsInit(void);
 void G_ReactionFireTargetsCreate(const Edict *shooter);

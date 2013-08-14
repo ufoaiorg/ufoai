@@ -53,6 +53,14 @@ typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 #define LE_INVISIBLE			0x0010
 #define LE_SELECTED				0x0020 /**< used for actors - for the current selected actor this is true */
 
+typedef struct leStep_s {
+	int steps;
+	int lastMoveTime;
+	int lastMoveDuration;
+	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
+	struct leStep_s *next;
+} leStep_t;
+
 /** @brief a local entity */
 typedef struct le_s {
 	bool inuse;
@@ -119,8 +127,7 @@ typedef struct le_s {
 	int pathContents[MAX_ROUTE];	/**< content flags of the brushes the actor is walking in */
 	int positionContents;			/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
-	int steps;		/**< if we are in a move event, this is the amount of steps that is going to get executed */
-	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
+	leStep_t *stepList;
 	int startTime, endTime;
 	int speed[MAX_ROUTE];			/**< the speed the le is moving with */
 	float rotationSpeed;
