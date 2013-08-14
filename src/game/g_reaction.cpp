@@ -902,6 +902,16 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 }
 
 /**
+ * @brief Removes the given target from the reaction fire lists
+ * @param[in] target The target to remove from the lists
+ */
+void G_ReactionFireOnDead (const Edict *target)
+{
+	assert(G_IsDead(target));
+	rf.updateAllTargets(target);
+}
+
+/**
  * @brief Called after 'target' has fired, this might trigger more reaction fire or resolve outstanding reaction fire (because target is out of time)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot

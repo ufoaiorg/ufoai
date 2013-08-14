@@ -506,6 +506,8 @@ bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
 	/* unlink the floor container */
 	ent->resetFloor();
 
+	G_ReactionFireOnDead(ent);
+
 	return true;
 }
 
