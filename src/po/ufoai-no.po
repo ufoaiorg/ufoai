@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-07 09:04+0200\n"
-"PO-Revision-Date: 2013-05-02 07:54+0100\n"
+"PO-Revision-Date: 2013-08-14 14:54+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -57,7 +57,6 @@ msgid "Small cemetery"
 msgstr "Liten kirkegård"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outskirt of a big city."
 msgstr "Utkanten av en stor by."
 
@@ -2789,9 +2788,8 @@ msgstr "Afrikansk landsby"
 
 #: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
 #: ../base/ufos/maps.ufo:332
-#, fuzzy
 msgid "African Desert"
-msgstr "Atacama-ørkenen"
+msgstr "Afrikansk ørken"
 
 #: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
@@ -3001,9 +2999,8 @@ msgid "Residential Neighbourhood"
 msgstr "Nabolag"
 
 #: ../base/ufos/maps.ufo:4936
-#, fuzzy
 msgid "Sewage Pipe Construction"
-msgstr "Avløpsbyggeplass"
+msgstr "Avløpsrørkonstruksjon"
 
 #: ../base/ufos/maps.ufo:4983
 msgid "Luxurious Resort"
@@ -7259,7 +7256,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/buildings.ufo:24
-#, fuzzy
 msgid ""
 "Our CW laser program has been successful in miniaturising and lightening the "
 "necessary components for a powerful deuterium-fluoride reaction. We want to "
@@ -7277,12 +7273,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Vårt CW-laserprogram har vært vellykket i miniaturisering og redusering av "
-"de nødvendige komponentene for en kraftig deuterium-fluorid reaksjon. Men de "
-"fremskritt vi har gjort er ikke bare nyttig for mobile våpen. Vi ønsker å "
-"prototype noen av våre oppgraderinger i eksisterende bakke-til-"
+"Vårt CW-laserprogram har vært vellykket i miniatyrisering og redusering av "
+"de nødvendige komponentene for en kraftig deuterium-fluorid reaksjon. Vi "
+"ønsker å prototype noen av våre oppgraderinger i eksisterende bakke-til-"
 "luftlasermatriser, slik at vi kan spore og avfyre kontinuerlig kraftige "
-"stråler med et effektnivå som våre anlegg kan komfortabelt håndtere.\n"
+"stråler med et effektnivå som våre anlegg kan håndtere komfortabelt.\n"
 "\n"
 "Gitt de ulike svakhetene ved våre Bakke-til-luft raketter mot romvesenes "
 "teknologi, trenger jeg ikke å fortelle deg alle fordelene ved å ha et "
@@ -9142,7 +9137,6 @@ msgid "The dropship has arrived at the crash site."
 msgstr "Transportflyet har ankommet krasjstedet."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:23
-#, fuzzy
 msgid ""
 "The aliens penetrated your base defenses and are inside the compound. Rally "
 "the soldiers on site to eliminate the threat. Security cameras placed around "
@@ -9151,7 +9145,8 @@ msgid ""
 msgstr ""
 "Romvesenene penetrerte baseforsvaret og er inne på området. Samle soldatene "
 "på stedet for å eliminere trusselen. Overvåkingskameraer plassert rundt "
-"basen vil hjelpe deg å spore dem."
+"basen vil hjelpe deg å spore dem så lenge en soldat forblir i kamerarommet i "
+"kommandosenter."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -15958,11 +15953,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Grunnleggende (Kampanje)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Grunnleggende (bakkekamp)"
 
 #: ../base/ufos/research.ufo:111
 msgid "Skills and Abilities"
@@ -15985,9 +15980,8 @@ msgid "Base Facilities"
 msgstr "Bygninger"
 
 #: ../base/ufos/research.ufo:115
-#, fuzzy
 msgid "Global Installations"
-msgstr "Installasjoner"
+msgstr "Globale installasjoner"
 
 #: ../base/ufos/research.ufo:116
 msgid "Research Reports"
@@ -16022,42 +16016,36 @@ msgid "Production"
 msgstr "Produksjon"
 
 #: ../base/ufos/research.ufo:146
-#, fuzzy
 msgid "UFO Interception"
-msgstr "Avskjæring"
+msgstr "Ufo-avskjæring"
 
 #: ../base/ufos/research.ufo:154
-#, fuzzy
 msgid "UFO Disassembly"
-msgstr "Demontering"
+msgstr "Ufo-demontering"
 
 #: ../base/ufos/research.ufo:162
-#, fuzzy
 msgid "Nation Happiness"
 msgstr "Nasjonal tilfredshet"
 
 #: ../base/ufos/research.ufo:170
-#, fuzzy
 msgid "Time Units"
-msgstr "Tidsenheter:\t%i\n"
+msgstr "Tidsenheter"
 
 #: ../base/ufos/research.ufo:178
-#, fuzzy
 msgid "Reaction Fire"
 msgstr "Reaksjonsild"
 
 #: ../base/ufos/research.ufo:186
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Soldatvekt og -heftelse"
 
 #: ../base/ufos/research.ufo:194
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Sår og helbredelse"
 
 #: ../base/ufos/research.ufo:202
-#, fuzzy
 msgid "Auxiliary Equipment"
-msgstr "%s tilleggsutstyr\n"
+msgstr "Ekstrautstyr"
 
 #: ../base/ufos/research.ufo:215
 msgid "Continuous Wave Laser Operation"
@@ -19982,19 +19970,18 @@ msgid "Assemble a team first"
 msgstr "Samle et lag først"
 
 #: ../base/ufos/ui/popup_capacity.ufo:10
-#, fuzzy
 msgid "Capacity Exceeded"
-msgstr "Kapasitet"
+msgstr "Overskredet kapasiteten"
 
 #: ../base/ufos/ui/popup_capacity.ufo:14
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
+"Det er ikke mer plass til varer/personell på denne basen. Frigjør litt plass"
 
 #: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:127
-#, fuzzy
 msgid "Go to base"
-msgstr "Tilbake til base"
+msgstr "Gå til basen"
 
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
@@ -20080,9 +20067,8 @@ msgid "Disassembly"
 msgstr "Demontering"
 
 #: ../base/ufos/ui/production.ufo:192
-#, fuzzy
 msgid "Workshop space"
-msgstr "Verkstedkapasitet:"
+msgstr "Verkstedområde"
 
 #: ../base/ufos/ui/production.ufo:389 ../base/ufos/ui/production.ufo:399
 msgid "Change the production amount"
@@ -20114,40 +20100,36 @@ msgid "Open UFOPaedia"
 msgstr "Åpne UFOPaedia"
 
 #: ../base/ufos/ui/research.ufo:59
-#, fuzzy
 msgid "Stop researching this project"
-msgstr "Intet forskningsforslag tilgjengelig for dette prosjektet."
+msgstr "Stans forskning på dette prosjektet."
 
 #: ../base/ufos/ui/research.ufo:69
-#, fuzzy
 msgid "Assign less scientists on this project"
-msgstr "Tildel soldat til dette fartøyet"
+msgstr "Tildel færre forskere til dette prosjektet"
 
 #: ../base/ufos/ui/research.ufo:87
-#, fuzzy
 msgid "Assign more scientists on this project"
-msgstr "Tildel en eller flere soldater til dette flyet først."
+msgstr "Tildel flere forskere til dette prosjektet"
 
 #: ../base/ufos/ui/research.ufo:97
 msgid "Assign all free scientists on this project"
-msgstr ""
+msgstr "Tildel alle ledige forskere til dette prosjektet"
 
 #: ../base/ufos/ui/research.ufo:144
-#, fuzzy
 msgid "N/A"
-msgstr "NA"
+msgstr "–"
 
 #: ../base/ufos/ui/research.ufo:145
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr ""
+msgstr "En gjenstand eller forutsetning mangler for dette emnet"
 
 #: ../base/ufos/ui/research.ufo:153
 msgid "Expand/Collapse"
-msgstr ""
+msgstr "Utvid/skjul"
 
 #: ../base/ufos/ui/research.ufo:190
 msgid "Topics"
-msgstr ""
+msgstr "Emner"
 
 #: ../base/ufos/ui/research.ufo:289 client/cgame/campaign/cp_aircraft.cpp:429
 msgid "idle"
@@ -22126,22 +22108,21 @@ msgstr "Bygg en %s først."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "Ingen rapport"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Prosent"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Antall"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
-#, fuzzy
 msgid "Nothing"
-msgstr "Ingenting\n"
+msgstr "Ingenting"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:893
 msgid "^BAircraft\n"
@@ -23281,9 +23262,9 @@ msgid "No item selected"
 msgstr "Intet utstyr valgt"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:270
-#, fuzzy, c-format
+#, c-format
 msgid "Cost per item\t%i c\n"
-msgstr "Pris per utstyr\t%i kr\n"
+msgstr "Pris per element\t%i c\n"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:271
 #: client/cgame/campaign/cp_produce_callbacks.cpp:329
@@ -24332,23 +24313,20 @@ msgid "Show/hide ufoconsole."
 msgstr "Vis/skjul ufokonsollen"
 
 #: client/cl_inventory_callbacks.cpp:44
-#, fuzzy
 msgid "Close quarters"
-msgstr "Ikke nok boligkvarter"
+msgstr "Nært hold"
 
 #: client/cl_inventory_callbacks.cpp:48
-#, fuzzy
 msgid "Assault"
-msgstr "Angrepsrifle"
+msgstr "Angrep"
 
 #: client/cl_inventory_callbacks.cpp:50
 msgid "Sniper"
 msgstr "Snigskytte"
 
 #: client/cl_inventory_callbacks.cpp:52
-#, fuzzy
 msgid "Explosives"
-msgstr "Sprengladninger:"
+msgstr "Eksplosiver"
 
 #: client/cl_inventory_callbacks.cpp:133
 #, c-format
@@ -24815,127 +24793,6 @@ msgstr "romvesen"
 msgid "Take a screenshot"
 msgstr "Ta et skjermdump"
 
-#~ msgid ""
-#~ "Determines a soldier's accuracy with heavy weapons. Soldiers will "
-#~ "increase their heavy proficiency when they use heavy weapons effectively "
-#~ "in battle."
-#~ msgstr ""
-#~ "Fastsetter en soldats nøyaktighet med tunge våpen. Soldater øker sine "
-#~ "tunge ferdigheter når de bruker tunge våpen effektivt i kamp."
-
-#~ msgid "Heavy Weapons Proficiency"
-#~ msgstr "Tunge våpenegenskap"
-
-#~ msgid ""
-#~ "You cannot process aliens yet. Alien Containment not ready in this base."
-#~ msgstr ""
-#~ "Du kan ikke behandle romvesener ennå. Forvaringsrom for romvesener ikke "
-#~ "klar i denne basen."
-
-#~ msgid "Not enough storage space in %s. %s"
-#~ msgstr "Ikke nok lagerrom i %s. %s"
-
-#~ msgid "%i item was sold for %i credits."
-#~ msgid_plural "%i items were sold for %i credits."
-#~ msgstr[0] "%i element ble solgt for %i."
-#~ msgstr[1] "%i elementer ble solgt for %i."
-
-#~ msgid "Add/Remove scientist"
-#~ msgstr "Legg til/fjern vitenskapsmenn"
-
-#~ msgid "Switch to another base"
-#~ msgstr "Bytt til en annen base"
-
-#~ msgid "Base Research Info"
-#~ msgstr "Baseforskningsinfo"
-
-#~ msgid "Start research"
-#~ msgstr "Begynn forskning"
-
-#~ msgid "Stop research"
-#~ msgstr "Stans forskning"
-
-#~ msgid "Show research proposal"
-#~ msgstr "Vis forskningsforslag"
-
-#~ msgid "Laboratory space (used/all): %i/%i"
-#~ msgstr "Laboratorieplass (brukt/alle): %i/%i"
-
-#~ msgid "Scientists (available/all): %i/%i"
-#~ msgstr "Vitenskapsmenn (tilgjengelige/alle): %i/%i"
-
-#~ msgid "Not researched in any base."
-#~ msgstr "Ikke forsket på i noen base."
-
-#~ msgid "Researched in %s."
-#~ msgstr "Forsket på i %s"
-
-#~ msgid "Researched in this base."
-#~ msgstr "Forsket på denne basen."
-
-#~ msgid "Progress: %.1f%%"
-#~ msgstr "Fremskritt: %.1f%%"
-
-#~ msgid "Progress: not available."
-#~ msgstr "Fremgang: Ikke tilgjengelig."
-
-#~ msgid "Status: under research"
-#~ msgstr "Status: Forskning i gang"
-
-#~ msgid ""
-#~ "Status: this research topic is currently being processed in laboratories"
-#~ msgstr "Status: dette forskningstemaet blir behandlet i laboratorier"
-
-#~ msgid "Status: research paused"
-#~ msgstr "Status: Pause i forskning"
-
-#~ msgid "Status: research topic currently paused"
-#~ msgstr "Status: forskningstema stanset for øyeblikket."
-
-#~ msgid "Status: research finished"
-#~ msgstr "Status: Forskning avsluttet"
-
-#~ msgid "Status: not possible to research"
-#~ msgstr "Status: ikke mulig å forske"
-
-#~ msgid ""
-#~ "Status: the materials or background knowledge needed to research this "
-#~ "topic are not available yet"
-#~ msgstr ""
-#~ "Status: materialene eller bakgrunnskunnskapen for å forske på dette "
-#~ "temaet er ikke tilgjengelig ennå"
-
-#~ msgid "Status: unknown technology"
-#~ msgstr "Status: ukjent teknologi"
-
-#~ msgid "Unassigned scientists"
-#~ msgstr "Utildelt forskere"
-
-#~ msgid "Missing an artifact"
-#~ msgstr "Mangler et element"
-
-#~ msgid "Unresearchable collected items"
-#~ msgstr "Innsamlede gjenstander som ikke kan utforskes"
-
-#~ msgid "This item is currently under research in another base."
-#~ msgstr "Dette utstyret er for tiden et forskningsobjekt på en annen base."
-
-#~ msgid "The research on this item is complete."
-#~ msgstr "Forskningen på dette utstyret er ferdig."
-
-#~ msgid ""
-#~ "The research on this item is not yet possible.\n"
-#~ "You need to research the technologies it's based on first."
-#~ msgstr ""
-#~ "Forskning på dette utstyret er ikke mulig enda.\n"
-#~ "Du må forske i de teknologiene som det er basert på først."
-
-#~ msgid "Nothing to research."
-#~ msgstr "Ingenting å utforske"
-
-#~ msgid "Build a laboratory first."
-#~ msgstr "Bygg laboratorium først."
-
 #~ msgid "Bomber_city"
 #~ msgstr "Bybomber"
 
@@ -24950,6 +24807,17 @@ msgstr "Ta et skjermdump"
 
 #~ msgid "Country Desert (Crashed Harvester)"
 #~ msgstr "Ørken (Ufo-krasjsted)"
+
+#~ msgid ""
+#~ "Determines a soldier's accuracy with heavy weapons. Soldiers will "
+#~ "increase their heavy proficiency when they use heavy weapons effectively "
+#~ "in battle."
+#~ msgstr ""
+#~ "Fastsetter en soldats nøyaktighet med tunge våpen. Soldater øker sine "
+#~ "tunge ferdigheter når de bruker tunge våpen effektivt i kamp."
+
+#~ msgid "Heavy Weapons Proficiency"
+#~ msgstr "Tunge våpenegenskap"
 
 #~ msgid "intro_sentence1"
 #~ msgstr ""
@@ -25036,6 +24904,131 @@ msgstr "Ta et skjermdump"
 #~ msgid "Storage capacity:"
 #~ msgstr "Lagerkapasitet:"
 
+#~ msgid "Add/Remove scientist"
+#~ msgstr "Legg til/fjern vitenskapsmenn"
+
+#~ msgid "Switch to another base"
+#~ msgstr "Bytt til en annen base"
+
+#~ msgid "Base Research Info"
+#~ msgstr "Baseforskningsinfo"
+
+#~ msgid "Start research"
+#~ msgstr "Begynn forskning"
+
+#~ msgid "Stop research"
+#~ msgstr "Stans forskning"
+
+#~ msgid "Show research proposal"
+#~ msgstr "Vis forskningsforslag"
+
+#~ msgid ""
+#~ "You cannot process aliens yet. Alien Containment not ready in this base."
+#~ msgstr ""
+#~ "Du kan ikke behandle romvesener ennå. Forvaringsrom for romvesener ikke "
+#~ "klar i denne basen."
+
+#~ msgid "Not enough storage space in %s. %s"
+#~ msgstr "Ikke nok lagerrom i %s. %s"
+
+#~ msgid "%i item was sold for %i credits."
+#~ msgid_plural "%i items were sold for %i credits."
+#~ msgstr[0] "%i element ble solgt for %i."
+#~ msgstr[1] "%i elementer ble solgt for %i."
+
+#~ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
+#~ msgstr "^BBygninger\t\t\t\t\t\tKapasitet\t\t\t\tMengde\n"
+
+#~ msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
+#~ msgstr "^BProduksjon\t\t\t\t\t\tAntall\t\t\t\tProsent\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
+
+#~ msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
+#~ msgstr "^BForskning\t\t\t\t\t\tForskere\t\t\t\tProsent\n"
+
+#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
+#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
+
+#~ msgid "Laboratory space (used/all): %i/%i"
+#~ msgstr "Laboratorieplass (brukt/alle): %i/%i"
+
+#~ msgid "Scientists (available/all): %i/%i"
+#~ msgstr "Vitenskapsmenn (tilgjengelige/alle): %i/%i"
+
+#~ msgid "Not researched in any base."
+#~ msgstr "Ikke forsket på i noen base."
+
+#~ msgid "Researched in %s."
+#~ msgstr "Forsket på i %s"
+
+#~ msgid "Researched in this base."
+#~ msgstr "Forsket på denne basen."
+
+#~ msgid "Progress: %.1f%%"
+#~ msgstr "Fremskritt: %.1f%%"
+
+#~ msgid "Progress: not available."
+#~ msgstr "Fremgang: Ikke tilgjengelig."
+
+#~ msgid "Status: under research"
+#~ msgstr "Status: Forskning i gang"
+
+#~ msgid ""
+#~ "Status: this research topic is currently being processed in laboratories"
+#~ msgstr "Status: dette forskningstemaet blir behandlet i laboratorier"
+
+#~ msgid "Status: research paused"
+#~ msgstr "Status: Pause i forskning"
+
+#~ msgid "Status: research topic currently paused"
+#~ msgstr "Status: forskningstema stanset for øyeblikket."
+
+#~ msgid "Status: research finished"
+#~ msgstr "Status: Forskning avsluttet"
+
+#~ msgid "Status: not possible to research"
+#~ msgstr "Status: ikke mulig å forske"
+
+#~ msgid ""
+#~ "Status: the materials or background knowledge needed to research this "
+#~ "topic are not available yet"
+#~ msgstr ""
+#~ "Status: materialene eller bakgrunnskunnskapen for å forske på dette "
+#~ "temaet er ikke tilgjengelig ennå"
+
+#~ msgid "Status: unknown technology"
+#~ msgstr "Status: ukjent teknologi"
+
+#~ msgid "Unassigned scientists"
+#~ msgstr "Utildelt forskere"
+
+#~ msgid "Missing an artifact"
+#~ msgstr "Mangler et element"
+
+#~ msgid "Unresearchable collected items"
+#~ msgstr "Innsamlede gjenstander som ikke kan utforskes"
+
+#~ msgid "This item is currently under research in another base."
+#~ msgstr "Dette utstyret er for tiden et forskningsobjekt på en annen base."
+
+#~ msgid "The research on this item is complete."
+#~ msgstr "Forskningen på dette utstyret er ferdig."
+
+#~ msgid ""
+#~ "The research on this item is not yet possible.\n"
+#~ "You need to research the technologies it's based on first."
+#~ msgstr ""
+#~ "Forskning på dette utstyret er ikke mulig enda.\n"
+#~ "Du må forske i de teknologiene som det er basert på først."
+
+#~ msgid "Nothing to research."
+#~ msgstr "Ingenting å utforske"
+
+#~ msgid "Build a laboratory first."
+#~ msgstr "Bygg laboratorium først."
+
 #~ msgid "Small"
 #~ msgstr "Liten"
 
@@ -25059,21 +25052,6 @@ msgstr "Ta et skjermdump"
 
 #~ msgid "skill_explosive"
 #~ msgstr "Eksplosiv"
-
-#~ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-#~ msgstr "^BBygninger\t\t\t\t\t\tKapasitet\t\t\t\tMengde\n"
-
-#~ msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-#~ msgstr "^BProduksjon\t\t\t\t\t\tAntall\t\t\t\tProsent\n"
-
-#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
-
-#~ msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-#~ msgstr "^BForskning\t\t\t\t\t\tForskere\t\t\t\tProsent\n"
-
-#~ msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
-#~ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
 #~ msgid "Alien landing - Snow"
 #~ msgstr "Utenomjordisk landing - snø"
