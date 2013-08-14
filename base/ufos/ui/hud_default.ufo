@@ -15,12 +15,10 @@ component actorButton extends radiobutton
 component rfShooter extends panel
 {
 	{
-		size	"300 25"
+		size	"210 35"
 		bgcolor "0 0 0 0.7"
-	}
-	data tu
-	{
-		integer 0
+		border	1
+		bordercolor		"1 1 1 0.2"
 	}
 	model head_shooter
 	{
@@ -28,23 +26,29 @@ component rfShooter extends panel
 		skin	""
 		angles	"0 60 90"
 		autoscale	true
-		pos		"0 0"
+		pos		"5 5"
 		size	"25 25"
 		origin	"0 0 0"
+		ghost	true
 	}
 	bar timeremaining
 	{
-		pos		"30 17"
-		size	"240 8"
+		pos		"35 22"
+		size	"170 8"
 		current	0
 		max		0
 		disabled	true
+		border	1
+		bordercolor	"1 1 1 0.2"
+		ghost	true
 	}
-	string rffiredef
+	string rfnotice
 	{
 		string	""
-		size	"240 17"
-		pos		"30 0"
+		size	"170 17"
+		pos		"35 5"
+		ghost	true
+		font	"f_verysmall"
 	}
 }
 
@@ -74,11 +78,12 @@ window hud_default extends hud
 	panel reactions
 	{
 		{
-			pos				"120 60"
-			size			"300 400"
+			pos				"122 62"
+			size			"210 500"
 			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
+			layoutMargin	4
 			ghost			true
+			invis			true
 		}
 	}
 
@@ -1040,15 +1045,29 @@ window hud_default extends hud
 			// top down view for robots - sideview of the body isn't very nice
 			*node:root.reactions.rf<1><2>.head_shooter@angles = "0 60 90"
 		}
+
+		// Target is out of range
 		if ( <7> == 1 ) {
-			*node:root.reactions.rf<1><2>.timeremaining@color = ".4 .4 .4 .8"
+			*node:root.reactions.rf<1><2>.timeremaining@color = "0.65 0.13 0 1"
+			*node:root.reactions.rf<1><2>.rfnotice@string = "Target out of range"
 		} else {
-			*node:root.reactions.rf<1><2>.timeremaining@color = ".1 .1 .7 1"
+
+			// Turn the panel red if the unit is ready to fire
+			if ( <6> == 0 ) {
+				*node:root.reactions.rf<1><2>@bgcolor = "0.65 0.13 0 1"
+				*node:root.reactions.rf<1><2>.rfnotice@string = "Target acquired"
+
+			// Turn the bar yellow if the unit is nearing fire capability
+			} elif ( <6> < 5 ) {
+				*node:root.reactions.rf<1><2>.timeremaining@color = "0.83 0.92 0.44 1"
+
+			// Otherwise the bar should be blue
+			} else {
+				*node:root.reactions.rf<1><2>.timeremaining@color = "0.1 0.1 0.7 1"
+			}
+			*node:root.reactions.rf<1><2>.rfnotice@string = "<8> (<6> TUs)"
 		}
 		*node:root.reactions.rf<1><2>.timeremaining@max = <6>
-		*node:root.reactions.rf<1><2>.timeremaining@current = <6>
-		*node:root.reactions.rf<1><2>.tu@integer = "<6>"
-		*node:root.reactions.rf<1><2>.rffiredef@string = "<8>"
 	}
 
 	/**
@@ -1069,8 +1088,30 @@ window hud_default extends hud
 	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
-		*node:root.reactions.rf<1><2>.timeremaining@current = <3>
-		*node:root.reactions.rf<1><2>.tu@integer = "<3>"
+		*cvar:i = (*node:root.reactions.rf<1><2>.timeremaining@max - <3>)
+		*node:root.reactions.rf<1><2>.timeremaining@current = *cvar:i
+		delete *cvar:i
+
+		// Target is out of range
+		if ( <4> == 1 ) {
+			*node:root.reactions.rf<1><2>.timeremaining@color = "0.65 0.13 0 1"
+			*node:root.reactions.rf<1><2>.rfnotice@string = "Target out of range"
+		} else {
+
+			// Turn the panel red if the unit is ready to fire
+			if ( <3> == 0 ) {
+				*node:root.reactions.rf<1><2>@bgcolor = "0.65 0.13 0 1"
+				*node:root.reactions.rf<1><2>.rfnotice@string = "Target acquired"
+
+			// Turn the bar yellow if the unit is nearing fire capability
+			} elif ( <3> < 5 ) {
+				*node:root.reactions.rf<1><2>.timeremaining@color = "0.83 0.92 0.44 1"
+
+			// Otherwise the bar should be blue
+			} else {
+				*node:root.reactions.rf<1><2>.timeremaining@color = "0.1 0.1 0.7 1"
+			}
+		}
 	}
 
 	// ==================
