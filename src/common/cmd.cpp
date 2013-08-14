@@ -754,35 +754,34 @@ void Cmd_AddUserdata (const char *cmd_name, void *userdata)
 
 /**
  * @brief Add a new command to the script interface
- * @param[in] cmd_name The name the command is available via script interface
+ * @param[in] cmdName The name the command is available via script interface
  * @param[in] function The function pointer
- * @param[in] desc A usually(?) one-line description of what the cmd does
+ * @param[in] desc A short description of what the cmd does. It is shown for e.g. the tab
+ * completion or the command list.
  * @sa Cmd_RemoveCommand
  */
-void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
+void Cmd_AddCommand (const char *cmdName, xcommand_t function, const char *desc)
 {
-	unsigned int hash;
-
-	if (!cmd_name || !cmd_name[0])
+	if (!Q_strvalid(cmdName))
 		return;
 
 	/* fail if the command is a variable name */
-	if (Cvar_GetString(cmd_name)[0]) {
-		Com_Printf("Cmd_AddCommand: %s already defined as a var\n", cmd_name);
+	if (Cvar_GetString(cmdName)[0]) {
+		Com_Printf("Cmd_AddCommand: %s already defined as a var\n", cmdName);
 		return;
 	}
 
 	/* fail if the command already exists */
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd_function_t *cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmd_name, cmd->name)) {
-			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
+		if (Q_streq(cmdName, cmd->name)) {
+			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmdName);
 			return;
 		}
 	}
 
 	cmd_function_t* const cmd = Mem_PoolAllocType(cmd_function_t, com_cmdSysPool);
-	cmd->name = cmd_name;
+	cmd->name = cmdName;
 	cmd->description = desc;
 	cmd->function = function;
 	cmd->completeParam = nullptr;
