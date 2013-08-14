@@ -212,7 +212,7 @@ character_t *CL_ActorGetChr (const le_t *le)
  * @param[in] shooter The local entity to get the reaction fire firedef from
  * @return The current selected firedef for reaction fire or @c nullptr if there is none
  */
-static const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
+const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
 {
 	const character_t *chr = CL_ActorGetChr(shooter);
 	if (chr == nullptr)

@@ -85,8 +85,10 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	int shooterSkin;
 	bool shooterRobot;
 	CL_GetReactionFireHead(shooter, &shooterModel, &shooterSkin, &shooterRobot);
-	const bool outOfRange = CL_ActorIsReactionFireOutOfRange(shooter, target);
+	const fireDef_t *shooterFiredef = CL_ActorGetReactionFireFireDef(shooter);
+	const float distance = VectorDist(shooter->origin, target->origin);
+	const bool outOfRange = shooterFiredef->range < distance;
 
-	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i %i %i", shooterEntNum, target->entnum, shooterModel,
-			shooterSkin, shooterRobot, tusUntilTriggered, outOfRange);
+	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i %i %i \"%s\"", shooterEntNum, target->entnum, shooterModel,
+			shooterSkin, shooterRobot, tusUntilTriggered, outOfRange, _(shooterFiredef->name));
 }

@@ -325,6 +325,7 @@ window hud extends levelbuttons {
 	 * @param <5> boolean whether shooter is a robot
 	 * @param <6> TUs left until rf is triggered
 	 * @param <7> Out of range = 1, in range = 0
+	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget { }
 

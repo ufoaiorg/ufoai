@@ -36,12 +36,11 @@ component rfShooter extends panel
 	{
 		pos		"30 17"
 		size	"240 8"
-		color	".1 .1 .7 1"
 		current	0
 		max		0
 		disabled	true
 	}
-	string tu_notice
+	string rffiredef
 	{
 		string	""
 		size	"240 17"
@@ -1031,6 +1030,7 @@ window hud_default extends hud
 	 * @param <5> boolean whether shooter is a robot
 	 * @param <6> TUs left until rf is triggered
 	 * @param <7> Out of range = 1, in range = 0
+	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget {
 		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
@@ -1040,10 +1040,15 @@ window hud_default extends hud
 			// top down view for robots - sideview of the body isn't very nice
 			*node:root.reactions.rf<1><2>.head_shooter@angles = "0 60 90"
 		}
+		if ( <7> == 1 ) {
+			*node:root.reactions.rf<1><2>.timeremaining@color = ".4 .4 .4 .8"
+		} else {
+			*node:root.reactions.rf<1><2>.timeremaining@color = ".1 .1 .7 1"
+		}
 		*node:root.reactions.rf<1><2>.timeremaining@max = <6>
 		*node:root.reactions.rf<1><2>.timeremaining@current = <6>
-		*node:root.reactions.rf<1><2>.tu_notice@string = "<6> TUs"
 		*node:root.reactions.rf<1><2>.tu@integer = "<6>"
+		*node:root.reactions.rf<1><2>.rffiredef@string = "<8>"
 	}
 
 	/**
@@ -1065,7 +1070,6 @@ window hud_default extends hud
 	 */
 	confunc reactionfire_updatetarget {
 		*node:root.reactions.rf<1><2>.timeremaining@current = <3>
-		*node:root.reactions.rf<1><2>.tu_notice@string = "<3> TUs"
 		*node:root.reactions.rf<1><2>.tu@integer = "<3>"
 	}
 
