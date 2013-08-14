@@ -274,16 +274,14 @@ static bool AI_HideNeeded (const Edict *ent)
 			if (G_IsCivilian(from))
 				continue;
 
-			const Item *item = from->getRightHandItem();
-			const fireDef_t *fd = nullptr;
-			if (item && item->def()) {
-				fd = item->getFiredefs();
-			} else {
-				item = from->getLeftHandItem();
-				if (item && item->def())
-					fd = item->getFiredefs();
-			}
-			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
+			const Item *item = ent->getRightHandItem();
+			if (!item)
+				item = ent->getLeftHandItem();
+			if (!item)
+				continue;
+
+			const fireDef_t *fd = item->getFiredefs();
+			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
 			if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
 				const int damageRand = fd->damage[0] + (fd->damage[1] * crand());
 				const int damage = std::max(0, damageRand);
