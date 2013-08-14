@@ -287,7 +287,7 @@ typedef struct cgame_import_s {
 	bool (IMPORT *Cmd_GenericCompleteFunction) (char const* candidate, char const* partial, char const** match);
 	mapDef_t* (IMPORT *Com_GetMapDefinitionByID) (const char *mapDefID);
 
-	void (IMPORT *Cbuf_AddText) (const char *text);
+	void (IMPORT *Cbuf_AddText) (const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *Cbuf_Execute) (void);
 
 	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));

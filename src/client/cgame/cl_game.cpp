@@ -940,7 +940,7 @@ static void UI_RequestMapList_f (void)
 
 	callbackCmd = Cmd_Argv(1);
 
-	Cbuf_AddText(va("%s begin;", callbackCmd));
+	Cbuf_AddText("%s begin\n", callbackCmd);
 
 	MapDef_ForeachCondition(md, multiplayer ? md->multiplayer : md->singleplayer) {
 		const char *preview;
@@ -961,9 +961,9 @@ static void UI_RequestMapList_f (void)
 		if (!R_ImageExists("pics/maps/shots/%s", preview))
 			preview = "default";
 
-		Cbuf_AddText(va("%s add \"%s\" \"%s\";", callbackCmd, md->id, preview));
+		Cbuf_AddText("%s add \"%s\" \"%s\"\n", callbackCmd, md->id, preview);
 	}
-	Cbuf_AddText(va("%s end;", callbackCmd));
+	Cbuf_AddText("%s end\n", callbackCmd);
 }
 
 static void UI_GetMaps_f (void)
@@ -1511,7 +1511,7 @@ void GAME_CharacterCvars (const character_t *chr)
 static void GAME_Abort_f (void)
 {
 	/* aborting means letting the aliens win */
-	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
+	Cbuf_AddText("sv win %i\n", TEAM_ALIEN);
 }
 
 void GAME_Drop (void)

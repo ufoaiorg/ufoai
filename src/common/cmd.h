@@ -43,7 +43,7 @@ void Cbuf_Shutdown(void);
 /**
  * @brief as new commands are generated from the console or keyBindings, */
 /* the text is added to the end of the command buffer. */
-void Cbuf_AddText(const char *text);
+void Cbuf_AddText(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
 
 /**
  * @brief when a command wants to issue other commands immediately, the text is */

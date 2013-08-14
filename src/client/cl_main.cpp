@@ -375,8 +375,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 		} else {
 			char str[512];
 			NET_ReadString(msg, str, sizeof(str));
-			Cbuf_AddText(str);
-			Cbuf_AddText("\n");
+			Cbuf_AddText("%s\n", str);
 		}
 		return;
 	}

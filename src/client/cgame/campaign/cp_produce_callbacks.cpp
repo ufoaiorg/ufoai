@@ -787,9 +787,9 @@ static void PR_ProductionChange_f (void)
 
 	amount = atoi(cgi->Cmd_Argv(1));
 	if (amount > 0) {
-		cgi->Cbuf_AddText(va("prod_inc %i\n", amount));
+		cgi->Cbuf_AddText("prod_inc %i\n", amount);
 	} else {
-		cgi->Cbuf_AddText(va("prod_dec %i\n", -amount));
+		cgi->Cbuf_AddText("prod_dec %i\n", -amount);
 	}
 }
 

@@ -252,14 +252,13 @@ static void Key_Console (int key, int unicode)
 
 	if (key == K_ENTER || key == K_KP_ENTER) {	/* backslash text are commands, else chat */
 		if (keyLines[editLine][1] == '\\' || keyLines[editLine][1] == '/')
-			Cbuf_AddText(keyLines[editLine] + 2);	/* skip the > */
+			Cbuf_AddText("%s\n", keyLines[editLine] + 2);	/* skip the > */
 		/* no command - just enter */
 		else if (!keyLines[editLine][1])
 			return;
 		else
-			Cbuf_AddText(keyLines[editLine] + 1);	/* valid command */
+			Cbuf_AddText("%s\n", keyLines[editLine] + 1);	/* valid command */
 
-		Cbuf_AddText("\n");
 		Com_Printf("%s\n", keyLines[editLine] + 1);
 		editLine = (editLine + 1) & (MAXKEYLINES - 1);
 		historyLine = editLine;
@@ -842,8 +841,6 @@ void Key_SetDest (keydest_t keyDest)
  */
 void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned time)
 {
-	char cmd[MAX_STRING_CHARS];
-
 	/* unbindable key */
 	if (key >= K_KEY_SIZE)
 		return;
@@ -890,8 +887,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 				 * released or whether any other bound key will still ensure that the
 				 * kbutton_t is pressed
 				 * the time is the msec value when the key was released */
-				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
-				Cbuf_AddText(cmd);
+				Cbuf_AddText("-%s %i %i\n", kb + 1, key, time);
 			}
 			if (i == 0)
 				kb = keyBindings[key];
@@ -922,11 +918,9 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 				/* '+' means we have pressed the key
 				 * the key number is used because the kbutton_t can be 'pressed' by several keys
 				 * the time is the msec value when the key was pressed */
-				Com_sprintf(cmd, sizeof(cmd), "%s %i %i\n", kb, key, time);
-				Cbuf_AddText(cmd);
+				Cbuf_AddText("%s %i %i\n", kb, key, time);
 			} else {
-				Cbuf_AddText(kb);
-				Cbuf_AddText("\n");
+				Cbuf_AddText("%s\n", kb);
 			}
 			if (cls.keyDest == key_game)
 				return;

@@ -265,7 +265,7 @@ bool G_MatchDoEnd (void)
 		AIL_Cleanup();
 
 		if (level.mapEndCommand != nullptr) {
-			gi.AddCommandString(level.mapEndCommand);
+			gi.AddCommandString("%s\n", level.mapEndCommand);
 		}
 
 		level.intermissionTime = 0.0;

@@ -298,7 +298,7 @@ typedef struct game_import_s {
 
 	/** add commands to the server console as if they were typed in
 	 * for map changing, etc */
-	void (IMPORT *AddCommandString) (const char *text);
+	void (IMPORT *AddCommandString) (const char *text, ...) __attribute__((format(__printf__, 1, 2)));
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */

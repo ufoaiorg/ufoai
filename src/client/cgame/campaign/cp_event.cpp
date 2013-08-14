@@ -323,7 +323,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void *userdata)
 				continue;
 			if (Q_strvalid(event->command)) {
 				CP_CampaignTriggerFunctions(true);
-				cgi->Cbuf_AddText(event->command);
+				cgi->Cbuf_AddText("%s\n", event->command);
 				cgi->Cbuf_Execute();
 				CP_CampaignTriggerFunctions(false);
 			}

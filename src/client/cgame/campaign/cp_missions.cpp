@@ -118,14 +118,14 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		char maps[2048];
 		char coords[2048];
 		B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
-		cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
+		cgi->Cbuf_AddText("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords);
 
 		return;
 	}
 
 	const char *param = battleParameters->param ? battleParameters->param : mission->mapDef->param;
-	cgi->Cbuf_AddText(va("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
-		mission->mapDef->map, param ? param : ""));
+	cgi->Cbuf_AddText("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
+		mission->mapDef->map, param ? param : "");
 }
 
 /**

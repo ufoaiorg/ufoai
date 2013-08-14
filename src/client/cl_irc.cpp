@@ -497,7 +497,7 @@ static bool Irc_Proto_Msg (const char *target, const char *text)
 {
 	if (*text == '/') {
 		Com_DPrintf(DEBUG_CLIENT, "Don't send irc commands as PRIVMSG\n");
-		Cbuf_AddText(va("%s\n", &text[1]));
+		Cbuf_AddText("%s\n", &text[1]);
 		return true;
 	} else {
 		char msg[IRC_SEND_BUF_SIZE];
@@ -1621,7 +1621,7 @@ static void Irc_Connect_f (void)
 		}
 	} else if (irc_server->string[0] != '\0' && irc_port->integer) {
 		if (!irc_connected)
-			Cbuf_AddText(va("irc_connect %s %i %s\n", irc_server->string, irc_port->integer, irc_channel->string));
+			Cbuf_AddText("irc_connect %s %i %s\n", irc_server->string, irc_port->integer, irc_channel->string);
 		else
 			Com_Printf("Already connected.\n");
 	} else {

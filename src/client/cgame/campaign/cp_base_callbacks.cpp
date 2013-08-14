@@ -718,7 +718,7 @@ static void B_AssembleMap_f (void)
 	char maps[2048];
 	char coords[2048];
 	B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
-	cgi->Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords));
+	cgi->Cbuf_AddText("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords);
 }
 
 /**

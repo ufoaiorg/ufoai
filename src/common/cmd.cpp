@@ -120,19 +120,22 @@ void Cbuf_Shutdown (void)
  * @brief Adds command text at the end of the buffer
  * @note Normally when a command is generate from the console or keyBindings, it will be added to the end of the command buffer.
  */
-void Cbuf_AddText (const char *text)
+void Cbuf_AddText (const char *format, ...)
 {
-	int l;
+	va_list argptr;
+	static char text[CMD_BUFFER_SIZE];
+	va_start(argptr, format);
+	Q_vsnprintf(text, sizeof(text), format, argptr);
+	va_end(argptr);
 
 	if (cmdClosed) {
-		text = strstr(text, "cmdopen");
-		if (text == nullptr) {
+		if (!Q_strstart(text, "cmdopen")) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
 			return;
 		}
 	}
 
-	l = strlen(text);
+	const int l = strlen(text);
 
 	if (cmd_text.cursize + l >= cmd_text.maxsize) {
 		Com_Printf("Cbuf_AddText: overflow (%i) (%s)\n", cmd_text.maxsize, text);
@@ -153,7 +156,7 @@ void Cbuf_InsertText (const char *text)
 	char *temp;
 	int templen;
 
-	if (!text || !*text)
+	if (Q_strnull(text))
 		return;
 
 	/* copy off any commands still remaining in the exec buffer */
@@ -162,11 +165,12 @@ void Cbuf_InsertText (const char *text)
 		temp = Mem_AllocTypeN(char, templen);
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
-	} else
+	} else {
 		temp = nullptr;			/* shut up compiler */
+	}
 
 	/* add the entire text of the file */
-	Cbuf_AddText(text);
+	Cbuf_AddText("%s\n", text);
 
 	/* add the copied off data */
 	if (templen) {
@@ -273,7 +277,7 @@ void Cbuf_AddEarlyCommands (bool clear)
 		const char *s = Com_Argv(i);
 		if (!Q_streq(s, "+set"))
 			continue;
-		Cbuf_AddText(va("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2)));
+		Cbuf_AddText("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2));
 		if (clear) {
 			Com_ClearArgv(i);
 			Com_ClearArgv(i + 1);
@@ -329,7 +333,7 @@ bool Cbuf_AddLateCommands (void)
 
 	const bool ret = build[0] != '\0';
 	if (ret)
-		Cbuf_AddText(build);
+		Cbuf_AddText("%s", build);
 
 	Mem_Free(text);
 	Mem_Free(build);
@@ -363,11 +367,10 @@ static void Cmd_Exec_f (void)
 	Com_Printf("executing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = Mem_AllocTypeN(char, len + 2);
+	f2 = Mem_AllocTypeN(char, len + 1);
 	memcpy(f2, f, len);
 	/* make really sure that there is a newline */
-	f2[len] = '\n';
-	f2[len + 1] = 0;
+	f2[len] = 0;
 
 	Cbuf_InsertText(f2);
 
@@ -908,7 +911,6 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 
 	return n;
 }
-
 
 /**
  * @brief A complete command line has been parsed, so try to execute it

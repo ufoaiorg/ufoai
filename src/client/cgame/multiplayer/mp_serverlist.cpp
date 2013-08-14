@@ -521,7 +521,7 @@ static void CL_ServerListClick_f (void)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
 				selectedServer = &serverList[i];
-				cgi->Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
+				cgi->Cbuf_AddText("server_info %s %s\n", serverList[i].node, serverList[i].service);
 				return;
 			}
 	}

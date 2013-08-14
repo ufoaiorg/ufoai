@@ -686,7 +686,7 @@ void SV_Frame (int now, void *data)
 		do {
 			s = Sys_ConsoleInput();
 			if (s)
-				Cbuf_AddText(va("%s\n", s));
+				Cbuf_AddText("%s\n", s);
 		} while (s);
 	}
 

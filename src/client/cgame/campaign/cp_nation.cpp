@@ -485,7 +485,7 @@ static void CP_NationStatsClick_f (void)
 		return;
 
 	cgi->UI_PushWindow("nations");
-	cgi->Cbuf_AddText(va("nation_select %i;", num));
+	cgi->Cbuf_AddText("nation_select %i\n", num);
 }
 
 /** Space for month-lines with 12 points for each nation. */

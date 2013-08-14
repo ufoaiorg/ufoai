@@ -816,7 +816,7 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, cons
 static int SEQ_ExecuteCommand (sequenceContext_t *context, const char *name, const char *data)
 {
 	/* add the command */
-	Cbuf_AddText(name);
+	Cbuf_AddText("%s\n", name);
 	return 1;
 }
 

@@ -87,7 +87,6 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
  */
 static void GAME_SK_Start_f (void)
 {
-	char map[MAX_VAR];
 	const mapDef_t *md;
 
 	if (cgi->GAME_IsTeamEmpty()) {
@@ -123,9 +122,8 @@ static void GAME_SK_Start_f (void)
 	GAME_SK_SetMissionParameters(md);
 
 	assert(md->map);
-	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
-	cgi->Cbuf_AddText(map);
+	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 }
 
 static void GAME_SK_Restart_f (void)

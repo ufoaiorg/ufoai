@@ -537,7 +537,7 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 	case EA_CMD:
 		/* execute a command */
 		if (action->d.terminal.d1.constString)
-			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.constString, true, context));
+			Cbuf_AddText("%s\n", UI_GenInjectedString(action->d.terminal.d1.constString, true, context));
 		break;
 
 	case EA_CALL:

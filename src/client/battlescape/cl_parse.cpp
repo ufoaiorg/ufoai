@@ -229,7 +229,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer *msg)
 		char s[MAX_SVC_STUFFTEXT];
 		NET_ReadString(msg, s, sizeof(s));
 		Com_DPrintf(DEBUG_CLIENT, "stufftext: %s\n", s);
-		Cbuf_AddText(s);
+		Cbuf_AddText("%s\n", s);
 		break;
 	}
 

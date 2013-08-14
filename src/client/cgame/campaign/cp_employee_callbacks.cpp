@@ -285,11 +285,11 @@ static void E_EmployeeDelete_f (void)
 		}
 	}
 	E_DeleteEmployee(employee);
-	cgi->Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+	cgi->Cbuf_AddText("employee_init %i\n", employeeCategory);
 
 	num = std::max(0, num - 1);
-	cgi->Cbuf_AddText(va("employee_select %i\n", num));
-	cgi->Cbuf_AddText(va("hire_select %i\n", num));
+	cgi->Cbuf_AddText("employee_select %i\n", num);
+	cgi->Cbuf_AddText("hire_select %i\n", num);
 
 	cgi->Cbuf_AddText("employee_update_count\n");
 }
@@ -351,7 +351,7 @@ static void E_EmployeeHire_f (void)
 		}
 	}
 	E_EmployeeSelect(employee);
-	cgi->Cbuf_AddText(va("hire_select %i\n", num));
+	cgi->Cbuf_AddText("hire_select %i\n", num);
 
 	E_UpdateGUICount_f();
 }

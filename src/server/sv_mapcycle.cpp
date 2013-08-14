@@ -22,7 +22,6 @@ void SV_NextMapcycle (void)
 	const char *map = nullptr, *gameType = nullptr;
 	bool day = true;
 	char expanded[MAX_QPATH];
-	char cmd[MAX_QPATH];
 	mapcycle_t *mapcycle;
 
 	mapcycle = mapcycleList;
@@ -128,10 +127,9 @@ void SV_NextMapcycle (void)
 	}
 
 	if (day)
-		Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
+		Cbuf_AddText("map day %s", map);
 	else
-		Com_sprintf(cmd, sizeof(cmd), "map night %s", map);
-	Cbuf_AddText(cmd);
+		Cbuf_AddText("map night %s", map);
 }
 
 /**

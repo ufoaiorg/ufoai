@@ -717,7 +717,7 @@ static void UP_OpenMailWith (const char *techID)
 		return;
 
 	cgi->UI_PushWindow("mail");
-	cgi->Cbuf_AddText(va("ufopedia %s\n", techID));
+	cgi->Cbuf_AddText("ufopedia %s\n", techID);
 }
 
 /**
@@ -731,7 +731,7 @@ void UP_OpenWith (const char *techID)
 		return;
 
 	cgi->UI_PushWindow("ufopedia");
-	cgi->Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
+	cgi->Cbuf_AddText("ufopedia %s\nupdate_ufopedia_layout\n", techID);
 }
 
 /**
@@ -742,7 +742,7 @@ void UP_OpenWith (const char *techID)
 void UP_OpenCopyWith (const char *techID)
 {
 	cgi->Cmd_ExecuteString("ui_push ufopedia");
-	cgi->Cbuf_AddText(va("ufopedia %s\n", techID));
+	cgi->Cbuf_AddText("ufopedia %s\n", techID);
 }
 
 
