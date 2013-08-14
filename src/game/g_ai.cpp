@@ -283,7 +283,7 @@ static bool AI_HideNeeded (const Edict *ent)
 			const fireDef_t *fd = item->getFiredefs();
 			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
 			if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
-				const int damageRand = fd->damage[0] + (fd->damage[1] * crand());
+				const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
 				const int damage = std::max(0, damageRand);
 				if (damage >= ent->HP / 3) {
 					const int hidingTeam = AI_GetHidingTeam(ent);
