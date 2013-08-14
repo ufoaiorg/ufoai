@@ -958,7 +958,7 @@ static void B_MakeBaseMapShot_f (void)
 		return;
 	}
 
-	cgi->Cmd_ExecuteString(va("camsetangles %i %i", 60, 90));
+	cgi->Cmd_ExecuteString("camsetangles %i %i", 60, 90);
 	cgi->Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	cgi->Cvar_SetValue("cl_worldlevel", 1);

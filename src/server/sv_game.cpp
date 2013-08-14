@@ -687,7 +687,7 @@ void SV_ShutdownGameProgs (void)
 	size = Mem_PoolSize(sv->gameSysPool);
 	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
-		Cmd_ExecuteString(va("mem_stats %s", gameSysPoolName));
+		Cmd_ExecuteString("mem_stats %s", gameSysPoolName);
 	}
 
 	Mem_DeletePool(sv->gameSysPool);

@@ -1228,15 +1228,13 @@ void Qcommon_Init (int argc, char **argv)
  */
 void Com_ReadFromPipe (void)
 {
-	char buffer[MAX_STRING_CHARS] = { "" };
-	int read;
-
 	if (pipefile.f == nullptr)
 		return;
 
-	read = FS_Read2(buffer, sizeof(buffer), &pipefile, false);
+	char buffer[MAX_STRING_CHARS] = { "" };
+	const int read = FS_Read2(buffer, sizeof(buffer), &pipefile, false);
 	if (read > 0)
-		Cmd_ExecuteString(buffer);
+		Cmd_ExecuteString("%s", buffer);
 }
 
 static void tick_timer (int now, void *data)

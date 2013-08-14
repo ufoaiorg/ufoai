@@ -134,7 +134,7 @@ static void UFO_ExecuteTestWindow (const char* windowName)
 
 	TEST_ParseScript(va("ufos/uitest/%s.ufo", windowName));
 
-	Cmd_ExecuteString(va("ui_push %s", windowName));
+	Cmd_ExecuteString("ui_push %s", windowName);
 
 	/* while the execution buffer is not empty */
 	for (i = 0; i < 20; i++) {

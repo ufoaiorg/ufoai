@@ -371,7 +371,7 @@ bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildi
 	}
 
 	if (Q_strvalid(command)) {
-		cgi->Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
+		cgi->Cmd_ExecuteString("%s %i %i", command, base->idx, buildingTemplate->buildingType);
 		return true;
 	}
 

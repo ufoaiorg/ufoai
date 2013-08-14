@@ -83,7 +83,6 @@ window hud_default extends hud
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	4
 			ghost			true
-			invis			true
 		}
 	}
 
@@ -1038,6 +1037,7 @@ window hud_default extends hud
 	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget {
+		cmd "echo reactionfire_addtarget <1> <2>"
 		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
 		*node:root.reactions.rf<1><2>.head_shooter@src = "<3>"
 		*node:root.reactions.rf<1><2>.head_shooter@skin = "<4>"
@@ -1076,6 +1076,7 @@ window hud_default extends hud
 	 * @param <2> target entity number
 	 */
 	confunc reactionfire_removetarget {
+		cmd "echo reactionfire_removetarget <1> <2>"
 		call *node:root.reactions.rf<1><2>@delete
 	}
 
@@ -1088,6 +1089,7 @@ window hud_default extends hud
 	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
+		cmd "echo reactionfire_updatetarget <1> <2>"
 		*node:root.reactions.rf<1><2>.timeremaining@current = (*node:root.reactions.rf<1><2>.timeremaining@max - <3>)
 
 		// Target is out of range

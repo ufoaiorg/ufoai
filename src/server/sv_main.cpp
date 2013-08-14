@@ -452,7 +452,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		}
 
 		/* execute the string */
-		Cmd_ExecuteString(remaining);
+		Cmd_ExecuteString("%s", remaining);
 	}
 
 	Com_EndRedirect();

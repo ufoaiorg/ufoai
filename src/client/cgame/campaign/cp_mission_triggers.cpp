@@ -51,20 +51,20 @@ void CP_ExecuteMissionTrigger (const mission_t *mission, bool won)
 	if (won) {
 		if (Q_strvalid(mission->onwin)) {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->onwin);
-			cgi->Cmd_ExecuteString(mission->onwin);
+			cgi->Cmd_ExecuteString("%s", mission->onwin);
 		}
 		if (mission->mapDef && Q_strvalid(mission->mapDef->onwin)) {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", mission->mapDef->onwin);
-			cgi->Cmd_ExecuteString(mission->mapDef->onwin);
+			cgi->Cmd_ExecuteString("%s", mission->mapDef->onwin);
 		}
 	} else {
 		if (Q_strvalid(mission->onlose)) {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->onlose);
-			cgi->Cmd_ExecuteString(mission->onlose);
+			cgi->Cmd_ExecuteString("%s", mission->onlose);
 		}
 		if (mission->mapDef && Q_strvalid(mission->mapDef->onlose)) {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", mission->mapDef->onlose);
-			cgi->Cmd_ExecuteString(mission->mapDef->onlose);
+			cgi->Cmd_ExecuteString("%s", mission->mapDef->onlose);
 		}
 	}
 

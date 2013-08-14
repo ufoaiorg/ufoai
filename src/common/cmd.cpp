@@ -250,7 +250,7 @@ void Cbuf_Execute (void)
 		}
 
 		/* execute the command line */
-		Cmd_ExecuteString(line);
+		Cmd_ExecuteString("%s", line);
 
 		if (cmdWait) {
 			/* skip out while text still remains in buffer, leaving it
@@ -912,12 +912,12 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 	return n;
 }
 
-/**
- * @brief A complete command line has been parsed, so try to execute it
- * @todo lookupnoadd the token to speed search?
- */
-void Cmd_ExecuteString (const char *text)
+void Cmd_vExecuteString (const char *fmt, va_list ap)
 {
+	char text[1024];
+
+	Q_vsnprintf(text, sizeof(text), fmt, ap);
+
 	const cmd_function_t *cmd;
 	const cmd_alias_t *a;
 	const char *str;
@@ -939,7 +939,7 @@ void Cmd_ExecuteString (const char *text)
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
-				Cmd_ExecuteString(va("cmd %s", text));
+				Cmd_ExecuteString("cmd %s", text);
 			} else {
 				cmd_userdata = cmd->userdata;
 				cmd->function();
@@ -967,6 +967,19 @@ void Cmd_ExecuteString (const char *text)
 
 	/* send it as a server command if we are connected */
 	Cmd_ForwardToServer();
+}
+
+/**
+ * @brief A complete command line has been parsed, so try to execute it
+ * @todo lookupnoadd the token to speed search?
+ */
+void Cmd_ExecuteString (const char *text, ...)
+{
+	va_list ap;
+
+	va_start(ap, text);
+	Cmd_vExecuteString(text, ap);
+	va_end(ap);
 }
 
 /**
@@ -1048,7 +1061,7 @@ static void Cmd_Test_f (void)
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_streq(cmd->name, "quit"))
-			Cmd_ExecuteString(cmd->name);
+			Cmd_ExecuteString("%s", cmd->name);
 	}
 }
 

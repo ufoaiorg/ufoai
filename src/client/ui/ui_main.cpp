@@ -105,11 +105,8 @@ static void UI_Memory_f (void)
 void UI_ExecuteConfunc (const char *fmt, ...)
 {
 	va_list ap;
-	char confunc[MAX_CONFUNC_SIZE];
-
 	va_start(ap, fmt);
-	Q_vsnprintf(confunc, sizeof(confunc), fmt, ap);
-	Cmd_ExecuteString(confunc);
+	Cmd_vExecuteString(fmt, ap);
 	va_end(ap);
 }
 

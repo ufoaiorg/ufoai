@@ -75,7 +75,7 @@ static void TUT_ListClick_f (void)
 	if (num < 0 || num >= numTutorials)
 		return;
 
-	Cmd_ExecuteString(va("seq_start %s", tutorials[num].sequence));
+	Cmd_ExecuteString("seq_start %s", tutorials[num].sequence);
 }
 
 void TUT_InitStartup (void)

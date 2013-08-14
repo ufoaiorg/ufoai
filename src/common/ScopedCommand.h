@@ -9,18 +9,18 @@ public:
 	ScopedCommand (const std::string& scopeEnterCommand, const std::string& scopeLeaveCommand) :
 			_scopeLeaveCommand(scopeLeaveCommand)
 	{
-		Cmd_ExecuteString(scopeEnterCommand.c_str());
+		Cmd_ExecuteString("%s", scopeEnterCommand.c_str());
 	}
 
 	ScopedCommand (const std::string& command, const std::string& scopeEnterParameter, const std::string& scopeLeaveParameter) :
 			_scopeLeaveCommand(command + " " + scopeLeaveParameter)
 	{
 		const std::string enter = command + " " + scopeEnterParameter;
-		Cmd_ExecuteString(enter.c_str());
+		Cmd_ExecuteString("%s", enter.c_str());
 	}
 
 	~ScopedCommand ()
 	{
-		Cmd_ExecuteString(_scopeLeaveCommand.c_str());
+		Cmd_ExecuteString("%s", _scopeLeaveCommand.c_str());
 	}
 };

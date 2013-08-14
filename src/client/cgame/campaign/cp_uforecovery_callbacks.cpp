@@ -581,7 +581,7 @@ static void US_DestroySoredUFO_f (void)
 		return;
 	}
 	US_RemoveStoredUFO(ufo);
-	cgi->Cmd_ExecuteString(va("mn_installation_select %d", ufo->installation->idx));
+	cgi->Cmd_ExecuteString("mn_installation_select %d", ufo->installation->idx);
 }
 
 /**

@@ -589,7 +589,7 @@ static void TR_Add_f (void)
 	TR_Fill(base, td.transferBase, td.currentTransferType);
 	/* Update capacity list of destination base */
 	if (td.transferBase)
-		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
 }
 
 /**
@@ -630,7 +630,7 @@ static void TR_TransferListClear_f (void)
 
 	/* Update capacity list of destination base */
 	if (td.transferBase)
-		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
 }
 
 /**
@@ -654,7 +654,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 
 	/* Update capacity list of destination base */
 	if (td.transferBase)
-		cgi->Cmd_ExecuteString(va("ui_trans_caplist %d", td.transferBase->idx));
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
 }
 
 /**
@@ -728,7 +728,7 @@ static void TR_Init_f (void)
 	/* Set up cvar used with tabset */
 	cgi->Cvar_Set("mn_itemtype", transferTypeIDs[0]);
 	/* Select first available item */
-	cgi->Cmd_ExecuteString(va("ui_trans_fill %s", transferTypeIDs[0]));
+	cgi->Cmd_ExecuteString("ui_trans_fill %s", transferTypeIDs[0]);
 }
 
 /**

@@ -84,7 +84,7 @@ void CL_ViewLoadMedia (void)
 		SCR_DrawLoading(loadingPercent);
 		cl.model_draw[i] = R_FindModel(name);
 		if (!cl.model_draw[i]) {
-			Cmd_ExecuteString("fs_info\n");
+			Cmd_ExecuteString("fs_info");
 			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
 		}
 

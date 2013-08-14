@@ -534,7 +534,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 		}
 	} else if (key == K_MOUSE2) {
 		if (entry) {
-			cgi->Cmd_ExecuteString(va("building_destroy %i %i", base->idx, entry->idx));
+			cgi->Cmd_ExecuteString("building_destroy %i %i", base->idx, entry->idx);
 		}
 	} else if (key == K_MOUSE1) {
 		if (ccs.baseAction == BA_NEWBUILDING) {

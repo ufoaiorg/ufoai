@@ -67,7 +67,6 @@ static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
  */
 static void GAME_MP_StartServer_f (void)
 {
-	char map[MAX_VAR];
 	const mapDef_t *md;
 
 	if (!cgi->Cvar_GetInteger("sv_dedicated") && cgi->GAME_IsTeamEmpty())
@@ -84,8 +83,6 @@ static void GAME_MP_StartServer_f (void)
 		return;
 	assert(md->map);
 
-	Com_sprintf(map, sizeof(map), "map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
-
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
 	cgi->Cvar_Set("rm_drop", "");
 	cgi->Cvar_Set("rm_ufo", "");
@@ -96,7 +93,7 @@ static void GAME_MP_StartServer_f (void)
 	else
 		cgi->Cvar_SetValue("sv_maxteams", 2);
 
-	cgi->Cmd_ExecuteString(map);
+	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame");
 }

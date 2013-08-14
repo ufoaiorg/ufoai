@@ -154,7 +154,8 @@ void Cmd_TokenizeString(const char *text, bool macroExpand);
  * @brief Parses a single line of text into arguments and tries to execute it
  * as if it was typed at the console
  */
-void Cmd_ExecuteString(const char *text);
+void Cmd_ExecuteString(const char *text, ...) __attribute__((format(__printf__, 1, 2)));
+void Cmd_vExecuteString(const char *fmt, va_list ap);
 
 /**
  * @brief adds the current command line as a clc_stringcmd to the client message.

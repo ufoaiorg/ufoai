@@ -282,7 +282,7 @@ typedef struct cgame_import_s {
 	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
 	void (IMPORT *Cmd_AddCommand) (const char *cmdName, xcommand_t function, const char *desc);
 	void (IMPORT *Cmd_RemoveCommand) (const char *cmdName);
-	void (IMPORT *Cmd_ExecuteString) (const char *text);
+	void (IMPORT *Cmd_ExecuteString) (const char *text, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *Cmd_AddParamCompleteFunction) (const char *cmd_name, int (*function)(const char *partial, const char **match));
 	bool (IMPORT *Cmd_GenericCompleteFunction) (char const* candidate, char const* partial, char const** match);
 	mapDef_t* (IMPORT *Com_GetMapDefinitionByID) (const char *mapDefID);

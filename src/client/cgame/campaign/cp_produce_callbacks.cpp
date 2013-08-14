@@ -273,7 +273,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		cgi->Cvar_Set("mn_item", od->id);
 
 		PR_RequirementsInfo(base, &tech->requireForProduction);
-		cgi->Cmd_ExecuteString(va("show_requirements %i", tech->requireForProduction.numLinks));
+		cgi->Cmd_ExecuteString("show_requirements %i", tech->requireForProduction.numLinks);
 	}
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
@@ -330,7 +330,7 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
-	cgi->Cmd_ExecuteString(va("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks));
+	cgi->Cmd_ExecuteString("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks);
 }
 
 /**

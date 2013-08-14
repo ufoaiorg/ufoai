@@ -332,7 +332,7 @@ static void HUD_ExecuteAction_f (void)
 		if (strlen(rest) >= 4) {
 			char const hand  = rest[0];
 			int  const index = atoi(rest + 3);
-			Cmd_ExecuteString(va("hud_fireweapon %c %i", hand, index));
+			Cmd_ExecuteString("hud_fireweapon %c %i", hand, index);
 			return;
 		}
 	}

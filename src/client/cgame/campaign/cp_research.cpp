@@ -65,7 +65,7 @@ void RS_ResearchFinish (technology_t* tech)
 
 	/* execute the trigger only if the tech is not yet researched */
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
-		cgi->Cmd_ExecuteString(tech->finishedResearchEvent);
+		cgi->Cmd_ExecuteString("%s", tech->finishedResearchEvent);
 
 	tech->statusResearch = RS_FINISH;
 	tech->researchedDate = ccs.date;

@@ -214,11 +214,11 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	}
 
 	cgi->Cvar_Set("mn_target", _("None"));
-	cgi->Cmd_ExecuteString("setautofire disable");
+	cgi->UI_ExecuteConfunc("setautofire disable");
 	if (installation) {
 		/* Every slot aims the same target */
 		if (installation->numBatteries) {
-			cgi->Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
+			cgi->UI_ExecuteConfunc("setautofire %i", installation->batteries[0].autofire);
 
 			if (installation->batteries[0].target)
 				cgi->Cvar_Set("mn_target", UFO_GetName(installation->batteries[0].target));
@@ -237,7 +237,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 				cgi->Cvar_Set("mn_target", UFO_GetName(base->lasers[0].target));
 		}
 		if (base->numBatteries || base->numLasers)
-			cgi->Cmd_ExecuteString(va("setautofire %i", autofire));
+			cgi->UI_ExecuteConfunc("setautofire %i", autofire);
 	}
 
 	/* Check if we can change to laser or missile */
@@ -393,7 +393,7 @@ static void BDEF_AddItem_f (void)
 	}
 
 	/* Reinit menu */
-	cgi->Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
+	cgi->Cmd_ExecuteString("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type));
 }
 
 /**
@@ -465,7 +465,7 @@ static void BDEF_RemoveItem_f (void)
 			slot->installationTime = 0;
 		}
 	}
-	cgi->Cmd_ExecuteString(va("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type)));
+	cgi->Cmd_ExecuteString("basedef_updatemenu %s", BDEF_GetIDFromItemType(slot->type));
 }
 
 /**
