@@ -1088,9 +1088,7 @@ window hud_default extends hud
 	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
-		*cvar:i = (*node:root.reactions.rf<1><2>.timeremaining@max - <3>)
-		*node:root.reactions.rf<1><2>.timeremaining@current = *cvar:i
-		delete *cvar:i
+		*node:root.reactions.rf<1><2>.timeremaining@current = (*node:root.reactions.rf<1><2>.timeremaining@max - <3>)
 
 		// Target is out of range
 		if ( <4> == 1 ) {
