@@ -1116,34 +1116,23 @@ static bool G_PrepareShot (Edict *ent, shoot_types_t shootType, fireDefIndex_t f
 bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
 {
-	const fireDef_t *fd;
-	Item *weapon;
-	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, prevDir, shots;
-	containerIndex_t container;
-	int mask;
-	bool quiet;
-	vec3_t impact;
-	int tusNeeded;
-
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
-	quiet = (mock != nullptr) || G_IsAIPlayer(&player);
+	const bool quiet = (mock != nullptr) || G_IsAIPlayer(&player);
 
-	weapon = nullptr;
-	fd = nullptr;
-	container = 0;
+	Item *weapon = nullptr;
+	const fireDef_t *fd = nullptr;
+	containerIndex_t container = 0;
 	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!"));
 		return false;
 	}
 
-	ammo = weapon->getAmmoLeft();
-	tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
+	const int tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
 	if (allowReaction) {
 		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded))
 			return false;
@@ -1175,6 +1164,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* check we're not out of ammo */
+	int ammo = weapon->getAmmoLeft();
 	if (!ammo && fd->ammo && !weapon->def()->thrown) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no ammo!"));
@@ -1182,6 +1172,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* check target is not out of range */
+	vec3_t target;
 	gi.GridPosToVec(ent->fieldSize, at, target);
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
@@ -1197,7 +1188,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 			/* Splash damage */
 			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += tusNeeded;
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
-			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+			for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
 				ent->chr.scoreMission->firedSplashHit[i] = false;
 			}
@@ -1205,7 +1196,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 			/* Direct hits */
 			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += tusNeeded;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
-			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+			for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
 				ent->chr.scoreMission->firedHit[i] = false;
 			}
@@ -1213,7 +1204,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* fire shots */
-	shots = fd->shots;
+	int shots = fd->shots;
 	if (fd->ammo && !weapon->def()->thrown) {
 		/**
 		 * If loaded ammo is less than needed ammo from firedef
@@ -1237,10 +1228,8 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* rotate the player */
-	if (mock)
-		prevDir = ent->dir;
-	else
-		prevDir = 0;
+	const int prevDir = mock ? ent->dir : 0;
+	vec3_t dir;
 
 	if (!G_EdictPosIsSameAs(ent, at)) {
 		VectorSubtract(at, ent->pos, dir);
@@ -1256,9 +1245,10 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	/* calculate visibility */
 	target[2] -= z_align;
 	VectorSubtract(target, ent->origin, dir);
+	vec3_t center;
 	VectorMA(ent->origin, 0.5, dir, center);
-	mask = 0;
-	for (i = 0; i < MAX_TEAMS; i++)
+	int mask = 0;
+	for (int i = 0; i < MAX_TEAMS; i++)
 		if (G_IsVisibleForTeam(ent, i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
 			mask |= G_TeamToVisMask(i);
 
@@ -1312,10 +1302,12 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		}
 	}
 
+	vec3_t shotOrigin;
 	G_GetShotOrigin(ent, fd, dir, shotOrigin);
 
 	/* Fire all shots. */
-	for (i = 0; i < shots; i++)
+	vec3_t impact;
+	for (int i = 0; i < shots; i++)
 		if (fd->gravity)
 			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
 		else
