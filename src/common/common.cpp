@@ -545,15 +545,12 @@ void Com_ClearArgv (int arg)
 	com_argv[arg] = "";
 }
 
-
 static void Com_InitArgv (int argc, char **argv)
 {
-	int i;
-
 	if (argc > MAX_NUM_ARGVS)
 		Com_Error(ERR_FATAL, "argc > MAX_NUM_ARGVS");
 	com_argc = argc;
-	for (i = 0; i < argc; i++) {
+	for (int i = 0; i < argc; i++) {
 		if (!argv[i] || strlen(argv[i]) >= MAX_TOKEN_CHARS)
 			com_argv[i] = "";
 		else

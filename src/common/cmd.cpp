@@ -268,9 +268,8 @@ void Cbuf_Execute (void)
  */
 void Cbuf_AddEarlyCommands (bool clear)
 {
-	int i;
-
-	for (i = 1; i < Com_Argc(); i++) {
+	const int argc = Com_Argc();
+	for (int i = 1; i < argc; i++) {
 		const char *s = Com_Argv(i);
 		if (!Q_streq(s, "+set"))
 			continue;
@@ -292,50 +291,43 @@ void Cbuf_AddEarlyCommands (bool clear)
  */
 bool Cbuf_AddLateCommands (void)
 {
-	int i, j;
-	int s;
-	char *text, *build, c;
-	int argc;
-	bool ret;
-
 	/* build the combined string to parse from */
-	s = 0;
-	argc = Com_Argc();
-	for (i = 1; i < argc; i++) {
+	int s = 0;
+	const int argc = Com_Argc();
+	for (int i = 1; i < argc; i++) {
 		s += strlen(Com_Argv(i)) + 1;
 	}
 	if (!s)
 		return false;
 
-	text = Mem_AllocTypeN(char, s + 1);
-	text[0] = 0;
-	for (i = 1; i < argc; i++) {
+	char *text = Mem_AllocTypeN(char, s + 1);
+	for (int i = 1; i < argc; i++) {
 		Q_strcat(text, Com_Argv(i), s);
 		if (i != argc - 1)
 			Q_strcat(text, " ", s);
 	}
 
 	/* pull out the commands */
-	build = Mem_AllocTypeN(char, s + 1);
-	build[0] = 0;
+	char *build = Mem_AllocTypeN(char, s + 1);
 
-	for (i = 0; i < s - 1; i++) {
-		if (text[i] == '+') {
-			i++;
+	for (int i = 0; i < s - 1; i++) {
+		if (text[i] != '+')
+			continue;
+		i++;
 
-			for (j = i; text[j] != '+' && text[j] != '-' && text[j] != 0; j++) {}
+		int j;
+		for (j = i; text[j] != '+' && text[j] != '-' && text[j] != '\0'; j++) {}
 
-			c = text[j];
-			text[j] = 0;
+		const char c = text[j];
+		text[j] = '\0';
 
-			Q_strcat(build, text + i, s);
-			Q_strcat(build, "\n", s);
-			text[j] = c;
-			i = j - 1;
-		}
+		Q_strcat(build, text + i, s);
+		Q_strcat(build, "\n", s);
+		text[j] = c;
+		i = j - 1;
 	}
 
-	ret = (build[0] != 0);
+	const bool ret = build[0] != '\0';
 	if (ret)
 		Cbuf_AddText(build);
 
