@@ -1738,6 +1738,9 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_saveteamstate", GAME_SaveTeamState_f);
 	Cmd_AddCommand("game_saveteam", GAME_SaveTeam_f, "Save a team slot");
 	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
+	Cmd_AddCommand("game_uploadteam", GAME_UploadTeam_f, "Upload a team to the UFOAI server");
+	Cmd_AddCommand("game_downloadteam", GAME_DownloadTeam_f, "Download a team from the UFOAI server");
+	Cmd_AddCommand("game_listteams", GAME_ListTeams_f, "Show all teams on the UFOAI server");
 	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
 	Cmd_AddCommand("game_teamupdate", GAME_UpdateTeamMenuParameters_f, "");
 	Cmd_AddCommand("game_actorselect", GAME_ActorSelect_f, "Select an actor in the equipment menu");

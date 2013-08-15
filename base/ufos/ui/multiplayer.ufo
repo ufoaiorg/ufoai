@@ -97,6 +97,66 @@ window abstract_multiplayer
 
 }
 
+component downloadentry extends button
+{
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"240 135"
+		size		"200 34"
+		string		""
+		onClick		{ cmd "game_downloadteam someidtodo;" }
+	}
+}
+
+window multiplayer_team_download extends abstract_multiplayer
+{
+	panel downloadable
+	{
+		{
+			pos		"482 130"
+			size	"440 550"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	4
+			border	1
+			bordercolor		"1 1 1 1"
+		}
+	}
+
+	string headline
+	{
+		string	"_Available teams:"
+		pos		"482 100"
+		size	"440 20"
+		font	"f_big"
+	}
+
+	/**
+	 * @brief Add a server stored team to the list of downloadable teams
+	 * @param <1> The download id
+	 * @param <2> The name
+	 */
+	confunc teamlist_add
+	{
+		call *node:root.downloadable@createChild("download<1>", "downloadentry")
+		*node:root.downloadable.download<1>@string = <2>
+	}
+
+	confunc teamlist_clear
+	{
+		call *node:root.downloadable@removeAllChild
+	}
+
+	func onWindowOpened
+	{
+		cmd	"teamlist_clear;game_listteams;"
+	}
+}
+
 // =====================
 // MP TEAM MENU
 // =====================
@@ -108,6 +168,19 @@ window multiplayer_team extends abstract_multiplayer
 			pos		"482 100"
 			size	"480 350"
 		}
+	}
+
+	button button_download
+	{
+		pos	"482 420"
+		size "200 40"
+		tooltip	"_Download pre created teams from the ufoai webserver"
+		onClick	{ cmd "ui_push multiplayer_team_download;" }
+		background	"ui/button_green_small"
+		font	"f_menusmall"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Download"
 	}
 
 	func onWindowOpened

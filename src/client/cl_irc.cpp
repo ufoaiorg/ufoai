@@ -1820,7 +1820,7 @@ static void Irc_Client_Kick_f (void)
 	Irc_Proto_Kick(channel, nick, reason);
 }
 
-static void Irc_GetExternalIP (const char *externalIP)
+static void Irc_GetExternalIP (const char *externalIP, void *userdata)
 {
 	const irc_user_t *user;
 	char buf[128];

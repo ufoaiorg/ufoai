@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);
+void GAME_UploadTeam_f(void);
+void GAME_DownloadTeam_f(void);
+void GAME_ListTeams_f(void);
 void GAME_TeamSlotComments_f(void);
 void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);

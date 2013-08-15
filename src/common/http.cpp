@@ -95,10 +95,7 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 	Q_strncpyz(headerBuff, (const char *)ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
-		dlhandle_t *dl;
-
-		dl = (dlhandle_t *)stream;
-
+		dlhandle_t *dl = (dlhandle_t *)stream;
 		if (dl->file)
 			dl->fileSize = strtoul(headerBuff + 16, nullptr, 10);
 	}
@@ -167,7 +164,7 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static char *HTTP_GetURLInternal (const char *url)
+static char *HTTP_GetURLInternal (const char *url, FILE* file)
 {
 	dlhandle_t dl;
 	char buf[576];
@@ -185,8 +182,13 @@ static char *HTTP_GetURLInternal (const char *url)
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_FAILONERROR, 1);
-	curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
-	curl_easy_setopt(dl.curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
+	if (file) {
+		curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, file);
+		curl_easy_setopt(dl.curl, CURLOPT_WRITEFUNCTION, nullptr);
+	} else {
+		curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
+		curl_easy_setopt(dl.curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
+	}
 	curl_easy_setopt(dl.curl, CURLOPT_PROXY, http_proxy->string);
 	curl_easy_setopt(dl.curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
@@ -239,11 +241,16 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_easy_cleanup(curl);
 }
 
-void HTTP_GetURL (const char *url, http_callback_t callback)
+void HTTP_GetToFile (const char *url, FILE* file)
 {
-	char *response = HTTP_GetURLInternal(url);
+	HTTP_GetURLInternal(url, file);
+}
+
+void HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
+{
+	char *response = HTTP_GetURLInternal(url, nullptr);
 	if (callback != nullptr)
-		callback(response);
+		callback(response, userdata);
 	Mem_Free(response);
 }
 

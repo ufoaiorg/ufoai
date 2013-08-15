@@ -377,7 +377,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	cgi->NET_StreamFree(s);
 }
 
-static void CL_QueryMasterServerThread (const char *responseBuf)
+static void CL_QueryMasterServerThread (const char *responseBuf, void *userdata)
 {
 	const char *serverListBuf;
 	const char *token;

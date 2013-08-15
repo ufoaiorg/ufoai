@@ -62,9 +62,10 @@ typedef struct upparam_s {
 	struct upparam_s* next;
 } upparam_t;
 
-typedef void (*http_callback_t) (const char *response);
+typedef void (*http_callback_t) (const char *response, void *userdata);
 
-void HTTP_GetURL(const char *url, http_callback_t callback);
+void HTTP_GetToFile(const char *url, FILE* file);
+void HTTP_GetURL(const char *url, http_callback_t callback, void *userdata = nullptr);
 void HTTP_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params);
 size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream);
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream);
