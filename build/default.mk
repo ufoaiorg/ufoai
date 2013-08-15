@@ -151,10 +151,6 @@ ifdef HAVE_SDL2_MIXER_SDL_MIXER_H
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL2_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL2_mixer)
 else
-ifdef HAVE_SDL_MIXER_SDL_MIXER_H
-SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
-SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
-else
 ifdef HAVE_SDL2_SDL_H
 SDL_MIXER_LIBS           ?=
 SDL_MIXER_CFLAGS         ?= -Isrc/libs/vorbis -Isrc/libs/vorbis/src -Isrc/libs/vorbis/include -Isrc/libs/ogg/include -Isrc/libs/SDL_mixer -DOGG_MUSIC -DWAV_MUSIC -DHAVE_SDL_MIXER_H
@@ -208,7 +204,6 @@ SDL_MIXER_SRCS            = \
 else
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
-endif
 endif
 endif
 OPENGL_CFLAGS            ?= $(call PKG_CFLAGS,gl,GL)
