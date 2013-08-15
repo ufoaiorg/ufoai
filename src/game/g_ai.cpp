@@ -677,11 +677,6 @@ static inline bool AI_IsValidTarget (const Edict *ent, const Edict *target)
  */
 static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
-	Edict *check = nullptr;
-	shoot_types_t shootType;
-	float minDist;
-	float bestActionScore, maxDmg;
-	int bestTime = -1;
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	int tu = G_ActorUsableTUs(ent) - move;
 
@@ -689,7 +684,6 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
-	bestActionScore = 0.0;
 	aia->reset();
 
 	/* set basic parameters */
@@ -697,15 +691,19 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	maxDmg = 0.0;
 	/* search best target */
+	float maxDmg = 0.0;
+	float bestActionScore = 0.0;
+	int bestTime = -1;
+	Edict *check = nullptr;
+
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (G_EdictPosIsSameAs(check, to) || !AI_IsValidTarget(ent, check))
 			continue;
 
 		/* shooting */
 		maxDmg = 0.0;
-		for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 			const Item *item = AI_GetItemForShootType(shootType, ent);
 			if (!item)
 				continue;
@@ -764,7 +762,7 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 	}
 
 	/* reward closing in */
-	minDist = CLOSE_IN_DIST;
+	float minDist = CLOSE_IN_DIST;
 	check = nullptr;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (check->team != ent->team) {
