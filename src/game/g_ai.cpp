@@ -770,8 +770,11 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 			minDist = std::min(dist, minDist);
 		}
 	}
-	if (G_IsRaged(ent) || aia->target)
+	if (aia->target || G_IsRaged(ent))
 		bestActionScore += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+	else
+		/* if no target available let them wander around until they find one */
+		bestActionScore += SCORE_RANDOM * frand();
 
 	/* penalize herding */
 	check = nullptr;
