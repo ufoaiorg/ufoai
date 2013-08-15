@@ -94,7 +94,7 @@ typedef enum artType_s {
 } artType_t;
 
 typedef struct ptlArt_s {
-	char name[MAX_VAR];	/**< the path of the particle art */
+	char name[MAX_VAR];	/**< the path of the particle art - must be the first entry because the parsing code relies on this */
 	int frame;
 	int skin;		/**< the skin of the model */
 	union {
