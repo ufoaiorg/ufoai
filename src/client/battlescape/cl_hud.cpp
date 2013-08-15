@@ -1336,7 +1336,7 @@ static void HUD_ActorWoundData_f (void)
 					_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
 			for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
 				if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
-					Q_strcat(text, va(_("- Reduced %s\n"), HUD_GetPenaltyString(penalty)), lengthof(text));
+					Q_strcat(text, lengthof(text), va(_("- Reduced %s\n"), HUD_GetPenaltyString(penalty)));
 			UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
 		}
 	}
@@ -1374,7 +1374,7 @@ static void HUD_UpdateActorLoad_f (void)
 				if (fireDef[i].time > 0 && fireDef[i].time > tus) {
 					if (count <= 0)
 						Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-					Q_strcat(popupText, va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time), sizeof(popupText));
+					Q_strcat(popupText, sizeof(popupText), va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time));
 					++count;
 				}
 		}

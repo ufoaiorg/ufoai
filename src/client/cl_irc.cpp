@@ -644,7 +644,7 @@ static bool Irc_AppendToBuffer (const char* const msg, ...)
 	}
 
 	Com_sprintf(buf, sizeof(buf), "%s\n", appendString);
-	Q_strcat(irc_buffer, buf, sizeof(irc_buffer));
+	Q_strcat(irc_buffer, sizeof(irc_buffer), buf);
 	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", appendString);
 

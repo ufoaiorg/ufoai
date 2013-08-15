@@ -259,23 +259,23 @@ void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLen
 			if (item.def() == item.ammoDef()) {
 				/* Item has no ammo but might have shot-count */
 				if (item.getAmmoLeft()) {
-					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
+					Q_strcat(tooltipText, stringMaxLength, va(_("Ammo: %i\n"), item.getAmmoLeft()));
 				}
 			} else if (item.ammoDef()) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.ammoDef()->name)), stringMaxLength);
-				Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.getAmmoLeft()), stringMaxLength);
+				Q_strcat(tooltipText, stringMaxLength, va(_("%s loaded\n"), _(item.ammoDef()->name)));
+				Q_strcat(tooltipText, stringMaxLength, va(_("Ammo: %i\n"), item.getAmmoLeft()));
 			}
 		} else if (item.def()->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(item.def()->numWeapons == 1 && item.def()->weapons[0] == item.def())) {
 				int i;
 				/* If it's ammo get the weapon names it can be used in */
-				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
+				Q_strcat(tooltipText, stringMaxLength, _("Usable in:\n"));
 				for (i = 0; i < item.def()->numWeapons; i++) {
 					const objDef_t *weapon = item.def()->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
-						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
+						Q_strcat(tooltipText, stringMaxLength, va("* %s\n", _(weapon->name)));
 					}
 				}
 			}
@@ -673,7 +673,7 @@ void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		UI_GetItemTooltip(*itemHover, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
 		/* Display stored container-coordinates of the item. */
-		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->getX(), itemHover->getY()), sizeof(tooltiptext));
+		Q_strcat(tooltiptext, sizeof(tooltiptext), va("\n%i/%i", itemHover->getX(), itemHover->getY()));
 #endif
 		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
 	}

@@ -1022,12 +1022,12 @@ static void SV_PrintMapStrings (const MapInfo *map, char *asmTiles, char *asmPos
 			SV_DumpPlaced(map, i);
 
 		if (asmTiles[0])
-			Q_strcat(asmTiles, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+			Q_strcat(asmTiles, MAX_TOKEN_CHARS * MAX_TILESTRINGS, " ");
 		if (asmPos[0])
-			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+			Q_strcat(asmPos, MAX_TOKEN_CHARS * MAX_TILESTRINGS, " ");
 
-		Q_strcat(asmTiles, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		Q_strcat(asmPos, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmTiles, MAX_TOKEN_CHARS * MAX_TILESTRINGS, va("%s", pl->tile->id));
+		Q_strcat(asmPos, MAX_TOKEN_CHARS * MAX_TILESTRINGS, va("%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0));
 	}
 
 	Com_Printf("tiles: %s\n", asmTiles);

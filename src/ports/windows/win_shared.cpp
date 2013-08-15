@@ -423,7 +423,7 @@ char *Sys_GetHomeDirectory (void)
 		return nullptr;
 	}
 
-	Q_strcat(path, "\\UFOAI", sizeof(path));
+	Q_strcat(path, sizeof(path), "\\UFOAI");
 	FreeLibrary(shfolder);
 
 	if (!CreateDirectory(path, nullptr)) {

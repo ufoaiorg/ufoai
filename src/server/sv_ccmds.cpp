@@ -303,7 +303,7 @@ static void SV_ConSay_f (void)
 	if (*p == '"')
 		p++;
 
-	Q_strcat(text, p, sizeof(text));
+	Q_strcat(text, sizeof(text), p);
 	if (text[strlen(text)] == '"')
 		text[strlen(text)] = 0;
 	SV_BroadcastPrintf(PRINT_CHAT, "%s\n", text);

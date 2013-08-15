@@ -678,8 +678,8 @@ static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
 	char gdir[MAX_OSPATH];
 
 	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
-		Q_strcat(gdir, "/", sizeof(gdir));
-		Q_strcat(gdir, dir, sizeof(gdir));
+		Q_strcat(gdir, sizeof(gdir), "/");
+		Q_strcat(gdir, sizeof(gdir), dir);
 		FS_CreatePath(va("%s/", gdir));
 		FS_AddGameDirectory(gdir, write);
 	}
@@ -696,7 +696,7 @@ int FS_GetModList (linkedList_t **mods)
 
 	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
 		char const * const append = "/" MODS_DIR;
-		Q_strcat(gdir, append, sizeof(gdir));
+		Q_strcat(gdir, sizeof(gdir), append);
 		homedir = gdir;
 	} else {
 		homedir = nullptr;

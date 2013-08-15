@@ -298,8 +298,8 @@ void R_DumpOpenGlState (void)
 
 	for (int i = 0; i < lengthof(openGLCaps); i++) {
 		if (glIsEnabled(openGLCaps[i].idx)) {
-			Q_strcat(s, openGLCaps[i].text, sizeof(s));
-			Q_strcat(s, " ", sizeof(s));
+			Q_strcat(s, sizeof(s), openGLCaps[i].text);
+			Q_strcat(s, sizeof(s), " ");
 		}
 	}
 	glGetFloatv(GL_CURRENT_COLOR, color);

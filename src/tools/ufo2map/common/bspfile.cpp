@@ -517,7 +517,7 @@ const char *UnparseEntities (void)
 		if (!ep)
 			continue;	/* ent got removed */
 
-		Q_strcat(curTile->entdata, "{\n", sizeof(curTile->entdata));
+		Q_strcat(curTile->entdata, sizeof(curTile->entdata), "{\n");
 
 		for (ep = entities[i].epairs; ep; ep = ep->next) {
 			Q_strncpyz(key, ep->key, sizeof(key));
@@ -528,9 +528,9 @@ const char *UnparseEntities (void)
 			if (IsInvalidEntityToken(value) || IsInvalidEntityToken(key))
 				Sys_Error("Invalid entity %i found with key '%s' and value '%s'", i, key, value);
 			Com_sprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
-			Q_strcat(curTile->entdata, line, sizeof(curTile->entdata));
+			Q_strcat(curTile->entdata, sizeof(curTile->entdata), line);
 		}
-		Q_strcat(curTile->entdata, "}\n", sizeof(curTile->entdata));
+		Q_strcat(curTile->entdata, sizeof(curTile->entdata), "}\n");
 	}
 	curTile->entdatasize = strlen(curTile->entdata);
 

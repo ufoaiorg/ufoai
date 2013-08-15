@@ -49,10 +49,10 @@ static void G_Players_f (const Player &player)
 
 		/* can't print all of them in one packet */
 		if (strlen(smallBuf) + strlen(largeBuf) > sizeof(largeBuf) - 100) {
-			Q_strcat(largeBuf, "...\n", sizeof(largeBuf));
+			Q_strcat(largeBuf, sizeof(largeBuf), "...\n");
 			break;
 		}
-		Q_strcat(largeBuf, smallBuf, sizeof(largeBuf));
+		Q_strcat(largeBuf, sizeof(largeBuf), smallBuf);
 		count++;
 	}
 
@@ -102,17 +102,17 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 		Com_sprintf(text, sizeof(text), "^B%s (team): ", player.pers.netname);
 
 	if (arg0) {
-		Q_strcat(text, gi.Cmd_Argv(0), sizeof(text));
-		Q_strcat(text, " ", sizeof(text));
-		Q_strcat(text, gi.Cmd_Args(), sizeof(text));
+		Q_strcat(text, sizeof(text), gi.Cmd_Argv(0));
+		Q_strcat(text, sizeof(text), " ");
+		Q_strcat(text, sizeof(text), gi.Cmd_Args());
 	} else {
 		const char *p = gi.Cmd_Args();
 		const char *token = Com_Parse(&p);
 
-		Q_strcat(text, token, sizeof(text));
+		Q_strcat(text, sizeof(text), token);
 	}
 
-	Q_strcat(text, "\n", sizeof(text));
+	Q_strcat(text, sizeof(text), "\n");
 
 	if (sv_dedicated->integer)
 		gi.DPrintf("%s", text);

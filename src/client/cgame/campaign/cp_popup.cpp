@@ -222,11 +222,11 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.textPopup, va(_("Back to base\t%s\n"), aircraft->homebase->name), lengthof(popupAircraft.textPopup));
+	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), va(_("Back to base\t%s\n"), aircraft->homebase->name));
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_STOP;
-	Q_strcat(popupAircraft.textPopup, _("Stop\n"), lengthof(popupAircraft.textPopup));
+	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Stop\n"));
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_CHANGE_HOMEBASE;
-	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), lengthof(popupAircraft.textPopup));
+	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Change homebase\n"));
 
 	/* Set missions in popup_aircraft */
 	if (AIR_GetTeamSize(aircraft) > 0) {
@@ -237,7 +237,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 			if (tempMission->pos) {
 				popupAircraft.itemsId[popupAircraft.numItems] = MIS_GetIdx(tempMission);
 				popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-				Q_strcat(popupAircraft.textPopup, va(_("Mission\t%s\n"), MIS_GetName(tempMission)), lengthof(popupAircraft.textPopup));
+				Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), va(_("Mission\t%s\n"), MIS_GetName(tempMission)));
 			}
 		}
 	}

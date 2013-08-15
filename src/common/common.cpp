@@ -345,7 +345,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 			NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
 			rd_buffer[0] = '\0';
 		}
-		Q_strcat(rd_buffer, msg, sizeof(char) * rd_buffersize);
+		Q_strcat(rd_buffer, sizeof(char) * rd_buffersize, msg);
 		return;
 	}
 
@@ -725,8 +725,8 @@ bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, ui
 			Com_Printf("\n");
 		if (cmd) {
 			/* append the found parameter */
-			Q_strcat(cmdLine, " ", sizeof(cmdLine));
-			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
+			Q_strcat(cmdLine, sizeof(cmdLine), " ");
+			Q_strcat(cmdLine, sizeof(cmdLine), cmd);
 			append = false;
 			use = cmdLine;
 		} else

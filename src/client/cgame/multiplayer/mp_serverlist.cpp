@@ -136,7 +136,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 						server->sv_maxclients);
 					server->serverListPos = serverListPos;
 					serverListPos++;
-					Q_strcat(serverText, string, sizeof(serverText));
+					Q_strcat(serverText, sizeof(serverText), string);
 				}
 			}
 		} else if (strncmp(str, "print", 5) == 0) {
@@ -263,7 +263,7 @@ void CL_ParseTeamInfoMessage (dbuffer *msg)
 	if (!cnt) {
 		/** @todo warning must not be into the player list.
 		 * if we see this we are the first player that would be connected to the server */
-		/* Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText)); */
+		/* Q_strcat(teamData.teamInfoText, sizeof(teamData.teamInfoText), _("No player connected\n")); */
 	}
 
 	cgi->Cvar_SetValue("mn_maxteams", teamData.maxteams);

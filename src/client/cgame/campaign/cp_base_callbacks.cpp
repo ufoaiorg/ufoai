@@ -890,34 +890,34 @@ static void BaseSummary_Init (const base_t *base)
 	static char textInfoBuffer[1024];
 	textInfoBuffer[0] = 0;
 
-	Q_strcat(textInfoBuffer, _("^BAircraft\n"), sizeof(textInfoBuffer));
+	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BAircraft\n"));
 	for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++) {
 		const aircraftType_t airType = (aircraftType_t)i;
 		const int count = AIR_CountTypeInBase(base, airType);
 		if (count == 0)
 			continue;
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
-			count), sizeof(textInfoBuffer));
+		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
+			count));
 	}
-	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
+	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
 
-	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
+	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BEmployees\n"));
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		const int cnt = E_CountHired(base, emplType);
 		if (cnt == 0)
 			continue;
 		const char *desc = E_GetEmployeeString(emplType, cnt);
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", desc, cnt), sizeof(textInfoBuffer));
+		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i\n", desc, cnt));
 	}
-	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
+	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
 
-	Q_strcat(textInfoBuffer, _("^BAliens\n"), sizeof(textInfoBuffer));
+	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BAliens\n"));
 	if (base->alienContainment) {
 		linkedList_t *list = base->alienContainment->list();
 		LIST_Foreach(list, alienCargo_t, item) {
-			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i/%i\n",
-				_(item->teamDef->name), item->alive, item->dead), sizeof(textInfoBuffer));
+			Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i/%i\n",
+				_(item->teamDef->name), item->alive, item->dead));
 		}
 		cgi->LIST_Delete(&list);
 	}

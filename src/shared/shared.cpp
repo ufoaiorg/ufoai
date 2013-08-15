@@ -475,7 +475,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
  * @return pointer destination string.
  * never goes past bounds or leaves without a terminating 0
  */
-void Q_strcat (char *dest, const char *src, size_t destsize)
+void Q_strcat (char *dest, size_t destsize, const char *src)
 {
 	const size_t dest_length = strlen(dest);
 	if (dest_length >= destsize)

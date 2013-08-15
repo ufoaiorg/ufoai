@@ -267,7 +267,7 @@ static int PrecalcNormalsAndTangents (const char *filename)
 	Com_Printf("- model '%s'\n", filename);
 
 	Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
-	Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
+	Q_strcat(mdxFileName, sizeof(mdxFileName), ".mdx");
 
 	if (!config.overwrite && FS_CheckFile("%s", mdxFileName) != -1) {
 		Com_Printf("  \\ - mdx already exists\n");

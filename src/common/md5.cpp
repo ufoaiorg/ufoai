@@ -301,7 +301,7 @@ char *Com_MD5File (const char *fn, int length)
 	final[0] = '\0';
 
 	for (i = 0; i < 16; i++)
-		Q_strcat(final, va("%02X", digest[i]), sizeof(final));
+		Q_strcat(final, sizeof(final), va("%02X", digest[i]));
 
 	return final;
 }

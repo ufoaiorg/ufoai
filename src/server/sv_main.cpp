@@ -447,8 +447,8 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 
 		/* execute the rcon commands */
 		for (i = 2; i < Cmd_Argc(); i++) {
-			Q_strcat(remaining, Cmd_Argv(i), sizeof(remaining));
-			Q_strcat(remaining, " ", sizeof(remaining));
+			Q_strcat(remaining, sizeof(remaining), Cmd_Argv(i));
+			Q_strcat(remaining, sizeof(remaining), " ");
 		}
 
 		/* execute the string */

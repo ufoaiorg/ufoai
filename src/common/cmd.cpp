@@ -306,9 +306,9 @@ bool Cbuf_AddLateCommands (void)
 
 	char *text = Mem_AllocTypeN(char, s + 1);
 	for (int i = 1; i < argc; i++) {
-		Q_strcat(text, Com_Argv(i), s);
+		Q_strcat(text, s, Com_Argv(i));
 		if (i != argc - 1)
-			Q_strcat(text, " ", s);
+			Q_strcat(text, s, " ");
 	}
 
 	/* pull out the commands */
@@ -325,8 +325,8 @@ bool Cbuf_AddLateCommands (void)
 		const char c = text[j];
 		text[j] = '\0';
 
-		Q_strcat(build, text + i, s);
-		Q_strcat(build, "\n", s);
+		Q_strcat(build, s, text + i);
+		Q_strcat(build, s, "\n");
 		text[j] = c;
 		i = j - 1;
 	}
@@ -443,9 +443,9 @@ static void Cmd_Alias_f (void)
 	cmd[0] = 0;					/* start out with a null string */
 	c = Cmd_Argc();
 	for (i = 2; i < c; i++) {
-		Q_strcat(cmd, Cmd_Argv(i), sizeof(cmd));
+		Q_strcat(cmd, sizeof(cmd), Cmd_Argv(i));
 		if (i != (c - 1))
-			Q_strcat(cmd, " ", sizeof(cmd));
+			Q_strcat(cmd, sizeof(cmd), " ");
 	}
 
 	if (Q_streq(Cmd_Argv(0), "aliasa"))

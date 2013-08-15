@@ -358,26 +358,26 @@ static void AIM_AircraftEquipMenuUpdate (void)
 	/* First slot: item currently assigned */
 	if (!slot->item) {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s", _("No item assigned.\n"));
-		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
-			AII_WeightToName(slot->size)), sizeof(smallbuffer1));
+		Q_strcat(smallbuffer1, sizeof(smallbuffer1), va(_("This slot is for %s or smaller items."),
+			AII_WeightToName(slot->size)));
 	} else {
 		technology_t *itemTech = RS_GetTechForItem(slot->item);
 		technology_t *nextItemTech = slot->nextItem ? RS_GetTechForItem(slot->nextItem) : nullptr;
 		/* Print next item if we are removing item currently installed and a new item has been added. */
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", slot->nextItem ? _(nextItemTech->name) : _(itemTech->name));
 		if (!slot->installationTime) {
-			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("This item is functional.\n"));
 		} else if (slot->installationTime > 0) {
-			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
-				slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), va(_("This item will be installed in %i hours.\n"),
+				slot->installationTime));
 		} else if (slot->nextItem) {
-			Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(itemTech->name),
-				- slot->installationTime), sizeof(smallbuffer1));
-			Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(nextItemTech->name),
-				slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), va(_("%s will be removed in %i hours.\n"), _(itemTech->name),
+				- slot->installationTime));
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), va(_("%s will be installed in %i hours.\n"), _(nextItemTech->name),
+				slot->nextItem->craftitem.installationTime - slot->installationTime));
 		} else {
-			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
-				-slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), va(_("This item will be removed in %i hours.\n"),
+				-slot->installationTime));
 		}
 	}
 	cgi->UI_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
