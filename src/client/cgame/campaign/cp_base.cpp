@@ -558,8 +558,8 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  */
 static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const char *map, int col, int row)
 {
-	Q_strcat(coords, coordsLength, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0));
-	Q_strcat(maps, mapsLength, map);
+	Q_strcat(coords, coordsLength, "%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0);
+	Q_strcat(maps, mapsLength, "%s", map);
 }
 
 /**
@@ -1441,13 +1441,13 @@ void B_DrawBuilding (const building_t* building)
 		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
-		Q_strcat(buildingText, sizeof(buildingText), va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime));
+		Q_strcat(buildingText, sizeof(buildingText), ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime);
 
 	if (building->varCosts)
-		Q_strcat(buildingText, sizeof(buildingText), va(_("Running costs:\t%i c\n"), building->varCosts));
+		Q_strcat(buildingText, sizeof(buildingText), _("Running costs:\t%i c\n"), building->varCosts);
 
 	if (building->dependsBuilding)
-		Q_strcat(buildingText, sizeof(buildingText), va(_("Needs:\t%s\n"), _(building->dependsBuilding->name)));
+		Q_strcat(buildingText, sizeof(buildingText), _("Needs:\t%s\n"), _(building->dependsBuilding->name));
 
 	if (building->name)
 		cgi->Cvar_Set("mn_building_name", _(building->name));

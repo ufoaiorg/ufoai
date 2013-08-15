@@ -678,8 +678,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
 	char gdir[MAX_OSPATH];
 
 	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
-		Q_strcat(gdir, sizeof(gdir), "/");
-		Q_strcat(gdir, sizeof(gdir), dir);
+		Q_strcat(gdir, sizeof(gdir), "/%s", dir);
 		FS_CreatePath(va("%s/", gdir));
 		FS_AddGameDirectory(gdir, write);
 	}

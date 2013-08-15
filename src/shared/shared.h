@@ -147,7 +147,7 @@ void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *f
 #endif
 
 int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
-void Q_strcat(char *dest, size_t destsize, const char *src) __attribute__((nonnull));
+void Q_strcat(char *dest, size_t destsize, const char *src, ...) __attribute__((nonnull, format(__printf__, 3, 4)));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
 

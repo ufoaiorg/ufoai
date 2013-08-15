@@ -645,7 +645,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 				if (sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2])) != 3)
 					Com_Error(ERR_DROP, "CMod_LoadEntityString: invalid origin token '%s' for keyname %s", token, keyname);
 				VectorAdd(v, shift, v);
-				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]));
+				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]);
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
@@ -659,16 +659,16 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 				model = &tile.models[NUM_REGULAR_MODELS + num - 1];
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += mapData->numInline;
-				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), va("%s *%i ", keyname, num));
+				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s *%i ", keyname, num);
 			} else if (Q_streq(keyname, "targetname") || Q_streq(keyname, "target")) {
-				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), va("%s \"%s-%i\" ", keyname, token, tile.idx));
+				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s \"%s-%i\" ", keyname, token, tile.idx);
 			} else {
 				if (Q_streq(keyname, "classname") && Q_streq(token, "worldspawn")) {
 					if (Q_strvalid(entityString))
-						Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), entityString);
+						Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s", entityString);
 				}
 				/* just store key and value */
-				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), va("%s \"%s\" ", keyname, token));
+				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s \"%s\" ", keyname, token);
 			}
 		}
 

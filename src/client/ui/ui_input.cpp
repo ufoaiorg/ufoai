@@ -344,8 +344,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 
 		/* create a new patch from the new windows */
 		newPath[0] = '\0';
-		Q_strcat(newPath, sizeof(newPath), window->name);
-		Q_strcat(newPath, sizeof(newPath), path + strlen(node->root->name));
+		Q_strcat(newPath, sizeof(newPath), "%s%s", window->name, path + strlen(node->root->name));
 		UI_SetKeyBindingEx(newPath, key, description, true);
 	}
 }

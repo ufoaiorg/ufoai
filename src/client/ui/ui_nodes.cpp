@@ -183,7 +183,7 @@ const char* UI_GetPath (const uiNode_t* node)
 	result[0] = '\0';
 	while (i) {
 		i--;
-		Q_strcat(result, sizeof(result), nodes[i]->name);
+		Q_strcat(result, sizeof(result), "%s", nodes[i]->name);
 		if (i > 0)
 			Q_strcat(result, sizeof(result), ".");
 	}

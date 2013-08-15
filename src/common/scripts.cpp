@@ -2262,7 +2262,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
 		str = Com_GiveName(gender + NAME_LAST, chr->teamDef);
 		if (!str)
 			continue;
-		Q_strcat(chr->name, sizeof(chr->name), str);
+		Q_strcat(chr->name, sizeof(chr->name), "%s", str);
 
 		if (!Com_GetCharacterModel(chr))
 			continue;

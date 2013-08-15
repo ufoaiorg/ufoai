@@ -65,7 +65,7 @@ void CP_StatsUpdate_f (void)
 	cgi->UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
 
 	INS_Foreach(inst) {
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va("%s\n", inst->name));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), "%s\n", inst->name);
 	}
 
 	/* nations */
@@ -73,10 +73,10 @@ void CP_StatsUpdate_f (void)
 	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation)));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation));
 		totalfunds += NAT_GetFunding(nation, 0);
 	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("\nFunding this month:\t%d"), totalfunds));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\nFunding this month:\t%d"), totalfunds);
 
 	/* costs */
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -95,13 +95,13 @@ void CP_StatsUpdate_f (void)
 	cgi->UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]);
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
 	cgi->UI_RegisterText(TEXT_STATS_COSTS, pos);
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Employees:\t%i c\n"), costs));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Employees:\t%i c\n"), costs);
 	sum += costs;
 
 	costs = 0;
@@ -110,41 +110,41 @@ void CP_StatsUpdate_f (void)
 			continue;
 		costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
 	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Aircraft:\t%i c\n"), costs));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Aircraft:\t%i c\n"), costs);
 	sum += costs;
 
 	base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		costs = CP_GetSalaryUpKeepBase(salary, base);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Base (%s):\t%i c\n"), base->name, costs));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Base (%s):\t%i c\n"), base->name, costs);
 		sum += costs;
 	}
 
 	costs = CP_GetSalaryAdministrative(salary);
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Administrative costs:\t%i c\n"), costs));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Administrative costs:\t%i c\n"), costs);
 	sum += costs;
 
 	if (ccs.credits < 0) {
 		const float interest = ccs.credits * campaign->salaries.debtInterest;
 
 		costs = (int)ceil(interest);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Debt:\t%i c\n"), costs));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Debt:\t%i c\n"), costs);
 		sum += costs;
 	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("\n\t-------\nSum:\t%i c\n"), sum));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\n\t-------\nSum:\t%i c\n"), sum);
 
 	/* campaign */
 	pos += (strlen(pos) + 1);
 	cgi->UI_RegisterText(TEXT_GENERIC, pos);
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), va(_("Max. allowed debts: %ic\n"), campaign->negativeCreditsUntilLost));
+	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Max. allowed debts: %ic\n"), campaign->negativeCreditsUntilLost);
 
 	/* only show the xvi spread data when it's available */
 	if (CP_IsXVIVisible()) {
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos),
-			va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
+			_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 			"Current eXtraterrestial Viral Infection: %i%%"),
 			campaign->maxAllowedXVIRateUntilLost,
-			CP_GetAverageXVIRate()));
+			CP_GetAverageXVIRate());
 	}
 }
 

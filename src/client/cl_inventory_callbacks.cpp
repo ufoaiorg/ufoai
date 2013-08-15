@@ -131,14 +131,14 @@ void INV_ItemDescription (const objDef_t *od)
 		*itemText = '\0';
 		if (od->isArmour()) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
-			Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%g Kg\n"), od->weight));
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 			Q_strcat(itemText, sizeof(itemText), "\n");
 			Q_strcat(itemText, sizeof(itemText), _("^BDamage type:\tProtection:\n"));
 			for (i = 0; i < csi.numDTs; i++) {
 				const damageType_t *dt = &csi.dts[i];
 				if (!dt->showInMenu)
 					continue;
-				Q_strcat(itemText, sizeof(itemText), va(_("%s\t%i\n"), _(dt->id), od->ratings[i]));
+				Q_strcat(itemText, sizeof(itemText), _("%s\t%i\n"), _(dt->id), od->ratings[i]);
 			}
 		} else if ((od->weapon && od->numAmmos) || od->isAmmo()) {
 			const objDef_t *odAmmo;
@@ -148,7 +148,7 @@ void INV_ItemDescription (const objDef_t *od)
 				if (od->weapon) {
 					Com_sprintf(itemText, sizeof(itemText), _("%s weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 					if (od->ammo > 0)
-						Q_strcat(itemText, sizeof(itemText), va(_("Max ammo:\t%i\n"), od->ammo));
+						Q_strcat(itemText, sizeof(itemText), _("Max ammo:\t%i\n"), od->ammo);
 					odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od;
 					assert(odAmmo);
 					for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od); weaponIndex++) {}
@@ -157,7 +157,7 @@ void INV_ItemDescription (const objDef_t *od)
 					weaponIndex = itemIndex;
 				}
 
-				Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%g Kg\n"), od->weight));
+				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 					const fireDef_t *fd;
@@ -176,28 +176,28 @@ void INV_ItemDescription (const objDef_t *od)
 					Cvar_Set("mn_firemodename", _(fd->name));
 
 					/* We display the characteristics of this firemode */
-					Q_strcat(itemText, sizeof(itemText), va(_("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill)));
-					Q_strcat(itemText, sizeof(itemText), va(_("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots));
-					Q_strcat(itemText, sizeof(itemText), va(_("Time units:\t%i\n"), fd->time));
-					Q_strcat(itemText, sizeof(itemText), va(_("Range:\t%g\n"), fd->range / UNIT_SIZE));
-					Q_strcat(itemText, sizeof(itemText), va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2));
+					Q_strcat(itemText, sizeof(itemText), _("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill));
+					Q_strcat(itemText, sizeof(itemText), _("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots);
+					Q_strcat(itemText, sizeof(itemText), _("Time units:\t%i\n"), fd->time);
+					Q_strcat(itemText, sizeof(itemText), _("Range:\t%g\n"), fd->range / UNIT_SIZE);
+					Q_strcat(itemText, sizeof(itemText), _("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2);
 				}
 			} else {
 				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), od->isAmmo() ? _("Ammunition") : _("Weapon"));
-				Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%g Kg\n"), od->weight));
+				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 			}
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%g Kg\n"), od->weight));
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 		} else {
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%g Kg\n"), od->weight));
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
 				const fireDef_t *fd = &od->fd[0][0];
-				Q_strcat(itemText, sizeof(itemText), va(_("Action:\t%s\n"), _(fd->name)));
-				Q_strcat(itemText, sizeof(itemText), va(_("Time units:\t%i\n"), fd->time));
-				Q_strcat(itemText, sizeof(itemText), va(_("Range:\t%g\n"), fd->range / UNIT_SIZE));
+				Q_strcat(itemText, sizeof(itemText), _("Action:\t%s\n"), _(fd->name));
+				Q_strcat(itemText, sizeof(itemText), _("Time units:\t%i\n"), fd->time);
+				Q_strcat(itemText, sizeof(itemText), _("Range:\t%g\n"), fd->range / UNIT_SIZE);
 			}
 		}
 
@@ -372,7 +372,7 @@ static void INV_UpdateActorLoad_f (void)
 					continue;
 				if (count <= 0)
 					Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-				Q_strcat(popupText, sizeof(popupText), va("%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time));
+				Q_strcat(popupText, sizeof(popupText), "%s: %s (%i)\n", _(invList->def()->name), _(fireDef[i].name), fireDef[i].time);
 				++count;
 			}
 		}

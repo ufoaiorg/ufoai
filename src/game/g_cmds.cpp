@@ -52,7 +52,7 @@ static void G_Players_f (const Player &player)
 			Q_strcat(largeBuf, sizeof(largeBuf), "...\n");
 			break;
 		}
-		Q_strcat(largeBuf, sizeof(largeBuf), smallBuf);
+		Q_strcat(largeBuf, sizeof(largeBuf), "%s", smallBuf);
 		count++;
 	}
 
@@ -102,17 +102,13 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 		Com_sprintf(text, sizeof(text), "^B%s (team): ", player.pers.netname);
 
 	if (arg0) {
-		Q_strcat(text, sizeof(text), gi.Cmd_Argv(0));
-		Q_strcat(text, sizeof(text), " ");
-		Q_strcat(text, sizeof(text), gi.Cmd_Args());
+		Q_strcat(text, sizeof(text), "%s %s\n", gi.Cmd_Argv(0), gi.Cmd_Args());
 	} else {
 		const char *p = gi.Cmd_Args();
 		const char *token = Com_Parse(&p);
 
-		Q_strcat(text, sizeof(text), token);
+		Q_strcat(text, sizeof(text), "%s\n", token);
 	}
-
-	Q_strcat(text, sizeof(text), "\n");
 
 	if (sv_dedicated->integer)
 		gi.DPrintf("%s", text);

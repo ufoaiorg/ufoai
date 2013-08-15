@@ -626,7 +626,6 @@ static bool Irc_Proto_PollServerMsg (irc_server_msg_t *msg, bool *msg_complete)
  */
 static bool Irc_AppendToBuffer (const char* const msg, ...)
 {
-	char buf[IRC_RECV_BUF_SIZE];
 	va_list ap;
 	char appendString[2048];
 
@@ -643,8 +642,7 @@ static bool Irc_AppendToBuffer (const char* const msg, ...)
 		memmove(irc_buffer, n + 1, strlen(n));
 	}
 
-	Com_sprintf(buf, sizeof(buf), "%s\n", appendString);
-	Q_strcat(irc_buffer, sizeof(irc_buffer), buf);
+	Q_strcat(irc_buffer, sizeof(irc_buffer), "%s\n", appendString);
 	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", appendString);
 

@@ -144,8 +144,7 @@ bool Rimp_Init (void)
 		char buf[4096] = "";
 		Q_strcat(buf, sizeof(buf), "I: Available resolutions:");
 		for (int i = 0; i < r_sdl_config.numModes; i++) {
-			const char *modeStr = va(" %ix%i", r_sdl_config.modes[i][0], r_sdl_config.modes[i][1]);
-			Q_strcat(buf, sizeof(buf), modeStr);
+			Q_strcat(buf, sizeof(buf), " %ix%i", r_sdl_config.modes[i][0], r_sdl_config.modes[i][1]);
 		}
 		Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 	}

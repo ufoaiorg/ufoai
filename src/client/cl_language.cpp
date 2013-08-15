@@ -298,8 +298,7 @@ static bool CL_LanguageTest (const char *localeID)
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/" BASEDIRNAME "/i18n/", FS_GetCwd());
 #endif
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: using mo files from '%s'\n", languagePath);
-	Q_strcat(languagePath, sizeof(languagePath), localeID);
-	Q_strcat(languagePath, sizeof(languagePath), "/LC_MESSAGES/ufoai.mo");
+	Q_strcat(languagePath, sizeof(languagePath), "%s/LC_MESSAGES/ufoai.mo", localeID);
 
 	/* No *.mo file -> no language. */
 	if (!FS_FileExists(languagePath)) {

@@ -896,8 +896,8 @@ static void BaseSummary_Init (const base_t *base)
 		const int count = AIR_CountTypeInBase(base, airType);
 		if (count == 0)
 			continue;
-		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
-			count));
+		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
+			count);
 	}
 	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
 
@@ -908,7 +908,7 @@ static void BaseSummary_Init (const base_t *base)
 		if (cnt == 0)
 			continue;
 		const char *desc = E_GetEmployeeString(emplType, cnt);
-		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i\n", desc, cnt));
+		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i\n", desc, cnt);
 	}
 	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
 
@@ -916,8 +916,8 @@ static void BaseSummary_Init (const base_t *base)
 	if (base->alienContainment) {
 		linkedList_t *list = base->alienContainment->list();
 		LIST_Foreach(list, alienCargo_t, item) {
-			Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), va("\t%s:\t\t\t\t%i/%i\n",
-				_(item->teamDef->name), item->alive, item->dead));
+			Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i/%i\n",
+				_(item->teamDef->name), item->alive, item->dead);
 		}
 		cgi->LIST_Delete(&list);
 	}

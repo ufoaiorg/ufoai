@@ -127,16 +127,14 @@ static void CL_PingServerCallback (struct net_stream *s)
 			cgi->NET_ReadString(buf, str, sizeof(str));
 			if (CL_ProcessPingReply(server, str)) {
 				if (CL_ShowServer(server)) {
-					char string[MAX_INFO_STRING];
-					Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-						server->sv_hostname,
-						server->mapname,
-						server->gametype,
-						server->clients,
-						server->sv_maxclients);
 					server->serverListPos = serverListPos;
 					serverListPos++;
-					Q_strcat(serverText, sizeof(serverText), string);
+					Q_strcat(serverText, sizeof(serverText), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
+							server->sv_hostname,
+							server->mapname,
+							server->gametype,
+							server->clients,
+							server->sv_maxclients);
 				}
 			}
 		} else if (strncmp(str, "print", 5) == 0) {

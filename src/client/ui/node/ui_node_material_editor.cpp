@@ -253,7 +253,7 @@ static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char *b
 
 	while (md->name) {
 		if (stage->flags & md->stageFlag)
-			Q_strcat(buf, size, va("%s ", md->name));
+			Q_strcat(buf, size, "%s ", md->name);
 		md++;
 	}
 }

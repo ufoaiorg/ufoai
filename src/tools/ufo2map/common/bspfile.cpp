@@ -507,12 +507,12 @@ void ParseEntities (void)
  */
 const char *UnparseEntities (void)
 {
-	char line[2048], key[1024], value[1024];
-	int i;
+	char key[1024];
+	char value[1024];
 
 	curTile->entdata[0] = '\0';
 
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const epair_t *ep = entities[i].epairs;
 		if (!ep)
 			continue;	/* ent got removed */
@@ -527,8 +527,7 @@ const char *UnparseEntities (void)
 
 			if (IsInvalidEntityToken(value) || IsInvalidEntityToken(key))
 				Sys_Error("Invalid entity %i found with key '%s' and value '%s'", i, key, value);
-			Com_sprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
-			Q_strcat(curTile->entdata, sizeof(curTile->entdata), line);
+			Q_strcat(curTile->entdata, sizeof(curTile->entdata), "\"%s\" \"%s\"\n", key, value);
 		}
 		Q_strcat(curTile->entdata, sizeof(curTile->entdata), "}\n");
 	}

@@ -267,9 +267,9 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		const technology_t *tech = RS_GetTechForItem(od);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
-		Q_strcat(productionInfo, sizeof(productionInfo), va(_("Cost per item\t%i c\n"), PR_GetPrice(od)));
-		Q_strcat(productionInfo, sizeof(productionInfo), va(_("Production time\t%ih\n"), remainingHours));
-		Q_strcat(productionInfo, sizeof(productionInfo), va(_("Item size\t%i\n"), od->size));
+		Q_strcat(productionInfo, sizeof(productionInfo), _("Cost per item\t%i c\n"), PR_GetPrice(od));
+		Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
+		Q_strcat(productionInfo, sizeof(productionInfo), _("Item size\t%i\n"), od->size);
 		cgi->Cvar_Set("mn_item", od->id);
 
 		PR_RequirementsInfo(base, &tech->requireForProduction);
@@ -293,8 +293,8 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 	assert(ufo->ufoTemplate);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->condition * 100, _("Disassembly"));
-	Q_strcat(productionInfo, sizeof(productionInfo), va(_("Stored at: %s\n"), ufo->installation->name));
-	Q_strcat(productionInfo, sizeof(productionInfo), va(_("Disassembly time: %ih\n"), remainingHours));
+	Q_strcat(productionInfo, sizeof(productionInfo), _("Stored at: %s\n"), ufo->installation->name);
+	Q_strcat(productionInfo, sizeof(productionInfo), _("Disassembly time: %ih\n"), remainingHours);
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Components:\n"));
 	/* Print components. */
 	for (i = 0; i < ufo->comp->numItemtypes; i++) {
@@ -305,7 +305,7 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 			continue;
 
 		assert(compOd);
-		Q_strcat(productionInfo, sizeof(productionInfo), va("  %s (%i)\n", _(compOd->name), amount));
+		Q_strcat(productionInfo, sizeof(productionInfo), "  %s (%i)\n", _(compOd->name), amount);
 	}
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	cgi->Cvar_Set("mn_item", ufo->id);
@@ -324,8 +324,8 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	static char productionInfo[512];
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
-	Q_strcat(productionInfo, sizeof(productionInfo), va(_("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate)));
-	Q_strcat(productionInfo, sizeof(productionInfo), va(_("Production time\t%ih\n"), remainingHours));
+	Q_strcat(productionInfo, sizeof(productionInfo), _("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate));
+	Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	cgi->Cvar_Set("mn_item", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);

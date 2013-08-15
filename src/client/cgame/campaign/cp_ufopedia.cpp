@@ -49,7 +49,7 @@ static char upBuffer[MAX_UPTEXT];
 #define MAIL_LENGTH 256
 #define MAIL_BUFFER_SIZE 0x4000
 static char mailBuffer[MAIL_BUFFER_SIZE];
-#define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
+#define CHECK_MAIL_EOL if (mailBuffer[MAIL_LENGTH-3] != '\n') mailBuffer[MAIL_LENGTH-2] = '\n';
 #define MAIL_CLIENT_LINES 15
 
 /**
@@ -211,9 +211,9 @@ static void UP_BuildingDescription (const technology_t* t)
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building"));
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Needs:\t%s\n"), b->dependsBuilding ? _(b->dependsBuilding->name) : _("None"));
-		Q_strcat(upBuffer, sizeof(upBuffer), va(ngettext("Construction time:\t%i day\n", "Construction time:\t%i days\n", b->buildTime), b->buildTime));
-		Q_strcat(upBuffer, sizeof(upBuffer), va(_("Cost:\t%i c\n"), b->fixCosts));
-		Q_strcat(upBuffer, sizeof(upBuffer), va(_("Running costs:\t%i c\n"), b->varCosts));
+		Q_strcat(upBuffer, sizeof(upBuffer), ngettext("Construction time:\t%i day\n", "Construction time:\t%i days\n", b->buildTime), b->buildTime);
+		Q_strcat(upBuffer, sizeof(upBuffer), _("Cost:\t%i c\n"), b->fixCosts);
+		Q_strcat(upBuffer, sizeof(upBuffer), _("Running costs:\t%i c\n"), b->varCosts);
 	}
 
 	cgi->Cvar_Set("mn_upmetadata", "1");
@@ -263,7 +263,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 		switch (item->craftitem.type) {
 		case AC_ITEM_WEAPON:
-				Q_strcat(itemText, sizeof(itemText), va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))));
+				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item)));
 				break;
 		case AC_ITEM_BASE_MISSILE:
 		case AC_ITEM_BASE_LASER:
@@ -287,15 +287,15 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 		if (ammo) {
 			/* We display the characteristics of this ammo */
-			Q_strcat(itemText, sizeof(itemText), va(_("Ammo:\t%i\n"), ammo->ammo));
+			Q_strcat(itemText, sizeof(itemText), _("Ammo:\t%i\n"), ammo->ammo);
 			if (!EQUAL(ammo->craftitem.weaponDamage, 0))
-				Q_strcat(itemText, sizeof(itemText), va(_("Damage:\t%i\n"), (int) ammo->craftitem.weaponDamage));
-			Q_strcat(itemText, sizeof(itemText), va(_("Reloading time:\t%i\n"),  (int) ammo->craftitem.weaponDelay));
+				Q_strcat(itemText, sizeof(itemText), _("Damage:\t%i\n"), (int) ammo->craftitem.weaponDamage);
+			Q_strcat(itemText, sizeof(itemText), _("Reloading time:\t%i\n"),  (int) ammo->craftitem.weaponDelay);
 		}
 		/* We write the range of the weapon */
 		if (!EQUAL(item->craftitem.stats[AIR_STATS_WRANGE], 0))
-			Q_strcat(itemText, sizeof(itemText), va("%s:\t%i\n", UP_AircraftStatToName(AIR_STATS_WRANGE),
-				AIR_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)));
+			Q_strcat(itemText, sizeof(itemText), "%s:\t%i\n", UP_AircraftStatToName(AIR_STATS_WRANGE),
+				AIR_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE));
 
 		/* we scan all stats except weapon range */
 		for (i = 0; i < AIR_STATS_MAX; i++) {
@@ -303,13 +303,13 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			if (i == AIR_STATS_WRANGE)
 				continue;
 			if (item->craftitem.stats[i] > 2.0f)
-				Q_strcat(itemText, sizeof(itemText), va("%s:\t+%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i)));
+				Q_strcat(itemText, sizeof(itemText), "%s:\t+%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i));
 			else if (item->craftitem.stats[i] < -2.0f)
-				Q_strcat(itemText, sizeof(itemText), va("%s:\t%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i)));
+				Q_strcat(itemText, sizeof(itemText), "%s:\t%i\n", statsName, AIR_AircraftMenuStatsValues(item->craftitem.stats[i], i));
 			else if (item->craftitem.stats[i] > 1.0f)
-				Q_strcat(itemText, sizeof(itemText), va(_("%s:\t+%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100));
+				Q_strcat(itemText, sizeof(itemText), _("%s:\t+%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100);
 			else if (!EQUAL(item->craftitem.stats[i], 0))
-				Q_strcat(itemText, sizeof(itemText), va(_("%s:\t%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100));
+				Q_strcat(itemText, sizeof(itemText), _("%s:\t%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100);
 		}
 	} else {
 		Q_strcat(itemText, sizeof(itemText), _("Unknown - need to research this"));
@@ -339,21 +339,21 @@ void UP_AircraftDescription (const technology_t* tech)
 			switch (i) {
 			case AIR_STATS_SPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-				Q_strcat(upBuffer, sizeof(upBuffer), va(_("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
-					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)));
+				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
 				break;
 			case AIR_STATS_MAXSPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-				Q_strcat(upBuffer, sizeof(upBuffer), va(_("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
-					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)));
+				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
 				break;
 			case AIR_STATS_FUELSIZE:
-				Q_strcat(upBuffer, sizeof(upBuffer), va(_("Operational range:\t%i km\n"),
-					AIR_GetOperationRange(aircraft)));
+				Q_strcat(upBuffer, sizeof(upBuffer), _("Operational range:\t%i km\n"),
+					AIR_GetOperationRange(aircraft));
 				break;
 			case AIR_STATS_ACCURACY:
-				Q_strcat(upBuffer, sizeof(upBuffer), va(_("%s:\t%i\n"), UP_AircraftStatToName(i),
-					AIR_AircraftMenuStatsValues(aircraft->stats[i], i)));
+				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
 				break;
 			default:
 				break;
@@ -364,11 +364,11 @@ void UP_AircraftDescription (const technology_t* tech)
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
 		const building_t *building = B_GetBuildingTemplateByType(buildingType);
 
-		Q_strcat(upBuffer, sizeof(upBuffer), va(_("Required Hangar:\t%s\n"), _(building->name)));
+		Q_strcat(upBuffer, sizeof(upBuffer), _("Required Hangar:\t%s\n"), _(building->name));
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
 		if (!AIR_IsUFO(aircraft))
-			Q_strcat(upBuffer, sizeof(upBuffer), va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize));
+			Q_strcat(upBuffer, sizeof(upBuffer), _("Max. soldiers:\t%i\n"), aircraft->maxTeamSize);
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
@@ -1112,7 +1112,6 @@ static void UP_SetMailButtons_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	char tempBuf[MAIL_LENGTH] = "";
 	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
 	dateLong_t date;
 
@@ -1125,56 +1124,52 @@ static void UP_OpenMail_f (void)
 				break;
 			CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
 			if (!m->pedia->mail[TECHMAIL_PRE].read)
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^BProposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 			else
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s\t%i %s %02i\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("Proposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 			CHECK_MAIL_EOL
-			Q_strcat(mailBuffer, sizeof(mailBuffer), tempBuf);
 			break;
 		case MSG_RESEARCH_FINISHED:
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
 			CP_DateConvertLong(&m->pedia->researchedDate, &date);
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^BRe: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 			else
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s\t%i %s %02i\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("Re: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 			CHECK_MAIL_EOL
-			Q_strcat(mailBuffer, sizeof(mailBuffer), tempBuf);
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from) {
 				CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
 				if (!m->pedia->mail[TECHMAIL_PRE].read)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
+					Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
 				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
+					Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
 				CHECK_MAIL_EOL
-				Q_strcat(mailBuffer, sizeof(mailBuffer), tempBuf);
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				CP_DateConvertLong(&m->pedia->researchedDate, &date);
 				if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
+					Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
 				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
+					Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
 				CHECK_MAIL_EOL
-				Q_strcat(mailBuffer, sizeof(mailBuffer), tempBuf);
 			}
 			break;
 		case MSG_EVENT:
@@ -1182,13 +1177,12 @@ static void UP_OpenMail_f (void)
 			if (!m->eventMail->from)
 				break;
 			if (!m->eventMail->read)
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%s\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%s\n"),
 					_(m->eventMail->subject), _(m->eventMail->date));
 			else
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%s\n"),
+				Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%s\n"),
 					_(m->eventMail->subject), _(m->eventMail->date));
 			CHECK_MAIL_EOL
-			Q_strcat(mailBuffer, sizeof(mailBuffer), tempBuf);
 			break;
 		default:
 			break;

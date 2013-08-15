@@ -191,12 +191,12 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
 		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Operational range:\t%i km\n"), AIR_GetOperationRange(aircraft)));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Weapons:\t%i of %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Armour:\t%i of 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Electronics:\t%i of %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics));
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), _("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE));
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), _("Operational range:\t%i km\n"), AIR_GetOperationRange(aircraft));
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), _("Weapons:\t%i of %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons);
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), _("Armour:\t%i of 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft));
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), _("Electronics:\t%i of %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics);
 
 	cgi->UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
