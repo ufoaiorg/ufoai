@@ -15,6 +15,8 @@
 
 #include "zlib.h"
 
+#undef DEBUG
+
 #ifdef STDC
 #  include <stddef.h>
 #  include <string.h>

@@ -95,8 +95,57 @@ ifdef HAVE_SDL2_TTF_SDL_TTF_H
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL2_ttf)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL2_ttf)
 else
+ifdef HAVE_SDL2_SDL_H
+SDL_TTF_LIBS             ?=
+SDL_TTF_CFLAGS           ?= -Isrc/libs/SDL_ttf -Isrc/libs/SDL_ttf/external/freetype-2.4.12/include -DFT2_BUILD_LIBRARY
+SDL_TTF_SRCS              = \
+	libs/SDL_ttf/SDL_ttf.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/autofit/autofit.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftbase.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftbbox.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftbdf.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftbitmap.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftcid.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftdebug.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftfstype.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftgasp.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftglyph.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftgxval.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftinit.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftlcdfil.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftmm.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftotval.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftpatent.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftpfr.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftstroke.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftsynth.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftsystem.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/fttype1.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftwinfnt.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/base/ftxf86.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/bdf/bdf.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/bzip2/ftbzip2.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/cache/ftcache.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/cff/cff.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/cid/type1cid.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/gzip/ftgzip.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/lzw/ftlzw.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/pcf/pcf.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/pfr/pfr.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/psaux/psaux.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/pshinter/pshinter.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/psnames/psmodule.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/raster/raster.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/sfnt/sfnt.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/smooth/smooth.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/truetype/truetype.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/type1/type1.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/type42/type42.c \
+	libs/SDL_ttf/external/freetype-2.4.12/src/winfonts/winfnt.c
+else
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL_ttf)
+endif
 endif
 ifdef HAVE_SDL2_MIXER_SDL_MIXER_H
 SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL2_mixer)

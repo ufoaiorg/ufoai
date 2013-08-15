@@ -265,6 +265,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(SDL_MIXER_SRCS) \
 	\
+	$(SDL_TTF_SRCS) \
+	\
 	$(PNG_SRCS) \
 	\
 	$(JPEG_SRCS)
