@@ -86,7 +86,7 @@ equipment multiplayer_initial
 	item (grenl_plasma_ammo		6)
 	item (rpg_hybrid_ammo		2)
 	item (plasmagrenade			8)
-	item (stun_grenade			12)
+	item (stungrenade			12)
 	item (stungrenade_alien		4)
 	item (stunrod				12)
 	item (knifemono				8)
