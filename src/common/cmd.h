@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "filesys.h"
 #include "../shared/cxx.h"
+#include <stdarg.h>
 
 /**
  * @brief allocates an initial text buffer that will grow as needed
