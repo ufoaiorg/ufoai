@@ -175,6 +175,9 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 	if (aircraft->tpl != aircraft) {
 		int i;
 
+		if (aircraft->stats[AIR_STATS_DAMAGE] > 0)
+			sellPrice *= (float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE];
+
 		if (aircraft->shield.item)
 			sellPrice += BS_GetItemSellingPrice(aircraft->shield.item);
 		if (aircraft->shield.ammo)
