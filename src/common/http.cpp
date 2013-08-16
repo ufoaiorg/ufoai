@@ -161,13 +161,12 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static char *HTTP_GetURLInternal (const char *url, FILE* file)
+static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file)
 {
-	dlhandle_t dl;
+	if (Q_strvalid(url))
+		return false;
+
 	char buf[576];
-
-	OBJZERO(dl);
-
 	HTTP_ResolvURL(url, buf, sizeof(buf));
 	if (buf[0] == '\0')
 		return nullptr;
@@ -196,27 +195,51 @@ static char *HTTP_GetURLInternal (const char *url, FILE* file)
 	curl_easy_setopt(dl.curl, CURLOPT_NOSIGNAL, 1);
 
 	/* get it */
-	curl_easy_perform(dl.curl);
+	const CURLcode result = curl_easy_perform(dl.curl);
+	if (result != CURLE_OK)	{
+		Com_Printf("failed to fetch '%s': %s\n", url, curl_easy_strerror(result));
+		curl_easy_cleanup(dl.curl);
+		return false;
+	}
 
 	/* clean up */
 	curl_easy_cleanup(dl.curl);
 
-	return dl.tempBuffer;
+	return true;
 }
 
-void HTTP_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
+bool HTTP_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
 {
-	CURL *curl;
+	if (Q_strnull(url)) {
+		Com_Printf("no upload url given\n");
+		return false;
+	}
+
+	if (Q_strnull(fileName)) {
+		Com_Printf("no upload fileName given\n");
+		return false;
+	}
+
+	if (Q_strnull(formName)) {
+		Com_Printf("no upload formName given\n");
+		return false;
+	}
+
+	char buf[576];
+	HTTP_ResolvURL(url, buf, sizeof(buf));
+	if (buf[0] == '\0') {
+		Com_Printf("could not resolve '%s'\n", url);
+		return false;
+	}
+
+	CURL *curl = curl_easy_init();
+	if (curl == nullptr) {
+		Com_Printf("could not init curl\n");
+		return false;
+	}
+
 	struct curl_httppost* post = nullptr;
 	struct curl_httppost* last = nullptr;
-	char buf[576];
-
-	HTTP_ResolvURL(url, buf, sizeof(buf));
-	if (buf[0] == '\0')
-		return;
-
-	curl = curl_easy_init();
-
 	while (params) {
 		curl_formadd(&post, &last, CURLFORM_PTRNAME, params->name, CURLFORM_PTRCONTENTS, params->value, CURLFORM_END);
 		params = params->next;
@@ -233,22 +256,43 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(curl, CURLOPT_URL, url);
 	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-	curl_easy_perform(curl);
+	const CURLcode result = curl_easy_perform(curl);
+	if (result != CURLE_OK)	{
+		Com_Printf("failed to upload file '%s': %s\n", fileName, curl_easy_strerror(result));
+		curl_easy_cleanup(curl);
+		return false;
+	}
 
 	curl_easy_cleanup(curl);
+	return true;
 }
 
-void HTTP_GetToFile (const char *url, FILE* file)
+bool HTTP_GetToFile (const char *url, FILE* file)
 {
-	HTTP_GetURLInternal(url, file);
+	if (!file)
+		return false;
+	dlhandle_t dl;
+	OBJZERO(dl);
+
+	return HTTP_GetURLInternal(dl, url, file);
 }
 
 void HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
 {
-	char *response = HTTP_GetURLInternal(url, nullptr);
+	dlhandle_t dl;
+	OBJZERO(dl);
+
+	if (!HTTP_GetURLInternal(dl, url, nullptr)) {
+		Mem_Free(dl.tempBuffer);
+		dl.tempBuffer = nullptr;
+		return;
+	}
+
 	if (callback != nullptr)
-		callback(response, userdata);
-	Mem_Free(response);
+		callback(dl.tempBuffer, userdata);
+
+	Mem_Free(dl.tempBuffer);
+	dl.tempBuffer = nullptr;
 }
 
 /**
