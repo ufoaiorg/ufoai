@@ -30,14 +30,14 @@ component cmpTechItem extends panel {
 
 	string name {
 		pos			"25 0"
-		size		"345 25"
+		size		"345 20"
 		color		"0 .78 0 1"
 		longlines	LONGLINES_PRETTYCHOP
 		ghost		true
 	}
 
 	bar progress {
-		pos			"5 27"
+		pos			"5 30"
 		size		"224 5"
 		color		"0 0.8 0 1"
 		bordercolor	"0 0.8 0 1"
@@ -45,6 +45,15 @@ component cmpTechItem extends panel {
 		current		0
 		max			100
 		readonly	true
+		ghost		true
+	}
+	string progress_label {
+		pos			"235 25"
+		size		"50 11"
+		color		"0 .78 0 1"
+		font		"f_verysmall"
+		contentalign	ALIGN_UL
+		padding		0
 		ghost		true
 	}
 
@@ -245,7 +254,10 @@ window research
 			*node:parent.techlist.tech_<1>.id@string = "<1>"
 			*node:parent.techlist.tech_<1>.name@string = "<2>"
 			*node:parent.techlist.tech_<1>.progress@current = <4>
-			*node:parent.techlist.tech_<1>.progress@tooltip = "<4>%"
+
+			if ( <4> > 0 ) {
+				*node:parent.techlist.tech_<1>.progress_label@string = "<4>%"
+			}
 
 			if ( paramCount >= 5 ) {
 				if ( "<5>" eq "base" ) {
