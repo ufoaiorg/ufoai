@@ -4616,6 +4616,12 @@ base/textures/tex_buildings/concrete021.png | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete024.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete024_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs01.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs01_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs02.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs02_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
 base/textures/tex_buildings/crate_drtyow.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/crate_drtyow_sign.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -4763,6 +4769,12 @@ base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/metal01.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/metal01_nm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/metal01_sm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/metal02.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/metal02_nm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/metal02_sm.png | Public Domain | Yughues | OpenGameArt
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4857,6 +4869,15 @@ base/textures/tex_buildings/t_wll_fnctrm_sgn.jpg | GNU General Public License 2.
 base/textures/tex_buildings/t_wll_fnctrm_sgn2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_sign2_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/t_wll_fnctrm_sign_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/tile01.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile01_nm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile01_sm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile02.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile02_nm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile02_sm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile03.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile03_nm.png | Public Domain | Yughues | OpenGameArt
+base/textures/tex_buildings/tile03_sm.png | Public Domain | Yughues | OpenGameArt
 base/textures/tex_buildings/tile_teracotablue.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/tin_floor04ach.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/tin_floor04ach_nm.png | GNU General Public License 2.0
@@ -4914,6 +4935,9 @@ base/textures/tex_buildings/wall043_nm.png | GNU General Public License 2.0 | MC
 base/textures/tex_buildings/wall044.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
 base/textures/tex_buildings/wall044_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/wall_brick01.png | Creative Commons Attribution-ShareAlike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/wall_brick01_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/wall_brick01_sm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
 base/textures/tex_buildings/wall_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_dirt2.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_dirt3.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
