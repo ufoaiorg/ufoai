@@ -1276,7 +1276,11 @@ Once a wounded soldier makes it back to base alive, our medical team will take o
 
 Addenda
 
-None."
+Medikits come with three prepared treatment capabilities. Apply First Aid will treat a soldier's wounds, stemming the blood loss of a wound in an effort to keep them alive. It will restore a small amount of health, but soldiers will need to recover back at base.
+
+Stimulants can be used to revive a soldier who has fallen unconcious as a result of being stunned or gassed.
+
+Antipsychotics will provide an injection of endorphins. Many desperate commanders have found it useful to boost morale during highly stressful engagements."
 }
 
 msgid plasatomizer_txt {
