@@ -1957,7 +1957,7 @@ static void Irc_Input_Activate_f (void)
 		UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
-		UI_PopWindow(false);
+		UI_PopWindow();
 		UI_PushWindow("irc_popup");
 	}
 }

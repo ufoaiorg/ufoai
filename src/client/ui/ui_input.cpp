@@ -685,7 +685,7 @@ static void UI_LeftClick (int x, int y)
 	if (!pressedNode && ui_global.windowStackPos != 0) {
 		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (UI_WindowIsDropDown(window)) {
-			UI_PopWindow(false);
+			UI_PopWindow();
 		}
 	}
 

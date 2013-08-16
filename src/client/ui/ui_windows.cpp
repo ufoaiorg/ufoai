@@ -501,7 +501,7 @@ void UI_PopWindowWithEscKey (void)
 	if (WINDOWEXTRADATACONST(window).preventTypingEscape)
 		return;
 
-	UI_PopWindow(false);
+	UI_PopWindow();
 }
 
 /**
@@ -515,7 +515,7 @@ static void UI_PopWindow_f (void)
 		return;
 	}
 
-	UI_PopWindow(false);
+	UI_PopWindow();
 }
 
 /**

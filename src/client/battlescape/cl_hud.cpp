@@ -465,7 +465,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == nullptr) {
-			UI_PopWindow(false);
+			UI_PopWindow();
 			return;
 		}
 
@@ -505,7 +505,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 		const actorHands_t hand = ACTOR_HAND_LEFT;
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == nullptr) {
-			UI_PopWindow(false);
+			UI_PopWindow();
 			return;
 		}
 
