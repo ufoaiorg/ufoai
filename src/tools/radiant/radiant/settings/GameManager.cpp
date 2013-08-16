@@ -7,7 +7,9 @@
 #include "os/path.h"
 #include "gtkutil/messagebox.h"
 #include "Win32Registry.h"
-
+#ifdef HAVE_CONFIG_H
+#include "../../../../../config.h"
+#endif
 #include <libxml/parser.h>
 
 namespace ui {
@@ -28,11 +30,17 @@ bool GameManager::settingsValid () const
 void GameManager::initialise ()
 {
 #ifdef PKGDATADIR
-	_enginePath = PKGDATADIR;
+	if (!settingsValid()) {
+		_enginePath = PKGDATADIR;
+		_cleanedEnginePath = DirectoryCleaned(_enginePath);
+		GlobalRegistry().set(RKEY_ENGINE_PATH, _enginePath);
+	}
 #endif
 
 	if (!settingsValid()) {
 		_enginePath = Win32Registry::getKeyValue("Software\\UFOAI", "ufo.exe");
+		_cleanedEnginePath = DirectoryCleaned(_enginePath);
+		GlobalRegistry().set(RKEY_ENGINE_PATH, _enginePath);
 	}
 
 	// Check loop, continue, till the user specifies a valid setting
