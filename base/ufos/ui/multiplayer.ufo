@@ -87,33 +87,15 @@ window abstract_multiplayer
 		onClick		{ cmd "irc_connect; ui_push irc;" }
 	}
 
-
 	cmpMenuButton button_exit
 	{
 		string		"_Back"
 		pos			"80 470"
 		onClick		{ cmd "ui_pop;" }
 	}
-
 }
 
-component downloadentry extends button
-{
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"240 135"
-		size		"200 34"
-		string		""
-		onClick		{ cmd "game_downloadteam someidtodo;" }
-	}
-}
-
-window multiplayer_team_download extends abstract_multiplayer
+window team_download extends abstract_multiplayer
 {
 	panel downloadable
 	{
@@ -142,8 +124,18 @@ window multiplayer_team_download extends abstract_multiplayer
 	 */
 	confunc teamlist_add
 	{
-		call *node:root.downloadable@createChild("download<1>", "downloadentry")
+		call *node:root.downloadable@createChild("download<1>", "team_downloadentry")
 		*node:root.downloadable.download<1>@string = <2>
+		*node:root.downloadable.download<1>.id@integer = <1>
+	}
+
+	/**
+	 * @brief Called when a team download was successful
+	 * @param <1> The slot index
+	 */
+	confunc teamlist_downloadsuccessful
+	{
+		cmd "game_teamcomments;ui_pop;"
 	}
 
 	confunc teamlist_clear
@@ -175,7 +167,7 @@ window multiplayer_team extends abstract_multiplayer
 		pos	"482 420"
 		size "200 40"
 		tooltip	"_Download pre created teams from the ufoai webserver"
-		onClick	{ cmd "ui_push multiplayer_team_download;" }
+		onClick	{ cmd "ui_push team_download;" }
 		background	"ui/button_green_small"
 		font	"f_menusmall"
 		color	"0 0.5 0 1"

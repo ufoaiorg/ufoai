@@ -327,6 +327,28 @@ component cmpMapPanel extends panel
 */
 }
 
+component team_downloadentry extends button
+{
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"240 135"
+		size		"200 34"
+		string		""
+		// TODO: slot index
+		onClick		{ cmd "game_downloadteam <node:this.id@integer> 1;" }
+	}
+
+	data id
+	{
+		integer	0
+	}
+}
+
 component cmpTeamPanel extends panel
 {
 	{

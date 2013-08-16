@@ -31,7 +31,6 @@ component teamSoldier extends panel {
 	}
 }
 
-
 window game_team_edit extends objectinfo
 {
 	{

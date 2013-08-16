@@ -410,7 +410,6 @@ void GAME_LoadTeam_f (void)
 
 void GAME_UploadTeam_f (void)
 {
-	static const char *url = "http://ufoai.org/TeamUpload.php";
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
 		return;
@@ -429,26 +428,36 @@ void GAME_UploadTeam_f (void)
 	paramUser.value = Sys_GetCurrentUser();
 	paramUser.next = nullptr;
 
-	HTTP_PutFile("team", filename, url, &paramUser);
+	if (HTTP_PutFile("team", filename, cl_teamuploadurl->string, &paramUser))
+		Com_Printf("uploaded the team %i\n", index);
+	else
+		Com_Printf("failed to upload the team %i\n", index);
 }
 
 void GAME_DownloadTeam_f (void)
 {
-	static const char *url = "http://ufoai.org/TeamDownload.php";
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <id> <slotindex>\n", Cmd_Argv(0));
 		return;
 	}
-	const int id = atoi(Cmd_Argv(1));
+	const char *id = Cmd_Argv(1);
 	const int index = atoi(Cmd_Argv(2));
 	qFILE f;
-	FS_OpenFile(va("save/team%i", index), &f, FILE_WRITE);
+	FS_OpenFile(va("save/team%i.mpt", index), &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("could not open the target file\n");
 		return;
 	}
-	HTTP_GetToFile(va("%s?team=%i", url, id), f.f);
-	GAME_TeamSlotComments_f();
+	char url[256];
+	Q_strncpyz(url, cl_teamdownloadurl->string, sizeof(url));
+	if (!Q_strreplace(cl_teamdownloadurl->string, "$id$", id, url, sizeof(url)))
+		return;
+
+	if (!HTTP_GetToFile(url, f.f))
+		return;
+
+	Com_Printf("downloaded team %s into slot %i\n", id, index);
+	UI_ExecuteConfunc("teamlist_downloadsuccessful %i", index);
 }
 
 static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
@@ -507,14 +516,16 @@ static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
 			break;
 		}
 		if (value->string == nullptr) {
-			Com_Printf("invalid value found: '%s'\n", token);
+			Com_DPrintf(DEBUG_CLIENT, "invalid value found: '%s'\n", token);
+			// skip the invalid value for this and try to go on
+			token = Com_Parse(&responseBuf);
 		}
 	}
 }
 
 void GAME_ListTeams_f (void)
 {
-	static const char *url = "http://ufoai.org/TeamList.php";
+	static const char *url = cl_teamlisturl->string;
 	HTTP_GetURL(url, GAME_ListTeamsCallback);
 }
 

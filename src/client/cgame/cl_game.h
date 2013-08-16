@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern geoscapeData_t geoscapeData;
 struct cgame_export_s;
 
+extern cvar_t *cl_teamdownloadurl;
+extern cvar_t *cl_teamuploadurl;
+extern cvar_t *cl_teamlisturl;
+
 #define GAME_IsSingleplayer()	(!GAME_IsMultiplayer())
 bool GAME_IsMultiplayer(void);
 void GAME_ParseModes(const char *name, const char **text);
