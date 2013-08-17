@@ -797,24 +797,18 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
  */
 static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
-	Edict *check = nullptr;
-	float minDist, minDistCivilian, minDistFighter;
-	float bestActionScore;
-	float reactionTrap = 0.0;
-	float delta;
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
-
-	/* set basic parameters */
-	bestActionScore = 0.0;
-	aia->reset();
-	VectorCopy(to, aia->to);
-	VectorCopy(to, aia->stop);
-	G_EdictSetOrigin(ent, to);
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
+
+	/* set basic parameters */
+	aia->reset();
+	VectorCopy(to, aia->to);
+	VectorCopy(to, aia->stop);
+	G_EdictSetOrigin(ent, to);
 
 	/* check whether this civilian can use weapons */
 	if (ent->chr.teamDef) {
@@ -825,8 +819,10 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 		gi.DPrintf("AI_CivilianCalcActionScore: Error - civilian team with no teamdef\n");
 
 	/* run away */
+	float minDist, minDistCivilian, minDistFighter;
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
 
+	Edict *check = nullptr;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		float dist;
 		if (ent == check)
@@ -855,6 +851,7 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 	minDistCivilian /= UNIT_SIZE;
 	minDistFighter /= UNIT_SIZE;
 
+	float delta;
 	if (minDist < 8.0) {
 		/* very near an alien: run away fast */
 		delta = 4.0 * minDist;
@@ -878,6 +875,7 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 		delta /= 10.0;
 
 	/* try to hide */
+	float reactionTrap = 0.0;
 	check = nullptr;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent == check)
@@ -889,7 +887,7 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
 	}
 	delta -= reactionTrap;
-	bestActionScore += delta;
+	float bestActionScore = delta;
 
 	/* Try not to stand in dangerous terrain */
 	if (!AI_CheckPosition(ent))
@@ -914,11 +912,12 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
  */
 static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *aia)
 {
-	Edict *check = nullptr;
-	float minDistFriendly, minDistOthers;
-	float bestActionScore = 0.0;
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
+
+	/* test for time */
+	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
+		return AI_ACTION_NOTHING_FOUND;
 
 	/* set basic parameters */
 	aia->reset();
@@ -926,13 +925,11 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	/* test for time */
-	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
-		return AI_ACTION_NOTHING_FOUND;
-
 	/* run away */
+	float minDistFriendly, minDistOthers;
 	minDistFriendly = minDistOthers = RUN_AWAY_DIST * UNIT_SIZE;
 
+	Edict *check = nullptr;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		float dist;
 		if (ent == check)
@@ -953,7 +950,7 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 	minDistFriendly /= UNIT_SIZE;
 	minDistOthers /= UNIT_SIZE;
 
-	bestActionScore += SCORE_PANIC_RUN_TO_FRIENDS / minDistFriendly;
+	float bestActionScore = SCORE_PANIC_RUN_TO_FRIENDS / minDistFriendly;
 	bestActionScore -= SCORE_PANIC_FLEE_FROM_STRANGERS / minDistOthers;
 
 	/* try to hide */
