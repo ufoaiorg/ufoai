@@ -135,6 +135,15 @@ static bool CL_CvarCheckVidMode (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, -1, VID_GetModeNums(), true);
 }
 
+void VID_Minimize (void)
+{
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_MinimizeWindow(cls.window);
+#else
+	SDL_WM_IconifyWindow();
+#endif
+}
+
 /**
  * @sa R_Shutdown
  */
@@ -152,6 +161,7 @@ void VID_Init (void)
 	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
 
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
+	Cmd_AddCommand("vid_minimize", VID_Minimize, "Minimize the game window");
 
 	/* memory pools */
 	vid_genericPool = Mem_CreatePool("Vid: Generic");

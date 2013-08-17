@@ -100,5 +100,6 @@ extern cvar_t *vid_grabmouse;
 
 /* Video module initialisation etc */
 void VID_Init(void);
+void VID_Minimize(void);
 int VID_GetModeNums(void);
 bool VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
