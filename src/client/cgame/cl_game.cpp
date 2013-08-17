@@ -1754,7 +1754,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
 
-	cl_teamdownloadurl = Cvar_Get("cl_teamdownloadurl", "http://ufoai.org/teams/$id$.mpt", CVAR_ARCHIVE, "The url to download a shared team from. Use $id$ as a placeholder for the team id.");
+	cl_teamdownloadurl = Cvar_Get("cl_teamdownloadurl", "http://ufoai.org/teams/team$id$.mpt", CVAR_ARCHIVE, "The url to download a shared team from. Use $id$ as a placeholder for the team id.");
 	cl_teamlisturl = Cvar_Get("cl_teamlisturl", "http://ufoai.org/teamlist.php", CVAR_ARCHIVE, "The url to get the team list from.");
 	cl_teamuploadurl = Cvar_Get("cl_teamuploadurl", "http://ufoai.org/teamupload.php", CVAR_ARCHIVE, "The url to upload a team to.");
 

@@ -163,13 +163,17 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  */
 static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file)
 {
-	if (Q_strvalid(url))
+	if (Q_strnull(url)) {
+		Com_Printf("invalid url given\n");
 		return false;
+	}
 
 	char buf[576];
 	HTTP_ResolvURL(url, buf, sizeof(buf));
-	if (buf[0] == '\0')
+	if (buf[0] == '\0') {
+		Com_Printf("could not resolve '%s'\n", url);
 		return false;
+	}
 	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
 
 	dl.curl = curl_easy_init();
