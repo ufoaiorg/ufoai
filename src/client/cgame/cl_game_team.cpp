@@ -529,7 +529,8 @@ static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
 void GAME_ListTeams_f (void)
 {
 	static const char *url = cl_teamlisturl->string;
-	HTTP_GetURL(url, GAME_ListTeamsCallback);
+	if (!HTTP_GetURL(url, GAME_ListTeamsCallback))
+		Com_Printf("failed to query the team list\n");
 }
 
 /**
