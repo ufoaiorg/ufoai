@@ -968,6 +968,7 @@ void IN_Frame (void)
 				}
 				unsigned short keyUnicode = unicode;
 				IN_EventEnqueue(0, keyUnicode, true);
+				IN_EventEnqueue(0, keyUnicode, false);
 			}
 			break;
 		}
