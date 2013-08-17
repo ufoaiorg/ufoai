@@ -169,7 +169,7 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file)
 	char buf[576];
 	HTTP_ResolvURL(url, buf, sizeof(buf));
 	if (buf[0] == '\0')
-		return nullptr;
+		return false;
 	Q_strncpyz(dl.URL, url, sizeof(dl.URL));
 
 	dl.curl = curl_easy_init();
