@@ -37,8 +37,8 @@ function getFreeId() {
 	$files = scandir(getDir(), 1);
 	$file = reset($files);
 	if (false === $file)
-		return "0000000000";
-	return getId($file);
+		return sprintf("%08d", 0);
+	return sprintf("%08d", getId($file) + 1);
 }
 
 function main() {
