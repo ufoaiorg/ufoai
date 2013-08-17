@@ -542,10 +542,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
-	fireDefIndex_t fdIdx;
-	float dist;
 
-	for (fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
 		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
 				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
@@ -555,6 +553,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 		const int shots = tu / time;
 		if (shots) {
 			float dmg;
+			float dist;
 			if (G_IsStunned(check) && !G_IsInsane(ent) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
