@@ -3,7 +3,7 @@ include "teamconfig.php";
 
 function move($tmpfile) {
 	$id = getFreeId();
-	$uploadfile = TEAMDIR . "team" . $id . "." . FILEEXT;
+	$uploadfile = getDir() . "team" . $id . "." . FILEEXT;
 	if (!move_uploaded_file($tmpfile, $uploadfile)) {
 		unlink($tmpfile);
 		error("could not move the file");
@@ -12,19 +12,20 @@ function move($tmpfile) {
 
 function checkDuplicate($tmpfile, $size) {
 	$md5 = md5_file($tmpfile);
-	$files = scandir(TEAMDIR);
+	$files = scandir(getDir());
 	foreach ($files as $file) {
-		if (is_dir($file)) {
+		$fullfile = getDir() . $file;
+		if (is_dir($fullfile)) {
 			continue;
 		}
-		$filesize = filesize($file);
+		$filesize = filesize($fullfile);
 		if (false === $filesize) {
-			error("could not get the filesize of a file");
+			error("could not get the filesize of a file $fullfile");
 		}
 		if ($filesize !== $size) {
 			continue;
 		}
-		if (md5_file($file) === $md5) {
+		if (md5_file($fullfile) === $md5) {
 			return true;
 		}
 	}
@@ -33,8 +34,11 @@ function checkDuplicate($tmpfile, $size) {
 }
 
 function getFreeId() {
-	// TODO:
-	return 0;
+	$files = scandir(getDir(), 1);
+	$file = reset($files);
+	if (false === $file)
+		return "0000000000";
+	return getId($file);
 }
 
 function main() {

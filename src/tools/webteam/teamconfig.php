@@ -38,6 +38,15 @@ function getData($filename) {
 	return $array;
 }
 
+function getDir() {
+	return TEAMDIR;
+}
+
+function getId($file) {
+	preg_match_all('!\d+!', basename($file), $matches);
+	return implode(' ', $matches[0]);
+}
+
 function error($message) {
 	http_response_code(403);
 	error_log($message);
