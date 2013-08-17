@@ -108,7 +108,7 @@ bool VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 /**
  * @brief Perform a renderer restart
  */
-void VID_Restart_f (void)
+static void VID_Restart_f (void)
 {
 	refdef.ready = false;
 

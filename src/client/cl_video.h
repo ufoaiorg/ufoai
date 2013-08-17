@@ -101,5 +101,4 @@ extern cvar_t *vid_grabmouse;
 /* Video module initialisation etc */
 void VID_Init(void);
 int VID_GetModeNums(void);
-void VID_Restart_f(void);
 bool VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
