@@ -56,7 +56,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_AIRCRAFT_DETECTED "detected"
 #define SAVE_AIRCRAFT_LANDED "landed"
-#define SAVE_AIRCRAFT_HANGAR "hangar"
 
 #define SAVE_AIRCRAFT_AIRCRAFTTEAM "aircraftTeam"
 #define SAVE_AIRCRAFT_MEMBER "member"
@@ -137,7 +136,6 @@ DTD:
 	aircraftTarget		CDATA	#IMPLIED
 
 	idx					CDATA	#REQUIRED
-	hangar				CDATA	'0'
 	pilotUCN			CDATA	#IMPLIED
 
 	radarRange			CDATA	'0'

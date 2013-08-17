@@ -102,13 +102,10 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 {
 	int homebase;
 	int numAvailableBases = 0;
-	baseCapacities_t capacity;
 	linkedList_t *popupListText = nullptr;
 	base_t *base;
 
 	assert(aircraft);
-
-	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 
 	cgi->LIST_Delete(&popupListData);
 
@@ -125,7 +122,7 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 			LIST_Add(&popupListData, INVALID_BASE);
 			homebase = popupNum;
 		} else {
-			msg = AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity);
+			msg = AIR_CheckMoveIntoNewHomebase(aircraft, base);
 			if (!msg) {
 				msg = _("base can hold aircraft");
 				LIST_Add(&popupListData, base->idx);
@@ -196,7 +193,8 @@ static void CL_PopupChangeHomebase_f (void)
 	if (base == nullptr)
 		return;
 
-	AIR_MoveAircraftIntoNewHomebase(aircraft, base);
+	if (!AIR_CheckMoveIntoNewHomebase(aircraft, base))
+		AIR_MoveAircraftIntoNewHomebase(aircraft, base);
 
 	cgi->UI_PopWindow(false);
 	CL_DisplayHomebasePopup(aircraft, true);

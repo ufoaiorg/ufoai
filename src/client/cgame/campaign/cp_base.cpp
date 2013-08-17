@@ -757,10 +757,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 	/* calculate capacities.cur for every capacity */
 
 	/* Current CAP_ALIENS (live alien capacity) is managed by AlienContainment class */
-
-	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_SMALL)) ||
-		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_BIG)))
-		AIR_UpdateHangarCapForAll(base);
+	/* Current aircraft capacities should not need recounting */
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
 		CAP_SetCurrent(base, CAP_EMPLOYEES, E_CountAllHired(base));
@@ -893,7 +890,8 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 		bool moved = false;
 		while ((newbase = B_GetNext(newbase)) != nullptr) {
 			/* found a new homebase? */
-			if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
+			if (base != newbase && !AIR_CheckMoveIntoNewHomebase(aircraft, newbase)) {
+				AIR_MoveAircraftIntoNewHomebase(aircraft, newbase);
 				moved = true;
 				break;
 			}

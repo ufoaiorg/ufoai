@@ -233,29 +233,12 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
  */
 bool BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
 {
-	int freeSpace;
-	int price;
-
 	if (!base)
 		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No base given.");
 	if (!aircraftTemplate)
 		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
 
-	if (!B_GetBuildingStatus(base, B_COMMAND))
-		return false;
-	/* We cannot buy aircraft if there is no power in our base. */
-	if (!B_GetBuildingStatus(base, B_POWER))
-		return false;
-	/* We cannot buy aircraft without any hangar. */
-	if (!AIR_AircraftAllowed(base))
-		return false;
-
-	/* Check free space in hangars. */
-	freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, base, 0);
-	if (freeSpace <= 0)
-		return false;
-
-	price = BS_GetAircraftBuyingPrice(aircraftTemplate);
+	int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
 	if (ccs.credits < price)
 		return false;
 

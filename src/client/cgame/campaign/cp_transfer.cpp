@@ -67,23 +67,13 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				continue;
 			if (!B_ItemIsStoredInBaseStorage(od))
 				continue;
-			if (!B_GetBuildingStatus(destination, B_STORAGE)) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Storage, items are removed!"), destination->name);
-				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
-				break;
-			}
 			B_AddToStorage(destination, od, transfer->itemAmount[od->idx]);
 		}
 	}
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
-		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
-			int i;
-			if (success) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Living Quarters, employees got unhired!"), destination->name);
-				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
-			}
-			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		if (!success) {	/* Employees will be unhired. */
+			for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 				const employeeType_t type = (employeeType_t)i;
 				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
@@ -92,8 +82,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				}
 			}
 		} else {
-			int i;
-			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+			for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 				const employeeType_t type = (employeeType_t)i;
 				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
@@ -125,12 +114,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
 		TR_ForeachAircraft(aircraft, transfer) {
-			if ((AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) <= 0) || !AIR_MoveAircraftIntoNewHomebase(aircraft, destination)) {
-				/* No space, aircraft will be lost. */
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space. Aircraft is lost!"), destination->name);
-				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
-				AIR_DeleteAircraft(aircraft);
-			}
+			AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
 		}
 		cgi->LIST_Delete(&transfer->aircraft);
 	}

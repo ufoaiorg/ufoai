@@ -286,11 +286,6 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return nullptr;
 		}
-		/** @todo we should also count aircraft that are already in the queue list */
-		if (AIR_CalculateHangarStorage(data->data.aircraft, base, 0) <= 0) {
-			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-			return nullptr;
-		}
 	}
 
 	/** @todo remove this and make the ufo const */
@@ -497,15 +492,6 @@ static bool PR_CheckFrame (base_t *base, production_t *prod)
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->creditMessage = true;
-			}
-			state = false;
-		}
-		/* Not enough free space in hangars for this aircraft. */
-		else if (AIR_CalculateHangarStorage(aircraft, base, 0) <= 0) {
-			if (!prod->spaceMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = true;
 			}
 			state = false;
 		}

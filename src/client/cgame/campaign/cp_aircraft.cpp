@@ -80,62 +80,6 @@ int AIR_BaseCountAircraft (const base_t *base)
 	return count;
 }
 
-/**
- * @brief Updates hangar capacities for one aircraft in given base.
- * @param[in] aircraftTemplate Aircraft template.
- * @param[in,out] base Pointer to base.
- * @return AIRCRAFT_HANGAR_BIG if aircraft was placed in big hangar
- * @return AIRCRAFT_HANGAR_SMALL if small
- * @return AIRCRAFT_HANGAR_ERROR if error or not possible
- * @sa AIR_NewAircraft
- * @sa AIR_UpdateHangarCapForAll
- */
-static int AIR_UpdateHangarCapForOne (const aircraft_t *aircraftTemplate, base_t *base)
-{
-	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
-	const buildingType_t buildingType = B_GetBuildingTypeByCapacity(capType);
-	int freeSpace;
-
-	if (!base || capType == MAX_CAP || buildingType == MAX_BUILDING_TYPE)
-		return AIRCRAFT_HANGAR_ERROR;
-
-	freeSpace = CAP_GetFreeCapacity(base, capType);
-	if (!B_GetBuildingStatus(base, buildingType) || freeSpace < 1) {
-		Com_Printf("AIR_UpdateHangarCapForOne: base '%s' does not have enough hangar space for '%s'!\n", base->name, aircraftTemplate->id);
-		return AIRCRAFT_HANGAR_ERROR;
-	}
-
-	CAP_AddCurrent(base, capType, 1);
-	switch (capType) {
-	case CAP_AIRCRAFT_SMALL:
-		return AIRCRAFT_HANGAR_SMALL;
-	case CAP_AIRCRAFT_BIG:
-		return AIRCRAFT_HANGAR_BIG;
-	default:
-		return AIRCRAFT_HANGAR_ERROR;
-	}
-}
-
-/**
- * @brief Updates current capacities for hangars in given base.
- * @param[in,out] base The base we want to update.
- * @note Call this function whenever you sell/loss aircraft in given base.
- * @sa BS_SellAircraft_f
- */
-void AIR_UpdateHangarCapForAll (base_t *base)
-{
-	if (!base)
-		return;
-
-	/* Reset current capacities for hangar. */
-	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
-	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
-
-	AIR_ForeachFromBase(aircraft, base) {
-		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
-	}
-}
-
 #ifdef DEBUG
 /**
  * @brief Debug function which lists all aircraft in all bases.
@@ -725,8 +669,11 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
  */
 aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
+	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
 	aircraft_t& aircraft = LIST_Add(&ccs.aircraft, *aircraftTemplate);
 	aircraft.homebase = base;
+	if (base && capType != MAX_CAP && aircraft.status != AIR_CRASHED)
+		CAP_AddCurrent(base, capType, 1);
 	return &aircraft;
 }
 
@@ -739,7 +686,14 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  */
 bool AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
-	return cgi->LIST_Remove(&ccs.aircraft, (const void *)aircraft);
+	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
+	const bool crashed = (aircraft->status == AIR_CRASHED);
+	if (cgi->LIST_Remove(&ccs.aircraft, (const void *)aircraft)) {
+		if (base && capType != MAX_CAP && !crashed)
+			CAP_AddCurrent(base, capType, -1);
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -784,9 +738,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraft;
-	aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
-	if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
-		Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
+
 	/* also update the base menu buttons */
 	cgi->Cmd_ExecuteString("base_init");
 	return aircraft;
@@ -798,14 +750,15 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
  */
 baseCapacities_t AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
-	assert(aircraft);
+	if (!aircraft)
+		return MAX_CAP;
 	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
 		return CAP_AIRCRAFT_SMALL;
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFT_BIG;
 	}
-	cgi->Com_Error(ERR_DROP, "AIR_GetCapacityByAircraftWeight: Unknown weight of aircraft '%i'\n", aircraft->size);
+	return MAX_CAP;
 }
 
 /**
@@ -834,8 +787,15 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	return size;
 }
 
-const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const baseCapacities_t capacity)
+/**
+ * @brief Checks if destination base can store an aircraft and its team
+ * @param[in] aircraft Pointer to the aircraft to check
+ * @param[in] base Pointer to the base to store aircraft
+ */
+const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base)
 {
+	const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
 		return _("No operational hangars at that base.");
 
@@ -883,14 +843,12 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 
 /**
  * @brief Moves a given aircraft to a new base (also the employees and inventory)
- * @note Also checks for a working hangar
  * @param[in] aircraft The aircraft to move into a new base
  * @param[in] base The base to move the aircraft into
  */
-bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
+void AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
-	baseCapacities_t capacity;
 
 	assert(aircraft);
 	assert(base);
@@ -905,10 +863,6 @@ bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 		aircraft->status = AIR_HOME;
 	}
 
-	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
-	if (AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity))
-		return false;
-
 	oldBase = aircraft->homebase;
 	assert(oldBase);
 
@@ -922,6 +876,7 @@ bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	}
 
 	/* Move aircraft to new base */
+	const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	CAP_AddCurrent(oldBase, capacity, -1);
 	aircraft->homebase = base;
 	CAP_AddCurrent(base, capacity, 1);
@@ -939,14 +894,12 @@ bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 		/* redirect to the new base */
 		AIR_AircraftReturnToBase(aircraft);
 	}
-
-	return true;
 }
 
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.
- * @note The assigned soldiers (if any) are removed/unassinged from the aircraft - not fired.
+ * @note The assigned soldiers (if any) are unassinged from the aircraft - not fired.
  * @sa AIR_DestroyAircraft
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
@@ -998,9 +951,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	/* also update the base menu buttons */
 	cgi->Cmd_ExecuteString("base_init");
-
-	/* update hangar capacities */
-	AIR_UpdateHangarCapForAll(base);
 
 	/* Update Radar overlay */
 	if (aircraftIsOnGeoscape)
@@ -2408,8 +2358,6 @@ static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft,
 	if (isUfo)
 		return true;
 
-	cgi->XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
-
 	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
 	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		xmlNode_t *ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
@@ -2549,7 +2497,6 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->idx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
 	if (craft->idx < 0) {
 		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
-		cgi->Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
 
@@ -2632,8 +2579,6 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	/* All other informations are not needed for ufos */
 	if (!craft->homebase)
 		return true;
-
-	craft->hangar = cgi->XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
 	for (ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_MEMBER); AIR_GetTeamSize(craft) < craft->maxTeamSize && ssnode;
@@ -2895,31 +2840,6 @@ bool AIR_ScriptSanityCheck (void)
 	}
 
 	return !error;
-}
-
-/**
- * @brief Calculates free space in hangars in given base.
- * @param[in] aircraftTemplate aircraft in aircraftTemplates list.
- * @param[in] base The base to calc the free space in.
- * @param[in] used Additional space "used" in hangars (use that when calculating space for more than one aircraft).
- * @return Amount of free space in hangars suitable for given aircraft type.
- * @note Returns -1 in case of error. Returns 0 if no error but no free space.
- */
-int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t *base, int used)
-{
-	assert(base);
-	assert(aircraftTemplate);
-	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
-
-	if (!base->founded) {
-		return -1;
-	}
-
-	const baseCapacities_t aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
-	/* If this is a small aircraft, we will check space in small hangar.
-	 * If this is a large aircraft, we will check space in big hangar. */
-	const int freespace = CAP_GetFreeCapacity(base, aircraftCapacity) - used;
-	return std::max(freespace, 0);
 }
 
 /**

@@ -166,9 +166,6 @@ static void BS_Buy_f (void)
 
 	aircraft = AIR_GetAircraftSilent(itemid);
 	if (aircraft) {
-		int freeSpace;
-		int price;
-
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			CP_Popup(_("Note"), _("No command centre in this base.\nHangars are not functional.\n"));
 			return;
@@ -184,18 +181,12 @@ static void BS_Buy_f (void)
 			return;
 		}
 		/* Check free space in hangars. */
-		freeSpace = AIR_CalculateHangarStorage(aircraft, base, 0);
-		if (freeSpace < 0) {
-			Com_Printf("BS_Buy_f: something bad happened, AIR_CalculateHangarStorage returned < 0!\n");
-			return;
-		}
-		if (freeSpace == 0) {
+		if (CAP_GetFreeCapacity(base, AIR_GetCapacityByAircraftWeight(aircraft)) <= 0) {
 			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		}
 
-		price = BS_GetAircraftBuyingPrice(aircraft);
-		if (ccs.credits < price) {
+		if (ccs.credits < BS_GetAircraftBuyingPrice(aircraft)) {
 			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 			return;
 		}

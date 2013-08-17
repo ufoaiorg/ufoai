@@ -65,17 +65,6 @@ typedef enum {
 	AIRCRAFT_LARGE = 2
 } aircraftSize_t;
 
-/** @brief All different Hangar size.
- * @note for Phalanx aircraft and UFO.
- */
-typedef enum {
-	AIRCRAFT_HANGAR_NONE = 0,
-	AIRCRAFT_HANGAR_SMALL = 1,
-	AIRCRAFT_HANGAR_BIG = 2,
-
-	AIRCRAFT_HANGAR_ERROR
-} aircraftHangarType_t;
-
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
 typedef enum {
@@ -180,8 +169,6 @@ typedef struct aircraft_s {
 	mapline_t route;
 	int point;			/**< Number of route points that has already been done when aircraft is moving */
 	int time;			/**< Elapsed seconds since aircraft started it's new route */
-	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
-						 * is being parked in (CAP_AIRCRAFT_SMALL/CAP_AIRCRAFT_BIG). */
 
 	int maxTeamSize;	/**< Max amount of soldiers onboard. */
 	linkedList_t *acTeam;			/**< List of employees. i.e. current team for this aircraft */
@@ -257,7 +244,6 @@ bool AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
 void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft, bool killPilot = true);
-bool AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 bool AIR_AddToAircraftTeam(aircraft_t *aircraft, Employee* employee);
@@ -278,9 +264,7 @@ void AIR_GetDestinationWhilePursuing(const aircraft_t *shooter, const aircraft_t
 bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, bool destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
-void AIR_UpdateHangarCapForAll(struct base_s *base);
 bool AIR_ScriptSanityCheck(void);
-int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used) __attribute__((nonnull (1, 2)));
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
@@ -289,7 +273,8 @@ const char *AIR_GetAircraftString(aircraftType_t aircraftType);
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
 baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
-const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const baseCapacities_t capacity);
+const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base);
+void AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);

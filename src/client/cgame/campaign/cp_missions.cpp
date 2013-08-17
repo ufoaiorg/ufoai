@@ -1272,7 +1272,9 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		aircraft->homebase->aircraftCurrent = AIR_GetFirstFromBase(aircraft->homebase);
 
 	/* a crashed aircraft is no longer using capacity of the hangars */
-	AIR_UpdateHangarCapForAll(aircraft->homebase);
+	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
+	if (capType != MAX_CAP)
+		CAP_AddCurrent(aircraft->homebase, capType, -1);
 
 	if (GEO_IsAircraftSelected(aircraft))
 		GEO_SetSelectedAircraft(nullptr);
