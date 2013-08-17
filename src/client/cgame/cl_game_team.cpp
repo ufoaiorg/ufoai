@@ -485,6 +485,7 @@ static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
 		Com_Printf("invalid token: '%s' - expected {\n", token);
 		return;
 	}
+	int num = 0;
 	int level = 1;
 	for (;;) {
 		token = Com_Parse(&responseBuf);
@@ -501,6 +502,7 @@ static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
 				break;
 			}
 			UI_ExecuteConfunc("teamlist_add %i \"%s\"", entry.id, entry.name);
+			num++;
 			continue;
 		}
 
@@ -521,6 +523,7 @@ static void GAME_ListTeamsCallback (const char *responseBuf, void *userdata)
 			token = Com_Parse(&responseBuf);
 		}
 	}
+	Com_Printf("found %i teams\n", num);
 }
 
 void GAME_ListTeams_f (void)
