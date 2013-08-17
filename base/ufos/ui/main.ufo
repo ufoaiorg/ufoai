@@ -8,11 +8,37 @@ window main
 		background	"background/main_bg"
 	}
 
-	string version
-	{
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
+	panel bottom {
+		{
+			pos			"10 743"
+			size		"800 25"
+			layout		LAYOUT_LEFT_RIGHT_FLOW
+			layoutMargin	6
+		}
+/*
+		button facebook
+		{
+			icon		"icons/facebook"
+			tooltip		"_Like us on facebook"
+			size		"20 21"
+			padding		0
+			onClick		{ cmd "cl_openurl http://www.facebook.com/ufoai/;" }
+		}
+
+		button twitter
+		{
+			icon		"icons/twitter"
+			tooltip		"_Follow us on twitter"
+			size		"20 21"
+			padding		0
+			onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
+		}
+*/
+		string version
+		{
+			string		*cvar:version
+			size		"550 20"
+		}
 	}
 
 	// ==================
