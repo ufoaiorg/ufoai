@@ -859,6 +859,21 @@ static void CL_ShowConfigstrings_f (void)
 }
 
 /**
+ * @brief Opens the specified URL and minimizes the game window. You have to specify the whole
+ * url including the protocol.
+ */
+static void CL_OpenURL_f (void)
+{
+	if (Cmd_Argc() != 2) {
+		Com_Printf("usage: %s <url>\n", Cmd_Argv(0));
+		return;
+	}
+
+	VID_Minimize();
+	Sys_OpenURL(Cmd_Argv(1));
+}
+
+/**
  * @brief Calls all reset functions for all subsystems like production and research
  * also initializes the cvars and commands
  * @sa CL_Init
@@ -907,6 +922,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
 	Cmd_AddCommand("startmatch", CL_StartMatch_f, "Start the match once every player is ready");
 	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
+	Cmd_AddCommand("cl_openurl", CL_OpenURL_f, "Opens the given url in a browser");
 
 	/* forward to server commands
 	 * the only thing this does is allow command completion
