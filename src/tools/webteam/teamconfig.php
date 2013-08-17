@@ -39,6 +39,7 @@ function getData($filename) {
 }
 
 function error($message) {
+	http_response_code(403);
 	error_log($message);
 	#$stdout = fopen('php://stdout', 'w');
 	#fwrite($stdout, "$message\n");
