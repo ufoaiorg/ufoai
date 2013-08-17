@@ -597,7 +597,7 @@ window popup_keyinfo
 	string keyinfo_label
 	{
 		font		"f_verysmall_bold"
-		string		*cvar:mn_keyinfo_label_string
+		string		""
 		contentalign	ALIGN_CC
 		pos			"20 58"
 		size		"498 20"
@@ -607,27 +607,11 @@ window popup_keyinfo
 	func onWindowOpened {
 		// check if we are in campaign mode
 		if ( *cvar:mn_base_count > 0 ) {
-			// check if we are playing in windowed mode
-			if ( *cvar:vid_fullscreen == 0) {
-				*cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://ufoai.org.\nHint: Press CTRL+G to grab/release the mousepointer."
-			} else {
-				*cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://ufoai.org."
-			}
+			*node:root.keyinfo_label@string = "_Visit our forums and join the community at http://ufoai.org."
 		} else {
-			// check if we are playing in windowed mode
-			if ( *cvar:vid_fullscreen == 0) {
-				*cvar:mn_keyinfo_label_string = "_Note: Campaign-specific keybindings visible in Campaign mode only.\nHint: Press CTRL+G to grab/release the mousepointer."
-			} else {
-				*cvar:mn_keyinfo_label_string = "_Note: Campaign-specific keybindings visible in Campaign mode only."
-			}
+			*node:root.keyinfo_label@string = "_Note: Campaign-specific keybindings visible in Campaign mode only."
 		}
 		cmd "mn_init_keylist;"
-		*cvar:help_window_open = 1
-	}
-
-	func onWindowClosed {
-		delete *cvar:mn_keyinfo_label_string
-		delete *cvar:help_window_open
 	}
 
 	// only show the current binding - no support for changing them atm
