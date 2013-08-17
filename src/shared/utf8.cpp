@@ -128,6 +128,10 @@ int UTF8_next (const char **str)
 	size_t len, i;
 	int cp, min;
 	const char *s = *str;
+
+	if (s[0] == '\0')
+		return -1;
+
 	const unsigned char *buf = (const unsigned char*)(s);
 
 	if (buf[0] < 0x80) {

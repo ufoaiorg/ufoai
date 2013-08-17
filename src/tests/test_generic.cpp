@@ -398,6 +398,15 @@ static void testStringCopiers (void)
 	time = Sys_Milliseconds() - time;
 	Com_Printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
 
+	const char *s = src;
+	int cnt = 0;
+	Com_Printf("initial length: %i %p\n", UTF8_strlen(s), s);
+	while (UTF8_next(&s) != -1) {
+		Com_Printf("remaining length: %i %p\n", UTF8_strlen(s), s);
+		cnt++;
+	}
+	UFO_CU_ASSERT_EQUAL_INT_MSG(cnt, UTF8_strlen(src), va("actual: %i, expected %i", cnt, UTF8_strlen(src)));
+
 	/* Com_sprintf */
 
 	/* empty string */
