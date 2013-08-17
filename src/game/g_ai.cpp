@@ -541,7 +541,7 @@ static Edict *AI_SearchDestroyableObject (const Edict *ent, const fireDef_t *fd)
 static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
 {
 	float vis = ACTOR_VIS_0;
-	bool visChecked = false;	/* only check visibily once for an actor */
+	bool visChecked = false;	/* only check visibility once for an actor */
 	fireDefIndex_t fdIdx;
 	float dist;
 
@@ -629,7 +629,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (fd->splrad > 0.0 || G_IsStunned(check))
+				if (!item->def()->thrown && (fd->splrad > 0.0 || G_IsStunned(check)))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;
@@ -684,9 +684,8 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
-	aia->reset();
-
 	/* set basic parameters */
+	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
