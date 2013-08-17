@@ -555,7 +555,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 		const int shots = tu / time;
 		if (shots) {
 			float dmg;
-			if (G_IsStunned(check) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
+			if (G_IsStunned(check) && !G_IsInsane(ent) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
@@ -614,7 +614,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 				dmg *= SCORE_CIV_FACTOR;
 
 			/* Stunned malus */
-			if (G_IsStunned(check))
+			if (G_IsStunned(check) && !G_IsRaged(ent))
 				dmg *= SCORE_DISABLED_FACTOR;
 
 			/* add random effects */
