@@ -349,6 +349,18 @@ component team_downloadentry extends button
 	}
 }
 
+component cmpTeamPanelButton extends button
+{
+	background		"ui/button_green_verysmall"
+	color		"0 .78 0 1"
+	selectcolor	"1 1 1 1"
+	contentalign	ALIGN_CC
+	padding		8
+	font		"f_verysmall"
+	disabled	true
+	size		"200 34"
+}
+
 component cmpTeamPanel extends panel
 {
 	{
@@ -369,184 +381,88 @@ component cmpTeamPanel extends panel
 		*node:this.parent.slot_team<1>@disabled = false
 	}
 
-	button slot_team0
+	cmpTeamPanelButton slot_team0
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 100"
-		size		"200 34"
 		string		*cvar:mn_slot0
 		onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
 	}
 
-	button slot_team1
+	cmpTeamPanelButton slot_team1
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 135"
-		size		"200 34"
 		string		*cvar:mn_slot1
 		onClick		{ cmd "game_loadteam 1;ui_push game_team_edit;" }
 	}
 
-	button slot_team2
+	cmpTeamPanelButton slot_team2
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 170"
-		size		"200 34"
 		string		*cvar:mn_slot2
 		onClick		{ cmd "game_loadteam 2;ui_push game_team_edit;" }
 	}
 
-	button slot_team3
+	cmpTeamPanelButton slot_team3
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 205"
-		size		"200 34"
 		string		*cvar:mn_slot3
 		onClick		{ cmd "game_loadteam 3;ui_push game_team_edit;" }
 	}
 
-	button slot_team4
+	cmpTeamPanelButton slot_team4
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 240"
-		size		"200 34"
 		string		*cvar:mn_slot4
 		onClick		{ cmd "game_loadteam 4;ui_push game_team_edit;" }
 	}
 
-	button slot_team5
+	cmpTeamPanelButton slot_team5
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"0 275"
-		size		"200 34"
 		string		*cvar:mn_slot5
 		onClick		{ cmd "game_loadteam 5;ui_push game_team_edit;" }
 	}
 
 	// Second row
 
-	button slot_team6
+	cmpTeamPanelButton slot_team6
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 100"
-		size		"200 34"
 		string		*cvar:mn_slot6
 		onClick		{ cmd "game_loadteam 6;ui_push game_team_edit;" }
 	}
 
-	button slot_team7
+	cmpTeamPanelButton slot_team7
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 135"
-		size		"200 34"
 		string		*cvar:mn_slot7
 		onClick		{ cmd "game_loadteam 7;ui_push game_team_edit;" }
 	}
 
-	button slot_team8
+	cmpTeamPanelButton slot_team8
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 170"
-		size		"200 34"
 		string		*cvar:mn_slot8
 		onClick		{ cmd "game_loadteam 8;ui_push game_team_edit;" }
 	}
 
-	button slot_team9
+	cmpTeamPanelButton slot_team9
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 205"
-		size		"200 34"
 		string		*cvar:mn_slot9
 		onClick		{ cmd "game_loadteam 9;ui_push game_team_edit;" }
 	}
 
-	button slot_team10
+	cmpTeamPanelButton slot_team10
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 240"
-		size		"200 34"
 		string		*cvar:mn_slot10
 		onClick		{ cmd "game_loadteam 10;ui_push game_team_edit;" }
 	}
 
-	button slot_team11
+	cmpTeamPanelButton slot_team11
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		disabled	true
 		pos			"240 275"
-		size		"200 34"
 		string		*cvar:mn_slot11
 		onClick		{ cmd "game_loadteam 11;ui_push game_team_edit;" }
 	}
