@@ -65,3 +65,4 @@ char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);
 void Sys_Backtrace(void);
+void Sys_OpenURL(const char *url);

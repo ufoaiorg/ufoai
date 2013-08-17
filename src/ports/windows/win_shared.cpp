@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 #include <mmsystem.h>
+#include <shellapi.h>
 
 HINSTANCE global_hInstance;
 
@@ -468,4 +469,9 @@ void Sys_InitSignals (void)
 
 void Sys_Mkfifo (const char *ospath, qFILE *f)
 {
+}
+
+void Sys_OpenURL (const char *url)
+{
+	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }

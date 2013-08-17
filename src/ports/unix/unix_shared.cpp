@@ -188,3 +188,14 @@ void Sys_InitSignals (void)
 	signal(SIGTERM, Sys_Signal);
 #endif
 }
+
+void Sys_OpenURL (const char *url)
+{
+	char buf[512];
+# ifdef __APPLE__
+	Com_sprintf(buf, sizeof(buf), "open \"%s\"", url);
+#else
+	Com_sprintf(buf, sizeof(buf), "xdg-open \"%s\"", url);
+#endif
+	system(buf);
+}
