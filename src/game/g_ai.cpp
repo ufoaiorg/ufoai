@@ -885,9 +885,6 @@ static float AI_CivilianCalcActionScore (Edict *ent, const pos3_t to, aiAction_t
 		if (!(G_IsAlien(check) || G_IsInsane(ent)))
 			continue;
 
-		if (!G_IsVisibleForTeam(check, ent->team))
-			continue;
-
 		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
 			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
 	}
@@ -965,9 +962,6 @@ static float AI_PanicCalcActionScore (Edict *ent, const pos3_t to, aiAction_t *a
 		if (ent == check)
 			continue;
 		if (G_IsInsane(ent))
-			continue;
-
-		if (!G_IsVisibleForTeam(check, ent->team))
 			continue;
 
 		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
