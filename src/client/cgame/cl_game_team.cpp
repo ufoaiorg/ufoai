@@ -440,7 +440,7 @@ void GAME_DownloadTeam_f (void)
 		Com_Printf("Usage: %s <id> <slotindex>\n", Cmd_Argv(0));
 		return;
 	}
-	const char *id = Cmd_Argv(1);
+	const int id = atoi(Cmd_Argv(1));
 	const int index = atoi(Cmd_Argv(2));
 	qFILE f;
 	FS_OpenFile(va("save/team%i.mpt", index), &f, FILE_WRITE);
@@ -450,13 +450,13 @@ void GAME_DownloadTeam_f (void)
 	}
 	char url[256];
 	Q_strncpyz(url, cl_teamdownloadurl->string, sizeof(url));
-	if (!Q_strreplace(cl_teamdownloadurl->string, "$id$", id, url, sizeof(url)))
+	if (!Q_strreplace(cl_teamdownloadurl->string, "$id$", va("%08d", id), url, sizeof(url)))
 		return;
 
 	if (!HTTP_GetToFile(url, f.f))
 		return;
 
-	Com_Printf("downloaded team %s into slot %i\n", id, index);
+	Com_Printf("downloaded team %i into slot %i\n", id, index);
 	UI_ExecuteConfunc("teamlist_downloadsuccessful %i", index);
 }
 
