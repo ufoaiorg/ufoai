@@ -277,7 +277,7 @@ bool HTTP_GetToFile (const char *url, FILE* file)
 	return HTTP_GetURLInternal(dl, url, file);
 }
 
-void HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
+bool HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
 {
 	dlhandle_t dl;
 	OBJZERO(dl);
@@ -285,7 +285,7 @@ void HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
 	if (!HTTP_GetURLInternal(dl, url, nullptr)) {
 		Mem_Free(dl.tempBuffer);
 		dl.tempBuffer = nullptr;
-		return;
+		return false;
 	}
 
 	if (callback != nullptr)
@@ -293,6 +293,7 @@ void HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
 
 	Mem_Free(dl.tempBuffer);
 	dl.tempBuffer = nullptr;
+	return true;
 }
 
 /**
