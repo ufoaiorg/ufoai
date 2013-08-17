@@ -1,5 +1,5 @@
 <?php
-DEBUG=false
+const DEBUG = false;
 if (DEBUG) {
 	error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
 } else {
