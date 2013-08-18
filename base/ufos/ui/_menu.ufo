@@ -421,25 +421,34 @@ component cmpTeamPanel extends panel
 		}
 	}
 
+	data side
+	{
+		string "left"
+	}
+
 	/**
 	 * @brief adds a new entry to the left slot
-	 * @param <1> "right" or "left"
-	 * @param <2> the id
-	 * @param <3> the file name
-	 * @param <4> the slot name
-	 * @param <5> the team members
-	 * @param <6> true if uploadable (user created file) or false if game data file
+	 * @param <1> the id
+	 * @param <2> the file name
+	 * @param <3> the slot name
+	 * @param <4> the team members
+	 * @param <5> true if uploadable (user created file) or false if game data file
 	 */
 	confunc teamsaveslotadd
 	{
-		call *node:this.parent.<1>@createChild("slot<2>", "cmpTeamSlotPanel")
-		*node:this.parent.<1>.slot<2>.filename@string = "<3>"
-		*node:this.parent.<1>.slot<2>.index@integer = <2>
-		*node:this.parent.<1>.slot<2>.button@string = "<4> (<5>)"
-		*node:this.parent.<1>.slot<2>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
-		*node:this.parent.<1>.slot<2>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
-		if (<6> == 0) {
-			*node:this.parent.<1>.slot<2>.upload@invis = true
+		call *node:this.parent.<node:this.parent.side@string>@createChild("slot<1>", "cmpTeamSlotPanel")
+		*node:this.parent.<node:this.parent.side@string>.slot<1>.filename@string = "<2>"
+		*node:this.parent.<node:this.parent.side@string>.slot<1>.index@integer = <1>
+		*node:this.parent.<node:this.parent.side@string>.slot<1>.button@string = "<3> (<4>)"
+		*node:this.parent.<node:this.parent.side@string>.slot<1>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
+		*node:this.parent.<node:this.parent.side@string>.slot<1>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
+		if (<5> == 0) {
+			*node:this.parent.<node:this.parent.side@string>.slot<1>.upload@invis = true
+		}
+		if (<node:this.parent.side@string> eq "left") {
+			*node:this.parent.side@string = "right"
+		} else {
+			*node:this.parent.side@string = "left"
 		}
 	}
 

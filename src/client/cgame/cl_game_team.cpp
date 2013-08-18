@@ -130,8 +130,6 @@ void GAME_TeamSlotComments_f (void)
 	if (!n)
 		return;
 
-	const char *side[] = {"left", "right"};
-	int sideIndex = 0;
 	const char *filename;
 	int i = 0;
 	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
@@ -156,11 +154,7 @@ void GAME_TeamSlotComments_f (void)
 		}
 
 		const bool uploadable = FS_FileExists("%s/save/%s", FS_Gamedir(), filename);
-		UI_ExecuteConfunc("teamsaveslotadd %s %i \"%s\" \"%s\" %i %i", side[sideIndex], i++, filename, header.name, LittleLong(header.soldiercount), uploadable ? 1 : 0);
-		if (sideIndex)
-			sideIndex = 0;
-		else
-			sideIndex = 1;
+		UI_ExecuteConfunc("teamsaveslotadd %i \"%s\" \"%s\" %i %i", i++, filename, header.name, LittleLong(header.soldiercount), uploadable ? 1 : 0);
 	}
 	FS_NextFileFromFileList(nullptr);
 }
