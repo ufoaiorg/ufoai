@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "web_team.h"
+#include "web_main.h"
 #include "../cl_shared.h"
 #include "../cgame/cl_game_team.h"
 #include "../cl_http.h"
@@ -56,7 +57,7 @@ void WEB_UploadTeam_f (void)
 		paramUser.value = Sys_GetCurrentUser();
 		paramUser.next = nullptr;
 
-		if (HTTP_PutFile("team", va("%s/save/%s", FS_Gamedir(), filename), web_teamuploadurl->string, &paramUser))
+		if (WEB_PutFile("team", va("%s/save/%s", FS_Gamedir(), filename), web_teamuploadurl->string, &paramUser))
 			Com_Printf("uploaded the team '%s'\n", filename);
 		else
 			Com_Printf("failed to upload the team from file '%s'\n", filename);
@@ -86,7 +87,7 @@ void WEB_DownloadTeam_f (void)
 	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), url, sizeof(url)))
 		return;
 
-	if (!HTTP_GetToFile(url, f.f))
+	if (!WEB_GetToFile(url, f.f))
 		return;
 
 	if (Com_CheckDuplicateFile(filename, "save/*.mpt")) {
@@ -167,6 +168,6 @@ static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
 void WEB_ListTeams_f (void)
 {
 	static const char *url = web_teamlisturl->string;
-	if (!HTTP_GetURL(url, WEB_ListTeamsCallback))
+	if (!WEB_GetURL(url, WEB_ListTeamsCallback))
 		Com_Printf("failed to query the team list\n");
 }

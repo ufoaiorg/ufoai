@@ -31,6 +31,21 @@
 
 static cvar_t *web_authurl;
 
+bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
+{
+	return HTTP_GetURL(url, callback, userdata);
+}
+
+bool WEB_GetToFile (const char *url, FILE* file)
+{
+	return HTTP_GetToFile(url, file);
+}
+
+bool WEB_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
+{
+	return HTTP_PutFile(formName, fileName, url, params);
+}
+
 bool WEB_Auth (const char *username, const char *password)
 {
 	return false;

@@ -161,7 +161,7 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file)
+static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file, const char *postfields)
 {
 	if (Q_strnull(url)) {
 		Com_Printf("invalid url given\n");
@@ -193,6 +193,7 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file)
 	curl_easy_setopt(dl.curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEHEADER, &dl);
+	curl_easy_setopt(dl.curl, CURLOPT_POSTFIELDS, postfields);
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
 	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
@@ -271,22 +272,35 @@ bool HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	return true;
 }
 
-bool HTTP_GetToFile (const char *url, FILE* file)
+/**
+ * @brief Downloads the given @c url into the given @c file.
+ * @param[in] url The url to fetch
+ * @param[in] file The file to write the result into
+ * @param[in] postfields Some potential POST data in the form
+ */
+bool HTTP_GetToFile (const char *url, FILE* file, const char *postfields)
 {
 	if (!file)
 		return false;
 	dlhandle_t dl;
 	OBJZERO(dl);
 
-	return HTTP_GetURLInternal(dl, url, file);
+	return HTTP_GetURLInternal(dl, url, file, postfields);
 }
 
-bool HTTP_GetURL (const char *url, http_callback_t callback, void *userdata)
+/**
+ * @brief Downloads the given @c url and return the data to the callback (optional)
+ * @param[in] url The url to fetch
+ * @param[in] callback The callback to give the data to. Might also be @c NULL
+ * @param[in] userdata The userdata that is given to the callback
+ * @param[in] postfields Some potential POST data
+ */
+bool HTTP_GetURL (const char *url, http_callback_t callback, void *userdata, const char *postfields)
 {
 	dlhandle_t dl;
 	OBJZERO(dl);
 
-	if (!HTTP_GetURLInternal(dl, url, nullptr)) {
+	if (!HTTP_GetURLInternal(dl, url, nullptr, postfields)) {
 		Mem_Free(dl.tempBuffer);
 		dl.tempBuffer = nullptr;
 		return false;

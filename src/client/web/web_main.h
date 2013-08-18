@@ -26,5 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../common/common.h"
+#include "../../common/http.h"
+
 bool WEB_Auth(const char *username, const char *password);
 void WEB_InitStartup(void);
+bool WEB_GetURL(const char *url, http_callback_t callback, void *userdata = nullptr);
+bool WEB_GetToFile(const char *url, FILE* file);
+bool WEB_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params);
