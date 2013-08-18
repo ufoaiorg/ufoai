@@ -89,7 +89,13 @@ void WEB_DownloadTeam_f (void)
 	if (!HTTP_GetToFile(url, f.f))
 		return;
 
-	UI_ExecuteConfunc("teamlist_downloadsuccessful");
+	if (Com_CheckDuplicateFile(filename, "save/*.mpt")) {
+		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
+		UI_ExecuteConfunc("teamlist_downloadduplicate");
+		return;
+	}
+
+	UI_ExecuteConfunc("teamlist_downloadsuccessful %s", filename);
 }
 
 static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)

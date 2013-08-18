@@ -265,7 +265,7 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
  * @param[in] length Compute the md5 of the first 'length' bytes (if 0 - complete file)
  * @return the md5 sum buffer (char*)
  */
-char *Com_MD5File (const char *fn, int length)
+const char *Com_MD5File (const char *fn, int length)
 {
 	static char final[33] = {"unknown"};
 	unsigned char digest[16] = {""};

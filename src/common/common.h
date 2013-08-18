@@ -250,7 +250,7 @@ const char *Com_UnsignedIntToBinary(uint32_t x);
 const char *Com_ByteToBinary(byte x);
 
 #include "md4.h"
-char *Com_MD5File(const char *fn, int length);
+const char *Com_MD5File(const char *fn, int length = 0);
 
 extern cvar_t *http_proxy;
 extern cvar_t *http_timeout;
@@ -370,6 +370,7 @@ const char *Com_Argv(int arg);		/* range and null checked */
 void Com_ClearArgv(int arg);
 const char *Com_MacroExpandString(const char *text);
 void Com_UploadCrashDump(const char *crashDumpFile);
+bool Com_CheckDuplicateFile(const char *file, const char *wildcard);
 
 bool Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
 

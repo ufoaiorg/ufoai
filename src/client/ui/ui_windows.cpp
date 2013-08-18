@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_internal.h"
 #include "ui_input.h"
 #include "ui_node.h"
+#include "ui_popup.h"
 #include "node/ui_node_abstractnode.h"
 #include "node/ui_node_window.h"
 #include "node/ui_node_battlescape.h"
@@ -711,6 +712,18 @@ static void UI_DebugTree_f (void)
 	UI_DebugTree(node, 0);
 }
 
+static void UI_Popup_f (void)
+{
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <header> <body>\n", Cmd_Argv(0));
+		return;
+	}
+
+	const char *header = Cmd_Argv(1);
+	const char *body = Cmd_Argv(2);
+	UI_Popup(header, body);
+}
+
 void UI_InitWindows (void)
 {
 	ui_sys_main = Cvar_Get("ui_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see ui_sys_active");
@@ -725,5 +738,6 @@ void UI_InitWindows (void)
 	Cmd_AddCommand("ui_close", UI_CloseWindow_f, "Close a window");
 	Cmd_AddCommand("ui_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
 	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
+	Cmd_AddCommand("ui_popup", UI_Popup_f, "Shows a popup window");
 	Cmd_AddParamCompleteFunction("ui_tree", UI_CompleteWithWindow);
 }

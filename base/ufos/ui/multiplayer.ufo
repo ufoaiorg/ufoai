@@ -129,10 +129,15 @@ window team_download extends abstract_multiplayer
 
 	/**
 	 * @brief Called when a team download was successful
+	 * @param <1> the filename of the newly available team
 	 */
 	confunc teamlist_downloadsuccessful
 	{
 		cmd "game_teamcomments;ui_pop;"
+	}
+
+	confunc teamlist_downloadduplicate
+	{
 	}
 
 	confunc teamlist_clear
