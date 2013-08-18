@@ -58,10 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cgameType_t cgameTypes[MAX_CGAMETYPES];
 static int numCGameTypes;
 
-cvar_t *cl_teamdownloadurl;
-cvar_t *cl_teamuploadurl;
-cvar_t *cl_teamlisturl;
-
 static inline const cgame_export_t *GAME_GetCurrentType (void)
 {
 	return cls.gametype;
@@ -1742,9 +1738,6 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_saveteamstate", GAME_SaveTeamState_f);
 	Cmd_AddCommand("game_saveteam", GAME_SaveTeam_f, "Save a team slot");
 	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
-	Cmd_AddCommand("game_uploadteam", GAME_UploadTeam_f, "Upload a team to the UFOAI server");
-	Cmd_AddCommand("game_downloadteam", GAME_DownloadTeam_f, "Download a team from the UFOAI server");
-	Cmd_AddCommand("game_listteams", GAME_ListTeams_f, "Show all teams on the UFOAI server");
 	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
 	Cmd_AddCommand("game_teamupdate", GAME_UpdateTeamMenuParameters_f, "");
 	Cmd_AddCommand("game_actorselect", GAME_ActorSelect_f, "Select an actor in the equipment menu");
@@ -1753,10 +1746,6 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
-
-	cl_teamdownloadurl = Cvar_Get("cl_teamdownloadurl", "http://ufoai.org/teams/team$id$.mpt", CVAR_ARCHIVE, "The url to download a shared team from. Use $id$ as a placeholder for the team id.");
-	cl_teamlisturl = Cvar_Get("cl_teamlisturl", "http://ufoai.org/teamlist.php", CVAR_ARCHIVE, "The url to get the team list from.");
-	cl_teamuploadurl = Cvar_Get("cl_teamuploadurl", "http://ufoai.org/teamupload.php", CVAR_ARCHIVE, "The url to upload a team to.");
 
 	Cvar_RegisterCvarListener(cvarListener);
 }

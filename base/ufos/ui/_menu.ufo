@@ -340,7 +340,7 @@ component team_downloadentry extends button
 		size		"200 34"
 		string		""
 		// TODO: slot index
-		onClick		{ cmd "game_downloadteam <node:this.id@integer> 1;" }
+		onClick		{ cmd "web_downloadteam <node:this.id@integer> 1;" }
 	}
 
 	data id
@@ -386,6 +386,7 @@ component cmpTeamPanel extends panel
 		pos			"0 100"
 		string		*cvar:mn_slot0
 		onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
+		onRClick    { cmd "web_uploadteam 0;" }
 	}
 
 	cmpTeamPanelButton slot_team1

@@ -1,10 +1,11 @@
 /**
  * @file
- * @brief cgame team management headers.
+ * @brief UFOAI web interface management. Authentification as well as
+ * uploading/downloading stuff to and from your account is done here.
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -25,20 +26,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include "../../common/xml.h"
-
-#define NO_TEAM_SLOT_LOADED -1
-
-void GAME_SaveTeam_f(void);
-void GAME_LoadTeam_f(void);
-void GAME_TeamSlotComments_f(void);
-void GAME_SaveTeamState_f(void);
-void GAME_ToggleActorForTeam_f(void);
-void GAME_AutoTeam_f(void);
-void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
-void GAME_UpdateInventory(Inventory *inv, const equipDef_t *ed);
-void GAME_UpdateTeamMenuParameters_f(void);
-void GAME_ActorSelect_f(void);
-bool GAME_LoadDefaultTeam(bool force);
-bool GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);
-bool GAME_LoadCharacter(xmlNode_t *p, character_t *chr);
+bool WEB_Auth(const char *username, const char *password);
+void WEB_InitStartup(void);

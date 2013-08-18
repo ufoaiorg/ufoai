@@ -122,6 +122,9 @@ $(TARGET)_SRCS_TMP      = \
 	client/cgame/cl_game.cpp \
 	client/cgame/cl_game_team.cpp \
 	\
+	client/web/web_main.cpp \
+	client/web/web_team.cpp \
+	\
 	client/ui/ui_actions.cpp \
 	client/ui/ui_behaviour.cpp \
 	client/ui/ui_components.cpp \

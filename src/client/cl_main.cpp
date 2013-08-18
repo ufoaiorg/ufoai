@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
 #include "sound/s_mumble.h"
+#include "web/web_main.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
 #include "ui/ui_main.h"
@@ -955,6 +956,7 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	GAME_InitStartup();
+	WEB_InitStartup();
 	ACTOR_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();

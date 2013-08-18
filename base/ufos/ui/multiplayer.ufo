@@ -145,7 +145,7 @@ window team_download extends abstract_multiplayer
 
 	func onWindowOpened
 	{
-		cmd	"teamlist_clear;game_listteams;"
+		cmd	"teamlist_clear;web_listteams;"
 	}
 }
 

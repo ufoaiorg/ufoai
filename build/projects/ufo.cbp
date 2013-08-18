@@ -489,6 +489,10 @@
 		<Unit filename="..\..\src\client\cgame\staticcampaign\cl_game_staticcampaign.cpp" />
 		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_missions.cpp" />
 		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_parse.cpp" />
+		<Unit filename="..\..\src\client\web\web_main.cpp" />
+		<Unit filename="..\..\src\client\web\web_main.h" />
+		<Unit filename="..\..\src\client\web\web_team.cpp" />
+		<Unit filename="..\..\src\client\web\web_team.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.cpp" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic_ogm.cpp" />
