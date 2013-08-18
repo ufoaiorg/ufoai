@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "web_team.h"
 #include "../cl_shared.h"
+#include "../cgame/cl_game_team.h"
 #include "../cl_http.h"
 #include "../ui/ui_main.h"
 #include "../../shared/parse.h"
@@ -41,35 +42,41 @@ void WEB_UploadTeam_f (void)
 		return;
 	}
 
-	const int index = atoi(Cmd_Argv(1));
+	int index = atoi(Cmd_Argv(1));
+	const char *filename;
+	/* we will loop the whole team save list, just because i don't want
+	 * to specify the filename in the script api of this command. Otherwise
+	 * one could upload everything with this command */
+	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
+		if (index-- != 0)
+			continue;
 
-	const char *filename = va("%s/save/team%i.mpt", FS_Gamedir(), index);
-	if (!FS_FileExists(filename)) {
-		Com_Printf("file '%s' doesn't exist\n", filename);
-		return;
+		upparam_t paramUser;
+		paramUser.name = "user";
+		paramUser.value = Sys_GetCurrentUser();
+		paramUser.next = nullptr;
+
+		if (HTTP_PutFile("team", va("%s/save/%s", FS_Gamedir(), filename), web_teamuploadurl->string, &paramUser))
+			Com_Printf("uploaded the team '%s'\n", filename);
+		else
+			Com_Printf("failed to upload the team from file '%s'\n", filename);
+		break;
 	}
-
-	upparam_t paramUser;
-	paramUser.name = "user";
-	paramUser.value = Sys_GetCurrentUser();
-	paramUser.next = nullptr;
-
-	if (HTTP_PutFile("team", filename, web_teamuploadurl->string, &paramUser))
-		Com_Printf("uploaded the team %i\n", index);
-	else
-		Com_Printf("failed to upload the team %i\n", index);
+	FS_NextFileFromFileList(nullptr);
 }
 
 void WEB_DownloadTeam_f (void)
 {
-	if (Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <id> <slotindex>\n", Cmd_Argv(0));
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <id>\n", Cmd_Argv(0));
 		return;
 	}
 	const int id = atoi(Cmd_Argv(1));
-	const int index = atoi(Cmd_Argv(2));
+	char filename[MAX_QPATH];
+	if (!GAME_TeamGetFreeFilename(filename, sizeof(filename)))
+		return;
 	qFILE f;
-	FS_OpenFile(va("save/team%i.mpt", index), &f, FILE_WRITE);
+	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("could not open the target file\n");
 		return;
@@ -82,8 +89,7 @@ void WEB_DownloadTeam_f (void)
 	if (!HTTP_GetToFile(url, f.f))
 		return;
 
-	Com_Printf("downloaded team %i into slot %i\n", id, index);
-	UI_ExecuteConfunc("teamlist_downloadsuccessful %i", index);
+	UI_ExecuteConfunc("teamlist_downloadsuccessful");
 }
 
 static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)

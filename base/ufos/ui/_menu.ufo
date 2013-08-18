@@ -339,8 +339,7 @@ component team_downloadentry extends button
 		pos			"240 135"
 		size		"200 34"
 		string		""
-		// TODO: slot index
-		onClick		{ cmd "web_downloadteam <node:this.id@integer> 1;" }
+		onClick		{ cmd "web_downloadteam <node:this.id@integer>;" }
 	}
 
 	data id
@@ -349,16 +348,45 @@ component team_downloadentry extends button
 	}
 }
 
-component cmpTeamPanelButton extends button
+component cmpTeamSlotPanel extends panel
 {
-	background		"ui/button_green_verysmall"
-	color		"0 .78 0 1"
-	selectcolor	"1 1 1 1"
-	contentalign	ALIGN_CC
-	padding		8
-	font		"f_verysmall"
-	disabled	true
-	size		"200 34"
+	{
+		size		"199 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	2
+	}
+
+	data filename
+	{
+		string		""
+	}
+
+	data index
+	{
+		integer		-1
+	}
+
+	button button
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		size		"170 34"
+	}
+
+	button upload
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		size		"28 34"
+	}
 }
 
 component cmpTeamPanel extends panel
@@ -367,105 +395,53 @@ component cmpTeamPanel extends panel
 		pos			"0 50"
 		size		"420 550"
 	}
+
 	// ================
 	// save team slots
 	// ================
 
+	panel left
+	{
+		{
+			pos		"1 100"
+			size	"200 216"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+		}
+	}
+
+	panel right
+	{
+		{
+			pos		"240 100"
+			size	"200 216"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+		}
+	}
+
 	/**
-	 * @param[in] <1> id of the slot
-	 * @param[in] <2> amount of soldiers in the savegame
-	 * @param[in] <3> name of the savegame
+	 * @brief adds a new entry to the left slot
+	 * @param <1> "right" or "left"
+	 * @param <2> the id
+	 * @param <3> the file name
+	 * @param <4> the slot name
+	 * @param <5> the team members
 	 */
-	confunc set_slotname {
-		*cvar:mn_slot<1> = "<3> (<2>)"
-		*node:this.parent.slot_team<1>@disabled = false
+	confunc teamsaveslotadd
+	{
+		call *node:this.parent.<1>@createChild("slot<2>", "cmpTeamSlotPanel")
+		*node:this.parent.<1>.slot<2>.filename@string = "<3>"
+		*node:this.parent.<1>.slot<2>.index@integer = <2>
+		*node:this.parent.<1>.slot<2>.button@string = "<4> (<5>)"
+		*node:this.parent.<1>.slot<2>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
+		*node:this.parent.<1>.slot<2>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
 	}
 
-	cmpTeamPanelButton slot_team0
+	confunc teamsaveslotsclear
 	{
-		pos			"0 100"
-		string		*cvar:mn_slot0
-		onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
-		onRClick    { cmd "web_uploadteam 0;" }
-	}
-
-	cmpTeamPanelButton slot_team1
-	{
-		pos			"0 135"
-		string		*cvar:mn_slot1
-		onClick		{ cmd "game_loadteam 1;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team2
-	{
-		pos			"0 170"
-		string		*cvar:mn_slot2
-		onClick		{ cmd "game_loadteam 2;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team3
-	{
-		pos			"0 205"
-		string		*cvar:mn_slot3
-		onClick		{ cmd "game_loadteam 3;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team4
-	{
-		pos			"0 240"
-		string		*cvar:mn_slot4
-		onClick		{ cmd "game_loadteam 4;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team5
-	{
-		pos			"0 275"
-		string		*cvar:mn_slot5
-		onClick		{ cmd "game_loadteam 5;ui_push game_team_edit;" }
-	}
-
-	// Second row
-
-	cmpTeamPanelButton slot_team6
-	{
-		pos			"240 100"
-		string		*cvar:mn_slot6
-		onClick		{ cmd "game_loadteam 6;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team7
-	{
-		pos			"240 135"
-		string		*cvar:mn_slot7
-		onClick		{ cmd "game_loadteam 7;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team8
-	{
-		pos			"240 170"
-		string		*cvar:mn_slot8
-		onClick		{ cmd "game_loadteam 8;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team9
-	{
-		pos			"240 205"
-		string		*cvar:mn_slot9
-		onClick		{ cmd "game_loadteam 9;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team10
-	{
-		pos			"240 240"
-		string		*cvar:mn_slot10
-		onClick		{ cmd "game_loadteam 10;ui_push game_team_edit;" }
-	}
-
-	cmpTeamPanelButton slot_team11
-	{
-		pos			"240 275"
-		string		*cvar:mn_slot11
-		onClick		{ cmd "game_loadteam 11;ui_push game_team_edit;" }
+		call *node:this.parent.left@removeAllChild
+		call *node:this.parent.right@removeAllChild
 	}
 
 	// ==================

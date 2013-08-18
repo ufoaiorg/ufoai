@@ -653,13 +653,13 @@ window game_team_edit extends objectinfo
 // ==========================
 
 /**
- * @todo The ui_pop into the change event dont work - the workaround is the func onWindowClosed game_teamcomments call
+ * @todo The ui_pop into the change event doesn't work - the workaround is the func onWindowClosed game_teamcomments call
  */
 window game_team_save_popup
 {
 	{
 		pos			"264 262"
-		size		"360 496"
+		size		"360 200"
 		dragbutton	true
 		closebutton	true
 		modal		true
@@ -667,12 +667,7 @@ window game_team_save_popup
 		string		"_Save your team"
 	}
 
-
-	// ==========================
-	// SLOTS
-	// ==========================
-
-	textentry slot_team0
+	textentry name
 	{
 		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
@@ -682,162 +677,20 @@ window game_team_save_popup
 		font		"f_verysmall"
 		pos			"50 53"
 		size		"256 34"
-		string		*cvar:mn_slot0
-		onChange		{ cmd "game_saveteam 0;ui_pop;" }
+		string		*cvar:mn_teamname
 	}
 
-	textentry slot_team1
+	button save
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 88"
-		size		"256 34"
-		string		*cvar:mn_slot1
-		onChange	{ cmd "game_saveteam 1;ui_pop;" }
-	}
-
-	textentry slot_team2
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 123"
-		size		"256 34"
-		string		*cvar:mn_slot2
-		onChange	{ cmd "game_saveteam 2;ui_pop;" }
-	}
-
-	textentry slot_team3
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 158"
-		size		"256 34"
-		string		*cvar:mn_slot3
-		onChange	{ cmd "game_saveteam 3;ui_pop;" }
-	}
-
-	textentry slot_team4
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 193"
-		size		"256 34"
-		string		*cvar:mn_slot4
-		onChange	{ cmd "game_saveteam 4;ui_pop;" }
-	}
-
-	textentry slot_team5
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 228"
-		size		"256 34"
-		string		*cvar:mn_slot5
-		onChange	{ cmd "game_saveteam 5;ui_pop;" }
-	}
-
-	textentry slot_team6
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 263"
-		size		"256 34"
-		string		*cvar:mn_slot6
-		onChange	{ cmd "game_saveteam 6;ui_pop;" }
-	}
-
-	textentry slot_team7
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 298"
-		size		"256 34"
-		string		*cvar:mn_slot7
-		onChange	{ cmd "game_saveteam 7;ui_pop;" }
-	}
-
-	textentry slot_team8
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 333"
-		size		"256 34"
-		string		*cvar:mn_slot8
-		onChange	{ cmd "game_saveteam 8;ui_pop;" }
-	}
-
-	textentry slot_team9
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 368"
-		size		"256 34"
-		string		*cvar:mn_slot9
-		onChange	{ cmd "game_saveteam 9;ui_pop;" }
-	}
-
-	textentry slot_team10
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 403"
-		size		"256 34"
-		string		*cvar:mn_slot10
-		onChange	{ cmd "game_saveteam 10;ui_pop;" }
-	}
-
-	textentry slot_team11
-	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		padding		8
-		font		"f_verysmall"
-		pos			"50 438"
-		size		"256 34"
-		string		*cvar:mn_slot11
-		onChange	{ cmd "game_saveteam 11;ui_pop;" }
+		pos			"50 90"
+		size		"256 30"
+		string		"_Save"
+		onClick		{ cmd "game_saveteam <cvar:mn_teamname>;ui_pop;" }
+		font	"f_menusmall"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Save"
+		background	"ui/button_green_small"
 	}
 
 	func onWindowClosed

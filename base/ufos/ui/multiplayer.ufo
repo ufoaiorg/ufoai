@@ -103,9 +103,7 @@ window team_download extends abstract_multiplayer
 			pos		"482 130"
 			size	"440 550"
 			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	4
-			border	1
-			bordercolor		"1 1 1 1"
+			layoutMargin	2
 		}
 	}
 
@@ -131,7 +129,6 @@ window team_download extends abstract_multiplayer
 
 	/**
 	 * @brief Called when a team download was successful
-	 * @param <1> The slot index
 	 */
 	confunc teamlist_downloadsuccessful
 	{

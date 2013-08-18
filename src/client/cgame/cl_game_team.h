@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/xml.h"
 
 #define NO_TEAM_SLOT_LOADED -1
-
+bool GAME_TeamGetFreeFilename(char *filename, size_t size);
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);
 void GAME_TeamSlotComments_f(void);

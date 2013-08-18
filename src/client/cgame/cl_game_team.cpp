@@ -123,33 +123,44 @@ void GAME_SaveTeamState_f (void)
  */
 void GAME_TeamSlotComments_f (void)
 {
-	int i;
-	const int maxTeamSlots = 12;
+	UI_ExecuteConfunc("teamsaveslotsclear");
 
-	for (i = 0; i < maxTeamSlots; i++) {
-		/* open file */
+	const int n = FS_BuildFileList("save/*.mpt");
+	Com_Printf("%i teams found\n", n);
+	if (!n)
+		return;
+
+	const char *side[] = {"left", "right"};
+	int sideIndex = 0;
+	const char *filename;
+	int i = 0;
+	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
 		qFILE f;
-
-		FS_OpenFile(va("save/team%i.mpt", i), &f, FILE_READ);
-		if (f.f || f.z) {
-			teamSaveFileHeader_t header;
-			const int clen = sizeof(header);
-			if (FS_Read(&header, clen, &f) != clen) {
-				Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-				FS_CloseFile(&f);
-				Cvar_Set(va("mn_slot%i", i), "");
-				continue;
-			}
-			FS_CloseFile(&f);
-			if (LittleLong(header.version) == TEAM_SAVE_FILE_VERSION) {
-				UI_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
-			} else {
-				Cvar_Set(va("mn_slot%i", i), "");
-			}
-		} else {
-			Cvar_Set(va("mn_slot%i", i), "");
+		FS_OpenFile(va("save/%s", filename), &f, FILE_READ);
+		if (!f.f && !f.z) {
+			Com_Printf("Warning: Could not open '%s'\n", filename);
+			continue;
 		}
+		teamSaveFileHeader_t header;
+		const int clen = sizeof(header);
+		if (FS_Read(&header, clen, &f) != clen) {
+			Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
+			FS_CloseFile(&f);
+			continue;
+		}
+		FS_CloseFile(&f);
+		if (LittleLong(header.version) != TEAM_SAVE_FILE_VERSION) {
+			Com_Printf("Warning: Version mismatch in '%s'\n", filename);
+			continue;
+		}
+
+		UI_ExecuteConfunc("teamsaveslotadd %s %i \"%s\" \"%s\" %i", side[sideIndex], i++, filename, header.name, LittleLong(header.soldiercount));
+		if (sideIndex)
+			sideIndex = 0;
+		else
+			sideIndex = 1;
 	}
+	FS_NextFileFromFileList(nullptr);
 }
 
 /**
@@ -208,8 +219,6 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
 	header.soldiercount = LittleLong(LIST_Count(chrDisplayList));
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
-	Cvar_Set("mn_teamname", header.name);
-
 	snode = XML_AddNode(node, SAVE_TEAM_NODE);
 	GAME_SaveTeamInfo(snode);
 
@@ -249,34 +258,50 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
 }
 
 /**
+ * @brief Searches a free team filename.
+ * @param[out] filename The team filename that can be used.
+ * @param[in] size The size of the @c filename buffer.
+ * @return @c true if a valid team name was found, @c false otherwise. In the latter case,
+ * don't use anything from the @c filename buffer
+ */
+bool GAME_TeamGetFreeFilename (char *filename, size_t size)
+{
+	for (int num = 0; num < 100; num++) {
+		Com_sprintf(filename, size, "save/team%02i.mpt", num);
+		if (FS_CheckFile("%s", filename) == -1) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * @brief Stores a team in a specified teamslot
  */
 void GAME_SaveTeam_f (void)
 {
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
+		return;
+	}
+
 	if (LIST_IsEmpty(chrDisplayList)) {
 		UI_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
-	} else {
-		char filename[MAX_OSPATH];
-		int index;
-		const char *name;
-
-		if (Cmd_Argc() != 2) {
-			Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
-			return;
-		}
-
-		index = atoi(Cmd_Argv(1));
-
-		name = Cvar_GetString(va("mn_slot%i", index));
-		if (name[0] == '\0')
-			name = _("NewTeam");
-
-		/* save */
-		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-		if (!GAME_SaveTeam(filename, name))
-			UI_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
+
+	const char *name = Cmd_Argv(1);
+	if (Q_strnull(name))
+		name = _("New Team");
+
+	char filename[MAX_OSPATH];
+	if (!GAME_TeamGetFreeFilename(filename, sizeof(filename))) {
+		UI_Popup(_("Note"), _("Error saving team. Too many teams!"));
+		return;
+	}
+
+	if (!GAME_SaveTeam(filename, name))
+		UI_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 }
 
 /**
@@ -333,7 +358,6 @@ static bool GAME_LoadTeam (const char *filename)
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_ROOTNODE "' not found)\n");
 		return false;
 	}
-	Cvar_Set("mn_teamname", header.name);
 
 	snode = XML_GetNode(node, SAVE_TEAM_NODE);
 	if (!snode) {
