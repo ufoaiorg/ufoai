@@ -88,6 +88,8 @@ typedef struct aiAction_s {
 #define HERD_DIST			7
 #define HOLD_DIST			3
 
+#define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
+
 static pathing_t *hidePathingTable;
 static pathing_t *herdPathingTable;
 
@@ -670,6 +672,57 @@ static inline bool AI_IsValidTarget (const Edict *ent, const Edict *target)
 }
 
 /**
+ * @brief Search the edict's inventory for a grenade or other one-use weapon.
+ */
+static const invDef_t *AI_SearchGrenade (const Edict *ent, Item **ip)
+{
+	/* search for grenades and select the one that is available easily */
+	const Container *cont = nullptr;
+	const invDef_t *bestContainer = nullptr;
+	Item *weapon = nullptr;
+	int cost = 100;
+	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		if (cont->def()->out >= cost)
+			continue;
+		Item *item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			assert(item->def());
+			const objDef_t *obj = item->def();
+			if (item->isWeapon() && !item->mustReload() && ((obj->thrown && obj->oneshot && obj->deplete)
+				|| Q_streq(obj->type, "grenade"))) {
+				weapon = item;
+				bestContainer = cont->def();
+				cost = bestContainer->out;
+				break;
+			}
+		}
+	}
+
+	*ip = weapon;
+	return bestContainer;
+}
+
+/**
+ * @brief Check if the hand for the given shoot type is free.
+ * @returns @c true if shoot type uses a hand and it is free, @c false if hand isn't free
+ * or shoot type doesn't use a hand.
+ */
+static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict *ent)
+{
+	if (IS_SHOT_RIGHT(shootType)) {
+		const Item *item = ent->getRightHandItem();
+		return item == nullptr;
+	}
+	if (IS_SHOT_LEFT(shootType)) {
+		const Item *left = ent->getLeftHandItem();
+		const Item *right = ent->getRightHandItem();
+		return left == nullptr && (right == nullptr || !right->isHeldTwoHanded());
+	}
+
+	return false;
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fill z_align values
  * @todo optimize this
@@ -689,6 +742,10 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
+	/* pre-find a grenade */
+	Item *grenade = nullptr;
+	const invDef_t *fromCont = AI_SearchGrenade(ent, &grenade);
+
 	/* search best target */
 	float maxDmg = 0.0;
 	float bestActionScore = 0.0;
@@ -702,7 +759,8 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 		/* shooting */
 		maxDmg = 0.0;
 		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-			const Item *item = AI_GetItemForShootType(shootType, ent);
+			const bool freeHand = AI_IsHandForForShootTypeFree(shootType, ent);
+			const Item *item = freeHand ? grenade : AI_GetItemForShootType(shootType, ent);
 			if (!item)
 				continue;
 
@@ -710,7 +768,11 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 			if (fdArray == nullptr)
 				continue;
 
-			AI_SearchBestTarget(aia, ent, check, item, shootType, tu, &maxDmg, &bestTime, fdArray);
+			const invDef_t *toCont = INVDEF_FOR_SHOOTTYPE(shootType);
+			const int invMoveCost = freeHand && grenade ? fromCont->out + toCont->in : 0;
+			AI_SearchBestTarget(aia, ent, check, item, shootType, tu - invMoveCost, &maxDmg, &bestTime, fdArray);
+			if (aia->shootType == shootType)
+				bestTime += invMoveCost;
 		}
 	}
 	/* add damage to bestActionScore */
@@ -1119,11 +1181,6 @@ static int AI_CheckForMissionTargets (const Player &player, Edict *ent, aiAction
  */
 static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 {
-	aiAction_t aia, bestAia;
-	pos3_t oldPos, to;
-	vec3_t oldOrigin;
-	float bestActionScore, best;
-
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
 		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
@@ -1141,12 +1198,16 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 	const int yh = std::min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
-	best = AI_ACTION_NOTHING_FOUND;
+	pos3_t oldPos;
+	vec3_t oldOrigin;
 	VectorCopy(ent->pos, oldPos);
 	VectorCopy(ent->origin, oldOrigin);
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
+	float bestActionScore, best = AI_ACTION_NOTHING_FOUND;
+	aiAction_t aia, bestAia;
+	pos3_t to;
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; ++to[2]) {
 		for (to[1] = yl; to[1] < yh; ++to[1]) {
 			for (to[0] = xl; to[0] < xh; ++to[0]) {
@@ -1200,6 +1261,15 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
 		bestAia.reset();
+
+	/* if we are throwing a grenade from the inventory grab it now */
+	if (bestAia.target && AI_IsHandForForShootTypeFree(bestAia.shootType, ent)) {
+		Item *grenade = nullptr;
+		const invDef_t *fromCont = AI_SearchGrenade(ent, &grenade);
+		const invDef_t *toCont = INVDEF_FOR_SHOOTTYPE(bestAia.shootType);
+		if (!grenade || !fromCont || !toCont || !G_ActorInvMove(ent, fromCont, grenade, toCont, NONE, NONE, true))
+			bestAia.target = nullptr;
+	}
 
 	return bestAia;
 }
