@@ -822,20 +822,24 @@ static float AI_FighterCalcActionScore (Edict *ent, const pos3_t to, aiAction_t 
 			bestActionScore += move;
 	}
 
-	/* reward closing in */
-	float minDist = CLOSE_IN_DIST;
-	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (check->team != ent->team) {
-			const float dist = VectorDist(ent->origin, check->origin);
-			minDist = std::min(dist, minDist);
+	if (aia->target) {
+		const float dist = VectorDist(ent->origin, aia->target->origin);
+		bestActionScore += SCORE_CLOSE_IN * (1.0 - dist / CLOSE_IN_DIST);
+	} else if (G_IsRaged(ent)) {
+		/* reward closing in */
+		float minDist = CLOSE_IN_DIST;
+		check = nullptr;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			if (check->team != ent->team) {
+				const float dist = VectorDist(ent->origin, check->origin);
+				minDist = std::min(dist, minDist);
+			}
 		}
-	}
-	if (aia->target || G_IsRaged(ent))
 		bestActionScore += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
-	else
+	} else {
 		/* if no target available let them wander around until they find one */
 		bestActionScore += SCORE_RANDOM * frand();
+	}
 
 	/* penalize herding */
 	check = nullptr;
