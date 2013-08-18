@@ -108,4 +108,17 @@ void WEB_InitStartup (void)
 			"The url to upload a team to.");
 	web_authurl = Cvar_Get("web_authurl", SERVER "api/auth.php", CVAR_ARCHIVE,
 			"The url to perform the authentification against.");
+
+	Com_Printf("\n------- web initialization ---------\n");
+	if (Q_strvalid(web_password->string)) {
+		Com_Printf("... using username '%s'\n", web_username->string);
+		WEB_Auth(web_username->string, web_password->string);
+		if (Q_strvalid(web_password->string)) {
+			Com_Printf("... login successful\n");
+		} else {
+			Com_Printf("... login failed\n");
+		}
+	} else {
+		Com_Printf("... web access not yet configured\n");
+	}
 }
