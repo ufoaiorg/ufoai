@@ -628,7 +628,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (!item->def()->thrown && (fd->splrad > 0.0 || G_IsStunned(check)))
+				if (!fd->gravity && (fd->splrad > 0.0 || G_IsStunned(check)))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;
@@ -1473,7 +1473,6 @@ static void AI_SetEquipment (Edict *ent, const equipDef_t *ed)
 		gi.DPrintf("AI_InitPlayer: actor with no equipment\n");
 	}
 }
-
 
 /**
  * @brief Initializes the actor.
