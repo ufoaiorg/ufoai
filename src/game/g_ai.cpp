@@ -1123,7 +1123,10 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
 	float bestActionScore, best;
-	/* The actor will be forced to stand before doing the move, so calculations here might be a little off */
+
+	/* check if the actor is in crouched state and try to stand up before doing the move */
+	if (G_IsCrouched(ent))
+		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* calculate move table */
 	G_MoveCalc(0, ent, ent->pos, G_ActorUsableTUs(ent));
@@ -1182,10 +1185,6 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict *ent)
 		bestAia.target = nullptr;
 		return bestAia;
 	}
-
-	/* check if the actor is in crouched state and try to stand up before doing the move */
-	if (G_IsCrouched(ent))
-		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
 	for (;;) {
