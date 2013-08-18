@@ -556,7 +556,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 		if (shots) {
 			float dmg;
 			float dist;
-			if (G_IsStunned(check) && !G_IsInsane(ent) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
+			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
+			if (stunWeapon && !G_IsInsane(ent) && (G_IsStunned(check) || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
