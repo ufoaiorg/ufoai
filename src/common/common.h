@@ -251,6 +251,7 @@ const char *Com_ByteToBinary(byte x);
 
 #include "md4.h"
 const char *Com_MD5File(const char *fn, int length = 0);
+const char *Com_MD5Buffer(const byte *buf, size_t len);
 
 extern cvar_t *http_proxy;
 extern cvar_t *http_timeout;

@@ -1,0 +1,87 @@
+window webauth
+{
+	{
+		pos			"264 262"
+		size		"360 240"
+		dragbutton	true
+		closebutton	true
+		background		"ui/popup_alpha_tile"
+		color		"1.0 0.75 0 1"
+		string		"_Login"
+		modal		true
+	}
+
+	string webusernamestr
+	{
+		string 		"_Name"
+		pos			"30 60"
+		size		"110 34"
+		contentalign	ALIGN_CL
+		color		"1.0 0.75 0 1"
+	}
+	textentry webusername
+	{
+		string		*cvar:web_username
+		background		"ui/button_green_verysmall"
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CL
+		padding		8
+		font		"f_verysmall"
+		pos			"150 60"
+		size		"180 34"
+	}
+
+	string webpasswordstr
+	{
+		string 		"_Password"
+		pos			"30 110"
+		size		"110 34"
+		contentalign	ALIGN_CL
+		color		"1.0 0.75 0 1"
+	}
+	textentry webpassword
+	{
+		string		*cvar:web_password
+		background		"ui/button_green_verysmall"
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CL
+		padding		8
+		font		"f_verysmall"
+		pos			"150 110"
+		size		"180 34"
+		ispassword	true
+		onChange 	{
+			// TODO: encrypt me
+		}
+	}
+
+	button login
+	{
+		pos			"50 180"
+		size		"256 30"
+		string		"_Login"
+		onClick		{ cmd "web_auth <cvar:web_username> <cvar:web_password>;" }
+		font	"f_menusmall"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Login"
+		background	"ui/button_green_small"
+	}
+
+	func onWindowOpened
+	{
+		// it's encrypted, so it has no value any longer in this dialog
+		*cvar:web_password = ""
+	}
+
+	confunc web_authsuccessful {
+		cmd "echo \"Authentification successful\";ui_pop;"
+	}
+
+	confunc web_authfailed {
+		*cvar:web_password = ""
+		cmd "echo \"Authentification failed\";"
+	}
+}

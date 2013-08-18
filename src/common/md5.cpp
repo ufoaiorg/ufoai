@@ -267,23 +267,19 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
  */
 const char *Com_MD5File (const char *fn, int length)
 {
-	static char final[33] = {"unknown"};
-	unsigned char digest[16] = {""};
 	qFILE f;
-	MD5_CTX md5;
-	char buffer[2048];
-	int i;
-	int total = 0;
 	const int filelen = FS_OpenFile(fn, &f, FILE_READ);
-
 	if (filelen < 1)
-		return final;
+		return "unknown";
 
 	if (filelen < length || !length)
 		length = filelen;
 
+	MD5_CTX md5;
 	MD5Init(&md5);
 
+	char buffer[2048];
+	int total = 0;
 	for (;;) {
 		int r = FS_Read(buffer, sizeof(buffer), &f);
 		if (r < 1)
@@ -291,16 +287,43 @@ const char *Com_MD5File (const char *fn, int length)
 		if (r + total > length)
 			r = length - total;
 		total += r;
-		MD5Update(&md5 , (unsigned char *)buffer, r);
+		MD5Update(&md5, (const unsigned char *)buffer, r);
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
 	FS_CloseFile(&f);
+	unsigned char digest[16] = {""};
 	MD5Final(&md5, digest);
 
+	static char final[33];
 	final[0] = '\0';
+	for (int i = 0; i < 16; i++)
+		Q_strcat(final, sizeof(final), "%02X", digest[i]);
 
-	for (i = 0; i < 16; i++)
+	return final;
+}
+
+/**
+ * @brief Compute the md5sum of the given buffer
+ * @param[in] fn Filename to compute the md5 of
+ * @param[in] length Compute the md5 of the first 'length' bytes (if 0 - complete file)
+ * @return the md5 sum buffer (char*)
+ */
+const char *Com_MD5Buffer (const byte *buf, size_t len)
+{
+	if (len < 1)
+		return "unknown";
+
+	MD5_CTX md5;
+	MD5Init(&md5);
+	MD5Update(&md5, (const unsigned char *)buf, len);
+
+	unsigned char digest[16] = {""};
+	MD5Final(&md5, digest);
+
+	static char final[33];
+	final[0] = '\0';
+	for (int i = 0; i < 16; i++)
 		Q_strcat(final, sizeof(final), "%02X", digest[i]);
 
 	return final;

@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/cvar.h"
 
+extern cvar_t *web_username;
+extern cvar_t *web_password;
 extern cvar_t *web_teamdownloadurl;
 extern cvar_t *web_teamuploadurl;
 extern cvar_t *web_teamlisturl;

@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 #include "../../shared/parse.h"
 
+cvar_t *web_username;
+cvar_t *web_password;
 cvar_t *web_teamdownloadurl;
 cvar_t *web_teamuploadurl;
 cvar_t *web_teamlisturl;

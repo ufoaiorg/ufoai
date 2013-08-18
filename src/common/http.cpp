@@ -193,7 +193,8 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file, co
 	curl_easy_setopt(dl.curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEHEADER, &dl);
-	curl_easy_setopt(dl.curl, CURLOPT_POSTFIELDS, postfields);
+	if (postfields != nullptr)
+		curl_easy_setopt(dl.curl, CURLOPT_POSTFIELDS, postfields);
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
 	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
