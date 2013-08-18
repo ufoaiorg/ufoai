@@ -938,7 +938,7 @@ void FS_InitFilesystem (bool writeToHomeDir)
 	if (Q_strvalid(fsGameDir)) {
 		char path[MAX_QPATH];
 		Com_sprintf(path, sizeof(path), "./%s", fsGameDir);
-		if (!FS_FileExists(path)) {
+		if (!FS_FileExists("%s", path)) {
 			Com_sprintf(path, sizeof(path), "./" MODS_DIR "/%s", fsGameDir);
 		}
 		FS_AddGameDirectory(path, !writeToHomeDir);
@@ -1613,12 +1613,19 @@ const char *FS_GetCwd (void)
  * @sa FS_CheckFile
  * @param[in] filename Full filesystem path to the file
  */
-bool FS_FileExists (const char *filename)
+bool FS_FileExists (const char *filename, ...)
 {
+	char path[MAX_OSPATH];
+	va_list ap;
+
+	va_start(ap, filename);
+	Q_vsnprintf(path, sizeof(path), filename, ap);
+	va_end(ap);
+
 #ifdef _WIN32
-	return (_access(filename, 00) == 0);
+	return (_access(path, 00) == 0);
 #else
-	return (access(filename, R_OK) == 0);
+	return (access(path, R_OK) == 0);
 #endif
 }
 

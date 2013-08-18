@@ -54,12 +54,19 @@ void WEB_UploadTeam_f (void)
 		if (index-- != 0)
 			continue;
 
+		const char *fullPath = va("%s/save/%s", FS_Gamedir(), filename);
+		if (!FS_FileExists("%s", fullPath)) {
+			/* we silently ignore this, because this file is not in the users save path,
+			 * but part of the game data. Don't upload this. */
+			break;
+		}
+
 		upparam_t paramUser;
 		paramUser.name = "user";
 		paramUser.value = Sys_GetCurrentUser();
 		paramUser.next = nullptr;
 
-		if (WEB_PutFile("team", va("%s/save/%s", FS_Gamedir(), filename), web_teamuploadurl->string, &paramUser))
+		if (WEB_PutFile("team", fullPath, web_teamuploadurl->string, &paramUser))
 			Com_Printf("uploaded the team '%s'\n", filename);
 		else
 			Com_Printf("failed to upload the team from file '%s'\n", filename);

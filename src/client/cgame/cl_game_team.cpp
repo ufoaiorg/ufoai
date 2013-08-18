@@ -136,7 +136,8 @@ void GAME_TeamSlotComments_f (void)
 	int i = 0;
 	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
 		qFILE f;
-		FS_OpenFile(va("save/%s", filename), &f, FILE_READ);
+		const char *savePath = va("save/%s", filename);
+		FS_OpenFile(savePath, &f, FILE_READ);
 		if (!f.f && !f.z) {
 			Com_Printf("Warning: Could not open '%s'\n", filename);
 			continue;
@@ -154,7 +155,8 @@ void GAME_TeamSlotComments_f (void)
 			continue;
 		}
 
-		UI_ExecuteConfunc("teamsaveslotadd %s %i \"%s\" \"%s\" %i", side[sideIndex], i++, filename, header.name, LittleLong(header.soldiercount));
+		const bool uploadable = FS_FileExists("%s/save/%s", FS_Gamedir(), filename);
+		UI_ExecuteConfunc("teamsaveslotadd %s %i \"%s\" \"%s\" %i %i", side[sideIndex], i++, filename, header.name, LittleLong(header.soldiercount), uploadable ? 1 : 0);
 		if (sideIndex)
 			sideIndex = 0;
 		else

@@ -374,15 +374,16 @@ component cmpTeamSlotPanel extends panel
 		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		size		"170 34"
+		size		"164 34"
 	}
 
 	button upload
 	{
-		background		"ui/button_green_verysmall"
+		background		"icons/upload"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
+		tooltip		"_Upload"
 		padding		8
 		font		"f_verysmall"
 		size		"28 34"
@@ -427,6 +428,7 @@ component cmpTeamPanel extends panel
 	 * @param <3> the file name
 	 * @param <4> the slot name
 	 * @param <5> the team members
+	 * @param <6> true if uploadable (user created file) or false if game data file
 	 */
 	confunc teamsaveslotadd
 	{
@@ -436,6 +438,9 @@ component cmpTeamPanel extends panel
 		*node:this.parent.<1>.slot<2>.button@string = "<4> (<5>)"
 		*node:this.parent.<1>.slot<2>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
 		*node:this.parent.<1>.slot<2>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
+		if (<6> == 0) {
+			*node:this.parent.<1>.slot<2>.upload@invis = true
+		}
 	}
 
 	confunc teamsaveslotsclear

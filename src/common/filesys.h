@@ -135,7 +135,7 @@ void FS_ExecAutoexec(void);
 int FS_GetModList(struct linkedList_t **mods);
 const char *FS_GetCwd(void);
 void FS_NormPath(char *path);
-bool FS_FileExists(const char *filename);
+bool FS_FileExists(const char *filename, ...) __attribute__((format(__printf__, 1, 2)));
 
 void FS_GetMaps(bool reset);
 

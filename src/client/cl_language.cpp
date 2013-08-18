@@ -301,7 +301,7 @@ static bool CL_LanguageTest (const char *localeID)
 	Q_strcat(languagePath, sizeof(languagePath), "%s/LC_MESSAGES/ufoai.mo", localeID);
 
 	/* No *.mo file -> no language. */
-	if (!FS_FileExists(languagePath)) {
+	if (!FS_FileExists("%s", languagePath)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' not found.\n", localeID);
 		return false;
 	}
