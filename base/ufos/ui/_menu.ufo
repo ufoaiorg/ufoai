@@ -390,6 +390,29 @@ component cmpTeamSlotPanel extends panel
 	}
 }
 
+component cmpCurrentLoadedTeamPanel extends panel
+{
+	{
+	}
+
+	/**
+	 * @brief Adds a member to the current loaded team list
+	 * @param <1> Name
+	 * @param <2> Head model
+	 * @param <3> Head skin
+	 */
+	confunc team_memberadd
+	{
+	}
+
+	/**
+	 * @brief Removes all entries from the current team list.
+	 */
+	confunc team_membersclear
+	{
+	}
+}
+
 component cmpTeamPanel extends panel
 {
 	{

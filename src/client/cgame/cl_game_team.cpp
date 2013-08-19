@@ -381,6 +381,11 @@ static bool GAME_LoadTeam (const char *filename)
 		}
 	}
 
+	UI_ExecuteConfunc("team_membersclear");
+	LIST_Foreach(chrDisplayList, character_t, chr) {
+		UI_ExecuteConfunc("team_memberadd \"%s\" \"%s\" %i", chr->name, chr->head, chr->headSkin);
+	}
+
 	Com_Printf("File '%s' loaded.\n", filename);
 
 	mxmlDelete(topNode);
