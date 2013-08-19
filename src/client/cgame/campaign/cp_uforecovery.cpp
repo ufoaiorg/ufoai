@@ -97,8 +97,6 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  */
 storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)
 {
-	storedUFO_t ufo;
-
 	if (!ufoTemplate) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
 		return nullptr;
@@ -115,6 +113,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	}
 
 	/* we can store it there */
+	storedUFO_t ufo;
 	ufo.idx = ccs.campaignStats.ufosStored++;
 	Q_strncpyz(ufo.id, ufoTemplate->id, sizeof(ufo.id));
 	ufo.comp = CP_GetComponentsByID(ufo.id);
@@ -200,12 +199,10 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
  */
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
-	const capacities_t *ufoCap;
-
 	if (!installation)
 		cgi->Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
 
-	ufoCap = &installation->ufoCapacity;
+	const capacities_t *ufoCap = &installation->ufoCapacity;
 
 	US_Foreach(ufo) {
 		if (ufoCap->cur <= ufoCap->max)
