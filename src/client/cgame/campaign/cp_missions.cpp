@@ -455,9 +455,13 @@ const char *MIS_GetName (const mission_t *mission)
 	case STAGE_TERROR_MISSION:
 		if (mission->data.city)
 			return va(_("Alien terror in %s"), _(mission->data.city->name));
+		else
+			return _("Alien terror");
 	case STAGE_BASE_ATTACK:
 		if (mission->data.base)
 			return va(_("Base attacked: %s"), mission->data.base->name);
+		else
+			return _("Base attack");
 	case STAGE_BASE_DISCOVERED:
 		if (nation)
 			return va(_("Alien base in %s"), _(nation->name));
