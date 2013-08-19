@@ -367,8 +367,8 @@ typedef struct invDef_s {
 
 /**
  * @brief item instance data, with linked list capability
- * @note m and t are transfered as shorts over the net - a value of NONE means
- * that there is no item - e.g. a value of NONE for m means, that there is no
+ * @note the item and ammo indices are transfered as shorts over the net - a value of NONE means
+ * that there is no item - e.g. a value of NONE for the ammo means, that there is no
  * ammo loaded or assigned to this weapon
  */
 class Item {
