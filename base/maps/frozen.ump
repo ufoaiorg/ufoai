@@ -752,9 +752,6 @@ tileset river_v "0 6"
 
 assembly nature_small_noufo
 {
-size "6 6"
-title "_Frozen"
-multiplayer +mp_team2
 size "7 7"
 title "_Frozen"
 multiplayer +mp_team2
