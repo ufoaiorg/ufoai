@@ -64,6 +64,7 @@ typedef struct upparam_s {
 
 typedef void (*http_callback_t) (const char *response, void *userdata);
 
+bool HTTP_Encode(const char *url, char *out, size_t outLength);
 bool HTTP_GetToFile(const char *url, FILE* file, const char *postfields = nullptr);
 bool HTTP_GetURL(const char *url, http_callback_t callback, void *userdata = nullptr, const char *postfields = nullptr);
 bool HTTP_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params);

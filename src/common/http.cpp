@@ -290,6 +290,27 @@ bool HTTP_GetToFile (const char *url, FILE* file, const char *postfields)
 }
 
 /**
+ * @brief This function converts the given url to an URL encoded string.
+ * All input characters that are not a-z, A-Z, 0-9, '-', '.', '_' or '~' are converted to their "URL escaped" version
+ * (%NN where NN is a two-digit hexadecimal number).
+ * @return @c true if the conversion was successful, @c false if it failed or the target buffer was too small.
+ */
+bool HTTP_Encode (const char *url, char *out, size_t outLength)
+{
+	CURL *curl = curl_easy_init();
+	char *encoded = curl_easy_escape(curl, url, 0);
+	if (encoded == nullptr) {
+		curl_easy_cleanup(curl);
+		return false;
+	}
+	Q_strncpyz(out, encoded, outLength);
+	const bool success = strlen(encoded) < outLength;
+	curl_free(encoded);
+	curl_easy_cleanup(curl);
+	return success;
+}
+
+/**
  * @brief Downloads the given @c url and return the data to the callback (optional)
  * @param[in] url The url to fetch
  * @param[in] callback The callback to give the data to. Might also be @c NULL
