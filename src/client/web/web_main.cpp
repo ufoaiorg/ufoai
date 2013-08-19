@@ -112,7 +112,9 @@ void WEB_InitStartup (void)
 	Com_Printf("\n------- web initialization ---------\n");
 	if (Q_strvalid(web_password->string)) {
 		Com_Printf("... using username '%s'\n", web_username->string);
-		WEB_Auth(web_username->string, web_password->string);
+		if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
+			Cvar_Set("web_password", "");
+		}
 		if (Q_strvalid(web_password->string)) {
 			Com_Printf("... login successful\n");
 		} else {
