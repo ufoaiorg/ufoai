@@ -466,7 +466,7 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 
 	Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvar->string);
 	if (cvar->string[0] != '+') {
-		Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n",
+		Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seem to be a valid tile id '%s' - set to default '%s'\n",
 				cvar->name, cvar->string, token);
 		Cvar_Set(cvar->name, token);
 		if (token[0] != '+' && !strchr(token, '/'))
