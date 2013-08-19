@@ -40,7 +40,7 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
 	char usernameEncoded[MAX_VAR];
 	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
-	Com_sprintf(buf, sizeof(buf), "%s?user=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	Com_sprintf(buf, sizeof(buf), "%s?request=user_authentication&username=%s&password=%s", url, usernameEncoded, passwordEncoded);
 	return HTTP_GetURL(buf, callback, userdata);
 }
 
