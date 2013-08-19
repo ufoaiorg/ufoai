@@ -59,7 +59,13 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
  */
 bool WEB_GetToFile (const char *url, FILE* file)
 {
-	return HTTP_GetToFile(url, file);
+	char buf[512];
+	char passwordEncoded[MAX_VAR];
+	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
+	char usernameEncoded[MAX_VAR];
+	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
+	Com_sprintf(buf, sizeof(buf), "%s?request=user_authentication&username=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	return HTTP_GetToFile(buf, file);
 }
 
 /**
