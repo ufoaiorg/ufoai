@@ -45,8 +45,6 @@ void WEB_UploadTeam_f (void)
 		return;
 	}
 
-	/** @todo: check that we are authenticated */
-
 	int index = atoi(Cmd_Argv(1));
 	const char *filename;
 	/* we will loop the whole team save list, just because i don't want
@@ -64,9 +62,17 @@ void WEB_UploadTeam_f (void)
 		}
 
 		upparam_t paramUser;
-		paramUser.name = "user";
-		paramUser.value = Sys_GetCurrentUser();
-		paramUser.next = nullptr;
+		upparam_t paramPassword;
+		upparam_t paramRequest;
+		paramUser.name = "username";
+		paramUser.value = web_username->string;
+		paramUser.next = &paramPassword;
+		paramPassword.name = "password";
+		paramPassword.value = web_password->string;
+		paramPassword.next = &paramRequest;
+		paramRequest.name = "request";
+		paramRequest.value = "user_authentication";
+		paramRequest.next = nullptr;
 
 		if (WEB_PutFile("team", fullPath, web_teamuploadurl->string, &paramUser))
 			Com_Printf("uploaded the team '%s'\n", filename);
