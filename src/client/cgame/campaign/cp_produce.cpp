@@ -229,6 +229,20 @@ technology_t* PR_GetTech (const productionData_t *data)
 	}
 }
 
+static void PR_ResetUFODisassembly (production_t *prod)
+{
+	/** @todo remove this and make the ufo const */
+	if (PR_IsDisassembly(prod))
+		prod->data.data.ufo->disassembly = nullptr;
+}
+
+static void PR_SetUFODisassembly (production_t *prod)
+{
+	/** @todo remove this and make the ufo const */
+	if (PR_IsDisassembly(prod))
+		prod->data.data.ufo->disassembly = prod;
+}
+
 /**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
@@ -287,9 +301,7 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
 
-	/** @todo remove this and make the ufo const */
-	if (PR_IsDisassembly(prod))
-		prod->data.data.ufo->disassembly = prod;
+	PR_SetUFODisassembly(prod);
 
 	queue->numItems++;
 	return prod;
@@ -303,29 +315,22 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
  */
 void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
-	int i;
 	production_t *prod = &queue->items[index];
-	const technology_t *tech;
-
-	assert(base);
-
-	tech = PR_GetTech(&prod->data);
+	const technology_t *tech = PR_GetTech(&prod->data);
 	if (tech == nullptr)
 		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
-	if (PR_IsDisassembly(prod))
-		prod->data.data.ufo->disassembly = nullptr;
+	PR_ResetUFODisassembly(prod);
 
+	assert(base);
 	PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
 
 	REMOVE_ELEM_ADJUST_IDX(queue->items, index, queue->numItems);
 
 	/* Adjust ufos' disassembly pointer */
-	for (i = index; i < queue->numItems; i++) {
+	for (int i = index; i < queue->numItems; i++) {
 		production_t *disassembly = &queue->items[i];
-
-		if (PR_IsDisassembly(disassembly))
-			disassembly->data.data.ufo->disassembly = disassembly;
+		PR_SetUFODisassembly(disassembly);
 	}
 }
 
@@ -338,39 +343,34 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 void PR_QueueMove (production_queue_t *queue, int index, int offset)
 {
 	const int newIndex = std::max(0, std::min(index + offset, queue->numItems - 1));
-	int i;
-	production_t saved;
 
 	if (newIndex == index)
 		return;
 
-	saved = queue->items[index];
+	production_t saved = queue->items[index];
 
 	/* copy up */
-	for (i = index; i < newIndex; i++) {
+	for (int i = index; i < newIndex; i++) {
 		production_t *prod;
 		queue->items[i] = queue->items[i + 1];
 		prod = &queue->items[i];
 		prod->idx = i;
-		if (PR_IsDisassembly(prod))
-			prod->data.data.ufo->disassembly = prod;
+		PR_SetUFODisassembly(prod);
 	}
 
 	/* copy down */
-	for (i = index; i > newIndex; i--) {
+	for (int i = index; i > newIndex; i--) {
 		production_t *prod;
 		queue->items[i] = queue->items[i - 1];
 		prod = &queue->items[i];
 		prod->idx = i;
-		if (PR_IsDisassembly(prod))
-			prod->data.data.ufo->disassembly = prod;
+		PR_SetUFODisassembly(prod);
 	}
 
 	/* insert item */
 	queue->items[newIndex] = saved;
 	queue->items[newIndex].idx = newIndex;
-	if (PR_IsDisassembly(&queue->items[newIndex]))
-		queue->items[newIndex].data.data.ufo->disassembly = &(queue->items[newIndex]);
+	PR_SetUFODisassembly(&queue->items[newIndex]);
 }
 
 /**
@@ -394,12 +394,10 @@ void PR_QueueNext (base_t *base)
  */
 static void PR_EmptyQueue (base_t *base)
 {
-	production_queue_t *queue;
-
 	if (!base)
 		return;
 
-	queue = PR_GetProductionForBase(base);
+	production_queue_t *queue = PR_GetProductionForBase(base);
 	while (queue->numItems)
 		PR_QueueDelete(base, queue, 0);
 }
@@ -426,10 +424,9 @@ static void PR_ProductionRollBottom (base_t *base)
  */
 static int PR_DisassembleItem (base_t *base, const components_t *comp, float condition, bool calculate)
 {
-	int i;
 	int size = 0;
 
-	for (i = 0; i < comp->numItemtypes; i++) {
+	for (int i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		const int amount = (condition < 1 && comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? comp->itemAmount2[i] : round(comp->itemAmount[i] * condition);
 
@@ -439,16 +436,17 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
 		assert(compOd);
 		size += compOd->size * amount;
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
-		if (!calculate) {
-			if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
-				B_ManageAntimatter(base, amount, true);
-			} else {
-				technology_t *tech = RS_GetTechForItem(compOd);
-				B_AddToStorage(base, compOd, amount);
-				RS_MarkCollected(tech);
-			}
-			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
+		if (calculate)
+			continue;
+
+		if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
+			B_ManageAntimatter(base, amount, true);
+		} else {
+			technology_t *tech = RS_GetTechForItem(compOd);
+			B_AddToStorage(base, compOd, amount);
+			RS_MarkCollected(tech);
 		}
+		Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
 	}
 	return size;
 }
@@ -525,30 +523,32 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 	if (!PR_IsProduction(prod))
 		return;
 
-	if (PR_IsReady(prod)) {
-		const char *name = PR_GetName(&prod->data);
-		technology_t *tech = PR_GetTech(&prod->data);
+	if (!PR_IsReady(prod))
+		return;
 
-		prod->frame = 0;
-		prod->amount--;
+	const char *name = PR_GetName(&prod->data);
+	technology_t *tech = PR_GetTech(&prod->data);
 
-		if (PR_IsItem(prod)) {
-			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
-			/* Now add it to equipment and update capacity. */
-			B_AddToStorage(base, prod->data.data.item, 1);
-		} else if (PR_IsAircraft(prod)) {
-			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
-			/* Now add new aircraft. */
-			AIR_NewAircraft(base, prod->data.data.aircraft);
-		}
+	prod->frame = 0;
+	prod->amount--;
 
-		/* queue the next production */
-		if (prod->amount <= 0) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), name, base->name);
-			MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, tech);
-			PR_QueueNext(base);
-		}
+	if (PR_IsItem(prod)) {
+		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
+		/* Now add it to equipment and update capacity. */
+		B_AddToStorage(base, prod->data.data.item, 1);
+	} else if (PR_IsAircraft(prod)) {
+		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
+		/* Now add new aircraft. */
+		AIR_NewAircraft(base, prod->data.data.aircraft);
 	}
+
+	if (prod->amount > 0)
+		return;
+
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), name, base->name);
+	MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, tech);
+	/* queue the next production */
+	PR_QueueNext(base);
 }
 
 /**
@@ -563,17 +563,18 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 	if (!PR_IsDisassembly(prod))
 		return;
 
-	if (PR_IsReady(prod)) {
-		storedUFO_t *ufo = prod->data.data.ufo;
-		PR_DisassembleItem(base, ufo->comp, ufo->condition, false);
+	if (!PR_IsReady(prod))
+		return;
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
-				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
-		MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+	storedUFO_t *ufo = prod->data.data.ufo;
+	PR_DisassembleItem(base, ufo->comp, ufo->condition, false);
 
-		/* Removing UFO will remove the production too */
-		US_RemoveStoredUFO(ufo);
-	}
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
+			UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
+	MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+
+	/* Removing UFO will remove the production too */
+	US_RemoveStoredUFO(ufo);
 }
 
 /**
@@ -584,13 +585,10 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
  */
 int PR_IncreaseProduction (production_t *prod, int amount)
 {
-	base_t *base;
-	const technology_t *tech;
-
 	if (PR_IsDisassembly(prod))
 		return 0;
 
-	base = PR_ProductionBase(prod);
+	base_t *base = PR_ProductionBase(prod);
 	assert(base);
 
 	/* amount limit per one production */
@@ -598,7 +596,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 		amount = std::max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
 	}
 
-	tech = PR_GetTech(&prod->data);
+	const technology_t *tech = PR_GetTech(&prod->data);
 	assert(tech);
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
@@ -620,11 +618,8 @@ int PR_IncreaseProduction (production_t *prod, int amount)
  */
 int PR_DecreaseProduction (production_t *prod, int amount)
 {
-	base_t *base;
-	const technology_t *tech;
-
 	assert(prod);
-	base = PR_ProductionBase(prod);
+	base_t *base = PR_ProductionBase(prod);
 	assert(base);
 
 	if (PR_IsDisassembly(prod))
@@ -637,7 +632,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 		return amount;
 	}
 
-	tech = PR_GetTech(&prod->data);
+	const technology_t *tech = PR_GetTech(&prod->data);
 	if (tech == nullptr)
 		cgi->Com_Error(ERR_DROP, "No tech pointer for production");
 
@@ -656,14 +651,11 @@ int PR_DecreaseProduction (production_t *prod, int amount)
  */
 void PR_ProductionRun (void)
 {
-	base_t *base;
-
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
 	 * whether an item is produced. Then add to base storage. */
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
-		production_t *prod;
 		production_queue_t *q = PR_GetProductionForBase(base);
 
 		/* not actually any active productions */
@@ -674,7 +666,7 @@ void PR_ProductionRun (void)
 		if (!PR_ProductionAllowed(base))
 			continue;
 
-		prod = &q->items[0];
+		production_t *prod = &q->items[0];
 		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 
 		if (!PR_CheckFrame(base, prod))
@@ -712,14 +704,13 @@ void PR_ProductionInit (void)
  */
 void PR_UpdateProductionCap (base_t *base, int workerChange)
 {
-	capacities_t *workspaceCapacity = CAP_Get(base, CAP_WORKSPACE);
-	int workers;
 	assert(base);
+	capacities_t *workspaceCapacity = CAP_Get(base, CAP_WORKSPACE);
 
 	if (workspaceCapacity->max <= 0)
 		PR_EmptyQueue(base);
 
-	workers = E_CountHired(base, EMPL_WORKER) + workerChange;
+	const int workers = E_CountHired(base, EMPL_WORKER) + workerChange;
 	if (workspaceCapacity->max >= workers)
 		workspaceCapacity->cur = workers;
 	else
@@ -775,10 +766,9 @@ base_t *PR_ProductionBase (const production_t *production)
  */
 bool PR_SaveXML (xmlNode_t *p)
 {
-	base_t *base;
 	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
@@ -811,11 +801,9 @@ bool PR_SaveXML (xmlNode_t *p)
  */
 bool PR_LoadXML (xmlNode_t *p)
 {
-	xmlNode_t *node, *snode;
+	xmlNode_t *node = cgi->XML_GetNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	node = cgi->XML_GetNode(p, SAVE_PRODUCE_PRODUCTION);
-
-	for (snode = cgi->XML_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
+	for (xmlNode_t *snode = cgi->XML_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
 			snode = cgi->XML_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
 		xmlNode_t *ssnode;
 		const int baseIDX = cgi->XML_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
@@ -832,8 +820,6 @@ bool PR_LoadXML (xmlNode_t *p)
 		for (ssnode = cgi->XML_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
 			const char *s1 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
-			const char *s2;
-			int ufoIDX;
 			production_t *prod = &pq->items[pq->numItems];
 
 			prod->idx = pq->numItems;
@@ -850,7 +836,7 @@ bool PR_LoadXML (xmlNode_t *p)
 			if (s1[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_ITEM, INVSH_GetItemByID(s1));
 			/* UFO */
-			ufoIDX = cgi->XML_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
+			const int ufoIDX = cgi->XML_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
 			if (ufoIDX != -1) {
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
@@ -860,10 +846,10 @@ bool PR_LoadXML (xmlNode_t *p)
 				}
 
 				PR_SetData(&prod->data, PRODUCTION_TYPE_DISASSEMBLY, ufo);
-				prod->data.data.ufo->disassembly = prod;
+				PR_SetUFODisassembly(prod);
 			}
 			/* aircraft */
-			s2 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
+			const char *s2 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 
@@ -888,9 +874,7 @@ static bool PR_PostLoadInitProgress (void)
 	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		production_queue_t *pq = PR_GetProductionForBase(base);
-		int j;
-
-		for (j = 0; j < pq->numItems; j++) {
+		for (int j = 0; j < pq->numItems; j++) {
 			production_t *prod = &pq->items[j];
 			prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 		}
