@@ -167,7 +167,7 @@ static void BS_Buy_f (void)
 	aircraft = AIR_GetAircraftSilent(itemid);
 	if (aircraft) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
-			CP_Popup(_("Note"), _("No command centre in this base.\nHangars are not functional.\n"));
+			CP_Popup(_("Note"), _("No Command Centre in this base.\nHangars are not functional.\n"));
 			return;
 		}
 		/* We cannot buy aircraft if there is no power in our base. */
