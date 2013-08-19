@@ -213,11 +213,11 @@ static void AII_CollectingAmmo (void *data, const Item *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
-	eTempEq.numItemsLoose[magazine->ammoDef()->idx] += magazine->getAmmoLeft();
-	if (eTempEq.numItemsLoose[magazine->ammoDef()->idx] >= magazine->def()->ammo) {
+	eTempEq.numItemsLoose[magazine->getAmmoDef()->idx] += magazine->getAmmoLeft();
+	if (eTempEq.numItemsLoose[magazine->getAmmoDef()->idx] >= magazine->getDef()->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numItemsLoose[magazine->ammoDef()->idx] -= magazine->def()->ammo;
-		AII_CollectItem(aircraft, magazine->ammoDef(), 1);
+		eTempEq.numItemsLoose[magazine->getAmmoDef()->idx] -= magazine->getDef()->ammo;
+		AII_CollectItem(aircraft, magazine->getAmmoDef(), 1);
 	}
 }
 
@@ -272,7 +272,7 @@ static void AII_CarriedItems (const Inventory *soldierInventory)
 	while ((cont = soldierInventory->getNextCont(cont))) {
 		/* Items on the ground are collected as ET_ITEM */
 		for (item = cont->_invList; item; item = item->getNext()) {
-			const objDef_t *itemType = item->def();
+			const objDef_t *itemType = item->getDef();
 			technology_t *tech = RS_GetTechForItem(itemType);
 			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
@@ -774,10 +774,10 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
-				const objDef_t *obj = item->def();
+				const objDef_t *obj = item->getDef();
 				size += obj->size;
 
-				obj = item->ammoDef();
+				obj = item->getAmmoDef();
 				if (obj)
 					size += obj->size;
 			}
@@ -828,11 +828,11 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 	while ((cont = chr->inv.getNextCont(cont, true))) {
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			const objDef_t *obj = item->def();
+			const objDef_t *obj = item->getDef();
 			B_AddToStorage(sourceBase, obj, -1);
 			B_AddToStorage(destBase, obj, 1);
 
-			obj = item->ammoDef();
+			obj = item->getAmmoDef();
 			if (obj) {
 				B_AddToStorage(sourceBase, obj, -1);
 				B_AddToStorage(destBase, obj, 1);
@@ -2955,12 +2955,12 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 			Item *ic = cont->getNextItem(nullptr);
 			while (ic) {
 				const Item item = *ic;
-				const objDef_t *type = item.def();
+				const objDef_t *type = item.getDef();
 				Item *next = ic->getNext();
 
 				ed.numItems[type->idx]++;
 				if (item.getAmmoLeft() && type->isReloadable()) {
-					assert(item.ammoDef());
+					assert(item.getAmmoDef());
 					/* Accumulate loose ammo into clips */
 					ed.addClip(&item);	/* does not delete the item */
 				}

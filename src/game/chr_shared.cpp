@@ -33,7 +33,7 @@ character_s::character_s ()
 
 void character_s::init ()
 {
-	name[0] = path[0] = body[0] = head[0] = 0;
+	name[0] = path[0] = body[0] = head[0] = '\0';
 	ucn = bodySkin = headSkin = HP = minHP = maxHP = STUN = morale = state = gender = 0;
 	fieldSize = 0;
 	scoreMission = nullptr;
@@ -70,11 +70,14 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 	return td->robot;
 }
 
-const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char *templateId) {
-	if (!Q_strnull(templateId))
-		for (int i = 0; i < teamDef->numTemplates; i++)
-			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
-				return teamDef->characterTemplates[i];
+const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char *templateId)
+{
+	if (Q_strnull(templateId))
+		return nullptr;
+
+	for (int i = 0; i < teamDef->numTemplates; i++)
+		if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
+			return teamDef->characterTemplates[i];
 
 	return nullptr;
 }
@@ -171,7 +174,7 @@ const char *CHRSH_CharGetBody (const character_t *const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
-		const objDef_t *od = chr->inv.getArmour()->def();
+		const objDef_t *od = chr->inv.getArmour()->getDef();
 		const char *id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -193,7 +196,7 @@ const char *CHRSH_CharGetHead (const character_t *const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !chr->teamDef->robot) {
-		const objDef_t *od = chr->inv.getArmour()->def();
+		const objDef_t *od = chr->inv.getArmour()->getDef();
 		const char *id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -204,7 +207,10 @@ const char *CHRSH_CharGetHead (const character_t *const chr)
 	return returnModel;
 }
 
-BodyData::BodyData (void)  : _totalBodyArea(0.0f), _numBodyParts(0) { }
+BodyData::BodyData (void) :
+		_totalBodyArea(0.0f), _numBodyParts(0)
+{
+}
 
 short BodyData::getRandomBodyPart (void) const
 {
@@ -292,6 +298,7 @@ short BodyData::getHitBodyPart (const byte direction, const float height) const
 	return bodyPart;
 }
 
-float BodyData::getArea(const short bodyPart) const {
+float BodyData::getArea (const short bodyPart) const
+{
 	return (_bodyParts[bodyPart].shape[0] + _bodyParts[bodyPart].shape[1]) * 0.5 * _bodyParts[bodyPart].shape[2];
 }

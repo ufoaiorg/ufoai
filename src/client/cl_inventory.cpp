@@ -107,7 +107,7 @@ bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *src
 	x += weaponList->getX();
 	y += weaponList->getY();
 
-	const objDef_t *weapon = weaponList->def();
+	const objDef_t *weapon = weaponList->getDef();
 	if (weapon->weapons[0]) {
 		Item *ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
@@ -144,11 +144,11 @@ bool INV_UnloadWeapon (Item *weapon, Inventory *inv, const invDef_t *container)
 	assert(weapon);
 	if (container && inv) {
 		bool moved = false;
-		if (weapon->def() != weapon->ammoDef() && weapon->getAmmoLeft() > 0) {
-			const Item item(weapon->ammoDef());
+		if (weapon->getDef() != weapon->getAmmoDef() && weapon->getAmmoLeft() > 0) {
+			const Item item(weapon->getAmmoDef());
 			moved = cls.i.addToInventory(inv, &item, container, NONE, NONE, 1) != nullptr;
 		}
-		if (moved || weapon->def() == weapon->ammoDef()) {
+		if (moved || weapon->getDef() == weapon->getAmmoDef()) {
 			weapon->setAmmoDef(nullptr);
 			weapon->setAmmoLeft(0);
 			return moved;
@@ -374,9 +374,9 @@ Item *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_
 
 	for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		/* Search only in the items that could get displayed. */
-		if (ic && ic->def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->def(), filterType))) {
+		if (ic && ic->getDef() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->getDef(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-			if (itemType == ic->def())
+			if (itemType == ic->getDef())
 				return ic;
 		}
 	}

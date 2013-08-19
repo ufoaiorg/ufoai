@@ -331,28 +331,28 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				tempItem.setDef(obj->ammos[ammoIdx]);
 
 				/* skip weapos that are their own ammo -- oneshot and such */
-				if (obj == tempItem.def())
+				if (obj == tempItem.getDef())
 					continue;
 
 				/* skip unusable ammo */
-				if (!GAME_ItemIsUseable(tempItem.def()))
+				if (!GAME_ItemIsUseable(tempItem.getDef()))
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.def(), (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
+				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.getDef(), (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
 
 				/* Calculate the center of the item model/image. */
-				ammopos[0] += icItem->def()->sx * C_UNIT / 2.0;
-				ammopos[1] -= icItem->def()->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->getDef()->sx * C_UNIT / 2.0;
+				ammopos[1] -= icItem->getDef()->sy * C_UNIT / 2.0;
 				UI_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
 				UI_DrawString("f_verysmall", ALIGN_LC,
-					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, ammopos[1] + icItem->def()->sy * C_UNIT / 2.0,
-					ammopos[0] + icItem->def()->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
+					ammopos[0] + icItem->getDef()->sx * C_UNIT / 2.0, ammopos[1] + icItem->getDef()->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->getDef()->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
 					0, va("x%i", icItem->getAmount()));
-				ammopos[0] += icItem->def()->sx * C_UNIT / 2.0;
-				ammopos[1] += icItem->def()->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->getDef()->sx * C_UNIT / 2.0;
+				ammopos[1] += icItem->getDef()->sy * C_UNIT / 2.0;
 			}
 		}
 		cellHeight += 10;
@@ -440,7 +440,7 @@ void uiBaseInventoryNode::draw (uiNode_t *node)
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
 	if (UI_DNDIsDragging() && UI_DNDGetType() == DND_ITEM) {
-		highlightType = UI_DNDGetItem()->def();
+		highlightType = UI_DNDGetItem()->getDef();
 	}
 
 	UI_BaseInventoryNodeDraw2(node, highlightType);
@@ -666,7 +666,7 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 			oldMouseX = x;
 			oldMouseY = y;
 			UI_SetMouseCapture(node);
-			EXTRADATA(node).super.lastSelectedId = dragInfoIC->def()->idx;
+			EXTRADATA(node).super.lastSelectedId = dragInfoIC->getDef()->idx;
 			if (EXTRADATA(node).super.onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}

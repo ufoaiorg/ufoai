@@ -410,13 +410,12 @@ static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, c
 		 * by surviving actors. Loser only gets what their living team
 		 * members carry. */
 		if (LE_IsItem(le)) {
-			if (won) {
-				Item *i = le->getFloorContainer();
-				for ( ; i; i = i->getNext()) {
-					collectItem(data, i->def(), 1);
-					if (i->isReloadable() && i->getAmmoLeft() > 0)
-						collectAmmo(data, i);
-				}
+			if (!won)
+				continue;
+			for (Item *i = le->getFloorContainer(); i; i = i->getNext()) {
+				collectItem(data, i->getDef(), 1);
+				if (i->isReloadable() && i->getAmmoLeft() > 0)
+					collectAmmo(data, i);
 			}
 		} else if (LE_IsActor(le)) {
 			/* The items are already dropped to floor and are available
@@ -425,7 +424,7 @@ static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, c
 			if (won && LE_IsDead(le)) {
 				Item *item = le->inv.getArmour();
 				if (item)
-					collectItem(data, item->def(), 1);
+					collectItem(data, item->getDef(), 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
 				ownitems(&le->inv);
@@ -1217,12 +1216,12 @@ void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAliv
  */
 static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t container, int x, int y)
 {
-	const int ammoIdx = item->ammoDef() ? item->ammoDef()->idx : NONE;
+	const int ammoIdx = item->getAmmoDef() ? item->getAmmoDef()->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
-	assert(item->def());
+	assert(item->getDef());
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		item->def()->id, container, item->def()->idx, item->getAmmoLeft(), ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item->def()->idx, item->getAmmoLeft(), ammoIdx, container, x, y, item->rotated, item->getAmount());
+		item->getDef()->id, container, item->getDef()->idx, item->getAmmoLeft(), ammoIdx, x, y);
+	NET_WriteFormat(buf, eventData->formatString, item->getDef()->idx, item->getAmmoLeft(), ammoIdx, container, x, y, item->rotated, item->getAmount());
 }
 
 /**

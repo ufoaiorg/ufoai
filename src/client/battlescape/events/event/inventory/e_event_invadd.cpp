@@ -48,7 +48,7 @@ static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *conta
 	item->setDef(INVSH_GetItemByIDX(itemIdx));
 	item->setAmmoDef(INVSH_GetItemByIDX(ammoIdx));
 
-	if (!item->def())
+	if (!item->getDef())
 		Com_Error(ERR_DROP, "no weapon given for item");
 }
 
@@ -99,16 +99,16 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 
 		if (cls.i.addToInventory(&le->inv, &item, INVDEF(container), x, y, item.getAmount()) == nullptr)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
-					item.getAmount(), item.def()->id, container);
+					item.getAmount(), item.getDef()->id, container);
 
 		if (container == CID_RIGHT)
-			le->right = item.def()->idx;
+			le->right = item.getDef()->idx;
 		else if (container == CID_LEFT)
-			le->left = item.def()->idx;
+			le->left = item.getDef()->idx;
 		else if (container == CID_EXTENSION)
-			le->extension = item.def()->idx;
+			le->extension = item.getDef()->idx;
 		else if (container == CID_HEADGEAR)
-			le->headgear = item.def()->idx;
+			le->headgear = item.getDef()->idx;
 	}
 
 	switch (le->type) {

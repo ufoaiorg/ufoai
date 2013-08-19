@@ -410,7 +410,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict *shooter) const
 
 	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
-	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
+	if (weapon && weapon->getAmmoDef() && weapon->isWeapon() && !weapon->mustReload()) {
 		const fireDef_t *fdArray = weapon->getFiredefs();
 		if (fdArray == nullptr)
 			return nullptr;

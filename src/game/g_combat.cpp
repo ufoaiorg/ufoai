@@ -317,7 +317,7 @@ int G_ApplyProtection (const Edict *target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
 	if (target->getArmour()) {
-		const objDef_t *armourDef = target->getArmour()->def();
+		const objDef_t *armourDef = target->getArmour()->getDef();
 		const short armourProtection = armourDef->protection[dmgWeight];
 		const short totalProtection = armourProtection + naturalProtection;
 		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));
@@ -749,7 +749,7 @@ static void G_ShootGrenade (const Player &player, Edict *ent, const fireDef_t *f
 					G_SplashDamage(ent, fd, impact, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
-					if (fd->ammo && !fd->splrad && weapon->def()->thrown) {
+					if (fd->ammo && !fd->splrad && weapon->getDef()->thrown) {
 						pos3_t drop;
 						VecToPos(impact, drop);
 						G_SpawnItemOnFloor(drop, weapon);
@@ -995,7 +995,7 @@ static void G_ShootSingle (Edict *ent, const fireDef_t *fd, const vec3_t from, c
 		if (hitEnt || bounce > fd->bounce || tr.fraction >= 1.0) {
 			if (!mock) {
 				/* spawn the throwable item on the floor but only if it is not depletable */
-				if (fd->ammo && !fd->splrad && weapon->def()->thrown && !weapon->def()->deplete) {
+				if (fd->ammo && !fd->splrad && weapon->getDef()->thrown && !weapon->getDef()->deplete) {
 					pos3_t drop;
 
 					if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
@@ -1157,7 +1157,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 	}
 
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (weapon->def()->fireTwoHanded && ent->getLeftHandItem()) {
+	if (weapon->getDef()->fireTwoHanded && ent->getLeftHandItem()) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
@@ -1165,7 +1165,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 	/* check we're not out of ammo */
 	int ammo = weapon->getAmmoLeft();
-	if (!ammo && fd->ammo && !weapon->def()->thrown) {
+	if (!ammo && fd->ammo && !weapon->getDef()->thrown) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no ammo!"));
 		return false;
@@ -1205,7 +1205,7 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 	/* fire shots */
 	int shots = fd->shots;
-	if (fd->ammo && !weapon->def()->thrown) {
+	if (fd->ammo && !weapon->getDef()->thrown) {
 		/**
 		 * If loaded ammo is less than needed ammo from firedef
 		 * then reduce shot-number relative to the difference.
@@ -1275,8 +1275,8 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 
 		/* ammo... */
 		if (fd->ammo) {
-			if (ammo > 0 || !weapon->def()->thrown) {
-				G_EventInventoryAmmo(*ent, weapon->ammoDef(), ammo, shootType);
+			if (ammo > 0 || !weapon->getDef()->thrown) {
+				G_EventInventoryAmmo(*ent, weapon->getAmmoDef(), ammo, shootType);
 				weapon->setAmmoLeft(ammo);
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t *invDef = INVDEF(container);
@@ -1290,10 +1290,10 @@ bool G_ClientShoot (const Player &player, Edict *ent, const pos3_t at, shoot_typ
 		}
 
 		/* remove throwable oneshot && deplete weapon from inventory */
-		if (weapon->def()->thrown && weapon->def()->oneshot && weapon->def()->deplete) {
+		if (weapon->getDef()->thrown && weapon->getDef()->oneshot && weapon->getDef()->deplete) {
 			const invDef_t *invDef = INVDEF(container);
 			if (itemAlreadyRemoved)
-				gi.Error("Item %s is already removed", weapon->def()->id);
+				gi.Error("Item %s is already removed", weapon->getDef()->id);
 			assert(invDef->single);
 			game.i.emptyContainer(&ent->chr.inv, invDef->id);
 			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);

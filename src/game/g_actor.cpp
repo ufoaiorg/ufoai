@@ -158,7 +158,7 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
 
 	const Item *weapon = ent->getHandItem(fm->getHand());
 	assert(weapon);
-	assert(weapon->def());
+	assert(weapon->getDef());
 
 	const fireDef_t *fd = weapon->getFiredefs();
 	assert(fd);
@@ -549,7 +549,7 @@ bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, Item *fItem, co
 	Player &player = actor->getPlayer();
 
 	assert(fItem);
-	assert(fItem->def());
+	assert(fItem->getDef());
 
 	/* Store the location/item of 'from' BEFORE actually moving items with moveInInventory. */
 	fromItemBackup = *fItem;
@@ -675,7 +675,7 @@ bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, Item *fItem, co
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.setAmmoLeft(NONE_AMMO);
 			item.setAmmoDef(nullptr);
-			item.setDef(toItemBackup.ammoDef());
+			item.setDef(toItemBackup.getAmmoDef());
 			item.rotated = fromItemBackup.rotated;
 			item.setAmount(toItemBackup.getAmount());
 			toContType = fromContType;
@@ -752,11 +752,11 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 	const objDef_t *weapon;
 
 	if (ent->getContainer(invDef->id)) {
-		weapon = ent->getContainer(invDef->id)->def();
+		weapon = ent->getContainer(invDef->id)->getDef();
 	} else if (invDef->isLeftDef() && ent->getRightHandItem()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(CID_RIGHT);
-		weapon = ent->getRightHandItem()->def();
+		weapon = ent->getRightHandItem()->getDef();
 	} else
 		return;
 
@@ -781,7 +781,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 		 * we've already found. */
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			if (item->def()->isLoadableInWeapon(weapon)) {
+			if (item->getDef()->isLoadableInWeapon(weapon)) {
 				ammoItem = item;
 				bestContainer = INVDEF(cont->id);
 				tu = bestContainer->out;

@@ -82,12 +82,12 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
 {
 	Item *ic = ent->getContainer(container);
 	while (ic) {
-		const objDef_t *item = ic->def();
+		const objDef_t *item = ic->getDef();
 		if (item != nullptr && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
-						ic->def()->id, container);
+						ic->getDef()->id, container);
 			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), container, ic->getX(), ic->getY());
 			return true;
 		}
@@ -115,13 +115,13 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 	if (ic) {
 		bool check = false;
 		while (ic) {
-			assert(ic->def());
-			if (ic->def()->isVirtual) {
+			assert(ic->getDef());
+			if (ic->getDef()->isVirtual) {
 				Item *next = ic->getNext();
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
-							ic->def()->id, container);
+							ic->getDef()->id, container);
 				ic = next;
 			} else {
 				/* there are none virtual items left that should be send to the client */
@@ -273,10 +273,10 @@ void G_InventoryToFloor (Edict *ent)
 			assert(item.getAmount() == 1);
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->def()->id, container, ent->number);
+						ic->getDef()->id, container, ent->number);
 			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == nullptr)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->def()->id, container, ent->number);
+						ic->getDef()->id, container, ent->number);
 #ifdef ADJACENT
 			G_InventoryPlaceItemAdjacent(ent);
 #endif
@@ -340,8 +340,8 @@ void G_ReadItem (Item *item, const invDef_t **container, int *x, int *y)
  */
 void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
 {
-	assert(item.def());
-	gi.WriteFormat("sbsbbbbs", item.def()->idx, item.getAmmoLeft(), item.ammoDef() ? item.ammoDef()->idx : NONE, contId, x, y, item.rotated, item.getAmount());
+	assert(item.getDef());
+	gi.WriteFormat("sbsbbbbs", item.getDef()->idx, item.getAmmoLeft(), item.getAmmoDef() ? item.getAmmoDef()->idx : NONE, contId, x, y, item.rotated, item.getAmount());
 }
 
 /**
@@ -378,7 +378,7 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			/* send a single item */
-			assert(item->def());
+			assert(item->getDef());
 			G_WriteItem(*item, cont->id, item->getX(), item->getY());
 		}
 	}

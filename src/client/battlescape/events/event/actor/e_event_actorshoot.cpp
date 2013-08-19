@@ -101,10 +101,10 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		weapon = actor->getLeftHandItem();
 	}
 
-	if (!weapon || !weapon->def())
+	if (!weapon || !weapon->getDef())
 		return;
 
-	const objDef_t *od = weapon->def();
+	const objDef_t *od = weapon->getDef();
 	const model_t *model = cls.modelPool[od->idx];
 	if (!model)
 		Com_Error(ERR_DROP, "Model for item %s is not precached", od->id);

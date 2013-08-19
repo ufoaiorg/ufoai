@@ -787,12 +787,12 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
 	while ((cont = chr->inv.getNextCont(cont))) {
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			if (item->def()) {
-				AII_CollectItem(aircraft, item->def(), 1);
+			if (!item->getDef())
+				continue;
+			AII_CollectItem(aircraft, item->getDef(), 1);
 
-				if (item->getAmmoLeft() && item->ammoDef())
-					AII_CollectItem(aircraft, item->ammoDef(), 1);
-			}
+			if (item->getAmmoLeft() && item->getAmmoDef())
+				AII_CollectItem(aircraft, item->getAmmoDef(), 1);
 		}
 	}
 }
