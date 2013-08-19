@@ -234,6 +234,7 @@ technology_t* PR_GetTech (const productionData_t *data)
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] data The production data
  * @param[in] amount Desired amount to produce.
+ * @return @c NULL in case the production wasn't enqueued, otherwise the production pointer
  */
 production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed int amount)
 {
