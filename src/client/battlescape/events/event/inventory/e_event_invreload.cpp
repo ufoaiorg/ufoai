@@ -56,13 +56,13 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_LoadAndPlaySample(ic->getDef()->reloadSound, le->origin, ic->getDef()->reloadAttenuation, SND_VOLUME_WEAPONS);
+	S_LoadAndPlaySample(ic->def()->reloadSound, le->origin, ic->def()->reloadAttenuation, SND_VOLUME_WEAPONS);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
 	equipDef_t *ed = GAME_GetEquipmentDefinition();
-	if (ed && ic->getAmmoLeft() > 0 && ic->getAmmoLeft() != ic->getDef()->ammo) {
-		assert(ammo == ic->getDef()->ammo);
+	if (ed && ic->getAmmoLeft() > 0 && ic->getAmmoLeft() != ic->def()->ammo) {
+		assert(ammo == ic->def()->ammo);
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
 		ed->addClip(ic);
 	}

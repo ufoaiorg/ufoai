@@ -539,10 +539,10 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	const objDef_t *weapon;
 
 	if (ent->getContainer(containerID)) {
-		weapon = ent->getContainer(containerID)->getDef();
+		weapon = ent->getContainer(containerID)->def();
 	} else if (containerID == CID_LEFT && ent->getRightHandItem()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
-		weapon = ent->getRightHandItem()->getDef();
+		weapon = ent->getRightHandItem()->def();
 	} else
 		return false;
 
@@ -553,7 +553,7 @@ bool G_ClientCanReload (Edict *ent, containerIndex_t containerID)
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			if (item->getDef()->isLoadableInWeapon(weapon))
+			if (item->def()->isLoadableInWeapon(weapon))
 				return true;
 		}
 	}
@@ -584,7 +584,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 		while ((item = cont->getNextItem(item))) {
 			/* We are looking for the *fastest* way to get a weapon,
 			 * no matter what kind of weapon it is. */
-			assert(item->getDef());
+			assert(item->def());
 			if (item->isWeapon() && !item->mustReload()) {
 				theWeapon = item;
 				bestContainer = cont->def();
@@ -1114,13 +1114,13 @@ static void G_ClientReadInventory (Edict *ent)
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (container->temp)
-			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.getDef()->id, container->id);
+			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container->id);
 		/* ignore the overload for now */
 		if (!ent->chr.inv.canHoldItemWeight(CID_EQUIP, container->id, item, ent->chr.score.skills[ABILITY_POWER]))
-			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.getDef()->id, ent->number);
+			Com_Printf("G_ClientReadInventory: Item %s exceeds ent %i weight capacity\n", item.def()->id, ent->number);
 		if (!level.noEquipment && game.i.addToInventory(&ent->chr.inv, &item, container, x, y, 1) == nullptr)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
-					item.getDef()->id, container->id, x, y);
+					item.def()->id, container->id, x, y);
 	}
 }
 

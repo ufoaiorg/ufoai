@@ -168,9 +168,9 @@ static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invD
 				continue;
 
 			if (item->rotated)
-				INVSH_MergeShapes(mask, item->getDef()->getShapeRotated(), item->getX(), item->getY());
+				INVSH_MergeShapes(mask, item->def()->getShapeRotated(), item->getX(), item->getY());
 			else
-				INVSH_MergeShapes(mask, item->getDef()->shape, item->getX(), item->getY());
+				INVSH_MergeShapes(mask, item->def()->shape, item->getX(), item->getY());
 		}
 	}
 
@@ -212,9 +212,9 @@ static bool INVSH_ShapeCheckPosition (const Item *item, const int x, const int y
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (item->rotated) {
-		shape = item->getDef()->getShapeRotated();
+		shape = item->def()->getShapeRotated();
 	} else {
-		shape = item->getDef()->shape;
+		shape = item->def()->shape;
 	}
 
 	return INVSH_CheckShapeSmall(shape, x - item->getX(), y - item->getY());
@@ -489,9 +489,9 @@ Item::Item (const objDef_t *itemDef, const objDef_t *ammo, int ammoLeft)
  */
 float Item::getWeight () const
 {
-	float weight = getDef()->weight;
-	if (getAmmoDef() && getAmmoDef() != getDef() && getAmmoLeft() > 0) {
-		weight += getAmmoDef()->weight;
+	float weight = def()->weight;
+	if (ammoDef() && ammoDef() != def() && getAmmoLeft() > 0) {
+		weight += ammoDef()->weight;
 	}
 	return weight;
 }
@@ -509,7 +509,7 @@ bool Item::isSameAs (const Item *const other) const
 	if (this == nullptr || other == nullptr)
 		return false;
 
-	if (this->getDef() == other->getDef() && this->getAmmoDef() == other->getAmmoDef() && this->getAmmoLeft() == other->getAmmoLeft())
+	if (this->def() == other->def() && this->ammoDef() == other->ammoDef() && this->getAmmoLeft() == other->getAmmoLeft())
 		return true;
 
 	return false;
@@ -545,13 +545,13 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
  */
 const fireDef_t *Item::getFiredefs () const
 {
-	const objDef_t *ammodef = getAmmoDef();
-	const objDef_t *weapon = getDef();
+	const objDef_t *ammodef = ammoDef();
+	const objDef_t *weapon = def();
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
 	if (weapon->numWeapons > 0)
-		ammodef = getDef();
+		ammodef = def();
 
 	if (!ammodef)
 		return nullptr;
@@ -591,12 +591,14 @@ const fireDef_t *Item::getSlowestFireDef () const
  */
 const objDef_t *Item::getReactionFireWeaponType () const
 {
-	if (getDef() == nullptr)
+	if (!this)
 		return nullptr;
 
-	const fireDef_t *fd = getFiredefs();
-	if (fd && fd->reaction)
-		return getDef();
+	if (def()) {
+		const fireDef_t *fd = getFiredefs();
+		if (fd && fd->reaction)
+			return def();
+	}
 
 	return nullptr;
 }
@@ -827,7 +829,7 @@ void Inventory::findSpace (const invDef_t *container, const Item *item, int* con
 
 	for (int y = 0; y < SHAPE_BIG_MAX_HEIGHT; ++y) {
 		for (int x = 0; x < SHAPE_BIG_MAX_WIDTH; ++x) {
-			const int checkedTo = canHoldItem(container, item->getDef(), x, y, ignoredItem);
+			const int checkedTo = canHoldItem(container, item->def(), x, y, ignoredItem);
 			if (checkedTo) {
 				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -959,11 +961,11 @@ bool Inventory::holdsReactionFireWeapon () const
  */
 void equipDef_t::addClip (const Item *item)
 {
-	const int ammoIdx = item->getAmmoDef()->idx;
+	const int ammoIdx = item->ammoDef()->idx;
 	numItemsLoose[ammoIdx] += item->getAmmoLeft();
 	/* Accumulate loose ammo into clips */
-	if (numItemsLoose[ammoIdx] >= item->getDef()->ammo) {
-		numItemsLoose[ammoIdx] -= item->getDef()->ammo;
+	if (numItemsLoose[ammoIdx] >= item->def()->ammo) {
+		numItemsLoose[ammoIdx] -= item->def()->ammo;
 		numItems[ammoIdx]++;
 	}
 }

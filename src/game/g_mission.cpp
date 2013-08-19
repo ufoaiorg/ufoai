@@ -86,7 +86,7 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 		while ((cont = activator->chr.inv.getNextCont(cont))) {
 			Item *item = nullptr;
 			while ((item = cont->getNextItem(item))) {
-				const objDef_t *od = item->getDef();
+				const objDef_t *od = item->def();
 				/* check whether we found the searched item in the actor's inventory */
 				if (!Q_streq(od->id, self->owner->item))
 					continue;
@@ -172,7 +172,7 @@ void G_MissionThink (Edict *self)
 					return;
 				}
 				for (; ic; ic = ic->getNext()) {
-					const objDef_t *od = ic->getDef();
+					const objDef_t *od = ic->def();
 					assert(od);
 					/* not the item we are looking for */
 					if (Q_streq(od->id, chain->item))

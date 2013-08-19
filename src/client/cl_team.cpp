@@ -149,12 +149,12 @@ static void CL_ActorCvars (const character_t *chr)
 	/* visible equipment */
 	weapon = chr->inv.getRightHandContainer();
 	if (weapon)
-		Cvar_Set("mn_rweapon", weapon->getDef()->model);
+		Cvar_Set("mn_rweapon", weapon->def()->model);
 	else
 		Cvar_Set("mn_rweapon", "");
 	weapon = chr->inv.getLeftHandContainer();
 	if (weapon)
-		Cvar_Set("mn_lweapon", weapon->getDef()->model);
+		Cvar_Set("mn_lweapon", weapon->def()->model);
 	else
 		Cvar_Set("mn_lweapon", "");
 }

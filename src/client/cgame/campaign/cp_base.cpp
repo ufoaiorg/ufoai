@@ -1802,9 +1802,9 @@ static int CL_GetSkillIndicator (const character_t *chr, abilityskills_t skill)
 	const Item *rightHand = chr->inv.getRightHandContainer();
 	const Item *holster = chr->inv.getHolsterContainer();
 
-	if (rightHand && rightHand->getAmmoDef() && rightHand->getDef())
+	if (rightHand && rightHand->ammoDef() && rightHand->def())
 		fdRight = rightHand->getFiredefs();
-	if (holster && holster->getAmmoDef() && holster->getDef())
+	if (holster && holster->ammoDef() && holster->def())
 		fdHolster = holster->getFiredefs();
 	/* disregard left hand, or dual-wielding guys are too good */
 
@@ -1817,12 +1817,12 @@ static int CL_GetSkillIndicator (const character_t *chr, abilityskills_t skill)
 	const byte fmode2 = 1;
 	int no = 0;
 	if (rightHand != nullptr) {
-		const fireDef_t *fd = rightHand->getAmmoDef()->fd[fdRight->weapFdsIdx];
+		const fireDef_t *fd = rightHand->ammoDef()->fd[fdRight->weapFdsIdx];
 		no += 2 * (skill == fd[fmode1].weaponSkill);
 		no += 2 * (skill == fd[fmode2].weaponSkill);
 	}
 	if (holster != nullptr && holster->isReloadable()) {
-		const fireDef_t *fd = holster->getAmmoDef()->fd[fdHolster->weapFdsIdx];
+		const fireDef_t *fd = holster->ammoDef()->fd[fdHolster->weapFdsIdx];
 		no += (skill == fd[fmode1].weaponSkill);
 		no += (skill == fd[fmode2].weaponSkill);
 	}

@@ -519,17 +519,17 @@ void GAME_ActorSelect_f (void)
  */
 static void GAME_SaveItem (xmlNode_t *p, const Item *item, containerIndex_t container, int x, int y)
 {
-	assert(item->getDef() != nullptr);
+	assert(item->def() != nullptr);
 
 	XML_AddString(p, SAVE_INVENTORY_CONTAINER, INVDEF(container)->name);
 	XML_AddInt(p, SAVE_INVENTORY_X, x);
 	XML_AddInt(p, SAVE_INVENTORY_Y, y);
 	XML_AddIntValue(p, SAVE_INVENTORY_ROTATED, item->rotated);
-	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->getDef()->id);
+	XML_AddString(p, SAVE_INVENTORY_WEAPONID, item->def()->id);
 	/** @todo: is there any case when amount != 1 for soldier inventory item? */
 	XML_AddInt(p, SAVE_INVENTORY_AMOUNT, item->getAmount());
 	if (item->getAmmoLeft() > NONE_AMMO) {
-		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->getAmmoDef()->id);
+		XML_AddString(p, SAVE_INVENTORY_MUNITIONID, item->ammoDef()->id);
 		XML_AddInt(p, SAVE_INVENTORY_AMMO, item->getAmmoLeft());
 	}
 }
@@ -591,11 +591,11 @@ static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container
 		item->setAmmoDef(INVSH_GetItemByID(itemID));
 
 		/* reset ammo count if ammunition (item) not found */
-		if (!item->getAmmoDef())
+		if (!item->ammoDef())
 			item->setAmmoLeft(NONE_AMMO);
 	/* no ammo needed - fire definitions are in the item */
 	} else if (!item->isReloadable()) {
-		item->setAmmoDef(item->getDef());
+		item->setAmmoDef(item->def());
 	}
 }
 
@@ -619,13 +619,13 @@ static void GAME_LoadInventory (xmlNode_t *p, Inventory *inv, int maxLoad)
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
 		if (INVDEF(container)->temp)
-			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.getDef()->id, container);
+			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container);
 		/* ignore the overload for now */
 		if (!inv->canHoldItemWeight(CID_EQUIP, container, item, maxLoad))
-			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.getDef()->id);
+			Com_Printf("GAME_LoadInventory: Item %s exceeds weight capacity\n", item.def()->id);
 
 		if (!cls.i.addToInventory(inv, &item, INVDEF(container), x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.getDef() ? item.getDef()->id : "nullptr");
+			Com_Printf("Could not add item '%s' to inventory\n", item.def() ? item.def()->id : "nullptr");
 	}
 }
 

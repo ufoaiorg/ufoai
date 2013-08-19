@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 {
-	const objDef_t *type = item->getDef();
+	const objDef_t *type = item->def();
 
 	assert(ed->numItems[type->idx] > 0);
 	--ed->numItems[type->idx];
@@ -49,7 +49,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 		if (!type->isAmmo()) {
 			/* "Recharge" the oneshot weapon. */
 			item->setAmmoLeft(type->ammo);
-			item->setAmmoDef(item->getDef()); /* Just in case this hasn't been done yet. */
+			item->setAmmoDef(item->def()); /* Just in case this hasn't been done yet. */
 			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return;
 		} else {
@@ -57,12 +57,12 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 			return;
 		}
 	} else if (item->getAmmoLeft()) {
-		assert(item->getAmmoDef());
+		assert(item->ammoDef());
 		/* The item is a weapon and it was reloaded one time. */
 		if (item->getAmmoLeft() == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			if (ed->numItems[item->getAmmoDef()->idx] > 0) {
-				--ed->numItems[item->getAmmoDef()->idx];
+			if (ed->numItems[item->ammoDef()->idx] > 0) {
+				--ed->numItems[item->ammoDef()->idx];
 			} else {
 				/* Your clip has been sold; give it back. */
 				item->setAmmoLeft(NONE_AMMO);
@@ -72,8 +72,8 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 	}
 
 	/* Check for complete clips of the same kind */
-	if (item->getAmmoDef() && ed->numItems[item->getAmmoDef()->idx] > 0) {
-		--ed->numItems[item->getAmmoDef()->idx];
+	if (item->ammoDef() && ed->numItems[item->ammoDef()->idx] > 0) {
+		--ed->numItems[item->ammoDef()->idx];
 		item->setAmmoLeft(type->ammo);
 		return;
 	}
@@ -100,9 +100,9 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item->getAmmoDef() && ed->numItemsLoose[item->getAmmoDef()->idx] > 0) {
-		item->setAmmoLeft(ed->numItemsLoose[item->getAmmoDef()->idx]);
-		ed->numItemsLoose[item->getAmmoDef()->idx] = 0;
+	if (item->ammoDef() && ed->numItemsLoose[item->ammoDef()->idx] > 0) {
+		item->setAmmoLeft(ed->numItemsLoose[item->ammoDef()->idx]);
+		ed->numItemsLoose[item->ammoDef()->idx] = 0;
 		return;
 	}
 
@@ -117,8 +117,8 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
-				assert(item->getAmmoDef());
-				ed->numItemsLoose[item->getAmmoDef()->idx] = item->getAmmoLeft();
+				assert(item->ammoDef());
+				ed->numItemsLoose[item->ammoDef()->idx] = item->getAmmoLeft();
 				/* We don't have to accumulate loose ammo into clips
 				 * because we did it previously and we create no new ammo */
 			}
@@ -163,7 +163,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		if (employee->getUGV()) {
 			/* Check if there is a weapon and add it if there isn't. */
 			Item *rightH = chr->inv.getRightHandContainer();
-			if (!rightH || !rightH->getDef())
+			if (!rightH || !rightH->def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->getUGV()->weapon));
 		}
 	}
@@ -184,7 +184,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 #endif
 			for (ic = chr->inv.getContainer3(container); ic; ic = next) {
 				next = ic->getNext();
-				if (ed->numItems[ic->getDef()->idx] > 0) {
+				if (ed->numItems[ic->def()->idx] > 0) {
 					CP_AddWeaponAmmo(ed, ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
@@ -225,7 +225,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 			if (employee->getUGV()) {
 				/* Check if there is a weapon and add it if there isn't. */
 				Item *rightH = chr->inv.getRightHandContainer();
-				if (!rightH || !rightH->getDef())
+				if (!rightH || !rightH->def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->getUGV()->weapon));
 				continue;
 			}
@@ -237,7 +237,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 #endif
 			for (ic = chr->inv.getContainer3(container); ic; ic = next) {
 				next = ic->getNext();
-				if (ed->numItems[ic->getDef()->idx] > 0) {
+				if (ed->numItems[ic->def()->idx] > 0) {
 					CP_AddWeaponAmmo(ed, ic);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */

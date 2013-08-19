@@ -308,7 +308,7 @@ static inline const Item *AI_GetItemFromInventory (const Item *ic)
 {
 	if (ic != nullptr) {
 		const Item *item = ic;
-		if (item->getAmmoDef() && item->isWeapon() && !item->mustReload())
+		if (item->ammoDef() && item->isWeapon() && !item->mustReload())
 			return item;
 	}
 	return nullptr;
@@ -543,7 +543,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
 
-	for (fireDefIndex_t fdIdx = 0; fdIdx < item->getAmmoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
 		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
 				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
@@ -554,7 +554,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 		if (shots) {
 			float dmg;
 			float dist;
-			if (G_IsStunned(check) && !G_IsInsane(ent) && (item->getDef()->dmgtype == gi.csi->damStunElectro || item->getDef()->dmgtype == gi.csi->damStunGas))
+			if (G_IsStunned(check) && !G_IsInsane(ent) && (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
@@ -591,7 +591,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 
 			/* take into account armour */
 			if (check->getArmour()) {
-				const objDef_t *ad = check->getArmour()->getDef();
+				const objDef_t *ad = check->getArmour()->def();
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
@@ -628,7 +628,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (!item->getDef()->thrown && (fd->splrad > 0.0 || G_IsStunned(check)))
+				if (!item->def()->thrown && (fd->splrad > 0.0 || G_IsStunned(check)))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;

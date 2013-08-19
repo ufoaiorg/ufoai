@@ -386,7 +386,7 @@ public:
 					 * parsing functions are expecting this to be at least 4 bytes */
 
 
-	inline const objDef_t *getAmmoDef (void) const {
+	inline const objDef_t *ammoDef (void) const {
 		return _ammoDef;
 	}
 
@@ -445,7 +445,7 @@ public:
 		_itemDef = objDef;
 	}
 
-	inline const objDef_t *getDef (void) const {
+	inline const objDef_t *def (void) const {
 		return _itemDef;
 	}
 

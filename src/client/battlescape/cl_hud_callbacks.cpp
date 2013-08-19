@@ -60,7 +60,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
 		return nullptr;
 
 	const Item *weapon = actor->getHandItem(hand);
-	if (!weapon || !weapon->getDef())
+	if (!weapon || !weapon->def())
 		return nullptr;
 
 	return weapon->getFiredefs();
@@ -80,7 +80,7 @@ static bool HUD_CheckShooting (const le_t* le, Item *weapon)
 		return false;
 
 	/* No item in hand. */
-	if (!weapon || !weapon->getDef()) {
+	if (!weapon || !weapon->def()) {
 		HUD_DisplayMessage(_("Can't perform action - no item in hand!"));
 		return false;
 	}
@@ -90,7 +90,7 @@ static bool HUD_CheckShooting (const le_t* le, Item *weapon)
 		return false;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-	if (weapon->getDef()->fireTwoHanded && le->getLeftHandItem()) {
+	if (weapon->def()->fireTwoHanded && le->getLeftHandItem()) {
 		HUD_DisplayMessage(_("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
 	}
@@ -248,7 +248,7 @@ static bool HUD_CheckReload (const le_t* le, const Item *weapon, containerIndex_
 		return false;
 
 	/* No item in hand. */
-	if (!weapon || !weapon->getDef()) {
+	if (!weapon || !weapon->def()) {
 		HUD_DisplayMessage(_("Can't perform action - no item in hand!"));
 		return false;
 	}
@@ -259,7 +259,7 @@ static bool HUD_CheckReload (const le_t* le, const Item *weapon, containerIndex_
 		return false;
 	}
 
-	const int tus = HUD_CalcReloadTime(le, weapon->getDef(), container);
+	const int tus = HUD_CalcReloadTime(le, weapon->def(), container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
 		HUD_DisplayMessage(_("Can't perform action - no ammo!"));
