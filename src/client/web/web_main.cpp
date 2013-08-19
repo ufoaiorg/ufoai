@@ -98,6 +98,11 @@ bool WEB_PutFile (const char *formName, const char *fileName, const char *url, u
 	return HTTP_PutFile(formName, fileName, url, params);
 }
 
+/**
+ * @brief The callback for the web auth request
+ * @param[in] response The web auth response
+ * @param[in] userdata The userdata. @c NULL in this case.
+ */
 static void WEB_AuthResponse (const char *response, void *userdata)
 {
 	if (response == nullptr) {
