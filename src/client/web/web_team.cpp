@@ -38,6 +38,11 @@ cvar_t *web_teamdownloadurl;
 cvar_t *web_teamuploadurl;
 cvar_t *web_teamlisturl;
 
+/**
+ * @brief Uploads a team onto the ufoai server
+ * @note Only teams from the home directory of the user are working. A user may
+ * not upload default delivered teams from without the game installation folder.
+ */
 void WEB_UploadTeam_f (void)
 {
 	if (Cmd_Argc() != 2) {
@@ -70,6 +75,10 @@ void WEB_UploadTeam_f (void)
 	FS_NextFileFromFileList(nullptr);
 }
 
+/**
+ * @brief Downloads a particular team and informs the ui (by calling confuncs) about the result.
+ * @note This method does a duplicate check on the downloaded file.
+ */
 void WEB_DownloadTeam_f (void)
 {
 	if (Cmd_Argc() != 2) {
@@ -104,6 +113,11 @@ void WEB_DownloadTeam_f (void)
 	UI_ExecuteConfunc("teamlist_downloadsuccessful %s", filename);
 }
 
+/**
+ * @brief The http callback for the team list command
+ * @param[in] responseBuf The team list in ufo script format
+ * @param[in] userdata This is null in this case
+ */
 static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
 {
 	if (!responseBuf) {
@@ -170,6 +184,10 @@ static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
 	Com_Printf("found %i teams\n", num);
 }
 
+/**
+ * @brief Shows all downloadable teams on the ufoai server
+ * @sa WEB_ListTeamsCallback
+ */
 void WEB_ListTeams_f (void)
 {
 	static const char *url = web_teamlisturl->string;
