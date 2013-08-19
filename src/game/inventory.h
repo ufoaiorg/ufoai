@@ -40,8 +40,8 @@ typedef struct inventoryImport_s {
 class InventoryInterface
 {
 	const inventoryImport_t *import;
-	invList_t *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
-	item_t cacheItem;
+	Item *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
+	Item cacheItem;
 	const csi_t *csi;
 	const char *invName;
 
@@ -49,12 +49,12 @@ public:
 	InventoryInterface ();
 
 	void initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import);
-	bool removeFromInventory (Inventory* const inv, const invDef_t *container, invList_t *fItem) __attribute__((warn_unused_result));
-	invList_t *addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y,
+	bool removeFromInventory (Inventory* const inv, const invDef_t *container, Item *fItem) __attribute__((warn_unused_result));
+	Item *addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
 
-	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t *from, invList_t *item, const invDef_t *to,
-			int tx, int ty, int *TU, invList_t ** icp);
+	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t *from, Item *item, const invDef_t *to,
+			int tx, int ty, int *TU, Item ** icp);
 
 	bool tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container);
 	void destroyInventory (Inventory* const inv);
@@ -79,8 +79,8 @@ protected:
 	{
 		import->Free(data);
 	}
-	void removeInvList (invList_t *invList);
-	invList_t *addInvList (Inventory *const inv, const invDef_t *container);
+	void removeInvList (Item *invList);
+	Item *addInvList (Inventory *const inv, const invDef_t *container);
 	float GetInventoryState (const Inventory *inventory, int &slowestFd);
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
 };

@@ -29,18 +29,18 @@ InventoryInterface::InventoryInterface () :
 {
 }
 
-void InventoryInterface::removeInvList (invList_t *invList)
+void InventoryInterface::removeInvList (Item *invList)
 {
 	Com_DPrintf(DEBUG_SHARED, "removeInvList: remove one slot (%s)\n", invName);
 
 	/* first entry */
 	if (this->_invList == invList) {
-		invList_t *ic = this->_invList;
+		Item *ic = this->_invList;
 		this->_invList = ic->getNext();
 		free(ic);
 	} else {
-		invList_t *ic = this->_invList;
-		invList_t *prev = nullptr;
+		Item *ic = this->_invList;
+		Item *prev = nullptr;
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
@@ -54,20 +54,20 @@ void InventoryInterface::removeInvList (invList_t *invList)
 	}
 }
 
-invList_t *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *container)
+Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *container)
 {
-	invList_t *newEntry = static_cast<invList_t*>(alloc(sizeof(invList_t)));
+	Item *newEntry = static_cast<Item*>(alloc(sizeof(Item)));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
-	invList_t *firstEntry = inv->getContainer2(container->id);
+	Item *firstEntry = inv->getContainer2(container->id);
 	if (!firstEntry) {
 		/* create the list */
 		inv->setContainer(container->id, newEntry);
 	} else {
 		/* read up to the end of the list */
-		invList_t *list = firstEntry;
+		Item *list = firstEntry;
 		while (list->getNext())
 			list = list->getNext();
 		/* append our new item as the last in the list */
@@ -87,9 +87,9 @@ invList_t *InventoryInterface::addInvList (Inventory *const inv, const invDef_t 
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa removeFromInventory
- * @return the @c invList_t pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
+ * @return the @c Item pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
-invList_t *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
+Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
 {
 	if (!item->def())
 		return nullptr;
@@ -103,7 +103,7 @@ invList_t *InventoryInterface::addToInventory (Inventory *const inv, const Item*
 	if (container->single && inv->getContainer2(container->id))
 		return nullptr;
 
-	invList_t *ic;
+	Item *ic;
 	/* CID_EQUIP and CID_FLOOR */
 	if (container->temp) {
 		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext())
@@ -150,13 +150,13 @@ invList_t *InventoryInterface::addToInventory (Inventory *const inv, const Item*
  * @return false If nothing was removed or an error occurred.
  * @sa addToInventory
  */
-bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t *container, invList_t *fItem)
+bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t *container, Item *fItem)
 {
 	assert(inv);
 	assert(container);
 	assert(fItem);
 
-	invList_t *ic = inv->getContainer2(container->id);
+	Item *ic = inv->getContainer2(container->id);
 	if (!ic)
 		return false;
 
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
 		return true;
 	}
 
-	for (invList_t *previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
+	for (Item *previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */
@@ -235,9 +235,9 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, invList_t *fItem, const invDef_t *to, int tx, int ty, int *TU, invList_t ** uponItem)
+inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, Item *fItem, const invDef_t *to, int tx, int ty, int *TU, Item ** uponItem)
 {
-	invList_t *ic;
+	Item *ic;
 
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
@@ -319,8 +319,8 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 	}
 
 	if (to->armour && from != to && !checkedTo) {
-		item_t cacheItem2;
-		invList_t *icTo;
+		Item cacheItem2;
+		Item *icTo;
 		/* Store x/y origin coordinates of removed (source) item.
 		 * When we re-add it we can use this. */
 		const int cacheFromX = fItem->getX();
@@ -504,12 +504,12 @@ bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *co
  */
 void InventoryInterface::emptyContainer (Inventory* const inv, const containerIndex_t containerId)
 {
-	invList_t *ic;
+	Item *ic;
 
 	ic = inv->getContainer3(containerId);
 
 	while (ic) {
-		invList_t *old = ic;
+		Item *old = ic;
 		ic = ic->getNext();
 		removeInvList(old);
 	}
@@ -551,7 +551,7 @@ float InventoryInterface::GetInventoryState (const Inventory *inventory, int &sl
 	slowestFd = 0;
 	const Container *cont = nullptr;
 	while ((cont = inventory->getNextCont(cont))) {
-		for (invList_t *ic = cont->_invList, *next; ic; ic = next) {
+		for (Item *ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
 			weight += ic->getWeight();
 			const fireDef_t *fireDef = (*ic).getSlowestFireDef();
@@ -977,7 +977,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 int InventoryInterface::GetUsedSlots ()
 {
 	int i = 0;
-	const invList_t *slot = _invList;
+	const Item *slot = _invList;
 	while (slot) {
 		slot = slot->getNext();
 		i++;
@@ -996,7 +996,7 @@ int InventoryInterface::GetUsedSlots ()
  */
 void InventoryInterface::initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import)
 {
-	const item_t item;
+	const Item item;
 
 	OBJZERO(*this);
 

@@ -227,7 +227,7 @@ typedef struct craftitem_s {
 	bool bullets;			/**< create bullets for the projectiles */
 	bool beam;				/**< create (laser/particle) beam particles for the projectiles */
 	vec4_t beamColor;
-} craftitem_t;
+} craftItem;
 
 #define MAX_DAMAGETYPES 64
 
@@ -301,7 +301,7 @@ typedef struct objDef_s {
 
 	/**** @todo move into campaign only structure ****/
 	/* Aircraft specific */
-	craftitem_t craftitem;
+	craftItem craftitem;
 	int price;				/**< Price for this item. */
 	int productionCost;		/**< Production costs for this item. */
 	int size;				/**< Size of an item, used in storage capacities. */
@@ -477,16 +477,13 @@ public:
 	const fireDef_t *getFiredefs () const;
 	const fireDef_t *getSlowestFireDef () const;
 };
-typedef Item item_t;
-/** the old linked list type, deprecated, but neede for compatibility */
-typedef Item invList_t;
 
 class Container
 {
 	const invDef_t *_def;	/* container attributes (invDef_t) */
 public:
 	int id;
-	invList_t *_invList;	/* start of the list of items */
+	Item *_invList;	/* start of the list of items */
 
 	Container();
 	const invDef_t *def () const;
@@ -514,16 +511,16 @@ public:
 	/** temporary naming while migrating !!
 	 * getContainer2 will return an item, while
 	 * getContainer3 will actually return a container. */
-	inline invList_t *getContainer2 (const containerIndex_t idx) const {
+	inline Item *getContainer2 (const containerIndex_t idx) const {
 		return getContainer(idx)._invList;
 	}
 
 	/** @todo this should return a reference - can't be null */
-	inline invList_t *getContainer3 (const containerIndex_t idx) const {
+	inline Item *getContainer3 (const containerIndex_t idx) const {
 		return getContainer(idx)._invList;
 	}
 
-	inline void setContainer (const containerIndex_t idx, invList_t *cont) {
+	inline void setContainer (const containerIndex_t idx, Item *cont) {
 		_containers[idx]._invList = cont;
 	}
 
@@ -552,22 +549,22 @@ public:
 	Item *getArmour () const;
 	Item *getHeadgear() const;
 	/** @todo this should return a reference - can't be null */
-	invList_t *getRightHandContainer() const;
+	Item *getRightHandContainer() const;
 	/** @todo this should return a reference - can't be null */
-	invList_t *getLeftHandContainer () const;
+	Item *getLeftHandContainer () const;
 	/** @todo this should return a reference - can't be null */
-	invList_t *getHolsterContainer() const;
+	Item *getHolsterContainer() const;
 	/** @todo this should return a reference - can't be null */
-	invList_t *getEquipContainer () const;
+	Item *getEquipContainer () const;
 	/** @todo this should return a reference - can't be null */
-	invList_t *getFloorContainer() const;
-	void setFloorContainer(invList_t *cont);
+	Item *getFloorContainer() const;
+	void setFloorContainer(Item *cont);
 
 	void findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
 	Item *findInContainer (const containerIndex_t contId, const Item * const item) const;
-	invList_t *getItemAtPos (const invDef_t *container, const int x, const int y) const;
+	Item *getItemAtPos (const invDef_t *container, const int x, const int y) const;
 	float getWeight () const;
-	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const invList_t *ignoredItem) const;
+	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo: convert into iterator */

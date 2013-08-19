@@ -79,7 +79,7 @@ static int dragInfoToY = -1;
  * The current invList pointer (only used for ignoring the dragged item
  * for finding free space right now)
  */
-static const invList_t *dragInfoIC;
+static const Item *dragInfoIC;
 
 static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
 {
@@ -622,9 +622,9 @@ void uiContainerNode::draw (uiNode_t *node)
  * @param[out] contY Y location in the container (row).
  * @sa UI_ContainerNodeSearchInScrollableContainer
  */
-static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
+static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
 {
-	invList_t *result = nullptr;
+	Item *result = nullptr;
 
 	if (!ui_inventory)
 		return nullptr;
@@ -679,7 +679,7 @@ void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	}
 }
 
-static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID, invList_t **icp)
+static bool UI_ContainerNodeAddItem (const invDef_t *container, Item *ic, containerIndex_t containerID, Item **icp)
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
@@ -693,7 +693,7 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, c
  * @param[in] ic An item from the node container
  * @todo We should use an item ID, and get the item inside the function, to avoid wrong uses.
  */
-void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
+void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic)
 {
 	containerIndex_t target;
 	bool ammoChanged = false;
@@ -738,7 +738,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 				 * for available space here, too */
 				const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
 				const size_t size = lengthof(idxArray);
-				invList_t *tItem = nullptr;
+				Item *tItem = nullptr;
 				unsigned int i;
 				for (i = 0; i < size; i++) {
 					target = idxArray[i];
@@ -794,7 +794,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 
 	assert(EXTRADATA(node).container);
 
-	invList_t *ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY);
+	Item *ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY);
 	if (!ic)
 		return;
 	UI_ContainerNodeAutoPlaceItem(node, ic);
@@ -935,7 +935,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	}
 
 	{
-		invList_t *fItem;
+		Item *fItem;
 
 		/* is there empty slot? */
 		const int checkedTo = ui_inventory->canHoldItem(containerType, dragItem->def(), dragInfoToX, dragInfoToY, dragInfoIC);
@@ -986,8 +986,8 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 	} else {
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
-			invList_t *fItem;
-			invList_t *tItem;
+			Item *fItem;
+			Item *tItem;
 			bool moved = false;
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);

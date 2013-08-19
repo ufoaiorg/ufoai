@@ -977,7 +977,7 @@ void CL_ActorShoot (const le_t *le, const pos3_t at)
  * @param weapon The weapon to reload
  * @return @c NONE if no container was found, the container id otherwise.
  */
-int CL_ActorGetContainerForReload (invList_t **invList, const Inventory *inv, const objDef_t *weapon)
+int CL_ActorGetContainerForReload (Item **invList, const Inventory *inv, const objDef_t *weapon)
 {
 	containerIndex_t container;
 	int tu = 100;
@@ -991,7 +991,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const Inventory *inv, co
 		 * searching other containers if it would take longer
 		 * to retrieve the ammo from them than the one
 		 * we've already found. */
-		for (invList_t *ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
+		for (Item *ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
 			const objDef_t *od = ic->def();
 			if (!od->isLoadableInWeapon(weapon) || !GAME_ItemIsUseable(od))
 				continue;
@@ -1013,7 +1013,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const Inventory *inv, co
 void CL_ActorReload (le_t *le, containerIndex_t containerID)
 {
 	Inventory *inv;
-	invList_t *ic;
+	Item *ic;
 	const objDef_t *weapon;
 	containerIndex_t bestContainer;
 

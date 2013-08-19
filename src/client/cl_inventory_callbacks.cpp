@@ -360,7 +360,7 @@ static void INV_UpdateActorLoad_f (void)
 
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
+		for (Item *invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();
 			const fireDef_t *fireDef = invList->getFiredefs();
 			if (fireDef == nullptr)

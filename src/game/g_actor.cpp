@@ -536,11 +536,11 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, invList_t *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, Item *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
 {
 	Edict *floor;
 	bool newFloor;
-	invList_t *tc;
+	Item *tc;
 	playermask_t mask;
 	inventory_action_t ia;
 	Item fromItemBackup, toItemBackup;

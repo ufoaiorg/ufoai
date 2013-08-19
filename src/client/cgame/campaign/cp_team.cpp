@@ -175,7 +175,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 			if (employee->transfer)
 				continue;
 
-			invList_t *ic, *next;
+			Item *ic, *next;
 			character_t *chr = &employee->chr;
 #if 0
 			/* ignore items linked from any temp container */
@@ -218,13 +218,13 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 
 	for (container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
-			invList_t *ic, *next;
+			Item *ic, *next;
 			character_t *chr = &employee->chr;
 
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 			if (employee->getUGV()) {
 				/* Check if there is a weapon and add it if there isn't. */
-				invList_t *rightH = chr->inv.getRightHandContainer();
+				Item *rightH = chr->inv.getRightHandContainer();
 				if (!rightH || !rightH->def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->getUGV()->weapon));
 				continue;

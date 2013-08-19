@@ -324,7 +324,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT *GetNextUniqueCharacterNumber) (void);
 
-	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const Inventory *));
+	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory *));
 	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, bool));
 
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);
@@ -332,7 +332,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *INV_EquipActor) (character_t* const chr, const equipDef_t *ed, int maxWeight);
 	void (IMPORT *INV_EquipActorMelee) (Inventory* const inv, const teamDef_t* td);
 	void (IMPORT *INV_EquipActorRobot) (Inventory* const inv, const objDef_t* weapon);
-	bool (IMPORT *INV_RemoveFromInventory) (Inventory* const i, const invDef_t * container, invList_t *fItem);
+	bool (IMPORT *INV_RemoveFromInventory) (Inventory* const i, const invDef_t * container, Item *fItem);
 
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
 

@@ -820,9 +820,9 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
  * @note This item is the only one that will be drawn when lying at the floor
  * @sa LE_PlaceItem
  * @return the item index in the @c csi.ods array
- * @note Only call this for none empty invList_t
+ * @note Only call this for none empty Item
  */
-static const objDef_t *LE_BiggestItem (const invList_t *ic)
+static const objDef_t *LE_BiggestItem (const Item *ic)
 {
 	assert(ic);
 	const objDef_t *max;
@@ -836,7 +836,7 @@ static const objDef_t *LE_BiggestItem (const invList_t *ic)
 		}
 	}
 
-	/* there must be an item in the invList_t */
+	/* there must be an item in the Item */
 	assert(max);
 	return max;
 }
@@ -863,7 +863,7 @@ void LE_PlaceItem (le_t *le)
 	/* the le is an ET_ITEM entity, this entity is there to render dropped items
 	 * if there are no items in the floor container, this entity can be
 	 * deactivated */
-	invList_t *floorCont = le->getFloorContainer();
+	Item *floorCont = le->getFloorContainer();
 	if (floorCont) {
 		const objDef_t *biggest = LE_BiggestItem(floorCont);
 		le->model1 = cls.modelPool[biggest->idx];

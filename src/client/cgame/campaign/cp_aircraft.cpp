@@ -2954,9 +2954,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item *ic = cont->getNextItem(nullptr);
 			while (ic) {
-				const item_t item = *ic;
+				const Item item = *ic;
 				const objDef_t *type = item.def();
-				invList_t *next = ic->getNext();
+				Item *next = ic->getNext();
 
 				ed.numItems[type->idx]++;
 				if (item.getAmmoLeft() && type->isReloadable()) {

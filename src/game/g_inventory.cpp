@@ -80,7 +80,7 @@ Edict *G_GetFloorItems (Edict *ent)
  */
 bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t container)
 {
-	invList_t *ic = ent->getContainer(container);
+	Item *ic = ent->getContainer(container);
 	while (ic) {
 		const objDef_t *item = ic->def();
 		if (item != nullptr && Q_streq(item->id, itemID)) {
@@ -107,7 +107,7 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict *ent, containerIndex_t
  */
 static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 {
-	invList_t *ic = ent->getContainer(container);
+	Item *ic = ent->getContainer(container);
 
 	if (container == CID_ARMOUR)
 		return false;
@@ -117,7 +117,7 @@ static bool G_InventoryDropToFloorCheck (Edict *ent, containerIndex_t container)
 		while (ic) {
 			assert(ic->def());
 			if (ic->def()->isVirtual) {
-				invList_t *next = ic->getNext();
+				Item *next = ic->getNext();
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 					gi.Error("Could not remove virtual item '%s' from inventory %i",
@@ -261,7 +261,7 @@ void G_InventoryToFloor (Edict *ent)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
-		invList_t *ic, *next;
+		Item *ic, *next;
 		for (ic = ent->getContainer(container); ic; ic = next) {
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,

@@ -304,7 +304,7 @@ static bool AI_HideNeeded (const Edict *ent)
  * @param ic The inventory to search a useable weapon in.
  * @return Ready to fire weapon.
  */
-static inline const Item *AI_GetItemFromInventory (const invList_t *ic)
+static inline const Item *AI_GetItemFromInventory (const Item *ic)
 {
 	if (ic != nullptr) {
 		const Item *item = ic;

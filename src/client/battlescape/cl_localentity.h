@@ -179,11 +179,11 @@ typedef struct le_s {
 			return inv.getLeftHandContainer();
 		return nullptr;
 	}
-	inline invList_t *getFloorContainer () const
+	inline Item *getFloorContainer () const
 	{
 		return inv.getFloorContainer();
 	}
-	inline void setFloorContainer (invList_t *il)
+	inline void setFloorContainer (Item *il)
 	{
 		inv.setFloorContainer(il);
 	}

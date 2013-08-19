@@ -780,9 +780,9 @@ int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the container that you want to check.
- * @return invList_t Pointer to the invList_t/item that is located at x/y.
+ * @return Item Pointer to the Item/item that is located at x/y.
  */
-invList_t *Inventory::getItemAtPos (const invDef_t *container, const int x, const int y) const
+Item *Inventory::getItemAtPos (const invDef_t *container, const int x, const int y) const
 {
 	assert(container);
 
@@ -886,17 +886,17 @@ float Inventory::getWeight () const
 	return weight;
 }
 
-void Inventory::setFloorContainer(invList_t *cont)
+void Inventory::setFloorContainer(Item *cont)
 {
 	setContainer(CID_FLOOR, cont);
 }
 
-invList_t *Inventory::getRightHandContainer () const
+Item *Inventory::getRightHandContainer () const
 {
 	return getContainer2(CID_RIGHT);
 }
 
-invList_t *Inventory::getLeftHandContainer () const
+Item *Inventory::getLeftHandContainer () const
 {
 	return getContainer2(CID_LEFT);
 }
@@ -906,17 +906,17 @@ Item *Inventory::getHeadgear () const
 	return getContainer2(CID_HEADGEAR);
 }
 
-invList_t *Inventory::getHolsterContainer () const
+Item *Inventory::getHolsterContainer () const
 {
 	return getContainer3(CID_HOLSTER);
 }
 
-invList_t *Inventory::getFloorContainer () const
+Item *Inventory::getFloorContainer () const
 {
 	return getContainer3(CID_FLOOR);
 }
 
-invList_t *Inventory::getEquipContainer () const
+Item *Inventory::getEquipContainer () const
 {
 	return getContainer3(CID_EQUIP);
 }

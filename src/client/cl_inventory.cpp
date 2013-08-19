@@ -63,7 +63,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
  * @return true if the move was successful.
  */
 bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY,
-	const invDef_t *fromContainer, invList_t *fItem, invList_t **uponItem)
+	const invDef_t *fromContainer, Item *fItem, Item **uponItem)
 {
 	int moved;
 
@@ -98,7 +98,7 @@ bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-bool INV_LoadWeapon (const invList_t *weaponList, Inventory *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	assert(weaponList);
 
@@ -109,7 +109,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, Inventory *inv, const invDef_t
 
 	const objDef_t *weapon = weaponList->def();
 	if (weapon->weapons[0]) {
-		invList_t *ic = inv->getItemAtPos(destContainer, x, y);
+		Item *ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
 			ic->setAmmoLeft(weapon->ammo);
 			ic->setAmmoDef(weapon);
@@ -117,7 +117,7 @@ bool INV_LoadWeapon (const invList_t *weaponList, Inventory *inv, const invDef_t
 	} else if (weapon->isReloadable()) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		int i = 0;
-		invList_t *ic = nullptr;
+		Item *ic = nullptr;
 		/* search an ammo */
 		while (i < weapon->numAmmos && !ic) {
 			const objDef_t *ammo = weapon->ammos[i];
@@ -359,12 +359,12 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @param[in] container Container in the inventory.
  * @param[in] itemType The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
- * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @return @c Item Pointer to the Item/item that is located at x/y or equals "item".
  * @sa Inventory::getItemAtPos
  */
-invList_t *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
+Item *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
 {
-	invList_t *ic;
+	Item *ic;
 
 	if (inv == nullptr)
 		return nullptr;

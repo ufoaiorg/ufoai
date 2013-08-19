@@ -385,7 +385,7 @@ void G_EventEndRound (void)
 	G_EventEnd();
 }
 
-void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t *invDef, const invList_t *ic)
+void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t *invDef, const Item *ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent.number);
 	gi.WriteByte(item->def()->ammo);

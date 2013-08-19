@@ -40,7 +40,7 @@ static bool nodeAcceptDND = false;		/**< Save if the current target node can acc
 static bool positionAcceptDND = false;	/**< Save if the current position accept the DND object */
 
 static uiDNDType_t objectType;				/**< Save the type of the object we are dragging */
-static item_t draggingItem;					/**< Save the dragging object */
+static Item draggingItem;					/**< Save the dragging object */
 
 static uiNode_t *sourceNode;				/**< Node where come from the DND object */
 static uiNode_t *targetNode;				/**< Current node under the mouse */

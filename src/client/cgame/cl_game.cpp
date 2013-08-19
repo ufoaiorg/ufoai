@@ -387,7 +387,7 @@ static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
 	cls.i.EquipActorRobot(inv, weapon);
 }
 
-static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, invList_t *fItem)
+static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, Item *fItem)
 {
 	return cls.i.removeFromInventory(i, container, fItem);
 }
@@ -402,7 +402,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const invList_t *), void (*ownitems) (const Inventory *))
+static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const Item *), void (*ownitems) (const Inventory *))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
@@ -411,7 +411,7 @@ static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, c
 		 * members carry. */
 		if (LE_IsItem(le)) {
 			if (won) {
-				invList_t *i = le->getFloorContainer();
+				Item *i = le->getFloorContainer();
 				for ( ; i; i = i->getNext()) {
 					collectItem(data, i->def(), 1);
 					if (i->isReloadable() && i->getAmmoLeft() > 0)
@@ -1238,7 +1238,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
 	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		const invList_t *ic;
+		const Item *ic;
 		for (ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
 			GAME_NetSendItem(buf, ic, container, ic->getX(), ic->getY());
 		}

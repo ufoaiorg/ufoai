@@ -182,7 +182,7 @@ public:
 	inline void toggleActive() {
 		active ^= true;
 	}
-	inline invList_t *getContainer (const containerIndex_t idx) const {
+	inline Item *getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer3(idx);
 	}
 	inline void resetContainer (const containerIndex_t idx) {
@@ -204,7 +204,7 @@ public:
 			return chr.inv.getLeftHandContainer();
 		else return nullptr;
 	}
-	inline invList_t *getFloor () const {
+	inline Item *getFloor () const {
 		return chr.inv.getFloorContainer();
 	}
 	inline void setFloor (const Edict *other) {

@@ -152,7 +152,7 @@ static void testShooting (void)
 
 static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container)
 {
-	const invList_t *invlist = ent->getContainer(container);
+	const Item *invlist = ent->getContainer(container);
 	int count = 0;
 	while (invlist != NULL) {
 		count += invlist->getAmount();
@@ -200,7 +200,7 @@ static void testInventoryForDiedAlien (void)
 		edict_t *diedEnt;
 		edict_t *ent;
 		edict_t *floorItems;
-		invList_t *invlist;
+		Item *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
@@ -236,7 +236,7 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
 		count = GAMETEST_GetItemCount(ent, CID_FLOOR);
 		if (count > 0) {
-			invList_t *entryToMove = ent->getFloor();
+			Item *entryToMove = ent->getFloor();
 			int tx, ty;
 			ent->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
 			if (tx != NONE) {
@@ -265,7 +265,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		edict_t *diedEnt2;
 		edict_t *ent;
 		edict_t *floorItems;
-		invList_t *invlist;
+		Item *invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
@@ -316,7 +316,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 
 		count = GAMETEST_GetItemCount(ent, CID_FLOOR);
 		if (count > 0) {
-			invList_t *entryToMove = ent->getFloor();
+			Item *entryToMove = ent->getFloor();
 			int tx, ty;
 			ent->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
 			if (tx != NONE) {

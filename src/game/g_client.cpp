@@ -574,7 +574,7 @@ void G_ClientGetWeaponFromInventory (Edict *ent)
 
 	/* search for weapons and select the one that is available easily */
 	const invDef_t *bestContainer = nullptr;
-	invList_t *theWeapon = nullptr;
+	Item *theWeapon = nullptr;
 	int tu = 100;
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
@@ -691,7 +691,7 @@ int G_ClientAction (Player &player)
 		} else {
 			const invDef_t *fromPtr = INVDEF(from);
 			const invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
+			Item *fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
 			if (fromItem)
 				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
 		}

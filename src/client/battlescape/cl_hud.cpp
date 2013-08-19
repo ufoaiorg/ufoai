@@ -702,7 +702,7 @@ static int HUD_GetMinimumTUsForUsage (const Item *item)
  */
 static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char **reason)
 {
-	const invList_t *invList = le->inv.getContainer2(containerID);
+	const Item *invList = le->inv.getContainer2(containerID);
 
 	/* No weapon in hand. */
 	if (!invList) {
@@ -1365,7 +1365,7 @@ static void HUD_UpdateActorLoad_f (void)
 
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		for (invList_t *invList = cont->_invList, *next; invList; invList = next) {
+		for (Item *invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();
 			const fireDef_t *fireDef = invList->getFiredefs();
 			if (fireDef == nullptr)

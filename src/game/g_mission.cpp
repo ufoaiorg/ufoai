@@ -163,7 +163,7 @@ void G_MissionThink (Edict *self)
 	while (chain) {
 		if (chain->type == ET_MISSION) {
 			if (chain->item) {
-				const invList_t *ic;
+				const Item *ic;
 				G_GetFloorItems(chain);
 				ic = chain->getFloor();
 				if (!ic) {
