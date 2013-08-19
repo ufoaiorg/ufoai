@@ -269,22 +269,24 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	prod->amount = amount;
 
 	tech = PR_GetTech(&prod->data);
-	if (!tech)
+	if (tech == nullptr)
 		return nullptr;
 
-	prod->totalFrames = PR_CalculateTotalFrames(base, data);
+	if (tech->produceTime < 0) {
+		/* Don't try to add an item to the queue which is not producible. */
+		return nullptr;
+	}
 
 	if (PR_IsDisassemblyData(data)) {
 		/* only one item for disassemblies */
 		amount = 1;
-	} else if (tech->produceTime < 0) {
-		/* Don't try to add an item to the queue which is not producible. */
-		return nullptr;
 	}
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
 		return nullptr;
+
+	prod->totalFrames = PR_CalculateTotalFrames(base, data);
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
 
