@@ -764,25 +764,22 @@ static void NAT_NationList_f (void)
  * @note Called from CP_CampaignRun
  * @sa CP_CampaignRun
  * @sa B_CreateEmployee
- * @todo This is very redundant with CP_StatsUpdate_f. Ivestigate and clean up.
+ * @todo This is very redundant with CP_StatsUpdate_f. Investigate and clean up.
  */
 void NAT_HandleBudget (const campaign_t *campaign)
 {
-	int i, j;
 	char message[1024];
 	int cost;
 	int totalIncome = 0;
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
-	base_t *base;
 	const salary_t *salary = &campaign->salaries;
-	const rank_t *rank;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
 	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, true);
 
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
@@ -790,14 +787,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 
 		totalIncome += funding;
 
-		for (j = 0; 0.25 + j < (float) nation->maxScientists * stats->happiness * ccs.curCampaign->employeeRate; j++) {
+		for (int j = 0; 0.25 + j < (float) nation->maxScientists * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST, nation, nullptr);
 			newScientists++;
 		}
 
 		if (stats->happiness > 0) {
-			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
+			for (int j = 0; 0.25 + j < (float) nation->maxSoldiers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER, nation, nullptr);
 				newSoldiers++;
@@ -805,14 +802,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		}
 		/* pilots */
 		if (stats->happiness > 0) {
-			for (j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * ccs.curCampaign->employeeRate; j++) {
+			for (int j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 				/* Create a pilot. */
 				E_CreateEmployee(EMPL_PILOT, nation, nullptr);
 				newPilots++;
 			}
 		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
+		for (int j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness * ccs.curCampaign->employeeRate; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, nullptr);
 			newWorkers++;
@@ -828,12 +825,12 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
-	for (i = 0; i < MAX_EMPL; i++) {
+	for (int i = 0; i < MAX_EMPL; i++) {
 		cost = 0;
 		E_Foreach(i, employee) {
 			if (!employee->isHired())
 				continue;
-			rank = CL_GetRankByIdx(employee->chr.score.rank);
+			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())
 					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->getType());
 		}
@@ -859,7 +856,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		cost = CP_GetSalaryUpKeepBase(salary, base);
 		totalExpenditure += cost;
@@ -893,16 +890,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
  */
 void NAT_BackupMonthlyData (void)
 {
-	int i, nat;
-
 	/**
 	 * Back up nation relationship .
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
-	for (nat = 0; nat < ccs.numNations; nat++) {
+	for (int nat = 0; nat < ccs.numNations; nat++) {
 		nation_t *nation = NAT_GetNationByIDX(nat);
 
-		for (i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
+		for (int i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];
 		}
 	}

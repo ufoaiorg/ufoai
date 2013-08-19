@@ -31,24 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STATS_BUFFER 2048
 /**
  * @brief Shows the current stats from stats_t stats
- * @todo This is very redundant with NAT_HandleBudget Ivestigate and clean up.
+ * @todo This is very redundant with NAT_HandleBudget Investigate and clean up.
  */
 void CP_StatsUpdate_f (void)
 {
-	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
-	int hired[MAX_EMPL];
-	int i, costs = 0, sum = 0, totalfunds = 0;
-	base_t *base;
 	const campaign_t *campaign = ccs.curCampaign;
-	const salary_t *salary = &campaign->salaries;
-	const rank_t *rank;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
-	OBJZERO(hired);
 
-	pos = statsBuffer;
+	char *pos = statsBuffer;
 
 	/* missions */
 	cgi->UI_RegisterText(TEXT_STATS_MISSION, pos);
@@ -70,8 +63,9 @@ void CP_StatsUpdate_f (void)
 
 	/* nations */
 	pos += (strlen(pos) + 1);
+	int totalfunds = 0;
 	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation));
 		totalfunds += NAT_GetFunding(nation, 0);
@@ -79,12 +73,16 @@ void CP_StatsUpdate_f (void)
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\nFunding this month:\t%d"), totalfunds);
 
 	/* costs */
-	for (i = 0; i < MAX_EMPL; i++) {
+	int costs = 0;
+	const salary_t *salary = &campaign->salaries;
+	int hired[MAX_EMPL];
+	OBJZERO(hired);
+	for (int i = 0; i < MAX_EMPL; i++) {
 		E_Foreach(i, employee) {
 			const employeeType_t type = (employeeType_t)i;
 			if (!employee->isHired())
 				continue;
-			rank = CL_GetRankByIdx(employee->chr.score.rank);
+			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);
 			hired[employee->getType()]++;
 		}
@@ -93,7 +91,7 @@ void CP_StatsUpdate_f (void)
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
 	cgi->UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
-	for (i = 0; i < MAX_EMPL; i++) {
+	for (int i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]);
 	}
@@ -102,7 +100,7 @@ void CP_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	cgi->UI_RegisterText(TEXT_STATS_COSTS, pos);
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Employees:\t%i c\n"), costs);
-	sum += costs;
+	int sum = costs;
 
 	costs = 0;
 	AIR_Foreach(aircraft) {
@@ -113,7 +111,7 @@ void CP_StatsUpdate_f (void)
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Aircraft:\t%i c\n"), costs);
 	sum += costs;
 
-	base = nullptr;
+	base_t *base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		costs = CP_GetSalaryUpKeepBase(salary, base);
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Base (%s):\t%i c\n"), base->name, costs);
