@@ -698,3 +698,43 @@ window game_team_save_popup
 		cmd "game_teamcomments;"
 	}
 }
+
+// ==========================
+// GENERATE TEAM POPUP
+// ==========================
+
+window game_team_new_popup
+{
+	{
+		pos			"264 262"
+		size		"360 200"
+		dragbutton	true
+		closebutton	true
+		modal		true
+		background		"ui/popup_alpha_tile"
+		string		"_Generate a team"
+	}
+
+	selectbox team_box
+	{
+		color			"0.6 0.6 0.6 0.3"
+		cvar			*cvar:cl_teamdef
+		dataid			OPTION_TEAMDEFS
+		pos				"50 53"
+		size			"256 34"
+	}
+
+	button button_new
+	{
+		pos			"50 90"
+		size		"256 30"
+		string		"_Generate Team"
+		tooltip		"_Generate a new team with the selected race"
+		onClick		{ cmd "game_autoteam *cvar:cl_equip;ui_pop; ui_push game_team_edit;" }
+		font		"f_menusmall"
+		color		"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string		"_Generate Team"
+		background	"ui/button_green_small"
+	}
+}

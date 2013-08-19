@@ -473,6 +473,21 @@ component cmpTeamPanel extends panel
 		size		"480 550"
 	}
 
+	// ==================
+	// create new team
+	// ==================
+	button button_new
+	{
+		pos	"1 0"
+		size "440 40"
+		onClick	{ cmd "ui_push game_team_new_popup;" }
+		background	"ui/button_green_small"
+		font	"f_menusmall"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Generate New Team"
+	}
+
 	// ================
 	// save team slots
 	// ================
@@ -480,7 +495,7 @@ component cmpTeamPanel extends panel
 	panel slots
 	{
 		{
-			pos		"1 100"
+			pos		"1 50"
 			size	"200 216"
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
@@ -495,7 +510,7 @@ component cmpTeamPanel extends panel
 	}
 	vscrollbar slots_scroll {
 		image		"ui/scrollbar_v_green"
-		pos			"201 100"
+		pos			"201 50"
 		height		"216"
 		hidewhenunused	true
 		onChange {
@@ -529,33 +544,37 @@ component cmpTeamPanel extends panel
 		call *node:this.parent.slots@removeAllChild
 	}
 
-	cmpCurrentLoadedTeamPanel currentLoaded
-	{
-		{
-			pos		"240 100"
-		}
-	}
-
 	// ==================
 	// current team
 	// ==================
 
-	button button_new
+	cmpCurrentLoadedTeamPanel currentLoaded
 	{
-		pos	"0 40"
+		{
+			pos		"240 50"
+		}
+	}
+
+	// =======================
+	// team management buttons
+	// =======================
+
+	button button_download
+	{
+		pos	"0 270"
 		size "200 40"
-		tooltip	"_Generate a new random team"
-		onClick	{ cmd "game_autoteam *cvar:cl_equip;ui_push game_team_edit;" }
+		tooltip	"_Download new teams"
+		onClick	{ cmd "ui_push team_download;" }
 		background	"ui/button_green_small"
 		font	"f_menusmall"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_New"
+		string	"_Download"
 	}
 
 	button button_save
 	{
-		pos	"240 40"
+		pos	"240 270"
 		size "200 40"
 		tooltip	"_Save the current team"
 		onClick	{ cmd "ui_push game_team_save_popup;" }
@@ -563,24 +582,7 @@ component cmpTeamPanel extends panel
 		font	"f_menusmall"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Save"
-	}
-
-	string team_str
-	{
-		string	"_Team:"
-		pos			"10 0"
-		size		"200 20"
-		tooltip		"_Select which side you want to play with."
-	}
-
-	selectbox team_box
-	{
-		pos		"240 0"
-		size	"200 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:cl_teamdef
-		dataid	OPTION_TEAMDEFS
+		string	"_Save Team"
 	}
 }
 
