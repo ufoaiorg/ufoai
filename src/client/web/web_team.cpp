@@ -45,6 +45,8 @@ void WEB_UploadTeam_f (void)
 		return;
 	}
 
+	/** @todo: check that we are authenticated */
+
 	int index = atoi(Cmd_Argv(1));
 	const char *filename;
 	/* we will loop the whole team save list, just because i don't want
