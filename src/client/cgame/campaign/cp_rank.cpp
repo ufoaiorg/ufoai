@@ -33,9 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int CL_GetRankIdx (const char *rankID)
 {
-	int i;
-
-	for (i = 0; i < ccs.numRanks; i++) {
+	for (int i = 0; i < ccs.numRanks; i++) {
 		if (Q_streq(ccs.ranks[i].id, rankID))
 			return i;
 	}
