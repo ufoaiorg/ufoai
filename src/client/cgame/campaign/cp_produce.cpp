@@ -237,8 +237,6 @@ technology_t* PR_GetTech (const productionData_t *data)
  */
 production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed int amount)
 {
-	production_t *prod;
-	const technology_t *tech;
 	production_queue_t *queue = PR_GetProductionForBase(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
@@ -261,26 +259,24 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	}
 
 	/* Initialize */
-	prod = &queue->items[queue->numItems];
+	production_t *prod = &queue->items[queue->numItems];
 	OBJZERO(*prod);
 	/* self-reference. */
 	prod->idx = queue->numItems;
 	prod->data = *data;
 	prod->amount = amount;
 
-	tech = PR_GetTech(&prod->data);
+	const technology_t *tech = PR_GetTech(&prod->data);
 	if (tech == nullptr)
 		return nullptr;
 
-	if (tech->produceTime < 0) {
-		/* Don't try to add an item to the queue which is not producible. */
+	/* Don't try to add an item to the queue which is not producible. */
+	if (tech->produceTime < 0)
 		return nullptr;
-	}
 
-	if (PR_IsDisassemblyData(data)) {
-		/* only one item for disassemblies */
+	/* only one item for disassemblies */
+	if (PR_IsDisassemblyData(data))
 		amount = 1;
-	}
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
