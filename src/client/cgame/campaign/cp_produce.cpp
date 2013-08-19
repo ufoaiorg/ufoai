@@ -246,6 +246,20 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return nullptr;
 
+	/* We cannot queue new aircraft if no free hangar space. */
+	/** @todo move this check out into a new function */
+	if (data->type == PRODUCTION_TYPE_AIRCRAFT) {
+		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			/** @todo move popup into menucode */
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo Command Centre in this base.\n"));
+			return nullptr;
+		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+			/** @todo move popup into menucode */
+			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
+			return nullptr;
+		}
+	}
+
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
 	OBJZERO(*prod);
@@ -273,20 +287,6 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 		return nullptr;
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
-
-	/* We cannot queue new aircraft if no free hangar space. */
-	/** @todo move this check out into a new function */
-	if (data->type == PRODUCTION_TYPE_AIRCRAFT) {
-		if (!B_GetBuildingStatus(base, B_COMMAND)) {
-			/** @todo move popup into menucode */
-			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
-			return nullptr;
-		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			/** @todo move popup into menucode */
-			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
-			return nullptr;
-		}
-	}
 
 	/** @todo remove this and make the ufo const */
 	if (PR_IsDisassembly(prod))
