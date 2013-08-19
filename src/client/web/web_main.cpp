@@ -33,6 +33,13 @@
 
 static cvar_t *web_authurl;
 
+/**
+ * @brief Downloads the given url and notify the callback. The login credentials are automatically added as GET parameters
+ * @param[in] url The url to download
+ * @param[in] callback The callback to given the downloaded data to
+ * @param[in] userdata Userdata that is given to the @c callback
+ * @return @c true if the download was successful, @c false otherwise
+ */
 bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 {
 	char buf[512];
@@ -44,11 +51,25 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 	return HTTP_GetURL(buf, callback, userdata);
 }
 
+/**
+ * @brief Downloads the given url directly into the given file. The login credentials are automatically added as GET parameters
+ * @param[in] url The url to download
+ * @param[in] file The file to write into
+ * @return @c true if the download was successful, @c false otherwise
+ */
 bool WEB_GetToFile (const char *url, FILE* file)
 {
 	return HTTP_GetToFile(url, file);
 }
 
+/**
+ * @brief Uploads a file to the server with the login credentials
+ * @param[in] formName The name of the form to submit with the file upload
+ * @param]in] fileName The filename to upload - this must be a full path, not a virtual filesystem path
+ * @param[in] url The url to open
+ * @param[in] params Additional parameters for the form. The username and password values are automatically
+ * filled in and don't have to be specified here.
+ */
 bool WEB_PutFile (const char *formName, const char *fileName, const char *url, upparam_t *params)
 {
 	upparam_t paramUser;
