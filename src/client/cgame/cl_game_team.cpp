@@ -398,7 +398,7 @@ bool GAME_LoadDefaultTeam (bool force)
 	}
 
 	char filename[MAX_OSPATH];
-	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", cls.teamSaveSlotIndex);
+	Com_sprintf(filename, sizeof(filename), "save/team%02i.mpt", cls.teamSaveSlotIndex);
 	if (GAME_LoadTeam(filename) && !GAME_IsTeamEmpty()) {
 		return true;
 	}
@@ -421,7 +421,7 @@ void GAME_LoadTeam_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	char filename[MAX_OSPATH];
-	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
+	Com_sprintf(filename, sizeof(filename), "save/team%02i.mpt", index);
 	if (GAME_LoadTeam(filename) && !GAME_IsTeamEmpty()) {
 		cls.teamSaveSlotIndex = index;
 	} else {
