@@ -390,19 +390,70 @@ component cmpTeamSlotPanel extends panel
 	}
 }
 
+component currentTeamMember extends panel
+{
+	{
+		size		"260 25"
+	}
+
+	string name
+	{
+		pos			"20 0"
+		color		"0 .78 0 1"
+		size		"260 25"
+		contentalign	ALIGN_CL
+	}
+
+	// TODO: head and skin
+}
+
 component cmpCurrentLoadedTeamPanel extends panel
 {
 	{
+		size	"280 160"
+	}
+
+	panel soldierlist
+	{
+		pos				"0 0"
+		size			"260 160"
+		padding			6
+		layout			LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+		onViewChange
+		{
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar soldierlist_scroll
+	{
+		image		"ui/scrollbar_v_green"
+		pos			"262 0"
+		height		"160"
+		current		0
+		viewsize	4
+		fullsize	25
+		onChange
+		{
+			*node:parent.soldierlist@viewpos = <current>
+		}
 	}
 
 	/**
 	 * @brief Adds a member to the current loaded team list
-	 * @param <1> Name
-	 * @param <2> Head model
-	 * @param <3> Head skin
+	 * @param <1> id
+	 * @param <2> Name
+	 * @param <3> Head model
+	 * @param <4> Head skin
 	 */
 	confunc team_memberadd
 	{
+		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
+		*node:parent.soldierlist.member<1>.name@string = <2>
+		// TODO: head and skin
 	}
 
 	/**
@@ -410,6 +461,7 @@ component cmpCurrentLoadedTeamPanel extends panel
 	 */
 	confunc team_membersclear
 	{
+		call *node:parent.soldierlist@removeAllChild
 	}
 }
 

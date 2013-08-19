@@ -164,19 +164,16 @@ window multiplayer_team extends abstract_multiplayer
 		}
 	}
 
-/*
 	cmpCurrentLoadedTeamPanel currentLoaded
 	{
 		{
-			pos		"482 480"
-			size	"480 350"
+			pos		"482 510"
 		}
 	}
-*/
 
 	button button_download
 	{
-		pos	"482 420"
+		pos	"482 460"
 		size "200 40"
 		tooltip	"_Download pre created teams from the ufoai webserver"
 		onClick	{ cmd "ui_push team_download;" }

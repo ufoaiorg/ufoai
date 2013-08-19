@@ -190,6 +190,7 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t *chr = GAME_GetCharacter(i);
 		GAME_LoadCharacter(n, chr);
+		UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", i, chr->name, chr->head, chr->headSkin);
 		LIST_AddPointer(&chrDisplayList, (void*)chr);
 	}
 
@@ -379,11 +380,6 @@ static bool GAME_LoadTeam (const char *filename)
 			ed->numItems[od->idx] = XML_GetInt(snode, SAVE_TEAM_NUM, 0);
 			ed->numItemsLoose[od->idx] = XML_GetInt(snode, SAVE_TEAM_NUMLOOSE, 0);
 		}
-	}
-
-	UI_ExecuteConfunc("team_membersclear");
-	LIST_Foreach(chrDisplayList, character_t, chr) {
-		UI_ExecuteConfunc("team_memberadd \"%s\" \"%s\" %i", chr->name, chr->head, chr->headSkin);
 	}
 
 	Com_Printf("File '%s' loaded.\n", filename);
