@@ -164,13 +164,6 @@ window multiplayer_team extends abstract_multiplayer
 		}
 	}
 
-	cmpCurrentLoadedTeamPanel currentLoaded
-	{
-		{
-			pos		"482 510"
-		}
-	}
-
 	button button_download
 	{
 		pos	"482 460"

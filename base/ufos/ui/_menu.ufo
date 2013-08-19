@@ -410,13 +410,13 @@ component currentTeamMember extends panel
 component cmpCurrentLoadedTeamPanel extends panel
 {
 	{
-		size	"280 160"
+		size	"220 216"
 	}
 
 	panel soldierlist
 	{
 		pos				"0 0"
-		size			"260 160"
+		size			"180 216"
 		padding			6
 		layout			LAYOUT_TOP_DOWN_FLOW
 		wheelscrollable	true
@@ -431,11 +431,12 @@ component cmpCurrentLoadedTeamPanel extends panel
 	vscrollbar soldierlist_scroll
 	{
 		image		"ui/scrollbar_v_green"
-		pos			"262 0"
-		height		"160"
+		pos			"200 0"
+		height		"216"
 		current		0
 		viewsize	4
 		fullsize	25
+		hidewhenunused	true
 		onChange
 		{
 			*node:parent.soldierlist@viewpos = <current>
@@ -469,36 +470,37 @@ component cmpTeamPanel extends panel
 {
 	{
 		pos			"0 50"
-		size		"420 550"
+		size		"480 550"
 	}
 
 	// ================
 	// save team slots
 	// ================
 
-	panel left
+	panel slots
 	{
 		{
 			pos		"1 100"
 			size	"200 216"
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
+			wheelscrollable	true
+
+			onViewChange {
+				*node:parent.slots_scroll@fullsize = <fullsize>
+				*node:parent.slots_scroll@current = <viewpos>
+				*node:parent.slots_scroll@viewsize = <viewsize>
+			}
 		}
 	}
-
-	panel right
-	{
-		{
-			pos		"240 100"
-			size	"200 216"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
+	vscrollbar slots_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"201 100"
+		height		"216"
+		hidewhenunused	true
+		onChange {
+			*node:parent.slots@viewpos = <current>
 		}
-	}
-
-	data side
-	{
-		string "left"
 	}
 
 	/**
@@ -511,26 +513,27 @@ component cmpTeamPanel extends panel
 	 */
 	confunc teamsaveslotadd
 	{
-		call *node:this.parent.<node:this.parent.side@string>@createChild("slot<1>", "cmpTeamSlotPanel")
-		*node:this.parent.<node:this.parent.side@string>.slot<1>.filename@string = "<2>"
-		*node:this.parent.<node:this.parent.side@string>.slot<1>.index@integer = <1>
-		*node:this.parent.<node:this.parent.side@string>.slot<1>.button@string = "<3> (<4>)"
-		*node:this.parent.<node:this.parent.side@string>.slot<1>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
-		*node:this.parent.<node:this.parent.side@string>.slot<1>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
+		call *node:this.parent.slots@createChild("slot<1>", "cmpTeamSlotPanel")
+		*node:this.parent.slots.slot<1>.filename@string = "<2>"
+		*node:this.parent.slots.slot<1>.index@integer = <1>
+		*node:this.parent.slots.slot<1>.button@string = "<3> (<4>)"
+		*node:this.parent.slots.slot<1>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
+		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
 		if (<5> == 0) {
-			*node:this.parent.<node:this.parent.side@string>.slot<1>.upload@invis = true
-		}
-		if (<node:this.parent.side@string> eq "left") {
-			*node:this.parent.side@string = "right"
-		} else {
-			*node:this.parent.side@string = "left"
+			*node:this.parent.slots.slot<1>.upload@invis = true
 		}
 	}
 
 	confunc teamsaveslotsclear
 	{
-		call *node:this.parent.left@removeAllChild
-		call *node:this.parent.right@removeAllChild
+		call *node:this.parent.slots@removeAllChild
+	}
+
+	cmpCurrentLoadedTeamPanel currentLoaded
+	{
+		{
+			pos		"240 100"
+		}
 	}
 
 	// ==================
