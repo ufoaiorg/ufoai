@@ -7,9 +7,8 @@ if (DEBUG) {
 	error_reporting(0);
 }
 
-#const TEAMDIR = '/home/mgerhardy/.ufoai/2.5-dev/base/save/';
-#const TEAMDIR = '/home/users/mattn/htdocs/ufoai/teams/';
-const TEAMDIR = '/var/www/teams/';
+const TEAMDIR = '/home/users/mattn/htdocs/ufoai/teams/';
+#const TEAMDIR = '/var/www/teams/';
 const FORMNAME = "team";
 const FILEEXT = "mpt";
 # 1MB
