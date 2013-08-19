@@ -36,8 +36,12 @@ static cvar_t *web_authurl;
 bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 {
 	char buf[512];
-	Com_sprintf(buf, sizeof(buf), "user=%s&password=%s", web_username->string, web_password->string);
-	return HTTP_GetURL(url, callback, userdata, buf);
+	char passwordEncoded[MAX_VAR];
+	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
+	char usernameEncoded[MAX_VAR];
+	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
+	Com_sprintf(buf, sizeof(buf), "%s?user=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	return HTTP_GetURL(buf, callback, userdata);
 }
 
 bool WEB_GetToFile (const char *url, FILE* file)
