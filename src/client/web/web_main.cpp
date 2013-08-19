@@ -49,8 +49,25 @@ bool WEB_GetToFile (const char *url, FILE* file)
 	return HTTP_GetToFile(url, file);
 }
 
-bool WEB_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
+bool WEB_PutFile (const char *formName, const char *fileName, const char *url, upparam_t *params)
 {
+	upparam_t paramUser;
+	upparam_t paramPassword;
+	upparam_t paramRequest;
+	paramUser.name = "username";
+	paramUser.value = web_username->string;
+	paramUser.next = &paramPassword;
+	paramPassword.name = "password";
+	paramPassword.value = web_password->string;
+	paramPassword.next = &paramRequest;
+	paramRequest.name = "request";
+	paramRequest.value = "user_authentication";
+	paramRequest.next = nullptr;
+	if (params != nullptr) {
+		params->next = &paramUser;
+	} else {
+		params = &paramUser;
+	}
 	return HTTP_PutFile(formName, fileName, url, params);
 }
 

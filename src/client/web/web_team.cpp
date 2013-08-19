@@ -61,20 +61,7 @@ void WEB_UploadTeam_f (void)
 			break;
 		}
 
-		upparam_t paramUser;
-		upparam_t paramPassword;
-		upparam_t paramRequest;
-		paramUser.name = "username";
-		paramUser.value = web_username->string;
-		paramUser.next = &paramPassword;
-		paramPassword.name = "password";
-		paramPassword.value = web_password->string;
-		paramPassword.next = &paramRequest;
-		paramRequest.name = "request";
-		paramRequest.value = "user_authentication";
-		paramRequest.next = nullptr;
-
-		if (WEB_PutFile("team", fullPath, web_teamuploadurl->string, &paramUser))
+		if (WEB_PutFile("team", fullPath, web_teamuploadurl->string))
 			Com_Printf("uploaded the team '%s'\n", filename);
 		else
 			Com_Printf("failed to upload the team from file '%s'\n", filename);
