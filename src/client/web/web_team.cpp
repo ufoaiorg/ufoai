@@ -96,7 +96,8 @@ void WEB_DownloadTeam_f (void)
 	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), url, sizeof(url)))
 		return;
 
-	if (!WEB_GetToFile(url, f.f))
+	/* no login is needed here */
+	if (!HTTP_GetToFile(url, f.f))
 		return;
 
 	if (Com_CheckDuplicateFile(filename, "save/*.mpt")) {
