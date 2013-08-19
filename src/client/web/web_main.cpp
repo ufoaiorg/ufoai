@@ -118,9 +118,18 @@ static void WEB_AuthResponse (const char *response, void *userdata)
 	Cvar_Set("web_password", "");
 }
 
+/**
+ * @brief Performs a web auth request
+ * @param[in] username The (unencoded) username
+ * @param[in] password The (ununcoded) password
+ * @note the cvars @c web_username and @c web_password are going to become overridden here.
+ * If the auth failed, the cvar @c web_password is set to an empty string again.
+ * @return @c true if the auth was successful, @c false otherwise.
+ */
 bool WEB_Auth (const char *username, const char *password)
 {
 	const char *md5sum = Com_MD5Buffer((const byte*)password, strlen(password));
+	Cvar_Set("web_username", username);
 	Cvar_Set("web_password", md5sum);
 	if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
 		Cvar_Set("web_password", "");
