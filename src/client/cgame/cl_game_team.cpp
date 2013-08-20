@@ -393,7 +393,7 @@ static bool GAME_LoadTeam (const char *filename)
  * @param[in] filenameLength The length of the @c filename buffer.
  * @return @c true if the filename for the given index was found, @c false otherwise (e.g. invalid index)
  */
-static bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLength)
+bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLength)
 {
 	const char *save;
 	/* we will loop the whole team save list, just because i don't want

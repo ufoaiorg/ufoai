@@ -1,5 +1,5 @@
 <?php
-include "teamconfig.php";
+include "internal/teamconfig.php";
 
 // get all text files with a .mpt extension.
 $dir = getDir() . '*.' . FILEEXT;

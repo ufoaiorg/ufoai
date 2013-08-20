@@ -47,7 +47,7 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
 	char usernameEncoded[MAX_VAR];
 	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
-	Com_sprintf(buf, sizeof(buf), "%s?request=user_authentication&username=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	Com_sprintf(buf, sizeof(buf), "%s?username=%s&password=%s", url, usernameEncoded, passwordEncoded);
 	return HTTP_GetURL(buf, callback, userdata);
 }
 
@@ -150,6 +150,15 @@ static void WEB_Auth_f (void)
 	} else {
 		UI_ExecuteConfunc("web_authfailed");
 	}
+}
+
+bool WEB_CheckAuth (void)
+{
+	if (Q_strnull(web_password->string)) {
+		UI_PushWindow("webauth");
+		return false;
+	}
+	return true;
 }
 
 void WEB_InitStartup (void)

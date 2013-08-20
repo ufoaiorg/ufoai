@@ -1,5 +1,6 @@
 <?php
-include "teamconfig.php";
+include "internal/teamconfig.php";
+include "internal/auth.php";
 
 function move($tmpfile) {
 	$id = getFreeId();
@@ -42,6 +43,9 @@ function getFreeId() {
 }
 
 function main() {
+	if (false === auth()) {
+		error("Not logged in");
+	}
 	$f = $_FILES[FORMNAME];
 	if (!isset($f)) {
 		error("No file attached");

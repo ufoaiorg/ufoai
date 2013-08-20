@@ -45,6 +45,9 @@ cvar_t *web_teamlisturl;
  */
 void WEB_UploadTeam_f (void)
 {
+	if (!WEB_CheckAuth())
+		return;
+
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
 		return;
@@ -54,28 +57,22 @@ void WEB_UploadTeam_f (void)
 	if (index < 0)
 		return;
 
-	const char *filename;
-	/* we will loop the whole team save list, just because i don't want
-	 * to specify the filename in the script api of this command. Otherwise
-	 * one could upload everything with this command */
-	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
-		if (index-- != 0)
-			continue;
+	char filename[MAX_OSPATH];
+	if (!GAME_GetTeamFileName(index, filename, sizeof(filename)))
+		return;
 
-		const char *fullPath = va("%s/save/%s", FS_Gamedir(), filename);
-		if (!FS_FileExists("%s", fullPath)) {
-			/* we silently ignore this, because this file is not in the users save path,
-			 * but part of the game data. Don't upload this. */
-			break;
-		}
-
-		if (WEB_PutFile("team", fullPath, web_teamuploadurl->string))
-			Com_Printf("uploaded the team '%s'\n", filename);
-		else
-			Com_Printf("failed to upload the team from file '%s'\n", filename);
-		break;
+	const char *fullPath = va("%s/save/%s", FS_Gamedir(), filename);
+	/* we ignore this, because this file is not in the users save path,
+	 * but part of the game data. Don't upload this. */
+	if (!FS_FileExists("%s", fullPath)) {
+		Com_Printf("no user data: '%s'\n", fullPath);
+		return;
 	}
-	FS_NextFileFromFileList(nullptr);
+
+	if (WEB_PutFile("team", fullPath, web_teamuploadurl->string))
+		Com_Printf("uploaded the team '%s'\n", filename);
+	else
+		Com_Printf("failed to upload the team from file '%s'\n", filename);
 }
 
 /**
