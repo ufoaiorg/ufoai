@@ -64,7 +64,6 @@ typedef struct production_s
 	int totalFrames;	/**< total number of frames needed to finish the production (it can change with worker count and so) */
 	int frame;			/**< the actual frame counter */
 	signed int amount;	/**< How much are we producing. */
-	bool spaceMessage;	/**< Used in No Free Space message adding. */
 	bool creditMessage;	/**< Used in No Credits message adding. */
 } production_t;
 
@@ -89,7 +88,6 @@ typedef struct production_s
 #define PRODUCE_DIVISOR 1
 
 #define PR_GetPrice(item)			((item)->productionCost * PRODUCE_FACTOR / PRODUCE_DIVISOR)
-#define PR_HasInsufficientCredits(item)	(PR_GetPrice(item) > ccs.credits)
 
 /**
  * @brief A production queue. Lists all items to be produced.

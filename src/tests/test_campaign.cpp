@@ -632,8 +632,6 @@ static void testProductionAircraft (void)
 	const aircraft_t *aircraft;
 	int old;
 	int i, n;
-	const building_t *buildingTemplate;
-	building_t *building;
 	productionData_t data;
 	production_t *prod;
 
@@ -646,31 +644,14 @@ static void testProductionAircraft (void)
 	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
 	CU_ASSERT_TRUE(PR_ProductionAllowed(base));
 
-	aircraft = AIR_GetAircraft("craft_drop_firebird");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
-
-	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
-	old = CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL);
-	/* not enough space in hangars */
-	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
-
-	buildingTemplate = B_GetBuildingTemplate("building_intercept");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
-	building = B_SetBuildingByClick(base, buildingTemplate, 1, 1);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(building);
-	/* hangar is not yet done */
-	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
-
-	/** @todo make this a function once base stuff is refactored */
-	building->buildingStatus = B_STATUS_WORKING;
-	B_UpdateBaseCapacities(B_GetCapacityFromBuildingType(building->buildingType), base);
-
+	/* Check for production requirements */
 	aircraft = AIR_GetAircraft("craft_inter_stingray");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
 	/* no antimatter */
 	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
 
+	old = CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL);
 	aircraft = AIR_GetAircraft("craft_inter_stiletto");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);

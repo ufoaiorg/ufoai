@@ -259,20 +259,6 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return nullptr;
 
-	/* We cannot queue new aircraft if no free hangar space. */
-	/** @todo move this check out into a new function */
-	if (data->type == PRODUCTION_TYPE_AIRCRAFT) {
-		if (!B_GetBuildingStatus(base, B_COMMAND)) {
-			/** @todo move popup into menucode */
-			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo Command Centre in this base.\n"));
-			return nullptr;
-		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			/** @todo move popup into menucode */
-			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
-			return nullptr;
-		}
-	}
-
 	/* Initialize */
 	production_t *prod = &queue->items[queue->numItems];
 	OBJZERO(*prod);
@@ -285,13 +271,13 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	if (tech == nullptr)
 		return nullptr;
 
-	/* Don't try to add an item to the queue which is not producible. */
-	if (tech->produceTime < 0)
-		return nullptr;
 
 	/* only one item for disassemblies */
 	if (PR_IsDisassemblyData(data))
 		amount = 1;
+	else if (tech->produceTime < 0)
+		/* Don't try to add an item to the queue which is not producible. */
+		return nullptr;
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
@@ -415,43 +401,6 @@ static void PR_ProductionRollBottom (base_t *base)
 }
 
 /**
- * @brief Disassembles item, adds components to base storage and calculates all components size.
- * @param[in] base Pointer to base where the disassembling is being made.
- * @param[in] comp Pointer to components definition.
- * @param[in] condition condition of the item/UFO being disassembled, objects gathered from disassembly decreased to that factor
- * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
- * @return Size of all components in this disassembling.
- */
-static int PR_DisassembleItem (base_t *base, const components_t *comp, float condition, bool calculate)
-{
-	int size = 0;
-
-	for (int i = 0; i < comp->numItemtypes; i++) {
-		const objDef_t *compOd = comp->items[i];
-		const int amount = (condition < 1 && comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? comp->itemAmount2[i] : round(comp->itemAmount[i] * condition);
-
-		if (amount <= 0)
-			continue;
-
-		assert(compOd);
-		size += compOd->size * amount;
-		/* Add to base storage only if this is real disassembling, not calculation of size. */
-		if (calculate)
-			continue;
-
-		if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
-			B_ManageAntimatter(base, amount, true);
-		} else {
-			technology_t *tech = RS_GetTechForItem(compOd);
-			B_AddToStorage(base, compOd, amount);
-			RS_MarkCollected(tech);
-		}
-		Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
-	}
-	return size;
-}
-
-/**
  * @brief Checks whether production can continue
  * @param base The base the production is running in
  * @param prod The production
@@ -459,73 +408,38 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
  */
 static bool PR_CheckFrame (base_t *base, production_t *prod)
 {
-	bool state = true;
+	int price = 0;
 
 	if (PR_IsItem(prod)) {
 		const objDef_t *od = prod->data.data.item;
-		/* Not enough money to produce more items in this base. */
-		if (PR_HasInsufficientCredits(od)) {
-			if (!prod->creditMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->creditMessage = true;
-			}
-			state = false;
-		}
-		/* Not enough free space in base storage for this item. */
-		else if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size) {
-			if (!prod->spaceMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = true;
-			}
-			state = false;
-		}
+		price = PR_GetPrice(od);
 	} else if (PR_IsAircraft(prod)) {
 		const aircraft_t *aircraft = prod->data.data.aircraft;
-		/* Not enough money to produce more items in this base. */
-		if (PR_HasInsufficientCredits(aircraft)) {
-			if (!prod->creditMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->creditMessage = true;
-			}
-			state = false;
-		}
-	} else if (PR_IsDisassembly(prod)) {
-		const storedUFO_t *ufo = prod->data.data.ufo;
-
-		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < PR_DisassembleItem(base, ufo->comp, ufo->condition, true)) {
-			if (!prod->spaceMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = true;
-			}
-			state = false;
-		}
+		price = PR_GetPrice(aircraft);
 	}
 
-	if (!state)
-		PR_ProductionRollBottom(base);
+	/* Not enough money */
+	if (price > 0 && price > ccs.credits) {
+		if (!prod->creditMessage) {
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
+			MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
+			prod->creditMessage = true;
+		}
 
-	return state;
+		PR_ProductionRollBottom(base);
+		return false;
+	}
+
+	return true;
 }
 
 /**
- * @brief Runs the production of an item or an aircraft
- * @sa PR_DisassemblingFrame
- * @sa PR_ProductionRun
+ * @brief Run actions on finishing production of one item/aircraft/UGV..
  * @param base The base to produce in
  * @param prod The production that is running
  */
-static void PR_ProductionFrame (base_t* base, production_t *prod)
+static void PR_FinishProduction (base_t* base, production_t *prod)
 {
-	if (!PR_IsProduction(prod))
-		return;
-
-	if (!PR_IsReady(prod))
-		return;
-
 	const char *name = PR_GetName(&prod->data);
 	technology_t *tech = PR_GetTech(&prod->data);
 
@@ -552,22 +466,33 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 }
 
 /**
- * @brief Runs the disassembling of a ufo
- * @sa PR_ProductionFrame
- * @sa PR_ProductionRun
+ * @brief Run actions on finishing disassembling of a ufo
  * @param base The base to produce in
  * @param prod The production that is running
  */
-static void PR_DisassemblingFrame (base_t* base, production_t* prod)
+static void PR_FinishDisassembly (base_t* base, production_t* prod)
 {
-	if (!PR_IsDisassembly(prod))
-		return;
-
-	if (!PR_IsReady(prod))
-		return;
-
 	storedUFO_t *ufo = prod->data.data.ufo;
-	PR_DisassembleItem(base, ufo->comp, ufo->condition, false);
+
+	assert(ufo);
+	for (int i = 0; i < ufo->comp->numItemtypes; i++) {
+		const objDef_t *compOd = ufo->comp->items[i];
+		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? 
+			ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
+
+		assert(compOd);
+
+		if (amount <= 0)
+			continue;
+
+		if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
+			B_ManageAntimatter(base, amount, true);
+		} else {
+			technology_t *tech = RS_GetTechForItem(compOd);
+			B_AddToStorage(base, compOd, amount);
+			RS_MarkCollected(tech);
+		}
+	}
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
 			UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
@@ -674,8 +599,14 @@ void PR_ProductionRun (void)
 
 		prod->frame++;
 
-		PR_ProductionFrame(base, prod);
-		PR_DisassemblingFrame(base, prod);
+		/* If Production/Disassembly is not finished yet, we're done, check next base */
+		if (!PR_IsReady(prod))
+			continue;
+
+		if (PR_IsProduction(prod))
+			PR_FinishProduction(base, prod);
+		else if (PR_IsDisassembly(prod))
+			PR_FinishDisassembly(base, prod);
 	}
 }
 
