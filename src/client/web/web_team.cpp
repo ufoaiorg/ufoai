@@ -51,6 +51,9 @@ void WEB_UploadTeam_f (void)
 	}
 
 	int index = atoi(Cmd_Argv(1));
+	if (index < 0)
+		return;
+
 	const char *filename;
 	/* we will loop the whole team save list, just because i don't want
 	 * to specify the filename in the script api of this command. Otherwise

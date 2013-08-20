@@ -384,6 +384,35 @@ static bool GAME_LoadTeam (const char *filename)
 	return true;
 }
 
+/**
+ * @brief Get the filename for the xth team in the file system
+ * @note We are only dealing with indices to identify a team, thus we have to loop
+ * the team list each time we need a filename of a team.
+ * @param[in] index The index of the team we are looking for in the filesystem
+ * @param[out] filename The filename of the team. This value is only set or valid if this function returned @c true.
+ * @param[in] filenameLength The length of the @c filename buffer.
+ * @return @c true if the filename for the given index was found, @c false otherwise (e.g. invalid index)
+ */
+static bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLength)
+{
+	const char *save;
+	/* we will loop the whole team save list, just because i don't want
+	 * to specify the filename in the script api of this command. Otherwise
+	 * one could upload everything with this command */
+	while ((save = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
+		if (index == 0)
+			break;
+		index--;
+	}
+	FS_NextFileFromFileList(nullptr);
+	if (index > 0)
+		return false;
+	if (save == nullptr)
+		return false;
+	Com_sprintf(filename, filenameLength, "save/%s", save);
+	return true;
+}
+
 bool GAME_LoadDefaultTeam (bool force)
 {
 	if (cls.teamSaveSlotIndex == NO_TEAM_SLOT_LOADED) {
@@ -393,7 +422,8 @@ bool GAME_LoadDefaultTeam (bool force)
 	}
 
 	char filename[MAX_OSPATH];
-	Com_sprintf(filename, sizeof(filename), "save/team%02i.mpt", cls.teamSaveSlotIndex);
+	if (!GAME_GetTeamFileName(cls.teamSaveSlotIndex, filename, sizeof(filename)))
+		return false;
 	if (GAME_LoadTeam(filename) && !GAME_IsTeamEmpty()) {
 		return true;
 	}
@@ -414,9 +444,11 @@ void GAME_LoadTeam_f (void)
 
 	const int index = atoi(Cmd_Argv(1));
 
-	/* first try to load the xml file, if this does not succeed, try the old file */
 	char filename[MAX_OSPATH];
-	Com_sprintf(filename, sizeof(filename), "save/team%02i.mpt", index);
+	if (!GAME_GetTeamFileName(index, filename, sizeof(filename))) {
+		Com_Printf("Could not get the file for the index: %i\n", index);
+		return;
+	}
 	if (GAME_LoadTeam(filename) && !GAME_IsTeamEmpty()) {
 		cls.teamSaveSlotIndex = index;
 	} else {
