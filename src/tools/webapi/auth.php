@@ -26,7 +26,7 @@
 // Path to the SMF Settings.php file
 // The api will attempt to find this itself, but it's search can take a while,
 // so it's faster to set this here. See smf_2_api.php:574
-define('SMF_SETTINGS', '');
+define('SMF_SETTINGS', '/home/users/mattn/htdocs/ufoai/forum/Settings.php');
 
 // Path to the api
 require_once('smf_2_api.php');
@@ -41,7 +41,7 @@ if (isset($_REQUEST['request']) && $_REQUEST['request'] == 'user_authentication'
 
 	// Exit early if we're missing data
 	if ((!isset($_REQUEST['username']) || !trim($_REQUEST['username'])) ||
-			(!isset($_REQUEST['password']) || !trim($_REQUEST['password'])) {
+			(!isset($_REQUEST['password']) || !trim($_REQUEST['password']))) {
 		echo '0';
 		exit();
 
