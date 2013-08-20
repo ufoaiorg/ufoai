@@ -637,6 +637,23 @@ static void testComFilePath (void)
 	CU_ASSERT_STRING_EQUAL(buf, "");
 }
 
+static void testMD5File (void)
+{
+	const char *md5 = Com_MD5File("media/DejaVuSans.ttf");
+	const char *expected = "c4adcbdd6ec636e0b19cd6aabe85e8fb";
+	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
+	CU_ASSERT_STRING_EQUAL(md5, expected);
+}
+
+static void testMD5Buffer (void)
+{
+	const char *in = "Test";
+	const char *expected = "0cbc6611f5540bd0809a388dc95a615b";
+	const char *md5 = Com_MD5Buffer((const byte*)in, strlen(in));
+	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
+	CU_ASSERT_STRING_EQUAL(md5, expected);
+}
+
 /**
  * @brief The string 'a' and 'c' evaluates to true - everything else to false
  */
@@ -673,6 +690,12 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(GenericSuite, testMD5File) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testMD5Buffer) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(GenericSuite, testStringHunks) == NULL)
 		return CU_get_error();
 

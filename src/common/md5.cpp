@@ -293,7 +293,7 @@ const char *Com_MD5File (const char *fn, int length)
 	static char final[33];
 	final[0] = '\0';
 	for (int i = 0; i < 16; i++)
-		Q_strcat(final, sizeof(final), "%02X", digest[i]);
+		Q_strcat(final, sizeof(final), "%02x", digest[i]);
 
 	return final;
 }
@@ -311,7 +311,7 @@ const char *Com_MD5Buffer (const byte *buf, size_t len)
 
 	MD5_CTX md5;
 	MD5Init(&md5);
-	MD5Update(&md5, (const unsigned char *) buf, len);
+	MD5Update(&md5, buf, len);
 
 	unsigned char digest[16] = { "" };
 	MD5Final(&md5, digest);
@@ -319,7 +319,7 @@ const char *Com_MD5Buffer (const byte *buf, size_t len)
 	static char final[33];
 	final[0] = '\0';
 	for (int i = 0; i < 16; i++)
-		Q_strcat(final, sizeof(final), "%02X", digest[i]);
+		Q_strcat(final, sizeof(final), "%02x", digest[i]);
 
 	return final;
 }
