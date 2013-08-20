@@ -26,6 +26,7 @@ installer: wininstaller linuxinstaller mojoinstaller
 
 mappack: maps-sync
 	$(Q)git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-mappack/ HEAD:base/maps | bzip2 -9 > ufoai-$(UFOAI_VERSION)-mappack.tar.bz2
+	$(Q)find base/maps -name '*.bsp' -print0 | xargs -0 md5sum > ufoai-$(UFOAI_VERSION)-mappack.md5
 
 dataarchive: pk3
 	$(Q)tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar $(PAK_PATHS)
