@@ -1106,6 +1106,16 @@ int FS_BuildFileList (const char *fileList)
 	return LIST_Count(block->files);
 }
 
+/**
+ * @brief Returns the next file that is found in the virtual filesystem identified by the given file pattern
+ * @param[in] files The file pattern to search for. This can e.g. be "*.ogg" or "**.ufo" to also include
+ * subdirectories.
+ * @return The next found filename or @c NULL if the end of the list was reached.
+ * @note Keep in mind that the list is cached and also the position in the list is not reset until you explicitly
+ * want this by calling this function with a @c NULL parameter for the pattern.
+ * @note If you have to rebuild a file list, use @c FS_BuildFileList manually. Following calls will then use the new
+ * file list.
+ */
 const char *FS_NextFileFromFileList (const char *files)
 {
 	static linkedList_t *listEntry = nullptr;
