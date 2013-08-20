@@ -55,8 +55,6 @@ static void testLoadAllAnimationFiles (void)
 	const char *filename;
 	mAliasModel_t mod;
 
-	FS_BuildFileList(pattern);
-
 	OBJZERO(mod);
 	/* set a very high value to work around the error check in the loading function */
 	mod.num_frames = 100000;

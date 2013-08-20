@@ -125,11 +125,6 @@ void GAME_TeamSlotComments_f (void)
 {
 	UI_ExecuteConfunc("teamsaveslotsclear");
 
-	const int n = FS_BuildFileList("save/*.mpt");
-	Com_Printf("%i teams found\n", n);
-	if (!n)
-		return;
-
 	const char *filename;
 	int i = 0;
 	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {

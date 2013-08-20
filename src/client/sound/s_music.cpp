@@ -298,11 +298,8 @@ static void M_Change_f (void)
 
 static int M_CompleteMusic (const char *partial, const char **match)
 {
-	char const* const pattern = "music/*.ogg";
-	FS_BuildFileList(pattern);
-
 	int n = 0;
-	while (char const* const filename = FS_NextFileFromFileList(pattern)) {
+	while (char const* const filename = FS_NextFileFromFileList("music/*.ogg")) {
 		if (Cmd_GenericCompleteFunction(filename, partial, match)) {
 			Com_Printf("%s\n", filename);
 			++n;

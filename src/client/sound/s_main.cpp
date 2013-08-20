@@ -159,15 +159,14 @@ static int S_CompleteSounds (const char *partial, const char **match)
 	for (char const* const* extension = soundExtensions; *extension; ++extension) {
 		char pattern[MAX_OSPATH];
 		Com_sprintf(pattern, sizeof(pattern), "sound/**.%s", *extension);
-		FS_BuildFileList(pattern);
 		while (char const* filename = FS_NextFileFromFileList(pattern)) {
-			char const* const fileWithPath = filename + 6;
+			char const* const fileWithPath = filename + strlen("sound/");
 			if (Cmd_GenericCompleteFunction(fileWithPath, partial, match)) {
 				Com_Printf("%s\n", fileWithPath);
 				++n;
 			}
 		}
-		FS_NextFileFromFileList(0);
+		FS_NextFileFromFileList(nullptr);
 	}
 	return n;
 }

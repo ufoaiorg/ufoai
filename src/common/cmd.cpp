@@ -1027,10 +1027,7 @@ static void Cmd_List_f (void)
 static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 {
 	int n = 0;
-
-	char const* const pattern = "*.cfg";
-	FS_BuildFileList(pattern);
-	while (char const* filename = FS_NextFileFromFileList(pattern)) {
+	while (char const* filename = FS_NextFileFromFileList("*.cfg")) {
 		if (Cmd_GenericCompleteFunction(filename, partial, match)) {
 			Com_Printf("%s\n", filename);
 			++n;
