@@ -678,9 +678,6 @@ bool Com_CheckDuplicateFile (const char *file, const char *wildcard)
 	const char *md5 = Com_MD5File(file);
 	const char *filename;
 	bool match = false;
-	/* we will loop the whole team save list, just because i don't want
-	 * to specify the filename in the script api of this command. Otherwise
-	 * one could upload everything with this command */
 	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
 		const char *md5Other = Com_MD5File(filename);
 		if (Q_streq(md5, md5Other)) {

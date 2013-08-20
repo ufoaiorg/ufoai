@@ -308,7 +308,7 @@ static int M_CompleteMusic (const char *partial, const char **match)
 			++n;
 		}
 	}
-	FS_NextFileFromFileList(0);
+	FS_NextFileFromFileList(nullptr);
 	return n;
 }
 
