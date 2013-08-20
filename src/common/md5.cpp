@@ -21,6 +21,7 @@
  */
 
 #include "common.h"
+#include <SDL_endian.h>
 
 typedef struct MD5Context {
 	uint32_t buf[4];
@@ -28,32 +29,27 @@ typedef struct MD5Context {
 	unsigned char in[64];
 } MD5_CTX;
 
-#ifndef BIG_ENDIAN
-	#define byteReverse(buf, len)	/* Nothing */
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#define byteReverse(buf, len)  {} /* Nothing */
 #else
-	static void byteReverse(unsigned char *buf, unsigned longs);
-
-	/**
-	 * @note: this code is harmless on little-endian machines.
-	 */
-	static void byteReverse(unsigned char *buf, unsigned longs)
-	{
-		uint32_t t;
-		do {
-			t = (uint32_t)
-			((unsigned) buf[3] << 8 | buf[2]) << 16 |
-			((unsigned) buf[1] << 8 | buf[0]);
-			*(uint32_t *) buf = t;
-			buf += 4;
-		} while (--longs);
-	}
-#endif /* BIG_ENDIAN */
+/**
+ * @note: this code is harmless on little-endian machines.
+ */
+static void byteReverse (unsigned char *buf, unsigned longs)
+{
+	do {
+		const uint32_t t = SDL_SwapLE32(*(uint32_t*)buf);
+		*(uint32_t *) buf = t;
+		buf += 4;
+	} while (--longs);
+}
+#endif
 
 /**
  * @brief Start MD5 accumulation.  Set bit count to 0 and buffer to mysterious
  * initialization constants.
  */
-static void MD5Init(struct MD5Context *ctx)
+static void MD5Init (struct MD5Context *ctx)
 {
 	ctx->buf[0] = 0x67452301;
 	ctx->buf[1] = 0xefcdab89;
@@ -80,7 +76,7 @@ static void MD5Init(struct MD5Context *ctx)
  * reflect the addition of 16 longwords of new data.  MD5Update blocks
  * the data and converts bytes into longwords for this routine.
  */
-static void MD5Transform(uint32_t buf[4], uint32_t const in[16])
+static void MD5Transform (uint32_t buf[4], uint32_t const in[16])
 {
 	register uint32_t a, b, c, d;
 
@@ -167,7 +163,7 @@ static void MD5Transform(uint32_t buf[4], uint32_t const in[16])
  * @brief Update context to reflect the concatenation of another buffer full
  * of bytes.
  */
-static void MD5Update(struct MD5Context *ctx, unsigned char const *buf, unsigned len)
+static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigned len)
 {
 	uint32_t t;
 
@@ -175,10 +171,10 @@ static void MD5Update(struct MD5Context *ctx, unsigned char const *buf, unsigned
 
 	t = ctx->bits[0];
 	if ((ctx->bits[0] = t + ((uint32_t) len << 3)) < t)
-		ctx->bits[1]++;		/* Carry from low to high */
+		ctx->bits[1]++; /* Carry from low to high */
 	ctx->bits[1] += len >> 29;
 
-	t = (t >> 3) & 0x3f;	/* Bytes already in shsInfo->data */
+	t = (t >> 3) & 0x3f; /* Bytes already in shsInfo->data */
 
 	/* Handle any leading odd-sized chunks */
 
@@ -211,12 +207,11 @@ static void MD5Update(struct MD5Context *ctx, unsigned char const *buf, unsigned
 	memcpy(ctx->in, buf, len);
 }
 
-
 /**
  * @brief Final wrapup - pad to 64-byte boundary with the bit pattern
  * 1 0* (64-bit count of bits processed, MSB-first)
  */
-static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
+static void MD5Final (struct MD5Context *ctx, unsigned char *digest)
 {
 	unsigned count;
 	unsigned char *p;
@@ -225,7 +220,7 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
 	count = (ctx->bits[0] >> 3) & 0x3F;
 
 	/* Set the first char of padding to 0x80.  This is safe since there is
-	always at least one byte free */
+	 always at least one byte free */
 	p = ctx->in + count;
 	*p++ = 0x80;
 
@@ -287,12 +282,12 @@ const char *Com_MD5File (const char *fn, int length)
 		if (r + total > length)
 			r = length - total;
 		total += r;
-		MD5Update(&md5, (const unsigned char *)buffer, r);
+		MD5Update(&md5, (const unsigned char *) buffer, r);
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
 	FS_CloseFile(&f);
-	unsigned char digest[16] = {""};
+	unsigned char digest[16] = { "" };
 	MD5Final(&md5, digest);
 
 	static char final[33];
@@ -316,9 +311,9 @@ const char *Com_MD5Buffer (const byte *buf, size_t len)
 
 	MD5_CTX md5;
 	MD5Init(&md5);
-	MD5Update(&md5, (const unsigned char *)buf, len);
+	MD5Update(&md5, (const unsigned char *) buf, len);
 
-	unsigned char digest[16] = {""};
+	unsigned char digest[16] = { "" };
 	MD5Final(&md5, digest);
 
 	static char final[33];
