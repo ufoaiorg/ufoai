@@ -28,6 +28,7 @@
 #include "../cl_shared.h"
 #include "../ui/ui_main.h"
 #include "web_team.h"
+#include "../../common/sha2.h"
 
 #define SERVER "http://ufoai.org/"
 
@@ -128,9 +129,12 @@ static void WEB_AuthResponse (const char *response, void *userdata)
  */
 bool WEB_Auth (const char *username, const char *password)
 {
-	const char *md5sum = Com_MD5Buffer((const byte*)password, strlen(password));
+	byte digest[32];
+	Com_SHA2Csum((const byte*)password, strlen(password), digest);
 	Cvar_Set("web_username", username);
-	Cvar_Set("web_password", md5sum);
+	char buf[65];
+	Com_SHA2ToHex(digest, buf);
+	Cvar_Set("web_password", buf);
 	if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
 		Cvar_Set("web_password", "");
 		return false;

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "test_shared.h"
 #include "../common/common.h"
+#include "../common/sha2.h"
 #include "../common/http.h"
 #include "../common/binaryexpressionparser.h"
 #include "../shared/utf8.h"
@@ -654,6 +655,18 @@ static void testMD5Buffer (void)
 	CU_ASSERT_STRING_EQUAL(md5, expected);
 }
 
+static void testSHA2Buffer (void)
+{
+	const char *in = "Test";
+	const char *expected = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
+	byte digest[32];
+	Com_SHA2Csum((const byte*)in, strlen(in), digest);
+	char buf[65];
+	Com_SHA2ToHex(digest, buf);
+	Com_Printf("got: '%s', expected '%s'\n", buf, expected);
+	CU_ASSERT_STRING_EQUAL(buf, expected);
+}
+
 /**
  * @brief The string 'a' and 'c' evaluates to true - everything else to false
  */
@@ -694,6 +707,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testMD5Buffer) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testSHA2Buffer) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringHunks) == NULL)

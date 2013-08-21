@@ -197,6 +197,7 @@ $(TARGET)_SRCS      = \
 	common/dbuffer.cpp \
 	common/pqueue.cpp \
 	common/scripts.cpp \
+	common/sha2.cpp \
 	common/tracing.cpp \
 	common/routing.cpp \
 	common/xml.cpp \

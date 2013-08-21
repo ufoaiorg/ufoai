@@ -103,6 +103,7 @@
 		<Unit filename="..\..\src\common\list.cpp" />
 		<Unit filename="..\..\src\common\md4.cpp" />
 		<Unit filename="..\..\src\common\md5.cpp" />
+		<Unit filename="..\..\src\common\sha2.cpp" />
 		<Unit filename="..\..\src\common\mem.cpp" />
 		<Unit filename="..\..\src\common\msg.cpp" />
 		<Unit filename="..\..\src\common\net.cpp" />

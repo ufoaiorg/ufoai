@@ -32,6 +32,7 @@ $(TARGET)_SRCS      = \
 	common/netpack.cpp \
 	common/pqueue.cpp \
 	common/scripts.cpp \
+	common/sha2.cpp \
 	common/tracing.cpp \
 	common/routing.cpp \
 	\
