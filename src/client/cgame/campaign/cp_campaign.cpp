@@ -1212,7 +1212,6 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 	E_InitialEmployees(campaign);
 
 	GEO_Reset(campaign->map);
-	PR_ProductionInit();
 
 	CP_UpdateCredits(campaign->credits);
 

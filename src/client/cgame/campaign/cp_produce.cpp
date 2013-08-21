@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_ufo.h"
-#include "cp_popup.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 #include "save/save_produce.h"
@@ -36,20 +35,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
 static const int PRODUCE_WORKERS = 10;
 
-static cvar_t *mn_production_limit;		/**< Maximum items in queue. */
-static cvar_t *mn_production_workers;		/**< Amount of hired workers in base. */
-static cvar_t *mn_production_amount;	/**< Amount of the current production; if no production, an invalid value */
-
 /**
- * @brief Calculates the fraction (percentage) of production of an item in 1 minute.
- * @param[in] base Pointer to the base with given production.
- * @param[in] prodData Pointer to the productionData structure.
- * @sa PR_ProductionRun
- * @sa PR_ItemProductionInfo
- * @sa PR_DisassemblyInfo
- * @return the production in minutes. Does at least return 1 minute
+ * @brief Calculates the total frame count (minutes) needed for producing an item
+ * @param[in] base Pointer to the base the production happen
+ * @param[in] prodData Pointer to the productionData structure
  */
-static double PR_CalculateProductionTimeInMinutes (const base_t *base, const productionData_t *prodData)
+static int PR_CalculateTotalFrames (const base_t *base, const productionData_t *prodData)
 {
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
@@ -71,19 +62,10 @@ static double PR_CalculateProductionTimeInMinutes (const base_t *base, const pro
 	}
 	/* Calculate the time needed for production of the item for our amount of workers. */
 	const float rate = PRODUCE_WORKERS / ccs.curCampaign->produceRate;
-	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * rate) / maxWorkers;
-	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
-	return std::max(1.0, timeScaled);
-}
+	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * rate) / std::max(1, maxWorkers);
 
-/**
- * @brief Calculates the total frame count needed for producing an item
- * @param[in] base Pointer to the base the production happen
- * @param[in] prodData Pointer to the productionData structure
- */
-static int PR_CalculateTotalFrames (const base_t *base, const productionData_t *prodData)
-{
-	return PR_CalculateProductionTimeInMinutes(base, prodData) + 1;
+	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
+	return std::max(1.0, timeScaled) + 1;
 }
 
 /**
@@ -255,8 +237,6 @@ production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed in
 	production_queue_t *queue = PR_GetProductionForBase(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
-		return nullptr;
-	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return nullptr;
 
 	/* Initialize */
@@ -619,13 +599,6 @@ bool PR_ProductionAllowed (const base_t* base)
 {
 	assert(base);
 	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_WORKSHOP) && E_CountHired(base, EMPL_WORKER) > 0;
-}
-
-void PR_ProductionInit (void)
-{
-	mn_production_limit = cgi->Cvar_Get("mn_production_limit", "0", 0, nullptr);
-	mn_production_workers = cgi->Cvar_Get("mn_production_workers", "0", 0, nullptr);
-	mn_production_amount = cgi->Cvar_Get("mn_production_amount", "0", 0, nullptr);
 }
 
 /**
