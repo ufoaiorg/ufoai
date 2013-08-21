@@ -1044,6 +1044,7 @@ void IN_Frame (void)
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
+				Com_Printf("try to toggle fullscreen\n");
 				if (IN_ToggleFullscreen()) {
 					Cvar_SetValue("vid_fullscreen", 1);
 					/* make sure, that input grab is deactivated in fullscreen mode */
@@ -1063,6 +1064,7 @@ void IN_Frame (void)
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 #endif
+				Com_Printf("toggled mouse grab (%s)\n", vid_grabmouse->integer == 1 ? "true" : "false");
 				break; /* ignore this key */
 			}
 
