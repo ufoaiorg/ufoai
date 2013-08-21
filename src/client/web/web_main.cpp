@@ -43,12 +43,15 @@ static cvar_t *web_authurl;
  */
 bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 {
-	char buf[512];
-	char passwordEncoded[MAX_VAR];
+	char buf[576];
+	char passwordEncoded[512];
 	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
-	char usernameEncoded[MAX_VAR];
+	char usernameEncoded[128];
 	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
-	Com_sprintf(buf, sizeof(buf), "%s?username=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	if (!Com_sprintf(buf, sizeof(buf), "%s?username=%s&password=%s", url, usernameEncoded, passwordEncoded)) {
+		Com_Printf("overflow in url length: '%s'\n", buf);
+		return false;
+	}
 	return HTTP_GetURL(buf, callback, userdata);
 }
 
@@ -60,12 +63,15 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
  */
 bool WEB_GetToFile (const char *url, FILE* file)
 {
-	char buf[512];
+	char buf[576];
 	char passwordEncoded[MAX_VAR];
 	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
 	char usernameEncoded[MAX_VAR];
 	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
-	Com_sprintf(buf, sizeof(buf), "%s?request=user_authentication&username=%s&password=%s", url, usernameEncoded, passwordEncoded);
+	if (!Com_sprintf(buf, sizeof(buf), "%s?username=%s&password=%s", url, usernameEncoded, passwordEncoded)) {
+		Com_Printf("overflow in url length: '%s'\n", buf);
+		return false;
+	}
 	return HTTP_GetToFile(buf, file);
 }
 
