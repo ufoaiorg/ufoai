@@ -87,16 +87,12 @@ bool WEB_PutFile (const char *formName, const char *fileName, const char *url, u
 {
 	upparam_t paramUser;
 	upparam_t paramPassword;
-	upparam_t paramRequest;
 	paramUser.name = "username";
 	paramUser.value = web_username->string;
 	paramUser.next = &paramPassword;
 	paramPassword.name = "password";
 	paramPassword.value = web_password->string;
-	paramPassword.next = &paramRequest;
-	paramRequest.name = "request";
-	paramRequest.value = "user_authentication";
-	paramRequest.next = nullptr;
+	paramPassword.next = nullptr;
 	if (params != nullptr) {
 		params->next = &paramUser;
 	} else {
