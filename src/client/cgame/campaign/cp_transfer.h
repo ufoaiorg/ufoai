@@ -43,7 +43,7 @@ enum {
 	TRANS_ALIEN_MAX
 };
 
-/** @brief Transfer informations (they are being stored in ccs.transfers). */
+/** @brief Transfer information (they are being stored in ccs.transfers). */
 typedef struct transfer_s {
 	base_t* destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */
 	base_t* srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */

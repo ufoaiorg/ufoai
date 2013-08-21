@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	SUFO_RECOVERED,				/**< UFO just got recovered, it's being transported to the UFO Yard */
 	SUFO_STORED,				/**< UFO is in UFO Yard, nothing special */
-	SUFO_TRANSFERED,			/**< UFO is being transfered to another UFO Yard */
+	SUFO_TRANSFERED,			/**< UFO is being transferred to another UFO Yard */
 
 	MAX_SUFO_STATUS
 } storedUFOStatus_t;

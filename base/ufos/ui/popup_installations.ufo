@@ -784,7 +784,7 @@ window popup_ufoyards {
 		call *node:parent.list@createChild("ufo<1>", "cmp_ufoyard_entry")
 		// tmpvar
 		*node:parent.list.ufo<1>.id@string = "<5>"
-		if ( *node:parent.list.ufo<1>.id@string eq "transfering" ) {
+		if ( *node:parent.list.ufo<1>.id@string eq "transferring" ) {
 			*node:parent.list.ufo<1>@bgcolor = ".3 .3 .3 .3"
 		} elif ( *node:parent.list.ufo<1>.id@string eq "disassembling" ) {
 			*node:parent.list.ufo<1>@bgcolor = "0 .3 0 .3"
@@ -835,8 +835,8 @@ window popup_ufoyards {
 				*node:parent.ufoinfo.transfer@disabled = true
 				*node:parent.ufoinfo.confirm@disabled = false
 				*node:parent.ufoinfo.destroy@disabled = false
-			} elif ( *node:parent.ufoinfo.status@string eq "transfering" ) {
-				*node:parent.ufoinfo.status@string = "_transfering"
+			} elif ( *node:parent.ufoinfo.status@string eq "transferring" ) {
+				*node:parent.ufoinfo.status@string = "_transferring"
 				*node:parent.ufoyardtabs.transfer@disabled = true
 				*node:parent.ufoinfo.transfer@disabled = true
 				*node:parent.ufoinfo.confirm@disabled = true

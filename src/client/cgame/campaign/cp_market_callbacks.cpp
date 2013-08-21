@@ -277,7 +277,7 @@ static void BS_Buy_f (void)
 }
 
 /**
- * @brief Show informations about item/aircaft/ugv in the market
+ * @brief Show information about item/aircaft/ugv in the market
  */
 static void BS_ShowInfo_f (void)
 {
@@ -453,7 +453,7 @@ void BS_InitCallbacks(void)
 
 	cgi->Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
 	cgi->Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
-	cgi->Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show informations about item/aircaft/ugv in the market");
+	cgi->Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show information about item/aircaft/ugv in the market");
 	cgi->Cmd_AddCommand("ui_market_fill", BS_FillMarket_f, "Fill market item list");
 }
 

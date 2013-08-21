@@ -98,7 +98,7 @@ void MouseEventManager::loadCameraEventDefinitions ()
 				} else if (eventName == "DisableFreeLookMode") {
 					_cameraConditions[ui::camDisableFreeLookMode] = getCondition(eventList[i]);
 				} else {
-					globalOutputStream() << "MouseEventManager: Warning: Ignoring unkown event name: " << eventName
+					globalOutputStream() << "MouseEventManager: Warning: Ignoring unknown event name: " << eventName
 							<< "\n";
 				}
 			}
@@ -149,7 +149,7 @@ void MouseEventManager::loadObserverEventDefinitions ()
 				} else if (eventName == "JumpToObject") {
 					_observerConditions[ui::obsJumpToObject] = getCondition(eventList[i]);
 				} else {
-					globalOutputStream() << "MouseEventManager: Warning: Ignoring unkown event name: " << eventName
+					globalOutputStream() << "MouseEventManager: Warning: Ignoring unknown event name: " << eventName
 							<< "\n";
 				}
 			}
@@ -192,7 +192,7 @@ void MouseEventManager::loadXYViewEventDefinitions ()
 				} else if (eventName == "NewBrushDrag") {
 					_xyConditions[ui::xyNewBrushDrag] = getCondition(eventList[i]);
 				} else {
-					globalOutputStream() << "MouseEventManager: Warning: Ignoring unkown event name: " << eventName
+					globalOutputStream() << "MouseEventManager: Warning: Ignoring unknown event name: " << eventName
 							<< "\n";
 				}
 			}

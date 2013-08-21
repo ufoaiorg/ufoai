@@ -53,7 +53,7 @@ void UR_ProcessActive (void)
 		if (Date_LaterThan(&ufo->arrive, &ccs.date))
 			continue;
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transfered to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transferred to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
 		switch (ufo->status) {
 		case SUFO_RECOVERED:
 			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, MSG_TRANSFERFINISHED);
@@ -215,7 +215,7 @@ void US_RemoveUFOsExceedingCapacity (installation_t* installation)
 }
 
 /**
- * @brief Start transfering of a stored UFO
+ * @brief Start transferring of a stored UFO
  * @param[in,out] ufo Stored UFO to transfer
  * @param[in,out] ufoyard Destination of the UFO transfer
  * @return success or failure indicator
@@ -225,13 +225,13 @@ bool US_TransferUFO (storedUFO_t* ufo, installation_t* ufoyard)
 	date_t date;
 
 	if (!ufo)
-		cgi->Com_Error(ERR_DROP, "No UFO cannot be transfered!");
+		cgi->Com_Error(ERR_DROP, "No UFO cannot be transferred!");
 	if (!ufoyard)
-		cgi->Com_Error(ERR_DROP, "UFO cannot be transfered to void!");
-	/* only stored ufo can be transfered */
+		cgi->Com_Error(ERR_DROP, "UFO cannot be transferred to void!");
+	/* only stored ufo can be transferred */
 	if (ufo->status != SUFO_STORED)
 		return false;
-	/* UFO being disassembled cannot be transfered*/
+	/* UFO being disassembled cannot be transferred*/
 	if (ufo->disassembly != nullptr)
 		return false;
 	/* UFO is in the same yard - no need of transfer */

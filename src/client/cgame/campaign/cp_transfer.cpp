@@ -132,7 +132,7 @@ static void TR_TransferEnd (transfer_t* transfer)
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(nullptr, transfer, false);
 		MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), _("The destination base no longer exists! Transfer cargo was lost, personnel has been discharged."), MSG_TRANSFERFINISHED);
-		/** @todo what if source base is lost? we won't be able to unhire transfered employees. */
+		/** @todo what if source base is lost? we won't be able to unhire transferred employees. */
 	} else {
 		char message[256];
 		TR_EmptyTransferCargo(destination, transfer, true);
@@ -329,7 +329,7 @@ static void TR_ListTransfers_f (void)
 						if (!employee->isHired())
 							Com_Printf("Warning: employee^ not hired!\n");
 						if (!employee->transfer)
-							Com_Printf("Warning: employee^ not marked as being transfered!\n");
+							Com_Printf("Warning: employee^ not marked as being transferred!\n");
 					}
 				}
 			}

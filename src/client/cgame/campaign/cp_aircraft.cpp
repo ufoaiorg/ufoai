@@ -849,7 +849,7 @@ void AIR_MoveAircraftIntoNewHomebase (aircraft_t* aircraft, base_t* base)
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
-	/* Is aircraft being transfered? */
+	/* Is aircraft being transferred? */
 	if (aircraft->status == AIR_TRANSFER) {
 		/* Move the aircraft to the new base to avoid fuel problems */
 		VectorCopy(base->pos, aircraft->pos);
@@ -2340,7 +2340,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 
 	cgi->Com_UnregisterConstList(saveAircraftConstants);
 
-	/* All other informations are not needed for ufos */
+	/* All other information is not needed for ufos */
 	if (isUfo)
 		return true;
 
@@ -2559,7 +2559,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 
 	cgi->Com_UnregisterConstList(saveAircraftConstants);
 
-	/* All other informations are not needed for ufos */
+	/* All other information is not needed for ufos */
 	if (!craft->homebase)
 		return true;
 

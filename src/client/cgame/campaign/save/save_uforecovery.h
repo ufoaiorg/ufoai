@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const constListEntry_t saveStoredUFOConstants[] = {
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::recovered", SUFO_RECOVERED},
 	{SAVE_STOREDUFOSTATUS_NAMESPACE"::stored", SUFO_STORED},
-	{SAVE_STOREDUFOSTATUS_NAMESPACE"::transfered", SUFO_TRANSFERED},
+	{SAVE_STOREDUFOSTATUS_NAMESPACE"::transferred", SUFO_TRANSFERED},
 	{nullptr, -1}
 };
 
@@ -51,7 +51,7 @@ DTD:
 	id				CDATA		#REQUIRED
 	status			(recovered,
 					stored,
-					transfered)	#REQUIRED
+					transferred)	#REQUIRED
 	condition		CDATA		'1.0'
 	installationIDX CDATA		#REQUIRED
 >

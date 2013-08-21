@@ -135,7 +135,7 @@ typedef enum aircraftStatus_s {
 	AIR_UFO,			/**< pursuing a UFO - also used for ufos that are pursuing an aircraft */
 	AIR_DROP,			/**< ready to drop down */
 	AIR_INTERCEPT,		/**< ready to intercept */
-	AIR_TRANSFER,		/**< being transfered */
+	AIR_TRANSFER,		/**< being transferred */
 	AIR_CRASHED,		/**< crashed */
 	AIR_RETURNING		/**< returning to homebase */
 } aircraftStatus_t;

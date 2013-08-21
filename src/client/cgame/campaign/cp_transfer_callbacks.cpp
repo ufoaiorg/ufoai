@@ -115,7 +115,7 @@ static bool TR_CheckEmployee (const Employee* employee, const base_t* destbase)
 		/* Is this a soldier assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
 			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
-			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransferred to another base.\n"),
 					_(rank->shortname), employee->chr.name);
 			return false;
 		}
@@ -123,7 +123,7 @@ static bool TR_CheckEmployee (const Employee* employee, const base_t* destbase)
 	case EMPL_PILOT:
 		/* Is this a pilot assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
-			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransferred to another base.\n"),
 					employee->chr.name);
 			return false;
 		}

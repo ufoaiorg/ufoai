@@ -381,7 +381,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 
 /*====================================
 *
-* Get informations from mission list
+* Get information from mission list
 *
 ====================================*/
 

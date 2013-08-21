@@ -247,7 +247,7 @@ static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs)
 
 /**
  * @brief Prints information about the selected item (no aircraft) in production.
- * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] base Pointer to the base where information should be printed.
  * @param[in] od The attributes of the item being produced.
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
@@ -314,7 +314,7 @@ static void PR_DisassemblyInfo (const storedUFO_t* ufo, int remainingHours)
 
 /**
  * @brief Prints information about the selected aircraft in production.
- * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] base Pointer to the base where information should be printed.
  * @param[in] aircraftTemplate The aircraft to print the information for
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
@@ -334,7 +334,7 @@ static void PR_AircraftInfo (const base_t* base, const aircraft_t* aircraftTempl
 
 /**
  * @brief Prints information about the selected item in production.
- * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] base Pointer to the base where information should be printed.
  * @sa PR_AircraftInfo
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo

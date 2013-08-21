@@ -488,7 +488,7 @@ static void testTransferEmployee (void)
 	ResetCampaignData();
 
 	/** @todo test the transfer of employees and make sure that they can't be used for
-	 * anything in the base while they are transfered */
+	 * anything in the base while they are transferred */
 }
 
 static void testUFORecovery (void)

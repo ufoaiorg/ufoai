@@ -519,7 +519,7 @@ const char* US_StoredUFOStatus (const storedUFO_t* ufo)
 			return "stored";
 		case SUFO_RECOVERED:
 		case SUFO_TRANSFERED:
-			return "transfering";
+			return "transferring";
 		default:
 			return "unknown";
 	}
@@ -542,7 +542,7 @@ static void US_SelectStoredUfo_f (void)
 	const char* status = US_StoredUFOStatus(ufo);
 	const char* eta;
 
-	if (Q_streq(status, "transfering")) {
+	if (Q_streq(status, "transferring")) {
 		date_t time = Date_Substract(ufo->arrive, ccs.date);
 		eta = CP_SecondConvert(Date_DateToSeconds(&time));
 	} else {

@@ -254,7 +254,7 @@ typedef int32_t shoot_types_t;
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
 
-/* State flags - transfered as short (so max 16 bits please) */
+/* State flags - transferred as short (so max 16 bits please) */
 /* public states */
 #define STATE_PUBLIC		0x00FF	/**< mask to separate private flags from events */
 #define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/

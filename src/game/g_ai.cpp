@@ -892,7 +892,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
  * @brief Calculates possible actions for a civilian.
  * @param[in] ent Pointer to an edict being civilian.
  * @param[in] to The grid position to walk to.
- * @param[in] aia Pointer to aiAction containing informations about possible action.
+ * @param[in] aia Pointer to aiAction containing information about possible action.
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
@@ -1007,7 +1007,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t
  * @brief Calculates possible actions for a panicking unit.
  * @param[in] ent Pointer to an edict which is panicking.
  * @param[in] to The grid position to walk to.
- * @param[in] aia Pointer to aiAction containing informations about possible action.
+ * @param[in] aia Pointer to aiAction containing information about possible action.
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */

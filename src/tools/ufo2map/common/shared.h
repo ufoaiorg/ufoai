@@ -70,7 +70,7 @@ typedef struct mapConfig_s {
 	bool noshare;		/**< If true, keep identical edges in the bsp */
 	bool nosubdiv;		/**< If this is set to false faces that are larger than the given chop size will get subdivided */
 	bool notjunc;		/**< If true, do not break edges on tjunctions. This will decrease the compile times and should not be used on final compiles */
-	bool verboseentities;	/**< prints entity sub model informations to the console */
+	bool verboseentities;	/**< prints entity sub model information to the console */
 	bool nobackclip;	/**< does not filter out back clipping brushes - results in larger bsp files */
 	int nolighting;
 	int block_xl, block_xh, block_yl, block_yh;

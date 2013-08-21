@@ -103,7 +103,7 @@ static void E_EmployeeListScroll_f (void)
 		/* don't show employees of other bases */
 		if (employee->isHired() && !employee->isHiredInBase(base))
 			continue;
-		/* don't show employees being transfered to other bases */
+		/* don't show employees being transferred to other bases */
 		if (employee->transfer)
 			continue;
 
@@ -177,7 +177,7 @@ static void E_EmployeeList_f (void)
 		/* don't show employees of other bases */
 		if (e->isHired() && !e->isHiredInBase(base))
 			continue;
-		/* don't show employees being transfered to other bases */
+		/* don't show employees being transferred to other bases */
 		if (e->transfer)
 			continue;
 		cgi->LIST_AddPointer(&employeeListName, e->chr.name);
