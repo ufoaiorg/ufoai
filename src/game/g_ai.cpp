@@ -537,6 +537,7 @@ static Edict *AI_SearchDestroyableObject (const Edict *ent, const fireDef_t *fd)
 	return nullptr;
 }
 
+#define GRENADE_CHECK_PARTITIONS	4
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
@@ -544,6 +545,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
+	int shotChecked = NONE;
 
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t *fd = &fdArray[fdIdx];
@@ -562,30 +564,62 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict *ent, Edict *check
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
-			/* check how good the target is visible and if we have a shot */
+			/* check how good the target is visible */
 			if (!visChecked) {	/* only do this once per actor ! */
 				vis = G_ActorVis(ent->origin, ent, check, true);
 				visChecked = true;
+			}
 
-				if (vis != ACTOR_VIS_0) {
-					/* check weapon can hit */
-					vec3_t dir, origin;
+			if (vis == ACTOR_VIS_0)
+				return;
 
-					VectorSubtract(check->origin, ent->origin, dir);
-					G_GetShotOrigin(ent, fd, dir, origin);
-
+			/*
+			 * check weapon can hit, we only want to do this once unless the LoF actually changes
+			 * between shots, only hand grenades seem to do this (rolled vs thrown)
+			 */
+			const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
+			if (shotChecked != shotFlags) {
+				shotChecked = shotFlags;
+				vec3_t dir, origin;
+				VectorSubtract(check->origin, ent->origin, dir);
+				G_GetShotOrigin(ent, fd, dir, origin);
+				if (!fd->gravity) {
 					/* gun-to-target line free? */
 					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
 					const Edict *trEnt = G_EdictsGetByNum(trace.entNum);
 					const bool hitBreakable = G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
 					const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
-					if (!trEnt || (trEnt != check && !shotBreakable))
-						return;
+					if (!trEnt || (!VectorCompare(trEnt->pos, check->pos) && !shotBreakable))
+						continue;
+				} else {
+					/* gun-to-target *parabola* free? */
+					vec3_t target, v;
+					VectorCopy(check->origin, target);
+					/* Grenades are targeted at the ground in G_ShootGrenade */
+					target[2] -= GROUND_DELTA;
+					const float dt = gi.GrenadeTarget(origin, target, fd->range, fd->launched, fd->rolled, v) / GRENADE_CHECK_PARTITIONS;
+					if (!dt)
+						continue;
+					VectorSubtract(target, origin, dir);
+					VectorScale(dir, 1.0 / GRENADE_CHECK_PARTITIONS, dir);
+					dir[2] = 0;
+					float vz = v[2];
+					int i;
+					for (i = 0; i < GRENADE_CHECK_PARTITIONS; i++) {
+						VectorAdd(origin, dir, target);
+						target[2] += dt * (vz - 0.5 * GRAVITY * dt);
+						vz -= GRAVITY * dt;
+						const trace_t trace = G_Trace(origin, target, ent, MASK_SHOT);
+						const Edict *trEnt = G_EdictsGetByNum(trace.entNum);
+						if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, check->pos))) {
+							break;
+						}
+						VectorCopy(target, origin);
+					}
+					if (i < GRENADE_CHECK_PARTITIONS)
+						continue;
 				}
 			}
-
-			if (vis == ACTOR_VIS_0)
-				return;
 
 			/* calculate expected damage */
 			dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
