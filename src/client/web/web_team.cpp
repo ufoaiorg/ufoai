@@ -61,7 +61,7 @@ void WEB_UploadTeam_f (void)
 	if (!GAME_GetTeamFileName(index, filename, sizeof(filename)))
 		return;
 
-	const char *fullPath = va("%s/save/%s", FS_Gamedir(), filename);
+	const char *fullPath = va("%s/%s", FS_Gamedir(), filename);
 	/* we ignore this, because this file is not in the users save path,
 	 * but part of the game data. Don't upload this. */
 	if (!FS_FileExists("%s", fullPath)) {
