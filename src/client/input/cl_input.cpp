@@ -899,6 +899,28 @@ void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDo
 	}
 }
 
+static bool IN_ToggleFullscreen (void)
+{
+#if SDL_VERSION_ATLEAST(2,0,0)
+	const int mask = SDL_WINDOW_FULLSCREEN_DESKTOP;
+	const bool isFullScreen = SDL_GetWindowFlags(cls.window) & mask;
+	SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : SDL_WINDOW_FULLSCREEN);
+	return SDL_GetWindowFlags(cls.window) & mask;
+#else
+#ifdef _WIN32
+	return false;
+#else
+	SDL_Surface *surface = SDL_GetVideoSurface();
+	if (!SDL_WM_ToggleFullScreen(surface)) {
+		const int flags = surface->flags ^= SDL_FULLSCREEN;
+		SDL_SetVideoMode(surface->w, surface->h, 0, flags);
+	}
+
+	return surface->flags & SDL_FULLSCREEN;
+#endif
+#endif
+}
+
 /**
  * @brief Handle input events like key presses and joystick movement as well
  * as window events
@@ -1021,23 +1043,8 @@ void IN_Frame (void)
 
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
-#ifndef _WIN32 /** @todo: still needed with SDL2? */
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
-#if SDL_VERSION_ATLEAST(2,0,0)
-				const int mask = (SDL_WINDOW_FULLSCREEN_DESKTOP|SDL_WINDOW_FULLSCREEN);
-				const bool isFullScreen = SDL_GetWindowFlags(cls.window) & mask;
-				SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : SDL_WINDOW_FULLSCREEN);
-				if (SDL_GetWindowFlags(cls.window) & mask) {
-#else
-				SDL_Surface *surface = SDL_GetVideoSurface();
-				if (!SDL_WM_ToggleFullScreen(surface)) {
-					int flags = surface->flags ^= SDL_FULLSCREEN;
-					SDL_SetVideoMode(surface->w, surface->h, 0, flags);
-				}
-
-				if (surface->flags & SDL_FULLSCREEN) {
-#endif
-
+				if (IN_ToggleFullscreen()) {
 					Cvar_SetValue("vid_fullscreen", 1);
 					/* make sure, that input grab is deactivated in fullscreen mode */
 					Cvar_SetValue("vid_grabmouse", 0);
@@ -1047,7 +1054,6 @@ void IN_Frame (void)
 				vid_fullscreen->modified = false; /* we just changed it with SDL. */
 				break; /* ignore this key */
 			}
-#endif
 
 			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
 #if SDL_VERSION_ATLEAST(2,0,0)
