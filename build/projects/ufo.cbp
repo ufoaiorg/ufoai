@@ -774,6 +774,7 @@
 		<Unit filename="..\..\src\common\md4.h" />
 		<Unit filename="..\..\src\common\md5.cpp" />
 		<Unit filename="..\..\src\common\md5.h" />
+		<Unit filename="..\..\src\common\sha1.cpp" />
 		<Unit filename="..\..\src\common\sha2.cpp" />
 		<Unit filename="..\..\src\common\sha2.h" />
 		<Unit filename="..\..\src\common\mem.cpp" />
