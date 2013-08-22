@@ -248,7 +248,7 @@ static bool M_PlayRandomByCategory (int category)
 		return false;
 	const int rnd = rand() % musicArrayLength[category];
 	music.category = category;
-	Com_Printf("Music: track changed from %s to %s.\n", snd_music->string, musicArrays[category][rnd]);
+	Com_Printf("Music: track changed from %s to %s.\n", music.currentTrack, musicArrays[category][rnd]);
 	Cvar_Set("snd_music", musicArrays[category][rnd]);
 	return snd_music->modified;
 }
