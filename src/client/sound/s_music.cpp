@@ -157,7 +157,7 @@ static void M_Start (const char *file)
 	}
 
 	/* we are already playing that track */
-	if (Q_streq(name, music.currentTrack))
+	if (Q_streq(name, music.currentTrack) && music.data && Mix_PlayingMusic())
 		return;
 
 	/* we are still playing some background track - fade it out */
