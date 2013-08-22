@@ -164,7 +164,8 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
  * @note There is only one movement event which takes some time and delays other events in the queue. If you want
  * to execute any other event during this movement event, use this function to get the proper eventTime for doing
  * so.
- * @param[in] eventTimining The structure to get the needed data from
+ * @param[in] eventTiming The structure to get the needed data from
+ * @param[in] le The moving actor
  * @param[in] step The step we want to calculate the time for
  * @return @c -1 on error (invalid input data), otherwise the timestamp the move event was executed for that step
  */
