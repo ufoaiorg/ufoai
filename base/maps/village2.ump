@@ -70,6 +70,15 @@ tile +b2x4_house04
 	0		0		0		0
 }
 
+tile +b2x2_house05
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
 // Commercial Buildings --------------------------------------------*
 
 tile +b2x4_station01
@@ -262,6 +271,7 @@ tileset 2x2
 	+b2x2_house01
 	+b2x2_house02
 	+b2x2_house03
+	+b2x2_house05
 }
 
 tileset 2x4
