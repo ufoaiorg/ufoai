@@ -148,6 +148,10 @@ bool WEB_Auth (const char *username, const char *password)
 	return Q_strvalid(web_password->string);
 }
 
+/**
+ * @brief Console callback for handling the web auth
+ * @sa WEB_Auth
+ */
 static void WEB_Auth_f (void)
 {
 	if (Cmd_Argc() != 3) {
@@ -161,6 +165,10 @@ static void WEB_Auth_f (void)
 	}
 }
 
+/**
+ * @brief Pushes the webauth window if the password is not yet set
+ * @return @c true if the user is authenticated, @c false otherwise
+ */
 bool WEB_CheckAuth (void)
 {
 	if (Q_strnull(web_password->string)) {
