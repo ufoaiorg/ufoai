@@ -102,7 +102,10 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 		for (i = 0; i < length && copy[i]; i++)
 			copy[i] = copy[i] & 127;
 		copy[i] = '\0';
-		Com_Printf("%s", copy);
+		if (level == PRINT_HUD)
+			Com_Printf("%s\n", copy);
+		else
+			Com_Printf("%s", copy);
 	}
 
 	client_t *cl = nullptr;
