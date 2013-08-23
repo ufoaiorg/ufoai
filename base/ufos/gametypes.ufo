@@ -1,4 +1,16 @@
-
+gametype fight1on1with12
+{
+	name "_1on1"
+	cvarlist {
+		sv_teamplay 0
+		sv_maxclients 2
+		sv_maxsoldiersperplayer 12
+		sv_maxsoldiersperteam 12
+		ai_numactors 0
+		sv_ai 0
+//		sv_maxplayersperteam 1
+	}
+}
 gametype fight1on1
 {
 	name "_1on1"
