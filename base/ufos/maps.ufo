@@ -5395,6 +5395,42 @@ mapdef frozen_mp_deathmatch
 }
 
 // ============ //
+
+// +VILLAGE2 MULTIPLAYER MAPS //
+////////////////////////////////
+
+mapdef vil2_mp2p
+{
+	map				"+village2"
+	param			"mp2p_01"
+	description		"_Village MP (2v2)"
+	multiplayer		true
+	campaign		false
+	skirmish		false
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+	)
+
+	ufos
+	(
+	)
+
+	terrains
+	(
+	)
+
+	cultures
+	(
+	)
+
+	populations
+	(
+	)
+}
+
 // SPECIAL MAPS //
 // ============ //
 
