@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] ent The edict to perform the check for
  * @sa LE_IsLivingActor
  */
-bool G_IsLivingActor (const Edict *ent)
+bool G_IsLivingActor (const Edict* ent)
 {
 	return G_IsActor(ent) && (G_IsStunned(ent) || !G_IsDead(ent));
 }
@@ -52,7 +52,7 @@ bool G_IsLivingActor (const Edict *ent)
  * @param actor The actor that is using the door
  * @param door The door that should be opened/closed
  */
-void G_ActorUseDoor (Edict *actor, Edict *door)
+void G_ActorUseDoor (Edict* actor, Edict* door)
 {
 	/* check whether it's part of an edict group but not the master */
 	if (door->flags & FL_GROUPSLAVE)
@@ -66,7 +66,7 @@ void G_ActorUseDoor (Edict *actor, Edict *door)
 	if (G_IsAI(actor))
 		return;
 
-	Edict *closeActor = nullptr;
+	Edict* closeActor = nullptr;
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
@@ -79,7 +79,7 @@ void G_ActorUseDoor (Edict *actor, Edict *door)
  * @param[in] actor The actor to check
  * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
  */
-bool G_ActorIsInRescueZone (const Edict *actor)
+bool G_ActorIsInRescueZone (const Edict* actor)
 {
 	return actor->inRescueZone;
 }
@@ -89,7 +89,7 @@ bool G_ActorIsInRescueZone (const Edict *actor)
  * @param[out] actor The actor to set the rescue zone flag for
  * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
  */
-void G_ActorSetInRescueZone (Edict *actor, bool inRescueZone)
+void G_ActorSetInRescueZone (Edict* actor, bool inRescueZone)
 {
 	if (inRescueZone == G_ActorIsInRescueZone(actor))
 		return;
@@ -107,7 +107,7 @@ void G_ActorSetInRescueZone (Edict *actor, bool inRescueZone)
  * @param actor The actors' edict
  * @param ent The edict that can be used by the actor
  */
-void G_ActorSetClientAction (Edict *actor, Edict *ent)
+void G_ActorSetClientAction (Edict* actor, Edict* ent)
 {
 	if (actor->clientAction == ent)
 		return;
@@ -126,7 +126,7 @@ void G_ActorSetClientAction (Edict *actor, Edict *ent)
  * @param ent The actor to calculate the reserved TUs for
  * @return The amount of reserved TUs for the given actor edict
  */
-int G_ActorGetReservedTUs (const Edict *ent)
+int G_ActorGetReservedTUs (const Edict* ent)
 {
 	const chrReservations_t *res = &ent->chr.reservedTus;
 	return res->reaction + res->shot + res->crouch;
@@ -138,7 +138,7 @@ int G_ActorGetReservedTUs (const Edict *ent)
  * return zero here
  * @return The amount of usable TUs for the given actor edict
  */
-int G_ActorUsableTUs (const Edict *ent)
+int G_ActorUsableTUs (const Edict* ent)
 {
 	if (!ent)
 		return 0;
@@ -152,7 +152,7 @@ int G_ActorUsableTUs (const Edict *ent)
  * @param[in] ent The actors edict
  * @return The amount of TUs that are needed for the current selected reaction fire mode.
  */
-int G_ActorGetTUForReactionFire (const Edict *ent)
+int G_ActorGetTUForReactionFire (const Edict* ent)
 {
 	const FiremodeSettings *fm = &ent->chr.RFmode;
 
@@ -172,7 +172,7 @@ int G_ActorGetTUForReactionFire (const Edict *ent)
  * @param[in] resShot TUs for shooting
  * @param[in] resCrouch TUs for going into crouch mode
  */
-void G_ActorReserveTUs (Edict *ent, int resReaction, int resShot, int resCrouch)
+void G_ActorReserveTUs (Edict* ent, int resReaction, int resShot, int resCrouch)
 {
 	if (ent->TU >= resReaction + resShot + resCrouch) {
 		ent->chr.reservedTus.reaction = resReaction;
@@ -190,7 +190,7 @@ void G_ActorReserveTUs (Edict *ent, int resReaction, int resShot, int resCrouch)
  * @return Bitmask of visible (VIS_*) values
  * @sa G_CheckVisTeamAll
  */
-int G_ActorDoTurn (Edict *ent, byte dir)
+int G_ActorDoTurn (Edict* ent, byte dir)
 {
 	float angleDiv;
 	const byte *rot;
@@ -265,7 +265,7 @@ int G_ActorDoTurn (Edict *ent, byte dir)
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
-void G_ActorSetMaxs (Edict *ent)
+void G_ActorSetMaxs (Edict* ent)
 {
 	if (G_IsCrouched(ent))
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
@@ -278,7 +278,7 @@ void G_ActorSetMaxs (Edict *ent)
 	gi.LinkEdict(ent);
 }
 
-int G_ActorCalculateMaxTU (const Edict *ent)
+int G_ActorCalculateMaxTU (const Edict* ent)
 {
 	const int invWeight = ent->chr.inv.getWeight();
 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], GET_ENCUMBRANCE_PENALTY(invWeight,
@@ -291,14 +291,14 @@ int G_ActorCalculateMaxTU (const Edict *ent)
  * @brief Set time units for the given edict. Based on speed skills
  * @param ent The actor edict
  */
-void G_ActorGiveTimeUnits (Edict *ent)
+void G_ActorGiveTimeUnits (Edict* ent)
 {
 	const int tus = G_IsDazed(ent) ? 0 : G_ActorCalculateMaxTU(ent);
 	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
 }
 
-void G_ActorSetTU (Edict *ent, int tus)
+void G_ActorSetTU (Edict* ent, int tus)
 {
 	if (tus > 0 && tus < ent->TU) {
 		if (g_notu != nullptr && g_notu->integer) {
@@ -309,12 +309,12 @@ void G_ActorSetTU (Edict *ent, int tus)
 	ent->TU = std::max(tus, 0);
 }
 
-void G_ActorUseTU (Edict *ent, int tus)
+void G_ActorUseTU (Edict* ent, int tus)
 {
 	G_ActorSetTU(ent, ent->TU - tus);
 }
 
-static bool G_ActorStun (Edict *ent, const Edict *attacker)
+static bool G_ActorStun (Edict* ent, const Edict* attacker)
 {
 	/* already dead or stunned? */
 	if (G_IsDead(ent))
@@ -330,7 +330,7 @@ static bool G_ActorStun (Edict *ent, const Edict *attacker)
 	return true;
 }
 
-void G_ActorModifyCounters (const Edict *attacker, const Edict *victim, int deltaAlive, int deltaKills, int deltaStuns)
+void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int deltaAlive, int deltaKills, int deltaStuns)
 {
 	const int spawned = level.num_spawned[victim->team];
 	const int attackerTeam = (attacker != nullptr ? attacker->team : MAX_TEAMS);
@@ -391,7 +391,7 @@ void G_ActorModifyCounters (const Edict *attacker, const Edict *victim, int delt
  * @param[in] actor The actor edict to get the eye position in the world from
  * @param[out] eye The eye vector world position
  */
-void G_ActorGetEyeVector (const Edict *actor, vec3_t eye)
+void G_ActorGetEyeVector (const Edict* actor, vec3_t eye)
 {
 	VectorCopy(actor->origin, eye);
 	if (G_IsCrouched(actor) || G_IsPanicked(actor))
@@ -400,7 +400,7 @@ void G_ActorGetEyeVector (const Edict *actor, vec3_t eye)
 		eye[2] += EYE_STAND;
 }
 
-static void G_ActorRevitalise (Edict *ent)
+static void G_ActorRevitalise (Edict* ent)
 {
 	if (G_IsStunned(ent)) {
 		G_RemoveStunned(ent);
@@ -420,11 +420,11 @@ static void G_ActorRevitalise (Edict *ent)
 	G_PrintStats("%s is revitalized.", ent->chr.name);
 }
 
-void G_ActorCheckRevitalise (Edict *ent)
+void G_ActorCheckRevitalise (Edict* ent)
 {
 	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
 		/* check that we could move after we stood up */
-		Edict *otherActor = nullptr;
+		Edict* otherActor = nullptr;
 		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {
 			if (!VectorCompare(ent->pos, otherActor->pos))
 				continue;
@@ -438,7 +438,7 @@ void G_ActorCheckRevitalise (Edict *ent)
 	}
 }
 
-static bool G_ActorDie (Edict *ent, const Edict *attacker)
+static bool G_ActorDie (Edict* ent, const Edict* attacker)
 {
 	const bool stunned = G_IsStunned(ent);
 
@@ -468,7 +468,7 @@ static bool G_ActorDie (Edict *ent, const Edict *attacker)
  * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
  * it should drop only what he has in hands? Stunned actor can wake later during mission.
  */
-bool G_ActorDieOrStun (Edict *ent, Edict *attacker)
+bool G_ActorDieOrStun (Edict* ent, Edict* attacker)
 {
 	bool state;
 
@@ -536,9 +536,9 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, Item *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict* actor, const invDef_t *fromContType, Item *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
 {
-	Edict *floor;
+	Edict* floor;
 	bool newFloor;
 	Item *tc;
 	playermask_t mask;
@@ -747,7 +747,7 @@ bool G_ActorInvMove (Edict *actor, const invDef_t *fromContType, Item *fItem, co
  * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (Edict *ent, const invDef_t *invDef)
+void G_ActorReload (Edict* ent, const invDef_t *invDef)
 {
 	const objDef_t *weapon;
 
@@ -795,7 +795,7 @@ void G_ActorReload (Edict *ent, const invDef_t *invDef)
 		G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
 }
 
-int G_ActorGetModifiedTimeForFiredef (const Edict *const ent, const fireDef_t *const fd, const bool reaction)
+int G_ActorGetModifiedTimeForFiredef (const Edict* const ent, const fireDef_t *const fd, const bool reaction)
 {
 	return fd->time * G_ActorGetInjuryPenalty(ent, reaction ? MODIFIER_REACTION : MODIFIER_SHOOTING);
 }

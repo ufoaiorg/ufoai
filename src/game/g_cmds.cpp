@@ -131,7 +131,7 @@ static void G_KillTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	int amount = -1;
 
 	/* with a parameter we will be able to kill a specific team */
@@ -170,7 +170,7 @@ static void G_StunTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
@@ -199,7 +199,7 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
@@ -291,7 +291,7 @@ static void G_ListMissionScore_f (void)
  */
 void G_InvList_f (const Player &player)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
@@ -316,7 +316,7 @@ void G_InvList_f (const Player &player)
 
 static void G_TouchEdict_f (void)
 {
-	Edict *e, *ent;
+	Edict* e, *ent;
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
@@ -344,7 +344,7 @@ static void G_TouchEdict_f (void)
 
 static void G_UseEdict_f (void)
 {
-	Edict *e;
+	Edict* e;
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
@@ -370,7 +370,7 @@ static void G_UseEdict_f (void)
 
 static void G_DestroyEdict_f (void)
 {
-	Edict *e;
+	Edict* e;
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
@@ -400,7 +400,7 @@ static void G_StateChange_f (void)
 	}
 
 	const int entnum = atoi(gi.Cmd_Argv(1));
-	Edict *e = G_EdictsGetByNum(entnum);
+	Edict* e = G_EdictsGetByNum(entnum);
 	if (e == nullptr)
 		return;
 

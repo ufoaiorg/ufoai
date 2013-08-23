@@ -90,14 +90,14 @@ static int AIL_toTeamInt (const char *team)
  * @brief Wrapper around edict.
  */
 typedef struct aiActor_s {
-	Edict *ent; /**< Actual actor. */
+	Edict* ent; /**< Actual actor. */
 } aiActor_t;
 
 
 /*
  * Current AI Actor.
  */
-static Edict *AIL_ent; /**< Actor currently running the Lua AI. */
+static Edict* AIL_ent; /**< Actor currently running the Lua AI. */
 static Player *AIL_player; /**< Player currently running the Lua AI. */
 
 
@@ -574,9 +574,9 @@ static int AIL_see (lua_State *L)
 {
 	int vision, team;
 	int i, j, k, n, cur;
-	Edict *check = nullptr;
+	Edict* check = nullptr;
 	aiActor_t target;
-	Edict *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
+	Edict* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
 
 	/* Defaults. */
@@ -803,7 +803,7 @@ static int AIL_positionshoot (lua_State *L)
 {
 	pos3_t to, bestPos;
 	vec3_t check;
-	Edict *ent;
+	Edict* ent;
 	int dist;
 	int xl, yl, xh, yh;
 	int min_tu;
@@ -960,7 +960,7 @@ static int AIL_distance (lua_State *L)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AIL_ActorThink (Player &player, Edict *ent)
+void AIL_ActorThink (Player &player, Edict* ent)
 {
 	lua_State *L;
 
@@ -991,7 +991,7 @@ void AIL_ActorThink (Player &player, Edict *ent)
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (Edict *ent, const char *type, const char *subtype)
+int AIL_InitActor (Edict* ent, const char *type, const char *subtype)
 {
 	AI_t *AI;
 	int size;
@@ -1038,7 +1038,7 @@ int AIL_InitActor (Edict *ent, const char *type, const char *subtype)
  * @brief Cleans up the AI part of the actor.
  * @param[in] ent Pointer to actor to cleanup AI.
  */
-static void AIL_CleanupActor (Edict *ent)
+static void AIL_CleanupActor (Edict* ent)
 {
 	AI_t *AI = &ent->AI;
 
@@ -1070,7 +1070,7 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextActor(ent)))
 		AIL_CleanupActor(ent);
