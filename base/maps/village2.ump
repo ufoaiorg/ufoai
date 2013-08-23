@@ -1,0 +1,369 @@
+// ****************
+// SUBURBAN VILLAGE
+// ****************
+//
+// Tile naming scheme
+// ------------------
+// example: vil_b2x2_house01.map
+//
+// vil_ = theme prefix
+// b, p, s(h,v,t,x,c) = building, park or street (horizontal, vertical,
+						t-crossing, 4-way crossing, corner)
+// 2x2 = size of the tile
+// house = description of tile contents
+// 01 = iteration or variation of the contents
+//
+// Note: tiles will be used in tilesets with fixed assemblies, so no RMA
+// placement rules must be defined.
+
+base village2/vil_
+
+// dropship tiles --------------------------------------------------*
+
+tile +craft_drop_firebird
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// UFOs ------------------------------------------------------------*
+
+// Houses ----------------------------------------------------------*
+
+tile +b2x2_house01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house02
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house03
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x4_house04
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Commercial Buildings --------------------------------------------*
+
+tile +b2x4_station01
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Parks -----------------------------------------------------------*
+
+tile +p4x4_fountain01
+{
+	6 6
+	0		0		0		0		0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		0		0		0		0		0
+}
+
+// Streets ---------------------------------------------------------*
+
+tile +sc_ne01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sc_sw01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sh1x1_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sh_01
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +sh_02
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +st_east01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_north01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_north02
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_south01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_west01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_01
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_02
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_03
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv1x1_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sx_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+// Multiplayer Start Positions--------------------------------------*
+
+tile +mp1
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp2
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp3
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp4
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Tilesets --------------------------------------------------------*
+
+tileset 2x2
+{
+	+b2x2_house01
+	+b2x2_house02
+	+b2x2_house03
+}
+
+tileset 2x4
+{
+	+b2x4_station01
+	+b2x4_house04
+}
+
+tileset 4x4
+{
+	+p4x4_fountain01
+}
+
+tileset sh
+{
+	+sh_01
+	+sh_02
+}
+
+tileset st_north
+{
+	+st_north01
+	+st_north02
+}
+
+tileset sv
+{
+	+sv_01
+	+sv_02
+	+sv_03
+}
+
+// Assemblies ------------------------------------------------------*
+
+assembly default
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +st_east01						"0 0"
+	fix *rm_drop +craft_drop_firebird	"1 0"
+	fix tileset st_north				"3 0"
+	fix tileset sh						"4 0"
+	fix tileset sh						"6 0"
+	fix +st_west01						"8 0"
+	fix tileset sv						"0 1"
+	fix tileset sv						"3 1"
+	fix tileset sv						"8 1"
+	fix tileset sv						"0 3"
+	fix +st_east01						"3 3"
+	fix tileset sh						"4 3"
+	fix tileset sh						"6 3"
+	fix +st_west01						"8 3"
+	fix +sv1x1_01						"3 4"
+	fix tileset sv						"8 4"
+	fix +st_east01						"0 5"
+	fix tileset sh						"1 5"
+	fix +st_west01						"3 5"
+	fix tileset sv						"0 6"
+	fix tileset sv						"3 6"
+	fix tileset sv						"8 6"
+
+	// Building tilesets
+	fix tileset 2x4						"1 1"
+	fix tileset 2x2						"4 1"
+	fix tileset 2x2						"6 1"
+	fix tileset 4x4						"4 4"
+	fix tileset 2x2						"1 6"
+}
+
+
+assembly mp2p_01
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix tileset sv						"4 0"
+	fix +st_east01						"7 0"
+	fix +mp1							"8 0"
+	fix +sv1x1_01						"7 1"
+	fix +sc_ne01						"2 2"
+	fix +sh1x1_01						"3 2"
+	fix +sc_sw01						"4 2"
+	fix tileset sv						"7 2"
+	fix +sv1x1_01						"2 3"
+	fix tileset sv						"2 4"
+	fix +sc_ne01						"5 4"
+	fix +sh1x1_01						"6 4"
+	fix +sc_sw01						"7 4"
+	fix tileset sv						"5 5"
+	fix +mp2							"0 6"
+	fix +sc_sw01						"2 6"
+
+	// Building tilesets
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"2 0"
+	fix tileset 2x4						"5 0"
+	fix tileset 2x2						"8 1"
+	fix tileset 2x2						"0 2"
+	fix tileset 2x2						"8 3"
+	fix tileset 2x4						"3 3"
+	fix tileset 2x2						"0 4"
+	fix tileset 2x2						"6 5"
+	fix tileset 2x2						"8 5"
+}
