@@ -5407,6 +5407,7 @@ mapdef vil2_mp2p
 	multiplayer		true
 	campaign		false
 	singleplayer	false
+	teams			2
 	maxaliens		30
 
 	aircraft
@@ -5439,6 +5440,7 @@ mapdef vil2_mp4p
 	multiplayer		true
 	campaign		false
 	singleplayer	false
+	teams			4
 	maxaliens		30
 
 	aircraft
