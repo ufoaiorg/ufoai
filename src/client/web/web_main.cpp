@@ -186,6 +186,8 @@ void WEB_InitStartup (void)
 	Cmd_AddCommand("web_auth", WEB_Auth_f, "Perform the authentification against the UFOAI server");
 
 	web_username = Cvar_Get("web_username", Sys_GetCurrentUser(), CVAR_ARCHIVE, "The username for the UFOAI server.");
+	/* if the password is a non-empty string, this means that username and password
+	 * are valid, and the authentification was successful */
 	web_password = Cvar_Get("web_password", "", CVAR_ARCHIVE, "The encrypted password for the UFOAI server.");
 
 	web_teamdownloadurl = Cvar_Get("web_teamdownloadurl", SERVER "teams/team$id$.mpt", CVAR_ARCHIVE,
