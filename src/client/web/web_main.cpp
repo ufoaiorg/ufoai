@@ -78,7 +78,7 @@ bool WEB_GetToFile (const char *url, FILE* file)
 /**
  * @brief Uploads a file to the server with the login credentials
  * @param[in] formName The name of the form to submit with the file upload
- * @param]in] fileName The filename to upload - this must be a full path, not a virtual filesystem path
+ * @param[in] fileName The filename to upload - this must be a full path, not a virtual filesystem path
  * @param[in] url The url to open
  * @param[in] params Additional parameters for the form. The username and password values are automatically
  * filled in and don't have to be specified here.
