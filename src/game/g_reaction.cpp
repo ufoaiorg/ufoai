@@ -130,6 +130,7 @@ public:
 	void notifyClientMove(const Edict* target, bool startMove);
 	void notifyClientOnStep (const Edict* target, int step);
 	void create (const Edict* shooter);
+	void resetTargetList(const Edict* shooter);
 
 private:
 	ReactionFireTargetList rfData[MAX_RF_DATA];
@@ -297,6 +298,12 @@ void ReactionFireTargets::remove (Edict* shooter, const Edict* target)
 	}
 }
 
+void ReactionFireTargets::resetTargetList (const Edict* shooter)
+{
+	ReactionFireTargetList* rfts = find(shooter);
+	rfts->reset();
+}
+
 /**
  * @brief Check if the given shooter is ready to reaction fire at the given target.
  * @param[in] shooter The reaction firing actor
@@ -392,8 +399,9 @@ public:
 	bool checkExecution(const Edict* target);
 	void updateAllTargets(const Edict* target);
 	bool tryToShoot(Edict* shooter, const Edict* target);
-	bool isInWeaponRange (const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
+	bool isInWeaponRange(const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
 	const fireDef_t* getFireDef (const Edict* shooter) const;
+	void resetTargets(const Edict* shooter);
 };
 static ReactionFire rf;
 
@@ -707,6 +715,12 @@ void ReactionFire::updateAllTargets (const Edict* target)
 	}
 }
 
+void ReactionFire::resetTargets (const Edict *shooter)
+{
+	rft.resetTargetList(shooter);
+
+}
+
 /**
  * @brief Perform the reaction fire shot
  * @param[in] shooter The actor that is trying to shoot
@@ -909,6 +923,7 @@ void G_ReactionFireOnDead (const Edict* target)
 {
 	assert(G_IsDead(target));
 	rf.updateAllTargets(target);
+	rf.resetTargets(target);
 }
 
 /**
