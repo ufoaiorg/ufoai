@@ -5406,7 +5406,39 @@ mapdef vil2_mp2p
 	description		"_Village MP (2v2)"
 	multiplayer		true
 	campaign		false
-	skirmish		false
+	singleplayer	false
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+	)
+
+	ufos
+	(
+	)
+
+	terrains
+	(
+	)
+
+	cultures
+	(
+	)
+
+	populations
+	(
+	)
+}
+
+mapdef vil2_mp4p
+{
+	map				"+village2"
+	param			"mp4p_01"
+	description		"_Village MP (2v2)"
+	multiplayer		true
+	campaign		false
+	singleplayer	false
 	maxaliens		30
 
 	aircraft

@@ -367,3 +367,48 @@ assembly mp2p_01
 	fix tileset 2x2						"6 5"
 	fix tileset 2x2						"8 5"
 }
+
+
+assembly mp4p_01
+{
+	size "10 10"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +mp1							"0 0"
+	fix +st_west01						"2 0"
+	fix tileset sv						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +st_east01						"2 2"
+	fix tileset sh						"3 2"
+	fix +st_south01						"5 2"
+	fix +sh1x1_01						"6 2"
+	fix +st_north01						"7 2"
+	fix +mp3							"8 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"7 3"
+	fix tileset sv						"2 5"
+	fix tileset sv						"7 5"
+	fix +mp4							"0 7"
+	fix +st_south01						"2 7"
+	fix +sh1x1_01						"3 7"
+	fix +st_north01						"4 7"
+	fix tileset sh						"5 7"
+	fix +st_west01						"7 7"
+	fix tileset sv						"4 8"
+	fix +sv1x1_01						"7 8"
+	fix +st_east01						"7 9"
+	fix +mp2							"8 9"
+
+	// Building tilesets
+	fix tileset 2x2						"3 0"
+	fix tileset 2x2						"6 0"
+	fix tileset 2x2						"8 0"
+	fix tileset 2x4						"0 1"
+	fix tileset 4x4						"3 3"
+	fix tileset 2x2						"8 3"
+	fix tileset 2x2						"0 5"
+	fix tileset 2x4						"8 5"
+	fix tileset 2x2						"0 8"
+	fix tileset 2x2						"2 8"
+	fix tileset 2x2						"5 8"
+}
