@@ -213,8 +213,7 @@ static void GAME_MP_AddChatMessage (const char *text)
 
 static bool GAME_MP_HandleServerCommand (const char *command, dbuffer *msg)
 {
-	/* teaminfo command */
-	if (Q_streq(command, "teaminfo")) {
+	if (Q_streq(command, SV_CMD_TEAMINFO)) {
 		CL_ParseTeamInfoMessage(msg);
 		return true;
 	}
@@ -260,14 +259,14 @@ static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 	if (cl_maxsoldiersperteam->modified) {
 		cl_maxsoldiersperteam->modified = false;
 		if (!cgi->Com_ServerState()) {
-			cgi->Cmd_ExecuteString("rcon set %s %s", cl_maxsoldiersperteam->name, cl_maxsoldiersperteam->string);
+			cgi->Cmd_ExecuteString(SV_CMD_RCON " set %s %s", cl_maxsoldiersperteam->name, cl_maxsoldiersperteam->string);
 		}
 	}
 
 	if (cl_maxsoldiersperplayer->modified) {
 		cl_maxsoldiersperplayer->modified = false;
 		if (!cgi->Com_ServerState()) {
-			cgi->Cmd_ExecuteString("rcon set %s %s", cl_maxsoldiersperplayer->name, cl_maxsoldiersperplayer->string);
+			cgi->Cmd_ExecuteString(SV_CMD_RCON " set %s %s", cl_maxsoldiersperplayer->name, cl_maxsoldiersperplayer->string);
 		}
 	}
 }
