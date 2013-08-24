@@ -418,7 +418,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 			UI_Popup(_("Bad rcon password"), _("The rcon password you specified was wrong."));
 		} else if (strstr(popupText, REJ_CONNECTION_REFUSED)) {
 			UI_Popup(_("Connection failure"), _("The server refused the connection."));
-		} else {
+		} else if (Q_strvalid(popupText)) {
 			UI_Popup(_("Notice"), _(popupText));
 		}
 		return;
