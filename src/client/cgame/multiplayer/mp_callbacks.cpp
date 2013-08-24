@@ -38,7 +38,7 @@ cvar_t *cl_maxsoldiersperplayer;
 static cvar_t *rcon_address;
 static cvar_t *info_password;
 
-static void CL_Connect_f (void)
+static void GAME_MP_Connect_f (void)
 {
 	if (!selectedServer && cgi->Cmd_Argc() != 2 && cgi->Cmd_Argc() != 3) {
 		cgi->Com_Printf("Usage: %s <server> [<port>]\n", cgi->Cmd_Argv(0));
@@ -80,7 +80,7 @@ static void CL_Connect_f (void)
 	cgi->HUD_InitUI("multiplayerInGame");
 }
 
-static void CL_RconCallback (struct net_stream *s)
+static void GAME_MP_RconCallback (struct net_stream *s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -103,7 +103,12 @@ static void CL_RconCallback (struct net_stream *s)
 	cgi->NET_StreamFree(s);
 }
 
-bool MP_Rcon (const char *password, const char *command)
+/**
+ * @brief Sends an rcon command to the gameserver that the user is currently connected to,
+ * or if this is not the case, the gameserver that is specified in the cvar rcon_address.
+ * @return @c true if the command was send, @c false otherwise.
+ */
+bool GAME_MP_Rcon (const char *password, const char *command)
 {
 	if (Q_strnull(password)) {
 		cgi->Com_Printf("You must set 'rcon_password' before issuing a rcon command.\n");
@@ -124,7 +129,7 @@ bool MP_Rcon (const char *password, const char *command)
 		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, nullptr);
 		if (s) {
 			cgi->NET_OOB_Printf(s, SV_CMD_RCON " %s %s", password, command);
-			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
+			cgi->NET_StreamSetCallback(s, &GAME_MP_RconCallback);
 			return true;
 		}
 	}
@@ -132,11 +137,12 @@ bool MP_Rcon (const char *password, const char *command)
 	cgi->Com_Printf("You are not connected to any server\n");
 	return false;
 }
+
 /**
  * Send the rest of the command line over as
  * an unconnected command.
  */
-static void CL_Rcon_f (void)
+static void GAME_MP_Rcon_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
 		cgi->Com_Printf("Usage: %s <command>\n", cgi->Cmd_Argv(0));
@@ -148,11 +154,11 @@ static void CL_Rcon_f (void)
 		return;
 	}
 
-	if (!MP_Rcon(rcon_client_password->string, cgi->Cmd_Args()))
+	if (!GAME_MP_Rcon(rcon_client_password->string, cgi->Cmd_Args()))
 		Com_Printf("Could not send the rcon command\n");
 }
 
-static void CL_StartGame_f (void)
+static void GAME_MP_StartGame_f (void)
 {
 	if (cgi->Com_ServerState())
 		cgi->Cmd_ExecuteString("startgame");
@@ -162,11 +168,8 @@ static void CL_StartGame_f (void)
 
 /**
  * @brief Binding for disconnect console command
- * @sa CL_Disconnect
- * @sa CL_Drop
- * @sa SV_ShutdownWhenEmpty
  */
-static void CL_Disconnect_f (void)
+static void GAME_MP_Disconnect_f (void)
 {
 	cgi->SV_ShutdownWhenEmpty();
 	cgi->CL_Drop();
@@ -175,7 +178,7 @@ static void CL_Disconnect_f (void)
 /**
  * @brief The server is changing levels
  */
-static void CL_Reconnect_f (void)
+static void GAME_MP_Reconnect_f (void)
 {
 	if (cgi->Com_ServerState())
 		return;
@@ -190,11 +193,11 @@ static void CL_Reconnect_f (void)
 }
 
 /**
- * @brief Send the teaminfo string to server
+ * @brief Send the SV_CMD_TEAMINFO command to server
  * @sa CL_ParseTeamInfoMessage
  * @sa SV_ConnectionlessPacket
  */
-static void CL_SelectTeam_Init_f (void)
+static void GAME_MP_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
 	cgi->UI_ResetData(TEXT_STANDARD);
@@ -226,9 +229,9 @@ static bool GAME_MP_SetTeamNum (int teamnum)
 
 /**
  * @brief Increase or decrease the teamnum
- * @sa CL_SelectTeam_Init_f
+ * @sa GAME_MP_SelectTeam_Init_f
  */
-static void CL_TeamNum_f (void)
+static void GAME_MP_TeamNum_f (void)
 {
 	int i = cgi->Cvar_GetInteger("cl_teamnum");
 
@@ -249,7 +252,7 @@ static void CL_TeamNum_f (void)
 		}
 	}
 
-	CL_SelectTeam_Init_f();
+	GAME_MP_SelectTeam_Init_f();
 }
 
 /**
@@ -257,7 +260,7 @@ static void CL_TeamNum_f (void)
  * @sa Cmd_AddParamCompleteFunction
  * @todo Extend this for all the servers on the server browser list
  */
-static int CL_CompleteNetworkAddress (const char *partial, const char **match)
+static int GAME_MP_CompleteNetworkAddress (const char *partial, const char **match)
 {
 	int n = 0;
 	for (int i = 0; i != MAX_BOOKMARKS; ++i) {
@@ -270,7 +273,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	return n;
 }
 
-static void MP_InitUI_f (void)
+static void GAME_MP_InitUI_f (void)
 {
 	uiNode_t *gameTypes = nullptr;
 	for (int i = 0; i < cgi->csi->numGTs; i++) {
@@ -280,7 +283,7 @@ static void MP_InitUI_f (void)
 	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
 }
 
-void MP_CallbacksInit (const cgame_import_t *import)
+void GAME_MP_CallbacksInit (const cgame_import_t *import)
 {
 	cgi = import;
 	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
@@ -288,24 +291,24 @@ void MP_CallbacksInit (const cgame_import_t *import)
 	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, nullptr);
 	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
 	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
-	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	cgi->Cmd_AddCommand("mp_init_ui", MP_InitUI_f, nullptr);
-	cgi->Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
-	cgi->Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
-	cgi->Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
-	cgi->Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
-	cgi->Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
-	cgi->Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
-	cgi->Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
-	cgi->Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
-	cgi->Cmd_AddCommand("cl_startgame", CL_StartGame_f, "Forces a gamestart if you are the admin");
-	cgi->Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
+	cgi->Cmd_AddCommand("mp_selectteam_init", GAME_MP_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	cgi->Cmd_AddCommand("mp_init_ui", GAME_MP_InitUI_f, nullptr);
+	cgi->Cmd_AddCommand("teamnum_dec", GAME_MP_TeamNum_f, "Decrease the preferred teamnum");
+	cgi->Cmd_AddCommand("teamnum_inc", GAME_MP_TeamNum_f, "Increase the preferred teamnum");
+	cgi->Cmd_AddCommand("pingservers", GAME_MP_PingServers_f, "Ping all servers in local network to get the serverlist");
+	cgi->Cmd_AddCommand("disconnect", GAME_MP_Disconnect_f, "Disconnect from the current server");
+	cgi->Cmd_AddCommand("connect", GAME_MP_Connect_f, "Connect to given ip");
+	cgi->Cmd_AddParamCompleteFunction("connect", GAME_MP_CompleteNetworkAddress);
+	cgi->Cmd_AddCommand("reconnect", GAME_MP_Reconnect_f, "Reconnect to last server");
+	cgi->Cmd_AddCommand("rcon", GAME_MP_Rcon_f, "Execute a rcon command - see rcon_password");
+	cgi->Cmd_AddCommand("cl_startgame", GAME_MP_StartGame_f, "Forces a gamestart if you are the admin");
+	cgi->Cmd_AddParamCompleteFunction("rcon", GAME_MP_CompleteNetworkAddress);
 
 	cl_maxsoldiersperteam->modified = false;
 	cl_maxsoldiersperplayer->modified = false;
 }
 
-void MP_CallbacksShutdown (void)
+void GAME_MP_CallbacksShutdown (void)
 {
 	cgi->Cmd_RemoveCommand("mp_selectteam_init");
 	cgi->Cmd_RemoveCommand("mp_init_ui");

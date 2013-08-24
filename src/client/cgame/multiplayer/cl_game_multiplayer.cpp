@@ -212,7 +212,7 @@ static void GAME_MP_AddChatMessage (const char *text)
 static bool GAME_MP_HandleServerCommand (const char *command, dbuffer *msg)
 {
 	if (Q_streq(command, SV_CMD_TEAMINFO)) {
-		CL_ParseTeamInfoMessage(msg);
+		GAME_MP_ParseTeamInfoMessage(msg);
 		return true;
 	}
 
@@ -227,16 +227,16 @@ static void GAME_MP_InitStartup (void)
 
 	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, nullptr);
 	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
-	MP_CallbacksInit(cgi);
-	MP_ServerListInit(cgi);
+	GAME_MP_CallbacksInit(cgi);
+	GAME_MP_ServerListInit(cgi);
 }
 
 static void GAME_MP_Shutdown (void)
 {
 	cgi->Cmd_RemoveCommand("mp_startserver");
 	cgi->Cmd_RemoveCommand("mp_updategametype");
-	MP_CallbacksShutdown();
-	MP_ServerListShutdown();
+	GAME_MP_CallbacksShutdown();
+	GAME_MP_ServerListShutdown();
 
 	cgi->SV_Shutdown("Game mode shutdown", false);
 

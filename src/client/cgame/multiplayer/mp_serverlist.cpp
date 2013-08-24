@@ -52,7 +52,7 @@ static struct datagram_socket *netDatagramSocket;
  * @return @c true if the server is compatible, @c msg is not @c null and the server
  * wasn't pinged already, @c false otherwise
  */
-static bool CL_ProcessPingReply (serverList_t *server, const char *msg)
+static bool GAME_MP_ProcessPingReply (serverList_t *server, const char *msg)
 {
 	if (!msg)
 		return false;
@@ -94,7 +94,7 @@ typedef enum {
  * @param[in] server The server data
  * @return @c true if the server should be visible for the current filter settings, @c false otherwise
  */
-static inline bool CL_ShowServer (const serverList_t *server)
+static inline bool GAME_MP_ShowServer (const serverList_t *server)
 {
 	if (cl_serverlist->integer == SERVERLIST_SHOWALL)
 		return true;
@@ -106,10 +106,7 @@ static inline bool CL_ShowServer (const serverList_t *server)
 	return false;
 }
 
-/**
- * @brief CL_PingServer
- */
-static void CL_PingServerCallback (struct net_stream *s)
+static void GAME_MP_PingServerCallback (struct net_stream *s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -128,8 +125,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 
 	if (strncmp(str, "info", 4) == 0) {
 		cgi->NET_ReadString(buf, str, sizeof(str));
-		if (CL_ProcessPingReply(server, str)) {
-			if (CL_ShowServer(server)) {
+		if (GAME_MP_ProcessPingReply(server, str)) {
+			if (GAME_MP_ShowServer(server)) {
 				server->serverListPos = serverListPos;
 				serverListPos++;
 				Q_strcat(serverText, sizeof(serverText), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
@@ -151,9 +148,9 @@ static void CL_PingServerCallback (struct net_stream *s)
 /**
  * @brief Pings all servers in serverList
  * @sa CL_AddServerToList
- * @sa CL_ParseServerInfoMessage
+ * @sa GAME_MP_ParseServerInfoMessage
  */
-static void CL_PingServer (serverList_t *server)
+static void GAME_MP_PingServer (serverList_t *server)
 {
 	struct net_stream *s = cgi->NET_Connect(server->node, server->service, nullptr);
 	if (s == nullptr) {
@@ -163,13 +160,13 @@ static void CL_PingServer (serverList_t *server)
 	cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
 	cgi->NET_OOB_Printf(s, SV_CMD_INFO " %i", PROTOCOL_VERSION);
 	cgi->NET_StreamSetData(s, server);
-	cgi->NET_StreamSetCallback(s, &CL_PingServerCallback);
+	cgi->NET_StreamSetCallback(s, &GAME_MP_PingServerCallback);
 }
 
 /**
  * @brief Prints all the servers on the list to game console
  */
-void CL_PrintServerList_f (void)
+static void GAME_MP_PrintServerList_f (void)
 {
 	cgi->Com_Printf("%i servers on the list\n", serverListLength);
 
@@ -184,7 +181,7 @@ void CL_PrintServerList_f (void)
  * @return false if it is no valid address or server already exists
  * @sa CL_ParseStatusMessage
  */
-static void CL_AddServerToList (const char *node, const char *service)
+static void GAME_MP_AddServerToList (const char *node, const char *service)
 {
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
@@ -196,7 +193,7 @@ static void CL_AddServerToList (const char *node, const char *service)
 	OBJZERO(serverList[serverListLength]);
 	serverList[serverListLength].node = cgi->GAME_StrDup(node);
 	serverList[serverListLength].service = cgi->GAME_StrDup(service);
-	CL_PingServer(&serverList[serverListLength]);
+	GAME_MP_PingServer(&serverList[serverListLength]);
 	serverListLength++;
 }
 
@@ -206,16 +203,16 @@ static void CL_AddServerToList (const char *node, const char *service)
  * This function fills the multiplayer_selectteam menu with content
  * @sa NET_OOB_Printf
  * @sa SVC_TeamInfo
- * @sa CL_SelectTeam_Init_f
+ * @sa GAME_MP_SelectTeam_Init_f
  */
-void CL_ParseTeamInfoMessage (dbuffer *msg)
+void GAME_MP_ParseTeamInfoMessage (dbuffer *msg)
 {
 	char str[4096];
 	if (cgi->NET_ReadString(msg, str, sizeof(str)) == 0) {
 		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
 		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
 		cgi->UI_ExecuteConfunc("multiplayer_playerNumber 0");
-		cgi->Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "GAME_MP_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
 
@@ -275,7 +272,7 @@ static char userInfoText[256];
  * @sa CL_ServerInfoCallback
  * @sa SVC_Info
  */
-void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
+static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 {
 	const char *value;
 	char str[MAX_INFO_STRING];
@@ -352,10 +349,10 @@ void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 }
 
 /**
- * @sa CL_ServerInfo_f
- * @sa CL_ParseServerInfoMessage
+ * @sa GAME_MP_ServerInfo_f
+ * @sa GAME_MP_ParseServerInfoMessage
  */
-static void CL_ServerInfoCallback (struct net_stream *s)
+static void GAME_MP_ServerInfoCallback (struct net_stream *s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -372,12 +369,12 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	if (Q_streq(str, "print")) {
 		char hostname[256];
 		cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
-		CL_ParseServerInfoMessage(buf, hostname);
+		GAME_MP_ParseServerInfoMessage(buf, hostname);
 	}
 	cgi->NET_StreamFree(s);
 }
 
-static void CL_QueryMasterServerThread (const char *responseBuf, void *userdata)
+static void GAME_MP_QueryMasterServerThread (const char *responseBuf, void *userdata)
 {
 	if (!responseBuf) {
 		cgi->Com_Printf("Could not query masterserver\n");
@@ -411,21 +408,21 @@ static void CL_QueryMasterServerThread (const char *responseBuf, void *userdata)
 		}
 		char service[MAX_VAR];
 		Q_strncpyz(service, token, sizeof(service));
-		CL_AddServerToList(node, service);
+		GAME_MP_AddServerToList(node, service);
 	}
 }
 
 /**
  * @sa SV_DiscoveryCallback
  */
-static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
 {
 	const char match[] = "discovered";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
 		char node[MAX_VAR];
 		char service[MAX_VAR];
 		cgi->NET_SockaddrToStrings(s, from, node, sizeof(node), service, sizeof(service));
-		CL_AddServerToList(node, service);
+		GAME_MP_AddServerToList(node, service);
 	}
 }
 
@@ -434,7 +431,7 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
  *
  * bookmarks are saved in cvar adr[0-15]
  */
-static void CL_BookmarkAdd_f (void)
+static void GAME_MP_BookmarkAdd_f (void)
 {
 	const char *newBookmark;
 
@@ -462,7 +459,7 @@ static void CL_BookmarkAdd_f (void)
 /**
  * @sa CL_ServerInfoCallback
  */
-static void CL_ServerInfo_f (void)
+static void GAME_MP_ServerInfo_f (void)
 {
 	const char *host;
 	const char *port;
@@ -489,7 +486,7 @@ static void CL_ServerInfo_f (void)
 	struct net_stream *s = cgi->NET_Connect(host, port, nullptr);
 	if (s != nullptr) {
 		cgi->NET_OOB_Printf(s, SV_CMD_STATUS " %i", PROTOCOL_VERSION);
-		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);
+		cgi->NET_StreamSetCallback(s, &GAME_MP_ServerInfoCallback);
 	} else {
 		cgi->Com_Printf("Could not connect to %s %s\n", host, port);
 	}
@@ -497,9 +494,9 @@ static void CL_ServerInfo_f (void)
 
 /**
  * @brief Callback for bookmark nodes in multiplayer menu (mp_bookmarks)
- * @sa CL_ParseServerInfoMessage
+ * @sa GAME_MP_ParseServerInfoMessage
  */
-static void CL_ServerListClick_f (void)
+static void GAME_MP_ServerListClick_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
 		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
@@ -529,10 +526,10 @@ static int lastServerQuery = 0;
 
 /**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
- * @sa CL_ParseServerInfoMessage
+ * @sa GAME_MP_ParseServerInfoMessage
  * @note Use a parameter for pingservers to update the current serverlist
  */
-void CL_PingServers_f (void)
+void GAME_MP_PingServers_f (void)
 {
 	selectedServer = nullptr;
 
@@ -555,7 +552,7 @@ void CL_PingServers_f (void)
 	}
 
 	if (!netDatagramSocket)
-		netDatagramSocket = cgi->NET_DatagramSocketNew(nullptr, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
+		netDatagramSocket = cgi->NET_DatagramSocketNew(nullptr, DOUBLEQUOTE(PORT_CLIENT), &GAME_MP_ServerListDiscoveryCallback);
 
 	/* broadcast search for all the servers int the local network */
 	if (netDatagramSocket) {
@@ -576,11 +573,11 @@ void CL_PingServers_f (void)
 	/* query master server? */
 	if (cgi->Cmd_Argc() == 2 && !Q_streq(cgi->Cmd_Argv(1), "local")) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
-		cgi->CL_QueryMasterServer("query", CL_QueryMasterServerThread);
+		cgi->CL_QueryMasterServer("query", GAME_MP_QueryMasterServerThread);
 	}
 }
 
-void MP_ServerListInit (const cgame_import_t *import)
+void GAME_MP_ServerListInit (const cgame_import_t *import)
 {
 	cgi = import;
 	/* register our variables */
@@ -588,14 +585,14 @@ void MP_ServerListInit (const cgame_import_t *import)
 		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
-	cgi->Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-	cgi->Cmd_AddCommand("server_info", CL_ServerInfo_f, nullptr);
-	cgi->Cmd_AddCommand("serverlist", CL_PrintServerList_f, nullptr);
+	cgi->Cmd_AddCommand("bookmark_add", GAME_MP_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
+	cgi->Cmd_AddCommand("server_info", GAME_MP_ServerInfo_f, nullptr);
+	cgi->Cmd_AddCommand("serverlist", GAME_MP_PrintServerList_f, nullptr);
 	/* text id is servers in menu_multiplayer.ufo */
-	cgi->Cmd_AddCommand("servers_click", CL_ServerListClick_f, nullptr);
+	cgi->Cmd_AddCommand("servers_click", GAME_MP_ServerListClick_f, nullptr);
 }
 
-void MP_ServerListShutdown (void)
+void GAME_MP_ServerListShutdown (void)
 {
 	cgi->Cmd_RemoveCommand("bookmark_add");
 	cgi->Cmd_RemoveCommand("server_info");

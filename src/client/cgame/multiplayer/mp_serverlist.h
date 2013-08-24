@@ -45,11 +45,10 @@ extern serverList_t *selectedServer;
 
 struct cgame_import_s;
 
-void CL_PingServers_f(void);
-void CL_PrintServerList_f(void);
+void GAME_MP_PingServers_f(void);
 
-void CL_ParseTeamInfoMessage(dbuffer *msg);
+void GAME_MP_ParseTeamInfoMessage(dbuffer *msg);
 void CL_ParseServerInfoMessage(dbuffer *msg, const char *hostname);
 
-void MP_ServerListInit(const struct cgame_import_s *import);
-void MP_ServerListShutdown(void);
+void GAME_MP_ServerListInit(const struct cgame_import_s *import);
+void GAME_MP_ServerListShutdown(void);
