@@ -823,7 +823,7 @@ window mp_create_server extends abstract_multiplayer
 			current		*cvar:sv_maxsoldiersperteam
 			pos			"350 90"
 			min			1
-			max			8
+			max			12
 			delta		1
 		}
 
@@ -849,7 +849,7 @@ window mp_create_server extends abstract_multiplayer
 			current		*cvar:sv_maxsoldiersperplayer
 			pos			"350 110"
 			min			1
-			max			8
+			max			12
 			delta		1
 		}
 
