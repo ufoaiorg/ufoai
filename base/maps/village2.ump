@@ -8,7 +8,7 @@
 //
 // vil_ = theme prefix
 // b, p, s(h,v,t,x,c) = building, park or street (horizontal, vertical,
-						t-crossing, 4-way crossing, corner)
+//						t-crossing, 4-way crossing, corner)
 // 2x2 = size of the tile
 // house = description of tile contents
 // 01 = iteration or variation of the contents
