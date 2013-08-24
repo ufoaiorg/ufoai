@@ -149,7 +149,7 @@ static void CL_Rcon_f (void)
 	}
 
 	if (!MP_Rcon(rcon_client_password->string, cgi->Cmd_Args()))
-		Com_Printf("Could not send the rcon command");
+		Com_Printf("Could not send the rcon command\n");
 }
 
 static void CL_StartGame_f (void)
