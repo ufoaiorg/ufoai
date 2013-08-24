@@ -82,7 +82,7 @@ typedef struct client_persistent_s {
 	bool ai;				/**< client controlled by ai */
 
 	/** ai specific data */
-	Edict *last;			/**< set to the last actor edict that was handled for the ai in their think function */
+	Edict* last;			/**< set to the last actor edict that was handled for the ai in their think function */
 
 	float	flood_locktill;	/**< locked from talking */
 	float	flood_when[10];	/**< when messages were said */

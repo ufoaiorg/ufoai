@@ -96,7 +96,7 @@ void G_CheckForceEndRound (void)
 static int G_PlayerSoldiersCount (const Player &player)
 {
 	int cnt = 0;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (ent->pnum == player.getNum())
@@ -116,7 +116,7 @@ static int G_PlayerSoldiersCount (const Player &player)
  */
 static void G_UpdateStunState (int team)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	const int regen = 1;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
@@ -137,7 +137,7 @@ static void G_UpdateStunState (int team)
  */
 static void G_UpdateCarriedWeight (int team)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		if (ent->chr.scoreMission) {
@@ -215,7 +215,7 @@ void G_ClientEndRound (Player &player)
 
 	if (!G_IsAIPlayer(&player)) {
 		if (g_lastseen->integer > 0) {
-			Edict *ent = nullptr;
+			Edict* ent = nullptr;
 			while ((ent = G_EdictsGetNextActor(ent))) {
 				if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
 					player.lastSeen = level.actualRound;

@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (Edict *ent, bool sanity)
+static void G_MoralePanic (Edict* ent, bool sanity)
 {
 	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
@@ -76,7 +76,7 @@ static void G_MoralePanic (Edict *ent, bool sanity)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopPanic (Edict *ent)
+static void G_MoraleStopPanic (Edict* ent)
 {
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
@@ -93,7 +93,7 @@ static void G_MoraleStopPanic (Edict *ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleRage (Edict *ent, bool sanity)
+static void G_MoraleRage (Edict* ent, bool sanity)
 {
 	if (sanity) {
 		G_SetRage(ent);
@@ -118,7 +118,7 @@ static void G_MoraleRage (Edict *ent, bool sanity)
  * @sa G_MoraleStopPanic
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopRage (Edict *ent)
+static void G_MoraleStopRage (Edict* ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		G_RemoveInsane(ent);
@@ -160,7 +160,7 @@ void G_MoraleBehaviour (int team)
 	if (!enabled)
 		return;
 
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team)) != nullptr) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
 		if (ent->type != ET_ACTOR || CHRSH_IsTeamDefRobot(ent->chr.teamDef))

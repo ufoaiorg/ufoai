@@ -30,25 +30,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void G_FreeEdict(Edict *e);
-Edict *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
-Edict *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
-bool G_UseEdict(Edict *ent, Edict *activator);
+void G_FreeEdict(Edict* e);
+Edict* G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
+Edict* G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
+bool G_UseEdict(Edict* ent, Edict* activator);
 const char *G_GetWeaponNameForFiredef(const fireDef_t *fd);
 Player* G_GetPlayerForTeam(int team);
-void G_TakeDamage(Edict *ent, int damage);
+void G_TakeDamage(Edict* ent, int damage);
 bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
-trace_t G_Trace(const vec3_t start, const vec3_t end, const Edict *passent, int contentmask);
+trace_t G_Trace(const vec3_t start, const vec3_t end, const Edict* passent, int contentmask);
 const char *G_GetPlayerName(int pnum);
 void G_PrintStats(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
-void G_PrintActorStats(const Edict *victim, const Edict *attacker, const fireDef_t *fd);
-Edict *G_FindRadius(Edict *from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
+void G_PrintActorStats(const Edict* victim, const Edict* attacker, const fireDef_t *fd);
+Edict* G_FindRadius(Edict* from, const vec3_t org, float rad, entity_type_t type = ET_NULL);
 playermask_t G_GetClosePlayerMask(const vec3_t origin, float radius);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_RecalcRouting(const char *model, const GridBox& box);
 void G_CompleteRecalcRouting(void);
-int G_TouchTriggers(Edict *ent);
-int G_TouchSolids(Edict *ent, float extend);
-void G_TouchEdicts(Edict *ent, float extend);
+int G_TouchTriggers(Edict* ent);
+int G_TouchSolids(Edict* ent, float extend);
+void G_TouchEdicts(Edict* ent, float extend);
 uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);

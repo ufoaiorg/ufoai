@@ -121,19 +121,19 @@ class ReactionFireTargets
 {
 public:
 	void init();
-	void add (const Edict *shooter, const Edict *target, const int tusForShot);
-	void remove (Edict *shooter, const Edict *target);
-	bool hasExpired (const Edict *shooter, const Edict *target, const int tusTarget);
-	int getTriggerTUs (const Edict *shooter, const Edict *target);
-	void advance (const Edict *shooter, const int tusShot);
+	void add (const Edict* shooter, const Edict* target, const int tusForShot);
+	void remove (Edict* shooter, const Edict* target);
+	bool hasExpired (const Edict* shooter, const Edict* target, const int tusTarget);
+	int getTriggerTUs (const Edict* shooter, const Edict* target);
+	void advance (const Edict* shooter, const int tusShot);
 	void reset();
-	void notifyClientMove(const Edict *target, bool startMove);
-	void notifyClientOnStep (const Edict *target, int step);
-	void create (const Edict *shooter);
+	void notifyClientMove(const Edict* target, bool startMove);
+	void notifyClientOnStep (const Edict* target, int step);
+	void create (const Edict* shooter);
 
 private:
 	ReactionFireTargetList rfData[MAX_RF_DATA];
-	ReactionFireTargetList* find (const Edict *shooter);
+	ReactionFireTargetList* find (const Edict* shooter);
 };
 
 static ReactionFireTargets rft;
@@ -158,7 +158,7 @@ void ReactionFireTargets::reset (void)
 	}
 }
 
-void ReactionFireTargets::notifyClientOnStep (const Edict *target, int step)
+void ReactionFireTargets::notifyClientOnStep (const Edict* target, int step)
 {
 	if (step == 0)
 		G_ReactionFireNofityClientStartMove(target);
@@ -167,7 +167,7 @@ void ReactionFireTargets::notifyClientOnStep (const Edict *target, int step)
 		ReactionFireTargetList *rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
 			continue;
-		const Edict *shooter = G_EdictsGetByNum(rfts->entnum);
+		const Edict* shooter = G_EdictsGetByNum(rfts->entnum);
 		for (int j = 0; j < rfts->count; j++) {
 			ReactionFireTarget& t = rfts->targets[j];
 			if (t.target != target)
@@ -178,13 +178,13 @@ void ReactionFireTargets::notifyClientOnStep (const Edict *target, int step)
 	}
 }
 
-void ReactionFireTargets::notifyClientMove (const Edict *target, bool startMove)
+void ReactionFireTargets::notifyClientMove (const Edict* target, bool startMove)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
 			continue;
-		const Edict *shooter = G_EdictsGetByNum(rfts->entnum);
+		const Edict* shooter = G_EdictsGetByNum(rfts->entnum);
 		for (int j = 0; j < rfts->count; j++) {
 			if (rfts->targets[j].target != target)
 				continue;
@@ -202,7 +202,7 @@ void ReactionFireTargets::notifyClientMove (const Edict *target, bool startMove)
  * @brief Find the given edict's table of reaction fire targets.
  * @param[in] shooter The reaction firing actor
  */
-ReactionFireTargetList* ReactionFireTargets::find (const Edict *shooter)
+ReactionFireTargetList* ReactionFireTargets::find (const Edict* shooter)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
@@ -218,7 +218,7 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict *shooter)
  * @brief Create a table of reaction fire targets for the given edict.
  * @param[in] shooter The reaction firing actor
  */
-void ReactionFireTargets::create (const Edict *shooter)
+void ReactionFireTargets::create (const Edict* shooter)
 {
 	ReactionFireTargetList *rfts = find(shooter);
 
@@ -242,7 +242,7 @@ void ReactionFireTargets::create (const Edict *shooter)
  * @param[in] target The potential reaction fire victim
  * @param[in] tusForShot The TUs needed for the shot
  */
-void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const int tusForShot)
+void ReactionFireTargets::add (const Edict* shooter, const Edict* target, const int tusForShot)
 {
 	int i;
 	ReactionFireTargetList *rfts = find(shooter);
@@ -271,7 +271,7 @@ void ReactionFireTargets::add (const Edict *shooter, const Edict *target, const 
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
  */
-void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
+void ReactionFireTargets::remove (Edict* shooter, const Edict* target)
 {
 	ReactionFireTargetList *rfts = find(shooter);
 
@@ -303,7 +303,7 @@ void ReactionFireTargets::remove (Edict *shooter, const Edict *target)
  * @param[in] target The potential reaction fire victim
  * @return The TUs the target will need to reach until the RF shot goes off.
  */
-int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *target)
+int ReactionFireTargets::getTriggerTUs (const Edict* shooter, const Edict* target)
 {
 	const ReactionFireTargetList *rfts = find(shooter);
 
@@ -328,7 +328,7 @@ int ReactionFireTargets::getTriggerTUs (const Edict *shooter, const Edict *targe
  * @param[in] target The potential reaction fire victim
  * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
-bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target, const int tusTarget)
+bool ReactionFireTargets::hasExpired (const Edict* shooter, const Edict* target, const int tusTarget)
 {
 	const ReactionFireTargetList *rfts = find(shooter);
 
@@ -352,7 +352,7 @@ bool ReactionFireTargets::hasExpired (const Edict *shooter, const Edict *target,
  * @param[in] shooter The reaction firing actor
  * @param[in] tusShot The TUs the shooter will need for the next shot
  */
-void ReactionFireTargets::advance (const Edict *shooter, const int tusShot)
+void ReactionFireTargets::advance (const Edict* shooter, const int tusShot)
 {
 	ReactionFireTargetList *rfts = find(shooter);
 	assert(rfts);
@@ -375,7 +375,7 @@ void G_ReactionFireTargetsInit (void)
  * @brief free function to create a table of reaction fire targets for the given edict.
  * @param[in] shooter The reaction firing actor
  */
-void G_ReactionFireTargetsCreate (const Edict *shooter)
+void G_ReactionFireTargetsCreate (const Edict* shooter)
 {
 	rft.create(shooter);
 }
@@ -383,17 +383,17 @@ void G_ReactionFireTargetsCreate (const Edict *shooter)
 class ReactionFire
 {
 private:
-	bool isEnemy(const Edict *shooter, const Edict *target) const;
-	bool canReact(Edict *shooter, const Edict *target) const;
-	bool canSee(const Edict *shooter, const Edict *target) const;
-	bool shoot(Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
+	bool isEnemy(const Edict* shooter, const Edict* target) const;
+	bool canReact(Edict* shooter, const Edict* target) const;
+	bool canSee(const Edict* shooter, const Edict* target) const;
+	bool shoot(Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 public:
-	void notifyClientOnStep(const Edict *target, int step);
-	bool checkExecution(const Edict *target);
-	void updateAllTargets(const Edict *target);
-	bool tryToShoot(Edict *shooter, const Edict *target);
-	bool isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd) const;
-	const fireDef_t* getFireDef (const Edict *shooter) const;
+	void notifyClientOnStep(const Edict* target, int step);
+	bool checkExecution(const Edict* target);
+	void updateAllTargets(const Edict* target);
+	bool tryToShoot(Edict* shooter, const Edict* target);
+	bool isInWeaponRange (const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
+	const fireDef_t* getFireDef (const Edict* shooter) const;
 };
 static ReactionFire rf;
 
@@ -402,7 +402,7 @@ static ReactionFire rf;
  * @param[in] shooter The reaction firing actor
  * @return nullptr if something is wrong
  */
-const fireDef_t* ReactionFire::getFireDef (const Edict *shooter) const
+const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
 {
 	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
 	if (!fmSetting->isSaneFiremode())
@@ -421,7 +421,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict *shooter) const
 	return nullptr;
 }
 
-bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, const fireDef_t* fd) const
+bool ReactionFire::isInWeaponRange (const Edict* shooter, const Edict* target, const fireDef_t* fd) const
 {
 	assert(fd);
 	return fd->range >= VectorDist(shooter->origin, target->origin);
@@ -434,7 +434,7 @@ bool ReactionFire::isInWeaponRange (const Edict *shooter, const Edict *target, c
  * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
  * using in reaction fire situations can handle the distance between the shooter and the target)
  */
-static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *target)
+static int G_ReactionFireGetTUsForItem (const Edict* shooter, const Edict* target)
 {
 	const fireDef_t *fd = rf.getFireDef(shooter);
 	if (!fd)
@@ -453,7 +453,7 @@ static int G_ReactionFireGetTUsForItem (const Edict *shooter, const Edict *targe
  * @brief Checks if the currently selected firemode is usable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  */
-static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
+static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
 {
 	const FiremodeSettings *fmSettings = &actor->chr.RFmode;
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
@@ -482,7 +482,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict *actor)
  * @param[in] hand The hand that should be used for reaction fire
  * @param[in] od The object/weapon for the reaction fire
  */
-void G_ReactionFireSettingsUpdate (Edict *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
+void G_ReactionFireSettingsUpdate (Edict* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {
 	ent->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
 
@@ -505,7 +505,7 @@ void G_ReactionFireSettingsUpdate (Edict *ent, fireDefIndex_t fmIdx, actorHands_
  * @param[in] ent The actors edict to check for TUs for
  * @return @c true if the given actor has enough TUs left to activate reaction fire, @c false otherwise.
  */
-static bool G_ActorHasEnoughTUsReactionFire (const Edict *ent)
+static bool G_ActorHasEnoughTUsReactionFire (const Edict* ent)
 {
 	const int TUs = G_ActorGetTUForReactionFire(ent);
 	const chrReservations_t *res = &ent->chr.reservedTus;
@@ -517,7 +517,7 @@ static bool G_ActorHasEnoughTUsReactionFire (const Edict *ent)
  * @return @c true if the needed settings could have been made or settings are
  * already valid, @c false otherwise.
  */
-static bool G_ReactionFireSettingsSetDefault (Edict *ent)
+static bool G_ReactionFireSettingsSetDefault (Edict* ent)
 {
 	if (G_ActorHasWorkingFireModeSet(ent))
 		return true;
@@ -553,7 +553,7 @@ static bool G_ReactionFireSettingsSetDefault (Edict *ent)
  * @param[in] ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
-static bool G_ReactionFireCanBeEnabled (const Edict *ent)
+static bool G_ReactionFireCanBeEnabled (const Edict* ent)
 {
 	/* check ent is a suitable shooter */
 	if (!ent->inuse || !G_IsLivingActor(ent))
@@ -590,7 +590,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict *ent)
  * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
  * back to @c 0
  */
-bool G_ReactionFireSettingsReserveTUs (Edict *ent)
+bool G_ReactionFireSettingsReserveTUs (Edict* ent)
 {
 	if (G_ReactionFireSettingsSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 		const int TUs = G_ActorGetTUForReactionFire(ent);
@@ -608,7 +608,7 @@ bool G_ReactionFireSettingsReserveTUs (Edict *ent)
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::isEnemy (const Edict *shooter, const Edict *target) const
+bool ReactionFire::isEnemy (const Edict* shooter, const Edict* target) const
 {
 	/* an entity can't reaction fire at itself */
 	if (shooter == target)
@@ -636,7 +636,7 @@ bool ReactionFire::isEnemy (const Edict *shooter, const Edict *target) const
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canReact (Edict *shooter, const Edict *target) const
+bool ReactionFire::canReact (Edict* shooter, const Edict* target) const
 {
 	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
 	if (G_IsDazed(shooter))
@@ -662,7 +662,7 @@ bool ReactionFire::canReact (Edict *shooter, const Edict *target) const
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canSee (const Edict *shooter, const Edict *target) const
+bool ReactionFire::canSee (const Edict* shooter, const Edict* target) const
 {
 	if (!G_IsVisibleForTeam(target, shooter->team))
 		return false;
@@ -687,9 +687,9 @@ bool ReactionFire::canSee (const Edict *shooter, const Edict *target) const
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  */
-void ReactionFire::updateAllTargets (const Edict *target)
+void ReactionFire::updateAllTargets (const Edict* target)
 {
-	Edict *shooter = nullptr;
+	Edict* shooter = nullptr;
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
@@ -716,7 +716,7 @@ void ReactionFire::updateAllTargets (const Edict *target)
  * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @sa G_ClientShoot
  */
-bool ReactionFire::shoot (Edict *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
+bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
@@ -755,7 +755,7 @@ bool ReactionFire::shoot (Edict *shooter, const pos3_t at, shoot_types_t type, f
  * @param[in] target The victim of the reaction fire
  * @return true if the entity fired, false otherwise
  */
-bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
+bool ReactionFire::tryToShoot (Edict* shooter, const Edict* target)
 {
 	/* check for valid target */
 	assert(target);
@@ -780,7 +780,7 @@ bool ReactionFire::tryToShoot (Edict *shooter, const Edict *target)
 	return tookShot;
 }
 
-void ReactionFire::notifyClientOnStep (const Edict *target, int step)
+void ReactionFire::notifyClientOnStep (const Edict* target, int step)
 {
 	rft.notifyClientOnStep(target, step);
 }
@@ -792,9 +792,9 @@ void ReactionFire::notifyClientOnStep (const Edict *target, int step)
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
  */
-bool ReactionFire::checkExecution (const Edict *target)
+bool ReactionFire::checkExecution (const Edict* target)
 {
-	Edict *shooter = nullptr;
+	Edict* shooter = nullptr;
 	bool fired = false;
 
 	/* check all possible shooters */
@@ -818,14 +818,14 @@ bool ReactionFire::checkExecution (const Edict *target)
  * @brief Prints some reaction fire data to the console
  * @param[in] target The target entity
  */
-static void G_ReactionFirePrintSituation (Edict *target)
+static void G_ReactionFirePrintSituation (Edict* target)
 {
 	if (!G_IsAlien(target))
 		return;
 
 	Com_Printf("Alien %i at %i/%i/%i TU:%i\n", target->number, target->pos[0], target->pos[1], target->pos[2], target->TU);
 
-	Edict *shooter = nullptr;
+	Edict* shooter = nullptr;
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
@@ -851,7 +851,7 @@ static void G_ReactionFirePrintSituation (Edict *target)
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-bool G_ReactionFireOnMovement (Edict *target, int step)
+bool G_ReactionFireOnMovement (Edict* target, int step)
 {
 #if DEBUG_RF
 	G_ReactionFirePrintSituation(target);
@@ -873,7 +873,7 @@ bool G_ReactionFireOnMovement (Edict *target, int step)
  * @param[in] fdTime The TU of the shot
  * @sa G_ClientShoot
  */
-void G_ReactionFirePreShot (const Edict *target, const int fdTime)
+void G_ReactionFirePreShot (const Edict* target, const int fdTime)
 {
 	bool repeat = true;
 
@@ -883,7 +883,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
-		Edict *shooter = nullptr;
+		Edict* shooter = nullptr;
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
@@ -905,7 +905,7 @@ void G_ReactionFirePreShot (const Edict *target, const int fdTime)
  * @brief Removes the given target from the reaction fire lists
  * @param[in] target The target to remove from the lists
  */
-void G_ReactionFireOnDead (const Edict *target)
+void G_ReactionFireOnDead (const Edict* target)
 {
 	assert(G_IsDead(target));
 	rf.updateAllTargets(target);
@@ -916,7 +916,7 @@ void G_ReactionFireOnDead (const Edict *target)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot
  */
-void G_ReactionFirePostShot (Edict *target)
+void G_ReactionFirePostShot (Edict* target)
 {
 	/* Check to see whether this resolves any reaction fire */
 	rf.checkExecution(target);
@@ -940,19 +940,19 @@ void G_ReactionFireOnEndTurn (void)
  */
 void G_ReactionFireReset (int team)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_RemoveShaken(ent);
 	}
 }
 
-void G_ReactionFireNofityClientStartMove (const Edict *target)
+void G_ReactionFireNofityClientStartMove (const Edict* target)
 {
 	rft.notifyClientMove(target, true);
 }
 
-void G_ReactionFireNofityClientEndMove (const Edict *target)
+void G_ReactionFireNofityClientEndMove (const Edict* target)
 {
 	rft.notifyClientMove(target, false);
 }

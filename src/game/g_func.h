@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void SP_func_breakable(Edict *ent);
-void SP_func_door(Edict *ent);
-void SP_func_door_sliding(Edict *ent);
-void SP_func_rotating(Edict *ent);
+void SP_func_breakable(Edict* ent);
+void SP_func_door(Edict* ent);
+void SP_func_door_sliding(Edict* ent);
+void SP_func_rotating(Edict* ent);

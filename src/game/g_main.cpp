@@ -313,7 +313,7 @@ static void CheckNeedPass (void)
 static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
-		Edict *ent = G_EdictsGetFirst();	/* skip the world */
+		Edict* ent = G_EdictsGetFirst();	/* skip the world */
 		while ((ent = G_EdictsGetNextInUse(ent)))
 			G_EventSendEdict(*ent);
 	}

@@ -230,7 +230,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t *fd, bool firstSho
  */
 void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t *fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t *trace, const vec3_t from, const vec3_t impact)
 {
-	const Edict *targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
+	const Edict* targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
 	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_SHOOT, ent.number);
 	if (targetEdict && G_IsBreakable(targetEdict))
@@ -523,7 +523,7 @@ void G_EventEdictAppear (playermask_t playerMask, const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventActorAppear (playermask_t playerMask, const Edict &check, const Edict *ent)
+void G_EventActorAppear (playermask_t playerMask, const Edict &check, const Edict* ent)
 {
 	const int mask = G_TeamToPM(check.team) & playerMask;
 
@@ -666,7 +666,7 @@ void G_EventEnd (void)
 	if (gi.GetEvent() == EV_ACTOR_MOVE) {
 		/* mark the end of the steps */
 		gi.WriteLong(0);
-		const Edict *ent = gi.GetEventEdict();
+		const Edict* ent = gi.GetEventEdict();
 		assert(ent);
 		gi.WriteGPos(ent->pos);
 	}

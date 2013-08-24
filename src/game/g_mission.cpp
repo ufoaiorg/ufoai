@@ -47,7 +47,7 @@ void G_MissionAddVictoryMessage (const char *message)
  * @note Don't set a client action here - otherwise the movement event might
  * be corrupted
  */
-bool G_MissionTouch (Edict *self, Edict *activator)
+bool G_MissionTouch (Edict* self, Edict* activator)
 {
 	if (!self->owner)
 		return false;
@@ -106,7 +106,7 @@ bool G_MissionTouch (Edict *self, Edict *activator)
 /**
  * @brief Mission trigger destroy function
  */
-bool G_MissionDestroy (Edict *self)
+bool G_MissionDestroy (Edict* self)
 {
 	return true;
 }
@@ -114,9 +114,9 @@ bool G_MissionDestroy (Edict *self)
 /**
  * @brief Mission trigger use function
  */
-bool G_MissionUse (Edict *self, Edict *activator)
+bool G_MissionUse (Edict* self, Edict* activator)
 {
-	Edict *target = G_EdictsFindTargetEntity(self->target);
+	Edict* target = G_EdictsFindTargetEntity(self->target);
 	if (!target) {
 		gi.DPrintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
@@ -140,10 +140,10 @@ bool G_MissionUse (Edict *self, Edict *activator)
  * @note Think functions are only executed when the match is running
  * or in other word, the game has started
  */
-void G_MissionThink (Edict *self)
+void G_MissionThink (Edict* self)
 {
-	Edict *chain = self->groupMaster;
-	Edict *ent;
+	Edict* chain = self->groupMaster;
+	Edict* ent;
 	int team;
 
 	if (!G_MatchIsRunning())
@@ -212,7 +212,7 @@ void G_MissionThink (Edict *self)
 		chain = self;
 	while (chain) {
 		if (chain->item != nullptr) {
-			Edict *item = G_GetEdictFromPos(chain->pos, ET_ITEM);
+			Edict* item = G_GetEdictFromPos(chain->pos, ET_ITEM);
 			if (item != nullptr) {
 				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
@@ -224,7 +224,7 @@ void G_MissionThink (Edict *self)
 		}
 		if (chain->particle != nullptr) {
 			/** @todo not yet working - particle stays active */
-			Edict *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
+			Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != nullptr) {
 				G_AppearPerishEvent(PM_ALL, false, *particle, nullptr);
 				G_FreeEdict(particle);

@@ -57,7 +57,7 @@ static int forbiddenListLength;
  * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
-static void G_BuildForbiddenList (int team, const Edict *movingActor)
+static void G_BuildForbiddenList (int team, const Edict* movingActor)
 {
 	forbiddenListLength = 0;
 
@@ -68,7 +68,7 @@ static void G_BuildForbiddenList (int team, const Edict *movingActor)
 	else
 		teamMask = TEAM_ALL;
 
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & teamMask))) {
@@ -97,7 +97,7 @@ static void G_BuildForbiddenList (int team, const Edict *movingActor)
  * @sa G_BuildForbiddenList
  * @sa G_MoveCalcLocal
  */
-void G_MoveCalc (int team, const Edict *movingActor, const pos3_t from, int distance)
+void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int distance)
 {
 	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, distance);
 }
@@ -112,7 +112,7 @@ void G_MoveCalc (int team, const Edict *movingActor, const pos3_t from, int dist
  * @sa G_MoveCalc
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalcLocal (pathing_t *pt, int team, const Edict *movingActor, const pos3_t from, int distance)
+void G_MoveCalcLocal (pathing_t *pt, int team, const Edict* movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
 	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
@@ -123,7 +123,7 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const Edict *movingActor, const p
  * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
  */
-void G_ActorFall (Edict *ent)
+void G_ActorFall (Edict* ent)
 {
 	const pos_t oldZ = ent->pos[2];
 
@@ -132,7 +132,7 @@ void G_ActorFall (Edict *ent)
 	if (oldZ == ent->pos[2])
 		return;
 
-	Edict *entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
+	Edict* entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
 	if (entAtPos != nullptr && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
@@ -156,7 +156,7 @@ void G_ActorFall (Edict *ent)
  * @param max The index of the next step in dvtab
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t *dvtab, int max)
+static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t *dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		return true;
@@ -168,7 +168,7 @@ static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t *
 		VectorCopy(ent->pos, pos);
 		while (max >= 0) {
 			int tmp = 0;
-			const Edict *blockEdict;
+			const Edict* blockEdict;
 
 			PosAddDV(pos, tmp, dvtab[max]);
 			max--;
@@ -191,7 +191,7 @@ static bool G_ActorShouldStopInMidMove (const Edict *ent, int visState, dvec_t *
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (Edict *ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
@@ -241,7 +241,7 @@ static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const Edict* ent, const pathing_t *path, const pos3_t to, bool stored)
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
@@ -274,7 +274,7 @@ pos_t G_ActorMoveLength (const Edict *ent, const pathing_t *path, const pos3_t t
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t to)
+void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t to)
 {
 	pos3_t pos;
 	int oldHP;
@@ -419,7 +419,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict *ent, const pos3_t t
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				G_ActorSetTU(ent, initTU - usedTUs);
 
-				Edict *clientAction = ent->clientAction;
+				Edict* clientAction = ent->clientAction;
 				oldState = ent->state;
 				oldHP = ent->HP;
 				oldSTUN = ent->STUN;

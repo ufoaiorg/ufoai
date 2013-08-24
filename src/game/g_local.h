@@ -229,8 +229,8 @@ extern cvar_t *flood_waitdelay;
 extern cvar_t *g_difficulty;
 
 /* g_camera */
-void G_InitCamera(Edict *ent, camera_type_t cameraType, float angle, bool rotate);
-Edict *G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
+void G_InitCamera(Edict* ent, camera_type_t cameraType, float angle, bool rotate);
+Edict* G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_cmds.c */
 void G_ClientCommand(Player &player);
@@ -244,7 +244,7 @@ void G_MoraleBehaviour(int team);
 
 /* g_phys */
 void G_PhysicsRun(void);
-void G_PhysicsStep(Edict *ent);
+void G_PhysicsStep(Edict* ent);
 
 /* g_round */
 void G_CheckForceEndRound(void);
@@ -259,9 +259,9 @@ void G_ServerCommand(void);
 bool SV_FilterPacket(const char *from);
 
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
-void G_EdictCalcOrigin(Edict *ent);
-void G_EdictSetOrigin(Edict *ent, const pos3_t newPos);
-bool G_EdictPosIsSameAs(const Edict *ent, const pos3_t cmpPos);
+void G_EdictCalcOrigin(Edict* ent);
+void G_EdictSetOrigin(Edict* ent, const pos3_t newPos);
+bool G_EdictPosIsSameAs(const Edict* ent, const pos3_t cmpPos);
 
 #include "g_events.h"
 

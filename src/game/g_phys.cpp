@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * we can assume, that moving slower and more carefully would also not produce
  * the water sounds
  */
-void G_PhysicsStep (Edict *ent)
+void G_PhysicsStep (Edict* ent)
 {
 	/**
 	 * @todo don't play foot step sounds for flying units.
@@ -92,7 +92,7 @@ void G_PhysicsStep (Edict *ent)
 /**
  * @brief Runs thinking code for this frame if necessary
  */
-static bool G_PhysicsThink (Edict *ent)
+static bool G_PhysicsThink (Edict* ent)
 {
 	if (ent->nextthink <= 0)
 		return true;
@@ -125,7 +125,7 @@ void G_PhysicsRun (void)
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (ent->think)
 			G_PhysicsThink(ent);

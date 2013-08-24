@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_UpdateCharacterExperience
  * @sa G_GetMaxExperiencePerMission
  */
-static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
+static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 {
 	character_t *chr = &ent->chr;
 
@@ -93,7 +93,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict *ent)
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
  */
-static void G_UpdateCharacterExperience (Edict *ent)
+static void G_UpdateCharacterExperience (Edict* ent)
 {
 	character_t *chr = &ent->chr;
 
@@ -124,7 +124,7 @@ static void G_UpdateCharacterExperience (Edict *ent)
 void G_MatchEndTrigger (int team, int timeGap)
 {
 	bool foundNextMap = false;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != nullptr) {
 		if (ent->team == team) {
@@ -149,7 +149,7 @@ void G_MatchEndTrigger (int team, int timeGap)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @note you also have to update the pascal string size in G_MatchSendResults if you change the buffer here
  */
-static void G_SendCharacterData (const Edict *ent)
+static void G_SendCharacterData (const Edict* ent)
 {
 	int k;
 
@@ -184,7 +184,7 @@ static void G_SendCharacterData (const Edict *ent)
  */
 static void G_MatchSendResults (int team, bool nextmap)
 {
-	Edict *ent, *attacker;
+	Edict* ent, *attacker;
 	int i, j = 0;
 
 	attacker = nullptr;
@@ -296,7 +296,7 @@ void G_MatchEndCheck (void)
 
 	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++) {
-		Edict *ent = nullptr;
+		Edict* ent = nullptr;
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, i)) != nullptr) {

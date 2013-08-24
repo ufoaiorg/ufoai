@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param ent The edict to free.
  * @sa G_Spawn
  */
-void G_FreeEdict (Edict *ent)
+void G_FreeEdict (Edict* ent)
 {
 	G_EventDestroyEdict(*ent);
 
@@ -56,9 +56,9 @@ void G_FreeEdict (Edict *ent)
  * @param type The type of the edict to look for or @c -1 to look for any type in the search.
  * @return @c nullptr if nothing was found, otherwise the entity located at the given grid position.
  */
-Edict *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
+Edict* G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (type > ET_NULL && ent->type != type)
@@ -78,9 +78,9 @@ Edict *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
  * @param n The amount of given entity_type_t values that are given via variadic arguments to this function.
  * @return @c nullptr if nothing was found, otherwise the entity located at the given grid position.
  */
-Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
+Edict* G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 	entity_type_t types[ET_MAX];
 	va_list ap;
 	int i;
@@ -114,7 +114,7 @@ Edict *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
  * @return true when triggering the use function was successful.
  * @sa G_ClientUseEdict
  */
-bool G_UseEdict (Edict *ent, Edict *activator)
+bool G_UseEdict (Edict* ent, Edict* activator)
 {
 	if (!ent)
 		return false;
@@ -130,7 +130,7 @@ bool G_UseEdict (Edict *ent, Edict *activator)
 		status = false;
 	}
 
-	Edict *chain = ent->groupChain;
+	Edict* chain = ent->groupChain;
 	while (chain) {
 		if (chain->use)
 			chain->use(chain, activator);
@@ -216,7 +216,7 @@ Player* G_GetPlayerForTeam (int team)
  * getting negative.
  * @sa G_Damage
  */
-void G_TakeDamage (Edict *ent, int damage)
+void G_TakeDamage (Edict* ent, int damage)
 {
 	if (G_IsBreakable(ent) || G_IsActor(ent))
 		ent->HP = std::max(ent->HP - damage, 0);
@@ -267,7 +267,7 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
  * via contentmask (MASK_*).
  * @return The trace result
  */
-trace_t G_Trace (const vec3_t start, const vec3_t end, const Edict *passent, int contentmask)
+trace_t G_Trace (const vec3_t start, const vec3_t end, const Edict* passent, int contentmask)
 {
 	const AABB box(vec3_origin, vec3_origin);
 	G_TraceDraw(start, end);
@@ -293,7 +293,7 @@ const char *G_GetPlayerName (int pnum)
 playermask_t G_GetClosePlayerMask (const vec3_t origin, float radius)
 {
 	playermask_t pm = 0;
-	Edict *closeActor = nullptr;
+	Edict* closeActor = nullptr;
 	while ((closeActor = G_FindRadius(closeActor, origin, radius))) {
 		if (!G_IsLivingActor(closeActor))
 			continue;
@@ -339,7 +339,7 @@ void G_PrintStats (const char *format, ...)
  * @sa G_Damage
  * @sa G_PrintStats
  */
-void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDef_t *fd)
+void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDef_t *fd)
 {
 	char buffer[512];
 
@@ -405,15 +405,15 @@ void G_PrintActorStats (const Edict *victim, const Edict *attacker, const fireDe
  * @param[in] rad radius to search an edict in.
  * @param[in] type Type of entity. @c ET_NULL to ignore the type.
  * @code
- * Edict *ent = nullptr;
+ * Edict* ent = nullptr;
  * while ((ent = G_FindRadius(ent, origin, rad, type)) != nullptr) {
  *   [...]
  * }
  * @endcode
  */
-Edict *G_FindRadius (Edict *from, const vec3_t org, float rad, entity_type_t type)
+Edict* G_FindRadius (Edict* from, const vec3_t org, float rad, entity_type_t type)
 {
-	Edict *ent = from;
+	Edict* ent = from;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		int j;
@@ -441,7 +441,7 @@ Edict *G_FindRadius (Edict *from, const vec3_t org, float rad, entity_type_t typ
 void G_GenerateEntList (const char *entList[MAX_EDICTS])
 {
 	int i = 0;
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	/* generate entity list */
 	while ((ent = G_EdictsGetNextInUse(ent)))
@@ -468,7 +468,7 @@ void G_RecalcRouting (const char *model, const GridBox& box)
  */
 void G_CompleteRecalcRouting (void)
 {
-	Edict *ent = nullptr;
+	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
@@ -481,9 +481,9 @@ void G_CompleteRecalcRouting (void)
  * @param touched The edicts that the activating ent currently touches
  * @param num The amount of edicts in the @c touched list
  */
-static void G_ResetTriggers (Edict *ent, Edict **touched, int num)
+static void G_ResetTriggers (Edict* ent, Edict* *touched, int num)
 {
-	Edict *trigger = nullptr;
+	Edict* trigger = nullptr;
 
 	/* check all edicts to find all triggers */
 	while ((trigger = G_EdictsGetNextInUse(trigger))) {
@@ -515,12 +515,12 @@ static void G_ResetTriggers (Edict *ent, Edict **touched, int num)
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-static int G_GetTouchingEdicts (const AABB& aabb, Edict **list, int maxCount, Edict *skip)
+static int G_GetTouchingEdicts (const AABB& aabb, Edict* *list, int maxCount, Edict* skip)
 {
 	int num = 0;
 
 	/* skip the world */
-	Edict *ent = G_EdictsGetFirst();
+	Edict* ent = G_EdictsGetFirst();
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* deactivated */
 		if (ent->solid == SOLID_NOT)
@@ -542,10 +542,10 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict **list, int maxCount, Ed
  * @param[in,out] ent The entity that maybe touches others
  * @return Returns the number of associated client actions
  */
-int G_TouchTriggers (Edict *ent)
+int G_TouchTriggers (Edict* ent)
 {
 	int i, num, usedNum = 0;
-	Edict *touched[MAX_EDICTS];
+	Edict* touched[MAX_EDICTS];
 
 	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
 		return 0;
@@ -557,7 +557,7 @@ int G_TouchTriggers (Edict *ent)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		Edict *hit = touched[i];
+		Edict* hit = touched[i];
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
 		if (!hit->touch)
@@ -580,11 +580,11 @@ int G_TouchTriggers (Edict *ent)
  * bbox intersects with the edicts' bbox
  * @return the amount of touched edicts
  */
-int G_TouchSolids (Edict *ent, float extend)
+int G_TouchSolids (Edict* ent, float extend)
 {
 	int i, num, usedNum = 0;
 	vec3_t absmin, absmax;
-	Edict *touch[MAX_EDICTS];
+	Edict* touch[MAX_EDICTS];
 
 	if (!G_IsLivingActor(ent))
 		return 0;
@@ -599,7 +599,7 @@ int G_TouchSolids (Edict *ent, float extend)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		Edict *hit = touch[i];
+		Edict* hit = touch[i];
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
 		if (!hit->inuse)
@@ -618,10 +618,10 @@ int G_TouchSolids (Edict *ent, float extend)
  * @param[in] ent The edict to check.
  * @param[in] extend Extend value for the bounding box
  */
-void G_TouchEdicts (Edict *ent, float extend)
+void G_TouchEdicts (Edict* ent, float extend)
 {
 	int i, num;
-	Edict *touched[MAX_EDICTS];
+	Edict* touched[MAX_EDICTS];
 	vec3_t absmin, absmax;
 	const char *entName = (ent->model) ? ent->model : ent->chr.name;
 
@@ -636,7 +636,7 @@ void G_TouchEdicts (Edict *ent, float extend)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		Edict *hit = touched[i];
+		Edict* hit = touched[i];
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)
