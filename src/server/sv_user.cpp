@@ -212,11 +212,9 @@ static const ucmd_t ucmds[] = {
  */
 static void SV_ExecuteUserCommand (client_t *cl, const char *s)
 {
-	const ucmd_t *u;
-
 	Cmd_TokenizeString(s, false);
 
-	for (u = ucmds; u->name; u++)
+	for (const ucmd_t *u = ucmds; u->name; u++)
 		if (Q_streq(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func(cl);
