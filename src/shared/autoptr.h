@@ -48,6 +48,11 @@ template<typename T> class AutoPtr
 			return p_;
 		}
 
+		operator T* () const
+		{
+			return p_;
+		}
+
 	private:
 		T* p_;
 
