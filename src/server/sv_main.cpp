@@ -188,7 +188,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	dbuffer msg;
 	char infoGlobal[MAX_INFO_STRING] = "";
 
-	NET_WriteByte(&msg, clc_oob);
+	NET_WriteByte(&msg, svc_oob);
 	NET_WriteRawString(&msg, "teaminfo\n");
 
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_teamplay", Cvar_GetString("sv_teamplay"));
@@ -225,7 +225,7 @@ static void SVC_Status (struct net_stream *s)
 	client_t *cl;
 	char player[1024];
 	dbuffer msg;
-	NET_WriteByte(&msg, clc_oob);
+	NET_WriteByte(&msg, svc_oob);
 	NET_WriteRawString(&msg, "print\n");
 
 	NET_WriteRawString(&msg, Cvar_Serverinfo());
@@ -408,7 +408,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 static inline bool Rcon_Validate (const char *password)
 {
 	/* no rcon access */
-	if (!strlen(rcon_password->string))
+	if (Q_strnull(rcon_password->string))
 		return false;
 
 	/* password not valid */
@@ -432,9 +432,9 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 	bool valid = Rcon_Validate(Cmd_Argv(1));
 
 	if (!valid)
-		Com_Printf("Bad rcon from %s:\n%s\n", peername, Cmd_Argv(1));
+		Com_Printf("Bad rcon from %s with password: '%s'\n", peername, Cmd_Argv(1));
 	else
-		Com_Printf("Rcon from %s:\n%s\n", peername, Cmd_Argv(1));
+		Com_Printf("Rcon from %s\n", peername);
 
 	Com_BeginRedirect(stream, sv_outputbuf, SV_OUTPUTBUF_LENGTH);
 
@@ -451,6 +451,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		}
 
 		/* execute the string */
+		Com_Printf("rcon command: '%s'\n", remaining);
 		Cmd_ExecuteString("%s", remaining);
 	}
 
@@ -807,7 +808,7 @@ void SV_Init (void)
 	sv_http_downloadserver = Cvar_Get("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
-	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
+	sv_maxsoldiersperplayer = Cvar_Get(" ", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
 	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");

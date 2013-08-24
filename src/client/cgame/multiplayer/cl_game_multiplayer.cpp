@@ -38,6 +38,7 @@ static void GAME_MP_StartBattlescape (bool isTeamPlay)
 {
 	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
 	cgi->UI_InitStack("multiplayer_wait", nullptr);
+	rcon_client_password->modified = true;
 }
 
 static void GAME_MP_NotifyEvent (event_t eventType)
@@ -73,7 +74,7 @@ static void GAME_MP_StartServer_f (void)
 		cgi->GAME_AutoTeam("multiplayer_initial", cgi->GAME_GetCharacterArraySize());
 
 	if (cgi->Cvar_GetInteger("sv_teamplay")
-	 && cgi->Cvar_GetValue("sv_maxsoldiersperplayer") > cgi->Cvar_GetValue("sv_maxsoldiersperteam")) {
+	 && cl_maxsoldiersperplayer->integer > cl_maxsoldiersperteam->integer) {
 		cgi->UI_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
@@ -223,9 +224,6 @@ static bool GAME_MP_HandleServerCommand (const char *command, dbuffer *msg)
 
 static void GAME_MP_InitStartup (void)
 {
-	const char *max_s = cgi->Cvar_VariableStringOld("sv_maxsoldiersperteam");
-	const char *max_spp = cgi->Cvar_VariableStringOld("sv_maxsoldiersperplayer");
-
 	cgi->Cvar_ForceSet("sv_maxclients", "2");
 	/** @todo make equipment configurable for multiplayer */
 	cgi->Cvar_Set("cl_equip", "multiplayer_initial");
@@ -234,13 +232,6 @@ static void GAME_MP_InitStartup (void)
 	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
 	MP_CallbacksInit(cgi);
 	MP_ServerListInit(cgi);
-
-	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
-	 * cvars if values were previously set */
-	if (max_s[0] != '\0')
-		cgi->Cvar_Set("sv_maxsoldiersperteam", max_s);
-	if (max_spp[0] != '\0')
-		cgi->Cvar_Set("sv_maxsoldiersperplayer", max_spp);
 }
 
 static void GAME_MP_Shutdown (void)
@@ -253,6 +244,32 @@ static void GAME_MP_Shutdown (void)
 	cgi->SV_Shutdown("Game mode shutdown", false);
 
 	OBJZERO(teamData);
+}
+
+static void GAME_MP_RunFrame (float secondsSinceLastFrame)
+{
+	if (rcon_client_password->modified) {
+		rcon_client_password->modified = false;
+		if (!cgi->Com_ServerState() && Q_strnull(rcon_client_password->string)) {
+			cgi->UI_ExecuteConfunc("multiplayer_admin_panel 0");
+		} else {
+			cgi->UI_ExecuteConfunc("multiplayer_admin_panel 1");
+		}
+	}
+
+	if (cl_maxsoldiersperteam->modified) {
+		cl_maxsoldiersperteam->modified = false;
+		if (!cgi->Com_ServerState()) {
+			cgi->Cmd_ExecuteString("rcon set %s %s", cl_maxsoldiersperteam->name, cl_maxsoldiersperteam->string);
+		}
+	}
+
+	if (cl_maxsoldiersperplayer->modified) {
+		cl_maxsoldiersperplayer->modified = false;
+		if (!cgi->Com_ServerState()) {
+			cgi->Cmd_ExecuteString("rcon set %s %s", cl_maxsoldiersperplayer->name, cl_maxsoldiersperplayer->string);
+		}
+	}
 }
 
 #ifndef HARD_LINKED_CGAME
@@ -277,6 +294,7 @@ const cgame_export_t *GetCGameMultiplayerAPI (const cgame_import_t *import)
 	e.NotifyEvent = GAME_MP_NotifyEvent;
 	e.AddChatMessage = GAME_MP_AddChatMessage;
 	e.HandleServerCommand = GAME_MP_HandleServerCommand;
+	e.RunFrame = GAME_MP_RunFrame;
 
 	cgi = import;
 

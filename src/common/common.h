@@ -167,7 +167,7 @@ enum clc_ops_e {
 	clc_action,
 	clc_userinfo,				/**< [[userinfo string] */
 	clc_stringcmd,				/**< [string] message */
-	clc_oob = 0xff				/**< out of band - connectionless */
+	clc_oob = svc_oob			/**< out of band - connectionless */
 };
 
 #define SOUND_ATTN_NONE 0.0f /**< full volume the entire level */

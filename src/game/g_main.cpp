@@ -164,9 +164,9 @@ static void G_Init (void)
 	/* max. players per team (original quake) */
 	sv_maxplayersperteam = gi.Cvar_Get("sv_maxplayersperteam", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
 	/* max. soldiers per team */
-	sv_maxsoldiersperteam = gi.Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
+	sv_maxsoldiersperteam = gi.Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
 	/* max soldiers per player */
-	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
+	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");

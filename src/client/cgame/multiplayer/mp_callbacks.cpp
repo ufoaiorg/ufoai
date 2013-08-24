@@ -32,7 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const cgame_import_t *cgi;
 
 teamData_t teamData;
-static cvar_t *rcon_client_password;
+cvar_t *rcon_client_password;
+cvar_t *cl_maxsoldiersperteam;
+cvar_t *cl_maxsoldiersperplayer;
 static cvar_t *rcon_address;
 static cvar_t *info_password;
 
@@ -87,7 +89,7 @@ static void CL_RconCallback (struct net_stream *s)
 		char commandBuf[8];
 		cgi->NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
 
-		if (cmd == clc_oob && Q_streq(commandBuf, "print")) {
+		if (cmd == svc_oob && Q_streq(commandBuf, "print")) {
 			char paramBuf[2048];
 			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
 			cgi->Com_Printf("%s\n", paramBuf);
@@ -97,29 +99,16 @@ static void CL_RconCallback (struct net_stream *s)
 	cgi->NET_StreamFree(s);
 }
 
-/**
- * Send the rest of the command line over as
- * an unconnected command.
- */
-static void CL_Rcon_f (void)
+bool MP_Rcon (const char *password, const char *command)
 {
-	char message[MAX_STRING_CHARS];
-
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <command>\n", cgi->Cmd_Argv(0));
-		return;
+	if (Q_strnull(password)) {
+		cgi->Com_Printf("You must set 'rcon_password' before issuing a rcon command.\n");
+		return false;
 	}
-
-	if (!rcon_client_password->string) {
-		cgi->Com_Printf("You must set 'rcon_password' before issuing an rcon command.\n");
-		return;
-	}
-
-	Com_sprintf(message, sizeof(message), "rcon %s %s",
-		rcon_client_password->string, cgi->Cmd_Args());
 
 	if (cgi->CL_GetClientState() >= ca_connected) {
-		cgi->NET_OOB_Printf2("%s", message);
+		cgi->NET_OOB_Printf2("rcon %s %s", password, command);
+		return true;
 	} else if (rcon_address->string) {
 		const char *port;
 
@@ -130,12 +119,41 @@ static void CL_Rcon_f (void)
 
 		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, nullptr);
 		if (s) {
-			cgi->NET_OOB_Printf(s, "%s", message);
+			cgi->NET_OOB_Printf(s, "rcon %s %s", password, command);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
+			return true;
 		}
-	} else {
-		cgi->Com_Printf("You are not connected to any server\n");
 	}
+
+	cgi->Com_Printf("You are not connected to any server\n");
+	return false;
+}
+/**
+ * Send the rest of the command line over as
+ * an unconnected command.
+ */
+static void CL_Rcon_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <command>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	if (!rcon_client_password->string) {
+		cgi->Com_Printf("You must set 'rcon_password' before issuing a rcon command.\n");
+		return;
+	}
+
+	if (!MP_Rcon(rcon_client_password->string, cgi->Cmd_Args()))
+		Com_Printf("Could not send the rcon command");
+}
+
+static void CL_StartGame_f (void)
+{
+	if (cgi->Com_ServerState())
+		cgi->Cmd_ExecuteString("startgame");
+	else
+		cgi->Cmd_ExecuteString("rcon startgame");
 }
 
 /**
@@ -254,6 +272,8 @@ void MP_CallbacksInit (const cgame_import_t *import)
 	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
 	rcon_address = cgi->Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
 	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, nullptr);
+	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
+	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
 	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	cgi->Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
 	cgi->Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
@@ -263,7 +283,11 @@ void MP_CallbacksInit (const cgame_import_t *import)
 	cgi->Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
 	cgi->Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 	cgi->Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
+	cgi->Cmd_AddCommand("cl_startgame", CL_StartGame_f, "Forces a gamestart if you are the admin");
 	cgi->Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
+
+	cl_maxsoldiersperteam->modified = false;
+	cl_maxsoldiersperplayer->modified = false;
 }
 
 void MP_CallbacksShutdown (void)

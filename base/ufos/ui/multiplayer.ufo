@@ -814,14 +814,14 @@ window mp_create_server extends abstract_multiplayer
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"335 90"
+			pos			"300 90"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
-			pos			"390 90"
+			pos			"350 90"
 			min			1
 			max			8
 			delta		1
@@ -840,14 +840,14 @@ window mp_create_server extends abstract_multiplayer
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"335 110"
+			pos			"300 110"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
-			pos			"390 110"
+			pos			"350 110"
 			min			1
 			max			8
 			delta		1
@@ -1310,20 +1310,6 @@ window multiplayer_wait extends levelbuttons
 			onClick		{ cmd "teamnum_dec;" }
 		}
 
-		/** @todo only for admin, and command it self should check the user */
-		button button_force
-		{
-			visiblewhen "*cvar:cl_admin == 1"
-			string		"_Force start"
-			tooltip		"_Start the game even if not all teams is ready or have joined"
-			background		"ui/button_blue"
-			pos			"35 130"
-			size		"150 30"
-			color		"0.8 0.8 0.8 1"
-			selectcolor "1 1 1 1"
-			onClick		{ cmd "startgame;" }
-		}
-
 		checkbox_green cb_ready
 		{
 			tooltip		"_Finish the teamselection and start the game"
@@ -1338,6 +1324,130 @@ window multiplayer_wait extends levelbuttons
 			pos			"230 130"
 			size		"180 20"
 			onClick		{ call *node:parent.cb_ready@toggle }
+		}
+	}
+
+	panel admin {
+		{
+			pos		"50 30"
+			size	"400 200"
+			padding	10
+			background	"ui/panel_window"
+		}
+
+		string title
+		{
+			string		"_Admin control"
+			font		"f_big"
+			color		"1 1 1 1"
+			pos			"0 5"
+			size		"415 50"
+			contentalign	ALIGN_CC
+		}
+
+		string maxperplayer_str
+		{
+			string		"_Max. soldiers per team:"
+			tooltip		"_Sets the max allowed soldiers per team"
+			pos			"25 70"
+			size		"250 20"
+		}
+		string maxperplayer_value
+		{
+			string		*cvar:sv_maxsoldiersperteam
+			pos			"280 70"
+			size		"40 20"
+			contentalign	ALIGN_UC
+		}
+		spinner_blue maxperplayer_change
+		{
+			current		*cvar:sv_maxsoldiersperteam
+			pos			"325 70"
+			min			1
+			max			12
+			delta		1
+		}
+
+		string maxsoldierperplayer_str
+		{
+			string		"_Max. soldiers per player:"
+			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
+			pos			"25 95"
+			size		"250 20"
+		}
+		string maxsoldierperplayer_value
+		{
+			string		*cvar:sv_maxsoldiersperplayer
+			pos			"280 95"
+			size		"40 20"
+			contentalign	ALIGN_UC
+		}
+		spinner_blue maxsoldierperplayer_change
+		{
+			current		*cvar:sv_maxsoldiersperplayer
+			pos			"325 95"
+			min			1
+			max			12
+			delta		1
+		}
+
+		button button_force
+		{
+			string		"_Force start"
+			tooltip		"_Launch the game before all teams are ready"
+			background		"ui/button_blue"
+			pos			"25 135"
+			size		"150 30"
+			color		"0.8 0.8 0.8 1"
+			selectcolor "1 1 1 1"
+			onClick		{ cmd "cl_startgame;" }
+		}
+	}
+
+	panel rcon {
+		{
+			pos		"50 290"
+			size	"400 200"
+			padding	10
+			background	"ui/panel_window"
+		}
+
+		string title
+		{
+			string		"_Remote Admin Control"
+			font		"f_big"
+			color		"1 1 1 1"
+			pos			"0 5"
+			size		"415 50"
+			contentalign	ALIGN_CC
+		}
+
+		string current_rcon_pwd
+		{
+			string		"_RCON-Password:"
+			pos			"25 80"
+			size		"256 20"
+		}
+		textentry slot_rcon_pwd
+		{
+			string		*cvar:rcon_password
+			background		"ui/button_green_verysmall"
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			contentalign	ALIGN_CL
+			padding		8
+			font		"f_verysmall"
+			pos			"25 110"
+			size		"250 30"
+			ispassword	true
+		}
+	}
+
+	confunc multiplayer_admin_panel {
+		if (<1> == 0) {
+			*node:root.admin@invis = true
+		} else {
+			*node:root.admin@invis = false
 		}
 	}
 

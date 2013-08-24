@@ -122,7 +122,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 
 	cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
-	if (cmd == clc_oob) {
+	if (cmd == svc_oob) {
 		if (strncmp(str, "info", 4) == 0) {
 			cgi->NET_ReadString(buf, str, sizeof(str));
 			if (CL_ProcessPingReply(server, str)) {
@@ -367,7 +367,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 		char str[8];
 		cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
-		if (cmd == clc_oob && Q_streq(str, "print")) {
+		if (cmd == svc_oob && Q_streq(str, "print")) {
 			char hostname[256];
 			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
 			CL_ParseServerInfoMessage(buf, hostname);

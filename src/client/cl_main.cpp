@@ -420,7 +420,7 @@ static void CL_ReadPackets (void)
 	dbuffer *msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
 		const svc_ops_t cmd = NET_ReadByte(msg);
-		if (cmd == clc_oob)
+		if (cmd == svc_oob)
 			CL_ConnectionlessPacket(msg);
 		else
 			CL_ParseServerMessage(cmd, msg);
