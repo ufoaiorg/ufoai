@@ -283,76 +283,76 @@ void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 {
 	const char *value;
 	char str[MAX_INFO_STRING];
-	char buf[256];
 
 	cgi->NET_ReadString(msg, str, sizeof(str));
 
 	/* check for server status response message */
 	value = Info_ValueForKey(str, "sv_dedicated");
-	if (*value) {
-		const char *token;
-		/* server info cvars and users are seperated via newline */
-		const char *users = strstr(str, "\n");
-		if (!users) {
-			cgi->Com_Printf(S_COLOR_GREEN "%s\n", str);
-			return;
-		}
-		cgi->Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
-
-		cgi->Cvar_Set("mn_mappic", "maps/shots/default");
-		if (*Info_ValueForKey(str, "sv_needpass") == '1')
-			cgi->Cvar_Set("mn_server_need_password", "1");
-		else
-			cgi->Cvar_Set("mn_server_need_password", "0");
-
-		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), hostname);
-		cgi->Cvar_Set("mn_server_ip", hostname);
-		value = Info_ValueForKey(str, "sv_mapname");
-		assert(value);
-		cgi->Cvar_Set("mn_svmapname", value);
-		Q_strncpyz(buf, value, sizeof(buf));
-		token = buf;
-		/* skip random map char */
-		if (token[0] == '+')
-			token++;
-
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (!cgi->R_ImageExists("pics/maps/shots/%s", token)) {
-			/* store it relative to pics/ dir - not relative to game dir */
-			cgi->Cvar_Set("mn_mappic", va("maps/shots/%s", token));
-		}
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(str, "sv_hostname"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(str, "sv_enablemorale")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(str, "sv_gametype"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(str, "ver"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), _(Info_BoolForKey(str, "sv_dedicated")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(str, "sys_os"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(str, "sv_protocol"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(str, "sv_roundtimelimit"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), _(Info_BoolForKey(str, "sv_teamplay")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(str, "sv_maxplayersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(str, "sv_maxteams"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(str, "sv_maxclients"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperplayer"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(str, "sv_needpass")));
-		cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
-		userInfoText[0] = '\0';
-		do {
-			int team;
-			token = Com_Parse(&users);
-			if (!users)
-				break;
-			team = atoi(token);
-			token = Com_Parse(&users);
-			if (!users)
-				break;
-			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
-		} while (1);
-		cgi->UI_RegisterText(TEXT_LIST, userInfoText);
-		cgi->UI_PushWindow("serverinfo");
-	} else
+	if (Q_strnull(value)) {
 		cgi->Com_Printf(S_COLOR_GREEN "%s", str);
+		return;
+	}
+
+	/* server info cvars and users are seperated via newline */
+	const char *users = strstr(str, "\n");
+	if (users == nullptr) {
+		cgi->Com_Printf(S_COLOR_GREEN "%s\n", str);
+		return;
+	}
+	cgi->Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
+
+	cgi->Cvar_Set("mn_mappic", "maps/shots/default");
+	if (*Info_ValueForKey(str, "sv_needpass") == '1')
+		cgi->Cvar_Set("mn_server_need_password", "1");
+	else
+		cgi->Cvar_Set("mn_server_need_password", "0");
+
+	Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), hostname);
+	cgi->Cvar_Set("mn_server_ip", hostname);
+	value = Info_ValueForKey(str, "sv_mapname");
+	assert(value);
+	cgi->Cvar_Set("mn_svmapname", value);
+	char buf[256];
+	Q_strncpyz(buf, value, sizeof(buf));
+	const char *token = buf;
+	/* skip random map char */
+	if (token[0] == '+')
+		token++;
+
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Map:\t%s\n"), value);
+	if (!cgi->R_ImageExists("pics/maps/shots/%s", token)) {
+		/* store it relative to pics/ dir - not relative to game dir */
+		cgi->Cvar_Set("mn_mappic", va("maps/shots/%s", token));
+	}
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(str, "sv_hostname"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(str, "sv_enablemorale")));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(str, "sv_gametype"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(str, "ver"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Dedicated server:\t%s\n"), _(Info_BoolForKey(str, "sv_dedicated")));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(str, "sys_os"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(str, "sv_protocol"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(str, "sv_roundtimelimit"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Teamplay:\t%s\n"), _(Info_BoolForKey(str, "sv_teamplay")));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(str, "sv_maxplayersperteam"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(str, "sv_maxteams"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(str, "sv_maxclients"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperplayer"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperteam"));
+	Q_strcat(serverInfoText, sizeof(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(str, "sv_needpass")));
+	cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
+	userInfoText[0] = '\0';
+	for (;;) {
+		token = Com_Parse(&users);
+		if (users == nullptr)
+			break;
+		const int team = atoi(token);
+		token = Com_Parse(&users);
+		if (users == nullptr)
+			break;
+		Q_strcat(userInfoText, sizeof(userInfoText), "%s\t%i\n", token, team);
+	}
+	cgi->UI_RegisterText(TEXT_LIST, userInfoText);
+	cgi->UI_PushWindow("serverinfo");
 }
 
 /**
@@ -436,7 +436,6 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
  */
 static void CL_BookmarkAdd_f (void)
 {
-	int i;
 	const char *newBookmark;
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -445,10 +444,11 @@ static void CL_BookmarkAdd_f (void)
 			cgi->Com_Printf("Usage: %s <ip>\n", cgi->Cmd_Argv(0));
 			return;
 		}
-	} else
+	} else {
 		newBookmark = cgi->Cmd_Argv(1);
+	}
 
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
+	for (int i = 0; i < MAX_BOOKMARKS; i++) {
 		const char *bookmark = cgi->Cvar_GetString(va("adr%i", i));
 		if (bookmark[0] == '\0') {
 			cgi->Cvar_Set(va("adr%i", i), newBookmark);
@@ -464,7 +464,6 @@ static void CL_BookmarkAdd_f (void)
  */
 static void CL_ServerInfo_f (void)
 {
-	struct net_stream *s;
 	const char *host;
 	const char *port;
 
@@ -487,12 +486,13 @@ static void CL_ServerInfo_f (void)
 		}
 		break;
 	}
-	s = cgi->NET_Connect(host, port, nullptr);
-	if (s) {
+	struct net_stream *s = cgi->NET_Connect(host, port, nullptr);
+	if (s != nullptr) {
 		cgi->NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);
-	} else
+	} else {
 		cgi->Com_Printf("Could not connect to %s %s\n", host, port);
+	}
 }
 
 /**
@@ -501,24 +501,23 @@ static void CL_ServerInfo_f (void)
  */
 static void CL_ServerListClick_f (void)
 {
-	int num;
-
 	if (cgi->Cmd_Argc() < 2) {
 		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	num = atoi(cgi->Cmd_Argv(1));
+	const int num = atoi(cgi->Cmd_Argv(1));
 
 	cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
-	if (num >= 0 && num < serverListLength) {
-		int i;
-		for (i = 0; i < serverListLength; i++)
-			if (serverList[i].pinged && serverList[i].serverListPos == num) {
-				/* found the server - grab the infos for this server */
-				selectedServer = &serverList[i];
-				cgi->Cbuf_AddText("server_info %s %s\n", serverList[i].node, serverList[i].service);
-				return;
-			}
+	if (num < 0 || num >= serverListLength)
+		return;
+
+	for (int i = 0; i < serverListLength; i++) {
+		if (!serverList[i].pinged || serverList[i].serverListPos != num)
+			continue;
+		/* found the server - grab the infos for this server */
+		selectedServer = &serverList[i];
+		cgi->Cbuf_AddText("server_info %s %s\n", serverList[i].node, serverList[i].service);
+		return;
 	}
 }
 
@@ -583,11 +582,9 @@ void CL_PingServers_f (void)
 
 void MP_ServerListInit (const cgame_import_t *import)
 {
-	int i;
-
 	cgi = import;
 	/* register our variables */
-	for (i = 0; i < MAX_BOOKMARKS; i++)
+	for (int i = 0; i < MAX_BOOKMARKS; i++)
 		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
