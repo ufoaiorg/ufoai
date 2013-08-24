@@ -674,7 +674,7 @@ window mp_create_server extends abstract_multiplayer
 			lineheight	"20"
 			contentalign	ALIGN_UC
 			onChange {
-				cmd "mp_updategametype;"
+				cmd "mp_updategametype;mn_getmaps;"
 			}
 		}
 
@@ -1051,7 +1051,7 @@ window mp_create_server extends abstract_multiplayer
 	func onWindowOpened
 	{
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
-		cmd "mp_updategametype;mn_getmaps;"
+		cmd "mp_init_ui;mn_getmaps;"
 		*cvar:mn_server_config_tab = 1
 		call *node:root.mp_update_config_navigation
 		cmd "ui_resetdata TEXT_STANDARD;"

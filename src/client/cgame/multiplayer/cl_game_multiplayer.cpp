@@ -102,30 +102,6 @@ static void GAME_MP_StartServer_f (void)
 }
 
 /**
- * @brief Update the menu values with current gametype values
- */
-static void GAME_MP_UpdateGametype_f (void)
-{
-	const int numGTs = cgi->csi->numGTs;
-	/* no types defined or parsed */
-	if (numGTs == 0)
-		return;
-
-	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
-	if (!md || !md->multiplayer) {
-		cgi->Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
-		return;
-	}
-
-	const char *gameType = cgi->Cvar_GetString("sv_gametype");
-	if (md->gameTypes && !cgi->LIST_ContainsString(md->gameTypes, gameType))
-		/* current value is not valid for this map, set to first valid gametype */
-		cgi->Cvar_Set("sv_gametype", static_cast<const char*>(md->gameTypes->data));
-
-	cgi->Com_SetGameType();
-}
-
-/**
  * @brief After a mission was finished this function is called
  * @param msg The network message buffer
  * @param winner The winning team
@@ -163,35 +139,57 @@ static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 
 static const mapDef_t *GAME_MP_MapInfo (int step)
 {
-	const mapDef_t *md;
 	int i = 0;
-
-	while (!cgi->GAME_GetCurrentSelectedMap()->multiplayer) {
+	const char *gameType = cgi->Cvar_GetString("sv_gametype");
+	for (;;) {
 		i++;
-		cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
 		if (i > 100000)
-			cgi->Com_Error(ERR_DROP, "no multiplayer map found");
-	}
+			break;
 
-	md = cgi->GAME_GetCurrentSelectedMap();
-	cgi->UI_ResetData(TEXT_LIST);
-	cgi->UI_ResetData(TEXT_LIST2);
+		cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
+		const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+		if (md == nullptr)
+			break;
+		if (!md->multiplayer)
+			continue;
+		if (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gameType)) {
+			linkedList_t *gameNames = nullptr;
+			for (int j = 0; j < cgi->csi->numGTs; j++) {
+				const gametype_t *gt = &cgi->csi->gts[j];
+				if (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
+					cgi->LIST_AddString(&gameNames, _(gt->name));
+				}
+			}
+			cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
 
-	uiNode_t *gameTypes = nullptr;
-	linkedList_t *gameNames = nullptr;
-	for (i = 0; i < cgi->csi->numGTs; i++) {
-		const gametype_t *gt = &cgi->csi->gts[i];
-		if (!md->gameTypes || cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
-			cgi->UI_AddOption(&gameTypes, gt->id,  _(gt->name), gt->id);
-			cgi->LIST_AddString(&gameNames, _(gt->name));
+			return md;
 		}
 	}
 
-	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
-	cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
-	cgi->UI_ExecuteConfunc("mp_updategametype");
+	cgi->Com_Printf("no multiplayer map found for the current selected gametype: '%s'", gameType);
+	return nullptr;
+}
 
-	return md;
+/**
+ * @brief Update the map according to the gametype
+ */
+static void GAME_MP_UpdateGametype_f (void)
+{
+	const int numGTs = cgi->csi->numGTs;
+	/* no types defined or parsed */
+	if (numGTs == 0)
+		return;
+
+	cgi->Com_SetGameType();
+
+	const char *gameType = cgi->Cvar_GetString("sv_gametype");
+	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+	if (md != nullptr && md->multiplayer && (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gameType))) {
+		/* no change needed, gametype is supported */
+		return;
+	}
+
+	GAME_MP_MapInfo(1);
 }
 
 static linkedList_t *mp_chatMessageStack = nullptr;
@@ -247,6 +245,9 @@ static void GAME_MP_Shutdown (void)
 
 static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 {
+	if (!cgi->Com_ServerState() && cgi->CL_GetClientState() < ca_connected && Q_strnull(Cvar_GetString("rcon_address")))
+		return;
+
 	if (rcon_client_password->modified) {
 		rcon_client_password->modified = false;
 		if (!cgi->Com_ServerState() && Q_strnull(rcon_client_password->string)) {

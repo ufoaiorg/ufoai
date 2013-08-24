@@ -270,6 +270,16 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	return n;
 }
 
+static void MP_InitUI_f (void)
+{
+	uiNode_t *gameTypes = nullptr;
+	for (int i = 0; i < cgi->csi->numGTs; i++) {
+		const gametype_t *gt = &cgi->csi->gts[i];
+		cgi->UI_AddOption(&gameTypes, gt->id, _(gt->name), gt->id);
+	}
+	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
+}
+
 void MP_CallbacksInit (const cgame_import_t *import)
 {
 	cgi = import;
@@ -279,6 +289,7 @@ void MP_CallbacksInit (const cgame_import_t *import)
 	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
 	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
 	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	cgi->Cmd_AddCommand("mp_init_ui", MP_InitUI_f, nullptr);
 	cgi->Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
 	cgi->Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
 	cgi->Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
@@ -297,6 +308,7 @@ void MP_CallbacksInit (const cgame_import_t *import)
 void MP_CallbacksShutdown (void)
 {
 	cgi->Cmd_RemoveCommand("mp_selectteam_init");
+	cgi->Cmd_RemoveCommand("mp_init_ui");
 	cgi->Cmd_RemoveCommand("teamnum_dec");
 	cgi->Cmd_RemoveCommand("teamnum_inc");
 	cgi->Cmd_RemoveCommand("rcon");
