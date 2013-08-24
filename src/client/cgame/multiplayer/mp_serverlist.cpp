@@ -379,40 +379,37 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 
 static void CL_QueryMasterServerThread (const char *responseBuf, void *userdata)
 {
-	const char *serverListBuf;
-	const char *token;
-	char node[MAX_VAR], service[MAX_VAR];
-	int i, num;
-
 	if (!responseBuf) {
 		cgi->Com_Printf("Could not query masterserver\n");
 		return;
 	}
 
-	serverListBuf = responseBuf;
+	const char *serverListBuf = responseBuf;
 
 	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverListBuf);
-	token = Com_Parse(&serverListBuf);
+	const char *token = Com_Parse(&serverListBuf);
 
-	num = atoi(token);
+	int num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "Too many servers: %i\n", num);
 		num = MAX_SERVERLIST;
 	}
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		/* host */
 		token = Com_Parse(&serverListBuf);
 		if (!*token || !serverListBuf) {
 			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
+		char node[MAX_VAR];
 		Q_strncpyz(node, token, sizeof(node));
 		/* port */
 		token = Com_Parse(&serverListBuf);
-		if (!*token || !serverListBuf) {
+		if (token[0] == '\0' || !serverListBuf) {
 			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
+		char service[MAX_VAR];
 		Q_strncpyz(service, token, sizeof(service));
 		CL_AddServerToList(node, service);
 	}
