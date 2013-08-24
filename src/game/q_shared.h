@@ -449,4 +449,31 @@ extern csi_t csi;
 
 /** @brief Reject messages that are send to the client from the game module */
 #define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."
+#define BAD_RCON_PASSWORD "Bad rcon_password."
 #define REJ_BANNED "Banned."
+#define REJ_SERVER_FULL "Server is full."
+#define REJ_SERVER_VERSION_MISMATCH "The server is running a different version of the game."
+#define REJ_GAME_ALREADY_STARTED "Game has started already."
+#define REJ_CONNECTION_REFUSED "Connection refused."
+
+#define SV_CMD_CONNECT "connect"
+#define SV_CMD_RCON "rcon"
+#define SV_CMD_STATUS "status"
+#define SV_CMD_TEAMINFO "teaminfo"
+#define SV_CMD_INFO "info"
+#define SV_CMD_PRINT "print"
+
+/* unused */
+#define SV_CMD_ACK "ack"
+#define CL_CMD_PING "ping"
+#define CL_CMD_ECHO "echo"
+/* unused end */
+
+#define CL_CMD_COMMAND "cmd"
+#define CL_CMD_CLIENT_CONNECT "client_connect"
+
+#define NET_STATE_NEW "new"
+#define NET_STATE_BEGIN "begin"
+#define NET_STATE_STARTMATCH "startmatch"
+#define NET_STATE_DISCONNECT "disconnect"
+#define NET_STATE_INFO "info"

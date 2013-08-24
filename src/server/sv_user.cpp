@@ -195,14 +195,14 @@ typedef struct {
 
 static const ucmd_t ucmds[] = {
 	/* auto issued */
-	{"new", SV_New_f},
-	{"begin", SV_Begin_f},
-	{"startmatch", SV_StartMatch_f},
+	{NET_STATE_NEW, SV_New_f},
+	{NET_STATE_BEGIN, SV_Begin_f},
+	{NET_STATE_STARTMATCH, SV_StartMatch_f},
 
-	{"disconnect", SV_Disconnect_f},
+	{NET_STATE_DISCONNECT, SV_Disconnect_f},
 
 	/* issued by hand at client consoles */
-	{"info", SV_ShowServerinfo_f},
+	{NET_STATE_INFO, SV_ShowServerinfo_f},
 
 	{nullptr, nullptr}
 };

@@ -322,7 +322,7 @@ void Com_BeginRedirect (struct net_stream *stream, char *buffer, int buffersize)
  */
 void Com_EndRedirect (void)
 {
-	NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
+	NET_OOB_Printf(rd_stream, SV_CMD_PRINT "\n%s", rd_buffer);
 
 	rd_stream = nullptr;
 	rd_buffer = nullptr;
@@ -342,7 +342,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	/* redirect the output? */
 	if (rd_buffer) {
 		if ((strlen(msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
-			NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
+			NET_OOB_Printf(rd_stream, SV_CMD_PRINT "\n%s", rd_buffer);
 			rd_buffer[0] = '\0';
 		}
 		Q_strcat(rd_buffer, sizeof(char) * rd_buffersize, "%s", msg);

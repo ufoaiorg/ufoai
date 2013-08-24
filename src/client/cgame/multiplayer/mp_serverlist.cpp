@@ -161,7 +161,7 @@ static void CL_PingServer (serverList_t *server)
 		return;
 	}
 	cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
-	cgi->NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
+	cgi->NET_OOB_Printf(s, SV_CMD_INFO " %i", PROTOCOL_VERSION);
 	cgi->NET_StreamSetData(s, server);
 	cgi->NET_StreamSetCallback(s, &CL_PingServerCallback);
 }
@@ -488,7 +488,7 @@ static void CL_ServerInfo_f (void)
 	}
 	struct net_stream *s = cgi->NET_Connect(host, port, nullptr);
 	if (s != nullptr) {
-		cgi->NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
+		cgi->NET_OOB_Printf(s, SV_CMD_STATUS " %i", PROTOCOL_VERSION);
 		cgi->NET_StreamSetCallback(s, &CL_ServerInfoCallback);
 	} else {
 		cgi->Com_Printf("Could not connect to %s %s\n", host, port);

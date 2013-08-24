@@ -111,7 +111,7 @@ bool MP_Rcon (const char *password, const char *command)
 	}
 
 	if (cgi->CL_GetClientState() >= ca_connected) {
-		cgi->NET_OOB_Printf2("rcon %s %s", password, command);
+		cgi->NET_OOB_Printf2(SV_CMD_RCON " %s %s", password, command);
 		return true;
 	} else if (rcon_address->string) {
 		const char *port;
@@ -123,7 +123,7 @@ bool MP_Rcon (const char *password, const char *command)
 
 		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, nullptr);
 		if (s) {
-			cgi->NET_OOB_Printf(s, "rcon %s %s", password, command);
+			cgi->NET_OOB_Printf(s, SV_CMD_RCON " %s %s", password, command);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
 			return true;
 		}
@@ -204,7 +204,7 @@ static void CL_SelectTeam_Init_f (void)
 	else
 		cgi->Cvar_Set("cl_admin", "0");
 
-	cgi->NET_OOB_Printf2("teaminfo %i", PROTOCOL_VERSION);
+	cgi->NET_OOB_Printf2(SV_CMD_TEAMINFO " %i", PROTOCOL_VERSION);
 	cgi->UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
 }
 

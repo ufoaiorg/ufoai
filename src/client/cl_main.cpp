@@ -213,7 +213,7 @@ static void CL_Connect (void)
 	}
 
 	if (cls.netStream) {
-		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
+		NET_OOB_Printf(cls.netStream, SV_CMD_CONNECT " %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = CL_Milliseconds();
 	} else {
 		if (cls.servername[0] != '\0') {
@@ -264,7 +264,7 @@ void CL_Disconnect (void)
 	if (!Com_ServerState()) {
 		dbuffer msg;
 		NET_WriteByte(&msg, clc_stringcmd);
-		NET_WriteString(&msg, "disconnect\n");
+		NET_WriteString(&msg, NET_STATE_DISCONNECT "\n");
 		NET_WriteMsg(cls.netStream, msg);
 		/* make sure, that this is send */
 		NET_Wait(0);
@@ -347,7 +347,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s (%s)\n", c, Cmd_Args());
 
 	/* server connection */
-	if (Q_streq(c, "client_connect")) {
+	if (Q_streq(c, CL_CMD_CLIENT_CONNECT)) {
 		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			if (char const* const p = Q_strstart(Cmd_Argv(i), "dlserver=")) {
@@ -363,13 +363,13 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 		}
 		dbuffer buf(5);
 		NET_WriteByte(&buf, clc_stringcmd);
-		NET_WriteString(&buf, "new\n");
+		NET_WriteString(&buf, NET_STATE_NEW "\n");
 		NET_WriteMsg(cls.netStream, buf);
 		return;
 	}
 
 	/* remote command from gui front end */
-	if (Q_streq(c, "cmd")) {
+	if (Q_streq(c, CL_CMD_COMMAND)) {
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
@@ -382,25 +382,43 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 	}
 
 	/* ping from server */
-	if (Q_streq(c, "ping")) {
-		NET_OOB_Printf(cls.netStream, "ack");
+	if (Q_streq(c, CL_CMD_PING)) {
+		NET_OOB_Printf(cls.netStream, SV_CMD_ACK);
 		return;
 	}
 
 	/* echo request from server */
-	if (Q_streq(c, "echo")) {
+	if (Q_streq(c, CL_CMD_ECHO)) {
 		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	/* print */
-	if (Q_streq(c, "print")) {
+	if (Q_streq(c, SV_CMD_PRINT)) {
 		NET_ReadString(msg, popupText, sizeof(popupText));
 		/* special reject messages needs proper handling */
-		/** @todo this is in the userinfo string, but not clearly announced via print - see SVC_DirectConnect */
-		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
+		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT)) {
 			UI_PushWindow("serverpassword");
-		UI_Popup(_("Notice"), _(popupText));
+			if (Q_strvalid(Cvar_GetString("password"))) {
+				UI_Popup(_("Connection failure"), _("The password you specified was wrong."));
+				Cvar_Set("password", "");
+			} else {
+				UI_Popup(_("Connection failure"), _("This server requires a password."));
+			}
+		} else if (strstr(s, REJ_SERVER_FULL)) {
+			UI_Popup(_("Connection failure"), _("This server is full."));
+		} else if (strstr(s, REJ_BANNED)) {
+			UI_Popup(_("Connection failure"), _("You are banned on this server."));
+		} else if (strstr(s, REJ_GAME_ALREADY_STARTED)) {
+			UI_Popup(_("Connection failure"), _("The game has already started."));
+		} else if (strstr(s, REJ_SERVER_VERSION_MISMATCH)) {
+			UI_Popup(_("Connection failure"), _("The server is running a different version of the game."));
+		} else if (strstr(s, BAD_RCON_PASSWORD)) {
+			Cvar_Set("rcon_password", "");
+			UI_Popup(_("Bad rcon password"), _("The rcon password you specified was wrong."));
+		} else {
+			UI_Popup(_("Notice"), _(popupText));
+		}
 		return;
 	}
 
@@ -592,7 +610,7 @@ void CL_RequestNextDownload (void)
 		/* this will activate the render process (see client state ca_active) */
 		NET_WriteByte(&msg, clc_stringcmd);
 		/* see CL_StartGame */
-		NET_WriteString(&msg, "begin\n");
+		NET_WriteString(&msg, NET_STATE_BEGIN "\n");
 		NET_WriteMsg(cls.netStream, msg);
 	}
 

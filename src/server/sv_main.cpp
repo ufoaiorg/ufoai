@@ -264,7 +264,7 @@ static void SVC_Info (struct net_stream *s)
 	if (version != PROTOCOL_VERSION) {
 		char string[MAX_VAR];
 		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", sv_hostname->string, version, PROTOCOL_VERSION);
-		NET_OOB_Printf(s, "print\n%s", string);
+		NET_OOB_Printf(s, SV_CMD_PRINT "\n%s", string);
 	} else {
 		client_t *cl;
 		char infostring[MAX_INFO_STRING];
@@ -285,7 +285,7 @@ static void SVC_Info (struct net_stream *s)
 		Info_SetValueForKeyAsInteger(infostring, sizeof(infostring), "clients", count);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_maxclients", sv_maxclients->string);
 		Info_SetValueForKey(infostring, sizeof(infostring), "sv_version", UFO_VERSION);
-		NET_OOB_Printf(s, "info\n%s", infostring);
+		NET_OOB_Printf(s, SV_CMD_INFO "\n%s", infostring);
 	}
 }
 
@@ -309,14 +309,14 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	if (sv->started || sv->spawned) {
 		Com_Printf("rejected connect because match is already running\n");
-		NET_OOB_Printf(stream, "print\nGame has started already.\n");
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_GAME_ALREADY_STARTED "\n");
 		return;
 	}
 
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		Com_Printf("rejected connect from version %i - %s\n", version, peername);
-		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_SERVER_VERSION_MISMATCH "\n");
 		return;
 	}
 
@@ -324,19 +324,19 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	if (userinfo[0] == '\0') {  /* catch empty userinfo */
 		Com_Printf("Empty userinfo from %s\n", peername);
-		NET_OOB_Printf(stream, "print\nConnection refused.\n");
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_CONNECTION_REFUSED "\n");
 		return;
 	}
 
 	if (strchr(userinfo, '\xFF')) {  /* catch end of message in string exploit */
 		Com_Printf("Illegal userinfo contained xFF from %s\n", peername);
-		NET_OOB_Printf(stream, "print\nConnection refused.\n");
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_CONNECTION_REFUSED "\n");
 		return;
 	}
 
 	if (strlen(Info_ValueForKey(userinfo, "ip"))) {  /* catch spoofed ips  */
 		Com_Printf("Illegal userinfo contained ip from %s\n", peername);
-		NET_OOB_Printf(stream, "print\nConnection refused.\n");
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_CONNECTION_REFUSED "\n");
 		return;
 	}
 
@@ -349,7 +349,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 		if (cl->state == cs_free)
 			break;
 	if (cl == nullptr) {
-		NET_OOB_Printf(stream, "print\nServer is full.\n");
+		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_SERVER_FULL "\n");
 		Com_Printf("Rejected a connection - server is full.\n");
 		return;
 	}
@@ -371,10 +371,10 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	if (!connected) {
 		const char *rejmsg = Info_ValueForKey(userinfo, "rejmsg");
 		if (rejmsg[0] != '\0') {
-			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", rejmsg);
+			NET_OOB_Printf(stream, SV_CMD_PRINT "\n%s\n" REJ_CONNECTION_REFUSED "\n", rejmsg);
 			Com_Printf("Game rejected a connection from %s. Reason: %s\n", peername, rejmsg);
 		} else {
-			NET_OOB_Printf(stream, "print\nConnection refused.\n");
+			NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_CONNECTION_REFUSED "\n");
 			Com_Printf("Game rejected a connection from %s.\n", peername);
 		}
 		return;
@@ -390,9 +390,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	/* send the connect packet to the client */
 	if (sv_http_downloadserver->string[0])
-		NET_OOB_Printf(stream, "client_connect dlserver=%s", sv_http_downloadserver->string);
+		NET_OOB_Printf(stream, CL_CMD_CLIENT_CONNECT " dlserver=%s", sv_http_downloadserver->string);
 	else
-		NET_OOB_Printf(stream, "client_connect");
+		NET_OOB_Printf(stream, CL_CMD_CLIENT_CONNECT);
 
 	SV_SetClientState(cl, cs_connected);
 
@@ -438,10 +438,10 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 
 	Com_BeginRedirect(stream, sv_outputbuf, SV_OUTPUTBUF_LENGTH);
 
-	if (!valid)
+	if (!valid) {
 		/* inform the client */
-		Com_Printf("Bad rcon_password.\n");
-	else {
+		Com_Printf(BAD_RCON_PASSWORD);
+	} else {
 		char remaining[1024] = "";
 		int i;
 
@@ -451,7 +451,6 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		}
 
 		/* execute the string */
-		Com_Printf("rcon command: '%s'\n", remaining);
 		Cmd_ExecuteString("%s", remaining);
 	}
 
@@ -477,15 +476,15 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 	c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
 
-	if (Q_streq(c, "teaminfo"))
+	if (Q_streq(c, SV_CMD_TEAMINFO))
 		SVC_TeamInfo(stream);
-	else if (Q_streq(c, "info"))
+	else if (Q_streq(c, SV_CMD_INFO))
 		SVC_Info(stream);
-	else if (Q_streq(c, "status"))
+	else if (Q_streq(c, SV_CMD_STATUS))
 		SVC_Status(stream);
-	else if (Q_streq(c, "connect"))
+	else if (Q_streq(c, SV_CMD_CONNECT))
 		SVC_DirectConnect(stream);
-	else if (Q_streq(c, "rcon"))
+	else if (Q_streq(c, SV_CMD_RCON))
 		SVC_RemoteCommand(stream);
 	else
 		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), true), s);

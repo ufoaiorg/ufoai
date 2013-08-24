@@ -5,7 +5,7 @@
  * @section Connection
  *
  * In case the connection is established (@c G_ClientConnect), the client
- * state is @c cs_connected. The client will send "new", @c SV_New_f sets the
+ * state is @c cs_connected. The client will send SV_STATE_NEW, @c SV_New_f sets the
  * state to @c cs_spawning, and asks the client to precache the data after
  * sending the configstrings. After the client is done with it, it will send
  * "begin" to the server. @c SV_Begin_f will now set the client state to @c cs_began
@@ -13,7 +13,7 @@
  * "spawnsoldiers" now. The client is answering with @c clc_teaminfo and the server
  * will call @c G_ClientTeamInfo. The client state is now @c cs_spawned. Last but not
  * least the server informs the client that the match can now get started by
- * asking to execute "startmatch". The client answers with "startmatch", too and
+ * asking to execute "startmatch". The client answers with NET_STATE_STARTMATCH and
  * @c G_ClientStartMatch is executed.
  */
 
@@ -1452,7 +1452,7 @@ bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
 	}
 
 	if (!G_PlayerToPM(*player)) {
-		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", "Server is full");
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_SERVER_FULL);
 		return false;
 	}
 

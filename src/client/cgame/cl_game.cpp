@@ -1466,7 +1466,7 @@ void GAME_StartMatch (void)
 	if (!LIST_IsEmpty(cl.chrList)) {
 		dbuffer msg(12);
 		NET_WriteByte(&msg, clc_stringcmd);
-		NET_WriteString(&msg, "startmatch\n");
+		NET_WriteString(&msg, NET_STATE_STARTMATCH "\n");
 		NET_WriteMsg(cls.netStream, msg);
 
 		GAME_InitializeBattlescape(cl.chrList);
