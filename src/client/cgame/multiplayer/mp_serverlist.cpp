@@ -111,39 +111,40 @@ static inline bool CL_ShowServer (const serverList_t *server)
  */
 static void CL_PingServerCallback (struct net_stream *s)
 {
-	dbuffer *buf = cgi->NET_ReadMsg(s);
+	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
 		cgi->NET_StreamFree(s);
 		return;
 	}
 	serverList_t *server = (serverList_t *)cgi->NET_StreamGetData(s);
 	const int cmd = cgi->NET_ReadByte(buf);
-	char str[512];
+	if (cmd != svc_oob) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
 
+	char str[512];
 	cgi->NET_ReadStringLine(buf, str, sizeof(str));
 
-	if (cmd == svc_oob) {
-		if (strncmp(str, "info", 4) == 0) {
-			cgi->NET_ReadString(buf, str, sizeof(str));
-			if (CL_ProcessPingReply(server, str)) {
-				if (CL_ShowServer(server)) {
-					server->serverListPos = serverListPos;
-					serverListPos++;
-					Q_strcat(serverText, sizeof(serverText), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-							server->sv_hostname,
-							server->mapname,
-							server->gametype,
-							server->clients,
-							server->sv_maxclients);
-				}
+	if (strncmp(str, "info", 4) == 0) {
+		cgi->NET_ReadString(buf, str, sizeof(str));
+		if (CL_ProcessPingReply(server, str)) {
+			if (CL_ShowServer(server)) {
+				server->serverListPos = serverListPos;
+				serverListPos++;
+				Q_strcat(serverText, sizeof(serverText), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
+						server->sv_hostname,
+						server->mapname,
+						server->gametype,
+						server->clients,
+						server->sv_maxclients);
 			}
-		} else if (strncmp(str, "print", 5) == 0) {
-			char paramBuf[2048];
-			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
-			cgi->Com_DPrintf(DEBUG_CLIENT, "%s", paramBuf);
 		}
+	} else if (strncmp(str, "print", 5) == 0) {
+		char paramBuf[2048];
+		cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
+		cgi->Com_DPrintf(DEBUG_CLIENT, "%s", paramBuf);
 	}
-	delete buf;
 	cgi->NET_StreamFree(s);
 }
 
@@ -155,15 +156,14 @@ static void CL_PingServerCallback (struct net_stream *s)
 static void CL_PingServer (serverList_t *server)
 {
 	struct net_stream *s = cgi->NET_Connect(server->node, server->service, nullptr);
-
-	if (s) {
-		cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
-		cgi->NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
-		cgi->NET_StreamSetData(s, server);
-		cgi->NET_StreamSetCallback(s, &CL_PingServerCallback);
-	} else {
+	if (s == nullptr) {
 		cgi->Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
+		return;
 	}
+	cgi->Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
+	cgi->NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
+	cgi->NET_StreamSetData(s, server);
+	cgi->NET_StreamSetCallback(s, &CL_PingServerCallback);
 }
 
 /**
@@ -171,11 +171,9 @@ static void CL_PingServer (serverList_t *server)
  */
 void CL_PrintServerList_f (void)
 {
-	int i;
-
 	cgi->Com_Printf("%i servers on the list\n", serverListLength);
 
-	for (i = 0; i < serverListLength; i++) {
+	for (int i = 0; i < serverListLength; i++) {
 		const serverList_t *list = &serverList[i];
 		cgi->Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, list->node, list->service, list->pinged);
 	}
@@ -188,12 +186,10 @@ void CL_PrintServerList_f (void)
  */
 static void CL_AddServerToList (const char *node, const char *service)
 {
-	int i;
-
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
 
-	for (i = 0; i < serverListLength; i++)
+	for (int i = 0; i < serverListLength; i++)
 		if (Q_streq(serverList[i].node, node) && Q_streq(serverList[i].service, service))
 			return;
 
@@ -215,10 +211,6 @@ static void CL_AddServerToList (const char *node, const char *service)
 void CL_ParseTeamInfoMessage (dbuffer *msg)
 {
 	char str[4096];
-	int cnt = 0;
-	linkedList_t *userList = nullptr;
-	linkedList_t *userTeam = nullptr;
-
 	if (cgi->NET_ReadString(msg, str, sizeof(str)) == 0) {
 		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
 		cgi->UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
@@ -231,6 +223,10 @@ void CL_ParseTeamInfoMessage (dbuffer *msg)
 
 	teamData.maxteams = Info_IntegerForKey(str, "sv_maxteams");
 	teamData.maxPlayersPerTeam = Info_IntegerForKey(str, "sv_maxplayersperteam");
+
+	int cnt = 0;
+	linkedList_t *userList = nullptr;
+	linkedList_t *userTeam = nullptr;
 
 	/* for each lines */
 	while (cgi->NET_ReadString(msg, str, sizeof(str)) > 0) {
@@ -361,18 +357,22 @@ void CL_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
  */
 static void CL_ServerInfoCallback (struct net_stream *s)
 {
-	dbuffer *buf = cgi->NET_ReadMsg(s);
-	if (buf) {
-		const int cmd = cgi->NET_ReadByte(buf);
-		char str[8];
-		cgi->NET_ReadStringLine(buf, str, sizeof(str));
-
-		if (cmd == svc_oob && Q_streq(str, "print")) {
-			char hostname[256];
-			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
-			CL_ParseServerInfoMessage(buf, hostname);
-		}
-		delete buf;
+	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
+	if (!buf) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
+	const int cmd = cgi->NET_ReadByte(buf);
+	if (cmd != svc_oob) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
+	char str[8];
+	cgi->NET_ReadStringLine(buf, str, sizeof(str));
+	if (Q_streq(str, "print")) {
+		char hostname[256];
+		cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
+		CL_ParseServerInfoMessage(buf, hostname);
 	}
 	cgi->NET_StreamFree(s);
 }

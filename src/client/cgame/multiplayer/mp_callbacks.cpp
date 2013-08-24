@@ -40,14 +40,13 @@ static cvar_t *info_password;
 
 static void CL_Connect_f (void)
 {
-	char server[MAX_VAR];
-	char serverport[16];
-
 	if (!selectedServer && cgi->Cmd_Argc() != 2 && cgi->Cmd_Argc() != 3) {
 		cgi->Com_Printf("Usage: %s <server> [<port>]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
+	char server[MAX_VAR];
+	char serverport[16];
 	if (cgi->Cmd_Argc() == 2) {
 		Q_strncpyz(server, cgi->Cmd_Argv(1), sizeof(server));
 		Q_strncpyz(serverport, DOUBLEQUOTE(PORT_SERVER), sizeof(serverport));
@@ -83,18 +82,23 @@ static void CL_Connect_f (void)
 
 static void CL_RconCallback (struct net_stream *s)
 {
-	dbuffer *buf = cgi->NET_ReadMsg(s);
-	if (buf) {
-		const int cmd = cgi->NET_ReadByte(buf);
-		char commandBuf[8];
-		cgi->NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
+	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
+	if (!buf) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
+	const int cmd = cgi->NET_ReadByte(buf);
+	if (cmd != svc_oob) {
+		cgi->NET_StreamFree(s);
+		return;
+	}
+	char commandBuf[8];
+	cgi->NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
 
-		if (cmd == svc_oob && Q_streq(commandBuf, "print")) {
-			char paramBuf[2048];
-			cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
-			cgi->Com_Printf("%s\n", paramBuf);
-		}
-		delete buf;
+	if (Q_streq(commandBuf, "print")) {
+		char paramBuf[2048];
+		cgi->NET_ReadString(buf, paramBuf, sizeof(paramBuf));
+		cgi->Com_Printf("%s\n", paramBuf);
 	}
 	cgi->NET_StreamFree(s);
 }

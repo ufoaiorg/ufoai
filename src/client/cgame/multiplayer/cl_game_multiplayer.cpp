@@ -43,8 +43,10 @@ static void GAME_MP_StartBattlescape (bool isTeamPlay)
 
 static void GAME_MP_NotifyEvent (event_t eventType)
 {
-	if (eventType == EV_RESET)
-		cgi->HUD_InitUI("multiplayerInGame");
+	if (eventType != EV_RESET)
+		return;
+
+	cgi->HUD_InitUI("multiplayerInGame");
 }
 
 static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
@@ -139,15 +141,14 @@ static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 {
 	linkedList_t *list = nullptr;
 	int enemiesKilled, enemiesStunned;
-	int i;
 	const int team = cgi->GAME_GetCurrentTeam();
 
 	enemiesKilled = enemiesStunned = 0;
-	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i != team) {
-			enemiesKilled += numKilled[team][i];
-			enemiesStunned += numStunned[team][i];
-		}
+	for (int i = 0; i < MAX_TEAMS; i++) {
+		if (i == team)
+			continue;
+		enemiesKilled += numKilled[team][i];
+		enemiesStunned += numStunned[team][i];
 	}
 
 	cgi->LIST_AddString(&list, va(_("Enemies killed:\t%i"), enemiesKilled + enemiesStunned));
@@ -201,10 +202,9 @@ static linkedList_t *mp_chatMessageStack = nullptr;
 static void GAME_MP_AddChatMessage (const char *text)
 {
 	char message[2048];
-	const char *msg;
 	Q_strncpyz(message, text, sizeof(message));
 
-	msg = Com_Trim(message);
+	const char *msg = Com_Trim(message);
 	cgi->LIST_AddString(&mp_chatMessageStack, msg);
 	cgi->HUD_DisplayMessage(msg);
 	cgi->UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
