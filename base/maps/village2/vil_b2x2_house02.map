@@ -4023,7 +4023,7 @@
 "_color" "0.997302 1 0.899407"
 "light" "200"
 "origin" "390 116 74"
-"spawnflags" "1"
+"spawnflags" "0"
 }
 // entity 44
 {
@@ -4031,7 +4031,7 @@
 "_color" "0.997302 1 0.899407"
 "light" "200"
 "origin" "52 336 74"
-"spawnflags" "1"
+"spawnflags" "0"
 }
 // entity 45
 {
@@ -4039,5 +4039,5 @@
 "_color" "0.997302 1 0.899407"
 "light" "200"
 "origin" "348 116 74"
-"spawnflags" "1"
+"spawnflags" "0"
 }
