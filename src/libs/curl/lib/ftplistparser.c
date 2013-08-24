@@ -32,7 +32,7 @@
  * 4) UNIX symlink
  * lrwxr-xr-x 1 user01 ftp  512 Jan 29 23:32 prog -> prog2000
  * 5) DOS style
- * 01-29-97 11:32PM <DIR> prog
+ * "01-29-97 11:32PM <DIR> prog"
  */
 
 #include "setup.h"
