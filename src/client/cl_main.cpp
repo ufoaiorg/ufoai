@@ -365,6 +365,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 		NET_WriteByte(&buf, clc_stringcmd);
 		NET_WriteString(&buf, NET_STATE_NEW "\n");
 		NET_WriteMsg(cls.netStream, buf);
+		GAME_InitMissionBriefing(_("Loading"));
 		return;
 	}
 
