@@ -301,7 +301,5 @@ void MP_CallbacksShutdown (void)
 	cgi->Cmd_RemoveCommand("connect");
 	cgi->Cmd_RemoveCommand("reconnect");
 
-	cgi->Cvar_Delete("rcon_password");
 	cgi->Cvar_Delete("rcon_address");
-	cgi->Cvar_Delete("password");
 }
