@@ -814,14 +814,14 @@ window mp_create_server extends abstract_multiplayer
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"300 90"
+			pos			"335 90"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
-			pos			"350 90"
+			pos			"390 90"
 			min			1
 			max			12
 			delta		1
@@ -840,14 +840,14 @@ window mp_create_server extends abstract_multiplayer
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"300 110"
+			pos			"335 110"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
-			pos			"350 110"
+			pos			"390 110"
 			min			1
 			max			12
 			delta		1
