@@ -36,28 +36,28 @@ tile +s1_01
 	// ship rear part
 {
 4 3
-0    m    tw    0
-a    +m   +r    x
-0    x    x     0
+0		m		tw		0
+a		+m		+r		x
+0		x		x		0
 }
 
 tile +s1_02
 	// ship rear part, including the bridge and a middle part with a container
 {
 4 4
-0    m    tw    0
-a    +m   +r    x
-a    +m   +r    x
-0    m    s     0
+0		m		tw		0
+a		+m		+r		x
+a		+m		+r		x
+0		m		s		0
 }
 
 tile +s2_01
 	// ship middle part, empty
 {
 4 3
-0     m    rs    0
-a     +m   +s    x
-0     m    st    0
+0		m		rs		0
+a		+m		+s		x
+0		m		st		0
 }
 
 
@@ -65,18 +65,18 @@ tile +s2_02
 	// ship middle part, with a container
 {
 4 3
-0     m    rs    0
-a     +m   +s    x
-0     m    st    0
+0		m		rs		0
+a		+m		+s		x
+0		m		st		0
 }
 
 tile +s3_01
 	// ship front part
 {
 4 3
-0     m    s     0
-a     +m   +t    x
-0     m    rw    0
+0		m		s		0
+a		+m		+t		x
+0		m		rw		0
 }
 
 // water ------------------------------------------------------------
@@ -85,18 +85,18 @@ tile +w_01
 	// water, empty
 {
 3 3
-0      wt       0
-m      +w       x
-0      wr       0
+0		wt		0
+m		+w		x
+0		wr		0
 }
 
 tile +w_02
 	// water, with a bouy
 {
 3 3
-0      wt       0
-m      +w       x
-0      wr       0
+0		wt		0
+m		+w		x
+0		wr		0
 }
 
 // common tiles -----------------------------------------------------
@@ -105,159 +105,159 @@ tile +a_00
 	// this should be a required / fixed tile for faster assembling
 {
 4 3
-0      a      a      0
-a     +a      +a     m
-0      x      x      0
+0		a		a		0
+a		+a		+a		m
+0		x		x		0
 }
 
 tile +a_01
 	// a single container : blue, heading north
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_02
 	// a single container : blue, heading east
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_03
 	// three containers, some boxes and crates are used to climb up
 {
 3 4
-0      a      0
-a     +a      am
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+a		+a		am
+0		a		0
 }
 
 tile +a_04
 	// a single container : red, heading north
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_05
 	// four containers : red/blue, heading north
 {
 4 3
-0      a      a     0
-a     +a      +a    am
-0      a      a     0
+0		a		a		0
+a		+a		+a		am
+0		a		a		0
 }
 tile +a_06
 	// 2 x 2 containers : red/blue sorted, heading east
 {
 4 3
-0      a      a     0
-a     +a      +a    am
-0      a      a     0
+0		a		a		0
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_07
 	// 2 x 2 containers : red/blue mixed, heading east
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_08
 	// blue barrels, some boxes and crates, a forklift
 {
 4 4
-0      a      a     0
-a     +a      +a    am
-a      a      +a    am
-0      0      a     0
+0		a		a		0
+a		+a		+a		am
+a		a		+a		am
+0		0		a		0
 }
 
 tile +a_09
 	// waste conainer, scrap metal
 {
 4 4
-0      0      a     0
-a      a      +a    am
-a      +a     +a    am
-0      a      a     0
+0		0		a		0
+a		a		+a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_10
 	// a crane : heading west, a truck trailer and crates
 {
 5 3
-0      a      a     a     0
-a      +a     +a    +a    am
-0      a      a     a     0
+0		a		a		a		0
+a		+a		+a		+a		am
+0		a		a		a		0
 }
 
 tile +a_11
 	// two trucks, a truck mounted crane, pile of woods
 {
 4 6
-0      z      z     0
-a     +a      +a    am
-a     +a      +a    am
-a     +a      +a    am
-a     +a      +a    am
-0      a      a     0
+0		z		z		0
+a		+a		+a		am
+a		+a		+a		am
+a		+a		+a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_12
 	// a single container, red, heading north
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_13
 	// two containers side by side : blue, heading east
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_14
 	// three containers as triangle, red, heading north
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_15
 	// a hole with water
 {
 3 3
-0      a      0
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+0		a		0
 }
 
 tile +a_16
 	// a crane : heading east, planks
 {
 4 4
-0      0      a     0
-a      a     +a     am
-a     +a     +a     am
-0      a      a     0
+0		0		a		0
+a		a		+a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_17
@@ -265,62 +265,62 @@ tile +a_17
 	// boxes and crates to climb up
 {
 4 4
-0      a      0     0
-a     +a      a     am
-a     +a      +a    am
-0      a      a     0
+0		a		0		0
+a		+a		a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_18
 	// 9 containers, some cable reels
 {
 3 5
-0      a      0
-a     +a      am
-a     +a      am
-a     +a      am
-0      a      0
+0		a		0
+a		+a		am
+a		+a		am
+a		+a		am
+0		a		0
 }
 
 tile +a_19
 	// a crane : heading north, with a container, washing machines, cars
 {
 4 4
-0      a     a     0
-a     +a     +a    am
-a     +a     +a    am
-0      a     a     0
+0		a		a		0
+a		+a		+a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 tile +a_20
 	// a crane : heading south, 'flameable' barrels, some blockers
 {
 3 4
-0      a     0
-a     +a     am
-a     +a     am
-0      a     0
+0		a		0
+a		+a		am
+a		+a		am
+0		a		0
 }
 
 tile +a_21
 	// dry dock with the hoovercraft
 {
 5 5
-0     a     a    0     0
-a     +a    +a   m     0
-a     +a    +a   +m    w
-a     +a    +a   m     0
-0     a     a    0     0
+0		a		a		0		0
+a		+a		+a		m		0
+a		+a		+a		+m		w
+a		+a		+a		m		0
+0		a		a		0		0
 }
 
 tile +a_22
 	// a pile of gravel
 {
 4 4
-0     a     a    0
-a     +a    +a   am
-a     +a    +a   am
-0     a     a    0
+0		a		a		0
+a		+a		+a		am
+a		+a		+a		am
+0		a		a		0
 }
 
 // pier -------------------------------------------------------------
@@ -329,9 +329,9 @@ tile +m2_01
 	// mole, with a stair down and a wooden landing stage
 {
 4 3
-0     m     0     0
-a     +m    +w    x
-0     m     0     0
+0		m		0		0
+a		+m		+w		x
+0		m		0		0
 }
 
 tile +m_01
@@ -339,36 +339,36 @@ tile +m_01
 	// stair leads down from north to south, opposed to +m_05
 {
 3 3
-0      m      0
-a     +m      w
-0      m      0
+0		m		0
+a		+m		w
+0		m		0
 }
 
 tile +m_02
 	// mole, with two lamps and a small handrail
 {
 3 3
-0     m       0
-a     +m      w
-0     m       0
+0		m		0
+a		+m		w
+0		m		0
 }
 
 tile +m_03
 	// mole, with like a pier pointing east
 {
 3 3
-0     m       0
-a     +m      w
-0     m       0
+0		m		0
+a		+m		w
+0		m		0
 }
 
 tile +m_04
 	// mole, with a constriction
 {
 3 3
-0     m       0
-a     +m      w
-0     m       0
+0		m		0
+a		+m		w
+0		m		0
 }
 
 tile +m_05
@@ -376,18 +376,18 @@ tile +m_05
 	// stair leads down from south to north, opposed to +m_01
 {
 3 3
-0     m       0
-a     +m      w
-0     m       0
+0		m		0
+a		+m		w
+0		m		0
 }
 
 tile +m_06
 	// a ramp down to the water
 {
 4 3
-0      a      m     0
-a     +a     +m     w
-0      a      m     0
+0		a		m		0
+a		+a		+m		w
+0		a		m		0
 }
 
 // dropships --------------------------------------------------------
@@ -398,11 +398,11 @@ tile +craft_drop_firebird
 	// 8 x info_player_start for team 1
 {
 4 5
-0    a     a     0
-x    +a    +a    am
-x    +a    +a    am
-x    +a    +a    am
-0    a     a     0
+0		a		a		0
+x		+a		+a		am
+x		+a		+a		am
+x		+a		+a		am
+0		a		a		0
 }
 
 tile +craft_drop_herakles
@@ -411,11 +411,11 @@ tile +craft_drop_herakles
 	// 8 x info_player_start for team 1
 {
 4 5
-0    a    a    0
-x    +a   +a   am
-x    +a   +a   am
-x    +a   +a   am
-0    a    a    0
+0		a		a		0
+x		+a		+a		am
+x		+a		+a		am
+x		+a		+a		am
+0		a		a		0
 }
 
 tile +craft_drop_raptor
@@ -424,11 +424,11 @@ tile +craft_drop_raptor
 	// 8 x info_player_start for team 1
 {
 5 5
-0    a    a    a    0
-x    +a   +a   +a   am
-x    +a   +a   +a   am
-x    +a   +a   +a   am
-0    a    a    a    0
+0		a		a		a		0
+x		+a		+a		+a		am
+x		+a		+a		+a		am
+x		+a		+a		+a		am
+0		a		a		a		0
 }
 
 // muliplayer tiles -------------------------------------------------
