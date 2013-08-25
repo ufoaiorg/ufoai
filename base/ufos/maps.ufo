@@ -5413,7 +5413,6 @@ mapdef vil2_mp2p
 	gametypes
 	(
 		fight1on1
-		fight2on2
 	)
 
 	aircraft
