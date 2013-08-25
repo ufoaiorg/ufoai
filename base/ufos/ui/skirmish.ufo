@@ -488,7 +488,7 @@ window skirmish
 	func onWindowOpened
 	{
 		// TODO: Allow changing the difficulty via menu
-		cmd "game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set g_difficulty 0;"
+		cmd "game_setmode;set ai_equipment multiplayer_alien;set g_difficulty 0;"
 		cmd "set mn_serverday 1;"
 		cmd "mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1

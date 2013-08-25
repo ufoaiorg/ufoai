@@ -802,7 +802,7 @@ window mp_create_server extends abstract_multiplayer
 		}
 
 		// ===================
-		// G_MAXPERPLAYER
+		// MAXSOLDIER PER TEAM
 		// ===================
 		string maxperplayer_str
 		{
@@ -929,6 +929,32 @@ window mp_create_server extends abstract_multiplayer
 			min			30
 			max			500
 			delta		5
+		}
+
+		// ======================================
+		// NUMBER OF AI ACTORS STRINGS & SPINNER
+		// ======================================
+		string mp_ai_numactors_str
+		{
+			string		"_Max. AI actors:"
+			pos			"25 190"
+			size		"300 20"
+			tooltip		"_The maximum of AI actors for this game."
+		}
+		string mp_ai_numactors_value
+		{
+			string		*cvar:ai_numaliens
+			pos			"335 190"
+			size		"50 20"
+			contentalign	ALIGN_CC
+		}
+		spinner_blue mp_ai_numactors_change
+		{
+			current		*cvar:ai_numaliens
+			pos			"390 190"
+			min			1
+			max			30
+			delta		1
 		}
 	}
 
