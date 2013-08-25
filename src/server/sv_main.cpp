@@ -54,6 +54,26 @@ cvar_t *sv_mapname;
 
 memPool_t *sv_genericPool;
 
+typedef struct leakyBucket_s {
+	char node[64];
+
+	int lastTime;
+	signed char burst;
+
+	long hash;
+
+	struct leakyBucket_s *prev;
+	struct leakyBucket_s *next;
+} leakyBucket_t;
+
+/* This is deliberately quite large to make it more of an effort to DoS */
+#define MAX_BUCKETS			16384
+#define MAX_HASHES			1024
+
+static leakyBucket_t buckets[MAX_BUCKETS];
+static leakyBucket_t *bucketHashes[MAX_HASHES];
+static leakyBucket_t outboundLeakyBucket;
+
 char *SV_GetConfigString (int index)
 {
 	if (!Com_CheckConfigStringIndex(index))
@@ -179,36 +199,140 @@ CONNECTIONLESS COMMANDS
 */
 
 /**
+ * @brief Find or allocate a bucket for an address
+ */
+static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burst, int period)
+{
+	char node[64];
+	NET_StreamPeerToName(&address, node, sizeof(node), false);
+
+	const long hash = Com_HashKey(node, MAX_HASHES);
+	const int now = Sys_Milliseconds();
+
+	for (leakyBucket_t *bucket = bucketHashes[hash]; bucket; bucket = bucket->next) {
+		if (!Q_streq(bucket->node, node))
+			continue;
+
+		return bucket;
+	}
+
+	for (int i = 0; i < MAX_BUCKETS; i++) {
+		leakyBucket_t *bucket = &buckets[i];
+		const int interval = now - bucket->lastTime;
+
+		/* Reclaim expired buckets */
+		if (bucket->lastTime > 0 && (interval > (burst * period) || interval < 0)) {
+			if (bucket->prev != nullptr) {
+				bucket->prev->next = bucket->next;
+			} else {
+				bucketHashes[bucket->hash] = bucket->next;
+			}
+
+			if (bucket->next != nullptr) {
+				bucket->next->prev = bucket->prev;
+			}
+
+			OBJZERO(bucket);
+		}
+
+		if (Q_strnull(bucket->node)) {
+			Q_strncpyz(bucket->node, node, sizeof(bucket->node));
+			bucket->lastTime = now;
+			bucket->burst = 0;
+			bucket->hash = hash;
+
+			/* Add to the head of the relevant hash chain */
+			bucket->next = bucketHashes[hash];
+			if (bucketHashes[hash] != nullptr) {
+				bucketHashes[hash]->prev = bucket;
+			}
+
+			bucket->prev = nullptr;
+			bucketHashes[hash] = bucket;
+
+			return bucket;
+		}
+	}
+
+	/* Couldn't allocate a bucket for this address */
+	return nullptr;
+}
+
+static bool SVC_RateLimit (leakyBucket_t *bucket, int burst = 10, int period = 100)
+{
+	if (bucket == nullptr)
+		return true;
+
+	const int now = Sys_Milliseconds();
+	const int interval = now - bucket->lastTime;
+	const int expired = interval / period;
+	const int expiredRemainder = interval % period;
+
+	if (expired > bucket->burst) {
+		bucket->burst = 0;
+		bucket->lastTime = now;
+	} else {
+		bucket->burst -= expired;
+		bucket->lastTime = now - expiredRemainder;
+	}
+
+	if (bucket->burst < burst) {
+		bucket->burst++;
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * @brief Rate limit for a particular address
+ */
+static bool SVC_RateLimitAddress (struct net_stream &from, int burst = 10, int period = 1000)
+{
+	leakyBucket_t *bucket = SVC_BucketForAddress(from, burst, period);
+	return SVC_RateLimit(bucket, burst, period);
+}
+
+/**
  * @brief Responds with teaminfo such as free team num
  * @sa CL_ParseTeamInfoMessage
  */
 static void SVC_TeamInfo (struct net_stream *s)
 {
-	client_t *cl;
-	dbuffer msg;
+	if (SVC_RateLimitAddress(*s)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
+		return;
+	}
+
+	/* Allow getinfo to be DoSed relatively easily, but prevent excess outbound bandwidth usage when being flooded inbound */
+	if (SVC_RateLimit(&outboundLeakyBucket)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: rate limit exceeded, dropping request\n");
+		return;
+	}
+
 	char infoGlobal[MAX_INFO_STRING] = "";
-
-	NET_WriteByte(&msg, svc_oob);
-	NET_WriteRawString(&msg, "teaminfo\n");
-
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_teamplay", Cvar_GetString("sv_teamplay"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxteams", Cvar_GetString("sv_maxteams"));
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
+
+	dbuffer msg;
+	NET_WriteByte(&msg, svc_oob);
+	NET_WriteRawString(&msg, "teaminfo\n");
 	NET_WriteString(&msg, infoGlobal);
 
-	cl = nullptr;
+	client_t *cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
-		if (cl->state >= cs_connected) {
-			char infoPlayer[MAX_INFO_STRING] = "";
-			/* show players that already have a team with their teamnum */
-			int teamId = svs.ge->ClientGetTeamNum(*cl->player);
-			if (!teamId)
-				teamId = TEAM_NO_ACTIVE;
-			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
-			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
-			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
-			NET_WriteString(&msg, infoPlayer);
-		}
+		if (cl->state < cs_connected)
+			continue;
+		char infoPlayer[MAX_INFO_STRING] = "";
+		/* show players that already have a team with their teamnum */
+		int teamId = svs.ge->ClientGetTeamNum(*cl->player);
+		if (!teamId)
+			teamId = TEAM_NO_ACTIVE;
+		Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
+		Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
+		Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
+		NET_WriteString(&msg, infoPlayer);
 	}
 
 	NET_WriteByte(&msg, 0);
@@ -222,21 +346,31 @@ static void SVC_TeamInfo (struct net_stream *s)
  */
 static void SVC_Status (struct net_stream *s)
 {
-	client_t *cl;
-	char player[1024];
+	if (SVC_RateLimitAddress(*s)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_Status: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
+		return;
+	}
+
+	/* Allow getstatus to be DoSed relatively easily, but prevent excess outbound bandwidth usage when being flooded inbound */
+	if (SVC_RateLimit(&outboundLeakyBucket, 10, 100)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_Status: rate limit exceeded, dropping request\n");
+		return;
+	}
+
 	dbuffer msg;
 	NET_WriteByte(&msg, svc_oob);
-	NET_WriteRawString(&msg, "print\n");
-
+	NET_WriteRawString(&msg, SV_CMD_PRINT "\n");
 	NET_WriteRawString(&msg, Cvar_Serverinfo());
 	NET_WriteRawString(&msg, "\n");
 
-	cl = nullptr;
+	client_t *cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
-		if (cl->state > cs_free) {
-			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(*cl->player), cl->name);
-			NET_WriteRawString(&msg, player);
-		}
+		if (cl->state <= cs_free)
+			continue;
+
+		char player[1024];
+		Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(*cl->player), cl->name);
+		NET_WriteRawString(&msg, player);
 	}
 
 	NET_WriteMsg(s, msg);
@@ -252,41 +386,48 @@ static void SVC_Status (struct net_stream *s)
  */
 static void SVC_Info (struct net_stream *s)
 {
-	int version;
+	if (SVC_RateLimitAddress(*s)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
+		return;
+	}
+
+	/* Allow getinfo to be DoSed relatively easily, but prevent excess outbound bandwidth usage when being flooded inbound */
+	if (SVC_RateLimit(&outboundLeakyBucket)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_Info: rate limit exceeded, dropping request\n");
+		return;
+	}
 
 	if (sv_maxclients->integer == 1) {
 		Com_DPrintf(DEBUG_SERVER, "Ignore info string in singleplayer mode\n");
 		return;	/* ignore in single player */
 	}
 
-	version = atoi(Cmd_Argv(1));
-
+	const int version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		char string[MAX_VAR];
 		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", sv_hostname->string, version, PROTOCOL_VERSION);
 		NET_OOB_Printf(s, SV_CMD_PRINT "\n%s", string);
-	} else {
-		client_t *cl;
-		char infostring[MAX_INFO_STRING];
-		int count = 0;
-
-		cl = nullptr;
-		while ((cl = SV_GetNextClient(cl)) != nullptr)
-			if (cl->state >= cs_spawning)
-				count++;
-
-		infostring[0] = '\0';
-
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION));
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_hostname", sv_hostname->string);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_dedicated", sv_dedicated->string);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_gametype", sv_gametype->string);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_mapname", sv->name);
-		Info_SetValueForKeyAsInteger(infostring, sizeof(infostring), "clients", count);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_maxclients", sv_maxclients->string);
-		Info_SetValueForKey(infostring, sizeof(infostring), "sv_version", UFO_VERSION);
-		NET_OOB_Printf(s, SV_CMD_INFO "\n%s", infostring);
+		return;
 	}
+
+	int count = 0;
+
+	client_t *cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr)
+		if (cl->state >= cs_spawning)
+			count++;
+
+	char infostring[MAX_INFO_STRING];
+	infostring[0] = '\0';
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION));
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_hostname", sv_hostname->string);
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_dedicated", sv_dedicated->string);
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_gametype", sv_gametype->string);
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_mapname", sv->name);
+	Info_SetValueForKeyAsInteger(infostring, sizeof(infostring), "clients", count);
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_maxclients", sv_maxclients->string);
+	Info_SetValueForKey(infostring, sizeof(infostring), "sv_version", UFO_VERSION);
+	NET_OOB_Printf(s, SV_CMD_INFO "\n%s", infostring);
 }
 
 
@@ -296,15 +437,6 @@ static void SVC_Info (struct net_stream *s)
  */
 static void SVC_DirectConnect (struct net_stream *stream)
 {
-	char userinfo[MAX_INFO_STRING];
-	client_t *cl;
-	SrvPlayer *player;
-	int playernum;
-	int version;
-	bool connected;
-	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
-
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
 	if (sv->started || sv->spawned) {
@@ -313,13 +445,17 @@ static void SVC_DirectConnect (struct net_stream *stream)
 		return;
 	}
 
-	version = atoi(Cmd_Argv(1));
+	char buf[256];
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
+
+	const int version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		Com_Printf("rejected connect from version %i - %s\n", version, peername);
 		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_SERVER_VERSION_MISMATCH "\n");
 		return;
 	}
 
+	char userinfo[MAX_INFO_STRING];
 	Q_strncpyz(userinfo, Cmd_Argv(2), sizeof(userinfo));
 
 	if (userinfo[0] == '\0') {  /* catch empty userinfo */
@@ -344,7 +480,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
 	/* find a client slot */
-	cl = nullptr;
+	client_t *cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state == cs_free)
 			break;
@@ -357,11 +493,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	/* build a new connection - accept the new client
 	 * this is the only place a client_t is ever initialized */
 	OBJZERO(*cl);
-	playernum = cl - SV_GetClient(0);
-	player = PLAYER_NUM(playernum);
+	const int playernum = cl - SV_GetClient(0);
+	SrvPlayer *player = PLAYER_NUM(playernum);
 	cl->player = player;
 	cl->player->setNum(playernum);
 
+	bool connected;
 	{
 		const ScopedMutex scopedMutex(svs.serverMutex);
 		connected = svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
@@ -385,7 +522,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->lastmessage = svs.realtime;
 
 	/* parse some info from the info strings */
-	strncpy(cl->userinfo, userinfo, sizeof(cl->userinfo) - 1);
+	Q_strncpyz(cl->userinfo, userinfo, sizeof(cl->userinfo));
 	SV_UserinfoChanged(cl);
 
 	/* send the connect packet to the client */
@@ -418,25 +555,36 @@ static inline bool Rcon_Validate (const char *password)
 	return true;
 }
 
-#define SV_OUTPUTBUF_LENGTH 1024
-
-static char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
-
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
 static void SVC_RemoteCommand (struct net_stream *stream)
 {
-	char buf[256];
+	char buf[64];
 	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
-	bool valid = Rcon_Validate(Cmd_Argv(1));
 
-	if (!valid)
+	/* Prevent using rcon as an amplifier and make dictionary attacks impractical */
+	if (SVC_RateLimitAddress(*stream)) {
+		Com_DPrintf(DEBUG_SERVER, "SVC_RemoteCommand: rate limit from %s exceeded, dropping request\n", peername);
+		return;
+	}
+
+	const bool valid = Rcon_Validate(Cmd_Argv(1));
+	if (!valid) {
+		static leakyBucket_t bucket;
+		/* Make DoS via rcon impractical */
+		if (SVC_RateLimit(&bucket, 10, 1000)) {
+			Com_DPrintf(DEBUG_SERVER, "SVC_RemoteCommand: rate limit exceeded, dropping request\n");
+			return;
+		}
+
 		Com_Printf("Bad rcon from %s with password: '%s'\n", peername, Cmd_Argv(1));
-	else
+	} else {
 		Com_Printf("Rcon from %s\n", peername);
+	}
 
-	Com_BeginRedirect(stream, sv_outputbuf, SV_OUTPUTBUF_LENGTH);
+	static char sv_outputbuf[1024];
+	Com_BeginRedirect(stream, sv_outputbuf, sizeof(sv_outputbuf));
 
 	if (!valid) {
 		/* inform the client */
@@ -465,29 +613,28 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  */
 static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 {
-	const char *c;
 	char s[512];
-	char buf[256];
 
 	NET_ReadStringLine(msg, s, sizeof(s));
-
 	Cmd_TokenizeString(s, false);
 
-	c = Cmd_Argv(0);
+	const char *c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
 
-	if (Q_streq(c, SV_CMD_TEAMINFO))
+	if (Q_streq(c, SV_CMD_TEAMINFO)) {
 		SVC_TeamInfo(stream);
-	else if (Q_streq(c, SV_CMD_INFO))
+	} else if (Q_streq(c, SV_CMD_INFO)) {
 		SVC_Info(stream);
-	else if (Q_streq(c, SV_CMD_STATUS))
+	} else if (Q_streq(c, SV_CMD_STATUS)) {
 		SVC_Status(stream);
-	else if (Q_streq(c, SV_CMD_CONNECT))
+	} else if (Q_streq(c, SV_CMD_CONNECT)) {
 		SVC_DirectConnect(stream);
-	else if (Q_streq(c, SV_CMD_RCON))
+	} else if (Q_streq(c, SV_CMD_RCON)) {
 		SVC_RemoteCommand(stream);
-	else
+	} else {
+		char buf[256];
 		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), true), s);
+	}
 }
 
 /**
@@ -574,13 +721,11 @@ static void Master_Heartbeat (void)
  */
 static void SV_CheckSpawnSoldiers (void)
 {
-	client_t *cl;
-
 	/* already started? */
 	if (sv->spawned)
 		return;
 
-	cl = nullptr;
+	client_t *cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		/* all players must be connected and all of them must have set
 		 * the ready flag */
@@ -627,7 +772,6 @@ static void SV_CheckStartMatch (void)
 
 static void SV_PingPlayers (void)
 {
-	client_t *cl;
 	/* check for time wraparound */
 	if (svs.lastPing > svs.realtime)
 		svs.lastPing = svs.realtime;
@@ -636,24 +780,24 @@ static void SV_PingPlayers (void)
 		return;					/* not time to send yet */
 
 	svs.lastPing = svs.realtime;
-	cl = nullptr;
-	while ((cl = SV_GetNextClient(cl)) != nullptr)
-		if (cl->state != cs_free) {
-			dbuffer msg(1);
-			NET_WriteByte(&msg, svc_ping);
-			NET_WriteMsg(cl->stream, msg);
-		}
+	client_t *cl = nullptr;
+	while ((cl = SV_GetNextClient(cl)) != nullptr) {
+		if (cl->state == cs_free)
+			continue;
+		dbuffer msg(1);
+		NET_WriteByte(&msg, svc_ping);
+		NET_WriteMsg(cl->stream, msg);
+	}
 }
 
 static void SV_CheckTimeouts (void)
 {
-	client_t *cl = nullptr;
 	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
 
 	if (sv_maxclients->integer == 1)
 		return;
 
-	cl = nullptr;
+	client_t *cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state == cs_free)
 			continue;
@@ -699,6 +843,15 @@ void SV_Frame (int now, void *data)
 	}
 
 	svs.realtime = now;
+
+	/* if time is about to hit the 32nd bit, kick all clients
+	 * and clear sv.time, rather
+	 * than checking for negative time wraparound everywhere.
+	 * 2giga-milliseconds = 23 days, so it won't be too often */
+	if (svs.realtime > 0x70000000) {
+		SV_Map(true, sv->name, sv->assembly);
+		return;
+	}
 
 	/* keep the random time dependent */
 	rand();
@@ -817,7 +970,7 @@ void SV_Init (void)
 	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "0", 0, "Activate rma problem output");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
-	sv_timeout = Cvar_Get("sv_timeout", "20", CVAR_ARCHIVE, "Seconds until a client times out");
+	sv_timeout = Cvar_Get("sv_timeout", "200", CVAR_ARCHIVE, "Seconds until a client times out");
 
 	SV_MapcycleInit();
 	SV_LogInit();
