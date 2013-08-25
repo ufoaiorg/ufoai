@@ -5394,6 +5394,35 @@ mapdef frozen_mp_deathmatch
 	)
 }
 
+////////////////////////////////
+// +HARBOUR2 MULTIPLAYER MAPS //
+////////////////////////////////
+
+mapdef harbour2mp
+{
+	map				"+harbour2"
+	param			"mp4p_01"
+	description		"_A container harbour."
+	size			"medium"
+	maxaliens		16
+	civilianteam	worker
+	campaign		false
+	singleplayer	false
+	multiplayer		true
+	teams			4
+	gametypes
+	(
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
+	)
+}
+
 // ============ //
 
 // +VILLAGE2 MULTIPLAYER MAPS //

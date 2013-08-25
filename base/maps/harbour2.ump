@@ -434,43 +434,53 @@ x    +a   +a   +a   am
 // muliplayer tiles -------------------------------------------------
 
 tile +team1
-	// 2 x info_2x2_start for team 1
-	// 10 x info_player_start_start for team 1
+	// 4 x info_2x2_start for team 1
+	// 12 x info_player_start_start for team 1
 {
 3 3
-0      a      0
-a     +a      a
-0      x      0
+0		0		0
+x		+a		0
+0		x		0
 }
 
 tile +team2
-	// 2 x info_2x2_start for team 2
-	// 10 x info_player_start_start for team 2
+	// 4 x info_2x2_start for team 2
+	// 12 x info_player_start_start for team 2
 {
 3 3
-0      a      0
-a     +a      m
-0      a      0
+0		x		0
+x		+a		0
+0		0		0
 }
 
 tile +team3
-	// 2 x info_2x2_start for team 3
-	// 10 x info_player_start_start for team 3
+	// 4 x info_2x2_start for team 3
+	// 12 x info_player_start_start for team 3
 {
 3 3
-0      a      0
-x     +a      a
-0      a      0
+0		x		0
+0		+a		xm
+0		0		0
 }
 
 tile +team4
-	// 2 x info_2x2_start for team 4
-	// 10 x info_player_start_start for team 4
+	// 4 x info_2x2_start for team 4
+	// 12 x info_player_start_start for team 4
 {
 3 3
-0      x      0
-a     +a      a
-0      a      0
+0		0		0
+0		+a		xm
+0		x		0
+}
+
+// tilesets ---------------------------------------------------------
+
+tileset crane
+{
+	+a_10	// "0 1"	//3 - 3		3x1		crane, heading west
+	+a_16	// "0 1"	//3 - 3		2x2		crane, planks
+	+a_19	// "0 1"	//4 - 4		2x2		crane, with a container, washing machines, cars
+	+a_20	// "0 1"	//2 - 2		1x2		crane, with barrels
 }
 
 // assemblies -------------------------------------------------------
@@ -479,7 +489,7 @@ assembly harbour
 {
 title "_Harbour"
 size "8 7"
-+a_00	"1 1"   //1 - 1     1x1     required tile, only use once!
++a_00	"1 1"	//1 - 1		1x1		required tile, only use once!
 +s1_01	"0 1"	//2 - 2		2x1		ship rear part
 +s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
 +s2_01	"0 2"	//2 - 2		2x1		ship middle part empty
@@ -511,7 +521,7 @@ size "8 7"
 +a_15	"0 1"	//1 - 1		1x1		hole with water
 +a_16	"0 1"	//3 - 3		2x2		crane, planks
 +a_17	"0 1"	//3 - 3		2x2		six containers, boxes and crates
-+a_18	"0 1"	//3 - 3		1x1		9 containers
++a_18	"0 1"	//3 - 3		1x3		9 containers
 +a_19	"0 1"	//4 - 4		2x2		crane, with a container, washing machines, cars
 +a_20	"0 1"	//2 - 2		1x2		crane, with barrels
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
@@ -555,10 +565,55 @@ size "8 7"
 +a_15	"0 1"	//1 - 1		1x1		hole with water
 +a_16	"0 1"	//3 - 3		2x2		crane, planks
 +a_17	"0 1"	//3 - 3		2x2		six containers, boxes and crates
-+a_18	"0 1"	//3 - 3		1x1		9 containers
++a_18	"0 1"	//3 - 3		1x3		9 containers
 +a_19	"0 1"	//4 - 4		2x2		crane, with a container, washing machines, cars
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
 +a_22	"0 1"	//4 - 4		2x2		a pile of gravel
 *rm_drop +craft_drop_firebird "1 1"
 multiplayer +team2
+}
+
+// multiplayer assemblies ------------------------------------------*
+
+assembly mp4p_01
+{
+title "_Harbour"
+size "7 7"
++s1_01		"0 1"	//2 - 2		2x1		ship rear part
++s1_02		"0 1"	//4 - 4		2x2		the ship's bridge
++s2_01		"0 2"	//2 - 2		2x1		ship middle part empty
++s2_02		"0 2"	//2 - 2		2x1		ship middle part with a container
++s3_01		"0 2"	//2 - 2		2x1		ship front part
++w_01		"0 7"	//1 - 1		1x1		water
++w_02		"0 1"	//1 - 1		1x1		water with bouy
++m2_01		"0 1"	//2 - 1		2x1		a stair down and a wooden landing stage
++m_01		"0 1"	//2 - 2		2x1		a stair down to the water
++m_02		"0 1"	//1 - 1		1x1		two lamps and a small handrail
++m_03		"0 1"	//1 - 1		1x1		with like a pier pointing east
++m_04		"0 1"	//1 - 1		1x1		with a constriction
++m_05		"0 1"	//1 - 1		1x1		a stair down to the water
++m_06		"0 1"	//2 - 2		2x1		a + m, a ramp down to the water
++a_01		"0 5"	//1 - 2		1x1		a single container
++a_02		"0 5"	//1 - 2		1x1		a single container
++a_03		"0 1"	//2 - 2		1x2		three containers, boxes and crates
++a_04		"0 5"	//1 - 1		1x1		a single container
++a_05		"0 1"	//2 - 2		2x1		four containers
++a_06		"0 1"	//2 - 2		2x1		2x4 containers
++a_07		"0 5"	//1 - 1		1x1		2x2 containers
++a_08		"0 1"	//3 - 3		2x2		some boxes and crates, a forklift
++a_09		"0 1"	//3 - 3		2x2		waste conainer, scrap metal
++a_11		"0 1"	//8 - 8		2x4		two trucks, a truck mounted crane, pile of woods
++a_12		"0 5"	//1 - 1		1x1		a single container
++a_13		"0 5"	//1 - 1		1x1		two container side by side
++a_14		"0 5"	//1 - 1		1x1		three containers
++a_15		"0 1"	//1 - 1		1x1		hole with water
++a_17		"0 1"	//3 - 3		2x2		six containers, boxes and crates
++a_18		"0 1"	//3 - 3		1x3		9 containers
++a_21		"0 1"	//7 - 7		2x3		a + m, dry dock
++a_22		"0 1"	//4 - 4		2x2		a pile of gravel
+tileset crane	"0 1"
+fix +team1		"0 0"
+fix +team2		"0 6"
++team3			"1 1"
++team4			"1 1"
 }

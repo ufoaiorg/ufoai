@@ -4,12 +4,12 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 64 256 132 ) ( 64 0 132 ) ( 0 256 132 ) tex_buildings/concrete007 0 0 0 0.25 0.25 65280 0 0
-( 64 256 132 ) ( 0 256 132 ) ( 64 256 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
-( 256 256 132 ) ( 256 256 4 ) ( 256 0 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
-( 16 0 -64 ) ( 80 0 -64 ) ( 16 256 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
-( 0 0 4 ) ( 0 0 132 ) ( 64 0 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
-( 0 0 4 ) ( 0 256 4 ) ( 0 0 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 192 0 132 ) ( 192 256 132 ) ( 256 0 132 ) tex_buildings/concrete007 0 0 0 0.25 0.25 65280 0 0
+( 192 0 132 ) ( 256 0 132 ) ( 192 0 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 0 0 132 ) ( 0 0 4 ) ( 0 256 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 240 256 -64 ) ( 176 256 -64 ) ( 240 0 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
+( 256 256 4 ) ( 256 256 132 ) ( 192 256 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 256 256 4 ) ( 256 0 4 ) ( 256 256 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
 }
 }
 // entity 1
@@ -17,109 +17,110 @@
 "classname" "info_2x2_start"
 "origin" "192 64 156"
 "angle" "-90"
-"team" "2"
+"team" "3"
 }
 // entity 2
 {
 "classname" "info_2x2_start"
 "origin" "64 64 156"
 "angle" "-90"
-"team" "2"
+"team" "3"
 }
 // entity 3
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "144 48 156"
-"angle" "-45"
+"angle" "-90"
 }
 // entity 4
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "112 48 156"
 "angle" "-90"
 }
 // entity 5
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "144 80 156"
-"angle" "-45"
+"angle" "-90"
 }
 // entity 6
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "112 80 156"
-"angle" "-90"
+"angle" "-135"
 }
 // entity 7
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "144 112 156"
-"angle" "-45"
+"angle" "-90"
 }
 // entity 8
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "112 112 156"
-"angle" "-90"
+"angle" "-135"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "144 144 156"
-"angle" "-45"
+"angle" "-90"
 }
 // entity 10
 {
 "classname" "info_player_start"
-"team" "2"
+"team" "3"
 "origin" "112 144 156"
-"angle" "-90"
+"angle" "-135"
 }
 // entity 11
 {
 "classname" "info_player_start"
-"team" "2"
-"origin" "144 208 156"
-"angle" "0"
+"team" "3"
+"origin" "144 176 156"
+"angle" "-90"
 }
 // entity 12
 {
 "classname" "info_player_start"
-"team" "2"
-"origin" "112 208 156"
-"angle" "-90"
+"team" "3"
+"origin" "112 176 156"
+"angle" "180"
 }
 // entity 13
 {
 "classname" "info_player_start"
-"team" "2"
-"origin" "144 176 156"
+"team" "3"
+"origin" "144 208 156"
+"angle" "-90"
 }
 // entity 14
 {
 "classname" "info_player_start"
-"team" "2"
-"origin" "112 176 156"
-"angle" "-90"
+"team" "3"
+"origin" "112 208 156"
+"angle" "180"
 }
 // entity 15
 {
 "classname" "info_2x2_start"
 "origin" "192 192 156"
-"angle" "-45"
-"team" "2"
+"angle" "-90"
+"team" "3"
 }
 // entity 16
 {
 "classname" "info_2x2_start"
 "origin" "64 192 156"
-"angle" "-90"
-"team" "2"
+"angle" "-135"
+"team" "3"
 }
