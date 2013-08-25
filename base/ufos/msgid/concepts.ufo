@@ -64,7 +64,7 @@ Soldiers firing weapons with low TU costs will execute more reaction shots -- an
 
 Addenda
 
-A soldier will not perform reaction fire unless they have saved enough Time Units in the last turn and reaction fire has been enabled in the soldier's control panel. Commanders can choose the firemode the soldier should use with reaction fire in the firemode selection window.
+A soldier will not perform reaction fire unless it has been enabled in the soldier's control panel. When enabled, a soldier will be unable to spend the Time Units required to fire once during the enemy's turn. Commanders can choose the firemode the soldier should use with reaction fire in the firemode selection window.
 
 If an enemy unit wanders out of a unit's view -- even for a moment -- the reaction fire counter will be reset. A unit must spend enough TUs consecutively in view of a unit to receive reaction fire."
 }
