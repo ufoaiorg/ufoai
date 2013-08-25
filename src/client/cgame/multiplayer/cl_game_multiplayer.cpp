@@ -152,11 +152,11 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 			break;
 		if (!md->multiplayer)
 			continue;
-		if (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gameType)) {
+		if (cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 			linkedList_t *gameNames = nullptr;
 			for (int j = 0; j < cgi->csi->numGTs; j++) {
 				const gametype_t *gt = &cgi->csi->gts[j];
-				if (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
+				if (cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
 					cgi->LIST_AddString(&gameNames, _(gt->name));
 				}
 			}
@@ -184,7 +184,7 @@ static void GAME_MP_UpdateGametype_f (void)
 
 	const char *gameType = cgi->Cvar_GetString("sv_gametype");
 	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
-	if (md != nullptr && md->multiplayer && (md->gameTypes == nullptr || cgi->LIST_ContainsString(md->gameTypes, gameType))) {
+	if (md != nullptr && md->multiplayer && cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 		/* no change needed, gametype is supported */
 		return;
 	}

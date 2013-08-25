@@ -5410,6 +5410,12 @@ mapdef vil2_mp2p
 	teams			2
 	maxaliens		30
 
+	gametypes
+	(
+		fight1on1
+		fight2on2
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -5442,6 +5448,12 @@ mapdef vil2_mp4p
 	singleplayer	false
 	teams			4
 	maxaliens		30
+
+	gametypes
+	(
+		fight1on1
+		fight2on2
+	)
 
 	aircraft
 	(
