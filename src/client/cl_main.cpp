@@ -574,11 +574,13 @@ static bool CL_CanMultiplayerStart (void)
 
 	CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_ENTITYSTRING), cl.mapData, cl.mapTiles);
 
+#if 0
 	if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
 		UI_Popup(_("Error"), _("Local map version differs from server"));
 		Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%i'",
 			cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
 	}
+#endif
 
 	return true;
 }
