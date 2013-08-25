@@ -288,13 +288,13 @@ static void NET_ShowStreams_f (void)
 	int cnt = 0;
 
 	for (i = 0; i < MAX_STREAMS; i++) {
-		if (streams[i] != nullptr) {
-			Com_Printf("Steam %i is opened: %s on socket %i (closed: %i, finished: %i, outbound: " UFO_SIZE_T ", inbound: " UFO_SIZE_T ")\n", i,
-				NET_StreamPeerToName(streams[i], buf, sizeof(buf), true),
-				streams[i]->socket, streams[i]->closed, streams[i]->finished,
-				dbuffer_len(streams[i]->outbound), dbuffer_len(streams[i]->inbound));
-			cnt++;
-		}
+		if (streams[i] == nullptr)
+			continue;
+		Com_Printf("Steam %i is opened: %s on socket %i (closed: %i, finished: %i, outbound: " UFO_SIZE_T ", inbound: " UFO_SIZE_T ")\n", i,
+			NET_StreamPeerToName(streams[i], buf, sizeof(buf), true),
+			streams[i]->socket, streams[i]->closed, streams[i]->finished,
+			dbuffer_len(streams[i]->outbound), dbuffer_len(streams[i]->inbound));
+		cnt++;
 	}
 	Com_Printf("%i/%i streams opened\n", cnt, MAX_STREAMS);
 }
