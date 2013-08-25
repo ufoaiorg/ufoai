@@ -714,8 +714,6 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	AII_UpdateAircraftStats(aircraft);
 	/* initialise aircraft pointer in slots */
 	AII_SetAircraftInSlots(aircraft);
-	/* give him some fuel */
-	aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 	/* Set HP to maximum */
 	aircraft->damage = aircraft->stats[AIR_STATS_DAMAGE];
 	/* Set Default Name */

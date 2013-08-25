@@ -1181,6 +1181,8 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+		/* refuel initial aicraft instantly */
+		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		/* Assign and equip soldiers on Dropships */
 		AIR_AssignInitial(aircraft);
 		B_InitialEquipment(aircraft, equipDef);
@@ -1192,6 +1194,8 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
 		if (!E_HireEmployeeByType(base, EMPL_PILOT))
 			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+		/* refuel initial aicraft instantly */
+		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		AIM_AutoEquipAircraft(aircraft);
 	}
 }
