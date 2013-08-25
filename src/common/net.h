@@ -52,6 +52,7 @@ int NET_StreamDequeue(struct net_stream *s, char *data, int len);
 void *NET_StreamGetData(struct net_stream *s);
 void NET_StreamSetData(struct net_stream *s, void *data);
 const char *NET_StreamPeerToName(struct net_stream *s, char *dst, int len, bool appendPort);
+const char *NET_StreamToString(struct net_stream *s);
 bool NET_StreamIsLoopback(struct net_stream *s);
 void NET_StreamFree(struct net_stream *s);
 void NET_StreamFinished(struct net_stream *s);

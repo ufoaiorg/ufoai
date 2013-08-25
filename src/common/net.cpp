@@ -868,6 +868,17 @@ void NET_StreamFinished (struct net_stream *s)
 }
 
 /**
+ * @brief Returns the numerical representation of a @c net_stream
+ * @note Not thread safe!
+ */
+const char *NET_StreamToString (struct net_stream *s)
+{
+	static char node[64];
+	NET_StreamPeerToName(s, node, sizeof(node), false);
+	return node;
+}
+
+/**
  * @param[in] s The network stream to get the name for
  * @param[out] dst The target buffer to store the ip and port in
  * @param[in] len The length of the target buffer
