@@ -582,8 +582,10 @@ INPUT_ENCODING         = UTF-8
 # *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90
 
 FILE_PATTERNS          = *.c \
+                         *.cpp \
                          *.h \
                          *.m \
+                         *.mm \
                          *.glsl
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories
