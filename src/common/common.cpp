@@ -59,6 +59,7 @@ cvar_t *sys_priority;
 cvar_t *sys_affinity;
 cvar_t *sys_os;
 cvar_t *hwclass;
+static cvar_t *uploadcrashdump;
 
 static qFILE logfile;
 static qFILE pipefile;
@@ -648,6 +649,8 @@ const char *Com_MacroExpandString (const char *text)
 
 void Com_UploadCrashDump (const char *crashDumpFile)
 {
+	if (uploadcrashdump == nullptr || uploadcrashdump->integer != 1)
+		return;
 	upparam_t paramUser;
 	upparam_t paramVersion;
 	upparam_t paramOS;
@@ -1097,6 +1100,8 @@ void Qcommon_Init (int argc, char **argv)
 
 		Cmd_Init();
 		Cvar_Init();
+
+		uploadcrashdump = Cvar_Get("uploadcrashdump", "1", 0, "upload crashdumps to the developers");
 
 		Key_Init();
 
