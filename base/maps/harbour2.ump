@@ -527,7 +527,6 @@ size "8 7"
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
 +a_22	"0 1"	//4 - 4		2x2		a pile of gravel
 *rm_drop +craft_drop_firebird "1 1"
-multiplayer +team2
 }
 
 assembly pier
@@ -570,7 +569,6 @@ size "8 7"
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
 +a_22	"0 1"	//4 - 4		2x2		a pile of gravel
 *rm_drop +craft_drop_firebird "1 1"
-multiplayer +team2
 }
 
 // multiplayer assemblies ------------------------------------------*

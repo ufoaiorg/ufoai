@@ -1643,25 +1643,22 @@ mapdef frozen_nature_small_noufo
 
 mapdef harbour2_a
 {
-	map			"+harbour2"
-	param		"harbour"
-	description	"_Harbour"
-	size		"large"
-	multiplayer	true
-	teams		2
+	map				"+harbour2"
+	param			"harbour"
+	description		"_Harbour"
+	size			"medium"
+	maxaliens		16
+	civilianteam	worker
+
+	multiplayer		true
+	teams			1
 	gametypes
 	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens	16
-	civilianteam	worker
-	campaign	true
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1694,25 +1691,22 @@ mapdef harbour2_a
 
 mapdef harbour2_b
 {
-	map			"+harbour2"
-	param		"pier"
-	description	"_Harbour"
-	size		"large"
-	multiplayer	true
-	teams		2
+	map				"+harbour2"
+	param			"pier"
+	description		"_Harbour"
+	size			"medium"
+	maxaliens		16
+	civilianteam	worker
+
+	multiplayer		true
+	teams			1
 	gametypes
 	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens	16
-	civilianteam	worker
-	campaign	true
+
 	aircraft
 	(
 		craft_drop_firebird
