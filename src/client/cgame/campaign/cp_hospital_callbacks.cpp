@@ -46,10 +46,9 @@ static int hospitalNumEntries;
 static void HOS_EntryWoundData (const character_t *const chr, const int entry)
 {
 	const BodyData *bodyData = chr->teamDef->bodyTemplate;
-	int bodyPart;
 	const woundInfo_t *const wounds = &chr->wounds;
 
-	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
+	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 		if (wounds->treatmentLevel[bodyPart] != 0) {
 			const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
 			char text[MAX_VAR];
@@ -60,12 +59,11 @@ static void HOS_EntryWoundData (const character_t *const chr, const int entry)
 	}
 }
 
-static float HOS_InjuryLevel(const character_t *const chr)
+static float HOS_InjuryLevel (const character_t *const chr)
 {
-	float injuryLevel = 0;
-	int i;
+	float injuryLevel = 0.0f;
 
-	for (i = 0; i < chr->teamDef->bodyTemplate->numBodyParts(); ++i)
+	for (int i = 0; i < chr->teamDef->bodyTemplate->numBodyParts(); ++i)
 		injuryLevel += static_cast<float>(chr->wounds.treatmentLevel[i]) / chr->maxHP;
 
 	return injuryLevel;
@@ -77,10 +75,6 @@ static float HOS_InjuryLevel(const character_t *const chr)
  */
 static void HOS_UpdateMenu (void)
 {
-	char name[128];
-	char rank[128];
-	int j, type;
-	int entry;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -89,9 +83,11 @@ static void HOS_UpdateMenu (void)
 	/* Reset list. */
 	cgi->UI_ExecuteConfunc("hospital_clear");
 
+	int j, type;
+	int entry;
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
-			float injuryLevel = HOS_InjuryLevel(&employee->chr);
+			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
 			if (!employee->isHiredInBase(base))
 				continue;
 			/* Don't show soldiers who are gone in mission */
@@ -102,31 +98,26 @@ static void HOS_UpdateMenu (void)
 				continue;
 
 			if (j >= hospitalFirstEntry && entry < HOS_MENU_MAX_ENTRIES) {
+				char name[128];
+				char rank[128];
 				/* Print name. */
 				Q_strncpyz(name, employee->chr.name, sizeof(name));
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER) {
 					const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
 					Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
-				} else
+				} else {
 					Q_strncpyz(rank, E_GetEmployeeString(employee->getType(), 1), sizeof(rank));
+				}
 				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
+				const char *level = "light";
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)
-					cgi->UI_ExecuteConfunc("hospitalserious %i", entry);
+					level = "serious";
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
-					cgi->UI_ExecuteConfunc("hospitalmedium %i", entry);
-				else
-					cgi->UI_ExecuteConfunc("hospitallight %i", entry);
-
-				/* Display name in the correct list-entry. */
-				cgi->Cvar_Set(va("mn_hos_item%i", entry), name);
-				/* Display rank in the correct list-entry. */
-				cgi->Cvar_Set(va("mn_hos_rank%i", entry), rank);
-				/* Prepare the health bar */
-				cgi->Cvar_Set(va("mn_hos_hp%i", entry), va("%i", employee->chr.HP));
-				cgi->Cvar_Set(va("mn_hos_hpmax%i", entry), va("%i", employee->chr.maxHP));
+					level = "medium";
+				cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", entry, level, employee->chr.HP, employee->chr.maxHP, name, rank);
 
 				/* Send wound info */
 				HOS_EntryWoundData(&employee->chr, entry);
@@ -141,10 +132,6 @@ static void HOS_UpdateMenu (void)
 
 	/* Set rest of the list-entries to have no text at all. */
 	for (; entry < HOS_MENU_MAX_ENTRIES; entry++) {
-		cgi->Cvar_Set(va("mn_hos_item%i", entry), "");
-		cgi->Cvar_Set(va("mn_hos_rank%i", entry), "");
-		cgi->Cvar_Set(va("mn_hos_hp%i", entry), "0");
-		cgi->Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
 		cgi->UI_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }

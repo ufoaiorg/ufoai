@@ -45,7 +45,7 @@ component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 
 component cmpHospitalPanel extends panel {
 	{
-	size "300 85"
+		size "300 85"
 	}
 	image button {
 		src "ui/hosp_button_green"
@@ -123,33 +123,55 @@ window hospital
 			call *node:root.hos<cvar:i>.wounds@removeAllchild
 			*cvar:i = ( *cvar:i + 1 )
 		}
-	delete *cvar:i
+		delete *cvar:i
 	}
 
-	confunc hospitalserious	{
-		*node:root.hos<1>.icon@icon				= "icons/health_critical"
+	/**
+	 * @param <1> Entry index
+	 * @param <2> light, medium, serious
+	 * @param <3> HP
+	 * @param <4> MaxHP
+	 * @param <5> Injury level
+	 * @param <6> Name
+	 * @param <7> Rank
+	 */
+	confunc hospitaladd	{
+		if ( <2> eq "light" ) {
+			*node:root.hos<1>.icon@icon				= "icons/health_normal"
+			*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
+		} elif ( <2> eq "medium" ) {
+			*node:root.hos<1>.icon@icon				= "icons/health_medium"
+			*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
+		} elif ( <2> eq "serious" ) {
+			*node:root.hos<1>.icon@icon				= "icons/health_critical"
+			*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
+		}
 		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
-		*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
+		*cvar:mn_hos_item<1> = "<5>"
+		*cvar:mn_hos_rank<1> = "<6>"
+		*node:root.hos<1>.health@current = <3>
+		*node:root.hos<1>.health@max = <4>
 	}
-	confunc hospitalmedium	{
-		*node:root.hos<1>.icon@icon				= "icons/health_medium"
-		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
-		*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
-	}
-	confunc hospitallight	{
-		*node:root.hos<1>.icon@icon				= "icons/health_normal"
-		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
-		*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
-	}
+
+	/**
+	 * @param <1> Entry index
+	 */
 	confunc hospitalunused	{
+		*cvar:mn_hos_item<1> = ""
+		*cvar:mn_hos_rank<1> = ""
+		*node:root.hos<1>.health@current = 0
+		*node:root.hos<1>.health@max = 1
 		*node:root.hos<1>.icon@icon				= "icons/health_unused"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
 		*node:root.hos<1>.click_button@tooltip	= "_Unused"
 	}
 
-	// <2> Body part type (id)
-	// <3> Severity of wounds
-	// <4> Tooltip
+	/**
+	 * @param <1> Entry index
+	 * @param <2> Body part type (id)
+	 * @param <3> Severity of wounds
+	 * @param <4> Tooltip
+	 */
 	confunc hospital_wounds {
 		call *node:root.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
 		if (<3> >= 0.3) {
@@ -172,19 +194,11 @@ window hospital
 		{
 			pos "25 95"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp0
-			max *cvar:mn_hos_hpmax0
-		}
 	}
 
 	cmpHospitalPanel hos1 {
 		{
 			pos "345 95"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp1
-			max *cvar:mn_hos_hpmax1
 		}
 	}
 
@@ -192,19 +206,11 @@ window hospital
 		{
 			pos "665 95"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp2
-			max *cvar:mn_hos_hpmax2
-		}
 	}
 
 	cmpHospitalPanel hos3 {
 		{
 			pos "25 190"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp3
-			max *cvar:mn_hos_hpmax3
 		}
 	}
 
@@ -212,19 +218,11 @@ window hospital
 		{
 			pos "345 190"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp4
-			max *cvar:mn_hos_hpmax4
-		}
 	}
 
 	cmpHospitalPanel hos5 {
 		{
 			pos "665 190"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp5
-			max *cvar:mn_hos_hpmax5
 		}
 	}
 
@@ -232,19 +230,11 @@ window hospital
 		{
 			pos "25 285"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp6
-			max *cvar:mn_hos_hpmax6
-		}
 	}
 
 	cmpHospitalPanel hos7 {
 		{
 			pos "345 285"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp7
-			max *cvar:mn_hos_hpmax7
 		}
 	}
 
@@ -252,19 +242,11 @@ window hospital
 		{
 			pos "665 285"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp8
-			max *cvar:mn_hos_hpmax8
-		}
 	}
 
 	cmpHospitalPanel hos9 {
 		{
 			pos "25 380"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp9
-			max *cvar:mn_hos_hpmax9
 		}
 	}
 
@@ -272,19 +254,11 @@ window hospital
 		{
 			pos "345 380"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp10
-			max *cvar:mn_hos_hpmax10
-		}
 	}
 
 	cmpHospitalPanel hos11 {
 		{
 			pos "665 380"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp11
-			max *cvar:mn_hos_hpmax11
 		}
 	}
 
@@ -292,19 +266,11 @@ window hospital
 		{
 			pos "25 475"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp12
-			max *cvar:mn_hos_hpmax12
-		}
 	}
 
 	cmpHospitalPanel hos13 {
 		{
 			pos "345 475"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp13
-			max *cvar:mn_hos_hpmax13
 		}
 	}
 
@@ -312,19 +278,11 @@ window hospital
 		{
 			pos "665 475"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp14
-			max *cvar:mn_hos_hpmax14
-		}
 	}
 
 	cmpHospitalPanel hos15 {
 		{
 			pos "25 570"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp15
-			max *cvar:mn_hos_hpmax15
 		}
 	}
 
@@ -332,19 +290,11 @@ window hospital
 		{
 			pos "345 570"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp16
-			max *cvar:mn_hos_hpmax16
-		}
 	}
 
 	cmpHospitalPanel hos17 {
 		{
 			pos "665 570"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp17
-			max *cvar:mn_hos_hpmax17
 		}
 	}
 
@@ -352,29 +302,17 @@ window hospital
 		{
 			pos "25 665"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp18
-			max *cvar:mn_hos_hpmax18
-		}
 	}
 
 	cmpHospitalPanel hos19 {
 		{
 			pos "345 665"
 		}
-		bar health  {
-			current *cvar:mn_hos_hp19
-			max *cvar:mn_hos_hpmax19
-		}
 	}
 
 	cmpHospitalPanel hos20 {
 		{
 			pos "665 665"
-		}
-		bar health  {
-			current *cvar:mn_hos_hp20
-			max *cvar:mn_hos_hpmax20
 		}
 	}
 
@@ -410,8 +348,6 @@ window hospital
 			*node:root.hos<cvar:i>@num = <cvar:i>
 			*node:root.hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
 			*node:root.hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
-//			*node:root.hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
-//			*node:root.hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
