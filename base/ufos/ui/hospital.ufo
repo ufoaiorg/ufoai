@@ -318,42 +318,6 @@ window hospital_employee
 		string val { string *cvar:mn_tmnd }
 	}
 
-	cmpHospitalNamedTbar cls {
-		{
-			pos "690 312"
-		}
-		tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
-		string lbl { string "_Close Combat:" }
-		string val { string *cvar:mn_tcls }
-	}
-
-	cmpHospitalNamedTbar ass {
-		{
-			pos "690 342"
-		}
-		tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
-		string lbl { string "_Assault Weapons:" }
-		string val { string *cvar:mn_tass }
-	}
-
-	cmpHospitalNamedTbar snp {
-		{
-			pos "690 372"
-		}
-		tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
-		string lbl { string "_Sniper Rifles:" }
-		string val { string *cvar:mn_tsnp }
-	}
-
-	cmpHospitalNamedTbar exp {
-		{
-			pos "690 402"
-		}
-		tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
-		string lbl { string "_High-Explosives:" }
-		string val { string *cvar:mn_texp }
-	}
-
 	cmpHospitalNamedTbar health  {
 		{
 			pos "690 432"

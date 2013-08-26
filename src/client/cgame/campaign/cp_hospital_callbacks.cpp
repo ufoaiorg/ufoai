@@ -134,12 +134,45 @@ static void HOS_EmployeeInit_f (void)
 	cgi->UI_ResetData(TEXT_STANDARD);
 
 	const character_t& c = e->chr;
-	CL_UpdateCharacterValues(&c);
+	const chrScoreGlobal_t& score = c.score;
+	cgi->Cvar_ForceSet("mn_name", c.name);
+	cgi->Cvar_ForceSet("mn_body", CHRSH_CharGetBody(&c));
+	cgi->Cvar_ForceSet("mn_head", CHRSH_CharGetHead(&c));
+	cgi->Cvar_ForceSet("mn_body_skin", va("%i", c.bodySkin));
+	cgi->Cvar_ForceSet("mn_head_skin", va("%i", c.headSkin));
+
+	cgi->Cvar_SetValue("mn_vpwr", score.skills[ABILITY_POWER]);
+	cgi->Cvar_SetValue("mn_vspd", score.skills[ABILITY_SPEED]);
+	cgi->Cvar_SetValue("mn_vacc", score.skills[ABILITY_ACCURACY]);
+	cgi->Cvar_SetValue("mn_vmnd", score.skills[ABILITY_MIND]);
+
+	if (score.rank >= 0) {
+		char buf[MAX_VAR];
+		const rank_t *rank = CL_GetRankByIdx(score.rank);
+		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
+		cgi->Cvar_Set("mn_chrrank", buf);
+		cgi->Cvar_Set("mn_chrrank_img", rank->image);
+		Com_sprintf(buf, sizeof(buf), "%s ", _(rank->shortname));
+		cgi->Cvar_Set("mn_chrrankprefix", buf);
+	} else {
+		cgi->Cvar_Set("mn_chrrank_img", "");
+		cgi->Cvar_Set("mn_chrrank", "");
+		cgi->Cvar_Set("mn_chrrankprefix", "");
+	}
+
+	cgi->Cvar_SetValue("mn_vpwri", score.initialSkills[ABILITY_POWER]);
+	cgi->Cvar_SetValue("mn_vspdi", score.initialSkills[ABILITY_SPEED]);
+	cgi->Cvar_SetValue("mn_vacci", score.initialSkills[ABILITY_ACCURACY]);
+	cgi->Cvar_SetValue("mn_vmndi", score.initialSkills[ABILITY_MIND]);
+
+	cgi->Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_POWER]), score.skills[ABILITY_POWER]));
+	cgi->Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_SPEED]), score.skills[ABILITY_SPEED]));
+	cgi->Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_ACCURACY]), score.skills[ABILITY_ACCURACY]));
+	cgi->Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_MIND]), score.skills[ABILITY_MIND]));
 
 	cgi->Cvar_SetValue("mn_hp", c.HP);
 	cgi->Cvar_SetValue("mn_hpmax", c.maxHP);
 }
-
 
 void HOS_InitCallbacks(void)
 {
