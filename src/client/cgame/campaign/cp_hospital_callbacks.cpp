@@ -79,16 +79,13 @@ static void HOS_UpdateMenu (void)
 			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
 				continue;
 
-			char name[128];
-			char rank[128];
-			/* Print name. */
-			Q_strncpyz(name, employee->chr.name, sizeof(name));
-			/* Print rank for soldiers or type for other personel. */
+			const char *rank;
+			/* Print rank for soldiers or type for other employees. */
 			if (type == EMPL_SOLDIER) {
 				const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
-				Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
+				rank = _(rankPtr->name);
 			} else {
-				Q_strncpyz(rank, E_GetEmployeeString(employee->getType(), 1), sizeof(rank));
+				rank = E_GetEmployeeString(employee->getType(), 1);
 			}
 			const char *level = "light";
 			/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
@@ -97,7 +94,7 @@ static void HOS_UpdateMenu (void)
 			/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 			else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
 				level = "medium";
-			cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", employee->chr.ucn, level, employee->chr.HP, employee->chr.maxHP, name, rank);
+			cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", employee->chr.ucn, level, employee->chr.HP, employee->chr.maxHP, employee->chr.name, rank);
 
 			/* Send wound info */
 			HOS_EntryWoundData(&employee->chr);
@@ -153,7 +150,7 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee *e = E_GetEmployeeFromChrUCN(ucn);
+	const Employee *e = E_GetEmployeeFromChrUCN(ucn);
 	if (e == nullptr)
 		return;
 
