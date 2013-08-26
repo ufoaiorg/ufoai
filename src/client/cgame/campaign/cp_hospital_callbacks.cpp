@@ -146,21 +146,13 @@ static void HOS_EmployeeInit_f (void)
 
 	cgi->UI_ExecuteConfunc("hospital_employee_show \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\"",
 			c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage);
-	cgi->Cvar_SetValue("mn_vpwr", score.skills[ABILITY_POWER]);
-	cgi->Cvar_SetValue("mn_vpwri", score.initialSkills[ABILITY_POWER]);
-	cgi->Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_POWER]), score.skills[ABILITY_POWER]));
 
-	cgi->Cvar_SetValue("mn_vspd", score.skills[ABILITY_SPEED]);
-	cgi->Cvar_SetValue("mn_vspdi", score.initialSkills[ABILITY_SPEED]);
-	cgi->Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_SPEED]), score.skills[ABILITY_SPEED]));
-
-	cgi->Cvar_SetValue("mn_vacc", score.skills[ABILITY_ACCURACY]);
-	cgi->Cvar_SetValue("mn_vacci", score.initialSkills[ABILITY_ACCURACY]);
-	cgi->Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_ACCURACY]), score.skills[ABILITY_ACCURACY]));
-
-	cgi->Cvar_SetValue("mn_vmnd", score.skills[ABILITY_MIND]);
-	cgi->Cvar_SetValue("mn_vmndi", score.initialSkills[ABILITY_MIND]);
-	cgi->Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(score.skills[ABILITY_MIND]), score.skills[ABILITY_MIND]));
+	const abilityskills_t list[] = { ABILITY_POWER, ABILITY_SPEED, ABILITY_ACCURACY, ABILITY_MIND };
+	const int n = lengthof(list);
+	for (int i = 0; i < n; i++) {
+		cgi->UI_ExecuteConfunc("hospital_employee_set_values %i %i \"%s\"",
+				i, score.skills[i], CL_ActorGetSkillString(score.skills[i]));
+	}
 }
 
 void HOS_InitCallbacks(void)

@@ -276,40 +276,32 @@ window hospital_employee
 		longlines LONGLINES_PRETTYCHOP
 	}
 
-	cmpHospitalNamedTbar pwr {
+	cmpHospitalNamedTbar bar0 {
 		{
 			pos "690 182"
 		}
-		tbar bar   { current *cvar:mn_vpwr }
 		string lbl { string "_Strength:" }
-		string val { string *cvar:mn_tpwr }
 	}
 
-	cmpHospitalNamedTbar spd {
+	cmpHospitalNamedTbar bar1 {
 		{
 			pos "690 212"
 		}
-		tbar bar   { current *cvar:mn_vspd }
 		string lbl { string "_Speed:" }
-		string val { string *cvar:mn_tspd }
 	}
 
-	cmpHospitalNamedTbar acc {
+	cmpHospitalNamedTbar bar2 {
 		{
 			pos "690 242"
 		}
-		tbar bar   { current *cvar:mn_vacc }
 		string lbl { string "_Accuracy:" }
-		string val { string *cvar:mn_tacc }
 	}
 
-	cmpHospitalNamedTbar mnd {
+	cmpHospitalNamedTbar bar3 {
 		{
 			pos "690 272"
 		}
-		tbar bar   { current *cvar:mn_vmnd }
 		string lbl { string "_Mind:" }
-		string val { string *cvar:mn_tmnd }
 	}
 
 	cmpHospitalNamedTbar health  {
@@ -371,6 +363,16 @@ window hospital_employee
 		*node:root.health.bar@max = <7>
 		*node:root.rank_lbl@string = <8>
 		*node:root.rank@src = <9>
+	}
+
+	/**
+	 * @param <1> index
+	 * @param <2> skill
+	 * @param <3> skill description (Poor, Mediocre, Average, ...)
+	 */
+	confunc hospital_employee_set_values {
+		*node:root.bar<1>.bar@current = "<2>"
+		*node:root.bar<1>.val@string = "<3> (<2>)"
 	}
 
 	// ==================
