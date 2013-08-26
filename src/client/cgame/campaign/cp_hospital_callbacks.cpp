@@ -49,13 +49,13 @@ static void HOS_EntryWoundData (const character_t *const chr, const int entry)
 	const woundInfo_t *const wounds = &chr->wounds;
 
 	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
-		if (wounds->treatmentLevel[bodyPart] != 0) {
-			const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
-			char text[MAX_VAR];
-			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged %s (damage: %i)") :
-					_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds->treatmentLevel[bodyPart]);
-			cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", entry, bodyData->id(bodyPart), severity, text);
-		}
+		if (wounds->treatmentLevel[bodyPart] == 0)
+			continue;
+		const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
+		char text[MAX_VAR];
+		Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged %s (damage: %i)") :
+				_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds->treatmentLevel[bodyPart]);
+		cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", entry, bodyData->id(bodyPart), severity, text);
 	}
 }
 
@@ -75,17 +75,17 @@ static float HOS_InjuryLevel (const character_t *const chr)
  */
 static void HOS_UpdateMenu (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-
+	const base_t *base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
 	/* Reset list. */
 	cgi->UI_ExecuteConfunc("hospital_clear");
 
-	int j, type;
-	int entry;
-	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
+	int j = 0;
+	int entry = 0;
+
+	for (int type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
 			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
 			if (!employee->isHiredInBase(base))
@@ -142,8 +142,7 @@ static void HOS_UpdateMenu (void)
  */
 static void HOS_Init_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-
+	const base_t *base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
