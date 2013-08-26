@@ -52,25 +52,37 @@ component cmpHospitalPanel extends panel {
 		pos "0 0"
 	}
 
+	data index {
+		integer		-1
+	}
+
 	button icon	{
-		visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"
-		icon "icons/health_unused"
 		padding 0
 		pos "248  11"
 		size "40 40"
 	}
 
-	string item	{ pos "15 10"	color "1 1 1 1"	size "220 16" }
+	string item	{
+		pos "15 10"
+		color "1 1 1 1"
+		size "220 16"
+	}
 
-	string rank	{ pos "15 35"	color "1 1 1 1"	size "220 16" }
+	string rank	{
+		pos "15 35"
+		color "1 1 1 1"
+		size "220 16"
+	}
 
-	bar health     { pos "22 65" 	size "263 6" color "0 .8 0 1" }
+	bar health {
+		pos "22 65"
+		size "263 6"
+		color "0 .8 0 1"
+	}
 
-	zone click_button {
+	zone click {
 		pos "0 0"
 		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click <node:parent@num>;" }
 	}
 
 	panel wounds {
@@ -116,14 +128,7 @@ window hospital
 
 	confunc hospital_clear
 	{
-		*cvar:i = 0
-		while ( *cvar:i < 21 ) {
-			*node:root.hos<cvar:i>.button@src = "ui/hosp_button_green"
-			*node:root.hos<cvar:i>.click_button@tooltip = "_Unused"
-			call *node:root.hos<cvar:i>.wounds@removeAllchild
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
+		call *node:root.panel@removeAllchild
 	}
 
 	/**
@@ -136,34 +141,23 @@ window hospital
 	 * @param <7> Rank
 	 */
 	confunc hospitaladd	{
+		call *node:root.panel@createChild("hos<1>", "cmpHospitalPanel")
 		if ( <2> eq "light" ) {
-			*node:root.hos<1>.icon@icon				= "icons/health_normal"
-			*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
+			*node:root.panel.hos<1>.icon@icon				= "icons/health_normal"
+			*node:root.panel.hos<1>.click@tooltip	= "_Slightly wounded"
 		} elif ( <2> eq "medium" ) {
-			*node:root.hos<1>.icon@icon				= "icons/health_medium"
-			*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
+			*node:root.panel.hos<1>.icon@icon				= "icons/health_medium"
+			*node:root.panel.hos<1>.click@tooltip	= "_Medium wounds"
 		} elif ( <2> eq "serious" ) {
-			*node:root.hos<1>.icon@icon				= "icons/health_critical"
-			*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
+			*node:root.panel.hos<1>.icon@icon				= "icons/health_critical"
+			*node:root.panel.hos<1>.click@tooltip	= "_Heavily wounded"
 		}
-		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
-		*cvar:mn_hos_item<1> = "<5>"
-		*cvar:mn_hos_rank<1> = "<6>"
-		*node:root.hos<1>.health@current = <3>
-		*node:root.hos<1>.health@max = <4>
-	}
-
-	/**
-	 * @param <1> Entry index
-	 */
-	confunc hospitalunused	{
-		*cvar:mn_hos_item<1> = ""
-		*cvar:mn_hos_rank<1> = ""
-		*node:root.hos<1>.health@current = 0
-		*node:root.hos<1>.health@max = 1
-		*node:root.hos<1>.icon@icon				= "icons/health_unused"
-		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
-		*node:root.hos<1>.click_button@tooltip	= "_Unused"
+		*node:root.panel.hos<1>.health@current = <3>
+		*node:root.panel.hos<1>.health@max = <4>
+		*node:root.panel.hos<1>.item@string = "<5>"
+		*node:root.panel.hos<1>.rank@string = "<6>"
+		*node:root.panel.hos<1>.index@integer = <1>
+		*node:root.panel.hos<1>.click@onClick = { cmd "hosp_list_click <node:this.parent.index@integer>;" }
 	}
 
 	/**
@@ -173,167 +167,37 @@ window hospital
 	 * @param <4> Tooltip
 	 */
 	confunc hospital_wounds {
-		call *node:root.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
+		call *node:root.panel.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
 		if (<3> >= 0.3) {
-			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
+			*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
 		} else {
-			*node:root.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
+			*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
 		}
-		*node:root.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+		*node:root.panel.hos<1>.wounds.wound_<2>@tooltip = "<4>"
 	}
 
-	zone hos_scroll_zone
-	{
-		pos "0 75"
-		size "1024 690"
-		onWheelUp 	{ cmd "hosp_list_up;" }
-		onWheelDown { cmd "hosp_list_down;" }
-	}
+	panel panel {
+		pos "20 95"
+		size "980 648"
+		layout		LAYOUT_COLUMN
+		layoutColumns	3
+		layoutMargin	5
+		padding		20
+		wheelscrollable	true
 
-	cmpHospitalPanel hos0 {
-		{
-			pos "25 95"
-		}
-	}
-
-	cmpHospitalPanel hos1 {
-		{
-			pos "345 95"
+		onViewChange	{
+			*node:parent.hos_scroll@fullsize = <fullsize>
+			*node:parent.hos_scroll@current = <viewpos>
+			*node:parent.hos_scroll@viewsize = <viewsize>
 		}
 	}
-
-	cmpHospitalPanel hos2 {
-		{
-			pos "665 95"
+	vscrollbar hos_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"970 110"
+		height		"628"
+		onChange	{
+			*node:parent.panel@viewpos = <current>
 		}
-	}
-
-	cmpHospitalPanel hos3 {
-		{
-			pos "25 190"
-		}
-	}
-
-	cmpHospitalPanel hos4 {
-		{
-			pos "345 190"
-		}
-	}
-
-	cmpHospitalPanel hos5 {
-		{
-			pos "665 190"
-		}
-	}
-
-	cmpHospitalPanel hos6 {
-		{
-			pos "25 285"
-		}
-	}
-
-	cmpHospitalPanel hos7 {
-		{
-			pos "345 285"
-		}
-	}
-
-	cmpHospitalPanel hos8 {
-		{
-			pos "665 285"
-		}
-	}
-
-	cmpHospitalPanel hos9 {
-		{
-			pos "25 380"
-		}
-	}
-
-	cmpHospitalPanel hos10 {
-		{
-			pos "345 380"
-		}
-	}
-
-	cmpHospitalPanel hos11 {
-		{
-			pos "665 380"
-		}
-	}
-
-	cmpHospitalPanel hos12 {
-		{
-			pos "25 475"
-		}
-	}
-
-	cmpHospitalPanel hos13 {
-		{
-			pos "345 475"
-		}
-	}
-
-	cmpHospitalPanel hos14 {
-		{
-			pos "665 475"
-		}
-	}
-
-	cmpHospitalPanel hos15 {
-		{
-			pos "25 570"
-		}
-	}
-
-	cmpHospitalPanel hos16 {
-		{
-			pos "345 570"
-		}
-	}
-
-	cmpHospitalPanel hos17 {
-		{
-			pos "665 570"
-		}
-	}
-
-	cmpHospitalPanel hos18 {
-		{
-			pos "25 665"
-		}
-	}
-
-	cmpHospitalPanel hos19 {
-		{
-			pos "345 665"
-		}
-	}
-
-	cmpHospitalPanel hos20 {
-		{
-			pos "665 665"
-		}
-	}
-
-	button hos_button_scrollup
-	{
-		tooltip "_Scroll up"
-		icon	"icons/scroll_top"
-		pos		"980 95"
-		size		"16 16"
-		padding		0
-		onClick	{ cmd "hosp_list_up;" }
-	}
-
-	button hos_button_scrolldown
-	{
-		tooltip "_Scroll down"
-		icon	"icons/scroll_bottom"
-		pos		"980 733"
-		size		"16 16"
-		padding		0
-		onClick	{ cmd "hosp_list_down;" }
 	}
 
 	// ==================
@@ -343,15 +207,7 @@ window hospital
 	func onWindowOpened
 	{
 		cmd "hosp_init;"
-		*cvar:i = 0
-		while ( *cvar:i < 20 ) {
-			*node:root.hos<cvar:i>@num = <cvar:i>
-			*node:root.hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
-			*node:root.hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
-		}
-	delete *cvar:i
-	*cvar:mn_lastsubmenu = "hospital"
+		*cvar:mn_lastsubmenu = "hospital"
 	}
 }
 

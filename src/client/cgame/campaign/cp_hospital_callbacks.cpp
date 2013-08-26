@@ -31,19 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief This is the current selected employee for the hospital_employee menu. */
 static Employee* currentEmployeeInHospital = nullptr;
 
-/** @brief First line in Hospital menu. */
-static int hospitalFirstEntry;
-
-/** @brief Number of all entries in Hospital menu. */
-static int hospitalNumEntries;
-
-/** @brief Maximal entries in hospital menu. */
-#define HOS_MENU_MAX_ENTRIES 21
-
-/** @brief Number of entries in a line of the hospital menu. */
-#define HOS_MENU_LINE_ENTRIES 3
-
-static void HOS_EntryWoundData (const character_t *const chr, const int entry)
+static void HOS_EntryWoundData (const character_t *const chr)
 {
 	const BodyData *bodyData = chr->teamDef->bodyTemplate;
 	const woundInfo_t *const wounds = &chr->wounds;
@@ -55,7 +43,7 @@ static void HOS_EntryWoundData (const character_t *const chr, const int entry)
 		char text[MAX_VAR];
 		Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged %s (damage: %i)") :
 				_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds->treatmentLevel[bodyPart]);
-		cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", entry, bodyData->id(bodyPart), severity, text);
+		cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", chr->ucn, bodyData->id(bodyPart), severity, text);
 	}
 }
 
@@ -82,9 +70,6 @@ static void HOS_UpdateMenu (void)
 	/* Reset list. */
 	cgi->UI_ExecuteConfunc("hospital_clear");
 
-	int j = 0;
-	int entry = 0;
-
 	for (int type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
 			if (!employee->isHiredInBase(base))
@@ -97,42 +82,29 @@ static void HOS_UpdateMenu (void)
 			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
 				continue;
 
-			if (j >= hospitalFirstEntry && entry < HOS_MENU_MAX_ENTRIES) {
-				char name[128];
-				char rank[128];
-				/* Print name. */
-				Q_strncpyz(name, employee->chr.name, sizeof(name));
-				/* Print rank for soldiers or type for other personel. */
-				if (type == EMPL_SOLDIER) {
-					const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
-					Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
-				} else {
-					Q_strncpyz(rank, E_GetEmployeeString(employee->getType(), 1), sizeof(rank));
-				}
-				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
-				const char *level = "light";
-				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
-				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)
-					level = "serious";
-				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
-				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
-					level = "medium";
-				cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", entry, level, employee->chr.HP, employee->chr.maxHP, name, rank);
-
-				/* Send wound info */
-				HOS_EntryWoundData(&employee->chr, entry);
-
-				/* Increase the counter of list entries. */
-				entry++;
+			char name[128];
+			char rank[128];
+			/* Print name. */
+			Q_strncpyz(name, employee->chr.name, sizeof(name));
+			/* Print rank for soldiers or type for other personel. */
+			if (type == EMPL_SOLDIER) {
+				const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
+				Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
+			} else {
+				Q_strncpyz(rank, E_GetEmployeeString(employee->getType(), 1), sizeof(rank));
 			}
-			j++;
-		}
-	}
-	hospitalNumEntries = j;
+			const char *level = "light";
+			/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
+			if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)
+				level = "serious";
+			/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
+			else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
+				level = "medium";
+			cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", employee->chr.ucn, level, employee->chr.HP, employee->chr.maxHP, name, rank);
 
-	/* Set rest of the list-entries to have no text at all. */
-	for (; entry < HOS_MENU_MAX_ENTRIES; entry++) {
-		cgi->UI_ExecuteConfunc("hospitalunused %i", entry);
+			/* Send wound info */
+			HOS_EntryWoundData(&employee->chr);
+		}
 	}
 }
 
@@ -150,30 +122,6 @@ static void HOS_Init_f (void)
 		cgi->UI_PopWindow(false);
 		return;
 	}
-
-	hospitalFirstEntry = 0;
-
-	HOS_UpdateMenu();
-}
-
-/**
- * @brief Click function for scrolling up the employee list.
- */
-static void HOS_ListUp_f (void)
-{
-	if (hospitalFirstEntry >= HOS_MENU_LINE_ENTRIES)
-		hospitalFirstEntry -= HOS_MENU_LINE_ENTRIES;
-
-	HOS_UpdateMenu();
-}
-
-/**
- * @brief Click function for scrolling down the employee list.
- */
-static void HOS_ListDown_f (void)
-{
-	if (hospitalFirstEntry + HOS_MENU_MAX_ENTRIES < hospitalNumEntries)
-		hospitalFirstEntry += HOS_MENU_LINE_ENTRIES;
 
 	HOS_UpdateMenu();
 }
@@ -195,32 +143,11 @@ static void HOS_ListClick_f (void)
 	}
 
 	/* which employee? */
-	int num = atoi(cgi->Cmd_Argv(1)) + hospitalFirstEntry;
-
-	int type;
-	for (type = 0; type < MAX_EMPL; type++) {
-		E_Foreach(type, employee) {
-			if (!employee->isHiredInBase(base))
-				continue;
-			/* only those that need healing */
-			if (employee->chr.HP >= employee->chr.maxHP && HOS_InjuryLevel(&employee->chr) <= 0)
-				continue;
-			/* Don't select soldiers that are gone to a mission */
-			if (employee->isAwayFromBase())
-				continue;
-			if (num <= 0) {
-				currentEmployeeInHospital = employee;
-				/* end outer loop, too */
-				type = MAX_EMPL + 1;
-				/* end inner loop */
-				break;
-			}
-			num--;
-		}
-	}
+	const int ucn = atoi(cgi->Cmd_Argv(1));
+	currentEmployeeInHospital = E_GetEmployeeFromChrUCN(ucn);
 
 	/* open the hospital menu for this employee */
-	if (type != MAX_EMPL)
+	if (currentEmployeeInHospital != nullptr)
 		cgi->UI_PushWindow("hospital_employee");
 }
 
@@ -249,8 +176,6 @@ void HOS_InitCallbacks(void)
 	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
 	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
 	cgi->Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
-	cgi->Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
-	cgi->Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
 }
 
 void HOS_ShutdownCallbacks(void)
@@ -258,6 +183,4 @@ void HOS_ShutdownCallbacks(void)
 	cgi->Cmd_RemoveCommand("hosp_empl_init");
 	cgi->Cmd_RemoveCommand("hosp_init");
 	cgi->Cmd_RemoveCommand("hosp_list_click");
-	cgi->Cmd_RemoveCommand("hosp_list_up");
-	cgi->Cmd_RemoveCommand("hosp_list_down");
 }
