@@ -38,7 +38,7 @@ static linkedList_t *LIST_AllocateEntry(void* const data, linkedList_t* const ne
 }
 
 /** Append entry to end of list. */
-static void LIST_AppendEntry(linkedList_t **list, linkedList_t* const entry)
+static void LIST_AppendEntry(linkedList_t** list, linkedList_t* const entry)
 {
 	while (*list) list = &(*list)->next;
 	*list = entry;
@@ -51,7 +51,7 @@ static void LIST_AppendEntry(linkedList_t **list, linkedList_t* const entry)
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-linkedList_t *LIST_Add (linkedList_t **listDest, void const* data, size_t length)
+linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
 	assert(listDest);
 	assert(data);
@@ -104,7 +104,7 @@ static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const n
 	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
 
-void LIST_AddStringSorted (linkedList_t **listDest, const char *data)
+void LIST_AddStringSorted (linkedList_t** listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);
@@ -124,7 +124,7 @@ void LIST_AddStringSorted (linkedList_t **listDest, const char *data)
  * @sa LIST_AddString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_PrependString (linkedList_t **listDest, const char *data)
+void LIST_PrependString (linkedList_t** listDest, const char *data)
 {
 	*listDest = LIST_AllocateString(data, *listDest);
 }
@@ -136,7 +136,7 @@ void LIST_PrependString (linkedList_t **listDest, const char *data)
  * @see LIST_PrependString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddString (linkedList_t **listDest, const char *data)
+void LIST_AddString (linkedList_t** listDest, const char *data)
 {
 	assert(listDest);
 	assert(data);
@@ -150,7 +150,7 @@ void LIST_AddString (linkedList_t **listDest, const char *data)
  * @sa LIST_RemoveEntry
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddPointer (linkedList_t **listDest, void *data)
+void LIST_AddPointer (linkedList_t** listDest, void *data)
 {
 	assert(listDest);
 	assert(data);
@@ -169,7 +169,7 @@ void LIST_AddPointer (linkedList_t **listDest, void *data)
  * @sa LIST_Delete
  * @return @c true if the removal was successful, @c false otherwise.
  */
-bool LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
+bool LIST_RemoveEntry (linkedList_t** list, linkedList_t *entry)
 {
 	assert(list);
 	assert(entry);
@@ -192,7 +192,7 @@ bool LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
  */
-void LIST_Delete (linkedList_t **list)
+void LIST_Delete (linkedList_t** list)
 {
 	linkedList_t *next;
 	linkedList_t *l = *list;
@@ -211,7 +211,7 @@ void LIST_Delete (linkedList_t **list)
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
  */
-bool LIST_Remove (linkedList_t **list, const void *data)
+bool LIST_Remove (linkedList_t** list, const void *data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
 	if (l != nullptr)
@@ -310,7 +310,7 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 	}
 }
 
-void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void *userData)
+void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void *userData)
 {
 	if (LIST_IsEmpty(*list))
 		return;

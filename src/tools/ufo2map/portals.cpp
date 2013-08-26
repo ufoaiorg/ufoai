@@ -101,7 +101,7 @@ static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
  */
 void RemovePortalFromNode (portal_t *portal, node_t *l)
 {
-	portal_t **pp;
+	portal_t** pp;
 
 	/* remove reference to the current portal */
 	pp = &l->portals;

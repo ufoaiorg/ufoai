@@ -86,7 +86,7 @@ BOX AND LINE TRACING
 
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
 
-void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t **tnode, int32_t nodenum, int level);
+void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t** tnode, int32_t nodenum, int level);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject);

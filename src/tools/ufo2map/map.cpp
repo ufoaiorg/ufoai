@@ -1103,7 +1103,7 @@ void WriteMapFile (const char *filename)
 		/* add brushes from func_groups with single members to worldspawn */
 		if (i == 0) {
 			int numToAdd;
-			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
+			mapbrush_t** brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
 			if (brushesToAdd != nullptr) {
 				int k;
 				for (k = 0; k < numToAdd; k++) {

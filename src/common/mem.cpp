@@ -206,7 +206,7 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, co
 void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 {
 	memBlock_t *search;
-	memBlock_t **prev;
+	memBlock_t** prev;
 
 	if (!ptr)
 		return;

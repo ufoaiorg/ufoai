@@ -71,7 +71,7 @@ TRACING NODES
 /**
  * @brief Converts the disk node structure into the efficient tracing structure for LineTraces
  */
-static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t nodenum)
+static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenum)
 {
 	tnode_t *t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
@@ -115,7 +115,7 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t no
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t nodenum, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenum, int level)
 {
 	assert(nodenum < tile->numnodes + 6); /* +6 => bbox */
 

@@ -557,7 +557,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
 {
 	bspbrush_t *b[2];
 	int i, j;
@@ -713,7 +713,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
 {
 	bspbrush_t *brush;
 

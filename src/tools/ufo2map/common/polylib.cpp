@@ -215,7 +215,7 @@ winding_t *ReverseWinding (const winding_t *w)
 }
 
 void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t dist,
-		const vec_t epsilon, winding_t **front, winding_t **back)
+		const vec_t epsilon, winding_t** front, winding_t** back)
 {
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
@@ -310,7 +310,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 		Sys_Error("ClipWinding: MAX_POINTS_ON_WINDING");
 }
 
-void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
+void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
 	winding_t *in;
 	/** @todo Why + 4? */

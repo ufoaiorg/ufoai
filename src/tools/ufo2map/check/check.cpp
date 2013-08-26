@@ -508,7 +508,7 @@ static void Check_FindCompositeSides (void)
 			}
 
 			if (numMembers > 1) { /* composite found */
-				side_t **sidesInNewComposite = Mem_AllocTypeN(side_t *, numMembers);
+				side_t** sidesInNewComposite = Mem_AllocTypeN(side_t *, numMembers);
 
 				if (!sidesInNewComposite)
 					Sys_Error("Check_FindCompositeSides: out of memory");

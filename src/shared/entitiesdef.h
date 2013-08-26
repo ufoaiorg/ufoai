@@ -66,7 +66,7 @@ typedef struct entityKeyDef_s {
 	char	*defaultVal;/**< a default value that may be provided by ufo2map -fix */
 	int		flags;		/**< optional, mandatory, etc, see @sa ED_OPTIONAL, ED_MANDATORY, ED_ABSTRACT */
 	int		vLen;		/**< for numeric types that may be vectors, the number of elements */
-	entityKeyRange_t **ranges; /**< store allowed values for this key. may be a different range for each element */
+	entityKeyRange_t** ranges; /**< store allowed values for this key. may be a different range for each element */
 	int		numRanges;	/**< may be 0, 1 or equal to the vLen. only for numeric types */
 } entityKeyDef_t;
 

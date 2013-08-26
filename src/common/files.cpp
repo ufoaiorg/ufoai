@@ -688,7 +688,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
  * @brief Adds the directory to the head of the search path
  * @note No ending slash here
  */
-int FS_GetModList (linkedList_t **mods)
+int FS_GetModList (linkedList_t** mods)
 {
 	char gdir[MAX_OSPATH];
 	const char *homedir;
@@ -775,7 +775,7 @@ void FS_ExecAutoexec (void)
  */
 static void FS_Link_f (void)
 {
-	filelink_t **prev;
+	filelink_t** prev;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <from> <to>\n", Cmd_Argv(0));
@@ -973,7 +973,7 @@ static listBlock_t *fs_blocklist = nullptr;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t **fl, const char *name, bool stripPath)
+static void _AddToListBlock (linkedList_t** fl, const char *name, bool stripPath)
 {
 	const char *f;
 
@@ -1007,7 +1007,7 @@ int FS_BuildFileList (const char *fileList)
 
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
-	for (listBlock_t **anchor = &fs_blocklist; *anchor;) {
+	for (listBlock_t** anchor = &fs_blocklist; *anchor;) {
 		listBlock_t* const block = *anchor;
 		if (Q_streq(block->path, files)) {
 			*anchor = block->next;
