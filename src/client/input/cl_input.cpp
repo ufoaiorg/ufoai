@@ -629,9 +629,9 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
+static void IN_TranslateKey (const unsigned int keycode, unsigned int *ascii)
 {
-	switch (keysym->sym) {
+	switch (keycode) {
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
 		break;
@@ -868,23 +868,12 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		*ascii = K_SPACE;
 		break;
 	default:
-#if SDL_VERSION_ATLEAST(2,0,0)
-		/* handled via text input api */
-		*ascii = 0;
-#else
-		*ascii = keysym->sym;
-#endif
+		if (isprint(keycode))
+			*ascii = keycode;
+		else
+			*ascii = 0;
 		break;
 	}
-
-#if SDL_VERSION_ATLEAST(2,0,0)
-	*unicode = 0;
-#else
-	*unicode = keysym->unicode;
-#endif
-
-	if (in_debug->integer)
-		Com_Printf("unicode: %hx keycode: %i key: %hx\n", *unicode, *ascii, *ascii);
 }
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
@@ -984,13 +973,14 @@ void IN_Frame (void)
 			const char *text = event.text.text;
 			const char **str = &text;
 			for (;;) {
-				const int unicode = UTF8_next(str);
-				if (unicode == -1) {
+				const int characterUnicode = UTF8_next(str);
+				if (characterUnicode == -1) {
 					break;
 				}
-				unsigned short keyUnicode = unicode;
-				IN_EventEnqueue(0, keyUnicode, true);
-				IN_EventEnqueue(0, keyUnicode, false);
+				unicode = characterUnicode;
+				IN_TranslateKey(characterUnicode, &key);
+				IN_EventEnqueue(key, unicode, true);
+				IN_EventEnqueue(key, unicode, false);
 			}
 			break;
 		}
@@ -1074,13 +1064,23 @@ void IN_Frame (void)
 				break;
 			}
 
-			IN_TranslateKey(&event.key.keysym, &key, &unicode);
+#if SDL_VERSION_ATLEAST(2,0,0)
+			unicode = 0;
+#else
+			unicode = event.key.keysym.unicode;
+#endif
+			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, true);
 			break;
 
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
-			IN_TranslateKey(&event.key.keysym, &key, &unicode);
+#if SDL_VERSION_ATLEAST(2,0,0)
+			unicode = 0;
+#else
+			unicode = event.key.keysym.unicode;
+#endif
+			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, false);
 			break;
 
