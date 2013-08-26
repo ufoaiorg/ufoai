@@ -126,11 +126,6 @@ window hospital
 	// employee list
 	// ==================
 
-	confunc hospital_clear
-	{
-		call *node:root.panel@removeAllchild
-	}
-
 	/**
 	 * @param <1> Entry index
 	 * @param <2> light, medium, serious
@@ -206,6 +201,7 @@ window hospital
 
 	func onWindowOpened
 	{
+		call *node:root.panel@removeAllchild
 		cmd "hosp_init;"
 		*cvar:mn_lastsubmenu = "hospital"
 	}

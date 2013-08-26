@@ -28,19 +28,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_hospital_callbacks.h"
 
-static void HOS_EntryWoundData (const character_t *const chr)
+static void HOS_EntryWoundData (const character_t& chr)
 {
-	const BodyData *bodyData = chr->teamDef->bodyTemplate;
-	const woundInfo_t *const wounds = &chr->wounds;
+	const BodyData *bodyData = chr.teamDef->bodyTemplate;
+	const woundInfo_t& wounds = &chr.wounds;
 
 	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
-		if (wounds->treatmentLevel[bodyPart] == 0)
+		if (wounds.treatmentLevel[bodyPart] == 0)
 			continue;
-		const float severity = static_cast<float>(wounds->treatmentLevel[bodyPart]) / chr->maxHP;
+		const float severity = static_cast<float>(wounds.treatmentLevel[bodyPart]) / chr.maxHP;
 		char text[MAX_VAR];
-		Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ? _("Damaged %s (damage: %i)") :
-				_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds->treatmentLevel[bodyPart]);
-		cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", chr->ucn, bodyData->id(bodyPart), severity, text);
+		Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr.teamDef) ? _("Damaged %s (damage: %i)") :
+				_("Wounded %s (damage: %i)"), _(bodyData->name(bodyPart)), wounds.treatmentLevel[bodyPart]);
+		cgi->UI_ExecuteConfunc("hospital_wounds %i %s %f \"%s\"", chr.ucn, bodyData->id(bodyPart), severity, text);
 	}
 }
 
@@ -54,52 +54,36 @@ static float HOS_InjuryLevel (const character_t *const chr)
 	return injuryLevel;
 }
 
-/**
- * @brief Updates the hospital menu.
- * @sa HOS_Init_f
- */
-static void HOS_UpdateMenu (void)
+static const char* HOS_GetRank (const Employee &employee)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
-	if (!base)
-		return;
-
-	/* Reset list. */
-	cgi->UI_ExecuteConfunc("hospital_clear");
-
-	for (int type = 0; type < MAX_EMPL; type++) {
-		E_Foreach(type, employee) {
-			if (!employee->isHiredInBase(base))
-				continue;
-			/* Don't show soldiers who are gone in mission */
-			if (employee->isAwayFromBase())
-				continue;
-			/* Don't show healthy employees */
-			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
-			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
-				continue;
-
-			const char *rank;
-			/* Print rank for soldiers or type for other employees. */
-			if (type == EMPL_SOLDIER) {
-				const rank_t *rankPtr = CL_GetRankByIdx(employee->chr.score.rank);
-				rank = _(rankPtr->name);
-			} else {
-				rank = E_GetEmployeeString(employee->getType(), 1);
-			}
-			const char *level = "light";
-			/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
-			if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5) || injuryLevel >= 0.5)
-				level = "serious";
-			/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
-			else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85) || injuryLevel >= 0.15)
-				level = "medium";
-			cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", employee->chr.ucn, level, employee->chr.HP, employee->chr.maxHP, employee->chr.name, rank);
-
-			/* Send wound info */
-			HOS_EntryWoundData(&employee->chr);
-		}
+	/* Print rank for soldiers or type for other employees. */
+	if (employee.isSoldier()) {
+		const rank_t *rankPtr = CL_GetRankByIdx(employee.chr.score.rank);
+		return _(rankPtr->name);
 	}
+	return E_GetEmployeeString(employee.getType(), 1);
+}
+
+static const char *HOS_GetInjuryLevel (const Employee &employee, float injuryLevel)
+{
+	/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
+	if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.5) || injuryLevel >= 0.5)
+		return "serious";
+
+	/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
+	else if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.85) || injuryLevel >= 0.15)
+		return "medium";
+
+	return "light";
+}
+
+static inline void HOS_Entry (const Employee& employee, float injuryLevel)
+{
+	const char *rank = HOS_GetRank(employee);
+	const char *level = HOS_GetInjuryLevel(employee, injuryLevel);
+	const character_t& chr = employee.chr;
+	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank);
+	HOS_EntryWoundData(chr);
 }
 
 /**
@@ -117,7 +101,19 @@ static void HOS_Init_f (void)
 		return;
 	}
 
-	HOS_UpdateMenu();
+	for (int type = 0; type < MAX_EMPL; type++) {
+		E_Foreach(type, employee) {
+			/* Don't show soldiers who are not in this base or gone in mission */
+			if (!employee->isHiredInBase(base) || employee->isAwayFromBase())
+				continue;
+			/* Don't show healthy employees */
+			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
+			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
+				continue;
+
+			HOS_Entry(*employee, injuryLevel);
+		}
+	}
 }
 
 /**
