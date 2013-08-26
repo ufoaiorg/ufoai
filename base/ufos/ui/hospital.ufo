@@ -393,13 +393,19 @@ window hospital_employee
 		disabled	true
 	}
 
+	/**
+	 * @param <1> The character ucn
+	 */
+	confunc hospital_employee_init {
+		cmd "hosp_empl_init <1>;"
+	}
+
 	// ==================
 	// init function
 	// ==================
 
 	func onWindowOpened
 	{
-		cmd "hosp_empl_init;"
 		*cvar:mn_lastsubmenu = "hospital_employee"
 	}
 }

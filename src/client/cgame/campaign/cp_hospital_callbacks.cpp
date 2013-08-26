@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_hospital_callbacks.h"
 
-/** @brief This is the current selected employee for the hospital_employee menu. */
-static Employee* currentEmployeeInHospital = nullptr;
-
 static void HOS_EntryWoundData (const character_t *const chr)
 {
 	const BodyData *bodyData = chr->teamDef->bodyTemplate;
@@ -132,23 +129,17 @@ static void HOS_Init_f (void)
 static void HOS_ListClick_f (void)
 {
 	const base_t *base = B_GetCurrentSelectedBase();
-	if (!base) {
-		currentEmployeeInHospital = nullptr;
+	if (!base)
 		return;
-	}
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
+		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	/* which employee? */
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	currentEmployeeInHospital = E_GetEmployeeFromChrUCN(ucn);
-
-	/* open the hospital menu for this employee */
-	if (currentEmployeeInHospital != nullptr)
-		cgi->UI_PushWindow("hospital_employee");
+	cgi->UI_PushWindow("hospital_employee");
+	cgi->UI_ExecuteConfunc("hospital_employee_init %i", ucn);
 }
 
 /**
@@ -156,18 +147,23 @@ static void HOS_ListClick_f (void)
  */
 static void HOS_EmployeeInit_f (void)
 {
-	if (!currentEmployeeInHospital) {
-		Com_Printf("HOS_EmployeeInit_f: no employee selected.\n");
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
+	const int ucn = atoi(cgi->Cmd_Argv(1));
+	Employee *e = E_GetEmployeeFromChrUCN(ucn);
+	if (e == nullptr)
+		return;
+
 	cgi->UI_ResetData(TEXT_STANDARD);
 
-	character_t* c = &currentEmployeeInHospital->chr;
-	CL_UpdateCharacterValues(c);
+	const character_t& c = e->chr;
+	CL_UpdateCharacterValues(&c);
 
-	cgi->Cvar_SetValue("mn_hp", c->HP);
-	cgi->Cvar_SetValue("mn_hpmax", c->maxHP);
+	cgi->Cvar_SetValue("mn_hp", c.HP);
+	cgi->Cvar_SetValue("mn_hpmax", c.maxHP);
 }
 
 
