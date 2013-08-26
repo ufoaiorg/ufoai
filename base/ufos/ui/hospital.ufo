@@ -241,7 +241,7 @@ window hospital_employee
 		background	"ui/panel_grey_green_large"
 	}
 
-	string txt_name
+	string name
 	{
 		string	*cvar:mn_name
 		pos		"475 118"
@@ -270,8 +270,17 @@ window hospital_employee
 		}
 	}
 
-	image	rank_img { pos "475 470" src *cvar:mn_chrrank_img }
-	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines LONGLINES_PRETTYCHOP }
+	image rank_img {
+		pos "475 470"
+		src *cvar:mn_chrrank_img
+	}
+
+	string rank_lbl {
+		pos "475 175"
+		size "200 20"
+		string *cvar:mn_chrrank
+		longlines LONGLINES_PRETTYCHOP
+	}
 
 	cmpHospitalNamedTbar pwr {
 		{
