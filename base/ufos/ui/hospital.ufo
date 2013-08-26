@@ -40,6 +40,7 @@ component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 	}
 	string	val {
 		pos "160 0"
+		longlines LONGLINES_PRETTYCHOP
 	}
 }
 
@@ -152,7 +153,7 @@ window hospital
 		*node:root.panel.hos<1>.item@string = "<5>"
 		*node:root.panel.hos<1>.rank@string = "<6>"
 		*node:root.panel.hos<1>.index@integer = <1>
-		*node:root.panel.hos<1>.click@onClick = { cmd "ui_push hospital_employee; hospital_employee_init <node:this.parent.index@integer>;" }
+		*node:root.panel.hos<1>.click@onClick = { cmd "ui_push hospital_employee; hosp_empl_init <node:this.parent.index@integer>;" }
 	}
 
 	/**
@@ -243,7 +244,6 @@ window hospital_employee
 
 	string name
 	{
-		string	*cvar:mn_name
 		pos		"475 118"
 		size	"415 20"
 	}
@@ -251,8 +251,6 @@ window hospital_employee
 	model body
 	{
 		{
-			src		*cvar:mn_body
-			skin	*cvar:mn_body_skin
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"6.7 6.7 6.7"
@@ -263,22 +261,18 @@ window hospital_employee
 
 		model head
 		{
-			src		*cvar:mn_head
-			skin	*cvar:mn_head_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
 	}
 
-	image rank_img {
+	image rank {
 		pos "475 470"
-		src *cvar:mn_chrrank_img
 	}
 
 	string rank_lbl {
 		pos "475 175"
 		size "200 20"
-		string *cvar:mn_chrrank
 		longlines LONGLINES_PRETTYCHOP
 	}
 
@@ -324,18 +318,11 @@ window hospital_employee
 		}
 		tbar bar
 		{
-			current *cvar:mn_hp
-			max *cvar:mn_hpmax
 			image "ui/bar_health"
 		}
 		string lbl
 		{
 			string "_Health:"
-			longlines LONGLINES_PRETTYCHOP
-		}
-		string val
-		{
-			string *cvar:mn_hp
 			longlines LONGLINES_PRETTYCHOP
 		}
 	}
@@ -363,10 +350,27 @@ window hospital_employee
 	}
 
 	/**
-	 * @param <1> The character ucn
+	 * @param <1> Name
+	 * @param <2> Body
+	 * @param <3> BodySkin
+	 * @param <4> Head
+	 * @param <5> HeadSkin
+	 * @param <6> HP
+	 * @param <7> MaxHP
+	 * @param <8> Rank
+	 * @param <9> Rank image
 	 */
-	confunc hospital_employee_init {
-		cmd "hosp_empl_init <1>;"
+	confunc hospital_employee_show {
+		*node:root.name@string = "<1>"
+		*node:root.body@src = "<2>"
+		*node:root.body@skin = <3>
+		*node:root.body.head@src = "<4>"
+		*node:root.body.head@skin = <5>
+		*node:root.health.val@string = "<6>"
+		*node:root.health.bar@current = <6>
+		*node:root.health.bar@max = <7>
+		*node:root.rank_lbl@string = <8>
+		*node:root.rank@src = <9>
 	}
 
 	// ==================
