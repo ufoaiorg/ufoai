@@ -81,7 +81,7 @@ static void B_Destroy_AntimaterStorage_f (void)
  * get available. The content is updated everytime B_BuildingInit is called
  * (i.e everytime the buildings-list is displayed/updated)
  */
-static void B_BuildingAddToList (linkedList_t **buildingList, building_t *building)
+static void B_BuildingAddToList (linkedList_t** buildingList, building_t *building)
 {
 	int count;
 	assert(building);

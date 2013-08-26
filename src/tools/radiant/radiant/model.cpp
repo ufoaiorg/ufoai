@@ -180,7 +180,7 @@ typedef SingletonModule<ModelPicoAPI, ModelPicoDependencies, PicoModelAPIConstru
 void ModelModules_Init (void)
 {
 	pico_initialise();
-	const picoModule_t **modules = PicoModuleList(0);
+	const picoModule_t** modules = PicoModuleList(0);
 	while (*modules != 0) {
 		const picoModule_t *module = *modules++;
 		if (module->canload && module->load) {

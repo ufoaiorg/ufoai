@@ -1349,7 +1349,7 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
  * @param[out] list list to return
  * @return True if the list is well formed, else false.
  */
-bool Com_ParseList (const char **text, linkedList_t **list)
+bool Com_ParseList (const char **text, linkedList_t** list)
 {
 	*list = nullptr;
 

@@ -97,7 +97,7 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  */
 static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
 {
-	pos_t **p;
+	pos_t** p;
 	int i;
 	actorSizeEnum_t size;
 

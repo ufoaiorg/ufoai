@@ -170,7 +170,7 @@ static void SV_MapcycleAdd (const char *mapName, bool day, const char *gameType)
 	Com_DPrintf(DEBUG_SERVER, "mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
 
 	/* Append to end of list. */
-	mapcycle_t **anchor = &mapcycleList;
+	mapcycle_t** anchor = &mapcycleList;
 	while (*anchor) anchor = &(*anchor)->next;
 	*anchor = mapcycle;
 

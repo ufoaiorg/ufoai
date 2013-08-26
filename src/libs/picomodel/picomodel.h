@@ -92,10 +92,10 @@ struct picoSurface_s {
 	picoIndex_t *smoothingGroup;
 
 	int numSTArrays, maxSTArrays;
-	picoVec2_t **st;
+	picoVec2_t** st;
 
 	int numColorArrays, maxColorArrays;
-	picoColor_t **color;
+	picoColor_t** color;
 
 	int numIndexes, maxIndexes;
 	picoIndex_t *index;
@@ -129,10 +129,10 @@ struct picoModel_s {
 	picoVec3_t maxs;
 
 	int numShaders, maxShaders;
-	picoShader_t **shader;
+	picoShader_t** shader;
 
 	int numSurfaces, maxSurfaces;
-	picoSurface_t **surface;
+	picoSurface_t** surface;
 
 	const picoModule_t *module; /* sea */
 };
@@ -189,7 +189,7 @@ void PicoSetLoadFileFunc (void (*func) (char*, unsigned char**, int*));
 void PicoSetFreeFileFunc (void (*func) (void*));
 void PicoSetPrintFunc (void (*func) (int, const char*));
 
-const picoModule_t **PicoModuleList (int *numModules);
+const picoModule_t** PicoModuleList (int *numModules);
 
 picoModel_t *PicoLoadModel (char *name, int frameNum);
 
@@ -295,11 +295,11 @@ typedef struct picoVertexCombinationHash_s {
 } picoVertexCombinationHash_t;
 
 unsigned int PicoVertexCoordGenerateHash (picoVec3_t xyz);
-picoVertexCombinationHash_t **PicoNewVertexCombinationHashTable (void);
-void PicoFreeVertexCombinationHashTable (picoVertexCombinationHash_t **hashTable);
-picoVertexCombinationHash_t *PicoFindVertexCombinationInHashTable (picoVertexCombinationHash_t **hashTable,
+picoVertexCombinationHash_t** PicoNewVertexCombinationHashTable (void);
+void PicoFreeVertexCombinationHashTable (picoVertexCombinationHash_t** hashTable);
+picoVertexCombinationHash_t *PicoFindVertexCombinationInHashTable (picoVertexCombinationHash_t** hashTable,
 		picoVec3_t xyz, picoVec3_t normal, picoVec3_t st, picoColor_t color);
-picoVertexCombinationHash_t *PicoAddVertexCombinationToHashTable (picoVertexCombinationHash_t **hashTable,
+picoVertexCombinationHash_t *PicoAddVertexCombinationToHashTable (picoVertexCombinationHash_t** hashTable,
 		picoVec3_t xyz, picoVec3_t normal, picoVec3_t st, picoColor_t color, picoIndex_t index);
 
 /* specialized functions */
@@ -307,8 +307,8 @@ int PicoFindSurfaceVertexNum (picoSurface_t *surface, picoVec3_t xyz, picoVec3_t
 		int numColors, picoColor_t *color, picoIndex_t smoothingGroup);
 void PicoFixSurfaceNormals (picoSurface_t *surface);
 
-void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **normals, int numSTs, picoVec2_t **st,
-		int numColors, picoColor_t **colors, picoShader_t *shader, picoIndex_t *smoothingGroup);
+void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t** xyz, picoVec3_t** normals, int numSTs, picoVec2_t** st,
+		int numColors, picoColor_t** colors, picoShader_t *shader, picoIndex_t *smoothingGroup);
 
 /* end marker */
 #ifdef __cplusplus

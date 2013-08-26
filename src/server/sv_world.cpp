@@ -209,7 +209,7 @@ static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t *ent)
 
 typedef struct {
 	const float *areaMins, *areaMaxs;
-	edict_t **areaEdictList;
+	edict_t** areaEdictList;
 	int areaEdictListCount, areaEdictListMaxCount;
 } areaParms_t;
 
@@ -263,7 +263,7 @@ static void SV_AreaEdicts_r (worldSector_t *node, areaParms_t *ap)
  * @param[in] maxCount The size of the given @c list
  * @return the number of pointers filled in
  */
-int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount)
+int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int maxCount)
 {
 	areaParms_t	ap;
 

@@ -118,7 +118,7 @@ static aseSubMaterial_t *_ase_get_submaterial_or_default (aseMaterial_t *materia
 	return NULL;
 }
 
-static aseMaterial_t *_ase_add_material (aseMaterial_t **list, int mtlIdParent)
+static aseMaterial_t *_ase_add_material (aseMaterial_t** list, int mtlIdParent)
 {
 	aseMaterial_t *mtl = _pico_calloc(1, sizeof(aseMaterial_t));
 	mtl->mtlId = mtlIdParent;
@@ -129,7 +129,7 @@ static aseMaterial_t *_ase_add_material (aseMaterial_t **list, int mtlIdParent)
 	return mtl;
 }
 
-static aseSubMaterial_t *_ase_add_submaterial (aseMaterial_t **list, int mtlIdParent, int subMtlId,
+static aseSubMaterial_t *_ase_add_submaterial (aseMaterial_t** list, int mtlIdParent, int subMtlId,
 		picoShader_t *shader)
 {
 	aseMaterial_t *parent = _ase_get_material(*list, mtlIdParent);
@@ -147,7 +147,7 @@ static aseSubMaterial_t *_ase_add_submaterial (aseMaterial_t **list, int mtlIdPa
 	return subMtl;
 }
 
-static void _ase_free_materials (aseMaterial_t **list)
+static void _ase_free_materials (aseMaterial_t** list)
 {
 	aseMaterial_t *mtl = *list;
 	aseSubMaterial_t *subMtl = NULL;

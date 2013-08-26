@@ -1430,9 +1430,9 @@ void CL_ParseParticle (const char *name, const char **text)
 		for (i = 0; i < PF_NUM_PTLFUNCS; i++)
 			if (Q_streq(token, pf_strings[i])) {
 				/* allocate the first particle command */
-				ptlCmd_t **pc;
+				ptlCmd_t** pc;
 
-				pc = (ptlCmd_t **) ((byte *) pd + pf_values[i]);
+				pc = (ptlCmd_t** ) ((byte *) pd + pf_values[i]);
 				*pc = &ptlCmd[numPtlCmds];
 
 				/* parse the commands */

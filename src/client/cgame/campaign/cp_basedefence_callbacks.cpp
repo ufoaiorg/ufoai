@@ -67,7 +67,7 @@ static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
 	linkedList_t *itemList = nullptr;
-	technology_t **list;
+	technology_t** list;
 
 	assert(slot);
 
@@ -118,7 +118,7 @@ static void BDEF_SelectItem_f (void)
 		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : nullptr;
 		UP_AircraftItemDescription(item);
 	} else if (itemIDX >= 0) {
-		technology_t **list;
+		technology_t** list;
 		technology_t *itemTech = nullptr;
 		int i = 0;
 
@@ -138,7 +138,7 @@ static void BDEF_SelectItem_f (void)
 	}
 }
 
-static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **slotList)
+static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t** slotList)
 {
 	char defBuffer[512];
 	const int size = cgi->LIST_Count(*slotList) + 1;
@@ -167,7 +167,7 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **s
 	}
 }
 
-static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, linkedList_t **slotList)
+static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, linkedList_t** slotList)
 {
 	int i;
 
@@ -310,7 +310,7 @@ static void BDEF_AddItem_f (void)
 	aircraftSlot_t *slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-	technology_t **list;
+	technology_t** list;
 	technology_t *itemTech = nullptr;
 	aircraftItemType_t bdefType;
 	int slotIDX;

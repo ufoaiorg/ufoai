@@ -135,7 +135,7 @@ static picoModel_t *PicoModuleLoadModel (const picoModule_t *pm, const char *fil
  */
 picoModel_t *PicoLoadModel (char *fileName, int frameNum)
 {
-	const picoModule_t **modules;
+	const picoModule_t** modules;
 	picoModel_t *model;
 	picoByte_t *buffer;
 	int bufSize;
@@ -1140,16 +1140,16 @@ unsigned int PicoVertexCoordGenerateHash (picoVec3_t xyz)
 	return hash;
 }
 
-picoVertexCombinationHash_t **PicoNewVertexCombinationHashTable (void)
+picoVertexCombinationHash_t** PicoNewVertexCombinationHashTable (void)
 {
-	picoVertexCombinationHash_t **hashTable = _pico_alloc(HASHTABLE_SIZE * sizeof(picoVertexCombinationHash_t*));
+	picoVertexCombinationHash_t** hashTable = _pico_alloc(HASHTABLE_SIZE * sizeof(picoVertexCombinationHash_t*));
 
 	memset(hashTable, 0, HASHTABLE_SIZE * sizeof(picoVertexCombinationHash_t*));
 
 	return hashTable;
 }
 
-void PicoFreeVertexCombinationHashTable (picoVertexCombinationHash_t **hashTable)
+void PicoFreeVertexCombinationHashTable (picoVertexCombinationHash_t** hashTable)
 {
 	int i;
 	picoVertexCombinationHash_t *vertexCombinationHash;
@@ -1177,7 +1177,7 @@ void PicoFreeVertexCombinationHashTable (picoVertexCombinationHash_t **hashTable
 	_pico_free(hashTable);
 }
 
-picoVertexCombinationHash_t *PicoFindVertexCombinationInHashTable (picoVertexCombinationHash_t **hashTable,
+picoVertexCombinationHash_t *PicoFindVertexCombinationInHashTable (picoVertexCombinationHash_t** hashTable,
 		picoVec3_t xyz, picoVec3_t normal, picoVec3_t st, picoColor_t color)
 {
 	unsigned int hash;
@@ -1219,7 +1219,7 @@ picoVertexCombinationHash_t *PicoFindVertexCombinationInHashTable (picoVertexCom
 	return NULL;
 }
 
-picoVertexCombinationHash_t *PicoAddVertexCombinationToHashTable (picoVertexCombinationHash_t **hashTable,
+picoVertexCombinationHash_t *PicoAddVertexCombinationToHashTable (picoVertexCombinationHash_t** hashTable,
 		picoVec3_t xyz, picoVec3_t normal, picoVec3_t st, picoColor_t color, picoIndex_t index)
 {
 	unsigned int hash;
@@ -1584,8 +1584,8 @@ void PicoFixSurfaceNormals (picoSurface_t *surface)
  * @brief A nice way to add individual triangles to the model.
  * Chooses an appropriate surface based on the shader, or adds a new surface if necessary
  */
-void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t **xyz, picoVec3_t **normals, int numSTs, picoVec2_t **st,
-		int numColors, picoColor_t **colors, picoShader_t *shader, picoIndex_t *smoothingGroup)
+void PicoAddTriangleToModel (picoModel_t *model, picoVec3_t** xyz, picoVec3_t** normals, int numSTs, picoVec2_t** st,
+		int numColors, picoColor_t** colors, picoShader_t *shader, picoIndex_t *smoothingGroup)
 {
 	int i, j;
 	picoSurface_t *workSurface = NULL;

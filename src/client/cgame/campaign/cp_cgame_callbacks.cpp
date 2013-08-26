@@ -322,7 +322,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 	cgi->SV_Shutdown("Mission end", false);
 }
 
-bool GAME_CP_Spawn (linkedList_t **chrList)
+bool GAME_CP_Spawn (linkedList_t** chrList)
 {
 	aircraft_t *aircraft = GEO_GetMissionAircraft();
 	base_t *base;
@@ -573,7 +573,7 @@ const char *GAME_CP_GetTeamDef (void)
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
 }
 
-void GAME_CP_InitMissionBriefing (const char **title, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs)
+void GAME_CP_InitMissionBriefing (const char **title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs)
 {
 	const battleParam_t *bp = &ccs.battleParameters;
 	const mission_t *mission = bp->mission;
