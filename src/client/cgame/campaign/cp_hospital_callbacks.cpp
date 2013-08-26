@@ -87,13 +87,13 @@ static void HOS_UpdateMenu (void)
 
 	for (int type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
-			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
 			if (!employee->isHiredInBase(base))
 				continue;
 			/* Don't show soldiers who are gone in mission */
 			if (employee->isAwayFromBase())
 				continue;
 			/* Don't show healthy employees */
+			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
 			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
 				continue;
 
@@ -183,9 +183,7 @@ static void HOS_ListDown_f (void)
  */
 static void HOS_ListClick_f (void)
 {
-	int num, type;
-	base_t *base = B_GetCurrentSelectedBase();
-
+	const base_t *base = B_GetCurrentSelectedBase();
 	if (!base) {
 		currentEmployeeInHospital = nullptr;
 		return;
@@ -197,8 +195,9 @@ static void HOS_ListClick_f (void)
 	}
 
 	/* which employee? */
-	num = atoi(cgi->Cmd_Argv(1)) + hospitalFirstEntry;
+	int num = atoi(cgi->Cmd_Argv(1)) + hospitalFirstEntry;
 
+	int type;
 	for (type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
 			if (!employee->isHiredInBase(base))
@@ -209,7 +208,7 @@ static void HOS_ListClick_f (void)
 			/* Don't select soldiers that are gone to a mission */
 			if (employee->isAwayFromBase())
 				continue;
-			if (!num) {
+			if (num <= 0) {
 				currentEmployeeInHospital = employee;
 				/* end outer loop, too */
 				type = MAX_EMPL + 1;
@@ -230,8 +229,6 @@ static void HOS_ListClick_f (void)
  */
 static void HOS_EmployeeInit_f (void)
 {
-	character_t* c;
-
 	if (!currentEmployeeInHospital) {
 		Com_Printf("HOS_EmployeeInit_f: no employee selected.\n");
 		return;
@@ -239,7 +236,7 @@ static void HOS_EmployeeInit_f (void)
 
 	cgi->UI_ResetData(TEXT_STANDARD);
 
-	c = &currentEmployeeInHospital->chr;
+	character_t* c = &currentEmployeeInHospital->chr;
 	CL_UpdateCharacterValues(c);
 
 	cgi->Cvar_SetValue("mn_hp", c->HP);
