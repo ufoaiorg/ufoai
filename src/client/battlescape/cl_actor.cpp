@@ -88,48 +88,6 @@ ACTOR MENU UPDATING
 ==============================================================
 */
 
-/**
- * @brief Return the skill string for the given skill level
- * @return skill string
- * @param[in] skill a skill value between 0 and MAX_SKILL
- */
-const char *CL_ActorGetSkillString (const int skill)
-{
-	const int skillLevel = skill * 10 / MAX_SKILL;
-#ifdef DEBUG
-	if (skill > MAX_SKILL) {
-		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value (%i/%i).\n", skill, MAX_SKILL);
-	}
-#endif
-	switch (skillLevel) {
-	case 0:
-		return _("Poor");
-	case 1:
-		return _("Mediocre");
-	case 2:
-		return _("Average");
-	case 3:
-		return _("Competent");
-	case 4:
-		return _("Proficient");
-	case 5:
-		return _("Very Good");
-	case 6:
-		return _("Highly Proficient");
-	case 7:
-		return _("Excellent");
-	case 8:
-		return _("Outstanding");
-	case 9:
-		return _("Impressive");
-	case 10:
-		return _("Superhuman");
-	default:
-		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i).\n", skill, skillLevel);
-		return "";
-	}
-}
-
 void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
 {
 	if (actor->fd != fd)

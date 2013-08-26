@@ -51,8 +51,6 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);
 
-const char *CL_ActorGetSkillString(const int skill);
-
 int CL_ActorCheckAction(const le_t *le);
 void CL_ActorInvMove(const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY);
 
