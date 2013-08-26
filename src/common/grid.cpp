@@ -83,7 +83,7 @@ static const int TUsUsed[] = {
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
 /**
-* @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
+* @brief Checks one cell on the grid against the 'forbiddenList' (i.e. cells blocked by other entities).
  * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize width of the actor in cells
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
