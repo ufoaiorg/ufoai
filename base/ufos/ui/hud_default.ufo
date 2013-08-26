@@ -1002,19 +1002,19 @@ window hud_default extends hud
 	{
 		*node:root.info.bt_reaction_s@texl	= "0 64"
 		*node:root.info.bt_reaction_s@texh	= "31 95"
-		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire"
+		*node:root.info.bt_reaction_s@tooltip = "_Disable reaction fire"
 	}
 	confunc startreaction_impos
 	{
 		*node:root.info.bt_reaction_s@texl	= "32 64"
 		*node:root.info.bt_reaction_s@texh	= "63 95"
-		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (not possible)"
+		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (not available)"
 	}
 	confunc deselect_reaction
 	{
 		*node:root.info.bt_reaction_s@texl	= "0 32"
 		*node:root.info.bt_reaction_s@texh	= "31 63"
-		*node:root.info.bt_reaction_s@tooltip = "_No reaction fire"
+		*node:root.info.bt_reaction_s@tooltip = "_Enable reaction fire"
 	}
 	confunc disable_reaction
 	{
