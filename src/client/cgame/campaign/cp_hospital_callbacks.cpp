@@ -121,25 +121,6 @@ static void HOS_Init_f (void)
 }
 
 /**
- * @brief Click function for hospital menu employee list.
- */
-static void HOS_ListClick_f (void)
-{
-	const base_t *base = B_GetCurrentSelectedBase();
-	if (!base)
-		return;
-
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	const int ucn = atoi(cgi->Cmd_Argv(1));
-	cgi->UI_PushWindow("hospital_employee");
-	cgi->UI_ExecuteConfunc("hospital_employee_init %i", ucn);
-}
-
-/**
  * @brief This is the init function for the hospital_employee menu
  */
 static void HOS_EmployeeInit_f (void)
@@ -168,12 +149,10 @@ void HOS_InitCallbacks(void)
 {
 	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
 	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
-	cgi->Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
 }
 
 void HOS_ShutdownCallbacks(void)
 {
 	cgi->Cmd_RemoveCommand("hosp_empl_init");
 	cgi->Cmd_RemoveCommand("hosp_init");
-	cgi->Cmd_RemoveCommand("hosp_list_click");
 }

@@ -157,7 +157,7 @@ window hospital
 		*node:root.panel.hos<1>.item@string = "<5>"
 		*node:root.panel.hos<1>.rank@string = "<6>"
 		*node:root.panel.hos<1>.index@integer = <1>
-		*node:root.panel.hos<1>.click@onClick = { cmd "hosp_list_click <node:this.parent.index@integer>;" }
+		*node:root.panel.hos<1>.click@onClick = { cmd "ui_push hospital_employee; hospital_employee_init <node:this.parent.index@integer>;" }
 	}
 
 	/**
