@@ -254,7 +254,7 @@ Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
  * @param[out] hiredEmployees Linked list of hired employees in the base.
  * @return Number of hired employees in the base that are currently not on a transfer. Or @c -1 in case of an error.
  */
-int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
+int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t** hiredEmployees)
 {
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);

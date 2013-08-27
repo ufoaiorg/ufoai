@@ -114,7 +114,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 			break;
 
 		if (Q_streq(token, "equipment")) {
-			linkedList_t **list = &alienCategory->equipment;
+			linkedList_t** list = &alienCategory->equipment;
 			if (!Com_ParseList(text, list)) {
 				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing equipment list", name);
 			}

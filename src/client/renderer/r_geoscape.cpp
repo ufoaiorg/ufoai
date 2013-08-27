@@ -725,7 +725,7 @@ static void R_Blur (r_framebuffer_t *source, r_framebuffer_t *dest, int tex, int
 /**
  * @brief blur from the source image pyramid into the dest image pyramid
  */
-static void R_BlurStack (int levels, r_framebuffer_t **sources, r_framebuffer_t **dests)
+static void R_BlurStack (int levels, r_framebuffer_t** sources, r_framebuffer_t** dests)
 {
 	int i;
 

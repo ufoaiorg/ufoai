@@ -70,7 +70,7 @@ void BDEF_InitialiseInstallationSlots(installation_t *installation);
 void BDEF_ReloadBattery(void);
 void BDEF_AutoSelectTarget(void);
 
-technology_t **AII_GetCraftitemTechsByType(aircraftItemType_t type);
+technology_t** AII_GetCraftitemTechsByType(aircraftItemType_t type);
 void AII_UpdateInstallationDelay(void);
 bool AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, bool nextItem);
 bool AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);

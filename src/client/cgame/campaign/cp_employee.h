@@ -147,7 +147,7 @@ extern const char *E_GetEmployeeString(employeeType_t type, int n);
 Employee* E_GetUnhired(employeeType_t type);
 Employee* E_GetUnhiredRobot(const struct ugv_s *ugvType);
 
-int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees);
+int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t** hiredEmployees);
 Employee* E_GetHiredRobot(const base_t* const base, const struct ugv_s *ugvType);
 
 Employee* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);

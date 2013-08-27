@@ -91,7 +91,7 @@ static void CP_HarvestMissionStart (mission_t *mission)
  * @note nationList should be empty if no nation should be favoured.
  * @return True if nationList has been filled, false else.
  */
-static bool CP_ChooseNation (const mission_t *mission, linkedList_t **nationList)
+static bool CP_ChooseNation (const mission_t *mission, linkedList_t** nationList)
 {
 	int randomNumber, max = 0;
 	/* Increase this factor to make probability to select non-infected nation higher

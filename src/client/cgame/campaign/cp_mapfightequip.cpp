@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note This list is terminated by a nullptr pointer.
  * @param[in] type Type of the craft-items to return.
  */
-technology_t **AII_GetCraftitemTechsByType (aircraftItemType_t type)
+technology_t** AII_GetCraftitemTechsByType (aircraftItemType_t type)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	int i, j = 0;

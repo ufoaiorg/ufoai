@@ -148,7 +148,7 @@ void R_EnableWorldLights (void)
  * @param inShadow Whether model is shadowed from the sun
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableModelLights (const light_t **lights, int numLights, bool inShadow, bool enable)
+void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, bool enable)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
@@ -355,7 +355,7 @@ static void R_AddLightToEntity (const vec_t *pos, lighting_t *ltng, const light_
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	const light_t **el = ltng->lights;
+	const light_t** el = ltng->lights;
 
 	for (i = 0; i < ltng->numLights; i++) {
 		if (i == maxLights)

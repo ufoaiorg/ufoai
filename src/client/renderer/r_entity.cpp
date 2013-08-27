@@ -626,7 +626,7 @@ static bool R_CullEntity (entity_t *e)
 void R_GetEntityLists (void)
 {
 	int i;
-	entity_t **chain;
+	entity_t** chain;
 
 	if (!r_drawentities->integer)
 		return;

@@ -192,8 +192,8 @@ static bool AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterTy
 static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
 	linkedList_t *amountList = nullptr;
-	technology_t **techList;
-	technology_t **currentTech;
+	technology_t** techList;
+	technology_t** currentTech;
 	const base_t *base = slot->aircraft->homebase;
 	int count = 0;
 	uiNode_t *AIM_items = nullptr;

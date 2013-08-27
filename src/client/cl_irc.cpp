@@ -1330,7 +1330,7 @@ static bool Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 		m->msg_len = msg_len;
 		m->next = nullptr;
 		/* append message node */
-		irc_bucket_message_t **anchor = &irc_bucket.first_msg;
+		irc_bucket_message_t** anchor = &irc_bucket.first_msg;
 		while (*anchor) anchor = &(*anchor)->next;
 		*anchor = m;
 		/* update bucket sizes */

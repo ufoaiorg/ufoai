@@ -395,7 +395,7 @@ void R_UploadAlpha (const image_t *image, const byte *alphaData)
 static inline void R_DeleteImage (image_t *image)
 {
 	const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
-	for (image_t **anchor = &imageHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+	for (image_t** anchor = &imageHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
 		if (Q_streq((*anchor)->name, image->name)) {
 			HASH_Delete(anchor);
 			break;
