@@ -1,0 +1,13 @@
+implant muscular
+{
+	item	implant_muscular
+	removetime	1
+	installationtime 1
+}
+
+implant amphetamine
+{
+	item	implant_amphetamine
+	removetime	1
+	installationtime 1
+}

@@ -1242,7 +1242,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
 		if (INVDEF(container)->temp)
 			continue;
 		const Item *ic;
-		for (ic = inv->getContainer3(container); ic; ic = ic->getNext()) {
+		for (ic = inv->getContainer2(container); ic; ic = ic->getNext()) {
 			GAME_NetSendItem(buf, ic, container, ic->getX(), ic->getY());
 		}
 	}

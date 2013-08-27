@@ -925,17 +925,17 @@ Item *Inventory::getHeadgear () const
 
 Item *Inventory::getHolsterContainer () const
 {
-	return getContainer3(CID_HOLSTER);
+	return getContainer2(CID_HOLSTER);
 }
 
 Item *Inventory::getFloorContainer () const
 {
-	return getContainer3(CID_FLOOR);
+	return getContainer2(CID_FLOOR);
 }
 
 Item *Inventory::getEquipContainer () const
 {
-	return getContainer3(CID_EQUIP);
+	return getContainer2(CID_EQUIP);
 }
 
 Item *Inventory::getArmour () const

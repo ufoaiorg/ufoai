@@ -106,7 +106,7 @@ Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* cons
 	Item *ic;
 	/* CID_EQUIP and CID_FLOOR */
 	if (container->temp) {
-		for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext())
+		for (ic = inv->getContainer2(container->id); ic; ic = ic->getNext())
 			if (ic->isSameAs(item)) {
 				ic->addAmount(amount);
 				Com_DPrintf(DEBUG_SHARED, "addToInventory: Amount of '%s': %i (%s)\n",
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
 		return true;
 	}
 
-	for (Item *previous = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
+	for (Item *previous = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
 		if (ic == fItem) {
 			this->cacheItem = *ic;
 			/* temp container like CID_EQUIP and CID_FLOOR */
@@ -504,9 +504,7 @@ bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *co
  */
 void InventoryInterface::emptyContainer (Inventory* const inv, const containerIndex_t containerId)
 {
-	Item *ic;
-
-	ic = inv->getContainer3(containerId);
+	Item *ic = inv->getContainer2(containerId);
 
 	while (ic) {
 		Item *old = ic;

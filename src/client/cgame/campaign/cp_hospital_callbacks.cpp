@@ -112,9 +112,19 @@ static void HOS_ApplyImplant_f (void)
 		return;
 	const bool state = HOS_ApplyImplant(chr, *def);
 	if (!state) {
+		Item *item = chr.inv.getContainer2(CID_IMPLANT);
+		while (item) {
+			if (item->def() == od) {
+				cgi->INV_RemoveFromInventory(&chr.inv, chr.inv.getContainer(CID_IMPLANT).def(), item);
+				break;
+			}
+			item = item->getNext();
+		}
+
 		Com_Printf("Could not apply implant %s to character: %i\n", def->id, chr.ucn);
 		return;
 	}
+	cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i", def->idx);
 	Com_Printf("Applied implant %s to character: %i\n", def->id, chr.ucn);
 }
 
@@ -145,6 +155,25 @@ static void HOS_Init_f (void)
 
 			HOS_Entry(*employee, injuryLevel);
 		}
+	}
+}
+
+/**
+ * @brief Calls all the ui confuncs to show the implants of the given character
+ * @param[in] c The character to show the implants for
+ */
+static void HOS_UpdateCharacterImplantList (const character_t& c)
+{
+	cgi->UI_ExecuteConfunc("hospital_employee_clear_implants");
+	for (int i = 0; i < lengthof(c.implants); i++) {
+		const implant_t& implant = c.implants[i];
+		const implantDef_t *def = implant.def;
+		if (def == nullptr)
+			continue;
+		const objDef_t& od = *def->item;
+		cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i \"%s\" \"%s\" %i %i %i %i",
+				def->idx, _(od.name), od.image, def->installationTime,
+				implant.installedTime, def->removeTime, implant.removedTime);
 	}
 }
 
@@ -189,6 +218,8 @@ static void HOS_EmployeeInit_f (void)
 		cgi->UI_ExecuteConfunc("hospital_employee_set_values %i %i \"%s\"",
 				i, score.skills[i], CL_ActorGetSkillString(score.skills[i]));
 	}
+
+	HOS_UpdateCharacterImplantList(c);
 }
 
 void HOS_InitCallbacks (void)

@@ -183,7 +183,7 @@ public:
 		active ^= true;
 	}
 	inline Item *getContainer (const containerIndex_t idx) const {
-		return chr.inv.getContainer3(idx);
+		return chr.inv.getContainer2(idx);
 	}
 	inline void resetContainer (const containerIndex_t idx) {
 		chr.inv.resetContainer(idx);

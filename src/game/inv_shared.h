@@ -544,15 +544,12 @@ public:
 		return _containers[idx];
 	}
 
-	/** temporary naming while migrating !!
+	/**
+	 * @note temporary naming while migrating !!
 	 * getContainer2 will return an item, while
-	 * getContainer3 will actually return a container. */
+	 * @todo this should return a reference - can't be null
+	 */
 	inline Item *getContainer2 (const containerIndex_t idx) const {
-		return getContainer(idx)._invList;
-	}
-
-	/** @todo this should return a reference - can't be null */
-	inline Item *getContainer3 (const containerIndex_t idx) const {
 		return getContainer(idx)._invList;
 	}
 

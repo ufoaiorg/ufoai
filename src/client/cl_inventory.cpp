@@ -65,20 +65,20 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY,
 	const invDef_t *fromContainer, Item *fItem, Item **uponItem)
 {
-	int moved;
-
 	if (toX >= SHAPE_BIG_MAX_WIDTH || toY >= SHAPE_BIG_MAX_HEIGHT)
 		return false;
 
 	if (!fItem)
 		return false;
-	if (!inv->canHoldItemWeight(fromContainer->id, toContainer->id, *fItem, GAME_GetChrMaxLoad(GAME_GetSelectedChr()))) {
+
+	const int maxWeight = GAME_GetChrMaxLoad(GAME_GetSelectedChr());
+	if (!inv->canHoldItemWeight(fromContainer->id, toContainer->id, *fItem, maxWeight)) {
 		UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 		return false;
 	}
 
 	/* move the item */
-	moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, toX, toY, nullptr, uponItem);
+	const int moved = cls.i.moveInInventory(inv, fromContainer, fItem, toContainer, toX, toY, nullptr, uponItem);
 
 	switch (moved) {
 	case IA_MOVE:
@@ -377,7 +377,7 @@ Item *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_
 	if (itemType == nullptr)
 		return nullptr;
 
-	for (ic = inv->getContainer3(container->id); ic; ic = ic->getNext()) {
+	for (ic = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */

@@ -68,7 +68,37 @@ component cmpHospitalPanel extends panel {
 
 component cmpHospitalImplant extends panel {
 	{
-		size "300 85"
+		size	"210 35"
+		bgcolor "0 0 0 0.7"
+		border	1
+		bordercolor		"1 1 1 0.2"
+	}
+
+	string name {
+		string	""
+		size	"170 17"
+		pos		"35 5"
+		ghost	true
+		font	"f_verysmall"
+	}
+
+	image img {
+		src		""
+		pos		"5 5"
+		size	"25 25"
+		ghost	true
+	}
+
+	bar timeremaining
+	{
+		pos		"35 22"
+		size	"170 8"
+		current	0
+		max		0
+		disabled	true
+		border	1
+		bordercolor	"1 1 1 0.2"
+		ghost	true
 	}
 }
 
@@ -339,6 +369,11 @@ window hospital_employee
 		container implant {
 			pos "20 240"
 		}
+
+		panel list {
+			pos "20 280"
+			size "236 190"
+		}
 	}
 
 	/**
@@ -378,14 +413,33 @@ window hospital_employee
 	}
 
 	/**
-	 * @param <1> id
+	 * @param <1> implant id
+	 * @param <2> implant name: translated name of the implant
+	 * @param <3> implant image
+	 * @param <4> installation time: The complete time (days) it needs to be fully installed
+	 * @param <5> installed time: The time (days) that is still needs to be fully installed
+	 * @param <6> remove time: The complete time (days) it needs to be fully removed
+	 * @param <7> removed time: The time (days) that is still needs to be fully removed
 	 */
 	confunc hospital_employee_add_implant {
-		call *node:root.implants@createChild("implant<1>", "cmpHospitalImplant")
+		call *node:root.implants.list@createChild("implant<1>", "cmpHospitalImplant")
+		*node:root.implants.list.implant<1>.name@string = "<2>"
+		*node:root.implants.list.implant<1>.img@src = "<3>"
+		if ( <5> > 0 ) {
+			*node:root.implants.list.implant<1>.timeremaining@max = <4>
+			*node:root.implants.list.implant<1>.timeremaining@current = <5>
+			*node:root.implants.list.implant<1>.timeremaining@invis = false
+		} elif ( <7> > 0 ) {
+			*node:root.implants.list.implant<1>.timeremaining@max = <6>
+			*node:root.implants.list.implant<1>.timeremaining@current = <7>
+			*node:root.implants.list.implant<1>.timeremaining@invis = false
+		} else {
+			*node:root.implants.list.implant<1>.timeremaining@invis = true
+		}
 	}
 
 	confunc hospital_employee_clear_implants {
-		call *node:root.implants@removeAllchild
+		call *node:root.implants.list@removeAllchild
 	}
 
 	// ==================

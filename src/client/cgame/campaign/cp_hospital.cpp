@@ -94,7 +94,7 @@ static void HOS_UpdateCharacterWithEffect (character_t& chr, const itemEffect_t&
 }
 
 /**
- * @brief Updates the characters permanent implants
+ * @brief Updates the characters permanent implants. Called every day.
  */
 static void HOS_UpdateImplants (character_t& chr)
 {
@@ -113,10 +113,19 @@ static void HOS_UpdateImplants (character_t& chr)
 		if (implant.installedTime > 0) {
 			implant.installedTime--;
 			if (implant.installedTime == 0 && e.isPermanent) {
+				MS_AddNewMessage(_("Notice"), va(_("Implant is installed for soldier %s"), chr.name));
 				HOS_UpdateCharacterWithEffect(chr, e);
 			}
 		}
 
+		if (implant.removedTime > 0) {
+			implant.removedTime--;
+			if (implant.removedTime == 0) {
+				implant.def = nullptr;
+				MS_AddNewMessage(_("Notice"), va(_("Implant is removed from soldier %s"), chr.name));
+				continue;
+			}
+		}
 		if (e.period <= 0)
 			continue;
 
@@ -136,13 +145,20 @@ bool HOS_ApplyImplant (character_t& chr, const implantDef_t& def)
 {
 	const objDef_t& od = *def.item;
 
-	if (!od.implant)
+	if (!od.implant) {
+		Com_Printf("object '%s' is no implant\n", od.id);
 		return false;
-	if (od.strengthenEffect == nullptr)
+	}
+	if (od.strengthenEffect == nullptr) {
+		Com_Printf("object '%s' has no strengthen effect\n", od.id);
 		return false;
+	}
+
 	const itemEffect_t* e = od.strengthenEffect;
-	if (e->period <= 0 && !e->isPermanent)
+	if (e->period <= 0 && !e->isPermanent) {
+		Com_Printf("object '%s' is not permanent\n", od.id);
 		return false;
+	}
 
 	for (int i = 0; i < lengthof(chr.implants); i++) {
 		implant_t& implant = chr.implants[i];
@@ -158,6 +174,7 @@ bool HOS_ApplyImplant (character_t& chr, const implantDef_t& def)
 
 		return true;
 	}
+	Com_Printf("no free implant slot\n");
 	return false;
 }
 
