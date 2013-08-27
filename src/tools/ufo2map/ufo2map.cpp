@@ -215,7 +215,7 @@ void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
 /**
  * @brief Check for bsping, lighting and checking/fixing command line parameters
  */
-static void U2M_Parameter (int argc, char **argv)
+static void U2M_Parameter (int argc, char** argv)
 {
 	int i;
 
@@ -544,7 +544,7 @@ void PrintMapName (void)
 }
 
 
-int main (int argc, char **argv)
+int main (int argc, char** argv)
 {
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;

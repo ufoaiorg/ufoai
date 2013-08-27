@@ -191,9 +191,9 @@ int32_t CM_HeadnodeForBox (MapTile &tile, const vec3_t mins, const vec3_t maxs)
  * @return true - hit something
  * @return false - hit nothing
  */
-bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
 {
-	const char **name;
+	const char** name;
 
 	/* trace against world first */
 	if (TR_TestLine(mapTiles, start, stop, levelmask))
@@ -241,9 +241,9 @@ bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist)
 {
-	const char **name;
+	const char** name;
 	bool blocked;
 	float fraction = 2.0f;
 
@@ -361,7 +361,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
  * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char **list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
 	/* trace against world first */
 	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
@@ -373,7 +373,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, con
 	/* Now lineBox specifies the whole volume to be traced through. */
 
 	trace_t trace = tr;
-	for (const char **name = list; *name; name++) {
+	for (const char** name = list; *name; name++) {
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);

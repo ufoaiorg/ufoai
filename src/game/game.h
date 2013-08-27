@@ -215,7 +215,7 @@ typedef struct game_import_s {
 	/** @brief fast version of a line trace but without including entities */
 	bool (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
 	/** @brief fast version of a line trace that also includes entities */
-	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
+	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 
 	void (IMPORT *GridCalcPathing) (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t**  forbiddenList, int forbiddenListLength);
@@ -225,7 +225,7 @@ typedef struct game_import_s {
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
 	pos_t (IMPORT *GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
-	void (IMPORT *GridRecalcRouting) (const char *name, const GridBox& box, const char **list);
+	void (IMPORT *GridRecalcRouting) (const char *name, const GridBox& box, const char** list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
 	bool (IMPORT *GridShouldUseAutostand) (const pathing_t *path, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);

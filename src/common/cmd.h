@@ -108,7 +108,7 @@ void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc 
 
 void Cmd_RemoveCommand(const char *cmd_name);
 
-void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
+void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char** match));
 
 void Cmd_AddUserdata(const char *cmd_name, void *userdata);
 void *Cmd_GetUserdata (const char *cmd_name);
@@ -132,8 +132,8 @@ bool Cmd_Exists(const char *cmd_name);
  * @brief attempts to match a partial command for automatic command line completion
  * returns nullptr if nothing fits
  */
-int Cmd_CompleteCommandParameters(const char *command, const char *partial, const char **match);
-int Cmd_CompleteCommand(const char *partial, const char **match);
+int Cmd_CompleteCommandParameters(const char *command, const char *partial, const char** match);
+int Cmd_CompleteCommand(const char *partial, const char** match);
 
 /**
  * @brief The functions that execute commands get their parameters with these

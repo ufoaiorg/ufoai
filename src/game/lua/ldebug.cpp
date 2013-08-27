@@ -30,7 +30,7 @@
 
 
 
-static const char *getfuncname (lua_State *L, CallInfo *ci, const char **name);
+static const char *getfuncname (lua_State *L, CallInfo *ci, const char** name);
 
 
 static int currentpc (lua_State *L, CallInfo *ci) {
@@ -495,7 +495,7 @@ static const char *kname (Proto *p, int c) {
 
 
 static const char *getobjname (lua_State *L, CallInfo *ci, int stackpos,
-                               const char **name) {
+                               const char** name) {
   if (isLua(ci)) {  /* a Lua function? */
     Proto *p = ci_func(ci)->l.p;
     int pc = currentpc(L, ci);
@@ -541,7 +541,7 @@ static const char *getobjname (lua_State *L, CallInfo *ci, int stackpos,
 }
 
 
-static const char *getfuncname (lua_State *L, CallInfo *ci, const char **name) {
+static const char *getfuncname (lua_State *L, CallInfo *ci, const char** name) {
   Instruction i;
   if ((isLua(ci) && ci->tailcalls > 0) || !isLua(ci - 1))
     return nullptr;  /* calling function is not Lua (or is unknown) */

@@ -546,7 +546,7 @@ void Com_ClearArgv (int arg)
 	com_argv[arg] = "";
 }
 
-static void Com_InitArgv (int argc, char **argv)
+static void Com_InitArgv (int argc, char** argv)
 {
 	if (argc > MAX_NUM_ARGVS)
 		Com_Error(ERR_FATAL, "argc > MAX_NUM_ARGVS");
@@ -1070,7 +1070,7 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
  * @sa Sys_Init
  * @sa CL_Init
  */
-void Qcommon_Init (int argc, char **argv)
+void Qcommon_Init (int argc, char** argv)
 {
 	logfile_active = nullptr;
 	developer = nullptr;
@@ -1458,7 +1458,7 @@ void Qcommon_Frame (void)
 		CL_FilterEventQueue(&Event_FilterAll);
 		if (restart.gamedir != nullptr) {
 			const char *restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
-			Qcommon_Init(4, const_cast<char **>(restartArgv));
+			Qcommon_Init(4, const_cast<char** >(restartArgv));
 		} else {
 			Qcommon_Init(0, nullptr);
 		}

@@ -71,12 +71,12 @@ public:
 	mapTiles_t *mapTiles;
 	Routing &routing;			/**< The routing tables */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
-	const char **list;			/**< The local models list */
+	const char** list;			/**< The local models list */
 
-	RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list);
+	RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list);
 };
 
-RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char **list) : routing(r)
+RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list) : routing(r)
 {
 	this->mapTiles = mapTiles;
 	this->actorSize = actorSize;
@@ -391,7 +391,7 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char **list)
+int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char** list)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -1421,7 +1421,7 @@ static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, cons
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
+void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	/* the essential data passed down the calltree */
@@ -1565,7 +1565,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char *baseFilename, const i
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char **list)
+int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */

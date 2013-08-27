@@ -490,7 +490,7 @@ typedef struct cmd_function_s {
 	const char *name;
 	const char *description;
 	xcommand_t function;
-	int (*completeParam) (const char *partial, const char **match);
+	int (*completeParam) (const char *partial, const char** match);
 	void *userdata;
 } cmd_function_t;
 
@@ -682,7 +682,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  */
-void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char **match))
+void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char** match))
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -859,7 +859,7 @@ bool Cmd_Exists (const char *cmd_name)
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char **match)
+int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char** match)
 {
 	const cmd_function_t *cmd;
 	unsigned int hash;
@@ -883,7 +883,7 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-int Cmd_CompleteCommand (const char *partial, const char **match)
+int Cmd_CompleteCommand (const char *partial, const char** match)
 {
 	if (partial[0] == '\0')
 		return 0;
@@ -1024,7 +1024,7 @@ static void Cmd_List_f (void)
  * @brief Autocomplete function for exec command
  * @sa Cmd_AddParamCompleteFunction
  */
-static int Cmd_CompleteExecCommand (const char *partial, const char **match)
+static int Cmd_CompleteExecCommand (const char *partial, const char** match)
 {
 	int n = 0;
 	while (char const* filename = FS_NextFileFromFileList("*.cfg")) {

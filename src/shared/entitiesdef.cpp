@@ -560,7 +560,7 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 /**
  * @return ED_ERROR or ED_OK
  */
-static int ED_ParseEntities (const char **data_p)
+static int ED_ParseEntities (const char** data_p)
 {
 	int braceLevel = 0;
 	int tokensOnLevel0 = 0;

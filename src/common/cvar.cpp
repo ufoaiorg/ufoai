@@ -259,7 +259,7 @@ void Cvar_Reset (cvar_t *cvar)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-int Cvar_CompleteVariable (const char *partial, const char **match)
+int Cvar_CompleteVariable (const char *partial, const char** match)
 {
 	int n = 0;
 	for (cvar_t const* cvar = cvarVars; cvar; cvar = cvar->next) {

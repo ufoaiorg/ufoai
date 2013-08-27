@@ -48,7 +48,7 @@ void Com_UnParseLastToken (void)
  * @brief Get the current token value
  * @return The current token value
  */
-const char *Com_GetToken (const char **data_p)
+const char *Com_GetToken (const char** data_p)
 {
 	return com_token;
 }
@@ -57,7 +57,7 @@ const char *Com_GetToken (const char **data_p)
  * @brief Get the current token type
  * @return The current token type
  */
-Com_TokenType_t Com_GetType (const char **data_p)
+Com_TokenType_t Com_GetType (const char** data_p)
 {
 	return type;
 }
@@ -66,7 +66,7 @@ Com_TokenType_t Com_GetType (const char **data_p)
  * @brief Compute the next token
  * @return Type of the next token
  */
-Com_TokenType_t Com_NextToken (const char **data_p)
+Com_TokenType_t Com_NextToken (const char** data_p)
 {
 	Com_Parse(data_p);
 	return type;
@@ -245,7 +245,7 @@ skipwhite:
  * @param[in,out] text The text pointer to skip the block in. This pointer is set to the end of the block
  * @note Even multiple depth levels are supported. Skipping a block with nested blocks works, too.
  */
-void Com_SkipBlock (const char **text)
+void Com_SkipBlock (const char** text)
 {
 	int depth = 1;
 
@@ -264,7 +264,7 @@ void Com_SkipBlock (const char **text)
  * @param[out] start The pointer to the beginning of the block
  * @return The amount of characters in the block, or -1 if the text does not start with the script block character '{'
  */
-int Com_GetBlock (const char **text, const char **start)
+int Com_GetBlock (const char** text, const char** start)
 {
 	const char *token = Com_Parse(text);
 	if (*token != '{')

@@ -528,7 +528,7 @@ void FS_AddGameDirectory (const char *dir, bool write)
 
 	for (char const* const* extList = pakFileExt; *extList; ++extList) {
 		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
-		char **dirnames = nullptr;
+		char** dirnames = nullptr;
 		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
 			for (i = 0; i < ndirs - 1; i++) {
@@ -576,7 +576,7 @@ void FS_AddGameDirectory (const char *dir, bool write)
  * @sa Sys_FindClose
  * @note Don't forget to free the filelist array and the file itself
  */
-char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
+char** FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
 	char *s;
 	int nfiles = 0, i;
@@ -713,10 +713,10 @@ int FS_GetModList (linkedList_t** mods)
 	LIST_AddString(mods, BASEDIRNAME);
 	int numberMods = 1;
 	/* it is likely that we have duplicate names now, which we will cleanup below */
-	for (const char **path = searchpaths; *path; path++) {
+	for (const char** path = searchpaths; *path; path++) {
 		const char *pattern = *path;
 		int ndirs = 0;
-		char **dirnames = FS_ListFiles(va("%s/*", pattern), &ndirs, SFF_SUBDIR, SFF_HIDDEN | SFF_SYSTEM);
+		char** dirnames = FS_ListFiles(va("%s/*", pattern), &ndirs, SFF_SUBDIR, SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
 			int i;
 			for (i = 0; i < ndirs - 1; i++) {
@@ -827,7 +827,7 @@ static void FS_Dir_f (void)
 		Com_Printf("Directory of %s\n", findname);
 		Com_Printf("----\n");
 
-		char **dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
+		char** dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
 			int i;
 
@@ -1087,7 +1087,7 @@ int FS_BuildFileList (const char *fileList)
 			LIST_Delete(&list);
 		} else {
 			int nfiles = 0;
-			char **filenames;
+			char** filenames;
 
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
@@ -1231,7 +1231,7 @@ const char *FS_GetFileData (const char *files)
 	return nullptr;
 }
 
-char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
+char *FS_NextScriptHeader (const char *files, const char** name, const char** text)
 {
 	static char lastList[MAX_QPATH];
 	static listBlock_t *lBlock;
@@ -1412,7 +1412,7 @@ void FS_GetMaps (bool reset)
 	char filename[MAX_QPATH];
 	int status, i;
 	const char *baseMapName = nullptr;
-	char **dirnames;
+	char** dirnames;
 	int ndirs;
 	searchpath_t *search;
 	pack_t *pak;

@@ -43,12 +43,12 @@ enum Com_TokenType_t {
 	TT_QUOTED_WORD
 };
 
-const char *Com_GetToken(const char **data_p);
-Com_TokenType_t Com_GetType(const char **data_p);
-Com_TokenType_t Com_NextToken(const char **data_p);
+const char *Com_GetToken(const char** data_p);
+Com_TokenType_t Com_GetType(const char** data_p);
+Com_TokenType_t Com_NextToken(const char** data_p);
 
-const char *Com_Parse(const char **data_p, char *target = nullptr, size_t size = 0);
+const char *Com_Parse(const char** data_p, char *target = nullptr, size_t size = 0);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
-void Com_SkipBlock(const char **text);
-int Com_GetBlock(const char **text, const char **start);
+void Com_SkipBlock(const char** text);
+int Com_GetBlock(const char** text, const char** start);

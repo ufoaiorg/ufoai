@@ -392,7 +392,7 @@ MISC FUNCTIONS
  * @param[in] fileName The filename where this function was called from
  * @param[in] fileLine The line where this function was called from
  */
-char *_Mem_PoolStrDupTo (const char *in, char **out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+char *_Mem_PoolStrDupTo (const char *in, char** out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	if (!out)
 		return nullptr;

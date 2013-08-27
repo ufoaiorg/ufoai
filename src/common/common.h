@@ -297,7 +297,7 @@ typedef void (*vPrintfPtr_t)(const char *fmt, va_list ap);
 vPrintfPtr_t Qcommon_GetPrintFunction(void);
 void Qcommon_SetPrintFunction(vPrintfPtr_t func);
 
-void Qcommon_Init(int argc, char **argv);
+void Qcommon_Init(int argc, char** argv);
 void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
@@ -341,7 +341,7 @@ void CL_Shutdown(void);
 int CL_Milliseconds(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
-bool CL_ParseClientData(const char *type, const char *name, const char **text);
+bool CL_ParseClientData(const char *type, const char *name, const char** text);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void CL_InitAfter(void);

@@ -123,7 +123,7 @@ int UTF8_char_len (unsigned char c)
  * but the pointer is advanced by the length of the utf-8 character.
  * @return The utf-8 character, or -1 on error
  */
-int UTF8_next (const char **str)
+int UTF8_next (const char** str)
 {
 	size_t len, i;
 	int cp, min;
