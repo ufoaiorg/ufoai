@@ -339,9 +339,9 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
     if (ind->num_nodes >= ind->alloc_nodes)
     {
       if (!ind->alloc_nodes)
-        temp = (mxml_node_t** )malloc(64 * sizeof(mxml_node_t *));
+        temp = (mxml_node_t**)malloc(64 * sizeof(mxml_node_t*));
       else
-        temp = (mxml_node_t** )realloc(ind->nodes, (ind->alloc_nodes + 64) * sizeof(mxml_node_t *));
+        temp = (mxml_node_t**)realloc(ind->nodes, (ind->alloc_nodes + 64) * sizeof(mxml_node_t*));
 
       if (!temp)
       {

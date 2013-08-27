@@ -1432,7 +1432,7 @@ void CL_ParseParticle (const char *name, const char **text)
 				/* allocate the first particle command */
 				ptlCmd_t** pc;
 
-				pc = (ptlCmd_t** ) ((byte *) pd + pf_values[i]);
+				pc = (ptlCmd_t**) ((byte*) pd + pf_values[i]);
 				*pc = &ptlCmd[numPtlCmds];
 
 				/* parse the commands */
