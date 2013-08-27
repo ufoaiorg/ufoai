@@ -67,7 +67,7 @@ class VirtualFileSystem
 		/// Returns the size of the buffer allocated, or undefined value if *\p buffer is 0;
 		/// The caller must free the allocated buffer by calling \c freeFile
 		/// \deprecated Deprecated - use \c openFile.
-		virtual std::size_t loadFile (const std::string& filename, void **buffer) = 0;
+		virtual std::size_t loadFile (const std::string& filename, void** buffer) = 0;
 		/// \brief Frees the buffer returned by \c loadFile.
 		/// \deprecated Deprecated.
 		virtual void freeFile (void *p) = 0;

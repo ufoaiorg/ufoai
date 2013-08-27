@@ -1004,7 +1004,7 @@ LUA_API void lua_concat (lua_State *L, int n) {
 }
 
 
-LUA_API lua_Alloc lua_getallocf (lua_State *L, void **ud) {
+LUA_API lua_Alloc lua_getallocf (lua_State *L, void** ud) {
   lua_Alloc f;
   lua_lock(L);
   if (ud) *ud = G(L)->ud;

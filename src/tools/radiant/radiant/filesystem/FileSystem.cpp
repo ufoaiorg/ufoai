@@ -150,7 +150,7 @@ ArchiveTextFile* FileSystem::openTextFile (const std::string& filename)
 	return 0;
 }
 
-std::size_t FileSystem::loadFile (const std::string& filename, void **buffer)
+std::size_t FileSystem::loadFile (const std::string& filename, void** buffer)
 {
 	AutoPtr<ArchiveFile> file(openFile(DirectoryCleaned(filename)));
 	if (file) {

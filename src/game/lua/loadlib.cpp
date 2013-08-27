@@ -260,15 +260,15 @@ static lua_CFunction ll_sym (lua_State *L, void *lib, const char *sym) {
 
 
 
-static void **ll_register (lua_State *L, const char *path) {
-  void **plib;
+static void** ll_register (lua_State *L, const char *path) {
+  void** plib;
   lua_pushfstring(L, "%s%s", LIBPREFIX, path);
   lua_gettable(L, LUA_REGISTRYINDEX);  /* check library in registry? */
   if (!lua_isnil(L, -1))  /* is there an entry? */
-    plib = (void **)lua_touserdata(L, -1);
+    plib = (void** )lua_touserdata(L, -1);
   else {  /* no entry yet; create one */
     lua_pop(L, 1);
-    plib = (void **)lua_newuserdata(L, sizeof(const void *));
+    plib = (void** )lua_newuserdata(L, sizeof(const void *));
     *plib = nullptr;
     luaL_getmetatable(L, "_LOADLIB");
     lua_setmetatable(L, -2);
@@ -285,7 +285,7 @@ static void **ll_register (lua_State *L, const char *path) {
 ** handle
 */
 static int gctm (lua_State *L) {
-  void **lib = (void **)luaL_checkudata(L, 1, "_LOADLIB");
+  void** lib = (void** )luaL_checkudata(L, 1, "_LOADLIB");
   if (*lib) ll_unloadlib(*lib);
   *lib = nullptr;  /* mark library as closed */
   return 0;
@@ -293,7 +293,7 @@ static int gctm (lua_State *L) {
 
 
 static int ll_loadfunc (lua_State *L, const char *path, const char *sym) {
-  void **reg = ll_register(L, path);
+  void** reg = ll_register(L, path);
   if (*reg == nullptr) *reg = ll_load(L, path);
   if (*reg == nullptr)
     return ERRLIB;  /* unable to load library */

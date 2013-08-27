@@ -106,7 +106,7 @@ void *_pico_calloc (size_t num, size_t size)
 /**
  * @brief memory reallocation wrapper (note: only grows, but never shrinks or frees)
  */
-void *_pico_realloc (void **ptr, size_t oldSize, size_t newSize)
+void *_pico_realloc (void** ptr, size_t oldSize, size_t newSize)
 {
 	void *ptr2;
 
