@@ -59,19 +59,20 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 		}
 	}
 
-	newStep->steps = 0;
 	/* the end of this event is marked with a 0 */
 	while (NET_PeekLong(msg) != 0) {
+		newStep->steps = NET_ReadByte(msg);
 		const dvec_t dvec = NET_ReadShort(msg);
 		const byte dir = getDVdir(dvec);
 		pos3_t oldPos;
 		VectorCopy(pos, oldPos);
 		PosAddDV(pos, crouchingState, dvec);
 		const int stepTime = LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
-		newStep->stepTimes[newStep->steps++] = stepTime;
+		newStep->stepTimes[newStep->steps] = stepTime;
 		time += stepTime;
 		NET_ReadShort(msg);
 	}
+	++newStep->steps;
 
 	if (newStep->steps >= MAX_ROUTE)
 		Com_Error(ERR_DROP, "route length overflow: %i", newStep->steps);
@@ -129,6 +130,7 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 	int i = 0;
 	/* the end of this event is marked with a 0 */
 	while (NET_PeekLong(msg) != 0) {
+		NET_ReadByte(msg);
 		le->dvtab[i] = NET_ReadShort(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
 		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);

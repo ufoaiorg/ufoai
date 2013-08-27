@@ -107,7 +107,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_APPEAR), "!s!sbbbsbgbssssbbsbbbs", CL_ActorAppear, CL_ActorAppearTime, CL_CheckDefault},
 	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, nullptr, nullptr},
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, nullptr, nullptr},
-	{E(EV_ACTOR_MOVE), "ssss!lg", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
+	{E(EV_ACTOR_MOVE), "sbsss!lg", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, nullptr, nullptr},
 	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssbb", CL_ActorReactionFireAddTarget, CL_ActorReactionFireAddTargetTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ssb", CL_ActorReactionFireRemoveTarget, CL_ActorReactionFireRemoveTargetTime, nullptr},
@@ -174,13 +174,18 @@ int CL_GetStepTime (const eventTiming_t *eventTiming, const le_t* le, int step)
 	const leStep_t *list = le->stepList;
 	if (list == nullptr)
 		return eventTiming->nextTime;
-	if (step > list->steps) {
-		Com_Printf("invalid step given: %i/%i\n", step, list->steps);
-		return list->lastMoveTime + list->lastMoveDuration;
-	}
 	if (step < 0) {
-		Com_Printf("invalid step given: %i/%i\n", step, list->steps);
+		Com_Printf("invalid step given: %i/%i (entnum: %i)\n", step, list->steps, le->entnum);
 		return list->lastMoveTime;
+	}
+	while (list->next) {
+		if (step < list->steps)
+			break;
+		list = list->next;
+	}
+	if (step > list->steps) {
+		Com_Printf("invalid step given: %i/%i (entnum: %i)\n", step, list->steps, le->entnum);
+		return list->lastMoveTime + list->lastMoveDuration;
 	}
 	int delay = 0;
 	for (int i = 0; i < list->steps; i++) {

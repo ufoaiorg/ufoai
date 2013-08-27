@@ -161,9 +161,6 @@ void ReactionFireTargets::reset (void)
 
 void ReactionFireTargets::notifyClientOnStep (const Edict* target, int step)
 {
-	if (step == 0)
-		G_ReactionFireNofityClientStartMove(target);
-
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
@@ -191,7 +188,7 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, bool startMove)
 				continue;
 			if (startMove) {
 				const int tus = target->TU - rfts->targets[j].triggerTUs;
-				G_EventReactionFireAddTarget(*shooter, *target, tus, 0);
+				G_EventReactionFireAddTarget(*shooter, *target, tus, target->moveinfo.steps);
 			} else {
 				G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps);
 			}

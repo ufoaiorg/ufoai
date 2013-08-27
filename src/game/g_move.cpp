@@ -203,6 +203,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 		ent->moveinfo.steps = 0;
 		ent->moveinfo.currentStep = 0;
 	}
+	gi.WriteByte(ent->moveinfo.steps);
 	ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
 	ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
 	ent->moveinfo.steps++;
@@ -338,7 +339,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t t
 		ent->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
-		ent->moveinfo.steps = 0;
+		G_ReactionFireNofityClientStartMove(ent);
 		while (numdv > 0) {
 			int step = ent->moveinfo.steps;
 			/* A flag to see if we needed to change crouch state */
