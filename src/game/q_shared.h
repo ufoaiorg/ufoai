@@ -393,6 +393,9 @@ typedef struct csi_s {
 	objDef_t ods[MAX_OBJDEFS];
 	int numODs;
 
+	implantDef_t implants[MAX_IMPLANTS];
+	int numImplants;
+
 	/** Inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;

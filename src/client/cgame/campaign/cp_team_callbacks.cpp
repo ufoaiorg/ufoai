@@ -78,21 +78,6 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 }
 
 /**
- * @brief Set up equip (floor) container for soldiers
- * @param[in,out] chr Pointer to soldiers character structure
- */
-static void CP_TEAM_SetEquipContainer (character_t *chr)
-{
-	Inventory *uiInv = *cgi->ui_inventory;
-	if (uiInv && uiInv != &chr->inv) {
-		chr->inv.setContainer(CID_EQUIP, uiInv->getContainer2(CID_EQUIP));
-		/* set 'old' CID_EQUIP to nullptr */
-		uiInv->resetContainer(CID_EQUIP);
-	}
-	*cgi->ui_inventory = &chr->inv;
-}
-
-/**
  * @brief Selects a soldier by his/her Unique Character Number on team UI
  */
 static void CP_TEAM_SelectActorByUCN_f (void)
@@ -124,7 +109,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 	chr = &employee->chr;
 
 	/* update menu inventory */
-	CP_TEAM_SetEquipContainer(chr);
+	CP_SetEquipContainer(chr);
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr);
@@ -303,7 +288,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	if (aircraft) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t *chr = &employee->chr;
-			CP_TEAM_SetEquipContainer(chr);
+			CP_SetEquipContainer(chr);
 			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
 			count++;
 		}
@@ -316,7 +301,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 			if (employee->isAwayFromBase())
 				continue;
 			character_t *chr = &employee->chr;
-			CP_TEAM_SetEquipContainer(chr);
+			CP_SetEquipContainer(chr);
 			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
 			count++;
 		}

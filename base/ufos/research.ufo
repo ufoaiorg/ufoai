@@ -5964,3 +5964,51 @@ tech rs_human_vaccine
 	time		2000
 	image		"techs/human_vaccine"
 }
+
+tech rs_implant_amphetamine
+{
+	name		"_Amphetamine Implant"
+	type		"tech"
+	up_chapter	"skill"
+	provides	implant_amphetamine
+	image		"techs/implant_amphetamine"
+	description {
+		default "*msgid:implant_amphetamine_txt"
+	}
+	pre_description {
+		default "*msgid:implant_amphetamine_pre_txt"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	time		1
+}
+
+tech rs_implant_muscular
+{
+	name		"_Muscle Stimulant"
+	type		"tech"
+	up_chapter	"skill"
+	provides	implant_muscular
+	image		"techs/implant_muscular"
+	description {
+		default "*msgid:implant_muscular_txt"
+	}
+	pre_description {
+		default "*msgid:implant_muscular_pre_txt"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	time		1
+}

@@ -87,6 +87,7 @@ static Item *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef
 #define CII_WEAPONONLY 0x02		/**< it mean any soldier equipment, else ammo */
 #define CII_AVAILABLEONLY 0x04
 #define CII_NOTAVAILABLEONLY 0x08
+#define CII_IMPLANTONLY 0x10
 #define CII_END 0x80
 
 typedef struct {
@@ -117,9 +118,6 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 		/* iterate all item type*/
 		for (;iterator->itemID < csi.numODs; iterator->itemID++) {
-			bool isAmmo;
-			bool isWeapon;
-			bool isArmour;
 			const objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
@@ -128,13 +126,16 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 			/* type filter */
 			/** @todo not sure its the right check */
-			isArmour = obj->isArmour();
-			isAmmo = obj->numWeapons != 0 && obj->isAmmo();
-			isWeapon = obj->weapon || obj->isMisc || isArmour;
+			const bool isArmour = obj->isArmour();
+			const bool isAmmo = obj->numWeapons != 0 && obj->isAmmo();
+			const bool isWeapon = obj->weapon || obj->isMisc || isArmour;
+			const bool isImplant = obj->implant;
 
 			if ((filter & CII_WEAPONONLY) && !isWeapon)
 				continue;
 			if ((filter & CII_AMMOONLY) && !isAmmo)
+				continue;
+			if ((filter & CII_IMPLANTONLY) && !isImplant)
 				continue;
 			if (!INV_ItemMatchesFilter(obj, iterator->filterEquipType))
 				continue;
@@ -176,12 +177,16 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_AVAILABLEONLY;
 		if (EXTRADATACONST(node).displayAmmo)
 			iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_AVAILABLEONLY;
+		if (EXTRADATACONST(node).displayImplant)
+			iterator->groupSteps[groupID++] = CII_IMPLANTONLY | CII_AVAILABLEONLY;
 		/* unavailable items */
 		if (EXTRADATACONST(node).displayUnavailableItem) {
 			if (EXTRADATACONST(node).displayWeapon)
 				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
 			if (EXTRADATACONST(node).displayAmmo)
 				iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_NOTAVAILABLEONLY;
+			if (EXTRADATACONST(node).displayImplant)
+				iterator->groupSteps[groupID++] = CII_IMPLANTONLY | CII_NOTAVAILABLEONLY;
 		}
 	} else {
 		const int filter = (EXTRADATACONST(node).displayUnavailableItem) ? 0 : CII_AVAILABLEONLY;
@@ -189,6 +194,8 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
 		if (EXTRADATACONST(node).displayAmmo)
 			iterator->groupSteps[groupID++] = CII_AMMOONLY | filter;
+		if (EXTRADATACONST(node).displayImplant)
+			iterator->groupSteps[groupID++] = CII_IMPLANTONLY | filter;
 	}
 	iterator->groupSteps[groupID++] = CII_END;
 
@@ -583,25 +590,21 @@ static Item *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
  */
 void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
-	vec2_t nodepos;
-
-	UI_GetNodeAbsPos(node, nodepos);
-
 	/* Find out where the mouse is. */
 	const Item *itemHover = UI_BaseInventoryNodeGetItem(node, x, y, nullptr, nullptr);
+	if (!itemHover)
+		return;
 
-	if (itemHover) {
-		static char tooltiptext[MAX_VAR * 2];
-		const int itemToolTipWidth = 250;
+	static char tooltiptext[MAX_VAR * 2];
+	const int itemToolTipWidth = 250;
 
-		/* Get name and info about item */
-		UI_GetItemTooltip(*itemHover, tooltiptext, sizeof(tooltiptext));
+	/* Get name and info about item */
+	UI_GetItemTooltip(*itemHover, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
-		/* Display stored container-coordinates of the item. */
-		Q_strcat(tooltiptext, sizeof(tooltiptext), "\n%i/%i", itemHover->getX(), itemHover->getY());
+	/* Display stored container-coordinates of the item. */
+	Q_strcat(tooltiptext, sizeof(tooltiptext), "\n%i/%i", itemHover->getX(), itemHover->getY());
 #endif
-		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
-	}
+	UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
 }
 
 /**
@@ -613,10 +616,6 @@ void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
  */
 static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
-	Item *ic;
-	int fromX, fromY;
-	int sel;
-
 	if (!ui_inventory)
 		return;
 
@@ -624,13 +623,14 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (CL_BattlescapeRunning())
 		return;
 
-	sel = cl_selected->integer;
+	const int sel = cl_selected->integer;
 	if (sel < 0)
 		return;
 
 	assert(EXTRADATA(node).super.container);
 
-	ic = UI_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
+	int fromX, fromY;
+	Item *ic = UI_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
 	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
 	if (!ic)
 		return;
@@ -763,6 +763,8 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);
 	/* Display/hide ammo. */
 	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_BOOL, baseInventoryExtraData_t, displayAmmo);
+	/* Display/hide implants. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayimplant", V_BOOL, baseInventoryExtraData_t, displayImplant);
 	/* Display/hide out of stock items. */
 	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_BOOL, baseInventoryExtraData_t, displayUnavailableItem);
 	/* Sort the list to display in stock items on top of the list. */
@@ -788,6 +790,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
 	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);
 	Com_RegisterConstInt("FILTER_S_HEAVY", FILTER_S_HEAVY);
+	Com_RegisterConstInt("FILTER_S_IMPLANT", FILTER_S_IMPLANT);
 	Com_RegisterConstInt("FILTER_S_MISC", FILTER_S_MISC);
 	Com_RegisterConstInt("FILTER_S_ARMOUR", FILTER_S_ARMOUR);
 	Com_RegisterConstInt("FILTER_CRAFTITEM", FILTER_CRAFTITEM);

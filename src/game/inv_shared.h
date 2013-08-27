@@ -44,6 +44,7 @@ typedef enum {
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
+#define MAX_IMPLANTS	16
 #define MAX_MAPDEFS		256
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_AMMOS_PER_OBJDEF 4
@@ -54,7 +55,7 @@ typedef enum {
 typedef int32_t containerIndex_t;
 #define CID_RIGHT		0
 #define CID_LEFT		1
-#define CID_EXTENSION	2
+#define CID_IMPLANT		2
 #define CID_HEADGEAR	3
 #define CID_BACKPACK	4
 #define CID_BELT		5
@@ -85,6 +86,35 @@ typedef enum {
 typedef int32_t weaponFireDefIndex_t;
 typedef int32_t fireDefIndex_t;
 
+typedef enum {
+	EFFECT_ACTIVE,
+	EFFECT_INACTIVE,
+	EFFECT_OVERDOSE,
+	EFFECT_STRENGTHEN,
+	EFFECT_MAX
+} effectStages_t;
+
+typedef struct itemEffect_s {
+	bool isPermanent;	/**< @c true if this effect does not expire */
+	int duration;	/**< the turns that the effect is active */
+	int period;		/**< Frequency to add attribute. This is for effects that are handled outside of the battlescape. */
+
+	/* all in percent */
+	float accuracy;
+	float TUs;
+	float power;
+	float mind;
+	float morale;
+} itemEffect_t;
+
+typedef struct implantDef_s {
+	const char *id;
+	int idx;
+	const struct objDef_s *item;	/**< the assigned implant effect */
+	int installationTime;	/**< the time that is needed in order to install the implant */
+	int removeTime;			/**< the time that is needed in order to remove the implant */
+} implantDef_t;
+
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	const char *name;			/**< fire definition name (translatable) */
@@ -107,6 +137,10 @@ typedef struct fireDef_s {
 						 ** This does _NOT_ equal the index of the weapon object in ods.
 						 */
 	fireDefIndex_t fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
+	itemEffect_t *activeEffect;
+	itemEffect_t *deactiveEffect;
+	itemEffect_t *overdoseEffect;
+	itemEffect_t *strengthenEffect;
 
 	bool soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
 	bool gravity;		/**< Does gravity have any influence on this item? */
@@ -251,9 +285,10 @@ typedef struct objDef_s {
 	bool weapon;			/**< This item is a weapon or ammo. */
 	bool holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
 	bool fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
-	bool extension;			/**< This is an extension. (may not be headgear, too). */
-	bool headgear;			/**< This is a headgear. (may not be extension, too). */
+	bool headgear;			/**< This is a headgear. */
 	bool thrown;			/**< This item can be thrown. */
+	bool implant;			/**< This item can be implanted */
+	itemEffect_t *strengthenEffect;
 	bool isVirtual;			/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
 	bool isPrimary;
 	bool isSecondary;
@@ -347,9 +382,10 @@ typedef struct invDef_s {
 	/** Type of this container or inventory. */
 	bool single;	/**< Just a single item can be stored in this container. */
 	bool armour;	/**< Only armour can be stored in this container. */
-	bool extension;	/**< Only extension items can be stored in this container. */
+	bool implant;	/**< Only implants can be stored in this container. */
 	bool headgear;	/**< Only headgear items can be stored in this container. */
 	bool all;		/**< Every item type can be stored in this container. */
+	bool unique;	/**< Does not allow to put the same item more than once into the container */
 	bool temp;		/**< This is only a pointer to another inventory definitions. */
 	/** Scroll information. @sa Inventory */
 	bool scroll;	/**< Set if the container is scrollable */
@@ -423,7 +459,7 @@ public:
 	}
 
 	Item ();
-	Item (const objDef_t *_itemDef, const objDef_t *ammo=nullptr, int ammoLeft=0);
+	Item (const objDef_t *_itemDef, const objDef_t *ammo = nullptr, int ammoLeft = 0);
 
 	inline int getX () const {
 		return _x;
@@ -617,6 +653,7 @@ const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 
+const implantDef_t *INVSH_GetImplantForObjDef(const objDef_t* od);
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))

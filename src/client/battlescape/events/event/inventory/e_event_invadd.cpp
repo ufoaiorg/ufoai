@@ -105,8 +105,6 @@ void CL_InvAdd (const eventRegister_t *self, dbuffer *msg)
 			le->right = item.def()->idx;
 		else if (container == CID_LEFT)
 			le->left = item.def()->idx;
-		else if (container == CID_EXTENSION)
-			le->extension = item.def()->idx;
 		else if (container == CID_HEADGEAR)
 			le->headgear = item.def()->idx;
 	}

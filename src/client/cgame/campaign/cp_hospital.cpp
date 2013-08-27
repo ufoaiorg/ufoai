@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void HOS_HealWounds (character_t* chr, int healing)
 {
-	int bodyPart;
-	woundInfo_t *wounds = &chr->wounds;
+	woundInfo_t& wounds = chr->wounds;
 
-	for (bodyPart = 0; bodyPart < chr->teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
-		if (wounds->treatmentLevel[bodyPart] > 0)
-			wounds->treatmentLevel[bodyPart] = std::max(0, wounds->treatmentLevel[bodyPart] - healing);
-
+	for (int bodyPart = 0; bodyPart < chr->teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+		if (wounds.treatmentLevel[bodyPart] <= 0)
+			continue;
+		wounds.treatmentLevel[bodyPart] = std::max(0, wounds.treatmentLevel[bodyPart] - healing);
+	}
 }
 
 /**
@@ -75,23 +75,107 @@ bool HOS_HealCharacter (character_t* chr, bool hospital)
 }
 
 /**
+ * @brief Assign the effect values to the character
+ */
+static void HOS_UpdateCharacterWithEffect (character_t& chr, const itemEffect_t& e)
+{
+	chrScoreGlobal_t& s = chr.score;
+	if (fabs(e.accuracy) > EQUAL_EPSILON)
+		s.skills[ABILITY_ACCURACY] *= 1.0f + e.accuracy;
+	if (fabs(e.mind) > EQUAL_EPSILON)
+		s.skills[ABILITY_MIND] *= 1.0f + e.mind;
+	if (fabs(e.power) > EQUAL_EPSILON)
+		s.skills[ABILITY_POWER] *= 1.0f + e.power;
+	if (fabs(e.TUs) > EQUAL_EPSILON)
+		s.skills[ABILITY_SPEED] *= 1.0f + e.TUs;
+
+	if (fabs(e.morale) > EQUAL_EPSILON)
+		chr.morale *= 1.0f + e.morale;
+}
+
+/**
+ * @brief Updates the characters permanent implants
+ */
+static void HOS_UpdateImplants (character_t& chr)
+{
+	for (int i = 0; i < lengthof(chr.implants); i++) {
+		implant_t& implant = chr.implants[i];
+		const implantDef_t* def = implant.def;
+		/* empty slot */
+		if (def == nullptr || def->item == nullptr)
+			continue;
+		const objDef_t& od = *def->item;
+		if (od.strengthenEffect == nullptr)
+			continue;
+
+		const itemEffect_t& e = *od.strengthenEffect;
+
+		if (implant.installedTime > 0) {
+			implant.installedTime--;
+			if (implant.installedTime == 0 && e.isPermanent) {
+				HOS_UpdateCharacterWithEffect(chr, e);
+			}
+		}
+
+		if (e.period <= 0)
+			continue;
+
+		implant.trigger--;
+		if (implant.trigger <= 0)
+			continue;
+
+		HOS_UpdateCharacterWithEffect(chr, e);
+		implant.trigger = e.period;
+	}
+}
+
+/**
+ * @brief Add a new implant to a character
+ */
+bool HOS_ApplyImplant (character_t& chr, const implantDef_t& def)
+{
+	const objDef_t& od = *def.item;
+
+	if (!od.implant)
+		return false;
+	if (od.strengthenEffect == nullptr)
+		return false;
+	const itemEffect_t* e = od.strengthenEffect;
+	if (e->period <= 0 && !e->isPermanent)
+		return false;
+
+	for (int i = 0; i < lengthof(chr.implants); i++) {
+		implant_t& implant = chr.implants[i];
+		/* already filled slot */
+		if (implant.def != nullptr)
+			continue;
+
+		OBJZERO(implant);
+		implant.def = &def;
+		if (!e->isPermanent)
+			implant.trigger = e->period;
+		implant.installedTime = def.installationTime;
+
+		return true;
+	}
+	return false;
+}
+
+/**
  * @brief Checks health status of all employees in all bases.
  * @sa CP_CampaignRun
  * @note Called every day.
  */
 void HOS_HospitalRun (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_EMPL; i++) {
-		employeeType_t type = (employeeType_t)i;
+	for (int i = 0; i < MAX_EMPL; i++) {
+		const employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
 			if (!employee->isHired())
 				continue;
-			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
-				HOS_HealCharacter(&(employee->chr), true);
-			else
-				HOS_HealCharacter(&(employee->chr), false);
+			const bool hospital = B_GetBuildingStatus(employee->baseHired, B_HOSPITAL);
+			HOS_HealCharacter(&(employee->chr), hospital);
+			HOS_UpdateImplants(employee->chr);
 		}
 	}
 }

@@ -107,32 +107,30 @@ bool G_InventoryRemoveItemByID (const char *itemID, Edict* ent, containerIndex_t
  */
 static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 {
-	Item *ic = ent->getContainer(container);
-
-	if (container == CID_ARMOUR)
+	if (container == CID_ARMOUR || container == CID_IMPLANT)
 		return false;
 
-	if (ic) {
-		bool check = false;
-		while (ic) {
-			assert(ic->def());
-			if (ic->def()->isVirtual) {
-				Item *next = ic->getNext();
-				/* remove the virtual item to update the inventory lists */
-				if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
-					gi.Error("Could not remove virtual item '%s' from inventory %i",
-							ic->def()->id, container);
-				ic = next;
-			} else {
-				/* there are none virtual items left that should be send to the client */
-				check = true;
-				ic = ic->getNext();
-			}
-		}
-		return check;
-	}
+	Item *ic = ent->getContainer(container);
+	if (!ic)
+		return false;
 
-	return false;
+	bool check = false;
+	while (ic) {
+		assert(ic->def());
+		if (ic->def()->isVirtual) {
+			Item *next = ic->getNext();
+			/* remove the virtual item to update the inventory lists */
+			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
+				gi.Error("Could not remove virtual item '%s' from inventory %i",
+						ic->def()->id, container);
+			ic = next;
+		} else {
+			/* there are none virtual items left that should be send to the client */
+			check = true;
+			ic = ic->getNext();
+		}
+	}
+	return check;
 }
 
 /**
@@ -257,7 +255,7 @@ void G_InventoryToFloor (Edict* ent)
 
 		/* skip CID_ARMOUR, we will collect armours using armour container,
 		 * not CID_FLOOR */
-		if (container == CID_ARMOUR)
+		if (container == CID_ARMOUR || container == CID_IMPLANT)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */

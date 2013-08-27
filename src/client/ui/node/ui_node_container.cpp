@@ -341,7 +341,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory *inv)
 	assert(inv);
 
 	UI_GetNodeAbsPos(node, nodepos);
-	/* if single container (hands, extension, headgear) */
+	/* if single container (hands, headgear) */
 	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
 		if (UI_DNDIsSourceNode(node) || inv->canHoldItem(EXTRADATA(node).container, od, 0, 0, dragInfoIC))
@@ -624,29 +624,25 @@ void uiContainerNode::draw (uiNode_t *node)
  */
 static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
 {
-	Item *result = nullptr;
-
 	if (!ui_inventory)
 		return nullptr;
 
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (UI_IsScrollContainerNode(node)) {
 		Sys_Error("UI_ContainerNodeGetItemAtPosition is not usable for scrollable containers!");
-	} else {
-		vec2_t nodepos;
-		int fromX, fromY;
-
-		UI_GetNodeAbsPos(node, nodepos);
-		/* Normalize screen coordinates to container coordinates. */
-		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
-		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
-		if (contX)
-			*contX = fromX;
-		if (contY)
-			*contY = fromY;
-
-		result = ui_inventory->getItemAtPos(EXTRADATACONST(node).container, fromX, fromY);
 	}
+
+	vec2_t nodepos;
+	UI_GetNodeAbsPos(node, nodepos);
+	/* Normalize screen coordinates to container coordinates. */
+	const int fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
+	const int fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
+	if (contX)
+		*contX = fromX;
+	if (contY)
+		*contY = fromY;
+
+	Item *result = ui_inventory->getItemAtPos(EXTRADATACONST(node).container, fromX, fromY);
 	return result;
 }
 
@@ -658,10 +654,6 @@ static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int 
  */
 void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
-	vec2_t nodepos;
-
-	UI_GetNodeAbsPos(node, nodepos);
-
 	/* Find out where the mouse is. */
 	const Item *itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
 

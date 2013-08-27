@@ -295,6 +295,17 @@ const objDef_t *INVSH_GetItemByID (const char *id)
 	return od;
 }
 
+const implantDef_t *INVSH_GetImplantForObjDef (const objDef_t* od)
+{
+	for (int i = 0; i < CSI->numImplants; i++) {
+		const implantDef_t *id = &CSI->implants[i];
+		if (id->item == od)
+			return id;
+	}
+	Com_Printf("INVSH_GetImplantForObjDef: could not get implant for %s\n", od->id);
+	return nullptr;
+}
+
 /**
  * Searched an inventory container by a given container id
  * @param[in] id ID or name of the inventory container to search for
@@ -715,7 +726,7 @@ int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const
 		if (!container->armour && !container->all) {
 			return INV_DOES_NOT_FIT;
 		}
-	} else if (!od->extension && container->extension) {
+	} else if (!od->implant && container->implant) {
 		return INV_DOES_NOT_FIT;
 	} else if (!od->headgear && container->headgear) {
 		return INV_DOES_NOT_FIT;
@@ -739,7 +750,13 @@ int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const
 			return INV_DOES_NOT_FIT;
 	}
 
-	/* Single item containers, e.g. hands, extension or headgear. */
+	if (container->unique) {
+		const Item item(od);
+		if (containsItem(container->id, &item))
+			return INV_DOES_NOT_FIT;
+	}
+
+	/* Single item containers, e.g. hands or headgear. */
 	if (container->single) {
 		if (getContainer2(container->id)) {
 			/* There is already an item. */

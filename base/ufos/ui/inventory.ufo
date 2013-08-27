@@ -81,19 +81,19 @@ window inventory
 		size "160 25"
 	}
 
-	string s_extension_shadow
+	string s_implant_shadow
 	{
 		pos "15 83"
 		contentalign ALIGN_UC
-		string	"_Extension"
+		string	"_Implant"
 		color "0 0 0 1"
 		size "160 25"
 	}
-	string s_extension
+	string s_implant
 	{
 		pos "14 82"
 		contentalign ALIGN_UC
-		string	"_Extension"
+		string	"_Implant"
 		color "0 0.6 0 1"
 		size "160 25"
 	}
@@ -221,7 +221,7 @@ window inventory
 	// Containers (see inventory.ufo for the definition)
 	// ==================================================
 
-	container extension	{ pos "33 107" }
+	// Implants are not switchable in combat - thus no display of "container implant" needed.
 	container right		{ pos "33 181" }
 	container left		{ pos "357 181" }
 	// Armour is not switchable in combat - thus no display of "container armour" needed.

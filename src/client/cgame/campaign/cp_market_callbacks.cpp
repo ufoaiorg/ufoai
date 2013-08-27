@@ -263,7 +263,6 @@ static void BS_Buy_f (void)
 			}
 
 			BS_BuyItem(od, base, count);
-			return;
 		} else {
 			/* sell */
 			count = std::min(-1 * count, B_ItemInBase(od, base));
@@ -402,6 +401,7 @@ static void BS_FillMarket_f (void)
 	case FILTER_S_PRIMARY:
 	case FILTER_S_SECONDARY:
 	case FILTER_S_HEAVY:
+	case FILTER_S_IMPLANT:
 	case FILTER_S_MISC:
 	case FILTER_S_ARMOUR:
 	case FILTER_DUMMY:

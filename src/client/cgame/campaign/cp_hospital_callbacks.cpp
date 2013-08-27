@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
 #include "cp_hospital_callbacks.h"
+#include "cp_hospital.h"
+#include "cp_team.h"
 
 static void HOS_EntryWoundData (const character_t& chr)
 {
@@ -86,8 +88,38 @@ static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 	HOS_EntryWoundData(chr);
 }
 
+static void HOS_ApplyImplant_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <ucn> <implantid>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	const int ucn = atoi(cgi->Cmd_Argv(1));
+	Employee *e = E_GetEmployeeFromChrUCN(ucn);
+	if (e == nullptr) {
+		Com_Printf("No employee for ucn %i found\n", ucn);
+		return;
+	}
+
+	character_t& chr = e->chr;
+	const int odIdx = atoi(cgi->Cmd_Argv(2));
+	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
+	if (od == nullptr)
+		return;
+	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
+	if (def == nullptr)
+		return;
+	const bool state = HOS_ApplyImplant(chr, *def);
+	if (!state) {
+		Com_Printf("Could not apply implant %s to character: %i\n", def->id, chr.ucn);
+		return;
+	}
+	Com_Printf("Applied implant %s to character: %i\n", def->id, chr.ucn);
+}
+
 /**
- * @brief Script command to init the hospital menu.
+ * @brief Script command to initialize the hospital menu.
  * @sa HOS_EmployeeInit_f
  */
 static void HOS_Init_f (void)
@@ -117,7 +149,7 @@ static void HOS_Init_f (void)
 }
 
 /**
- * @brief This is the init function for the hospital_employee menu
+ * @brief This is the initialization function for the hospital_employee menu
  */
 static void HOS_EmployeeInit_f (void)
 {
@@ -127,13 +159,13 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	const Employee *e = E_GetEmployeeFromChrUCN(ucn);
+	Employee *e = E_GetEmployeeFromChrUCN(ucn);
 	if (e == nullptr)
 		return;
 
 	cgi->UI_ResetData(TEXT_STANDARD);
 
-	const character_t& c = e->chr;
+	character_t& c = e->chr;
 	const chrScoreGlobal_t& score = c.score;
 	const char *rank = "";
 	const char *rankImage = "";
@@ -144,8 +176,12 @@ static void HOS_EmployeeInit_f (void)
 		rankImage = r->image;
 	}
 
-	cgi->UI_ExecuteConfunc("hospital_employee_show \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\"",
-			c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage);
+	CP_SetEquipContainer(&c);
+	base_t *base = e->baseHired;
+	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &base->storage);
+
+	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\"",
+			ucn, c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage);
 
 	const abilityskills_t list[] = { ABILITY_POWER, ABILITY_SPEED, ABILITY_ACCURACY, ABILITY_MIND };
 	const int n = lengthof(list);
@@ -155,14 +191,16 @@ static void HOS_EmployeeInit_f (void)
 	}
 }
 
-void HOS_InitCallbacks(void)
+void HOS_InitCallbacks (void)
 {
 	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
 	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
+	cgi->Cmd_AddCommand("hosp_assign_implant", HOS_ApplyImplant_f, "Assign an implant to an employee");
 }
 
-void HOS_ShutdownCallbacks(void)
+void HOS_ShutdownCallbacks (void)
 {
 	cgi->Cmd_RemoveCommand("hosp_empl_init");
 	cgi->Cmd_RemoveCommand("hosp_init");
+	cgi->Cmd_RemoveCommand("hosp_assign_implant");
 }

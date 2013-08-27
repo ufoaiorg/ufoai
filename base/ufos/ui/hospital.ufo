@@ -66,6 +66,12 @@ component cmpHospitalPanel extends panel {
 	}
 }
 
+component cmpHospitalImplant extends panel {
+	{
+		size "300 85"
+	}
+}
+
 window hospital
 {
 	/** @todo Remove me */
@@ -222,6 +228,11 @@ window hospital_employee
 		size	"415 20"
 	}
 
+	data ucn
+	{
+		integer	-1
+	}
+
 	model body
 	{
 		{
@@ -278,7 +289,7 @@ window hospital_employee
 		string lbl { string "_Mind:" }
 	}
 
-	cmpHospitalNamedTbar health  {
+	cmpHospitalNamedTbar health {
 		{
 			pos "690 432"
 		}
@@ -293,50 +304,67 @@ window hospital_employee
 		}
 	}
 
-	// ==================
-	// action buttons
-	// ==================
+	panel implants {
+		{
+			pos		"26 101"
+			size	"276 471"
+			background	"ui/panel_grey_green_large"
+		}
+		baseinventory equip {
+			pos						"20 20"
+			size					"220 200"
+			displayimplant			true
+			displayunavailableitem	true
+			columns					1
+			filter					"FILTER_S_IMPLANT"
+			onViewChange {
+				*node:root.implants.equip_scroll@current = <viewpos>
+				*node:root.implants.equip_scroll@viewsize = <viewsize>
+				*node:root.implants.equip_scroll@fullsize = <fullsize>
+			}
+			onSelect { cmd "hosp_implant_details <lastselectedid>;" }
+			onChange { cmd "hosp_assign_implant <node:root.ucn@integer> <lastselectedid>;" }
+		}
 
-	panel buttonpanel {
-		pos		"26 101"
-		size	"276 471"
-		background	"ui/panel_grey_green_large"
-	}
+		vscrollbar equip_scroll {
+			image	"ui/scrollbar_v_green"
+			pos 	"242 20"
+			height	"200"
+			hidewhenunused true
+			onChange {
+				*node:root.implants.equip@viewpos = <current>
+			}
+		}
 
-	button button_hosp_bionic_start
-	{
-		string		"_Implants"
-		color		"0 0.8 0 1"
-		background		"ui/button_green_small"
-		pos			"60 270"
-		size		"207 48"
-		font		"f_menu"
-		tooltip		"_Not implemented"
-		disabled	true
+		container implant {
+			pos "20 240"
+		}
 	}
 
 	/**
-	 * @param <1> Name
-	 * @param <2> Body
-	 * @param <3> BodySkin
-	 * @param <4> Head
-	 * @param <5> HeadSkin
-	 * @param <6> HP
-	 * @param <7> MaxHP
-	 * @param <8> Rank
-	 * @param <9> Rank image
+	 * @param <1> UCN
+	 * @param <2> Name
+	 * @param <3> Body
+	 * @param <4> BodySkin
+	 * @param <5> Head
+	 * @param <6> HeadSkin
+	 * @param <7> HP
+	 * @param <8> MaxHP
+	 * @param <9> Rank
+	 * @param <10> Rank image
 	 */
 	confunc hospital_employee_show {
-		*node:root.name@string = "<1>"
-		*node:root.body@src = "<2>"
-		*node:root.body@skin = <3>
-		*node:root.body.head@src = "<4>"
-		*node:root.body.head@skin = <5>
-		*node:root.health.val@string = "<6>"
-		*node:root.health.bar@current = <6>
-		*node:root.health.bar@max = <7>
-		*node:root.rank_lbl@string = <8>
-		*node:root.rank@src = <9>
+		*node:root.ucn@integer = <1>
+		*node:root.name@string = "<2>"
+		*node:root.body@src = "<3>"
+		*node:root.body@skin = <4>
+		*node:root.body.head@src = "<5>"
+		*node:root.body.head@skin = <6>
+		*node:root.health.val@string = "<7>"
+		*node:root.health.bar@current = <7>
+		*node:root.health.bar@max = <8>
+		*node:root.rank_lbl@string = <9>
+		*node:root.rank@src = <10>
 	}
 
 	/**
@@ -347,6 +375,17 @@ window hospital_employee
 	confunc hospital_employee_set_values {
 		*node:root.bar<1>.bar@current = "<2>"
 		*node:root.bar<1>.val@string = "<3> (<2>)"
+	}
+
+	/**
+	 * @param <1> id
+	 */
+	confunc hospital_employee_add_implant {
+		call *node:root.implants@createChild("implant<1>", "cmpHospitalImplant")
+	}
+
+	confunc hospital_employee_clear_implants {
+		call *node:root.implants@removeAllchild
 	}
 
 	// ==================

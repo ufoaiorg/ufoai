@@ -1449,7 +1449,7 @@ static const value_t od_vals[] = {
 	{"weapon", V_BOOL, offsetof(objDef_t, weapon), MEMBER_SIZEOF(objDef_t, weapon)},
 	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdTwoHanded), MEMBER_SIZEOF(objDef_t, holdTwoHanded)},
 	{"firetwohanded", V_BOOL, offsetof(objDef_t, fireTwoHanded), MEMBER_SIZEOF(objDef_t, fireTwoHanded)},
-	{"extension", V_BOOL, offsetof(objDef_t, extension), MEMBER_SIZEOF(objDef_t, extension)},
+	{"implant", V_BOOL, offsetof(objDef_t, implant), MEMBER_SIZEOF(objDef_t, implant)},
 	{"headgear", V_BOOL, offsetof(objDef_t, headgear), MEMBER_SIZEOF(objDef_t, headgear)},
 	{"thrown", V_BOOL, offsetof(objDef_t, thrown), MEMBER_SIZEOF(objDef_t, thrown)},
 	{"ammo", V_INT, offsetof(objDef_t, ammo), MEMBER_SIZEOF(objDef_t, ammo)},
@@ -1492,6 +1492,20 @@ static const value_t od_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
+static const value_t effect_vals[] = {
+	{"period", V_INT, offsetof(itemEffect_t, period), MEMBER_SIZEOF(itemEffect_t, period)},
+	{"duration", V_INT, offsetof(itemEffect_t, duration), MEMBER_SIZEOF(itemEffect_t, duration)},
+	{"permanent", V_BOOL, offsetof(itemEffect_t, isPermanent), MEMBER_SIZEOF(itemEffect_t, isPermanent)},
+
+	{"accuracy", V_FLOAT, offsetof(itemEffect_t, accuracy), MEMBER_SIZEOF(itemEffect_t, accuracy)},
+	{"tu", V_FLOAT, offsetof(itemEffect_t, TUs), MEMBER_SIZEOF(itemEffect_t, TUs)},
+	{"power", V_FLOAT, offsetof(itemEffect_t, power), MEMBER_SIZEOF(itemEffect_t, power)},
+	{"mind", V_FLOAT, offsetof(itemEffect_t, mind), MEMBER_SIZEOF(itemEffect_t, mind)},
+	{"morale", V_FLOAT, offsetof(itemEffect_t, morale), MEMBER_SIZEOF(itemEffect_t, morale)},
+
+	{nullptr, V_NULL, 0, 0}
+};
+
 /* =========================================================== */
 
 static const value_t fdps[] = {
@@ -1530,7 +1544,112 @@ static const value_t fdps[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
+/**
+ * @brief Parses the item effect.
+ * @param[in,out] e The item effect that is filled in here.
+ */
+static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char *name, const char **text)
+{
+	effectStages_t stage = EFFECT_MAX;
 
+	const char *token = Com_Parse(text);
+	if (!*text) {
+		Com_Printf("Com_ParseItemEffect: syntax error for item '%s'\n", name);
+		return stage;
+	}
+
+	if (Q_streq(token, "active")) {
+		stage = EFFECT_ACTIVE;
+	} else if (Q_streq(token, "inactive")) {
+		stage = EFFECT_INACTIVE;
+	} else if (Q_streq(token, "overdose")) {
+		stage = EFFECT_OVERDOSE;
+	} else if (Q_streq(token, "strengthen")) {
+		stage = EFFECT_STRENGTHEN;
+	} else {
+		token = Com_Parse(text);
+		if (!*text || *token != '{') {
+			Com_Printf("Com_ParseItemEffect: syntax error for item '%s'\n", name);
+			return stage;
+		}
+		Com_SkipBlock(text);
+		Com_Printf("Com_ParseItemEffect: item effect of \"%s\" has invalid effect stage: '%s'\n", name, token);
+		return stage;
+	}
+
+	token = Com_Parse(text);
+	if (token[0] != '{') {
+		Com_Printf("Com_ParseItemEffect: syntax error for item '%s'\n", name);
+		return stage;
+	}
+
+	do {
+		token = Com_Parse(text);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (!Com_ParseBlockToken(name, text, e, effect_vals, com_genericPool, token)) {
+			Com_Printf("Com_ParseItemEffect: item effect of \"%s\" contains invalid values\n", name);
+			return stage;
+		}
+	} while (*text); /* dummy condition */
+
+	return stage;
+}
+
+/**
+ * @brief Parses the effect that is bound to a fire definitions.
+ * @param[in,out] fd The fire definition to add the effect to
+ */
+static void Com_ParseFireEffect (fireDef_t *fd, const char *name, const char **text)
+{
+	itemEffect_t *e = Mem_AllocType(itemEffect_t);
+	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
+	if (stage == EFFECT_MAX) {
+		Mem_Free(e);
+		return;
+	}
+
+	itemEffect_t **stagePtr;
+	switch (stage) {
+	case EFFECT_ACTIVE:
+		stagePtr = &fd->activeEffect;
+		break;
+	case EFFECT_INACTIVE:
+		stagePtr = &fd->deactiveEffect;
+		break;
+	case EFFECT_OVERDOSE:
+		stagePtr = &fd->overdoseEffect;
+		break;
+	case EFFECT_STRENGTHEN:
+		stagePtr = &fd->strengthenEffect;
+		break;
+	case EFFECT_MAX:
+		stagePtr = nullptr;
+		break;
+	}
+
+	if (stagePtr == nullptr) {
+		Mem_Free(e);
+		Com_Printf("Com_ParseFireEffect: invalid effect stage for '%s'\n", name);
+		return;
+	}
+
+	if (*stagePtr != nullptr) {
+		Mem_Free(e);
+		Com_Printf("Com_ParseFireEffect: item effect of \"%s\" already has an effect assigned\n", name);
+		return;
+	}
+
+	*stagePtr = e;
+}
+
+/**
+ * @brief Parses the firemode
+ * @param[in,out] fd The fire definition to fill
+ */
 static bool Com_ParseFire (const char *name, const char** text, fireDef_t *fd)
 {
 	const char *errhead = "Com_ParseFire: unexpected end of file";
@@ -1566,6 +1685,8 @@ static bool Com_ParseFire (const char *name, const char** text, fireDef_t *fd)
 					}
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
+			} else if (Q_streq(token, "effect")) {
+				Com_ParseFireEffect(fd, name, text);
 			} else if (Q_streq(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
@@ -1650,7 +1771,6 @@ static void Com_ParseArmourOrResistance (const char *name, const char** text, sh
 	} while (*text);
 }
 
-
 /**
  * @brief List of valid strings for slot types
  * @note slot names are the same as the item types (and must be in the same order)
@@ -1680,8 +1800,9 @@ struct parseItemWeapon_t {
 	char *token;
 };
 
-static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char *token, const char** text)
+static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char** text)
 {
+	const char *token;
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* get it's body */
 		token = Com_Parse(text);
@@ -1738,6 +1859,23 @@ static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char 
 		} while (*text);
 		od->numWeapons++;
 	}
+}
+
+static void Com_ParseObjDefEffect (objDef_t *od, const char *name, const char **text)
+{
+	itemEffect_t *e = Mem_AllocType(itemEffect_t);
+	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
+	if (stage != EFFECT_STRENGTHEN) {
+		Com_Printf("Com_ParseObjDefEffect: ignore invalid item effect stage for item: '%s'\n", name);
+		Mem_Free(e);
+		return;
+	}
+	if (od->strengthenEffect != nullptr) {
+		Com_Printf("Com_ParseObjDefEffect: there is already a strengthen effect assigned to: '%s'\n", name);
+		Mem_Free(e);
+		return;
+	}
+	od->strengthenEffect = e;
 }
 
 /**
@@ -1809,6 +1947,8 @@ static void Com_ParseItem (const char *name, const char** text)
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
 				}
+			} else if (Q_streq(token, "effect")) {
+				Com_ParseObjDefEffect(od, name, text);
 			} else if (Q_streq(token, "crafttype")) {
 				/* Craftitem type definition. */
 				token = Com_EParse(text, errhead, name);
@@ -1829,7 +1969,7 @@ static void Com_ParseItem (const char *name, const char** text)
 			} else if (Q_streq(token, "rating")) {
 				Com_ParseArmourOrResistance(name, text, od->ratings, true);
 			} else if (Q_streq(token, "weapon_mod")) {
-				Com_ParseFireDefinition(od, name, token, text);
+				Com_ParseFireDefinition(od, name, text);
 			} else {
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 			}
@@ -1849,6 +1989,10 @@ static void Com_ParseItem (const char *name, const char** text)
 			break;
 	od->sy = i + 1;
 
+	if ((od->weapon || od->isAmmo() || od->isArmour() || od->implant) && !od->isVirtual && od->shape == 0) {
+		Sys_Error("Item %s has no shape\n", od->id);
+	}
+
 	if (od->thrown && od->deplete && od->oneshot && od->ammo) {
 		Sys_Error("Item %s has invalid parameters\n", od->id);
 	}
@@ -1857,6 +2001,76 @@ static void Com_ParseItem (const char *name, const char** text)
 		Com_Printf("Com_ParseItem: weapon \"%s\" has an invalid reload sound attenuation value set\n", od->id);
 }
 
+/*
+==============================================================================
+IMPLANT DEFINITION INTERPRETER
+==============================================================================
+*/
+
+static const value_t implant_vals[] = {
+	{"installationtime", V_INT, offsetof(implantDef_t, installationTime), 0},
+	{"removetime", V_INT, offsetof(implantDef_t, removeTime), 0},
+
+	{nullptr, V_NULL, 0, 0}
+};
+
+static void Com_ParseImplant (const char *name, const char **text)
+{
+	/* search for implants with same name */
+	if (INVSH_GetItemByIDSilent(name) != nullptr) {
+		Com_Printf("Com_ParseImplant: implant def \"%s\" with same name found, second ignored\n", name);
+		return;
+	}
+
+	if (csi.numImplants >= MAX_IMPLANTS)
+		Sys_Error("Com_ParseImplant: MAX_IMPLANTS exceeded\n");
+
+	Com_DPrintf(DEBUG_SHARED, "...found implant: '%s' (%i)\n", name, csi.numImplants);
+
+	/* initialize the implant definition */
+	implantDef_t *implant = &csi.implants[csi.numImplants++];
+	OBJZERO(*implant);
+	implant->id = Mem_StrDup(name);
+	if (Q_strnull(implant->id))
+		Sys_Error("Com_ParseImplant: no id given\n");
+
+	implant->idx = csi.numImplants - 1;
+
+	/* get it's body */
+	const char *token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseImplant: implant def \"%s\" without body ignored\n", name);
+		csi.numImplants--;
+		return;
+	}
+
+	const char *errhead = "Com_ParseImplant: unexpected end of file (implant ";
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (!Com_ParseBlockToken(name, text, implant, implant_vals, com_genericPool, token)) {
+			if (Q_streq(token, "item")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text) {
+					Com_Printf("Com_ParseImplant: syntax error (implant %s)\n", name);
+					break;
+				}
+				implant->item = INVSH_GetItemByID(token);
+			} else {
+				Com_Printf("Com_ParseImplant: unknown token \"%s\" ignored (implant %s)\n", token, name);
+			}
+		}
+	} while (*text);
+
+	if (implant->item == nullptr) {
+		Sys_Error("implant %s without item found", name);
+	}
+}
 
 /*
 ==============================================================================
@@ -1870,14 +2084,16 @@ static const value_t idps[] = {
 	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
 	/* Scrollable container */
 	{"scroll", V_BOOL, offsetof(invDef_t, scroll), MEMBER_SIZEOF(invDef_t, scroll)},
-	/* only a single item as weapon extension - single should be set, too */
-	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
+	/* this is the implant container */
+	{"implant", V_BOOL, offsetof(invDef_t, implant), MEMBER_SIZEOF(invDef_t, implant)},
 	/* this is the armour container */
 	{"armour", V_BOOL, offsetof(invDef_t, armour), MEMBER_SIZEOF(invDef_t, armour)},
 	/* this is the headgear container */
 	{"headgear", V_BOOL, offsetof(invDef_t, headgear), MEMBER_SIZEOF(invDef_t, headgear)},
 	/* allow everything to be stored in this container (e.g armour and weapons) */
 	{"all", V_BOOL, offsetof(invDef_t, all), MEMBER_SIZEOF(invDef_t, all)},
+	/* Does not allow to put the same item more than once into the container */
+	{"unique", V_BOOL, offsetof(invDef_t, unique), MEMBER_SIZEOF(invDef_t, unique)},
 	{"temp", V_BOOL, offsetof(invDef_t, temp), MEMBER_SIZEOF(invDef_t, temp)},
 	/* time units for moving something in */
 	{"in", V_INT, offsetof(invDef_t, in), MEMBER_SIZEOF(invDef_t, in)},
@@ -1896,8 +2112,8 @@ static void Com_ParseInventory (const char *name, const char** text)
 		cid = CID_RIGHT;
 	} else if (Q_streq(name, "left")) {
 		cid = CID_LEFT;
-	} else if (Q_streq(name, "extension")) {
-		cid = CID_EXTENSION;
+	} else if (Q_streq(name, "implant")) {
+		cid = CID_IMPLANT;
 	} else if (Q_streq(name, "belt")) {
 		cid = CID_BELT;
 	} else if (Q_streq(name, "holster")) {
@@ -1935,7 +2151,6 @@ static void Com_ParseInventory (const char *name, const char** text)
 
 	csi.numIDs++;
 }
-
 
 /*
 ==============================================================================
@@ -3470,6 +3685,8 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseEquipment(name, &text);
 		else if (Q_streq(type, "team"))
 			Com_ParseTeam(name, &text);
+		else if (Q_streq(type, "implant"))
+			Com_ParseImplant(name, &text);
 	}
 
 	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/

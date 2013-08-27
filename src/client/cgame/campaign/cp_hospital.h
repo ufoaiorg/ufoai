@@ -30,3 +30,4 @@ bool HOS_HealCharacter(character_t* chr, bool hospital);
 bool HOS_HealEmployee(Employee* employee);
 void HOS_HealAll(const base_t* const base);
 void HOS_HospitalRun(void);
+bool HOS_ApplyImplant(character_t& chr, const implantDef_t& implant);

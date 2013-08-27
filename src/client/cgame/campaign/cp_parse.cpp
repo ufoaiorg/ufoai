@@ -734,12 +734,6 @@ static bool CP_ItemsSanityCheck (void)
 			result = false;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
 		}
-
-		/* extension and headgear are mutual exclusive */
-		if (item->extension && item->headgear) {
-			result = false;
-			Com_Printf("CP_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
-		}
 	}
 
 	return result;

@@ -300,7 +300,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
 	if ((to->armour && !fItem->isArmour())
-	 || (to->extension && !fItem->def()->extension)
+	 || (to->implant && !fItem->def()->implant)
 	 || (to->headgear && !fItem->def()->headgear)) {
 		return IA_NONE;
 	}
@@ -956,8 +956,8 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 
 						if (miscItem->headgear)
 							container = CID_HEADGEAR;
-						else if (miscItem->extension)
-							container = CID_EXTENSION;
+						else if (miscItem->implant)
+							container = CID_IMPLANT;
 						else
 							container = CID_BACKPACK;
 						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))

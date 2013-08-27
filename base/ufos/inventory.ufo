@@ -7,17 +7,6 @@
 // armour - only armours can be placed here
 // all - everything can be placed here - even armours
 // headgear - headgear slot - only usable for headgear
-// extension - the extension slot - only weapon or item extension can be placed here
-
-// What's this "extension" exactly?
-inventory extension
-{
-	shape		"0 0 5 1"
-	extension	true
-	single		true
-	in			1
-	out			0
-}
 
 // Headgear slot
 inventory headgear
@@ -81,6 +70,15 @@ inventory armour
 	armour	true
 	in		200
 	out		200
+}
+
+inventory implant
+{
+	shape	"0 0 2 1"
+	in		200
+	out		200
+	implant	true
+	unique	true
 }
 
 // Make sure that the temp containers are the last ones

@@ -131,6 +131,21 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
 }
 
 /**
+ * @brief Set up equip (floor) container for soldiers
+ * @param[in,out] chr Pointer to soldiers character structure
+ */
+void CP_SetEquipContainer (character_t *chr)
+{
+	Inventory *uiInv = *cgi->ui_inventory;
+	if (uiInv && uiInv != &chr->inv) {
+		chr->inv.setContainer(CID_EQUIP, uiInv->getContainer2(CID_EQUIP));
+		/* set 'old' CID_EQUIP to nullptr */
+		uiInv->resetContainer(CID_EQUIP);
+	}
+	*cgi->ui_inventory = &chr->inv;
+}
+
+/**
  * @brief Reloads weapons, removes not assigned and resets defaults
  * @param[in] base Pointer to a base for given team.
  * @param[in] ed equipDef_t pointer to equipment

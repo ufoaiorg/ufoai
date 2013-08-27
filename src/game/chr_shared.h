@@ -356,6 +356,14 @@ typedef struct woundInfo_s {
 	}
 } woundInfo_t;
 
+#define MAX_CHARACTER_IMPLANTS 4
+typedef struct implant_s {
+	const implantDef_t *def;	/**< if @c null, the slot is still empty */
+	int installedTime;	/**< the remaining days until the implant is ready */
+	int removedTime;	/**< the remaining days until the removal is ready */
+	int trigger;
+} implant_t;
+
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;					/**< unique character number */
@@ -386,6 +394,8 @@ typedef struct character_s {
 	int gender;						/**< Gender index. */
 	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+	implant_t implants[MAX_CHARACTER_IMPLANTS];
 
 	character_s();					/**< ctor */
 	void init ();

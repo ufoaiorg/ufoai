@@ -33,12 +33,13 @@ character_s::character_s ()
 
 void character_s::init ()
 {
-	name[0] = path[0] = body[0] = head[0] = 0;
+	name[0] = path[0] = body[0] = head[0] = '\0';
 	ucn = bodySkin = headSkin = HP = minHP = maxHP = STUN = morale = state = gender = 0;
 	fieldSize = 0;
 	scoreMission = nullptr;
 	teamDef = nullptr;
 	inv.init();
+	memset(implants, 0, sizeof(implants));
 }
 
 /**

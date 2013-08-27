@@ -255,6 +255,8 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 	/* heavy weapons may be primary too. check heavy first */
 	if (obj->isHeavy)
 		return FILTER_S_HEAVY;
+	if (obj->implant)
+		return FILTER_S_IMPLANT;
 	else if (obj->isPrimary)
 		return FILTER_S_PRIMARY;
 	else if (obj->isSecondary)
@@ -317,6 +319,9 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 				return true;
 		}
 		break;
+
+	case FILTER_S_IMPLANT:
+		return obj->implant;
 
 	case FILTER_S_ARMOUR:
 		return obj->isArmour();
@@ -387,12 +392,13 @@ Item *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_
 
 /** Names of the filter types as used in console function. e.g. in .ufo files.
  * @sa inv_shared.h:itemFilterTypes_t */
-static char const* const filterTypeNames[MAX_FILTERTYPES] = {
+static char const* const filterTypeNames[] = {
 	"primary",		/**< FILTER_S_PRIMARY */
 	"secondary",	/**< FILTER_S_SECONDARY */
 	"heavy",		/**< FILTER_S_HEAVY */
 	"misc",			/**< FILTER_S_MISC */
 	"armour",		/**< FILTER_S_ARMOUR */
+	"implants",		/**< FILTER_S_IMPLANT */
 	"",				/**< MAX_SOLDIER_FILTERTYPES */
 	"craftitem",	/**< FILTER_CRAFTITEM */
 	"ugvitem",		/**< FILTER_UGVITEM */

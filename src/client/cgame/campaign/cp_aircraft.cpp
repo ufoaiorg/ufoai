@@ -1447,7 +1447,6 @@ void AIR_ParseAircraft (const char *name, const char** text, bool assignAircraft
 
 				if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_radar_vals, cp_campaignPool, token))
 					Com_Printf("AIR_ParseAircraft: Ignoring unknown radar value '%s'\n", token);
-
 			} while (*text); /* dummy condition */
 			continue;
 		}

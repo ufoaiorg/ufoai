@@ -54,6 +54,7 @@ typedef struct baseInventoryExtraData_s {
 	int columns;
 	bool displayWeapon;
 	bool displayAmmo;
+	bool displayImplant;
 	bool displayUnavailableItem;
 	bool displayAmmoOfWeapon;
 	bool displayUnavailableAmmoOfWeapon;

@@ -39,6 +39,7 @@ typedef enum {
 	FILTER_S_HEAVY,			/**< Heavy weapons for soldiers. */
 	FILTER_S_MISC,			/**< Misc. soldier equipment (i.e. everything else that is not in the other soldier-item filters) */
 	FILTER_S_ARMOUR,		/**< Armour for soldiers. */
+	FILTER_S_IMPLANT,		/**< Implants */
 	MAX_SOLDIER_FILTERTYPES,
 
 	/* Non-soldier items */

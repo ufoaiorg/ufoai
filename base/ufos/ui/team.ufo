@@ -63,11 +63,11 @@ window game_team_edit extends objectinfo
 		size "160 25"
 	}
 
-	string s_extension
+	string s_implant
 	{
 		pos "530 76"
 		contentalign ALIGN_UC
-		string	"_Extension"
+		string	"_Implant"
 		color "0 0.6 0 1"
 		size "160 25"
 	}
@@ -183,6 +183,10 @@ window game_team_edit extends objectinfo
 		elif ( *cvar:mn_equiptype == 4 ) {
 			*node:root.equip@filter = FILTER_S_ARMOUR
 			*node:root.equip_ammo@filter = FILTER_S_ARMOUR
+		}
+		elif ( *cvar:mn_equiptype == 5 ) {
+			*node:root.equip@filter = FILTER_S_IMPLANT
+			*node:root.equip_ammo@filter = FILTER_S_IMPLANT
 		}
 		*node:root.equip@viewpos = 0
 		*node:root.equip_ammo@viewpos = 0
@@ -531,7 +535,7 @@ window game_team_edit extends objectinfo
 	// Containers (see inventory.ufo for the definition)
 	// ==================
 
-	container extension	{ pos "548 104"	onSelect { cmd "object_update <lastselectedid> team_update_item_list;" } }
+	container implant	{ pos "548 104"	onSelect { cmd "object_update <lastselectedid> team_update_item_list;" } }
 	container right		{ pos "548 178"	onSelect { cmd "object_update <lastselectedid> team_update_item_list;" } }
 	container left		{ pos "872 178"	onSelect { cmd "object_update <lastselectedid> team_update_item_list;" } }
 	container backpack	{ pos "872 54"	onSelect { cmd "object_update <lastselectedid> team_update_item_list;" } }
