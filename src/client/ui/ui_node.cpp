@@ -645,7 +645,7 @@ uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
 	assert(node->firstChild);
 
 	/** remove the 'child' node */
-	for (uiNode_t **anchor = &node->firstChild;; anchor = &(*anchor)->next) {
+	for (uiNode_t** anchor = &node->firstChild;; anchor = &(*anchor)->next) {
 		if (!*anchor)
 			return 0;
 

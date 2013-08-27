@@ -132,7 +132,7 @@ const char *FS_Gamedir(void);
 void FS_CreateOpenPipeFile(const char *filename, qFILE *f);
 const char *FS_NextPath(const char *prevpath);
 void FS_ExecAutoexec(void);
-int FS_GetModList(struct linkedList_t **mods);
+int FS_GetModList(struct linkedList_t** mods);
 const char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 bool FS_FileExists(const char *filename, ...) __attribute__((format(__printf__, 1, 2)));

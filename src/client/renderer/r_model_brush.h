@@ -136,7 +136,7 @@ typedef struct mBspSurface_s {
  * and then sorted by world texture index to reduce binds
  */
 typedef struct mBspSurfaces_s {
-	mBspSurface_t **surfaces;
+	mBspSurface_t** surfaces;
 	int count;
 } mBspSurfaces_t;
 

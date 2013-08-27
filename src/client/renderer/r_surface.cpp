@@ -98,7 +98,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 void R_DrawSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
 {
 	int numSurfaces = surfs->count;
-	mBspSurface_t **surfPtrList = surfs->surfaces;
+	mBspSurface_t** surfPtrList = surfs->surfaces;
 	const int frame = r_locals.frame;
 
 	int lastLightMap = 0, lastDeluxeMap = 0;

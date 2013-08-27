@@ -194,7 +194,7 @@ int UI_GetDataVersion (int textId)
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-uiNode_t* UI_AddOption (uiNode_t **tree, const char* name, const char* label, const char* value)
+uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
 {
 	uiNode_t *last;
 	uiNode_t *option;
@@ -262,7 +262,7 @@ void UI_ResetData (int dataId)
  * @todo option should start with '_' if we need to translate it
  * @warning update parent
  */
-static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
+static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t** option)
 {
 	uiNode_t *prev = *option;
 	uiNode_t *prevfind = nullptr;
@@ -295,7 +295,7 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
 /**
  * @brief Sort options by alphabet
  */
-void UI_SortOptions (uiNode_t **first)
+void UI_SortOptions (uiNode_t** first)
 {
 	uiNode_t *option;
 

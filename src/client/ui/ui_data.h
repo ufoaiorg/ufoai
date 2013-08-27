@@ -84,13 +84,13 @@ void UI_RegisterLinkedListText(int textId, linkedList_t *text);
 /* option */
 void UI_RegisterOption(int dataId, uiNode_t* option);
 uiNode_t* UI_GetOption(int dataId) __attribute__ ((warn_unused_result));
-void UI_SortOptions(uiNode_t **option);
+void UI_SortOptions(uiNode_t** option);
 uiNode_t* UI_InitOptionIteratorAtIndex(int index, uiNode_t* option, uiOptionIterator_t* iterator);
 uiNode_t* UI_OptionIteratorNextOption(uiOptionIterator_t* iterator);
 void UI_UpdateInvisOptions(uiNode_t* option, const linkedList_t *stringList);
 uiNode_t* UI_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
 int UI_FindOptionPosition(uiOptionIterator_t* iterator, uiNode_t const* option);
-uiNode_t* UI_AddOption(uiNode_t **tree, const char* name, const char* label, const char* value);
+uiNode_t* UI_AddOption(uiNode_t** tree, const char* name, const char* label, const char* value);
 
 /* line strip */
 void UI_RegisterLineStrip(int dataId, struct lineStrip_s *text);

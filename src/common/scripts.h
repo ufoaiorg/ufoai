@@ -200,7 +200,7 @@ int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 bool Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool);
 bool Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token);
-bool Com_ParseList(const char **text, linkedList_t **list);
+bool Com_ParseList(const char **text, linkedList_t** list);
 void *Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);

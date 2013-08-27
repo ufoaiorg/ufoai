@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[out] property A node property
  * @return A node (else nullptr, if no node found) and a property (else nullptr if no/wrong property defined)
  */
-uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_t *context, const value_t **property)
+uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_t *context, const value_t** property)
 {
 	if (property != nullptr)
 		*property = nullptr;

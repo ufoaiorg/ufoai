@@ -657,7 +657,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	}
 }
 
-static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t **r_sorted_surfaces)
+static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t** r_sorted_surfaces)
 {
 	int i, j;
 
@@ -689,7 +689,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 {
 	const mBspSurface_t *surf, *s;
 	int i, ns;
-	mBspSurfaces_t **r_sorted_surfaces = Mem_AllocTypeN(mBspSurfaces_t *, r_numImages);
+	mBspSurfaces_t** r_sorted_surfaces = Mem_AllocTypeN(mBspSurfaces_t *, r_numImages);
 
 	/* resolve the start surface and total surface count */
 	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];

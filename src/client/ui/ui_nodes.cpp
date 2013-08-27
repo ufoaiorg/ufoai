@@ -206,7 +206,7 @@ const char* UI_GetPath (const uiNode_t* node)
  * @param[out] resultProperty Property found. Else nullptr.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
-void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t **resultNode, const value_t **resultProperty)
+void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t** resultProperty)
 {
 	char name[MAX_VAR];
 	uiNode_t* node = nullptr;
@@ -550,7 +550,7 @@ void UI_DeleteNode (uiNode_t* node)
 
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		const value_t **property = behaviour->localProperties;
+		const value_t** property = behaviour->localProperties;
 		if (property == nullptr)
 			continue;
 		while (*property) {

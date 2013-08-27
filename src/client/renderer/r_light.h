@@ -51,7 +51,7 @@ void R_AddLight(const vec3_t origin, float radius, const vec3_t color);
 void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, float sustain);
 void R_UpdateSustainedLights(void);
 void R_EnableWorldLights(void);
-void R_EnableModelLights(const light_t **lights, int numLights, bool inShadow, bool enable);
+void R_EnableModelLights(const light_t** lights, int numLights, bool inShadow, bool enable);
 void R_DisableLights(void);
 
 void R_AddStaticLight(const vec3_t origin, float radius, const vec3_t color);

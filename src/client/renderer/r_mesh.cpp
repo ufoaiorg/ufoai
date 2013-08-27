@@ -165,7 +165,7 @@ static void R_ComputeGLMatrixFromTag (float *glMatrix, const mAliasTagOrientatio
 
 #define R_GetTagOrientByFrame(mod, tagIndex, frame) &(((mod)->alias.tags)[tagIndex].orient[frame])
 
-void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int oldFrame, const mAliasTagOrientation_t **current, const mAliasTagOrientation_t **old)
+void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int oldFrame, const mAliasTagOrientation_t** current, const mAliasTagOrientation_t** old)
 {
 	const int index = R_GetTagIndexByName(mod, tagName);
 	if (index == -1) {
