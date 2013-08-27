@@ -46,6 +46,13 @@ inline void R_DrawArrays (GLint first, GLsizei count) {
 /* glDrawElements() cannot be invoked with GL_UNSIGNED_INT on GLES */
 typedef GLushort glElementIndex_t;
 #define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_SHORT
+
+#define glOrtho												glOrthof
+#define glFrustum											glFrustumf
+#define glFogi												glFogx
+#define glDepthRange										glDepthRangef
+/* Stub, so that we won't clutter the code with #ifdefs */
+#define glPolygonMode(x, y)
 #else
 typedef GLuint glElementIndex_t;
 #define GL_ELEMENT_INDEX_TYPE GL_UNSIGNED_INT

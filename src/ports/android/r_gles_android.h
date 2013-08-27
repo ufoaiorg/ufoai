@@ -55,11 +55,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_CLAMP											GL_CLAMP_TO_EDGE /* Not exactly GL_CLAMP but very close */
 #endif
 
-#define glOrtho												glOrthof
-#define glFrustum											glFrustumf
-#define glFogi												glFogx
-#define glDepthRange										glDepthRangef
-
 #define glTranslated( X, Y, Z )								glTranslatex( (X)*0x10000, (Y)*0x10000, (Z)*0x10000 )
 
 /* GLES 2 defines for shaders */
@@ -75,6 +70,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_MAX_VARYING_VECTORS              0x8DFC
 #define GL_MAX_FRAGMENT_UNIFORM_VECTORS     0x8DFD
 #define GL_MAX_VERTEX_UNIFORM_VECTORS       0x8DFB
-
-/* Stub, so that we won't clutter the code with #ifdefs */
-#define glPolygonMode(x, y)
