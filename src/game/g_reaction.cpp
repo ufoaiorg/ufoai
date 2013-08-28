@@ -867,10 +867,10 @@ bool G_ReactionFireOnMovement (Edict* target, int step)
 #if DEBUG_RF
 	G_ReactionFirePrintSituation(target);
 #endif
+	rf.notifyClientOnStep(target, step);
+
 	/* Check to see whether this resolves any reaction fire */
 	const bool fired = rf.checkExecution(target);
-
-	rf.notifyClientOnStep(target, step);
 
 	/* Check to see whether this triggers any reaction fire */
 	rf.updateAllTargets(target);
