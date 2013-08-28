@@ -89,4 +89,4 @@ bool B_PostLoadInit(void);
 bool AIR_PostLoadInit(void);
 bool PR_PostLoadInit(void);
 
-bool SAV_GameLoad(const char *file, const char **error);
+bool SAV_GameLoad(const char *file, const char** error);

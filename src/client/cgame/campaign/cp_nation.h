@@ -81,11 +81,11 @@ int NAT_GetFunding(const nation_t* const nation, int month);
 const nationInfo_t* NAT_GetCurrentMonthInfo(const nation_t* const nation);
 const char *NAT_GetHappinessString(const nation_t* nation);
 
-void CL_ParseNations(const char *name, const char **text);
+void CL_ParseNations(const char *name, const char** text);
 
 city_t *CITY_GetById(const char *cityId);
 city_t *CITY_GetByPos(vec2_t pos);
-void CITY_Parse(const char *name, const char **text);
+void CITY_Parse(const char *name, const char** text);
 
 bool NAT_ScriptSanityCheck(void);
 

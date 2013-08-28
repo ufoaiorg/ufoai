@@ -1551,7 +1551,7 @@ const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t 
  * @param[in] text The script block to parse
  * @sa CL_ParseScriptFirst
  */
-void B_ParseBaseTemplate (const char *name, const char **text)
+void B_ParseBaseTemplate (const char *name, const char** text)
 {
 	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
 	const char *token;

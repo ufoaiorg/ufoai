@@ -154,7 +154,7 @@ typedef struct baseTemplate_s {
 
 void B_UpdateBaseData(void);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
-void B_ParseBaseTemplate(const char *name, const char **text);
+void B_ParseBaseTemplate(const char *name, const char** text);
 void B_BaseResetStatus(base_t* const base);
 const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, bool onlyWorking);
 const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);

@@ -1283,7 +1283,7 @@ void UP_Shutdown (void)
  * @param[in] text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseChapter (const char *name, const char **text)
+void UP_ParseChapter (const char *name, const char** text)
 {
 	const char *errhead = "UP_ParseChapter: unexpected end of file (names ";
 	const char *token;

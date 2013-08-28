@@ -124,7 +124,7 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
  * @param[in] file The Filename to load from (without extension)
  * @param[out] error On failure an errormessage may be set.
  */
-bool SAV_GameLoad (const char *file, const char **error)
+bool SAV_GameLoad (const char *file, const char** error)
 {
 	char filename[MAX_OSPATH];
 	qFILE f;
@@ -246,7 +246,7 @@ bool SAV_GameLoad (const char *file, const char **error)
  * @param[in] comment Description of the savegame
  * @param[out] error On failure an errormessage may be set.
  */
-static bool SAV_GameSave (const char *filename, const char *comment, char **error)
+static bool SAV_GameSave (const char *filename, const char *comment, char** error)
 {
 	xmlNode_t *topNode, *node;
 	char savegame[MAX_OSPATH];

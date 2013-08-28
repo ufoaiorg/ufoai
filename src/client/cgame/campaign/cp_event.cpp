@@ -89,7 +89,7 @@ static const value_t eventMail_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseEventMails (const char *name, const char **text)
+void CL_ParseEventMails (const char *name, const char** text)
 {
 	eventMail_t *eventMail;
 
@@ -359,7 +359,7 @@ static const constListEntry_t eventConstants[] = {
 	{nullptr, -1}
 };
 
-void CP_ParseEventTrigger (const char *name, const char **text)
+void CP_ParseEventTrigger (const char *name, const char** text)
 {
 	const char *errhead = "CP_ParseEventTrigger: unexpected end of file (event ";
 	const char *token;
@@ -448,7 +448,7 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseCampaignEvents (const char *name, const char **text)
+void CL_ParseCampaignEvents (const char *name, const char** text)
 {
 	const char *errhead = "CL_ParseCampaignEvents: unexpected end of file (events ";
 	const char *token;

@@ -278,7 +278,7 @@ bool MSO_LoadXML (xmlNode_t *p)
 /**
  * @brief parses message options settings from file.
  */
-static int MSO_ParseOption (const char *blockName, const char **text)
+static int MSO_ParseOption (const char *blockName, const char** text)
 {
 	const char *errhead = "MSO_ParseSettings: unexpected end of file (names ";
 	const char *token;
@@ -346,7 +346,7 @@ static int MSO_ParseOption (const char *blockName, const char **text)
  * @brief Parses a messagecategory script section. These categories are used to group notification types.
  * @sa MSO_InitTextList
  */
-static bool MSO_ParseCategory (const char *blockName, const char **text)
+static bool MSO_ParseCategory (const char *blockName, const char** text)
 {
 	const char *errhead = "MSO_ParseCategory: unexpected end of file (names ";
 	const char *token;
@@ -442,7 +442,7 @@ static bool MSO_ParseCategory (const char *blockName, const char **text)
 /**
  * @brief parses message options settings from file.
  */
-void MSO_ParseMessageSettings (const char *name, const char **text)
+void MSO_ParseMessageSettings (const char *name, const char** text)
 {
 	const char *errhead = "MSO_ParseMessageSettings: unexpected end of file (names ";
 	const char *token;

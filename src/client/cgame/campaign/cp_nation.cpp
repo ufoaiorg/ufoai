@@ -299,7 +299,7 @@ static const value_t nation_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseNations (const char *name, const char **text)
+void CL_ParseNations (const char *name, const char** text)
 {
 	nation_t *nation;
 	int i;
@@ -372,7 +372,7 @@ static const value_t city_vals[] = {
  * @param[in] name ID of the found nation
  * @param[in] text The text of the nation node
  */
-void CITY_Parse (const char *name, const char **text)
+void CITY_Parse (const char *name, const char** text)
 {
 	city_t newCity;
 

@@ -1140,7 +1140,7 @@ static const value_t valid_techmail_vars[] = {
  * @sa GAME_SetMode
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void RS_ParseTechnologies (const char *name, const char **text)
+void RS_ParseTechnologies (const char *name, const char** text)
 {
 	technology_t *tech;
 	unsigned hash;

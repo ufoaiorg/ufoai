@@ -110,7 +110,7 @@ extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern char const* const nt_strings[NT_NUM_NOTIFYTYPE];
 
 uiMessageListNodeMessage_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, messageType_t type = MSG_STANDARD, technology_t *pedia = nullptr, bool popup = false);
-void MSO_ParseMessageSettings(const char *name, const char **text);
+void MSO_ParseMessageSettings(const char *name, const char** text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands);
 void MSO_Init(void);
 void MSO_Shutdown(void);

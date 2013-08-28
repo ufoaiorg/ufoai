@@ -71,7 +71,7 @@ static const value_t rankValues[] = {
  * @brief Parse medals and ranks defined in the medals.ufo file.
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseRanks (const char *name, const char **text)
+void CL_ParseRanks (const char *name, const char** text)
 {
 	rank_t *rank;
 	const char *errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";

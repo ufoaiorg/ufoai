@@ -388,7 +388,7 @@ static const value_t installation_vals[] = {
  * @param[in] name Unique test-id of a installationTemplate_t.
  * @param[in] text the rest of the script file that is tokenized here
  */
-void INS_ParseInstallations (const char *name, const char **text)
+void INS_ParseInstallations (const char *name, const char** text)
 {
 	installationTemplate_t *installation;
 	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";

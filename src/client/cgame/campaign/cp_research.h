@@ -203,7 +203,7 @@ typedef struct technology_s {
 void RS_InitStartup(void);
 void RS_ResetTechs(void);
 int RS_ResearchRun(void);
-void RS_ParseTechnologies(const char *name, const char **text);
+void RS_ParseTechnologies(const char *name, const char** text);
 bool RS_IsResearched_idx(int techIdx);
 bool RS_IsResearched_ptr(const technology_t *tech);
 

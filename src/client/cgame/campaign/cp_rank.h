@@ -40,6 +40,6 @@ typedef struct rank_s {
 	int level;			/**< rank level for given employee type */
 } rank_t;
 
-void CL_ParseRanks(const char *name, const char **text);
+void CL_ParseRanks(const char *name, const char** text);
 int CL_GetRankIdx(const char *rankID);
 rank_t *CL_GetRankByIdx(const int index);

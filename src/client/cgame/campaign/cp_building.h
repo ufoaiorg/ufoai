@@ -130,7 +130,7 @@ typedef struct building_s {
  */
 #define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
 
-void B_ParseBuildings(const char *name, const char **text, bool link);
+void B_ParseBuildings(const char *name, const char** text, bool link);
 bool B_BuildingScriptSanityCheck(void);
 
 building_t *B_GetBuildingTemplate(const char *buildingName);

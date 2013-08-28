@@ -74,7 +74,7 @@ static const value_t alien_group_vals[] = {
 /**
  * @sa CL_ParseScriptFirst
  */
-static void CP_ParseAlienTeam (const char *name, const char **text)
+static void CP_ParseAlienTeam (const char *name, const char** text)
 {
 	const char *errhead = "CP_ParseAlienTeam: unexpected end of file (alienteam ";
 	const char *token;
@@ -198,7 +198,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  */
-static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char **text)
+static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char** text)
 {
 	const char *errhead = "CP_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
@@ -250,7 +250,7 @@ static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const c
  * @param[in] researchable Mark them researchable or not researchable
  * @sa CP_ParseScriptFirst
  */
-static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, bool researchable)
+static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char** text, bool researchable)
 {
 	const char *errhead = "CP_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
@@ -331,7 +331,7 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-static void CP_ParseSalary (const char *name, const char **text, salary_t *s)
+static void CP_ParseSalary (const char *name, const char** text, salary_t *s)
 {
 	Com_ParseBlock(name, text, s, salary_vals, cp_campaignPool);
 }
@@ -375,7 +375,7 @@ static const value_t campaign_vals[] = {
 /**
  * @sa CL_ParseClientData
  */
-static void CP_ParseCampaign (const char *name, const char **text)
+static void CP_ParseCampaign (const char *name, const char** text)
 {
 	const char *errhead = "CP_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
@@ -502,7 +502,7 @@ static const value_t components_type_vals[] = {
  * @param[in] text the whole following text after the "components" definition.
  * @sa CP_ParseScriptFirst
  */
-static void CP_ParseComponents (const char *name, const char **text)
+static void CP_ParseComponents (const char *name, const char** text)
 {
 	components_t *comp;
 	const char *errhead = "CP_ParseComponents: unexpected end of file.";
@@ -637,7 +637,7 @@ components_t *CP_GetComponentsByID (const char *id)
  * @sa CP_ParseCampaignData
  * @sa CP_ParseScriptSecond
  */
-static void CP_ParseScriptFirst (const char *type, const char *name, const char **text)
+static void CP_ParseScriptFirst (const char *type, const char *name, const char** text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "up_chapter"))
@@ -681,7 +681,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-static void CP_ParseScriptSecond (const char *type, const char *name, const char **text)
+static void CP_ParseScriptSecond (const char *type, const char *name, const char** text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "building"))
@@ -697,7 +697,7 @@ static void CP_ParseScriptSecond (const char *type, const char *name, const char
 /**
  * @brief Parses the campaign specific data - this data can only be parsed once the campaign started
  */
-static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char **text)
+static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char** text)
 {
 	if (Q_streq(type, "researched"))
 		CP_ParseResearchedCampaignItems(campaign, name, text);
