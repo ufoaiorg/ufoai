@@ -2,7 +2,6 @@
 item implant_amphetamine
 {
 	name		"_Amphetamine Implant"
-	model		"weapons/implants/amphetamine"
 	price		8000
 	size		1
 	implant		true
@@ -17,7 +16,6 @@ item implant_amphetamine
 		{
 			shots	1
 			ammo	5
-			firesnd	"weapons/implant"
 
 			effect active
 			{
@@ -47,7 +45,6 @@ item implant_amphetamine
 item implant_muscular
 {
 	name		"_Muscle Stimulant"
-	model		"weapons/implants/stimulant"
 	price		8000
 	size		1
 	implant		true
