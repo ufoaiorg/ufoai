@@ -121,15 +121,15 @@ class ReactionFireTargets
 {
 public:
 	void init();
-	void add (const Edict* shooter, const Edict* target, const int tusForShot);
-	void remove (Edict* shooter, const Edict* target);
-	bool hasExpired (const Edict* shooter, const Edict* target, const int tusTarget);
-	int getTriggerTUs (const Edict* shooter, const Edict* target);
-	void advance (const Edict* shooter, const int tusShot);
+	void add(const Edict* shooter, const Edict* target, const int tusForShot);
+	void remove(const Edict* shooter, const Edict* target);
+	bool hasExpired(const Edict* shooter, const Edict* target, const int tusTarget);
+	int getTriggerTUs(const Edict* shooter, const Edict* target);
+	void advance(const Edict* shooter, const int tusShot);
 	void reset();
-	void notifyClientMove(const Edict* target, bool startMove);
-	void notifyClientOnStep (const Edict* target, int step);
-	void create (const Edict* shooter);
+	void notifyClientMove(const Edict* target, int step, bool startMove);
+	void notifyClientOnStep(const Edict* target, int step);
+	void create(const Edict* shooter);
 	void resetTargetList(const Edict* shooter);
 
 private:
@@ -269,7 +269,7 @@ void ReactionFireTargets::add (const Edict* shooter, const Edict* target, const 
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
  */
-void ReactionFireTargets::remove (Edict* shooter, const Edict* target)
+void ReactionFireTargets::remove (const Edict* shooter, const Edict* target)
 {
 	ReactionFireTargetList *rfts = find(shooter);
 
@@ -298,6 +298,9 @@ void ReactionFireTargets::remove (Edict* shooter, const Edict* target)
 void ReactionFireTargets::resetTargetList (const Edict* shooter)
 {
 	ReactionFireTargetList* rfts = find(shooter);
+	for (int i = rfts->count - 1; i >= 0; --i)
+		remove(shooter, rfts->targets[i].target);
+
 	rfts->reset();
 }
 
