@@ -53,7 +53,11 @@ int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg
 	const le_t *target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
-
+	if (step >= MAX_ROUTE)
+		return eventTiming->nextTime;
+	int stepTime = CL_GetStepTime(eventTiming, target, step);
+	if (eventTiming->shootTime > stepTime)
+		return eventTiming->impactTime;
 	return CL_GetStepTime(eventTiming, target, step) - 400;
 }
 
