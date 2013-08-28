@@ -131,6 +131,7 @@ public:
 	void notifyClientOnStep(const Edict* target, int step);
 	void create(const Edict* shooter);
 	void resetTargetList(const Edict* shooter);
+	void notifyClientOnShot(const Edict* target, int step);
 
 private:
 	ReactionFireTargetList rfData[MAX_RF_DATA];
@@ -176,7 +177,24 @@ void ReactionFireTargets::notifyClientOnStep (const Edict* target, int step)
 	}
 }
 
-void ReactionFireTargets::notifyClientMove (const Edict* target, bool startMove)
+void ReactionFireTargets::notifyClientOnShot (const Edict* target, int tusTarget)
+{
+	for (int i = 0; i < MAX_RF_DATA; i++) {
+		ReactionFireTargetList* rfts = &rfData[i];
+		if (rfts->entnum == RF_NO_ENTNUM)
+			continue;
+		const Edict* shooter = G_EdictsGetByNum(rfts->entnum);
+		for (int j = 0; j < rfts->count; j++) {
+			ReactionFireTarget& t = rfts->targets[j];
+			if (t.target != target)
+				continue;
+			const int tus = std::max(0, target->TU - tusTarget - t.triggerTUs);
+			G_EventReactionFireTargetUpdate(*shooter, *target, tus, MAX_ROUTE);
+		}
+	}
+}
+
+void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool startMove)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList *rfts = &rfData[i];
@@ -188,9 +206,9 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, bool startMove)
 				continue;
 			if (startMove) {
 				const int tus = target->TU - rfts->targets[j].triggerTUs;
-				G_EventReactionFireAddTarget(*shooter, *target, tus, target->moveinfo.steps);
+				G_EventReactionFireAddTarget(*shooter, *target, tus, step);
 			} else {
-				G_EventReactionFireRemoveTarget(*shooter, *target, target->moveinfo.steps);
+				G_EventReactionFireRemoveTarget(*shooter, *target, step);
 			}
 		}
 	}
@@ -400,8 +418,9 @@ public:
 	void updateAllTargets(const Edict* target);
 	bool tryToShoot(Edict* shooter, const Edict* target);
 	bool isInWeaponRange(const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
-	const fireDef_t* getFireDef (const Edict* shooter) const;
+	const fireDef_t* getFireDef(const Edict* shooter) const;
 	void resetTargets(const Edict* shooter);
+	void notifyClientOnShot(const Edict* target, int tusTarget);
 };
 static ReactionFire rf;
 
@@ -794,6 +813,11 @@ bool ReactionFire::tryToShoot (Edict* shooter, const Edict* target)
 	return tookShot;
 }
 
+void ReactionFire::notifyClientOnShot (const Edict* target, int tusTarget)
+{
+	rft.notifyClientOnShot(target, tusTarget);
+}
+
 void ReactionFire::notifyClientOnStep (const Edict* target, int step)
 {
 	rft.notifyClientOnStep(target, step);
@@ -881,6 +905,16 @@ bool G_ReactionFireOnMovement (Edict* target, int step)
 	return fired;
 }
 
+static void G_ReactionFireNofityClientStartShot (const Edict* target)
+{
+	rft.notifyClientMove(target, MAX_ROUTE, true);
+}
+
+static void G_ReactionFireNofityClientEndShot (const Edict* target)
+{
+	rft.notifyClientMove(target, MAX_ROUTE, false);
+}
+
 /**
  * @brief Called when 'target' is about to shoot, this forces a 'draw' to decide who gets the first shot
  * @param[in] target The entity about to shoot
@@ -892,7 +926,9 @@ void G_ReactionFirePreShot (const Edict* target, const int fdTime)
 	bool repeat = true;
 
 	/* Check to see whether this triggers any reaction fire */
+	G_ReactionFireNofityClientStartShot(target);
 	rf.updateAllTargets(target);
+	rf.notifyClientOnShot(target, fdTime);
 
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
@@ -934,7 +970,9 @@ void G_ReactionFireOnDead (const Edict* target)
 void G_ReactionFirePostShot (Edict* target)
 {
 	/* Check to see whether this resolves any reaction fire */
+	rf.notifyClientOnShot(target, 0);
 	rf.checkExecution(target);
+	G_ReactionFireNofityClientEndShot(target);
 }
 
 /**
@@ -964,10 +1002,10 @@ void G_ReactionFireReset (int team)
 
 void G_ReactionFireNofityClientStartMove (const Edict* target)
 {
-	rft.notifyClientMove(target, true);
+	rft.notifyClientMove(target, target->moveinfo.steps - 1, true);
 }
 
 void G_ReactionFireNofityClientEndMove (const Edict* target)
 {
-	rft.notifyClientMove(target, false);
+	rft.notifyClientMove(target, target->moveinfo.steps - 1, false);
 }
