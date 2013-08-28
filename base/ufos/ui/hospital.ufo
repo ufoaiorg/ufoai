@@ -353,7 +353,7 @@ window hospital_employee
 				*node:root.implants.equip_scroll@fullsize = <fullsize>
 			}
 			onSelect { cmd "hosp_implant_details <lastselectedid>;" }
-			onChange { cmd "hosp_assign_implant <node:root.ucn@integer> <lastselectedid>;" }
+			onChange { cmd "hosp_implant_change <node:root.ucn@integer> <lastselectedid>;" }
 		}
 
 		vscrollbar equip_scroll {
@@ -423,8 +423,8 @@ window hospital_employee
 	 */
 	confunc hospital_employee_add_implant {
 		call *node:root.implants.list@createChild("implant<1>", "cmpHospitalImplant")
-		*node:root.implants.list.implant<1>.name@string = "<2>"
-		*node:root.implants.list.implant<1>.img@src = "<3>"
+		*node:root.implants.list.implant<1>.name@string = <2>
+		*node:root.implants.list.implant<1>.img@src = <3>
 		if ( <5> > 0 ) {
 			*node:root.implants.list.implant<1>.timeremaining@max = <4>
 			*node:root.implants.list.implant<1>.timeremaining@current = <5>

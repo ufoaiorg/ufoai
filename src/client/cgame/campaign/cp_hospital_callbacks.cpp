@@ -88,7 +88,38 @@ static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 	HOS_EntryWoundData(chr);
 }
 
-static void HOS_ApplyImplant_f (void)
+/**
+ * @brief Calls all the ui confuncs to show the implants of the given character
+ * @param[in] c The character to show the implants for
+ */
+static void HOS_UpdateCharacterImplantList (const character_t& c)
+{
+	cgi->UI_ExecuteConfunc("hospital_employee_clear_implants");
+	for (int i = 0; i < lengthof(c.implants); i++) {
+		const implant_t& implant = c.implants[i];
+		const implantDef_t *def = implant.def;
+		if (def == nullptr)
+			continue;
+		const objDef_t& od = *def->item;
+		cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i \"%s\" \"%s\" %i %i %i %i",
+				def->idx, _(od.name), od.image, def->installationTime,
+				implant.installedTime, def->removeTime, implant.removedTime);
+	}
+}
+
+static Item* HOS_GetImplant (const character_t& chr, const implantDef_t& def)
+{
+	Item *item = chr.inv.getContainer2(CID_IMPLANT);
+	while (item) {
+		if (item->def() == def.item) {
+			return item;
+		}
+		item = item->getNext();
+	}
+	return nullptr;
+}
+
+static void HOS_ImplantChange_f (void)
 {
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <ucn> <implantid>\n", cgi->Cmd_Argv(0));
@@ -104,28 +135,39 @@ static void HOS_ApplyImplant_f (void)
 
 	character_t& chr = e->chr;
 	const int odIdx = atoi(cgi->Cmd_Argv(2));
+	Com_Printf("odidx: %i, ucn: %i\n", odIdx, ucn);
 	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	if (od == nullptr)
 		return;
 	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
-	const bool state = HOS_ApplyImplant(chr, *def);
-	if (!state) {
-		Item *item = chr.inv.getContainer2(CID_IMPLANT);
-		while (item) {
-			if (item->def() == od) {
+	Item *item = HOS_GetImplant(chr, *def);
+	if (item != nullptr) {
+		cgi->INV_RemoveFromInventory(&chr.inv, chr.inv.getContainer(CID_IMPLANT).def(), item);
+	} else {
+		const bool state = HOS_ApplyImplant(chr, *def);
+		if (!state) {
+			if (item != nullptr)
 				cgi->INV_RemoveFromInventory(&chr.inv, chr.inv.getContainer(CID_IMPLANT).def(), item);
-				break;
-			}
-			item = item->getNext();
-		}
 
-		Com_Printf("Could not apply implant %s to character: %i\n", def->id, chr.ucn);
-		return;
+			Com_Printf("Could not apply implant %s to character: %i\n", def->id, chr.ucn);
+			return;
+		}
 	}
-	cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i", def->idx);
+	HOS_UpdateCharacterImplantList(chr);
 	Com_Printf("Applied implant %s to character: %i\n", def->id, chr.ucn);
+}
+
+static void HOS_ImplantDetails_f (void)
+{
+	const int odIdx = atoi(cgi->Cmd_Argv(2));
+	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
+	if (od == nullptr)
+		return;
+	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
+	if (def == nullptr)
+		return;
 }
 
 /**
@@ -155,25 +197,6 @@ static void HOS_Init_f (void)
 
 			HOS_Entry(*employee, injuryLevel);
 		}
-	}
-}
-
-/**
- * @brief Calls all the ui confuncs to show the implants of the given character
- * @param[in] c The character to show the implants for
- */
-static void HOS_UpdateCharacterImplantList (const character_t& c)
-{
-	cgi->UI_ExecuteConfunc("hospital_employee_clear_implants");
-	for (int i = 0; i < lengthof(c.implants); i++) {
-		const implant_t& implant = c.implants[i];
-		const implantDef_t *def = implant.def;
-		if (def == nullptr)
-			continue;
-		const objDef_t& od = *def->item;
-		cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i \"%s\" \"%s\" %i %i %i %i",
-				def->idx, _(od.name), od.image, def->installationTime,
-				implant.installedTime, def->removeTime, implant.removedTime);
 	}
 }
 
@@ -226,12 +249,14 @@ void HOS_InitCallbacks (void)
 {
 	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
 	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
-	cgi->Cmd_AddCommand("hosp_assign_implant", HOS_ApplyImplant_f, "Assign an implant to an employee");
+	cgi->Cmd_AddCommand("hosp_implant_change", HOS_ImplantChange_f, "Assign or remove an implant to an employee");
+	cgi->Cmd_AddCommand("hosp_implant_details", HOS_ImplantDetails_f, "Print details for an implant");
 }
 
 void HOS_ShutdownCallbacks (void)
 {
 	cgi->Cmd_RemoveCommand("hosp_empl_init");
 	cgi->Cmd_RemoveCommand("hosp_init");
-	cgi->Cmd_RemoveCommand("hosp_assign_implant");
+	cgi->Cmd_RemoveCommand("hosp_implant_change");
+	cgi->Cmd_RemoveCommand("hosp_implant_details");
 }

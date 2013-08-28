@@ -721,25 +721,26 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic)
 				if (packed)
 					break;
 			}
+		} else if (ic->def()->headgear) {
+			target = CID_HEADGEAR;
+			packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
+		} else if (ic->def()->implant) {
+			target = CID_IMPLANT;
+			packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
 		} else {
-			if (ic->def()->headgear) {
-				target = CID_HEADGEAR;
-				packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
-			} else {
-				/* left and right are single containers, but this might change - it's cleaner to check
-				 * for available space here, too */
-				const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
-				const size_t size = lengthof(idxArray);
-				Item *tItem = nullptr;
-				unsigned int i;
-				for (i = 0; i < size; i++) {
-					target = idxArray[i];
-					packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
-					if (packed) {
-						if ((ic->isWeapon() && !ic->getAmmoLeft()) || ic->def()->weapons[0])
-							ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
-						break;
-					}
+			/* left and right are single containers, but this might change - it's cleaner to check
+			 * for available space here, too */
+			const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
+			const size_t size = lengthof(idxArray);
+			Item *tItem = nullptr;
+			unsigned int i;
+			for (i = 0; i < size; i++) {
+				target = idxArray[i];
+				packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
+				if (packed) {
+					if ((ic->isWeapon() && !ic->getAmmoLeft()) || ic->def()->weapons[0])
+						ammoChanged = INV_LoadWeapon(tItem, ui_inventory, container, INVDEF(target));
+					break;
 				}
 			}
 		}
