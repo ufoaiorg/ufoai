@@ -46,7 +46,7 @@ static void HOS_EntryWoundData (const character_t& chr)
 	}
 }
 
-static float HOS_InjuryLevel (const character_t *const chr)
+static float HOS_GetInjuryLevel (const character_t *const chr)
 {
 	float injuryLevel = 0.0f;
 
@@ -66,7 +66,7 @@ static const char* HOS_GetRank (const Employee &employee)
 	return E_GetEmployeeString(employee.getType(), 1);
 }
 
-static const char *HOS_GetInjuryLevel (const Employee &employee, float injuryLevel)
+static const char *HOS_GetInjuryLevelString (const Employee &employee, float injuryLevel)
 {
 	/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 	if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.5) || injuryLevel >= 0.5)
@@ -86,7 +86,7 @@ static const char *HOS_GetInjuryLevel (const Employee &employee, float injuryLev
 static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 {
 	const char *rank = HOS_GetRank(employee);
-	const char *level = HOS_GetInjuryLevel(employee, injuryLevel);
+	const char *level = HOS_GetInjuryLevelString(employee, injuryLevel);
 	const character_t& chr = employee.chr;
 
 	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank);
@@ -189,7 +189,7 @@ static void HOS_Init_f (void)
 			/* Don't show soldiers who are not in this base or gone in mission */
 			if (!employee->isHiredInBase(base) || employee->isAwayFromBase())
 				continue;
-			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
+			const float injuryLevel = HOS_GetInjuryLevel(&employee->chr);
 			HOS_Entry(*employee, injuryLevel);
 		}
 	}
