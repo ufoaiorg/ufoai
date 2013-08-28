@@ -247,9 +247,7 @@ bool objDef_t::isBaseDefenceItem () const
 }
 
 /**
- * @brief Returns the index of this item in the inventory.
- * @note check that id is a none empty string
- * @note previously known as RS_GetItem
+ * @brief Returns the item that belongs to the given id or @c nullptr if it wasn't found.
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByID
  */
@@ -268,7 +266,7 @@ const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 }
 
 /**
- * @brief Returns the index of this item in the inventory.
+ * @brief Returns the item that belongs to the given index or @c nullptr if the index is invalid.
  */
 const objDef_t *INVSH_GetItemByIDX (int index)
 {
@@ -304,6 +302,39 @@ const implantDef_t *INVSH_GetImplantForObjDef (const objDef_t* od)
 	}
 	Com_Printf("INVSH_GetImplantForObjDef: could not get implant for %s\n", od->id);
 	return nullptr;
+}
+
+/**
+ * @brief Returns the implant that belongs to the given id or @c nullptr if it wasn't found.
+ * @param[in] id the implant id in our implant definition array (csi.implants)
+ * @sa INVSH_GetImplantByID
+ */
+const implantDef_t *INVSH_GetImplantByIDSilent (const char *id)
+{
+	if (!id)
+		return nullptr;
+
+	for (int i = 0; i < CSI->numImplants; ++i) {
+		const implantDef_t *item = &CSI->implants[i];
+		if (Q_streq(id, item->id)) {
+			return item;
+		}
+	}
+	return nullptr;
+}
+
+/**
+ * @brief Returns the implant that belongs to the given id or @c nullptr if it wasn't found.
+ * @param[in] id the implant id in our implant definition array (csi.implants)
+ * @sa INVSH_GetImplantByIDSilent
+ */
+const implantDef_t *INVSH_GetImplantByID (const char *id)
+{
+	const implantDef_t *implantDef = INVSH_GetImplantByIDSilent(id);
+	if (!implantDef)
+		Com_Printf("INVSH_GetImplantByID: Implant \"%s\" not found.\n", id);
+
+	return implantDef;
 }
 
 /**

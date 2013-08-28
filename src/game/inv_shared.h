@@ -651,6 +651,9 @@ const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 
 const implantDef_t *INVSH_GetImplantForObjDef(const objDef_t* od);
+const implantDef_t *INVSH_GetImplantByID(const char *id);
+const implantDef_t *INVSH_GetImplantByIDSilent(const char *id);
+
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))

@@ -210,8 +210,6 @@ static void HOS_EmployeeInit_f (void)
 	if (e == nullptr)
 		return;
 
-	cgi->UI_ResetData(TEXT_STANDARD);
-
 	character_t& c = e->chr;
 	const chrScoreGlobal_t& score = c.score;
 	const char *rank = "";

@@ -47,6 +47,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* @todo For compatibility with older saves */
 #define SAVE_CHARACTER_WOUNDTYPE "type"
 
+#define SAVE_CHARACTER_IMPLANTS "implants"
+#define SAVE_CHARACTER_IMPLANT "implant"
+#define SAVE_CHARACTER_IMPLANT_INSTALLEDTIME "installedtime"
+#define SAVE_CHARACTER_IMPLANT_REMOVETIME "removetime"
+#define SAVE_CHARACTER_IMPLANT_IMPLANT "implant"
+
 #define SAVE_CHARACTER_SCORES "scores"
 
 #define SAVE_CHARACTER_SKILLS "skill"

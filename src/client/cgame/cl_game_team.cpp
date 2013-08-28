@@ -666,7 +666,6 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	xmlNode_t *sScore;
 	xmlNode_t *sInventory;
 	xmlNode_t *sInjuries;
-	int k;
 	const chrScoreGlobal_t *score;
 
 	assert(chr);
@@ -688,22 +687,35 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	XML_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr->fieldSize);
 	XML_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
 
+	const int implants = lengthof(chr->implants);
+	xmlNode_t *sImplants = XML_AddNode(p, SAVE_CHARACTER_IMPLANTS);
+	for (int i = 0; i < implants; i++) {
+		const implant_t& implant = chr->implants[i];
+		if (implant.def == nullptr)
+			continue;
+
+		xmlNode_t *sImplant = XML_AddNode(sImplants, SAVE_CHARACTER_IMPLANT);
+		XML_AddIntValue(sImplant, SAVE_CHARACTER_IMPLANT_INSTALLEDTIME, implant.installedTime);
+		XML_AddIntValue(sImplant, SAVE_CHARACTER_IMPLANT_REMOVETIME, implant.removedTime);
+		XML_AddString(sImplant, SAVE_CHARACTER_IMPLANT_IMPLANT, implant.def->id);
+	}
+
 	sInjuries = XML_AddNode(p, SAVE_CHARACTER_INJURIES);
 	/* Store wounds */
-	for (k = 0; k < chr->teamDef->bodyTemplate->numBodyParts(); ++k) {
-		if (chr->wounds.treatmentLevel[k]) {
-			xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
+	for (int k = 0; k < chr->teamDef->bodyTemplate->numBodyParts(); ++k) {
+		if (!chr->wounds.treatmentLevel[k])
+			continue;
+		xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
 
-			XML_AddString(sWound, SAVE_CHARACTER_WOUNDEDPART, chr->teamDef->bodyTemplate->id(k));
-			XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
-		}
+		XML_AddString(sWound, SAVE_CHARACTER_WOUNDEDPART, chr->teamDef->bodyTemplate->id(k));
+		XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
 	}
 
 	score = &chr->score;
 
 	sScore = XML_AddNode(p, SAVE_CHARACTER_SCORES);
 	/* Store skills */
-	for (k = 0; k <= SKILL_NUM_TYPES; k++) {
+	for (int k = 0; k <= SKILL_NUM_TYPES; k++) {
 		if (score->experience[k] || score->initialSkills[k]
 		 || (k < SKILL_NUM_TYPES && score->skills[k])) {
 			xmlNode_t *sSkill = XML_AddNode(sScore, SAVE_CHARACTER_SKILLS);
@@ -721,7 +733,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 		}
 	}
 	/* Store kills */
-	for (k = 0; k < KILLED_NUM_TYPES; k++) {
+	for (int k = 0; k < KILLED_NUM_TYPES; k++) {
 		if (score->kills[k] || score->stuns[k]) {
 			xmlNode_t *sKill = XML_AddNode(sScore, SAVE_CHARACTER_KILLS);
 			XML_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
@@ -801,6 +813,17 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 			return false;
 		}
 		chr->wounds.treatmentLevel[bodyPart] = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, 0);
+	}
+
+	xmlNode_t *sImplants = XML_GetNode(p, SAVE_CHARACTER_IMPLANTS);
+	/* Load implants */
+	int implantCnt = 0;
+	for (xmlNode_t* sImplant = XML_GetNode(sImplants, SAVE_CHARACTER_IMPLANT); sImplant; sImplant = XML_GetNextNode(sImplant, sImplants, SAVE_CHARACTER_IMPLANT)) {
+		implant_t& implant = chr->implants[implantCnt++];
+		implant.installedTime = XML_GetInt(sImplants, SAVE_CHARACTER_IMPLANT_INSTALLEDTIME, 0);
+		implant.removedTime = XML_GetInt(sImplants, SAVE_CHARACTER_IMPLANT_REMOVETIME, 0);
+		const char *implantDefID = XML_GetString(sImplants, SAVE_CHARACTER_IMPLANT_IMPLANT);
+		implant.def = INVSH_GetImplantByID(implantDefID);
 	}
 
 	Com_RegisterConstList(saveCharacterConstants);
