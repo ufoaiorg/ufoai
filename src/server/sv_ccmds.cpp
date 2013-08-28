@@ -385,7 +385,7 @@ static void SV_ServerCommand_f (void)
  * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cmd_AddParamCompleteFunction
  */
-static int SV_CompleteMapCommand (const char *partial, const char **match)
+static int SV_CompleteMapCommand (const char *partial, const char** match)
 {
 	const char *dayNightStr = nullptr;
 	static char dayNightMatch[7];
@@ -475,7 +475,7 @@ static serverCommand_t const serverCommandList[] = {
  * @brief Autocomplete function for server commands
  * @sa ServerCommand
  */
-static int SV_CompleteServerCommand (const char *partial, const char **match)
+static int SV_CompleteServerCommand (const char *partial, const char** match)
 {
 	int n = 0;
 	for (serverCommand_t const* i = serverCommandList; i->name; ++i) {

@@ -285,7 +285,7 @@ static int Com_FindNameType (const char *nameType)
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
  */
-const char *Com_EParse (const char **text, const char *errhead, const char *errinfo, char *target, size_t size)
+const char *Com_EParse (const char** text, const char *errhead, const char *errinfo, char *target, size_t size)
 {
 	const char *token;
 
@@ -1296,7 +1296,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-bool Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token)
+bool Com_ParseBlockToken (const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool, const char *token)
 {
 	const value_t *v;
 	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
@@ -1349,7 +1349,7 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
  * @param[out] list list to return
  * @return True if the list is well formed, else false.
  */
-bool Com_ParseList (const char **text, linkedList_t** list)
+bool Com_ParseList (const char** text, linkedList_t** list)
 {
 	*list = nullptr;
 
@@ -1379,7 +1379,7 @@ bool Com_ParseList (const char **text, linkedList_t** list)
 	return true;
 }
 
-bool Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool)
+bool Com_ParseBlock (const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
@@ -1531,7 +1531,7 @@ static const value_t fdps[] = {
 };
 
 
-static bool Com_ParseFire (const char *name, const char **text, fireDef_t *fd)
+static bool Com_ParseFire (const char *name, const char** text, fireDef_t *fd)
 {
 	const char *errhead = "Com_ParseFire: unexpected end of file";
 	const char *token;
@@ -1609,7 +1609,7 @@ static bool Com_ParseFire (const char *name, const char **text, fireDef_t *fd)
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmourOrResistance (const char *name, const char **text, short *ad, bool rating)
+static void Com_ParseArmourOrResistance (const char *name, const char** text, short *ad, bool rating)
 {
 	const char *errhead = "Com_ParseArmourOrResistance: unexpected end of file";
 	const char *token;
@@ -1680,7 +1680,7 @@ struct parseItemWeapon_t {
 	char *token;
 };
 
-static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char *token, const char **text)
+static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char *token, const char** text)
 {
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* get it's body */
@@ -1744,7 +1744,7 @@ static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char 
  * @brief Parses weapon, equipment, craft items and armour
  * @sa Com_ParseArmour
  */
-static void Com_ParseItem (const char *name, const char **text)
+static void Com_ParseItem (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	objDef_t *od;
@@ -1887,7 +1887,7 @@ static const value_t idps[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseInventory (const char *name, const char **text)
+static void Com_ParseInventory (const char *name, const char** text)
 {
 	containerIndex_t cid;
 
@@ -1961,7 +1961,7 @@ static const value_t equipment_definition_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseEquipment (const char *name, const char **text)
+static void Com_ParseEquipment (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
@@ -2276,7 +2276,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
  * @sa Com_ParseActors
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorNames (const char *name, const char **text)
+static void Com_ParseActorNames (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
 	const char *token;
@@ -2350,7 +2350,7 @@ static void Com_ParseActorNames (const char *name, const char **text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorModels (const char *name, const char **text, teamDef_t *td)
+static void Com_ParseActorModels (const char *name, const char** text, teamDef_t *td)
 {
 	const char *errhead = "Com_ParseActorModels: unexpected end of file (actors ";
 	const char *token;
@@ -2415,7 +2415,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t *td)
+static void Com_ParseActorSounds (const char *name, const char** text, teamDef_t *td)
 {
 	const char *const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
 	const char *token;
@@ -2511,7 +2511,7 @@ static const value_t teamDefValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseTeam (const char *name, const char **text)
+static void Com_ParseTeam (const char *name, const char** text)
 {
 	teamDef_t *td;
 	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
@@ -2667,7 +2667,7 @@ static const value_t ugvValues[] = {
  * @brief Parse 2x2 units (e.g. UGVs)
  * @sa CL_ParseClientData
  */
-static void Com_ParseUGVs (const char *name, const char **text)
+static void Com_ParseUGVs (const char *name, const char** text)
 {
 	ugv_t *ugv;
 	int i;
@@ -2698,7 +2698,7 @@ static void Com_ParseUGVs (const char *name, const char **text)
 /**
  * @brief Parses character templates from scripts
  */
-static void Com_ParseCharacterTemplate (const char *name, const char **text)
+static void Com_ParseCharacterTemplate (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseCharacterTemplate: unexpected end of file";
 	const char *token;
@@ -2768,7 +2768,7 @@ static const char *const penaltyNames[MODIFIER_MAX] = {
 		"accuracy", "shooting", "movement", "visibility", "reaction", "max_tu"
 };
 
-static void Com_ParseBodyPart (const char *name, const char **text, BodyData *bd)
+static void Com_ParseBodyPart (const char *name, const char** text, BodyData *bd)
 {
 	const char *errhead = "Com_ParseBodyPart: unexpected end of file";
 	const char *token;
@@ -2835,7 +2835,7 @@ static void Com_ParseBodyPart (const char *name, const char **text, BodyData *bd
 	bd->addBodyPart(bp);
 }
 
-static void Com_ParseBodyTemplate (const char *name, const char **text)
+static void Com_ParseBodyTemplate (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseBodyTemplate: unexpected end of file";
 	const char *token;
@@ -2924,7 +2924,7 @@ const terrainType_t *Com_GetTerrainType (const char *textureName)
  * @note Terrain definitions are used for footstep sounds and terrain particles
  * @sa Com_ParseScripts
  */
-static void Com_ParseTerrain (const char *name, const char **text)
+static void Com_ParseTerrain (const char *name, const char** text)
 {
 
 	/* check for additions to existing name categories */
@@ -2960,7 +2960,7 @@ static const value_t gameTypeValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseGameTypes (const char *name, const char **text)
+static void Com_ParseGameTypes (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	const char *token;
@@ -3038,7 +3038,7 @@ DAMAGE TYPES INTERPRETER
 ==============================================================================
 */
 
-static void Com_ParseDamageTypes (const char *name, const char **text)
+static void Com_ParseDamageTypes (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
 	const char *token;
@@ -3320,7 +3320,7 @@ static const value_t mapdef_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseMapDefinition (const char *name, const char **text)
+static void Com_ParseMapDefinition (const char *name, const char** text)
 {
 	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
 	mapDef_t *md;

@@ -58,7 +58,7 @@ void CL_SlowFrame (int now, void *data)
 {
 }
 
-bool CL_ParseClientData (const char *type, const char *name, const char **text)
+bool CL_ParseClientData (const char *type, const char *name, const char** text)
 {
 	return true;
 }

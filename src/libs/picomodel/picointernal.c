@@ -181,7 +181,7 @@ void _pico_free (void *ptr)
 /**
  * @brief wrapper around the loadfile function pointer
  */
-void _pico_load_file (char *name, unsigned char **buffer, int *bufSize)
+void _pico_load_file (char *name, unsigned char** buffer, int *bufSize)
 {
 	/* sanity checks */
 	if (name == NULL) {

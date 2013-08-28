@@ -1186,7 +1186,7 @@ void CL_ParticleRun (void)
 			CL_ParticleRun2(p);
 }
 
-static void CL_ParsePtlCmds (const char *name, const char **text)
+static void CL_ParsePtlCmds (const char *name, const char** text)
 {
 	ptlCmd_t *pc;
 	const value_t *pp;
@@ -1382,7 +1382,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
  * @return the position of the particle in ptlDef array
  * @sa CL_ParseClientData
  */
-void CL_ParseParticle (const char *name, const char **text)
+void CL_ParseParticle (const char *name, const char** text)
 {
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;

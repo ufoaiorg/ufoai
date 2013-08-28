@@ -107,7 +107,7 @@ char *_pico_clone_alloc (const char *str);
 void _pico_free (void *ptr);
 
 /* files */
-void _pico_load_file (char *name, unsigned char **buffer, int *bufSize);
+void _pico_load_file (char *name, unsigned char** buffer, int *bufSize);
 void _pico_free_file (void *buffer);
 
 /* strings */

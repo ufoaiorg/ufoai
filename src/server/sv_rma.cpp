@@ -304,7 +304,7 @@ static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileNam
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTileSet (const char *filename, const char **text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTileSet (const char *filename, const char** text, MapInfo *map, bool inherit)
 {
 	const char *errhead = "SV_ParseMapTileSet: Unexpected end of file (";
 	const char *token;
@@ -364,7 +364,7 @@ static bool SV_ParseMapTileSet (const char *filename, const char **text, MapInfo
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTile (const char *filename, const char** text, MapInfo *map, bool inherit)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
@@ -449,7 +449,7 @@ static bool SV_ParseMapTile (const char *filename, const char **text, MapInfo *m
  * @param errhead Error header
  * @return @c nullptr if file has invalid format, @c the tilename of the cvar otherwise.
  */
-static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char *token, const char *filename, const char **text, const char *errhead)
+static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char *token, const char *filename, const char** text, const char *errhead)
 {
 	const cvar_t *cvar;
 
@@ -493,7 +493,7 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 	return cvar->string;
 }
 
-static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filename, const char **text, const Assembly *a)
+static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filename, const char** text, const Assembly *a)
 {
 	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
 	const TileSet *tileSet;
@@ -521,7 +521,7 @@ static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filena
  * @param[in] text The text of the ump file to parse
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const char **text, Assembly *a)
+static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const char** text, Assembly *a)
 {
 	const char *errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
 	const char *token;
@@ -549,7 +549,7 @@ static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const cha
 	return true;
 }
 
-static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, const char **text, Assembly *a)
+static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, const char** text, Assembly *a)
 {
 	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
 	const TileSet *tileSet;
@@ -605,7 +605,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
  * @note: format of tile: "[tilename] min max"
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char **text, Assembly *a)
+static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char** text, Assembly *a)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	const char *token;

@@ -430,7 +430,7 @@ void exec_stop (Exec *e)
  * @brief Runs the given command and blocks the GUI until command is finished
  * @sa exec_run for async processes
  */
-gint exec_run_cmd (const std::string& cmd, gchar **output, const std::string& working_dir)
+gint exec_run_cmd (const std::string& cmd, gchar** output, const std::string& working_dir)
 {
 	gchar *std_out = NULL;
 	gchar *std_err = NULL;

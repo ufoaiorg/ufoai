@@ -50,7 +50,7 @@ static void Usage (void)
 /**
  * @brief Parameter parsing
  */
-static void SL_Parameter (int argc, char **argv)
+static void SL_Parameter (int argc, char** argv)
 {
 	int i;
 
@@ -88,7 +88,7 @@ void Com_Printf (const char *format, ...)
 	printf("%s", out_buffer);
 }
 
-int main (int argc, char **argv)
+int main (int argc, char** argv)
 {
 	char bspFilename[MAX_OSPATH];
 

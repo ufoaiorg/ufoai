@@ -337,7 +337,7 @@ static void UM_DefaultParameter (void)
 /**
  * @brief Parameter parsing
  */
-static void UM_Parameter (int argc, char **argv)
+static void UM_Parameter (int argc, char** argv)
 {
 	int i;
 
@@ -598,7 +598,7 @@ void R_ReallocateTexunitArray (gltexunit_t *texunit, int size)
 		r_state.active_texunit = texunit;
 }
 
-int main (int argc, char **argv)
+int main (int argc, char** argv)
 {
 	Com_Printf("---- ufomodel " VERSION " ----\n");
 

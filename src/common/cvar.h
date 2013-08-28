@@ -156,7 +156,7 @@ const char *Cvar_VariableStringOld(const char *varName);
  * @brief attempts to match a partial variable name for command line completion
  * returns nullptr if nothing fits
  */
-int Cvar_CompleteVariable(const char *partial, const char **match);
+int Cvar_CompleteVariable(const char *partial, const char** match);
 
 /**
  * @brief any CVAR_LATCHED variables that have been set will now take effect

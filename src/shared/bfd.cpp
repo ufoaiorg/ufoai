@@ -70,7 +70,7 @@ static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
 			&(data->file), &(data->func), &(data->line));
 }
 
-void find (struct bfd_ctx * b, size_t offset, const char **file, const char **func, unsigned *line)
+void find (struct bfd_ctx * b, size_t offset, const char** file, const char** func, unsigned *line)
 {
 	struct find_info data;
 	data.func = nullptr;
@@ -92,7 +92,7 @@ void find (struct bfd_ctx * b, size_t offset, const char **file, const char **fu
 	}
 }
 
-static void list_matching_formats (struct output_buffer *ob, const char * procname, char **p)
+static void list_matching_formats (struct output_buffer *ob, const char * procname, char** p)
 {
 	if (!p || !*p)
 		return;
@@ -108,7 +108,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	bfd *b;
 	void *symbol_table;
 	unsigned dummy = 0;
-	char **matching = nullptr;
+	char** matching = nullptr;
 
 	bc->handle = nullptr;
 	bc->symbol = nullptr;

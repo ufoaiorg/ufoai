@@ -700,7 +700,7 @@ static int HUD_GetMinimumTUsForUsage (const Item *item)
  * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char **reason)
+static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char** reason)
 {
 	const Item *invList = le->inv.getContainer2(containerID);
 

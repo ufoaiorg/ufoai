@@ -31,6 +31,6 @@ void CL_ParticleFree(ptl_t *p);
 void CL_ParticleRegisterArt(void);
 void PTL_InitStartup(void);
 void CL_ParticleRun(void);
-void CL_ParseParticle(const char *name, const char **text);
+void CL_ParseParticle(const char *name, const char** text);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v = nullptr, const vec3_t a = nullptr);
 ptlDef_t *CL_ParticleGet(const char *particleID);

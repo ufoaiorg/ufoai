@@ -1348,7 +1348,7 @@ static const value_t aircraft_radar_vals[] = {
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraftItems)
+void AIR_ParseAircraft (const char *name, const char** text, bool assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *aircraftTemplate;

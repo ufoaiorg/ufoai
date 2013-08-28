@@ -543,7 +543,7 @@ static bool SV_TestLine (const vec3_t start, const vec3_t stop, const int levelm
 	return TR_TestLine(&sv->mapTiles, start, stop, levelmask);
 }
 
-static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
 {
 	/* do the line test */
 	const bool hit = CM_EntTestLine(&sv->mapTiles, start, stop, levelmask, entlist);
@@ -555,7 +555,7 @@ static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
 	return Grid_Fall(sv->mapData.routing, actorSize, pos);
 }
 
-static void SV_RecalcRouting (const char *name, const GridBox& box, const char **list)
+static void SV_RecalcRouting (const char *name, const GridBox& box, const char** list)
 {
 	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routing, name, box, list);
 }

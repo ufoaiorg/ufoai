@@ -255,7 +255,7 @@ const aircraft_t *AIR_GetAircraftSilent(const char *name);
 const aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
 bool AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void AIR_ParseAircraft(const char *name, const char **text, bool assignAircraftItems);
+void AIR_ParseAircraft(const char *name, const char** text, bool assignAircraftItems);
 bool AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
 bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);

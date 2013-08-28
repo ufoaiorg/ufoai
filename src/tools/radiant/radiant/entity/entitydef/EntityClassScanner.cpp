@@ -14,7 +14,7 @@ const std::string EntityClassScannerUFO::getFilename () const
 	return "ufos/entities.ufo";
 }
 
-void EntityClassScannerUFO::parseFlags (EntityClass *e, const char **text)
+void EntityClassScannerUFO::parseFlags (EntityClass *e, const char** text)
 {
 	e->flagnames.clear();
 	string::splitBy(*text, e->flagnames);
