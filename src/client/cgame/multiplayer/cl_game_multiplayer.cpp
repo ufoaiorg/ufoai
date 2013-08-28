@@ -246,7 +246,7 @@ static void GAME_MP_Shutdown (void)
 
 static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 {
-	if (!cgi->Com_ServerState() && cgi->CL_GetClientState() < ca_connected && Q_strnull(Cvar_GetString("rcon_address")))
+	if (!cgi->Com_ServerState() && cgi->CL_GetClientState() < ca_connected && Q_strnull(cgi->Cvar_GetString("rcon_address")))
 		return;
 
 	if (rcon_client_password->modified) {
