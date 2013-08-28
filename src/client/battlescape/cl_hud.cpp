@@ -1365,9 +1365,9 @@ static void HUD_UpdateActorLoad_f (void)
 
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		for (Item *invList = cont->_invList, *next; invList; invList = next) {
-			next = invList->getNext();
-			const fireDef_t *fireDef = invList->getFiredefs();
+		Item* item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			const fireDef_t *fireDef = item->getFiredefs();
 			if (fireDef == nullptr)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
@@ -1375,7 +1375,7 @@ static void HUD_UpdateActorLoad_f (void)
 				if (fd.time > 0 && fd.time > tus) {
 					if (count <= 0)
 						Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));
-					Q_strcat(popupText, sizeof(popupText), "%s: %s (%i)\n", _(invList->def()->name), _(fd.name), fd.time);
+					Q_strcat(popupText, sizeof(popupText), "%s: %s (%i)\n", _(item->def()->name), _(fd.name), fd.time);
 					++count;
 				}
 			}
