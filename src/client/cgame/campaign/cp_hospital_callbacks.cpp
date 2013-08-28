@@ -146,8 +146,8 @@ static void HOS_ImplantChange_f (void)
 	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
-	const bool state = HOS_ApplyImplant(chr, *def);
-	if (!state) {
+	const implant_t* implant = CHRSH_ApplyImplant(chr, *def);
+	if (implant == nullptr) {
 		Item *item = HOS_GetImplant(chr, *def);
 		if (item != nullptr) {
 			const Container& container = chr.inv.getContainer(CID_IMPLANT);

@@ -236,7 +236,7 @@ void CL_UpdateCharacterValues (const character_t *chr)
  */
 void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
-	OBJZERO(*chr);
+	chr->init();
 
 	/* link inventory */
 	cls.i.destroyInventory(&chr->inv);

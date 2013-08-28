@@ -412,3 +412,5 @@ const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnu
 bool CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
+const implant_t* CHRSH_ApplyImplant(character_t& chr, const implantDef_t& implant);
+void CHRSH_UpdateImplants(character_t& chr);

@@ -13,6 +13,7 @@ $(TARGET)_LDFLAGS  += -lcunit $(PNG_LIBS) $(JPEG_LIBS) $(BFD_LIBS) $(INTL_LIBS) 
 
 $(TARGET)_SRCS_TMP      = \
 	tests/test_all.cpp \
+	tests/test_character.cpp \
 	tests/test_routing.cpp \
 	tests/test_events.cpp \
 	tests/test_generic.cpp \

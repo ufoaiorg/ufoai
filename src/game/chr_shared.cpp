@@ -81,6 +81,108 @@ const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char
 }
 
 /**
+ * @brief Assign the effect values to the character
+ */
+static void CHRSH_UpdateCharacterWithEffect (character_t& chr, const itemEffect_t& e)
+{
+	chrScoreGlobal_t& s = chr.score;
+	if (fabs(e.accuracy) > EQUAL_EPSILON)
+		s.skills[ABILITY_ACCURACY] *= 1.0f + e.accuracy;
+	if (fabs(e.mind) > EQUAL_EPSILON)
+		s.skills[ABILITY_MIND] *= 1.0f + e.mind;
+	if (fabs(e.power) > EQUAL_EPSILON)
+		s.skills[ABILITY_POWER] *= 1.0f + e.power;
+	if (fabs(e.TUs) > EQUAL_EPSILON)
+		s.skills[ABILITY_SPEED] *= 1.0f + e.TUs;
+
+	if (fabs(e.morale) > EQUAL_EPSILON)
+		chr.morale *= 1.0f + e.morale;
+}
+
+/**
+ * @brief Updates the characters permanent implants. Called every day.
+ */
+void CHRSH_UpdateImplants (character_t& chr)
+{
+	for (int i = 0; i < lengthof(chr.implants); i++) {
+		implant_t& implant = chr.implants[i];
+		const implantDef_t* def = implant.def;
+		/* empty slot */
+		if (def == nullptr || def->item == nullptr)
+			continue;
+		const objDef_t& od = *def->item;
+		if (od.strengthenEffect == nullptr)
+			continue;
+
+		const itemEffect_t& e = *od.strengthenEffect;
+
+		if (implant.installedTime > 0) {
+			implant.installedTime--;
+			if (implant.installedTime == 0 && e.isPermanent) {
+				CHRSH_UpdateCharacterWithEffect(chr, e);
+			}
+		}
+
+		if (implant.removedTime > 0) {
+			implant.removedTime--;
+			if (implant.removedTime == 0) {
+				implant.def = nullptr;
+				continue;
+			}
+		}
+		if (e.period <= 0)
+			continue;
+
+		implant.trigger--;
+		if (implant.trigger <= 0)
+			continue;
+
+		CHRSH_UpdateCharacterWithEffect(chr, e);
+		implant.trigger = e.period;
+	}
+}
+
+/**
+ * @brief Add a new implant to a character
+ */
+const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
+{
+	const objDef_t& od = *def.item;
+
+	if (!od.implant) {
+		Com_Printf("object '%s' is no implant\n", od.id);
+		return nullptr;
+	}
+	if (od.strengthenEffect == nullptr) {
+		Com_Printf("object '%s' has no strengthen effect\n", od.id);
+		return nullptr;
+	}
+
+	const itemEffect_t* e = od.strengthenEffect;
+	if (e->period <= 0 && !e->isPermanent) {
+		Com_Printf("object '%s' is not permanent\n", od.id);
+		return nullptr;
+	}
+
+	for (int i = 0; i < lengthof(chr.implants); i++) {
+		implant_t& implant = chr.implants[i];
+		/* already filled slot */
+		if (implant.def != nullptr)
+			continue;
+
+		OBJZERO(implant);
+		implant.def = &def;
+		if (!e->isPermanent)
+			implant.trigger = e->period;
+		implant.installedTime = def.installationTime;
+
+		return &chr.implants[i];
+	}
+	Com_Printf("no free implant slot\n");
+	return nullptr;
+}
+
+/**
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
  * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp

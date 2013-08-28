@@ -51,6 +51,7 @@ typedef int (*testSuite_t) (void);
 #include "test_particles.h"
 #include "test_renderer.h"
 #include "test_scripts.h"
+#include "test_character.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddEventsTests,
@@ -69,6 +70,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddScriptsTests,
 	UFO_AddMathlibExtraTests,
 	UFO_AddParticlesTests,
+	UFO_AddCharacterTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))
