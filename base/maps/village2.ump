@@ -138,6 +138,33 @@ tile +p4x4_fountain01
 	0		0		0		0		0		0
 }
 
+tile +p2x2_garden01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +p2x2_playground01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +p2x2_playground02
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
 // Streets ---------------------------------------------------------*
 
 tile +sc_ne01
@@ -305,6 +332,9 @@ tileset 2x2
 	+b2x2_house02
 	+b2x2_house03
 	+b2x2_house05
+	+p2x2_garden01
+	+p2x2_playground01
+	+p2x2_playground02
 }
 
 tileset 2x4
