@@ -223,8 +223,10 @@ static void HOS_EmployeeInit_f (void)
 
 	base_t *base = e->baseHired;
 	CP_CleanTempInventory(base);
+	equipDef_t unused = base->storage;
+	CP_CleanupTeam(base, &unused);
 	CP_SetEquipContainer(&c);
-	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &base->storage);
+	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
 
 	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\" %i",
 			ucn, c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage, e->isSoldier() ? 1 : 0);
