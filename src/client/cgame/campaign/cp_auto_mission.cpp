@@ -941,11 +941,6 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
 	results->mission = mission;
 
-	/**
-	 * @todo find out why this black-magic with inventory is needed and clean up
-	 * @sa CP_StartSelectedMission
-	 * @sa CP_MissionEnd
-	 */
 	ccs.eMission = aircraft->homebase->storage; /* copied, including arrays inside! */
 
 	AM_DoFight(&autoBattle);

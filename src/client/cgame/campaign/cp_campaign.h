@@ -399,7 +399,8 @@ typedef void (*missionResultFunction_t) (const missionResults_t *results);
  * @sa csi_t
  */
 typedef struct ccs_s {
-	equipDef_t eMission;
+	equipDef_t eMission;					/**< this is a copy of the base storage we are starting a mission from. This is needed because
+											 * we don't want to "waste" items on a retry. */
 	market_t eMarket;						/**< Prices, evolution and number of items on market */
 
 	linkedList_t *missions;					/**< Missions spawned (visible on geoscape or not) */

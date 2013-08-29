@@ -1107,11 +1107,6 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	}
 
 	/* add the looted goods to base storage and market */
-	/**
-	 * @todo find out why this black-magic with inventory is needed and clean up
-	 * @sa CP_StartSelectedMission
-	 * @sa AM_Go
-	 */
 	base->storage = ccs.eMission;
 
 	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
