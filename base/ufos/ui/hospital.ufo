@@ -157,6 +157,9 @@ window hospital
 		} elif ( <2> eq "serious" ) {
 			*node:root.panel.hos<1>.icon@icon				= "icons/health_critical"
 			*node:root.panel.hos<1>.click@tooltip	= "_Heavily wounded"
+		} elif ( <2> eq "healthy" ) {
+			*node:root.panel.hos<1>.icon@icon				= "icons/health_unused"
+			*node:root.panel.hos<1>.click@tooltip	= "_Healthy"
 		}
 		*node:root.panel.hos<1>.health@current = <3>
 		*node:root.panel.hos<1>.health@max = <4>

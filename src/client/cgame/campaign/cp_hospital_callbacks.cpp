@@ -76,6 +76,10 @@ static const char *HOS_GetInjuryLevel (const Employee &employee, float injuryLev
 	else if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.85) || injuryLevel >= 0.15)
 		return "medium";
 
+	/* no wounds and full hp */
+	else if (employee.chr.HP >= employee.chr.maxHP && injuryLevel <= 0)
+		return "healty";
+
 	return "light";
 }
 
@@ -84,6 +88,7 @@ static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 	const char *rank = HOS_GetRank(employee);
 	const char *level = HOS_GetInjuryLevel(employee, injuryLevel);
 	const character_t& chr = employee.chr;
+
 	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank);
 	HOS_EntryWoundData(chr);
 }
@@ -141,21 +146,16 @@ static void HOS_ImplantChange_f (void)
 	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
-	Item *item = HOS_GetImplant(chr, *def);
-	if (item != nullptr) {
-		cgi->INV_RemoveFromInventory(&chr.inv, chr.inv.getContainer(CID_IMPLANT).def(), item);
-	} else {
-		const bool state = HOS_ApplyImplant(chr, *def);
-		if (!state) {
-			if (item != nullptr)
-				cgi->INV_RemoveFromInventory(&chr.inv, chr.inv.getContainer(CID_IMPLANT).def(), item);
-
-			Com_Printf("Could not apply implant %s to character: %i\n", def->id, chr.ucn);
+	const bool state = HOS_ApplyImplant(chr, *def);
+	if (!state) {
+		Item *item = HOS_GetImplant(chr, *def);
+		if (item != nullptr) {
+			const Container& container = chr.inv.getContainer(CID_IMPLANT);
+			cgi->INV_RemoveFromInventory(&chr.inv, container.def(), item);
 			return;
 		}
 	}
 	HOS_UpdateCharacterImplantList(chr);
-	Com_Printf("Applied implant %s to character: %i\n", def->id, chr.ucn);
 }
 
 static void HOS_ImplantDetails_f (void)
@@ -189,11 +189,7 @@ static void HOS_Init_f (void)
 			/* Don't show soldiers who are not in this base or gone in mission */
 			if (!employee->isHiredInBase(base) || employee->isAwayFromBase())
 				continue;
-			/* Don't show healthy employees */
 			const float injuryLevel = HOS_InjuryLevel(&employee->chr);
-			if (employee->chr.HP >= employee->chr.maxHP && injuryLevel <= 0)
-				continue;
-
 			HOS_Entry(*employee, injuryLevel);
 		}
 	}
@@ -227,8 +223,9 @@ static void HOS_EmployeeInit_f (void)
 		rankImage = r->image;
 	}
 
-	CP_SetEquipContainer(&c);
 	base_t *base = e->baseHired;
+	CP_CleanTempInventory(base);
+	CP_SetEquipContainer(&c);
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &base->storage);
 
 	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\"",
