@@ -376,6 +376,9 @@ window hospital_employee
 		panel list {
 			pos "20 280"
 			size "236 190"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	4
+			ghost			true
 		}
 	}
 
