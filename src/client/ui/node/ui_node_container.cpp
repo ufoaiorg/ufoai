@@ -98,6 +98,8 @@ static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
 void UI_ContainerNodeUpdateEquipment (Inventory *inv, const equipDef_t *ed)
 {
 	int i;
+	/* make a copy, because we are not really using these items,
+	 * but only putting them into a temp container */
 	int *const numItems = Mem_Dup(int, ed->numItems, lengthof(ed->numItems));
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
