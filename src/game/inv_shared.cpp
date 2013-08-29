@@ -879,9 +879,11 @@ bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, c
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
+	const float itemWeight = item.getWeight();
+	if (itemWeight <= 0.00001f)
+		return true;
 	const bool swapArmour = item.isArmour() && getArmour();
 	const float invWeight = getWeight() - (swapArmour ? getArmour()->getWeight() : 0);
-	const float itemWeight = item.getWeight();
 
 	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
 }
