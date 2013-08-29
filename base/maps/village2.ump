@@ -125,6 +125,15 @@ tile +b2x4_mart01
 	0		0		0		0
 }
 
+tile +b2x2_diner01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
 // Parks -----------------------------------------------------------*
 
 tile +p4x4_fountain01
@@ -328,6 +337,7 @@ tile +mp4
 
 tileset 2x2
 {
+	+b2x2_diner01
 	+b2x2_house01
 	+b2x2_house02
 	+b2x2_house03
@@ -339,11 +349,11 @@ tileset 2x2
 
 tileset 2x4
 {
-	+b2x4_station01
-	+b2x4_mart01
 	+b2x4_house04
 	+b2x4_house06
 	+b2x4_house07
+	+b2x4_mart01
+	+b2x4_station01
 }
 
 tileset 4x4
