@@ -2,6 +2,32 @@
 // HOSPITAL MENU
 // ==================
 
+component cmpHhumanoid_head extends button {
+	color "1 0 0 1"
+	pos			"0 0"
+	size		"16 16"
+}
+component cmpHhumanoid_torso extends button {
+	color "1 0 0 1"
+	pos			"20 0"
+	size		"16 16"
+}
+component cmpHhumanoid_arms extends button {
+	color "1 0 0 1"
+	pos			"40 0"
+	size		"16 16"
+}
+component cmpHhumanoid_legs extends button {
+	color "1 0 0 1"
+	pos			"60 0"
+	size		"16 16"
+}
+component cmpHdefault_body extends button {
+	color "1 0 0 1"
+	pos			"0 0"
+	size		"16 16"
+}
+
 component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
