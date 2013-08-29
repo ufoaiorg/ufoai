@@ -192,26 +192,28 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
 	}
 
 	for (Item *previous = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
-		if (ic == fItem) {
-			this->cacheItem = *ic;
-			/* temp container like CID_EQUIP and CID_FLOOR */
-			if (ic->getAmount() > 1 && container->temp) {
-				ic->addAmount(-1);
-				Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
-					ic->def()->name, ic->getAmount(), invName);
-				return true;
-			}
+		if (ic != fItem) {
+			previous = ic;
+			continue;
+		}
 
-			if (ic == inv->getContainer2(container->id))
-				inv->setContainer(container->id, inv->getContainer2(container->id)->getNext());
-			else
-				previous->setNext(ic->getNext());
-
-			removeInvList(ic);
-
+		this->cacheItem = *ic;
+		/* temp container like CID_EQUIP and CID_FLOOR */
+		if (ic->getAmount() > 1 && container->temp) {
+			ic->addAmount(-1);
+			Com_DPrintf(DEBUG_SHARED, "removeFromInventory: Amount of '%s': %i (%s)\n",
+				ic->def()->name, ic->getAmount(), invName);
 			return true;
 		}
-		previous = ic;
+
+		if (ic == inv->getContainer2(container->id))
+			inv->setContainer(container->id, inv->getContainer2(container->id)->getNext());
+		else
+			previous->setNext(ic->getNext());
+
+		removeInvList(ic);
+
+		return true;
 	}
 	return false;
 }
