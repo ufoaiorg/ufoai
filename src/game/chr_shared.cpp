@@ -111,15 +111,12 @@ void CHRSH_UpdateImplants (character_t& chr)
 		if (def == nullptr || def->item == nullptr)
 			continue;
 		const objDef_t& od = *def->item;
-		if (od.strengthenEffect == nullptr)
-			continue;
-
-		const itemEffect_t& e = *od.strengthenEffect;
+		const itemEffect_t* e = od.strengthenEffect;
 
 		if (implant.installedTime > 0) {
 			implant.installedTime--;
-			if (implant.installedTime == 0 && e.isPermanent) {
-				CHRSH_UpdateCharacterWithEffect(chr, e);
+			if (implant.installedTime == 0 && e != nullptr && e->isPermanent) {
+				CHRSH_UpdateCharacterWithEffect(chr, *e);
 			}
 		}
 
@@ -130,15 +127,15 @@ void CHRSH_UpdateImplants (character_t& chr)
 				continue;
 			}
 		}
-		if (e.period <= 0)
+		if (e == nullptr || e->period <= 0)
 			continue;
 
 		implant.trigger--;
 		if (implant.trigger <= 0)
 			continue;
 
-		CHRSH_UpdateCharacterWithEffect(chr, e);
-		implant.trigger = e.period;
+		CHRSH_UpdateCharacterWithEffect(chr, *e);
+		implant.trigger = e->period;
 	}
 }
 
@@ -153,13 +150,9 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
 		Com_Printf("object '%s' is no implant\n", od.id);
 		return nullptr;
 	}
-	if (od.strengthenEffect == nullptr) {
-		Com_Printf("object '%s' has no strengthen effect\n", od.id);
-		return nullptr;
-	}
 
 	const itemEffect_t* e = od.strengthenEffect;
-	if (e->period <= 0 && !e->isPermanent) {
+	if (e != nullptr && e->period <= 0 && !e->isPermanent) {
 		Com_Printf("object '%s' is not permanent\n", od.id);
 		return nullptr;
 	}
@@ -172,7 +165,7 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
 
 		OBJZERO(implant);
 		implant.def = &def;
-		if (!e->isPermanent)
+		if (e != nullptr && !e->isPermanent)
 			implant.trigger = e->period;
 		implant.installedTime = def.installationTime;
 

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * The suite initialization function.
  * Returns zero on success, non-zero otherwise.
  */
-static int UFO_InitSuiteDBuffer (void)
+static int InitSuite (void)
 {
 	TEST_Init();
 
@@ -43,7 +43,7 @@ static int UFO_InitSuiteDBuffer (void)
  * The suite cleanup function.
  * Returns zero on success, non-zero otherwise.
  */
-static int UFO_CleanSuiteDBuffer (void)
+static int CleanSuite (void)
 {
 	TEST_Shutdown();
 	return 0;
@@ -56,30 +56,69 @@ static character_t* GetCharacter (const char *teamDefID = "phalanx")
 	return &chr;
 }
 
-static void testImplants (void)
+static void RunStrengthenImplant (character_t& chr, const implant_t& implant, const objDef_t& od)
+{
+	Com_Printf("%s ", od.id);
+	/** @todo perform tests */
+}
+
+static void RunEffectForImplant (const fireDef_t& fd, character_t& chr, const implant_t& implant, const objDef_t& od, const itemEffect_t& effect)
+{
+	Com_Printf("%s ", implant.def->id);
+	/** @todo perform tests */
+}
+
+static void RunImplant (const implantDef_t& implantDef)
 {
 	character_t* chr = GetCharacter();
-	const implantDef_t* implantDef = INVSH_GetImplantByID("muscular");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(implantDef);
-	const objDef_t* od = implantDef->item;
+	const objDef_t* od = implantDef.item;
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(od->strengthenEffect);
-	const implant_t* implant = CHRSH_ApplyImplant(*chr, *implantDef);
+	const implant_t* implant = CHRSH_ApplyImplant(*chr, implantDef);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(implant);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(implant->def);
+	Com_Printf("implant: '%s': ", implant->def->id);
 	CU_ASSERT_EQUAL(implant->removedTime, 0);
 	CU_ASSERT_NOT_EQUAL(implant->installedTime, 0);
 	CU_ASSERT_PTR_NOT_NULL(implant->def);
-	CU_ASSERT_EQUAL(implant->installedTime, implantDef->installationTime);
-	for (int i = 0; i < implantDef->installationTime; i++) {
+	CU_ASSERT_EQUAL(implant->installedTime, implantDef.installationTime);
+	for (int i = 0; i < implantDef.installationTime; i++) {
 		CHRSH_UpdateImplants(*chr);
 	}
 	CU_ASSERT_EQUAL(implant->installedTime, 0);
+
+	int effects = 0;
+	if (od->strengthenEffect != nullptr) {
+		RunStrengthenImplant(*chr, *implant, *od);
+		effects++;
+	}
+	for (int w = 0; w < MAX_WEAPONS_PER_OBJDEF; w++) {
+		for (int f = 0; f < od->numFiredefs[w]; f++) {
+			const fireDef_t& fd = od->fd[w][f];
+			const itemEffect_t* effect[] = { fd.activeEffect, fd.deactiveEffect, fd.overdoseEffect };
+			for (int e = 0; e < lengthof(effect); e++) {
+				if (effect[e] == nullptr)
+					continue;
+				RunEffectForImplant(fd, *chr, *implant, *od, *effect[e]);
+				effects++;
+			}
+		}
+	}
+	CU_ASSERT_TRUE_FATAL(effects >= 1);
+	Com_Printf("passed %i effects\n", effects);
+}
+
+static void testImplants (void)
+{
+	Com_Printf("\n");
+	for (int i = 0; i < csi.numImplants; i++) {
+		RunImplant(csi.implants[i]);
+	}
 }
 
 int UFO_AddCharacterTests (void)
 {
 	/* add a suite to the registry */
-	CU_pSuite DBufferSuite = CU_add_suite("CharacterTests", UFO_InitSuiteDBuffer, UFO_CleanSuiteDBuffer);
+	CU_pSuite DBufferSuite = CU_add_suite("CharacterTests", InitSuite, CleanSuite);
 	if (DBufferSuite == NULL)
 		return CU_get_error();
 

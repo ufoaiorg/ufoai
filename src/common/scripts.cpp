@@ -1624,8 +1624,7 @@ static void Com_ParseFireEffect (fireDef_t *fd, const char *name, const char **t
 		stagePtr = &fd->overdoseEffect;
 		break;
 	case EFFECT_STRENGTHEN:
-		stagePtr = &fd->strengthenEffect;
-		break;
+		/* strengthen effect isn't available here */
 	case EFFECT_MAX:
 		stagePtr = nullptr;
 		break;

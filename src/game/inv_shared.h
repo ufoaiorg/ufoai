@@ -140,7 +140,6 @@ typedef struct fireDef_s {
 	itemEffect_t *activeEffect;
 	itemEffect_t *deactiveEffect;
 	itemEffect_t *overdoseEffect;
-	itemEffect_t *strengthenEffect;
 
 	bool soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
 	bool gravity;		/**< Does gravity have any influence on this item? */
