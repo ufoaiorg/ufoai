@@ -405,7 +405,7 @@ static void testStringCopiers (void)
 	while (UTF8_next(&s) != -1) {
 		cnt++;
 	}
-	UFO_CU_ASSERT_EQUAL_INT_MSG(cnt, UTF8_strlen(src), va("actual: %i, expected %i", cnt, UTF8_strlen(src)));
+	CU_ASSERT_EQUAL(cnt, UTF8_strlen(src));
 
 	/* Com_sprintf */
 
