@@ -456,6 +456,17 @@ void GAME_LoadTeam_f (void)
 	}
 }
 
+static void GAME_UpdateInventory (Inventory *inv, const equipDef_t *ed)
+{
+	if (!LIST_IsEmpty(chrDisplayList))
+		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
+	else
+		ui_inventory = nullptr;
+
+	/* manage inventory */
+	UI_ContainerNodeUpdateEquipment(inv, ed);
+}
+
 /**
  * @brief Get the equipment definition (from script files) for the current selected team
  * and updates the equipment inventory containers
@@ -471,17 +482,6 @@ static void GAME_GetEquipment (void)
 
 	game_inventory.init();
 	GAME_UpdateInventory(&game_inventory, ed);
-}
-
-void GAME_UpdateInventory (Inventory *inv, const equipDef_t *ed)
-{
-	if (!LIST_IsEmpty(chrDisplayList))
-		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
-	else
-		ui_inventory = nullptr;
-
-	/* manage inventory */
-	UI_ContainerNodeUpdateEquipment(inv, ed);
 }
 
 /**
