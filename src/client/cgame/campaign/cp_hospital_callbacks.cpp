@@ -135,7 +135,6 @@ static void HOS_ImplantChange_f (void)
 
 	character_t& chr = e->chr;
 	const int odIdx = atoi(cgi->Cmd_Argv(2));
-	Com_Printf("odidx: %i, ucn: %i\n", odIdx, ucn);
 	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	if (od == nullptr)
 		return;
@@ -161,7 +160,7 @@ static void HOS_ImplantChange_f (void)
 
 static void HOS_ImplantDetails_f (void)
 {
-	const int odIdx = atoi(cgi->Cmd_Argv(2));
+	const int odIdx = atoi(cgi->Cmd_Argv(1));
 	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	if (od == nullptr)
 		return;
