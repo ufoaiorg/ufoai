@@ -65,7 +65,7 @@ static void UI_RegisterFont (const uiFont_t *font)
 /**
  * @sa CL_ParseClientData
  */
-bool UI_ParseFont (const char *name, const char **text)
+bool UI_ParseFont (const char *name, const char** text)
 {
 	uiFont_t *font;
 	const char *errhead = "UI_ParseFont: unexpected end of file (font";

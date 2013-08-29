@@ -68,7 +68,7 @@ static cvar_t *snd_music_volume;
  * @brief Parses music definitions for different situations
  * @note We have lists for geoscape, battlescape, main and aircombat
  */
-void M_ParseMusic (const char *name, const char **text)
+void M_ParseMusic (const char *name, const char** text)
 {
 	int i;
 
@@ -296,7 +296,7 @@ static void M_Change_f (void)
 	M_PlayRandomByCategory(category);
 }
 
-static int M_CompleteMusic (const char *partial, const char **match)
+static int M_CompleteMusic (const char *partial, const char** match)
 {
 	int n = 0;
 	while (char const* const filename = FS_NextFileFromFileList("music/*.ogg")) {

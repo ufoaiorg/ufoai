@@ -41,7 +41,7 @@ void UI_PopWindow(bool all = false);
 void UI_PopWindowWithEscKey(void);
 void UI_CloseWindow(const char* name);
 uiNode_t* UI_GetActiveWindow(void);
-int UI_CompleteWithWindow(const char *partial, const char **match);
+int UI_CompleteWithWindow(const char *partial, const char** match);
 bool UI_IsWindowOnStack(const char* name);
 bool UI_IsMouseOnWindow(void);
 void UI_InvalidateStack(void);

@@ -552,7 +552,7 @@ uiAction_t *UI_AllocStaticStringCondition (const char *description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else nullptr
  */
-static uiAction_t *UI_ParseValueExpression (const char **text)
+static uiAction_t *UI_ParseValueExpression (const char** text)
 {
 	const char* token;
 	uiAction_t *expression = UI_AllocStaticAction();
@@ -662,7 +662,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	Com_Error(ERR_FATAL, "UI_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
-uiAction_t *UI_ParseExpression (const char **text)
+uiAction_t *UI_ParseExpression (const char** text)
 {
 	const char* token;
 

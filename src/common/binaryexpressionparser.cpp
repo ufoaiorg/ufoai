@@ -41,7 +41,7 @@ private:
 	bool result;
 	const void *userdata;
 
-	inline void SkipWhiteSpaces (const char **s) const
+	inline void SkipWhiteSpaces (const char** s) const
 	{
 		while (**s == ' ' || **s == '\t')
 			(*s)++;
@@ -50,14 +50,14 @@ private:
 	/**
 	 * @brief Advance to the next char that is no whitespace
 	 */
-	inline void NextChar (const char **s) const
+	inline void NextChar (const char** s) const
 	{
 		(*s)++;
 		/* skip white-spaces too */
 		SkipWhiteSpaces(s);
 	}
 
-	const char *GetSwitchName (const char **s)
+	const char *GetSwitchName (const char** s)
 	{
 		int pos = 0;
 
@@ -76,7 +76,7 @@ private:
 	 * that are done in @c CheckAnd
 	 * @return The result of the evaluation
 	 */
-	bool CheckOR (const char **s)
+	bool CheckOR (const char** s)
 	{
 		bool result = false;
 		enum {
@@ -105,7 +105,7 @@ private:
 		return result;
 	}
 
-	bool CheckAND (const char **s)
+	bool CheckAND (const char** s)
 	{
 		bool result = true;
 		bool negate = false;

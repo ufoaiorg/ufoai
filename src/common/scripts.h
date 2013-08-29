@@ -198,9 +198,9 @@ int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, s
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
-bool Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool);
-bool Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token);
-bool Com_ParseList(const char **text, linkedList_t** list);
+bool Com_ParseBlock(const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool);
+bool Com_ParseBlockToken(const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool, const char *token);
+bool Com_ParseList(const char** text, linkedList_t** list);
 void *Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
@@ -246,7 +246,7 @@ void Com_RegisterConstList(const constListEntry_t constList[]);
 bool Com_UnregisterConstList(const constListEntry_t constList[]);
 
 void Com_ParseScripts(bool onlyServer);
-const char *Com_EParse(const char **text, const char *errhead, const char *errinfo, char *target = 0, size_t size = 0);
+const char *Com_EParse(const char** text, const char *errhead, const char *errinfo, char *target = 0, size_t size = 0);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
 const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);

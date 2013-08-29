@@ -163,11 +163,11 @@ int FS_CheckFile(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)))
 
 int FS_BuildFileList(const char *files);
 const char* FS_NextFileFromFileList(const char *files);
-char *FS_NextScriptHeader(const char *files, const char **name, const char **text);
+char *FS_NextScriptHeader(const char *files, const char** name, const char** text);
 void FS_CreatePath(const char *path);
 
 /* Make sure we have this available */
-char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+char** FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 
 const char *FS_GetFileData(const char *files);
 

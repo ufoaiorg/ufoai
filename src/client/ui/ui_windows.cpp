@@ -212,7 +212,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
  * @sa UI_PushWindow
  * @note Does not really complete the input - but shows at least all parsed windows
  */
-int UI_CompleteWithWindow (const char *partial, const char **match)
+int UI_CompleteWithWindow (const char *partial, const char** match)
 {
 	int n = 0;
 	for (uiNode_t** i = ui_global.windows, ** const end = i + ui_global.numWindows; i != end; ++i) {

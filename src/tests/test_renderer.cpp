@@ -106,7 +106,7 @@ static void testCharacterAnimationFiles (void)
 	vid_modelPool = Mem_CreatePool("Vid Model Pool");
 
 	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
-		const char **animList;
+		const char** animList;
 		if (Q_strstart(filename, "models/soldiers/"))
 			animList = soldiers;
 		else if (Q_strstart(filename, "models/civilians/"))

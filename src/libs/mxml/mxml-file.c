@@ -97,7 +97,7 @@ typedef struct _mxml_fdbuf_s		/**** File descriptor buffer ****/
  * Local functions...
  */
 
-static int		mxml_add_char(int ch, char **ptr, char **buffer,
+static int		mxml_add_char(int ch, char** ptr, char** buffer,
 			              int *bufsize);
 static int		mxml_fd_getc(void *p, int *encoding);
 static int		mxml_fd_putc(int ch, void *p);
@@ -626,8 +626,8 @@ mxmlSetWrapMargin(int column)		/* I - Column for wrapping, 0 to disable wrapping
 
 static int				/* O  - 0 on success, -1 on error */
 mxml_add_char(int  ch,			/* I  - Character to add */
-              char **bufptr,		/* IO - Current position in buffer */
-	      char **buffer,		/* IO - Current buffer */
+              char** bufptr,		/* IO - Current position in buffer */
+	      char** buffer,		/* IO - Current buffer */
 	      int  *bufsize)		/* IO - Current buffer size */
 {
   char	*newbuffer;			/* New buffer value */
@@ -2333,7 +2333,7 @@ mxml_string_getc(void *p,		/* I  - Pointer to file */
   const char	**s;			/* Pointer to string pointer */
 
 
-  s = (const char **)p;
+  s = (const char** )p;
 
   if ((ch = (*s)[0] & 255) != 0 || *encoding == ENCODE_UTF16LE)
   {
@@ -2584,7 +2584,7 @@ mxml_string_putc(int  ch,		/* I - Character to write */
   char	**pp;				/* Pointer to string pointers */
 
 
-  pp = (char **)p;
+  pp = (char** )p;
 
   if (pp[0] < pp[1])
     pp[0][0] = ch;

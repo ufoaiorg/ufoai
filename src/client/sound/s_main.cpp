@@ -151,7 +151,7 @@ static void S_Restart_f (void)
 	S_LoadSamples();
 }
 
-static int S_CompleteSounds (const char *partial, const char **match)
+static int S_CompleteSounds (const char *partial, const char** match)
 {
 	char const* const soundExtensions[] = SAMPLE_TYPES;
 

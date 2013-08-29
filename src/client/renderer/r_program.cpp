@@ -288,7 +288,7 @@ void R_ShutdownPrograms (void)
  * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return strlen(in)
  */
-static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
+static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char** out, size_t *len)
 {
 	const size_t inLength = strlen(in);
 	strcpy(*out, in);
@@ -391,7 +391,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * @param[in] inElse If true, parsing an "#else" clause and shouldn't expect another "#else"
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, bool nested, bool inElse)
+static size_t R_PreprocessShaderR (const char *name, const char** inPtr, char *out, long *remainingOutChars, bool nested, bool inElse)
 {
 	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
 	/* Keep looping till we reach the end of the shader string, or a parsing error.*/

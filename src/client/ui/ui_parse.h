@@ -30,10 +30,10 @@ struct uiNode_t;
 struct uiAction_s;
 struct value_s;
 
-bool UI_ParseWindow(const char *type, const char *name, const char **text);
-bool UI_ParseComponent(const char *type, const char *name, const char **text);
-bool UI_ParseSprite(const char *name, const char **text);
-bool UI_ParseUIModel(const char *name, const char **text);
+bool UI_ParseWindow(const char *type, const char *name, const char** text);
+bool UI_ParseComponent(const char *type, const char *name, const char** text);
+bool UI_ParseSprite(const char *name, const char** text);
+bool UI_ParseUIModel(const char *name, const char** text);
 float UI_GetReferenceFloat(uiNode_t const* node, const void *ref);
 const char *UI_GetReferenceString(uiNode_t const* node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));

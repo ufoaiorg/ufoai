@@ -37,7 +37,7 @@ typedef struct uiFont_s {
 const char *UI_GetFontFromNode(uiNode_t const* node);
 const uiFont_t *UI_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
-bool UI_ParseFont(const char *name, const char **text);
+bool UI_ParseFont(const char *name, const char** text);
 void UI_InitFonts(void);
 void UI_FontShutdown(void);
 int UI_FontGetHeight(const char *font);

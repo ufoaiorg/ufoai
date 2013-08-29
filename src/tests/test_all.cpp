@@ -241,7 +241,7 @@ static void Test_EnableAllSuites (void)
 	}
 }
 
-static void Test_Parameters (const int argc, char **argv)
+static void Test_Parameters (const int argc, char** argv)
 {
 	int i;
 
@@ -350,7 +350,7 @@ static void TEST_vPrintfLog (const char *fmt, va_list ap)
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
  */
-int main (int argc, char **argv)
+int main (int argc, char** argv)
 {
 	int i;
 	int failures;
