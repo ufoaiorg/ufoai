@@ -53,6 +53,7 @@ bool GAME_HandleServerCommand(const char *command, dbuffer *msg);
 void GAME_AddChatMessage(const char *format, ...);
 void GAME_CharacterCvars(const character_t *chr);
 character_t* GAME_GetCharacter(int index);
+character_t* GAME_GetCharacterByUCN(int ucn);
 size_t GAME_GetCharacterArraySize(void);
 void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);

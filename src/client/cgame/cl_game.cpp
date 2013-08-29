@@ -166,6 +166,23 @@ character_t* GAME_GetCharacter (int index)
 }
 
 /**
+ * @brief Returns a character that can be used to store the game type specific character values
+ * @note The returned pointer is a reference to static memory
+ * @param ucn The unique character number
+ * @return @c null if no character with the specified ucn was found.
+ */
+character_t* GAME_GetCharacterByUCN (int ucn)
+{
+	const int size = lengthof(characters);
+	for (int i = 0; i < size; i++) {
+		character_t *chr = &characters[i];
+		if (chr->ucn == ucn)
+			return chr;
+	}
+	return nullptr;
+}
+
+/**
  * @return The size of the static character array
  * @sa GAME_GetCharacter
  * @sa GAME_ResetCharacters
