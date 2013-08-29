@@ -749,6 +749,10 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic)
 			return;
 	}
 
+	EXTRADATA(node).lastSelectedId = ic->def()->idx;
+	if (EXTRADATA(node).onSelect) {
+		UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+	}
 	/* Run onChange events */
 	uiNode_t *targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange)
