@@ -1084,7 +1084,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, bool won)
 
 /**
  * @brief Closing actions after fighting a battle
- * @param[in] campaign The capmaign we play
+ * @param[in] campaign The campaign we play
  * @param[in, out] mission The mission the battle was on
  * @param[in] battleParameters Parameters of the battle
  * @param[in] won if PHALANX won
