@@ -89,12 +89,9 @@ static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
 /**
  * @brief Fills the ground container of the ui_inventory with unused items from a given
  * equipment definition
- * @note Keep in mind that @c ed is changed here - so items are removed and the ground container
- * of an inventory definition is in general a temp container - that means you should make a copy
- * of the @c equipDef_t you want to add to the temp ground container of the given @c inv
  * @todo it's not obvious for the caller that @c ui_inventory pointer must be set
  * @param[in,out] inv The inventory to add the unused items from @c ed to
- * @param[in,out] ed The equipment definition to get the used items from that should be added
+ * @param[in] ed The equipment definition to get the used items from that should be added
  * to the ground container of @c inv
  * @todo not used nor called by the container node; should be move somewhere else
  */
