@@ -390,6 +390,7 @@ window hospital_employee
 	 * @param <8> MaxHP
 	 * @param <9> Rank
 	 * @param <10> Rank image
+	 * @param <11> 1 if implants are possible, 0 if not
 	 */
 	confunc hospital_employee_show {
 		*node:root.ucn@integer = <1>
@@ -403,6 +404,11 @@ window hospital_employee
 		*node:root.health.bar@max = <8>
 		*node:root.rank_lbl@string = <9>
 		*node:root.rank@src = <10>
+		if ( <11> == 1 ) {
+			*node:root.implants@invis = false
+		} else {
+			*node:root.implants@invis = true
+		}
 	}
 
 	/**

@@ -146,7 +146,7 @@ static void HOS_ImplantChange_f (void)
 	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
-	const implant_t* implant = CHRSH_ApplyImplant(chr, *def);
+	const implant_t* implant = e->isSoldier() ? CHRSH_ApplyImplant(chr, *def) : nullptr;
 	if (implant == nullptr) {
 		Item *item = HOS_GetImplant(chr, *def);
 		if (item != nullptr) {
@@ -226,8 +226,8 @@ static void HOS_EmployeeInit_f (void)
 	CP_SetEquipContainer(&c);
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &base->storage);
 
-	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\"",
-			ucn, c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage);
+	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\" %i",
+			ucn, c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage, e->isSoldier() ? 1 : 0);
 
 	const abilityskills_t list[] = { ABILITY_POWER, ABILITY_SPEED, ABILITY_ACCURACY, ABILITY_MIND };
 	const int n = lengthof(list);

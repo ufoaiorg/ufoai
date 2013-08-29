@@ -1250,7 +1250,7 @@ static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t c
  */
 static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
 {
-	int nr = inv->countItems();
+	const int nr = inv->countItems();
 
 	NET_WriteShort(buf, nr);
 
