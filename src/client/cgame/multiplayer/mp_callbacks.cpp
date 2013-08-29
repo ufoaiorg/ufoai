@@ -260,7 +260,7 @@ static void GAME_MP_TeamNum_f (void)
  * @sa Cmd_AddParamCompleteFunction
  * @todo Extend this for all the servers on the server browser list
  */
-static int GAME_MP_CompleteNetworkAddress (const char *partial, const char **match)
+static int GAME_MP_CompleteNetworkAddress (const char *partial, const char** match)
 {
 	int n = 0;
 	for (int i = 0; i != MAX_BOOKMARKS; ++i) {

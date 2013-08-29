@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_popup.h"
 #include "ui/node/ui_node_abstractnode.h"
 
-static inline void CLMN_AddBindings (linkedList_t** list, char **bindings)
+static inline void CLMN_AddBindings (linkedList_t** list, char** bindings)
 {
 	int i;
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++) {

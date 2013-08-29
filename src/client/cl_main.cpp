@@ -722,7 +722,7 @@ static const value_t actorskin_vals[] = {
 };
 
 
-static void CL_ParseActorSkin (const char *name, const char **text)
+static void CL_ParseActorSkin (const char *name, const char** text)
 {
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (CL_GetActorSkinCount() == 0) {
@@ -795,7 +795,7 @@ void CL_InitAfter (void)
  * @note This data is persistent until you shutdown the game
  * @return True if the parsing function succeeded.
  */
-bool CL_ParseClientData (const char *type, const char *name, const char **text)
+bool CL_ParseClientData (const char *type, const char *name, const char** text)
 {
 #ifndef COMPILE_UNITTESTS
 	static int progressCurrent = 0;

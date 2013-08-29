@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CL_ParseLanguages(const char *name, const char **text);
+void CL_ParseLanguages(const char *name, const char** text);
 void CL_LanguageInit(void);
 void CL_LanguageShutdown(void);
 bool CL_LanguageTryToSet(const char *localeID);

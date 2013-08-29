@@ -35,7 +35,7 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
-static void GAME_SK_InitMissionBriefing (const char **title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs)
+static void GAME_SK_InitMissionBriefing (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs)
 {
 	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 	if (Q_strvalid(md->victoryCondition)) {

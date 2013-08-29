@@ -54,7 +54,7 @@ static msgid_t *msgIDHash[MAX_MSGIDHASH];
 #define MSGIDSIZE 65536
 static char *msgIDText;
 
-static void CL_ParseMessageID (const char *name, const char **text)
+static void CL_ParseMessageID (const char *name, const char** text)
 {
 	/* get it's body */
 	const char *token = Com_Parse(text);
@@ -210,7 +210,7 @@ static const char *CL_GetLocaleID (const char *fullLocale)
 /**
  * @brief Parse all language definitions from the script files
  */
-void CL_ParseLanguages (const char *name, const char **text)
+void CL_ParseLanguages (const char *name, const char** text)
 {
 	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
 	const char	*token;

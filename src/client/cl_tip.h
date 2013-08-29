@@ -26,4 +26,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void TOTD_InitStartup(void);
 void TOTD_Shutdown(void);
-void CL_ParseTipOfTheDay(const char *name, const char **text);
+void CL_ParseTipOfTheDay(const char *name, const char** text);

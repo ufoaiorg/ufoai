@@ -879,7 +879,7 @@ static int CL_FindSequenceCommand (const char* commandName)
  * @brief Reads the sequence values from given text-pointer
  * @sa CL_ParseClientData
  */
-void CL_ParseSequence (const char *name, const char **text)
+void CL_ParseSequence (const char *name, const char** text)
 {
 	const char *errhead = "CL_ParseSequence: unexpected end of file (sequence ";
 	sequence_t *sp;

@@ -505,7 +505,7 @@ static void R_DrawImageCentered (int x, int y, const char *name)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 }
 
-static const char *Com_EParse_ (const char **text, const char *errhead, const char *errinfo)
+static const char *Com_EParse_ (const char** text, const char *errhead, const char *errinfo)
 {
 	return Com_EParse(text, errhead, errinfo);
 }
@@ -1055,7 +1055,7 @@ static const value_t cgame_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-void GAME_ParseModes (const char *name, const char **text)
+void GAME_ParseModes (const char *name, const char** text)
 {
 	cgameType_t *cgame;
 	int i;

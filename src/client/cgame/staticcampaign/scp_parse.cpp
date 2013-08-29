@@ -35,7 +35,7 @@ static const value_t mission_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void SCP_ParseMission (const char *name, const char **text)
+static void SCP_ParseMission (const char *name, const char** text)
 {
 	const char *errhead = "SCP_ParseMission: unexpected end of file (mission ";
 	staticMission_t *ms;
@@ -150,7 +150,7 @@ static const value_t stageset_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void SCP_ParseStageSet (const char *name, const char **text)
+static void SCP_ParseStageSet (const char *name, const char** text)
 {
 	const char *errhead = "SCP_ParseStageSet: unexpected end of file (stageset ";
 	stageSet_t *sp;
@@ -242,7 +242,7 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 	} while (*text);
 }
 
-static void SCP_ParseStage (const char *name, const char **text)
+static void SCP_ParseStage (const char *name, const char** text)
 {
 	const char *errhead = "SCP_ParseStage: unexpected end of file (stage ";
 	stage_t *sp;
@@ -297,7 +297,7 @@ static void SCP_ParseStage (const char *name, const char **text)
 	sp->num = scd->numStageSets - sp->first;
 }
 
-static void SCP_ParseStaticCampaignData (const char *name, const char **text)
+static void SCP_ParseStaticCampaignData (const char *name, const char** text)
 {
 	const char *errhead = "SCP_ParseStaticCampaignData: unexpected end of file (names ";
 	const char *token;
@@ -338,7 +338,7 @@ void SCP_Parse (void)
 
 	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr) {
 		if (Q_streq(type, "staticcampaign")) {
-			const char **textPtr = &text;
+			const char** textPtr = &text;
 			SCP_ParseStaticCampaignData(name, textPtr);
 		}
 	}

@@ -96,7 +96,7 @@ QGL_EXTERN void (APIENTRY *qglVertexAttribPointer)(GLuint index, GLint size, GLe
 /* glsl vertex and fragment shaders and programs */
 QGL_EXTERN GLuint (APIENTRY *qglCreateShader)(GLenum type);
 QGL_EXTERN void (APIENTRY *qglDeleteShader)(GLuint id);
-QGL_EXTERN void (APIENTRY *qglShaderSource)(GLuint id, GLuint count, GLchar **sources, GLuint *len);
+QGL_EXTERN void (APIENTRY *qglShaderSource)(GLuint id, GLuint count, GLchar** sources, GLuint *len);
 QGL_EXTERN void (APIENTRY *qglCompileShader)(GLuint id);
 QGL_EXTERN void (APIENTRY *qglGetShaderiv)(GLuint id, GLenum field, GLuint *dest);
 QGL_EXTERN void (APIENTRY *qglGetShaderInfoLog)(GLuint id, GLuint maxlen, GLuint *len, GLchar *dest);
@@ -159,7 +159,7 @@ typedef void (APIENTRY *VertexAttribPointer_t)(GLuint index, GLint size, GLenum 
 /* glsl vertex and fragment shaders and programs */
 typedef GLuint (APIENTRY *CreateShader_t)(GLenum type);
 typedef void (APIENTRY *DeleteShader_t)(GLuint id);
-typedef void (APIENTRY *ShaderSource_t)(GLuint id, GLuint count, GLchar **sources, GLuint *len);
+typedef void (APIENTRY *ShaderSource_t)(GLuint id, GLuint count, GLchar** sources, GLuint *len);
 typedef void (APIENTRY *CompileShader_t)(GLuint id);
 typedef void (APIENTRY *GetShaderiv_t)(GLuint id, GLenum field, GLuint *dest);
 typedef void (APIENTRY *GetShaderInfoLog_t)(GLuint id, GLuint maxlen, GLuint *len, GLchar *dest);

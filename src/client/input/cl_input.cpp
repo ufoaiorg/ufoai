@@ -971,7 +971,7 @@ void IN_Frame (void)
 			break;
 		case SDL_TEXTINPUT: {
 			const char *text = event.text.text;
-			const char **str = &text;
+			const char** str = &text;
 			for (;;) {
 				const int characterUnicode = UTF8_next(str);
 				if (characterUnicode == -1) {

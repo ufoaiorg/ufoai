@@ -35,7 +35,7 @@ struct cgame_export_s;
 
 #define GAME_IsSingleplayer()	(!GAME_IsMultiplayer())
 bool GAME_IsMultiplayer(void);
-void GAME_ParseModes(const char *name, const char **text);
+void GAME_ParseModes(const char *name, const char** text);
 void GAME_InitStartup(void);
 void GAME_Shutdown(void);
 void GAME_InitUIData(void);

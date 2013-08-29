@@ -78,7 +78,7 @@ static void CL_GetTipOfTheDay_f (void)
 /**
  * @brief Parse all tip definitions from the script files
  */
-void CL_ParseTipOfTheDay (const char *name, const char **text)
+void CL_ParseTipOfTheDay (const char *name, const char** text)
 {
 	if (name[0] != '_') {
 		Com_Printf("Ignore tip: '%s' - not marked translatable\n", name);

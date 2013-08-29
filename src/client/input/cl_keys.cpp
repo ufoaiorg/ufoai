@@ -511,7 +511,7 @@ const char *Key_KeynumToString (int keynum)
 const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 {
 	int i;
-	char **keySpace = nullptr;
+	char** keySpace = nullptr;
 
 	switch (space) {
 	case KEYSPACE_UI:
@@ -547,7 +547,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  */
 void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
-	char **keySpace = nullptr;
+	char** keySpace = nullptr;
 
 	if (keynum == -1 || keynum >= K_KEY_SIZE)
 		return;
@@ -772,7 +772,7 @@ static void Key_Bindlist_f (void)
 
 }
 
-static int Key_CompleteKeyName (const char *partial, const char **match)
+static int Key_CompleteKeyName (const char *partial, const char** match)
 {
 	int n = 0;
 	for (keyName_t const* kn = keyNames; kn->name; ++kn) {

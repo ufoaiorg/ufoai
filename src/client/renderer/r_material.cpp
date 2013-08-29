@@ -569,7 +569,7 @@ static int R_LoadAnimImages (materialStage_t *s)
  * @brief Material stage parser
  * @sa R_LoadMaterials
  */
-static int R_ParseStage (materialStage_t *s, const char **buffer)
+static int R_ParseStage (materialStage_t *s, const char** buffer)
 {
 	int i;
 
