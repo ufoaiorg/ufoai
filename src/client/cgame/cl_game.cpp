@@ -1655,14 +1655,14 @@ character_t* GAME_GetSelectedChr (void)
  */
 int GAME_GetChrMaxLoad (const character_t *chr)
 {
-	if (chr) {
-		const cgame_export_t *list = GAME_GetCurrentType();
-		const int strength = chr->score.skills[ABILITY_POWER];
-		if (list && list->GetChrMaxLoad != nullptr)
-			return std::min(strength, list->GetChrMaxLoad(chr));
-		return strength;
-	}
-	return NONE;
+	if (chr == nullptr)
+		return NONE;
+
+	const cgame_export_t *list = GAME_GetCurrentType();
+	const int strength = chr->score.skills[ABILITY_POWER];
+	if (list && list->GetChrMaxLoad != nullptr)
+		return std::min(strength, list->GetChrMaxLoad(chr));
+	return strength;
 }
 
 /**
