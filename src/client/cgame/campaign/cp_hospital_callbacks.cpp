@@ -206,12 +206,12 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee *e = E_GetEmployeeFromChrUCN(ucn);
-	if (e == nullptr)
+	Employee *emp = E_GetEmployeeFromChrUCN(ucn);
+	if (emp == nullptr)
 		return;
 
-	character_t& c = e->chr;
-	const chrScoreGlobal_t& score = c.score;
+	character_t& echr = emp->chr;
+	const chrScoreGlobal_t& score = echr.score;
 	const char *rank = "";
 	const char *rankImage = "";
 
@@ -221,15 +221,16 @@ static void HOS_EmployeeInit_f (void)
 		rankImage = r->image;
 	}
 
-	base_t *base = e->baseHired;
+	base_t *base = emp->baseHired;
 	CP_CleanTempInventory(base);
 	equipDef_t unused = base->storage;
 	CP_CleanupTeam(base, &unused);
-	CP_SetEquipContainer(&c);
+	CP_SetEquipContainer(&echr);
 	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
 
 	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\" %i",
-			ucn, c.name, CHRSH_CharGetBody(&c), c.bodySkin, CHRSH_CharGetHead(&c), c.headSkin, c.HP, c.maxHP, rank, rankImage, e->isSoldier() ? 1 : 0);
+			ucn, echr.name, CHRSH_CharGetBody(&echr), echr.bodySkin, CHRSH_CharGetHead(&echr),
+			echr.headSkin, echr.HP, echr.maxHP, rank, rankImage, emp->isSoldier() ? 1 : 0);
 
 	const abilityskills_t list[] = { ABILITY_POWER, ABILITY_SPEED, ABILITY_ACCURACY, ABILITY_MIND };
 	const int n = lengthof(list);
@@ -238,7 +239,7 @@ static void HOS_EmployeeInit_f (void)
 				i, score.skills[i], CL_ActorGetSkillString(score.skills[i]));
 	}
 
-	HOS_UpdateCharacterImplantList(c);
+	HOS_UpdateCharacterImplantList(echr);
 }
 
 void HOS_InitCallbacks (void)
