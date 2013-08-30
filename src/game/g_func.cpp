@@ -60,7 +60,7 @@ static bool Touch_Breakable (Edict* self, Edict* activator)
 static bool Destroy_Breakable (Edict* self)
 {
 	vec3_t origin;
-	const char *model = self->model;
+	const char* model = self->model;
 
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 

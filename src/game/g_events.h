@@ -62,7 +62,7 @@ void G_EventInventoryDelete(const Edict &ent, playermask_t playerMask, const con
 void G_EventInventoryReload(const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t *invDef, const Item *ic);
 void G_EventModelExplodeTriggered(const Edict &ent);
 void G_EventModelExplode(const Edict &ent);
-void G_EventParticleSpawn(playermask_t playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+void G_EventParticleSpawn(playermask_t playerMask, const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void G_EventPerish(const Edict &ent);
 void G_EventReactionFireChange(const Edict &ent);
 void G_EventReset(const Player &player, int activeTeam);
@@ -73,7 +73,7 @@ void G_EventSendState(playermask_t playerMask, const Edict &ent);
 void G_EventSetClientAction(const Edict &ent);
 void G_EventShootHidden(teammask_t teamMask, const fireDef_t *fd, bool firstShoot);
 void G_EventShoot(const Edict &ent, teammask_t teamMask, const fireDef_t *fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t *trace, const vec3_t from, const vec3_t impact);
-void G_EventSpawnSound(playermask_t playerMask, bool instant, const Edict &ent, const vec3_t origin, const char *sound);
+void G_EventSpawnSound(playermask_t playerMask, bool instant, const Edict &ent, const vec3_t origin, const char* sound);
 void G_EventStart(const Player &player, bool teamplay);
 void G_EventStartShoot(const Edict &ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at);
 void G_EventThrow(teammask_t teamMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);

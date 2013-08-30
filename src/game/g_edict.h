@@ -62,14 +62,14 @@ public:
 	Edict* child;			/**< e.g. the trigger for this edict */
 	Edict* owner;			/**< e.g. the door model in case of func_door */
 	int modelindex;			/**< inline model index */
-	const char *classname;
+	const char* classname;
 #endif
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
 
 	int mapNum;			/**< entity number in the map file */
-	const char *model;	/**< inline model (start with * and is followed by the model numberer)
+	const char* model;	/**< inline model (start with * and is followed by the model numberer)
 						 * or misc_model model name (e.g. md2) */
 
 	/** only used locally in game, not by server */
@@ -97,7 +97,7 @@ public:
 	unsigned int head;
 	int frame;					/**< frame of the model to show */
 
-	char *group;				/**< this can be used to trigger a group of entities
+	char* group;				/**< this can be used to trigger a group of entities
 								 * e.g. for two-part-doors - set the group to the same
 								 * string for each door part and they will open both
 								 * if you open one */
@@ -118,13 +118,13 @@ public:
 
 	int radius;					/**< this is used to extend the bounding box of a trigger_touch for e.g. misc_mission */
 	int speed;					/**< speed of entities - e.g. rotating or actors */
-	const char *target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
-	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
-	const char *item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
-	const char *particle;
-	const char *nextmap;
-	const char *message;		/**< misc_message */
-	const char *noise;			/**< sounds - e.g. for func_door */
+	const char* target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
+	const char* targetname;		/**< name pointed to by target - see the target of the parent edict */
+	const char* item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
+	const char* particle;
+	const char* nextmap;
+	const char* message;		/**< misc_message */
+	const char* noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	camera_edict_data_t camera;
 	int count;					/**< general purpose 'amount' variable - set via mapeditor often */

@@ -108,7 +108,7 @@ typedef struct itemEffect_s {
 } itemEffect_t;
 
 typedef struct implantDef_s {
-	const char *id;
+	const char* id;
 	int idx;
 	const struct objDef_s *item;	/**< the assigned implant effect */
 	int installationTime;	/**< the time that is needed in order to install the implant */
@@ -117,14 +117,14 @@ typedef struct implantDef_s {
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	const char *name;			/**< fire definition name (translatable) */
-	const char *projectile;		/**< projectile particle */
-	const char *impact;			/**< impact particle */
-	const char *impactSound;	/**< the sound that is played on impact */
-	const char *hitBody;		/**< hit the body particles */
-	const char *hitBodySound;	/**< the sound that is played on hitting a body */
-	const char *fireSound;		/**< the sound when a recruits fires */
-	const char *bounceSound;	/**< bouncing sound */
+	const char* name;			/**< fire definition name (translatable) */
+	const char* projectile;		/**< projectile particle */
+	const char* impact;			/**< impact particle */
+	const char* impactSound;	/**< the sound that is played on impact */
+	const char* hitBody;		/**< hit the body particles */
+	const char* hitBodySound;	/**< the sound that is played on hitting a body */
+	const char* fireSound;		/**< the sound when a recruits fires */
+	const char* bounceSound;	/**< bouncing sound */
 
 	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
 	float impactAttenuation;	/**< attenuation of impact (less louder over distance), see S_PlaySample() */
@@ -271,12 +271,12 @@ typedef struct craftitem_s {
 typedef struct objDef_s {
 	/* Common */
 	int idx;				/**< Index of the objDef in the global item list (ods). */
-	const char *name;		/**< Item name taken from scriptfile. */
-	const char *id;			/**< Identifier of the item being item definition in scriptfile. */
-	const char *model;		/**< Model name - relative to game dir. */
-	const char *image;		/**< Object image file - relative to game dir. */
-	const char *type;		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
-	const char *armourPath;
+	const char* name;		/**< Item name taken from scriptfile. */
+	const char* id;			/**< Identifier of the item being item definition in scriptfile. */
+	const char* model;		/**< Model name - relative to game dir. */
+	const char* image;		/**< Object image file - relative to game dir. */
+	const char* type;		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
+	const char* armourPath;
 	uint32_t shape;			/**< The shape in inventory. */
 
 	float scale;			/**< scale value for images? and models */
@@ -301,7 +301,7 @@ typedef struct objDef_s {
 					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int _reload;			/**< Time units (TUs) for reloading the weapon. */
-	const char *reloadSound;	/**< Sound played when weapon is reloaded */
+	const char* reloadSound;	/**< Sound played when weapon is reloaded */
 	float reloadAttenuation;	/**< Attenuation of reload sound - less louder over distance - */
 	bool oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
@@ -608,7 +608,7 @@ public:
 
 typedef struct equipDef_s {
 	char id[MAX_VAR];			/**< script id of the equipment definition */
-	const char *name;			/**< translatable name of the equipment definition */
+	const char* name;			/**< translatable name of the equipment definition */
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
@@ -645,15 +645,15 @@ typedef enum {
 
 void INVSH_InitCSI(const struct csi_s *import) __attribute__((nonnull));
 
-const objDef_t *INVSH_GetItemByID(const char *id);
+const objDef_t *INVSH_GetItemByID(const char* id);
 const objDef_t *INVSH_GetItemByIDX(int index);
-const objDef_t *INVSH_GetItemByIDSilent(const char *id);
+const objDef_t *INVSH_GetItemByIDSilent(const char* id);
 
 const implantDef_t *INVSH_GetImplantForObjDef(const objDef_t* od);
-const implantDef_t *INVSH_GetImplantByID(const char *id);
-const implantDef_t *INVSH_GetImplantByIDSilent(const char *id);
+const implantDef_t *INVSH_GetImplantByID(const char* id);
+const implantDef_t *INVSH_GetImplantByIDSilent(const char* id);
 
-const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
+const invDef_t *INVSH_GetInventoryDefinitionByID(const char* id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))
 

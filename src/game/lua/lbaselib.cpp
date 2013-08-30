@@ -33,7 +33,7 @@ static int luaB_print (lua_State *L) {
   int i;
   lua_getglobal(L, "tostring");
   for (i=1; i<=n; i++) {
-    const char *s;
+    const char* s;
     lua_pushvalue(L, -1);  /* function to be called */
     lua_pushvalue(L, i);   /* value to print */
     lua_call(L, 1, 1);
@@ -60,8 +60,8 @@ static int luaB_tonumber (lua_State *L) {
     }
   }
   else {
-    const char *s1 = luaL_checkstring(L, 1);
-    char *s2;
+    const char* s1 = luaL_checkstring(L, 1);
+    char* s2;
     unsigned long n;
     luaL_argcheck(L, 2 <= base && base <= 36, 2, "base out of range");
     n = strtoul(s1, &s2, base);
@@ -191,7 +191,7 @@ static int luaB_gcinfo (lua_State *L) {
 
 
 static int luaB_collectgarbage (lua_State *L) {
-  static const char *const opts[] = {"stop", "restart", "collect",
+  static const char* const opts[] = {"stop", "restart", "collect",
     "count", "step", "setpause", "setstepmul", nullptr};
   static const int optsnum[] = {LUA_GCSTOP, LUA_GCRESTART, LUA_GCCOLLECT,
     LUA_GCCOUNT, LUA_GCSTEP, LUA_GCSETPAUSE, LUA_GCSETSTEPMUL};
@@ -276,14 +276,14 @@ static int load_aux (lua_State *L, int status) {
 
 static int luaB_loadstring (lua_State *L) {
   size_t l;
-  const char *s = luaL_checklstring(L, 1, &l);
-  const char *chunkname = luaL_optstring(L, 2, s);
+  const char* s = luaL_checklstring(L, 1, &l);
+  const char* chunkname = luaL_optstring(L, 2, s);
   return load_aux(L, luaL_loadbuffer(L, s, l, chunkname));
 }
 
 
 static int luaB_loadfile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, nullptr);
+  const char* fname = luaL_optstring(L, 1, nullptr);
   return load_aux(L, luaL_loadfile(L, fname));
 }
 
@@ -294,7 +294,7 @@ static int luaB_loadfile (lua_State *L) {
 ** stack top. Instead, it keeps its resulting string in a
 ** reserved slot inside the stack.
 */
-static const char *generic_reader (lua_State *L, void *ud, size_t *size) {
+static const char* generic_reader (lua_State *L, void *ud, size_t *size) {
   (void)ud;  /* to avoid warnings */
   luaL_checkstack(L, 2, "too many nested functions");
   lua_pushvalue(L, 1);  /* get function */
@@ -314,7 +314,7 @@ static const char *generic_reader (lua_State *L, void *ud, size_t *size) {
 
 static int luaB_load (lua_State *L) {
   int status;
-  const char *cname = luaL_optstring(L, 2, "=(load)");
+  const char* cname = luaL_optstring(L, 2, "=(load)");
   luaL_checktype(L, 1, LUA_TFUNCTION);
   lua_settop(L, 3);  /* function, eventual name, plus one reserved slot */
   status = lua_load(L, generic_reader, nullptr, cname);
@@ -323,7 +323,7 @@ static int luaB_load (lua_State *L) {
 
 
 static int luaB_dofile (lua_State *L) {
-  const char *fname = luaL_optstring(L, 1, nullptr);
+  const char* fname = luaL_optstring(L, 1, nullptr);
   int n = lua_gettop(L);
   if (luaL_loadfile(L, fname) != 0) lua_error(L);
   lua_call(L, 0, LUA_MULTRET);
@@ -484,7 +484,7 @@ static const luaL_Reg base_funcs[] = {
 #define CO_NOR	2	/* 'normal' (it resumed another coroutine) */
 #define CO_DEAD	3
 
-static const char *const statnames[] =
+static const char* const statnames[] =
     {"running", "suspended", "normal", "dead"};
 
 static int costatus (lua_State *L, lua_State *co) {
@@ -615,7 +615,7 @@ static const luaL_Reg co_funcs[] = {
 /* }====================================================== */
 
 
-static void auxopen (lua_State *L, const char *name,
+static void auxopen (lua_State *L, const char* name,
                      lua_CFunction f, lua_CFunction u) {
   lua_pushcfunction(L, u);
   lua_pushcclosure(L, f, 1);

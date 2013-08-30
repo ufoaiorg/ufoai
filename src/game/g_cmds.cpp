@@ -104,8 +104,8 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 	if (arg0) {
 		Q_strcat(text, sizeof(text), "%s %s\n", gi.Cmd_Argv(0), gi.Cmd_Args());
 	} else {
-		const char *p = gi.Cmd_Args();
-		const char *token = Com_Parse(&p);
+		const char* p = gi.Cmd_Args();
+		const char* token = Com_Parse(&p);
 
 		Q_strcat(text, sizeof(text), "%s\n", token);
 	}
@@ -404,7 +404,7 @@ static void G_StateChange_f (void)
 	if (e == nullptr)
 		return;
 
-	const char *state = gi.Cmd_Argv(2);
+	const char* state = gi.Cmd_Argv(2);
 	if (Q_strcasecmp(state, "panic")) {
 		e->morale = mor_panic->integer / 2;
 	} else if (Q_strcasecmp(state, "shaken")) {
@@ -421,7 +421,7 @@ static void G_StateChange_f (void)
 
 void G_ClientCommand (Player &player)
 {
-	const char *cmd;
+	const char* cmd;
 
 	if (!player.isInUse())
 		return;					/* not fully in game yet */

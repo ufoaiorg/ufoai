@@ -81,7 +81,7 @@ typedef struct level_locals_s {
 						 * calculated through framenum * SERVER_FRAME_SECONDS */
 
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
-	char *mapEndCommand;
+	char* mapEndCommand;
 	bool routed;
 	bool day;
 	bool hurtAliens;
@@ -256,7 +256,7 @@ void G_SendPlayerStats(const Player &player);
 
 /* g_svcmds.c */
 void G_ServerCommand(void);
-bool SV_FilterPacket(const char *from);
+bool SV_FilterPacket(const char* from);
 
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(Edict* ent);

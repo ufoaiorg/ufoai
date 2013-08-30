@@ -170,28 +170,28 @@ typedef struct game_import_s {
 	/* special messages */
 
 	/** sends message to all players */
-	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 2, 3)));
+	void (IMPORT *BroadcastPrintf) (int printlevel, const char* fmt, ...) __attribute__((format(__printf__, 2, 3)));
 	/** print output to server console */
-	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
+	void (IMPORT *DPrintf) (const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
-	void (IMPORT *PlayerPrintf) (const player_t *player, int printlevel, const char *fmt, va_list ap);
+	void (IMPORT *PlayerPrintf) (const player_t *player, int printlevel, const char* fmt, va_list ap);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
 	 * they connect, and changes are sent to all connected clients. */
-	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(__printf__, 2, 3)));
+	void (IMPORT *ConfigString) (int num, const char* fmt, ...) __attribute__((format(__printf__, 2, 3)));
 
 	/** @note The error message should not have a newline - it's added inside of this function */
-	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
+	void (IMPORT *Error) (const char* fmt, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
-	unsigned int (IMPORT *ModelIndex) (const char *name);
+	unsigned int (IMPORT *ModelIndex) (const char* name);
 
 	/** This updates the inline model's orientation */
-	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);
-	void (IMPORT *GetInlineModelAABB) (const char *name, AABB& aabb);
+	void (IMPORT *SetInlineModelOrientation) (const char* name, const vec3_t origin, const vec3_t angles);
+	void (IMPORT *GetInlineModelAABB) (const char* name, AABB& aabb);
 
-	void (IMPORT *SetModel) (edict_t *ent, const char *name);
+	void (IMPORT *SetModel) (edict_t *ent, const char* name);
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
@@ -201,9 +201,9 @@ typedef struct game_import_s {
 	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passent, int contentmask);
 
 	int (IMPORT *PointContents) (const vec3_t point);
-	const char *(IMPORT *GetFootstepSound) (const char *texture);
-	float (IMPORT *GetBounceFraction) (const char *texture);
-	bool (IMPORT *LoadModelAABB) (const char *model, int frame, AABB& aabb);
+	const char* (IMPORT *GetFootstepSound) (const char* texture);
+	float (IMPORT *GetBounceFraction) (const char* texture);
+	bool (IMPORT *LoadModelAABB) (const char* model, int frame, AABB& aabb);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
@@ -225,14 +225,14 @@ typedef struct game_import_s {
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
 	pos_t (IMPORT *GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
-	void (IMPORT *GridRecalcRouting) (const char *name, const GridBox& box, const char** list);
+	void (IMPORT *GridRecalcRouting) (const char* name, const GridBox& box, const char** list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
 	bool (IMPORT *GridShouldUseAutostand) (const pathing_t *path, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */
-	const char *(IMPORT *FS_Gamedir) (void);
-	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
+	const char* (IMPORT *FS_Gamedir) (void);
+	int (IMPORT *FS_LoadFile) (const char* path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
 
 	/* network messaging (writing) */
@@ -242,12 +242,12 @@ typedef struct game_import_s {
 	void (IMPORT *WriteShort) (int c);
 
 	void (IMPORT *WriteLong) (int c);
-	void (IMPORT *WriteString) (const char *s);
+	void (IMPORT *WriteString) (const char* s);
 	void (IMPORT *WritePos) (const vec3_t pos);	/**< some fractional bits */
 	void (IMPORT *WriteGPos) (const pos3_t pos);
 	void (IMPORT *WriteDir) (const vec3_t pos);	/**< single byte encoded, very coarse */
 	void (IMPORT *WriteAngle) (float f);
-	void (IMPORT *WriteFormat) (const char *format, ...);
+	void (IMPORT *WriteFormat) (const char* format, ...);
 
 	void (IMPORT *AbortEvents) (void);
 	void (IMPORT *EndEvents) (void);
@@ -264,41 +264,41 @@ typedef struct game_import_s {
 	int (IMPORT *ReadByte) (void);
 	int (IMPORT *ReadShort) (void);
 	int (IMPORT *ReadLong) (void);
-	int (IMPORT *ReadString) (char *str, size_t length);
+	int (IMPORT *ReadString) (char* str, size_t length);
 	void (IMPORT *ReadPos) (vec3_t pos);
 	void (IMPORT *ReadGPos) (pos3_t pos);
 	void (IMPORT *ReadDir) (vec3_t vector);
 	float (IMPORT *ReadAngle) (void);
 	void (IMPORT *ReadData) (void *buffer, int size);
-	void (IMPORT *ReadFormat) (const char *format, ...);
+	void (IMPORT *ReadFormat) (const char* format, ...);
 
-	bool (IMPORT *GetConstInt) (const char *name, int *value);
-	bool (IMPORT *GetConstIntFromNamespace) (const char *space, const char *name, int *value);
-	const char *(IMPORT *GetConstVariable) (const char *space, int value);
-	void (IMPORT *RegisterConstInt) (const char *name, int value);
-	bool (IMPORT *UnregisterConstVariable) (const char *name);
+	bool (IMPORT *GetConstInt) (const char* name, int *value);
+	bool (IMPORT *GetConstIntFromNamespace) (const char* space, const char* name, int *value);
+	const char* (IMPORT *GetConstVariable) (const char* space, int value);
+	void (IMPORT *RegisterConstInt) (const char* name, int value);
+	bool (IMPORT *UnregisterConstVariable) (const char* name);
 
 	/* misc functions */
-	void (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);
+	void (IMPORT *GetCharacterValues) (const char* teamDefinition, character_t *chr);
 
 	/* managed memory allocation */
-	void *(IMPORT *TagMalloc) (int size, int tag, const char *file, int line);
-	void (IMPORT *TagFree) (void *block, const char *file, int line);
-	void (IMPORT *FreeTags) (int tag, const char *file, int line);
+	void *(IMPORT *TagMalloc) (int size, int tag, const char* file, int line);
+	void (IMPORT *TagFree) (void *block, const char* file, int line);
+	void (IMPORT *FreeTags) (int tag, const char* file, int line);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char *desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
-	const char *(IMPORT *Cvar_String) (const char *varName);
+	cvar_t *(IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char* varName, const char* value);
+	const char* (IMPORT *Cvar_String) (const char* varName);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);
-	const char *(IMPORT *Cmd_Argv) (int n);
-	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
+	const char* (IMPORT *Cmd_Argv) (int n);
+	const char* (IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
 
 	/** add commands to the server console as if they were typed in
 	 * for map changing, etc */
-	void (IMPORT *AddCommandString) (const char *text, ...) __attribute__((format(__printf__, 1, 2)));
+	void (IMPORT *AddCommandString) (const char* text, ...) __attribute__((format(__printf__, 1, 2)));
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */
@@ -312,12 +312,12 @@ typedef struct game_export_s {
 	void (EXPORT *Shutdown) (void);
 
 	/* each new level entered will cause a call to G_SpawnEntities */
-	void (EXPORT *SpawnEntities) (const char *mapname, bool day, const char *entstring);
+	void (EXPORT *SpawnEntities) (const char* mapname, bool day, const char* entstring);
 
-	bool (EXPORT *ClientConnect) (player_t *client, char *userinfo, size_t userinfoSize);
+	bool (EXPORT *ClientConnect) (player_t *client, char* userinfo, size_t userinfoSize);
 	bool (EXPORT *ClientBegin) (player_t &client);
 	void (EXPORT *ClientStartMatch) (player_t &client);
-	void (EXPORT *ClientUserinfoChanged) (player_t &client, const char *userinfo);
+	void (EXPORT *ClientUserinfoChanged) (player_t &client, const char* userinfo);
 	void (EXPORT *ClientDisconnect) (player_t &client);
 	void (EXPORT *ClientCommand) (player_t &client);
 
@@ -329,7 +329,7 @@ typedef struct game_export_s {
 	bool (EXPORT *ClientIsReady) (const player_t *client);	/* assert ! */
 
 	int (EXPORT *ClientGetActiveTeam) (void);
-	const char *(EXPORT *ClientGetName) (int pnum);
+	const char* (EXPORT *ClientGetName) (int pnum);
 
 	bool (EXPORT *RunFrame) (void);
 

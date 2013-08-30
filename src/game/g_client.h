@@ -35,7 +35,7 @@ Player *G_PlayerGetNextActiveAI(Player *lastPlayer);
 playermask_t G_TeamToPM(int team);
 teammask_t G_PMToVis(playermask_t playerMask);
 playermask_t G_VisToPM(teammask_t teamMask);
-void G_ClientPrintf(const Player &player, int printlevel, const char *fmt, ...) __attribute__((format(__printf__, 3, 4)));
+void G_ClientPrintf(const Player &player, int printlevel, const char* fmt, ...) __attribute__((format(__printf__, 3, 4)));
 void G_GiveTimeUnits(int team);
 void G_AppearPerishEvent(playermask_t player_mask, bool appear, Edict &check, const Edict* ent);
 void G_SendInvisible(const Player &player);
@@ -56,7 +56,7 @@ void G_ClientInitActorStates(const Player &player);
 void G_ClientTeamInfo(const Player &player);
 bool G_ClientBegin(Player &player);
 void G_ClientStartMatch(Player &player);
-void G_ClientUserinfoChanged(Player &player, const char *userinfo);
-bool G_ClientConnect(Player *player, char *userinfo, size_t userinfoSize);  /* can't change to Player&. Conflict with SrvPlayer ! */
+void G_ClientUserinfoChanged(Player &player, const char* userinfo);
+bool G_ClientConnect(Player *player, char* userinfo, size_t userinfoSize);  /* can't change to Player&. Conflict with SrvPlayer ! */
 void G_ClientDisconnect(Player &player);
 void G_ResetClientData(void);

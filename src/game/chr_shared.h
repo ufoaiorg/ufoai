@@ -234,7 +234,7 @@ typedef enum {
 
 /** @brief Defines a type of UGV/Robot */
 typedef struct ugv_s {
-	char *id;
+	char* id;
 	int idx;
 	char weapon[MAX_VAR];
 	char armour[MAX_VAR];
@@ -275,15 +275,15 @@ private:
 
 public:
 	BodyData(void);
-	const char *id(void) const;
-	const char *id(const short bodyPart) const;
-	const char *name(const short bodyPart) const;
+	const char* id(void) const;
+	const char* id(const short bodyPart) const;
+	const char* name(const short bodyPart) const;
 	float penalty(const short bodyPart, const modifier_types_t type) const;
 	float bleedingFactor(const short bodyPart) const;
 	float woundThreshold(const short bodyPart) const;
 	short getRandomBodyPart(void) const;
 	short numBodyParts (void) const;
-	void setId(const char *id);
+	void setId(const char* id);
 	void addBodyPart(const BodyPartData &bodyPart);
 	short getHitBodyPart(const byte direction, const float height) const;
 	float getArea(const short bodyPart) const;
@@ -306,9 +306,9 @@ typedef struct teamDef_s {
 	const int *numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
-		char *path;
-		char *body;
-		char *head;
+		char* path;
+		char* body;
+		char* head;
 		int   bodySkin;
 		int   headSkin;
 	};
@@ -405,10 +405,10 @@ typedef struct character_s {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-const chrTemplate_t *CHRSH_GetTemplateByID(const teamDef_t *teamDef, const char *templateId);
-void CHRSH_CharGenAbilitySkills(character_t *chr, bool multiplayer, const char *templateId = "") __attribute__((nonnull));
-const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
-const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
+const chrTemplate_t *CHRSH_GetTemplateByID(const teamDef_t *teamDef, const char* templateId);
+void CHRSH_CharGenAbilitySkills(character_t *chr, bool multiplayer, const char* templateId = "") __attribute__((nonnull));
+const char* CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
+const char* CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 bool CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);

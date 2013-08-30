@@ -172,7 +172,7 @@ static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
  * @return id of the item to which fire definition belongs or "unknown" when no object found.
  * @sa G_GetObjectForFiredef
  */
-const char *G_GetWeaponNameForFiredef (const fireDef_t *fd)
+const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
 {
 	const objDef_t *obj = G_GetObjectForFiredef(fd);
 	if (!obj)
@@ -241,7 +241,7 @@ static inline void G_TraceDraw (const vec3_t start, const vec3_t end)
  */
 bool G_TestLineWithEnts (const vec3_t start, const vec3_t end)
 {
-	const char *entList[MAX_EDICTS];
+	const char* entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	G_TraceDraw(start, end);
@@ -277,7 +277,7 @@ trace_t G_Trace (const vec3_t start, const vec3_t end, const Edict* passent, int
 /**
  * @brief Returns the player name for a give player number
  */
-const char *G_GetPlayerName (int pnum)
+const char* G_GetPlayerName (int pnum)
 {
 	if (pnum >= game.sv_maxplayersperteam)
 		return "";
@@ -306,7 +306,7 @@ playermask_t G_GetClosePlayerMask (const vec3_t origin, float radius)
  * @brief Prints stats to game console and stats log file
  * @sa G_PrintActorStats
  */
-void G_PrintStats (const char *format, ...)
+void G_PrintStats (const char* format, ...)
 {
 	char buffer[512];
 	va_list argptr;
@@ -345,8 +345,8 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 
 	if (attacker != nullptr && fd != nullptr) {
 		if (victim->pnum != attacker->pnum) {
-			const char *victimName = G_GetPlayerName(victim->pnum);
-			const char *attackerName = G_GetPlayerName(attacker->pnum);
+			const char* victimName = G_GetPlayerName(victim->pnum);
+			const char* attackerName = G_GetPlayerName(attacker->pnum);
 			if (victimName[0] == '\0') { /* empty string */
 				switch (victim->team) {
 				case TEAM_CIVILIAN:
@@ -385,13 +385,13 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->number);
 			}
 		} else {
-			const char *attackerName = G_GetPlayerName(attacker->pnum);
+			const char* attackerName = G_GetPlayerName(attacker->pnum);
 			Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s (entnum: %i)",
 				attackerName, (victim->HP == 0 ? "kills" : "stuns"),
 				victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->number);
 		}
 	} else {
-		const char *victimName = G_GetPlayerName(victim->pnum);
+		const char* victimName = G_GetPlayerName(victim->pnum);
 		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s (entnum: %i)",
 			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"), victim->number);
 	}
@@ -438,7 +438,7 @@ Edict* G_FindRadius (Edict* from, const vec3_t org, float rad, entity_type_t typ
  * @sa G_RecalcRouting
  * @sa G_LineVis
  */
-void G_GenerateEntList (const char *entList[MAX_EDICTS])
+void G_GenerateEntList (const char* entList[MAX_EDICTS])
 {
 	int i = 0;
 	Edict* ent = nullptr;
@@ -454,9 +454,9 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (const char *model, const GridBox& box)
+void G_RecalcRouting (const char* model, const GridBox& box)
 {
-	const char *entList[MAX_EDICTS];
+	const char* entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
@@ -623,7 +623,7 @@ void G_TouchEdicts (Edict* ent, float extend)
 	int i, num;
 	Edict* touched[MAX_EDICTS];
 	vec3_t absmin, absmax;
-	const char *entName = (ent->model) ? ent->model : ent->chr.name;
+	const char* entName = (ent->model) ? ent->model : ent->chr.name;
 
 	for (i = 0; i < 3; i++) {
 		absmin[i] = ent->absmin[i] - extend;

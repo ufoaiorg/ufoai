@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict &ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict &ent, const vec3_t origin, const char* sound)
 {
 	G_EventAdd(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0), ent.number);
 
@@ -295,7 +295,7 @@ void G_EventReactionFireTargetUpdate (const Edict &shooter, const Edict &target,
  * @param[in] v velocity vector
  * @param[in] a acceleration vector
  */
-void G_EventParticleSpawn (playermask_t playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+void G_EventParticleSpawn (playermask_t playerMask, const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
 	G_EventAdd(playerMask, EV_PARTICLE_SPAWN, -1);
 	gi.WriteByte(levelFlags);

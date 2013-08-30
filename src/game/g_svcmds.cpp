@@ -65,7 +65,7 @@ typedef struct ipfilter_s {
 static ipfilter_t ipfilters[MAX_IPFILTERS];
 static int numipfilters;
 
-static bool StringToFilter (const char *s, ipfilter_t *f)
+static bool StringToFilter (const char* s, ipfilter_t *f)
 {
 	char num[128];
 	int i, j;
@@ -104,12 +104,12 @@ static bool StringToFilter (const char *s, ipfilter_t *f)
 	return true;
 }
 
-bool SV_FilterPacket (const char *from)
+bool SV_FilterPacket (const char* from)
 {
 	int i;
 	unsigned in;
 	byte m[4];
-	const char *p;
+	const char* p;
 
 	i = 0;
 	p = from;
@@ -329,7 +329,7 @@ static void SVCmd_ListEdicts_f (void)
 	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl             | pos\n");
 	while ((ent = G_EdictsGetNext(ent))) {
 		char buf[128];
-		const char *model;
+		const char* model;
 		if (ent->type == ET_PARTICLE)
 			model = ent->particle;
 		else if (ent->model)
@@ -353,7 +353,7 @@ static void SVCmd_ListEdicts_f (void)
  */
 void G_ServerCommand (void)
 {
-	const char *cmd;
+	const char* cmd;
 
 	cmd = gi.Cmd_Argv(1);
 	if (Q_strcasecmp(cmd, "addip") == 0)

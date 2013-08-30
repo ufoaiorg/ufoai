@@ -203,7 +203,7 @@ playermask_t G_VisToPM (teammask_t teamMask)
  * @param printLevel A numeric value to restrict and channel the printing (CONSOLE, HUD, CHAT...)
  * @param fmt A format string as in printf
  */
-void G_ClientPrintf (const Player &player, int printLevel, const char *fmt, ...)
+void G_ClientPrintf (const Player &player, int printLevel, const char* fmt, ...)
 {
 	va_list ap;
 
@@ -646,7 +646,7 @@ int G_ClientAction (Player &player)
 	int fmIdx, objIdx;
 	int resCrouch, resShot;
 	Edict* ent;
-	const char *format;
+	const char* format;
 
 	/* read the header */
 	action = (player_action_t)gi.ReadByte();
@@ -1394,7 +1394,7 @@ void G_ClientStartMatch (Player &player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged (Player &player, const char *userinfo)
+void G_ClientUserinfoChanged (Player &player, const char* userinfo)
 {
 	const bool alreadyReady = player.isReady();
 	const int oldTeamnum = Info_IntegerForKey(player.pers.userinfo, "cl_teamnum");
@@ -1437,9 +1437,9 @@ void G_ClientUserinfoChanged (Player &player, const char *userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-bool G_ClientConnect (Player *player, char *userinfo, size_t userinfoSize)
+bool G_ClientConnect (Player *player, char* userinfo, size_t userinfoSize)
 {
-	const char *value;
+	const char* value;
 
 	value = Info_ValueForKey(userinfo, "ip");
 

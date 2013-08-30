@@ -1495,7 +1495,7 @@ void AI_Run (void)
  */
 static void AI_SetStats (Edict* ent, int team)
 {
-	const char *templateId = "";
+	const char* templateId = "";
 	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams)
 		for (int i = 0; i < gi.csi->numAlienTeams; ++i)
 			if (gi.csi->alienTeams[i] == ent->chr.teamDef && gi.csi->alienChrTemplates[i]) {
@@ -1541,7 +1541,7 @@ static void AI_SetStats (Edict* ent, int team)
 static void AI_SetCharacterValues (Edict* ent, int team)
 {
 	/* Set model. */
-	const char *teamDefinition;
+	const char* teamDefinition;
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			const int alienTeam = rand() % gi.csi->numAlienTeams;
@@ -1625,7 +1625,7 @@ static const equipDef_t *G_GetEquipmentForAISpawn (int team)
 {
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
-		const char *equipID = gi.Cvar_String("ai_equipment");
+		const char* equipID = gi.Cvar_String("ai_equipment");
 		const equipDef_t *ed = G_GetEquipDefByID(equipID);
 		if (ed == nullptr)
 			ed = &gi.csi->eds[0];

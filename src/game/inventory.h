@@ -43,12 +43,12 @@ class InventoryInterface
 	Item *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
 	Item cacheItem;
 	const csi_t *csi;
-	const char *invName;
+	const char* invName;
 
 public:
 	InventoryInterface ();
 
-	void initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import);
+	void initInventory (const char* name, const csi_t *csi, const inventoryImport_t *import);
 	bool removeFromInventory (Inventory* const inv, const invDef_t *container, Item *fItem) __attribute__((warn_unused_result));
 	Item *addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y,
 			int amount) __attribute__((warn_unused_result));

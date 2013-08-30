@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void G_MissionAddVictoryMessage(const char *message);
+void G_MissionAddVictoryMessage(const char* message);
 bool G_MissionTouch(Edict* self, Edict* activator);
 bool G_MissionDestroy(Edict* self);
 bool G_MissionUse(Edict* self, Edict* activator);

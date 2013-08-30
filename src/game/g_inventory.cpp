@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 
-const equipDef_t *G_GetEquipDefByID (const char *equipID)
+const equipDef_t *G_GetEquipDefByID (const char* equipID)
 {
 	int i;
 	const equipDef_t *ed;
@@ -78,7 +78,7 @@ Edict* G_GetFloorItems (Edict* ent)
  * @param container The container in the inventory of the edict to remove the searched item from.
  * @return @c true if the removal was successful, @c false otherwise.
  */
-bool G_InventoryRemoveItemByID (const char *itemID, Edict* ent, containerIndex_t container)
+bool G_InventoryRemoveItemByID (const char* itemID, Edict* ent, containerIndex_t container)
 {
 	Item *ic = ent->getContainer(container);
 	while (ic) {
@@ -138,7 +138,7 @@ static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
  * @param pos The grid location to spawn the item on the floor
  * @param itemID The item to spawn
  */
-bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
+bool G_AddItemToFloor (const pos3_t pos, const char* itemID)
 {
 	Edict* floor;
 	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);

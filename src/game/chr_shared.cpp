@@ -71,7 +71,7 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 	return td->robot;
 }
 
-const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char *templateId) {
+const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char* templateId) {
 	if (!Q_strnull(templateId))
 		for (int i = 0; i < teamDef->numTemplates; i++)
 			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
@@ -182,7 +182,7 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
  * @note mulitplayer is a special case here
  * @todo Add modifiers for difficulty setting here!
  */
-void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char *templateId)
+void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char* templateId)
 {
 	int i;
 	const chrTemplate_t *chrTemplate;
@@ -261,14 +261,14 @@ void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char 
  * @sa CHRSH_CharGetBody
  * @return the character body model (from a static buffer)
  */
-const char *CHRSH_CharGetBody (const character_t *const chr)
+const char* CHRSH_CharGetBody (const character_t *const chr)
 {
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
 		const objDef_t *od = chr->inv.getArmour()->def();
-		const char *id = od->armourPath;
+		const char* id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
@@ -283,14 +283,14 @@ const char *CHRSH_CharGetBody (const character_t *const chr)
  * @param[in] chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
-const char *CHRSH_CharGetHead (const character_t *const chr)
+const char* CHRSH_CharGetHead (const character_t *const chr)
 {
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !chr->teamDef->robot) {
 		const objDef_t *od = chr->inv.getArmour()->def();
-		const char *id = od->armourPath;
+		const char* id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
@@ -320,17 +320,17 @@ short BodyData::getRandomBodyPart (void) const
 	return bodyPart;
 }
 
-const char *BodyData::id (void) const
+const char* BodyData::id (void) const
 {
 	return _id;
 }
 
-const char *BodyData::id (const short bodyPart) const
+const char* BodyData::id (const short bodyPart) const
 {
 	return _bodyParts[bodyPart].id;
 }
 
-const char *BodyData::name (const short bodyPart) const
+const char* BodyData::name (const short bodyPart) const
 {
 	return _bodyParts[bodyPart].name;
 }
@@ -355,7 +355,7 @@ short BodyData::numBodyParts (void) const
 	return _numBodyParts;
 }
 
-void BodyData::setId (const char *id)
+void BodyData::setId (const char* id)
 {
 	Q_strncpyz(_id, id, sizeof(_id));
 }

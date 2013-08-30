@@ -61,13 +61,13 @@ static int db_setfenv (lua_State *L) {
 }
 
 
-static void settabss (lua_State *L, const char *i, const char *v) {
+static void settabss (lua_State *L, const char* i, const char* v) {
   lua_pushstring(L, v);
   lua_setfield(L, -2, i);
 }
 
 
-static void settabsi (lua_State *L, const char *i, int v) {
+static void settabsi (lua_State *L, const char* i, int v) {
   lua_pushinteger(L, v);
   lua_setfield(L, -2, i);
 }
@@ -85,7 +85,7 @@ static lua_State *getthread (lua_State *L, int *arg) {
 }
 
 
-static void treatstackoption (lua_State *L, lua_State *L1, const char *fname) {
+static void treatstackoption (lua_State *L, lua_State *L1, const char* fname) {
   if (L == L1) {
     lua_pushvalue(L, -2);
     lua_remove(L, -3);
@@ -100,7 +100,7 @@ static int db_getinfo (lua_State *L) {
   lua_Debug ar;
   int arg;
   lua_State *L1 = getthread(L, &arg);
-  const char *options = luaL_optstring(L, arg+2, "flnSu");
+  const char* options = luaL_optstring(L, arg+2, "flnSu");
   if (lua_isnumber(L, arg+1)) {
     if (!lua_getstack(L1, (int)lua_tointeger(L, arg+1), &ar)) {
       lua_pushnil(L);  /* level out of range */
@@ -145,7 +145,7 @@ static int db_getlocal (lua_State *L) {
   int arg;
   lua_State *L1 = getthread(L, &arg);
   lua_Debug ar;
-  const char *name;
+  const char* name;
   if (!lua_getstack(L1, luaL_checkint(L, arg+1), &ar))  /* out of range? */
     return luaL_argerror(L, arg+1, "level out of range");
   name = lua_getlocal(L1, &ar, luaL_checkint(L, arg+2));
@@ -177,7 +177,7 @@ static int db_setlocal (lua_State *L) {
 
 
 static int auxupvalue (lua_State *L, int get) {
-  const char *name;
+  const char* name;
   int n = luaL_checkint(L, 2);
   luaL_checktype(L, 1, LUA_TFUNCTION);
   if (lua_iscfunction(L, 1)) return 0;  /* cannot touch C upvalues from Lua */
@@ -205,7 +205,7 @@ static char KEY_HOOK = 'h';
 
 
 static void hookf (lua_State *L, lua_Debug *ar) {
-  static const char *const hooknames[] =
+  static const char* const hooknames[] =
     {"call", "return", "line", "count", "tail return"};
   lua_pushlightuserdata(L, (void *)&KEY_HOOK);
   lua_rawget(L, LUA_REGISTRYINDEX);
@@ -222,7 +222,7 @@ static void hookf (lua_State *L, lua_Debug *ar) {
 }
 
 
-static int makemask (const char *smask, int count) {
+static int makemask (const char* smask, int count) {
   int mask = 0;
   if (strchr(smask, 'c')) mask |= LUA_MASKCALL;
   if (strchr(smask, 'r')) mask |= LUA_MASKRET;
@@ -232,7 +232,7 @@ static int makemask (const char *smask, int count) {
 }
 
 
-static char *unmakemask (int mask, char *smask) {
+static char* unmakemask (int mask, char* smask) {
   int i = 0;
   if (mask & LUA_MASKCALL) smask[i++] = 'c';
   if (mask & LUA_MASKRET) smask[i++] = 'r';
@@ -264,7 +264,7 @@ static int db_sethook (lua_State *L) {
     func = nullptr; mask = 0; count = 0;  /* turn off hooks */
   }
   else {
-    const char *smask = luaL_checkstring(L, arg+2);
+    const char* smask = luaL_checkstring(L, arg+2);
     luaL_checktype(L, arg+1, LUA_TFUNCTION);
     count = luaL_optint(L, arg+3, 0);
     func = hookf; mask = makemask(smask, count);

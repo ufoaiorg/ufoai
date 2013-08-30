@@ -49,7 +49,7 @@ void G_PhysicsStep (Edict* ent)
 		const playermask_t playerMask = ~G_VisToPM(visflags);
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
-			const char *snd = nullptr;
+			const char* snd = nullptr;
 			if (stepContentFlags & CONTENTS_WATER) {
 				if (contentFlags & CONTENTS_WATER) {
 					/* looks like we already are in the water */

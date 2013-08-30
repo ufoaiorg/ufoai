@@ -280,12 +280,12 @@ Edict* G_EdictsGetLivingActorFromPos (const pos3_t pos)
  * @return @c nullptr if no edict with the given target name was found, otherwise
  * the edict that has the targetname set you were looking for.
  */
-Edict* G_EdictsFindTargetEntity (const char *target)
+Edict* G_EdictsFindTargetEntity (const char* target)
 {
 	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		const char *n = ent->targetname;
+		const char* n = ent->targetname;
 		if (n && Q_streq(n, target))
 			return ent;
 	}

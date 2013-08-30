@@ -994,7 +994,7 @@ int InventoryInterface::GetUsedSlots ()
  * @sa G_Init
  * @sa CL_InitLocal
  */
-void InventoryInterface::initInventory (const char *name, const csi_t *csi, const inventoryImport_t *import)
+void InventoryInterface::initInventory (const char* name, const csi_t *csi, const inventoryImport_t *import)
 {
 	const Item item;
 

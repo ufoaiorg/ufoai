@@ -251,7 +251,7 @@ bool objDef_t::isBaseDefenceItem () const
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByID
  */
-const objDef_t *INVSH_GetItemByIDSilent (const char *id)
+const objDef_t *INVSH_GetItemByIDSilent (const char* id)
 {
 	if (!id)
 		return nullptr;
@@ -284,7 +284,7 @@ const objDef_t *INVSH_GetItemByIDX (int index)
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
-const objDef_t *INVSH_GetItemByID (const char *id)
+const objDef_t *INVSH_GetItemByID (const char* id)
 {
 	const objDef_t *od = INVSH_GetItemByIDSilent(id);
 	if (!od)
@@ -309,7 +309,7 @@ const implantDef_t *INVSH_GetImplantForObjDef (const objDef_t* od)
  * @param[in] id the implant id in our implant definition array (csi.implants)
  * @sa INVSH_GetImplantByID
  */
-const implantDef_t *INVSH_GetImplantByIDSilent (const char *id)
+const implantDef_t *INVSH_GetImplantByIDSilent (const char* id)
 {
 	if (!id)
 		return nullptr;
@@ -328,7 +328,7 @@ const implantDef_t *INVSH_GetImplantByIDSilent (const char *id)
  * @param[in] id the implant id in our implant definition array (csi.implants)
  * @sa INVSH_GetImplantByIDSilent
  */
-const implantDef_t *INVSH_GetImplantByID (const char *id)
+const implantDef_t *INVSH_GetImplantByID (const char* id)
 {
 	const implantDef_t *implantDef = INVSH_GetImplantByIDSilent(id);
 	if (!implantDef)
@@ -342,7 +342,7 @@ const implantDef_t *INVSH_GetImplantByID (const char *id)
  * @param[in] id ID or name of the inventory container to search for
  * @return @c nullptr if not found
  */
-const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
+const invDef_t *INVSH_GetInventoryDefinitionByID (const char* id)
 {
 	containerIndex_t i;
 	const invDef_t *container;

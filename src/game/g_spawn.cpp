@@ -78,7 +78,7 @@ static void SP_misc_camera(Edict* ent);
 static void SP_misc_smokestun(Edict* ent);
 
 typedef struct spawn_s {
-	const char *name;
+	const char* name;
 	void (*spawn) (Edict* ent);
 } spawn_t;
 
@@ -142,11 +142,11 @@ static void ED_CallSpawn (Edict* ent)
  * @note This memory is automatically freed when we close or change the level
  * @param[in] string The string to copy
  */
-static char *ED_NewString (const char *string)
+static char* ED_NewString (const char* string)
 {
 	const size_t l = strlen(string) + 1;
-	char *newb = (char*)G_TagMalloc(l, TAG_LEVEL);
-	char *new_p = newb;
+	char* newb = (char*)G_TagMalloc(l, TAG_LEVEL);
+	char* new_p = newb;
 
 	for (int i = 0; i < l; i++) {
 		/* check for special chars and convert them */
@@ -166,7 +166,7 @@ static char *ED_NewString (const char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField (const char *key, const char *value, Edict* ent)
+static void ED_ParseField (const char* key, const char* value, Edict* ent)
 {
 	KeyValuePair kvp(key, value);
 
@@ -244,7 +244,7 @@ static void ED_ParseField (const char *key, const char *value, Edict* ent)
  * @param[in] data The string to parse from
  * @param[in] ent should be a properly initialized empty edict.
  */
-static const char *ED_ParseEdict (const char *data, Edict* ent)
+static const char* ED_ParseEdict (const char* data, Edict* ent)
 {
 	bool init;
 	char keyname[MAX_VAR];
@@ -255,7 +255,7 @@ static const char *ED_ParseEdict (const char *data, Edict* ent)
 	/* go through all the dictionary pairs */
 	while (1) {
 		/* parse key */
-		const char *c = Com_Parse(&data);
+		const char* c = Com_Parse(&data);
 		if (c[0] == '}')
 			break;
 		if (!data)
@@ -331,7 +331,7 @@ static void G_FindEdictGroups (void)
  * @sa CM_EntityString
  * @sa SV_SpawnServer
  */
-void G_SpawnEntities (const char *mapname, bool day, const char *entities)
+void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 {
 	int entnum;
 
@@ -360,7 +360,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 	while (1) {
 		Edict* ent;
 		/* parse the opening brace */
-		const char *token = Com_Parse(&entities);
+		const char* token = Com_Parse(&entities);
 		if (!entities)
 			break;
 		if (token[0] != '{')
@@ -407,7 +407,7 @@ void G_SpawnEntities (const char *mapname, bool day, const char *entities)
  * angles and bad trails.
  * @sa G_FreeEdict
  */
-Edict* G_Spawn (const char *classname)
+Edict* G_Spawn (const char* classname)
 {
 	Edict* ent = G_EdictsGetNewEdict();
 
@@ -440,7 +440,7 @@ static void Think_SmokeAndFire (Edict* self)
 	}
 }
 
-static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
+static void G_SpawnSmoke (const vec3_t vec, const char* particle, int rounds)
 {
 	pos3_t pos;
 	Edict* ent;
@@ -472,7 +472,7 @@ static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
  * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
  * @param[in] radius The max distance of a cell from the center to get a particle
  */
-void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_t radius)
+void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_t radius)
 {
 	vec_t x, y;
 
@@ -498,7 +498,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds, vec_
 	}
 }
 
-static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int damage)
+static void G_SpawnFire (const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
 	Edict* ent;
@@ -523,7 +523,7 @@ static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int
 	ent->count = rounds;
 }
 
-void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius)
+void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
 	vec_t x, y;
 
@@ -547,7 +547,7 @@ void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int d
 	}
 }
 
-static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds, int damage)
+static void G_SpawnStunSmoke (const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
 	Edict* ent;
@@ -572,7 +572,7 @@ static void G_SpawnStunSmoke (const vec3_t vec, const char *particle, int rounds
 	ent->count = rounds;
 }
 
-void G_SpawnStunSmokeField (const vec3_t vec, const char *particle, int rounds, int damage, vec_t radius)
+void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
 	vec_t x, y;
 
@@ -618,7 +618,7 @@ Edict* G_SpawnFloor (const pos3_t pos)
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */
-Edict* G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
+Edict* G_SpawnParticle (const vec3_t origin, int spawnflags, const char* particle)
 {
 	Edict* ent = G_Spawn("particle");
 	ent->type = ET_PARTICLE;
@@ -1017,7 +1017,7 @@ static bool Message_Use (Edict* self, Edict* activator)
 		return false;
 	} else {
 		Player &player = activator->getPlayer();
-		const char *msg = self->message;
+		const char* msg = self->message;
 		/* remove gettext marker */
 		if (msg[0] == '_')
 			msg++;
@@ -1030,7 +1030,7 @@ static bool Message_Use (Edict* self, Edict* activator)
 	}
 }
 
-static void G_SpawnField (Edict* ent, const char *classname, entity_type_t type, solid_t solid)
+static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type, solid_t solid)
 {
 	vec3_t particleOrigin;
 

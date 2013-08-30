@@ -300,7 +300,7 @@ static void G_Shutdown (void)
 static void CheckNeedPass (void)
 {
 	if (password->modified) {
-		const char *need = "0";
+		const char* need = "0";
 		password->modified = false;
 
 		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
@@ -415,7 +415,7 @@ game_export_t *GetGameAPI (game_import_t *import)
 
 #ifndef HARD_LINKED_GAME
 /* this is only here so the functions in the shared code can link */
-void Sys_Error (const char *error, ...)
+void Sys_Error (const char* error, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -427,7 +427,7 @@ void Sys_Error (const char *error, ...)
 	gi.Error("%s", text);
 }
 
-void Com_Printf (const char *msg, ...)
+void Com_Printf (const char* msg, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -439,7 +439,7 @@ void Com_Printf (const char *msg, ...)
 	gi.DPrintf("%s", text);
 }
 
-void Com_DPrintf (int level, const char *msg, ...)
+void Com_DPrintf (int level, const char* msg, ...)
 {
 	va_list argptr;
 	char text[1024];

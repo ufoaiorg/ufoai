@@ -64,9 +64,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return The team string
  * @sa AIL_Init
  */
-static const char *AIL_toTeamString (const int team)
+static const char* AIL_toTeamString (const int team)
 {
-	const char *teamStr = gi.GetConstVariable("luaaiteam", team);
+	const char* teamStr = gi.GetConstVariable("luaaiteam", team);
 	if (teamStr == nullptr)
 		AIL_invalidparameter(1);
 	return teamStr;
@@ -78,7 +78,7 @@ static const char *AIL_toTeamString (const int team)
  * @return The integer representation of the given team string
  * @sa AIL_Init
  */
-static int AIL_toTeamInt (const char *team)
+static int AIL_toTeamInt (const char* team)
 {
 	int teamInt = TEAM_DEFAULT;
 	if (!gi.GetConstIntFromNamespace("luaaiteam", team, &teamInt))
@@ -380,7 +380,7 @@ static int actorL_face (lua_State *L)
 static int actorL_team (lua_State *L)
 {
 	const aiActor_t *target;
-	const char *team;
+	const char* team;
 
 	assert(lua_isactor(L, 1));
 
@@ -532,7 +532,7 @@ static int AIL_print (lua_State *L)
 	const int n = lua_gettop(L);  /* number of arguments */
 
 	for (i = 1; i <= n; i++) {
-		const char *s;
+		const char* s;
 		bool meta = false;
 
 		lua_pushvalue(L, i);   /* value to print */
@@ -587,7 +587,7 @@ static int AIL_see (lua_State *L)
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
-			const char *s = lua_tostring(L, 1);
+			const char* s = lua_tostring(L, 1);
 			/** @todo Properly implement at edict level, get rid of magic numbers.
 			 * These are only "placeholders". */
 			if (Q_streq(s, "all"))
@@ -606,7 +606,7 @@ static int AIL_see (lua_State *L)
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
-				const char *s = lua_tostring(L, 2);
+				const char* s = lua_tostring(L, 2);
 				team = AIL_toTeamInt(s);
 			} else
 				AIL_invalidparameter(2);
@@ -720,7 +720,7 @@ static int AIL_reactionfire (lua_State *L)
 
 		if (lua_isstring(L, 1)) {
 			/* get reaction fire mode */
-			const char *cmd = lua_tostring(L, 1);
+			const char* cmd = lua_tostring(L, 1);
 			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION : STATE_REACTION;
 		}
 
@@ -777,7 +777,7 @@ static int AIL_reload (lua_State *L)
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {
-			const char *s = lua_tostring(L, 1);
+			const char* s = lua_tostring(L, 1);
 
 			if (Q_streq(s, "right"))
 				container = CID_RIGHT;
@@ -884,7 +884,7 @@ static int AIL_positionhide (lua_State *L)
 	/* parse parameter */
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
-			const char *s = lua_tostring(L, 1);
+			const char* s = lua_tostring(L, 1);
 			hidingTeam = AIL_toTeamInt(s);
 			if (hidingTeam == TEAM_ALL)
 				AIL_invalidparameter(1);
@@ -991,12 +991,12 @@ void AIL_ActorThink (Player &player, Edict* ent)
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (Edict* ent, const char *type, const char *subtype)
+int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 {
 	AI_t *AI;
 	int size;
 	char path[MAX_VAR];
-	char *fbuf;
+	char* fbuf;
 
 	/* Prepare the AI */
 	AI = &ent->AI;
