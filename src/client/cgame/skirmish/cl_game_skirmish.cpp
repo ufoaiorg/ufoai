@@ -123,7 +123,7 @@ static void GAME_SK_Start_f (void)
 
 	assert(md->map);
 
-	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char *)LIST_GetRandom(md->params) : "");
+	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char *)cgi->LIST_GetRandom(md->params) : "");
 }
 
 static void GAME_SK_Restart_f (void)

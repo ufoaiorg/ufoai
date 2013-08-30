@@ -155,6 +155,7 @@ typedef struct cgame_import_s {
 	void *(IMPORT *LIST_GetByIdx) (linkedList_t *list, int index);
 	bool (IMPORT *LIST_Remove) (linkedList_t **list, const void *data);
 	void (IMPORT *LIST_Sort) (linkedList_t **list, linkedListSort_t sorter, const void* userData);
+	void* (IMPORT *LIST_GetRandom) (linkedList_t *list);
 
 	void (IMPORT *SV_ShutdownWhenEmpty) (void);
 	void (IMPORT *SV_Shutdown) (const char *finalmsg, bool reconnect);

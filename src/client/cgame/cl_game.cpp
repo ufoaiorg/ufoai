@@ -552,6 +552,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->LIST_GetByIdx = LIST_GetByIdx;
 		cgi->LIST_Remove = LIST_Remove;
 		cgi->LIST_Sort = LIST_Sort;
+		cgi->LIST_GetRandom = LIST_GetRandom;
 
 		cgi->Cvar_Delete = Cvar_Delete;
 		/** @todo add a wrapper here that stores the cgame cvars and removes them on shutdown automatically */
