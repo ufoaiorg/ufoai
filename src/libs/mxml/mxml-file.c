@@ -2333,7 +2333,7 @@ mxml_string_getc(void *p,		/* I  - Pointer to file */
   const char	**s;			/* Pointer to string pointer */
 
 
-  s = (const char** )p;
+  s = (const char**)p;
 
   if ((ch = (*s)[0] & 255) != 0 || *encoding == ENCODE_UTF16LE)
   {
@@ -2584,7 +2584,7 @@ mxml_string_putc(int  ch,		/* I - Character to write */
   char	**pp;				/* Pointer to string pointers */
 
 
-  pp = (char** )p;
+  pp = (char**)p;
 
   if (pp[0] < pp[1])
     pp[0][0] = ch;

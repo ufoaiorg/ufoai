@@ -139,7 +139,7 @@ static bool Touch_NextMapTrigger (Edict* self, Edict* activator)
 		G_ClientPrintf(activator->getPlayer(), PRINT_HUD, _("Switching map!"));
 		Com_sprintf(command, sizeof(command), "map %s %s\n",
 				level.day ? "day" : "night", self->nextmap);
-		level.mapEndCommand = (char* )G_TagMalloc(strlen(command) + 1, TAG_GAME);
+		level.mapEndCommand = (char*)G_TagMalloc(strlen(command) + 1, TAG_GAME);
 		Q_strncpyz(level.mapEndCommand, command, strlen(command));
 
 		level.nextMapSwitch = true;
