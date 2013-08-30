@@ -3507,7 +3507,6 @@ static const value_t mapdef_vals[] = {
 	{"victorycondition", V_TRANSLATION_STRING, offsetof(mapDef_t, victoryCondition), 0},
 	{"missionbriefing", V_TRANSLATION_STRING, offsetof(mapDef_t, missionBriefing), 0},
 	{"map", V_HUNK_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_HUNK_STRING, offsetof(mapDef_t, param), 0},
 	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},
 	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
 
@@ -3567,8 +3566,12 @@ static void Com_ParseMapDefinition (const char *name, const char** text)
 			break;
 
 		if (!Com_ParseBlockToken(name, text, md, mapdef_vals, com_genericPool, token)) {
-			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-			continue;
+			if (Q_streq(token, "params")) {
+				Com_ParseList(text, &md->params);
+			} else {
+				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+				continue;
+			}
 		}
 	} while (*text);
 

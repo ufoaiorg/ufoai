@@ -115,7 +115,7 @@ static void testMapDefsMassRMA (void)
 			else
 				continue;
 
-			Com_Printf("Map: %s Assembly: %s\n", p, md->param);
+			Com_Printf("Map: %s Assembly: %s\n", p, md->params);
 
 			sv_threads->integer = 0;
 
@@ -149,7 +149,7 @@ static void testMapDefsMassRMA (void)
 						typedef struct skip_info {
 							int         seed;
 							char const* map;
-							char const* param;
+							char const* params;
 							char const* craft;
 							char const* ufo;
 						} skip_info;
@@ -172,7 +172,7 @@ static void testMapDefsMassRMA (void)
 								continue;
 							if (e->map && !Q_streq(p, e->map))
 								continue;
-							if (e->param && !Q_streq(md->param, e->param))
+							if (e->params && !Q_streq(md->params, e->params))
 								continue;
 							if (e->craft && !Q_streq(craft, e->craft))
 								continue;
@@ -188,7 +188,7 @@ static void testMapDefsMassRMA (void)
 						if (Q_streq(p, "ufocrash"))
 							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
-							ass = md->param;
+							ass = md->params;
 
 						char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
 						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
@@ -196,7 +196,7 @@ static void testMapDefsMassRMA (void)
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
-							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
+							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->params, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
 					didItOnce = true;
@@ -246,14 +246,14 @@ static void testMapDefStatistic (void)
 		SV_ParseUMP(p, nullptr, theMap, false);
 		theMap->asmIdx = 0;
 		/* overwrite with specified, if any */
-		if (md->param && md->param[0]) {
+		if (md->params && md->params[0]) {
 			for (j = 0; j < theMap->numAssemblies; j++)
-				if (Q_streq(md->param, theMap->assemblies[j].id)) {
+				if (Q_streq(md->params, theMap->assemblies[j].id)) {
 					theMap->asmIdx = j;
 					break;
 				}
 			if (j == theMap->numAssemblies) {
-				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->param);
+				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->params);
 			}
 		}
 
@@ -267,7 +267,7 @@ static void testMapDefStatistic (void)
 			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 		}
 
-		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->param);
+		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->params);
 		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
@@ -322,7 +322,7 @@ static void testMapDefsFootSteps (void)
 
 		int count = 0;
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
-		SV_Map(true, md->map, md->param);
+		SV_Map(true, md->map, md->params);
 
 		/* now that we have loaded the map, check all cells for walkable places */
 		GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
@@ -375,12 +375,12 @@ static void testMapDefsFootSteps (void)
 			}
 		}
 		if (!texNames[0][0]) {
-			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->param);
+			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->params);
 		} else {
 			++badMapCount;
 			for (int i = 0; i < texCountMax; ++i) {
 				if (texNames[i][0]) {
-					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->param, texNames[i]);
+					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->params, texNames[i]);
 				}
 			}
 		}
@@ -426,8 +426,11 @@ static void testMapDefsSingleplayer (void)
 		srand(seed);
 
 		Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
-		SV_Map(true, md->map, md->param);
-		SV_ShutdownGameProgs();
+		LIST_Foreach(md->params, const char, param) {
+			Com_Printf("testMapDefsSingleplayer: Mapdef %s (param %s)\n", md->id, param);
+			SV_Map(true, md->map, param);
+			SV_ShutdownGameProgs();
+		}
 		CU_PASS(md->map);
 	}
 }
@@ -460,13 +463,16 @@ static void testMapDefsMultiplayer (void)
 		srand(seed);
 
 		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
-		SV_Map(true, md->map, md->param);
+		LIST_Foreach(md->params, const char, param) {
+			Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
+			SV_Map(true, md->map, param);
 
-		player = PLAYER_NUM(0);
-		Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
-		CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
+			player = PLAYER_NUM(0);
+			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
+			CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 
-		SV_ShutdownGameProgs();
+			SV_ShutdownGameProgs();
+		}
 		CU_PASS(md->map);
 	}
 }

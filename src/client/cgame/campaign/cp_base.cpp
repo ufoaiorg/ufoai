@@ -1589,7 +1589,6 @@ void B_ParseBaseTemplate (const char *name, const char** text)
 		if (*token == '}')
 			break;
 
-
 		if (!Q_streq(token, "building")) {
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: \"building\" token expected but \"%s\" found", token);
 		}

@@ -920,7 +920,7 @@ static void UI_MapInfo (int step)
 	/* skip random map char */
 	Cvar_Set("mn_svmapid", md->id);
 	if (mapname[0] == '+') {
-		Cvar_Set("mn_svmapname", va("%s %s", md->map, md->param ? md->param : ""));
+		Cvar_Set("mn_svmapname", va("%s %s", md->map, md->params ? (const char*)LIST_GetRandom(md->params) : ""));
 		mapname++;
 	} else {
 		Cvar_Set("mn_svmapname", md->map);

@@ -64,7 +64,7 @@
 mapdef africa_large
 {
 	map				"+africa"
-	param			"large"
+	params			("large")
 	description		"_African Village"
 	multiplayer		true
 	teams			2
@@ -118,7 +118,7 @@ mapdef africa_large
 mapdef africa_medium
 {
 	map				"+africa"
-	param			"medium"
+	params			("medium")
 	description		"_African Village"
 	multiplayer		true
 	teams			2
@@ -173,7 +173,7 @@ mapdef africa_medium
 mapdef africa_small
 {
 	map				"+africa"
-	param			"small"
+	params			("small")
 	description		"_African Village"
 	multiplayer		true
 	teams			2
@@ -227,7 +227,7 @@ mapdef africa_small
 mapdef africa_nature_large
 {
 	map				"+africa"
-	param			"nature_large"
+	params			("nature_large")
 	description		"_African Desert"
 	multiplayer		true
 	teams			2
@@ -277,7 +277,7 @@ mapdef africa_nature_large
 mapdef africa_nature_medium
 {
 	map				"+africa"
-	param			"nature_medium"
+	params			("nature_medium")
 	description		"_African Desert"
 	multiplayer		true
 	teams			2
@@ -328,7 +328,7 @@ mapdef africa_nature_medium
 mapdef africa_nature_small
 {
 	map				"+africa"
-	param			"nature_small"
+	params			("nature_small")
 	description		"_African Desert"
 	multiplayer		true
 	teams			2
@@ -383,7 +383,7 @@ mapdef africa_nature_small
 mapdef beach
 {
 	map				"+beach"
-	param			"default"
+	params			("default")
 	description		"_Coastal Crash Site"
 	campaign		false
 	multiplayer		false
@@ -424,7 +424,7 @@ mapdef beach
 mapdef bomber_city
 {
 	map				"+bomber_city"
-	param			"default"
+	params			("default")
 	description		"_Bomber in the City"
 	multiplayer		true
 	teams			4
@@ -482,7 +482,7 @@ mapdef bomber_city
 mapdef bridge
 {
 	map				"+bridge"
-	param			"default"
+	params			("default")
 	description		"_Bridge"
 	multiplayer		false
 	gametypes ( )
@@ -522,7 +522,7 @@ mapdef bridge
 mapdef bridge_mp
 {
 	map				"+bridge"
-	param			"mp"
+	params			("mp")
 	description		"_Bridge (MP)"
 	campaign 		false
 	singleplayer	false
@@ -573,7 +573,7 @@ mapdef city3_small_noufo
 
 {
 	map				"+city3"
-	param			"small_noufo"
+	params			("small_noufo")
 	description		"_Urban Periphery"
 	maxaliens		25
 
@@ -614,7 +614,7 @@ mapdef city3_small_noufo
 mapdef country_large
 {
 	map			"+country"
-	param		"large"
+	params		("large")
 	multiplayer	false
 	description	"_Country Desert"
 	size		"large"
@@ -658,7 +658,7 @@ mapdef country_large
 mapdef country_street
 {
 	map			"+country"
-	param		"street"
+	params		("street")
 	multiplayer	false
 	description	"_Some houses in the desert."
 	size		"large"
@@ -703,7 +703,7 @@ mapdef country_street
 mapdef desert_medium
 {
 	map				"+desert"
-	param			"medium"
+	params			("medium")
 	description		"_Country Desert"
 	multiplayer		true
 	teams			2
@@ -752,7 +752,7 @@ mapdef desert_medium
 mapdef desert_large
 {
 	map				"+desert"
-	param			"large"
+	params			("large")
 	description		"_Country Desert"
 	multiplayer		true
 	teams			2
@@ -803,7 +803,7 @@ mapdef desert_large
 mapdef farm_large
 {
 	map			"+farm"
-	param		"large"
+	params		("large")
 	description	"_Farm"
 	size		"large"
 	teams		4
@@ -845,7 +845,7 @@ mapdef farm_large
 mapdef farm_medium
 {
 	map			"+farm"
-	param		"medium"
+	params		("medium")
 	description	"_Farm"
 	size		"medium"
 	teams		4
@@ -886,7 +886,7 @@ mapdef farm_medium
 mapdef farm_small
 {
 	map			"+farm"
-	param		"small"
+	params		("small")
 	description	"_Farm"
 	size		"small"
 	teams		4
@@ -930,7 +930,7 @@ mapdef farm_small
 mapdef farm2
 {
 	map				"+farm2"
-	param			"standard"
+	params			("standard")
 	description		"_Farm"
 	size			"medium"
 	teams			2
@@ -982,7 +982,7 @@ mapdef farm2
 mapdef forest_large
 {
 	map			"+forest"
-	param		"large"
+	params		("large")
 	description	"_Forest"
 	multiplayer	false
 	size		"large"
@@ -1022,7 +1022,7 @@ mapdef forest_large
 mapdef forest_large_crash
 {
 	map			"+forest"
-	param		"large_crash"
+	params		("large_crash")
 	description	"_Forest"
 	multiplayer	false
 	size		"large"
@@ -1062,7 +1062,7 @@ mapdef forest_large_crash
 mapdef forest_small
 {
 	map			"+forest"
-	param		"small"
+	params		("small")
 	description	"_Forest"
 	multiplayer	false
 	size		"small"
@@ -1102,7 +1102,7 @@ mapdef forest_small
 mapdef forest_small_crash
 {
 	map			"+forest"
-	param		"small_crash"
+	params		("small_crash")
 	description	"_Forest"
 	multiplayer	false
 	size		"small"
@@ -1146,7 +1146,7 @@ mapdef forest_small_crash
 mapdef fueldump
 {
 	map				"+frozen"
-	param			"fueldump"
+	params			("fueldump")
 	description		"_Fuel Depot"
 	civilianteam	worker
 	maxaliens		10
@@ -1190,7 +1190,7 @@ mapdef fueldump
 mapdef frozen_industrial_large
 {
 	map				"+frozen"
-	param			"industrial_large"
+	params			("industrial_large")
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		30
@@ -1244,7 +1244,7 @@ mapdef frozen_industrial_large
 mapdef frozen_industrial_medium
 {
 	map				"+frozen"
-	param			"industrial_medium"
+	params			("industrial_medium")
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		14
@@ -1300,7 +1300,7 @@ mapdef frozen_industrial_medium
 mapdef frozen_industrial_small
 {
 	map				"+frozen"
-	param			"industrial_small"
+	params			("industrial_small")
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
@@ -1354,7 +1354,7 @@ mapdef frozen_industrial_small
 mapdef frozen_industrial_small_noufo
 {
 	map				"+frozen"
-	param			"industrial_small_noufo"
+	params			("industrial_small_noufo")
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
@@ -1405,7 +1405,7 @@ mapdef frozen_industrial_small_noufo
 mapdef frozen_lake
 {
 	map				"+frozen"
-	param			"lake_ice"
+	params			("lake_ice")
 	description		"_Snowy Logging Site"
 	maxaliens		9
 
@@ -1440,7 +1440,7 @@ mapdef frozen_lake
 mapdef frozen_nature_large
 {
 	map				"+frozen"
-	param			"nature_large"
+	params			("nature_large")
 	description		"_Snow"
 	maxaliens		30
 	multiplayer		true
@@ -1490,7 +1490,7 @@ mapdef frozen_nature_large
 mapdef frozen_nature_medium
 {
 	map				"+frozen"
-	param			"nature_medium"
+	params			("nature_medium")
 	description		"_Snow"
 	maxaliens		14
 	multiplayer		true
@@ -1542,7 +1542,7 @@ mapdef frozen_nature_medium
 mapdef frozen_nature_small
 {
 	map				"+frozen"
-	param			"nature_small"
+	params			("nature_small")
 	description		"_Snow"
 	maxaliens		9
 	multiplayer		true
@@ -1593,7 +1593,7 @@ mapdef frozen_nature_small
 mapdef frozen_nature_small_noufo
 {
 	map				"+frozen"
-	param			"nature_small_noufo"
+	params			("nature_small_noufo")
 	description		"_Snow"
 	maxaliens		9
 	multiplayer		true
@@ -1644,7 +1644,7 @@ mapdef frozen_nature_small_noufo
 mapdef harbour2_a
 {
 	map				"+harbour2"
-	param			"harbour"
+	params			("harbour")
 	description		"_Harbour"
 	size			"medium"
 	maxaliens		16
@@ -1692,7 +1692,7 @@ mapdef harbour2_a
 mapdef harbour2_b
 {
 	map				"+harbour2"
-	param			"pier"
+	params			("pier")
 	description		"_Harbour"
 	size			"medium"
 	maxaliens		16
@@ -1744,7 +1744,7 @@ mapdef harbour2_b
 mapdef hills_harvester
 {
 	map			"+hills"
-	param		"harvester"
+	params		("harvester")
 	description	"_Suburban Housing"
 	size		"small"
 	teams		4
@@ -1788,7 +1788,7 @@ mapdef hills_harvester
 mapdef hills_harvester_desert
 {
 	map			"+hills"
-	param		"desert_harvester"
+	params		("desert_harvester")
 	description	"_Suburban Housing"
 	size		"small"
 	teams		4
@@ -1830,7 +1830,7 @@ mapdef hills_harvester_desert
 mapdef hills_small
 {
 	map			"+hills"
-	param		"small_ufo"
+	params		("small_ufo")
 	description	"_Suburban Housing"
 	size		"small"
 	teams		4
@@ -1877,7 +1877,7 @@ mapdef hills_small
 mapdef ice_large
 {
 	map				"+ice"
-	param			"large"
+	params			("large")
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
@@ -1916,7 +1916,7 @@ mapdef ice_large
 mapdef ice_medium
 {
 	map				"+ice"
-	param			"medium"
+	params			("medium")
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
@@ -1959,7 +1959,7 @@ mapdef ice_medium
 mapdef ice_small
 {
 	map				"+ice"
-	param			"small"
+	params			("small")
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
@@ -2004,7 +2004,7 @@ mapdef ice_small
 mapdef industrial_large
 {
 	map				"+industrial"
-	param			"large"
+	params			("large")
 	description		"_Industrial Site"
 	size			"large"
 	multiplayer		false
@@ -2047,7 +2047,7 @@ mapdef industrial_large
 mapdef industrial_medium
 {
 	map				"+industrial"
-	param			"medium"
+	params			("medium")
 	description		"_Industrial Site"
 	size			"large"
 	multiplayer		false
@@ -2091,7 +2091,7 @@ mapdef industrial_medium
 mapdef industrial_small
 {
 	map				"+industrial"
-	param			"small"
+	params			("small")
 	description		"_Industrial Site"
 	size			"small"
 	multiplayer		false
@@ -2134,7 +2134,7 @@ mapdef industrial_small
 mapdef industrial_noufo
 {
 	map				"+industrial"
-	param			"noufo"
+	params			("noufo")
 	description		"_Industrial Site"
 	size			"medium"
 	multiplayer		false
@@ -2180,7 +2180,7 @@ mapdef industrial_noufo
 mapdef japan_large
 {
 	map			"+japan"
-	param		"large"
+	params		("large")
 	description	"_East Asian Village"
 	teams		2
 	multiplayer	false
@@ -2228,7 +2228,7 @@ mapdef japan_large
 mapdef japan_small
 {
 	map			"+japan"
-	param		"small"
+	params		("small")
 	description	"_East Asian Village"
 	teams		2
 	multiplayer	false
@@ -2280,7 +2280,7 @@ mapdef japan_small
 mapdef laboratory
 {
 	map				"+laboratory"
-	param			"default"
+	params			("default")
 	description		"_Laboratory"
 	multiplayer		true
 	teams			2
@@ -2331,7 +2331,7 @@ mapdef laboratory
 mapdef laboratory_noufo
 {
 	map				"+laboratory"
-	param			"noufo"
+	params			("noufo")
 	description		"_Laboratory"
 	multiplayer		true
 	teams			2
@@ -2385,7 +2385,7 @@ mapdef laboratory_noufo
 mapdef mansion_huge
 {
 	map				"+mansion"
-	param			"huge"
+	params			("huge")
 	description		"_Mansion"
 	maxaliens		19
 	multiplayer		true
@@ -2440,7 +2440,7 @@ mapdef mansion_huge
 mapdef mansion_medium
 {
 	map				"+mansion1"
-	param			"medium"
+	params			("medium")
 	description		"_Mansion"
 	maxaliens		18
 	singleplayer	true
@@ -2488,7 +2488,7 @@ mapdef mansion_medium
 mapdef mansion_small
 {
 	map				"+mansion"
-	param			"small"
+	params			("small")
 	description		"_Mansion"
 	maxaliens		15
 	singleplayer	true
@@ -2539,7 +2539,7 @@ mapdef mansion_small
 mapdef oriental_large
 {
 	map				"+oriental"
-	param			"large"
+	params			("large")
 	description		"_Middle Eastern Suburb"
 	multiplayer		false
 	size			"small"
@@ -2580,7 +2580,7 @@ mapdef oriental_large
 mapdef oriental_medium
 {
 	map				"+oriental"
-	param			"medium"
+	params			("medium")
 	description		"_Middle Eastern Suburb"
 	multiplayer		false
 	size			"small"
@@ -2621,7 +2621,7 @@ mapdef oriental_medium
 mapdef oriental_small
 {
 	map				"+oriental"
-	param			"small"
+	params			("small")
 	description		"_Middle Eastern Suburb"
 	multiplayer		false
 	size			"small"
@@ -2666,7 +2666,7 @@ mapdef oriental_small
 mapdef scout_crash
 {
 	map				"+scout_crash"
-	param			"standard"
+	params			("standard")
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -2718,7 +2718,7 @@ mapdef scout_crash
 mapdef tropic_bigufo
 {
 	map			"+tropic"
-	param		"bigufo"
+	params		("bigufo")
 	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	25
@@ -2758,7 +2758,7 @@ mapdef tropic_bigufo
 mapdef tropic_drug
 {
 	map			"+tropic"
-	param		"drug"
+	params		("drug")
 	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	14
@@ -2801,7 +2801,7 @@ mapdef tropic_drug
 mapdef tropic_river
 {
 	map			"+tropic"
-	param		"river"
+	params		("river")
 	description	"_Tropical Jungle"
 	multiplayer	false
 	maxaliens	6
@@ -2878,7 +2878,7 @@ mapdef ufocrash
 mapdef village_bungalow
 {
 	map				"+village"
-	param			"bungalow"
+	params			("bungalow")
 	description		"_Bungalow"
 	size			"small"
 	maxaliens		6
@@ -2923,7 +2923,7 @@ mapdef village_bungalow
 mapdef village_bungalow2
 {
 	map				"+village"
-	param			"bungalow2"
+	params			("bungalow2")
 	description		"_House"
 	size			"small"
 	maxaliens		6
@@ -2968,7 +2968,7 @@ mapdef village_bungalow2
 mapdef village_large
 {
 	map				"+village"
-	param			"large"
+	params			("large")
 	description		"_Suburban City"
 	multiplayer		false
 	size			"large"
@@ -3007,7 +3007,7 @@ mapdef village_large
 mapdef village_medium
 {
 	map				"+village"
-	param			"medium"
+	params			("medium")
 	description		"_Suburban City"
 	multiplayer		false
 	size			"medium"
@@ -3045,7 +3045,7 @@ mapdef village_medium
 mapdef village_medium_noufo
 {
 	map				"+village"
-	param			"medium_noufo"
+	params			("medium_noufo")
 	description		"_Suburban City"
 	multiplayer		false
 	size			"medium"
@@ -3083,7 +3083,7 @@ mapdef village_medium_noufo
 mapdef village_small
 {
 	map				"+village"
-	param			"small"
+	params			("small")
 	description		"_Suburban City"
 	multiplayer		false
 	size			"small"
@@ -3130,7 +3130,7 @@ mapdef village_small
 mapdef base_initial
 {
 	map			"+baseattack"
-	param		"initial"
+	params		("initial")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
 	multiplayer	false
@@ -3166,7 +3166,7 @@ mapdef base_initial
 mapdef base_random
 {
 	map			"+baseattack"
-	param		"random"
+	params		("random")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
 	multiplayer	false
@@ -3206,7 +3206,7 @@ mapdef base_random
 mapdef cemetery_main
 {
 	map				"+cemetery"
-	param			"main"
+	params			("main")
 	description		"_Cemetery"
 	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
@@ -3248,7 +3248,7 @@ mapdef cemetery_main
 mapdef city2
 {
 	map				"+city2"
-	param			"city2"
+	params			("city2")
 	description		"_City High-Rise"
 	multiplayer		false
 	campaign		true
@@ -3289,7 +3289,7 @@ mapdef city2
 mapdef city_disco
 {
 	map				"+city_disco"
-	param			"default"
+	params			("default")
 	description		"_Urban Disco"
 	multiplayer		true
 	teams			2
@@ -3339,7 +3339,7 @@ mapdef city_disco
 mapdef community_centre
 {
 	map				"+community_centre"
-	param			"default"
+	params			("default")
 	description		"_Community Centre"
 	multiplayer		true
 	teams			3
@@ -3393,7 +3393,7 @@ mapdef construction
 {
 	map				"+construction"
 	description		"_Construction Site"
-	param			"default"
+	params			("default")
 	maxaliens		29
 	multiplayer		true
 	teams			2
@@ -3446,7 +3446,7 @@ mapdef construction
 mapdef druglord
 {
 	map				"+druglord"
-	param			"default"
+	params			("default")
 	description		"_Tropical Jungle Estate"
 	multiplayer		true
 	teams			2
@@ -3495,7 +3495,7 @@ mapdef druglord
 mapdef eaglenest
 {
 	map				"+eaglenest"
-	param			"default"
+	params			("default")
 	multiplayer		true
 	teams			2
 	gametypes (
@@ -3548,7 +3548,7 @@ mapdef eaglenest
 mapdef gasstation
 {
 	map				"+gasstation"
-	param			"default"
+	params			("default")
 	description		"_Gas Station"
 	multiplayer		true
 	teams			2
@@ -3597,7 +3597,7 @@ mapdef gasstation
 mapdef italy
 {
 	map				"+italy"
-	param			"default"
+	params			("default")
 	description		"_Luxury House"
 	maxaliens		9
 
@@ -3653,7 +3653,7 @@ mapdef japan_default
 {
 	map			"+japan"
 	description	"_East Asian Village"
-	param		"default"
+	params		("default")
 	teams		2
 	multiplayer	true
 	gametypes (
@@ -3704,7 +3704,7 @@ mapdef japan_default
 mapdef mart
 {
 	map			"+mart"
-	param		"default"
+	params		("default")
 	description	"_Supermarket"
 	multiplayer	true
 	teams		2
@@ -3757,7 +3757,7 @@ mapdef mart
 mapdef military_convoy
 {
 	map				"+military_convoy"
-	param			"default"
+	params			("default")
 	description		"_Military Convoy Ambush Site"
 	multiplayer		true
 	teams			2
@@ -3806,7 +3806,7 @@ mapdef military_convoy
 mapdef oriental_mosque
 {
 	map				"+oriental_mosque"
-	param			"standard"
+	params			("standard")
 	description		"_Middle Eastern Suburb"
 	multiplayer		true
 	teams			2
@@ -3858,7 +3858,7 @@ mapdef oriental_mosque
 mapdef shelter
 {
 	map				"+shelter"
-	param			"standard"
+	params			("standard")
 	description		"_Military Shelter"
 	size			"medium"
 	teams			4
@@ -3915,7 +3915,7 @@ mapdef solarplant
 {
 	map				"+solarplant"
 	description		"_Solar Power Plant"
-	param			"default"
+	params			("default")
 	maxaliens		16
 
 	aircraft
@@ -3956,7 +3956,7 @@ mapdef solarplant
 mapdef spedition
 {
 	map			"+spedition"
-	param		"default"
+	params		("default")
 	description	"_Workshop"
 	multiplayer	true
 	teams		2
@@ -4007,7 +4007,7 @@ mapdef spedition
 mapdef stadium
 {
 	map				"+stadium"
-	param			"default"
+	params			("default")
 	description		"_Basketball Stadium"
 	multiplayer		true
 	teams			2
@@ -4059,7 +4059,7 @@ mapdef stadium
 mapdef tower
 {
 	map				"+tower"
-	param			"default"
+	params			("default")
 	description		"_Office Complex"
 	multiplayer		true
 	teams			3
@@ -4114,7 +4114,7 @@ mapdef tower
 mapdef transport
 {
 	map			"+transport"
-	param		"default"
+	params		("default")
 	description	"_Warehouse"
 	multiplayer	true
 	teams		2
@@ -4164,7 +4164,7 @@ mapdef transport
 mapdef vil2_dev
 {
 	map				"+village2"
-	param			"default"
+	params			("default")
 	description		"_Village 2"
 	multiplayer		false
 	campaign		false
@@ -5328,7 +5328,7 @@ mapdef city2mp
 {
 	map				"+city2"
 	description		"_City High-Rise (MP)"
-	param			"city2mp"
+	params			("city2mp")
 	maxaliens		23
 	singleplayer	false
 	campaign		false
@@ -5354,7 +5354,7 @@ mapdef city2mp
 mapdef frozen_mp_coop
 {
 	map				"+frozen"
-	param			"multiplayercoop"
+	params			("multiplayercoop")
 	description		"_Frozen Industrial Site (Coop)"
 	maxaliens		12
 	singleplayer	false
@@ -5372,7 +5372,7 @@ mapdef frozen_mp_coop
 mapdef frozen_mp_deathmatch
 {
 	map				"+frozen"
-	param			"multiplayerdeathmatch"
+	params			("multiplayerdeathmatch")
 	description		"_Frozen Industrial Site (MP)"
 	maxaliens		12
 	singleplayer	false
@@ -5395,7 +5395,7 @@ mapdef frozen_mp_deathmatch
 mapdef harbour2mp
 {
 	map				"+harbour2"
-	param			"mp4p_01"
+	params			("mp4p_01")
 	description		"_A container harbour."
 	size			"medium"
 	maxaliens		16
@@ -5425,7 +5425,7 @@ mapdef harbour2mp
 mapdef vil2_mp2p
 {
 	map				"+village2"
-	param			"mp2p_01"
+	params			("mp2p_01")
 	description		"_Village MP (2v2)"
 	multiplayer		true
 	campaign		false
@@ -5463,7 +5463,7 @@ mapdef vil2_mp2p
 mapdef vil2_mp4p
 {
 	map				"+village2"
-	param			"mp4p_01"
+	params			("mp4p_01")
 	description		"_Village MP (2v2)"
 	multiplayer		true
 	campaign		false

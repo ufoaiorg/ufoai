@@ -67,6 +67,7 @@ linkedList_t *LIST_CopyStructure(linkedList_t *src);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 bool LIST_Remove(linkedList_t** list, const void *data);
 void LIST_Sort(linkedList_t** list, linkedListSort_t sorter, const void *userData);
+void *LIST_GetRandom(linkedList_t* list);
 
 /**
  * Add a copy of data to list and return a reference to the copied data.

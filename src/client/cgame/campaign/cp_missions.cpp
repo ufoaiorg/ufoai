@@ -123,7 +123,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		return;
 	}
 
-	const char *param = battleParameters->param ? battleParameters->param : mission->mapDef->param;
+	const char *param = battleParameters->param ? battleParameters->param : (const char *)LIST_GetRandom(mission->mapDef->params);
 	cgi->Cbuf_AddText("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : "");
 }
