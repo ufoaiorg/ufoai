@@ -337,14 +337,12 @@ ifeq ($(HARD_LINKED_CGAME),1)
 	$(TARGET)_SRCS     += \
 		$(cgame-campaign_SRCS) \
 		$(cgame-skirmish_SRCS) \
-		$(cgame-multiplayer_SRCS) \
-		$(cgame-staticcampaign_SRCS)
+		$(cgame-multiplayer_SRCS)
 else
 	$(TARGET)_DEPS     := \
 		cgame-campaign \
 		cgame-skirmish \
-		cgame-multiplayer \
-		cgame-staticcampaign
+		cgame-multiplayer
 endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))

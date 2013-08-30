@@ -108,14 +108,12 @@ geoscapeData_t geoscapeData;
 
 #ifdef HARD_LINKED_CGAME
 #include "campaign/cl_game_campaign.h"
-#include "staticcampaign/cl_game_staticcampaign.h"
 #include "multiplayer/cl_game_multiplayer.h"
 #include "skirmish/cl_game_skirmish.h"
 
 static const cgame_api_t gameTypeList[] = {
 	GetCGameMultiplayerAPI,
 	GetCGameCampaignAPI,
-	GetCGameStaticCampaignAPI,
 	GetCGameSkirmishAPI
 };
 

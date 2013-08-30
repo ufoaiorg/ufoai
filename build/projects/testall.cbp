@@ -257,9 +257,6 @@
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.cpp" />
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.cpp" />
 		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.cpp" />
-		<Unit filename="..\..\src\client\cgame\staticcampaign\cl_game_staticcampaign.cpp" />
-		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_missions.cpp" />
-		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_parse.cpp" />
 		<Unit filename="..\..\src\client\web\web_main.cpp" />
 		<Unit filename="..\..\src\client\web\web_main.h" />
 		<Unit filename="..\..\src\client\web\web_team.cpp" />

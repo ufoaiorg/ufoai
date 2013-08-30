@@ -13,12 +13,7 @@ cgame multiplayer {
 
 cgame campaign {
 	window	"campaign"
-	name "_Full Campaign"
-}
-
-cgame staticcampaign {
-	window	"staticcampaign"
-	name "_Simple Campaign"
+	name "_Campaign"
 }
 
 cgame skirmish {
