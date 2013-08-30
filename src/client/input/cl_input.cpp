@@ -868,7 +868,7 @@ static void IN_TranslateKey (const unsigned int keycode, unsigned int *ascii)
 		*ascii = K_SPACE;
 		break;
 	default:
-		if (isprint(keycode))
+		if (UTF8_encoded_len(keycode) == 1 && isprint(keycode))
 			*ascii = keycode;
 		else
 			*ascii = 0;
