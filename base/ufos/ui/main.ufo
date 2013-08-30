@@ -57,6 +57,7 @@ window main
 			size		"256 344"
 			layout		LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	6
+			wheelscrollable	false
 		}
 
 		cmpMenuButton button_singleplayer
