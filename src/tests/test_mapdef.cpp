@@ -426,10 +426,15 @@ static void testMapDefsSingleplayer (void)
 		srand(seed);
 
 		Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
-		LIST_Foreach(md->params, const char, param) {
-			Com_Printf("testMapDefsSingleplayer: Mapdef %s (param %s)\n", md->id, param);
-			SV_Map(true, md->map, param);
+		if (LIST_IsEmpty(md->params)) {
+			SV_Map(true, md->map, nullptr);
 			SV_ShutdownGameProgs();
+		} else {
+			LIST_Foreach(md->params, const char, param) {
+				Com_Printf("testMapDefsSingleplayer: Mapdef %s (param %s)\n", md->id, param);
+				SV_Map(true, md->map, param);
+				SV_ShutdownGameProgs();
+			}
 		}
 		CU_PASS(md->map);
 	}
@@ -463,15 +468,25 @@ static void testMapDefsMultiplayer (void)
 		srand(seed);
 
 		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
-		LIST_Foreach(md->params, const char, param) {
-			Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
-			SV_Map(true, md->map, param);
+		if (LIST_IsEmpty(md->params)) {
+			SV_Map(true, md->map, nullptr);
 
 			player = PLAYER_NUM(0);
 			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
 			CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 
 			SV_ShutdownGameProgs();
+		} else {
+			LIST_Foreach(md->params, const char, param) {
+				Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
+				SV_Map(true, md->map, param);
+
+				player = PLAYER_NUM(0);
+				Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
+				CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
+
+				SV_ShutdownGameProgs();
+			}
 		}
 		CU_PASS(md->map);
 	}
