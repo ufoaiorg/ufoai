@@ -393,8 +393,8 @@ component cmpTeamSlotPanel extends panel
 
 	button delete
 	{
-		size		"22 22"
-		icon 		"icons/garbage"
+		size		"34 34"
+		icon 		"icons/delete"
 		tooltip		"_Delete this team"
 	}
 }
