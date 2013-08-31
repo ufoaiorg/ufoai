@@ -122,12 +122,6 @@ void WEB_DownloadTeam_f (void)
 		Com_Printf("No free filenames for a new team\n");
 		return;
 	}
-	qFILE f;
-	FS_OpenFile(filename, &f, FILE_WRITE);
-	if (!f.f) {
-		Com_Printf("Could not open the target file\n");
-		return;
-	}
 	char urlId[256];
 	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), urlId, sizeof(urlId))) {
 		Com_Printf("$id$ is missing in the url\n");
@@ -138,12 +132,21 @@ void WEB_DownloadTeam_f (void)
 		Com_Printf("$userid$ is missing in the url\n");
 		return;
 	}
+	qFILE f;
+	FS_OpenFile(filename, &f, FILE_WRITE);
+	if (!f.f) {
+		Com_Printf("Could not open the target file\n");
+		FS_CloseFile(&f);
+		return;
+	}
 
 	/* no login is needed here */
 	if (!HTTP_GetToFile(url, f.f)) {
 		Com_Printf("team download failed from '%s'\n", url);
+		FS_CloseFile(&f);
 		return;
 	}
+	FS_CloseFile(&f);
 
 	if (Com_CheckDuplicateFile(filename, "save/*.mpt")) {
 		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
