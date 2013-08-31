@@ -250,19 +250,20 @@ check_compiler() {
 	CC=${CC:-${DEFAULT_COMPILER_CC}}
 	CXX=${CXX:-${DEFAULT_COMPILER_CXX}}
 
+	if [ "${TARGET_OS}" = "mingw32" ] || [ "${TARGET_OS}" = "mingw64" ] || [ "${TARGET_OS}" = "mingw64_64" ]; then
+		CC=gcc
+	fi
+
 	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 		CROSS="i686-pc-mingw32-"
-		CC=gcc
 	fi
 
 	if [ "${TARGET_OS}" = "mingw64" ] && [ "${HOST_OS}" != "mingw64" ]; then
 		CROSS="i686-w64-mingw32-"
-		CC=gcc
 	fi
 
 	if [ "${TARGET_OS}" = "mingw64_64" ] && [ "${HOST_OS}" != "mingw64_64" ]; then
 		CROSS="x86_64-w64-mingw32-"
-		CC=gcc
 	fi
 
 	if [ -n "${CROSS}" ]; then
