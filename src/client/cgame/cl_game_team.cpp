@@ -127,6 +127,7 @@ void GAME_TeamSlotComments_f (void)
 
 	const char *filename;
 	int i = 0;
+	FS_BuildFileList("save/*.mpt");
 	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
 		qFILE f;
 		const char *savePath = va("save/%s", filename);
