@@ -923,6 +923,7 @@ function smfapi_authenticate($username='', $password='', $encrypted=true)
 
     // if they match the password/hash is correct
     if ($user_settings['passwd'] == $sha_passwd) {
+        $user_info["id"] = $user_settings['id_member'];
         return true;
     } else {
         // try other hashing schemes
@@ -1015,6 +1016,7 @@ function smfapi_authenticate($username='', $password='', $encrypted=true)
             // used worked, so it will work again through this api, or SMF will
             // update it if the user authenticates through there. No sense messing
             // with it if it's not broken imo. Authentication successful
+			$user_info["id"] = $user_settings['id_member'];
 			return true;
 		}
     }

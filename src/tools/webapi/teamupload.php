@@ -40,8 +40,8 @@ function getFreeId() {
 		error("Too many teams uploaded");
 	$file = reset($files);
 	if (false === $file)
-		return sprintf("%08d", 0);
-	return sprintf("%08d", getId($file) + 1);
+		return sprintf("%02d", 0);
+	return sprintf("%02d", getId($file) + 1);
 }
 
 function main() {

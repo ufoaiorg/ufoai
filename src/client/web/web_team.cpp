@@ -123,7 +123,7 @@ void WEB_DownloadTeam_f (void)
 		return;
 	}
 	char urlId[256];
-	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), urlId, sizeof(urlId))) {
+	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%02d", id), urlId, sizeof(urlId))) {
 		Com_Printf("$id$ is missing in the url\n");
 		return;
 	}
