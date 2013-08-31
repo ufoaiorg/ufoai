@@ -64,6 +64,7 @@
 ./client/cl_main.cpp
 ./client/cl_menu.cpp
 ./client/cl_screen.cpp
+./client/cl_team.cpp
 ./client/input/cl_input.cpp
 ./client/input/cl_joystick.cpp
 ./client/ui/node/ui_node_container.cpp
