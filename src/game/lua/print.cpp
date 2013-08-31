@@ -22,7 +22,7 @@
 
 static void PrintString(const TString* ts)
 {
- const char *s=getstr(ts);
+ const char* s=getstr(ts);
  size_t i,n=ts->tsv.len;
  putchar('"');
  for (i=0; i<n; i++)
@@ -160,7 +160,7 @@ static void PrintCode(const Proto* f)
 
 static void PrintHeader(const Proto* f)
 {
- const char *s=getstr(f->source);
+ const char* s=getstr(f->source);
  if (*s=='@' || *s=='=')
   s++;
  else if (*s==LUA_SIGNATURE[0])

@@ -405,7 +405,7 @@ static void resume (lua_State *L, void *ud) {
 }
 
 
-static int resume_error (lua_State *L, const char *msg) {
+static int resume_error (lua_State *L, const char* msg) {
   L->top = L->ci->base;
   setsvalue2s(L, L->top, luaS_new(L, msg));
   incr_top(L);
@@ -484,7 +484,7 @@ int luaD_pcall (lua_State *L, Pfunc func, void *u,
 struct SParser {  /* data to `f_parser' */
   ZIO *z;
   Mbuffer buff;  /* buffer to be used by the scanner */
-  const char *name;
+  const char* name;
 };
 
 static void f_parser (lua_State *L, void *ud) {
@@ -505,7 +505,7 @@ static void f_parser (lua_State *L, void *ud) {
 }
 
 
-int luaD_protectedparser (lua_State *L, ZIO *z, const char *name) {
+int luaD_protectedparser (lua_State *L, ZIO *z, const char* name) {
   struct SParser p;
   int status;
   p.z = z; p.name = name;

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return The value or empty string - never nullptr
  * @todo Not thread safe
  */
-const char *Info_ValueForKey (const char *s, const char *key)
+const char* Info_ValueForKey (const char* s, const char* key)
 {
 	char pkey[512];
 	/* use two buffers so compares */
@@ -49,7 +49,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 	if (*s == '\\' && *s != '\n')
 		s++;
 	while (1) {
-		char *o = pkey;
+		char* o = pkey;
 		while (*s != '\\' && *s != '\n') {
 			if (!*s)
 				return "";
@@ -73,15 +73,15 @@ const char *Info_ValueForKey (const char *s, const char *key)
 	}
 }
 
-const char *Info_BoolForKey (const char *s, const char *key)
+const char* Info_BoolForKey (const char* s, const char* key)
 {
-	const char *boolStr = Info_ValueForKey(s, key);
+	const char* boolStr = Info_ValueForKey(s, key);
 	if (boolStr[0] == '0' || boolStr[0] == '\0' || Q_streq(boolStr, "No"))
 		return "No";
 	return "Yes";
 }
 
-int Info_IntegerForKey (const char *s, const char *key)
+int Info_IntegerForKey (const char* s, const char* key)
 {
 	return atoi(Info_ValueForKey(s, key));
 }
@@ -92,7 +92,7 @@ int Info_IntegerForKey (const char *s, const char *key)
  * @param[in] key String to search for in s
  * @sa Info_SetValueForKey
  */
-void Info_RemoveKey (char *s, const char *key)
+void Info_RemoveKey (char* s, const char* key)
 {
 	char pkey[512];
 	char value[512];
@@ -103,10 +103,10 @@ void Info_RemoveKey (char *s, const char *key)
 	}
 
 	while (1) {
-		char *start = s;
+		char* start = s;
 		if (*s == '\\')
 			s++;
-		char *o = pkey;
+		char* o = pkey;
 		while (*s != '\\') {
 			if (!*s)
 				return;
@@ -139,7 +139,7 @@ void Info_RemoveKey (char *s, const char *key)
 /**
  * @brief Some characters are illegal in info strings because they can mess up the server's parsing
  */
-bool Info_Validate (const char *s)
+bool Info_Validate (const char* s)
 {
 	if (strstr(s, "\""))
 		return false;
@@ -151,7 +151,7 @@ bool Info_Validate (const char *s)
 /**
  * @sa Info_SetValueForKey
  */
-void Info_SetValueForKeyAsInteger (char *s, const size_t size, const char *key, const int value)
+void Info_SetValueForKeyAsInteger (char* s, const size_t size, const char* key, const int value)
 {
 	Info_SetValueForKey(s, size, key, va("%i", value));
 }
@@ -166,7 +166,7 @@ void Info_SetValueForKeyAsInteger (char *s, const size_t size, const char *key, 
  * @sa Info_RemoveKey
  * @sa Info_SetValueForKeyAsInteger
  */
-void Info_SetValueForKey (char *s, const size_t size, const char *key, const char *value)
+void Info_SetValueForKey (char* s, const size_t size, const char* key, const char* value)
 {
 	char newi[MAX_INFO_STRING];
 
@@ -206,7 +206,7 @@ void Info_SetValueForKey (char *s, const size_t size, const char *key, const cha
 /**
  * @brief Prints info strings (like userinfo or serverinfo - CVAR_USERINFO, CVAR_SERVERINFO)
  */
-void Info_Print (const char *s)
+void Info_Print (const char* s)
 {
 	if (*s == '\\')
 		s++;

@@ -34,7 +34,7 @@
 
 
 /* ORDER RESERVED */
-const char *const luaX_tokens [] = {
+const char* const luaX_tokens [] = {
     "and", "break", "do", "else", "elseif",
     "end", "false", "for", "function", "if",
     "in", "local", "nil", "not", "or", "repeat",
@@ -75,7 +75,7 @@ void luaX_init (lua_State *L) {
 #define MAXSRC          80
 
 
-const char *luaX_token2str (LexState *ls, int token) {
+const char* luaX_token2str (LexState *ls, int token) {
   if (token < FIRST_RESERVED) {
     lua_assert(token == cast(unsigned char, token));
     return (iscntrl(token)) ? luaO_pushfstring(ls->L, "char(%d)", token) :
@@ -86,7 +86,7 @@ const char *luaX_token2str (LexState *ls, int token) {
 }
 
 
-static const char *txtToken (LexState *ls, int token) {
+static const char* txtToken (LexState *ls, int token) {
   switch (token) {
     case TK_NAME:
     case TK_STRING:
@@ -99,7 +99,7 @@ static const char *txtToken (LexState *ls, int token) {
 }
 
 
-void luaX_lexerror (LexState *ls, const char *msg, int token) {
+void luaX_lexerror (LexState *ls, const char* msg, int token) {
   char buff[MAXSRC];
   luaO_chunkid(buff, getstr(ls->source), MAXSRC);
   msg = luaO_pushfstring(ls->L, "%s:%d: %s", buff, ls->linenumber, msg);
@@ -109,12 +109,12 @@ void luaX_lexerror (LexState *ls, const char *msg, int token) {
 }
 
 
-void luaX_syntaxerror (LexState *ls, const char *msg) {
+void luaX_syntaxerror (LexState *ls, const char* msg) {
   luaX_lexerror(ls, msg, ls->t.token);
 }
 
 
-TString *luaX_newstring (LexState *ls, const char *str, size_t l) {
+TString *luaX_newstring (LexState *ls, const char* str, size_t l) {
   lua_State *L = ls->L;
   TString *ts = luaS_newlstr(L, str, l);
   TValue *o = luaH_setstr(L, ls->fs->h, ts);  /* entry for `str' */
@@ -147,7 +147,7 @@ void luaX_setinput (lua_State *L, LexState *ls, ZIO *z, TString *source) {
   ls->lastline = 1;
   ls->source = source;
   luaZ_resizebuffer(ls->L, ls->buff, LUA_MINBUFFER);  /* initialize buffer */
-  next(ls);  /* read first char */
+  next(ls);  /* read first character */
 }
 
 
@@ -160,7 +160,7 @@ void luaX_setinput (lua_State *L, LexState *ls, ZIO *z, TString *source) {
 
 
 
-static int check_next (LexState *ls, const char *set) {
+static int check_next (LexState *ls, const char* set) {
   if (!strchr(set, ls->current))
     return 0;
   save_and_next(ls);
@@ -170,7 +170,7 @@ static int check_next (LexState *ls, const char *set) {
 
 static void buffreplace (LexState *ls, char from, char to) {
   size_t n = luaZ_bufflen(ls->buff);
-  char *p = luaZ_buffer(ls->buff);
+  char* p = luaZ_buffer(ls->buff);
   while (n--)
     if (p[n] == from) p[n] = to;
 }

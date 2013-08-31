@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Player action format strings for netchannel transfer
  * @note They all have a prefix
  * @sa MSG_Write_PA */
-const char *pa_format[] =
+const char* pa_format[] =
 {
 	"",					/**< PA_NULL */
 	"s",				/**< PA_TURN */

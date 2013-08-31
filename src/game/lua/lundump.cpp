@@ -25,7 +25,7 @@ public:
 	lua_State* L;
 	ZIO* Z;
 	Mbuffer* b;
-	const char *name;
+	const char* name;
 };
 
 #ifdef LUAC_TRUST_BINARIES
@@ -34,7 +34,7 @@ public:
 #else
 #define IF(c,s)		if (c) error(S,s)
 
-static void error(LoadState* S, const char *why)
+static void error(LoadState* S, const char* why)
 {
  luaO_pushfstring(S->L,"%s: %s in precompiled chunk",S->name,why);
  luaD_throw(S->L,LUA_ERRSYNTAX);
@@ -82,7 +82,7 @@ static TString* LoadString(LoadState* S)
   return nullptr;
  else
  {
-  char *s=luaZ_openspace(S->L,S->b,size);
+  char* s=luaZ_openspace(S->L,S->b,size);
   LoadBlock(S,s,size);
   return luaS_newlstr(S->L,s,size-1);		/* remove trailing '\0' */
  }
@@ -193,7 +193,7 @@ static void LoadHeader(LoadState* S)
 /*
 ** load precompiled chunk
 */
-Proto* luaU_undump (lua_State* L, ZIO* Z, Mbuffer* buff, const char *name)
+Proto* luaU_undump (lua_State* L, ZIO* Z, Mbuffer* buff, const char* name)
 {
  LoadState S;
  if (*name=='@' || *name=='=')
@@ -212,7 +212,7 @@ Proto* luaU_undump (lua_State* L, ZIO* Z, Mbuffer* buff, const char *name)
 /*
 * make header
 */
-void luaU_header (char *h)
+void luaU_header (char* h)
 {
  int x=1;
  memcpy(h,LUA_SIGNATURE,sizeof(LUA_SIGNATURE)-1);

@@ -53,7 +53,7 @@ public:
 	SrvEdict *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 
-	const char *classname;
+	const char* classname;
 
 	inline bool isSameAs (const SrvEdict *other) const {
 		if (!other)

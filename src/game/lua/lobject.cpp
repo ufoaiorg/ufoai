@@ -87,8 +87,8 @@ int luaO_rawequalObj (const TValue *t1, const TValue *t2) {
 }
 
 
-int luaO_str2d (const char *s, lua_Number *result) {
-  char *endptr;
+int luaO_str2d (const char* s, lua_Number *result) {
+  char* endptr;
   *result = lua_str2number(s, &endptr);
   if (endptr == s) return 0;  /* conversion failed */
   if (*endptr == 'x' || *endptr == 'X')  /* maybe an hexadecimal constant? */
@@ -101,24 +101,24 @@ int luaO_str2d (const char *s, lua_Number *result) {
 
 
 
-static void pushstr (lua_State *L, const char *str) {
+static void pushstr (lua_State *L, const char* str) {
   setsvalue2s(L, L->top, luaS_new(L, str));
   incr_top(L);
 }
 
 
 /* this function handles only `%d', `%c', %f, %p, and `%s' formats */
-const char *luaO_pushvfstring (lua_State *L, const char *fmt, va_list argp) {
+const char* luaO_pushvfstring (lua_State *L, const char* fmt, va_list argp) {
   int n = 1;
   pushstr(L, "");
   for (;;) {
-    const char *e = strchr(fmt, '%');
+    const char* e = strchr(fmt, '%');
     if (e == nullptr) break;
     setsvalue2s(L, L->top, luaS_newlstr(L, fmt, e-fmt));
     incr_top(L);
     switch (*(e+1)) {
       case 's': {
-        const char *s = va_arg(argp, char *);
+        const char* s = va_arg(argp, char* );
         if (s == nullptr) s = "(null)";
         pushstr(L, s);
         break;
@@ -169,8 +169,8 @@ const char *luaO_pushvfstring (lua_State *L, const char *fmt, va_list argp) {
 }
 
 
-const char *luaO_pushfstring (lua_State *L, const char *fmt, ...) {
-  const char *msg;
+const char* luaO_pushfstring (lua_State *L, const char* fmt, ...) {
+  const char* msg;
   va_list argp;
   va_start(argp, fmt);
   msg = luaO_pushvfstring(L, fmt, argp);
@@ -179,9 +179,9 @@ const char *luaO_pushfstring (lua_State *L, const char *fmt, ...) {
 }
 
 
-void luaO_chunkid (char *out, const char *source, size_t bufflen) {
+void luaO_chunkid (char* out, const char* source, size_t bufflen) {
   if (*source == '=') {
-    strncpy(out, source+1, bufflen);  /* remove first char */
+    strncpy(out, source+1, bufflen);  /* remove first char* /
     out[bufflen-1] = '\0';  /* ensures null termination */
   }
   else {  /* out = "source", or "...source" */

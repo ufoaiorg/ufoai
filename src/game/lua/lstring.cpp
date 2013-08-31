@@ -47,7 +47,7 @@ void luaS_resize (lua_State *L, int newsize) {
 }
 
 
-static TString *newlstr (lua_State *L, const char *str, size_t l,
+static TString *newlstr (lua_State *L, const char* str, size_t l,
                                        unsigned int h) {
   TString *ts;
   stringtable *tb;
@@ -60,7 +60,7 @@ static TString *newlstr (lua_State *L, const char *str, size_t l,
   ts->tsv.tt = LUA_TSTRING;
   ts->tsv.reserved = 0;
   memcpy(ts+1, str, l*sizeof(char));
-  ((char *)(ts+1))[l] = '\0';  /* ending 0 */
+  ((char* )(ts+1))[l] = '\0';  /* ending 0 */
   tb = &G(L)->strt;
   h = lmod(h, tb->size);
   ts->tsv.next = tb->hash[h];  /* chain new entry */
@@ -72,7 +72,7 @@ static TString *newlstr (lua_State *L, const char *str, size_t l,
 }
 
 
-TString *luaS_newlstr (lua_State *L, const char *str, size_t l) {
+TString *luaS_newlstr (lua_State *L, const char* str, size_t l) {
   GCObject *o;
   unsigned int h = cast(unsigned int, l);  /* seed */
   size_t step = (l>>5)+1;  /* if string is too long, don't hash all its chars */

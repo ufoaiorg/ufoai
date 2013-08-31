@@ -68,8 +68,8 @@ static void error_expected (LexState *ls, int token) {
 }
 
 
-static void errorlimit (FuncState *fs, int limit, const char *what) {
-  const char *msg = (fs->f->linedefined == 0) ?
+static void errorlimit (FuncState *fs, int limit, const char* what) {
+  const char* msg = (fs->f->linedefined == 0) ?
     luaO_pushfstring(fs->L, "main function has more than %d %s", limit, what) :
     luaO_pushfstring(fs->L, "function at line %d has more than %d %s",
                             fs->f->linedefined, limit, what);
@@ -380,7 +380,7 @@ static void close_func (LexState *ls) {
 }
 
 
-Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char *name) {
+Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char* name) {
   struct LexState lexstate;
   struct FuncState funcstate;
   lexstate.buff = buff;

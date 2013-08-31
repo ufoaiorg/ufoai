@@ -53,9 +53,9 @@ SYSTEM SPECIFIC
 */
 
 /* this is only here so the functions in q_shared.c can link */
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
-void Com_Printf(const char *msg, ...) __attribute__((format(__printf__, 1, 2)));
-void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
+void Sys_Error(const char* error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
+void Com_Printf(const char* msg, ...) __attribute__((format(__printf__, 1, 2)));
+void Com_DPrintf(int level, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
 
 #define TEAM_NO_ACTIVE -1
 #define TEAM_CIVILIAN   0
@@ -197,7 +197,7 @@ typedef enum {
 	PA_NUM_EVENTS
 } player_action_t;
 
-extern const char *pa_format[PA_NUM_EVENTS];
+extern const char* pa_format[PA_NUM_EVENTS];
 
 /** @brief Available shoot types - also see the @c ST_ constants */
 typedef int32_t shoot_types_t;
@@ -337,14 +337,14 @@ typedef struct gametype_s {
 
 typedef struct mapDef_s {
 	/* general */
-	char *id;				/**< script file id */
-	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
+	char* id;				/**< script file id */
+	char* map;				/**< bsp or ump base filename (without extension and day or night char) */
 	linkedList_t *params;	/**< in case of ump file, the assembly to use */
-	char *description;		/**< the description to show in the menus */
-	char *victoryCondition;	/**< the mission briefing victory condition */
-	char *missionBriefing;	/**< the mission briefing description */
-	char *size;				/**< small, medium, big */
-	char *civTeam;			/**< the civilian team to use for this map - this can also be nullptr */
+	char* description;		/**< the description to show in the menus */
+	char* victoryCondition;	/**< the mission briefing victory condition */
+	char* missionBriefing;	/**< the mission briefing description */
+	char* size;				/**< small, medium, big */
+	char* civTeam;			/**< the civilian team to use for this map - this can also be nullptr */
 
 	/* multiplayer */
 	bool multiplayer;		/**< is this map multiplayer ready at all */
@@ -371,8 +371,8 @@ typedef struct mapDef_s {
 	/** @note Don't end with ; - the trigger commands get the base index as
 	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
 	 * in your trigger command, you can seperate more commands with ; of course */
-	char *onwin;		/**< trigger command after you've won a battle */
-	char *onlose;		/**< trigger command after you've lost a battle */
+	char* onwin;		/**< trigger command after you've won a battle */
+	char* onlose;		/**< trigger command after you've lost a battle */
 } mapDef_t;
 
 #define MapDef_ForeachCondition(var, condition) \
@@ -381,7 +381,7 @@ typedef struct mapDef_s {
 
 #define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
 mapDef_t *Com_GetMapDefByIDX(int index);
-mapDef_t *Com_GetMapDefinitionByID(const char *mapDefID);
+mapDef_t *Com_GetMapDefinitionByID(const char* mapDefID);
 
 /**
  * @brief The csi structure is the client-server-information structure

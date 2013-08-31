@@ -24,10 +24,10 @@
 #define IO_OUTPUT	2
 
 
-static const char *const fnames[] = {"input", "output"};
+static const char* const fnames[] = {"input", "output"};
 
 
-static int pushresult (lua_State *L, int i, const char *filename) {
+static int pushresult (lua_State *L, int i, const char* filename) {
   int en = errno;  /* calls to Lua API may change this value */
   if (i) {
     lua_pushboolean(L, 1);
@@ -45,7 +45,7 @@ static int pushresult (lua_State *L, int i, const char *filename) {
 }
 
 
-static void fileerror (lua_State *L, int arg, const char *filename) {
+static void fileerror (lua_State *L, int arg, const char* filename) {
   lua_pushfstring(L, "%s: %s", filename, strerror(errno));
   luaL_argerror(L, arg, lua_tostring(L, -1));
 }
@@ -159,8 +159,8 @@ static int io_tostring (lua_State *L) {
 
 
 static int io_open (lua_State *L) {
-  const char *filename = luaL_checkstring(L, 1);
-  const char *mode = luaL_optstring(L, 2, "r");
+  const char* filename = luaL_checkstring(L, 1);
+  const char* mode = luaL_optstring(L, 2, "r");
   FILE **pf = newfile(L);
   *pf = fopen(filename, mode);
   return (*pf == nullptr) ? pushresult(L, 0, filename) : 1;
@@ -172,8 +172,8 @@ static int io_open (lua_State *L) {
 ** correct __close for 'popen' files
 */
 static int io_popen (lua_State *L) {
-  const char *filename = luaL_checkstring(L, 1);
-  const char *mode = luaL_optstring(L, 2, "r");
+  const char* filename = luaL_checkstring(L, 1);
+  const char* mode = luaL_optstring(L, 2, "r");
   FILE **pf = newfile(L);
   *pf = lua_popen(L, filename, mode);
   return (*pf == nullptr) ? pushresult(L, 0, filename) : 1;
@@ -197,9 +197,9 @@ static FILE *getiofile (lua_State *L, int findex) {
 }
 
 
-static int g_iofile (lua_State *L, int f, const char *mode) {
+static int g_iofile (lua_State *L, int f, const char* mode) {
   if (!lua_isnoneornil(L, 1)) {
-    const char *filename = lua_tostring(L, 1);
+    const char* filename = lua_tostring(L, 1);
     if (filename) {
       FILE **pf = newfile(L);
       *pf = fopen(filename, mode);
@@ -252,7 +252,7 @@ static int io_lines (lua_State *L) {
     return f_lines(L);
   }
   else {
-    const char *filename = luaL_checkstring(L, 1);
+    const char* filename = luaL_checkstring(L, 1);
     FILE **pf = newfile(L);
     *pf = fopen(filename, "r");
     if (*pf == nullptr)
@@ -296,7 +296,7 @@ static int read_line (lua_State *L, FILE *f) {
   luaL_buffinit(L, &b);
   for (;;) {
     size_t l;
-    char *p = luaL_prepbuffer(&b);
+    char* p = luaL_prepbuffer(&b);
     if (fgets(p, LUAL_BUFFERSIZE, f) == nullptr) {  /* eof? */
       luaL_pushresult(&b);  /* close buffer */
       return (lua_objlen(L, -1) > 0);  /* check whether read something */
@@ -320,7 +320,7 @@ static int read_chars (lua_State *L, FILE *f, size_t n) {
   luaL_buffinit(L, &b);
   rlen = LUAL_BUFFERSIZE;  /* try to read that much each time */
   do {
-    char *p = luaL_prepbuffer(&b);
+    char* p = luaL_prepbuffer(&b);
     if (rlen > n) rlen = n;  /* cannot read more than asked */
     nr = fread(p, sizeof(char), rlen, f);
     luaL_addsize(&b, nr);
@@ -349,7 +349,7 @@ static int g_read (lua_State *L, FILE *f, int first) {
         success = (l == 0) ? test_eof(L, f) : read_chars(L, f, l);
       }
       else {
-        const char *p = lua_tostring(L, n);
+        const char* p = lua_tostring(L, n);
         luaL_argcheck(L, p && p[0] == '*', n, "invalid option");
         switch (p[1]) {
           case 'n':  /* number */
@@ -421,7 +421,7 @@ static int g_write (lua_State *L, FILE *f, int arg) {
     }
     else {
       size_t l;
-      const char *s = luaL_checklstring(L, arg, &l);
+      const char* s = luaL_checklstring(L, arg, &l);
       status = status && (fwrite(s, sizeof(char), l, f) == l);
     }
   }
@@ -441,7 +441,7 @@ static int f_write (lua_State *L) {
 
 static int f_seek (lua_State *L) {
   static const int mode[] = {SEEK_SET, SEEK_CUR, SEEK_END};
-  static const char *const modenames[] = {"set", "cur", "end", nullptr};
+  static const char* const modenames[] = {"set", "cur", "end", nullptr};
   FILE *f = tofile(L);
   int op = luaL_checkoption(L, 2, "cur", modenames);
   long offset = luaL_optlong(L, 3, 0);
@@ -457,7 +457,7 @@ static int f_seek (lua_State *L) {
 
 static int f_setvbuf (lua_State *L) {
   static const int mode[] = {_IONBF, _IOFBF, _IOLBF};
-  static const char *const modenames[] = {"no", "full", "line", nullptr};
+  static const char* const modenames[] = {"no", "full", "line", nullptr};
   FILE *f = tofile(L);
   int op = luaL_checkoption(L, 2, nullptr, modenames);
   lua_Integer sz = luaL_optinteger(L, 3, LUAL_BUFFERSIZE);
@@ -515,7 +515,7 @@ static void createmeta (lua_State *L) {
 }
 
 
-static void createstdfile (lua_State *L, FILE *f, int k, const char *fname) {
+static void createstdfile (lua_State *L, FILE *f, int k, const char* fname) {
   *newfile(L) = f;
   if (k > 0) {
     lua_pushvalue(L, -1);

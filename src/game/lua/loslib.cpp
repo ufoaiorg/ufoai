@@ -20,7 +20,7 @@
 #include "lualib.h"
 
 
-static int os_pushresult (lua_State *L, int i, const char *filename) {
+static int os_pushresult (lua_State *L, int i, const char* filename) {
   int en = errno;  /* calls to Lua API may change this value */
   if (i) {
     lua_pushboolean(L, 1);
@@ -42,14 +42,14 @@ static int os_execute (lua_State *L) {
 
 
 static int os_remove (lua_State *L) {
-  const char *filename = luaL_checkstring(L, 1);
+  const char* filename = luaL_checkstring(L, 1);
   return os_pushresult(L, remove(filename) == 0, filename);
 }
 
 
 static int os_rename (lua_State *L) {
-  const char *fromname = luaL_checkstring(L, 1);
-  const char *toname = luaL_checkstring(L, 2);
+  const char* fromname = luaL_checkstring(L, 1);
+  const char* toname = luaL_checkstring(L, 2);
   return os_pushresult(L, rename(fromname, toname) == 0, fromname);
 }
 
@@ -85,19 +85,19 @@ static int os_clock (lua_State *L) {
 ** =======================================================
 */
 
-static void setfield (lua_State *L, const char *key, int value) {
+static void setfield (lua_State *L, const char* key, int value) {
   lua_pushinteger(L, value);
   lua_setfield(L, -2, key);
 }
 
-static void setboolfield (lua_State *L, const char *key, int value) {
+static void setboolfield (lua_State *L, const char* key, int value) {
   if (value < 0)  /* undefined? */
     return;  /* does not set field */
   lua_pushboolean(L, value);
   lua_setfield(L, -2, key);
 }
 
-static int getboolfield (lua_State *L, const char *key) {
+static int getboolfield (lua_State *L, const char* key) {
   int res;
   lua_getfield(L, -1, key);
   res = lua_isnil(L, -1) ? -1 : lua_toboolean(L, -1);
@@ -106,7 +106,7 @@ static int getboolfield (lua_State *L, const char *key) {
 }
 
 
-static int getfield (lua_State *L, const char *key, int d) {
+static int getfield (lua_State *L, const char* key, int d) {
   int res;
   lua_getfield(L, -1, key);
   if (lua_isnumber(L, -1))
@@ -122,7 +122,7 @@ static int getfield (lua_State *L, const char *key, int d) {
 
 
 static int os_date (lua_State *L) {
-  const char *s = luaL_optstring(L, 1, "%c");
+  const char* s = luaL_optstring(L, 1, "%c");
   time_t t = luaL_opt(L, (time_t)luaL_checknumber, 2, time(nullptr));
   struct tm *stm;
   if (*s == '!') {  /* UTC? */
@@ -204,9 +204,9 @@ static int os_difftime (lua_State *L) {
 static int os_setlocale (lua_State *L) {
   static const int cat[] = {LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY,
                       LC_NUMERIC, LC_TIME};
-  static const char *const catnames[] = {"all", "collate", "ctype", "monetary",
+  static const char* const catnames[] = {"all", "collate", "ctype", "monetary",
      "numeric", "time", nullptr};
-  const char *l = luaL_optstring(L, 1, nullptr);
+  const char* l = luaL_optstring(L, 1, nullptr);
   int op = luaL_checkoption(L, 2, "all", catnames);
   lua_pushstring(L, setlocale(cat[op], l));
   return 1;

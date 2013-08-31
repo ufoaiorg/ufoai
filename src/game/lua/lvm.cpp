@@ -201,9 +201,9 @@ static int call_orderTM (lua_State *L, const TValue *p1, const TValue *p2,
 
 
 static int l_strcmp (const TString *ls, const TString *rs) {
-  const char *l = getstr(ls);
+  const char* l = getstr(ls);
   size_t ll = ls->tsv.len;
-  const char *r = getstr(rs);
+  const char* r = getstr(rs);
   size_t lr = rs->tsv.len;
   for (;;) {
     int temp = strcoll(l, r);
@@ -291,7 +291,7 @@ void luaV_concat (lua_State *L, int total, int last) {
     else {
       /* at least two string values; get as many as possible */
       size_t tl = tsvalue(top-1)->len;
-      char *buffer;
+      char* buffer;
       int i;
       /* collect total length */
       for (n = 1; n < total && tostring(L, top-n-1); n++) {

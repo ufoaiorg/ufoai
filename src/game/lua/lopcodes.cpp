@@ -13,7 +13,7 @@
 
 /* ORDER OP */
 
-const char *const luaP_opnames[NUM_OPCODES+1] = {
+const char* const luaP_opnames[NUM_OPCODES+1] = {
   "MOVE",
   "LOADK",
   "LOADBOOL",
