@@ -153,19 +153,17 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 			cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
 			continue;
 		}
-		if (cgi->LIST_ContainsString(md->gameTypes, gameType)) {
-			linkedList_t *gameNames = nullptr;
-			for (int j = 0; j < cgi->csi->numGTs; j++) {
-				const gametype_t *gt = &cgi->csi->gts[j];
-				if (cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
-					cgi->LIST_AddString(&gameNames, _(gt->name));
-				}
+		linkedList_t *gameNames = nullptr;
+		for (int j = 0; j < cgi->csi->numGTs; j++) {
+			const gametype_t *gt = &cgi->csi->gts[j];
+			if (cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
+				cgi->LIST_AddString(&gameNames, _(gt->name));
 			}
-			cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
-			cgi->Cvar_SetValue("ai_numaliens", md->maxAliens);
-
-			return md;
 		}
+		cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
+		cgi->Cvar_SetValue("ai_numaliens", md->maxAliens);
+
+		return md;
 	}
 
 	cgi->Com_Printf("no multiplayer map found for the current selected gametype: '%s'", gameType);
