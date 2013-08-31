@@ -689,17 +689,12 @@ window game_team_save_popup
 		pos			"50 90"
 		size		"256 30"
 		string		"_Save"
-		onClick		{ cmd "game_saveteam <cvar:mn_teamname>;ui_pop;" }
+		onClick		{ cmd "game_saveteam <node:root.name@string>;ui_pop;game_teamcomments;" }
 		font	"f_menusmall"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Save"
 		background	"ui/button_green_small"
-	}
-
-	func onWindowClosed
-	{
-		cmd "game_teamcomments;"
 	}
 }
 
