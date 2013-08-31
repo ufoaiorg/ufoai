@@ -43,7 +43,7 @@ void ColourPropertyEditor::setColourButton (const std::string& val)
 	str >> b;
 
 	// Construct the GdkColor and set the GtkColorButton from it
-	GdkColor col = { 0, guint16(r * 65535), guint16(g * 65535), guint32(b * 65535) };
+	GdkColor col = { guint16(0), guint16(r * 65535), guint16(g * 65535), guint16(b * 65535) };
 	gtk_color_button_set_color(GTK_COLOR_BUTTON(_colorButton), &col);
 }
 
