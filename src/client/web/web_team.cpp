@@ -99,10 +99,13 @@ void WEB_DeleteTeam_f (void)
 
 	char url[576];
 	Com_sprintf(url, sizeof(url), "%s?teamid=%i", web_teamdeleteurl->string, teamId);
-	if (WEB_GetURL(url, nullptr))
+	if (WEB_GetURL(url, nullptr)) {
 		Com_Printf("deleted the team '%i'\n", teamId);
-	else
+		UI_ExecuteConfunc("teamlist_deletesuccessful %i %i", web_userid->integer, teamId);
+	} else {
 		Com_Printf("failed to delete the team '%i' from the server\n", teamId);
+		UI_ExecuteConfunc("teamlist_deletefailed");
+	}
 }
 
 /**

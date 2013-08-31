@@ -156,6 +156,19 @@ window team_download extends abstract_multiplayer
 	{
 	}
 
+	/**
+	 * @param <1> The user id of the owner
+	 * @param <2> The team id
+	 */
+	confunc teamlist_deletesuccessful
+	{
+		call *node:root.downloadable.download<1><2>@delete
+	}
+
+	confunc teamlist_deletefailed
+	{
+	}
+
 	confunc teamlist_clear
 	{
 		call *node:root.downloadable@removeAllChild
