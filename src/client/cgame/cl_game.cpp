@@ -882,7 +882,7 @@ static void UI_MapInfoGetNext (int step)
 
 		const mapDef_t *md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
-		/* avoid infinit loop */
+		/* avoid infinite loop */
 		if (ref == cls.currentSelectedMap)
 			break;
 		/* special purpose maps are not startable without the specific context */

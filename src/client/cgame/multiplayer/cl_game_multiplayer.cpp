@@ -146,12 +146,13 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 		if (i > 100000)
 			break;
 
-		cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
 		const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 		if (md == nullptr)
 			break;
-		if (!md->multiplayer)
+		if (!md->multiplayer || !cgi->LIST_ContainsString(md->gameTypes, gameType)) {
+			cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
 			continue;
+		}
 		if (cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 			linkedList_t *gameNames = nullptr;
 			for (int j = 0; j < cgi->csi->numGTs; j++) {
