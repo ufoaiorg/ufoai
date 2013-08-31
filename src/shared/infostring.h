@@ -35,11 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_INFO_VALUE      64
 #define MAX_INFO_STRING     512
 
-const char *Info_ValueForKey(const char *s, const char *key);
-const char *Info_BoolForKey(const char *s, const char *key);
-int Info_IntegerForKey(const char *s, const char *key);
-void Info_RemoveKey(char *s, const char *key);
-void Info_SetValueForKey(char *s, const size_t size, const char *key, const char *value);
-void Info_SetValueForKeyAsInteger(char *s, const size_t size, const char *key, const int value);
-void Info_Print(const char *s);
-bool Info_Validate(const char *s);
+const char* Info_ValueForKey(const char* s, const char* key);
+const char* Info_BoolForKey(const char* s, const char* key);
+int Info_IntegerForKey(const char* s, const char* key);
+void Info_RemoveKey(char* s, const char* key);
+void Info_SetValueForKey(char* s, const size_t size, const char* key, const char* value);
+void Info_SetValueForKeyAsInteger(char* s, const size_t size, const char* key, const int value);
+void Info_Print(const char* s);
+bool Info_Validate(const char* s);

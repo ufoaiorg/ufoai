@@ -48,7 +48,7 @@ void Com_UnParseLastToken (void)
  * @brief Get the current token value
  * @return The current token value
  */
-const char *Com_GetToken (const char** data_p)
+const char* Com_GetToken (const char** data_p)
 {
 	return com_token;
 }
@@ -77,9 +77,9 @@ Com_TokenType_t Com_NextToken (const char** data_p)
  * @param[in] buffer The buffer to count the tokens in
  * @return The amount of tokens in the given buffer
  */
-int Com_CountTokensInBuffer (const char *buffer)
+int Com_CountTokensInBuffer (const char* buffer)
 {
-	const char *text = buffer;
+	const char* text = buffer;
 	int n = 0;
 	for (;;) {
 		Com_Parse(&text);
@@ -103,11 +103,11 @@ int Com_CountTokensInBuffer (const char *buffer)
  * the next call.
  * @sa Com_EParse
  */
-const char *Com_Parse (const char *data_p[], char *target, size_t size)
+const char* Com_Parse (const char* data_p[], char* target, size_t size)
 {
 	char c;
 	size_t len;
-	const char *data;
+	const char* data;
 
 	if (!target) {
 		target = com_token;
@@ -250,7 +250,7 @@ void Com_SkipBlock (const char** text)
 	int depth = 1;
 
 	do {
-		const char *token = Com_Parse(text);
+		const char* token = Com_Parse(text);
 		if (*token == '{')
 			depth++;
 		else if (*token == '}')
@@ -266,11 +266,11 @@ void Com_SkipBlock (const char** text)
  */
 int Com_GetBlock (const char** text, const char** start)
 {
-	const char *token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (*token != '{')
 		return -1;
 	*start = *text;
 	Com_SkipBlock(text);
-	const char *end = *text - 1;	/* The pointer to the end of the block */
+	const char* end = *text - 1;	/* The pointer to the end of the block */
 	return end - *start;
 }

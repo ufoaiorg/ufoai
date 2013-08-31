@@ -118,7 +118,7 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
  * @brief search for an existing keyDef to add a new parsed pair info to.
  * @return a pointer to the entity def or nullptr if it is not found
  */
-static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char *name, int parseMode)
+static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char* name, int parseMode)
 {
 	int i;
 	for (i = 0; i < numDefs; i++) {
@@ -136,7 +136,7 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
  * the appropriate internal constant integer
  * @return the constant, or ED_ERROR if strType is not recognised
  */
-static int ED_Type2Constant (const char *strType)
+static int ED_Type2Constant (const char* strType)
 {
 	if (Q_streq(strType, "V_FLOAT"))
 		return ED_TYPE_FLOAT;
@@ -155,7 +155,7 @@ static int ED_Type2Constant (const char *strType)
  * representation of a type (eg V_FLOAT)
  * @return the string, or nullptr if the integer is not recognised.
  */
-static const char *ED_Constant2Type (int constInt)
+static const char* ED_Constant2Type (int constInt)
 {
 	switch (constInt) {
 	case ED_TYPE_FLOAT:
@@ -181,13 +181,13 @@ static const char *ED_Constant2Type (int constInt)
  * @return ED_ERROR or ED_OK
  * @sa ED_GetLastError.
  */
-static int ED_GetIntVectorFromString (const char *str, int v[], const int n)
+static int ED_GetIntVectorFromString (const char* str, int v[], const int n)
 {
 	int i;
-	const char *buf_p = str;
+	const char* buf_p = str;
 
 	for (i = 0; buf_p; i++) {
-		const char *tok = Com_Parse(&buf_p);
+		const char* tok = Com_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVectorFromString: v[%i] too small for ints from string \"%s\"", n, str);
@@ -224,9 +224,9 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @sa ED_GetLastError
  * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
-static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive, int_float_tu *parsedNumber)
+static int ED_CheckNumber (const char* value, const int floatOrInt, const int insistPositive, int_float_tu *parsedNumber)
 {
-	char *end_p;
+	char* end_p;
 	/* V_INTs are protected from octal and hex as strtol with base 10 is used.
 	 * this test is useful for V_INT, as it gives a specific error message.
 	 * V_FLOATs are not protected from hex, inf, nan, so this check is here.
@@ -321,16 +321,16 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int type, const in
  * @param type one of ED_TYPE_FLOAT, ED_TYPE_INT or ED_TYPE_BOOL
  * @return ED_OK or ED_ERROR (call ED_GetLastError)
  */
-static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int type)
+static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char* value, const int type)
 {
 	int i = 0;
 	static char tokBuf[64];
-	const char *buf_p = tokBuf;
+	const char* buf_p = tokBuf;
 
 	strncpy(tokBuf, value, sizeof(tokBuf));
 	assert(type == ED_TYPE_INT || type == ED_TYPE_FLOAT || type == ED_TYPE_BOOL);
 	while (buf_p) {
-		const char *tok = Com_Parse(&buf_p);
+		const char* tok = Com_Parse(&buf_p);
 		int_float_tu parsedNumber;
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
@@ -357,7 +357,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
  * @note abstract (radiant) keys may not have types. keys used here must be declared in entities.ufo in
  * an optional or mandatory block.
  */
-int ED_Check (const char *classname, const char *key, const char *value)
+int ED_Check (const char* classname, const char* key, const char* value)
 {
 	const entityKeyDef_t *kd = ED_GetKeyDef(classname, key, 0);
 	if (!kd)
@@ -372,7 +372,7 @@ int ED_Check (const char *classname, const char *key, const char *value)
  * @return ED_ERROR or ED_OK
  * @sa ED_GetLastError
  */
-int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
+int ED_CheckKey (const entityKeyDef_t *kd, const char* value)
 {
 	ED_TEST_RETURN_ERROR(!kd, "ED_CheckTypeEntityKey: null key def");
 	switch (kd->flags & ED_KEY_TYPE) {
@@ -394,13 +394,13 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
  * @brief takes a type string (eg "V_FLOAT 6") and configures entity def
  * @return ED_ERROR or ED_OK
  */
-static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
+static int ED_ParseType (entityKeyDef_t *kd, const char* parsedToken)
 {
 	static char tokBuf[64];
-	const char *buf_p;
+	const char* buf_p;
 	int type;
 	int vectorLen;
-	const char *partToken;
+	const char* partToken;
 	int_float_tu parsedNumber;
 
 	/* need a copy, as parsedToken is held in a static buffer in the
@@ -442,7 +442,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
  * @brief converts a block name (eg "optional") to an constant (eg ED_OPTIONAL).
  * @return the parse mode or ED_ERROR
  */
-static int ED_Block2Constant (const char *blockName)
+static int ED_Block2Constant (const char* blockName)
 {
 	if (Q_streq("optional", blockName))
 		return ED_OPTIONAL;
@@ -465,7 +465,7 @@ static int ED_Block2Constant (const char *blockName)
  * representation of a type (eg V_FLOAT)
  * @return the string, or nullptr if the integer is not recognised.
  */
-static const char *ED_Constant2Block (int constInt)
+static const char* ED_Constant2Block (int constInt)
 {
 	switch (constInt) {
 	case ED_OPTIONAL:
@@ -486,11 +486,11 @@ static const char *ED_Constant2Block (int constInt)
 	}
 }
 
-static int ED_AllocRange (entityKeyDef_t *kd, const char *rangeStr)
+static int ED_AllocRange (entityKeyDef_t *kd, const char* rangeStr)
 {
 	entityKeyRange_t** newRanges;
 	/* start a new range */
-	char *newStr = strdup(rangeStr);
+	char* newStr = strdup(rangeStr);
 	entityKeyRange_t *newRange = (entityKeyRange_t *)malloc(sizeof(entityKeyRange_t));
 	OBJZERO(*newRange);
 	/* resize array of pointers */
@@ -511,7 +511,7 @@ static int ED_AllocRange (entityKeyDef_t *kd, const char *rangeStr)
  * @return ED_ERROR or ED_OK.
  */
 static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
-		const char *newName, const char *newVal, const int mode)
+		const char* newName, const char* newVal, const int mode)
 {
 	/* check if there is already a key def */
 	entityKeyDef_t *keyDef = ED_FindKeyDefInArray(keyDefsBuf, *numKeyDefsSoFar_p, newName, mode);
@@ -571,7 +571,7 @@ static int ED_ParseEntities (const char** data_p)
 	int toggle = 0; /* many lines should have a pair of tokens on, this toggles 0, 1 to indicate progress */
 
 	while (data_p) {
-		const char *parsedToken = Com_Parse(data_p);
+		const char* parsedToken = Com_Parse(data_p);
 		toggle ^= 1;
 
 		if (parsedToken[0] == '\0' && braceLevel == 0)
@@ -677,12 +677,12 @@ static int ED_ProcessRanges (void)
 			for (i = 0; i < kd->numRanges ;i++) {
 				int numElements = 0;
 				entityKeyRange_t *kr = kd->ranges[i];
-				const char *tmpRange_p = kr->str;
+				const char* tmpRange_p = kr->str;
 				ED_TEST_RETURN_ERROR(!keyType || (keyType & ED_TYPE_STRING), "ED_ProcessRanges: ranges may not be specified for strings. note that V_STRING is the default type. %s in %s",
 					kd->name, ed->classname);
 				while (tmpRange_p) {
 					int_float_tu parsedNumber;
-					const char *tok = Com_Parse(&tmpRange_p);
+					const char* tok = Com_Parse(&tmpRange_p);
 					if (tok[0] == '\0')
 						break;
 					if (Q_streq("-", tok)) {
@@ -736,7 +736,7 @@ static int ED_ProcessRanges (void)
  * @return ED_OK or ED_ERR
  * @sa ED_GetLastErr
  */
-int ED_Parse (const char *data_p)
+int ED_Parse (const char* data_p)
 {
 	/* only do this once, repeat calls are OK */
 	static int done = 0;
@@ -761,7 +761,7 @@ int ED_Parse (const char *data_p)
 	return ED_OK;
 }
 
-const char *ED_GetLastError (void)
+const char* ED_GetLastError (void)
 {
 	return lastErr;
 }
@@ -773,7 +773,7 @@ const char *ED_GetLastError (void)
  * @param abstract send abstract to find an abstract key with this name
  * @return nullptr if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
-const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, const int abstract)
+const entityKeyDef_t *ED_GetKeyDef (const char* classname, const char* keyname, const int abstract)
 {
 	const entityDef_t *ed = ED_GetEntityDef(classname);
 	return ED_GetKeyDefEntity(ed, keyname, abstract);
@@ -787,7 +787,7 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, 
  * key is required
  * @return nullptr if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
-const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract)
+const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char* keyname, const int abstract)
 {
 	const entityKeyDef_t *kd;
 
@@ -813,7 +813,7 @@ const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *key
  * @brief searches for the parsed entity def by classname
  * @return nullptr if the entity def is not found. call ED_GetLastError to get a relevant message.
  */
-const entityDef_t *ED_GetEntityDef (const char *classname)
+const entityDef_t *ED_GetEntityDef (const char* classname)
 {
 	const entityDef_t *ed;
 

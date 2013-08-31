@@ -1462,7 +1462,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const in
 	}
 }
 
-void RT_WriteCSVFiles (const Routing &routing, const char *baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	qFILE f;

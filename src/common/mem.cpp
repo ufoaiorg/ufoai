@@ -80,7 +80,7 @@ static uint32_t m_numPools;
 POOL MANAGEMENT
 ==============================================================================*/
 
-static memPool_t *Mem_FindPool (const char *name)
+static memPool_t *Mem_FindPool (const char* name)
 {
 	memPool_t *pool;
 	uint32_t i;
@@ -100,7 +100,7 @@ static memPool_t *Mem_FindPool (const char *name)
 /**
  * @sa _Mem_DeletePool
  */
-memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fileLine)
+memPool_t *_Mem_CreatePool (const char* name, const char* fileName, const int fileLine)
 {
 	memPool_t *pool;
 	uint32_t i;
@@ -145,7 +145,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
  * @sa _Mem_CreatePool
  * @sa _Mem_FreePool
  */
-void _Mem_DeletePool (memPool_t *pool, const char *fileName, const int fileLine)
+void _Mem_DeletePool (memPool_t *pool, const char* fileName, const int fileLine)
 {
 	if (!pool)
 		return;
@@ -182,7 +182,7 @@ static size_t Mem_BlockRawSize(memBlock_t const* const mem)
 	return mem->memSize + sizeof(memBlock_t) + sizeof(memBlockFoot_t);
 }
 
-static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, const int fileLine)
+static void _Mem_CheckSentinels (memBlock_t* const mem, const char* fileName, const int fileLine)
 {
 	/* Check sentinels */
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
@@ -203,7 +203,7 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, co
 /**
  * @sa _Mem_FreePool
  */
-void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
+void _Mem_Free (void *ptr, const char* fileName, const int fileLine)
 {
 	memBlock_t *search;
 	memBlock_t** prev;
@@ -243,7 +243,7 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 /**
  * @brief Free memory blocks assigned to a specified tag within a pool
  */
-void _Mem_FreeTag (memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+void _Mem_FreeTag (memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
 	memBlock_t *mem, *next;
 	int j = 0;
@@ -266,7 +266,7 @@ void _Mem_FreeTag (memPool_t *pool, const int tagNum, const char *fileName, cons
  * @sa _Mem_CreatePool
  * @sa _Mem_DeletePool
  */
-void _Mem_FreePool (memPool_t *pool, const char *fileName, const int fileLine)
+void _Mem_FreePool (memPool_t *pool, const char* fileName, const int fileLine)
 {
 	memBlock_t *mem, *next;
 	int j = 0;
@@ -289,7 +289,7 @@ void _Mem_FreePool (memPool_t *pool, const char *fileName, const int fileLine)
 /**
  * @brief Optionally returns 0 filled memory allocated in a pool with a tag
  */
-void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
 	memBlock_t *mem;
 
@@ -341,7 +341,7 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 	return Mem_BlockToPtr(mem);
 }
 
-void *_Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
+void *_Mem_ReAlloc (void *ptr, size_t size, const char* fileName, const int fileLine)
 {
 	memPool_t *pool;
 	void *newPtr;
@@ -392,7 +392,7 @@ MISC FUNCTIONS
  * @param[in] fileName The filename where this function was called from
  * @param[in] fileLine The line where this function was called from
  */
-char *_Mem_PoolStrDupTo (const char *in, char** out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+char* _Mem_PoolStrDupTo (const char* in, char** out, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
 	if (!out)
 		return nullptr;
@@ -400,7 +400,7 @@ char *_Mem_PoolStrDupTo (const char *in, char** out, memPool_t *pool, const int 
 	return *out;
 }
 
-void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
 	void *copy;
 
@@ -420,11 +420,11 @@ void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagN
  * @param[in] fileName The filename where this function was called from
  * @param[in] fileLine The line where this function was called from
  */
-char *_Mem_PoolStrDup (const char *in, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+char* _Mem_PoolStrDup (const char* in, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	char *out;
+	char* out;
 
-	out = (char *)_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
+	out = (char* )_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;
@@ -466,7 +466,7 @@ uint32_t _Mem_ChangeTag (memPool_t *pool, const int tagFrom, const int tagTo)
 }
 
 
-static void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, const int fileLine)
+static void _Mem_CheckPoolIntegrity (memPool_t *pool, const char* fileName, const int fileLine)
 {
 	memBlock_t *mem;
 	uint32_t blocks;
@@ -493,7 +493,7 @@ static void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, cons
 }
 
 
-void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
+void _Mem_CheckGlobalIntegrity (const char* fileName, const int fileLine)
 {
 	memPool_t *pool;
 	uint32_t i;

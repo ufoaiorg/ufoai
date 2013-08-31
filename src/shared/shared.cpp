@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Returns just the filename from a given path
  * @sa Com_StripExtension
  */
-const char *Com_SkipPath (const char *pathname)
+const char* Com_SkipPath (const char* pathname)
 {
 	char const* const last = strrchr(pathname, '/');
 	return last ? last + 1 : pathname;
@@ -45,9 +45,9 @@ const char *Com_SkipPath (const char *pathname)
  * @param s The string that is modified
  * @return The start of the input string
  */
-char *Com_Chop (char *s)
+char* Com_Chop (char* s)
 {
-	char *right;
+	char* right;
 
 	right = s + strlen(s) - 1;
 
@@ -62,9 +62,9 @@ char *Com_Chop (char *s)
  * @param s The string that is modified
  * @return The first none whitespace character of the given input string
  */
-char *Com_Trim (char *s)
+char* Com_Trim (char* s)
 {
-	char *left;
+	char* left;
 
 	left = s;
 
@@ -79,7 +79,7 @@ char *Com_Trim (char *s)
  * This can be used to print utf-8 characters to the console.
  * It will replace every high character value with a simple dot.
  */
-char *Com_ConvertToASCII7 (char *s)
+char* Com_ConvertToASCII7 (char* s)
 {
 	unsigned int l;
 	const size_t length = strlen(s);
@@ -103,9 +103,9 @@ char *Com_ConvertToASCII7 (char *s)
 /**
  * @brief Like Com_Filter, but match PATTERN against any final segment of TEXT.
  */
-static int Com_FilterAfterStar (const char *pattern, const char *text)
+static int Com_FilterAfterStar (const char* pattern, const char* text)
 {
-	register const char *p = pattern, *t = text;
+	register const char* p = pattern, *t = text;
 	register char c, c1;
 
 	while ((c = *p++) == '?' || c == '*')
@@ -142,9 +142,9 @@ static int Com_FilterAfterStar (const char *pattern, const char *text)
  * @note To suppress the special syntactic significance of any of `[]*?!-\',
  * and match the character exactly, precede it with a `\'.
  */
-int Com_Filter (const char *pattern, const char *text)
+int Com_Filter (const char* pattern, const char* text)
 {
-	register const char *p = pattern, *t = text;
+	register const char* p = pattern, *t = text;
 	register char c;
 
 	while ((c = *p++) != '\0')
@@ -236,9 +236,9 @@ int Com_Filter (const char *pattern, const char *text)
  * @param[out] outputPath The target buffer
  * @param[in] size The size of the target buffer
  */
-void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, char *outputPath, size_t size)
+void Com_ReplaceFilename (const char* inputPath, const char* expectedFileName, char* outputPath, size_t size)
 {
-	char *slash, *end;
+	char* slash, *end;
 
 	Q_strncpyz(outputPath, inputPath, size);
 
@@ -256,9 +256,9 @@ void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, c
  * @param[in] out The stripped filename
  * @param[in] size The size of the output buffer
  */
-void Com_StripExtension (const char *in, char *out, const size_t size)
+void Com_StripExtension (const char* in, char* out, const size_t size)
 {
-	char *out_ext = nullptr;
+	char* out_ext = nullptr;
 	int i = 1;
 
 	while (*in && i < size) {
@@ -279,9 +279,9 @@ void Com_StripExtension (const char *in, char *out, const size_t size)
  * @param path The path resp. filename to extract the extension from
  * @return @c nullptr if the given path name does not contain an extension
  */
-const char *Com_GetExtension (const char *path)
+const char* Com_GetExtension (const char* path)
 {
-	const char *src = path + strlen(path) - 1;
+	const char* src = path + strlen(path) - 1;
 	while (*src != '/' && src != path) {
 		if (*src == '.')
 			return src + 1;
@@ -294,10 +294,10 @@ const char *Com_GetExtension (const char *path)
 /**
  * @brief Sets a default extension if there is none
  */
-void Com_DefaultExtension (char *path, size_t len, const char *extension)
+void Com_DefaultExtension (char* path, size_t len, const char* extension)
 {
 	char oldPath[MAX_OSPATH];
-	const char *src;
+	const char* src;
 
 	/* if path doesn't have a .EXT, append extension
 	 * (extension should include the .) */
@@ -316,9 +316,9 @@ void Com_DefaultExtension (char *path, size_t len, const char *extension)
 /**
  * @brief Returns the path up to, but not including the last /
  */
-void Com_FilePath (const char *in, char *out, size_t size)
+void Com_FilePath (const char* in, char* out, size_t size)
 {
-	const char *s = in + strlen(in) - 1;
+	const char* s = in + strlen(in) - 1;
 
 	while (s != in && *s != '/')
 		s--;
@@ -333,7 +333,7 @@ void Com_FilePath (const char *in, char *out, size_t size)
 /**
  * @brief returns hash key for a string
  */
-unsigned int Com_HashKey (const char *name, int hashsize)
+unsigned int Com_HashKey (const char* name, int hashsize)
 {
 	int i;
 	unsigned int v;
@@ -352,7 +352,7 @@ unsigned int Com_HashKey (const char *name, int hashsize)
  * @param ts ptr to the resulting string
  * @param tslen length of target buffer
  */
-void Com_MakeTimestamp (char *ts, const size_t tslen)
+void Com_MakeTimestamp (char* ts, const size_t tslen)
 {
 	struct tm *t;
 	time_t aclock;
@@ -387,8 +387,8 @@ int Q_FloatSort (const void *float1, const void *float2)
  */
 int Q_StringSort (const void *string1, const void *string2)
 {
-	const char *s1 = (const char *)string1;
-	const char *s2 = (const char *)string2;
+	const char* s1 = (const char* )string1;
+	const char* s2 = (const char* )string2;
 	if (*s1 < *s2)
 		return -1;
 	else if (*s1 == *s2) {
@@ -410,13 +410,13 @@ int Q_StringSort (const void *string1, const void *string2)
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
  */
-const char *va (const char *format, ...)
+const char* va (const char* format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
 	static char string[16][VA_BUFSIZE];
 	static unsigned int index = 0;
-	char *buf;
+	char* buf;
 
 	buf = string[index & 0x0F];
 	index++;
@@ -434,9 +434,9 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
-char *Q_strlwr (char *str)
+char* Q_strlwr (char* str)
 {
-	char *origs = str;
+	char* origs = str;
 	while (*str) {
 		*str = tolower(*str);
 		str++;
@@ -451,9 +451,9 @@ char *Q_strlwr (char *str)
  * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
  */
 #ifdef DEBUG
-void Q_strncpyzDebug (char *dest, const char *src, size_t destsize, const char *file, int line)
+void Q_strncpyzDebug (char* dest, const char* src, size_t destsize, const char* file, int line)
 #else
-void Q_strncpyz (char *dest, const char *src, size_t destsize)
+void Q_strncpyz (char* dest, const char* src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
@@ -475,7 +475,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
  * @return pointer destination string.
  * never goes past bounds or leaves without a terminating 0
  */
-void Q_strcat (char *dest, size_t destsize, const char *format, ...)
+void Q_strcat (char* dest, size_t destsize, const char* format, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -496,7 +496,7 @@ void Q_strcat (char *dest, size_t destsize, const char *format, ...)
  * @param[in] fmt Stringformat (like printf)
  * @return false if overflowed - true otherwise
  */
-bool Com_sprintf (char *dest, size_t size, const char *fmt, ...)
+bool Com_sprintf (char* dest, size_t size, const char* fmt, ...)
 {
 	va_list ap;
 	int len;
@@ -511,7 +511,7 @@ bool Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	if (len <= size - 1)
 		return true;
 
-	/* number of char */
+	/* number of character */
 	len = size - 1;
 
 	/* check for UTF8 multibyte sequences */
@@ -537,7 +537,7 @@ bool Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 /**
  * @brief Safe (null terminating) vsnprintf implementation
  */
-int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
+int Q_vsnprintf (char* str, size_t size, const char* format, va_list ap)
 {
 	int len;
 
@@ -559,7 +559,7 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 	return len;
 }
 
-const char *Q_stristr (const char *str, const char *substr)
+const char* Q_stristr (const char* str, const char* substr)
 {
 	const size_t sublen = strlen(substr);
 	while (*str) {
@@ -581,7 +581,7 @@ char const* Q_strstart (char const* str, char const* start)
 	return str;
 }
 
-bool Q_strreplace (const char *source, const char *pattern, const char *replace, char *dest, size_t destsize)
+bool Q_strreplace (const char* source, const char* pattern, const char* replace, char* dest, size_t destsize)
 {
 	if (char const* const hit = strstr(source, pattern)) {
 		int const len = snprintf(dest, destsize, "%.*s%s%s", (int)(hit - source), source, replace, hit + strlen(pattern));
@@ -597,7 +597,7 @@ bool Q_strreplace (const char *source, const char *pattern, const char *replace,
  * @param[in] input The input string to check
  * @return @c true if the string is valid and can be used as a name, @c false otherwise
  */
-bool Com_IsValidName (const char *input)
+bool Com_IsValidName (const char* input)
 {
 	/* empty strings are not allowed */
 	if (!Q_strvalid(input))
@@ -612,7 +612,7 @@ bool Com_IsValidName (const char *input)
 }
 
 #ifndef NDEBUG
-void UFO_assert (bool condition, const char *fmt, ...)
+void UFO_assert (bool condition, const char* fmt, ...)
 {
 	if (condition)
 		return;

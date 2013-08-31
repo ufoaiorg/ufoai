@@ -42,7 +42,7 @@ static filelink_t *fs_links;
 static searchpath_t *fs_searchpaths;
 #define MODS_DIR "mods"
 
-void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
+void FS_CreateOpenPipeFile (const char* filename, qFILE *f)
 {
 	if (fs_searchpaths == nullptr) {
 		Sys_Error("Filesystem call made without initialization");
@@ -63,7 +63,7 @@ void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
  * @brief Called to find where to write a file (savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority
  */
-const char *FS_Gamedir (void)
+const char* FS_Gamedir (void)
 {
 	searchpath_t *search;
 
@@ -80,7 +80,7 @@ const char *FS_Gamedir (void)
  * separators (/)
  * @sa Sys_NormPath
  */
-void FS_NormPath (char *path)
+void FS_NormPath (char* path)
 {
 	Sys_NormPath(path);
 }
@@ -115,10 +115,10 @@ int FS_FileLength (qFILE * f)
  * @note Paths should already be normalized
  * @sa FS_NormPath
  */
-void FS_CreatePath (const char *path)
+void FS_CreatePath (const char* path)
 {
 	char pathCopy[MAX_OSPATH];
-	char *ofs;
+	char* ofs;
 
 	Q_strncpyz(pathCopy, path, sizeof(pathCopy));
 
@@ -159,7 +159,7 @@ void FS_CloseFile (qFILE * f)
  * @return the filesize or -1 in case of an error
  * @note Used for streaming data out of either a pak file or a separate file.
  */
-int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
+int FS_OpenFile (const char* filename, qFILE *file, filemode_t mode)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
@@ -299,7 +299,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
  * @note Won't print any errors
  * @sa FS_FileExists
  */
-int FS_CheckFile (const char *fmt, ...)
+int FS_CheckFile (const char* fmt, ...)
 {
 	int result;
 	qFILE file;
@@ -393,7 +393,7 @@ int FS_Read (void *buffer, int len, qFILE * f)
  * @sa FS_Read
  * @sa FS_OpenFile
  */
-int FS_LoadFile (const char *path, byte **buffer)
+int FS_LoadFile (const char* path, byte **buffer)
 {
 	qFILE h;
 	int len;
@@ -435,9 +435,9 @@ void FS_FreeFile (void *buffer)
  * @param[in] packfile The pack filename
  * @note pk3 and zip are valid extensions
  */
-static pack_t *FS_LoadPackFile (const char *packfile)
+static pack_t *FS_LoadPackFile (const char* packfile)
 {
-	const char *extension = Com_GetExtension(packfile);
+	const char* extension = Com_GetExtension(packfile);
 
 	if (Q_streq(extension, "pk3") || Q_streq(extension, "zip")) {
 		int i;
@@ -508,7 +508,7 @@ static char const* const pakFileExt[] = {
  * @param[in] dir The directory name relative to the game dir
  * @param[in] write Add this directory as writable (config files, save games)
  */
-void FS_AddGameDirectory (const char *dir, bool write)
+void FS_AddGameDirectory (const char* dir, bool write)
 {
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
@@ -576,9 +576,9 @@ void FS_AddGameDirectory (const char *dir, bool write)
  * @sa Sys_FindClose
  * @note Don't forget to free the filelist array and the file itself
  */
-char** FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
+char** FS_ListFiles (const char* findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
-	char *s;
+	char* s;
 	int nfiles = 0, i;
 	char tempList[MAX_FILES][MAX_OSPATH];
 
@@ -629,10 +629,10 @@ char** FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
  * @brief Allows enumerating all of the directories in the search path
  * @note ignore pk3 here
  */
-const char *FS_NextPath (const char *prevpath)
+const char* FS_NextPath (const char* prevpath)
 {
 	searchpath_t *s;
-	char *prev;
+	char* prev;
 
 	if (!prevpath)
 		return FS_Gamedir();
@@ -649,9 +649,9 @@ const char *FS_NextPath (const char *prevpath)
 	return nullptr;
 }
 
-static bool FS_GetHomeDirectory (char *gdir, size_t length)
+static bool FS_GetHomeDirectory (char* gdir, size_t length)
 {
-	const char *homedir = Sys_GetHomeDirectory();
+	const char* homedir = Sys_GetHomeDirectory();
 
 	if (homedir) {
 #ifdef _WIN32
@@ -673,7 +673,7 @@ static bool FS_GetHomeDirectory (char *gdir, size_t length)
  * @param[in] write Add this directory as writable (config files, save games)
  * @sa Sys_GetHomeDirectory
  */
-static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
+static void FS_AddHomeAsGameDirectory (const char* dir, bool write)
 {
 	char gdir[MAX_OSPATH];
 
@@ -691,7 +691,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
 int FS_GetModList (linkedList_t** mods)
 {
 	char gdir[MAX_OSPATH];
-	const char *homedir;
+	const char* homedir;
 
 	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
 		char const * const append = "/" MODS_DIR;
@@ -714,7 +714,7 @@ int FS_GetModList (linkedList_t** mods)
 	int numberMods = 1;
 	/* it is likely that we have duplicate names now, which we will cleanup below */
 	for (const char** path = searchpaths; *path; path++) {
-		const char *pattern = *path;
+		const char* pattern = *path;
 		int ndirs = 0;
 		char** dirnames = FS_ListFiles(va("%s/*", pattern), &ndirs, SFF_SUBDIR, SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
@@ -816,7 +816,7 @@ static void FS_Link_f (void)
 static void FS_Dir_f (void)
 {
 	char const *wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
-	const char *path = nullptr;
+	const char* path = nullptr;
 	char findname[1024];
 	int ndirs;
 
@@ -846,7 +846,7 @@ static void FS_Dir_f (void)
 static void FS_List_f (void)
 {
 	char const *wildcard = Cmd_Argc() == 2 ? Cmd_Argv(1) : "*.*";
-	const char *filename;
+	const char* filename;
 
 	Com_Printf("Show files for '%s'\n", wildcard);
 	FS_BuildFileList(wildcard);
@@ -934,7 +934,7 @@ void FS_InitFilesystem (bool writeToHomeDir)
 	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
 	FS_AddHomeAsGameDirectory(BASEDIRNAME, writeToHomeDir);
 #ifdef COMPILE_UFO
-	const char *fsGameDir = Cvar_GetString("fs_gamedir");
+	const char* fsGameDir = Cvar_GetString("fs_gamedir");
 	if (Q_strvalid(fsGameDir)) {
 		char path[MAX_QPATH];
 		Com_sprintf(path, sizeof(path), "./%s", fsGameDir);
@@ -973,9 +973,9 @@ static listBlock_t *fs_blocklist = nullptr;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, const char *name, bool stripPath)
+static void _AddToListBlock (linkedList_t** fl, const char* name, bool stripPath)
 {
-	const char *f;
+	const char* f;
 
 	/* strip path */
 	if (stripPath)
@@ -994,7 +994,7 @@ static void _AddToListBlock (linkedList_t** fl, const char *name, bool stripPath
  * @brief Build a filelist
  * @param[in] fileList e.g. *.cfg to get all config files in the gamedir/ dir
  */
-int FS_BuildFileList (const char *fileList)
+int FS_BuildFileList (const char* fileList)
 {
 	searchpath_t *search;
 	char files[MAX_QPATH];
@@ -1034,7 +1034,7 @@ int FS_BuildFileList (const char *fileList)
 	for (search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
-			const char *ext = strrchr(files, '.');
+			const char* ext = strrchr(files, '.');
 			const pack_t *pak = search->pack;
 			size_t l = strlen(files);
 			if (!ext)
@@ -1047,7 +1047,7 @@ int FS_BuildFileList (const char *fileList)
 			/* look through all the pak file elements */
 			for (i = 0; i < pak->numfiles; i++) {
 				/* found it! */
-				const char *fileNameEntry = pak->files[i].name;
+				const char* fileNameEntry = pak->files[i].name;
 				bool matchAlsoInSubDirs = (findname[0] == '*' || !strncmp(fileNameEntry, findname, l))
 						 && (ext[0] == '*' || strstr(fileNameEntry, ext));
 				if (matchAlsoInSubDirs) {
@@ -1069,7 +1069,7 @@ int FS_BuildFileList (const char *fileList)
 			}
 		} else if (strstr(files, "**")) {
 			linkedList_t *list = nullptr;
-			const char *wildcard = strstr(files, "**");
+			const char* wildcard = strstr(files, "**");
 			const size_t l = strlen(files) - strlen(wildcard);
 
 			Q_strncpyz(findname, files, sizeof(findname));
@@ -1116,12 +1116,12 @@ int FS_BuildFileList (const char *fileList)
  * @note If you have to rebuild a file list, use @c FS_BuildFileList manually. Following calls will then use the new
  * file list.
  */
-const char *FS_NextFileFromFileList (const char *files)
+const char* FS_NextFileFromFileList (const char* files)
 {
 	static linkedList_t *listEntry = nullptr;
 	static listBlock_t *_block = nullptr;
 	listBlock_t *block;
-	const char *file = nullptr;
+	const char* file = nullptr;
 
 	/* restart the list? */
 	if (files == nullptr) {
@@ -1155,7 +1155,7 @@ const char *FS_NextFileFromFileList (const char *files)
 	}
 
 	if (listEntry) {
-		file = (const char *)listEntry->data;
+		file = (const char* )listEntry->data;
 		listEntry = listEntry->next;
 	}
 
@@ -1172,7 +1172,7 @@ const char *FS_NextFileFromFileList (const char *files)
  * @note You don't have to free the file buffer on the calling side.
  * This is done in this function, too
  */
-const char *FS_GetFileData (const char *files)
+const char* FS_GetFileData (const char* files)
 {
 	listBlock_t *block;
 	static linkedList_t *fileList = nullptr;
@@ -1221,7 +1221,7 @@ const char *FS_GetFileData (const char *files)
 
 		/* load a new file */
 		Q_strncpyz(filename, block->path, sizeof(filename));
-		strcpy(strrchr(filename, '/') + 1, (const char *)fileList->data);
+		strcpy(strrchr(filename, '/') + 1, (const char* )fileList->data);
 
 		FS_LoadFile(filename, &buffer);
 		return (const char*)buffer;
@@ -1231,7 +1231,7 @@ const char *FS_GetFileData (const char *files)
 	return nullptr;
 }
 
-char *FS_NextScriptHeader (const char *files, const char** name, const char** text)
+char* FS_NextScriptHeader (const char* files, const char** name, const char** text)
 {
 	static char lastList[MAX_QPATH];
 	static listBlock_t *lBlock;
@@ -1241,7 +1241,7 @@ char *FS_NextScriptHeader (const char *files, const char** name, const char** te
 	static char headerType[MAX_VAR];
 	static char headerName[512];
 	listBlock_t *block;
-	const char *token;
+	const char* token;
 
 	if (!text) {
 		*lastList = 0;
@@ -1316,7 +1316,7 @@ char *FS_NextScriptHeader (const char *files, const char** name, const char** te
 
 			/* load a new file */
 			Q_strncpyz(filename, lBlock->path, sizeof(filename));
-			strcpy(strrchr(filename, '/') + 1, (const char *)lFile->data);
+			strcpy(strrchr(filename, '/') + 1, (const char* )lFile->data);
 
 			FS_LoadFile(filename, &lBuffer);
 			/* skip a file that couldn't get loaded */
@@ -1340,7 +1340,7 @@ char *FS_NextScriptHeader (const char *files, const char** name, const char** te
 }
 
 /* global vars for maplisting */
-char *fs_maps[MAX_MAPS];
+char* fs_maps[MAX_MAPS];
 int fs_numInstalledMaps = -1;
 static bool fs_mapsInstalledInit = false;
 
@@ -1349,8 +1349,8 @@ static bool fs_mapsInstalledInit = false;
  */
 static int FS_MapDefSort (const void *map1, const void *map2)
 {
-	const char *mapStr1 = *(const char * const *)map1;
-	const char *mapStr2 = *(const char * const *)map2;
+	const char* mapStr1 = *(const char*  const *)map1;
+	const char* mapStr2 = *(const char*  const *)map2;
 
 	/* skip special map chars for rma and base attack */
 	if (mapStr1[0] == '+')
@@ -1371,7 +1371,7 @@ static int FS_MapDefSort (const void *map1, const void *map2)
  * @return 2 if magic number is bad
  * @return 3 if version of bsp-file is bad
  */
-static int CheckBSPFile (const char *filename)
+static int CheckBSPFile (const char* filename)
 {
 	int i;
 	int header[2];
@@ -1411,7 +1411,7 @@ void FS_GetMaps (bool reset)
 	char findname[MAX_OSPATH];
 	char filename[MAX_QPATH];
 	int status, i;
-	const char *baseMapName = nullptr;
+	const char* baseMapName = nullptr;
 	char** dirnames;
 	int ndirs;
 	searchpath_t *search;
@@ -1525,14 +1525,14 @@ void FS_GetMaps (bool reset)
 
 	fs_mapsInstalledInit = true;
 
-	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char *), FS_MapDefSort);
+	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char* ), FS_MapDefSort);
 }
 
 /**
  * @brief Can print chunks for 1024 chars into a file.
  * @note The file must already be opened and may not be a zip file handle
  */
-int FS_Printf (qFILE *f, const char *msg, ...)
+int FS_Printf (qFILE *f, const char* msg, ...)
 {
 	va_list ap;
 	int len;
@@ -1582,7 +1582,7 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 }
 
 
-int FS_WriteFile (const void *buffer, size_t len, const char *filename)
+int FS_WriteFile (const void *buffer, size_t len, const char* filename)
 {
 	qFILE f;
 	int c, lencheck;
@@ -1610,7 +1610,7 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 /**
  * @brief Return current working dir
  */
-const char *FS_GetCwd (void)
+const char* FS_GetCwd (void)
 {
 	static char buf[MAX_OSPATH];
 	Q_strncpyz(buf, Sys_Cwd(), sizeof(buf));
@@ -1623,7 +1623,7 @@ const char *FS_GetCwd (void)
  * @sa FS_CheckFile
  * @param[in] filename Full filesystem path to the file
  */
-bool FS_FileExists (const char *filename, ...)
+bool FS_FileExists (const char* filename, ...)
 {
 	char path[MAX_OSPATH];
 	va_list ap;
@@ -1684,7 +1684,7 @@ void FS_Shutdown (void)
  * @sa FS_Shutdown
  * @sa FS_InitFilesystem
  */
-void FS_RestartFilesystem (const char *gamedir)
+void FS_RestartFilesystem (const char* gamedir)
 {
 	if (gamedir != nullptr)
 		Com_Printf("restarting with gamedir set to %s\n", gamedir);
@@ -1695,7 +1695,7 @@ void FS_RestartFilesystem (const char *gamedir)
  * @brief Copy a fully specified file from one place to another
  * @todo Allow copy of pk3 file content
  */
-void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
+void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 {
 	FILE *f;
 	int len;
@@ -1736,7 +1736,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 /**
  * @sa FS_CopyFile
  */
-void FS_RemoveFile (const char *osPath)
+void FS_RemoveFile (const char* osPath)
 {
 	if (!fs_searchpaths)
 		Sys_Error("Filesystem call made without initialization");
@@ -1753,7 +1753,7 @@ void FS_RemoveFile (const char *osPath)
  * @param[in] to The filename we want after the rename
  * @param[in] relative If relative is true we have to add the FS_Gamedir path for writing
  */
-bool FS_RenameFile (const char *from, const char *to, bool relative)
+bool FS_RenameFile (const char* from, const char* to, bool relative)
 {
 	char from_buf[MAX_OSPATH];
 	char to_buf[MAX_OSPATH];

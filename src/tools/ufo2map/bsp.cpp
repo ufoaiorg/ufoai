@@ -105,7 +105,7 @@ static void ProcessSubModel (int entityNum)
  * @sa ProcessWorldModel
  * @sa ProcessSubModel
  */
-void ProcessModels (const char *filename)
+void ProcessModels (const char* filename)
 {
 	int entity_num;
 

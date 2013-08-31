@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] pos Offset from the start
  * @return position where deleted character started
  */
-int UTF8_delete_char (char *s, int pos)
+int UTF8_delete_char (char* s, int pos)
 {
 	int start = pos;
 	int next = pos;
@@ -57,7 +57,7 @@ int UTF8_delete_char (char *s, int pos)
  * @param[in] c Unicode code as 32-bit integer
  * @return Number of bytes added
  */
-int UTF8_insert_char (char *s, int n, int pos, int c)
+int UTF8_insert_char (char* s, int n, int pos, int c)
 {
 	const int utf8len = UTF8_encoded_len(c);
 	const int tail = strlen(&s[pos]) + 1;
@@ -127,12 +127,12 @@ int UTF8_next (const char** str)
 {
 	size_t len, i;
 	int cp, min;
-	const char *s = *str;
+	const char* s = *str;
 
 	if (s[0] == '\0')
 		return -1;
 
-	const unsigned char *buf = (const unsigned char*)(s);
+	const unsigned char* buf = (const unsigned char*)(s);
 
 	if (buf[0] < 0x80) {
 		len = 1;
@@ -198,7 +198,7 @@ int UTF8_encoded_len (int c)
  * @note to count the number of bytes, use strlen
  * @sa strlen
  */
-size_t UTF8_strlen (const char *str)
+size_t UTF8_strlen (const char* str)
 {
 	size_t result = 0;
 
@@ -217,7 +217,7 @@ size_t UTF8_strlen (const char *str)
  * @param[in] limit Maximum number of bytes to copy
  * @return dest pointer
  */
-char *UTF8_strncpyz (char *dest, const char *src, size_t limit)
+char* UTF8_strncpyz (char* dest, const char* src, size_t limit)
 {
 	size_t length;
 

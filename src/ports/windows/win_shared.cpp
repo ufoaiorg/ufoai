@@ -45,7 +45,7 @@ int Sys_Milliseconds (void)
 	return timeGetTime() - base;
 }
 
-void Sys_Mkdir (const char *path)
+void Sys_Mkdir (const char* path)
 {
 	_mkdir(path);
 }
@@ -117,7 +117,7 @@ void Sys_SetAffinityAndPriority (void)
 }
 #endif
 
-const char *Sys_SetLocale (const char *localeID)
+const char* Sys_SetLocale (const char* localeID)
 {
 	Sys_Setenv("LANG", localeID);
 	Sys_Setenv("LANGUAGE", localeID);
@@ -126,7 +126,7 @@ const char *Sys_SetLocale (const char *localeID)
 	return localeID;
 }
 
-const char *Sys_GetLocale (void)
+const char* Sys_GetLocale (void)
 {
 	if (getenv("LANGUAGE"))
 		return getenv("LANGUAGE");
@@ -170,7 +170,7 @@ static bool CompareAttributes (unsigned found, unsigned musthave, unsigned canth
  * @sa Sys_FindNext
  * @sa Sys_FindClose
  */
-char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
+char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canthave)
 {
 	struct _finddata_t findinfo;
 
@@ -202,7 +202,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
  * @sa Sys_FindFirst
  * @sa Sys_FindClose
  */
-char *Sys_FindNext (unsigned musthave, unsigned canthave)
+char* Sys_FindNext (unsigned musthave, unsigned canthave)
 {
 	struct _finddata_t findinfo;
 
@@ -237,7 +237,7 @@ void Sys_FindClose (void)
 
 #define MAX_FOUND_FILES 0x1000
 
-void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t** list)
+void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char* filter, linkedList_t** list)
 {
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
@@ -296,7 +296,7 @@ void Sys_Quit (void)
  * @param[in] fgColor <bitmask for foreground color. FOREGROUND_BLUE, FOREGROUND_GREEN, FOREGROUND_RED, FOREGROUND_INTENSITY and combinations (yellow = green | red).>
  * @param[in] toStdOut <true write to stdout. false == stderr.>
  */
-static void Sys_ColoredOutput (const char *text, unsigned int fgColor, bool toStdOut)
+static void Sys_ColoredOutput (const char* text, unsigned int fgColor, bool toStdOut)
 {
 	/* paint this colors (gray on black). */
 	unsigned int cliPaintColor = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
@@ -332,7 +332,7 @@ static void Sys_ColoredOutput (const char *text, unsigned int fgColor, bool toSt
 	CloseHandle(console);
 }
 
-void Sys_Error (const char *error, ...)
+void Sys_Error (const char* error, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -351,7 +351,7 @@ void Sys_Error (const char *error, ...)
 /**
  * @brief Get current user
  */
-const char *Sys_GetCurrentUser (void)
+const char* Sys_GetCurrentUser (void)
 {
 	static char s_userName[1024];
 	unsigned long size = sizeof(s_userName);
@@ -365,7 +365,7 @@ const char *Sys_GetCurrentUser (void)
 /**
  * @brief Get current working dir
  */
-char *Sys_Cwd (void)
+char* Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -379,9 +379,9 @@ char *Sys_Cwd (void)
 /**
  * @brief Normalize path (remove all \\ )
  */
-void Sys_NormPath (char *path)
+void Sys_NormPath (char* path)
 {
-	char *tmp = path;
+	char* tmp = path;
 
 	while (*tmp) {
 		if (*tmp == '\\')
@@ -398,7 +398,7 @@ void Sys_NormPath (char *path)
  * @note Use the cvar fs_usehomedir if you want to use the homedir for other
  * Windows versions, too
  */
-char *Sys_GetHomeDirectory (void)
+char* Sys_GetHomeDirectory (void)
 {
 	static char path[MAX_PATH];
 	HMODULE shfolder;
@@ -451,10 +451,10 @@ void Sys_Sleep (int milliseconds)
  * @return nonzero if succeeds
  * @note gettext FAQ recommends using both functions to set environment variable(s), so we do
  */
-int Sys_Setenv (const char *name, const char *value)
+int Sys_Setenv (const char* name, const char* value)
 {
 	const size_t n = strlen(name) + strlen(value) + 2;
-	char *str = (char *)malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
+	char* str = (char* )malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
 
 	strcat(strcat(strcpy(str, name), "="), value);
 	if (putenv(str))
@@ -467,11 +467,11 @@ void Sys_InitSignals (void)
 {
 }
 
-void Sys_Mkfifo (const char *ospath, qFILE *f)
+void Sys_Mkfifo (const char* ospath, qFILE *f)
 {
 }
 
-void Sys_OpenURL (const char *url)
+void Sys_OpenURL (const char* url)
 {
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
