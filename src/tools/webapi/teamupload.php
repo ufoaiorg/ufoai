@@ -36,6 +36,8 @@ function checkDuplicate($tmpfile, $size) {
 
 function getFreeId() {
 	$files = glob(getDir() . getUserId() . "*." . FILEEXT);
+	if (count($files) >= MAX_TEAMS)
+		error("Too many teams uploaded");
 	$file = reset($files);
 	if (false === $file)
 		return sprintf("%08d", 0);

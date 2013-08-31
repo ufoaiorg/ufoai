@@ -11,6 +11,7 @@ const TEAMDIR = '/home/users/mattn/htdocs/ufoai/teams/';
 #const TEAMDIR = '/var/www/teams/';
 const FORMNAME = "team";
 const FILEEXT = "mpt";
+const MAX_TEAMS = 10;
 # 1MB
 const MAXSIZE = 104448;
 const MPTVERSION = 4;
