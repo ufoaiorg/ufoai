@@ -310,8 +310,13 @@ component cmpMapPanel extends panel
 	}
 }
 
-component team_downloadentry extends button
-{
+component team_downloadentry extends panel {
+	{
+		pos			"240 135"
+		size		"250 34"
+	}
+
+	button download
 	{
 		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
@@ -319,13 +324,27 @@ component team_downloadentry extends button
 		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"240 135"
+		pos			"0 0"
 		size		"200 34"
 		string		""
-		onClick		{ cmd "web_downloadteam <node:this.id@integer>;" }
+		onClick		{ cmd "web_downloadteam <node:this.parent.userid@integer> <node:this.parent.id@integer>;" }
+	}
+
+	button delete
+	{
+		pos			"212 6"
+		size		"22 22"
+		icon 		"icons/garbage"
+		tooltip		"_Remove this team from the server"
+		onClick		{ cmd "web_deleteteam <node:this.parent.id@integer>;" }
 	}
 
 	data id
+	{
+		integer	0
+	}
+
+	data userid
 	{
 		integer	0
 	}
@@ -357,7 +376,7 @@ component cmpTeamSlotPanel extends panel
 		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		size		"164 34"
+		size		"140 34"
 	}
 
 	button upload
@@ -370,6 +389,13 @@ component cmpTeamSlotPanel extends panel
 		padding		8
 		font		"f_verysmall"
 		size		"28 34"
+	}
+
+	button delete
+	{
+		size		"22 22"
+		icon 		"icons/garbage"
+		tooltip		"_Delete this team"
 	}
 }
 
@@ -507,7 +533,7 @@ component cmpTeamPanel extends panel
 	 * @param <2> the file name
 	 * @param <3> the slot name
 	 * @param <4> the team members
-	 * @param <5> true if uploadable (user created file) or false if game data file
+	 * @param <5> true if user created, false if the save was delievered with the original game data
 	 */
 	confunc teamsaveslotadd
 	{
@@ -515,10 +541,13 @@ component cmpTeamPanel extends panel
 		*node:this.parent.slots.slot<1>.filename@string = "<2>"
 		*node:this.parent.slots.slot<1>.index@integer = <1>
 		*node:this.parent.slots.slot<1>.button@string = "<3> (<4>)"
+		*node:this.parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
 		*node:this.parent.slots.slot<1>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
 		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadteam <node:this.parent.index@integer>;" }
+		*node:this.parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
 		if (<5> == 0) {
 			*node:this.parent.slots.slot<1>.upload@invis = true
+			*node:this.parent.slots.slot<1>.delete@invis = true
 		}
 	}
 

@@ -119,6 +119,22 @@ void GAME_SaveTeamState_f (void)
 }
 
 /**
+ * @brief Removes a user created team
+ */
+void GAME_TeamDelete_f (void)
+{
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+		return;
+	}
+
+	const char *team = Cmd_Argv(1);
+	char buf[MAX_OSPATH];
+	Com_sprintf(buf, sizeof(buf), "%s/save/%s", FS_Gamedir(), team);
+	FS_RemoveFile(buf);
+}
+
+/**
  * @brief Reads the comments from team files
  */
 void GAME_TeamSlotComments_f (void)

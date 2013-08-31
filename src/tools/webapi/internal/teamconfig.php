@@ -43,7 +43,12 @@ function getDir() {
 
 function getId($file) {
 	preg_match_all('!\d+!', basename($file), $matches);
-	return implode(' ', $matches[0]);
+	return $matches[0][1];
+}
+
+function getUser($file) {
+	preg_match_all('!\d+!', basename($file), $matches);
+	return $matches[0][0];
 }
 
 function error($message) {

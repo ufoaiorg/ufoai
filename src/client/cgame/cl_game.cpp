@@ -1759,6 +1759,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
 	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");
 	Cmd_AddCommand("game_teamupdate", GAME_UpdateTeamMenuParameters_f, "");
+	Cmd_AddCommand("game_teamdelete", GAME_TeamDelete_f, "Removes a team");
 	Cmd_AddCommand("game_actorselect", GAME_ActorSelect_f, "Select an actor in the equipment menu");
 	Cmd_AddCommand("mn_getmaps", UI_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype");

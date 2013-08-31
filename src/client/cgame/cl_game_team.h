@@ -33,6 +33,7 @@ bool GAME_GetTeamFileName(unsigned int index, char *filename, size_t filenameLen
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);
 void GAME_TeamSlotComments_f(void);
+void GAME_TeamDelete_f(void);
 void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);

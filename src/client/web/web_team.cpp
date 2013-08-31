@@ -34,7 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *web_username;
 cvar_t *web_password;
+cvar_t *web_userid;
 cvar_t *web_teamdownloadurl;
+cvar_t *web_teamdeleteurl;
 cvar_t *web_teamuploadurl;
 cvar_t *web_teamlisturl;
 
@@ -69,10 +71,38 @@ void WEB_UploadTeam_f (void)
 		return;
 	}
 
-	if (WEB_PutFile("team", fullPath, web_teamuploadurl->string))
+	if (WEB_PutFile("team", fullPath, web_teamuploadurl->string)) {
+		UI_ExecuteConfunc("teamlist_uploadsuccessful");
 		Com_Printf("uploaded the team '%s'\n", filename);
-	else
+	} else {
+		UI_ExecuteConfunc("teamlist_uploadfailed");
 		Com_Printf("failed to upload the team from file '%s'\n", filename);
+	}
+}
+
+/**
+ * @brief Delete one of your own teams from the server
+ */
+void WEB_DeleteTeam_f (void)
+{
+	if (!WEB_CheckAuth())
+		return;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <teamid>\n", Cmd_Argv(0));
+		return;
+	}
+
+	const int teamId = atoi(Cmd_Argv(1));
+	if (teamId < 0)
+		return;
+
+	char url[576];
+	Com_sprintf(url, sizeof(url), "%s?teamid=%i", web_teamdeleteurl->string, teamId);
+	if (WEB_GetURL(url, nullptr))
+		Com_Printf("deleted the team '%i'\n", teamId);
+	else
+		Com_Printf("failed to delete the team '%i' from the server\n", teamId);
 }
 
 /**
@@ -81,28 +111,39 @@ void WEB_UploadTeam_f (void)
  */
 void WEB_DownloadTeam_f (void)
 {
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <id>\n", Cmd_Argv(0));
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <userid> <id>\n", Cmd_Argv(0));
 		return;
 	}
-	const int id = atoi(Cmd_Argv(1));
+	const char* userId = Cmd_Argv(1);
+	const int id = atoi(Cmd_Argv(2));
 	char filename[MAX_QPATH];
-	if (!GAME_TeamGetFreeFilename(filename, sizeof(filename)))
+	if (!GAME_TeamGetFreeFilename(filename, sizeof(filename))) {
+		Com_Printf("No free filenames for a new team\n");
 		return;
+	}
 	qFILE f;
 	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
-		Com_Printf("could not open the target file\n");
+		Com_Printf("Could not open the target file\n");
+		return;
+	}
+	char urlId[256];
+	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), urlId, sizeof(urlId))) {
+		Com_Printf("$id$ is missing in the url\n");
 		return;
 	}
 	char url[256];
-	Q_strncpyz(url, web_teamdownloadurl->string, sizeof(url));
-	if (!Q_strreplace(web_teamdownloadurl->string, "$id$", va("%08d", id), url, sizeof(url)))
+	if (!Q_strreplace(urlId, "$userid$", userId, url, sizeof(url))) {
+		Com_Printf("$userid$ is missing in the url\n");
 		return;
+	}
 
 	/* no login is needed here */
-	if (!HTTP_GetToFile(url, f.f))
+	if (!HTTP_GetToFile(url, f.f)) {
+		Com_Printf("team download failed from '%s'\n", url);
 		return;
+	}
 
 	if (Com_CheckDuplicateFile(filename, "save/*.mpt")) {
 		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
@@ -128,10 +169,12 @@ static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
 	struct entry_s {
 		int id;
 		char name[MAX_VAR];
+		int userId;
 	};
 
 	const value_t values[] = {
 		{"id", V_INT, offsetof(entry_s, id), MEMBER_SIZEOF(entry_s, id)},
+		{"userid", V_INT, offsetof(entry_s, userId), MEMBER_SIZEOF(entry_s, userId)},
 		{"name", V_STRING, offsetof(entry_s, name), 0},
 		{nullptr, V_NULL, 0, 0}
 	};
@@ -159,7 +202,7 @@ static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
 			if (level == 0) {
 				break;
 			}
-			UI_ExecuteConfunc("teamlist_add %i \"%s\"", entry.id, entry.name);
+			UI_ExecuteConfunc("teamlist_add %i \"%s\" %i %i", entry.id, entry.name, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
 			num++;
 			continue;
 		}

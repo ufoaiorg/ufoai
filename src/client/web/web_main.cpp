@@ -48,7 +48,8 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
 	HTTP_Encode(web_password->string, passwordEncoded, sizeof(passwordEncoded));
 	char usernameEncoded[128];
 	HTTP_Encode(web_username->string, usernameEncoded, sizeof(usernameEncoded));
-	if (!Com_sprintf(buf, sizeof(buf), "%s?username=%s&password=%s", url, usernameEncoded, passwordEncoded)) {
+	const char sep = strchr(url, '?') ? '&' : '?';
+	if (!Com_sprintf(buf, sizeof(buf), "%s%cusername=%s&password=%s", url, sep, usernameEncoded, passwordEncoded)) {
 		Com_Printf("overflow in url length: '%s'\n", buf);
 		return false;
 	}
@@ -110,15 +111,17 @@ static void WEB_AuthResponse (const char *response, void *userdata)
 {
 	if (response == nullptr) {
 		Cvar_Set("web_password", "");
+		Cvar_Set("web_userid", "0");
 		return;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "response: '%s'\n", response);
-	/* success */
-	if (Q_streq(response, "1"))
-		return;
-
-	/* failed */
-	Cvar_Set("web_password", "");
+	if (Q_streq(response, "0")) {
+		/* failed */
+		Cvar_Set("web_password", "");
+		Cvar_Set("web_userid", "0");
+	} else {
+		Cvar_Set("web_userid", "%i", atoi(response));
+	}
 }
 
 /**
@@ -142,6 +145,7 @@ bool WEB_Auth (const char *username, const char *password)
 	Cvar_Set("web_password", "%s", digest);
 	if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
 		Cvar_Set("web_password", "");
+		Cvar_Set("web_userid", "0");
 		return false;
 	}
 	/* if the password is still set, the auth was successful */
@@ -181,6 +185,7 @@ bool WEB_CheckAuth (void)
 void WEB_InitStartup (void)
 {
 	Cmd_AddCommand("web_uploadteam", WEB_UploadTeam_f, "Upload a team to the UFOAI server");
+	Cmd_AddCommand("web_deleteteam", WEB_DeleteTeam_f, "Delete one of your own teams from the server");
 	Cmd_AddCommand("web_downloadteam", WEB_DownloadTeam_f, "Download a team from the UFOAI server");
 	Cmd_AddCommand("web_listteams", WEB_ListTeams_f, "Show all teams on the UFOAI server");
 	Cmd_AddCommand("web_auth", WEB_Auth_f, "Perform the authentification against the UFOAI server");
@@ -189,11 +194,14 @@ void WEB_InitStartup (void)
 	/* if the password is a non-empty string, this means that username and password
 	 * are valid, and the authentification was successful */
 	web_password = Cvar_Get("web_password", "", CVAR_ARCHIVE, "The encrypted password for the UFOAI server.");
+	web_userid = Cvar_Get("web_userid", "0", 0, "Your userid for the UFOAI server");
 
-	web_teamdownloadurl = Cvar_Get("web_teamdownloadurl", SERVER "teams/team$id$.mpt", CVAR_ARCHIVE,
+	web_teamdownloadurl = Cvar_Get("web_teamdownloadurl", SERVER "teams/$userid$-team$id$.mpt", CVAR_ARCHIVE,
 			"The url to download a shared team from. Use $id$ as a placeholder for the team id.");
 	web_teamlisturl = Cvar_Get("web_teamlisturl", SERVER "api/teamlist.php", CVAR_ARCHIVE,
 			"The url to get the team list from.");
+	web_teamdeleteurl = Cvar_Get("web_teamdeleteurl", SERVER "api/teamdelete.php", CVAR_ARCHIVE,
+			"The url to call if you want to delete one of your own teams again.");
 	web_teamuploadurl = Cvar_Get("web_teamuploadurl", SERVER "api/teamupload.php", CVAR_ARCHIVE,
 			"The url to upload a team to.");
 	web_authurl = Cvar_Get("web_authurl", SERVER "api/auth.php", CVAR_ARCHIVE,

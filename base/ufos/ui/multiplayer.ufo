@@ -117,14 +117,22 @@ window team_download extends abstract_multiplayer
 
 	/**
 	 * @brief Add a server stored team to the list of downloadable teams
-	 * @param <1> The download id
+	 * @param <1> The team id
 	 * @param <2> The name
+	 * @param <3> The user id of the owner
+	 * @param <4> Own team = 1, other users team = 0
 	 */
 	confunc teamlist_add
 	{
-		call *node:root.downloadable@createChild("download<1>", "team_downloadentry")
-		*node:root.downloadable.download<1>@string = <2>
-		*node:root.downloadable.download<1>.id@integer = <1>
+		call *node:root.downloadable@createChild("download<3><1>", "team_downloadentry")
+		*node:root.downloadable.download<3><1>.download@string = "<2> (<3>)"
+		*node:root.downloadable.download<3><1>.id@integer = <1>
+		*node:root.downloadable.download<3><1>.userid@integer = <3>
+		if ( <4> == 1 ) {
+			*node:root.downloadable.download<3><1>.delete@invis = false
+		} else {
+			*node:root.downloadable.download<3><1>.delete@invis = true
+		}
 	}
 
 	/**
@@ -137,6 +145,14 @@ window team_download extends abstract_multiplayer
 	}
 
 	confunc teamlist_downloadduplicate
+	{
+	}
+
+	confunc teamlist_uploadsuccessful
+	{
+	}
+
+	confunc teamlist_uploadfailed
 	{
 	}
 

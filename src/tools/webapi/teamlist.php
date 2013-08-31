@@ -9,11 +9,12 @@ $teams = glob($dir);
 echo "{";
 foreach($teams as $team) {
 	$id = getId($team);
+	$userId = getUser($team);
 	$data = getData($team);
 	# the stored soldiers in this file
 	$count = $data["soldiercount"];
 	# might contain " - replace with '
 	$name = str_replace("\"", "'", $data["name"]);
-	echo "{id \"$id\" soldiercount \"$count\" name \"$name\"}";
+	echo "{id \"$id\" userid \"$userId\" soldiercount \"$count\" name \"$name\"}";
 }
 echo "}";

@@ -9,12 +9,17 @@ function getUsername() {
 	return $_REQUEST['username'];
 }
 
+function getUserId() {
+	global $user_info;
+	return $user_info["id"];
+}
+
 function auth() {
 	$u = getUsername();
 	$p = $_REQUEST['password'];
 	if (!isset($u) || !trim($u) || !isset($p) || !trim($p)) {
 		return false;
 	}
-	return smfapi_authenticate(trim($u), trim($u), true);
+	return smfapi_authenticate(trim($u), trim($p), true);
 }
 

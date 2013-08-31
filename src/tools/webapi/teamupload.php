@@ -4,7 +4,7 @@ include "internal/auth.php";
 
 function move($tmpfile) {
 	$id = getFreeId();
-	$uploadfile = getDir() . "team" . $id . "." . FILEEXT;
+	$uploadfile = getDir() . getUserId() . "-team" . $id . "." . FILEEXT;
 	if (!move_uploaded_file($tmpfile, $uploadfile)) {
 		unlink($tmpfile);
 		error("could not move the file");
@@ -35,7 +35,7 @@ function checkDuplicate($tmpfile, $size) {
 }
 
 function getFreeId() {
-	$files = scandir(getDir(), 1);
+	$files = glob(getDir() . getUserId() . "*." . FILEEXT);
 	$file = reset($files);
 	if (false === $file)
 		return sprintf("%08d", 0);
