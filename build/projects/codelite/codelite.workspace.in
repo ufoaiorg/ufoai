@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="%%NAME%%" Database="./%%NAME%%.tags">
+	<Project Name="%%NAME%%" Path="%%NAME%%.project" Active="yes" />
+	<BuildMatrix>
+		<WorkspaceConfiguration Name="%%NAME%%" Selected="yes">
+			<Project Name="%%NAME%%" ConfigName=""/>
+		</WorkspaceConfiguration>
+	</BuildMatrix>
+</CodeLite_Workspace>

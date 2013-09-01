@@ -20,6 +20,8 @@ CC          ?= gcc
 CXX         ?= g++
 Q           ?= @
 BUILDDIR    ?= $(MODE)-$(TARGET_OS)-$(TARGET_ARCH)
+PROJECTSDIR ?= build/projects
+PROJECTS    := $(sort $(patsubst $(PROJECTSDIR)/%.mk,%,$(wildcard $(PROJECTSDIR)/*.mk)))
 SRCDIR      := src
 TARGETS_TMP := $(sort $(patsubst build/modules/%.mk,%,$(wildcard build/modules/*.mk)))
 TARGETS     := $(filter-out $(foreach TARGET,$(TARGETS_TMP),$(if $($(TARGET)_DISABLE),$(TARGET),)),$(TARGETS_TMP))
@@ -61,6 +63,10 @@ CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
 
 ASSEMBLE_OBJECTS = $(patsubst %, $(BUILDDIR)/$(1)/%.o, $(filter %.c %.cpp %.rc, $($(1)_SRCS)))
 FILTER_OUT = $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v)))
+
+define INCLUDE_PROJECT_RULE
+include $(PROJECTSDIR)/$(1).mk
+endef
 
 define INCLUDE_RULE
 include build/modules/$(1).mk
@@ -157,6 +163,8 @@ endif
 endif
 endef
 $(foreach TARGET,$(TARGETS),$(eval $(call BUILD_RULE,$(TARGET))))
+
+$(foreach PROJECT,$(PROJECTS),$(eval $(call INCLUDE_PROJECT_RULE,$(PROJECT))))
 
 .PHONY: run-configure
 run-configure:

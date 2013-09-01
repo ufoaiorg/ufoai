@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="%%NAME%%">
+%%COMPILATION_UNITS%%
+	<Settings Type="Executable">
+		<Configuration Name="%%NAME%%" CompilerType="gnu c++" DebuggerType="GNU gdb debugger" Type="Executable">
+			<General OutputFile="%%NAME%%" IntermediateDirectory="%%TARGET%%\%%NAME%%" Command="./%%NAME%%" CommandArguments="" WorkingDirectory="." PauseExecWhenProcTerminates="yes"/>
+			<Compiler Required="yes" Options="">
+				<!--<IncludePath Value="xxx"/>-->
+				<!--<Preprocessor Value="xxx"/>-->
+			</Compiler>
+			<Linker Required="yes" Options="">
+				<!--<LibraryPath Value="xxx" />-->
+				<!--<Library Value="xxx" />-->
+			</Linker>
+			<!--
+			<ResourceCompiler Required="no" Options=""/>
+			-->
+			<!--
+			<ResourceCompiler Required="yes" Options="">
+				<IncludePath Value="src/common/ports/project.rc"/>
+			</ResourceCompiler>
+			-->
+			<PreBuild>
+			</PreBuild>
+			<PostBuild>
+			</PostBuild>
+			<CustomBuild Enabled="no">
+				<CleanCommand></CleanCommand>
+				<BuildCommand></BuildCommand>
+				<SingleFileCommand></SingleFileCommand>
+				<MakefileGenerationCommand></MakefileGenerationCommand>
+				<ThirdPartyToolName>None</ThirdPartyToolName>
+				<WorkingDirectory></WorkingDirectory>
+			</CustomBuild>
+			<AdditionalRules>
+				<CustomPostBuild></CustomPostBuild>
+				<CustomPreBuild></CustomPreBuild>
+			</AdditionalRules>
+		</Configuration>
+	</Settings>
+</CodeLite_Project>
