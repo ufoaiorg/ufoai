@@ -252,13 +252,6 @@ EXTENSION_MAPPING      =
 
 MARKDOWN_SUPPORT       = YES
 
-# When enabled doxygen tries to link words that correspond to documented classes,
-# or namespaces to their corresponding documentation. Such a link can be
-# prevented in individual cases by by putting a % sign in front of the word or
-# globally by setting AUTOLINK_SUPPORT to NO.
-
-AUTOLINK_SUPPORT       = YES
-
 # If you use STL classes (i.e. std::string, std::vector, etc.) but do not want
 # to include (a tag file for) the STL sources as input, then you should
 # set this tag to YES in order to let doxygen match functions declarations and
@@ -789,13 +782,6 @@ FILTER_SOURCE_FILES    = NO
 
 FILTER_SOURCE_PATTERNS =
 
-# If the USE_MD_FILE_AS_MAINPAGE tag refers to the name of a markdown file that
-# is part of the input, its contents will be placed on the main page (index.html).
-# This can be useful if you have a project on for instance GitHub and want reuse
-# the introduction page also for the doxygen output.
-
-USE_MDFILE_AS_MAINPAGE =
-
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
@@ -923,16 +909,6 @@ HTML_FOOTER            =
 # tag will in the future become obsolete.
 
 HTML_STYLESHEET        =
-
-# The HTML_EXTRA_STYLESHEET tag can be used to specify an additional
-# user-defined cascading style sheet that is included after the standard
-# style sheets created by doxygen. Using this option one can overrule
-# certain style aspects. This is preferred over using HTML_STYLESHEET
-# since it does not replace the standard style sheet and is therefor more
-# robust against future updates. Doxygen will copy the style sheet file to
-# the output directory.
-
-HTML_EXTRA_STYLESHEET  =
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
