@@ -1404,20 +1404,20 @@ window multiplayer_wait extends levelbuttons
 		{
 			string		"_Max. soldiers per team:"
 			tooltip		"_Sets the max allowed soldiers per team"
-			pos			"25 70"
+			pos			"25 60"
 			size		"250 20"
 		}
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"280 70"
+			pos			"280 60"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
-			pos			"325 70"
+			pos			"325 60"
 			min			1
 			max			12
 			delta		1
@@ -1427,23 +1427,46 @@ window multiplayer_wait extends levelbuttons
 		{
 			string		"_Max. soldiers per player:"
 			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-			pos			"25 95"
+			pos			"25 85"
 			size		"250 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"280 95"
+			pos			"280 85"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		spinner_blue maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
-			pos			"325 95"
+			pos			"325 85"
 			min			1
 			max			12
 			delta		1
+		}
+
+		string roundlimit_str
+		{
+			string		"_Round time limit:"
+			tooltip		"_Sets the max allowed soldiers per team"
+			pos			"25 110"
+			size		"250 20"
+		}
+		string roundtimelimit_value
+		{
+			string		*cvar:sv_roundtimelimit
+			pos			"280 110"
+			size		"40 20"
+			contentalign	ALIGN_UC
+		}
+		spinner_blue roundtimelimit_change
+		{
+			current		*cvar:sv_roundtimelimit
+			pos			"325 110"
+			min			30
+			max			500
+			delta		5
 		}
 
 		button button_force
@@ -1451,7 +1474,7 @@ window multiplayer_wait extends levelbuttons
 			string		"_Force start"
 			tooltip		"_Launch the game before all teams are ready"
 			background		"ui/button_blue"
-			pos			"25 135"
+			pos			"25 145"
 			size		"150 30"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"

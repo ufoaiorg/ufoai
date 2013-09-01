@@ -35,6 +35,7 @@ teamData_t teamData;
 cvar_t *rcon_client_password;
 cvar_t *cl_maxsoldiersperteam;
 cvar_t *cl_maxsoldiersperplayer;
+cvar_t *cl_roundtimelimit;
 static cvar_t *rcon_address;
 static cvar_t *info_password;
 
@@ -291,6 +292,7 @@ void GAME_MP_CallbacksInit (const cgame_import_t *import)
 	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, nullptr);
 	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
 	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
+	cl_roundtimelimit = cgi->Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 	cgi->Cmd_AddCommand("mp_selectteam_init", GAME_MP_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	cgi->Cmd_AddCommand("mp_init_ui", GAME_MP_InitUI_f, nullptr);
 	cgi->Cmd_AddCommand("teamnum_dec", GAME_MP_TeamNum_f, "Decrease the preferred teamnum");

@@ -257,17 +257,14 @@ static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 		}
 	}
 
-	if (cl_maxsoldiersperteam->modified) {
-		cl_maxsoldiersperteam->modified = false;
-		if (!cgi->Com_ServerState()) {
-			cgi->Cmd_ExecuteString(SV_CMD_RCON " set %s %s", cl_maxsoldiersperteam->name, cl_maxsoldiersperteam->string);
+	cvar_t *cvars[] = {cl_maxsoldiersperteam, cl_maxsoldiersperplayer, cl_roundtimelimit};
+	for (int i = 0; i < lengthof(cvars); i++) {
+		if (!cvars[i]->modified) {
+			continue;
 		}
-	}
-
-	if (cl_maxsoldiersperplayer->modified) {
-		cl_maxsoldiersperplayer->modified = false;
+		cvars[i]->modified = false;
 		if (!cgi->Com_ServerState()) {
-			cgi->Cmd_ExecuteString(SV_CMD_RCON " set %s %s", cl_maxsoldiersperplayer->name, cl_maxsoldiersperplayer->string);
+			cgi->Cmd_ExecuteString(SV_CMD_RCON " set %s %s", cvars[i]->name, cvars[i]->string);
 		}
 	}
 }
