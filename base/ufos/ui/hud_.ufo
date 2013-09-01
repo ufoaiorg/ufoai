@@ -615,7 +615,7 @@ window hud_chat
 					if ( *cvar:mn_chatselect eq "chat" ) {
 						*node:parent.ircscreen@invis = true
 						*node:parent.chatscreen@invis = false
-						cmd "hud_activate_chat_textentry;"
+						call *node:root.hud_activate_chat_textentry
 					}
 				}
 			}
@@ -797,23 +797,23 @@ window hud_chat
 							cmd "say \"<cvar:mn_entry>\";"
 						}
 						*cvar:mn_entry = ""
-						cmd "hud_activate_chat_textentry;"
+						call *node:root.hud_activate_chat_textentry
 					}
 				}
 			}
 		}
 	}
 
-	confunc hud_activate_chat_textentry {
+	func hud_activate_chat_textentry {
 		call *node:root.allchats.chatscreen.input.say@edit
 	}
 
-	confunc hud_activate_irc_textentry {
+	func hud_activate_irc_textentry {
 		call *node:root.allchats.ircscreen.input.say@edit
 	}
 
 	func onWindowOpened {
 		*cvar:mn_chatselect = "chat"
-		cmd "hud_activate_chat_textentry;"
+		call *node:root.hud_activate_chat_textentry
 	}
 }
