@@ -385,12 +385,10 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 
 void *LIST_GetRandom (linkedList_t* list)
 {
-	int elements, element;
-
-	if (LIST_IsEmpty(list))
+	const int elements = LIST_Count(list);
+	if (elements == 0)
 		return nullptr;
 
-	elements = LIST_Count(list);
-	element = rand() % elements;
+	const int element = rand() % elements;
 	return LIST_GetByIdx(list, element);
 }

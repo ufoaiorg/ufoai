@@ -222,6 +222,7 @@ static void testLinkedList (void)
 	CU_ASSERT_EQUAL(LIST_Count(list2), 0);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
 	LIST_Delete(&list);
+	CU_ASSERT_PTR_NULL(LIST_GetRandom(list2));
 
 	LIST_AddString(&list, "test6");
 	LIST_AddString(&list, "test2");
@@ -231,6 +232,7 @@ static void testLinkedList (void)
 	LIST_AddString(&list, "test4");
 	LIST_AddString(&list, "test7");
 	CU_ASSERT_EQUAL(LIST_Count(list), 7);
+	CU_ASSERT_PTR_NOT_NULL(LIST_GetRandom(list));
 
 	LIST_Sort(&list, testListSorter, NULL);
 	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 0), "test1");
