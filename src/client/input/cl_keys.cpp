@@ -845,8 +845,6 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 	if (key >= K_KEY_SIZE)
 		return;
 
-	/* any key (except F1-F12) during the sequence mode will bring up the menu */
-
 	if (cls.keyDest == key_game) {
 		if (down && UI_KeyPressed(key, unicode))
 			return;
