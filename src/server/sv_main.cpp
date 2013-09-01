@@ -232,7 +232,7 @@ static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burs
 				bucket->next->prev = bucket->prev;
 			}
 
-			OBJZERO(bucket);
+			OBJZERO(*bucket);
 		}
 
 		if (Q_strnull(bucket->node)) {
