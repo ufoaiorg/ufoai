@@ -43,7 +43,7 @@ void Cmd_ForwardToServer(void);
 
 typedef struct cmd_alias_s {
 	char name[MAX_ALIAS_NAME];
-	char *value;
+	char* value;
 	bool archive;	/**< store the alias and reload it on the next game start */
 	struct cmd_alias_s *hash_next;
 	struct cmd_alias_s *next;
@@ -120,7 +120,7 @@ void Cbuf_Shutdown (void)
  * @brief Adds command text at the end of the buffer
  * @note Normally when a command is generate from the console or keyBindings, it will be added to the end of the command buffer.
  */
-void Cbuf_AddText (const char *format, ...)
+void Cbuf_AddText (const char* format, ...)
 {
 	va_list argptr;
 	static char text[CMD_BUFFER_SIZE];
@@ -151,9 +151,9 @@ void Cbuf_AddText (const char *format, ...)
  * @note Adds a @c \\n to the text
  * @todo actually change the command buffer to do less copying
  */
-void Cbuf_InsertText (const char *text)
+void Cbuf_InsertText (const char* text)
 {
-	char *temp;
+	char* temp;
 	int templen;
 
 	if (Q_strnull(text))
@@ -219,7 +219,7 @@ void Cbuf_Execute (void)
 
 	while (cmd_text.cursize) {
 		/* find a \n or ; line break */
-		char *text = (char *) cmd_text.data;
+		char* text = (char* ) cmd_text.data;
 		int quotes = 0;
 
 		for (i = 0; i < cmd_text.cursize; i++) {
@@ -274,7 +274,7 @@ void Cbuf_AddEarlyCommands (bool clear)
 {
 	const int argc = Com_Argc();
 	for (int i = 1; i < argc; i++) {
-		const char *s = Com_Argv(i);
+		const char* s = Com_Argv(i);
 		if (!Q_streq(s, "+set"))
 			continue;
 		Cbuf_AddText("set %s %s\n", Com_Argv(i + 1), Com_Argv(i + 2));
@@ -304,7 +304,7 @@ bool Cbuf_AddLateCommands (void)
 	if (!s)
 		return false;
 
-	char *text = Mem_AllocTypeN(char, s + 1);
+	char* text = Mem_AllocTypeN(char, s + 1);
 	for (int i = 1; i < argc; i++) {
 		Q_strcat(text, s, "%s", Com_Argv(i));
 		if (i != argc - 1)
@@ -312,7 +312,7 @@ bool Cbuf_AddLateCommands (void)
 	}
 
 	/* pull out the commands */
-	char *build = Mem_AllocTypeN(char, s + 1);
+	char* build = Mem_AllocTypeN(char, s + 1);
 
 	for (int i = 0; i < s - 1; i++) {
 		if (text[i] != '+')
@@ -350,7 +350,7 @@ SCRIPT COMMANDS
 static void Cmd_Exec_f (void)
 {
 	byte *f;
-	char *f2;
+	char* f2;
 	int len;
 
 	if (Cmd_Argc() != 2) {
@@ -400,7 +400,7 @@ static void Cmd_Alias_f (void)
 	size_t len;
 	unsigned int hash;
 	int i, c;
-	const char *s;
+	const char* s;
 
 	if (Cmd_Argc() == 1) {
 		Com_Printf("Current alias commands:\n");
@@ -487,15 +487,15 @@ COMMAND EXECUTION
 typedef struct cmd_function_s {
 	struct cmd_function_s *next;
 	struct cmd_function_s *hash_next;
-	const char *name;
-	const char *description;
+	const char* name;
+	const char* description;
 	xcommand_t function;
-	int (*completeParam) (const char *partial, const char** match);
+	int (*completeParam) (const char* partial, const char** match);
 	void *userdata;
 } cmd_function_t;
 
 static int cmd_argc;
-static char *cmd_argv[MAX_STRING_TOKENS];
+static char* cmd_argv[MAX_STRING_TOKENS];
 static char cmd_args[MAX_STRING_CHARS];
 static void *cmd_userdata;
 
@@ -519,7 +519,7 @@ int Cmd_Argc (void)
  * @return The argument from @c cmd_argv
  * @sa Cmd_Argc
  */
-const char *Cmd_Argv (int arg)
+const char* Cmd_Argv (int arg)
 {
 	if (arg >= cmd_argc)
 		return "";
@@ -529,7 +529,7 @@ const char *Cmd_Argv (int arg)
 /**
  * @brief Returns a single string containing argv(1) to argv(argc()-1)
  */
-const char *Cmd_Args (void)
+const char* Cmd_Args (void)
 {
 	return cmd_args;
 }
@@ -569,9 +569,9 @@ void Cmd_BufClear (void)
  * @param[in] text The text to parse and tokenize
  * @param[in] macroExpand expand cvar string with their values
  */
-void Cmd_TokenizeString (const char *text, bool macroExpand)
+void Cmd_TokenizeString (const char* text, bool macroExpand)
 {
-	const char *expanded;
+	const char* expanded;
 
 	Cmd_BufClear();
 
@@ -602,7 +602,7 @@ void Cmd_TokenizeString (const char *text, bool macroExpand)
 			Com_Chop(cmd_args);
 		}
 
-		const char *com_token = Com_Parse(&text);
+		const char* com_token = Com_Parse(&text);
 		if (!text)
 			return;
 
@@ -625,10 +625,10 @@ void Cmd_TokenizeString (const char *text, bool macroExpand)
  * @note never returns a nullptr pointer
  * @todo - search alias, too
  */
-const char *Cmd_GetCommandDesc (const char *cmd_name)
+const char* Cmd_GetCommandDesc (const char* cmd_name)
 {
 	cmd_function_t *cmd;
-	char *sep = nullptr;
+	char* sep = nullptr;
 	unsigned int hash;
 	char searchName[MAX_VAR];
 
@@ -664,7 +664,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 		*match = matchString;
 	} else {
 		/* Subsequent match, determine common prefix with previous match(es). */
-		char *      dst = matchString;
+		char*       dst = matchString;
 		char const* src = candidate;
 		while (*dst == *src) {
 			++dst;
@@ -682,7 +682,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  */
-void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char** match))
+void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const char* partial, const char** match))
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -708,7 +708,7 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_AddUserdata
  */
-void *Cmd_GetUserdata (const char *cmd_name)
+void *Cmd_GetUserdata (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -737,7 +737,7 @@ void *Cmd_GetUserdata (const char *cmd_name)
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_GetUserdata
  */
-void Cmd_AddUserdata (const char *cmd_name, void *userdata)
+void Cmd_AddUserdata (const char* cmd_name, void *userdata)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -762,7 +762,7 @@ void Cmd_AddUserdata (const char *cmd_name, void *userdata)
  * completion or the command list.
  * @sa Cmd_RemoveCommand
  */
-void Cmd_AddCommand (const char *cmdName, xcommand_t function, const char *desc)
+void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 {
 	if (!Q_strvalid(cmdName))
 		return;
@@ -797,7 +797,7 @@ void Cmd_AddCommand (const char *cmdName, xcommand_t function, const char *desc)
  * @param[in] cmd_name The script interface function name to remove
  * @sa Cmd_AddCommand
  */
-void Cmd_RemoveCommand (const char *cmd_name)
+void Cmd_RemoveCommand (const char* cmd_name)
 {
 	cmd_function_t *cmd, **back;
 	unsigned int hash;
@@ -837,7 +837,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
  * @brief Checks whether a function exists already
  * @param[in] cmd_name The script interface function name to search for
  */
-bool Cmd_Exists (const char *cmd_name)
+bool Cmd_Exists (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -859,7 +859,7 @@ bool Cmd_Exists (const char *cmd_name)
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char** match)
+int Cmd_CompleteCommandParameters (const char* command, const char* partial, const char** match)
 {
 	const cmd_function_t *cmd;
 	unsigned int hash;
@@ -883,7 +883,7 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-int Cmd_CompleteCommand (const char *partial, const char** match)
+int Cmd_CompleteCommand (const char* partial, const char** match)
 {
 	if (partial[0] == '\0')
 		return 0;
@@ -911,7 +911,7 @@ int Cmd_CompleteCommand (const char *partial, const char** match)
 	return n;
 }
 
-void Cmd_vExecuteString (const char *fmt, va_list ap)
+void Cmd_vExecuteString (const char* fmt, va_list ap)
 {
 	char text[1024];
 
@@ -919,7 +919,7 @@ void Cmd_vExecuteString (const char *fmt, va_list ap)
 
 	const cmd_function_t *cmd;
 	const cmd_alias_t *a;
-	const char *str;
+	const char* str;
 	unsigned int hash;
 
 	Com_DPrintf(DEBUG_COMMANDS, "ExecuteString: '%s'\n", text);
@@ -972,7 +972,7 @@ void Cmd_vExecuteString (const char *fmt, va_list ap)
  * @brief A complete command line has been parsed, so try to execute it
  * @todo lookupnoadd the token to speed search?
  */
-void Cmd_ExecuteString (const char *text, ...)
+void Cmd_ExecuteString (const char* text, ...)
 {
 	va_list ap;
 
@@ -989,7 +989,7 @@ static void Cmd_List_f (void)
 	const cmd_function_t *cmd;
 	const cmd_alias_t *alias;
 	int i = 0, j = 0, c, l = 0;
-	const char *token = nullptr;
+	const char* token = nullptr;
 
 	c = Cmd_Argc();
 
@@ -1024,7 +1024,7 @@ static void Cmd_List_f (void)
  * @brief Autocomplete function for exec command
  * @sa Cmd_AddParamCompleteFunction
  */
-static int Cmd_CompleteExecCommand (const char *partial, const char** match)
+static int Cmd_CompleteExecCommand (const char* partial, const char** match)
 {
 	int n = 0;
 	while (char const* filename = FS_NextFileFromFileList("*.cfg")) {
@@ -1064,7 +1064,7 @@ static void Cmd_Test_f (void)
 void Cmd_PrintDebugCommands (void)
 {
 	const cmd_function_t *cmd;
-	const char *otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
+	const char* otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
 	int num = lengthof(otherCommands);
 
 	Com_Printf("Debug commands:\n");
@@ -1075,7 +1075,7 @@ void Cmd_PrintDebugCommands (void)
 
 	Com_Printf("Other useful commands:\n");
 	while (num) {
-		const char *desc = Cmd_GetCommandDesc(otherCommands[num - 1]);
+		const char* desc = Cmd_GetCommandDesc(otherCommands[num - 1]);
 		Com_Printf(" * %s\n   %s\n", otherCommands[num - 1], desc);
 		num--;
 	}

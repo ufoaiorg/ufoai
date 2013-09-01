@@ -139,7 +139,7 @@ static void EmitFace (const face_t *f)
  */
 static int EmitDrawNode_r (node_t *node)
 {
-	const char *side[2] = {"front", "back"};
+	const char* side[2] = {"front", "back"};
 	dBspNode_t *n;
 	const face_t *f;
 	int i;
@@ -338,7 +338,7 @@ void BeginBSPFile (void)
  * @brief Finishes a new bsp and writes to disk
  * @sa BeginBSPFile
  */
-void EndBSPFile (const char *filename)
+void EndBSPFile (const char* filename)
 {
 	EmitBrushes();
 	EmitPlanes();

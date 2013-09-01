@@ -224,7 +224,7 @@ static bool Check_SurfProps (const int flags, const side_t *s)
 {
 	const ptrdiff_t indexSide = s - brushsides;
 	const brush_texture_t *tex = &side_brushtextures[indexSide];
-	const char *texname = tex->name;
+	const char* texname = tex->name;
 	assert(flags & (SURF_NODRAW | MASK_CLIP));
 
 	if ((flags & SURF_NODRAW) && Q_streq(texname, "tex_common/nodraw"))
@@ -254,7 +254,7 @@ static bool Check_SurfProps (const int flags, const side_t *s)
 static bool Check_IsOptimisable (const mapbrush_t *b)
 {
 	const entity_t *e = &entities[b->entitynum];
-	const char *name = ValueForKey(e, "classname");
+	const char* name = ValueForKey(e, "classname");
 	int i, numNodraws = 0;
 
 	if (!Q_streq(name, "func_group") && !Q_streq(name, "worldspawn"))
@@ -1461,13 +1461,13 @@ void CheckLevelFlags (void)
  */
 void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
 {
-	const char *texname = tex->name;
+	const char* texname = tex->name;
 	const int initSurf = tex->surfaceFlags;
 	const int initCont = side->contentFlags;
 
 	/* see discussion at Check_SetNodraw */
 	if (!config.fixMap && !config.performMapCheck) {
-		const char *flagsDescription = nullptr;
+		const char* flagsDescription = nullptr;
 		if (Q_streq(texname, "tex_common/actorclip")) {
 			side->contentFlags |= CONTENTS_ACTORCLIP;
 			flagsDescription = "CONTENTS_ACTORCLIP";

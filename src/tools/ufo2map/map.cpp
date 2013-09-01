@@ -500,7 +500,7 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t *s)
+static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t *s)
 {
 	qFILE f;
 	bool terrainByTexture = false;
@@ -572,7 +572,7 @@ static int footstepsCnt = 0;
  * @sa SV_GetFootstepSound
  * @sa Com_GetTerrainType
  */
-static void GenerateFootstepList (const char *filename, int mipTexIndex)
+static void GenerateFootstepList (const char* filename, int mipTexIndex)
 {
 	qFILE f;
 	char fileBase[MAX_OSPATH];
@@ -609,7 +609,7 @@ static void GenerateFootstepList (const char *filename, int mipTexIndex)
  * @param[in] mapent The entity the brush to parse belongs to
  * @param[in] filename The map filename, used to derive the name for the footsteps file
  */
-static void ParseBrush (entity_t *mapent, const char *filename)
+static void ParseBrush (entity_t *mapent, const char* filename)
 {
 	mapbrush_t *b;
 	int i, j, k, m;
@@ -905,7 +905,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
  * @param[in] entName
  * @return true if the name of the entity implies, that this is an inline model
  */
-static inline bool IsInlineModelEntity (const char *entName)
+static inline bool IsInlineModelEntity (const char* entName)
 {
 	const bool inlineModelEntity = (Q_streq("func_breakable", entName)
 			|| Q_streq("func_door", entName)
@@ -921,12 +921,12 @@ static inline bool IsInlineModelEntity (const char *entName)
  * @param[in] target The targetname value that the entity should have that we are
  * looking for
  */
-entity_t *FindTargetEntity (const char *target)
+entity_t *FindTargetEntity (const char* target)
 {
 	int i;
 
 	for (i = 0; i < num_entities; i++) {
-		const char *n = ValueForKey(&entities[i], "targetname");
+		const char* n = ValueForKey(&entities[i], "targetname");
 		if (Q_streq(n, target))
 			return &entities[i];
 	}
@@ -939,10 +939,10 @@ entity_t *FindTargetEntity (const char *target)
  * @sa ParseBrush
  * @param[in] filename The map filename
  */
-static bool ParseMapEntity (const char *filename, const char *entityString)
+static bool ParseMapEntity (const char* filename, const char* entityString)
 {
 	entity_t *mapent;
-	const char *entName;
+	const char* entName;
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
@@ -999,16 +999,16 @@ static bool ParseMapEntity (const char *filename, const char *entityString)
 		if (worldspawnCount > 1)
 			Com_Printf("Warning: more than one %s in one map\n", entName);
 
-		const char *text = entityString;
+		const char* text = entityString;
 		do {
-			const char *token = Com_Parse(&text);
+			const char* token = Com_Parse(&text);
 			if (Q_strnull(token))
 				break;
-			const char *key = Mem_StrDup(token);
+			const char* key = Mem_StrDup(token);
 			token = Com_Parse(&text);
 			if (Q_strnull(token))
 				break;
-			const char *value = Mem_StrDup(token);
+			const char* value = Mem_StrDup(token);
 			epair_t *e = AddEpair(key, value, num_entities);
 			e->next = mapent->epairs;
 			mapent->epairs = e;
@@ -1064,7 +1064,7 @@ static void WriteMapBrush (const mapbrush_t *brush, const int j, qFILE *f)
  * @sa LoadMapFile
  * @sa FixErrors
  */
-void WriteMapFile (const char *filename)
+void WriteMapFile (const char* filename)
 {
 	qFILE f;
 	int i, j, jc;
@@ -1129,11 +1129,11 @@ void WriteMapFile (const char *filename)
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * from another ump file (no assemblies)
  */
-static void ParseUMP (const char *name, char *entityString, bool inherit)
+static void ParseUMP (const char* name, char* entityString, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
-	const char *text;
+	const char* text;
 
 	*entityString = '\0';
 
@@ -1146,7 +1146,7 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 	/* parse it */
 	text = (const char*)buf;
 	do {
-		const char *token = Com_Parse(&text);
+		const char* token = Com_Parse(&text);
 		if (!text)
 			break;
 
@@ -1157,7 +1157,7 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 			else
 				ParseUMP(token, entityString, true);
 		} else if (Q_streq(token, "worldspawn")) {
-			const char *start = nullptr;
+			const char* start = nullptr;
 			const int length = Com_GetBlock(&text, &start);
 			if (length == -1) {
 				Com_Printf("ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
@@ -1186,15 +1186,15 @@ static void ParseUMP (const char *name, char *entityString, bool inherit)
 /**
  * @brief The contract is that the directory name is equal to the base of the ump filename
  */
-static const char *GetUMPName (const char *mapFilename)
+static const char* GetUMPName (const char* mapFilename)
 {
 	static char name[MAX_QPATH];
-	const char *filename = Com_SkipPath(mapFilename);
+	const char* filename = Com_SkipPath(mapFilename);
 	/* if we are in no subdir, we don't have any ump */
 	if (filename == nullptr)
 		return nullptr;
 
-	const char *mapsDir = "maps/";
+	const char* mapsDir = "maps/";
 	const int lMaps = strlen(mapsDir);
 	const int l = strlen(filename);
 	const int targetLength = strlen(mapFilename) - lMaps - l;
@@ -1209,7 +1209,7 @@ static const char *GetUMPName (const char *mapFilename)
  * @sa WriteMapFile
  * @sa ParseMapEntity
  */
-void LoadMapFile (const char *filename)
+void LoadMapFile (const char* filename)
 {
 	int i, subdivide;
 
@@ -1234,7 +1234,7 @@ void LoadMapFile (const char *filename)
 	mapTiles.numTiles = 1;
 
 	char entityString[MAX_TOKEN_CHARS];
-	const char *ump = GetUMPName(filename);
+	const char* ump = GetUMPName(filename);
 	if (ump != nullptr)
 		ParseUMP(ump, entityString, false);
 

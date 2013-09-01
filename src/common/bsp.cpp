@@ -475,7 +475,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char *name, const lump_t *lump, const int sX, const int sY, const int sZ)
+static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *base, const char* name, const lump_t *lump, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	Routing *tempMap = static_cast<Routing *>(Mem_Alloc(sizeof(Routing)));
@@ -593,7 +593,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte *bas
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapData_t *mapData, const byte *base, const lump_t *l, const vec3_t shift)
 {
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given (entitystring: '%s')", entityString ? entityString : "none");
@@ -605,11 +605,11 @@ static void CMod_LoadEntityString (MapTile &tile, const char *entityString, mapD
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump (offset: %u, length: %u, entitystring: '%s')", l->fileofs, l->filelen, entityString ? entityString : "none");
 
 	/* merge entitystring information */
-	const char *es = (const char *) (base + l->fileofs);
+	const char* es = (const char* ) (base + l->fileofs);
 	while (1) {
 		cBspModel_t *model = nullptr;
 		/* parse the opening brace */
-		const char *token = Com_Parse(&es);
+		const char* token = Com_Parse(&es);
 		if (!es)
 			break;
 		if (token[0] != '{')
@@ -770,7 +770,7 @@ static void CM_InitBoxHull (MapTile &tile)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char *name, const char *entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
+static void CM_AddMapTile (const char* name, const char* entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -922,7 +922,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
-void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entityString, mapData_t *mapData, mapTiles_t *mapTiles)
+void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entityString, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
@@ -943,7 +943,7 @@ void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entit
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		const char *token = Com_Parse(&tiles);
+		const char* token = Com_Parse(&tiles);
 		if (!tiles) {
 			CMod_RerouteMap(mapTiles, mapData);
 			return;
@@ -995,7 +995,7 @@ void CM_LoadMap (const char *tiles, bool day, const char *pos, const char *entit
  * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
  * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
-cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char *name)
+cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char* name)
 {
 	int i, num;
 
@@ -1031,7 +1031,7 @@ cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char *name)
  * @sa LE_DoorAction
  * @sa G_ClientUseEdict
  */
-cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles)
+cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char* name, const vec3_t origin, const vec3_t angles)
 {
 	cBspModel_t *model = CM_InlineModel(mapTiles, name);
 	assert(model);
@@ -1047,7 +1047,7 @@ cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *nam
  * @param[in] name The name of the model, must include the '*'
  * @param[out] aabb The aabb to be filled
  */
-void CM_GetInlineModelAABB (mapTiles_t *mapTiles, const char *name, AABB& aabb)
+void CM_GetInlineModelAABB (mapTiles_t *mapTiles, const char* name, AABB& aabb)
 {
 	cBspModel_t *model = CM_InlineModel(mapTiles, name);
 	assert(model);

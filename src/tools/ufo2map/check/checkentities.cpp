@@ -44,7 +44,7 @@ mapbrush_t** Check_ExtraBrushesForWorldspawn (int *numBrushes);
  * @note starts with "info_" and contains "_start"
  * @return true if this is a start point
  */
-static bool Check_IsInfoStart(const char *classname)
+static bool Check_IsInfoStart(const char* classname)
 {
 	return Q_strstart(classname, "info_") && strstr(classname, "_start");
 }
@@ -72,14 +72,14 @@ static bool Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
  */
 static bool Check_TargetExists (const epair_t *kvp)
 {
-	const char *thisKey = kvp->key;
-	const char *value = kvp->value;
-	const char *otherKey = Q_streq("target", thisKey) ? "targetname" : "target";
+	const char* thisKey = kvp->key;
+	const char* value = kvp->value;
+	const char* otherKey = Q_streq("target", thisKey) ? "targetname" : "target";
 	int i;
 
 	for (i = 0; i < num_entities; i++) {
 		const entity_t *e = &entities[i];
-		const char *searchVal = ValueForKey(e, otherKey);
+		const char* searchVal = ValueForKey(e, otherKey);
 
 		if (searchVal && Q_streq(searchVal, value))
 			return true;
@@ -88,7 +88,7 @@ static bool Check_TargetExists (const epair_t *kvp)
 	return false;
 }
 
-static void Check_EntityWithBrushes (entity_t *e, const char *classname, int entnum)
+static void Check_EntityWithBrushes (entity_t *e, const char* classname, int entnum)
 {
 	if (!e->numbrushes) {
 		Check_Printf(VERB_CHECK, true, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
@@ -118,7 +118,7 @@ void CheckEntities (void)
 
 	for (i = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
+		const char* name = ValueForKey(e, "classname");
 		const entityDef_t *ed = ED_GetEntityDef(name);
 		const epair_t *kvp;
 		const entityKeyDef_t *kd;
@@ -161,9 +161,9 @@ void CheckEntities (void)
 		/* check keys in the entity definition - make sure mandatory ones are present */
 		for (kd = ed->keyDefs; kd->name; kd++) {
 			if (kd->flags & ED_MANDATORY) {
-				const char *keyNameInEnt = ValueForKey(e, kd->name);
+				const char* keyNameInEnt = ValueForKey(e, kd->name);
 				if (keyNameInEnt[0] == '\0') {
-					const char *defaultVal = kd->defaultVal;
+					const char* defaultVal = kd->defaultVal;
 					const bool hasDefault = defaultVal ? true : false;
 					Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
 					if (defaultVal) {
@@ -201,7 +201,7 @@ void Check_Stats(void) {
 
 	/* count number of each type of entity */
 	for (i = 0; i < num_entities; i++) {
-		const char *name = ValueForKey(&entities[i], "classname");
+		const char* name = ValueForKey(&entities[i], "classname");
 
 		for (j = 0; j < numEntityDefs; j++)
 			if (Q_streq(name, entityDefs[j].classname)) {
@@ -272,7 +272,7 @@ mapbrush_t** Check_ExtraBrushesForWorldspawn (int *numBrushes)
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
 		const entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
+		const char* name = ValueForKey(e, "classname");
 
 		if (e->numbrushes == 1 && Q_streq(name, "func_group")) {
 			assert(j < numToMoveToWorldspawn);

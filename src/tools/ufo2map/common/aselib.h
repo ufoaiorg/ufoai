@@ -40,8 +40,8 @@ typedef struct {
 	int numtriangles;
 } polyset_t;
 
-void ASE_Load(const char *filename, bool verbose);
+void ASE_Load(const char* filename, bool verbose);
 polyset_t *ASE_GetSurfaceAnimation(int whichSurface);
 int ASE_GetNumSurfaces(void);
-const char *ASE_GetSurfaceName(int ndx);
+const char* ASE_GetSurfaceName(int ndx);
 void ASE_Free(void);

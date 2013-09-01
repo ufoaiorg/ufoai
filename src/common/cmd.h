@@ -44,13 +44,13 @@ void Cbuf_Shutdown(void);
 /**
  * @brief as new commands are generated from the console or keyBindings, */
 /* the text is added to the end of the command buffer. */
-void Cbuf_AddText(const char *format, ...) __attribute__((format(__printf__, 1, 2)));
+void Cbuf_AddText(const char* format, ...) __attribute__((format(__printf__, 1, 2)));
 
 /**
  * @brief when a command wants to issue other commands immediately, the text is */
 /* inserted at the beginning of the buffer, before any remaining unexecuted */
 /* commands. */
-void Cbuf_InsertText(const char *text);
+void Cbuf_InsertText(const char* text);
 
 /**
  * @brief adds all the +set commands from the command line */
@@ -89,9 +89,9 @@ void Cmd_PrintDebugCommands(void);
 typedef void (*xcommand_t) (void);
 
 typedef struct cmdList_s {
-	const char *name;
+	const char* name;
 	xcommand_t function;
-	const char *description;
+	const char* description;
 } cmdList_t;
 
 void Cmd_Init(void);
@@ -104,14 +104,14 @@ void Cmd_Shutdown(void);
  * if function is nullptr, the command will be forwarded to the server
  * as a clc_stringcmd instead of executed locally
  */
-void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc = nullptr);
+void Cmd_AddCommand(const char* cmd_name, xcommand_t function, const char* desc = nullptr);
 
-void Cmd_RemoveCommand(const char *cmd_name);
+void Cmd_RemoveCommand(const char* cmd_name);
 
-void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char** match));
+void Cmd_AddParamCompleteFunction(const char* cmd_name, int (*function)(const char* partial, const char** match));
 
-void Cmd_AddUserdata(const char *cmd_name, void *userdata);
-void *Cmd_GetUserdata (const char *cmd_name);
+void Cmd_AddUserdata(const char* cmd_name, void *userdata);
+void *Cmd_GetUserdata (const char* cmd_name);
 
 /**
  * Tests whether candidate has partial as prefix and determines the common prefix of all candidates passed to it.
@@ -126,14 +126,14 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 /**
  * @brief used by the cvar code to check for cvar / command name overlap
  */
-bool Cmd_Exists(const char *cmd_name);
+bool Cmd_Exists(const char* cmd_name);
 
 /**
  * @brief attempts to match a partial command for automatic command line completion
  * returns nullptr if nothing fits
  */
-int Cmd_CompleteCommandParameters(const char *command, const char *partial, const char** match);
-int Cmd_CompleteCommand(const char *partial, const char** match);
+int Cmd_CompleteCommandParameters(const char* command, const char* partial, const char** match);
+int Cmd_CompleteCommand(const char* partial, const char** match);
 
 /**
  * @brief The functions that execute commands get their parameters with these
@@ -141,22 +141,22 @@ int Cmd_CompleteCommand(const char *partial, const char** match);
  * if arg > argc, so string operations are always safe.
  */
 int Cmd_Argc(void);
-const char *Cmd_Argv(int arg);
-const char *Cmd_Args(void);
+const char* Cmd_Argv(int arg);
+const char* Cmd_Args(void);
 void *Cmd_Userdata(void);
 
 /**
  * @brief Takes a null terminated string.  Does not need to be /n terminated.
  * breaks the string up into arg tokens.
  */
-void Cmd_TokenizeString(const char *text, bool macroExpand);
+void Cmd_TokenizeString(const char* text, bool macroExpand);
 
 /**
  * @brief Parses a single line of text into arguments and tries to execute it
  * as if it was typed at the console
  */
-void Cmd_ExecuteString(const char *text, ...) __attribute__((format(__printf__, 1, 2)));
-void Cmd_vExecuteString(const char *fmt, va_list ap);
+void Cmd_ExecuteString(const char* text, ...) __attribute__((format(__printf__, 1, 2)));
+void Cmd_vExecuteString(const char* fmt, va_list ap);
 
 /**
  * @brief adds the current command line as a clc_stringcmd to the client message.
@@ -168,7 +168,7 @@ void Cmd_ForwardToServer(void);
 /**
  * @brief Searches for the description of a given command
  */
-const char *Cmd_GetCommandDesc(const char *command);
+const char* Cmd_GetCommandDesc(const char* command);
 
 /**
  * @brief Clears the command execution buffer

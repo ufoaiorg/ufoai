@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @callergraph
  */
 void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
-							int entnum, int brushnum, const char *format, ...)
+							int entnum, int brushnum, const char* format, ...)
 {
 	static verbosityLevel_t lastMsgVerbLevel = VERB_NORMAL;
 	static bool firstSuccessfulPrint = true;
@@ -107,7 +107,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
 		}
 
 		if (startOfLine) {
-			const char *prefix;
+			const char* prefix;
 			prefix = change ? "* " : "  ";
 			prefix = (brushnum == NUM_NONE && entnum == NUM_NONE) ? "//" : prefix;
 
@@ -128,7 +128,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
  */
 void Check_InitEntityDefs (void)
 {
-	char *entitiesUfoBuf;
+	char* entitiesUfoBuf;
 
 	/* only do this once, may be called by different
 	 * check functions, depending on command-line */
@@ -138,7 +138,7 @@ void Check_InitEntityDefs (void)
 	if (FS_LoadFile("ufos/entities.ufo", (byte **)&entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read entities.ufo");
 
-	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
+	if (ED_Parse((const char* )entitiesUfoBuf) == ED_ERROR)
 		Sys_Error("Error while parsing entities.ufo: %s", ED_GetLastError());
 
 	/* info has been copied to new malloc'd space in ED_Parse */

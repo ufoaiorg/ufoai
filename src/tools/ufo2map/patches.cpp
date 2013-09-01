@@ -185,7 +185,7 @@ static entity_t *EntityForModel (int modnum)
 	Com_sprintf(name, sizeof(name), "*%i", modnum);
 	/* search the entities for one using modnum */
 	for (i = 0; i < num_entities; i++) {
-		const char *s = ValueForKey(&entities[i], "model");
+		const char* s = ValueForKey(&entities[i], "model");
 		if (Q_streq(s, name))
 			return &entities[i];
 	}

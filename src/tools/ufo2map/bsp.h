@@ -77,8 +77,8 @@ extern brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 extern int brush_start, brush_end;
 
 byte GetLevelFlagsFromBrush(const mapbrush_t *brush);
-void LoadMapFile(const char *filename);
-void WriteMapFile(const char *filename);
+void LoadMapFile(const char* filename);
+void WriteMapFile(const char* filename);
 uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 
 /*============================================================================= */
@@ -102,7 +102,7 @@ void SetModelNumbers(void);
 
 void BeginBSPFile(void);
 int WriteBSP(node_t *headnode);
-void EndBSPFile(const char *filename);
+void EndBSPFile(const char* filename);
 void BeginModel(int entityNum);
 void EndModel(void);
 void EmitBrushes(void);
@@ -129,4 +129,4 @@ void CloseTracingNodes(void);
 void DoRouting(void);
 
 /* bsp.c */
-void ProcessModels(const char *filename);
+void ProcessModels(const char* filename);

@@ -228,7 +228,7 @@ static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void *dest, s
 /**
  * @sa WriteBSPFile
  */
-dMapTile_t *LoadBSPFile (const char *filename)
+dMapTile_t *LoadBSPFile (const char* filename)
 {
 	int size;
 	unsigned int i;
@@ -315,7 +315,7 @@ static void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *da
  * @brief Swaps the bsp file in place, so it should not be referenced again
  * @sa LoadBSPFile
  */
-long WriteBSPFile (const char *filename)
+long WriteBSPFile (const char* filename)
 {
 	qFILE bspfile;
 	dBspHeader_t outheader;
@@ -403,9 +403,9 @@ entity_t entities[MAX_MAP_ENTITIES];
  * @param[in,out] str The string to clean up
  * @note Whitespaces are converted to \\0
  */
-static void StripTrailingWhitespaces (char *str)
+static void StripTrailingWhitespaces (char* str)
 {
-	char *s;
+	char* s;
 
 	s = str + strlen(str) - 1;
 	while (s >= str && *s <= ' ') {
@@ -414,12 +414,12 @@ static void StripTrailingWhitespaces (char *str)
 	}
 }
 
-static inline bool IsInvalidEntityToken (const char *token)
+static inline bool IsInvalidEntityToken (const char* token)
 {
 	return Q_streq(token, "}") || Q_streq(token, "{");
 }
 
-epair_t *AddEpair (const char *key, const char *value, int entNum)
+epair_t *AddEpair (const char* key, const char* value, int entNum)
 {
 	epair_t	*e = Mem_AllocType(epair_t);
 
@@ -446,10 +446,10 @@ epair_t *AddEpair (const char *key, const char *value, int entNum)
 epair_t *ParseEpair (int entNum)
 {
 	StripTrailingWhitespaces(parsedToken);
-	const char *key = Mem_StrDup(parsedToken);
+	const char* key = Mem_StrDup(parsedToken);
 	GetToken();
 	StripTrailingWhitespaces(parsedToken);
-	const char *value = Mem_StrDup(parsedToken);
+	const char* value = Mem_StrDup(parsedToken);
 	return AddEpair(key, value, entNum);
 }
 
@@ -505,7 +505,7 @@ void ParseEntities (void)
  * @brief Generates the curTile->entdata string from all the entities
  * @sa ParseEntities
  */
-const char *UnparseEntities (void)
+const char* UnparseEntities (void)
 {
 	char key[1024];
 	char value[1024];
@@ -536,7 +536,7 @@ const char *UnparseEntities (void)
 	return curTile->entdata;
 }
 
-void SetKeyValue (entity_t *ent, const char *key, const char *value)
+void SetKeyValue (entity_t *ent, const char* key, const char* value)
 {
 	epair_t *ep;
 
@@ -552,7 +552,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	ep->value = Mem_StrDup(value);
 }
 
-const char *ValueForKey (const entity_t *ent, const char *key)
+const char* ValueForKey (const entity_t *ent, const char* key)
 {
 	const epair_t *ep;
 
@@ -562,9 +562,9 @@ const char *ValueForKey (const entity_t *ent, const char *key)
 	return "";
 }
 
-vec_t FloatForKey (const entity_t *ent, const char *key)
+vec_t FloatForKey (const entity_t *ent, const char* key)
 {
-	const char *k;
+	const char* k;
 
 	k = ValueForKey(ent, key);
 	return atof(k);
@@ -573,7 +573,7 @@ vec_t FloatForKey (const entity_t *ent, const char *key)
 /**
  * @brief Converts a string into a @c vec3_t
  */
-void GetVectorFromString (const char *value, vec3_t vec)
+void GetVectorFromString (const char* value, vec3_t vec)
 {
 	if (value[0] != '\0') {
 		double v1, v2, v3;
@@ -590,8 +590,8 @@ void GetVectorFromString (const char *value, vec3_t vec)
 /**
  * @brief Converts the value of a entity parameter into a @c vec3_t
  */
-void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
+void GetVectorForKey (const entity_t *ent, const char* key, vec3_t vec)
 {
-	const char *k = ValueForKey(ent, key);
+	const char* k = ValueForKey(ent, key);
 	GetVectorFromString(k, vec);
 }

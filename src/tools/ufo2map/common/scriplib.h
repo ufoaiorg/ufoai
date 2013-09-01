@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern char parsedToken[MAX_TOKEN_CHARS];
 
-void LoadScriptFile(const char *filename);
-void ParseFromMemory(char *buffer, int size);
+void LoadScriptFile(const char* filename);
+void ParseFromMemory(char* buffer, int size);
 
 const char* GetToken();
 bool TokenAvailable(void);

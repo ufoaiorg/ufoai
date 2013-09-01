@@ -37,5 +37,5 @@ typedef struct {
 } textureref_t;
 
 extern textureref_t textureref[MAX_MAP_TEXTURES];
-int	FindMiptex(const char *name);
+int	FindMiptex(const char* name);
 int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, bool isTerrain);

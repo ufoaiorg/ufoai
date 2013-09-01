@@ -55,8 +55,8 @@ memPool_t *com_fileSysPool;
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
 typedef struct usagePair_s {
-	const char *flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be nullptr */
-	const char *desc;/**< a description of the functionality provided by the flag, or nullptr if the flags is actually a full line  */
+	const char* flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be nullptr */
+	const char* desc;/**< a description of the functionality provided by the flag, or nullptr if the flags is actually a full line  */
 } usagePair_t;
 
 static const usagePair_t usageArray[] = {
@@ -167,7 +167,7 @@ static void Usage (void)
 	}
 }
 
-void Com_Printf (const char *format, ...)
+void Com_Printf (const char* format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;
@@ -195,7 +195,7 @@ bool AbortPrint (const verbosityLevel_t msgVerbLevel)
  * @brief decides wether to proceed with output based on verbosity level
  * @sa Com_Printf, Check_Printf, AbortPrint
  */
-void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
+void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char* format, ...)
 {
 	if (AbortPrint(msgVerbLevel))
 		return;
@@ -531,7 +531,7 @@ static void U2M_SetDefaultConfigValues (void)
  */
 void PrintMapName (void)
 {
-	const char *mode = nullptr;
+	const char* mode = nullptr;
 
 	if (config.performMapCheck) {
 		mode = "[check]";

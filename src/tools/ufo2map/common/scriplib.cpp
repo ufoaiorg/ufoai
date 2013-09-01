@@ -36,15 +36,15 @@ PARSING STUFF
 typedef struct {
 	char	filename[MAX_OSPATH];
 	char	*buffer;
-	const char *script_p;
-	const char *end_p;
+	const char* script_p;
+	const char* end_p;
 } script_t;
 
 static script_t script;
 
 char parsedToken[MAX_TOKEN_CHARS];
 
-void LoadScriptFile (const char *filename)
+void LoadScriptFile (const char* filename)
 {
 	strncpy(script.filename, filename, sizeof(script.filename));
 
@@ -59,7 +59,7 @@ void LoadScriptFile (const char *filename)
 /**
  * @brief Parses e.g. the entity string that is already stored in memory
  */
-void ParseFromMemory (char *buffer, int size)
+void ParseFromMemory (char* buffer, int size)
 {
 	Q_strncpyz(script.filename, "memory buffer", sizeof(script.filename));
 
@@ -74,7 +74,7 @@ void ParseFromMemory (char *buffer, int size)
  */
 const char* GetToken ()
 {
-	const char *token = Com_Parse(&script.script_p, parsedToken, sizeof(parsedToken));
+	const char* token = Com_Parse(&script.script_p, parsedToken, sizeof(parsedToken));
 	if (!script.script_p) {
 		/* not if the current script is a memory buffer */
 		if (!Q_streq(script.filename, "memory buffer"))
@@ -91,7 +91,7 @@ const char* GetToken ()
  */
 bool TokenAvailable (void)
 {
-	const char *search_p = script.script_p;
+	const char* search_p = script.script_p;
 
 	if (search_p >= script.end_p)
 		return false;

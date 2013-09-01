@@ -35,7 +35,7 @@ textureref_t textureref[MAX_MAP_TEXTURES];
  * @sa TexinfoForBrushTexture
  * @sa ParseBrush
  */
-int FindMiptex (const char *name)
+int FindMiptex (const char* name)
 {
 	int i;
 

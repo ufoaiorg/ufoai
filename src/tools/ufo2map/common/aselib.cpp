@@ -89,8 +89,8 @@ typedef struct {
 	aseMaterial_t materials[MAX_ASE_MATERIALS];
 	aseGeomObject_t objects[MAX_ASE_OBJECTS];
 
-	char *buffer;
-	char *curpos;
+	char* buffer;
+	char* curpos;
 	int len;
 
 	int currentObject;
@@ -103,7 +103,7 @@ static ase_t ase;
 static void ASE_Process(void);
 static void ASE_FreeGeomObject(int ndx);
 
-void ASE_Load (const char *filename, bool verbose)
+void ASE_Load (const char* filename, bool verbose)
 {
 	qFILE file;
 
@@ -145,7 +145,7 @@ int ASE_GetNumSurfaces (void)
 	return ase.currentObject;
 }
 
-const char *ASE_GetSurfaceName (int which)
+const char* ASE_GetSurfaceName (int which)
 {
 	aseGeomObject_t *pObject = &ase.objects[which];
 
@@ -277,7 +277,7 @@ static int ASE_GetToken (bool restOfLine)
 	return 1;
 }
 
-static void ASE_ParseBracedBlock (void (*parser)(const char *token))
+static void ASE_ParseBracedBlock (void (*parser)(const char* token))
 {
 	int indent = 0;
 
@@ -319,10 +319,10 @@ static void ASE_SkipRestOfLine (void)
 	ASE_GetToken(true);
 }
 
-static void ASE_KeyMAP_DIFFUSE (const char *token)
+static void ASE_KeyMAP_DIFFUSE (const char* token)
 {
 	if (Q_streq(token, "*BITMAP")) {
-		const char *bitmap;
+		const char* bitmap;
 		size_t len;
 
 		ASE_GetToken(false);
@@ -337,13 +337,13 @@ static void ASE_KeyMAP_DIFFUSE (const char *token)
 	}
 }
 
-static void ASE_KeyMATERIAL (const char *token)
+static void ASE_KeyMATERIAL (const char* token)
 {
 	if (Q_streq(token, "*MAP_DIFFUSE"))
 		ASE_ParseBracedBlock(ASE_KeyMAP_DIFFUSE);
 }
 
-static void ASE_KeyMATERIAL_LIST (const char *token)
+static void ASE_KeyMATERIAL_LIST (const char* token)
 {
 	if (Q_streq(token, "*MATERIAL_COUNT")) {
 		ASE_GetToken(false);
@@ -359,7 +359,7 @@ static void ASE_KeyMATERIAL_LIST (const char *token)
 	}
 }
 
-static void ASE_KeyMESH_VERTEX_LIST (const char *token)
+static void ASE_KeyMESH_VERTEX_LIST (const char* token)
 {
 	aseMesh_t *pMesh = ASE_GetCurrentMesh();
 
@@ -383,7 +383,7 @@ static void ASE_KeyMESH_VERTEX_LIST (const char *token)
 		Sys_Error("Unknown token '%s' while parsing MESH_VERTEX_LIST", token);
 }
 
-static void ASE_KeyMESH_FACE_LIST (const char *token)
+static void ASE_KeyMESH_FACE_LIST (const char* token)
 {
 	aseMesh_t *pMesh = ASE_GetCurrentMesh();
 
@@ -418,7 +418,7 @@ static void ASE_KeyMESH_FACE_LIST (const char *token)
 		Sys_Error("Unknown token '%s' while parsing MESH_FACE_LIST", token);
 }
 
-static void ASE_KeyTFACE_LIST (const char *token)
+static void ASE_KeyTFACE_LIST (const char* token)
 {
 	aseMesh_t *pMesh = ASE_GetCurrentMesh();
 
@@ -445,7 +445,7 @@ static void ASE_KeyTFACE_LIST (const char *token)
 		Sys_Error("Unknown token '%s' in MESH_TFACE", token);
 }
 
-static void ASE_KeyMESH_TVERTLIST (const char *token)
+static void ASE_KeyMESH_TVERTLIST (const char* token)
 {
 	aseMesh_t *pMesh = ASE_GetCurrentMesh();
 
@@ -475,7 +475,7 @@ static void ASE_KeyMESH_TVERTLIST (const char *token)
 		Sys_Error("Unknown token '%s' while parsing MESH_TVERTLIST", token);
 }
 
-static void ASE_KeyMESH (const char *token)
+static void ASE_KeyMESH (const char* token)
 {
 	aseMesh_t *pMesh = ASE_GetCurrentMesh();
 
@@ -530,10 +530,10 @@ static void ASE_KeyMESH (const char *token)
 	}
 }
 
-static void ASE_KeyGEOMOBJECT (const char *token)
+static void ASE_KeyGEOMOBJECT (const char* token)
 {
 	if (Q_streq(token, "*NODE_NAME")) {
-		char *name = ase.objects[ase.currentObject].name;
+		char* name = ase.objects[ase.currentObject].name;
 
 		ASE_GetToken(true);
 		VERBOSE((" %s\n", s_token));

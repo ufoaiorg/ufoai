@@ -328,10 +328,10 @@ void BuildLights (void)
 	/* entities (skip the world) */
 	for (i = 1; i < num_entities; i++) {
 		float intensity;
-		const char *color;
-		const char *target;
+		const char* color;
+		const char* target;
 		const entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
+		const char* name = ValueForKey(e, "classname");
 		if (!Q_strstart(name, "light"))
 			continue;
 
@@ -402,7 +402,7 @@ void BuildLights (void)
 	/* handle worldspawn light settings */
 	{
 		const entity_t *e = &entities[0];
-		const char *ambient, *light, *angles, *color;
+		const char* ambient, *light, *angles, *color;
 		float f;
 		int i;
 
@@ -886,7 +886,7 @@ void BuildFacelights (unsigned int facenum)
 }
 
 #define TGA_HEADER_SIZE 18
-static void WriteTGA24 (const char *filename, const byte * data, int width, int height, int offset)
+static void WriteTGA24 (const char* filename, const byte * data, int width, int height, int offset)
 {
 	int i, size;
 	byte *buffer;
@@ -950,7 +950,7 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
  * @param name The name of the map to export the lightmap for
  * @param day @c true to export the day lightmap data, @c false to export the night lightmap data
  */
-static void ExportLightmap (const char *path, const char *name, bool day)
+static void ExportLightmap (const char* path, const char* name, bool day)
 {
 	int i;
 	const int lightmapIndex = day ? 1 : 0;
@@ -983,10 +983,10 @@ static void ExportLightmap (const char *path, const char *name, bool day)
  * @note The bsp file must already be loaded.
  * @param bspFileName The path of the loaded bsp file.
  */
-void ExportLightmaps (const char *bspFileName)
+void ExportLightmaps (const char* bspFileName)
 {
 	char path[MAX_QPATH], lightmapName[MAX_QPATH];
-	const char *fileName = Com_SkipPath(bspFileName);
+	const char* fileName = Com_SkipPath(bspFileName);
 
 	Com_FilePath(bspFileName, path, sizeof(path));
 	Com_StripExtension(fileName, lightmapName, sizeof(lightmapName));
