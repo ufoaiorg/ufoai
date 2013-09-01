@@ -1641,58 +1641,15 @@ mapdef frozen_nature_small_noufo
 // HARBOUR RANDOM MAPS //
 /////////////////////////
 
-mapdef harbour2_a
+mapdef harbour2
 {
 	map				"+harbour2"
-	params			("harbour")
 	description		"_Harbour"
-	size			"medium"
-	maxaliens		16
-	civilianteam	worker
-
-	multiplayer		true
-	teams			1
-	gametypes
+	params
 	(
-		coop2
-		coop3
-		coop4
+		"harbour"
+		"pier"
 	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"coast"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
-mapdef harbour2_b
-{
-	map				"+harbour2"
-	params			("pier")
 	description		"_Harbour"
 	size			"medium"
 	maxaliens		16
