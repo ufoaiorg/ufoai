@@ -143,7 +143,8 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == nullptr);
 	/* skip '*cvar ' */
-	editedCvar = Cvar_Get(&((char*)node->text)[6]);
+	const char *cvarRef = "*cvar:";
+	editedCvar = Cvar_Get(&((const char*)node->text)[strlen(cvarRef)]);
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = false;
@@ -192,25 +193,24 @@ void uiTextEntryNode::onFocusLost (uiNode_t *node)
 /**
  * @brief edit the current cvar with a char
  */
-static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
+static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int unicode)
 {
 	char buffer[MAX_CVAR_EDITING_LENGTH];
-	int length;
 
 	/* copy the cvar */
 	Q_strncpyz(buffer, editedCvar->string, sizeof(buffer));
-	length = strlen(buffer);
+	int length = strlen(buffer);
 
 	/* compute result */
-	if (key == K_BACKSPACE) {
+	if (unicode == K_BACKSPACE) {
 		length = UTF8_delete_char(buffer, length - 1);
 	} else {
-		int charLength = UTF8_encoded_len(key);
+		int charLength = UTF8_encoded_len(unicode);
 		/* is buffer full? */
 		if (length + charLength >= sizeof(buffer))
 			return;
 
-		length += UTF8_insert_char(buffer, sizeof(buffer), length, key);
+		length += UTF8_insert_char(buffer, sizeof(buffer), length, unicode);
 	}
 
 	/* update the cvar */
@@ -315,7 +315,6 @@ void uiTextEntryNode::draw (uiNode_t *node)
 			R_Color(nullptr);
 		}
 	}
-
 }
 
 /**
