@@ -330,7 +330,7 @@ static void Key_Console (int key, int unicode)
 			return;
 		}
 
-		if (keyLinePos > 1)  /* or just a char */
+		if (keyLinePos > 1)  /* or just a char. */
 			keyLinePos--;
 		return;
 	} else if (key == K_RIGHTARROW) {  /* move cursor right */
@@ -345,7 +345,7 @@ static void Key_Console (int key, int unicode)
 				keyLinePos++;
 			return;
 		}
-		keyLinePos++;  /* or just a char */
+		keyLinePos++;  /* or just a char. */
 		return;
 	}
 

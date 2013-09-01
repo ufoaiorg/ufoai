@@ -420,18 +420,18 @@ static void testStringCopiers (void)
 	CU_ASSERT_EQUAL(dest[2], 'b');
 	CU_ASSERT_EQUAL(dest[3], '\0');
 
-	/* trimmed utf8 char */
+	/* trimmed utf8 char. */
 	Com_sprintf(dest, 5, "aab%c%c", 0xd0, 0x80);
 	CU_ASSERT_EQUAL(dest[2], 'b');
 	CU_ASSERT_EQUAL(dest[3], '\0');
 
-	/* untrimmed utf8 char */
+	/* untrimmed utf8 char. */
 	Com_sprintf(dest, 6, "aab%c%c", 0xd0, 0x80);
 	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
 	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
 	CU_ASSERT_EQUAL(dest[5], '\0');
 
-	/* 2 consecutive utf8 char */
+	/* 2 consecutive utf8 char. */
 	Com_sprintf(dest, 7, "aab\xD0\x80\xD0\x80");
 	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
 	CU_ASSERT_EQUAL(dest[5], '\0');
@@ -447,18 +447,18 @@ static void testStringCopiers (void)
 	CU_ASSERT_EQUAL(dest[2], 'b');
 	CU_ASSERT_EQUAL(dest[3], '\0');
 
-	/* trimmed utf8 char */
+	/* trimmed utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 5);
 	CU_ASSERT_EQUAL(dest[2], 'b');
 	CU_ASSERT_EQUAL(dest[3], '\0');
 
-	/* untrimmed utf8 char */
+	/* untrimmed utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 6);
 	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
 	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
 	CU_ASSERT_EQUAL(dest[5], '\0');
 
-	/* 2 consecutive utf8 char */
+	/* 2 consecutive utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80\xD0\x80", 7);
 	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
 	CU_ASSERT_EQUAL(dest[5], '\0');

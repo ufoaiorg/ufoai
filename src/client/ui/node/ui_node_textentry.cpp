@@ -224,7 +224,7 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int unicode)
 bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
-	/* remove the last char */
+	/* remove the last char. */
 	case K_BACKSPACE:
 		UI_TextEntryNodeEdit(node, K_BACKSPACE);
 		return true;
@@ -245,7 +245,7 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 	if (unicode < 32 || (unicode >= 127 && unicode < 192))
 		return false;
 
-	/* add a char */
+	/* add a char. */
 	UI_TextEntryNodeEdit(node, unicode);
 	return true;
 }

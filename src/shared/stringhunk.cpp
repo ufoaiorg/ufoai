@@ -39,7 +39,7 @@ bool STRHUNK_Add (stringHunk_t *hunk, const char *string)
 	if (remaining < 1)
 		return false;
 
-	/* add delimiter char */
+	/* add delimiter char. */
 	if (hunk->pos != hunk->hunk) {
 		if (remaining == 1)
 			return false;

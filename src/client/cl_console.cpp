@@ -240,7 +240,7 @@ void Con_LoadConsoleHistory (void)
 	if (!f.f)
 		return;
 
-	/* we have to skip the initial line char and the string end char */
+	/* we have to skip the initial line char and the string end char. */
 	while (fgets(line, MAXCMDLINE - 2, f.f)) {
 		if (line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = 0;

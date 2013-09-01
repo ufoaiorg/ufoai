@@ -308,7 +308,7 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 	char buf[256];
 	Q_strncpyz(buf, value, sizeof(buf));
 	const char *token = buf;
-	/* skip random map char */
+	/* skip random map char. */
 	if (token[0] == '+')
 		token++;
 
