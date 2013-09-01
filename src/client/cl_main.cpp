@@ -401,23 +401,30 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 		if (strstr(popupText, REJ_PASSWORD_REQUIRED_OR_INCORRECT)) {
 			UI_PushWindow("serverpassword");
 			if (Q_strvalid(Cvar_GetString("password"))) {
-				UI_Popup(_("Connection failure"), _("The password you specified was wrong."));
 				Cvar_Set("password", "");
+				CL_Drop();
+				UI_Popup(_("Connection failure"), _("The password you specified was wrong."));
 			} else {
+				CL_Drop();
 				UI_Popup(_("Connection failure"), _("This server requires a password."));
 			}
 		} else if (strstr(popupText, REJ_SERVER_FULL)) {
+			CL_Drop();
 			UI_Popup(_("Connection failure"), _("This server is full."));
 		} else if (strstr(popupText, REJ_BANNED)) {
+			CL_Drop();
 			UI_Popup(_("Connection failure"), _("You are banned on this server."));
 		} else if (strstr(popupText, REJ_GAME_ALREADY_STARTED)) {
+			CL_Drop();
 			UI_Popup(_("Connection failure"), _("The game has already started."));
 		} else if (strstr(popupText, REJ_SERVER_VERSION_MISMATCH)) {
+			CL_Drop();
 			UI_Popup(_("Connection failure"), _("The server is running a different version of the game."));
 		} else if (strstr(popupText, BAD_RCON_PASSWORD)) {
 			Cvar_Set("rcon_password", "");
 			UI_Popup(_("Bad rcon password"), _("The rcon password you specified was wrong."));
 		} else if (strstr(popupText, REJ_CONNECTION_REFUSED)) {
+			CL_Drop();
 			UI_Popup(_("Connection failure"), _("The server refused the connection."));
 		} else if (Q_strvalid(popupText)) {
 			UI_Popup(_("Notice"), _(popupText));
