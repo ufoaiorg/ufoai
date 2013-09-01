@@ -314,6 +314,8 @@ component team_downloadentry extends panel {
 	{
 		pos			"240 135"
 		size		"250 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
 	}
 
 	button download
@@ -322,19 +324,17 @@ component team_downloadentry extends panel {
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
-		padding		8
 		font		"f_verysmall"
 		pos			"0 0"
-		size		"200 34"
+		size		"190 34"
 		string		""
 		onClick		{ cmd "web_downloadteam <node:this.parent.userid@integer> <node:this.parent.id@integer>;" }
 	}
 
 	button delete
 	{
-		pos			"212 6"
-		size		"22 22"
-		icon 		"icons/garbage"
+		size		"34 34"
+		icon 		"icons/delete"
 		tooltip		"_Remove this team from the server"
 		onClick		{ cmd "web_deleteteam <node:this.parent.id@integer>;" }
 	}
@@ -353,9 +353,9 @@ component team_downloadentry extends panel {
 component cmpTeamSlotPanel extends panel
 {
 	{
-		size		"199 34"
+		size		"228 34"
 		layout			LAYOUT_LEFT_RIGHT_FLOW
-		layoutMargin	2
+		layoutMargin	1
 	}
 
 	data filename
@@ -374,21 +374,15 @@ component cmpTeamSlotPanel extends panel
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
-		padding		8
 		font		"f_verysmall"
-		size		"140 34"
+		size		"160 34"
 	}
 
 	button upload
 	{
 		background		"icons/upload"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
 		tooltip		"_Upload"
-		padding		8
-		font		"f_verysmall"
-		size		"28 34"
+		size		"34 34"
 	}
 
 	button delete
@@ -419,14 +413,23 @@ component currentTeamMember extends panel
 component cmpCurrentLoadedTeamPanel extends panel
 {
 	{
-		size	"220 216"
+		size	"210 216"
+	}
+
+	string title
+	{
+		pos				"0 0"
+		color			"0 .78 0 1"
+		size			"170 18"
+		contentalign	ALIGN_CC
+		string			"_Currently loaded"
 	}
 
 	panel soldierlist
 	{
-		pos				"0 0"
-		size			"180 216"
-		padding			6
+		pos				"0 26"
+		size			"170 190"
+		padding			4
 		layout			LAYOUT_TOP_DOWN_FLOW
 		wheelscrollable	true
 		onViewChange
@@ -440,8 +443,8 @@ component cmpCurrentLoadedTeamPanel extends panel
 	vscrollbar soldierlist_scroll
 	{
 		image		"ui/scrollbar_v_green"
-		pos			"200 0"
-		height		"216"
+		pos			"190 26"
+		height		"190"
 		current		0
 		viewsize	4
 		fullsize	25
@@ -505,7 +508,7 @@ component cmpTeamPanel extends panel
 	{
 		{
 			pos		"1 50"
-			size	"200 216"
+			size	"230 216"
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
 			wheelscrollable	true
@@ -519,7 +522,7 @@ component cmpTeamPanel extends panel
 	}
 	vscrollbar slots_scroll {
 		image		"ui/scrollbar_v_green"
-		pos			"201 50"
+		pos			"229 50"
 		height		"216"
 		hidewhenunused	true
 		onChange {
@@ -563,7 +566,7 @@ component cmpTeamPanel extends panel
 	cmpCurrentLoadedTeamPanel currentLoaded
 	{
 		{
-			pos		"240 50"
+			pos		"250 50"
 		}
 	}
 
