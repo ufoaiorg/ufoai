@@ -221,9 +221,9 @@ MISC
 #define CON_COLOR_WHITE		7
 #define MAX_COLORS			8
 
-void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
+void Com_BeginRedirect(struct net_stream *stream, char* buffer, int buffersize);
 void Com_EndRedirect(void);
-void Com_vPrintf(const char *fmt, va_list);
+void Com_vPrintf(const char* fmt, va_list);
 
 typedef void (*exceptionCallback_t)(void);
 
@@ -233,25 +233,25 @@ typedef void (*exceptionCallback_t)(void);
 struct comDrop_t {};
 class comRestart_t {
 public:
-	const char *gamedir;
-	comRestart_t (const char *_gamedir) : gamedir(_gamedir ? strdup(_gamedir) : nullptr) {}
+	const char* gamedir;
+	comRestart_t (const char* _gamedir) : gamedir(_gamedir ? strdup(_gamedir) : nullptr) {}
 	virtual ~comRestart_t () { free(static_cast<void*>(const_cast<char*>(gamedir))); }
 };
 
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
-void Com_WriteConfigToFile(const char *filename);
+void Com_WriteConfigToFile(const char* filename);
 void Cvar_WriteVariables(qFILE *f);
 
 int Com_ServerState(void);
 void Com_SetServerState(int state);
 void Com_SetRandomSeed(unsigned int seed);
-const char *Com_UnsignedIntToBinary(uint32_t x);
-const char *Com_ByteToBinary(byte x);
+const char* Com_UnsignedIntToBinary(uint32_t x);
+const char* Com_ByteToBinary(byte x);
 
 #include "md4.h"
-const char *Com_MD5File(const char *fn, int length = 0);
-const char *Com_MD5Buffer(const byte *buf, size_t len);
+const char* Com_MD5File(const char* fn, int length = 0);
+const char* Com_MD5Buffer(const byte *buf, size_t len);
 
 extern cvar_t *http_proxy;
 extern cvar_t *http_timeout;
@@ -293,7 +293,7 @@ typedef struct date_s {
 
 #define MAXCMDLINE 256
 
-typedef void (*vPrintfPtr_t)(const char *fmt, va_list ap);
+typedef void (*vPrintfPtr_t)(const char* fmt, va_list ap);
 vPrintfPtr_t Qcommon_GetPrintFunction(void);
 void Qcommon_SetPrintFunction(vPrintfPtr_t func);
 
@@ -304,7 +304,7 @@ void Com_SetGameType(void);
 void Com_ReadFromPipe(void);
 float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 bool Com_CheckConfigStringIndex(int index);
-void Con_Print(const char *txt);
+void Con_Print(const char* txt);
 
 /* Event timing */
 
@@ -341,14 +341,14 @@ void CL_Shutdown(void);
 int CL_Milliseconds(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
-bool CL_ParseClientData(const char *type, const char *name, const char** text);
+bool CL_ParseClientData(const char* type, const char* name, const char** text);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void CL_InitAfter(void);
 
 void SV_Init(void);
 void SV_Clear(void);
-void SV_Shutdown(const char *finalmsg, bool reconnect);
+void SV_Shutdown(const char* finalmsg, bool reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void *);
 mapData_t *SV_GetMapData(void);
@@ -367,13 +367,13 @@ extern memPool_t *com_networkPool;
 /*============================================================================ */
 
 int Com_Argc(void);
-const char *Com_Argv(int arg);		/* range and null checked */
+const char* Com_Argv(int arg);		/* range and null checked */
 void Com_ClearArgv(int arg);
-const char *Com_MacroExpandString(const char *text);
-void Com_UploadCrashDump(const char *crashDumpFile);
-bool Com_CheckDuplicateFile(const char *file, const char *wildcard);
+const char* Com_MacroExpandString(const char* text);
+void Com_UploadCrashDump(const char* crashDumpFile);
+bool Com_CheckDuplicateFile(const char* file, const char* wildcard);
 
-bool Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
+bool Com_ConsoleCompleteCommand(const char* s, char* target, size_t bufSize, uint32_t *pos, uint32_t offset);
 
 void Key_Init(void);
 

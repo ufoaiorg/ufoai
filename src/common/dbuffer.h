@@ -30,15 +30,15 @@ public:
 	virtual ~dbuffer ();
 
 	/* Append the given byte string to the buffer */
-	void add (const char *, size_t);
+	void add (const char* , size_t);
 	/* Read the given number of bytes from the start of the buffer */
-	size_t get (char *, size_t) const;
+	size_t get (char* , size_t) const;
 	/* Read the given number of bytes from the given position */
-	size_t getAt (size_t, char *, size_t) const;
+	size_t getAt (size_t, char* , size_t) const;
 	/* Remove the given number of bytes from the start of the buffer */
 	size_t remove (size_t);
 	/* Read and remove in one pass */
-	size_t extract (char *, size_t);
+	size_t extract (char* , size_t);
 
 	size_t length () const;
 };

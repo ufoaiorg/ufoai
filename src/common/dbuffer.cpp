@@ -39,7 +39,7 @@ dbuffer::~dbuffer ()
 {
 }
 
-void dbuffer::add (const char *data, size_t len)
+void dbuffer::add (const char* data, size_t len)
 {
 	_data.insert(_data.begin() + _length, data, data + len);
 	_length += len;
@@ -58,7 +58,7 @@ void dbuffer::add (const char *data, size_t len)
  * If the buffer does not contain at least @c len bytes, then as many
  * bytes as are present will be copied.
  */
-size_t dbuffer::get (char *data, size_t len) const
+size_t dbuffer::get (char* data, size_t len) const
 {
 	if (len > _length) {
 		len = _length;
@@ -83,7 +83,7 @@ size_t dbuffer::get (char *data, size_t len) const
  * If the buffer does not contain at least @c len bytes after offset,
  * then as many bytes as are present will be copied.
  */
-size_t dbuffer::getAt (size_t offset, char *data, size_t len) const
+size_t dbuffer::getAt (size_t offset, char* data, size_t len) const
 {
 	if (offset > _length)
 		return 0;
@@ -133,7 +133,7 @@ size_t dbuffer::remove (size_t len)
  * However many bytes are copied, exactly that many will be removed
  * from the start of the dbuffer.
  */
-size_t dbuffer::extract (char *data, size_t len)
+size_t dbuffer::extract (char* data, size_t len)
 {
 	len = get(data, len);
 	remove(len);

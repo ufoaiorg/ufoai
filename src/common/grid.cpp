@@ -950,7 +950,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBo
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char *name, const GridBox &box, const char** list)
+void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char* name, const GridBox &box, const char** list)
 {
 	if (box.isZero()) {
 		pos3_t min, max;

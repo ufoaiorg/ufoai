@@ -38,14 +38,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 csi_t csi;
 
 static int com_argc;
-static const char *com_argv[MAX_NUM_ARGVS + 1];
+static const char* com_argv[MAX_NUM_ARGVS + 1];
 
 static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
 
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
-static const char *consoleLogName = "ufoconsole.log";
+static const char* consoleLogName = "ufoconsole.log";
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
@@ -294,7 +294,7 @@ CLIENT / SERVER interactions
 ============================================================================
 */
 
-static char *rd_buffer;
+static char* rd_buffer;
 static unsigned int rd_buffersize;
 static struct net_stream *rd_stream;
 
@@ -304,7 +304,7 @@ static struct net_stream *rd_stream;
  *
  * This is used to redirect printf outputs for rcon commands
  */
-void Com_BeginRedirect (struct net_stream *stream, char *buffer, int buffersize)
+void Com_BeginRedirect (struct net_stream *stream, char* buffer, int buffersize)
 {
 	if (!buffer || !buffersize)
 		return;
@@ -334,7 +334,7 @@ void Com_EndRedirect (void)
  * @note Both client and server can use this, and it will output
  * to the appropriate place.
  */
-void Com_vPrintf (const char *fmt, va_list ap)
+void Com_vPrintf (const char* fmt, va_list ap)
 {
 	char msg[MAXPRINTMSG];
 
@@ -365,7 +365,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		}
 		if (logfile.f) {
 			/* strip color codes */
-			const char *output = msg;
+			const char* output = msg;
 
 			if (output[strlen(output) - 1] == '\n') {
 				char timestamp[40];
@@ -394,7 +394,7 @@ void Com_Printf (const char* const fmt, ...)
 /**
  * @brief A Com_Printf that only shows up if the "developer" cvar is set
  */
-void Com_DPrintf (int level, const char *fmt, ...)
+void Com_DPrintf (int level, const char* fmt, ...)
 {
 	/* don't confuse non-developers with techie stuff... */
 	if (!developer)
@@ -413,7 +413,7 @@ void Com_DPrintf (int level, const char *fmt, ...)
  * @note Both client and server can use this, and it will
  * do the appropriate things.
  */
-void Com_Error (int code, const char *fmt, ...)
+void Com_Error (int code, const char* fmt, ...)
 {
 	va_list argptr;
 	static char msg[MAXPRINTMSG];
@@ -527,7 +527,7 @@ int Com_Argc (void)
 /**
  * @brief Returns an argument of script commandline
  */
-const char *Com_Argv (int arg)
+const char* Com_Argv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return "";
@@ -566,14 +566,14 @@ static void Com_InitArgv (int argc, char** argv)
  * @sa Cmd_TokenizeString
  * @sa UI_GetReferenceString
  */
-const char *Com_MacroExpandString (const char *text)
+const char* Com_MacroExpandString (const char* text)
 {
 	int i, j, count, len;
 	bool inquote;
-	const char *scan;
+	const char* scan;
 	static char expanded[MAX_STRING_CHARS];
-	const char *token, *start, *cvarvalue;
-	char *pos;
+	const char* token, *start, *cvarvalue;
+	char* pos;
 
 	inquote = false;
 	scan = text;
@@ -647,14 +647,14 @@ const char *Com_MacroExpandString (const char *text)
 		return nullptr;
 }
 
-void Com_UploadCrashDump (const char *crashDumpFile)
+void Com_UploadCrashDump (const char* crashDumpFile)
 {
 	if (uploadcrashdump == nullptr || uploadcrashdump->integer != 1)
 		return;
 	upparam_t paramUser;
 	upparam_t paramVersion;
 	upparam_t paramOS;
-	const char *crashDumpURL = "http://ufoai.org/CrashDump.php";
+	const char* crashDumpURL = "http://ufoai.org/CrashDump.php";
 
 	paramUser.name = "user";
 	paramUser.value = Sys_GetCurrentUser();
@@ -676,13 +676,13 @@ void Com_UploadCrashDump (const char *crashDumpFile)
  * @param[in] wildcard The wildcard to specify which files should be checked
  * @return @c false if no duplicate was found, @c true otherwise
  */
-bool Com_CheckDuplicateFile (const char *file, const char *wildcard)
+bool Com_CheckDuplicateFile (const char* file, const char* wildcard)
 {
-	const char *md5 = Com_MD5File(file);
-	const char *filename;
+	const char* md5 = Com_MD5File(file);
+	const char* filename;
 	bool match = false;
 	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
-		const char *md5Other = Com_MD5File(filename);
+		const char* md5Other = Com_MD5File(filename);
 		if (Q_streq(md5, md5Other)) {
 			match = true;
 			break;
@@ -703,9 +703,9 @@ bool Com_CheckDuplicateFile (const char *file, const char *wildcard)
  * @param[out] pos The position in the buffer after command completion
  * @param[in] offset The input buffer position to put the completed command to
  */
-bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset)
+bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, uint32_t *pos, uint32_t offset)
 {
-	const char *cmd = nullptr, *cvar = nullptr, *use = nullptr;
+	const char* cmd = nullptr, *cvar = nullptr, *use = nullptr;
 	char cmdLine[MAXCMDLINE] = "";
 	char cmdBase[MAXCMDLINE] = "";
 	bool append = true;
@@ -727,7 +727,7 @@ bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, ui
 	 * parameter stage */
 	if (strstr(s, " ")) {
 		int cntParams;
-		char *tmp;
+		char* tmp;
 		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
 		/* remove the last whitespace */
 		cmdLine[strlen(cmdLine) - 1] = '\0';
@@ -883,7 +883,7 @@ static void Com_DebugHelp_f (void)
 static void Com_DebugError_f (void)
 {
 	if (Cmd_Argc() == 3) {
-		const char *errorType = Cmd_Argv(1);
+		const char* errorType = Cmd_Argv(1);
 		if (Q_streq(errorType, "ERR_DROP"))
 			Com_Error(ERR_DROP, "%s", Cmd_Argv(2));
 		else if (Q_streq(errorType, "ERR_FATAL"))
@@ -897,7 +897,7 @@ static void Com_DebugError_f (void)
 
 
 typedef struct debugLevel_s {
-	const char *str;
+	const char* str;
 	int debugLevel;
 } debugLevel_t;
 
@@ -925,7 +925,7 @@ static void Com_DeveloperSet_f (void)
 	int i = 0;
 
 	if (Cmd_Argc() == 2) {
-		const char *debugLevel = Cmd_Argv(1);
+		const char* debugLevel = Cmd_Argv(1);
 		while (debugLevels[i].str) {
 			if (Q_streq(debugLevel, debugLevels[i].str)) {
 				if (oldValue & debugLevels[i].debugLevel)	/* if it's already set... */
@@ -972,7 +972,7 @@ static bool Com_CvarCheckMaxFPS (cvar_t *cvar)
 /**
  * @sa Key_WriteBindings
  */
-void Com_WriteConfigToFile (const char *filename)
+void Com_WriteConfigToFile (const char* filename)
 {
 	qFILE f;
 
@@ -997,11 +997,11 @@ void Com_SetRandomSeed (unsigned int seed)
 	/*Com_Printf("setting random seed to %i\n", seed);*/
 }
 
-const char *Com_ByteToBinary (byte x)
+const char* Com_ByteToBinary (byte x)
 {
 	static char buf[9];
 	int cnt, mask = 1 << 7;
-	char *b = buf;
+	char* b = buf;
 
 	for (cnt = 1; cnt <= 8; ++cnt) {
 		*b++ = ((x & mask) == 0) ? '0' : '1';
@@ -1013,11 +1013,11 @@ const char *Com_ByteToBinary (byte x)
 	return buf;
 }
 
-const char *Com_UnsignedIntToBinary (uint32_t x)
+const char* Com_UnsignedIntToBinary (uint32_t x)
 {
 	static char buf[37];
 	int cnt, mask = 1 << 31;
-	char *b = buf;
+	char* b = buf;
 
 	for (cnt = 1; cnt <= 32; ++cnt) {
 		*b++ = ((x & mask) == 0) ? '0' : '1';
@@ -1167,14 +1167,14 @@ void Qcommon_Init (int argc, char** argv)
 		// 3 dual core with 2 GB
 		// 2 EeePc with 1 GB
 		// 1 smartphone
-		const char *hwclassVal = "5";
+		const char* hwclassVal = "5";
 #ifdef __ANDROID__
 		/** get the hardware class of the machine we are running on. */
 		hwclassVal = "1";
 #endif
 		hwclass = Cvar_Get("hwclass", hwclassVal, 0, "Defines the hardware class of this machine. 1 is the lowest, 5 is the highest.");
 
-		const char *s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
+		const char* s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 		Cvar_Get("version", s, CVAR_NOSET, "Full version string");
 		Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
@@ -1457,7 +1457,7 @@ void Qcommon_Frame (void)
 		Qcommon_Shutdown();
 		CL_FilterEventQueue(&Event_FilterAll);
 		if (restart.gamedir != nullptr) {
-			const char *restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
+			const char* restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
 			Qcommon_Init(4, const_cast<char** >(restartArgv));
 		} else {
 			Qcommon_Init(0, nullptr);

@@ -128,8 +128,8 @@ struct net_stream {
 
 struct datagram {
 	int len;
-	char *msg;
-	char *addr;
+	char* msg;
+	char* addr;
 	struct datagram *next;
 };
 
@@ -156,7 +156,7 @@ static SOCKET server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
 
 #ifdef _WIN32
-static const char *netStringErrorWin (int code)
+static const char* netStringErrorWin (int code)
 {
 	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
@@ -598,7 +598,7 @@ static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 	return true;
 }
 
-static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i, stream_onclose_func *onclose)
+static struct net_stream *NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func *onclose)
 {
 	struct net_stream *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -650,7 +650,7 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
  * @sa NET_ConnectToLoopBack
  * @todo What about a timeout
  */
-struct net_stream *NET_Connect (const char *node, const char *service, stream_onclose_func *onclose)
+struct net_stream *NET_Connect (const char* node, const char* service, stream_onclose_func *onclose)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -731,7 +731,7 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
  * @brief Enqueue a network message into a stream
  * @sa NET_StreamDequeue
  */
-void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
+void NET_StreamEnqueue (struct net_stream *s, const char* data, int len)
 {
 	if (len <= 0 || !s || s->closed || s->finished)
 		return;
@@ -757,7 +757,7 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 /**
  * @brief Returns the length of the waiting inbound buffer
  */
-static int NET_StreamPeek (struct net_stream *s, char *data, int len)
+static int NET_StreamPeek (struct net_stream *s, char* data, int len)
 {
 	if (len <= 0 || !s)
 		return 0;
@@ -772,7 +772,7 @@ static int NET_StreamPeek (struct net_stream *s, char *data, int len)
 /**
  * @sa NET_StreamEnqueue
  */
-int NET_StreamDequeue (struct net_stream *s, char *data, int len)
+int NET_StreamDequeue (struct net_stream *s, char* data, int len)
 {
 	if (len <= 0 || !s || s->finished)
 		return 0;
@@ -791,7 +791,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	unsigned int v;
 	const ScopedMutex scopedMutex(netMutex);
 
-	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
+	if (NET_StreamPeek(s, (char* )&v, 4) < 4)
 		return nullptr;
 
 	int len = LittleLong(v);
@@ -871,7 +871,7 @@ void NET_StreamFinished (struct net_stream *s)
  * @brief Returns the numerical representation of a @c net_stream
  * @note Not thread safe!
  */
-const char *NET_StreamToString (struct net_stream *s)
+const char* NET_StreamToString (struct net_stream *s)
 {
 	static char node[64];
 	NET_StreamPeerToName(s, node, sizeof(node), false);
@@ -884,7 +884,7 @@ const char *NET_StreamToString (struct net_stream *s)
  * @param[in] len The length of the target buffer
  * @param[in] appendPort Also append the port number to the target buffer
  */
-const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, bool appendPort)
+const char* NET_StreamPeerToName (struct net_stream *s, char* dst, int len, bool appendPort)
 {
 	if (!s)
 		return "(null)";
@@ -943,7 +943,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	}
 
 #ifdef _WIN32
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char* ) &t, sizeof(t)) != 0) {
 #else
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
 #endif
@@ -972,7 +972,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	return sock;
 }
 
-static struct addrinfo* NET_GetAddrinfoForNode (const char *node, const char *service)
+static struct addrinfo* NET_GetAddrinfoForNode (const char* node, const char* service)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -1003,7 +1003,7 @@ static struct addrinfo* NET_GetAddrinfoForNode (const char *node, const char *se
  * @sa server_func
  * @sa SV_Stop
  */
-bool SV_Start (const char *node, const char *service, stream_callback_func *func)
+bool SV_Start (const char* node, const char* service, stream_callback_func *func)
 {
 	if (!func)
 		return false;
@@ -1071,13 +1071,13 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char* ) &t, sizeof(t)) != 0) {
 		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char *) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char* ) &t, sizeof(t)) != 0) {
 		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;
@@ -1112,7 +1112,7 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
  * @param[in] service The port number
  * @param[in] func Callback function for data handling
  */
-struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *service, datagram_callback_func *func)
+struct datagram_socket *NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func *func)
 {
 	struct datagram_socket *s;
 	struct addrinfo *res;
@@ -1147,7 +1147,7 @@ struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *ser
 /**
  * @sa NET_DatagramSocketNew
  */
-void NET_DatagramSend (struct datagram_socket *s, const char *buf, int len, struct sockaddr *to)
+void NET_DatagramSend (struct datagram_socket *s, const char* buf, int len, struct sockaddr *to)
 {
 	if (!s || len <= 0 || !buf || !to)
 		return;
@@ -1171,7 +1171,7 @@ void NET_DatagramSend (struct datagram_socket *s, const char *buf, int len, stru
  * @sa NET_DatagramSocketNew
  * @todo This is only sending on the first available device, what if we have several devices?
  */
-void NET_DatagramBroadcast (struct datagram_socket *s, const char *buf, int len, int port)
+void NET_DatagramBroadcast (struct datagram_socket *s, const char* buf, int len, int port)
 {
 	if (s->family == AF_INET) {
 		struct sockaddr_in addr;
@@ -1224,7 +1224,7 @@ void NET_DatagramSocketClose (struct datagram_socket *s)
  * @param[out] service The target service name buffer
  * @param[in] servicelen The length of the service name buffer
  */
-void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen)
+void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, char* node, size_t nodelen, char* service, size_t servicelen)
 {
 	const int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
 			NI_NUMERICHOST | NI_NUMERICSERV | NI_DGRAM);
@@ -1235,13 +1235,13 @@ void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, ch
 	}
 }
 
-static void NET_AddrinfoToString (const struct addrinfo *addr, char *buf, size_t bufLength)
+static void NET_AddrinfoToString (const struct addrinfo *addr, char* buf, size_t bufLength)
 {
-	char *service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
+	char* service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
 	Q_strncpyz(buf, service, bufLength);
 }
 
-void NET_ResolvNode (const char *node, char *buf, size_t bufLength)
+void NET_ResolvNode (const char* node, char* buf, size_t bufLength)
 {
 	struct addrinfo* addrinfo = NET_GetAddrinfoForNode(node, nullptr);
 	if (addrinfo == nullptr) {

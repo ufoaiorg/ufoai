@@ -34,8 +34,8 @@ void NET_WriteChar(dbuffer *buf, char c);
 void NET_WriteByte(dbuffer *buf, byte c);
 void NET_WriteShort(dbuffer *buf, int c);
 void NET_WriteLong(dbuffer *buf, int c);
-void NET_WriteString(dbuffer *buf, const char *str);
-void NET_WriteRawString(dbuffer *buf, const char *str);
+void NET_WriteString(dbuffer *buf, const char* str);
+void NET_WriteRawString(dbuffer *buf, const char* str);
 void NET_WriteCoord(dbuffer *buf, float f);
 void NET_WritePos(dbuffer *buf, const vec3_t pos);
 void NET_Write2Pos(dbuffer *buf, const vec2_t pos);
@@ -43,9 +43,9 @@ void NET_WriteGPos(dbuffer *buf, const pos3_t pos);
 void NET_WriteAngle(dbuffer *buf, float f);
 void NET_WriteAngle16(dbuffer *buf, float f);
 void NET_WriteDir(dbuffer *buf, const vec3_t vector);
-void NET_vWriteFormat(dbuffer *buf, const char *format, va_list ap);
-void NET_WriteFormat(dbuffer *buf, const char *format, ...);
-void NET_VPrintf(dbuffer *buf, const char *format, va_list ap, char *str, size_t length);
+void NET_vWriteFormat(dbuffer *buf, const char* format, va_list ap);
+void NET_WriteFormat(dbuffer *buf, const char* format, ...);
+void NET_VPrintf(dbuffer *buf, const char* format, va_list ap, char* str, size_t length);
 
 /* This frees the buf argument */
 void NET_WriteMsg(struct net_stream *s, dbuffer &buf);
@@ -53,7 +53,7 @@ void NET_WriteMsg(struct net_stream *s, dbuffer &buf);
 /* This keeps buf intact */
 void NET_WriteConstMsg(struct net_stream *s, const dbuffer &buf);
 
-void NET_OOB_Printf(struct net_stream *s, const char *format, ...) __attribute__((format(__printf__,2,3)));
+void NET_OOB_Printf(struct net_stream *s, const char* format, ...) __attribute__((format(__printf__,2,3)));
 
 int NET_ReadChar(dbuffer *buf);
 int NET_ReadByte(dbuffer *buf);
@@ -62,8 +62,8 @@ int NET_PeekByte(const dbuffer *buf);
 int NET_PeekShort(const dbuffer *buf);
 int NET_PeekLong(const dbuffer *buf);
 int NET_ReadLong(dbuffer *buf);
-int NET_ReadString(dbuffer *buf, char *string, size_t length);
-int NET_ReadStringLine(dbuffer *buf, char *string, size_t length);
+int NET_ReadString(dbuffer *buf, char* string, size_t length);
+int NET_ReadStringLine(dbuffer *buf, char* string, size_t length);
 
 float NET_ReadCoord(dbuffer *buf);
 void NET_ReadPos(dbuffer *buf, vec3_t pos);
@@ -74,6 +74,6 @@ float NET_ReadAngle16(dbuffer *buf);
 void NET_ReadDir(dbuffer *buf, vec3_t vector);
 
 void NET_ReadData(dbuffer *buf, void *buffer, int size);
-void NET_vReadFormat(dbuffer *buf, const char *format, va_list ap);
-void NET_ReadFormat(dbuffer *buf, const char *format, ...);
-void NET_SkipFormat(dbuffer *buf, const char *format);
+void NET_vReadFormat(dbuffer *buf, const char* format, va_list ap);
+void NET_ReadFormat(dbuffer *buf, const char* format, ...);
+void NET_SkipFormat(dbuffer *buf, const char* format);

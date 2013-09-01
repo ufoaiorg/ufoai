@@ -65,7 +65,7 @@ void SV_SetMaster_f (void)
  * @param[in] s Either the numeric id of the player, or the player name
  * @return the client structure
  */
-static client_t *SV_GetPlayerClientStructure (const char *s)
+static client_t *SV_GetPlayerClientStructure (const char* s)
 {
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
@@ -98,7 +98,7 @@ static client_t *SV_GetPlayerClientStructure (const char *s)
 /**
  * @brief Checks whether a map exists
  */
-bool SV_CheckMap (const char *map, const char *assembly)
+bool SV_CheckMap (const char* map, const char* assembly)
 {
 	char expanded[MAX_QPATH];
 
@@ -164,7 +164,7 @@ static void SV_Map_f (void)
 	/* the buffers must be as big as the CS_TILES/CS_POSITONS config strings, because the base assembly
 	 * gives the full resolved rma assembly string */
 	char bufMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	const char *assembly = nullptr;
+	const char* assembly = nullptr;
 	char bufAssembly[MAX_TOKEN_CHARS * MAX_TILESTRINGS] = "";
 	Q_strncpyz(bufMap, Cmd_Argv(2), sizeof(bufMap));
 	/* assembled maps uses position strings */
@@ -233,7 +233,7 @@ static void SV_Status_f (void)
 {
 	int i;
 	client_t *cl;
-	const char *s;
+	const char* s;
 	char buf[256];
 
 	if (!svs.clients) {
@@ -286,7 +286,7 @@ static void SV_Status_f (void)
  */
 static void SV_ConSay_f (void)
 {
-	const char *p;
+	const char* p;
 	char text[1024];
 
 	if (Cmd_Argc() < 2)
@@ -385,9 +385,9 @@ static void SV_ServerCommand_f (void)
  * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cmd_AddParamCompleteFunction
  */
-static int SV_CompleteMapCommand (const char *partial, const char** match)
+static int SV_CompleteMapCommand (const char* partial, const char** match)
 {
-	const char *dayNightStr = nullptr;
+	const char* dayNightStr = nullptr;
 	static char dayNightMatch[7];
 
 	if (partial[0])
@@ -475,7 +475,7 @@ static serverCommand_t const serverCommandList[] = {
  * @brief Autocomplete function for server commands
  * @sa ServerCommand
  */
-static int SV_CompleteServerCommand (const char *partial, const char** match)
+static int SV_CompleteServerCommand (const char* partial, const char** match)
 {
 	int n = 0;
 	for (serverCommand_t const* i = serverCommandList; i->name; ++i) {
@@ -497,7 +497,7 @@ static void SV_PrintConfigStrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString;
+		const char* configString;
 		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 		 * so don't send the middle parts again. */
 		if (i > CS_TILES && i < CS_POSITIONS)

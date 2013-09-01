@@ -82,7 +82,7 @@ cvar_t *Cvar_GetFirst (void)
 }
 
 
-static bool Cvar_InfoValidate (const char *s)
+static bool Cvar_InfoValidate (const char* s)
 {
 	return s[strcspn(s, "\\\";")] == '\0';
 }
@@ -94,7 +94,7 @@ static bool Cvar_InfoValidate (const char *s)
  * @sa Cvar_GetString
  * @sa Cvar_SetValue
  */
-cvar_t *Cvar_FindVar (const char *varName)
+cvar_t *Cvar_FindVar (const char* varName)
 {
 	cvar_t *var;
 	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
@@ -114,7 +114,7 @@ cvar_t *Cvar_FindVar (const char *varName)
  * @sa Cvar_GetInteger
  * @return 0 if not defined
  */
-float Cvar_GetValue (const char *varName)
+float Cvar_GetValue (const char* varName)
 {
 	cvar_t *var;
 
@@ -130,7 +130,7 @@ float Cvar_GetValue (const char *varName)
  * @sa Cvar_FindVar
  * @return true if set
  */
-bool Cvar_SetCheckFunction (const char *varName, bool (*check) (cvar_t *cvar))
+bool Cvar_SetCheckFunction (const char* varName, bool (*check) (cvar_t *cvar))
 {
 	cvar_t *var;
 
@@ -187,7 +187,7 @@ bool Cvar_AssertValue (cvar_t *cvar, float minVal, float maxVal, bool shouldBeIn
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-int Cvar_GetInteger (const char *varName)
+int Cvar_GetInteger (const char* varName)
 {
 	const cvar_t *var;
 
@@ -205,7 +205,7 @@ int Cvar_GetInteger (const char *varName)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-const char *Cvar_GetString (const char *varName)
+const char* Cvar_GetString (const char* varName)
 {
 	const cvar_t *var;
 
@@ -223,7 +223,7 @@ const char *Cvar_GetString (const char *varName)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-const char *Cvar_VariableStringOld (const char *varName)
+const char* Cvar_VariableStringOld (const char* varName)
 {
 	cvar_t *var;
 
@@ -242,7 +242,7 @@ const char *Cvar_VariableStringOld (const char *varName)
  */
 void Cvar_Reset (cvar_t *cvar)
 {
-	char *str;
+	char* str;
 
 	if (cvar->oldString == nullptr)
 		return;
@@ -259,7 +259,7 @@ void Cvar_Reset (cvar_t *cvar)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-int Cvar_CompleteVariable (const char *partial, const char** match)
+int Cvar_CompleteVariable (const char* partial, const char** match)
 {
 	int n = 0;
 	for (cvar_t const* cvar = cvarVars; cvar; cvar = cvar->next) {
@@ -280,7 +280,7 @@ int Cvar_CompleteVariable (const char *partial, const char** match)
 /**
  * @brief Function to remove the cvar and free the space
  */
-bool Cvar_Delete (const char *varName)
+bool Cvar_Delete (const char* varName)
 {
 	unsigned hash;
 
@@ -346,7 +346,7 @@ bool Cvar_Delete (const char *varName)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char *desc)
+cvar_t *Cvar_Get (const char* var_name, const char* var_value, int flags, const char* desc)
 {
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
@@ -450,7 +450,7 @@ static cvarChangeListener_t *Cvar_GetChangeListener (cvarChangeListenerFunc_t li
  * @param varName The cvar name to register the listener for
  * @param listenerFunc The listener callback to register
  */
-cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
+cvarChangeListener_t *Cvar_RegisterChangeListener (const char* varName, cvarChangeListenerFunc_t listenerFunc)
 {
 	cvar_t *var = Cvar_FindVar(varName);
 	if (!var) {
@@ -491,7 +491,7 @@ cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChan
  * @param varName The cvar name to register the listener for
  * @param listenerFunc The listener callback to unregister
  */
-void Cvar_UnRegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
+void Cvar_UnRegisterChangeListener (const char* varName, cvarChangeListenerFunc_t listenerFunc)
 {
 	cvar_t *var = Cvar_FindVar(varName);
 	if (!var) {
@@ -516,7 +516,7 @@ void Cvar_UnRegisterChangeListener (const char *varName, cvarChangeListenerFunc_
  * @param[in] value Set the cvar to the value specified by 'value'
  * @param[in] force Force the update of the cvar
  */
-static cvar_t *Cvar_Set2 (const char *varName, const char *value, bool force)
+static cvar_t *Cvar_Set2 (const char* varName, const char* value, bool force)
 {
 	cvar_t *var;
 
@@ -610,7 +610,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, bool force)
 /**
  * @brief Will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet (const char *varName, const char *value)
+cvar_t *Cvar_ForceSet (const char* varName, const char* value)
 {
 	return Cvar_Set2(varName, value, true);
 }
@@ -621,7 +621,7 @@ cvar_t *Cvar_ForceSet (const char *varName, const char *value)
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-cvar_t *Cvar_Set (const char *varName, const char *value, ...)
+cvar_t *Cvar_Set (const char* varName, const char* value, ...)
 {
 	va_list argptr;
 	char text[512];
@@ -646,7 +646,7 @@ cvar_t *Cvar_Set (const char *varName, const char *value, ...)
  * @param flags which flags
  * @sa Cvar_Set_f
  */
-cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
+cvar_t *Cvar_FullSet (const char* varName, const char* value, int flags)
 {
 	cvar_t *var;
 
@@ -679,7 +679,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
  * @brief Expands value to a string and calls Cvar_Set
  * @note Float values are in the format #.##
  */
-void Cvar_SetValue (const char *varName, float value)
+void Cvar_SetValue (const char* varName, float value)
 {
 	if (value == (int) value)
 		Cvar_Set(varName, "%i", (int)value);
@@ -762,7 +762,7 @@ static void Cvar_SetOld_f (void)
 
 static void Cvar_Define_f (void)
 {
-	const char *name;
+	const char* name;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <cvarname> <value>\n", Cmd_Argv(0));
@@ -787,7 +787,7 @@ static void Cvar_Set_f (void)
 	}
 
 	if (c == 4) {
-		const char *arg = Cmd_Argv(3);
+		const char* arg = Cmd_Argv(3);
 		int flags = 0;
 
 		while (arg[0] != '\0') {
@@ -825,7 +825,7 @@ static void Cvar_Switch_f (void)
 	}
 
 	if (c == 3) {
-		const char *arg = Cmd_Argv(2);
+		const char* arg = Cmd_Argv(2);
 		int flags = 0;
 
 		while (arg[0] != '\0') {
@@ -919,7 +919,7 @@ static void Cvar_List_f (void)
 {
 	cvar_t *var;
 	int i, c, l = 0;
-	const char *token = nullptr;
+	const char* token = nullptr;
 
 	c = Cmd_Argc();
 
@@ -968,7 +968,7 @@ static void Cvar_List_f (void)
  * @brief Return a string with all cvars with bitflag given by parameter set
  * @param bit The bitflag we search the global cvar array for
  */
-static char *Cvar_BitInfo (int bit)
+static char* Cvar_BitInfo (int bit)
 {
 	static char info[MAX_INFO_STRING];
 	cvar_t *var;
@@ -985,7 +985,7 @@ static char *Cvar_BitInfo (int bit)
 /**
  * @brief Returns an info string containing all the CVAR_USERINFO cvars
  */
-const char *Cvar_Userinfo (void)
+const char* Cvar_Userinfo (void)
 {
 	return Cvar_BitInfo(CVAR_USERINFO);
 }
@@ -994,7 +994,7 @@ const char *Cvar_Userinfo (void)
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
  * @sa SV_StatusString
  */
-const char *Cvar_Serverinfo (void)
+const char* Cvar_Serverinfo (void)
 {
 	return Cvar_BitInfo(CVAR_SERVERINFO);
 }

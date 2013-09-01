@@ -35,7 +35,7 @@ typedef struct MD5Context {
 /**
  * @note: this code is harmless on little-endian machines.
  */
-static void byteReverse (unsigned char *buf, unsigned longs)
+static void byteReverse (unsigned char* buf, unsigned longs)
 {
 	do {
 		const uint32_t t = SDL_SwapLE32(*(uint32_t*)buf);
@@ -179,7 +179,7 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigne
 	/* Handle any leading odd-sized chunks */
 
 	if (t) {
-		unsigned char *p = (unsigned char *) ctx->in + t;
+		unsigned char* p = (unsigned char* ) ctx->in + t;
 
 		t = 64 - t;
 		if (len < t) {
@@ -211,10 +211,10 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigne
  * @brief Final wrapup - pad to 64-byte boundary with the bit pattern
  * 1 0* (64-bit count of bits processed, MSB-first)
  */
-static void MD5Final (struct MD5Context *ctx, unsigned char *digest)
+static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
 {
 	unsigned count;
-	unsigned char *p;
+	unsigned char* p;
 
 	/* Compute number of bytes mod 64 */
 	count = (ctx->bits[0] >> 3) & 0x3F;
@@ -247,7 +247,7 @@ static void MD5Final (struct MD5Context *ctx, unsigned char *digest)
 	((uint32_t *) ctx->in)[15] = ctx->bits[1];
 
 	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
-	byteReverse((unsigned char *) ctx->buf, 4);
+	byteReverse((unsigned char* ) ctx->buf, 4);
 
 	if (digest != nullptr)
 		memcpy(digest, ctx->buf, 16);
@@ -260,7 +260,7 @@ static void MD5Final (struct MD5Context *ctx, unsigned char *digest)
  * @param[in] length Compute the md5 of the first 'length' bytes (if 0 - complete file)
  * @return the md5 sum buffer (char*)
  */
-const char *Com_MD5File (const char *fn, int length)
+const char* Com_MD5File (const char* fn, int length)
 {
 	qFILE f;
 	const int filelen = FS_OpenFile(fn, &f, FILE_READ);
@@ -282,7 +282,7 @@ const char *Com_MD5File (const char *fn, int length)
 		if (r + total > length)
 			r = length - total;
 		total += r;
-		MD5Update(&md5, (const unsigned char *) buffer, r);
+		MD5Update(&md5, (const unsigned char* ) buffer, r);
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
@@ -304,7 +304,7 @@ const char *Com_MD5File (const char *fn, int length)
  * @param[in] len Compute the md5 of the first 'length' bytes (if 0 - complete file)
  * @return the md5 sum buffer (char*)
  */
-const char *Com_MD5Buffer (const byte *buf, size_t len)
+const char* Com_MD5Buffer (const byte *buf, size_t len)
 {
 	if (len < 1)
 		return "unknown";

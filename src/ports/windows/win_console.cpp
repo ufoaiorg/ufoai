@@ -89,7 +89,7 @@ static void Sys_ConsoleLoop (bool error)
  * @brief Handles input for the console window
  * @returns @c nullptr if there is no input in the input box
  */
-const char *Sys_ConsoleInput (void)
+const char* Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
 
@@ -112,12 +112,12 @@ const char *Sys_ConsoleInput (void)
 }
 
 
-void Sys_ConsoleOutput (const char *text)
+void Sys_ConsoleOutput (const char* text)
 {
 	char buffer[MAX_PRINTMSG];
 	int len = 0;
 
-	/* skip color char */
+	/* skip color character */
 	if (*text == 1)
 		text++;
 
@@ -163,7 +163,7 @@ void Sys_Backtrace (void)
 {
 }
 
-void Sys_Error (const char *error, ...)
+void Sys_Error (const char* error, ...)
 {
 	va_list argptr;
 	char text[1024];

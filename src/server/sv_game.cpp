@@ -37,7 +37,7 @@
 /**
  * @brief Debug print to server console
  */
-static void SV_dprintf (const char *fmt, ...)
+static void SV_dprintf (const char* fmt, ...)
 {
 	va_list ap;
 
@@ -50,7 +50,7 @@ static void SV_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void SV_PlayerPrintf (const SrvPlayer *player, int level, const char *fmt, va_list ap)
+static void SV_PlayerPrintf (const SrvPlayer *player, int level, const char* fmt, va_list ap)
 {
 	if (level == PRINT_NONE)
 		return;
@@ -72,12 +72,12 @@ static float SV_GetVisibility (const pos3_t position)
 	return CM_GetVisibility(&sv->mapTiles, position);
 }
 
-static void SV_error (const char *fmt, ...) __attribute__((noreturn));
+static void SV_error (const char* fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
  * @note The error message should not have a newline - it's added inside of this function
  */
-static void SV_error (const char *fmt, ...)
+static void SV_error (const char* fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -97,7 +97,7 @@ static void SV_error (const char *fmt, ...)
  * @param create if @c true the value will get written into the config strings (appended)
  * @return @c 0 if not found
  */
-static unsigned int SV_FindIndex (const char *name, int start, int max, bool create)
+static unsigned int SV_FindIndex (const char* name, int start, int max, bool create)
 {
 	int i;
 
@@ -105,7 +105,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, bool cre
 		return 0;
 
 	for (i = 1; i < max && SV_GetConfigString(start + i)[0] != '\0'; i++) {
-		const char *configString = SV_GetConfigString(start + i);
+		const char* configString = SV_GetConfigString(start + i);
 		if (Q_streq(configString, name))
 			return i;
 	}
@@ -129,7 +129,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, bool cre
 	return i;
 }
 
-static unsigned int SV_ModelIndex (const char *name)
+static unsigned int SV_ModelIndex (const char* name)
 {
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, true);
 }
@@ -138,7 +138,7 @@ static unsigned int SV_ModelIndex (const char *name)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void SV_SetModel (edict_t *ent, const char *name)
+static void SV_SetModel (edict_t *ent, const char* name)
 {
 	if (!name)
 		SV_error("SV_SetModel: nullptr");
@@ -160,7 +160,7 @@ static void SV_SetModel (edict_t *ent, const char *name)
 /**
  * @sa CL_ParseConfigString
  */
-static void SV_Configstring (int index, const char *fmt, ...)
+static void SV_Configstring (int index, const char* fmt, ...)
 {
 	char val[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	va_list argptr;
@@ -205,7 +205,7 @@ static void SV_WriteLong (int c)
 	NET_WriteLong(sv->pendingEvent.buf, c);
 }
 
-static void SV_WriteString (const char *s)
+static void SV_WriteString (const char* s)
 {
 	NET_WriteString(sv->pendingEvent.buf, s);
 }
@@ -230,7 +230,7 @@ static void SV_WriteAngle (float f)
 	NET_WriteAngle(sv->pendingEvent.buf, f);
 }
 
-static void SV_WriteFormat (const char *format, ...)
+static void SV_WriteFormat (const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -258,7 +258,7 @@ static int SV_ReadLong (void)
 	return NET_ReadLong(sv->messageBuffer);
 }
 
-static int SV_ReadString (char *str, size_t length)
+static int SV_ReadString (char* str, size_t length)
 {
 	return NET_ReadString(sv->messageBuffer, str, length);
 }
@@ -291,7 +291,7 @@ static void SV_ReadData (void *buffer, int size)
 /**
  * @sa NET_vReadFormat
  */
-static void SV_ReadFormat (const char *format, ...)
+static void SV_ReadFormat (const char* format, ...)
 {
 	va_list ap;
 
@@ -352,7 +352,7 @@ static void SV_EndEvents (void)
 }
 
 typedef struct {
-	const char *name;
+	const char* name;
 } eventNames_t;
 
 #define M(x) { #x }
@@ -429,7 +429,7 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 	if (rawType >= EV_NUM_EVENTS || rawType < 0)
 		Com_Error(ERR_DROP, "SV_AddEvent: invalid event %i", rawType);
 
-	const char *eventName = eventNames[rawType].name;
+	const char* eventName = eventNames[rawType].name;
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %s (%i - %i) (mask %s) (entnum: %i)\n", eventName,
 			rawType, eType, Com_UnsignedIntToBinary(mask), entnum);
 
@@ -514,7 +514,7 @@ static edict_t *SV_GetEventEdict (void)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
+static void *SV_TagAlloc (int size, int tagNum, const char* file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -522,7 +522,7 @@ static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 	return _Mem_Alloc(size, true, sv->gameSysPool, tagNum, file, line);
 }
 
-static void SV_MemFree (void *ptr, const char *file, int line)
+static void SV_MemFree (void *ptr, const char* file, int line)
 {
 	_Mem_Free(ptr, file, line);
 }
@@ -530,7 +530,7 @@ static void SV_MemFree (void *ptr, const char *file, int line)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void SV_FreeTags (int tagNum, const char *file, int line)
+static void SV_FreeTags (int tagNum, const char* file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -555,7 +555,7 @@ static pos_t SV_GridFall (const int actorSize, const pos3_t pos)
 	return Grid_Fall(sv->mapData.routing, actorSize, pos);
 }
 
-static void SV_RecalcRouting (const char *name, const GridBox& box, const char** list)
+static void SV_RecalcRouting (const char* name, const GridBox& box, const char** list)
 {
 	Grid_RecalcRouting(&sv->mapTiles, sv->mapData.routing, name, box, list);
 }
@@ -575,12 +575,12 @@ static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)
 	return RT_CanActorStandHere(sv->mapData.routing, actorSize, pos);
 }
 
-static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
+static void SV_SetInlineModelOrientation (const char* name, const vec3_t origin, const vec3_t angles)
 {
 	CM_SetInlineModelOrientation(&sv->mapTiles, name, origin, angles);
 }
 
-static void SV_GetInlineModelAABB (const char *name, AABB& aabb)
+static void SV_GetInlineModelAABB (const char* name, AABB& aabb)
 {
 	CM_GetInlineModelAABB(&sv->mapTiles, name, aabb);
 }
@@ -596,7 +596,7 @@ static void SV_UnloadGame (void)
 }
 
 #ifndef HARD_LINKED_GAME
-static bool SV_LoadGame (const char *path)
+static bool SV_LoadGame (const char* path)
 {
 	char name[MAX_OSPATH];
 
@@ -626,7 +626,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 #ifndef HARD_LINKED_GAME
 	typedef game_export_t *(*game_api_t) (game_import_t *);
 	game_api_t GetGameAPI;
-	const char *path;
+	const char* path;
 
 	if (svs.gameLibrary)
 		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");

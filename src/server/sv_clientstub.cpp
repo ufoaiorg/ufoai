@@ -42,7 +42,7 @@ void CL_Drop (void)
 {
 }
 
-void Con_Print (const char *txt)
+void Con_Print (const char* txt)
 {
 }
 
@@ -58,14 +58,14 @@ void CL_SlowFrame (int now, void *data)
 {
 }
 
-bool CL_ParseClientData (const char *type, const char *name, const char** text)
+bool CL_ParseClientData (const char* type, const char* name, const char** text)
 {
 	return true;
 }
 
 void Cmd_ForwardToServer (void)
 {
-	const char *cmd;
+	const char* cmd;
 
 	cmd = Cmd_Argv(0);
 	Com_Printf("Unknown command \"%s\"\n", cmd);

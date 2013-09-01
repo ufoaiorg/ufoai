@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param port The port
  * @return @c true if the extracting went well, @c false if an error occurred
  */
-bool HTTP_ExtractComponents (const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port)
+bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int *port)
 {
-	char *s, *buf;
-	const char *proto = "http://";
+	char* s, *buf;
+	const char* proto = "http://";
 	const size_t protoLength = strlen(proto);
 	char buffer[1024];
 	int i;
@@ -92,7 +92,7 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 	else
 		len = sizeof(headerBuff);
 
-	Q_strncpyz(headerBuff, (const char *)ptr, len);
+	Q_strncpyz(headerBuff, (const char* )ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
 		dlhandle_t *dl = (dlhandle_t *)stream;
@@ -119,7 +119,7 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 		dl->fileSize = bytes > 131072 ? bytes : 131072;
 		dl->tempBuffer = Mem_AllocTypeN(char, dl->fileSize);
 	} else if (dl->position + bytes >= dl->fileSize - 1) {
-		char *tmp = dl->tempBuffer;
+		char* tmp = dl->tempBuffer;
 		dl->tempBuffer = Mem_AllocTypeN(char, dl->fileSize * 2);
 		memcpy(dl->tempBuffer, tmp, dl->fileSize);
 		Mem_Free(tmp);
@@ -140,7 +140,7 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
  * @param[out] buf The resolved url or empty if an error occurred
  * @param[in] size The size of the target buffer
  */
-static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
+static void HTTP_ResolvURL (const char* url, char* buf, size_t size)
 {
 	char server[512];
 	char ipServer[MAX_VAR];
@@ -161,7 +161,7 @@ static void HTTP_ResolvURL (const char *url, char *buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file, const char *postfields)
+static bool HTTP_GetURLInternal (dlhandle_t &dl, const char* url, FILE* file, const char* postfields)
 {
 	if (Q_strnull(url)) {
 		Com_Printf("invalid url given\n");
@@ -214,7 +214,7 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char *url, FILE* file, co
 	return true;
 }
 
-bool HTTP_PutFile (const char *formName, const char *fileName, const char *url, const upparam_t *params)
+bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, const upparam_t *params)
 {
 	if (Q_strnull(url)) {
 		Com_Printf("no upload url given\n");
@@ -279,7 +279,7 @@ bool HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
  * @param[in] file The file to write the result into
  * @param[in] postfields Some potential POST data in the form
  */
-bool HTTP_GetToFile (const char *url, FILE* file, const char *postfields)
+bool HTTP_GetToFile (const char* url, FILE* file, const char* postfields)
 {
 	if (!file)
 		return false;
@@ -295,10 +295,10 @@ bool HTTP_GetToFile (const char *url, FILE* file, const char *postfields)
  * (%NN where NN is a two-digit hexadecimal number).
  * @return @c true if the conversion was successful, @c false if it failed or the target buffer was too small.
  */
-bool HTTP_Encode (const char *url, char *out, size_t outLength)
+bool HTTP_Encode (const char* url, char* out, size_t outLength)
 {
 	CURL *curl = curl_easy_init();
-	char *encoded = curl_easy_escape(curl, url, 0);
+	char* encoded = curl_easy_escape(curl, url, 0);
 	if (encoded == nullptr) {
 		curl_easy_cleanup(curl);
 		return false;
@@ -317,7 +317,7 @@ bool HTTP_Encode (const char *url, char *out, size_t outLength)
  * @param[in] userdata The userdata that is given to the callback
  * @param[in] postfields Some potential POST data
  */
-bool HTTP_GetURL (const char *url, http_callback_t callback, void *userdata, const char *postfields)
+bool HTTP_GetURL (const char* url, http_callback_t callback, void *userdata, const char* postfields)
 {
 	dlhandle_t dl;
 	OBJZERO(dl);
@@ -344,10 +344,10 @@ void HTTP_Cleanup (void)
 	curl_global_cleanup();
 }
 #else
-void HTTP_GetURL(const char *url, http_callback_t callback) {}
-void HTTP_PutFile(const char *formName, const char *fileName, const char *url, const upparam_t *params) {}
+void HTTP_GetURL(const char* url, http_callback_t callback) {}
+void HTTP_PutFile(const char* formName, const char* fileName, const char* url, const upparam_t *params) {}
 size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
 void HTTP_Cleanup(void) {}
-bool HTTP_ExtractComponents(const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port) {return false;}
+bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int *port) {return false;}
 #endif

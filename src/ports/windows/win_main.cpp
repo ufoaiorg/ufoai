@@ -73,7 +73,7 @@ void Sys_Init (void)
 
 static void FixWorkingDirectory (void)
 {
-	char *p;
+	char* p;
 	char curDir[MAX_PATH];
 
 	GetModuleFileName(nullptr, curDir, sizeof(curDir)-1);

@@ -268,7 +268,7 @@ void Com_SHA2Finish (sha2_context *ctx, byte digest[32])
 	PUT_UINT32_BE(ctx->state[7], digest, 28);
 }
 
-bool Com_SHA2File (const char *filename, byte digest[32])
+bool Com_SHA2File (const char* filename, byte digest[32])
 {
 	qFILE f;
 	const int filelen = FS_OpenFile(filename, &f, FILE_READ);

@@ -136,7 +136,7 @@ bool Com_SHA1Result (SHA1Context *context)
  *
  * Comments:
  */
-void Com_SHA1Input (SHA1Context *context, const unsigned char *message_array, unsigned length)
+void Com_SHA1Input (SHA1Context *context, const unsigned char* message_array, unsigned length)
 {
 	if (!length) {
 		return;
@@ -330,7 +330,7 @@ static void Com_SHA1PadMessage (SHA1Context *context)
 	Com_SHA1ProcessMessageBlock(context);
 }
 
-bool Com_SHA1File (const char *filename, char digest[41])
+bool Com_SHA1File (const char* filename, char digest[41])
 {
 	qFILE f;
 	const int filelen = FS_OpenFile(filename, &f, FILE_READ);
@@ -358,7 +358,7 @@ bool Com_SHA1File (const char *filename, char digest[41])
 	return true;
 }
 
-bool Com_SHA1Buffer (const unsigned char *buf, unsigned int len, char digest[41])
+bool Com_SHA1Buffer (const unsigned char* buf, unsigned int len, char digest[41])
 {
 	if (len < 1)
 		return false;

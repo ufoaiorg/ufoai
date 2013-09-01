@@ -40,11 +40,11 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 
 	while (StackWalk(IMAGE_FILE_MACHINE_I386, process, thread, &frame, context,
 			0, SymFunctionTableAccess, SymGetModuleBase, 0)) {
-		const char * file = nullptr;
-		const char * func = nullptr;
+		const char*  file = nullptr;
+		const char*  func = nullptr;
 		unsigned line = 0;
 		DWORD module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
-		const char * module_name = "[unknown module]";
+		const char*  module_name = "[unknown module]";
 		IMAGEHLP_SYMBOL *symbol = (IMAGEHLP_SYMBOL *) symbol_buffer;
 
 		--depth;
@@ -83,7 +83,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prev = nullptr;
 #define BUFFER_MAX (16*1024)
-static char * g_output = nullptr;
+static char*  g_output = nullptr;
 
 static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 {
@@ -91,7 +91,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	SYSTEMTIME timeInfo;
 	OSVERSIONINFOEX osInfo;
 	FILE* crash;
-	const char *dumpFile = "crashdump.txt";
+	const char* dumpFile = "crashdump.txt";
 	int ret;
 
 	GetSystemTime(&timeInfo);
