@@ -16,33 +16,8 @@ ifeq ($(DEBUG),1)
 	$(TARGET)_CFLAGS += -DLUA_USE_APICHECK
 endif
 
-$(TARGET)_SRCS      = \
-	game/g_actor.cpp \
-	game/g_ai.cpp \
-	game/g_ai_lua.cpp \
-	game/g_camera.cpp \
-	game/g_client.cpp \
-	game/g_combat.cpp \
-	game/g_cmds.cpp \
-	game/g_edicts.cpp \
-	game/g_events.cpp \
-	game/g_func.cpp \
-	game/g_health.cpp \
-	game/g_inventory.cpp \
-	game/g_main.cpp \
-	game/g_match.cpp \
-	game/g_mission.cpp \
-	game/g_morale.cpp \
-	game/g_move.cpp \
-	game/g_phys.cpp \
-	game/g_reaction.cpp \
-	game/g_round.cpp \
-	game/g_stats.cpp \
-	game/g_spawn.cpp \
-	game/g_svcmds.cpp \
-	game/g_trigger.cpp \
-	game/g_utils.cpp \
-	game/g_vis.cpp \
+$(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
+	$(wildcard $(SRCDIR)/game/g_*.cpp) \
 	\
 	game/lua/lapi.cpp \
 	game/lua/lauxlib.cpp \
@@ -73,7 +48,7 @@ $(TARGET)_SRCS      = \
 	game/lua/lundump.cpp \
 	game/lua/lvm.cpp \
 	game/lua/lzio.cpp \
-	game/lua/print.cpp
+	game/lua/print.cpp )
 
 ifneq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS += shared/mathlib.cpp \
