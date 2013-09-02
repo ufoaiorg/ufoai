@@ -754,7 +754,7 @@ static void CM_InitBoxHull (MapTile &tile)
 	}
 }
 
-void CM_LoadBsp (MapTile &tile, dBspHeader_t& header, vec3_t shift, const byte *base)
+void CM_LoadBsp (MapTile &tile, const dBspHeader_t& header, const vec3_t shift, const byte *base)
 {
 	/* load into heap */
 	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
