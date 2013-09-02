@@ -29,12 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 CMODEL
 ==============================================================*/
 #include "tracing.h"
+#include "qfiles.h"
 
 void CM_LoadMap(const char* tiles, bool day, const char* pos, const char* entityString, mapData_t *mapData, mapTiles_t *mapTiles);
 cBspModel_t *CM_InlineModel(const mapTiles_t *mapTiles, const char* name);
 cBspModel_t *CM_SetInlineModelOrientation(mapTiles_t *mapTiles, const char* name, const vec3_t origin, const vec3_t angles);
 void CM_GetInlineModelAABB(mapTiles_t *mapTiles, const char* name, AABB& aabb);
 float CM_GetVisibility(const mapTiles_t *mapTiles, const pos3_t position);
+void CM_LoadBsp(MapTile &tile, dBspHeader_t& header, vec3_t shift, const byte *base);
 
 /*==============================================================
 CMODEL BOX TRACING

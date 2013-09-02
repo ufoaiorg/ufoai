@@ -754,6 +754,19 @@ static void CM_InitBoxHull (MapTile &tile)
 	}
 }
 
+void CM_LoadBsp (MapTile &tile, dBspHeader_t& header, vec3_t shift, const byte *base)
+{
+	/* load into heap */
+	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
+	CMod_LoadLeafs(tile, base, &header.lumps[LUMP_LEAFS]);
+	CMod_LoadLeafBrushes(tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
+	CMod_LoadPlanes(tile, base, &header.lumps[LUMP_PLANES], shift);
+	CMod_LoadBrushes(tile, base, &header.lumps[LUMP_BRUSHES]);
+	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
+	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
+	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
+}
+
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
@@ -817,15 +830,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	 * are assembling a map */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
-	/* load into heap */
-	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
-	CMod_LoadLeafs(tile, base, &header.lumps[LUMP_LEAFS]);
-	CMod_LoadLeafBrushes(tile, base, &header.lumps[LUMP_LEAFBRUSHES]);
-	CMod_LoadPlanes(tile, base, &header.lumps[LUMP_PLANES], shift);
-	CMod_LoadBrushes(tile, base, &header.lumps[LUMP_BRUSHES]);
-	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
-	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
-	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
+	CM_LoadBsp(tile, header, shift, base);
 	CMod_LoadEntityString(tile, entityString, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
 		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
