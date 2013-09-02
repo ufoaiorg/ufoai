@@ -458,7 +458,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	char userinfo[MAX_INFO_STRING];
 	Q_strncpyz(userinfo, Cmd_Argv(2), sizeof(userinfo));
 
-	if (userinfo[0] == '\0') {  /* catch empty userinfo */
+	if (Q_strnull(userinfo)) {  /* catch empty userinfo */
 		Com_Printf("Empty userinfo from %s\n", peername);
 		NET_OOB_Printf(stream, SV_CMD_PRINT "\n" REJ_CONNECTION_REFUSED "\n");
 		return;
