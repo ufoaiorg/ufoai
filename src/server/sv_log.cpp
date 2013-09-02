@@ -33,7 +33,7 @@
 static SDL_mutex *svLogMutex;
 static stringHunk_t *svLogHunk;
 
-static void SV_LogPrintOutput (const char *string)
+static void SV_LogPrintOutput (const char* string)
 {
 	Com_Printf("%s", string);
 }
@@ -58,7 +58,7 @@ void SV_LogHandleOutput (void)
  * @param format The format of the message
  * @param ap The variadic function argument list to fill the format strings
  */
-void SV_LogAdd (const char *format, va_list ap)
+void SV_LogAdd (const char* format, va_list ap)
 {
 	char msg[1024];
 

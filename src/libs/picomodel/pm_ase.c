@@ -295,10 +295,10 @@ static void _ase_submit_triangles (picoModel_t *model, aseMaterial_t *materials,
 	}
 }
 
-static void shadername_convert (char *shaderName)
+static void shadername_convert (char* shaderName)
 {
 	/* unix-style path separators */
-	char *s = shaderName;
+	char* s = shaderName;
 	for (; *s != '\0'; ++s) {
 		if (*s == '\\') {
 			*s = '/';
@@ -377,7 +377,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 		/* remember node name */
 		if (!_pico_stricmp(p->token, "*node_name")) {
 			/* read node name */
-			char *ptr = _pico_parse(p, 0);
+			char* ptr = _pico_parse(p, 0);
 			if (ptr == NULL)
 				_ase_error_return("Node name parse error");
 
@@ -633,7 +633,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 			char materialName[1024];
 			float transValue = 0.0f, shineValue = 1.0f;
 			picoColor_t ambientColor, diffuseColor, specularColor;
-			char *mapname = NULL;
+			char* mapname = NULL;
 			int subMtlId, subMaterialLevel = -1;
 
 			/* get material index */
@@ -704,7 +704,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 				}
 				/* parse material name */
 				else if (!_pico_stricmp(p->token, "*material_name")) {
-					char *name = _pico_parse(p, 0);
+					char* name = _pico_parse(p, 0);
 					if (name == NULL)
 						_ase_error_return("Missing material name");
 
@@ -815,7 +815,7 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 
 						/* parse diffuse map bitmap */
 						if (!_pico_stricmp(p->token, "*bitmap")) {
-							char *name = _pico_parse(p, 0);
+							char* name = _pico_parse(p, 0);
 							if (name == NULL)
 								_ase_error_return("Missing material map bitmap name");
 							mapname = _pico_alloc(strlen(name) + 1);
@@ -865,13 +865,13 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 
 				/* extract shadername from bitmap path */
 				if (mapname != NULL) {
-					char *p = mapname;
+					char* p = mapname;
 
 					/* convert to shader-name format */
 					shadername_convert(mapname);
 					{
 						/* remove extension */
-						char *last_period = strrchr(p, '.');
+						char* last_period = strrchr(p, '.');
 						if (last_period != NULL) {
 							*last_period = '\0';
 						}

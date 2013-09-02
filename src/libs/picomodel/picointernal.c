@@ -143,9 +143,9 @@ void *_pico_realloc (void** ptr, size_t oldSize, size_t newSize)
  * as custom clone size (the string is cropped to fit into mem
  * if needed). -sea
  */
-char *_pico_clone_alloc (const char *str)
+char* _pico_clone_alloc (const char* str)
 {
-	char *cloned;
+	char* cloned;
 
 	/* sanity check */
 	if (str == NULL)
@@ -181,7 +181,7 @@ void _pico_free (void *ptr)
 /**
  * @brief wrapper around the loadfile function pointer
  */
-void _pico_load_file (char *name, unsigned char** buffer, int *bufSize)
+void _pico_load_file (char* name, unsigned char** buffer, int *bufSize)
 {
 	/* sanity checks */
 	if (name == NULL) {
@@ -218,7 +218,7 @@ void _pico_free_file (void *buffer)
 /**
  * @brief wrapper around the print function pointer -sea
  */
-void _pico_printf (int level, const char *format, ...)
+void _pico_printf (int level, const char* format, ...)
 {
 	char str[4096];
 	va_list argptr;
@@ -246,7 +246,7 @@ void _pico_printf (int level, const char *format, ...)
  * trims everything after the first whitespace-delimited token
  */
 
-void _pico_first_token (char *str)
+void _pico_first_token (char* str)
 {
 	if (!str || !*str)
 		return;
@@ -258,9 +258,9 @@ void _pico_first_token (char *str)
 /* _pico_strltrim:
  * left trims the given string -sea
  */
-char *_pico_strltrim (char *str)
+char* _pico_strltrim (char* str)
 {
-	char *str1 = str, *str2 = str;
+	char* str1 = str, *str2 = str;
 
 	while (isspace(*str2))
 		str2++;
@@ -273,10 +273,10 @@ char *_pico_strltrim (char *str)
 /* _pico_strrtrim:
  * right trims the given string -sea
  */
-char *_pico_strrtrim (char *str)
+char* _pico_strrtrim (char* str)
 {
 	if (str && *str) {
-		char *str1 = str;
+		char* str1 = str;
 		int allspace = 1;
 
 		while (*str1) {
@@ -298,9 +298,9 @@ char *_pico_strrtrim (char *str)
 /* _pico_strlwr:
  *  pico internal string-to-lower routine.
  */
-char *_pico_strlwr (char *str)
+char* _pico_strlwr (char* str)
 {
-	char *cp;
+	char* cp;
 	for (cp = str; *cp; ++cp) {
 		if ('A' <= *cp && *cp <= 'Z') {
 			*cp += ('a' - 'A');
@@ -312,7 +312,7 @@ char *_pico_strlwr (char *str)
 /* _pico_strchcount:
  *  counts how often the given char appears in str. -sea
  */
-int _pico_strchcount (char *str, int ch)
+int _pico_strchcount (char* str, int ch)
 {
 	int count = 0;
 	while (*str++)
@@ -551,7 +551,7 @@ float _pico_big_float (float src)
 /* _pico_stristr:
  *  case-insensitive strstr. -sea
  */
-const char *_pico_stristr (const char *str, const char *substr)
+const char* _pico_stristr (const char* str, const char* substr)
 {
 	const size_t sublen = strlen(substr);
 	while (*str) {
@@ -569,7 +569,7 @@ const char *_pico_stristr (const char *str, const char *substr)
  changes dos \ style path separators to /
  */
 
-void _pico_unixify (char *path)
+void _pico_unixify (char* path)
 {
 	if (path == NULL)
 		return;
@@ -585,10 +585,10 @@ void _pico_unixify (char *path)
  *  the directory separators to un*x style. returns 1 on success
  *  or 0 when 'destSize' was exceeded. -sea
  */
-int _pico_nofname (const char *path, char *dest, int destSize)
+int _pico_nofname (const char* path, char* dest, int destSize)
 {
 	int left = destSize;
-	char *temp = dest;
+	char* temp = dest;
 
 	while ((*dest = *path) != '\0') {
 		if (*dest == '/' || *dest == '\\') {
@@ -611,9 +611,9 @@ int _pico_nofname (const char *path, char *dest, int destSize)
  *  returns ptr to filename portion in given path or an empty
  *  string otherwise. given 'path' is not altered. -sea
  */
-const char *_pico_nopath (const char *path)
+const char* _pico_nopath (const char* path)
 {
-	const char *src;
+	const char* src;
 	src = path + (strlen(path) - 1);
 
 	if (path == NULL)
@@ -633,9 +633,9 @@ const char *_pico_nopath (const char *path)
  *  or filepath's filename portion. the given 'path' *is*
  *  altered. leave 'ext' empty to remove extension. -sea
  */
-char *_pico_setfext (char *path, const char *ext)
+char* _pico_setfext (char* path, const char* ext)
 {
-	char *src;
+	char* src;
 	int remfext = 0;
 
 	src = path + (strlen(path) - 1);
@@ -670,7 +670,7 @@ char *_pico_setfext (char *path, const char *ext)
  *  removed string trimming here. this can be done manually by the
  *  calling func.
  */
-int _pico_getline (char *buf, int bufsize, char *dest, int destsize)
+int _pico_getline (char* buf, int bufsize, char* dest, int destsize)
 {
 	int pos;
 
@@ -721,8 +721,8 @@ picoParser_t *_pico_new_parser (picoByte_t *buffer, int bufSize)
 		return NULL;
 	}
 	/* setup */
-	p->buffer = (char *) buffer;
-	p->cursor = (char *) buffer;
+	p->buffer = (char* ) buffer;
+	p->cursor = (char* ) buffer;
 	p->bufSize = bufSize;
 	p->max = p->buffer + bufSize;
 	p->curLine = 1; /* sea: new */
@@ -758,7 +758,7 @@ void _pico_free_parser (picoParser_t *p)
 int _pico_parse_ex (picoParser_t *p, int allowLFs, int handleQuoted)
 {
 	int hasLFs = 0;
-	char *old;
+	char* old;
 
 	/* sanity checks */
 	if (p == NULL || p->buffer == NULL || p->cursor < p->buffer || p->cursor >= p->max)
@@ -820,7 +820,7 @@ int _pico_parse_ex (picoParser_t *p, int allowLFs, int handleQuoted)
  * @brief reads the first token from the next line and returns
  * a pointer to it. returns NULL on EOL or EOF. -sea
  */
-char *_pico_parse_first (picoParser_t *p)
+char* _pico_parse_first (picoParser_t *p)
 {
 	/* sanity check */
 	if (p == NULL)
@@ -839,7 +839,7 @@ char *_pico_parse_first (picoParser_t *p)
  * to it. quoted strings are handled as usual. returns NULL
  * on EOL or EOF. -sea
  */
-char *_pico_parse (picoParser_t *p, int allowLFs)
+char* _pico_parse (picoParser_t *p, int allowLFs)
 {
 	/* sanity check */
 	if (p == NULL)
@@ -909,7 +909,7 @@ int _pico_parse_skip_braced (picoParser_t *p)
 	return 1;
 }
 
-int _pico_parse_check (picoParser_t *p, int allowLFs, const char *str)
+int _pico_parse_check (picoParser_t *p, int allowLFs, const char* str)
 {
 	if (!_pico_parse_ex(p, allowLFs, 1))
 		return 0;
@@ -918,7 +918,7 @@ int _pico_parse_check (picoParser_t *p, int allowLFs, const char *str)
 	return 0;
 }
 
-int _pico_parse_checki (picoParser_t *p, int allowLFs, const char *str)
+int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str)
 {
 	if (!_pico_parse_ex(p, allowLFs, 1))
 		return 0;
@@ -929,7 +929,7 @@ int _pico_parse_checki (picoParser_t *p, int allowLFs, const char *str)
 
 int _pico_parse_int (picoParser_t *p, int *out)
 {
-	char *token;
+	char* token;
 
 	/* sanity checks */
 	if (p == NULL || out == NULL)
@@ -948,7 +948,7 @@ int _pico_parse_int (picoParser_t *p, int *out)
 
 int _pico_parse_int_def (picoParser_t *p, int *out, int def)
 {
-	char *token;
+	char* token;
 
 	/* sanity checks */
 	if (p == NULL || out == NULL)
@@ -967,7 +967,7 @@ int _pico_parse_int_def (picoParser_t *p, int *out, int def)
 
 int _pico_parse_float (picoParser_t *p, float *out)
 {
-	char *token;
+	char* token;
 
 	/* sanity checks */
 	if (p == NULL || out == NULL)
@@ -986,7 +986,7 @@ int _pico_parse_float (picoParser_t *p, float *out)
 
 int _pico_parse_float_def (picoParser_t *p, float *out, float def)
 {
-	char *token;
+	char* token;
 
 	/* sanity checks */
 	if (p == NULL || out == NULL)
@@ -1016,7 +1016,7 @@ int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
 
 	/* parse three vector components */
 	for (i = 0; i < 3; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec(out);
 			return 0;
@@ -1040,7 +1040,7 @@ int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
 
 	/* parse three vector components */
 	for (i = 0; i < 3; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec(def, out);
 			return 0;
@@ -1064,7 +1064,7 @@ int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
 
 	/* parse two vector components */
 	for (i = 0; i < 2; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec2(out);
 			return 0;
@@ -1088,7 +1088,7 @@ int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
 
 	/* parse two vector components */
 	for (i = 0; i < 2; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec2(def, out);
 			return 0;
@@ -1112,7 +1112,7 @@ int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
 
 	/* parse four vector components */
 	for (i = 0; i < 4; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_zero_vec4(out);
 			return 0;
@@ -1136,7 +1136,7 @@ int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def)
 
 	/* parse four vector components */
 	for (i = 0; i < 4; i++) {
-		char *token = _pico_parse(p, 0);
+		char* token = _pico_parse(p, 0);
 		if (token == NULL) {
 			_pico_copy_vec4(def, out);
 			return 0;

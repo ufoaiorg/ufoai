@@ -147,8 +147,8 @@ public:
 	}
 };
 
-MapInfo* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos, char *entityString, const unsigned int seed);
+MapInfo* SV_AssembleMap(const char* name, const char* assembly, char* asmMap, char* asmPos, char* entityString, const unsigned int seed);
 
 /* the next two functions are only exported for cunits tests */
-void SV_ParseUMP(const char *name, char *entityString, MapInfo *map, bool inherit);
+void SV_ParseUMP(const char* name, char* entityString, MapInfo *map, bool inherit);
 void SV_PrepareTilesToPlace(MapInfo *map);

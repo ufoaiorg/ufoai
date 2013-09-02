@@ -80,9 +80,9 @@ class BinaryToTextInputStream: public TextInputStream
 			m_inputStream(inputStream)
 		{
 		}
-		std::size_t read (char *buffer, std::size_t length)
+		std::size_t read (char* buffer, std::size_t length)
 		{
-			char *p = buffer;
+			char* p = buffer;
 			for (;;) {
 				if (length != 0 && m_inputStream.readByte(
 						*reinterpret_cast<typename BinaryInputStreamType::byte_type*> (p))) {
@@ -115,7 +115,7 @@ class StoredArchiveFile: public ArchiveFile
 		{
 		}
 
-		static StoredArchiveFile* create (const char *name, const char *archiveName, position_type position,
+		static StoredArchiveFile* create (const char* name, const char* archiveName, position_type position,
 				size_type stream_size, size_type file_size)
 		{
 			return New<StoredArchiveFile> ().scalar(name, archiveName, position, stream_size, file_size);

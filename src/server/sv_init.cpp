@@ -40,7 +40,7 @@ serverInstanceGame_t *sv;			/* local server */
  * @note the title string must be translated client side
  * @return Never nullptr - mapname or maptitle (if defined in assembly)
  */
-static const char *SV_GetMapTitle (const MapInfo *map, const char* const mapname)
+static const char* SV_GetMapTitle (const MapInfo *map, const char* const mapname)
 {
 	assert(mapname);
 
@@ -62,7 +62,7 @@ static const char *SV_GetMapTitle (const MapInfo *map, const char* const mapname
 /**
  * @sa CL_ServerListDiscoveryCallback
  */
-static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+static void SV_DiscoveryCallback (struct datagram_socket *s, const char* buf, int len, struct sockaddr *from)
 {
 	const char match[] = "discover";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
@@ -111,13 +111,13 @@ static void SV_InitGame (void)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-void SV_Map (bool day, const char *levelstring, const char *assembly)
+void SV_Map (bool day, const char* levelstring, const char* assembly)
 {
 	int i;
 	unsigned checksum = 0;
-	char *map = SV_GetConfigString(CS_TILES);
-	char *pos = SV_GetConfigString(CS_POSITIONS);
-	char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
+	char* map = SV_GetConfigString(CS_TILES);
+	char* pos = SV_GetConfigString(CS_POSITIONS);
+	char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
 	MapInfo *randomMap = nullptr;
 	client_t *cl;
 

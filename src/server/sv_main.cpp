@@ -74,7 +74,7 @@ static leakyBucket_t buckets[MAX_BUCKETS];
 static leakyBucket_t *bucketHashes[MAX_HASHES];
 static leakyBucket_t outboundLeakyBucket;
 
-char *SV_GetConfigString (int index)
+char* SV_GetConfigString (int index)
 {
 	if (!Com_CheckConfigStringIndex(index))
 		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
@@ -87,10 +87,10 @@ int SV_GetConfigStringInteger (int index)
 	return atoi(SV_GetConfigString(index));
 }
 
-char *SV_SetConfigString (int index, ...)
+char* SV_SetConfigString (int index, ...)
 {
 	va_list ap;
-	const char *value;
+	const char* value;
 
 	if (!Com_CheckConfigStringIndex(index))
 		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
@@ -105,7 +105,7 @@ char *SV_SetConfigString (int index, ...)
 		value = va("%i", va_arg(ap, int));
 		break;
 	default:
-		value = va_arg(ap, char *);
+		value = va_arg(ap, char* );
 		break;
 	}
 
@@ -158,7 +158,7 @@ client_t *SV_GetClient (int index)
  * or unwillingly. This is NOT called if the entire server is quitting
  * or crashing.
  */
-void SV_DropClient (client_t *drop, const char *message)
+void SV_DropClient (client_t *drop, const char* message)
 {
 	/* add the disconnect */
 	dbuffer msg(2 + strlen(message));
@@ -446,7 +446,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
+	const char* peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
 
 	const int version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
@@ -506,7 +506,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	/* get the game a chance to reject this connection or modify the userinfo */
 	if (!connected) {
-		const char *rejmsg = Info_ValueForKey(userinfo, "rejmsg");
+		const char* rejmsg = Info_ValueForKey(userinfo, "rejmsg");
 		if (rejmsg[0] != '\0') {
 			NET_OOB_Printf(stream, SV_CMD_PRINT "\n%s\n" REJ_CONNECTION_REFUSED "\n", rejmsg);
 			Com_Printf("Game rejected a connection from %s. Reason: %s\n", peername, rejmsg);
@@ -542,7 +542,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
  * @brief Checks whether the remote connection is allowed (rcon_password must be
  * set on the server) - and verify the user given password with the cvar value.
  */
-static inline bool Rcon_Validate (const char *password)
+static inline bool Rcon_Validate (const char* password)
 {
 	/* no rcon access */
 	if (Q_strnull(rcon_password->string))
@@ -561,7 +561,7 @@ static inline bool Rcon_Validate (const char *password)
 static void SVC_RemoteCommand (struct net_stream *stream)
 {
 	char buf[64];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
+	const char* peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
 
 	/* Prevent using rcon as an amplifier and make dictionary attacks impractical */
 	if (SVC_RateLimitAddress(*stream)) {
@@ -618,7 +618,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 	NET_ReadStringLine(msg, s, sizeof(s));
 	Cmd_TokenizeString(s, false);
 
-	const char *c = Cmd_Argv(0);
+	const char* c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
 
 	if (Q_streq(c, SV_CMD_TEAMINFO)) {
@@ -825,7 +825,7 @@ void SV_Frame (int now, void *data)
 	}
 
 	if (sv_dedicated->integer) {
-		const char *s;
+		const char* s;
 		do {
 			s = Sys_ConsoleInput();
 			if (s)
@@ -981,7 +981,7 @@ void SV_Init (void)
  * connected clients before the server goes down.
  * @sa SV_Shutdown
  */
-static void SV_FinalMessage (const char *message, bool reconnect)
+static void SV_FinalMessage (const char* message, bool reconnect)
 {
 	client_t *cl;
 	dbuffer msg(2 + strlen(message));
@@ -1021,7 +1021,7 @@ void SV_Clear (void)
  * @param[in] reconnect True if this is only a restart (new map or map restart),
  * false if the server shutdown completely and you also want to disconnect all clients
  */
-void SV_Shutdown (const char *finalmsg, bool reconnect)
+void SV_Shutdown (const char* finalmsg, bool reconnect)
 {
 	unsigned int i;
 

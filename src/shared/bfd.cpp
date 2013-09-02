@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef HAVE_BFD_H
 #include "bfd.h"
 
-void output_init (struct output_buffer *ob, char * buf, size_t sz)
+void output_init (struct output_buffer *ob, char*  buf, size_t sz)
 {
 	ob->buf = buf;
 	ob->sz = sz;
@@ -38,7 +38,7 @@ void output_init (struct output_buffer *ob, char * buf, size_t sz)
 	ob->buf[0] = '\0';
 }
 
-void output_print (struct output_buffer *ob, const char * format, ...)
+void output_print (struct output_buffer *ob, const char*  format, ...)
 {
 	va_list ap;
 	if (ob->sz == ob->ptr)
@@ -92,7 +92,7 @@ void find (struct bfd_ctx * b, size_t offset, const char** file, const char** fu
 	}
 }
 
-static void list_matching_formats (struct output_buffer *ob, const char * procname, char** p)
+static void list_matching_formats (struct output_buffer *ob, const char*  procname, char** p)
 {
 	if (!p || !*p)
 		return;
@@ -103,7 +103,7 @@ static void list_matching_formats (struct output_buffer *ob, const char * procna
 	output_print(ob, "\n");
 }
 
-static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct output_buffer *ob)
+static int init_bfd_ctx (struct bfd_ctx *bc, const char*  procname, struct output_buffer *ob)
 {
 	bfd *b;
 	void *symbol_table;
@@ -126,7 +126,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	}
 
 	if (!bfd_check_format_matches(b, bfd_object, &matching)) {
-		const char *errmsg = bfd_errmsg(bfd_get_error());
+		const char* errmsg = bfd_errmsg(bfd_get_error());
 		output_print(ob, "%s (%s)\n", errmsg, b->filename);
 		if (bfd_get_error() == bfd_error_file_ambiguously_recognized) {
 			list_matching_formats(ob, b->filename, matching);
@@ -137,7 +137,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	}
 
 	if ((bfd_get_file_flags(b) & HAS_SYMS) == 0) {
-		const char *errmsg = bfd_errmsg(bfd_get_error());
+		const char* errmsg = bfd_errmsg(bfd_get_error());
 		output_print(ob, "Failed to get file flags from (%s) %s\n", b->filename, errmsg);
 		bfd_close(b);
 		return 1;
@@ -145,7 +145,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 
 	if (bfd_read_minisymbols(b, FALSE, &symbol_table, &dummy) == 0) {
 		if (bfd_read_minisymbols(b, TRUE, &symbol_table, &dummy) < 0) {
-			const char *errmsg = bfd_errmsg(bfd_get_error());
+			const char* errmsg = bfd_errmsg(bfd_get_error());
 			output_print(ob, "Failed to read symbols from (%s): %s\n", b->filename, errmsg);
 			free(symbol_table);
 			bfd_close(b);
@@ -167,7 +167,7 @@ static void close_bfd_ctx (struct bfd_ctx *bc)
 	}
 }
 
-struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const char *procname)
+struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const char* procname)
 {
 	struct bfd_ctx bc;
 

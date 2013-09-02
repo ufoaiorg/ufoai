@@ -182,7 +182,7 @@ class ModuleRef
 		Module* m_module;
 		Type* m_table;
 	public:
-		ModuleRef (const char *name) :
+		ModuleRef (const char* name) :
 			m_table(0)
 		{
 			if (!globalModuleServer().getError()) {

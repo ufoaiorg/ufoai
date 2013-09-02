@@ -191,7 +191,7 @@ static void FreeObjVertexData (TObjVertexData *vertexData)
 static picoShader_t *_obj_default_shader (picoModel_t *model)
 {
 	picoShader_t *picoShader = PicoNewShader(model);
-	char *skinname = _pico_clone_alloc(model->fileName);
+	char* skinname = _pico_clone_alloc(model->fileName);
 	_pico_setfext(skinname, "");
 
 	PicoSetShaderName(picoShader, skinname);
@@ -207,7 +207,7 @@ static int _obj_mtl_load (picoModel_t *model)
 	picoParser_t *p;
 	picoByte_t *mtlBuffer;
 	int mtlBufSize;
-	char *fileName;
+	char* fileName;
 
 	/* sanity checks */
 	if (model == NULL || model->fileName == NULL)
@@ -266,7 +266,7 @@ static int _obj_mtl_load (picoModel_t *model)
 		/* new material */
 		if (!_pico_stricmp(p->token, "newmtl")) {
 			picoShader_t *shader;
-			char *name;
+			char* name;
 
 			/* get material name */
 			name = _pico_parse(p, 0);
@@ -289,7 +289,7 @@ static int _obj_mtl_load (picoModel_t *model)
 		}
 		/* diffuse map name */
 		else if (!_pico_stricmp(p->token, "map_kd")) {
-			char *mapName;
+			char* mapName;
 
 			/* pointer to current shader must be valid */
 			if (curShader == NULL)
@@ -586,7 +586,7 @@ static picoModel_t *_obj_load (PM_PARAMS_LOAD)
 		/* new group (for us this means a new surface) */
 		else if (!_pico_stricmp(p->token, "g")) {
 			picoSurface_t *newSurface;
-			char *groupName;
+			char* groupName;
 
 			/* get first group name (ignore 2nd,3rd,etc.) */
 			groupName = _pico_parse(p, 0);
@@ -657,7 +657,7 @@ static picoModel_t *_obj_load (PM_PARAMS_LOAD)
 			/* store the actual vertex/uv/normal data in three arrays */
 			/* called 'verts','coords' and 'normals'. */
 			for (i = 0; i < 4; i++) {
-				char *str;
+				char* str;
 
 				/* get next vertex index string (different */
 				/* formats are handled below) */

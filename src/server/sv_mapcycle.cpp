@@ -5,8 +5,8 @@
  * @brief map cycle list element
 */
 typedef struct mapcycle_s {
-	char *map;			/**< map name */
-	char *type;			/**< gametype to play on this map */
+	char* map;			/**< map name */
+	char* type;			/**< gametype to play on this map */
 	bool day;		/**< load the day version */
 	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
 } mapcycle_t;
@@ -19,7 +19,7 @@ static int mapcycleCount;		/**< number of maps in the cycle */
  */
 void SV_NextMapcycle (void)
 {
-	const char *map = nullptr, *gameType = nullptr;
+	const char* map = nullptr, *gameType = nullptr;
 	bool day = true;
 	char expanded[MAX_QPATH];
 	mapcycle_t *mapcycle;
@@ -33,7 +33,7 @@ void SV_NextMapcycle (void)
 			 * but in sv->assembly */
 			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
-				char *base = strstr(expanded, " ");
+				char* base = strstr(expanded, " ");
 				if (base) {
 					char assembly[MAX_QPATH];
 					base[0] = '\0'; /* split the strings */
@@ -160,7 +160,7 @@ void SV_MapcycleClear (void)
  * @todo check for maps and valid gametypes here
  * @sa SV_MapcycleClear
  */
-static void SV_MapcycleAdd (const char *mapName, bool day, const char *gameType)
+static void SV_MapcycleAdd (const char* mapName, bool day, const char* gameType)
 {
 	mapcycle_t* const mapcycle = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
 	mapcycle->map  = Mem_PoolStrDup(mapName, sv_genericPool, 0);
@@ -186,7 +186,7 @@ static void SV_ParseMapcycle (void)
 {
 	int length = 0;
 	byte *buffer = nullptr;
-	const char *buf;
+	const char* buf;
 
 	mapcycleCount = 0;
 	mapcycleList = nullptr;
@@ -199,7 +199,7 @@ static void SV_ParseMapcycle (void)
 		buf = (const char*)buffer;
 		do {
 			bool day = false;
-			const char *token;
+			const char* token;
 			char map[MAX_VAR], gameType[MAX_VAR];
 			/* parse map name */
 			token = Com_Parse(&buf);
@@ -245,9 +245,9 @@ static void SV_MapcycleList_f (void)
 static void SV_MapcycleAdd_f (void)
 {
 	if (Cmd_Argc() == 4) {
-		const char *map = Cmd_Argv(1);
-		const char *day = Cmd_Argv(2);
-		const char *gametype = Cmd_Argv(3);
+		const char* map = Cmd_Argv(1);
+		const char* day = Cmd_Argv(2);
+		const char* gametype = Cmd_Argv(3);
 		if (!SV_CheckMap(map, nullptr)) {
 			Com_Printf("map '%s' isn't a valid map\n", map);
 			return;

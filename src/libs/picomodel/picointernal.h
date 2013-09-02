@@ -71,13 +71,13 @@ extern "C" {
 
 /* types */
 typedef struct picoParser_s {
-	char *buffer;
+	char* buffer;
 	int bufSize;
-	char *token;
+	char* token;
 	int tokenSize;
 	int tokenMax;
-	char *cursor;
-	char *max;
+	char* cursor;
+	char* max;
 	int curLine;
 } picoParser_t;
 
@@ -103,26 +103,26 @@ extern void (*_pico_ptr_print) (int, const char*);
 void *_pico_alloc (size_t size);
 void *_pico_calloc (size_t num, size_t size);
 void *_pico_realloc (void** ptr, size_t oldSize, size_t newSize);
-char *_pico_clone_alloc (const char *str);
+char* _pico_clone_alloc (const char* str);
 void _pico_free (void *ptr);
 
 /* files */
-void _pico_load_file (char *name, unsigned char** buffer, int *bufSize);
+void _pico_load_file (char* name, unsigned char** buffer, int *bufSize);
 void _pico_free_file (void *buffer);
 
 /* strings */
-void _pico_first_token (char *str);
-char *_pico_strltrim (char *str);
-char *_pico_strrtrim (char *str);
-int _pico_strchcount (char *str, int ch);
-void _pico_printf (int level, const char *format, ...);
-const char *_pico_stristr (const char *str, const char *substr);
-void _pico_unixify (char *path);
-int _pico_nofname (const char *path, char *dest, int destSize);
-const char *_pico_nopath (const char *path);
-char *_pico_setfext (char *path, const char *ext);
-int _pico_getline (char *buf, int bufsize, char *dest, int destsize);
-char *_pico_strlwr (char *str);
+void _pico_first_token (char* str);
+char* _pico_strltrim (char* str);
+char* _pico_strrtrim (char* str);
+int _pico_strchcount (char* str, int ch);
+void _pico_printf (int level, const char* format, ...);
+const char* _pico_stristr (const char* str, const char* substr);
+void _pico_unixify (char* path);
+int _pico_nofname (const char* path, char* dest, int destSize);
+const char* _pico_nopath (const char* path);
+char* _pico_setfext (char* path, const char* ext);
+int _pico_getline (char* buf, int bufsize, char* dest, int destsize);
+char* _pico_strlwr (char* str);
 
 /* vectors */
 void _pico_zero_bounds (picoVec3_t mins, picoVec3_t maxs);
@@ -158,12 +158,12 @@ float _pico_little_float (float src);
 picoParser_t *_pico_new_parser (picoByte_t *buffer, int bufSize);
 void _pico_free_parser (picoParser_t *p);
 int _pico_parse_ex (picoParser_t *p, int allowLFs, int handleQuoted);
-char *_pico_parse_first (picoParser_t *p);
-char *_pico_parse (picoParser_t *p, int allowLFs);
+char* _pico_parse_first (picoParser_t *p);
+char* _pico_parse (picoParser_t *p, int allowLFs);
 void _pico_parse_skip_rest (picoParser_t *p);
 int _pico_parse_skip_braced (picoParser_t *p);
-int _pico_parse_check (picoParser_t *p, int allowLFs, const char *str);
-int _pico_parse_checki (picoParser_t *p, int allowLFs, const char *str);
+int _pico_parse_check (picoParser_t *p, int allowLFs, const char* str);
+int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str);
 int _pico_parse_int (picoParser_t *p, int *out);
 int _pico_parse_int_def (picoParser_t *p, int *out, int def);
 int _pico_parse_float (picoParser_t *p, float *out);

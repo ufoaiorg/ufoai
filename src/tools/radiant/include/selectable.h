@@ -88,7 +88,7 @@ inline void assign_if_closer (SelectionIntersection& best, const SelectionInters
  */
 class VertexPointer
 {
-		typedef const unsigned char *byte_pointer;
+		typedef const unsigned char* byte_pointer;
 	public:
 		typedef const Vector3* vector_pointer;
 		typedef const Vector3& vector_reference;

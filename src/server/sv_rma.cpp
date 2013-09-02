@@ -131,7 +131,7 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
-static void SV_TileMaskToString (unsigned long m, char *str)
+static void SV_TileMaskToString (unsigned long m, char* str)
 {
 	int i;
 	int j = 0;	/* writepos */
@@ -186,7 +186,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 		const mPlaced_t *mp = &map->mPlaced[i];
 		const Tile *tile = mp->tile;
 		int tx, ty;
-		const char *tn = tile->id + 1;
+		const char* tn = tile->id + 1;
 
 		if (!strncmp(tn, "craft_", 6))
 			tn += 6;
@@ -263,7 +263,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	}
 
 	/* print it */
-	const char *underscores = "_________________________________________________________________________\n";
+	const char* underscores = "_________________________________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
 	int w = ACW * (MMW - 1 - mAsm->width);
 	Com_Printf("%s", underscores + w);
@@ -273,7 +273,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	Com_Printf("%s", underscores + w);
 }
 
-static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char *tileSetName)
+static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char* tileSetName)
 {
 	int i;
 
@@ -286,7 +286,7 @@ static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char *tileSetN
 	return nullptr;
 }
 
-static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileName)
+static inline const Tile *SV_GetMapTile (const MapInfo *map, const char* tileName)
 {
 	int i;
 
@@ -304,10 +304,10 @@ static inline const Tile *SV_GetMapTile (const MapInfo *map, const char *tileNam
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTileSet (const char *filename, const char** text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo *map, bool inherit)
 {
-	const char *errhead = "SV_ParseMapTileSet: Unexpected end of file (";
-	const char *token;
+	const char* errhead = "SV_ParseMapTileSet: Unexpected end of file (";
+	const char* token;
 	TileSet *target = &map->tileSets[map->numTileSets];
 
 	OBJZERO(*target);
@@ -336,7 +336,7 @@ static bool SV_ParseMapTileSet (const char *filename, const char** text, MapInfo
 			if (target->numTiles >= MAX_TILESETTILES)
 				Com_Error(ERR_DROP, "Max tileset limit reached for tileset '%s'", target->id);
 			else {	/* just to get rid of the 'mixed decl and code' warning */
-				char *tileTarget = target->tiles[target->numTiles];
+				char* tileTarget = target->tiles[target->numTiles];
 				const size_t size = sizeof(target->tiles[target->numTiles]);
 				if (inherit) {
 					if (token[0] == '+')
@@ -364,10 +364,10 @@ static bool SV_ParseMapTileSet (const char *filename, const char** text, MapInfo
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTile (const char *filename, const char** text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo *map, bool inherit)
 {
-	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
-	const char *token;
+	const char* errhead = "SV_ParseMapTile: Unexpected end of file (";
+	const char* token;
 	int x, y, i;
 	Tile *target = &map->mTile[map->numTiles];
 	target->area = 0;
@@ -449,7 +449,7 @@ static bool SV_ParseMapTile (const char *filename, const char** text, MapInfo *m
  * @param errhead Error header
  * @return @c nullptr if file has invalid format, @c the tilename of the cvar otherwise.
  */
-static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char *token, const char *filename, const char** text, const char *errhead)
+static const char* SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char* token, const char* filename, const char** text, const char* errhead)
 {
 	const cvar_t *cvar;
 
@@ -479,12 +479,12 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 	 * Allow cvar replacement to use inherited tiles - see FR #3446
 	 * @todo a better way to do this?
 	 */
-	const char *tokenTile = strrchr(token, '/');
+	const char* tokenTile = strrchr(token, '/');
 	if (tokenTile) {
-		const char *cvarTile = cvar->string + 1;
+		const char* cvarTile = cvar->string + 1;
 		for (int i = 0; i < map->numTiles; i++) {
-			const char *tileId = map->mTile[i].id;
-			const char *tileName = strrchr(tileId, '/');
+			const char* tileId = map->mTile[i].id;
+			const char* tileName = strrchr(tileId, '/');
 			if (tileName && strstr(tileName, cvarTile) && !Q_strncasecmp(tileId, token, tokenTile - token))
 				return tileId;
 		}
@@ -493,12 +493,12 @@ static const char *SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 	return cvar->string;
 }
 
-static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filename, const char** text, const Assembly *a)
+static const char* SV_GetTileFromTileSet (const MapInfo *map, const char* filename, const char** text, const Assembly *a)
 {
-	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
+	const char* errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
 	const TileSet *tileSet;
 	int random;
-	const char *token;
+	const char* token;
 
 	/* get tileset id */
 	token = Com_EParse(text, errhead, filename);
@@ -521,10 +521,10 @@ static const char *SV_GetTileFromTileSet (const MapInfo *map, const char *filena
  * @param[in] text The text of the ump file to parse
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const char** text, Assembly *a)
+static bool SV_ParseAssemblySeeds (MapInfo *map, const char* filename, const char** text, Assembly *a)
 {
-	const char *errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
-	const char *token;
+	const char* errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
+	const char* token;
 
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
@@ -549,12 +549,12 @@ static bool SV_ParseAssemblySeeds (MapInfo *map, const char *filename, const cha
 	return true;
 }
 
-static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, const char** text, Assembly *a)
+static void SV_GetTilesFromTileSet (const MapInfo *map, const char* filename, const char** text, Assembly *a)
 {
-	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
+	const char* errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
 	const TileSet *tileSet;
 	int min, max;
-	const char *token;
+	const char* token;
 
 	/* get tileset id */
 	token = Com_EParse(text, errhead, filename);
@@ -605,10 +605,10 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char *filename, co
  * @note: format of tile: "[tilename] min max"
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssembly (MapInfo *map, const char *filename, const char** text, Assembly *a)
+static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** text, Assembly *a)
 {
-	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	const char *token;
+	const char* errhead = "SV_ParseAssembly: Unexpected end of file (";
+	const char* token;
 	int x, y;
 	const Tile *tile;
 
@@ -1009,7 +1009,7 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
  * string this string contains three coordinates for shifting the given tile names.
  */
-static void SV_PrintMapStrings (const MapInfo *map, char *asmTiles, char *asmPos)
+static void SV_PrintMapStrings (const MapInfo *map, char* asmTiles, char* asmPos)
 {
 	int i;
 	const Assembly *mAsm;
@@ -1856,11 +1856,11 @@ static int SV_ParallelSearch (MapInfo *map)
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * from another ump file (no assemblies)
  */
-void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inherit)
+void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
-	const char *text, *token;
+	const char* text, *token;
 
 	/* load the map info */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
@@ -1889,7 +1889,7 @@ void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inher
 				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
 		} else if (Q_streq(token, "line")) {
 			token = Com_Parse(&text);
-			const char *p = token;
+			const char* p = token;
 			map->lineFlags = 0;
 			while (*p) {
 				map->lineFlags |= tileMask(*p);
@@ -1901,7 +1901,7 @@ void SV_ParseUMP (const char *name, char *entityString, MapInfo *map, bool inher
 			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
 				map->numTileSets++;
 		} else if (Q_streq(token, "worldspawn")) {
-			const char *start = nullptr;
+			const char* start = nullptr;
 			const int length = Com_GetBlock(&text, &start);
 			if (length == -1) {
 				Com_Printf("SV_ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
@@ -1950,7 +1950,7 @@ static int cmpTileAreaSize (const void * a, const void * b)
 }
 #endif
 
-static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmTiles, char *asmPos, const unsigned int seed)
+static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed)
 {
 	int i;
 	const Assembly *mAsm = map->getCurrentAssembly();
@@ -2058,7 +2058,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char *assembly, char *asmT
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap (const char *mapName, const char *assembly, char *asmTiles, char *asmPos, char *entityString, const unsigned int seed)
+MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed)
 {
 	MapInfo *map;
 

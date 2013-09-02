@@ -37,7 +37,7 @@ EVENT MESSAGES
 /**
  * @sa SV_BroadcastCommand
  */
-void SV_ClientCommand (client_t *client, const char *fmt, ...)
+void SV_ClientCommand (client_t *client, const char* fmt, ...)
 {
 	va_list ap;
 	char str[MAX_SVC_STUFFTEXT];
@@ -55,7 +55,7 @@ void SV_ClientCommand (client_t *client, const char *fmt, ...)
 /**
  * @brief Sends text across to be displayed if the level passes
  */
-void SV_ClientPrintf (client_t *cl, int level, const char *fmt, ...)
+void SV_ClientPrintf (client_t *cl, int level, const char* fmt, ...)
 {
 	if (level > cl->messagelevel)
 		return;
@@ -76,7 +76,7 @@ void SV_ClientPrintf (client_t *cl, int level, const char *fmt, ...)
 /**
  * @brief Sends text to all active clients
  */
-void SV_BroadcastPrintf (int level, const char *fmt, ...)
+void SV_BroadcastPrintf (int level, const char* fmt, ...)
 {
 	dbuffer msg;
 	NET_WriteByte(&msg, svc_print);

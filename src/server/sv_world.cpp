@@ -504,7 +504,7 @@ trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const e
  * @sa GenerateFootstepList
  * @return either @c nullptr or the footstep sound filename if there is one assigned in the scripts
  */
-const char *SV_GetFootstepSound (const char *texture)
+const char* SV_GetFootstepSound (const char* texture)
 {
 	const terrainType_t *t = Com_GetTerrainType(texture);
 	return t ? t->footstepSound : nullptr;
@@ -515,7 +515,7 @@ const char *SV_GetFootstepSound (const char *texture)
  * @sa Com_GetTerrainType
  * @sa GenerateFootstepList
  */
-float SV_GetBounceFraction (const char *texture)
+float SV_GetBounceFraction (const char* texture)
 {
 	const terrainType_t *t = Com_GetTerrainType(texture);
 	return t ? t->bounceFraction : 1.0f;
@@ -598,7 +598,7 @@ static char const* const mod_extensions[] = {
  * @param[in] frame The frame to load the bounding box for
  * @param[out] aabb The bounding box of the model - this is absolute to the worldorigin (0,0,0)
  */
-bool SV_LoadModelAABB (const char *model, int frame, AABB& aabb)
+bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 {
 	sv_model_t *mod;
 	byte *buf = nullptr;

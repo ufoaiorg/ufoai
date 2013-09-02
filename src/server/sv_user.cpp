@@ -93,7 +93,7 @@ static void SV_New_f (client_t *cl)
 	if (Com_ServerState() == ss_game) {
 		int i;
 		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-			const char *configString;
+			const char* configString;
 			/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 			 * so don't send the middle parts again. */
 			if (i > CS_TILES && i < CS_POSITIONS)
@@ -189,7 +189,7 @@ static void SV_ShowServerinfo_f (client_t *cl)
 
 
 typedef struct {
-	const char *name;
+	const char* name;
 	void (*func) (client_t *client);
 } ucmd_t;
 
@@ -210,7 +210,7 @@ static const ucmd_t ucmds[] = {
 /**
  * @sa SV_ExecuteClientMessage
  */
-static void SV_ExecuteUserCommand (client_t *cl, const char *s)
+static void SV_ExecuteUserCommand (client_t *cl, const char* s)
 {
 	Cmd_TokenizeString(s, false);
 

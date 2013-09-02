@@ -83,7 +83,7 @@ struct picoSurface_s {
 	picoModel_t *model; /* owner model */
 
 	picoSurfaceType_t type;
-	char *name; /* sea: surface name */
+	char* name; /* sea: surface name */
 	picoShader_t *shader; /* ydnar: changed to ptr */
 
 	int numVertexes, maxVertexes;
@@ -110,8 +110,8 @@ struct picoSurface_s {
 struct picoShader_s {
 	picoModel_t *model; /* owner model */
 
-	char *name; /* shader name */
-	char *mapName; /* shader file name (name of diffuse texturemap) */
+	char* name; /* shader name */
+	char* mapName; /* shader file name (name of diffuse texturemap) */
 	picoColor_t ambientColor; /* ambient color of mesh (rgba) */
 	picoColor_t diffuseColor; /* diffuse color of mesh (rgba) */
 	picoColor_t specularColor; /* specular color of mesh (rgba) */
@@ -121,8 +121,8 @@ struct picoShader_s {
 
 struct picoModel_s {
 	void *data;
-	char *name; /* model name */
-	char *fileName; /* sea: model file name */
+	char* name; /* model name */
+	char* fileName; /* sea: model file name */
 	int frameNum; /* sea: renamed to frameNum */
 	int numFrames; /* sea: number of frames */
 	picoVec3_t mins;
@@ -152,26 +152,26 @@ enum {
 
 /* convenience (makes it easy to add new params to the callbacks) */
 #define PM_PARAMS_CANLOAD \
- const char *fileName, void *buffer, int bufSize
+ const char* fileName, void *buffer, int bufSize
 
 #define PM_PARAMS_LOAD \
- const char *fileName, int frameNum, void *buffer, int bufSize
+ const char* fileName, int frameNum, void *buffer, int bufSize
 
 #define PM_PARAMS_CANSAVE \
  void
 
 #define PM_PARAMS_SAVE \
- const char *fileName, picoModel_t *model
+ const char* fileName, picoModel_t *model
 
 /** @brief pico file format module structure */
 struct picoModule_s {
-	const char *version; /**< internal module version (e.g. '1.5-b2') */
+	const char* version; /**< internal module version (e.g. '1.5-b2') */
 
-	const char *displayName; /**< string used to display in guis, etc. */
-	const char *authorName; /**< author name (eg. 'My Real Name') */
-	const char *copyright; /**< copyright year and holder (eg. '2002 My Company') */
+	const char* displayName; /**< string used to display in guis, etc. */
+	const char* authorName; /**< author name (eg. 'My Real Name') */
+	const char* copyright; /**< copyright year and holder (eg. '2002 My Company') */
 
-	const char *defaultExts[PICO_MAX_DEFAULT_EXTS]; /**< default file extensions used by this file type */
+	const char* defaultExts[PICO_MAX_DEFAULT_EXTS]; /**< default file extensions used by this file type */
 	int (*canload) (PM_PARAMS_CANLOAD); /**< checks whether module can load given file (returns PMVR_*) */
 	picoModel_t *(*load) (PM_PARAMS_LOAD); /**< parses model file data */
 	int (*cansave) (PM_PARAMS_CANSAVE); /**< checks whether module can save (returns 1 or 0 and might spit out a message) */
@@ -191,10 +191,10 @@ void PicoSetPrintFunc (void (*func) (int, const char*));
 
 const picoModule_t** PicoModuleList (int *numModules);
 
-picoModel_t *PicoLoadModel (char *name, int frameNum);
+picoModel_t *PicoLoadModel (char* name, int frameNum);
 
-typedef size_t (*PicoInputStreamReadFunc) (void *inputStream, unsigned char *buffer, size_t length);
-picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char *fileName, void *inputStream,
+typedef size_t (*PicoInputStreamReadFunc) (void *inputStream, unsigned char* buffer, size_t length);
+picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void *inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum);
 
 /* model functions */
@@ -205,24 +205,24 @@ int PicoAdjustModel (picoModel_t *model, int numShaders, int numSurfaces);
 /* shader functions */
 picoShader_t *PicoNewShader (picoModel_t *model);
 void PicoFreeShader (picoShader_t *shader);
-picoShader_t *PicoFindShader (picoModel_t *model, char *name, int caseSensitive);
+picoShader_t *PicoFindShader (picoModel_t *model, char* name, int caseSensitive);
 
 /* surface functions */
 picoSurface_t *PicoNewSurface (picoModel_t *model);
 void PicoFreeSurface (picoSurface_t *surface);
-picoSurface_t *PicoFindSurface (picoModel_t *model, char *name, int caseSensitive);
+picoSurface_t *PicoFindSurface (picoModel_t *model, char* name, int caseSensitive);
 int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays, int numColorArrays, int numIndexes,
 		int numFaceNormals);
 
 /* setter functions */
-void PicoSetModelName (picoModel_t *model, const char *name);
-void PicoSetModelFileName (picoModel_t *model, const char *fileName);
+void PicoSetModelName (picoModel_t *model, const char* name);
+void PicoSetModelFileName (picoModel_t *model, const char* fileName);
 void PicoSetModelFrameNum (picoModel_t *model, int frameNum);
 void PicoSetModelNumFrames (picoModel_t *model, int numFrames);
 void PicoSetModelData (picoModel_t *model, void *data);
 
-void PicoSetShaderName (picoShader_t *shader, const char *name);
-void PicoSetShaderMapName (picoShader_t *shader, char *mapName);
+void PicoSetShaderName (picoShader_t *shader, const char* name);
+void PicoSetShaderMapName (picoShader_t *shader, char* mapName);
 void PicoSetShaderAmbientColor (picoShader_t *shader, picoColor_t color);
 void PicoSetShaderDiffuseColor (picoShader_t *shader, picoColor_t color);
 void PicoSetShaderSpecularColor (picoShader_t *shader, picoColor_t color);
@@ -231,7 +231,7 @@ void PicoSetShaderShininess (picoShader_t *shader, float value);
 
 void PicoSetSurfaceData (picoSurface_t *surface, void *data);
 void PicoSetSurfaceType (picoSurface_t *surface, picoSurfaceType_t type);
-void PicoSetSurfaceName (picoSurface_t *surface, char *name);
+void PicoSetSurfaceName (picoSurface_t *surface, char* name);
 void PicoSetSurfaceShader (picoSurface_t *surface, picoShader_t *shader);
 void PicoSetSurfaceXYZ (picoSurface_t *surface, int num, picoVec3_t xyz);
 void PicoSetSurfaceNormal (picoSurface_t *surface, int num, picoVec3_t normal);
@@ -244,8 +244,8 @@ void PicoSetSurfaceSpecial (picoSurface_t *surface, int num, int special);
 void PicoSetSurfaceSmoothingGroup (picoSurface_t *surface, int num, picoIndex_t smoothingGroup);
 
 /* getter functions */
-const char *PicoGetModelName (picoModel_t *model);
-const char *PicoGetModelFileName (picoModel_t *model);
+const char* PicoGetModelName (picoModel_t *model);
+const char* PicoGetModelFileName (picoModel_t *model);
 int PicoGetModelFrameNum (picoModel_t *model);
 int PicoGetModelNumFrames (picoModel_t *model);
 void *PicoGetModelData (picoModel_t *model);
@@ -256,8 +256,8 @@ picoSurface_t *PicoGetModelSurface (picoModel_t *model, int num);
 int PicoGetModelTotalVertexes (picoModel_t *model);
 int PicoGetModelTotalIndexes (picoModel_t *model);
 
-const char *PicoGetShaderName (picoShader_t *shader);
-const char *PicoGetShaderMapName (picoShader_t *shader);
+const char* PicoGetShaderName (picoShader_t *shader);
+const char* PicoGetShaderMapName (picoShader_t *shader);
 picoByte_t *PicoGetShaderAmbientColor (picoShader_t *shader);
 picoByte_t *PicoGetShaderDiffuseColor (picoShader_t *shader);
 picoByte_t *PicoGetShaderSpecularColor (picoShader_t *shader);
@@ -265,7 +265,7 @@ float PicoGetShaderTransparency (picoShader_t *shader);
 float PicoGetShaderShininess (picoShader_t *shader);
 
 void *PicoGetSurfaceData (picoSurface_t *surface);
-const char *PicoGetSurfaceName (picoSurface_t *surface); /* sea */
+const char* PicoGetSurfaceName (picoSurface_t *surface); /* sea */
 picoSurfaceType_t PicoGetSurfaceType (picoSurface_t *surface);
 picoShader_t *PicoGetSurfaceShader (picoSurface_t *surface); /* sea */
 

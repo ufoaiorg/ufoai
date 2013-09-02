@@ -109,7 +109,7 @@ void PicoSetPrintFunc (void (*func) (int, const char*))
 		_pico_ptr_print = func;
 }
 
-static picoModel_t *PicoModuleLoadModel (const picoModule_t *pm, const char *fileName, picoByte_t *buffer, int bufSize,
+static picoModel_t *PicoModuleLoadModel (const picoModule_t *pm, const char* fileName, picoByte_t *buffer, int bufSize,
 		int frameNum)
 {
 	/* see whether this module can load the model file or not */
@@ -133,7 +133,7 @@ static picoModel_t *PicoModuleLoadModel (const picoModule_t *pm, const char *fil
 /**
  * @brief the meat and potatoes function
  */
-picoModel_t *PicoLoadModel (char *fileName, int frameNum)
+picoModel_t *PicoLoadModel (char* fileName, int frameNum)
 {
 	const picoModule_t** modules;
 	picoModel_t *model;
@@ -188,7 +188,7 @@ picoModel_t *PicoLoadModel (char *fileName, int frameNum)
 	return model;
 }
 
-picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char *fileName, void *inputStream,
+picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void *inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum)
 {
 	picoModel_t *model;
@@ -380,7 +380,7 @@ void PicoFreeShader (picoShader_t *shader)
 /**
  * @brief finds a named shader in a model
  */
-picoShader_t *PicoFindShader (picoModel_t *model, char *name, int caseSensitive)
+picoShader_t *PicoFindShader (picoModel_t *model, char* name, int caseSensitive)
 {
 	int i;
 
@@ -577,7 +577,7 @@ int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays,
 /**
  * @brief Finds first matching named surface in a model.
  */
-picoSurface_t *PicoFindSurface (picoModel_t *model, char *name, int caseSensitive)
+picoSurface_t *PicoFindSurface (picoModel_t *model, char* name, int caseSensitive)
 {
 	int i;
 
@@ -604,7 +604,7 @@ picoSurface_t *PicoFindSurface (picoModel_t *model, char *name, int caseSensitiv
 	return NULL;
 }
 
-void PicoSetModelName (picoModel_t *model, const char *name)
+void PicoSetModelName (picoModel_t *model, const char* name)
 {
 	if (model == NULL || name == NULL)
 		return;
@@ -614,7 +614,7 @@ void PicoSetModelName (picoModel_t *model, const char *name)
 	model->name = _pico_clone_alloc(name);
 }
 
-void PicoSetModelFileName (picoModel_t *model, const char *fileName)
+void PicoSetModelFileName (picoModel_t *model, const char* fileName)
 {
 	if (model == NULL || fileName == NULL)
 		return;
@@ -645,7 +645,7 @@ void PicoSetModelData (picoModel_t *model, void *data)
 	model->data = data;
 }
 
-void PicoSetShaderName (picoShader_t *shader, const char *name)
+void PicoSetShaderName (picoShader_t *shader, const char* name)
 {
 	if (shader == NULL || name == NULL)
 		return;
@@ -655,7 +655,7 @@ void PicoSetShaderName (picoShader_t *shader, const char *name)
 	shader->name = _pico_clone_alloc(name);
 }
 
-void PicoSetShaderMapName (picoShader_t *shader, char *mapName)
+void PicoSetShaderMapName (picoShader_t *shader, char* mapName)
 {
 	if (shader == NULL || mapName == NULL)
 		return;
@@ -735,7 +735,7 @@ void PicoSetSurfaceType (picoSurface_t *surface, picoSurfaceType_t type)
 	surface->type = type;
 }
 
-void PicoSetSurfaceName (picoSurface_t *surface, char *name)
+void PicoSetSurfaceName (picoSurface_t *surface, char* name)
 {
 	if (surface == NULL || name == NULL)
 		return;
@@ -837,7 +837,7 @@ void PicoSetSurfaceSpecial (picoSurface_t *surface, int num, int special)
 	surface->special[num] = special;
 }
 
-const char *PicoGetModelName (picoModel_t *model)
+const char* PicoGetModelName (picoModel_t *model)
 {
 	if (model == NULL)
 		return NULL;
@@ -846,7 +846,7 @@ const char *PicoGetModelName (picoModel_t *model)
 	return model->name;
 }
 
-const char *PicoGetModelFileName (picoModel_t *model)
+const char* PicoGetModelFileName (picoModel_t *model)
 {
 	if (model == NULL)
 		return NULL;
@@ -950,7 +950,7 @@ int PicoGetModelTotalIndexes (picoModel_t *model)
 	return count;
 }
 
-const char *PicoGetShaderName (picoShader_t *shader)
+const char* PicoGetShaderName (picoShader_t *shader)
 {
 	if (shader == NULL)
 		return NULL;
@@ -959,7 +959,7 @@ const char *PicoGetShaderName (picoShader_t *shader)
 	return shader->name;
 }
 
-const char *PicoGetShaderMapName (picoShader_t *shader)
+const char* PicoGetShaderMapName (picoShader_t *shader)
 {
 	if (shader == NULL)
 		return NULL;
@@ -1017,7 +1017,7 @@ picoSurfaceType_t PicoGetSurfaceType (picoSurface_t *surface)
 	return surface->type;
 }
 
-const char *PicoGetSurfaceName (picoSurface_t *surface)
+const char* PicoGetSurfaceName (picoSurface_t *surface)
 {
 	if (surface == NULL)
 		return NULL;

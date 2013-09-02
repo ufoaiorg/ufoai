@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @return @c true if the add was successful, @c false if there was an overflow and the string was cut.
  */
-bool STRHUNK_Add (stringHunk_t *hunk, const char *string)
+bool STRHUNK_Add (stringHunk_t *hunk, const char* string)
 {
 	const ptrdiff_t filled = hunk->pos - hunk->hunk;
 	const size_t remaining = hunk->size - filled;
@@ -61,7 +61,7 @@ void STRHUNK_Reset (stringHunk_t *hunk)
 
 void STRHUNK_Visit (stringHunk_t *hunk, stringHunkVisitor_t visitor)
 {
-	const char *string = hunk->hunk;
+	const char* string = hunk->hunk;
 
 	if (hunk->entries == 0)
 		return;
