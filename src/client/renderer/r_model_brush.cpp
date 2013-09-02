@@ -970,8 +970,8 @@ static void R_SetupSubmodels (void)
 }
 
 /**
- @brief Sets up surface range for the world model
- @note Depends on ufo2map to store all world model surfaces before submodel ones
+ * @brief Sets up surface range for the world model
+ * @note Depends on ufo2map to store all world model surfaces before submodel ones
  */
 static void R_SetupWorldModel (void)
 {
