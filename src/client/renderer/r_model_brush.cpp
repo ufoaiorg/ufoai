@@ -409,21 +409,18 @@ static void R_ModLoadNodes (const lump_t *l)
 
 static void R_ModLoadLeafs (const lump_t *l)
 {
-	const dBspLeaf_t *in;
-	int i, j, count;
-
-	in = (const dBspLeaf_t *) (mod_base + l->fileofs);
+	const dBspLeaf_t *in = (const dBspLeaf_t *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
-	count = l->filelen / sizeof(*in);
+	const int count = l->filelen / sizeof(*in);
 	mBspLeaf_t* out = Mem_PoolAllocTypeN(mBspLeaf_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
 	r_worldmodel->bsp.leafs = out;
 	r_worldmodel->bsp.numleafs = count;
 
-	for (i = 0; i < count; i++, in++, out++) {
-		for (j = 0; j < 3; j++) {
+	for (int i = 0; i < count; i++, in++, out++) {
+		for (int j = 0; j < 3; j++) {
 			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
 			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + (float)shift[j];
 		}
