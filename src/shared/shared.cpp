@@ -517,7 +517,7 @@ bool Com_sprintf (char* dest, size_t size, const char* fmt, ...)
 	/* check for UTF8 multibyte sequences */
 	if (len > 0 && (unsigned char) dest[len - 1] >= 0x80) {
 		int i = len - 1;
-		while ((i > 0) && ((unsigned char) dest[i] & 0xc0) == 0x80)
+		while (i > 0 && UTF8_CONTINUATION_BYTE((unsigned char) dest[i]))
 			i--;
 		if (UTF8_char_len(dest[i]) + i > len) {
 			dest[i] = '\0';
