@@ -28,6 +28,21 @@ tile +main
 0		0		0		0		0		0		0		0		0		0		0		0		0
 }
 
+tile +stadium
+{
+7 9
+0		0		0		0		0		0		0
+0		0		0		0		+a		+a		0
+0		0		0		0		+a		+a		0
+0		0		0		0		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0
+}
+
+
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -68,5 +83,13 @@ assembly bomber_city
 size "11 8"
 title "_Bomber in the City"
 +main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly stadium
+{
+size "5 7"
+title "_Stadium"
++stadium "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

@@ -2780,6 +2780,8 @@ mapdef bomber_city
 	description		"_Bomber in the City"
 	params			("bomber_city")
 	size			"large"
+	maxaliens		30
+
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -2795,7 +2797,6 @@ mapdef bomber_city
 		coop3
 		coop4
 	)
-	maxaliens		30
 
 	aircraft
 	(
@@ -2807,6 +2808,56 @@ mapdef bomber_city
 	ufos
 	(
 		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef stadium
+{
+	map				"+urban"
+	description		"_Basketball Stadium"
+	params			("stadium")
+	size			"medium"
+	maxaliens		21
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
 	)
 
 	terrains
