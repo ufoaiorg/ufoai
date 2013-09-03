@@ -337,6 +337,11 @@ typedef struct cgame_import_s {
 
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
 
+	void (IMPORT *WEB_Upload) (int category, const char *filename);
+	void (IMPORT *WEB_Delete) (int category, const char *filename);
+	void (IMPORT *WEB_DownloadFromUser) (int category, const char *filename, int userId);
+	void (IMPORT *WEB_ListForUser) (int category, int userId);
+
 	/** @todo: remove me */
 	byte *r_xviAlpha;
 	byte *r_radarPic;

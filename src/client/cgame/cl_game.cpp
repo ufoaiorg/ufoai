@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_messagelist.h"
 #include "../ui/node/ui_node_model.h"
 #include "../cl_team.h"
+#include "../web/web_cgame.h"
 #include "../battlescape/events/e_main.h"
 #include "../cl_inventory.h"
 #include "../../shared/parse.h"
@@ -417,6 +418,26 @@ static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *contai
 	return cls.i.removeFromInventory(i, container, fItem);
 }
 
+static void GAME_WebUpload (int category, const char *filename)
+{
+	WEB_CGameUpload(GAME_GetCurrentName(), category, filename);
+}
+
+static void GAME_WebDelete (int category, const char *filename)
+{
+	WEB_CGameDelete(GAME_GetCurrentName(), category, filename);
+}
+
+static void GAME_WebDownloadFromUser (int category, const char *filename, int userId)
+{
+	WEB_CGameDownloadFromUser(GAME_GetCurrentName(), category, filename, userId);
+}
+
+static void GAME_WebListForUser (int category, int userId)
+{
+	WEB_CGameListForUser(GAME_GetCurrentName(), category, userId);
+}
+
 static void GAME_SetNextUniqueCharacterNumber (int ucn)
 {
 	cls.nextUniqueCharacterNumber = ucn;
@@ -721,6 +742,11 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->INV_ItemDescription = INV_ItemDescription;
+
+		cgi->WEB_Upload = GAME_WebUpload;
+		cgi->WEB_Delete = GAME_WebDelete;
+		cgi->WEB_DownloadFromUser = GAME_WebDownloadFromUser;
+		cgi->WEB_ListForUser = GAME_WebListForUser;
 
 		cgi->Sys_Error = Sys_Error;
 
