@@ -46,7 +46,7 @@ inline void entry_set_float (GtkEntry* entry, float f)
 	entry_set_string(entry, buf);
 }
 
-inline const char *entry_get_string (GtkEntry* entry)
+inline const char* entry_get_string (GtkEntry* entry)
 {
 	return gtk_entry_get_text(entry);
 }

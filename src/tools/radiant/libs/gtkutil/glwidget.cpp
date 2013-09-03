@@ -37,7 +37,7 @@ void (*GLWidget_sharedContextDestroyed) () = 0;
 typedef int* attribs_t;
 struct config_t
 {
-		const char *name;
+		const char* name;
 		attribs_t attribs;
 };
 typedef const config_t* configs_iterator;

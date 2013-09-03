@@ -156,12 +156,12 @@ inline bool path_is_directory (const std::string& path)
 
 /// \brief Returns a pointer to the first character of the filename component of \p path.
 /// O(n)
-inline const char *path_get_filename_start (const char *path)
+inline const char* path_get_filename_start (const char* path)
 {
 	// not strictly necessary,since paths should not contain '\'
 	// mixed paths on windows containing both '/' and '\', use last of both for this
-	const char *last_forward_slash = strrchr(path, '/');
-	const char *last_backward_slash = strrchr(path, '\\');
+	const char* last_forward_slash = strrchr(path, '/');
+	const char* last_backward_slash = strrchr(path, '\\');
 	if (last_forward_slash > last_backward_slash) {
 		return last_forward_slash + 1;
 	} else if (last_forward_slash < last_backward_slash) {
@@ -175,7 +175,7 @@ inline const char *path_get_filename_start (const char *path)
 /// Returns >0 if \p path is lexicographically greater than \p other.
 /// Returns 0 if both \p path and \p other refer to the same file.
 /// O(n)
-inline int path_compare (const char *path, const char *other)
+inline int path_compare (const char* path, const char* other)
 {
 #if defined(OS_CASE_INSENSITIVE)
        return string_compare_nocase(path, other);
@@ -209,22 +209,22 @@ inline bool path_equal_n (const std::string& path, const std::string& other, std
 
 /// \brief Returns a pointer to the character after the end of the filename component of \p path - either the extension separator or the terminating null character.
 /// O(n)
-inline const char *path_get_filename_base_end (const char *path)
+inline const char* path_get_filename_base_end (const char* path)
 {
-	const char *last_period = strrchr(path_get_filename_start(path), '.');
+	const char* last_period = strrchr(path_get_filename_start(path), '.');
 	return (last_period != 0) ? last_period : path + string_length(path);
 }
 
 /// \brief Returns the length of the filename component (not including extension) of \p path.
 /// O(n)
-inline std::size_t path_get_filename_base_length (const char *path)
+inline std::size_t path_get_filename_base_length (const char* path)
 {
 	return path_get_filename_base_end(path) - path;
 }
 
 /// \brief If \p path is a child of \p base, returns the subpath relative to \p base, else returns \p path.
 /// O(n)
-inline const char *path_make_relative (const std::string& path, const std::string& base)
+inline const char* path_make_relative (const std::string& path, const std::string& base)
 {
 	const std::size_t length = base.length();
 	if (path_equal_n(path, base, length)) {

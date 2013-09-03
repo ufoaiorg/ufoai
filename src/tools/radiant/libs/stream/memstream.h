@@ -30,11 +30,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class BufferOutputStream : public TextOutputStream {
 	std::vector<char> m_buffer;
 public:
-	std::size_t write(const char *buffer, std::size_t length) {
+	std::size_t write(const char* buffer, std::size_t length) {
 		m_buffer.insert(m_buffer.end(), buffer, buffer + length);
 		return length;
 	}
-	const char *data() const {
+	const char* data() const {
 		return &(*m_buffer.begin());
 	}
 	std::size_t size() const {
@@ -53,19 +53,19 @@ inline BufferOutputStream& operator<<(BufferOutputStream& ostream, const T& t) {
 
 
 class BufferInputStream : public TextInputStream {
-	const char *m_read;
-	const char *m_end;
+	const char* m_read;
+	const char* m_end;
 public:
-	BufferInputStream(const char *buffer, std::size_t length)
+	BufferInputStream(const char* buffer, std::size_t length)
 			: m_read(buffer), m_end(buffer + length) {
 	}
 
 	BufferInputStream(const std::string& buffer)
 			: m_read(buffer.c_str()), m_end(buffer.c_str() + buffer.size()) {
 	}
-	std::size_t read(char *buffer, std::size_t length) {
+	std::size_t read(char* buffer, std::size_t length) {
 		std::size_t count = std::min(std::size_t(m_end - m_read), length);
-		const char *end = m_read + count;
+		const char* end = m_read + count;
 		while (m_read != end) {
 			*buffer++ = *m_read++;
 		}

@@ -29,7 +29,7 @@ namespace gtkutil
 	SourceView::SourceView (const std::string& language, bool readOnly)
 	{
 		// Set the search path to the language and style files
-		gchar *directories[2];
+		gchar* directories[2];
 
 		std::string langFilesDir = GlobalRegistry().get(RKEY_APP_PATH) + "sourceviewer/";
 
@@ -105,7 +105,7 @@ namespace gtkutil
 		gtk_text_buffer_get_bounds(GTK_TEXT_BUFFER(_buffer), &start, &end);
 
 		// Extract the script from the input window
-		gchar *text = gtk_text_buffer_get_text(GTK_TEXT_BUFFER(_buffer), &start, &end, TRUE);
+		gchar* text = gtk_text_buffer_get_text(GTK_TEXT_BUFFER(_buffer), &start, &end, TRUE);
 
 		// Convert to std::string, free the GLIB stuff and return
 		std::string contents(text);

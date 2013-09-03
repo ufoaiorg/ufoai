@@ -36,7 +36,7 @@ namespace gtkutil
 			}
 
 			// Constructor with frame label
-			FramedWidget (GtkWidget* containedWidget, const char *title) :
+			FramedWidget (GtkWidget* containedWidget, const char* title) :
 				_containedWidget(containedWidget), _title(title)
 			{
 			}

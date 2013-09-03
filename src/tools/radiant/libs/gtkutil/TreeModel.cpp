@@ -12,7 +12,7 @@ namespace gtkutil
 		gtk_tree_model_get_value(model, iter, colNo, &val);
 
 		// Create and return the string, and free the GValue
-		const gchar *c = g_value_get_string(&val);
+		const gchar* c = g_value_get_string(&val);
 
 		// greebo: g_value_get_string can return NULL, catch this
 		std::string retVal = (c != NULL) ? c : "";
@@ -135,7 +135,7 @@ namespace gtkutil
 		}
 	}
 
-	gboolean TreeModel::equalFuncStringContains (GtkTreeModel* model, gint column, const gchar *key, GtkTreeIter* iter,
+	gboolean TreeModel::equalFuncStringContains (GtkTreeModel* model, gint column, const gchar* key, GtkTreeIter* iter,
 			gpointer search_data)
 	{
 		// Retrieve the eclass string from the model

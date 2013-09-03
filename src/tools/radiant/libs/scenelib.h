@@ -673,7 +673,7 @@ enum ENodeType
 	eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive
 };
 
-inline const char *nodetype_get_name (ENodeType type)
+inline const char* nodetype_get_name (ENodeType type)
 {
 	if (type == eNodeMap)
 		return "map";

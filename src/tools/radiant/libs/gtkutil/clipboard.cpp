@@ -46,7 +46,7 @@ static ClipboardPasteFunc g_clipboardPasteFunc = 0;
 static void clipboard_get (GtkClipboard *clipboard, GtkSelectionData *selection_data, guint info, gpointer data)
 {
 	std::size_t len = *reinterpret_cast<std::size_t*> (data);
-	const char *buffer = (len != 0) ? reinterpret_cast<const char*> (data) + sizeof(std::size_t) : 0;
+	const char* buffer = (len != 0) ? reinterpret_cast<const char*> (data) + sizeof(std::size_t) : 0;
 
 	GdkAtom type = GDK_NONE;
 	if (info == clipboard_targets.info) {
@@ -81,7 +81,7 @@ void clipboard_copy (ClipboardCopyFunc copy)
 	BufferOutputStream ostream;
 	copy(ostream);
 	std::size_t length = ostream.size();
-	char *data = new char[length + sizeof(std::size_t)];
+	char* data = new char[length + sizeof(std::size_t)];
 	*reinterpret_cast<std::size_t*> (data) = length;
 	memcpy(data + sizeof(std::size_t), ostream.data(), length);
 

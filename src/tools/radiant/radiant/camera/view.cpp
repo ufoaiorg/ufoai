@@ -41,7 +41,7 @@ void Cull_ResetStats ()
 	g_count_oriented_bboxs = 0;
 }
 
-const char *Cull_GetStats ()
+const char* Cull_GetStats ()
 {
 	static char g_cull_stats[1024];
 	snprintf(g_cull_stats, sizeof(g_cull_stats), "planes %d + %d | bboxs %d + %d", g_count_planes,

@@ -79,7 +79,7 @@ class TextFileInputStream: public TextInputStream
 			return buffer;
 		}
 
-		std::size_t read (char *buffer, std::size_t length)
+		std::size_t read (char* buffer, std::size_t length)
 		{
 			return fread(buffer, 1, length, m_file);
 		}
@@ -113,7 +113,7 @@ class TextFileOutputStream: public TextOutputStream
 			return fwrite(buffer.c_str(), 1, buffer.length(), m_file);
 		}
 
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			return fwrite(buffer, 1, length, m_file);
 		}

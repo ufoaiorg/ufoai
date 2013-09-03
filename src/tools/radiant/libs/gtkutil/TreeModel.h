@@ -147,7 +147,7 @@ namespace gtkutil
 			 *
 			 * Prerequisites: The search column must contain a string.
 			 */
-			static gboolean equalFuncStringContains (GtkTreeModel* model, gint column, const gchar *key,
+			static gboolean equalFuncStringContains (GtkTreeModel* model, gint column, const gchar* key,
 					GtkTreeIter* iter, gpointer search_data);
 
 			/* Local object that walks the GtkTreeModel and obtains a GtkTreePath locating

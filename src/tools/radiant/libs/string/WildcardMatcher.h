@@ -30,9 +30,9 @@ class WildcardMatcher
 
 	private:
 		/* Like glob_match, but match PATTERN against any final segment of TEXT.  */
-		inline bool glob_match_after_star (const char *pattern, const char *text)
+		inline bool glob_match_after_star (const char* pattern, const char* text)
 		{
-			register const char *p = pattern, *t = text;
+			register const char* p = pattern, *t = text;
 			register char c, c1;
 
 			while ((c = *p++) == '?' || c == '*')
@@ -56,9 +56,9 @@ class WildcardMatcher
 		}
 
 		/* Return nonzero if PATTERN has any special globbing chars in it. */
-		inline bool glob_pattern_p (const char *pattern)
+		inline bool glob_pattern_p (const char* pattern)
 		{
-			register const char *p = pattern;
+			register const char* p = pattern;
 			register char c;
 			int open = 0;
 
@@ -84,9 +84,9 @@ class WildcardMatcher
 			return false;
 		}
 
-		bool glob_matches (const char *pattern, const char *text)
+		bool glob_matches (const char* pattern, const char* text)
 		{
-			register const char *p = pattern, *t = text;
+			register const char* p = pattern, *t = text;
 			register char c;
 
 			while ((c = *p++) != '\0')

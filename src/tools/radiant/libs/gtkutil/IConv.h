@@ -72,7 +72,7 @@ namespace gtkutil
 				// NULL for anything but inbuf; work around that. (NULL outbuf
 				// or NULL *outbuf is allowed by Unix98.)
 
-				char *outbuf = 0;
+				char* outbuf = 0;
 				gsize inbytes_left = 0;
 				gsize outbytes_left = 0;
 
@@ -89,7 +89,7 @@ namespace gtkutil
 				gsize bytes_written = 0;
 				GError* gerror = 0;
 
-				char * const buf = g_convert_with_iconv(str.data(), static_cast<gssize> (str.size()), gobject_, 0,
+				char*  const buf = g_convert_with_iconv(str.data(), static_cast<gssize> (str.size()), gobject_, 0,
 						&bytes_written, &gerror);
 
 				if (gerror) {
@@ -116,7 +116,7 @@ namespace gtkutil
 				gsize bytes_written = 0;
 				GError* gerror = 0;
 
-				char * const buf = g_locale_to_utf8(input.data(), static_cast<gssize> (input.size()), 0,
+				char*  const buf = g_locale_to_utf8(input.data(), static_cast<gssize> (input.size()), 0,
 						&bytes_written, &gerror);
 
 				if (gerror)
@@ -137,7 +137,7 @@ namespace gtkutil
 				gsize bytes_written = 0;
 				GError* gerror = 0;
 
-				char * const buf = g_locale_from_utf8(input.data(), static_cast<gssize> (input.size()), 0,
+				char*  const buf = g_locale_from_utf8(input.data(), static_cast<gssize> (input.size()), 0,
 						&bytes_written, &gerror);
 
 				if (gerror)
@@ -162,7 +162,7 @@ namespace gtkutil
 				gsize bytes_written = 0;
 				GError* gerror = 0;
 
-				char * const buf = g_filename_to_utf8(input.data(), static_cast<gssize> (input.size()), 0,
+				char*  const buf = g_filename_to_utf8(input.data(), static_cast<gssize> (input.size()), 0,
 						&bytes_written, &gerror);
 
 				if (gerror)

@@ -46,7 +46,7 @@ inline void directory_close (Directory* directory)
 	g_dir_close(directory);
 }
 
-inline const char *directory_read_and_increment (Directory* directory)
+inline const char* directory_read_and_increment (Directory* directory)
 {
 	return g_dir_read_name(directory);
 }
@@ -57,7 +57,7 @@ void Directory_forEach(const std::string& path, const Functor& functor) {
 
 	if (directory_good(dir)) {
 		for (;;) {
-			const char *name = directory_read_and_increment(dir);
+			const char* name = directory_read_and_increment(dir);
 			if (name == 0) {
 				break;
 			}

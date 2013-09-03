@@ -23,7 +23,7 @@ namespace gtkutil
 		public:
 
 			// Constructor takes the icon name and the label text.
-			StockIconMenuItem (const gchar *stockName, const std::string& text) :
+			StockIconMenuItem (const gchar* stockName, const std::string& text) :
 				_icon(gtk_image_new_from_stock(stockName, GTK_ICON_SIZE_MENU)), _label(gtk_label_new(text.c_str()))
 			{
 			}
