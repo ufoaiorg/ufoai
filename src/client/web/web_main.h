@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 #include "../../common/http.h"
 
+#define WEB_API_SERVER "http://ufoai.org/"
+
+extern cvar_t *web_username;
+extern cvar_t *web_password;
+extern cvar_t *web_userid;
+
 bool WEB_CheckAuth(void);
 bool WEB_Auth(const char *username, const char *password);
 void WEB_InitStartup(void);

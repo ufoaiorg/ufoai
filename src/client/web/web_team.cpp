@@ -32,13 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 #include "../../shared/parse.h"
 
-cvar_t *web_username;
-cvar_t *web_password;
-cvar_t *web_userid;
-cvar_t *web_teamdownloadurl;
-cvar_t *web_teamdeleteurl;
-cvar_t *web_teamuploadurl;
-cvar_t *web_teamlisturl;
+static cvar_t *web_teamdownloadurl;
+static cvar_t *web_teamdeleteurl;
+static cvar_t *web_teamuploadurl;
+static cvar_t *web_teamlisturl;
 
 /**
  * @brief Uploads a team onto the ufoai server
@@ -242,4 +239,16 @@ void WEB_ListTeams_f (void)
 	static const char *url = web_teamlisturl->string;
 	if (!WEB_GetURL(url, WEB_ListTeamsCallback))
 		Com_Printf("failed to query the team list\n");
+}
+
+void WEB_TeamCvars (void)
+{
+	web_teamdownloadurl = Cvar_Get("web_teamdownloadurl", WEB_API_SERVER "teams/$userid$-team$id$.mpt", CVAR_ARCHIVE,
+			"The url to download a shared team from. Use $id$ as a placeholder for the team id.");
+	web_teamlisturl = Cvar_Get("web_teamlisturl", WEB_API_SERVER "api/teamlist.php", CVAR_ARCHIVE,
+			"The url to get the team list from.");
+	web_teamdeleteurl = Cvar_Get("web_teamdeleteurl", WEB_API_SERVER "api/teamdelete.php", CVAR_ARCHIVE,
+			"The url to call if you want to delete one of your own teams again.");
+	web_teamuploadurl = Cvar_Get("web_teamuploadurl", WEB_API_SERVER "api/teamupload.php", CVAR_ARCHIVE,
+			"The url to upload a team to.");
 }

@@ -28,11 +28,13 @@
 #include "../cl_shared.h"
 #include "../ui/ui_main.h"
 #include "web_team.h"
+#include "web_cgame.h"
 #include "../../common/sha1.h"
 
-#define SERVER "http://ufoai.org/"
-
 static cvar_t *web_authurl;
+cvar_t *web_username;
+cvar_t *web_password;
+cvar_t *web_userid;
 
 /**
  * @brief Downloads the given url and notify the callback. The login credentials are automatically added as GET parameters
@@ -195,17 +197,11 @@ void WEB_InitStartup (void)
 	 * are valid, and the authentification was successful */
 	web_password = Cvar_Get("web_password", "", CVAR_ARCHIVE, "The encrypted password for the UFOAI server.");
 	web_userid = Cvar_Get("web_userid", "0", 0, "Your userid for the UFOAI server");
-
-	web_teamdownloadurl = Cvar_Get("web_teamdownloadurl", SERVER "teams/$userid$-team$id$.mpt", CVAR_ARCHIVE,
-			"The url to download a shared team from. Use $id$ as a placeholder for the team id.");
-	web_teamlisturl = Cvar_Get("web_teamlisturl", SERVER "api/teamlist.php", CVAR_ARCHIVE,
-			"The url to get the team list from.");
-	web_teamdeleteurl = Cvar_Get("web_teamdeleteurl", SERVER "api/teamdelete.php", CVAR_ARCHIVE,
-			"The url to call if you want to delete one of your own teams again.");
-	web_teamuploadurl = Cvar_Get("web_teamuploadurl", SERVER "api/teamupload.php", CVAR_ARCHIVE,
-			"The url to upload a team to.");
-	web_authurl = Cvar_Get("web_authurl", SERVER "api/auth.php", CVAR_ARCHIVE,
+	web_authurl = Cvar_Get("web_authurl", WEB_API_SERVER "api/auth.php", CVAR_ARCHIVE,
 			"The url to perform the authentification against.");
+
+	WEB_TeamCvars();
+	WEB_CGameCvars();
 
 	Com_Printf("\n------- web initialization ---------\n");
 	if (Q_strvalid(web_password->string)) {

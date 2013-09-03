@@ -1,7 +1,6 @@
 /**
  * @file
- * @brief UFOAI web interface management. Authentification as well as
- * uploading/downloading stuff to and from your account is done here.
+ * @brief UFOAI web interface management. c(lient)game related stuff.
  */
 
 /*
@@ -26,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include "../../common/cvar.h"
-
-void WEB_UploadTeam_f(void);
-void WEB_DeleteTeam_f(void);
-void WEB_DownloadTeam_f(void);
-void WEB_ListTeams_f(void);
-void WEB_TeamCvars(void);
+void WEB_CGameUpload(const char *cgameId, int category, const char *filename);
+void WEB_CGameDelete(const char *cgameId, int category, const char *filename);
+void WEB_CGameDownloadFromUser(const char *cgameId, int category, const char *filename, int userId);
+void WEB_CGameListForUser(const char *cgameId, int category, int userId);
+void WEB_CGameDownload(const char *cgameId, int category, const char *filename);
+void WEB_CGameList(const char *cgameId, int category);
+void WEB_CGameCvars(void);
