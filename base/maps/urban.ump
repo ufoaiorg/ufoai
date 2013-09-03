@@ -10,57 +10,59 @@ base urban/ub_
 // a: main
 // c: craft tile, usually a dropship or a UFO
 
+
+// Common tiles ----------------------------------------------------*
+
 tile +main
 {
 12 10
 
-0      0      0      0      0      0      0      0      0      0      0      0
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0
-0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      0      0      0      0      0      0      0      0      0      0      0
+0		0		0		0		0		0		0		0		0		0		0		0
+0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0		0		0		0
 }
+
+// Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
 {
 4 5
-
-0      0      0      0
-0      +b     +b     a
-0      +b     +b     a
-0      +b     +b     a
-0      a      a      a
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		a
 }
 
 tile +craft_drop_herakles
 {
 4 5
-
-0      0      0      0
-0      +b     +b     a
-0      +b     +b     a
-0      +b     +b     a
-0      a      a      a
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		a
 }
 
 tile +craft_drop_raptor
 {
 4 5
-
-0      0      0      0
-0      +b     +b     a
-0      +b     +b     a
-0      +b     +b     a
-0      a      a      a
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		a
 }
 
-// ########################################
-// ########### Maps for the game ###########
+
+// maps assemblies  ------------------------------------------------*
 
 assembly bomber_city
 {
