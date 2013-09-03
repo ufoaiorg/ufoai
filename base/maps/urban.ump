@@ -1,14 +1,14 @@
-// *********************************
-// Bomber_city
-// *********************************
+// **************************//
+// URBAN BUILDINGS RMA THEME //
+// **************************//
 
-base bomber_city/bc_
+base urban/ub_
 
 // Tiletypes:
 // ----------
 // +: tile contains something
 // a: main
-// b: dropship
+// c: craft tile, usually a dropship or a UFO
 
 tile +main
 {
@@ -62,7 +62,7 @@ tile +craft_drop_raptor
 // ########################################
 // ########### Maps for the game ###########
 
-assembly default
+assembly bomber_city
 {
 size "10 8"
 title "_Bomber in the City"

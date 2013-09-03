@@ -417,64 +417,6 @@ mapdef beach
 	)
 }
 
-/////////////////////////////
-// BOMBER_CITY RANDOM MAPS //
-/////////////////////////////
-
-mapdef bomber_city
-{
-	map				"+bomber_city"
-	params			("default")
-	description		"_Bomber in the City"
-	multiplayer		true
-	teams			4
-	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-		fight4on4
-		fight4on4on4
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		25
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		craft_ufo_bomber
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"desert"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
 ////////////////////////
 // BRIDGE RANDOM MAPS //
 ////////////////////////
@@ -2825,6 +2767,64 @@ mapdef ufocrash
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
+	)
+}
+
+///////////////////////////////
+// URBAN BUILDINGS RMA THEME //
+///////////////////////////////
+
+mapdef bomber_city
+{
+	map				"+urban"
+	params			("bomber_city")
+	description		"_Bomber in the City"
+	multiplayer		true
+	teams			4
+	gametypes (
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
+		coop2
+		coop3
+		coop4
+	)
+	maxaliens		25
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
 	)
 }
 
