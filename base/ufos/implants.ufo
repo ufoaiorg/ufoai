@@ -1,3 +1,4 @@
+/*
 implant muscular
 {
 	item	implant_muscular
@@ -11,3 +12,4 @@ implant amphetamine
 	removetime	1
 	installationtime 1
 }
+*/

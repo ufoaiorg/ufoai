@@ -1,3 +1,4 @@
+/*
 // Amphetamine Injection
 item implant_amphetamine
 {
@@ -58,3 +59,4 @@ item implant_muscular
 		mind		-0.03
 	}
 }
+*/
