@@ -2777,8 +2777,9 @@ mapdef ufocrash
 mapdef bomber_city
 {
 	map				"+urban"
-	params			("bomber_city")
 	description		"_Bomber in the City"
+	params			("bomber_city")
+	size			"large"
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -2794,7 +2795,7 @@ mapdef bomber_city
 		coop3
 		coop4
 	)
-	maxaliens		25
+	maxaliens		30
 
 	aircraft
 	(

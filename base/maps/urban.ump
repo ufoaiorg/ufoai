@@ -15,50 +15,49 @@ base urban/ub_
 
 tile +main
 {
-12 10
-
-0		0		0		0		0		0		0		0		0		0		0		0
-0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0		0		0		0		0
+13 10
+0		0		0		0		0		0		0		0		0		0		0		0		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0		0		0		0		0
 }
 
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
 {
-4 5
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		a
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_herakles
 {
-4 5
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		a
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 tile +craft_drop_raptor
 {
-4 5
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		a
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
 }
 
 
@@ -66,7 +65,7 @@ tile +craft_drop_raptor
 
 assembly bomber_city
 {
-size "10 8"
+size "11 8"
 title "_Bomber in the City"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
