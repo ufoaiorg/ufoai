@@ -89,6 +89,8 @@ static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 	const char *level = HOS_GetInjuryLevelString(employee, injuryLevel);
 	const character_t& chr = employee.chr;
 
+	if (!employee.isSoldier() && employee.chr.HP >= employee.chr.maxHP && injuryLevel <= 0)
+		return;
 	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank);
 	HOS_EntryWoundData(chr);
 }
