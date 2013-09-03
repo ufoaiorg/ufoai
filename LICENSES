@@ -82,11 +82,6 @@ base/maps/beach/beach_c_2.map | GNU General Public License 2.0 or later | Holger
 base/maps/beach/beach_c_3.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/beach/beach_craft_crash_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/beach/beach_w_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/bomber_city.ump | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/bomber_city/bc_main.map | GNU General Public License 2.0 or later
 base/maps/bridge.ump | GNU General Public License 2.0 or later
 base/maps/bridge/br_bridge.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -728,6 +723,11 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
+base/maps/urban.ump | GNU General Public License 2.0 or later
+base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_main.map | GNU General Public License 2.0 or later
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
