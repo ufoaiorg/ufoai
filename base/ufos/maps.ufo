@@ -3958,58 +3958,6 @@ mapdef spedition
 	)
 }
 
-/////////////////////////
-// STADIUM RANDOM MAPS //
-/////////////////////////
-
-mapdef stadium
-{
-	map				"+stadium"
-	params			("default")
-	description		"_Basketball Stadium"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-
-	maxaliens		21
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-//	ufos
-//	(
-//	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-	)
-
-	cultures
-	(
-		"eastern"
-		"western"
-	)
-
-	populations
-	(
-		"urban"
-		"village"
-		"suburban"
-	)
-}
-
 ///////////////////////
 // TOWER RANDOM MAPS //
 ///////////////////////

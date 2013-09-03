@@ -681,11 +681,6 @@ base/maps/spedition/sp_craft_drop_firebird.map | GNU General Public License 2.0 
 base/maps/spedition/sp_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/spedition/sp_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/spedition/sp_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/stadium.ump | GNU General Public License 2.0 or later
-base/maps/stadium/st_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/stadium/st_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/stadium/st_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/stadium/st_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/tower/t_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/tower/t_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
@@ -728,6 +723,7 @@ base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or l
 base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_main.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_stadium.map | GNU General Public License 2.0 or later | "SparX" Beyeler | renamed base/maps/stadium/st_main.map
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
@@ -3156,9 +3152,6 @@ base/pics/maps/shots/africa_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/alienbase.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/alienbase_2.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/alienbase_3.png | GNU General Public License 2.0 or later
-base/pics/maps/shots/urban.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/urban_2.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3298,9 +3291,6 @@ base/pics/maps/shots/small_street_3.jpg | GNU General Public License 2.0 or late
 base/pics/maps/shots/spedition.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/spedition_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/spedition_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/stadium.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/stadium_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/stadium_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3322,6 +3312,12 @@ base/pics/maps/shots/tropic_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/ufocrash.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/ufocrash_2.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/ufocrash_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/pics/maps/shots/urban.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/urban_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/urban_5.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/urban_6.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
