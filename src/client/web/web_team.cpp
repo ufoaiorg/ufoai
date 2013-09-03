@@ -40,9 +40,9 @@ static cvar_t *web_teamlisturl;
 /**
  * @brief Uploads a team onto the ufoai server
  * @note Only teams from the home directory of the user are working. A user may
- * not upload default delivered teams from without the game installation folder.
+ * not upload default delivered teams from within the game installation folder.
  */
-void WEB_UploadTeam_f (void)
+static void WEB_UploadTeam_f (void)
 {
 	if (!WEB_CheckAuth())
 		return;
@@ -80,7 +80,7 @@ void WEB_UploadTeam_f (void)
 /**
  * @brief Delete one of your own teams from the server
  */
-void WEB_DeleteTeam_f (void)
+static void WEB_DeleteTeam_f (void)
 {
 	if (!WEB_CheckAuth())
 		return;
@@ -109,7 +109,7 @@ void WEB_DeleteTeam_f (void)
  * @brief Downloads a particular team and informs the ui (by calling confuncs) about the result.
  * @note This method does a duplicate check on the downloaded file.
  */
-void WEB_DownloadTeam_f (void)
+static void WEB_DownloadTeam_f (void)
 {
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <userid> <id>\n", Cmd_Argv(0));
@@ -234,7 +234,7 @@ static void WEB_ListTeamsCallback (const char *responseBuf, void *userdata)
  * @brief Shows all downloadable teams on the ufoai server
  * @sa WEB_ListTeamsCallback
  */
-void WEB_ListTeams_f (void)
+static void WEB_ListTeams_f (void)
 {
 	static const char *url = web_teamlisturl->string;
 	if (!WEB_GetURL(url, WEB_ListTeamsCallback))
@@ -251,4 +251,12 @@ void WEB_TeamCvars (void)
 			"The url to call if you want to delete one of your own teams again.");
 	web_teamuploadurl = Cvar_Get("web_teamuploadurl", WEB_API_SERVER "api/teamupload.php", CVAR_ARCHIVE,
 			"The url to upload a team to.");
+}
+
+void WEB_TeamCommands (void)
+{
+	Cmd_AddCommand("web_uploadteam", WEB_UploadTeam_f, "Upload a team to the UFOAI server");
+	Cmd_AddCommand("web_deleteteam", WEB_DeleteTeam_f, "Delete one of your own teams from the server");
+	Cmd_AddCommand("web_downloadteam", WEB_DownloadTeam_f, "Download a team from the UFOAI server");
+	Cmd_AddCommand("web_listteams", WEB_ListTeams_f, "Show all teams on the UFOAI server");
 }

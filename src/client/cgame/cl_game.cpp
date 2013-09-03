@@ -190,6 +190,13 @@ size_t GAME_GetCharacterArraySize (void)
 	return lengthof(characters);
 }
 
+const char* GAME_GetCurrentName (void)
+{
+	const cgame_export_t* cgame = GAME_GetCurrentType();
+	if (cgame == nullptr)
+		return nullptr;
+	return cgame->menu;
+}
 /**
  * @brief Reset all characters in the static character array
  * @sa GAME_GetCharacterArraySize

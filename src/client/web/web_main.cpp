@@ -186,10 +186,6 @@ bool WEB_CheckAuth (void)
 
 void WEB_InitStartup (void)
 {
-	Cmd_AddCommand("web_uploadteam", WEB_UploadTeam_f, "Upload a team to the UFOAI server");
-	Cmd_AddCommand("web_deleteteam", WEB_DeleteTeam_f, "Delete one of your own teams from the server");
-	Cmd_AddCommand("web_downloadteam", WEB_DownloadTeam_f, "Download a team from the UFOAI server");
-	Cmd_AddCommand("web_listteams", WEB_ListTeams_f, "Show all teams on the UFOAI server");
 	Cmd_AddCommand("web_auth", WEB_Auth_f, "Perform the authentification against the UFOAI server");
 
 	web_username = Cvar_Get("web_username", Sys_GetCurrentUser(), CVAR_ARCHIVE, "The username for the UFOAI server.");
@@ -201,7 +197,9 @@ void WEB_InitStartup (void)
 			"The url to perform the authentification against.");
 
 	WEB_TeamCvars();
+	WEB_TeamCommands();
 	WEB_CGameCvars();
+	WEB_CGameCommands();
 
 	Com_Printf("\n------- web initialization ---------\n");
 	if (Q_strvalid(web_password->string)) {

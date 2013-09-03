@@ -55,6 +55,7 @@ void GAME_CharacterCvars(const character_t *chr);
 character_t* GAME_GetCharacter(int index);
 character_t* GAME_GetCharacterByUCN(int ucn);
 size_t GAME_GetCharacterArraySize(void);
+const char* GAME_GetCurrentName(void);
 void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);
 void GAME_AppendTeamMember(int memberIndex, const char *teamDefID, const equipDef_t *ed);

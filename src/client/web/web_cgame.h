@@ -27,8 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void WEB_CGameUpload(const char *cgameId, int category, const char *filename);
 void WEB_CGameDelete(const char *cgameId, int category, const char *filename);
-void WEB_CGameDownloadFromUser(const char *cgameId, int category, const char *filename, int userId);
-void WEB_CGameListForUser(const char *cgameId, int category, int userId);
-void WEB_CGameDownload(const char *cgameId, int category, const char *filename);
-void WEB_CGameList(const char *cgameId, int category);
+void WEB_CGameDownloadFromUser(const char *cgameId, int category, const char *filename, int userId = -1);
+void WEB_CGameListForUser(const char *cgameId, int category, int userId = -1);
 void WEB_CGameCvars(void);
+void WEB_CGameCommands(void);
