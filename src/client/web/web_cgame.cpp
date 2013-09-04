@@ -99,7 +99,7 @@ void WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 	}
 
 	char url[URL_SIZE];
-	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgameuploadurl->string, cgameId, category, filename);
+	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgameuploadurl->string, cgameId, category, nullptr);
 	if (encodedURL == nullptr) {
 		UI_ExecuteConfunc("cgame_uploadfailed");
 		return;
@@ -170,15 +170,13 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 	}
 
 	struct entry_s {
-		int id;
-		char name[MAX_VAR];
 		int userId;
+		char name[MAX_QPATH];
 	};
 
 	const value_t values[] = {
-		{"id", V_INT, offsetof(entry_s, id), MEMBER_SIZEOF(entry_s, id)},
 		{"userid", V_INT, offsetof(entry_s, userId), MEMBER_SIZEOF(entry_s, userId)},
-		{"name", V_STRING, offsetof(entry_s, name), 0},
+		{"file", V_STRING, offsetof(entry_s, name), 0},
 		{nullptr, V_NULL, 0, 0}
 	};
 
@@ -205,7 +203,7 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 			if (level == 0) {
 				break;
 			}
-			UI_ExecuteConfunc("cgamelist_add %i \"%s\" %i %i", entry.id, entry.name, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
+			UI_ExecuteConfunc("cgamefiles_add \"%s\" \"%s\" %i %i", entry.name, entry.name, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
 			num++;
 			continue;
 		}
@@ -311,10 +309,10 @@ static void WEB_ListCGame_f (void)
 
 void WEB_CGameCvars (void)
 {
-	web_cgamedownloadurl = Cvar_Get("web_cgamedownloadurl", WEB_API_SERVER "cgame/$cgame$/$userid$/$category$/$file$", CVAR_ARCHIVE, "The url to download a shared cgame file from. Use $userid$, $category$, $cgame$ and $file$ as placeholders.");
-	web_cgamelisturl = Cvar_Get("web_cgamelisturl", WEB_API_SERVER "api/cgamelist.php?cgameid=$cgame$&category=$category$&userid=$userid$", CVAR_ARCHIVE, "The url to get the cgame file list from.");
-	web_cgamedeleteurl = Cvar_Get("web_cgamedeleteurl", WEB_API_SERVER "api/cgamedelete.php?cgameid=$cgame$&category=$category$&file=$file$", CVAR_ARCHIVE, "The url to call if you want to delete one of your own cgame files again.");
-	web_cgameuploadurl = Cvar_Get("web_cgameuploadurl", WEB_API_SERVER "api/cgameupload.php?cgameid=$cgame$&category=$category$", CVAR_ARCHIVE, "The url to upload a cgame file to.");
+	web_cgamedownloadurl = Cvar_Get("web_cgamedownloadurl", WEB_API_SERVER "cgame/$cgame$/$userid$/$category$/$file$", 0, "The url to download a shared cgame file from. Use $userid$, $category$, $cgame$ and $file$ as placeholders.");
+	web_cgamelisturl = Cvar_Get("web_cgamelisturl", WEB_API_SERVER "api/cgamelist.php?cgame=$cgame$&category=$category$&userid=$userid$", 0, "The url to get the cgame file list from.");
+	web_cgamedeleteurl = Cvar_Get("web_cgamedeleteurl", WEB_API_SERVER "api/cgamedelete.php?cgame=$cgame$&category=$category$&file=$file$", 0, "The url to call if you want to delete one of your own cgame files again.");
+	web_cgameuploadurl = Cvar_Get("web_cgameuploadurl", WEB_API_SERVER "api/cgameupload.php?cgame=$cgame$&category=$category$", 0, "The url to upload a cgame file to.");
 }
 
 void WEB_CGameCommands (void)

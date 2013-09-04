@@ -1,9 +1,9 @@
 <?php
-include "internal/auth.php";
+include "internal/webapi.php";
 
-if (true === auth()) {
-	echo getUserId();
-	exit();
+if (true === auth ()) {
+	echo getUserId ();
+	exit ();
 }
 
 echo "0";

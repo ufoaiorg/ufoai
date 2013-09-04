@@ -1,20 +1,16 @@
 <?php
-include "internal/config.php";
+include "internal/webapi.php";
 
-// get all text files with a .mpt extension.
-$dir = getDir() . '*.' . FILEEXT;
-$teams = glob($dir);
+$fs = new FileSystem ();
+if (hasRequestUserId ())
+	$userId = getRequestUserId ();
+else
+	$userId = getUserId();
 
-// print each file name
+$files = $fs->listUserFiles ( $userId );
+
 echo "{";
-foreach($teams as $team) {
-	$id = getId($team);
-	$userId = getUser($team);
-	$data = getData($team);
-	# the stored soldiers in this file
-	$count = $data["soldiercount"];
-	# might contain " - replace with '
-	$name = str_replace("\"", "'", $data["name"]);
-	echo "{id \"$id\" userid \"$userId\" soldiercount \"$count\" name \"$name\"}";
+foreach ( $files as $file ) {
+	echo "{userid \"" . $userId . "\" file \"" . $file . "\"}";
 }
 echo "}";

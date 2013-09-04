@@ -66,7 +66,7 @@ window cgame_download
 	 * @param <3> The user id of the owner
 	 * @param <4> Own file = 1, other users file = 0
 	 */
-	confunc cgamelist_add
+	confunc cgamefiles_add
 	{
 		call *node:root.downloadable@createChild("download<3><1>", "downloadentry")
 		*node:root.downloadable.download<3><1>.download@string = "<2> (<3>)"
@@ -83,19 +83,19 @@ window cgame_download
 	 * @brief Called when a file download was successful
 	 * @param <1> the filename of the newly available file
 	 */
-	confunc cgamelist_downloadsuccessful
+	confunc cgame_downloadsuccessful
 	{
 	}
 
-	confunc cgamelist_downloadduplicate
+	confunc cgame_downloadduplicate
 	{
 	}
 
-	confunc cgamelist_uploadsuccessful
+	confunc cgame_uploadsuccessful
 	{
 	}
 
-	confunc cgamelist_uploadfailed
+	confunc cgame_uploadfailed
 	{
 	}
 
@@ -103,16 +103,16 @@ window cgame_download
 	 * @param <1> The user id of the owner
 	 * @param <2> The team id
 	 */
-	confunc cgamelist_deletesuccessful
+	confunc cgame_deletesuccessful
 	{
 		call *node:root.downloadable.download<1><2>@delete
 	}
 
-	confunc cgamelist_deletefailed
+	confunc cgame_deletefailed
 	{
 	}
 
-	confunc cgamelist_clear
+	confunc cgamefiles_clear
 	{
 		call *node:root.downloadable@removeAllChild
 	}
