@@ -84,10 +84,16 @@ static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, 
 	return out;
 }
 
-void WEB_CGameUpload (const char *cgameId, int category, const char *filename)
+bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 {
+	if (Q_strnull(cgameId))
+		return false;
+
+	if (Q_strnull(filename))
+		return false;
+
 	if (!WEB_CheckAuth())
-		return;
+		return false;
 
 	const char *fullPath = va("%s/%s", FS_Gamedir(), filename);
 	/* we ignore this, because this file is not in the users save path,
@@ -95,66 +101,71 @@ void WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 	if (!FS_FileExists("%s", fullPath)) {
 		Com_Printf("no user data: '%s'\n", fullPath);
 		UI_ExecuteConfunc("cgame_uploadfailed");
-		return;
+		return false;
 	}
 
 	char url[URL_SIZE];
 	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgameuploadurl->string, cgameId, category, nullptr);
 	if (encodedURL == nullptr) {
 		UI_ExecuteConfunc("cgame_uploadfailed");
-		return;
+		return false;
 	}
 
-	if (WEB_PutFile("cgame", fullPath, encodedURL)) {
-		UI_ExecuteConfunc("cgame_uploadsuccessful");
-		Com_Printf("uploaded the team '%s'\n", filename);
-	} else {
+	if (!WEB_PutFile("cgame", fullPath, encodedURL)) {
 		UI_ExecuteConfunc("cgame_uploadfailed");
 		Com_Printf("failed to upload the team from file '%s'\n", filename);
+		return false;
 	}
+
+	UI_ExecuteConfunc("cgame_uploadsuccessful");
+	Com_Printf("uploaded the team '%s'\n", filename);
+	return true;
 }
 
-void WEB_CGameDelete (const char *cgameId, int category, const char *filename)
+bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
 {
 	if (!WEB_CheckAuth())
-		return;
+		return false;
 
 	char url[URL_SIZE];
 	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedeleteurl->string, cgameId, category, filename);
 	if (encodedURL == nullptr)
-		return;
+		return false;
 
-	if (WEB_GetURL(encodedURL, nullptr)) {
-		Com_Printf("deleted the cgame file '%s'\n", filename);
-		UI_ExecuteConfunc("cgame_deletesuccessful");
-	} else {
+	if (!WEB_GetURL(encodedURL, nullptr)) {
 		Com_Printf("failed to delete the cgame file '%s' from the server\n", filename);
 		UI_ExecuteConfunc("cgame_deletefailed");
+		return false;
 	}
+
+	Com_Printf("deleted the cgame file '%s'\n", filename);
+	UI_ExecuteConfunc("cgame_deletesuccessful");
+	return true;
 }
 
-void WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *filename, int userId)
+bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *filename, int userId)
 {
 	char url[URL_SIZE];
 	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedownloadurl->string, cgameId, category, filename, userId);
 	if (encodedURL == nullptr)
-		return;
+		return false;
 
 	qFILE f;
 	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("Could not open the target file\n");
 		FS_CloseFile(&f);
-		return;
+		return false;
 	}
 
 	/* no login is needed here */
 	if (!HTTP_GetToFile(encodedURL, f.f)) {
 		Com_Printf("cgame file download failed from '%s'\n", url);
 		FS_CloseFile(&f);
-		return;
+		return false;
 	}
 	FS_CloseFile(&f);
+	return true;
 }
 
 /**
@@ -228,18 +239,22 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 	Com_Printf("found %i cgame file entries\n", num);
 }
 
-void WEB_CGameListForUser (const char *cgameId, int category, int userId)
+bool WEB_CGameListForUser (const char *cgameId, int category, int userId)
 {
 	if (userId == -1 && !WEB_CheckAuth())
-		return;
+		return false;
 
 	char url[URL_SIZE];
 	const char* encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamelisturl->string, cgameId, category, nullptr, userId);
 	if (encodedURL == nullptr)
-		return;
+		return false;
 
-	if (!WEB_GetURL(encodedURL, WEB_ListCGameFilesCallback))
+	if (!WEB_GetURL(encodedURL, WEB_ListCGameFilesCallback)) {
 		Com_Printf("failed to query the cgame list for '%s' in category %i and for user %i\n", cgameId, category, userId);
+		return false;
+	}
+
+	return true;
 }
 
 static void WEB_UploadCGame_f (void)

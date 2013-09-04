@@ -673,7 +673,7 @@ static bool FS_GetHomeDirectory (char* gdir, size_t length)
  * @param[in] write Add this directory as writable (config files, save games)
  * @sa Sys_GetHomeDirectory
  */
-static void FS_AddHomeAsGameDirectory (const char* dir, bool write)
+void FS_AddHomeAsGameDirectory (const char* dir, bool write)
 {
 	char gdir[MAX_OSPATH];
 

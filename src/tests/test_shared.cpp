@@ -77,6 +77,7 @@ void TEST_Init (void)
 		Cvar_Init();
 		FS_InitFilesystem(true);
 		FS_AddGameDirectory("./unittest", false);
+		FS_AddHomeAsGameDirectory("unittest", true);
 		Swap_Init();
 		SV_Init();
 		NET_Init();

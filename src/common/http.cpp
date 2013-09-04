@@ -203,7 +203,13 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char* url, FILE* file, co
 	/* get it */
 	const CURLcode result = curl_easy_perform(dl.curl);
 	if (result != CURLE_OK)	{
-		Com_Printf("failed to fetch '%s': %s\n", url, curl_easy_strerror(result));
+		if (result == CURLE_HTTP_RETURNED_ERROR) {
+			long httpCode = 0;
+			curl_easy_getinfo(dl.curl, CURLINFO_RESPONSE_CODE, &httpCode);
+			Com_Printf("failed to fetch '%s': %s (%i)\n", url, curl_easy_strerror(result), (int)httpCode);
+		} else {
+			Com_Printf("failed to fetch '%s': %s\n", url, curl_easy_strerror(result));
+		}
 		curl_easy_cleanup(dl.curl);
 		return false;
 	}
@@ -264,7 +270,13 @@ bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, 
 	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
 	const CURLcode result = curl_easy_perform(curl);
 	if (result != CURLE_OK)	{
-		Com_Printf("failed to upload file '%s': %s\n", fileName, curl_easy_strerror(result));
+		if (result == CURLE_HTTP_RETURNED_ERROR) {
+			long httpCode = 0;
+			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
+			Com_Printf("failed to upload file '%s': %s (%i)\n", fileName, curl_easy_strerror(result), (int)httpCode);
+		} else {
+			Com_Printf("failed to upload file '%s': %s\n", fileName, curl_easy_strerror(result));
+		}
 		curl_easy_cleanup(curl);
 		return false;
 	}

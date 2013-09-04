@@ -1,6 +1,5 @@
 /**
  * @file
- * @brief UFOAI web interface management. c(lient)game related stuff.
  */
 
 /*
@@ -15,7 +14,7 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.m
+See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
@@ -25,9 +24,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-bool WEB_CGameUpload(const char *cgameId, int category, const char *filename);
-bool WEB_CGameDelete(const char *cgameId, int category, const char *filename);
-bool WEB_CGameDownloadFromUser(const char *cgameId, int category, const char *filename, int userId = -1);
-bool WEB_CGameListForUser(const char *cgameId, int category, int userId = -1);
-void WEB_CGameCvars(void);
-void WEB_CGameCommands(void);
+int UFO_AddWebAPITests(void);

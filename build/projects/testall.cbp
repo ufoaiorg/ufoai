@@ -576,6 +576,8 @@
 		<Unit filename="..\..\src\tests\test_campaign.h" />
 		<Unit filename="..\..\src\tests\test_character.cpp" />
 		<Unit filename="..\..\src\tests\test_character.h" />
+		<Unit filename="..\..\src\tests\test_webapi.cpp" />
+		<Unit filename="..\..\src\tests\test_webapi.h" />
 		<Unit filename="..\..\src\tests\test_dbuffer.cpp" />
 		<Unit filename="..\..\src\tests\test_dbuffer.h" />
 		<Unit filename="..\..\src\tests\test_events.cpp" />
