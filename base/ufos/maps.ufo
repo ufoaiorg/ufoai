@@ -3348,6 +3348,8 @@ mapdef city2
 	)
 }
 
+/* disabled while moving the map to the +urban map theme -----------*
+
 ////////////////////////////
 // CITY_DISCO RANDOM MAPS //
 ////////////////////////////
@@ -3397,6 +3399,8 @@ mapdef city_disco
 		"urban"
 	)
 }
+
+-------------------------------------------------------------------*/
 
 //////////////////////////////
 // CONSTRUCTION RANDOM MAPS //

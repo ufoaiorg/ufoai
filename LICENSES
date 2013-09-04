@@ -132,11 +132,6 @@ base/maps/city3/c3_street_h_1.map | GNU General Public License 2.0 or later | Ho
 base/maps/city3/c3_street_h_9_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_street_v_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_street_v_9_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/city_disco.ump | GNU General Public License 2.0 or later
-base/maps/city_disco/cd_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/city_disco/cd_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/city_disco/cd_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/city_disco/cd_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_industry.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/city_train.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/construction.ump | GNU General Public License 2.0 or later
@@ -706,6 +701,7 @@ base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/urban.ump | GNU General Public License 2.0 or later
+base/maps/urban/ub_city_disco.map | GNU General Public License 2.0 or later | "SparX" Beyeler | base/maps/city_disco/cd_main.map
 base/maps/urban/ub_community_centre.map | GNU General Public License 2.0 or later | Martin Gerhardy | base/maps/community_centre/cm_main.map
 base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or later
