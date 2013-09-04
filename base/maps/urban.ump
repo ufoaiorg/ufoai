@@ -75,6 +75,18 @@ tile +main
 0		0		0		0		0		0		0		0		0		0		0		0		0
 }
 
+tile +mart
+{
+7 7
+0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0
+}
+
 tile +stadium
 {
 7 9
@@ -87,6 +99,17 @@ tile +stadium
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
 0		0		0		0		0		0		0
+}
+
+
+// Filler tiles ----------------------------------------------------*
+
+tile +filler_a
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
 }
 
 // UFO tiles -------------------------------------------------------*
@@ -192,4 +215,13 @@ title "_Laboratory"
 fix +laboratory		"0 0"
 fix +lab_parking	"7 1"
 fix *rm_drop +craft_drop_firebird	"0 4"
+}
+
+assembly mart
+{
+size "8 5"
+title "_Mart"
++filler_a	"0 6"
++mart		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }

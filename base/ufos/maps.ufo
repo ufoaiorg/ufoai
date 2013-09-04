@@ -2940,6 +2940,57 @@ mapdef laboratory_noufo
 	)
 }
 
+mapdef mart
+{
+	map			"+urban"
+	params		("mart")
+	description	"_Supermarket"
+	size		"medium"
+	maxaliens	16
+
+	multiplayer	true
+	teams		2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef stadium
 {
 	map				"+urban"
@@ -3714,59 +3765,6 @@ mapdef japan_default
 }
 
 /* disabled while moving the map to the +urban map theme -----------*
-
-//////////////////////
-// MART RANDOM MAPS //
-//////////////////////
-
-mapdef mart
-{
-	map			"+mart"
-	params		("default")
-	description	"_Supermarket"
-	multiplayer	true
-	teams		2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-
-	maxaliens		23
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-//	ufos
-//	(
-//	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-		"mountain"
-		"cold"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		"urban"
-		"village"
-		"suburban"
-	)
-}
 
 -------------------------------------------------------------------*/
 
