@@ -28,9 +28,9 @@ enum
 };
 
 // CONSTANTS
-const char *ADDPROPERTY_TITLE = _("Add property");
-const char *FOLDER_ICON = "folder16.png";
-const char *CUSTOM_PROPERTY_TEXT = _("Custom properties defined for this entity class, if any");
+const char* ADDPROPERTY_TITLE = _("Add property");
+const char* FOLDER_ICON = "folder16.png";
+const char* CUSTOM_PROPERTY_TEXT = _("Custom properties defined for this entity class, if any");
 }
 
 // Constructor creates GTK widgets
@@ -150,7 +150,7 @@ class CustomPropertyAdder: public EntityClassAttributeVisitor
 		void visit (const EntityClassAttribute& attr)
 		{
 			// Escape any Pango markup in the attribute name (e.g. "<" or ">")
-			gchar *escName = g_markup_escape_text(attr.name.c_str(), -1);
+			gchar* escName = g_markup_escape_text(attr.name.c_str(), -1);
 
 			GtkTreeIter tmp;
 			gtk_tree_store_append(_store, &tmp, _parent);

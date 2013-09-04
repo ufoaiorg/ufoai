@@ -99,7 +99,7 @@ namespace sidebar
 					std::string descriptionPath = fullBaseNamePath + ".txt";
 					AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(descriptionPath));
 					if (file) {
-						const char *description = "";
+						const char* description = "";
 						TextInputStream &stream = file->getInputStream();
 						const std::size_t realsize = stream.read(buffer, file->size());
 						buffer[realsize] = '\0';

@@ -43,7 +43,7 @@ Environment::Environment() :
 
 std::string Environment::getHomeDir ()
 {
-	const gchar *home;
+	const gchar* home;
 
 #ifdef _WIN32
 	home = g_get_user_config_dir();
@@ -57,7 +57,7 @@ std::string Environment::getHomeDir ()
 	return cleaned + RADIANT_HOME + RADIANT_DIRECTORY;
 }
 
-void Environment::init(int argc, char *argv[])
+void Environment::init(int argc, char* argv[])
 {
 	_homePath = getHomeDir();
 
@@ -66,14 +66,14 @@ void Environment::init(int argc, char *argv[])
 	if (!(g_file_test(_appPath.c_str(), (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(_appPath.c_str())))
 #endif
 	{
-		gchar *currentDir = g_get_current_dir();
+		gchar* currentDir = g_get_current_dir();
 		_appPath = DirectoryCleaned(currentDir);
 		g_free(currentDir);
 	}
 	initPaths();
 }
 
-void Environment::initArgs(int argc, char *argv[]) {
+void Environment::initArgs(int argc, char* argv[]) {
 	int i, j, k;
 
 	for (i = 1; i < argc; i++) {

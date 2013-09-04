@@ -6,12 +6,12 @@
 
 #include <libxml/parser.h>
 
-inline const char *xmlAttr_getName (xmlAttrPtr attr)
+inline const char* xmlAttr_getName (xmlAttrPtr attr)
 {
 	return reinterpret_cast<const char*> (attr->name);
 }
 
-inline const char *xmlAttr_getValue (xmlAttrPtr attr)
+inline const char* xmlAttr_getValue (xmlAttrPtr attr)
 {
 	return reinterpret_cast<const char*> (attr->children->content);
 }

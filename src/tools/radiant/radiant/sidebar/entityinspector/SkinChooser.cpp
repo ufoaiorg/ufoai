@@ -19,8 +19,8 @@ namespace ui {
 
 namespace {
 
-const char *FOLDER_ICON = "folder16.png";
-const char *SKIN_ICON = "skin16.png";
+const char* FOLDER_ICON = "folder16.png";
+const char* SKIN_ICON = "skin16.png";
 
 // Tree column enum
 enum

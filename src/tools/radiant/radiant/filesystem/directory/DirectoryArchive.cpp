@@ -85,7 +85,7 @@ void DirectoryArchive::forEachFile (VisitorFunc visitor, const std::string& root
 	dirs.push_back(directory_open(path));
 
 	while (!dirs.empty() && directory_good(dirs.back())) {
-		const char *name = directory_read_and_increment(dirs.back());
+		const char* name = directory_read_and_increment(dirs.back());
 
 		if (name == 0) {
 			directory_close(dirs.back());

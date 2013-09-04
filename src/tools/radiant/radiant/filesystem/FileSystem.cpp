@@ -85,11 +85,11 @@ void FileSystem::initDirectory (const std::string& directory)
 
 			Archives archives;
 			for (;;) {
-				const char *name = g_dir_read_name(dir);
+				const char* name = g_dir_read_name(dir);
 				if (name == 0)
 					break;
 
-				const char *ext = strrchr(name, '.');
+				const char* ext = strrchr(name, '.');
 				if ((ext == 0) || *(++ext) == '\0' || GetArchiveTable(archiveModules, ext) == 0)
 					continue;
 

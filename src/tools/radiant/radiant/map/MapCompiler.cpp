@@ -45,7 +45,7 @@ int MapCompiler::run(const std::string& mapName, const std::string& parameters, 
 	std::string relativeMapName = GlobalFileSystem().getRelative(mapName);
 
 	const std::string workingDir = os::stripFilename(_compilerBinary);
-	char *output = NULL;
+	char* output = NULL;
 
 	int exitCode = exec_run_cmd(_compilerBinary + " " + parameters + " " + relativeMapName, &output, workingDir);
 	if (exitCode == -1)
@@ -84,17 +84,17 @@ inline void compileReadProgress (void *ex, void *buffer)
 	static const gdouble stepWidth = 1.0 / compilerSteps / substeps;
 
 	static char const* const steps[] =
-			{ "LEVEL:", "UNITCHECK:", "CONNCHECK:", "FACELIGHTS:", "FINALLIGHT:", (const char *) 0 };
+			{ "LEVEL:", "UNITCHECK:", "CONNCHECK:", "FACELIGHTS:", "FINALLIGHT:", (const char* ) 0 };
 
 	ExecCmd *job = (ExecCmd *) ex;
 	Exec *exec = (Exec *) job->exec;
 
-	gchar *buf = (gchar*) buffer;
+	gchar* buf = (gchar*) buffer;
 
 	if (strstr(buf, "(time:")) {
 		job->parse_progress = FALSE;
 	} else {
-		const char *const *step = steps;
+		const char* const *step = steps;
 		while (*step) {
 			if (buf != 0 && !string_equal(*step, buf)) {
 				job->parse_progress = TRUE;
@@ -105,7 +105,7 @@ inline void compileReadProgress (void *ex, void *buffer)
 	}
 
 	if (job->parse_progress) {
-		const char *dots = strstr(buf, "...");
+		const char* dots = strstr(buf, "...");
 		if (dots) {
 			const char progress = *(dots - 1);
 			if (progress >= '0' && progress <= '9') {

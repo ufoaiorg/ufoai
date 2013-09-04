@@ -250,7 +250,7 @@ bool ScriptTokeniser::tokenise ()
 	return m_write != m_token;
 }
 
-const char *ScriptTokeniser::fillToken ()
+const char* ScriptTokeniser::fillToken ()
 {
 	if (!tokenise()) {
 		return 0;
@@ -272,7 +272,7 @@ const std::string ScriptTokeniser::getToken ()
 		return m_token;
 	}
 
-	const char *token = fillToken();
+	const char* token = fillToken();
 	if (token)
 		return std::string(token);
 

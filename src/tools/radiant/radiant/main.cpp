@@ -100,7 +100,7 @@
 
 #undef main
 
-static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data)
+static void gtk_error_redirect (const gchar* domain, GLogLevelFlags log_level, const gchar* message, gpointer user_data)
 {
 	gboolean in_recursion;
 	StringOutputStream buf(256);
@@ -169,7 +169,7 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 			buf << "LOG (";
 		if (log_level) {
 			gchar string[] = "0x00): ";
-			gchar *p = string + 2;
+			gchar* p = string + 2;
 			const guint i = g_bit_nth_msf(log_level, -1);
 			*p++ = i >> 4;
 			*p = '0' + (i & 0xf);
@@ -239,11 +239,11 @@ class LineLimitedTextOutputStream: public TextOutputStream
 			outputStream(outputStream), count(count)
 		{
 		}
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			if (count != 0) {
-				const char *p = buffer;
-				const char *end = buffer + length;
+				const char* p = buffer;
+				const char* end = buffer + length;
 				for (;;) {
 					p = std::find(p, end, '\n');
 					if (p == end) {
@@ -354,7 +354,7 @@ static void remove_local_pid (void)
 	file_remove(g_pidGameFile);
 }
 
-int main (int argc, char *argv[])
+int main (int argc, char* argv[])
 {
 	streams_init();
 
