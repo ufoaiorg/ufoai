@@ -351,7 +351,7 @@ tileset 2x2
 	+b2x2_house02
 	+b2x2_house03
 	+b2x2_house05
-	// +b2x2_house08 disabled, because only eight tiles allowed in a tileset
+	+b2x2_house08
 	+p2x2_garden01
 	+p2x2_playground01
 	+p2x2_playground02
