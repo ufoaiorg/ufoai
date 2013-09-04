@@ -31,7 +31,7 @@
 inline unsigned int path_get_depth (const std::string& path)
 {
 	unsigned int depth = 0;
-	const char *cstr = path.c_str();
+	const char* cstr = path.c_str();
 	while (cstr != 0 && cstr[0] != '\0') {
 		cstr = strchr(cstr, '/');
 		if (cstr != 0) {

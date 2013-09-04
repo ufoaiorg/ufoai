@@ -105,7 +105,7 @@ EntityClass *EntityClassScannerUFO::initFromDefinition (const entityDef_t *defin
 		} else if (keyName == "spawnflags") {
 			if (keydef->flags & ED_ABSTRACT) {
 				/* there are two keydefs, abstract holds the valid levelflags, the other one default value and type */
-				const char *flags = keydef->desc;
+				const char* flags = keydef->desc;
 				parseFlags(e, &flags);
 			} else {
 				parseAttribute(e, keydef);
@@ -157,7 +157,7 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 	}
 
 	const std::size_t size = file->size();
-	char *entities = (char *) malloc(size + 1);
+	char* entities = (char* ) malloc(size + 1);
 	TextInputStream &stream = file->getInputStream();
 	const std::size_t realsize = stream.read(entities, size);
 	entities[realsize] = '\0';

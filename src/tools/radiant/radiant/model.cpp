@@ -49,7 +49,7 @@ typedef unsigned char byte;
 #include "gtkutil/widget.h"
 #include "picomodel/model.h"
 
-static void PicoPrintFunc (int level, const char *str)
+static void PicoPrintFunc (int level, const char* str)
 {
 	if (str == 0)
 		return;
@@ -76,7 +76,7 @@ static void PicoPrintFunc (int level, const char *str)
 	}
 }
 
-static void PicoLoadFileFunc (char *name, byte **buffer, int *bufSize)
+static void PicoLoadFileFunc (char* name, byte **buffer, int *bufSize)
 {
 	*bufSize = static_cast<int> (GlobalFileSystem().loadFile(name, (void**)buffer));
 }
@@ -157,11 +157,11 @@ class PicoModelAPIConstructor
 		std::string m_extension;
 		const picoModule_t *m_module;
 	public:
-		PicoModelAPIConstructor (const char *extension, const picoModule_t *module) :
+		PicoModelAPIConstructor (const char* extension, const picoModule_t *module) :
 			m_extension(extension), m_module(module)
 		{
 		}
-		const char *getName ()
+		const char* getName ()
 		{
 			return m_extension.c_str();
 		}

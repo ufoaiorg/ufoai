@@ -52,7 +52,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 		RGBAImage* image = new RGBAImage(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img), false);
 
 		// Initialise the source buffer pointers
-		guchar *gdkStart = gdk_pixbuf_get_pixels(img);
+		guchar* gdkStart = gdk_pixbuf_get_pixels(img);
 		int rowstride = gdk_pixbuf_get_rowstride(img);
 		int numChannels = gdk_pixbuf_get_n_channels(img);
 
@@ -62,7 +62,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 		// Now do an unelegant cycle over all the pixels and move them into the target
 		for (unsigned int y = 0; y < image->height; y++) {
 			for (unsigned int x = 0; x < image->width; x++) {
-				guchar *gdkPixel = gdkStart + y * rowstride + x * numChannels;
+				guchar* gdkPixel = gdkStart + y * rowstride + x * numChannels;
 
 				// Copy the values from the GdkPixel
 				targetPixel->red = gdkPixel[0];
@@ -90,7 +90,7 @@ static Image* LoadImageGDK (ArchiveFile& file)
 	return NULL;
 }
 
-static Image* LoadImage (ArchiveFile& file, const char *extension)
+static Image* LoadImage (ArchiveFile& file, const char* extension)
 {
 	RGBAImage* image = (RGBAImage *) 0;
 
@@ -104,7 +104,7 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 	}
 
 	GError *error = (GError *) 0;
-	if (gdk_pixbuf_loader_write(loader, (const guchar *) buffer.buffer, static_cast<gsize> (buffer.length),
+	if (gdk_pixbuf_loader_write(loader, (const guchar* ) buffer.buffer, static_cast<gsize> (buffer.length),
 			&error)) {
 		int pos = 0;
 		GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
@@ -112,7 +112,7 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 		const int height = gdk_pixbuf_get_height(pixbuf);
 		const gboolean hasAlpha = gdk_pixbuf_get_has_alpha(pixbuf);
 		const int stepWidth = gdk_pixbuf_get_n_channels(pixbuf);
-		const guchar *pixels = gdk_pixbuf_get_pixels(pixbuf);
+		const guchar* pixels = gdk_pixbuf_get_pixels(pixbuf);
 
 		image = new RGBAImage(width, height, false);
 		byte *rgba = image->getRGBAPixels();

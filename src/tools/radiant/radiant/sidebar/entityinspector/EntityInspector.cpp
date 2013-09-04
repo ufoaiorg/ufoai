@@ -39,7 +39,7 @@ const int TREEVIEW_MIN_WIDTH = 220;
 const int TREEVIEW_MIN_HEIGHT = 60;
 const int PROPERTYEDITORPANE_MIN_HEIGHT = 90;
 
-const char *PROPERTY_NODES_XPATH = "game/entityInspector//property";
+const char* PROPERTY_NODES_XPATH = "game/entityInspector//property";
 
 const std::string HELP_ICON_NAME = "helpicon.png";
 

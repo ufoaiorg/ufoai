@@ -51,7 +51,7 @@ class Environment
 
 public:
 	// Call this with the arguments from main()
-	void init(int argc, char *argv[]);
+	void init(int argc, char* argv[]);
 
 	int getArgc() const;
 
@@ -88,7 +88,7 @@ private:
 	void initPaths();
 
 	// Initialises the arguments
-	void initArgs(int argc, char *argv[]);
+	void initArgs(int argc, char* argv[]);
 
 	Environment();
 };

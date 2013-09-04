@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SYS_ERR 3 ///< error
 #define SYS_NOCON 4 ///< no console, only print to the file (useful whenever Sys_Printf and output IS the problem)
 
-std::size_t Sys_Print(int level, const char *buf, std::size_t length);
+std::size_t Sys_Print(int level, const char* buf, std::size_t length);
 class TextOutputStream;
 TextOutputStream& getSysPrintOutputStream();
 TextOutputStream& getSysPrintErrorStream();

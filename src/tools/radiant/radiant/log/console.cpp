@@ -131,14 +131,14 @@ class GtkTextBufferOutputStream: public TextOutputStream
 			textBuffer(textBuffer), iter(iter), tag(tag)
 		{
 		}
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			gtk_text_buffer_insert_with_tags(textBuffer, iter, buffer, gint(length), tag, (char const*) 0);
 			return length;
 		}
 };
 
-std::size_t Sys_Print (int level, const char *buf, std::size_t length)
+std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 {
 	const std::string str = std::string(buf, length);
 	bool contains_newline = std::find(buf, buf + length, '\n') != buf + length;
@@ -208,7 +208,7 @@ std::size_t Sys_Print (int level, const char *buf, std::size_t length)
 class SysPrintOutputStream: public TextOutputStream
 {
 	public:
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			return Sys_Print(SYS_STD, buffer, length);
 		}
@@ -217,7 +217,7 @@ class SysPrintOutputStream: public TextOutputStream
 class SysPrintErrorStream: public TextOutputStream
 {
 	public:
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			return Sys_Print(SYS_ERR, buffer, length);
 		}
@@ -226,7 +226,7 @@ class SysPrintErrorStream: public TextOutputStream
 class SysPrintWarningStream: public TextOutputStream
 {
 	public:
-		std::size_t write (const char *buffer, std::size_t length)
+		std::size_t write (const char* buffer, std::size_t length)
 		{
 			return Sys_Print(SYS_WRN, buffer, length);
 		}

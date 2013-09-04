@@ -96,10 +96,10 @@ static gboolean exec_channel_callback (GIOChannel *channel, GIOCondition conditi
 			cont = FALSE;
 		} else if (cmd->read_proc) {
 			GError *error = NULL;
-			const gchar *to_codeset = "UTF-8";
-			const gchar *from_codeset = "ISO-8859-1";
-			gchar *fallback = NULL;
-			gchar *converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL,
+			const gchar* to_codeset = "UTF-8";
+			const gchar* from_codeset = "ISO-8859-1";
+			gchar* fallback = NULL;
+			gchar* converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL,
 					&error);
 			if (converted != NULL) {
 				cmd->read_proc(cmd, converted);
@@ -277,7 +277,7 @@ void exec_delete (Exec *exec)
 	g_free(exec);
 }
 
-Exec* exec_new (const gchar *process_title, const gchar *process_description)
+Exec* exec_new (const gchar* process_title, const gchar* process_description)
 {
 	g_return_val_if_fail(process_description != NULL, NULL);
 
@@ -290,30 +290,30 @@ Exec* exec_new (const gchar *process_title, const gchar *process_description)
 	return exec;
 }
 
-void exec_cmd_add_arg (ExecCmd *e, const gchar *format, ...)
+void exec_cmd_add_arg (ExecCmd *e, const gchar* format, ...)
 {
 	g_return_if_fail(format != NULL);
 
 	va_list va;
 	va_start(va, format);
-	gchar *arg = NULL;
+	gchar* arg = NULL;
 	g_vasprintf(&arg, format, va);
 	va_end(va);
 	g_ptr_array_add(e->args, arg);
 }
 
-void exec_cmd_update_arg (ExecCmd *e, const gchar *arg_start, const gchar *format, ...)
+void exec_cmd_update_arg (ExecCmd *e, const gchar* arg_start, const gchar* format, ...)
 {
 	g_return_if_fail(arg_start != NULL);
 	g_return_if_fail(format != NULL);
 
 	guint i = 0;
 	for (; i < e->args->len; ++i) {
-		gchar *arg = (gchar *) g_ptr_array_index(e->args, i);
+		gchar* arg = (gchar* ) g_ptr_array_index(e->args, i);
 		if (strstr(arg, arg_start) != NULL) {
 			g_free(arg);
 			va_list va;
-			gchar *new_arg = NULL;
+			gchar* new_arg = NULL;
 			va_start(va, format);
 			g_vasprintf(&new_arg, format, va);
 			va_end(va);
@@ -432,8 +432,8 @@ void exec_stop (Exec *e)
  */
 gint exec_run_cmd (const std::string& cmd, gchar** output, const std::string& working_dir)
 {
-	gchar *std_out = NULL;
-	gchar *std_err = NULL;
+	gchar* std_out = NULL;
+	gchar* std_err = NULL;
 	gint exit_code = -1;
 	GError *error = NULL;
 
