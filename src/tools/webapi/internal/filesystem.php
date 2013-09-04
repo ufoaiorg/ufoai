@@ -64,6 +64,11 @@ class FileSystem {
 	}
 
 	public function upload($tmpname, $name, $size) {
+		$ext = pathinfo ( $name, PATHINFO_EXTENSION );
+		if ($ext !== "mpt" && $ext !== "savx") {
+			error ( "unsupported extension: " . $ext );
+		}
+
 		if (true === $this->checkDuplicate ( $tmpname, $size )) {
 			error ( "duplicate" );
 		}
