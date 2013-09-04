@@ -40,10 +40,10 @@ class FileSystem {
 			unlink ( $tmpfile );
 			error ( "could not move the file" );
 		}
-		$file = $this->getFileType ( $targetfile );
+		$file = $this->getFileType ( $uploadfile );
 		if (false === $file->isValid ()) {
-			unlink ( $tmpfile );
-			error ( "unknown file type: " . $name );
+			unlink ( $uploadfile );
+			error ( "unknown file type: " . $targetfile );
 		}
 	}
 
