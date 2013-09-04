@@ -11,7 +11,7 @@ base urban/ub_
 // c: craft tile, usually a dropship or a UFO
 
 
-// Common tiles ----------------------------------------------------*
+// Urban buildings ----------------------------------------------------*
 
 tile +city_disco
 {
