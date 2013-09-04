@@ -13,6 +13,17 @@ base urban/ub_
 
 // Common tiles ----------------------------------------------------*
 
+tile +community_centre
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 tile +laboratory
 {
 11 9
@@ -125,6 +136,14 @@ assembly bomber_city
 size "11 8"
 title "_Bomber in the City"
 +main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly community_centre
+{
+size "3 7"
+title "_Community Centre"
++community_centre "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 

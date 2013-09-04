@@ -2725,6 +2725,59 @@ mapdef bomber_city
 	)
 }
 
+mapdef community_centre
+{
+	map				"+urban"
+	params			("community_centre")
+	description		"_Community Centre"
+	size			"small"
+	maxaliens		8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef laboratory
 {
 	map				"+urban"
@@ -3344,63 +3397,6 @@ mapdef city_disco
 		"urban"
 	)
 }
-
-/* disabled while moving the map to +urban -------------------------*
-
-//////////////////////////////////
-// COMMUNITY_CENTRE RANDOM MAPS //
-//////////////////////////////////
-
-mapdef community_centre
-{
-	map				"+community_centre"
-	params			("default")
-	description		"_Community Centre"
-	multiplayer		true
-	teams			3
-	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		8
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-//	ufos
-//	(
-//	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
--------------------------------------------------------------------*/
 
 //////////////////////////////
 // CONSTRUCTION RANDOM MAPS //
