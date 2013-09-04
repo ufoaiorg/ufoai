@@ -84,7 +84,7 @@ static void Exit (int exitCode)
 	exit(exitCode);
 }
 
-void Com_Printf (const char *format, ...)
+void Com_Printf (const char* format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;
@@ -96,7 +96,7 @@ void Com_Printf (const char *format, ...)
 	printf("%s", out_buffer);
 }
 
-void Com_DPrintf (int level, const char *fmt, ...)
+void Com_DPrintf (int level, const char* fmt, ...)
 {
 	if (config.verbose) {
 		char outBuffer[4096];
@@ -110,7 +110,7 @@ void Com_DPrintf (int level, const char *fmt, ...)
 	}
 }
 
-image_t *R_LoadImageData (const char *name, const byte *pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char* name, const byte *pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	size_t len;
@@ -137,7 +137,7 @@ image_t *R_LoadImageData (const char *name, const byte *pic, int width, int heig
 	return image;
 }
 
-image_t *R_FindImage (const char *pname, imagetype_t type)
+image_t *R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	image_t *image;
@@ -169,7 +169,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
  * @note Both client and server can use this, and it will
  * do the appropriate things.
  */
-void Com_Error (int code, const char *fmt, ...)
+void Com_Error (int code, const char* fmt, ...)
 {
 	va_list argptr;
 	static char msg[1024];
@@ -186,7 +186,7 @@ void Com_Error (int code, const char *fmt, ...)
  * @brief Loads in a model for the given name
  * @param[in] name Filename relative to base dir and with extension (models/model.md2)
  */
-static model_t *LoadModel (const char *name)
+static model_t *LoadModel (const char* name)
 {
 	byte *buf;
 	int modfilelen;
@@ -225,7 +225,7 @@ static model_t *LoadModel (const char *name)
 	return mod;
 }
 
-static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char *fileName)
+static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char* fileName)
 {
 	int i;
 	qFILE f;
@@ -257,7 +257,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	FS_CloseFile(&f);
 }
 
-static int PrecalcNormalsAndTangents (const char *filename)
+static int PrecalcNormalsAndTangents (const char* filename)
 {
 	char mdxFileName[MAX_QPATH];
 	model_t *mod;
@@ -293,9 +293,9 @@ static int PrecalcNormalsAndTangents (const char *filename)
 	return cntCalculated;
 }
 
-static void PrecalcNormalsAndTangentsBatch (const char *pattern)
+static void PrecalcNormalsAndTangentsBatch (const char* pattern)
 {
-	const char *filename;
+	const char* filename;
 	int cntCalculated, cntAll;
 
 	FS_BuildFileList(pattern);
@@ -397,7 +397,7 @@ static void UM_Parameter (int argc, char** argv)
 	}
 }
 
-typedef void (*modelWorker_t) (const byte *buf, const char *fileName, int bufSize, void *userData);
+typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSize, void *userData);
 
 /**
  * @brief The caller has to ensure that the model is from the expected format
@@ -405,7 +405,7 @@ typedef void (*modelWorker_t) (const byte *buf, const char *fileName, int bufSiz
  * @param fileName The file name of the model to load
  * @param userData User data that is passed to the worker function
  */
-static void ModelWorker (modelWorker_t worker, const char *fileName, void *userData)
+static void ModelWorker (modelWorker_t worker, const char* fileName, void *userData)
 {
 	byte *buf = nullptr;
 	int modfilelen;
@@ -432,9 +432,9 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 	FS_FreeFile(buf);
 }
 
-static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void *userData)
+static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
-	const char *md2Path;
+	const char* md2Path;
 	uint32_t numSkins;
 	int i;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
@@ -442,13 +442,13 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	for (i = 0; i < numSkins; i++) {
-		const char *extension;
+		const char* extension;
 		int errors = 0;
-		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+		const char* name = md2Path + i * MD2_MAX_SKINNAME;
 
 		if (name[0] != '.')
 			errors++;
@@ -462,16 +462,16 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 
 		if (errors > 0) {
 			dMD2Model_t *fixedMD2;
-			char *skinPath;
+			char* skinPath;
 			char path[MD2_MAX_SKINNAME];
 			char pathBuf[MD2_MAX_SKINNAME];
-			const char *fixedPath;
+			const char* fixedPath;
 			if (model == nullptr) {
 				model = Mem_Dup(byte, buf, bufSize);
 				Com_Printf("model: %s\n", fileName);
 			}
 			fixedMD2 = (dMD2Model_t *)model;
-			skinPath = (char *) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
+			skinPath = (char* ) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
 
 			OBJZERO(path);
 
@@ -497,9 +497,9 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 	}
 }
 
-static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *userData)
+static void MD2Check (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
-	const char *md2Path;
+	const char* md2Path;
 	uint32_t numSkins;
 	int i;
 	bool headline = false;
@@ -507,13 +507,13 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	for (i = 0; i < numSkins; i++) {
-		const char *extension;
+		const char* extension;
 		int errors = 0;
-		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+		const char* name = md2Path + i * MD2_MAX_SKINNAME;
 
 		if (name[0] != '.')
 			errors++;
@@ -543,8 +543,8 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 
 static void MD2Visitor (modelWorker_t worker, void *userData)
 {
-	const char *fileName;
-	const char *pattern = "**.md2";
+	const char* fileName;
+	const char* pattern = "**.md2";
 
 	FS_BuildFileList(pattern);
 

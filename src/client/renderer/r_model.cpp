@@ -36,7 +36,7 @@ int r_numMapTiles;
 model_t r_modelsInline[MAX_MOD_KNOWN];
 int r_numModelsInline;
 
-static char *r_actorSkinNames[MAX_ACTORSKINNAME];
+static char* r_actorSkinNames[MAX_ACTORSKINNAME];
 static int r_numActorSkinName;
 
 /**
@@ -112,7 +112,7 @@ model_t *R_AllocModelSlot (void)
  * @param[in,out] mod Structure to initialize
  * @return True if the loading was succeed. True or false structure mod was edited.
  */
-static bool R_LoadModel (model_t *mod, const char *filename)
+static bool R_LoadModel (model_t *mod, const char* filename)
 {
 	byte *buf;
 	int modfilelen;
@@ -147,7 +147,7 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 
 	default:
 	{
-		const char *ext = Com_GetExtension(filename);
+		const char* ext = Com_GetExtension(filename);
 		if (ext != nullptr && !Q_strcasecmp(ext, "obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
@@ -169,7 +169,7 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 	return true;
 }
 
-bool R_ModelExists (const char *name)
+bool R_ModelExists (const char* name)
 {
 	if (Com_GetExtension(name) == nullptr) {
 		int i;
@@ -196,7 +196,7 @@ bool R_ModelExists (const char *name)
  * try to load one of the supported model formats
  * @return nullptr if no model could be found with the given name, model_t otherwise
  */
-model_t *R_FindModel (const char *name)
+model_t *R_FindModel (const char* name)
 {
 	model_t *mod;
 	model_t model;
@@ -262,7 +262,7 @@ model_t *R_FindModel (const char *name)
  * @sa R_FindModel
  * @param[in] name Short name of the model relative to base dir without (models/model)
  */
-model_t *R_GetModel (const char *name)
+model_t *R_GetModel (const char* name)
 {
 	model_t *mod;
 	int i;
@@ -326,7 +326,7 @@ void R_SwitchModelMemPoolTag (void)
  * @brief Register an actorskin name
  * @return The id where the actorskin is registered
  */
-int R_ModAllocateActorSkin (const char *name)
+int R_ModAllocateActorSkin (const char* name)
 {
 	if (r_numActorSkinName >= lengthof(r_actorSkinNames))
 		return -1;
@@ -341,7 +341,7 @@ bool R_UseActorSkin (void)
 	return r_numActorSkinName != 0;
 }
 
-static const char *R_GetActorSkin (int id)
+static const char* R_GetActorSkin (int id)
 {
 	assert(id >= 0 && id < r_numActorSkinName);
 	return r_actorSkinNames[id];
@@ -368,7 +368,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t *defaultSkin)
 		if (i == 0) {
 			modelSkin->skin = defaultSkin;
 		} else {
-			const char *skin = R_GetActorSkin(i);
+			const char* skin = R_GetActorSkin(i);
 			modelSkin->skin = R_AliasModelGetSkin(nullptr, va("%s_%s", defaultSkin->name, skin));
 			/** @todo should we add warning here? */
 			if (modelSkin->skin == r_noTexture)

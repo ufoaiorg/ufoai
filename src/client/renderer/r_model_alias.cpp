@@ -33,18 +33,18 @@ ALIAS MODELS
 ==============================================================================
 */
 
-void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
+void R_ModLoadAnims (mAliasModel_t *mod, const char* animname)
 {
-	const char *text;
+	const char* text;
 	mAliasAnim_t *anim;
 	int n;
 	/* load the tags */
 	byte *animbuf = nullptr;
-	const char *buffer;
+	const char* buffer;
 
 	FS_LoadFile(animname, &animbuf);
 
-	buffer = (const char *)animbuf;
+	buffer = (const char* )animbuf;
 
 	/* count the animations */
 	n = Com_CountTokensInBuffer(buffer);
@@ -66,7 +66,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 
 	do {
 		/* get the name */
-		const char *token = Com_Parse(&text);
+		const char* token = Com_Parse(&text);
 		if (!text)
 			break;
 		Q_strncpyz(anim->name, token, sizeof(anim->name));
@@ -248,7 +248,7 @@ bool R_ModLoadMDX (model_t *mod)
 			return false;
 
 		buf = buffer;
-		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
+		if (strncmp((const char* ) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
 			FS_FreeFile(buf);
 			Com_Error(ERR_DROP, "No mdx file buffer given");
 		}
@@ -515,7 +515,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	mesh->indexes = newIndexArray;
 }
 
-image_t* R_AliasModelGetSkin (const char *modelFileName, const char *skin)
+image_t* R_AliasModelGetSkin (const char* modelFileName, const char* skin)
 {
 	image_t* result;
 	if (skin[0] != '.')

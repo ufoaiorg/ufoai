@@ -76,7 +76,7 @@ static void SL_Parameter (int argc, char** argv)
 	}
 }
 
-void Com_Printf (const char *format, ...)
+void Com_Printf (const char* format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;

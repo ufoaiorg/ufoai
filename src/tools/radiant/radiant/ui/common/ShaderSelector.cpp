@@ -26,8 +26,8 @@ namespace ui
 /* CONSTANTS */
 
 namespace {
-	const char *FOLDER_ICON = "folder16.png";
-	const char *TEXTURE_ICON = "icon_texture.png";
+	const char* FOLDER_ICON = "folder16.png";
+	const char* TEXTURE_ICON = "icon_texture.png";
 
 	// Column enum
 	enum {

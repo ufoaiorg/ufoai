@@ -119,7 +119,7 @@ Colour3 TextureManipulator::getFlatshadeColour (Image* input)
 		incr = 1;
 
 	// Set the pixel pointer to the very first pixel
-	unsigned char *pixels = input->getRGBAPixels();
+	unsigned char* pixels = input->getRGBAPixels();
 
 	Colour3 returnValue;
 	int pixelCount = 0;
@@ -158,7 +158,7 @@ Image* TextureManipulator::getResized (Image* input)
 {
 	int width = input->getWidth();
 	int height = input->getHeight();
-	unsigned char *sourcePixels = input->getRGBAPixels();
+	unsigned char* sourcePixels = input->getRGBAPixels();
 
 	Image* output;
 
@@ -223,7 +223,7 @@ Image* TextureManipulator::processGamma (Image* input)
 	int numPixels = input->getWidth() * input->getHeight();
 
 	// Set the pixel pointer to the very first pixel
-	unsigned char *pixels = input->getRGBAPixels();
+	unsigned char* pixels = input->getRGBAPixels();
 
 	// Go over all the pixels and change their value accordingly
 	for (int i = 0; i < (numPixels * 4); i += 4) {

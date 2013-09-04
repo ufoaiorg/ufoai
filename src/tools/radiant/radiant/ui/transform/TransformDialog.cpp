@@ -42,7 +42,7 @@ namespace ui {
 		const std::string LABEL_SCALEY = _("Y-Axis Scale:");
 		const std::string LABEL_SCALEZ = _("Z-Axis Scale:");
 
-		const char *LABEL_STEP = _("Step:");
+		const char* LABEL_STEP = _("Step:");
 
 		const std::string RKEY_ROOT = "user/ui/transformDialog/";
 		const std::string RKEY_WINDOW_STATE = RKEY_ROOT + "window";

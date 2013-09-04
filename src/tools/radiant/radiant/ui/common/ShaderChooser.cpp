@@ -80,7 +80,7 @@ GtkWidget* ShaderChooser::createButtons() {
 
 void ShaderChooser::shaderSelectionChanged(const std::string& shaderName, GtkListStore* listStore) {
 	if (_targetEntry != NULL) {
-		const char *value = shaderName.c_str();
+		const char* value = shaderName.c_str();
 		if (_stripTextureDir)
 			value += GlobalTexturePrefix_get().size();
 		gtk_entry_set_text(GTK_ENTRY(_targetEntry), value);

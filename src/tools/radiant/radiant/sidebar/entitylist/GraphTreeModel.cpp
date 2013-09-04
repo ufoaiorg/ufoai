@@ -28,7 +28,7 @@ inline std::string getNodeName (scene::Node& node)
 gint GraphTreeModel::sortName (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer userdata)
 {
 	gint ret = 0;
-	gchar *name1, *name2;
+	gchar* name1, *name2;
 
 	gtk_tree_model_get(model, a, COL_NAME, &name1, -1);
 	gtk_tree_model_get(model, b, COL_NAME, &name2, -1);

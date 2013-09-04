@@ -15,7 +15,7 @@ namespace ui
 	namespace
 	{
 		/* CONSTANTS */
-		const char *ECLASS_CHOOSER_TITLE = _("Create entity");
+		const char* ECLASS_CHOOSER_TITLE = _("Create entity");
 	}
 
 	// Obtain and display the singleton instance

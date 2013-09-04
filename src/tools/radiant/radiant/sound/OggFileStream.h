@@ -13,7 +13,7 @@ namespace sound
 	{
 			ScopedArchiveBuffer& _source;
 
-			unsigned char *_curPtr;
+			unsigned char* _curPtr;
 		public:
 			OggFileStream (ScopedArchiveBuffer& source) :
 				_source(source)

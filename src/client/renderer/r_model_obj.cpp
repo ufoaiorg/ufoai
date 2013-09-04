@@ -137,11 +137,11 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
  *
  * @return the number of triangles produced for the specified line.
  */
-static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line)
+static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char* line)
 {
 	mobjvert_t *v, verts[MAX_OBJ_FACE_VERTS];
-	const char *d;
-	char *e;
+	const char* d;
+	char* e;
 	char tok[32];
 	int i, tris;
 
@@ -149,7 +149,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 	i = 0;
 
 	while (true) {
-		const char *c = Com_Parse(&line);
+		const char* c = Com_Parse(&line);
 
 		if (c[0] == '\0')  /* done */
 			break;
@@ -220,7 +220,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
  * @brief Parse the object file line. If the structures have been allocated,
  * populate them. Otherwise simply accumulate counts.
  */
-static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
+static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
 {
 	if (Q_strnull(line))  /* don't bother */
 		return;
@@ -277,15 +277,15 @@ static void R_LoadObjSkin (model_t *mod)
 
 	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
 	if (FS_CheckFile("%s.mtl", skinPath) != -1) {
-		const char *buffer;
+		const char* buffer;
 		byte *buf;
 		int i;
 
 		FS_LoadFile(va("%s.mtl", skinPath), &buf);
 
-		buffer = (const char *)buf;
+		buffer = (const char* )buf;
 		for (;;) {
-			const char *token = Com_Parse(&buffer);
+			const char* token = Com_Parse(&buffer);
 			if (token[0] == '\0')
 				break;
 
@@ -295,15 +295,15 @@ static void R_LoadObjSkin (model_t *mod)
 		}
 		mesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, mesh->num_skins, vid_modelPool);
 
-		buffer = (const char *)buf;
+		buffer = (const char* )buf;
 		i = 0;
 		for (;;) {
-			const char *token = Com_Parse(&buffer);
+			const char* token = Com_Parse(&buffer);
 			if (token[0] == '\0')
 				break;
 
 			if (Q_streq(token, "map_Kd")) {
-				const char *skin = Com_Parse(&buffer);
+				const char* skin = Com_Parse(&buffer);
 				mAliasSkin_t *aliasSkin = &mesh->skins[i++];
 
 				Com_sprintf(skinPath, sizeof(skinPath), ".%s", skin);

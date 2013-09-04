@@ -370,7 +370,7 @@ void FilterEditor::onCancel (GtkWidget* widget, FilterEditor* self)
 	self->destroy();
 }
 
-void FilterEditor::onEntityKeyEdited (GtkCellRendererText* renderer, gchar *path, gchar *new_text, FilterEditor* self)
+void FilterEditor::onEntityKeyEdited (GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self)
 {
 	GtkTreeIter iter;
 	if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(self->_ruleStore), &iter, path)) {
@@ -386,7 +386,7 @@ void FilterEditor::onEntityKeyEdited (GtkCellRendererText* renderer, gchar *path
 	}
 }
 
-void FilterEditor::onRegexEdited (GtkCellRendererText* renderer, gchar *path, gchar *new_text, FilterEditor* self)
+void FilterEditor::onRegexEdited (GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self)
 {
 	GtkTreeIter iter;
 	if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(self->_ruleStore), &iter, path)) {
@@ -401,7 +401,7 @@ void FilterEditor::onRegexEdited (GtkCellRendererText* renderer, gchar *path, gc
 	}
 }
 
-void FilterEditor::onTypeEdited (GtkCellRendererText* renderer, gchar *path, gchar *new_text, FilterEditor* self)
+void FilterEditor::onTypeEdited (GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self)
 {
 	GtkTreeIter iter;
 	if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(self->_ruleStore), &iter, path)) {
@@ -419,7 +419,7 @@ void FilterEditor::onTypeEdited (GtkCellRendererText* renderer, gchar *path, gch
 	}
 }
 
-void FilterEditor::onActionEdited (GtkCellRendererText* renderer, gchar *path, gchar *new_text, FilterEditor* self)
+void FilterEditor::onActionEdited (GtkCellRendererText* renderer, gchar* path, gchar* new_text, FilterEditor* self)
 {
 	GtkTreeIter iter;
 	if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(self->_ruleStore), &iter, path)) {

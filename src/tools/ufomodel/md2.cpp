@@ -8,7 +8,7 @@
 #include "../../common/common.h"
 #include "../../shared/byte.h"
 
-void MD2HeaderCheck (const dMD2Model_t *md2, const char *fileName, int bufSize)
+void MD2HeaderCheck (const dMD2Model_t *md2, const char* fileName, int bufSize)
 {
 	/* sanity checks */
 	const uint32_t version = LittleLong(md2->version);
@@ -36,21 +36,21 @@ void MD2HeaderCheck (const dMD2Model_t *md2, const char *fileName, int bufSize)
 		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)", fileName, numTris, MD2_MAX_TRIANGLES);
 }
 
-void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, void *userData)
+void MD2SkinEdit (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
 	uint32_t numSkins;
 	byte *const copy = Mem_Dup(byte, buf, bufSize);
 	dMD2Model_t *md2 = (dMD2Model_t *)copy;
-	char *md2Path;
+	char* md2Path;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (char *) copy + LittleLong(md2->ofs_skins);
+	md2Path = (char* ) copy + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
 	for (int i = 0; i < numSkins; i++) {
-		char *name = md2Path + i * MD2_MAX_SKINNAME;
+		char* name = md2Path + i * MD2_MAX_SKINNAME;
 		Com_Printf("  \\ - skin %i: %s\n", i + 1, name);
 		printf("  \\ - new skin: ");
 		fflush(stdout);
@@ -69,7 +69,7 @@ void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, void *user
 	Mem_Free(copy);
 }
 
-void MD2Info (const byte *buf, const char *fileName, int bufSize, void *userData)
+void MD2Info (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
@@ -93,11 +93,11 @@ void MD2Info (const byte *buf, const char *fileName, int bufSize, void *userData
 	const uint32_t ofsEnd = LittleLong(md2->ofs_end);
 	const uint32_t ofsSkins = LittleLong(md2->ofs_skins);
 
-	const char *md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	const char* md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
 	for (int i = 0; i < numSkins; i++) {
-		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+		const char* name = md2Path + i * MD2_MAX_SKINNAME;
 		Com_Printf("    \\ -> skin %i: %s\n", i + 1, name);
 	}
 	Com_Printf("  \\ - vertices %i\n", numVerts);
@@ -118,7 +118,7 @@ void MD2Info (const byte *buf, const char *fileName, int bufSize, void *userData
 	Com_Printf("    \\ - ofsEnd %i\n", ofsEnd);
 }
 
-void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userData)
+void MD2SkinNum (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
 	byte *copy = Mem_Dup(byte, buf, bufSize);
 	dMD2Model_t *md2 = (dMD2Model_t *)copy;
@@ -189,9 +189,9 @@ void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userD
 	memmove(to, from, n);
 
 	if (deltaSkins > 0) {
-		char * md2Path = (char *) copy + LittleLong(md2->ofs_skins);
+		char*  md2Path = (char* ) copy + LittleLong(md2->ofs_skins);
 		for (int i = numSkins; i < numSkins + deltaSkins; i++) {
-			char *name = md2Path + i * MD2_MAX_SKINNAME;
+			char* name = md2Path + i * MD2_MAX_SKINNAME;
 			memset(name, 0, MD2_MAX_SKINNAME);
 			strcpy(name, ".none");
 			Com_Printf("  \\ - skin %i: %s\n", i + 1, name);
@@ -212,7 +212,7 @@ void MD2SkinNum (const byte *buf, const char *fileName, int bufSize, void *userD
 	Mem_Free(copy);
 }
 
-void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize, void *userData)
+void MD2GLCmdsRemove (const byte *buf, const char* fileName, int bufSize, void *userData)
 {
 	uint32_t numGLCmds;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;

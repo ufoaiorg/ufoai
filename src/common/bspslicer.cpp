@@ -10,7 +10,7 @@
 
 #define DEPTH 3
 
-static bool SL_CreatePNGFile (const char *filename, unsigned char *buffer, int width, int height)
+static bool SL_CreatePNGFile (const char* filename, unsigned char* buffer, int width, int height)
 {
 	qFILE f;
 
@@ -27,7 +27,7 @@ static bool SL_CreatePNGFile (const char *filename, unsigned char *buffer, int w
 
 #define IMAGE_BUFFER_SET_BLACK(buffer, offset) do {int i; for (i = 0; i < DEPTH; i++) {buffer[offset + i] = 0xFF; } } while(0);
 
-static void SL_Bresenham (int x0, int y0, int x1, int y1, int width, int height, bool rotated, unsigned char *outputBuffer)
+static void SL_Bresenham (int x0, int y0, int x1, int y1, int width, int height, bool rotated, unsigned char* outputBuffer)
 {
 	int dy = y1 - y0;
 	int dx = x1 - x0;
@@ -159,7 +159,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 	int width;
 	int height;
 	bool rotated = false;
-	unsigned char *pictureBuffer;
+	unsigned char* pictureBuffer;
 
 	lineX1 = lineY1 = lineX2 = lineY2 = 0.0f;
 

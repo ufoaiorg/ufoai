@@ -57,7 +57,7 @@ inline float normalised_to_world (float normalised, float world_origin, float no
 	return world_origin + normalised * normalised2world_scale;
 }
 
-inline const char *ViewType_getTitle (EViewType viewtype)
+inline const char* ViewType_getTitle (EViewType viewtype)
 {
 	if (viewtype == XY) {
 		return _("XY Top");
@@ -921,7 +921,7 @@ void XYWnd::snapToGrid (Vector3& point)
 void XYWnd::drawAxis (void)
 {
 	if (GlobalXYWnd().showAxes()) {
-		const char *g_AxisName[3] = { "X", "Y", "Z" };
+		const char* g_AxisName[3] = { "X", "Y", "Z" };
 		const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 		const int nDim2 = (m_viewType == XY) ? 1 : 2;
 		const int w = (int) (m_nWidth / 2 / m_fScale);
@@ -1316,8 +1316,8 @@ void XYWnd::drawSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vM
 	if (vMinBounds == vMaxBounds)
 		return;
 
-	const char *g_pDimStrings[] = { "x:", "y:", "z:" };
-	typedef const char *OrgStrings[2];
+	const char* g_pDimStrings[] = { "x:", "y:", "z:" };
+	typedef const char* OrgStrings[2];
 	const OrgStrings g_pOrgStrings[] = { { "x:", "y:", }, { "x:", "z:", }, { "y:", "z:", } };
 
 	Vector3 vSize(vMaxBounds - vMinBounds);

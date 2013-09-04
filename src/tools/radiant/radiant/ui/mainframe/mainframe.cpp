@@ -688,7 +688,7 @@ static void GlobalGL_sharedContextCreated (void)
 
 	/* use default font here (Sans 10 is gtk default) */
 	GtkSettings *settings = gtk_settings_get_default();
-	gchar *fontname;
+	gchar* fontname;
 	g_object_get(settings, "gtk-font-name", &fontname, (char*) 0);
 	g_font = glfont_create(fontname);
 	// Fallbacks

@@ -88,7 +88,7 @@ static void R_ModLoadTags (model_t *mod, void *buffer, int bufSize)
 
 	for (j = 0; j < pheader.num_tags; j++, pouttag++) {
 		mAliasTagOrientation_t* pouttagorient = mod->alias.tags[j].orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, mod->alias.num_frames, vid_modelPool);
-		memcpy(pouttag->name, (char *) pintag + pheader.ofs_names + j * MD2_MAX_SKINNAME, sizeof(pouttag->name));
+		memcpy(pouttag->name, (char* ) pintag + pheader.ofs_names + j * MD2_MAX_SKINNAME, sizeof(pouttag->name));
 		for (i = 0; i < pheader.num_frames; i++, pouttagorient++) {
 			int k;
 			for (k = 0; k < 3; k++) {
@@ -133,10 +133,10 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
-		const char *md2Path;
+		const char* md2Path;
 		if (R_UseActorSkin() && Q_strstart(outMesh->name, "models/soldiers/")) {
 			image_t *defaultSkin;
-			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+			md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 			defaultSkin = R_AliasModelGetSkin(mod->name, md2Path);
 			R_LoadActorSkinsFromModel(outMesh, defaultSkin);
 
@@ -150,7 +150,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 				Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
 
 			outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
-			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+			md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 			for (i = 0; i < outMesh->num_skins; i++) {
 				outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
 				Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
@@ -323,7 +323,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 
 		outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
-		const char *md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+		const char* md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
 			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
 			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));

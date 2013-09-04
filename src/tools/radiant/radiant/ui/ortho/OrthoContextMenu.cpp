@@ -19,18 +19,18 @@ namespace ui
 	namespace
 	{
 		/* CONSTANTS */
-		const char *LIGHT_CLASSNAME = "light";
-		const char *MODEL_CLASSNAME = "misc_model";
-		const char *SOUND_CLASSNAME = "misc_sounchar *d";
+		const char* LIGHT_CLASSNAME = "light";
+		const char* MODEL_CLASSNAME = "misc_model";
+		const char* SOUND_CLASSNAME = "misc_sounchar* d";
 
-		const char *ADD_MODEL_TEXT = _("Create model...");
-		const char *ADD_LIGHT_TEXT = _("Create light...");
-		const char *ADD_SOUND_TEXT = _("Create sound...");
-		const char *ADD_ENTITY_TEXT = _("Create entity...");
-		const char *CONNECT_ENTITIES_TEXT = _("Connect entities...");
-		const char *FIT_TEXTURE_TEXT = _("Fit textures...");
-		const char *GENERATE_MATERIALS_TEXT = _("Generate materials...");
-		const char *GENERATE_TERRAIN_TEXT = _("Generate terrain...");
+		const char* ADD_MODEL_TEXT = _("Create model...");
+		const char* ADD_LIGHT_TEXT = _("Create light...");
+		const char* ADD_SOUND_TEXT = _("Create sound...");
+		const char* ADD_ENTITY_TEXT = _("Create entity...");
+		const char* CONNECT_ENTITIES_TEXT = _("Connect entities...");
+		const char* FIT_TEXTURE_TEXT = _("Fit textures...");
+		const char* GENERATE_MATERIALS_TEXT = _("Generate materials...");
+		const char* GENERATE_TERRAIN_TEXT = _("Generate terrain...");
 	}
 
 	// Static class function to display the singleton instance.
