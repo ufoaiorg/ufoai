@@ -9,6 +9,23 @@
 	}
 }
 
+// +city_disco material file
+
+{
+	material tex_pics/tonight_honuda
+	{
+		texture tex_pics/tonight_honuda
+		scroll.s 0.25
+	}
+}
+
+{
+	material tex_buildings/wall019
+	hardness 0.2
+	specular 0.2
+}
+
+
 // +stadium map material file --------------------------------------*
 
 /* flares for stadium lights */

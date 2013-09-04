@@ -2725,6 +2725,59 @@ mapdef bomber_city
 	)
 }
 
+mapdef city_disco
+{
+	map				"+urban"
+	description		"_Urban Disco"
+	params			("city_disco")
+	size			"small"
+	maxaliens		8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef community_centre
 {
 	map				"+urban"
@@ -3349,56 +3402,6 @@ mapdef city2
 }
 
 /* disabled while moving the map to the +urban map theme -----------*
-
-////////////////////////////
-// CITY_DISCO RANDOM MAPS //
-////////////////////////////
-
-mapdef city_disco
-{
-	map				"+city_disco"
-	params			("default")
-	description		"_Urban Disco"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		21
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-//	ufos
-//	(
-//	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-		"desert"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
 
 -------------------------------------------------------------------*/
 
