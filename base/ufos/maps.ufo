@@ -3345,6 +3345,8 @@ mapdef city_disco
 	)
 }
 
+/* disabled while moving the map to +urban -------------------------*
+
 //////////////////////////////////
 // COMMUNITY_CENTRE RANDOM MAPS //
 //////////////////////////////////
@@ -3397,6 +3399,8 @@ mapdef community_centre
 		"village"
 	)
 }
+
+-------------------------------------------------------------------*/
 
 //////////////////////////////
 // CONSTRUCTION RANDOM MAPS //
