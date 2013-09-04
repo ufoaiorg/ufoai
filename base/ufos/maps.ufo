@@ -2172,6 +2172,8 @@ mapdef japan_small
 	)
 }
 
+/* disabled while moving the map into the +urban map theme -*
+
 ////////////////////////////
 // LABORATORY RANDOM MAPS //
 ////////////////////////////
@@ -2276,6 +2278,8 @@ mapdef laboratory_noufo
 		"village"
 	)
 }
+
+-----------------------------------------------------------*/
 
 /////////////////////////
 // MANSION RANDOM MAPS //

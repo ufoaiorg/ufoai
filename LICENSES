@@ -531,14 +531,6 @@ base/maps/japan/ja_p_tr.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_p_v.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_sw.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_w1.map | GNU General Public License 2.0 or later
-base/maps/laboratory.ump | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_craft_ufo_fighter.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_main.map | GNU General Public License 2.0 or later
-base/maps/laboratory/lab_parking.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mansion.ump | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mansion/mansion_coast1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mansion/mansion_coast2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
@@ -722,6 +714,10 @@ base/maps/urban.ump | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_craft_ufo_fighter.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_craft_ufo_scout.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_lab_parking.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_laboratory.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_main.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_stadium.map | GNU General Public License 2.0 or later | "SparX" Beyeler | renamed base/maps/stadium/st_main.map
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
@@ -3246,9 +3242,6 @@ base/pics/maps/shots/italy_3.jpg | GNU General Public License 2.0 or later | Mar
 base/pics/maps/shots/japan.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/japan_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/japan_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/laboratory.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/laboratory_2.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/laboratory_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/mart.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mart_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mart_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3318,6 +3311,9 @@ base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/urban_4.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/urban_5.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/urban_6.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/urban_7.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory.jpg
+base/pics/maps/shots/urban_8.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory_2.jpg
+base/pics/maps/shots/urban_9.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory_3.jpg
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
