@@ -3401,10 +3401,6 @@ mapdef city2
 	)
 }
 
-/* disabled while moving the map to the +urban map theme -----------*
-
--------------------------------------------------------------------*/
-
 //////////////////////////////
 // CONSTRUCTION RANDOM MAPS //
 //////////////////////////////
@@ -3717,6 +3713,8 @@ mapdef japan_default
 	)
 }
 
+/* disabled while moving the map to the +urban map theme -----------*
+
 //////////////////////
 // MART RANDOM MAPS //
 //////////////////////
@@ -3769,6 +3767,8 @@ mapdef mart
 		"suburban"
 	)
 }
+
+-------------------------------------------------------------------*/
 
 /////////////////////////////////
 // MILITARY_CONVOY RANDOM MAPS //
