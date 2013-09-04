@@ -3,7 +3,7 @@ include_once "filetypes/mpt.php";
 include_once "filetypes/savx.php";
 include_once "filetypes/unknown.php";
 
-const MAXSIZE = 104448;
+const MAXSIZE = 1048576;
 const MAX_FILE_PER_CGAME = 10;
 const WEBAPIDIR = '/home/users/mattn/htdocs/ufoai/cgame/';
 
