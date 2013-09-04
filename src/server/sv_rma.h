@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * The # *used* in an assemly is roughly limited to RMA2_MAX_REC (+fixed + required tiles). */
 #define MAX_TILETYPES 128
 #define MAX_TILESETS 16
-#define MAX_TILESETTILES 8
+#define MAX_TILESETTILES 16
 #define MAX_TILESIZE 16
 #define MAX_FIXEDTILES 64
 
