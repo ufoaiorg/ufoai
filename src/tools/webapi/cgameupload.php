@@ -1,5 +1,5 @@
 <?php
-include "internal/teamconfig.php";
+include "internal/config.php";
 include "internal/auth.php";
 
 function move($tmpfile) {

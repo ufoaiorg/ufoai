@@ -27,7 +27,6 @@
 #include "web_main.h"
 #include "../cl_shared.h"
 #include "../ui/ui_main.h"
-#include "web_team.h"
 #include "web_cgame.h"
 #include "../../common/sha1.h"
 
@@ -196,8 +195,6 @@ void WEB_InitStartup (void)
 	web_authurl = Cvar_Get("web_authurl", WEB_API_SERVER "api/auth.php", CVAR_ARCHIVE,
 			"The url to perform the authentification against.");
 
-	WEB_TeamCvars();
-	WEB_TeamCommands();
 	WEB_CGameCvars();
 	WEB_CGameCommands();
 

@@ -1,11 +1,51 @@
-window team_download
+component downloadentry extends panel {
+	{
+		pos			"240 135"
+		size		"250 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
+	}
+
+	button download
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		font		"f_verysmall"
+		pos			"0 0"
+		size		"190 34"
+		string		""
+		onClick		{ cmd "web_downloadcgame <node:this.parent.userid@integer> <node:this.parent.id@integer>;" }
+	}
+
+	button delete
+	{
+		size		"34 34"
+		icon 		"icons/delete"
+		tooltip		"_Remove this file from the server"
+		onClick		{ cmd "web_deletecgame <node:this.parent.id@integer>;" }
+	}
+
+	data id
+	{
+		integer	0
+	}
+
+	data userid
+	{
+		integer	0
+	}
+}
+
+window cgame_download
 {
 	{
 		pos			"256 50"
 		size		"512 650"
 		dragbutton	true
 		background		"ui/popup_alpha_tile"
-		string		"_Available teams:"
+		string		"_Available files:"
 		modal		true
 	}
 
@@ -20,15 +60,15 @@ window team_download
 	}
 
 	/**
-	 * @brief Add a server stored team to the list of downloadable teams
-	 * @param <1> The team id
+	 * @brief Add a server stored file to the list of downloadable files
+	 * @param <1> The file id
 	 * @param <2> The name
 	 * @param <3> The user id of the owner
-	 * @param <4> Own team = 1, other users team = 0
+	 * @param <4> Own file = 1, other users file = 0
 	 */
-	confunc teamlist_add
+	confunc cgamelist_add
 	{
-		call *node:root.downloadable@createChild("download<3><1>", "team_downloadentry")
+		call *node:root.downloadable@createChild("download<3><1>", "downloadentry")
 		*node:root.downloadable.download<3><1>.download@string = "<2> (<3>)"
 		*node:root.downloadable.download<3><1>.id@integer = <1>
 		*node:root.downloadable.download<3><1>.userid@integer = <3>
@@ -40,23 +80,22 @@ window team_download
 	}
 
 	/**
-	 * @brief Called when a team download was successful
-	 * @param <1> the filename of the newly available team
+	 * @brief Called when a file download was successful
+	 * @param <1> the filename of the newly available file
 	 */
-	confunc teamlist_downloadsuccessful
-	{
-		cmd "game_teamcomments;ui_pop;"
-	}
-
-	confunc teamlist_downloadduplicate
+	confunc cgamelist_downloadsuccessful
 	{
 	}
 
-	confunc teamlist_uploadsuccessful
+	confunc cgamelist_downloadduplicate
 	{
 	}
 
-	confunc teamlist_uploadfailed
+	confunc cgamelist_uploadsuccessful
+	{
+	}
+
+	confunc cgamelist_uploadfailed
 	{
 	}
 
@@ -64,22 +103,22 @@ window team_download
 	 * @param <1> The user id of the owner
 	 * @param <2> The team id
 	 */
-	confunc teamlist_deletesuccessful
+	confunc cgamelist_deletesuccessful
 	{
 		call *node:root.downloadable.download<1><2>@delete
 	}
 
-	confunc teamlist_deletefailed
+	confunc cgamelist_deletefailed
 	{
 	}
 
-	confunc teamlist_clear
+	confunc cgamelist_clear
 	{
 		call *node:root.downloadable@removeAllChild
 	}
 
 	func onWindowOpened
 	{
-		cmd	"teamlist_clear;web_listteams;"
+		cmd	"cgamelist_clear;web_listcgame 0;"
 	}
 }

@@ -488,8 +488,6 @@
 		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.h" />
 		<Unit filename="..\..\src\client\web\web_main.cpp" />
 		<Unit filename="..\..\src\client\web\web_main.h" />
-		<Unit filename="..\..\src\client\web\web_team.cpp" />
-		<Unit filename="..\..\src\client\web\web_team.h" />
 		<Unit filename="..\..\src\client\web\web_cgame.cpp" />
 		<Unit filename="..\..\src\client\web\web_cgame.h" />
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.cpp" />
