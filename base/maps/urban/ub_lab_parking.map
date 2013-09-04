@@ -2,8 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
-"maxlevel" "4"
 // brush 0
 {
 ( 512 0 4 ) ( 0 0 4 ) ( 512 4 4 ) tex_buildings/concrete008 0 0 0 1 1 65280 0 0

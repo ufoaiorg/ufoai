@@ -13,6 +13,29 @@ base urban/ub_
 
 // Common tiles ----------------------------------------------------*
 
+tile +laboratory
+{
+11 9
+0		0		0		0		0		0		0		0		0		0		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0		0		0
+}
+
+tile +lab_parking
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
 tile +main
 {
 13 10
@@ -42,6 +65,25 @@ tile +stadium
 0		0		0		0		0		0		0
 }
 
+// UFO tiles -------------------------------------------------------*
+
+tile +craft_ufo_fighter
+{
+4 4
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		0
+}
+
+tile +craft_ufo_scout
+{
+4 4
+0		0		0		0
+0		+c		+c		0
+0		+c		+c		0
+0		0		0		0
+}
 
 // Dropship tiles --------------------------------------------------*
 
@@ -92,4 +134,22 @@ size "5 7"
 title "_Stadium"
 +stadium "1 1"
 *rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly laboratory
+{
+size "9 7"
+title "_Laboratory"
+fix +laboratory		"0 0"
+fix *rm_ufo +craft_ufo_fighter		"7 1"
+fix *rm_drop +craft_drop_firebird	"0 4"
+}
+
+assembly laboratory_noufo
+{
+size "9 7"
+title "_Laboratory"
+fix +laboratory		"0 0"
+fix +lab_parking	"7 1"
+fix *rm_drop +craft_drop_firebird	"0 4"
 }

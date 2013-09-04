@@ -2172,115 +2172,6 @@ mapdef japan_small
 	)
 }
 
-/* disabled while moving the map into the +urban map theme -*
-
-////////////////////////////
-// LABORATORY RANDOM MAPS //
-////////////////////////////
-
-mapdef laboratory
-{
-	map				"+laboratory"
-	params			("default")
-	description		"_Laboratory"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		24
-
-	civilianteam	scientist
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		craft_ufo_fighter
-		craft_ufo_scout
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
-mapdef laboratory_noufo
-{
-	map				"+laboratory"
-	params			("noufo")
-	description		"_Laboratory"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		24
-
-	civilianteam	scientist
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"urban"
-		"suburban"
-		"village"
-	)
-}
-
------------------------------------------------------------*/
-
 /////////////////////////
 // MANSION RANDOM MAPS //
 /////////////////////////
@@ -2812,6 +2703,115 @@ mapdef bomber_city
 	ufos
 	(
 		craft_ufo_bomber
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef laboratory
+{
+	map				"+urban"
+	params			("laboratory")
+	description		"_Laboratory"
+	size			"medium"
+	maxaliens		16
+	civilianteam	scientist
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		craft_ufo_fighter
+		craft_ufo_scout
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef laboratory_noufo
+{
+	map				"+urban"
+	params			("laboratory_noufo")
+	description		"_Laboratory"
+	size			"medium"
+	maxaliens		16
+	civilianteam	scientist
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
 	)
 
 	terrains
