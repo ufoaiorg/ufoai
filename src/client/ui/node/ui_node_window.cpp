@@ -212,6 +212,18 @@ void uiWindowNode::onWindowClosed (uiNode_t *node)
 }
 
 /**
+ * @brief Called when a windows gets active again after some other window was popped from the stack
+ */
+void uiWindowNode::onWindowActivate (uiNode_t *node)
+{
+	uiLocatedNode::onWindowActivate(node);
+
+	/* script callback */
+	if (EXTRADATA(node).onWindowActivate)
+		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowActivate);
+}
+
+/**
  * @brief Called at the begin of the load from script
  */
 void uiWindowNode::onLoading (uiNode_t *node)
@@ -367,6 +379,8 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "onWindowOpened", V_UI_ACTION, windowExtraData_t, onWindowOpened);
 	/* Invoked when the window is removed from the rendering stack. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onWindowClosed", V_UI_ACTION, windowExtraData_t, onWindowClosed);
+	/* Called when a windows gets active again after some other window was popped from the stack. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onWindowActivate", V_UI_ACTION, windowExtraData_t, onWindowActivate);
 	/* Invoked after all UI scripts are loaded. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onScriptLoaded", V_UI_ACTION, windowExtraData_t, onScriptLoaded);
 

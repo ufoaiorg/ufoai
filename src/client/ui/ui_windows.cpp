@@ -470,6 +470,9 @@ void UI_PopWindow (bool all)
 					UI_PushWindow(ui_sys_active->string);
 			}
 		}
+
+		uiNode_t *activeWindow = UI_GetActiveWindow();
+		UI_Node_WindowActivate(activeWindow);
 	}
 
 	/* change from e.g. console mode to game input mode (fetch input) */

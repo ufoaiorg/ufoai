@@ -40,6 +40,7 @@ class uiWindowNode : public uiLocatedNode {
 	void onLoaded(uiNode_t* node) override;
 	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
 	void onWindowClosed(uiNode_t* node) override;
+	void onWindowActivate(uiNode_t *node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
 };
 
@@ -72,6 +73,7 @@ typedef struct {
 	/** @todo think about converting it to action instead of node */
 	struct uiAction_s *onWindowOpened; 	/**< Invoked when the window is added to the rendering stack */
 	struct uiAction_s *onWindowClosed;	/**< Invoked when the window is removed from the rendering stack */
+	struct uiAction_s *onWindowActivate;/**< Called when a windows gets active again after some other window was popped from the stack */
 	struct uiAction_s *onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
 
 	node_index_t *index;

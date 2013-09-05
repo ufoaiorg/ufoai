@@ -482,6 +482,12 @@ window skirmish
 			*node:root.panel_team@invis = false
 		}
 	}
+
+	func onWindowActivate
+	{
+		cmd	"game_teamcomments;"
+	}
+
 	// =====
 	// INIT
 	// =====

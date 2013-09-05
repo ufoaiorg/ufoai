@@ -182,6 +182,14 @@ void uiNode::onWindowClosed (uiNode_t *node)
 	}
 }
 
+void uiNode::onWindowActivate (uiNode_t *node)
+{
+	uiNode_t* child;
+	for (child = node->firstChild; child; child = child->next) {
+		UI_Node_WindowActivate(child);
+	}
+}
+
 /**
  * @brief Callback stub
  */

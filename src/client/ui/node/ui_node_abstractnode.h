@@ -51,6 +51,8 @@ public:
 	virtual void onWindowOpened(uiNode_t* node, linkedList_t *params);
 	/** Invoked when the window is removed from the rendering stack */
 	virtual void onWindowClosed(uiNode_t* node);
+	/** Called when a windows gets active again after some other window was popped from the stack */
+	virtual void onWindowActivate(uiNode_t* node);
 	/** Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	virtual void onActivate(uiNode_t* node);
 	/** Called when a property change */

@@ -246,6 +246,12 @@ void UI_Node_WindowClosed (uiNode_t* node)
 	b->onWindowClosed(node);
 }
 
+void UI_Node_WindowActivate (uiNode_t* node)
+{
+	uiNode *b = node->behaviour->manager.get();
+	b->onWindowActivate(node);
+}
+
 void UI_Node_DoLayout (uiNode_t* node)
 {
 	if (UI_Node_IsDrawable(node)) {

@@ -64,6 +64,7 @@ void UI_Node_NewNode (uiNode_t* node);
 void UI_Node_DeleteNode (uiNode_t* node);
 void UI_Node_WindowOpened (uiNode_t* node, linkedList_t *params);
 void UI_Node_WindowClosed (uiNode_t* node);
+void UI_Node_WindowActivate (uiNode_t* node);
 void UI_Node_DoLayout (uiNode_t* node);
 void UI_Node_Activate (uiNode_t* node);
 void UI_Node_PropertyChanged (uiNode_t* node, const value_t *property);

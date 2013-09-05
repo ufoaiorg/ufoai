@@ -108,6 +108,11 @@ window multiplayer_team extends abstract_multiplayer
 		}
 	}
 
+	func onWindowActivate
+	{
+		cmd	"game_teamcomments;"
+	}
+
 	func onWindowOpened
 	{
 		cmd	"game_teamcomments;define cl_teamdef phalanx;"
