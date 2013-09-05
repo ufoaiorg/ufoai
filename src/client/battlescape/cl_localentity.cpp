@@ -273,7 +273,7 @@ void LE_SetThink (le_t *le, localEntityThinkFunc_t think)
 	le->think = think;
 }
 
-localModel_t *LM_GetByID (const char *id)
+localModel_t *LM_GetByID (const char* id)
 {
 	int i;
 
@@ -301,7 +301,7 @@ localModel_t *LM_GetByID (const char *id)
  * @sa CL_SpawnParseEntitystring
  * @sa LM_AddToScene
  */
-localModel_t *LM_AddModel (const char *model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
+localModel_t *LM_AddModel (const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
 	localModel_t *lm;
 
@@ -388,13 +388,13 @@ void LM_Think (void)
  * have a 'c' in front of their animation definitions (see *.anm files for
  * characters)
  */
-const char *LE_GetAnim (const char *anim, int right, int left, int state)
+const char* LE_GetAnim (const char* anim, int right, int left, int state)
 {
 	if (!anim)
 		return "";
 
 	static char retAnim[MAX_VAR];
-	char *mod = retAnim;
+	char* mod = retAnim;
 	size_t length = sizeof(retAnim);
 
 	/* add crouched flag */
@@ -504,7 +504,7 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
  * @param[in] textureName The name of the texture the actor is standing on
  * @sa LET_PathMove
  */
-static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
+static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char* textureName)
 {
 	const terrainType_t *t;
 	vec3_t origin;
@@ -1127,7 +1127,7 @@ void LET_SlideDoor (le_t *le, int speed)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_SpawnParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation)
+void LE_AddAmbientSound (const char* sound, const vec3_t origin, int levelflags, float volume, float attenuation)
 {
 	le_t* le;
 	int sampleIdx;
@@ -1200,7 +1200,7 @@ le_t *LE_Add (int entnum)
 	return le;
 }
 
-void _LE_NotFoundError (int entnum, int type, const char *file, const int line)
+void _LE_NotFoundError (int entnum, int type, const char* file, const int line)
 {
 	Cmd_ExecuteString("debug_listle");
 	Cmd_ExecuteString("debug_listedicts");

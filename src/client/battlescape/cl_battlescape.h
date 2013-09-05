@@ -71,7 +71,7 @@ typedef struct clientBattleScape_s {
 	int numLEs;
 	le_t LEs[MAX_EDICTS];
 
-	const char *leInlineModelList[MAX_EDICTS + 1];
+	const char* leInlineModelList[MAX_EDICTS + 1];
 
 	bool spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
@@ -94,9 +94,9 @@ bool CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
 bool CL_OutsideMap(const vec3_t impact, const float delta);
 int CL_CountVisibleEnemies(void);
-char *CL_GetConfigString(int index);
+char* CL_GetConfigString(int index);
 int CL_GetConfigStringInteger(int index);
-char *CL_SetConfigString(int index, dbuffer *msg);
+char* CL_SetConfigString(int index, dbuffer *msg);
 #ifdef DEBUG
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);

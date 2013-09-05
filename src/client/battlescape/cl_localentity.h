@@ -145,10 +145,10 @@ typedef struct le_s {
 
 	/** gfx */
 	animState_t as;			/**< holds things like the current active frame and so on */
-	const char *particleID;
+	const char* particleID;
 	int levelflags;			/**< the levels this local entity should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
-	const char *ref1, *ref2;
+	const char* ref1, *ref2;
 	const struct le_s *ref3;
 	Inventory inv;
 	int left, right, headgear;	/**< item indices that the actor holds in his hands */
@@ -239,10 +239,10 @@ extern cvar_t *cl_trace_debug;
 extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_map_draw_rescue_zone;
 
-const char *LE_GetAnim(const char *anim, int right, int left, int state);
+const char* LE_GetAnim(const char* anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
-void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation);
+void LE_AddAmbientSound(const char* sound, const vec3_t origin, int levelflags, float volume, float attenuation);
 int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)
@@ -288,7 +288,7 @@ void LE_DoEndPathMove(le_t *le);
 /* local model functions */
 void LM_Think(void);
 void LMT_Init(localModel_t *localModel);
-localModel_t *LM_AddModel(const char *model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
+localModel_t *LM_AddModel(const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
 void LM_Perish(dbuffer *msg);
 void LM_AddToScene(void);
 
@@ -309,7 +309,7 @@ void LE_Unlock(le_t *le);
 bool LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, -1, __FILE__, __LINE__)
 #define LE_NotFoundWithTypeError(entnum, type) _LE_NotFoundError(entnum, type, __FILE__, __LINE__)
-void _LE_NotFoundError(int entnum, int type, const char *file, const int line) __attribute__((noreturn));
+void _LE_NotFoundError(int entnum, int type, const char* file, const int line) __attribute__((noreturn));
 le_t *LE_Find(entity_type_t type, const pos3_t pos);
 le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
 le_t *LE_GetFromPos(const pos3_t pos);
@@ -325,4 +325,4 @@ void LET_RotateDoor(le_t *le, int speed);
 trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB &box, const le_t *passle, le_t *passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
-localModel_t *LM_GetByID(const char *id);
+localModel_t *LM_GetByID(const char* id);

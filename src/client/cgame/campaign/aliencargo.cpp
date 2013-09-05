@@ -83,7 +83,7 @@ bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
  * @param[in] alive Number of alive aliens
  * @param[in] dead Number of dead aliens
  */
-bool AlienCargo::add(const char *teamId, int alive, int dead)
+bool AlienCargo::add(const char* teamId, int alive, int dead)
 {
 	if (!teamId)
 		return false;
@@ -172,7 +172,7 @@ bool AlienCargo::load(xmlNode_t *root)
 	for (xmlNode_t *alienNode = cgi->XML_GetNode(root, SAVE_ALIENCARGO_ITEM); alienNode;
 		alienNode = cgi->XML_GetNextNode(alienNode, root, SAVE_ALIENCARGO_ITEM))
 	{
-		const char *teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCARGO_TEAMDEFID);
+		const char* teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCARGO_TEAMDEFID);
 		const int alive = cgi->XML_GetInt(alienNode, SAVE_ALIENCARGO_ALIVE, 0);
 		const int dead = cgi->XML_GetInt(alienNode, SAVE_ALIENCARGO_DEAD, 0);
 		if (!add(teamId, alive, dead))

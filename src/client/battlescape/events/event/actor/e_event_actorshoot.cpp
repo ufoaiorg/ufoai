@@ -92,7 +92,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		return;
 
 	const Item *weapon;
-	const char *tag;
+	const char* tag;
 	if (IS_SHOT_RIGHT(shootType)) {
 		tag = "tag_rweapon";
 		weapon = actor->getRightHandItem();

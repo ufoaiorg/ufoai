@@ -83,7 +83,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		if (playerNum != le->pnum) {
-			const char *playerName = CL_PlayerGetName(playerNum);
+			const char* playerName = CL_PlayerGetName(playerNum);
 			char tmpbuf[128];
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s lost a soldier\n"), playerName);
 			HUD_DisplayMessage(tmpbuf);

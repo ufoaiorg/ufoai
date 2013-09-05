@@ -78,7 +78,7 @@ void CL_ViewLoadMedia (void)
 	max += csi.numODs;
 
 	for (i = 1; i < MAX_MODELS; i++) {
-		const char *name = CL_GetConfigString(CS_MODELS + i);
+		const char* name = CL_GetConfigString(CS_MODELS + i);
 		if (name[0] == '\0')
 			break;
 		SCR_DrawLoading(loadingPercent);

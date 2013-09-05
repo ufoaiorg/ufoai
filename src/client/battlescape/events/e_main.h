@@ -46,11 +46,11 @@ typedef struct eventRegister_s {
 	/**
 	 * @brief the name of this event (e.g. for logs)
 	 */
-	const char *name;
+	const char* name;
 	/**
 	 * @brief The format string that is used to write and parse this event
 	 */
-	const char *formatString;
+	const char* formatString;
 	/**
 	 * @brief Callback that is executing the event
 	 * @param self A pointer to this struct

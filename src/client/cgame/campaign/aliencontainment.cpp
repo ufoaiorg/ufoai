@@ -113,7 +113,7 @@ bool AlienContainment::add(const teamDef_t *team, int alive, int dead)
  * @param[in] alive Number of alive aliens
  * @param[in] dead Number of dead aliens
  */
-bool AlienContainment::add(const char *teamId, int alive, int dead)
+bool AlienContainment::add(const char* teamId, int alive, int dead)
 {
 	if (!teamId)
 		return false;

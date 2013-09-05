@@ -95,7 +95,7 @@ static void CL_ParseServerData (dbuffer *msg)
 static void CL_ParseClientinfo (unsigned int player)
 {
 	clientinfo_t *ci = &cl.clientinfo[player];
-	const char *s = CL_GetConfigString(CS_PLAYERNAMES + player);
+	const char* s = CL_GetConfigString(CS_PLAYERNAMES + player);
 
 	/* isolate the player's name */
 	Q_strncpyz(ci->name, s, sizeof(ci->name));
@@ -111,7 +111,7 @@ int CL_GetPlayerNum (void)
  * @param player The index of the player
  * @return The name of the player
  */
-const char *CL_PlayerGetName (unsigned int player)
+const char* CL_PlayerGetName (unsigned int player)
 {
 	const clientinfo_t *ci = &cl.clientinfo[player];
 	return ci->name;
@@ -123,7 +123,7 @@ const char *CL_PlayerGetName (unsigned int player)
 static void CL_ParseConfigString (dbuffer *msg)
 {
 	const int i = NET_ReadShort(msg);
-	const char *s = CL_SetConfigString(i, msg);
+	const char* s = CL_SetConfigString(i, msg);
 
 	Com_DPrintf(DEBUG_CLIENT, "configstring %d: %s\n", i, s);
 

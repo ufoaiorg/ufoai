@@ -37,7 +37,7 @@ class AlienContainment : public AlienCargo {
 
 	public:
 		virtual bool add (const teamDef_t *team, int alive, int dead);
-		virtual bool add (const char *teamId, int alive, int dead);
+		virtual bool add (const char* teamId, int alive, int dead);
 
 		static bool isLifeSupported (const teamDef_t *team);
 

@@ -149,11 +149,11 @@ typedef struct aircraft_s {
 						 * this should be references only with the variable name aircraftIdx
 						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
 	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
-	char *id;			/**< Internal id from script file. */
+	char* id;			/**< Internal id from script file. */
 	char name[MAX_VAR];			/**< Aircraft name (user can change this). */
-	char *defaultName;	/**< Translatable default name for aircraft. */
-	char *image;		/**< Image on geoscape. */
-	char *model;		/**< Model used on geoscape */
+	char* defaultName;	/**< Translatable default name for aircraft. */
+	char* image;		/**< Image on geoscape. */
+	char* model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
 	aircraftStatus_t status;			/**< Status of this aircraft, see aircraftStatus_t. */
@@ -185,11 +185,11 @@ typedef struct aircraft_s {
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemTypes;						/**< How many types of items we collected. */
 
-	const char *building;		/**< id of the building needed as hangar */
+	const char* building;		/**< id of the building needed as hangar */
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */
-	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference
+	char* missionID;			/**< aircraft loaded before missions, we need this temporary as reference
 								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
 	bool leader;				/**< try to follow this aircraft */
@@ -238,7 +238,7 @@ aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 bool AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_BaseCountAircraft(const struct base_s *base);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
-const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
+const char* AIR_AircraftStatusToName(const aircraft_t *aircraft);
 bool AIR_IsAircraftInBase(const aircraft_t *aircraft);
 bool AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
@@ -251,11 +251,11 @@ bool AIR_IsInAircraftTeam(const aircraft_t *aircraft, const Employee* employee);
 int AIR_GetTeamSize(const aircraft_t *aircraft);
 
 void AIR_CampaignRun(const struct campaign_s* campaign, int dt, bool updateRadarOverlay);
-const aircraft_t *AIR_GetAircraftSilent(const char *name);
-const aircraft_t *AIR_GetAircraft(const char *name);
+const aircraft_t *AIR_GetAircraftSilent(const char* name);
+const aircraft_t *AIR_GetAircraft(const char* name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
 bool AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void AIR_ParseAircraft(const char *name, const char** text, bool assignAircraftItems);
+void AIR_ParseAircraft(const char* name, const char** text, bool assignAircraftItems);
 bool AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
 bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
@@ -268,12 +268,12 @@ bool AIR_ScriptSanityCheck(void);
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
-const char *AIR_GetAircraftString(aircraftType_t aircraftType);
+const char* AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
 baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
-const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base);
+const char* AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base);
 void AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);

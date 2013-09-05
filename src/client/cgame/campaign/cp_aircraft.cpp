@@ -353,7 +353,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
  * @param[in] aircraft Aircraft to translate the status of
  * @return Translation string of given status.
  */
-const char *AIR_AircraftStatusToName (const aircraft_t *aircraft)
+const char* AIR_AircraftStatusToName (const aircraft_t *aircraft)
 {
 	assert(aircraft);
 	assert(aircraft->homebase);
@@ -469,7 +469,7 @@ int AIR_CountInBaseByTemplate (const base_t *base, const aircraft_t *aircraftTem
 /**
  * @brief Returns the string that matches the given aircraft type
  */
-const char *AIR_GetAircraftString (aircraftType_t aircraftType)
+const char* AIR_GetAircraftString (aircraftType_t aircraftType)
 {
 	switch (aircraftType) {
 	case AIRCRAFT_INTERCEPTOR:
@@ -613,7 +613,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
  * @return aircraft_t pointer or nullptr if not found.
  * @note This function gives no warning on null name or if no aircraft found
  */
-const aircraft_t *AIR_GetAircraftSilent (const char *name)
+const aircraft_t *AIR_GetAircraftSilent (const char* name)
 {
 	int i;
 
@@ -632,7 +632,7 @@ const aircraft_t *AIR_GetAircraftSilent (const char *name)
  * @param[in] name Aircraft id.
  * @return aircraft_t pointer or errors out (ERR_DROP)
  */
-const aircraft_t *AIR_GetAircraft (const char *name)
+const aircraft_t *AIR_GetAircraft (const char* name)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(name);
 	if (Q_strnull(name))
@@ -790,7 +790,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
  * @param[in] aircraft Pointer to the aircraft to check
  * @param[in] base Pointer to the base to store aircraft
  */
-const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base)
+const char* AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base)
 {
 	const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 
@@ -1348,11 +1348,11 @@ static const value_t aircraft_radar_vals[] = {
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-void AIR_ParseAircraft (const char *name, const char** text, bool assignAircraftItems)
+void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraftItems)
 {
-	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
+	const char* errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *aircraftTemplate;
-	const char *token;
+	const char* token;
 	int i;
 	technology_t *tech;
 	aircraftItemType_t itemType = MAX_ACITEMS;
@@ -2478,11 +2478,11 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 {
 	xmlNode_t *snode;
 	xmlNode_t *ssnode;
-	const char *statusId;
+	const char* statusId;
 	/* vars, if aircraft wasn't found */
 	int tmpInt;
 	int l, status;
-	const char *s = cgi->XML_GetString(p, SAVE_AIRCRAFT_ID);
+	const char* s = cgi->XML_GetString(p, SAVE_AIRCRAFT_ID);
 	const aircraft_t *crafttype = AIR_GetAircraft(s);
 
 	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
@@ -2536,7 +2536,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
 	for (ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_AIRSTAT); ssnode; ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRSTAT)) {
-		const char *statId =  cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
+		const char* statId =  cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
 		int idx;
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
@@ -2602,7 +2602,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
 	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < MAX_CARGO && ssnode;
 			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
-		const char *const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
+		const char* const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
 		const objDef_t *od = INVSH_GetItemByID(str);
 
 		if (!od) {

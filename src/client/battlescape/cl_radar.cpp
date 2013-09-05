@@ -96,10 +96,10 @@ static void CL_BattlescapeRadarGenPreview_f (void)
 static void CL_BattlescapeRadarGenerate_f (void)
 {
 	const int border = 0;
-	const char *mapName = Cvar_GetString("sv_mapname");
+	const char* mapName = Cvar_GetString("sv_mapname");
 
 	const int level = Cvar_GetInteger("cl_worldlevel");
-	const char *filename = nullptr;
+	const char* filename = nullptr;
 	int x, y, width, height;
 
 	CL_BattlescapeRadarMapInFrameBuffer(&x, &y, &width, &height);

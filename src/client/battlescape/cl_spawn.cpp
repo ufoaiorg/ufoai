@@ -66,7 +66,7 @@ typedef struct localEntityParse_s {
 	int maxteams;
 
 	/* not filled from entity string */
-	const char *entStringPos;
+	const char* entStringPos;
 	int entnum;
 } localEntityParse_t;
 
@@ -114,7 +114,7 @@ static void SP_misc_sound(const localEntityParse_t *entData);
 static void SP_light(const localEntityParse_t *entData);
 
 typedef struct {
-	const char *name;
+	const char* name;
 	void (*spawn) (const localEntityParse_t *entData);
 } spawn_t;
 
@@ -155,7 +155,7 @@ static void CL_SpawnCall (const localEntityParse_t *entData)
  */
 void CL_SpawnParseEntitystring (void)
 {
-	const char *es = cl.mapData->mapEntityString;
+	const char* es = cl.mapData->mapEntityString;
 	int entnum = 0, maxLevel;
 
 	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
@@ -171,7 +171,7 @@ void CL_SpawnParseEntitystring (void)
 	while (1) {
 		localEntityParse_t entData;
 		/* parse the opening brace */
-		const char *entityToken = Com_Parse(&es);
+		const char* entityToken = Com_Parse(&es);
 		/* memorize the start */
 		if (!es)
 			break;

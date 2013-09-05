@@ -135,7 +135,7 @@ static reserveButtonState_t crouchReserveButtonState;
  * @sa UI_DisplayNotice
  * @param[in] text text is already translated here
  */
-void HUD_DisplayMessage (const char *text)
+void HUD_DisplayMessage (const char* text)
 {
 	assert(text);
 	UI_DisplayNotice(text, cl_hud_message_timeout->integer, cl_hud->string);
@@ -152,7 +152,7 @@ void HUD_UpdateActorStats (const le_t *le)
 
 	const character_t *chr = CL_ActorGetChr(le);
 	assert(chr);
-	const char *tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
+	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 		chr->name, le->HP, le->maxHP, le->TU, (item && item->def()) ? _(item->def()->name) : "");
 
 	const int idx = CL_ActorGetNumber(le);
@@ -169,7 +169,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 	if (buttonStates[button] == state)
 		return;
 
-	const char *prefix;
+	const char* prefix;
 
 	switch (state) {
 	case BT_STATE_DESELECT:
@@ -401,7 +401,7 @@ static void HUD_ShotReserve_f (void)
  * @param hand What list to display
  * @param index Index of the actual firemode
  */
-static void HUD_DisplayFiremodeEntry (const char *callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
+static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
 	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
@@ -417,7 +417,7 @@ static void HUD_DisplayFiremodeEntry (const char *callback, const le_t* actor, c
 	const int usableTusForRF = HUD_UsableReactionTUs(actor);
 
 	char tuString[MAX_VAR];
-	const char *tooltip;
+	const char* tooltip;
 	if (usableTusForRF > time) {
 		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - time);
 		tooltip = tuString;
@@ -447,7 +447,7 @@ static void HUD_DisplayFiremodeEntry (const char *callback, const le_t* actor, c
  * @param actor actor who can do the actions
  * @param type The action to display
  */
-static void HUD_DisplayActions (const char *callback, const le_t* actor, actionType_t type)
+static void HUD_DisplayActions (const char* callback, const le_t* actor, actionType_t type)
 {
 	int i;
 
@@ -491,7 +491,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 			containerIndex_t container = CID_RIGHT;
 			bool noAmmo;
 			bool noTU;
-			const char *actionId = "reload_handr";
+			const char* actionId = "reload_handr";
 
 			tus = HUD_CalcReloadTime(actor, weapon->def(), container);
 			noAmmo = tus == -1;
@@ -528,7 +528,7 @@ static void HUD_DisplayActions (const char *callback, const le_t* actor, actionT
 		/* Reloadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
 			containerIndex_t container = CID_LEFT;
-			const char *actionId = "reload_handl";
+			const char* actionId = "reload_handl";
 			const int tus = HUD_CalcReloadTime(actor, weapon->def(), container);
 			const bool noAmmo = tus == -1;
 			const bool noTU = actor->TU < tus;
@@ -654,7 +654,7 @@ static void HUD_RemainingTUs_f (void)
 		return;
 	}
 
-	const char *type = Cmd_Argv(1);
+	const char* type = Cmd_Argv(1);
 	const bool state = Com_ParseBoolean(Cmd_Argv(2));
 
 	OBJZERO(displayRemainingTus);
@@ -926,7 +926,7 @@ static void HUD_UpdateButtons (const le_t *le)
 		}
 	}
 
-	const char *reason;
+	const char* reason;
 
 	/* Reload buttons */
 	const int rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, CID_RIGHT, &reason);
@@ -982,7 +982,7 @@ static void HUD_UpdateButtons (const le_t *le)
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
-		const char *menuName = UI_GetActiveWindowName();
+		const char* menuName = UI_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */
@@ -999,7 +999,7 @@ static void HUD_UpdateButtons (const le_t *le)
  */
 static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 {
-	const char *string = UI_GetText(textId);
+	const char* string = UI_GetText(textId);
 	if (string && cl_show_cursor_tooltips->integer)
 		UI_DrawTooltip(string, mousePosX + xOffset, mousePosY - yOffset, viddef.virtualWidth - mousePosX);
 }
@@ -1250,7 +1250,7 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 			actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
 
 	/* animation and weapons */
-	const char *animName = R_AnimGetName(&actor->as, actor->model1);
+	const char* animName = R_AnimGetName(&actor->as, actor->model1);
 	if (animName)
 		Cvar_Set("mn_anim", "%s", animName);
 	if (actor->getRightHandItem()) {
@@ -1284,7 +1284,7 @@ static void HUD_UpdateActorCvar (const le_t *actor)
 		Cvar_Set("mn_ammoleft", "");
 }
 
-static const char *HUD_GetPenaltyString (const int type)
+static const char* HUD_GetPenaltyString (const int type)
 {
 	switch (type) {
 	case MODIFIER_ACCURACY:
@@ -1500,7 +1500,7 @@ void HUD_Update (void)
  * @param newValue The new value of the cvar (a sane actor idx)
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void HUD_ActorSelectionChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1520,7 +1520,7 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_RightHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void HUD_RightHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1538,7 +1538,7 @@ static void HUD_RightHandChangeListener (const char *cvarName, const char *oldVa
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void HUD_LeftHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1556,7 +1556,7 @@ static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldVal
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void HUD_TUChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1599,7 +1599,7 @@ static bool HUD_CheckCLHud (cvar_t *cvar)
  * @brief Display the user interface
  * @param optionWindowName Name of the window used to display options, else nullptr if nothing
  */
-void HUD_InitUI (const char *optionWindowName)
+void HUD_InitUI (const char* optionWindowName)
 {
 	OBJZERO(buttonStates);
 	if (!HUD_CheckCLHud(cl_hud)) {

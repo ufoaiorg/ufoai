@@ -45,7 +45,7 @@ class AlienCargo {
 		int sumDead;				/**< cache of number of dead bodies of all kinds in the cargo*/
 	public:
 		virtual bool add (const teamDef_t *team, int alive, int dead);
-		virtual bool add (const char *teamId, int alive, int dead);
+		virtual bool add (const char* teamId, int alive, int dead);
 
 		int getAlive (const teamDef_t *team) const;
 		int getDead (const teamDef_t *team) const;
