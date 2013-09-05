@@ -114,6 +114,15 @@ tile +filler_a
 
 // UFO tiles -------------------------------------------------------*
 
+/* this is a hack */
+tile +craft_ufo_bomber
+{
+3 3
+0		0		0
+0		+c		0
+0		0		0
+}
+
 tile +craft_ufo_fighter
 {
 4 4
@@ -136,9 +145,8 @@ tile +craft_ufo_scout
 
 tile +craft_drop_firebird
 {
-5 5
+5 4
 0		0		0		0		0
-0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
@@ -146,9 +154,8 @@ tile +craft_drop_firebird
 
 tile +craft_drop_herakles
 {
-5 5
+5 4
 0		0		0		0		0
-0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
@@ -171,23 +178,26 @@ assembly bomber_city
 {
 size "11 8"
 title "_Bomber in the City"
-+main "1 1"
-*rm_drop +craft_drop_firebird "1 1"
++filler_a		"0 3"
+fix +main		"0 0"
+fix *rm_drop +craft_drop_firebird "0 5"
 }
 
 assembly city_disco
 {
 size "5 6"
 title "_Urban Disco"
-+city_disco "1 1"
-*rm_drop +craft_drop_firebird "1 1"
++filler_a			"0 3"
+fix +city_disco		"0 0"
+fix *rm_drop +craft_drop_firebird "0 3"
 }
 
 assembly community_centre
 {
-size "3 7"
+size "6 4"
 title "_Community Centre"
-+community_centre "1 1"
++filler_a			"0 6"
++community_centre	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -195,14 +205,16 @@ assembly stadium
 {
 size "5 7"
 title "_Stadium"
-+stadium "1 1"
-*rm_drop +craft_drop_firebird "1 1"
++filler_a			"0 3"
+fix +stadium		"0 0"
+fix *rm_drop +craft_drop_firebird "0 4"
 }
 
 assembly laboratory
 {
 size "9 7"
 title "_Laboratory"
++filler_a			"0 3"
 fix +laboratory		"0 0"
 fix *rm_ufo +craft_ufo_fighter		"7 1"
 fix *rm_drop +craft_drop_firebird	"0 4"
@@ -212,6 +224,7 @@ assembly laboratory_noufo
 {
 size "9 7"
 title "_Laboratory"
++filler_a			"0 3"
 fix +laboratory		"0 0"
 fix +lab_parking	"7 1"
 fix *rm_drop +craft_drop_firebird	"0 4"
@@ -221,7 +234,7 @@ assembly mart
 {
 size "8 5"
 title "_Mart"
-+filler_a	"0 6"
++filler_a	"0 9"
 +mart		"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
