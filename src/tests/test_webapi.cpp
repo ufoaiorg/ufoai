@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/web/web_main.h"
 #include "../client/web/web_cgame.h"
 
-#define FILEPATH "save/"
+#define FILEPATH "save/campaign/"
 #define FILE "unittest1.savx"
 #define FILENAME FILEPATH FILE
 #define CGAME "test"
