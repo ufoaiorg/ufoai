@@ -189,8 +189,12 @@ bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *f
 	if (encodedURL == nullptr)
 		return false;
 
+	char buf[MAX_OSPATH];
+	GAME_GetRelativeSavePath(buf, sizeof(buf));
+	Q_strcat(buf, sizeof(buf), "%s", filename);
+
 	qFILE f;
-	FS_OpenFile(filename, &f, FILE_WRITE);
+	FS_OpenFile(buf, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("Could not open the target file\n");
 		FS_CloseFile(&f);
@@ -318,6 +322,7 @@ int WEB_CGameListForUser (const char *cgameId, int category, int userId)
 	if (encodedURL == nullptr)
 		return -1;
 
+	UI_ExecuteConfunc("cgamefiles_clear");
 	int count = 0;
 	if (!WEB_GetURL(encodedURL, WEB_ListCGameFilesCallback, &count)) {
 		Com_Printf("failed to query the cgame list for '%s' in category %i and for user %i\n", cgameId, category, userId);
@@ -339,7 +344,9 @@ static void WEB_UploadCGame_f (void)
 		return;
 	}
 	const int category = atoi(Cmd_Argv(1));
-	const char* filename = Cmd_Argv(2);
+	char filename[MAX_OSPATH];
+	GAME_GetRelativeSavePath(filename, sizeof(filename));
+	Q_strcat(filename, sizeof(filename), "%s", Cmd_Argv(2));
 	WEB_CGameUpload(name, category, filename);
 }
 

@@ -132,10 +132,10 @@ bool SAV_GameLoad (const char *file, const char** error)
 	xmlNode_t *topNode, *node;
 	saveFileHeader_t header;
 
-	Q_strncpyz(filename, file, sizeof(filename));
-
 	/* open file */
-	FS_OpenFile(va("save/%s.%s", filename, SAVEGAME_EXTENSION), &f, FILE_READ);
+	cgi->GetRelativeSavePath(filename, sizeof(filename));
+	Q_strcat(filename, sizeof(filename), "%s.%s", file, SAVEGAME_EXTENSION);
+	FS_OpenFile(filename, &f, FILE_READ);
 	if (!f.f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		*error = "File not found";
@@ -273,7 +273,8 @@ static bool SAV_GameSave (const char *filename, const char *comment, char** erro
 	}
 
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
-	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
+	cgi->GetRelativeSavePath(savegame, sizeof(savegame));
+	Q_strcat(savegame, sizeof(savegame), "%s.%s", filename, SAVEGAME_EXTENSION);
 	topNode = mxmlNewXML("1.0");
 	node = cgi->XML_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
@@ -399,7 +400,10 @@ static void SAV_GameReadGameComment (const int idx)
 	saveFileHeader_t header;
 	qFILE f;
 
-	const char *filename = va("save/slot%i.%s", idx, SAVEGAME_EXTENSION);
+	char filename[MAX_OSPATH];
+	cgi->GetRelativeSavePath(filename, sizeof(filename));
+	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
+
 	FS_OpenFile(filename, &f, FILE_READ);
 	if (f.f || f.z) {
 		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
@@ -460,7 +464,9 @@ static void SAV_GameLoad_f (void)
 	}
 
 	/* Check if savegame exists */
-	if (cgi->FS_CheckFile("save/%s.%s", cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
+	char buf[MAX_OSPATH];
+	cgi->GetRelativeSavePath(buf, sizeof(buf));
+	if (cgi->FS_CheckFile("%s%s.%s", buf, cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
 		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", cgi->Cmd_Argv(1));
 		return;
 	}
@@ -543,7 +549,10 @@ static void SAV_GameSaveNameCleanup_f (void)
 	if (slotID < 0 || slotID > 7)
 		return;
 
-	FS_OpenFile(va("save/slot%i.%s", slotID, SAVEGAME_EXTENSION), &f, FILE_READ);
+	char buf[MAX_OSPATH];
+	cgi->GetRelativeSavePath(buf, sizeof(buf));
+	Q_strcat(buf, sizeof(buf), "slot%i.%s", slotID, SAVEGAME_EXTENSION);
+	FS_OpenFile(buf, &f, FILE_READ);
 	if (!f.f && !f.z)
 		return;
 
@@ -571,7 +580,10 @@ static void SAV_GameQuickLoadInit_f (void)
 		return;
 	}
 
-	FS_OpenFile(va("save/slotquick.%s", SAVEGAME_EXTENSION), &f, FILE_READ);
+	char buf[MAX_OSPATH];
+	cgi->GetRelativeSavePath(buf, sizeof(buf));
+	Q_strcat(buf, sizeof(buf), "slotquick.%s", SAVEGAME_EXTENSION);
+	FS_OpenFile(buf, &f, FILE_READ);
 	if (f.f || f.z) {
 		cgi->UI_PushWindow("quickload");
 		FS_CloseFile(&f);

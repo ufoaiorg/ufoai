@@ -506,7 +506,7 @@ component cmpTeamPanel extends panel
 		*node:this.parent.slots.slot<1>.button@string = "<3> (<4>)"
 		*node:this.parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
 		*node:this.parent.slots.slot<1>.button@onClick = { cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;" }
-		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 save/<node:this.parent.filename@string>;" }
+		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
 		*node:this.parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
 		if (<5> == 0) {
 			*node:this.parent.slots.slot<1>.upload@invis = true

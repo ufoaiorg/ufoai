@@ -130,7 +130,8 @@ void GAME_TeamDelete_f (void)
 
 	const char *team = Cmd_Argv(1);
 	char buf[MAX_OSPATH];
-	Com_sprintf(buf, sizeof(buf), "%s/save/%s", FS_Gamedir(), team);
+	GAME_GetAbsoluteSavePath(buf, sizeof(buf));
+	Q_strcat(buf, sizeof(buf), "%s", team);
 	FS_RemoveFile(buf);
 }
 
@@ -143,10 +144,16 @@ void GAME_TeamSlotComments_f (void)
 
 	const char *filename;
 	int i = 0;
-	FS_BuildFileList("save/*.mpt");
-	while ((filename = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
+	char relSavePath[MAX_OSPATH];
+	GAME_GetRelativeSavePath(relSavePath, sizeof(relSavePath));
+	char pattern[MAX_OSPATH];
+	Q_strncpyz(pattern, relSavePath, sizeof(pattern));
+	Q_strcat(pattern, sizeof(pattern), "*.mpt");
+
+	FS_BuildFileList(pattern);
+	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
 		qFILE f;
-		const char *savePath = va("save/%s", filename);
+		const char *savePath = va("%s/%s", relSavePath, filename);
 		FS_OpenFile(savePath, &f, FILE_READ);
 		if (!f.f && !f.z) {
 			Com_Printf("Warning: Could not open '%s'\n", filename);
@@ -165,7 +172,9 @@ void GAME_TeamSlotComments_f (void)
 			continue;
 		}
 
-		const bool uploadable = FS_FileExists("%s/save/%s", FS_Gamedir(), filename);
+		char absSavePath[MAX_OSPATH];
+		GAME_GetAbsoluteSavePath(absSavePath, sizeof(absSavePath));
+		const bool uploadable = FS_FileExists("%s/%s", absSavePath, filename);
 		UI_ExecuteConfunc("teamsaveslotadd %i \"%s\" \"%s\" %i %i", i++, filename, header.name, LittleLong(header.soldiercount), uploadable ? 1 : 0);
 	}
 	FS_NextFileFromFileList(nullptr);
@@ -275,8 +284,11 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
  */
 bool GAME_TeamGetFreeFilename (char *filename, size_t size)
 {
+	char buf[MAX_OSPATH];
+	GAME_GetRelativeSavePath(buf, sizeof(buf));
+
 	for (int num = 0; num < 100; num++) {
-		Com_sprintf(filename, size, "save/team%02i.mpt", num);
+		Com_sprintf(filename, size, "%s/team%02i.mpt", buf, num);
 		if (FS_CheckFile("%s", filename) == -1) {
 			return true;
 		}
@@ -416,7 +428,11 @@ bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLe
 	/* we will loop the whole team save list, just because i don't want
 	 * to specify the filename in the script api of this command. Otherwise
 	 * one could upload everything with this command */
-	while ((save = FS_NextFileFromFileList("save/*.mpt")) != nullptr) {
+	char buf[MAX_OSPATH];
+	GAME_GetRelativeSavePath(buf, sizeof(buf));
+	char pattern[MAX_OSPATH];
+	Com_sprintf(pattern, sizeof(pattern), "%s*.mpt", buf);
+	while ((save = FS_NextFileFromFileList(buf)) != nullptr) {
 		if (index == 0)
 			break;
 		index--;
@@ -426,7 +442,7 @@ bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLe
 		return false;
 	if (save == nullptr)
 		return false;
-	Com_sprintf(filename, filenameLength, "save/%s", save);
+	Com_sprintf(filename, filenameLength, "%s/%s", buf, save);
 	return true;
 }
 

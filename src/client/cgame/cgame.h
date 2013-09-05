@@ -342,6 +342,9 @@ typedef struct cgame_import_s {
 	void (IMPORT *WEB_DownloadFromUser) (int category, const char *filename, int userId);
 	void (IMPORT *WEB_ListForUser) (int category, int userId);
 
+	const char* (IMPORT *GetRelativeSavePath) (char* buf, size_t bufSize);
+	const char* (IMPORT *GetAbsoluteSavePath) (char* buf, size_t bufSize);
+
 	/** @todo: remove me */
 	byte *r_xviAlpha;
 	byte *r_radarPic;

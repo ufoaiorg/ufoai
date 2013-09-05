@@ -748,6 +748,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->WEB_DownloadFromUser = GAME_WebDownloadFromUser;
 		cgi->WEB_ListForUser = GAME_WebListForUser;
 
+		cgi->GetRelativeSavePath = GAME_GetRelativeSavePath;
+		cgi->GetAbsoluteSavePath = GAME_GetAbsoluteSavePath;
+
 		cgi->Sys_Error = Sys_Error;
 
 		cgi->HUD_InitUI = HUD_InitUI;
@@ -1520,6 +1523,18 @@ void GAME_StartMatch (void)
 
 		GAME_InitializeBattlescape(cl.chrList);
 	}
+}
+
+const char* GAME_GetRelativeSavePath (char* buf, size_t bufSize)
+{
+	Com_sprintf(buf, bufSize, "save/%s/", GAME_GetCurrentName());
+	return buf;
+}
+
+const char* GAME_GetAbsoluteSavePath (char* buf, size_t bufSize)
+{
+	Com_sprintf(buf, bufSize, "%s/save/%s/", FS_Gamedir(), GAME_GetCurrentName());
+	return buf;
 }
 
 equipDef_t *GAME_GetEquipmentDefinition (void)

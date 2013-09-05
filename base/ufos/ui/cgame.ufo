@@ -134,6 +134,6 @@ window cgame_download
 
 	func onWindowOpened
 	{
-		cmd	"cgamefiles_clear;web_listcgame 0;"
+		cmd	"web_listcgame 0;"
 	}
 }

@@ -48,6 +48,8 @@ bool GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap);
 void GAME_SpawnSoldiers(void);
 void GAME_StartMatch(void);
+const char* GAME_GetRelativeSavePath(char* buf, size_t bufSize);
+const char* GAME_GetAbsoluteSavePath(char* buf, size_t bufSize);
 equipDef_t *GAME_GetEquipmentDefinition(void);
 bool GAME_HandleServerCommand(const char *command, dbuffer *msg);
 void GAME_AddChatMessage(const char *format, ...);
