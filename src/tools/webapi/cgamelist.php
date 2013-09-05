@@ -8,9 +8,15 @@ else
 	$userId = getUserId();
 
 $files = $fs->listUserFiles ( $userId );
+$category = getRequestCategory();
 
 echo "{";
 foreach ( $files as $file ) {
-	echo "{userid \"" . $userId . "\" file \"" . $file . "\"}";
+	$type = $fs->getFileType($file);
+	if (false === $type->isValid ()) {
+		continue;
+	}
+	$name = $type->getName();
+	echo "{userid \"" . $userId . "\" file \"" . $file . "\" name \"" . $name . "\" category \"" . $category . "\"}";
 }
 echo "}";

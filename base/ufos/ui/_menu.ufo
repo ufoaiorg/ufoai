@@ -310,7 +310,7 @@ component cmpMapPanel extends panel
 	}
 }
 
-component cmpTeamSlotPanel extends panel
+component cmpFileSlotPanel extends panel
 {
 	{
 		size		"228 34"
@@ -500,7 +500,7 @@ component cmpTeamPanel extends panel
 	 */
 	confunc teamsaveslotadd
 	{
-		call *node:this.parent.slots@createChild("slot<1>", "cmpTeamSlotPanel")
+		call *node:this.parent.slots@createChild("slot<1>", "cmpFileSlotPanel")
 		*node:this.parent.slots.slot<1>.filename@string = "<2>"
 		*node:this.parent.slots.slot<1>.index@integer = <1>
 		*node:this.parent.slots.slot<1>.button@string = "<3> (<4>)"

@@ -165,7 +165,12 @@ bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
 	}
 
 	Com_Printf("deleted the cgame file '%s'\n", filename);
-	UI_ExecuteConfunc("cgame_deletesuccessful");
+
+	char idBuf[MAX_VAR];
+	const char *id = Com_SkipPath(filename);
+	Com_StripExtension(id, idBuf, sizeof(idBuf));
+
+	UI_ExecuteConfunc("cgame_deletesuccessful \"%s\" %i %i", idBuf, category, web_userid->integer);
 	return true;
 }
 
@@ -221,12 +226,16 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 
 	struct entry_s {
 		int userId;
-		char name[MAX_QPATH];
+		int category;
+		char file[MAX_QPATH];
+		char name[MAX_VAR];
 	};
 
 	const value_t values[] = {
 		{"userid", V_INT, offsetof(entry_s, userId), MEMBER_SIZEOF(entry_s, userId)},
-		{"file", V_STRING, offsetof(entry_s, name), 0},
+		{"category", V_INT, offsetof(entry_s, category), MEMBER_SIZEOF(entry_s, category)},
+		{"file", V_STRING, offsetof(entry_s, file), 0},
+		{"name", V_STRING, offsetof(entry_s, name), 0},
 		{nullptr, V_NULL, 0, 0}
 	};
 
@@ -254,9 +263,10 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 				break;
 			}
 			char idBuf[MAX_VAR];
-			const char *id = Com_SkipPath(entry.name);
+			const char *id = Com_SkipPath(entry.file);
 			Com_StripExtension(id, idBuf, sizeof(idBuf));
-			UI_ExecuteConfunc("cgamefiles_add \"%s\" \"%s\" %i %i", idBuf, id, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
+			const bool ownEntry = entry.userId == web_userid->integer;
+			UI_ExecuteConfunc("cgamefiles_add \"%s\" %i %i \"%s\" \"%s\" %i", idBuf, entry.category, entry.userId, id, entry.name, ownEntry ? 1 : 0);
 			num++;
 			continue;
 		}

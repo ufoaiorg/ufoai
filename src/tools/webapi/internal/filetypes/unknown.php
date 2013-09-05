@@ -9,4 +9,8 @@ class UnknownFileType extends FileType {
 	public function isValid () {
 		return false;
 	}
+
+	public function getName() {
+		return "Unknown";
+	}
 }

@@ -35,6 +35,14 @@ window campaign {
 			cmd "ui_push load;"
 		}
 	}
+	cmpMenuButton button_download {
+		string	"_Download"
+		tooltip	"_Download savegames"
+		pos	"80 310"
+		onClick	{
+			cmd "ui_push cgame_download;"
+		}
+	}
 	cmpMenuButton button_continue {
 		string		"_Continue"
 		tooltip		"_Load last saved game or continue playing."
@@ -226,102 +234,54 @@ window load
 		contentalign	ALIGN_UC
 		font		"f_big"
 	}
+	panel slots
+	{
+		{
+			pos		"640 200"
+			size	"230 296"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+			wheelscrollable	true
 
-	button slot0 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 200"
-		size		"256 32"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot0; game_timestop;" *cvar:mn_fastexit = 1; }
+			onViewChange {
+				*node:parent.slots_scroll@fullsize = <fullsize>
+				*node:parent.slots_scroll@current = <viewpos>
+				*node:parent.slots_scroll@viewsize = <viewsize>
+			}
+		}
+
+		cmpFileSlotPanel slot0 {
+		}
+
+		cmpFileSlotPanel slot1 {
+		}
+
+		cmpFileSlotPanel slot2 {
+		}
+
+		cmpFileSlotPanel slot3 {
+		}
+
+		cmpFileSlotPanel slot4 {
+		}
+
+		cmpFileSlotPanel slot5 {
+		}
+
+		cmpFileSlotPanel slot6 {
+		}
+
+		cmpFileSlotPanel slot7 {
+		}
 	}
-	button slot1 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 235"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot1; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot2 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 270"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot2; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot3 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 305"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot3; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot4 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 340"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot4; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot5 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 375"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot5; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot6 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 410"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot6; game_timestop;" *cvar:mn_fastexit = 1; }
-	}
-	button slot7 {
-		string		""
-		background		"ui/button_green_verysmall"
-		pos			"640 445"
-		size		"256 34"
-		font		"f_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CL
-		padding		8
-		onClick		{ cmd "game_load slot7; game_timestop;" *cvar:mn_fastexit = 1; }
+	vscrollbar slots_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"229 50"
+		height		"216"
+		hidewhenunused	true
+		onChange {
+			*node:parent.slots@viewpos = <current>
+		}
 	}
 
 	/**
@@ -329,16 +289,23 @@ window load
 	 * @param[in] <2> name of the savegame slot
 	 * @param[in] <3> game date of the savegame slot
 	 * @param[in] <4> real date of the savegame slot
+	 * @param[in] <5> filename
 	 */
 	confunc update_save_game_info {
+		//call *node:this.parent.slots@createChild("slot<1>", "cmpFileSlotPanel")
+		*node:this.parent.slots.slot<1>.filename@string = <5>
+		*node:this.parent.slots.slot<1>.index@integer = <1>
 		if ( "<3>" ne "" ) {
-			*cvar:mn_slot<1> = "<2> - <3>"
+			*node:this.parent.slots.slot<1>.button@string = "<2> - <3>"
 		} else {
-			*cvar:mn_slot<1> = "<2>"
+			*node:this.parent.slots.slot<1>.button@string = "<2>"
 		}
-		*node:root.slot<1>@string = *cvar:mn_slot<1>
-		*node:load.slot<1>@tooltip = "<4>"
-		*node:save.slot<1>@tooltip = "<4>"
+		*node:this.parent.slots.slot<1>.button@tooltip = <4>
+		*node:this.parent.slots.slot<1>.button@onClick = { cmd "game_load slot<node:this.parent.index@integer>; game_timestop;" *cvar:mn_fastexit = 1;" }
+		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 save/<node:this.parent.filename@string>;" }
+		//*node:this.parent.slots.slot<1>.delete@onClick = {}
+		*node:this.parent.slots.slot<1>.upload@invis = false
+		*node:this.parent.slots.slot<1>.delete@invis = true
 	}
 
 	cmpMenuButton button_back {

@@ -399,7 +399,8 @@ static void SAV_GameReadGameComment (const int idx)
 	saveFileHeader_t header;
 	qFILE f;
 
-	FS_OpenFile(va("save/slot%i.%s", idx, SAVEGAME_EXTENSION), &f, FILE_READ);
+	const char *filename = va("save/slot%i.%s", idx, SAVEGAME_EXTENSION);
+	FS_OpenFile(filename, &f, FILE_READ);
 	if (f.f || f.z) {
 		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 			Com_Printf("Warning: Savefile header may be corrupted\n");
@@ -409,14 +410,15 @@ static void SAV_GameReadGameComment (const int idx)
 		header.xmlSize = LittleLong(header.xmlSize);
 		header.subsystems = LittleLong(header.subsystems);
 
+		const char *basename = Com_SkipPath(filename);
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
-			cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
+			cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
 
 		FS_CloseFile(&f);
 	} else {
-			cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\"", idx);
+		cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\" \"\"", idx);
 	}
 }
 

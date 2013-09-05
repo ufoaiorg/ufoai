@@ -16,7 +16,7 @@ component downloadentry extends panel {
 		pos			"0 0"
 		size		"190 34"
 		string		""
-		onClick		{ cmd "web_downloadcgame <node:this.parent.userid@integer> <node:this.parent.id@integer>;" }
+		onClick		{ cmd "web_downloadcgame <node:this.parent.category@integer> <node:this.parent.filename@string> <node:this.parent.userid@integer>;" }
 	}
 
 	button delete
@@ -24,10 +24,15 @@ component downloadentry extends panel {
 		size		"34 34"
 		icon 		"icons/delete"
 		tooltip		"_Remove this file from the server"
-		onClick		{ cmd "web_deletecgame <node:this.parent.id@integer>;" }
+		onClick		{ cmd "web_deletecgame <node:this.parent.category@integer> <node:this.parent.filename@string>;" }
 	}
 
-	data id
+	data filename
+	{
+		string	""
+	}
+
+	data category
 	{
 		integer	0
 	}
@@ -61,21 +66,24 @@ window cgame_download
 
 	/**
 	 * @brief Add a server stored file to the list of downloadable files
-	 * @param <1> The file id
-	 * @param <2> The name
+	 * @param <1> The file id (string)
+	 * @param <2> The category
 	 * @param <3> The user id of the owner
-	 * @param <4> Own file = 1, other users file = 0
+	 * @param <4> The file name
+	 * @param <5> The title
+	 * @param <6> Own file = 1, other users file = 0
 	 */
 	confunc cgamefiles_add
 	{
-		call *node:root.downloadable@createChild("download<3><1>", "downloadentry")
-		*node:root.downloadable.download<3><1>.download@string = "<1> (<3>)"
-		*node:root.downloadable.download<3><1>.id@string = <2>
-		*node:root.downloadable.download<3><1>.userid@integer = <3>
-		if ( <4> == 1 ) {
-			*node:root.downloadable.download<3><1>.delete@invis = false
+		call *node:root.downloadable@createChild("download<1>-<2>-<3>", "downloadentry")
+		*node:root.downloadable.download<1>-<2>-<3>.category@integer = <2>
+		*node:root.downloadable.download<1>-<2>-<3>.userid@integer = <3>
+		*node:root.downloadable.download<1>-<2>-<3>.filename@string = <4>
+		*node:root.downloadable.download<1>-<2>-<3>.download@string = <5>
+		if ( <6> == 1 ) {
+			*node:root.downloadable.download<1>-<2>-<3>.delete@invis = false
 		} else {
-			*node:root.downloadable.download<3><1>.delete@invis = true
+			*node:root.downloadable.download<1>-<2>-<3>.delete@invis = true
 		}
 	}
 
@@ -100,12 +108,13 @@ window cgame_download
 	}
 
 	/**
-	 * @param <1> The user id of the owner
-	 * @param <2> The team id
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
 	 */
 	confunc cgame_deletesuccessful
 	{
-		call *node:root.downloadable.download<1><2>@delete
+		call *node:root.downloadable.download<1>-<2>-<3>@delete
 	}
 
 	confunc cgame_deletefailed

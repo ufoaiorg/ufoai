@@ -20,4 +20,8 @@ class FileType {
 	public function isValid () {
 		return true;
 	}
+
+	public function getName () {
+		return "";
+	}
 }
