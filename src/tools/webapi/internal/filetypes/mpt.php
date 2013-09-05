@@ -10,18 +10,18 @@ class MPT extends FileType {
 	}
 
 	public function getVersion() {
-		return $_array ['version'];
+		return intval ( $this->array ['version'] );
 	}
 
 	public function getSoldierCount() {
-		return $_array ['soldiercount'];
+		return intval ( $this->array ['soldiercount'] );
 	}
 
 	public function getName() {
-		return $_array ['name'];
+		return $this->array ['name'];
 	}
 
 	public function isValid () {
-		return getVersion() === 4;
+		return $this->getVersion () == 4;
 	}
 }

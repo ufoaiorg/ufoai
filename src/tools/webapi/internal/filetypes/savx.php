@@ -15,34 +15,34 @@ class SAVX extends FileType {
 	}
 
 	public function getVersion() {
-		return $_array ['version'];
+		return intval ( $this->array ['version'] );
 	}
 
 	public function isCompressed() {
-		return $_array ['compressed'];
+		return intval ( $this->array ['compressed'] );
 	}
 
 	public function getSubsystems() {
-		return $_array ['subsystems'];
+		return intval ( $this->array ['subsystems'] );
 	}
 
 	public function getGameversion() {
-		return $_array ['gameversion'];
+		return $this->array ['gameversion'];
 	}
 
 	public function getName() {
-		return $_array ['name'];
+		return $this->array ['name'];
 	}
 
 	public function getGamedate() {
-		return $_array ['gamedate'];
+		return $this->array ['gamedate'];
 	}
 
 	public function getRealdate() {
-		return $_array ['realdate'];
+		return $this->array ['realdate'];
 	}
 
 	public function isValid () {
-		return getVersion() === 4;
+		return $this->getVersion () == 4;
 	}
 }

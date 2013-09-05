@@ -3,11 +3,11 @@ include "internal/webapi.php";
 
 function main() {
 	if (false === auth ()) {
-		error ( "Not logged in" );
+		error ( "Not logged in", 403 );
 	}
 	$fs = new FileSystem ();
 	$file = $fs->getOwnFile ();
-	$fs->remove ( $file );
+	$fs->delete ( $file );
 }
 
 main ();

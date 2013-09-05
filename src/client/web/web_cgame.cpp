@@ -37,6 +37,17 @@ static cvar_t *web_cgamelisturl;
 
 #define URL_SIZE 576
 
+/**
+ * @brief Replaces placeholders in the urls with given values.
+ * @param[out] out The final url
+ * @param[in] outSize The size of the @c out buffer
+ * @param[in] url The url with all the placeholders included
+ * @param[in] cgameId The cgame id. Mandatory. May not be @c null.
+ * @param[in] category The category of the cgame. If @c -1 then skip it.
+ * @param[in] filename The filename to replace. If @c null, then skip it.
+ * @param[in] userId The user id to replace. If @c -1 then skip it.
+ * @return The @c buf pointer, or @c null in case of an error.
+ */
 static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, const char *cgameId, int category, const char *filename, int userId = -1)
 {
 	char categoryStr[MAX_VAR];
@@ -84,6 +95,14 @@ static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, 
 	return out;
 }
 
+/**
+ * @brief Uploads a file to the server.
+ * @param[in] cgameId The cgame id that is used to upload the file.
+ * @param[in] category The category of the cgame.
+ * @note The current authenticated user will be taken.
+ * @note Files can only get uploaded from within the user directory. You can't upload game provided content.
+ * @return @c true if the upload of the file was successful, @c false otherwise.
+ */
 bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 {
 	if (Q_strnull(cgameId))
@@ -112,16 +131,23 @@ bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 	}
 
 	if (!WEB_PutFile("cgame", fullPath, encodedURL)) {
-		UI_ExecuteConfunc("cgame_uploadfailed");
 		Com_Printf("failed to upload the team from file '%s'\n", filename);
+		UI_ExecuteConfunc("cgame_uploadfailed");
 		return false;
 	}
 
-	UI_ExecuteConfunc("cgame_uploadsuccessful");
 	Com_Printf("uploaded the team '%s'\n", filename);
+	UI_ExecuteConfunc("cgame_uploadsuccessful");
 	return true;
 }
 
+/**
+ * @brief Deletes a user owned file on the server.
+ * @param[in] cgameId The cgame id that is used to get the file.
+ * @param[in] category The category of the cgame.
+ * @note The current authenticated user will be taken.
+ * @return @c true if the deletion of the file was successful, @c false otherwise.
+ */
 bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
 {
 	if (!WEB_CheckAuth())
@@ -143,6 +169,14 @@ bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
 	return true;
 }
 
+/**
+ * @brief Downloads a file from the server and store it in the user directory.
+ * @param[in] cgameId The cgame id that is used to get the file.
+ * @param[in] category The category of the cgame.
+ * @param[in] userId The user id to get the file for. If this is @c -1 (the default), the current
+ * authenticated user will be taken.
+ * @return @c true if the download of the file was successful, @c false otherwise.
+ */
 bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *filename, int userId)
 {
 	char url[URL_SIZE];
@@ -171,10 +205,15 @@ bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *f
 /**
  * @brief The http callback for the cgame list command
  * @param[in] responseBuf The cgame list in ufo script format
- * @param[in] userdata This is null in this case
+ * @param[in] userdata This can be used to return the amount of files that were listed
  */
 static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 {
+	int* count = (int*)userdata;
+
+	if (count != nullptr)
+		*count = 0;
+
 	if (!responseBuf) {
 		Com_Printf("Could not load the cgame list\n");
 		return;
@@ -214,7 +253,10 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 			if (level == 0) {
 				break;
 			}
-			UI_ExecuteConfunc("cgamefiles_add \"%s\" \"%s\" %i %i", entry.name, entry.name, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
+			char idBuf[MAX_VAR];
+			const char *id = Com_SkipPath(entry.name);
+			Com_StripExtension(id, idBuf, sizeof(idBuf));
+			UI_ExecuteConfunc("cgamefiles_add \"%s\" \"%s\" %i %i", idBuf, id, entry.userId, (entry.userId == web_userid->integer) ? 1 : 0);
 			num++;
 			continue;
 		}
@@ -237,24 +279,39 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 		}
 	}
 	Com_Printf("found %i cgame file entries\n", num);
+	if (count != nullptr)
+		*count = num;
 }
 
-bool WEB_CGameListForUser (const char *cgameId, int category, int userId)
+/**
+ * @brief Shows the uploaded files for the particular cgame category and the given userid.
+ * @param[in] cgameId The cgame id that is used to get a filelist for.
+ * @param[in] category The category of the cgame.
+ * @param[in] userId The user id to get the file list for. If this is @c -1 (the default), the current
+ * authenticated user will be taken.
+ * @return The amount of files that were found on the server. Or @c -1 on error.
+ */
+int WEB_CGameListForUser (const char *cgameId, int category, int userId)
 {
-	if (userId == -1 && !WEB_CheckAuth())
-		return false;
+	if (userId == -1) {
+		if (!WEB_CheckAuth())
+			return -1;
+
+		userId = web_userid->integer;
+	}
 
 	char url[URL_SIZE];
 	const char* encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamelisturl->string, cgameId, category, nullptr, userId);
 	if (encodedURL == nullptr)
-		return false;
+		return -1;
 
-	if (!WEB_GetURL(encodedURL, WEB_ListCGameFilesCallback)) {
+	int count = 0;
+	if (!WEB_GetURL(encodedURL, WEB_ListCGameFilesCallback, &count)) {
 		Com_Printf("failed to query the cgame list for '%s' in category %i and for user %i\n", cgameId, category, userId);
-		return false;
+		return -1;
 	}
 
-	return true;
+	return count;
 }
 
 static void WEB_UploadCGame_f (void)
@@ -319,7 +376,9 @@ static void WEB_ListCGame_f (void)
 	}
 	const int category = atoi(Cmd_Argv(1));
 	const int userId = Cmd_Argc() == 3 ? atoi(Cmd_Argv(2)) : -1;
-	WEB_CGameListForUser(name, category, userId);
+	if (WEB_CGameListForUser(name, category, userId) == -1) {
+		Com_Printf("failed to list the cgame files for '%s' in category %i for userid %i\n", name, category, userId);
+	}
 }
 
 void WEB_CGameCvars (void)

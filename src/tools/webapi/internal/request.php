@@ -3,10 +3,10 @@
 function getRequestCGame() {
 	$r = $_REQUEST ['cgame'];
 	if (! isset ( $r ))
-		error ( "missing request parameter" );
+		error ( "missing request parameter: cgame", 400 );
 	$valid = array('-', '_');
 	if (!ctype_alnum(str_replace($valid, '', $r))) {
-		error ( "invalid request parameter given" );
+		error ( "invalid request parameter given: " . $r, 400 );
 	}
 	return $r;
 }
@@ -26,8 +26,8 @@ function getPassword() {
 }
 
 function getRequestUserId() {
-	if (false === hasRequestUserId ( $r ))
-		error ( "missing request parameter" );
+	if (false === hasRequestUserId ())
+		error ( "missing request parameter: userid", 400 );
 	$r = $_REQUEST ['userid'];
 	return intval ( $r );
 }
@@ -40,17 +40,17 @@ function hasRequestUserId() {
 function getRequestCategory() {
 	$r = $_REQUEST ['category'];
 	if (! isset ( $r ))
-		error ( "missing request parameter" );
+		error ( "missing request parameter: category", 400 );
 	return intval ( $r );
 }
 
 function getRequestFile() {
-	$r = $_REQUEST ['file'];
+	$r = basename ( $_REQUEST ['file'] );
 	if (! isset ( $r ))
-		error ( "missing request parameter" );
-	$valid = array('-', '_');
+		error ( "missing request parameter: file", 400 );
+	$valid = array('-', '_', '.');
 	if (!ctype_alnum(str_replace($valid, '', $r))) {
-		error ( "invalid request parameter given" );
+		error ( "invalid request parameter given: " . $r, 400 );
 	}
 	return $r;
 }

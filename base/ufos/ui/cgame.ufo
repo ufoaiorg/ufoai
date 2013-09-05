@@ -69,8 +69,8 @@ window cgame_download
 	confunc cgamefiles_add
 	{
 		call *node:root.downloadable@createChild("download<3><1>", "downloadentry")
-		*node:root.downloadable.download<3><1>.download@string = "<2> (<3>)"
-		*node:root.downloadable.download<3><1>.id@integer = <1>
+		*node:root.downloadable.download<3><1>.download@string = "<1> (<3>)"
+		*node:root.downloadable.download<3><1>.id@string = <2>
 		*node:root.downloadable.download<3><1>.userid@integer = <3>
 		if ( <4> == 1 ) {
 			*node:root.downloadable.download<3><1>.delete@invis = false
@@ -119,6 +119,6 @@ window cgame_download
 
 	func onWindowOpened
 	{
-		cmd	"cgamelist_clear;web_listcgame 0;"
+		cmd	"cgamefiles_clear;web_listcgame 0;"
 	}
 }

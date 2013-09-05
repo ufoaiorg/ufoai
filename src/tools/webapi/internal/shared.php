@@ -8,10 +8,8 @@ if (DEBUG) {
 	error_reporting ( 0 );
 }
 
-function error($message) {
-	http_response_code ( 403 );
+function error($message, $error = 500) {
+	http_response_code ( $error );
 	error_log ( $message );
-	// stdout = fopen('php://stdout', 'w');
-	// write($stdout, "$message\n");
-	die ( $message );
+	die ( "Error processing the request" );
 }

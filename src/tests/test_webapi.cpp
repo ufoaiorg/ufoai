@@ -81,6 +81,7 @@ static void testFileManagement (void)
 	if (Q_strnull(user) || Q_strnull(password))
 		return;
 
+	/* we can only upload files from within our user directory - so let's copy it there */
 	if (!FS_FileExists("%s/" FILENAME, FS_Gamedir())) {
 		byte *buf;
 		const int size = FS_LoadFile(FILENAME, &buf);
@@ -89,10 +90,15 @@ static void testFileManagement (void)
 		FS_WriteFile(buf, size, FILENAME);
 		FS_FreeFile(buf);
 	}
-	//CU_ASSERT_TRUE(WEB_CGameUpload(CGAME, CATEGORY, FILENAME));
-	//CU_ASSERT_TRUE(WEB_CGameDownloadFromUser(CGAME, CATEGORY, FILE, web_userid->integer));
-	//CU_ASSERT_TRUE(WEB_CGameListForUser(CGAME, CATEGORY, web_userid->integer));
-	//CU_ASSERT_TRUE(WEB_CGameDelete(CGAME, CATEGORY, FILE))
+	CU_ASSERT_TRUE_FATAL(WEB_CGameUpload(CGAME, CATEGORY, FILENAME));
+	CU_ASSERT_TRUE_FATAL(WEB_CGameDownloadFromUser(CGAME, CATEGORY, FILE, web_userid->integer));
+	const int countAfterUpload = WEB_CGameListForUser(CGAME, CATEGORY, web_userid->integer);
+	CU_ASSERT_TRUE_FATAL(countAfterUpload != -1);
+	CU_ASSERT_TRUE_FATAL(countAfterUpload >= 1);
+	CU_ASSERT_TRUE(WEB_CGameDelete(CGAME, CATEGORY, FILE));
+	const int countAfterDelete = WEB_CGameListForUser(CGAME, CATEGORY, web_userid->integer);
+	CU_ASSERT_TRUE_FATAL(countAfterDelete != -1);
+	CU_ASSERT_EQUAL_FATAL(countAfterDelete, countAfterUpload - 1);
 }
 
 int UFO_AddWebAPITests (void)
