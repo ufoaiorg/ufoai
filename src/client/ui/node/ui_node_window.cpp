@@ -187,16 +187,10 @@ void uiWindowNode::doLayout (uiNode_t *node)
 
 /**
  * @brief Called when we init the node on the screen
- * @todo we can move generic code into abstract node
  */
 void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
-	uiNode_t *child;
-
-	/* init child */
-	for (child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowOpened(child, nullptr);
-	}
+	uiLocatedNode::onWindowOpened(node, params);
 
 	/* script callback */
 	if (EXTRADATA(node).onWindowOpened)
@@ -207,16 +201,10 @@ void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 
 /**
  * @brief Called when we close the node on the screen
- * @todo we can move generic code into abstract node
  */
 void uiWindowNode::onWindowClosed (uiNode_t *node)
 {
-	uiNode_t *child;
-
-	/* close child */
-	for (child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowClosed(child);
-	}
+	uiLocatedNode::onWindowActivate(node);
 
 	/* script callback */
 	if (EXTRADATA(node).onWindowClosed)
