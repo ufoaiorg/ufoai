@@ -87,6 +87,12 @@ window cgame_download
 		}
 	}
 
+	confunc cgamefiles_nofilesfound
+	{
+		call *node:root.downloadable@createChild("nofiles", "string")
+		*node:root.downloadable.nofiles@string = "_No files uploaded yet"
+	}
+
 	/**
 	 * @brief Called when a file download was successful
 	 * @param <1> the filename of the newly available file

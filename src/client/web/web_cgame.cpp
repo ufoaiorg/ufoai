@@ -288,6 +288,9 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
 			token = Com_Parse(&responseBuf);
 		}
 	}
+	if (num == 0) {
+		UI_ExecuteConfunc("cgamefiles_nofilesfound");
+	}
 	Com_Printf("found %i cgame file entries\n", num);
 	if (count != nullptr)
 		*count = num;
