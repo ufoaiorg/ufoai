@@ -11,7 +11,17 @@ base urban/ub_
 // c: craft tile, usually a dropship or a UFO
 
 
-// Urban buildings ----------------------------------------------------*
+// Urban buildings -------------------------------------------------*
+
+tile +bld_office_a
+{
+6 5
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		0		0		0
+}
 
 tile +city_disco
 {
@@ -236,5 +246,14 @@ size "8 5"
 title "_Mart"
 +filler_a	"0 9"
 +mart		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly buildings
+{
+size "4 6"
+title "_Urban"
++filler_a		"0 9"
++bld_office_a	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

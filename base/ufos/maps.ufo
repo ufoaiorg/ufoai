@@ -3041,6 +3041,56 @@ mapdef stadium
 	)
 }
 
+mapdef urban_buildings
+{
+	map				"+urban"
+	description		"_Urban"
+	params			("buildings")
+	size			"large"
+	maxaliens		30
+
+	campaign		false
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 /////////////////////////
 // VILLAGE RANDOM MAPS //
 /////////////////////////
