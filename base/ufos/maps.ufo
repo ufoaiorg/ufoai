@@ -4394,7 +4394,12 @@ mapdef dam
 
 	terrains
 	(
-		// any
+		"desert"
+		"cold"
+		"mountain"
+		"wasted"
+		"tropical"
+		"grass"
 	)
 
 	cultures
