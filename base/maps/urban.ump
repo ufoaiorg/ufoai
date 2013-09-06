@@ -133,6 +133,15 @@ tile +filler_a
 0		0		0
 }
 
+tile +filler_3x1_a
+	// pipe construction site, C2
+{
+5 3
+0		0		0		0		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 // UFO tiles -------------------------------------------------------*
 
 /* this is a hack */
@@ -199,18 +208,18 @@ assembly bomber_city
 {
 size "11 8"
 title "_Bomber in the City"
-+filler_a		"0 3"
-fix +main		"0 0"
-fix *rm_drop +craft_drop_firebird "0 5"
++filler_3x1_a	"0 1"
++main		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly city_disco
 {
 size "5 6"
 title "_Urban Disco"
-+filler_a			"0 3"
-fix +city_disco		"0 0"
-fix *rm_drop +craft_drop_firebird "0 3"
++filler_3x1_a		"0 1"
++city_disco		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly community_centre
@@ -218,6 +227,7 @@ assembly community_centre
 size "6 4"
 title "_Community Centre"
 +filler_a			"0 6"
++filler_3x1_a		"0 1"
 +community_centre	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -226,36 +236,37 @@ assembly stadium
 {
 size "5 7"
 title "_Stadium"
-+filler_a			"0 3"
-fix +stadium		"0 0"
-fix *rm_drop +craft_drop_firebird "0 4"
++filler_3x1_a		"0 1"
++stadium		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly laboratory
 {
 size "9 7"
 title "_Laboratory"
-+filler_a			"0 3"
++filler_3x1_a		"0 1"
 fix +laboratory		"0 0"
-fix *rm_ufo +craft_ufo_fighter		"7 1"
-fix *rm_drop +craft_drop_firebird	"0 4"
+*rm_ufo +craft_ufo_fighter		"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly laboratory_noufo
 {
 size "9 7"
 title "_Laboratory"
-+filler_a			"0 3"
++filler_3x1_a		"0 1"
 fix +laboratory		"0 0"
 fix +lab_parking	"7 1"
-fix *rm_drop +craft_drop_firebird	"0 4"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly mart
 {
 size "8 5"
 title "_Mart"
-+filler_a	"0 9"
++filler_a		"0 6"
++filler_3x1_a	"0 1"
 +mart		"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -264,7 +275,7 @@ assembly buildings
 {
 size "7 7"
 title "_Urban"
-+filler_a		"0 3"
++filler_3x1_a	"0 1"
 +bld_laboratory	"1 1"
 +bld_office_a	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
