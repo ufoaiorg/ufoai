@@ -209,7 +209,7 @@ static void SwapBSPFile (void)
 	}
 }
 
-static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void *dest, size_t size)
+static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void* dest, size_t size)
 {
 	const lump_t *lump = &header->lumps[lumpIdx];
 	const uint32_t length = lump->filelen;
@@ -294,7 +294,7 @@ dMapTile_t *LoadBSPFile (const char* filename)
  * @sa WriteBSPFile
  * @todo Implement this without the ftell stuff - don't write the bsp file twice
  */
-static void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *data, int len)
+static void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void* data, int len)
 {
 	lump_t *lump;
 	long offset;

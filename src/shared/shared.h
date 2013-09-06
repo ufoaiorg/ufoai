@@ -107,8 +107,8 @@ bool Com_IsValidName(const char* input);
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
 const char* va(const char* format, ...) __attribute__((format(__printf__, 1, 2)));
-int Q_FloatSort(const void *float1, const void *float2);
-int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
+int Q_FloatSort(const void* float1, const void* float2);
+int Q_StringSort(const void* string1, const void* string2) __attribute__((nonnull));
 
 unsigned int Com_HashKey(const char* name, int hashsize);
 void Com_MakeTimestamp(char* ts, const size_t tslen);

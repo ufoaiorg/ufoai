@@ -42,9 +42,9 @@
 #define setprogdir(L)		((void)0)
 
 
-static void ll_unloadlib (void *lib);
-static void *ll_load (lua_State *L, const char* path);
-static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym);
+static void ll_unloadlib (void* lib);
+static void* ll_load (lua_State *L, const char* path);
+static lua_CFunction ll_sym (lua_State *L, void* lib, const char* sym);
 
 
 
@@ -61,19 +61,19 @@ static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym);
 #include <dlfcn.h>
 #include <stdint.h>
 
-static void ll_unloadlib (void *lib) {
+static void ll_unloadlib (void* lib) {
   dlclose(lib);
 }
 
 
-static void *ll_load (lua_State *L, const char* path) {
-  void *lib = dlopen(path, RTLD_NOW);
+static void* ll_load (lua_State *L, const char* path) {
+  void* lib = dlopen(path, RTLD_NOW);
   if (lib == nullptr) lua_pushstring(L, dlerror());
   return lib;
 }
 
 
-static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym) {
+static lua_CFunction ll_sym (lua_State *L, void* lib, const char* sym) {
   lua_CFunction f = (lua_CFunction) ((intptr_t) dlsym(lib, sym));
   if (f == nullptr) lua_pushstring(L, dlerror());
   return f;
@@ -120,19 +120,19 @@ static void pusherror (lua_State *L) {
     lua_pushfstring(L, "system error %d\n", error);
 }
 
-static void ll_unloadlib (void *lib) {
+static void ll_unloadlib (void* lib) {
   FreeLibrary((HINSTANCE)lib);
 }
 
 
-static void *ll_load (lua_State *L, const char* path) {
+static void* ll_load (lua_State *L, const char* path) {
   HINSTANCE lib = LoadLibraryA(path);
   if (lib == nullptr) pusherror(L);
   return lib;
 }
 
 
-static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym) {
+static lua_CFunction ll_sym (lua_State *L, void* lib, const char* sym) {
   lua_CFunction f = (lua_CFunction)GetProcAddress((HINSTANCE)lib, sym);
   if (f == nullptr) pusherror(L);
   return f;
@@ -184,12 +184,12 @@ static const char* errorfromcode (NSObjectFileImageReturnCode ret) {
 }
 
 
-static void ll_unloadlib (void *lib) {
+static void ll_unloadlib (void* lib) {
   NSUnLinkModule((NSModule)lib, NSUNLINKMODULE_OPTION_RESET_LAZY_REFERENCES);
 }
 
 
-static void *ll_load (lua_State *L, const char* path) {
+static void* ll_load (lua_State *L, const char* path) {
   NSObjectFileImage img;
   NSObjectFileImageReturnCode ret;
   /* this would be a rare case, but prevents crashing if it happens */
@@ -210,7 +210,7 @@ static void *ll_load (lua_State *L, const char* path) {
 }
 
 
-static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym) {
+static lua_CFunction ll_sym (lua_State *L, void* lib, const char* sym) {
   NSSymbol nss = NSLookupSymbolInModule((NSModule)lib, sym);
   if (nss == nullptr) {
     lua_pushfstring(L, "symbol " LUA_QS " not found", sym);
@@ -237,19 +237,19 @@ static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym) {
 #define DLMSG	"dynamic libraries not enabled; check your Lua installation"
 
 
-static void ll_unloadlib (void *lib) {
+static void ll_unloadlib (void* lib) {
   (void)lib;  /* to avoid warnings */
 }
 
 
-static void *ll_load (lua_State *L, const char* path) {
+static void* ll_load (lua_State *L, const char* path) {
   (void)path;  /* to avoid warnings */
   lua_pushliteral(L, DLMSG);
   return nullptr;
 }
 
 
-static lua_CFunction ll_sym (lua_State *L, void *lib, const char* sym) {
+static lua_CFunction ll_sym (lua_State *L, void* lib, const char* sym) {
   (void)lib; (void)sym;  /* to avoid warnings */
   lua_pushliteral(L, DLMSG);
   return nullptr;
@@ -268,7 +268,7 @@ static void** ll_register (lua_State *L, const char* path) {
     plib = (void**)lua_touserdata(L, -1);
   else {  /* no entry yet; create one */
     lua_pop(L, 1);
-    plib = (void**)lua_newuserdata(L, sizeof(const void *));
+    plib = (void**)lua_newuserdata(L, sizeof(const void* ));
     *plib = nullptr;
     luaL_getmetatable(L, "_LOADLIB");
     lua_setmetatable(L, -2);
@@ -446,7 +446,7 @@ static int loader_preload (lua_State *L) {
 
 
 static int sentinel_ = 0;
-#define sentinel	((void *)&sentinel_)
+#define sentinel	((void* )&sentinel_)
 
 
 static int ll_require (lua_State *L) {

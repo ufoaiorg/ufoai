@@ -30,11 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 
 typedef struct inventoryImport_s {
-	void (*Free) (void *data);
+	void (*Free) (void* data);
 
 	void (*FreeAll) (void);
 
-	void *(*Alloc) (size_t size);
+	void* (*Alloc) (size_t size);
 } inventoryImport_t;
 
 class InventoryInterface
@@ -70,12 +70,12 @@ public:
 	int GetUsedSlots ();
 
 protected:
-	inline void *alloc (size_t size)
+	inline void* alloc (size_t size)
 	{
 		return import->Alloc(size);
 	}
 
-	inline void free (void *data)
+	inline void free (void* data)
 	{
 		import->Free(data);
 	}

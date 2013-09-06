@@ -88,7 +88,7 @@ const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char* s
  * @note O(n)
  * @note Only use this for small linked lists
  */
-linkedList_t *LIST_GetPointer (linkedList_t *list, const void *data)
+linkedList_t *LIST_GetPointer (linkedList_t *list, const void* data)
 {
 	while ((data != nullptr) && (list != nullptr)) {
 		if (list->data == data)
@@ -150,7 +150,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
  * @sa LIST_RemoveEntry
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-void LIST_AddPointer (linkedList_t** listDest, void *data)
+void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
 	assert(listDest);
 	assert(data);
@@ -211,7 +211,7 @@ void LIST_Delete (linkedList_t** list)
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
  */
-bool LIST_Remove (linkedList_t** list, const void *data)
+bool LIST_Remove (linkedList_t** list, const void* data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
 	if (l != nullptr)
@@ -225,7 +225,7 @@ bool LIST_Remove (linkedList_t** list, const void *data)
  * generally be the same element after the sort.)
  * @note see http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
  */
-static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void *userData)
+static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void* userData)
 {
 	linkedList_t *p, *q, *e;
 	int insize, psize, qsize, i;
@@ -310,7 +310,7 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 	}
 }
 
-void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void *userData)
+void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void* userData)
 {
 	if (LIST_IsEmpty(*list))
 		return;
@@ -362,7 +362,7 @@ int LIST_Count (const linkedList_t *list)
  * @param[in] index The index of the entry in the linked list.
  * @return A void pointer of the content in the list-entry.
  */
-void *LIST_GetByIdx (linkedList_t *list, int index)
+void* LIST_GetByIdx (linkedList_t *list, int index)
 {
 	int i;
 
@@ -383,7 +383,7 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 	return nullptr;
 }
 
-void *LIST_GetRandom (linkedList_t* list)
+void* LIST_GetRandom (linkedList_t* list)
 {
 	const int elements = LIST_Count(list);
 	if (elements == 0)

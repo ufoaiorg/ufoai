@@ -108,7 +108,7 @@ void luaD_throw (lua_State *L, int errcode) {
 }
 
 
-int luaD_rawrunprotected (lua_State *L, Pfunc f, void *ud) {
+int luaD_rawrunprotected (lua_State *L, Pfunc f, void* ud) {
   struct lua_longjmp lj;
   lj.status = 0;
   lj.previous = L->errorJmp;  /* chain new error handler */
@@ -380,7 +380,7 @@ void luaD_call (lua_State *L, StkId func, int nResults) {
 }
 
 
-static void resume (lua_State *L, void *ud) {
+static void resume (lua_State *L, void* ud) {
   StkId firstArg = cast(StkId, ud);
   CallInfo *ci = L->ci;
   if (L->status == 0) {  /* start coroutine? */
@@ -452,7 +452,7 @@ LUA_API int lua_yield (lua_State *L, int nresults) {
 }
 
 
-int luaD_pcall (lua_State *L, Pfunc func, void *u,
+int luaD_pcall (lua_State *L, Pfunc func, void* u,
                 ptrdiff_t old_top, ptrdiff_t ef) {
   int status;
   unsigned short oldnCcalls = L->nCcalls;
@@ -487,7 +487,7 @@ struct SParser {  /* data to `f_parser' */
   const char* name;
 };
 
-static void f_parser (lua_State *L, void *ud) {
+static void f_parser (lua_State *L, void* ud) {
   int i;
   Proto *tf;
   Closure *cl;

@@ -121,8 +121,8 @@ LUALIB_API int luaL_newmetatable (lua_State *L, const char* tname) {
 }
 
 
-LUALIB_API void *luaL_checkudata (lua_State *L, int ud, const char* tname) {
-  void *p = lua_touserdata(L, ud);
+LUALIB_API void* luaL_checkudata (lua_State *L, int ud, const char* tname) {
+  void* p = lua_touserdata(L, ud);
   if (p != nullptr) {  /* value is a userdata? */
     if (lua_getmetatable(L, ud)) {  /* does it have a metatable? */
       lua_getfield(L, LUA_REGISTRYINDEX, tname);  /* get correct metatable */
@@ -526,7 +526,7 @@ typedef struct LoadF {
 } LoadF;
 
 
-static const char* getF (lua_State *L, void *ud, size_t *size) {
+static const char* getF (lua_State *L, void* ud, size_t *size) {
   LoadF *lf = (LoadF *)ud;
   (void)L;
   if (lf->extraline) {
@@ -596,7 +596,7 @@ typedef struct LoadS {
 } LoadS;
 
 
-static const char* getS (lua_State *L, void *ud, size_t *size) {
+static const char* getS (lua_State *L, void* ud, size_t *size) {
   LoadS *ls = (LoadS *)ud;
   (void)L;
   if (ls->size == 0) return nullptr;
@@ -624,7 +624,7 @@ LUALIB_API int (luaL_loadstring) (lua_State *L, const char* s) {
 /* }====================================================== */
 
 
-static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
+static void* l_alloc (void* ud, void* ptr, size_t osize, size_t nsize) {
   (void)ud;
   (void)osize;
   if (nsize == 0) {

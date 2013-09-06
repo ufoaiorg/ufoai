@@ -233,7 +233,7 @@ typedef struct game_import_s {
 	/* filesystem functions */
 	const char* (IMPORT *FS_Gamedir) (void);
 	int (IMPORT *FS_LoadFile) (const char* path, byte **buffer);
-	void (IMPORT *FS_FreeFile) (void *buffer);
+	void (IMPORT *FS_FreeFile) (void* buffer);
 
 	/* network messaging (writing) */
 	void (IMPORT *WriteChar) (char c);
@@ -269,7 +269,7 @@ typedef struct game_import_s {
 	void (IMPORT *ReadGPos) (pos3_t pos);
 	void (IMPORT *ReadDir) (vec3_t vector);
 	float (IMPORT *ReadAngle) (void);
-	void (IMPORT *ReadData) (void *buffer, int size);
+	void (IMPORT *ReadData) (void* buffer, int size);
 	void (IMPORT *ReadFormat) (const char* format, ...);
 
 	bool (IMPORT *GetConstInt) (const char* name, int *value);
@@ -282,8 +282,8 @@ typedef struct game_import_s {
 	void (IMPORT *GetCharacterValues) (const char* teamDefinition, character_t *chr);
 
 	/* managed memory allocation */
-	void *(IMPORT *TagMalloc) (int size, int tag, const char* file, int line);
-	void (IMPORT *TagFree) (void *block, const char* file, int line);
+	void* (IMPORT *TagMalloc) (int size, int tag, const char* file, int line);
+	void (IMPORT *TagFree) (void* block, const char* file, int line);
 	void (IMPORT *FreeTags) (int tag, const char* file, int line);
 
 	/* console variable interaction */

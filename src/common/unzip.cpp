@@ -522,12 +522,12 @@ local int unzlocal_GetCurrentFileInfoInternal OF((
 		*pfile_info_internal,
 		char* szFileName,
 		uLong fileNameBufferSize,
-		void *extraField,
+		void* extraField,
 		uLong extraFieldBufferSize,
 		char* szComment,
 		uLong commentBufferSize));
 
-local int unzlocal_GetCurrentFileInfoInternal (unzFile file, unz_file_info *pfile_info, unz_file_info_internal *pfile_info_internal, char* szFileName, uLong fileNameBufferSize, void *extraField, uLong extraFieldBufferSize, char* szComment, uLong commentBufferSize)
+local int unzlocal_GetCurrentFileInfoInternal (unzFile file, unz_file_info *pfile_info, unz_file_info_internal *pfile_info_internal, char* szFileName, uLong fileNameBufferSize, void* extraField, uLong extraFieldBufferSize, char* szComment, uLong commentBufferSize)
 {
 	unz_s* s = NULL;
 	unz_file_info file_info;
@@ -681,7 +681,7 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file, unz_file_info *pfil
   No preparation of the structure is needed
   return UNZ_OK if there is no problem.
 */
-int ZEXPORT unzGetCurrentFileInfo (unzFile file, unz_file_info *pfile_info, char* szFileName, uLong fileNameBufferSize, void *extraField, uLong extraFieldBufferSize, char* szComment, uLong commentBufferSize)
+int ZEXPORT unzGetCurrentFileInfo (unzFile file, unz_file_info *pfile_info, char* szFileName, uLong fileNameBufferSize, void* extraField, uLong extraFieldBufferSize, char* szComment, uLong commentBufferSize)
 {
     return unzlocal_GetCurrentFileInfoInternal(file,pfile_info,NULL,
                                                 szFileName,fileNameBufferSize,

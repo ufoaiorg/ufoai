@@ -125,12 +125,12 @@ cvar_t *g_difficulty;
 
 static const int TAG_INVENTORY = 2389;
 
-static void G_FreeInventory (void *data)
+static void G_FreeInventory (void* data)
 {
 	G_MemFree(data);
 }
 
-static void *G_AllocInventoryMemory (size_t size)
+static void* G_AllocInventoryMemory (size_t size)
 {
 	return G_TagMalloc(size, TAG_INVENTORY);
 }

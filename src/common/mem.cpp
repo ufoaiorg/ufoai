@@ -167,7 +167,7 @@ static memBlock_t *Mem_PtrToBlock(void* const ptr)
 	return static_cast<memBlock_t*>(ptr) - 1;
 }
 
-static void *Mem_BlockToPtr(memBlock_t* const mem)
+static void* Mem_BlockToPtr(memBlock_t* const mem)
 {
 	return mem + 1;
 }
@@ -203,7 +203,7 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char* fileName, co
 /**
  * @sa _Mem_FreePool
  */
-void _Mem_Free (void *ptr, const char* fileName, const int fileLine)
+void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
 {
 	memBlock_t *search;
 	memBlock_t** prev;
@@ -289,7 +289,7 @@ void _Mem_FreePool (memPool_t *pool, const char* fileName, const int fileLine)
 /**
  * @brief Optionally returns 0 filled memory allocated in a pool with a tag
  */
-void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
+void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
 	memBlock_t *mem;
 
@@ -341,10 +341,10 @@ void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum,
 	return Mem_BlockToPtr(mem);
 }
 
-void *_Mem_ReAlloc (void *ptr, size_t size, const char* fileName, const int fileLine)
+void* _Mem_ReAlloc (void* ptr, size_t size, const char* fileName, const int fileLine)
 {
 	memPool_t *pool;
-	void *newPtr;
+	void* newPtr;
 
 	if (!size)
 		Sys_Error("Use Mem_Free instead");
@@ -400,9 +400,9 @@ char* _Mem_PoolStrDupTo (const char* in, char** out, memPool_t *pool, const int 
 	return *out;
 }
 
-void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
+void* _Mem_PoolDup (const void* in, size_t size, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	void *copy;
+	void* copy;
 
 	assert(in != nullptr);
 	assert(size > 0);
@@ -510,7 +510,7 @@ void _Mem_CheckGlobalIntegrity (const char* fileName, const int fileLine)
  * @param pool The pool to search the pointer in
  * @param pointer The pointer to search in the pool
  */
-bool _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
+bool _Mem_AllocatedInPool (memPool_t *pool, const void* pointer)
 {
 	memBlock_t *mem;
 

@@ -382,7 +382,7 @@ LUA_API lua_CFunction lua_tocfunction (lua_State *L, int idx) {
 }
 
 
-LUA_API void *lua_touserdata (lua_State *L, int idx) {
+LUA_API void* lua_touserdata (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
   switch (ttype(o)) {
     case LUA_TUSERDATA: return (rawuvalue(o) + 1);
@@ -398,7 +398,7 @@ LUA_API lua_State *lua_tothread (lua_State *L, int idx) {
 }
 
 
-LUA_API const void *lua_topointer (lua_State *L, int idx) {
+LUA_API const void* lua_topointer (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
   switch (ttype(o)) {
     case LUA_TTABLE: return hvalue(o);
@@ -508,7 +508,7 @@ LUA_API void lua_pushboolean (lua_State *L, int b) {
 }
 
 
-LUA_API void lua_pushlightuserdata (lua_State *L, void *p) {
+LUA_API void lua_pushlightuserdata (lua_State *L, void* p) {
   lua_lock(L);
   setpvalue(L->top, p);
   api_incr_top(L);
@@ -795,7 +795,7 @@ struct CallS {  /* data to `f_call' */
 };
 
 
-static void f_call (lua_State *L, void *ud) {
+static void f_call (lua_State *L, void* ud) {
   struct CallS *c = cast(struct CallS *, ud);
   luaD_call(L, c->func, c->nresults);
 }
@@ -830,11 +830,11 @@ LUA_API int lua_pcall (lua_State *L, int nargs, int nresults, int errfunc) {
 */
 struct CCallS {  /* data to `f_Ccall' */
   lua_CFunction func;
-  void *ud;
+  void* ud;
 };
 
 
-static void f_Ccall (lua_State *L, void *ud) {
+static void f_Ccall (lua_State *L, void* ud) {
   struct CCallS *c = cast(struct CCallS *, ud);
   Closure *cl;
   cl = luaF_newCclosure(L, 0, getcurrenv(L));
@@ -847,7 +847,7 @@ static void f_Ccall (lua_State *L, void *ud) {
 }
 
 
-LUA_API int lua_cpcall (lua_State *L, lua_CFunction func, void *ud) {
+LUA_API int lua_cpcall (lua_State *L, lua_CFunction func, void* ud) {
   struct CCallS c;
   int status;
   lua_lock(L);
@@ -859,7 +859,7 @@ LUA_API int lua_cpcall (lua_State *L, lua_CFunction func, void *ud) {
 }
 
 
-LUA_API int lua_load (lua_State *L, lua_Reader reader, void *data,
+LUA_API int lua_load (lua_State *L, lua_Reader reader, void* data,
                       const char* chunkname) {
   ZIO z;
   int status;
@@ -872,7 +872,7 @@ LUA_API int lua_load (lua_State *L, lua_Reader reader, void *data,
 }
 
 
-LUA_API int lua_dump (lua_State *L, lua_Writer writer, void *data) {
+LUA_API int lua_dump (lua_State *L, lua_Writer writer, void* data) {
   int status;
   TValue *o;
   lua_lock(L);
@@ -1014,7 +1014,7 @@ LUA_API lua_Alloc lua_getallocf (lua_State *L, void** ud) {
 }
 
 
-LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud) {
+LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void* ud) {
   lua_lock(L);
   G(L)->ud = ud;
   G(L)->frealloc = f;
@@ -1022,7 +1022,7 @@ LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud) {
 }
 
 
-LUA_API void *lua_newuserdata (lua_State *L, size_t size) {
+LUA_API void* lua_newuserdata (lua_State *L, size_t size) {
   Udata *u;
   lua_lock(L);
   luaC_checkGC(L);

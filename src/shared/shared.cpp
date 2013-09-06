@@ -372,7 +372,7 @@ void Com_MakeTimestamp (char* ts, const size_t tslen)
  * found, respectively, to be less than,  to match, or be greater than float2
  * @note sort function pointer for qsort
  */
-int Q_FloatSort (const void *float1, const void *float2)
+int Q_FloatSort (const void* float1, const void* float2)
 {
 	return (*(const float *)float1 - *(const float *)float2);
 }
@@ -385,7 +385,7 @@ int Q_FloatSort (const void *float1, const void *float2)
  * found, respectively, to be less than,  to match, or be greater than string2
  * @note sort function pointer for qsort
  */
-int Q_StringSort (const void *string1, const void *string2)
+int Q_StringSort (const void* string1, const void* string2)
 {
 	const char* s1 = (const char* )string1;
 	const char* s2 = (const char* )string2;

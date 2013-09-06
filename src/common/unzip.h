@@ -231,7 +231,7 @@ extern int ZEXPORT unzGetCurrentFileInfo OF((unzFile file,
                          unz_file_info *pfile_info,
                          char* szFileName,
                          uLong fileNameBufferSize,
-                         void *extraField,
+                         void* extraField,
                          uLong extraFieldBufferSize,
                          char* szComment,
                          uLong commentBufferSize));

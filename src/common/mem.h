@@ -56,21 +56,21 @@ struct memPool_t;
 memPool_t *_Mem_CreatePool(const char* name, const char* fileName, const int fileLine) __attribute__ ((malloc));
 void _Mem_DeletePool(memPool_t *pool, const char* fileName, const int fileLine);
 
-void _Mem_Free(void *ptr, const char* fileName, const int fileLine);
+void _Mem_Free(void* ptr, const char* fileName, const int fileLine);
 void _Mem_FreeTag(memPool_t *pool, const int tagNum, const char* fileName, const int fileLine);
 void _Mem_FreePool(memPool_t *pool, const char* fileName, const int fileLine);
-void *_Mem_Alloc(size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine) __attribute__ ((malloc));
-void *_Mem_ReAlloc(void *ptr, size_t size, const char* fileName, const int fileLine);
+void* _Mem_Alloc(size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine) __attribute__ ((malloc));
+void* _Mem_ReAlloc(void* ptr, size_t size, const char* fileName, const int fileLine);
 
 char* _Mem_PoolStrDupTo(const char* in, char** out, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine);
-void *_Mem_PoolDup(const void *in, size_t size, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine);
+void* _Mem_PoolDup(const void* in, size_t size, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine);
 char* _Mem_PoolStrDup(const char* in, memPool_t *pool, const int tagNum, const char* fileName, const int fileLine) __attribute__ ((malloc));
 uint32_t _Mem_PoolSize(memPool_t *pool);
 uint32_t _Mem_ChangeTag(memPool_t *pool, const int tagFrom, const int tagTo);
 
 void _Mem_CheckGlobalIntegrity(const char* fileName, const int fileLine);
 
-bool _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
+bool _Mem_AllocatedInPool(memPool_t *pool, const void* pointer);
 
 void Mem_Init(void);
 void Mem_Shutdown(void);

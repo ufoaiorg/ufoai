@@ -332,7 +332,7 @@ int FS_CheckFile (const char* fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-int FS_Read2 (void *buffer, int len, qFILE *f, bool failOnEmptyRead)
+int FS_Read2 (void* buffer, int len, qFILE *f, bool failOnEmptyRead)
 {
 	int read;
 	byte *buf;
@@ -380,7 +380,7 @@ int FS_Read2 (void *buffer, int len, qFILE *f, bool failOnEmptyRead)
 	return len;
 }
 
-int FS_Read (void *buffer, int len, qFILE * f)
+int FS_Read (void* buffer, int len, qFILE * f)
 {
 	return FS_Read2(buffer, len, f, true);
 }
@@ -424,7 +424,7 @@ int FS_LoadFile (const char* path, byte **buffer)
 	return len;
 }
 
-void FS_FreeFile (void *buffer)
+void FS_FreeFile (void* buffer)
 {
 	_Mem_Free(buffer, "FS_FreeFile", 0);
 }
@@ -485,7 +485,7 @@ static pack_t *FS_LoadPackFile (const char* packfile)
 		pack->files = newfiles;
 
 		/* Sort our list alphabetically - also rearrange the unsigned long values */
-		qsort((void *)pack->files, i, sizeof(*newfiles), Q_StringSort);
+		qsort((void* )pack->files, i, sizeof(*newfiles), Q_StringSort);
 
 		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
@@ -547,7 +547,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
 	}
 
 	/* Sort our list alphabetically */
-	qsort((void *)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
+	qsort((void* )pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
 	for (i = 0; i < pakfile_count; i++) {
 		pack_t *pak = FS_LoadPackFile(pakfile_list[i]);
@@ -1347,7 +1347,7 @@ static bool fs_mapsInstalledInit = false;
 /**
  * @sa Com_MapDefSort
  */
-static int FS_MapDefSort (const void *map1, const void *map2)
+static int FS_MapDefSort (const void* map1, const void* map2)
 {
 	const char* mapStr1 = *(const char*  const *)map1;
 	const char* mapStr2 = *(const char*  const *)map2;
@@ -1549,7 +1549,7 @@ int FS_Printf (qFILE *f, const char* msg, ...)
 /**
  * @brief Properly handles partial writes
  */
-int FS_Write (const void *buffer, int len, qFILE * f)
+int FS_Write (const void* buffer, int len, qFILE * f)
 {
 	if (!f->f)
 		return 0;
@@ -1582,7 +1582,7 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 }
 
 
-int FS_WriteFile (const void *buffer, size_t len, const char* filename)
+int FS_WriteFile (const void* buffer, size_t len, const char* filename)
 {
 	qFILE f;
 	int c, lencheck;

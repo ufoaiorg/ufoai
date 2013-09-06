@@ -67,7 +67,7 @@ static void freestack (lua_State *L, lua_State *L1) {
 /*
 ** open parts that may cause memory-allocation errors
 */
-static void f_luaopen (lua_State *L, void *ud) {
+static void f_luaopen (lua_State *L, void* ud) {
   global_State *g = G(L);
   UNUSED(ud);
   stack_init(L, L);  /* init stack */
@@ -140,11 +140,11 @@ void luaE_freethread (lua_State *L, lua_State *L1) {
 }
 
 
-LUA_API lua_State *lua_newstate (lua_Alloc f, void *ud) {
+LUA_API lua_State *lua_newstate (lua_Alloc f, void* ud) {
   int i;
   lua_State *L;
   global_State *g;
-  void *l = (*f)(ud, nullptr, 0, state_size(LG));
+  void* l = (*f)(ud, nullptr, 0, state_size(LG));
   if (l == nullptr) return nullptr;
   L = tostate(l);
   g = &((LG *)L)->g;
@@ -190,7 +190,7 @@ LUA_API lua_State *lua_newstate (lua_Alloc f, void *ud) {
 }
 
 
-static void callallgcTM (lua_State *L, void *ud) {
+static void callallgcTM (lua_State *L, void* ud) {
   UNUSED(ud);
   luaC_callGCTM(L);  /* call GC metamethods for all udata */
 }

@@ -22,7 +22,7 @@
 
 /*
 ** About the realloc function:
-** void * frealloc (void *ud, void *ptr, size_t osize, size_t nsize);
+** void*  frealloc (void* ud, void* ptr, size_t osize, size_t nsize);
 ** (`osize' is the old size, `nsize' is the new size)
 **
 ** Lua ensures that (ptr == nullptr) iff (osize == 0).
@@ -43,9 +43,9 @@
 #define MINSIZEARRAY	4
 
 
-void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems,
+void* luaM_growaux_ (lua_State *L, void* block, int *size, size_t size_elems,
                      int limit, const char* errormsg) {
-  void *newblock;
+  void* newblock;
   int newsize;
   if (*size >= limit/2) {  /* cannot double it? */
     if (*size >= limit)  /* cannot grow even a little? */
@@ -63,7 +63,7 @@ void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems,
 }
 
 
-void *luaM_toobig (lua_State *L) {
+void* luaM_toobig (lua_State *L) {
   luaG_runerror(L, "memory allocation error: block too big");
   return nullptr;  /* to avoid warnings */
 }
@@ -73,7 +73,7 @@ void *luaM_toobig (lua_State *L) {
 /*
 ** generic allocation routine.
 */
-void *luaM_realloc_ (lua_State *L, void *block, size_t osize, size_t nsize) {
+void* luaM_realloc_ (lua_State *L, void* block, size_t osize, size_t nsize) {
   global_State *g = G(L);
   lua_assert((osize == 0) == (block == nullptr));
   block = (*g->frealloc)(g->ud, block, osize, nsize);

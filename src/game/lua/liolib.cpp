@@ -55,7 +55,7 @@ static void fileerror (lua_State *L, int arg, const char* filename) {
 
 
 static int io_type (lua_State *L) {
-  void *ud;
+  void* ud;
   luaL_checkany(L, 1);
   ud = lua_touserdata(L, 1);
   lua_getfield(L, LUA_REGISTRYINDEX, LUA_FILEHANDLE);
