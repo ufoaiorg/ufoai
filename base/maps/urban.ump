@@ -13,6 +13,17 @@ base urban/ub_
 
 // Urban buildings -------------------------------------------------*
 
+tile +bld_laboratory
+{
+9 6
+0		0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0
+}
+
 tile +bld_office_a
 {
 6 5
@@ -251,9 +262,10 @@ title "_Mart"
 
 assembly buildings
 {
-size "4 6"
+size "7 7"
 title "_Urban"
-+filler_a		"0 9"
++filler_a		"0 3"
++bld_laboratory	"1 1"
 +bld_office_a	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
