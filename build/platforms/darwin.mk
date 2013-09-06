@@ -28,12 +28,14 @@ ifneq ($(FRAMEWORK_DIR),)
 	CFLAGS           += -F$(FRAMEWORK_DIR)
 	LDFLAGS          += -F$(FRAMEWORK_DIR)
 
+ifndef HAVE_SDL2_SDL_H
 	SDL_CFLAGS       ?= -I$(FRAMEWORK_DIR)/SDL.framework/Headers
 	SDL_LIBS         ?= -framework SDL -lSDLmain
 	SDL_MIXER_CFLAGS ?= -I$(FRAMEWORK_DIR)/SDL_mixer.framework/Headers
 	SDL_MIXER_LIBS   ?= -framework SDL_mixer
 	SDL_TTF_CFLAGS   ?= -I$(FRAMEWORK_DIR)/SDL_ttf.framework/Headers
 	SDL_TTF_LIBS     ?= -framework SDL_ttf
+endif
 endif
 
 ifdef UNIVERSAL
