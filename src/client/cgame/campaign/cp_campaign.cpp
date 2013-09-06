@@ -237,7 +237,7 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
 		const ufoType_t type = mission->ufo->ufotype;
-		const char *ufoID;
+		const char* ufoID;
 
 		if (mission->crashed)
 			ufoID = cgi->Com_UFOCrashedTypeToShortName(type);
@@ -721,7 +721,7 @@ static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
 	xmlNode_t *node;
 
 	for (node = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = cgi->XML_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
-		const char *s = cgi->XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
+		const char* s = cgi->XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
 		mapDef_t *map;
 
 		if (s[0] == '\0') {
@@ -747,7 +747,7 @@ bool CP_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *campaignNode;
 	xmlNode_t *mapNode;
-	const char *name;
+	const char* name;
 	campaign_t *campaign;
 	xmlNode_t *mapDefStat;
 
@@ -1266,7 +1266,7 @@ void CP_Shutdown (void)
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or nullptr if not found
  */
-campaign_t* CP_GetCampaign (const char *name)
+campaign_t* CP_GetCampaign (const char* name)
 {
 	campaign_t* campaign;
 	int i;

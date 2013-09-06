@@ -40,7 +40,7 @@ static void CP_AddTechAsResearchable_f (void)
 		return;
 	}
 
-	const char *techID = cgi->Cmd_Argv(1);
+	const char* techID = cgi->Cmd_Argv(1);
 	technology_t *tech = RS_GetTechByID(techID);
 	RS_MarkOneResearchable(tech);
 }
@@ -55,7 +55,7 @@ static void CP_AddTechAsResearchable_f (void)
 static void CP_AddItemAsCollected_f (void)
 {
 	int baseID;
-	const char *id;
+	const char* id;
 	base_t *base;
 	const objDef_t *item;
 

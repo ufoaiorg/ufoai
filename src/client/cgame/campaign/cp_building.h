@@ -78,9 +78,9 @@ typedef struct building_s {
 	struct building_s *tpl;			/**< Self link in "buildingTemplates" list. */
 	struct base_s *base;			/**< The base this building is located in. */
 
-	const char *id;
-	char *name;						/**< translatable name of the building */
-	const char *image, *mapPart, *pedia;
+	const char* id;
+	char* name;						/**< translatable name of the building */
+	const char* image, *mapPart, *pedia;
 
 	vec2_t	size;
 	int fixCosts, varCosts;
@@ -97,10 +97,10 @@ typedef struct building_s {
 	buildingStatus_t buildingStatus;
 
 	/** Event handler functions */
-	char *onConstruct;
-	char *onDestroy;
-	char *onEnable;
-	char *onDisable;
+	char* onConstruct;
+	char* onDestroy;
+	char* onEnable;
+	char* onDisable;
 
 	int maxCount;					/**< How many building of the same type allowed? */
 
@@ -130,14 +130,14 @@ typedef struct building_s {
  */
 #define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
 
-void B_ParseBuildings(const char *name, const char** text, bool link);
+void B_ParseBuildings(const char* name, const char** text, bool link);
 bool B_BuildingScriptSanityCheck(void);
 
-building_t *B_GetBuildingTemplate(const char *buildingName);
-building_t *B_GetBuildingTemplateSilent(const char *buildingName);
+building_t *B_GetBuildingTemplate(const char* buildingName);
+building_t *B_GetBuildingTemplateSilent(const char* buildingName);
 const building_t *B_GetBuildingTemplateByType(buildingType_t type);
 
-buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
+buildingType_t B_GetBuildingTypeByBuildingID(const char* buildingID);
 bool B_CheckBuildingDependencesStatus(const building_t* building);
 bool B_IsBuildingBuiltUp(const building_t *building);
 float B_GetConstructionTimeRemain(const building_t *building);

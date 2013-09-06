@@ -30,7 +30,7 @@ void INT_IncreaseAlienInterest(const campaign_t *campaign);
 void INT_ChangeIndividualInterest(float percentage, interestCategory_t category);
 
 #ifdef DEBUG
-const char *INT_InterestCategoryToName(interestCategory_t category);
+const char* INT_InterestCategoryToName(interestCategory_t category);
 #endif
 
 void INT_InitStartup(void);

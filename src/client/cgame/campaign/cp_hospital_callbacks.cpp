@@ -66,7 +66,7 @@ static const char* HOS_GetRank (const Employee &employee)
 	return E_GetEmployeeString(employee.getType(), 1);
 }
 
-static const char *HOS_GetInjuryLevelString (const Employee &employee, float injuryLevel)
+static const char* HOS_GetInjuryLevelString (const Employee &employee, float injuryLevel)
 {
 	/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 	if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.5) || injuryLevel >= 0.5)
@@ -85,8 +85,8 @@ static const char *HOS_GetInjuryLevelString (const Employee &employee, float inj
 
 static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 {
-	const char *rank = HOS_GetRank(employee);
-	const char *level = HOS_GetInjuryLevelString(employee, injuryLevel);
+	const char* rank = HOS_GetRank(employee);
+	const char* level = HOS_GetInjuryLevelString(employee, injuryLevel);
 	const character_t& chr = employee.chr;
 
 	if (!employee.isSoldier() && employee.chr.HP >= employee.chr.maxHP && injuryLevel <= 0)
@@ -214,8 +214,8 @@ static void HOS_EmployeeInit_f (void)
 
 	character_t& echr = emp->chr;
 	const chrScoreGlobal_t& score = echr.score;
-	const char *rank = "";
-	const char *rankImage = "";
+	const char* rank = "";
+	const char* rankImage = "";
 
 	if (score.rank >= 0) {
 		const rank_t *r = CL_GetRankByIdx(score.rank);

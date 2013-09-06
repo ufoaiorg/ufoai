@@ -216,7 +216,7 @@ static void B_BuildBase_f (void)
 
 	if (ccs.credits - campaign->basecost > 0) {
 		const nation_t *nation;
-		const char *baseName = mn_base_title->string;
+		const char* baseName = mn_base_title->string;
 		base_t *base;
 		/* there may be no " in the base name */
 		if (!Com_IsValidName(baseName))
@@ -727,7 +727,7 @@ static void B_AssembleMap_f (void)
 static void B_CheckBuildingStatusForMenu_f (void)
 {
 	int num;
-	const char *buildingID;
+	const char* buildingID;
 	const building_t *building;
 	const base_t *base = B_GetCurrentSelectedBase();
 
@@ -865,7 +865,7 @@ static void BaseSummary_Init (const base_t *base)
 	if (queue->numItems > 0) {
 		for (i = 0; i < queue->numItems; i++) {
 			const production_t *production = &queue->items[i];
-			const char *name = PR_GetName(&production->data);
+			const char* name = PR_GetName(&production->data);
 			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, name,
 				production->amount, PR_GetProgress(production) * 100, 0);
 		}
@@ -907,7 +907,7 @@ static void BaseSummary_Init (const base_t *base)
 		const int cnt = E_CountHired(base, emplType);
 		if (cnt == 0)
 			continue;
-		const char *desc = E_GetEmployeeString(emplType, cnt);
+		const char* desc = E_GetEmployeeString(emplType, cnt);
 		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i\n", desc, cnt);
 	}
 	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");

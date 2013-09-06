@@ -142,7 +142,7 @@ bool INT_LoadXML (xmlNode_t *parent)
 	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (node = cgi->XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
 			node = cgi->XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
-		const char *categoryId = cgi->XML_GetString(node, SAVE_INTERESTS_ID);
+		const char* categoryId = cgi->XML_GetString(node, SAVE_INTERESTS_ID);
 		int cat;
 
 		if (!cgi->Com_GetConstInt(categoryId, (int*) &cat)) {
@@ -160,7 +160,7 @@ bool INT_LoadXML (xmlNode_t *parent)
 /**
  * @brief Return Name of the category of a mission.
  */
-const char *INT_InterestCategoryToName (interestCategory_t category)
+const char* INT_InterestCategoryToName (interestCategory_t category)
 {
 	switch (category) {
 	case INTERESTCATEGORY_NONE:

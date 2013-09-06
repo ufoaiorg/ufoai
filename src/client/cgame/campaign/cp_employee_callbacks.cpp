@@ -312,7 +312,7 @@ static void E_EmployeeHire_f (void)
 		return;
 	}
 
-	const char *arg = cgi->Cmd_Argv(1);
+	const char* arg = cgi->Cmd_Argv(1);
 
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than

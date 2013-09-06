@@ -41,7 +41,7 @@ static linkedList_t *eventMails = nullptr;
  * body messages, set createCopy to true
  * @param[in] id The id from the script files
  */
-eventMail_t* CL_GetEventMail (const char *id)
+eventMail_t* CL_GetEventMail (const char* id)
 {
 	int i;
 
@@ -89,7 +89,7 @@ static const value_t eventMail_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseEventMails (const char *name, const char** text)
+void CL_ParseEventMails (const char* name, const char** text)
 {
 	eventMail_t *eventMail;
 
@@ -135,7 +135,7 @@ void CP_CheckCampaignEvents (campaign_t *campaign)
  * @note Also performs some sanity check
  * @param name The events id
  */
-const campaignEvents_t *CP_GetEventsByID (const char *name)
+const campaignEvents_t *CP_GetEventsByID (const char* name)
 {
 	int i;
 
@@ -155,9 +155,9 @@ const campaignEvents_t *CP_GetEventsByID (const char *name)
 	return nullptr;
 }
 
-static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
+static int CP_CheckTriggerEvent (const char* expression, const void *userdata)
 {
-	const char *type;
+	const char* type;
 
 	/* check that a particular installation type is built already */
 	type = Q_strstart(expression, "installation");
@@ -181,7 +181,7 @@ static int CP_CheckTriggerEvent (const char *expression, const void *userdata)
 		char value[MAX_VAR];
 		Q_strncpyz(value, type + 1, sizeof(value));
 		value[strlen(value) - 1] = '\0';
-		const char *detectedUFO = static_cast<const char*>(userdata);
+		const char* detectedUFO = static_cast<const char*>(userdata);
 		if (Q_strnull(detectedUFO))
 			return -1;
 		return Q_streq(detectedUFO, value);
@@ -359,10 +359,10 @@ static const constListEntry_t eventConstants[] = {
 	{nullptr, -1}
 };
 
-void CP_ParseEventTrigger (const char *name, const char** text)
+void CP_ParseEventTrigger (const char* name, const char** text)
 {
-	const char *errhead = "CP_ParseEventTrigger: unexpected end of file (event ";
-	const char *token;
+	const char* errhead = "CP_ParseEventTrigger: unexpected end of file (event ";
+	const char* token;
 
 	if (ccs.numCampaignTriggerEvents >= MAX_CAMPAIGN_TRIGGER_EVENTS) {
 		Com_Printf("CP_ParseEventTrigger: max event def limit hit\n");
@@ -428,7 +428,7 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
 		return true;
 
 	for (s = cgi->XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = cgi->XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
-		const char *id = cgi->XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
+		const char* id = cgi->XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
 		const bool state = cgi->XML_GetBool(s, SAVE_TRIGGEREVENTS_STATE, true);
 
 		int i;
@@ -448,10 +448,10 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseCampaignEvents (const char *name, const char** text)
+void CL_ParseCampaignEvents (const char* name, const char** text)
 {
-	const char *errhead = "CL_ParseCampaignEvents: unexpected end of file (events ";
-	const char *token;
+	const char* errhead = "CL_ParseCampaignEvents: unexpected end of file (events ";
+	const char* token;
 	campaignEvents_t* events;
 
 	if (ccs.numCampaignEventDefinitions >= MAX_CAMPAIGNS) {
@@ -507,7 +507,7 @@ void CL_ParseCampaignEvents (const char *name, const char** text)
 /**
  * @brief Adds the event mail to the message stack. This message is going to be added to the savegame.
  */
-void CL_EventAddMail (const char *eventMailId)
+void CL_EventAddMail (const char* eventMailId)
 {
 	eventMail_t* eventMail = CL_GetEventMail(eventMailId);
 	if (!eventMail) {

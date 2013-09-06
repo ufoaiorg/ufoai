@@ -141,8 +141,8 @@ int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool exc
 base_t *E_Unassign(Employee *employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
 
-employeeType_t E_GetEmployeeType(const char *type);
-extern const char *E_GetEmployeeString(employeeType_t type, int n);
+employeeType_t E_GetEmployeeType(const char* type);
+extern const char* E_GetEmployeeString(employeeType_t type, int n);
 
 Employee* E_GetUnhired(employeeType_t type);
 Employee* E_GetUnhiredRobot(const struct ugv_s *ugvType);

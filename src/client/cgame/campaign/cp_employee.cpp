@@ -170,7 +170,7 @@ bool E_MoveIntoNewBase (Employee *employee, base_t *newBase)
  * @param n number of persons of that kind (for plural detection)
  * @return translated employee string
  */
-const char *E_GetEmployeeString (employeeType_t type, int n)
+const char* E_GetEmployeeString (employeeType_t type, int n)
 {
 	switch (type) {
 	case EMPL_SOLDIER:
@@ -194,7 +194,7 @@ const char *E_GetEmployeeString (employeeType_t type, int n)
  * @return employeeType_t
  * @todo use cgi->Com_ConstInt*
  */
-employeeType_t E_GetEmployeeType (const char *type)
+employeeType_t E_GetEmployeeType (const char* type)
 {
 	if (!type)
 		return MAX_EMPL;
@@ -518,9 +518,9 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  */
 Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
 {
-	const char *teamID;
+	const char* teamID;
 	char teamDefName[MAX_VAR];
-	const char *rank;
+	const char* rank;
 
 	if (type >= MAX_EMPL)
 		return nullptr;
@@ -991,7 +991,7 @@ bool E_LoadXML (xmlNode_t *p)
 			snode = cgi->XML_GetNextNode(snode, p, SAVE_EMPLOYEE_EMPLOYEES)) {
 		xmlNode_t *ssnode;
 		employeeType_t emplType;
-		const char *type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
+		const char* type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);

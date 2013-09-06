@@ -41,7 +41,7 @@ int INS_GetCount (void)
 	return cgi->LIST_Count(ccs.installations);
 }
 
-installationType_t INS_GetType (const char *type)
+installationType_t INS_GetType (const char* type)
 {
 	if (Q_streq(type, "samsite"))
 		return INSTALLATION_DEFENCE;
@@ -105,7 +105,7 @@ installation_t* INS_GetByIDX (int idx)
  * @param[in] id ID of the installation template to find.
  * @return corresponding installation Template, @c nullptr if not found.
  */
-const installationTemplate_t* INS_GetInstallationTemplateByID (const char *id)
+const installationTemplate_t* INS_GetInstallationTemplateByID (const char* id)
 {
 	int idx;
 
@@ -142,7 +142,7 @@ const installationTemplate_t* INS_GetInstallationTemplateByType (installationTyp
  * @param[in] pos Position on Globe to build at
  * @param[in] name The name of the installation - might already be in utf-8
  */
-installation_t* INS_Build (const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name)
+installation_t* INS_Build (const installationTemplate_t *installationTemplate, const vec2_t pos, const char* name)
 {
 	installation_t installation;
 	const int newInstallationAlienInterest = 1.0f;
@@ -388,11 +388,11 @@ static const value_t installation_vals[] = {
  * @param[in] name Unique test-id of a installationTemplate_t.
  * @param[in] text the rest of the script file that is tokenized here
  */
-void INS_ParseInstallations (const char *name, const char** text)
+void INS_ParseInstallations (const char* name, const char** text)
 {
 	installationTemplate_t *installation;
-	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "INS_ParseInstallations: unexpected end of file (names ";
+	const char* token;
 	int i;
 
 	/* get id list body */
@@ -516,8 +516,8 @@ bool INS_LoadXML (xmlNode_t *p)
 	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
 		installation_t inst;
-		const char *instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
-		const char *instStat = cgi->XML_GetString(s, SAVE_INSTALLATION_STATUS);
+		const char* instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
+		const char* instStat = cgi->XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
 		inst.idx = cgi->XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {

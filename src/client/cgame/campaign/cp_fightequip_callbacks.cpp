@@ -131,7 +131,7 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 /**
  * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
  */
-static inline const char *AIM_AircraftItemtypeName (const int equiptype)
+static inline const char* AIM_AircraftItemtypeName (const int equiptype)
 {
 	switch (equiptype) {
 	case AC_ITEM_WEAPON:
@@ -306,7 +306,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 {
 	static char smallbuffer1[256];
 	static char smallbuffer2[128];
-	const char *typeName;
+	const char* typeName;
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -906,7 +906,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
 static void AIM_AircraftItemtypeByName_f (void)
 {
 	aircraftItemType_t i;
-	const char *name;
+	const char* name;
 
 	if (cgi->Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", cgi->Cmd_Argv(0));

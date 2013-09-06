@@ -556,7 +556,7 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  * @sa SV_Map_f
  * @sa SV_Map
  */
-static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const char *map, int col, int row)
+static inline void B_AddMap (char* maps, size_t mapsLength, char* coords, size_t coordsLength, const char* map, int col, int row)
 {
 	Q_strcat(coords, coordsLength, "%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0);
 	Q_strcat(maps, mapsLength, "%s", map);
@@ -570,7 +570,7 @@ static inline void B_AddMap (char *maps, size_t mapsLength, char *coords, size_t
  * @todo If a building is still under construction, it will be assembled as a finished part.
  * Otherwise we need mapparts for all the maps under construction.
  */
-bool B_AssembleMap (char *maps, size_t mapsLength, char *coords, size_t coordsLength, const base_t *base)
+bool B_AssembleMap (char* maps, size_t mapsLength, char* coords, size_t coordsLength, const base_t *base)
 {
 	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
@@ -1093,7 +1093,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemp
  * @param[in] hire If hiring employee needed
  * @note It builds an empty base on nullptr (or empty) templatename
  */
-static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hire)
+static void B_BuildFromTemplate (base_t *base, const char* templateName, bool hire)
 {
 	const baseTemplate_t *baseTemplate = B_GetBaseTemplate(templateName);
 	int freeSpace = BASE_SIZE * BASE_SIZE;
@@ -1175,7 +1175,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 	/* buy two first aircraft and hire pilots for them. */
 	if (B_GetBuildingStatus(base, B_HANGAR)) {
 		const equipDef_t *equipDef = cgi->INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
-		const char *firebird = cgi->Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+		const char* firebird = cgi->Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
 		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
 		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
@@ -1188,7 +1188,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 		B_InitialEquipment(aircraft, equipDef);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-		const char *stiletto = cgi->Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
+		const char* stiletto = cgi->Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
 		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
 		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
 		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
@@ -1224,7 +1224,7 @@ int B_GetInstallationLimit (void)
  * @param[in] name The name for the base. This might already be in utf-8 as
  * it's the user input from the UI
  */
-void B_SetName (base_t *base, const char *name)
+void B_SetName (base_t *base, const char* name)
 {
 	Q_strncpyz(base->name, name, sizeof(base->name));
 }
@@ -1235,7 +1235,7 @@ void B_SetName (base_t *base, const char *name)
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
  */
-base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
+base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char* name)
 {
 	if (!campaign)
 		cgi->Com_Error(ERR_DROP, "You can only build a base in an active campaign");
@@ -1294,7 +1294,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
  * @param[in] baseTemplateID The unique id of the building (baseTemplate_t->name).
  * @return baseTemplate_t If a Template was found it is returned, otherwise->nullptr.
  */
-const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
+const baseTemplate_t *B_GetBaseTemplate (const char* baseTemplateID)
 {
 	if (!baseTemplateID)
 		return nullptr;
@@ -1551,10 +1551,10 @@ const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t 
  * @param[in] text The script block to parse
  * @sa CL_ParseScriptFirst
  */
-void B_ParseBaseTemplate (const char *name, const char** text)
+void B_ParseBaseTemplate (const char* name, const char** text)
 {
-	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
+	const char* token;
 	baseTemplate_t* baseTemplate;
 	vec2_t pos;
 	bool map[BASE_SIZE][BASE_SIZE];
@@ -1602,8 +1602,8 @@ void B_ParseBaseTemplate (const char *name, const char** text)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
 		}
 
-		const char *buildingToken = (char*)list->data;
-		const char *positionToken = (char*)list->next->data;
+		const char* buildingToken = (char*)list->data;
+		const char* positionToken = (char*)list->next->data;
 
 		if (baseTemplate->numBuildings >= MAX_BASEBUILDINGS)
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
@@ -2609,7 +2609,7 @@ bool B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 {
 	xmlNode_t *node;
 	for (node = cgi->XML_GetNode(parent, SAVE_BASES_ITEM); node; node = cgi->XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
-		const char *s = cgi->XML_GetString(node, SAVE_BASES_ODS_ID);
+		const char* s = cgi->XML_GetString(node, SAVE_BASES_ODS_ID);
 		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
@@ -2655,7 +2655,7 @@ bool B_LoadXML (xmlNode_t *parent)
 			return false;
 		}
 		b->founded = true;
-		const char *str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
+		const char* str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
 			cgi->Com_UnregisterConstList(saveBaseConstants);

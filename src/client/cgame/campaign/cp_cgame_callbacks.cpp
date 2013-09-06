@@ -71,7 +71,7 @@ static void GAME_CP_Results_f (void)
  * @brief Translate the difficulty int to a translated string
  * @param[in] difficulty The difficulty level of the game
  */
-static inline const char *CP_ToDifficultyName (const int difficulty)
+static inline const char* CP_ToDifficultyName (const int difficulty)
 {
 	switch (difficulty) {
 	case -4:
@@ -119,7 +119,7 @@ static char campaignDesc[MAXCAMPAIGNTEXT];
  */
 static void GAME_CP_CampaignDescription_f (void)
 {
-	const char *racetype;
+	const char* racetype;
 	const campaign_t *campaign;
 
 	if (cgi->Cmd_Argc() < 2 || Q_streq(cgi->Cmd_Argv(1), "")) {
@@ -144,7 +144,7 @@ static void GAME_CP_CampaignDescription_f (void)
 	else
 		racetype = _("Aliens");
 
-	const char *text = cgi->CL_Translate(campaign->text);
+	const char* text = cgi->CL_Translate(campaign->text);
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
@@ -452,7 +452,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 
 	int baseRow, baseCol;
 	for (baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
-		const char *image = nullptr;
+		const char* image = nullptr;
 		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
 			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
 			const building_t *building;
@@ -486,7 +486,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 				case B_STATUS_UNDER_CONSTRUCTION: {
 					const float remaining = B_GetConstructionTimeRemain(building);
 					const float time = std::max(0.0f, remaining);
-					const char *text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
+					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
 					cgi->UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, text);
 					break;
 				}
@@ -567,7 +567,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 	}
 }
 
-const char *GAME_CP_GetTeamDef (void)
+const char* GAME_CP_GetTeamDef (void)
 {
 	const int team = ccs.curCampaign->team;
 	return cgi->Com_ValueToStr(&team, V_TEAM, 0);
@@ -640,7 +640,7 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	cgi->Cvar_Set("mn_chrkillteam", "%i", chr->score.kills[KILLED_TEAM]);
 }
 
-const char *GAME_CP_GetItemModel (const char *string)
+const char* GAME_CP_GetItemModel (const char* string)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {

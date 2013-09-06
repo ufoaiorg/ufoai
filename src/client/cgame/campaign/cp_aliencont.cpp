@@ -157,7 +157,7 @@ static void AC_AddOne_f (void)
 		Com_Printf("Usage: %s <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	const char *alienName = cgi->Cmd_Argv(1);
+	const char* alienName = cgi->Cmd_Argv(1);
 	if (!alienName)
 		return;
 
@@ -204,7 +204,7 @@ bool AC_LoadXML (xmlNode_t *parent)
 		}
 
 		FOREACH_XMLNODE(alienNode, contNode, SAVE_ALIENCONT_ALIEN) {
-			const char *teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
+			const char* teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
 			const int alive = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
 			const int dead = cgi->XML_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
 

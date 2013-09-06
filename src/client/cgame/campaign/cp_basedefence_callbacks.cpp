@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief returns the itemtype index from a string identifier
  * @param[in] type Defence type identifier string
  */
-static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
+static aircraftItemType_t BDEF_GetItemTypeFromID (const char* type)
 {
 	assert(type);
 	if (Q_streq(type, "missile"))
@@ -48,7 +48,7 @@ static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
  * @brief returns the string identifier from an itemtype index
  * @param[in] type Defence type
  */
-static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
+static const char* BDEF_GetIDFromItemType (aircraftItemType_t type)
 {
 	switch (type) {
 	case AC_ITEM_BASE_MISSILE:
@@ -147,7 +147,7 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t** s
 		cgi->LIST_AddString(slotList, defBuffer);
 	} else {
 		const technology_t *tech;
-		const char *status;
+		const char* status;
 		if (!slot->installationTime)
 			status = _("Working");
 		else if (slot->installationTime > 0)
@@ -576,7 +576,7 @@ static void BDEF_AddBattery_f (void)
 {
 	basedefenceType_t basedefType;
 	base_t *base;
-	const char *type;
+	const char* type;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
@@ -626,7 +626,7 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
 static void BDEF_UpdateActiveBattery_f (void)
 {
 	base_t *base;
-	const char *type;
+	const char* type;
 	int count;
 
 	if (cgi->Cmd_Argc() < 3) {

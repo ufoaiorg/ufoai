@@ -109,7 +109,7 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 
 	ccs.numProjectiles++;
 
-	const char *sound;
+	const char* sound;
 	if (projectile->bullets) {
 		sound = "geoscape/combat-gun";
 	} else if (projectile->beam) {

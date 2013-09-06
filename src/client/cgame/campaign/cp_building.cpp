@@ -56,7 +56,7 @@ float B_GetConstructionTimeRemain (const building_t *building)
 }
 
 static const struct buildingTypeMapping_s {
-	const char *id;
+	const char* id;
 	buildingType_t type;
 } buildingTypeMapping[] = {
 	{ "lab", B_LAB },
@@ -83,7 +83,7 @@ static const struct buildingTypeMapping_s {
  * @sa B_ParseBuildings
  * @param[in] buildingID The script building id that should get converted into the enum value
  */
-buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
+buildingType_t B_GetBuildingTypeByBuildingID (const char* buildingID)
 {
 	for (const struct buildingTypeMapping_s *v = buildingTypeMapping; v->id; v++)
 		if (Q_streq(buildingID, v->id))
@@ -132,12 +132,12 @@ static const value_t valid_building_vars[] = {
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
  */
-void B_ParseBuildings (const char *name, const char** text, bool link)
+void B_ParseBuildings (const char* name, const char** text, bool link)
 {
 	building_t *building;
 	technology_t *techLink;
-	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "B_ParseBuildings: unexpected end of file (names ";
+	const char* token;
 
 	/* get id list body */
 	token = Com_Parse(text);
@@ -274,7 +274,7 @@ bool B_BuildingScriptSanityCheck (void)
  * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
-building_t *B_GetBuildingTemplateSilent (const char *buildingName)
+building_t *B_GetBuildingTemplateSilent (const char* buildingName)
 {
 	int i = 0;
 
@@ -294,7 +294,7 @@ building_t *B_GetBuildingTemplateSilent (const char *buildingName)
  * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
-building_t *B_GetBuildingTemplate (const char *buildingName)
+building_t *B_GetBuildingTemplate (const char* buildingName)
 {
 	if (!buildingName || buildingName[0] == '\0') {
 		Com_Printf("No, or empty building ID\n");
@@ -348,7 +348,7 @@ bool B_CheckBuildingDependencesStatus (const building_t* building)
  */
 bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildingEvent_t eventType)
 {
-	const char *command = nullptr;
+	const char* command = nullptr;
 
 	assert(buildingTemplate);
 	assert(base);

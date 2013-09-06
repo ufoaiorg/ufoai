@@ -147,22 +147,22 @@ typedef struct base_s {
 
 /** @brief template for creating a base */
 typedef struct baseTemplate_s {
-	char *id;			/**< ID of the base template */
+	char* id;			/**< ID of the base template */
 	baseBuildingTile_t buildings[MAX_BASEBUILDINGS]; /**< the buildings to be built for this template. */
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;
 
 void B_UpdateBaseData(void);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
-void B_ParseBaseTemplate(const char *name, const char** text);
+void B_ParseBaseTemplate(const char* name, const char** text);
 void B_BaseResetStatus(base_t* const base);
 const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, bool onlyWorking);
-const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
+const baseTemplate_t *B_GetBaseTemplate(const char* baseTemplateName);
 
 void B_InitStartup(void);
 
 /* base functions */
-base_t *B_Build(const struct campaign_s *campaign, const vec2_t pos, const char *name);
+base_t *B_Build(const struct campaign_s *campaign, const vec2_t pos, const char* name);
 void B_SetUpFirstBase(const struct campaign_s *campaign, base_t* base);
 base_t *B_GetNext(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
@@ -170,13 +170,13 @@ base_t* B_GetFoundedBaseByIDX(int baseIdx);
 int B_GetCount(void);
 void B_SelectBase(const base_t *base);
 void B_Destroy(base_t *base);
-void B_SetName(base_t *base, const char *name);
+void B_SetName(base_t *base, const char* name);
 
 base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
-bool B_AssembleMap(char *maps, size_t mapsLength, char *coords, size_t coordsLength, const base_t *base);
+bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLength, const base_t *base);
 
 /* building functions */
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked

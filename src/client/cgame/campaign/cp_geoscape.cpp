@@ -125,7 +125,7 @@ CLICK ON MAP and MULTI SELECTION FUNCTIONS
  * @brief Add an element in the multiselection list
  */
 static void GEO_MultiSelectListAddItem (multiSelectType_t itemType, int itemID,
-	const char *itemDescription, const char *itemName)
+	const char* itemDescription, const char* itemName)
 {
 	Q_strcat(multiSelect.popupText, sizeof(multiSelect.popupText), "%s\t%s\n", itemDescription, itemName);
 	multiSelect.selectType[multiSelect.nbSelect] = itemType;
@@ -498,7 +498,7 @@ static bool GEO_IsPositionSelected (const uiNode_t* node, const vec2_t pos, int 
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char* model, int skin)
 {
 	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	if (data.flatgeoscape) {
@@ -991,7 +991,7 @@ static void GEO_SelectObject_f (void)
 		return;
 	}
 
-	const char *type = cgi->Cmd_Argv(1);
+	const char* type = cgi->Cmd_Argv(1);
 	const int idx = atoi(cgi->Cmd_Argv(2));
 	mapExtraData_t &data = UI_MAPEXTRADATA(node);
 	const bool flatgeoscape = data.flatgeoscape;
@@ -1174,7 +1174,7 @@ static void GEO_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 	cgi->R_Color(nullptr);
 }
 
-static inline void GEO_RenderImage (int x, int y, const char *image)
+static inline void GEO_RenderImage (int x, int y, const char* image)
 {
 	cgi->R_DrawImageCentered(x, y, image);
 }
@@ -1283,7 +1283,7 @@ static void GEO_DrawRadarInMap (const uiNode_t *node, const radar_t *radar, cons
  * @pre installation is not nullptr.
  */
 static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
-	bool oneUFOVisible, const char *font)
+	bool oneUFOVisible, const char* font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
 	int x, y;
@@ -1324,7 +1324,7 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
  * @param[in] font Default font.
  */
 static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t *base,
-	bool oneUFOVisible, const char *font)
+	bool oneUFOVisible, const char* font)
 {
 	int x, y;
 
@@ -1487,7 +1487,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
  * @param[in] size The size of the target buffer
  * @return A pointer to the buffer that was given to this function
  */
-static const char *GEO_GetMissionText (char *buffer, size_t size, const mission_t *mission)
+static const char* GEO_GetMissionText (char* buffer, size_t size, const mission_t *mission)
 {
 	assert(mission);
 	Com_sprintf(buffer, size, _("Name: %s\nObjective: %s"),
@@ -1502,7 +1502,7 @@ static const char *GEO_GetMissionText (char *buffer, size_t size, const mission_
  * @param[in] size The size of the target buffer
  * @return A pointer to the buffer that was given to this function
  */
-static const char *GEO_GetAircraftText (char *buffer, size_t size, const aircraft_t *aircraft)
+static const char* GEO_GetAircraftText (char* buffer, size_t size, const aircraft_t *aircraft)
 {
 	if (aircraft->status == AIR_UFO) {
 		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
@@ -1539,7 +1539,7 @@ static const char *GEO_GetAircraftText (char *buffer, size_t size, const aircraf
  * @param[in] size The size of the target buffer
  * @return A pointer to the buffer that was given to this function
  */
-static const char *GEO_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
+static const char* GEO_GetUFOText (char* buffer, size_t size, const aircraft_t* ufo)
 {
 	Com_sprintf(buffer, size, "%s\n", UFO_GetName(ufo));
 	Q_strcat(buffer, size, _("Speed: %i km/h\n"), AIR_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
@@ -1586,7 +1586,7 @@ void GEO_UpdateGeoscapeDock (void)
 void GEO_DrawMarkers (const uiNode_t* node)
 {
 	int i;
-	const char *font;
+	const char* font;
 	aircraft_t *ufo;
 	base_t *base;
 
@@ -1941,7 +1941,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
-const char *GEO_GetTerrainType (const byte* const color)
+const char* GEO_GetTerrainType (const byte* const color)
 {
 	if (MapIsDesert(color))
 		return "desert";
@@ -1967,7 +1967,7 @@ const char *GEO_GetTerrainType (const byte* const color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-static const char *GEO_GetCultureType (const byte* color)
+static const char* GEO_GetCultureType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -1989,7 +1989,7 @@ static const char *GEO_GetCultureType (const byte* color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-static const char *GEO_GetPopulationType (const byte* color)
+static const char* GEO_GetPopulationType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -2011,7 +2011,7 @@ static const char *GEO_GetPopulationType (const byte* color)
  * @param[out] coast GEO_GetColor will set this to true if the given position is a coast line.
  * @return returns the zone name
  */
-static inline const char *GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
+static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return GEO_GetTerrainType(color);
@@ -2023,7 +2023,7 @@ static inline const char *GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast
  * @param[in] pos Map Coordinates to get the culture type from
  * @return returns the zone name
  */
-static inline const char *GEO_GetCultureTypeByPos (const vec2_t pos)
+static inline const char* GEO_GetCultureTypeByPos (const vec2_t pos)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_CULTURE, nullptr);
 	return GEO_GetCultureType(color);
@@ -2035,7 +2035,7 @@ static inline const char *GEO_GetCultureTypeByPos (const vec2_t pos)
  * @param[in] pos Map Coordinates to get the population type from
  * @return returns the zone name
  */
-static inline const char *GEO_GetPopulationTypeByPos (const vec2_t pos)
+static inline const char* GEO_GetPopulationTypeByPos (const vec2_t pos)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_POPULATION, nullptr);
 	return GEO_GetPopulationType(color);
@@ -2077,9 +2077,9 @@ int GEO_GetCivilianNumberByPosition (const vec2_t pos)
 void GEO_PrintParameterStringByPos (const vec2_t pos)
 {
 	bool coast = false;
-	const char *terrainType = GEO_GetTerrainTypeByPos(pos, &coast);
-	const char *cultureType = GEO_GetCultureTypeByPos(pos);
-	const char *populationType = GEO_GetPopulationTypeByPos(pos);
+	const char* terrainType = GEO_GetTerrainTypeByPos(pos, &coast);
+	const char* cultureType = GEO_GetCultureTypeByPos(pos);
+	const char* populationType = GEO_GetPopulationTypeByPos(pos);
 
 	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s, Coast: %s)\n",
 			terrainType, cultureType, populationType, coast ? "true" : "false");
@@ -2251,9 +2251,9 @@ base_t* GEO_PositionCloseToBase (const vec2_t pos)
 bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations)
 {
 	bool coast = false;
-	const char *terrainType = GEO_GetTerrainTypeByPos(pos, &coast);
-	const char *cultureType = GEO_GetCultureTypeByPos(pos);
-	const char *populationType = GEO_GetPopulationTypeByPos(pos);
+	const char* terrainType = GEO_GetTerrainTypeByPos(pos, &coast);
+	const char* cultureType = GEO_GetCultureTypeByPos(pos);
+	const char* populationType = GEO_GetPopulationTypeByPos(pos);
 
 	if (MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)))
 		return false;
@@ -2289,7 +2289,7 @@ void GEO_Shutdown (void)
 	nationsPic = nullptr;
 }
 
-void GEO_Init (const char *map)
+void GEO_Init (const char* map)
 {
 	/* load terrain mask */
 	cgi->R_LoadImage(va("pics/geoscape/%s_terrain", map), &terrainPic, &terrainWidth, &terrainHeight);
@@ -2312,7 +2312,7 @@ void GEO_Init (const char *map)
 		cgi->Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", map);
 }
 
-void GEO_Reset (const char *map)
+void GEO_Reset (const char* map)
 {
 	GEO_Shutdown();
 	GEO_Init(map);
@@ -2336,7 +2336,7 @@ void GEO_NotifyUFODisappear (const aircraft_t* ufo)
  * @brief Switch overlay (turn on / off)
  * @param[in] overlayID Name of the overlay you want to switch.
  */
-void GEO_SetOverlay (const char *overlayID)
+void GEO_SetOverlay (const char* overlayID)
 {
 	const int value = cgi->Cvar_GetInteger("cl_geoscape_overlay");
 	if (Q_streq(overlayID, "nations")) {
@@ -2362,7 +2362,7 @@ void GEO_SetOverlay (const char *overlayID)
  */
 static void GEO_SetOverlay_f (void)
 {
-	const char *arg;
+	const char* arg;
 
 	if (cgi->Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));
@@ -2381,7 +2381,7 @@ static void GEO_SetOverlay_f (void)
  * @brief Remove overlay.
  * @param[in] overlayID Name of the overlay you want to turn off.
  */
-void GEO_DeactivateOverlay (const char *overlayID)
+void GEO_DeactivateOverlay (const char* overlayID)
 {
 	if (Q_streq(overlayID, "nations")) {
 		if (GEO_IsNationOverlayActivated())
@@ -2400,7 +2400,7 @@ void GEO_DeactivateOverlay (const char *overlayID)
  */
 static void GEO_DeactivateOverlay_f (void)
 {
-	const char *arg;
+	const char* arg;
 
 	if (cgi->Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));

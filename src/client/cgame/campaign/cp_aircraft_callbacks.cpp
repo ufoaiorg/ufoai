@@ -242,7 +242,7 @@ static void AIR_AircraftUpdateList_f (void)
 static void AIR_ChangeAircraftName_f (void)
 {
 	const base_t *base = B_GetCurrentSelectedBase();
-	const char *newName = cgi->Cvar_GetString("mn_aircraftname");
+	const char* newName = cgi->Cvar_GetString("mn_aircraftname");
 	aircraft_t *aircraft;
 
 	if (!base)

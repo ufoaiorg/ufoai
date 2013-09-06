@@ -119,7 +119,7 @@ static void AC_KillOne_f (void)
 
 	/* this function should work by teamDef ID (or raceID), but currently multple teams defined per race
 	 * that makes the thing more complicated */
-	const char *techId = cgi->Cmd_Argv(argc - 1);
+	const char* techId = cgi->Cmd_Argv(argc - 1);
 	linkedList_t *list = base->alienContainment->list();
 	LIST_Foreach(list, alienCargo_t, item) {
 		const technology_t *tech = RS_GetTechForTeam(item->teamDef);
