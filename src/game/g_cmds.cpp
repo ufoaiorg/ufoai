@@ -88,36 +88,41 @@ static bool G_CheckFlood (Player &player)
 
 static void G_Say_f (Player &player, bool arg0, bool team)
 {
-	char text[256];
-
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
 
 	if (G_CheckFlood(player))
 		return;
 
-	if (!team)
-		Com_sprintf(text, sizeof(text), "%s: ", player.pers.netname);
-	else
-		Com_sprintf(text, sizeof(text), "^B%s (team): ", player.pers.netname);
-
+	char text[256];
 	if (arg0) {
-		Q_strcat(text, sizeof(text), "%s %s\n", gi.Cmd_Argv(0), gi.Cmd_Args());
+		Com_sprintf(text, sizeof(text), "%s %s", gi.Cmd_Argv(0), gi.Cmd_Args());
 	} else {
-		const char* p = gi.Cmd_Args();
-		const char* token = Com_Parse(&p);
-
-		Q_strcat(text, sizeof(text), "%s\n", token);
+		Com_sprintf(text, sizeof(text), "%s", gi.Cmd_Args());
 	}
 
-	if (sv_dedicated->integer)
-		gi.DPrintf("%s", text);
+	/* strip quotes */
+	char *s = text;
+	if (s[0] == '"' && s[strlen(s) - 1] == '"') {
+		s[strlen(s) - 1] = '\0';
+		s++;
+	}
+
+	if (sv_dedicated->integer) {
+		if (!team)
+			gi.DPrintf("%s: %s\n", player.pers.netname, s);
+		else
+			gi.DPrintf("^B%s (team): %s\n", player.pers.netname, s);
+	}
 
 	Player *p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (team && p->getTeam() != player.getTeam())
 			continue;
-		G_ClientPrintf(*p, PRINT_CHAT, "%s", text);
+		if (!team)
+			G_ClientPrintf(*p, PRINT_CHAT, "%s: %s\n", player.pers.netname, s);
+		else
+			G_ClientPrintf(*p, PRINT_CHAT, "^B%s (team): %s\n", player.pers.netname, s);
 	}
 }
 
