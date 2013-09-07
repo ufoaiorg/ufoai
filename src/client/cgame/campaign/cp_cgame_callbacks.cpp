@@ -325,8 +325,6 @@ void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, 
 bool GAME_CP_Spawn (linkedList_t** chrList)
 {
 	aircraft_t *aircraft = GEO_GetMissionAircraft();
-	base_t *base;
-
 	if (!aircraft)
 		return false;
 
@@ -335,10 +333,8 @@ bool GAME_CP_Spawn (linkedList_t** chrList)
 		cgi->LIST_AddPointer(chrList, (void*)&employee->chr);
 	}
 
-	base = aircraft->homebase;
-
 	/* clean temp inventory */
-	CP_CleanTempInventory(base);
+	CP_CleanTempInventory(aircraft->homebase);
 
 	return true;
 }
