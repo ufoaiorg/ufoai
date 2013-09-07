@@ -223,7 +223,7 @@ void Info_Print (const char* s)
 		}
 
 		if (!*s) {
-			Com_Printf("%-20.*sMISSING VALUE\n", key_len, key);
+			Com_Printf("%-40.*sMISSING VALUE\n", key_len, key);
 			return;
 		}
 
@@ -236,6 +236,6 @@ void Info_Print (const char* s)
 		if (*s)
 			s++;
 
-		Com_Printf("%-20.*s%.*s\n", key_len, key, value_len, value);
+		Com_Printf("%-40.*s%.*s\n", key_len, key, value_len, value);
 	}
 }
