@@ -186,12 +186,12 @@ void Info_SetValueForKey (char* s, const size_t size, const char* key, const cha
 	}
 
 	if (strlen(key) > MAX_INFO_KEY - 1) {
-		Com_Printf("Keys must be < " STRINGIFY(MAX_INFO_KEY) " characters.\n");
+		Com_Printf("Keys must be < " DOUBLEQUOTE(MAX_INFO_KEY) " characters.\n");
 		return;
 	}
 
 	if (strlen(key) > MAX_INFO_VALUE - 1) {
-		Com_Printf("Values must be < " STRINGIFY(MAX_INFO_VALUE) " characters.\n");
+		Com_Printf("Values must be < " DOUBLEQUOTE(MAX_INFO_VALUE) " characters.\n");
 		return;
 	}
 
