@@ -961,7 +961,7 @@ void SV_Init (void)
 	sv_http_downloadserver = Cvar_Get("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
-	sv_maxsoldiersperplayer = Cvar_Get(" ", STRINGIFY(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
+	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
 	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
