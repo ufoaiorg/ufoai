@@ -425,7 +425,7 @@ void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 	const base_t *base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
-	building_t *building = base->map[row][col].building;
+	const building_t *building = base->map[row][col].building;
 	if (!building)
 		return;
 
