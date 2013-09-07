@@ -316,7 +316,8 @@ static void SV_ConSay_f (void)
 static void SV_Serverinfo_f (void)
 {
 	Com_Printf("Server info settings:\n");
-	Info_Print(Cvar_Serverinfo());
+	char info[MAX_INFO_STRING];
+	Info_Print(Cvar_Serverinfo(info, sizeof(info)));
 }
 
 

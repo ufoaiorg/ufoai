@@ -213,7 +213,8 @@ static void CL_Connect (void)
 	}
 
 	if (cls.netStream) {
-		NET_OOB_Printf(cls.netStream, SV_CMD_CONNECT " %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
+		char info[MAX_INFO_STRING];
+		NET_OOB_Printf(cls.netStream, SV_CMD_CONNECT " %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo(info, sizeof(info)));
 		cls.connectTime = CL_Milliseconds();
 	} else {
 		if (cls.servername[0] != '\0') {
@@ -463,7 +464,8 @@ static void CL_ReadPackets (void)
 static void CL_UserInfo_f (void)
 {
 	Com_Printf("User info settings:\n");
-	Info_Print(Cvar_Userinfo());
+	char info[MAX_INFO_STRING];
+	Info_Print(Cvar_Userinfo(info, sizeof(info)));
 }
 
 /**
@@ -1007,7 +1009,8 @@ static void CL_SendChangedUserinfos (void)
 		return;
 	if (!Com_IsUserinfoModified())
 		return;
-	const char *userInfo = Cvar_Userinfo();
+	char info[MAX_INFO_STRING];
+	const char *userInfo = Cvar_Userinfo(info, sizeof(info));
 	dbuffer msg(strlen(userInfo) + 2);
 	NET_WriteByte(&msg, clc_userinfo);
 	NET_WriteString(&msg, userInfo);

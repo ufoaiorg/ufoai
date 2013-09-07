@@ -176,12 +176,12 @@ void Cvar_Shutdown(void);
 /**
  * @brief returns an info string containing all the CVAR_USERINFO cvars
  */
-const char* Cvar_Userinfo(void);
+const char* Cvar_Userinfo(char* info, size_t infoSize);
 
 /**
  * @brief returns an info string containing all the CVAR_SERVERINFO cvars
  */
-const char* Cvar_Serverinfo(void);
+const char* Cvar_Serverinfo(char* info, size_t infoSize);
 
 /**
  * @brief this function checks cvar ranges and integral values

@@ -184,7 +184,8 @@ static void SV_Disconnect_f (client_t *cl)
  */
 static void SV_ShowServerinfo_f (client_t *cl)
 {
-	Info_Print(Cvar_Serverinfo());
+	char info[MAX_INFO_STRING];
+	Info_Print(Cvar_Serverinfo(info, sizeof(info)));
 }
 
 

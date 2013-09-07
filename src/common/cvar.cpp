@@ -980,22 +980,20 @@ static char* Cvar_BitInfo (int bit, char* info, size_t infoSize)
 /**
  * @brief Returns an info string containing all the CVAR_USERINFO cvars
  */
-const char* Cvar_Userinfo (void)
+const char* Cvar_Userinfo (char* info, size_t infoSize)
 {
-	static char info[MAX_INFO_STRING];
-	info[0] = 0;
-	return Cvar_BitInfo(CVAR_USERINFO, info, sizeof(info));
+	info[0] = '\0';
+	return Cvar_BitInfo(CVAR_USERINFO, info, infoSize);
 }
 
 /**
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
  * @sa SV_StatusString
  */
-const char* Cvar_Serverinfo (void)
+const char* Cvar_Serverinfo (char* info, size_t infoSize)
 {
-	static char info[MAX_INFO_STRING];
-	info[0] = 0;
-	return Cvar_BitInfo(CVAR_SERVERINFO, info, sizeof(info));
+	info[0] = '\0';
+	return Cvar_BitInfo(CVAR_SERVERINFO, info, infoSize);
 }
 
 /**

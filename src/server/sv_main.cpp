@@ -360,7 +360,8 @@ static void SVC_Status (struct net_stream *s)
 	dbuffer msg;
 	NET_WriteByte(&msg, svc_oob);
 	NET_WriteRawString(&msg, SV_CMD_PRINT "\n");
-	NET_WriteRawString(&msg, Cvar_Serverinfo());
+	char info[MAX_INFO_STRING];
+	NET_WriteRawString(&msg, Cvar_Serverinfo(info, sizeof(info)));
 	NET_WriteRawString(&msg, "\n");
 
 	client_t *cl = nullptr;
