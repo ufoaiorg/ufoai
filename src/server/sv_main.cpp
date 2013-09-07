@@ -617,7 +617,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 	char s[512];
 
 	NET_ReadStringLine(msg, s, sizeof(s));
-	Cmd_TokenizeString(s, false);
+	Cmd_TokenizeString(s, false, false);
 
 	const char* c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);

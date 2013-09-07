@@ -568,8 +568,9 @@ void Cmd_BufClear (void)
  * @sa Com_MacroExpandString
  * @param[in] text The text to parse and tokenize
  * @param[in] macroExpand expand cvar string with their values
+ * @param[in] replaceWhitespaces Replace \\t and \\n to \t and \n
  */
-void Cmd_TokenizeString (const char* text, bool macroExpand)
+void Cmd_TokenizeString (const char* text, bool macroExpand, bool replaceWhitespaces)
 {
 	const char* expanded;
 
@@ -602,7 +603,7 @@ void Cmd_TokenizeString (const char* text, bool macroExpand)
 			Com_Chop(cmd_args);
 		}
 
-		const char* com_token = Com_Parse(&text);
+		const char* com_token = Com_Parse(&text, nullptr, 0, replaceWhitespaces);
 		if (!text)
 			return;
 

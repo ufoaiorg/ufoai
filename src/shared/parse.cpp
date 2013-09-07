@@ -103,7 +103,7 @@ int Com_CountTokensInBuffer (const char* buffer)
  * the next call.
  * @sa Com_EParse
  */
-const char* Com_Parse (const char* data_p[], char* target, size_t size)
+const char* Com_Parse (const char* data_p[], char* target, size_t size, bool replaceWhitespaces)
 {
 	char c;
 	size_t len;
@@ -163,11 +163,15 @@ skipwhite:
 		for (;;) {
 			c = *data++;
 			if (c == '\\' && data[0] == 'n') {
-				c = '\n';
-				data++;
+				if (replaceWhitespaces) {
+					c = '\n';
+					data++;
+				}
 			} else if (c == '\\' && data[0] == 't') {
-				c = '\t';
-				data++;
+				if (replaceWhitespaces) {
+					c = '\t';
+					data++;
+				}
 			/* nested quotation */
 			} else if (c == '\\' && data[0] == '\"') {
 				c = '\"';

@@ -149,7 +149,7 @@ void *Cmd_Userdata(void);
  * @brief Takes a null terminated string.  Does not need to be /n terminated.
  * breaks the string up into arg tokens.
  */
-void Cmd_TokenizeString(const char* text, bool macroExpand);
+void Cmd_TokenizeString(const char* text, bool macroExpand, bool replaceWhitespaces = true);
 
 /**
  * @brief Parses a single line of text into arguments and tries to execute it

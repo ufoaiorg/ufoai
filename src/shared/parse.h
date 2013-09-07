@@ -47,7 +47,7 @@ const char* Com_GetToken(const char** data_p);
 Com_TokenType_t Com_GetType(const char** data_p);
 Com_TokenType_t Com_NextToken(const char** data_p);
 
-const char* Com_Parse(const char** data_p, char* target = nullptr, size_t size = 0);
+const char* Com_Parse(const char** data_p, char* target = nullptr, size_t size = 0, bool replaceWhitespaces = true);
 int Com_CountTokensInBuffer(const char* buffer);
 void Com_UnParseLastToken(void);
 void Com_SkipBlock(const char** text);

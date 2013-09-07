@@ -346,6 +346,17 @@ static void testInfoStrings (void)
 	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
 }
 
+static void testTokenizeInfoStrings (void)
+{
+	Cvar_Get("password", "test", CVAR_USERINFO, nullptr);
+	char info[MAX_INFO_STRING];
+	const char* s = va(SV_CMD_CONNECT " %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo(info, sizeof(info)));
+	Cmd_TokenizeString(s, false, false);
+	CU_ASSERT_STRING_EQUAL(Cmd_Argv(0), SV_CMD_CONNECT);
+	CU_ASSERT_STRING_EQUAL(Cmd_Argv(1), DOUBLEQUOTE(PROTOCOL_VERSION));
+	CU_ASSERT_STRING_EQUAL(Cmd_Argv(2), info);
+}
+
 static void testCvars (void)
 {
 	Cvar_Get("testGeneric_cvar", "testGeneric_cvarValue", CVAR_NOSET, "No set");
@@ -753,6 +764,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testTokenizeInfoStrings) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testCvars) == NULL)
