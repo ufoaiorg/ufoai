@@ -393,7 +393,7 @@ typedef struct character_s {
 	const teamDef_t *teamDef;		/**< Pointer to team definition. */
 	int gender;						/**< Gender index. */
 	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
-	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) */
 
 	implant_t implants[MAX_CHARACTER_IMPLANTS];
 
