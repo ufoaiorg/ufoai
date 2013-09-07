@@ -295,7 +295,7 @@ int PicoAdjustModel (picoModel_t *model, int numShaders, int numSurfaces)
 	/* additional shaders? */
 	while (numShaders > model->maxShaders) {
 		model->maxShaders += PICO_GROW_SHADERS;
-		if (!_pico_realloc((void* ) &model->shader, model->numShaders * sizeof(*model->shader),
+		if (!_pico_realloc((void*) &model->shader, model->numShaders * sizeof(*model->shader),
 				model->maxShaders * sizeof(*model->shader)))
 			return 0;
 	}
@@ -307,7 +307,7 @@ int PicoAdjustModel (picoModel_t *model, int numShaders, int numSurfaces)
 	/* additional surfaces? */
 	while (numSurfaces > model->maxSurfaces) {
 		model->maxSurfaces += PICO_GROW_SURFACES;
-		if (!_pico_realloc((void* ) &model->surface, model->numSurfaces * sizeof(*model->surface),
+		if (!_pico_realloc((void*) &model->surface, model->numSurfaces * sizeof(*model->surface),
 				model->maxSurfaces * sizeof(*model->surface)))
 			return 0;
 	}
@@ -497,13 +497,13 @@ int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays,
 	/* additional vertexes? */
 	while (numVertexes > surface->maxVertexes) { /* fix */
 		surface->maxVertexes += PICO_GROW_VERTEXES;
-		if (!_pico_realloc((void* ) &surface->xyz, surface->numVertexes * sizeof(*surface->xyz),
+		if (!_pico_realloc((void*) &surface->xyz, surface->numVertexes * sizeof(*surface->xyz),
 				surface->maxVertexes * sizeof(*surface->xyz)))
 			return 0;
-		if (!_pico_realloc((void* ) &surface->normal, surface->numVertexes * sizeof(*surface->normal),
+		if (!_pico_realloc((void*) &surface->normal, surface->numVertexes * sizeof(*surface->normal),
 				surface->maxVertexes * sizeof(*surface->normal)))
 			return 0;
-		if (!_pico_realloc((void* ) &surface->smoothingGroup, surface->numVertexes * sizeof(*surface->smoothingGroup),
+		if (!_pico_realloc((void*) &surface->smoothingGroup, surface->numVertexes * sizeof(*surface->smoothingGroup),
 				surface->maxVertexes * sizeof(*surface->smoothingGroup)))
 			return 0;
 		for (i = 0; i < surface->numSTArrays; i++)
@@ -561,7 +561,7 @@ int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays,
 	/* additional face normals? */
 	while (numFaceNormals > surface->maxFaceNormals) { /* fix */
 		surface->maxFaceNormals += PICO_GROW_FACES;
-		if (!_pico_realloc((void* ) &surface->faceNormal, surface->numFaceNormals * sizeof(*surface->faceNormal),
+		if (!_pico_realloc((void*) &surface->faceNormal, surface->numFaceNormals * sizeof(*surface->faceNormal),
 				surface->maxFaceNormals * sizeof(*surface->faceNormal)))
 			return 0;
 	}

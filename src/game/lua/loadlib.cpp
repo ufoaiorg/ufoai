@@ -268,7 +268,7 @@ static void** ll_register (lua_State *L, const char* path) {
     plib = (void**)lua_touserdata(L, -1);
   else {  /* no entry yet; create one */
     lua_pop(L, 1);
-    plib = (void**)lua_newuserdata(L, sizeof(const void* ));
+    plib = (void**)lua_newuserdata(L, sizeof(const void*));
     *plib = nullptr;
     luaL_getmetatable(L, "_LOADLIB");
     lua_setmetatable(L, -2);
@@ -446,7 +446,7 @@ static int loader_preload (lua_State *L) {
 
 
 static int sentinel_ = 0;
-#define sentinel	((void* )&sentinel_)
+#define sentinel	((void*)&sentinel_)
 
 
 static int ll_require (lua_State *L) {

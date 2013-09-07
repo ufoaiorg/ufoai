@@ -485,7 +485,7 @@ static pack_t *FS_LoadPackFile (const char* packfile)
 		pack->files = newfiles;
 
 		/* Sort our list alphabetically - also rearrange the unsigned long values */
-		qsort((void* )pack->files, i, sizeof(*newfiles), Q_StringSort);
+		qsort((void*)pack->files, i, sizeof(*newfiles), Q_StringSort);
 
 		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
@@ -547,7 +547,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
 	}
 
 	/* Sort our list alphabetically */
-	qsort((void* )pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
+	qsort((void*)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
 	for (i = 0; i < pakfile_count; i++) {
 		pack_t *pak = FS_LoadPackFile(pakfile_list[i]);
