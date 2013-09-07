@@ -485,8 +485,8 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 				switch (building->buildingStatus) {
 				case B_STATUS_UNDER_CONSTRUCTION: {
 					const float remaining = B_GetConstructionTimeRemain(building);
-					const float time = std::max(0.0f, remaining);
-					const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
+					const int time = std::max(0, (int)ceilf(remaining));
+					const char* text = va(ngettext("%d day left", "%d days left", time), time);
 					cgi->UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, text);
 					break;
 				}
