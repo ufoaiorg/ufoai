@@ -190,7 +190,7 @@ void uiWindowNode::doLayout (uiNode_t *node)
  */
 void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
-	uiLocatedNode::onWindowOpened(node, params);
+	uiLocatedNode::onWindowOpened(node, nullptr);
 
 	/* script callback */
 	if (EXTRADATA(node).onWindowOpened)
@@ -204,7 +204,7 @@ void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
  */
 void uiWindowNode::onWindowClosed (uiNode_t *node)
 {
-	uiLocatedNode::onWindowActivate(node);
+	uiLocatedNode::onWindowClosed(node);
 
 	/* script callback */
 	if (EXTRADATA(node).onWindowClosed)
