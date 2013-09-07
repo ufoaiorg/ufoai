@@ -1,6 +1,24 @@
 #pragma once
 #include <SDL_platform.h>
 
+#ifndef __LINUX__
+#ifndef __MACOSX__
+#ifndef __WIN64__
+#ifndef __WIN32__
+#ifndef __ANDROID__
+#ifndef EMSCRIPTEN
+#ifndef __IPHONEOS__
+#ifndef __FREEBSD__
+#error The target platform was not found.  Please add to config.h.
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+
 #ifdef __LINUX__
 #include "linux-config.h"
 #endif
