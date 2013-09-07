@@ -334,8 +334,8 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 		if (teamSize > 0 && AIR_CanIntercept(aircraft)) {
 			char aircraftListText[256] = "";
 			const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
-			const char *statusName = AIR_AircraftStatusToName(aircraft);
-			const char *time = CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
+			const char* statusName = AIR_AircraftStatusToName(aircraft);
+			const char* time = CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 			Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
 					teamSize, aircraft->maxTeamSize, statusName, aircraft->homebase->name, time);
 			cgi->LIST_AddString(&aircraftList, aircraftListText);
@@ -385,7 +385,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 			char aircraftListText[256] = "";
 			/* don't show aircraft with no weapons or no ammo, or crafts that
 			 * can't even reach the target */
-			const char *enoughFuelMarker = "^B";
+			const char* enoughFuelMarker = "^B";
 
 			/* Does the aircraft has weapons and ammo ? */
 			if (AIRFIGHT_ChooseWeapon(aircraft->weapons, aircraft->maxWeapons, aircraft->pos, aircraft->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
@@ -607,7 +607,7 @@ void CL_PopupInit (void)
 /**
  * @brief Wrapper around @c UI_Popup which also stops the time
  */
-void CP_PopupList (const char *title, const char *text)
+void CP_PopupList (const char* title, const char* text)
 {
 	CP_GameTimeStop();
 	CP_Popup(title, "%s", text);
@@ -616,7 +616,7 @@ void CP_PopupList (const char *title, const char *text)
 /**
  * @brief Wrapper around @c UI_Popup
  */
-void CP_Popup (const char *title, const char *text, ...)
+void CP_Popup (const char* title, const char* text, ...)
 {
 	static char msg[1024];
 	va_list argptr;

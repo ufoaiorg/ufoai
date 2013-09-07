@@ -123,7 +123,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		return;
 	}
 
-	const char *param = battleParameters->param ? battleParameters->param : (const char *)cgi->LIST_GetRandom(mission->mapDef->params);
+	const char* param = battleParameters->param ? battleParameters->param : (const char* )cgi->LIST_GetRandom(mission->mapDef->params);
 	cgi->Cbuf_AddText("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : "");
 }
@@ -316,7 +316,7 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
  */
 void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const aircraft_t *aircraft)
 {
-	const char *zoneType;
+	const char* zoneType;
 	const byte *color;
 
 	assert(mission->posAssigned);
@@ -341,7 +341,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	/* Is there a UFO to recover ? */
 	if (mission->ufo) {
 		const aircraft_t *ufo = mission->ufo;
-		const char *shortUFOType;
+		const char* shortUFOType;
 		float ufoCondition;
 
 		if (mission->crashed) {
@@ -387,7 +387,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
  * @param[in] missionId Unique string id for the mission
  * @return pointer to the mission or nullptr if Id was nullptr or mission not found
  */
-mission_t* CP_GetMissionByIDSilent (const char *missionId)
+mission_t* CP_GetMissionByIDSilent (const char* missionId)
 {
 	if (!missionId)
 		return nullptr;
@@ -405,7 +405,7 @@ mission_t* CP_GetMissionByIDSilent (const char *missionId)
  * @param[in] missionId Unique string id for the mission
  * @return pointer to the mission or nullptr if Id was nullptr or mission not found
  */
-mission_t* CP_GetMissionByID (const char *missionId)
+mission_t* CP_GetMissionByID (const char* missionId)
 {
 	mission_t *mission = CP_GetMissionByIDSilent(missionId);
 
@@ -442,7 +442,7 @@ int MIS_GetIdx (const mission_t *mis)
  * @brief Returns a short translated name for a mission
  * @param[in] mission Pointer to the mission to get name for
  */
-const char *MIS_GetName (const mission_t *mission)
+const char* MIS_GetName (const mission_t *mission)
 {
 	assert(mission);
 
@@ -493,7 +493,7 @@ const char *MIS_GetName (const mission_t *mission)
  * @brief Return Name of the category of a mission.
  * @note Not translated yet - only for console usage
  */
-static const char *CP_MissionStageToName (const missionStage_t stage)
+static const char* CP_MissionStageToName (const missionStage_t stage)
 {
 	switch (stage) {
 	case STAGE_NOT_ACTIVE:
@@ -562,7 +562,7 @@ int CP_CountMissionOnGeoscape (void)
  * @param[in] mission Pointer to the mission drawn on geoscape
  * @sa GEO_DrawMarkers
  */
-const char *MIS_GetModel (const mission_t *mission)
+const char* MIS_GetModel (const mission_t *mission)
 {
 	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
 	assert(mission->mapDef);
@@ -691,7 +691,7 @@ static inline messageType_t CP_MissionGetMessageLevel (const mission_t *mission)
  * @param[in] mission The mission that was added to the geoscape and for that a message should be created
  * @return The pointer to the static buffer that holds the message.
  */
-static inline const char *CP_MissionGetMessage (const mission_t *mission)
+static inline const char* CP_MissionGetMessage (const mission_t *mission)
 {
 	if (mission->category == INTERESTCATEGORY_RESCUE) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission for %s to save your soldiers, some of whom may still be alive."), mission->data.aircraft->name);
@@ -1906,11 +1906,11 @@ bool MIS_LoadXML (xmlNode_t *parent)
 	missionNode = cgi->XML_GetNode(parent, SAVE_MISSIONS);
 	for (node = cgi->XML_GetNode(missionNode, SAVE_MISSIONS_MISSION); node;
 			node = cgi->XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
-		const char *name;
+		const char* name;
 		mission_t mission;
 		bool defaultAssigned = false;
-		const char *categoryId = cgi->XML_GetString(node, SAVE_MISSIONS_CATEGORY);
-		const char *stageId = cgi->XML_GetString(node, SAVE_MISSIONS_STAGE);
+		const char* categoryId = cgi->XML_GetString(node, SAVE_MISSIONS_CATEGORY);
+		const char* stageId = cgi->XML_GetString(node, SAVE_MISSIONS_STAGE);
 
 		OBJZERO(mission);
 

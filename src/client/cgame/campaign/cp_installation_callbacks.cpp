@@ -227,9 +227,9 @@ static void INS_FillUFOYardData_f (void)
 	if (ins) {
 		const nation_t *nat = GEO_GetNation(ins->pos);
 		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
-		const char *buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
+		const char* buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
 		const int freeCap = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
-		const char *nationName = nat ? _(nat->name) : "";
+		const char* nationName = nat ? _(nat->name) : "";
 
 		cgi->UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
 
@@ -237,9 +237,9 @@ static void INS_FillUFOYardData_f (void)
 			if (ufo->installation != ins)
 				continue;
 
-			const char *ufoName = UFO_GetName(ufo->ufoTemplate);
-			const char *condition = va(_("Condition: %3.0f%%"), ufo->condition * 100);
-			const char *status = US_StoredUFOStatus(ufo);
+			const char* ufoName = UFO_GetName(ufo->ufoTemplate);
+			const char* condition = va(_("Condition: %3.0f%%"), ufo->condition * 100);
+			const char* status = US_StoredUFOStatus(ufo);
 			cgi->UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);
 		}
 	}
@@ -277,7 +277,7 @@ static void INS_SelectType_f (void)
 	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	const char *id = cgi->Cmd_Argv(1);
+	const char* id = cgi->Cmd_Argv(1);
 
 	if (ccs.mapAction == MA_NEWINSTALLATION) {
 		GEO_ResetAction();

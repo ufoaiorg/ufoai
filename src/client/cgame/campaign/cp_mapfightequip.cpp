@@ -1334,7 +1334,7 @@ void BDEF_AutoSelectTarget (void)
  * @sa itemWeight_t
  * @sa AII_GetItemWeightBySize
  */
-const char *AII_WeightToName (itemWeight_t weight)
+const char* AII_WeightToName (itemWeight_t weight)
 {
 	switch (weight) {
 	case ITEM_LIGHT:
@@ -1384,7 +1384,7 @@ void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, bool weapon)
  */
 void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 {
-	const char *name;
+	const char* name;
 	name = cgi->XML_GetString(node, SAVE_SLOT_ITEMID);
 	if (name[0] != '\0') {
 		const technology_t *tech = RS_GetTechByProvided(name);

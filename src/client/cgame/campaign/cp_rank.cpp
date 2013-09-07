@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] rankID Script id of the rank
  * @return -1 if no rank with rankID found
  */
-int CL_GetRankIdx (const char *rankID)
+int CL_GetRankIdx (const char* rankID)
 {
 	for (int i = 0; i < ccs.numRanks; i++) {
 		if (Q_streq(ccs.ranks[i].id, rankID))
@@ -71,11 +71,11 @@ static const value_t rankValues[] = {
  * @brief Parse medals and ranks defined in the medals.ufo file.
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseRanks (const char *name, const char** text)
+void CL_ParseRanks (const char* name, const char** text)
 {
 	rank_t *rank;
-	const char *errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";
-	const char *token;
+	const char* errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";
+	const char* token;
 	int i;
 
 	/* get name list body body */

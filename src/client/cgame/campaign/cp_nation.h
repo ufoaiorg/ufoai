@@ -42,8 +42,8 @@ typedef struct nationInfo_s {
  * @brief Nation definition
  */
 typedef struct nation_s {
-	const char *id;		/**< Unique ID of this nation. */
-	const char *name;		/**< Full name of the nation. */
+	const char* id;		/**< Unique ID of this nation. */
+	const char* name;		/**< Full name of the nation. */
 	int idx;		/**< position in the nations array */
 
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
@@ -66,26 +66,26 @@ typedef struct nation_s {
  * @brief City definition
  */
 typedef struct city_s {
-	const char *id;			/**< Unique ID of this city. */
-	const char *name;		/**< Full name of the city. */
+	const char* id;			/**< Unique ID of this city. */
+	const char* name;		/**< Full name of the city. */
 	int idx;				/**< position in the cities array */
 
 	vec2_t pos;				/**< City position on geoscape. */
 } city_t;
 
 nation_t *NAT_GetNationByIDX(const int index);
-nation_t *NAT_GetNationByID(const char *nationID);
+nation_t *NAT_GetNationByID(const char* nationID);
 void NAT_UpdateHappinessForAllNations(const float minhappiness);
 void NAT_SetHappiness(const float minhappiness, nation_t *nation, const float happiness);
 int NAT_GetFunding(const nation_t* const nation, int month);
 const nationInfo_t* NAT_GetCurrentMonthInfo(const nation_t* const nation);
-const char *NAT_GetHappinessString(const nation_t* nation);
+const char* NAT_GetHappinessString(const nation_t* nation);
 
-void CL_ParseNations(const char *name, const char** text);
+void CL_ParseNations(const char* name, const char** text);
 
-city_t *CITY_GetById(const char *cityId);
+city_t *CITY_GetById(const char* cityId);
 city_t *CITY_GetByPos(vec2_t pos);
-void CITY_Parse(const char *name, const char** text);
+void CITY_Parse(const char* name, const char** text);
 
 bool NAT_ScriptSanityCheck(void);
 

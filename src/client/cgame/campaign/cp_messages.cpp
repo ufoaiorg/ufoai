@@ -36,7 +36,7 @@ char cp_messageBuffer[MAX_MESSAGE_TEXT];
  * @param[in] message The message to convert into text
  * @param[in] textsize The maximum length for text
  */
-static void MS_TimestampedText (char *text, uiMessageListNodeMessage_t *message, size_t textsize)
+static void MS_TimestampedText (char* text, uiMessageListNodeMessage_t *message, size_t textsize)
 {
 	dateLong_t date;
 	CP_DateConvertLong(&message->date, &date);
@@ -58,7 +58,7 @@ static void MS_TimestampedText (char *text, uiMessageListNodeMessage_t *message,
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = true @endcode
  */
-uiMessageListNodeMessage_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
+uiMessageListNodeMessage_t *MS_AddNewMessage (const char* title, const char* text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
 {
 	assert(type < MSG_MAX);
 
@@ -138,7 +138,7 @@ uiMessageListNodeMessage_t *MS_AddNewMessage (const char *title, const char *tex
 		CP_PopupList(mess->title, mess->text);
 
 	if (playSound) {
-		const char *sound = nullptr;
+		const char* sound = nullptr;
 		switch (type) {
 		case MSG_DEBUG:
 			break;
@@ -263,7 +263,7 @@ bool MS_LoadXML (xmlNode_t *p)
 	cgi->Com_RegisterConstList(saveMessageConstants);
 	for (sn = cgi->XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = cgi->XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
-		const char *type = cgi->XML_GetString(sn, SAVE_MESSAGES_TYPE);
+		const char* type = cgi->XML_GetString(sn, SAVE_MESSAGES_TYPE);
 		int mtype;
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];

@@ -267,7 +267,7 @@ bool RS_RequirementsMet (const technology_t *tech, const base_t *base)
  * @brief returns the currently used description for a technology.
  * @param[in,out] desc A list of possible descriptions (with tech-links that decide which one is the correct one)
  */
-const char *RS_GetDescription (technologyDescriptions_t *desc)
+const char* RS_GetDescription (technologyDescriptions_t *desc)
 {
 	int i;
 
@@ -774,7 +774,7 @@ static void RS_MarkResearched (technology_t *tech, const base_t *base)
  * @param techID The event technology script id to research
  * @note If there is no base available the tech is not marked as researched, too
  */
-bool RS_MarkStoryLineEventResearched (const char *techID)
+bool RS_MarkStoryLineEventResearched (const char* techID)
 {
 	technology_t* tech = RS_GetTechByID(techID);
 	if (!RS_IsResearched_ptr(tech)) {
@@ -854,7 +854,7 @@ int RS_ResearchRun (void)
 
 #ifdef DEBUG
 /** @todo use cgi->Com_RegisterConstInt(); */
-static const char *RS_TechTypeToName (researchType_t type)
+static const char* RS_TechTypeToName (researchType_t type)
 {
 	switch(type) {
 	case RS_TECH:
@@ -882,7 +882,7 @@ static const char *RS_TechTypeToName (researchType_t type)
 	}
 }
 
-static const char *RS_TechReqToName (requirement_t *req)
+static const char* RS_TechReqToName (requirement_t *req)
 {
 	switch(req->type) {
 	case RS_LINK_TECH:
@@ -907,7 +907,7 @@ static const char *RS_TechReqToName (requirement_t *req)
 }
 
 /** @todo use cgi->Com_RegisterConstInt(); */
-static const char *RS_TechLinkTypeToName (requirementType_t type)
+static const char* RS_TechLinkTypeToName (requirementType_t type)
 {
 	switch(type) {
 	case RS_LINK_TECH:
@@ -1140,12 +1140,12 @@ static const value_t valid_techmail_vars[] = {
  * @sa GAME_SetMode
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void RS_ParseTechnologies (const char *name, const char** text)
+void RS_ParseTechnologies (const char* name, const char** text)
 {
 	technology_t *tech;
 	unsigned hash;
-	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
-	const char *token;
+	const char* errhead = "RS_ParseTechnologies: unexpected end of file.";
+	const char* token;
 	requirements_t *requiredTemp;
 	technologyDescriptions_t *descTemp;
 	int i;
@@ -1284,8 +1284,8 @@ void RS_ParseTechnologies (const char *name, const char** text)
 					}
 
 					if (descTemp->numDescriptions < MAX_DESCRIPTIONS) {
-						const char *id = (char*)list->data;
-						const char *description = (char*)list->next->data;
+						const char* id = (char*)list->data;
+						const char* description = (char*)list->next->data;
 
 						/* Copy tech string into entry. */
 						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(id, cp_campaignPool, 0);
@@ -1360,8 +1360,8 @@ void RS_ParseTechnologies (const char *name, const char** text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
-							const char *idToken = (char*)list->data;
-							const char *amountToken = (char*)list->next->data;
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
 
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
@@ -1409,8 +1409,8 @@ void RS_ParseTechnologies (const char *name, const char** text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
 							}
 
-							const char *idToken = (char*)list->data;
-							const char *amountToken = (char*)list->next->data;
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
 
 							/* Set requirement-name (id). */
 							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
@@ -1433,8 +1433,8 @@ void RS_ParseTechnologies (const char *name, const char** text)
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
 							}
 
-							const char *idToken = (char*)list->data;
-							const char *amountToken = (char*)list->next->data;
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
 
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_UFO;
@@ -1614,7 +1614,7 @@ technology_t* RS_GetTechByIDX (int techIdx)
  * @param[in] id Unique identifier of the tech as defined in the research.ufo file (e.g. "tech xxxx").
  * @return technology_t pointer or nullptr if an error occured.
  */
-technology_t *RS_GetTechByID (const char *id)
+technology_t *RS_GetTechByID (const char* id)
 {
 	unsigned hash;
 	technology_t *tech;
@@ -1636,7 +1636,7 @@ technology_t *RS_GetTechByID (const char *id)
  * @param[in] idProvided Unique identifier of the object the tech is providing
  * @return The tech for the given object id or nullptr if not found
  */
-technology_t *RS_GetTechByProvided (const char *idProvided)
+technology_t *RS_GetTechByProvided (const char* idProvided)
 {
 	unsigned hash;
 	technology_t *tech;
@@ -1690,7 +1690,7 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
  * @brief Returns the index (idx) of a "tech" entry given it's name.
  * @param[in] name the name of the tech
  */
-int RS_GetTechIdxByName (const char *name)
+int RS_GetTechIdxByName (const char* name)
 {
 	technology_t *tech;
 	const unsigned hash = Com_HashKey(name, TECH_HASH_SIZE);
@@ -1801,11 +1801,11 @@ bool RS_LoadXML (xmlNode_t *parent)
 
 	cgi->Com_RegisterConstList(saveResearchConstants);
 	for (snode = cgi->XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = cgi->XML_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = cgi->XML_GetString(snode, SAVE_RESEARCH_ID);
+		const char* techString = cgi->XML_GetString(snode, SAVE_RESEARCH_ID);
 		xmlNode_t *ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
-		const char *type = cgi->XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
+		const char* type = cgi->XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
 
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);

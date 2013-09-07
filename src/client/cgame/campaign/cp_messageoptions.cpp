@@ -112,7 +112,7 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
  * @brief Parse notify type
  * @return A NT_ number, else return -1
  */
-static int MSO_ParseNotifyType (const char *name)
+static int MSO_ParseNotifyType (const char* name)
 {
 	for (int idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
 		if (Q_streq(name, nt_strings[idx])) {
@@ -126,7 +126,7 @@ static int MSO_ParseNotifyType (const char *name)
  * @brief Parse option type
  * @return A MSO value, else 0
  */
-static int MSO_ParseOptionType (const char *type)
+static int MSO_ParseOptionType (const char* type)
 {
 	if (Q_strcaseeq(type, "pause"))
 		return MSO_PAUSE;
@@ -154,7 +154,7 @@ static void MSO_Set_f (void)
 	if (optionsType == 0)
 		return;
 
-	const char *messagetype = cgi->Cmd_Argv(1);
+	const char* messagetype = cgi->Cmd_Argv(1);
 	int type;
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		if (Q_streq(nt_strings[type], messagetype))
@@ -205,7 +205,7 @@ static void MSO_SetAll_f (void)
  * @return message_t pointer if message was added
  * @sa MS_AddNewMessageSound
  */
-uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup)
+uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char* title, const char* text, messageType_t type, technology_t *pedia, bool popup)
 {
 	uiMessageListNodeMessage_t *result = nullptr;
 	const messageSettings_t *settings = &messageSettings[messagecategory];
@@ -253,7 +253,7 @@ bool MSO_LoadXML (xmlNode_t *p)
 		return false;
 
 	for (s = cgi->XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = cgi->XML_GetNextNode(s, n, SAVE_MESSAGEOPTIONS_TYPE)) {
-		const char *messagetype = cgi->XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
+		const char* messagetype = cgi->XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
 		int type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -278,10 +278,10 @@ bool MSO_LoadXML (xmlNode_t *p)
 /**
  * @brief parses message options settings from file.
  */
-static int MSO_ParseOption (const char *blockName, const char** text)
+static int MSO_ParseOption (const char* blockName, const char** text)
 {
-	const char *errhead = "MSO_ParseSettings: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "MSO_ParseSettings: unexpected end of file (names ";
+	const char* token;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -327,7 +327,7 @@ static int MSO_ParseOption (const char *blockName, const char** text)
 	}
 
 	for (linkedList_t *element = status; element != nullptr; element = element->next) {
-		const char *value = (const char*)element->data;
+		const char* value = (const char*)element->data;
 		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
 			Com_Printf("MSO_ParseOption: message option type \"%s\" undefined.\n", value);
@@ -346,10 +346,10 @@ static int MSO_ParseOption (const char *blockName, const char** text)
  * @brief Parses a messagecategory script section. These categories are used to group notification types.
  * @sa MSO_InitTextList
  */
-static bool MSO_ParseCategory (const char *blockName, const char** text)
+static bool MSO_ParseCategory (const char* blockName, const char** text)
 {
-	const char *errhead = "MSO_ParseCategory: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "MSO_ParseCategory: unexpected end of file (names ";
+	const char* token;
 	msgCategory_t *category;
 	msgCategoryEntry_t *categoryEntry;
 
@@ -442,10 +442,10 @@ static bool MSO_ParseCategory (const char *blockName, const char** text)
 /**
  * @brief parses message options settings from file.
  */
-void MSO_ParseMessageSettings (const char *name, const char** text)
+void MSO_ParseMessageSettings (const char* name, const char** text)
 {
-	const char *errhead = "MSO_ParseMessageSettings: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "MSO_ParseMessageSettings: unexpected end of file (names ";
+	const char* token;
 
 	/* settings available, reset previous settings */
 	OBJZERO(messageSettings);

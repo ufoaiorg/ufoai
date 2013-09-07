@@ -180,7 +180,7 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 /**
  * @return The translated name of the item in production
  */
-const char *PR_GetName (const productionData_t *data)
+const char* PR_GetName (const productionData_t *data)
 {
 	switch (data->type) {
 	case PRODUCTION_TYPE_ITEM:
@@ -420,7 +420,7 @@ static bool PR_CheckFrame (base_t *base, production_t *prod)
  */
 static void PR_FinishProduction (base_t* base, production_t *prod)
 {
-	const char *name = PR_GetName(&prod->data);
+	const char* name = PR_GetName(&prod->data);
 	technology_t *tech = PR_GetTech(&prod->data);
 
 	prod->frame = 0;
@@ -457,7 +457,7 @@ static void PR_FinishDisassembly (base_t* base, production_t* prod)
 	assert(ufo);
 	for (int i = 0; i < ufo->comp->numItemtypes; i++) {
 		const objDef_t *compOd = ufo->comp->items[i];
-		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? 
+		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ?
 			ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
 
 		assert(compOd);
@@ -723,7 +723,7 @@ bool PR_LoadXML (xmlNode_t *p)
 
 		for (ssnode = cgi->XML_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
-			const char *s1 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
+			const char* s1 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_ITEMID);
 			production_t *prod = &pq->items[pq->numItems];
 
 			prod->idx = pq->numItems;
@@ -753,7 +753,7 @@ bool PR_LoadXML (xmlNode_t *p)
 				PR_SetUFODisassembly(prod);
 			}
 			/* aircraft */
-			const char *s2 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
+			const char* s2 = cgi->XML_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 

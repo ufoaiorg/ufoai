@@ -87,7 +87,7 @@ bool AII_InstallationCanShoot(const installation_t *installation);
 
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
-const char *AII_WeightToName(itemWeight_t weight);
+const char* AII_WeightToName(itemWeight_t weight);
 void AII_AutoAddAmmo(aircraftSlot_t *slot);
 bool AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t *tech);
 

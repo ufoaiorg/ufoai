@@ -56,9 +56,9 @@ typedef enum {
 struct uiMessageListNodeMessage_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
-	char *text;
+	char* text;
 	date_t date;
-	const char *iconName;
+	const char* iconName;
 	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
 	struct uiMessageListNodeMessage_s *next;
 
@@ -70,7 +70,7 @@ struct uiMessageListNodeMessage_s {
 
 typedef struct uiMessageListNodeMessage_s uiMessageListNodeMessage_t;
 
-uiMessageListNodeMessage_t *MS_AddNewMessage(const char *title, const char *text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = nullptr, bool popup = false, bool playSound = true);
+uiMessageListNodeMessage_t *MS_AddNewMessage(const char* title, const char* text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = nullptr, bool popup = false, bool playSound = true);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];

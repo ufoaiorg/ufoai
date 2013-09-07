@@ -56,7 +56,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  */
 static void BS_MarketInfoClick_f (void)
 {
-	const char *item = cgi->Cvar_GetString("mn_item");
+	const char* item = cgi->Cvar_GetString("mn_item");
 	const technology_t *tech = RS_GetTechByProvided(item);
 
 	if (tech)
@@ -112,7 +112,7 @@ static void BS_SetAutosell_f (void)
  */
 static void BS_Buy_f (void)
 {
-	const char *itemid;
+	const char* itemid;
 	int count;
 	base_t *base = B_GetCurrentSelectedBase();
 	const aircraft_t *aircraft;
@@ -281,7 +281,7 @@ static void BS_Buy_f (void)
  */
 static void BS_ShowInfo_f (void)
 {
-	const char *itemid;
+	const char* itemid;
 	const aircraft_t *aircraft;
 	const ugv_t *ugv;
 	const objDef_t *od;

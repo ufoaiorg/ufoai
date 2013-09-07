@@ -46,7 +46,7 @@ nation_t *NAT_GetNationByIDX (const int index)
  * @param[in] nationID nation id as defined in (nation_t->id)
  * @return nation_t pointer or nullptr if nothing found (=error).
  */
-nation_t *NAT_GetNationByID (const char *nationID)
+nation_t *NAT_GetNationByID (const char* nationID)
 {
 	int i;
 
@@ -132,7 +132,7 @@ const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
  * @return Translated happiness string
  * @note happiness is between 0 and 1.0
  */
-const char *NAT_GetHappinessString (const nation_t* nation)
+const char* NAT_GetHappinessString (const nation_t* nation)
 {
 	const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 	if (stats->happiness < 0.015)
@@ -167,8 +167,8 @@ const char *NAT_GetHappinessString (const nation_t* nation)
  */
 void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float happiness)
 {
-	const char *oldString = NAT_GetHappinessString(nation);
-	const char *newString;
+	const char* oldString = NAT_GetHappinessString(nation);
+	const char* newString;
 	nationInfo_t *stats = &nation->stats[0];
 	const float oldHappiness = stats->happiness;
 	const float middleHappiness = (minhappiness + 1.0) / 2;
@@ -299,7 +299,7 @@ static const value_t nation_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cp_campaignPool - free on every game restart and reparse
  */
-void CL_ParseNations (const char *name, const char** text)
+void CL_ParseNations (const char* name, const char** text)
 {
 	nation_t *nation;
 	int i;
@@ -338,7 +338,7 @@ void CL_ParseNations (const char *name, const char** text)
  * @brief Finds a city by it's scripted identifier
  * @param[in] cityId Scripted ID of the city
  */
-city_t *CITY_GetById (const char *cityId)
+city_t *CITY_GetById (const char* cityId)
 {
 	LIST_Foreach(ccs.cities, city_t, city) {
 		if (Q_streq(cityId, city->id))
@@ -372,7 +372,7 @@ static const value_t city_vals[] = {
  * @param[in] name ID of the found nation
  * @param[in] text The text of the nation node
  */
-void CITY_Parse (const char *name, const char** text)
+void CITY_Parse (const char* name, const char** text)
 {
 	city_t newCity;
 

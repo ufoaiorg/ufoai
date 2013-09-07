@@ -38,13 +38,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern const int MAX_POS_LOOP;
 
-const char *MIS_GetName(const mission_t *mission);
+const char* MIS_GetName(const mission_t *mission);
 
 void BATTLE_SetVars(const battleParam_t *battleParameters);
 void CP_CreateBattleParameters(mission_t *mission, battleParam_t *param, const aircraft_t *aircraft);
 void BATTLE_Start(mission_t* mission, const battleParam_t *battleParameters);
-mission_t* CP_GetMissionByIDSilent(const char *missionId);
-mission_t *CP_GetMissionByID(const char *missionId);
+mission_t* CP_GetMissionByIDSilent(const char* missionId);
+mission_t *CP_GetMissionByID(const char* missionId);
 int MIS_GetIdx(const mission_t *mis);
 mission_t* MIS_GetByIdx(int id);
 void CP_MissionRemove(mission_t *mission);
@@ -54,7 +54,7 @@ bool CP_CheckMissionLimitedInTime(const mission_t *mission);
 void CP_MissionDisableTimeLimit(mission_t *mission);
 void CP_MissionNotifyBaseDestroyed(const base_t *base);
 void CP_MissionNotifyInstallationDestroyed(const installation_t *installation);
-const char *MIS_GetModel(const mission_t *mission);
+const char* MIS_GetModel(const mission_t *mission);
 void CP_MissionRemoveFromGeoscape(mission_t *mission);
 void CP_MissionAddToGeoscape(mission_t *mission, bool force);
 void CP_UFORemoveFromGeoscape(mission_t *mission, bool destroyed);

@@ -54,7 +54,7 @@ static void MSO_InitList (void)
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
-		const char *id = va("%d", idx);
+		const char* id = va("%d", idx);
 
 		if (entry->isCategory) {
 			lastCategory = cgi->UI_AddOption(&messageSetting, id, va("_%s", entry->notifyType), id);

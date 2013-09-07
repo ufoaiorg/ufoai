@@ -50,9 +50,9 @@ typedef enum {
 } installationType_t;
 
 typedef struct installationTemplate_s {
-	char *id;							/**< id of the installation. */
-	char *name;							/**< Name of the installation (as you see it ingame). */
-	char *description;					/**< Short description in build dialog */
+	char* id;							/**< id of the installation. */
+	char* name;							/**< Name of the installation (as you see it ingame). */
+	char* description;					/**< Short description in build dialog */
 	installationType_t type;			/**< the type of the installation */
 
 	int cost;							/**< Price of the installation. */
@@ -62,8 +62,8 @@ typedef struct installationTemplate_s {
 	int maxUFOsStored;					/**< The maximum number of ufos that can be stored in an installation. */
 	int maxDamage;						/**< The maximum amount of damage an installation can sustain before it is destroyed. */
 	int buildTime;						/**< Time to build the installation, in days. */
-	char *model;						/**< Model used on 3D geoscape */
-	char *image;						/**< Image used on 2D geoscape */
+	char* model;						/**< Model used on 3D geoscape */
+	char* image;						/**< Image used on 2D geoscape */
 	struct technology_s *tech;			/**< Link to the installation-technology. */
 	bool once;
 } installationTemplate_t;
@@ -112,17 +112,17 @@ installation_t *INS_GetFirstUFOYard(bool free);
 int INS_GetCount(void);
 
 /* Installation template */
-void INS_ParseInstallations(const char *name, const char** text);
-const installationTemplate_t *INS_GetInstallationTemplateByID(const char *id);
+void INS_ParseInstallations(const char* name, const char** text);
+const installationTemplate_t *INS_GetInstallationTemplateByID(const char* id);
 const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
 void INS_LinkTechnologies(void);
 
 bool INS_HasAny(installationStatus_t status = INSTALLATION_WORKING);
 bool INS_HasType(installationType_t type, installationStatus_t status = INSTALLATION_WORKING);
-installationType_t INS_GetType(const char *type);
+installationType_t INS_GetType(const char* type);
 
 /* Lifecycle: build/update/destroy */
-installation_t *INS_Build(const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name);
+installation_t *INS_Build(const installationTemplate_t *installationTemplate, const vec2_t pos, const char* name);
 void INS_UpdateInstallationData(void);
 void INS_DestroyInstallation(installation_t *installation);
 

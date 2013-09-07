@@ -91,7 +91,7 @@ typedef struct messageSettings_s {
 
 #define MAX_MESSAGECATEGORIES 16
 typedef struct msgCategoryEntry_s {
-	const char *notifyType;					/**< notification type or category name */
+	const char* notifyType;					/**< notification type or category name */
 	struct msgCategory_s *category; 		/**< associated category */
 	struct msgCategoryEntry_s *next;		/**< pointer to next in category */
 	struct msgCategoryEntry_s *previous;	/**< pointer to previous in category */
@@ -101,7 +101,7 @@ typedef struct msgCategoryEntry_s {
 
 typedef struct msgCategory_s {
 	int idx;				/**< self-link */
-	const char *name;			/**< script file id / translatable category name */
+	const char* name;			/**< script file id / translatable category name */
 	msgCategoryEntry_t *first;
 	msgCategoryEntry_t *last;
 } msgCategory_t;
@@ -109,8 +109,8 @@ typedef struct msgCategory_s {
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern char const* const nt_strings[NT_NUM_NOTIFYTYPE];
 
-uiMessageListNodeMessage_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, messageType_t type = MSG_STANDARD, technology_t *pedia = nullptr, bool popup = false);
-void MSO_ParseMessageSettings(const char *name, const char** text);
+uiMessageListNodeMessage_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char* title, const char* text, messageType_t type = MSG_STANDARD, technology_t *pedia = nullptr, bool popup = false);
+void MSO_ParseMessageSettings(const char* name, const char** text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands);
 void MSO_Init(void);
 void MSO_Shutdown(void);

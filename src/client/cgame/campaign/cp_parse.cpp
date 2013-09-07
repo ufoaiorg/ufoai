@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return Alien mission category
  * @sa interestCategory_t
  */
-static interestCategory_t CP_GetAlienMissionTypeByID (const char *type)
+static interestCategory_t CP_GetAlienMissionTypeByID (const char* type)
 {
 	if (Q_streq(type, "recon"))
 		return INTERESTCATEGORY_RECON;
@@ -74,10 +74,10 @@ static const value_t alien_group_vals[] = {
 /**
  * @sa CL_ParseScriptFirst
  */
-static void CP_ParseAlienTeam (const char *name, const char** text)
+static void CP_ParseAlienTeam (const char* name, const char** text)
 {
-	const char *errhead = "CP_ParseAlienTeam: unexpected end of file (alienteam ";
-	const char *token;
+	const char* errhead = "CP_ParseAlienTeam: unexpected end of file (alienteam ";
+	const char* token;
 	int i;
 	alienTeamCategory_t *alienCategory;
 
@@ -198,10 +198,10 @@ static void CP_ParseAlienTeam (const char *name, const char** text)
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  */
-static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char** text)
+static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const char* name, const char** text)
 {
-	const char *errhead = "CP_ParseResearchedCampaignItems: unexpected end of file (equipment ";
-	const char *token;
+	const char* errhead = "CP_ParseResearchedCampaignItems: unexpected end of file (equipment ";
+	const char* token;
 	int i;
 
 	/* Don't parse if it is not definition for current type of campaign. */
@@ -250,10 +250,10 @@ static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const c
  * @param[in] researchable Mark them researchable or not researchable
  * @sa CP_ParseScriptFirst
  */
-static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char** text, bool researchable)
+static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char* name, const char** text, bool researchable)
 {
-	const char *errhead = "CP_ParseResearchableCampaignStates: unexpected end of file (equipment ";
-	const char *token;
+	const char* errhead = "CP_ParseResearchableCampaignStates: unexpected end of file (equipment ";
+	const char* token;
 	int i;
 
 	/* get it's body */
@@ -331,7 +331,7 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-static void CP_ParseSalary (const char *name, const char** text, salary_t *s)
+static void CP_ParseSalary (const char* name, const char** text, salary_t *s)
 {
 	Com_ParseBlock(name, text, s, salary_vals, cp_campaignPool);
 }
@@ -375,11 +375,11 @@ static const value_t campaign_vals[] = {
 /**
  * @sa CL_ParseClientData
  */
-static void CP_ParseCampaign (const char *name, const char** text)
+static void CP_ParseCampaign (const char* name, const char** text)
 {
-	const char *errhead = "CP_ParseCampaign: unexpected end of file (campaign ";
+	const char* errhead = "CP_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
-	const char *token;
+	const char* token;
 	int i;
 	salary_t *s;
 	bool drop = false;
@@ -502,11 +502,11 @@ static const value_t components_type_vals[] = {
  * @param[in] text the whole following text after the "components" definition.
  * @sa CP_ParseScriptFirst
  */
-static void CP_ParseComponents (const char *name, const char** text)
+static void CP_ParseComponents (const char* name, const char** text)
 {
 	components_t *comp;
-	const char *errhead = "CP_ParseComponents: unexpected end of file.";
-	const char *token;
+	const char* errhead = "CP_ParseComponents: unexpected end of file.";
+	const char* token;
 
 	/* get body */
 	token = Com_Parse(text);
@@ -616,7 +616,7 @@ components_t *CP_GetComponentsByItem (const objDef_t *item)
  * @param[in] id assemblyId of the component definition.
  * @return Pointer to @c components_t definition.
  */
-components_t *CP_GetComponentsByID (const char *id)
+components_t *CP_GetComponentsByID (const char* id)
 {
 	int i;
 
@@ -637,7 +637,7 @@ components_t *CP_GetComponentsByID (const char *id)
  * @sa CP_ParseCampaignData
  * @sa CP_ParseScriptSecond
  */
-static void CP_ParseScriptFirst (const char *type, const char *name, const char** text)
+static void CP_ParseScriptFirst (const char* type, const char* name, const char** text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "up_chapter"))
@@ -681,7 +681,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char*
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-static void CP_ParseScriptSecond (const char *type, const char *name, const char** text)
+static void CP_ParseScriptSecond (const char* type, const char* name, const char** text)
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "building"))
@@ -697,7 +697,7 @@ static void CP_ParseScriptSecond (const char *type, const char *name, const char
 /**
  * @brief Parses the campaign specific data - this data can only be parsed once the campaign started
  */
-static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char** text)
+static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const char* type, const char* name, const char** text)
 {
 	if (Q_streq(type, "researched"))
 		CP_ParseResearchedCampaignItems(campaign, name, text);
@@ -742,7 +742,7 @@ static bool CP_ItemsSanityCheck (void)
 /** @brief struct that holds the sanity check data */
 typedef struct {
 	bool (*check)(void);	/**< function pointer to check function */
-	const char *name;			/**< name of the subsystem to check */
+	const char* name;			/**< name of the subsystem to check */
 } sanity_functions_t;
 
 /** @brief Data for sanity check of parsed script data */
@@ -780,7 +780,7 @@ void CP_ScriptSanityCheck (void)
  */
 void CP_ParseCampaignData (void)
 {
-	const char *type, *name, *text;
+	const char* type, *name, *text;
 	int i;
 	campaign_t *campaign;
 
@@ -831,7 +831,7 @@ void CP_ParseCampaignData (void)
 
 void CP_ReadCampaignData (const campaign_t *campaign)
 {
-	const char *type, *name, *text;
+	const char* type, *name, *text;
 
 	/* stage two parsing */
 	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);

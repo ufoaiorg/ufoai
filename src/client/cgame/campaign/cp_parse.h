@@ -47,4 +47,4 @@ typedef struct components_s {
 
 void CP_ScriptSanityCheck(void);
 components_t *CP_GetComponentsByItem(const objDef_t *item);
-components_t *CP_GetComponentsByID(const char *id);
+components_t *CP_GetComponentsByID(const char* id);

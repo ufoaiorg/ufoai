@@ -102,7 +102,7 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 	}
 
 	/* strip quotes */
-	char *s = text;
+	char* s = text;
 	if (s[0] == '"' && s[strlen(s) - 1] == '"') {
 		s[strlen(s) - 1] = '\0';
 		s++;

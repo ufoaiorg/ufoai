@@ -662,7 +662,7 @@ static void PR_ProductionIncrease_f (void)
 		PR_IncreaseProduction(prod, producibleAmount);
 		cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
-		const char *name = nullptr;
+		const char* name = nullptr;
 
 		tech = PR_GetTech(&selectedData);
 		name = PR_GetName(&selectedData);
