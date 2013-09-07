@@ -30,3 +30,7 @@
 #ifdef __IPHONEOS__
 #include "ios-config.h"
 #endif
+
+#ifdef __FREEBSD__
+#include "freebsd-config.h"
+#endif
