@@ -105,7 +105,7 @@ static cvar_t *net_ipv4;
 static SDL_mutex *netMutex;
 
 struct net_stream {
-	void *data;
+	void* data;
 
 	bool loopback;
 	bool ready;
@@ -812,12 +812,12 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	return buf;
 }
 
-void *NET_StreamGetData (struct net_stream *s)
+void* NET_StreamGetData (struct net_stream *s)
 {
 	return s ? s->data : nullptr;
 }
 
-void NET_StreamSetData (struct net_stream *s, void *data)
+void NET_StreamSetData (struct net_stream *s, void* data)
 {
 	if (!s)
 		return;

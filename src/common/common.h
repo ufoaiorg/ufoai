@@ -308,25 +308,25 @@ void Con_Print(const char* txt);
 
 /* Event timing */
 
-typedef void event_func(int now, void *data);
-typedef bool event_check_func(int now, void *data);
+typedef void event_func(int now, void* data);
+typedef bool event_check_func(int now, void* data);
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
-typedef bool event_filter(int when, event_func *func, event_check_func *check, void *data);
-typedef void event_clean_func(void * data);
+typedef bool event_filter(int when, event_func *func, event_check_func *check, void* data);
+typedef void event_clean_func(void*  data);
 
 struct scheduleEvent_t {
 	int when;
 	event_func *func;
 	event_check_func *check;
 	event_clean_func *clean;
-	void *data;
+	void* data;
 };
 
 typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
 
-ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
+ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*
@@ -339,8 +339,8 @@ void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
 int CL_Milliseconds(void);
-void CL_Frame(int now, void *data);
-void CL_SlowFrame(int now, void *data);
+void CL_Frame(int now, void* data);
+void CL_SlowFrame(int now, void* data);
 bool CL_ParseClientData(const char* type, const char* name, const char** text);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
@@ -350,7 +350,7 @@ void SV_Init(void);
 void SV_Clear(void);
 void SV_Shutdown(const char* finalmsg, bool reconnect);
 void SV_ShutdownWhenEmpty(void);
-void SV_Frame(int now, void *);
+void SV_Frame(int now, void* );
 mapData_t *SV_GetMapData(void);
 mapTiles_t *SV_GetMapTiles(void);
 

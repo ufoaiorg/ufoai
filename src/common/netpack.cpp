@@ -393,7 +393,7 @@ float NET_ReadAngle16 (dbuffer *buf)
 	return (float) SHORT2ANGLE(s);
 }
 
-void NET_ReadData (dbuffer *buf, void *data, int len)
+void NET_ReadData (dbuffer *buf, void* data, int len)
 {
 	int i;
 

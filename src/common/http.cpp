@@ -76,7 +76,7 @@ bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength,
 /**
  * @brief libcurl callback to update header info.
  */
-size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
+size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 {
 	char headerBuff[1024];
 	size_t bytes;
@@ -106,7 +106,7 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 /**
  * @brief libcurl callback for HTTP_GetURL
  */
-size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
+size_t HTTP_Recv (void* ptr, size_t size, size_t nmemb, void* stream)
 {
 	size_t bytes;
 	dlhandle_t *dl;
@@ -329,7 +329,7 @@ bool HTTP_Encode (const char* url, char* out, size_t outLength)
  * @param[in] userdata The userdata that is given to the callback
  * @param[in] postfields Some potential POST data
  */
-bool HTTP_GetURL (const char* url, http_callback_t callback, void *userdata, const char* postfields)
+bool HTTP_GetURL (const char* url, http_callback_t callback, void* userdata, const char* postfields)
 {
 	dlhandle_t dl;
 	OBJZERO(dl);
@@ -358,8 +358,8 @@ void HTTP_Cleanup (void)
 #else
 void HTTP_GetURL(const char* url, http_callback_t callback) {}
 void HTTP_PutFile(const char* formName, const char* fileName, const char* url, const upparam_t *params) {}
-size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
-size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream) {return 0L;}
+size_t HTTP_Recv(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
+size_t HTTP_Header(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 void HTTP_Cleanup(void) {}
 bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int *port) {return false;}
 #endif

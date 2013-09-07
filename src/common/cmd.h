@@ -110,8 +110,8 @@ void Cmd_RemoveCommand(const char* cmd_name);
 
 void Cmd_AddParamCompleteFunction(const char* cmd_name, int (*function)(const char* partial, const char** match));
 
-void Cmd_AddUserdata(const char* cmd_name, void *userdata);
-void *Cmd_GetUserdata (const char* cmd_name);
+void Cmd_AddUserdata(const char* cmd_name, void* userdata);
+void* Cmd_GetUserdata (const char* cmd_name);
 
 /**
  * Tests whether candidate has partial as prefix and determines the common prefix of all candidates passed to it.
@@ -143,7 +143,7 @@ int Cmd_CompleteCommand(const char* partial, const char** match);
 int Cmd_Argc(void);
 const char* Cmd_Argv(int arg);
 const char* Cmd_Args(void);
-void *Cmd_Userdata(void);
+void* Cmd_Userdata(void);
 
 /**
  * @brief Takes a null terminated string.  Does not need to be /n terminated.

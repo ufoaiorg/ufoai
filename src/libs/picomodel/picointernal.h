@@ -91,7 +91,7 @@ typedef struct picoMemStream_s {
 /* variables */
 extern const picoModule_t *picoModules[];
 
-extern void *(*_pico_ptr_malloc) (size_t);
+extern void* (*_pico_ptr_malloc) (size_t);
 extern void (*_pico_ptr_free) (void*);
 extern void (*_pico_ptr_load_file) (char*, unsigned char**, int*);
 extern void (*_pico_ptr_free_file) (void*);
@@ -100,15 +100,15 @@ extern void (*_pico_ptr_print) (int, const char*);
 /* prototypes */
 
 /* memory */
-void *_pico_alloc (size_t size);
-void *_pico_calloc (size_t num, size_t size);
-void *_pico_realloc (void** ptr, size_t oldSize, size_t newSize);
+void* _pico_alloc (size_t size);
+void* _pico_calloc (size_t num, size_t size);
+void* _pico_realloc (void** ptr, size_t oldSize, size_t newSize);
 char* _pico_clone_alloc (const char* str);
-void _pico_free (void *ptr);
+void _pico_free (void* ptr);
 
 /* files */
 void _pico_load_file (char* name, unsigned char** buffer, int *bufSize);
-void _pico_free_file (void *buffer);
+void _pico_free_file (void* buffer);
 
 /* strings */
 void _pico_first_token (char* str);
@@ -178,7 +178,7 @@ int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def);
 /* pico memory stream */
 picoMemStream_t *_pico_new_memstream (picoByte_t *buffer, int bufSize);
 void _pico_free_memstream (picoMemStream_t *s);
-int _pico_memstream_read (picoMemStream_t *s, void *buffer, int len);
+int _pico_memstream_read (picoMemStream_t *s, void* buffer, int len);
 int _pico_memstream_getc (picoMemStream_t *s);
 int _pico_memstream_seek (picoMemStream_t *s, long offset, int origin);
 long _pico_memstream_tell (picoMemStream_t *s);

@@ -220,7 +220,7 @@ void Com_SHA2Update (sha2_context *ctx, const byte *input, uint32_t length)
 		ctx->total[1]++;
 
 	if (left && length >= fill) {
-		memcpy((void *) (ctx->buffer + left), (const void *) input, fill);
+		memcpy((void* ) (ctx->buffer + left), (const void* ) input, fill);
 		Com_SHA2Process(ctx, ctx->buffer);
 		length -= fill;
 		input += fill;
@@ -234,7 +234,7 @@ void Com_SHA2Update (sha2_context *ctx, const byte *input, uint32_t length)
 	}
 
 	if (length) {
-		memcpy((void *) (ctx->buffer + left), (const void *) input, length);
+		memcpy((void* ) (ctx->buffer + left), (const void* ) input, length);
 	}
 }
 

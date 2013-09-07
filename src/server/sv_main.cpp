@@ -672,7 +672,7 @@ static SDL_Thread *masterServerHeartBeatThread;
  * @brief Send a message to the master every few minutes to
  * let it know we are alive, and log information
  */
-static int Master_HeartbeatThread (void * data)
+static int Master_HeartbeatThread (void*  data)
 {
 	char url[512];
 	Com_sprintf(url, sizeof(url), "%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string);
@@ -815,7 +815,7 @@ static void SV_CheckTimeouts (void)
 /**
  * @sa Qcommon_Frame
  */
-void SV_Frame (int now, void *data)
+void SV_Frame (int now, void* data)
 {
 	Com_ReadFromPipe();
 

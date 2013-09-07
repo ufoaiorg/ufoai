@@ -1718,7 +1718,7 @@ void SV_PrepareTilesToPlace (MapInfo *map)
  * @return 0 on success, -1 if it was interrupted via the @c mapSem semaphore, signaling that
  *  someone else has finished first, or timeout occurred.
  */
-static int SV_AssemblyThread (void *data)
+static int SV_AssemblyThread (void* data)
 {
 	MapInfo *map = static_cast<MapInfo*>(data);
 
@@ -1940,7 +1940,7 @@ void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inher
 }
 
 #if SORT_BY_SIZE
-static int cmpTileAreaSize (const void * a, const void * b)
+static int cmpTileAreaSize (const void*  a, const void*  b)
 {
 	if (((const mToPlace_t *) a)->tile->area > ((const mToPlace_t *) b)->tile->area)
 		return -1;

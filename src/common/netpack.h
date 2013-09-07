@@ -73,7 +73,7 @@ float NET_ReadAngle(dbuffer *buf);
 float NET_ReadAngle16(dbuffer *buf);
 void NET_ReadDir(dbuffer *buf, vec3_t vector);
 
-void NET_ReadData(dbuffer *buf, void *buffer, int size);
+void NET_ReadData(dbuffer *buf, void* buffer, int size);
 void NET_vReadFormat(dbuffer *buf, const char* format, va_list ap);
 void NET_ReadFormat(dbuffer *buf, const char* format, ...);
 void NET_SkipFormat(dbuffer *buf, const char* format);

@@ -491,13 +491,13 @@ typedef struct cmd_function_s {
 	const char* description;
 	xcommand_t function;
 	int (*completeParam) (const char* partial, const char** match);
-	void *userdata;
+	void* userdata;
 } cmd_function_t;
 
 static int cmd_argc;
 static char* cmd_argv[MAX_STRING_TOKENS];
 static char cmd_args[MAX_STRING_CHARS];
-static void *cmd_userdata;
+static void* cmd_userdata;
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
@@ -537,7 +537,7 @@ const char* Cmd_Args (void)
 /**
  * @brief Return the userdata of the called command
  */
-void *Cmd_Userdata (void)
+void* Cmd_Userdata (void)
 {
 	return cmd_userdata;
 }
@@ -709,7 +709,7 @@ void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const c
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_AddUserdata
  */
-void *Cmd_GetUserdata (const char* cmd_name)
+void* Cmd_GetUserdata (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -738,7 +738,7 @@ void *Cmd_GetUserdata (const char* cmd_name)
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_GetUserdata
  */
-void Cmd_AddUserdata (const char* cmd_name, void *userdata)
+void Cmd_AddUserdata (const char* cmd_name, void* userdata)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;

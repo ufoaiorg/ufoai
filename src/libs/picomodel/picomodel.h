@@ -78,7 +78,7 @@ typedef struct picoModel_s picoModel_t;
 typedef struct picoModule_s picoModule_t;
 
 struct picoSurface_s {
-	void *data;
+	void* data;
 
 	picoModel_t *model; /* owner model */
 
@@ -120,7 +120,7 @@ struct picoShader_s {
 };
 
 struct picoModel_s {
-	void *data;
+	void* data;
 	char* name; /* model name */
 	char* fileName; /* sea: model file name */
 	int frameNum; /* sea: renamed to frameNum */
@@ -152,10 +152,10 @@ enum {
 
 /* convenience (makes it easy to add new params to the callbacks) */
 #define PM_PARAMS_CANLOAD \
- const char* fileName, void *buffer, int bufSize
+ const char* fileName, void* buffer, int bufSize
 
 #define PM_PARAMS_LOAD \
- const char* fileName, int frameNum, void *buffer, int bufSize
+ const char* fileName, int frameNum, void* buffer, int bufSize
 
 #define PM_PARAMS_CANSAVE \
  void
@@ -183,7 +183,7 @@ int PicoInit (void);
 void PicoShutdown (void);
 int PicoError (void);
 
-void PicoSetMallocFunc (void *(*func) (size_t));
+void PicoSetMallocFunc (void* (*func) (size_t));
 void PicoSetFreeFunc (void (*func) (void*));
 void PicoSetLoadFileFunc (void (*func) (char*, unsigned char**, int*));
 void PicoSetFreeFileFunc (void (*func) (void*));
@@ -193,8 +193,8 @@ const picoModule_t** PicoModuleList (int *numModules);
 
 picoModel_t *PicoLoadModel (char* name, int frameNum);
 
-typedef size_t (*PicoInputStreamReadFunc) (void *inputStream, unsigned char* buffer, size_t length);
-picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void *inputStream,
+typedef size_t (*PicoInputStreamReadFunc) (void* inputStream, unsigned char* buffer, size_t length);
+picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void* inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum);
 
 /* model functions */
@@ -219,7 +219,7 @@ void PicoSetModelName (picoModel_t *model, const char* name);
 void PicoSetModelFileName (picoModel_t *model, const char* fileName);
 void PicoSetModelFrameNum (picoModel_t *model, int frameNum);
 void PicoSetModelNumFrames (picoModel_t *model, int numFrames);
-void PicoSetModelData (picoModel_t *model, void *data);
+void PicoSetModelData (picoModel_t *model, void* data);
 
 void PicoSetShaderName (picoShader_t *shader, const char* name);
 void PicoSetShaderMapName (picoShader_t *shader, char* mapName);
@@ -229,7 +229,7 @@ void PicoSetShaderSpecularColor (picoShader_t *shader, picoColor_t color);
 void PicoSetShaderTransparency (picoShader_t *shader, float value);
 void PicoSetShaderShininess (picoShader_t *shader, float value);
 
-void PicoSetSurfaceData (picoSurface_t *surface, void *data);
+void PicoSetSurfaceData (picoSurface_t *surface, void* data);
 void PicoSetSurfaceType (picoSurface_t *surface, picoSurfaceType_t type);
 void PicoSetSurfaceName (picoSurface_t *surface, char* name);
 void PicoSetSurfaceShader (picoSurface_t *surface, picoShader_t *shader);
@@ -248,7 +248,7 @@ const char* PicoGetModelName (picoModel_t *model);
 const char* PicoGetModelFileName (picoModel_t *model);
 int PicoGetModelFrameNum (picoModel_t *model);
 int PicoGetModelNumFrames (picoModel_t *model);
-void *PicoGetModelData (picoModel_t *model);
+void* PicoGetModelData (picoModel_t *model);
 int PicoGetModelNumShaders (picoModel_t *model);
 picoShader_t *PicoGetModelShader (picoModel_t *model, int num); /* sea */
 int PicoGetModelNumSurfaces (picoModel_t *model);
@@ -264,7 +264,7 @@ picoByte_t *PicoGetShaderSpecularColor (picoShader_t *shader);
 float PicoGetShaderTransparency (picoShader_t *shader);
 float PicoGetShaderShininess (picoShader_t *shader);
 
-void *PicoGetSurfaceData (picoSurface_t *surface);
+void* PicoGetSurfaceData (picoSurface_t *surface);
 const char* PicoGetSurfaceName (picoSurface_t *surface); /* sea */
 picoSurfaceType_t PicoGetSurfaceType (picoSurface_t *surface);
 picoShader_t *PicoGetSurfaceShader (picoSurface_t *surface); /* sea */
@@ -290,7 +290,7 @@ typedef struct picoVertexCombinationData_s {
 typedef struct picoVertexCombinationHash_s {
 	picoVertexCombinationData_t vcd;
 	picoIndex_t index;
-	void *data;
+	void* data;
 	struct picoVertexCombinationHash_s *next;
 } picoVertexCombinationHash_t;
 

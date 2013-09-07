@@ -205,7 +205,7 @@ static void mdfour (unsigned char* out, const unsigned char* in, int n)
  * Date: 01 Jan 2000
  */
 
-unsigned Com_BlockChecksum (const void *buffer, int length)
+unsigned Com_BlockChecksum (const void* buffer, int length)
 {
 	int digest[4];
 	unsigned val;

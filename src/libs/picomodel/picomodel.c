@@ -67,7 +67,7 @@ int PicoError (void)
 /**
  * @brief sets the ptr to the malloc function
  */
-void PicoSetMallocFunc (void *(*func) ( size_t))
+void PicoSetMallocFunc (void* (*func) ( size_t))
 {
 	if (func != NULL)
 		_pico_ptr_malloc = func;
@@ -188,7 +188,7 @@ picoModel_t *PicoLoadModel (char* fileName, int frameNum)
 	return model;
 }
 
-picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void *inputStream,
+picoModel_t *PicoModuleLoadModelStream (const picoModule_t *module, const char* fileName, void* inputStream,
 		PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum)
 {
 	picoModel_t *model;
@@ -295,7 +295,7 @@ int PicoAdjustModel (picoModel_t *model, int numShaders, int numSurfaces)
 	/* additional shaders? */
 	while (numShaders > model->maxShaders) {
 		model->maxShaders += PICO_GROW_SHADERS;
-		if (!_pico_realloc((void *) &model->shader, model->numShaders * sizeof(*model->shader),
+		if (!_pico_realloc((void* ) &model->shader, model->numShaders * sizeof(*model->shader),
 				model->maxShaders * sizeof(*model->shader)))
 			return 0;
 	}
@@ -307,7 +307,7 @@ int PicoAdjustModel (picoModel_t *model, int numShaders, int numSurfaces)
 	/* additional surfaces? */
 	while (numSurfaces > model->maxSurfaces) {
 		model->maxSurfaces += PICO_GROW_SURFACES;
-		if (!_pico_realloc((void *) &model->surface, model->numSurfaces * sizeof(*model->surface),
+		if (!_pico_realloc((void* ) &model->surface, model->numSurfaces * sizeof(*model->surface),
 				model->maxSurfaces * sizeof(*model->surface)))
 			return 0;
 	}
@@ -497,13 +497,13 @@ int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays,
 	/* additional vertexes? */
 	while (numVertexes > surface->maxVertexes) { /* fix */
 		surface->maxVertexes += PICO_GROW_VERTEXES;
-		if (!_pico_realloc((void *) &surface->xyz, surface->numVertexes * sizeof(*surface->xyz),
+		if (!_pico_realloc((void* ) &surface->xyz, surface->numVertexes * sizeof(*surface->xyz),
 				surface->maxVertexes * sizeof(*surface->xyz)))
 			return 0;
-		if (!_pico_realloc((void *) &surface->normal, surface->numVertexes * sizeof(*surface->normal),
+		if (!_pico_realloc((void* ) &surface->normal, surface->numVertexes * sizeof(*surface->normal),
 				surface->maxVertexes * sizeof(*surface->normal)))
 			return 0;
-		if (!_pico_realloc((void *) &surface->smoothingGroup, surface->numVertexes * sizeof(*surface->smoothingGroup),
+		if (!_pico_realloc((void* ) &surface->smoothingGroup, surface->numVertexes * sizeof(*surface->smoothingGroup),
 				surface->maxVertexes * sizeof(*surface->smoothingGroup)))
 			return 0;
 		for (i = 0; i < surface->numSTArrays; i++)
@@ -561,7 +561,7 @@ int PicoAdjustSurface (picoSurface_t *surface, int numVertexes, int numSTArrays,
 	/* additional face normals? */
 	while (numFaceNormals > surface->maxFaceNormals) { /* fix */
 		surface->maxFaceNormals += PICO_GROW_FACES;
-		if (!_pico_realloc((void *) &surface->faceNormal, surface->numFaceNormals * sizeof(*surface->faceNormal),
+		if (!_pico_realloc((void* ) &surface->faceNormal, surface->numFaceNormals * sizeof(*surface->faceNormal),
 				surface->maxFaceNormals * sizeof(*surface->faceNormal)))
 			return 0;
 	}
@@ -638,7 +638,7 @@ void PicoSetModelNumFrames (picoModel_t *model, int numFrames)
 	model->numFrames = numFrames;
 }
 
-void PicoSetModelData (picoModel_t *model, void *data)
+void PicoSetModelData (picoModel_t *model, void* data)
 {
 	if (model == NULL)
 		return;
@@ -721,7 +721,7 @@ void PicoSetShaderShininess (picoShader_t *shader, float value)
 		shader->shininess = 127.0;
 }
 
-void PicoSetSurfaceData (picoSurface_t *surface, void *data)
+void PicoSetSurfaceData (picoSurface_t *surface, void* data)
 {
 	if (surface == NULL)
 		return;
@@ -869,7 +869,7 @@ int PicoGetModelNumFrames (picoModel_t *model)
 	return model->numFrames;
 }
 
-void *PicoGetModelData (picoModel_t *model)
+void* PicoGetModelData (picoModel_t *model)
 {
 	if (model == NULL)
 		return NULL;
@@ -1003,7 +1003,7 @@ float PicoGetShaderShininess (picoShader_t *shader)
 	return shader->shininess;
 }
 
-void *PicoGetSurfaceData (picoSurface_t *surface)
+void* PicoGetSurfaceData (picoSurface_t *surface)
 {
 	if (surface == NULL)
 		return NULL;
@@ -1364,7 +1364,7 @@ typedef struct _UniqueIndices {
 	BinaryTree tree;
 	IndexArray indices;
 	LessFunc lessFunc;
-	void *lessData;
+	void* lessData;
 } UniqueIndices;
 
 static size_t UniqueIndices_size (UniqueIndices* self)
@@ -1378,7 +1378,7 @@ static void UniqueIndices_reserve (UniqueIndices* self, size_t size)
 	indexarray_reserve(&self->indices, size);
 }
 
-static void UniqueIndices_init (UniqueIndices* self, LessFunc lessFunc, void *lessData)
+static void UniqueIndices_init (UniqueIndices* self, LessFunc lessFunc, void* lessData)
 {
 	self->lessFunc = lessFunc;
 	self->lessData = lessData;
@@ -1440,7 +1440,7 @@ typedef struct picoSmoothVertices_s {
 	picoIndex_t *smoothingGroups;
 } picoSmoothVertices_t;
 
-static int lessSmoothVertex (void *data, picoIndex_t first, picoIndex_t second)
+static int lessSmoothVertex (void* data, picoIndex_t first, picoIndex_t second)
 {
 	picoSmoothVertices_t *smoothVertices = data;
 

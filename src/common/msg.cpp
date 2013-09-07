@@ -38,9 +38,9 @@ void SZ_Clear (sizebuf_t *buf)
 	buf->cursize = 0;
 }
 
-static void *SZ_GetSpace (sizebuf_t *buf, int length)
+static void* SZ_GetSpace (sizebuf_t *buf, int length)
 {
-	void *data;
+	void* data;
 
 	if (buf->cursize + length > buf->maxsize)
 		Com_Error(ERR_FATAL, "SZ_GetSpace: overflow");
@@ -51,7 +51,7 @@ static void *SZ_GetSpace (sizebuf_t *buf, int length)
 	return data;
 }
 
-void SZ_Write (sizebuf_t *buf, const void *data, int length)
+void SZ_Write (sizebuf_t *buf, const void* data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }

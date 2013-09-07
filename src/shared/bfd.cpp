@@ -51,7 +51,7 @@ void output_print (struct output_buffer *ob, const char*  format, ...)
 	ob->ptr = strlen(ob->buf + ob->ptr) + ob->ptr;
 }
 
-static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
+static void lookup_section (bfd *abfd, asection *sec, void* opaque_data)
 {
 	struct find_info *data = (struct find_info *)opaque_data;
 	bfd_vma vma;
@@ -106,7 +106,7 @@ static void list_matching_formats (struct output_buffer *ob, const char*  procna
 static int init_bfd_ctx (struct bfd_ctx *bc, const char*  procname, struct output_buffer *ob)
 {
 	bfd *b;
-	void *symbol_table;
+	void* symbol_table;
 	unsigned dummy = 0;
 	char** matching = nullptr;
 

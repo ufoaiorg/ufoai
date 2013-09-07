@@ -55,12 +55,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param oldValue The old value of the cvar - this is never @c nullptr, but can be empty.
  * @param newValue The new value of the cvar - this is never @c nullptr, but can be empty.
  */
-typedef void (*cvarChangeListenerFunc_t) (const char* cvarName, const char* oldValue, const char* newValue, void *data);
+typedef void (*cvarChangeListenerFunc_t) (const char* cvarName, const char* oldValue, const char* newValue, void* data);
 
 typedef struct cvarChangeListener_s {
 	cvarChangeListenerFunc_t exec;
 	struct cvarChangeListener_s *next;
-	void *data;
+	void* data;
 } cvarChangeListener_t;
 
 /**

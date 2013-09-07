@@ -49,8 +49,8 @@ struct net_stream *NET_Connect(const char* node, const char* service, stream_onc
 struct net_stream *NET_ConnectToLoopBack(stream_onclose_func *onclose);
 void NET_StreamEnqueue(struct net_stream *s, const char* data, int len);
 int NET_StreamDequeue(struct net_stream *s, char* data, int len);
-void *NET_StreamGetData(struct net_stream *s);
-void NET_StreamSetData(struct net_stream *s, void *data);
+void* NET_StreamGetData(struct net_stream *s);
+void NET_StreamSetData(struct net_stream *s, void* data);
 const char* NET_StreamPeerToName(struct net_stream *s, char* dst, int len, bool appendPort);
 const char* NET_StreamToString(struct net_stream *s);
 bool NET_StreamIsLoopback(struct net_stream *s);

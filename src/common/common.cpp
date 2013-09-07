@@ -89,7 +89,7 @@ struct timer {
 	int checks_low;
 
 	event_func *func;
-	void *data;
+	void* data;
 };
 
 class CompareScheduleEvent {
@@ -102,7 +102,7 @@ public:
 typedef std::multiset<ScheduleEventPtr, CompareScheduleEvent> EventPriorityQueue;
 static EventPriorityQueue eventQueue;
 
-static void Schedule_Timer(cvar_t *freq, event_func *func, event_check_func *check, void *data);
+static void Schedule_Timer(cvar_t *freq, event_func *func, event_check_func *check, void* data);
 
 /*
 ==============================================================================
@@ -1048,7 +1048,7 @@ static void Com_WriteConfig_f (void)
 	Com_WriteConfigToFile(filename);
 }
 
-static void Cbuf_Execute_timer (int now, void *data)
+static void Cbuf_Execute_timer (int now, void* data)
 {
 	Cbuf_Execute();
 }
@@ -1263,7 +1263,7 @@ void Com_ReadFromPipe (void)
 		Cmd_ExecuteString("%s", buffer);
 }
 
-static void tick_timer (int now, void *data)
+static void tick_timer (int now, void* data)
 {
 	struct timer *timer = (struct timer *)data;
 	const int old_interval = timer->interval;
@@ -1324,7 +1324,7 @@ static void tick_timer (int now, void *data)
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, nullptr, nullptr, timer);
 }
 
-static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void *data)
+static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void* data)
 {
 	struct timer* const timer = Mem_PoolAllocType(struct timer, com_genericPool);
 	int i;
@@ -1354,7 +1354,7 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
  *  function or func will be called, but never both.
  * @param data Arbitrary data to be passed to the check and event functions.
  */
-ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
+ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data)
 {
 	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;
@@ -1429,7 +1429,7 @@ int CL_FilterEventQueue (event_filter *filter)
  * @param[in] check The event check callback that can be used to delay event
  * @param[in] data The userdata that was given at event scheduling
  */
-static bool Event_FilterAll (int when, event_func *func, event_check_func *check, void *data)
+static bool Event_FilterAll (int when, event_func *func, event_check_func *check, void* data)
 {
 	return false;
 }

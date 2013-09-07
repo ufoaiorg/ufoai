@@ -77,7 +77,7 @@ static void (*WorkFunction) (unsigned int);
  * @brief Shared work entry point by all threads.  Retrieve and perform
  * chunks of work iteratively until work is finished.
  */
-static int ThreadWork (void *p)
+static int ThreadWork (void* p)
 {
 	while (true) {
 		int work = GetThreadWork();

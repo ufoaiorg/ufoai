@@ -167,7 +167,7 @@ static TObjVertexData *SizeObjVertexData (TObjVertexData *vertexData, int reqEnt
 				newAllocated);
 #endif
 		/* try to reallocate */
-		vertexData = (TObjVertexData *) _pico_realloc((void *) &vertexData, sizeof(TObjVertexData) * (*allocated),
+		vertexData = (TObjVertexData *) _pico_realloc((void* ) &vertexData, sizeof(TObjVertexData) * (*allocated),
 				sizeof(TObjVertexData) * (newAllocated));
 
 		/* reallocation failed */

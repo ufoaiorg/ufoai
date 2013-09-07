@@ -283,7 +283,7 @@ static float SV_ReadAngle (void)
 	return NET_ReadAngle(sv->messageBuffer);
 }
 
-static void SV_ReadData (void *buffer, int size)
+static void SV_ReadData (void* buffer, int size)
 {
 	NET_ReadData(sv->messageBuffer, buffer, size);
 }
@@ -514,7 +514,7 @@ static edict_t *SV_GetEventEdict (void)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void *SV_TagAlloc (int size, int tagNum, const char* file, int line)
+static void* SV_TagAlloc (int size, int tagNum, const char* file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -522,7 +522,7 @@ static void *SV_TagAlloc (int size, int tagNum, const char* file, int line)
 	return _Mem_Alloc(size, true, sv->gameSysPool, tagNum, file, line);
 }
 
-static void SV_MemFree (void *ptr, const char* file, int line)
+static void SV_MemFree (void* ptr, const char* file, int line)
 {
 	_Mem_Free(ptr, file, line);
 }
@@ -703,7 +703,7 @@ void SV_ShutdownGameProgs (void)
  * @sa SV_RunGameFrame
  * @sa SV_Frame
  */
-int SV_RunGameFrameThread (void *data)
+int SV_RunGameFrameThread (void* data)
 {
 	do {
 		const ScopedMutex scopedMutex(svs.serverMutex);

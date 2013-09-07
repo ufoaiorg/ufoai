@@ -42,7 +42,7 @@
 #include "picointernal.h"
 
 /* function pointers */
-void *(*_pico_ptr_malloc) ( size_t) = malloc;
+void* (*_pico_ptr_malloc) ( size_t) = malloc;
 void (*_pico_ptr_free) (void*) = free;
 void (*_pico_ptr_load_file) (char*, unsigned char**, int*) = NULL;
 void (*_pico_ptr_free_file) (void*) = NULL;
@@ -56,9 +56,9 @@ typedef union {
 /**
  * @brief kludged memory allocation wrapper
  */
-void *_pico_alloc (size_t size)
+void* _pico_alloc (size_t size)
 {
-	void *ptr;
+	void* ptr;
 
 	/* some sanity checks */
 	if (size == 0)
@@ -81,9 +81,9 @@ void *_pico_alloc (size_t size)
 /**
  * @brief _pico_calloc wrapper
  */
-void *_pico_calloc (size_t num, size_t size)
+void* _pico_calloc (size_t num, size_t size)
 {
-	void *ptr;
+	void* ptr;
 
 	/* some sanity checks */
 	if (num == 0 || size == 0)
@@ -106,9 +106,9 @@ void *_pico_calloc (size_t num, size_t size)
 /**
  * @brief memory reallocation wrapper (note: only grows, but never shrinks or frees)
  */
-void *_pico_realloc (void** ptr, size_t oldSize, size_t newSize)
+void* _pico_realloc (void** ptr, size_t oldSize, size_t newSize)
 {
-	void *ptr2;
+	void* ptr2;
 
 	/* sanity checks */
 	if (ptr == NULL)
@@ -166,7 +166,7 @@ char* _pico_clone_alloc (const char* str)
 /**
  * @brief wrapper around the free function pointer
  */
-void _pico_free (void *ptr)
+void _pico_free (void* ptr)
 {
 	/* sanity checks */
 	if (ptr == NULL)
@@ -200,7 +200,7 @@ void _pico_load_file (char* name, unsigned char** buffer, int *bufSize)
 /**
  * @brief wrapper around the file free function pointer
  */
-void _pico_free_file (void *buffer)
+void _pico_free_file (void* buffer)
 {
 	/* sanity checks */
 	if (buffer == NULL)
@@ -1189,7 +1189,7 @@ void _pico_free_memstream (picoMemStream_t *s)
 /**
  * @brief reads data from a pico memorystream into a buffer.
  */
-int _pico_memstream_read (picoMemStream_t *s, void *buffer, int len)
+int _pico_memstream_read (picoMemStream_t *s, void* buffer, int len)
 {
 	int ret = 1;
 
