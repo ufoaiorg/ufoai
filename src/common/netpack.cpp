@@ -65,6 +65,9 @@ void NET_WriteString (dbuffer *buf, const char* str)
 	Com_DPrintf(DEBUG_EVENTSYS, "string event data: %s\n", str);
 }
 
+/**
+ * @brief Skip the zero string terminal character. If you need it, use @c NET_WriteString.
+ */
 void NET_WriteRawString (dbuffer *buf, const char* str)
 {
 	if (!str)

@@ -968,16 +968,11 @@ static void Cvar_List_f (void)
  * @brief Return a string with all cvars with bitflag given by parameter set
  * @param bit The bitflag we search the global cvar array for
  */
-static char* Cvar_BitInfo (int bit)
+static char* Cvar_BitInfo (int bit, char* info, size_t infoSize)
 {
-	static char info[MAX_INFO_STRING];
-	cvar_t *var;
-
-	info[0] = 0;
-
-	for (var = cvarVars; var; var = var->next) {
+	for (cvar_t *var = cvarVars; var; var = var->next) {
 		if (var->flags & bit)
-			Info_SetValueForKey(info, sizeof(info), var->name, var->string);
+			Info_SetValueForKey(info, infoSize, var->name, var->string);
 	}
 	return info;
 }
@@ -987,7 +982,9 @@ static char* Cvar_BitInfo (int bit)
  */
 const char* Cvar_Userinfo (void)
 {
-	return Cvar_BitInfo(CVAR_USERINFO);
+	static char info[MAX_INFO_STRING];
+	info[0] = 0;
+	return Cvar_BitInfo(CVAR_USERINFO, info, sizeof(info));
 }
 
 /**
@@ -996,7 +993,9 @@ const char* Cvar_Userinfo (void)
  */
 const char* Cvar_Serverinfo (void)
 {
-	return Cvar_BitInfo(CVAR_SERVERINFO);
+	static char info[MAX_INFO_STRING];
+	info[0] = 0;
+	return Cvar_BitInfo(CVAR_SERVERINFO, info, sizeof(info));
 }
 
 /**
