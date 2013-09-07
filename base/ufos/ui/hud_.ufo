@@ -792,9 +792,9 @@ window hud_chat
 					clickoutabort	true
 					onChange	{
 						if ( *cvar:mn_chat_team eq "1" ) {
-							cmd "say_team \"<cvar:mn_entry>\";"
+							cmd "say_team \"<node:this@string>\";"
 						} else {
-							cmd "say \"<cvar:mn_entry>\";"
+							cmd "say \"<node:this@string>\";"
 						}
 						*cvar:mn_entry = ""
 						call *node:root.hud_activate_chat_textentry
