@@ -91,9 +91,7 @@ static void SV_New_f (client_t *cl)
 
 	/* game server */
 	if (Com_ServerState() == ss_game) {
-		int i;
-		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-			const char* configString;
+		for (int i = 0; i < MAX_CONFIGSTRINGS; i++) {
 			/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 			 * so don't send the middle parts again. */
 			if (i > CS_TILES && i < CS_POSITIONS)
@@ -101,20 +99,22 @@ static void SV_New_f (client_t *cl)
 			if (i > CS_POSITIONS && i < CS_MODELS)
 				continue;
 
-			configString = SV_GetConfigString(i);
-			if (configString[0] != '\0') {
-				dbuffer msg;
-				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
-				NET_WriteByte(&msg, svc_configstring);
-				NET_WriteShort(&msg, i);
-				NET_WriteString(&msg, configString);
-				/* enqueue and free msg */
-				NET_WriteMsg(cl->stream, msg);
-			}
+			const char* configString = SV_GetConfigString(i);
+			if (!Q_strvalid(configString))
+				continue;
+
+			Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
+
+			dbuffer msg;
+			NET_WriteByte(&msg, svc_configstring);
+			NET_WriteShort(&msg, i);
+			NET_WriteString(&msg, configString);
+			/* enqueue and free msg */
+			NET_WriteMsg(cl->stream, msg);
 		}
 	}
 
-	SV_ClientCommand(cl, "precache\n");
+	SV_ClientCommand(cl, CL_PRECACHE "\n");
 }
 
 /**

@@ -739,7 +739,7 @@ static void SV_CheckSpawnSoldiers (void)
 	cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state != cs_free)
-			SV_ClientCommand(cl, "spawnsoldiers\n");
+			SV_ClientCommand(cl, CL_SPAWNSOLDIERS "\n");
 }
 
 static void SV_CheckStartMatch (void)
@@ -766,7 +766,7 @@ static void SV_CheckStartMatch (void)
 	cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state != cs_free)
-			SV_ClientCommand(cl, "startmatch\n");
+			SV_ClientCommand(cl, CL_STARTMATCH "\n");
 }
 
 #define	PING_SECONDS	5

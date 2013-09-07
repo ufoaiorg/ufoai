@@ -472,6 +472,10 @@ extern csi_t csi;
 #define CL_CMD_ECHO "echo"
 /* unused end */
 
+#define CL_PRECACHE "precache"
+#define CL_SPAWNSOLDIERS "spawnsoldiers"
+#define CL_STARTMATCH "startmatch"
+
 #define CL_CMD_COMMAND "cmd"
 #define CL_CMD_CLIENT_CONNECT "client_connect"
 

@@ -951,9 +951,9 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
 	Cmd_AddCommand("env", CL_Env_f);
 
-	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
-	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
-	Cmd_AddCommand("startmatch", CL_StartMatch_f, "Start the match once every player is ready");
+	Cmd_AddCommand(CL_PRECACHE, CL_Precache_f, "Function that is called at mapload to precache map data");
+	Cmd_AddCommand(CL_SPAWNSOLDIERS, CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
+	Cmd_AddCommand(CL_STARTMATCH, CL_StartMatch_f, "Start the match once every player is ready");
 	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 	Cmd_AddCommand("cl_openurl", CL_OpenURL_f, "Opens the given url in a browser");
 
