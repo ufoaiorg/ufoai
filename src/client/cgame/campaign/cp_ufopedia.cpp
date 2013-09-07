@@ -135,7 +135,7 @@ static void UP_ChangeDisplay (int newDisplay)
  * @sa aircraftParams_t
  * @sa AIR_AircraftMenuStatsValues
  */
-static const char *UP_AircraftStatToName (int stat)
+static const char* UP_AircraftStatToName (int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
@@ -299,7 +299,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 		/* we scan all stats except weapon range */
 		for (i = 0; i < AIR_STATS_MAX; i++) {
-			const char *statsName = UP_AircraftStatToName(i);
+			const char* statsName = UP_AircraftStatToName(i);
 			if (i == AIR_STATS_WRANGE)
 				continue;
 			if (item->craftitem.stats[i] > 2.0f)
@@ -480,8 +480,8 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 {
 	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
 	char dateBuf[MAX_VAR] = "";
-	const char *subjectType = "";
-	const char *from, *to, *subject, *model;
+	const char* subjectType = "";
+	const char* from, *to, *subject, *model;
 	dateLong_t date;
 
 	if (mail) {
@@ -695,7 +695,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 /**
  * @sa CL_EventAddMail_f
  */
-void UP_OpenEventMail (const char *eventMailID)
+void UP_OpenEventMail (const char* eventMailID)
 {
 	eventMail_t* mail;
 	mail = CL_GetEventMail(eventMailID);
@@ -711,7 +711,7 @@ void UP_OpenEventMail (const char *eventMailID)
  * @param techID mail entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-static void UP_OpenMailWith (const char *techID)
+static void UP_OpenMailWith (const char* techID)
 {
 	if (!techID)
 		return;
@@ -725,7 +725,7 @@ static void UP_OpenMailWith (const char *techID)
  * @param techID UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-void UP_OpenWith (const char *techID)
+void UP_OpenWith (const char* techID)
 {
 	if (!techID)
 		return;
@@ -739,7 +739,7 @@ void UP_OpenWith (const char *techID)
  * @param techID UFOpaedia entry id (technology script id)
  * @sa UP_FindEntry_f
  */
-void UP_OpenCopyWith (const char *techID)
+void UP_OpenCopyWith (const char* techID)
 {
 	cgi->Cmd_ExecuteString("ui_push ufopedia");
 	cgi->Cbuf_AddText("ufopedia %s\n", techID);
@@ -751,7 +751,7 @@ void UP_OpenCopyWith (const char *techID)
  */
 static void UP_FindEntry_f (void)
 {
-	const char *id;
+	const char* id;
 	technology_t *tech;
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -792,7 +792,7 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
-			const char *id = va("@%i", tech->idx);
+			const char* id = va("@%i", tech->idx);
 			cgi->UI_AddOption(&first, id, va("_%s", tech->name), id);
 		}
 		tech = tech->upNext;
@@ -1283,10 +1283,10 @@ void UP_Shutdown (void)
  * @param[in] text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseChapter (const char *name, const char** text)
+void UP_ParseChapter (const char* name, const char** text)
 {
-	const char *errhead = "UP_ParseChapter: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "UP_ParseChapter: unexpected end of file (names ";
+	const char* token;
 
 	if (ccs.numChapters >= MAX_PEDIACHAPTERS) {
 		cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Too many chapter defs.\n", name);

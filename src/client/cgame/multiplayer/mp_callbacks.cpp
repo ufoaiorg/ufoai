@@ -109,7 +109,7 @@ static void GAME_MP_RconCallback (struct net_stream *s)
  * or if this is not the case, the gameserver that is specified in the cvar rcon_address.
  * @return @c true if the command was send, @c false otherwise.
  */
-bool GAME_MP_Rcon (const char *password, const char *command)
+bool GAME_MP_Rcon (const char* password, const char* command)
 {
 	if (Q_strnull(password)) {
 		cgi->Com_Printf("You must set 'rcon_password' before issuing a rcon command.\n");
@@ -120,7 +120,7 @@ bool GAME_MP_Rcon (const char *password, const char *command)
 		cgi->NET_OOB_Printf2(SV_CMD_RCON " %s %s", password, command);
 		return true;
 	} else if (rcon_address->string) {
-		const char *port;
+		const char* port;
 
 		if (strstr(rcon_address->string, ":"))
 			port = strstr(rcon_address->string, ":") + 1;
@@ -261,7 +261,7 @@ static void GAME_MP_TeamNum_f (void)
  * @sa Cmd_AddParamCompleteFunction
  * @todo Extend this for all the servers on the server browser list
  */
-static int GAME_MP_CompleteNetworkAddress (const char *partial, const char** match)
+static int GAME_MP_CompleteNetworkAddress (const char* partial, const char** match)
 {
 	int n = 0;
 	for (int i = 0; i != MAX_BOOKMARKS; ++i) {

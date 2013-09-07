@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_FILE_VERSION 4
 
 typedef struct saveSubsystems_s {
-	const char *name;
+	const char* name;
 	bool (*save) (xmlNode_t *parent);	/**< return false if saving failed */
 	bool (*load) (xmlNode_t *parent);	/**< return false if loading failed */
 } saveSubsystems_t;
@@ -89,4 +89,4 @@ bool B_PostLoadInit(void);
 bool AIR_PostLoadInit(void);
 bool PR_PostLoadInit(void);
 
-bool SAV_GameLoad(const char *file, const char** error);
+bool SAV_GameLoad(const char* file, const char** error);

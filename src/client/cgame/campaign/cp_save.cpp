@@ -124,7 +124,7 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
  * @param[in] file The Filename to load from (without extension)
  * @param[out] error On failure an errormessage may be set.
  */
-bool SAV_GameLoad (const char *file, const char** error)
+bool SAV_GameLoad (const char* file, const char** error)
 {
 	char filename[MAX_OSPATH];
 	qFILE f;
@@ -246,7 +246,7 @@ bool SAV_GameLoad (const char *file, const char** error)
  * @param[in] comment Description of the savegame
  * @param[out] error On failure an errormessage may be set.
  */
-static bool SAV_GameSave (const char *filename, const char *comment, char** error)
+static bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
 	xmlNode_t *topNode, *node;
 	char savegame[MAX_OSPATH];
@@ -361,7 +361,7 @@ static bool SAV_GameSave (const char *filename, const char *comment, char** erro
 static void SAV_GameSave_f (void)
 {
 	char comment[MAX_VAR] = "";
-	char *error = nullptr;
+	char* error = nullptr;
 	bool result;
 
 	/* get argument */
@@ -377,7 +377,7 @@ static void SAV_GameSave_f (void)
 
 	/* get comment */
 	if (cgi->Cmd_Argc() > 2) {
-		const char *arg = cgi->Cmd_Argv(2);
+		const char* arg = cgi->Cmd_Argv(2);
 		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
@@ -414,7 +414,7 @@ static void SAV_GameReadGameComment (const int idx)
 		header.xmlSize = LittleLong(header.xmlSize);
 		header.subsystems = LittleLong(header.subsystems);
 
-		const char *basename = Com_SkipPath(filename);
+		const char* basename = Com_SkipPath(filename);
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
@@ -455,7 +455,7 @@ static void SAV_GameReadGameComments_f (void)
  */
 static void SAV_GameLoad_f (void)
 {
-	const char *error = nullptr;
+	const char* error = nullptr;
 
 	/* get argument */
 	if (cgi->Cmd_Argc() < 2) {
@@ -488,7 +488,7 @@ static void SAV_GameLoad_f (void)
  */
 static void SAV_GameContinue_f (void)
 {
-	const char *error = nullptr;
+	const char* error = nullptr;
 
 	if (cgi->CL_OnBattlescape()) {
 		cgi->UI_PopWindow(false);
@@ -600,7 +600,7 @@ static void SAV_GameQuickSave_f (void)
 	if (cgi->CL_OnBattlescape())
 		return;
 
-	char *error = nullptr;
+	char* error = nullptr;
 	bool result = SAV_GameSave("slotquick", _("QuickSave"), &error);
 	if (!result)
 		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
@@ -614,7 +614,7 @@ static void SAV_GameQuickSave_f (void)
  */
 static void SAV_GameQuickLoad_f (void)
 {
-	const char *error = nullptr;
+	const char* error = nullptr;
 
 	if (cgi->CL_OnBattlescape()) {
 		Com_Printf("Could not load the campaign while you are on the battlefield\n");

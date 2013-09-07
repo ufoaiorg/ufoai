@@ -41,7 +41,7 @@ void CP_StatsUpdate_f (void)
 	/* delete buffer */
 	OBJZERO(statsBuffer);
 
-	char *pos = statsBuffer;
+	char* pos = statsBuffer;
 
 	/* missions */
 	cgi->UI_RegisterText(TEXT_STATS_MISSION, pos);

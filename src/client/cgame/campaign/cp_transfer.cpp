@@ -463,7 +463,7 @@ bool TR_LoadXML (xmlNode_t *p)
 		if (ss) {
 			transfer.hasItems = true;
 			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
-				const char *itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
+				const char* itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
 				const objDef_t *od = INVSH_GetItemByID(itemId);
 
 				if (od)
@@ -487,7 +487,7 @@ bool TR_LoadXML (xmlNode_t *p)
 				for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
 					const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
 					const int dead  = cgi->XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
-					const char *id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
+					const char* id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
 					if (!transfer.alienCargo->add(id, alive, dead))
 						Com_Printf("TR_LoadXML: Cannot add aliens to cargo: %s, alive: %d, dead: %d\n", id, alive, dead);
 				}

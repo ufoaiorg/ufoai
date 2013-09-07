@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 typedef struct gameLapse_s {
-	const char *name;
+	const char* name;
 	int scale;
 } gameLapse_t;
 
@@ -53,7 +53,7 @@ CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
  * @param[in] second Number of second.
  * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CP_DateConvertLong
  */
-const char *CP_SecondConvert (int second)
+const char* CP_SecondConvert (int second)
 {
 	static char buffer[6];
 	const int hour = second / SECONDS_PER_HOUR;
@@ -316,7 +316,7 @@ date_t Date_Random (date_t minFrame, date_t maxFrame)
  * @param[in] month The month index - [0-11]
  * @return month name as char*
  */
-const char *Date_GetMonthName (int month)
+const char* Date_GetMonthName (int month)
 {
 	switch (month) {
 	case 0:

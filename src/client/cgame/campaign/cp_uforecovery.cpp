@@ -335,7 +335,7 @@ bool US_LoadXML (xmlNode_t *p)
 	cgi->Com_RegisterConstList(saveStoredUFOConstants);
 	for (snode = cgi->XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
 			snode = cgi->XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
-		const char *id = cgi->XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
+		const char* id = cgi->XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
 		storedUFO_t ufo;
 		int statusIDX;
 

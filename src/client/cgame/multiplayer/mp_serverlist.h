@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BOOKMARKS 16
 
 typedef struct serverList_s {
-	char *node;						/**< node ip address */
-	char *service;					/**< node port */
+	char* node;						/**< node ip address */
+	char* service;					/**< node port */
 	bool pinged;				/**< already pinged */
 	char sv_hostname[MAX_OSPATH];	/**< the server hostname */
 	char mapname[16];				/**< currently running map */
@@ -48,7 +48,7 @@ struct cgame_import_s;
 void GAME_MP_PingServers_f(void);
 
 void GAME_MP_ParseTeamInfoMessage(dbuffer *msg);
-void CL_ParseServerInfoMessage(dbuffer *msg, const char *hostname);
+void CL_ParseServerInfoMessage(dbuffer *msg, const char* hostname);
 
 void GAME_MP_ServerListInit(const struct cgame_import_s *import);
 void GAME_MP_ServerListShutdown(void);

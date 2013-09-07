@@ -52,7 +52,7 @@ static struct datagram_socket *netDatagramSocket;
  * @return @c true if the server is compatible, @c msg is not @c null and the server
  * wasn't pinged already, @c false otherwise
  */
-static bool GAME_MP_ProcessPingReply (serverList_t *server, const char *msg)
+static bool GAME_MP_ProcessPingReply (serverList_t *server, const char* msg)
 {
 	if (!msg)
 		return false;
@@ -181,7 +181,7 @@ static void GAME_MP_PrintServerList_f (void)
  * @return false if it is no valid address or server already exists
  * @sa CL_ParseStatusMessage
  */
-static void GAME_MP_AddServerToList (const char *node, const char *service)
+static void GAME_MP_AddServerToList (const char* node, const char* service)
 {
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
@@ -229,7 +229,7 @@ void GAME_MP_ParseTeamInfoMessage (dbuffer *msg)
 	while (cgi->NET_ReadString(msg, str, sizeof(str)) > 0) {
 		const int team = Info_IntegerForKey(str, "cl_team");
 		const int isReady = Info_IntegerForKey(str, "cl_ready");
-		const char *user = Info_ValueForKey(str, "cl_name");
+		const char* user = Info_ValueForKey(str, "cl_name");
 
 		if (team > 0 && team < MAX_TEAMS)
 			teamData.teamCount[team]++;
@@ -272,9 +272,9 @@ static char userInfoText[256];
  * @sa CL_ServerInfoCallback
  * @sa SVC_Info
  */
-static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
+static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char* hostname)
 {
-	const char *value;
+	const char* value;
 	char str[MAX_INFO_STRING];
 
 	cgi->NET_ReadString(msg, str, sizeof(str));
@@ -287,7 +287,7 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 	}
 
 	/* server info cvars and users are seperated via newline */
-	const char *users = strstr(str, "\n");
+	const char* users = strstr(str, "\n");
 	if (users == nullptr) {
 		cgi->Com_Printf(S_COLOR_GREEN "%s\n", str);
 		return;
@@ -307,7 +307,7 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char *hostname)
 	cgi->Cvar_Set("mn_svmapname", "%s", value);
 	char buf[256];
 	Q_strncpyz(buf, value, sizeof(buf));
-	const char *token = buf;
+	const char* token = buf;
 	/* skip random map char. */
 	if (token[0] == '+')
 		token++;
@@ -374,17 +374,17 @@ static void GAME_MP_ServerInfoCallback (struct net_stream *s)
 	cgi->NET_StreamFree(s);
 }
 
-static void GAME_MP_QueryMasterServerThread (const char *responseBuf, void *userdata)
+static void GAME_MP_QueryMasterServerThread (const char* responseBuf, void *userdata)
 {
 	if (!responseBuf) {
 		cgi->Com_Printf("Could not query masterserver\n");
 		return;
 	}
 
-	const char *serverListBuf = responseBuf;
+	const char* serverListBuf = responseBuf;
 
 	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverListBuf);
-	const char *token = Com_Parse(&serverListBuf);
+	const char* token = Com_Parse(&serverListBuf);
 
 	int num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
@@ -415,7 +415,7 @@ static void GAME_MP_QueryMasterServerThread (const char *responseBuf, void *user
 /**
  * @sa SV_DiscoveryCallback
  */
-static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket *s, const char* buf, int len, struct sockaddr *from)
 {
 	const char match[] = "discovered";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
@@ -433,7 +433,7 @@ static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket *s, cons
  */
 static void GAME_MP_BookmarkAdd_f (void)
 {
-	const char *newBookmark;
+	const char* newBookmark;
 
 	if (cgi->Cmd_Argc() < 2) {
 		newBookmark = cgi->Cvar_GetString("mn_server_ip");
@@ -446,7 +446,7 @@ static void GAME_MP_BookmarkAdd_f (void)
 	}
 
 	for (int i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *bookmark = cgi->Cvar_GetString(va("adr%i", i));
+		const char* bookmark = cgi->Cvar_GetString(va("adr%i", i));
 		if (bookmark[0] == '\0') {
 			cgi->Cvar_Set(va("adr%i", i), "%s", newBookmark);
 			return;
@@ -461,8 +461,8 @@ static void GAME_MP_BookmarkAdd_f (void)
  */
 static void GAME_MP_ServerInfo_f (void)
 {
-	const char *host;
-	const char *port;
+	const char* host;
+	const char* port;
 
 	switch (cgi->Cmd_Argc()) {
 	case 2:

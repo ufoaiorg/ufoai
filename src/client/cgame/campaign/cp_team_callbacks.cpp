@@ -225,7 +225,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	const int maxTeamSize = employeeType == EMPL_PILOT ? 1 : aircraft->maxTeamSize;
 	E_Foreach(employeeType, employee) {
 		const aircraft_t *assignedCraft;
-		const char *tooltip;
+		const char* tooltip;
 
 		if (!employee->isHiredInBase(base))
 			continue;
@@ -337,7 +337,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 		if (employee->transfer)
 			continue;
 
-		const char *tooltip;
+		const char* tooltip;
 		const bool isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != nullptr;
 		if (employee->isAwayFromBase())
 			tooltip = _("Employee is away from base");

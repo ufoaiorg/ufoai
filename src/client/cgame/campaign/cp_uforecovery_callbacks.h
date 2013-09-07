@@ -26,5 +26,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 void UR_InitCallbacks(void);
-const char *US_StoredUFOStatus(const storedUFO_t *ufo);
+const char* US_StoredUFOStatus(const storedUFO_t *ufo);
 void UR_ShutdownCallbacks(void);

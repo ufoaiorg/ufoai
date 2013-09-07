@@ -376,7 +376,7 @@ static int UR_DialogGetCurrentNationIndex (void)
  * @param[in] id Script id for order column
  * @sa ufoRecoveryNationOrder_t
  */
-static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char *id)
+static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char* id)
 {
 	if (!id)
 		return MAX_ORDER;
@@ -507,7 +507,7 @@ static void UR_DialogStartSell_f (void)
  * @brief Returns string representation of the stored UFO's status
  * @note uses stored ufo status and disassembly
  */
-const char *US_StoredUFOStatus (const storedUFO_t *ufo)
+const char* US_StoredUFOStatus (const storedUFO_t *ufo)
 {
 	assert(ufo);
 
@@ -538,9 +538,9 @@ static void US_SelectStoredUfo_f (void)
 		return;
 	}
 
-	const char *ufoName = UFO_GetName(ufo->ufoTemplate);
-	const char *status = US_StoredUFOStatus(ufo);
-	const char *eta;
+	const char* ufoName = UFO_GetName(ufo->ufoTemplate);
+	const char* status = US_StoredUFOStatus(ufo);
+	const char* eta;
 
 	if (Q_streq(status, "transfering")) {
 		date_t time = Date_Substract(ufo->arrive, ccs.date);
@@ -605,7 +605,7 @@ static void US_FillUFOTransfer_f (void)
 		if (ins == ufo->installation)
 			continue;
 		nation_t *nat = GEO_GetNation(ins->pos);
-		const char *nationName = nat ? _(nat->name) : "";
+		const char* nationName = nat ? _(nat->name) : "";
 		const int freeSpace = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 		cgi->UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
 	}

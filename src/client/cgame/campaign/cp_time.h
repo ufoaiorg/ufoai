@@ -41,7 +41,7 @@ typedef struct dateLong_s {
 } dateLong_t;
 
 void CP_DateConvertLong(const date_t *date, dateLong_t *dateLong);
-const char *CP_SecondConvert(int second);
+const char* CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
 void CP_GameTimeStop(void);
@@ -56,4 +56,4 @@ bool Date_IsDue(const date_t *date);
 date_t Date_Add(date_t a, const date_t &b);
 date_t Date_Substract(date_t a, const date_t &b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);
-const char *Date_GetMonthName(int month);
+const char* Date_GetMonthName(int month);

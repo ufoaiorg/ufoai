@@ -70,7 +70,7 @@ typedef enum requirementType_s {
 
 typedef struct requirement_s {
 	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
-	char *id;	/**< Dependency id (text-id) */
+	char* id;	/**< Dependency id (text-id) */
 	union typelink_t {
 		const struct technology_s *tech;
 		const struct objDef_s *od;
@@ -89,7 +89,7 @@ typedef struct requirements_s {
 /** @todo MAX_CAMPAIGNS is not defined unless cp_campaign.h is included before */
 typedef struct markResearched_s {
 	bool markOnly[MAX_CAMPAIGNS];
-	char *campaign[MAX_CAMPAIGNS];
+	char* campaign[MAX_CAMPAIGNS];
 	int numDefinitions;
 } markResearched_t;
 
@@ -106,14 +106,14 @@ typedef enum {
  * @sa eventMail_t
  */
 typedef struct techMail_s {
-	char *from;			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
-	const char *to;		/**< recipient (_mail_to_base_commander) */
-	const char *subject;	/**< mail subject line - if mail and mail_pre are available
+	char* from;			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
+	const char* to;		/**< recipient (_mail_to_base_commander) */
+	const char* subject;	/**< mail subject line - if mail and mail_pre are available
 								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
 								 * automatically */
-	const char *date;		/**< date string, if empty use the date of research */
-	const char *icon;		/**< name of an image file to display in the mail client */
-	const char *model;		/**< model name of the sender */
+	const char* date;		/**< date string, if empty use the date of research */
+	const char* icon;		/**< name of an image file to display in the mail client */
+	const char* model;		/**< model name of the sender */
 	bool read;		/**< already read the mail? */
 } techMail_t;
 
@@ -129,15 +129,15 @@ typedef struct technologyDescriptions_s {
 	int numDescriptions;	/**< The number of descriptions. */
 	int usedDescription;	/**< The index of the first used description, so we do not get a different text each time it should be displayed. undef=-1
 				 * @todo Check if we should set this in the function that updates the research_proposals? Currently it's only in RS_GetDescription. */
-	char *text[MAX_DESCRIPTIONS];	/**< A list of descriptions (Short text-id to get the full text via gettext). */
-	char *tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this description should be displayed. */
+	char* text[MAX_DESCRIPTIONS];	/**< A list of descriptions (Short text-id to get the full text via gettext). */
+	char* tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this description should be displayed. */
 } technologyDescriptions_t;
 
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
-	char *id;		/**< Short (unique) id/name. */
+	char* id;		/**< Short (unique) id/name. */
 	int idx;			/**< Self-link in the global list */
-	char *name;		/**< Full name of this technology. */
+	char* name;		/**< Full name of this technology. */
 	technologyDescriptions_t description;	/**< Descriptions of researched item.  */
 	technologyDescriptions_t preDescription;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
@@ -151,7 +151,7 @@ typedef struct technology_s {
 					 * This is updated from the info stored in the requireOR and requireAND lists.
 					 * @see RS_CheckCollected. */
 
-	char *provides;		/**< The item that this technology enables. */
+	char* provides;		/**< The item that this technology enables. */
 
 	float overallTime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overallTime" stays always the same,
@@ -161,16 +161,16 @@ typedef struct technology_s {
 					 * counting only if a day has passed and they still are met. */
 
 	researchStatus_t statusResearch;	/**< Current status of the research. */
-	char *finishedResearchEvent;		/**< nullptr or string with scriptable commands that are executed after the tech was successfully researched */
+	char* finishedResearchEvent;		/**< nullptr or string with scriptable commands that are executed after the tech was successfully researched */
 	bool announce;			/**< if this is true the ufopedia will be opened on finishing the research */
 
 	struct base_s	*base;	/**< The base this tech is researched in. */
 	int scientists;			/**< How many scientists (from "base") are researching this tech. */
 
-	char *image;			/**< Image to display in the Ufopedia and other menus for this tech.
+	char* image;			/**< Image to display in the Ufopedia and other menus for this tech.
 							 * If not set in the .ufo file this is auto-set in RS_InitTree.
 							 * @sa cl_research.c: RS_InitTree */
-	char *mdl;				/**< Same as "image" but it's a 3d model.. */
+	char* mdl;				/**< Same as "image" but it's a 3d model.. */
 
 	bool statusResearchable;		/**< Is this item researchable? */
 
@@ -203,7 +203,7 @@ typedef struct technology_s {
 void RS_InitStartup(void);
 void RS_ResetTechs(void);
 int RS_ResearchRun(void);
-void RS_ParseTechnologies(const char *name, const char** text);
+void RS_ParseTechnologies(const char* name, const char** text);
 bool RS_IsResearched_idx(int techIdx);
 bool RS_IsResearched_ptr(const technology_t *tech);
 
@@ -212,10 +212,10 @@ technology_t* RS_GetTechForTeam(const teamDef_t *team);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(const struct campaign_s *campaign, bool load);
-const char *RS_GetDescription(technologyDescriptions_t *desc);
+const char* RS_GetDescription(technologyDescriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(const struct base_s *base, bool init = false);
-bool RS_MarkStoryLineEventResearched(const char *techID);
+bool RS_MarkStoryLineEventResearched(const char* techID);
 void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
@@ -225,11 +225,11 @@ void RS_RemoveScientist(technology_t* tech, Employee *employee);
 void RS_RemoveFiredScientist(struct base_s *base, Employee *employee);
 void RS_RemoveScientistsExceedingCapacity(struct base_s *base);
 
-technology_t *RS_GetTechByID(const char *id);
-technology_t *RS_GetTechByProvided(const char *idProvided);
+technology_t *RS_GetTechByID(const char* id);
+technology_t *RS_GetTechByProvided(const char* idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
-int RS_GetTechIdxByName(const char *name);
+int RS_GetTechIdxByName(const char* name);
 int RS_CountScientistsInBase(const struct base_s *base);
 bool RS_ScriptSanityCheck(void);
 

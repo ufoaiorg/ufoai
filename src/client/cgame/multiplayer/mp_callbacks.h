@@ -43,4 +43,4 @@ struct cgame_import_s;
 
 void GAME_MP_CallbacksInit(const struct cgame_import_s *import);
 void GAME_MP_CallbacksShutdown(void);
-bool GAME_MP_Rcon(const char *password, const char *command);
+bool GAME_MP_Rcon(const char* password, const char* command);

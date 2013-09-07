@@ -57,7 +57,7 @@ static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 	if (cgi->CL_GetPlayerNum() == playerNum) {
 		Com_sprintf(buf, sizeof(buf), _("You've ended your turn.\n"));
 	} else {
-		const char *playerName = cgi->CL_PlayerGetName(playerNum);
+		const char* playerName = cgi->CL_PlayerGetName(playerNum);
 		Com_sprintf(buf, sizeof(buf), _("%s ended his turn (team %i).\n"), playerName, team);
 	}
 	/* add translated message to chat buffer */
@@ -96,7 +96,7 @@ static void GAME_MP_StartServer_f (void)
 	else
 		cgi->Cvar_SetValue("sv_maxteams", 2);
 
-	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char *)cgi->LIST_GetRandom(md->params) : "");
+	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char* )cgi->LIST_GetRandom(md->params) : "");
 
 	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame");
 }
@@ -140,7 +140,7 @@ static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *num
 static const mapDef_t *GAME_MP_MapInfo (int step)
 {
 	int i = 0;
-	const char *gameType = cgi->Cvar_GetString("sv_gametype");
+	const char* gameType = cgi->Cvar_GetString("sv_gametype");
 	for (;;) {
 		i++;
 		if (i > 100000)
@@ -182,7 +182,7 @@ static void GAME_MP_UpdateGametype_f (void)
 
 	cgi->Com_SetGameType();
 
-	const char *gameType = cgi->Cvar_GetString("sv_gametype");
+	const char* gameType = cgi->Cvar_GetString("sv_gametype");
 	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
 	if (md != nullptr && md->multiplayer && cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 		/* no change needed, gametype is supported */
@@ -197,19 +197,19 @@ static linkedList_t *mp_chatMessageStack = nullptr;
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
  */
-static void GAME_MP_AddChatMessage (const char *text)
+static void GAME_MP_AddChatMessage (const char* text)
 {
 	char message[2048];
 	Q_strncpyz(message, text, sizeof(message));
 
-	const char *msg = Com_Trim(message);
+	const char* msg = Com_Trim(message);
 	cgi->LIST_AddString(&mp_chatMessageStack, msg);
 	cgi->HUD_DisplayMessage(msg);
 	cgi->UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
 	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
-static bool GAME_MP_HandleServerCommand (const char *command, dbuffer *msg)
+static bool GAME_MP_HandleServerCommand (const char* command, dbuffer *msg)
 {
 	if (Q_streq(command, SV_CMD_TEAMINFO)) {
 		GAME_MP_ParseTeamInfoMessage(msg);

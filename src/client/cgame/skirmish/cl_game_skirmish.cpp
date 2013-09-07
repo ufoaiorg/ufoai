@@ -49,7 +49,7 @@ static void GAME_SK_InitMissionBriefing (const char** title, linkedList_t** vict
 	}
 }
 
-static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char *name)
+static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char* name)
 {
 	return cgi->Com_GetRandomMapAssemblyNameForCraft(name);
 }
@@ -96,8 +96,8 @@ static void GAME_SK_Start_f (void)
 	if (cgi->GAME_IsTeamEmpty()) {
 		unsigned int i;
 		/** @todo make the teamdef configurable */
-		const char *ugvTeamDefID = "phalanx_ugv_phoenix";
-		const char *name = cgi->Cvar_GetString("cl_equip");
+		const char* ugvTeamDefID = "phalanx_ugv_phoenix";
+		const char* name = cgi->Cvar_GetString("cl_equip");
 		const equipDef_t *ed = cgi->INV_GetEquipmentDefinitionByID(name);
 		const size_t size = cgi->GAME_GetCharacterArraySize();
 		uint32_t maxSoldiers = cgi->Cvar_GetInteger("sv_maxsoldiersperplayer");
@@ -123,7 +123,7 @@ static void GAME_SK_Start_f (void)
 
 	assert(md->map);
 
-	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char *)cgi->LIST_GetRandom(md->params) : "");
+	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char* )cgi->LIST_GetRandom(md->params) : "");
 }
 
 static void GAME_SK_Restart_f (void)
@@ -137,8 +137,8 @@ static void GAME_SK_Restart_f (void)
  */
 static void GAME_SK_ChangeEquip_f (void)
 {
-	const char *cvarName;
-	const char *command;
+	const char* cvarName;
+	const char* command;
 	changeEquipType_t type;
 	const equipDef_t *ed;
 	char cvarBuf[MAX_VAR];
@@ -236,7 +236,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
 		cgi->Cvar_Set("rm_drop", "");
 	} else {
-		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
+		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char* )dropships->data);
 		cgi->Cvar_Set("rm_drop", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_DROPSHIPS), dropships);
 		cgi->UI_RegisterOption(OPTION_DROPSHIPS, cgi->UI_GetOption(OPTION_DROPSHIPS));
@@ -257,7 +257,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
 		cgi->Cvar_Set("rm_ufo", "");
 	} else {
-		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
+		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char* )ufos->data);
 		cgi->Cvar_Set("rm_ufo", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_UFOS), ufos);
 		cgi->UI_RegisterOption(OPTION_UFOS, cgi->UI_GetOption(OPTION_UFOS));
@@ -304,17 +304,17 @@ static void GAME_InitMenuOptions (void)
 	uiNode_t* aircraftOptions = nullptr;
 
 	for (i = 0; i < UFO_MAX; i++) {
-		const char *shortName = cgi->Com_UFOTypeToShortName((ufoType_t)i);
+		const char* shortName = cgi->Com_UFOTypeToShortName((ufoType_t)i);
 		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
-		const char *shortName = cgi->Com_UFOCrashedTypeToShortName((ufoType_t)i);
+		const char* shortName = cgi->Com_UFOCrashedTypeToShortName((ufoType_t)i);
 		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	cgi->UI_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	for (i = 0; i < DROPSHIP_MAX; i++) {
-		const char *shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
+		const char* shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		cgi->UI_AddOption(&aircraftOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	cgi->UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);

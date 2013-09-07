@@ -56,10 +56,10 @@ static void GAME_UpdateActiveTeamList (void)
 		characterActive[i] = true;
 }
 
-void GAME_AutoTeam (const char *equipmentDefinitionID, int teamMembers)
+void GAME_AutoTeam (const char* equipmentDefinitionID, int teamMembers)
 {
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(equipmentDefinitionID);
-	const char *teamDefID = GAME_GetTeamDef();
+	const char* teamDefID = GAME_GetTeamDef();
 	cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
 
 	GAME_GenerateTeam(teamDefID, ed, teamMembers);
@@ -128,7 +128,7 @@ void GAME_TeamDelete_f (void)
 		return;
 	}
 
-	const char *team = Cmd_Argv(1);
+	const char* team = Cmd_Argv(1);
 	char buf[MAX_OSPATH];
 	GAME_GetAbsoluteSavePath(buf, sizeof(buf));
 	Q_strcat(buf, sizeof(buf), "%s", team);
@@ -142,7 +142,7 @@ void GAME_TeamSlotComments_f (void)
 {
 	UI_ExecuteConfunc("teamsaveslotsclear");
 
-	const char *filename;
+	const char* filename;
 	int i = 0;
 	char relSavePath[MAX_OSPATH];
 	GAME_GetRelativeSavePath(relSavePath, sizeof(relSavePath));
@@ -153,7 +153,7 @@ void GAME_TeamSlotComments_f (void)
 	FS_BuildFileList(pattern);
 	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
 		qFILE f;
-		const char *savePath = va("%s/%s", relSavePath, filename);
+		const char* savePath = va("%s/%s", relSavePath, filename);
 		FS_OpenFile(savePath, &f, FILE_READ);
 		if (!f.f && !f.z) {
 			Com_Printf("Warning: Could not open '%s'\n", filename);
@@ -221,7 +221,7 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 /**
  * @brief Saves a team in xml format
  */
-static bool GAME_SaveTeam (const char *filename, const char *name)
+static bool GAME_SaveTeam (const char* filename, const char* name)
 {
 	int requiredBufferLength;
 	teamSaveFileHeader_t header;
@@ -282,7 +282,7 @@ static bool GAME_SaveTeam (const char *filename, const char *name)
  * @return @c true if a valid team name was found, @c false otherwise. In the latter case,
  * don't use anything from the @c filename buffer
  */
-bool GAME_TeamGetFreeFilename (char *filename, size_t size)
+bool GAME_TeamGetFreeFilename (char* filename, size_t size)
 {
 	char buf[MAX_OSPATH];
 	GAME_GetRelativeSavePath(buf, sizeof(buf));
@@ -311,7 +311,7 @@ void GAME_SaveTeam_f (void)
 		return;
 	}
 
-	const char *name = Cmd_Argv(1);
+	const char* name = Cmd_Argv(1);
 	if (Q_strnull(name))
 		name = _("New Team");
 
@@ -328,7 +328,7 @@ void GAME_SaveTeam_f (void)
 /**
  * @brief Load a team from an xml file
  */
-static bool GAME_LoadTeam (const char *filename)
+static bool GAME_LoadTeam (const char* filename)
 {
 	qFILE f;
 	int clen;
@@ -397,7 +397,7 @@ static bool GAME_LoadTeam (const char *filename)
 
 	ed = GAME_GetEquipmentDefinition();
 	for (ssnode = XML_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
-		const char *objID = XML_GetString(ssnode, SAVE_TEAM_ID);
+		const char* objID = XML_GetString(ssnode, SAVE_TEAM_ID);
 		const objDef_t *od = INVSH_GetItemByID(objID);
 
 		if (od) {
@@ -422,9 +422,9 @@ static bool GAME_LoadTeam (const char *filename)
  * @param[in] filenameLength The length of the @c filename buffer.
  * @return @c true if the filename for the given index was found, @c false otherwise (e.g. invalid index)
  */
-bool GAME_GetTeamFileName (unsigned int index, char *filename, size_t filenameLength)
+bool GAME_GetTeamFileName (unsigned int index, char* filename, size_t filenameLength)
 {
-	const char *save;
+	const char* save;
 	/* we will loop the whole team save list, just because i don't want
 	 * to specify the filename in the script api of this command. Otherwise
 	 * one could upload everything with this command */
@@ -506,7 +506,7 @@ static void GAME_UpdateInventory (Inventory *inv, const equipDef_t *ed)
  */
 static void GAME_GetEquipment (void)
 {
-	const char *equipmentName = Cvar_GetString("cl_equip");
+	const char* equipmentName = Cvar_GetString("cl_equip");
 	/* search equipment definition */
 	const equipDef_t *edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
 
@@ -624,8 +624,8 @@ static void GAME_SaveInventory (xmlNode_t *p, const Inventory *inv)
  */
 static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container, int *x, int *y)
 {
-	const char *itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
-	const char *contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
+	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
+	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
 	int i;
 
 	/* reset */
@@ -792,7 +792,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
  */
 bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 {
-	const char *s;
+	const char* s;
 	xmlNode_t *sScore;
 	xmlNode_t *sSkill;
 	xmlNode_t *sKill;
@@ -829,7 +829,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	sInjuries = XML_GetNode(p, SAVE_CHARACTER_INJURIES);
 	/* Load wounds */
 	for (sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
-		const char *bodyPartId = XML_GetString(sWound, SAVE_CHARACTER_WOUNDEDPART);
+		const char* bodyPartId = XML_GetString(sWound, SAVE_CHARACTER_WOUNDEDPART);
 		short bodyPart;
 
 		if (bodyPartId[0] != '\0') {
@@ -855,7 +855,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 		implant_t& implant = chr->implants[implantCnt++];
 		implant.installedTime = XML_GetInt(sImplants, SAVE_CHARACTER_IMPLANT_INSTALLEDTIME, 0);
 		implant.removedTime = XML_GetInt(sImplants, SAVE_CHARACTER_IMPLANT_REMOVETIME, 0);
-		const char *implantDefID = XML_GetString(sImplants, SAVE_CHARACTER_IMPLANT_IMPLANT);
+		const char* implantDefID = XML_GetString(sImplants, SAVE_CHARACTER_IMPLANT_IMPLANT);
 		implant.def = INVSH_GetImplantByID(implantDefID);
 	}
 
@@ -865,7 +865,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	/* Load Skills */
 	for (sSkill = XML_GetNode(sScore, SAVE_CHARACTER_SKILLS); sSkill; sSkill = XML_GetNextNode(sSkill, sScore, SAVE_CHARACTER_SKILLS)) {
 		int idx;
-		const char *type = XML_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
+		const char* type = XML_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
 
 		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid skill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
@@ -889,7 +889,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	/* Load kills */
 	for (sKill = XML_GetNode(sScore, SAVE_CHARACTER_KILLS); sKill; sKill = XML_GetNextNode(sKill, sScore, SAVE_CHARACTER_KILLS)) {
 		int idx;
-		const char *type = XML_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
+		const char* type = XML_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
 
 		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_KILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid kill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
@@ -914,8 +914,8 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	Com_UnregisterConstList(saveCharacterConstants);
 
-	const char *body = CHRSH_CharGetBody(chr);
-	const char *head = CHRSH_CharGetHead(chr);
+	const char* body = CHRSH_CharGetBody(chr);
+	const char* head = CHRSH_CharGetHead(chr);
 	if (!R_ModelExists(head) || !R_ModelExists(body)) {
 		if (!Com_GetCharacterModel(chr))
 			return false;

@@ -90,7 +90,7 @@ static void TR_TransferStart_f (void)
  * @param[in] id Transfer type Id
  * @sa transferType_t
  */
-static transferType_t TR_GetTransferType (const char *id)
+static transferType_t TR_GetTransferType (const char* id)
 {
 	int i;
 	for (i = 0; i < TRANS_TYPE_MAX; i++) {
@@ -751,7 +751,7 @@ static void TR_List_f (void)
 
 	cgi->UI_ExecuteConfunc("tr_listclear");
 	TR_Foreach(transfer) {
-		const char *source = transfer->srcBase ? transfer->srcBase->name : "mission";
+		const char* source = transfer->srcBase ? transfer->srcBase->name : "mission";
 		date_t time = Date_Substract(transfer->event, ccs.date);
 
 		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
