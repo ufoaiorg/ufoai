@@ -103,7 +103,7 @@ static void testMapDefsMassRMA (void)
 			continue;
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
-		if (++mapCount <= 40)		/* change 0 to n to skip the first n assemblies */
+		if (++mapCount <= 0)		/* change 0 to n to skip the first n assemblies */
 			continue;
 
 		{
