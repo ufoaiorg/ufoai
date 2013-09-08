@@ -83,7 +83,9 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
- * and builds each map multiple times with different seeds.
+ * and builds each map with each ufo and every assembly for all valid seeds.
+ * In other words: this a FULL test to check if some seed causes problems in any of the
+ * possible combinations, so it should not be run on the buildserver on a daily basis.
  */
 static void testMapDefsMassRMA (void)
 {
