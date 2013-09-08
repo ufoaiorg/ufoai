@@ -105,9 +105,6 @@ static void testMapDefsMassRMA (void)
 			continue;
 
 		{
-			int i;
-			long time;
-			MapInfo *randomMap;
 			char *p = md->map;
 
 			if (*p == '+')
@@ -140,10 +137,11 @@ static void testMapDefsMassRMA (void)
 					else
 						Cvar_Set("rm_ufo", "");
 
+					int i;
 					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 						const char *ass = NULL;
 						srand(i);
-						time = Sys_Milliseconds();
+						long time = Sys_Milliseconds();
 						Com_Printf("Seed: %i\n", i);
 
 						typedef struct skip_info {
@@ -191,8 +189,8 @@ static void testMapDefsMassRMA (void)
 							ass = (const char *)LIST_GetByIdx(md->params, 0);
 
 
-						char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
-						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
+						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
+						MapInfo* randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
 						CU_ASSERT(randomMap != NULL);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
