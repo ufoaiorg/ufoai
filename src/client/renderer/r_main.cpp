@@ -279,6 +279,8 @@ void R_BeginFrame (void)
 		r_threads->modified = false;
 	}
 
+	R_EnableMultisample(true);
+
 	R_Setup2D();
 
 	/* clear screen if desired */
@@ -446,6 +448,8 @@ void R_EndFrame (void)
 		}
 		vid_gamma->modified = false;
 	}
+
+	R_EnableMultisample(false);
 
 	R_ClearScene();
 
