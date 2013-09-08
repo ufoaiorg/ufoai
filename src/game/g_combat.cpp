@@ -254,17 +254,15 @@ static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t *fd, co
  */
 static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDef_t *fd, const int splashDamage)
 {
-	chrScoreMission_t *score;
-	killtypes_t type;
-
 	if (!attacker || !target || !fd)
 		return;
 
-	score = attacker->chr.scoreMission;
+	chrScoreMission_t *score = attacker->chr.scoreMission;
 	/* Abort if no player team. */
 	if (!score)
 		return;
 
+	killtypes_t type;
 	switch (target->team) {
 		case TEAM_CIVILIAN:
 			type = KILLED_CIVILIANS;
