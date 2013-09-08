@@ -1019,7 +1019,7 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 
 	/* Load the AI */
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
-	size = gi.FS_LoadFile(path, (byte **) &fbuf);
+	size = gi.FS_LoadFile(path, (byte** ) &fbuf);
 	if (size == 0) {
 		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
 		return -1;

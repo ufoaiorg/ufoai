@@ -21,7 +21,7 @@ namespace routing
 	 * @sa CompressRouting (ufo2map)
 	 * @sa CMod_LoadRouting
 	 */
-	static int CMod_DeCompressRouting (byte ** source, byte * dataStart)
+	static int CMod_DeCompressRouting (byte**  source, byte * dataStart)
 	{
 		int i, c;
 		byte *data_p;

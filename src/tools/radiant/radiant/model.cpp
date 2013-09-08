@@ -76,7 +76,7 @@ static void PicoPrintFunc (int level, const char* str)
 	}
 }
 
-static void PicoLoadFileFunc (char* name, byte **buffer, int *bufSize)
+static void PicoLoadFileFunc (char* name, byte** buffer, int *bufSize)
 {
 	*bufSize = static_cast<int> (GlobalFileSystem().loadFile(name, (void**)buffer));
 }

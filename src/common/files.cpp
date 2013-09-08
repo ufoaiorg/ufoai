@@ -393,7 +393,7 @@ int FS_Read (void* buffer, int len, qFILE * f)
  * @sa FS_Read
  * @sa FS_OpenFile
  */
-int FS_LoadFile (const char* path, byte **buffer)
+int FS_LoadFile (const char* path, byte** buffer)
 {
 	qFILE h;
 	int len;

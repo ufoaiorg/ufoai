@@ -48,7 +48,7 @@ void LoadScriptFile (const char* filename)
 {
 	strncpy(script.filename, filename, sizeof(script.filename));
 
-	const int size = FS_LoadFile(script.filename, (byte **)&script.buffer);
+	const int size = FS_LoadFile(script.filename, (byte** )&script.buffer);
 	if (size == -1)
 		Sys_Error("file '%s' doesn't exist", script.filename);
 

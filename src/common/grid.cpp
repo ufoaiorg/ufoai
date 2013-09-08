@@ -506,7 +506,7 @@ bool Step::isPossible (const pathing_t *path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte ** fb_list, int fb_length)
+void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
 {
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
@@ -609,7 +609,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte ** fb_list, int fb_length)
+bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
 {
 	bool found = false;
 	int count;

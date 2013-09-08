@@ -232,7 +232,7 @@ typedef struct game_import_s {
 
 	/* filesystem functions */
 	const char* (IMPORT *FS_Gamedir) (void);
-	int (IMPORT *FS_LoadFile) (const char* path, byte **buffer);
+	int (IMPORT *FS_LoadFile) (const char* path, byte** buffer);
 	void (IMPORT *FS_FreeFile) (void* buffer);
 
 	/* network messaging (writing) */

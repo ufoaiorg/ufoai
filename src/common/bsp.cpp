@@ -395,7 +395,7 @@ static void CMod_LoadBrushSides (MapTile &tile, const byte *base, const lump_t *
  * @sa CompressRouting (ufo2map)
  * @sa CMod_LoadRouting
  */
-static int CMod_DeCompressRouting (const byte ** source, byte * dataStart)
+static int CMod_DeCompressRouting (const byte**  source, byte * dataStart)
 {
 	int i, c;
 	byte *data_p;

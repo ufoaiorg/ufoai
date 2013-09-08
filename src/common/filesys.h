@@ -149,7 +149,7 @@ void FS_CopyFile(const char *fromOSPath, const char *toOSPath);
 
 /* note: this can't be called from another DLL, due to MS libc issues */
 
-int FS_LoadFile(const char *path, byte **buffer);
+int FS_LoadFile(const char *path, byte** buffer);
 
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */

@@ -149,7 +149,7 @@ void R_ImageList_f (void)
  * @param[out] height Height of the loaded image.
  * @sa R_FindImage
  */
-void R_LoadImage (const char *name, byte **pic, int *width, int *height)
+void R_LoadImage (const char *name, byte** pic, int *width, int *height)
 {
 	char filenameTemp[MAX_QPATH];
 	SDL_Surface *surf;
