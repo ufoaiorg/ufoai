@@ -71,27 +71,27 @@ typedef struct installationTemplate_s {
 
 /** @brief A installation with all it's data */
 typedef struct installation_s {
-	int idx;					/**< Self link. Index in the global installation-list. */
-	char name[MAX_VAR];			/**< Name of the installation */
+	int idx;						/**< Self link. Index in the global installation-list. */
+	char name[MAX_VAR];				/**< Name of the installation */
 
 	const installationTemplate_t *installationTemplate; /** The template used for the installation. */
 
-	vec3_t pos;		/**< pos on geoscape */
+	vec3_t pos;						/**< pos on geoscape */
 
 	installationStatus_t installationStatus; /**< the current installation status */
 
-	float alienInterest;	/**< How much aliens know this installation (and may attack it) */
+	float alienInterest;			/**< How much aliens know this installation (and may attack it) */
 
 	struct radar_s radar;			/**< Radar of the installation (for radar towers) */
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
-	int numBatteries;		/**< how many batteries are installed? */
+	int numBatteries;				/**< how many batteries are installed? */
 
 	capacities_t ufoCapacity;		/**< Capacity of UFO Yard. */
 
 	int installationDamage;			/**< Hit points of installation */
 	int buildStart;					/**< Date when the installation building started */
-	bool selected;				/**< current selected installation? */
+	bool selected;					/**< current selected installation? */
 } installation_t;
 
 /** Currently displayed/accessed base. */
