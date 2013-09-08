@@ -60,7 +60,7 @@ typedef struct geoscapeData_s {
 	bool nationOverlay;
 	bool xviOverlay;
 	bool radarOverlay;
-	const char *map;
+	const char* map;
 	date_t date;
 
 	/** this is the data that is used with r_xviTexture */
@@ -86,6 +86,6 @@ typedef enum {
 #define MapDef_ForeachSingleplayer(var) MapDef_ForeachCondition(var, (var)->singleplayer)
 #define MapDef_ForeachSingleplayerCampaign(var) MapDef_ForeachCondition(var, (var)->singleplayer && (var)->campaign)
 
-mapDef_t *Com_GetMapDefinitionByID(const char *mapDefID);
+mapDef_t *Com_GetMapDefinitionByID(const char* mapDefID);
 
 extern memPool_t *cl_genericPool;

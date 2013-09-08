@@ -41,7 +41,7 @@ linkedList_t *chrDisplayList;
  * @brief Allocate a skin from the cls structure
  * @return A actorskin structure
  */
-actorSkin_t* CL_AllocateActorSkin (const char *name)
+actorSkin_t* CL_AllocateActorSkin (const char* name)
 {
 	int index;
 	actorSkin_t *skin;
@@ -164,7 +164,7 @@ static void CL_ActorCvars (const character_t *chr)
  * @return skill string
  * @param[in] skill a skill value between 0 and MAX_SKILL
  */
-const char *CL_ActorGetSkillString (const int skill)
+const char* CL_ActorGetSkillString (const int skill)
 {
 	const int skillLevel = skill * 10 / MAX_SKILL;
 #ifdef DEBUG
@@ -234,7 +234,7 @@ void CL_UpdateCharacterValues (const character_t *chr)
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
  */
-void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
+void CL_GenerateCharacter (character_t *chr, const char* teamDefName)
 {
 	chr->init();
 

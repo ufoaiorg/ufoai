@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c nullptr if no equipment definition found.
  */
-const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
+const equipDef_t *INV_GetEquipmentDefinitionByID (const char* name)
 {
 	int i;
 
@@ -412,7 +412,7 @@ CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
  * @brief Searches for a filter type name (as used in console functions) and returns the matching itemFilterTypes_t enum.
  * @param[in] filterTypeID Filter type name so search for. @sa filterTypeNames.
  */
-itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
+itemFilterTypes_t INV_GetFilterTypeID (const char*  filterTypeID)
 {
 	int i;
 
@@ -424,7 +424,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 		return FILTER_S_PRIMARY;
 
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
-		const char *fileTypeName = filterTypeNames[i];
+		const char* fileTypeName = filterTypeNames[i];
 		if (fileTypeName && Q_streq(fileTypeName, filterTypeID))
 			return (itemFilterTypes_t)i;
 	}
@@ -436,7 +436,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 /**
  * @param[in] id The filter type index
  */
-const char *INV_GetFilterType (itemFilterTypes_t id)
+const char* INV_GetFilterType (itemFilterTypes_t id)
 {
 	assert(id < MAX_FILTERTYPES);
 	return filterTypeNames[id];

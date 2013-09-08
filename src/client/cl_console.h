@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void Con_DrawString(const char *text, int x, int y, unsigned int width);
+void Con_DrawString(const char* text, int x, int y, unsigned int width);
 void Con_Scroll(int scroll);
 void Con_CheckResize(void);
 void Con_Init(void);
 void Con_DrawConsole(float frac);
-void Con_Print(const char *txt);
+void Con_Print(const char* txt);
 void Con_ToggleConsole_f(void);
 void Con_Close(void);
 

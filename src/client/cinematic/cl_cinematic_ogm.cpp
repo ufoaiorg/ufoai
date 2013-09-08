@@ -115,7 +115,7 @@ static int CIN_XVID_Init (cinematic_t *cin)
 	return ret;
 }
 
-static int CIN_XVID_Decode (cinematic_t *cin, unsigned char *input, int inputSize)
+static int CIN_XVID_Decode (cinematic_t *cin, unsigned char* input, int inputSize)
 {
 	int ret;
 
@@ -168,7 +168,7 @@ static int CIN_OGM_LoadBlockToSync (cinematic_t *cin)
 	int r = -1;
 
 	if (OGMCIN.ogmFile.f || OGMCIN.ogmFile.z) {
-		char *buffer = ogg_sync_buffer(&OGMCIN.oy, OGG_BUFFER_SIZE);
+		char* buffer = ogg_sync_buffer(&OGMCIN.oy, OGG_BUFFER_SIZE);
 		const int bytes = FS_Read(buffer, OGG_BUFFER_SIZE, &OGMCIN.ogmFile);
 		if (bytes > 0)
 			ogg_sync_wrote(&OGMCIN.oy, bytes);

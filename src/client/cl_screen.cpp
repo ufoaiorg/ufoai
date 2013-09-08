@@ -67,7 +67,7 @@ static char cursorImage[MAX_QPATH];
 /**
  * @sa Font_DrawString
  */
-static void SCR_DrawString (int x, int y, const char *string)
+static void SCR_DrawString (int x, int y, const char* string)
 {
 	if (Q_strnull(string))
 		return;
@@ -124,7 +124,7 @@ void SCR_DrawLoadingScreen (bool string, int percent)
  */
 static void SCR_DrawDownloading (void)
 {
-	const char *dlmsg = va(_("Downloading [%s]"), cls.downloadName);
+	const char* dlmsg = va(_("Downloading [%s]"), cls.downloadName);
 	UI_DrawString("f_menubig", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2 - 60),
@@ -197,7 +197,7 @@ static void SCR_DrawCursor (void)
 		return;
 
 	if (!UI_DNDIsDragging()) {
-		const char *pic;
+		const char* pic;
 		image_t *image;
 
 		if (!cls.isOurRound() && CL_BattlescapeRunning())

@@ -83,7 +83,7 @@ void CIN_RunCinematic (cinematic_t *cin)
  * @brief Open a cinematic file and store status to a structure
  * @sa CIN_CloseCinematic
  */
-void CIN_OpenCinematic (cinematic_t *cin, const char *fileName)
+void CIN_OpenCinematic (cinematic_t *cin, const char* fileName)
 {
 	char name[MAX_OSPATH];
 	int status = 1;

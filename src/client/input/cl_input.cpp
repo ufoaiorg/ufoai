@@ -117,7 +117,7 @@ static kbutton_t in_pantilt;
 static void IN_KeyDown (kbutton_t *b)
 {
 	int k;
-	const char *c = Cmd_Argv(1);
+	const char* c = Cmd_Argv(1);
 
 	if (c[0])
 		k = atoi(c);
@@ -164,7 +164,7 @@ static void IN_KeyUp (kbutton_t *b)
 {
 	int k;
 	unsigned uptime;
-	const char *c = Cmd_Argv(1);
+	const char* c = Cmd_Argv(1);
 
 	if (c[0])
 		k = atoi(c);
@@ -970,7 +970,7 @@ void IN_Frame (void)
 			/** @todo */
 			break;
 		case SDL_TEXTINPUT: {
-			const char *text = event.text.text;
+			const char* text = event.text.text;
 			const char** str = &text;
 			for (;;) {
 				const int characterUnicode = UTF8_next(str);

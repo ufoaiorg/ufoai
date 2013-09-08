@@ -32,9 +32,9 @@ struct sequenceContext_s;
 
 pSequenceContext_t SEQ_AllocContext(void);
 void SEQ_FreeContext(pSequenceContext_t context);
-bool SEQ_InitContext(pSequenceContext_t context, const char *sequenceName);
+bool SEQ_InitContext(pSequenceContext_t context, const char* sequenceName);
 bool SEQ_Render(pSequenceContext_t context);
 void SEQ_SendClickEvent(pSequenceContext_t context);
 void SEQ_SetView(pSequenceContext_t context, vec2_t pos, vec2_t size);
 void SEQ_Shutdown(void);
-void CL_ParseSequence(const char *name, const char** text);
+void CL_ParseSequence(const char* name, const char** text);

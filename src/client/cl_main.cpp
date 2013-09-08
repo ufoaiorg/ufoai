@@ -97,7 +97,7 @@ memPool_t *vid_modelPool;	/**< modeldata - wiped with every new map */
  */
 void Cmd_ForwardToServer (void)
 {
-	const char *cmd = Cmd_Argv(0);
+	const char* cmd = Cmd_Argv(0);
 
 	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
 		Com_Printf("Unknown command \"%s\" - wasn't sent to server\n", cmd);
@@ -126,7 +126,7 @@ static void CL_Env_f (void)
 	if (argc == 3) {
 		Sys_Setenv(Cmd_Argv(1), Cmd_Argv(2));
 	} else if (argc == 2) {
-		const char *env = SDL_getenv(Cmd_Argv(1));
+		const char* env = SDL_getenv(Cmd_Argv(1));
 		if (env)
 			Com_Printf("%s=%s\n", Cmd_Argv(1), env);
 		else
@@ -309,11 +309,11 @@ static void CL_Packet_f (void)
 		return;
 	}
 
-	const char *in = Cmd_Argv(3);
+	const char* in = Cmd_Argv(3);
 
 	const int l = strlen(in);
 	char buf[MAX_STRING_TOKENS];
-	char *out = buf;
+	char* out = buf;
 
 	for (int i = 0; i < l; i++) {
 		if (in[i] == '\\' && in[i + 1] == 'n') {
@@ -344,7 +344,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
 
 	Cmd_TokenizeString(s, false);
 
-	const char *c = Cmd_Argv(0);
+	const char* c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s (%s)\n", c, Cmd_Args());
 
 	/* server connection */
@@ -496,7 +496,7 @@ static void CL_StartMatch_f (void)
 	GAME_StartMatch();
 }
 
-static bool CL_DownloadUMPMap (const char *tiles)
+static bool CL_DownloadUMPMap (const char* tiles)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
@@ -505,7 +505,7 @@ static bool CL_DownloadUMPMap (const char *tiles)
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		const char *token = Com_Parse(&tiles);
+		const char* token = Com_Parse(&tiles);
 		if (!tiles)
 			return startedDownload;
 
@@ -527,7 +527,7 @@ static bool CL_DownloadUMPMap (const char *tiles)
 	return startedDownload;
 }
 
-static bool CL_DownloadMap (const char *map)
+static bool CL_DownloadMap (const char* map)
 {
 	bool startedDownload;
 	if (map[0] != '+') {
@@ -535,7 +535,7 @@ static bool CL_DownloadMap (const char *map)
 	} else {
 		startedDownload = !CL_CheckOrDownloadFile(va("maps/%s.ump", map + 1));
 		if (!startedDownload) {
-			const char *tiles = CL_GetConfigString(CS_TILES);
+			const char* tiles = CL_GetConfigString(CS_TILES);
 			startedDownload = CL_DownloadUMPMap(tiles);
 		}
 	}
@@ -551,7 +551,7 @@ static bool CL_DownloadMap (const char *map)
 static bool CL_CanMultiplayerStart (void)
 {
 	const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
-	const char *serverVersion = CL_GetConfigString(CS_VERSION);
+	const char* serverVersion = CL_GetConfigString(CS_VERSION);
 
 	/* checksum doesn't match with the one the server gave us via configstring */
 	if (!Q_streq(UFO_VERSION, serverVersion)) {
@@ -731,7 +731,7 @@ static const value_t actorskin_vals[] = {
 };
 
 
-static void CL_ParseActorSkin (const char *name, const char** text)
+static void CL_ParseActorSkin (const char* name, const char** text)
 {
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (CL_GetActorSkinCount() == 0) {
@@ -750,8 +750,8 @@ static void CL_ParseActorSkin (const char *name, const char** text)
  */
 static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
 {
-	const char *map1 = ((const mapDef_t *)mapDef1)->map;
-	const char *map2 = ((const mapDef_t *)mapDef2)->map;
+	const char* map1 = ((const mapDef_t *)mapDef1)->map;
+	const char* map2 = ((const mapDef_t *)mapDef2)->map;
 
 	/* skip special map chars for rma and base attack */
 	if (map1[0] == '+' || map1[0] == '.')
@@ -804,7 +804,7 @@ void CL_InitAfter (void)
  * @note This data is persistent until you shutdown the game
  * @return True if the parsing function succeeded.
  */
-bool CL_ParseClientData (const char *type, const char *name, const char** text)
+bool CL_ParseClientData (const char* type, const char* name, const char** text)
 {
 #ifndef COMPILE_UNITTESTS
 	static int progressCurrent = 0;
@@ -876,7 +876,7 @@ static void CL_ShowConfigstrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString;
+		const char* configString;
 		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 		 * so don't print the middle parts */
 		if (i > CS_TILES && i < CS_POSITIONS)
@@ -1010,7 +1010,7 @@ static void CL_SendChangedUserinfos (void)
 	if (!Com_IsUserinfoModified())
 		return;
 	char info[MAX_INFO_STRING];
-	const char *userInfo = Cvar_Userinfo(info, sizeof(info));
+	const char* userInfo = Cvar_Userinfo(info, sizeof(info));
 	dbuffer msg(strlen(userInfo) + 2);
 	NET_WriteByte(&msg, clc_userinfo);
 	NET_WriteString(&msg, userInfo);
@@ -1186,12 +1186,12 @@ static void CL_InitMemPools (void)
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 }
 
-static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void CL_RContextCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	UI_DisplayNotice(_("This change requires a restart!"), 2000, nullptr);
 }
 
-static void CL_RImagesCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void CL_RImagesCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	UI_DisplayNotice(_("This change might require a restart."), 2000, nullptr);
 }

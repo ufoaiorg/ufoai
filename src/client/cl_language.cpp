@@ -41,8 +41,8 @@ static memPool_t *cl_msgidPool;
  * pointing to the po file content to not waste memory for our long texts.
  */
 typedef struct msgid_s {
-	const char *id;				/**< the msgid id used for referencing via *msgid: 'id' */
-	const char *text;			/**< the pointer to the po file */
+	const char* id;				/**< the msgid id used for referencing via *msgid: 'id' */
+	const char* text;			/**< the pointer to the po file */
 	struct msgid_s *hash_next;	/**< hash map next pointer in case of collision */
 } msgid_t;
 
@@ -52,12 +52,12 @@ static int numMsgIDs;
 static msgid_t *msgIDHash[MAX_MSGIDHASH];
 
 #define MSGIDSIZE 65536
-static char *msgIDText;
+static char* msgIDText;
 
-static void CL_ParseMessageID (const char *name, const char** text)
+static void CL_ParseMessageID (const char* name, const char** text)
 {
 	/* get it's body */
-	const char *token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseMessageID: msgid \"%s\" without body ignored\n", name);
 		return;
@@ -81,7 +81,7 @@ static void CL_ParseMessageID (const char *name, const char** text)
 		HASH_Add(msgIDHash, msgid, hash);
 
 		do {
-			const char *errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
+			const char* errhead = "CL_ParseMessageID: unexpected end of file (msgid ";
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				break;
@@ -136,7 +136,7 @@ const char* CL_Translate (const char* t)
 
 void CL_ParseMessageIDs (void)
 {
-	const char *type, *name, *text;
+	const char* type, *name, *text;
 
 	numMsgIDs = 0;
 	OBJZERO(msgIDHash);
@@ -165,7 +165,7 @@ void CL_ParseMessageIDs (void)
  * @brief List of all mappings for a locale
  */
 typedef struct localeMapping_s {
-	char *localeMapping;	/**< string that contains e.g. en_US.UTF-8 */
+	char* localeMapping;	/**< string that contains e.g. en_US.UTF-8 */
 	struct localeMapping_s *next;	/**< next entry in the linked list */
 } localeMapping_t;
 
@@ -174,9 +174,9 @@ typedef struct localeMapping_s {
  * from our script files
  */
 typedef struct language_s {
-	const char *localeID;			/**< short locale id */
-	const char *localeString;		/**< translatable locale string to show in menus */
-	const char *nativeString;		/**< Name of the language in the native language itself */
+	const char* localeID;			/**< short locale id */
+	const char* localeString;		/**< translatable locale string to show in menus */
+	const char* nativeString;		/**< Name of the language in the native language itself */
 	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s *next;	/**< next language in this list */
 } language_t;
@@ -188,7 +188,7 @@ static int languageCount; /**< how many languages do we have */
  * @brief Searches the locale script id with the given locale string
  * @param[in] fullLocale The full locale string. E.g. en_US.UTF-8
  */
-static const char *CL_GetLocaleID (const char *fullLocale)
+static const char* CL_GetLocaleID (const char* fullLocale)
 {
 	int i;
 	language_t *language;
@@ -210,9 +210,9 @@ static const char *CL_GetLocaleID (const char *fullLocale)
 /**
  * @brief Parse all language definitions from the script files
  */
-void CL_ParseLanguages (const char *name, const char** text)
+void CL_ParseLanguages (const char* name, const char** text)
 {
-	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
+	const char* errhead = "CL_ParseLanguages: unexpected end of file (language ";
 	const char	*token;
 
 	if (!*text) {
@@ -277,7 +277,7 @@ void CL_ParseLanguages (const char *name, const char** text)
  * @param[in] localeID language abbreviation.
  * @return true if setting given language is possible.
  */
-static bool CL_LanguageTest (const char *localeID)
+static bool CL_LanguageTest (const char* localeID)
 {
 #ifndef _WIN32
 	int i;
@@ -371,10 +371,10 @@ void CL_LanguageInit (void)
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
 		Q_strncpyz(systemLanguage, s_language->string, sizeof(systemLanguage));
 	} else {
-		const char *currentLocale = Sys_GetLocale();
+		const char* currentLocale = Sys_GetLocale();
 
 		if (currentLocale) {
-			const char *localeID = CL_GetLocaleID(currentLocale);
+			const char* localeID = CL_GetLocaleID(currentLocale);
 			if (localeID)
 				Q_strncpyz(systemLanguage, localeID, sizeof(systemLanguage));
 			else
@@ -422,7 +422,7 @@ static void CL_NewLanguage (void)
  * @param[in] localeID the locale id parsed from scriptfiles (e.g. en or de [the short id])
  * @sa CL_LocaleSet
  */
-bool CL_LanguageTryToSet (const char *localeID)
+bool CL_LanguageTryToSet (const char* localeID)
 {
 	int i;
 	language_t* language;

@@ -98,7 +98,7 @@ static const value_t tutValues[] = {
 /**
  * @sa CL_ParseClientData
  */
-void TUT_ParseTutorials (const char *name, const char** text)
+void TUT_ParseTutorials (const char* name, const char** text)
 {
 	tutorial_t *t;
 

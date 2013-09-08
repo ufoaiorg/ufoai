@@ -555,7 +555,7 @@ void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 	cin->codecData = nullptr;
 }
 
-int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
+int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char* fileName)
 {
 	roqChunk_t chunk;
 	int size;

@@ -53,9 +53,9 @@ static int		pendingCount = 0;
 static int		abortDownloads = HTTPDL_ABORT_NONE;
 static bool	downloadingPK3 = false;
 
-static void StripHighBits (char *string)
+static void StripHighBits (char* string)
 {
-	char *p = string;
+	char* p = string;
 
 	while (string[0]) {
 		const unsigned char c = *(string++);
@@ -105,7 +105,7 @@ static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double
  * seems to treat '/' and such as illegal chars and encodes almost
  * the entire URL...
  */
-static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
+static void CL_EscapeHTTPPath (const char* filePath, char* escaped)
 {
 	int		i;
 	size_t	len;
@@ -146,7 +146,7 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 {
 	char escapedFilePath[MAX_QPATH * 4];
-	const char *extension = Com_GetExtension(entry->ufoPath);
+	const char* extension = Com_GetExtension(entry->ufoPath);
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * nullptr file handle indicates filelist. */
@@ -228,7 +228,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 /**
  * @brief A new server is specified, so we nuke all our state.
  */
-void CL_SetHTTPServer (const char *URL)
+void CL_SetHTTPServer (const char* URL)
 {
 	CL_HTTP_Cleanup();
 
@@ -291,7 +291,7 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
  * @brief Called from the precache check to queue a download.
  * @sa CL_CheckOrDownloadFile
  */
-bool CL_QueueHTTPDownload (const char *ufoPath)
+bool CL_QueueHTTPDownload (const char* ufoPath)
 {
 	/* no http server (or we got booted) */
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
@@ -312,7 +312,7 @@ bool CL_QueueHTTPDownload (const char *ufoPath)
 
 	/* special case for map file lists */
 	if (cl_http_filelists->integer) {
-		const char *extension = Com_GetExtension(ufoPath);
+		const char* extension = Com_GetExtension(ufoPath);
 		if (extension != nullptr && !Q_strcasecmp(extension, "bsp")) {
 			char listPath[MAX_OSPATH];
 			const size_t len = strlen(ufoPath);
@@ -346,7 +346,7 @@ bool CL_PendingHTTPDownloads (void)
  * @sa CL_CheckAndQueueDownload
  * @sa CL_RequestNextDownload
  */
-bool CL_CheckOrDownloadFile (const char *filename)
+bool CL_CheckOrDownloadFile (const char* filename)
 {
 	static char lastfilename[MAX_OSPATH] = "";
 
@@ -396,7 +396,7 @@ bool CL_CheckOrDownloadFile (const char *filename)
  * @sa CL_QueueHTTPDownload
  * @sa CL_ParseFileList
  */
-static void CL_CheckAndQueueDownload (char *path)
+static void CL_CheckAndQueueDownload (char* path)
 {
 	size_t		length;
 	const char	*ext;
@@ -497,7 +497,7 @@ static void CL_CheckAndQueueDownload (char *path)
  */
 static void CL_ParseFileList (dlhandle_t *dl)
 {
-	char *list;
+	char* list;
 
 	if (!cl_http_filelists->integer)
 		return;
@@ -505,7 +505,7 @@ static void CL_ParseFileList (dlhandle_t *dl)
 	list = dl->tempBuffer;
 
 	for (;;) {
-		char *p = strchr(list, '\n');
+		char* p = strchr(list, '\n');
 		if (p) {
 			p[0] = 0;
 			if (list[0])
@@ -646,7 +646,7 @@ static void CL_FinishHTTPDownload (void)
 		case CURLE_OK:
 			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 			if (responseCode == 404) {
-				const char *extension = Com_GetExtension(dl->queueEntry->ufoPath);
+				const char* extension = Com_GetExtension(dl->queueEntry->ufoPath);
 				if (extension != nullptr && Q_streq(extension, "pk3"))
 					downloadingPK3 = false;
 
@@ -812,13 +812,13 @@ void HTTP_InitStartup (void)
 }
 #else
 void CL_CancelHTTPDownloads(bool permKill) {}
-bool CL_QueueHTTPDownload(const char *ufoPath) {return false;}
+bool CL_QueueHTTPDownload(const char* ufoPath) {return false;}
 void CL_RunHTTPDownloads(void) {}
 bool CL_PendingHTTPDownloads(void) {return false;}
-void CL_SetHTTPServer(const char *URL) {}
+void CL_SetHTTPServer(const char* URL) {}
 void CL_HTTP_Cleanup(void) {}
 void CL_RequestNextDownload(void) {}
-bool CL_CheckOrDownloadFile(const char *filename) {return false;}
+bool CL_CheckOrDownloadFile(const char* filename) {return false;}
 
 void HTTP_InitStartup(void){}
 #endif

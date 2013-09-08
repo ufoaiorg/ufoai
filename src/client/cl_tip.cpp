@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 typedef struct tipOfTheDay_s {
-	const char *tipString;	/**< untranslated tips string from script files */
+	const char* tipString;	/**< untranslated tips string from script files */
 	struct tipOfTheDay_s* next;
 } tipOfTheDay_t;
 
@@ -78,7 +78,7 @@ static void CL_GetTipOfTheDay_f (void)
 /**
  * @brief Parse all tip definitions from the script files
  */
-void CL_ParseTipOfTheDay (const char *name, const char** text)
+void CL_ParseTipOfTheDay (const char* name, const char** text)
 {
 	if (name[0] != '_') {
 		Com_Printf("Ignore tip: '%s' - not marked translatable\n", name);

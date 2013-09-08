@@ -32,7 +32,7 @@ typedef struct actorSkin_s {
 	int idx;
 
 	/** Unique string identifier */
-	char *id;
+	char* id;
 
 	/** Name of the skin, displayed in user interface */
 	char name[MAX_VAR];
@@ -43,13 +43,13 @@ typedef struct actorSkin_s {
 	bool multiplayer;
 } actorSkin_t;
 
-void CL_GenerateCharacter(character_t *chr, const char *teamDefName);
+void CL_GenerateCharacter(character_t *chr, const char* teamDefName);
 void CL_UpdateCharacterValues(const character_t *chr);
-const char *CL_ActorGetSkillString(const int skill);
+const char* CL_ActorGetSkillString(const int skill);
 
 void TEAM_InitStartup(void);
 
-actorSkin_t* CL_AllocateActorSkin(const char *name);
+actorSkin_t* CL_AllocateActorSkin(const char* name);
 unsigned int CL_GetActorSkinCount(void);
 
 extern linkedList_t *chrDisplayList;

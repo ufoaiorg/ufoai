@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/http.h"
 
 void CL_CancelHTTPDownloads(bool permKill);
-bool CL_QueueHTTPDownload(const char *ufoPath);
+bool CL_QueueHTTPDownload(const char* ufoPath);
 void CL_RunHTTPDownloads(void);
 bool CL_PendingHTTPDownloads(void);
-void CL_SetHTTPServer(const char *URL);
+void CL_SetHTTPServer(const char* URL);
 void CL_HTTP_Cleanup(void);
 void CL_RequestNextDownload(void);
-bool CL_CheckOrDownloadFile(const char *filename);
+bool CL_CheckOrDownloadFile(const char* filename);
 
 void HTTP_InitStartup(void);
