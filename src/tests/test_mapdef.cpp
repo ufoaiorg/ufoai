@@ -76,7 +76,7 @@ static int UFO_CleanSuiteMapDef (void)
 	return 0;
 }
 
-#define SEED_TEST 1
+#define SEED_TEST 0
 #if SEED_TEST
 char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
