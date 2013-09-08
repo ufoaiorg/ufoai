@@ -188,7 +188,8 @@ static void testMapDefsMassRMA (void)
 						if (Q_streq(p, "ufocrash"))
 							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
-							ass = md->params;
+							ass = (const char *)LIST_GetByIdx(md->params, 0);
+
 
 						char *entityString = SV_GetConfigString(CS_ENTITYSTRING);
 						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
