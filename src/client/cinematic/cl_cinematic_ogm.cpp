@@ -228,7 +228,7 @@ static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 	vorbis_block_init(&OGMCIN.vd, &vb);
 
 	while (OGMCIN.currentTime > (int) (OGMCIN.vd.granulepos * 1000 / OGMCIN.vi.rate)) {
-		float **pcm;
+		float** pcm;
 		const int samples = vorbis_synthesis_pcmout(&OGMCIN.vd, &pcm);
 
 		if (samples > 0) {
@@ -238,7 +238,7 @@ static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 			int samplesNeeded = sizeof(rawBuffer) / (width * channel);
 			const float *left = pcm[0];
 			const float *right = (OGMCIN.vi.channels > 1) ? pcm[1] : pcm[0];
-			short *ptr = (short*)rawBuffer;
+			short* ptr = (short*)rawBuffer;
 			int i;
 
 			if (samples < samplesNeeded)

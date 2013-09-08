@@ -73,7 +73,7 @@ static Uint32 threadID;
  * @param[in] n Size of the list
  * @param[out] list The list to fill with random values
  */
-static void RandomList (const int n, short *list)
+static void RandomList (const int n, short* list)
 {
 	short i;
 

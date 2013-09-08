@@ -103,7 +103,7 @@ public:
 	int emptyleaf;
 
 	int numleafbrushes;
-	unsigned short *leafbrushes;
+	unsigned short* leafbrushes;
 
 	int nummodels;
 	cBspModel_t *models;

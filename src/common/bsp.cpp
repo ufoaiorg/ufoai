@@ -320,13 +320,13 @@ static void CMod_LoadPlanes (MapTile &tile, const byte *base, const lump_t *l, c
 static void CMod_LoadLeafBrushes (MapTile &tile, const byte *base, const lump_t *l)
 {
 	int i;
-	const unsigned short *in;
+	const unsigned short* in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const unsigned short *) (base + l->fileofs);
+	in = (const unsigned short* ) (base + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);

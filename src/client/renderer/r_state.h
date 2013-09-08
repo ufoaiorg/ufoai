@@ -96,7 +96,7 @@ typedef struct rstate_s {
 
 	/* arrays */
 	GLfloat *vertex_array_3d;
-	GLshort *vertex_array_2d;
+	GLshort* vertex_array_2d;
 	GLfloat *color_array;
 	GLint *index_array;
 	GLfloat *normal_array;

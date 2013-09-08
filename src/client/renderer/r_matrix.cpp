@@ -1528,7 +1528,7 @@ void Matrix4x4_FromDoom3Joint (matrix4x4_t *m, double ox, double oy, double oz, 
 #endif
 }
 
-void Matrix4x4_FromBonePose6s (matrix4x4_t *m, float originscale, const short *pose6s)
+void Matrix4x4_FromBonePose6s (matrix4x4_t *m, float originscale, const short* pose6s)
 {
 	float origin[3];
 	float quat[4];
@@ -1543,7 +1543,7 @@ void Matrix4x4_FromBonePose6s (matrix4x4_t *m, float originscale, const short *p
 	Matrix4x4_FromOriginQuat(m, origin[0], origin[1], origin[2], quat[0], quat[1], quat[2], quat[3]);
 }
 
-void Matrix4x4_ToBonePose6s (const matrix4x4_t *m, float origininvscale, short *pose6s)
+void Matrix4x4_ToBonePose6s (const matrix4x4_t *m, float origininvscale, short* pose6s)
 {
 	float origin[3];
 	float quat[4];

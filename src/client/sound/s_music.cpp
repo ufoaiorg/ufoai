@@ -439,22 +439,22 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 		const float scale = (float)rate / s_env.rate;
 		for (i = 0;; i++) {
 			const int src = i * scale;
-			short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
+			short* ptr = (short* )&userdata->sampleBuf[userdata->samplePos];
 			if (src >= samples)
 				break;
-			*ptr = LittleShort(((const short *) data)[src * 2]);
+			*ptr = LittleShort(((const short* ) data)[src * 2]);
 			ptr++;
-			*ptr = LittleShort(((const short *) data)[src * 2 + 1]);
+			*ptr = LittleShort(((const short* ) data)[src * 2 + 1]);
 
 			userdata->samplePos += 4;
 			userdata->samplePos %= MAX_RAW_SAMPLES;
 		}
 	} else {
 		for (i = 0; i < samples; i++) {
-			short *ptr = (short *)&userdata->sampleBuf[userdata->samplePos];
-			*ptr = LittleShort(((const short *) data)[i * 2]);
+			short* ptr = (short* )&userdata->sampleBuf[userdata->samplePos];
+			*ptr = LittleShort(((const short* ) data)[i * 2]);
 			ptr++;
-			*ptr = LittleShort(((const short *) data)[i * 2 + 1]);
+			*ptr = LittleShort(((const short* ) data)[i * 2 + 1]);
 
 			userdata->samplePos += 4;
 			userdata->samplePos %= MAX_RAW_SAMPLES;

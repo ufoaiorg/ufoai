@@ -91,7 +91,7 @@ static void Con_Clear (void)
  * @param y The y coordinate on the screen
  * @param width Characters to draw
  */
-static void Con_DrawText (const short *text, int x, int y, size_t width)
+static void Con_DrawText (const short* text, int x, int y, size_t width)
 {
 	unsigned int xPos;
 	for (xPos = 0; xPos < width; xPos++) {
@@ -511,7 +511,7 @@ void Con_DrawConsole (float frac)
 		if (con.currentLine - row >= con.totalLines)
 			break;				/* past scrollback wrap point */
 
-		short *text = con.text + (row % con.totalLines) * con.lineWidth;
+		short* text = con.text + (row % con.totalLines) * con.lineWidth;
 
 		Con_DrawText(text, 0, y, con.lineWidth);
 	}
