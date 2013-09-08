@@ -106,6 +106,7 @@ struct uiNode_t {
 	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
 	struct uiAction_s* visibilityCondition;	/**< cvar condition to display/hide the node */
+	int deleteTime;				/**< delayed delete time */
 
 	/** linked list of exclude rect, which exclude node zone for hover or click functions */
 	uiExcludeRect_t *firstExcludeRect;

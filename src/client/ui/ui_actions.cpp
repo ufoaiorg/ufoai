@@ -193,7 +193,7 @@ const char* UI_GetParam (const uiCallContext_t *context, int paramID)
 		paramID--;
 	}
 
-	return (char*) current->data;
+	return (const char*) current->data;
 }
 
 /**

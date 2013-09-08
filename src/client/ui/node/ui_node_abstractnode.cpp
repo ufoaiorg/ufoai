@@ -267,6 +267,21 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
+static void UI_AbstractNodeCallDeleteTimed (uiNode_t *node, const uiCallContext_t *context)
+{
+	if (UI_GetParamNumber(context) != 1) {
+		Com_Printf("UI_AbstractNodeCallDeleteTimed: Invalid number of parameters\n");
+		return;
+	}
+	const char* msStr = UI_GetParam(context, 1);
+	const int ms = atoi(msStr);
+	if (ms <= 0) {
+		UI_DeleteNode(node);
+	} else {
+		node->deleteTime = CL_Milliseconds() + ms;
+	}
+}
+
 bool uiLocatedNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (node->onWheelUp && deltaY < 0) {
@@ -429,6 +444,9 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 
 	/* Delete the node and remove it from his parent. */
 	UI_RegisterNodeMethod(behaviour, "delete", UI_AbstractNodeCallDelete);
+
+	/* Delete the node in x ms and remove it from his parent. */
+	UI_RegisterNodeMethod(behaviour, "deletetimed", UI_AbstractNodeCallDeleteTimed);
 
 	/** @todo move it into common? */
 	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);

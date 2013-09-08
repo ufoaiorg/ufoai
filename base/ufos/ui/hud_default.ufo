@@ -1076,7 +1076,7 @@ window hud_default extends hud
 	 * @param <2> target entity number
 	 */
 	confunc reactionfire_removetarget {
-		call *node:root.reactions.rf<1><2>@delete
+		call *node:root.reactions.rf<1><2>@deletetimed(1500)
 	}
 
 	/**

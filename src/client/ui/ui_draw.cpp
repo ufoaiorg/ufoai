@@ -208,9 +208,6 @@ static void UI_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
 
 static void UI_DrawNode (uiNode_t *node)
 {
-	uiNode_t *child;
-	vec2_t pos;
-
 	/* update the layout */
 	UI_Validate(node);
 
@@ -221,6 +218,7 @@ static void UI_DrawNode (uiNode_t *node)
 	if (!UI_CheckVisibility(node))
 		return;
 
+	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 
 	/** @todo remove it when its possible:
@@ -267,7 +265,7 @@ static void UI_DrawNode (uiNode_t *node)
 		}
 
 		/** @todo we can skip nodes outside visible rect */
-		for (child = node->firstChild; child; child = child->next)
+		for (uiNode_t *child = node->firstChild; child; child = child->next)
 			UI_DrawNode(child);
 
 		/** @todo move it at the right position */
@@ -282,6 +280,14 @@ static void UI_DrawNode (uiNode_t *node)
 		}
 
 		UI_PopClipRect();
+	}
+
+	for (uiNode_t *iter = node->firstChild; iter; ) {
+		uiNode_t* child = iter;
+		iter = iter->next;
+		if (child->deleteTime > 0 && child->deleteTime < CL_Milliseconds()) {
+			UI_DeleteNode(child);
+		}
 	}
 }
 
