@@ -32,22 +32,22 @@
 #include "callbackfwd.h"
 
 template<typename Type>
-inline void *convertToOpaque (Type* t)
+inline void* convertToOpaque (Type* t)
 {
 	return t;
 }
 template<typename Type>
-inline void *convertToOpaque (const Type* t)
+inline void* convertToOpaque (const Type* t)
 {
 	return const_cast<Type*> (t);
 }
 template<typename Type>
-inline void *convertToOpaque (Type& t)
+inline void* convertToOpaque (Type& t)
 {
 	return &t;
 }
 template<typename Type>
-inline void *convertToOpaque (const Type& t)
+inline void* convertToOpaque (const Type& t)
 {
 	return const_cast<Type*> (&t);
 }
@@ -61,7 +61,7 @@ template<typename Type>
 class ConvertFromOpaque<Type&>
 {
 	public:
-		static Type& apply (void *p)
+		static Type& apply (void* p)
 		{
 			return *static_cast<Type*> (p);
 		}
@@ -71,7 +71,7 @@ template<typename Type>
 class ConvertFromOpaque<const Type&>
 {
 	public:
-		static const Type& apply (void *p)
+		static const Type& apply (void* p)
 		{
 			return *static_cast<Type*> (p);
 		}
@@ -81,7 +81,7 @@ template<typename Type>
 class ConvertFromOpaque<Type*>
 {
 	public:
-		static Type* apply (void *p)
+		static Type* apply (void* p)
 		{
 			return static_cast<Type*> (p);
 		}
@@ -91,7 +91,7 @@ template<typename Type>
 class ConvertFromOpaque<const Type*>
 {
 	public:
-		static const Type* apply (void *p)
+		static const Type* apply (void* p)
 		{
 			return static_cast<Type*> (p);
 		}
@@ -116,11 +116,11 @@ class BindFirstOpaque
 		{
 			return firstBound;
 		}
-		static result_type thunk (void *environment)
+		static result_type thunk (void* environment)
 		{
 			return Caller::call(ConvertFromOpaque<FirstBound>::apply(environment));
 		}
-		void *getEnvironment () const
+		void* getEnvironment () const
 		{
 			return convertToOpaque(firstBound);
 		}
@@ -146,11 +146,11 @@ class BindFirstOpaque1
 		{
 			return firstBound;
 		}
-		static result_type thunk (void *environment, first_argument_type a1)
+		static result_type thunk (void* environment, first_argument_type a1)
 		{
 			return Caller::call(ConvertFromOpaque<FirstBound>::apply(environment), a1);
 		}
-		void *getEnvironment () const
+		void* getEnvironment () const
 		{
 			return convertToOpaque(firstBound);
 		}
@@ -177,11 +177,11 @@ class BindFirstOpaque2
 		{
 			return firstBound;
 		}
-		static result_type thunk (void *environment, first_argument_type a1, second_argument_type a2)
+		static result_type thunk (void* environment, first_argument_type a1, second_argument_type a2)
 		{
 			return Caller::call(ConvertFromOpaque<FirstBound>::apply(environment), a1, a2);
 		}
-		void *getEnvironment () const
+		void* getEnvironment () const
 		{
 			return convertToOpaque(firstBound);
 		}
@@ -209,12 +209,12 @@ class BindFirstOpaque3
 		{
 			return firstBound;
 		}
-		static result_type thunk (void *environment, first_argument_type a1, second_argument_type a2,
+		static result_type thunk (void* environment, first_argument_type a1, second_argument_type a2,
 				third_argument_type a3)
 		{
 			return Caller::call(ConvertFromOpaque<FirstBound>::apply(environment), a1, a2, a3);
 		}
-		void *getEnvironment () const
+		void* getEnvironment () const
 		{
 			return convertToOpaque(firstBound);
 		}
@@ -223,15 +223,15 @@ class BindFirstOpaque3
 template<typename Thunk_>
 class CallbackBase
 {
-		void *m_environment;
+		void* m_environment;
 		Thunk_ m_thunk;
 	public:
 		typedef Thunk_ Thunk;
-		CallbackBase (void *environment, Thunk function) :
+		CallbackBase (void* environment, Thunk function) :
 			m_environment(environment), m_thunk(function)
 		{
 		}
-		void *getEnvironment () const
+		void* getEnvironment () const
 		{
 			return m_environment;
 		}
@@ -282,7 +282,7 @@ class Callback0: public CallbackBase<Result(*) (void*)>
 			Base(caller.getEnvironment(), BindFirstOpaque<Caller>::thunk)
 		{
 		}
-		Callback0 (void *environment, typename Base::Thunk function) :
+		Callback0 (void* environment, typename Base::Thunk function) :
 			Base(environment, function)
 		{
 		}
@@ -331,7 +331,7 @@ class Callback1: public CallbackBase<Result(*) (void*, FirstArgument)>
 			Base(caller.getEnvironment(), BindFirstOpaque1<Caller>::thunk)
 		{
 		}
-		Callback1 (void *environment, typename Base::Thunk function) :
+		Callback1 (void* environment, typename Base::Thunk function) :
 			Base(environment, function)
 		{
 		}
@@ -380,7 +380,7 @@ class Callback2: public CallbackBase<Result(*) (void*, FirstArgument, SecondArgu
 			Base(caller.getEnvironment(), BindFirstOpaque2<Caller>::thunk)
 		{
 		}
-		Callback2 (void *environment, typename Base::Thunk function) :
+		Callback2 (void* environment, typename Base::Thunk function) :
 			Base(environment, function)
 		{
 		}
@@ -430,7 +430,7 @@ class Callback3: public CallbackBase<Result(*) (void*, FirstArgument, SecondArgu
 			Base(caller.getEnvironment(), BindFirstOpaque3<Caller>::thunk)
 		{
 		}
-		Callback3 (void *environment, typename Base::Thunk function) :
+		Callback3 (void* environment, typename Base::Thunk function) :
 			Base(environment, function)
 		{
 		}

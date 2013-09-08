@@ -80,7 +80,7 @@ const std::string RKEY_TEXTURES_LICENSE_PATH = "user/ui/textures/browser/license
 const std::string RKEY_TEXTURES_SKIPCOMMON = "user/ui/textures/skipCommon";
 }
 
-static void TextureBrowser_scrollChanged (void *data, gdouble value);
+static void TextureBrowser_scrollChanged (void* data, gdouble value);
 
 TextureBrowser::TextureBrowser () :
 	_glWidget(false), m_texture_scroll(NULL), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
@@ -792,7 +792,7 @@ gboolean TextureBrowser::onMouseScroll (GtkWidget* widget, GdkEventScroll* event
 	return FALSE;
 }
 
-void TextureBrowser_scrollChanged (void *data, gdouble value)
+void TextureBrowser_scrollChanged (void* data, gdouble value)
 {
 	TextureBrowser *textureBrowser = reinterpret_cast<TextureBrowser*> (data);
 	textureBrowser->setOriginY(-(int) value);

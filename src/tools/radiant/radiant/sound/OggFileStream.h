@@ -22,7 +22,7 @@ namespace sound
 				_curPtr = _source.buffer;
 			}
 
-			static std::size_t oggReadFunc (void *ptr, std::size_t byteSize, std::size_t sizeToRead, void *datasource)
+			static std::size_t oggReadFunc (void* ptr, std::size_t byteSize, std::size_t sizeToRead, void* datasource)
 			{
 				OggFileStream* self = reinterpret_cast<OggFileStream*> (datasource);
 
@@ -45,7 +45,7 @@ namespace sound
 				return actualSizeToRead;
 			}
 
-			static int oggSeekFunc (void *datasource, ogg_int64_t offset, int whence)
+			static int oggSeekFunc (void* datasource, ogg_int64_t offset, int whence)
 			{
 				OggFileStream* self = reinterpret_cast<OggFileStream*> (datasource);
 
@@ -76,12 +76,12 @@ namespace sound
 				return 0;
 			}
 
-			static int oggCloseFunc (void *datasource)
+			static int oggCloseFunc (void* datasource)
 			{
 				return 1;
 			}
 
-			static long oggTellFunc (void *datasource)
+			static long oggTellFunc (void* datasource)
 			{
 				OggFileStream* self = reinterpret_cast<OggFileStream*> (datasource);
 				return static_cast<long> (self->_curPtr - self->_source.buffer);

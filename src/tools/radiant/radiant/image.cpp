@@ -71,7 +71,7 @@ class LoadImageVisitor: public ImageModules::Visitor
 }; // class LoadImageVisitor
 
 /// \brief Returns a new image for the first file matching \p name in one of the available texture formats, or 0 if no file is found.
-Image* QERApp_LoadImage (void *environment, const std::string& name)
+Image* QERApp_LoadImage (void* environment, const std::string& name)
 {
 	Image* image = NULL;
 

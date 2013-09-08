@@ -70,7 +70,7 @@ class VirtualFileSystem
 		virtual std::size_t loadFile (const std::string& filename, void** buffer) = 0;
 		/// \brief Frees the buffer returned by \c loadFile.
 		/// \deprecated Deprecated.
-		virtual void freeFile (void *p) = 0;
+		virtual void freeFile (void* p) = 0;
 
 		/// \brief Calls \p callback for each directory under \p basedir.
 		virtual void forEachDirectory (const std::string& basedir, const FileNameCallback& callback, std::size_t depth = 1) = 0;

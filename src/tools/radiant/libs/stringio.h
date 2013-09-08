@@ -262,7 +262,7 @@ template<typename FirstArgument, typename Caller, typename FirstConversion>
 class ImportConvert1
 {
 	public:
-		static void thunk (void *environment, FirstArgument firstArgument)
+		static void thunk (void* environment, FirstArgument firstArgument)
 		{
 			Caller::thunk(environment, FirstConversion(firstArgument));
 		}

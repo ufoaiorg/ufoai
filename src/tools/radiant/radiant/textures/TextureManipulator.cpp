@@ -321,7 +321,7 @@ void TextureManipulator::resampleTextureLerpLine (const byte *in, byte *out, int
  R_ResampleTexture
  ================
  */
-void TextureManipulator::resampleTexture (const void *indata_, int inwidth, int inheight, void *outdata, int outwidth,
+void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int inheight, void* outdata, int outwidth,
 		int outheight, int bytesperpixel)
 {
 	if (rowsize < outwidth * bytesperpixel) {

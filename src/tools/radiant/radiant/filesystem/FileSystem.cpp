@@ -166,7 +166,7 @@ std::size_t FileSystem::loadFile (const std::string& filename, void** buffer)
 	return 0;
 }
 
-void FileSystem::freeFile (void *p)
+void FileSystem::freeFile (void* p)
 {
 	free(p);
 }

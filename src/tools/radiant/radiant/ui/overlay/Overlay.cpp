@@ -329,7 +329,7 @@ private:
 	/* greebo: The custom loader that delivers the loaded Image* to the
 	 * GlobalTexturesCache() system.
 	 */
-	static Image* loadImageGDK (void *environment, const std::string& name)
+	static Image* loadImageGDK (void* environment, const std::string& name)
 	{
 		Overlay* self = reinterpret_cast<Overlay*> (environment);
 

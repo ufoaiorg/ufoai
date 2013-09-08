@@ -77,7 +77,7 @@ void MapCompiler::fixErrors (const std::string& mapName, ICompilerObserver& obse
 	}
 }
 
-inline void compileReadProgress (void *ex, void *buffer)
+inline void compileReadProgress (void* ex, void* buffer)
 {
 	static const gdouble compilerSteps = 7.0;
 	static const gdouble substeps = 10.0; /* 0..9 in the output */

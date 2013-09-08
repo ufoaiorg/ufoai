@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 
 /** @brief Callback from within the process */
-typedef void (*ExecFunc) (void *, void*);
+typedef void (*ExecFunc) (void* , void*);
 
 typedef enum
 {

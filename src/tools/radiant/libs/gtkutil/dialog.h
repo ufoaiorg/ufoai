@@ -31,7 +31,7 @@
 typedef int gint;
 typedef gint gboolean;
 typedef void (*GCallback) (void);
-typedef void *gpointer;
+typedef void* gpointer;
 typedef struct _GdkEventAny GdkEventAny;
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkEntry GtkEntry;

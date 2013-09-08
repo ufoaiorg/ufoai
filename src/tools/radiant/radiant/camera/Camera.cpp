@@ -228,7 +228,7 @@ void Camera::updateProjection ()
 	m_view->Construct(projection, modelview, width, height);
 }
 
-void Camera::motionDelta (int x, int y, void *data)
+void Camera::motionDelta (int x, int y, void* data)
 {
 	Camera* self = reinterpret_cast<Camera*>(data);
 	self->mouseMove(x, y);

@@ -44,9 +44,9 @@ void Sys_SetCursorPos (GtkWindow* window, int x, int y);
 class DeferredMotion
 {
 		guint m_handler;
-		typedef void(*MotionFunction) (gdouble x, gdouble y, guint state, void *data);
+		typedef void(*MotionFunction) (gdouble x, gdouble y, guint state, void* data);
 		MotionFunction m_function;
-		void *m_data;
+		void* m_data;
 		gdouble m_x;
 		gdouble m_y;
 		guint m_state;
@@ -58,7 +58,7 @@ class DeferredMotion
 			return FALSE;
 		}
 	public:
-		DeferredMotion (MotionFunction function, void *data) :
+		DeferredMotion (MotionFunction function, void* data) :
 			m_handler(0), m_function(function), m_data(data)
 		{
 		}
@@ -84,9 +84,9 @@ class DeferredMotionDelta
 		int m_delta_x;
 		int m_delta_y;
 		guint m_motion_handler;
-		typedef void (*MotionDeltaFunction) (int x, int y, void *data);
+		typedef void (*MotionDeltaFunction) (int x, int y, void* data);
 		MotionDeltaFunction m_function;
-		void *m_data;
+		void* m_data;
 
 		static gboolean deferred_motion (gpointer data)
 		{
@@ -100,7 +100,7 @@ class DeferredMotionDelta
 			return FALSE;
 		}
 	public:
-		DeferredMotionDelta (MotionDeltaFunction function, void *data) :
+		DeferredMotionDelta (MotionDeltaFunction function, void* data) :
 			m_delta_x(0), m_delta_y(0), m_motion_handler(0), m_function(function), m_data(data)
 		{
 		}
@@ -125,9 +125,9 @@ class FreezePointer
 {
 		unsigned int handle_motion;
 		int recorded_x, recorded_y;
-		typedef void (*MotionDeltaFunction) (int x, int y, unsigned int state, void *data);
+		typedef void (*MotionDeltaFunction) (int x, int y, unsigned int state, void* data);
 		MotionDeltaFunction m_function;
-		void *m_data;
+		void* m_data;
 	public:
 		FreezePointer () :
 			handle_motion(0), recorded_x(0), recorded_y(0), m_function(0), m_data(0)
@@ -146,7 +146,7 @@ class FreezePointer
 			return FALSE;
 		}
 
-		void freeze_pointer (GtkWindow* window, MotionDeltaFunction function, void *data)
+		void freeze_pointer (GtkWindow* window, MotionDeltaFunction function, void* data)
 		{
 			ASSERT_MESSAGE(m_function == 0, "can't freeze pointer");
 
