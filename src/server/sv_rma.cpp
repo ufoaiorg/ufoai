@@ -1007,7 +1007,8 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * map tiles that should be assembled. The order is the same as in the @c asmPos string.
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
- * string this string contains three coordinates for shifting the given tile names.
+ * string asmPos contains three coordinates for shifting the given tile names.
+ * @param[in] print Print out the mapStrings or not
  */
 static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos, bool print)
 {
