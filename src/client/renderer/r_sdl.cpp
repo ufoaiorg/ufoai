@@ -96,8 +96,8 @@ bool Rimp_Init (void)
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 	int screen = 0;
-	int modes = SDL_GetNumDisplayModes(screen);
-	if (modes) {
+	const int modes = SDL_GetNumDisplayModes(screen);
+	if (modes > 0) {
 		r_sdl_config.modes = Mem_AllocTypeN(rect_t, modes);
 		for (int i = 0; i < modes; i++) {
 			SDL_DisplayMode displayMode;
