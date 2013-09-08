@@ -178,6 +178,8 @@ bool Rimp_Init (void)
 	if (!SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &attrValue))
 		Com_Printf("I: got %d bits for alpha\n", attrValue);
 	if (!SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &attrValue))
+		Com_Printf("I: got multisample %s\n", attrValue != 0 ? "enabled" : "disabled");
+	if (!SDL_GL_GetAttribute(SDL_GL_MULTISAMPLEBUFFERS, &attrValue))
 		Com_Printf("I: got %d multisample buffers\n", attrValue);
 
 	return true;
