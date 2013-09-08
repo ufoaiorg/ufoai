@@ -710,7 +710,8 @@ bool R_SetMode (void)
 	return true;
 }
 
-/** @note SDL_GL_GetProcAddress returns a void*, which is not on all
+/**
+ * @note SDL_GL_GetProcAddress returns a void*, which is not on all
  * supported platforms the same size as a function pointer.
  * This wrapper is a workaround until SDL is fixed.
  * It is known to produce the "warning: assignment from incompatible pointer type"
@@ -725,21 +726,21 @@ static uintptr_t R_GetProcAddressExt (const char *functionName)
 	const char *s = strstr(functionName, "###");
 	if (s == nullptr) {
 		return R_GetProcAddress(functionName);
-	} else {
-		const char *replace[] = {"EXT", "OES", "ARB"};
-		char targetBuf[128];
-		const size_t length = lengthof(targetBuf);
-		const size_t replaceNo = lengthof(replace);
-		for (size_t i = 0; i < replaceNo; i++) {
-			if (Q_strreplace(functionName, "###", replace[i], targetBuf, length)) {
-				uintptr_t funcAdr = R_GetProcAddress(targetBuf);
-				if (funcAdr != 0)
-					return funcAdr;
-			}
-		}
-		Com_Printf("%s not found\n", functionName);
-		return 0;
 	}
+
+	const char *replace[] = {"EXT", "OES", "ARB"};
+	char targetBuf[128];
+	const size_t length = lengthof(targetBuf);
+	const size_t replaceNo = lengthof(replace);
+	for (size_t i = 0; i < replaceNo; i++) {
+		if (Q_strreplace(functionName, "###", replace[i], targetBuf, length)) {
+			uintptr_t funcAdr = R_GetProcAddress(targetBuf);
+			if (funcAdr != 0)
+				return funcAdr;
+		}
+	}
+	Com_Printf("%s not found\n", functionName);
+	return 0;
 }
 
 /**
