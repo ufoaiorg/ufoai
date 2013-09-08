@@ -482,7 +482,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *inde
 /**
  * @brief Translate string into glmode
  */
-static GLenum R_ConstByName (const char *c)
+static GLenum R_ConstByName (const char* c)
 {
 	if (Q_streq(c, "GL_ONE"))
 		return GL_ONE;
@@ -553,7 +553,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 
 	/* now load the rest */
 	for (i = 0; i < s->anim.num_frames; i++) {
-		const char *c = va("%s%d", name, i);
+		const char* c = va("%s%d", name, i);
 		image_t *image = R_FindImage(c, it_material);
 		s->anim.images[i] = image;
 		if (image == r_noTexture) {
@@ -574,7 +574,7 @@ static int R_ParseStage (materialStage_t *s, const char** buffer)
 	int i;
 
 	while (true) {
-		const char *c = Com_Parse(buffer);
+		const char* c = Com_Parse(buffer);
 
 		if (c[0] == '\0')
 			break;
@@ -926,11 +926,11 @@ static int R_ParseStage (materialStage_t *s, const char** buffer)
  * @brief Load material definitions for each map that has one
  * @param[in] map the base name of the map to load the material for
  */
-void R_LoadMaterials (const char *map)
+void R_LoadMaterials (const char* map)
 {
 	char path[MAX_QPATH];
 	byte *fileBuffer;
-	const char *buffer;
+	const char* buffer;
 	bool inmaterial;
 	image_t *image;
 	material_t *m;
@@ -956,14 +956,14 @@ void R_LoadMaterials (const char *map)
 			Com_Printf("...ignore materials (r_materials is deactivated)\n");
 	}
 
-	buffer = (const char *)fileBuffer;
+	buffer = (const char* )fileBuffer;
 
 	inmaterial = false;
 	image = nullptr;
 	m = nullptr;
 
 	while (true) {
-		const char *c = Com_Parse(&buffer);
+		const char* c = Com_Parse(&buffer);
 
 		if (c[0] == '\0')
 			break;
@@ -1100,7 +1100,7 @@ void R_LoadMaterials (const char *map)
 /**
  * @brief Change listener callback for material value cvars
  */
-void R_UpdateDefaultMaterial (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+void R_UpdateDefaultMaterial (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	defaultMaterial.specular = r_default_specular->value;
 	defaultMaterial.hardness = r_default_hardness->value;

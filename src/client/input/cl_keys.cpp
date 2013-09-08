@@ -60,14 +60,14 @@ size_t msgBufferLen = 0;
  * punctuation symbol is above the 4.
  */
 
-char *keyBindings[K_KEY_SIZE];
-char *menuKeyBindings[K_KEY_SIZE];
-char *battleKeyBindings[K_KEY_SIZE];
+char* keyBindings[K_KEY_SIZE];
+char* menuKeyBindings[K_KEY_SIZE];
+char* battleKeyBindings[K_KEY_SIZE];
 
 static bool keyDown[K_KEY_SIZE];
 
 typedef struct {
-	const char *name;
+	const char* name;
 	int keynum;
 } keyName_t;
 
@@ -455,7 +455,7 @@ static void Key_Console (int key, int unicode)
  * the K_* names are matched up.
  * @sa Key_KeynumToString
  */
-int Key_StringToKeynum (const char *str)
+int Key_StringToKeynum (const char* str)
 {
 	const keyName_t *kn;
 
@@ -480,7 +480,7 @@ int Key_StringToKeynum (const char *str)
  * @todo handle quote special (general escape sequence?)
  * @sa Key_StringToKeynum
  */
-const char *Key_KeynumToString (int keynum)
+const char* Key_KeynumToString (int keynum)
 {
 	const keyName_t *kn;
 	static char tinystr[2];
@@ -508,7 +508,7 @@ const char *Key_KeynumToString (int keynum)
  * @sa Key_SetBinding
  * @return the binded key or empty string if not found
  */
-const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
+const char* Key_GetBinding (const char* binding, keyBindSpace_t space)
 {
 	int i;
 	char** keySpace = nullptr;
@@ -545,7 +545,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  * @sa Key_StringToKeynum
  * @note If command is empty, this function will only remove the actual key binding instead of setting empty string.
  */
-void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
+void Key_SetBinding (int keynum, const char* binding, keyBindSpace_t space)
 {
 	char** keySpace = nullptr;
 
@@ -709,7 +709,7 @@ void Key_WriteBindings (const char* filename)
 		}
 
 	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
-		const char *path;
+		const char* path;
 		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
 
 		if (binding->node == nullptr)
@@ -772,7 +772,7 @@ static void Key_Bindlist_f (void)
 
 }
 
-static int Key_CompleteKeyName (const char *partial, const char** match)
+static int Key_CompleteKeyName (const char* partial, const char** match)
 {
 	int n = 0;
 	for (keyName_t const* kn = keyNames; kn->name; ++kn) {
@@ -876,7 +876,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 		 * to keep the character from continuing an action started before a console
 		 * switch.  Button commands include the kenum as a parameter, so multiple
 		 * downs can be matched with ups */
-		const char *kb = menuKeyBindings[key];
+		const char* kb = menuKeyBindings[key];
 		/* this loop ensures, that every down event reaches it's proper kbutton_t */
 		for (i = 0; i < 3; i++) {
 			if (kb && kb[0] == '+') {
@@ -900,7 +900,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 		/* Some keyboards need modifiers to access key values that are
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
-		const char *kb = nullptr;
+		const char* kb = nullptr;
 		if (IN_GetMouseSpace() == MS_UI && unicode >= 32 && unicode < 127)
 			kb = menuKeyBindings[unicode];
 		if (!kb && IN_GetMouseSpace() == MS_UI)

@@ -86,7 +86,7 @@ typedef struct entity_s {
 
 	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
-	const char *tagname;		/**< name of the tag */
+	const char* tagname;		/**< name of the tag */
 
 	/* misc */
 	int skinnum;

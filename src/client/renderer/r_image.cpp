@@ -94,7 +94,7 @@ void R_ImageList_f (void)
 	cnt = 0;
 
 	FOR_EACH_IMAGE(i, image, images) {
-		const char *type;
+		const char* type;
 		if (!image->texnum)
 			continue;
 		cnt++;
@@ -149,7 +149,7 @@ void R_ImageList_f (void)
  * @param[out] height Height of the loaded image.
  * @sa R_FindImage
  */
-void R_LoadImage (const char *name, byte** pic, int *width, int *height)
+void R_LoadImage (const char* name, byte** pic, int *width, int *height)
 {
 	char filenameTemp[MAX_QPATH];
 	SDL_Surface *surf;
@@ -409,7 +409,7 @@ static inline void R_DeleteImage (image_t *image)
 	OBJZERO(*image);
 }
 
-image_t *R_GetImage (const char *name)
+image_t *R_GetImage (const char* name)
 {
 	image_t *image;
 	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);
@@ -432,7 +432,7 @@ image_t *R_GetImage (const char *name)
  * @param[in] height The height of the image (power of two, please)
  * @param[in] type The image type @sa imagetype_t
  */
-image_t *R_LoadImageData (const char *name, const byte *pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char* name, const byte *pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	imageArray_t *images;
@@ -504,7 +504,7 @@ image_t *R_LoadImageData (const char *name, const byte *pic, int width, int heig
 	return image;
 }
 
-image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
+image_t* R_RenderToTexture (const char* name, int x, int y, int w, int h)
 {
 	image_t *img = R_GetImage(name);
 	const bool dimensionDiffer = img != nullptr && img->width != w && img->height != h;
@@ -560,7 +560,7 @@ static void R_ChangeImageType(image_t *img, imagetype_t type)
  * @sa R_LoadJPG
  * @sa R_LoadPNG
  */
-image_t *R_FindImage (const char *pname, imagetype_t type)
+image_t *R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	image_t *image;
@@ -630,7 +630,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
  * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
-const image_t *R_FindPics (const char *name)
+const image_t *R_FindPics (const char* name)
 {
 	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
@@ -638,7 +638,7 @@ const image_t *R_FindPics (const char *name)
 	return image;
 }
 
-bool R_ImageExists (const char *pname, ...)
+bool R_ImageExists (const char* pname, ...)
 {
 	char const* const* const types = Img_GetImageTypes();
 	int i;
@@ -814,7 +814,7 @@ void R_ReloadImages (void)
 }
 
 typedef struct {
-	const char *name;
+	const char* name;
 	int minimize, maximize;
 } glTextureMode_t;
 
@@ -827,7 +827,7 @@ static const glTextureMode_t gl_texture_modes[] = {
 	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR} /* bilinear filtering, trilinear filtering, mipmaps */
 };
 
-void R_TextureMode (const char *string)
+void R_TextureMode (const char* string)
 {
 	int i;
 	image_t *image;
@@ -864,15 +864,15 @@ void R_TextureMode (const char *string)
 }
 
 #ifdef GL_VERSION_ES_CM_1_0
-void R_TextureSolidMode (const char *string)
+void R_TextureSolidMode (const char* string)
 {
 }
-void R_TextureAlphaMode (const char *string)
+void R_TextureAlphaMode (const char* string)
 {
 }
 #else
 typedef struct {
-	const char *name;
+	const char* name;
 	int mode;
 } gltmode_t;
 
@@ -891,7 +891,7 @@ static const gltmode_t gl_alpha_modes[] = {
 };
 
 
-void R_TextureAlphaMode (const char *string)
+void R_TextureAlphaMode (const char* string)
 {
 	int i;
 	const size_t size = lengthof(gl_alpha_modes);
@@ -927,7 +927,7 @@ static const gltmode_t gl_solid_modes[] = {
 	{"GL_LUMINANCE16", GL_LUMINANCE16}
 };
 
-void R_TextureSolidMode (const char *string)
+void R_TextureSolidMode (const char* string)
 {
 	int i;
 	const size_t size = lengthof(gl_solid_modes);

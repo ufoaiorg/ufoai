@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_ttf.h>
 
 typedef struct font_s {
-	const char *name;
+	const char* name;
 	TTF_Font *font;
 	SDL_RWops *rw;				/**< ttf font reading structure for SDL_RWops */
 	byte *buffer;				/**< loaded file */
@@ -38,5 +38,5 @@ typedef struct font_s {
 
 /* public */
 void R_FontListCache_f(void);
-font_t *R_GetFont(const char *name);
+font_t *R_GetFont(const char* name);
 void R_FontCleanCache (void);

@@ -98,7 +98,7 @@ enum {
  * @param[in] filename Force to use a filename. Else nullptr to autogen a filename
  * @param[in] ext Force to use an image format (tga/png/jpg). Else nullptr to use value of r_screenshot_format
  */
-void R_ScreenShot (int x, int y, int width, int height, const char *filename, const char *ext)
+void R_ScreenShot (int x, int y, int width, int height, const char* filename, const char* ext)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, quality = 100;
@@ -204,7 +204,7 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 
 void R_ScreenShot_f (void)
 {
-	const char *ext = nullptr;
+	const char* ext = nullptr;
 	if (Cmd_Argc() > 1)
 		ext = Cmd_Argv(1);
 	R_ScreenShot(0, 0, viddef.context.width, viddef.context.height, nullptr, ext);
@@ -259,7 +259,7 @@ void R_DumpOpenGlState (void)
 {
 #define CAPABILITY( X ) {GL_ ## X, # X}
 	/* List taken from here: http://www.khronos.org/opengles/sdk/1.1/docs/man/glIsEnabled.xml */
-	const struct { GLenum idx; const char * text; } openGLCaps[] = {
+	const struct { GLenum idx; const char*  text; } openGLCaps[] = {
 		CAPABILITY(ALPHA_TEST),
 		CAPABILITY(BLEND),
 		CAPABILITY(COLOR_ARRAY),
@@ -293,7 +293,7 @@ void R_DumpOpenGlState (void)
 	GLint activeClientTexUnit = 0;
 	GLint activeTexId = 0;
 	GLfloat texEnvMode = 0;
-	const char * texEnvModeStr = "UNKNOWN";
+	const char*  texEnvModeStr = "UNKNOWN";
 	GLfloat color[4];
 
 	for (int i = 0; i < lengthof(openGLCaps); i++) {

@@ -60,7 +60,7 @@ static inline const char* R_TranslateError (GLenum error)
 /**
  * @brief Checks for opengl errors
  */
-static int R_CheckErrorDebug (const char *file, int line, const char *function)
+static int R_CheckErrorDebug (const char* file, int line, const char* function)
 {
 	int ret = 0;
 	if (r_checkerror && r_checkerror->integer) {

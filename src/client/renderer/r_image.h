@@ -84,7 +84,7 @@ void R_UploadTexture(const unsigned *data, int width, int height, image_t* image
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
 void R_GetScaledTextureSize(int width, int height, int *scaledWidth, int *scaledHeight);
 void R_ScaleTexture(const unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
-image_t* R_RenderToTexture(const char *name, int x, int y, int w, int h);
+image_t* R_RenderToTexture(const char* name, int x, int y, int w, int h);
 
 void R_ImageList_f(void);
 void R_InitImages(void);
@@ -93,18 +93,18 @@ void R_ReloadImages (void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_UploadAlpha(const image_t *image, const byte *alphaData);
-void R_TextureMode(const char *string);
-void R_TextureAlphaMode(const char *string);
-void R_TextureSolidMode(const char *string);
+void R_TextureMode(const char* string);
+void R_TextureAlphaMode(const char* string);
+void R_TextureSolidMode(const char* string);
 
 void R_FreeImage(image_t *image);
 
-image_t *R_LoadImageData(const char *name, const byte *pic, int width, int height, imagetype_t type);
-image_t *R_GetImage(const char *name);
-image_t *R_FindImage(const char *pname, imagetype_t type);
-const image_t *R_FindPics(const char *name);
+image_t *R_LoadImageData(const char* name, const byte *pic, int width, int height, imagetype_t type);
+image_t *R_GetImage(const char* name);
+image_t *R_FindImage(const char* pname, imagetype_t type);
+const image_t *R_FindPics(const char* name);
 
-bool R_ImageExists(const char *pname, ...) __attribute__((format(__printf__, 1, 2)));
+bool R_ImageExists(const char* pname, ...) __attribute__((format(__printf__, 1, 2)));
 image_t *R_GetImageAtIndex(int i);
 int R_GetImageIndex(image_t *image);
 

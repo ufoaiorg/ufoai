@@ -32,7 +32,7 @@ void R_DrawChars(void);
 void R_DrawFills(void);
 void R_DrawFill(int x, int y, int w, int h, const vec4_t color);
 void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
-int R_UploadData(const char *name, unsigned *frame, int width, int height);
+int R_UploadData(const char* name, unsigned *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);
 void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);

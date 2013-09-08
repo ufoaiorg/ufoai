@@ -270,7 +270,7 @@ void R_DrawFills (void)
  * @param[in] height The height of the texture
  * @return the texture number of the uploaded images
  */
-int R_UploadData (const char *name, unsigned *frame, int width, int height)
+int R_UploadData (const char* name, unsigned *frame, int width, int height)
 {
 	image_t *img;
 	unsigned *scaled;

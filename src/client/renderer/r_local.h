@@ -152,10 +152,10 @@ typedef enum {
 
 /** @brief GL config stuff */
 typedef struct {
-	const char *rendererString;
-	const char *vendorString;
-	const char *versionString;
-	const char *extensionsString;
+	const char* rendererString;
+	const char* vendorString;
+	const char* versionString;
+	const char* extensionsString;
 
 	int glVersionMajor;
 	int glVersionMinor;

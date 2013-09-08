@@ -34,7 +34,7 @@
 
 typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
 
-const char *shaderQualityLevelNames[SHQ_NUM][2] = {
+const char* shaderQualityLevelNames[SHQ_NUM][2] = {
 	{"world_low","model_low"},
 	{"world_med","model_med"},
 	{"world_med","model_high"} /** @todo high quality world shader */
@@ -64,7 +64,7 @@ void R_UseProgram  (r_program_t *prog)
 	}
 }
 
-static r_progvar_t *R_ProgramVariable (int type, const char *name)
+static r_progvar_t *R_ProgramVariable (int type, const char* name)
 {
 	r_progvar_t *v;
 	int i;
@@ -108,7 +108,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	return v;
 }
 
-void R_ProgramParameter1i (const char *name, GLint value)
+void R_ProgramParameter1i (const char* name, GLint value)
 {
 	r_progvar_t *v;
 
@@ -118,7 +118,7 @@ void R_ProgramParameter1i (const char *name, GLint value)
 	qglUniform1i(v->location, value);
 }
 
-void R_ProgramParameter1f (const char *name, GLfloat value)
+void R_ProgramParameter1f (const char* name, GLfloat value)
 {
 	r_progvar_t *v;
 
@@ -128,7 +128,7 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
-void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
+void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -138,7 +138,7 @@ void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform1fv(v->location, size, value);
 }
 
-void R_ProgramParameter2fv (const char *name, GLfloat *value)
+void R_ProgramParameter2fv (const char* name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -148,7 +148,7 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value)
 	qglUniform2fv(v->location, 1, value);
 }
 
-void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
+void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -158,7 +158,7 @@ void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform2fv(v->location, size, value);
 }
 
-void R_ProgramParameter3fv (const char *name, GLfloat *value)
+void R_ProgramParameter3fv (const char* name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -168,7 +168,7 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 	qglUniform3fv(v->location, 1, value);
 }
 
-void R_ProgramParameter3fvs (const char *name, GLint size, GLfloat *value)
+void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -178,7 +178,7 @@ void R_ProgramParameter3fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform3fv(v->location, size, value);
 }
 
-void R_ProgramParameter4fv (const char *name, GLfloat *value)
+void R_ProgramParameter4fv (const char* name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -188,7 +188,7 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 	qglUniform4fv(v->location, 1, value);
 }
 
-void R_ProgramParameter4fvs (const char *name, GLint size, GLfloat *value)
+void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -198,7 +198,7 @@ void R_ProgramParameter4fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform4fv(v->location, size, value);
 }
 
-void R_ProgramParameterMatrix4fv (const char *name, GLfloat *value)
+void R_ProgramParameterMatrix4fv (const char* name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -208,7 +208,7 @@ void R_ProgramParameterMatrix4fv (const char *name, GLfloat *value)
 	qglUniformMatrix4fv(v->location, 1, GL_FALSE, value);
 }
 
-void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
+void R_AttributePointer (const char* name, GLuint size, const GLvoid *array)
 {
 	r_progvar_t *v;
 
@@ -218,7 +218,7 @@ void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
 	qglVertexAttribPointer(v->location, size, GL_FLOAT, GL_FALSE, 0, array);
 }
 
-void R_EnableAttribute (const char *name)
+void R_EnableAttribute (const char* name)
 {
 	r_progvar_t *v;
 
@@ -228,7 +228,7 @@ void R_EnableAttribute (const char *name)
 	qglEnableVertexAttribArray(v->location);
 }
 
-void R_DisableAttribute (const char *name)
+void R_DisableAttribute (const char* name)
 {
 	r_progvar_t *v;
 
@@ -288,7 +288,7 @@ void R_ShutdownPrograms (void)
  * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return strlen(in)
  */
-static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char** out, size_t *len)
+static size_t R_PreprocessShaderAddToShaderBuf (const char* name, const char* in, char** out, size_t *len)
 {
 	const size_t inLength = strlen(in);
 	strcpy(*out, in);
@@ -308,10 +308,10 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
  * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return The number of characters prefixed to the shader string.
  */
-static size_t R_InitializeShader (const GLenum type, const char *name, char *out, size_t len)
+static size_t R_InitializeShader (const GLenum type, const char* name, char* out, size_t len)
 {
 	size_t initialChars = 0;
-	const char *hwHack, *defines;
+	const char* hwHack, *defines;
 	/* in the format GLSL compiler expects it -- e.g. 110 for version 1.10 */
 	const int shaderVersion = (int)(r_glsl_version->value * 100 + 0.1);
 
@@ -391,7 +391,7 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * @param[in] inElse If true, parsing an "#else" clause and shouldn't expect another "#else"
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShaderR (const char *name, const char** inPtr, char *out, long *remainingOutChars, bool nested, bool inElse)
+static size_t R_PreprocessShaderR (const char* name, const char** inPtr, char* out, long *remainingOutChars, bool nested, bool inElse)
 {
 	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
 	/* Keep looping till we reach the end of the shader string, or a parsing error.*/
@@ -581,7 +581,7 @@ static size_t R_PreprocessShaderR (const char *name, const char** inPtr, char *o
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t *remainingOutChars)
+static size_t R_PreprocessShader (const char* name, const char* in, char* out, size_t *remainingOutChars)
 {
 	long remainingOutCharsAsLong = *remainingOutChars;
 	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, false, false);
@@ -595,12 +595,12 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
  * @param[in] name The file name of the shader to load from ./base/shaders/ (e.g. "world_fs.glsl").
  * @return A structure used as a handle to the compiled shader (program).
  */
-static r_shader_t *R_LoadShader (const GLenum type, const char *name)
+static r_shader_t *R_LoadShader (const GLenum type, const char* name)
 {
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
 	unsigned e, length[1];
-	char *srcBuf;
+	char* srcBuf;
 	byte *buf;
 	int i;
 	size_t bufLength = SHADER_BUF_SIZE;
@@ -626,7 +626,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	srcBuf += initializeLength;
 	bufLength -= initializeLength;
 
-	R_PreprocessShader(name, (const char *)buf, srcBuf, &bufLength);
+	R_PreprocessShader(name, (const char* )buf, srcBuf, &bufLength);
 	FS_FreeFile(buf);
 
 	src[0] = source;
@@ -684,7 +684,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	return sh;
 }
 
-r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUseFunc_t use)
+r_program_t *R_LoadProgram (const char* name, programInitFunc_t init, programUseFunc_t use)
 {
 	r_program_t *prog;
 	unsigned e;

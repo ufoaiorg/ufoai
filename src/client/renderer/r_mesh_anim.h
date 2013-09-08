@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void R_AnimAppend(animState_t *as, const model_t *mod, const char *name);
-void R_AnimChange(animState_t *as, const model_t *mod, const char *name);
+void R_AnimAppend(animState_t *as, const model_t *mod, const char* name);
+void R_AnimChange(animState_t *as, const model_t *mod, const char* name);
 void R_AnimRun(animState_t *as, const model_t *mod, int msec);
-const char *R_AnimGetName(const animState_t *as, const model_t *mod);
+const char* R_AnimGetName(const animState_t *as, const model_t *mod);
 void R_InterpolateTransform(float backlerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float *interpolated);

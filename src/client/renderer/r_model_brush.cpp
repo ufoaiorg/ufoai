@@ -181,7 +181,7 @@ static void R_ModLoadEdges (const lump_t *l)
 /**
  * @sa BATTLE_Start
  */
-static void R_ModLoadTexinfo (const char *mapZone, const lump_t *l)
+static void R_ModLoadTexinfo (const char* mapZone, const lump_t *l)
 {
 	const dBspTexinfo_t *in;
 	int i, j, count;
@@ -1027,7 +1027,7 @@ static void R_SetupWorldModel (void)
  * @param[in] sZ Shift z grid units
  * @sa UNIT_SIZE
  */
-static void R_ModAddMapTile (const char *name, const char *mapZone, bool day, int sX, int sY, int sZ)
+static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, int sX, int sY, int sZ)
 {
 	int i;
 	byte *buffer;
@@ -1091,7 +1091,7 @@ static void R_ModAddMapTile (const char *name, const char *mapZone, bool day, in
 	FS_FreeFile(buffer);
 }
 
-static void R_ModEndLoading (const char *mapName)
+static void R_ModEndLoading (const char* mapName)
 {
 	R_EndBuildingLightmaps();
 	R_LoadMaterials(mapName);
@@ -1119,7 +1119,7 @@ static void R_ModEndLoading (const char *mapName)
  * and pathfinding stuff.
  * @sa UI_BuildRadarImageList
  */
-void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char *mapName, const char *mapZone)
+void R_ModBeginLoading (const char* tiles, bool day, const char* pos, const char* mapName, const char* mapZone)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
@@ -1141,7 +1141,7 @@ void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		const char *token = Com_Parse(&tiles);
+		const char* token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
 			R_ModEndLoading(mapName);

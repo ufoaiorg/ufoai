@@ -308,7 +308,7 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
  * @c tagname of tag_rweapon will transform the location to the right hand of an actor.
  * @sa R_DrawAliasModel
  */
-void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char *tagname)
+void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char* tagname)
 {
 	image_t *skin;
 	mAliasMesh_t *mesh;

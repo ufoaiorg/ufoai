@@ -104,7 +104,7 @@ cvar_t *r_flares;
 cvar_t *r_coronas;
 cvar_t *r_drawtags;
 
-static void R_PrintInfo (const char *pre, const char *msg)
+static void R_PrintInfo (const char* pre, const char* msg)
 {
 	char buf[4096];
 	const size_t length = sizeof(buf);
@@ -720,19 +720,19 @@ bool R_SetMode (void)
  * This wrapper is a workaround until SDL is fixed.
  * It is known to produce the "warning: assignment from incompatible pointer type"
  */
-static inline uintptr_t R_GetProcAddress (const char *functionName)
+static inline uintptr_t R_GetProcAddress (const char* functionName)
 {
 	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
 }
 
-static uintptr_t R_GetProcAddressExt (const char *functionName)
+static uintptr_t R_GetProcAddressExt (const char* functionName)
 {
-	const char *s = strstr(functionName, "###");
+	const char* s = strstr(functionName, "###");
 	if (s == nullptr) {
 		return R_GetProcAddress(functionName);
 	}
 
-	const char *replace[] = {"EXT", "OES", "ARB"};
+	const char* replace[] = {"EXT", "OES", "ARB"};
 	char targetBuf[128];
 	const size_t length = lengthof(targetBuf);
 	const size_t replaceNo = lengthof(replace);
@@ -755,7 +755,7 @@ static uintptr_t R_GetProcAddressExt (const char *functionName)
  * GL_ARB_framebuffer_object
  * @return @c true if the extension was announced by the OpenGL driver, @c false otherwise.
  */
-static inline bool R_CheckExtension (const char *extension)
+static inline bool R_CheckExtension (const char* extension)
 {
 	bool found;
 #ifdef GL_VERSION_ES_CM_1_0
@@ -763,11 +763,11 @@ static inline bool R_CheckExtension (const char *extension)
 		extension = "GL_OES_texture_npot";
 	}
 #endif
-	const char *s = strstr(extension, "###");
+	const char* s = strstr(extension, "###");
 	if (s == nullptr) {
 		found = strstr(r_config.extensionsString, extension) != nullptr;
 	} else {
-		const char *replace[] = {"ARB", "EXT", "OES"};
+		const char* replace[] = {"ARB", "EXT", "OES"};
 		char targetBuf[128];
 		const size_t length = lengthof(targetBuf);
 		const size_t replaceNo = lengthof(replace);
@@ -813,7 +813,7 @@ static void R_InitExtensions (void)
 
 	/* Get OpenGL version.*/
 	if(sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor) != 2) {
-		const char * versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
+		const char*  versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
 		while(*versionNumbers && strchr("0123456789", *versionNumbers) == nullptr) {
 			versionNumbers ++;
 		}
@@ -989,7 +989,7 @@ static void R_InitExtensions (void)
 		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0;
 		 * it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0
 		 * then enable shaders as the implementation supports the shading language!*/
-		const char *shadingVersion = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
+		const char* shadingVersion = (const char* )glGetString(GL_SHADING_LANGUAGE_VERSION);
 		sscanf(shadingVersion, "%d.%d", &r_config.glslVersionMajor, &r_config.glslVersionMinor);
 		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %i.%i\n",
 				r_config.glslVersionMajor, r_config.glslVersionMinor);
@@ -1179,7 +1179,7 @@ static inline void R_EnforceVersion (void)
 /**
  * @brief Searches vendor and renderer GL strings for the given vendor id
  */
-static bool R_SearchForVendor (const char *vendor)
+static bool R_SearchForVendor (const char* vendor)
 {
 	return Q_stristr(r_config.vendorString, vendor)
 		|| Q_stristr(r_config.rendererString, vendor);
@@ -1251,10 +1251,10 @@ bool R_Init (void)
 		return false;
 
 	/* get our various GL strings */
-	r_config.vendorString = (const char *)glGetString(GL_VENDOR);
-	r_config.rendererString = (const char *)glGetString(GL_RENDERER);
-	r_config.versionString = (const char *)glGetString(GL_VERSION);
-	r_config.extensionsString = (const char *)glGetString(GL_EXTENSIONS);
+	r_config.vendorString = (const char* )glGetString(GL_VENDOR);
+	r_config.rendererString = (const char* )glGetString(GL_RENDERER);
+	r_config.versionString = (const char* )glGetString(GL_VERSION);
+	r_config.extensionsString = (const char* )glGetString(GL_EXTENSIONS);
 	R_Strings_f();
 
 	/* sanity checks and card specific hacks */
