@@ -1000,9 +1000,9 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
 }
 
 /**
- * @brief Prints the mapstrings as known from the ufoconsole.log
+ * @brief Creates the mapstrings as known from the ufoconsole.log and optionally prints them.
  * This can also be used to dump the progress of the RMA process.
- * @param[in,out] map All we know about the map to assemble
+ * @param[in] map All we know about the map to assemble
  * @param[out] asmTiles The output string of the random map assembly that contains all the
  * map tiles that should be assembled. The order is the same as in the @c asmPos string.
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
