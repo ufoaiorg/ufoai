@@ -310,7 +310,7 @@ static void INS_ConstructionFinished_f (void)
  * @brief returns the first installation with (free) ufostoring capacity
  * @param[in] free On true it gives the first UFO Yard with free space
  * @return installation_t Pointer to the UFO Yard
- **/
+ */
 installation_t *INS_GetFirstUFOYard (bool free)
 {
 	INS_ForeachOfType(installation, INSTALLATION_UFOYARD) {

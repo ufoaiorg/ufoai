@@ -192,7 +192,7 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
  * @param[in] radar Pointer to the radar where ufo should be removed.
  * @param[in] ufo Pointer to UFO to remove.
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
- **/
+ */
 static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t* ufo, bool destroyed)
 {
 	int i;
@@ -212,7 +212,7 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
  * @brief Notify to every radar that the specified ufo has been removed from geoscape
  * @param[in] ufo Pointer to UFO to remove.
  * @param[in] destroyed True if the UFO has been destroyed, false if it's only landed.
- **/
+ */
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
 {
 	base_t *base;

@@ -74,7 +74,7 @@ typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];			/**< Name of the installation */
 
-	const installationTemplate_t *installationTemplate; /** The template used for the installation. **/
+	const installationTemplate_t *installationTemplate; /** The template used for the installation. */
 
 	vec3_t pos;		/**< pos on geoscape */
 
