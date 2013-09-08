@@ -155,7 +155,7 @@ const campaignEvents_t *CP_GetEventsByID (const char* name)
 	return nullptr;
 }
 
-static int CP_CheckTriggerEvent (const char* expression, const void *userdata)
+static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 {
 	const char* type;
 
@@ -309,7 +309,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void *userdata)
  * @param[in] type the event type
  * @param[in] userdata Any userdata that is passed to the bep checker function
  */
-void CP_TriggerEvent (campaignTriggerEventType_t type, const void *userdata)
+void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 {
 	int i;
 

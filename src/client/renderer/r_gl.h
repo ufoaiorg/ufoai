@@ -86,12 +86,12 @@ QGL_EXTERN void (APIENTRY *qglClientActiveTexture)(GLenum texture);
 QGL_EXTERN void (APIENTRY *qglGenBuffers)  (GLuint count, GLuint *id);
 QGL_EXTERN void (APIENTRY *qglDeleteBuffers)  (GLuint count, GLuint *id);
 QGL_EXTERN void (APIENTRY *qglBindBuffer)  (GLenum target, GLuint id);
-QGL_EXTERN void (APIENTRY *qglBufferData)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+QGL_EXTERN void (APIENTRY *qglBufferData)  (GLenum target, GLsizei size, const GLvoid* data, GLenum usage);
 
 /* vertex attribute arrays */
 QGL_EXTERN void (APIENTRY *qglEnableVertexAttribArray)(GLuint index);
 QGL_EXTERN void (APIENTRY *qglDisableVertexAttribArray)(GLuint index);
-QGL_EXTERN void (APIENTRY *qglVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+QGL_EXTERN void (APIENTRY *qglVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
 /* glsl vertex and fragment shaders and programs */
 QGL_EXTERN GLuint (APIENTRY *qglCreateShader)(GLenum type);
@@ -149,12 +149,12 @@ typedef void (APIENTRY *ClientActiveTexture_t)(GLenum texture);
 typedef void (APIENTRY *GenBuffers_t)  (GLuint count, GLuint *id);
 typedef void (APIENTRY *DeleteBuffers_t)  (GLuint count, GLuint *id);
 typedef void (APIENTRY *BindBuffer_t)  (GLenum target, GLuint id);
-typedef void (APIENTRY *BufferData_t)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+typedef void (APIENTRY *BufferData_t)  (GLenum target, GLsizei size, const GLvoid* data, GLenum usage);
 
 /* vertex attribute arrays */
 typedef void (APIENTRY *EnableVertexAttribArray_t)(GLuint index);
 typedef void (APIENTRY *DisableVertexAttribArray_t)(GLuint index);
-typedef void (APIENTRY *VertexAttribPointer_t)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+typedef void (APIENTRY *VertexAttribPointer_t)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer);
 
 /* glsl vertex and fragment shaders and programs */
 typedef GLuint (APIENTRY *CreateShader_t)(GLenum type);

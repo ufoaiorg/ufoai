@@ -1500,7 +1500,7 @@ void HUD_Update (void)
  * @param newValue The new value of the cvar (a sane actor idx)
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_ActorSelectionChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void HUD_ActorSelectionChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1520,7 +1520,7 @@ static void HUD_ActorSelectionChangeListener (const char* cvarName, const char* 
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_RightHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void HUD_RightHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1538,7 +1538,7 @@ static void HUD_RightHandChangeListener (const char* cvarName, const char* oldVa
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_LeftHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void HUD_LeftHandChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -1556,7 +1556,7 @@ static void HUD_LeftHandChangeListener (const char* cvarName, const char* oldVal
  * @param newValue The new value of the cvar
  * @param data Unused here, but required by cvarChangeListenerFunc_t
  */
-static void HUD_TUChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void HUD_TUChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	if (!CL_OnBattlescape())
 		return;

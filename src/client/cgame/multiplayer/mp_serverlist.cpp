@@ -374,7 +374,7 @@ static void GAME_MP_ServerInfoCallback (struct net_stream *s)
 	cgi->NET_StreamFree(s);
 }
 
-static void GAME_MP_QueryMasterServerThread (const char* responseBuf, void *userdata)
+static void GAME_MP_QueryMasterServerThread (const char* responseBuf, void* userdata)
 {
 	if (!responseBuf) {
 		cgi->Com_Printf("Could not query masterserver\n");

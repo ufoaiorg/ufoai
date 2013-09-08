@@ -1792,7 +1792,7 @@ static void Irc_Client_Names_f (void)
 		user = user->next;
 	}
 	if (i > 0) {
-		qsort((void *)irc_userListOrdered, i, MAX_VAR, Q_StringSort);
+		qsort((void* )irc_userListOrdered, i, MAX_VAR, Q_StringSort);
 		while (i--)
 			LIST_AddString(&irc_names_buffer, irc_userListOrdered[i]);
 	}
@@ -1820,7 +1820,7 @@ static void Irc_Client_Kick_f (void)
 	Irc_Proto_Kick(channel, nick, reason);
 }
 
-static void Irc_GetExternalIP (const char* externalIP, void *userdata)
+static void Irc_GetExternalIP (const char* externalIP, void* userdata)
 {
 	const irc_user_t *user;
 	char buf[128];

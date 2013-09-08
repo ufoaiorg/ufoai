@@ -228,7 +228,7 @@ static const int RSTACK = -(MAX_PCMD_DATA);
 #define		MAX_STACK_DATA	512
 
 static byte cmdStack[MAX_STACK_DATA];
-static void *stackPtr[MAX_STACK_DEPTH];
+static void* stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
 /**
@@ -380,7 +380,7 @@ static ptlArt_t *CL_ParticleGetArt (const char* name, int frame, artType_t type)
  * @param cmd The command to get the data location for.
  * @return The position where the command stores the data.
  */
-static inline void *CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t *cmd)
+static inline void* CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t *cmd)
 {
 	if (cmd->ref < 0)
 		/* a negative ref value is relative to the particle */
@@ -396,7 +396,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 	ptrdiff_t e;
 	int type;
 	int i, j, n;
-	void *cmdData;
+	void* cmdData;
 	float arg;
 	ptl_t *pnew;
 

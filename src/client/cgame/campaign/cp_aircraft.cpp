@@ -209,7 +209,7 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  * @param[in] data Pointer to aircraft used in this mission.
  * @param[in] magazine Pointer to Item being magazine.
  */
-static void AII_CollectingAmmo (void *data, const Item *magazine)
+static void AII_CollectingAmmo (void* data, const Item *magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
@@ -253,7 +253,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	aircraft->itemTypes++;
 }
 
-static inline void AII_CollectItem_ (void *data, const objDef_t *item, int amount)
+static inline void AII_CollectItem_ (void* data, const objDef_t *item, int amount)
 {
 	AII_CollectItem((aircraft_t *)data, item, amount);
 }
@@ -688,7 +688,7 @@ bool AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
 	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
 	const bool crashed = (aircraft->status == AIR_CRASHED);
-	if (cgi->LIST_Remove(&ccs.aircraft, (const void *)aircraft)) {
+	if (cgi->LIST_Remove(&ccs.aircraft, (const void* )aircraft)) {
 		if (base && capType != MAX_CAP && !crashed)
 			CAP_AddCurrent(base, capType, -1);
 		return true;

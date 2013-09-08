@@ -748,7 +748,7 @@ static void CL_ParseActorSkin (const char* name, const char** text)
 /**
  * @sa FS_MapDefSort
  */
-static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
+static int Com_MapDefSort (const void* mapDef1, const void* mapDef2)
 {
 	const char* map1 = ((const mapDef_t *)mapDef1)->map;
 	const char* map2 = ((const mapDef_t *)mapDef2)->map;
@@ -1106,7 +1106,7 @@ void CL_SetClientState (connstate_t state)
 /**
  * @sa Qcommon_Frame
  */
-void CL_Frame (int now, void *data)
+void CL_Frame (int now, void* data)
 {
 	static int lastFrame = 0;
 	int delta;
@@ -1167,7 +1167,7 @@ void CL_Frame (int now, void *data)
 /**
  * @sa CL_Frame
  */
-void CL_SlowFrame (int now, void *data)
+void CL_SlowFrame (int now, void* data)
 {
 	/* language */
 	if (s_language->modified) {
@@ -1186,12 +1186,12 @@ static void CL_InitMemPools (void)
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 }
 
-static void CL_RContextCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void CL_RContextCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	UI_DisplayNotice(_("This change requires a restart!"), 2000, nullptr);
 }
 
-static void CL_RImagesCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void CL_RImagesCvarChange (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	UI_DisplayNotice(_("This change might require a restart."), 2000, nullptr);
 }

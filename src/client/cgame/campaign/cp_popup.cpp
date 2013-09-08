@@ -298,7 +298,7 @@ static void CL_PopupAircraftClick_f (void)
 POPUP_INTERCEPT
 ========================================*/
 
-static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircraftEntry2, const void *userData)
+static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircraftEntry2, const void* userData)
 {
 	const vec_t* pos = (const vec_t*)userData;
 	const aircraft_t *aircraft1 = (const aircraft_t*)aircraftEntry1->data;

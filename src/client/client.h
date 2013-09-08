@@ -109,7 +109,7 @@ typedef struct client_static_s {
 	}
 
 #ifndef HARD_LINKED_CGAME
-	void *cgameLibrary;
+	void* cgameLibrary;
 #endif
 
 #if SDL_VERSION_ATLEAST(2,0,0)

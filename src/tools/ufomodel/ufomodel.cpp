@@ -397,7 +397,7 @@ static void UM_Parameter (int argc, char** argv)
 	}
 }
 
-typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSize, void *userData);
+typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSize, void* userData);
 
 /**
  * @brief The caller has to ensure that the model is from the expected format
@@ -405,7 +405,7 @@ typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSiz
  * @param fileName The file name of the model to load
  * @param userData User data that is passed to the worker function
  */
-static void ModelWorker (modelWorker_t worker, const char* fileName, void *userData)
+static void ModelWorker (modelWorker_t worker, const char* fileName, void* userData)
 {
 	byte *buf = nullptr;
 	int modfilelen;
@@ -432,7 +432,7 @@ static void ModelWorker (modelWorker_t worker, const char* fileName, void *userD
 	FS_FreeFile(buf);
 }
 
-static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void *userData)
+static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void* userData)
 {
 	const char* md2Path;
 	uint32_t numSkins;
@@ -497,7 +497,7 @@ static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void
 	}
 }
 
-static void MD2Check (const byte *buf, const char* fileName, int bufSize, void *userData)
+static void MD2Check (const byte *buf, const char* fileName, int bufSize, void* userData)
 {
 	const char* md2Path;
 	uint32_t numSkins;
@@ -541,7 +541,7 @@ static void MD2Check (const byte *buf, const char* fileName, int bufSize, void *
 	}
 }
 
-static void MD2Visitor (modelWorker_t worker, void *userData)
+static void MD2Visitor (modelWorker_t worker, void* userData)
 {
 	const char* fileName;
 	const char* pattern = "**.md2";

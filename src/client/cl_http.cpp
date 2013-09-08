@@ -78,7 +78,7 @@ static inline bool isvalidchar (int c)
  * @brief libcurl callback to update progress info. Mainly just used as
  * a way to cancel the transfer if required.
  */
-static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
+static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {
 	dlhandle_t *dl;
 
@@ -605,7 +605,7 @@ static void CL_FinishHTTPDownload (void)
 
 		curl = msg->easy_handle;
 
-		/* curl doesn't provide reverse-lookup of the void * ptr, so search for it */
+		/* curl doesn't provide reverse-lookup of the void*  ptr, so search for it */
 		for (i = 0; i < 4; i++) {
 			if (cls.HTTPHandles[i].curl == curl) {
 				dl = &cls.HTTPHandles[i];

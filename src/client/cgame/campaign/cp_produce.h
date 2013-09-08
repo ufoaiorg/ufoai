@@ -48,7 +48,7 @@ typedef struct {
 		const objDef_t *item;				/**< Item to be produced. */
 		const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
 		struct storedUFO_s *ufo;
-		const void *pointer;				/**< if you just wanna check whether a valid pointer was set */
+		const void* pointer;				/**< if you just wanna check whether a valid pointer was set */
 	} data;
 	productionType_t type;
 } productionData_t;

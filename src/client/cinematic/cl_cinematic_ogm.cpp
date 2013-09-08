@@ -53,7 +53,7 @@ typedef struct
 	bool videoStreamIsXvid;
 #ifdef HAVE_XVID_H
 	xvid_dec_stats_t xvidDecodeStats;
-	void *xvidDecodeHandle;
+	void* xvidDecodeHandle;
 #endif
 	bool videoStreamIsTheora;
 #ifdef HAVE_THEORA_THEORA_H

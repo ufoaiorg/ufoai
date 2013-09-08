@@ -47,7 +47,7 @@ typedef struct cinematic_s {
 
 	int status;					/**< Status of the playing */
 
-	void *codecData;
+	void* codecData;
 } cinematic_t;
 
 void CIN_OpenCinematic(cinematic_t *cin, const char* name);

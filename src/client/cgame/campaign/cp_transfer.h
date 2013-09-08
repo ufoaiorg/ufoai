@@ -79,7 +79,7 @@ typedef struct transferCargo_s {
 		const aircraft_t *aircraft;
 		const Employee *employee;
 		const teamDef_t *alienTeam;
-		const void *pointer;		/**< if you just wanna check whether a valid pointer was set */
+		const void* pointer;		/**< if you just wanna check whether a valid pointer was set */
 	} data;
 	transferCargoType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
 } transferCargo_t;
@@ -118,7 +118,7 @@ typedef struct transferData_s {
 #define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], Employee, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
-bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void *data);
+bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 

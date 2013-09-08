@@ -184,7 +184,7 @@ static void GAME_CP_Start_f (void)
 	cgi->Cbuf_AddText("seq_start intro\n");
 }
 
-static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, bool dead)
+static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t *teamDef, int amount, bool dead)
 {
 	AL_AddAlienTypeToAircraftCargo((aircraft_t *) data, teamDef, amount, dead);
 }

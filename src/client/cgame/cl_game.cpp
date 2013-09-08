@@ -388,7 +388,7 @@ static char* GAME_StrDup (const char* string)
 	return Mem_PoolStrDup(string, cl_genericPool, 0);
 }
 
-static void GAME_Free (void *ptr)
+static void GAME_Free (void* ptr)
 {
 	Mem_Free(ptr);
 }
@@ -448,7 +448,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void *, const Item *), void (*ownitems) (const Inventory *))
+static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item *), void (*ownitems) (const Inventory *))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
@@ -483,7 +483,7 @@ static void GAME_CollectItems (void *data, int won, void (*collectItem)(void*, c
 /**
  * @brief Collecting stunned and dead alien bodies after the mission.
  */
-static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, bool))
+static void GAME_CollectAliens (void* data, void (*collect)(void*, const teamDef_t*, int, bool))
 {
 	le_t *le = nullptr;
 
@@ -801,12 +801,12 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 
 static const int TAG_INVENTORY = 17462;
 
-static void GAME_FreeInventory (void *data)
+static void GAME_FreeInventory (void* data)
 {
 	Mem_Free(data);
 }
 
-static void *GAME_AllocInventoryMemory (size_t size)
+static void* GAME_AllocInventoryMemory (size_t size)
 {
 	return Mem_PoolAlloc(size, cl_genericPool, TAG_INVENTORY);
 }
