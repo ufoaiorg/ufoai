@@ -49,15 +49,17 @@ void uiTimerNode::onWindowClosed (uiNode_t *node)
  */
 void uiTimerNode::draw (uiNode_t *node)
 {
+	uiLocatedNode::draw(node);
+	timerExtraData_t& data = EXTRADATA(node);
 	/* embedded timer */
-	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
-		if (EXTRADATA(node).lastTime == 0)
-			EXTRADATA(node).lastTime = CL_Milliseconds();
-		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < CL_Milliseconds()) {
+	if (data.onTimeOut && data.timeOut) {
+		if (data.lastTime == 0)
+			data.lastTime = CL_Milliseconds();
+		if (data.lastTime + data.timeOut < CL_Milliseconds()) {
 			/* allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
-			EXTRADATA(node).lastTime = 0;
+			data.lastTime = 0;
 			Com_DPrintf(DEBUG_CLIENT, "uiTimerNode::draw: Timeout for node '%s'\n", node->name);
-			UI_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
+			UI_ExecuteEventActions(node, data.onTimeOut);
 		}
 	}
 }
