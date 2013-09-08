@@ -105,7 +105,7 @@ char* SV_SetConfigString (int index, ...)
 		value = va("%i", va_arg(ap, int));
 		break;
 	default:
-		value = va_arg(ap, char* );
+		value = va_arg(ap, char*);
 		break;
 	}
 

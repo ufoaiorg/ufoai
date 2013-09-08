@@ -605,7 +605,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapD
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump (offset: %u, length: %u, entitystring: '%s')", l->fileofs, l->filelen, entityString ? entityString : "none");
 
 	/* merge entitystring information */
-	const char* es = (const char* ) (base + l->fileofs);
+	const char* es = (const char*) (base + l->fileofs);
 	while (1) {
 		cBspModel_t *model = nullptr;
 		/* parse the opening brace */

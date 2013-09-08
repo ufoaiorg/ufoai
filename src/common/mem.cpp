@@ -424,7 +424,7 @@ char* _Mem_PoolStrDup (const char* in, memPool_t *pool, const int tagNum, const 
 {
 	char* out;
 
-	out = (char* )_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
+	out = (char*)_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;

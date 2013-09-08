@@ -210,7 +210,7 @@ unsigned Com_BlockChecksum (const void* buffer, int length)
 	int digest[4];
 	unsigned val;
 
-	mdfour((unsigned char* ) digest, (const unsigned char* ) buffer, length);
+	mdfour((unsigned char*) digest, (const unsigned char*) buffer, length);
 
 	val = digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
 

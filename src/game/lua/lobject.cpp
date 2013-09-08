@@ -118,7 +118,7 @@ const char* luaO_pushvfstring (lua_State *L, const char* fmt, va_list argp) {
     incr_top(L);
     switch (*(e+1)) {
       case 's': {
-        const char* s = va_arg(argp, char* );
+        const char* s = va_arg(argp, char*);
         if (s == nullptr) s = "(null)";
         pushstr(L, s);
         break;

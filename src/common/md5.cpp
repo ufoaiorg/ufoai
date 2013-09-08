@@ -179,7 +179,7 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigne
 	/* Handle any leading odd-sized chunks */
 
 	if (t) {
-		unsigned char* p = (unsigned char* ) ctx->in + t;
+		unsigned char* p = (unsigned char*) ctx->in + t;
 
 		t = 64 - t;
 		if (len < t) {
@@ -247,7 +247,7 @@ static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
 	((uint32_t *) ctx->in)[15] = ctx->bits[1];
 
 	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
-	byteReverse((unsigned char* ) ctx->buf, 4);
+	byteReverse((unsigned char*) ctx->buf, 4);
 
 	if (digest != nullptr)
 		memcpy(digest, ctx->buf, 16);
@@ -282,7 +282,7 @@ const char* Com_MD5File (const char* fn, int length)
 		if (r + total > length)
 			r = length - total;
 		total += r;
-		MD5Update(&md5, (const unsigned char* ) buffer, r);
+		MD5Update(&md5, (const unsigned char*) buffer, r);
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}

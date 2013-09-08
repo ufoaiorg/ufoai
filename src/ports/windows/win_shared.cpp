@@ -454,7 +454,7 @@ void Sys_Sleep (int milliseconds)
 int Sys_Setenv (const char* name, const char* value)
 {
 	const size_t n = strlen(name) + strlen(value) + 2;
-	char* str = (char* )malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
+	char* str = (char*)malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
 
 	strcat(strcat(strcpy(str, name), "="), value);
 	if (putenv(str))

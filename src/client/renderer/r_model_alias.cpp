@@ -44,7 +44,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char* animname)
 
 	FS_LoadFile(animname, &animbuf);
 
-	buffer = (const char* )animbuf;
+	buffer = (const char*)animbuf;
 
 	/* count the animations */
 	n = Com_CountTokensInBuffer(buffer);
@@ -248,7 +248,7 @@ bool R_ModLoadMDX (model_t *mod)
 			return false;
 
 		buf = buffer;
-		if (strncmp((const char* ) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
+		if (strncmp((const char*) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
 			FS_FreeFile(buf);
 			Com_Error(ERR_DROP, "No mdx file buffer given");
 		}

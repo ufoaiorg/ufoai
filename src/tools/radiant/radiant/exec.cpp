@@ -309,7 +309,7 @@ void exec_cmd_update_arg (ExecCmd *e, const gchar* arg_start, const gchar* forma
 
 	guint i = 0;
 	for (; i < e->args->len; ++i) {
-		gchar* arg = (gchar* ) g_ptr_array_index(e->args, i);
+		gchar* arg = (gchar*) g_ptr_array_index(e->args, i);
 		if (strstr(arg, arg_start) != NULL) {
 			g_free(arg);
 			va_list va;

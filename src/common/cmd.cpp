@@ -219,7 +219,7 @@ void Cbuf_Execute (void)
 
 	while (cmd_text.cursize) {
 		/* find a \n or ; line break */
-		char* text = (char* ) cmd_text.data;
+		char* text = (char*) cmd_text.data;
 		int quotes = 0;
 
 		for (i = 0; i < cmd_text.cursize; i++) {

@@ -1155,7 +1155,7 @@ const char* FS_NextFileFromFileList (const char* files)
 	}
 
 	if (listEntry) {
-		file = (const char* )listEntry->data;
+		file = (const char*)listEntry->data;
 		listEntry = listEntry->next;
 	}
 
@@ -1221,7 +1221,7 @@ const char* FS_GetFileData (const char* files)
 
 		/* load a new file */
 		Q_strncpyz(filename, block->path, sizeof(filename));
-		strcpy(strrchr(filename, '/') + 1, (const char* )fileList->data);
+		strcpy(strrchr(filename, '/') + 1, (const char*)fileList->data);
 
 		FS_LoadFile(filename, &buffer);
 		return (const char*)buffer;
@@ -1316,7 +1316,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 
 			/* load a new file */
 			Q_strncpyz(filename, lBlock->path, sizeof(filename));
-			strcpy(strrchr(filename, '/') + 1, (const char* )lFile->data);
+			strcpy(strrchr(filename, '/') + 1, (const char*)lFile->data);
 
 			FS_LoadFile(filename, &lBuffer);
 			/* skip a file that couldn't get loaded */
@@ -1525,7 +1525,7 @@ void FS_GetMaps (bool reset)
 
 	fs_mapsInstalledInit = true;
 
-	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char* ), FS_MapDefSort);
+	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char*), FS_MapDefSort);
 }
 
 /**

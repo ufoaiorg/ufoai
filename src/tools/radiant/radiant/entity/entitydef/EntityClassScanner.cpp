@@ -157,7 +157,7 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 	}
 
 	const std::size_t size = file->size();
-	char* entities = (char* ) malloc(size + 1);
+	char* entities = (char*) malloc(size + 1);
 	TextInputStream &stream = file->getInputStream();
 	const std::size_t realsize = stream.read(entities, size);
 	entities[realsize] = '\0';

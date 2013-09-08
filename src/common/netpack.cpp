@@ -38,21 +38,21 @@ void NET_WriteChar (dbuffer *buf, char c)
 
 void NET_WriteByte (dbuffer *buf, byte c)
 {
-	buf->add((const char* )&c, 1);
+	buf->add((const char*)&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteShort (dbuffer *buf, int c)
 {
 	const unsigned short v = LittleShort(c);
-	buf->add((const char* )&v, 2);
+	buf->add((const char*)&v, 2);
 	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
 void NET_WriteLong (dbuffer *buf, int c)
 {
 	const int v = LittleLong(c);
-	buf->add((const char* )&v, 4);
+	buf->add((const char*)&v, 4);
 	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
@@ -180,7 +180,7 @@ void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
 		case '!':
 			break;
 		case '&':
-			NET_WriteString(buf, va_arg(ap, char* ));
+			NET_WriteString(buf, va_arg(ap, char*));
 			break;
 		case '*': {
 			const int n = va_arg(ap, int);
@@ -234,7 +234,7 @@ int NET_ReadChar (dbuffer *buf)
 int NET_ReadByte (dbuffer *buf)
 {
 	unsigned char c;
-	if (buf->extract((char* )&c, 1) == 0)
+	if (buf->extract((char*)&c, 1) == 0)
 		return -1;
 	return c;
 }
@@ -242,7 +242,7 @@ int NET_ReadByte (dbuffer *buf)
 int NET_ReadShort (dbuffer *buf)
 {
 	unsigned short v;
-	if (buf->extract((char* )&v, 2) < 2)
+	if (buf->extract((char*)&v, 2) < 2)
 		return -1;
 
 	return LittleShort(v);
@@ -251,7 +251,7 @@ int NET_ReadShort (dbuffer *buf)
 int NET_PeekByte (const dbuffer *buf)
 {
 	unsigned char c;
-	if (buf->get((char* )&c, 1) == 0)
+	if (buf->get((char*)&c, 1) == 0)
 		return -1;
 	return c;
 }
@@ -264,7 +264,7 @@ int NET_PeekByte (const dbuffer *buf)
 int NET_PeekShort (const dbuffer *buf)
 {
 	uint16_t v;
-	if (buf->get((char* )&v, 2) < 2)
+	if (buf->get((char*)&v, 2) < 2)
 		return -1;
 
 	return LittleShort(v);
@@ -273,7 +273,7 @@ int NET_PeekShort (const dbuffer *buf)
 int NET_PeekLong (const dbuffer *buf)
 {
 	uint32_t v;
-	if (buf->get((char* )&v, 4) < 4)
+	if (buf->get((char*)&v, 4) < 4)
 		return -1;
 
 	return LittleLong(v);
@@ -282,7 +282,7 @@ int NET_PeekLong (const dbuffer *buf)
 int NET_ReadLong (dbuffer *buf)
 {
 	unsigned int v;
-	if (buf->extract((char* )&v, 4) < 4)
+	if (buf->extract((char*)&v, 4) < 4)
 		return -1;
 
 	return LittleLong(v);
@@ -449,7 +449,7 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 			format++;
 			break;
 		case '&': {
-			char* str = va_arg(ap, char* );
+			char* str = va_arg(ap, char*);
 			const size_t length = va_arg(ap, size_t);
 			NET_ReadString(buf, str, length);
 			break;
@@ -561,7 +561,7 @@ void NET_OOB_Printf (struct net_stream *s, const char* format, ...)
 	va_end(argptr);
 
 	const int len = LittleLong(strlen(string) + 1);
-	NET_StreamEnqueue(s, (const char* )&len, 4);
+	NET_StreamEnqueue(s, (const char*)&len, 4);
 	NET_StreamEnqueue(s, &cmd, 1);
 	NET_StreamEnqueue(s, string, strlen(string));
 }
@@ -575,7 +575,7 @@ void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
 {
 	char tmp[256];
 	int len = LittleLong(buf.length());
-	NET_StreamEnqueue(s, (char* )&len, 4);
+	NET_StreamEnqueue(s, (char*)&len, 4);
 
 	while (buf.length()) {
 		len = buf.extract(tmp, sizeof(tmp));
@@ -595,7 +595,7 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 	char tmp[256];
 	const int len = LittleLong(buf.length());
 	int pos = 0;
-	NET_StreamEnqueue(s, (const char* )&len, 4);
+	NET_StreamEnqueue(s, (const char*)&len, 4);
 
 	while (pos < buf.length()) {
 		const int x = buf.getAt(pos, tmp, sizeof(tmp));

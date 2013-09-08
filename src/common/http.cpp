@@ -92,7 +92,7 @@ size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 	else
 		len = sizeof(headerBuff);
 
-	Q_strncpyz(headerBuff, (const char* )ptr, len);
+	Q_strncpyz(headerBuff, (const char*)ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
 		dlhandle_t *dl = (dlhandle_t *)stream;

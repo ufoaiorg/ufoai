@@ -104,7 +104,7 @@ static Image* LoadImage (ArchiveFile& file, const char* extension)
 	}
 
 	GError *error = (GError *) 0;
-	if (gdk_pixbuf_loader_write(loader, (const guchar* ) buffer.buffer, static_cast<gsize> (buffer.length),
+	if (gdk_pixbuf_loader_write(loader, (const guchar*) buffer.buffer, static_cast<gsize> (buffer.length),
 			&error)) {
 		int pos = 0;
 		GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);

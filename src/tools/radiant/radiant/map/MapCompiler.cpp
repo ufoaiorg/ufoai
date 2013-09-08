@@ -84,7 +84,7 @@ inline void compileReadProgress (void* ex, void* buffer)
 	static const gdouble stepWidth = 1.0 / compilerSteps / substeps;
 
 	static char const* const steps[] =
-			{ "LEVEL:", "UNITCHECK:", "CONNCHECK:", "FACELIGHTS:", "FINALLIGHT:", (const char* ) 0 };
+			{ "LEVEL:", "UNITCHECK:", "CONNCHECK:", "FACELIGHTS:", "FINALLIGHT:", (const char*) 0 };
 
 	ExecCmd *job = (ExecCmd *) ex;
 	Exec *exec = (Exec *) job->exec;

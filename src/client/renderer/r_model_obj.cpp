@@ -283,7 +283,7 @@ static void R_LoadObjSkin (model_t *mod)
 
 		FS_LoadFile(va("%s.mtl", skinPath), &buf);
 
-		buffer = (const char* )buf;
+		buffer = (const char*)buf;
 		for (;;) {
 			const char* token = Com_Parse(&buffer);
 			if (token[0] == '\0')
@@ -295,7 +295,7 @@ static void R_LoadObjSkin (model_t *mod)
 		}
 		mesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, mesh->num_skins, vid_modelPool);
 
-		buffer = (const char* )buf;
+		buffer = (const char*)buf;
 		i = 0;
 		for (;;) {
 			const char* token = Com_Parse(&buffer);

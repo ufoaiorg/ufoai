@@ -442,7 +442,7 @@ static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	for (i = 0; i < numSkins; i++) {
@@ -471,7 +471,7 @@ static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void
 				Com_Printf("model: %s\n", fileName);
 			}
 			fixedMD2 = (dMD2Model_t *)model;
-			skinPath = (char* ) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
+			skinPath = (char*) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
 
 			OBJZERO(path);
 
@@ -507,7 +507,7 @@ static void MD2Check (const byte *buf, const char* fileName, int bufSize, void *
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	for (i = 0; i < numSkins; i++) {

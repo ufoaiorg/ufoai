@@ -45,7 +45,7 @@ void MD2SkinEdit (const byte *buf, const char* fileName, int bufSize, void *user
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (char* ) copy + LittleLong(md2->ofs_skins);
+	md2Path = (char*) copy + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
@@ -93,7 +93,7 @@ void MD2Info (const byte *buf, const char* fileName, int bufSize, void *userData
 	const uint32_t ofsEnd = LittleLong(md2->ofs_end);
 	const uint32_t ofsSkins = LittleLong(md2->ofs_skins);
 
-	const char* md2Path = (const char* ) md2 + LittleLong(md2->ofs_skins);
+	const char* md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
 
 	Com_Printf("  \\ - skins %i\n", numSkins);
 	for (int i = 0; i < numSkins; i++) {
@@ -189,7 +189,7 @@ void MD2SkinNum (const byte *buf, const char* fileName, int bufSize, void *userD
 	memmove(to, from, n);
 
 	if (deltaSkins > 0) {
-		char*  md2Path = (char* ) copy + LittleLong(md2->ofs_skins);
+		char*  md2Path = (char*) copy + LittleLong(md2->ofs_skins);
 		for (int i = numSkins; i < numSkins + deltaSkins; i++) {
 			char* name = md2Path + i * MD2_MAX_SKINNAME;
 			memset(name, 0, MD2_MAX_SKINNAME);

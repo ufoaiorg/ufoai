@@ -791,7 +791,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	unsigned int v;
 	const ScopedMutex scopedMutex(netMutex);
 
-	if (NET_StreamPeek(s, (char* )&v, 4) < 4)
+	if (NET_StreamPeek(s, (char*)&v, 4) < 4)
 		return nullptr;
 
 	int len = LittleLong(v);
@@ -943,7 +943,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	}
 
 #ifdef _WIN32
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char* ) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*) &t, sizeof(t)) != 0) {
 #else
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
 #endif
@@ -1071,13 +1071,13 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char* ) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*) &t, sizeof(t)) != 0) {
 		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char* ) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char*) &t, sizeof(t)) != 0) {
 		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;

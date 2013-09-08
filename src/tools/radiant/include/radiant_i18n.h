@@ -32,6 +32,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #undef _
 #define _(String) Q_(String)
-//#define  _(String) ((const char* ) gettext (GETTEXT_PACKAGE, String))
+//#define  _(String) ((const char*) gettext (GETTEXT_PACKAGE, String))
 
 #endif
