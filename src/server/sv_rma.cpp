@@ -1953,7 +1953,7 @@ static int cmpTileAreaSize (const void*  a, const void*  b)
 }
 #endif
 
-static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed)
+static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed, bool print)
 {
 	int i;
 	const Assembly *mAsm = map->getCurrentAssembly();
@@ -1988,7 +1988,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
+				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed, print);
 			}
 			Mem_Free(map);
 			return nullptr;
@@ -2024,7 +2024,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
 				/* if we are allowed to restart the search with a fixed seed
 				 * from the assembly definition, do so */
 				Com_SetRandomSeed(mAsm->seeds[seed % mAsm->numSeeds]);
-				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
+				return SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed, print);
 			}
 			return nullptr;
 		}
@@ -2101,7 +2101,7 @@ MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTil
 		}
 	}
 
-	SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed);
+	SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed, true);
 
 	return map;
 }
