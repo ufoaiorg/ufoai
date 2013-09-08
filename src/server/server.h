@@ -74,15 +74,15 @@ typedef struct pending_event_s {
 } pending_event_t;
 
 typedef struct serverInstanceStatic_s {
-	bool initialized;		/**< sv_init has completed */
+	bool initialized;			/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket *netDatagramSocket;
 	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 	int lastPing;
-	bool abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
-	bool killserver;		/**< will initiate shutdown once abandon is set */
+	bool abandon;				/**< shutdown server when all clients disconnect and don't accept new connections */
+	bool killserver;			/**< will initiate shutdown once abandon is set */
 	SDL_mutex *serverMutex;
 	SDL_cond *gameFrameCond;	/**< the signal that the game frame threads waits for */
 	SDL_Thread *gameThread;
@@ -107,16 +107,16 @@ typedef struct serverInstanceGame_s {
 	server_state_t state;		/**< precache commands are only valid during load */
 
 	char name[MAX_QPATH];		/**< map name */
-	char assembly[MAX_QPATH];		/**< random map assembly name */
+	char assembly[MAX_QPATH];	/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
 
 	bool endgame;
-	bool spawned;			/**< set when the actors have spawned - no further connections are allowed in this case */
-	bool started;			/**< set when the match has started */
+	bool spawned;				/**< set when the actors have spawned - no further connections are allowed in this case */
+	bool started;				/**< set when the match has started */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	dbuffer *messageBuffer;			/**< the message buffer that was received from the client. */
+	dbuffer *messageBuffer;		/**< the message buffer that was received from the client. */
 	pending_event_t pendingEvent;
 	pending_event_t eventQueue[64];
 	int eventQueuePos;
@@ -131,7 +131,7 @@ typedef struct serverInstanceGame_s {
 	worldSector_t worldSectors[AREA_NODES];
 	unsigned int numWorldSectors;
 
-	memPool_t *gameSysPool;	/**< the mempool for the game lib */
+	memPool_t *gameSysPool;		/**< the mempool for the game lib */
 } serverInstanceGame_t;
 
 #define PLAYER_NUM(n) ((player_t *)((byte *)svs.ge->players + svs.ge->player_size * (n)))
@@ -163,8 +163,8 @@ typedef struct client_s {
 	struct net_stream *stream;
 } client_t;
 
-extern serverInstanceStatic_t svs;		/**< persistant server instance info */
-extern serverInstanceGame_t *sv;		/**< server data per game/map */
+extern serverInstanceStatic_t svs;	/**< persistant server instance info */
+extern serverInstanceGame_t *sv;	/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_rma;
@@ -172,7 +172,7 @@ extern cvar_t *sv_rma;
 extern cvar_t *sv_rmadisplaythemap;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
-extern cvar_t *sv_threads;	/**< run the game lib threaded */
+extern cvar_t *sv_threads;			/**< run the game lib threaded */
 
 /* sv_main.c */
 void SV_DropClient(client_t *drop, const char *message);
