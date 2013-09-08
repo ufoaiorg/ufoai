@@ -145,6 +145,7 @@ typedef struct rstate_s {
 	/* states */
 	bool shell_enabled;
 	bool blend_enabled;
+	bool multisample_enabled;
 	bool color_array_enabled;
 	bool alpha_test_enabled;
 	bool stencil_test_enabled;
@@ -188,6 +189,7 @@ void R_BindArray(GLenum target, GLenum type, const void *array);
 void R_BindDefaultArray(GLenum target);
 void R_EnableStencilTest(bool enable);
 void R_EnableTexture(gltexunit_t *texunit, bool enable);
+void R_EnableMultisample(bool enable);
 void R_EnableBlend(bool enable);
 void R_EnableAlphaTest(bool enable);
 void R_EnableColorArray(bool enable);

@@ -238,6 +238,24 @@ void R_BlendFunc (GLenum src, GLenum dest)
 	glBlendFunc(src, dest);
 }
 
+void R_EnableMultisample (bool enable)
+{
+	if (r_multisample->integer == 0 && enable)
+		return;
+
+	if (r_state.multisample_enabled == enable)
+		return;
+
+	r_state.multisample_enabled = enable;
+
+	if (enable) {
+		glEnable(GL_MULTISAMPLE);
+	} else {
+		glDisable(GL_MULTISAMPLE);
+	}
+	R_CheckError();
+}
+
 void R_EnableBlend (bool enable)
 {
 	if (r_state.blend_enabled == enable)

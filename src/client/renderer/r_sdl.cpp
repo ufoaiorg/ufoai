@@ -199,11 +199,12 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 	/* valid values are between 0 and 4 */
 	i = std::min(4, std::max(0, context->multisample));
-	Com_Printf("I: set multisample buffers to %i\n", i);
 	if (i > 0) {
+		Com_Printf("I: set multisample buffers to %i\n", i);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, i);
 	} else {
+		Com_Printf("I: disable multisample buffers\n");
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 	}
