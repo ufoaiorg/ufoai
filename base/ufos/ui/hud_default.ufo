@@ -1038,36 +1038,33 @@ window hud_default extends hud
 	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget {
-		call *node:root.reactions@createChild("rf<1><2>", "rfShooter")
-		*node:root.reactions.rf<1><2>.head_shooter@src = "<3>"
-		*node:root.reactions.rf<1><2>.head_shooter@skin = "<4>"
+		call *node:root.reactions@createChild("rf-<1>-<2>", "rfShooter")
+		*node:root.reactions.rf-<1>-<2>.head_shooter@src = "<3>"
+		*node:root.reactions.rf-<1>-<2>.head_shooter@skin = "<4>"
 		if ( <5> == 1 ) {
 			// top down view for robots - sideview of the body isn't very nice
-			*node:root.reactions.rf<1><2>.head_shooter@angles = "0 60 90"
+			*node:root.reactions.rf-<1>-<2>.head_shooter@angles = "0 60 90"
 		}
 
-		// Target is out of range
 		if ( <7> == 1 ) {
-			*node:root.reactions.rf<1><2>.timeremaining@color = "0.65 0.13 0 1"
-			*node:root.reactions.rf<1><2>.rfnotice@string = "Target out of range"
+			// Target is out of range
+			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
+			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
 		} else {
-
-			// Turn the panel red if the unit is ready to fire
-			if ( <6> == 0 ) {
-				*node:root.reactions.rf<1><2>@bgcolor = "0.65 0.13 0 1"
-				*node:root.reactions.rf<1><2>.rfnotice@string = "Target acquired"
-
-			// Turn the bar yellow if the unit is nearing fire capability
+			if ( <6> <= 0 ) {
+				// Turn the panel red if the unit is ready to fire
+				*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
+				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
 			} elif ( <6> < 5 ) {
-				*node:root.reactions.rf<1><2>.timeremaining@color = "0.83 0.92 0.44 1"
-
-			// Otherwise the bar should be blue
+				// Turn the bar yellow if the unit is nearing fire capability
+				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
 			} else {
-				*node:root.reactions.rf<1><2>.timeremaining@color = "0.1 0.1 0.7 1"
+				// Otherwise the bar should be blue
+				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
 			}
-			*node:root.reactions.rf<1><2>.rfnotice@string = "<8> (<6> TUs)"
+			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "<8> (<6> TUs)"
 		}
-		*node:root.reactions.rf<1><2>.timeremaining@max = <6>
+		*node:root.reactions.rf-<1>-<2>.timeremaining@max = <6>
 	}
 
 	/**
@@ -1076,7 +1073,7 @@ window hud_default extends hud
 	 * @param <2> target entity number
 	 */
 	confunc reactionfire_removetarget {
-		call *node:root.reactions.rf<1><2>@deletetimed(1500)
+		call *node:root.reactions.rf-<1>-<2>@deletetimed(1500)
 	}
 
 	/**
@@ -1088,26 +1085,23 @@ window hud_default extends hud
 	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
-		*node:root.reactions.rf<1><2>.timeremaining@current = (*node:root.reactions.rf<1><2>.timeremaining@max - <3>)
+		*node:root.reactions.rf-<1>-<2>.timeremaining@current = (*node:root.reactions.rf-<1>-<2>.timeremaining@max - <3>)
 
-		// Target is out of range
 		if ( <4> == 1 ) {
-			*node:root.reactions.rf<1><2>.timeremaining@color = "0.65 0.13 0 1"
-			*node:root.reactions.rf<1><2>.rfnotice@string = "Target out of range"
+			// Target is out of range
+			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
+			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
 		} else {
-
-			// Turn the panel red if the unit is ready to fire
-			if ( <3> == 0 ) {
-				*node:root.reactions.rf<1><2>@bgcolor = "0.65 0.13 0 1"
-				*node:root.reactions.rf<1><2>.rfnotice@string = "Target acquired"
-
-			// Turn the bar yellow if the unit is nearing fire capability
+			if ( <3> <= 0 ) {
+				// Turn the panel red if the unit is ready to fire
+				*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
+				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
 			} elif ( <3> < 5 ) {
-				*node:root.reactions.rf<1><2>.timeremaining@color = "0.83 0.92 0.44 1"
-
-			// Otherwise the bar should be blue
+				// Turn the bar yellow if the unit is nearing fire capability
+				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
 			} else {
-				*node:root.reactions.rf<1><2>.timeremaining@color = "0.1 0.1 0.7 1"
+				// Otherwise the bar should be blue
+				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
 			}
 		}
 	}
