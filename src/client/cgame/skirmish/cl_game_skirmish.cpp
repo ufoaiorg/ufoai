@@ -123,7 +123,7 @@ static void GAME_SK_Start_f (void)
 
 	assert(md->map);
 
-	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char* )cgi->LIST_GetRandom(md->params) : "");
+	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
 }
 
 static void GAME_SK_Restart_f (void)
@@ -236,7 +236,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
 		cgi->Cvar_Set("rm_drop", "");
 	} else {
-		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char* )dropships->data);
+		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char*)dropships->data);
 		cgi->Cvar_Set("rm_drop", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_DROPSHIPS), dropships);
 		cgi->UI_RegisterOption(OPTION_DROPSHIPS, cgi->UI_GetOption(OPTION_DROPSHIPS));
@@ -257,7 +257,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
 		cgi->Cvar_Set("rm_ufo", "");
 	} else {
-		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char* )ufos->data);
+		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char*)ufos->data);
 		cgi->Cvar_Set("rm_ufo", "%s", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_UFOS), ufos);
 		cgi->UI_RegisterOption(OPTION_UFOS, cgi->UI_GetOption(OPTION_UFOS));

@@ -989,7 +989,7 @@ static void R_InitExtensions (void)
 		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0;
 		 * it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0
 		 * then enable shaders as the implementation supports the shading language!*/
-		const char* shadingVersion = (const char* )glGetString(GL_SHADING_LANGUAGE_VERSION);
+		const char* shadingVersion = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 		sscanf(shadingVersion, "%d.%d", &r_config.glslVersionMajor, &r_config.glslVersionMinor);
 		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %i.%i\n",
 				r_config.glslVersionMajor, r_config.glslVersionMinor);
@@ -1251,10 +1251,10 @@ bool R_Init (void)
 		return false;
 
 	/* get our various GL strings */
-	r_config.vendorString = (const char* )glGetString(GL_VENDOR);
-	r_config.rendererString = (const char* )glGetString(GL_RENDERER);
-	r_config.versionString = (const char* )glGetString(GL_VERSION);
-	r_config.extensionsString = (const char* )glGetString(GL_EXTENSIONS);
+	r_config.vendorString = (const char*)glGetString(GL_VENDOR);
+	r_config.rendererString = (const char*)glGetString(GL_RENDERER);
+	r_config.versionString = (const char*)glGetString(GL_VERSION);
+	r_config.extensionsString = (const char*)glGetString(GL_EXTENSIONS);
 	R_Strings_f();
 
 	/* sanity checks and card specific hacks */

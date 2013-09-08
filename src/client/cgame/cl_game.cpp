@@ -1744,9 +1744,9 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 	} else {
 		const linkedList_t *entry = LIST_ContainsString(equipmentList, equipID);
 		if (entry == nullptr) {
-			equipID = (const char* )equipmentList->data;
+			equipID = (const char*)equipmentList->data;
 		} else if (changeType == FORWARD) {
-			equipID = (const char* )(entry->next != nullptr ? entry->next->data : equipmentList->data);
+			equipID = (const char*)(entry->next != nullptr ? entry->next->data : equipmentList->data);
 		} else if (changeType == BACKWARD) {
 			const char* newEntry = nullptr;
 			const char* prevEntry = nullptr;

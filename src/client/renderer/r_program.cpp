@@ -626,7 +626,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char* name)
 	srcBuf += initializeLength;
 	bufLength -= initializeLength;
 
-	R_PreprocessShader(name, (const char* )buf, srcBuf, &bufLength);
+	R_PreprocessShader(name, (const char*)buf, srcBuf, &bufLength);
 	FS_FreeFile(buf);
 
 	src[0] = source;

@@ -453,21 +453,21 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			if (offsetof(ptl_t, pic) == -cmd->ref) {
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for pic (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
-				p->pic = CL_ParticleGetArt((char* ) stackPtr[stackIdx], p->frame, ART_PIC);
+				p->pic = CL_ParticleGetArt((char*) stackPtr[stackIdx], p->frame, ART_PIC);
 				e = (byte *) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
-				p->model = CL_ParticleGetArt((char* ) stackPtr[stackIdx], p->frame, ART_MODEL);
+				p->model = CL_ParticleGetArt((char*) stackPtr[stackIdx], p->frame, ART_MODEL);
 				e = (byte *) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, program) == -cmd->ref) {
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for program (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
-				p->program = R_LoadProgram((char* ) stackPtr[stackIdx], R_InitParticleProgram, R_UseParticleProgram);
+				p->program = R_LoadProgram((char*) stackPtr[stackIdx], R_InitParticleProgram, R_UseParticleProgram);
 				if (p->program)
 					p->program->userdata = p;
 				e = (byte *) stackPtr[stackIdx] - cmdStack;
@@ -617,9 +617,9 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			return;
 
 		case PC_SPAWN:
-			pnew = CL_ParticleSpawn((const char* ) cmdData, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((const char*) cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (!pnew)
-				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s' (%s)\n", p->ctrl->name, (const char* ) cmdData);
+				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s' (%s)\n", p->ctrl->name, (const char*) cmdData);
 			break;
 
 		case PC_TNSPAWN:
@@ -641,7 +641,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			i = *(int *) stackPtr[stackIdx];
 
 			/** @todo make the children boolean configurable */
-			CL_ParticleSpawnTimed((const char* ) cmdData, p, true, i, n);
+			CL_ParticleSpawnTimed((const char*) cmdData, p, true, i, n);
 
 			e -= 2 * sizeof(int);
 
@@ -660,14 +660,14 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {
-				pnew = CL_ParticleSpawn((const char* ) cmdData, p->levelFlags, p->s, p->v, p->a);
+				pnew = CL_ParticleSpawn((const char*) cmdData, p->levelFlags, p->s, p->v, p->a);
 				if (!pnew)
 					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 
 		case PC_CHILD:
-			pnew = CL_ParticleSpawn((const char* )cmdData, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((const char*)cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
 				pnew->next = p->children;
 				pnew->parent = p;
@@ -1331,7 +1331,7 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 				pc->ref = (int) (pcmdPos - pcmdData);
 				pcmdPos += Com_EParseValue(pcmdPos, token, (valueTypes_t)pc->type, 0, 0);
 
-/*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char* )pc->ref); */
+/*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char*)pc->ref); */
 				break;
 			}
 

@@ -76,7 +76,7 @@ static int UFO_CleanSuiteMapDef (void)
 	return 0;
 }
 
-#define SEED_TEST 0
+#define SEED_TEST 1
 #if SEED_TEST
 char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
@@ -103,7 +103,7 @@ static void testMapDefsMassRMA (void)
 			continue;
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
-		if (++mapCount <= 0)		/* change 0 to n to skip the first n assemblies */
+		if (++mapCount <= 40)		/* change 0 to n to skip the first n assemblies */
 			continue;
 
 		{

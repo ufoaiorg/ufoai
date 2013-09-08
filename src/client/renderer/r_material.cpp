@@ -956,7 +956,7 @@ void R_LoadMaterials (const char* map)
 			Com_Printf("...ignore materials (r_materials is deactivated)\n");
 	}
 
-	buffer = (const char* )fileBuffer;
+	buffer = (const char*)fileBuffer;
 
 	inmaterial = false;
 	image = nullptr;
