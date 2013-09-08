@@ -173,22 +173,25 @@ static void G_UpdateShotMock (shot_mock_t *mock, const Edict* shooter, const Edi
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
-	if (damage > 0) {
-		if (!struck->inuse || G_IsDead(struck))
-			return;
-		else if (!G_IsVisibleForTeam(struck, shooter->team))
-			return;
-		else if (G_IsCivilian(struck))
-			mock->civilian += 1;
-		else if (struck->team == shooter->team)
-			mock->friendCount += 1;
-		else if (G_IsActor(struck))
-			mock->enemyCount += 1;
-		else
-			return;
+	if (damage <= 0)
+		return;
 
-		mock->damage += damage;
-	}
+	if (!struck->inuse || G_IsDead(struck))
+		return;
+
+	if (!G_IsVisibleForTeam(struck, shooter->team))
+		return;
+
+	if (G_IsCivilian(struck))
+		mock->civilian += 1;
+	else if (struck->team == shooter->team)
+		mock->friendCount += 1;
+	else if (G_IsActor(struck))
+		mock->enemyCount += 1;
+	else
+		return;
+
+	mock->damage += damage;
 }
 
 /**
