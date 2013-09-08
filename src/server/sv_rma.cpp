@@ -1009,7 +1009,7 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
  * string this string contains three coordinates for shifting the given tile names.
  */
-static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos)
+static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos, bool print)
 {
 	int i;
 	const Assembly *mAsm;
@@ -1030,9 +1030,11 @@ static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos
 		Q_strcat(asmPos, MAX_TOKEN_CHARS * MAX_TILESTRINGS, "%i %i %i", (pl->x - mAsm->width / 2) * 8, (pl->y - mAsm->height / 2) * 8, 0);
 	}
 
-	Com_Printf("tiles: %s\n", asmTiles);
-	Com_Printf("pos: %s\n", asmPos);
-	Com_Printf("tiles: %i\n", map->numPlaced);
+	if (print) {
+		Com_Printf("tiles: %s\n", asmTiles);
+		Com_Printf("pos: %s\n", asmPos);
+		Com_Printf("tiles: %i\n", map->numPlaced);
+	}
 }
 
 /**
@@ -1504,7 +1506,7 @@ static bool SV_AddMissingTiles (MapInfo *map)
 	mapStr[0] = 0;
 	posStr[0] = 0;
 	if (map->numPlaced < 8)
-		SV_BuildMapStrings(map, mapStr, posStr);
+		SV_BuildMapStrings(map, mapStr, posStr, true);
 #endif
 	/** try to reduce the number of available options */
 	bool eliminated = true;
@@ -1626,7 +1628,7 @@ static bool SV_AddMapTiles (MapInfo *map)
 					mapStr[0] = 0;
 					posStr[0] = 0;
 					if (map->numPlaced < 6)
-						SV_BuildMapStrings(map, mapStr, posStr);
+						SV_BuildMapStrings(map, mapStr, posStr, true);
 #endif
 					break;
 				}
@@ -2034,7 +2036,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
 	asmPos[0] = 0;
 
 	/* generate the strings */
-	SV_BuildMapStrings(map, asmTiles, asmPos);
+	SV_BuildMapStrings(map, asmTiles, asmPos, true);
 
 	return map;
 }
