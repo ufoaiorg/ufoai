@@ -69,10 +69,13 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 		if (distance >= UNIT_SIZE) {
 			Edict* e = nullptr;
 			while ((e = G_EdictsGetNextInUse(e))) {
-				if (G_IsSmoke(e) && RayIntersectAABB(eye, point, e->absmin, e->absmax)) {
-						blocked = true;
-						break;
-				}
+				if (!G_IsSmoke(e))
+					continue;
+				if (!RayIntersectAABB(eye, point, e->absmin, e->absmax))
+					continue;
+
+				blocked = true;
+				break;
 			}
 		}
 		if (!blocked)
