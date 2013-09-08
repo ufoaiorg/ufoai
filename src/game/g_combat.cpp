@@ -95,75 +95,68 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
  * @sa G_Damage
  */
-static void G_Morale (int type, const Edict* victim, const Edict* attacker, int param)
+static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* attacker, int param)
 {
 	Edict* ent = nullptr;
-	int newMorale;
-	float mod;
-
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
-		if (ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
-			switch (type) {
-			case ML_WOUND:
-			case ML_DEATH:
-				/* morale damage depends on the damage */
-				mod = mob_wound->value * param;
-				/* death hurts morale even more than just damage */
-				if (type == ML_DEATH)
-					mod += mob_death->value;
-				/* seeing how someone gets shot increases the morale change */
-				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, false)))
-					mod *= mof_watching->value;
-				if (attacker != nullptr && ent->team == attacker->team) {
-					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
-					/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
-					if (victim->team == attacker->team)
-						mod *= mof_teamkill->value;
-					else
-						mod *= mof_enemy->value;
-				}
-				/* seeing a civilian die is more "acceptable" */
-				if (G_IsCivilian(victim))
-					mod *= mof_civilian->value;
-				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-				if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
-					mod *= -1;
-				if (attacker != nullptr) {
-					/* if you stand near to the attacker or the victim, the morale change is higher. */
-					mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
-						* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
-						* mor_attacker->value;
-				} else {
-					mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
-						* mor_victim->value;
-				}
-				/* morale damage depends on the number of living allies */
-				mod *= (1 - mon_teamfactor->value)
-					+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
-					/ (level.num_alive[victim->team] + 1);
-				/* being hit isn't fun */
-				if (ent == victim)
-					mod *= mor_pain->value;
-				break;
-			default:
-				gi.DPrintf("Undefined morale modifier type %i\n", type);
-				mod = 0;
-				break;
-			}
-			/* clamp new morale */
-			/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
-			newMorale = ent->morale + (int) (MORALE_RANDOM(mod) + 0.9);
-			if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
-				ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-			else if (newMorale < 0)
-				ent->morale = 0;
-			else
-				ent->morale = newMorale;
+		if (ent->type != ET_ACTOR)
+			continue;
+		if (G_IsDead(ent))
+			continue;
+		if (ent->team == TEAM_CIVILIAN)
+			continue;
 
-			/* send phys data */
-			G_SendStats(*ent);
+		/* morale damage depends on the damage */
+		float mod = mob_wound->value * param;
+		/* death hurts morale even more than just damage */
+		if (type == ML_DEATH)
+			mod += mob_death->value;
+		/* seeing how someone gets shot increases the morale change */
+		if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, false)))
+			mod *= mof_watching->value;
+		if (attacker != nullptr && ent->team == attacker->team) {
+			/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
+			/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
+			if (victim->team == attacker->team)
+				mod *= mof_teamkill->value;
+			else
+				mod *= mof_enemy->value;
 		}
+		/* seeing a civilian die is more "acceptable" */
+		if (G_IsCivilian(victim))
+			mod *= mof_civilian->value;
+		/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
+		if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
+			mod *= -1;
+		if (attacker != nullptr) {
+			/* if you stand near to the attacker or the victim, the morale change is higher. */
+			mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
+				* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
+				* mor_attacker->value;
+		} else {
+			mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
+				* mor_victim->value;
+		}
+		/* morale damage depends on the number of living allies */
+		mod *= (1 - mon_teamfactor->value)
+			+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
+			/ (level.num_alive[victim->team] + 1);
+		/* being hit isn't fun */
+		if (ent == victim)
+			mod *= mor_pain->value;
+		/* clamp new morale */
+		/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
+		const int newMorale = ent->morale + (int) (MORALE_RANDOM(mod) + 0.9);
+		if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
+			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+		else if (newMorale < 0)
+			ent->morale = 0;
+		else
+			ent->morale = newMorale;
+
+		/* send phys data */
+		G_SendStats(*ent);
 	}
 }
 
