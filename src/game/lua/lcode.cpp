@@ -182,7 +182,7 @@ void luaK_patchtohere (FuncState *fs, int list) {
 }
 
 
-void luaK_concat (FuncState *fs, int *l1, int l2) {
+void luaK_concat (FuncState *fs, int* l1, int l2) {
   if (l2 == NO_JUMP) return;
   else if (*l1 == NO_JUMP)
     *l1 = l2;

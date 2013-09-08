@@ -303,7 +303,7 @@ typedef struct teamDef_s {
 	char footstepSound[MAX_VAR];
 
 	linkedList_t *const *names;	/**< Names list per gender. */
-	const int *numNames;	/**< Amount of names in this list for all different genders. */
+	const int* numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
 		char* path;

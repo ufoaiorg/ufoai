@@ -157,7 +157,7 @@ typedef struct
 */
 
 
-local int unzlocal_getByte (const zlib_filefunc_def* pzlib_filefunc_def, voidpf filestream, int *pi)
+local int unzlocal_getByte (const zlib_filefunc_def* pzlib_filefunc_def, voidpf filestream, int* pi)
 {
     unsigned char c;
     int err = (int)ZREAD(*pzlib_filefunc_def,filestream,&c,1);

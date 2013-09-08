@@ -272,8 +272,8 @@ typedef struct game_import_s {
 	void (IMPORT *ReadData) (void* buffer, int size);
 	void (IMPORT *ReadFormat) (const char* format, ...);
 
-	bool (IMPORT *GetConstInt) (const char* name, int *value);
-	bool (IMPORT *GetConstIntFromNamespace) (const char* space, const char* name, int *value);
+	bool (IMPORT *GetConstInt) (const char* name, int* value);
+	bool (IMPORT *GetConstIntFromNamespace) (const char* space, const char* name, int* value);
 	const char* (IMPORT *GetConstVariable) (const char* space, int value);
 	void (IMPORT *RegisterConstInt) (const char* name, int value);
 	bool (IMPORT *UnregisterConstVariable) (const char* name);

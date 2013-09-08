@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param port The port
  * @return @c true if the extracting went well, @c false if an error occurred
  */
-bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int *port)
+bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port)
 {
 	char* s, *buf;
 	const char* proto = "http://";
@@ -361,5 +361,5 @@ void HTTP_PutFile(const char* formName, const char* fileName, const char* url, c
 size_t HTTP_Recv(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 size_t HTTP_Header(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 void HTTP_Cleanup(void) {}
-bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int *port) {return false;}
+bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port) {return false;}
 #endif

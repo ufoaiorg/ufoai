@@ -181,7 +181,7 @@ void _pico_free (void* ptr)
 /**
  * @brief wrapper around the loadfile function pointer
  */
-void _pico_load_file (char* name, unsigned char** buffer, int *bufSize)
+void _pico_load_file (char* name, unsigned char** buffer, int* bufSize)
 {
 	/* sanity checks */
 	if (name == NULL) {
@@ -927,7 +927,7 @@ int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str)
 	return 0;
 }
 
-int _pico_parse_int (picoParser_t *p, int *out)
+int _pico_parse_int (picoParser_t *p, int* out)
 {
 	char* token;
 
@@ -946,7 +946,7 @@ int _pico_parse_int (picoParser_t *p, int *out)
 	return 1;
 }
 
-int _pico_parse_int_def (picoParser_t *p, int *out, int def)
+int _pico_parse_int_def (picoParser_t *p, int* out, int def)
 {
 	char* token;
 

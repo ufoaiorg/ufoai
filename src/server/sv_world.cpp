@@ -300,7 +300,7 @@ typedef struct moveclip_s {
  * @return The headnode for the edict
  * @sa CL_HullForEntity
  */
-static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
+static int SV_HullForEntity (const edict_t *ent, int* tile, vec3_t rmaShift)
 {
 	assert(ent->solid != SOLID_NOT);
 	assert(ent->solid != SOLID_TRIGGER);

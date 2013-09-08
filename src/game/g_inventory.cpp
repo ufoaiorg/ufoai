@@ -298,7 +298,7 @@ void G_InventoryToFloor (Edict* ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_ReadItem (Item *item, const invDef_t** container, int *x, int *y)
+void G_ReadItem (Item *item, const invDef_t** container, int* x, int* y)
 {
 	int t, m;
 	int ammoleft;

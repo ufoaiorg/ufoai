@@ -61,7 +61,7 @@ NULL /* terminator */
  * the number of supported modules in 'numModules'. Note that
  * this param can be NULL when the count is not needed.
  */
-const picoModule_t** PicoModuleList (int *numModules)
+const picoModule_t** PicoModuleList (int* numModules)
 {
 	/* get module count */
 	if (numModules != NULL)

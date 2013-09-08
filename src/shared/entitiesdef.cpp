@@ -510,7 +510,7 @@ static int ED_AllocRange (entityKeyDef_t *kd, const char* rangeStr)
 /**
  * @return ED_ERROR or ED_OK.
  */
-static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
+static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int* numKeyDefsSoFar_p,
 		const char* newName, const char* newVal, const int mode)
 {
 	/* check if there is already a key def */
@@ -710,7 +710,7 @@ static int ED_ProcessRanges (void)
 					kr->str, kd->name, ed->classname);
 				if (ED_TYPE_INT == keyType || ED_TYPE_BOOL == keyType) {
 					const size_t size = numElements * sizeof(int);
-					kr->iArr = (int *)malloc(size);
+					kr->iArr = (int* )malloc(size);
 					ED_TEST_RETURN_ERROR(!kr->iArr, "ED_ProcessRanges: out of memory");
 					memcpy(kr->iArr, ibuf, size);
 				} else { /* ED_TYPE_FLOAT */

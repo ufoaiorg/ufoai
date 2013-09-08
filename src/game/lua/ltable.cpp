@@ -186,7 +186,7 @@ int luaH_next (lua_State *L, Table *t, StkId key) {
 */
 
 
-static int computesizes (int nums[], int *narray) {
+static int computesizes (int nums[], int* narray) {
   int i;
   int twotoi;  /* 2^i */
   int a = 0;  /* number of elements smaller than 2^i */
@@ -208,7 +208,7 @@ static int computesizes (int nums[], int *narray) {
 }
 
 
-static int countint (const TValue *key, int *nums) {
+static int countint (const TValue *key, int* nums) {
   int k = arrayindex(key);
   if (0 < k && k <= MAXASIZE) {  /* is `key' an appropriate array index? */
     nums[ceillog2(k)]++;  /* count as such */
@@ -219,7 +219,7 @@ static int countint (const TValue *key, int *nums) {
 }
 
 
-static int numusearray (const Table *t, int *nums) {
+static int numusearray (const Table *t, int* nums) {
   int lg;
   int ttlg;  /* 2^lg */
   int ause = 0;  /* summation of `nums' */
@@ -244,7 +244,7 @@ static int numusearray (const Table *t, int *nums) {
 }
 
 
-static int numusehash (const Table *t, int *nums, int *pnasize) {
+static int numusehash (const Table *t, int* nums, int* pnasize) {
   int totaluse = 0;  /* total number of elements */
   int ause = 0;  /* summation of `nums' */
   int i = sizenode(t);

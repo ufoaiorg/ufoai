@@ -54,7 +54,7 @@ public:
 			int amount) __attribute__((warn_unused_result));
 
 	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t *from, Item *item, const invDef_t *to,
-			int tx, int ty, int *TU, Item ** icp);
+			int tx, int ty, int* TU, Item ** icp);
 
 	bool tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container);
 	void destroyInventory (Inventory* const inv);

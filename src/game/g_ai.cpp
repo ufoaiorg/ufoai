@@ -541,7 +541,7 @@ static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t *fd)
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (aiAction_t *aia, const Edict* ent, Edict* check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
+static void AI_SearchBestTarget (aiAction_t *aia, const Edict* ent, Edict* check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int* bestTime, const fireDef_t *fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */

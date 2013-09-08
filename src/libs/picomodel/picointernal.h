@@ -107,7 +107,7 @@ char* _pico_clone_alloc (const char* str);
 void _pico_free (void* ptr);
 
 /* files */
-void _pico_load_file (char* name, unsigned char** buffer, int *bufSize);
+void _pico_load_file (char* name, unsigned char** buffer, int* bufSize);
 void _pico_free_file (void* buffer);
 
 /* strings */
@@ -164,8 +164,8 @@ void _pico_parse_skip_rest (picoParser_t *p);
 int _pico_parse_skip_braced (picoParser_t *p);
 int _pico_parse_check (picoParser_t *p, int allowLFs, const char* str);
 int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str);
-int _pico_parse_int (picoParser_t *p, int *out);
-int _pico_parse_int_def (picoParser_t *p, int *out, int def);
+int _pico_parse_int (picoParser_t *p, int* out);
+int _pico_parse_int_def (picoParser_t *p, int* out, int def);
 int _pico_parse_float (picoParser_t *p, float *out);
 int _pico_parse_float_def (picoParser_t *p, float *out, float def);
 int _pico_parse_vec (picoParser_t *p, picoVec3_t out);

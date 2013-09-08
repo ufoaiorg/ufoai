@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int numToMoveToWorldspawn = 0;
 
 static void Check_MapSize (vec3_t mapSize);
-mapbrush_t** Check_ExtraBrushesForWorldspawn (int *numBrushes);
+mapbrush_t** Check_ExtraBrushesForWorldspawn (int* numBrushes);
 
 
 /**
@@ -184,7 +184,7 @@ void CheckEntities (void)
 void Check_Stats(void) {
 	vec3_t worldSize;
 	int i, j;
-	int *entNums;
+	int* entNums;
 
 	Check_InitEntityDefs();
 
@@ -255,7 +255,7 @@ static void Check_MapSize (vec3_t mapSize)
  * @return a pointer to the array of pointers to brushes to be included in worldspawn.
  * @param[out] numBrushes the number of brushes
  */
-mapbrush_t** Check_ExtraBrushesForWorldspawn (int *numBrushes)
+mapbrush_t** Check_ExtraBrushesForWorldspawn (int* numBrushes)
 {
 	int i, j;
 	mapbrush_t** brushesToMove;

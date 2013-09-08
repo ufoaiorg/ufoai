@@ -576,7 +576,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
  * @sa Sys_FindClose
  * @note Don't forget to free the filelist array and the file itself
  */
-char** FS_ListFiles (const char* findname, int *numfiles, unsigned musthave, unsigned canthave)
+char** FS_ListFiles (const char* findname, int* numfiles, unsigned musthave, unsigned canthave)
 {
 	char* s;
 	int nfiles = 0, i;

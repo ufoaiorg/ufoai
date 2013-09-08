@@ -189,7 +189,7 @@ void PicoSetLoadFileFunc (void (*func) (char*, unsigned char**, int*));
 void PicoSetFreeFileFunc (void (*func) (void*));
 void PicoSetPrintFunc (void (*func) (int, const char*));
 
-const picoModule_t** PicoModuleList (int *numModules);
+const picoModule_t** PicoModuleList (int* numModules);
 
 picoModel_t *PicoLoadModel (char* name, int frameNum);
 

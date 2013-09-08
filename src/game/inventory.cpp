@@ -237,7 +237,7 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, Item *fItem, const invDef_t *to, int tx, int ty, int *TU, Item ** uponItem)
+inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, Item *fItem, const invDef_t *to, int tx, int ty, int* TU, Item ** uponItem)
 {
 	Item *ic;
 
