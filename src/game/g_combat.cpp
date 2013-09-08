@@ -276,18 +276,7 @@ static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDe
 			return;
 	}
 
-	if (!splashDamage) {
-		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
-			/* Increase friendly fire counter. */
-			score->hits[fd->weaponSkill][KILLED_TEAM]++;
-			score->firedHit[KILLED_TEAM] = true;
-		}
-
-		if (!score->firedHit[type]) {
-			score->hits[fd->weaponSkill][type]++;
-			score->firedHit[type] = true;
-		}
-	} else {
+	if (splashDamage) {
 		if (attacker->team == target->team) {
 			/* Increase friendly fire counter. */
 			score->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
@@ -301,6 +290,17 @@ static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDe
 		if (!score->firedSplashHit[type]) {
 			score->hitsSplash[fd->weaponSkill][type]++;
 			score->firedSplashHit[type] = true;
+		}
+	} else {
+		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
+			/* Increase friendly fire counter. */
+			score->hits[fd->weaponSkill][KILLED_TEAM]++;
+			score->firedHit[KILLED_TEAM] = true;
+		}
+
+		if (!score->firedHit[type]) {
+			score->hits[fd->weaponSkill][type]++;
+			score->firedHit[type] = true;
 		}
 	}
 }
