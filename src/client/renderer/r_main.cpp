@@ -535,6 +535,11 @@ static bool R_CvarPostProcess (cvar_t *cvar)
 	return true;
 }
 
+static bool R_CvarCheckMultisample (cvar_t *cvar)
+{
+	return Cvar_AssertValue(cvar, 0, 4, true);
+}
+
 static void R_RegisterSystemVars (void)
 {
 	const cmdList_t *commands;
@@ -584,6 +589,7 @@ static void R_RegisterSystemVars (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK");
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
+	Cvar_SetCheckFunction("r_multisample", R_CvarCheckMultisample);
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");

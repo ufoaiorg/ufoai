@@ -197,12 +197,10 @@ bool R_InitGraphics (const viddefContext_t *context)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	/* valid values are between 0 and 4 */
-	i = std::min(4, std::max(0, context->multisample));
-	if (i > 0) {
-		Com_Printf("I: set multisample buffers to %i\n", i);
+	if (context->multisample > 0) {
+		Com_Printf("I: set multisample buffers to %i\n", context->multisample);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, i);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, context->multisample);
 	} else {
 		Com_Printf("I: disable multisample buffers\n");
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);

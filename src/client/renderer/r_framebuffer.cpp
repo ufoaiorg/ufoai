@@ -216,12 +216,12 @@ r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool
 	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 #endif
 
-	/* Presence of depth buffer indicates render target that could use antialiasing*/
+	/* Presence of depth buffer indicates render target that could use antialiasing */
 	if (depth) {
 		/** @todo also check if we are running on older (SM2.0) hardware, which doesn't support antialiased MRT */
 		if (qglRenderbufferStorageMultisampleEXT && qglBlitFramebuffer) {
-			int samples = std::min(4, std::max(0, r_multisample->integer));
-			if (samples>1)
+			const int samples = r_multisample->integer;
+			if (samples > 1)
 				buf->samples = samples;
 		}
 	}
