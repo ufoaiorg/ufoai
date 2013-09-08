@@ -243,6 +243,12 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	name = UI_GetParam(context, 1);
 	type = UI_GetParam(context, 2);
 
+	uiNode_t* existingNode = UI_GetNode(node, name);
+	if (existingNode != nullptr) {
+		UI_DeleteNode(existingNode);
+		Com_DPrintf(DEBUG_CLIENT, "Node with name '%s' already exists\n", name);
+	}
+
 	component = UI_GetComponent(type);
 	if (component) {
 		child = UI_CloneNode(component, node->root, true, name, true);
