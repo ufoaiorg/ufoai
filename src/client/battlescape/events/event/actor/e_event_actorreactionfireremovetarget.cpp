@@ -45,7 +45,7 @@ int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t *self, dbuffer *
 	const int stepTime = CL_GetStepTime(eventTiming, target, step);
 	if (eventTiming->shootTime > stepTime)
 		return eventTiming->impactTime;
-	return stepTime + 200;
+	return stepTime;
 }
 
 /**
