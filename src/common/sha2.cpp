@@ -205,7 +205,7 @@ static void Com_SHA2Process (sha2_context *ctx, const byte data[64])
 	ctx->state[7] += H;
 }
 
-void Com_SHA2Update (sha2_context *ctx, const byte *input, uint32_t length)
+void Com_SHA2Update (sha2_context *ctx, const byte* input, uint32_t length)
 {
 	if (!length)
 		return;
@@ -292,7 +292,7 @@ bool Com_SHA2File (const char* filename, byte digest[32])
 	return true;
 }
 
-void Com_SHA2Csum (const byte *buf, uint32_t buflen, byte digest[32])
+void Com_SHA2Csum (const byte* buf, uint32_t buflen, byte digest[32])
 {
 	sha2_context ctx;
 
@@ -308,7 +308,7 @@ void Com_SHA2ToHex (const byte digest[32], char final[65])
 		Q_strcat(final, 65, "%02x", digest[i]);
 }
 
-void Com_SHA2Hmac (const byte *buf, uint32_t buflen, const byte *key, uint32_t keylen, byte digest[32])
+void Com_SHA2Hmac (const byte* buf, uint32_t buflen, const byte* key, uint32_t keylen, byte digest[32])
 {
 	uint32_t i;
 	sha2_context ctx;

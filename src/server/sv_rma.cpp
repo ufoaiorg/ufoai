@@ -1862,7 +1862,7 @@ static int SV_ParallelSearch (MapInfo *map)
 void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inherit)
 {
 	char filename[MAX_QPATH];
-	byte *buf;
+	byte* buf;
 	const char* text, *token;
 
 	/* load the map info */

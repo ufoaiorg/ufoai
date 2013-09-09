@@ -526,12 +526,12 @@ float SV_GetBounceFraction (const char* texture)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte *buffer)
+static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte* buffer)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
 	const int frameSize = LittleLong(md2->framesize);
-	const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
+	const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte* ) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
 	vec3_t scale, mins, maxs;
 	int j;
 
@@ -553,10 +553,10 @@ static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte *buffer)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte *buffer)
+static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte* buffer)
 {
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
-	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
+	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte* )md3 + LittleLong(md3->ofs_frames));
 	const int num_frames = LittleLong(md3->num_frames);
 	vec3_t mins, maxs;
 	int j;
@@ -579,7 +579,7 @@ static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte *buffer)
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadObjModel (sv_model_t *mod, const byte *buffer, int bufferLength)
+static void SV_ModLoadObjModel (sv_model_t *mod, const byte* buffer, int bufferLength)
 {
 	/** @todo implement me */
 }
@@ -601,7 +601,7 @@ static char const* const mod_extensions[] = {
 bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 {
 	sv_model_t *mod;
-	byte *buf = nullptr;
+	byte* buf = nullptr;
 	unsigned int i;
 	int modfilelen = 0;
 

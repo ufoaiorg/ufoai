@@ -67,4 +67,4 @@ void GetVectorFromString(const char* value, vec3_t vec);
 void GetVectorForKey(const entity_t *ent, const char* key, vec3_t vec);
 epair_t *ParseEpair(int entNum);
 epair_t *AddEpair(const char* key, const char* value, int entNum);
-byte *CompressRouting(byte *dataStart, byte *destStart, int l);
+byte* CompressRouting(byte* dataStart, byte* destStart, int l);

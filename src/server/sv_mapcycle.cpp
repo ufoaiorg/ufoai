@@ -185,7 +185,7 @@ static void SV_MapcycleAdd (const char* mapName, bool day, const char* gameType)
 static void SV_ParseMapcycle (void)
 {
 	int length = 0;
-	byte *buffer = nullptr;
+	byte* buffer = nullptr;
 	const char* buf;
 
 	mapcycleCount = 0;

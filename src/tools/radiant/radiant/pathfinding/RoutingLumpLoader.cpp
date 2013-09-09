@@ -21,11 +21,11 @@ namespace routing
 	 * @sa CompressRouting (ufo2map)
 	 * @sa CMod_LoadRouting
 	 */
-	static int CMod_DeCompressRouting (byte**  source, byte * dataStart)
+	static int CMod_DeCompressRouting (byte**  source, byte*  dataStart)
 	{
 		int i, c;
-		byte *data_p;
-		byte *src;
+		byte* data_p;
+		byte* src;
 
 		data_p = dataStart;
 		src = *source;
@@ -151,7 +151,7 @@ namespace routing
 		static Routing tempMap;
 		static Routing clMap;
 		static MapTile curTile;
-		byte *source;
+		byte* source;
 		int length;
 		int x, y, z, size;
 		int minX, minY, minZ;
@@ -246,11 +246,11 @@ namespace routing
 		/* load the file */
 		InputStream &stream = file.getInputStream();
 		const std::size_t size = file.size();
-		byte *buf = (byte*) malloc(size + 1);
+		byte* buf = (byte*) malloc(size + 1);
 		dBspHeader_t *header = (dBspHeader_t *) buf;
 		stream.read(buf, size);
 
-		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte *) buf, 0, 0, 0);
+		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte* ) buf, 0, 0, 0);
 		free(buf);
 	}
 

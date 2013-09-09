@@ -115,7 +115,7 @@ static void CheckConnectionsThread (unsigned int unitnum)
 void DoRouting (void)
 {
 	int i;
-	byte *data;
+	byte* data;
 	vec3_t mins, maxs;
 	pos3_t pos;
 

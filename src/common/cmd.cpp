@@ -349,7 +349,7 @@ SCRIPT COMMANDS
 
 static void Cmd_Exec_f (void)
 {
-	byte *f;
+	byte* f;
 	char* f2;
 	int len;
 

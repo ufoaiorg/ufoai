@@ -54,7 +54,7 @@ char const* const* Img_GetImageTypes (void)
  * @sa R_LoadJPG
  * @sa R_FindImage
  */
-void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
+void R_WritePNG (qFILE *f, byte* buffer, int width, int height)
 {
 	int			i;
 	png_structp	png_ptr;
@@ -100,7 +100,7 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
  * @sa R_LoadTGA
  * @sa R_WriteTGA
  */
-void R_WriteCompressedTGA (qFILE *f, const byte *buffer, int width, int height)
+void R_WriteCompressedTGA (qFILE *f, const byte* buffer, int width, int height)
 {
 	byte pixel_data[TGA_CHANNELS];
 	byte block_data[TGA_CHANNELS * 128];
@@ -226,12 +226,12 @@ void R_WriteCompressedTGA (qFILE *f, const byte *buffer, int width, int height)
  * @sa R_ScreenShot_f
  * @sa R_LoadJPG
  */
-void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
+void R_WriteJPG (qFILE *f, byte* buffer, int width, int height, int quality)
 {
 	int offset, w3;
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
-	byte *s;
+	byte* s;
 
 	/* Initialise the jpeg compression object */
 	cinfo.err = jpeg_std_error(&jerr);
@@ -248,7 +248,7 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_set_defaults(&cinfo);
 	jpeg_set_quality(&cinfo, quality, TRUE);
 	jpeg_start_compress(&cinfo, TRUE);	/* start compression */
-	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) "UFOAI", (uint32_t) 5);
+	jpeg_write_marker(&cinfo, JPEG_COM, (const byte* ) "UFOAI", (uint32_t) 5);
 
 	/* Feed scanline data */
 	w3 = cinfo.image_width * 3;

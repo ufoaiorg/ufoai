@@ -1132,7 +1132,7 @@ void WriteMapFile (const char* filename)
 static void ParseUMP (const char* name, char* entityString, bool inherit)
 {
 	char filename[MAX_QPATH];
-	byte *buf;
+	byte* buf;
 	const char* text;
 
 	*entityString = '\0';

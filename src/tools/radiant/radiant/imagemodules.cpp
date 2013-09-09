@@ -115,7 +115,7 @@ static Image* LoadImage (ArchiveFile& file, const char* extension)
 		const guchar* pixels = gdk_pixbuf_get_pixels(pixbuf);
 
 		image = new RGBAImage(width, height, false);
-		byte *rgba = image->getRGBAPixels();
+		byte* rgba = image->getRGBAPixels();
 		const int rowextra = gdk_pixbuf_get_rowstride(pixbuf) - width * stepWidth;
 
 		for (int y = 0; y < height; ++y, pixels += rowextra) {

@@ -193,7 +193,7 @@ void G_ActorReserveTUs (Edict* ent, int resReaction, int resShot, int resCrouch)
 int G_ActorDoTurn (Edict* ent, byte dir)
 {
 	float angleDiv;
-	const byte *rot;
+	const byte* rot;
 	int i, num;
 	int status;
 
@@ -334,21 +334,21 @@ void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int delt
 {
 	const int spawned = level.num_spawned[victim->team];
 	const int attackerTeam = (attacker != nullptr ? attacker->team : MAX_TEAMS);
-	byte *alive = level.num_alive;
+	byte* alive = level.num_alive;
 
 	alive[victim->team] += deltaAlive;
 	if (alive[victim->team] > spawned)
 		gi.Error("alive counter out of sync");
 
 	if (deltaStuns != 0) {
-		byte *stuns = level.num_stuns[attackerTeam];
+		byte* stuns = level.num_stuns[attackerTeam];
 		stuns[victim->team] += deltaStuns;
 		if (stuns[victim->team] > spawned)
 			gi.Error("stuns counter out of sync");
 	}
 
 	if (deltaKills != 0) {
-		byte *kills = level.num_kills[attackerTeam];
+		byte* kills = level.num_kills[attackerTeam];
 		kills[victim->team] += deltaKills;
 		if (kills[victim->team] > spawned)
 			gi.Error("kills counter out of sync");

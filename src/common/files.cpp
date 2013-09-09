@@ -335,10 +335,10 @@ int FS_CheckFile (const char* fmt, ...)
 int FS_Read2 (void* buffer, int len, qFILE *f, bool failOnEmptyRead)
 {
 	int read;
-	byte *buf;
+	byte* buf;
 	int tries;
 
-	buf = (byte *) buffer;
+	buf = (byte* ) buffer;
 
 	if (f->z) {
 		read = unzReadCurrentFile(f->z, buf, len);
@@ -1176,7 +1176,7 @@ const char* FS_GetFileData (const char* files)
 {
 	listBlock_t *block;
 	static linkedList_t *fileList = nullptr;
-	static byte *buffer = nullptr;
+	static byte* buffer = nullptr;
 
 	/* free the old file */
 	if (buffer) {
@@ -1236,7 +1236,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 	static char lastList[MAX_QPATH];
 	static listBlock_t *lBlock;
 	static linkedList_t *lFile;
-	static byte *lBuffer;
+	static byte* lBuffer;
 
 	static char headerType[MAX_VAR];
 	static char headerName[512];
@@ -1554,7 +1554,7 @@ int FS_Write (const void* buffer, int len, qFILE * f)
 	if (!f->f)
 		return 0;
 
-	const byte *buf = (const byte *) buffer;
+	const byte* buf = (const byte* ) buffer;
 
 	int remaining = len;
 	int tries = 0;

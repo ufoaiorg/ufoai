@@ -108,7 +108,7 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 		}
 
 		/* extract the forbidden coordinates */
-		byte *forbiddenSize = *(p + 1);
+		byte* forbiddenSize = *(p + 1);
 		memcpy(&size, forbiddenSize, sizeof(size));
 		const int fx = (*p)[0];
 		const int fy = (*p)[1];
