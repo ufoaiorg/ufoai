@@ -245,8 +245,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 
 	uiNode_t* existingNode = UI_GetNode(node, name);
 	if (existingNode != nullptr) {
-		UI_DeleteNode(existingNode);
-		Com_DPrintf(DEBUG_CLIENT, "Node with name '%s' already exists\n", name);
+		Com_Printf("UI_AbstractNodeCallCreateChild: Node with name '%s' already exists\n", name);
 	}
 
 	component = UI_GetComponent(type);
