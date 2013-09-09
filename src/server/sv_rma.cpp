@@ -2053,8 +2053,8 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
  * Each of the map tiles in this string has a corresponding entry in the pos string, too.
  * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmTiles
  * string this string contains three coordinates for shifting the given tile names.
- * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
+ * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_ParseAssembly
