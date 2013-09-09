@@ -149,9 +149,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = false;
 #if SDL_VERSION_ATLEAST(2,0,0)
-	if (SDL_HasScreenKeyboardSupport()) {
-		SDL_StartTextInput();
-	}
+	SDL_StartTextInput();
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 	SDL_Rect r = {static_cast<int>(pos[0]), static_cast<int>(pos[1]), static_cast<int>(node->box.size[0]), static_cast<int>(node->box.size[1])};
@@ -184,9 +182,7 @@ void uiTextEntryNode::onFocusLost (uiNode_t *node)
 		UI_TextEntryNodeValidateEdition(node);
 	}
 #if SDL_VERSION_ATLEAST(2,0,0)
-	if (SDL_HasScreenKeyboardSupport()) {
-		SDL_StopTextInput();
-	}
+	SDL_StopTextInput();
 #endif
 }
 
