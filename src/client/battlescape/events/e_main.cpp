@@ -174,17 +174,15 @@ int CL_GetStepTime (const eventTiming_t *eventTiming, const le_t* le, int step)
 	const leStep_t *list = le->stepList;
 	if (list == nullptr)
 		return eventTiming->nextTime;
-	if (step < 0) {
-		Com_Printf("invalid step given: %i/%i (entnum: %i)\n", step, list->steps, le->entnum);
-		return list->lastMoveTime;
-	}
-	while (list->next) {
-		if (step < list->steps)
-			break;
+	for (int i = 0; i < le->stepIndex; i++) {
 		list = list->next;
 	}
+	if (step < 0) {
+		Com_Printf("invalid step given: %i/%i (entnum: %i with stepindex: %i)\n", step, list->steps, le->entnum, le->stepIndex);
+		return list->lastMoveTime;
+	}
 	if (step > list->steps) {
-		Com_Printf("invalid step given: %i/%i (entnum: %i)\n", step, list->steps, le->entnum);
+		Com_Printf("invalid step given: %i/%i (entnum: %i with stepindex: %i)\n", step, list->steps, le->entnum, le->stepIndex);
 		return list->lastMoveTime + list->lastMoveDuration;
 	}
 	int delay = 0;

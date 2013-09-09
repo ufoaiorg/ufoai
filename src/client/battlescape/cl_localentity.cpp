@@ -461,6 +461,7 @@ void LET_StartIdle (le_t *le)
 		leStep_t *step = le->stepList->next;
 		Mem_Free(le->stepList);
 		le->stepList = step;
+		le->stepIndex--;
 	}
 
 	/* keep this animation until something happens */

@@ -271,7 +271,8 @@ void ReactionFireTargets::add (const Edict* shooter, const Edict* target, const 
 		if (rfts->targets[i].target == target)
 			return;
 	}
-	assert(i < MAX_RF_TARGETS);
+	if (i >= MAX_RF_TARGETS)
+		return;
 	rfts->targets[i].target = target;
 	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;

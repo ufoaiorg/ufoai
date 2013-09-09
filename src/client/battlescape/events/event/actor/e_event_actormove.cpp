@@ -48,11 +48,13 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	leStep_t *newStep = Mem_AllocType(leStep_t);
 	if (le->stepList == nullptr) {
 		le->stepList = newStep;
+		le->stepIndex = 0;
 	} else {
 		leStep_t *step = le->stepList;
 		while (step) {
 			if (step->next == nullptr) {
 				step->next = newStep;
+				le->stepIndex++;
 				break;
 			}
 			step = step->next;
