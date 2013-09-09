@@ -114,7 +114,8 @@ static void testMapDefsMassRMA (void)
 			else
 				continue;
 
-			Com_Printf("Map: %s Assembly: %s\n", p, md->params);
+			const char* ass = (const char *)LIST_GetByIdx(md->params, 0);
+			Com_Printf("Map: %s Assembly: %s\n", p, ass);
 
 			sv_threads->integer = 0;
 
@@ -141,7 +142,7 @@ static void testMapDefsMassRMA (void)
 
 					int i;
 					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
-						const char *ass = NULL;
+						ass = NULL;
 						srand(i);
 						long time = Sys_Milliseconds();
 						Com_Printf("Seed: %i\n", i);
@@ -197,7 +198,7 @@ static void testMapDefsMassRMA (void)
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
-							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->params, i, randomMap->numPlaced, time);
+							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
 					didItOnce = true;
