@@ -192,7 +192,7 @@ static void testMapDefsMassRMA (void)
 
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
-						MapInfo* randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i);
+						MapInfo* randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i, false);
 						CU_ASSERT(randomMap != NULL);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);

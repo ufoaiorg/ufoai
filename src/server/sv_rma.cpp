@@ -2037,7 +2037,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
 	asmPos[0] = 0;
 
 	/* generate the strings */
-	SV_BuildMapStrings(map, asmTiles, asmPos, true);
+	SV_BuildMapStrings(map, asmTiles, asmPos, print);
 
 	return map;
 }
@@ -2055,13 +2055,14 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
  * string this string contains three coordinates for shifting the given tile names.
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
+ * @param[in] print Whether or not extended output should be printed
  * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed)
+MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
 {
 	MapInfo *map;
 
@@ -2101,7 +2102,7 @@ MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTil
 		}
 	}
 
-	SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed, true);
+	SV_DoMapAssemble(map, assembly, asmTiles, asmPos, seed, print);
 
 	return map;
 }
