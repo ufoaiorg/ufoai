@@ -468,9 +468,9 @@ static bool CIN_ROQ_DecodeChunk (cinematic_t *cin)
 			return false;	/* Finished */
 
 		/* Parse the chunk header */
-		ROQCIN.chunk.id = LittleShort(*(short* )&ROQCIN.header[0]);
+		ROQCIN.chunk.id = LittleShort(*(short*)&ROQCIN.header[0]);
 		ROQCIN.chunk.size = LittleLong(*(int *)&ROQCIN.header[2]);
-		ROQCIN.chunk.flags = LittleShort(*(short* )&ROQCIN.header[6]);
+		ROQCIN.chunk.flags = LittleShort(*(short*)&ROQCIN.header[6]);
 
 		if (ROQCIN.chunk.id == ROQ_IDENT || ROQCIN.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 			Com_Printf("Invalid chunk id during decode: %i\n", ROQCIN.chunk.id);
@@ -581,9 +581,9 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char* fileName)
 	FS_Read(header, sizeof(header), &ROQCIN.file);
 
 	/* first 8 bytes are the header */
-	chunk.id = LittleShort(*(short* )&header[0]);
+	chunk.id = LittleShort(*(short*)&header[0]);
 	chunk.size = LittleLong(*(int *)&header[2]);
-	chunk.flags = LittleShort(*(short* )&header[6]);
+	chunk.flags = LittleShort(*(short*)&header[6]);
 
 	if (chunk.id != ROQ_IDENT) {
 		FS_CloseFile(&ROQCIN.file);

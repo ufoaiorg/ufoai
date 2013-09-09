@@ -422,16 +422,16 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 
 		switch (typeID) {
 		case 'c':
-			*va_arg(ap, int* ) = NET_ReadChar(buf);
+			*va_arg(ap, int*) = NET_ReadChar(buf);
 			break;
 		case 'b':
-			*va_arg(ap, int* ) = NET_ReadByte(buf);
+			*va_arg(ap, int*) = NET_ReadByte(buf);
 			break;
 		case 's':
-			*va_arg(ap, int* ) = NET_ReadShort(buf);
+			*va_arg(ap, int*) = NET_ReadShort(buf);
 			break;
 		case 'l':
-			*va_arg(ap, int* ) = NET_ReadLong(buf);
+			*va_arg(ap, int*) = NET_ReadLong(buf);
 			break;
 		case 'p':
 			NET_ReadPos(buf, *va_arg(ap, vec3_t *));
@@ -460,7 +460,7 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 				byte *p;
 				const int n = NET_ReadShort(buf);
 
-				*va_arg(ap, int* ) = n;
+				*va_arg(ap, int*) = n;
 				p = va_arg(ap, byte *);
 
 				for (i = 0; i < n; i++)

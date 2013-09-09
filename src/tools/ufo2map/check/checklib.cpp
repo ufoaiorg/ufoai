@@ -135,7 +135,7 @@ void Check_InitEntityDefs (void)
 	if (numEntityDefs)
 		return;
 
-	if (FS_LoadFile("ufos/entities.ufo", (byte** )&entitiesUfoBuf) == -1)
+	if (FS_LoadFile("ufos/entities.ufo", (byte**)&entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read entities.ufo");
 
 	if (ED_Parse((const char*)entitiesUfoBuf) == ED_ERROR)

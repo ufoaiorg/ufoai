@@ -1031,7 +1031,7 @@ void R_ReallocateStateArrays (int size)
 	if (size <= r_state.array_size)
 		return;
 	r_state.vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.vertex_array_3d, size * COMPONENTS_VERTEX_ARRAY3D * sizeof(GLfloat));
-	r_state.vertex_array_2d = (GLshort* ) Mem_SafeReAlloc(r_state.vertex_array_2d, size * COMPONENTS_VERTEX_ARRAY2D * sizeof(GLshort));
+	r_state.vertex_array_2d = (GLshort*) Mem_SafeReAlloc(r_state.vertex_array_2d, size * COMPONENTS_VERTEX_ARRAY2D * sizeof(GLshort));
 	r_state.color_array = (GLfloat *) Mem_SafeReAlloc(r_state.color_array, size * COMPONENTS_COLOR_ARRAY * sizeof(GLfloat));
 	r_state.index_array = (GLint *) Mem_SafeReAlloc(r_state.index_array, size * COMPONENTS_INDEX_ARRAY * sizeof(GLint));
 	r_state.normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.normal_array, size * COMPONENTS_NORMAL_ARRAY * sizeof(GLfloat));

@@ -688,7 +688,7 @@ bool AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
 	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
 	const bool crashed = (aircraft->status == AIR_CRASHED);
-	if (cgi->LIST_Remove(&ccs.aircraft, (const void* )aircraft)) {
+	if (cgi->LIST_Remove(&ccs.aircraft, (const void*)aircraft)) {
 		if (base && capType != MAX_CAP && !crashed)
 			CAP_AddCurrent(base, capType, -1);
 		return true;

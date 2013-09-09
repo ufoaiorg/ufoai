@@ -240,7 +240,7 @@ dMapTile_t *LoadBSPFile (const char* filename)
 	mapTiles.numTiles = 1;
 
 	/* load the file header */
-	size = FS_LoadFile(filename, (byte** )&header);
+	size = FS_LoadFile(filename, (byte**)&header);
 	if (size == -1)
 		Sys_Error("'%s' doesn't exist", filename);
 
