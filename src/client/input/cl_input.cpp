@@ -178,7 +178,7 @@ static void IN_KeyUp (kbutton_t *b)
 		b->down[0] = 0;
 	else if (b->down[1] == k)
 		b->down[1] = 0;
-	/* key up without coresponding down (menu pass through) */
+	/* key up without corresponding down (menu pass through) */
 	else
 		return;
 
