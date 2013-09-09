@@ -6,12 +6,18 @@ NICE              ?= 19
 UFO2MAPFLAGS      ?= -v 4 -nice $(NICE) -quant 4 -soft
 FAST_UFO2MAPFLAGS ?= -v 2 -quant 6 -nice $(NICE)
 ENTS_UFO2MAPFLAGS ?= -v 2 -nice $(NICE) -onlyents
-PYTHONBIN         := $(shell $(PROGRAM_PYTHON) -m urllib2 2>/dev/null && echo python)
+PYTHONBIN         := $(shell $(PROGRAM_PYTHON) -m urllib2 2>/dev/null && echo $(PROGRAM_PYTHON))
 ifeq ($(PYTHONBIN),)
         PYTHONBIN         := $(shell python2.6 -m urllib2 2>/dev/null && echo python2.6)
 endif
 ifeq ($(PYTHONBIN),)
         PYTHONBIN         := $(shell python2.7 -m urllib2 2>/dev/null && echo python2.7)
+endif
+ifeq ($(PYTHONBIN),)
+        PYTHONBIN         := $(shell python2 -m urllib2 2>/dev/null && echo python2)
+endif
+ifeq ($(PYTHONBIN),)
+        PYTHONBIN         := python
 endif
 
 maps: ufo2map $(BSPS)
