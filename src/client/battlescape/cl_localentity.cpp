@@ -1233,9 +1233,13 @@ void LE_CenterView (const le_t *le)
 		return;
 
 	assert(le);
-	pos3_t pos;
-	VecToPos(cl.cam.origin, pos);
-	CL_CameraRoute(pos, le->pos);
+	if (le->team == cls.team) {
+		VectorCopy(le->origin, cl.cam.origin);
+	} else {
+		pos3_t pos;
+		VecToPos(cl.cam.origin, pos);
+		CL_CameraRoute(pos, le->pos);
+	}
 }
 
 /**
