@@ -72,7 +72,6 @@ window hud_default extends hud
 
 	// ============================
 	// reaction fire tracking panel
-	// @todo this is currently just a temporary testing panel. remove invis
 	// parameter to display the panel
 	// ============================
 	panel reactions
@@ -83,7 +82,6 @@ window hud_default extends hud
 			layout			LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	4
 			ghost			true
-			invis			true
 		}
 	}
 
