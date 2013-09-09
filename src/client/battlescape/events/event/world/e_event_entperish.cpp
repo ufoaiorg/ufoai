@@ -59,6 +59,8 @@ void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
+		if (!cls.isOurRound() && le->team != TEAM_CIVILIAN)
+			LE_CenterView(le);
 		cls.i.destroyInventory(&le->inv);
 		break;
 #ifdef DEBUG

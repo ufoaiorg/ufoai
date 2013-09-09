@@ -95,4 +95,7 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 
 	UI_ExecuteConfunc("reactionfire_addtarget %i %i \"%s\" %i %i %i %i \"%s\"", shooterEntNum, target->entnum, shooterModel,
 			shooterSkin, shooterRobot, tusUntilTriggered, outOfRange, _(shooterFiredef->name));
+
+	/* if we are not close the target with the camera, just move the camera */
+	CL_CameraRoute(shooter->pos, target->pos);
 }

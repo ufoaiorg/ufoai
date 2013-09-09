@@ -152,7 +152,11 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 	if (LE_IsLivingActor(le)) {
 		if (!cls.isOurRound()) {
 			/* center view (if wanted) */
-			LE_CenterView(le);
+			if (leResponsible) {
+				CL_CameraRoute(leResponsible->pos, le->pos);
+			} else {
+				LE_CenterView(le);
+			}
 		}
 
 		/* draw line of sight */

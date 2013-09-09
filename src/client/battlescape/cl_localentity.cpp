@@ -687,6 +687,10 @@ static void LET_PathMove (le_t *le)
  */
 void LET_StartPathMove (le_t *le)
 {
+	/* center view (if wanted) */
+	if (!cls.isOurRound() && le->team != TEAM_CIVILIAN)
+		LE_CenterView(le);
+
 	/* initial animation or animation change */
 	R_AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
 	if (!le->as.change)
@@ -1225,13 +1229,13 @@ void _LE_NotFoundError (int entnum, int type, const char* file, const int line)
  */
 void LE_CenterView (const le_t *le)
 {
-	/* if (cl_centerview->integer == 1 && cl.actTeam != cls.team) */
 	if (!cl_centerview->integer)
 		return;
 
 	assert(le);
-	Cvar_SetValue("cl_worldlevel", le->pos[2]);
-	VectorCopy(le->origin, cl.cam.origin);
+	pos3_t pos;
+	VecToPos(cl.cam.origin, pos);
+	CL_CameraRoute(pos, le->pos);
 }
 
 /**

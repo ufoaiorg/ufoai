@@ -151,7 +151,7 @@ void CL_CameraMove (void)
 	if (cameraRoute) {
 		/* camera route */
 		frac = cls.frametime * moveaccel * 2;
-		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - 200) {
+		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - UNIT_SIZE) {
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
@@ -159,8 +159,9 @@ void CL_CameraMove (void)
 
 				CL_BlockBattlescapeEvents(false);
 			}
-		} else
+		} else {
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
+		}
 	} else {
 		/* normal camera movement */
 		/* calculate ground-based movement vectors */
@@ -244,6 +245,12 @@ void CL_CameraMove (void)
 void CL_CameraRoute (const pos3_t from, const pos3_t target)
 {
 	if (!cl_centerview->integer)
+		return;
+
+	vec3_t targetCamera;
+	PosToVec(target, targetCamera);
+	const bool closeEnough = VectorCompareEps(targetCamera, cl.cam.origin, UNIT_SIZE);
+	if (closeEnough)
 		return;
 
 	/* initialize the camera route variables */
@@ -362,7 +369,7 @@ static void CL_CenterCameraIntoMap_f (void)
 void CL_CameraInit (void)
 {
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, "Rotation speed of the battlescape camera.");
-	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, "Movement speed of the battlescape camera.");
+	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "450", CVAR_ARCHIVE, "Movement speed of the battlescape camera.");
 	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, "Movement acceleration of the battlescape camera.");
 	cl_campitchmax = Cvar_Get("cl_campitchmax", "89", 0, "Max. battlescape camera pitch - over 90 presents apparent mouse inversion.");
 	cl_camzoomspeed = Cvar_Get("cl_camzoomspeed", "2.0", 0);
