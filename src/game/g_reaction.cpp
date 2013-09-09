@@ -727,9 +727,7 @@ void ReactionFire::updateAllTargets (const Edict* target)
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS) */
-		if (isEnemy(shooter, target)
-		  && canReact(shooter, target)
-		  && canSee(shooter, target)) {
+		if (isPossible(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
 			if (TUs < 0)
 				continue;	/* no suitable weapon */
@@ -743,7 +741,6 @@ void ReactionFire::updateAllTargets (const Edict* target)
 void ReactionFire::resetTargets (const Edict *shooter)
 {
 	rft.resetTargetList(shooter);
-
 }
 
 /**
@@ -801,9 +798,7 @@ bool ReactionFire::tryToShoot (Edict* shooter, const Edict* target)
 
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!(isEnemy(shooter, target)
-		&& canReact(shooter, target)
-		&& canSee(shooter, target))) {
+	if (!isPossible(shooter, target)) {
 		rft.remove(shooter, target);
 		return false;
 	}
