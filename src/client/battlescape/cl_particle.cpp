@@ -632,13 +632,13 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			type = stackType[--stackIdx];
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
-			n = *(int *) stackPtr[stackIdx];
+			n = *(int* ) stackPtr[stackIdx];
 
 			/* delta time */
 			type = stackType[--stackIdx];
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
-			i = *(int *) stackPtr[stackIdx];
+			i = *(int* ) stackPtr[stackIdx];
 
 			/** @todo make the children boolean configurable */
 			CL_ParticleSpawnTimed((const char*) cmdData, p, true, i, n);
@@ -656,7 +656,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
 
-			n = *(int *) stackPtr[stackIdx];
+			n = *(int* ) stackPtr[stackIdx];
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {

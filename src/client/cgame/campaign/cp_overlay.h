@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_DecreaseXVILevelEverywhere(void);
 void CP_ChangeXVILevel(const vec2_t pos, float factor);
 void CP_InitializeXVIOverlay(void);
-void CP_GetXVIMapDimensions(int *width, int *height);
+void CP_GetXVIMapDimensions(int* width, int* height);
 int CP_GetXVILevel(int x, int y);
 void CP_SetXVILevel(int x, int y, int value);
 void CP_InitializeRadarOverlay(bool source);

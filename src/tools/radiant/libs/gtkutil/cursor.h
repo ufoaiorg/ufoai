@@ -34,7 +34,7 @@ typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 
 GdkCursor* create_blank_cursor ();
-void Sys_GetCursorPos (GtkWindow* window, int *x, int *y);
+void Sys_GetCursorPos (GtkWindow* window, int* x, int* y);
 void Sys_SetCursorPos (GtkWindow* window, int x, int y);
 
 /* greebo: this class is used by the XYViews as some sort of "onMouseMotion" callback wrapper

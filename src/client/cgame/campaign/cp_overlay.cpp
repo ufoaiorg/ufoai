@@ -49,7 +49,7 @@ static inline void CP_UploadXVI (void)
 	cgi->R_UploadAlpha("***r_xvitexture***", cgi->r_xviAlpha);
 }
 
-void CP_GetXVIMapDimensions (int *width, int *height)
+void CP_GetXVIMapDimensions (int* width, int* height)
 {
 	*width = XVI_WIDTH;
 	*height = XVI_HEIGHT;
@@ -88,7 +88,7 @@ int CP_GetXVILevel (int x, int y)
  * @note circle will be drawn between yMin (included) and yMin (excluded). So yMin and yMax are rounded
  * respectively by lower and upper value.
  */
-static void CP_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int height, int *yMin, int *yMax)
+static void CP_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int height, int* yMin, int* yMax)
 {
 	const float radarHeightPerDegree = height / 180.0f;
 

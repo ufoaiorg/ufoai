@@ -844,7 +844,7 @@ static int RT_CalcNewZ (const RoutingData *rtd, const int ax, const int ay, cons
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *foundLow, int *foundHigh)
+static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int* foundLow, int* foundHigh)
 {
 	const trace_t tr = RT_ObstructedTrace(rtd, Line(start, end), hi, lo);
 	if (tr.fraction >= 1.0) {
@@ -883,7 +883,7 @@ static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const ve
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int bottom, const int top, int *foundLow, int *foundHigh)
+static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int bottom, const int top, int* foundLow, int* foundHigh)
 {
 	vec3_t start, end;
 	pos3_t pos;

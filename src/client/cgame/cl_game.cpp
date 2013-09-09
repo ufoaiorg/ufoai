@@ -1255,7 +1255,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
  * the attacker team, the second the victim team
  * @param nextmap Indicates if there is another map to follow within the same msission
  */
-void GAME_HandleResults (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)

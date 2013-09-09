@@ -622,7 +622,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const Inventory *inv)
  * @param[out] y Vertical coordinate of the item in the container
  * @sa GAME_SaveItem
  */
-static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container, int *x, int *y)
+static void GAME_LoadItem (xmlNode_t *n, Item *item, containerIndex_t *container, int* x, int* y)
 {
 	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);

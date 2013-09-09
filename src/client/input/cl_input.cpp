@@ -629,7 +629,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (const unsigned int keycode, unsigned int *ascii)
+static void IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 {
 	switch (keycode) {
 	case SDLK_PAGEUP:

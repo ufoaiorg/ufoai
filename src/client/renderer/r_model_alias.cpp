@@ -528,7 +528,7 @@ image_t* R_AliasModelGetSkin (const char* modelFileName, const char* skin)
 	return result;
 }
 
-image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin)
+image_t* R_AliasModelState (const model_t *mod, int* mesh, int* frame, int* oldFrame, int* skin)
 {
 	/* check animations */
 	if ((*frame >= mod->alias.num_frames) || *frame < 0) {

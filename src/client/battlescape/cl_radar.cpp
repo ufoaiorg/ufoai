@@ -54,7 +54,7 @@ static void CL_BattlescapeRadarClose_f (void)
  * @return the rect where the radarmap should be, when we generate radar images
  * @todo fix that function, map is not well captured
  */
-static void CL_BattlescapeRadarMapInFrameBuffer (int *x, int *y, int *width, int *height)
+static void CL_BattlescapeRadarMapInFrameBuffer (int* x, int* y, int* width, int* height)
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
 	static const float magicCoef =  0.351f;

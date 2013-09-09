@@ -378,7 +378,7 @@ GEOSCAPE DRAWING AND COORDINATES
  * @param[out] z z value of the given latitude and longitude - might also be nullptr if not needed
  * @return true if the point is visible, false else (if it's outside the node or on the wrong side of the earth).
  */
-static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int* y, int* z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -428,7 +428,7 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, i
  * @returns true if the screen position is within the boundaries of the menu
  * node. Otherwise returns false.
  */
-static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
+static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int* y)
 {
 	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	/* get "raw" position */
@@ -459,7 +459,7 @@ static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  * @param[out] z Pointer to the Z coordinate on the screen (may be nullptr if not needed)
  * @returns true if pos corresponds to a point which is visible on the screen. Otherwise returns false.
  */
-static bool GEO_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static bool GEO_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int* y, int* z)
 {
 	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
 	if (!data.flatgeoscape)

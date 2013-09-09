@@ -201,7 +201,7 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t 
  * @param nextmap If it was a follow-up map of the same mission
  * the attacker team, the second the victim team
  */
-void GAME_CP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_CP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;

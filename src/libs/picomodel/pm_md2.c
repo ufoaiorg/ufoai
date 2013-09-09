@@ -217,7 +217,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	int tempIndex[MD2_MAX_TRIANGLES * 3];
 	int tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
-	int *outIndex;
+	int* outIndex;
 
 	/* set as md2 */
 	bb = (picoByte_t*) buffer;
@@ -365,7 +365,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	/* build list of unique vertices */
 	numIndexes = md2->numTris * 3;
 	numVerts = 0;
-	outIndex = (int *) _pico_alloc(sizeof(int) * numIndexes);
+	outIndex = (int* ) _pico_alloc(sizeof(int) * numIndexes);
 
 	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;

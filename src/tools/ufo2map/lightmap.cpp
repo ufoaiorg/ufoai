@@ -475,7 +475,7 @@ void BuildLights (void)
  * @sa GatherSampleLight
  * @return false if not blocked
  */
-static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
+static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int* headhint)
 {
 	int i;
 	static int shared_lastthead = 0;
@@ -512,7 +512,7 @@ static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *h
 /**
  * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
-static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhint)
+static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int* headhint)
 {
 	vec3_t delta;
 	float dot, light;
@@ -552,11 +552,11 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
  * @param[in] scale is the normalizer for multisampling
  * @param[in,out] headhints An array of theads for each light to optimize the tracing
  */
-static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhints)
+static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int* headhints)
 {
 	light_t *l;
 	vec3_t delta;
-	int *headhint;
+	int* headhint;
 
 	for (l = lights[config.compile_for_day], headhint = headhints; l; l = l->next, headhint++) {
 		float light = 0.0;
@@ -643,7 +643,7 @@ static inline void NudgeSamplePosition (const vec3_t in, const vec3_t normal, co
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
  * @param[out] nfaces The number of dBspFace_t's referencing edge
  */
-static void FacesWithVert (int vert, int *faces, int *nfaces)
+static void FacesWithVert (int vert, int* faces, int* nfaces)
 {
 	int i, j, k;
 
@@ -773,7 +773,7 @@ void BuildFacelights (unsigned int facenum)
 	float scale;
 	int i, j, numsamples;
 	facelight_t *fl;
-	int *headhints;
+	int* headhints;
 	const int grid_type = config.soft ? 1 : 0;
 
 	if (facenum >= MAX_MAP_FACES) {

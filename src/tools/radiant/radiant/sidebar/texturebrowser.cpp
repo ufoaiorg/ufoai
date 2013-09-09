@@ -250,7 +250,7 @@ int TextureBrowser::getTextureHeight(const GLTexture* tex) {
 	return height;
 }
 
-void TextureBrowser::getNextTexturePosition (TextureLayout& layout, const GLTexture* q, int *x, int *y)
+void TextureBrowser::getNextTexturePosition (TextureLayout& layout, const GLTexture* q, int* x, int* y)
 {
 	const int nWidth = getTextureWidth(q);
 	const int nHeight = getTextureHeight(q);

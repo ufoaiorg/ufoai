@@ -48,7 +48,7 @@ GdkCursor* create_blank_cursor ()
 
 #include <gdk/gdkwin32.h>
 
-void Sys_GetCursorPos(GtkWindow* window, int *x, int *y) {
+void Sys_GetCursorPos(GtkWindow* window, int* x, int* y) {
 	POINT pos;
 	GetCursorPos(&pos);
 	ScreenToClient((HWND)GDK_WINDOW_HWND(GTK_WIDGET(window)->window), &pos);
@@ -68,7 +68,7 @@ void Sys_SetCursorPos(GtkWindow* window, int x, int y) {
 
 #include <gdk/gdkx.h>
 
-void Sys_GetCursorPos (GtkWindow* window, int *x, int *y)
+void Sys_GetCursorPos (GtkWindow* window, int* x, int* y)
 {
 	gdk_display_get_pointer(gdk_display_get_default(), 0, x, y, 0);
 }

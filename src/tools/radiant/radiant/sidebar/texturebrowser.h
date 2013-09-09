@@ -184,7 +184,7 @@ class TextureBrowser: public RegistryKeyObserver, public PreferenceConstructor, 
 		int getTotalHeight();
 		void clampOriginY();
 		int getOriginY();
-		void getNextTexturePosition(TextureLayout& layout, const GLTexture* q, int *x, int *y);
+		void getNextTexturePosition(TextureLayout& layout, const GLTexture* q, int* x, int* y);
 		const IShader* getTextureAt(int mx, int my);
 		void draw();
 		void onMouseWheel(bool bUp);

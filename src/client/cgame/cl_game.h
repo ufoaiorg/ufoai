@@ -45,7 +45,7 @@ void GAME_ReloadMode(void);
 void GAME_Init(bool load);
 void GAME_DisplayItemInfo(uiNode_t *node, const char* string);
 bool GAME_ItemIsUseable(const objDef_t *od);
-void GAME_HandleResults(dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap);
+void GAME_HandleResults(dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap);
 void GAME_SpawnSoldiers(void);
 void GAME_StartMatch(void);
 const char* GAME_GetRelativeSavePath(char* buf, size_t bufSize);

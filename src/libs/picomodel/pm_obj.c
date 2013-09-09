@@ -120,7 +120,7 @@ static int _obj_canload (PM_PARAMS_CANLOAD)
  * allocates - and reallocates as soon as required -
  * my vertex data array in even steps.
  */
-static TObjVertexData *SizeObjVertexData (TObjVertexData *vertexData, int reqEntries, int *entries, int *allocated)
+static TObjVertexData *SizeObjVertexData (TObjVertexData *vertexData, int reqEntries, int* entries, int* allocated)
 {
 	int newAllocated;
 

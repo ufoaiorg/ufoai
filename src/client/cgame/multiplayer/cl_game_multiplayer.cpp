@@ -113,7 +113,7 @@ static void GAME_MP_StartServer_f (void)
  * the attacker team, the second the victim team
  * @param nextmap Indicates if there is another map to follow within the same mission
  */
-static void GAME_MP_Results (dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+static void GAME_MP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	linkedList_t *list = nullptr;
 	int enemiesKilled, enemiesStunned;

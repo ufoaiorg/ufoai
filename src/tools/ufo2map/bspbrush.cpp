@@ -233,7 +233,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 
 
 static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
-			int *numsplits, bool *hintsplit, int *epsilonbrush)
+			int* numsplits, bool *hintsplit, int* epsilonbrush)
 {
 	int i, s;
 	plane_t *plane;

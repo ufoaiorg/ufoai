@@ -1645,7 +1645,7 @@ model_t *LE_GetDrawModel (unsigned int index)
  * @return The headnode for the local entity
  * @sa SV_HullForEntity
  */
-static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t angles)
+static int32_t CL_HullForEntity (const le_t *le, int* tile, vec3_t rmaShift, vec3_t angles)
 {
 	/* special case for bmodels */
 	if (le->contents & CONTENTS_SOLID) {

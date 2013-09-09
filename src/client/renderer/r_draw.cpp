@@ -456,7 +456,7 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 
 #define MAX_LINEVERTS 256
 
-static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
+static inline void R_Draw2DArray (int points, int* verts, GLenum mode)
 {
 	int i;
 
@@ -484,7 +484,7 @@ static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
  * @brief 2 dimensional line strip
  * @sa R_DrawLineLoop
  */
-void R_DrawLineStrip (int points, int *verts)
+void R_DrawLineStrip (int points, int* verts)
 {
 	R_Draw2DArray(points, verts, GL_LINE_STRIP);
 }
@@ -492,7 +492,7 @@ void R_DrawLineStrip (int points, int *verts)
 /**
  * @sa R_DrawLineStrip
  */
-void R_DrawLineLoop (int points, int *verts)
+void R_DrawLineLoop (int points, int* verts)
 {
 	R_Draw2DArray(points, verts, GL_LINE_LOOP);
 }
@@ -501,7 +501,7 @@ void R_DrawLineLoop (int points, int *verts)
  * @brief Draws one line with only one start and one end point
  * @sa R_DrawLineStrip
  */
-void R_DrawLine (int *verts, float thickness)
+void R_DrawLine (int* verts, float thickness)
 {
 	if (thickness > 0.0)
 		glLineWidth(thickness);
@@ -516,7 +516,7 @@ void R_DrawLine (int *verts, float thickness)
  * @sa R_DrawLineStrip
  * @sa R_DrawLineLoop
  */
-void R_DrawPolygon (int points, int *verts)
+void R_DrawPolygon (int points, int* verts)
 {
 	R_Draw2DArray(points, verts, GL_TRIANGLE_FAN);
 }

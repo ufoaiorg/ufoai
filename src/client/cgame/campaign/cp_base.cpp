@@ -387,7 +387,7 @@ building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuildin
  * <code>if (hasBuilding[B_QUARTERS])</code> check - this should speed things up a lot
  * @return true if building with status was found
  */
-bool B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
+bool B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int* cnt)
 {
 	int cntlocal = 0;
 	building_t *building = nullptr;
