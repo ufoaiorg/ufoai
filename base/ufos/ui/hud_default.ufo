@@ -85,7 +85,6 @@ window hud_default extends hud
 		}
 	}
 
-
 	// ==================
 	// floor bar
 	// ==================

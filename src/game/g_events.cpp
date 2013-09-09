@@ -462,8 +462,8 @@ void G_EventCenterViewAt (playermask_t playerMask, const pos3_t pos)
 
 /**
  * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
- * @param playerMask The clients that should see the edict
- * @param pos The position to center the view
+ * @param[in] playerMask The clients that should see the edict
+ * @param[in] pos The position to center the view
  */
 void G_EventMoveCameraTo (playermask_t playerMask, const pos3_t pos)
 {
