@@ -534,8 +534,10 @@ void UI_DeleteNode (uiNode_t* node)
 {
 	uiBehaviour_t *behaviour;
 
-	if (!node->dynamic)
+	if (!node->dynamic) {
+		Com_Printf("UI_DeleteNode: Can't delete the static node '%s'\n", UI_GetPath(node));
 		return;
+	}
 
 	UI_BeforeDeletingNode(node);
 
