@@ -257,7 +257,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 	if (!data.active)
 		return;
 
-	const char *map = data.map;
+	const char* map = data.map;
 	date_t& date = data.date;
 
 	/* Draw the map and markers */
@@ -573,7 +573,7 @@ static void UI_GeoscapeNodeZoomOut (uiNode_t *node, const uiCallContext_t *conte
  */
 static void UI_GeoscapeNodeZoom_f (void)
 {
-	const char *cmd;
+	const char* cmd;
 	const float zoomAmount = 50.0f;
 
 	if (Cmd_Argc() != 2) {
@@ -623,7 +623,7 @@ static void UI_GeoscapeNodeZoom_f (void)
  */
 static void UI_GeoscapeNodeScroll_f (void)
 {
-	const char *cmd;
+	const char* cmd;
 	float scrollX = 0.0f, scrollY = 0.0f;
 	const float scrollAmount = 80.0f;
 

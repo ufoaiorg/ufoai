@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define IMAGE_WIDTH 64
 
 typedef struct materialDescription_s {
-	const char *name;
+	const char* name;
 	const int stageFlag;
 } materialDescription_t;
 
@@ -247,7 +247,7 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y
 	return -1;
 }
 
-static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char *buf, size_t size)
+static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char* buf, size_t size)
 {
 	const materialDescription_t *md = materialDescriptions;
 
@@ -283,7 +283,7 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 	} else {
 		int i;
 		if (materialStage) {
-			const char *stageType = Cvar_GetString("me_stagetype");
+			const char* stageType = Cvar_GetString("me_stagetype");
 			if (stageType[0] == '\0')
 				stageType = "stretch";
 			UI_ExecuteConfunc("hidestages false %s", stageType);
@@ -312,7 +312,7 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
  * @param stageName The name to search the flag for
  * @return -1 if no flag was not found for the given name
  */
-static int UI_MaterialEditorNameToStage (const char *stageName)
+static int UI_MaterialEditorNameToStage (const char* stageName)
 {
 	const materialDescription_t *md = materialDescriptions;
 
@@ -425,7 +425,7 @@ static void UI_MaterialEditorChangeValue_f (void)
 {
 	image_t *image;
 	int id, stageType;
-	const char *var, *value;
+	const char* var, *value;
 	size_t bytes;
 
 	if (Cmd_Argc() < 5) {

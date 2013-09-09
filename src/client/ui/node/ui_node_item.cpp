@@ -55,7 +55,7 @@ void uiItemNode::draw (uiNode_t *node)
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
 		Item item(od, nullptr, 1); /* 1 so it's not reddish; fake item anyway */
-		const char *model = GAME_GetModelForItem(item.def(), nullptr);
+		const char* model = GAME_GetModelForItem(item.def(), nullptr);
 
 		if (EXTRADATA(node).containerLike || Q_strnull(model)) {
 			const vec4_t color = {1, 1, 1, 1};

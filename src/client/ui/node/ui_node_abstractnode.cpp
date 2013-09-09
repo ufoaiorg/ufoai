@@ -39,7 +39,7 @@ static void UI_NodeGetProperty_f (void)
 {
 	uiNode_t *node;
 	const value_t *property;
-	const char *sValue;
+	const char* sValue;
 	float fValue;
 
 	if (Cmd_Argc() != 2) {
@@ -232,8 +232,8 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 {
 	uiNode_t *child;
 	uiNode_t *component;
-	const char *name;
-	const char *type;
+	const char* name;
+	const char* type;
 
 	if (UI_GetParamNumber(context) != 2) {
 		Com_Printf("UI_AbstractNodeCallCreateChild: Invalid number of parameters\n");

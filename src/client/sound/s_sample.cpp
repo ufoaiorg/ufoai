@@ -44,7 +44,7 @@ s_sample_t *stdSoundPool[MAX_SOUNDIDS];
  * @param name The soundfile (relative to the sound dir and without extension)
  * @return @c nullptr if not yet loaded
  */
-static s_sample_t *S_FindByName (const char *name)
+static s_sample_t *S_FindByName (const char* name)
 {
 	s_sample_t *sample;
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
@@ -56,11 +56,11 @@ static s_sample_t *S_FindByName (const char *name)
 	return nullptr;
 }
 
-static Mix_Chunk* S_LoadSampleChunk (const char *sound)
+static Mix_Chunk* S_LoadSampleChunk (const char* sound)
 {
 	size_t len;
 	byte *buf;
-	const char *soundExtensions[] = SAMPLE_TYPES;
+	const char* soundExtensions[] = SAMPLE_TYPES;
 	const char** extension = soundExtensions;
 	SDL_RWops *rw;
 	Mix_Chunk *chunk;
@@ -104,7 +104,7 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
  * @return The index of the loaded sample or 0
  * @sa S_LoadSound
  */
-int S_LoadSampleIdx (const char *soundFile)
+int S_LoadSampleIdx (const char* soundFile)
 {
 	Mix_Chunk *chunk;
 	char name[MAX_QPATH];

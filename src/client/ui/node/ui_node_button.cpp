@@ -65,7 +65,7 @@ void uiButtonNode::draw (uiNode_t *node)
 	vec2_t pos;
 	static const vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 
 	if (node->flash)
 		UI_EnableFlashing(node->flashColor, node->flashSpeed);
@@ -171,7 +171,7 @@ void uiButtonNode::onLoaded (uiNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->box.size[1] == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		node->box.size[1] = (UI_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 }

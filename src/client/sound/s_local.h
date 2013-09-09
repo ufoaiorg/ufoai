@@ -39,7 +39,7 @@ extern memPool_t *cl_soundSysPool;
 #define SAMPLE_TYPES { "ogg", "wav", nullptr }
 
 typedef struct s_sample_s {
-	char *name;
+	char* name;
 	int lastPlayed;		/**< used to determine whether this sample should be send to the mixer or skipped if played
 						 * too fast after each other */
 	Mix_Chunk* chunk;

@@ -224,7 +224,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 	SDL_DisplayMode displayMode;
 	SDL_GetDesktopDisplayMode(0, &displayMode);
-	const char *name = SDL_GetPixelFormatName(displayMode.format);
+	const char* name = SDL_GetPixelFormatName(displayMode.format);
 	Com_Printf("current desktop mode: %dx%d@%dHz (%s)\n",
 			displayMode.w, displayMode.h, displayMode.refresh_rate, name);
 
@@ -243,7 +243,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (!cls.window) {
-		const char *error = SDL_GetError();
+		const char* error = SDL_GetError();
 		Com_Printf("SDL SDL_CreateWindow failed: %s\n", error);
 		SDL_ClearError();
 		return -1;
@@ -262,7 +262,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 
 	SDL_Surface* screen = SDL_SetVideoMode(context->width, context->height, 0, flags);
 	if (!screen) {
-		const char *error = SDL_GetError();
+		const char* error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		SDL_ClearError();
 		return false;

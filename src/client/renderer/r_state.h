@@ -178,7 +178,7 @@ void R_BlendFunc(GLenum src, GLenum dest);
 
 bool R_SelectTexture(gltexunit_t *texunit);
 
-void R_BindTextureDebug(int texnum, const char *file, int line, const char *function);
+void R_BindTextureDebug(int texnum, const char* file, int line, const char* function);
 #define R_BindTexture(tn) R_BindTextureDebug(tn, __FILE__, __LINE__, __PRETTY_FUNCTION__)
 void R_BindTextureForTexUnit(GLuint texnum, gltexunit_t *texunit);
 void R_BindLightmapTexture(GLuint texnum);

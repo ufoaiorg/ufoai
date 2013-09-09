@@ -58,7 +58,7 @@ typedef struct music_s {
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
-static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
+static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
 static music_t music;
 static cvar_t *snd_music;
@@ -68,7 +68,7 @@ static cvar_t *snd_music_volume;
  * @brief Parses music definitions for different situations
  * @note We have lists for geoscape, battlescape, main and aircombat
  */
-void M_ParseMusic (const char *name, const char** text)
+void M_ParseMusic (const char* name, const char** text)
 {
 	int i;
 
@@ -130,7 +130,7 @@ void M_Stop (void)
 /**
  * @sa M_Stop
  */
-static void M_Start (const char *file)
+static void M_Start (const char* file)
 {
 	char name[MAX_QPATH];
 	size_t len;
@@ -225,10 +225,10 @@ static void M_RandomTrack_f (void)
 		int randomID = rand() % musicTrackCount;
 		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
-		const char *filename;
+		const char* filename;
 		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != nullptr) {
 			if (!randomID) {
-				const char *musicTrack = Com_SkipPath(filename);
+				const char* musicTrack = Com_SkipPath(filename);
 				Com_Printf("..playing next music track: '%s'\n", musicTrack);
 				Cvar_Set("snd_music", "%s", musicTrack);
 			}
@@ -296,7 +296,7 @@ static void M_Change_f (void)
 	M_PlayRandomByCategory(category);
 }
 
-static int M_CompleteMusic (const char *partial, const char** match)
+static int M_CompleteMusic (const char* partial, const char** match)
 {
 	int n = 0;
 	while (char const* const filename = FS_NextFileFromFileList("music/*.ogg")) {

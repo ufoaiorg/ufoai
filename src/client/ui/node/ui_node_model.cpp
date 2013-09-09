@@ -56,7 +56,7 @@ static const uiBehaviour_t *localBehaviour;
  * @param[in] modelName model id from script files
  * @return uiModel_t pointer
  */
-uiModel_t *UI_GetUIModel (const char *modelName)
+uiModel_t *UI_GetUIModel (const char* modelName)
 {
 	int i;
 
@@ -76,7 +76,7 @@ static void UI_ListUIModels_f (void)
 	Com_Printf("UI models: %i\n", ui_global.numModels);
 	for (i = 0; i < ui_global.numModels; i++) {
 		const uiModel_t *m = &ui_global.models[i];
-		const char *need = m->next != nullptr ? m->next->id : "none";
+		const char* need = m->next != nullptr ? m->next->id : "none";
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
 	}
 }
@@ -116,7 +116,7 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiMode
 /**
  * @brief Draw a model using UI model definition
  */
-static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, modelInfo_t *mi, uiModel_t *model)
+static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char* source, modelInfo_t *mi, uiModel_t *model)
 {
 	bool autoScaleComputed = false;
 	vec3_t autoScale;
@@ -194,7 +194,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			R_DrawModelDirect(mi, &pmi, model->tag);
 		} else {
 			/* no tag and no parent means - base model or single model */
-			const char *ref;
+			const char* ref;
 			UI_InitModelInfoView(node, mi, model);
 			Vector4Copy(node->color, mi->color);
 
@@ -225,7 +225,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			/* only base models have animations */
 			if (ref && *ref) {
 				animState_t *as = &model->animState;
-				const char *anim = R_AnimGetName(as, mi->model);
+				const char* anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
 				if (anim == nullptr || !Q_streq(anim, ref))
 					R_AnimChange(as, mi->model, ref);
@@ -247,7 +247,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 /**
  * @todo need to merge UI model case, and the common case (looks to be a copy-pasted code)
  */
-void UI_DrawModelNode (uiNode_t *node, const char *source)
+void UI_DrawModelNode (uiNode_t *node, const char* source)
 {
 	modelInfo_t mi;
 	uiModel_t *model;
@@ -326,7 +326,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* do animations */
 	if (EXTRADATA(node).animation && *EXTRADATA(node).animation) {
-		const char *ref;
+		const char* ref;
 		ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
 
 		/* check whether the cvar value changed */
@@ -344,7 +344,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			R_AnimChange(as, mi.model, ref);
 			EXTRADATA(node).animationState = as;
 		} else {
-			const char *anim;
+			const char* anim;
 			/* change anim if needed */
 			anim = R_AnimGetName(as, mi.model);
 			if (anim && !Q_streq(anim, ref))
@@ -365,7 +365,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 		uiNode_t *child;
 		modelInfo_t pmi = mi;
 		for (child = node->firstChild; child; child = child->next) {
-			const char *tag;
+			const char* tag;
 			char childSource[MAX_VAR];
 			const char* childRef;
 

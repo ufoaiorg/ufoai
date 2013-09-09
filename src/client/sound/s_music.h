@@ -43,7 +43,7 @@ typedef struct musicStream_s {
 
 void M_AddToSampleBuffer(musicStream_t *userdata, int rate, int samples, const byte *data);
 void M_StopMusicStream(musicStream_t *userdata);
-void M_ParseMusic(const char *name, const char** text);
+void M_ParseMusic(const char* name, const char** text);
 void M_Frame(void);
 void M_Init(void);
 void M_Shutdown(void);

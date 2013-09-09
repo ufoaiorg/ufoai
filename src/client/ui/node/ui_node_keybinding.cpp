@@ -70,7 +70,7 @@ void uiKeyBindingNode::onLeftClick (uiNode_t *node, int x, int y)
  */
 bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
-	const char *binding;
+	const char* binding;
 
 	UI_RemoveFocus();
 
@@ -86,7 +86,7 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 		/* if it's the same command, do not change anything, otherwise
 		 * show the reason why nothing was changed */
 		if (!Q_streq(binding, command)) {
-			const char *keyStr = Key_KeynumToString(key);
+			const char* keyStr = Key_KeynumToString(key);
 			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, nullptr);
 		}
 		return false;
@@ -103,10 +103,10 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 
 void uiKeyBindingNode::draw (uiNode_t *node)
 {
-	const char *binding, *description, *command;
+	const char* binding, *description, *command;
 	const float *textColor;
 	vec2_t pos;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	const int bindingWidth = EXTRADATA(node).bindingWidth;
 	const int descriptionWidth = node->box.size[0] - bindingWidth;
 	vec2_t descriptionPos, descriptionSize;

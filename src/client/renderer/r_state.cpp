@@ -66,7 +66,7 @@ static void R_BindTexture_ (int texnum)
 	R_CheckError();
 }
 
-void R_BindTextureDebug (int texnum, const char *file, int line, const char *function)
+void R_BindTextureDebug (int texnum, const char* file, int line, const char* function)
 {
 	if (texnum <= 0) {
 		Com_Printf("Bad texnum (%d) in: %s (%d): %s\n", texnum, file, line, function);

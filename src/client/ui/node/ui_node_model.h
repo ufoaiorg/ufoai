@@ -44,12 +44,12 @@ class uiModelNode : public uiLocatedNode {
 
 /** @brief Model that have more than one part (top and down part of an aircraft) */
 typedef struct uiModel_s {
-	char *id;
-	char *anim;	/**< animation to run for this model */
-	char *parent;	/**< parent model id */
-	char *tag;	/**< the tag the model should placed onto */
+	char* id;
+	char* anim;	/**< animation to run for this model */
+	char* parent;	/**< parent model id */
+	char* tag;	/**< the tag the model should placed onto */
 	int skin;		/**< skin number to use - default 0 (first skin) */
-	char *model;
+	char* model;
 	animState_t animState;
 	vec3_t origin, scale, angles, center;	/**< to cache the calculated values */
 	vec4_t color;				/**< rgba */
@@ -60,7 +60,7 @@ typedef struct uiModel_s {
  * @brief extradata for the model node
  */
 typedef struct modelExtraData_s {
-	char *oldRefValue;	/**< used for storing old reference values */
+	char* oldRefValue;	/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
 	vec3_t omega;
@@ -76,6 +76,6 @@ typedef struct modelExtraData_s {
 	bool containerLike;		/**< Display an item like an item from the container */
 } modelExtraData_t;
 
-uiModel_t *UI_GetUIModel(const char *modelName);
-void UI_DrawModelNode(uiNode_t* node, const char *source);
+uiModel_t *UI_GetUIModel(const char* modelName);
+void UI_DrawModelNode(uiNode_t* node, const char* source);
 void UI_RegisterModelNode(uiBehaviour_t *behaviour);

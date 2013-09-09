@@ -189,7 +189,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float relVolume, float 
  * @sa S_PlaySample
  * @sa S_LoadSample
  */
-void S_StartLocalSample (const char *name, float relVolume)
+void S_StartLocalSample (const char* name, float relVolume)
 {
 	s_sample_t *sample;
 

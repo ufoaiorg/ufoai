@@ -151,7 +151,7 @@ static void S_Restart_f (void)
 	S_LoadSamples();
 }
 
-static int S_CompleteSounds (const char *partial, const char** match)
+static int S_CompleteSounds (const char* partial, const char** match)
 {
 	char const* const soundExtensions[] = SAMPLE_TYPES;
 
@@ -317,7 +317,7 @@ void S_Shutdown (void)
  * @param attenuation how to reduce volume by distance
  * @param volume well, the volume
  */
-bool S_LoadAndPlaySample (const char *s, const vec3_t origin, float attenuation, float volume)
+bool S_LoadAndPlaySample (const char* s, const vec3_t origin, float attenuation, float volume)
 {
 	s_sample_t *sample = S_LoadSample(s);
 	if (!sample)
@@ -342,7 +342,7 @@ void S_PlayStdSample (const stdsound_t sId, const vec3_t origin, float attenuati
  * @brief Loads and registers a sound file for later use
  * @param[in] soundFile The name of the soundfile, relative to the sounds dir
  */
-s_sample_t *S_LoadSample (const char *soundFile)
+s_sample_t *S_LoadSample (const char* soundFile)
 {
 	int sampleIdx = S_LoadSampleIdx(soundFile);
 	return S_GetSample(sampleIdx);

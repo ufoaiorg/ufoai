@@ -51,7 +51,7 @@ void UI_OptionNodeSortOptions (uiNode_t *node)
 	node->lastChild = option;
 }
 
-const char *UI_AbstractOptionGetCurrentValue (uiNode_t *node)
+const char* UI_AbstractOptionGetCurrentValue (uiNode_t *node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
@@ -66,9 +66,9 @@ const char *UI_AbstractOptionGetCurrentValue (uiNode_t *node)
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
 
-void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char *value)
+void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char* value)
 {
-	const char *cvarName = &EXTRADATA(node).cvar[6];
+	const char* cvarName = &EXTRADATA(node).cvar[6];
 	Cvar_Set(cvarName, "%s", value);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);

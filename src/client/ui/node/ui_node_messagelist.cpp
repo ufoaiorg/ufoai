@@ -54,9 +54,9 @@ static int mouseScrollY;
 typedef struct uiMessageListNodeMessage_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
-	char *text;
+	char* text;
 	date_t date;
-	const char *iconName;
+	const char* iconName;
 	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
 	struct uiMessageListNodeMessage_s *next;
 } uiMessageListNodeMessage_t;
@@ -83,7 +83,7 @@ void UI_MessageAddStack (struct uiMessageListNodeMessage_s* message)
 /**
  * @return Number of lines need to display this message
  */
-static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char *fontID, int width)
+static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int width)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -94,7 +94,7 @@ static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t 
 	return std::max(lines1, lines2);
 }
 
-static char *lastDate;
+static char* lastDate;
 
 /**
  * @todo do not hard code icons
@@ -102,14 +102,14 @@ static char *lastDate;
  */
 static uiSprite_t *UI_MessageGetIcon (const uiMessageListNodeMessage_t *message)
 {
-	const char *iconName = message->iconName;
+	const char* iconName = message->iconName;
 	if (Q_strnull(iconName))
 		iconName = "icons/message_info";
 
 	return UI_GetSpriteByName(message->iconName);
 }
 
-static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char *fontID, int x, int y, int width, int *screenLines)
+static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int x, int y, int width, int *screenLines)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -152,7 +152,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 {
 	uiMessageListNodeMessage_t *message;
 	int screenLines;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width;
 	int defaultHeight;

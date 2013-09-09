@@ -197,7 +197,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
 		R_Color(nullptr);
 	} else {
 		uiModel_t *model = nullptr;
-		const char *modelName = GAME_GetModelForItem(od, &model);
+		const char* modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
 		if (Q_strnull(modelName)) {
@@ -242,7 +242,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int
  * @param[in] stringMaxLength Max. string size of @c tooltipText.
  * @return Number of lines
  */
-void UI_GetItemTooltip (const Item &item, char *tooltipText, size_t stringMaxLength)
+void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLength)
 {
 	assert(item.def());
 
@@ -383,7 +383,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory *inv)
  */
 void uiContainerNode::onLoaded (uiNode_t* const node)
 {
-	const char *name;
+	const char* name;
 	const invDef_t *container;
 
 	/** @todo find a better way to add more equip node, without this hack */
