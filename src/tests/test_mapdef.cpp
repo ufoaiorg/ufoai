@@ -76,8 +76,6 @@ static int UFO_CleanSuiteMapDef (void)
 	return 0;
 }
 
-#define SEED_TEST 0
-#if SEED_TEST
 char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
@@ -209,7 +207,6 @@ static void testMapDefsMassRMA (void)
 		}
 	}
 }
-#endif
 
 #define MAP_STATISTIC 0
 #if MAP_STATISTIC
@@ -397,7 +394,6 @@ static void testMapDefsFootSteps (void)
 #endif
 
 #if !MAP_STATISTIC
-#if !SEED_TEST
 #if !FOOTSTEP_TEST
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
@@ -495,7 +491,6 @@ static void testMapDefsMultiplayer (void)
 }
 #endif
 #endif
-#endif
 
 int UFO_AddMapDefTests (void)
 {
@@ -505,14 +500,15 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == NULL)
 		return CU_get_error();
 
+	const char *specialtest = TEST_GetStringProperty("mapspecialtest");
+	if (specialtest && Q_streq(specialtest, "seed")) {
+		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
+			return CU_get_error();
+	}
+	else {
 #if MAP_STATISTIC
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == NULL)
-		return CU_get_error();
-#else
-#if SEED_TEST
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
 		return CU_get_error();
 #else
 #if FOOSTEP_TEST
@@ -527,6 +523,6 @@ int UFO_AddMapDefTests (void)
 		return CU_get_error();
 #endif
 #endif
-#endif
+	}
 	return CUE_SUCCESS;
 }
