@@ -461,7 +461,11 @@ void LET_StartIdle (le_t *le)
 		leStep_t *step = le->stepList->next;
 		Mem_Free(le->stepList);
 		le->stepList = step;
-		le->stepIndex--;
+		if (step != nullptr) {
+			le->stepIndex--;
+		} else if (le->stepIndex != 0) {
+			Com_Error(ERR_DROP, "stepindex for entnum %i is out of sync (%i should be 0)\n", le->entnum, le->stepIndex);
+		}
 	}
 
 	/* keep this animation until something happens */
