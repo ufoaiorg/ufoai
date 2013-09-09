@@ -412,6 +412,7 @@ private:
 	bool canReact(Edict* shooter, const Edict* target) const;
 	bool canSee(const Edict* shooter, const Edict* target) const;
 	bool shoot(Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
+	bool isPossible(Edict* shooter, const Edict* target) const;
 public:
 	void notifyClientOnStep(const Edict* target, int step);
 	bool checkExecution(const Edict* target);
@@ -628,6 +629,11 @@ bool G_ReactionFireSettingsReserveTUs (Edict* ent)
 
 	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 	return false;
+}
+
+inline bool ReactionFire::isPossible (Edict* shooter, const Edict* target) const
+{
+	return isEnemy(shooter, target) && canReact(shooter, target) && canSee(shooter, target);
 }
 
 /**
