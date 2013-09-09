@@ -34,7 +34,7 @@ void PrintBSPFileSizes(void);
  * @sa entity_t
  */
 typedef struct epair_s {
-	struct epair_s	*next;	/**< the next entry in the key, value list */
+	struct epair_s	*next;		/**< the next entry in the key, value list */
 	const char	*key;			/**< the name of the parameter */
 	const char	*value;			/**< the value of the parameter */
 } epair_t;
@@ -47,7 +47,7 @@ typedef struct {
 	int			firstbrush;		/**< the index of the first brush in mapbrushes in case of a bmodel */
 	int			numbrushes;		/**< the number of brushes in case of a bmodel */
 	epair_t		*epairs;		/**< the entity parameters (key, value) */
-	bool	skip;			/**< skip this entity in case the check functions have found an error and it should
+	bool		skip;			/**< skip this entity in case the check functions have found an error and it should
 								 * not get written back into the fixed map file */
 } entity_t;
 
