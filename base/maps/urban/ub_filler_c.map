@@ -874,7 +874,7 @@
 "classname" "misc_model"
 "origin" "48 140 24"
 "model" "models/objects/vegi/plant/plant.md2"
-"spawnflags" "65280"
+"spawnflags" "255"
 }
 // entity 9
 {
