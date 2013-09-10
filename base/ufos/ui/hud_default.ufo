@@ -878,6 +878,17 @@ window hud_default extends hud
 		}
 	}
 
+	string overlay
+	{
+		string	"_Please wait"
+		color	"1 0 0 1"
+		font	"f_verybig_bold"
+		ghost	true
+		pos		"0 0"
+		size	"1024 768"
+		contentalign	ALIGN_CC
+	}
+
 	// ==================
 	// override ahud confunc
 	// ==================
@@ -940,11 +951,13 @@ window hud_default extends hud
 	confunc startround
 	{
 		*node:root.next.bt_nextround@disabled = false
+		*node:root.overlay@invis = true
 	}
 
 	confunc endround
 	{
 		*node:root.next.bt_nextround@disabled = true
+		*node:root.overlay@invis = false
 		cmd "hud_movemode;"
 	}
 
