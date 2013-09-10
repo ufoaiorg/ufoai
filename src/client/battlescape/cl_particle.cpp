@@ -1364,7 +1364,7 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 
 	} while (*text);
 
-	/* terminalize cmd chain */
+	/* terminate cmd chain */
 	if (numPtlCmds >= MAX_PTLCMDS)
 		Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
 	pc = &ptlCmd[numPtlCmds++];
