@@ -244,7 +244,7 @@ static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 }
 
 static char const* const imageExtensions[] = {
-	"tga", "jpg", "png", nullptr
+	"jpg", "png", nullptr
 };
 
 static bool UI_CheckRadarImage (const char *imageName, const int level)
