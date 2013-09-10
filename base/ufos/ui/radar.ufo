@@ -5,14 +5,6 @@ window radarwindow {
 		starlayout	true
 	}
 
-	func onWindowOpened {
-		*cvar:radar_window_open = 1
-	}
-
-	func onWindowClosed {
-		delete *cvar:radar_window_open
-	}
-
 	radar hudradar
 	{
 		align	LAYOUTALIGN_FILL
