@@ -540,9 +540,9 @@ void uiRadarNode::draw (uiNode_t *node)
 #endif
 
 	/* the cl struct is wiped with every new map */
-	if (!cl.radarInited) {
+	if (!cl.radarInitialized) {
 		UI_InitRadar(node);
-		cl.radarInited = true;
+		cl.radarInitialized = true;
 	}
 
 	/* update context */

@@ -56,7 +56,7 @@ typedef struct clientBattleScape_s {
 	model_t *model_draw[MAX_MODELS];
 	const struct cBspModel_s *model_clip[MAX_MODELS];
 
-	bool radarInited;		/**< every radar image (for every level [1-8]) is loaded */
+	bool radarInitialized;		/**< every radar image (for every level [1-8]) is loaded */
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
 
