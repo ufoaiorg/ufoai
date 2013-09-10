@@ -705,8 +705,19 @@ base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or l
 base/maps/urban/ub_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_ufo_scout.map | GNU General Public License 2.0 or later
+base/maps/urban/ub_dummy_centre.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_ne.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_nw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_dummy_w.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_filler_3x1_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_filler_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_filler_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/urban/ub_filler_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_lab_parking.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_laboratory.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_main.map | GNU General Public License 2.0 or later

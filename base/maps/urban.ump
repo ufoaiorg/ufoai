@@ -133,6 +133,22 @@ tile +filler_a
 0		0		0
 }
 
+tile +filler_b
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +filler_c
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 tile +filler_3x1_a
 	// pipe construction site, C2
 {
@@ -141,6 +157,90 @@ tile +filler_3x1_a
 0		+a		+a		+a		0
 0		0		0		0		0
 }
+
+// Dummy tiles -----------------------------------------------------*
+/* The initial idea of this was to just fill some empty room at the 
+   border of the map with "blockers" .
+   Not sure if this will work, though.*/
+
+tile +dummy_ne
+{
+4 4
+0		ac		ac		0
+1		+a2		+a		ac
+1		+2		+a2		ac
+0		3		3		0
+}
+
+tile +dummy_nw
+{
+4 4
+0		ac		ac		0
+ac		+a		+a1		2
+ac		+a1		+1		2
+0		4		4		0
+}
+
+tile +dummy_se
+{
+4 4
+0		2		2		0
+4		+3		+a3		ac
+4		+a3		+a3		ac
+0		ac		ac		0
+}
+
+tile +dummy_sw
+{
+4 4
+0		1		1		0
+ac		+a4		+4		3
+ac		+a4		+a4		3
+0		ac		ac		0
+}
+
+tile +dummy_centre
+{
+3 3
+0		12		0
+14		+x		23
+0		34		0
+}
+
+tile +dummy_e
+{
+4 3
+0		2		2		0
+x		+23		+a23	ac
+0		3		3		0
+}
+
+tile +dummy_n
+{
+3 4
+0		ac		0
+1		+a12	2
+1		+12		2
+0		x		0
+}
+
+tile +dummy_s
+{
+3 4
+0		x		0
+4		+34		3
+4		+a34	3
+0		ac		0
+}
+
+tile +dummy_w
+{
+4 3
+0		1		1		0
+ac		+a14	+14		x
+0		4		4		0
+}
+
 
 // UFO tiles -------------------------------------------------------*
 
@@ -224,9 +324,19 @@ title "_Urban Disco"
 
 assembly community_centre
 {
-size "6 4"
+size "6 7"
 title "_Community Centre"
-+filler_a			"0 6"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 2"
++dummy_n			"0 2"
++dummy_s			"0 2"
++dummy_w			"0 2"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
 +filler_3x1_a		"0 1"
 +community_centre	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
@@ -263,11 +373,22 @@ fix +lab_parking	"7 1"
 
 assembly mart
 {
-size "8 5"
+size "8 8"
 title "_Mart"
-+filler_a		"0 6"
-+filler_3x1_a	"0 1"
-+mart		"1 1"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 2"
++dummy_n			"0 2"
++dummy_s			"0 2"
++dummy_w			"0 2"
++dummy_centre		"0 1"
++filler_a			"0 6"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++mart				"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
