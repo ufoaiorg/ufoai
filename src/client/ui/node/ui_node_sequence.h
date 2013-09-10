@@ -39,7 +39,7 @@ void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
 
 typedef struct {
 	bool playing;
-	const char *source;
+	const char* source;
 
 	/** Called when the sequence end */
 	struct uiAction_s *onEnd;

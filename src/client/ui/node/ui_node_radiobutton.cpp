@@ -59,7 +59,7 @@ static bool UI_RadioButtonNodeIsSelected (uiNode_t *node)
 		const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 		return current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON;
 	} else {
-		const char *current = UI_GetReferenceString(node, EXTRADATA(node).cvar);
+		const char* current = UI_GetReferenceString(node, EXTRADATA(node).cvar);
 		return Q_streq(current, EXTRADATA(node).string);
 	}
 }
@@ -74,7 +74,7 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 	uiSpriteStatus_t iconStatus;
 	const bool disabled = node->disabled || node->parent->disabled;
 	int texY;
-	const char *image;
+	const char* image;
 	const bool isSelected = UI_RadioButtonNodeIsSelected(node);
 
 	if (disabled) {

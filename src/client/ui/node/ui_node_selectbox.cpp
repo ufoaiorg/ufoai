@@ -96,8 +96,8 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
-	const char *ref;
-	const char *font;
+	const char* ref;
+	const char* font;
 	vec2_t nodepos;
 	const char* imageName;
 	const image_t *image;
@@ -136,7 +136,7 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 		if (option->invis)
 			R_Color(invisColor);
 
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
@@ -156,8 +156,8 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
-	const char *ref;
-	const char *font;
+	const char* ref;
+	const char* font;
 	vec2_t nodepos;
 	const char* imageName;
 	const image_t *image;
@@ -202,7 +202,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 			UI_DrawFill(selBoxX, selBoxY, node->box.size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
 			0, label, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);

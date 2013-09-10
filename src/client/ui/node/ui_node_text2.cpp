@@ -43,9 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 {
-	const char *data;
+	const char* data;
 	int bufferSize = 1024;
-	char *buffer = Mem_AllocTypeN(char, bufferSize);
+	char* buffer = Mem_AllocTypeN(char, bufferSize);
 
 	LIST_Delete(&EXTRADATA(node).lineSplit);
 
@@ -69,7 +69,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	data = CL_Translate(data);
 
 	while (data[0] != '\0') {
-		const char *next = strchr(data, '\n');
+		const char* next = strchr(data, '\n');
 		int lineSize;
 		if (next == nullptr)
 			lineSize = strlen(data);
@@ -108,7 +108,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 
 	lineHeight = EXTRADATACONST(node).super.lineHeight;
 	if (lineHeight == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineHeight = UI_FontGetHeight(font);
 	}
 
@@ -145,7 +145,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	char newFont[MAX_VAR];
 	const char* oldFont = nullptr;
 	int fullSizeY;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width;
 	int viewSizeY;
@@ -155,7 +155,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	if (isSizeChange(node)) {
 		int lineHeight = EXTRADATA(node).super.lineHeight;
 		if (lineHeight == 0) {
-			const char *font = UI_GetFontFromNode(node);
+			const char* font = UI_GetFontFromNode(node);
 			lineHeight = UI_FontGetHeight(font);
 		}
 		viewSizeY = node->box.size[1] / lineHeight;
@@ -184,7 +184,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 
 	fullSizeY = 0;
 	while (list) {
-		const char *cur = (const char*)list->data;
+		const char* cur = (const char*)list->data;
 		int x1; /* variable x position */
 
 		/* new line starts from node x position */
@@ -328,7 +328,7 @@ void uiText2Node::onLoaded (uiNode_t *node)
 	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineheight = UI_FontGetHeight(font);
 	}
 

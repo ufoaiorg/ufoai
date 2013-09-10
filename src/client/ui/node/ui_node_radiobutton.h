@@ -35,7 +35,7 @@ class uiRadioButtonNode : public uiLocatedNode {
 typedef struct radioButtonExtraData_s {
 	char* cvar;
 	float value;
-	char *string;
+	char* string;
 	uiSprite_t *background;
 	uiSprite_t *icon;	/**< Link to an icon */
 	bool flipIcon;			/**< Flip the icon rendering (horizontal) */

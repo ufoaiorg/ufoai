@@ -46,7 +46,7 @@ typedef struct uiSharedData_s {
 	uiSharedType_t type;		/**< Type of the shared data */
 	union {
 		/** @brief Holds static array of characters to display */
-		const char *text;
+		const char* text;
 		/** @brief Holds a linked list for displaying in the UI */
 		linkedList_t *linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
@@ -74,9 +74,9 @@ int UI_GetDataIDByName(const char* name) __attribute__ ((warn_unused_result));
 void UI_InitData(void);
 
 /* text */
-void UI_RegisterText(int textId, const char *text);
-const char *UI_GetText(int textId) __attribute__ ((warn_unused_result));
-const char *UI_GetTextFromList(int textId, int line) __attribute__ ((warn_unused_result));
+void UI_RegisterText(int textId, const char* text);
+const char* UI_GetText(int textId) __attribute__ ((warn_unused_result));
+const char* UI_GetTextFromList(int textId, int line) __attribute__ ((warn_unused_result));
 
 /* linked list */
 void UI_RegisterLinkedListText(int textId, linkedList_t *text);

@@ -60,7 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void uiStringNode::draw (uiNode_t *node)
 {
 	vec2_t nodepos;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	const char* ref = UI_GetReferenceString(node, node->text);
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	vec_t *color;
@@ -94,8 +94,8 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 		UI_Tooltip(node, x, y);
 		return;
 	}
-	const char *font = UI_GetFontFromNode(node);
-	const char *text = UI_GetReferenceString(node, node->text);
+	const char* font = UI_GetFontFromNode(node);
+	const char* text = UI_GetReferenceString(node, node->text);
 	bool isTruncated;
 	if (!text)
 		return;

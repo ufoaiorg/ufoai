@@ -57,9 +57,9 @@ void uiTextNode::validateCache (uiNode_t *node)
 	}
 }
 
-const char *UI_TextNodeGetSelectedText (uiNode_t *node, int num)
+const char* UI_TextNodeGetSelectedText (uiNode_t *node, int num)
 {
-	const char *text = UI_GetTextFromList(EXTRADATA(node).dataID, num);
+	const char* text = UI_GetTextFromList(EXTRADATA(node).dataID, num);
 	if (text == nullptr)
 		return "";
 	return text;
@@ -119,7 +119,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 
 	lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineHeight = UI_FontGetHeight(font);
 	}
 
@@ -153,16 +153,16 @@ void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  * @note text or list but be used, not both
  */
-void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t *list, bool noDraw)
+void uiTextNode::drawText (uiNode_t* node, const char* text, const linkedList_t *list, bool noDraw)
 {
 	static char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];
 	const char* oldFont = nullptr;
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
-	char *cur, *tab, *end;
+	char* cur, *tab, *end;
 	int fullSizeY;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width;
 	int viewSizeY;
@@ -172,7 +172,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t 
 	if (isSizeChange(node)) {
 		int lineHeight = EXTRADATA(node).lineHeight;
 		if (lineHeight == 0) {
-			const char *font = UI_GetFontFromNode(node);
+			const char* font = UI_GetFontFromNode(node);
 			lineHeight = UI_FontGetHeight(font);
 		}
 		viewSizeY = node->box.size[1] / lineHeight;
@@ -479,7 +479,7 @@ void uiTextNode::onLoaded (uiNode_t *node)
 	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineheight = UI_FontGetHeight(font);
 	}
 

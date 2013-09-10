@@ -298,7 +298,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 	int y = 0;
 	int texX = 0;
 	int texY = 0;
-	const char *texture;
+	const char* texture;
 	const image_t *image;
 
 	UI_GetNodeAbsPos(node, pos);

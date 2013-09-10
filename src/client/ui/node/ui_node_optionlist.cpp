@@ -63,7 +63,7 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 
 	lineHeight =  EXTRADATA(node).lineHeight;
 	if (lineHeight == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineHeight = UI_FontGetHeight(font);
 	}
 
@@ -76,8 +76,8 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 void uiOptionListNode::draw (uiNode_t *node)
 {
 	uiNode_t* option;
-	const char *ref;
-	const char *font;
+	const char* ref;
+	const char* font;
 	int lineHeight;
 	vec2_t pos;
 	int currentY;
@@ -143,7 +143,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 		}
 
 		/* print the option label */
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY,
@@ -181,7 +181,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t *node, int x, in
 
 	lineHeight =  EXTRADATA(node).lineHeight;
 	if (lineHeight == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineHeight = UI_FontGetHeight(font);
 	}
 

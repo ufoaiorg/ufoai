@@ -301,7 +301,7 @@ static void UI_DrawNotice (void)
 	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	int height = 0, width = 0;
 	const int maxWidth = 500;
-	const char *font = "f_normal";
+	const char* font = "f_normal";
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 	int x, y;
@@ -410,7 +410,7 @@ void UI_DrawCursor (void)
  * @param[in] text text is already translated here
  * @param[in] windowName Window name where we must display the notice; else nullptr to use the current active window
  */
-void UI_DisplayNotice (const char *text, int time, const char* windowName)
+void UI_DisplayNotice (const char* text, int time, const char* windowName)
 {
 	noticeTime = CL_Milliseconds() + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));

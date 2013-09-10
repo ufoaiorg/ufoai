@@ -60,7 +60,7 @@ static int mouseScrollY;
  */
 static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 {
-	const char *font;
+	const char* font;
 	int fontHeight;
 	bool updated;
 	int elements;
@@ -110,8 +110,8 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t *node)
 void uiOptionTreeNode::draw (uiNode_t *node)
 {
 	uiNode_t* option;
-	const char *ref;
-	const char *font;
+	const char* ref;
+	const char* font;
 	vec2_t pos;
 	int fontHeight;
 	int currentY;
@@ -196,7 +196,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
@@ -213,7 +213,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int *depth)
 {
 	uiNode_t* option;
-	const char *font;
+	const char* font;
 	int fontHeight;
 	int count;
 	uiOptionIterator_t iterator;

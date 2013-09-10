@@ -42,7 +42,7 @@ public:
 public:
 	void validateCache(uiNode_t* node);
 protected:
-	void drawText (uiNode_t* node, const char *text, const linkedList_t *list, bool noDraw);
+	void drawText (uiNode_t* node, const char* text, const linkedList_t *list, bool noDraw);
 	virtual void updateCache (uiNode_t* node);
 };
 
@@ -51,7 +51,7 @@ struct uiAction_s;
 
 void UI_TextScrollEnd(const char* nodePath);
 void UI_TextNodeSelectLine(uiNode_t* node, int num);
-const char *UI_TextNodeGetSelectedText(uiNode_t *node, int num);
+const char* UI_TextNodeGetSelectedText(uiNode_t *node, int num);
 
 void UI_RegisterTextNode(uiBehaviour_t *behaviour);
 
@@ -62,7 +62,7 @@ typedef struct {
 	int versionId;				/**< Cached version of the shared data, to check update */
 
 	int textLineSelected;		/**< Which line is currently selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
-	const char *textSelected;	/**< Text of the current selected line */
+	const char* textSelected;	/**< Text of the current selected line */
 	int lineUnderMouse;			/**< UI_TEXT: The line under the mouse, when the mouse is over the node */
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */

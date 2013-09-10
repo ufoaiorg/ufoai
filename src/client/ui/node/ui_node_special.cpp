@@ -151,7 +151,7 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 	behaviour->manager = UINodePtr(new uiConFuncNode());
 }
 
-static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void UI_CvarListenerNodeCallback (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	linkedList_t *list = static_cast<linkedList_t*>(data);
 	linkedList_t *params = nullptr;

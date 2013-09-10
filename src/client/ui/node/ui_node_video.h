@@ -43,7 +43,7 @@ void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
 struct uiAction_s;
 
 typedef struct {
-	const char *source;
+	const char* source;
 	cinematic_t cin;
 	bool nosound;
 	struct uiAction_s *onEnd;

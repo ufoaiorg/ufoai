@@ -30,4 +30,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiNode_t;
 
 void UI_InsertComponent(uiNode_t* component);
-uiNode_t* UI_GetComponent(const char *name);
+uiNode_t* UI_GetComponent(const char* name);

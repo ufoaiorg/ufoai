@@ -67,7 +67,7 @@ static const int TILE_SIZE = 40;
  */
 static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 {
-	const char *font;
+	const char* font;
 	uiNode_t* option;
 	uiNode_t* prev = nullptr;
 	int allowedWidth;
@@ -95,7 +95,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &tabWidth, nullptr, nullptr, nullptr);
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
@@ -152,7 +152,7 @@ void uiTabNode::onLeftClick (uiNode_t *node, int x, int y)
  * @param[in] width The width size of the screen to use (stretch)
  * @param[in] type The status of the tab we display
  */
-static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, ui_tabStatus_t type)
+static inline void UI_TabNodeDrawPlain (const char* image, int x, int y, int width, ui_tabStatus_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
 	UI_DrawNormImageByName(false, x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
@@ -167,7 +167,7 @@ static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int wid
  * @param[in] leftType The status of the left tab of the junction we display
  * @param[in] rightType The status of the right tab of the junction we display
  */
-static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
+static inline void UI_TabNodeDrawJunction (const char* image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
 {
 	UI_DrawNormImageByName(false, x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
@@ -178,8 +178,8 @@ void uiTabNode::draw (uiNode_t *node)
 	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
 	uiNode_t* overMouseOption = nullptr;
-	const char *ref;
-	const char *font;
+	const char* ref;
+	const char* font;
 	int currentX;
 	int allowedWidth;
 	vec2_t pos;
@@ -233,7 +233,7 @@ void uiTabNode::draw (uiNode_t *node)
 		UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 
 		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, nullptr, nullptr);
 		tabWidth = fontWidth;
@@ -299,7 +299,7 @@ void uiTabNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	if (!OPTIONEXTRADATA(option).truncated)
 		return;
 
-	const char *label = CL_Translate(OPTIONEXTRADATA(option).label);
+	const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
 	UI_DrawTooltip(label, x, y, tooltipWidth);
 }
 

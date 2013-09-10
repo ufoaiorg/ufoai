@@ -50,7 +50,7 @@ static int UI_TextListNodeGetLine (const uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
-		const char *font = UI_GetFontFromNode(node);
+		const char* font = UI_GetFontFromNode(node);
 		lineHeight = UI_FontGetHeight(font);
 	}
 
@@ -74,7 +74,7 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t *list)
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	int count; /* variable x position */
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int currentY;
 	int viewSizeY;

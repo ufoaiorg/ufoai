@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return The component found, else nullptr
  * @note Use dichotomic search
  */
-uiNode_t *UI_GetComponent (const char *name)
+uiNode_t *UI_GetComponent (const char* name)
 {
 	unsigned char min = 0;
 	unsigned char max = ui_global.numComponents;

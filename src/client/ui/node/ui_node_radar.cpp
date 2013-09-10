@@ -37,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
 	/* image */
-	char *name;				/**< the mapname */
-	char *path[PATHFINDING_HEIGHT];		/**< the path to the image (including name) */
+	char* name;				/**< the mapname */
+	char* path[PATHFINDING_HEIGHT];		/**< the path to the image (including name) */
 	int x, y;				/**< screen coordinates for the image */
 	int width, height;		/**< the width and height of the image */
 
@@ -100,7 +100,7 @@ static void UI_FreeRadarImages (void)
  * @sa UI_DrawRadar
  * @sa R_ModBeginLoading
  */
-static void UI_BuildRadarImageList (const char *tiles, const char *pos)
+static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 {
 	const float mapMidX = cl.mapData->getWidthX() * 0.5;
 	const float mapMidY = (cl.mapData->getMaxY() + cl.mapData->getMinY()) * 0.5;
@@ -112,7 +112,7 @@ static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 		char name[MAX_VAR];
 		hudRadarImage_t *image;
 		/* get tile name */
-		const char *token = Com_Parse(&tiles);
+		const char* token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
 			return;
@@ -247,7 +247,7 @@ static char const* const imageExtensions[] = {
 	"jpg", "png", nullptr
 };
 
-static bool UI_CheckRadarImage (const char *imageName, const int level)
+static bool UI_CheckRadarImage (const char* imageName, const int level)
 {
 	char const* const* ext = imageExtensions;
 

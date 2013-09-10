@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief
  */
-static const char *const ui_sharedDataIDNames[] = {
+static const char* const ui_sharedDataIDNames[] = {
 	"", /**< nullptr value */
 	STRINGIFY(TEXT_STANDARD),
 	STRINGIFY(TEXT_LIST),
@@ -137,7 +137,7 @@ int UI_GetDataIDByName (const char* name)
  * @brief share a text with a data id
  * @note The UI code doesn't manage the text memory, it only save a pointer
  */
-void UI_RegisterText (int dataId, const char *text)
+void UI_RegisterText (int dataId, const char* text)
 {
 	UI_ResetData(dataId);
 
@@ -166,14 +166,14 @@ void UI_RegisterLinkedListText (int dataId, linkedList_t *text)
 	ui_global.sharedData[dataId].versionId++;
 }
 
-const char *UI_GetText (int textId)
+const char* UI_GetText (int textId)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_TEXT)
 		return nullptr;
 	return CL_Translate(ui_global.sharedData[textId].data.text);
 }
 
-const char *UI_GetTextFromList (int textId, int line)
+const char* UI_GetTextFromList (int textId, int line)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_LINKEDLISTTEXT)
 		return nullptr;
@@ -267,11 +267,11 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t** option)
 	uiNode_t *prev = *option;
 	uiNode_t *prevfind = nullptr;
 	uiNode_t *search = (*option)->next;
-	const char *label = CL_Translate(OPTIONEXTRADATA(*option).label);
+	const char* label = CL_Translate(OPTIONEXTRADATA(*option).label);
 
 	/* search the smaller element */
 	while (search) {
-		const char *searchlabel = CL_Translate(OPTIONEXTRADATA(search).label);
+		const char* searchlabel = CL_Translate(OPTIONEXTRADATA(search).label);
 		if (strcmp(label, searchlabel) < 0) {
 			prevfind = prev;
 			label = searchlabel;
@@ -512,7 +512,7 @@ int UI_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
 static void UI_ResetData_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		const char *dataId = Cmd_Argv(1);
+		const char* dataId = Cmd_Argv(1);
 		const int id = UI_GetDataIDByName(dataId);
 		if (id == -1)
 			Com_Printf("%s: invalid data ID: %s\n", Cmd_Argv(0), dataId);

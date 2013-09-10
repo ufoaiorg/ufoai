@@ -115,7 +115,7 @@ void uiWindowNode::draw (uiNode_t *node)
 {
 	const char* text;
 	vec2_t pos;
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 
 	UI_GetNodeAbsPos(node, pos);
 

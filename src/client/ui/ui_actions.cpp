@@ -93,8 +93,8 @@ static void UI_CheckActionTokenTypeSanity (void)
 {
 	int i;
 	for (i = 0; i < lengthof(actionTokens) - 1; i++) {
-		const char *a = actionTokens[i].token;
-		const char *b = actionTokens[i + 1].token;
+		const char* a = actionTokens[i].token;
+		const char* b = actionTokens[i + 1].token;
 		if (strcmp(a, b) >= 0) {
 			Sys_Error("UI_CheckActionTokenTypeSanity: '%s' is before '%s'. actionList must be sorted by alphabet", a, b);
 		}
@@ -209,13 +209,13 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
 	static char propertyName[256];
-	const char *cin = input;
-	char *cout = cmd;
+	const char* cin = input;
+	char* cout = cmd;
 
 	while (length && cin[0] != '\0') {
 		if (cin[0] == '<') {
 			/* read propertyName between '<' and '>' */
-			const char *next = UI_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
+			const char* next = UI_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
 				/* cvar injection */
 				if (char const* const rest = Q_strstart(propertyName, "cvar:")) {
@@ -386,14 +386,14 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	}
 
 	if (left->type == EA_VALUE_CVARNAME || left->type == EA_VALUE_CVARNAME_WITHINJECTION) {
-		const char *cvarName;
+		const char* cvarName;
 
 		if (left->type == EA_VALUE_CVARNAME)
 			cvarName = left->d.terminal.d1.constString;
 		else
 			cvarName = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 
-		const char *textValue = CL_Translate(UI_GetStringFromExpression(right, context));
+		const char* textValue = CL_Translate(UI_GetStringFromExpression(right, context));
 		Cvar_ForceSet(cvarName, textValue);
 		return;
 	}
@@ -675,13 +675,13 @@ void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, 
  * @param[in] string The string to check for injection
  * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
-bool UI_IsInjectedString (const char *string)
+bool UI_IsInjectedString (const char* string)
 {
-	const char *c = string;
+	const char* c = string;
 	assert(string);
 	while (*c != '\0') {
 		if (*c == '<') {
-			const char *d = c + 1;
+			const char* d = c + 1;
 			if (*d != '>') {
 				while (*d) {
 					if (*d == '>')
@@ -720,7 +720,7 @@ void UI_FreeStringProperty (void *pointer)
  * @param[in] command A command for the action
  * @return An initialised action
  */
-uiAction_t* UI_AllocStaticCommandAction (const char *command)
+uiAction_t* UI_AllocStaticCommandAction (const char* command)
 {
 	uiAction_t* action = UI_AllocStaticAction();
 	action->type = EA_CMD;
@@ -746,7 +746,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->d.terminal.d1.constString = Mem_PoolStrDup((const char *)data, ui_sysPool, 0);
+		(*action)->d.terminal.d1.constString = Mem_PoolStrDup((const char* )data, ui_sysPool, 0);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);
@@ -896,7 +896,7 @@ static void UI_RemoveListener_f (void)
 	UI_RemoveListener(node, property, function);
 }
 
-static void UI_CvarChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+static void UI_CvarChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
 {
 	linkedList_t *list = static_cast<linkedList_t*>(data);
 	LIST_Foreach(list, char const, confunc) {
@@ -906,8 +906,8 @@ static void UI_CvarChangeListener (const char *cvarName, const char *oldValue, c
 
 static void UI_AddCvarListener_f (void)
 {
-	const char *cvarName;
-	const char *confuncName;
+	const char* cvarName;
+	const char* confuncName;
 	cvarChangeListener_t *l;
 
 	if (Cmd_Argc() != 3) {
@@ -924,8 +924,8 @@ static void UI_AddCvarListener_f (void)
 
 static void UI_RemoveCvarListener_f (void)
 {
-	const char *cvarName;
-	const char *confuncName;
+	const char* cvarName;
+	const char* confuncName;
 	cvar_t *var;
 
 	if (Cmd_Argc() != 3) {

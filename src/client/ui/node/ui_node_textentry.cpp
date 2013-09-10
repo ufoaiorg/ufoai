@@ -143,7 +143,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == nullptr);
 	/* skip '*cvar ' */
-	const char *cvarRef = "*cvar:";
+	const char* cvarRef = "*cvar:";
 	editedCvar = Cvar_Get(&((const char*)node->text)[strlen(cvarRef)]);
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
@@ -251,7 +251,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 	const float *textColor;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	const char *font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 
 	if (node->disabled) {
