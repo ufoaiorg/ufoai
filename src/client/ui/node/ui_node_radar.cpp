@@ -103,7 +103,7 @@ static void UI_FreeRadarImages (void)
 static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 {
 	const float mapMidX = cl.mapData->getWidthX() * 0.5;
-	const float mapMidY = (cl.mapData->mapMax[1] + cl.mapData->mapMin[1]) * 0.5;
+	const float mapMidY = (cl.mapData->getMaxY() + cl.mapData->getMinY()) * 0.5;
 
 	/* load tiles */
 	while (tiles) {
@@ -313,13 +313,13 @@ static void UI_InitRadar (const uiNode_t *node)
 				tile->mapHeight = tile->gridHeight * 8 * UNIT_SIZE;
 			} else {
 				tile->mapX = cl.mapData->getMinX();
-				tile->mapY = cl.mapData->mapMin[1];
+				tile->mapY = cl.mapData->getMinY();
 				tile->mapWidth = cl.mapData->getWidthX();
 				tile->mapHeight = cl.mapData->getWidthY();
 			}
 		}
 		if (tile->isTile) {
-			tile->mapY = cl.mapData->mapMax[1] - tile->mapY - tile->mapHeight;
+			tile->mapY = cl.mapData->getMaxY() - tile->mapY - tile->mapHeight;
 		}
 	}
 
@@ -339,7 +339,7 @@ static void UI_InitRadar (const uiNode_t *node)
 	}
 	/* compute translation */
 	min[0] = cl.mapData->getMinX() + (cl.mapData->getWidthX() - (max[0] - min[0])) * 0.5 - min[0];
-	min[1] = cl.mapData->mapMin[1] + (cl.mapData->getWidthY() - (max[1] - min[1])) * 0.5 - min[1];
+	min[1] = cl.mapData->getMinY() + (cl.mapData->getWidthY() - (max[1] - min[1])) * 0.5 - min[1];
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
 		tile->mapX += min[0];
@@ -415,6 +415,10 @@ static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t
 	R_Color(color);
 	R_DrawImageArray((const vec2_t *)coords, (const vec2_t *)vertices, image);
 	R_Color(nullptr);
+}
+
+static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
+{
 }
 
 static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
@@ -556,10 +560,10 @@ void uiRadarNode::draw (uiNode_t *node)
 		radar.gridHeight = 6;
 
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]));
-		textposy += 25;
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight));
-		textposy += 25;
+	UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f %fx%f map", cl.mapData->getMinX(), cl.mapData->getMinY(), cl.mapData->getMaxX(), cl.mapData->getMaxY()));
+	textposy += 25;
+	UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight));
+	textposy += 25;
 #endif
 
 	/* draw background */
@@ -573,16 +577,15 @@ void uiRadarNode::draw (uiNode_t *node)
 			maxlevel = tile->maxlevel - 1;
 		assert(tile->path[maxlevel]);
 		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->getMinX());
-		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->mapMin[1]);
+		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->getMinY());
 
 		UI_DrawNormImageByName(false, imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]));
+		UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]));
 		textposy += 25;
-		UI_DrawStringInBox("f_small", 0, imagePos[0], imagePos[1],
-				500, 25, va("%dx%d", tile->gridX, tile->gridY));
+		UI_DrawStringInBox("f_small", ALIGN_UL, imagePos[0], imagePos[1], 500, 25, va("%dx%d", tile->gridX, tile->gridY));
 #endif
 	}
 
@@ -599,7 +602,7 @@ void uiRadarNode::draw (uiNode_t *node)
 
 		/* convert to radar area coordinates */
 		itempos[0] = pos[0] + (le->origin[0] - cl.mapData->getMinX()) * mapCoefX;
-		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - cl.mapData->mapMin[1])) * mapCoefY;
+		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - cl.mapData->getMinY())) * mapCoefY;
 
 		switch (le->type) {
 		case ET_ACTOR:
@@ -607,12 +610,13 @@ void uiRadarNode::draw (uiNode_t *node)
 			UI_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
+			UI_RadarNodeDrawItem(le, itempos);
 			break;
 		default:
 			break;
 		}
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]));
+		UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]));
 		textposy += 25;
 		UI_DrawFill(itempos[0], itempos[1], UNIT_SIZE * mapCoefX, 1, red);
 		UI_DrawFill(itempos[0], itempos[1], 1, UNIT_SIZE * mapCoefY, red);
@@ -640,7 +644,7 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 
 	/* from node to map */
 	pos[0] = cl.mapData->getMinX() + x / mapCoefX;
-	pos[1] = cl.mapData->mapMax[1] - y / mapCoefY;
+	pos[1] = cl.mapData->getMaxY() - y / mapCoefY;
 	pos[2] = 0;
 
 	VectorCopy(pos, cl.cam.origin);
