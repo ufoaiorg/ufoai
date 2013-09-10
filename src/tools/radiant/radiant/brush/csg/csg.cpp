@@ -33,19 +33,6 @@
 
 typedef std::vector<Brush*> brush_vector_t;
 
-static void Face_makeBrush (Face& face, const Brush& brush, brush_vector_t& out, float offset)
-{
-	if (face.contributes()) {
-		out.push_back(new Brush(brush));
-		Face* newFace = out.back()->addFace(face);
-		if (newFace != 0) {
-			newFace->flipWinding();
-			newFace->getPlane().offset(offset);
-			newFace->planeChanged();
-		}
-	}
-}
-
 class FaceMakeBrush
 {
 		const Brush& brush;
@@ -56,9 +43,18 @@ class FaceMakeBrush
 			brush(brush), out(out), offset(offset)
 		{
 		}
+
 		void operator() (Face& face) const
 		{
-			Face_makeBrush(face, brush, out, offset);
+			if (face.contributes()) {
+				out.push_back(new Brush(brush));
+				Face* newFace = out.back()->addFace(face);
+				if (newFace != 0) {
+					newFace->flipWinding();
+					newFace->getPlane().offset(offset);
+					newFace->planeChanged();
+				}
+			}
 		}
 };
 
