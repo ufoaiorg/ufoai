@@ -438,7 +438,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 		return;
 
 	/* draw FOV */
-	if (LE_IsSelected(le)) {
+	if (!LE_IsDead(le)) {
 		vertices[0][0] = - size * 4;
 		vertices[0][1] = + 0;
 		vertices[1][0] = + size * 4;
@@ -465,7 +465,11 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 		}
 
 		UI_RadarNodeGetActorColor(le, color);
-		Vector4Set(color, 1, 1, 1, color[3] * 0.75);
+		if (LE_IsSelected(le)) {
+			color[3] *= 0.75;
+		} else {
+			color[3] = 0.1f;
+		}
 		UI_RadarNodeDrawArrays(color, coords, vertices, image);
 	}
 
