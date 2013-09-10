@@ -190,18 +190,18 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 		/* loop through all the faces of the BSP file... */
 		for (j = 0; j < tile->nummodels; j++) {
 			const dBspModel_t *model = &tile->models[j];
-			int faceIndex;
-
-			for (faceIndex = 0; faceIndex < model->numfaces; faceIndex++) {
+			for (int faceIndex = 0; faceIndex < model->numfaces; faceIndex++) {
 				const dBspSurface_t *face = &tile->faces[model->firstface + faceIndex];
-				int edgeIndex;
+				const dBspTexinfo_t *texinfo = &tile->texinfo[face->texinfo];
+				if (texinfo->surfaceFlags & (SURF_NODRAW|SURF_HINT|SURF_SKIP|SURF_BLEND33|SURF_BLEND66))
+					continue;
+				/** @todo handle content flags */
 
 				first = true;
 				both = false;
 
 				/* for each face, loop though all of the edges, getting the vertexes... */
-				for (edgeIndex = 0; edgeIndex < face->numedges;
-						edgeIndex++) {
+				for (int edgeIndex = 0; edgeIndex < face->numedges; edgeIndex++) {
 					/* get the coordinates of the vertex of this edge... */
 					int edge = tile->surfedges[face->firstedge + edgeIndex];
 
