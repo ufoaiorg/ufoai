@@ -322,15 +322,6 @@ window hud extends levelbuttons {
 			cmd "ui_push hudphysdat;"
 		}
 	}
-	confunc show_hide_radar
-	{
-		// a second click will close the radar window again
-		if ( *cvar:radar_window_open == 1 ) {
-			cmd "closeradar;"
-		} else {
-			cmd "openradar;"
-		}
-	}
 
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
