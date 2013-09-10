@@ -23,34 +23,3 @@ window radarwindow {
 		}
 	}
 }
-
-// this is the popup-version of the radar, but is currently unused
-window radarwindow_popup {
-	{
-		pos			"206 100"
-		size		"647 580"
-		dragbutton	true
-		closebutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Radar"
-	}
-
-	func onWindowOpened {
-		*cvar:radar_window_open = 1
-	}
-
-	func onWindowClosed {
-		delete *cvar:radar_window_open
-	}
-
-	func closeradar
-	{
-		cmd "closeradar;"
-	}
-
-	radar hudradar
-	{
-		pos	"25 55"
-		size "500 500"
-	}
-}
