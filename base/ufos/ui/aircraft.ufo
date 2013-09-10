@@ -222,9 +222,9 @@ window iaircraft
 		}
 	}
 
-/**
- * @brief Reset the cvars for a character.
- */
+	/**
+	 * @brief Reset the cvars for a character.
+	 */
 	confunc reset_character_cvars {
 		/** @todo gui should not manage it -> it should not be here */
 		*cvar:mn_name = ""

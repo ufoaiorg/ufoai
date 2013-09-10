@@ -98,9 +98,9 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
 	Cvar_SetValue("mn_vass", score->skills[SKILL_ASSAULT]);
 	Cvar_SetValue("mn_vsnp", score->skills[SKILL_SNIPER]);
 	Cvar_SetValue("mn_vexp", score->skills[SKILL_EXPLOSIVE]);
-	Cvar_SetValue("mn_vpil", chr->score.skills[SKILL_PILOTING]);
-	Cvar_SetValue("mn_vtar", chr->score.skills[SKILL_TARGETING]);
-	Cvar_SetValue("mn_vevad", chr->score.skills[SKILL_EVADING]);
+	Cvar_SetValue("mn_vpil", score->skills[SKILL_PILOTING]);
+	Cvar_SetValue("mn_vtar", score->skills[SKILL_TARGETING]);
+	Cvar_SetValue("mn_vevad", score->skills[SKILL_EVADING]);
 	Cvar_SetValue("mn_vpwri", score->initialSkills[ABILITY_POWER]);
 	Cvar_SetValue("mn_vspdi", score->initialSkills[ABILITY_SPEED]);
 	Cvar_SetValue("mn_vacci", score->initialSkills[ABILITY_ACCURACY]);
@@ -110,9 +110,9 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
 	Cvar_SetValue("mn_vassi", score->initialSkills[SKILL_ASSAULT]);
 	Cvar_SetValue("mn_vsnpi", score->initialSkills[SKILL_SNIPER]);
 	Cvar_SetValue("mn_vexpi", score->initialSkills[SKILL_EXPLOSIVE]);
-	Cvar_SetValue("mn_vpili", chr->score.initialSkills[SKILL_PILOTING]);
-	Cvar_SetValue("mn_vtari", chr->score.initialSkills[SKILL_TARGETING]);
-	Cvar_SetValue("mn_vevadi", chr->score.initialSkills[SKILL_EVADING]);
+	Cvar_SetValue("mn_vpili", score->initialSkills[SKILL_PILOTING]);
+	Cvar_SetValue("mn_vtari", score->initialSkills[SKILL_TARGETING]);
+	Cvar_SetValue("mn_vevadi", score->initialSkills[SKILL_EVADING]);
 	Cvar_SetValue("mn_vhp", chr->HP);
 	Cvar_SetValue("mn_vhpmax", chr->maxHP);
 
@@ -125,9 +125,9 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
 	Cvar_Set("mn_tass", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_ASSAULT]), score->skills[SKILL_ASSAULT]);
 	Cvar_Set("mn_tsnp", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_SNIPER]), score->skills[SKILL_SNIPER]);
 	Cvar_Set("mn_texp", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_EXPLOSIVE]), score->skills[SKILL_EXPLOSIVE]);
-	Cvar_Set("mn_tpil", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_PILOTING]), chr->score.skills[SKILL_PILOTING]);
-	Cvar_Set("mn_ttar", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_TARGETING]), chr->score.skills[SKILL_TARGETING]);
-	Cvar_Set("mn_tevad", "%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EVADING]), chr->score.skills[SKILL_EVADING]);
+	Cvar_Set("mn_tpil", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_PILOTING]), score->skills[SKILL_PILOTING]);
+	Cvar_Set("mn_ttar", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_TARGETING]), score->skills[SKILL_TARGETING]);
+	Cvar_Set("mn_tevad", "%s (%i)", CL_ActorGetSkillString(score->skills[SKILL_EVADING]), score->skills[SKILL_EVADING]);
 	Cvar_Set("mn_thp", "%i (%i)", chr->HP, chr->maxHP);
 }
 
