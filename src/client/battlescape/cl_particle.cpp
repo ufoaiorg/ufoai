@@ -252,17 +252,17 @@ static void CL_ParticleSpawnTimed (const char* name, ptl_t *parent, bool childre
 
 	for (i = 0; i < length; i++) {
 		timedParticle_t *tp = &timedParticles[i];
-		if (tp->n == tp->max) {
-			/* found a free slot */
-			Q_strncpyz(tp->ptl, name, sizeof(tp->ptl));
-			tp->levelFlags = parent->levelFlags;
-			tp->dt = deltaTime;
-			tp->n = 0;
-			tp->children = children;
-			tp->max = n;
-			tp->parent = parent;
-			return;
-		}
+		if (tp->n != tp->max)
+			continue;
+		/* found a free slot */
+		Q_strncpyz(tp->ptl, name, sizeof(tp->ptl));
+		tp->levelFlags = parent->levelFlags;
+		tp->dt = deltaTime;
+		tp->n = 0;
+		tp->children = children;
+		tp->max = n;
+		tp->parent = parent;
+		return;
 	}
 	Com_Printf("Could not spawn timed particles due to overflow\n");
 }
@@ -385,9 +385,8 @@ static inline void* CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t 
 	if (cmd->ref < 0)
 		/* a negative ref value is relative to the particle */
 		return (byte*)p - cmd->ref;
-	else
-		/* data is stored on the global command data hunk */
-		return (byte*)pcmdData + cmd->ref;
+	/* data is stored on the global command data hunk */
+	return (byte*)pcmdData + cmd->ref;
 }
 
 static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
@@ -686,13 +685,11 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 
 ptlDef_t *CL_ParticleGet (const char* name)
 {
-	int i;
-
-	if (!name || strlen(name) <= 0)
+	if (Q_strnull(name))
 		return nullptr;
 
 	/* find the particle definition */
-	for (i = 0; i < numPtlDefs; i++) {
+	for (int i = 0; i < numPtlDefs; i++) {
 		ptlDef_t *pd = &ptlDef[i];
 		if (Q_streq(name, pd->name)) {
 			return pd;
@@ -715,15 +712,13 @@ ptlDef_t *CL_ParticleGet (const char* name)
  */
 ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
-	ptlDef_t *pd;
-	ptl_t *p;
 	int i;
 
-	if (!name || strlen(name) <= 0)
+	if (Q_strnull(name))
 		return nullptr;
 
 	/* find the particle definition */
-	pd = CL_ParticleGet(name);
+	ptlDef_t *pd = CL_ParticleGet(name);
 	if (pd == nullptr) {
 		Com_Printf("Particle definition \"%s\" not found\n", name);
 		return nullptr;
@@ -744,7 +739,7 @@ ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
 	}
 
 	/* allocate particle */
-	p = &r_particleArray[i];
+	ptl_t *p = &r_particleArray[i];
 	OBJZERO(*p);
 
 	/* set basic values */
@@ -847,17 +842,19 @@ void CL_ParticleCheckRounds (void)
 	ptl_t *p;
 	int i;
 
-	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
-		if (p->inuse) {
-			/* run round function */
-			CL_ParticleFunction(p, p->ctrl->round);
+	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++) {
+		if (!p->inuse)
+			continue;
+		/* run round function */
+		CL_ParticleFunction(p, p->ctrl->round);
 
-			if (p->rounds) {
-				p->roundsCnt--;
-				if (p->roundsCnt <= 0)
-					CL_ParticleFree(p);
-			}
-		}
+		if (!p->rounds)
+			continue;
+
+		p->roundsCnt--;
+		if (p->roundsCnt <= 0)
+			CL_ParticleFree(p);
+	}
 }
 
 typedef struct ptlTraceCache_s {
@@ -951,7 +948,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
-
 			p->hitSolid = true;
 
 			/* now execute the physics handler */
@@ -1056,24 +1052,22 @@ static void CL_ParticleRunTimed (void)
 			continue;
 		if (CL_Milliseconds() - tp->lastTime < tp->dt)
 			continue;
-		{
-			ptl_t *p;
-			if (!tp->n) {
-				/* first spawn? - then copy the parent values. We have to
-				 * do this here and now earlier because projectile particles
-				 * get these values set after spawn. */
-				VectorCopy(tp->parent->s, tp->s);
-				VectorCopy(tp->parent->v, tp->v);
-				VectorCopy(tp->parent->a, tp->a);
-			}
-			tp->n++;
-			tp->lastTime = CL_Milliseconds();
-			p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
-			if (p && tp->children) {
-				p->next = tp->parent->children;
-				p->parent = tp->parent;
-				tp->parent->children = p;
-			}
+
+		if (!tp->n) {
+			/* first spawn? - then copy the parent values. We have to
+			 * do this here and now earlier because projectile particles
+			 * get these values set after spawn. */
+			VectorCopy(tp->parent->s, tp->s);
+			VectorCopy(tp->parent->v, tp->v);
+			VectorCopy(tp->parent->a, tp->a);
+		}
+		tp->n++;
+		tp->lastTime = CL_Milliseconds();
+		ptl_t *p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+		if (p && tp->children) {
+			p->next = tp->parent->children;
+			p->parent = tp->parent;
+			tp->parent->children = p;
 		}
 	}
 }
@@ -1142,30 +1136,32 @@ static void CL_ParseMapParticle (ptl_t *ptl, const char* es, bool afterwards)
 static void CL_RunMapParticles (void)
 {
 	mapParticle_t *mp;
-	ptl_t *ptl;
 	int i;
 
-	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++)
-		if (mp->nextTime && cl.time >= mp->nextTime) {
-			/* spawn a new particle */
-			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin);
-			if (!ptl) {
-				Com_Printf(S_COLOR_YELLOW "Could not spawn particle '%s'\n", mp->ptl);
-				mp->nextTime = 0;
-				continue;
-			}
-
-			/* init the particle */
-			CL_ParseMapParticle(ptl, mp->info, false);
-			CL_ParticleFunction(ptl, ptl->ctrl->init);
-			CL_ParseMapParticle(ptl, mp->info, true);
-
-			/* prepare next spawning */
-			if (Vector2NotEmpty(mp->wait))
-				mp->nextTime += mp->wait[0] + mp->wait[1] * frand();
-			else
-				mp->nextTime = 0;
+	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++) {
+		if (!mp->nextTime)
+			continue;
+		if (cl.time < mp->nextTime)
+			continue;
+		/* spawn a new particle */
+		ptl_t *ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin);
+		if (!ptl) {
+			Com_Printf(S_COLOR_YELLOW "Could not spawn particle '%s'\n", mp->ptl);
+			mp->nextTime = 0;
+			continue;
 		}
+
+		/* init the particle */
+		CL_ParseMapParticle(ptl, mp->info, false);
+		CL_ParticleFunction(ptl, ptl->ctrl->init);
+		CL_ParseMapParticle(ptl, mp->info, true);
+
+		/* prepare next spawning */
+		if (Vector2NotEmpty(mp->wait))
+			mp->nextTime += mp->wait[0] + mp->wait[1] * frand();
+		else
+			mp->nextTime = 0;
+	}
 }
 
 /**
