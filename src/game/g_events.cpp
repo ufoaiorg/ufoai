@@ -169,7 +169,7 @@ void G_EventDestroyEdict (const Edict &ent)
  * @param amount The new amount of the left ammo
  * @param shootType The shooting type to determine which container to use
  */
-void G_EventInventoryAmmo (const Edict &ent, const objDef_t *ammo, int amount, shoot_types_t shootType)
+void G_EventInventoryAmmo (const Edict &ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_INV_AMMO, ent.number);
 	gi.WriteByte(amount);
@@ -206,7 +206,7 @@ void G_EventStartShoot (const Edict &ent, teammask_t teamMask, shoot_types_t sho
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (teammask_t teamMask, const fireDef_t *fd, bool firstShoot)
+void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot)
 {
 	G_EventAdd(~G_VisToPM(teamMask), EV_ACTOR_SHOOT_HIDDEN, -1);
 	gi.WriteByte(firstShoot);
@@ -228,7 +228,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t *fd, bool firstSho
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t *fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t *trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const Edict* targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
@@ -253,7 +253,7 @@ void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t *fd, b
 void G_EventReactionFireChange (const Edict &ent)
 {
 	const FiremodeSettings &fireMode = ent.chr.RFmode;
-	const objDef_t *od = fireMode.getWeapon();
+	const objDef_t* od = fireMode.getWeapon();
 
 	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_REACTIONFIRECHANGE, ent.number);
 	gi.WriteByte(fireMode.getFmIdx());
@@ -385,7 +385,7 @@ void G_EventEndRound (void)
 	G_EventEnd();
 }
 
-void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t *invDef, const Item *ic)
+void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t* invDef, const Item *ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent.number);
 	gi.WriteByte(item->def()->ammo);
@@ -404,7 +404,7 @@ void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const It
  * @param[in] position The current position
  * @param[in] velocity The velocity of the throw
  */
-void G_EventThrow (teammask_t teamMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
+void G_EventThrow (teammask_t teamMask, const fireDef_t* fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
 {
 	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_THROW, -1);
 	gi.WriteShort(dt * 1000);

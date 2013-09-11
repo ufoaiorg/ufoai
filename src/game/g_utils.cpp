@@ -145,18 +145,18 @@ bool G_UseEdict (Edict* ent, Edict* activator)
  * @param[in] fd Pointer to fire definition, for which item is wanted.
  * @return @c od to which fire definition belongs or @c nullptr when no object found.
  */
-static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
+static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 {
 	int i, j, k;
 
 	/* For each object ... */
 	for (i = 0; i < gi.csi->numODs; i++) {
-		const objDef_t *od = &gi.csi->ods[i];
+		const objDef_t* od = &gi.csi->ods[i];
 		/* For each weapon-entry in the object ... */
 		for (j = 0; j < od->numWeapons; j++) {
 			/* For each fire-definition in the weapon entry  ... */
 			for (k = 0; k < od->numFiredefs[j]; k++) {
-				const fireDef_t *csiFD = &od->fd[j][k];
+				const fireDef_t* csiFD = &od->fd[j][k];
 				if (csiFD == fd)
 					return od;
 			}
@@ -172,9 +172,9 @@ static const objDef_t *G_GetObjectForFiredef (const fireDef_t *fd)
  * @return id of the item to which fire definition belongs or "unknown" when no object found.
  * @sa G_GetObjectForFiredef
  */
-const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
+const char* G_GetWeaponNameForFiredef (const fireDef_t* fd)
 {
-	const objDef_t *obj = G_GetObjectForFiredef(fd);
+	const objDef_t* obj = G_GetObjectForFiredef(fd);
 	if (!obj)
 		return "unknown";
 	else
@@ -339,7 +339,7 @@ void G_PrintStats (const char* format, ...)
  * @sa G_Damage
  * @sa G_PrintStats
  */
-void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDef_t *fd)
+void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDef_t* fd)
 {
 	char buffer[512];
 

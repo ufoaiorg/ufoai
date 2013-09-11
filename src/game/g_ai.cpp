@@ -41,7 +41,7 @@ typedef struct aiAction_s {
 	shoot_types_t shootType;	/**< the shoot type */
 	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
 	Edict* target;		/**< the target edict */
-	const fireDef_t *fd;/**< the firemode to use for shooting */
+	const fireDef_t* fd;/**< the firemode to use for shooting */
 	int z_align;		/**< the z-align for every shoot */
 
 	inline void reset() {
@@ -90,8 +90,8 @@ typedef struct aiAction_s {
 
 #define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
 
-static pathing_t *hidePathingTable;
-static pathing_t *herdPathingTable;
+static pathing_t* hidePathingTable;
+static pathing_t* herdPathingTable;
 
 void AI_Init (void)
 {
@@ -146,7 +146,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-static bool AI_FighterCheckShoot (const Edict* ent, const Edict* check, const fireDef_t *fd, float *dist)
+static bool AI_FighterCheckShoot (const Edict* ent, const Edict* check, const fireDef_t* fd, float *dist)
 {
 	/* check range */
 	*dist = VectorDist(ent->origin, check->origin);
@@ -282,7 +282,7 @@ static bool AI_HideNeeded (const Edict* ent)
 			if (!item)
 				continue;
 
-			const fireDef_t *fd = item->getFiredefs();
+			const fireDef_t* fd = item->getFiredefs();
 			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
 			if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
 				const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
@@ -391,7 +391,7 @@ bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
 
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
-		hidePathingTable = (pathing_t *) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
+		hidePathingTable = (pathing_t* ) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
 	/* search hiding spot */
 	G_MoveCalcLocal(hidePathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
@@ -448,7 +448,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 	Edict* enemy = nullptr;
 
 	if (!herdPathingTable)
-		herdPathingTable = (pathing_t *) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
+		herdPathingTable = (pathing_t* ) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 	/* find the nearest enemy actor to the target*/
 	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);
@@ -512,7 +512,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
  * from shooting at the breakable parts of their own ship.
  * So I disabled it for now. Duke, 23.10.09
  */
-static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t *fd)
+static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t* fd)
 {
 #if 0
 	/* search best none human target */
@@ -541,14 +541,14 @@ static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t *fd)
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (aiAction_t *aia, const Edict* ent, Edict* check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int* bestTime, const fireDef_t *fdArray)
+static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check, const Item *item, shoot_types_t shootType, int tu, float *maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
 	int shotChecked = NONE;
 
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-		const fireDef_t *fd = &fdArray[fdIdx];
+		const fireDef_t* fd = &fdArray[fdIdx];
 		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
 				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
 		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 + acc);
@@ -628,7 +628,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const Edict* ent, Edict* check
 
 			/* take into account armour */
 			if (check->getArmour()) {
-				const objDef_t *ad = check->getArmour()->def();
+				const objDef_t* ad = check->getArmour()->def();
 				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
@@ -709,11 +709,11 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 /**
  * @brief Search the edict's inventory for a grenade or other one-use weapon.
  */
-static const invDef_t *AI_SearchGrenade (const Edict* ent, Item **ip)
+static const invDef_t* AI_SearchGrenade (const Edict* ent, Item **ip)
 {
 	/* search for grenades and select the one that is available easily */
 	const Container *cont = nullptr;
-	const invDef_t *bestContainer = nullptr;
+	const invDef_t* bestContainer = nullptr;
 	Item *weapon = nullptr;
 	int cost = 100;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
@@ -722,7 +722,7 @@ static const invDef_t *AI_SearchGrenade (const Edict* ent, Item **ip)
 		Item *item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			assert(item->def());
-			const objDef_t *obj = item->def();
+			const objDef_t* obj = item->def();
 			if (item->isWeapon() && !item->mustReload() && ((obj->thrown && obj->oneshot && obj->deplete)
 				|| Q_streq(obj->type, "grenade"))) {
 				weapon = item;
@@ -762,7 +762,7 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict* ent)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t *aia)
+static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	int tu = G_ActorUsableTUs(ent) - move;
@@ -779,7 +779,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t 
 
 	/* pre-find a grenade */
 	Item *grenade = nullptr;
-	const invDef_t *fromCont = AI_SearchGrenade(ent, &grenade);
+	const invDef_t* fromCont = AI_SearchGrenade(ent, &grenade);
 
 	/* search best target */
 	float maxDmg = 0.0;
@@ -799,11 +799,11 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t 
 			if (!item)
 				continue;
 
-			const fireDef_t *fdArray = item->getFiredefs();
+			const fireDef_t* fdArray = item->getFiredefs();
 			if (fdArray == nullptr)
 				continue;
 
-			const invDef_t *toCont = INVDEF_FOR_SHOOTTYPE(shootType);
+			const invDef_t* toCont = INVDEF_FOR_SHOOTTYPE(shootType);
 			const int invMoveCost = freeHand && grenade ? fromCont->out + toCont->in : 0;
 			AI_SearchBestTarget(aia, ent, check, item, shootType, tu - invMoveCost, &maxDmg, &bestTime, fdArray);
 			if (aia->shootType == shootType)
@@ -894,7 +894,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t 
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t *aia)
+static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -911,7 +911,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t
 
 	/* check whether this civilian can use weapons */
 	if (ent->chr.teamDef) {
-		const teamDef_t *teamDef = ent->chr.teamDef;
+		const teamDef_t* teamDef = ent->chr.teamDef;
 		if (!G_IsPanicked(ent) && teamDef->weapons)
 			return AI_FighterCalcActionScore(ent, to, aia);
 	} else
@@ -1009,7 +1009,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, aiAction_t *aia)
+static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -1120,7 +1120,7 @@ static bool AI_FindMissionLocation (Edict* ent, const pos3_t to)
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const Player &player, Edict* ent, aiAction_t *aia)
+static int AI_CheckForMissionTargets (const Player &player, Edict* ent, aiAction_t* aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	int actionScore;
@@ -1304,8 +1304,8 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict* ent)
 	/* if we are throwing a grenade from the inventory grab it now */
 	if (bestAia.target && AI_IsHandForForShootTypeFree(bestAia.shootType, ent)) {
 		Item *grenade = nullptr;
-		const invDef_t *fromCont = AI_SearchGrenade(ent, &grenade);
-		const invDef_t *toCont = INVDEF_FOR_SHOOTTYPE(bestAia.shootType);
+		const invDef_t* fromCont = AI_SearchGrenade(ent, &grenade);
+		const invDef_t* toCont = INVDEF_FOR_SHOOTTYPE(bestAia.shootType);
 		if (!grenade || !fromCont || !toCont || !G_ActorInvMove(ent, fromCont, grenade, toCont, NONE, NONE, true))
 			bestAia.target = nullptr;
 	}
@@ -1545,7 +1545,7 @@ static void AI_SetCharacterValues (Edict* ent, int team)
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			const int alienTeam = rand() % gi.csi->numAlienTeams;
-			const teamDef_t *td = gi.csi->alienTeams[alienTeam];
+			const teamDef_t* td = gi.csi->alienTeams[alienTeam];
 			assert(td);
 			teamDefinition = td->id;
 		} else {
@@ -1565,11 +1565,11 @@ static void AI_SetCharacterValues (Edict* ent, int team)
  * @param ent Actor to give equipment to.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (Edict* ent, const equipDef_t *ed)
+static void AI_SetEquipment (Edict* ent, const equipDef_t* ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
-		const objDef_t *weapon = ent->chr.teamDef->onlyWeapon;
+		const objDef_t* weapon = ent->chr.teamDef->onlyWeapon;
 		if (weapon->numAmmos > 0)
 			game.i.EquipActorRobot(&ent->chr.inv, weapon);
 		else if (weapon->fireTwoHanded)
@@ -1589,7 +1589,7 @@ static void AI_SetEquipment (Edict* ent, const equipDef_t *ed)
  * @param[in,out] ent Pointer to Edict representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c nullptr.
  */
-static void AI_InitPlayer (const Player &player, Edict* ent, const equipDef_t *ed)
+static void AI_InitPlayer (const Player &player, Edict* ent, const equipDef_t* ed)
 {
 	const int team = player.getTeam();
 
@@ -1621,12 +1621,12 @@ static void AI_InitPlayer (const Player &player, Edict* ent, const equipDef_t *e
 		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
 
-static const equipDef_t *G_GetEquipmentForAISpawn (int team)
+static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 {
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
 		const char* equipID = gi.Cvar_String("ai_equipment");
-		const equipDef_t *ed = G_GetEquipDefByID(equipID);
+		const equipDef_t* ed = G_GetEquipDefByID(equipID);
 		if (ed == nullptr)
 			ed = &gi.csi->eds[0];
 		return ed;
@@ -1634,7 +1634,7 @@ static const equipDef_t *G_GetEquipmentForAISpawn (int team)
 	return nullptr;
 }
 
-static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
+static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t* ed)
 {
 	Edict* ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
@@ -1663,7 +1663,7 @@ static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t *ed)
 static void G_SpawnAIPlayers (const Player &player, int numSpawn)
 {
 	int i;
-	const equipDef_t *ed = G_GetEquipmentForAISpawn(player.getTeam());
+	const equipDef_t* ed = G_GetEquipmentForAISpawn(player.getTeam());
 
 	for (i = 0; i < numSpawn; i++) {
 		if (G_SpawnAIPlayer(player, ed) == nullptr)
@@ -1691,7 +1691,7 @@ void AI_CheckRespawn (int team)
 	const int spawned = level.initialAlienActorsSpawned;
 	const int alive = level.num_alive[team];
 	int diff = spawned - alive;
-	const equipDef_t *ed = G_GetEquipmentForAISpawn(team);
+	const equipDef_t* ed = G_GetEquipmentForAISpawn(team);
 
 	while (diff > 0) {
 		const Player *player = G_GetPlayerForTeam(team);

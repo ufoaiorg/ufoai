@@ -165,7 +165,7 @@ public:
 
 	AI_t AI; 					/**< The character's artificial intelligence */
 
-	pos3_t *forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
+	pos3_t* forbiddenListPos;	/**< this is used for e.g. misc_models with the solid flag set - this will
 								 * hold a list of grid positions that are blocked by the aabb of the model */
 	int forbiddenListSize;		/**< amount of entries in the forbiddenListPos */
 

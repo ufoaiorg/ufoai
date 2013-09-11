@@ -440,7 +440,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
 	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
-		const fireDef_t *fdArray = weapon->getFiredefs();
+		const fireDef_t* fdArray = weapon->getFiredefs();
 		if (fdArray == nullptr)
 			return nullptr;
 
@@ -465,7 +465,7 @@ bool ReactionFire::isInWeaponRange (const Edict* shooter, const Edict* target, c
  */
 static int G_ReactionFireGetTUsForItem (const Edict* shooter, const Edict* target)
 {
-	const fireDef_t *fd = rf.getFireDef(shooter);
+	const fireDef_t* fd = rf.getFireDef(shooter);
 	if (!fd)
 		return -1;
 
@@ -491,7 +491,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
 	const Item *weapon = actor->getHandItem(fmSettings->getHand());
 	if (!weapon)
 		return false;
-	const fireDef_t *fd = weapon->getFiredefs();
+	const fireDef_t* fd = weapon->getFiredefs();
 	if (fd == nullptr)
 		return false;
 
@@ -511,7 +511,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
  * @param[in] hand The hand that should be used for reaction fire
  * @param[in] od The object/weapon for the reaction fire
  */
-void G_ReactionFireSettingsUpdate (Edict* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
+void G_ReactionFireSettingsUpdate (Edict* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od)
 {
 	ent->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
 
@@ -537,7 +537,7 @@ void G_ReactionFireSettingsUpdate (Edict* ent, fireDefIndex_t fmIdx, actorHands_
 static bool G_ActorHasEnoughTUsReactionFire (const Edict* ent)
 {
 	const int TUs = G_ActorGetTUForReactionFire(ent);
-	const chrReservations_t *res = &ent->chr.reservedTus;
+	const chrReservations_t* res = &ent->chr.reservedTus;
 	return ent->TU - TUs >= res->shot + res->crouch;
 }
 
@@ -561,7 +561,7 @@ static bool G_ReactionFireSettingsSetDefault (Edict* ent)
 	if (!item)
 		return false;
 
-	const objDef_t *weapon = item->getReactionFireWeaponType();
+	const objDef_t* weapon = item->getReactionFireWeaponType();
 	if (!weapon)
 		return false;
 

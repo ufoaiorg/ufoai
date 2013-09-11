@@ -128,7 +128,7 @@ void G_ActorSetClientAction (Edict* actor, Edict* ent)
  */
 int G_ActorGetReservedTUs (const Edict* ent)
 {
-	const chrReservations_t *res = &ent->chr.reservedTus;
+	const chrReservations_t* res = &ent->chr.reservedTus;
 	return res->reaction + res->shot + res->crouch;
 }
 
@@ -160,7 +160,7 @@ int G_ActorGetTUForReactionFire (const Edict* ent)
 	assert(weapon);
 	assert(weapon->def());
 
-	const fireDef_t *fd = weapon->getFiredefs();
+	const fireDef_t* fd = weapon->getFiredefs();
 	assert(fd);
 	return G_ActorGetModifiedTimeForFiredef(ent, &fd[fm->getFmIdx()], true);
 }
@@ -536,7 +536,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict* actor, const invDef_t *fromContType, Item *fItem, const invDef_t *toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item *fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
 {
 	Edict* floor;
 	bool newFloor;
@@ -747,9 +747,9 @@ bool G_ActorInvMove (Edict* actor, const invDef_t *fromContType, Item *fItem, co
  * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (Edict* ent, const invDef_t *invDef)
+void G_ActorReload (Edict* ent, const invDef_t* invDef)
 {
-	const objDef_t *weapon;
+	const objDef_t* weapon;
 
 	if (ent->getContainer(invDef->id)) {
 		weapon = ent->getContainer(invDef->id)->def();
@@ -768,7 +768,7 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 
 	/* search for clips and select the one that is available easily */
 	/* also try the temp containers */
-	const invDef_t *bestContainer = nullptr;
+	const invDef_t* bestContainer = nullptr;
 	Item *ammoItem = nullptr;
 	int tu = 100;
 	const Container *cont = nullptr;
@@ -795,7 +795,7 @@ void G_ActorReload (Edict* ent, const invDef_t *invDef)
 		G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
 }
 
-int G_ActorGetModifiedTimeForFiredef (const Edict* const ent, const fireDef_t *const fd, const bool reaction)
+int G_ActorGetModifiedTimeForFiredef (const Edict* const ent, const fireDef_t* const fd, const bool reaction)
 {
 	return fd->time * G_ActorGetInjuryPenalty(ent, reaction ? MODIFIER_REACTION : MODIFIER_SHOOTING);
 }

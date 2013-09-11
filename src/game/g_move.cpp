@@ -42,7 +42,7 @@ static const float FALLING_DAMAGE_FACTOR = 10.0f;
  * @brief The forbidden list is a list of entity positions that are occupied by an entity.
  * This list is checked everytime an actor wants to walk there.
  */
-static pos_t *forbiddenList[MAX_FORBIDDENLIST];
+static pos_t* forbiddenList[MAX_FORBIDDENLIST];
 static int forbiddenListLength;
 
 /**
@@ -112,7 +112,7 @@ void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int dist
  * @sa G_MoveCalc
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalcLocal (pathing_t *pt, int team, const Edict* movingActor, const pos3_t from, int distance)
+void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
 	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
@@ -156,7 +156,7 @@ void G_ActorFall (Edict* ent)
  * @param max The index of the next step in dvtab
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t *dvtab, int max)
+static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t* dvtab, int max)
 {
 	if (visState & VIS_STOP)
 		return true;
@@ -215,7 +215,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 	gi.WriteShort(contentFlags);
 }
 
-static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState, pos3_t pos)
+static int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos)
 {
 	int dvec;
 	int numdv = 0;
@@ -242,7 +242,7 @@ static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-pos_t G_ActorMoveLength (const Edict* ent, const pathing_t *path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t to, bool stored)
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);

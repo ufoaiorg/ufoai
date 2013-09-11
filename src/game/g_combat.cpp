@@ -169,7 +169,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
  * @note Called only from G_Damage().
  * @sa G_Damage
  */
-static void G_UpdateShotMock (shot_mock_t *mock, const Edict* shooter, const Edict* struck, int damage)
+static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edict* struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
@@ -202,10 +202,10 @@ static void G_UpdateShotMock (shot_mock_t *mock, const Edict* shooter, const Edi
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
  */
-static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t *fd, const Edict* target)
+static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, const Edict* target)
 {
-	chrScoreMission_t *scoreMission;
-	chrScoreGlobal_t *scoreGlobal;
+	chrScoreMission_t* scoreMission;
+	chrScoreGlobal_t* scoreGlobal;
 	killtypes_t type;
 
 	if (!attacker || !target)
@@ -252,12 +252,12 @@ static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t *fd, co
  * @param[in] fd the used fire definition.
  * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.
  */
-static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDef_t *fd, const int splashDamage)
+static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDef_t* fd, const int splashDamage)
 {
 	if (!attacker || !target || !fd)
 		return;
 
-	chrScoreMission_t *score = attacker->chr.scoreMission;
+	chrScoreMission_t* score = attacker->chr.scoreMission;
 	/* Abort if no player team. */
 	if (!score)
 		return;
@@ -314,7 +314,7 @@ int G_ApplyProtection (const Edict* target, const byte dmgWeight, int damage)
 {
 	const int naturalProtection = target->chr.teamDef->resistance[dmgWeight];
 	if (target->getArmour()) {
-		const objDef_t *armourDef = target->getArmour()->def();
+		const objDef_t* armourDef = target->getArmour()->def();
 		const short armourProtection = armourDef->protection[dmgWeight];
 		const short totalProtection = armourProtection + naturalProtection;
 		damage = std::min(std::max(0, damage - armourProtection), std::max(1, damage - totalProtection));
@@ -336,7 +336,7 @@ int G_ApplyProtection (const Edict* target, const byte dmgWeight, int damage)
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (Edict* target, const fireDef_t *fd, int damage, Edict* attacker, shot_mock_t *mock, const vec3_t impact)
+static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* attacker, shot_mock_t* mock, const vec3_t impact)
 {
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -442,7 +442,7 @@ static void G_Damage (Edict* target, const fireDef_t *fd, int damage, Edict* att
 	G_CheckDeathOrKnockout(target, attacker, fd, damage);
 }
 
-void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t *fd, int damage)
+void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t* fd, int damage)
 {
 	/* Sanity check */
 	target->HP = std::min(std::max(target->HP, 0), target->chr.maxHP);
@@ -479,7 +479,7 @@ void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t *fd
  * @todo Such function should check notonly fire - it should be generic function to check
  * surface vulnerability for given damagetype.
  */
-static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fireDef_t *fd)
+static inline bool G_FireAffectedSurface (const cBspSurface_t* surface, const fireDef_t* fd)
 {
 	if (!surface)
 		return false;
@@ -501,7 +501,7 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fi
  * @param[in,out] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (Edict* ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t *tr)
+static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot_mock_t* mock, const trace_t* tr)
 {
 	Edict* check = nullptr;
 	vec3_t center;
@@ -621,8 +621,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t *fd,
-	const vec3_t from, const pos3_t at, int mask, const Item *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
+static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* fd,
+	const vec3_t from, const pos3_t at, int mask, const Item *weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent))
@@ -839,8 +839,8 @@ static void DumpAllEntities (void)
  * @param[out] impact The location of the target (-center?)
  * @sa CL_TargetingStraight
  */
-static void G_ShootSingle (Edict* ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
-	int mask, const Item *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
+static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, const pos3_t at,
+	int mask, const Item *weapon, shot_mock_t* mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent)) {
@@ -1028,7 +1028,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t *fd, const vec3_t from, c
 	}
 }
 
-void G_GetShotOrigin (const Edict* shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin)
+void G_GetShotOrigin (const Edict* shooter, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
 	gi.GridPosToVec(shooter->fieldSize, shooter->pos, shotOrigin);
@@ -1057,9 +1057,9 @@ void G_GetShotOrigin (const Edict* shooter, const fireDef_t *fd, const vec3_t di
  * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
-static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t firemode, Item **weapon, containerIndex_t *container, const fireDef_t** fd)
+static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t firemode, Item **weapon, containerIndex_t* container, const fireDef_t** fd)
 {
-	const fireDef_t *fdArray;
+	const fireDef_t* fdArray;
 	Item *item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
@@ -1111,14 +1111,14 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
  * damage might reduce the health of your target.
  */
 bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_types_t shootType,
-		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
+		fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align)
 {
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
 	const bool quiet = (mock != nullptr) || G_IsAIPlayer(&player);
 
 	Item *weapon = nullptr;
-	const fireDef_t *fd = nullptr;
+	const fireDef_t* fd = nullptr;
 	containerIndex_t container = 0;
 	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
@@ -1276,7 +1276,7 @@ bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_typ
 				G_EventInventoryAmmo(*ent, weapon->ammoDef(), ammo, shootType);
 				weapon->setAmmoLeft(ammo);
 			} else { /* delete the knife or the rifle without ammo */
-				const invDef_t *invDef = INVDEF(container);
+				const invDef_t* invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = true;	/* for assert only */
 				game.i.emptyContainer(&ent->chr.inv, invDef->id);
@@ -1288,7 +1288,7 @@ bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_typ
 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->def()->thrown && weapon->def()->oneshot && weapon->def()->deplete) {
-			const invDef_t *invDef = INVDEF(container);
+			const invDef_t* invDef = INVDEF(container);
 			if (itemAlreadyRemoved)
 				gi.Error("Item %s is already removed", weapon->def()->id);
 			assert(invDef->single);

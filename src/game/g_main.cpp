@@ -40,88 +40,88 @@ game_import_t gi;
 game_export_t globals;
 
 #ifndef HARD_LINKED_GAME
-cvar_t *sv_maxclients;
-cvar_t *sv_dedicated;
-cvar_t *developer;
+cvar_t* sv_maxclients;
+cvar_t* sv_dedicated;
+cvar_t* developer;
 #endif
 
-cvar_t *logstats;
+cvar_t* logstats;
 FILE *logstatsfile;
 
-cvar_t *sv_needpass;
-cvar_t *sv_maxplayersperteam;
-cvar_t *sv_maxsoldiersperteam;
-cvar_t *sv_maxsoldiersperplayer;
-cvar_t *sv_enablemorale;
-cvar_t *sv_roundtimelimit;
-cvar_t *sv_maxentities;
-cvar_t *sv_filterban;
-cvar_t *sv_maxteams;
-cvar_t *sv_ai;
-cvar_t *sv_teamplay;
-cvar_t *sv_hurtaliens;
-cvar_t *sv_shot_origin;
-static cvar_t *sv_cheats;
-static cvar_t *sv_send_edicts;
+cvar_t* sv_needpass;
+cvar_t* sv_maxplayersperteam;
+cvar_t* sv_maxsoldiersperteam;
+cvar_t* sv_maxsoldiersperplayer;
+cvar_t* sv_enablemorale;
+cvar_t* sv_roundtimelimit;
+cvar_t* sv_maxentities;
+cvar_t* sv_filterban;
+cvar_t* sv_maxteams;
+cvar_t* sv_ai;
+cvar_t* sv_teamplay;
+cvar_t* sv_hurtaliens;
+cvar_t* sv_shot_origin;
+static cvar_t* sv_cheats;
+static cvar_t* sv_send_edicts;
 
-cvar_t *password;
+cvar_t* password;
 
-cvar_t *ai_alien;
-cvar_t *ai_civilian;
-cvar_t *ai_equipment;
-cvar_t *ai_numaliens;
-cvar_t *ai_numcivilians;
-cvar_t *ai_numactors;
+cvar_t* ai_alien;
+cvar_t* ai_civilian;
+cvar_t* ai_equipment;
+cvar_t* ai_numaliens;
+cvar_t* ai_numcivilians;
+cvar_t* ai_numactors;
 
 /* morale cvars */
-cvar_t *mob_death;
-cvar_t *mob_wound;
-cvar_t *mof_watching;
-cvar_t *mof_teamkill;
-cvar_t *mof_civilian;
-cvar_t *mof_enemy;
-cvar_t *mor_pain;
+cvar_t* mob_death;
+cvar_t* mob_wound;
+cvar_t* mof_watching;
+cvar_t* mof_teamkill;
+cvar_t* mof_civilian;
+cvar_t* mof_enemy;
+cvar_t* mor_pain;
 
 /*everyone gets this times morale damage */
-cvar_t *mor_default;
+cvar_t* mor_default;
 
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t *mor_distance;
+cvar_t* mor_distance;
 
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t *mor_victim;
+cvar_t* mor_victim;
 
 /*at this distance the following two get halfed (exponential scale) */
-cvar_t *mor_attacker;
+cvar_t* mor_attacker;
 
 /* how much the morale depends on the size of the damaged team */
-cvar_t *mon_teamfactor;
+cvar_t* mon_teamfactor;
 
-cvar_t *mor_regeneration;
-cvar_t *mor_shaken;
-cvar_t *mor_panic;
-cvar_t *mor_brave;
+cvar_t* mor_regeneration;
+cvar_t* mor_shaken;
+cvar_t* mor_panic;
+cvar_t* mor_brave;
 
-cvar_t *m_sanity;
-cvar_t *m_rage;
-cvar_t *m_rage_stop;
-cvar_t *m_panic_stop;
+cvar_t* m_sanity;
+cvar_t* m_rage;
+cvar_t* m_rage_stop;
+cvar_t* m_panic_stop;
 
-cvar_t *g_endlessaliens;
-cvar_t *g_ailua;
-cvar_t *g_aihumans;
-cvar_t *g_aidebug;
-cvar_t *g_drawtraces;
-cvar_t *g_nodamage;
-cvar_t *g_notu;
-cvar_t *g_nospawn;
-cvar_t *g_actorspeed;
-cvar_t *g_lastseen;
-cvar_t *flood_msgs;
-cvar_t *flood_persecond;
-cvar_t *flood_waitdelay;
+cvar_t* g_endlessaliens;
+cvar_t* g_ailua;
+cvar_t* g_aihumans;
+cvar_t* g_aidebug;
+cvar_t* g_drawtraces;
+cvar_t* g_nodamage;
+cvar_t* g_notu;
+cvar_t* g_nospawn;
+cvar_t* g_actorspeed;
+cvar_t* g_lastseen;
+cvar_t* flood_msgs;
+cvar_t* flood_persecond;
+cvar_t* flood_waitdelay;
 
-cvar_t *g_difficulty;
+cvar_t* g_difficulty;
 
 static const int TAG_INVENTORY = 2389;
 
@@ -256,7 +256,7 @@ static void G_Init (void)
 	/* initialize all players for this game */
 	/* game.sv_maxplayersperteam for human controlled players
 	 * + game.sv_maxplayer for ai */
-	game.players = (player_t *)G_TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
+	game.players = (player_t* )G_TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.maxplayersperteam = game.sv_maxplayersperteam;
 
@@ -376,7 +376,7 @@ static bool G_RunFrame (void)
 /**
  * @brief Returns a pointer to the structure with all entry points and global variables
  */
-game_export_t *GetGameAPI (game_import_t *import)
+game_export_t* GetGameAPI (game_import_t* import)
 {
 	gi = *import;
 	srand(gi.seed);

@@ -536,7 +536,7 @@ void G_ClientStateChange (const Player &player, Edict* ent, int reqState, bool c
  */
 bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
 {
-	const objDef_t *weapon;
+	const objDef_t* weapon;
 
 	if (ent->getContainer(containerID)) {
 		weapon = ent->getContainer(containerID)->def();
@@ -573,7 +573,7 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
 		return;
 
 	/* search for weapons and select the one that is available easily */
-	const invDef_t *bestContainer = nullptr;
+	const invDef_t* bestContainer = nullptr;
 	Item *theWeapon = nullptr;
 	int tu = 100;
 	const Container *cont = nullptr;
@@ -595,7 +595,7 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
 	}
 
 	/* send request */
-	const invDef_t *invDef = INVDEF(CID_RIGHT);
+	const invDef_t* invDef = INVDEF(CID_RIGHT);
 	if (bestContainer)
 		G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
 }
@@ -689,8 +689,8 @@ int G_ClientAction (Player &player)
 		if (!isValidContId(from) || !isValidContId(to)) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
-			const invDef_t *fromPtr = INVDEF(from);
-			const invDef_t *toPtr = INVDEF(to);
+			const invDef_t* fromPtr = INVDEF(from);
+			const invDef_t* toPtr = INVDEF(to);
 			Item *fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
 			if (fromItem)
 				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
@@ -1109,7 +1109,7 @@ static void G_ClientReadInventory (Edict* ent)
 	int nr = gi.ReadShort();
 
 	for (; nr-- > 0;) {
-		const invDef_t *container;
+		const invDef_t* container;
 		Item item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
@@ -1181,7 +1181,7 @@ static void G_ClientSkipActorInfo (void)
 	invDef_t container;
 	Item item;
 	int x, y;
-	const invDef_t *c = &container;
+	const invDef_t* c = &container;
 
 	G_ClientReadCharacter(&ent);
 

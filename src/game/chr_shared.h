@@ -138,7 +138,7 @@ typedef struct chrScoreGlobal_s {
 class FiremodeSettings {
 	actorHands_t _hand;		/**< the used hand, an enum */
 	fireDefIndex_t _fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
-	const objDef_t *_weapon;
+	const objDef_t* _weapon;
 
 public:
 
@@ -153,7 +153,7 @@ public:
 		return _fmIdx;
 	}
 
-	inline const objDef_t *getWeapon () const {
+	inline const objDef_t* getWeapon () const {
 		return _weapon;
 	}
 
@@ -165,7 +165,7 @@ public:
 		_hand = hand;
 	}
 
-	inline void set (const actorHands_t hand, const fireDefIndex_t fmIdx, const objDef_t *weapon) {
+	inline void set (const actorHands_t hand, const fireDefIndex_t fmIdx, const objDef_t* weapon) {
 		_hand = hand;
 		_fmIdx = fmIdx;
 		_weapon = weapon;
@@ -291,7 +291,7 @@ public:
 
 typedef struct teamNames_s {
 	char id[MAX_VAR];						/**< id from script file. */
-	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
+	linkedList_t* names[NAME_NUM_TYPES];	/**< Names list per gender. */
 	int numNames[NAME_NUM_TYPES];			/**< Amount of names in this list for all different genders. */
 } teamNames_t;
 
@@ -302,7 +302,7 @@ typedef struct teamDef_s {
 	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
 	char footstepSound[MAX_VAR];
 
-	linkedList_t *const *names;	/**< Names list per gender. */
+	linkedList_t* const *names;	/**< Names list per gender. */
 	const int* numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
@@ -313,10 +313,10 @@ typedef struct teamDef_s {
 		int   headSkin;
 	};
 
-	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
+	linkedList_t* models[NAME_LAST];	/**< Models list per gender. */
 	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
 
-	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
+	linkedList_t* sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
 	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
 
 	int team;	/**< What is the race of this team? */
@@ -324,7 +324,7 @@ typedef struct teamDef_s {
 	bool robot;
 	bool armour;	/**< Does this team use armour. */
 	bool weapons;	/**< Does this team use weapons. */
-	const objDef_t *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	const objDef_t* onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
 							 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefinitions */
@@ -335,7 +335,7 @@ typedef struct teamDef_s {
 
 	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
 
-	const chrTemplate_t *characterTemplates[MAX_TEMPLATES_PER_TEAM];
+	const chrTemplate_t* characterTemplates[MAX_TEMPLATES_PER_TEAM];
 	int numTemplates;
 
 	const BodyData *bodyTemplate;
@@ -358,7 +358,7 @@ typedef struct woundInfo_s {
 
 #define MAX_CHARACTER_IMPLANTS 4
 typedef struct implant_s {
-	const implantDef_t *def;	/**< if @c null, the slot is still empty */
+	const implantDef_t* def;	/**< if @c null, the slot is still empty */
 	int installedTime;	/**< the remaining days until the implant is ready */
 	int removedTime;	/**< the remaining days until the removal is ready */
 	int trigger;
@@ -384,13 +384,13 @@ typedef struct character_s {
 	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
-	chrScoreMission_t *scoreMission;	/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's nullptr. */
+	chrScoreMission_t* scoreMission;	/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's nullptr. */
 
 	actorSizeEnum_t fieldSize;
 
 	Inventory inv;				/**< the inventory */
 
-	const teamDef_t *teamDef;		/**< Pointer to team definition. */
+	const teamDef_t* teamDef;		/**< Pointer to team definition. */
 	int gender;						/**< Gender index. */
 	chrReservations_t reservedTus;	/**< Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	FiremodeSettings RFmode;		/**< Stores the firemode to be used for reaction fire (if the fireDef allows that) */
@@ -405,12 +405,12 @@ typedef struct character_s {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-const chrTemplate_t *CHRSH_GetTemplateByID(const teamDef_t *teamDef, const char* templateId);
-void CHRSH_CharGenAbilitySkills(character_t *chr, bool multiplayer, const char* templateId = "") __attribute__((nonnull));
+const chrTemplate_t* CHRSH_GetTemplateByID(const teamDef_t* teamDef, const char* templateId);
+void CHRSH_CharGenAbilitySkills(character_t* chr, bool multiplayer, const char* templateId = "") __attribute__((nonnull));
 const char* CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 const char* CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 bool CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 bool CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
-bool CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
+bool CHRSH_IsArmourUseableForTeam(const objDef_t* od, const teamDef_t* teamDef);
 const implant_t* CHRSH_ApplyImplant(character_t& chr, const implantDef_t& implant);
 void CHRSH_UpdateImplants(character_t& chr);

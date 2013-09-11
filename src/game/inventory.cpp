@@ -54,7 +54,7 @@ void InventoryInterface::removeInvList (Item *invList)
 	}
 }
 
-Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *container)
+Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t* container)
 {
 	Item *newEntry = static_cast<Item*>(alloc(sizeof(Item)));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
@@ -89,7 +89,7 @@ Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t *cont
  * @sa removeFromInventory
  * @return the @c Item pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
-Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y, int amount)
+Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t* container, int x, int y, int amount)
 {
 	if (!item->def())
 		return nullptr;
@@ -150,7 +150,7 @@ Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* cons
  * @return false If nothing was removed or an error occurred.
  * @sa addToInventory
  */
-bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t *container, Item *fItem)
+bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t* container, Item *fItem)
 {
 	assert(inv);
 	assert(container);
@@ -237,7 +237,7 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t *from, Item *fItem, const invDef_t *to, int tx, int ty, int* TU, Item ** uponItem)
+inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t* from, Item *fItem, const invDef_t* to, int tx, int ty, int* TU, Item ** uponItem)
 {
 	Item *ic;
 
@@ -473,7 +473,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
  * @sa findSpace
  * @sa addToInventory
  */
-bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container)
+bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t* container)
 {
 	int x, y;
 
@@ -554,7 +554,7 @@ float InventoryInterface::GetInventoryState (const Inventory *inventory, int &sl
 		for (Item *ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
 			weight += ic->getWeight();
-			const fireDef_t *fireDef = (*ic).getSlowestFireDef();
+			const fireDef_t* fireDef = (*ic).getSlowestFireDef();
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
 		}
@@ -573,11 +573,11 @@ float InventoryInterface::GetInventoryState (const Inventory *inventory, int &sl
  * @param[in] maxWeight The max weight this actor is allowed to carry.
  * @sa isLoadableInWeapon()
  */
-int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight)
+int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t* ed, int maxWeight)
 {
 	Inventory* const inv = &chr->inv;
 	const int speed = chr->score.skills[ABILITY_SPEED];
-	const objDef_t *ammo = nullptr;
+	const objDef_t* ammo = nullptr;
 	bool allowLeft;
 	bool packed;
 	int ammoMult = 1;
@@ -605,7 +605,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		int totalAvailableAmmo = 0;
 		int i;
 		for (i = 0; i < csi->numODs; i++) {
-			const objDef_t *obj = INVSH_GetItemByIDX(i);
+			const objDef_t* obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && obj->isLoadableInWeapon(weapon)) {
 				totalAvailableAmmo++;
 			}
@@ -613,7 +613,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		if (totalAvailableAmmo) {
 			int randNumber = rand() % totalAvailableAmmo;
 			for (i = 0; i < csi->numODs; i++) {
-				const objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t* obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->isLoadableInWeapon(weapon)) {
 					randNumber--;
 					if (randNumber < 0) {
@@ -695,12 +695,12 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
  * @param[in] td Pointer to a team definition.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-void InventoryInterface::EquipActorMelee (Inventory* const inv, const teamDef_t *td)
+void InventoryInterface::EquipActorMelee (Inventory* const inv, const teamDef_t* td)
 {
 	assert(td->onlyWeapon);
 
 	/* Get weapon def */
-	const objDef_t *obj = td->onlyWeapon;
+	const objDef_t* obj = td->onlyWeapon;
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	Item item(obj);
@@ -718,7 +718,7 @@ void InventoryInterface::EquipActorMelee (Inventory* const inv, const teamDef_t 
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-void InventoryInterface::EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
+void InventoryInterface::EquipActorRobot (Inventory* const inv, const objDef_t* weapon)
 {
 	assert(weapon);
 
@@ -754,10 +754,10 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
+void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* ed, int maxWeight)
 {
 	Inventory* const inv = &chr->inv;
-	const teamDef_t *td = chr->teamDef;
+	const teamDef_t* td = chr->teamDef;
 	const int speed = chr->score.skills[ABILITY_SPEED];
 	int i;
 	const int numEquip = lengthof(ed->numItems);
@@ -768,13 +768,13 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		int sum;
 		int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
 								* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
-		const objDef_t *primaryWeapon = nullptr;
+		const objDef_t* primaryWeapon = nullptr;
 		int hasWeapon = 0;
 		/* Primary weapons */
 		const int maxWeaponIdx = std::min(this->csi->numODs - 1, numEquip - 1);
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
-			const objDef_t *obj = INVSH_GetItemByIDX(i);
+			const objDef_t* obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && obj->weapon && obj->fireTwoHanded && obj->isPrimary) {
 				randNumber -= ed->numItems[i];
 				missedPrimary += ed->numItems[i];
@@ -814,9 +814,9 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		/* Sidearms (secondary weapons with reload). */
 		do {
 			int randNumber = rand() % 100;
-			const objDef_t *secondaryWeapon = nullptr;
+			const objDef_t* secondaryWeapon = nullptr;
 			for (i = 0; i < this->csi->numODs; i++) {
-				const objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t* obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isReloadable() && !obj->deplete && obj->isSecondary) {
 					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
@@ -848,7 +848,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		 * have one misc if it fits your backpack */
 		sum = 0;
 		for (i = 0; i < this->csi->numODs; i++) {
-			const objDef_t *obj = INVSH_GetItemByIDX(i);
+			const objDef_t* obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 			 && (!obj->isReloadable() || obj->deplete)) || obj->isMisc)) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
@@ -860,9 +860,9 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		if (sum) {
 			do {
 				int randNumber = rand() % sum;
-				const objDef_t *secondaryWeapon = nullptr;
+				const objDef_t* secondaryWeapon = nullptr;
 				for (i = 0; i < this->csi->numODs; i++) {
-					const objDef_t *obj = INVSH_GetItemByIDX(i);
+					const objDef_t* obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 					 && (!obj->isReloadable() || obj->deplete)) || obj->isMisc)) {
 						randNumber -= ed->numItems[i] ? std::max(ed->numItems[i] % 100, 1) : 0;
@@ -885,11 +885,11 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		/* If no weapon at all, bad guys will always find a blade to wield. */
 		if (!hasWeapon) {
 			int maxPrice = 0;
-			const objDef_t *blade = nullptr;
+			const objDef_t* blade = nullptr;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
 					ed->id, invName);
 			for (i = 0; i < this->csi->numODs; i++) {
-				const objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t* obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->isReloadable()) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
@@ -915,7 +915,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		do {
 			int randNumber = rand() % 100;
 			for (i = 0; i < this->csi->numODs; i++) {
-				const objDef_t *armour = INVSH_GetItemByIDX(i);
+				const objDef_t* armour = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && armour->isArmour()) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
@@ -942,7 +942,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 		int randNumber = rand() % 10;
 		for (i = 0; i < this->csi->numODs; i++) {
 			if (ed->numItems[i]) {
-				const objDef_t *miscItem = INVSH_GetItemByIDX(i);
+				const objDef_t* miscItem = INVSH_GetItemByIDX(i);
 				if (miscItem->isMisc && !miscItem->weapon) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
@@ -950,7 +950,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t *e
 						const Item item(miscItem, oneShot ? miscItem : nullptr, oneShot ? miscItem->ammo : NONE_AMMO);
 						containerIndex_t container;
 						int tuNeed;
-						const fireDef_t *itemFd = item.getSlowestFireDef();
+						const fireDef_t* itemFd = item.getSlowestFireDef();
 						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
 
@@ -994,7 +994,7 @@ int InventoryInterface::GetUsedSlots ()
  * @sa G_Init
  * @sa CL_InitLocal
  */
-void InventoryInterface::initInventory (const char* name, const csi_t *csi, const inventoryImport_t *import)
+void InventoryInterface::initInventory (const char* name, const csi_t* csi, const inventoryImport_t* import)
 {
 	const Item item;
 

@@ -165,7 +165,7 @@ typedef Edict edict_t;
 typedef struct game_import_s {
 	/* client/server information */
 	int seed;	/**< random seed */
-	const csi_t *csi;
+	const csi_t* csi;
 
 	/* special messages */
 
@@ -174,7 +174,7 @@ typedef struct game_import_s {
 	/** print output to server console */
 	void (IMPORT *DPrintf) (const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
-	void (IMPORT *PlayerPrintf) (const player_t *player, int printlevel, const char* fmt, va_list ap);
+	void (IMPORT *PlayerPrintf) (const player_t* player, int printlevel, const char* fmt, va_list ap);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
@@ -191,14 +191,14 @@ typedef struct game_import_s {
 	void (IMPORT *SetInlineModelOrientation) (const char* name, const vec3_t origin, const vec3_t angles);
 	void (IMPORT *GetInlineModelAABB) (const char* name, AABB& aabb);
 
-	void (IMPORT *SetModel) (edict_t *ent, const char* name);
+	void (IMPORT *SetModel) (edict_t* ent, const char* name);
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if nullptr then a line is used instead
 	 * @return the trace data
 	 */
-	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passent, int contentmask);
+	trace_t (IMPORT *Trace) (const vec3_t start, const AABB &box, const vec3_t end, const edict_t* passent, int contentmask);
 
 	int (IMPORT *PointContents) (const vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
@@ -207,9 +207,9 @@ typedef struct game_import_s {
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
-	void (IMPORT *LinkEdict) (edict_t *ent);
+	void (IMPORT *LinkEdict) (edict_t* ent);
 	/** call before removing an interactive edict */
-	void (IMPORT *UnlinkEdict) (edict_t *ent);
+	void (IMPORT *UnlinkEdict) (edict_t* ent);
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t** list, int maxcount);
 
 	/** @brief fast version of a line trace but without including entities */
@@ -218,16 +218,16 @@ typedef struct game_import_s {
 	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 
-	void (IMPORT *GridCalcPathing) (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t**  forbiddenList, int forbiddenListLength);
-	void (IMPORT *MoveStore) (pathing_t *path);
-	pos_t (IMPORT *MoveLength) (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored);
-	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);
+	void (IMPORT *GridCalcPathing) (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, pos_t**  forbiddenList, int forbiddenListLength);
+	void (IMPORT *MoveStore) (pathing_t* path);
+	pos_t (IMPORT *MoveLength) (const pathing_t* path, const pos3_t to, byte crouchingState, bool stored);
+	int (IMPORT *MoveNext) (const pathing_t* path, const pos3_t from, byte crouchingState);
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
 	pos_t (IMPORT *GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (const char* name, const GridBox& box, const char** list);
 	bool (IMPORT *CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
-	bool (IMPORT *GridShouldUseAutostand) (const pathing_t *path, const pos3_t pos);
+	bool (IMPORT *GridShouldUseAutostand) (const pathing_t* path, const pos3_t pos);
 	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */
@@ -253,7 +253,7 @@ typedef struct game_import_s {
 	void (IMPORT *EndEvents) (void);
 	void (IMPORT *AddEvent) (unsigned int mask, int eType, int entnum);
 	int (IMPORT *GetEvent) (void);
-	edict_t *(IMPORT *GetEventEdict) (void);
+	edict_t* (IMPORT *GetEventEdict) (void);
 
 	void (IMPORT *QueueEvent) (unsigned int mask, int eType, int entnum);
 	void (IMPORT *QueueWriteByte) (byte c);
@@ -279,7 +279,7 @@ typedef struct game_import_s {
 	bool (IMPORT *UnregisterConstVariable) (const char* name);
 
 	/* misc functions */
-	void (IMPORT *GetCharacterValues) (const char* teamDefinition, character_t *chr);
+	void (IMPORT *GetCharacterValues) (const char* teamDefinition, character_t* chr);
 
 	/* managed memory allocation */
 	void* (IMPORT *TagMalloc) (int size, int tag, const char* file, int line);
@@ -287,8 +287,8 @@ typedef struct game_import_s {
 	void (IMPORT *FreeTags) (int tag, const char* file, int line);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
+	cvar_t* (IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
+	cvar_t* (IMPORT *Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 	const char* (IMPORT *Cvar_String) (const char* varName);
 
 	/* ClientCommand and ServerCommand parameter access */
@@ -314,7 +314,7 @@ typedef struct game_export_s {
 	/* each new level entered will cause a call to G_SpawnEntities */
 	void (EXPORT *SpawnEntities) (const char* mapname, bool day, const char* entstring);
 
-	bool (EXPORT *ClientConnect) (player_t *client, char* userinfo, size_t userinfoSize);
+	bool (EXPORT *ClientConnect) (player_t* client, char* userinfo, size_t userinfoSize);
 	bool (EXPORT *ClientBegin) (player_t &client);
 	void (EXPORT *ClientStartMatch) (player_t &client);
 	void (EXPORT *ClientUserinfoChanged) (player_t &client, const char* userinfo);
@@ -326,7 +326,7 @@ typedef struct game_export_s {
 	void (EXPORT *ClientTeamInfo) (const player_t &client);
 	void (EXPORT *ClientInitActorStates) (const player_t &client);
 	int (EXPORT *ClientGetTeamNum) (const player_t &client);
-	bool (EXPORT *ClientIsReady) (const player_t *client);	/* assert ! */
+	bool (EXPORT *ClientIsReady) (const player_t* client);	/* assert ! */
 
 	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);
@@ -345,14 +345,14 @@ typedef struct game_export_s {
 	/* can vary in size from one game to another. */
 
 	/** The size will be fixed when ge->Init() is called */
-	edict_t *edicts;
+	edict_t* edicts;
 	int edict_size;
 	int num_edicts;				/**< current number, <= max_edicts */
 	int max_edicts;
 
-	player_t *players;
+	player_t* players;
 	int player_size;
 	int maxplayersperteam;
 } game_export_t;
 
-extern "C" game_export_t *GetGameAPI(game_import_t *import);
+extern "C" game_export_t* GetGameAPI(game_import_t* import);

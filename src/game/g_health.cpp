@@ -56,7 +56,7 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
 	G_TakeDamage(target, damage);
 	if (damage > 0 && target->HP > 0) {
 		short bodyPart;
-		const teamDef_t *const teamDef = target->chr.teamDef;
+		const teamDef_t* const teamDef = target->chr.teamDef;
 		if (impact) {
 			/* Direct hit */
 			const byte impactDirection = G_GetImpactDirection(target, impact);
@@ -85,14 +85,14 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
  * @param[in] heal The value of the damage to heal.
  * @param[in] healerTeam The index of the team of the healer.
  */
-void G_TreatActor (Edict* target, const fireDef_t *const fd, const int heal, const int healerTeam)
+void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, const int healerTeam)
 {
 	assert(target->chr.teamDef);
 
 	/* Treat wounds */
 	if (fd->dmgweight == gi.csi->damNormal) {
 		int bodyPart, mostWounded = 0;
-		woundInfo_t *wounds = &target->chr.wounds;
+		woundInfo_t* wounds = &target->chr.wounds;
 
 		/* Find the worst not treated wound */
 		for (bodyPart = 0; bodyPart < target->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
@@ -142,7 +142,7 @@ void G_BleedWounds (const int team)
 		int bodyPart, damage = 0;
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
-		const teamDef_t *const teamDef = ent->chr.teamDef;
+		const teamDef_t* const teamDef = ent->chr.teamDef;
 		woundInfo_t &wounds = ent->chr.wounds;
 		for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
@@ -187,7 +187,7 @@ float G_ActorGetInjuryPenalty (const Edict* const ent, const modifier_types_t ty
 	int bodyPart;
 	float penalty = 0;
 
-	const teamDef_t *const teamDef = ent->chr.teamDef;
+	const teamDef_t* const teamDef = ent->chr.teamDef;
 	for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
 		const int threshold = ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart);
 		const int injury = (ent->chr.wounds.woundLevel[bodyPart] + ent->chr.wounds.treatmentLevel[bodyPart] * 0.5);

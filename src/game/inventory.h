@@ -39,33 +39,33 @@ typedef struct inventoryImport_s {
 
 class InventoryInterface
 {
-	const inventoryImport_t *import;
+	const inventoryImport_t* import;
 	Item *_invList;	/* @todo figure out WTF this is good for (Duke, 11.3.2013) */
 	Item cacheItem;
-	const csi_t *csi;
+	const csi_t* csi;
 	const char* invName;
 
 public:
 	InventoryInterface ();
 
-	void initInventory (const char* name, const csi_t *csi, const inventoryImport_t *import);
-	bool removeFromInventory (Inventory* const inv, const invDef_t *container, Item *fItem) __attribute__((warn_unused_result));
-	Item *addToInventory (Inventory *const inv, const Item* const item, const invDef_t *container, int x, int y,
+	void initInventory (const char* name, const csi_t* csi, const inventoryImport_t* import);
+	bool removeFromInventory (Inventory* const inv, const invDef_t* container, Item *fItem) __attribute__((warn_unused_result));
+	Item *addToInventory (Inventory *const inv, const Item* const item, const invDef_t* container, int x, int y,
 			int amount) __attribute__((warn_unused_result));
 
-	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t *from, Item *item, const invDef_t *to,
+	inventory_action_t moveInInventory (Inventory* const inv, const invDef_t* from, Item *item, const invDef_t* to,
 			int tx, int ty, int* TU, Item ** icp);
 
-	bool tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t *container);
+	bool tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t* container);
 	void destroyInventory (Inventory* const inv);
 	void destroyInventoryInterface(void);
 	void emptyContainer (Inventory* const inv, const containerIndex_t container);
 
-	void EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight);
+	void EquipActor (character_t* const chr, const equipDef_t* ed, int maxWeight);
 
-	void EquipActorMelee (Inventory* const inv, const teamDef_t *td);
+	void EquipActorMelee (Inventory* const inv, const teamDef_t* td);
 
-	void EquipActorRobot (Inventory* const inv, const objDef_t *weapon);
+	void EquipActorRobot (Inventory* const inv, const objDef_t* weapon);
 
 	int GetUsedSlots ();
 
@@ -80,7 +80,7 @@ protected:
 		import->Free(data);
 	}
 	void removeInvList (Item *invList);
-	Item *addInvList (Inventory *const inv, const invDef_t *container);
+	Item *addInvList (Inventory *const inv, const invDef_t* container);
 	float GetInventoryState (const Inventory *inventory, int &slowestFd);
-	int PackAmmoAndWeapon (character_t* const chr, const objDef_t *weapon, int missedPrimary, const equipDef_t *ed, int maxWeight);
+	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t* ed, int maxWeight);
 };

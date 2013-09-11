@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-static const csi_t *CSI;
+static const csi_t* CSI;
 
 /**
  * @brief Initializes client server shared data pointer. This works because the client and the server are both
@@ -36,7 +36,7 @@ static const csi_t *CSI;
  * @sa G_Init
  * @sa Com_ParseScripts
  */
-void INVSH_InitCSI (const csi_t *import)
+void INVSH_InitCSI (const csi_t* import)
 {
 	CSI = import;
 }
@@ -96,7 +96,7 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
-static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+static bool INVSH_CheckShapeCollision (const uint32_t* shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
 
@@ -141,7 +141,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t ite
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invDef_t *container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invDef_t* container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
 {
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
@@ -251,13 +251,13 @@ bool objDef_t::isBaseDefenceItem () const
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByID
  */
-const objDef_t *INVSH_GetItemByIDSilent (const char* id)
+const objDef_t* INVSH_GetItemByIDSilent (const char* id)
 {
 	if (!id)
 		return nullptr;
 
 	for (int i = 0; i < CSI->numODs; ++i) {	/* i = item index */
-		const objDef_t *item = &CSI->ods[i];
+		const objDef_t* item = &CSI->ods[i];
 		if (Q_streq(id, item->id)) {
 			return item;
 		}
@@ -268,7 +268,7 @@ const objDef_t *INVSH_GetItemByIDSilent (const char* id)
 /**
  * @brief Returns the item that belongs to the given index or @c nullptr if the index is invalid.
  */
-const objDef_t *INVSH_GetItemByIDX (int index)
+const objDef_t* INVSH_GetItemByIDX (int index)
 {
 	if (index == NONE)
 		return nullptr;
@@ -284,19 +284,19 @@ const objDef_t *INVSH_GetItemByIDX (int index)
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
-const objDef_t *INVSH_GetItemByID (const char* id)
+const objDef_t* INVSH_GetItemByID (const char* id)
 {
-	const objDef_t *od = INVSH_GetItemByIDSilent(id);
+	const objDef_t* od = INVSH_GetItemByIDSilent(id);
 	if (!od)
 		Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 
 	return od;
 }
 
-const implantDef_t *INVSH_GetImplantForObjDef (const objDef_t* od)
+const implantDef_t* INVSH_GetImplantForObjDef (const objDef_t* od)
 {
 	for (int i = 0; i < CSI->numImplants; i++) {
-		const implantDef_t *id = &CSI->implants[i];
+		const implantDef_t* id = &CSI->implants[i];
 		if (id->item == od)
 			return id;
 	}
@@ -309,13 +309,13 @@ const implantDef_t *INVSH_GetImplantForObjDef (const objDef_t* od)
  * @param[in] id the implant id in our implant definition array (csi.implants)
  * @sa INVSH_GetImplantByID
  */
-const implantDef_t *INVSH_GetImplantByIDSilent (const char* id)
+const implantDef_t* INVSH_GetImplantByIDSilent (const char* id)
 {
 	if (!id)
 		return nullptr;
 
 	for (int i = 0; i < CSI->numImplants; ++i) {
-		const implantDef_t *item = &CSI->implants[i];
+		const implantDef_t* item = &CSI->implants[i];
 		if (Q_streq(id, item->id)) {
 			return item;
 		}
@@ -328,9 +328,9 @@ const implantDef_t *INVSH_GetImplantByIDSilent (const char* id)
  * @param[in] id the implant id in our implant definition array (csi.implants)
  * @sa INVSH_GetImplantByIDSilent
  */
-const implantDef_t *INVSH_GetImplantByID (const char* id)
+const implantDef_t* INVSH_GetImplantByID (const char* id)
 {
-	const implantDef_t *implantDef = INVSH_GetImplantByIDSilent(id);
+	const implantDef_t* implantDef = INVSH_GetImplantByIDSilent(id);
 	if (!implantDef)
 		Com_Printf("INVSH_GetImplantByID: Implant \"%s\" not found.\n", id);
 
@@ -342,10 +342,10 @@ const implantDef_t *INVSH_GetImplantByID (const char* id)
  * @param[in] id ID or name of the inventory container to search for
  * @return @c nullptr if not found
  */
-const invDef_t *INVSH_GetInventoryDefinitionByID (const char* id)
+const invDef_t* INVSH_GetInventoryDefinitionByID (const char* id)
 {
 	containerIndex_t i;
-	const invDef_t *container;
+	const invDef_t* container;
 
 	for (i = 0, container = CSI->ids; i < CID_MAX; ++container, ++i)
 		if (Q_streq(id, container->name))
@@ -359,7 +359,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char* id)
  * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c nullptr.
  * @return @c true if the item can be used in the given weapon, otherwise @c false.
  */
-bool objDef_t::isLoadableInWeapon (const objDef_t *weapon) const
+bool objDef_t::isLoadableInWeapon (const objDef_t* weapon) const
 {
 	int i;
 
@@ -390,7 +390,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @return Will never return nullptr
  * @sa getFiredefs
  */
-const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
+const fireDef_t* FIRESH_GetFiredef (const objDef_t* obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
 {
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);
@@ -407,7 +407,7 @@ const fireDef_t *FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefInde
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
-void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+void INVSH_MergeShapes (uint32_t* shape, const uint32_t itemShape, const int x, const int y)
 {
 	for (int i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); ++i)
 		shape[y + i] |= ((itemShape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
@@ -419,7 +419,7 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  */
-bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
+bool INVSH_CheckShape (const uint32_t* shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
 	const int position = powf(2.0f, (float)x);
@@ -515,7 +515,7 @@ Item::Item ()
 }
 
 /** @brief Item constructor with the 3 most often changed attributes */
-Item::Item (const objDef_t *itemDef, const objDef_t *ammo, int ammoLeft)
+Item::Item (const objDef_t* itemDef, const objDef_t* ammo, int ammoLeft)
 {
 	setAmmoLeft(ammoLeft);
 	setAmount(0);
@@ -585,10 +585,10 @@ void Item::getFirstShapePosition (int* const x, int* const y) const
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef
  */
-const fireDef_t *Item::getFiredefs () const
+const fireDef_t* Item::getFiredefs () const
 {
-	const objDef_t *ammodef = ammoDef();
-	const objDef_t *weapon = def();
+	const objDef_t* ammodef = ammoDef();
+	const objDef_t* weapon = def();
 
 	/* this weapon does not use ammo, check for
 	 * existing firedefs in the weapon. */
@@ -610,9 +610,9 @@ const fireDef_t *Item::getFiredefs () const
  * @brief Get the firedef that uses the most TU for this item.
  * @return The firedef that uses the most TU for this item or @c nullptr.
  */
-const fireDef_t *Item::getSlowestFireDef () const
+const fireDef_t* Item::getSlowestFireDef () const
 {
-	const fireDef_t *fdArray = getFiredefs();
+	const fireDef_t* fdArray = getFiredefs();
 	int slowest = 0;
 
 	if (fdArray == nullptr)
@@ -631,13 +631,13 @@ const fireDef_t *Item::getSlowestFireDef () const
  * @return @c nullptr if no reaction fire enabled weapon, the
  * reaction fire enabled object otherwise.
  */
-const objDef_t *Item::getReactionFireWeaponType () const
+const objDef_t* Item::getReactionFireWeaponType () const
 {
 	if (!this)
 		return nullptr;
 
 	if (def()) {
-		const fireDef_t *fd = getFiredefs();
+		const fireDef_t* fd = getFiredefs();
 		if (fd && fd->reaction)
 			return def();
 	}
@@ -652,7 +652,7 @@ Container::Container ()
 	id = 0;
 }
 
-const invDef_t *Container::def () const
+const invDef_t* Container::def () const
 {
 	return &CSI->ids[id];
 }
@@ -746,7 +746,7 @@ int Inventory::countItems () const
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const
+int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item *ignoredItem) const
 {
 	int fits;
 	assert(container);
@@ -830,7 +830,7 @@ int Inventory::canHoldItem (const invDef_t *container, const objDef_t *od, const
  * @param[in] x/y Position in the container that you want to check.
  * @return Item Pointer to the Item/item that is located at x/y.
  */
-Item *Inventory::getItemAtPos (const invDef_t *container, const int x, const int y) const
+Item *Inventory::getItemAtPos (const invDef_t* container, const int x, const int y) const
 {
 	assert(container);
 
@@ -862,7 +862,7 @@ Item *Inventory::getItemAtPos (const invDef_t *container, const int x, const int
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
-void Inventory::findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
+void Inventory::findSpace (const invDef_t* container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
 {
 	assert(container);
 	assert(!cacheCheckToInventory);

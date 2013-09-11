@@ -51,7 +51,7 @@ bool CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 	return td->team == TEAM_ALIEN;
 }
 
-bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
+bool CHRSH_IsArmourUseableForTeam (const objDef_t* od, const teamDef_t* teamDef)
 {
 	assert(teamDef);
 	assert(od->isArmour());
@@ -71,7 +71,7 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 	return td->robot;
 }
 
-const chrTemplate_t *CHRSH_GetTemplateByID (const teamDef_t *teamDef, const char* templateId) {
+const chrTemplate_t* CHRSH_GetTemplateByID (const teamDef_t* teamDef, const char* templateId) {
 	if (!Q_strnull(templateId))
 		for (int i = 0; i < teamDef->numTemplates; i++)
 			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
@@ -182,11 +182,11 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
  * @note mulitplayer is a special case here
  * @todo Add modifiers for difficulty setting here!
  */
-void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char* templateId)
+void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char* templateId)
 {
 	int i;
-	const chrTemplate_t *chrTemplate;
-	const teamDef_t *teamDef = chr->teamDef;
+	const chrTemplate_t* chrTemplate;
+	const teamDef_t* teamDef = chr->teamDef;
 
 	if (multiplayer && teamDef->team == TEAM_PHALANX)
 		/* @todo Hard coded template id, remove when possible */
@@ -261,13 +261,13 @@ void CHRSH_CharGenAbilitySkills (character_t *chr, bool multiplayer, const char*
  * @sa CHRSH_CharGetBody
  * @return the character body model (from a static buffer)
  */
-const char* CHRSH_CharGetBody (const character_t *const chr)
+const char* CHRSH_CharGetBody (const character_t* const chr)
 {
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
-		const objDef_t *od = chr->inv.getArmour()->def();
+		const objDef_t* od = chr->inv.getArmour()->def();
 		const char* id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -283,13 +283,13 @@ const char* CHRSH_CharGetBody (const character_t *const chr)
  * @param[in] chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
-const char* CHRSH_CharGetHead (const character_t *const chr)
+const char* CHRSH_CharGetHead (const character_t* const chr)
 {
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.getArmour() && !chr->teamDef->robot) {
-		const objDef_t *od = chr->inv.getArmour()->def();
+		const objDef_t* od = chr->inv.getArmour()->def();
 		const char* id = od->armourPath;
 		if (!od->isArmour())
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");

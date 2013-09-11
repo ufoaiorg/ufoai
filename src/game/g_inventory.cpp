@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_utils.h"
 #include "g_vis.h"
 
-const equipDef_t *G_GetEquipDefByID (const char* equipID)
+const equipDef_t* G_GetEquipDefByID (const char* equipID)
 {
 	int i;
-	const equipDef_t *ed;
+	const equipDef_t* ed;
 
 	for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
 		if (Q_streq(equipID, ed->id))
@@ -82,7 +82,7 @@ bool G_InventoryRemoveItemByID (const char* itemID, Edict* ent, containerIndex_t
 {
 	Item *ic = ent->getContainer(container);
 	while (ic) {
-		const objDef_t *item = ic->def();
+		const objDef_t* item = ic->def();
 		if (item != nullptr && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
@@ -141,7 +141,7 @@ static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 bool G_AddItemToFloor (const pos3_t pos, const char* itemID)
 {
 	Edict* floor;
-	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
+	const objDef_t* od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);
 		return false;

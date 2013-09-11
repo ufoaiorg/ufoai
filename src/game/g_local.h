@@ -101,7 +101,7 @@ typedef struct level_locals_s {
 	int nextEndRound;
 	int actualRound;		/**< the current running round counter */
 
-	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
+	pathing_t* pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
 	int noRandomSpawn;		/**< can be set via worldspawn to force random spawn point order for each team */
 	int noEquipment;		/**< can be set via worldspawn to force the players to collect their equipment in the map */
@@ -144,89 +144,89 @@ extern game_export_t globals;
 #define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
-extern cvar_t *sv_maxentities;
-extern cvar_t *password;
-extern cvar_t *sv_needpass;
-extern cvar_t *sv_dedicated;
-extern cvar_t *developer;
+extern cvar_t* sv_maxentities;
+extern cvar_t* password;
+extern cvar_t* sv_needpass;
+extern cvar_t* sv_dedicated;
+extern cvar_t* developer;
 
-extern cvar_t *logstats;
+extern cvar_t* logstats;
 extern FILE *logstatsfile;
 
-extern cvar_t *sv_filterban;
+extern cvar_t* sv_filterban;
 
-extern cvar_t *sv_maxvelocity;
+extern cvar_t* sv_maxvelocity;
 
-extern cvar_t *sv_maxclients;
-extern cvar_t *sv_shot_origin;
-extern cvar_t *sv_hurtaliens;
-extern cvar_t *sv_maxplayersperteam;
-extern cvar_t *sv_maxsoldiersperteam;
-extern cvar_t *sv_maxsoldiersperplayer;
-extern cvar_t *sv_enablemorale;
-extern cvar_t *sv_roundtimelimit;
+extern cvar_t* sv_maxclients;
+extern cvar_t* sv_shot_origin;
+extern cvar_t* sv_hurtaliens;
+extern cvar_t* sv_maxplayersperteam;
+extern cvar_t* sv_maxsoldiersperteam;
+extern cvar_t* sv_maxsoldiersperplayer;
+extern cvar_t* sv_enablemorale;
+extern cvar_t* sv_roundtimelimit;
 
-extern cvar_t *sv_maxteams;
+extern cvar_t* sv_maxteams;
 
-extern cvar_t *sv_ai;
-extern cvar_t *sv_teamplay;
+extern cvar_t* sv_ai;
+extern cvar_t* sv_teamplay;
 
-extern cvar_t *ai_alien;
-extern cvar_t *ai_civilian;
-extern cvar_t *ai_equipment;
-extern cvar_t *ai_numaliens;
-extern cvar_t *ai_numcivilians;
-extern cvar_t *ai_numactors;
+extern cvar_t* ai_alien;
+extern cvar_t* ai_civilian;
+extern cvar_t* ai_equipment;
+extern cvar_t* ai_numaliens;
+extern cvar_t* ai_numcivilians;
+extern cvar_t* ai_numactors;
 
-extern cvar_t *mob_death;
-extern cvar_t *mob_wound;
-extern cvar_t *mof_watching;
-extern cvar_t *mof_teamkill;
-extern cvar_t *mof_civilian;
-extern cvar_t *mof_enemy;
-extern cvar_t *mor_pain;
+extern cvar_t* mob_death;
+extern cvar_t* mob_wound;
+extern cvar_t* mof_watching;
+extern cvar_t* mof_teamkill;
+extern cvar_t* mof_civilian;
+extern cvar_t* mof_enemy;
+extern cvar_t* mor_pain;
 
 /*everyone gets this times morale damage */
-extern cvar_t *mor_default;
+extern cvar_t* mor_default;
 
 /* at this distance the following two get halfed (exponential scale) */
-extern cvar_t *mor_distance;
+extern cvar_t* mor_distance;
 
 /* at this distance the following two get halfed (exponential scale) */
-extern cvar_t *mor_victim;
+extern cvar_t* mor_victim;
 
 /* at this distance the following two get halfed (exponential scale) */
-extern cvar_t *mor_attacker;
+extern cvar_t* mor_attacker;
 
 /* how much the morale depends on the size of the damaged team */
-extern cvar_t *mon_teamfactor;
+extern cvar_t* mon_teamfactor;
 
-extern cvar_t *mor_regeneration;
-extern cvar_t *mor_shaken;
-extern cvar_t *mor_panic;
-extern cvar_t *mor_brave;
+extern cvar_t* mor_regeneration;
+extern cvar_t* mor_shaken;
+extern cvar_t* mor_panic;
+extern cvar_t* mor_brave;
 
-extern cvar_t *m_sanity;
-extern cvar_t *m_rage;
-extern cvar_t *m_rage_stop;
-extern cvar_t *m_panic_stop;
+extern cvar_t* m_sanity;
+extern cvar_t* m_rage;
+extern cvar_t* m_rage_stop;
+extern cvar_t* m_panic_stop;
 
-extern cvar_t *g_endlessaliens;
-extern cvar_t *g_ailua;
-extern cvar_t *g_aihumans;
-extern cvar_t *g_aidebug;
-extern cvar_t *g_drawtraces;
-extern cvar_t *g_nodamage;
-extern cvar_t *g_notu;
-extern cvar_t *g_nospawn;
-extern cvar_t *g_actorspeed;
-extern cvar_t *g_lastseen;
+extern cvar_t* g_endlessaliens;
+extern cvar_t* g_ailua;
+extern cvar_t* g_aihumans;
+extern cvar_t* g_aidebug;
+extern cvar_t* g_drawtraces;
+extern cvar_t* g_nodamage;
+extern cvar_t* g_notu;
+extern cvar_t* g_nospawn;
+extern cvar_t* g_actorspeed;
+extern cvar_t* g_lastseen;
 
-extern cvar_t *flood_msgs;
-extern cvar_t *flood_persecond;
-extern cvar_t *flood_waitdelay;
+extern cvar_t* flood_msgs;
+extern cvar_t* flood_persecond;
+extern cvar_t* flood_waitdelay;
 
-extern cvar_t *g_difficulty;
+extern cvar_t* g_difficulty;
 
 /* g_camera */
 void G_InitCamera(Edict* ent, camera_type_t cameraType, float angle, bool rotate);

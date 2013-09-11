@@ -137,9 +137,9 @@ typedef struct fireDef_s {
 						 ** This does _NOT_ equal the index of the weapon object in ods.
 						 */
 	fireDefIndex_t fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
-	itemEffect_t *activeEffect;
-	itemEffect_t *deactiveEffect;
-	itemEffect_t *overdoseEffect;
+	itemEffect_t* activeEffect;
+	itemEffect_t* deactiveEffect;
+	itemEffect_t* overdoseEffect;
 
 	bool soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
 	bool gravity;		/**< Does gravity have any influence on this item? */
@@ -287,7 +287,7 @@ typedef struct objDef_s {
 	bool headgear;			/**< This is a headgear. */
 	bool thrown;			/**< This item can be thrown. */
 	bool implant;			/**< This item can be implanted */
-	itemEffect_t *strengthenEffect;
+	itemEffect_t* strengthenEffect;
 	bool isVirtual;			/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
 	bool isPrimary;
 	bool isSecondary;
@@ -407,8 +407,8 @@ typedef struct invDef_s {
  * ammo loaded or assigned to this weapon
  */
 class Item {
-	const objDef_t *_itemDef;	/**< The weapon definition. */
-	const objDef_t *_ammoDef;	/**< Pointer to ammo definition. */
+	const objDef_t* _itemDef;	/**< The weapon definition. */
+	const objDef_t* _ammoDef;	/**< Pointer to ammo definition. */
 	Item *_next;				/**< Next entry in this list. */
 	int _x, _y;					/**< Position (aka origin location) of the item in the container/invlist.
 								 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
@@ -421,11 +421,11 @@ public:
 					 * parsing functions are expecting this to be at least 4 bytes */
 
 
-	inline const objDef_t *ammoDef (void) const {
+	inline const objDef_t* ammoDef (void) const {
 		return _ammoDef;
 	}
 
-	inline void setAmmoDef (const objDef_t *od) {
+	inline void setAmmoDef (const objDef_t* od) {
 		_ammoDef = od;
 	}
 
@@ -458,7 +458,7 @@ public:
 	}
 
 	Item ();
-	Item (const objDef_t *_itemDef, const objDef_t *ammo = nullptr, int ammoLeft = 0);
+	Item (const objDef_t* _itemDef, const objDef_t* ammo = nullptr, int ammoLeft = 0);
 
 	inline int getX () const {
 		return _x;
@@ -476,11 +476,11 @@ public:
 		_y = val;
 	}
 
-	inline void setDef(const objDef_t *objDef) {
+	inline void setDef(const objDef_t* objDef) {
 		_itemDef = objDef;
 	}
 
-	inline const objDef_t *def (void) const {
+	inline const objDef_t* def (void) const {
 		return _itemDef;
 	}
 
@@ -508,20 +508,20 @@ public:
 	bool isSameAs (const Item *const other) const;
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
-	const objDef_t *getReactionFireWeaponType () const;
-	const fireDef_t *getFiredefs () const;
-	const fireDef_t *getSlowestFireDef () const;
+	const objDef_t* getReactionFireWeaponType () const;
+	const fireDef_t* getFiredefs () const;
+	const fireDef_t* getSlowestFireDef () const;
 };
 
 class Container
 {
-	const invDef_t *_def;	/* container attributes (invDef_t) */
+	const invDef_t* _def;	/* container attributes (invDef_t) */
 public:
 	int id;
 	Item *_invList;	/* start of the list of items */
 
 	Container();
-	const invDef_t *def () const;
+	const invDef_t* def () const;
 	Item *getNextItem (const Item *prev) const;
 	int countItems () const;
 };
@@ -592,11 +592,11 @@ public:
 	Item *getFloorContainer() const;
 	void setFloorContainer(Item *cont);
 
-	void findSpace (const invDef_t *container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
+	void findSpace (const invDef_t* container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
 	Item *findInContainer (const containerIndex_t contId, const Item * const item) const;
-	Item *getItemAtPos (const invDef_t *container, const int x, const int y) const;
+	Item *getItemAtPos (const invDef_t* container, const int x, const int y) const;
 	float getWeight () const;
-	int canHoldItem (const invDef_t *container, const objDef_t *od, const int x, const int y, const Item *ignoredItem) const;
+	int canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item *ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo: convert into iterator */
@@ -645,15 +645,15 @@ typedef enum {
 
 void INVSH_InitCSI(const struct csi_s *import) __attribute__((nonnull));
 
-const objDef_t *INVSH_GetItemByID(const char* id);
-const objDef_t *INVSH_GetItemByIDX(int index);
-const objDef_t *INVSH_GetItemByIDSilent(const char* id);
+const objDef_t* INVSH_GetItemByID(const char* id);
+const objDef_t* INVSH_GetItemByIDX(int index);
+const objDef_t* INVSH_GetItemByIDSilent(const char* id);
 
-const implantDef_t *INVSH_GetImplantForObjDef(const objDef_t* od);
-const implantDef_t *INVSH_GetImplantByID(const char* id);
-const implantDef_t *INVSH_GetImplantByIDSilent(const char* id);
+const implantDef_t* INVSH_GetImplantForObjDef(const objDef_t* od);
+const implantDef_t* INVSH_GetImplantByID(const char* id);
+const implantDef_t* INVSH_GetImplantByIDSilent(const char* id);
 
-const invDef_t *INVSH_GetInventoryDefinitionByID(const char* id);
+const invDef_t* INVSH_GetInventoryDefinitionByID(const char* id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->getHand() == (HAND) && (fm)->getFmIdx() == (fdIdx))
 
@@ -661,8 +661,8 @@ const invDef_t *INVSH_GetInventoryDefinitionByID(const char* id);
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
-const fireDef_t *FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
+const fireDef_t* FIRESH_GetFiredef(const objDef_t* obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
-void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
-bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
+void INVSH_MergeShapes(uint32_t* shape, const uint32_t itemShape, const int x, const int y);
+bool INVSH_CheckShape(const uint32_t* shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);

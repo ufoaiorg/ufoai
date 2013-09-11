@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 {
-	character_t *chr = &ent->chr;
+	character_t* chr = &ent->chr;
 
 	int experience = 0;
 	int i;
@@ -95,7 +95,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
  */
 static void G_UpdateCharacterExperience (Edict* ent)
 {
-	character_t *chr = &ent->chr;
+	character_t* chr = &ent->chr;
 
 	/* Robots/UGVs do not get skill-upgrades. */
 	if (chr->teamDef->robot)

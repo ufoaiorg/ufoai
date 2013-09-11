@@ -120,7 +120,7 @@ static const spawn_t spawns[] = {
  */
 static void ED_CallSpawn (Edict* ent)
 {
-	const spawn_t *s;
+	const spawn_t* s;
 
 	if (!ent->classname)
 		return;
@@ -338,7 +338,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 	G_FreeTags(TAG_LEVEL);
 
 	OBJZERO(level);
-	level.pathingMap = (pathing_t *)G_TagMalloc(sizeof(*level.pathingMap), TAG_LEVEL);
+	level.pathingMap = (pathing_t* )G_TagMalloc(sizeof(*level.pathingMap), TAG_LEVEL);
 
 	G_EdictsInit();
 
@@ -948,7 +948,7 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 	yDelta = std::max(1, maxs[1] - mins[1]);
 
 	size = xDelta * yDelta;
-	ent->forbiddenListPos = (pos3_t *)G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
+	ent->forbiddenListPos = (pos3_t* )G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
 	ent->forbiddenListSize = size;
 
 	for (i = 0; i < xDelta; i++) {
