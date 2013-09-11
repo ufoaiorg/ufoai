@@ -113,7 +113,7 @@ static void testMapDefsMassRMA (void)
 				continue;
 
 			const char* ass = (const char *)LIST_GetByIdx(md->params, 0);
-			Com_Printf("Map: %s Assembly: %s\n", p, ass);
+			Com_Printf("\nMap: %s Assembly: %s\n", p, ass);
 
 			sv_threads->integer = 0;
 
@@ -138,12 +138,13 @@ static void testMapDefsMassRMA (void)
 					else
 						Cvar_Set("rm_ufo", "");
 
+					Com_Printf("\nSeed:");
 					int i;
 					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 						ass = NULL;
 						srand(i);
 						long time = Sys_Milliseconds();
-						Com_Printf("Seed: %i\n", i);
+						Com_Printf(" %i", i);
 
 						typedef struct skip_info {
 							int         seed;
@@ -196,7 +197,7 @@ static void testMapDefsMassRMA (void)
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
-							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, randomMap->numPlaced, time);
+							Com_Printf("\nMap: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
 					didItOnce = true;
@@ -501,6 +502,7 @@ int UFO_AddMapDefTests (void)
 		return CU_get_error();
 
 	const char *specialtest = TEST_GetStringProperty("mapspecialtest");
+//	const char *specialtest = "seed";
 	if (specialtest && Q_streq(specialtest, "seed")) {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
 			return CU_get_error();
