@@ -696,7 +696,7 @@ static void PR_ProductionIncrease_f (void)
 		cgi->UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 
 		/* messages */
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(name));
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Work begun on %s"), _(name));
 		MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, MSG_PRODUCTION, tech);
 	}
 
