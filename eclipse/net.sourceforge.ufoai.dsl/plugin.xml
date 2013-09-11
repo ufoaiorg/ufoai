@@ -12,7 +12,7 @@
       <editor
             default="true"
             extensions="map"
-            icon="icons/map.png"
+            icon="resources/icons/map.png"
             id="net.sourceforge.ufoai.editor.mapeditor"
             launcher="net.sourceforge.ufoai.editor.MapEditor"
             name="UFO:AI map editor">
