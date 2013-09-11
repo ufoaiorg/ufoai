@@ -1,3 +1,4 @@
-features
-plugins
-*.jar
+/features
+/plugins
+/*.jar
+/logs.zip
