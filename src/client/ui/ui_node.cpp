@@ -693,7 +693,7 @@ void UI_AppendNode (uiNode_t* const node, uiNode_t *newNode)
 	UI_InsertNode(node, node->lastChild, newNode);
 }
 
-void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const void *rawValue, int rawType)
+void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const void* rawValue, int rawType)
 {
 	if (property->type != rawType) {
 		Com_Printf("UI_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, UI_GetPath(node), property->string);

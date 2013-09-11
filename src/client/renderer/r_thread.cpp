@@ -33,7 +33,7 @@ renderer_threadstate_t r_threadstate;
 
 #define THREAD_SLEEP_INTERVAL 5
 
-int R_RunThread (void *p)
+int R_RunThread (void* p)
 {
 	while (r_threads->integer) {
 		if (!refdef.ready) {

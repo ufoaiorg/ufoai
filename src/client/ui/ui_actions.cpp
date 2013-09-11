@@ -353,7 +353,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 
 	/* decode RAW value */
 	if (value->type == EA_VALUE_RAW) {
-		const void *rawValue = value->d.terminal.d1.constData;
+		const void* rawValue = value->d.terminal.d1.constData;
 		const int rawType = value->d.terminal.d2.integer;
 		UI_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
@@ -702,7 +702,7 @@ bool UI_IsInjectedString (const char* string)
  * @param[in,out] pointer The pointer to the data that should be freed
  * @sa ui_dynStringPool
  */
-void UI_FreeStringProperty (void *pointer)
+void UI_FreeStringProperty (void* pointer)
 {
 	/* skip const string */
 	if ((uintptr_t)ui_global.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)ui_global.adata + (uintptr_t)ui_global.adataize)
@@ -738,7 +738,7 @@ uiAction_t* UI_AllocStaticCommandAction (const char* command)
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
-void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
+void UI_PoolAllocAction (uiAction_t** action, int type, const void* data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
@@ -829,7 +829,7 @@ static void UI_AddListener_f (void)
  */
 void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
-	void *data;
+	void* data;
 
 	/* data we must remove */
 	data = (void*) &functionNode->onClick;
@@ -896,7 +896,7 @@ static void UI_RemoveListener_f (void)
 	UI_RemoveListener(node, property, function);
 }
 
-static void UI_CvarChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+static void UI_CvarChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	linkedList_t *list = static_cast<linkedList_t*>(data);
 	LIST_Foreach(list, char const, confunc) {

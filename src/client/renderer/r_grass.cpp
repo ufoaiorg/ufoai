@@ -196,7 +196,7 @@ static void R_AddClump (const vec3_t pos, const vec3_t normal, int level)
 	clumpCount++;
 }
 
-static int ClumpOrder (const void *a, const void *b)
+static int ClumpOrder (const void* a, const void* b)
 {
 	const Clump *pa = static_cast <const Clump *>(a);
 	const Clump *pb = static_cast <const Clump *>(b);

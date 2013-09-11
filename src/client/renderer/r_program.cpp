@@ -208,7 +208,7 @@ void R_ProgramParameterMatrix4fv (const char* name, GLfloat *value)
 	qglUniformMatrix4fv(v->location, 1, GL_FALSE, value);
 }
 
-void R_AttributePointer (const char* name, GLuint size, const GLvoid *array)
+void R_AttributePointer (const char* name, GLuint size, const GLvoid* array)
 {
 	r_progvar_t *v;
 

@@ -118,7 +118,7 @@ void UI_ExecuteConfunc (const char *fmt, ...)
  * @param reset If true initilize the memory with 0
  * @return available memory, else nullptr
  */
-void *UI_AllocHunkMemory (size_t size, int align, bool reset)
+void* UI_AllocHunkMemory (size_t size, int align, bool reset)
 {
 	byte *memory = (byte*) ALIGN_PTR(ui_global.curadata, align);
 	if (memory + size > ui_global.adata + ui_global.adataize)

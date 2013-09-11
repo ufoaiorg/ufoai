@@ -42,7 +42,7 @@ cvar_t *web_userid;
  * @param[in] userdata Userdata that is given to the @c callback
  * @return @c true if the download was successful, @c false otherwise
  */
-bool WEB_GetURL (const char *url, http_callback_t callback, void *userdata)
+bool WEB_GetURL (const char *url, http_callback_t callback, void* userdata)
 {
 	char buf[576];
 	char passwordEncoded[512];
@@ -108,7 +108,7 @@ bool WEB_PutFile (const char *formName, const char *fileName, const char *url, u
  * @param[in] response The web auth response
  * @param[in] userdata The userdata. @c NULL in this case.
  */
-static void WEB_AuthResponse (const char *response, void *userdata)
+static void WEB_AuthResponse (const char *response, void* userdata)
 {
 	if (response == nullptr) {
 		Cvar_Set("web_password", "");

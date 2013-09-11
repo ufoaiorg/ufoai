@@ -130,7 +130,7 @@ void R_SphereInit (void)
 	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
 }
 
-static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void *texCoordBuffer)
+static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void* texCoordBuffer)
 {
 	R_SelectTexture(texunit);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texCoordBuffer);

@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_language.h"
 
 /** prototypes */
-static bool UI_ParseProperty(void *object, const value_t *property, const char* objectName, const char** text, const char** token);
+static bool UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char** text, const char** token);
 static uiAction_t *UI_ParseActionList(uiNode_t *node, const char** text, const char** token);
 static uiNode_t *UI_ParseNode(uiNode_t *parent, const char** text, const char** token, const char *errhead);
 
@@ -658,7 +658,7 @@ static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const c
  * @brief Parse a property value
  * @todo don't read the next token (need to change the script language)
  */
-static bool UI_ParseProperty (void *object, const value_t *property, const char* objectName, const char** text, const char** token)
+static bool UI_ParseProperty (void* object, const value_t *property, const char* objectName, const char** text, const char** token)
 {
 	const char *errhead = "UI_ParseProperty: unexpected end of file (object";
 	static const char *notWellFormedValue = "UI_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
@@ -1394,7 +1394,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 	Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 }
 
-float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
+float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 {
 	if (!ref)
 		return 0.0;

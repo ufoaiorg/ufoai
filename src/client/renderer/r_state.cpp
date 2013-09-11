@@ -145,7 +145,7 @@ void R_UseMaterial (const material_t *material)
 	}
 }
 
-void R_BindArray (GLenum target, GLenum type, const void *array)
+void R_BindArray (GLenum target, GLenum type, const void* array)
 {
 	switch (target) {
 	case GL_VERTEX_ARRAY:

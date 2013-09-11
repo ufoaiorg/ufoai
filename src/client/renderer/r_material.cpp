@@ -1100,7 +1100,7 @@ void R_LoadMaterials (const char* map)
 /**
  * @brief Change listener callback for material value cvars
  */
-void R_UpdateDefaultMaterial (const char* cvarName, const char* oldValue, const char* newValue, void *data)
+void R_UpdateDefaultMaterial (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
 	defaultMaterial.specular = r_default_specular->value;
 	defaultMaterial.hardness = r_default_hardness->value;

@@ -38,6 +38,6 @@ extern cvar_t *web_userid;
 bool WEB_CheckAuth(void);
 bool WEB_Auth(const char *username, const char *password);
 void WEB_InitStartup(void);
-bool WEB_GetURL(const char *url, http_callback_t callback, void *userdata = nullptr);
+bool WEB_GetURL(const char *url, http_callback_t callback, void* userdata = nullptr);
 bool WEB_GetToFile(const char *url, FILE* file);
 bool WEB_PutFile(const char *formName, const char *fileName, const char *url, upparam_t *params = nullptr);

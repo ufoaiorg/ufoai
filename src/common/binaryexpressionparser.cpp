@@ -39,7 +39,7 @@ private:
 	BEPEvaluteCallback_t varFunc;
 	char varName[MAX_VAR];
 	bool result;
-	const void *userdata;
+	const void* userdata;
 
 	inline void SkipWhiteSpaces (const char** s) const
 	{
@@ -150,7 +150,7 @@ private:
 	}
 
 public:
-	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam, const void *userdataPtr) :
+	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdataPtr) :
 		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam), userdata(userdataPtr)
 	{
 		const char *str = expr;
@@ -171,7 +171,7 @@ public:
 	}
 };
 
-bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam, const void *userdata)
+bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdata)
 {
 	if (!Q_strvalid(expr))
 		return true;

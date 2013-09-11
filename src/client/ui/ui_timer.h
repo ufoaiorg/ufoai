@@ -42,7 +42,7 @@ typedef struct uiTimer_s {
 	int calledTime;				/**< time we call the function. For the first call the value is 1 */
 
 	int delay;					/**< delay in millisecond between each call of */
-	void *userData;				/**< free to use data, not used by the core functions */
+	void* userData;				/**< free to use data, not used by the core functions */
 	bool isRunning;			/**< true if the timer is running */
 } uiTimer_t;
 

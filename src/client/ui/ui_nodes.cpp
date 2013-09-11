@@ -318,7 +318,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		void *memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, true);
+		void* memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, true);
 		if (memory == nullptr)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
 		node = static_cast<uiNode_t*>(memory);

@@ -216,7 +216,7 @@ bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *f
  * @param[in] responseBuf The cgame list in ufo script format
  * @param[in] userdata This can be used to return the amount of files that were listed
  */
-static void WEB_ListCGameFilesCallback (const char *responseBuf, void *userdata)
+static void WEB_ListCGameFilesCallback (const char *responseBuf, void* userdata)
 {
 	int* count = (int*)userdata;
 
