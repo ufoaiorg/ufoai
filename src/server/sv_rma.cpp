@@ -2016,7 +2016,6 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
 				seedUsed = rand() % 50;	/* limit the possible seeds to (testable) values between 0 and 49 */
 		}
 		Com_SetRandomSeed(seedUsed);
-		Com_Printf("Using RMA%i seed: %i for <%s>\n", sv_rma->integer, seedUsed, assembly);
 
 		if (!SV_AddMapTiles(map)) {
 			map->retryCnt++;
