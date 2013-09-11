@@ -1476,9 +1476,13 @@ window multiplayer_wait extends levelbuttons
 	}
 
 	/**
+	 * @brief Updates the level status
 	 * @inherited from levelbuttons window
-	 * @param <1> level ID (0..7)
-	 * @param <2> status: 0 not available, 1 available, 2 selected
+	 * @param <1> Level id (0-7)
+	 * @param <2> State
+	 *   0 = disabled (map doesn't have this level),
+	 *   1 = available (user can switch to this level)
+	 *   2 = active (the current selected level)
 	 */
 	confunc updateLevelStatus {
 		if ( <2> == 0 ) { *node:root.floor.bt<1>@disabled = true }

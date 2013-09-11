@@ -215,11 +215,27 @@ component cmpFiremodeEntry extends panel {
 }
 
 window levelbuttons {
+	/**
+	 * @brief Updates the level status
+	 * @param <1> Level id (0-7)
+	 * @param <2> State
+	 *   0 = disabled (map doesn't have this level),
+	 *   1 = available (user can switch to this level)
+	 *   2 = active (the current selected level)
+	 */
 	confunc updateLevelStatus { }
 }
 
 window reactionfire_listener {
+	/**
+	 * @brief The reaction fire mode was changed
+	 * @note no parameters
+	 */
 	confunc reactionfire_updated { }
+	/**
+	 * @brief Cvar listener callback - used in the firemode panels
+	 * @note no parameters
+	 */
 	confunc actor_updated { }
 }
 
@@ -482,6 +498,10 @@ window firemode_left extends reactionfire_listener {
 		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
+	/**
+	 * @brief The reaction fire mode was changed
+	 * @note no parameters
+	 */
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener l;"
 	}
@@ -519,6 +539,10 @@ window firemode_right extends reactionfire_listener {
 		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
+	/**
+	 * @brief The reaction fire mode was changed
+	 * @note no parameters
+	 */
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener r;"
 	}

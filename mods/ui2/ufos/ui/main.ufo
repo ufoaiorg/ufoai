@@ -20,6 +20,15 @@ window main
 		contentalign	ALIGN_CC
 	}
 
+	/**
+	 * @brief Adds cgame games to the main menu (like skirmish and campaign)
+	 * @param <1> window id
+	 * @param <2> name
+	 */
+	confunc game_addmode_singleplayer
+	{
+	}
+
 	panel buttons {
 		{
 			pos			"312 250"
