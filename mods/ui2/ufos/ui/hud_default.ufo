@@ -1301,7 +1301,6 @@ window inv_stats_hud
 	}
 	container headgear	{ pos "88 85" }
 	container backpack	{ pos "236 59" }
-//	container extension	{ pos "33 107" } // Add it when we have extensions
 	container right		{ pos "13 146" }
 	container left		{ pos "236 146" }
 	// Armour is not switchable in combat - thus no display of "container armour" needed.
