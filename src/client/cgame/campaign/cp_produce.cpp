@@ -439,7 +439,7 @@ static void PR_FinishProduction (base_t* base, production_t *prod)
 	if (prod->amount > 0)
 		return;
 
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), name, base->name);
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Work on %s at %s has finished."), name, base->name);
 	MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, tech);
 	/* queue the next production */
 	PR_QueueNext(base);
