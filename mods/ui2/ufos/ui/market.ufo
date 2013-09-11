@@ -375,7 +375,6 @@ window market  {
 			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
 		}
 
-
 		// Increase height of category panel
 		*node:root.base_container.market.list.category_height@integer = ( *node:root.base_container.market.list.category_height@integer + 30 )
 		*node:root.base_container.market.list.<cvar:ui_market_category>@size = "713 <node:root.base_container.market.list.category_height@integer>"

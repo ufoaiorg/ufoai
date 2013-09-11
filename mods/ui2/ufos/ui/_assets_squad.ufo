@@ -16,10 +16,10 @@ component EnemyEquip extends panel
 		size 		"490 30"
 		onMouseEnter 	{
 			*node:this.equip_alien@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this.equip_alien@color = "1 1 1 0.5"
-			}
+		}
 	}
 	string equip_alien
 	{
@@ -94,20 +94,20 @@ component SetSquadCount extends panel
 {
 	{
 		size	"495 40"
-		onMouseEnter 	{
+		onMouseEnter {
 			*node:this.squad_count_str@color = "1 1 1 0.9"
 			*node:this.squad_count_val@color = "1 1 1 0.9"
-			}
-		onMouseLeave 	{
+		}
+		onMouseLeave {
 			*node:this.squad_count_str@color = "1 1 1 0.5"
 			*node:this.squad_count_val@color = "1 1 1 0.5"
-			}
-		onWheelUp		{
+		}
+		onWheelUp {
 			cmd "squad_count up;"
-			}
-		onWheelDown		{
+		}
+		onWheelDown {
 			cmd "squad_count down;"
-			}
+		}
 	}
 
 	string squad_count_str
@@ -137,7 +137,7 @@ component SetSquadCount extends panel
 		icon		"icons/arrow_up_off"
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
-		onClick		{
+		onClick {
 			cmd "squad_count up;"
 		}
 	}
@@ -149,7 +149,7 @@ component SetSquadCount extends panel
 		icon		"icons/arrow_down_off"
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
-		onClick		{
+		onClick {
 			cmd "squad_count down;"
 		}
 	}
@@ -176,20 +176,20 @@ component SetUGVCount extends panel
 {
 	{
 		size	"485 40"
-		onMouseEnter 	{
+		onMouseEnter {
 			*node:this.ugv_count_str@color = "1 1 1 0.9"
 			*node:this.ugv_count_val@color = "1 1 1 0.9"
-			}
-		onMouseLeave 	{
+		}
+		onMouseLeave {
 			*node:this.ugv_count_str@color = "1 1 1 0.5"
 			*node:this.ugv_count_val@color = "1 1 1 0.5"
-			}
-		onWheelUp		{
+		}
+		onWheelUp {
 			cmd "ugv_count up;"
-			}
-		onWheelDown		{
+		}
+		onWheelDown {
 			cmd "ugv_count down;"
-			}
+		}
 	}
 
 	string ugv_count_str
@@ -262,10 +262,10 @@ component SelectedSquad extends panel
 		bgcolor	"1 1 1 0.02"
 		onMouseEnter 	{
 			*node:this@bgcolor = "1 1 1 0.04"
-			}
+		}
 		onMouseLeave 	{
 			*node:this@color = "1 1 1 0.02"
-			}
+		}
 	}
 
 	string selected_squad_name
@@ -277,10 +277,10 @@ component SelectedSquad extends panel
 		color		"1 1 1 0.5"
 		onMouseEnter 	{
 			*node:this@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this@color = "1 1 1 0.5"
-			}
+		}
 	}
 
 	MainMenu3Btn selected_squad_save
@@ -291,7 +291,7 @@ component SelectedSquad extends panel
 		font		"f_verysmall_bold"
 		onClick		{
 			cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
-			}
+		}
 	}
 
 	MainMenu2Btn selected_squad_edit
@@ -302,7 +302,7 @@ component SelectedSquad extends panel
 		font		"f_verysmall_bold"
 		onClick		{
 			cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
-			}
+		}
 	}
 }
 
@@ -314,10 +314,10 @@ component PlayerSquad extends panel
 		size 		"515 410"
 		onMouseEnter 	{
 			*node:this.player_squad_str@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this.player_squad_str@color = "1 1 1 0.5"
-			}
+		}
 	}
 
 	string player_squad_str
@@ -359,10 +359,10 @@ component PlayerSquad extends panel
 			bgcolor			"0 0 0 1"
 			onMouseEnter 	{
 				*node:this.squad_default_type.squad_default_type_str@color = "1 1 1 0.9"
-				}
+			}
 			onMouseLeave 	{
 				*node:this.squad_default_type.squad_default_type_str@color = "1 1 1 0.5"
-				}
+			}
 		}
 
 		SquadType squad_default_type
@@ -411,10 +411,10 @@ component PlayerSquad extends panel
 			color		"1 1 1 0.5"
 			onMouseEnter 	{
 				*node:this@color = "1 1 1 0.9"
-				}
+			}
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
-				}
+			}
 			onClick		{ cmd "game_autoteam multiplayer_initial;toggle_custom_team_opts new;" }
 		}
 
@@ -427,10 +427,10 @@ component PlayerSquad extends panel
 			color		"1 1 1 0.5"
 			onMouseEnter 	{
 				*node:this@color = "1 1 1 0.9"
-				}
+			}
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
-				}
+			}
 			onClick		{ cmd "toggle_custom_team_opts load;" }
 		}
 
@@ -475,7 +475,7 @@ component PlayerSquad extends panel
 					font		"f_verysmall_bold"
 					onClick		{
 						cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
-						}
+					}
 				}
 			}
 		}

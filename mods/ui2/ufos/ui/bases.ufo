@@ -21,7 +21,9 @@
 
 window bases
 {
-	{ size	"1024 768" }
+	{
+		size	"1024 768"
+	}
 
 	// Left base panel
 	panel base_container
@@ -408,9 +410,6 @@ window bases
 			}
 		}
 
-
-
-
 		BaseSection aircraft
 		{
 			{
@@ -569,7 +568,6 @@ window bases
 	 */
 	confunc show_bld_space
 	{
-
 		// Set the appropriate size of the panel
 		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 30)
 		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 <node:parent.sections.facilities.bld_panel.bld_space.height@integer>"
@@ -631,14 +629,12 @@ window bases
 	confunc show_facility
 	{
 		if (param1 eq "true") {
-
 			// Show capacity for all base buildings
 			cmd "base_building_space;"
 
 			// Set the state for subsequent clicks
 			*node:parent.sections.facilities.state@string = "false"
 		} else {
-
 			// Resets list selection
 			cmd "reset_building_current 0;"
 
@@ -751,9 +747,7 @@ window bases
 	 */
 	confunc alien_containment
 	{
-
 		if (param1 eq "true") {
-
 			// Show the alien containment area
 			*node:parent.base_container.alien_containment@invis = false
 
@@ -796,7 +790,6 @@ window bases
 			// Set the state for subsequent clicks
 			*node:parent.sections.containment.state@string = false
 		} else {
-
 			// Remove alien panels and hide the image/info when loaded
 			call *node:parent.base_container.alien_containment.aliens@removeAllChild
 			*node:parent.base_container.alien_containment.info@invis = true

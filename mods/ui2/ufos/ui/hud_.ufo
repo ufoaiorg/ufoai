@@ -9,7 +9,6 @@
  *   new UI.
  */
 
-
 // Firemode entry
 component cmpFiremodeEntry extends panel {
 	{
@@ -410,8 +409,8 @@ window hud extends levelbuttons {
 	vis ... visible
 	inv ... invisible
 */
-
-window firemode_left extends reactionfire_listener {
+window firemode_left extends reactionfire_listener
+{
 	{
 		pos			"622 0"
 		size		"255 700"
@@ -437,7 +436,6 @@ window firemode_left extends reactionfire_listener {
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener l;"
 	}
-
 }
 
 window firemode_right extends reactionfire_listener {
@@ -466,11 +464,10 @@ window firemode_right extends reactionfire_listener {
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener r;"
 	}
-
 }
 
-window hud_general {
-
+window hud_general
+{
 	func hide_firemodes {
 		call *node:firemode_left.elements@removeAllChild
 		call *node:firemode_right.elements@removeAllChild
@@ -510,7 +507,6 @@ window hud_general {
 			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
 	}
-
 }
 
 window hud_chat

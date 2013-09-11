@@ -285,7 +285,7 @@ component ResearchItem extends panel
 			cmd "research_select <node:this.itemnum@integer>;"
 			call *node:root.base_container.research.techs@removeAllChild
 			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-			}
+		}
 	}
 	data itemnum { }
 	bar status
@@ -315,7 +315,7 @@ component ResearchItem extends panel
 		 * is called and when it is executed.
 		 * @sa ExtResearchItem.ufopaedia@onClick
 		 */
-		onClick			{
+		onClick {
 			cmd "research_select <node:parent.itemnum@integer>;"
 			cmd "mn_show_ufopedia;"
 			call *node:root.base_container.research.techs@removeAllChild
@@ -348,7 +348,7 @@ component ResearchItem extends panel
 			call *node:root.base_container.research.techs@removeAllChild
 			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 			cmd "get_lab_space_string;"
-			}
+		}
 	}
 	button add_scientist
 	{
@@ -360,7 +360,7 @@ component ResearchItem extends panel
 			call *node:root.base_container.research.techs@removeAllChild
 			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 			cmd "get_lab_space_string;"
-			}
+		}
 	}
 }
 
@@ -377,7 +377,7 @@ component ExtResearchItem extends panel
 			cmd "research_select <node:this.itemnum@integer>;"
 			call *node:root.base_container.research.techs@removeAllChild
 			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-			}
+		}
 	}
 	data itemnum { }
 	bar status

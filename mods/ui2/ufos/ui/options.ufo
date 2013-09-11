@@ -18,7 +18,6 @@ window options
 	// Toolbar across the top of the screen
 	MainMenuToolbar mmtoolbar { }
 
-
 	panel opts_windows
 	{
 		{
@@ -58,7 +57,7 @@ window options
 				*node:parent.opts_general@invis = false
 				*node:this@bgcolor = "0.4 0.515 0.5 1"
 				*node:this@color =  "0 0 0 0.9"
-				}
+			}
 		}
 
 		MainMenuTab opts_video_btn
@@ -70,7 +69,7 @@ window options
 				*node:parent.opts_video@invis = false
 				*node:this@bgcolor = "0.4 0.515 0.5 1"
 				*node:this@color =  "0 0 0 0.9"
-				}
+			}
 		}
 
 		MainMenuTab opts_sound_btn
@@ -82,7 +81,7 @@ window options
 				*node:parent.opts_sound@invis = false
 				*node:this@bgcolor = "0.4 0.515 0.5 1"
 				*node:this@color =  "0 0 0 0.9"
-				}
+			}
 		}
 
 		MainMenuTab opts_gameplay_btn
@@ -94,7 +93,7 @@ window options
 				*node:parent.opts_gameplay@invis = false
 				*node:this@bgcolor = "0.4 0.515 0.5 1"
 				*node:this@color =  "0 0 0 0.9"
-				}
+			}
 		}
 
 		MainMenuExitBtn btn_back_btn
@@ -746,7 +745,7 @@ window options
 						size		"125 20"
 						onChange	{
 							cmd "hide_screenshot_quality;"
-							}
+						}
 					}
 					option screenshot_format_jpeg
 					{
@@ -1207,7 +1206,6 @@ window options
 				}
 			}
 		}
-
 
 		// ==================
 		// SOUND OPTIONS MENU

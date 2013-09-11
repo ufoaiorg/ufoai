@@ -74,10 +74,10 @@ window hud_default extends hud
 				border		"2"
 				onMouseEnter	{
 					*node:this@bgcolor = "0 0.21 0.158 0.7"
-					}
+				}
 				onMouseLeave	{
 					*node:this@bgcolor = "0 0.15 0.1 0.7"
-					}
+				}
 			}
 
 			// Soldier name
@@ -232,7 +232,7 @@ window hud_default extends hud
 						tooltip		"_Equipment"
 						onClick		{ cmd "toggle_button inventory_bg inv;ui_push inv_stats_hud;" }
 						onMouseEnter	{ *node:this@icon = "icons/inv" }
-						onMouseLeave	{ *node:this@icon = "icons/inv0"	}
+						onMouseLeave	{ *node:this@icon = "icons/inv0" }
 					}
 				}
 
@@ -836,8 +836,6 @@ window hud_default extends hud
 			}
 		}
 
-
-
 		// Soldier model
 		model sel_soldier_model
 		{
@@ -1167,7 +1165,6 @@ window hud_default extends hud
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
-
 
 		// Input soldier information squad selection
 		*cvar:i = 0;

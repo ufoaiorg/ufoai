@@ -7,7 +7,8 @@
 // - Add info about a save when it becomes available
 // - Once we can get the data about a campaign in not just one chunk, display them better
 // - Several campaign windows not yet changed (end game, save game, etc.)
-
+// - Saving doesn't use fixed slots anymore
+// - cgame webapi support
 
 window campaign
 {
@@ -708,7 +709,6 @@ window save
 	{
 		cmd "game_comments;"
 	}
-
 }
 
 // ==================
@@ -899,9 +899,9 @@ window popup_exit_confirmation
 		string		"_Quit anyway"
 		pos			"28 188"
 		onClick		{
-						cmd "ui_pop;"
-						cmd "game_exit;"
-					}
+			cmd "ui_pop;"
+			cmd "game_exit;"
+		}
 	}
 	cmpCancelButton bt_dontquit
 	{

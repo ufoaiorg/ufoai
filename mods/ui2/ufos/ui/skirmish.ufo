@@ -26,12 +26,12 @@ component cmpMapPreviewButton extends radiobutton
 	image preview {
 		pos		"2 2"
 		size	"128 96"
-		src		"maps/shots/default"
+		src		""
 		ghost	true
 	}
 
 	string name {
-		string			"The map name"
+		string			""
 		contentalign	ALIGN_CC
 		font			"f_verysmall"
 		pos				"8 101"
@@ -41,7 +41,7 @@ component cmpMapPreviewButton extends radiobutton
 
 	string id {
 		invis	true
-		string	"The map name"
+		string	""
 		pos		"14 96"
 		size	"100 32"
 	}
@@ -106,7 +106,6 @@ window skirmish
 				*cvar:mn_svmapid = ""
 				call *node:root.sk_map_sel.maplist@removeAllChild
 			} elif (param1 eq "add") {
-	//			cmd "echo <1> <2> <3>"
 				call *node:root.sk_map_sel.maplist@createchild("map<cvar:count>", "cmpMapPreviewButton")
 				call *node:root.sk_map_sel.maplist.map<cvar:count>.init(param2, param3)
 				*cvar:count = (*cvar:count + 1)

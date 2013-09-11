@@ -16,19 +16,19 @@ component SelTimeDay extends panel
 		size	"495 40"
 		onMouseEnter 	{
 			*node:this.txt_time_of_day@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this.txt_time_of_day@color = "1 1 1 0.5"
-			}
+		}
 		onClick	{
 			cmd "sel_map_time;"
 		}
 		onWheelUp		{
 			cmd "sel_map_time;"
-			}
+		}
 		onWheelDown		{
 			cmd "sel_map_time;"
-			}
+		}
 	}
 
 	string txt_time_of_day
@@ -81,17 +81,17 @@ component SetEnemyCount extends panel
 		onMouseEnter 	{
 			*node:this.enemy_count_str@color = "1 1 1 0.9"
 			*node:this.enemy_count_val@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this.enemy_count_str@color = "1 1 1 0.5"
 			*node:this.enemy_count_val@color = "1 1 1 0.5"
-			}
+		}
 		onWheelUp		{
 			cmd "increase_enemy_count;"
-			}
+		}
 		onWheelDown		{
 			cmd "decrease_enemy_count;"
-			}
+		}
 	}
 
 	string enemy_count_str
@@ -200,11 +200,11 @@ component SelUFO extends panel
 		onMouseEnter 	{
 			*node:this.ufos_str@color = "1 1 1 0.9"
 			*node:this.ufos_box@color = "1 1 1 0.9"
-			}
+		}
 		onMouseLeave 	{
 			*node:this.ufos_str@color = "1 1 1 0.5"
 			*node:this.ufos_box@color = "1 1 1 0.5"
-			}
+		}
 	}
 	string ufos_str
 	{
