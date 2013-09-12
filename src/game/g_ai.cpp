@@ -308,11 +308,13 @@ static bool AI_HideNeeded (const Edict* ent)
  */
 static inline const Item *AI_GetItemFromInventory (const Item *ic)
 {
-	if (ic != nullptr) {
-		const Item *item = ic;
-		if (item->ammoDef() && item->isWeapon() && !item->mustReload())
-			return item;
-	}
+	if (ic == nullptr)
+		return nullptr;
+
+	const Item *item = ic;
+	if (item->ammoDef() && item->isWeapon() && !item->mustReload())
+		return item;
+
 	return nullptr;
 }
 
