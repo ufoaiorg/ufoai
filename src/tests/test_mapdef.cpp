@@ -113,7 +113,7 @@ static void testMapDefsMassRMA (void)
 				continue;
 
 			const char* ass = (const char *)LIST_GetByIdx(md->params, 0);
-			Com_Printf("\nMap: %s Assembly: %s\n", p, ass);
+			Com_Printf("\nMap: %s Assembly: %s AssNr: %i\n", p, ass, mapCount);
 
 			sv_threads->integer = 0;
 
