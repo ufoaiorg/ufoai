@@ -211,6 +211,27 @@ size_t UTF8_strlen (const char* str)
 }
 
 /**
+ * @brief Convert UTF-8 character offset to a byte offset in the given string.
+ * @param[in] str Start of the string
+ * @param[in] pos UTF-8 character offset from the start
+ * @return offset of the first byte of the UTF-8 character at that offset
+ * @note If there aren't enough UTF-8 characters, returns the offset of the NULL terminator.
+ * @sa UTF8_char_len
+ */
+int UTF8_char_offset_to_byte_offset (char* str, int pos)
+{
+	int result = 0;
+
+	while (pos > 0 && str[0] != '\0') {
+		const int n = UTF8_char_len((unsigned char)*str);
+		str += n;
+		result += n;
+		pos--;
+	}
+	return result;
+}
+
+/**
  * @brief UTF8 capable string copy function
  * @param[out] dest Pointer to the output string
  * @param[in] src Pointer to the input string

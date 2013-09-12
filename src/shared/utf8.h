@@ -40,4 +40,5 @@ int UTF8_char_len(unsigned char c);
 int UTF8_next(const char** str);
 int UTF8_encoded_len(int codepoint);
 size_t UTF8_strlen(const char* str);
+int UTF8_char_offset_to_byte_offset (char* str, int pos);
 char* UTF8_strncpyz(char* dest, const char* src, size_t limit);
