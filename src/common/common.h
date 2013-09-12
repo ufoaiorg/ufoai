@@ -318,7 +318,7 @@ typedef void event_clean_func(void*  data);
 
 struct scheduleEvent_t {
 	int when;
-	bool delayFollowing;
+	int delayFollowing;
 	event_func *func;
 	event_check_func *check;
 	event_clean_func *clean;
