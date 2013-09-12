@@ -128,11 +128,11 @@ static void testMapDefsMassRMA (void)
 				 * for-loop seems to have two termination conditions. In fact, we have to manually
 				 * exit the for-loop if we ran it just once (without ufos).
 				 */
-				linkedList_t *iter;
-				for (iter = md->ufos; iter || !didItOnce; iter = iter->next) {
+				linkedList_t *iterUfo;
+				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
 					const char *ufo = NULL;
-					if (iter)
-						ufo = (const char *) (iter->data);
+					if (iterUfo)
+						ufo = (const char *) (iterUfo->data);
 					if (ufo)
 						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
 					else
@@ -201,7 +201,7 @@ static void testMapDefsMassRMA (void)
 						Mem_Free(randomMap);
 					}
 					didItOnce = true;
-					if (!iter)
+					if (!iterUfo)
 						break;
 				}
 			}
