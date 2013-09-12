@@ -153,7 +153,7 @@ void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
 		if (!cls.isOurRound()) {
 			/* center view (if wanted) */
 			if (leResponsible) {
-				CL_CameraRoute(leResponsible->pos, le->pos);
+				CL_CheckCameraRoute(leResponsible->pos, le->pos);
 			} else {
 				LE_CenterView(le);
 			}

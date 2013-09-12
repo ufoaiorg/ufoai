@@ -1234,11 +1234,21 @@ void LE_CenterView (const le_t *le)
 
 	assert(le);
 	if (le->team == cls.team) {
+		const float minDistToMove = 4.0f * UNIT_SIZE;
+		const float dist = Vector2Dist(cl.cam.origin, le->origin);
+		if (dist < minDistToMove) {
+			pos3_t currentCamPos;
+			VecToPos(cl.cam.origin, currentCamPos);
+			if (le->pos[2] != currentCamPos[2])
+				Cvar_SetValue("cl_worldlevel", le->pos[2]);
+			return;
+		}
+
 		VectorCopy(le->origin, cl.cam.origin);
 	} else {
 		pos3_t pos;
 		VecToPos(cl.cam.origin, pos);
-		CL_CameraRoute(pos, le->pos);
+		CL_CheckCameraRoute(pos, le->pos);
 	}
 }
 

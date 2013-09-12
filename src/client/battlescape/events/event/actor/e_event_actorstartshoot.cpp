@@ -63,7 +63,7 @@ void CL_ActorStartShoot (const eventRegister_t *self, dbuffer *msg)
 
 	/* center view (if wanted) */
 	if (!cls.isOurRound())
-		CL_CameraRoute(from, target);
+		CL_CheckCameraRoute(from, target);
 
 	/* actor dependent stuff following */
 	if (!le)

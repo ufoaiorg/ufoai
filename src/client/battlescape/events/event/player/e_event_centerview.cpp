@@ -40,5 +40,5 @@ void CL_MoveView (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &pos);
 	VecToPos(cl.cam.origin, from);
-	CL_CameraRoute(from, pos);
+	CL_CheckCameraRoute(from, pos);
 }
