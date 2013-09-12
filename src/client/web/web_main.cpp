@@ -42,7 +42,7 @@ cvar_t *web_userid;
  * @param[in] userdata Userdata that is given to the @c callback
  * @return @c true if the download was successful, @c false otherwise
  */
-bool WEB_GetURL (const char *url, http_callback_t callback, void* userdata)
+bool WEB_GetURL (const char* url, http_callback_t callback, void* userdata)
 {
 	char buf[576];
 	char passwordEncoded[512];
@@ -63,7 +63,7 @@ bool WEB_GetURL (const char *url, http_callback_t callback, void* userdata)
  * @param[in] file The file to write into
  * @return @c true if the download was successful, @c false otherwise
  */
-bool WEB_GetToFile (const char *url, FILE* file)
+bool WEB_GetToFile (const char* url, FILE* file)
 {
 	char buf[576];
 	char passwordEncoded[MAX_VAR];
@@ -85,7 +85,7 @@ bool WEB_GetToFile (const char *url, FILE* file)
  * @param[in] params Additional parameters for the form. The username and password values are automatically
  * filled in and don't have to be specified here.
  */
-bool WEB_PutFile (const char *formName, const char *fileName, const char *url, upparam_t *params)
+bool WEB_PutFile (const char* formName, const char* fileName, const char* url, upparam_t *params)
 {
 	upparam_t paramUser;
 	upparam_t paramPassword;
@@ -108,7 +108,7 @@ bool WEB_PutFile (const char *formName, const char *fileName, const char *url, u
  * @param[in] response The web auth response
  * @param[in] userdata The userdata. @c NULL in this case.
  */
-static void WEB_AuthResponse (const char *response, void* userdata)
+static void WEB_AuthResponse (const char* response, void* userdata)
 {
 	if (response == nullptr) {
 		Cvar_Set("web_password", "");
@@ -133,7 +133,7 @@ static void WEB_AuthResponse (const char *response, void* userdata)
  * If the auth failed, the cvar @c web_password is set to an empty string again.
  * @return @c true if the auth was successful, @c false otherwise.
  */
-bool WEB_Auth (const char *username, const char *password)
+bool WEB_Auth (const char* username, const char* password)
 {
 	char digest[41];
 	char user[MAX_VAR];

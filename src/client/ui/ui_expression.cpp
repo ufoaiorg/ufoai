@@ -64,7 +64,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		{
 			uiNode_t *node;
 			const value_t *propertyTmp;
-			const char *path = expression->d.terminal.d1.constString;
+			const char* path = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
 				path = UI_GenInjectedString(path, false, context);
 
@@ -84,7 +84,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 			{
 				uiNode_t *node;
 				const value_t *propertyTmp;
-				const char *path = expression->d.terminal.d1.constString;
+				const char* path = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 					path = UI_GenInjectedString(path, false, context);
 
@@ -197,7 +197,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 			{
 				cvar_t *cvar = nullptr;
-				const char *cvarName = expression->d.terminal.d1.constString;
+				const char* cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, false, context);
 				cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
@@ -222,7 +222,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_PARAM:
 		{
 			const int paramId = expression->d.terminal.d1.integer;
-			const char *string = UI_GetParam(context, paramId);
+			const char* string = UI_GetParam(context, paramId);
 			if (string[0] == '\0') {
 				Com_Printf("UI_GetFloatFromParam: Param '%i' is out of range, or empty; '0' returned\n", paramId);
 				return 0;
@@ -348,7 +348,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
 			cvar_t *cvar = nullptr;
-			const char *cvarName = expression->d.terminal.d1.constString;
+			const char* cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 				cvarName = UI_GenInjectedString(cvarName, false, context);
 			cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
@@ -532,9 +532,9 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
  * @param[in] description String describing a condition
  * @return The condition if everything is ok, nullptr otherwise
  */
-uiAction_t *UI_AllocStaticStringCondition (const char *description)
+uiAction_t *UI_AllocStaticStringCondition (const char* description)
 {
-	const char *text, *base;
+	const char* text, *base;
 	uiAction_t *expression;
 
 	base = va("( %s )", description);
@@ -604,7 +604,7 @@ static uiAction_t *UI_ParseValueExpression (const char** text)
 	/* it is a node property or it is a OLD syntax node property */
 	/** @todo We MUST remove the OLD code as fast as possible */
 	if (char const* path = Q_strstart(token, "*")) {
-		const char *propertyName;
+		const char* propertyName;
 #if 0	/* it looks useless, an unused cache */
 		const value_t *property;
 #endif

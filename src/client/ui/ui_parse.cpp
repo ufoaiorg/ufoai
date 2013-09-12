@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** prototypes */
 static bool UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char** text, const char** token);
 static uiAction_t *UI_ParseActionList(uiNode_t *node, const char** text, const char** token);
-static uiNode_t *UI_ParseNode(uiNode_t *parent, const char** text, const char** token, const char *errhead);
+static uiNode_t *UI_ParseNode(uiNode_t *parent, const char** text, const char** token, const char* errhead);
 
 /** @brief valid properties for a UI model definition */
 static const value_t uiModelProperties[] = {
@@ -78,7 +78,7 @@ static char const* const reservedTokens[] = {
 	nullptr
 };
 
-static bool UI_TokenIsReserved (const char *name)
+static bool UI_TokenIsReserved (const char* name)
 {
 	char const* const* token = reservedTokens;
 	while (*token) {
@@ -89,7 +89,7 @@ static bool UI_TokenIsReserved (const char *name)
 	return false;
 }
 
-static bool UI_TokenIsValue (const char *name, bool isQuoted)
+static bool UI_TokenIsValue (const char* name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -122,7 +122,7 @@ static bool UI_TokenIsValue (const char *name, bool isQuoted)
 	return false;
 }
 
-static bool UI_TokenIsName (const char *name, bool isQuoted)
+static bool UI_TokenIsName (const char* name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -234,7 +234,7 @@ uiAction_t *UI_AllocStaticAction (void)
  * @return True if the action is initialized
  * @todo remove node param and catch error where we call that function
  */
-bool UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *property, const char *string)
+bool UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *property, const char* string)
 {
 	if (property == nullptr) {
 		action->type = EA_VALUE_STRING;
@@ -272,7 +272,7 @@ bool UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *p
 /**
  * @brief Parser for setter command
  */
-static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char** text, const char** token, const char *errhead)
+static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char** text, const char** token, const char* errhead)
 {
 	const value_t *property;
 	int type;
@@ -357,7 +357,7 @@ static bool UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char** 
 /**
  * @brief Parser for c command
  */
-static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char** text, const char** token, const char *errhead)
+static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char** text, const char** token, const char* errhead)
 {
 	uiAction_t *expression;
 	uiAction_t *lastParam = nullptr;
@@ -425,7 +425,7 @@ static bool UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char**
  */
 static uiAction_t *UI_ParseActionList (uiNode_t *node, const char** text, const char** token)
 {
-	const char *errhead = "UI_ParseActionList: unexpected end of file (in event)";
+	const char* errhead = "UI_ParseActionList: unexpected end of file (in event)";
 	uiAction_t *firstAction;
 	uiAction_t *lastAction;
 	uiAction_t *action;
@@ -583,7 +583,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char** text, const 
 	return firstAction;
 }
 
-static bool UI_ParseExcludeRect (uiNode_t *node, const char** text, const char** token, const char *errhead)
+static bool UI_ParseExcludeRect (uiNode_t *node, const char** text, const char** token, const char* errhead)
 {
 	uiExcludeRect_t rect;
 	uiExcludeRect_t *newRect;
@@ -628,7 +628,7 @@ static bool UI_ParseExcludeRect (uiNode_t *node, const char** text, const char**
 	return true;
 }
 
-static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const char** text, const char** token, const char *errhead)
+static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const char** text, const char** token, const char* errhead)
 {
 	/* add new actions to end of list */
 	uiAction_t** action = &Com_GetValue<uiAction_t*>(node, event);
@@ -660,8 +660,8 @@ static bool UI_ParseEventProperty (uiNode_t *node, const value_t *event, const c
  */
 static bool UI_ParseProperty (void* object, const value_t *property, const char* objectName, const char** text, const char** token)
 {
-	const char *errhead = "UI_ParseProperty: unexpected end of file (object";
-	static const char *notWellFormedValue = "UI_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
+	const char* errhead = "UI_ParseProperty: unexpected end of file (object";
+	static const char* notWellFormedValue = "UI_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
 	size_t bytes;
 	int result;
 	const int specialType = property->type & V_UI_MASK;
@@ -684,7 +684,7 @@ static bool UI_ParseProperty (void* object, const value_t *property, const char*
 		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
 			char* const target = Com_GetValue<char[]>(object, property);
-			const char *translatableToken = *token;
+			const char* translatableToken = *token;
 			assert(property->size);
 			if (translatableToken[0] == '_')
 				translatableToken++;
@@ -882,7 +882,7 @@ static bool UI_ParseFunction (uiNode_t *node, const char** text, const char** to
  */
 static bool UI_ParseNodeProperties (uiNode_t *node, const char** text, const char** token)
 {
-	const char *errhead = "UI_ParseNodeProperties: unexpected end of file (node";
+	const char* errhead = "UI_ParseNodeProperties: unexpected end of file (node";
 	bool nextTokenAlreadyRead = false;
 
 	if ((*token)[0] != '{')
@@ -938,7 +938,7 @@ static bool UI_ParseNodeProperties (uiNode_t *node, const char** text, const cha
  * { { properties } nodes }
  * @endcode
  */
-static bool UI_ParseNodeBody (uiNode_t *node, const char** text, const char** token, const char *errhead)
+static bool UI_ParseNodeBody (uiNode_t *node, const char** text, const char** token, const char* errhead)
 {
 	bool result = true;
 
@@ -1019,7 +1019,7 @@ static bool UI_ParseNodeBody (uiNode_t *node, const char** text, const char** to
  * @note first token already read
  * @note dont read more than the need token (last right token is '}' of end of node)
  */
-static uiNode_t *UI_ParseNode (uiNode_t *parent, const char** text, const char** token, const char *errhead)
+static uiNode_t *UI_ParseNode (uiNode_t *parent, const char** text, const char** token, const char* errhead)
 {
 	uiNode_t *node = nullptr;
 	uiBehaviour_t *behaviour;
@@ -1096,12 +1096,12 @@ static uiNode_t *UI_ParseNode (uiNode_t *parent, const char** text, const char**
  * @brief parses the models.ufo and all files where UI models (menu_model) are defined
  * @sa CL_ParseClientData
  */
-bool UI_ParseUIModel (const char *name, const char** text)
+bool UI_ParseUIModel (const char* name, const char** text)
 {
 	uiModel_t *model;
-	const char *token;
+	const char* token;
 	int i;
-	const char *errhead = "UI_ParseUIModel: unexpected end of file (names ";
+	const char* errhead = "UI_ParseUIModel: unexpected end of file (names ";
 
 	/* search for a UI models with same name */
 	for (i = 0; i < ui_global.numModels; i++)
@@ -1178,10 +1178,10 @@ bool UI_ParseUIModel (const char *name, const char** text)
 	return true;
 }
 
-bool UI_ParseSprite (const char *name, const char** text)
+bool UI_ParseSprite (const char* name, const char** text)
 {
 	uiSprite_t *icon;
-	const char *token;
+	const char* token;
 
 	/* search for icons with same name */
 	icon = UI_AllocStaticSprite(name);
@@ -1226,10 +1226,10 @@ bool UI_ParseSprite (const char *name, const char** text)
  * }
  * @endcode
  */
-bool UI_ParseComponent (const char *type, const char *name, const char** text)
+bool UI_ParseComponent (const char* type, const char* name, const char** text)
 {
-	const char *errhead = "UI_ParseComponent: unexpected end of file (component";
-	const char *token;
+	const char* errhead = "UI_ParseComponent: unexpected end of file (component";
+	const char* token;
 
 	if (!Q_streq(type, "component")) {
 		Com_Error(ERR_FATAL, "UI_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
@@ -1300,11 +1300,11 @@ bool UI_ParseComponent (const char *type, const char *name, const char** text)
  * }
  * @endcode
  */
-bool UI_ParseWindow (const char *type, const char *name, const char** text)
+bool UI_ParseWindow (const char* type, const char* name, const char** text)
 {
-	const char *errhead = "UI_ParseWindow: unexpected end of file (window";
+	const char* errhead = "UI_ParseWindow: unexpected end of file (window";
 	uiNode_t *window;
-	const char *token;
+	const char* token;
 	int i;
 
 	if (!Q_streq(type, "window")) {
@@ -1368,7 +1368,7 @@ bool UI_ParseWindow (const char *type, const char *name, const char** text)
  * @sa Com_MacroExpandString
  * @todo we should review this code, '*' doesn't work very well for all the needed things
  */
-const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
+const char* UI_GetReferenceString (const uiNode_t* const node, const char* ref)
 {
 	if (!ref)
 		return nullptr;
@@ -1378,7 +1378,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		return CL_Translate(ref);
 
 	/* get the reference and the name */
-	const char *token = Com_MacroExpandString(ref);
+	const char* token = Com_MacroExpandString(ref);
 	if (token)
 		return CL_Translate(token);
 

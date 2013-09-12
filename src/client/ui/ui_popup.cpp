@@ -44,7 +44,7 @@ static char popupAction3[UI_MAX_SMALLTEXTLEN];
  * @note Only use static strings here - or use popupText if you really have to
  * build the string
  */
-void UI_Popup (const char *title, const char *text)
+void UI_Popup (const char* title, const char* text)
 {
 	Cvar_Set("ui_sys_popup_title", "%s", title);
 	UI_RegisterText(TEXT_POPUP_INFO, text);
@@ -59,7 +59,7 @@ void UI_Popup (const char *title, const char *text)
  * @param[in] entries List of the selectables choices.
  * @param[in] clickAction Action to perform when one clicked on the popup.
  */
-uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *entries, const char *clickAction)
+uiNode_t *UI_PopupList (const char* title, const char* headline, linkedList_t *entries, const char* clickAction)
 {
 	uiNode_t* window;
 	uiNode_t* listNode;
@@ -104,7 +104,7 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t *e
  * @param[in] clickAction Action to perform when button is clicked.
  * @note clickAction may be nullptr if button is not needed.
  */
-static void UI_SetOneButton (uiNode_t* window, const char *button, const char *clickAction)
+static void UI_SetOneButton (uiNode_t* window, const char* button, const char* clickAction)
 {
 	uiNode_t* buttonNode;
 
@@ -144,10 +144,10 @@ static void UI_SetOneButton (uiNode_t* window, const char *button, const char *c
  * @param[in] tooltip3 Tooltip of third button.
  * @note clickAction AND clickText must be nullptr if button should be invisible.
  */
-void UI_PopupButton (const char *title, const char *text,
-	const char *clickAction1, const char *clickText1, const char *tooltip1,
-	const char *clickAction2, const char *clickText2, const char *tooltip2,
-	const char *clickAction3, const char *clickText3, const char *tooltip3)
+void UI_PopupButton (const char* title, const char* text,
+	const char* clickAction1, const char* clickText1, const char* tooltip1,
+	const char* clickAction2, const char* clickText2, const char* tooltip2,
+	const char* clickAction3, const char* clickText3, const char* tooltip3)
 {
 	uiNode_t* window;
 

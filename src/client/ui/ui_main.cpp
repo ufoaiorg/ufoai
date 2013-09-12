@@ -102,7 +102,7 @@ static void UI_Memory_f (void)
  * this frame.
  * @param[in] fmt Construct string it will execute (command and param)
  */
-void UI_ExecuteConfunc (const char *fmt, ...)
+void UI_ExecuteConfunc (const char* fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);

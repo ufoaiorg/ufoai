@@ -26,4 +26,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern struct cvar_s *ui_sounds;
 
-void UI_PlaySound(const char *soundFile);
+void UI_PlaySound(const char* soundFile);

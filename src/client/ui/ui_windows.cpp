@@ -130,7 +130,7 @@ static void UI_DeleteWindowFromStack (uiNode_t *window)
  * @brief Searches the position in the current window stack for a given window id
  * @return -1 if the window is not on the stack
  */
-static inline int UI_GetWindowPositionFromStackByName (const char *name)
+static inline int UI_GetWindowPositionFromStackByName (const char* name)
 {
 	int i;
 	for (i = 0; i < ui_global.windowStackPos; i++)
@@ -169,7 +169,7 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
  * It can be nullptr when there is no parameters, else this object must be freed by the caller.
  * @return A pointer to @c uiNode_t
  */
-uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t *params)
+uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t *params)
 {
 	uiNode_t *window;
 
@@ -212,7 +212,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
  * @sa UI_PushWindow
  * @note Does not really complete the input - but shows at least all parsed windows
  */
-int UI_CompleteWithWindow (const char *partial, const char** match)
+int UI_CompleteWithWindow (const char* partial, const char** match)
 {
 	int n = 0;
 	for (uiNode_t** i = ui_global.windows, ** const end = i + ui_global.numWindows; i != end; ++i) {
@@ -580,7 +580,7 @@ bool UI_IsMouseOnWindow (void)
  * @note Use dichotomic search
  * @sa UI_GetActiveWindow
  */
-uiNode_t *UI_GetWindow (const char *name)
+uiNode_t *UI_GetWindow (const char* name)
 {
 	unsigned char min = 0;
 	unsigned char max = ui_global.numWindows;
@@ -675,8 +675,8 @@ static void UI_InitStack_f (void)
 		return;
 	}
 
-	const char *mainWindow = Cmd_Argv(1);
-	const char *optionWindow = nullptr;
+	const char* mainWindow = Cmd_Argv(1);
+	const char* optionWindow = nullptr;
 	if (Cmd_Argc() == 3) {
 		optionWindow = Cmd_Argv(2);
 	}
@@ -710,7 +710,7 @@ static void UI_DebugTree_f (void)
 		return;
 	}
 
-	const char *window = Cmd_Argv(1);
+	const char* window = Cmd_Argv(1);
 	const uiNode_t *node = UI_GetWindow(window);
 	UI_DebugTree(node, 0);
 }
@@ -722,8 +722,8 @@ static void UI_Popup_f (void)
 		return;
 	}
 
-	const char *header = Cmd_Argv(1);
-	const char *body = Cmd_Argv(2);
+	const char* header = Cmd_Argv(1);
+	const char* body = Cmd_Argv(2);
 	UI_Popup(header, body);
 }
 

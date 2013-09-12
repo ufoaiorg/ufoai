@@ -37,9 +37,9 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 /**
  * @brief Generic tooltip function
  */
-int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
+int UI_DrawTooltip (const char* string, int x, int y, int maxWidth)
 {
-	const char *font = "f_small";
+	const char* font = "f_small";
 	int height = 0, width = 0;
 
 	if (Q_strnull(string) || !font)
@@ -72,9 +72,9 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
  */
 void UI_Tooltip (const uiNode_t *node, int x, int y)
 {
-	const char *string;
-	const char *key = nullptr;
-	const char *tooltip = nullptr;
+	const char* string;
+	const char* key = nullptr;
+	const char* tooltip = nullptr;
 	static const int maxWidth = 200;
 
 	/* check values */

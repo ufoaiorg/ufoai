@@ -30,18 +30,18 @@ struct uiNode_t;
 struct uiAction_s;
 struct value_s;
 
-bool UI_ParseWindow(const char *type, const char *name, const char** text);
-bool UI_ParseComponent(const char *type, const char *name, const char** text);
-bool UI_ParseSprite(const char *name, const char** text);
-bool UI_ParseUIModel(const char *name, const char** text);
+bool UI_ParseWindow(const char* type, const char* name, const char** text);
+bool UI_ParseComponent(const char* type, const char* name, const char** text);
+bool UI_ParseSprite(const char* name, const char** text);
+bool UI_ParseUIModel(const char* name, const char** text);
 float UI_GetReferenceFloat(uiNode_t const* node, const void* ref);
-const char *UI_GetReferenceString(uiNode_t const* node, const char *ref) __attribute__ ((warn_unused_result));
+const char* UI_GetReferenceString(uiNode_t const* node, const char* ref) __attribute__ ((warn_unused_result));
 const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));
 char* UI_AllocStaticString(const char* string, int size) __attribute__ ((warn_unused_result));
 float* UI_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
 vec4_t* UI_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
 struct uiAction_s *UI_AllocStaticAction(void) __attribute__ ((warn_unused_result));
-bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s *property, const char *string);
+bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s *property, const char* string);
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

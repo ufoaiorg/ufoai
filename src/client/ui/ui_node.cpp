@@ -591,7 +591,7 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
+uiNode_t *UI_GetNode (const uiNode_t* const node, const char* name)
 {
 	uiNode_t *current = nullptr;
 

@@ -582,7 +582,7 @@ void UI_DeleteNode (uiNode_t* node)
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursive, const char *newName, bool isDynamic)
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursive, const char* newName, bool isDynamic)
 {
 	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
 

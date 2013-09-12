@@ -32,6 +32,6 @@ void UI_InitDraw(void);
 
 /* draw */
 void UI_Draw(void);
-void UI_DisplayNotice(const char *text, int time, const char *windowName);
+void UI_DisplayNotice(const char* text, int time, const char* windowName);
 void UI_DrawCursor(void);
 void UI_CaptureDrawOver(uiNode_t* node);

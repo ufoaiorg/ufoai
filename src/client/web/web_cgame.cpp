@@ -48,7 +48,7 @@ static cvar_t *web_cgamelisturl;
  * @param[in] userId The user id to replace. If @c -1 then skip it.
  * @return The @c buf pointer, or @c null in case of an error.
  */
-static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, const char *cgameId, int category, const char *filename, int userId = -1)
+static const char* WEB_CGameGetURL (char* out, size_t outSize, const char* url, const char* cgameId, int category, const char* filename, int userId = -1)
 {
 	char categoryStr[MAX_VAR];
 	Com_sprintf(categoryStr, sizeof(categoryStr), "%i", category);
@@ -56,8 +56,8 @@ static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, 
 	Com_sprintf(userIdStr, sizeof(userIdStr), "%i", userId);
 
 	const struct urlIds_s {
-		const char *id;
-		const char *replace;
+		const char* id;
+		const char* replace;
 		bool mandatory;
 	} urlIds[] = {
 		{"$cgame$", cgameId, true},
@@ -73,7 +73,7 @@ static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, 
 		const urlIds_s &id = urlIds[i];
 		if (strstr(out, id.id) != nullptr) {
 			char encoded[256] = { '\0' };
-			const char *replace = encoded;
+			const char* replace = encoded;
 			if (id.replace != nullptr) {
 				if (!HTTP_Encode(id.replace, encoded, sizeof(encoded))) {
 					Com_Printf("failed to encode '%s'\n", id.replace);
@@ -103,7 +103,7 @@ static const char* WEB_CGameGetURL (char *out, size_t outSize, const char *url, 
  * @note Files can only get uploaded from within the user directory. You can't upload game provided content.
  * @return @c true if the upload of the file was successful, @c false otherwise.
  */
-bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
+bool WEB_CGameUpload (const char* cgameId, int category, const char* filename)
 {
 	if (Q_strnull(cgameId))
 		return false;
@@ -114,7 +114,7 @@ bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 	if (!WEB_CheckAuth())
 		return false;
 
-	const char *fullPath = va("%s/%s", FS_Gamedir(), filename);
+	const char* fullPath = va("%s/%s", FS_Gamedir(), filename);
 	/* we ignore this, because this file is not in the users save path,
 	 * but part of the game data. Don't upload this. */
 	if (!FS_FileExists("%s", fullPath)) {
@@ -124,7 +124,7 @@ bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
 	}
 
 	char url[URL_SIZE];
-	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgameuploadurl->string, cgameId, category, nullptr);
+	const char* encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgameuploadurl->string, cgameId, category, nullptr);
 	if (encodedURL == nullptr) {
 		UI_ExecuteConfunc("cgame_uploadfailed");
 		return false;
@@ -148,13 +148,13 @@ bool WEB_CGameUpload (const char *cgameId, int category, const char *filename)
  * @note The current authenticated user will be taken.
  * @return @c true if the deletion of the file was successful, @c false otherwise.
  */
-bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
+bool WEB_CGameDelete (const char* cgameId, int category, const char* filename)
 {
 	if (!WEB_CheckAuth())
 		return false;
 
 	char url[URL_SIZE];
-	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedeleteurl->string, cgameId, category, filename);
+	const char* encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedeleteurl->string, cgameId, category, filename);
 	if (encodedURL == nullptr)
 		return false;
 
@@ -167,7 +167,7 @@ bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
 	Com_Printf("deleted the cgame file '%s'\n", filename);
 
 	char idBuf[MAX_VAR];
-	const char *id = Com_SkipPath(filename);
+	const char* id = Com_SkipPath(filename);
 	Com_StripExtension(id, idBuf, sizeof(idBuf));
 
 	UI_ExecuteConfunc("cgame_deletesuccessful \"%s\" %i %i", idBuf, category, web_userid->integer);
@@ -182,10 +182,10 @@ bool WEB_CGameDelete (const char *cgameId, int category, const char *filename)
  * authenticated user will be taken.
  * @return @c true if the download of the file was successful, @c false otherwise.
  */
-bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *filename, int userId)
+bool WEB_CGameDownloadFromUser (const char* cgameId, int category, const char* filename, int userId)
 {
 	char url[URL_SIZE];
-	const char *encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedownloadurl->string, cgameId, category, filename, userId);
+	const char* encodedURL = WEB_CGameGetURL(url, sizeof(url), web_cgamedownloadurl->string, cgameId, category, filename, userId);
 	if (encodedURL == nullptr)
 		return false;
 
@@ -216,7 +216,7 @@ bool WEB_CGameDownloadFromUser (const char *cgameId, int category, const char *f
  * @param[in] responseBuf The cgame list in ufo script format
  * @param[in] userdata This can be used to return the amount of files that were listed
  */
-static void WEB_ListCGameFilesCallback (const char *responseBuf, void* userdata)
+static void WEB_ListCGameFilesCallback (const char* responseBuf, void* userdata)
 {
 	int* count = (int*)userdata;
 
@@ -245,7 +245,7 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void* userdata)
 
 	entry_s entry;
 
-	const char *token = Com_Parse(&responseBuf);
+	const char* token = Com_Parse(&responseBuf);
 	if (token[0] != '{') {
 		Com_Printf("invalid token: '%s' - expected {\n", token);
 		return;
@@ -267,7 +267,7 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void* userdata)
 				break;
 			}
 			char idBuf[MAX_VAR];
-			const char *id = Com_SkipPath(entry.file);
+			const char* id = Com_SkipPath(entry.file);
 			Com_StripExtension(id, idBuf, sizeof(idBuf));
 			const bool ownEntry = entry.userId == web_userid->integer;
 			UI_ExecuteConfunc("cgamefiles_add \"%s\" %i %i \"%s\" \"%s\" %i", idBuf, entry.category, entry.userId, id, entry.name, ownEntry ? 1 : 0);
@@ -308,7 +308,7 @@ static void WEB_ListCGameFilesCallback (const char *responseBuf, void* userdata)
  * authenticated user will be taken.
  * @return The amount of files that were found on the server. Or @c -1 on error.
  */
-int WEB_CGameListForUser (const char *cgameId, int category, int userId)
+int WEB_CGameListForUser (const char* cgameId, int category, int userId)
 {
 	if (userId == -1) {
 		if (!WEB_CheckAuth())
