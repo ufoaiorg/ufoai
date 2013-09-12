@@ -353,7 +353,6 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
 	level.hurtAliens = sv_hurtaliens->integer;
-	ai_waypointList = nullptr;
 
 	/* parse ents */
 	entnum = 0;

@@ -1135,7 +1135,7 @@ static int AI_CheckForMissionTargets (const Player &player, Edict* ent, aiAction
 		int i = 0;
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
-		for (checkPoint = ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
+		for (checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
 			if (checkPoint->inuse)
 				continue;
 
@@ -1315,23 +1315,18 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict* ent)
 	return bestAia;
 }
 
-Edict* ai_waypointList;
-
 void G_AddToWayPointList (Edict* ent)
 {
-	int i = 1;
-
-	if (!ai_waypointList)
-		ai_waypointList = ent;
-	else {
-		Edict* e = ai_waypointList;
-		while (e->groupChain) {
-			e = e->groupChain;
-			i++;
-		}
-		i++;
-		e->groupChain = ent;
+	if (!level.ai_waypointList) {
+		level.ai_waypointList = ent;
+		return;
 	}
+
+	Edict* e = level.ai_waypointList;
+	while (e->groupChain) {
+		e = e->groupChain;
+	}
+	e->groupChain = ent;
 }
 
 /**
