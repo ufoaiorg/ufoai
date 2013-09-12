@@ -1389,7 +1389,7 @@ ScheduleEventPtr Dequeue_Event (int now)
 			return event;
 		}
 
-#if 0
+#if 1
 		/* delay all other events if this one is blocked */
 		if (event->delayFollowing > 0) {
 			EventPriorityQueue reOrder;
