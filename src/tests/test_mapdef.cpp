@@ -118,8 +118,6 @@ static void testMapDefsMassRMA (void)
 			sv_threads->integer = 0;
 
 			LIST_Foreach(md->aircraft, char const, craft) {
-				linkedList_t *iter;
-				const char *ufo = NULL;
 				bool didItOnce = false;
 
 				if (craft)
@@ -130,7 +128,9 @@ static void testMapDefsMassRMA (void)
 				 * for-loop seems to have two termination conditions. In fact, we have to manually
 				 * exit the for-loop if we ran it just once (without ufos).
 				 */
+				linkedList_t *iter;
 				for (iter = md->ufos; iter || !didItOnce; iter = iter->next) {
+					const char *ufo = NULL;
 					if (iter)
 						ufo = (const char *) (iter->data);
 					if (ufo)
