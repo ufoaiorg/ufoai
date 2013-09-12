@@ -40,6 +40,7 @@ static char const* const svc_strings[] =
 	"svc_bad",
 
 	"svc_nop",
+	"svc_ping",
 	"svc_disconnect",
 	"svc_reconnect",
 	"svc_print",
