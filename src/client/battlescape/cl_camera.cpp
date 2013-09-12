@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "events/e_parse.h"
 
 static bool cameraRoute = false;
+static int cameraRouteEnd;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
 
@@ -148,7 +149,14 @@ void CL_CameraMove (void)
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
 	/* camera route overrides user input */
-	if (cameraRoute) {
+	if (cameraRouteEnd > 0) {
+		if (cameraRouteEnd <= cl.time) {
+			CL_BlockBattlescapeEvents(false);
+			cameraRouteEnd = 0;
+		} else {
+			return;
+		}
+	} else if (cameraRoute) {
 		/* camera route */
 		frac = cls.frametime * moveaccel * 2;
 		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - UNIT_SIZE) {
@@ -156,8 +164,7 @@ void CL_CameraMove (void)
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
 				cameraRoute = false;
-
-				CL_BlockBattlescapeEvents(false);
+				cameraRouteEnd = cl.time + 500;
 			}
 		} else {
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
@@ -179,8 +186,9 @@ void CL_CameraMove (void)
 		if (VectorLength(cl.cam.speed) > frac) {
 			VectorNormalize2(cl.cam.speed, delta);
 			VectorMA(cl.cam.speed, -frac, delta, cl.cam.speed);
-		} else
+		} else {
 			VectorClear(cl.cam.speed);
+		}
 
 		/* acceleration */
 		frac = cls.frametime * moveaccel * 3.5;
