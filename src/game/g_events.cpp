@@ -620,7 +620,7 @@ void G_EventAddBrushModel (playermask_t playerMask, const Edict &ent)
 
 void G_EventEndRoundAnnounce (const Player &player)
 {
-	G_EventAdd(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY, -1);
+	G_EventAdd(PM_ALL, EV_ENDROUNDANNOUNCE, -1);
 	gi.WriteByte(player.getNum());
 	gi.WriteByte(player.getTeam());
 	G_EventEnd();
