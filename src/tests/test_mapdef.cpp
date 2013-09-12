@@ -117,7 +117,11 @@ static void testMapDefsMassRMA (void)
 
 			sv_threads->integer = 0;
 
-			LIST_Foreach(md->aircraft, char const, craft) {
+			linkedList_t* iterDrop;
+			for (iterDrop = md->aircraft; iterDrop; iterDrop = iterDrop->next) {
+				const char* craft = NULL;
+				if (iterDrop)
+					craft = (const char*) (iterDrop->data);
 				bool didItOnce = false;
 
 				if (craft)
