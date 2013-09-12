@@ -83,6 +83,10 @@ static void CL_LogEvent (const eventRegister_t *eventData)
  */
 void CL_BlockBattlescapeEvents (bool block)
 {
+	if (block)
+		Com_DPrintf(DEBUG_CLIENT, "block battlescape events\n");
+	else
+		Com_DPrintf(DEBUG_CLIENT, "unblock battlescape events\n");
 	cl.eventsBlocked = block;
 }
 
