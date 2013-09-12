@@ -229,6 +229,7 @@ bool R_InitGraphics (const viddefContext_t *context)
 			displayMode.w, displayMode.h, displayMode.refresh_rate, name);
 
 	SDL_VideoInit(nullptr);
+	SDL_SetModState(KMOD_NONE);
 	SDL_StopTextInput();
 
 	Com_Printf("driver: %s\n", SDL_GetCurrentVideoDriver());
