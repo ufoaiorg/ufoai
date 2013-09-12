@@ -79,11 +79,11 @@ static void testScheduler (void)
 	std::string s_four("four");
 	std::string s_five("five");
 
-	ScheduleEventPtr one = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_one));
-	ScheduleEventPtr two = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_two));
-	ScheduleEventPtr three = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_three));
-	ScheduleEventPtr four = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_four));
-	ScheduleEventPtr five = Schedule_Event(5, NULL, NULL, NULL, static_cast<void*>(&s_five));
+	ScheduleEventPtr one = Schedule_Event(3, nullptr, nullptr, nullptr, static_cast<void*>(&s_one));
+	ScheduleEventPtr two = Schedule_Event(3, nullptr, nullptr, nullptr, static_cast<void*>(&s_two));
+	ScheduleEventPtr three = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_three));
+	ScheduleEventPtr four = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_four));
+	ScheduleEventPtr five = Schedule_Event(5, nullptr, nullptr, nullptr, static_cast<void*>(&s_five));
 
 	CU_ASSERT_EQUAL(Dequeue_Event(1000), one);
 	CU_ASSERT_EQUAL(Dequeue_Event(1000), two);
@@ -113,11 +113,11 @@ static void testSchedulerCheck (void)
 	std::string s_four("four");
 	std::string s_five("five");
 
-	ScheduleEventPtr three = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_three));
-	ScheduleEventPtr four = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_four));
-	ScheduleEventPtr five = Schedule_Event(4, NULL, NULL, NULL, static_cast<void*>(&s_five));
-	ScheduleEventPtr one = Schedule_Event(3, NULL, delayCheck, NULL, static_cast<void*>(&s_one));
-	ScheduleEventPtr two = Schedule_Event(3, NULL, NULL, NULL, static_cast<void*>(&s_two));
+	ScheduleEventPtr three = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_three));
+	ScheduleEventPtr four = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_four));
+	ScheduleEventPtr five = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_five));
+	ScheduleEventPtr one = Schedule_Event(3, nullptr, delayCheck, nullptr, static_cast<void*>(&s_one));
+	ScheduleEventPtr two = Schedule_Event(3, nullptr, nullptr, nullptr, static_cast<void*>(&s_two));
 
 	ScheduleEventPtr e = Dequeue_Event(1);
 	CU_ASSERT_FALSE(e);
@@ -142,20 +142,20 @@ int UFO_AddEventsTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite EventsSuite = CU_add_suite("EventsTests", UFO_InitSuiteEvents, UFO_CleanSuiteEvents);
-	if (EventsSuite == NULL)
+	if (EventsSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(EventsSuite, testRange) == NULL)
+	if (CU_ADD_TEST(EventsSuite, testRange) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(EventsSuite, testEvents) == NULL)
+	if (CU_ADD_TEST(EventsSuite, testEvents) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(EventsSuite, testScheduler) == NULL)
+	if (CU_ADD_TEST(EventsSuite, testScheduler) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(EventsSuite, testSchedulerCheck) == NULL)
+	if (CU_ADD_TEST(EventsSuite, testSchedulerCheck) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

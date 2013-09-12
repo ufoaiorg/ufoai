@@ -643,8 +643,8 @@ const char* Com_MacroExpandString (const char* text)
 
 	if (count)
 		return expanded;
-	else
-		return nullptr;
+
+	return nullptr;
 }
 
 void Com_UploadCrashDump (const char* crashDumpFile)
