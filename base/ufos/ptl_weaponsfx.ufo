@@ -270,7 +270,7 @@ particle bulletImpact
 //		kpop   *v			// write it back into the particle structure (but keep it on the stack)
 //		add    *s			// add the current position (v + s)
 //		pop    *s			// write it back into the particle structure and remove from stack
-//		tps    1.0			// think per seconds to 1
+		tps    1.0			// think per seconds to 1
 
 		push   int 20		// push 20 to the stack
 		nspawn bulletFragment	// use the 20 from stack and spawn that many particles
