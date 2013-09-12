@@ -54,5 +54,6 @@ extern const float MIN_ZOOM, MAX_ZOOM;
 void CL_CameraInit(void);
 void CL_CameraMove(void);
 void CL_CameraRoute(const pos3_t from, const pos3_t target);
+void CL_CheckCameraRoute(const pos3_t from, const pos3_t target);
 void CL_CameraZoomIn(void);
 void CL_CameraZoomOut(void);

@@ -283,6 +283,23 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 }
 
 /**
+ * @brief Only moves the camera to the given target location if its not yet close enough
+ */
+void CL_CheckCameraRoute (const pos3_t from, const pos3_t target)
+{
+	pos3_t current;
+	VecToPos(cl.cam.origin, current);
+	const float minDistToMove = 4.0f;
+	const float dist = Vector2Dist(target, current);
+	if (dist < minDistToMove) {
+		if (target[2] != current[2])
+			Cvar_SetValue("cl_worldlevel", target[2]);
+		return;
+	}
+	CL_CameraRoute(from, target);
+}
+
+/**
  * @brief Zooms the scene of the battlefield in
  */
 void CL_CameraZoomIn (void)
