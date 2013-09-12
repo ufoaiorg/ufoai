@@ -266,38 +266,38 @@ static bool AI_CheckCrouch (const Edict* ent)
 static bool AI_HideNeeded (const Edict* ent)
 {
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
-	if (ent->morale > mor_brave->integer) {
-		Edict* from = nullptr;
-		/* test if ent is visible */
-		while ((from = G_EdictsGetNextLivingActor(from))) {
-			if (from->team == ent->team)
-				continue;
+	if (ent->morale <= mor_brave->integer)
+		return true;
 
-			if (G_IsCivilian(from))
-				continue;
+	Edict* from = nullptr;
+	/* test if ent is visible */
+	while ((from = G_EdictsGetNextLivingActor(from))) {
+		if (from->team == ent->team)
+			continue;
 
-			const Item *item = ent->getRightHandItem();
-			if (!item)
-				item = ent->getLeftHandItem();
-			if (!item)
-				continue;
+		if (G_IsCivilian(from))
+			continue;
 
-			const fireDef_t* fd = item->getFiredefs();
-			/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
-			if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
-				const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
-				const int damage = std::max(0, damageRand);
-				if (damage >= ent->HP / 3) {
-					const int hidingTeam = AI_GetHidingTeam(ent);
-					/* now check whether this enemy is visible for this alien */
-					if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
-						return true;
-				}
+		const Item *item = ent->getRightHandItem();
+		if (!item)
+			item = ent->getLeftHandItem();
+		if (!item)
+			continue;
+
+		const fireDef_t* fd = item->getFiredefs();
+		/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
+		if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
+			const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
+			const int damage = std::max(0, damageRand);
+			if (damage >= ent->HP / 3) {
+				const int hidingTeam = AI_GetHidingTeam(ent);
+				/* now check whether this enemy is visible for this alien */
+				if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
+					return true;
 			}
 		}
-		return false;
 	}
-	return true;
+	return false;
 }
 
 /**
