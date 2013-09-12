@@ -87,7 +87,6 @@ int CL_ActorDoShootTime (const eventRegister_t *self, dbuffer *msg, eventTiming_
  */
 static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
 {
-
 	if (actor == nullptr)
 		return;
 

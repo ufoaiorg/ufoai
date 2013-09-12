@@ -1353,8 +1353,10 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
  *  for the event in the case that it is not executed.  Either this
  *  function or func will be called, but never both.
  * @param data Arbitrary data to be passed to the check and event functions.
+ * @param delayFollowing Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false.
+ *  This is needed e.g. for battlescape events to not play events too fast because the beginning of the event queue was blocked.
  */
-ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data)
+ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data, int delayFollowing)
 {
 	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;
@@ -1362,6 +1364,7 @@ ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *c
 	event->check = check;
 	event->clean = clean;
 	event->data = data;
+	event->delayFollowing = delayFollowing;
 
 	eventQueue.insert(event);
 
@@ -1385,6 +1388,28 @@ ScheduleEventPtr Dequeue_Event (int now)
 			eventQueue.erase(i);
 			return event;
 		}
+
+#if 0
+		/* delay all other events if this one is blocked */
+		if (event->delayFollowing > 0) {
+			EventPriorityQueue reOrder;
+			EventPriorityQueue::iterator itEnd = eventQueue.end();
+			for (; i != itEnd;) {
+				ScheduleEventPtr tmpEvent = *i;
+				if (tmpEvent->func != event->func) {
+					++i;
+					continue;
+				}
+				tmpEvent->when += event->delayFollowing;
+				reOrder.insert(tmpEvent);
+				eventQueue.erase(i++);
+			}
+			for (EventPriorityQueue::iterator r = reOrder.begin(); r != reOrder.end(); ++r) {
+				eventQueue.insert(*r);
+			}
+			break;
+		}
+#endif
 	}
 	return ScheduleEventPtr();
 }

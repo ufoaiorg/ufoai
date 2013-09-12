@@ -318,6 +318,7 @@ typedef void event_clean_func(void*  data);
 
 struct scheduleEvent_t {
 	int when;
+	bool delayFollowing;
 	event_func *func;
 	event_check_func *check;
 	event_clean_func *clean;
@@ -326,7 +327,7 @@ struct scheduleEvent_t {
 
 typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
 
-ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data);
+ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data, int delayFollowing = 0);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*

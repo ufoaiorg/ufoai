@@ -249,7 +249,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
 		const int when = CL_GetEventTime(cur->eType, msg, &eventTiming);
-		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
+		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur, 50);
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}
