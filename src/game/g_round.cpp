@@ -154,6 +154,7 @@ static void G_GetNextActiveTeam (void)
 	int i;
 	const int lastTeam = G_GetActiveTeam();
 
+	Com_Printf("round end from team %i\n", lastTeam);
 	level.activeTeam = TEAM_NO_ACTIVE;
 
 	/* search next team */
@@ -162,6 +163,7 @@ static void G_GetNextActiveTeam (void)
 		if (level.num_alive[team]) {
 			/* found next player */
 			level.activeTeam = team;
+			Com_Printf("round start for team %i\n", team);
 			break;
 		}
 	}
