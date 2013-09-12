@@ -64,5 +64,5 @@ define $(BASE_DIR)/0materials.pk3
 endef
 
 define $(BASE_DIR)/0base.pk3
-	*.cfg mapcycle*.txt ai/*.lua save/*.mpt
+	*.cfg mapcycle*.txt ai/*.lua save/*/*
 endef
