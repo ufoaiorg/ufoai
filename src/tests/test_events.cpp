@@ -138,6 +138,54 @@ static void testSchedulerCheck (void)
 	CU_ASSERT_EQUAL_FATAL(e, five);
 }
 
+static bool delayCheckBlockedVal = false;
+static bool delayCheckBlocked (int now, void *data)
+{
+	return delayCheckBlockedVal;
+}
+
+static void testBlocked (void)
+{
+	std::string s_one("one");
+	std::string s_two("two");
+	std::string s_three("three");
+	std::string s_four("three");
+
+	const int delay = 10;
+
+	event_func* f_oneFour = (event_func*)0xCAFED00D;
+	event_func* f_twoThree = (event_func*)0xB16B00B5;
+
+	ScheduleEventPtr one = Schedule_Event(3, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_one), delay);
+	ScheduleEventPtr two = Schedule_Event(4 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_two), delay);
+	ScheduleEventPtr three = Schedule_Event(5 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_three), delay);
+	ScheduleEventPtr four = Schedule_Event(5, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_four), delay);
+
+	ScheduleEventPtr e = Dequeue_Event(1);
+	CU_ASSERT_FALSE(e);
+	e = Dequeue_Event(2);
+	CU_ASSERT_FALSE(e);
+	e = Dequeue_Event(3);
+	CU_ASSERT_FALSE(e);
+	e = Dequeue_Event(5);
+	CU_ASSERT_FALSE(e);
+
+	delayCheckBlockedVal = true;
+
+	e = Dequeue_Event(5);
+	CU_ASSERT_FALSE(e);
+	e = Dequeue_Event(5 + delay);
+	CU_ASSERT_EQUAL_FATAL(e, one);
+	e = Dequeue_Event(4 + delay);
+	CU_ASSERT_EQUAL_FATAL(e, two);
+	e = Dequeue_Event(4 + delay);
+	CU_ASSERT_FALSE(e);
+	e = Dequeue_Event(5 + delay);
+	CU_ASSERT_EQUAL_FATAL(e, three);
+	e = Dequeue_Event(5 + delay);
+	CU_ASSERT_EQUAL_FATAL(e, four);
+}
+
 int UFO_AddEventsTests (void)
 {
 	/* add a suite to the registry */
@@ -156,6 +204,9 @@ int UFO_AddEventsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(EventsSuite, testSchedulerCheck) == nullptr)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(EventsSuite, testBlocked) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
