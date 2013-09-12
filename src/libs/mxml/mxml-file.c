@@ -81,7 +81,7 @@
  * Types and structures...
  */
 
-typedef int (*_mxml_getc_cb_t)(void *, int *);
+typedef int (*_mxml_getc_cb_t)(void *, int* );
 typedef int (*_mxml_putc_cb_t)(int, void *);
 
 typedef struct _mxml_fdbuf_s		/**** File descriptor buffer ****/
@@ -98,15 +98,15 @@ typedef struct _mxml_fdbuf_s		/**** File descriptor buffer ****/
  */
 
 static int		mxml_add_char(int ch, char** ptr, char** buffer,
-			              int *bufsize);
-static int		mxml_fd_getc(void *p, int *encoding);
+			              int* bufsize);
+static int		mxml_fd_getc(void *p, int* encoding);
 static int		mxml_fd_putc(int ch, void *p);
 static int		mxml_fd_read(_mxml_fdbuf_t *buf);
 static int		mxml_fd_write(_mxml_fdbuf_t *buf);
-static int		mxml_file_getc(void *p, int *encoding);
+static int		mxml_file_getc(void *p, int* encoding);
 static int		mxml_file_putc(int ch, void *p);
 static int		mxml_get_entity(mxml_node_t *parent, void *p,
-			                int *encoding,
+			                int* encoding,
 					_mxml_getc_cb_t getc_cb);
 static inline int	mxml_isspace(int ch)
 			{
@@ -118,9 +118,9 @@ static mxml_node_t	*mxml_load_data(mxml_node_t *top, void *p,
 			                _mxml_getc_cb_t getc_cb,
                                         mxml_sax_cb_t sax_cb, void *sax_data);
 static int		mxml_parse_element(mxml_node_t *node, void *p,
-			                   int *encoding,
+			                   int* encoding,
 					   _mxml_getc_cb_t getc_cb);
-static int		mxml_string_getc(void *p, int *encoding);
+static int		mxml_string_getc(void *p, int* encoding);
 static int		mxml_string_putc(int ch, void *p);
 static int		mxml_write_name(const char *s, void *p,
 					_mxml_putc_cb_t putc_cb);
@@ -1357,7 +1357,7 @@ static int				/* O  - Character value or EOF on error */
 mxml_get_entity(mxml_node_t *parent,	/* I  - Parent node */
 		void        *p,		/* I  - Pointer to source */
 		int         *encoding,	/* IO - Character encoding */
-                int         (*getc_cb)(void *, int *))
+                int         (*getc_cb)(void *, int* ))
 					/* I  - Get character function */
 {
   int	ch;				/* Current character */

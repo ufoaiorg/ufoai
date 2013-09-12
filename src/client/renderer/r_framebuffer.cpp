@@ -176,7 +176,7 @@ void R_ShutdownFBObjects (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int *filters)
+r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int* filters)
 {
 	r_framebuffer_t *buf;
 	int i;
@@ -405,7 +405,7 @@ void R_DrawBuffers (unsigned int drawBufferNum)
  * @param attachments The buffers we are rendering into
  * @note The order of the attachments define the gl_FragData order in the shaders
 */
-void R_BindColorAttachments (unsigned int n, unsigned int *attachments)
+void R_BindColorAttachments (unsigned int n, unsigned int* attachments)
 {
 	if (!r_state.frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;

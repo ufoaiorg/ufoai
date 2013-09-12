@@ -478,7 +478,7 @@ xmlNode_t *XML_GetNextPos3 (xmlNode_t *actual, xmlNode_t *parent, const char *na
  * @return pointer to the node the data was retrieved from
  * @return nullptr if no node with name found
  */
-xmlNode_t *XML_GetDate (xmlNode_t *parent, const char *name, int *day, int *sec)
+xmlNode_t *XML_GetDate (xmlNode_t *parent, const char *name, int* day, int* sec)
 {
 	xmlNode_t *p = XML_GetNode(parent, name);
 	if (!p)

@@ -66,7 +66,7 @@ typedef struct model_s {
 /*============================================================================ */
 
 void R_ModModellist_f(void);
-image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin);
+image_t* R_AliasModelState(const model_t *mod, int* mesh, int* frame, int* oldFrame, int* skin);
 image_t* R_AliasModelGetSkin(const char* modelFileName, const char* skin);
 void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(bool complete);

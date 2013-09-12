@@ -372,7 +372,7 @@ int UI_DrawStringInBox (const char *fontID, align_t align, int x, int y, int wid
 }
 
 int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, int maxWidth,
-		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, bool increaseLine, longlines_t method)
+		int lineHeight, const char *c, int boxHeight, int scrollPos, int* curLine, bool increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);
 	const align_t verticalAlign = (align_t)(align / 3);  /* top, center, bottom */

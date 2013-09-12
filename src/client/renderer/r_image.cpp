@@ -149,7 +149,7 @@ void R_ImageList_f (void)
  * @param[out] height Height of the loaded image.
  * @sa R_FindImage
  */
-void R_LoadImage (const char* name, byte** pic, int *width, int *height)
+void R_LoadImage (const char* name, byte** pic, int* width, int* height)
 {
 	char filenameTemp[MAX_QPATH];
 	SDL_Surface *surf;
@@ -218,7 +218,7 @@ void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *ou
  * @param[out] scaledWidth The resulting width - can be the same as the given @c width
  * @param[out] scaledHeight The resulting height - can be the same as the given @c height
  */
-void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scaledHeight)
+void R_GetScaledTextureSize (int width, int height, int* scaledWidth, int* scaledHeight)
 {
 	for (*scaledWidth = 1; *scaledWidth < width; *scaledWidth <<= 1) {}
 	for (*scaledHeight = 1; *scaledHeight < height; *scaledHeight <<= 1) {}

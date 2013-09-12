@@ -37,7 +37,7 @@ void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int 
 void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, int texW, int texH, int border);
 void UI_DrawFill(int x, int y, int w, int h, const vec4_t color);
 int UI_DrawStringInBox(const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method = LONGLINES_PRETTYCHOP);
-int UI_DrawString(const char *fontID, align_t align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height = 0, int scroll_pos = 0, int *cur_line = nullptr, bool increaseLine = false, longlines_t method = LONGLINES_WRAP);
+int UI_DrawString(const char *fontID, align_t align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height = 0, int scroll_pos = 0, int* cur_line = nullptr, bool increaseLine = false, longlines_t method = LONGLINES_WRAP);
 void UI_Transform(const vec3_t transform, const vec3_t rotate, const vec3_t scale);
 void UI_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
 void UI_PushClipRect(int x, int y, int width, int height);

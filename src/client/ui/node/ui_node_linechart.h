@@ -36,7 +36,7 @@ class uiLineChartNode : public uiLocatedNode {
  * @brief an element of the line chart
  */
 typedef struct lineStrip_s {
-	int *pointList;				/**< list of value */
+	int* pointList;				/**< list of value */
 	int numPoints;				/**< number of values */
 	vec4_t color;				/**< color of the line strip */
 	struct lineStrip_s *next;	/**< next line strip */

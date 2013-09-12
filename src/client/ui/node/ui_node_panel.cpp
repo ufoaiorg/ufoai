@@ -365,8 +365,8 @@ static void UI_ColumnLayout (uiNode_t *node)
 		return;
 	}
 
-	int *columnPos = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
-	int *columnSize = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
+	int* columnPos = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
+	int* columnSize = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
 
 	/* check the first row */
 	child = node->firstChild;

@@ -168,7 +168,7 @@ char *FS_NextScriptHeader(const char *files, const char** name, const char** tex
 void FS_CreatePath(const char *path);
 
 /* Make sure we have this available */
-char** FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+char** FS_ListFiles(const char *findname, int* numfiles, unsigned musthave, unsigned canthave);
 
 const char *FS_GetFileData(const char *files);
 

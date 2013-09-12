@@ -59,7 +59,7 @@ xmlNode_t *XML_GetPos2(xmlNode_t *parent, const char *name, vec2_t pos);
 xmlNode_t *XML_GetNextPos2(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
 xmlNode_t *XML_GetPos3(xmlNode_t *parent, const char *name, vec3_t pos);
 xmlNode_t *XML_GetNextPos3(xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos);
-xmlNode_t *XML_GetDate(xmlNode_t *parent, const char *name, int *day, int *sec);
+xmlNode_t *XML_GetDate(xmlNode_t *parent, const char *name, int* day, int* sec);
 
 xmlNode_t *XML_GetNode(xmlNode_t *parent, const char *name);
 xmlNode_t *XML_GetNextNode(xmlNode_t *current, xmlNode_t *parent, const char *name);

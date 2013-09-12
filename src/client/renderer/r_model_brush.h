@@ -227,7 +227,7 @@ typedef struct mBspModel_s {
 	mBspSurface_t *surfaces;
 
 	int numsurfedges;
-	int *surfedges;
+	int* surfedges;
 
 	/* vertex arrays */
 	float *verts;

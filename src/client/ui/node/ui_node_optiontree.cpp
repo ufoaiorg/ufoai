@@ -210,7 +210,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	R_Color(nullptr);
 }
 
-static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int *depth)
+static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int* depth)
 {
 	uiNode_t* option;
 	const char* font;

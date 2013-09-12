@@ -386,7 +386,7 @@ _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
 	    break;
 
 	case 'n' : /* Output number of chars so far */
-	    *(va_arg(ap, int *)) = bytes;
+	    *(va_arg(ap, int* )) = bytes;
 	    break;
       }
     }

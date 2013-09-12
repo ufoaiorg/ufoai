@@ -103,7 +103,7 @@ void UI_NodeSetSize(uiNode_t* node, vec2_t size);
 /* position */
 void UI_GetNodeAbsPos(uiNode_t const* node, vec2_t pos);
 void UI_GetNodeScreenPos(const uiNode_t* node, vec2_t pos);
-void UI_NodeAbsoluteToRelativePos(uiNode_t const* node, int *x, int *y);
+void UI_NodeAbsoluteToRelativePos(uiNode_t const* node, int* x, int* y);
 void UI_NodeRelativeToAbsolutePoint(const uiNode_t* node, vec2_t pos);
 void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, int pointDirection);
 

@@ -297,7 +297,7 @@ static int R_FontChunkLength (const font_t *f, char* text, int len)
  * @param[out] widthp Pixel width of part that fits.
  * @return String length of part that fits.
  */
-static int R_FontFindFit (const font_t *f, char* text, int maxlen, int maxWidth, int *widthp)
+static int R_FontFindFit (const font_t *f, char* text, int maxlen, int maxWidth, int* widthp)
 {
 	int bestbreak = 0;
 	int width;
@@ -352,7 +352,7 @@ static int R_FontFindFit (const font_t *f, char* text, int maxlen, int maxWidth,
  * truncated.
  * Assumes whole string won't fit.
  */
-static int R_FontFindTruncFit (const font_t *f, const char* text, int maxlen, int maxWidth, bool mark, int *widthp)
+static int R_FontFindTruncFit (const font_t *f, const char* text, int maxlen, int maxWidth, bool mark, int* widthp)
 {
 	char buf[BUF_SIZE];
 	int width;
@@ -385,7 +385,7 @@ static int R_FontFindTruncFit (const font_t *f, const char* text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t *f, const char* text, int maxWidth, longlines_t method, int *lines, bool *aborted)
+static int R_FontMakeChunks (const font_t *f, const char* text, int maxWidth, longlines_t method, int* lines, bool *aborted)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -535,7 +535,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char* text, int maxWi
  * @param[out] lines receives total number of lines in text, including blank ones
  * @param[out] isTruncated receives true, if the text must be trucated
  */
-void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlines_t method, int *width, int *height, int *lines, bool *isTruncated)
+void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlines_t method, int* width, int* height, int* lines, bool *isTruncated)
 {
 	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
@@ -704,7 +704,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * @todo This could be replaced with a set of much simpler interfaces.
  */
 int R_FontDrawString (const char* fontId, align_t align, int x, int y, int absX, int maxWidth,
-		int lineHeight, const char* c, int boxHeight, int scrollPos, int *curLine, longlines_t method)
+		int lineHeight, const char* c, int boxHeight, int scrollPos, int* curLine, longlines_t method)
 {
 	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap;

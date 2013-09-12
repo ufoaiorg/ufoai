@@ -524,7 +524,7 @@ void UI_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
  * @param[in,out] x an absolute x position
  * @param[in,out] y an absolute y position
  */
-void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
+void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int* x, int* y)
 {
 	assert(node != nullptr);
 	/* if we request the position of an undrawable node, there is a problem */

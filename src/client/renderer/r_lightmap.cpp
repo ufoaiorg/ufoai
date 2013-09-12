@@ -93,7 +93,7 @@ static void R_UploadLightmapPage (void)
  * Find a suitable location to store data in the texture atlas
  * @brief returns a texture number and the position inside it
  */
-static bool R_AllocLightmapBlock (int w, int h, int *x, int *y)
+static bool R_AllocLightmapBlock (int w, int h, int* x, int* y)
 {
 	int i, j;
 	int best;

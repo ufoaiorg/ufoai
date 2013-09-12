@@ -80,7 +80,7 @@ void uiBaseLayoutNode::draw (uiNode_t *node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row) const
+void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int* col, int* row) const
 {
 	assert(col);
 	assert(row);

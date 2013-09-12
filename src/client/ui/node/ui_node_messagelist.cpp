@@ -109,7 +109,7 @@ static uiSprite_t *UI_MessageGetIcon (const uiMessageListNodeMessage_t *message)
 	return UI_GetSpriteByName(message->iconName);
 }
 
-static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int x, int y, int width, int *screenLines)
+static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int x, int y, int width, int* screenLines)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;

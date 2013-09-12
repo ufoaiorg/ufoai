@@ -82,7 +82,7 @@ extern int r_numImages;
 
 void R_UploadTexture(const unsigned *data, int width, int height, image_t* image);
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
-void R_GetScaledTextureSize(int width, int height, int *scaledWidth, int *scaledHeight);
+void R_GetScaledTextureSize(int width, int height, int* scaledWidth, int* scaledHeight);
 void R_ScaleTexture(const unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
 image_t* R_RenderToTexture(const char* name, int x, int y, int w, int h);
 

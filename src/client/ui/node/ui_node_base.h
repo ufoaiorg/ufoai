@@ -38,7 +38,7 @@ public:
 	void onMiddleClick(uiNode_t* node, int x, int y) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
 protected:
-	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row) const;
+	void getCellAtPos(const uiNode_t *node, int x, int y, int* col, int* row) const;
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {
