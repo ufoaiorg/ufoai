@@ -360,10 +360,6 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
  */
 static void SAV_GameSave_f (void)
 {
-	char comment[MAX_VAR] = "";
-	char* error = nullptr;
-	bool result;
-
 	/* get argument */
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <filename> <comment|*cvar>\n", cgi->Cmd_Argv(0));
@@ -376,18 +372,21 @@ static void SAV_GameSave_f (void)
 	}
 
 	/* get comment */
+	char comment[MAX_VAR] = "";
 	if (cgi->Cmd_Argc() > 2) {
 		const char* arg = cgi->Cmd_Argv(2);
 		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
-	result = SAV_GameSave(cgi->Cmd_Argv(1), comment, &error);
-	if (!result) {
-		if (error)
-			CP_Popup(_("Note"), "%s\n%s", _("Error saving game."), error);
-		else
-			CP_Popup(_("Note"), "%s\n%s", "%s\n", _("Error saving game."));
-	}
+	char* error = nullptr;
+	const bool result = SAV_GameSave(cgi->Cmd_Argv(1), comment, &error);
+	if (result)
+		return;
+
+	if (error)
+		CP_Popup(_("Note"), "%s\n%s", _("Error saving game."), error);
+	else
+		CP_Popup(_("Note"), "%s\n%s", "%s\n", _("Error saving game."));
 }
 
 /**
@@ -395,7 +394,7 @@ static void SAV_GameSave_f (void)
  * @param[in] idx the savegame slot to retrieve gamecomment for
  * @sa SAV_GameReadGameComments_f
  */
-static void SAV_GameReadGameComment (const int idx)
+static void SAV_GameReadGameComment (bool save, const int idx)
 {
 	saveFileHeader_t header;
 	qFILE f;
@@ -405,24 +404,34 @@ static void SAV_GameReadGameComment (const int idx)
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
 
 	FS_OpenFile(filename, &f, FILE_READ);
-	if (f.f || f.z) {
-		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
-			Com_Printf("Warning: Savefile header may be corrupted\n");
+	if (!f.f && !f.z) {
+		if (save) {
+			cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\" \"\"", idx);
+		} else {
+			cgi->UI_ExecuteConfunc("update_load_game_info %i \"\" \"\" \"\" \"\"", idx);
+		}
+		return;
+	}
 
-		header.compressed = LittleLong(header.compressed);
-		header.version = LittleLong(header.version);
-		header.xmlSize = LittleLong(header.xmlSize);
-		header.subsystems = LittleLong(header.subsystems);
+	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
+		Com_Printf("Warning: Savefile header may be corrupted\n");
+	FS_CloseFile(&f);
 
-		const char* basename = Com_SkipPath(filename);
-		if (!SAV_VerifyHeader(&header))
-			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
-		else
-			cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
+	header.compressed = LittleLong(header.compressed);
+	header.version = LittleLong(header.version);
+	header.xmlSize = LittleLong(header.xmlSize);
+	header.subsystems = LittleLong(header.subsystems);
 
-		FS_CloseFile(&f);
+	const char* basename = Com_SkipPath(filename);
+	if (!SAV_VerifyHeader(&header)) {
+		Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
+		return;
+	}
+
+	if (save) {
+		cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
 	} else {
-		cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\" \"\"", idx);
+		cgi->UI_ExecuteConfunc("update_load_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
 	}
 }
 
@@ -437,14 +446,19 @@ static void SAV_GameReadGameComment (const int idx)
  */
 static void SAV_GameReadGameComments_f (void)
 {
-	if (cgi->Cmd_Argc() == 2) {
-		int idx = atoi(cgi->Cmd_Argv(1));
-		SAV_GameReadGameComment(idx);
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("usage: %s <load|save> {id}\n", Cmd_Argv(0));
+		return;
+	}
+
+	const bool save = Q_streq("save", cgi->Cmd_Argv(1));
+	if (cgi->Cmd_Argc() == 3) {
+		int idx = atoi(cgi->Cmd_Argv(2));
+		SAV_GameReadGameComment(save, idx);
 	} else {
-		int i;
 		/* read all game comments */
-		for (i = 0; i < 8; i++) {
-			SAV_GameReadGameComment(i);
+		for (int i = 0; i < 8; i++) {
+			SAV_GameReadGameComment(save, i);
 		}
 	}
 }
@@ -525,47 +539,6 @@ bool SAV_AddSubsystem (saveSubsystems_t *subsystem)
 
 	Com_Printf("added %s subsystem\n", subsystem->name);
 	return true;
-}
-
-/**
- * @brief Set the mn_slotX cvar to the comment (remove the date string) for clean
- * editing of the save comment
- * @sa SAV_GameReadGameComments_f
- */
-static void SAV_GameSaveNameCleanup_f (void)
-{
-	int slotID;
-	char cvar[16];
-	qFILE f;
-	saveFileHeader_t header;
-
-	/* get argument */
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <[0-7]>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	slotID = atoi(cgi->Cmd_Argv(1));
-	if (slotID < 0 || slotID > 7)
-		return;
-
-	char buf[MAX_OSPATH];
-	cgi->GetRelativeSavePath(buf, sizeof(buf));
-	Q_strcat(buf, sizeof(buf), "slot%i.%s", slotID, SAVEGAME_EXTENSION);
-	FS_OpenFile(buf, &f, FILE_READ);
-	if (!f.f && !f.z)
-		return;
-
-	/* read the comment */
-	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
-		Com_Printf("Warning: Savefile header may be corrupted\n");
-
-	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
-	if (SAV_VerifyHeader(&header))
-		cgi->Cvar_Set(cvar, "%s", header.name);
-	else
-		cgi->Cvar_Set(cvar, "");
-	FS_CloseFile(&f);
 }
 
 /**
@@ -695,7 +668,6 @@ void SAV_Init (void)
 	cgi->Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
 	cgi->Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
 	cgi->Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
-	cgi->Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
 	save_compressed = cgi->Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
 	cl_lastsave = cgi->Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 }
