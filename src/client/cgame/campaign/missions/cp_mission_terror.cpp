@@ -179,9 +179,10 @@ int CP_TerrorMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes
 		ufoTypes[num++] = UFO_HARVESTER;
 	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
 		ufoTypes[num++] = UFO_CORRUPTER;
+	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
+		ufoTypes[num++] = UFO_GUNBOAT;
 	if (UFO_ShouldAppearOnGeoscape(UFO_BOMBER))
 		ufoTypes[num++] = UFO_BOMBER;
-	/**< @todo Add Battleship when maps will be available */
 
 	return num;
 }
