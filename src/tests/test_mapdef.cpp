@@ -117,6 +117,11 @@ static void testMapDefsMassRMA (void)
 
 			sv_threads->integer = 0;
 
+			/* This is tricky. Some maps don't have any ufo on them and thus in the mapdef.
+			 * That would cause a LIST_Foreach macro to never run it's body. That's why these
+			 * for-loops seem to have two termination conditions. In fact, we have to manually
+			 * exit the for-loops if we ran it just once (without ufos nor dropships).
+			 */
 			bool didItOnce = false;
 			linkedList_t* iterDrop;
 			for (iterDrop = md->aircraft; iterDrop || !didItOnce; iterDrop = iterDrop->next) {
@@ -129,11 +134,6 @@ static void testMapDefsMassRMA (void)
 				else
 					Cvar_Set("rm_drop", "");
 
-				/* This is tricky. Some maps don't have any ufo on them and thus in the mapdef.
-				 * That would cause a LIST_Foreach macro to never run it's body. That's why this
-				 * for-loop seems to have two termination conditions. In fact, we have to manually
-				 * exit the for-loop if we ran it just once (without ufos).
-				 */
 				linkedList_t *iterUfo;
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
 					const char *ufo = NULL;
