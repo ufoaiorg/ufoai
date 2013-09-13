@@ -301,8 +301,13 @@ window load
 			*node:this.parent.slots.slot<1>.button@string = "<2>"
 		}
 		*node:this.parent.slots.slot<1>.button@tooltip = <4>
-		*node:this.parent.slots.slot<1>.button@onClick = { cmd "game_load slot<node:this.parent.index@integer>; game_timestop;" *cvar:mn_fastexit = 1;" }
-		*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
+		*node:this.parent.slots.slot<1>.button@onClick = {
+			cmd "game_load slot<node:this.parent.index@integer>; game_timestop;"
+			*cvar:mn_fastexit = 1
+		}
+		*node:this.parent.slots.slot<1>.upload@onClick = {
+			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+		}
 		//*node:this.parent.slots.slot<1>.delete@onClick = {}
 		*node:this.parent.slots.slot<1>.upload@invis = false
 		*node:this.parent.slots.slot<1>.delete@invis = true
