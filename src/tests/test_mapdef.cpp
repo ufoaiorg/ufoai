@@ -125,7 +125,7 @@ static void testMapDefsMassRMA (void)
 					craft = (const char*) (iterDrop->data);
 
 				if (craft)
-					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craft));
+					Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(craft));
 				else
 					Cvar_Set("rm_drop", "");
 
@@ -140,7 +140,7 @@ static void testMapDefsMassRMA (void)
 					if (iterUfo)
 						ufo = (const char *) (iterUfo->data);
 					if (ufo)
-						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
+						Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 					else
 						Cvar_Set("rm_ufo", "");
 
