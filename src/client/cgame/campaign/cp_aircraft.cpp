@@ -2126,7 +2126,7 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 	const int pilotSkill = aircraft->pilot->chr.score.skills[SKILL_PILOTING];
 	float baseProbability = (float) pilotSkill;
 
-	const byte *color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
+	const byte* color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
 	/* Crash over water: chances for survival are very bad */
 	if (MapIsWater(color)) {
 		baseProbability /= 10.0f;

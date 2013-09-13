@@ -37,7 +37,7 @@ static inline byte* CP_XVIGetAlpha (int x, int y)
 	return &cgi->r_xviAlpha[y * XVI_WIDTH + x];
 }
 
-static inline byte *CP_RadarGet (int x, int y, bool source)
+static inline byte* CP_RadarGet (int x, int y, bool source)
 {
 	if (source)
 		return &cgi->r_radarSourcePic[y * RADAR_WIDTH + x];
@@ -322,14 +322,14 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		int xMin = 0;
 		int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = CP_RadarGet(x, y, source);
+			byte* dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 		xMin = floor((latMin + 540.0f) * radarWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = CP_RadarGet(x, y, source);
+			byte* dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -337,14 +337,14 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		int xMin = 0;
 		int xMax = ceil((latMax - 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = CP_RadarGet(x, y, source);
+			byte* dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
 		xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
 		xMax = RADAR_WIDTH;
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = CP_RadarGet(x, y, source);
+			byte* dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
@@ -352,7 +352,7 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
 		const int xMin = floor((latMin + 180.0f) * radarWidthPerDegree);
 		const int xMax = ceil((latMax + 180.0f) * radarWidthPerDegree);
 		for (x = xMin; x < xMax; x++) {
-			byte *dest = CP_RadarGet(x, y, source);
+			byte* dest = CP_RadarGet(x, y, source);
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}

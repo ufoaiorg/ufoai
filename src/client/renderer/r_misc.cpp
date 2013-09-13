@@ -57,7 +57,7 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = 255;
 		}
 	}
-	r_noTexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
+	r_noTexture = R_LoadImageData("***r_notexture***", (byte* ) data, 8, 8, it_effect);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
@@ -67,7 +67,7 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = rand() % 48;
 		}
 	}
-	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
+	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte* )data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
 
 	/* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 	r_dummyTexture = R_LoadImageData("***r_dummytexture***", dummytexture, 1, 1, it_effect);

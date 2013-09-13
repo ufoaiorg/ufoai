@@ -39,7 +39,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char* animname)
 	mAliasAnim_t *anim;
 	int n;
 	/* load the tags */
-	byte *animbuf = nullptr;
+	byte* animbuf = nullptr;
 	const char* buffer;
 
 	FS_LoadFile(animname, &animbuf);
@@ -236,7 +236,7 @@ bool R_ModLoadMDX (model_t *mod)
 	for (i = 0; i < mod->alias.num_meshes; i++) {
 		mAliasMesh_t *mesh = &mod->alias.meshes[i];
 		char mdxFileName[MAX_QPATH];
-		byte *buffer = nullptr, *buf;
+		byte* buffer = nullptr, *buf;
 		const int32_t *intbuf;
 		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];

@@ -36,10 +36,10 @@ void MD2HeaderCheck (const dMD2Model_t *md2, const char* fileName, int bufSize)
 		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)", fileName, numTris, MD2_MAX_TRIANGLES);
 }
 
-void MD2SkinEdit (const byte *buf, const char* fileName, int bufSize, void* userData)
+void MD2SkinEdit (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	uint32_t numSkins;
-	byte *const copy = Mem_Dup(byte, buf, bufSize);
+	byte* const copy = Mem_Dup(byte, buf, bufSize);
 	dMD2Model_t *md2 = (dMD2Model_t *)copy;
 	char* md2Path;
 
@@ -69,7 +69,7 @@ void MD2SkinEdit (const byte *buf, const char* fileName, int bufSize, void* user
 	Mem_Free(copy);
 }
 
-void MD2Info (const byte *buf, const char* fileName, int bufSize, void* userData)
+void MD2Info (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
@@ -118,9 +118,9 @@ void MD2Info (const byte *buf, const char* fileName, int bufSize, void* userData
 	Com_Printf("    \\ - ofsEnd %i\n", ofsEnd);
 }
 
-void MD2SkinNum (const byte *buf, const char* fileName, int bufSize, void* userData)
+void MD2SkinNum (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
-	byte *copy = Mem_Dup(byte, buf, bufSize);
+	byte* copy = Mem_Dup(byte, buf, bufSize);
 	dMD2Model_t *md2 = (dMD2Model_t *)copy;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
@@ -185,7 +185,7 @@ void MD2SkinNum (const byte *buf, const char* fileName, int bufSize, void* userD
 
 	const int n = ofsEnd - moveOffset;
 	byte* from = copy + moveOffset;
-	byte *to = from + offsetDelta;
+	byte* to = from + offsetDelta;
 	memmove(to, from, n);
 
 	if (deltaSkins > 0) {
@@ -212,7 +212,7 @@ void MD2SkinNum (const byte *buf, const char* fileName, int bufSize, void* userD
 	Mem_Free(copy);
 }
 
-void MD2GLCmdsRemove (const byte *buf, const char* fileName, int bufSize, void* userData)
+void MD2GLCmdsRemove (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	uint32_t numGLCmds;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;

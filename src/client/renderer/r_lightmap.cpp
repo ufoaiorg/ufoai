@@ -136,16 +136,16 @@ static bool R_AllocLightmapBlock (int w, int h, int* x, int* y)
  * @brief Fullbridght lightmap
  * @sa R_BuildLightmap
  */
-static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
+static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte* sout, byte* dout, int stride)
 {
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
 	/* Allocatate attached-to-surface cache for fast point lighting lookups */
-	byte *l = surf->lightmap = Mem_PoolAllocTypeN(byte, smax * tmax * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
+	byte* l = surf->lightmap = Mem_PoolAllocTypeN(byte, smax * tmax * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
 
 	for (int t = 0; t < tmax; t++) {
-		byte *lmPtr = sout, *dmPtr = dout;
+		byte* lmPtr = sout, *dmPtr = dout;
 		for (int s = 0; s < smax; s++) {
 			/* fill lightmap samples */
 			l[0] = lmPtr[0] = 255;
@@ -172,20 +172,20 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
  * and write them into the strided block in the atlas page
  * @sa R_BuildDefaultLightmap
  */
-static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
+static void R_BuildLightmap (mBspSurface_t *surf, byte* sout, byte* dout, int stride)
 {
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 	const int area = smax * tmax;
 
 	int color[3] = {0, 0, 0};
-	byte *src = surf->samples;
+	byte* src = surf->samples;
 
 	/* Allocatate attached-to-surface cache for fast point lighting lookups and keep the pointer to fill it  a bit later */
-	byte *l = surf->lightmap = Mem_PoolAllocTypeN(byte, area * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
+	byte* l = surf->lightmap = Mem_PoolAllocTypeN(byte, area * LIGHTMAP_SAMPLE_SIZE, vid_lightPool);
 
 	for (int t = 0; t < tmax; t++) {
-		byte *lmPtr = sout, *dmPtr = dout;
+		byte* lmPtr = sout, *dmPtr = dout;
 		for (int s = 0; s < smax; s++) {
 			/* process lightmap samples and accumulate the average color */
 			color[0] += l[0] = lmPtr[0] = src[0];
@@ -224,7 +224,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 void R_CreateSurfaceLightmap (mBspSurface_t *surf)
 {
 	int smax, tmax;
-	byte *samples, *directions;
+	byte* samples, *directions;
 
 	if (!(surf->flags & MSURF_LIGHTMAP))
 		return;

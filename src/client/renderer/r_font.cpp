@@ -181,7 +181,7 @@ static font_t *R_FontAnalyze (const char* name, const char* path, int renderStyl
 	/* copy fontname */
 	f->name = name;
 
-	byte *buf;
+	byte* buf;
 	ttfSize = FS_LoadFile(path, &buf);
 	if (ttfSize == -1)
 		Com_Error(ERR_FATAL, "...could not load font file %s", path);

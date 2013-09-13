@@ -30,7 +30,7 @@ typedef struct font_s {
 	const char* name;
 	TTF_Font *font;
 	SDL_RWops *rw;				/**< ttf font reading structure for SDL_RWops */
-	byte *buffer;				/**< loaded file */
+	byte* buffer;				/**< loaded file */
 	int style;					/**< see also fontRenderStyle_t */
 	int lineSkip;				/**< TTF_FontLineSkip */
 	int height;

@@ -11,7 +11,7 @@
 #include "math/Vector3.h"
 
 namespace {
-static byte *row1 = NULL, *row2 = NULL;
+static byte* row1 = NULL, *row2 = NULL;
 static int rowsize = 0;
 
 const int MAX_TEXTURE_QUALITY = 3;
@@ -261,7 +261,7 @@ void TextureManipulator::calculateGammaTable ()
 	}
 }
 
-void TextureManipulator::resampleTextureLerpLine (const byte *in, byte *out, int inwidth, int outwidth,
+void TextureManipulator::resampleTextureLerpLine (const byte* in, byte* out, int inwidth, int outwidth,
 		int bytesperpixel)
 {
 	int j, xi, oldx = 0, f, fstep, endx, lerp;
@@ -329,15 +329,15 @@ void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int 
 		free(row2);
 
 		rowsize = outwidth * bytesperpixel;
-		row1 = (byte *) malloc(rowsize);
-		row2 = (byte *) malloc(rowsize);
+		row1 = (byte* ) malloc(rowsize);
+		row2 = (byte* ) malloc(rowsize);
 	}
 
 	byte const *const indata = static_cast<byte const*>(indata_);
 	if (bytesperpixel == 4) {
 		int i, j, yi, oldy, f, fstep, lerp, endy = (inheight - 1), inwidth4 = inwidth * 4, outwidth4 = outwidth * 4;
-		byte *out;
-		out = (byte *) outdata;
+		byte* out;
+		out = (byte* ) outdata;
 		fstep = (int) (inheight * 65536.0f / outheight);
 #define LERPBYTE(i) out[i] = (byte) ((((row2[i] - row1[i]) * lerp) >> 16) + row1[i])
 
@@ -422,8 +422,8 @@ void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int 
 		}
 	} else if (bytesperpixel == 3) {
 		int i, j, yi, oldy, f, fstep, lerp, endy = (inheight - 1), inwidth3 = inwidth * 3, outwidth3 = outwidth * 3;
-		byte *out;
-		out = (byte *) outdata;
+		byte* out;
+		out = (byte* ) outdata;
 		fstep = (int) (inheight * 65536.0f / outheight);
 #define LERPBYTE(i) out[i] = (byte) ((((row2[i] - row1[i]) * lerp) >> 16) + row1[i])
 
@@ -504,7 +504,7 @@ void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int 
 }
 
 // in can be the same as out
-void TextureManipulator::mipReduce (byte *in, byte *out, int width, int height, int destwidth, int destheight)
+void TextureManipulator::mipReduce (byte* in, byte* out, int width, int height, int destwidth, int destheight)
 {
 	if (width > destwidth) {
 		if (height > destheight) {

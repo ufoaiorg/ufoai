@@ -38,7 +38,7 @@ BRUSHMODEL LOADING
 /**
  * @brief The model base pointer - bases for the lump offsets
  */
-static const byte *mod_base;
+static const byte* mod_base;
 /**
  * @brief The shift array is used for random map assemblies (RMA) to shift
  * the mins/maxs and stuff like that
@@ -60,7 +60,7 @@ static void R_ModLoadLighting (const lump_t *l)
 		return;
 
 	r_worldmodel->bsp.lightdata  = Mem_PoolAllocTypeN(byte, l->filelen, vid_lightPool);
-	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
+	r_worldmodel->bsp.lightquant = *(const byte* ) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
@@ -1030,7 +1030,7 @@ static void R_SetupWorldModel (void)
 static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, int sX, int sY, int sZ)
 {
 	int i;
-	byte *buffer;
+	byte* buffer;
 	dBspHeader_t *header;
 	const int lightingLump = day ? LUMP_LIGHTING_DAY : LUMP_LIGHTING_NIGHT;
 
@@ -1062,7 +1062,7 @@ static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, in
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
-	mod_base = (byte *) header;
+	mod_base = (byte* ) header;
 
 	BSP_SwapHeader(header, r_worldmodel->name);
 

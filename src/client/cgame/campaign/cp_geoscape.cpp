@@ -98,19 +98,19 @@ static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
 static const float defaultBaseAngle = -90.0f;	/**< Default angle value for 3D models like bases */
 
-static byte *terrainPic;				/**< this is the terrain mask for separating the climate
+static byte* terrainPic;				/**< this is the terrain mask for separating the climate
 										 * zone and water by different color values */
 static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
 
-static byte *culturePic;				/**< this is the mask for separating the culture
+static byte* culturePic;				/**< this is the mask for separating the culture
 										 * zone and water by different color values */
 static int cultureWidth, cultureHeight;		/**< the width and height for the culture pic. */
 
-static byte *populationPic;				/**< this is the mask for separating the population rate
+static byte* populationPic;				/**< this is the mask for separating the population rate
 										 * zone and water by different color values */
 static int populationWidth, populationHeight;		/**< the width and height for the population pic. */
 
-static byte *nationsPic;				/**< this is the nation mask - separated
+static byte* nationsPic;				/**< this is the nation mask - separated
 										 * by colors given in nations.ufo. */
 static int nationsWidth, nationsHeight;	/**< the width and height for the nation pic. */
 
@@ -2133,11 +2133,11 @@ bool GEO_IsNight (const vec2_t pos)
  * @return Returns the color value at given position.
  * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  */
-const byte *GEO_GetColor (const vec2_t pos, mapType_t type, bool *coast)
+const byte* GEO_GetColor (const vec2_t pos, mapType_t type, bool *coast)
 {
 	int x, y;
 	int width, height;
-	const byte *mask;
+	const byte* mask;
 	const byte* color;
 
 	switch (type) {

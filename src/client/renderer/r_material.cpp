@@ -929,7 +929,7 @@ static int R_ParseStage (materialStage_t *s, const char** buffer)
 void R_LoadMaterials (const char* map)
 {
 	char path[MAX_QPATH];
-	byte *fileBuffer;
+	byte* fileBuffer;
 	const char* buffer;
 	bool inmaterial;
 	image_t *image;

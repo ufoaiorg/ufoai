@@ -199,14 +199,14 @@ void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *ou
 		assert(index2 < inwidth * inheight);
 
 		for (j = 0; j < outwidth; j++) {
-			const byte *pix1 = (const byte *) inrow + p1[j];
-			const byte *pix2 = (const byte *) inrow + p2[j];
-			const byte *pix3 = (const byte *) inrow2 + p1[j];
-			const byte *pix4 = (const byte *) inrow2 + p2[j];
-			((byte *) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
-			((byte *) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
-			((byte *) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
-			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
+			const byte* pix1 = (const byte* ) inrow + p1[j];
+			const byte* pix2 = (const byte* ) inrow + p2[j];
+			const byte* pix3 = (const byte* ) inrow2 + p1[j];
+			const byte* pix4 = (const byte* ) inrow2 + p2[j];
+			((byte* ) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
+			((byte* ) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
+			((byte* ) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
+			((byte* ) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
 }
@@ -261,14 +261,14 @@ void R_UploadTexture (const unsigned *data, int width, int height, image_t* imag
 	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 #endif
 	int i, c;
-	const byte *scan;
+	const byte* scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const bool clamp = R_IsClampedImageType(image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
 	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((const byte *) data) + 3; i < c; i++, scan += 4) {
+	for (i = 0, scan = ((const byte* ) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
 #ifdef GL_VERSION_ES_CM_1_0
 			texFormat = GL_RGBA;
@@ -347,7 +347,7 @@ void R_UploadTexture (const unsigned *data, int width, int height, image_t* imag
 /**
  * @brief Applies blurring to a texture
  */
-void R_SoftenTexture (byte *in, int width, int height, int bpp)
+void R_SoftenTexture (byte* in, int width, int height, int bpp)
 {
 	int i, j, k;
 	const int size = width * height * bpp;
@@ -361,14 +361,14 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 	for (i = 1; i < height - 1; i++) {
 		for (j = 1; j < width - 1; j++) {
-			const byte *src = in + ((i * width) + j) * bpp;  /* current input pixel */
+			const byte* src = in + ((i * width) + j) * bpp;  /* current input pixel */
 
-			const byte *u = (src - (width * bpp));  /* and it's neighbors */
-			const byte *d = (src + (width * bpp));
-			const byte *l = (src - (1 * bpp));
-			const byte *r = (src + (1 * bpp));
+			const byte* u = (src - (width * bpp));  /* and it's neighbors */
+			const byte* d = (src + (width * bpp));
+			const byte* l = (src - (1 * bpp));
+			const byte* r = (src + (1 * bpp));
 
-			byte *dest = out + ((i * width) + j) * bpp;  /* current output pixel */
+			byte* dest = out + ((i * width) + j) * bpp;  /* current output pixel */
 
 			for (k = 0; k < bpp; k++)
 				dest[k] = (u[k] + d[k] + l[k] + r[k]) / 4;
@@ -380,7 +380,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	Mem_Free(out);
 }
 
-void R_UploadAlpha (const image_t *image, const byte *alphaData)
+void R_UploadAlpha (const image_t *image, const byte* alphaData)
 {
 	R_BindTexture(image->texnum);
 
@@ -432,7 +432,7 @@ image_t *R_GetImage (const char* name)
  * @param[in] height The height of the image (power of two, please)
  * @param[in] type The image type @sa imagetype_t
  */
-image_t *R_LoadImageData (const char* name, const byte *pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	imageArray_t *images;
@@ -587,7 +587,7 @@ image_t *R_FindImage (const char* pname, imagetype_t type)
 	}
 
 	if ((surf = Img_LoadImage(lname))) {
-		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte* )surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 		if (image->type == it_world) {
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);

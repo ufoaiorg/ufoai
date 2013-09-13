@@ -317,7 +317,7 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
 void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const aircraft_t *aircraft)
 {
 	const char* zoneType;
-	const byte *color;
+	const byte* color;
 
 	assert(mission->posAssigned);
 	assert(mission->mapDef);

@@ -463,7 +463,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t *air
 void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, bool phalanxWon)
 {
 	if (phalanxWon) {
-		const byte *color;
+		const byte* color;
 
 		assert(aircraft);
 

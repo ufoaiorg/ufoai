@@ -886,10 +886,10 @@ void BuildFacelights (unsigned int facenum)
 }
 
 #define TGA_HEADER_SIZE 18
-static void WriteTGA24 (const char* filename, const byte * data, int width, int height, int offset)
+static void WriteTGA24 (const char* filename, const byte*  data, int width, int height, int offset)
 {
 	int i, size;
-	byte *buffer;
+	byte* buffer;
 	qFILE file;
 
 	size = width * height * 3;
@@ -954,13 +954,13 @@ static void ExportLightmap (const char* path, const char* name, bool day)
 {
 	int i;
 	const int lightmapIndex = day ? 1 : 0;
-	const byte *bspLightBytes = curTile->lightdata[lightmapIndex];
+	const byte* bspLightBytes = curTile->lightdata[lightmapIndex];
 	const byte quant = *bspLightBytes;
 	const int scale = 1 << quant;
 
 	for (i = 0; i < curTile->numfaces; i++) {
 		const dBspSurface_t *face = &curTile->faces[i];
-		const byte *lightmap = bspLightBytes + face->lightofs[lightmapIndex];
+		const byte* lightmap = bspLightBytes + face->lightofs[lightmapIndex];
 		vec2_t texSize;
 
 		CalcTextureSize(face, texSize, scale);
@@ -1011,7 +1011,7 @@ void FinalLightFace (unsigned int facenum)
 {
 	int j, k;
 	vec3_t dir, intensity;
-	byte *dest;
+	byte* dest;
 
 	dBspSurface_t *f = &curTile->faces[facenum];
 	facelight_t	*fl = &facelight[config.compile_for_day][facenum];

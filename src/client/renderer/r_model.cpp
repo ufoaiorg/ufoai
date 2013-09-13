@@ -114,7 +114,7 @@ model_t *R_AllocModelSlot (void)
  */
 static bool R_LoadModel (model_t *mod, const char* filename)
 {
-	byte *buf;
+	byte* buf;
 	int modfilelen;
 	char animname[MAX_QPATH];
 

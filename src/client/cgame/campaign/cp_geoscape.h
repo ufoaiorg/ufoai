@@ -72,7 +72,7 @@ int GEO_GetCivilianNumberByPosition(const vec2_t pos);
 void GEO_PrintParameterStringByPos(const vec2_t pos);
 void GEO_CheckPositionBoundaries(float *pos);
 bool GEO_IsNight(const vec2_t pos);
-const byte *GEO_GetColor(const vec2_t pos, mapType_t type, bool *coast);
+const byte* GEO_GetColor(const vec2_t pos, mapType_t type, bool *coast);
 void GEO_Init(const char* map);
 void GEO_Reset(const char* map);
 void GEO_Shutdown(void);

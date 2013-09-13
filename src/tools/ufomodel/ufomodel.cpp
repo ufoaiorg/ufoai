@@ -110,7 +110,7 @@ void Com_DPrintf (int level, const char* fmt, ...)
 	}
 }
 
-image_t *R_LoadImageData (const char* name, const byte *pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	size_t len;
@@ -150,7 +150,7 @@ image_t *R_FindImage (const char* pname, imagetype_t type)
 	Com_StripExtension(pname, lname, sizeof(lname));
 
 	if ((surf = Img_LoadImage(lname))) {
-		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte* )surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 	} else {
 		image = nullptr;
@@ -188,7 +188,7 @@ void Com_Error (int code, const char* fmt, ...)
  */
 static model_t *LoadModel (const char* name)
 {
-	byte *buf;
+	byte* buf;
 	int modfilelen;
 
 	/* load the file */
@@ -397,7 +397,7 @@ static void UM_Parameter (int argc, char** argv)
 	}
 }
 
-typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSize, void* userData);
+typedef void (*modelWorker_t) (const byte* buf, const char* fileName, int bufSize, void* userData);
 
 /**
  * @brief The caller has to ensure that the model is from the expected format
@@ -407,7 +407,7 @@ typedef void (*modelWorker_t) (const byte *buf, const char* fileName, int bufSiz
  */
 static void ModelWorker (modelWorker_t worker, const char* fileName, void* userData)
 {
-	byte *buf = nullptr;
+	byte* buf = nullptr;
 	int modfilelen;
 
 	/* load the file */
@@ -432,13 +432,13 @@ static void ModelWorker (modelWorker_t worker, const char* fileName, void* userD
 	FS_FreeFile(buf);
 }
 
-static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void* userData)
+static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	const char* md2Path;
 	uint32_t numSkins;
 	int i;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
-	byte *model = nullptr;
+	byte* model = nullptr;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -497,7 +497,7 @@ static void MD2SkinFix (const byte *buf, const char* fileName, int bufSize, void
 	}
 }
 
-static void MD2Check (const byte *buf, const char* fileName, int bufSize, void* userData)
+static void MD2Check (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	const char* md2Path;
 	uint32_t numSkins;

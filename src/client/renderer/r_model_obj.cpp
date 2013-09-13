@@ -278,7 +278,7 @@ static void R_LoadObjSkin (model_t *mod)
 	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
 	if (FS_CheckFile("%s.mtl", skinPath) != -1) {
 		const char* buffer;
-		byte *buf;
+		byte* buf;
 		int i;
 
 		FS_LoadFile(va("%s.mtl", skinPath), &buf);
@@ -326,10 +326,10 @@ static void R_LoadObjSkin (model_t *mod)
  * @brief Drives the actual parsing of the object file.  The file is read twice:
  * once to acquire primitive counts, and a second time to load them.
  */
-static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int bufSize)
+static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte* buffer, int bufSize)
 {
 	char line[MAX_STRING_CHARS];
-	const byte *c;
+	const byte* c;
 	bool comment;
 	int i;
 
@@ -360,7 +360,7 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int 
 	}
 }
 
-void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
+void R_LoadObjModel (model_t *mod, byte* buffer, int bufSize)
 {
 	mobj_t obj;
 	const float *v;

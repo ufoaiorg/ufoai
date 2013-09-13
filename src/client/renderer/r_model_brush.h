@@ -119,8 +119,8 @@ typedef struct mBspSurface_s {
 	int lightmap_texnum;
 	int deluxemap_texnum;
 
-	byte *samples;				/**< lightmap samples - only used at loading time */
-	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
+	byte* samples;				/**< lightmap samples - only used at loading time */
+	byte* lightmap;				/**< finalized lightmap samples, cached for lookups */
 
 	int lightframe;				/**< dynamic lighting frame */
 	int lights;					/**< bitmask of dynamic light sources */
@@ -247,7 +247,7 @@ typedef struct mBspModel_s {
 	unsigned int index_buffer;
 
 	byte lightquant;
-	byte *lightdata;
+	byte* lightdata;
 
 	/* sorted surfaces arrays */
 	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];

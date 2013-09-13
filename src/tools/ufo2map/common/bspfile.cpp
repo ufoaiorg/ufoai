@@ -34,18 +34,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CMod_DeCompressRouting
  * @sa CMod_LoadRouting
  */
-byte *CompressRouting (byte *dataStart, byte *destStart, int l)
+byte* CompressRouting (byte* dataStart, byte* destStart, int l)
 {
 	int c;
 	byte val;
-	byte *data, *dend, *dest_p;
+	byte* data, *dend, *dest_p;
 
 	dest_p = destStart;
 	data = dataStart;
 	dend = dataStart + l;
 
 	while (data < dend) {
-		byte *count_p;
+		byte* count_p;
 		if (data + 1 < dend && *data == *(data + 1)) {
 			/* repetitions */
 			val = *data++;
@@ -220,7 +220,7 @@ static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void* dest, s
 	if (length % size)
 		Sys_Error("LoadBSPFile: odd lump size");
 
-	memcpy(dest, (const byte *)header + ofs, length);
+	memcpy(dest, (const byte* )header + ofs, length);
 
 	return length / size;
 }
