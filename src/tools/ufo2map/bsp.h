@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/tracing.h"
 
-extern dMapTile_t *curTile;
+extern dMapTile_t* curTile;
 extern mapTiles_t mapTiles;
 
 typedef struct node_s {
@@ -76,7 +76,7 @@ extern brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 extern int brush_start, brush_end;
 
-byte GetLevelFlagsFromBrush(const mapbrush_t *brush);
+byte GetLevelFlagsFromBrush(const mapbrush_t* brush);
 void LoadMapFile(const char* filename);
 void WriteMapFile(const char* filename);
 uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
@@ -85,15 +85,15 @@ uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 
 /* csg.c */
 int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
-bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, const AABB& clip);
-bspbrush_t *ChopBrushes(bspbrush_t *head);
+bspbrush_t* MakeBspBrushList(int startbrush, int endbrush, int level, const AABB& clip);
+bspbrush_t* ChopBrushes(bspbrush_t* head);
 
 /* portals.c */
 uint32_t VisibleContents(uint32_t contents);
-void MarkVisibleSides(tree_t *tree, int start, int end);
-void FreePortal(portal_t *p);
-void MakeTreePortals(tree_t *tree);
-void RemovePortalFromNode(portal_t *portal, node_t *l);
+void MarkVisibleSides(tree_t* tree, int start, int end);
+void FreePortal(portal_t* p);
+void MakeTreePortals(tree_t* tree);
+void RemovePortalFromNode(portal_t* portal, node_t* l);
 
 /*============================================================================= */
 
@@ -101,7 +101,7 @@ void RemovePortalFromNode(portal_t *portal, node_t *l);
 void SetModelNumbers(void);
 
 void BeginBSPFile(void);
-int WriteBSP(node_t *headnode);
+int WriteBSP(node_t* headnode);
 void EndBSPFile(const char* filename);
 void BeginModel(int entityNum);
 void EndModel(void);
@@ -109,17 +109,17 @@ void EmitBrushes(void);
 void EmitPlanes(void);
 
 /* faces.c */
-void MakeFaces(node_t *headnode);
-void FixTjuncs(node_t *headnode);
-int GetEdge(int v1, int v2, const face_t *f);
-void FreeFace(face_t *f);
+void MakeFaces(node_t* headnode);
+void FixTjuncs(node_t* headnode);
+int GetEdge(int v1, int v2, const face_t* f);
+void FreeFace(face_t* f);
 
 /* tree.c */
-node_t *AllocNode(void);
-tree_t *AllocTree(void);
-tree_t *BuildTree(bspbrush_t *brushlist, const vec3_t mins, const vec3_t maxs);
-void FreeTree(tree_t *tree);
-void PruneNodes(node_t *node);
+node_t* AllocNode(void);
+tree_t* AllocTree(void);
+tree_t* BuildTree(bspbrush_t* brushlist, const vec3_t mins, const vec3_t maxs);
+void FreeTree(tree_t* tree);
+void PruneNodes(node_t* node);
 
 /* trace.c */
 void MakeTracingNodes(int levels);

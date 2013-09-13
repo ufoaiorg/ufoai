@@ -340,7 +340,7 @@ typedef struct mapDef_s {
 	/* general */
 	char* id;				/**< script file id */
 	char* map;				/**< bsp or ump base filename (without extension and day or night char) */
-	linkedList_t *params;	/**< in case of ump file, the assembly to use */
+	linkedList_t* params;	/**< in case of ump file, the assembly to use */
 	char* description;		/**< the description to show in the menus */
 	char* victoryCondition;	/**< the mission briefing victory condition */
 	char* missionBriefing;	/**< the mission briefing description */
@@ -350,7 +350,7 @@ typedef struct mapDef_s {
 	/* multiplayer */
 	bool multiplayer;		/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
-	linkedList_t *gameTypes;/**< gametype strings this map is useable for */
+	linkedList_t* gameTypes;/**< gametype strings this map is useable for */
 
 
 	/* singleplayer */
@@ -361,13 +361,13 @@ typedef struct mapDef_s {
 	int maxAliens;			/**< Number of spawning points on the map */
 	bool hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
-	linkedList_t *terrains;		/**< terrain strings this map is useable for */
-	linkedList_t *populations;	/**< population strings this map is useable for */
-	linkedList_t *cultures;		/**< culture strings this map is useable for */
+	linkedList_t* terrains;		/**< terrain strings this map is useable for */
+	linkedList_t* populations;	/**< population strings this map is useable for */
+	linkedList_t* cultures;		/**< culture strings this map is useable for */
 	bool storyRelated;			/**< Is this a mission story related? */
 	int timesAlreadyUsed;		/**< Number of times the map has already been used */
-	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
-	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */
+	linkedList_t* ufos;			/**< Type of allowed UFOs on the map */
+	linkedList_t* aircraft;		/**< Type of allowed aircraft on the map */
 
 	/** @note Don't end with ; - the trigger commands get the base index as
 	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
@@ -381,8 +381,8 @@ typedef struct mapDef_s {
 		if ((var) = &csi.mds[var##__loopvar], !(condition)) {} else
 
 #define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
-mapDef_t *Com_GetMapDefByIDX(int index);
-mapDef_t *Com_GetMapDefinitionByID(const char* mapDefID);
+mapDef_t* Com_GetMapDefByIDX(int index);
+mapDef_t* Com_GetMapDefinitionByID(const char* mapDefID);
 
 /**
  * @brief The csi structure is the client-server-information structure
@@ -427,16 +427,16 @@ typedef struct csi_s {
 
 	/** the current assigned teams for this mission
 	 * @todo this does not belong here - this is only static data that is shared */
-	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];
-	const chrTemplate_t *alienChrTemplates[MAX_TEAMS_PER_MISSION];
+	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
+	const chrTemplate_t* alienChrTemplates[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 
 	/** character templates */
 	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
 	int numChrTemplates;
-	linkedList_t *bodyTemplates;
+	linkedList_t* bodyTemplates;
 
-	linkedList_t *actorNames;
+	linkedList_t* actorNames;
 
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;

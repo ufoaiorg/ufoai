@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
  */
-dMapTile_t *curTile;
+dMapTile_t* curTile;
 mapTiles_t mapTiles;
 
 /**
@@ -37,7 +37,7 @@ mapTiles_t mapTiles;
  */
 static void ProcessWorldModel (int entityNumber)
 {
-	entity_t *e = &entities[0];
+	entity_t* e = &entities[0];
 
 	brush_start = e->firstbrush;
 	brush_end = brush_start + e->numbrushes;
@@ -62,10 +62,10 @@ static void ProcessWorldModel (int entityNumber)
  */
 static void ProcessSubModel (int entityNum)
 {
-	const entity_t *e;
+	const entity_t* e;
 	int start, end;
-	tree_t *tree;
-	bspbrush_t *list;
+	tree_t* tree;
+	bspbrush_t* list;
 	AABB aabb;
 
 	BeginModel(entityNum);

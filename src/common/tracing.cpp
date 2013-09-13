@@ -73,7 +73,7 @@ TRACING NODES
  */
 static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenum)
 {
-	tnode_t *t;				/* the tracing node to build */
+	tnode_t* t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
 	int i;
 	TR_NODE_TYPE *node;		/* the node we are investigating */
@@ -129,7 +129,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenu
 	if (tile->nodes[nodenum].planenum == PLANENUM_LEAF) {
 #endif
 		TR_NODE_TYPE *n;
-		tnode_t *t;
+		tnode_t* t;
 		vec3_t c0maxs, c1mins;
 		int i;
 
@@ -208,7 +208,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  */
 int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end)
 {
-	tnode_t *tnode;
+	tnode_t* tnode;
 	float front, back;
 	int r;
 
@@ -309,7 +309,7 @@ static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_
  * @sa TR_TestLine_r
  * @return false if not blocked
  */
-bool TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const int levelmask)
+bool TR_TestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const int levelmask)
 {
 	int tile;
 
@@ -339,7 +339,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  */
 static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end, vec3_t tr_end)
 {
-	tnode_t *tnode;
+	tnode_t* tnode;
 	float front, back;
 	vec3_t mid;
 	float frac;
@@ -462,7 +462,7 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec
  * @sa CL_ActorMouseTrace
  * @return false if no connection between start and end - 1 otherwise
  */
-bool TR_TestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
+bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
 	int tile;
 	vec3_t t_end;
@@ -535,7 +535,7 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 
 typedef struct leaf_check_s {
 	int leaf_count, leaf_maxcount;
-	int32_t *leaf_list;
+	int32_t* leaf_list;
 	int32_t leaf_topnode;
 } leaf_check_t;
 
@@ -544,7 +544,7 @@ typedef struct leaf_check_s {
  * call with topnode set to the headnode, returns with topnode
  * set to the first node that splits the box
  */
-static void TR_BoxLeafnums_r (boxtrace_t *traceData, int32_t nodenum, leaf_check_t *lc)
+static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check_t* lc)
 {
 	TR_TILE_TYPE *myTile = traceData->tile;
 
@@ -586,7 +586,7 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int32_t nodenum, leaf_check
  * @param[in] traceData both parameters and results of the trace
  * @param[in] headnode if < 0 we are in a leaf node
  */
-static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int32_t *list, int listsize, int32_t headnode, int32_t *topnode)
+static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int listsize, int32_t headnode, int32_t* topnode)
 {
 	leaf_check_t lc;
 	lc.leaf_list = list;
@@ -612,7 +612,7 @@ static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int32_t *list, int li
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
  */
-static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEAF_TYPE *leaf)
+static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEAF_TYPE *leaf)
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
@@ -720,7 +720,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 /**
  * @sa CM_TraceToLeaf
  */
-static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t *brush)
+static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 {
 	int i, j;
 	TR_PLANE_TYPE *plane;
@@ -775,7 +775,7 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t *brush)
  *  is intersected by the line drawn in TR_RecursiveHullCheck or is within the bounding box set in trace_mins and
  *  trace_maxs with the origin on the line.
  */
-static void TR_TraceToLeaf (boxtrace_t *traceData, int32_t leafnum)
+static void TR_TraceToLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
 	int k;
 	TR_LEAF_TYPE *leaf;
@@ -792,7 +792,7 @@ static void TR_TraceToLeaf (boxtrace_t *traceData, int32_t leafnum)
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
 		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
-		cBspBrush_t *b = &myTile->brushes[brushnum];
+		cBspBrush_t* b = &myTile->brushes[brushnum];
 
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
@@ -811,7 +811,7 @@ static void TR_TraceToLeaf (boxtrace_t *traceData, int32_t leafnum)
 /**
  * @sa CM_TestBoxInBrush
  */
-static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
+static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
 	int k;
 	const TR_LEAF_TYPE *leaf;
@@ -828,7 +828,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
 		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
-		cBspBrush_t *b = &myTile->brushes[brushnum];
+		cBspBrush_t* b = &myTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
@@ -859,7 +859,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
  *  using trace_extents.  Trace_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
-static void TR_RecursiveHullCheck (boxtrace_t *traceData, int32_t nodenum, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
+static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
 	TR_NODE_TYPE *node;
 	TR_PLANE_TYPE *plane;
@@ -1085,7 +1085,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
 {
 	int i;
-	cBspHead_t *h;
+	cBspHead_t* h;
 	trace_t tr;
 
 	/* ensure that the first trace is set in every case */
@@ -1124,7 +1124,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t 
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in the first tile.  Used by ufo2map.
  */
-trace_t TR_SingleTileBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_SingleTileBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject)
 {
 	/* Trace the whole line against the first tile. */
 	trace_t tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);

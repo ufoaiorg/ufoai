@@ -155,7 +155,7 @@ void Check_Free (void)
 	ED_Free();
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 		if (iBrush->numNear) {
 			assert(iBrush->nearBrushes);
 			Mem_Free(iBrush->nearBrushes);
@@ -165,7 +165,7 @@ void Check_Free (void)
 	}
 
 	for (i = 0; i < numCompositeSides; i++) {
-		compositeSide_t *cs = &compositeSides[i];
+		compositeSide_t* cs = &compositeSides[i];
 		if (cs->numMembers) {
 			assert(cs->memberSides);
 			Mem_Free(cs->memberSides);

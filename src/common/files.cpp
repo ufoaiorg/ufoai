@@ -38,8 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
-static filelink_t *fs_links;
-static searchpath_t *fs_searchpaths;
+static filelink_t* fs_links;
+static searchpath_t* fs_searchpaths;
 #define MODS_DIR "mods"
 
 void FS_CreateOpenPipeFile (const char* filename, qFILE *f)
@@ -65,7 +65,7 @@ void FS_CreateOpenPipeFile (const char* filename, qFILE *f)
  */
 const char* FS_Gamedir (void)
 {
-	searchpath_t *search;
+	searchpath_t* search;
 
 	for (search = fs_searchpaths; search; search = search->next) {
 		if (search->write)
@@ -161,10 +161,10 @@ void FS_CloseFile (qFILE * f)
  */
 int FS_OpenFile (const char* filename, qFILE *file, filemode_t mode)
 {
-	searchpath_t *search;
+	searchpath_t* search;
 	char netpath[MAX_OSPATH];
 	int i;
-	filelink_t *link;
+	filelink_t* link;
 
 	file->z = file->f = nullptr;
 
@@ -202,7 +202,7 @@ int FS_OpenFile (const char* filename, qFILE *file, filemode_t mode)
 		/* is the element a pak file? */
 		if (search->pack) {
 			/* look through all the pak file elements */
-			pack_t *pak = search->pack;
+			pack_t* pak = search->pack;
 			for (i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
@@ -435,7 +435,7 @@ void FS_FreeFile (void* buffer)
  * @param[in] packfile The pack filename
  * @note pk3 and zip are valid extensions
  */
-static pack_t *FS_LoadPackFile (const char* packfile)
+static pack_t* FS_LoadPackFile (const char* packfile)
 {
 	const char* extension = Com_GetExtension(packfile);
 
@@ -515,7 +515,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
 
-	for (searchpath_t *search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		if (Q_streq(search->filename, dir))
 			return;
 		if (write && search->write) {
@@ -550,7 +550,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
 	qsort((void*)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
 	for (i = 0; i < pakfile_count; i++) {
-		pack_t *pak = FS_LoadPackFile(pakfile_list[i]);
+		pack_t* pak = FS_LoadPackFile(pakfile_list[i]);
 		if (!pak)
 			continue;
 
@@ -631,7 +631,7 @@ char** FS_ListFiles (const char* findname, int* numfiles, unsigned musthave, uns
  */
 const char* FS_NextPath (const char* prevpath)
 {
-	searchpath_t *s;
+	searchpath_t* s;
 	char* prev;
 
 	if (!prevpath)
@@ -736,7 +736,7 @@ int FS_GetModList (linkedList_t** mods)
 static void FS_Mod_f (void)
 {
 	if (Cmd_Argc() == 1) {
-		linkedList_t *list = nullptr;
+		linkedList_t* list = nullptr;
 		FS_GetModList(&list);
 		LIST_Foreach(list, const char, mod) {
 			Com_Printf("mod: %s\n", mod);
@@ -752,7 +752,7 @@ static void FS_Mod_f (void)
 void FS_ExecAutoexec (void)
 {
 	char name[MAX_QPATH];
-	searchpath_t *s;
+	searchpath_t* s;
 
 	/* search through all the paths for an autoexec.cfg file */
 	for (s = fs_searchpaths; s != nullptr; s = s->next) {
@@ -784,7 +784,7 @@ static void FS_Link_f (void)
 
 	/* see if the link already exists */
 	prev = &fs_links;
-	for (filelink_t *l = fs_links; l; l = l->next) {
+	for (filelink_t* l = fs_links; l; l = l->next) {
 		if (Q_streq(l->from, Cmd_Argv(1))) {
 			Mem_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */
@@ -860,8 +860,8 @@ static void FS_List_f (void)
  */
 static void FS_Info_f (void)
 {
-	searchpath_t *search;
-	filelink_t *l;
+	searchpath_t* search;
+	filelink_t* l;
 
 	Com_Printf("Filesystem information\n");
 	Com_Printf("...write dir: '%s'\n", FS_Gamedir());
@@ -903,7 +903,7 @@ static const cmdList_t fs_commands[] = {
 
 static void FS_RemoveCommands (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
@@ -911,7 +911,7 @@ static void FS_RemoveCommands (void)
 
 static void FS_InitCommandsAndCvars (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -962,11 +962,11 @@ void FS_InitFilesystem (bool writeToHomeDir)
 
 typedef struct listBlock_s {
 	char path[MAX_QPATH];
-	linkedList_t *files;
+	linkedList_t* files;
 	struct listBlock_s *next;
 } listBlock_t;
 
-static listBlock_t *fs_blocklist = nullptr;
+static listBlock_t* fs_blocklist = nullptr;
 
 /**
  * @brief Add one name to the filelist
@@ -996,7 +996,7 @@ static void _AddToListBlock (linkedList_t** fl, const char* name, bool stripPath
  */
 int FS_BuildFileList (const char* fileList)
 {
-	searchpath_t *search;
+	searchpath_t* search;
 	char files[MAX_QPATH];
 	char findname[1024];
 	int i;
@@ -1035,7 +1035,7 @@ int FS_BuildFileList (const char* fileList)
 		/* is the element a pak file? */
 		if (search->pack) {
 			const char* ext = strrchr(files, '.');
-			const pack_t *pak = search->pack;
+			const pack_t* pak = search->pack;
 			size_t l = strlen(files);
 			if (!ext)
 				break;
@@ -1068,7 +1068,7 @@ int FS_BuildFileList (const char* fileList)
 				}
 			}
 		} else if (strstr(files, "**")) {
-			linkedList_t *list = nullptr;
+			linkedList_t* list = nullptr;
 			const char* wildcard = strstr(files, "**");
 			const size_t l = strlen(files) - strlen(wildcard);
 
@@ -1118,9 +1118,9 @@ int FS_BuildFileList (const char* fileList)
  */
 const char* FS_NextFileFromFileList (const char* files)
 {
-	static linkedList_t *listEntry = nullptr;
-	static listBlock_t *_block = nullptr;
-	listBlock_t *block;
+	static linkedList_t* listEntry = nullptr;
+	static listBlock_t* _block = nullptr;
+	listBlock_t* block;
 	const char* file = nullptr;
 
 	/* restart the list? */
@@ -1174,8 +1174,8 @@ const char* FS_NextFileFromFileList (const char* files)
  */
 const char* FS_GetFileData (const char* files)
 {
-	listBlock_t *block;
-	static linkedList_t *fileList = nullptr;
+	listBlock_t* block;
+	static linkedList_t* fileList = nullptr;
 	static byte* buffer = nullptr;
 
 	/* free the old file */
@@ -1234,13 +1234,13 @@ const char* FS_GetFileData (const char* files)
 char* FS_NextScriptHeader (const char* files, const char** name, const char** text)
 {
 	static char lastList[MAX_QPATH];
-	static listBlock_t *lBlock;
-	static linkedList_t *lFile;
+	static listBlock_t* lBlock;
+	static linkedList_t* lFile;
 	static byte* lBuffer;
 
 	static char headerType[MAX_VAR];
 	static char headerName[512];
-	listBlock_t *block;
+	listBlock_t* block;
 	const char* token;
 
 	if (!text) {
@@ -1414,8 +1414,8 @@ void FS_GetMaps (bool reset)
 	const char* baseMapName = nullptr;
 	char** dirnames;
 	int ndirs;
-	searchpath_t *search;
-	pack_t *pak;
+	searchpath_t* search;
+	pack_t* pak;
 
 	/* force a reread */
 	if (!reset && fs_mapsInstalledInit)
@@ -1646,7 +1646,7 @@ bool FS_FileExists (const char* filename, ...)
  */
 void FS_Shutdown (void)
 {
-	searchpath_t *p, *next;
+	searchpath_t* p, *next;
 
 	if (fs_openedFiles != 0) {
 		Com_Printf("There are still %i opened files\n", fs_openedFiles);

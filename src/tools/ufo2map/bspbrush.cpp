@@ -33,13 +33,13 @@ static int c_active_brushes;
 /**
  * @brief Sets the mins/maxs based on the windings
  */
-static void BoundBrush (bspbrush_t *brush)
+static void BoundBrush (bspbrush_t* brush)
 {
 	int i, j;
 
 	ClearBounds(brush->mins, brush->maxs);
 	for (i = 0; i < brush->numsides; i++) {
-		winding_t *w = brush->sides[i].winding;
+		winding_t* w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++)
@@ -52,17 +52,17 @@ static void BoundBrush (bspbrush_t *brush)
  * @brief makes basewindigs for sides and mins/maxs for the brush
  * @returns false if the brush doesn't enclose a valid volume
  */
-static void CreateBrushWindings (bspbrush_t *brush)
+static void CreateBrushWindings (bspbrush_t* brush)
 {
 	int i;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side_t *side = &brush->sides[i];
-		const plane_t *plane = &mapplanes[side->planenum];
+		side_t* side = &brush->sides[i];
+		const plane_t* plane = &mapplanes[side->planenum];
 		int j;
 
 		/* evidence that winding_t represents a hessian normal plane */
-		winding_t *w = BaseWindingForPlane(plane->normal, plane->dist);
+		winding_t* w = BaseWindingForPlane(plane->normal, plane->dist);
 
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
@@ -89,9 +89,9 @@ static void CreateBrushWindings (bspbrush_t *brush)
 /**
  * @brief Creates a new axial brush
  */
-bspbrush_t *BrushFromBounds (const vec3_t mins, const vec3_t maxs)
+bspbrush_t* BrushFromBounds (const vec3_t mins, const vec3_t maxs)
 {
-	bspbrush_t *b;
+	bspbrush_t* b;
 	int i;
 	vec3_t normal;
 
@@ -116,10 +116,10 @@ bspbrush_t *BrushFromBounds (const vec3_t mins, const vec3_t maxs)
 /**
  * @brief Returns the volume of the given brush
  */
-static vec_t BrushVolume (const bspbrush_t *brush)
+static vec_t BrushVolume (const bspbrush_t* brush)
 {
 	int i;
-	const winding_t *w;
+	const winding_t* w;
 	vec3_t corner;
 	vec_t volume;
 
@@ -142,7 +142,7 @@ static vec_t BrushVolume (const bspbrush_t *brush)
 	for (; i < brush->numsides; i++) {
 		w = brush->sides[i].winding;
 		if (w) {
-			const plane_t *plane = &mapplanes[brush->sides[i].planenum];
+			const plane_t* plane = &mapplanes[brush->sides[i].planenum];
 			const vec_t d = -(DotProduct(corner, plane->normal) - plane->dist);
 			const vec_t area = WindingArea(w);
 			volume += d * area;
@@ -156,7 +156,7 @@ static vec_t BrushVolume (const bspbrush_t *brush)
 /**
  * @brief Returns the amount of brushes in the given brushlist
  */
-int CountBrushList (bspbrush_t *brushes)
+int CountBrushList (bspbrush_t* brushes)
 {
 	int c;
 
@@ -170,20 +170,20 @@ int CountBrushList (bspbrush_t *brushes)
  * @sa AllocTree
  * @sa AllocNode
  */
-bspbrush_t *AllocBrush (int numsides)
+bspbrush_t* AllocBrush (int numsides)
 {
 	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * numsides;
 
 	if (threadstate.numthreads == 1)
 		c_active_brushes++;
 
-	return (bspbrush_t *)Mem_Alloc(size);
+	return (bspbrush_t* )Mem_Alloc(size);
 }
 
 /**
  * @sa AllocBrush
  */
-void FreeBrush (bspbrush_t *brushes)
+void FreeBrush (bspbrush_t* brushes)
 {
 	int i;
 
@@ -199,9 +199,9 @@ void FreeBrush (bspbrush_t *brushes)
  * @sa AllocBrush
  * @sa CountBrushList
  */
-void FreeBrushList (bspbrush_t *brushes)
+void FreeBrushList (bspbrush_t* brushes)
 {
-	bspbrush_t *next;
+	bspbrush_t* next;
 
 	for (; brushes; brushes = next) {
 		next = brushes->next;
@@ -213,9 +213,9 @@ void FreeBrushList (bspbrush_t *brushes)
  * @brief Duplicates the brush, the sides, and the windings
  * @sa AllocBrush
  */
-bspbrush_t *CopyBrush (const bspbrush_t *brush)
+bspbrush_t* CopyBrush (const bspbrush_t* brush)
 {
-	bspbrush_t *newbrush;
+	bspbrush_t* newbrush;
 	int i;
 	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * brush->numsides;
 
@@ -223,7 +223,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 	memcpy(newbrush, brush, size);
 
 	for (i = 0; i < brush->numsides; i++) {
-		const side_t *side = &brush->sides[i];
+		const side_t* side = &brush->sides[i];
 		if (side->winding)
 			newbrush->sides[i].winding = CopyWinding(side->winding);
 	}
@@ -232,11 +232,11 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 }
 
 
-static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
+static int TestBrushToPlanenum (bspbrush_t* brush, uint16_t planenum,
 			int* numsplits, bool *hintsplit, int* epsilonbrush)
 {
 	int i, s;
-	plane_t *plane;
+	plane_t* plane;
 	dBspPlane_t plane2;
 	vec_t d_front, d_back;
 	int front, back;
@@ -270,8 +270,8 @@ static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 	d_front = d_back = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
-		const side_t *side = &brush->sides[i];
-		const winding_t *w;
+		const side_t* side = &brush->sides[i];
+		const winding_t* w;
 		int j;
 		if (side->texinfo == TEXINFO_NODE)
 			continue;		/* on node, don't worry about splits */
@@ -309,9 +309,9 @@ static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 /**
  * @brief Collects the contentsflags of the brushes in the given list
  */
-uint32_t BrushListCalcContents (bspbrush_t *brushlist)
+uint32_t BrushListCalcContents (bspbrush_t* brushlist)
 {
-	bspbrush_t *b;
+	bspbrush_t* b;
 	uint32_t contentFlags = 0;
 
 	for (b = brushlist; b; b = b->next) {
@@ -337,7 +337,7 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
  * @brief Checks on which side a of plane the brush is
  * @todo Or vice versa?
  */
-static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
+static int BrushMostlyOnSide (const bspbrush_t* brush, const plane_t* plane)
 {
 	int i, j, side;
 	vec_t max;
@@ -345,7 +345,7 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 	max = 0;
 	side = PSIDE_FRONT;
 	for (i = 0; i < brush->numsides; i++) {
-		const winding_t *w = brush->sides[i].winding;
+		const winding_t* w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
@@ -368,15 +368,15 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 /**
  * @brief Checks if the plane splits the brush
  */
-static bool DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
+static bool DoesPlaneSplitBrush (const bspbrush_t* brush, int planenum)
 {
 	int i, j;
-	plane_t *plane  = &mapplanes[planenum];
+	plane_t* plane  = &mapplanes[planenum];
 	int front_cnt = 0, back_cnt = 0;
 
 	/* check all points */
 	for (i = 0; i < brush->numsides; i++) {
-		winding_t *w = brush->sides[i].winding;
+		winding_t* w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
@@ -396,7 +396,7 @@ static bool DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 #if TESTING_MOCK_SPLIT
 /* DoesPlaneSplitBrush does not yet work for all maps, namely city_train.map
  * Until we know why, let's use the old stuff. */
-static bool CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+static bool CheckPlaneAgainstVolume (int pnum, const bspbrush_t* volume)
 {
 	bool good;
 
@@ -406,9 +406,9 @@ static bool CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 }
 
 #else
-static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
+static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t* volume)
 {
-		bspbrush_t *front, *back;
+		bspbrush_t* front, *back;
 		bool good;
 
 		SplitBrush(volume, pnum, &front, &back);
@@ -428,11 +428,11 @@ static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
  * to partition the brushes with.
  * @return nullptr if there are no valid planes to split with..
  */
-side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
+side_t* SelectSplitSide (bspbrush_t* brushes, bspbrush_t* volume)
 {
 	int value, bestvalue;
-	bspbrush_t *brush, *test;
-	side_t *bestside;
+	bspbrush_t* brush, *test;
+	side_t* bestside;
 	int i, j, pass, numpasses;
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
@@ -459,7 +459,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
 				uint16_t pnum;
-				side_t *side = &brush->sides[i];
+				side_t* side = &brush->sides[i];
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
 				if (!side->winding)
@@ -557,12 +557,12 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
+void SplitBrush (const bspbrush_t* brush, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
 {
-	bspbrush_t *b[2];
+	bspbrush_t* b[2];
 	int i, j;
-	winding_t *w, *cw[2], *midwinding;
-	plane_t *plane;
+	winding_t* w, *cw[2], *midwinding;
+	plane_t* plane;
 	float d_front, d_back;
 
 	*front = *back = nullptr;
@@ -596,7 +596,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front,
 	/* create a new winding from the split plane */
 	w = BaseWindingForPlane(plane->normal, plane->dist);
 	for (i = 0; i < brush->numsides && w; i++) {
-		plane_t *plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
+		plane_t* plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
 		ChopWindingInPlace(&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
 	}
 
@@ -626,14 +626,14 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front,
 
 	/* split all the current windings */
 	for (i = 0; i < brush->numsides; i++) {
-		const side_t *s = &brush->sides[i];
+		const side_t* s = &brush->sides[i];
 		w = s->winding;
 		if (!w)
 			continue;
 		ClipWindingEpsilon(w, plane->normal, plane->dist,
 			0 /*PLANESIDE_EPSILON*/, &cw[0], &cw[1]);
 		for (j = 0; j < 2; j++) {
-			side_t *cs;
+			side_t* cs;
 
 			if (!cw[j])
 				continue;
@@ -685,7 +685,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front,
 
 	/* add the midwinding to both sides */
 	for (i = 0; i < 2; i++) {
-		side_t *cs = &b[i]->sides[b[i]->numsides];
+		side_t* cs = &b[i]->sides[b[i]->numsides];
 		b[i]->numsides++;
 
 		cs->planenum = planenum ^ i ^ 1;
@@ -713,18 +713,18 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t** front,
 	*back = b[1];
 }
 
-void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
+void SplitBrushList (bspbrush_t* brushes, uint16_t planenum, bspbrush_t** front, bspbrush_t** back)
 {
-	bspbrush_t *brush;
+	bspbrush_t* brush;
 
 	*front = *back = nullptr;
 
 	for (brush = brushes; brush; brush = brush->next) {
 		const int sides = brush->side;
-		bspbrush_t *newbrush;
+		bspbrush_t* newbrush;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
-			bspbrush_t *newbrush2;
+			bspbrush_t* newbrush2;
 			SplitBrush(brush, planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;
@@ -747,7 +747,7 @@ void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t** front,
 		if (sides & PSIDE_FACING) {
 			int i;
 			for (i = 0; i < newbrush->numsides; i++) {
-				side_t *side = newbrush->sides + i;
+				side_t* side = newbrush->sides + i;
 				if ((side->planenum & ~1) == planenum)
 					side->texinfo = TEXINFO_NODE;
 			}
@@ -773,9 +773,9 @@ void SplitBrushList (bspbrush_t *brushes, uint16_t planenum, bspbrush_t** front,
 /**
  * @brief Counts the faces and calculate the aabb
  */
-void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+void BrushlistCalcStats (bspbrush_t* brushlist, vec3_t mins, vec3_t maxs)
 {
-	bspbrush_t *b;
+	bspbrush_t* b;
 	int c_faces = 0, c_nonvisfaces = 0, c_brushes = 0;
 
 	for (b = brushlist; b; b = b->next) {
@@ -791,7 +791,7 @@ void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		}
 
 		for (i = 0; i < b->numsides; i++) {
-			side_t *side = &b->sides[i];
+			side_t* side = &b->sides[i];
 			if (side->bevel)
 				continue;
 			if (!side->winding)

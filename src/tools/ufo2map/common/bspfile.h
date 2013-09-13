@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../common/qfiles.h"
 
-dMapTile_t *LoadBSPFile(const char* filename);
+dMapTile_t* LoadBSPFile(const char* filename);
 long WriteBSPFile(const char* filename);
 void PrintBSPFileSizes(void);
 
@@ -54,17 +54,17 @@ typedef struct {
 extern int num_entities;
 extern entity_t entities[MAX_MAP_ENTITIES];
 
-entity_t *FindTargetEntity(const char* target);
+entity_t* FindTargetEntity(const char* target);
 void ParseEntities(void);
 const char* UnparseEntities(void);
 
-void SetKeyValue(entity_t *ent, const char* key, const char* value);
+void SetKeyValue(entity_t* ent, const char* key, const char* value);
 /* will return "" if not present */
-const char* ValueForKey(const entity_t *ent, const char* key);
+const char* ValueForKey(const entity_t* ent, const char* key);
 
-vec_t FloatForKey(const entity_t *ent, const char* key);
+vec_t FloatForKey(const entity_t* ent, const char* key);
 void GetVectorFromString(const char* value, vec3_t vec);
-void GetVectorForKey(const entity_t *ent, const char* key, vec3_t vec);
-epair_t *ParseEpair(int entNum);
-epair_t *AddEpair(const char* key, const char* value, int entNum);
+void GetVectorForKey(const entity_t* ent, const char* key, vec3_t vec);
+epair_t* ParseEpair(int entNum);
+epair_t* AddEpair(const char* key, const char* value, int entNum);
 byte* CompressRouting(byte* dataStart, byte* destStart, int l);

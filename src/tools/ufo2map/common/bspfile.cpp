@@ -90,7 +90,7 @@ static void SwapBSPFile (void)
 
 	/* models */
 	for (i = 0; i < curTile->nummodels; i++) {
-		dBspModel_t *d = &curTile->models[i];
+		dBspModel_t* d = &curTile->models[i];
 
 		d->firstface = LittleLong(d->firstface);
 		d->numfaces = LittleLong(d->numfaces);
@@ -105,14 +105,14 @@ static void SwapBSPFile (void)
 
 	/* vertexes */
 	for (i = 0; i < curTile->numvertexes; i++) {
-		dBspVertex_t *vertexes = &curTile->vertexes[i];
+		dBspVertex_t* vertexes = &curTile->vertexes[i];
 		for (j = 0; j < 3; j++)
 			vertexes->point[j] = LittleFloat(vertexes->point[j]);
 	}
 
 	/* planes */
 	for (i = 0; i < curTile->numplanes; i++) {
-		dBspPlane_t *plane = &curTile->planes[i];
+		dBspPlane_t* plane = &curTile->planes[i];
 		for (j = 0; j < 3; j++)
 			plane->normal[j] = LittleFloat(plane->normal[j]);
 		plane->dist = LittleFloat(plane->dist);
@@ -121,7 +121,7 @@ static void SwapBSPFile (void)
 
 	/* texinfos */
 	for (i = 0; i < curTile->numtexinfo; i++) {
-		dBspTexinfo_t *texinfo = &curTile->texinfo[i];
+		dBspTexinfo_t* texinfo = &curTile->texinfo[i];
 		for (j = 0; j < 2; j++)
 			for (k = 0; k < 4; k++)
 				texinfo->vecs[j][k] = LittleFloat(texinfo->vecs[j][k]);
@@ -131,7 +131,7 @@ static void SwapBSPFile (void)
 
 	/* faces */
 	for (i = 0; i < curTile->numfaces; i++) {
-		dBspSurface_t *face = &curTile->faces[i];
+		dBspSurface_t* face = &curTile->faces[i];
 		face->texinfo = LittleShort(face->texinfo);
 		face->planenum = LittleShort(face->planenum);
 		face->side = LittleShort(face->side);
@@ -143,7 +143,7 @@ static void SwapBSPFile (void)
 
 	/* nodes */
 	for (i = 0; i < curTile->numnodes; i++) {
-		dBspNode_t *node = &curTile->nodes[i];
+		dBspNode_t* node = &curTile->nodes[i];
 		/* planenum might be -1 here - special case for pathfinding nodes */
 		node->planenum = LittleLong(node->planenum);
 		for (j = 0; j < 3; j++) {
@@ -158,7 +158,7 @@ static void SwapBSPFile (void)
 
 	/* leafs */
 	for (i = 0; i < curTile->numleafs; i++) {
-		dBspLeaf_t *leaf = &curTile->leafs[i];
+		dBspLeaf_t* leaf = &curTile->leafs[i];
 		leaf->contentFlags = LittleLong(leaf->contentFlags);
 		leaf->area = LittleShort(leaf->area);
 		for (j = 0; j < 3; j++) {
@@ -180,14 +180,14 @@ static void SwapBSPFile (void)
 
 	/* edges */
 	for (i = 0; i < curTile->numedges; i++) {
-		dBspEdge_t *edge = &curTile->edges[i];
+		dBspEdge_t* edge = &curTile->edges[i];
 		edge->v[0] = LittleShort(edge->v[0]);
 		edge->v[1] = LittleShort(edge->v[1]);
 	}
 
 	/* dbrushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
-		dBspBrush_t *dbrush = &curTile->dbrushes[i];
+		dBspBrush_t* dbrush = &curTile->dbrushes[i];
 		dbrush->firstbrushside = LittleLong(dbrush->firstbrushside);
 		dbrush->numsides = LittleLong(dbrush->numsides);
 		dbrush->contentFlags = LittleLong(dbrush->contentFlags);
@@ -195,7 +195,7 @@ static void SwapBSPFile (void)
 
 	/* brushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
-		cBspBrush_t *cbrush = &curTile->brushes[i];
+		cBspBrush_t* cbrush = &curTile->brushes[i];
 		cbrush->firstbrushside = LittleLong(cbrush->firstbrushside);
 		cbrush->numsides = LittleLong(cbrush->numsides);
 		cbrush->contentFlags = LittleLong(cbrush->contentFlags);
@@ -203,15 +203,15 @@ static void SwapBSPFile (void)
 
 	/* brushsides */
 	for (i = 0; i < curTile->numbrushsides; i++) {
-		dBspBrushSide_t *brushSide = &curTile->brushsides[i];
+		dBspBrushSide_t* brushSide = &curTile->brushsides[i];
 		brushSide->planenum = LittleShort(brushSide->planenum);
 		brushSide->texinfo = LittleShort(brushSide->texinfo);
 	}
 }
 
-static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void* dest, size_t size)
+static uint32_t CopyLump (const dBspHeader_t* header, int lumpIdx, void* dest, size_t size)
 {
-	const lump_t *lump = &header->lumps[lumpIdx];
+	const lump_t* lump = &header->lumps[lumpIdx];
 	const uint32_t length = lump->filelen;
 	const uint32_t ofs = lump->fileofs;
 
@@ -228,11 +228,11 @@ static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void* dest, s
 /**
  * @sa WriteBSPFile
  */
-dMapTile_t *LoadBSPFile (const char* filename)
+dMapTile_t* LoadBSPFile (const char* filename)
 {
 	int size;
 	unsigned int i;
-	dBspHeader_t *header;
+	dBspHeader_t* header;
 
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles.mapTiles[0];
@@ -274,8 +274,8 @@ dMapTile_t *LoadBSPFile (const char* filename)
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
 	OBJZERO(curTile->brushes);
 	for (i = 0; i < curTile->numbrushes; i++) {
-		dBspBrush_t *dbrush = &curTile->dbrushes[i];
-		cBspBrush_t *brush = &curTile->brushes[i];
+		dBspBrush_t* dbrush = &curTile->dbrushes[i];
+		cBspBrush_t* brush = &curTile->brushes[i];
 		brush->firstbrushside = dbrush->firstbrushside;
 		brush->numsides = dbrush->numsides;
 		brush->contentFlags = dbrush->contentFlags;
@@ -294,9 +294,9 @@ dMapTile_t *LoadBSPFile (const char* filename)
  * @sa WriteBSPFile
  * @todo Implement this without the ftell stuff - don't write the bsp file twice
  */
-static void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void* data, int len)
+static void AddLump (qFILE *bspfile, dBspHeader_t* header, int lumpnum, void* data, int len)
 {
-	lump_t *lump;
+	lump_t* lump;
 	long offset;
 
 	lump = &header->lumps[lumpnum];
@@ -419,7 +419,7 @@ static inline bool IsInvalidEntityToken (const char* token)
 	return Q_streq(token, "}") || Q_streq(token, "{");
 }
 
-epair_t *AddEpair (const char* key, const char* value, int entNum)
+epair_t* AddEpair (const char* key, const char* value, int entNum)
 {
 	epair_t	*e = Mem_AllocType(epair_t);
 
@@ -443,7 +443,7 @@ epair_t *AddEpair (const char* key, const char* value, int entNum)
  * @sa ParseEntity
  * @sa ParseMapEntity
  */
-epair_t *ParseEpair (int entNum)
+epair_t* ParseEpair (int entNum)
 {
 	StripTrailingWhitespaces(parsedToken);
 	const char* key = Mem_StrDup(parsedToken);
@@ -456,9 +456,9 @@ epair_t *ParseEpair (int entNum)
 /**
  * @sa ParseEntities
  */
-static entity_t *ParseEntity (void)
+static entity_t* ParseEntity (void)
 {
-	entity_t *mapent;
+	entity_t* mapent;
 
 	if (Q_strnull(GetToken()))
 		return nullptr;
@@ -478,7 +478,7 @@ static entity_t *ParseEntity (void)
 		if (*parsedToken == '}') {
 			break;
 		} else {
-			epair_t *e = ParseEpair(num_entities);
+			epair_t* e = ParseEpair(num_entities);
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}
@@ -513,7 +513,7 @@ const char* UnparseEntities (void)
 	curTile->entdata[0] = '\0';
 
 	for (int i = 0; i < num_entities; i++) {
-		const epair_t *ep = entities[i].epairs;
+		const epair_t* ep = entities[i].epairs;
 		if (!ep)
 			continue;	/* ent got removed */
 
@@ -536,9 +536,9 @@ const char* UnparseEntities (void)
 	return curTile->entdata;
 }
 
-void SetKeyValue (entity_t *ent, const char* key, const char* value)
+void SetKeyValue (entity_t* ent, const char* key, const char* value)
 {
-	epair_t *ep;
+	epair_t* ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (Q_streq(ep->key, key)) {
@@ -552,9 +552,9 @@ void SetKeyValue (entity_t *ent, const char* key, const char* value)
 	ep->value = Mem_StrDup(value);
 }
 
-const char* ValueForKey (const entity_t *ent, const char* key)
+const char* ValueForKey (const entity_t* ent, const char* key)
 {
-	const epair_t *ep;
+	const epair_t* ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (Q_streq(ep->key, key))
@@ -562,7 +562,7 @@ const char* ValueForKey (const entity_t *ent, const char* key)
 	return "";
 }
 
-vec_t FloatForKey (const entity_t *ent, const char* key)
+vec_t FloatForKey (const entity_t* ent, const char* key)
 {
 	const char* k;
 
@@ -590,7 +590,7 @@ void GetVectorFromString (const char* value, vec3_t vec)
 /**
  * @brief Converts the value of a entity parameter into a @c vec3_t
  */
-void GetVectorForKey (const entity_t *ent, const char* key, vec3_t vec)
+void GetVectorForKey (const entity_t* ent, const char* key, vec3_t vec)
 {
 	const char* k = ValueForKey(ent, key);
 	GetVectorFromString(k, vec);

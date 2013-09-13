@@ -340,7 +340,7 @@ LUA_API int lua_toboolean (lua_State *L, int idx) {
 }
 
 
-LUA_API const char* lua_tolstring (lua_State *L, int idx, size_t *len) {
+LUA_API const char* lua_tolstring (lua_State *L, int idx, size_t* len) {
   StkId o = index2adr(L, idx);
   if (!ttisstring(o)) {
     lua_lock(L);  /* `luaV_tostring' may create a new string */

@@ -42,7 +42,7 @@ typedef union {
 	uint32_t ui;
 } floatint_t;
 
-static __inline__ float32_t FloatSwap (const float32_t *f)
+static __inline__ float32_t FloatSwap (const float32_t* f)
 {
 	floatint_t out;
 

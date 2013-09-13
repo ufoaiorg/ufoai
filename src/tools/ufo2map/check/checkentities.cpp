@@ -55,10 +55,10 @@ static bool Check_IsInfoStart(const char* classname)
  * @todo check for brush intersection as well as alignment, and move
  * to a good position if bad.
  */
-static bool Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
+static bool Check_InfoStartAligned (const entityDef_t* ed, const entity_t* e)
 {
 	static int size[6];
-	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
+	const entityKeyDef_t* sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
 	if (ED_GetIntVector(sizeKd, size, (int)(sizeof(size) / sizeof(int))) == ED_ERROR)
 		Sys_Error("%s", ED_GetLastError());
 
@@ -70,7 +70,7 @@ static bool Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
  * @brief check targets exist (targetname), and check targetnames are targetted (target)
  * @return false if there is a problem.
  */
-static bool Check_TargetExists (const epair_t *kvp)
+static bool Check_TargetExists (const epair_t* kvp)
 {
 	const char* thisKey = kvp->key;
 	const char* value = kvp->value;
@@ -78,7 +78,7 @@ static bool Check_TargetExists (const epair_t *kvp)
 	int i;
 
 	for (i = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
+		const entity_t* e = &entities[i];
 		const char* searchVal = ValueForKey(e, otherKey);
 
 		if (searchVal && Q_streq(searchVal, value))
@@ -88,7 +88,7 @@ static bool Check_TargetExists (const epair_t *kvp)
 	return false;
 }
 
-static void Check_EntityWithBrushes (entity_t *e, const char* classname, int entnum)
+static void Check_EntityWithBrushes (entity_t* e, const char* classname, int entnum)
 {
 	if (!e->numbrushes) {
 		Check_Printf(VERB_CHECK, true, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
@@ -117,11 +117,11 @@ void CheckEntities (void)
 	Check_InitEntityDefs();
 
 	for (i = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
+		entity_t* e = &entities[i];
 		const char* name = ValueForKey(e, "classname");
-		const entityDef_t *ed = ED_GetEntityDef(name);
-		const epair_t *kvp;
-		const entityKeyDef_t *kd;
+		const entityDef_t* ed = ED_GetEntityDef(name);
+		const epair_t* kvp;
+		const entityKeyDef_t* kd;
 
 		if (!ed) { /* check that a definition exists */
 			Check_Printf(VERB_CHECK, false, i, -1, "Not defined in entities.ufo: %s\n", name);
@@ -236,10 +236,10 @@ static void Check_MapSize (vec3_t mapSize)
 	VectorSet(maxs, 0, 0, 0);
 
 	for (i = 0; i < nummapbrushes; i++) {
-		const mapbrush_t *brush = &mapbrushes[i];
+		const mapbrush_t* brush = &mapbrushes[i];
 
 		for (bi = 0; bi < brush->numsides; bi++) {
-			const winding_t *winding = brush->original_sides[bi].winding;
+			const winding_t* winding = brush->original_sides[bi].winding;
 
 			for (vi = 0; vi < winding->numpoints; vi++)
 				AddPointToBounds(winding->p[vi], mins, maxs);
@@ -265,13 +265,13 @@ mapbrush_t** Check_ExtraBrushesForWorldspawn (int* numBrushes)
 	if (!numToMoveToWorldspawn)
 		return nullptr;
 
-	brushesToMove = Mem_AllocTypeN(mapbrush_t *, numToMoveToWorldspawn);
+	brushesToMove = Mem_AllocTypeN(mapbrush_t* , numToMoveToWorldspawn);
 	if (!brushesToMove)
 		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
 
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
+		const entity_t* e = &entities[i];
 		const char* name = ValueForKey(e, "classname");
 
 		if (e->numbrushes == 1 && Q_streq(name, "func_group")) {

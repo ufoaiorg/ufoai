@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <assert.h>
 #include <string.h>
 
-static linkedList_t *LIST_AllocateEntry(void* const data, linkedList_t* const next = 0)
+static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const next = 0)
 {
 	linkedList_t* const e = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	e->data = data;
@@ -51,7 +51,7 @@ static void LIST_AppendEntry(linkedList_t** list, linkedList_t* const entry)
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length)
+linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
 	assert(listDest);
 	assert(data);
@@ -70,7 +70,7 @@ linkedList_t *LIST_Add (linkedList_t** listDest, void const* data, size_t length
  * @note if string is @c nullptr, the function returns @c nullptr
  * @sa LIST_AddString
  */
-const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char* string)
+const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
 {
 	while ((string != nullptr) && (list != nullptr)) {
 		if (Q_streq(static_cast<char const*>(list->data), string))
@@ -88,7 +88,7 @@ const linkedList_t *LIST_ContainsString (const linkedList_t *list, const char* s
  * @note O(n)
  * @note Only use this for small linked lists
  */
-linkedList_t *LIST_GetPointer (linkedList_t *list, const void* data)
+linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 {
 	while ((data != nullptr) && (list != nullptr)) {
 		if (list->data == data)
@@ -99,7 +99,7 @@ linkedList_t *LIST_GetPointer (linkedList_t *list, const void* data)
 	return nullptr;
 }
 
-static linkedList_t *LIST_AllocateString(char const* data, linkedList_t* const next = 0)
+static linkedList_t* LIST_AllocateString(char const* data, linkedList_t* const next = 0)
 {
 	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
@@ -169,7 +169,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  * @sa LIST_Delete
  * @return @c true if the removal was successful, @c false otherwise.
  */
-bool LIST_RemoveEntry (linkedList_t** list, linkedList_t *entry)
+bool LIST_RemoveEntry (linkedList_t** list, linkedList_t* entry)
 {
 	assert(list);
 	assert(entry);
@@ -194,8 +194,8 @@ bool LIST_RemoveEntry (linkedList_t** list, linkedList_t *entry)
  */
 void LIST_Delete (linkedList_t** list)
 {
-	linkedList_t *next;
-	linkedList_t *l = *list;
+	linkedList_t* next;
+	linkedList_t* l = *list;
 
 	while (l) {
 		next = l->next;
@@ -213,7 +213,7 @@ void LIST_Delete (linkedList_t** list)
  */
 bool LIST_Remove (linkedList_t** list, const void* data)
 {
-	linkedList_t *l = LIST_GetPointer(*list, data);
+	linkedList_t* l = LIST_GetPointer(*list, data);
 	if (l != nullptr)
 		return LIST_RemoveEntry(list, l);
 	return false;
@@ -225,9 +225,9 @@ bool LIST_Remove (linkedList_t** list, const void* data)
  * generally be the same element after the sort.)
  * @note see http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
  */
-static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void* userData)
+static linkedList_t* _LIST_Sort (linkedList_t* list, linkedListSort_t sorter, const void* userData)
 {
-	linkedList_t *p, *q, *e;
+	linkedList_t* p, *q, *e;
 	int insize, psize, qsize, i;
 
 	/*
@@ -242,7 +242,7 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 	while (1) {
 		p = list;
 		list = nullptr;
-		linkedList_t *tail = nullptr;
+		linkedList_t* tail = nullptr;
 
 		int nmerges = 0; /* count number of merges we do in this pass */
 
@@ -321,9 +321,9 @@ void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void* userDa
  * @brief Copies the list structure data - but not the content from the original list.
  * We are only using pointers here.
  */
-linkedList_t *LIST_CopyStructure (linkedList_t *src)
+linkedList_t* LIST_CopyStructure (linkedList_t* src)
 {
-	linkedList_t *dest = nullptr;
+	linkedList_t* dest = nullptr;
 	LIST_Foreach(src, void, data) {
 		LIST_AddPointer(&dest, data);
 	}
@@ -335,7 +335,7 @@ linkedList_t *LIST_CopyStructure (linkedList_t *src)
  * @param[in] list The linked list to check
  * @return @c true if empty, @c false otherwise
  */
-bool LIST_IsEmpty (const linkedList_t *list)
+bool LIST_IsEmpty (const linkedList_t* list)
 {
 	return list == nullptr;
 }
@@ -344,9 +344,9 @@ bool LIST_IsEmpty (const linkedList_t *list)
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
  */
-int LIST_Count (const linkedList_t *list)
+int LIST_Count (const linkedList_t* list)
 {
-	const linkedList_t *l = list;
+	const linkedList_t* l = list;
 	int count = 0;
 
 	while (l) {
@@ -362,7 +362,7 @@ int LIST_Count (const linkedList_t *list)
  * @param[in] index The index of the entry in the linked list.
  * @return A void pointer of the content in the list-entry.
  */
-void* LIST_GetByIdx (linkedList_t *list, int index)
+void* LIST_GetByIdx (linkedList_t* list, int index)
 {
 	int i;
 

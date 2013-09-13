@@ -70,10 +70,10 @@ typedef enum {
  * @brief faces that are near pointing down may be set nodraw,
  * as views are always slightly down
  */
-static bool Check_SidePointsDown (const side_t *s)
+static bool Check_SidePointsDown (const side_t* s)
 {
 	const vec3_t down = {0.0f, 0.0f, -1.0f};
-	const plane_t *plane = &mapplanes[s->planenum];
+	const plane_t* plane = &mapplanes[s->planenum];
 	const float dihedralCos = DotProduct(plane->normal, down);
 	return dihedralCos >= NEARDOWN_COS;
 }
@@ -83,7 +83,7 @@ static bool Check_SidePointsDown (const side_t *s)
  * @note the sign of the result depends on which side of the plane the point is
  * @return a negative distance if the point is on the inside of the plane
  */
-static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t *plane)
+static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t* plane)
 {
 	/* normal should have a magnitude of one */
 	assert(fabs(VectorLengthSqr(plane->normal) - 1.0f) < CH_DIST_EPSILON);
@@ -103,10 +103,10 @@ static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t 
  * @return true if the planes of the sides face and touch
  * @sa CheckNodraws
  */
-static bool FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
+static bool FacingAndCoincidentTo (const side_t* side1, const side_t* side2)
 {
-	const plane_t *plane1 = &mapplanes[side1->planenum];
-	const plane_t *plane2 = &mapplanes[side2->planenum];
+	const plane_t* plane1 = &mapplanes[side1->planenum];
+	const plane_t* plane2 = &mapplanes[side2->planenum];
 	float distance;
 
 	const float dihedralCos = DotProduct(plane1->normal, plane2->normal);
@@ -128,11 +128,11 @@ static bool FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
  * @return true if the side1 and side2 are on a common plane
  * @sa CheckZFighting, FacingAndCoincidentTo
  */
-static bool ParallelAndCoincidentTo (const side_t *side1, const side_t *side2)
+static bool ParallelAndCoincidentTo (const side_t* side1, const side_t* side2)
 {
 	float distance;
-	const plane_t *plane1 = &mapplanes[side1->planenum];
-	const plane_t *plane2 = &mapplanes[side2->planenum];
+	const plane_t* plane1 = &mapplanes[side1->planenum];
+	const plane_t* plane2 = &mapplanes[side2->planenum];
 	const float dihedralCos = DotProduct(plane1->normal, plane2->normal);
 	if (dihedralCos <= COS_EPSILON)
 		return false; /* not parallel */
@@ -149,7 +149,7 @@ static bool ParallelAndCoincidentTo (const side_t *side1, const side_t *side2)
  * @param[in] mode determines how epsilons are applied
  * @return true if the supplied point is inside the brush
  */
-static inline bool Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t *brush, const pointInBrush_t mode)
+static inline bool Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t* brush, const pointInBrush_t mode)
 {
 	int i;
 	int numPlanes = 0; /* how many of the sides the point is on. on 2 sides, means on an edge. on 3 a vertex */
@@ -158,7 +158,7 @@ static inline bool Check_IsPointInsideBrush (const vec3_t point, const mapbrush_
 	const float epsilon = CH_DIST_EPSILON * (mode == PIB_EXCL_SURF ? -1.0f : 1.0f);
 
 	for (i = 0; i < brush->numsides; i++) {
-		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
+		const plane_t* plane = &mapplanes[brush->original_sides[i].planenum];
 
 		/* if the point is on the wrong side of any face, then it is outside */
 		/* distance to one of the planes of the sides, negative implies the point is inside this plane */
@@ -188,10 +188,10 @@ static inline bool Check_IsPointInsideBrush (const vec3_t point, const mapbrush_
  * the property is not one of those covered by this function.
  * @sa Check_SurfProps to check for one of several properties with one call
  */
-static bool Check_SurfProp (const int flag, const side_t *s)
+static bool Check_SurfProp (const int flag, const side_t* s)
 {
 	const ptrdiff_t indexSide = s - brushsides;
-	const brush_texture_t *tex = &side_brushtextures[indexSide];
+	const brush_texture_t* tex = &side_brushtextures[indexSide];
 	switch (flag) {
 	case SURF_NODRAW:
 		return Q_streq(tex->name, "tex_common/nodraw");
@@ -220,10 +220,10 @@ static bool Check_SurfProp (const int flag, const side_t *s)
  * the property is not one of those covered by this function.
  * @sa Check_SurfProp to check for one property with a call
  */
-static bool Check_SurfProps (const int flags, const side_t *s)
+static bool Check_SurfProps (const int flags, const side_t* s)
 {
 	const ptrdiff_t indexSide = s - brushsides;
-	const brush_texture_t *tex = &side_brushtextures[indexSide];
+	const brush_texture_t* tex = &side_brushtextures[indexSide];
 	const char* texname = tex->name;
 	assert(flags & (SURF_NODRAW | MASK_CLIP));
 
@@ -251,9 +251,9 @@ static bool Check_SurfProps (const int flags, const side_t *s)
 /**
  * @return true for brushes that do not move, are breakable, are seethrough, etc
  */
-static bool Check_IsOptimisable (const mapbrush_t *b)
+static bool Check_IsOptimisable (const mapbrush_t* b)
 {
-	const entity_t *e = &entities[b->entitynum];
+	const entity_t* e = &entities[b->entitynum];
 	const char* name = ValueForKey(e, "classname");
 	int i, numNodraws = 0;
 
@@ -262,7 +262,7 @@ static bool Check_IsOptimisable (const mapbrush_t *b)
 
 	/* content flags should be the same on all faces, but we shall be suspicious */
 	for (i = 0; i < b->numsides; i++) {
-		const side_t *side = &b->original_sides[i];
+		const side_t* side = &b->original_sides[i];
 		if (Check_SurfProps(CONTENTS_ORIGIN | MASK_CLIP, side))
 			return false;
 		if (side->contentFlags & CONTENTS_TRANSLUCENT)
@@ -277,7 +277,7 @@ static bool Check_IsOptimisable (const mapbrush_t *b)
 /**
  * @return true if the bounding boxes intersect or are within CH_DIST_EPSILON of intersecting
  */
-static bool Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush_t *b)
+static bool Check_BoundingBoxIntersects (const mapbrush_t* a, const mapbrush_t* b)
 {
 	int i;
 
@@ -298,7 +298,7 @@ static void Check_NearList (void)
 {
 	/* this function may be called more than once, but we only want this done once */
 	static bool done = false;
-	mapbrush_t *bbuf[MAX_MAP_BRUSHES];/*< store pointers to brushes here and then malloc them when we know how many */
+	mapbrush_t* bbuf[MAX_MAP_BRUSHES];/*< store pointers to brushes here and then malloc them when we know how many */
 	int i, j, numNear;
 
 	if (done)
@@ -306,11 +306,11 @@ static void Check_NearList (void)
 
 	/* make a list for iBrush*/
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 
 		/* test all brushes for nearness to iBrush */
 		for (j = 0, numNear = 0 ; j < nummapbrushes; j++) {
-			mapbrush_t *jBrush = &mapbrushes[j];
+			mapbrush_t* jBrush = &mapbrushes[j];
 
 			if (i == j) /* do not list a brush as being near itself - not useful!*/
 				continue;
@@ -328,7 +328,7 @@ static void Check_NearList (void)
 			continue;
 
 		/* now we know how many, we can malloc. then copy the pointers */
-		iBrush->nearBrushes = Mem_AllocTypeN(mapbrush_t *, numNear);
+		iBrush->nearBrushes = Mem_AllocTypeN(mapbrush_t* , numNear);
 
 		if (!iBrush->nearBrushes)
 			Sys_Error("Check_Nearlist: out of memory");
@@ -348,10 +348,10 @@ static void Check_NearList (void)
  * @return true if they are all in or on (within epsilon) brush b
  * @sa Check_IsPointInsideBrush
  */
-static bool Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
+static bool Check_SideIsInBrush (const side_t* side, const mapbrush_t* brush, pointInBrush_t mode)
 {
 	int i;
-	const winding_t *w = side->winding;
+	const winding_t* w = side->winding;
 
 	assert(w->numpoints > 0);
 
@@ -367,10 +367,10 @@ static bool Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, po
  * @brief for debugging, use this to see which face is the problem
  * as there is no non-debugging use (yet) usually #ifed out
  */
-static void Check_SetError (side_t *s)
+static void Check_SetError (side_t* s)
 {
 	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
+	brush_texture_t* tex = &side_brushtextures[index];
 
 	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
 }
@@ -383,17 +383,17 @@ static void Check_SetError (side_t *s)
  * @note tests for either side having a vertex in the other's brush, this will miss some odd types of intersection
  * @sa ParallelAndCoincident
  */
-static bool Check_SidesTouch (side_t *a, side_t *b)
+static bool Check_SidesTouch (side_t* a, side_t* b)
 {
-	side_t *s[2];
+	side_t* s[2];
 	int i, j;
 
 	s[0] = a;
 	s[1] = b;
 
 	for (i = 0; i < 2; i++) {
-		const winding_t *w = s[i]->winding; /* winding from one of the sides */
-		const mapbrush_t *brush = s[i ^ 1]->brush; /* the brush that the other side belongs to */
+		const winding_t* w = s[i]->winding; /* winding from one of the sides */
+		const mapbrush_t* brush = s[i ^ 1]->brush; /* the brush that the other side belongs to */
 
 		for (j = 0; j < w->numpoints ; j++) {
 			if (Check_IsPointInsideBrush(w->p[j], brush, PIB_INCL_SURF))
@@ -416,10 +416,10 @@ static void Check_FindCompositeSides (void)
 	/* store pointers to sides here and then malloc them when we know how many.
 	 * divide by 4 becuase, the minimum number of sides for a brush is 4, so if
 	 * all brushes were lined up, and had one side as a member, that would be their number */
-	side_t *sbuf[MAX_MAP_SIDES / 4];
+	side_t* sbuf[MAX_MAP_SIDES / 4];
 
-	mapbrush_t *bDone[MAX_MAP_SIDES]; /*< an array of brushes to check if the composite propagates across */
-	mapbrush_t *bTodo[MAX_MAP_SIDES]; /*< an array of brushes that have been checked, without this it would never stop */
+	mapbrush_t* bDone[MAX_MAP_SIDES]; /*< an array of brushes to check if the composite propagates across */
+	mapbrush_t* bTodo[MAX_MAP_SIDES]; /*< an array of brushes that have been checked, without this it would never stop */
 
 	/* this function may be called more than once, but we only want this done once */
 	if (done)
@@ -429,14 +429,14 @@ static void Check_FindCompositeSides (void)
 
 	/* check each brush, iBrush */
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 
 		if (!Check_IsOptimisable(iBrush))
 			continue; /* skip clips etc */
 
 		/* check each side, iSide, of iBrush for being the seed of a composite face */
 		for (is = 0; is < iBrush->numsides; is++) {
-			side_t *iSide = &iBrush->original_sides[is];
+			side_t* iSide = &iBrush->original_sides[is];
 
 			/* do not find the same composite again. no nodraws
 			 * AddBrushBevels creates sides without windings. skip these too */
@@ -459,13 +459,13 @@ static void Check_FindCompositeSides (void)
 			bDone[numDone++] = iBrush;
 
 			while (numTodo > 0) {
-				mapbrush_t *bChecking = bTodo[--numTodo];
+				mapbrush_t* bChecking = bTodo[--numTodo];
 				if (bChecking == nullptr)
 					continue;
 				bDone[numDone++] = bChecking; /* remember so it is not added to the todo list again */
 
 				for (j = 0; j < bChecking->numsides; j++) {
-					side_t *sChecking = &bChecking->original_sides[j];
+					side_t* sChecking = &bChecking->original_sides[j];
 
 					if (Check_SurfProp(SURF_NODRAW, sChecking) || !sChecking->winding)
 						continue; /* no nodraws in composites. see comment above above regarding winding*/
@@ -475,13 +475,13 @@ static void Check_FindCompositeSides (void)
 						/* test if sChecking intersects or touches any of sides that are already in the composite*/
 						for (k = 0; k < numMembers; k++) {
 							if (Check_SidesTouch(sChecking, sbuf[k])) {
-								const mapbrush_t *newMembersBrush = sChecking->brush;
+								const mapbrush_t* newMembersBrush = sChecking->brush;
 								sbuf[numMembers++] = sChecking; /* add to the array of members */
 								sChecking->isCompositeMember = true;
 
 								/* add this brush's nearList to the todo list, as the compostite may propagate through it */
 								for (l = 0; l < newMembersBrush->numNear;l++) {
-									mapbrush_t *nearListBrush = newMembersBrush->nearBrushes[l];
+									mapbrush_t* nearListBrush = newMembersBrush->nearBrushes[l];
 
 									if (!Check_IsOptimisable(nearListBrush))
 										continue; /* do not propogate across clips etc */
@@ -508,7 +508,7 @@ static void Check_FindCompositeSides (void)
 			}
 
 			if (numMembers > 1) { /* composite found */
-				side_t** sidesInNewComposite = Mem_AllocTypeN(side_t *, numMembers);
+				side_t** sidesInNewComposite = Mem_AllocTypeN(side_t* , numMembers);
 
 				if (!sidesInNewComposite)
 					Sys_Error("Check_FindCompositeSides: out of memory");
@@ -539,7 +539,7 @@ static void Check_FindCompositeSides (void)
  * @return 	zero if the edge is within an epsilon angle of parallel to the plane, or the edge is near zero length.
  * @note	an epsilon is used to exclude the actual vertices from passing the test.
  */
-static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t *plane, vec3_t intersection)
+static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t* plane, vec3_t intersection)
 {
 	vec3_t direction; /* a vector in the direction of the line */
 	vec3_t lineToPlane; /* a line from vert1 on the line to a point on the plane */
@@ -569,7 +569,7 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
  * @brief tests the lines joining the vertices in the winding
  * @return true if the any lines intersect the brush
  */
-static bool Check_WindingIntersects (const winding_t *winding, const mapbrush_t *brush)
+static bool Check_WindingIntersects (const winding_t* winding, const mapbrush_t* brush)
 {
 	vec3_t intersection;
 	int vi, bi;
@@ -597,20 +597,20 @@ void Check_BrushIntersection (void)
 	Check_NearList();
 
 	for (i = 0; i < nummapbrushes; i++) {
-		const mapbrush_t *iBrush = &mapbrushes[i];
+		const mapbrush_t* iBrush = &mapbrushes[i];
 
 		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
-			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			const mapbrush_t* jBrush = iBrush->nearBrushes[j];
 
 			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			/* check each side of i for intersection with brush j */
 			for (is = 0; is < iBrush->numsides; is++) {
-				const winding_t *winding = (iBrush->original_sides[is].winding);
+				const winding_t* winding = (iBrush->original_sides[is].winding);
 				if (Check_WindingIntersects(winding, jBrush)) {
 					Check_Printf(VERB_CHECK, false, iBrush->entitynum, iBrush->brushnum, "intersects with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
 					break;
@@ -721,7 +721,7 @@ static bool Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const vec3
 }
 #endif
 
-static float Check_LongestEdge (const winding_t *w)
+static float Check_LongestEdge (const winding_t* w)
 {
 	float longestSqr = 0;
 	int i;
@@ -746,12 +746,12 @@ static float Check_LongestEdge (const winding_t *w)
  * the longest edge
  * @return the width of overlap or -1.0f
  */
-static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
+static float Check_SidesOverlap (const side_t* s1, const side_t* s2)
 {
 	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
 	int numVert = 0, i, j, k;
-	winding_t *w[2];
-	mapbrush_t *b[2];
+	winding_t* w[2];
+	mapbrush_t* b[2];
 
 	w[0] = s1->winding; w[1] = s2->winding;
 	b[0] = s1->brush; b[1] = s2->brush;
@@ -792,7 +792,7 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 	{
 		/* make a winding, so WindingArea can be used */
 		float overlapArea, longestEdge, width;
-		winding_t *overlap = AllocWinding(numVert);
+		winding_t* overlap = AllocWinding(numVert);
 		overlap->numpoints = numVert;
 		memcpy(overlap->p, vertbuf, numVert * sizeof(vec3_t));
 		overlapArea = WindingArea(overlap);
@@ -854,13 +854,13 @@ void CheckZFighting (void)
 
 	/* loop through all pairs of near brushes */
 	for (i = 0; i < nummapbrushes; i++) {
-		const mapbrush_t *iBrush = &mapbrushes[i];
+		const mapbrush_t* iBrush = &mapbrushes[i];
 
 		if (!Check_IsOptimisable(iBrush))
 			continue; /* skip moving brushes, clips etc */
 
 		for (j = 0; j < iBrush->numNear; j++) {
-			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			const mapbrush_t* jBrush = iBrush->nearBrushes[j];
 
 			if ((iBrush->contentFlags & CONTENTS_LEVEL_ALL) != (jBrush->contentFlags & CONTENTS_LEVEL_ALL))
 				continue; /* must be on the same level */
@@ -869,7 +869,7 @@ void CheckZFighting (void)
 				continue; /* skip moving brushes, clips etc */
 
 			for (is = 0; is < iBrush->numsides; is++) {
-				const side_t *iSide = &iBrush->original_sides[is];
+				const side_t* iSide = &iBrush->original_sides[is];
 
 				if (Check_SurfProp(SURF_NODRAW, iSide))
 					continue; /* skip nodraws */
@@ -879,7 +879,7 @@ void CheckZFighting (void)
 
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
-					const side_t *jSide = &jBrush->original_sides[js];
+					const side_t* jSide = &jBrush->original_sides[js];
 
 					/* skip nodraws */
 					if (Check_SurfProp(SURF_NODRAW, jSide))
@@ -924,21 +924,21 @@ void Check_ContainedBrushes (void)
 	Check_NearList();
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 
 		/* do not check for brushes inside special (clip etc) brushes */
 		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
-			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			mapbrush_t* jBrush = iBrush->nearBrushes[j];
 			int numSidesInside = 0;
 
 			if (jBrush->contentFlags & CONTENTS_ORIGIN)
 				continue; /* origin brushes are allowed inside others */
 
 			for (js = 0; js < jBrush->numsides; js++) {
-				const side_t *jSide = &jBrush->original_sides[js];
+				const side_t* jSide = &jBrush->original_sides[js];
 
 				if (Check_SideIsInBrush(jSide, iBrush, PIB_INCL_SURF))
 					numSidesInside++;
@@ -956,15 +956,15 @@ void Check_ContainedBrushes (void)
  * @return nonzero if for any level selection the coveree will only be hidden when the coverer is too.
  * so the coveree may safely be set to nodraw, as far as levelflags are concerned.
  */
-static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
+static int Check_LevelForNodraws (const side_t* coverer, const side_t* coveree)
 {
 	return !(CONTENTS_LEVEL_ALL & ~coverer->contentFlags & coveree->contentFlags);
 }
 
-static void Check_SetNodraw (side_t *s)
+static void Check_SetNodraw (side_t* s)
 {
 	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
+	brush_texture_t* tex = &side_brushtextures[index];
 
 	Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 
@@ -1001,7 +1001,7 @@ void CheckNodraws (void)
 
 	/* check each brush, i, for downward sides */
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
@@ -1010,7 +1010,7 @@ void CheckNodraws (void)
 
 		/* check each side of i for pointing down */
 		for (is = 0; is < iBrush->numsides; is++) {
-			side_t *iSide = &iBrush->original_sides[is];
+			side_t* iSide = &iBrush->original_sides[is];
 
 			/* skip those that are already nodraw */
 			if (Check_SurfProp(SURF_NODRAW, iSide))
@@ -1034,7 +1034,7 @@ void CheckNodraws (void)
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		mapbrush_t* iBrush = &mapbrushes[i];
 		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
@@ -1043,7 +1043,7 @@ void CheckNodraws (void)
 
 		/* check each brush, j, for having a side that hides one of i's faces */
 		for (j = 0; j < iBrush->numNear; j++) {
-			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			mapbrush_t* jBrush = iBrush->nearBrushes[j];
 
 			/* skip moving brushes, clips etc */
 			if (!Check_IsOptimisable(jBrush))
@@ -1051,7 +1051,7 @@ void CheckNodraws (void)
 
 			/* check each side of i for being hidden */
 			for (is = 0; is < iBrush->numsides; is++) {
-				side_t *iSide = &iBrush->original_sides[is];
+				side_t* iSide = &iBrush->original_sides[is];
 
 				if (!iSide->winding)
 					continue; /* AddBrushBevels adds sides with no windings. skip these */
@@ -1065,7 +1065,7 @@ void CheckNodraws (void)
 
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
-					const side_t *jSide = &jBrush->original_sides[js];
+					const side_t* jSide = &jBrush->original_sides[js];
 
 					if (!jSide->winding)
 						continue; /* AddBrushBevels adds sides with no windings. skip these */
@@ -1101,14 +1101,14 @@ void CheckNodraws (void)
 
 		/* check each composite side for hiding one of iBrush's sides */
 		for (j = 0; j < numCompositeSides; j++) {
-			const compositeSide_t *composite = &compositeSides[j];
+			const compositeSide_t* composite = &compositeSides[j];
 			assert(composite);
 			assert(composite->memberSides[0]);
 
 			/* check each side for being hidden */
 			for (is = 0; is < iBrush->numsides; is++) {
-				side_t *iSide = &iBrush->original_sides[is];
-				winding_t *iWinding;
+				side_t* iSide = &iBrush->original_sides[is];
+				winding_t* iWinding;
 				vec3_t lastIntersection = {0, 0, 0}; /* used in innner loop, here to avoid repeated memset calls */
 
 				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
@@ -1155,7 +1155,7 @@ void CheckNodraws (void)
 					OBJZERO(paired);
 
 					for (l = 0; l < composite->numMembers; l++) {
-						const winding_t *mWinding = composite->memberSides[l]->winding;
+						const winding_t* mWinding = composite->memberSides[l]->winding;
 
 						for (m = 0; m < mWinding->numpoints; m++) {
 							bool intersects = Check_EdgeEdgeIntersection(
@@ -1234,10 +1234,10 @@ void CheckNodraws (void)
  * meaning it encloses no volume.
  * also checks for planes without any normal
  */
-static bool Check_DuplicateBrushPlanes (const mapbrush_t *b)
+static bool Check_DuplicateBrushPlanes (const mapbrush_t* b)
 {
 	int i, j;
-	const side_t *sides = b->original_sides;
+	const side_t* sides = b->original_sides;
 
 	for (i = 1; i < b->numsides; i++) {
 		/* check for duplication and mirroring */
@@ -1260,13 +1260,13 @@ static bool Check_DuplicateBrushPlanes (const mapbrush_t *b)
 /**
  * @sa BrushVolume
  */
-static vec_t Check_MapBrushVolume (const mapbrush_t *brush)
+static vec_t Check_MapBrushVolume (const mapbrush_t* brush)
 {
 	int i;
-	const winding_t *w;
+	const winding_t* w;
 	vec3_t corner;
 	vec_t d, area, volume;
-	const plane_t *plane;
+	const plane_t* plane;
 
 	if (!brush)
 		return 0;
@@ -1305,7 +1305,7 @@ void CheckMapMicro (void)
 	int i;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 		const float vol = Check_MapBrushVolume(brush);
 		if (vol < config.mapMicrovol) {
 			Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "microbrush volume %f - will be deleted\n", vol);
@@ -1378,7 +1378,7 @@ void CheckFillLevelFlags (void)
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 
 		/* CheckLevelFlags should be done first, so we will boldly
 		 * assume that levelflags are the same on each face */
@@ -1403,12 +1403,12 @@ void CheckLevelFlags (void)
 	int allLevelFlagsForBrush;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 
 		/* test if all faces are nodraw */
 		bool allNodraw = true;
 		for (j = 0; j < brush->numsides; j++) {
-			const side_t *side = &brush->original_sides[j];
+			const side_t* side = &brush->original_sides[j];
 			assert(side);
 
 			if (!(Check_SurfProp(SURF_NODRAW, side))) {
@@ -1425,7 +1425,7 @@ void CheckLevelFlags (void)
 			/* test if some faces do not have levelflags and remember
 			 * all levelflags which are set. */
 			for (j = 0; j < brush->numsides; j++) {
-				const side_t *side = &brush->original_sides[j];
+				const side_t* side = &brush->original_sides[j];
 
 				allLevelFlagsForBrush |= (side->contentFlags & CONTENTS_LEVEL_ALL);
 
@@ -1443,7 +1443,7 @@ void CheckLevelFlags (void)
 				const int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
 				Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "at least one face has no levelflags, setting %i on all faces\n", flagsToSet);
 				for (j = 0; j < brush->numsides; j++) {
-					side_t *side = &brush->original_sides[j];
+					side_t* side = &brush->original_sides[j];
 					side->contentFlags |= flagsToSet;
 				}
 			}
@@ -1459,7 +1459,7 @@ void CheckLevelFlags (void)
  * because this is saved back on -fix.
  * @note also removes phongs from nodraws. also removes legacy flags.
  */
-void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
+void SetImpliedFlags (side_t* side, brush_texture_t* tex, const mapbrush_t* brush)
 {
 	const char* texname = tex->name;
 	const int initSurf = tex->surfaceFlags;
@@ -1548,12 +1548,12 @@ void CheckFlagsBasedOnTextures (void)
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			side_t* side = &brush->original_sides[j];
 			const ptrdiff_t index = side - brushsides;
-			brush_texture_t *tex = &side_brushtextures[index];
+			brush_texture_t* tex = &side_brushtextures[index];
 
 			assert(side);
 			assert(tex);
@@ -1573,12 +1573,12 @@ void CheckTexturesBasedOnFlags (void)
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			side_t* side = &brush->original_sides[j];
 			const ptrdiff_t index = side - brushsides;
-			brush_texture_t *tex = &side_brushtextures[index];
+			brush_texture_t* tex = &side_brushtextures[index];
 
 			assert(side);
 			assert(tex);
@@ -1634,7 +1634,7 @@ void CheckTexturesBasedOnFlags (void)
  * as well as th check/fix code.
  * @sa ParseBrush
  */
-void CheckPropagateParserContentFlags(mapbrush_t *b)
+void CheckPropagateParserContentFlags(mapbrush_t* b)
 {
 	int notInformedMixedFace = 1;
 	int m;
@@ -1669,8 +1669,8 @@ void CheckMixedFaceContents (void)
 	int nfActorclip; /* number of faces with actorclip contentflag set */
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
-		side_t *side0;
+		mapbrush_t* brush = &mapbrushes[i];
+		side_t* side0;
 
 		/* if the origin flag is set in the mapbrush_t struct, then the brushes
 		 * work is done, and we can skip the mixed face contents check for this brush */
@@ -1683,7 +1683,7 @@ void CheckMixedFaceContents (void)
 		CheckPropagateParserContentFlags(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			side_t* side = &brush->original_sides[j];
 			assert(side);
 
 			nfActorclip += (side->contentFlags & CONTENTS_ACTORCLIP) ? 1 : 0;
@@ -1709,9 +1709,9 @@ void CheckMixedFaceContents (void)
 		if (nfActorclip && nfActorclip != brush->numsides) {
 			Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "ACTORCLIP is not set on all of the faces: removing.\n");
 			for (j = 0; j < brush->numsides; j++) {
-				side_t *side = &brush->original_sides[j];
+				side_t* side = &brush->original_sides[j];
 				const ptrdiff_t index = side - brushsides;
-				brush_texture_t *tex = &side_brushtextures[index];
+				brush_texture_t* tex = &side_brushtextures[index];
 
 				if ((side->contentFlags & CONTENTS_ACTORCLIP) && Q_streq(tex->name, "tex_common/actorclip")) {
 					Check_Printf(VERB_CHECK, true, brush->entitynum, brush->brushnum, "removing tex_common/actorclip, setting tex_common/error\n");
@@ -1729,12 +1729,12 @@ void CheckBrushes (void)
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t* brush = &mapbrushes[i];
 
 		Check_DuplicateBrushPlanes(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			side_t* side = &brush->original_sides[j];
 
 			assert(side);
 

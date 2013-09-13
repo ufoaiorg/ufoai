@@ -54,9 +54,9 @@ typedef struct {
 
 	int timeValue;
 
-	aseVertex_t *vertexes;
-	aseTVertex_t *tvertexes;
-	aseFace_t *faces, *tfaces;
+	aseVertex_t* vertexes;
+	aseTVertex_t* tvertexes;
+	aseFace_t* faces, *tfaces;
 
 	int currentFace, currentVertex;
 } aseMesh_t;
@@ -147,7 +147,7 @@ int ASE_GetNumSurfaces (void)
 
 const char* ASE_GetSurfaceName (int which)
 {
-	aseGeomObject_t *pObject = &ase.objects[which];
+	aseGeomObject_t* pObject = &ase.objects[which];
 
 	if (!pObject->anim.numFrames)
 		return 0;
@@ -158,10 +158,10 @@ const char* ASE_GetSurfaceName (int which)
 /**
  * @brief Returns an animation (sequence of polysets)
  */
-polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
+polyset_t* ASE_GetSurfaceAnimation (int whichSurface)
 {
-	aseGeomObject_t *pObject = &ase.objects[whichSurface];
-	polyset_t *psets;
+	aseGeomObject_t* pObject = &ase.objects[whichSurface];
+	polyset_t* psets;
 	int numFramesInAnimation;
 	int i, f;
 
@@ -174,8 +174,8 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 
 	for (f = 0, i = 0; i < numFramesInAnimation; i++) {
 		int t;
-		aseMesh_t *pMesh = &pObject->anim.frames[i];
-		polyset_t *ps = &psets[f];
+		aseMesh_t* pMesh = &pObject->anim.frames[i];
+		polyset_t* ps = &psets[f];
 
 		strcpy(ps->name, pObject->name);
 		strcpy(ps->materialname, ase.materials[pObject->materialRef].name);
@@ -187,13 +187,13 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 			int k;
 
 			for (k = 0; k < 3; k++) {
-				triangle_t *tri = &ps->triangles[t];
+				triangle_t* tri = &ps->triangles[t];
 				const int vIdx = pMesh->faces[t][k];
-				aseVertex_t *v = &pMesh->vertexes[vIdx];
+				aseVertex_t* v = &pMesh->vertexes[vIdx];
 				VectorSet(tri->verts[k], v->x, v->y, v->z);
 
 				if (pMesh->tvertexes && pMesh->tfaces) {
-					aseTVertex_t *tv = &pMesh->tvertexes[pMesh->tfaces[t][k]];
+					aseTVertex_t* tv = &pMesh->tvertexes[pMesh->tfaces[t][k]];
 					Vector2Set(tri->texcoords[k], tv->s, tv->t);
 				}
 			}
@@ -207,7 +207,7 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 
 static void ASE_FreeGeomObject (int ndx)
 {
-	aseGeomObject_t *pObject;
+	aseGeomObject_t* pObject;
 	int i;
 
 	pObject = &ase.objects[ndx];
@@ -222,9 +222,9 @@ static void ASE_FreeGeomObject (int ndx)
 	OBJZERO(*pObject);
 }
 
-static aseMesh_t *ASE_GetCurrentMesh (void)
+static aseMesh_t* ASE_GetCurrentMesh (void)
 {
-	aseGeomObject_t *pObject;
+	aseGeomObject_t* pObject;
 
 	if (ase.currentObject >= MAX_ASE_OBJECTS)
 		Sys_Error("Too many GEOMOBJECTs");
@@ -361,7 +361,7 @@ static void ASE_KeyMATERIAL_LIST (const char* token)
 
 static void ASE_KeyMESH_VERTEX_LIST (const char* token)
 {
-	aseMesh_t *pMesh = ASE_GetCurrentMesh();
+	aseMesh_t* pMesh = ASE_GetCurrentMesh();
 
 	if (Q_streq(token, "*MESH_VERTEX")) {
 		ASE_GetToken(false);		/* skip number */
@@ -385,7 +385,7 @@ static void ASE_KeyMESH_VERTEX_LIST (const char* token)
 
 static void ASE_KeyMESH_FACE_LIST (const char* token)
 {
-	aseMesh_t *pMesh = ASE_GetCurrentMesh();
+	aseMesh_t* pMesh = ASE_GetCurrentMesh();
 
 	if (Q_streq(token, "*MESH_FACE")) {
 		ASE_GetToken(false);	/* skip face number */
@@ -420,11 +420,11 @@ static void ASE_KeyMESH_FACE_LIST (const char* token)
 
 static void ASE_KeyTFACE_LIST (const char* token)
 {
-	aseMesh_t *pMesh = ASE_GetCurrentMesh();
+	aseMesh_t* pMesh = ASE_GetCurrentMesh();
 
 	if (Q_streq(token, "*MESH_TFACE")) {
 		int a, b, c;
-		aseFace_t *f;
+		aseFace_t* f;
 
 		ASE_GetToken(false);
 
@@ -447,7 +447,7 @@ static void ASE_KeyTFACE_LIST (const char* token)
 
 static void ASE_KeyMESH_TVERTLIST (const char* token)
 {
-	aseMesh_t *pMesh = ASE_GetCurrentMesh();
+	aseMesh_t* pMesh = ASE_GetCurrentMesh();
 
 	if (Q_streq(token, "*MESH_TVERT")) {
 		char u[80], v[80], w[80];
@@ -477,7 +477,7 @@ static void ASE_KeyMESH_TVERTLIST (const char* token)
 
 static void ASE_KeyMESH (const char* token)
 {
-	aseMesh_t *pMesh = ASE_GetCurrentMesh();
+	aseMesh_t* pMesh = ASE_GetCurrentMesh();
 
 	if (Q_streq(token, "*TIMEVALUE")) {
 		ASE_GetToken(false);
@@ -594,7 +594,7 @@ static void ASE_KeyGEOMOBJECT (const char* token)
 	}
 }
 
-static void ConcatenateObjects (aseGeomObject_t *pObjA, aseGeomObject_t *pObjB)
+static void ConcatenateObjects (aseGeomObject_t* pObjA, aseGeomObject_t* pObjB)
 {
 }
 

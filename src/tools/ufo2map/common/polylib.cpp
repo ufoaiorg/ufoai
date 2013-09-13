@@ -35,15 +35,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] points Amount of points for this winding
  * @sa FreeWinding
  */
-winding_t *AllocWinding (int points)
+winding_t* AllocWinding (int points)
 {
-	return (winding_t *)Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
+	return (winding_t* )Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
 }
 
 /**
  * @sa AllocWinding
  */
-void FreeWinding (winding_t *w)
+void FreeWinding (winding_t* w)
 {
 	if (*(unsigned *)w == 0xdeaddead)
 		Sys_Error("FreeWinding: freed a freed winding");
@@ -52,7 +52,7 @@ void FreeWinding (winding_t *w)
 	Mem_Free(w);
 }
 
-void RemoveColinearPoints (winding_t *w)
+void RemoveColinearPoints (winding_t* w)
 {
 	int i, nump = 0;
 	vec3_t v1, v2;
@@ -78,7 +78,7 @@ void RemoveColinearPoints (winding_t *w)
 	memcpy(w->p, p, nump * sizeof(p[0]));
 }
 
-vec_t WindingArea (const winding_t *w)
+vec_t WindingArea (const winding_t* w)
 {
 	int i;
 	vec3_t d1, d2, cross;
@@ -94,7 +94,7 @@ vec_t WindingArea (const winding_t *w)
 	return total * 0.5f;
 }
 
-void WindingBounds (const winding_t *w, vec3_t mins, vec3_t maxs)
+void WindingBounds (const winding_t* w, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
 
@@ -111,7 +111,7 @@ void WindingBounds (const winding_t *w, vec3_t mins, vec3_t maxs)
 	}
 }
 
-void WindingCenter (const winding_t *w, vec3_t center)
+void WindingCenter (const winding_t* w, vec3_t center)
 {
 	int i;
 	vec_t scale;
@@ -124,12 +124,12 @@ void WindingCenter (const winding_t *w, vec3_t center)
 	VectorScale(center, scale, center);
 }
 
-winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
+winding_t* BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 {
 	int i, x;
 	vec_t max, v;
 	vec3_t org, vright, vup;
-	winding_t *w;
+	winding_t* w;
 
 	/* find the major axis */
 	max = -BOGUS_RANGE;
@@ -194,18 +194,18 @@ winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
  * @param[in] w The winding to copy
  * @returns the new winding
  */
-winding_t *CopyWinding (const winding_t *w)
+winding_t* CopyWinding (const winding_t* w)
 {
-	winding_t *c = AllocWinding(w->numpoints);
-	const ptrdiff_t size = (ptrdiff_t)((winding_t *)0)->p[w->numpoints];
+	winding_t* c = AllocWinding(w->numpoints);
+	const ptrdiff_t size = (ptrdiff_t)((winding_t* )0)->p[w->numpoints];
 	memcpy(c, w, size);
 	return c;
 }
 
-winding_t *ReverseWinding (const winding_t *w)
+winding_t* ReverseWinding (const winding_t* w)
 {
 	int i;
-	winding_t *c = AllocWinding(w->numpoints);
+	winding_t* c = AllocWinding(w->numpoints);
 
 	for (i = 0; i < w->numpoints; i++) {
 		VectorCopy(w->p[w->numpoints - 1 - i], c->p[i]);
@@ -214,14 +214,14 @@ winding_t *ReverseWinding (const winding_t *w)
 	return c;
 }
 
-void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t dist,
+void ClipWindingEpsilon (const winding_t* in, const vec3_t normal, const vec_t dist,
 		const vec_t epsilon, winding_t** front, winding_t** back)
 {
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
 	int i, j;
-	winding_t *f, *b;
+	winding_t* f, *b;
 	int maxpts;
 
 	VectorClear(counts);
@@ -259,8 +259,8 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 	*back = b = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
-		const vec_t *p1 = in->p[i];
-		const vec_t *p2;
+		const vec_t* p1 = in->p[i];
+		const vec_t* p2;
 		vec_t dot;
 		vec3_t mid;
 
@@ -312,14 +312,14 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 
 void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
-	winding_t *in;
+	winding_t* in;
 	/** @todo Why + 4? */
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
 	int i, j;
 	vec3_t mid;
-	winding_t *f;
+	winding_t* f;
 	int maxpts;
 
 	in = *inout;
@@ -355,8 +355,8 @@ void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dis
 	f = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
-		const vec_t *p1 = in->p[i];
-		const vec_t *p2;
+		const vec_t* p1 = in->p[i];
+		const vec_t* p2;
 		vec_t dot;
 
 		if (sides[i] == SIDE_ON) {
@@ -405,9 +405,9 @@ void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dis
  * @return the fragment of in that is on the front side of the cliping plane.
  * @note The original is freed.
  */
-winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
+winding_t* ChopWinding (winding_t* in, vec3_t normal, vec_t dist)
 {
-	winding_t *f, *b;
+	winding_t* f, *b;
 
 	ClipWindingEpsilon(in, normal, dist, ON_EPSILON, &f, &b);
 	FreeWinding(in);
@@ -421,7 +421,7 @@ winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
  * @brief Returns true if the winding would be crunched out of existance by the
  * vertex snapping.
  */
-bool WindingIsTiny (winding_t *w)
+bool WindingIsTiny (winding_t* w)
 {
 	int i, edges;
 	vec3_t delta;
@@ -443,7 +443,7 @@ bool WindingIsTiny (winding_t *w)
  * @brief Returns true if the winding still has one of the points from
  * basewinding for plane
  */
-bool WindingIsHuge (const winding_t *w)
+bool WindingIsHuge (const winding_t* w)
 {
 	int i, j;
 
@@ -498,7 +498,7 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
  * @brief removes degenerate edges from a winding
  * @returns true if the winding is valid
  */
-bool FixWinding (winding_t *w)
+bool FixWinding (winding_t* w)
 {
 	bool valid;
 	int i, k;

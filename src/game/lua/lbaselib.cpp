@@ -294,7 +294,7 @@ static int luaB_loadfile (lua_State *L) {
 ** stack top. Instead, it keeps its resulting string in a
 ** reserved slot inside the stack.
 */
-static const char* generic_reader (lua_State *L, void* ud, size_t *size) {
+static const char* generic_reader (lua_State *L, void* ud, size_t* size) {
   (void)ud;  /* to avoid warnings */
   luaL_checkstack(L, 2, "too many nested functions");
   lua_pushvalue(L, 1);  /* get function */

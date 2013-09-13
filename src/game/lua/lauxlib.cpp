@@ -155,7 +155,7 @@ LUALIB_API void luaL_checkany (lua_State *L, int narg) {
 }
 
 
-LUALIB_API const char* luaL_checklstring (lua_State *L, int narg, size_t *len) {
+LUALIB_API const char* luaL_checklstring (lua_State *L, int narg, size_t* len) {
   const char* s = lua_tolstring(L, narg, len);
   if (!s) tag_error(L, narg, LUA_TSTRING);
   return s;
@@ -163,7 +163,7 @@ LUALIB_API const char* luaL_checklstring (lua_State *L, int narg, size_t *len) {
 
 
 LUALIB_API const char* luaL_optlstring (lua_State *L, int narg,
-                                        const char* def, size_t *len) {
+                                        const char* def, size_t* len) {
   if (lua_isnoneornil(L, narg)) {
     if (len)
       *len = (def ? strlen(def) : 0);
@@ -526,7 +526,7 @@ typedef struct LoadF {
 } LoadF;
 
 
-static const char* getF (lua_State *L, void* ud, size_t *size) {
+static const char* getF (lua_State *L, void* ud, size_t* size) {
   LoadF *lf = (LoadF *)ud;
   (void)L;
   if (lf->extraline) {
@@ -596,7 +596,7 @@ typedef struct LoadS {
 } LoadS;
 
 
-static const char* getS (lua_State *L, void* ud, size_t *size) {
+static const char* getS (lua_State *L, void* ud, size_t* size) {
   LoadS *ls = (LoadS *)ud;
   (void)L;
   if (ls->size == 0) return nullptr;

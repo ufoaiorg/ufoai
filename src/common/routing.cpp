@@ -68,15 +68,15 @@ static const AABB actor2x2Box(-half2x2Width, -half2x2Width, 0, half2x2Width, hal
 class RoutingData
 {
 public:
-	mapTiles_t *mapTiles;
+	mapTiles_t* mapTiles;
 	Routing &routing;			/**< The routing tables */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char** list;			/**< The local models list */
 
-	RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list);
+	RoutingData (mapTiles_t* mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list);
 };
 
-RoutingData::RoutingData (mapTiles_t *mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list) : routing(r)
+RoutingData::RoutingData (mapTiles_t* mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list) : routing(r)
 {
 	this->mapTiles = mapTiles;
 	this->actorSize = actorSize;
@@ -111,7 +111,7 @@ typedef struct place_s {
 	}
 } place_t;
 
-static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t actorSize, place_t* p, const int x, const int y, const int z)
 {
 	p->cell[0] = x;
 	p->cell[1] = y;
@@ -123,7 +123,7 @@ static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t a
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
 }
 
-static inline bool RT_PlaceDoesIntersectEnough (const place_t *p, const place_t *other)
+static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
 {
 	return (std::min(p->ceiling, other->ceiling) - std::max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
@@ -134,7 +134,7 @@ static inline bool RT_PlaceDoesIntersectEnough (const place_t *p, const place_t 
  * The other place has the beginning of the stairway, so the floor is at eg. 6
  * and the ceiling is that of the higher level, eg. 32.
  */
-static inline int RT_PlaceIsShifted (const place_t *p, const place_t *other)
+static inline int RT_PlaceIsShifted (const place_t* p, const place_t* other)
 {
 	if (!p->isUsable() || !other->isUsable())
 		return 0;
@@ -204,7 +204,7 @@ static void RT_DumpMap (const Routing &routing, actorSizeEnum_t actorSize, int l
  * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (mapTiles_t *mapTiles, const Routing &routing)
+void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing &routing)
 {
 	AABB box;
 	vec3_t normal, origin;
@@ -281,7 +281,7 @@ bool RT_CanActorStandHere (const Routing &routing, const int actorSize, const po
  * @sa CMod_LoadRouting
  * @sa DoRouting
  */
-void RT_GetMapSize (mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max)
+void RT_GetMapSize (mapTiles_t* mapTiles, vec3_t map_min, vec3_t map_max)
 {
 	AABB box;
 	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
@@ -391,7 +391,7 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char** list)
+int RT_CheckCell (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char** list)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -883,7 +883,7 @@ static int RT_TraceOpening (const RoutingData *rtd, const vec3_t start, const ve
  * @param[out] foundHigh Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int bottom, const int top, int* foundLow, int* foundHigh)
+static int RT_FindOpening (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int* foundLow, int* foundHigh)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -971,7 +971,7 @@ static int RT_FindOpening (RoutingData *rtd, const place_t *from, const int ax, 
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t *opening)
+static int RT_MicroTrace (RoutingData *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1164,7 +1164,7 @@ static int RT_MicroTrace (RoutingData *rtd, const place_t *from, const int ax, c
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const place_t *to, opening_t *opening)
+static int RT_TraceOnePassage (RoutingData *rtd, const place_t* from, const place_t* to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1247,12 +1247,12 @@ static int RT_TraceOnePassage (RoutingData *rtd, const place_t *from, const plac
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t *opening)
+static void RT_TracePassage (RoutingData *rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
-	const place_t *placeToCheck = nullptr;
+	const place_t* placeToCheck = nullptr;
 
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);
@@ -1421,7 +1421,7 @@ static int RT_UpdateConnection (RoutingData *rtd, const int x, const int y, cons
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
+void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	/* the essential data passed down the calltree */
@@ -1565,7 +1565,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t *mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
+int RT_DebugSpecial (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
