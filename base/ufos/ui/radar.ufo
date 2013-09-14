@@ -1,5 +1,5 @@
 // fullscreen battlescape radar
-window radarwindow {
+window radar {
 	{
 		fill		true
 		starlayout	true

@@ -1092,7 +1092,7 @@ window hud_default extends hud
 				pos			"0 0"
 				size		"48 48"
 				tooltip		"_Radar"
-				onClick	{ cmd "ui_push radarwindow;" }
+				onClick	{ cmd "ui_push radar;" }
 				onMouseEnter	{ *node:this@icon = "icons/radar" }
 				onMouseLeave	{ *node:this@icon = "icons/radar0"	}
 			}
