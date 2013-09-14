@@ -1438,28 +1438,29 @@ void AI_ActorThink (Player &player, Edict* ent)
 
 static void AI_PlayerRun (Player &player)
 {
-	if (level.activeTeam == player.getTeam() && !player.roundDone) {
-		/* find next actor to handle */
-		Edict* ent = player.pers.last;
+	if (level.activeTeam != player.getTeam() || player.roundDone)
+		return;
 
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
-			const int beforeTUs = ent->TU;
-			if (beforeTUs > 0) {
-				if (g_ailua->integer)
-					AIL_ActorThink(player, ent);
-				else
-					AI_ActorThink(player, ent);
-				player.pers.last = ent;
+	/* find next actor to handle */
+	Edict* ent = player.pers.last;
 
-				if (beforeTUs > ent->TU)
-					return;
-			}
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
+		const int beforeTUs = ent->TU;
+		if (beforeTUs > 0) {
+			if (g_ailua->integer)
+				AIL_ActorThink(player, ent);
+			else
+				AI_ActorThink(player, ent);
+			player.pers.last = ent;
+
+			if (beforeTUs > ent->TU)
+				return;
 		}
-
-		/* nothing left to do, request endround */
-		G_ClientEndRound(player);
-		player.pers.last = nullptr;
 	}
+
+	/* nothing left to do, request endround */
+	G_ClientEndRound(player);
+	player.pers.last = nullptr;
 }
 
 /**
