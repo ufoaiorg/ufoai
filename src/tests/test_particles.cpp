@@ -89,14 +89,14 @@ int UFO_AddParticlesTests (void)
 	/* add a suite to the registry */
 	CU_pSuite ParticlesSuite = CU_add_suite("ParticlesTests", UFO_InitSuiteParticles, UFO_CleanSuiteParticles);
 
-	if (ParticlesSuite == NULL)
+	if (ParticlesSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(ParticlesSuite, testFloodParticles) == NULL)
+	if (CU_ADD_TEST(ParticlesSuite, testFloodParticles) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ParticlesSuite, testNeededParticles) == NULL)
+	if (CU_ADD_TEST(ParticlesSuite, testNeededParticles) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

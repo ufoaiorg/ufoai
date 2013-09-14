@@ -61,7 +61,7 @@ static void testTimerDataStructure (void)
 	a = UI_AllocTimer(dummyNode, 10, dummyCallback);
 	b = UI_AllocTimer(dummyNode, 20, dummyCallback);
 	c = UI_AllocTimer(dummyNode, 30, dummyCallback);
-	CU_ASSERT(UI_PrivateGetFirstTimer() == NULL);
+	CU_ASSERT(UI_PrivateGetFirstTimer() == nullptr);
 
 	UI_TimerStart(b);
 	CU_ASSERT(UI_PrivateGetFirstTimer() == b);
@@ -74,9 +74,9 @@ static void testTimerDataStructure (void)
 
 	UI_TimerStop(a);
 	UI_TimerStop(b);
-	CU_ASSERT(a->owner != NULL);
+	CU_ASSERT(a->owner != nullptr);
 	CU_ASSERT(UI_PrivateGetFirstTimer() == c);
-	CU_ASSERT(UI_PrivateGetFirstTimer()->next == NULL);
+	CU_ASSERT(UI_PrivateGetFirstTimer()->next == nullptr);
 
 	UI_TimerStart(a);
 	CU_ASSERT(UI_PrivateGetFirstTimer() == a);
@@ -95,8 +95,8 @@ static void testTimerDataStructure (void)
 	CU_ASSERT(UI_PrivateGetFirstTimer() == c);
 
 	UI_TimerRelease(c);
-	CU_ASSERT(UI_PrivateGetFirstTimer() == NULL);
-	CU_ASSERT(c->owner == NULL);
+	CU_ASSERT(UI_PrivateGetFirstTimer() == nullptr);
+	CU_ASSERT(c->owner == nullptr);
 }
 
 int UFO_AddUITests (void)
@@ -104,11 +104,11 @@ int UFO_AddUITests (void)
 	/* add a suite to the registry */
 	CU_pSuite UISuite = CU_add_suite("UITests", UFO_InitSuiteUI, UFO_CleanSuiteUI);
 
-	if (UISuite == NULL)
+	if (UISuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(UISuite, testTimerDataStructure) == NULL)
+	if (CU_ADD_TEST(UISuite, testTimerDataStructure) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

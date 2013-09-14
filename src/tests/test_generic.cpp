@@ -77,7 +77,7 @@ static void testStringHunks (void)
 	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 15);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
 	STRHUNK_Delete(&hunk);
-	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+	CU_ASSERT_PTR_EQUAL(hunk, nullptr);
 
 	hunk = STRHUNK_Create(23);
 	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
@@ -92,7 +92,7 @@ static void testStringHunks (void)
 	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 0);
 
 	STRHUNK_Delete(&hunk);
-	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+	CU_ASSERT_PTR_EQUAL(hunk, nullptr);
 
 	hunk = STRHUNK_Create(5);
 	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "T"));
@@ -118,14 +118,14 @@ static void testConstInt (void)
 		{"namespace::explosive", 9},
 		{"namespace::hp", 10},
 
-		{NULL, -1}
+		{nullptr, -1}
 	};
 	const constListEntry_t list2[] = {
 		{"namespace2::soldier", 0},
 		{"namespace2::scientist", 1},
 		{"namespace2::worker", 2},
 		{"namespace2::pilot", 3},
-		{NULL, -1}
+		{nullptr, -1}
 	};
 	int out;
 
@@ -196,7 +196,7 @@ static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const voi
 
 static void testLinkedList (void)
 {
-	linkedList_t *list = NULL, *list2;
+	linkedList_t *list = nullptr, *list2;
 	const char* data = "SomeDataForTheLinkedList";
 	const size_t length = strlen(data);
 	linkedList_t *entry;
@@ -205,11 +205,11 @@ static void testLinkedList (void)
 
 	entry = LIST_Add(&list, data, length);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
-	CU_ASSERT_TRUE(entry != NULL);
+	CU_ASSERT_TRUE(entry != nullptr);
 	returnedData = (const char *)LIST_GetByIdx(list, 0);
-	CU_ASSERT_TRUE(returnedData != NULL);
+	CU_ASSERT_TRUE(returnedData != nullptr);
 	entry2 = LIST_ContainsString(list, returnedData);
-	CU_ASSERT_TRUE(entry2 != NULL);
+	CU_ASSERT_TRUE(entry2 != nullptr);
 	CU_ASSERT_EQUAL((const void*)entry2->data, (const void*)returnedData);
 	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
 	LIST_RemoveEntry(&list, entry);
@@ -234,7 +234,7 @@ static void testLinkedList (void)
 	CU_ASSERT_EQUAL(LIST_Count(list), 7);
 	CU_ASSERT_PTR_NOT_NULL(LIST_GetRandom(list));
 
-	LIST_Sort(&list, testListSorter, NULL);
+	LIST_Sort(&list, testListSorter, nullptr);
 	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 0), "test1");
 	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 1), "test2");
 	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 2), "test3");
@@ -246,7 +246,7 @@ static void testLinkedList (void)
 
 static void testLinkedListIterator (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 	int cnt;
 
 	LIST_AddString(&list, "test1");
@@ -263,7 +263,7 @@ static void testLinkedListIterator (void)
 
 	CU_ASSERT_EQUAL(cnt, 3);
 
-	list = NULL;
+	list = nullptr;
 	LIST_Foreach(list, char, string) {
 		(void)string;
 		/* we should not be here, because the list is empty */
@@ -273,7 +273,7 @@ static void testLinkedListIterator (void)
 
 static void testLinkedListIteratorRemove (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 
 	LIST_AddString(&list, "test1");
 	LIST_AddString(&list, "test2");
@@ -289,7 +289,7 @@ static void testLinkedListIteratorRemove (void)
 
 static void testPrependStringList (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 
 	LIST_PrependString(&list, "test2");
 	LIST_PrependString(&list, "test1");
@@ -302,7 +302,7 @@ static void testPrependStringList (void)
 
 static void testLinkedListStringSort (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = nullptr;
 
 	LIST_AddStringSorted(&list, "test2");
 	LIST_AddStringSorted(&list, "test1");
@@ -321,14 +321,14 @@ static void testFileSystemBuildLists (void)
 
 	CU_ASSERT_TRUE(ufosCnt > 1);
 
-	prev = NULL;
-	while ((filename = FS_NextFileFromFileList(wildcard)) != NULL) {
-		if (prev != NULL)
+	prev = nullptr;
+	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
+		if (prev != nullptr)
 			CU_ASSERT_EQUAL(Q_StringSort(prev, filename), -1);
 		prev = filename;
 	}
 
-	FS_NextFileFromFileList(NULL);
+	FS_NextFileFromFileList(nullptr);
 }
 
 static void testInfoStrings (void)
@@ -574,7 +574,7 @@ static void testUnsignedIntToBinary (void)
 
 static void testStringCheckFunctions (void)
 {
-	const char *strNull = NULL;
+	const char *strNull = nullptr;
 	const char *strEmpty = "";
 	const char *strValid = "someString";
 	CU_ASSERT_TRUE(Q_strnull(strNull));
@@ -627,14 +627,14 @@ static void testGetBlock (void)
 {
 	{
 		const char *test = "invalid block";
-		const int length = Com_GetBlock(&test, NULL);
-		UFO_CU_ASSERT_EQUAL_INT_MSG(length, -1, NULL);
+		const int length = Com_GetBlock(&test, nullptr);
+		UFO_CU_ASSERT_EQUAL_INT_MSG(length, -1, nullptr);
 	}
 	{
 		const char *test = "{the block length  }";
 		const char *buf = test;
 		const size_t expected = strlen(test) - 2;
-		const char *start = NULL;
+		const char *start = nullptr;
 		const int length = Com_GetBlock(&buf, &start);
 		CU_ASSERT_EQUAL(length, expected);
 		UFO_CU_ASSERT_EQUAL_INT_MSG(strncmp(start, test + 1, length), 0,
@@ -723,83 +723,83 @@ int UFO_AddGenericTests (void)
 	/* add a suite to the registry */
 	CU_pSuite GenericSuite = CU_add_suite("GenericTests", UFO_InitSuiteGeneric, UFO_CleanSuiteGeneric);
 
-	if (GenericSuite == NULL)
+	if (GenericSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(GenericSuite, testMD5File) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testMD5File) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testMD5Buffer) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testMD5Buffer) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testSHA1Buffer) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testSHA1Buffer) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testSHA2Buffer) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testSHA2Buffer) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testStringHunks) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testStringHunks) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testConstInt) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testConstInt) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testLinkedList) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testLinkedList) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testLinkedListIterator) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testLinkedListIterator) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testPrependStringList) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testPrependStringList) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testTokenizeInfoStrings) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testTokenizeInfoStrings) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testCvars) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testCvars) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testStringFunctions) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testStringFunctions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testHttpHelperFunctions) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testHttpHelperFunctions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testNetResolv) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testNetResolv) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testGetBlock) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testGetBlock) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testComFilePath) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testComFilePath) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GenericSuite, testBinaryExpressionParser) == NULL)
+	if (CU_ADD_TEST(GenericSuite, testBinaryExpressionParser) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

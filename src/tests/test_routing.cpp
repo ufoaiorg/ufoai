@@ -108,7 +108,7 @@ static void testMove (void)
 		VectorSet(vec, 80, 80, 32);
 		VecToPos(vec, pos);
 
-		Grid_CalcPathing(mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, NULL, 0);
+		Grid_CalcPathing(mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, nullptr, 0);
 		Grid_MoveStore(path);
 
 		/* move downwards */
@@ -223,7 +223,7 @@ static void testMoveEntities (void)
 	const byte crouchingState = 0;
 	const int maxTUs = MAX_ROUTE_TUS;
 
-	SV_Map(true, mapName, NULL);
+	SV_Map(true, mapName, nullptr);
 
 	/* starting point */
 	VectorSet(vec, 240, -144, 32);
@@ -232,7 +232,7 @@ static void testMoveEntities (void)
 	G_CompleteRecalcRouting();
 
 	{
-		edict_t *ent = NULL;
+		edict_t *ent = nullptr;
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			/* Dead 2x2 unit will stop walking, too. */
 			if (ent->type == ET_SOLID) {
@@ -343,23 +343,23 @@ int UFO_AddRoutingTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite routingSuite = CU_add_suite("RoutingTests", UFO_InitSuiteRouting, UFO_CleanSuiteRouting);
-	if (routingSuite == NULL)
+	if (routingSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(routingSuite, testMapLoading) == NULL)
+	if (CU_ADD_TEST(routingSuite, testMapLoading) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
+	if (CU_ADD_TEST(routingSuite, testMove) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(routingSuite, testMoveEntities) == NULL)
+	if (CU_ADD_TEST(routingSuite, testMoveEntities) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(routingSuite, testDvec) == NULL)
+	if (CU_ADD_TEST(routingSuite, testDvec) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(routingSuite, testTUsForDir) == NULL)
+	if (CU_ADD_TEST(routingSuite, testTUsForDir) == nullptr)
 		return CU_get_error();
 
 	/**

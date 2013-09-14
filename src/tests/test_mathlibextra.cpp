@@ -55,11 +55,11 @@ int UFO_AddMathlibExtraTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite MathlibExtraSuite = CU_add_suite("MathlibExtraTests", UFO_InitSuiteMathlibExtra, UFO_CleanSuiteMathlibExtra);
-	if (MathlibExtraSuite == NULL)
+	if (MathlibExtraSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(MathlibExtraSuite, testMathlibExtra) == NULL)
+	if (CU_ADD_TEST(MathlibExtraSuite, testMathlibExtra) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

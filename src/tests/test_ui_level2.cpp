@@ -53,9 +53,9 @@ static void TEST_ParseScript (const char* scriptName)
 
 	/* parse ui node script */
 	Com_Printf("Load \"%s\": %i script file(s)\n", scriptName, FS_BuildFileList(scriptName));
-	FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
-	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL) {
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
+	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != nullptr) {
 		try {
 			CL_ParseClientData(type, name, &text);
 		} catch (const comDrop_t &e) {
@@ -87,10 +87,10 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 	const uiBehaviour_t *stringBehaviour = UI_GetNodeBehaviour("string");
 	const uiNode_t *node;
 	const uiNode_t *window = UI_GetWindow(windowName);
-	CU_ASSERT_FATAL(window != NULL);
-	CU_ASSERT_FATAL(stringBehaviour != NULL);
+	CU_ASSERT_FATAL(window != nullptr);
+	CU_ASSERT_FATAL(stringBehaviour != nullptr);
 
-	for (node = window->firstChild; node != NULL; node = node->next) {
+	for (node = window->firstChild; node != nullptr; node = node->next) {
 		bool isGreen;
 		bool isRed;
 		/* skip non "string" nodes */
@@ -155,21 +155,21 @@ static void testKnownBehaviours (void)
 	uiBehaviour_t *behaviour;
 
 	behaviour = UI_GetNodeBehaviour("button");
-	CU_ASSERT_FATAL(behaviour != NULL);
+	CU_ASSERT_FATAL(behaviour != nullptr);
 	CU_ASSERT_STRING_EQUAL(behaviour->name, "button");
 
 	/* first one */
 	behaviour = UI_GetNodeBehaviour("");
-	CU_ASSERT(behaviour != NULL);
+	CU_ASSERT(behaviour != nullptr);
 
 	/* last one */
 	behaviour = UI_GetNodeBehaviour("zone");
-	CU_ASSERT_FATAL(behaviour != NULL);
+	CU_ASSERT_FATAL(behaviour != nullptr);
 	CU_ASSERT_STRING_EQUAL(behaviour->name, "zone");
 
 	/* unknown */
 	behaviour = UI_GetNodeBehaviour("dahu");
-	CU_ASSERT(behaviour == NULL);
+	CU_ASSERT(behaviour == nullptr);
 }
 
 /**
@@ -287,37 +287,37 @@ int UFO_AddUILevel2Tests (void)
 	/* add a suite to the registry */
 	CU_pSuite UISuite = CU_add_suite("UILevel2Tests", UFO_InitSuiteUILevel2, UFO_CleanSuiteUILevel2);
 
-	if (UISuite == NULL)
+	if (UISuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(UISuite, testKnownBehaviours) == NULL)
+	if (CU_ADD_TEST(UISuite, testKnownBehaviours) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testActions) == NULL)
+	if (CU_ADD_TEST(UISuite, testActions) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testActions2) == NULL)
+	if (CU_ADD_TEST(UISuite, testActions2) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testConditions) == NULL)
+	if (CU_ADD_TEST(UISuite, testConditions) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testFunctions) == NULL)
+	if (CU_ADD_TEST(UISuite, testFunctions) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testSetters) == NULL)
+	if (CU_ADD_TEST(UISuite, testSetters) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testCvars) == NULL)
+	if (CU_ADD_TEST(UISuite, testCvars) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testComponents) == NULL)
+	if (CU_ADD_TEST(UISuite, testComponents) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == NULL)
+	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testRuntimeError) == NULL)
+	if (CU_ADD_TEST(UISuite, testRuntimeError) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testVideo) == NULL)
+	if (CU_ADD_TEST(UISuite, testVideo) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testBinding) == NULL)
+	if (CU_ADD_TEST(UISuite, testBinding) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testCvarListener) == NULL)
+	if (CU_ADD_TEST(UISuite, testCvarListener) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
+	if (CU_ADD_TEST(UISuite, testSamples) == nullptr)
 		return CU_get_error();
 	return CUE_SUCCESS;
 }

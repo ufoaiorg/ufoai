@@ -70,7 +70,7 @@ static void testSpawnAndConnect (void)
 	byte *buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &buf);
-	edict_t *e = NULL;
+	edict_t *e = nullptr;
 	int cnt = 0;
 
 	CU_ASSERT_NOT_EQUAL_FATAL(size, -1);
@@ -100,13 +100,13 @@ static void testDoorTrigger (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t *e = NULL;
+		edict_t *e = nullptr;
 		int cnt = 0;
 		int doors = 0;
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 		while ((e = G_EdictsGetNextInUse(e))) {
 			cnt++;
 			if (e->type == ET_DOOR) {
@@ -139,7 +139,7 @@ static void testShooting (void)
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 		/** @todo equip the soldier */
 		/** @todo set the input variables -- gi.ReadFormat(format, &pos, &i, &firemode, &from); */
 		/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, true, from); */
@@ -154,7 +154,7 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 {
 	const Item *invlist = ent->getContainer(container);
 	int count = 0;
-	while (invlist != NULL) {
+	while (invlist != nullptr) {
 		count += invlist->getAmount();
 		invlist = invlist->getNext();
 	}
@@ -171,10 +171,10 @@ static void testVisFlags (void)
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 
 		num = 0;
-		ent = NULL;
+		ent = nullptr;
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
 			const teammask_t teamMask = G_TeamToVisMask(ent->team);
 			const bool visible = ent->visflags & teamMask;
@@ -204,18 +204,18 @@ static void testInventoryForDiedAlien (void)
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
-		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, NULL));
+		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, nullptr));
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* now try to collect the inventory with a second alien */
-		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
@@ -269,18 +269,18 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
-		G_ActorDieOrStun(diedEnt, NULL);
+		G_ActorDieOrStun(diedEnt, nullptr);
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* second alien that should die and drop its inventory */
-		diedEnt2 = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		diedEnt2 = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt2);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
@@ -290,11 +290,11 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_TRUE_FATAL(VectorCompare(diedEnt2->pos, diedEnt->pos));
 
 		diedEnt2->HP = 0;
-		G_ActorDieOrStun(diedEnt2, NULL);
+		G_ActorDieOrStun(diedEnt2, nullptr);
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt2));
 
 		/* now try to collect the inventory with a third alien */
-		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		player = ent->getPlayer();
@@ -346,11 +346,11 @@ static void testInventoryTempContainerLinks (void)
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(true, mapName, NULL);
+		SV_Map(true, mapName, nullptr);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		nr = 0;
 		const Container *cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
@@ -385,29 +385,29 @@ int UFO_AddGameTests (void)
 	/* add a suite to the registry */
 	CU_pSuite GameSuite = CU_add_suite("GameTests", UFO_InitSuiteGame, UFO_CleanSuiteGame);
 
-	if (GameSuite == NULL)
+	if (GameSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == NULL)
+	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testDoorTrigger) == NULL)
+	if (CU_ADD_TEST(GameSuite, testDoorTrigger) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
+	if (CU_ADD_TEST(GameSuite, testShooting) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testVisFlags) == NULL)
+	if (CU_ADD_TEST(GameSuite, testVisFlags) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == NULL)
+	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == NULL)
+	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == NULL)
+	if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

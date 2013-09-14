@@ -36,19 +36,19 @@ void TEST_Shutdown (void)
 	SV_Shutdown("test shutdown", false);
 	FS_Shutdown();
 	Cmd_Shutdown();
-	developer = NULL;
+	developer = nullptr;
 	Cvar_Shutdown();
 	Mem_Shutdown();
 	Com_Shutdown();
 	Cbuf_Shutdown();
 	NET_Shutdown();
 
-	com_aliasSysPool = NULL;
-	com_cmdSysPool = NULL;
-	com_cmodelSysPool = NULL;
-	com_cvarSysPool = NULL;
-	com_fileSysPool = NULL;
-	com_genericPool = NULL;
+	com_aliasSysPool = nullptr;
+	com_cmdSysPool = nullptr;
+	com_cmodelSysPool = nullptr;
+	com_cvarSysPool = nullptr;
+	com_fileSysPool = nullptr;
+	com_genericPool = nullptr;
 }
 
 void TEST_vPrintf (const char *fmt, va_list argptr)
@@ -143,7 +143,7 @@ void TEST_RegisterProperty (const char* name, const char* value)
 /**
  * Get a property name from global test structure
  * @param name Name of the property
- * @return A property element, else NULL if property not found.
+ * @return A property element, else nullptr if property not found.
  */
 static const test_property_t* TEST_GetProperty (const char* name)
 {
@@ -156,7 +156,7 @@ static const test_property_t* TEST_GetProperty (const char* name)
 			return element;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -166,20 +166,20 @@ static const test_property_t* TEST_GetProperty (const char* name)
  */
 bool TEST_ExistsProperty (const char* name)
 {
-	return TEST_GetProperty(name) != NULL;
+	return TEST_GetProperty(name) != nullptr;
 }
 
 /**
  * Get a property value from global test structure
  * @param name Name of the property
- * @return A property value, else NULL if property not found.
+ * @return A property value, else nullptr if property not found.
  */
 const char* TEST_GetStringProperty (const char* name)
 {
 	const test_property_t *element = TEST_GetProperty(name);
-	if (element == NULL) {
-		Com_Printf("WARNING: Test property \"%s\" not found. NULL returned.\n", name);
-		return NULL;
+	if (element == nullptr) {
+		Com_Printf("WARNING: Test property \"%s\" not found. nullptr returned.\n", name);
+		return nullptr;
 	}
 	return element->value;
 }
@@ -192,7 +192,7 @@ const char* TEST_GetStringProperty (const char* name)
 int TEST_GetIntProperty (const char* name)
 {
 	const test_property_t *element = TEST_GetProperty(name);
-	if (element == NULL) {
+	if (element == nullptr) {
 		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
 		return 0;
 	}
@@ -207,7 +207,7 @@ int TEST_GetIntProperty (const char* name)
 long TEST_GetLongProperty (const char* name)
 {
 	const test_property_t *element = TEST_GetProperty(name);
-	if (element == NULL) {
+	if (element == nullptr) {
 		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
 		return 0;
 	}

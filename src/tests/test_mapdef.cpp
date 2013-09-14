@@ -125,7 +125,7 @@ static void testMapDefsMassRMA (void)
 			bool didItOnce = false;
 			linkedList_t* iterDrop;
 			for (iterDrop = md->aircraft; iterDrop || !didItOnce; iterDrop = iterDrop->next) {
-				const char* craft = NULL;
+				const char* craft = nullptr;
 				if (iterDrop)
 					craft = (const char*) (iterDrop->data);
 
@@ -136,7 +136,7 @@ static void testMapDefsMassRMA (void)
 
 				linkedList_t *iterUfo;
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
-					const char *ufo = NULL;
+					const char *ufo = nullptr;
 					if (iterUfo)
 						ufo = (const char *) (iterUfo->data);
 					if (ufo)
@@ -147,7 +147,7 @@ static void testMapDefsMassRMA (void)
 					Com_Printf("\nSeed:");
 					int i;
 					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
-						ass = NULL;
+						ass = nullptr;
 						srand(i);
 						long time = Sys_Milliseconds();
 						Com_Printf(" %i", i);
@@ -199,7 +199,7 @@ static void testMapDefsMassRMA (void)
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
 						MapInfo* randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i, false);
-						CU_ASSERT(randomMap != NULL);
+						CU_ASSERT(randomMap != nullptr);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
@@ -324,7 +324,7 @@ static void testMapDefsFootSteps (void)
 		if (TEST_ExistsProperty("mapdef-seed")) {
 			seed = TEST_GetLongProperty("mapdef-seed");
 		} else {
-			seed = (unsigned int) time(NULL);
+			seed = (unsigned int) time(nullptr);
 		}
 		srand(seed);
 
@@ -358,7 +358,7 @@ static void testMapDefsFootSteps (void)
 					from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
 					from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
 					to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
-					const trace_t trace = SV_Trace(from, noBox, to, NULL, MASK_SOLID);
+					const trace_t trace = SV_Trace(from, noBox, to, nullptr, MASK_SOLID);
 					if (!trace.surface)
 						continue;
 
@@ -428,7 +428,7 @@ static void testMapDefsSingleplayer (void)
 		if (TEST_ExistsProperty("mapdef-seed")) {
 			seed = TEST_GetLongProperty("mapdef-seed");
 		} else {
-			seed = (unsigned int) time(NULL);
+			seed = (unsigned int) time(nullptr);
 		}
 		srand(seed);
 
@@ -470,7 +470,7 @@ static void testMapDefsMultiplayer (void)
 		if (TEST_ExistsProperty("mapdef-seed")) {
 			seed = TEST_GetLongProperty("mapdef-seed");
 		} else {
-			seed = (unsigned int) time(NULL);
+			seed = (unsigned int) time(nullptr);
 		}
 		srand(seed);
 
@@ -506,30 +506,30 @@ int UFO_AddMapDefTests (void)
 	/* add a suite to the registry */
 	CU_pSuite mapDefSuite = CU_add_suite("MapDefTests", UFO_InitSuiteMapDef, UFO_CleanSuiteMapDef);
 
-	if (mapDefSuite == NULL)
+	if (mapDefSuite == nullptr)
 		return CU_get_error();
 
 	const char *specialtest = TEST_GetStringProperty("mapspecialtest");
 //	const char *specialtest = "seed";
 	if (specialtest && Q_streq(specialtest, "seed")) {
-		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == NULL)
+		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == nullptr)
 			return CU_get_error();
 	}
 	else {
 #if MAP_STATISTIC
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == NULL)
+	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == nullptr)
 		return CU_get_error();
 #else
 #if FOOSTEP_TEST
-	if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == NULL)
+	if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == nullptr)
 		return CU_get_error();
 
 #else
-	if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == NULL)
+	if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == NULL)
+	if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == nullptr)
 		return CU_get_error();
 #endif
 #endif

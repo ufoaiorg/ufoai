@@ -65,7 +65,7 @@ static int UFO_CleanSuiteScripts (void)
 
 static bool TEST_CheckImage (const char *path)
 {
-	const char *extensions[] = {"png", "tga", "jpg", NULL};
+	const char *extensions[] = {"png", "tga", "jpg", nullptr};
 	int i = 0;
 
 	if (Q_strnull(path))
@@ -82,7 +82,7 @@ static bool TEST_CheckImage (const char *path)
 
 static bool TEST_CheckModel (const char *path)
 {
-	const char *extensions[] = {"md2", "md3", "obj", NULL};
+	const char *extensions[] = {"md2", "md3", "obj", nullptr};
 	int i = 0;
 	if (Q_strnull(path))
 		return true;
@@ -98,7 +98,7 @@ static bool TEST_CheckModel (const char *path)
 
 static bool TEST_CheckSound (const char *path)
 {
-	const char *extensions[] = {"wav", "ogg", NULL};
+	const char *extensions[] = {"wav", "ogg", nullptr};
 	int i = 0;
 
 	if (Q_strnull(path))
@@ -119,7 +119,7 @@ static bool TEST_CheckParticle (const char *particleID)
 		return true;
 
 	/* find the particle definition */
-	return CL_ParticleGet(particleID) != NULL;
+	return CL_ParticleGet(particleID) != nullptr;
 }
 
 static void testTeamDefs (void)
@@ -146,7 +146,7 @@ static void testTeamDefs (void)
 static void testTeamDefsModelScriptData (void)
 {
 	int i;
-	linkedList_t *armourPaths = NULL;
+	linkedList_t *armourPaths = nullptr;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		int j;
@@ -258,7 +258,7 @@ static void testMapDef (void)
 
 	i = 0;
 	MapDef_Foreach(md) {
-		if (md->civTeam != NULL)
+		if (md->civTeam != nullptr)
 			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));
 
 		CU_ASSERT_FALSE(md->maxAliens <= 0);
@@ -296,26 +296,26 @@ int UFO_AddScriptsTests (void)
 	/* add a suite to the registry */
 	CU_pSuite ScriptsSuite = CU_add_suite("ScriptsTests", UFO_InitSuiteScripts, UFO_CleanSuiteScripts);
 
-	if (ScriptsSuite == NULL)
+	if (ScriptsSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(ScriptsSuite, testTeamDefs) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testTeamDefs) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testTeamDefsModelScriptData) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testTeamDefsModelScriptData) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testItems) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testItems) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testNations) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testNations) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testAircraft) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testAircraft) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ScriptsSuite, testMapDef) == NULL)
+	if (CU_ADD_TEST(ScriptsSuite, testMapDef) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

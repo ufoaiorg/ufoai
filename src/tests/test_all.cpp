@@ -73,7 +73,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddParticlesTests,
 	UFO_AddCharacterTests,
 	UFO_AddWebAPITests,
-	NULL
+	nullptr
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))
 
@@ -134,10 +134,10 @@ static void Test_List (bool displayStatus)
 
 static void Test_AddSuiteTo (CU_pSuite *list, CU_pSuite suite)
 {
-	assert(suite->pNext == NULL);
-	assert(suite->pPrev == NULL);
+	assert(suite->pNext == nullptr);
+	assert(suite->pPrev == nullptr);
 	suite->pNext = *list;
-	if (*list == NULL)
+	if (*list == nullptr)
 		*list = suite;
 	else
 		(*list)->pPrev = suite;
@@ -152,8 +152,8 @@ static void Test_RemoveSuiteFrom (CU_pSuite *list, CU_pSuite suite)
 		suite->pNext->pPrev = suite->pPrev;
 	if (suite->pPrev)
 		suite->pPrev->pNext = suite->pNext;
-	suite->pPrev = NULL;
-	suite->pNext = NULL;
+	suite->pPrev = nullptr;
+	suite->pNext = nullptr;
 }
 
 static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
@@ -164,7 +164,7 @@ static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
 			return current;
 		current = current->pNext;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -184,7 +184,7 @@ static int Test_DisableSuite (const char *name)
 		Test_AddSuiteTo(&disabledSuites, suite);
 		return 0;
 	}
-	if (Test_GetSuiteByName(disabledSuites, name) != NULL)
+	if (Test_GetSuiteByName(disabledSuites, name) != nullptr)
 		return 2;
 	return 1;
 }
@@ -206,7 +206,7 @@ static int Test_EnableSuite (const char *name)
 		Test_AddSuiteTo(&registry->pSuite, suite);
 		return 0;
 	}
-	if (Test_GetSuiteByName(registry->pSuite, name) != NULL)
+	if (Test_GetSuiteByName(registry->pSuite, name) != nullptr)
 		return 2;
 	return 1;
 }

@@ -66,7 +66,7 @@ static void testUMPExtends (void)
 
 	srand(0);
 	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(randomMap != NULL);
+	CU_ASSERT(randomMap != nullptr);
 	Mem_Free(randomMap);
 }
 
@@ -77,7 +77,7 @@ static void testAssembly (void)
 
 	srand(0);
 	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(randomMap != NULL);
+	CU_ASSERT(randomMap != nullptr);
 	Mem_Free(randomMap);
 }
 
@@ -93,7 +93,7 @@ static void testMassAssemblyTimeout (void)
 		srand(i);
 		long time = Sys_Milliseconds();
 		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(randomMap != NULL);
+		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", randomMap->name, i, time));
@@ -113,7 +113,7 @@ static void testMassAssemblyParallel (void)
 		srand(i);
 		long time = Sys_Milliseconds();
 		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(randomMap != NULL);
+		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", randomMap->name, i, time));
@@ -168,7 +168,7 @@ static void testSeedlists (void)
 			time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
 			randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
-			CU_ASSERT(randomMap != NULL);
+			CU_ASSERT(randomMap != nullptr);
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
 			UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -208,7 +208,7 @@ static void testNewSeedlists (void)
 		randomMap = SV_AssembleMap("frozen", "nature_medium", mapStr, posStr, entityString, i);
 		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i);
 #endif
-		CU_ASSERT(randomMap != NULL);
+		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		timeSum += time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -238,30 +238,30 @@ int UFO_AddRandomMapAssemblyTests (void)
 		sv_maxclients->integer = 1;
 	}
 
-	if (RandomMapAssemblySuite == NULL)
+	if (RandomMapAssemblySuite == nullptr)
 		return CU_get_error();
 #if SEED_TEST
 	/* This test should normally (ie. buildbot) not be active */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testNewSeedlists) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testNewSeedlists) == nullptr)
 		return CU_get_error();
 #else
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testSeedlists) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testSeedlists) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyTimeout) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyTimeout) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == NULL)
+	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == nullptr)
 		return CU_get_error();
 #endif
 

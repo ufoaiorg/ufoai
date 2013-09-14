@@ -135,17 +135,17 @@ int UFO_AddDBufferTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite DBufferSuite = CU_add_suite("DBufferTests", UFO_InitSuiteDBuffer, UFO_CleanSuiteDBuffer);
-	if (DBufferSuite == NULL)
+	if (DBufferSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(DBufferSuite, testDBuffer) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testDBuffer) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(DBufferSuite, testDBufferBigData) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testDBufferBigData) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(DBufferSuite, testDBufferNetHandling) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testDBufferNetHandling) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

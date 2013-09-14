@@ -105,14 +105,14 @@ int UFO_AddWebAPITests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite DBufferSuite = CU_add_suite("WebAPITests", InitSuite, CleanSuite);
-	if (DBufferSuite == NULL)
+	if (DBufferSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(DBufferSuite, testAuth) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testAuth) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(DBufferSuite, testFileManagement) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testFileManagement) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

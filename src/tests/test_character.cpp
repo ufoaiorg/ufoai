@@ -119,11 +119,11 @@ int UFO_AddCharacterTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite DBufferSuite = CU_add_suite("CharacterTests", InitSuite, CleanSuite);
-	if (DBufferSuite == NULL)
+	if (DBufferSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(DBufferSuite, testImplants) == NULL)
+	if (CU_ADD_TEST(DBufferSuite, testImplants) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

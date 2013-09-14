@@ -154,7 +154,7 @@ static void testItemMove (void)
 	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
 	CU_ASSERT_PTR_NOT_NULL(containerTo);
 
-	CU_ASSERT_EQUAL(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, nullptr, nullptr));
 
 	CU_ASSERT(inv.containsItem(container->id, &item) == false);
 	CU_ASSERT(inv.containsItem(containerTo->id, &item) == true);
@@ -199,7 +199,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
 
@@ -220,7 +220,7 @@ static void testItemReload (void)
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, NULL, NULL));
+	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
 
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
 	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
@@ -328,21 +328,21 @@ int UFO_AddInventoryTests (void)
 {
 	/* add a suite to the registry */
 	CU_pSuite InventorySuite = CU_add_suite("InventoryTests", UFO_InitSuiteInventory, UFO_CleanSuiteInventory);
-	if (InventorySuite == NULL)
+	if (InventorySuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(InventorySuite, testItemAdd) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemAdd) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemDel) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemDel) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemMove) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemMove) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemMassActions) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemMassActions) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemReload) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemReload) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemToHeadgear) == NULL)
+	if (CU_ADD_TEST(InventorySuite, testItemToHeadgear) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

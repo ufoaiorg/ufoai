@@ -235,7 +235,7 @@ static void testAircraftHandling (void)
 	CU_ASSERT_EQUAL(count, 0);
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -250,7 +250,7 @@ static void testEmployeeHandling (void)
 		employeeType_t type = (employeeType_t)i;
 		if (type != EMPL_ROBOT) {
 			int cnt;
-			Employee *e = E_CreateEmployee(type, NULL, NULL);
+			Employee *e = E_CreateEmployee(type, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(type);
@@ -266,7 +266,7 @@ static void testEmployeeHandling (void)
 	{
 		const int amount = 3;
 		for (i = 0; i < amount; i++) {
-			Employee *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			Employee *e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 		}
 		{
@@ -288,7 +288,7 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		Employee *e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+		Employee *e = E_CreateEmployee(EMPL_PILOT, nullptr, nullptr);
 		int cnt;
 		CU_ASSERT_PTR_NOT_NULL(e);
 		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, false);
@@ -300,7 +300,7 @@ static void testEmployeeHandling (void)
 
 	{
 		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
-		Employee *e = E_CreateEmployee(EMPL_ROBOT, NULL, ugvType);
+		Employee *e = E_CreateEmployee(EMPL_ROBOT, nullptr, ugvType);
 		CU_ASSERT_PTR_NOT_NULL(e);
 		CU_ASSERT_TRUE(E_DeleteEmployee(e));
 	}
@@ -308,13 +308,13 @@ static void testEmployeeHandling (void)
 	{
 		int i, cnt;
 		for (i = 0; i < 512; i++) {
-			Employee *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			Employee *e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(EMPL_SOLDIER);
 			CU_ASSERT_EQUAL(cnt, i + 1);
 		}
-		E_DeleteAllEmployees(NULL);
+		E_DeleteAllEmployees(nullptr);
 
 		cnt = E_CountUnhired(EMPL_SOLDIER);
 		CU_ASSERT_EQUAL(cnt, 0);
@@ -343,7 +343,7 @@ static void testBaseBuilding (void)
 	}
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -361,7 +361,7 @@ static void testAutoMissions (void)
 	ResetCampaignData();
 
 	campaign = GetCampaign();
-	CU_ASSERT_TRUE_FATAL(campaign != NULL);
+	CU_ASSERT_TRUE_FATAL(campaign != nullptr);
 
 	OBJZERO(result);
 	OBJZERO(battleParameters);
@@ -372,7 +372,7 @@ static void testAutoMissions (void)
 	base = CreateBase("unittestautomission", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	aircraft = NULL;
+	aircraft = nullptr;
 	AIR_ForeachFromBase(a, base) {
 		if (AIR_GetTeamSize(a) > 0) {
 			aircraft = a;
@@ -474,7 +474,7 @@ static void testTransferItem (void)
 
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -525,13 +525,13 @@ static void testUFORecovery (void)
 	CU_ASSERT_EQUAL(storedUFO->status, SUFO_STORED);
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 }
 
 static void testAlienPSIDevice (void)
 {
 	ResetCampaignData();
-	RS_MarkResearchable(NULL, true);
+	RS_MarkResearchable(nullptr, true);
 
 	technology_t *alienPsiDevice = RS_GetTechByID("rs_alien_psi_device");
 	RS_MarkOneResearchable(alienPsiDevice);
@@ -541,7 +541,7 @@ static void testAlienPSIDevice (void)
 static void testResearch (void)
 {
 	ResetCampaignData();
-	RS_MarkResearchable(NULL, true);
+	RS_MarkResearchable(nullptr, true);
 
 	technology_t *laserTech = RS_GetTechByID("rs_laser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
@@ -575,7 +575,7 @@ static void testResearch (void)
 	CU_ASSERT_TRUE(otherLaserTech->statusResearchable);
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -620,7 +620,7 @@ static void testProductionItem (void)
 	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -670,7 +670,7 @@ static void testProductionAircraft (void)
 	CU_ASSERT_EQUAL(old + 1, CAP_GetCurrent(base, CAP_AIRCRAFT_SMALL));
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -721,7 +721,7 @@ static void testDisassembly (void)
 	CU_ASSERT_NOT_EQUAL(old, CAP_GetCurrent(base, CAP_ITEMS));
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -734,13 +734,13 @@ static void testMap (void)
 	ResetCampaignData();
 
 	Vector2Set(pos, -51, 0);
-	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
 
 	Vector2Set(pos, 51, 0);
-	CU_ASSERT_TRUE(!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
 
 	Vector2Set(pos, 20, 20);
-	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+	CU_ASSERT_TRUE(MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
 
 	Vector2Set(pos, -45, 2.5);
 	CU_ASSERT_TRUE(!MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, &coast)));
@@ -828,7 +828,7 @@ static void testAirFight (void)
 	CU_ASSERT_EQUAL(cnt - 1, AIR_BaseCountAircraft(base));
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -861,7 +861,7 @@ static void testRadar (void)
 	CU_ASSERT_TRUE(RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, false));
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -932,7 +932,7 @@ static void testSaveLoad (void)
 
 		CU_ASSERT_EQUAL(base->baseStatus, BASE_DESTROYED);
 
-		E_DeleteAllEmployees(NULL);
+		E_DeleteAllEmployees(nullptr);
 
 		B_SetName(base, "unittestbase2");
 	}
@@ -948,7 +948,7 @@ static void testSaveLoad (void)
 
 		B_Destroy(base);
 
-		E_DeleteAllEmployees(NULL);
+		E_DeleteAllEmployees(nullptr);
 	}
 
 	base->founded = false;
@@ -982,7 +982,7 @@ static void testSaveMassEmployees (void)
 	Cmd_ExecuteString("game_quicksave");
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -994,7 +994,7 @@ static void testLoadMassEmployees (void)
 	Cmd_ExecuteString("game_quickload");
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 }
 
 static void testCampaignRun (void)
@@ -1025,7 +1025,7 @@ static void testCampaignRun (void)
 	CU_ASSERT_EQUAL(ccs.date.day - startDay, days);
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -1038,13 +1038,13 @@ static void testLoad (void)
 
 	ResetCampaignData();
 
-	ccs.curCampaign = NULL;
+	ccs.curCampaign = nullptr;
 	CU_ASSERT_TRUE(SAV_GameLoad("unittest1", &error));
 	CU_ASSERT_PTR_NOT_NULL(ccs.curCampaign);
 
 	i = 0;
-	ufo = NULL;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+	ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr)
 		i++;
 
 	/* there should be one ufo on the geoscape */
@@ -1118,7 +1118,7 @@ static void testCampaignDateHandling (void)
 	CU_ASSERT_TRUE(CP_IsTimeStopped());
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -1159,7 +1159,7 @@ static void testHospital (void)
 	}
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -1251,7 +1251,7 @@ static void testBuildingConstruction (void)
 	CU_ASSERT_TRUE(B_BuildingDestroy(building1));
 
 	/* cleanup for the following tests */
-	E_DeleteAllEmployees(NULL);
+	E_DeleteAllEmployees(nullptr);
 
 	base->founded = false;
 }
@@ -1259,7 +1259,7 @@ static void testBuildingConstruction (void)
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
-	const char *error = NULL;
+	const char *error = nullptr;
 	bool success;
 
 	ResetCampaignData();
@@ -1302,11 +1302,11 @@ static void testTerrorMissions (void)
 	}
 
 	/* Search with UFOs available for Terror missions */
-	numUfoTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
+	numUfoTypes = CP_TerrorMissionAvailableUFOs(nullptr, ufoTypes);
 	for (i = 0; i < numUfoTypes; i++) {
 		ufoType_t ufoType = (ufoType_t)i;
 		mission_t mission;
-		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], NULL, &mission);
+		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], nullptr, &mission);
 
 		OBJZERO(mission);
 		mission.ufo = ufo;
@@ -1314,7 +1314,7 @@ static void testTerrorMissions (void)
 		ufo->mission = &mission;
 
 		LIST_Foreach(ccs.cities, city_t, city) {
-			mission.mapDef = NULL;
+			mission.mapDef = nullptr;
 #ifdef TEST_BIGUFOS
 			UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find map for city %s with ufo: %s", city->id, ufo->id));
 #else
@@ -1365,7 +1365,7 @@ static void testRandomPosMissions (void)
 			mission_t mission;
 			bool result;
 			OBJZERO(mission);
-			result = CP_GetRandomPosOnGeoscapeWithParameters(mission.pos, md->terrains, md->cultures, md->populations, NULL);
+			result = CP_GetRandomPosOnGeoscapeWithParameters(mission.pos, md->terrains, md->cultures, md->populations, nullptr);
 			UFO_CU_ASSERT_TRUE_MSG(result, va("could not find a mission for mapdef %s", md->id));
 		}
 	}
@@ -1450,110 +1450,110 @@ int UFO_AddCampaignTests (void)
 	/* add a suite to the registry */
 	CU_pSuite campaignSuite = CU_add_suite("CampaignTests", UFO_InitSuiteCampaign, UFO_CleanSuiteCampaign);
 
-	if (campaignSuite == NULL)
+	if (campaignSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testBuildingConstruction) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testAircraftHandling) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAircraftHandling) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testTransferItem) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTransferItem) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testTransferAircraft) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTransferAircraft) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testTransferEmployee) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTransferEmployee) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testUFORecovery) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testUFORecovery) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testResearch) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testResearch) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testProductionItem) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testProductionItem) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testProductionAircraft) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testProductionAircraft) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testDisassembly) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testDisassembly) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testMap) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testMap) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testAirFight) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAirFight) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testGeoscape) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testGeoscape) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testRadar) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testRadar) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testNation) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testNation) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testMarket) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testMarket) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testXVI) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testXVI) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testSaveLoad) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testSaveLoad) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testSaveMassEmployees) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testSaveMassEmployees) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testLoadMassEmployees) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testLoadMassEmployees) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testCampaignRun) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testCampaignRun) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testLoad) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testLoad) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testDateHandling) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testDateHandling) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testCampaignDateHandling) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testCampaignDateHandling) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testHospital) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testHospital) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
+	if (CU_ADD_TEST(campaignSuite, test3090011) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testAlienPSIDevice) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAlienPSIDevice) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testTerrorMissions) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTerrorMissions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testRandomPosMissions) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testRandomPosMissions) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testEventTrigger) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testEventTrigger) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testAssembleMap) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAssembleMap) == nullptr)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

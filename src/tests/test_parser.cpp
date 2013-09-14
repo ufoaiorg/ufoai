@@ -443,34 +443,34 @@ int UFO_AddParserTests (void)
 	/* add a suite to the registry */
 	CU_pSuite ParserSuite = CU_add_suite("ParserTests", UFO_InitSuiteParser, UFO_CleanSuiteParser);
 
-	if (ParserSuite == NULL)
+	if (ParserSuite == nullptr)
 		return CU_get_error();
 
 	/* add the tests to the suite */
 #if PARSER_XX > 0
-	if (CU_ADD_TEST(ParserSuite, testParserXX) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserXX) == nullptr)
 		return CU_get_error();
 #else
-	if (CU_ADD_TEST(ParserSuite, testParser) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParser) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserWithFunctionScriptToken) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserWithFunctionScriptToken) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserWithUnParse) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserWithUnParse) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserWithEntity) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserWithEntity) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserCommonType) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserCommonType) == nullptr)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(ParserSuite, testParserListOk) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserListOk) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserListOkEmpty) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserListOkEmpty) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserListKoEOF) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserListKoEOF) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserListKoWrongToken) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserListKoWrongToken) == nullptr)
 		return CU_get_error();
-	if (CU_ADD_TEST(ParserSuite, testParserListKoNewList) == NULL)
+	if (CU_ADD_TEST(ParserSuite, testParserListKoNewList) == nullptr)
 		return CU_get_error();
 #endif
 	return CUE_SUCCESS;
