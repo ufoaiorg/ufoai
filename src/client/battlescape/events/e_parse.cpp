@@ -120,6 +120,15 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
 }
 
 /**
+ * @brief Checks if a given battlescape event should get delayed.
+ * @param now The current time.
+ */
+static bool CL_DelayBattlescapeEvent (int now, void* data)
+{
+	return CL_AreBattlescapeEventsBlocked();
+}
+
+/**
  * @sa CL_ScheduleEvent
  */
 static void CL_ExecuteBattlescapeEvent (int now, void* data)
@@ -253,7 +262,9 @@ event_t CL_ParseEvent (dbuffer *msg)
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
 		const int when = CL_GetEventTime(cur->eType, msg, &eventTiming);
-		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur, 50);
+		ScheduleEventPtr e = Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
+		e->delayFollowing = 50;
+		e->delay = &CL_DelayBattlescapeEvent;
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}

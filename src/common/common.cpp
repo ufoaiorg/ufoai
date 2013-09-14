@@ -1356,7 +1356,7 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
  * @param delayFollowing Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false.
  *  This is needed e.g. for battlescape events to not play events too fast because the beginning of the event queue was blocked.
  */
-ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data, int delayFollowing)
+ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data)
 {
 	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;
@@ -1364,7 +1364,8 @@ ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *c
 	event->check = check;
 	event->clean = clean;
 	event->data = data;
-	event->delayFollowing = delayFollowing;
+	event->delayFollowing = 0;
+	event->delay = nullptr;
 
 	eventQueue.insert(event);
 
@@ -1389,9 +1390,8 @@ ScheduleEventPtr Dequeue_Event (int now)
 			return event;
 		}
 
-#if 1
 		/* delay all other events if this one is blocked */
-		if (event->delayFollowing > 0) {
+		if (event->delayFollowing > 0 && (event->delay == nullptr || event->delay(now, event->data))) {
 			EventPriorityQueue reOrder;
 			EventPriorityQueue::iterator itEnd = eventQueue.end();
 			for (; i != itEnd;) {
@@ -1409,7 +1409,6 @@ ScheduleEventPtr Dequeue_Event (int now)
 			}
 			break;
 		}
-#endif
 	}
 	return ScheduleEventPtr();
 }

@@ -310,24 +310,33 @@ void Con_Print(const char* txt);
 
 typedef void event_func(int now, void* data);
 typedef bool event_check_func(int now, void* data);
+typedef bool event_delay_func(int now, void* data);
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
 typedef bool event_filter(int when, event_func *func, event_check_func *check, void* data);
-typedef void event_clean_func(void*  data);
+typedef void event_clean_func(void* data);
 
 struct scheduleEvent_t {
 	int when;
 	int delayFollowing;
 	event_func *func;
 	event_check_func *check;
+	/**
+	 * @brief Called when the check failed and we have to delay events in the queue
+	 * @return @c false if there should be no delay for this event, @c true if it should
+	 * get delayed
+	 * @param[in] now The current time
+	 * @param[in] data The event userdata
+	 */
+	event_delay_func *delay;
 	event_clean_func *clean;
 	void* data;
 };
 
 typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
 
-ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data, int delayFollowing = 0);
+ScheduleEventPtr Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*

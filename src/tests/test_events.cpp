@@ -156,10 +156,14 @@ static void testBlocked (void)
 	event_func* f_oneFour = (event_func*)0xCAFED00D;
 	event_func* f_twoThree = (event_func*)0xB16B00B5;
 
-	ScheduleEventPtr one = Schedule_Event(3, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_one), delay);
-	ScheduleEventPtr two = Schedule_Event(4 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_two), delay);
-	ScheduleEventPtr three = Schedule_Event(5 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_three), delay);
-	ScheduleEventPtr four = Schedule_Event(5, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_four), delay);
+	ScheduleEventPtr one = Schedule_Event(3, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_one));
+	one->delayFollowing = delay;
+	ScheduleEventPtr two = Schedule_Event(4 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_two));
+	two->delayFollowing = delay;
+	ScheduleEventPtr three = Schedule_Event(5 + delay, f_twoThree, nullptr, nullptr, static_cast<void*>(&s_three));
+	three->delayFollowing = delay;
+	ScheduleEventPtr four = Schedule_Event(5, f_oneFour, delayCheckBlocked, nullptr, static_cast<void*>(&s_four));
+	four->delayFollowing = delay;
 
 	ScheduleEventPtr e = Dequeue_Event(1);
 	CU_ASSERT_FALSE(e);
