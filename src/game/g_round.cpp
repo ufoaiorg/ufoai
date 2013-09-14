@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_CheckForceEndRound (void)
 {
 	/* check for roundlimits in multiplayer only */
-	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
+	if (!sv_roundtimelimit->integer || G_IsSinglePlayer())
 		return;
 
 	if (!G_MatchIsRunning())

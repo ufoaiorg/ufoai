@@ -136,7 +136,7 @@ static void G_MoraleStopRage (Edict* ent)
  */
 static bool G_IsMoraleEnabled (int team)
 {
-	if (sv_maxclients->integer == 1)
+	if (G_IsSinglePlayer())
 		return true;
 
 	/* multiplayer */

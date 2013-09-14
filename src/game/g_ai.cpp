@@ -702,7 +702,7 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 		return false;
 
 	/* don't shoot civs in multiplayer */
-	if (sv_maxclients->integer > 1 || (g_aihumans->integer && !G_IsAI(ent)))
+	if (G_IsMultiPlayer() || (g_aihumans->integer && !G_IsAI(ent)))
 		return !G_IsCivilian(target);
 
 	return true;
@@ -1500,7 +1500,7 @@ static void AI_SetStats (Edict* ent, int team)
 				break;
 			}
 
-	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2, templateId);
+	CHRSH_CharGenAbilitySkills(&ent->chr, G_IsMultiPlayer(), templateId);
 
 	ent->HP = ent->chr.HP;
 	ent->morale = ent->chr.morale;
@@ -1732,7 +1732,7 @@ Player *AI_CreatePlayer (int team)
 			if (p->getTeam() == TEAM_CIVILIAN) {
 				G_SpawnAIPlayers(*p, ai_numcivilians->integer);
 			} else {
-				if (sv_maxclients->integer == 1)
+				if (G_IsSinglePlayer())
 					G_SpawnAIPlayers(*p, ai_numaliens->integer);
 				else
 					G_SpawnAIPlayers(*p, ai_numactors->integer);

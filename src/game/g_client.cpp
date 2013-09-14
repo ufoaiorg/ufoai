@@ -754,7 +754,7 @@ static void G_GetTeam (Player &player)
 		playersInGame++;
 
 	/* randomly assign a teamnumber in deathmatch games */
-	if (playersInGame <= 1 && sv_maxclients->integer > 1 && !sv_teamplay->integer) {
+	if (playersInGame <= 1 && G_IsMultiPlayer() && !sv_teamplay->integer) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		int randomSpot;
@@ -789,9 +789,9 @@ static void G_GetTeam (Player &player)
 	}
 
 	/* find a team */
-	if (sv_maxclients->integer == 1)
+	if (G_IsSinglePlayer()) {
 		G_SetTeamForPlayer(player, TEAM_PHALANX);
-	else if (sv_teamplay->integer) {
+	} else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		const int i = G_ClientGetTeamNumPref(player);
 		gi.DPrintf("Get a team for teamplay for %s\n", player.pers.netname);
@@ -927,7 +927,7 @@ static void G_GetStartingTeam (const Player &player)
 	if (G_MatchIsRunning())
 		return;
 
-	if (sv_maxclients->integer == 1) {
+	if (G_IsSinglePlayer()) {
 		level.activeTeam = player.getTeam();
 		level.teamOfs = MAX_TEAMS - level.activeTeam;
 		return;
@@ -1009,10 +1009,10 @@ static Edict* G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
  */
 static inline bool G_ActorSpawnIsAllowed (const int num, const int team)
 {
-	if (sv_maxclients->integer == 1)
+	if (G_IsSinglePlayer())
 		return true;
 
-	return (num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer);
+	return num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer;
 }
 
 /**
@@ -1382,7 +1382,7 @@ void G_ClientStartMatch (Player &player)
 	/* ensure that the last event is send, too */
 	G_EventEnd();
 
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		/* ensure that we restart the round time limit */
 		sv_roundtimelimit->modified = true;
 	}

@@ -344,7 +344,7 @@ static bool G_RunFrame (void)
 		}
 	}
 
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		if (sv_roundtimelimit->modified) {
 			/* some played around here - restart the count down */
 			level.roundstartTime = level.time;

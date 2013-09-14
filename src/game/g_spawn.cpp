@@ -388,7 +388,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 			gi.DPrintf("Could not create civilian\n");
 	}
 
-	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
+	if ((G_IsSinglePlayer() || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == nullptr)
 			gi.DPrintf("Could not create alien\n");
 	}
@@ -724,7 +724,7 @@ static void SP_light (Edict* ent)
 static void SP_player_start (Edict* ent)
 {
 	/* only used in multi player */
-	if (sv_maxclients->integer == 1) {
+	if (G_IsSinglePlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -746,7 +746,7 @@ static void SP_player_start (Edict* ent)
 static void SP_human_start (Edict* ent)
 {
 	/* only used in single player */
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -764,7 +764,7 @@ static void SP_human_start (Edict* ent)
 static void SP_2x2_start (Edict* ent)
 {
 	/* no 2x2 unit in multiplayer */
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -790,7 +790,7 @@ static void SP_2x2_start (Edict* ent)
 static void SP_alien_start (Edict* ent)
 {
 	/* deactivateable in multiplayer */
-	if (sv_maxclients->integer > 1 && !ai_numactors->integer) {
+	if (G_IsMultiPlayer() && !ai_numactors->integer) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -810,7 +810,7 @@ static void SP_alien_start (Edict* ent)
 static void SP_civilian_start (Edict* ent)
 {
 	/* deactivateable in multiplayer */
-	if (sv_maxclients->integer > 1 && !ai_numcivilians->integer) {
+	if (G_IsMultiPlayer() && !ai_numcivilians->integer) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -1092,7 +1092,7 @@ static void SP_misc_message (Edict* ent)
 static void SP_misc_camera (Edict* ent)
 {
 	/* only used in single player */
-	if (sv_maxclients->integer != 1) {
+	if (G_IsMultiPlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -1132,7 +1132,7 @@ static void SP_worldspawn (Edict* ent)
 	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);
 
 	/* only used in multi player */
-	if (sv_maxclients->integer >= 2) {
+	if (G_IsMultiPlayer()) {
 		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, "%i", sv_maxsoldiersperteam->integer);
 		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, "%i", sv_maxsoldiersperplayer->integer);
 		gi.ConfigString(CS_ENABLEMORALE, "%i", sv_enablemorale->integer);

@@ -174,7 +174,7 @@ void Think_NextMapTrigger (Edict* self)
 void SP_trigger_nextmap (Edict* ent)
 {
 	/* only used in single player */
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}
@@ -357,7 +357,7 @@ static void Reset_RescueTrigger (Edict* self, Edict* activator)
 void SP_trigger_rescue (Edict* ent)
 {
 	/* only used in single player */
-	if (sv_maxclients->integer > 1) {
+	if (G_IsMultiPlayer()) {
 		G_FreeEdict(ent);
 		return;
 	}

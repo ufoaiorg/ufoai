@@ -127,7 +127,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		if (G_IsCivilian(victim))
 			mod *= mof_civilian->value;
 		/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-		if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
+		if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && G_IsSinglePlayer()))
 			mod *= -1;
 		if (attacker != nullptr) {
 			/* if you stand near to the attacker or the victim, the morale change is higher. */
@@ -388,7 +388,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 	Com_DPrintf(DEBUG_GAME, " Total damage: %d\n", damage);
 
 	/* Apply difficulty settings. */
-	if (sv_maxclients->integer == 1) {
+	if (G_IsSinglePlayer()) {
 		if (G_IsAlien(attacker) && !G_IsAlien(target))
 			damage *= pow(1.18, g_difficulty->value);
 		else if (!G_IsAlien(attacker) && G_IsAlien(target))
