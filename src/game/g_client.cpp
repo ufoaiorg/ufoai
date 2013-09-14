@@ -305,16 +305,17 @@ void G_SendInvisible (const Player &player)
 	const int team = player.getTeam();
 
 	assert(team != TEAM_NO_ACTIVE);
-	if (level.num_alive[team]) {
-		Edict* ent = nullptr;
-		/* check visibility */
-		while ((ent = G_EdictsGetNextActor(ent))) {
-			if (ent->team != team) {
-				/* not visible for this team - so add the le only */
-				if (!G_IsVisibleForTeam(ent, team)) {
-					G_EventActorAdd(G_PlayerToPM(player), *ent);
-				}
-			}
+	if (!level.num_alive[team])
+		return;
+
+	Edict* ent = nullptr;
+	/* check visibility */
+	while ((ent = G_EdictsGetNextActor(ent))) {
+		if (ent->team == team)
+			continue;
+		/* not visible for this team - so add the le only */
+		if (!G_IsVisibleForTeam(ent, team)) {
+			G_EventActorAdd(G_PlayerToPM(player), *ent);
 		}
 	}
 }
