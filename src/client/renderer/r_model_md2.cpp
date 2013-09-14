@@ -87,7 +87,7 @@ static void R_ModLoadTags (model_t *mod, void* buffer, int bufSize)
 	mAliasTag_t* pouttag = mod->alias.tags = Mem_PoolAllocTypeN(mAliasTag_t, mod->alias.num_tags, vid_modelPool);
 
 	for (j = 0; j < pheader.num_tags; j++, pouttag++) {
-		mAliasTagOrientation_t* pouttagorient = mod->alias.tags[j].orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, mod->alias.num_frames, vid_modelPool);
+		mAliasTagOrientation_t* pouttagorient = mod->alias.tags[j].orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, pheader.num_frames, vid_modelPool);
 		memcpy(pouttag->name, (char*) pintag + pheader.ofs_names + j * MD2_MAX_SKINNAME, sizeof(pouttag->name));
 		for (i = 0; i < pheader.num_frames; i++, pouttagorient++) {
 			int k;
