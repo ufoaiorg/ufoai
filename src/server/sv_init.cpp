@@ -92,15 +92,16 @@ static void SV_InitGame (void)
 	if (sv_maxclients->integer > 1) {
 		svs.initialized = SV_Start(nullptr, port->string, &SV_ReadPacket);
 		svs.netDatagramSocket = NET_DatagramSocketNew(nullptr, port->string, &SV_DiscoveryCallback);
-	} else
+	} else {
 		svs.initialized = SV_Start(nullptr, nullptr, &SV_ReadPacket);
+	}
 
 	SV_Heartbeat_f();
 
 	/* init game */
 	SV_InitGameProgs();
 
-	if (sv_maxclients->integer != 1 && (sv_dedicated->integer || sv_public->integer))
+	if (sv_maxclients->integer > 1 && (sv_dedicated->integer || sv_public->integer))
 		SV_SetMaster_f();
 }
 

@@ -651,7 +651,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** t
 
 			/* a multiplayer only tile - forced to be exactly once in the map when
 			 * we are playing a multiplayer match */
-			if (sv_maxclients->integer >= 2) {
+			if (sv_maxclients->integer > 1) {
 				const Tile *t = SV_GetMapTile(map, token);
 				if (t != nullptr) {
 					const ptrdiff_t i = t - map->mTile;
