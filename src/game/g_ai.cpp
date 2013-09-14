@@ -1494,12 +1494,14 @@ void AI_Run (void)
 static void AI_SetStats (Edict* ent, int team)
 {
 	const char* templateId = "";
-	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams)
-		for (int i = 0; i < gi.csi->numAlienTeams; ++i)
+	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams) {
+		for (int i = 0; i < gi.csi->numAlienTeams; ++i) {
 			if (gi.csi->alienTeams[i] == ent->chr.teamDef && gi.csi->alienChrTemplates[i]) {
 				templateId = gi.csi->alienChrTemplates[i]->id;
 				break;
 			}
+		}
+	}
 
 	CHRSH_CharGenAbilitySkills(&ent->chr, G_IsMultiPlayer(), templateId);
 
@@ -1529,7 +1531,6 @@ static void AI_SetStats (Edict* ent, int team)
 
 	G_ActorGiveTimeUnits(ent);
 }
-
 
 /**
  * @brief Sets an actor's character values.
