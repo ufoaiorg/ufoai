@@ -105,6 +105,8 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 	else
 		cgi->Cvar_Set("sv_hurtaliens", "0");
 
+	cgi->Cvar_Set("r_overridematerial", "");
+
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
 		const base_t *base = mission->data.base;
@@ -118,6 +120,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 		char maps[2048];
 		char coords[2048];
 		B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
+		cgi->Cvar_Set("r_overridematerial", "baseattack");
 		cgi->Cbuf_AddText("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords);
 
 		return;

@@ -928,13 +928,9 @@ static int R_ParseStage (materialStage_t *s, const char** buffer)
  */
 void R_LoadMaterials (const char* map)
 {
-	char path[MAX_QPATH];
-	byte* fileBuffer;
-	const char* buffer;
-	bool inmaterial;
-	image_t *image;
-	material_t *m;
-	materialStage_t *ss;
+	if (Q_strvalid(r_overridematerial->string)) {
+		map = r_overridematerial->string;
+	}
 
 	/* clear previously loaded materials */
 	R_ImageClearMaterials();
@@ -945,8 +941,10 @@ void R_LoadMaterials (const char* map)
 		return;
 
 	/* load the materials file for parsing */
+	char path[MAX_QPATH];
 	Com_sprintf(path, sizeof(path), "materials/%s.mat", Com_SkipPath(map));
 
+	byte* fileBuffer;
 	if (FS_LoadFile(path, &fileBuffer) < 1) {
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
 		return;
@@ -956,11 +954,11 @@ void R_LoadMaterials (const char* map)
 			Com_Printf("...ignore materials (r_materials is deactivated)\n");
 	}
 
-	buffer = (const char*)fileBuffer;
+	const char* buffer = (const char*)fileBuffer;
 
-	inmaterial = false;
-	image = nullptr;
-	m = nullptr;
+	bool inmaterial = false;
+	image_t *image = nullptr;
+	material_t *m = nullptr;
 
 	while (true) {
 		const char* c = Com_Parse(&buffer);
@@ -1068,7 +1066,7 @@ void R_LoadMaterials (const char* map)
 			if (!m->stages)
 				m->stages = s;
 			else {
-				ss = m->stages;
+				materialStage_t *ss = m->stages;
 				while (ss->next)
 					ss = ss->next;
 				ss->next = s;
@@ -1084,7 +1082,7 @@ void R_LoadMaterials (const char* map)
 			inmaterial = false;
 			image = nullptr;
 			/* multiply stage glowscale values by material glowscale */
-			ss = m->stages;
+			materialStage_t *ss = m->stages;
 			while (ss) {
 				ss->glowscale *= m->glowscale;
 				ss = ss->next;

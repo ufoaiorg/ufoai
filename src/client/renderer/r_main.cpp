@@ -74,6 +74,7 @@ static cvar_t *r_texturemode;
 static cvar_t *r_texturealphamode;
 static cvar_t *r_texturesolidmode;
 cvar_t *r_materials;
+cvar_t *r_overridematerial;
 cvar_t *r_default_specular;
 cvar_t *r_default_hardness;
 cvar_t *r_checkerror;
@@ -560,6 +561,7 @@ static void R_RegisterSystemVars (void)
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
+	r_overridematerial = Cvar_Get("r_overridematerial", "", 0, "Used to override the material for a map");
 	r_default_specular = Cvar_Get("r_default_specular", "0.2", CVAR_R_CONTEXT, "Default specular exponent");
 	r_default_hardness = Cvar_Get("r_default_hardness", "0.2", CVAR_R_CONTEXT, "Default specular brightness");
 	Cvar_RegisterChangeListener("r_default_specular", R_UpdateDefaultMaterial);
