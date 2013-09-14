@@ -218,6 +218,7 @@ inline TransformNode* Node_getTransformNode (scene::Node& node)
 	return dynamic_cast<TransformNode*>(&node);
 }
 
+namespace scene {
 inline bool operator< (scene::Node& node, scene::Node& other)
 {
 	return &node < &other;
@@ -228,7 +229,8 @@ inline bool operator== (scene::Node& node, scene::Node& other)
 }
 inline bool operator!= (scene::Node& node, scene::Node& other)
 {
-	return !::operator==(node, other);
+	return !scene::operator==(node, other);
+}
 }
 
 inline scene::Node& NewNullNode ()
