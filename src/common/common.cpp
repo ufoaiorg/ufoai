@@ -1372,6 +1372,26 @@ ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *c
 	return event;
 }
 
+static void Delay_Events (EventPriorityQueue::iterator i)
+{
+	ScheduleEventPtr event = *i;
+	EventPriorityQueue reOrder;
+	EventPriorityQueue::iterator itEnd = eventQueue.end();
+	for (; i != itEnd;) {
+		ScheduleEventPtr tmpEvent = *i;
+		if (tmpEvent->func != event->func) {
+			++i;
+			continue;
+		}
+		tmpEvent->when += event->delayFollowing;
+		reOrder.insert(tmpEvent);
+		eventQueue.erase(i++);
+	}
+	for (EventPriorityQueue::iterator r = reOrder.begin(); r != reOrder.end(); ++r) {
+		eventQueue.insert(*r);
+	}
+}
+
 ScheduleEventPtr Dequeue_Event(int now);
 /**
  * @brief Finds and returns the first event in the event_queue that is due.
@@ -1392,21 +1412,7 @@ ScheduleEventPtr Dequeue_Event (int now)
 
 		/* delay all other events if this one is blocked */
 		if (event->delayFollowing > 0 && (event->delay == nullptr || event->delay(now, event->data))) {
-			EventPriorityQueue reOrder;
-			EventPriorityQueue::iterator itEnd = eventQueue.end();
-			for (; i != itEnd;) {
-				ScheduleEventPtr tmpEvent = *i;
-				if (tmpEvent->func != event->func) {
-					++i;
-					continue;
-				}
-				tmpEvent->when += event->delayFollowing;
-				reOrder.insert(tmpEvent);
-				eventQueue.erase(i++);
-			}
-			for (EventPriorityQueue::iterator r = reOrder.begin(); r != reOrder.end(); ++r) {
-				eventQueue.insert(*r);
-			}
+			Delay_Events(i);
 			break;
 		}
 	}
