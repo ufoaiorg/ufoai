@@ -7,10 +7,8 @@
  * @brief Render class for the 3d view
  */
 class RenderableParticle: public OpenGLRenderable {
-	const IParticleDefinition* m_particle;
 public:
-	RenderableParticle (const IParticleDefinition* particle) :
-			m_particle(particle)
+	RenderableParticle (const IParticleDefinition* particle)
 	{
 	}
 
