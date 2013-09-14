@@ -113,7 +113,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t *battleParameters)
 			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
 		/* assemble a random base */
 		if (!base)
-			cgi->Com_Error(ERR_DROP, "Baseattack map without base!\n");
+			cgi->Com_Error(ERR_DROP, "Baseattack map without base!");
 		/* base must be under attack and might not have been destroyed in the meantime. */
 		char maps[2048];
 		char coords[2048];
