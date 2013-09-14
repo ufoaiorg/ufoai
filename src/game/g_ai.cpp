@@ -1623,14 +1623,14 @@ static void AI_InitPlayer (const Player &player, Edict* ent, const equipDef_t* e
 static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 {
 	/* prepare equipment */
-	if (team != TEAM_CIVILIAN) {
-		const char* equipID = gi.Cvar_String("ai_equipment");
-		const equipDef_t* ed = G_GetEquipDefByID(equipID);
-		if (ed == nullptr)
-			ed = &gi.csi->eds[0];
-		return ed;
-	}
-	return nullptr;
+	if (team == TEAM_CIVILIAN)
+		return nullptr;
+
+	const char* equipID = gi.Cvar_String("ai_equipment");
+	const equipDef_t* ed = G_GetEquipDefByID(equipID);
+	if (ed == nullptr)
+		ed = &gi.csi->eds[0];
+	return ed;
 }
 
 static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t* ed)
@@ -1661,10 +1661,9 @@ static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t* ed)
  */
 static void G_SpawnAIPlayers (const Player &player, int numSpawn)
 {
-	int i;
 	const equipDef_t* ed = G_GetEquipmentForAISpawn(player.getTeam());
 
-	for (i = 0; i < numSpawn; i++) {
+	for (int i = 0; i < numSpawn; i++) {
 		if (G_SpawnAIPlayer(player, ed) == nullptr)
 			break;
 	}
