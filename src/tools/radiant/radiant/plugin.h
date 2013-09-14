@@ -32,7 +32,7 @@ void Radiant_Destroy ();
 template<typename Type>
 class Modules;
 
-struct IImageModule;
+class IImageModule;
 typedef Modules<IImageModule> ImageModules;
 ImageModules& Radiant_getImageModules ();
 class MapFormat;
