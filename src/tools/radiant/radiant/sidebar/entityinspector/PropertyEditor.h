@@ -24,9 +24,6 @@ typedef PropertyEditor* PropertyEditorPtr;
  */
 class PropertyEditor
 {
-		// The quit callback handle
-		guint _quitHandle;
-
 	protected:
 		// The variable that should hold the main widget
 		GtkWidget* _widget;

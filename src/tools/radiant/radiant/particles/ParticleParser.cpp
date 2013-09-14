@@ -2,7 +2,7 @@
 #include "ParticleDefinition.h"
 
 ParticleParser::ParticleParser (const std::string& particleID, const std::string& particleData) :
-	_particleData(particleData), _particleID(particleID)
+	_particleID(particleID)
 {
 }
 

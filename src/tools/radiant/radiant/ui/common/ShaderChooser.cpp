@@ -24,7 +24,6 @@ namespace ui {
 ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget* targetEntry, bool stripTextureDir) :
 	gtkutil::BlockingTransientWindow(_(LABEL_TITLE), parent),
 	_client(client),
-	_parent(parent),
 	_targetEntry(targetEntry),
 	_selector(this, SHADER_PREFIXES),
 	_stripTextureDir(stripTextureDir)

@@ -37,9 +37,6 @@ private:
 	// The "parent" class that gets notified upon shaderchange
 	ChooserClient* _client;
 
-	// The widget this dialog is transient for.
-	GtkWindow* _parent;
-
 	// The text entry the chosen texture is written into (can be NULL)
 	GtkWidget* _targetEntry;
 

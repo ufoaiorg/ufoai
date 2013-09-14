@@ -3,7 +3,6 @@
 
 class ParticleParser {
 	private:
-		const std::string& _particleData;
 		const std::string& _particleID;
 
 	public:

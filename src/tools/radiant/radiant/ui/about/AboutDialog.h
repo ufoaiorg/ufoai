@@ -17,9 +17,6 @@ namespace ui {
 class AboutDialog :
 	public gtkutil::BlockingTransientWindow
 {
-	// The treeview containing the above liststore
-	GtkWidget* _treeView;
-
 public:
 	// Constructor
 	AboutDialog();

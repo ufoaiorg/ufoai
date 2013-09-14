@@ -112,16 +112,16 @@ class GraphTreeNode
 		typedef MemberCaller<GraphTreeNode, &GraphTreeNode::rowChanged> RowChangedCaller;
 };
 
-struct GraphTreeModel
+class GraphTreeModel
 {
-		GObject parent;
-
-		GraphTreeNode* m_graph;
+public:
+	GObject parent;
+	GraphTreeNode* m_graph;
 };
 
 struct GraphTreeModelClass
 {
-		GObjectClass parent_class;
+	GObjectClass parent_class;
 };
 
 #define GRAPH_TREE_MODEL(p) (reinterpret_cast<GraphTreeModel*>(p))
