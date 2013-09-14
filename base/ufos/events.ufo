@@ -138,12 +138,10 @@ event alienbasediscovered
 	command	"cp_add_researchable rs_alien_base;addeventmail alien_base_discovered"
 }
 
-/*
 event detect_harvester
 {
-	type	ufo_detection
-	value	"craft_ufo_harvester"
+	type	"ufo_detection"
+	require	"ufo[craft_ufo_harvester]"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_buildufoyard"
 }
-*/

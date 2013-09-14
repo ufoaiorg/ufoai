@@ -157,6 +157,9 @@ const campaignEvents_t *CP_GetEventsByID (const char* name)
 
 static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 {
+	if (Q_strnull(expression))
+		return -1;
+
 	const char* type;
 
 	/* check that a particular installation type is built already */
@@ -301,6 +304,8 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		return 0;
 	}
 
+	Com_Printf("unknown expression given: '%s'\n", expression);
+
 	return -1;
 }
 
@@ -323,8 +328,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 				continue;
 			if (Q_strvalid(event->command)) {
 				CP_CampaignTriggerFunctions(true);
-				cgi->Cbuf_AddText("%s\n", event->command);
-				cgi->Cbuf_Execute();
+				cgi->Cmd_ExecuteString("%s", event->command);
 				CP_CampaignTriggerFunctions(false);
 			}
 

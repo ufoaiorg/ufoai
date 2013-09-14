@@ -1371,15 +1371,42 @@ static void testRandomPosMissions (void)
 	}
 }
 
+static bool testEventTriggerCalled;
+static void testEventTrigger_f (void)
+{
+	testEventTriggerCalled = true;
+}
+
 static void testEventTrigger (void)
 {
 	ResetCampaignData();
 
-	int i;
-	for (i = 0; i < 60; i++) {
+	testEventTriggerCalled = false;
+	for (int i = 0; i < 60; i++) {
 		CP_TriggerEvent(NEW_DAY);
 		ccs.date.day++;
 	}
+	Cmd_AddCommand("test_eventtrigger", testEventTrigger_f);
+	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents++];
+	OBJZERO(*event);
+	event->active = true;
+	event->type = UFO_DETECTION;
+	event->id = Mem_StrDup("test_eventtrigger");
+	event->command = Mem_StrDup("test_eventtrigger");
+	event->require = Mem_StrDup("ufo[craft_ufo_harvester]");
+	CP_TriggerEvent(UFO_DETECTION, "craft_ufo_harvester");
+	CU_ASSERT_TRUE(testEventTriggerCalled);
+	testEventTriggerCalled = false;
+	CP_TriggerEvent(UFO_DETECTION, "xxx");
+	CU_ASSERT_FALSE(testEventTriggerCalled);
+	event->once = true;
+	CP_TriggerEvent(UFO_DETECTION, "craft_ufo_harvester");
+	CU_ASSERT_TRUE(testEventTriggerCalled);
+	testEventTriggerCalled = false;
+	CP_TriggerEvent(UFO_DETECTION, "craft_ufo_harvester");
+	CU_ASSERT_FALSE(testEventTriggerCalled);
+	--ccs.numCampaignTriggerEvents;
+	Cmd_RemoveCommand("test_eventtrigger");
 }
 
 static void testAssembleMap (void)
