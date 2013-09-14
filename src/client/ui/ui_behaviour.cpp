@@ -145,20 +145,17 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 
 	/* sort properties by alphabet */
 	if (behaviour->localProperties) {
-		int i = 0;
-		const value_t* previous;
 		const value_t** oldmemory = behaviour->localProperties;
 		behaviour->localProperties = (const value_t**) UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, false);
 		if (behaviour->localProperties == nullptr) {
 			Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: UI memory hunk exceeded - increase the size");
 		}
 
-		previous = nullptr;
-		for (i = 0; i < behaviour->propertyCount; i++) {
+		const value_t* previous = nullptr;
+		for (int i = 0; i < behaviour->propertyCount; i++) {
 			const value_t* better = nullptr;
-			const value_t** current;
 			/* search the next element after previous */
-			for (current = oldmemory; *current != nullptr; current++) {
+			for (const value_t** current = oldmemory; *current != nullptr; current++) {
 				if (previous != nullptr && Q_strcasecmp(previous->string, (*current)->string) >= 0) {
 					continue;
 				}
