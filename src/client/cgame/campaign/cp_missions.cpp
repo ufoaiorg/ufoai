@@ -61,9 +61,9 @@ void BATTLE_SetVars (const battleParam_t *battleParameters)
 {
 	int i;
 
-	cgi->Cvar_SetValue("ai_numaliens", battleParameters->aliens);
+	cgi->Cvar_SetValue("ai_singleplayeraliens", battleParameters->aliens);
 	cgi->Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
-	cgi->Cvar_Set("ai_civilian", "%s", battleParameters->civTeam);
+	cgi->Cvar_Set("ai_civilianteam", "%s", battleParameters->civTeam);
 	cgi->Cvar_Set("ai_equipment", "%s", battleParameters->alienEquipment);
 
 	/* now store the alien teams in the shared cgi->csi->struct to let the game dll

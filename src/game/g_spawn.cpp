@@ -388,7 +388,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 			gi.DPrintf("Could not create civilian\n");
 	}
 
-	if ((G_IsSinglePlayer() || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
+	if ((G_IsSinglePlayer() || ai_multiplayeraliens->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == nullptr)
 			gi.DPrintf("Could not create alien\n");
 	}
@@ -790,7 +790,7 @@ static void SP_2x2_start (Edict* ent)
 static void SP_alien_start (Edict* ent)
 {
 	/* deactivateable in multiplayer */
-	if (G_IsMultiPlayer() && !ai_numactors->integer) {
+	if (G_IsMultiPlayer() && !ai_multiplayeraliens->integer) {
 		G_FreeEdict(ent);
 		return;
 	}

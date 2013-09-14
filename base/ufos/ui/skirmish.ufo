@@ -326,23 +326,23 @@ window skirmish
 		// ======================================
 		// NUMBER OF AI ACTORS STRINGS & SPINNER
 		// ======================================
-		string ai_numactors_str
+		string ai_multiplayeraliens_str
 		{
 			string		"_Max. AI actors:"
 			pos			"10 250"
 			size		"300 20"
 			tooltip		"_The maximum of AI actors for this game."
 		}
-		string ai_numactors_value
+		string ai_multiplayeraliens_value
 		{
-			string		*cvar:ai_numaliens
+			string		*cvar:ai_singleplayeraliens
 			pos			"310 250"
 			size		"50 20"
 			contentalign	ALIGN_CC
 		}
-		spinner_blue ai_numactors_change
+		spinner_blue ai_multiplayeraliens_change
 		{
-			current		*cvar:ai_numaliens
+			current		*cvar:ai_singleplayeraliens
 			pos			"368 249"
 			min			1
 			max			30

@@ -64,9 +64,9 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 
 	cgi->Cvar_SetValue("ai_numcivilians", 8);
 	if (md->civTeam != nullptr)
-		cgi->Cvar_Set("ai_civilian", "%s", md->civTeam);
+		cgi->Cvar_Set("ai_civilianteam", "%s", md->civTeam);
 	else
-		cgi->Cvar_Set("ai_civilian", "europe");
+		cgi->Cvar_Set("ai_civilianteam", "europe");
 
 	cgi->Cvar_Set("sv_hurtaliens", "0");
 
@@ -281,7 +281,7 @@ static const mapDef_t *GAME_SK_MapInfo (int step)
 
 	md = cgi->GAME_GetCurrentSelectedMap();
 
-	cgi->Cvar_SetValue("ai_numaliens", md->maxAliens);
+	cgi->Cvar_SetValue("ai_singleplayeraliens", md->maxAliens);
 
 	if (md->map[0] == '.')
 		return nullptr;

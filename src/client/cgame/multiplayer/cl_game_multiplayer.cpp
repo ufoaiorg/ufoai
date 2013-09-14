@@ -161,7 +161,7 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 			}
 		}
 		cgi->UI_RegisterLinkedListText(TEXT_LIST2, gameNames);
-		cgi->Cvar_SetValue("ai_numaliens", md->maxAliens);
+		cgi->Cvar_SetValue("ai_singleplayeraliens", md->maxAliens);
 
 		return md;
 	}

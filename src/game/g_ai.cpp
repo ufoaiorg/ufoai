@@ -1546,10 +1546,10 @@ static void AI_SetCharacterValues (Edict* ent, int team)
 			assert(td);
 			teamDefinition = td->id;
 		} else {
-			teamDefinition = gi.Cvar_String("ai_alien");
+			teamDefinition = gi.Cvar_String("ai_alienteam");
 		}
 	} else {
-		teamDefinition = gi.Cvar_String("ai_civilian");
+		teamDefinition = gi.Cvar_String("ai_civilianteam");
 	}
 	gi.GetCharacterValues(teamDefinition, &ent->chr);
 	if (!ent->chr.teamDef)
@@ -1709,7 +1709,7 @@ void AI_CheckRespawn (int team)
  * @param[in] team
  * @sa G_SpawnAIPlayer
  * @return Player pointer
- * @note see cvars ai_numaliens, ai_numcivilians, ai_numactors
+ * @note see cvars ai_singleplayeraliens, ai_numcivilians, ai_multiplayeraliens
  */
 Player *AI_CreatePlayer (int team)
 {
@@ -1733,9 +1733,9 @@ Player *AI_CreatePlayer (int team)
 				G_SpawnAIPlayers(*p, ai_numcivilians->integer);
 			} else {
 				if (G_IsSinglePlayer())
-					G_SpawnAIPlayers(*p, ai_numaliens->integer);
+					G_SpawnAIPlayers(*p, ai_singleplayeraliens->integer);
 				else
-					G_SpawnAIPlayers(*p, ai_numactors->integer);
+					G_SpawnAIPlayers(*p, ai_multiplayeraliens->integer);
 
 				level.initialAlienActorsSpawned = level.num_spawned[p->getTeam()];
 			}

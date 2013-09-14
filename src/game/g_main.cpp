@@ -66,12 +66,12 @@ static cvar_t* sv_send_edicts;
 
 cvar_t* password;
 
-cvar_t* ai_alien;
-cvar_t* ai_civilian;
+cvar_t* ai_alienteam;
+cvar_t* ai_civilianteam;
 cvar_t* ai_equipment;
-cvar_t* ai_numaliens;
+cvar_t* ai_singleplayeraliens;
 cvar_t* ai_numcivilians;
-cvar_t* ai_numactors;
+cvar_t* ai_multiplayeraliens;
 
 /* morale cvars */
 cvar_t* mob_death;
@@ -188,16 +188,16 @@ static void G_Init (void)
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
 	sv_hurtaliens = gi.Cvar_Get("sv_hurtaliens", "0", CVAR_SERVERINFO, "Spawn hurt aliens");
 
-	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
-	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
+	ai_alienteam = gi.Cvar_Get("ai_alienteam", "ortnok", 0, "Alien team");
+	ai_civilianteam = gi.Cvar_Get("ai_civilianteam", "europe", 0, "Civilian team");
 	/* this cvar is set in singleplayer via campaign definition */
 	ai_equipment = gi.Cvar_Get("ai_equipment", "multiplayer_alien", 0, "Initial equipment definition for aliens");
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.Cvar_Get("ai_numaliens", "30", 0, "How many aliens in this battle (singleplayer)");
+	ai_singleplayeraliens = gi.Cvar_Get("ai_singleplayeraliens", "30", 0, "How many aliens in this battle (singleplayer)");
 	/* civilians for singleplayer */
 	ai_numcivilians = gi.Cvar_Get("ai_numcivilians", "10", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
-	ai_numactors = gi.Cvar_Get("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
+	ai_multiplayeraliens = gi.Cvar_Get("ai_multiplayeraliens", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 
 	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH|CVAR_NOSET, nullptr);
 	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, nullptr);

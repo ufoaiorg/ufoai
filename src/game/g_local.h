@@ -174,12 +174,12 @@ extern cvar_t* sv_maxteams;
 extern cvar_t* sv_ai;
 extern cvar_t* sv_teamplay;
 
-extern cvar_t* ai_alien;
-extern cvar_t* ai_civilian;
+extern cvar_t* ai_alienteam;
+extern cvar_t* ai_civilianteam;
 extern cvar_t* ai_equipment;
-extern cvar_t* ai_numaliens;
+extern cvar_t* ai_singleplayeraliens;
 extern cvar_t* ai_numcivilians;
-extern cvar_t* ai_numactors;
+extern cvar_t* ai_multiplayeraliens;
 
 extern cvar_t* mob_death;
 extern cvar_t* mob_wound;

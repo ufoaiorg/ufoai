@@ -716,14 +716,14 @@ window mp_create_server extends abstract_multiplayer
 			pos			"25 25"
 			size		"250 20"
 			tooltip		"_Enemies respawn when killed."
-			visiblewhen "*cvar:ai_numactors >= 1"
+			visiblewhen "*cvar:ai_multiplayeraliens >= 1"
 		}
 		checkbox_blue alienrush_value
 		{
 			current		*cvar:g_endlessaliens
 			pos			"350 26"
 			size		"20 18"
-			visiblewhen "*cvar:ai_numactors >= 1"
+			visiblewhen "*cvar:ai_multiplayeraliens >= 1"
 		}
 
 		// ===================
@@ -833,23 +833,23 @@ window mp_create_server extends abstract_multiplayer
 		// ===================
 		// AI_NUMACTORS
 		// ===================
-		string ai_numactors_str
+		string ai_multiplayeraliens_str
 		{
 			string		"_Max. AI actors:"
 			tooltip		"_Max AI actors for teamplay mode"
 			pos			"25 150"
 			size		"300 20"
 		}
-		string ai_numactors_value
+		string ai_multiplayeraliens_value
 		{
-			string		*cvar:ai_numactors
+			string		*cvar:ai_multiplayeraliens
 			pos			"335 150"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue ai_numactors_change
+		spinner_blue ai_multiplayeraliens_change
 		{
-			current		*cvar:ai_numactors
+			current		*cvar:ai_multiplayeraliens
 			pos			"390 150"
 			min			0
 			max			8
