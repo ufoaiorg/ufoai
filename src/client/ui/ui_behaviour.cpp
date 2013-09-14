@@ -63,7 +63,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour,
 		/* temporary memory allocation */
 		behaviour->localProperties = Mem_PoolAllocTypeN(value_t const*, LOCAL_PROPERTY_SIZE, ui_sysPool);
 	}
-	if (behaviour->propertyCount >= LOCAL_PROPERTY_SIZE-1) {
+	if (behaviour->propertyCount >= LOCAL_PROPERTY_SIZE - 1) {
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Property memory of behaviour %s is full.", behaviour->name);
 	}
 	behaviour->localProperties[behaviour->propertyCount++] = property;
@@ -115,12 +115,6 @@ const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, cons
 	return nullptr;
 }
 
-/** @brief position of virtual function into node behaviour */
-static const int virtualFunctions[] = {
-	offsetof(uiBehaviour_t, extraDataSize),
-	-1
-};
-
 /**
  * @brief Initialize a node behaviour memory, after registration, and before unsing it.
  * @param behaviour Behaviour to initialize
@@ -140,27 +134,13 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	}
 
 	if (behaviour->extends) {
-		int i = 0;
-
-		/** TODO Find a way to remove that, if possible */
+		/** @todo Find a way to remove that, if possible */
 		behaviour->super = UI_GetNodeBehaviour(behaviour->extends);
 		UI_InitializeNodeBehaviour(behaviour->super);
 
-		while (true) {
-			const size_t pos = virtualFunctions[i];
-			uintptr_t superFunc;
-			uintptr_t func;
-			if (pos == -1)
-				break;
-
-			/* cache super function if we don't overwrite it */
-			superFunc = *(uintptr_t*)((byte*)behaviour->super + pos);
-			func = *(uintptr_t*)((byte*)behaviour + pos);
-			if (func == 0 && superFunc != 0)
-				*(uintptr_t*)((byte*)behaviour + pos) = superFunc;
-
-			i++;
-		}
+		/* cache super function if we don't overwrite it */
+		if (behaviour->extraDataSize == 0)
+			behaviour->extraDataSize = behaviour->super->extraDataSize;
 	}
 
 	/* sort properties by alphabet */
