@@ -10,7 +10,6 @@
 class DeflatedArchiveTextFile: public ArchiveTextFile
 {
 		std::string m_name;
-		std::size_t m_size;
 		std::size_t m_filesize;
 		FileInputStream m_istream;
 		SubFileInputStream m_substream;
@@ -22,7 +21,7 @@ class DeflatedArchiveTextFile: public ArchiveTextFile
 
 		DeflatedArchiveTextFile (const std::string& name, const std::string& archiveName, position_type position,
 				size_type stream_size, size_type filesize) :
-			m_name(name), m_size(stream_size), m_filesize(filesize), m_istream(archiveName), m_substream(m_istream,
+			m_name(name), m_filesize(filesize), m_istream(archiveName), m_substream(m_istream,
 					position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream)
 		{
 		}

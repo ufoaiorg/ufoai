@@ -61,7 +61,6 @@ class LevelFilter
 
 		class ForEachFace: public BrushVisitor
 		{
-				Brush &m_brush;
 			public:
 				mutable int m_contentFlagsVis;
 				mutable int m_surfaceFlagsVis;

@@ -29,7 +29,7 @@
 #include "iscenegraph.h"
 #include "nameable.h"
 
-struct GraphTreeModel;
+class GraphTreeModel;
 
 GraphTreeModel* graph_tree_model_new ();
 void graph_tree_model_delete (GraphTreeModel* model);

@@ -17,9 +17,6 @@ namespace map
 
 			GtkWidget* _previewContainer;
 
-			// The description widget (text entry)
-			GtkWidget* _usageInfo;
-
 			// The actual MapPreview widget
 			ui::MapPreview _preview;
 

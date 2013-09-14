@@ -31,7 +31,6 @@ class Camera
 		Vector3 origin;
 		Vector3 angles;
 
-		bool timing;
 		Vector3 color; // background
 		Vector3 vup, vright; // view matrix (taken from the modelview matrix)
 		unsigned int movementflags; // movement flags

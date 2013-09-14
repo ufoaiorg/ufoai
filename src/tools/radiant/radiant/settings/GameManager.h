@@ -35,7 +35,6 @@ class GameManager: public IGameManager, public PreferenceConstructor, public Reg
 		const std::string _emptyString;
 
 		ModuleObservers _enginePathObservers;
-		std::size_t _enginepathUnrealised;
 
 	private:
 

@@ -41,7 +41,7 @@ public:
 	 *
 	 *  @param axis:  0 = s-axis flip, 1 = t-axis flip
 	 */
-	virtual void flipSelected(unsigned int axis);
+	virtual void flipSelected(const int& axis);
 
 private:
 	/** greebo: Calculates the mean value of all the texCoords,

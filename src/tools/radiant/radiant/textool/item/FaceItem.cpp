@@ -143,7 +143,7 @@ void FaceItem::snapSelectedToGrid(float grid) {
 	TexToolItem::snapSelectedToGrid(grid);
 }
 
-void FaceItem::flipSelected(unsigned int axis) {
+void FaceItem::flipSelected(const int& axis) {
 	if (_selected) {
 		_sourceFace.flipTexture(axis);
 	}

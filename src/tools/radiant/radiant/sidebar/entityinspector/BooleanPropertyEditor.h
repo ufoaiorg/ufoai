@@ -15,9 +15,6 @@ class BooleanPropertyEditor: public PropertyEditor
 		// The checkbox
 		GtkWidget* _checkBox;
 
-		// Entity to edit
-		Entity* _entity;
-
 	public:
 
 		// Construct a BooleanPropertyEditor with an entity and key to edit

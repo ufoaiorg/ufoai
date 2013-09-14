@@ -5,7 +5,7 @@
 #include "CameraSettings.h"
 
 Camera::Camera (View* view, const Callback& update) :
-		origin(0, 0, 0), angles(0, 0, 0), timing(false), color(0, 0, 0), movementflags(0), fieldOfView(75.0f), m_view(
+		origin(0, 0, 0), angles(0, 0, 0), color(0, 0, 0), movementflags(0), fieldOfView(75.0f), m_view(
 				view), m_update(update), width(0), height(0), m_keymove_handler(0), m_mouseMove(motionDelta, this)
 {
 	projection = Matrix4::getIdentity();

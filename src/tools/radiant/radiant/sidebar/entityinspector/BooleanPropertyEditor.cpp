@@ -6,14 +6,13 @@ namespace ui {
 
 // Blank ctor
 
-BooleanPropertyEditor::BooleanPropertyEditor ()
+BooleanPropertyEditor::BooleanPropertyEditor () : _checkBox(0)
 {
 }
 
 // Constructor. Create the GTK widgets here
 
-BooleanPropertyEditor::BooleanPropertyEditor (Entity* entity, const std::string& name) :
-	_entity(entity)
+BooleanPropertyEditor::BooleanPropertyEditor (Entity* entity, const std::string& name)
 {
 	_widget = gtk_vbox_new(FALSE, 6);
 

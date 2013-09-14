@@ -49,7 +49,7 @@ namespace routing
 		}
 	}
 
-	void Routing::renderComponents (Renderer&, const VolumeTest&)
+	void Routing::renderComponents (Renderer&, const VolumeTest&) const
 	{
 		// this is not needed for rendering the routing data
 	}

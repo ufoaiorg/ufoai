@@ -80,8 +80,7 @@ bool LevelFilter::EntityFindByName::pre (const scene::Path& path, scene::Instanc
 	return true;
 }
 
-LevelFilter::ForEachFace::ForEachFace (Brush& brush) :
-	m_brush(brush)
+LevelFilter::ForEachFace::ForEachFace (Brush& brush)
 {
 	m_contentFlagsVis = -1;
 	m_surfaceFlagsVis = -1;

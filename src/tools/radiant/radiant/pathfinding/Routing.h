@@ -27,7 +27,7 @@ namespace routing
 			/** Submit renderable geometry when rendering takes place in Wireframe mode */
 			void renderWireframe (Renderer& renderer, const VolumeTest& volume) const;
 
-			void renderComponents (Renderer&, const VolumeTest&);
+			void renderComponents (Renderer&, const VolumeTest&) const;
 
 			void updateRouting (const std::string& bspFileName);
 
