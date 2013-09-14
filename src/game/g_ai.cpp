@@ -1714,36 +1714,34 @@ void AI_CheckRespawn (int team)
  */
 Player *AI_CreatePlayer (int team)
 {
-	Player *p;
-
 	if (!sv_ai->integer) {
 		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
 		return nullptr;
 	}
 
 	/* set players to ai players and cycle over all of them */
-	p = nullptr;
+	Player *p = nullptr;
 	while ((p = G_PlayerGetNextAI(p))) {
-		if (!p->isInUse()) {
-			p->reset();
-			p->setInUse(true);
-			p->setNum(p - game.players);
-			p->pers.ai = true;
-			G_SetTeamForPlayer(*p, team);
-			if (p->getTeam() == TEAM_CIVILIAN) {
-				G_SpawnAIPlayers(*p, ai_numcivilians->integer);
-			} else {
-				if (G_IsSinglePlayer())
-					G_SpawnAIPlayers(*p, ai_singleplayeraliens->integer);
-				else
-					G_SpawnAIPlayers(*p, ai_multiplayeraliens->integer);
+		if (p->isInUse())
+			continue;
+		p->reset();
+		p->setInUse(true);
+		p->setNum(p - game.players);
+		p->pers.ai = true;
+		G_SetTeamForPlayer(*p, team);
+		if (p->getTeam() == TEAM_CIVILIAN) {
+			G_SpawnAIPlayers(*p, ai_numcivilians->integer);
+		} else {
+			if (G_IsSinglePlayer())
+				G_SpawnAIPlayers(*p, ai_singleplayeraliens->integer);
+			else
+				G_SpawnAIPlayers(*p, ai_multiplayeraliens->integer);
 
-				level.initialAlienActorsSpawned = level.num_spawned[p->getTeam()];
-			}
-
-			gi.DPrintf("Created AI player (team %i)\n", p->getTeam());
-			return p;
+			level.initialAlienActorsSpawned = level.num_spawned[p->getTeam()];
 		}
+
+		gi.DPrintf("Created AI player (team %i)\n", p->getTeam());
+		return p;
 	}
 
 	/* nothing free */
