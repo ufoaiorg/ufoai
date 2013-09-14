@@ -78,7 +78,8 @@ typedef enum {
 	V_AIRCRAFTTYPE,
 	V_LIST,
 
-	V_NUM_TYPES
+	V_NUM_TYPES,
+	V_ENSURE32BIT = 0xffffffff
 } valueTypes_t;
 
 extern const char *const vt_names[];
