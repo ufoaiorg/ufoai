@@ -76,8 +76,6 @@ const std::string RKEY_HSCALE_STEP = RKEY_ROOT + "hScaleStep";
 const std::string RKEY_VSCALE_STEP = RKEY_ROOT + "vScaleStep";
 const std::string RKEY_ROTATION_STEP = RKEY_ROOT + "rotStep";
 
-const std::string RKEY_WINDOW_STATE = RKEY_ROOT + "window";
-
 const double MAX_FLOAT_RESOLUTION = 1.0E-5;
 
 const char* contentflagNamesDefault[32] = { "cont1", "cont2", "cont3", "cont4", "cont5", "cont6", "cont7", "cont8",
@@ -147,12 +145,6 @@ void SurfaceInspector::init ()
 
 void SurfaceInspector::shutdown ()
 {
-	// Delete all the current window states from the registry
-	GlobalRegistry().deleteXPath(RKEY_WINDOW_STATE);
-
-	// Create a new node
-	xml::Node node(GlobalRegistry().createKey(RKEY_WINDOW_STATE));
-
 	GlobalSelectionSystem().removeObserver(this);
 }
 

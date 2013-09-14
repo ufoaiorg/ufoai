@@ -64,8 +64,6 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	}
 	UndoableCommand undo("entityCreate -class " + name);
 
-	AABB workzone(AABB::createFromMinMax(GlobalSelectionSystem().getWorkZone().min, GlobalSelectionSystem().getWorkZone().max));
-
 	NodeSmartReference node(GlobalEntityCreator().createEntity(entityClass));
 
 	Node_getTraversable(GlobalSceneGraph().root())->insert(node);

@@ -86,9 +86,6 @@ class MainFrame : public PreferenceConstructor
 		ToolMode g_currentToolMode;
 		ToolMode g_defaultToolMode;
 
-		GtkWidget* m_hSplit;
-		GtkWidget* m_vSplit2;
-
 		ui::Sidebar *_sidebar;
 
 		CamWnd* m_pCamWnd;
@@ -99,10 +96,6 @@ class MainFrame : public PreferenceConstructor
 		WindowPositionTracker m_position_tracker;
 
 		IdleDraw m_idleRedrawStatusText;
-
-		GtkButton *m_toolBtnSave;
-		GtkButton *m_toolBtnUndo;
-		GtkButton *m_toolBtnRedo;
 
 		UndoSaveStateTracker m_saveStateTracker;
 
