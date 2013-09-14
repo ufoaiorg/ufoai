@@ -618,7 +618,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 		unicode = event->key.keysym.unicode;
 #endif
 		if (unicode) {
-			Com_Printf(" unicode: %hx", unicode);
+			Com_Printf(" unicode: %x", unicode);
 			if (unicode >= '0' && unicode <= '~')  /* printable? */
 				Com_Printf(" (%c)", (unsigned char)(unicode));
 		}
