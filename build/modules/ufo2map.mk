@@ -8,7 +8,10 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS)
+ifeq (,$(findstring clang,$(CXX)))
+	$(TARGET)_CFLAGS   += -ffloat-store
+endif
 $(TARGET)_LDFLAGS  += -lm $(PNG_LIBS) $(JPEG_LIBS) -lz $(SDL_LIBS)
 
 ifeq ($(SSE),1)

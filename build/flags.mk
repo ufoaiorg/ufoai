@@ -35,9 +35,11 @@ CFLAGS += -Wno-variadic-macros
 CFLAGS += -Wno-format-zero-length
 
 # clang stuff
-#CFLAGS += -Wno-extended-offsetof
-#CFLAGS += -Wno-c++11-extensions
-#CFLAGS += -Wno-cast-align
+ifneq (,$(findstring clang,$(CXX)))
+  CFLAGS += -Wno-extended-offsetof
+  CFLAGS += -Wno-c++11-extensions
+  CFLAGS += -Wno-cast-align
+endif
 
 ifeq ($(PROFILING),1)
   CFLAGS  += -pg
