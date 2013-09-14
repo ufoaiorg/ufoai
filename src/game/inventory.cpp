@@ -534,7 +534,6 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
 		emptyContainer(inv, cont->id);
 	}
 
-	OBJZERO(*inv);
 	inv->init();
 }
 

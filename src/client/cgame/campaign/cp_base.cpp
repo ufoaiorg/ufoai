@@ -2764,9 +2764,8 @@ bool B_LoadXML (xmlNode_t *parent)
 			b->alienContainment->load(node);
 		}
 
-		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
-		OBJZERO(b->bEquipment);
+		b->bEquipment.init();
 	}
 	cgi->Com_UnregisterConstList(saveBaseConstants);
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
