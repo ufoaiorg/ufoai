@@ -496,20 +496,20 @@ window bases
 			button icon { icon "icons/aliens" }
 			data state { string "true" }
 		}
-
 	}
 
 	// Back to geoscape
 	Geoscape geoscape_button { }
 
-
-	// Used to enable/disable the overall base buttons
-	// param1: button
-	// param2: state
-	// param3: tooltip
-	// @TODO: handle hospital/transfer
-	// @TODO: some buttons don't have windows
-	// @TODO: Check tooltips only show when disabled
+	/**
+	 * @brief Used to enable/disable the overall base buttons
+	 * @param <1> button
+	 * @param <2> state
+	 * @param <3> tooltip
+	 * @TODO: handle hospital/transfer
+	 * @TODO: some buttons don't have windows
+	 * @TODO: Check tooltips only show when disabled
+	 */
 	confunc update_basebutton
 	{
 		if (param2 eq "true") {
@@ -557,14 +557,14 @@ window bases
 		}
 	}
 
-	/*
-	 * Passes information on capacity for available buildings
-	 * param1 = building name
-	 * param2 = building id (building_lab, building_quarters, building_storage, etc.)
-	 * param3 = currently used capacity
-	 * param4 = actual max capacity
-	 * param5 = number of buildings built of this type
-	 * param6 = max number of buildings can be built from this type
+	/**
+	 * @brief Passes information on capacity for available buildings
+	 * @param <1> building name
+	 * @param <2> building id (building_lab, building_quarters, building_storage, etc.)
+	 * @param <3> currently used capacity
+	 * @param <4> actual max capacity
+	 * @param <5> number of buildings built of this type
+	 * @param <6> max number of buildings can be built from this type
 	 */
 	confunc show_bld_space
 	{
@@ -608,8 +608,8 @@ window bases
 		}
 	}
 
-	/*
-	 * Clear building space indicators in preparation for updating the list
+	/**
+	 * @brief Clear building space indicators in preparation for updating the list
 	 */
 	confunc clear_bld_space
 	{
@@ -622,13 +622,13 @@ window bases
 		*node:parent.sections.facilities.height@integer = 48
 	}
 
-	/*
-	 * Show the facilities panel
-	 * param1 = true (show) or false (hide)
+	/**
+	 * @brief Show the facilities panel
+	 * @param <1> true (show) or false (hide)
 	 */
 	confunc show_facility
 	{
-		if (param1 eq "true") {
+		if (<1> eq "true") {
 			// Show capacity for all base buildings
 			cmd "base_building_space;"
 
@@ -654,11 +654,11 @@ window bases
 		*node:parent.sections.containment@invis = <1>
 	}
 
-	/*
-	 * Current employees of a particular base
-	 * param1 = number of soldiers
-	 * param2 = number of scientists
-	 * param3 = number of workers
+	/**
+	 * @brief Current employees of a particular base
+	 * @param <1> number of soldiers
+	 * @param <2> number of scientists
+	 * @param <3> number of workers
 	 */
 	confunc current_employees
 	{
@@ -668,12 +668,12 @@ window bases
 	}
 
 	/*
-	 * Show the base's aircraft (not currently used in default UI)
-	 * param1 = id (in list of aircraft in base -- not global idx)
-	 * param2 = name
-	 * param3 = aircraft type
-	 * param4 = status
-	 * param5 = aircraft in base?
+	 * @brief Show the base's aircraft (not currently used in default UI)
+	 * @param <1> id (in list of aircraft in base -- not global idx)
+	 * @param <2> name
+	 * @param <3> aircraft type
+	 * @param <4> status
+	 * @param <5> aircraft in base?
 	 */
 	confunc clear_aircraft {
 		*node:parent.sections.aircraft@size	= "298 48"
@@ -702,11 +702,11 @@ window bases
 		 */
 	}
 
-	/*
-	 * Show a research item in the base overview (not used in default UI)
-	 * param1 = name
-	 * param2 = number of scientists working on it
-	 * param3 = percent complete
+	/**
+	 * @brief Show a research item in the base overview (not used in default UI)
+	 * @param <1> name
+	 * @param <2> number of scientists working on it
+	 * @param <3> percent complete
 	 * @TODO: to work properly, research window must call base_init when it
 	 *        closes. Currently, it will not update after research changed
 	 */
@@ -724,9 +724,9 @@ window bases
 	}
 
 	/*
-	 * Show the production item closest to completion in the base overview (not used in default UI)
-	 * param1 = name
-	 * param2 = percent complete
+	 * @brief Show the production item closest to completion in the base overview (not used in default UI)
+	 * @param <1> name
+	 * @param <2> percent complete
 	 */
 	confunc clear_production
 	{
@@ -741,13 +741,13 @@ window bases
 		*node:parent.sections.production.production_list.<1>.data_bar@current = <2>
 	}
 
-	/*
-	 * Show and hide the alien containment panel
-	 * param1 = true (show alien containment), false (hide alien containment)
+	/**
+	 * @brief Show and hide the alien containment panel
+	 * @param <1> true (show alien containment), false (hide alien containment)
 	 */
 	confunc alien_containment
 	{
-		if (param1 eq "true") {
+		if (<1> eq "true") {
 			// Show the alien containment area
 			*node:parent.base_container.alien_containment@invis = false
 
@@ -807,14 +807,14 @@ window bases
 		*node:parent.base_container.buttons@invis = <1>
 	}
 
-	/*
-	 * Clear the alien containment panel
+	/**
+	 * @brief Clear the alien containment panel
 	 */
 	confunc aliencont_clear { }
 
-	/*
-	 * Place the correct button by each alien in containment (kill or autopsy)
-	 * param1 = id of the alien slot in the UI
+	/**
+	 * @brief Place the correct button by each alien in containment (kill or autopsy)
+	 * @param <1> id of the alien slot in the UI
 	 */
 	confunc aliencontneedautopsy
 	{
@@ -835,8 +835,8 @@ window bases
 		*node:parent.base_container.alien_containment.info@invis = false
 	}
 
-	/*
-	 * Reset base status/display info when the player switches to a new base
+	/**
+	 * @brief Reset base status/display info when the player switches to a new base
 	 * or comes back from another window
 	 */
 	confunc reset_base

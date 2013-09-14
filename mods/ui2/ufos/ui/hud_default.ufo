@@ -293,8 +293,6 @@ window hud_default extends hud
 					}
 				}
 
-
-
 				// Reaction fire button
 				CircleBtn reaction
 				{
@@ -532,11 +530,11 @@ window hud_default extends hud
 				onMouseEnter	{
 					*node:this@icon = "icons/reload"
 					cmd "hud_remainingtus reload_r 1;"
-					}
+				}
 				onMouseLeave	{
 					*node:this@icon = "icons/reload0"
 					cmd "hud_remainingtus reload_r 1;"
-					}
+				}
 				onClick			{ cmd "hud_reloadright;" }
 			}
 			button reload_r_disabled
@@ -553,14 +551,14 @@ window hud_default extends hud
 				size			"28 23"
 				invis			true
 				icon			"icons/reload0"
-				onMouseEnter	{
+				onMouseEnter {
 					*node:this@icon = "icons/reload"
 					cmd "hud_remainingtus reload_l 1;"
-					}
-				onMouseLeave	{
+				}
+				onMouseLeave {
 					*node:this@icon = "icons/reload0"
 					cmd "hud_remainingtus reload_l 1;"
-					}
+				}
 				onClick			{ cmd "hud_reloadleft;" }
 			}
 			button reload_l_disabled
@@ -595,15 +593,16 @@ window hud_default extends hud
 				onMouseEnter	{
 					*node:this@bgcolor = "0 0.1 0 0.9"
 					*node:this@bordercolor = "0.824 0.917 0.437 1"
-					}
+				}
 				onMouseLeave	{
 					*node:this@bgcolor = "0 0.1 0 0.5"
 					*node:this@bordercolor = "0.527 0.6 0.21 1"
-					}
-				onClick			{ cmd "switchhands;" }
+				}
+				onClick			{ call *node:root.soldier.weapon.switchhands }
 			}
+
 			// Displays oweapon only if another weapon exists
-			confunc show_oweapon
+			func show_oweapon
 			{
 				if (*cvar:sldcurhand eq "r") {
 					if (*cvar:mn_lweapon eq "") {
@@ -620,7 +619,7 @@ window hud_default extends hud
 				}
 			}
 
-			confunc switchhands
+			func switchhands
 			{
 				if (*cvar:sldcurhand eq "r") {
 					*cvar:sldcurhand = "l"
@@ -645,7 +644,7 @@ window hud_default extends hud
 					*node:parent.oweapon@src = *cvar:mn_lweapon
 					*node:parent.ammo_count@string = *cvar:mn_ammoright
 				}
-				cmd "show_oweapon;"
+				call *node:root.soldier.weapon.show_oweapon
 			}
 			confunc deselect_primaryleft
 			{
@@ -1159,7 +1158,8 @@ window hud_default extends hud
 
 		// Resets the weapon display panel when soldier changes
 		*cvar:sldcurhand = "l"
-		cmd "switchhands;show_oweapon;"
+		call *node:root.soldier.weapon.switchhands
+		call *node:root.soldier.weapon.show_oweapon
 	}
 
 	func onWindowOpened
@@ -1205,10 +1205,10 @@ window inv_stats_hud
 		border		"2"
 		onMouseEnter	{
 			*node:this@bgcolor = "0 0.21 0.158 0.7"
-			}
+		}
 		onMouseLeave	{
 			*node:this@bgcolor = "0 0.15 0.1 0.7"
-			}
+		}
 	}
 	// Top bar
 	string name
