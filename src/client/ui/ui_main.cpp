@@ -120,7 +120,7 @@ void UI_ExecuteConfunc (const char* fmt, ...)
  */
 void* UI_AllocHunkMemory (size_t size, int align, bool reset)
 {
-	byte *memory = (byte*) ALIGN_PTR(ui_global.curadata, align);
+	byte* memory = (byte*) ALIGN_PTR(ui_global.curadata, align);
 	if (memory + size > ui_global.adata + ui_global.adataize)
 		return nullptr;
 	if (reset)

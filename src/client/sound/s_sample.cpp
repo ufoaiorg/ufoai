@@ -59,7 +59,7 @@ static s_sample_t *S_FindByName (const char* name)
 static Mix_Chunk* S_LoadSampleChunk (const char* sound)
 {
 	size_t len;
-	byte *buf;
+	byte* buf;
 	const char* soundExtensions[] = SAMPLE_TYPES;
 	const char** extension = soundExtensions;
 	SDL_RWops *rw;

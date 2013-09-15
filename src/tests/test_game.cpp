@@ -67,7 +67,7 @@ static void testSpawnAndConnect (void)
 	player_t *player;
 	const char *name = "name";
 	bool day = true;
-	byte *buf;
+	byte* buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &buf);
 	edict_t *e = nullptr;

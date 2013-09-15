@@ -50,7 +50,7 @@ typedef struct music_s {
 	char nextTrack[MAX_QPATH];
 	Mix_Music *data;
 	int category;
-	byte *buffer;
+	byte* buffer;
 	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
 	 * into a deadlock. This is due to the installed hook function for music mixing that is used
 	 * whenever we stream the music on our own */
@@ -134,7 +134,7 @@ static void M_Start (const char* file)
 {
 	char name[MAX_QPATH];
 	size_t len;
-	byte *musicBuf;
+	byte* musicBuf;
 	int size;
 	SDL_RWops *rw;
 
@@ -374,7 +374,7 @@ void M_Shutdown (void)
 	Cmd_RemoveCommand("music_randomtrack");
 }
 
-static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int length)
+static void M_MusicStreamCallback (musicStream_t *userdata, byte* stream, int length)
 {
 	int tries = 0;
 	while (1) {
@@ -426,7 +426,7 @@ static void M_PlayMusicStream (musicStream_t *userdata)
  * @param[in,out] userdata The music stream
  * @param[in] rate The sample rate
  */
-void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const byte *data)
+void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const byte* data)
 {
 	int i;
 

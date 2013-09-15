@@ -655,7 +655,7 @@ static void testStringCheckFunctions (void)
 
 static void testEntitiesDef (void)
 {
-	byte *fileBuffer;
+	byte* fileBuffer;
 	const char *buf;
 	int i;
 	bool worldSpawnFound;

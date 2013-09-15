@@ -71,7 +71,7 @@ typedef struct uiGlobal_s {
 	uiNode_t* components[UI_MAX_COMPONENTS];
 	int numComponents;
 
-	byte *adata, *curadata;
+	byte* adata, *curadata;
 	int adataize;
 
 	uiNode_t *windowStack[UI_MAX_WINDOWSTACK];

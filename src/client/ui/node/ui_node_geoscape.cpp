@@ -193,7 +193,7 @@ void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t *node, float q)
 	const float sin_q = sin(q);
 	const float cos_q = cos(q);
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
+	byte* px;
 
 	for (x = 0; x < DAN_WIDTH; x++) {
 		const float phi = x * dphi - q;

@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 typedef struct sizebuf_s {
-	byte *data;					/**< pointer to the data in the buffer */
+	byte* data;					/**< pointer to the data in the buffer */
 	int maxsize;				/**< max. size of the allocated buffer */
 	int cursize;				/**< current used size of the buffer */
 	int readcount;				/**< current read position */
 } sizebuf_t;
 
-void SZ_Init(sizebuf_t *buf, byte *data, int length);
+void SZ_Init(sizebuf_t *buf, byte* data, int length);
 void SZ_Clear(sizebuf_t *buf);
 void SZ_Write(sizebuf_t *buf, const void* data, int length);

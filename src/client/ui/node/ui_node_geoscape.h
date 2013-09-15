@@ -91,7 +91,7 @@ typedef struct mapExtraData_s {
 	float paddingRight;
 	int32_t overlayMask;
 	geoscapeData_t *geoscapeData;
-	byte *r_dayandnightAlpha;
+	byte* r_dayandnightAlpha;
 } mapExtraData_t;
 
 void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);

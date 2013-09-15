@@ -83,7 +83,7 @@ static void testFileManagement (void)
 
 	/* we can only upload files from within our user directory - so let's copy it there */
 	if (!FS_FileExists("%s/" FILENAME, FS_Gamedir())) {
-		byte *buf;
+		byte* buf;
 		const int size = FS_LoadFile(FILENAME, &buf);
 		CU_ASSERT_TRUE_FATAL(size > 0);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(buf);

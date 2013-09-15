@@ -478,7 +478,7 @@ static size_t R_PreprocessShaderR (const char* name, const char** inPtr, char* o
 
 			} else if (!strncmp((*inPtr), "include", 7)) {
 				char path[MAX_QPATH];
-				byte *buf = (byte*)0;
+				byte* buf = (byte*)0;
 				const char* bufAsChar = (const char*)0;
 				const char** bufAsCharPtr = (const char**)0;
 				(*inPtr) += 8;
@@ -601,7 +601,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char* name)
 	char path[MAX_QPATH], *src[1];
 	unsigned e, length[1];
 	char* srcBuf;
-	byte *buf;
+	byte* buf;
 	int i;
 	size_t bufLength = SHADER_BUF_SIZE;
 	size_t initializeLength;
