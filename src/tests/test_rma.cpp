@@ -194,6 +194,7 @@ static void testNewSeedlists (void)
 	MapInfo *randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
+	sv_rmadisplaythemap->integer = 1;	/* print out the RMA analysis */
 	sv_threads->integer = 0;
 	for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 		srand(i);
