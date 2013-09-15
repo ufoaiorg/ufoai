@@ -56,7 +56,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE textEntryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
+static const char CURSOR_ON = '|';		/**< Use as the cursor when we edit the text - visible */
+static const char CURSOR_OFF = ' ';		/**< Use as the cursor when we edit the text - invisible*/
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
 /* limit the input for cvar editing (base name, save slots and so on) */
@@ -148,6 +149,8 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = false;
+	EXTRADATA(node).cursorPosition = UTF8_strlen(editedCvar->string);
+
 #if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_StartTextInput();
 	vec2_t pos;
@@ -195,18 +198,28 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int unicode)
 
 	/* copy the cvar */
 	Q_strncpyz(buffer, editedCvar->string, sizeof(buffer));
-	int length = strlen(buffer);
 
 	/* compute result */
 	if (unicode == K_BACKSPACE) {
-		length = UTF8_delete_char(buffer, length - 1);
+		if (EXTRADATA(node).cursorPosition > 0){
+			UTF8_delete_char_at(buffer, EXTRADATA(node).cursorPosition - 1);
+			EXTRADATA(node).cursorPosition--;
+		}
+	} else if (unicode == K_DEL) {
+		if (EXTRADATA(node).cursorPosition < UTF8_strlen(editedCvar->string)){
+			UTF8_delete_char_at(buffer, EXTRADATA(node).cursorPosition);
+		}
 	} else {
+		int length = strlen(buffer);
 		int charLength = UTF8_encoded_len(unicode);
+
 		/* is buffer full? */
 		if (length + charLength >= sizeof(buffer))
 			return;
 
-		length += UTF8_insert_char(buffer, sizeof(buffer), length, unicode);
+		int insertedLength = UTF8_insert_char_at(buffer, sizeof(buffer), EXTRADATA(node).cursorPosition, unicode);
+		if (insertedLength > 0)
+			EXTRADATA(node).cursorPosition++;
 	}
 
 	/* update the cvar */
@@ -234,6 +247,28 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 	case K_KP_ENTER:
 		UI_TextEntryNodeValidateEdition(node);
 		UI_RemoveFocus();
+		return true;
+	case K_LEFTARROW:
+	case K_KP_LEFTARROW:
+		if (EXTRADATA(node).cursorPosition > 0)
+			EXTRADATA(node).cursorPosition--;
+		return true;
+	case K_RIGHTARROW:
+	case K_KP_RIGHTARROW:
+		if (EXTRADATA(node).cursorPosition < UTF8_strlen(editedCvar->string))
+			EXTRADATA(node).cursorPosition++;
+		return true;
+	case K_HOME:
+	case K_KP_HOME:
+		EXTRADATA(node).cursorPosition = 0;
+		return true;
+	case K_END:
+	case K_KP_END:
+		EXTRADATA(node).cursorPosition = UTF8_strlen(editedCvar->string);
+		return true;
+	case K_DEL:
+	case K_KP_DEL:
+		UI_TextEntryNodeEdit(node, K_DEL);
 		return true;
 	}
 
@@ -276,7 +311,6 @@ void uiTextEntryNode::draw (uiNode_t *node)
 
 	if (char const* const text = UI_GetReferenceString(node, node->text)) {
 		char  buf[MAX_VAR];
-		char* c = buf;
 		if (EXTRADATA(node).isPassword) {
 			size_t size = UTF8_strlen(text);
 
@@ -284,23 +318,26 @@ void uiTextEntryNode::draw (uiNode_t *node)
 				size = MAX_VAR - 2;
 
 			memset(buf, HIDECHAR, size);
-			c += size;
+			buf[size] = '\0';
 		} else {
-			size_t const size = strlen(text);
-			if (size < MAX_VAR - 2) {
+			size_t size = strlen(text);
+
+			if (size > MAX_VAR - 2)
+				size = MAX_VAR - 2;
+
+			/** @todo Does this not chop multi-byte UTF-8 chars in half? Change to UTF8_strncpyz()? */
 				memcpy(buf, text, size);
-				c += size;
+			buf[size] = '\0';
+		}
+
+		/** @todo Make the cursor into a real graphical object instead of using a text character. */
+		if (UI_HasFocus(node)) {
+			if (CL_Milliseconds() % 1000 < 500) {
+				UTF8_insert_char_at(buf, sizeof(buf), EXTRADATA(node).cursorPosition, (int)CURSOR_ON);
 			} else {
-				memcpy(buf, text, MAX_VAR - 2);
-				c += MAX_VAR - 2;
+				UTF8_insert_char_at(buf, sizeof(buf), EXTRADATA(node).cursorPosition, (int)CURSOR_OFF);
 			}
 		}
-
-		if (UI_HasFocus(node) && CL_Milliseconds() % 1000 < 500) {
-			*c++ = CURSOR;
-		}
-
-		*c = '\0';
 
 		if (*buf != '\0') {
 			R_Color(textColor);
@@ -346,6 +383,8 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	 * the text are canceled, and no change event are fired.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_BOOL, textEntryExtraData_t, clickOutAbort);
+	/* Cursor position (offset of next UTF-8 char to the right) */
+	UI_RegisterExtradataNodeProperty(behaviour, "cursorPosition", V_INT, textEntryExtraData_t, cursorPosition);
 	/* Call it when we abort the edition */
 	UI_RegisterExtradataNodeProperty(behaviour, "onAbort", V_UI_ACTION, textEntryExtraData_t, onAbort);
 	/* Call it to force node edition */

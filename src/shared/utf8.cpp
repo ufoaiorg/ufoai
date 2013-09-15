@@ -29,11 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Delete a whole (possibly multibyte) character from a string.
  * @param[in] s Start of the string
- * @param[in] pos Offset from the start
- * @return position where deleted character started
+ * @param[in] pos UTF-8 char offset from the start (not the byte offset)
+ * @return Number of bytes deleted
  */
-int UTF8_delete_char (char* s, int pos)
+int UTF8_delete_char_at (char* s, int pos)
 {
+	/* Convert the UTF-8 char offset to byte offset */
+	pos = UTF8_char_offset_to_byte_offset(s, pos);
+
 	int start = pos;
 	int next = pos;
 
@@ -46,19 +49,22 @@ int UTF8_delete_char (char* s, int pos)
 	/* memmove is the only standard copying function that is guaranteed
 	 * to work if the source and destination overlap. */
 	memmove(&s[start], &s[next], strlen(&s[next]) + 1);
-	return start;
+	return (next - start);
 }
 
 /**
  * @brief Insert a (possibly multibyte) UTF-8 character into a string.
  * @param[in] s Start of the string
  * @param[in] n Buffer size of the string
- * @param[in] pos Offset from the start
+ * @param[in] pos UTF-8 char offset from the start (not the byte offset)
  * @param[in] c Unicode code as 32-bit integer
  * @return Number of bytes added
  */
-int UTF8_insert_char (char* s, int n, int pos, int c)
+int UTF8_insert_char_at (char* s, int n, int pos, int c)
 {
+	/* Convert the UTF-8 char offset to byte offset */
+	pos = UTF8_char_offset_to_byte_offset(s, pos);
+
 	const int utf8len = UTF8_encoded_len(c);
 	const int tail = strlen(&s[pos]) + 1;
 

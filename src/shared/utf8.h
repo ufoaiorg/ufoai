@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * never do. */
 #define UTF8_CONTINUATION_BYTE(c) (((c) & 0xc0) == 0x80)
 
-int UTF8_delete_char(char* s, int pos);
-int UTF8_insert_char(char* s, int n, int pos, int codepoint);
+int UTF8_delete_char_at(char* s, int pos);
+int UTF8_insert_char_at(char* s, int n, int pos, int codepoint);
 int UTF8_char_len(unsigned char c);
 int UTF8_next(const char** str);
 int UTF8_encoded_len(int codepoint);
