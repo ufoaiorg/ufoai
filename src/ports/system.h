@@ -36,33 +36,33 @@ NON-PORTABLE SYSTEM SERVICES
 struct qFILE_s;
 
 void Sys_Init(void);
-void Sys_NormPath(char *path);
+void Sys_NormPath(char* path);
 void Sys_Sleep(int milliseconds);
-const char *Sys_GetCurrentUser(void);
-int Sys_Setenv(const char *name, const char *value);
+const char* Sys_GetCurrentUser(void);
+int Sys_Setenv(const char* name, const char* value);
 void Sys_InitSignals(void);
-const char *Sys_SetLocale(const char *localeID);
-const char *Sys_GetLocale(void);
+const char* Sys_SetLocale(const char* localeID);
+const char* Sys_GetLocale(void);
 
-const char *Sys_ConsoleInput(void);
-void Sys_ConsoleOutput(const char *string);
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
+const char* Sys_ConsoleInput(void);
+void Sys_ConsoleOutput(const char* string);
+void Sys_Error(const char* error, ...) __attribute__((noreturn, format(__printf__, 1, 2)));
 void Sys_Quit(void);
-char *Sys_GetHomeDirectory(void);
+char* Sys_GetHomeDirectory(void);
 
 void Sys_ConsoleShutdown(void);
 void Sys_ConsoleInit(void);
 void Sys_ShowConsole(bool show);
 
 /* pass in an attribute mask of things you wish to REJECT */
-char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
-char *Sys_FindNext(unsigned musthave, unsigned canthave);
+char* Sys_FindFirst(const char* path, unsigned musthave, unsigned canthave);
+char* Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
-void Sys_ListFilteredFiles(const char *basedir, const char *subdirs, const char *filter, linkedList_t** list);
-void Sys_Mkdir(const char *path);
-void Sys_Mkfifo(const char *ospath, struct qFILE_s *f);
-char *Sys_Cwd(void);
+void Sys_ListFilteredFiles(const char* basedir, const char* subdirs, const char* filter, linkedList_t** list);
+void Sys_Mkdir(const char* path);
+void Sys_Mkfifo(const char* ospath, struct qFILE_s *f);
+char* Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);
 void Sys_Backtrace(void);
-void Sys_OpenURL(const char *url);
+void Sys_OpenURL(const char* url);

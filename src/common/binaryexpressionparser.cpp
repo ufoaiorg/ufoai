@@ -57,7 +57,7 @@ private:
 		SkipWhiteSpaces(s);
 	}
 
-	const char *GetSwitchName (const char** s)
+	const char* GetSwitchName (const char** s)
 	{
 		int pos = 0;
 
@@ -150,10 +150,10 @@ private:
 	}
 
 public:
-	BinaryExpressionParser (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdataPtr) :
+	BinaryExpressionParser (const char* expr, BEPEvaluteCallback_t varFuncParam, const void* userdataPtr) :
 		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam), userdata(userdataPtr)
 	{
-		const char *str = expr;
+		const char* str = expr;
 		result = CheckOR(&str);
 		/* check for no end error */
 		if (Q_strvalid(str) && !binaryExpressionParserError)
@@ -171,7 +171,7 @@ public:
 	}
 };
 
-bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam, const void* userdata)
+bool BEP_Evaluate (const char* expr, BEPEvaluteCallback_t varFuncParam, const void* userdata)
 {
 	if (!Q_strvalid(expr))
 		return true;

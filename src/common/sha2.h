@@ -19,7 +19,7 @@ void Com_SHA2Finish (sha2_context *ctx, byte digest[32]);
  * @brief Output SHA-256(file contents)
  * @return @c true if successful
  */
-bool Com_SHA2File (const char *filename, byte digest[32]);
+bool Com_SHA2File (const char* filename, byte digest[32]);
 
 /**
  * @brief Output SHA-256(buf)

@@ -47,7 +47,7 @@ typedef struct sv_edict_s {
 typedef struct sv_model_s {
 	AABB aabb;			/**< the mins and maxs of the model bounding box */
 	int frame;			/**< the frame the mins and maxs were calculated for */
-	char *name;			/**< the model path (relative to base/ */
+	char* name;			/**< the model path (relative to base/ */
 } sv_model_t;
 
 /**
@@ -175,14 +175,14 @@ extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;			/**< run the game lib threaded */
 
 /* sv_main.c */
-void SV_DropClient(client_t *drop, const char *message);
+void SV_DropClient(client_t *drop, const char* message);
 int SV_CountPlayers(void);
 void SV_InitOperatorCommands(void);
 void SV_UserinfoChanged(client_t *cl);
 void SV_ReadPacket(struct net_stream *s);
-char *SV_GetConfigString(int index);
+char* SV_GetConfigString(int index);
 int SV_GetConfigStringInteger(int index);
-char *SV_SetConfigString(int index, ...);
+char* SV_SetConfigString(int index, ...);
 /* ensure that always two parameters are used */
 #define SV_SetConfigString(index, value) SV_SetConfigString(index, value)
 client_t *SV_GetNextClient(client_t *lastClient);
@@ -194,12 +194,12 @@ void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
 
 /* sv_init.c */
-void SV_Map(bool day, const char *levelstring, const char *assembly);
+void SV_Map(bool day, const char* levelstring, const char* assembly);
 
 void SV_Multicast(int mask, const dbuffer &msg);
-void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(__printf__,2,3)));
-void SV_ClientPrintf(client_t *cl, int level, const char *fmt, ...) __attribute__((format(__printf__,3,4)));
-void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(__printf__,2,3)));
+void SV_ClientCommand(client_t *client, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
+void SV_ClientPrintf(client_t *cl, int level, const char* fmt, ...) __attribute__((format(__printf__,3,4)));
+void SV_BroadcastPrintf(int level, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t *cl, int cmd, dbuffer *msg);
@@ -208,7 +208,7 @@ void SV_SetClientState(client_t *client, client_state_t state);
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);
 void SV_Heartbeat_f(void);
-bool SV_CheckMap(const char *map, const char *assembly);
+bool SV_CheckMap(const char* map, const char* assembly);
 
 /* sv_game.c */
 int SV_RunGameFrameThread(void *data);
@@ -228,9 +228,9 @@ int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t** list, int maxc
 
 /* returns the CONTENTS_* value from the world at the given point. */
 int SV_PointContents(const vec3_t p);
-const char *SV_GetFootstepSound(const char *texture);
-float SV_GetBounceFraction(const char *texture);
-bool SV_LoadModelAABB(const char *model, int frame, AABB& aabb);
+const char* SV_GetFootstepSound(const char* texture);
+float SV_GetBounceFraction(const char* texture);
+bool SV_LoadModelAABB(const char* model, int frame, AABB& aabb);
 trace_t SV_Trace(const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passedict, int contentmask);
 server_state_t SV_GetServerState(void);
 void SV_SetServerState(server_state_t);

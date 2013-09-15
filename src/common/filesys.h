@@ -74,9 +74,9 @@ typedef enum {
 /** @brief Links one file onto another - like a symlink */
 typedef struct filelink_s {
 	struct filelink_s *next;
-	char *from;
+	char* from;
 	int fromlength;
-	char *to;
+	char* to;
 } filelink_t;
 
 typedef struct {
@@ -110,7 +110,7 @@ typedef enum {
 FILESYSTEM
 ==============================================================
 */
-extern char *fs_maps[MAX_MAPS];
+extern char* fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
 
 /* directory searching */
@@ -122,34 +122,34 @@ extern int fs_numInstalledMaps;
 
 int FS_FileLength(qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
-int FS_WriteFile(const void *buffer, size_t len, const char *filename);
+int FS_WriteFile(const void *buffer, size_t len, const char* filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
-int FS_Printf(qFILE *f, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
+int FS_Printf(qFILE *f, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
 void FS_InitFilesystem(bool writeToHomeDir);
-void FS_AddGameDirectory(const char *dir, bool write);
+void FS_AddGameDirectory(const char* dir, bool write);
 void FS_AddHomeAsGameDirectory(const char* dir, bool write);
-void FS_RestartFilesystem(const char *gamedir);
-const char *FS_Gamedir(void);
-void FS_CreateOpenPipeFile(const char *filename, qFILE *f);
-const char *FS_NextPath(const char *prevpath);
+void FS_RestartFilesystem(const char* gamedir);
+const char* FS_Gamedir(void);
+void FS_CreateOpenPipeFile(const char* filename, qFILE *f);
+const char* FS_NextPath(const char* prevpath);
 void FS_ExecAutoexec(void);
 int FS_GetModList(struct linkedList_t** mods);
-const char *FS_GetCwd(void);
-void FS_NormPath(char *path);
-bool FS_FileExists(const char *filename, ...) __attribute__((format(__printf__, 1, 2)));
+const char* FS_GetCwd(void);
+void FS_NormPath(char* path);
+bool FS_FileExists(const char* filename, ...) __attribute__((format(__printf__, 1, 2)));
 
 void FS_GetMaps(bool reset);
 
-int FS_OpenFile(const char *filename, qFILE * file, filemode_t mode);
+int FS_OpenFile(const char* filename, qFILE * file, filemode_t mode);
 void FS_CloseFile(qFILE * f);
 
-bool FS_RenameFile(const char *from, const char *to, bool relative);
-void FS_RemoveFile(const char *osPath);
-void FS_CopyFile(const char *fromOSPath, const char *toOSPath);
+bool FS_RenameFile(const char* from, const char* to, bool relative);
+void FS_RemoveFile(const char* osPath);
+void FS_CopyFile(const char* fromOSPath, const char* toOSPath);
 
 /* note: this can't be called from another DLL, due to MS libc issues */
 
-int FS_LoadFile(const char *path, byte** buffer);
+int FS_LoadFile(const char* path, byte** buffer);
 
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
@@ -160,17 +160,17 @@ int FS_Read(void *buffer, int len, qFILE * f);
 
 void FS_FreeFile(void *buffer);
 
-int FS_CheckFile(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
+int FS_CheckFile(const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
 
-int FS_BuildFileList(const char *files);
-const char* FS_NextFileFromFileList(const char *files);
-char *FS_NextScriptHeader(const char *files, const char** name, const char** text);
-void FS_CreatePath(const char *path);
+int FS_BuildFileList(const char* files);
+const char* FS_NextFileFromFileList(const char* files);
+char* FS_NextScriptHeader(const char* files, const char** name, const char** text);
+void FS_CreatePath(const char* path);
 
 /* Make sure we have this available */
-char** FS_ListFiles(const char *findname, int* numfiles, unsigned musthave, unsigned canthave);
+char** FS_ListFiles(const char* findname, int* numfiles, unsigned musthave, unsigned canthave);
 
-const char *FS_GetFileData(const char *files);
+const char* FS_GetFileData(const char* files);
 
 /**
  * @brief cleanup function
