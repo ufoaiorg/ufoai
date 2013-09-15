@@ -62,6 +62,7 @@ void Sys_Error (const char *error, ...)
 	Sys_Backtrace();
 
 #ifdef COMPILE_UFO
+	Com_BreakIntoDebugger();
 	Sys_ConsoleShutdown();
 #endif
 
@@ -100,6 +101,10 @@ void Sys_Quit (void)
  */
 void Sys_Backtrace (void)
 {
+#ifdef COMPILE_UFO
+	Com_BreakIntoDebugger();
+#endif
+
 	const char *dumpFile = "crashdump.txt";
 	FILE *file = fopen(dumpFile, "w");
 	FILE *crash = file != nullptr ? file : stderr;

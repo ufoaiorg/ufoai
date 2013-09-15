@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ports/system.h"
 #include <set>
 #include <vector>
+#include <SDL.h>
 
 #define	MAXPRINTMSG	4096
 #define MAX_NUM_ARGVS	50
@@ -464,6 +465,43 @@ void Com_Error (int code, const char* fmt, ...)
 void Com_Drop (void)
 {
 	throw comDrop_t();
+}
+
+void Com_BreakIntoDebugger (void)
+{
+#ifdef DEBUG
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_MessageBoxData data;
+	SDL_MessageBoxButtonData okButton;
+	SDL_MessageBoxButtonData cancelButton;
+
+	OBJZERO(data);
+	OBJZERO(okButton);
+	OBJZERO(cancelButton);
+
+	okButton.flags |= SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+	okButton.text = "Yes";
+	okButton.buttonid = 1;
+
+	cancelButton.flags |= SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+	cancelButton.text = "No";
+	cancelButton.buttonid = 2;
+
+	const SDL_MessageBoxButtonData buttons[] = {okButton, cancelButton};
+	data.flags = SDL_MESSAGEBOX_ERROR;
+	data.title = "Error";
+	data.message = "Break into the debugger?";
+	data.numbuttons = lengthof(buttons);
+	data.buttons = buttons;
+	data.window = nullptr;
+
+	int buttonid = -1;
+	SDL_ShowMessageBox(&data, &buttonid);
+	if (buttonid == 1) {
+		Sys_Breakpoint();
+	}
+#endif
+#endif
 }
 
 /**

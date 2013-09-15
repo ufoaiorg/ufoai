@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <conio.h>
 #include <mmsystem.h>
 #include <shellapi.h>
+#include <intrin.h>
 
 HINSTANCE global_hInstance;
 
@@ -48,6 +49,11 @@ int Sys_Milliseconds (void)
 void Sys_Mkdir (const char* path)
 {
 	_mkdir(path);
+}
+
+void Sys_Breakpoint (void)
+{
+	__debugbreak();
 }
 
 #ifdef COMPILE_UFO

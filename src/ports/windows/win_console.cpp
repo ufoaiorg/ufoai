@@ -161,6 +161,9 @@ void Sys_ConsoleOutput (const char* text)
  */
 void Sys_Backtrace (void)
 {
+#ifdef COMPILE_UFO
+	Com_BreakIntoDebugger();
+#endif
 }
 
 void Sys_Error (const char* error, ...)

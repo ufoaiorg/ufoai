@@ -81,6 +81,11 @@ void Sys_Sleep (int milliseconds)
 	usleep(milliseconds * 1000);
 }
 
+void Sys_Breakpoint (void)
+{
+	raise(SIGTRAP);
+}
+
 #ifdef COMPILE_UFO
 const char *Sys_SetLocale (const char *localeID)
 {
