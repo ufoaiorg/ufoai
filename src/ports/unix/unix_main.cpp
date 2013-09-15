@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <locale.h>
 #include <signal.h>
 #include <dirent.h>
+#include <SDL.h>
 
 #include "../../common/common.h"
 #include "../system.h"
@@ -99,6 +100,39 @@ void Sys_Error (const char *error, ...)
 
 	fprintf(stderr, "Error: %s\n", string);
 
+#ifdef DEBUG
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_MessageBoxData data;
+	SDL_MessageBoxButtonData okButton;
+	SDL_MessageBoxButtonData cancelButton;
+
+	OBJZERO(data);
+	OBJZERO(okButton);
+	OBJZERO(cancelButton);
+
+	okButton.flags |= SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+	okButton.text = "OK";
+	okButton.buttonid = 1;
+
+	cancelButton.flags |= SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+	cancelButton.text = "Cancel";
+	cancelButton.buttonid = 2;
+
+	const SDL_MessageBoxButtonData buttons[] = {okButton, cancelButton};
+	data.flags = SDL_MESSAGEBOX_ERROR;
+	data.title = "Error";
+	data.message = string;
+	data.numbuttons = lengthof(buttons);
+	data.buttons = buttons;
+	data.window = nullptr;
+
+	int buttonid = -1;
+	SDL_ShowMessageBox(&data, &buttonid);
+	if (buttonid == 1) {
+		raise(SIGTRAP);
+	}
+#endif
+#endif
 	exit(1);
 }
 
