@@ -141,7 +141,7 @@ event alienbasediscovered
 event detect_harvester
 {
 	type	"ufo_detection"
-	require	"ufo[craft_ufo_harvester]"
+	require	"ufo[craft_ufo_harvester] & !installation[ufoyard]"
 	once	true // remove this event after it triggers
 	command	"addeventmail tip_buildufoyard"
 }
