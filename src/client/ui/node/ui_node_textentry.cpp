@@ -320,14 +320,8 @@ void uiTextEntryNode::draw (uiNode_t *node)
 			memset(buf, HIDECHAR, size);
 			buf[size] = '\0';
 		} else {
-			size_t size = strlen(text);
-
-			if (size > MAX_VAR - 2)
-				size = MAX_VAR - 2;
-
-			/** @todo Does this not chop multi-byte UTF-8 chars in half? Change to UTF8_strncpyz()? */
-				memcpy(buf, text, size);
-			buf[size] = '\0';
+			/* leave one byte empty for the text-based cursor */
+			UTF8_strncpyz(buf, text, sizeof(buf) - 1);
 		}
 
 		/** @todo Make the cursor into a real graphical object instead of using a text character. */
