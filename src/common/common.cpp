@@ -1372,7 +1372,7 @@ ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *c
 	return event;
 }
 
-static void Delay_Events (EventPriorityQueue::iterator i)
+static void Delay_Events (int now, EventPriorityQueue::iterator i)
 {
 	ScheduleEventPtr event = *i;
 	EventPriorityQueue reOrder;
@@ -1383,6 +1383,11 @@ static void Delay_Events (EventPriorityQueue::iterator i)
 			++i;
 			continue;
 		}
+		if (tmpEvent->delay != nullptr && !tmpEvent->delay(now, tmpEvent->data)){
+			++i;
+			continue;
+		}
+
 		tmpEvent->when += event->delayFollowing;
 		reOrder.insert(tmpEvent);
 		eventQueue.erase(i++);
@@ -1411,8 +1416,8 @@ ScheduleEventPtr Dequeue_Event (int now)
 		}
 
 		/* delay all other events if this one is blocked */
-		if (event->delayFollowing > 0 && (event->delay == nullptr || event->delay(now, event->data))) {
-			Delay_Events(i);
+		if (event->delayFollowing > 0) {
+			Delay_Events(now, i);
 			break;
 		}
 	}
