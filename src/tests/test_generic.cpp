@@ -504,6 +504,74 @@ static void testStringFunctions (void)
 
 	buf[5] = '\177';
 	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".ooba.");
+
+
+	/* UTF8_char_offset_to_byte_offset */
+
+	Q_strncpyz(buf, "mn\xD0\x80opq\xD0\x81r", sizeof(buf));
+
+	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 4), 5);
+	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 0), 0);
+	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, -1), 0);
+	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 999), 10);
+
+	/* UTF8_delete_char_at */
+
+	Q_strncpyz(buf, "mn\xD0\x80opq\xD0\x81r", sizeof(buf));
+
+	/* single-byte char before any multi-byte chars */
+	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 4), 1);
+	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x80oq\xD0\x81r")
+
+	/* multi-byte char after a multi-byte char */
+	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 5), 2);
+	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x80oqr");
+
+	/* negative index deletes first char */
+	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, -1), 1);
+	CU_ASSERT_STRING_EQUAL(buf, "n\xD0\x80oqr");
+
+	/* too-high index deletes nothing */
+	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 999), 0);
+	CU_ASSERT_STRING_EQUAL(buf, "n\xD0\x80oqr");
+
+	/* UTF8_insert_char_at */
+
+	Q_strncpyz(buf, "m\xD0\x82opqr", sizeof(buf));
+
+	/* single-byte char before any multi-byte chars */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 1, (int)'n'), 1);
+	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x82opqr");
+
+	/* multi-byte char after a multi-byte char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 5, 0x0403), 2);
+	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x82op\xD0\x83qr");
+
+	/* negative index inserts as first char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), -1, 0x0404), 2);
+	CU_ASSERT_STRING_EQUAL(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr");
+
+	/* too-high index inserts as last char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 999, 0x0405), 2);
+	CU_ASSERT_STRING_EQUAL(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr\xD0\x85");
+
+	Q_strncpyz(buf, "mnopqr", sizeof(buf));
+
+	/* trigger buffer overrun protection using multi-byte char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 8, 0, 0x0405), 0);
+	CU_ASSERT_STRING_EQUAL(buf, "mnopqr");
+
+	/* trigger buffer overrun protection using single-byte char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 7, 0, (int)'o'), 0);
+	CU_ASSERT_STRING_EQUAL(buf, "mnopqr");
+
+	/* exactly fill the buffer using multi-byte char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 9, 1, 0x0406), 2);
+	CU_ASSERT_STRING_EQUAL(buf, "m\xD0\x86nopqr");
+
+	/* exactly fill the buffer using single-byte char */
+	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 10, 1, (int)'s'), 1);
+	CU_ASSERT_STRING_EQUAL(buf, "ms\xD0\x86nopqr");
 }
 
 static void testHttpHelperFunctions (void)
