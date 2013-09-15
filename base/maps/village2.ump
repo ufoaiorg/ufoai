@@ -143,6 +143,15 @@ tile +b2x2_diner01
 	0		0		0		0
 }
 
+tile +b2x2_dentist01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
 // Parks -----------------------------------------------------------*
 
 tile +p4x4_fountain01
@@ -346,6 +355,7 @@ tile +mp4
 
 tileset 2x2
 {
+	+b2x2_dentist01
 	+b2x2_diner01
 	+b2x2_house01
 	+b2x2_house02
