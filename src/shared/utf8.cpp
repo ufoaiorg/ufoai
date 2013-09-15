@@ -71,7 +71,7 @@ int UTF8_insert_char_at (char* s, int n, int pos, int c)
 	if (utf8len == 0)
 		return 0;
 
-	if (pos + tail + utf8len >= n)
+	if (pos + tail + utf8len > n)
 		return 0;
 
 	/* Insertion: move up rest of string. Also moves string terminator. */
