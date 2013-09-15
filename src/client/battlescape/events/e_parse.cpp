@@ -84,9 +84,9 @@ static void CL_LogEvent (const eventRegister_t *eventData)
 void CL_BlockBattlescapeEvents (bool block)
 {
 	if (block)
-		Com_DPrintf(DEBUG_CLIENT, "block battlescape events\n");
+		Com_DPrintf(DEBUG_EVENTSYS, "block battlescape events\n");
 	else
-		Com_DPrintf(DEBUG_CLIENT, "unblock battlescape events\n");
+		Com_DPrintf(DEBUG_EVENTSYS, "unblock battlescape events\n");
 	cl.eventsBlocked = block;
 }
 
@@ -125,7 +125,12 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
  */
 static bool CL_DelayBattlescapeEvent (int now, void* data)
 {
-	return CL_AreBattlescapeEventsBlocked();
+	if (!CL_AreBattlescapeEventsBlocked())
+		return false;
+	const evTimes_t *event = (evTimes_t *)data;
+	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+	Com_DPrintf(DEBUG_EVENTSYS, "delay event %p type %s from %i\n", (void*)event, eventData->name, now);
+	return true;
 }
 
 /**
