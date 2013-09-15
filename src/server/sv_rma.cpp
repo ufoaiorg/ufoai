@@ -63,6 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
 /** @brief for every x/y we can store the tiles that can cover that place here */
 static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
+static int minMissingSolids;
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
 static SDL_mutex *mapLock;
@@ -1157,8 +1158,11 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 	}
 	if (solids < gapCount) {
 		if (sv_rmadisplaythemap->integer) {
+			const int missing = gapCount - solids;
 			SV_RmaPrintMap(map);
-			Com_Printf("out of solids\n");
+			if (minMissingSolids > missing)
+				minMissingSolids = missing;
+			Com_Printf("out of solids (missing: %i min: %i)\n", missing, minMissingSolids);
 		}
 		return false;
 	}
@@ -1562,6 +1566,7 @@ static bool SV_AddMissingTiles (MapInfo *map)
 		}
 	}
 
+	minMissingSolids = 999;
 	return SV_AddMissingTiles_r(map, 0, n, posTileList[0], nullptr, 0, 0);
 }
 
