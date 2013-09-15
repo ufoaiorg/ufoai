@@ -49,8 +49,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mapConfig_t config;
 static char mapFilename[MAX_OSPATH];
 
-memPool_t *com_genericPool;
-memPool_t *com_fileSysPool;
+memPool_t* com_genericPool;
+memPool_t* com_fileSysPool;
 
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
@@ -146,7 +146,7 @@ static const usagePair_t usageArray[] = {
  */
 static void Usage (void)
 {
-	const usagePair_t *v;
+	const usagePair_t* v;
 	int maxFlagsLen = 0;
 
 	/* run through to find the length of the longest

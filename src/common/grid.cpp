@@ -95,7 +95,7 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  * @return true if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
+static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t* path, int x, int y, int z)
 {
 	pos_t** p;
 	int i;
@@ -124,7 +124,7 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 	return false;
 }
 
-static void Grid_SetMoveData (pathing_t *path, const pos3_t toPos, const int crouch, const byte length, const int dir, const int oldZ)
+static void Grid_SetMoveData (pathing_t* path, const pos3_t toPos, const int crouch, const byte length, const int dir, const int oldZ)
 {
 	RT_AREA_TEST_POS(path, toPos, crouch);
 	RT_AREA_POS(path, toPos, crouch) = length;	/**< Store TUs for this square. */
@@ -162,11 +162,11 @@ public:
 	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool init ();
 	bool calcNewPos ();
-	void calcNewTUs (const pathing_t *path);
-	bool checkWalkingDirections (const pathing_t *path);
+	void calcNewTUs (const pathing_t* path);
+	bool checkWalkingDirections (const pathing_t* path);
 	bool checkFlyingDirections () const;
 	bool checkVerticalDirections () const;
-	bool isPossible (const pathing_t *path);
+	bool isPossible (const pathing_t* path);
 };
 
 /**
@@ -242,7 +242,7 @@ bool Step::calcNewPos (void)
  * @brief Calculate the TUs after we in the given dir
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  */
-void Step::calcNewTUs (const pathing_t *path)
+void Step::calcNewTUs (const pathing_t* path)
 {
 	const byte TUsSoFar = RT_AREA_POS(path, fromPos, crouchingState);
 	/* Find the number of TUs used (normally) to move in this direction. */
@@ -259,7 +259,7 @@ void Step::calcNewTUs (const pathing_t *path)
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @return false if we can't fly there
  */
-bool Step::checkWalkingDirections (const pathing_t *path)
+bool Step::checkWalkingDirections (const pathing_t* path)
 {
 	int nx, ny, nz;
 	int passageHeight;
@@ -451,7 +451,7 @@ bool Step::checkVerticalDirections () const
 /**
  * @param[in] path Pointer to client or server side pathing table (clMap, svMap)
  */
-bool Step::isPossible (const pathing_t *path)
+bool Step::isPossible (const pathing_t* path)
 {
 	/* calculate the position we would normally end up if moving in the given dir. */
 	if (!calcNewPos()) {
@@ -506,7 +506,7 @@ bool Step::isPossible (const pathing_t *path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
+void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
 {
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
@@ -609,7 +609,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
+bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
 {
 	bool found = false;
 	int count;
@@ -705,7 +705,7 @@ bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pat
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
  * @sa AI_ActorThink
  */
-void Grid_MoveStore (pathing_t *path)
+void Grid_MoveStore (pathing_t* path)
 {
 	memcpy(path->areaStored, path->area, sizeof(path->areaStored));
 }
@@ -720,7 +720,7 @@ void Grid_MoveStore (pathing_t *path)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingState, bool stored)
+pos_t Grid_MoveLength (const pathing_t* path, const pos3_t to, byte crouchingState, bool stored)
 {
 	/* Confirm bounds */
 	assert(to[2] < PATHFINDING_HEIGHT);
@@ -741,7 +741,7 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
  * @return a direction vector (see dvecs and DIRECTIONS)
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingState)
+int Grid_MoveNext (const pathing_t* path, const pos3_t toPos, byte crouchingState)
 {
 	const pos_t l = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
 
@@ -840,7 +840,7 @@ pos_t Grid_Fall (const Routing &routing, const actorSizeEnum_t actorSize, const 
  * @param[in] path Pointer to client or server side pathing table
  * @param[in] toPos Desired position
  */
-bool Grid_ShouldUseAutostand (const pathing_t *path, const pos3_t toPos)
+bool Grid_ShouldUseAutostand (const pathing_t* path, const pos3_t toPos)
 {
 	const int tusCrouched = RT_AREA_POS(path, toPos, 1);
 	const int tusUpright = RT_AREA_POS(path, toPos, 0);
@@ -876,7 +876,7 @@ void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, con
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBox &box, const char** list)
+void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBox &box, const char** list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -950,12 +950,12 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, Routing &routing, const GridBo
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (mapTiles_t *mapTiles, Routing &routing, const char* name, const GridBox &box, const char** list)
+void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing &routing, const char* name, const GridBox &box, const char** list)
 {
 	if (box.isZero()) {
 		pos3_t min, max;
 		vec3_t absmin, absmax;
-		const cBspModel_t *model;
+		const cBspModel_t* model;
 		unsigned int i;
 		/* get inline model, if it is one */
 		if (*name != '*') {

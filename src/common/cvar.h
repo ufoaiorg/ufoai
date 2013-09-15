@@ -79,7 +79,7 @@ typedef struct cvar_s {
 	float value;			/**< value as float */
 	int integer;			/**< value as integer */
 	bool (*check) (struct cvar_s* cvar);	/**< cvar check function */
-	cvarChangeListener_t *changeListener;
+	cvarChangeListener_t* changeListener;
 	struct cvar_s *next;
 	struct cvar_s *prev;
 	struct cvar_s *hash_next;
@@ -106,26 +106,26 @@ typedef SharedPtr<CvarListener> CvarListenerPtr;
 /**
  * @brief Return the first cvar of the cvar list
  */
-cvar_t *Cvar_GetFirst(void);
+cvar_t* Cvar_GetFirst(void);
 
 /**
  * @brief creates the variable if it doesn't exist, or returns the existing one
  * if it exists, the value will not be changed, but flags will be ORed in
  * that allows variables to be unarchived without needing bitflags
  */
-cvar_t *Cvar_Get(const char* varName, const char* value = "", int flags = 0, const char* desc = nullptr);
+cvar_t* Cvar_Get(const char* varName, const char* value = "", int flags = 0, const char* desc = nullptr);
 
 /**
  * @brief will create the variable if it doesn't exist
  */
-cvar_t *Cvar_Set(const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
+cvar_t* Cvar_Set(const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 
 /**
  * @brief will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet(const char* varName, const char* value);
+cvar_t* Cvar_ForceSet(const char* varName, const char* value);
 
-cvar_t *Cvar_FullSet(const char* varName, const char* value, int flags);
+cvar_t* Cvar_FullSet(const char* varName, const char* value, int flags);
 
 /**
  * @brief expands value to a string and calls Cvar_Set
@@ -186,12 +186,12 @@ const char* Cvar_Serverinfo(char* info, size_t infoSize);
 /**
  * @brief this function checks cvar ranges and integral values
  */
-bool Cvar_AssertValue(cvar_t *cvar, float minVal, float maxVal, bool shouldBeIntegral);
+bool Cvar_AssertValue(cvar_t* cvar, float minVal, float maxVal, bool shouldBeIntegral);
 
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-bool Cvar_SetCheckFunction(const char* varName, bool (*check) (cvar_t *cvar));
+bool Cvar_SetCheckFunction(const char* varName, bool (*check) (cvar_t* cvar));
 
 /**
  * @brief Registers a listener that is executed each time a cvar changed its value.
@@ -199,7 +199,7 @@ bool Cvar_SetCheckFunction(const char* varName, bool (*check) (cvar_t *cvar));
  * @param varName The cvar name to register the listener for
  * @param listenerFunc The listener callback to register
  */
-cvarChangeListener_t *Cvar_RegisterChangeListener(const char* varName, cvarChangeListenerFunc_t listenerFunc);
+cvarChangeListener_t* Cvar_RegisterChangeListener(const char* varName, cvarChangeListenerFunc_t listenerFunc);
 
 /**
  * @brief Unregisters a cvar change listener
@@ -233,7 +233,7 @@ bool Cvar_Delete(const char* varName);
 /**
  * @brief Searches for a cvar given by parameter
  */
-cvar_t *Cvar_FindVar(const char* varName);
+cvar_t* Cvar_FindVar(const char* varName);
 
 /**
  * @brief Checks whether there are pending cvars for the given flags
@@ -252,7 +252,7 @@ bool Com_IsRenderModified(void);
 
 void Cvar_ClearVars(int flags);
 
-void Cvar_Reset(cvar_t *cvar);
+void Cvar_Reset(cvar_t* cvar);
 
 #ifdef DEBUG
 void Cvar_PrintDebugCvars(void);

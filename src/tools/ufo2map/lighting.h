@@ -43,7 +43,7 @@ typedef struct patch_s {
 	struct patch_s	*next;		/**< next in face */
 } patch_t;
 
-extern patch_t *face_patches[MAX_MAP_FACES];
+extern patch_t* face_patches[MAX_MAP_FACES];
 /** for rotating bmodels */
 extern vec3_t face_offset[MAX_MAP_FACES];
 

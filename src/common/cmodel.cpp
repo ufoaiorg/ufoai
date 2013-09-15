@@ -39,7 +39,7 @@ GAME RELATED TRACING USING ENTITIES
  * @param[out] mins The maxs of the bbox
  * @param[out] maxs The mins of the bbox
  */
-static void CM_CalculateBoundingBox (const cBspModel_t *model, vec3_t mins, vec3_t maxs)
+static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3_t maxs)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
 	VectorAdd(model->origin, model->mins, mins);
@@ -61,7 +61,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t *model, vec3_t mins, vec3
  * @param[in] model The entity to check
  * @return true - the line isn't anywhere near the model
  */
-static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBspModel_t *model)
+static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBspModel_t* model)
 {
 	vec3_t amins, amaxs;
 	CM_CalculateBoundingBox(model, amins, amaxs);
@@ -191,7 +191,7 @@ int32_t CM_HeadnodeForBox (MapTile &tile, const vec3_t mins, const vec3_t maxs)
  * @return true - hit something
  * @return false - hit nothing
  */
-bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
+bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
 {
 	const char** name;
 
@@ -205,7 +205,7 @@ bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop
 		return false;
 
 	for (name = entlist; *name; name++) {
-		const cBspModel_t *model;
+		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
@@ -241,7 +241,7 @@ bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist)
+bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist)
 {
 	const char** name;
 	bool blocked;
@@ -253,7 +253,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
 		return blocked;
 
 	for (name = entlist; *name; name++) {
-		const cBspModel_t *model;
+		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
@@ -298,7 +298,7 @@ bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t st
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
-trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject)
+trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject)
 {
 	int tile, i;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
@@ -361,7 +361,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
  * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
 	/* trace against world first */
 	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
@@ -377,7 +377,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const Line &traceLine, con
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
-		const cBspModel_t *model = CM_InlineModel(mapTiles, *name);
+		const cBspModel_t* model = CM_InlineModel(mapTiles, *name);
 		assert(model);
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;

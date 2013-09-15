@@ -44,7 +44,7 @@ plane_t mapplanes[MAX_MAP_PLANES];
 int nummapplanes;
 
 #define	PLANE_HASHES	1024
-static plane_t *planehash[PLANE_HASHES];
+static plane_t* planehash[PLANE_HASHES];
 
 static vec3_t map_mins, map_maxs;
 static int c_boxbevels = 0;
@@ -100,7 +100,7 @@ static int PlaneTypeForNormal (const vec3_t normal)
  * @param dist
  * @return true if the normal and the distance vector are the same (by some epsilon) as in the given plane
  */
-static inline bool PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
+static inline bool PlaneEqual (const plane_t* p, const vec3_t normal, const vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
@@ -110,7 +110,7 @@ static inline bool PlaneEqual (const plane_t *p, const vec3_t normal, const vec_
 	return false;
 }
 
-static inline void AddPlaneToHash (plane_t *p)
+static inline void AddPlaneToHash (plane_t* p)
 {
 	const int hash = GetPlaneHashValueForDistance(p->dist);
 	p->hash_chain = planehash[hash];
@@ -119,7 +119,7 @@ static inline void AddPlaneToHash (plane_t *p)
 
 static uint16_t CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
-	plane_t *p;
+	plane_t* p;
 
 	if (VectorLength(normal) < 0.5)
 		Sys_Error("FloatPlane: bad normal (%.3f:%.3f:%.3f)", normal[0], normal[1], normal[2]);
@@ -186,7 +186,7 @@ static inline bool SnapVector (vec3_t normal)
  * @param[in,out] dist - Plane constant - return as rounded to integer if it
  * is within an epsilon of @c MAP_DIST_EPSILON
  */
-static inline void SnapPlane (vec3_t normal, vec_t *dist)
+static inline void SnapPlane (vec3_t normal, vec_t* dist)
 {
 	SnapVector(normal);
 
@@ -197,7 +197,7 @@ static inline void SnapPlane (vec3_t normal, vec_t *dist)
 uint16_t FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
 {
 	int i;
-	plane_t *p;
+	plane_t* p;
 	int hash;
 
 	SnapPlane(normal, &dist);
@@ -227,7 +227,7 @@ uint16_t FindOrCreateFloatPlane (vec3_t normal, vec_t dist)
  * @param[in] p2 Three points on the plane. (A vector with plane coordinates)
  * @return the index of the plane in the planes list.
  */
-static int16_t PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
+static int16_t PlaneFromPoints (const mapbrush_t* b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
 {
 	vec3_t t1, t2, normal;
 	vec_t dist;
@@ -254,10 +254,10 @@ static int16_t PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3
  * @param b The mapbrush to get the content flags for
  * @return The calculated content flags
  */
-static int BrushContents (mapbrush_t *b)
+static int BrushContents (mapbrush_t* b)
 {
 	int contentFlags, i;
-	const side_t *s;
+	const side_t* s;
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
@@ -277,7 +277,7 @@ static int BrushContents (mapbrush_t *b)
  * @param brush The brush to extract the level flags from
  * @return The level flags (content flags) of the given brush
  */
-byte GetLevelFlagsFromBrush (const mapbrush_t *brush)
+byte GetLevelFlagsFromBrush (const mapbrush_t* brush)
 {
 	const byte levelflags = (brush->contentFlags >> 8) & 0xFF;
 	return levelflags;
@@ -289,7 +289,7 @@ byte GetLevelFlagsFromBrush (const mapbrush_t *brush)
  * @brief Adds any additional planes necessary to allow the brush to be expanded
  * against axial bounding boxes
  */
-static void AddBrushBevels (mapbrush_t *b)
+static void AddBrushBevels (mapbrush_t* b)
 {
 	int axis, dir;
 	int i, j, l, order;
@@ -299,7 +299,7 @@ static void AddBrushBevels (mapbrush_t *b)
 	order = 0;
 	for (axis = 0; axis < 3; axis++) {
 		for (dir = -1; dir <= 1; dir += 2, order++) {
-			side_t *s;
+			side_t* s;
 			/* see if the plane is already present */
 			for (i = 0, s = b->original_sides; i < b->numsides; i++, s++) {
 				if (mapplanes[s->planenum].normal[axis] == dir)
@@ -346,8 +346,8 @@ static void AddBrushBevels (mapbrush_t *b)
 
 	/* test the non-axial plane edges */
 	for (i = 6; i < b->numsides; i++) {
-		side_t *s = b->original_sides + i;
-		winding_t *w = s->winding;
+		side_t* s = b->original_sides + i;
+		winding_t* w = s->winding;
 		if (!w)
 			continue;
 
@@ -374,7 +374,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* construct a plane */
 					vec3_t vec2 = {0, 0, 0};
 					float dist;
-					side_t *s2;
+					side_t* s2;
 
 					vec2[axis] = dir;
 					CrossProduct(vec, vec2, normal);
@@ -385,7 +385,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* if all the points on all the sides are
 					 * behind this plane, it is a proper edge bevel */
 					for (k = 0; k < b->numsides; k++) {
-						winding_t *w2;
+						winding_t* w2;
 						float minBack;
 
 						/* @note: This leads to different results on different archs
@@ -436,16 +436,16 @@ static void AddBrushBevels (mapbrush_t *b)
 /**
  * @brief makes basewindings for sides and mins / maxs for the brush
  */
-static bool MakeBrushWindings (mapbrush_t *brush)
+static bool MakeBrushWindings (mapbrush_t* brush)
 {
 	int i, j;
-	side_t *side;
+	side_t* side;
 
 	ClearBounds(brush->mins, brush->maxs);
 
 	for (i = 0; i < brush->numsides; i++) {
-		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
-		winding_t *w = BaseWindingForPlane(plane->normal, plane->dist);
+		const plane_t* plane = &mapplanes[brush->original_sides[i].planenum];
+		winding_t* w = BaseWindingForPlane(plane->normal, plane->dist);
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;
@@ -486,7 +486,7 @@ static bool MakeBrushWindings (mapbrush_t *brush)
  * @sa ParseBrush
  * @sa SetImpliedFlags
  */
-static inline void CheckFlags (side_t *side, const mapbrush_t *b)
+static inline void CheckFlags (side_t* side, const mapbrush_t* b)
 {
 	if ((side->contentFlags & CONTENTS_ACTORCLIP) && (side->contentFlags & CONTENTS_PASSABLE))
 		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
@@ -500,7 +500,7 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t *s)
+static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t* s)
 {
 	qFILE f;
 	bool terrainByTexture = false;
@@ -609,11 +609,11 @@ static void GenerateFootstepList (const char* filename, int mipTexIndex)
  * @param[in] mapent The entity the brush to parse belongs to
  * @param[in] filename The map filename, used to derive the name for the footsteps file
  */
-static void ParseBrush (entity_t *mapent, const char* filename)
+static void ParseBrush (entity_t* mapent, const char* filename)
 {
-	mapbrush_t *b;
+	mapbrush_t* b;
 	int i, j, k, m;
-	side_t *side;
+	side_t* side;
 	brush_texture_t td;
 	vec3_t planepts[3];
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
@@ -731,7 +731,7 @@ static void ParseBrush (entity_t *mapent, const char* filename)
 
 		/* see if the plane has been used already */
 		for (k = 0; k < b->numsides; k++) {
-			const side_t *s2 = b->original_sides + k;
+			const side_t* s2 = b->original_sides + k;
 			if (s2->planenum == planenum) {
 				Com_Printf("Entity %i, Brush %i: duplicate plane\n", b->entitynum, b->brushnum);
 				break;
@@ -839,10 +839,10 @@ static void ParseBrush (entity_t *mapent, const char* filename)
  * is parsed, so this is OK.
  * @sa MoveModelToWorld
  */
-static void MoveBrushesToWorld (entity_t *mapent)
+static void MoveBrushesToWorld (entity_t* mapent)
 {
 	int newbrushes, worldbrushes, i;
-	mapbrush_t *temp;
+	mapbrush_t* temp;
 
 	/* this is pretty gross, because the brushes are expected to be
 	 * in linear order for each entity */
@@ -877,14 +877,14 @@ static void MoveBrushesToWorld (entity_t *mapent)
  * @brief If there was an origin brush, offset all of the planes and texinfo
  * @note Used for e.g. func_door or func_rotating
  */
-static void AdjustBrushesForOrigin (const entity_t *ent)
+static void AdjustBrushesForOrigin (const entity_t* ent)
 {
 	int i, j;
 
 	for (i = 0; i < ent->numbrushes; i++) {
-		mapbrush_t *b = &mapbrushes[ent->firstbrush + i];
+		mapbrush_t* b = &mapbrushes[ent->firstbrush + i];
 		for (j = 0; j < b->numsides; j++) {
-			side_t *s = &b->original_sides[j];
+			side_t* s = &b->original_sides[j];
 			const ptrdiff_t index = s - brushsides;
 			const vec_t newdist = mapplanes[s->planenum].dist -
 				DotProduct(mapplanes[s->planenum].normal, ent->origin);
@@ -921,7 +921,7 @@ static inline bool IsInlineModelEntity (const char* entName)
  * @param[in] target The targetname value that the entity should have that we are
  * looking for
  */
-entity_t *FindTargetEntity (const char* target)
+entity_t* FindTargetEntity (const char* target)
 {
 	int i;
 
@@ -941,7 +941,7 @@ entity_t *FindTargetEntity (const char* target)
  */
 static bool ParseMapEntity (const char* filename, const char* entityString)
 {
-	entity_t *mapent;
+	entity_t* mapent;
 	const char* entName;
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
@@ -968,7 +968,7 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
 		if (*parsedToken == '{')
 			ParseBrush(mapent, filename);
 		else {
-			epair_t *e = ParseEpair(num_entities);
+			epair_t* e = ParseEpair(num_entities);
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}
@@ -1009,7 +1009,7 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
 			if (Q_strnull(token))
 				break;
 			const char* value = Mem_StrDup(token);
-			epair_t *e = AddEpair(key, value, num_entities);
+			epair_t* e = AddEpair(key, value, num_entities);
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		} while (true);
@@ -1021,7 +1021,7 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
  * @brief Recurse down the epair list
  * @note First writes the last element
  */
-static inline void WriteMapEntities (qFILE *f, const epair_t *e)
+static inline void WriteMapEntities (qFILE *f, const epair_t* e)
 {
 	if (!e)
 		return;
@@ -1039,15 +1039,15 @@ static inline void WriteMapEntities (qFILE *f, const epair_t *e)
  * @param[in] j the index of the brush in the entity, to label the brush in the comment in the map file
  * @param[in] f file to write to
  */
-static void WriteMapBrush (const mapbrush_t *brush, const int j, qFILE *f)
+static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE *f)
 {
 	int k = 0;
 	FS_Printf(f, "// brush %i\n{\n", j);
 	for (k = 0; k < brush->numsides; k++) {
-		const side_t *side = &brush->original_sides[k];
+		const side_t* side = &brush->original_sides[k];
 		const ptrdiff_t index = side - brushsides;
-		const brush_texture_t *t = &side_brushtextures[index];
-		const plane_t *p = &mapplanes[side->planenum];
+		const brush_texture_t* t = &side_brushtextures[index];
+		const plane_t* p = &mapplanes[side->planenum];
 		int l;
 
 		for (l = 0; l < 3; l++)
@@ -1079,8 +1079,8 @@ void WriteMapFile (const char* filename)
 	removed = 0;
 	FS_Printf(&f, "\n");
 	for (i = 0; i < num_entities; i++) {
-		const entity_t *mapent = &entities[i];
-		const epair_t *e = mapent->epairs;
+		const entity_t* mapent = &entities[i];
+		const epair_t* e = mapent->epairs;
 
 		/* maybe we don't want to write it back into the file */
 		if (mapent->skip) {
@@ -1094,7 +1094,7 @@ void WriteMapFile (const char* filename)
 		 * jc counts the brushes written back. they may differ if some are skipped,
 		 * eg they are microbrushes */
 		for (j = 0, jc = 0; j < mapent->numbrushes; j++) {
-			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
+			const mapbrush_t* brush = &mapbrushes[mapent->firstbrush + j];
 			if (brush->skipWriteBack)
 				continue;
 			WriteMapBrush(brush, jc++, &f);

@@ -74,8 +74,8 @@ static void BuildFaceExtents (void)
 	int k;
 
 	for (k = 0; k < curTile->numfaces; k++) {
-		const dBspSurface_t *s = &curTile->faces[k];
-		const dBspTexinfo_t *tex = &curTile->texinfo[s->texinfo];
+		const dBspSurface_t* s = &curTile->faces[k];
+		const dBspTexinfo_t* tex = &curTile->texinfo[s->texinfo];
 
 		float *mins = face_extents[k].mins;
 		float *maxs = face_extents[k].maxs;
@@ -94,7 +94,7 @@ static void BuildFaceExtents (void)
 
 		for (i = 0; i < s->numedges; i++) {
 			const int e = curTile->surfedges[s->firstedge + i];
-			const dBspVertex_t *v;
+			const dBspVertex_t* v;
 			int j;
 
 			if (e >= 0)
@@ -127,9 +127,9 @@ static void BuildFaceExtents (void)
 /**
  * @sa BuildFaceExtents
  */
-static void CalcLightinfoExtents (lightinfo_t *l)
+static void CalcLightinfoExtents (lightinfo_t* l)
 {
-	const dBspSurface_t *s;
+	const dBspSurface_t* s;
 	float *stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
 	int i;
@@ -155,9 +155,9 @@ static void CalcLightinfoExtents (lightinfo_t *l)
 /**
  * @brief Fills in texorg, worldtotex. and textoworld
  */
-static void CalcLightinfoVectors (lightinfo_t *l)
+static void CalcLightinfoVectors (lightinfo_t* l)
 {
-	const dBspTexinfo_t *tex;
+	const dBspTexinfo_t* tex;
 	int i;
 	vec3_t texnormal;
 	vec_t distscale, dist;
@@ -230,12 +230,12 @@ static void CalcLightinfoVectors (lightinfo_t *l)
  * @param[in] sofs The sample offset for the s coordinates
  * @param[in] tofs The sample offset for the t coordinates
  */
-static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
+static void CalcPoints (lightinfo_t* l, float sofs, float tofs)
 {
 	int s, t, j;
 	int w, h, step;
 	vec_t starts, startt;
-	vec_t *surf;
+	vec_t* surf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
@@ -265,8 +265,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 /** @brief buckets for sample accumulation - clipped by the surface */
 typedef struct facelight_s {
 	int numsamples;
-	vec3_t *samples;    /**< lightmap samples */
-	vec3_t *directions; /**< for specular lighting/bumpmapping */
+	vec3_t* samples;    /**< lightmap samples */
+	vec3_t* directions; /**< for specular lighting/bumpmapping */
 } facelight_t;
 
 static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];
@@ -290,7 +290,7 @@ typedef struct light_s {
 	float		stopdot;	/**< spotlights cone */
 } light_t;
 
-static light_t *lights[LIGHTMAP_MAX];
+static light_t* lights[LIGHTMAP_MAX];
 static int numlights[LIGHTMAP_MAX];
 
 /**
@@ -301,12 +301,12 @@ static int numlights[LIGHTMAP_MAX];
 void BuildLights (void)
 {
 	int i;
-	light_t *l;
+	light_t* l;
 
 	/* surfaces */
 	for (i = 0; i < MAX_MAP_FACES; i++) {
 		/* iterate subdivided patches */
-		for(const patch_t *p = face_patches[i]; p; p = p->next) {
+		for(const patch_t* p = face_patches[i]; p; p = p->next) {
 			if (VectorEmpty(p->light))
 				continue;
 
@@ -330,7 +330,7 @@ void BuildLights (void)
 		float intensity;
 		const char* color;
 		const char* target;
-		const entity_t *e = &entities[i];
+		const entity_t* e = &entities[i];
 		const char* name = ValueForKey(e, "classname");
 		if (!Q_strstart(name, "light"))
 			continue;
@@ -372,7 +372,7 @@ void BuildLights (void)
 				l->stopdot = 10;
 			l->stopdot = cos(l->stopdot * torad);
 			if (target[0] != '\0') {	/* point towards target */
-				entity_t *e2 = FindTargetEntity(target);
+				entity_t* e2 = FindTargetEntity(target);
 				if (!e2)
 					Com_Printf("WARNING: light at (%i %i %i) has missing target '%s' - e.g. create an info_null that has a 'targetname' set to '%s'\n",
 						(int)l->origin[0], (int)l->origin[1], (int)l->origin[2], target, target);
@@ -401,7 +401,7 @@ void BuildLights (void)
 
 	/* handle worldspawn light settings */
 	{
-		const entity_t *e = &entities[0];
+		const entity_t* e = &entities[0];
 		const char* ambient, *light, *angles, *color;
 		float f;
 		int i;
@@ -554,7 +554,7 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int* headhints)
 {
-	light_t *l;
+	light_t* l;
 	vec3_t delta;
 	int* headhint;
 
@@ -649,8 +649,8 @@ static void FacesWithVert (int vert, int* faces, int* nfaces)
 
 	k = 0;
 	for (i = 0; i < curTile->numfaces; i++) {
-		const dBspSurface_t *face = &curTile->faces[i];
-		const dBspTexinfo_t *tex = &curTile->texinfo[face->texinfo];
+		const dBspSurface_t* face = &curTile->faces[i];
+		const dBspTexinfo_t* tex = &curTile->texinfo[face->texinfo];
 
 		/* only build vertex normals for phong shaded surfaces */
 		if (!(tex->surfaceFlags & SURF_PHONG))
@@ -695,9 +695,9 @@ void BuildVertexNormals (void)
 			continue;
 
 		for (j = 0; j < num_vert_faces; j++) {
-			const dBspSurface_t *face = &curTile->faces[vert_faces[j]];
-			const dBspPlane_t *plane = &curTile->planes[face->planenum];
-			extents_t *extends = &face_extents[vert_faces[j]];
+			const dBspSurface_t* face = &curTile->faces[vert_faces[j]];
+			const dBspPlane_t* plane = &curTile->planes[face->planenum];
+			extents_t* extends = &face_extents[vert_faces[j]];
 
 			/* scale the contribution of each face based on size */
 			VectorSubtract(extends->maxs, extends->mins, delta);
@@ -720,7 +720,7 @@ void BuildVertexNormals (void)
  * question, weighting them according to their proximity to the sample position.
  * @todo Implement it (just clones the normal of nearest vertex for now)
  */
-static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
+static void SampleNormal (const lightinfo_t* l, const vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist[MAX_VERT_FACES];
@@ -762,9 +762,9 @@ static const float sampleofs[2][MAX_SAMPLES][2] = {
  */
 void BuildFacelights (unsigned int facenum)
 {
-	dBspSurface_t *face;
-	dBspPlane_t *plane;
-	dBspTexinfo_t *tex;
+	dBspSurface_t* face;
+	dBspPlane_t* plane;
+	dBspTexinfo_t* tex;
 	float *center;
 	float *sdir, *tdir;
 	vec3_t normal, binormal;
@@ -772,7 +772,7 @@ void BuildFacelights (unsigned int facenum)
 	lightinfo_t li;
 	float scale;
 	int i, j, numsamples;
-	facelight_t *fl;
+	facelight_t* fl;
 	int* headhints;
 	const int grid_type = config.soft ? 1 : 0;
 
@@ -930,7 +930,7 @@ static void WriteTGA24 (const char* filename, const byte*  data, int width, int 
  * @param[out] texsize The resulting texture size vector. First value is width, second value is height
  * @param[in] scale The scale (1/scale) of the lightmap texture in relation to the surface texture
  */
-static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
+static void CalcTextureSize (const dBspSurface_t* s, vec2_t texsize, int scale)
 {
 	const float *stmins = face_extents[s - curTile->faces].stmins;
 	const float *stmaxs = face_extents[s - curTile->faces].stmaxs;
@@ -959,7 +959,7 @@ static void ExportLightmap (const char* path, const char* name, bool day)
 	const int scale = 1 << quant;
 
 	for (i = 0; i < curTile->numfaces; i++) {
-		const dBspSurface_t *face = &curTile->faces[i];
+		const dBspSurface_t* face = &curTile->faces[i];
 		const byte* lightmap = bspLightBytes + face->lightofs[lightmapIndex];
 		vec2_t texSize;
 
@@ -1013,7 +1013,7 @@ void FinalLightFace (unsigned int facenum)
 	vec3_t dir, intensity;
 	byte* dest;
 
-	dBspSurface_t *f = &curTile->faces[facenum];
+	dBspSurface_t* f = &curTile->faces[facenum];
 	facelight_t	*fl = &facelight[config.compile_for_day][facenum];
 
 	/* none-lit texture */

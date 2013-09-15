@@ -41,10 +41,10 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
 void EmitPlanes (void)
 {
 	int i;
-	const plane_t *mp = mapplanes;
+	const plane_t* mp = mapplanes;
 
 	for (i = 0; i < nummapplanes; i++, mp++) {
-		dBspPlane_t *dp = &curTile->planes[curTile->numplanes];
+		dBspPlane_t* dp = &curTile->planes[curTile->numplanes];
 		VectorCopy(mp->normal, dp->normal);
 		dp->dist = mp->dist;
 		dp->type = mp->type;
@@ -55,11 +55,11 @@ void EmitPlanes (void)
 /**
  * @brief Emits a leafnode to the bsp file
  */
-static void EmitLeaf (const node_t *node)
+static void EmitLeaf (const node_t* node)
 {
-	dBspLeaf_t *leaf_p;
+	dBspLeaf_t* leaf_p;
 	int i;
-	const bspbrush_t *b;
+	const bspbrush_t* b;
 
 	/* emit a leaf */
 	if (curTile->numleafs >= MAX_MAP_LEAFS)
@@ -99,9 +99,9 @@ static void EmitLeaf (const node_t *node)
  * @sa EmitDrawNode_r
  * @note Called for every node face
  */
-static void EmitFace (const face_t *f)
+static void EmitFace (const face_t* f)
 {
-	dBspSurface_t *df;
+	dBspSurface_t* df;
 	int i;
 
 	if (f->numpoints < 3) {
@@ -137,11 +137,11 @@ static void EmitFace (const face_t *f)
  * @brief Writes the draw nodes
  * @note Called after a drawing hull is completed
  */
-static int EmitDrawNode_r (node_t *node)
+static int EmitDrawNode_r (node_t* node)
 {
 	const char* side[2] = {"front", "back"};
-	dBspNode_t *n;
-	const face_t *f;
+	dBspNode_t* n;
+	const face_t* f;
 	int i;
 
 	if (node->planenum == PLANENUM_LEAF) {
@@ -197,7 +197,7 @@ static int EmitDrawNode_r (node_t *node)
  * @param[in] headnode the top-most node in this bsp tree
  * @return the index to the head node created.
  */
-int WriteBSP (node_t *headnode)
+int WriteBSP (node_t* headnode)
 {
 	int oldfaces, emittedHeadnode;
 
@@ -251,9 +251,9 @@ void EmitBrushes (void)
 	OBJZERO(curTile->brushes);
 
 	for (bnum = 0; bnum < nummapbrushes; bnum++) {
-		const mapbrush_t *b = &mapbrushes[bnum];
-		dBspBrush_t *db = &curTile->dbrushes[bnum];
-		cBspBrush_t *cb = &curTile->brushes[bnum];
+		const mapbrush_t* b = &mapbrushes[bnum];
+		dBspBrush_t* db = &curTile->dbrushes[bnum];
+		cBspBrush_t* cb = &curTile->brushes[bnum];
 
 		db->contentFlags = b->contentFlags;
 		db->firstbrushside = curTile->numbrushsides;
@@ -266,7 +266,7 @@ void EmitBrushes (void)
 			if (curTile->numbrushsides == MAX_MAP_BRUSHSIDES) {
 				Sys_Error("MAX_MAP_BRUSHSIDES (%i)", curTile->numbrushsides);
 			} else {
-				dBspBrushSide_t *cp = &curTile->brushsides[curTile->numbrushsides];
+				dBspBrushSide_t* cp = &curTile->brushsides[curTile->numbrushsides];
 				curTile->numbrushsides++;
 				cp->planenum = b->original_sides[j].planenum;
 				cp->texinfo = b->original_sides[j].texinfo;
@@ -357,10 +357,10 @@ extern int firstmodeledge;
  */
 void BeginModel (int entityNum)
 {
-	dBspModel_t *mod;
+	dBspModel_t* mod;
 	int start, end;
 	int j;
-	const entity_t *e;
+	const entity_t* e;
 	vec3_t mins, maxs;
 
 	if (curTile->nummodels == MAX_MAP_MODELS)
@@ -379,7 +379,7 @@ void BeginModel (int entityNum)
 	ClearBounds(mins, maxs);
 
 	for (j = start; j < end; j++) {
-		const mapbrush_t *b = &mapbrushes[j];
+		const mapbrush_t* b = &mapbrushes[j];
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
 			continue;
@@ -398,7 +398,7 @@ void BeginModel (int entityNum)
  */
 void EndModel (void)
 {
-	dBspModel_t *mod;
+	dBspModel_t* mod;
 
 	/* set surfaces and brushes */
 	mod = &curTile->models[curTile->nummodels];

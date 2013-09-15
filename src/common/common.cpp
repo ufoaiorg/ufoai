@@ -43,35 +43,35 @@ static const char* com_argv[MAX_NUM_ARGVS + 1];
 
 static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
 
-cvar_t *developer;
-cvar_t *http_proxy;
-cvar_t *http_timeout;
+cvar_t* developer;
+cvar_t* http_proxy;
+cvar_t* http_timeout;
 static const char* consoleLogName = "ufoconsole.log";
-static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
-cvar_t *sv_dedicated;
+static cvar_t* logfile_active; /* 1 = buffer log, 2 = flush after each print */
+cvar_t* sv_dedicated;
 #ifndef DEDICATED_ONLY
-static cvar_t *cl_maxfps;
-cvar_t *s_language;
+static cvar_t* cl_maxfps;
+cvar_t* s_language;
 #endif
-cvar_t *sv_gametype;
-cvar_t *masterserver_url;
-cvar_t *port;
-cvar_t *sys_priority;
-cvar_t *sys_affinity;
-cvar_t *sys_os;
-cvar_t *hwclass;
-static cvar_t *uploadcrashdump;
+cvar_t* sv_gametype;
+cvar_t* masterserver_url;
+cvar_t* port;
+cvar_t* sys_priority;
+cvar_t* sys_affinity;
+cvar_t* sys_os;
+cvar_t* hwclass;
+static cvar_t* uploadcrashdump;
 
 static qFILE logfile;
 static qFILE pipefile;
 
-memPool_t *com_aliasSysPool;
-memPool_t *com_cmdSysPool;
-memPool_t *com_cmodelSysPool;
-memPool_t *com_cvarSysPool;
-memPool_t *com_fileSysPool;
-memPool_t *com_genericPool;
-memPool_t *com_networkPool;
+memPool_t* com_aliasSysPool;
+memPool_t* com_cmdSysPool;
+memPool_t* com_cmodelSysPool;
+memPool_t* com_cvarSysPool;
+memPool_t* com_fileSysPool;
+memPool_t* com_genericPool;
+memPool_t* com_networkPool;
 
 #define TIMER_CHECK_INTERVAL 100
 #define TIMER_CHECK_LAG 3
@@ -80,7 +80,7 @@ memPool_t *com_networkPool;
 #define TIMER_LATENESS_HISTORY 32
 
 struct timer {
-	cvar_t *min_freq;
+	cvar_t* min_freq;
 	int interval;
 	int recent_lateness[TIMER_LATENESS_HISTORY];
 	int next_lateness;
@@ -103,7 +103,7 @@ public:
 typedef std::multiset<ScheduleEventPtr, CompareScheduleEvent> EventPriorityQueue;
 static EventPriorityQueue eventQueue;
 
-static void Schedule_Timer(cvar_t *freq, event_func *func, event_check_func *check, void* data);
+static void Schedule_Timer(cvar_t* freq, event_func *func, event_check_func *check, void* data);
 
 /*
 ==============================================================================
@@ -741,7 +741,7 @@ bool Com_CheckDuplicateFile (const char* file, const char* wildcard)
  * @param[out] pos The position in the buffer after command completion
  * @param[in] offset The input buffer position to put the completed command to
  */
-bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, uint32_t *pos, uint32_t offset)
+bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, uint32_t* pos, uint32_t offset)
 {
 	const char* cmd = nullptr, *cvar = nullptr, *use = nullptr;
 	char cmdLine[MAXCMDLINE] = "";
@@ -847,10 +847,10 @@ void Com_SetGameType (void)
 	int i;
 
 	for (i = 0; i < csi.numGTs; i++) {
-		const gametype_t *gt = &csi.gts[i];
+		const gametype_t* gt = &csi.gts[i];
 		if (Q_streq(gt->id, sv_gametype->string)) {
 			int j;
-			const cvarlist_t *list;
+			const cvarlist_t* list;
 			if (sv_dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
@@ -874,8 +874,8 @@ static void Com_GameTypeList_f (void)
 	Com_Printf("Available gametypes:\n");
 	for (i = 0; i < csi.numGTs; i++) {
 		int j;
-		const gametype_t *gt = &csi.gts[i];
-		const cvarlist_t *list;
+		const gametype_t* gt = &csi.gts[i];
+		const cvarlist_t* list;
 
 		Com_Printf("%s\n", gt->id);
 
@@ -1000,7 +1000,7 @@ static void Com_DeveloperSet_f (void)
 /**
  * @brief Watches that the cvar cl_maxfps is never getting lower than 10
  */
-static bool Com_CvarCheckMaxFPS (cvar_t *cvar)
+static bool Com_CvarCheckMaxFPS (cvar_t* cvar)
 {
 	/* don't allow setting maxfps too low (or game could stop responding) */
 	return Cvar_AssertValue(cvar, 10, 1000, true);
@@ -1255,7 +1255,7 @@ void Qcommon_Init (int argc, char** argv)
 			SCR_EndLoadingPlaque();
 		}
 
-		const cvar_t *com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+		const cvar_t* com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
 		if (com_pipefile->string[0] != '\0') {
 			FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
 		}
@@ -1362,7 +1362,7 @@ static void tick_timer (int now, void* data)
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, nullptr, nullptr, timer);
 }
 
-static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void* data)
+static void Schedule_Timer (cvar_t* freq, event_func *func, event_check_func *check, void* data)
 {
 	struct timer* const timer = Mem_PoolAllocType(struct timer, com_genericPool);
 	int i;

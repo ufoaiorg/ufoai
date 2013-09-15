@@ -254,19 +254,19 @@ const char* Com_ByteToBinary(byte x);
 const char* Com_MD5File(const char* fn, int length = 0);
 const char* Com_MD5Buffer(const byte* buf, size_t len);
 
-extern cvar_t *http_proxy;
-extern cvar_t *http_timeout;
-extern cvar_t *developer;
-extern cvar_t *sv_dedicated;
-extern cvar_t *sv_maxclients;
-extern cvar_t *sv_gametype;
-extern cvar_t *masterserver_url;
-extern cvar_t *port;
+extern cvar_t* http_proxy;
+extern cvar_t* http_timeout;
+extern cvar_t* developer;
+extern cvar_t* sv_dedicated;
+extern cvar_t* sv_maxclients;
+extern cvar_t* sv_gametype;
+extern cvar_t* masterserver_url;
+extern cvar_t* port;
 
-extern cvar_t *sys_priority;
-extern cvar_t *sys_affinity;
-extern cvar_t *sys_os;
-extern cvar_t *hwclass;
+extern cvar_t* sys_priority;
+extern cvar_t* sys_affinity;
+extern cvar_t* sys_os;
+extern cvar_t* hwclass;
 
 /* Time information. */
 /**
@@ -362,18 +362,18 @@ void SV_Clear(void);
 void SV_Shutdown(const char* finalmsg, bool reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void*);
-mapData_t *SV_GetMapData(void);
-mapTiles_t *SV_GetMapTiles(void);
+mapData_t* SV_GetMapData(void);
+mapTiles_t* SV_GetMapTiles(void);
 
 /*============================================================================ */
 
-extern memPool_t *com_aliasSysPool;
-extern memPool_t *com_cmdSysPool;
-extern memPool_t *com_cmodelSysPool;
-extern memPool_t *com_cvarSysPool;
-extern memPool_t *com_fileSysPool;
-extern memPool_t *com_genericPool;
-extern memPool_t *com_networkPool;
+extern memPool_t* com_aliasSysPool;
+extern memPool_t* com_cmdSysPool;
+extern memPool_t* com_cmodelSysPool;
+extern memPool_t* com_cvarSysPool;
+extern memPool_t* com_fileSysPool;
+extern memPool_t* com_genericPool;
+extern memPool_t* com_networkPool;
 
 /*============================================================================ */
 
@@ -384,7 +384,7 @@ const char* Com_MacroExpandString(const char* text);
 void Com_UploadCrashDump(const char* crashDumpFile);
 bool Com_CheckDuplicateFile(const char* file, const char* wildcard);
 
-bool Com_ConsoleCompleteCommand(const char* s, char* target, size_t bufSize, uint32_t *pos, uint32_t offset);
+bool Com_ConsoleCompleteCommand(const char* s, char* target, size_t bufSize, uint32_t* pos, uint32_t offset);
 
 void Key_Init(void);
 

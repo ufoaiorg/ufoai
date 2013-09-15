@@ -49,8 +49,8 @@ typedef struct cmd_alias_s {
 	struct cmd_alias_s *next;
 } cmd_alias_t;
 
-static cmd_alias_t *cmd_alias;
-static cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
+static cmd_alias_t* cmd_alias;
+static cmd_alias_t* cmd_alias_hash[ALIAS_HASH_SIZE];
 static bool cmdWait;
 static bool cmdClosed;
 
@@ -395,7 +395,7 @@ static void Cmd_Echo_f (void)
  */
 static void Cmd_Alias_f (void)
 {
-	cmd_alias_t *a;
+	cmd_alias_t* a;
 	char cmd[MAX_STRING_CHARS];
 	size_t len;
 	unsigned int hash;
@@ -460,7 +460,7 @@ static void Cmd_Alias_f (void)
  */
 void Cmd_WriteAliases (qFILE *f)
 {
-	cmd_alias_t *a;
+	cmd_alias_t* a;
 
 	for (a = cmd_alias; a; a = a->next)
 		if (a->archive) {
@@ -499,8 +499,8 @@ static char* cmd_argv[MAX_STRING_TOKENS];
 static char cmd_args[MAX_STRING_CHARS];
 static void* cmd_userdata;
 
-static cmd_function_t *cmd_functions;	/* possible commands to execute */
-static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
+static cmd_function_t* cmd_functions;	/* possible commands to execute */
+static cmd_function_t* cmd_functions_hash[CMD_HASH_SIZE];
 
 /**
  * @brief Return the number of arguments of the current command.
@@ -628,7 +628,7 @@ void Cmd_TokenizeString (const char* text, bool macroExpand, bool replaceWhitesp
  */
 const char* Cmd_GetCommandDesc (const char* cmd_name)
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 	char* sep = nullptr;
 	unsigned int hash;
 	char searchName[MAX_VAR];
@@ -685,7 +685,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
  */
 void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const char* partial, const char** match))
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 	unsigned int hash;
 
 	if (!cmd_name || !cmd_name[0])
@@ -711,7 +711,7 @@ void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const c
  */
 void* Cmd_GetUserdata (const char* cmd_name)
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 	unsigned int hash;
 
 	if (!cmd_name || !cmd_name[0]) {
@@ -740,7 +740,7 @@ void* Cmd_GetUserdata (const char* cmd_name)
  */
 void Cmd_AddUserdata (const char* cmd_name, void* userdata)
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 	unsigned int hash;
 
 	if (!cmd_name || !cmd_name[0])
@@ -776,7 +776,7 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 
 	/* fail if the command already exists */
 	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	for (cmd_function_t *cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (Q_streq(cmdName, cmd->name)) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmdName);
 			return;
@@ -800,7 +800,7 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
  */
 void Cmd_RemoveCommand (const char* cmd_name)
 {
-	cmd_function_t *cmd, **back;
+	cmd_function_t* cmd, **back;
 	unsigned int hash;
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	back = &cmd_functions_hash[hash];
@@ -840,7 +840,7 @@ void Cmd_RemoveCommand (const char* cmd_name)
  */
 bool Cmd_Exists (const char* cmd_name)
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 	unsigned int hash;
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 
@@ -862,7 +862,7 @@ bool Cmd_Exists (const char* cmd_name)
  */
 int Cmd_CompleteCommandParameters (const char* command, const char* partial, const char** match)
 {
-	const cmd_function_t *cmd;
+	const cmd_function_t* cmd;
 	unsigned int hash;
 
 	/* check for partial matches in commands */
@@ -918,8 +918,8 @@ void Cmd_vExecuteString (const char* fmt, va_list ap)
 
 	Q_vsnprintf(text, sizeof(text), fmt, ap);
 
-	const cmd_function_t *cmd;
-	const cmd_alias_t *a;
+	const cmd_function_t* cmd;
+	const cmd_alias_t* a;
 	const char* str;
 	unsigned int hash;
 
@@ -987,8 +987,8 @@ void Cmd_ExecuteString (const char* text, ...)
  */
 static void Cmd_List_f (void)
 {
-	const cmd_function_t *cmd;
-	const cmd_alias_t *alias;
+	const cmd_function_t* cmd;
+	const cmd_alias_t* alias;
 	int i = 0, j = 0, c, l = 0;
 	const char* token = nullptr;
 
@@ -1054,7 +1054,7 @@ void Cmd_Dummy_f (void)
  */
 static void Cmd_Test_f (void)
 {
-	cmd_function_t *cmd;
+	cmd_function_t* cmd;
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_streq(cmd->name, "quit"))
@@ -1064,7 +1064,7 @@ static void Cmd_Test_f (void)
 
 void Cmd_PrintDebugCommands (void)
 {
-	const cmd_function_t *cmd;
+	const cmd_function_t* cmd;
 	const char* otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
 	int num = lengthof(otherCommands);
 

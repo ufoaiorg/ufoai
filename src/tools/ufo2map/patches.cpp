@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/images.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
-patch_t *face_patches[MAX_MAP_FACES];
+patch_t* face_patches[MAX_MAP_FACES];
 
 /*
 ===================================================================
@@ -92,10 +92,10 @@ void CalcTextureReflectivity (void)
 }
 
 
-static winding_t *WindingFromFace (const dBspSurface_t *f)
+static winding_t* WindingFromFace (const dBspSurface_t* f)
 {
 	int i, v;
-	winding_t *w;
+	winding_t* w;
 
 	w = AllocWinding(f->numedges);
 	w->numpoints = f->numedges;
@@ -107,7 +107,7 @@ static winding_t *WindingFromFace (const dBspSurface_t *f)
 		else
 			v = curTile->edges[se].v[0];
 
-		dBspVertex_t *dv = &curTile->vertexes[v];
+		dBspVertex_t* dv = &curTile->vertexes[v];
 		VectorCopy(dv->point, w->p[i]);
 	}
 
@@ -116,9 +116,9 @@ static winding_t *WindingFromFace (const dBspSurface_t *f)
 	return w;
 }
 
-static inline bool HasLight (const dBspSurface_t *f)
+static inline bool HasLight (const dBspSurface_t* f)
 {
-	const dBspTexinfo_t *tex;
+	const dBspTexinfo_t* tex;
 
 	tex = &curTile->texinfo[f->texinfo];
 	return (tex->surfaceFlags & SURF_LIGHT) && tex->value;
@@ -129,10 +129,10 @@ static inline bool HasLight (const dBspSurface_t *f)
  * @note Surface lights
  * @sa TexinfoForBrushTexture
  */
-static inline void EmissiveLight (patch_t *patch)
+static inline void EmissiveLight (patch_t* patch)
 {
-	const dBspTexinfo_t *tex = &curTile->texinfo[patch->face->texinfo];
-	const vec_t *ref = texture_reflectivity[patch->face->texinfo];
+	const dBspTexinfo_t* tex = &curTile->texinfo[patch->face->texinfo];
+	const vec_t* ref = texture_reflectivity[patch->face->texinfo];
 
 	VectorScale(ref, tex->value, patch->light);
 }
@@ -144,10 +144,10 @@ static inline void EmissiveLight (patch_t *patch)
  * @param w The winding
  * @sa BuildLights
  */
-static void BuildPatch (int fn, winding_t *w)
+static void BuildPatch (int fn, winding_t* w)
 {
-	patch_t *patch;
-	dBspPlane_t *plane;
+	patch_t* patch;
+	dBspPlane_t* plane;
 
 	patch = Mem_AllocType(patch_t);
 
@@ -177,7 +177,7 @@ static void BuildPatch (int fn, winding_t *w)
 	EmissiveLight(patch);  /* surface light */
 }
 
-static entity_t *EntityForModel (int modnum)
+static entity_t* EntityForModel (int modnum)
 {
 	int i;
 	char name[16];
@@ -205,8 +205,8 @@ void BuildPatches (void)
 	OBJZERO(face_patches);
 
 	for (i = 0; i < curTile->nummodels; i++) {
-		const dBspModel_t *mod = &curTile->models[i];
-		const entity_t *ent = EntityForModel(i);
+		const dBspModel_t* mod = &curTile->models[i];
+		const entity_t* ent = EntityForModel(i);
 		vec3_t origin;
 		int j;
 		/* bmodels with origin brushes (like func_door) need to be offset into their
@@ -215,8 +215,8 @@ void BuildPatches (void)
 
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
-			dBspSurface_t *f = &curTile->faces[facenum];
-			winding_t *w;
+			dBspSurface_t* f = &curTile->faces[facenum];
+			winding_t* w;
 			int k;
 
 			/* store the origin in case of moving bmodels (e.g. func_door) */
@@ -243,7 +243,7 @@ SUBDIVIDE
 
 #define PATCH_SUBDIVIDE 64
 
-static void FinishSubdividePatch (patch_t *patch, patch_t *newp)
+static void FinishSubdividePatch (patch_t* patch, patch_t* newp)
 {
 	VectorCopy(patch->normal, newp->normal);
 
@@ -271,14 +271,14 @@ static void FinishSubdividePatch (patch_t *patch, patch_t *newp)
 /**
  *	@brief Chops the patch by a global grid
  */
-static void SubdividePatch(patch_t *patch)
+static void SubdividePatch(patch_t* patch)
 {
-	winding_t *w, *o1, *o2;
+	winding_t* w, *o1, *o2;
 	vec3_t mins, maxs;
 	vec3_t split;
 	vec_t dist;
 	int i;
-	patch_t *newp;
+	patch_t* newp;
 
 	w = patch->winding;
 	WindingBounds(w, mins, maxs);
@@ -322,7 +322,7 @@ void SubdividePatches (void)
 	int i;
 
 	for (i = 0; i < MAX_MAP_FACES; i++) {
-		patch_t *p = face_patches[i];
+		patch_t* p = face_patches[i];
 
 		if (p)  /* break it up */
 			SubdividePatch(p);
@@ -337,9 +337,9 @@ void FreePatches (void)
 	int i;
 
 	for (i = 0; i < MAX_MAP_FACES; i++) {
-		patch_t *p = face_patches[i];
+		patch_t* p = face_patches[i];
 		while (p) {
-			patch_t *pnext = p->next;
+			patch_t* pnext = p->next;
 			Mem_Free(p);
 			p = pnext;
 		}

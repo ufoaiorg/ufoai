@@ -91,7 +91,7 @@ static int32_t BuildNodeChildren (const int n[3])
 			VectorCopy(curTile->nodes[node].mins, aabb.mins);
 			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 		} else {
-			dBspNode_t *newnode;
+			dBspNode_t* newnode;
 			vec3_t addvec;
 			/* add a new "special" dnode and store it */
 			newnode = &curTile->nodes[curTile->numnodes];
@@ -136,12 +136,12 @@ static int32_t BuildNodeChildren (const int n[3])
  */
 static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs, int entityNum)
 {
-	bspbrush_t *list;
-	tree_t *tree;
+	bspbrush_t* list;
+	tree_t* tree;
 	vec3_t bmins, bmaxs;
 	int32_t tmins[SPLIT_COORDS], tmaxs[SPLIT_COORDS];
 	int32_t nn[3];
-	node_t *node;
+	node_t* node;
 	int i;
 
 	/* calculate bounds, stop if no brushes are available */
@@ -254,7 +254,7 @@ void ProcessLevelEntityNumber (int entityNumber)
 void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t mins, maxs;
-	dBspModel_t *dm;
+	dBspModel_t* dm;
 
 	/* oversizing the blocks guarantees that all the boundaries will also get nodes. */
 	/* get maxs */

@@ -37,7 +37,7 @@ static int c_merge, c_subdivide, c_totalverts, c_uniqueverts, c_degenerate, c_tj
 static int superverts[MAX_SUPERVERTS];
 static int numsuperverts;
 
-static const face_t *edgefaces[MAX_MAP_EDGES][2];
+static const face_t* edgefaces[MAX_MAP_EDGES][2];
 int firstmodeledge = 1;
 
 static vec3_t edge_dir;
@@ -112,14 +112,14 @@ static int GetVertexnum (const vec3_t in)
 	return curTile->numvertexes - 1;
 }
 
-static face_t *AllocFace (void)
+static face_t* AllocFace (void)
 {
 	c_faces++;
 
 	return Mem_AllocType(face_t);
 }
 
-static face_t *NewFaceFromFace (const face_t *f)
+static face_t* NewFaceFromFace (const face_t* f)
 {
 	face_t	*newf;
 
@@ -131,7 +131,7 @@ static face_t *NewFaceFromFace (const face_t *f)
 	return newf;
 }
 
-void FreeFace (face_t *f)
+void FreeFace (face_t* f)
 {
 	if (f->w)
 		FreeWinding(f->w);
@@ -150,7 +150,7 @@ void FreeFace (face_t *f)
  * @note superverts[base] will become face->vertexnums[0], and the others
  * will be circularly filled in.
  */
-static void FaceFromSuperverts (node_t *node, face_t *f, int base)
+static void FaceFromSuperverts (node_t* node, face_t* f, int base)
 {
 	int i, remaining;
 
@@ -159,7 +159,7 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 	while (remaining > MAXEDGES) {
 		c_faceoverflows++;
 
-		face_t *newf = f->split[0] = NewFaceFromFace(f);
+		face_t* newf = f->split[0] = NewFaceFromFace(f);
 		newf->next = node->faces;
 		node->faces = newf;
 
@@ -182,9 +182,9 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 		f->vertexnums[i] = superverts[(i + base) % numsuperverts];
 }
 
-static void EmitFaceVertexes (node_t *node, face_t *f)
+static void EmitFaceVertexes (node_t* node, face_t* f)
 {
-	winding_t *w;
+	winding_t* w;
 	int i;
 
 	if (f->merged || f->split[0] || f->split[1])
@@ -211,10 +211,10 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 	FaceFromSuperverts(node, f, 0);
 }
 
-static void EmitVertexes_r (node_t *node)
+static void EmitVertexes_r (node_t* node)
 {
 	int i;
-	face_t *f;
+	face_t* f;
 
 	if (node->planenum == PLANENUM_LEAF)
 		return;
@@ -303,7 +303,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 	numsuperverts++;
 }
 
-static void FixFaceEdges (node_t *node, face_t *f)
+static void FixFaceEdges (node_t* node, face_t* f)
 {
 	int i, base;
 	vec3_t e2;
@@ -358,10 +358,10 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	FaceFromSuperverts(node, f, base);
 }
 
-static void FixEdges_r (node_t *node)
+static void FixEdges_r (node_t* node)
 {
 	int i;
-	face_t *f;
+	face_t* f;
 
 	if (node->planenum == PLANENUM_LEAF)
 		return;
@@ -377,7 +377,7 @@ static void FixEdges_r (node_t *node)
  * @sa ProcessSubModel
  * @sa ConstructLevelNodes_r
  */
-void FixTjuncs (node_t *headnode)
+void FixTjuncs (node_t* headnode)
 {
 	/* snap and merge all vertexes */
 	Verb_Printf(VERB_EXTRA, "---- snap verts ----\n");
@@ -406,9 +406,9 @@ void FixTjuncs (node_t *headnode)
  * @sa EmitFace.
  * @note Don't allow four way edges
  */
-int GetEdge (int v1, int v2, const face_t *f)
+int GetEdge (int v1, int v2, const face_t* f)
 {
-	dBspEdge_t *edge;
+	dBspEdge_t* edge;
 
 	if (!config.noshare) {
 		int i;
@@ -450,10 +450,10 @@ FACE MERGING
  * @return nullptr if the faces couldn't be merged, or the new winding.
  * @note The originals will NOT be freed.
  */
-static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t planenormal)
+static winding_t* TryMergeWinding (winding_t* f1, winding_t* f2, const vec3_t planenormal)
 {
-	vec_t *p1, *p2, *back;
-	winding_t *newf;
+	vec_t* p1, *p2, *back;
+	winding_t* newf;
 	int i, j, k, l;
 	vec3_t normal, delta;
 	vec_t dot;
@@ -467,8 +467,8 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 		p1 = f1->p[i];
 		p2 = f1->p[(i + 1) % f1->numpoints];
 		for (j = 0; j < f2->numpoints; j++) {
-			const vec_t *p3 = f2->p[j];
-			const vec_t *p4 = f2->p[(j + 1) % f2->numpoints];
+			const vec_t* p3 = f2->p[j];
+			const vec_t* p4 = f2->p[(j + 1) % f2->numpoints];
 			for (k = 0; k < 3; k++) {
 				if (fabs(p1[k] - p4[k]) > EQUAL_EPSILON)
 					break;
@@ -544,10 +544,10 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
  * @return nullptr if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
  */
-static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
+static face_t* TryMerge (face_t* f1, face_t* f2, const vec3_t planenormal)
 {
-	face_t *newf;
-	winding_t *nw;
+	face_t* newf;
+	winding_t* nw;
 
 	if (!f1->w || !f2->w)
 		return nullptr;
@@ -572,18 +572,18 @@ static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
 	return newf;
 }
 
-static void MergeNodeFaces (node_t *node)
+static void MergeNodeFaces (node_t* node)
 {
-	face_t *f1;
+	face_t* f1;
 
 	for (f1 = node->faces; f1; f1 = f1->next) {
-		face_t *f2;
+		face_t* f2;
 		if (f1->merged || f1->split[0] || f1->split[1])
 			continue;
 		for (f2 = node->faces; f2 != f1; f2 = f2->next) {
-			const plane_t *plane = &mapplanes[node->planenum];
-			face_t *merged;
-			face_t *end;
+			const plane_t* plane = &mapplanes[node->planenum];
+			face_t* merged;
+			face_t* end;
 
 			if (f2->merged || f2->split[0] || f2->split[1])
 				continue;
@@ -608,10 +608,10 @@ static void MergeNodeFaces (node_t *node)
 /**
  * @brief Chop up faces that are larger than we want in the surface cache
  */
-static void SubdivideFace (node_t *node, face_t *f)
+static void SubdivideFace (node_t* node, face_t* f)
 {
 	int axis, i;
-	const dBspTexinfo_t *tex;
+	const dBspTexinfo_t* tex;
 	vec3_t temp;
 	vec_t dist;
 
@@ -625,8 +625,8 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 	for (axis = 0; axis < 2; axis++) {
 		while (1) {
-			const winding_t *w = f->w;
-			winding_t *frontw, *backw;
+			const winding_t* w = f->w;
+			winding_t* frontw, *backw;
 			float mins = 999999;
 			float maxs = -999999;
 			vec_t v;
@@ -673,9 +673,9 @@ static void SubdivideFace (node_t *node, face_t *f)
 	}
 }
 
-static void SubdivideNodeFaces (node_t *node)
+static void SubdivideNodeFaces (node_t* node)
 {
-	face_t *f;
+	face_t* f;
 
 	for (f = node->faces; f; f = f->next)
 		SubdivideFace(node, f);
@@ -683,10 +683,10 @@ static void SubdivideNodeFaces (node_t *node)
 
 static int c_nodefaces;
 
-static face_t *FaceFromPortal (portal_t *p, bool pside)
+static face_t* FaceFromPortal (portal_t* p, bool pside)
 {
-	face_t *f;
-	side_t *side = p->side;
+	face_t* f;
+	side_t* side = p->side;
 
 	/* portal does not bridge different visible contents */
 	if (!side)
@@ -710,7 +710,7 @@ static face_t *FaceFromPortal (portal_t *p, bool pside)
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9) {
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		const entity_t *e = &entities[side->brush->entitynum];
+		const entity_t* e = &entities[side->brush->entitynum];
 		if (!Q_streq(ValueForKey(e, "classname"), "func_rotating")) {
 			if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 				/* e.g. water surfaces are removed if we set the surfaceFlags
@@ -739,9 +739,9 @@ static face_t *FaceFromPortal (portal_t *p, bool pside)
  * - water / empty : water
  * - water / water : none
  */
-static void MakeFaces_r (node_t *node)
+static void MakeFaces_r (node_t* node)
 {
-	portal_t *p;
+	portal_t* p;
 
 	/* recurse down to leafs */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -775,7 +775,7 @@ static void MakeFaces_r (node_t *node)
 	}
 }
 
-void MakeFaces (node_t *node)
+void MakeFaces (node_t* node)
 {
 	Verb_Printf(VERB_EXTRA, "--- MakeFaces ---\n");
 	c_merge = 0;

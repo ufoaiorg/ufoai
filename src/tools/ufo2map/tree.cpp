@@ -31,14 +31,14 @@ int c_nonvis;
  * @sa AllocBrush
  * @sa AllocTree
  */
-node_t *AllocNode (void)
+node_t* AllocNode (void)
 {
 	return Mem_AllocType(node_t);
 }
 
-static void FreeTreePortals_r (node_t *node)
+static void FreeTreePortals_r (node_t* node)
 {
-	portal_t *p, *nextp;
+	portal_t* p, *nextp;
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -57,9 +57,9 @@ static void FreeTreePortals_r (node_t *node)
 	node->portals = nullptr;
 }
 
-static void FreeTree_r (node_t *node)
+static void FreeTree_r (node_t* node)
 {
-	face_t *f, *nextf;
+	face_t* f, *nextf;
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -89,9 +89,9 @@ static void FreeTree_r (node_t *node)
 /**
  * @brief Allocates a tree and initializes it
  */
-tree_t *AllocTree (void)
+tree_t* AllocTree (void)
 {
-	tree_t *tree = Mem_AllocType(tree_t);
+	tree_t* tree = Mem_AllocType(tree_t);
 
 	tree->aabb.clearBounds();
 
@@ -99,7 +99,7 @@ tree_t *AllocTree (void)
 }
 
 
-void FreeTree (tree_t *tree)
+void FreeTree (tree_t* tree)
 {
 	FreeTreePortals_r(tree->headnode);
 	FreeTree_r(tree->headnode);
@@ -107,9 +107,9 @@ void FreeTree (tree_t *tree)
 }
 
 
-static void CheckPlaneAgainstParents (uint16_t pnum, const node_t *node)
+static void CheckPlaneAgainstParents (uint16_t pnum, const node_t* node)
 {
-	node_t *p;
+	node_t* p;
 
 	for (p = node->parent; p; p = p->parent) {
 		if (p->planenum == pnum)
@@ -117,7 +117,7 @@ static void CheckPlaneAgainstParents (uint16_t pnum, const node_t *node)
 	}
 }
 
-static void LeafNode (node_t *node, bspbrush_t *brushes)
+static void LeafNode (node_t* node, bspbrush_t* brushes)
 {
 	node->side = nullptr;
 	node->planenum = PLANENUM_LEAF;
@@ -128,12 +128,12 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	node->brushlist = brushes;
 }
 
-static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
+static node_t* BuildTree_r (node_t* node, bspbrush_t* brushes)
 {
-	node_t *newnode;
-	side_t *bestside;
+	node_t* newnode;
+	side_t* bestside;
 	int i;
-	bspbrush_t *children[2];
+	bspbrush_t* children[2];
 
 	if (threadstate.numthreads == 1)
 		c_nodes++;
@@ -179,10 +179,10 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 /**
  * @brief The incoming list will be freed before exiting
  */
-tree_t *BuildTree (bspbrush_t *brushlist, const vec3_t mins, const vec3_t maxs)
+tree_t* BuildTree (bspbrush_t* brushlist, const vec3_t mins, const vec3_t maxs)
 {
-	node_t *node;
-	tree_t *tree;
+	node_t* node;
+	tree_t* tree;
 	vec3_t blmins, blmaxs;
 
 	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
@@ -220,9 +220,9 @@ static int c_pruned;
  * @sa PruneNodes
  * @brief Will cut solid nodes by recursing down the bsp tree
  */
-static void PruneNodes_r (node_t *node)
+static void PruneNodes_r (node_t* node)
 {
-	bspbrush_t *b, *next;
+	bspbrush_t* b, *next;
 
 	if (node->planenum == PLANENUM_LEAF)
 		return;
@@ -259,7 +259,7 @@ static void PruneNodes_r (node_t *node)
 /**
  * @sa PruneNodes_r
  */
-void PruneNodes (node_t *node)
+void PruneNodes (node_t* node)
 {
 	Verb_Printf(VERB_EXTRA, "--- PruneNodes ---\n");
 	c_pruned = 0;

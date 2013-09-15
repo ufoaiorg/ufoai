@@ -48,15 +48,15 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
-	const dBspModel_t *in;
+	const dBspModel_t* in;
 	int i, j, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const dBspModel_t *) (base + l->fileofs);
+	in = (const dBspModel_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
@@ -67,7 +67,7 @@ static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t *l
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
-	cBspModel_t *out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
+	cBspModel_t* out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
 	tile.models = out;
 	tile.nummodels = count;
 
@@ -91,15 +91,15 @@ static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t *l
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t* l)
 {
-	const dBspTexinfo_t *in;
+	const dBspTexinfo_t* in;
 	int i, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const dBspTexinfo_t *) (base + l->fileofs);
+	in = (const dBspTexinfo_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -110,7 +110,7 @@ static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t *l)
 	if (count > MAX_MAP_TEXINFO)
 		Com_Error(ERR_DROP, "Map has too many surfaces");
 
-	cBspSurface_t *out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
+	cBspSurface_t* out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
 
 	tile.surfaces = out;
 	tile.numtexinfo = count;
@@ -131,16 +131,16 @@ static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t *l)
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
-	const dBspNode_t *in;
+	const dBspNode_t* in;
 	int child;
 	int i, j, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const dBspNode_t *) (base + l->fileofs);
+	in = (const dBspNode_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -152,7 +152,7 @@ static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t *l, co
 		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
-	cBspNode_t *out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
+	cBspNode_t* out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
 
 	tile.numnodes = count;
 	tile.nodes = out;
@@ -182,15 +182,15 @@ static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t *l, co
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t* l)
 {
-	const dBspBrush_t *in;
+	const dBspBrush_t* in;
 	int i, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const dBspBrush_t *) (base + l->fileofs);
+	in = (const dBspBrush_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -200,7 +200,7 @@ static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t *l)
 		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
-	cBspBrush_t *out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
+	cBspBrush_t* out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
 
 	tile.numbrushes = count;
 	tile.brushes = out;
@@ -218,16 +218,16 @@ static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t *l)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t* l)
 {
 	int i;
-	const dBspLeaf_t *in;
+	const dBspLeaf_t* in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const dBspLeaf_t *) (base + l->fileofs);
+	in = (const dBspLeaf_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -240,7 +240,7 @@ static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t *l)
 		Com_Error(ERR_DROP, "Map has too many leafs");
 
 	/* add some for the box */
-	cBspLeaf_t *out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
+	cBspLeaf_t* out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
 
 	tile.numleafs = count;
 	tile.leafs = out;
@@ -272,16 +272,16 @@ static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t *l)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	int i, j;
-	const dBspPlane_t *in;
+	const dBspPlane_t* in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const dBspPlane_t *) (base + l->fileofs);
+	in = (const dBspPlane_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -294,7 +294,7 @@ static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t *l, c
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	cBspPlane_t *out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
+	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
 
 	tile.numplanes = count;
 	tile.planes = out;
@@ -317,7 +317,7 @@ static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t *l, c
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadLeafBrushes (MapTile &tile, const byte* base, const lump_t* l)
 {
 	int i;
 	const unsigned short* in;
@@ -354,16 +354,16 @@ static void CMod_LoadLeafBrushes (MapTile &tile, const byte* base, const lump_t 
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadBrushSides (MapTile &tile, const byte* base, const lump_t* l)
 {
 	int i;
-	const dBspBrushSide_t *in;
+	const dBspBrushSide_t* in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const dBspBrushSide_t *) (base + l->fileofs);
+	in = (const dBspBrushSide_t* ) (base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -374,7 +374,7 @@ static void CMod_LoadBrushSides (MapTile &tile, const byte* base, const lump_t *
 		Com_Error(ERR_DROP, "Map has too many brushsides");
 
 	/* add some for the box */
-	cBspBrushSide_t *out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
+	cBspBrushSide_t* out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
 
 	tile.numbrushsides = count;
 	tile.brushsides = out;
@@ -442,7 +442,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
 {
 	int i;
 
-	tnode_t *tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
+	tnode_t* tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
 
 	tile.numtheads = 0;
 	tile.numcheads = 0;
@@ -475,7 +475,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte* base, const char* name, const lump_t *lump, const int sX, const int sY, const int sZ)
+static void CMod_LoadRouting (MapTile &tile, mapData_t* mapData, const byte* base, const char* name, const lump_t* lump, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	Routing *tempMap = static_cast<Routing *>(Mem_Alloc(sizeof(Routing)));
@@ -593,7 +593,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t *mapData, const byte* bas
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapData_t *mapData, const byte* base, const lump_t *l, const vec3_t shift)
+static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapData_t* mapData, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given (entitystring: '%s')", entityString ? entityString : "none");
@@ -607,7 +607,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapD
 	/* merge entitystring information */
 	const char* es = (const char*) (base + l->fileofs);
 	while (1) {
-		cBspModel_t *model = nullptr;
+		cBspModel_t* model = nullptr;
 		/* parse the opening brace */
 		const char* token = Com_Parse(&es);
 		if (!es)
@@ -681,7 +681,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapD
  * @brief Loads the lightmap for server side visibility lookup
  * @todo Implement this
  */
-static void CMod_LoadLighting (MapTile &tile, const byte* base, const lump_t *l)
+static void CMod_LoadLighting (MapTile &tile, const byte* base, const lump_t* l)
 {
 	if (l->filelen == 0)
 		return;
@@ -723,9 +723,9 @@ static void CM_InitBoxHull (MapTile &tile)
 	/* each side */
 	for (i = 0; i < 6; i++) {
 		const int side = i & 1;
-		cBspNode_t *c;
-		cBspPlane_t *p;
-		cBspBrushSide_t *s;
+		cBspNode_t* c;
+		cBspPlane_t* p;
+		cBspBrushSide_t* s;
 
 		/* brush sides */
 		s = &tile.brushsides[tile.numbrushsides + i];
@@ -783,7 +783,7 @@ void CM_LoadBsp (MapTile &tile, const dBspHeader_t& header, const vec3_t shift, 
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char* name, const char* entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
+static void CM_AddMapTile (const char* name, const char* entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t* mapData, mapTiles_t* mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -809,7 +809,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
-	header = *(dBspHeader_t *) buf;
+	header = *(dBspHeader_t* ) buf;
 	BSP_SwapHeader(&header, filename);
 
 	if (header.version != BSPVERSION)
@@ -856,7 +856,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	mapData->mapChecksum += checksum;
 }
 
-static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
+static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
@@ -927,7 +927,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
-void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entityString, mapData_t *mapData, mapTiles_t *mapTiles)
+void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entityString, mapData_t* mapData, mapTiles_t* mapTiles)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
@@ -1000,7 +1000,7 @@ void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entit
  * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
  * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
-cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char* name)
+cBspModel_t* CM_InlineModel (const mapTiles_t* mapTiles, const char* name)
 {
 	int i, num;
 
@@ -1036,9 +1036,9 @@ cBspModel_t *CM_InlineModel (const mapTiles_t *mapTiles, const char* name)
  * @sa LE_DoorAction
  * @sa G_ClientUseEdict
  */
-cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char* name, const vec3_t origin, const vec3_t angles)
+cBspModel_t* CM_SetInlineModelOrientation (mapTiles_t* mapTiles, const char* name, const vec3_t origin, const vec3_t angles)
 {
-	cBspModel_t *model = CM_InlineModel(mapTiles, name);
+	cBspModel_t* model = CM_InlineModel(mapTiles, name);
 	assert(model);
 	VectorCopy(origin, model->origin);
 	VectorCopy(angles, model->angles);
@@ -1052,9 +1052,9 @@ cBspModel_t *CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char* nam
  * @param[in] name The name of the model, must include the '*'
  * @param[out] aabb The aabb to be filled
  */
-void CM_GetInlineModelAABB (mapTiles_t *mapTiles, const char* name, AABB& aabb)
+void CM_GetInlineModelAABB (mapTiles_t* mapTiles, const char* name, AABB& aabb)
 {
-	cBspModel_t *model = CM_InlineModel(mapTiles, name);
+	cBspModel_t* model = CM_InlineModel(mapTiles, name);
 	assert(model);
 	CalculateMinsMaxs(model->angles, model->mins, model->maxs, model->origin, aabb.mins, aabb.maxs);
 }
@@ -1064,7 +1064,7 @@ void CM_GetInlineModelAABB (mapTiles_t *mapTiles, const char* name, AABB& aabb)
  * @return a visibility factor. @c 1.0 means fully visible, @c 0.0 means hardly visible because the
  * given position is in the darkness
  */
-float CM_GetVisibility (const mapTiles_t *mapTiles, const pos3_t position)
+float CM_GetVisibility (const mapTiles_t* mapTiles, const pos3_t position)
 {
 	int i;
 

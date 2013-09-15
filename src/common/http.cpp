@@ -95,7 +95,7 @@ size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 	Q_strncpyz(headerBuff, (const char*)ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
-		dlhandle_t *dl = (dlhandle_t *)stream;
+		dlhandle_t* dl = (dlhandle_t* )stream;
 		if (dl->file)
 			dl->fileSize = strtoul(headerBuff + 16, nullptr, 10);
 	}
@@ -109,9 +109,9 @@ size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 size_t HTTP_Recv (void* ptr, size_t size, size_t nmemb, void* stream)
 {
 	size_t bytes;
-	dlhandle_t *dl;
+	dlhandle_t* dl;
 
-	dl = (dlhandle_t *)stream;
+	dl = (dlhandle_t* )stream;
 
 	bytes = size * nmemb;
 
@@ -220,7 +220,7 @@ static bool HTTP_GetURLInternal (dlhandle_t &dl, const char* url, FILE* file, co
 	return true;
 }
 
-bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, const upparam_t *params)
+bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, const upparam_t* params)
 {
 	if (Q_strnull(url)) {
 		Com_Printf("no upload url given\n");
@@ -357,7 +357,7 @@ void HTTP_Cleanup (void)
 }
 #else
 void HTTP_GetURL(const char* url, http_callback_t callback) {}
-void HTTP_PutFile(const char* formName, const char* fileName, const char* url, const upparam_t *params) {}
+void HTTP_PutFile(const char* formName, const char* fileName, const char* url, const upparam_t* params) {}
 size_t HTTP_Recv(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 size_t HTTP_Header(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 void HTTP_Cleanup(void) {}

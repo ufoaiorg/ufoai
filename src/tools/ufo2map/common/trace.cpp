@@ -43,11 +43,11 @@ void MakeTracingNodes (int levels)
 	CloseTracingNodes();
 
 	/* allocate memory for the tnodes structure */
-	tnode_t *tnode = curTile->tnodes = Mem_AllocTypeN(tnode_t, curTile->numnodes + 1);
+	tnode_t* tnode = curTile->tnodes = Mem_AllocTypeN(tnode_t, curTile->numnodes + 1);
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {
-		const dBspModel_t *model = &curTile->models[i];
+		const dBspModel_t* model = &curTile->models[i];
 		if (!model->numfaces && i != LEVEL_LIGHTCLIP && i != LEVEL_ACTORCLIP)
 			continue;
 		if (model->headnode < 0)	/* empty models have headnode -1 */

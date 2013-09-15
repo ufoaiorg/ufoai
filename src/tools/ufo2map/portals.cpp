@@ -36,7 +36,7 @@ static int c_tinyportals = 0;
 /**
  * @sa FreePortal
  */
-static portal_t *AllocPortal (void)
+static portal_t* AllocPortal (void)
 {
 	if (threadstate.numthreads == 1)
 		c_active_portals++;
@@ -49,7 +49,7 @@ static portal_t *AllocPortal (void)
 /**
  * @sa AllocPortal
  */
-void FreePortal (portal_t *p)
+void FreePortal (portal_t* p)
 {
 	if (p->winding)
 		FreeWinding(p->winding);
@@ -79,7 +79,7 @@ uint32_t VisibleContents (uint32_t contentFlags)
  * @param[in,out] back The back node
  * @sa RemovePortalFromNode
  */
-static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
+static void AddPortalToNodes (portal_t* p, node_t* front, node_t* back)
 {
 	if (p->nodes[0] || p->nodes[1])
 		Sys_Error("AddPortalToNodes: already included");
@@ -99,14 +99,14 @@ static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
  * @param[in,out] l The node to remove the portal from
  * @sa AddPortalToNodes
  */
-void RemovePortalFromNode (portal_t *portal, node_t *l)
+void RemovePortalFromNode (portal_t* portal, node_t* l)
 {
 	portal_t** pp;
 
 	/* remove reference to the current portal */
 	pp = &l->portals;
 	while (1) {
-		portal_t *t = *pp;
+		portal_t* t = *pp;
 		if (!t)
 			Sys_Error("RemovePortalFromNode: portal not in leaf");
 
@@ -134,13 +134,13 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 /**
  * @brief The created portals will face the global outside_node
  */
-static void MakeHeadnodePortals (tree_t *tree)
+static void MakeHeadnodePortals (tree_t* tree)
 {
 	vec3_t bounds[2];
 	int i, j;
-	portal_t *portals[6];
+	portal_t* portals[6];
 	plane_t bplanes[6];
-	node_t *node;
+	node_t* node;
 
 	node = tree->headnode;
 
@@ -158,8 +158,8 @@ static void MakeHeadnodePortals (tree_t *tree)
 	for (i = 0; i < 3; i++)
 		for (j = 0; j < 2; j++) {
 			const int n = j * 3 + i;
-			portal_t *p = AllocPortal();
-			plane_t *pl = &bplanes[n];
+			portal_t* p = AllocPortal();
+			plane_t* pl = &bplanes[n];
 
 			OBJZERO(*pl);
 			portals[n] = p;
@@ -189,17 +189,17 @@ static void MakeHeadnodePortals (tree_t *tree)
 #define	BASE_WINDING_EPSILON	0.001
 #define	SPLIT_WINDING_EPSILON	0.001
 
-static winding_t *BaseWindingForNode (node_t *node)
+static winding_t* BaseWindingForNode (node_t* node)
 {
-	node_t *n;
-	winding_t *w;
+	node_t* n;
+	winding_t* w;
 
 	w = BaseWindingForPlane(mapplanes[node->planenum].normal
 		, mapplanes[node->planenum].dist);
 
 	/* clip by all the parents */
 	for (n = node->parent; n && w;) {
-		const plane_t *plane = &mapplanes[n->planenum];
+		const plane_t* plane = &mapplanes[n->planenum];
 
 		if (n->children[0] == node) {	/* take front */
 			ChopWindingInPlace(&w, plane->normal, plane->dist, BASE_WINDING_EPSILON);
@@ -222,10 +222,10 @@ static winding_t *BaseWindingForNode (node_t *node)
  * @brief Create the new portal by taking the full plane winding for the cutting plane
  * and clipping it by all of parents of this node
  */
-static void MakeNodePortal (node_t *node)
+static void MakeNodePortal (node_t* node)
 {
-	portal_t *new_portal, *p;
-	winding_t *w;
+	portal_t* new_portal, *p;
+	winding_t* w;
 	vec3_t normal;
 	float dist = 0.0f;
 	int side = 0;
@@ -269,13 +269,13 @@ static void MakeNodePortal (node_t *node)
  * @brief Move or split the portals that bound node so that the node's
  * children have portals instead of node.
  */
-static void SplitNodePortals (node_t *node)
+static void SplitNodePortals (node_t* node)
 {
-	portal_t *p, *next_portal, *new_portal;
-	node_t *f, *b;
+	portal_t* p, *next_portal, *new_portal;
+	node_t* f, *b;
 	int side = 0;
-	plane_t *plane;
-	winding_t *frontwinding, *backwinding;
+	plane_t* plane;
+	winding_t* frontwinding, *backwinding;
 
 	plane = &mapplanes[node->planenum];
 	f = node->children[0];
@@ -290,7 +290,7 @@ static void SplitNodePortals (node_t *node)
 			Sys_Error("SplitNodePortals: mislinked portal");
 		next_portal = p->next[side];
 
-		node_t *other_node = p->nodes[!side];
+		node_t* other_node = p->nodes[!side];
 		RemovePortalFromNode(p, p->nodes[0]);
 		RemovePortalFromNode(p, p->nodes[1]);
 
@@ -351,9 +351,9 @@ static void SplitNodePortals (node_t *node)
 }
 
 
-static void CalcNodeBounds (node_t *node)
+static void CalcNodeBounds (node_t* node)
 {
-	portal_t *p;
+	portal_t* p;
 	int s, i;
 
 	/* calc mins/maxs for both leafs and nodes */
@@ -368,7 +368,7 @@ static void CalcNodeBounds (node_t *node)
 }
 
 
-static void MakeTreePortals_r (node_t *node)
+static void MakeTreePortals_r (node_t* node)
 {
 	int i;
 
@@ -393,7 +393,7 @@ static void MakeTreePortals_r (node_t *node)
 	MakeTreePortals_r(node->children[1]);
 }
 
-void MakeTreePortals (tree_t *tree)
+void MakeTreePortals (tree_t* tree)
 {
 	MakeHeadnodePortals(tree);
 	MakeTreePortals_r(tree->headnode);
@@ -402,12 +402,12 @@ void MakeTreePortals (tree_t *tree)
 /**
  * @brief Finds a brush side to use for texturing the given portal
  */
-static void FindPortalSide (portal_t *p)
+static void FindPortalSide (portal_t* p)
 {
 	uint32_t viscontents;
-	bspbrush_t *bb;
+	bspbrush_t* bb;
 	int i, j, planenum;
-	side_t *bestside;
+	side_t* bestside;
 	float bestdot;
 
 	/* decide which content change is strongest
@@ -421,17 +421,17 @@ static void FindPortalSide (portal_t *p)
 	bestdot = 0;
 
 	for (j = 0; j < 2; j++) {
-		const node_t *n = p->nodes[j];
-		const plane_t *p1 = &mapplanes[p->onnode->planenum];
+		const node_t* n = p->nodes[j];
+		const plane_t* p1 = &mapplanes[p->onnode->planenum];
 		for (bb = n->brushlist; bb; bb = bb->next) {
-			const mapbrush_t *brush = bb->original;
+			const mapbrush_t* brush = bb->original;
 
 			if (!(brush->contentFlags & viscontents))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
-				side_t *side = &brush->original_sides[i];
+				side_t* side = &brush->original_sides[i];
 				float dot;
-				const plane_t *p2;
+				const plane_t* p2;
 
 				if (side->bevel)
 					continue;
@@ -463,9 +463,9 @@ gotit:
 }
 
 
-static void MarkVisibleSides_r (node_t *node)
+static void MarkVisibleSides_r (node_t* node)
 {
-	portal_t *p;
+	portal_t* p;
 	int s;
 
 	if (node->planenum != PLANENUM_LEAF) {
@@ -490,7 +490,7 @@ static void MarkVisibleSides_r (node_t *node)
 	}
 }
 
-void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
+void MarkVisibleSides (tree_t* tree, int startbrush, int endbrush)
 {
 	int i;
 
@@ -498,7 +498,7 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 
 	/* clear all the visible flags */
 	for (i = startbrush; i < endbrush; i++) {
-		mapbrush_t *mb = &mapbrushes[i];
+		mapbrush_t* mb = &mapbrushes[i];
 		const int numsides = mb->numsides;
 		int j;
 

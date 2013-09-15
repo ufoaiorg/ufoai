@@ -52,12 +52,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Return may by empty if A is contained inside B.
  * @note The originals are undisturbed.
  */
-static bspbrush_t *SubtractBrush (bspbrush_t *a, const bspbrush_t *b)
+static bspbrush_t* SubtractBrush (bspbrush_t* a, const bspbrush_t* b)
 {
 	/* a - b = out (list) */
 	int i;
-	bspbrush_t *front, *back, *out;
-	bspbrush_t *in;
+	bspbrush_t* front, *back, *out;
+	bspbrush_t* in;
 
 	in = a;
 	out = nullptr;
@@ -84,7 +84,7 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, const bspbrush_t *b)
  * @return true if the two brushes definately do not intersect.
  * @note There will be false negatives for some non-axial combinations.
  */
-static bool BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
+static bool BrushesDisjoint (bspbrush_t* a, bspbrush_t* b)
 {
 	int i, j;
 
@@ -111,10 +111,10 @@ static uint16_t maxplanenums[2];
  * @brief Any planes shared with the box edge will be set to no texinfo
  * @note not thread safe
  */
-static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, const vec3_t clipmins, const vec3_t clipmaxs)
+static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, const vec3_t clipmaxs)
 {
 	int i, j;
-	bspbrush_t *front, *back;
+	bspbrush_t* front, *back;
 
 	for (j = 0; j < 2; j++) {
 		if (brush->maxs[j] > clipmaxs[j]) {
@@ -139,7 +139,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, const vec3_t clipmins, con
 
 	/* remove any colinear faces */
 	for (i = 0; i < brush->numsides; i++) {
-		side_t *side = &brush->sides[i];
+		side_t* side = &brush->sides[i];
 		const int p = side->planenum & ~1;
 		if (p == maxplanenums[0] || p == maxplanenums[1]
 			|| p == minplanenums[0] || p == minplanenums[1]) {
@@ -198,9 +198,9 @@ static bool IsInLevel (const int contents, const int level)
 	}
 }
 
-static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
+static bspbrush_t* AddBrushListToTail (bspbrush_t* list, bspbrush_t* tail)
 {
-	bspbrush_t *walk, *next;
+	bspbrush_t* walk, *next;
 
 	/* add to end of list */
 	for (walk = list; walk; walk = next) {
@@ -219,10 +219,10 @@ static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
  * @param[in] skip The brush to skip
  * @return a @c bspbrush_t that is the old list without the skip entry
  */
-static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip)
+static bspbrush_t* CullList (bspbrush_t* list, bspbrush_t* skip)
 {
-	bspbrush_t *newlist;
-	bspbrush_t *next;
+	bspbrush_t* newlist;
+	bspbrush_t* next;
 
 	newlist = nullptr;
 
@@ -241,7 +241,7 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip)
 /**
  * @brief Returns true if b1 is allowed to bite b2
  */
-static inline bool BrushGE (bspbrush_t *b1, bspbrush_t *b2)
+static inline bool BrushGE (bspbrush_t* b1, bspbrush_t* b2)
 {
 	/* detail brushes never bite structural brushes */
 	if ((b1->original->contentFlags & CONTENTS_DETAIL)
@@ -273,7 +273,7 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 	num = 0;
 
 	for (i = startbrush; i < endbrush; i++) {
-		const mapbrush_t *b = &mapbrushes[i];
+		const mapbrush_t* b = &mapbrushes[i];
 
 		/* don't use finished brushes again */
 		if (b->finished)
@@ -298,9 +298,9 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 	return num;
 }
 
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AABB& clip)
+bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AABB& clip)
 {
-	bspbrush_t *brushlist, *newbrush;
+	bspbrush_t* brushlist, *newbrush;
 	int i, j, vis;
 	int numsides;
 
@@ -320,7 +320,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 	brushlist = nullptr;
 
 	for (i = startbrush; i < endbrush; i++) {
-		mapbrush_t *mb = &mapbrushes[i];
+		mapbrush_t* mb = &mapbrushes[i];
 
 		if (!IsInLevel(mb->contentFlags, level)){
 			Verb_Printf(VERB_DUMP, "Rejected brush %i: wrong level.\n", i);
@@ -359,7 +359,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 		newbrush->numsides = mb->numsides;
 		memcpy(newbrush->sides, mb->original_sides, numsides * sizeof(side_t));
 		for (j = 0; j < numsides; j++) {
-			side_t *side = &newbrush->sides[j];
+			side_t* side = &newbrush->sides[j];
 			if (side->winding)
 				side->winding = CopyWinding(side->winding);
 			if (side->surfaceFlags & SURF_HINT)
@@ -386,12 +386,12 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 /**
  * @brief Carves any intersecting solid brushes into the minimum number of non-intersecting brushes.
  */
-bspbrush_t *ChopBrushes (bspbrush_t *head)
+bspbrush_t* ChopBrushes (bspbrush_t* head)
 {
-	bspbrush_t *b1, *b2, *next;
-	bspbrush_t *tail;
-	bspbrush_t *keep;
-	bspbrush_t *sub, *sub2;
+	bspbrush_t* b1, *b2, *next;
+	bspbrush_t* tail;
+	bspbrush_t* keep;
+	bspbrush_t* sub, *sub2;
 	int c1, c2;
 	const int originalBrushes = CountBrushList(head);
 	int keepBrushes;

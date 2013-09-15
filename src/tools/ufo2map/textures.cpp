@@ -62,7 +62,7 @@ static const vec3_t baseaxis[18] =
 {0,-1,0}, {1,0,0}, {0,0,-1}			/* north wall */
 };
 
-static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, bool isTerrain)
+static void TextureAxisFromPlane (plane_t* pln, vec3_t xv, vec3_t yv, bool isTerrain)
 {
 	int bestaxis, numaxis, i;
 	vec_t best;
@@ -89,7 +89,7 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, bool isTer
 /**
  * @sa BaseLightForFace
  */
-int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t origin, bool isTerrain)
+int TexinfoForBrushTexture (plane_t* plane, brush_texture_t* bt, const vec3_t origin, bool isTerrain)
 {
 	vec3_t vecs[2];
 	int sv, tv;
