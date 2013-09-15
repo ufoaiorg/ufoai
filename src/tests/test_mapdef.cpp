@@ -144,6 +144,7 @@ static void testMapDefsMassRMA (void)
 					else
 						Cvar_Set("rm_ufo", "");
 
+					Com_Printf("\nDrop: %s Ufo: %s", craft, ufo);
 					Com_Printf("\nSeed:");
 					int i;
 					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
