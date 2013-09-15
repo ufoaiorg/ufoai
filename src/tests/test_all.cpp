@@ -311,7 +311,7 @@ static void Test_Parameters (const int argc, char** argv)
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
 			printf("-c  --console              | run tests in console mode\n");
-			printf("-Dprop=value               | defines a test property.");
+			printf("-Dprop=value               | defines a test property\n");
 			printf("-a  --automated            | run tests in automated mode (create xml file)\n");
 			printf("-l  --list                 | list suite name available, and exit.\n");
 			printf("-s  --status               | list suite name with there status, and exit.\n");
