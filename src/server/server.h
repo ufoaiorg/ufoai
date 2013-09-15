@@ -87,7 +87,7 @@ typedef struct serverInstanceStatic_s {
 	SDL_cond *gameFrameCond;	/**< the signal that the game frame threads waits for */
 	SDL_Thread *gameThread;
 #ifndef HARD_LINKED_GAME
-	void *gameLibrary;
+	void* gameLibrary;
 #endif
 	game_export_t *ge;
 } serverInstanceStatic_t;
@@ -211,7 +211,7 @@ void SV_Heartbeat_f(void);
 bool SV_CheckMap(const char* map, const char* assembly);
 
 /* sv_game.c */
-int SV_RunGameFrameThread(void *data);
+int SV_RunGameFrameThread(void* data);
 void SV_RunGameFrame(void);
 void SV_InitGameProgs(void);
 void SV_ShutdownGameProgs(void);

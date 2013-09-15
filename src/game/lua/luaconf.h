@@ -593,7 +593,7 @@ union luai_Cast { double l_d; long l_l; };
 ** aligned in 16-byte boundaries, then you should add long double in the
 ** union.) Probably you do not need to change this.
 */
-#define LUAI_USER_ALIGNMENT_T	union { double u; void *s; long l; }
+#define LUAI_USER_ALIGNMENT_T	union { double u; void* s; long l; }
 
 
 /*

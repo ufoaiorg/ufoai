@@ -38,4 +38,4 @@ struct mdfour {
 	uint32_t totalN;
 };
 
-unsigned Com_BlockChecksum(const void *buffer, int length);
+unsigned Com_BlockChecksum(const void* buffer, int length);

@@ -68,7 +68,7 @@ typedef struct CallInfo {
 typedef struct global_State {
   stringtable strt;  /* hash table for strings */
   lua_Alloc frealloc;  /* function to reallocate memory */
-  void *ud;         /* auxiliary data to `frealloc' */
+  void* ud;         /* auxiliary data to `frealloc' */
   lu_byte currentwhite;
   lu_byte gcstate;  /* state of garbage collector */
   int sweepstrgc;  /* position of sweep in `strt' */

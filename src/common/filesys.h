@@ -51,7 +51,7 @@ FILESYSTEM
 ==============================================================
 */
 typedef struct qFILE_s {
-	void *z; /**< in case of the file being a zip archive */
+	void* z; /**< in case of the file being a zip archive */
 	FILE *f; /**< in case the file being part of a pak or the actual file */
 	char name[MAX_OSPATH];
 	unsigned long filepos;
@@ -122,8 +122,8 @@ extern int fs_numInstalledMaps;
 
 int FS_FileLength(qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
-int FS_WriteFile(const void *buffer, size_t len, const char* filename);
-int FS_Write(const void *buffer, int len, qFILE * f);
+int FS_WriteFile(const void* buffer, size_t len, const char* filename);
+int FS_Write(const void* buffer, int len, qFILE * f);
 int FS_Printf(qFILE *f, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
 void FS_InitFilesystem(bool writeToHomeDir);
 void FS_AddGameDirectory(const char* dir, bool write);
@@ -154,11 +154,11 @@ int FS_LoadFile(const char* path, byte** buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-int FS_Read2(void *buffer, int len, qFILE *f, bool failOnEmptyRead);
-int FS_Read(void *buffer, int len, qFILE * f);
+int FS_Read2(void* buffer, int len, qFILE *f, bool failOnEmptyRead);
+int FS_Read(void* buffer, int len, qFILE * f);
 /* properly handles partial reads */
 
-void FS_FreeFile(void *buffer);
+void FS_FreeFile(void* buffer);
 
 int FS_CheckFile(const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
 

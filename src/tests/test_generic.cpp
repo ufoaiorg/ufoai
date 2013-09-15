@@ -189,7 +189,7 @@ static void testConstInt (void)
 	Com_UnregisterConstList(list2);
 }
 
-static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const void *userData)
+static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const void* userData)
 {
 	return strcmp((const char*)entry1->data, (const char*)entry2->data);
 }
@@ -694,7 +694,7 @@ static void testSHA2Buffer (void)
 /**
  * @brief The string 'a' and 'c' evaluates to true - everything else to false
  */
-static int TEST_BEP (const char *id, const void *userdata)
+static int TEST_BEP (const char *id, const void* userdata)
 {
 	return Q_streq(id, "a") || Q_streq(id, "c");
 }

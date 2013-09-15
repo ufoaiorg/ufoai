@@ -58,7 +58,7 @@ typedef struct GCheader {
 */
 typedef union {
   GCObject *gc;
-  void *p;
+  void* p;
   lua_Number n;
   int b;
 } Value;

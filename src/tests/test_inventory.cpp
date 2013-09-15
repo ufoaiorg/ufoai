@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static InventoryInterface i;
 static const int TAG_INVENTORY = 5546;
 
-static void FreeInventory (void *data)
+static void FreeInventory (void* data)
 {
 	Mem_Free(data);
 }
 
-static void *AllocInventoryMemory (size_t size)
+static void* AllocInventoryMemory (size_t size)
 {
 	return Mem_PoolAlloc(size, com_genericPool, TAG_INVENTORY);
 }

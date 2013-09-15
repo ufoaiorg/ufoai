@@ -93,7 +93,7 @@ static void testScheduler (void)
 	CU_ASSERT_FALSE(Dequeue_Event(1000));
 }
 
-static bool delayCheck (int now, void *data)
+static bool delayCheck (int now, void* data)
 {
 	static bool check = false;
 	const bool ret = check;
@@ -139,7 +139,7 @@ static void testSchedulerCheck (void)
 }
 
 static bool delayCheckBlockedVal = false;
-static bool delayCheckBlocked (int now, void *data)
+static bool delayCheckBlocked (int now, void* data)
 {
 	return delayCheckBlockedVal;
 }
