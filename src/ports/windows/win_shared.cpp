@@ -31,7 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <conio.h>
 #include <mmsystem.h>
 #include <shellapi.h>
+
+#if defined(_MSC_VER)
 #include <intrin.h>
+#endif
 
 HINSTANCE global_hInstance;
 
@@ -53,7 +56,11 @@ void Sys_Mkdir (const char* path)
 
 void Sys_Breakpoint (void)
 {
+#if defined(_MSC_VER)
 	__debugbreak();
+#elif (defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)))
+	__asm__ __volatile__ ( "int $3\n\t" );
+#endif
 }
 
 #ifdef COMPILE_UFO
