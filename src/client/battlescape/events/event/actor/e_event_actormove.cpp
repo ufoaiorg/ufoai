@@ -50,6 +50,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 		le->stepList = newStep;
 		le->stepIndex = 0;
 	} else {
+		/* append to the list */
 		leStep_t *step = le->stepList;
 		while (step) {
 			if (step->next == nullptr) {
