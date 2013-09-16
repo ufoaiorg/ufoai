@@ -11306,3 +11306,99 @@
 "origin" "304 308 144"
 "spawnflags" "1"
 }
+// entity 56
+{
+"classname" "info_civilian_start"
+"origin" "208 432 92"
+"angle" "180"
+}
+// entity 57
+{
+"classname" "info_civilian_start"
+"origin" "432 304 28"
+"angle" "180"
+}
+// entity 58
+{
+"classname" "info_civilian_start"
+"origin" "272 144 28"
+"angle" "180"
+}
+// entity 59
+{
+"classname" "info_civilian_start"
+"origin" "208 176 92"
+"angle" "180"
+}
+// entity 60
+{
+"classname" "info_alien_start"
+"origin" "464 240 28"
+"angle" "-1.4033e-014"
+}
+// entity 61
+{
+"classname" "info_alien_start"
+"origin" "272 336 156"
+"angle" "90"
+}
+// entity 62
+{
+"classname" "info_alien_start"
+"origin" "432 144 156"
+"angle" "90"
+}
+// entity 63
+{
+"classname" "info_alien_start"
+"origin" "240 272 28"
+"angle" "-90"
+}
+// entity 64
+{
+"classname" "info_alien_start"
+"origin" "432 144 92"
+"angle" "90"
+}
+// entity 65
+{
+"classname" "info_alien_start"
+"origin" "208 368 92"
+"angle" "90"
+}
+// entity 66
+{
+"classname" "info_alien_start"
+"origin" "368 432 92"
+"angle" "90"
+}
+// entity 67
+{
+"classname" "info_alien_start"
+"origin" "208 80 92"
+"angle" "-90"
+}
+// entity 68
+{
+"classname" "info_alien_start"
+"origin" "208 144 28"
+"angle" "-90"
+}
+// entity 69
+{
+"classname" "info_alien_start"
+"origin" "80 304 28"
+"angle" "-1.4033e-014"
+}
+// entity 70
+{
+"classname" "info_alien_start"
+"origin" "48 112 28"
+"angle" "180"
+}
+// entity 71
+{
+"classname" "info_alien_start"
+"origin" "80 400 28"
+"angle" "90"
+}
