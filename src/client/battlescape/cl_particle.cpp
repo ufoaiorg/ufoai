@@ -618,7 +618,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 		case PC_SPAWN:
 			pnew = CL_ParticleSpawn((const char*) cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (!pnew)
-				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s' (%s)\n", p->ctrl->name, (const char*) cmdData);
+				Com_DPrintf(DEBUG_CLIENT, "PC_SPAWN: Could not spawn child particle for '%s' (%s)\n", p->ctrl->name, (const char*) cmdData);
 			break;
 
 		case PC_TNSPAWN:
@@ -661,7 +661,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 			for (i = 0; i < n; i++) {
 				pnew = CL_ParticleSpawn((const char*) cmdData, p->levelFlags, p->s, p->v, p->a);
 				if (!pnew)
-					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
+					Com_DPrintf(DEBUG_CLIENT, "PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 
@@ -672,7 +672,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 				pnew->parent = p;
 				p->children = pnew;
 			} else {
-				Com_Printf("PC_CHILD: Could not spawn child particle for '%s'\n", p->ctrl->name);
+				Com_DPrintf(DEBUG_CLIENT, "PC_CHILD: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 
