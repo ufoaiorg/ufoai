@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-07 09:04+0200\n"
+"POT-Creation-Date: 2013-09-16 10:44+0200\n"
 "PO-Revision-Date: 2013-05-13 01:00-0500\n"
 "Last-Translator: Ganama <nijimania@hotmail.com>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -27,15 +27,11 @@ msgstr "아프리카"
 msgid "Home"
 msgstr "본부"
 
-#: ../base/maps/bomber_city.ump:68 ../base/ufos/maps.ufo:428
-msgid "Bomber in the City"
-msgstr "도시의 폭파범"
-
-#: ../base/maps/bridge.ump:100 ../base/ufos/maps.ufo:486
+#: ../base/maps/bridge.ump:101 ../base/ufos/maps.ufo:428
 msgid "Bridge"
 msgstr "교량"
 
-#: ../base/maps/bridge.ump:110 ../base/ufos/maps.ufo:526
+#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:468
 msgid "Bridge (MP)"
 msgstr "교량 (MP)"
 
@@ -47,14 +43,6 @@ msgstr "작은 묘지"
 #, fuzzy
 msgid "The outskirt of a big city."
 msgstr "대도시의 변두리."
-
-#: ../base/maps/city_disco.ump:65 ../base/ufos/maps.ufo:3298
-msgid "Urban Disco"
-msgstr "도심 디스코"
-
-#: ../base/maps/community_centre.ump:61 ../base/ufos/maps.ufo:3348
-msgid "Community Centre"
-msgstr "지역 문화 회관"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -90,15 +78,15 @@ msgstr "숲의 작은 오두막집"
 #: ../base/maps/frozen.ump:643 ../base/maps/frozen.ump:665
 #: ../base/maps/frozen.ump:689 ../base/maps/frozen.ump:711
 #: ../base/maps/frozen.ump:734 ../base/maps/frozen.ump:756
-#: ../base/maps/frozen.ump:759 ../base/maps/frozen.ump:829
+#: ../base/maps/frozen.ump:826
 msgid "Frozen"
 msgstr "얼어붙은 지역"
 
-#: ../base/maps/frozen.ump:784
+#: ../base/maps/frozen.ump:781
 msgid "Multiplayer Coop"
 msgstr "동맹 멀티플레이"
 
-#: ../base/maps/frozen.ump:806
+#: ../base/maps/frozen.ump:803
 msgid "Multiplayer Deathmatch"
 msgstr "데스매치 멀티플레이"
 
@@ -106,12 +94,12 @@ msgstr "데스매치 멀티플레이"
 msgid "Gasstation"
 msgstr "주유소"
 
-#: ../base/maps/harbour2.ump:480 ../base/ufos/maps.ufo:1648
-#: ../base/ufos/maps.ufo:1699
+#: ../base/maps/harbour2.ump:490 ../base/maps/harbour2.ump:578
+#: ../base/ufos/maps.ufo:1589 ../base/ufos/maps.ufo:1595
 msgid "Harbour"
 msgstr "항구"
 
-#: ../base/maps/harbour2.ump:525
+#: ../base/maps/harbour2.ump:534
 msgid "Pier"
 msgstr "부두"
 
@@ -129,9 +117,9 @@ msgstr "아이스"
 msgid "UFO Landed"
 msgstr "UFO 착륙"
 
-#: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:2014
-#: ../base/ufos/maps.ufo:2057 ../base/ufos/maps.ufo:2101
-#: ../base/ufos/maps.ufo:2144
+#: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:1907
+#: ../base/ufos/maps.ufo:1950 ../base/ufos/maps.ufo:1994
+#: ../base/ufos/maps.ufo:2037
 msgid "Industrial Site"
 msgstr "산업지구"
 
@@ -151,22 +139,11 @@ msgstr "동양풍의 작은 공원"
 msgid "Harvester"
 msgstr "수확선"
 
-#: ../base/maps/laboratory.ump:95 ../base/maps/laboratory.ump:104
-#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2290
-#: ../base/ufos/maps.ufo:2341 ../base/ufos/ui/research.ufo:322
-#: client/cgame/campaign/cp_base_callbacks.cpp:327
-msgid "Laboratory"
-msgstr "연구실"
-
 #: ../base/maps/mansion.ump:398 ../base/maps/mansion.ump:442
-#: ../base/maps/mansion1.ump:68 ../base/ufos/maps.ufo:2395
-#: ../base/ufos/maps.ufo:2449 ../base/ufos/maps.ufo:2497
+#: ../base/maps/mansion1.ump:68 ../base/ufos/maps.ufo:2183
+#: ../base/ufos/maps.ufo:2238 ../base/ufos/maps.ufo:2286
 msgid "Mansion"
 msgstr "맨션"
-
-#: ../base/maps/mart.ump:64
-msgid "Mart"
-msgstr "마트"
 
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
@@ -192,10 +169,6 @@ msgstr "구출 임무"
 msgid "Spedition"
 msgstr "물류창고"
 
-#: ../base/maps/stadium.ump:65
-msgid "Stadium"
-msgstr "운동장"
-
 #: ../base/maps/tower.ump:62
 msgid "Tower"
 msgstr "타워"
@@ -215,6 +188,38 @@ msgstr "열대우림 마약상"
 #: ../base/maps/tropic.ump:416
 msgid "Tropical UFO"
 msgstr "열대우림의 UFO"
+
+#: ../base/maps/urban.ump:310 ../base/ufos/maps.ufo:2675
+msgid "Bomber in the City"
+msgstr "도시의 폭파범"
+
+#: ../base/maps/urban.ump:319 ../base/ufos/maps.ufo:2731
+msgid "Urban Disco"
+msgstr "도심 디스코"
+
+#: ../base/maps/urban.ump:328 ../base/ufos/maps.ufo:2785
+msgid "Community Centre"
+msgstr "지역 문화 회관"
+
+#: ../base/maps/urban.ump:348
+msgid "Stadium"
+msgstr "운동장"
+
+#: ../base/maps/urban.ump:357 ../base/maps/urban.ump:367
+#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2838
+#: ../base/ufos/maps.ufo:2893 ../base/ufos/ui/research.ufo:334
+#: client/cgame/campaign/cp_base_callbacks.cpp:327
+msgid "Laboratory"
+msgstr "연구실"
+
+#: ../base/maps/urban.ump:377
+msgid "Mart"
+msgstr "마트"
+
+#: ../base/maps/urban.ump:398 ../base/ufos/maps.ufo:3047
+#: ../base/ufos/skins.ufo:19
+msgid "Urban"
+msgstr "도심용 위장복"
 
 #: ../base/maps/village.ump:758 ../base/maps/village.ump:786
 #: ../base/maps/village.ump:813 ../base/maps/village.ump:841
@@ -286,7 +291,7 @@ msgstr "스팅레이 요격기"
 msgid "Stingray"
 msgstr "스팅레이"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3966
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3980
 msgid "UFO - Scout"
 msgstr "UFO - 정찰선"
 
@@ -294,7 +299,7 @@ msgstr "UFO - 정찰선"
 msgid "Scout U"
 msgstr "정찰선 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4008
+#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4022
 msgid "UFO - Fighter"
 msgstr "UFO - 전투선"
 
@@ -302,7 +307,7 @@ msgstr "UFO - 전투선"
 msgid "Fighter U"
 msgstr "전투선 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4307
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4321
 msgid "UFO - Harvester"
 msgstr "UFO - 수확선"
 
@@ -310,7 +315,7 @@ msgstr "UFO - 수확선"
 msgid "Harvester U"
 msgstr "수확선 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4179
+#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4193
 msgid "UFO - Corrupter"
 msgstr "UFO - 커럽터"
 
@@ -318,7 +323,7 @@ msgstr "UFO - 커럽터"
 msgid "Corrupter U"
 msgstr "커럽터 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4051
+#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4065
 msgid "UFO - Supply Ship"
 msgstr "UFO - 보급선"
 
@@ -326,7 +331,7 @@ msgstr "UFO - 보급선"
 msgid "Supply U"
 msgstr "보급선 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4222
+#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4236
 msgid "UFO - Gunboat"
 msgstr "UFO - 건보트"
 
@@ -334,7 +339,7 @@ msgstr "UFO - 건보트"
 msgid "Gunboat U"
 msgstr "건보트 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4137
+#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4151
 msgid "UFO - Bomber"
 msgstr "UFO - 폭격선"
 
@@ -342,7 +347,7 @@ msgstr "UFO - 폭격선"
 msgid "Bomber U"
 msgstr "폭격선 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4264
+#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4278
 msgid "UFO - Ripper"
 msgstr "UFO - 립퍼"
 
@@ -350,7 +355,7 @@ msgstr "UFO - 립퍼"
 msgid "Ripper U"
 msgstr "립퍼 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4094
+#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4108
 msgid "UFO - Carrier"
 msgstr "UFO - 캐리어"
 
@@ -358,7 +363,7 @@ msgstr "UFO - 캐리어"
 msgid "Carrier U"
 msgstr "캐리어 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4350
+#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4364
 msgid "UFO - Mothership"
 msgstr "UFO - 모함"
 
@@ -366,7 +371,7 @@ msgstr "UFO - 모함"
 msgid "Mothership U"
 msgstr "모함 U"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5157
+#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5171
 msgid "Aerial Laser Cannon"
 msgstr "항공기용 레이저포"
 
@@ -374,11 +379,11 @@ msgstr "항공기용 레이저포"
 msgid "Shiva Rotary Cannon"
 msgstr "시바 기관포"
 
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5224
+#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5238
 msgid "SHIVA 20mm API Rounds"
 msgstr "시바 20mm 철갑 소이탄"
 
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5245
+#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5259
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "시바 20mm 고폭 소이탄"
 
@@ -394,71 +399,71 @@ msgstr "스패로호크 공대공 미사일 발사대"
 msgid "Sparrowhawk Missile"
 msgstr "스패로호크 공대공 미사일"
 
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5304
+#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5318
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 로켓 발사대"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5321
+#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5335
 msgid "TR-20 Rocket"
 msgstr "TR-20 로켓"
 
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5340
+#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5354
 msgid "Particle Beam Weapon"
 msgstr "입자 빔 무기"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5397
+#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5411
 msgid "Alien Launcher"
 msgstr "외계인 유탄 발사기"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5444
+#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5458
 msgid "Antimatter Missile"
 msgstr "반물질 미사일"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5493
+#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5507
 msgid "Hybrid Missile"
 msgstr "하이브리드 미사일"
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5543
+#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5557
 msgid "Targeting Computer"
 msgstr "조준 지원 컴퓨터"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5559
+#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5573
 msgid "Fuel Pod"
 msgstr "보조연료탱크"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4903
+#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4917
 msgid "Polymer Aircraft Armour"
 msgstr "폴리머 항공기 장갑판"
 
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4920
+#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4934
 msgid "Alien Aircraft Plating"
 msgstr "외계 우주선 강판"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4962
+#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4976
 msgid "Alien Polymer Armour"
 msgstr "외계인 폴리머 방탄복"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5575
+#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5589
 msgid "Alien Electronic Warfare Suite"
 msgstr "외계 전자 전쟁 스위트"
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5004
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5018
 msgid "Alien Astrogation"
 msgstr "외계 우주선 항법체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5042
+#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5056
 msgid "Alien Propulsion"
 msgstr "외계 우주선 추진체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5080
+#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5094
 msgid "Advanced Alien Propulsion"
 msgstr "고급 외계 추진체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5119
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5133
 msgid "Alien Detection"
 msgstr "외계 우주선 탐지체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4855
+#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4869
 msgid "AA51 missile launcher"
 msgstr "AA51 SAM 발사대"
 
@@ -559,12 +564,12 @@ msgstr "수송기 격납고"
 msgid "Interceptor Hangar"
 msgstr "요격기 격납고"
 
-#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:3965
+#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:4028
 #: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Workshop"
 msgstr "작업실"
 
-#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/radar.ufo:35
+#: ../base/ufos/basemanagement.ufo:168
 msgid "Radar"
 msgstr "레이더"
 
@@ -2430,48 +2435,48 @@ msgid "Zurich"
 msgstr "취리히"
 
 #: ../base/ufos/equipment.ufo:17 ../base/ufos/gamemodes.ufo:3
-#: ../base/ufos/ui/main.ufo:40
+#: ../base/ufos/ui/main.ufo:73
 msgid "Multiplayer"
 msgstr "멀티플레이"
 
-#: ../base/ufos/equipment.ufo:81
+#: ../base/ufos/equipment.ufo:105
 msgid "Alien Skirmish"
 msgstr "외계인과의 전투"
 
-#: ../base/ufos/equipment.ufo:108
+#: ../base/ufos/equipment.ufo:132
 msgid "Multiplayer Phalanx"
 msgstr "멀티플레이어 Phalanx"
 
-#: ../base/ufos/equipment.ufo:189
+#: ../base/ufos/equipment.ufo:213
 msgid "Assault Rifles Only"
 msgstr "돌격소총만 사용함"
 
-#: ../base/ufos/equipment.ufo:196
+#: ../base/ufos/equipment.ufo:220
 msgid "No IR Goggles"
 msgstr "적외선 고글 사용 안함"
 
 # Assumes that "Flamer" is short for "Flamethrower."
-#: ../base/ufos/equipment.ufo:255
+#: ../base/ufos/equipment.ufo:279
 msgid "Flamers/Rifles/Grenades"
 msgstr "화염방사기/소총/수류탄"
 
-#: ../base/ufos/equipment.ufo:273
+#: ../base/ufos/equipment.ufo:297
 msgid "Campaign Start"
 msgstr "캠페인 시작"
 
-#: ../base/ufos/equipment.ufo:316
+#: ../base/ufos/equipment.ufo:340
 msgid "Campaign Start (Market)"
 msgstr "캠페인 시작 (시장)"
 
-#: ../base/ufos/equipment.ufo:371
+#: ../base/ufos/equipment.ufo:395
 msgid "Asymptotic Market"
 msgstr "점근적 시장"
 
-#: ../base/ufos/equipment.ufo:394
+#: ../base/ufos/equipment.ufo:418
 msgid "Alien Campaign Start (Alien Campaign)"
 msgstr "외계인 캠페인 시작 (외계인 캠페인)"
 
-#: ../base/ufos/equipment.ufo:416
+#: ../base/ufos/equipment.ufo:440
 msgid "Alien Campaign Start (Market)"
 msgstr "외계인 캠페인 시작 (시장)"
 
@@ -2517,59 +2522,55 @@ msgstr "media/UnDinaruBold.ttf"
 msgid "media/languages.ttf"
 msgstr "media/languages.ttf"
 
-#: ../base/ufos/gamemodes.ufo:16
-msgid "Full Campaign"
-msgstr "정식 캠페인"
+#: ../base/ufos/gamemodes.ufo:16 ../base/ufos/ui/stats.ufo:158
+msgid "Campaign"
+msgstr "캠페인"
 
 #: ../base/ufos/gamemodes.ufo:21
-msgid "Simple Campaign"
-msgstr "간단한 캠페인"
-
-#: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
 msgstr "빠른시작"
 
-#: ../base/ufos/gametypes.ufo:4
+#: ../base/ufos/gametypes.ufo:3
 msgid "1on1"
 msgstr "1 대 1"
 
-#: ../base/ufos/gametypes.ufo:17
+#: ../base/ufos/gametypes.ufo:16
 msgid "1on1on1"
 msgstr "1 대 1 대 1"
 
-#: ../base/ufos/gametypes.ufo:30
+#: ../base/ufos/gametypes.ufo:29
 msgid "2on2"
 msgstr "2 대 2"
 
-#: ../base/ufos/gametypes.ufo:43
+#: ../base/ufos/gametypes.ufo:42
 msgid "2on2on2"
 msgstr "2 대 2 대 2"
 
-#: ../base/ufos/gametypes.ufo:56
+#: ../base/ufos/gametypes.ufo:55
 msgid "3on3"
 msgstr "3 대 3"
 
-#: ../base/ufos/gametypes.ufo:69
+#: ../base/ufos/gametypes.ufo:68
 msgid "3on3on3"
 msgstr "3 대 3 대 3"
 
-#: ../base/ufos/gametypes.ufo:82
+#: ../base/ufos/gametypes.ufo:81
 msgid "4on4"
 msgstr "4 대 4"
 
-#: ../base/ufos/gametypes.ufo:95
+#: ../base/ufos/gametypes.ufo:94
 msgid "4on4on4"
 msgstr "4 대 4 대 4"
 
-#: ../base/ufos/gametypes.ufo:108
+#: ../base/ufos/gametypes.ufo:107
 msgid "Coop 2 players"
 msgstr "2인 동맹"
 
-#: ../base/ufos/gametypes.ufo:121
+#: ../base/ufos/gametypes.ufo:120
 msgid "Coop 3 players"
 msgstr "3인 동맹"
 
-#: ../base/ufos/gametypes.ufo:134
+#: ../base/ufos/gametypes.ufo:133
 msgid "Coop 4 players"
 msgstr "4인 동맹"
 
@@ -2774,265 +2775,280 @@ msgstr "아타카마 사막"
 msgid "Coastal Crash Site"
 msgstr "해변 추락 지점"
 
-#: ../base/ufos/maps.ufo:577
+#: ../base/ufos/maps.ufo:519
 msgid "Urban Periphery"
 msgstr "도심 주변"
 
-#: ../base/ufos/maps.ufo:619 ../base/ufos/maps.ufo:707
-#: ../base/ufos/maps.ufo:756
+#: ../base/ufos/maps.ufo:561 ../base/ufos/maps.ufo:649
+#: ../base/ufos/maps.ufo:698
 msgid "Country Desert"
 msgstr "시골 사막"
 
-#: ../base/ufos/maps.ufo:663
+#: ../base/ufos/maps.ufo:605
 msgid "Some houses in the desert."
 msgstr "사막의 주택들."
 
-#: ../base/ufos/maps.ufo:807 ../base/ufos/maps.ufo:849
-#: ../base/ufos/maps.ufo:890 ../base/ufos/maps.ufo:934
+#: ../base/ufos/maps.ufo:749 ../base/ufos/maps.ufo:791
+#: ../base/ufos/maps.ufo:832 ../base/ufos/maps.ufo:876
 msgid "Farm"
 msgstr "농장"
 
-#: ../base/ufos/maps.ufo:986 ../base/ufos/maps.ufo:1026
-#: ../base/ufos/maps.ufo:1066 ../base/ufos/maps.ufo:1106
+#: ../base/ufos/maps.ufo:928 ../base/ufos/maps.ufo:968
+#: ../base/ufos/maps.ufo:1008 ../base/ufos/maps.ufo:1048
 msgid "Forest"
 msgstr "숲"
 
-#: ../base/ufos/maps.ufo:1150
+#: ../base/ufos/maps.ufo:1092
 msgid "Fuel Depot"
 msgstr "연료 저장소"
 
-#: ../base/ufos/maps.ufo:1194 ../base/ufos/maps.ufo:1248
-#: ../base/ufos/maps.ufo:1304 ../base/ufos/maps.ufo:1358
-#: ../base/ufos/maps.ufo:1444 ../base/ufos/maps.ufo:1494
-#: ../base/ufos/maps.ufo:1546 ../base/ufos/maps.ufo:1597
+#: ../base/ufos/maps.ufo:1136 ../base/ufos/maps.ufo:1190
+#: ../base/ufos/maps.ufo:1246 ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1386 ../base/ufos/maps.ufo:1436
+#: ../base/ufos/maps.ufo:1488 ../base/ufos/maps.ufo:1539
 msgid "Snow"
 msgstr "설원"
 
-#: ../base/ufos/maps.ufo:1409
+#: ../base/ufos/maps.ufo:1351
 msgid "Snowy Logging Site"
 msgstr "눈덮인 벌목장"
 
-#: ../base/ufos/maps.ufo:1754 ../base/ufos/maps.ufo:1798
-#: ../base/ufos/maps.ufo:1840
+#: ../base/ufos/maps.ufo:1647 ../base/ufos/maps.ufo:1691
+#: ../base/ufos/maps.ufo:1733
 msgid "Suburban Housing"
 msgstr "교외의 주택"
 
-#: ../base/ufos/maps.ufo:1887 ../base/ufos/maps.ufo:1926
-#: ../base/ufos/maps.ufo:1969
+#: ../base/ufos/maps.ufo:1780 ../base/ufos/maps.ufo:1819
+#: ../base/ufos/maps.ufo:1862
 msgid "Frozen Landscape"
 msgstr "얼어붙은 지역"
 
-#: ../base/ufos/maps.ufo:2190 ../base/ufos/maps.ufo:2238
-#: ../base/ufos/maps.ufo:3660
+#: ../base/ufos/maps.ufo:2083 ../base/ufos/maps.ufo:2131
+#: ../base/ufos/maps.ufo:3772
 msgid "East Asian Village"
 msgstr "동아시아 마을"
 
-#: ../base/ufos/maps.ufo:2548 ../base/ufos/maps.ufo:2589
-#: ../base/ufos/maps.ufo:2630 ../base/ufos/maps.ufo:3815
-#: ../base/ufos/maps.ufo:4889
+#: ../base/ufos/maps.ufo:2337 ../base/ufos/maps.ufo:2378
+#: ../base/ufos/maps.ufo:2419 ../base/ufos/maps.ufo:3878
+#: ../base/ufos/maps.ufo:4951
 msgid "Middle Eastern Suburb"
 msgstr "중동의 교외"
 
-#: ../base/ufos/maps.ufo:2685
+#: ../base/ufos/maps.ufo:2474
 msgid "Crashed Scout"
 msgstr "추락한 스카우트"
 
-#: ../base/ufos/maps.ufo:2727 ../base/ufos/maps.ufo:2767
-#: ../base/ufos/maps.ufo:2810
+#: ../base/ufos/maps.ufo:2516 ../base/ufos/maps.ufo:2556
+#: ../base/ufos/maps.ufo:2599
 msgid "Tropical Jungle"
 msgstr "열대 정글"
 
-#: ../base/ufos/maps.ufo:2857
+#: ../base/ufos/maps.ufo:2646
 msgid "UFO Crash Site"
 msgstr "UFO 추락 지점"
 
-#: ../base/ufos/maps.ufo:2887
-msgid "Bungalow"
-msgstr "방갈로"
-
-#: ../base/ufos/maps.ufo:2932
-msgid "House"
-msgstr "주택"
-
-#: ../base/ufos/maps.ufo:2977 ../base/ufos/maps.ufo:3016
-#: ../base/ufos/maps.ufo:3054 ../base/ufos/maps.ufo:3092
-#: ../base/ufos/maps.ufo:5194
-msgid "Suburban City"
-msgstr "교외 도시"
-
-#: ../base/ufos/maps.ufo:3139 ../base/ufos/maps.ufo:3175
-#: ../base/ufos/maps.ufo:5383
-msgid "PHALANX Base Under Attack"
-msgstr "PHALANX 기지가 공격 당하고 있습니다."
-
-#: ../base/ufos/maps.ufo:3215
-msgid "Cemetery"
-msgstr "묘지"
-
-#: ../base/ufos/maps.ufo:3257
-msgid "City High-Rise"
-msgstr "도심지의 고층 건물"
-
-#: ../base/ufos/maps.ufo:3400
-msgid "Construction Site"
-msgstr "공사 현장"
-
-#: ../base/ufos/maps.ufo:3455
-msgid "Tropical Jungle Estate"
-msgstr "열대 정글 저택"
-
-#: ../base/ufos/maps.ufo:3515
-msgid "Mountain Estate"
-msgstr "산중 저택"
-
-#: ../base/ufos/maps.ufo:3557
-msgid "Gas Station"
-msgstr "주유소"
-
-#: ../base/ufos/maps.ufo:3606
-msgid "Luxury House"
-msgstr "고급 주택"
-
-#: ../base/ufos/maps.ufo:3713
+#: ../base/ufos/maps.ufo:2947
 msgid "Supermarket"
 msgstr "슈퍼마켓"
 
-#: ../base/ufos/maps.ufo:3766
-msgid "Military Convoy Ambush Site"
-msgstr "군대 호송 습격지"
-
-#: ../base/ufos/maps.ufo:3867
-msgid "Military Shelter"
-msgstr "군용 대피소"
-
-#: ../base/ufos/maps.ufo:3922
-msgid "Solar Power Plant"
-msgstr "태양광 발전소"
-
-#: ../base/ufos/maps.ufo:4016
+#: ../base/ufos/maps.ufo:2997
 msgid "Basketball Stadium"
 msgstr "농구 경기장"
 
-#: ../base/ufos/maps.ufo:4068 ../base/ufos/maps.ufo:4843
+#: ../base/ufos/maps.ufo:3102
+msgid "Bungalow"
+msgstr "방갈로"
+
+#: ../base/ufos/maps.ufo:3147
+msgid "House"
+msgstr "주택"
+
+#: ../base/ufos/maps.ufo:3192 ../base/ufos/maps.ufo:3231
+#: ../base/ufos/maps.ufo:3269 ../base/ufos/maps.ufo:3307
+#: ../base/ufos/maps.ufo:5256
+msgid "Suburban City"
+msgstr "교외 도시"
+
+#: ../base/ufos/maps.ufo:3354 ../base/ufos/maps.ufo:3390
+#: ../base/ufos/maps.ufo:5555
+msgid "PHALANX Base Under Attack"
+msgstr "PHALANX 기지가 공격 당하고 있습니다."
+
+#: ../base/ufos/maps.ufo:3430
+msgid "Cemetery"
+msgstr "묘지"
+
+#: ../base/ufos/maps.ufo:3472
+msgid "City High-Rise"
+msgstr "도심지의 고층 건물"
+
+#: ../base/ufos/maps.ufo:3512
+msgid "Construction Site"
+msgstr "공사 현장"
+
+#: ../base/ufos/maps.ufo:3567
+msgid "Tropical Jungle Estate"
+msgstr "열대 정글 저택"
+
+#: ../base/ufos/maps.ufo:3627
+msgid "Mountain Estate"
+msgstr "산중 저택"
+
+#: ../base/ufos/maps.ufo:3669
+msgid "Gas Station"
+msgstr "주유소"
+
+#: ../base/ufos/maps.ufo:3718
+msgid "Luxury House"
+msgstr "고급 주택"
+
+#: ../base/ufos/maps.ufo:3829
+msgid "Military Convoy Ambush Site"
+msgstr "군대 호송 습격지"
+
+#: ../base/ufos/maps.ufo:3930
+msgid "Military Shelter"
+msgstr "군용 대피소"
+
+#: ../base/ufos/maps.ufo:3985
+msgid "Solar Power Plant"
+msgstr "태양광 발전소"
+
+#: ../base/ufos/maps.ufo:4079 ../base/ufos/maps.ufo:4905
 msgid "Office Complex"
 msgstr "사무단지"
 
-#: ../base/ufos/maps.ufo:4123
+#: ../base/ufos/maps.ufo:4134
 msgid "Warehouse"
 msgstr "창고"
 
-#: ../base/ufos/maps.ufo:4173
+#: ../base/ufos/maps.ufo:4184
+#, fuzzy
+msgid "Village 2"
+msgstr "마을"
+
+#: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
 msgstr "군용 벙커"
 
-#: ../base/ufos/maps.ufo:4222
+#: ../base/ufos/maps.ufo:4279
 msgid "Urban Warehouse"
 msgstr "도심 창고"
 
-#: ../base/ufos/maps.ufo:4267
+#: ../base/ufos/maps.ufo:4324
 msgid "Rural Village"
 msgstr "시골 마을"
 
-#: ../base/ufos/maps.ufo:4315
+#: ../base/ufos/maps.ufo:4372
 msgid "Corrupter UFO Crash Site"
 msgstr "코럽터 UFO 추락 지점"
 
-#: ../base/ufos/maps.ufo:4363
+#: ../base/ufos/maps.ufo:4420
 msgid "Hydroelectric Dam"
 msgstr "수력발전소"
 
-#: ../base/ufos/maps.ufo:4411
+#: ../base/ufos/maps.ufo:4473
 msgid "Small Village"
 msgstr "작은 마을"
 
-#: ../base/ufos/maps.ufo:4460
+#: ../base/ufos/maps.ufo:4522
 msgid "Estate"
 msgstr "저택"
 
-#: ../base/ufos/maps.ufo:4505
+#: ../base/ufos/maps.ufo:4567
 msgid "Archaeological Dig"
 msgstr "고고학적 발굴"
 
-#: ../base/ufos/maps.ufo:4555
+#: ../base/ufos/maps.ufo:4617
 msgid "Ferry"
 msgstr "페리"
 
-#: ../base/ufos/maps.ufo:4605
+#: ../base/ufos/maps.ufo:4667
 msgid "Fighter UFO Crash Site"
 msgstr "파이터 UFO 추락 지점"
 
-#: ../base/ufos/maps.ufo:4652
+#: ../base/ufos/maps.ufo:4714
 msgid "Secret Depot"
 msgstr "비밀 창고"
 
-#: ../base/ufos/maps.ufo:4700
+#: ../base/ufos/maps.ufo:4762
 msgid "Port"
 msgstr "항구"
 
-#: ../base/ufos/maps.ufo:4746
+#: ../base/ufos/maps.ufo:4808
 msgid "Old Mine"
 msgstr "오래된 탄광"
 
 # Translation assumes "Neighbourhood" is a map name that really refers to a "town."
 # Note that the term "neighbourhood" does not refer to a physical location but rather an area in relation to a specific place. It is grammatically inappropriate to use the term on its own.
-#: ../base/ufos/maps.ufo:4799
+#: ../base/ufos/maps.ufo:4861
 msgid "Residential Neighbourhood"
 msgstr "주택가"
 
-#: ../base/ufos/maps.ufo:4936
+#: ../base/ufos/maps.ufo:4998
 #, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "하수도 건설현장"
 
-#: ../base/ufos/maps.ufo:4983
+#: ../base/ufos/maps.ufo:5045
 msgid "Luxurious Resort"
 msgstr "호화 리조트"
 
-#: ../base/ufos/maps.ufo:5029
+#: ../base/ufos/maps.ufo:5091
 msgid "Old Town Center"
 msgstr "낡은 타운 센터"
 
-#: ../base/ufos/maps.ufo:5081
+#: ../base/ufos/maps.ufo:5143
 msgid "Small House"
 msgstr "작은 집"
 
-#: ../base/ufos/maps.ufo:5114
+#: ../base/ufos/maps.ufo:5176
 msgid "Small Suburban Street"
 msgstr "작은 교외 거리"
 
-#: ../base/ufos/maps.ufo:5147
+#: ../base/ufos/maps.ufo:5209
 msgid "Subway Station"
 msgstr "지하철 역"
 
-#: ../base/ufos/maps.ufo:5240
+#: ../base/ufos/maps.ufo:5302
 msgid "Wilderness"
 msgstr "황야"
 
-#: ../base/ufos/maps.ufo:5289
+#: ../base/ufos/maps.ufo:5351
 msgid "City High-Rise (MP)"
 msgstr "도심 고층건물 (멀티플레이)"
 
-#: ../base/ufos/maps.ufo:5317
+#: ../base/ufos/maps.ufo:5379
 msgid "Frozen Industrial Site (Coop)"
 msgstr "얼어붙은 공업부지 (협동)"
 
-#: ../base/ufos/maps.ufo:5335
+#: ../base/ufos/maps.ufo:5397
 msgid "Frozen Industrial Site (MP)"
 msgstr "얼어붙은 공업부지 (멀티플레이)"
 
-#: ../base/ufos/maps.ufo:5361
+#: ../base/ufos/maps.ufo:5420
+#, fuzzy
+msgid "A container harbour."
+msgstr "지역항구."
+
+#: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
+#, fuzzy
+msgid "Village MP (2v2)"
+msgstr "마을"
+
+#: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
 msgstr "외계인 기지"
 
-#: ../base/ufos/maps.ufo:5396
+#: ../base/ufos/maps.ufo:5568
 msgid "PHALANX Craft Crash Site"
 msgstr "PHALANX 항공기 추락지점"
 
-#: ../base/ufos/maps.ufo:5425
+#: ../base/ufos/maps.ufo:5597
 msgid "Training Zone: Alpha"
 msgstr "훈련 지대: 알파"
 
-#: ../base/ufos/maps.ufo:5442
+#: ../base/ufos/maps.ufo:5614
 msgid "Training Zone: Bravo"
 msgstr "훈련 지대: 브라보"
 
@@ -4419,7 +4435,7 @@ msgstr ""
 #: ../base/ufos/msgid/ugvs.ufo:6 ../base/ufos/msgid/ugvs.ufo:14
 #: ../base/ufos/msgid/ugvs.ufo:22 ../base/ufos/msgid/ugvs.ufo:30
 #: ../base/ufos/msgid/weapons.ufo:487 ../base/ufos/msgid/weapons.ufo:495
-#: ../base/ufos/msgid/weapons.ufo:503 ../base/ufos/msgid/weapons.ufo:1883
+#: ../base/ufos/msgid/weapons.ufo:503 ../base/ufos/msgid/weapons.ufo:1887
 msgid "No pre research info available"
 msgstr "<TODO>"
 
@@ -5823,6 +5839,7 @@ msgstr ""
 "나바르 중령"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
+#, fuzzy
 msgid ""
 "Commander, we've finished taking a look at the advanced alien propulsion "
 "systems and I've prepared a report for you.\n"
@@ -5835,9 +5852,8 @@ msgid ""
 "rates of matter-antimatter anihilation.\n"
 "\n"
 "The ad-hoc nature of the changes suggest the aliens are adapting technology "
-"as they go. The Supply UFO may be a recent creation. The extra propulsion "
-"was likely designed for the supply ship to carry heavy loads in earth's "
-"atmosphere, and it will be vital if they plan to field heavier UFOs.\n"
+"as they go. The extra propulsion was likely designed to enable heavy UFOs to "
+"stay airborne in earth's atmosphere.\n"
 "\n"
 "I think we can adapt these insights to design a more powerful propulsion "
 "mechanism, but the threat to an interceptor's structural integrity is so "
@@ -12336,10 +12352,11 @@ msgid ""
 "\n"
 "Addenda\n"
 "\n"
-"A soldier will not perform reaction fire unless they have saved enough Time "
-"Units in the last turn and reaction fire has been enabled in the soldier's "
-"control panel. Commanders can choose the firemode the soldier should use "
-"with reaction fire in the firemode selection window.\n"
+"A soldier will not perform reaction fire unless it has been enabled in the "
+"soldier's control panel. When enabled, a soldier will be unable to spend the "
+"Time Units required to fire once during the enemy's turn. Commanders can "
+"choose the firemode the soldier should use with reaction fire in the "
+"firemode selection window.\n"
 "\n"
 "If an enemy unit wanders out of a unit's view -- even for a moment -- the "
 "reaction fire counter will be reset. A unit must spend enough TUs "
@@ -16120,10 +16137,10 @@ msgid ""
 "The most striking characteristic we've seen of the invasion is that the "
 "aliens have been harvesting human biomass, sometimes even whole people, for "
 "their own nebulous purposes. They do this in a rather gruesome manner that "
-"shows no respect for life; their Kerrblades cut up human beings as if "
-"butchering cattle, and their Bloodspiders will simply dissect someone on the "
-"spot for a particularly interesting organ or a pint of blood. It is utterly, "
-"amorally practical.\n"
+"shows no respect for life; they cut up human beings as if butchering cattle, "
+"and their Bloodspiders will simply dissect someone on the spot for a "
+"particularly interesting organ or a pint of blood. It is utterly, amorally "
+"practical.\n"
 "\n"
 "We can only assume that they use the samples they're gathering in some kind "
 "of research program, studies into our physiology and perhaps our psychology "
@@ -16330,7 +16347,7 @@ msgid ""
 "\n"
 "3) Our satellite grid is wide open and could be wiped off the map in an "
 "instant. Emergency landlines exist, but only for military use. If the grid "
-"does come under attack, comms between PHALANX command centres and assets in "
+"does come under attack, comms between PHALANX Command Centres and assets in "
 "the field -- aircraft and ground teams -- will be hamstrung.\n"
 "\n"
 "4) There is no doubt that there are alien craft moving in orbit, ferrying "
@@ -18346,7 +18363,7 @@ msgstr ""
 "\n"
 "나바르 중령"
 
-#: ../base/ufos/msgid/weapons.ufo:547 ../base/ufos/msgid/weapons.ufo:1533
+#: ../base/ufos/msgid/weapons.ufo:547 ../base/ufos/msgid/weapons.ufo:1537
 #, fuzzy
 msgid ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -20941,10 +20958,7 @@ msgid ""
 "Our electrolaser can project a stable plasma channel at short to medium "
 "ranges, depending on atmospheric conditions, and deliver previously unheard-"
 "of voltages to the target. It is effective against organic enemies but "
-"robotic enemies are likely to be designed to disperse the charge. It can be "
-"toggled to different power levels depending on the needs of the moment, from "
-"a simple stunning shock to full-blown electrocution which can kill weaker "
-"targets outright.\n"
+"robotic enemies are likely to be designed to disperse the charge.\n"
 "\n"
 "Now for the cons.\n"
 "\n"
@@ -21162,7 +21176,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1279
+#: ../base/ufos/msgid/weapons.ufo:1283
 #, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
@@ -21256,7 +21270,17 @@ msgid ""
 "\n"
 "Addenda\n"
 "\n"
-"None."
+"Medikits come with three prepared treatment capabilities. Apply First Aid "
+"will treat a soldier's wounds, stemming the blood loss of a wound in an "
+"effort to keep them alive. It will restore a small amount of health, but "
+"soldiers will need to recover back at base.\n"
+"\n"
+"Stimulants can be used to revive a soldier who has fallen unconcious as a "
+"result of being stunned or gassed.\n"
+"\n"
+"Antipsychotics will provide an injection of endorphins. Many desperate "
+"commanders have found it useful to boost morale during highly stressful "
+"engagements."
 msgstr ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -21351,7 +21375,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1297
+#: ../base/ufos/msgid/weapons.ufo:1301
 #, fuzzy
 msgid ""
 "When the aliens need a sidearm, they don't screw around.\n"
@@ -21456,7 +21480,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1307
+#: ../base/ufos/msgid/weapons.ufo:1311
 #, fuzzy
 msgid ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't "
@@ -21493,7 +21517,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1319
+#: ../base/ufos/msgid/weapons.ufo:1323
 msgid ""
 "Commander, here's my report on our alien plasma blaster research.\n"
 "\n"
@@ -21517,7 +21541,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/weapons.ufo:1327
+#: ../base/ufos/msgid/weapons.ufo:1331
 #, fuzzy
 msgid ""
 "Commander, we've recovered an alien plasma blaster from the field. This is "
@@ -21537,7 +21561,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1345
+#: ../base/ufos/msgid/weapons.ufo:1349
 #, fuzzy
 msgid ""
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the "
@@ -21630,7 +21654,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1353
+#: ../base/ufos/msgid/weapons.ufo:1357
 #, fuzzy
 msgid ""
 "Commander, our last tactical mission brought back a strange alien weapon in "
@@ -21655,7 +21679,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1367
+#: ../base/ufos/msgid/weapons.ufo:1371
 #, fuzzy
 msgid ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all "
@@ -21668,10 +21692,7 @@ msgid ""
 "battery is highly powerful and barely within our power to duplicate. The "
 "trigger is of particular interest, because it contains a tiny thumbprint "
 "scanner which verifies that the grenade is not being accidentally activated. "
-"A legitimate (i.e. non-accidental) activation starts the timer countdown. "
-"The length of the countdown is variable depending on the number of seconds "
-"that the trigger is held down, but it has a built-in safe minimum of three "
-"seconds.\n"
+"A legitimate (i.e. non-accidental) activation starts the timer countdown.\n"
 "\n"
 "Once the timer reaches zero, the battery unleashes its power, heating a core "
 "of hydrogen to plasma in milliseconds. The explosive charge sends the "
@@ -21681,13 +21702,13 @@ msgid ""
 "velocity fragments and plasma particles all over the area of effect. Due to "
 "the unstable nature of uncontained plasma, the grenade has a limited blast "
 "radius, beyond which the plasma particles cool and slow down too much to be "
-"dangerous. This radius is approximately 50% larger than that of a standard "
-"human frag grenade.\n"
+"dangerous. This radius is slightly larger than that of a standard human frag "
+"grenade.\n"
 "\n"
 "Anything caught within the area of effect will be either severely injured or "
 "dead.\n"
 "\n"
-"We've drawn up a set of blueprints that will allow our Workshops to begin "
+"We've drawn up a set of blueprints that will allow our engineers to begin "
 "immediate construction, and a manual to train our soldiers in its use. They "
 "will now be able to use the plasma grenade as any other grenade in our "
 "arsenal.\n"
@@ -21730,7 +21751,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1377
+#: ../base/ufos/msgid/weapons.ufo:1381
 #, fuzzy
 msgid ""
 "Commander, our last tac mission has brought back an alien plasma grenade. "
@@ -21761,7 +21782,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1393
+#: ../base/ufos/msgid/weapons.ufo:1397
 #, fuzzy
 msgid ""
 "Commander, here's my report on our alien plasma rifle research.\n"
@@ -21834,7 +21855,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1399
+#: ../base/ufos/msgid/weapons.ufo:1403
 #, fuzzy
 msgid ""
 "Commander, my department is ready to begin studying the recovered alien "
@@ -21853,7 +21874,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1411
+#: ../base/ufos/msgid/weapons.ufo:1415
 msgid ""
 "Commander, we've finished drawing up the specs for the Encased Plasma Ammo. "
 "We've got design documents in place for your engineers to build new ammo "
@@ -21877,7 +21898,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/weapons.ufo:1421
+#: ../base/ufos/msgid/weapons.ufo:1425
 msgid ""
 "Commander, our research on the plasma blade has given us an idea for a suite "
 "of advanced ammo that could restore the stopping power of our traditional "
@@ -21899,7 +21920,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/weapons.ufo:1437
+#: ../base/ufos/msgid/weapons.ufo:1441
 #, fuzzy
 msgid ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared "
@@ -21996,7 +22017,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1445
+#: ../base/ufos/msgid/weapons.ufo:1449
 #, fuzzy
 msgid ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-"
@@ -22021,7 +22042,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1457
+#: ../base/ufos/msgid/weapons.ufo:1461
 msgid ""
 "Commander, here's my report on the new Heavy Needler we're encountering.\n"
 "\n"
@@ -22049,7 +22070,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 
-#: ../base/ufos/msgid/weapons.ufo:1463
+#: ../base/ufos/msgid/weapons.ufo:1467
 msgid ""
 "Commander, we've recovered a new alien weapon that appears to be a larger "
 "version of the Needler. Please let my men take a look as soon as possible.\n"
@@ -22061,7 +22082,7 @@ msgstr ""
 "\n"
 "나바르 중령"
 
-#: ../base/ufos/msgid/weapons.ufo:1477
+#: ../base/ufos/msgid/weapons.ufo:1481
 #, fuzzy
 msgid ""
 "Commander, I'd like to present you with the finished plans and prototype for "
@@ -22144,7 +22165,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1489
+#: ../base/ufos/msgid/weapons.ufo:1493
 #, fuzzy
 msgid ""
 "Commander, our brainstorms down at DivEngine have come up with an "
@@ -22194,7 +22215,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1565
+#: ../base/ufos/msgid/weapons.ufo:1569
 #, fuzzy
 msgid ""
 "Technical Specifications: Saboted Slugs\n"
@@ -22277,7 +22298,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1613
+#: ../base/ufos/msgid/weapons.ufo:1617
 #, fuzzy
 msgid ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -22458,7 +22479,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1647
+#: ../base/ufos/msgid/weapons.ufo:1651
 #, fuzzy
 msgid ""
 "Technical Specifications: Flechette Shells\n"
@@ -22549,7 +22570,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1691
+#: ../base/ufos/msgid/weapons.ufo:1695
 #, fuzzy
 msgid ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -22714,7 +22735,7 @@ msgstr ""
 "Despite good penetration against organics, this weapon performs very poorly "
 "against robotic targets."
 
-#: ../base/ufos/msgid/weapons.ufo:1723
+#: ../base/ufos/msgid/weapons.ufo:1727
 #, fuzzy
 msgid ""
 "Technical Specifications: SMG Magazine\n"
@@ -22795,7 +22816,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1763
+#: ../base/ufos/msgid/weapons.ufo:1767
 #, fuzzy
 msgid ""
 "Technical Specifications: Smoke Grenade\n"
@@ -22932,7 +22953,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1807
+#: ../base/ufos/msgid/weapons.ufo:1811
 #, fuzzy
 msgid ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -23105,7 +23126,7 @@ msgstr ""
 "Along with high-explosive rockets and grenades, this is one of the few "
 "standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/msgid/weapons.ufo:1839
+#: ../base/ufos/msgid/weapons.ufo:1843
 #, fuzzy
 msgid ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -23183,7 +23204,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/msgid/weapons.ufo:1859
+#: ../base/ufos/msgid/weapons.ufo:1863
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -23279,75 +23300,75 @@ msgstr ""
 "We've created a delivery system in the form of a standard throwable "
 "canister. Our troops should experience no problems using this item in the "
 "field.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
-
-#: ../base/ufos/msgid/weapons.ufo:1875
-#, fuzzy
-msgid ""
-"Commander,\n"
-"\n"
-"Ever since the start of the invasion, we have been left scratching our heads "
-"about the aliens' biology. We knew almost nothing about them, their biology, "
-"their genetics or their potential vulnerabilities. This left us helpless in "
-"the fields of biological and chemical warfare.\n"
-"\n"
-"Our study of the various live and dead alien specimens we've recovered has "
-"been enlightening. Thanks to the discoveries we've made over the past few "
-"months, my team and I have come to believe that we're ready to start a bio/"
-"chemical warfare program against the alien threat. We have tissue samples, "
-"autopsy data, live specimens for testing; all the raw materials we require "
-"to investigate methods of properly incapacitating battlefield specimens "
-"without being forced to send PHALANX troops into melee combat.\n"
-"\n"
-"This will be a challenge given the constant protection and filtration "
-"offered by the alien breathing apparatus, which prevents any harmful "
-"materials entering the lungs, but if you authorise sufficient lab time and "
-"funding we can almost certainly develop an aerosol compound that will "
-"disable exposed aliens by chemical or biological means.\n"
-"\n"
-"This will be a project of greatest importance and priority, Commander. The "
-"sooner you lend it your authorisation, the better.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
-msgstr ""
-"Commander,\n"
-"\n"
-"Ever since the start of the invasion, we have been left scratching our heads "
-"about the aliens' biology. We knew almost nothing about them, their biology, "
-"their genetics or their potential vulnerabilities. This left us helpless in "
-"the fields of biological and chemical warfare.\n"
-"\n"
-"Our study of the various live and dead alien specimens we've recovered has "
-"been enlightening. Thanks to the discoveries we've made over the past few "
-"months, my team and I have come to believe that we're ready to start a bio/"
-"chemical warfare program against the alien threat. We have tissue samples, "
-"autopsy data, live specimens for testing; all the raw materials we require "
-"to investigate methods of properly incapacitating battlefield specimens "
-"without being forced to send PHALANX troops into melee combat.\n"
-"\n"
-"This will be a challenge given the constant protection and filtration "
-"offered by the alien breathing apparatus, which prevents any harmful "
-"materials entering the lungs, but if you authorise sufficient lab time and "
-"funding we can almost certainly develop an aerosol compound that will "
-"disable exposed aliens by chemical or biological means.\n"
-"\n"
-"This will be a project of greatest importance and priority, Commander. The "
-"sooner you lend it your authorisation, the better.\n"
 "\n"
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/msgid/weapons.ufo:1879
+#, fuzzy
+msgid ""
+"Commander,\n"
+"\n"
+"Ever since the start of the invasion, we have been left scratching our heads "
+"about the aliens' biology. We knew almost nothing about them, their biology, "
+"their genetics or their potential vulnerabilities. This left us helpless in "
+"the fields of biological and chemical warfare.\n"
+"\n"
+"Our study of the various live and dead alien specimens we've recovered has "
+"been enlightening. Thanks to the discoveries we've made over the past few "
+"months, my team and I have come to believe that we're ready to start a bio/"
+"chemical warfare program against the alien threat. We have tissue samples, "
+"autopsy data, live specimens for testing; all the raw materials we require "
+"to investigate methods of properly incapacitating battlefield specimens "
+"without being forced to send PHALANX troops into melee combat.\n"
+"\n"
+"This will be a challenge given the constant protection and filtration "
+"offered by the alien breathing apparatus, which prevents any harmful "
+"materials entering the lungs, but if you authorise sufficient lab time and "
+"funding we can almost certainly develop an aerosol compound that will "
+"disable exposed aliens by chemical or biological means.\n"
+"\n"
+"This will be a project of greatest importance and priority, Commander. The "
+"sooner you lend it your authorisation, the better.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+msgstr ""
+"Commander,\n"
+"\n"
+"Ever since the start of the invasion, we have been left scratching our heads "
+"about the aliens' biology. We knew almost nothing about them, their biology, "
+"their genetics or their potential vulnerabilities. This left us helpless in "
+"the fields of biological and chemical warfare.\n"
+"\n"
+"Our study of the various live and dead alien specimens we've recovered has "
+"been enlightening. Thanks to the discoveries we've made over the past few "
+"months, my team and I have come to believe that we're ready to start a bio/"
+"chemical warfare program against the alien threat. We have tissue samples, "
+"autopsy data, live specimens for testing; all the raw materials we require "
+"to investigate methods of properly incapacitating battlefield specimens "
+"without being forced to send PHALANX troops into melee combat.\n"
+"\n"
+"This will be a challenge given the constant protection and filtration "
+"offered by the alien breathing apparatus, which prevents any harmful "
+"materials entering the lungs, but if you authorise sufficient lab time and "
+"funding we can almost certainly develop an aerosol compound that will "
+"disable exposed aliens by chemical or biological means.\n"
+"\n"
+"This will be a project of greatest importance and priority, Commander. The "
+"sooner you lend it your authorisation, the better.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
+
+#: ../base/ufos/msgid/weapons.ufo:1883
 msgid "stungren_alien_txt"
 msgstr "stungren_alien_txt"
 
-#: ../base/ufos/msgid/weapons.ufo:1905
+#: ../base/ufos/msgid/weapons.ufo:1909
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -23454,7 +23475,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/weapons.ufo:1923
+#: ../base/ufos/msgid/weapons.ufo:1927
 #, fuzzy
 msgid ""
 "Commander,\n"
@@ -23548,7 +23569,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/msgid/weapons.ufo:1937
+#: ../base/ufos/msgid/weapons.ufo:1941
 #, fuzzy
 msgid ""
 "Commander, I've got the specs of the new alien pistol for you, and they're "
@@ -23619,7 +23640,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1945
+#: ../base/ufos/msgid/weapons.ufo:1949
 #, fuzzy
 msgid ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire "
@@ -23642,7 +23663,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1961
+#: ../base/ufos/msgid/weapons.ufo:1965
 #, fuzzy
 msgid ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -23712,7 +23733,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1969
+#: ../base/ufos/msgid/weapons.ufo:1973
 #, fuzzy
 msgid ""
 "Commander, we've recovered a large alien cannon that fires high-energy "
@@ -23733,7 +23754,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1985
+#: ../base/ufos/msgid/weapons.ufo:1989
 #, fuzzy
 msgid ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's "
@@ -23816,7 +23837,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:1993
+#: ../base/ufos/msgid/weapons.ufo:1997
 #, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle "
@@ -23840,7 +23861,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:2011
+#: ../base/ufos/msgid/weapons.ufo:2015
 #, fuzzy
 msgid ""
 "Commander, my method worked. I think we've managed to crack the secrets of "
@@ -23947,7 +23968,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/msgid/weapons.ufo:2023
+#: ../base/ufos/msgid/weapons.ufo:2027
 #, fuzzy
 msgid ""
 "Commander, we've decided that more research is badly needed on the particle "
@@ -24065,14 +24086,14 @@ msgstr "오세아니아 공동국"
 msgid "Antimatter"
 msgstr "반물질"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5613
-#: ../base/ufos/research.ufo:5652
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:5627
+#: ../base/ufos/research.ufo:5666
 msgid "Alien Materials"
 msgstr "외계물질"
 
 #: ../base/ufos/otheritems.ufo:46 ../base/ufos/otheritems.ufo:82
 #: ../base/ufos/weapons_melee.ufo:26 ../base/ufos/weapons_melee.ufo:90
-#: ../base/ufos/weapons_melee.ufo:237
+#: ../base/ufos/weapons_melee.ufo:241
 msgid "Stab"
 msgstr "찌르기"
 
@@ -24219,7 +24240,7 @@ msgstr "기묘한 외계인 행동"
 msgid "Alien Communication"
 msgstr "외계인 의사소통"
 
-#: ../base/ufos/research.ufo:558 client/cgame/campaign/cp_missions.cpp:465
+#: ../base/ufos/research.ufo:558 client/cgame/campaign/cp_missions.cpp:472
 msgid "Alien base"
 msgstr "외계인 기지"
 
@@ -24235,15 +24256,15 @@ msgstr "외계인의 기원"
 msgid "UFO Theory"
 msgstr "UFO 이론"
 
-#: ../base/ufos/research.ufo:1097 ../base/ufos/weapons_human.ufo:1729
+#: ../base/ufos/research.ufo:1097 ../base/ufos/weapons_human.ufo:1733
 msgid "Electromagnetic Rifle"
 msgstr "전자기 소총"
 
-#: ../base/ufos/research.ufo:1136 ../base/ufos/weapons_human.ufo:1751
+#: ../base/ufos/research.ufo:1136 ../base/ufos/weapons_human.ufo:1755
 msgid "Electromagnetic Rifle Magazine"
 msgstr "전자기 소총탄창"
 
-#: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1819
+#: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1823
 #, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "전자기 소총탄창"
@@ -24294,7 +24315,7 @@ msgid "Heavy Needler Gun"
 msgstr "중형 니들건"
 
 #: ../base/ufos/research.ufo:2341 ../base/ufos/research.ufo:2349
-#: ../base/ufos/weapons_human.ufo:435
+#: ../base/ufos/weapons_human.ufo:439
 msgid "Coilgun"
 msgstr "코일건"
 
@@ -24386,97 +24407,106 @@ msgstr "저격수 특기"
 msgid "Speed Attribute"
 msgstr "속도"
 
-#: ../base/ufos/research.ufo:4398
+#: ../base/ufos/research.ufo:4412
 msgid "Alien Autopsy - Bloodspider"
 msgstr "외계인 부검 - 로봇거미"
 
-#: ../base/ufos/research.ufo:4452
+#: ../base/ufos/research.ufo:4466
 msgid "Alien Autopsy - Combat Bloodspider"
 msgstr "외계인 부검 - 전투형 블러드스파이더"
 
-#: ../base/ufos/research.ufo:4508
+#: ../base/ufos/research.ufo:4522
 msgid "Alien Autopsy - Ortnok"
 msgstr "외계인 부검 - 오트녹"
 
-#: ../base/ufos/research.ufo:4552
+#: ../base/ufos/research.ufo:4566
 msgid "Alien Autopsy - Taman"
 msgstr "외계인 부검 - 타만"
 
-#: ../base/ufos/research.ufo:4596
+#: ../base/ufos/research.ufo:4610
 msgid "Alien Autopsy - Shevaar"
 msgstr "외계인 부검 - 쉐바"
 
-#: ../base/ufos/research.ufo:4640
+#: ../base/ufos/research.ufo:4654
 msgid "Alien Autopsy - Hovernet"
 msgstr "외계인 부검 - 호버네트"
 
-#: ../base/ufos/research.ufo:4696
+#: ../base/ufos/research.ufo:4710
 msgid "Alien Autopsy - Combat Hovernet"
 msgstr "외계인 부검 - 전투형 호버네트"
 
-#: ../base/ufos/research.ufo:4758 ../base/ufos/team_humans.ufo:344
+#: ../base/ufos/research.ufo:4772 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4778 ../base/ufos/team_humans.ufo:401
+#: ../base/ufos/research.ufo:4792 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4886
+#: ../base/ufos/research.ufo:4900
 msgid "'Raven' ECM Unit"
 msgstr "'레이븐' 전파방해장치"
 
-#: ../base/ufos/research.ufo:5207
+#: ../base/ufos/research.ufo:5221
 msgid "SHIVA Rotary Cannon"
 msgstr "시바 기관포"
 
-#: ../base/ufos/research.ufo:5266
+#: ../base/ufos/research.ufo:5280
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "스패로호크 공대공 미사일 발사대"
 
-#: ../base/ufos/research.ufo:5283
+#: ../base/ufos/research.ufo:5297
 msgid "'Sparrowhawk' Missile"
 msgstr "스패로호크 공대공 미사일"
 
-#: ../base/ufos/research.ufo:5674
+#: ../base/ufos/research.ufo:5687
 msgid "Political Situation Before The Invasion"
 msgstr "침략전 정치적 상황"
 
-#: ../base/ufos/research.ufo:5687
+#: ../base/ufos/research.ufo:5699
 msgid "After The War"
 msgstr "전쟁이후"
 
-#: ../base/ufos/research.ufo:5700
+#: ../base/ufos/research.ufo:5711
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX와 뭄바이 사태의 여파"
 
-#: ../base/ufos/research.ufo:5712
+#: ../base/ufos/research.ufo:5722
 msgid "A New Twist"
 msgstr "A New Twist"
 
-#: ../base/ufos/research.ufo:5741
+#: ../base/ufos/research.ufo:5750
 msgid "The Enemy On Earth"
 msgstr "지구상의 적"
 
-#: ../base/ufos/research.ufo:5780
+#: ../base/ufos/research.ufo:5788
 msgid "XVI Census"
 msgstr "외계 바이러스 감염통계"
 
-#: ../base/ufos/research.ufo:5821
+#: ../base/ufos/research.ufo:5828
 msgid "The Alien Strategy"
 msgstr "외계인의 전략"
 
-#: ../base/ufos/research.ufo:5860
+#: ../base/ufos/research.ufo:5866
 msgid "Orbital UFO Activity"
 msgstr "궤도상의 UFO 활동"
 
-#: ../base/ufos/research.ufo:5903
+#: ../base/ufos/research.ufo:5908
 msgid "Alien Psi Device"
 msgstr "외계인 싸이(Psi) 장치"
 
-#: ../base/ufos/research.ufo:5935
+#: ../base/ufos/research.ufo:5939
 msgid "Human Vaccine"
 msgstr "인간 백신"
+
+#: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
+msgid "Amphetamine Implant"
+msgstr ""
+
+#: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
+#, fuzzy
+msgid "Muscle Stimulant"
+msgstr "각성제"
 
 #: ../base/ufos/seq_credits.ufo:44
 #, fuzzy
@@ -24695,7 +24725,7 @@ msgstr "탭키 혹은 1-8 숫자에 의해 선택이 가능합니다"
 
 #: ../base/ufos/seq_tutorials.ufo:475
 #: ../base/ufos/ui/aircraft_soldiers.ufo:234
-#: ../base/ufos/ui/hud_default.ufo:803
+#: ../base/ufos/ui/hud_default.ufo:862
 #: ../base/ufos/ui/popup_baseattack.ufo:145
 msgid "Physical stats"
 msgstr "능력치/상태"
@@ -24704,7 +24734,7 @@ msgstr "능력치/상태"
 msgid "Stats bars: movement, health and morale"
 msgstr "상태막대: 행동력, 체력 그리고 사기"
 
-#: ../base/ufos/seq_tutorials.ufo:519 ../base/ufos/ui/hud_default.ufo:815
+#: ../base/ufos/seq_tutorials.ufo:519 ../base/ufos/ui/hud_default.ufo:874
 msgid "Inventory"
 msgstr "소지품"
 
@@ -24816,7 +24846,7 @@ msgstr "메인메뉴로 나가기"
 msgid "How to play multiplayer"
 msgstr "멀티플레이 방법"
 
-#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:958
+#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:963
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "방화벽 설정 중 TCP 27910 포트가 열려있는지 확인하십시오."
@@ -24838,10 +24868,6 @@ msgstr ""
 #: ../base/ufos/seq_tutorials.ufo:1088
 msgid "As a server admin you should consider setting a round time limit."
 msgstr "서버 관리자로서 한 턴의 시간제한을 고민해야 합니다."
-
-#: ../base/ufos/skins.ufo:19
-msgid "Urban"
-msgstr "도심용 위장복"
 
 #: ../base/ufos/team_aliens.ufo:10
 msgid "Taman"
@@ -25215,7 +25241,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
-"seem to ignore unconcious civilians."
+"seem to ignore unconscious civilians."
 msgstr ""
 "민간인을 기절시키면 그가 작전지역을 돌아다니는 것을 막을 수 있습니다. 또한 외"
 "계인은 의식이 있는 민간인을 의식을 잃은 민간인보다 먼저 사살하려하는 것으로 "
@@ -25299,10 +25325,10 @@ msgstr "부상당한 외계인들은 기절시키기에 더 쉽습니다. 또한
 
 #: ../base/ufos/tips.ufo:56
 msgid ""
-"Find the control center and place one of your soldiers next to the console "
-"in order to take advantage of the security cameras."
+"During attacks on your base, place a spare soldier in the Command Centre's "
+"video surveillance room. Your soldier will be able to use the security "
+"cameras around the base to locate enemies."
 msgstr ""
-"컨트롤 센터를 찾아 병사 한명을 콘솔 옆에 세워두어 보안 카메라들을 활용하세요."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -25312,7 +25338,7 @@ msgstr "크레디트"
 msgid "Organisation capital"
 msgstr "조직 예산"
 
-#: ../base/ufos/ui/_menu.ufo:140 ../base/ufos/ui/hospital.ufo:105
+#: ../base/ufos/ui/_menu.ufo:140 ../base/ufos/ui/hospital.ufo:154
 msgid "Back to baseview"
 msgstr "기지관리로 돌아가기"
 
@@ -25333,7 +25359,7 @@ msgid "Switch to the next base"
 msgstr "다음 기지로 이동합니다"
 
 #: ../base/ufos/ui/_menu.ufo:231 ../base/ufos/ui/hud_phone.ufo:157
-#: client/cgame/campaign/cp_installation_callbacks.cpp:197
+#: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:579
 msgid "Cancel"
 msgstr "취소"
@@ -25359,66 +25385,52 @@ msgstr "주간 버전:"
 msgid "Select whether you want to play at day- or nighttime."
 msgstr "야간이나 주간 중에 진행할 시간을 고르시기 바랍니다."
 
-#: ../base/ufos/ui/_menu.ufo:302 client/cgame/campaign/cp_geoscape.cpp:1197
+#: ../base/ufos/ui/_menu.ufo:302 client/cgame/campaign/cp_geoscape.cpp:1195
 msgid "Night"
 msgstr "야간"
 
-#: ../base/ufos/ui/_menu.ufo:307 client/cgame/campaign/cp_geoscape.cpp:1197
+#: ../base/ufos/ui/_menu.ufo:307 client/cgame/campaign/cp_geoscape.cpp:1195
 msgid "Day"
 msgstr "주간"
 
-#: ../base/ufos/ui/_menu.ufo:540
-msgid "Generate a new random team"
+#: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
+#, fuzzy
+msgid "Upload"
+msgstr "짐 내리기"
+
+#: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
+#, fuzzy
+msgid "Delete this team"
+msgstr "바로가기 삭제"
+
+#: ../base/ufos/ui/_menu.ufo:440
+#, fuzzy
+msgid "Currently loaded"
+msgstr "Current node:"
+
+#: ../base/ufos/ui/_menu.ufo:515
+#, fuzzy
+msgid "Generate New Team"
 msgstr "새로운 임의의 팀을 작성합니다"
 
-#: ../base/ufos/ui/_menu.ufo:546
-msgid "New"
-msgstr "새 팀"
+#: ../base/ufos/ui/_menu.ufo:596
+#, fuzzy
+msgid "Download new teams"
+msgstr "내려 받는 중 [%s]"
 
-#: ../base/ufos/ui/_menu.ufo:553
+#: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
+#, fuzzy
+msgid "Download"
+msgstr "짐 내리기"
+
+#: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
 msgstr "현재 팀을 저장합니다"
 
-#: ../base/ufos/ui/_menu.ufo:559 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign.ufo:373
-msgid "Save"
-msgstr "저장하기"
-
-#: ../base/ufos/ui/_menu.ufo:564 ../base/ufos/ui/skirmish.ufo:422
-msgid "Team:"
-msgstr "팀"
-
-#: ../base/ufos/ui/_menu.ufo:567 ../base/ufos/ui/skirmish.ufo:425
-msgid "Select which side you want to play with."
-msgstr "Select which side you want to play with"
-
-#: ../base/ufos/ui/_menu.ufo:588
-msgid "Keyinfo and General Help"
-msgstr "키 정보와 일반 도움말"
-
-#: ../base/ufos/ui/_menu.ufo:612
-msgid ""
-"Visit our forums and join the community at http://ufoai.org.\n"
-"Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr ""
-"http://ufoai.org 에서 포럼을 방문하고 커뮤니티에 가입할 수 있습니다.\n"
-"힌트: CTRL+G 를 눌러서 마우스 포인터를 잡거나 풀 수 있습니다."
-
-#: ../base/ufos/ui/_menu.ufo:614
-msgid "Visit our forums and join the community at http://ufoai.org."
-msgstr "http://ufoai.org 에서 포럼를 방문하고 커뮤니티에 가입할 수 있습니다."
-
-#: ../base/ufos/ui/_menu.ufo:619
-msgid ""
-"Note: Campaign-specific keybindings visible in Campaign mode only.\n"
-"Hint: Press CTRL+G to grab/release the mousepointer."
-msgstr ""
-"참고: 캠페인 전용 단축키들은 캠페인 모드에서만 보입니다.\n"
-"힌트: CTRL+G 를 눌러서 마우스 포인터를 잡거나 풀 수 있습니다."
-
-#: ../base/ufos/ui/_menu.ufo:621
-msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
-msgstr "참고: 캠페인 전용 단축키들은 캠페인 모드에서만 보입니다."
+#: ../base/ufos/ui/_menu.ufo:615
+#, fuzzy
+msgid "Save Team"
+msgstr "당신의 팀을 고용하십시오."
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
@@ -25429,7 +25441,7 @@ msgid "Description"
 msgstr "설명:"
 
 #: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:217
-#: ../base/ufos/ui/bases.ufo:224 ../base/ufos/ui/hire.ufo:650
+#: ../base/ufos/ui/bases.ufo:224 ../base/ufos/ui/hire.ufo:654
 msgid "Pilots"
 msgstr "조종사"
 
@@ -25438,7 +25450,7 @@ msgid "Tanks"
 msgstr "탱크"
 
 #: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:201
-#: ../base/ufos/ui/bases.ufo:208 ../base/ufos/ui/hire.ufo:645
+#: ../base/ufos/ui/bases.ufo:208 ../base/ufos/ui/hire.ufo:649
 msgid "Soldiers"
 msgstr "전투원"
 
@@ -25476,9 +25488,9 @@ msgstr "무기"
 msgid "Ammo"
 msgstr "탄약"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:220 ../base/ufos/ui/equipment.ufo:239
+#: ../base/ufos/ui/aircraft_equip.ufo:220 ../base/ufos/ui/equipment.ufo:243
 #: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:50
-#: ../base/ufos/ui/team.ufo:219
+#: ../base/ufos/ui/team.ufo:222
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Armour"
@@ -25521,8 +25533,8 @@ msgid "Status:"
 msgstr "상태:"
 
 #: ../base/ufos/ui/aircraft_info.ufo:66
-#: ../base/ufos/ui/aircraft_soldiers.ufo:308 ../base/ufos/ui/hire.ufo:450
-#: ../base/ufos/ui/hire.ufo:499 ../base/ufos/ui/hospital.ufo:572
+#: ../base/ufos/ui/aircraft_soldiers.ufo:308 ../base/ufos/ui/hire.ufo:454
+#: ../base/ufos/ui/hire.ufo:503 ../base/ufos/ui/hospital.ufo:361
 #: ../base/ufos/ui/popup_baseattack.ufo:255
 msgid "Health:"
 msgstr "생명력:"
@@ -25541,7 +25553,7 @@ msgid "Call back"
 msgstr "항공기 귀환"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:104
-#: ../base/ufos/ui/aircraft_soldiers.ufo:379 ../base/ufos/ui/hire.ufo:234
+#: ../base/ufos/ui/aircraft_soldiers.ufo:379 ../base/ufos/ui/hire.ufo:238
 msgid "Equip soldiers"
 msgstr "전투원 장비착용"
 
@@ -25550,58 +25562,55 @@ msgstr "전투원 장비착용"
 msgid "Missions info"
 msgstr "작전공과"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:257 ../base/ufos/ui/equipment.ufo:396
-#: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:493
+#: ../base/ufos/ui/aircraft_soldiers.ufo:257 ../base/ufos/ui/equipment.ufo:400
+#: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:327
 #: ../base/ufos/ui/physdat.ufo:222 ../base/ufos/ui/popup_baseattack.ufo:176
-#: ../base/ufos/ui/team.ufo:371
+#: ../base/ufos/ui/team.ufo:374
 msgid "Strength:"
 msgstr "힘:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:263 ../base/ufos/ui/equipment.ufo:410
-#: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:502
+#: ../base/ufos/ui/aircraft_soldiers.ufo:263 ../base/ufos/ui/equipment.ufo:414
+#: ../base/ufos/ui/hire.ufo:361 ../base/ufos/ui/hospital.ufo:334
 #: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:236
-#: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:380
+#: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:383
 msgid "Speed:"
 msgstr "속도:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:269 ../base/ufos/ui/equipment.ufo:424
-#: ../base/ufos/ui/hire.ufo:371 ../base/ufos/ui/hospital.ufo:511
+#: ../base/ufos/ui/aircraft_soldiers.ufo:269 ../base/ufos/ui/equipment.ufo:428
+#: ../base/ufos/ui/hire.ufo:375 ../base/ufos/ui/hospital.ufo:341
 #: ../base/ufos/ui/physdat.ufo:250 ../base/ufos/ui/popup_baseattack.ufo:194
-#: ../base/ufos/ui/team.ufo:389
+#: ../base/ufos/ui/team.ufo:392
 msgid "Accuracy:"
 msgstr "정확도:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:275 ../base/ufos/ui/equipment.ufo:438
-#: ../base/ufos/ui/hire.ufo:385 ../base/ufos/ui/hospital.ufo:520
+#: ../base/ufos/ui/aircraft_soldiers.ufo:275 ../base/ufos/ui/equipment.ufo:442
+#: ../base/ufos/ui/hire.ufo:389 ../base/ufos/ui/hospital.ufo:348
 #: ../base/ufos/ui/physdat.ufo:264 ../base/ufos/ui/popup_baseattack.ufo:203
-#: ../base/ufos/ui/team.ufo:398
+#: ../base/ufos/ui/team.ufo:401
 msgid "Mind:"
 msgstr "정신력:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:281 ../base/ufos/ui/equipment.ufo:452
-#: ../base/ufos/ui/hire.ufo:399 ../base/ufos/ui/hospital.ufo:529
-#: ../base/ufos/ui/physdat.ufo:278 ../base/ufos/ui/popup_baseattack.ufo:212
-#: ../base/ufos/ui/team.ufo:407
+#: ../base/ufos/ui/aircraft_soldiers.ufo:281 ../base/ufos/ui/equipment.ufo:456
+#: ../base/ufos/ui/hire.ufo:403 ../base/ufos/ui/physdat.ufo:278
+#: ../base/ufos/ui/popup_baseattack.ufo:212 ../base/ufos/ui/team.ufo:410
 msgid "Close Combat:"
 msgstr "근접전투:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:287 ../base/ufos/ui/equipment.ufo:466
-#: ../base/ufos/ui/hire.ufo:413 ../base/ufos/ui/hospital.ufo:538
-#: ../base/ufos/ui/physdat.ufo:292 ../base/ufos/ui/popup_baseattack.ufo:222
-#: ../base/ufos/ui/team.ufo:416
+#: ../base/ufos/ui/aircraft_soldiers.ufo:287 ../base/ufos/ui/equipment.ufo:470
+#: ../base/ufos/ui/hire.ufo:417 ../base/ufos/ui/physdat.ufo:292
+#: ../base/ufos/ui/popup_baseattack.ufo:222 ../base/ufos/ui/team.ufo:419
 msgid "Assault Weapons:"
 msgstr "강습:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:293 ../base/ufos/ui/equipment.ufo:480
-#: ../base/ufos/ui/hire.ufo:427 ../base/ufos/ui/hospital.ufo:547
-#: ../base/ufos/ui/physdat.ufo:306 ../base/ufos/ui/popup_baseattack.ufo:232
-#: ../base/ufos/ui/team.ufo:425
+#: ../base/ufos/ui/aircraft_soldiers.ufo:293 ../base/ufos/ui/equipment.ufo:484
+#: ../base/ufos/ui/hire.ufo:431 ../base/ufos/ui/physdat.ufo:306
+#: ../base/ufos/ui/popup_baseattack.ufo:232 ../base/ufos/ui/team.ufo:428
 msgid "Sniper Rifles:"
 msgstr "저격:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:299 ../base/ufos/ui/equipment.ufo:494
-#: ../base/ufos/ui/hospital.ufo:556 ../base/ufos/ui/physdat.ufo:320
-#: ../base/ufos/ui/popup_baseattack.ufo:242 ../base/ufos/ui/team.ufo:434
+#: ../base/ufos/ui/aircraft_soldiers.ufo:299 ../base/ufos/ui/equipment.ufo:498
+#: ../base/ufos/ui/physdat.ufo:320 ../base/ufos/ui/popup_baseattack.ufo:242
+#: ../base/ufos/ui/team.ufo:437
 msgid "High-Explosives:"
 msgstr "폭발물:"
 
@@ -25675,7 +25684,7 @@ msgstr "방어용 무기를 장비합니다"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:452
-#: client/cgame/campaign/cp_base.cpp:2084
+#: client/cgame/campaign/cp_base.cpp:2062
 msgid "Information"
 msgstr "기지 정보"
 
@@ -25722,7 +25731,7 @@ msgstr "지대공 방어"
 #: ../base/ufos/ui/basedefence.ufo:310 ../base/ufos/ui/geoscape.ufo:851
 #: ../base/ufos/ui/geoscape.ufo:949 ../base/ufos/ui/geoscape.ufo:1210
 #: ../base/ufos/ui/geoscape.ufo:1282 ../base/ufos/ui/irc.ufo:202
-#: ../base/ufos/ui/main.ufo:110 ../base/ufos/ui/multiplayer.ufo:412
+#: ../base/ufos/ui/main.ufo:143 ../base/ufos/ui/multiplayer.ufo:415
 #: ../base/ufos/ui/popup_installations.ufo:155
 #: ../base/ufos/ui/popup_installations.ufo:482
 msgid "Name:"
@@ -25749,19 +25758,19 @@ msgstr "자동발사"
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
 #: client/cgame/campaign/cp_base_callbacks.cpp:633
 #: client/cgame/campaign/cp_base_callbacks.cpp:646
-#: client/cgame/campaign/cp_installation_callbacks.cpp:196
+#: client/cgame/campaign/cp_installation_callbacks.cpp:193
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:578
 msgid "Destroy"
 msgstr "건물해체"
 
 #: ../base/ufos/ui/basedefence.ufo:374 ../base/ufos/ui/geoscape.ufo:996
 #: ../base/ufos/ui/popup_installations.ufo:569
-#: client/cgame/campaign/cp_installation_callbacks.cpp:196
+#: client/cgame/campaign/cp_installation_callbacks.cpp:193
 msgid "Destroy installation"
 msgstr "설치물을 해체합니다"
 
 #: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:980
-#: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:315
+#: ../base/ufos/ui/inventory.ufo:240 ../base/ufos/ui/main.ufo:348
 #: ../base/ufos/ui/physdat.ufo:409 ../base/ufos/ui/popup_baseattack.ufo:302
 #: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130
@@ -25856,14 +25865,14 @@ msgid ""
 msgstr "이 기지에 관한 정보 (적재 가능 공간, 생산, 연구 등)"
 
 #: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/bases.ufo:240
-#: ../base/ufos/ui/hire.ufo:660 ../base/ufos/ui/research.ufo:196
-#: ../base/ufos/ui/research.ufo:304
+#: ../base/ufos/ui/hire.ufo:664 ../base/ufos/ui/research.ufo:205
+#: ../base/ufos/ui/research.ufo:316
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Scientists"
 msgstr "연구원"
 
 #: ../base/ufos/ui/bases.ufo:249 ../base/ufos/ui/bases.ufo:256
-#: ../base/ufos/ui/hire.ufo:655
+#: ../base/ufos/ui/hire.ufo:659
 msgid "Workers"
 msgstr "작업원"
 
@@ -25881,9 +25890,6 @@ msgstr "건물 선택"
 
 #: ../base/ufos/ui/buildings.ufo:180 ../base/ufos/ui/geoscape.ufo:560
 #: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:625
-#: client/cgame/campaign/cp_ufopedia.cpp:678
-#: client/cgame/campaign/cp_ufopedia.cpp:687
 #: client/cgame/campaign/cp_ufopedia.cpp:853
 msgid "UFOpaedia"
 msgstr "UFO 백과사전"
@@ -25900,119 +25906,143 @@ msgstr "게임시작"
 msgid "Start a new singleplayer campaign."
 msgstr "싱글플레이 캠페인을 새로 시작합니다."
 
-#: ../base/ufos/ui/campaign.ufo:32 ../base/ufos/ui/campaign.ufo:150
-#: ../base/ufos/ui/campaign.ufo:200 ../base/ufos/ui/campaign.ufo:223
+#: ../base/ufos/ui/campaign.ufo:32 ../base/ufos/ui/campaign.ufo:158
+#: ../base/ufos/ui/campaign.ufo:208 ../base/ufos/ui/campaign.ufo:231
 msgid "Load"
 msgstr "불러오기"
 
-#: ../base/ufos/ui/campaign.ufo:39 ../base/ufos/ui/campaign.ufo:144
+#: ../base/ufos/ui/campaign.ufo:40
+msgid "Download savegames"
+msgstr ""
+
+#: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
 #: ../base/ufos/ui/multiplayeringame.ufo:33
 #: ../base/ufos/ui/singleplayer.ufo:108
 msgid "Continue"
 msgstr "계속하기"
 
-#: ../base/ufos/ui/campaign.ufo:40
+#: ../base/ufos/ui/campaign.ufo:48
 msgid "Load last saved game or continue playing."
 msgstr "마지막에 저장된 게임을 읽어오거나, 현재의 게임을 재개합니다."
 
-#: ../base/ufos/ui/campaign.ufo:48 ../base/ufos/ui/campaign.ufo:345
-#: ../base/ufos/ui/campaign.ufo:502 ../base/ufos/ui/multiplayer.ufo:93
+#: ../base/ufos/ui/campaign.ufo:56 ../base/ufos/ui/campaign.ufo:317
+#: ../base/ufos/ui/campaign.ufo:444 ../base/ufos/ui/multiplayer.ufo:92
 #: ../base/ufos/ui/options.ufo:86 ../base/ufos/ui/singleplayer.ufo:70
 #: ../base/ufos/ui/skirmish.ufo:135 ../base/ufos/ui/tutorials.ufo:30
 msgid "Back"
 msgstr "돌아가기"
 
-#: ../base/ufos/ui/campaign.ufo:145
+#: ../base/ufos/ui/campaign.ufo:153
 msgid "Leave this menu and continue playing."
 msgstr "이 메뉴를 떠나 게임을 재개합니다."
 
-#: ../base/ufos/ui/campaign.ufo:160 ../base/ufos/ui/hud_default.ufo:792
-#: ../base/ufos/ui/main.ufo:46 ../base/ufos/ui/multiplayer.ufo:568
+#: ../base/ufos/ui/campaign.ufo:163 ../base/ufos/ui/campaign.ufo:345
+#: ../base/ufos/ui/team.ufo:691 ../base/ufos/ui/team.ufo:696
+msgid "Save"
+msgstr "저장하기"
+
+#: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/hud_default.ufo:851
+#: ../base/ufos/ui/main.ufo:79 ../base/ufos/ui/multiplayer.ufo:571
 #: ../base/ufos/ui/multiplayeringame.ufo:40
 #: ../base/ufos/ui/singleplayer.ufo:132 ../base/ufos/ui/skirmish.ufo:178
 msgid "Options"
 msgstr "게임설정"
 
-#: ../base/ufos/ui/campaign.ufo:165 ../base/ufos/ui/main.ufo:66
+#: ../base/ufos/ui/campaign.ufo:173 ../base/ufos/ui/main.ufo:99
 #: ../base/ufos/ui/singleplayer.ufo:140
 msgid "Exit"
 msgstr "종료"
 
-#: ../base/ufos/ui/campaign.ufo:184
+#: ../base/ufos/ui/campaign.ufo:192
 msgid "Reload campaign"
 msgstr "임무를 다시 불러오는 중입니다"
 
-#: ../base/ufos/ui/campaign.ufo:193
+#: ../base/ufos/ui/campaign.ufo:201
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
 msgstr "자동 저장된 캠페인 상태로 불러오시겠습니까?"
 
-#: ../base/ufos/ui/campaign.ufo:524
+#: ../base/ufos/ui/campaign.ufo:465
 msgid "You've lost the game"
 msgstr "게임에서 졌습니다"
 
-#: ../base/ufos/ui/campaign.ufo:533 ../base/ufos/ui/campaign.ufo:604
+#: ../base/ufos/ui/campaign.ufo:474 ../base/ufos/ui/campaign.ufo:545
 msgid "Click to continue"
 msgstr "진행하기 위해서는 클릭하시기 바랍니다"
 
-#: ../base/ufos/ui/campaign.ufo:595
+#: ../base/ufos/ui/campaign.ufo:536
 msgid "Thank you for playing UFO: Alien Invasion"
 msgstr "UFO: Alien Invasion을 즐겨주셔서 감사합니다."
 
-#: ../base/ufos/ui/campaign.ufo:663 ../base/ufos/ui/singleplayer.ufo:159
+#: ../base/ufos/ui/campaign.ufo:604 ../base/ufos/ui/singleplayer.ufo:159
 msgid "Exit Campaign Confirmation"
 msgstr "캠페인 나가기 확인"
 
-#: ../base/ufos/ui/campaign.ufo:672 ../base/ufos/ui/singleplayer.ufo:168
+#: ../base/ufos/ui/campaign.ufo:613 ../base/ufos/ui/singleplayer.ufo:168
 msgid "You will lose all your campaign progress."
 msgstr "캠페인의 모든 진행 경과를 잃게 됩니다."
 
-#: ../base/ufos/ui/campaign.ufo:678 ../base/ufos/ui/singleplayer.ufo:174
+#: ../base/ufos/ui/campaign.ufo:619 ../base/ufos/ui/singleplayer.ufo:174
 msgid "Exit current campaign and return to main menu."
 msgstr "현재 캠페인을 나가서 메인메뉴로 돌아가기."
 
-#: ../base/ufos/ui/campaign.ufo:679
+#: ../base/ufos/ui/campaign.ufo:620
 msgid "Quit anyway"
 msgstr "그래도 나가기"
 
-#: ../base/ufos/ui/campaign.ufo:688 ../base/ufos/ui/singleplayer.ufo:181
+#: ../base/ufos/ui/campaign.ufo:629 ../base/ufos/ui/singleplayer.ufo:181
 msgid "Do not quit."
 msgstr "나가지 않음."
 
+#: ../base/ufos/ui/cgame.ufo:26
+#, fuzzy
+msgid "Remove this file from the server"
+msgstr "항공기에서 전투원를 하차시킵니다"
+
+#: ../base/ufos/ui/cgame.ufo:53
+#, fuzzy
+msgid "Available files:"
+msgstr "가능한 언어들"
+
+#: ../base/ufos/ui/cgame.ufo:93
+msgid "No files uploaded yet"
+msgstr ""
+
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
-#: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:44
+#: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
 msgid "Backpack"
 msgstr "배낭"
 
 #: ../base/ufos/ui/equipment.ufo:51 ../base/ufos/ui/inventory.ufo:54
-#: ../base/ufos/ui/inventory.ufo:62 ../base/ufos/ui/team.ufo:53
+#: ../base/ufos/ui/inventory.ufo:62 ../base/ufos/ui/team.ufo:52
 msgid "Left Hand"
 msgstr "왼손"
 
 #: ../base/ufos/ui/equipment.ufo:60 ../base/ufos/ui/inventory.ufo:71
-#: ../base/ufos/ui/inventory.ufo:79 ../base/ufos/ui/team.ufo:62
+#: ../base/ufos/ui/inventory.ufo:79 ../base/ufos/ui/team.ufo:61
 msgid "Right Hand"
 msgstr "오른손"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
-#: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:71
-msgid "Extension"
-msgstr "확장"
+#: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
+#, fuzzy
+msgid "Implant"
+msgstr "이식수술"
 
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
-#: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:80
+#: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:79
 msgid "Headgear"
 msgstr "헤드기어"
 
 #: ../base/ufos/ui/equipment.ufo:87 ../base/ufos/ui/inventory.ufo:122
-#: ../base/ufos/ui/inventory.ufo:130 ../base/ufos/ui/team.ufo:89
+#: ../base/ufos/ui/inventory.ufo:130 ../base/ufos/ui/team.ufo:88
 msgid "Holster"
 msgstr "권총집"
 
 #: ../base/ufos/ui/equipment.ufo:96 ../base/ufos/ui/inventory.ufo:139
-#: ../base/ufos/ui/inventory.ufo:147 ../base/ufos/ui/team.ufo:98
+#: ../base/ufos/ui/inventory.ufo:147 ../base/ufos/ui/team.ufo:97
 msgid "Belt"
 msgstr "벨트"
 
@@ -26020,65 +26050,65 @@ msgstr "벨트"
 msgid "Remove all"
 msgstr "모두 제거"
 
-#: ../base/ufos/ui/equipment.ufo:223 ../base/ufos/ui/market.ufo:114
-#: ../base/ufos/ui/production.ufo:34 ../base/ufos/ui/team.ufo:203
+#: ../base/ufos/ui/equipment.ufo:227 ../base/ufos/ui/market.ufo:114
+#: ../base/ufos/ui/production.ufo:34 ../base/ufos/ui/team.ufo:206
 msgid "Primary"
 msgstr "주 무기"
 
-#: ../base/ufos/ui/equipment.ufo:227 ../base/ufos/ui/market.ufo:118
-#: ../base/ufos/ui/production.ufo:38 ../base/ufos/ui/team.ufo:207
+#: ../base/ufos/ui/equipment.ufo:231 ../base/ufos/ui/market.ufo:118
+#: ../base/ufos/ui/production.ufo:38 ../base/ufos/ui/team.ufo:210
 msgid "Secondary"
 msgstr "보조 무기"
 
-#: ../base/ufos/ui/equipment.ufo:231 ../base/ufos/ui/market.ufo:122
-#: ../base/ufos/ui/production.ufo:42 ../base/ufos/ui/team.ufo:211
+#: ../base/ufos/ui/equipment.ufo:235 ../base/ufos/ui/market.ufo:122
+#: ../base/ufos/ui/production.ufo:42 ../base/ufos/ui/team.ufo:214
 #: client/cl_inventory_callbacks.cpp:46
 msgid "Heavy"
 msgstr "중화기"
 
-#: ../base/ufos/ui/equipment.ufo:235 ../base/ufos/ui/market.ufo:126
-#: ../base/ufos/ui/production.ufo:46 ../base/ufos/ui/team.ufo:215
+#: ../base/ufos/ui/equipment.ufo:239 ../base/ufos/ui/market.ufo:126
+#: ../base/ufos/ui/production.ufo:46 ../base/ufos/ui/team.ufo:218
 msgid "Misc"
 msgstr "기타 장비"
 
-#: ../base/ufos/ui/equipment.ufo:306 ../base/ufos/ui/market.ufo:491
-#: ../base/ufos/ui/team.ufo:286 ../base/ufos/ui/ufopedia.ufo:342
+#: ../base/ufos/ui/equipment.ufo:310 ../base/ufos/ui/market.ufo:491
+#: ../base/ufos/ui/team.ufo:289 ../base/ufos/ui/ufopedia.ufo:342
 msgid "With:"
 msgstr "사용탄약:"
 
-#: ../base/ufos/ui/equipment.ufo:343 ../base/ufos/ui/market.ufo:528
-#: ../base/ufos/ui/team.ufo:323 ../base/ufos/ui/ufopedia.ufo:379
+#: ../base/ufos/ui/equipment.ufo:347 ../base/ufos/ui/market.ufo:528
+#: ../base/ufos/ui/team.ufo:326 ../base/ufos/ui/ufopedia.ufo:379
 msgid "Firemode:"
 msgstr "공격방법:"
 
-#: ../base/ufos/ui/equipment.ufo:351 ../base/ufos/ui/market.ufo:536
-#: ../base/ufos/ui/team.ufo:331 ../base/ufos/ui/ufopedia.ufo:387
+#: ../base/ufos/ui/equipment.ufo:355 ../base/ufos/ui/market.ufo:536
+#: ../base/ufos/ui/team.ufo:334 ../base/ufos/ui/ufopedia.ufo:387
 msgid "Previous firemode"
 msgstr "이전 공격방법"
 
-#: ../base/ufos/ui/equipment.ufo:369 ../base/ufos/ui/market.ufo:554
-#: ../base/ufos/ui/team.ufo:349 ../base/ufos/ui/ufopedia.ufo:405
+#: ../base/ufos/ui/equipment.ufo:373 ../base/ufos/ui/market.ufo:554
+#: ../base/ufos/ui/team.ufo:352 ../base/ufos/ui/ufopedia.ufo:405
 msgid "Next firemode"
 msgstr "다음 공격방법"
 
-#: ../base/ufos/ui/equipment.ufo:536 ../base/ufos/ui/team.ufo:475
+#: ../base/ufos/ui/equipment.ufo:540 ../base/ufos/ui/team.ufo:478
 msgid "Soldier Abilities"
 msgstr "병사 능력치"
 
-#: ../base/ufos/ui/equipment.ufo:540 ../base/ufos/ui/team.ufo:479
+#: ../base/ufos/ui/equipment.ufo:544 ../base/ufos/ui/team.ufo:482
 msgid "Object Info"
 msgstr "상세내용"
 
-#: ../base/ufos/ui/equipment.ufo:552 ../base/ufos/ui/equipment.ufo:565
+#: ../base/ufos/ui/equipment.ufo:556 ../base/ufos/ui/equipment.ufo:569
 msgid "Rename your unit"
 msgstr "유닛의 이름을 변경합니다"
 
-#: ../base/ufos/ui/equipment.ufo:678 ../base/ufos/ui/inventory.ufo:252
-#: ../base/ufos/ui/team.ufo:613
+#: ../base/ufos/ui/equipment.ufo:682 ../base/ufos/ui/inventory.ufo:252
+#: ../base/ufos/ui/team.ufo:616
 msgid "0/0 Kg"
 msgstr "0/0 킬로그램"
 
-#: ../base/ufos/ui/equipment.ufo:704 ../base/ufos/ui/team.ufo:630
+#: ../base/ufos/ui/equipment.ufo:708 ../base/ufos/ui/team.ufo:633
 msgid "Done"
 msgstr "완료"
 
@@ -26306,73 +26336,54 @@ msgstr "해고 - 제거하려면 오른쪽 클릭을 하세요"
 msgid "Hire - Right click to remove"
 msgstr "고용 - 제거하려면 오른쪽 클릭을 하세요"
 
-#: ../base/ufos/ui/hire.ufo:270
+#: ../base/ufos/ui/hire.ufo:274
 msgid "Rename employee"
 msgstr "직원 이름 변경"
 
-#: ../base/ufos/ui/hire.ufo:441
+#: ../base/ufos/ui/hire.ufo:445
 msgid "High Explosives:"
 msgstr "폭발물:"
 
-#: ../base/ufos/ui/hire.ufo:454 ../base/ufos/ui/physdat.ufo:444
+#: ../base/ufos/ui/hire.ufo:458 ../base/ufos/ui/physdat.ufo:444
 msgid "Missions Performed:"
 msgstr "미션 참가수:"
 
-#: ../base/ufos/ui/hire.ufo:457 ../base/ufos/ui/physdat.ufo:445
+#: ../base/ufos/ui/hire.ufo:461 ../base/ufos/ui/physdat.ufo:445
 msgid "Enemies Killed:"
 msgstr "적 사살 수:"
 
-#: ../base/ufos/ui/hire.ufo:472
+#: ../base/ufos/ui/hire.ufo:476
 msgid "Piloting:"
 msgstr "비행술:"
 
-#: ../base/ufos/ui/hire.ufo:481
+#: ../base/ufos/ui/hire.ufo:485
 msgid "Targeting:"
 msgstr "조준력:"
 
-#: ../base/ufos/ui/hire.ufo:490
+#: ../base/ufos/ui/hire.ufo:494
 msgid "Evading:"
 msgstr "피하는 중:"
 
-#: ../base/ufos/ui/hire.ufo:515 ../base/ufos/ui/hire.ufo:531
+#: ../base/ufos/ui/hire.ufo:519 ../base/ufos/ui/hire.ufo:535
 msgid "Occupation"
 msgstr "인원"
 
-#: ../base/ufos/ui/hospital.ufo:72 ../base/ufos/ui/hospital.ufo:122
-#: ../base/ufos/ui/hospital.ufo:147
-msgid "Unused"
-msgstr "사용되고 있지 않습니다"
-
-#: ../base/ufos/ui/hospital.ufo:132
-msgid "Heavily wounded"
-msgstr "중상"
-
-#: ../base/ufos/ui/hospital.ufo:137
-msgid "Medium wounds"
-msgstr "경상"
-
-#: ../base/ufos/ui/hospital.ufo:142
+#: ../base/ufos/ui/hospital.ufo:179
 msgid "Slightly wounded"
 msgstr "찰과상"
 
-#: ../base/ufos/ui/hospital.ufo:383
-msgid "Scroll up"
-msgstr "위로 스크롤합니다"
+#: ../base/ufos/ui/hospital.ufo:182
+msgid "Medium wounds"
+msgstr "경상"
 
-#: ../base/ufos/ui/hospital.ufo:393
-msgid "Scroll down"
-msgstr "아래로 스크롤합니다"
+#: ../base/ufos/ui/hospital.ufo:185
+msgid "Heavily wounded"
+msgstr "중상"
 
-#: ../base/ufos/ui/hospital.ufo:594
-msgid "Implants"
-msgstr "이식수술"
-
-#: ../base/ufos/ui/hospital.ufo:600 ../base/ufos/ui/popup_baseattack.ufo:388
-#: ../base/ufos/ui/popup_baseattack.ufo:395
-#: ../base/ufos/ui/popup_baseattack.ufo:402
-#: ../base/ufos/ui/popup_baseattack.ufo:409
-msgid "Not implemented"
-msgstr "구현되지 않음"
+#: ../base/ufos/ui/hospital.ufo:188
+#, fuzzy
+msgid "Healthy"
+msgstr "건강"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -26391,7 +26402,7 @@ msgstr "남은 행동력: %i"
 msgid "Check to use this firemode for reaction fire"
 msgstr "대응사격으로 사용할 공격법을 선택해 주세요"
 
-#: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1389
+#: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory_callbacks.cpp:388
 msgid "TU:"
 msgstr "TU:"
@@ -26400,103 +26411,120 @@ msgstr "TU:"
 msgid "Shots:"
 msgstr "사용탄수:"
 
-#: ../base/ufos/ui/hud_.ufo:562
+#: ../base/ufos/ui/hud_.ufo:607
 msgid "Chat"
 msgstr "대화"
 
-#: ../base/ufos/ui/hud_.ufo:594
+#: ../base/ufos/ui/hud_.ufo:639
 msgid "Party chat"
 msgstr "파티 대화"
 
-#: ../base/ufos/ui/hud_.ufo:598
+#: ../base/ufos/ui/hud_.ufo:643
 msgid "Global lobby (IRC)"
 msgstr "전체 대기실 (IRC)"
 
-#: ../base/ufos/ui/hud_.ufo:679 ../base/ufos/ui/hud_.ufo:742
+#: ../base/ufos/ui/hud_.ufo:724 ../base/ufos/ui/hud_.ufo:787
 msgid "Say:"
 msgstr "Say:"
 
-#: ../base/ufos/ui/hud_.ufo:750
+#: ../base/ufos/ui/hud_.ufo:795
 msgid "Team chat"
 msgstr "팀 대화"
 
-#: ../base/ufos/ui/hud_default.ufo:68 ../base/ufos/ui/multiplayer.ufo:1055
+#: ../base/ufos/ui/hud_default.ufo:123 ../base/ufos/ui/multiplayer.ufo:1060
 msgid "Level 1"
 msgstr "1 층"
 
-#: ../base/ufos/ui/hud_default.ufo:89 ../base/ufos/ui/multiplayer.ufo:1066
+#: ../base/ufos/ui/hud_default.ufo:144 ../base/ufos/ui/multiplayer.ufo:1071
 msgid "Level 2"
 msgstr "2 층"
 
-#: ../base/ufos/ui/hud_default.ufo:110 ../base/ufos/ui/multiplayer.ufo:1077
+#: ../base/ufos/ui/hud_default.ufo:165 ../base/ufos/ui/multiplayer.ufo:1082
 msgid "Level 3"
 msgstr "3 층"
 
-#: ../base/ufos/ui/hud_default.ufo:131 ../base/ufos/ui/multiplayer.ufo:1088
+#: ../base/ufos/ui/hud_default.ufo:186 ../base/ufos/ui/multiplayer.ufo:1093
 msgid "Level 4"
 msgstr "4 층"
 
-#: ../base/ufos/ui/hud_default.ufo:152 ../base/ufos/ui/multiplayer.ufo:1099
+#: ../base/ufos/ui/hud_default.ufo:207 ../base/ufos/ui/multiplayer.ufo:1104
 msgid "Level 5"
 msgstr "5 층"
 
-#: ../base/ufos/ui/hud_default.ufo:173 ../base/ufos/ui/multiplayer.ufo:1110
+#: ../base/ufos/ui/hud_default.ufo:228 ../base/ufos/ui/multiplayer.ufo:1115
 msgid "Level 6"
 msgstr "6 층"
 
-#: ../base/ufos/ui/hud_default.ufo:194 ../base/ufos/ui/multiplayer.ufo:1121
+#: ../base/ufos/ui/hud_default.ufo:249 ../base/ufos/ui/multiplayer.ufo:1126
 msgid "Level 7"
 msgstr "7 층"
 
-#: ../base/ufos/ui/hud_default.ufo:215 ../base/ufos/ui/multiplayer.ufo:1132
+#: ../base/ufos/ui/hud_default.ufo:270 ../base/ufos/ui/multiplayer.ufo:1137
 msgid "Level 8"
 msgstr "8 층"
 
-#: ../base/ufos/ui/hud_default.ufo:424 ../base/ufos/ui/hud_default.ufo:920
+#: ../base/ufos/ui/hud_default.ufo:483 ../base/ufos/ui/hud_default.ufo:992
 msgid "Show rescue zone"
 msgstr "구조지역 보이기"
 
-#: ../base/ufos/ui/hud_default.ufo:436
+#: ../base/ufos/ui/hud_default.ufo:495
 msgid "Finish round"
 msgstr "이번 차례를 종료합니다"
 
-#: ../base/ufos/ui/hud_default.ufo:475
+#: ../base/ufos/ui/hud_default.ufo:534
 msgid "Primary fire mode"
 msgstr "공격방법 1로 공격합니다"
 
-#: ../base/ufos/ui/hud_default.ufo:511
+#: ../base/ufos/ui/hud_default.ufo:570
 msgid "Use headgear"
 msgstr "헤드기어를 사용합니다"
 
-#: ../base/ufos/ui/hud_default.ufo:541
+#: ../base/ufos/ui/hud_default.ufo:600
 msgid "Use Item"
 msgstr "장비를 사용합니다"
 
-#: ../base/ufos/ui/hud_default.ufo:771
+#: ../base/ufos/ui/hud_default.ufo:830
 msgid "Chat messages"
 msgstr "대화 내용"
 
-#: ../base/ufos/ui/hud_default.ufo:917
+#: ../base/ufos/ui/hud_default.ufo:887
+msgid "Please wait"
+msgstr "잠시만 기다려주세요"
+
+#: ../base/ufos/ui/hud_default.ufo:989
 msgid "Hide rescue zone"
 msgstr "구조지역 숨기기"
 
-#: ../base/ufos/ui/hud_default.ufo:927 client/battlescape/cl_hud.cpp:904
+#: ../base/ufos/ui/hud_default.ufo:999 client/battlescape/cl_hud.cpp:904
 msgid "Reserve TUs for shooting."
 msgstr "사격을 위해 TU를 예약함."
 
-#: ../base/ufos/ui/hud_default.ufo:947
-msgid "Reaction fire"
-msgstr "대응사격"
+#: ../base/ufos/ui/hud_default.ufo:1019
+#, fuzzy
+msgid "Disable reaction fire"
+msgstr "대응사격모드의 토글."
 
-#: ../base/ufos/ui/hud_default.ufo:953
-msgid "Reaction fire (not possible)"
+#: ../base/ufos/ui/hud_default.ufo:1025
+#, fuzzy
+msgid "Reaction fire (not available)"
 msgstr "대응사격 (불가능)"
 
-#: ../base/ufos/ui/hud_default.ufo:959
-msgid "No reaction fire"
-msgstr "대응사격없음"
+#: ../base/ufos/ui/hud_default.ufo:1031
+#, fuzzy
+msgid "Enable reaction fire"
+msgstr "대응사격모드의 토글."
 
-#: ../base/ufos/ui/hud_default.ufo:981
+#: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
+#, fuzzy
+msgid "Target out of range"
+msgstr "공격목표를 지면으로 설정합니다"
+
+#: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
+#, fuzzy
+msgid "Target acquired"
+msgstr "목표지점이 점령되었습니다!"
+
+#: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
 msgstr "기본 HUD"
 
@@ -26524,7 +26552,7 @@ msgstr "탄약 없음"
 msgid "No more ammo"
 msgstr "탄창 없음"
 
-#: ../base/ufos/ui/hud_phone.ufo:795
+#: ../base/ufos/ui/hud_phone.ufo:799
 msgid "Phone HUD"
 msgstr "전화 HUD"
 
@@ -26533,7 +26561,7 @@ msgid "Floor"
 msgstr "층"
 
 #: ../base/ufos/ui/irc.ufo:22 ../base/ufos/ui/multiplayer.ufo:85
-#: ../base/ufos/ui/multiplayer.ufo:156 ../base/ufos/ui/multiplayer.ufo:1462
+#: ../base/ufos/ui/multiplayer.ufo:159 ../base/ufos/ui/multiplayer.ufo:1604
 #: ../base/ufos/ui/multiplayeringame.ufo:48
 msgid "Lobby"
 msgstr "대기실"
@@ -26578,8 +26606,8 @@ msgstr "접속되지 않았습니다"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "대기실에 접속하지 않았습니다. 접속하시겠습니까?"
 
-#: ../base/ufos/ui/irc.ufo:258 ../base/ufos/ui/multiplayer.ufo:248
-#: ../base/ufos/ui/multiplayer.ufo:455
+#: ../base/ufos/ui/irc.ufo:258 ../base/ufos/ui/multiplayer.ufo:251
+#: ../base/ufos/ui/multiplayer.ufo:458
 msgid "Connect"
 msgstr "접속"
 
@@ -26671,80 +26699,97 @@ msgstr "모두 읽은 것으로 표시"
 msgid "Leave mailclient"
 msgstr "메일 클라이언트를 나옵니다"
 
-#: ../base/ufos/ui/main.ufo:33
+#: ../base/ufos/ui/main.ufo:14
+msgid "Facebook"
+msgstr ""
+
+#: ../base/ufos/ui/main.ufo:15
+msgid "Like us on facebook"
+msgstr ""
+
+#: ../base/ufos/ui/main.ufo:26
+#, fuzzy
+msgid "Twitter"
+msgstr "Sitters"
+
+#: ../base/ufos/ui/main.ufo:27
+msgid "Follow us on twitter"
+msgstr ""
+
+#: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
 msgstr "싱글플레이"
 
-#: ../base/ufos/ui/main.ufo:34
+#: ../base/ufos/ui/main.ufo:67
 msgid "Choose between Campaign or Skirmish mode."
 msgstr "캠페인과 빠른 시작 모드 가운데 선택해주세요"
 
-#: ../base/ufos/ui/main.ufo:52 ../base/ufos/ui/tutorials.ufo:21
+#: ../base/ufos/ui/main.ufo:85 ../base/ufos/ui/tutorials.ufo:21
 msgid "Tutorials"
 msgstr "튜토리얼"
 
-#: ../base/ufos/ui/main.ufo:58
+#: ../base/ufos/ui/main.ufo:91
 msgid "Developers"
 msgstr "개발자들"
 
-#: ../base/ufos/ui/main.ufo:94
+#: ../base/ufos/ui/main.ufo:127
 msgid "Initial settings"
 msgstr "초기설정"
 
-#: ../base/ufos/ui/main.ufo:99
+#: ../base/ufos/ui/main.ufo:132
 msgid "User Information"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/main.ufo:133 ../base/ufos/ui/options.ufo:1303
+#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1303
 msgid "Volume Control"
 msgstr "음량"
 
-#: ../base/ufos/ui/main.ufo:140
+#: ../base/ufos/ui/main.ufo:173
 msgid "Effects:"
 msgstr "효과음:"
 
-#: ../base/ufos/ui/main.ufo:159 ../base/ufos/ui/options.ufo:1346
+#: ../base/ufos/ui/main.ufo:192 ../base/ufos/ui/options.ufo:1346
 msgid "Music:"
 msgstr "음악:"
 
-#: ../base/ufos/ui/main.ufo:182
+#: ../base/ufos/ui/main.ufo:215
 msgid "Language"
 msgstr "사용언어"
 
-#: ../base/ufos/ui/main.ufo:189
+#: ../base/ufos/ui/main.ufo:222
 msgid "Language:"
 msgstr "사용언어:"
 
-#: ../base/ufos/ui/main.ufo:228
+#: ../base/ufos/ui/main.ufo:261
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "플레이어명을 입력하고 'OK' 버튼을 눌러주세요:"
 
-#: ../base/ufos/ui/main.ufo:236 ../base/ufos/ui/multiplayer.ufo:1410
+#: ../base/ufos/ui/main.ufo:269 ../base/ufos/ui/multiplayer.ufo:1552
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
 msgstr "확인"
 
-#: ../base/ufos/ui/main.ufo:237
+#: ../base/ufos/ui/main.ufo:270
 msgid "Save settings"
 msgstr "설정을 저장합니다"
 
-#: ../base/ufos/ui/main.ufo:260
+#: ../base/ufos/ui/main.ufo:293
 msgid "Tip of the day"
 msgstr "오늘의 조언"
 
-#: ../base/ufos/ui/main.ufo:272
+#: ../base/ufos/ui/main.ufo:305
 msgid "Show tip of the day"
 msgstr "오늘의 조언을 표시한다"
 
-#: ../base/ufos/ui/main.ufo:293 ../base/ufos/ui/main.ufo:312
+#: ../base/ufos/ui/main.ufo:326 ../base/ufos/ui/main.ufo:345
 msgid "Next"
 msgstr "다음"
 
-#: ../base/ufos/ui/main.ufo:294 ../base/ufos/ui/main.ufo:313
+#: ../base/ufos/ui/main.ufo:327 ../base/ufos/ui/main.ufo:346
 msgid "Next tip"
 msgstr "다음 조언"
 
-#: ../base/ufos/ui/main.ufo:316
+#: ../base/ufos/ui/main.ufo:349
 msgid "Close window"
 msgstr "창 닫기"
 
@@ -26765,8 +26810,8 @@ msgstr "기타"
 msgid "UGV items"
 msgstr "무인전투차량 물품"
 
-#: ../base/ufos/ui/market.ufo:175 ../base/ufos/ui/multiplayer.ufo:197
-#: ../base/ufos/ui/options.ufo:110
+#: ../base/ufos/ui/market.ufo:175 ../base/ufos/ui/multiplayer.ufo:200
+#: ../base/ufos/ui/options.ufo:110 ../base/ufos/ui/web.ufo:16
 msgid "Name"
 msgstr "이름"
 
@@ -26799,7 +26844,7 @@ msgid "Item autosell disabled"
 msgstr "자동매각 사용하지 않음"
 
 #: ../base/ufos/ui/market.ufo:313 ../base/ufos/ui/popup_capacity.ufo:37
-#: ../base/ufos/ui/production.ufo:116 ../base/ufos/ui/research.ufo:282
+#: ../base/ufos/ui/production.ufo:116 ../base/ufos/ui/research.ufo:294
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Capacity"
 msgstr "최대 수용치"
@@ -26813,7 +26858,7 @@ msgid "free"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
-#: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:296
+#: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:308
 msgid "all"
 msgstr "올"
 
@@ -26981,7 +27026,7 @@ msgstr "이 서버로 접속"
 msgid "Delete this bookmark"
 msgstr "바로가기 삭제"
 
-#: ../base/ufos/ui/multiplayer.ufo:64 ../base/ufos/ui/multiplayer.ufo:206
+#: ../base/ufos/ui/multiplayer.ufo:64 ../base/ufos/ui/multiplayer.ufo:209
 #: ../base/ufos/ui/popup_baseattack.ufo:420 ../base/ufos/ui/skirmish.ufo:184
 msgid "Team"
 msgstr "팀"
@@ -26994,223 +27039,238 @@ msgstr "참여"
 msgid "Create"
 msgstr "생성"
 
-#: ../base/ufos/ui/multiplayer.ufo:142
+#: ../base/ufos/ui/multiplayer.ufo:145
 msgid "Internet/Lan"
 msgstr "Internet/Lan"
 
-#: ../base/ufos/ui/multiplayer.ufo:146
+#: ../base/ufos/ui/multiplayer.ufo:149
 msgid "Lan"
 msgstr "Lan"
 
-#: ../base/ufos/ui/multiplayer.ufo:151 ../base/ufos/ui/multiplayer.ufo:266
+#: ../base/ufos/ui/multiplayer.ufo:154 ../base/ufos/ui/multiplayer.ufo:269
 msgid "Bookmark"
 msgstr "바로가기"
 
-#: ../base/ufos/ui/multiplayer.ufo:188
+#: ../base/ufos/ui/multiplayer.ufo:191
 msgid "Userlist"
 msgstr "접속자 목록"
 
-#: ../base/ufos/ui/multiplayer.ufo:255
+#: ../base/ufos/ui/multiplayer.ufo:258
 msgid "Leave Serverbrowser"
 msgstr "서버목록 나가기"
 
-#: ../base/ufos/ui/multiplayer.ufo:267
+#: ../base/ufos/ui/multiplayer.ufo:270
 msgid "Add server to bookmarks"
 msgstr "서버를 바로가기에 저장하기"
 
-#: ../base/ufos/ui/multiplayer.ufo:301
+#: ../base/ufos/ui/multiplayer.ufo:304
 msgid "All"
 msgstr "All"
 
-#: ../base/ufos/ui/multiplayer.ufo:303
+#: ../base/ufos/ui/multiplayer.ufo:306
 msgid "Free"
 msgstr "Free"
 
-#: ../base/ufos/ui/multiplayer.ufo:305
+#: ../base/ufos/ui/multiplayer.ufo:308
 msgid "Playing"
 msgstr "Playing"
 
-#: ../base/ufos/ui/multiplayer.ufo:307
+#: ../base/ufos/ui/multiplayer.ufo:310
 msgid "Invalid"
 msgstr "오류"
 
-#: ../base/ufos/ui/multiplayer.ufo:319
+#: ../base/ufos/ui/multiplayer.ufo:322
 msgid "Serverfilter:"
 msgstr "서버필터:"
 
-#: ../base/ufos/ui/multiplayer.ufo:397
+#: ../base/ufos/ui/multiplayer.ufo:400
 msgid "Refresh"
 msgstr "갱신"
 
-#: ../base/ufos/ui/multiplayer.ufo:436
+#: ../base/ufos/ui/multiplayer.ufo:439
 msgid "Connect to IP"
 msgstr "IP 주소에 접속"
 
-#: ../base/ufos/ui/multiplayer.ufo:494
+#: ../base/ufos/ui/multiplayer.ufo:497
 msgid "Bookmarks"
 msgstr "바로가기 목록"
 
-#: ../base/ufos/ui/multiplayer.ufo:564 ../base/ufos/ui/skirmish.ufo:172
+#: ../base/ufos/ui/multiplayer.ufo:567 ../base/ufos/ui/skirmish.ufo:172
 msgid "Map"
 msgstr "지도"
 
-#: ../base/ufos/ui/multiplayer.ufo:572
+#: ../base/ufos/ui/multiplayer.ufo:575
 msgid "Security/registration"
 msgstr "보안/등록"
 
-#: ../base/ufos/ui/multiplayer.ufo:588
+#: ../base/ufos/ui/multiplayer.ufo:591
 msgid "Hostname:"
 msgstr "서버명:"
 
-#: ../base/ufos/ui/multiplayer.ufo:610
+#: ../base/ufos/ui/multiplayer.ufo:613
 msgid "Gametype:"
 msgstr "게임 종류:"
 
-#: ../base/ufos/ui/multiplayer.ufo:632
+#: ../base/ufos/ui/multiplayer.ufo:635
 msgid "Teamplay:"
 msgstr "팀전:"
 
-#: ../base/ufos/ui/multiplayer.ufo:656
+#: ../base/ufos/ui/multiplayer.ufo:659
 msgid "Allowed gametype:"
 msgstr "허용가능한 게임유형:"
 
-#: ../base/ufos/ui/multiplayer.ufo:697
+#: ../base/ufos/ui/multiplayer.ufo:700
 msgid "Enable morale states:"
 msgstr "심리적 영향을 받도록 합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:712 ../base/ufos/ui/skirmish.ufo:406
+#: ../base/ufos/ui/multiplayer.ufo:715 ../base/ufos/ui/skirmish.ufo:406
 msgid "Alien rush:"
 msgstr "외계인 돌진:"
 
-#: ../base/ufos/ui/multiplayer.ufo:715 ../base/ufos/ui/skirmish.ufo:409
+#: ../base/ufos/ui/multiplayer.ufo:718 ../base/ufos/ui/skirmish.ufo:409
 msgid "Enemies respawn when killed."
 msgstr "사살된 적군들은 다시 스포닝 됩니다."
 
-#: ../base/ufos/ui/multiplayer.ufo:729
+#: ../base/ufos/ui/multiplayer.ufo:734
 msgid "Max. clients:"
 msgstr "최대 클라이언트:"
 
-#: ../base/ufos/ui/multiplayer.ufo:730
+#: ../base/ufos/ui/multiplayer.ufo:735
 msgid "Sets the max allowed clients to connect"
 msgstr "클라이언트의 최대 접속수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:755
+#: ../base/ufos/ui/multiplayer.ufo:760 ../base/ufos/ui/multiplayer.ufo:1301
 msgid "Max. soldiers per team:"
 msgstr "팀 당 최대전투원수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:756
+#: ../base/ufos/ui/multiplayer.ufo:761 ../base/ufos/ui/multiplayer.ufo:1302
+#: ../base/ufos/ui/multiplayer.ufo:1348
 msgid "Sets the max allowed soldiers per team"
 msgstr "팀 당 최대 전투원수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:781
+#: ../base/ufos/ui/multiplayer.ufo:786 ../base/ufos/ui/multiplayer.ufo:1324
 msgid "Max. soldiers per player:"
 msgstr "플레이어 당 최대 전투원수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:782
+#: ../base/ufos/ui/multiplayer.ufo:787 ../base/ufos/ui/multiplayer.ufo:1325
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "팀전시의 플레이어 당 최대전투원수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:808
+#: ../base/ufos/ui/multiplayer.ufo:813
 msgid "Max. human players per team:"
 msgstr "팀 당 인간 플레이어 최대수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:833 ../base/ufos/ui/skirmish.ufo:331
+#: ../base/ufos/ui/multiplayer.ufo:838 ../base/ufos/ui/skirmish.ufo:331
 msgid "Max. AI actors:"
 msgstr "AI캐릭터의 수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:834
+#: ../base/ufos/ui/multiplayer.ufo:839
 msgid "Max AI actors for teamplay mode"
 msgstr "팀전시 AI캐릭터의 수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:860
+#: ../base/ufos/ui/multiplayer.ufo:865
 msgid "Round time limit in seconds:"
 msgstr "라운드 시간 한계의 초단위:"
 
-#: ../base/ufos/ui/multiplayer.ufo:892
+#: ../base/ufos/ui/multiplayer.ufo:897
 msgid "Make this server public:"
 msgstr "이 서버를 공개로 한다:"
 
-#: ../base/ufos/ui/multiplayer.ufo:908
+#: ../base/ufos/ui/multiplayer.ufo:913
 msgid "Server-Password:"
 msgstr "서버 접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:931
+#: ../base/ufos/ui/multiplayer.ufo:936 ../base/ufos/ui/multiplayer.ufo:1401
 msgid "RCON-Password:"
 msgstr "RCON 접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:973
+#: ../base/ufos/ui/multiplayer.ufo:978
 msgid "Start server"
 msgstr "서버가동"
 
-#: ../base/ufos/ui/multiplayer.ufo:1152
+#: ../base/ufos/ui/multiplayer.ufo:1157
 msgid "Players connected"
 msgstr "플레이어가 접속하였습니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:1206
+#: ../base/ufos/ui/multiplayer.ufo:1211
 msgid "Team selection"
 msgstr "팀 선택"
 
-#: ../base/ufos/ui/multiplayer.ufo:1227
+#: ../base/ufos/ui/multiplayer.ufo:1232
 msgid "Team preference:"
 msgstr "팀 설정:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1241
+#: ../base/ufos/ui/multiplayer.ufo:1246
 msgid "Next free team"
 msgstr "가능한 다음 팀"
 
-#: ../base/ufos/ui/multiplayer.ufo:1251
+#: ../base/ufos/ui/multiplayer.ufo:1256
 msgid "Previous free team"
 msgstr "가능한 이전 팀"
 
-#: ../base/ufos/ui/multiplayer.ufo:1263
-msgid "Force start"
-msgstr "강제 시작"
-
-#: ../base/ufos/ui/multiplayer.ufo:1264
-msgid "Start the game even if not all teams is ready or have joined"
-msgstr "모든 팀이 참가하지 않아도 게임을 시작하기"
-
-#: ../base/ufos/ui/multiplayer.ufo:1275 ../base/ufos/ui/multiplayer.ufo:1283
+#: ../base/ufos/ui/multiplayer.ufo:1266 ../base/ufos/ui/multiplayer.ufo:1274
 msgid "Finish the teamselection and start the game"
 msgstr "팀 선택을 마치고 게임을 시작합니다."
 
-#: ../base/ufos/ui/multiplayer.ufo:1282
+#: ../base/ufos/ui/multiplayer.ufo:1273
 msgid "Are you ready?"
 msgstr "준비되셨습니까?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
+msgid "Admin control"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:1347
+#, fuzzy
+msgid "Round time limit:"
+msgstr "라운드 시간 한계의 초단위:"
+
+#: ../base/ufos/ui/multiplayer.ufo:1370
+msgid "Force start"
+msgstr "강제 시작"
+
+#: ../base/ufos/ui/multiplayer.ufo:1371
+#, fuzzy
+msgid "Launch the game before all teams are ready"
+msgstr "모든 팀이 참가하지 않아도 게임을 시작하기"
+
+#: ../base/ufos/ui/multiplayer.ufo:1391
+msgid "Remote Admin Control"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
 msgstr "다른 사람 초대"
 
-#: ../base/ufos/ui/multiplayer.ufo:1293
+#: ../base/ufos/ui/multiplayer.ufo:1431
 msgid "Invite players that are online in the lobby"
 msgstr "대기실의 온라인 사용자를 초대함"
 
-#: ../base/ufos/ui/multiplayer.ufo:1377
+#: ../base/ufos/ui/multiplayer.ufo:1519
 msgid "Enter server password"
 msgstr "접속암호를 입력하시오"
 
-#: ../base/ufos/ui/multiplayer.ufo:1390
+#: ../base/ufos/ui/multiplayer.ufo:1532
 msgid "Password:"
 msgstr "접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1427
+#: ../base/ufos/ui/multiplayer.ufo:1569
 msgid "Game invitation"
 msgstr "게임 초대"
 
-#: ../base/ufos/ui/multiplayer.ufo:1446
+#: ../base/ufos/ui/multiplayer.ufo:1588
 msgid "Server info"
 msgstr "서버 정보"
 
-#: ../base/ufos/ui/multiplayer.ufo:1447
+#: ../base/ufos/ui/multiplayer.ufo:1589
 msgid "Show server information"
 msgstr "서버 정보 보여주기"
 
-#: ../base/ufos/ui/multiplayer.ufo:1463
+#: ../base/ufos/ui/multiplayer.ufo:1605
 msgid "Go into the lobby"
 msgstr "대기실로 나감"
 
-#: ../base/ufos/ui/multiplayer.ufo:1475
+#: ../base/ufos/ui/multiplayer.ufo:1617
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -27471,7 +27531,7 @@ msgstr "보통"
 msgid "High"
 msgstr "높음"
 
-#: ../base/ufos/ui/options.ufo:701 client/battlescape/cl_actor.cpp:120
+#: ../base/ufos/ui/options.ufo:701 client/cl_team.cpp:191
 msgid "Excellent"
 msgstr "훌륭함"
 
@@ -27720,8 +27780,8 @@ msgstr "인텔 그래픽스 하드웨어 해킹:"
 
 #: ../base/ufos/ui/options.ufo:1128
 msgid ""
-"This hack activates texture compression and deactivates GLSL shaders on "
-"Intel chips. Disable it to be able to turn on advanced rendering features."
+"This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
+"turn on advanced rendering features."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1161
@@ -28075,6 +28135,13 @@ msgstr "기지가 공격당하고 있습니다"
 msgid "Kill aliens in container"
 msgstr "보관중인 외계인들을 죽임"
 
+#: ../base/ufos/ui/popup_baseattack.ufo:388
+#: ../base/ufos/ui/popup_baseattack.ufo:395
+#: ../base/ufos/ui/popup_baseattack.ufo:402
+#: ../base/ufos/ui/popup_baseattack.ufo:409
+msgid "Not implemented"
+msgstr "구현되지 않음"
+
 #: ../base/ufos/ui/popup_baseattack.ufo:393
 msgid "Lift aircraft"
 msgstr "Lift aircraft"
@@ -28088,7 +28155,7 @@ msgid "Assemble defend team"
 msgstr "방어팀 구성하기"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:455
-#: client/cgame/multiplayer/mp_callbacks.cpp:62
+#: client/cgame/multiplayer/mp_callbacks.cpp:64
 msgid "Assemble a team first"
 msgstr "팀을 먼저 구성하십시오"
 
@@ -28102,7 +28169,7 @@ msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
 
-#: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:127
+#: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:136
 #, fuzzy
 msgid "Go to base"
 msgstr "기지로 귀환 중"
@@ -28223,43 +28290,43 @@ msgstr "요구사항"
 msgid "Open UFOPaedia"
 msgstr "UFO 백과사전 열람"
 
-#: ../base/ufos/ui/research.ufo:59
+#: ../base/ufos/ui/research.ufo:68
 #, fuzzy
 msgid "Stop researching this project"
 msgstr "이 프로젝트에 맞는 연구 제안서가 없습니다."
 
-#: ../base/ufos/ui/research.ufo:69
+#: ../base/ufos/ui/research.ufo:78
 #, fuzzy
 msgid "Assign less scientists on this project"
 msgstr "항공기에 전투원를 탑승시킵니다"
 
-#: ../base/ufos/ui/research.ufo:87
+#: ../base/ufos/ui/research.ufo:96
 #, fuzzy
 msgid "Assign more scientists on this project"
 msgstr "항공기에 한명 이상의 대원을 탑승시켜야 합니다."
 
-#: ../base/ufos/ui/research.ufo:97
+#: ../base/ufos/ui/research.ufo:106
 msgid "Assign all free scientists on this project"
 msgstr ""
 
-#: ../base/ufos/ui/research.ufo:144
+#: ../base/ufos/ui/research.ufo:153
 #, fuzzy
 msgid "N/A"
 msgstr "없음"
 
-#: ../base/ufos/ui/research.ufo:145
+#: ../base/ufos/ui/research.ufo:154
 msgid "An artifact or prerequisite is missing for this topic"
 msgstr ""
 
-#: ../base/ufos/ui/research.ufo:153
+#: ../base/ufos/ui/research.ufo:162
 msgid "Expand/Collapse"
 msgstr ""
 
-#: ../base/ufos/ui/research.ufo:190
+#: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
 msgstr ""
 
-#: ../base/ufos/ui/research.ufo:289 client/cgame/campaign/cp_aircraft.cpp:429
+#: ../base/ufos/ui/research.ufo:301 client/cgame/campaign/cp_aircraft.cpp:373
 msgid "idle"
 msgstr "대기 중"
 
@@ -28362,6 +28429,14 @@ msgid ""
 "UGVs for this game - only valid if enough free soldier slots are available."
 msgstr "본 게임용 UGV - 병사 슬롯들이 충분히 비어있어야만 해당됨."
 
+#: ../base/ufos/ui/skirmish.ufo:422
+msgid "Team:"
+msgstr "팀"
+
+#: ../base/ufos/ui/skirmish.ufo:425
+msgid "Select which side you want to play with."
+msgstr "Select which side you want to play with"
+
 #: ../base/ufos/ui/stats.ufo:39
 msgid "Missions"
 msgstr "임무"
@@ -28385,10 +28460,6 @@ msgstr "국가들"
 #: ../base/ufos/ui/stats.ufo:144
 msgid "Click for funding graphs"
 msgstr "투자 그래프를 보려면 클릭하시기 바랍니다"
-
-#: ../base/ufos/ui/stats.ufo:158
-msgid "Campaign"
-msgstr "캠페인"
 
 #: ../base/ufos/ui/stats.ufo:209
 msgid "Nation Statistics"
@@ -28458,9 +28529,24 @@ msgstr "현재 창:"
 msgid "Current node:"
 msgstr "Current node:"
 
-#: ../base/ufos/ui/team.ufo:668
+#: ../base/ufos/ui/team.ufo:671
 msgid "Save your team"
 msgstr "당신의 팀을 고용하십시오."
+
+#: ../base/ufos/ui/team.ufo:714
+#, fuzzy
+msgid "Generate a team"
+msgstr "새로운 임의의 팀을 작성합니다"
+
+#: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
+#, fuzzy
+msgid "Generate Team"
+msgstr "새로운 임의의 팀을 작성합니다"
+
+#: ../base/ufos/ui/team.ufo:731
+#, fuzzy
+msgid "Generate a new team with the selected race"
+msgstr "선택된 항목으로 GUI를 갱신합니다"
 
 #: ../base/ufos/ui/transfer.ufo:31
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -28565,6 +28651,16 @@ msgstr "큰 그림"
 msgid "Requirement(s):"
 msgstr "요구사항:"
 
+#: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
+#: ../base/ufos/ui/web.ufo:69
+msgid "Login"
+msgstr ""
+
+#: ../base/ufos/ui/web.ufo:37
+#, fuzzy
+msgid "Password"
+msgstr "접속암호:"
+
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
 msgstr "구급상자"
@@ -28664,12 +28760,12 @@ msgstr "돌격소총"
 msgid "Assault Rifle Magazine"
 msgstr "돌격소총 탄창"
 
-#: ../base/ufos/weapons_human.ufo:46 ../base/ufos/weapons_human.ufo:137
-#: ../base/ufos/weapons_human.ufo:384 ../base/ufos/weapons_human.ufo:475
-#: ../base/ufos/weapons_human.ufo:565 ../base/ufos/weapons_human.ufo:653
-#: ../base/ufos/weapons_human.ufo:856 ../base/ufos/weapons_human.ufo:924
-#: ../base/ufos/weapons_human.ufo:952 ../base/ufos/weapons_human.ufo:1570
-#: ../base/ufos/weapons_human.ufo:1770 ../base/ufos/weapons_human.ufo:1838
+#: ../base/ufos/weapons_human.ufo:46 ../base/ufos/weapons_human.ufo:139
+#: ../base/ufos/weapons_human.ufo:388 ../base/ufos/weapons_human.ufo:479
+#: ../base/ufos/weapons_human.ufo:569 ../base/ufos/weapons_human.ufo:657
+#: ../base/ufos/weapons_human.ufo:860 ../base/ufos/weapons_human.ufo:928
+#: ../base/ufos/weapons_human.ufo:956 ../base/ufos/weapons_human.ufo:1574
+#: ../base/ufos/weapons_human.ufo:1774 ../base/ufos/weapons_human.ufo:1842
 #: ../base/ufos/weapons_particle.ufo:45 ../base/ufos/weapons_particle.ufo:134
 #: ../base/ufos/weapons_particle.ufo:245 ../base/ufos/weapons_plasma.ufo:45
 #: ../base/ufos/weapons_plasma.ufo:156 ../base/ufos/weapons_plasma.ufo:317
@@ -28677,180 +28773,180 @@ msgstr "돌격소총 탄창"
 msgid "Snap Shot"
 msgstr "가늠사격"
 
-#: ../base/ufos/weapons_human.ufo:67 ../base/ufos/weapons_human.ufo:158
-#: ../base/ufos/weapons_human.ufo:674 ../base/ufos/weapons_particle.ufo:155
+#: ../base/ufos/weapons_human.ufo:67 ../base/ufos/weapons_human.ufo:160
+#: ../base/ufos/weapons_human.ufo:678 ../base/ufos/weapons_particle.ufo:155
 #: ../base/ufos/weapons_plasma.ufo:178 ../base/ufos/weapons_plasma.ufo:340
 #: ../base/ufos/weapons_plasma.ufo:408
 msgid "3-Round Burst"
 msgstr "3점사"
 
-#: ../base/ufos/weapons_human.ufo:90 ../base/ufos/weapons_human.ufo:180
-#: ../base/ufos/weapons_human.ufo:292 ../base/ufos/weapons_human.ufo:696
-#: ../base/ufos/weapons_human.ufo:787 ../base/ufos/weapons_multiplayer.ufo:76
+#: ../base/ufos/weapons_human.ufo:90 ../base/ufos/weapons_human.ufo:182
+#: ../base/ufos/weapons_human.ufo:296 ../base/ufos/weapons_human.ufo:700
+#: ../base/ufos/weapons_human.ufo:791 ../base/ufos/weapons_multiplayer.ufo:76
 #: ../base/ufos/weapons_multiplayer.ufo:312
 #: ../base/ufos/weapons_plasma.ufo:200 ../base/ufos/weapons_plasma.ufo:431
 #: ../base/ufos/weapons_plasma.ufo:518 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "자동사격"
 
-#: ../base/ufos/weapons_human.ufo:112 ../base/ufos/weapons_human.ufo:201
-#: ../base/ufos/weapons_human.ufo:406 ../base/ufos/weapons_human.ufo:497
-#: ../base/ufos/weapons_human.ufo:586 ../base/ufos/weapons_human.ufo:1134
-#: ../base/ufos/weapons_human.ufo:1178 ../base/ufos/weapons_human.ufo:1223
-#: ../base/ufos/weapons_human.ufo:1794 ../base/ufos/weapons_human.ufo:1862
+#: ../base/ufos/weapons_human.ufo:113 ../base/ufos/weapons_human.ufo:204
+#: ../base/ufos/weapons_human.ufo:410 ../base/ufos/weapons_human.ufo:501
+#: ../base/ufos/weapons_human.ufo:590 ../base/ufos/weapons_human.ufo:1138
+#: ../base/ufos/weapons_human.ufo:1182 ../base/ufos/weapons_human.ufo:1227
+#: ../base/ufos/weapons_human.ufo:1798 ../base/ufos/weapons_human.ufo:1866
 #: ../base/ufos/weapons_particle.ufo:66 ../base/ufos/weapons_particle.ufo:177
 #: ../base/ufos/weapons_plasma.ufo:88 ../base/ufos/weapons_plasma.ufo:222
 #: ../base/ufos/weapons_plasma.ufo:453 ../base/ufos/weapons_plasma.ufo:607
 msgid "Aimed Shot"
 msgstr "조준 사격"
 
-#: ../base/ufos/weapons_human.ufo:227
+#: ../base/ufos/weapons_human.ufo:231
 msgid "Machine Gun"
 msgstr "기관총"
 
-#: ../base/ufos/weapons_human.ufo:250
+#: ../base/ufos/weapons_human.ufo:254
 msgid "Machine Gun Magazine"
 msgstr "기관총 탄창"
 
-#: ../base/ufos/weapons_human.ufo:269 ../base/ufos/weapons_plasma.ufo:495
+#: ../base/ufos/weapons_human.ufo:273 ../base/ufos/weapons_plasma.ufo:495
 msgid "5-Shot Burst"
 msgstr "5점사"
 
-#: ../base/ufos/weapons_human.ufo:315 ../base/ufos/weapons_multiplayer.ufo:99
+#: ../base/ufos/weapons_human.ufo:319 ../base/ufos/weapons_multiplayer.ufo:99
 #: ../base/ufos/weapons_multiplayer.ufo:335
 #: ../base/ufos/weapons_plasma.ufo:541 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "전자동 난사"
 
-#: ../base/ufos/weapons_human.ufo:344
+#: ../base/ufos/weapons_human.ufo:348
 msgid "Sniper Rifle"
 msgstr "저격소총"
 
-#: ../base/ufos/weapons_human.ufo:366
+#: ../base/ufos/weapons_human.ufo:370
 msgid "Sniper Rifle Magazine"
 msgstr "저격소총 탄창"
 
-#: ../base/ufos/weapons_human.ufo:457
+#: ../base/ufos/weapons_human.ufo:461
 msgid "Coilgun Clip"
 msgstr "Coilgun Clip"
 
-#: ../base/ufos/weapons_human.ufo:526
+#: ../base/ufos/weapons_human.ufo:530
 msgid "7.62mm Pistol"
 msgstr "7.62mm 권총"
 
-#: ../base/ufos/weapons_human.ufo:547
+#: ../base/ufos/weapons_human.ufo:551
 msgid "7.62mm Pistol Magazine"
 msgstr "7.62mm 권총 탄창"
 
-#: ../base/ufos/weapons_human.ufo:613
+#: ../base/ufos/weapons_human.ufo:617
 msgid "Machine Pistol"
 msgstr "기관권총"
 
-#: ../base/ufos/weapons_human.ufo:635
+#: ../base/ufos/weapons_human.ufo:639
 msgid "4.2mm MP Magazine"
 msgstr "4.2mm 기관권총 탄창"
 
-#: ../base/ufos/weapons_human.ufo:725
+#: ../base/ufos/weapons_human.ufo:729
 msgid "Submachine Gun"
 msgstr "서브머신건"
 
-#: ../base/ufos/weapons_human.ufo:746
+#: ../base/ufos/weapons_human.ufo:750
 msgid "SMG Magazine"
 msgstr "서브머신건 탄창"
 
-#: ../base/ufos/weapons_human.ufo:764 ../base/ufos/weapons_multiplayer.ufo:52
+#: ../base/ufos/weapons_human.ufo:768 ../base/ufos/weapons_multiplayer.ufo:52
 msgid "5-Round Burst"
 msgstr "5점사"
 
-#: ../base/ufos/weapons_human.ufo:816
+#: ../base/ufos/weapons_human.ufo:820
 msgid "Riot Shotgun"
 msgstr "라이엇 산탄총"
 
-#: ../base/ufos/weapons_human.ufo:838
+#: ../base/ufos/weapons_human.ufo:842
 msgid "Saboted Slugs"
 msgstr "새보드 슬러그"
 
-#: ../base/ufos/weapons_human.ufo:885
+#: ../base/ufos/weapons_human.ufo:889
 msgid "Micro Shotgun"
 msgstr "초소형 산탄총"
 
-#: ../base/ufos/weapons_human.ufo:906 ../base/ufos/weapons_multiplayer.ufo:151
+#: ../base/ufos/weapons_human.ufo:910 ../base/ufos/weapons_multiplayer.ufo:151
 msgid "Flechette Shells"
 msgstr "강철화살 유탄"
 
-#: ../base/ufos/weapons_human.ufo:981
+#: ../base/ufos/weapons_human.ufo:985
 msgid "Flamethrower"
 msgstr "화염방사기"
 
-#: ../base/ufos/weapons_human.ufo:1003
+#: ../base/ufos/weapons_human.ufo:1007
 msgid "C90 Canister"
 msgstr "C90 화염방사기 연료통"
 
-#: ../base/ufos/weapons_human.ufo:1022
+#: ../base/ufos/weapons_human.ufo:1026
 msgid "Candlelight"
 msgstr "약한 불"
 
-#: ../base/ufos/weapons_human.ufo:1043
+#: ../base/ufos/weapons_human.ufo:1047
 msgid "Inferno"
 msgstr "중간 불"
 
-#: ../base/ufos/weapons_human.ufo:1064
+#: ../base/ufos/weapons_human.ufo:1068
 msgid "Inferno Sweep"
 msgstr "지옥불 튀김"
 
-#: ../base/ufos/weapons_human.ufo:1092
+#: ../base/ufos/weapons_human.ufo:1096
 msgid "Rocket Launcher"
 msgstr "로켓 발사기"
 
-#: ../base/ufos/weapons_human.ufo:1115
+#: ../base/ufos/weapons_human.ufo:1119
 msgid "HE Rocket"
 msgstr "고폭 로켓"
 
-#: ../base/ufos/weapons_human.ufo:1159
+#: ../base/ufos/weapons_human.ufo:1163
 msgid "IC Rocket"
 msgstr "소이 로켓"
 
-#: ../base/ufos/weapons_human.ufo:1204
+#: ../base/ufos/weapons_human.ufo:1208
 msgid "Hybrid Rocket"
 msgstr "하이브리드 로켓"
 
-#: ../base/ufos/weapons_human.ufo:1251
+#: ../base/ufos/weapons_human.ufo:1255
 msgid "Grenade Launcher"
 msgstr "유탄 발사기"
 
-#: ../base/ufos/weapons_human.ufo:1274
+#: ../base/ufos/weapons_human.ufo:1278
 msgid "25mm HIT Grenades"
 msgstr "25mm 고충격 열압력 유탄"
 
-#: ../base/ufos/weapons_human.ufo:1293 ../base/ufos/weapons_human.ufo:1428
-#: ../base/ufos/weapons_human.ufo:1612
+#: ../base/ufos/weapons_human.ufo:1297 ../base/ufos/weapons_human.ufo:1432
+#: ../base/ufos/weapons_human.ufo:1616
 msgid "Snap Shot (Impact)"
 msgstr "순간 사격 (충격)"
 
-#: ../base/ufos/weapons_human.ufo:1320 ../base/ufos/weapons_human.ufo:1456
-#: ../base/ufos/weapons_human.ufo:1639
+#: ../base/ufos/weapons_human.ufo:1324 ../base/ufos/weapons_human.ufo:1460
+#: ../base/ufos/weapons_human.ufo:1643
 msgid "Aimed Shot (Impact)"
 msgstr "조준 사격 (충격)"
 
-#: ../base/ufos/weapons_human.ufo:1347 ../base/ufos/weapons_human.ufo:1484
-#: ../base/ufos/weapons_human.ufo:1665
+#: ../base/ufos/weapons_human.ufo:1351 ../base/ufos/weapons_human.ufo:1488
+#: ../base/ufos/weapons_human.ufo:1669
 msgid "Snap Shot (Timer)"
 msgstr "순간 사격 (지연폭발)"
 
-#: ../base/ufos/weapons_human.ufo:1377 ../base/ufos/weapons_human.ufo:1515
-#: ../base/ufos/weapons_human.ufo:1694
+#: ../base/ufos/weapons_human.ufo:1381 ../base/ufos/weapons_human.ufo:1519
+#: ../base/ufos/weapons_human.ufo:1698
 msgid "Aimed Shot (Timer)"
 msgstr "조준 사격 (지연폭발)"
 
-#: ../base/ufos/weapons_human.ufo:1409
+#: ../base/ufos/weapons_human.ufo:1413
 msgid "25mm IC Grenades"
 msgstr "25mm 소이 유탄"
 
-#: ../base/ufos/weapons_human.ufo:1551
+#: ../base/ufos/weapons_human.ufo:1555
 msgid "25mm Flechette Grenades"
 msgstr "25mm 강철화살 유탄"
 
-#: ../base/ufos/weapons_human.ufo:1593
+#: ../base/ufos/weapons_human.ufo:1597
 msgid "25mm PB Grenades"
 msgstr "25mm 플라즈마 유탄"
 
@@ -28905,31 +29001,31 @@ msgstr "단분자 나이프"
 msgid "Stun Rod"
 msgstr "제압봉"
 
-#: ../base/ufos/weapons_melee.ufo:157
+#: ../base/ufos/weapons_melee.ufo:159
 msgid "Stun Charge"
 msgstr "제압 일격"
 
-#: ../base/ufos/weapons_melee.ufo:175
+#: ../base/ufos/weapons_melee.ufo:177
 msgid "Double Charge"
 msgstr "제압 이격"
 
-#: ../base/ufos/weapons_melee.ufo:193
+#: ../base/ufos/weapons_melee.ufo:195
 msgid "Bludgeon"
 msgstr "곤봉 공격"
 
-#: ../base/ufos/weapons_melee.ufo:216
+#: ../base/ufos/weapons_melee.ufo:218
 msgid "Kerrblade"
 msgstr "커블레이드"
 
-#: ../base/ufos/weapons_melee.ufo:255
+#: ../base/ufos/weapons_melee.ufo:259
 msgid "Slash"
 msgstr "베기"
 
-#: ../base/ufos/weapons_melee.ufo:280
+#: ../base/ufos/weapons_melee.ufo:284
 msgid "Plasma Blade"
 msgstr "플라즈마 검"
 
-#: ../base/ufos/weapons_melee.ufo:301
+#: ../base/ufos/weapons_melee.ufo:305
 msgid "Lock"
 msgstr "잠근다"
 
@@ -29065,111 +29161,70 @@ msgstr "25점사"
 msgid "Autocannon Module"
 msgstr "Autocannon Module"
 
-#: client/battlescape/cl_actor.cpp:106
-msgid "Poor"
-msgstr "나쁨"
-
-#: client/battlescape/cl_actor.cpp:108
-msgid "Mediocre"
-msgstr "보통"
-
-#: client/battlescape/cl_actor.cpp:110
-msgid "Average"
-msgstr "평균"
-
-#: client/battlescape/cl_actor.cpp:112
-msgid "Competent"
-msgstr "유능함"
-
-#: client/battlescape/cl_actor.cpp:114
-msgid "Proficient"
-msgstr "능숙함"
-
-#: client/battlescape/cl_actor.cpp:116
-msgid "Very Good"
-msgstr "매우 좋음"
-
-#: client/battlescape/cl_actor.cpp:118
-msgid "Highly Proficient"
-msgstr "숙달함"
-
-#: client/battlescape/cl_actor.cpp:122
-msgid "Outstanding"
-msgstr "뛰어남"
-
-# Source text needs context for accurate translation.
-#: client/battlescape/cl_actor.cpp:124
-msgid "Impressive"
-msgstr "대단한"
-
-#: client/battlescape/cl_actor.cpp:126
-msgid "Superhuman"
-msgstr "초인적"
-
-#: client/battlescape/cl_actor.cpp:741
+#: client/battlescape/cl_actor.cpp:739
 #: client/battlescape/events/e_server.cpp:40
 msgid "It is not your turn!"
 msgstr "지금은 당신의 차례가 아닙니다!"
 
-#: client/battlescape/cl_actor.cpp:1005
+#: client/battlescape/cl_actor.cpp:1003
 msgid "You cannot reload this unknown item."
 msgstr "이 미확인 물품을 재장전 할 수 없습니다."
 
-#: client/battlescape/cl_actor.cpp:1045 client/cl_inventory.cpp:76
-#: game/g_actor.cpp:574
+#: client/battlescape/cl_actor.cpp:1043 client/cl_inventory.cpp:76
+#: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
 msgstr "이 병사는 더 이상 아무것도 소지할 수 없습니다."
 
-#: client/battlescape/cl_actor.cpp:1045 client/battlescape/cl_hud.cpp:1384
+#: client/battlescape/cl_actor.cpp:1043 client/battlescape/cl_hud.cpp:1381
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
 msgid "Warning"
 msgstr "경고"
 
-#: client/battlescape/cl_actor.cpp:1892
+#: client/battlescape/cl_actor.cpp:1890
 msgid "Unknown alien race"
 msgstr "알 수 없는 외계인 종족"
 
-#: client/battlescape/cl_actor.cpp:2559
+#: client/battlescape/cl_actor.cpp:2557
 msgid "Toggle to next living actor"
 msgstr "다음 전투원 선택"
 
-#: client/battlescape/cl_actor.cpp:2560
+#: client/battlescape/cl_actor.cpp:2558
 msgid "Toggle to previous living actor"
 msgstr "이전 전투원 선택"
 
-#: client/battlescape/cl_actor.cpp:2561
+#: client/battlescape/cl_actor.cpp:2559
 msgid "Select an actor from list"
 msgstr "리스트에서 전투원를 선택"
 
-#: client/battlescape/cl_actor.cpp:2562
+#: client/battlescape/cl_actor.cpp:2560
 msgid "Update an actor"
 msgstr "전투원의 이름을 변경합니다"
 
-#: client/battlescape/cl_actor.cpp:2563
+#: client/battlescape/cl_actor.cpp:2561
 msgid "Toggle stand/crouch."
 msgstr "일어서기/앉기 교체"
 
-#: client/battlescape/cl_actor.cpp:2564
+#: client/battlescape/cl_actor.cpp:2562
 msgid "Toggle the headgear"
 msgstr "헤드기어 사용 토글"
 
-#: client/battlescape/cl_actor.cpp:2565
+#: client/battlescape/cl_actor.cpp:2563
 msgid "Use"
 msgstr "사용하기"
 
-#: client/battlescape/cl_actor.cpp:2566
+#: client/battlescape/cl_actor.cpp:2564
 msgid "Confirm the current action"
 msgstr "현재 행동을 실행"
 
-#: client/battlescape/cl_actor.cpp:2567
+#: client/battlescape/cl_actor.cpp:2565
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "현재 대원에서부터 보이는 다음 외계인으로 토글"
 
-#: client/battlescape/cl_actor.cpp:2569
+#: client/battlescape/cl_actor.cpp:2567
 msgid "Toggle camera to the next visible alien."
 msgstr "다음 외계인 보이기"
 
-#: client/battlescape/cl_actor.cpp:2570
+#: client/battlescape/cl_actor.cpp:2568
 msgid "Toggle camera to the previous visible alien."
 msgstr "이전 외계인 보이기"
 
@@ -29298,7 +29353,7 @@ msgstr "사격을 위해 TU를 예약할 수 없습니다."
 msgid "Reload weapon (%i TU)."
 msgstr "탄약 재장전 (%i TU)."
 
-#: client/battlescape/cl_hud.cpp:1173
+#: client/battlescape/cl_hud.cpp:1172
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first."
@@ -29306,7 +29361,7 @@ msgstr ""
 "이 미확인 아이템을 사용할 수 없습니다.\n"
 "먼저 연구가 필요합니다."
 
-#: client/battlescape/cl_hud.cpp:1194
+#: client/battlescape/cl_hud.cpp:1193
 #, c-format
 msgid ""
 "%s\n"
@@ -29315,17 +29370,17 @@ msgstr ""
 "%s\n"
 "(비었음)\n"
 
-#: client/battlescape/cl_hud.cpp:1212
+#: client/battlescape/cl_hud.cpp:1211
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "심리 %i | 예약된 TU: %i\n"
 
-#: client/battlescape/cl_hud.cpp:1214
+#: client/battlescape/cl_hud.cpp:1213
 #, c-format
 msgid "Morale  %i"
 msgstr "사기  %i"
 
-#: client/battlescape/cl_hud.cpp:1219
+#: client/battlescape/cl_hud.cpp:1218
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -29334,7 +29389,7 @@ msgstr ""
 "사기 %i | 예약된 TU: %i\n"
 "%s %i (%i|%i TU 남음)\n"
 
-#: client/battlescape/cl_hud.cpp:1223
+#: client/battlescape/cl_hud.cpp:1222
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -29343,7 +29398,7 @@ msgstr ""
 "사기  %i\n"
 "%s %i (%i TU 남음)\n"
 
-#: client/battlescape/cl_hud.cpp:1253
+#: client/battlescape/cl_hud.cpp:1249
 #, c-format
 msgid ""
 "Time Units\n"
@@ -29356,46 +29411,46 @@ msgstr ""
 "- 예약: %i\n"
 "- 남음: %i\n"
 
-#: client/battlescape/cl_hud.cpp:1296
+#: client/battlescape/cl_hud.cpp:1291
 msgid "accuracy"
 msgstr "명중률"
 
-#: client/battlescape/cl_hud.cpp:1298
+#: client/battlescape/cl_hud.cpp:1293
 msgid "shooting speed"
 msgstr "사격 속도"
 
-#: client/battlescape/cl_hud.cpp:1300
+#: client/battlescape/cl_hud.cpp:1295
 msgid "movement speed"
 msgstr "이동 속도"
 
-#: client/battlescape/cl_hud.cpp:1302
+#: client/battlescape/cl_hud.cpp:1297
 msgid "sight range"
 msgstr "시야 거리"
 
-#: client/battlescape/cl_hud.cpp:1304
+#: client/battlescape/cl_hud.cpp:1299
 msgid "reaction speed"
 msgstr "반응 속도"
 
-#: client/battlescape/cl_hud.cpp:1306
+#: client/battlescape/cl_hud.cpp:1301
 msgid "TU"
 msgstr "TU"
 
-#: client/battlescape/cl_hud.cpp:1336
+#: client/battlescape/cl_hud.cpp:1331
 #, c-format
 msgid "Damaged %s (deterioration: %i)\n"
 msgstr "%s에 충격을 가함 (악화율: %i)\n"
 
-#: client/battlescape/cl_hud.cpp:1336
+#: client/battlescape/cl_hud.cpp:1331
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
 msgstr "%s가 부상을 입음 (출혈: %i)\n"
 
-#: client/battlescape/cl_hud.cpp:1339
+#: client/battlescape/cl_hud.cpp:1334
 #, c-format
 msgid "- Reduced %s\n"
 msgstr "- %s 저하\n"
 
-#: client/battlescape/cl_hud.cpp:1376 client/cl_inventory_callbacks.cpp:374
+#: client/battlescape/cl_hud.cpp:1372 client/cl_inventory_callbacks.cpp:374
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
@@ -29403,11 +29458,11 @@ msgstr ""
 "이 병사에게는 더이상 다음의 물품을 사용할 행동력이 남아있지 않습니다:\n"
 "\n"
 
-#: client/battlescape/cl_hud.cpp:1388 client/cl_inventory_callbacks.cpp:386
+#: client/battlescape/cl_hud.cpp:1385 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
 msgstr "킬로그램"
 
-#: client/battlescape/cl_hud.cpp:1407
+#: client/battlescape/cl_hud.cpp:1404
 msgid "Currently panics!\n"
 msgstr "겁에 질려있습니다!\n"
 
@@ -29417,16 +29472,16 @@ msgid "Can't perform action - no item in hand!"
 msgstr "진행 불가 - 손에 아이템이 없습니다!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1183
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1167
 msgid "Can't perform action - no ammo!"
 msgstr "진행 불가 - 탄약이 없습니다!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1176
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1159
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "진행 불가 - 이 무기는 한손으로 사용할 수 없습니다!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:144
-#: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:620
+#: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:622
 msgid "Can't perform action - not enough TUs!"
 msgstr "진행 불가 - TU (행동력) 부족!"
 
@@ -29491,16 +29546,16 @@ msgstr "행동을 실시함."
 msgid "End current turn."
 msgstr "이번 차례를 종료함."
 
-#: client/battlescape/events/event/actor/e_event_actorappear.cpp:167
+#: client/battlescape/events/event/actor/e_event_actorappear.cpp:171
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "적 발견: %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.cpp:170
+#: client/battlescape/events/event/actor/e_event_actorappear.cpp:174
 msgid "Unknown enemy spotted!"
 msgstr "미확인 적군 발견!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.cpp:172
+#: client/battlescape/events/event/actor/e_event_actorappear.cpp:176
 msgid "Civilian spotted."
 msgstr "민간인 발견."
 
@@ -29606,91 +29661,91 @@ msgstr "%s이(가) 부상을 당했습니다"
 msgid "Your round started!"
 msgstr "당신의 차례입니다!"
 
-#: client/cgame/campaign/cp_aircraft.cpp:419
+#: client/cgame/campaign/cp_aircraft.cpp:363
 msgid "ON RED ALERT"
 msgstr "적색경보"
 
-#: client/cgame/campaign/cp_aircraft.cpp:423
+#: client/cgame/campaign/cp_aircraft.cpp:367
 msgid "Nothing - should not be displayed"
 msgstr "Nothing - should not be displayed"
 
-#: client/cgame/campaign/cp_aircraft.cpp:425
+#: client/cgame/campaign/cp_aircraft.cpp:369
 msgid "at home base"
 msgstr "기지에 대기 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:427
+#: client/cgame/campaign/cp_aircraft.cpp:371
 msgid "refuelling"
 msgstr "급유 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:431
+#: client/cgame/campaign/cp_aircraft.cpp:375
 msgid "in transit"
 msgstr "목적지로 이동 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:433
+#: client/cgame/campaign/cp_aircraft.cpp:377
 msgid "enroute to mission"
 msgstr "임무 목적지로 이동"
 
-#: client/cgame/campaign/cp_aircraft.cpp:435
+#: client/cgame/campaign/cp_aircraft.cpp:379
 msgid "pursuing a UFO"
 msgstr "UFO 추격 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:437
+#: client/cgame/campaign/cp_aircraft.cpp:381
 msgid "ready to drop soldiers"
 msgstr "대원을 투하할 준비를 함"
 
-#: client/cgame/campaign/cp_aircraft.cpp:439
+#: client/cgame/campaign/cp_aircraft.cpp:383
 msgid "intercepting a UFO"
 msgstr "요격 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:441
+#: client/cgame/campaign/cp_aircraft.cpp:385
 msgid "enroute to new home base"
 msgstr "새로운 기지로 이동"
 
-#: client/cgame/campaign/cp_aircraft.cpp:443
+#: client/cgame/campaign/cp_aircraft.cpp:387
 msgid "returning to base"
 msgstr "기지로 귀환 중"
 
-#: client/cgame/campaign/cp_aircraft.cpp:532
+#: client/cgame/campaign/cp_aircraft.cpp:476
 msgid "Interceptor"
 msgstr "요격기"
 
-#: client/cgame/campaign/cp_aircraft.cpp:534
+#: client/cgame/campaign/cp_aircraft.cpp:478
 msgid "Transporter"
 msgstr "수송기"
 
-#: client/cgame/campaign/cp_aircraft.cpp:536
+#: client/cgame/campaign/cp_aircraft.cpp:480
 #: client/cgame/campaign/cp_ufo.cpp:158 client/cgame/campaign/cp_ufo.cpp:159
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cgame/campaign/cp_aircraft.cpp:775
+#: client/cgame/campaign/cp_aircraft.cpp:727
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "새로운 %s 가 %s 에서 준비되었습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:776
-#: client/cgame/campaign/cp_aircraft.cpp:1128
-#: client/cgame/campaign/cp_aircraft.cpp:1169
-#: client/cgame/campaign/cp_aircraft.cpp:1185
-#: client/cgame/campaign/cp_aircraft.cpp:1228
-#: client/cgame/campaign/cp_aircraft.cpp:1284
-#: client/cgame/campaign/cp_aircraft.cpp:1307
-#: client/cgame/campaign/cp_aircraft.cpp:2060
+#: client/cgame/campaign/cp_aircraft.cpp:728
+#: client/cgame/campaign/cp_aircraft.cpp:1076
+#: client/cgame/campaign/cp_aircraft.cpp:1117
+#: client/cgame/campaign/cp_aircraft.cpp:1133
+#: client/cgame/campaign/cp_aircraft.cpp:1176
+#: client/cgame/campaign/cp_aircraft.cpp:1232
+#: client/cgame/campaign/cp_aircraft.cpp:1255
+#: client/cgame/campaign/cp_aircraft.cpp:2007
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:94
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:102
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:110
 #: client/cgame/campaign/cp_airfight.cpp:381
 #: client/cgame/campaign/cp_airfight.cpp:401
-#: client/cgame/campaign/cp_aliencont.cpp:104
-#: client/cgame/campaign/cp_aliencont.cpp:117
+#: client/cgame/campaign/cp_aliencont.cpp:103
+#: client/cgame/campaign/cp_aliencont.cpp:116
 #: client/cgame/campaign/cp_auto_mission.cpp:766
 #: client/cgame/campaign/cp_auto_mission.cpp:768
 #: client/cgame/campaign/cp_auto_mission.cpp:771
 #: client/cgame/campaign/cp_auto_mission.cpp:826
-#: client/cgame/campaign/cp_base.cpp:1358
-#: client/cgame/campaign/cp_base.cpp:1408
-#: client/cgame/campaign/cp_base.cpp:2305
-#: client/cgame/campaign/cp_base.cpp:2895
+#: client/cgame/campaign/cp_base.cpp:1339
+#: client/cgame/campaign/cp_base.cpp:1389
+#: client/cgame/campaign/cp_base.cpp:2277
+#: client/cgame/campaign/cp_base.cpp:2868
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
@@ -29705,85 +29760,81 @@ msgstr "새로운 %s 가 %s 에서 준비되었습니다."
 #: client/cgame/campaign/cp_base_callbacks.cpp:806
 #: client/cgame/campaign/cp_base_callbacks.cpp:810
 #: client/cgame/campaign/cp_base_callbacks.cpp:815
-#: client/cgame/campaign/cp_installation_callbacks.cpp:131
+#: client/cgame/campaign/cp_installation_callbacks.cpp:128
 #: client/cgame/campaign/cp_mapfightequip.cpp:349
 #: client/cgame/campaign/cp_mapfightequip.cpp:368
 #: client/cgame/campaign/cp_mapfightequip.cpp:373
 #: client/cgame/campaign/cp_mapfightequip.cpp:384
-#: client/cgame/campaign/cp_market_callbacks.cpp:193
-#: client/cgame/campaign/cp_market_callbacks.cpp:199
+#: client/cgame/campaign/cp_market_callbacks.cpp:185
+#: client/cgame/campaign/cp_market_callbacks.cpp:190
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
-#: client/cgame/campaign/cp_missions.cpp:726
-#: client/cgame/campaign/cp_missions.cpp:1064
-#: client/cgame/campaign/cp_nation.cpp:828
-#: client/cgame/campaign/cp_nation.cpp:846
-#: client/cgame/campaign/cp_nation.cpp:859
-#: client/cgame/campaign/cp_nation.cpp:868
-#: client/cgame/campaign/cp_nation.cpp:874
-#: client/cgame/campaign/cp_nation.cpp:882
-#: client/cgame/campaign/cp_popup.cpp:486
-#: client/cgame/campaign/cp_produce.cpp:478
-#: client/cgame/campaign/cp_produce.cpp:487
-#: client/cgame/campaign/cp_produce.cpp:498
-#: client/cgame/campaign/cp_produce.cpp:507
-#: client/cgame/campaign/cp_produce.cpp:518
+#: client/cgame/campaign/cp_missions.cpp:733
+#: client/cgame/campaign/cp_missions.cpp:1071
+#: client/cgame/campaign/cp_nation.cpp:825
+#: client/cgame/campaign/cp_nation.cpp:843
+#: client/cgame/campaign/cp_nation.cpp:856
+#: client/cgame/campaign/cp_nation.cpp:865
+#: client/cgame/campaign/cp_nation.cpp:871
+#: client/cgame/campaign/cp_nation.cpp:879
+#: client/cgame/campaign/cp_popup.cpp:484
+#: client/cgame/campaign/cp_produce.cpp:405
 #: client/cgame/campaign/cp_ufo.cpp:407 client/cgame/campaign/cp_ufo.cpp:860
 #: client/cgame/campaign/cp_ufo.cpp:864 client/cgame/campaign/cp_ufo.cpp:868
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:125
-#: client/cgame/multiplayer/mp_serverlist.cpp:464 client/cl_main.cpp:403
+#: client/cgame/multiplayer/mp_serverlist.cpp:456 client/cl_main.cpp:431
 msgid "Notice"
 msgstr "통지"
 
-#: client/cgame/campaign/cp_aircraft.cpp:840
+#: client/cgame/campaign/cp_aircraft.cpp:798
 msgid "No operational hangars at that base."
 msgstr "기지에 가동 중인 격납고가 없습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:844
+#: client/cgame/campaign/cp_aircraft.cpp:802
 msgid "No free hangars at that base."
 msgstr "기지에 비어있는 격납고가 없습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:847
+#: client/cgame/campaign/cp_aircraft.cpp:805
 msgid "Insufficient free crew quarter space at that base."
 msgstr "기지에 대원들이 있을 공간이 부족합니다,"
 
-#: client/cgame/campaign/cp_aircraft.cpp:850
+#: client/cgame/campaign/cp_aircraft.cpp:808
 msgid "Insufficient storage space at that base."
 msgstr "기지의 창고에 여유 공간이 부족합니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:854
+#: client/cgame/campaign/cp_aircraft.cpp:812
 msgid "That base is beyond this aircraft's range."
 msgstr "기지가 항공기의 항속거리 밖에 있습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1127
+#: client/cgame/campaign/cp_aircraft.cpp:1075
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "%s 항공기가 %s로 귀환했습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1168
+#: client/cgame/campaign/cp_aircraft.cpp:1116
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 "%s 항공기가 %s 에서 완전하게 급유하지 못했습니다. 반물질이 충분하지 않습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1184
+#: client/cgame/campaign/cp_aircraft.cpp:1132
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s 항공기가 %s에서 연료 충전을 완료했습니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1228
+#: client/cgame/campaign/cp_aircraft.cpp:1176
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "%s 항공기에 연료가 얼마 남지 않았고, 기지로 귀환중입니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1284
+#: client/cgame/campaign/cp_aircraft.cpp:1232
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "항공기에 한명 이상의 대원을 탑승시켜야 합니다."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1307
+#: client/cgame/campaign/cp_aircraft.cpp:1255
 msgid "Insufficient fuel."
 msgstr "연료부족."
 
-#: client/cgame/campaign/cp_aircraft.cpp:2060
+#: client/cgame/campaign/cp_aircraft.cpp:2007
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "%s 항공기가 UFO를 추격하기에는 연료가 부족합니다: %s 로 귀환합니다."
@@ -29813,15 +29864,15 @@ msgid "Aircraft started"
 msgstr "항공기를 발진시킵니다"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:192
-#: client/cgame/campaign/cp_geoscape.cpp:1518
-#: client/cgame/campaign/cp_geoscape.cpp:1527
+#: client/cgame/campaign/cp_geoscape.cpp:1514
+#: client/cgame/campaign/cp_geoscape.cpp:1523
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "속도:\t%i km/h\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:194
-#: client/cgame/campaign/cp_geoscape.cpp:1519
-#: client/cgame/campaign/cp_geoscape.cpp:1528
+#: client/cgame/campaign/cp_geoscape.cpp:1515
+#: client/cgame/campaign/cp_geoscape.cpp:1524
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "연료:\t%i/%i\n"
@@ -29880,11 +29931,11 @@ msgstr "조종사가 전사했습니다."
 msgid "You've lost the battle"
 msgstr "전투에 패배했습니다"
 
-#: client/cgame/campaign/cp_aliencont.cpp:104
+#: client/cgame/campaign/cp_aliencont.cpp:103
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "살아있는 외계인을 포획하지 못했습니다. 외계인이 죽었습니다."
 
-#: client/cgame/campaign/cp_aliencont.cpp:117
+#: client/cgame/campaign/cp_aliencont.cpp:116
 msgid "You've captured new aliens."
 msgstr "새로운 외계인을 포획했습니다."
 
@@ -29909,110 +29960,112 @@ msgstr "적은 퇴격시켰으나, 제대로 하지 못해 많은 시민들이 �
 msgid "Collected alien bodies"
 msgstr "수거된 외계인 사체"
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:994
 msgid "Not set"
 msgstr "설정되지 않음"
 
-#: client/cgame/campaign/cp_base.cpp:1017
+#: client/cgame/campaign/cp_base.cpp:1000
 #, c-format
 msgid "Already %i in base"
 msgstr "이미 기지에 %i개 존재하고 있습니다"
 
-#: client/cgame/campaign/cp_base.cpp:1024
+#: client/cgame/campaign/cp_base.cpp:1007
 msgid "Construction finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/cgame/campaign/cp_base.cpp:1028
+#: client/cgame/campaign/cp_base.cpp:1011
 msgid "Working 100%"
 msgstr "100% 동작 중"
 
-#: client/cgame/campaign/cp_base.cpp:1032
-msgid "Not operational, depends on"
+#: client/cgame/campaign/cp_base.cpp:1015
+#, fuzzy, c-format
+msgid "Not operational, depends on %s"
 msgstr "Not operational, depends on"
 
-#: client/cgame/campaign/cp_base.cpp:1036
+#: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
 msgstr "다운"
 
-#: client/cgame/campaign/cp_base.cpp:1358
+#: client/cgame/campaign/cp_base.cpp:1339
 msgid "Not enough credits to build this\n"
 msgstr "건설하기 위한 자금이 부족합니다\n"
 
-#: client/cgame/campaign/cp_base.cpp:1408
+#: client/cgame/campaign/cp_base.cpp:1389
 msgid "You must build next to existing buildings."
 msgstr "존재는 건물 옆에 지어야 합니다."
 
-#: client/cgame/campaign/cp_base.cpp:1462
+#: client/cgame/campaign/cp_base.cpp:1443
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "건설비용:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1465
+#: client/cgame/campaign/cp_base.cpp:1446
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i 일 후에 완공됩니다.\n"
 msgstr[1] "%i 일 후에 완공됩니다.\n"
 
-#: client/cgame/campaign/cp_base.cpp:1468
+#: client/cgame/campaign/cp_base.cpp:1449
 #: client/cgame/campaign/cp_ufopedia.cpp:216
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "유지비:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.cpp:1471
+#: client/cgame/campaign/cp_base.cpp:1452
 #: client/cgame/campaign/cp_ufopedia.cpp:213
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "필요시설:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2072
+#: client/cgame/campaign/cp_base.cpp:2050
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
 msgstr ""
 "기지에 항공기가 없습니다 - 구매하거나 다른 기지에서 수송해 오셔야 합니다\n"
 
-#: client/cgame/campaign/cp_base.cpp:2072
-#: client/cgame/campaign/cp_base.cpp:2074
-#: client/cgame/campaign/cp_market_callbacks.cpp:173
-#: client/cgame/campaign/cp_market_callbacks.cpp:178
-#: client/cgame/campaign/cp_market_callbacks.cpp:183
-#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
-#: client/cgame/cl_game_team.cpp:256 client/cgame/cl_game_team.cpp:277
+#: client/cgame/campaign/cp_base.cpp:2050
+#: client/cgame/campaign/cp_base.cpp:2052
+#: client/cgame/campaign/cp_market_callbacks.cpp:170
+#: client/cgame/campaign/cp_market_callbacks.cpp:175
+#: client/cgame/campaign/cp_market_callbacks.cpp:180
+#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
+#: client/cgame/cl_game_team.cpp:310 client/cgame/cl_game_team.cpp:320
+#: client/cgame/cl_game_team.cpp:325
 msgid "Note"
 msgstr "Note"
 
-#: client/cgame/campaign/cp_base.cpp:2074
+#: client/cgame/campaign/cp_base.cpp:2052
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "기지에 항공기가 없습니다 - 항공기를 먼저 구매하십시오\n"
 
-#: client/cgame/campaign/cp_base.cpp:2084
+#: client/cgame/campaign/cp_base.cpp:2062
 msgid "Antimatter (current/max):"
 msgstr "반물질 (현재/최대):"
 
-#: client/cgame/campaign/cp_base.cpp:2253
+#: client/cgame/campaign/cp_base.cpp:2228
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 건물의 건설이 %s 기지에서 완공되었습니다."
 
-#: client/cgame/campaign/cp_base.cpp:2254
+#: client/cgame/campaign/cp_base.cpp:2229
 msgid "Building finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/cgame/campaign/cp_base.cpp:2303
+#: client/cgame/campaign/cp_base.cpp:2275
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "%s개를 매각하고 %i 크레디트를 입수했습니다"
 
-#: client/cgame/campaign/cp_base.cpp:2304
+#: client/cgame/campaign/cp_base.cpp:2276
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i개의 입수한 아이템"
 msgstr[1] "%i개의 입수한 아이템"
 
-#: client/cgame/campaign/cp_base.cpp:2893
+#: client/cgame/campaign/cp_base.cpp:2866
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -30035,7 +30088,7 @@ msgstr "기지를 더 이상 지을 수 없습니다"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:223
 #: client/cgame/campaign/cp_geoscape.cpp:317
-#: client/cgame/campaign/cp_installation_callbacks.cpp:272
+#: client/cgame/campaign/cp_installation_callbacks.cpp:269
 msgid "Base"
 msgstr "기지"
 
@@ -30266,7 +30319,8 @@ msgid "^BAliens\n"
 msgstr "^B외계인\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:978
-#: client/cgame/campaign/cp_campaign.cpp:671
+#: client/cgame/campaign/cp_campaign.cpp:712
+#: client/cgame/campaign/cp_nation.cpp:643
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -30307,16 +30361,16 @@ msgstr "No defence of this type in this installation"
 msgid "No defence of this type in this base"
 msgstr "No defence of this type in this base"
 
-#: client/cgame/campaign/cp_campaign.cpp:333
+#: client/cgame/campaign/cp_campaign.cpp:374
 msgid "You've gone too far into debt."
 msgstr "빚더미 속에 빠져버렸습니다."
 
-#: client/cgame/campaign/cp_campaign.cpp:341
+#: client/cgame/campaign/cp_campaign.cpp:382
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 "기지가 파괴되었고, 새로운 기지를 지을 충분한 돈을 가지고 있지 않습니다."
 
-#: client/cgame/campaign/cp_campaign.cpp:347
+#: client/cgame/campaign/cp_campaign.cpp:388
 msgid ""
 "You have failed in your charter to protect Earth. Our home and our people "
 "have fallen to the alien infection. Only a handful of people on Earth remain "
@@ -30330,7 +30384,7 @@ msgstr ""
 "합니다; PHALNAX가 더 이상 존재 할 수 없습니다. Nothing stands between the "
 "aliens and total victory."
 
-#: client/cgame/campaign/cp_campaign.cpp:366
+#: client/cgame/campaign/cp_campaign.cpp:407
 msgid ""
 "Under your command, PHALANX operations have consistently failed to protect "
 "nations. The UN, highly unsatisfied with your performance, has decided to "
@@ -30344,12 +30398,12 @@ msgstr ""
 "로 결정했습니다. 더 이상의 초국가적인 협동은 이루어지지 않습니다. 지구의 국가"
 "들은 독립적으로 외계인에 저항을 시도 하였으나, 결국 하나둘씩 몰락해 갔습니다."
 
-#: client/cgame/campaign/cp_campaign.cpp:943
+#: client/cgame/campaign/cp_campaign.cpp:979
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s이(가) %s(으)로 진급했습니다.\n"
 
-#: client/cgame/campaign/cp_campaign.cpp:945
+#: client/cgame/campaign/cp_campaign.cpp:981
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -30358,7 +30412,7 @@ msgstr ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/cgame/campaign/cp_campaign.cpp:946
+#: client/cgame/campaign/cp_campaign.cpp:982
 msgid "Soldier promoted"
 msgstr "전투원이 진급했습니다"
 
@@ -30414,34 +30468,34 @@ msgstr ""
 "%s\n"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:824
+#: client/cgame/campaign/cp_nation.cpp:821
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "전투원"
 msgstr[1] "전투원"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:823
+#: client/cgame/campaign/cp_nation.cpp:820
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "연구원"
 msgstr[1] "연구원"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:826
+#: client/cgame/campaign/cp_nation.cpp:823
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "작업원"
 msgstr[1] "작업원"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:156
-#: client/cgame/campaign/cp_nation.cpp:825
+#: client/cgame/campaign/cp_nation.cpp:822
 msgid "pilot"
 msgid_plural "pilots"
 msgstr[0] "조종사"
 msgstr[1] "조종사들"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:434
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:430
 #, c-format
 msgid ""
 "%s\n"
@@ -30450,14 +30504,15 @@ msgstr ""
 "%s\n"
 "운행 불가. %s가 필요함."
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:489
-#, c-format
-msgid "%3.1f day left"
-msgid_plural "%3.1f days left"
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:485
+#, fuzzy, c-format
+msgid "%d day left"
+msgid_plural "%d days left"
 msgstr[0] "%3.1f일 남았음"
 msgstr[1] "%3.1f일 남았음"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:629
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:624
+#: client/cgame/campaign/cp_hospital_callbacks.cpp:222
 #, c-format
 msgid "Rank: %s"
 msgstr "계급: %s"
@@ -30480,18 +30535,18 @@ msgstr ""
 "대원들을 위한 숙소가 부족합니다.\n"
 "숙소를 더 건설하십시오."
 
-#: client/cgame/campaign/cp_employee_callbacks.cpp:285
-#: client/cgame/campaign/cp_employee_callbacks.cpp:339
+#: client/cgame/campaign/cp_employee_callbacks.cpp:282
+#: client/cgame/campaign/cp_employee_callbacks.cpp:340
 msgid "Could not fire employee"
 msgstr "고용된 인원을 해고할 수 없습니다"
 
-#: client/cgame/campaign/cp_employee_callbacks.cpp:346
+#: client/cgame/campaign/cp_employee_callbacks.cpp:347
 msgid "Could not hire employee"
 msgstr "인원을 고용할 수 없습니다"
 
-#: client/cgame/campaign/cp_event.cpp:532
+#: client/cgame/campaign/cp_event.cpp:536
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:285 client/cgame/campaign/cp_save.cpp:307
+#: client/cgame/campaign/cp_save.cpp:286 client/cgame/campaign/cp_save.cpp:308
 #: client/cgame/campaign/cp_time.cpp:119
 #: client/cgame/campaign/cp_ufopedia.cpp:513
 #: client/cgame/campaign/cp_ufopedia.cpp:518
@@ -30499,7 +30554,7 @@ msgstr "인원을 고용할 수 없습니다"
 msgid "%i %s %02i"
 msgstr "%i년 %s %02i일"
 
-#: client/cgame/campaign/cp_event.cpp:540
+#: client/cgame/campaign/cp_event.cpp:544
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "새로운 메일이 도착했습니다: %s"
@@ -30535,84 +30590,84 @@ msgstr ""
 "   - The UFO:AI development team"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:147
-#: client/cgame/campaign/cp_geoscape.cpp:1498
+#: client/cgame/campaign/cp_geoscape.cpp:1494
 msgid "Unknown"
 msgstr "알 수 없는 장비"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:360
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:361
 msgid "No item assigned.\n"
 msgstr "아무것도 장비되어있지 않습니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:361
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:362
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "이 슬롯은 %s 물품이나 그보다 가벼운 물품을 위한 것입니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:369
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:370
 msgid "This item is functional.\n"
 msgstr "장비는 정상 동작중입니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:371
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:372
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "장비를 장착하는데 %i 시간이 걸립니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:374
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:375
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "%s는 %i 시간 내에 해체될 것입니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:376
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:377
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "%s는 %i 시간 내에 설치될 것입니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:379
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:380
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "장비를 해제하는데 %i 시간이 걸립니다.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:389
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:390
 msgid "No ammo assigned to this weapon."
 msgstr "무기에 탄약이 장비되어있지 않습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:397
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:398
 msgid "No ammo needed"
 msgstr "탄약이 필요 없습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:524
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:525
 msgid "No slot selected."
 msgstr "슬롯이 선택되지 않았습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:527
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:528
 msgid "No item selected."
 msgstr "물품이 선택되어있지 않습니다"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:530
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:531
 msgid "You can't equip an alien technology."
 msgstr "외계인 장비를 장착할 수 없습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:533
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:534
 msgid "Technology requested is not yet completed."
 msgstr "필요한 기술이 개발되지 않았습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:536
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:537
 msgid "This item is too heavy for the selected slot."
 msgstr "슬롯에 장착하기에는 장비가 너무 무겁습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:539
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:540
 msgid "Equip a weapon first."
 msgstr "먼저 무기를 착용합니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:542
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:543
 msgid "Ammo not usable with current weapon."
 msgstr "현재 사용 중인 무기와 탄약이 맞지 않습니다."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:545
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:546
 msgid "Unknown problem."
 msgstr "알 수 없는 문제점."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:548
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:549
 msgid "Ok"
 msgstr "확인"
 
@@ -30621,7 +30676,7 @@ msgid "Mission"
 msgstr "임무"
 
 #: client/cgame/campaign/cp_geoscape.cpp:325
-#: client/cgame/campaign/cp_installation_callbacks.cpp:45
+#: client/cgame/campaign/cp_installation_callbacks.cpp:43
 msgid "Installation"
 msgstr "건설물"
 
@@ -30629,7 +30684,7 @@ msgstr "건설물"
 msgid "UFO Sighting"
 msgstr "UFO 발견"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1497
+#: client/cgame/campaign/cp_geoscape.cpp:1493
 #, c-format
 msgid ""
 "Name: %s\n"
@@ -30638,71 +30693,71 @@ msgstr ""
 "이름: %s\n"
 "목적: %s"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1513
-#: client/cgame/campaign/cp_geoscape.cpp:1523
+#: client/cgame/campaign/cp_geoscape.cpp:1509
+#: client/cgame/campaign/cp_geoscape.cpp:1519
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "이름:\t%s (%i/%i)\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1514
-#: client/cgame/campaign/cp_geoscape.cpp:1524
+#: client/cgame/campaign/cp_geoscape.cpp:1510
+#: client/cgame/campaign/cp_geoscape.cpp:1520
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "상태:\t%s\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1516
-#: client/cgame/campaign/cp_geoscape.cpp:1526
+#: client/cgame/campaign/cp_geoscape.cpp:1512
+#: client/cgame/campaign/cp_geoscape.cpp:1522
 #, c-format
 msgid "Health:\t%3.0f%%\n"
 msgstr "생명력:\t%3.0f%%\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1517
+#: client/cgame/campaign/cp_geoscape.cpp:1513
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "목표물까지 거리:\t\t%.0f\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1521
-#: client/cgame/campaign/cp_geoscape.cpp:1533
+#: client/cgame/campaign/cp_geoscape.cpp:1517
+#: client/cgame/campaign/cp_geoscape.cpp:1529
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1549
+#: client/cgame/campaign/cp_geoscape.cpp:1545
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "속도: %i km/h\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1730
+#: client/cgame/campaign/cp_geoscape.cpp:1728
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1767
+#: client/cgame/campaign/cp_geoscape.cpp:1765
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1770
+#: client/cgame/campaign/cp_geoscape.cpp:1768
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1775
+#: client/cgame/campaign/cp_geoscape.cpp:1773
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Aliens are attacking our base at this very moment.\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1780
+#: client/cgame/campaign/cp_geoscape.cpp:1778
 msgid "Select ufo or mission on map\n"
 msgstr "지도에서 UFO 혹은 임무를 선택하십시오\n"
 
-#: client/cgame/campaign/cp_geoscape.cpp:1785
+#: client/cgame/campaign/cp_geoscape.cpp:1783
 msgid "UFO in radar range\n"
 msgstr "레이더에 UFO 출현\n"
 
-#: client/cgame/campaign/cp_hospital_callbacks.cpp:56
+#: client/cgame/campaign/cp_hospital_callbacks.cpp:43
 #, c-format
 msgid "Damaged %s (damage: %i)"
 msgstr "%s에 충격을 가했음 (데미지: %i)"
 
-#: client/cgame/campaign/cp_hospital_callbacks.cpp:57
+#: client/cgame/campaign/cp_hospital_callbacks.cpp:44
 #, c-format
 msgid "Wounded %s (damage: %i)"
 msgstr "%s가 부상을 입었음 (데미지: %i)"
@@ -30725,51 +30780,51 @@ msgstr "%s 의 설치작업이 완료되었습니다"
 msgid "Installation finished"
 msgstr "건설이 완료되었습니다"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:68
-#: client/cgame/campaign/cp_installation_callbacks.cpp:233
+#: client/cgame/campaign/cp_installation_callbacks.cpp:65
+#: client/cgame/campaign/cp_installation_callbacks.cpp:230
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 일"
 msgstr[1] "%d 일"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:119
+#: client/cgame/campaign/cp_installation_callbacks.cpp:116
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "새로운 기지를 건설했습니다: %s (소재지: %s)"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:121
+#: client/cgame/campaign/cp_installation_callbacks.cpp:118
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "새로운 기지를 건설했습니다: %s "
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:122
+#: client/cgame/campaign/cp_installation_callbacks.cpp:119
 msgid "Installation building"
 msgstr "건물 신축"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:131
+#: client/cgame/campaign/cp_installation_callbacks.cpp:128
 msgid "Not enough credits to set up a new installation."
 msgstr "새로운 시설을 짓기에는 돈이 부족합니다."
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:195
+#: client/cgame/campaign/cp_installation_callbacks.cpp:192
 msgid "Destroy Installation"
 msgstr "시설물 해체"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:195
+#: client/cgame/campaign/cp_installation_callbacks.cpp:192
 msgid "Do you really want to destroy this installation?"
 msgstr "이 시설을 해체하시겠습니까?"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:197
+#: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:579
 msgid "Forget it"
 msgstr "잊어버리기"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:244
+#: client/cgame/campaign/cp_installation_callbacks.cpp:241
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr "상태: %3.0f%%"
 
-#: client/cgame/campaign/cp_installation_callbacks.cpp:265
+#: client/cgame/campaign/cp_installation_callbacks.cpp:262
 msgid "day"
 msgid_plural "days"
 msgstr[0] "일"
@@ -30814,31 +30869,32 @@ msgstr "%s 이 %s 에서 설치되어 있다 성공적으로 철거되었습니�
 msgid "%s was successfully removed from %s."
 msgstr "%s가 %s에서 성공적으로 제거되었습니다."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1340
+#: client/cgame/campaign/cp_mapfightequip.cpp:1341
 msgid "Light weight"
 msgstr "경량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1343
+#: client/cgame/campaign/cp_mapfightequip.cpp:1344
 msgid "Medium weight"
 msgstr "중경량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1346
+#: client/cgame/campaign/cp_mapfightequip.cpp:1347
 msgid "Heavy weight"
 msgstr "중량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1349
+#: client/cgame/campaign/cp_mapfightequip.cpp:1350
 msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:173
+#: client/cgame/campaign/cp_market_callbacks.cpp:170
+#, fuzzy
 msgid ""
-"No command centre in this base.\n"
+"No Command Centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
 "기지에 지휘통제실이 없습니다.\n"
 "격납고는 작동하지 않을 것입니다.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:178
+#: client/cgame/campaign/cp_market_callbacks.cpp:175
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -30846,11 +30902,11 @@ msgstr ""
 "기지에 발전실이 없습니다.\n"
 "격납고는 작동하지 않을 것 입니다."
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:183
+#: client/cgame/campaign/cp_market_callbacks.cpp:180
 msgid "Build a hangar first."
 msgstr "격납고를 먼저 지으십시오."
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:193
+#: client/cgame/campaign/cp_market_callbacks.cpp:185
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -30858,7 +30914,7 @@ msgstr ""
 "항공기를 구매할 수 없습니다.\n"
 "격납고가 부족합니다.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:199
+#: client/cgame/campaign/cp_market_callbacks.cpp:190
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -30866,23 +30922,23 @@ msgstr ""
 "항공기를 구매할 수 없습니다.\n"
 "자금이 부족합니다.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:219
-#: client/cgame/campaign/cp_market_callbacks.cpp:260
+#: client/cgame/campaign/cp_market_callbacks.cpp:210
+#: client/cgame/campaign/cp_market_callbacks.cpp:251
 msgid "Not enough money"
 msgstr "자금 부족"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:219
-#: client/cgame/campaign/cp_market_callbacks.cpp:260
+#: client/cgame/campaign/cp_market_callbacks.cpp:210
+#: client/cgame/campaign/cp_market_callbacks.cpp:251
 msgid "You cannot buy this item as you don't have enough credits."
 msgstr "자금부족으로 이 아이템은 구입할 수 없습니다."
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:224
-#: client/cgame/campaign/cp_market_callbacks.cpp:270
+#: client/cgame/campaign/cp_market_callbacks.cpp:215
+#: client/cgame/campaign/cp_market_callbacks.cpp:261
 msgid "Not enough storage space"
 msgstr "창고가 부족합니다"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:224
-#: client/cgame/campaign/cp_market_callbacks.cpp:270
+#: client/cgame/campaign/cp_market_callbacks.cpp:215
+#: client/cgame/campaign/cp_market_callbacks.cpp:261
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -30892,11 +30948,11 @@ msgstr ""
 "창고의 공간이 부족합니다.\n"
 "더 많은 창고시설을 지으십시오."
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:393
+#: client/cgame/campaign/cp_market_callbacks.cpp:383
 msgid "UGV is away from home"
 msgstr "UGV가 기지 밖에 있습니다"
 
-#: client/cgame/campaign/cp_market_callbacks.cpp:435
+#: client/cgame/campaign/cp_market_callbacks.cpp:426
 msgid "Aircraft is away from home"
 msgstr "항공기가 기지를 떠나 있습니다."
 
@@ -31081,42 +31137,53 @@ msgstr "구출한 시민 수"
 msgid "Gathered items (types/all)"
 msgstr "입수한 아이템 (종류/총량)"
 
-#: client/cgame/campaign/cp_missions.cpp:451
-#: client/cgame/campaign/cp_missions.cpp:474
+#: client/cgame/campaign/cp_missions.cpp:454
+#: client/cgame/campaign/cp_missions.cpp:481
 #, c-format
 msgid "Crashed %s"
 msgstr "격추된 %s"
 
-#: client/cgame/campaign/cp_missions.cpp:457
+#: client/cgame/campaign/cp_missions.cpp:460
 #, c-format
 msgid "Alien terror in %s"
 msgstr "%s에서 외계인 테러 발생"
 
-#: client/cgame/campaign/cp_missions.cpp:460
+#: client/cgame/campaign/cp_missions.cpp:462
+#, fuzzy
+msgid "Alien terror"
+msgstr "%s에서 외계인 테러 발생"
+
+#: client/cgame/campaign/cp_missions.cpp:465
 #, c-format
 msgid "Base attacked: %s"
 msgstr "기지 습격: %s"
 
-#: client/cgame/campaign/cp_missions.cpp:463
+#: client/cgame/campaign/cp_missions.cpp:467
+#: client/cgame/campaign/missions/cp_mission_baseattack.cpp:210
+#: po/OTHER_STRINGS:8
+msgid "Base attack"
+msgstr "기지 습격"
+
+#: client/cgame/campaign/cp_missions.cpp:470
 #, c-format
 msgid "Alien base in %s"
 msgstr "%s에 외계인 기지"
 
-#: client/cgame/campaign/cp_missions.cpp:477
+#: client/cgame/campaign/cp_missions.cpp:484
 #, c-format
 msgid "Landed %s"
 msgstr "%s 착륙"
 
-#: client/cgame/campaign/cp_missions.cpp:482
+#: client/cgame/campaign/cp_missions.cpp:489
 #, c-format
 msgid "Alien activity in %s"
 msgstr "%s에 외계인 활동"
 
-#: client/cgame/campaign/cp_missions.cpp:484
+#: client/cgame/campaign/cp_missions.cpp:491
 msgid "Alien activity"
 msgstr "외계인 활동"
 
-#: client/cgame/campaign/cp_missions.cpp:693
+#: client/cgame/campaign/cp_missions.cpp:700
 #, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
@@ -31125,16 +31192,16 @@ msgstr ""
 "%s의 구조임무를 시작하여 당신의 병사들을 구출하십시오. 일부 대원들이 생존해 "
 "있을지도 모릅니다."
 
-#: client/cgame/campaign/cp_missions.cpp:697
+#: client/cgame/campaign/cp_missions.cpp:704
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "%s 에서 외계인의 활동이 보고되었습니다"
 
-#: client/cgame/campaign/cp_missions.cpp:699
+#: client/cgame/campaign/cp_missions.cpp:706
 msgid "Alien activity has been detected."
 msgstr "외계인 활동이 탐지 되었습니다."
 
-#: client/cgame/campaign/cp_missions.cpp:1062
+#: client/cgame/campaign/cp_missions.cpp:1069
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "기지 방어: %s 성공!"
@@ -31206,84 +31273,84 @@ msgstr ""
 msgid "Nation changed happiness"
 msgstr "국가 만족도가 바뀌었습니다."
 
-#: client/cgame/campaign/cp_nation.cpp:821
+#: client/cgame/campaign/cp_nation.cpp:818
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr ""
 "%i인의 %s, %i인의 %s, %i인의 %s, %i인의 %s과 %i의 %s를 %s (%s)로부터 얻었습니"
 "다"
 
-#: client/cgame/campaign/cp_nation.cpp:822
+#: client/cgame/campaign/cp_nation.cpp:819
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "크레디트"
 msgstr[1] "크레디트"
 
-#: client/cgame/campaign/cp_nation.cpp:845
+#: client/cgame/campaign/cp_nation.cpp:842
 #, c-format
 msgid "Paid %i credits to: %s"
 msgstr "%i 크레디트를 %s 에게 지불했습니다"
 
-#: client/cgame/campaign/cp_nation.cpp:858
+#: client/cgame/campaign/cp_nation.cpp:855
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i 크레디트를 항공기 정비에 지불했습니다."
 
-#: client/cgame/campaign/cp_nation.cpp:867
+#: client/cgame/campaign/cp_nation.cpp:864
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "%i 크레디트를 기지 %s의 유지비용에 지불했습니다."
 
-#: client/cgame/campaign/cp_nation.cpp:872
+#: client/cgame/campaign/cp_nation.cpp:869
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "각종관리비로 %i 크레디트를 지불했습니다."
 
-#: client/cgame/campaign/cp_nation.cpp:880
+#: client/cgame/campaign/cp_nation.cpp:877
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "부채의 이자 %i크레디트를 지불했습니다."
 
-#: client/cgame/campaign/cp_popup.cpp:124
+#: client/cgame/campaign/cp_popup.cpp:121
 msgid "current homebase of aircraft"
 msgstr "항공기의 현재 귀환기지"
 
-#: client/cgame/campaign/cp_popup.cpp:130
+#: client/cgame/campaign/cp_popup.cpp:127
 msgid "base can hold aircraft"
 msgstr "비행기를 수용할 수 있는 기지입니다"
 
-#: client/cgame/campaign/cp_popup.cpp:145
+#: client/cgame/campaign/cp_popup.cpp:142
 msgid "Base\tStatus"
 msgstr "기지\t상태"
 
-#: client/cgame/campaign/cp_popup.cpp:145
+#: client/cgame/campaign/cp_popup.cpp:142
 msgid "Change homebase of aircraft"
 msgstr "항공기의 귀환기지를 변경합니다"
 
-#: client/cgame/campaign/cp_popup.cpp:225
+#: client/cgame/campaign/cp_popup.cpp:223
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "기지로 귀환\t%s\n"
 
-#: client/cgame/campaign/cp_popup.cpp:227
+#: client/cgame/campaign/cp_popup.cpp:225
 msgid "Stop\n"
 msgstr "대기\n"
 
-#: client/cgame/campaign/cp_popup.cpp:229
+#: client/cgame/campaign/cp_popup.cpp:227
 msgid "Change homebase\n"
 msgstr "귀환기지 변경\n"
 
-#: client/cgame/campaign/cp_popup.cpp:240
+#: client/cgame/campaign/cp_popup.cpp:238
 #, c-format
 msgid "Mission\t%s\n"
 msgstr "임무\t%s\n"
 
-#: client/cgame/campaign/cp_popup.cpp:341
+#: client/cgame/campaign/cp_popup.cpp:339
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
-#: client/cgame/campaign/cp_popup.cpp:355
+#: client/cgame/campaign/cp_popup.cpp:353
 msgid ""
 "No craft available, no pilot assigned, or no tactical teams assigned to "
 "available craft."
@@ -31291,20 +31358,20 @@ msgstr ""
 "No craft available, no pilot assigned, or no tactical teams assigned to "
 "available craft."
 
-#: client/cgame/campaign/cp_popup.cpp:403
+#: client/cgame/campaign/cp_popup.cpp:401
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#: client/cgame/campaign/cp_popup.cpp:425
+#: client/cgame/campaign/cp_popup.cpp:423
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "No craft available, no pilot assigned, or no weapon or ammo equipped."
 
-#: client/cgame/campaign/cp_popup.cpp:437
+#: client/cgame/campaign/cp_popup.cpp:435
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "No defence system operational or no weapon or ammo equipped."
 
-#: client/cgame/campaign/cp_popup.cpp:486
+#: client/cgame/campaign/cp_popup.cpp:484
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -31316,87 +31383,37 @@ msgstr ""
 "\n"
 "Aircraft cannot start.\n"
 
-#: client/cgame/campaign/cp_produce.cpp:282
-#: client/cgame/campaign/cp_produce.cpp:286
-#: client/cgame/campaign/cp_produce.cpp:291
-#: client/cgame/campaign/cp_produce_callbacks.cpp:640
-#: client/cgame/campaign/cp_produce_callbacks.cpp:688
-msgid "Hangars not ready"
-msgstr "격납고가 준비되지 않았습니다"
-
-#: client/cgame/campaign/cp_produce.cpp:282
-msgid ""
-"You cannot queue aircraft.\n"
-"No command centre in this base.\n"
-msgstr ""
-"비행기 생산일정을 잡을 수 없습니다.\n"
-"기지에 지휘통제실이 없습니다.\n"
-
-#: client/cgame/campaign/cp_produce.cpp:286
-msgid ""
-"You cannot queue aircraft.\n"
-"No hangars in this base.\n"
-msgstr ""
-"비행기 생산일정을 잡을 수 없습니다.\n"
-"격납고가 없습니다.\n"
-
-#: client/cgame/campaign/cp_produce.cpp:291
-#: client/cgame/campaign/cp_produce_callbacks.cpp:640
-#: client/cgame/campaign/cp_produce_callbacks.cpp:688
-msgid ""
-"You cannot queue aircraft.\n"
-"No free space in hangars.\n"
-msgstr ""
-"비행기 생산일정을 잡을 수 없습니다.\n"
-"비어있는 격납고가 없습니다.\n"
-
-#: client/cgame/campaign/cp_produce.cpp:393
+#: client/cgame/campaign/cp_produce.cpp:353
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "%s 기지의 생산예정이 없습니다"
 
-#: client/cgame/campaign/cp_produce.cpp:394
+#: client/cgame/campaign/cp_produce.cpp:354
 msgid "Production queue empty"
 msgstr "예정된 생산 목록이 없습니다"
 
-#: client/cgame/campaign/cp_produce.cpp:477
-#: client/cgame/campaign/cp_produce.cpp:497
+#: client/cgame/campaign/cp_produce.cpp:404
 #, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "%s 기지에 생산 자금이 부족합니다."
 
-#: client/cgame/campaign/cp_produce.cpp:486
-#, c-format
-msgid "Not enough free storage space in %s. Production postponed."
-msgstr "%s 기지에 창고 공간이 부족합니다. 생산은 연기되었습니다."
-
-#: client/cgame/campaign/cp_produce.cpp:506
-#, c-format
-msgid "Not enough free hangar space in %s. Production postponed."
-msgstr "%s 기지에 남은 격납고 공간이 없습니다. 생산은 연기되었습니다."
-
-#: client/cgame/campaign/cp_produce.cpp:517
-#, c-format
-msgid "Not enough free storage space in %s. Disassembling postponed."
-msgstr "%s 기지에 창고 공간이 부족합니다. 해체 작업은 연기되었습니다."
-
-#: client/cgame/campaign/cp_produce.cpp:562
-#, c-format
-msgid "The production of %s at %s has finished."
+#: client/cgame/campaign/cp_produce.cpp:442
+#, fuzzy, c-format
+msgid "Work on %s at %s has finished."
 msgstr "%s의 생산이 %s에서 완료되었습니다"
 
-#: client/cgame/campaign/cp_produce.cpp:563
-#: client/cgame/campaign/cp_produce.cpp:587
+#: client/cgame/campaign/cp_produce.cpp:443
+#: client/cgame/campaign/cp_produce.cpp:479
 msgid "Production finished"
 msgstr "생산완료"
 
-#: client/cgame/campaign/cp_produce.cpp:585
+#: client/cgame/campaign/cp_produce.cpp:477
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "%s의 해체작업이 %s에서완료 되었습니다."
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:264
-#: client/cgame/campaign/cp_produce_callbacks.cpp:369
+#: client/cgame/campaign/cp_produce_callbacks.cpp:368
 msgid "No item selected"
 msgstr "선택된 항목이 없습니다"
 
@@ -31406,7 +31423,7 @@ msgid "Cost per item\t%i c\n"
 msgstr "생산에 필요한 비용\t%i c\n"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:271
-#: client/cgame/campaign/cp_produce_callbacks.cpp:329
+#: client/cgame/campaign/cp_produce_callbacks.cpp:328
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "생산에 필요한 시간\t%i 시간\n"
@@ -31435,25 +31452,39 @@ msgstr "구성요소:\n"
 msgid "Production costs\t%i c\n"
 msgstr "생산 단가\t%i c\n"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:367
+#: client/cgame/campaign/cp_produce_callbacks.cpp:366
 msgid "No aircraft selected."
 msgstr "선택된 항공기가 없습니다."
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:660
-#: client/cgame/campaign/cp_produce_callbacks.cpp:677
+#: client/cgame/campaign/cp_produce_callbacks.cpp:635
+#: client/cgame/campaign/cp_produce_callbacks.cpp:683
+msgid "Hangars not ready"
+msgstr "격납고가 준비되지 않았습니다"
+
+#: client/cgame/campaign/cp_produce_callbacks.cpp:635
+#: client/cgame/campaign/cp_produce_callbacks.cpp:683
+msgid ""
+"You cannot queue aircraft.\n"
+"No free space in hangars.\n"
+msgstr ""
+"비행기 생산일정을 잡을 수 없습니다.\n"
+"비어있는 격납고가 없습니다.\n"
+
+#: client/cgame/campaign/cp_produce_callbacks.cpp:655
+#: client/cgame/campaign/cp_produce_callbacks.cpp:672
 msgid "Not enough materials"
 msgstr "자재가 부족합니다!"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:660
+#: client/cgame/campaign/cp_produce_callbacks.cpp:655
 msgid "You don't have the materials needed for producing more of this item.\n"
 msgstr "이 항목을 생산하는데 필요한, 충분한 자재를 보유하고 있지 않습니다.\n"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:664
-#: client/cgame/campaign/cp_produce_callbacks.cpp:680
+#: client/cgame/campaign/cp_produce_callbacks.cpp:659
+#: client/cgame/campaign/cp_produce_callbacks.cpp:675
 msgid "Not enough material!"
 msgstr "자재가 부족합니다!"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:664
+#: client/cgame/campaign/cp_produce_callbacks.cpp:659
 #, c-format
 msgid ""
 "You don't have enough material to produce all (%i) additional items. Only %i "
@@ -31462,11 +31493,11 @@ msgstr ""
 "모든 제품(%i 개)을 생산하기에는 자재가 부족합니다. 일부의 제품(%i 개)만 생산"
 "을 합니다."
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:677
+#: client/cgame/campaign/cp_produce_callbacks.cpp:672
 msgid "You don't have the materials needed for producing this item.\n"
 msgstr "이 항목을 생산하는데 필요한, 충분한 자재를 보유하고 있지 않습니다.\n"
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:680
+#: client/cgame/campaign/cp_produce_callbacks.cpp:675
 #, c-format
 msgid ""
 "You don't have enough material to produce all (%i) items. Production will "
@@ -31475,12 +31506,12 @@ msgstr ""
 "모든 제품(%i 개)을 생산하기에는 자재가 부족합니다. 일부의 제품(%i 개)만 생산"
 "을 합니다."
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:704
+#: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
-msgid "Production of %s started"
-msgstr "%s의 생산을 시작했습니다"
+msgid "Work begun on %s"
+msgstr ""
 
-#: client/cgame/campaign/cp_produce_callbacks.cpp:705
+#: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
 msgstr "생산을 시작했습니다"
 
@@ -31550,54 +31581,54 @@ msgstr "진행 중인 캠페인이 없습니다"
 msgid "Nothing to save yet."
 msgstr "저장할 것이 없습니다."
 
-#: client/cgame/campaign/cp_save.cpp:317
+#: client/cgame/campaign/cp_save.cpp:318
 msgid "Could not allocate enough memory to save this game"
 msgstr "이 게임을 저장하는데 충분한 메모리를 할당하지 못했습니다"
 
-#: client/cgame/campaign/cp_save.cpp:339
+#: client/cgame/campaign/cp_save.cpp:340
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "게임 저장 데이타를 압축에 메모리 에러 - save_compressed cvar를 0으로 설정하시"
 "오"
 
-#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
+#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
 msgid "Error saving game."
 msgstr "게임을 저장하는데 문제가 발생했습니다."
 
-#: client/cgame/campaign/cp_save.cpp:471 client/cgame/campaign/cp_save.cpp:494
-#: client/cgame/campaign/cp_save.cpp:612
-#: client/cgame/multiplayer/mp_callbacks.cpp:62 client/cl_irc.cpp:1211
-#: client/cl_irc.cpp:1436 client/cl_main.cpp:529 client/cl_main.cpp:533
-#: client/cl_main.cpp:557
+#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
+#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1209
+#: client/cl_irc.cpp:1434 client/cl_main.cpp:559 client/cl_main.cpp:563
+#: client/cl_main.cpp:588
 msgid "Error"
 msgstr "문제발생"
 
-#: client/cgame/campaign/cp_save.cpp:471 client/cgame/campaign/cp_save.cpp:494
-#: client/cgame/campaign/cp_save.cpp:612
+#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
+#: client/cgame/campaign/cp_save.cpp:599
 msgid "Error loading game."
 msgstr "게임을 불러들이는데 문제가 발생했습니다."
 
-#: client/cgame/campaign/cp_save.cpp:590
+#: client/cgame/campaign/cp_save.cpp:577
 msgid "QuickSave"
 msgstr "빠른저장"
 
-#: client/cgame/campaign/cp_save.cpp:594
+#: client/cgame/campaign/cp_save.cpp:581
 msgid "Campaign was successfully saved."
 msgstr "게임이 성공적으로 저장되었습니다."
 
-#: client/cgame/campaign/cp_save.cpp:594
+#: client/cgame/campaign/cp_save.cpp:581
 msgid "Quicksave"
 msgstr "빠른 저장"
 
-#: client/cgame/campaign/cp_save.cpp:614
+#: client/cgame/campaign/cp_save.cpp:601
 msgid "Campaign loaded"
 msgstr "캠페인을 읽어왔습니다"
 
-#: client/cgame/campaign/cp_save.cpp:614
+#: client/cgame/campaign/cp_save.cpp:601
 msgid "Quicksave campaign was successfully loaded."
 msgstr "캠페인의 빠른 저장이 성공적으로 읽어졌습니다."
 
-#: client/cgame/campaign/cp_statistics.cpp:55
+#: client/cgame/campaign/cp_statistics.cpp:48
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -31608,7 +31639,7 @@ msgstr ""
 "패배횟수:\t%i\n"
 "\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:60
+#: client/cgame/campaign/cp_statistics.cpp:53
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -31619,13 +31650,13 @@ msgstr ""
 "가동 중:\t%i\n"
 "공격을 받은 횟수:\t%i\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:76
-#: client/cgame/campaign/cp_ufopedia.cpp:1188
+#: client/cgame/campaign/cp_statistics.cpp:70
+#: client/cgame/campaign/cp_ufopedia.cpp:1183
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:79
+#: client/cgame/campaign/cp_statistics.cpp:73
 #, c-format
 msgid ""
 "\n"
@@ -31634,38 +31665,38 @@ msgstr ""
 "\n"
 "이번 달 자금:\t%d"
 
-#: client/cgame/campaign/cp_statistics.cpp:98
+#: client/cgame/campaign/cp_statistics.cpp:96
 #: client/cl_inventory_callbacks.cpp:141
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:104
+#: client/cgame/campaign/cp_statistics.cpp:102
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "대원:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:113
+#: client/cgame/campaign/cp_statistics.cpp:111
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "항공기:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:119
+#: client/cgame/campaign/cp_statistics.cpp:117
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "기지 (%s):\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:124
+#: client/cgame/campaign/cp_statistics.cpp:122
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "관리비:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:131
+#: client/cgame/campaign/cp_statistics.cpp:129
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "부채:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:134
+#: client/cgame/campaign/cp_statistics.cpp:132
 #, c-format
 msgid ""
 "\n"
@@ -31676,12 +31707,12 @@ msgstr ""
 "\t-------\n"
 "합계:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:139
+#: client/cgame/campaign/cp_statistics.cpp:137
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "부채 한도: %i c\n"
 
-#: client/cgame/campaign/cp_statistics.cpp:144
+#: client/cgame/campaign/cp_statistics.cpp:142
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -31690,24 +31721,24 @@ msgstr ""
 "허용 외계 바이러스 감염 수치: %i \n"
 "현재 외계 바이러스 감염 수치: %i"
 
-#: client/cgame/campaign/cp_team.cpp:288
+#: client/cgame/campaign/cp_team.cpp:307
 #, c-format
 msgid "%i of %i"
 msgstr "%i / %i"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:255
+#: client/cgame/campaign/cp_team_callbacks.cpp:240
 msgid "No more employee can be assigned to this aircraft"
 msgstr "이 항공기에는 더 이상의 대원을 배정할 수 없습니다"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:266
+#: client/cgame/campaign/cp_team_callbacks.cpp:251
 msgid "Employee is assigned to another aircraft"
 msgstr "다른 항공기에 배정된 대원입니다"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:358
+#: client/cgame/campaign/cp_team_callbacks.cpp:343
 msgid "Employee is away from base"
 msgstr "대원이 기지에서 떠나 있습니다"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:360
+#: client/cgame/campaign/cp_team_callbacks.cpp:345
 msgid "No more employee can be assigned to this team"
 msgstr "이 팀에는 더 이상의 대원을 배정할 수 없습니다"
 
@@ -31743,56 +31774,56 @@ msgstr "1 일"
 msgid "5 days"
 msgstr "5 일"
 
-#: client/cgame/campaign/cp_time.cpp:123
+#: client/cgame/campaign/cp_time.cpp:122
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cgame/campaign/cp_time.cpp:325
+#: client/cgame/campaign/cp_time.cpp:323
 msgid "Jan"
 msgstr "1월"
 
-#: client/cgame/campaign/cp_time.cpp:327
+#: client/cgame/campaign/cp_time.cpp:325
 msgid "Feb"
 msgstr "2월"
 
-#: client/cgame/campaign/cp_time.cpp:329
+#: client/cgame/campaign/cp_time.cpp:327
 msgid "Mar"
 msgstr "3월"
 
-#: client/cgame/campaign/cp_time.cpp:331
+#: client/cgame/campaign/cp_time.cpp:329
 msgid "Apr"
 msgstr "4월"
 
-#: client/cgame/campaign/cp_time.cpp:333
+#: client/cgame/campaign/cp_time.cpp:331
 msgid "May"
 msgstr "5월"
 
-#: client/cgame/campaign/cp_time.cpp:335
+#: client/cgame/campaign/cp_time.cpp:333
 msgid "Jun"
 msgstr "6월"
 
-#: client/cgame/campaign/cp_time.cpp:337
+#: client/cgame/campaign/cp_time.cpp:335
 msgid "Jul"
 msgstr "7월"
 
-#: client/cgame/campaign/cp_time.cpp:339
+#: client/cgame/campaign/cp_time.cpp:337
 msgid "Aug"
 msgstr "8월"
 
-#: client/cgame/campaign/cp_time.cpp:341
+#: client/cgame/campaign/cp_time.cpp:339
 msgid "Sep"
 msgstr "9월"
 
-#: client/cgame/campaign/cp_time.cpp:343
+#: client/cgame/campaign/cp_time.cpp:341
 msgid "Oct"
 msgstr "10월"
 
-#: client/cgame/campaign/cp_time.cpp:345
+#: client/cgame/campaign/cp_time.cpp:343
 msgid "Nov"
 msgstr "11월"
 
-#: client/cgame/campaign/cp_time.cpp:347
+#: client/cgame/campaign/cp_time.cpp:345
 msgid "Dec"
 msgstr "12월"
 
@@ -31802,37 +31833,19 @@ msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "%s 에 반물질 보관소가 없으므로, 반물질이 제거됩니다!"
 
 #: client/cgame/campaign/cp_transfer.cpp:59
-#: client/cgame/campaign/cp_transfer.cpp:72
-#: client/cgame/campaign/cp_transfer.cpp:84
-#: client/cgame/campaign/cp_transfer.cpp:113
-#: client/cgame/campaign/cp_transfer.cpp:131
-#: client/cgame/campaign/cp_transfer.cpp:150
-#: client/cgame/campaign/cp_transfer.cpp:156
+#: client/cgame/campaign/cp_transfer.cpp:102
+#: client/cgame/campaign/cp_transfer.cpp:134
+#: client/cgame/campaign/cp_transfer.cpp:140
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:84
 msgid "Transport mission"
 msgstr "수송 임무"
 
-#: client/cgame/campaign/cp_transfer.cpp:71
-#, c-format
-msgid "%s does not have Storage, items are removed!"
-msgstr "%s 에 창고가 없습니다. 물품들은 파기됩니다!"
-
-#: client/cgame/campaign/cp_transfer.cpp:83
-#, c-format
-msgid "%s does not have Living Quarters, employees got unhired!"
-msgstr "%s 에 숙소가 없습니다. 고용된 사람들이 해고됩니다!"
-
-#: client/cgame/campaign/cp_transfer.cpp:112
+#: client/cgame/campaign/cp_transfer.cpp:101
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "%s 에 외계인 수용시설이 없습니다. 외계인들은 제거됩니다!"
 
-#: client/cgame/campaign/cp_transfer.cpp:130
-#, c-format
-msgid "%s does not have enough free space. Aircraft is lost!"
-msgstr "%s 에 격납고 여유 공간이 없습니다. 항공기가 분실됐습니다!"
-
-#: client/cgame/campaign/cp_transfer.cpp:150
+#: client/cgame/campaign/cp_transfer.cpp:134
 msgid ""
 "The destination base no longer exists! Transfer cargo was lost, personnel "
 "has been discharged."
@@ -31840,7 +31853,7 @@ msgstr ""
 "도착할 기지가 더 이상 존재하지 않습니다! 수송 중이던 물품들은 소실되었고, 대"
 "원들은 해고되었습니다."
 
-#: client/cgame/campaign/cp_transfer.cpp:155
+#: client/cgame/campaign/cp_transfer.cpp:139
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "수송 임무 종료 : %s 기지에 화물 또는 대원이 도착했습니다."
@@ -32071,46 +32084,53 @@ msgstr ""
 "수신일시: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:625
-msgid "(complete)"
-msgstr "(완료)"
+#, fuzzy, c-format
+msgid "UFOpaedia: %s (complete)"
+msgstr "UFO 백과사전 내용"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:678
+#: client/cgame/campaign/cp_ufopedia.cpp:687
+#, fuzzy, c-format
+msgid "UFOpaedia: %s"
+msgstr "UFO 백과사전"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:684
 msgid "No pre-research description available."
 msgstr "선행 연구 내용이 없습니다."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1128
+#: client/cgame/campaign/cp_ufopedia.cpp:1127
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^B연구 제안서: %s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1132
+#: client/cgame/campaign/cp_ufopedia.cpp:1131
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "연구 제안서: %s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1143
+#: client/cgame/campaign/cp_ufopedia.cpp:1141
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^B답장: %s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1147
+#: client/cgame/campaign/cp_ufopedia.cpp:1145
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "답장: %s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1157
-#: client/cgame/campaign/cp_ufopedia.cpp:1169
+#: client/cgame/campaign/cp_ufopedia.cpp:1154
+#: client/cgame/campaign/cp_ufopedia.cpp:1165
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1161
-#: client/cgame/campaign/cp_ufopedia.cpp:1173
+#: client/cgame/campaign/cp_ufopedia.cpp:1158
+#: client/cgame/campaign/cp_ufopedia.cpp:1169
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1185
+#: client/cgame/campaign/cp_ufopedia.cpp:1180
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -32128,12 +32148,12 @@ msgstr "UFO가 회수되었습니다"
 msgid "UFO Transfered"
 msgstr "UFO 이송 완료"
 
-#: client/cgame/campaign/cp_uforecovery.cpp:255
+#: client/cgame/campaign/cp_uforecovery.cpp:252
 #, c-format
 msgid "UFO transport started, cargo is being transported to %s"
 msgstr "UFO 이송 시작; %s 기지에 화물을 수송합니다."
 
-#: client/cgame/campaign/cp_uforecovery.cpp:256
+#: client/cgame/campaign/cp_uforecovery.cpp:253
 msgid "UFO transport"
 msgstr "UFO 수송"
 
@@ -32208,11 +32228,6 @@ msgstr "'%s' 기지가 공격당하고 있습니다! 어떻게 하시겠습니�
 msgid "Base '%s' is under attack!"
 msgstr "'%s' 기지가 공격당하고 있습니다!"
 
-#: client/cgame/campaign/missions/cp_mission_baseattack.cpp:210
-#: po/OTHER_STRINGS:8
-msgid "Base attack"
-msgstr "기지 습격"
-
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "The Carrier UFO is in range. Should we launch the payload?"
 msgstr "캐리어 UFO가 사정거리 이내입니다. 탄두를 발사할까요?"
@@ -32233,68 +32248,74 @@ msgstr "UFO-캐리어를 지금 공격하십시오"
 msgid "Launch"
 msgstr "발사"
 
-#: client/cgame/cl_game_team.cpp:256
+#: client/cgame/cl_game_team.cpp:310
 msgid "Error saving team. Nothing to save yet."
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
-#: client/cgame/cl_game_team.cpp:272
-msgid "NewTeam"
+#: client/cgame/cl_game_team.cpp:316
+#, fuzzy
+msgid "New Team"
 msgstr "새로운 팀"
 
-#: client/cgame/cl_game_team.cpp:277
+#: client/cgame/cl_game_team.cpp:320
+#, fuzzy
+msgid "Error saving team. Too many teams!"
+msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
+
+#: client/cgame/cl_game_team.cpp:325
 msgid "Error saving team. Check free disk space!"
 msgstr "팀을 저장할 수 없습니다. 하드가 남아있는지 확인하십시오!"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:55
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:58
 msgid "You've ended your turn.\n"
 msgstr "당신의 차례를 끝내셨습니다.\n"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:58
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:61
 #, c-format
 msgid "%s ended his turn (team %i).\n"
 msgstr "%s 가 자신의 차례를 마쳤습니다.(%i 팀)\n"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:78
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:80
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "플레이어당 인원을 팀당 인원보다 적게 설정하시기 바랍니다"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:78
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:80
 msgid "Settings doesn't make sense"
 msgstr "유효하지 않은 설정입니다"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:155
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:130
 #, c-format
 msgid "Enemies killed:\t%i"
 msgstr "사살한 적군:\t%i"
 
-#: client/cgame/multiplayer/cl_game_multiplayer.cpp:156
+#: client/cgame/multiplayer/cl_game_multiplayer.cpp:131
 #, c-format
 msgid "Team survivors:\t%i"
 msgstr "아군 생존자:\t%i"
 
-#: client/cgame/multiplayer/mp_callbacks.cpp:186
+#: client/cgame/multiplayer/mp_callbacks.cpp:212
 msgid "Select a free team or your coop team"
 msgstr "Select a free team or your coop team"
 
-#: client/cgame/multiplayer/mp_callbacks.cpp:194
+#: client/cgame/multiplayer/mp_callbacks.cpp:220
 #, c-format
 msgid "Current team: %i"
 msgstr "현재 팀: %i"
 
-#: client/cgame/multiplayer/mp_callbacks.cpp:199
+#: client/cgame/multiplayer/mp_callbacks.cpp:225
 msgid "Team is already in use"
 msgstr "이미 사용 중 팀입니다"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:249
+#: client/cgame/multiplayer/mp_serverlist.cpp:240
 #, c-format
 msgid "Team %d"
 msgstr "팀 %d"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:251
+#: client/cgame/multiplayer/mp_serverlist.cpp:242
 msgid "No team"
 msgstr "팀이 없음"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:310
+#: client/cgame/multiplayer/mp_serverlist.cpp:303
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -32303,87 +32324,87 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:321
+#: client/cgame/multiplayer/mp_serverlist.cpp:315
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "지도:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:326
+#: client/cgame/multiplayer/mp_serverlist.cpp:320
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "서버명:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:327
+#: client/cgame/multiplayer/mp_serverlist.cpp:321
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "심리상태::\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:328
+#: client/cgame/multiplayer/mp_serverlist.cpp:322
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "게임유형:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:329
+#: client/cgame/multiplayer/mp_serverlist.cpp:323
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "클라이언트 버전:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:330
+#: client/cgame/multiplayer/mp_serverlist.cpp:324
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "전용서버:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:331
+#: client/cgame/multiplayer/mp_serverlist.cpp:325
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "OS 종류:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:332
+#: client/cgame/multiplayer/mp_serverlist.cpp:326
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "네트워크 프로토콜:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:333
+#: client/cgame/multiplayer/mp_serverlist.cpp:327
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "제한시간:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:334
+#: client/cgame/multiplayer/mp_serverlist.cpp:328
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "팀플레이:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:335
+#: client/cgame/multiplayer/mp_serverlist.cpp:329
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "팀당 최대 플레이어:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:336
+#: client/cgame/multiplayer/mp_serverlist.cpp:330
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "이 지도에서 진행 가능한 최대팀:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:337
+#: client/cgame/multiplayer/mp_serverlist.cpp:331
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "최대 클라이언트:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:338
+#: client/cgame/multiplayer/mp_serverlist.cpp:332
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "플레이어당 최대인원:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:339
+#: client/cgame/multiplayer/mp_serverlist.cpp:333
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "팀당 최대인원:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:340
+#: client/cgame/multiplayer/mp_serverlist.cpp:334
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "암호로 보호됨:\t%s\n"
 
-#: client/cgame/multiplayer/mp_serverlist.cpp:464
+#: client/cgame/multiplayer/mp_serverlist.cpp:456
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -32391,12 +32412,12 @@ msgstr ""
 "모든 바로가기 슬롯이 차있습니다 - 사용하지 않는 항목을 삭제하고 이전단계를 반"
 "복해 주시기 바랍니다"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:200
-#: client/cgame/skirmish/cl_game_skirmish.cpp:205
+#: client/cgame/skirmish/cl_game_skirmish.cpp:198
+#: client/cgame/skirmish/cl_game_skirmish.cpp:203
 msgid "Game Drawn!"
 msgstr "무승부!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:200
+#: client/cgame/skirmish/cl_game_skirmish.cpp:198
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32406,7 +32427,7 @@ msgstr ""
 "\n"
 "적군이 탈출했습니다."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:205
+#: client/cgame/skirmish/cl_game_skirmish.cpp:203
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32416,7 +32437,7 @@ msgstr ""
 "\n"
 "생존자가 있는 팀이 없습니다."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:216
+#: client/cgame/skirmish/cl_game_skirmish.cpp:214
 #, c-format
 msgid ""
 "\n"
@@ -32429,19 +32450,19 @@ msgstr ""
 "%i명(총 %i)의 아군 생존, %i명 사망, %i명 오발사.\n"
 "%i명(총 %i)의 시민 구조, %i명 사망, %i명 오발사."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:223
+#: client/cgame/skirmish/cl_game_skirmish.cpp:221
 msgid "Congratulations"
 msgstr "축하합니다"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:223
+#: client/cgame/skirmish/cl_game_skirmish.cpp:221
 msgid "You won the game!"
 msgstr "게임에서 승리하셨습니다!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:225
+#: client/cgame/skirmish/cl_game_skirmish.cpp:223
 msgid "Better luck next time"
 msgstr "다음 판은 행운이 따르기를 기원합니다"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:225
+#: client/cgame/skirmish/cl_game_skirmish.cpp:223
 msgid "You've lost the game!"
 msgstr "게임에서 졌습니다!"
 
@@ -32560,36 +32581,89 @@ msgstr "알 수 없음 - 사용할 수 없음"
 msgid "Warning: Not enough TUs..."
 msgstr "경고: 행동력 부족..."
 
-#: client/cl_irc.cpp:1436
+#: client/cl_irc.cpp:1434
 msgid "Server closed connection"
 msgstr "서버가 접속을 끊었습니다"
 
-#: client/cl_language.cpp:417
+#: client/cl_language.cpp:416
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.cpp:528
+#: client/cl_main.cpp:369
+#, fuzzy
+msgid "Loading"
+msgstr "불러오기"
+
+#: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
+#: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
+#: client/cl_main.cpp:429
+#, fuzzy
+msgid "Connection failure"
+msgstr "대응사격"
+
+#: client/cl_main.cpp:407
+msgid "The password you specified was wrong."
+msgstr ""
+
+#: client/cl_main.cpp:410
+#, fuzzy
+msgid "This server requires a password."
+msgstr "이 변경사항은 재시작을 해야 합니다!"
+
+#: client/cl_main.cpp:414
+#, fuzzy
+msgid "This server is full."
+msgstr "장비는 정상 동작중입니다.\n"
+
+#: client/cl_main.cpp:417
+#, fuzzy
+msgid "You are banned on this server."
+msgstr "이 서버로 접속"
+
+#: client/cl_main.cpp:420
+#, fuzzy
+msgid "The game has already started."
+msgstr "이미 사용 중 팀입니다"
+
+#: client/cl_main.cpp:423
+msgid "The server is running a different version of the game."
+msgstr ""
+
+#: client/cl_main.cpp:426
+msgid "Bad rcon password"
+msgstr ""
+
+#: client/cl_main.cpp:426
+msgid "The rcon password you specified was wrong."
+msgstr ""
+
+#: client/cl_main.cpp:429
+#, fuzzy
+msgid "The server refused the connection."
+msgstr "서버가 접속을 끊었습니다"
+
+#: client/cl_main.cpp:558
 #, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "사용 중인 버전 (%s)과 서버의 버전(%s)이 다릅니다 "
 
-#: client/cl_main.cpp:533
+#: client/cl_main.cpp:563
 msgid "Script files are not the same"
 msgstr "S스크립트 파일이 동일하지 않습니다"
 
-#: client/cl_main.cpp:557
+#: client/cl_main.cpp:588
 msgid "Local map version differs from server"
 msgstr "사용 중 지도의 버전이 서버와 다릅니다"
 
-#: client/cl_main.cpp:894
+#: client/cl_main.cpp:941
 msgid "Target your shot to the ground"
 msgstr "공격목표를 지면으로 설정합니다"
 
-#: client/cl_main.cpp:1141
+#: client/cl_main.cpp:1191
 msgid "This change requires a restart!"
 msgstr "이 변경사항은 재시작을 해야 합니다!"
 
-#: client/cl_main.cpp:1146
+#: client/cl_main.cpp:1196
 msgid "This change might require a restart."
 msgstr "이 변경사항은 재시작을 필요로 할 수도 있습니다."
 
@@ -32612,126 +32686,167 @@ msgstr "전술화면 카메라"
 msgid "Downloading [%s]"
 msgstr "내려 받는 중 [%s]"
 
-#: client/input/cl_input.cpp:1130
+#: client/cl_team.cpp:177
+msgid "Poor"
+msgstr "나쁨"
+
+#: client/cl_team.cpp:179
+msgid "Mediocre"
+msgstr "보통"
+
+#: client/cl_team.cpp:181
+msgid "Average"
+msgstr "평균"
+
+#: client/cl_team.cpp:183
+msgid "Competent"
+msgstr "유능함"
+
+#: client/cl_team.cpp:185
+msgid "Proficient"
+msgstr "능숙함"
+
+#: client/cl_team.cpp:187
+msgid "Very Good"
+msgstr "매우 좋음"
+
+#: client/cl_team.cpp:189
+msgid "Highly Proficient"
+msgstr "숙달함"
+
+#: client/cl_team.cpp:193
+msgid "Outstanding"
+msgstr "뛰어남"
+
+# Source text needs context for accurate translation.
+#: client/cl_team.cpp:195
+msgid "Impressive"
+msgstr "대단한"
+
+#: client/cl_team.cpp:197
+msgid "Superhuman"
+msgstr "초인적"
+
+#: client/input/cl_input.cpp:1183
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "전술화면의 시점을 시계 반대방향으로 회전"
 
-#: client/input/cl_input.cpp:1132
+#: client/input/cl_input.cpp:1185
 msgid "Rotate battlescape camera clockwise"
 msgstr "전술화면의 시점을 시계 방향으로 회전"
 
-#: client/input/cl_input.cpp:1134
+#: client/input/cl_input.cpp:1187
 msgid "Tilt battlescape camera up"
 msgstr "전술화면의 시점높이를 상승"
 
-#: client/input/cl_input.cpp:1136
+#: client/input/cl_input.cpp:1189
 msgid "Tilt battlescape camera down"
 msgstr "전술화면의 시점높이를 하강"
 
-#: client/input/cl_input.cpp:1138
+#: client/input/cl_input.cpp:1191
 msgid "Move battlescape camera"
 msgstr "전술화면의 시점을 이동"
 
-#: client/input/cl_input.cpp:1140
+#: client/input/cl_input.cpp:1193
 msgid "Move battlescape camera left"
 msgstr "전술화면의 시점을 왼쪽으로 이동"
 
-#: client/input/cl_input.cpp:1142
+#: client/input/cl_input.cpp:1195
 msgid "Move battlescape camera top left"
 msgstr "전술화면의 시점을 왼쪽 위로 이동"
 
-#: client/input/cl_input.cpp:1144
+#: client/input/cl_input.cpp:1197
 msgid "Move battlescape camera bottom left"
 msgstr "전술화면의 시점을 왼쪽 아래로 이동"
 
-#: client/input/cl_input.cpp:1146
+#: client/input/cl_input.cpp:1199
 msgid "Move battlescape camera right"
 msgstr "전술화면의 시점을 오른쪽으로 이동"
 
-#: client/input/cl_input.cpp:1148
+#: client/input/cl_input.cpp:1201
 msgid "Move battlescape camera top right"
 msgstr "전술화면의 시점을 오른쪽 위로 이동"
 
-#: client/input/cl_input.cpp:1150
+#: client/input/cl_input.cpp:1203
 msgid "Move battlescape camera bottom right"
 msgstr "전술화면의 시점을 오른쪽 아래로 이동"
 
-#: client/input/cl_input.cpp:1152
+#: client/input/cl_input.cpp:1205
 msgid "Move battlescape camera forward"
 msgstr "전술화면의 시점을 앞으로 이동"
 
-#: client/input/cl_input.cpp:1154
+#: client/input/cl_input.cpp:1207
 msgid "Move battlescape camera backward"
 msgstr "전술화면의 시점을 뒤로 이동"
 
-#: client/input/cl_input.cpp:1156 client/input/cl_input.cpp:1180
+#: client/input/cl_input.cpp:1209 client/input/cl_input.cpp:1233
 msgid "Zoom in"
 msgstr "확대"
 
-#: client/input/cl_input.cpp:1158 client/input/cl_input.cpp:1181
+#: client/input/cl_input.cpp:1211 client/input/cl_input.cpp:1234
 msgid "Zoom out"
 msgstr "축소"
 
-#: client/input/cl_input.cpp:1161
+#: client/input/cl_input.cpp:1214
 msgid "Left mouse button click (menu)"
 msgstr "마우스 왼쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1163
+#: client/input/cl_input.cpp:1216
 msgid "Middle mouse button click (menu)"
 msgstr "마우스 휠 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1165
+#: client/input/cl_input.cpp:1218
 msgid "Right mouse button click (menu)"
 msgstr "마우스 오른쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1167
+#: client/input/cl_input.cpp:1220
 msgid "Mouse wheel up"
 msgstr "마우스 휠 위로"
 
-#: client/input/cl_input.cpp:1168
+#: client/input/cl_input.cpp:1221
 msgid "Mouse wheel down"
 msgstr "마우스 휠 내리기"
 
-#: client/input/cl_input.cpp:1169
+#: client/input/cl_input.cpp:1222
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "오브젝트/이동목표/공격방법 선택, 공격 그 외"
 
-#: client/input/cl_input.cpp:1171
+#: client/input/cl_input.cpp:1224
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "전장 돌려보기 / 사격 모드에서는 행동 취소"
 
-#: client/input/cl_input.cpp:1173
+#: client/input/cl_input.cpp:1226
 msgid "Turn soldier toward mouse pointer"
 msgstr "마우스포인터의 방향으로 전투원를 보게 한다"
 
-#: client/input/cl_input.cpp:1175
+#: client/input/cl_input.cpp:1228
 msgid "Toggles the hud radar mode"
 msgstr "HUD 레이더 사용 토글"
 
-#: client/input/cl_input.cpp:1178
+#: client/input/cl_input.cpp:1231
 msgid "Slice through terrain at a higher level"
 msgstr "지형표시 고도레벨을 증가"
 
-#: client/input/cl_input.cpp:1179
+#: client/input/cl_input.cpp:1232
 msgid "Slice through terrain at a lower level"
 msgstr "지형표시 고도레벨을 감소"
 
-#: client/ui/node/ui_node_container.cpp:262
-#: client/ui/node/ui_node_container.cpp:267
+#: client/ui/node/ui_node_container.cpp:261
+#: client/ui/node/ui_node_container.cpp:266
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "탄약: %i\n"
 
-#: client/ui/node/ui_node_container.cpp:266
+#: client/ui/node/ui_node_container.cpp:265
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s가 장전 되었습니다\n"
 
-#: client/ui/node/ui_node_container.cpp:274
+#: client/ui/node/ui_node_container.cpp:273
 msgid "Usable in:\n"
 msgstr "사용가능 무기:\n"
 
-#: client/ui/node/ui_node_container.cpp:326
+#: client/ui/node/ui_node_container.cpp:325
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "In: %i Out: %i"
@@ -32766,41 +32881,41 @@ msgstr "전투원이 구조지역에 진입하였습니다."
 msgid "Soldier left the rescue zone."
 msgstr "전투원이 구조지역에서 벗어났습니다."
 
-#: game/g_actor.cpp:624
+#: game/g_actor.cpp:626
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr ""
 "행동을 취할 수 없습니다 - 이미 동일한 탄알의 최대 장탄수로 장전되어 있습니다!"
 
-#: game/g_client.cpp:340
+#: game/g_client.cpp:341
 msgid "Can't perform action - object not present!"
 msgstr "행동을 취할 수 없습니다 - 대상이 없습니다!"
 
-#: game/g_client.cpp:345
+#: game/g_client.cpp:346
 msgid "Can't perform action - not an actor!"
 msgstr "행동을 취할 수 없습니다 - 대원이 아닙니다!"
 
-#: game/g_client.cpp:350
+#: game/g_client.cpp:351
 msgid "Can't perform action - actor is stunned!"
 msgstr "행동을 취할 수 없습니다 - 대원이 기절했습니다!"
 
-#: game/g_client.cpp:355
+#: game/g_client.cpp:356
 msgid "Can't perform action - actor is dead!"
 msgstr "행동을 취할 수 없습니다 - 대원이 사망하였습니다!"
 
-#: game/g_client.cpp:360
+#: game/g_client.cpp:361
 msgid "Can't perform action - not on same team!"
 msgstr "행동을 취할 수 없습니다 - 같은 팀이 아닙니다!"
 
-#: game/g_client.cpp:365
+#: game/g_client.cpp:366
 msgid "Can't perform action - no control over allied actors!"
 msgstr "행동을 취할 수 없습니다 - 동맹중인 다른 팀원은 조작할 수 없습니다!"
 
-#: game/g_client.cpp:384
+#: game/g_client.cpp:385
 msgid "Can't perform action - it is not your turn!"
 msgstr "행동을 취할 수 없습니다 - 당신의 차례가 아닙니다!"
 
-#: game/g_client.cpp:499
+#: game/g_client.cpp:500
 msgid "Currently shaken, won't let their guard down."
 msgstr "흥분중. 방어를 낮추지 않음."
 
@@ -32814,7 +32929,7 @@ msgstr "%d 초간 말을 할 수 없습니다\n"
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "플러딩 방지: 당신은 %d 초동안 말을 할 수 없습니다.\n"
 
-#: game/g_combat.cpp:425
+#: game/g_combat.cpp:422
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
@@ -32822,23 +32937,23 @@ msgstr ""
 "대원이 당황했습니다!\n"
 "적군이 섬광탄을 사용했습니다!"
 
-#: game/g_combat.cpp:653
+#: game/g_combat.cpp:647
 msgid "Can't perform action - impossible throw!"
 msgstr "행동을 취할 수 없습니다 - 던질 수 없습니다!"
 
-#: game/g_combat.cpp:1141
+#: game/g_combat.cpp:1125
 msgid "Can't perform action - object not activatable!"
 msgstr "행동을 취할 수 없습니다 - 활성화 시킬 수 없는 대상입니다!"
 
-#: game/g_combat.cpp:1168
+#: game/g_combat.cpp:1151
 msgid "Can't perform action - target is not wounded!"
 msgstr "행동 불가 - 대상이 부상자가 아닙니다!"
 
-#: game/g_combat.cpp:1191
+#: game/g_combat.cpp:1176
 msgid "Can't perform action - target out of range!"
 msgstr "행동을 취할 수 없습니다 - 사정거리를 벗어났습니다!"
 
-#: game/g_combat.cpp:1237
+#: game/g_combat.cpp:1222
 msgid "Can't perform action - not enough ammo!"
 msgstr "행동을 취할 수 없습니다 - 탄약이 부족합니다!"
 
@@ -32874,15 +32989,15 @@ msgstr "%s가 분노에 사로잡혔습니다!"
 msgid "%s is currently shaken."
 msgstr "%s가 심리적으로 불안합니다."
 
-#: game/g_reaction.cpp:530
+#: game/g_reaction.cpp:599
 msgid "No reaction fire enabled weapon."
 msgstr "대응사격 가능한 무기가 없습니다."
 
-#: game/g_reaction.cpp:535
+#: game/g_reaction.cpp:604
 msgid "No fire mode selected for reaction fire."
 msgstr "대응사격할 방법이 선택되어 있지 않습니다."
 
-#: game/g_reaction.cpp:540
+#: game/g_reaction.cpp:609
 msgid "Not enough TUs left for activating reaction fire."
 msgstr "대응사격을 하기에는 남은 TU(행동력)가 부족합니다."
 
@@ -32933,6 +33048,99 @@ msgstr "외계인"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "스크린샷 저장"
+
+#~ msgid "Full Campaign"
+#~ msgstr "정식 캠페인"
+
+#~ msgid "Simple Campaign"
+#~ msgstr "간단한 캠페인"
+
+#~ msgid ""
+#~ "Find the control center and place one of your soldiers next to the "
+#~ "console in order to take advantage of the security cameras."
+#~ msgstr ""
+#~ "컨트롤 센터를 찾아 병사 한명을 콘솔 옆에 세워두어 보안 카메라들을 활용하세"
+#~ "요."
+
+#~ msgid "New"
+#~ msgstr "새 팀"
+
+#~ msgid "Keyinfo and General Help"
+#~ msgstr "키 정보와 일반 도움말"
+
+#~ msgid ""
+#~ "Visit our forums and join the community at http://ufoai.org.\n"
+#~ "Hint: Press CTRL+G to grab/release the mousepointer."
+#~ msgstr ""
+#~ "http://ufoai.org 에서 포럼을 방문하고 커뮤니티에 가입할 수 있습니다.\n"
+#~ "힌트: CTRL+G 를 눌러서 마우스 포인터를 잡거나 풀 수 있습니다."
+
+#~ msgid "Visit our forums and join the community at http://ufoai.org."
+#~ msgstr ""
+#~ "http://ufoai.org 에서 포럼를 방문하고 커뮤니티에 가입할 수 있습니다."
+
+#~ msgid ""
+#~ "Note: Campaign-specific keybindings visible in Campaign mode only.\n"
+#~ "Hint: Press CTRL+G to grab/release the mousepointer."
+#~ msgstr ""
+#~ "참고: 캠페인 전용 단축키들은 캠페인 모드에서만 보입니다.\n"
+#~ "힌트: CTRL+G 를 눌러서 마우스 포인터를 잡거나 풀 수 있습니다."
+
+#~ msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
+#~ msgstr "참고: 캠페인 전용 단축키들은 캠페인 모드에서만 보입니다."
+
+#~ msgid "Extension"
+#~ msgstr "확장"
+
+#~ msgid "Unused"
+#~ msgstr "사용되고 있지 않습니다"
+
+#~ msgid "Scroll up"
+#~ msgstr "위로 스크롤합니다"
+
+#~ msgid "Scroll down"
+#~ msgstr "아래로 스크롤합니다"
+
+#~ msgid "No reaction fire"
+#~ msgstr "대응사격없음"
+
+#~ msgid ""
+#~ "You cannot queue aircraft.\n"
+#~ "No command centre in this base.\n"
+#~ msgstr ""
+#~ "비행기 생산일정을 잡을 수 없습니다.\n"
+#~ "기지에 지휘통제실이 없습니다.\n"
+
+#~ msgid ""
+#~ "You cannot queue aircraft.\n"
+#~ "No hangars in this base.\n"
+#~ msgstr ""
+#~ "비행기 생산일정을 잡을 수 없습니다.\n"
+#~ "격납고가 없습니다.\n"
+
+#~ msgid "Not enough free storage space in %s. Production postponed."
+#~ msgstr "%s 기지에 창고 공간이 부족합니다. 생산은 연기되었습니다."
+
+#~ msgid "Not enough free hangar space in %s. Production postponed."
+#~ msgstr "%s 기지에 남은 격납고 공간이 없습니다. 생산은 연기되었습니다."
+
+#~ msgid "Not enough free storage space in %s. Disassembling postponed."
+#~ msgstr "%s 기지에 창고 공간이 부족합니다. 해체 작업은 연기되었습니다."
+
+#~ msgid "Production of %s started"
+#~ msgstr "%s의 생산을 시작했습니다"
+
+#~ msgid "%s does not have Storage, items are removed!"
+#~ msgstr "%s 에 창고가 없습니다. 물품들은 파기됩니다!"
+
+#~ msgid "%s does not have Living Quarters, employees got unhired!"
+#~ msgstr "%s 에 숙소가 없습니다. 고용된 사람들이 해고됩니다!"
+
+#~ msgid "%s does not have enough free space. Aircraft is lost!"
+#~ msgstr "%s 에 격납고 여유 공간이 없습니다. 항공기가 분실됐습니다!"
+
+#~ msgid "(complete)"
+#~ msgstr "(완료)"
 
 #~ msgid ""
 #~ "Determines a soldier's accuracy with heavy weapons. Soldiers will "
@@ -33449,9 +33657,6 @@ msgstr "스크린샷 저장"
 #~ msgid "A depot with the name 'The Gate' where secret technology is stored."
 #~ msgstr "비밀 기술이 보관되어 있는, '게이트'라는 이름의 저장소."
 
-#~ msgid "A local harbour."
-#~ msgstr "지역항구."
-
 #~ msgid "A small settlement in winter."
 #~ msgstr "겨울의 작은 거주지."
 
@@ -33862,9 +34067,6 @@ msgstr "스크린샷 저장"
 
 #~ msgid "Mattn"
 #~ msgstr "Mattn"
-
-#~ msgid "Sitters"
-#~ msgstr "Sitters"
 
 #~ msgid "The Community"
 #~ msgstr "커뮤니티 사람들"
@@ -36443,9 +36645,6 @@ msgstr "스크린샷 저장"
 #~ msgid "Soldier is assigned to another craft"
 #~ msgstr "다른 항공기에 탑승중인 전투원입니다"
 
-#~ msgid "Remove soldier from this craft"
-#~ msgstr "항공기에서 전투원를 하차시킵니다"
-
 #~ msgid "Soldier carries equipment"
 #~ msgstr "장비소지 완료된 전투원"
 
@@ -36584,9 +36783,6 @@ msgstr "스크린샷 저장"
 
 #~ msgid "Go to soldier equipment screen before the battle"
 #~ msgstr "전투를 하기 전에 전투원 장비 화면으로 가십시오"
-
-#~ msgid "Update the GUI with the selected item"
-#~ msgstr "선택된 항목으로 GUI를 갱신합니다"
 
 #, fuzzy
 #~ msgid "^BUI bindings"
@@ -37423,9 +37619,6 @@ msgstr "스크린샷 저장"
 #~ msgid "Click the big button in the lower right corner when ready"
 #~ msgstr "준비가 되면 화면 우측 하단의 큰 버튼을 눌러주세요."
 
-#~ msgid "Please wait"
-#~ msgstr "잠시만 기다려주세요"
-
 #~ msgid "Players connected, waiting for others"
 #~ msgstr "플레이어가 접속하였습니다, 다른 플레이어를 기다립니다"
 
@@ -37542,9 +37735,6 @@ msgstr "스크린샷 저장"
 #~ msgid "Select next base for transfer"
 #~ msgstr "수송할 다음 기지 선택"
 
-#~ msgid "Unload"
-#~ msgstr "짐 내리기"
-
 #~ msgid "Previous entry"
 #~ msgstr "이전 항목"
 
@@ -37616,9 +37806,6 @@ msgstr "스크린샷 저장"
 
 #~ msgid "%s:\tProtection: %i\n"
 #~ msgstr "%s:\t방어력: %i\n"
-
-#~ msgid "UFOpaedia Content"
-#~ msgstr "UFO 백과사전 내용"
 
 #~ msgid "UFOpaedia Index: %s"
 #~ msgstr "UFO 백과사전 목차: %s"
