@@ -76,4 +76,4 @@ typedef struct eventRegister_s {
 const eventRegister_t *CL_GetEvent(const event_t eType);
 int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
 int CL_GetStepTime(const eventTiming_t *eventTiming, const le_t* le, int step);
-const char *CL_ConvertSoundFromEvent(char* sound, size_t size);
+const char* CL_ConvertSoundFromEvent(char* sound, size_t size);

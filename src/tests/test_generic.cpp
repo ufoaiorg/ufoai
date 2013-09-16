@@ -59,12 +59,12 @@ static int UFO_CleanSuiteGeneric (void)
 	return 0;
 }
 
-static void STRHUNK_VisitorTestEntry (const char *string)
+static void STRHUNK_VisitorTestEntry (const char* string)
 {
 	CU_ASSERT_STRING_EQUAL(string, "Test");
 }
 
-static void STRHUNK_VisitorTestEntry2 (const char *string)
+static void STRHUNK_VisitorTestEntry2 (const char* string)
 {
 	CU_ASSERT_STRING_EQUAL(string, "T");
 }
@@ -201,12 +201,12 @@ static void testLinkedList (void)
 	const size_t length = strlen(data);
 	linkedList_t *entry;
 	const linkedList_t *entry2;
-	const char *returnedData;
+	const char* returnedData;
 
 	entry = LIST_Add(&list, data, length);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
 	CU_ASSERT_TRUE(entry != nullptr);
-	returnedData = (const char *)LIST_GetByIdx(list, 0);
+	returnedData = (const char* )LIST_GetByIdx(list, 0);
 	CU_ASSERT_TRUE(returnedData != nullptr);
 	entry2 = LIST_ContainsString(list, returnedData);
 	CU_ASSERT_TRUE(entry2 != nullptr);
@@ -294,8 +294,8 @@ static void testPrependStringList (void)
 	LIST_PrependString(&list, "test2");
 	LIST_PrependString(&list, "test1");
 
-	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
-	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 1), "test2");
+	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 1), "test2");
 
 	LIST_Delete(&list);
 }
@@ -308,15 +308,15 @@ static void testLinkedListStringSort (void)
 	LIST_AddStringSorted(&list, "test1");
 	LIST_AddStringSorted(&list, "test3");
 
-	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 0), "test1");
 
 	LIST_Delete(&list);
 }
 
 static void testFileSystemBuildLists (void)
 {
-	const char *filename, *prev;
-	const char *wildcard = "ufos/**.ufo";
+	const char* filename, *prev;
+	const char* wildcard = "ufos/**.ufo";
 	const int ufosCnt = FS_BuildFileList(wildcard);
 
 	CU_ASSERT_TRUE(ufosCnt > 1);
@@ -413,7 +413,7 @@ static void testStringCopiers (void)
 	time = Sys_Milliseconds() - time;
 	Com_Printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
 
-	const char *s = src;
+	const char* s = src;
 	int cnt = 0;
 	while (UTF8_next(&s) != -1) {
 		cnt++;
@@ -579,7 +579,7 @@ static void testHttpHelperFunctions (void)
 	char server[512];
 	char uriPath[512];
 	int port;
-	const char *url;
+	const char* url;
 
 	url = "http://www.test.domain.com:123/someScript.cgi?parameter";
 	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
@@ -621,7 +621,7 @@ static void testNetResolv (void)
 
 static void testUnsignedIntToBinary (void)
 {
-	const char *buf = Com_UnsignedIntToBinary(3);
+	const char* buf = Com_UnsignedIntToBinary(3);
 	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 00000011");
 
 	buf = Com_UnsignedIntToBinary(255);
@@ -642,9 +642,9 @@ static void testUnsignedIntToBinary (void)
 
 static void testStringCheckFunctions (void)
 {
-	const char *strNull = nullptr;
-	const char *strEmpty = "";
-	const char *strValid = "someString";
+	const char* strNull = nullptr;
+	const char* strEmpty = "";
+	const char* strValid = "someString";
 	CU_ASSERT_TRUE(Q_strnull(strNull));
 	CU_ASSERT_TRUE(Q_strnull(strEmpty));
 	CU_ASSERT_FALSE(Q_strnull(strValid));
@@ -656,13 +656,13 @@ static void testStringCheckFunctions (void)
 static void testEntitiesDef (void)
 {
 	byte* fileBuffer;
-	const char *buf;
+	const char* buf;
 	int i;
 	bool worldSpawnFound;
 
 	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
 
-	buf = (const char *) fileBuffer;
+	buf = (const char* ) fileBuffer;
 	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
 
 	CU_ASSERT_TRUE(numEntityDefs > 0);
@@ -694,15 +694,15 @@ static void testEntitiesDef (void)
 static void testGetBlock (void)
 {
 	{
-		const char *test = "invalid block";
+		const char* test = "invalid block";
 		const int length = Com_GetBlock(&test, nullptr);
 		UFO_CU_ASSERT_EQUAL_INT_MSG(length, -1, nullptr);
 	}
 	{
-		const char *test = "{the block length  }";
-		const char *buf = test;
+		const char* test = "{the block length  }";
+		const char* buf = test;
 		const size_t expected = strlen(test) - 2;
-		const char *start = nullptr;
+		const char* start = nullptr;
 		const int length = Com_GetBlock(&buf, &start);
 		CU_ASSERT_EQUAL(length, expected);
 		UFO_CU_ASSERT_EQUAL_INT_MSG(strncmp(start, test + 1, length), 0,
@@ -722,25 +722,25 @@ static void testComFilePath (void)
 
 static void testMD5File (void)
 {
-	const char *md5 = Com_MD5File("media/DejaVuSans.ttf");
-	const char *expected = "c4adcbdd6ec636e0b19cd6aabe85e8fb";
+	const char* md5 = Com_MD5File("media/DejaVuSans.ttf");
+	const char* expected = "c4adcbdd6ec636e0b19cd6aabe85e8fb";
 	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
 	CU_ASSERT_STRING_EQUAL(md5, expected);
 }
 
 static void testMD5Buffer (void)
 {
-	const char *in = "Test";
-	const char *expected = "0cbc6611f5540bd0809a388dc95a615b";
-	const char *md5 = Com_MD5Buffer((const byte*)in, strlen(in));
+	const char* in = "Test";
+	const char* expected = "0cbc6611f5540bd0809a388dc95a615b";
+	const char* md5 = Com_MD5Buffer((const byte*)in, strlen(in));
 	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
 	CU_ASSERT_STRING_EQUAL(md5, expected);
 }
 
 static void testSHA1Buffer (void)
 {
-	const char *in = "Test";
-	const char *expected = "640ab2bae07bedc4c163f679a746f7ab7fb5d1fa";
+	const char* in = "Test";
+	const char* expected = "640ab2bae07bedc4c163f679a746f7ab7fb5d1fa";
 	char digest[41];
 	Com_SHA1Buffer((const byte*)in, strlen(in), digest);
 	Com_Printf("got: '%s', expected '%s'\n", digest, expected);
@@ -749,8 +749,8 @@ static void testSHA1Buffer (void)
 
 static void testSHA2Buffer (void)
 {
-	const char *in = "Test";
-	const char *expected = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
+	const char* in = "Test";
+	const char* expected = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
 	byte digest[32];
 	Com_SHA2Csum((const byte*)in, strlen(in), digest);
 	char buf[65];
@@ -762,7 +762,7 @@ static void testSHA2Buffer (void)
 /**
  * @brief The string 'a' and 'c' evaluates to true - everything else to false
  */
-static int TEST_BEP (const char *id, const void* userdata)
+static int TEST_BEP (const char* id, const void* userdata)
 {
 	return Q_streq(id, "a") || Q_streq(id, "c");
 }

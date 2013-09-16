@@ -64,7 +64,7 @@ static bool Destroy_Breakable (Edict* self)
 
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
-	const char *breakSound = nullptr;
+	const char* breakSound = nullptr;
 	switch (self->material) {
 	case MAT_GLASS:
 		breakSound = "misc/breakglass+";

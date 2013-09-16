@@ -51,8 +51,8 @@ static int UFO_CleanSuiteRenderer (void)
 
 static void testLoadAllAnimationFiles (void)
 {
-	const char *pattern = "models/**.anm";
-	const char *filename;
+	const char* pattern = "models/**.anm";
+	const char* filename;
 	mAliasModel_t mod;
 
 	OBJZERO(mod);
@@ -71,8 +71,8 @@ static void testLoadAllAnimationFiles (void)
 
 static void testCharacterAnimationFiles (void)
 {
-	const char *pattern = "models/**.anm";
-	const char *filename;
+	const char* pattern = "models/**.anm";
+	const char* filename;
 	mAliasModel_t mod;
 	const char* bloodspider[] = { "death1", "death2", "death3", "dead1",
 			"dead2", "dead3", "stand0", "stand1", "stand2", "stand3", "walk0",

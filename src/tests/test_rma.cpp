@@ -158,7 +158,7 @@ static void testSeedlists (void)
 		{"village", "commercial"},
 		{"village", "small"}
 	};
-	length = sizeof(assNames) / (2 * sizeof(char *));
+	length = sizeof(assNames) / (2 * sizeof(char*));
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;

@@ -156,7 +156,7 @@ static void Test_RemoveSuiteFrom (CU_pSuite *list, CU_pSuite suite)
 	suite->pNext = nullptr;
 }
 
-static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
+static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char* name)
 {
 	CU_pSuite current = first;
 	while (current) {
@@ -172,7 +172,7 @@ static CU_pSuite Test_GetSuiteByName (CU_pSuite first, const char *name)
  * @param name Name of the test suite
  * @return 1 if the name is unknown, 2 if the suite is already disabled, else 0
  */
-static int Test_DisableSuite (const char *name)
+static int Test_DisableSuite (const char* name)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -194,7 +194,7 @@ static int Test_DisableSuite (const char *name)
  * @param name Name of the test suite
  * @return 1 if the name is unknown, 2 if the suite is already enabled, else 0
  */
-static int Test_EnableSuite (const char *name)
+static int Test_EnableSuite (const char* name)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -335,7 +335,7 @@ static void Test_Parameters (const int argc, char** argv)
 	}
 }
 
-static void TEST_vPrintfLog (const char *fmt, va_list ap)
+static void TEST_vPrintfLog (const char* fmt, va_list ap)
 {
 	if (logFile) {
 		char msg[2048];
@@ -378,7 +378,7 @@ int main (int argc, char** argv)
 	}
 
 	if (config.log) {
-		const char *path = "testall.log";
+		const char* path = "testall.log";
 		logFile = fopen(path, "wb");
 		Qcommon_SetPrintFunction(TEST_vPrintfLog);
 	} else

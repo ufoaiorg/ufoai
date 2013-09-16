@@ -212,7 +212,7 @@ int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, in
  * @param[in] size The size of the @c sound buffer
  * @return Pointer to the @c sound buffer
  */
-const char *CL_ConvertSoundFromEvent (char* sound, size_t size)
+const char* CL_ConvertSoundFromEvent (char* sound, size_t size)
 {
 	const size_t length = strlen(sound) - 1;
 	if (sound[length] != '+')

@@ -663,7 +663,7 @@ void G_EventDoorClose (const Edict &door)
 	G_EventEnd();
 }
 
-void G_EventModelExplodeTriggered (const Edict &ent, const char *sound)
+void G_EventModelExplodeTriggered (const Edict &ent, const char* sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED, ent.number);
@@ -671,7 +671,7 @@ void G_EventModelExplodeTriggered (const Edict &ent, const char *sound)
 	G_EventEnd();
 }
 
-void G_EventModelExplode (const Edict &ent, const char *sound)
+void G_EventModelExplode (const Edict &ent, const char* sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE, ent.number);

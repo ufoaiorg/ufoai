@@ -55,7 +55,7 @@ typedef int (*lua_CFunction) (lua_State *L);
 /*
 ** functions that read/write blocks when loading/dumping Lua chunks
 */
-typedef const char * (*lua_Reader) (lua_State *L, void* ud, size_t *sz);
+typedef const char*  (*lua_Reader) (lua_State *L, void* ud, size_t *sz);
 
 typedef int (*lua_Writer) (lua_State *L, const void* p, size_t sz, void* ud);
 
@@ -160,11 +160,11 @@ LUA_API const void     *(lua_topointer) (lua_State *L, int idx);
 LUA_API void  (lua_pushnil) (lua_State *L);
 LUA_API void  (lua_pushnumber) (lua_State *L, lua_Number n);
 LUA_API void  (lua_pushinteger) (lua_State *L, lua_Integer n);
-LUA_API void  (lua_pushlstring) (lua_State *L, const char *s, size_t l);
-LUA_API void  (lua_pushstring) (lua_State *L, const char *s);
-LUA_API const char *(lua_pushvfstring) (lua_State *L, const char *fmt,
+LUA_API void  (lua_pushlstring) (lua_State *L, const char* s, size_t l);
+LUA_API void  (lua_pushstring) (lua_State *L, const char* s);
+LUA_API const char* (lua_pushvfstring) (lua_State *L, const char* fmt,
                                                       va_list argp);
-LUA_API const char *(lua_pushfstring) (lua_State *L, const char *fmt, ...);
+LUA_API const char* (lua_pushfstring) (lua_State *L, const char* fmt, ...);
 LUA_API void  (lua_pushcclosure) (lua_State *L, lua_CFunction fn, int n);
 LUA_API void  (lua_pushboolean) (lua_State *L, int b);
 LUA_API void  (lua_pushlightuserdata) (lua_State *L, void* p);
@@ -175,7 +175,7 @@ LUA_API int   (lua_pushthread) (lua_State *L);
 ** get functions (Lua -> stack)
 */
 LUA_API void  (lua_gettable) (lua_State *L, int idx);
-LUA_API void  (lua_getfield) (lua_State *L, int idx, const char *k);
+LUA_API void  (lua_getfield) (lua_State *L, int idx, const char* k);
 LUA_API void  (lua_rawget) (lua_State *L, int idx);
 LUA_API void  (lua_rawgeti) (lua_State *L, int idx, int n);
 LUA_API void  (lua_createtable) (lua_State *L, int narr, int nrec);
@@ -188,7 +188,7 @@ LUA_API void  (lua_getfenv) (lua_State *L, int idx);
 ** set functions (stack -> Lua)
 */
 LUA_API void  (lua_settable) (lua_State *L, int idx);
-LUA_API void  (lua_setfield) (lua_State *L, int idx, const char *k);
+LUA_API void  (lua_setfield) (lua_State *L, int idx, const char* k);
 LUA_API void  (lua_rawset) (lua_State *L, int idx);
 LUA_API void  (lua_rawseti) (lua_State *L, int idx, int n);
 LUA_API int   (lua_setmetatable) (lua_State *L, int objindex);
@@ -202,7 +202,7 @@ LUA_API void  (lua_call) (lua_State *L, int nargs, int nresults);
 LUA_API int   (lua_pcall) (lua_State *L, int nargs, int nresults, int errfunc);
 LUA_API int   (lua_cpcall) (lua_State *L, lua_CFunction func, void* ud);
 LUA_API int   (lua_load) (lua_State *L, lua_Reader reader, void* dt,
-                                        const char *chunkname);
+                                        const char* chunkname);
 
 LUA_API int (lua_dump) (lua_State *L, lua_Writer writer, void* data);
 
@@ -331,11 +331,11 @@ typedef void (*lua_Hook) (lua_State *L, lua_Debug *ar);
 
 
 LUA_API int lua_getstack (lua_State *L, int level, lua_Debug *ar);
-LUA_API int lua_getinfo (lua_State *L, const char *what, lua_Debug *ar);
-LUA_API const char *lua_getlocal (lua_State *L, const lua_Debug *ar, int n);
-LUA_API const char *lua_setlocal (lua_State *L, const lua_Debug *ar, int n);
-LUA_API const char *lua_getupvalue (lua_State *L, int funcindex, int n);
-LUA_API const char *lua_setupvalue (lua_State *L, int funcindex, int n);
+LUA_API int lua_getinfo (lua_State *L, const char* what, lua_Debug *ar);
+LUA_API const char* lua_getlocal (lua_State *L, const lua_Debug *ar, int n);
+LUA_API const char* lua_setlocal (lua_State *L, const lua_Debug *ar, int n);
+LUA_API const char* lua_getupvalue (lua_State *L, int funcindex, int n);
+LUA_API const char* lua_setupvalue (lua_State *L, int funcindex, int n);
 
 LUA_API int lua_sethook (lua_State *L, lua_Hook func, int mask, int count);
 LUA_API lua_Hook lua_gethook (lua_State *L);
@@ -345,10 +345,10 @@ LUA_API int lua_gethookcount (lua_State *L);
 
 struct lua_Debug {
   int event;
-  const char *name;	/* (n) */
-  const char *namewhat;	/* (n) `global', `local', `field', `method' */
-  const char *what;	/* (S) `Lua', `C', `main', `tail' */
-  const char *source;	/* (S) */
+  const char* name;	/* (n) */
+  const char* namewhat;	/* (n) `global', `local', `field', `method' */
+  const char* what;	/* (S) `Lua', `C', `main', `tail' */
+  const char* source;	/* (S) */
   int currentline;	/* (l) */
   int nups;		/* (u) number of upvalues */
   int linedefined;	/* (S) */

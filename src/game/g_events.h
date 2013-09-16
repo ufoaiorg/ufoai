@@ -61,8 +61,8 @@ void G_EventInventoryAdd(const Edict &ent, playermask_t playerMask, int itemAmou
 void G_EventInventoryAmmo(const Edict &ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
 void G_EventInventoryDelete(const Edict &ent, playermask_t playerMask, const containerIndex_t containerId, int x, int y);
 void G_EventInventoryReload(const Edict &ent, playermask_t playerMask, const Item *item, const invDef_t* invDef, const Item *ic);
-void G_EventModelExplodeTriggered(const Edict &ent, const char *sound);
-void G_EventModelExplode(const Edict &ent, const char *sound);
+void G_EventModelExplodeTriggered(const Edict &ent, const char* sound);
+void G_EventModelExplode(const Edict &ent, const char* sound);
 void G_EventParticleSpawn(playermask_t playerMask, const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void G_EventPerish(const Edict &ent);
 void G_EventReactionFireChange(const Edict &ent);

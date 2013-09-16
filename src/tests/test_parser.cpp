@@ -55,7 +55,7 @@ static void testParser (void)
 {
 	const char* string = "aa \t\n {\"bbb(bbb bbb)bbb {\"{a}\n/* foooo { } \n { } */\n// fooooo\naaaa";
 	const char* cursor = string;
-	const char *token;
+	const char* token;
 
 	token = Com_Parse(&cursor);
 	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
@@ -97,7 +97,7 @@ static void testParserWithEntity (void)
 {
 	const char* string = "\n\taaaa \"  \\n  \\t  \\\"  \"";
 	const char* cursor = string;
-	const char *token;
+	const char* token;
 
 	token = Com_Parse(&cursor);
 	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
@@ -115,7 +115,7 @@ static void testParserWithUnParse (void)
 {
 	const char* string = "aaaaa\n\tbbbbb \"ccccc\"";
 	const char* cursor = string;
-	const char *token;
+	const char* token;
 
 	token = Com_Parse(&cursor);
 	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
@@ -173,7 +173,7 @@ static void testParserWithFunctionScriptToken (void)
 {
 	const char* string = "aa \t\n aa,({\"bbb(bbb bbb)bbb {\"{a}\n/* foooo { } \n { } */\n// fooooo\naaaa)";
 	const char* cursor = string;
-	const char *token;
+	const char* token;
 
 	token = Com_Parse(&cursor);
 	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_WORD);

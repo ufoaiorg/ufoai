@@ -57,7 +57,7 @@ static int UFO_CleanSuiteRouting (void)
 
 static mapData_t mapData;
 static mapTiles_t mapTiles;
-static const char *mapName = "test_routing";
+static const char* mapName = "test_routing";
 static void testMapLoading (void)
 {
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {

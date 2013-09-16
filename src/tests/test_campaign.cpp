@@ -133,7 +133,7 @@ static int UFO_CleanSuiteCampaign (void)
 	return 0;
 }
 
-static installation_t* CreateInstallation (const char *name, const vec2_t pos)
+static installation_t* CreateInstallation (const char* name, const vec2_t pos)
 {
 	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_UFOYARD);
 	installation_t *installation;
@@ -152,7 +152,7 @@ static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 	return installation;
 }
 
-static base_t* CreateBase (const char *name, const vec2_t pos)
+static base_t* CreateBase (const char* name, const vec2_t pos)
 {
 	const campaign_t *campaign = GetCampaign();
 	base_t *base;
@@ -1034,7 +1034,7 @@ static void testLoad (void)
 {
 	int i;
 	aircraft_t *ufo;
-	const char *error;
+	const char* error;
 
 	ResetCampaignData();
 
@@ -1259,7 +1259,7 @@ static void testBuildingConstruction (void)
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
-	const char *error = nullptr;
+	const char* error = nullptr;
 	bool success;
 
 	ResetCampaignData();
@@ -1270,7 +1270,7 @@ static void test3090011 (void)
 
 static bool skipTest (const mapDef_t *md)
 {
-	const char *map = md->id;
+	const char* map = md->id;
 	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "alienbase");
 }
 
@@ -1424,7 +1424,7 @@ static void testAssembleMap (void)
 	char coords[2048];
 
 	CU_ASSERT_TRUE(B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base));
-	const char *str = coords;
+	const char* str = coords;
 	int coordsAmount = 0;
 	do {
 		Com_Parse(&str);
