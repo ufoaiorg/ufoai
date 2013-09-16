@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-16 10:44+0200\n"
-"PO-Revision-Date: 2013-08-22 18:48+0100\n"
+"PO-Revision-Date: 2013-09-17 00:01+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -3045,9 +3045,8 @@ msgid "Frozen Industrial Site (MP)"
 msgstr "Frossent industriområde (MP)"
 
 #: ../base/ufos/maps.ufo:5420
-#, fuzzy
 msgid "A container harbour."
-msgstr "En lokal havn."
+msgstr "En containerhavn."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
 #, fuzzy
@@ -16796,9 +16795,8 @@ msgid "Amphetamine Implant"
 msgstr ""
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
-#, fuzzy
 msgid "Muscle Stimulant"
-msgstr "Stimulerende"
+msgstr "Muskelstimulerende"
 
 #: ../base/ufos/seq_credits.ufo:44
 msgid "http://www.ufoai.org"
@@ -17514,12 +17512,11 @@ msgstr ""
 "veldig nær basen for å unngå en lengre jakt."
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
 "seem to ignore unconscious civilians."
 msgstr ""
-"Vurdere å svimeslå sivile for å hindre de fra å løpe rundt. Romvesener synes "
+"Vurder å svimeslå sivile for å hindre de fra å løpe rundt. Romvesener synes "
 "å ignorere bevisstløse personer."
 
 #: ../base/ufos/tips.ufo:46
@@ -17674,14 +17671,12 @@ msgid "Day"
 msgstr "Dag"
 
 #: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
-#, fuzzy
 msgid "Upload"
-msgstr "Tøm"
+msgstr "Opplasting"
 
 #: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
-#, fuzzy
 msgid "Delete this team"
-msgstr "Slett dette bokmerket"
+msgstr "Slett dette teamet"
 
 # # in game
 #: ../base/ufos/ui/_menu.ufo:440
@@ -17690,28 +17685,24 @@ msgid "Currently loaded"
 msgstr "Nåværende node:"
 
 #: ../base/ufos/ui/_menu.ufo:515
-#, fuzzy
 msgid "Generate New Team"
-msgstr "Generer et tilfeldig team"
+msgstr "Generer nytt team"
 
 #: ../base/ufos/ui/_menu.ufo:596
-#, fuzzy
 msgid "Download new teams"
-msgstr "Laster ned [%s]"
+msgstr "Last ned nye team"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "Tøm"
+msgstr "Nedlasting"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
 msgstr "Lagre nåværende team"
 
 #: ../base/ufos/ui/_menu.ufo:615
-#, fuzzy
 msgid "Save Team"
-msgstr "Lagre teamet ditt"
+msgstr "Lagre team"
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
@@ -18286,19 +18277,16 @@ msgid "Do not quit."
 msgstr "Ikke avslutt"
 
 #: ../base/ufos/ui/cgame.ufo:26
-#, fuzzy
 msgid "Remove this file from the server"
-msgstr "Fjern soldat fra dette fartøyet"
+msgstr "Fjern denne filen fra serveren"
 
 #: ../base/ufos/ui/cgame.ufo:53
-#, fuzzy
 msgid "Available files:"
-msgstr "Tilgjengelige språk"
+msgstr "Tilgjengelige filer:"
 
 #: ../base/ufos/ui/cgame.ufo:93
-#, fuzzy
 msgid "No files uploaded yet"
-msgstr "Ingen partikkel hentet"
+msgstr "Ingen filer lastet opp enda"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -18317,9 +18305,8 @@ msgstr "Høyre hånd"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
 #: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
-#, fuzzy
 msgid "Implant"
-msgstr "Implantater"
+msgstr "Implantat"
 
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:79
@@ -18671,9 +18658,8 @@ msgid "Heavily wounded"
 msgstr "Hardt såret"
 
 #: ../base/ufos/ui/hospital.ufo:188
-#, fuzzy
 msgid "Healthy"
-msgstr "Helse"
+msgstr "Sunn"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -18790,24 +18776,20 @@ msgid "Reserve TUs for shooting."
 msgstr "Reserver TUs for skyting."
 
 #: ../base/ufos/ui/hud_default.ufo:1019
-#, fuzzy
 msgid "Disable reaction fire"
-msgstr "Skift reaksjonsild"
+msgstr "Deaktiver reaksjonsild"
 
 #: ../base/ufos/ui/hud_default.ufo:1025
-#, fuzzy
 msgid "Reaction fire (not available)"
-msgstr "Reaksjonsild (ikke mulig)"
+msgstr "Reaksjonsild (ikke tilgjengelig)"
 
 #: ../base/ufos/ui/hud_default.ufo:1031
-#, fuzzy
 msgid "Enable reaction fire"
-msgstr "Skift reaksjonsild"
+msgstr "Aktiver reaksjonsild"
 
 #: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
-#, fuzzy
 msgid "Target out of range"
-msgstr "Målrett skuddet mot bakken"
+msgstr "Målet er utenfor rekkevidde"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
 #, fuzzy
@@ -18998,9 +18980,8 @@ msgid "Like us on facebook"
 msgstr ""
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
@@ -19512,18 +19493,16 @@ msgid "Admin control"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
-#, fuzzy
 msgid "Round time limit:"
-msgstr "Rundetidsgrensen i sekunder:"
+msgstr "Rundetidsgrense:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Force start"
 msgstr "Tving start"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
-msgstr "Start spillet selv om ikke alle team er klare eller tilkoblet"
+msgstr "Start spillet før alle team er klare"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
@@ -20089,14 +20068,12 @@ msgid "Intel Graphics Hardware Hack:"
 msgstr "Intel grafikkort-hack:"
 
 #: ../base/ufos/ui/options.ufo:1128
-#, fuzzy
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
-"Denne hacken aktiverer teksturkomprimering og deaktiverer GLSL-skyggelegging "
-"på Intel-prosessorenr. Deaktiver den for å kunne slå på avanserte "
-"gjengivelsesfunksjoner."
+"Denne hacken deaktiverer GLSL-skyggelegging på Intel-prosessorenr. Deaktiver "
+"den for å kunne slå på avanserte gjengivelsesfunksjoner."
 
 #: ../base/ufos/ui/options.ufo:1161
 msgid ""
@@ -20848,19 +20825,16 @@ msgid "Save your team"
 msgstr "Lagre teamet ditt"
 
 #: ../base/ufos/ui/team.ufo:714
-#, fuzzy
 msgid "Generate a team"
-msgstr "Generer et tilfeldig team"
+msgstr "Generer et team"
 
 #: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
-#, fuzzy
 msgid "Generate Team"
-msgstr "Generer et tilfeldig team"
+msgstr "Generer team"
 
 #: ../base/ufos/ui/team.ufo:731
-#, fuzzy
 msgid "Generate a new team with the selected race"
-msgstr "Oppdatere GUI-en med det valgte elementet"
+msgstr "Generer et nytt tema med valgt rase"
 
 #: ../base/ufos/ui/transfer.ufo:31
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -20965,7 +20939,6 @@ msgid "Login"
 msgstr ""
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
 msgstr "Passord:"
 
@@ -22290,9 +22263,9 @@ msgid "Working 100%"
 msgstr "Arbeider 100%"
 
 #: client/cgame/campaign/cp_base.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "Not operational, depends on %s"
-msgstr "Ikke operativ, avhenger av"
+msgstr "Ikke operativ, avhenger av %s"
 
 #: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
@@ -22822,11 +22795,11 @@ msgstr ""
 "ikke operativ, avhenger av %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "%3.1f dag igjen"
-msgstr[1] "%3.1f dager igjen"
+msgstr[0] "%d dag igjen"
+msgstr[1] "%d dager igjen"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -23202,12 +23175,11 @@ msgid "Unknown weight"
 msgstr "Ukjent vekt"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
-#, fuzzy
 msgid ""
 "No Command Centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
-"Ingen kommandosentral på denne basen.\n"
+"Ingen kommandosentraler i denne basen.\n"
 "Hangarer er ikke funksjonsdyktige.\n"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
@@ -23453,9 +23425,8 @@ msgid "Alien terror in %s"
 msgstr "Romvesen-terror i %s"
 
 #: client/cgame/campaign/cp_missions.cpp:462
-#, fuzzy
 msgid "Alien terror"
-msgstr "Romvesen-terror i %s"
+msgstr "Romvesen-terror"
 
 #: client/cgame/campaign/cp_missions.cpp:465
 #, c-format
@@ -23703,9 +23674,9 @@ msgid "Not enough credits to finish production in %s."
 msgstr "Ikke nok penger for å avslutte produksjonen på %s."
 
 #: client/cgame/campaign/cp_produce.cpp:442
-#, fuzzy, c-format
+#, c-format
 msgid "Work on %s at %s has finished."
-msgstr "Produksjonen av %s ved %s er ferdig."
+msgstr "Arbeidet med %s ved %s er ferdig."
 
 #: client/cgame/campaign/cp_produce.cpp:443
 #: client/cgame/campaign/cp_produce.cpp:479
@@ -24400,9 +24371,9 @@ msgstr ""
 # #ufopedia
 #: client/cgame/campaign/cp_ufopedia.cpp:678
 #: client/cgame/campaign/cp_ufopedia.cpp:687
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s"
-msgstr "Ufopedia"
+msgstr "Ufopedia: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:684
 msgid "No pre-research description available."
@@ -24561,14 +24532,12 @@ msgid "Error saving team. Nothing to save yet."
 msgstr "Feil ved lagring av team. Ingenting å lagre enda."
 
 #: client/cgame/cl_game_team.cpp:316
-#, fuzzy
 msgid "New Team"
 msgstr "Nytt Lag"
 
 #: client/cgame/cl_game_team.cpp:320
-#, fuzzy
 msgid "Error saving team. Too many teams!"
-msgstr "Feil ved lagring av team. Ingenting å lagre enda."
+msgstr "Feil ved lagring av team. For mange team"
 
 #: client/cgame/cl_game_team.cpp:325
 msgid "Error saving team. Check free disk space!"
@@ -24894,40 +24863,34 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:369
-#, fuzzy
 msgid "Loading"
-msgstr "Last inn"
+msgstr "Laster inn"
 
 #: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
 #: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "Connection failure"
-msgstr "Reaksjonsild"
+msgstr "Tilkoblingsfeil"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
 msgstr ""
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "Denne endringen krever en omstart"
+msgstr "Denne serveren krever passord"
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "Dette utstyret er funksjonelt.\n"
+msgstr "Denne tjeneren er full."
 
 #: client/cl_main.cpp:417
-#, fuzzy
 msgid "You are banned on this server."
-msgstr "Koble til serveren"
+msgstr "Du er utestengt fra denne tjeneren."
 
 #: client/cl_main.cpp:420
-#, fuzzy
 msgid "The game has already started."
-msgstr "Team er allerede i bruk"
+msgstr "Spillet er allerede i gang."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
@@ -24942,9 +24905,8 @@ msgid "The rcon password you specified was wrong."
 msgstr ""
 
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "The server refused the connection."
-msgstr "Tjeneren lukket forbindelsen"
+msgstr "Tjeneren nektet forbindelsen"
 
 #: client/cl_main.cpp:558
 #, c-format
