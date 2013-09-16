@@ -250,7 +250,7 @@ namespace routing
 		dBspHeader_t *header = (dBspHeader_t *) buf;
 		stream.read(buf, size);
 
-		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte* ) buf, 0, 0, 0);
+		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte*) buf, 0, 0, 0);
 		free(buf);
 	}
 

@@ -268,25 +268,25 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t *cin, const byte* data)
 		const int g = roqCin_yuvTable.ug[data[4]] + roqCin_yuvTable.vg[data[5]];
 		const int b = roqCin_yuvTable.ub[data[4]];
 
-		((byte* )&ROQCIN.quadVectors[i].pixel[0])[0] = CIN_ROQ_ClampByte(data[0] + r);
-		((byte* )&ROQCIN.quadVectors[i].pixel[0])[1] = CIN_ROQ_ClampByte(data[0] - g);
-		((byte* )&ROQCIN.quadVectors[i].pixel[0])[2] = CIN_ROQ_ClampByte(data[0] + b);
-		((byte* )&ROQCIN.quadVectors[i].pixel[0])[3] = 255;
+		((byte*)&ROQCIN.quadVectors[i].pixel[0])[0] = CIN_ROQ_ClampByte(data[0] + r);
+		((byte*)&ROQCIN.quadVectors[i].pixel[0])[1] = CIN_ROQ_ClampByte(data[0] - g);
+		((byte*)&ROQCIN.quadVectors[i].pixel[0])[2] = CIN_ROQ_ClampByte(data[0] + b);
+		((byte*)&ROQCIN.quadVectors[i].pixel[0])[3] = 255;
 
-		((byte* )&ROQCIN.quadVectors[i].pixel[1])[0] = CIN_ROQ_ClampByte(data[1] + r);
-		((byte* )&ROQCIN.quadVectors[i].pixel[1])[1] = CIN_ROQ_ClampByte(data[1] - g);
-		((byte* )&ROQCIN.quadVectors[i].pixel[1])[2] = CIN_ROQ_ClampByte(data[1] + b);
-		((byte* )&ROQCIN.quadVectors[i].pixel[1])[3] = 255;
+		((byte*)&ROQCIN.quadVectors[i].pixel[1])[0] = CIN_ROQ_ClampByte(data[1] + r);
+		((byte*)&ROQCIN.quadVectors[i].pixel[1])[1] = CIN_ROQ_ClampByte(data[1] - g);
+		((byte*)&ROQCIN.quadVectors[i].pixel[1])[2] = CIN_ROQ_ClampByte(data[1] + b);
+		((byte*)&ROQCIN.quadVectors[i].pixel[1])[3] = 255;
 
-		((byte* )&ROQCIN.quadVectors[i].pixel[2])[0] = CIN_ROQ_ClampByte(data[2] + r);
-		((byte* )&ROQCIN.quadVectors[i].pixel[2])[1] = CIN_ROQ_ClampByte(data[2] - g);
-		((byte* )&ROQCIN.quadVectors[i].pixel[2])[2] = CIN_ROQ_ClampByte(data[2] + b);
-		((byte* )&ROQCIN.quadVectors[i].pixel[2])[3] = 255;
+		((byte*)&ROQCIN.quadVectors[i].pixel[2])[0] = CIN_ROQ_ClampByte(data[2] + r);
+		((byte*)&ROQCIN.quadVectors[i].pixel[2])[1] = CIN_ROQ_ClampByte(data[2] - g);
+		((byte*)&ROQCIN.quadVectors[i].pixel[2])[2] = CIN_ROQ_ClampByte(data[2] + b);
+		((byte*)&ROQCIN.quadVectors[i].pixel[2])[3] = 255;
 
-		((byte* )&ROQCIN.quadVectors[i].pixel[3])[0] = CIN_ROQ_ClampByte(data[3] + r);
-		((byte* )&ROQCIN.quadVectors[i].pixel[3])[1] = CIN_ROQ_ClampByte(data[3] - g);
-		((byte* )&ROQCIN.quadVectors[i].pixel[3])[2] = CIN_ROQ_ClampByte(data[3] + b);
-		((byte* )&ROQCIN.quadVectors[i].pixel[3])[3] = 255;
+		((byte*)&ROQCIN.quadVectors[i].pixel[3])[0] = CIN_ROQ_ClampByte(data[3] + r);
+		((byte*)&ROQCIN.quadVectors[i].pixel[3])[1] = CIN_ROQ_ClampByte(data[3] - g);
+		((byte*)&ROQCIN.quadVectors[i].pixel[3])[2] = CIN_ROQ_ClampByte(data[3] + b);
+		((byte*)&ROQCIN.quadVectors[i].pixel[3])[3] = 255;
 
 		data += 6;
 	}
@@ -425,7 +425,7 @@ static void CIN_ROQ_DecodeSoundMono (cinematic_t *cin, const byte* data)
 		samples[j + 1] = (short)prev;
 	}
 
-	M_AddToSampleBuffer(&ROQCIN.musicStream, ROQ_SOUND_RATE, i, (const byte* )samples);
+	M_AddToSampleBuffer(&ROQCIN.musicStream, ROQ_SOUND_RATE, i, (const byte*)samples);
 }
 
 /**
@@ -447,7 +447,7 @@ static void CIN_ROQ_DecodeSoundStereo (cinematic_t *cin, const byte* data)
 		samples[i + 1] = prevR;
 	}
 
-	M_AddToSampleBuffer(&ROQCIN.musicStream, ROQ_SOUND_RATE, i / 2, (const byte* )samples);
+	M_AddToSampleBuffer(&ROQCIN.musicStream, ROQ_SOUND_RATE, i / 2, (const byte*)samples);
 }
 
 /**

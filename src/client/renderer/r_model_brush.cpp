@@ -60,7 +60,7 @@ static void R_ModLoadLighting (const lump_t *l)
 		return;
 
 	r_worldmodel->bsp.lightdata  = Mem_PoolAllocTypeN(byte, l->filelen, vid_lightPool);
-	r_worldmodel->bsp.lightquant = *(const byte* ) (mod_base + l->fileofs);
+	r_worldmodel->bsp.lightquant = *(const byte*) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
@@ -1062,7 +1062,7 @@ static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, in
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
-	mod_base = (byte* ) header;
+	mod_base = (byte*) header;
 
 	BSP_SwapHeader(header, r_worldmodel->name);
 

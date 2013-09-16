@@ -168,7 +168,7 @@ void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
 			NET_WritePos(buf, va_arg(ap, float *));
 			break;
 		case 'g':
-			NET_WriteGPos(buf, va_arg(ap, byte* ));
+			NET_WriteGPos(buf, va_arg(ap, byte*));
 			break;
 		case 'd':
 			NET_WriteDir(buf, va_arg(ap, float *));
@@ -184,7 +184,7 @@ void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
 			break;
 		case '*': {
 			const int n = va_arg(ap, int);
-			const byte* p = va_arg(ap, byte* );
+			const byte* p = va_arg(ap, byte*);
 			NET_WriteShort(buf, n);
 			for (int i = 0; i < n; i++)
 				NET_WriteByte(buf, *p++);
@@ -398,7 +398,7 @@ void NET_ReadData (dbuffer *buf, void* data, int len)
 	int i;
 
 	for (i = 0; i < len; i++)
-		((byte* ) data)[i] = NET_ReadByte(buf);
+		((byte*) data)[i] = NET_ReadByte(buf);
 }
 
 void NET_ReadDir (dbuffer *buf, vec3_t dir)
@@ -461,7 +461,7 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 				const int n = NET_ReadShort(buf);
 
 				*va_arg(ap, int*) = n;
-				p = va_arg(ap, byte* );
+				p = va_arg(ap, byte*);
 
 				for (i = 0; i < n; i++)
 					*p++ = NET_ReadByte(buf);

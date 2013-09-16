@@ -412,7 +412,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
 			/* pop an element off the stack */
-			e = (byte* ) stackPtr[--stackIdx] - cmdStack;
+			e = (byte*) stackPtr[--stackIdx] - cmdStack;
 
 			i = RSTACK - cmd->ref;
 			if (!i) {
@@ -453,14 +453,14 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for pic (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 				p->pic = CL_ParticleGetArt((char*) stackPtr[stackIdx], p->frame, ART_PIC);
-				e = (byte* ) stackPtr[stackIdx] - cmdStack;
+				e = (byte*) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char*) stackPtr[stackIdx], p->frame, ART_MODEL);
-				e = (byte* ) stackPtr[stackIdx] - cmdStack;
+				e = (byte*) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, program) == -cmd->ref) {
@@ -469,7 +469,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 				p->program = R_LoadProgram((char*) stackPtr[stackIdx], R_InitParticleProgram, R_UseParticleProgram);
 				if (p->program)
 					p->program->userdata = p;
-				e = (byte* ) stackPtr[stackIdx] - cmdStack;
+				e = (byte*) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 

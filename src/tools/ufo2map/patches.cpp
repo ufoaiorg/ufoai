@@ -74,7 +74,7 @@ void CalcTextureReflectivity (void)
 		color[0] = color[1] = color[2] = 0;
 
 		for(j = 0; j < texels; j++){
-			const byte* pos = (byte* )surf->pixels + j * 4;
+			const byte* pos = (byte*)surf->pixels + j * 4;
 			color[0] += *pos++; /* r */
 			color[1] += *pos++; /* g */
 			color[2] += *pos++; /* b */

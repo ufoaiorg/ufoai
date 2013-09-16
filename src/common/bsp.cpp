@@ -815,7 +815,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
-	base = (const byte* ) buf;
+	base = (const byte*) buf;
 
 	/* init */
 	if (mapTiles->numTiles >= MAX_MAPTILES)

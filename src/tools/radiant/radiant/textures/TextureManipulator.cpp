@@ -329,15 +329,15 @@ void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int 
 		free(row2);
 
 		rowsize = outwidth * bytesperpixel;
-		row1 = (byte* ) malloc(rowsize);
-		row2 = (byte* ) malloc(rowsize);
+		row1 = (byte*) malloc(rowsize);
+		row2 = (byte*) malloc(rowsize);
 	}
 
 	byte const *const indata = static_cast<byte const*>(indata_);
 	if (bytesperpixel == 4) {
 		int i, j, yi, oldy, f, fstep, lerp, endy = (inheight - 1), inwidth4 = inwidth * 4, outwidth4 = outwidth * 4;
 		byte* out;
-		out = (byte* ) outdata;
+		out = (byte*) outdata;
 		fstep = (int) (inheight * 65536.0f / outheight);
 #define LERPBYTE(i) out[i] = (byte) ((((row2[i] - row1[i]) * lerp) >> 16) + row1[i])
 
@@ -423,7 +423,7 @@ void TextureManipulator::resampleTexture (const void* indata_, int inwidth, int 
 	} else if (bytesperpixel == 3) {
 		int i, j, yi, oldy, f, fstep, lerp, endy = (inheight - 1), inwidth3 = inwidth * 3, outwidth3 = outwidth * 3;
 		byte* out;
-		out = (byte* ) outdata;
+		out = (byte*) outdata;
 		fstep = (int) (inheight * 65536.0f / outheight);
 #define LERPBYTE(i) out[i] = (byte) ((((row2[i] - row1[i]) * lerp) >> 16) + row1[i])
 

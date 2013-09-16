@@ -248,7 +248,7 @@ void R_WriteJPG (qFILE *f, byte* buffer, int width, int height, int quality)
 	jpeg_set_defaults(&cinfo);
 	jpeg_set_quality(&cinfo, quality, TRUE);
 	jpeg_start_compress(&cinfo, TRUE);	/* start compression */
-	jpeg_write_marker(&cinfo, JPEG_COM, (const byte* ) "UFOAI", (uint32_t) 5);
+	jpeg_write_marker(&cinfo, JPEG_COM, (const byte*) "UFOAI", (uint32_t) 5);
 
 	/* Feed scanline data */
 	w3 = cinfo.image_width * 3;

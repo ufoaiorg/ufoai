@@ -338,7 +338,7 @@ int FS_Read2 (void* buffer, int len, qFILE *f, bool failOnEmptyRead)
 	byte* buf;
 	int tries;
 
-	buf = (byte* ) buffer;
+	buf = (byte*) buffer;
 
 	if (f->z) {
 		read = unzReadCurrentFile(f->z, buf, len);
@@ -1554,7 +1554,7 @@ int FS_Write (const void* buffer, int len, qFILE * f)
 	if (!f->f)
 		return 0;
 
-	const byte* buf = (const byte* ) buffer;
+	const byte* buf = (const byte*) buffer;
 
 	int remaining = len;
 	int tries = 0;

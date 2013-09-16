@@ -199,14 +199,14 @@ void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *ou
 		assert(index2 < inwidth * inheight);
 
 		for (j = 0; j < outwidth; j++) {
-			const byte* pix1 = (const byte* ) inrow + p1[j];
-			const byte* pix2 = (const byte* ) inrow + p2[j];
-			const byte* pix3 = (const byte* ) inrow2 + p1[j];
-			const byte* pix4 = (const byte* ) inrow2 + p2[j];
-			((byte* ) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
-			((byte* ) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
-			((byte* ) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
-			((byte* ) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
+			const byte* pix1 = (const byte*) inrow + p1[j];
+			const byte* pix2 = (const byte*) inrow + p2[j];
+			const byte* pix3 = (const byte*) inrow2 + p1[j];
+			const byte* pix4 = (const byte*) inrow2 + p2[j];
+			((byte*) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
+			((byte*) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
+			((byte*) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
+			((byte*) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
 }
@@ -268,7 +268,7 @@ void R_UploadTexture (const unsigned *data, int width, int height, image_t* imag
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
 	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((const byte* ) data) + 3; i < c; i++, scan += 4) {
+	for (i = 0, scan = ((const byte*) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
 #ifdef GL_VERSION_ES_CM_1_0
 			texFormat = GL_RGBA;
@@ -587,7 +587,7 @@ image_t *R_FindImage (const char* pname, imagetype_t type)
 	}
 
 	if ((surf = Img_LoadImage(lname))) {
-		image = R_LoadImageData(lname, (byte* )surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte*)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 		if (image->type == it_world) {
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);

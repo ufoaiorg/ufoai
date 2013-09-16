@@ -150,7 +150,7 @@ image_t *R_FindImage (const char* pname, imagetype_t type)
 	Com_StripExtension(pname, lname, sizeof(lname));
 
 	if ((surf = Img_LoadImage(lname))) {
-		image = R_LoadImageData(lname, (byte* )surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte*)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 	} else {
 		image = nullptr;

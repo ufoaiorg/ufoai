@@ -134,7 +134,7 @@ typedef struct serverInstanceGame_s {
 	memPool_t *gameSysPool;		/**< the mempool for the game lib */
 } serverInstanceGame_t;
 
-#define PLAYER_NUM(n) ((player_t *)((byte* )svs.ge->players + svs.ge->player_size * (n)))
+#define PLAYER_NUM(n) ((player_t *)((byte*)svs.ge->players + svs.ge->player_size * (n)))
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */

@@ -220,7 +220,7 @@ static uint32_t CopyLump (const dBspHeader_t* header, int lumpIdx, void* dest, s
 	if (length % size)
 		Sys_Error("LoadBSPFile: odd lump size");
 
-	memcpy(dest, (const byte* )header + ofs, length);
+	memcpy(dest, (const byte*)header + ofs, length);
 
 	return length / size;
 }
