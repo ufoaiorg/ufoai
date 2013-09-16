@@ -432,7 +432,8 @@ bool GAME_GetTeamFileName (unsigned int index, char* filename, size_t filenameLe
 	GAME_GetRelativeSavePath(buf, sizeof(buf));
 	char pattern[MAX_OSPATH];
 	Com_sprintf(pattern, sizeof(pattern), "%s*.mpt", buf);
-	FS_BuildFileList(pattern);
+	const int amount = FS_BuildFileList(pattern);
+	Com_DPrintf(DEBUG_CLIENT, "found %i entries for %s\n", amount, pattern);
 	while ((save = FS_NextFileFromFileList(buf)) != nullptr) {
 		if (index == 0)
 			break;
