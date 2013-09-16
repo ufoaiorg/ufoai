@@ -133,13 +133,13 @@ const eventRegister_t events[] = {
 	/** @sa G_ReadItem, G_WriteItem */
 	{E(EV_INV_TRANSFER), "sbsbbbbs", nullptr, nullptr, nullptr},
 
-	{E(EV_MODEL_EXPLODE), "s", CL_Explode, CL_ExplodeTime, nullptr},
-	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, nullptr, nullptr},
+	{E(EV_MODEL_EXPLODE), "s&", CL_Explode, CL_ExplodeTime, nullptr},
+	{E(EV_MODEL_EXPLODE_TRIGGERED), "s&", CL_Explode, nullptr, nullptr},
 
 	{E(EV_PARTICLE_APPEAR), "ssp&", CL_ParticleAppear, CL_ParticleAppearTime, nullptr},
 	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, CL_ParticleSpawnEventTime, nullptr},
 
-	{E(EV_SOUND), "sp&", CL_SoundEvent, nullptr, nullptr},
+	{E(EV_SOUND), "spb&", CL_SoundEvent, CL_SoundEventTime, nullptr},
 
 	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, nullptr, nullptr},
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, nullptr, nullptr},
@@ -203,4 +203,28 @@ int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, in
 		return eventTiming->nextTime;
 	}
 	return nextTime;
+}
+
+/**
+ * @brief Some sound strings may end on a '+' to indicate to use a random sound
+ * which can be identified by replacing the '+' by a number
+ * @param[in,out] sound The sound string that we might need to convert
+ * @param[in] size The size of the @c sound buffer
+ * @return Pointer to the @c sound buffer
+ */
+const char *CL_ConvertSoundFromEvent (char* sound, size_t size)
+{
+	const size_t length = strlen(sound) - 1;
+	if (sound[length] != '+')
+		return sound;
+
+	for (int i = 1; i <= 99; i++) {
+		if (!FS_CheckFile("sounds/%s%02i", sound, i) == -1)
+			continue;
+		sound[length] = '\0';
+		Q_strcat(sound, size, "%02i", rand() % i + 1);
+		return sound;
+	}
+
+	return "";
 }

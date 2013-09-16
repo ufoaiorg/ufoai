@@ -40,7 +40,11 @@ int CL_ExplodeTime (const struct eventRegister_s *self, dbuffer *msg, eventTimin
  */
 void CL_Explode (const eventRegister_t *self, dbuffer *msg)
 {
-	const int entnum = NET_ReadShort(msg);
+	int entnum;
+	char sound[MAX_QPATH];
+
+	NET_ReadFormat(msg, self->formatString, &entnum, sound, sizeof(sound));
+
 	le_t *le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
@@ -48,6 +52,10 @@ void CL_Explode (const eventRegister_t *self, dbuffer *msg)
 	le->inuse = false;
 	if (le->modelnum1 > 0)
 		cl.model_clip[le->modelnum1] = nullptr;
+
+	const char* file = CL_ConvertSoundFromEvent(sound, sizeof(sound));
+	Com_DPrintf(DEBUG_SOUND, "Play network sample %s at (%f:%f:%f)\n", file, le->origin[0], le->origin[1], le->origin[2]);
+	S_LoadAndPlaySample(file, le->origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);

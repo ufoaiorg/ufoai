@@ -482,6 +482,16 @@ static void SV_QueueWriteByte (byte c)
 	NET_WriteByte(sv->eventQueue[sv->eventQueuePos - 1].buf, c);
 }
 
+static void SV_QueueWriteString (const char* s)
+{
+	NET_WriteString(sv->eventQueue[sv->eventQueuePos - 1].buf, s);
+}
+
+static void SV_QueueWritePos (const vec3_t pos)
+{
+	NET_WritePos(sv->eventQueue[sv->eventQueuePos - 1].buf, pos);
+}
+
 static void SV_QueueWriteShort (int c)
 {
 	NET_WriteShort(sv->eventQueue[sv->eventQueuePos - 1].buf, c);
@@ -804,6 +814,8 @@ void SV_InitGameProgs (void)
 
 	import.QueueEvent = SV_QueueEvent;
 	import.QueueWriteByte = SV_QueueWriteByte;
+	import.QueueWritePos = SV_QueueWritePos;
+	import.QueueWriteString = SV_QueueWriteString;
 	import.QueueWriteShort = SV_QueueWriteShort;
 
 	import.ReadChar = SV_ReadChar;

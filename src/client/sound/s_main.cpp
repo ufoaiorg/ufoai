@@ -319,6 +319,9 @@ void S_Shutdown (void)
  */
 bool S_LoadAndPlaySample (const char* s, const vec3_t origin, float attenuation, float volume)
 {
+	if (Q_strnull(s))
+		return false;
+
 	s_sample_t *sample = S_LoadSample(s);
 	if (!sample)
 		return false;

@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict &ent, const vec3_t origin, const char* sound)
+void G_EventSpawnSound (playermask_t playerMask, const Edict &ent, const vec3_t origin, const char* sound)
 {
-	G_EventAdd(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0), ent.number);
+	G_EventAdd(playerMask, EV_SOUND, ent.number);
 
 	/* use the entity origin unless it is a bmodel or explicitly specified */
 	if (!origin) {
@@ -55,8 +55,18 @@ void G_EventSpawnSound (playermask_t playerMask, bool instant, const Edict &ent,
 	} else {
 		gi.WritePos(origin);
 	}
+	gi.WriteByte(0xFF);
 	gi.WriteString(sound);
 	G_EventEnd();
+}
+
+void G_EventSpawnFootstepSound (const Edict &ent, const char* sound)
+{
+	const playermask_t playerMask = ~G_VisToPM(ent.visflags);
+	gi.QueueEvent(playerMask, EV_SOUND, ent.number);
+	gi.QueueWritePos(ent.origin);
+	gi.QueueWriteByte(ent.moveinfo.steps);
+	gi.QueueWriteString(sound);
 }
 
 /**
@@ -653,17 +663,19 @@ void G_EventDoorClose (const Edict &door)
 	G_EventEnd();
 }
 
-void G_EventModelExplodeTriggered (const Edict &ent)
+void G_EventModelExplodeTriggered (const Edict &ent, const char *sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED, ent.number);
+	gi.WriteString(sound);
 	G_EventEnd();
 }
 
-void G_EventModelExplode (const Edict &ent)
+void G_EventModelExplode (const Edict &ent, const char *sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE, ent.number);
+	gi.WriteString(sound);
 	G_EventEnd();
 }
 

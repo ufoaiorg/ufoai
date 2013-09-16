@@ -366,7 +366,6 @@ static bool G_RunFrame (void)
 
 	/* run ai */
 	AI_Run();
-	G_PhysicsRun();
 
 	G_SendBoundingBoxes();
 

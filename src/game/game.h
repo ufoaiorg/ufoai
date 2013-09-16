@@ -257,6 +257,8 @@ typedef struct game_import_s {
 
 	void (IMPORT *QueueEvent) (unsigned int mask, int eType, int entnum);
 	void (IMPORT *QueueWriteByte) (byte c);
+	void (IMPORT *QueueWritePos) (const vec3_t pos);
+	void (IMPORT *QueueWriteString) (const char* s);
 	void (IMPORT *QueueWriteShort) (int c);
 
 	/* network messaging (reading) */

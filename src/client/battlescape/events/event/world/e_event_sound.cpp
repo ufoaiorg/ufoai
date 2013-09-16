@@ -26,6 +26,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_sound.h"
 
+int CL_SoundEventTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
+{
+	char sound[MAX_QPATH];
+	vec3_t origin;
+	int number;
+	int step;
+
+	/* read data */
+	NET_ReadFormat(msg, self->formatString, &number, &origin, &step, &sound, sizeof(sound));
+
+	const le_t *le = LE_Get(number);
+	if (!le)
+		LE_NotFoundError(number);
+	if (step >= MAX_ROUTE)
+		return eventTiming->nextTime;
+	const int stepTime = CL_GetStepTime(eventTiming, le, step);
+	if (eventTiming->shootTime > stepTime)
+		return eventTiming->impactTime;
+	return stepTime;
+}
+
 /**
  * @brief Play a sound on the client side
  * @param[in] self Pointer to the event structure that is currently executed
@@ -40,9 +61,10 @@ void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 	char sound[MAX_QPATH];
 	vec3_t origin;
 	int number;
+	int step;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &number, &origin, &sound, sizeof(sound));
+	NET_ReadFormat(msg, self->formatString, &number, &origin, &step, &sound, sizeof(sound));
 
 	le_t *le = LE_Get(number);
 	if (le) {
@@ -53,19 +75,7 @@ void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 		}
 	}
 
-	size_t length = strlen(sound) - 1;
-	if (sound[length] == '+') {
-		int i;
-
-		sound[length] = '\0';
-		for (i = 1; i <= 99; i++) {
-			if (FS_CheckFile("sounds/%s%02i", sound, i) == -1)
-				break;
-		}
-
-		Com_sprintf(sound + length, sizeof(sound) - length, "%02i", rand() % i + 1);
-	}
-
-	Com_DPrintf(DEBUG_SOUND, "Play network sample %s at (%f:%f:%f)\n", sound, origin[0], origin[1], origin[2]);
-	S_LoadAndPlaySample(sound, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
+	const char* file = CL_ConvertSoundFromEvent(sound, sizeof(sound));
+	Com_DPrintf(DEBUG_SOUND, "Play network sample %s at (%f:%f:%f)\n", file, origin[0], origin[1], origin[2]);
+	S_LoadAndPlaySample(file, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
 }

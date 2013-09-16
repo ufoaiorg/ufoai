@@ -184,6 +184,37 @@ static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t* 
 	return false;
 }
 
+static void G_SendFootstepSound (Edict* ent, const int contentFlags)
+{
+	const char* snd = nullptr;
+
+	if (contentFlags & CONTENTS_WATER) {
+		if (ent->contentFlags & CONTENTS_WATER) {
+			/* looks like we already are in the water */
+			/* send water moving sound */
+			snd = "footsteps/water_under";
+		} else {
+			/* send water entering sound */
+			snd = "footsteps/water_in";
+		}
+	} else if (ent->contentFlags & CONTENTS_WATER) {
+		/* send water leaving sound */
+		snd = "footsteps/water_out";
+	} else if (Q_strvalid(ent->chr.teamDef->footstepSound)) {
+		/* some teams have a fixed footstep or moving sound */
+		snd = ent->chr.teamDef->footstepSound;
+	} else {
+		/* we should really hit the ground with this */
+		const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
+		const trace_t trace = G_Trace(ent->origin, to, nullptr, MASK_SOLID);
+		if (trace.surface) {
+			snd = gi.GetFootstepSound(trace.surface->name);
+		}
+	}
+	if (snd != nullptr) {
+		G_EventSpawnFootstepSound(*ent, snd);
+	}
+}
 /**
  * @brief Writes a step of the move event to the net
  * @param[in] ent Edict to move
@@ -198,21 +229,25 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 		G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_MOVE, ent->number);
 	}
 
-	/* the moveinfo stuff is used inside the G_PhysicsStep think function */
 	if (ent->moveinfo.steps >= MAX_ROUTE) {
 		ent->moveinfo.steps = 0;
-		ent->moveinfo.currentStep = 0;
 	}
 	gi.WriteByte(ent->moveinfo.steps);
-	ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
-	ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
-	ent->moveinfo.steps++;
 
 	/* write move header and always one step after another - because the next step
 	 * might already be the last one due to some stop event */
 	gi.WriteShort(dvec);
 	gi.WriteShort(ent->speed);
 	gi.WriteShort(contentFlags);
+
+	/* Send the sound effect to everyone how's not seeing the actor */
+	if (!G_IsCrouched(ent)) {
+		G_SendFootstepSound(ent, contentFlags);
+	}
+
+	ent->contentFlags = contentFlags;
+
+	ent->moveinfo.steps++;
 }
 
 static int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos)
@@ -316,10 +351,6 @@ void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t t
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
 		return;
-
-	/* this let the footstep sounds play even over network */
-	ent->think = G_PhysicsStep;
-	ent->nextthink = level.time;
 
 	/* assemble dvec-encoded move data */
 	VectorCopy(to, pos);

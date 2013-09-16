@@ -64,33 +64,34 @@ static bool Destroy_Breakable (Edict* self)
 
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
-	/* the HP value is used to decide whether this was a triggered call or a
-	 * call during a fight - a triggered call will be handled differently in
-	 * terms of timing and the related particle effects in the client code */
-	if (self->HP == 0)
-		G_EventModelExplodeTriggered(*self);
-	else
-		G_EventModelExplode(*self);
-
-	if (self->particle)
-		G_SpawnParticle(origin, self->spawnflags, self->particle);
-
+	const char *breakSound = nullptr;
 	switch (self->material) {
 	case MAT_GLASS:
-		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakglass+");
+		breakSound = "misc/breakglass+";
 		break;
 	case MAT_METAL:
-		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakmetal+");
+		breakSound = "misc/breakmetal+";
 		break;
 	case MAT_ELECTRICAL:
-		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakelectric+");
+		breakSound = "misc/breakelectric+";
 		break;
 	case MAT_WOOD:
-		G_EventSpawnSound(PM_ALL, false, *self, origin, "misc/breakwood+");
+		breakSound = "misc/breakwood+";
 		break;
 	case MAT_MAX:
 		break;
 	}
+
+	/* the HP value is used to decide whether this was a triggered call or a
+	 * call during a fight - a triggered call will be handled differently in
+	 * terms of timing and the related particle effects in the client code */
+	if (self->HP == 0)
+		G_EventModelExplodeTriggered(*self, breakSound);
+	else
+		G_EventModelExplode(*self, breakSound);
+
+	if (self->particle)
+		G_SpawnParticle(origin, self->spawnflags, self->particle);
 
 	G_TouchEdicts(self, 10.0f);
 
@@ -235,7 +236,7 @@ static bool Door_Use (Edict* door, Edict* activator)
 			G_EventDoorClose(*door);
 		if (door->noise[0] != '\0') {
 			const playermask_t playerMask = G_GetClosePlayerMask(door->origin, UNIT_SIZE * 10);
-			G_EventSpawnSound(playerMask, false, *door, door->origin, door->noise);
+			G_EventSpawnSound(playerMask, *door, door->origin, door->noise);
 		}
 	}
 

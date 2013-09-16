@@ -245,10 +245,6 @@ void G_InvList_f(const Player &player);
 void G_MoraleBehaviour(int team);
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-/* g_phys */
-void G_PhysicsRun(void);
-void G_PhysicsStep(Edict* ent);
-
 /* g_round */
 void G_CheckForceEndRound(void);
 void G_ClientEndRound(Player &player);
@@ -282,10 +278,7 @@ typedef enum {
 
 /** @brief actor movement */
 typedef struct moveinfo_s {
-	int			contentFlags[MAX_ROUTE];
-	teammask_t	visflags[MAX_ROUTE];
 	byte		steps;
-	int			currentStep;
 } moveinfo_t;
 
 /**
