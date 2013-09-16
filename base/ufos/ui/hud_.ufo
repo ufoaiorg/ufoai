@@ -625,7 +625,8 @@ window hud_chat
 					if ( *cvar:mn_chatselect eq "irc" ) {
 						*node:parent.ircscreen@invis = false
 						*node:parent.chatscreen@invis = true
-						cmd "irc_connect;hud_activate_irc_textentry;"
+						cmd "irc_connect;"
+						call *node:root.hud_activate_chat_textentry
 					}
 					if ( *cvar:mn_chatselect eq "chat" ) {
 						*node:parent.ircscreen@invis = true
@@ -735,7 +736,8 @@ window hud_chat
 					font		"f_verysmall"
 					clickoutabort	true
 					onChange	{
-						cmd "irc_chanmsg;hud_activate_irc_textentry;"
+						cmd "irc_chanmsg;"
+						call *node:root.hud_activate_chat_textentry
 					}
 				}
 			}
