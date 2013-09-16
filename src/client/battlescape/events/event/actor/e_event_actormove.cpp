@@ -76,7 +76,7 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	}
 	++newStep->steps;
 
-	if (newStep->steps >= MAX_ROUTE)
+	if (newStep->steps > MAX_ROUTE)
 		Com_Error(ERR_DROP, "route length overflow: %i", newStep->steps);
 
 	/* skip the end of move marker */
@@ -140,7 +140,7 @@ void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
 	}
 	le->pathLength = i;
 
-	if (le->pathLength >= MAX_ROUTE)
+	if (le->pathLength > MAX_ROUTE)
 		Com_Error(ERR_DROP, "Overflow in pathLength (entnum: %i)", number);
 
 	/* skip the end of move marker */
