@@ -723,6 +723,23 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 }
 
 /**
+ * @brief Returns the actor that is closest to the given origin
+ */
+le_t* CL_ActorGetClosest (const vec3_t origin, int team)
+{
+	le_t* closest = nullptr;
+	le_t* le = nullptr;
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->team != team || !LE_IsLivingAndVisibleActor(le))
+			continue;
+
+		if (closest == nullptr || VectorDist(le->origin, origin) < VectorDist(closest->origin, origin))
+			closest = le;
+	}
+	return closest;
+}
+
+/**
  * @brief Checks that an action is valid.
  * @param[in] le Pointer to actor for which we check an action.
  * @return true if action is valid.

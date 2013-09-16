@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
+#include "../../../cl_actor.h"
 #include "e_event_sound.h"
 
 int CL_SoundEventTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
@@ -77,5 +78,16 @@ void CL_SoundEvent (const eventRegister_t *self, dbuffer *msg)
 
 	const char* file = CL_ConvertSoundFromEvent(sound, sizeof(sound));
 	Com_DPrintf(DEBUG_SOUND, "Play network sample %s at (%f:%f:%f)\n", file, origin[0], origin[1], origin[2]);
+	if (step >= 0 && step < MAX_ROUTE) {
+		le_t* closest = CL_ActorGetClosest(origin, cls.team);
+		if (closest != nullptr) {
+			vec3_t tmp;
+			VectorCopy(cl.cam.camorg, tmp);
+			VectorCopy(closest->origin, cl.cam.camorg);
+			S_LoadAndPlaySample(file, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
+			VectorCopy(tmp, cl.cam.camorg);
+		}
+		return;
+	}
 	S_LoadAndPlaySample(file, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
 }

@@ -66,6 +66,7 @@ int CL_ActorMoveMode(const le_t *le);
 void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);
 bool CL_ActorFireModeActivated(const actorModes_t mode);
 void CL_ActorConditionalMoveCalc(le_t *le);
+le_t* CL_ActorGetClosest(const vec3_t origin, int team);
 bool CL_ActorSelect(le_t *le);
 bool CL_ActorSelectList(int num);
 bool CL_ActorSelectNext(void);
