@@ -32,10 +32,10 @@ typedef struct cBspModel_s {
 
 /** @sa dBspTexinfo_t */
 typedef struct cBspSurface_s {
-	char name[MAX_QPATH];	/**< the texture name */
-	uint32_t surfaceFlags;	/**< surface flags SURF_* */
-	uint32_t value;			/**< currently not used except in loading CMod_LoadSurfaces */
-	byte* lightmap;			/**< lightmap samples for server side visibility lookup */
+	char name[MAX_QPATH];			/**< the texture name */
+	uint32_t surfaceFlags;			/**< surface flags SURF_* */
+	uint32_t value;					/**< currently not used except in loading CMod_LoadSurfaces */
+	byte* lightmap;					/**< lightmap samples for server side visibility lookup */
 } cBspSurface_t;
 
 typedef struct cBspNode_s {
@@ -57,9 +57,9 @@ typedef struct cBspLeaf_s {
 
 typedef struct cBspBrush_s {
 	uint32_t contentFlags;			/**< the CONTENTS_* mask */
-	int numsides;				/**< number of sides for this models - start to count from firstbrushside */
-	int firstbrushside;			/**< first brush in the list of this model */
-	int checkcount;				/**< to avoid repeated testings */
+	int numsides;					/**< number of sides for this models - start to count from firstbrushside */
+		int firstbrushside;			/**< first brush in the list of this model */
+		int checkcount;				/**< to avoid repeated testings */
 } cBspBrush_t;
 
 /**
@@ -362,7 +362,7 @@ typedef struct mapData_s {
 
 typedef struct {
 	vec3_t mins, maxs;
-	vec3_t origin;			/**< for sounds or lights */
+	vec3_t origin;				/**< for sounds or lights */
 	int32_t headnode;
 	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
 } dBspModel_t;
@@ -379,9 +379,9 @@ typedef struct {
  * @note 0-2 are axial planes
  */
 typedef struct {
-	vec3_t normal;	/**< normal vector */
-	float dist;		/**< distance from origin */
-	int type;		/**< PLANE_X - PLANE_ANYZ */
+	vec3_t normal;				/**< normal vector */
+	float dist;					/**< distance from origin */
+	int type;					/**< PLANE_X - PLANE_ANYZ */
 } dBspPlane_t;
 
 typedef struct {
@@ -395,9 +395,9 @@ typedef struct {
 
 /** @sa cBspSurface_t */
 typedef struct texinfo_s {
-	float vecs[2][4];				/**< [s/t][xyz offset] */
-	uint32_t surfaceFlags;			/**< miptex flags + overrides */
-	uint32_t value;					/**< light emission, etc */
+	float vecs[2][4];			/**< [s/t][xyz offset] */
+	uint32_t surfaceFlags;		/**< miptex flags + overrides */
+	uint32_t value;				/**< light emission, etc */
 	char texture[32];			/**< texture name */
 } dBspTexinfo_t;
 
@@ -410,7 +410,7 @@ typedef struct {
 } dBspEdge_t;
 
 typedef struct {
-	uint16_t planenum;	/**< planenum is used in lighting stage, but not in ufo */
+	uint16_t planenum;			/**< planenum is used in lighting stage, but not in ufo */
 	short side;
 
 	int firstedge;				/**< we must support > 64k edges */
@@ -418,12 +418,12 @@ typedef struct {
 	short texinfo;				/**< index in the global texinfo array */
 
 	/** lighting info */
-	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */
+	int lightofs[LIGHTMAP_MAX];	/**< start of [surfsize] samples */
 } dBspSurface_t;
 
 /** @brief convex region of space in the BSP tree */
 typedef struct {
-	uint32_t contentFlags;				/**< OR of all brushes */
+	uint32_t contentFlags;		/**< OR of all brushes */
 
 	short area;
 
@@ -443,7 +443,7 @@ typedef struct {
 typedef struct {
 	int firstbrushside;
 	int numsides;
-	uint32_t contentFlags;				/**< OR of all brushes */
+	uint32_t contentFlags;		/**< OR of all brushes */
 } dBspBrush_t;
 
 typedef struct {
