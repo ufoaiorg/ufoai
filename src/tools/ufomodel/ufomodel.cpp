@@ -576,14 +576,14 @@ void R_ReallocateStateArrays(int size)
 	/* TODO: check if stub without code would be sufficient here */
 	if (size <= r_state.array_size)
 		return;
-	r_state.vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.vertex_array_3d = (GLfloat* ) Mem_SafeReAlloc(r_state.vertex_array_3d, size * 3 * sizeof(GLfloat));
 	r_state.vertex_array_2d = (GLshort*) Mem_SafeReAlloc(r_state.vertex_array_2d, size * 2 * sizeof(GLshort));
-	r_state.color_array = (GLfloat *) Mem_SafeReAlloc(r_state.color_array, size * 4 * sizeof(GLfloat));
-	r_state.normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.normal_array, size * 3 * sizeof(GLfloat));
-	r_state.tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.tangent_array, size * 4 * sizeof(GLfloat));
-	r_state.next_vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat));
-	r_state.next_normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_normal_array, size * 3 * sizeof(GLfloat));
-	r_state.next_tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_tangent_array, size * 4 * sizeof(GLfloat));
+	r_state.color_array = (GLfloat* ) Mem_SafeReAlloc(r_state.color_array, size * 4 * sizeof(GLfloat));
+	r_state.normal_array = (GLfloat* ) Mem_SafeReAlloc(r_state.normal_array, size * 3 * sizeof(GLfloat));
+	r_state.tangent_array = (GLfloat* ) Mem_SafeReAlloc(r_state.tangent_array, size * 4 * sizeof(GLfloat));
+	r_state.next_vertex_array_3d = (GLfloat* ) Mem_SafeReAlloc(r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.next_normal_array = (GLfloat* ) Mem_SafeReAlloc(r_state.next_normal_array, size * 3 * sizeof(GLfloat));
+	r_state.next_tangent_array = (GLfloat* ) Mem_SafeReAlloc(r_state.next_tangent_array, size * 4 * sizeof(GLfloat));
 	r_state.array_size = size;
 }
 
@@ -592,7 +592,7 @@ void R_ReallocateTexunitArray (gltexunit_t *texunit, int size)
 	/* TODO: check if stub without code would be sufficient here */
 	if (size <= texunit->array_size)
 		return;
-	texunit->texcoord_array = (GLfloat *) Mem_SafeReAlloc(texunit->texcoord_array, size * 2 * sizeof(GLfloat));
+	texunit->texcoord_array = (GLfloat* ) Mem_SafeReAlloc(texunit->texcoord_array, size * 2 * sizeof(GLfloat));
 	texunit->array_size = size;
 	if (!r_state.active_texunit)
 		r_state.active_texunit = texunit;

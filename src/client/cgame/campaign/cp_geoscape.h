@@ -70,7 +70,7 @@ void GEO_InitStartup(void);
 const char* GEO_GetTerrainType(const byte* color);
 int GEO_GetCivilianNumberByPosition(const vec2_t pos);
 void GEO_PrintParameterStringByPos(const vec2_t pos);
-void GEO_CheckPositionBoundaries(float *pos);
+void GEO_CheckPositionBoundaries(float* pos);
 bool GEO_IsNight(const vec2_t pos);
 const byte* GEO_GetColor(const vec2_t pos, mapType_t type, bool *coast);
 void GEO_Init(const char* map);

@@ -208,7 +208,7 @@ static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t *ent)
 }
 
 typedef struct {
-	const float *areaMins, *areaMaxs;
+	const float* areaMins, *areaMaxs;
 	edict_t** areaEdictList;
 	int areaEdictListCount, areaEdictListMaxCount;
 } areaParms_t;
@@ -281,8 +281,8 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int max
 /** @brief Server side moveclip - see cmodel.c */
 typedef struct moveclip_s {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	const float *mins, *maxs;	/**< size of the moving object */
-	const float *start, *end;
+	const float* mins, *maxs;	/**< size of the moving object */
+	const float* start, *end;
 	trace_t trace;
 	const edict_t *passedict;
 	int contentmask;
@@ -337,7 +337,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 {
 	int i;
 	edict_t *touchlist[MAX_EDICTS];
-	const float *angles;
+	const float* angles;
 	int headnode = 0;
 	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS);
 

@@ -126,7 +126,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 	vec3_t triangleNormals[MAX_ALIAS_TRIS];
 	vec3_t triangleTangents[MAX_ALIAS_TRIS];
 	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
-	float *texcoords, *verts, *normals, *tangents;
+	float* texcoords, *verts, *normals, *tangents;
 
 	/* set up array pointers for either the previous keyframe or the next keyframe */
 	texcoords = mesh->texcoords;

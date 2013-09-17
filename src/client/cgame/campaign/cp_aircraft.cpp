@@ -1049,7 +1049,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 	/* Aircraft is moving */
 	if (AIR_AircraftMakeMove(deltaTime, aircraft)) {
 		/* aircraft reach its destination */
-		const float *end = aircraft->route.point[aircraft->route.numPoints - 1];
+		const float* end = aircraft->route.point[aircraft->route.numPoints - 1];
 		Vector2Copy(end, aircraft->pos);
 		GEO_CheckPositionBoundaries(aircraft->pos);
 
@@ -2194,7 +2194,7 @@ void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const Employee* pi
  * @param[out] weaponRanges An array containing a unique list of weapons ranges.
  * @return Number of unique weapons ranges.
  */
-int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float *weaponRanges)
+int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float* weaponRanges)
 {
 	int idxSlot;
 	float allWeaponRanges[MAX_AIRCRAFTSLOT];

@@ -67,7 +67,7 @@ class IShader
 		/**
 		 * get the alphaFunc
 		 */
-		virtual void getAlphaFunc (EAlphaFunc *func, float *ref) = 0;
+		virtual void getAlphaFunc (EAlphaFunc *func, float* ref) = 0;
 
 		virtual BlendFunc getBlendFunc () const = 0;
 

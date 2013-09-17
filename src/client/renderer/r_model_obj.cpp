@@ -37,15 +37,15 @@ typedef struct mobjtri_s {
 typedef struct mobj_s {
 	int num_verts;
 	int num_verts_parsed;
-	float *verts;
+	float* verts;
 
 	int num_normals;
 	int num_normals_parsed;
-	float *normals;
+	float* normals;
 
 	int num_texcoords;
 	int num_texcoords_parsed;
-	float *texcoords;
+	float* texcoords;
 
 	int num_tris;
 	int num_tris_parsed;
@@ -227,7 +227,7 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
 
 	if (!strncmp(line, "v ", 2)) {  /* vertex */
 		if (obj->verts) {  /* parse it */
-			float *f = obj->verts + obj->num_verts_parsed * 3;
+			float* f = obj->verts + obj->num_verts_parsed * 3;
 
 			if (sscanf(line + 2, "%f %f %f", &f[0], &f[2], &f[1]) != 3)
 				Com_Error(ERR_DROP, "R_LoadObjModelLine: Malformed vertex for %s: %s.",
@@ -238,7 +238,7 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
 			obj->num_verts++;
 	} else if (!strncmp(line, "vn ", 3)) {  /* normal */
 		if (obj->normals) {  /* parse it */
-			float *f = obj->normals + obj->num_normals_parsed * 3;
+			float* f = obj->normals + obj->num_normals_parsed * 3;
 
 			if (sscanf(line + 3, "%f %f %f", &f[0], &f[1], &f[2]) != 3)
 				Com_Error(ERR_DROP, "R_LoadObjModelLine: Malformed normal for %s: %s.",
@@ -249,7 +249,7 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
 			obj->num_normals++;
 	} else if (!strncmp(line, "vt ", 3)) {  /* texcoord */
 		if (obj->texcoords) {  /* parse it */
-			float *f = obj->texcoords + obj->num_texcoords_parsed * 2;
+			float* f = obj->texcoords + obj->num_texcoords_parsed * 2;
 
 			if (sscanf(line + 3, "%f %f", &f[0], &f[1]) != 2)
 				Com_Error(ERR_DROP, "R_LoadObjModelLine: Malformed texcoord for %s: %s.",
@@ -363,7 +363,7 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte* buffer, int 
 void R_LoadObjModel (model_t *mod, byte* buffer, int bufSize)
 {
 	mobj_t obj;
-	const float *v;
+	const float* v;
 	int i;
 
 	mod->type = mod_obj;

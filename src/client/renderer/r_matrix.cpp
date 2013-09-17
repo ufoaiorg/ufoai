@@ -1473,7 +1473,7 @@ void Matrix4x4_FromOriginQuat (matrix4x4_t *m, double ox, double oy, double oz, 
 /**
  * see http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
  */
-void Matrix4x4_ToOrigin3Quat4Float (const matrix4x4_t *m, float *origin, float *quat)
+void Matrix4x4_ToOrigin3Quat4Float (const matrix4x4_t *m, float* origin, float* quat)
 {
 	float s;
 	quat[3] = sqrt(1.0f + m->m[0][0] + m->m[1][1] + m->m[2][2]) * 0.5f;
@@ -1630,7 +1630,7 @@ void Matrix4x4_Transform3x3 (const matrix4x4_t *in, const float v[3], float out[
 #endif
 }
 
-void Matrix4x4_TransformPositivePlane (const matrix4x4_t *in, float x, float y, float z, float d, float *o)
+void Matrix4x4_TransformPositivePlane (const matrix4x4_t *in, float x, float y, float z, float d, float* o)
 {
 	float scale = sqrt(in->m[0][0] * in->m[0][0] + in->m[0][1] * in->m[0][1] + in->m[0][2] * in->m[0][2]);
 	float iscale = 1.0f / scale;
@@ -1647,7 +1647,7 @@ void Matrix4x4_TransformPositivePlane (const matrix4x4_t *in, float x, float y, 
 #endif
 }
 
-void Matrix4x4_TransformStandardPlane (const matrix4x4_t *in, float x, float y, float z, float d, float *o)
+void Matrix4x4_TransformStandardPlane (const matrix4x4_t *in, float x, float y, float z, float d, float* o)
 {
 	float scale = sqrt(in->m[0][0] * in->m[0][0] + in->m[0][1] * in->m[0][1] + in->m[0][2] * in->m[0][2]);
 	float iscale = 1.0f / scale;
@@ -1722,7 +1722,7 @@ void Matrix4x4_ConcatScale3 (matrix4x4_t *out, double x, double y, double z)
 	Matrix4x4_Concat(out, &base, &temp);
 }
 
-void Matrix4x4_OriginFromMatrix (const matrix4x4_t *in, float *out)
+void Matrix4x4_OriginFromMatrix (const matrix4x4_t *in, float* out)
 {
 #ifdef MATRIX4x4_OPENGLORIENTATION
 	out[0] = in->m[3][0];

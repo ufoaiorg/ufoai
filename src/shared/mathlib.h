@@ -248,7 +248,7 @@ void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, f
 
 float frand(void);              /* 0 to 1 */
 float crand(void);              /* -1 to 1 */
-void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev 1 */
+void gaussrand(float* gauss1, float* gauss2);   /* -inf to +inf, median 0, stdev 1 */
 
 vec_t Q_rint(const vec_t in);
 vec_t ColorNormalize(const vec3_t in, vec3_t out);

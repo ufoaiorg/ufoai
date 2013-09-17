@@ -528,7 +528,7 @@ void GEO_CalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	vec2_t trafo, sa, ea;
 	float cosTrafo, sinTrafo;
 	float phiStart, phiEnd, dPhi, phi;
-	float *p;
+	float* p;
 	int i, n;
 
 	/* get plane normal */
@@ -580,7 +580,7 @@ void GEO_CalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	dPhi = (phiEnd - phiStart) / n;
 	p = nullptr;
 	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {
-		const float *last = p;
+		const float* last = p;
 		p = line->point[i];
 		VectorSet(v, -sinTrafo * cos(phi), sin(phi), cosTrafo * cos(phi));
 		VecToPolar(v, p);
@@ -895,7 +895,7 @@ static void GEO_ConvertObjectPositionToGeoscapePosition (bool flatgeoscape, floa
 /**
  * @brief center to a mission
  */
-static void GEO_GetMissionAngle (bool flatgeoscape, float *vector, int id)
+static void GEO_GetMissionAngle (bool flatgeoscape, float* vector, int id)
 {
 	mission_t *mission = MIS_GetByIdx(id);
 	if (mission == nullptr)
@@ -907,7 +907,7 @@ static void GEO_GetMissionAngle (bool flatgeoscape, float *vector, int id)
 /**
  * @brief center to a ufo
  */
-static void GEO_GetUFOAngle (bool flatgeoscape, float *vector, int idx)
+static void GEO_GetUFOAngle (bool flatgeoscape, float* vector, int idx)
 {
 	aircraft_t *ufo;
 
@@ -967,7 +967,7 @@ void GEO_CenterPosition (const vec2_t pos)
 		return;
 	mapExtraData_t &data = UI_MAPEXTRADATA(node);
 	const bool flatgeoscape = data.flatgeoscape;
-	float *vector;
+	float* vector;
 	if (flatgeoscape)
 		vector = data.smoothFinal2DGeoscapeCenter;
 	else
@@ -996,7 +996,7 @@ static void GEO_SelectObject_f (void)
 	mapExtraData_t &data = UI_MAPEXTRADATA(node);
 	const bool flatgeoscape = data.flatgeoscape;
 
-	float *vector;
+	float* vector;
 	if (flatgeoscape)
 		vector = data.smoothFinal2DGeoscapeCenter;
 	else
@@ -2089,7 +2089,7 @@ void GEO_PrintParameterStringByPos (const vec2_t pos)
  * @brief Check that a position (in latitude / longitude) is within boundaries.
  * @param[in,out] pos Pointer to the 2 elements vector giving the position.
  */
-void GEO_CheckPositionBoundaries (float *pos)
+void GEO_CheckPositionBoundaries (float* pos)
 {
 	while (pos[0] > 180.0)
 		pos[0] -= 360.0;

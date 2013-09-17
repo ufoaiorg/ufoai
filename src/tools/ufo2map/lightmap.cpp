@@ -77,13 +77,13 @@ static void BuildFaceExtents (void)
 		const dBspSurface_t* s = &curTile->faces[k];
 		const dBspTexinfo_t* tex = &curTile->texinfo[s->texinfo];
 
-		float *mins = face_extents[k].mins;
-		float *maxs = face_extents[k].maxs;
+		float* mins = face_extents[k].mins;
+		float* maxs = face_extents[k].maxs;
 
-		float *center = face_extents[k].center;
+		float* center = face_extents[k].center;
 
-		float *stmins = face_extents[k].stmins;
-		float *stmaxs = face_extents[k].stmaxs;
+		float* stmins = face_extents[k].stmins;
+		float* stmaxs = face_extents[k].stmaxs;
 		int i;
 
 		VectorSet(mins, 999999, 999999, 999999);
@@ -130,7 +130,7 @@ static void BuildFaceExtents (void)
 static void CalcLightinfoExtents (lightinfo_t* l)
 {
 	const dBspSurface_t* s;
-	float *stmins, *stmaxs;
+	float* stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
 	int i;
 	const int luxelScale = (1 << config.lightquant);
@@ -512,7 +512,7 @@ static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int* h
 /**
  * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
-static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int* headhint)
+static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float* sample, float* direction, float scale, int* headhint)
 {
 	vec3_t delta;
 	float dot, light;
@@ -552,7 +552,7 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
  * @param[in] scale is the normalizer for multisampling
  * @param[in,out] headhints An array of theads for each light to optimize the tracing
  */
-static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int* headhints)
+static void GatherSampleLight (vec3_t pos, const vec3_t normal, float* sample, float* direction, float scale, int* headhints)
 {
 	light_t* l;
 	vec3_t delta;
@@ -765,8 +765,8 @@ void BuildFacelights (unsigned int facenum)
 	dBspSurface_t* face;
 	dBspPlane_t* plane;
 	dBspTexinfo_t* tex;
-	float *center;
-	float *sdir, *tdir;
+	float* center;
+	float* sdir, *tdir;
 	vec3_t normal, binormal;
 	vec4_t tangent;
 	lightinfo_t li;
@@ -932,8 +932,8 @@ static void WriteTGA24 (const char* filename, const byte*  data, int width, int 
  */
 static void CalcTextureSize (const dBspSurface_t* s, vec2_t texsize, int scale)
 {
-	const float *stmins = face_extents[s - curTile->faces].stmins;
-	const float *stmaxs = face_extents[s - curTile->faces].stmaxs;
+	const float* stmins = face_extents[s - curTile->faces].stmins;
+	const float* stmaxs = face_extents[s - curTile->faces].stmaxs;
 	int i;
 
 	for (i = 0; i < 2; i++) {

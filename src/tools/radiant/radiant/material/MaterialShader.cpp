@@ -203,7 +203,7 @@ bool MaterialShader::isDefault () const
 }
 
 // get the alphaFunc
-void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float *ref)
+void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float* ref)
 {
 	*func = eAlways;
 	*ref = -1.0;

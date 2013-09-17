@@ -86,7 +86,7 @@ static int GetVertexnum (const vec3_t in)
 	h = HashVec(vert);
 
 	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
-		const float *p = curTile->vertexes[vnum].point;
+		const float* p = curTile->vertexes[vnum].point;
 		if (fabs(p[0] - vert[0]) < POINT_EPSILON
 		 && fabs(p[1] - vert[1]) < POINT_EPSILON
 		 && fabs(p[2] - vert[2]) < POINT_EPSILON)

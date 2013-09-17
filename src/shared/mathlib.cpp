@@ -532,7 +532,7 @@ float crand (void)
  * @sa crand
  * @sa frand
  */
-void gaussrand (float *gauss1, float *gauss2)
+void gaussrand (float* gauss1, float* gauss2)
 {
 	float x1, x2, w, tmp;
 

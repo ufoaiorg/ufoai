@@ -116,7 +116,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	int fontHeight;
 	int currentY;
 	int currentDecY = 0;
-	const float *textColor;
+	const float* textColor;
 	vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 	uiOptionIterator_t iterator;

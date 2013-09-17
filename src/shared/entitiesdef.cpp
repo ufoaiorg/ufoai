@@ -715,7 +715,7 @@ static int ED_ProcessRanges (void)
 					memcpy(kr->iArr, ibuf, size);
 				} else { /* ED_TYPE_FLOAT */
 					const size_t size = numElements * sizeof(float);
-					kr->fArr = (float *)malloc(size);
+					kr->fArr = (float* )malloc(size);
 					ED_TEST_RETURN_ERROR(!kr->fArr, "ED_ProcessRanges: out of memory");
 					memcpy(kr->fArr, fbuf, size);
 				}

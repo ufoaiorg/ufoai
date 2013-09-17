@@ -236,8 +236,8 @@ static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 			const int width = 2;
 			const int channel = 2;
 			int samplesNeeded = sizeof(rawBuffer) / (width * channel);
-			const float *left = pcm[0];
-			const float *right = (OGMCIN.vi.channels > 1) ? pcm[1] : pcm[0];
+			const float* left = pcm[0];
+			const float* right = (OGMCIN.vi.channels > 1) ? pcm[1] : pcm[0];
 			short* ptr = (short*)rawBuffer;
 			int i;
 

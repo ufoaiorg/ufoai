@@ -270,7 +270,7 @@ int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
 const char* AIR_GetAircraftString(aircraftType_t aircraftType);
 
-int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
+int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float* weaponRanges);
 baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
 const char* AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base);
