@@ -39,14 +39,14 @@ typedef struct cBspSurface_s {
 } cBspSurface_t;
 
 typedef struct cBspNode_s {
-	cBspPlane_t *plane;
+	cBspPlane_t* plane;
 	vec3_t mins, maxs;
 	int32_t children[2];			/**< negative numbers are leafs */
 } cBspNode_t;
 
 typedef struct cBspBrushSide_s {
-	cBspPlane_t *plane;
-	cBspSurface_t *surface;
+	cBspPlane_t* plane;
+	cBspSurface_t* surface;
 } cBspBrushSide_t;
 
 typedef struct cBspLeaf_s {
@@ -87,38 +87,38 @@ public:
 	int idx;
 
 	int numbrushsides;
-	cBspBrushSide_t *brushsides;
+	cBspBrushSide_t* brushsides;
 
 	int numtexinfo;
-	cBspSurface_t *surfaces;
+	cBspSurface_t* surfaces;
 
 	int numplanes;
-	cBspPlane_t *planes; /* numplanes + 12 for box hull */
+	cBspPlane_t* planes; /* numplanes + 12 for box hull */
 
 	int numnodes;
-	cBspNode_t *nodes; /* numnodes + 6 for box hull */
+	cBspNode_t* nodes; /* numnodes + 6 for box hull */
 
 	int numleafs;
-	cBspLeaf_t *leafs;
+	cBspLeaf_t* leafs;
 	int emptyleaf;
 
 	int numleafbrushes;
 	unsigned short* leafbrushes;
 
 	int nummodels;
-	cBspModel_t *models;
+	cBspModel_t* models;
 
 	int numbrushes;
-	cBspBrush_t *brushes;
+	cBspBrush_t* brushes;
 
 	/* tracing box */
-	cBspPlane_t *box_planes;
+	cBspPlane_t* box_planes;
 	int box_headnode;
-	cBspBrush_t *box_brush;
-	cBspLeaf_t *box_leaf;
+	cBspBrush_t* box_brush;
+	cBspLeaf_t* box_leaf;
 
 	/* line tracing */
-	tnode_t *tnodes;
+	tnode_t* tnodes;
 	int numtheads;
 	intptr_t thead[LEVEL_MAX];
 	int theadlevel[LEVEL_MAX];
@@ -448,13 +448,13 @@ typedef struct {
 
 typedef struct {
 	/* tracing box */
-	dBspPlane_t *box_planes;
+	dBspPlane_t* box_planes;
 	int box_headnode;
-	dBspBrush_t *box_brush;
-	dBspLeaf_t *box_leaf;
+	dBspBrush_t* box_brush;
+	dBspLeaf_t* box_leaf;
 
 	/* line tracing */
-	tnode_t *tnodes;
+	tnode_t* tnodes;
 	int numtheads;
 	int thead[LEVEL_MAX];
 	int theadlevel[LEVEL_MAX];

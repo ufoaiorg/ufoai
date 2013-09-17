@@ -37,7 +37,7 @@ EVENT MESSAGES
 /**
  * @sa SV_BroadcastCommand
  */
-void SV_ClientCommand (client_t *client, const char* fmt, ...)
+void SV_ClientCommand (client_t* client, const char* fmt, ...)
 {
 	va_list ap;
 	char str[MAX_SVC_STUFFTEXT];
@@ -55,7 +55,7 @@ void SV_ClientCommand (client_t *client, const char* fmt, ...)
 /**
  * @brief Sends text across to be displayed if the level passes
  */
-void SV_ClientPrintf (client_t *cl, int level, const char* fmt, ...)
+void SV_ClientPrintf (client_t* cl, int level, const char* fmt, ...)
 {
 	if (level > cl->messagelevel)
 		return;
@@ -108,7 +108,7 @@ void SV_BroadcastPrintf (int level, const char* fmt, ...)
 			Com_Printf("%s", copy);
 	}
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (level > cl->messagelevel)
 			continue;
@@ -126,7 +126,7 @@ void SV_BroadcastPrintf (int level, const char* fmt, ...)
 void SV_Multicast (int mask, const dbuffer &msg)
 {
 	/* send the data to all relevant clients */
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	int j = -1;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		j++;
