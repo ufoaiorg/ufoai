@@ -434,7 +434,7 @@ bool GAME_GetTeamFileName (unsigned int index, char* filename, size_t filenameLe
 	Com_sprintf(pattern, sizeof(pattern), "%s*.mpt", buf);
 	const int amount = FS_BuildFileList(pattern);
 	Com_DPrintf(DEBUG_CLIENT, "found %i entries for %s\n", amount, pattern);
-	while ((save = FS_NextFileFromFileList(buf)) != nullptr) {
+	while ((save = FS_NextFileFromFileList(pattern)) != nullptr) {
 		if (index == 0)
 			break;
 		index--;
