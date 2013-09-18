@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa SV_ClearWorld
  * @sa SV_LinkEdict
  */
-static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const vec3_t maxs)
+static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const vec3_t maxs)
 {
-	worldSector_t *anode;
+	worldSector_t* anode;
 	vec3_t size;
 	vec3_t mins1, maxs1, mins2, maxs2;
 
@@ -87,7 +87,7 @@ void SV_ClearWorld (void)
 	SV_CreateWorldSector(0, sv->mapData.mapMin, sv->mapData.mapMax);
 }
 
-static inline sv_edict_t *SV_GetServerDataForEdict (const edict_t *ent)
+static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t* ent)
 {
 	if (!ent || ent->number < 0 || ent->number >= lengthof(sv->edicts))
 		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");
@@ -98,11 +98,11 @@ static inline sv_edict_t *SV_GetServerDataForEdict (const edict_t *ent)
 /**
  * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
  */
-void SV_UnlinkEdict (edict_t *ent)
+void SV_UnlinkEdict (edict_t* ent)
 {
-	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
-	sv_edict_t *scan;
-	worldSector_t *ws;
+	sv_edict_t* sv_ent = SV_GetServerDataForEdict(ent);
+	sv_edict_t* scan;
+	worldSector_t* ws;
 
 	sv_ent->linked = false;
 
@@ -132,10 +132,10 @@ void SV_UnlinkEdict (edict_t *ent)
  * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
  * @sa SV_CreateAreaNode
  */
-void SV_LinkEdict (edict_t *ent)
+void SV_LinkEdict (edict_t* ent)
 {
-	worldSector_t *node;
-	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
+	worldSector_t* node;
+	sv_edict_t* sv_ent = SV_GetServerDataForEdict(ent);
 
 	if (sv_ent->worldSector)
 		SV_UnlinkEdict(ent);	/* unlink from old position */
@@ -202,7 +202,7 @@ void SV_LinkEdict (edict_t *ent)
  * @param[in] ent The edict to check the intersection for
  * @return @c true if intersect, @c false otherwise
  */
-static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t *ent)
+static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t* ent)
 {
 	return aabb.doesIntersect(AABB(ent->absmin,ent->absmax));
 }
@@ -219,9 +219,9 @@ typedef struct {
  * to be returned that doesn't actually intersect the area on an exact test.
  * @sa SV_AreaEdicts
  */
-static void SV_AreaEdicts_r (worldSector_t *node, areaParms_t *ap)
+static void SV_AreaEdicts_r (worldSector_t* node, areaParms_t* ap)
 {
-	sv_edict_t *check, *next;
+	sv_edict_t* check, *next;
 
 	for (check = node->entities; check; check = next) {
 		next = check->nextEntityInWorldSector;
@@ -284,7 +284,7 @@ typedef struct moveclip_s {
 	const float* mins, *maxs;	/**< size of the moving object */
 	const float* start, *end;
 	trace_t trace;
-	const edict_t *passedict;
+	const edict_t* passedict;
 	int contentmask;
 } moveclip_t;
 
@@ -300,14 +300,14 @@ typedef struct moveclip_s {
  * @return The headnode for the edict
  * @sa CL_HullForEntity
  */
-static int SV_HullForEntity (const edict_t *ent, int* tile, vec3_t rmaShift)
+static int SV_HullForEntity (const edict_t* ent, int* tile, vec3_t rmaShift)
 {
 	assert(ent->solid != SOLID_NOT);
 	assert(ent->solid != SOLID_TRIGGER);
 
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */
-		const cBspModel_t *model;
+		const cBspModel_t* model;
 
 		assert(ent->modelindex < MAX_MODELS);
 
@@ -333,10 +333,10 @@ static int SV_HullForEntity (const edict_t *ent, int* tile, vec3_t rmaShift)
  * @sa SV_AreaEdicts
  * @sa CL_ClipMoveToLEs
  */
-static void SV_ClipMoveToEntities (moveclip_t *clip)
+static void SV_ClipMoveToEntities (moveclip_t* clip)
 {
 	int i;
-	edict_t *touchlist[MAX_EDICTS];
+	edict_t* touchlist[MAX_EDICTS];
 	const float* angles;
 	int headnode = 0;
 	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS);
@@ -345,7 +345,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		vec3_t rmaShift;
-		edict_t *touch = touchlist[i];
+		edict_t* touch = touchlist[i];
 		int tile = 0;
 
 		if (touch->solid == SOLID_NOT || touch->solid == SOLID_TRIGGER)
@@ -461,7 +461,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
  * @param[in] box The bounding box that is moved through the world
  */
-trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passedict, int contentmask)
+trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t* passedict, int contentmask)
 {
 	moveclip_t clip;
 
@@ -506,7 +506,7 @@ trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const e
  */
 const char* SV_GetFootstepSound (const char* texture)
 {
-	const terrainType_t *t = Com_GetTerrainType(texture);
+	const terrainType_t* t = Com_GetTerrainType(texture);
 	return t ? t->footstepSound : nullptr;
 }
 
@@ -517,7 +517,7 @@ const char* SV_GetFootstepSound (const char* texture)
  */
 float SV_GetBounceFraction (const char* texture)
 {
-	const terrainType_t *t = Com_GetTerrainType(texture);
+	const terrainType_t* t = Com_GetTerrainType(texture);
 	return t ? t->bounceFraction : 1.0f;
 }
 
@@ -526,12 +526,12 @@ float SV_GetBounceFraction (const char* texture)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte* buffer)
+static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte* buffer)
 {
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
+	const dMD2Model_t* md2 = (const dMD2Model_t* )buffer;
 	const int num_frames = LittleLong(md2->num_frames);
 	const int frameSize = LittleLong(md2->framesize);
-	const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte*) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
+	const dMD2Frame_t* frame = (const dMD2Frame_t* ) ((const byte*) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
 	vec3_t scale, mins, maxs;
 	int j;
 
@@ -553,10 +553,10 @@ static void SV_ModLoadAliasMD2Model (sv_model_t *mod, const byte* buffer)
  * @param[in,out] mod The server side model struct to store the results in
  * @param[in] buffer The mesh model buffer
  */
-static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte* buffer)
+static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte* buffer)
 {
-	const dmd3_t *md3 = (const dmd3_t *)buffer;
-	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte*)md3 + LittleLong(md3->ofs_frames));
+	const dmd3_t* md3 = (const dmd3_t* )buffer;
+	const dmd3frame_t* frame = (const dmd3frame_t* )((const byte*)md3 + LittleLong(md3->ofs_frames));
 	const int num_frames = LittleLong(md3->num_frames);
 	vec3_t mins, maxs;
 	int j;
@@ -579,7 +579,7 @@ static void SV_ModLoadAliasMD3Model (sv_model_t *mod, const byte* buffer)
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadObjModel (sv_model_t *mod, const byte* buffer, int bufferLength)
+static void SV_ModLoadObjModel (sv_model_t* mod, const byte* buffer, int bufferLength)
 {
 	/** @todo implement me */
 }
@@ -600,7 +600,7 @@ static char const* const mod_extensions[] = {
  */
 bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 {
-	sv_model_t *mod;
+	sv_model_t* mod;
 	byte* buf = nullptr;
 	unsigned int i;
 	int modfilelen = 0;

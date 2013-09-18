@@ -31,7 +31,7 @@ void EntityClassScannerUFO::parseFlags (EntityClass *e, const char** text)
  * @note opposed to old parsing code this adds attributes for all definitions,
  * not only for the ones that get special treatment in gui.
  */
-void EntityClassScannerUFO::parseAttribute (EntityClass *e, const entityKeyDef_t *keydef)
+void EntityClassScannerUFO::parseAttribute (EntityClass *e, const entityKeyDef_t* keydef)
 {
 	const bool mandatory = (keydef->flags & ED_MANDATORY);
 	/* we use attribute key as its type, only for some types this is really used */
@@ -72,7 +72,7 @@ void EntityClassScannerUFO::parseAttribute (EntityClass *e, const entityKeyDef_t
  * @param entityDef parsed definition information to use
  * @return a new entity class or 0 if something was wrong with definition
  */
-EntityClass *EntityClassScannerUFO::initFromDefinition (const entityDef_t *definition)
+EntityClass *EntityClassScannerUFO::initFromDefinition (const entityDef_t* definition)
 {
 	g_debug("Creating entity class for entity definition '%s'\n", definition->classname);
 
@@ -81,7 +81,7 @@ EntityClass *EntityClassScannerUFO::initFromDefinition (const entityDef_t *defin
 	e->m_name = definition->classname;
 
 	for (int idx = 0; idx < definition->numKeyDefs; idx++) {
-		const entityKeyDef_t *keydef = &definition->keyDefs[idx];
+		const entityKeyDef_t* keydef = &definition->keyDefs[idx];
 		const std::string keyName = keydef->name;
 
 		if (keyName == "color") {

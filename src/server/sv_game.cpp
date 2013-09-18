@@ -58,7 +58,7 @@ static void SV_PlayerPrintf (const SrvPlayer *player, int level, const char* fmt
 	if (player) {
 		char msg[1024];
 		Q_vsnprintf(msg, sizeof(msg), fmt, ap);
-		client_t *cl = SV_GetClient(player->getNum());
+		client_t* cl = SV_GetClient(player->getNum());
 		SV_ClientPrintf(cl, level, "%s", msg);
 	} else
 		SV_LogAdd(fmt, ap);
@@ -138,7 +138,7 @@ static unsigned int SV_ModelIndex (const char* name)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void SV_SetModel (edict_t *ent, const char* name)
+static void SV_SetModel (edict_t* ent, const char* name)
 {
 	if (!name)
 		SV_error("SV_SetModel: nullptr");
@@ -147,7 +147,7 @@ static void SV_SetModel (edict_t *ent, const char* name)
 
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
-		const cBspModel_t *mod = CM_InlineModel(&sv->mapTiles, name);
+		const cBspModel_t* mod = CM_InlineModel(&sv->mapTiles, name);
 		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
@@ -309,7 +309,7 @@ static void SV_ReadFormat (const char* format, ...)
  */
 static void SV_AbortEvents (void)
 {
-	pending_event_t *p = &sv->pendingEvent;
+	pending_event_t* p = &sv->pendingEvent;
 
 	if (!p->pending)
 		return;
@@ -335,7 +335,7 @@ static void SV_SendQueuedEvents (void)
  */
 static void SV_EndEvents (void)
 {
-	pending_event_t *p = &sv->pendingEvent;
+	pending_event_t* p = &sv->pendingEvent;
 
 	if (!p->pending) {
 		SV_SendQueuedEvents();
@@ -424,7 +424,7 @@ CASSERT(lengthof(eventNames) == EV_NUM_EVENTS);
  */
 static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 {
-	pending_event_t *p = &sv->pendingEvent;
+	pending_event_t* p = &sv->pendingEvent;
 	const int rawType = eType &~ EVENT_INSTANTLY;
 
 	if (rawType >= EV_NUM_EVENTS || rawType < 0)
@@ -502,16 +502,16 @@ static void SV_QueueWriteShort (int c)
  */
 static int SV_GetEvent (void)
 {
-	const pending_event_t *p = &sv->pendingEvent;
+	const pending_event_t* p = &sv->pendingEvent;
 	if (!p->pending)
 		return -1;
 
 	return p->type;
 }
 
-static edict_t *SV_GetEventEdict (void)
+static edict_t* SV_GetEventEdict (void)
 {
-	const pending_event_t *p = &sv->pendingEvent;
+	const pending_event_t* p = &sv->pendingEvent;
 	if (!p->pending)
 		return nullptr;
 
@@ -576,7 +576,7 @@ static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 	Grid_PosToVec(sv->mapData.routing, actorSize, pos, vec);
 }
 
-static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, int distance, pos_t** forbiddenList, int forbiddenListLength)
+static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, pos_t** forbiddenList, int forbiddenListLength)
 {
 	Grid_CalcPathing(sv->mapData.routing, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
 }
@@ -632,10 +632,10 @@ static bool SV_LoadGame (const char* path)
 /**
  * @brief Loads the game shared library and calls the api init function
  */
-static game_export_t *SV_GetGameAPI (game_import_t *parms)
+static game_export_t* SV_GetGameAPI (game_import_t* parms)
 {
 #ifndef HARD_LINKED_GAME
-	typedef game_export_t *(*game_api_t) (game_import_t *);
+	typedef game_export_t* (*game_api_t) (game_import_t* );
 	game_api_t GetGameAPI;
 	const char* path;
 

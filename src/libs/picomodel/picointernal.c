@@ -699,9 +699,9 @@ int _pico_getline (char* buf, int bufsize, char* dest, int destsize)
 /**
  * @brief allocates a new ascii parser object.
  */
-picoParser_t *_pico_new_parser (picoByte_t *buffer, int bufSize)
+picoParser_t* _pico_new_parser (picoByte_t* buffer, int bufSize)
 {
-	picoParser_t *p;
+	picoParser_t* p;
 
 	/* sanity check */
 	if (buffer == NULL || bufSize <= 0)
@@ -734,7 +734,7 @@ picoParser_t *_pico_new_parser (picoByte_t *buffer, int bufSize)
 /**
  * @brief frees an existing pico parser object.
  */
-void _pico_free_parser (picoParser_t *p)
+void _pico_free_parser (picoParser_t* p)
 {
 	/* sanity check */
 	if (p == NULL)
@@ -755,7 +755,7 @@ void _pico_free_parser (picoParser_t *p)
  * will handle "quoted" strings and return the data between the
  * quotes as token. returns 0 on end/error or 1 on success. -sea
  */
-int _pico_parse_ex (picoParser_t *p, int allowLFs, int handleQuoted)
+int _pico_parse_ex (picoParser_t* p, int allowLFs, int handleQuoted)
 {
 	int hasLFs = 0;
 	char* old;
@@ -820,7 +820,7 @@ int _pico_parse_ex (picoParser_t *p, int allowLFs, int handleQuoted)
  * @brief reads the first token from the next line and returns
  * a pointer to it. returns NULL on EOL or EOF. -sea
  */
-char* _pico_parse_first (picoParser_t *p)
+char* _pico_parse_first (picoParser_t* p)
 {
 	/* sanity check */
 	if (p == NULL)
@@ -839,7 +839,7 @@ char* _pico_parse_first (picoParser_t *p)
  * to it. quoted strings are handled as usual. returns NULL
  * on EOL or EOF. -sea
  */
-char* _pico_parse (picoParser_t *p, int allowLFs)
+char* _pico_parse (picoParser_t* p, int allowLFs)
 {
 	/* sanity check */
 	if (p == NULL)
@@ -856,7 +856,7 @@ char* _pico_parse (picoParser_t *p, int allowLFs)
 /**
  * @brief skips the rest of the current line in parser.
  */
-void _pico_parse_skip_rest (picoParser_t *p)
+void _pico_parse_skip_rest (picoParser_t* p)
 {
 	while (_pico_parse_ex(p, 0, 0)) {
 	}
@@ -867,7 +867,7 @@ void _pico_parse_skip_rest (picoParser_t *p)
  * or 0 on error (when there was no closing bracket and the
  * end of buffer was reached or when the opening bracket was missing).
  */
-int _pico_parse_skip_braced (picoParser_t *p)
+int _pico_parse_skip_braced (picoParser_t* p)
 {
 	int firstToken = 1;
 	int level;
@@ -909,7 +909,7 @@ int _pico_parse_skip_braced (picoParser_t *p)
 	return 1;
 }
 
-int _pico_parse_check (picoParser_t *p, int allowLFs, const char* str)
+int _pico_parse_check (picoParser_t* p, int allowLFs, const char* str)
 {
 	if (!_pico_parse_ex(p, allowLFs, 1))
 		return 0;
@@ -918,7 +918,7 @@ int _pico_parse_check (picoParser_t *p, int allowLFs, const char* str)
 	return 0;
 }
 
-int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str)
+int _pico_parse_checki (picoParser_t* p, int allowLFs, const char* str)
 {
 	if (!_pico_parse_ex(p, allowLFs, 1))
 		return 0;
@@ -927,7 +927,7 @@ int _pico_parse_checki (picoParser_t *p, int allowLFs, const char* str)
 	return 0;
 }
 
-int _pico_parse_int (picoParser_t *p, int* out)
+int _pico_parse_int (picoParser_t* p, int* out)
 {
 	char* token;
 
@@ -946,7 +946,7 @@ int _pico_parse_int (picoParser_t *p, int* out)
 	return 1;
 }
 
-int _pico_parse_int_def (picoParser_t *p, int* out, int def)
+int _pico_parse_int_def (picoParser_t* p, int* out, int def)
 {
 	char* token;
 
@@ -965,7 +965,7 @@ int _pico_parse_int_def (picoParser_t *p, int* out, int def)
 	return 1;
 }
 
-int _pico_parse_float (picoParser_t *p, float *out)
+int _pico_parse_float (picoParser_t* p, float *out)
 {
 	char* token;
 
@@ -984,7 +984,7 @@ int _pico_parse_float (picoParser_t *p, float *out)
 	return 1;
 }
 
-int _pico_parse_float_def (picoParser_t *p, float *out, float def)
+int _pico_parse_float_def (picoParser_t* p, float *out, float def)
 {
 	char* token;
 
@@ -1003,7 +1003,7 @@ int _pico_parse_float_def (picoParser_t *p, float *out, float def)
 	return 1;
 }
 
-int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
+int _pico_parse_vec (picoParser_t* p, picoVec3_t out)
 {
 	int i;
 
@@ -1027,7 +1027,7 @@ int _pico_parse_vec (picoParser_t *p, picoVec3_t out)
 	return 1;
 }
 
-int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
+int _pico_parse_vec_def (picoParser_t* p, picoVec3_t out, picoVec3_t def)
 {
 	int i;
 
@@ -1051,7 +1051,7 @@ int _pico_parse_vec_def (picoParser_t *p, picoVec3_t out, picoVec3_t def)
 	return 1;
 }
 
-int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
+int _pico_parse_vec2 (picoParser_t* p, picoVec2_t out)
 {
 	int i;
 
@@ -1075,7 +1075,7 @@ int _pico_parse_vec2 (picoParser_t *p, picoVec2_t out)
 	return 1;
 }
 
-int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
+int _pico_parse_vec2_def (picoParser_t* p, picoVec2_t out, picoVec2_t def)
 {
 	int i;
 
@@ -1099,7 +1099,7 @@ int _pico_parse_vec2_def (picoParser_t *p, picoVec2_t out, picoVec2_t def)
 	return 1;
 }
 
-int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
+int _pico_parse_vec4 (picoParser_t* p, picoVec4_t out)
 {
 	int i;
 
@@ -1123,7 +1123,7 @@ int _pico_parse_vec4 (picoParser_t *p, picoVec4_t out)
 	return 1;
 }
 
-int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def)
+int _pico_parse_vec4_def (picoParser_t* p, picoVec4_t out, picoVec4_t def)
 {
 	int i;
 
@@ -1150,9 +1150,9 @@ int _pico_parse_vec4_def (picoParser_t *p, picoVec4_t out, picoVec4_t def)
 /**
  * @brief allocates a new memorystream object.
  */
-picoMemStream_t *_pico_new_memstream (picoByte_t *buffer, int bufSize)
+picoMemStream_t* _pico_new_memstream (picoByte_t* buffer, int bufSize)
 {
-	picoMemStream_t *s;
+	picoMemStream_t* s;
 
 	/* sanity check */
 	if (buffer == NULL || bufSize <= 0)
@@ -1176,7 +1176,7 @@ picoMemStream_t *_pico_new_memstream (picoByte_t *buffer, int bufSize)
 /**
  * @brief frees an existing pico memorystream object.
  */
-void _pico_free_memstream (picoMemStream_t *s)
+void _pico_free_memstream (picoMemStream_t* s)
 {
 	/* sanity check */
 	if (s == NULL)
@@ -1189,7 +1189,7 @@ void _pico_free_memstream (picoMemStream_t *s)
 /**
  * @brief reads data from a pico memorystream into a buffer.
  */
-int _pico_memstream_read (picoMemStream_t *s, void* buffer, int len)
+int _pico_memstream_read (picoMemStream_t* s, void* buffer, int len)
 {
 	int ret = 1;
 
@@ -1212,7 +1212,7 @@ int _pico_memstream_read (picoMemStream_t *s, void* buffer, int len)
 /**
  * @brief reads a character from a pico memorystream
  */
-int _pico_memstream_getc (picoMemStream_t *s)
+int _pico_memstream_getc (picoMemStream_t* s)
 {
 	int c = 0;
 
@@ -1230,7 +1230,7 @@ int _pico_memstream_getc (picoMemStream_t *s)
 /**
  * @brief sets the current read position to a different location
  */
-int _pico_memstream_seek (picoMemStream_t *s, long offset, int origin)
+int _pico_memstream_seek (picoMemStream_t* s, long offset, int origin)
 {
 	int overflow;
 
@@ -1270,7 +1270,7 @@ int _pico_memstream_seek (picoMemStream_t *s, long offset, int origin)
 /**
  * @brief returns the current read position in the pico memorystream
  */
-long _pico_memstream_tell (picoMemStream_t *s)
+long _pico_memstream_tell (picoMemStream_t* s)
 {
 	/* sanity check */
 	if (s == NULL)

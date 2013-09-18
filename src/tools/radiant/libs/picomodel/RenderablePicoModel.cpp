@@ -10,7 +10,7 @@ namespace model
 {
 	// Constructor
 
-	RenderablePicoModel::RenderablePicoModel (picoModel_t *mod)
+	RenderablePicoModel::RenderablePicoModel (picoModel_t* mod)
 	{
 		// Get the number of surfaces to create
 		const int nSurf = PicoGetModelNumSurfaces(mod);
@@ -18,7 +18,7 @@ namespace model
 		// Create a RenderablePicoSurface for each surface in the structure
 		for (int n = 0; n < nSurf; ++n) {
 			// Retrieve the surface, discarding it if it is null or non-triangulated (?)
-			picoSurface_t *surf = PicoGetModelSurface(mod, n);
+			picoSurface_t* surf = PicoGetModelSurface(mod, n);
 			if (surf == 0 || PicoGetSurfaceType(surf) != PICO_TRIANGLES)
 				continue;
 
@@ -35,7 +35,7 @@ namespace model
 
 		const int nShaders = PicoGetModelNumShaders(mod);
 		for (int n = 0; n < nShaders; n++) {
-			const picoShader_t *shader = PicoGetModelShader(mod, n);
+			const picoShader_t* shader = PicoGetModelShader(mod, n);
 			if (shader) {
 				modelSkinList.push_back(shader->name);
 			}

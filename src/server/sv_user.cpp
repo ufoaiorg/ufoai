@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Set the client state
  * @sa client_state_t
  */
-void SV_SetClientState (client_t *client, client_state_t state)
+void SV_SetClientState (client_t* client, client_state_t state)
 {
 	assert(client);
 	Com_DPrintf(DEBUG_SERVER, "Set state for client '%s' to %i\n", client->name, state);
@@ -53,7 +53,7 @@ USER STRINGCMD EXECUTION
  * @sa CL_Reconnect_f
  * @sa CL_ConnectionlessPacket
  */
-static void SV_New_f (client_t *cl)
+static void SV_New_f (client_t* cl)
 {
 	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", cl->name);
 
@@ -120,7 +120,7 @@ static void SV_New_f (client_t *cl)
 /**
  * @sa SV_Spawn_f
  */
-static void SV_Begin_f (client_t *cl)
+static void SV_Begin_f (client_t* cl)
 {
 	bool began;
 
@@ -151,7 +151,7 @@ static void SV_Begin_f (client_t *cl)
 /**
  * @sa SV_Begin_f
  */
-static void SV_StartMatch_f (client_t *cl)
+static void SV_StartMatch_f (client_t* cl)
 {
 	Com_DPrintf(DEBUG_SERVER, "StartMatch() from %s\n", cl->name);
 
@@ -173,7 +173,7 @@ static void SV_StartMatch_f (client_t *cl)
 /**
  * @brief The client is going to disconnect, so remove the connection immediately
  */
-static void SV_Disconnect_f (client_t *cl)
+static void SV_Disconnect_f (client_t* cl)
 {
 	SV_DropClient(cl, "Disconnect\n");
 }
@@ -182,7 +182,7 @@ static void SV_Disconnect_f (client_t *cl)
 /**
  * @brief Dumps the serverinfo info string
  */
-static void SV_ShowServerinfo_f (client_t *cl)
+static void SV_ShowServerinfo_f (client_t* cl)
 {
 	char info[MAX_INFO_STRING];
 	Info_Print(Cvar_Serverinfo(info, sizeof(info)));
@@ -191,7 +191,7 @@ static void SV_ShowServerinfo_f (client_t *cl)
 
 typedef struct {
 	const char* name;
-	void (*func) (client_t *client);
+	void (*func) (client_t* client);
 } ucmd_t;
 
 static const ucmd_t ucmds[] = {
@@ -211,11 +211,11 @@ static const ucmd_t ucmds[] = {
 /**
  * @sa SV_ExecuteClientMessage
  */
-static void SV_ExecuteUserCommand (client_t *cl, const char* s)
+static void SV_ExecuteUserCommand (client_t* cl, const char* s)
 {
 	Cmd_TokenizeString(s, false, false);
 
-	for (const ucmd_t *u = ucmds; u->name; u++)
+	for (const ucmd_t* u = ucmds; u->name; u++)
 		if (Q_streq(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func(cl);
@@ -232,7 +232,7 @@ static void SV_ExecuteUserCommand (client_t *cl, const char* s)
 /**
  * @brief The current net_message is parsed for the given client
  */
-void SV_ExecuteClientMessage (client_t *cl, int cmd, dbuffer *msg)
+void SV_ExecuteClientMessage (client_t* cl, int cmd, dbuffer *msg)
 {
 	if (cmd == -1)
 		return;

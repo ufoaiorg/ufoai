@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/scopedmutex.h"
 
 serverInstanceStatic_t svs;			/* persistant server info */
-serverInstanceGame_t *sv;			/* local server */
+serverInstanceGame_t* sv;			/* local server */
 
 /**
  * @brief Get the map title for a given map
@@ -120,7 +120,7 @@ void SV_Map (bool day, const char* levelstring, const char* assembly)
 	char* pos = SV_GetConfigString(CS_POSITIONS);
 	char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
 	MapInfo *randomMap = nullptr;
-	client_t *cl;
+	client_t* cl;
 
 	/* any partially connected client will be restarted */
 	Com_SetServerState(ss_restart);

@@ -48,7 +48,7 @@ static struct mdfour *m;
 #define ROUND3(a,b,c,d,k,s) a = lshift(a + H(b,c,d) + X[k] + 0x6ED9EBA1,s)
 
 /* this applies md4 to 64 byte chunks */
-static void mdfour64 (uint32_t *M)
+static void mdfour64 (uint32_t* M)
 {
 	int j;
 	uint32_t AA, BB, CC, DD;
@@ -101,7 +101,7 @@ static void mdfour64 (uint32_t *M)
 	m->A = A; m->B = B; m->C = C; m->D = D;
 }
 
-static void copy64 (uint32_t *M, const unsigned char* in)
+static void copy64 (uint32_t* M, const unsigned char* in)
 {
 	int i;
 

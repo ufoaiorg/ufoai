@@ -33,7 +33,7 @@ Bases on Justin-Heyes Jones' A* tutorial
 /**
  * @brief initialise the priority queue with a maximum size of maxelements.
  */
-void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
+void PQueueInitialise (priorityQueue_t* pq, uint32_t maxElements)
 {
 	pq->maxSize = maxElements;
 	pq->currentSize = 0;
@@ -44,14 +44,14 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 		Sys_Error("PQueueInitialise: Memory alloc failed!");
 }
 
-void PQueuePush (priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t r)
+void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
 	uint32_t currentSize = pq->currentSize;
 
 	if (currentSize == pq->maxSize) {
 		const int new_size = pq->maxSize * 2;
-		pq->elements = (priorityQueueElement_t *)Mem_ReAlloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
+		pq->elements = (priorityQueueElement_t* )Mem_ReAlloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
 		pq->maxSize = new_size;
 	}
 
@@ -81,7 +81,7 @@ void PQueuePush (priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t r
 /**
  * @brief free up memory for pqueue
  */
-void PQueueFree (priorityQueue_t *pq)
+void PQueueFree (priorityQueue_t* pq)
 {
 	Mem_Free(pq->elements);
 }
@@ -89,11 +89,11 @@ void PQueueFree (priorityQueue_t *pq)
 /**
  * @brief remove the first node from the pqueue and provide a pointer to it
  */
-void PQueuePop (priorityQueue_t *pq, pos4_t item)
+void PQueuePop (priorityQueue_t* pq, pos4_t item)
 {
 	uint32_t i, j;
 	uint32_t child;
-	priorityQueueElement_t *elements = pq->elements;
+	priorityQueueElement_t* elements = pq->elements;
 	uint32_t currentSize = pq->currentSize;
 	priorityQueueElement_t pMaxElement;
 	priorityQueueElement_t pLastElement;

@@ -65,12 +65,12 @@ void SV_SetMaster_f (void)
  * @param[in] s Either the numeric id of the player, or the player name
  * @return the client structure
  */
-static client_t *SV_GetPlayerClientStructure (const char* s)
+static client_t* SV_GetPlayerClientStructure (const char* s)
 {
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
 		int idnum = atoi(Cmd_Argv(1));
-		client_t *cl = nullptr;
+		client_t* cl = nullptr;
 		/* check for a name match */
 		while ((cl = SV_GetNextClient(cl)) != nullptr && idnum > 0)
 			idnum--;
@@ -80,7 +80,7 @@ static client_t *SV_GetPlayerClientStructure (const char* s)
 		}
 		return cl;
 	} else {
-		client_t *cl = nullptr;
+		client_t* cl = nullptr;
 		/* check for a name match */
 		while ((cl = SV_GetNextClient(cl)) != nullptr) {
 			if (cl->state == cs_free)
@@ -186,7 +186,7 @@ static void SV_Map_f (void)
  */
 static void SV_Kick_f (void)
 {
-	client_t *cl;
+	client_t* cl;
 
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");
@@ -214,7 +214,7 @@ static void SV_Kick_f (void)
  */
 static void SV_StartGame_f (void)
 {
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	int cnt = 0;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state != cs_free) {
@@ -232,7 +232,7 @@ static void SV_StartGame_f (void)
 static void SV_Status_f (void)
 {
 	int i;
-	client_t *cl;
+	client_t* cl;
 	const char* s;
 	char buf[256];
 
@@ -327,7 +327,7 @@ static void SV_Serverinfo_f (void)
  */
 static void SV_UserInfo_f (void)
 {
-	client_t *cl;
+	client_t* cl;
 
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");

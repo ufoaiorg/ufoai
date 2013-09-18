@@ -26,19 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "msg.h"
 
-void SZ_Init (sizebuf_t *buf, byte*  data, int length)
+void SZ_Init (sizebuf_t* buf, byte*  data, int length)
 {
 	OBJZERO(*buf);
 	buf->data = data;
 	buf->maxsize = length;
 }
 
-void SZ_Clear (sizebuf_t *buf)
+void SZ_Clear (sizebuf_t* buf)
 {
 	buf->cursize = 0;
 }
 
-static void* SZ_GetSpace (sizebuf_t *buf, int length)
+static void* SZ_GetSpace (sizebuf_t* buf, int length)
 {
 	void* data;
 
@@ -51,7 +51,7 @@ static void* SZ_GetSpace (sizebuf_t *buf, int length)
 	return data;
 }
 
-void SZ_Write (sizebuf_t *buf, const void* data, int length)
+void SZ_Write (sizebuf_t* buf, const void* data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }

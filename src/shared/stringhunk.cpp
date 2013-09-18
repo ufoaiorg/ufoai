@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @return @c true if the add was successful, @c false if there was an overflow and the string was cut.
  */
-bool STRHUNK_Add (stringHunk_t *hunk, const char* string)
+bool STRHUNK_Add (stringHunk_t* hunk, const char* string)
 {
 	const ptrdiff_t filled = hunk->pos - hunk->hunk;
 	const size_t remaining = hunk->size - filled;
@@ -52,14 +52,14 @@ bool STRHUNK_Add (stringHunk_t *hunk, const char* string)
 	return !overflow;
 }
 
-void STRHUNK_Reset (stringHunk_t *hunk)
+void STRHUNK_Reset (stringHunk_t* hunk)
 {
 	hunk->pos = hunk->hunk;
 	hunk->entries = 0;
 	hunk->hunk[0] = '\0';
 }
 
-void STRHUNK_Visit (stringHunk_t *hunk, stringHunkVisitor_t visitor)
+void STRHUNK_Visit (stringHunk_t* hunk, stringHunkVisitor_t visitor)
 {
 	const char* string = hunk->hunk;
 
@@ -75,19 +75,19 @@ void STRHUNK_Visit (stringHunk_t *hunk, stringHunkVisitor_t visitor)
 	}
 }
 
-int STRHUNK_Size (const stringHunk_t *hunk)
+int STRHUNK_Size (const stringHunk_t* hunk)
 {
 	return hunk->entries;
 }
 
-size_t STRHUNK_GetFreeSpace (const stringHunk_t *hunk)
+size_t STRHUNK_GetFreeSpace (const stringHunk_t* hunk)
 {
 	return hunk->size - (ptrdiff_t)(hunk->pos - hunk->hunk);
 }
 
-stringHunk_t *STRHUNK_Create (size_t size)
+stringHunk_t* STRHUNK_Create (size_t size)
 {
-	stringHunk_t *strHunk = Mem_AllocType(stringHunk_t);
+	stringHunk_t* strHunk = Mem_AllocType(stringHunk_t);
 	strHunk->size = size;
 	strHunk->hunk = Mem_AllocTypeN(char, size);
 	strHunk->pos = strHunk->hunk;

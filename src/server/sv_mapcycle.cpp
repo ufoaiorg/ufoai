@@ -11,7 +11,7 @@ typedef struct mapcycle_s {
 	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
 } mapcycle_t;
 
-static mapcycle_t *mapcycleList;	/**< map cycle linked list */
+static mapcycle_t* mapcycleList;	/**< map cycle linked list */
 static int mapcycleCount;		/**< number of maps in the cycle */
 
 /**
@@ -22,7 +22,7 @@ void SV_NextMapcycle (void)
 	const char* map = nullptr, *gameType = nullptr;
 	bool day = true;
 	char expanded[MAX_QPATH];
-	mapcycle_t *mapcycle;
+	mapcycle_t* mapcycle;
 
 	mapcycle = mapcycleList;
 	if (sv->name[0]) {
@@ -139,11 +139,11 @@ void SV_NextMapcycle (void)
 void SV_MapcycleClear (void)
 {
 	int i;
-	mapcycle_t *mapcycle;
+	mapcycle_t* mapcycle;
 
 	mapcycle = mapcycleList;
 	for (i = 0; i < mapcycleCount; i++) {
-		mapcycle_t *oldMapcycle = mapcycle;
+		mapcycle_t* oldMapcycle = mapcycle;
 		mapcycle = mapcycle->next;
 		Mem_Free(oldMapcycle->type);
 		Mem_Free(oldMapcycle->map);
@@ -232,7 +232,7 @@ static void SV_ParseMapcycle (void)
 static void SV_MapcycleList_f (void)
 {
 	int i;
-	const mapcycle_t *mapcycle;
+	const mapcycle_t* mapcycle;
 
 	mapcycle = mapcycleList;
 	Com_Printf("current mapcycle has %i entries\n", mapcycleCount);

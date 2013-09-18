@@ -31,7 +31,7 @@
 #include <SDL_thread.h>
 
 static SDL_mutex *svLogMutex;
-static stringHunk_t *svLogHunk;
+static stringHunk_t* svLogHunk;
 
 static void SV_LogPrintOutput (const char* string)
 {

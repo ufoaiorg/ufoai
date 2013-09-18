@@ -184,7 +184,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 
 	/* fill in the data */
 	for (i = 0; i < map->numPlaced; i++) {
-		const mPlaced_t *mp = &map->mPlaced[i];
+		const mPlaced_t* mp = &map->mPlaced[i];
 		const Tile *tile = mp->tile;
 		int tx, ty;
 		const char* tn = tile->id + 1;
@@ -452,7 +452,7 @@ static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo *m
  */
 static const char* SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char* token, const char* filename, const char** text, const char* errhead)
 {
-	const cvar_t *cvar;
+	const cvar_t* cvar;
 
 	Com_DPrintf(DEBUG_SERVER, "SV_GetCvarToken: cvar replacement: %s\n", token);
 
@@ -880,7 +880,7 @@ static void SV_DumpPlaced (const MapInfo *map, int pl)
 	const Assembly *mAsm = map->getCurrentAssembly();
 	const int h = mAsm->height;
 	const int w = mAsm->width;
-	const mPlaced_t *placed = &map->mPlaced[pl];
+	const mPlaced_t* placed = &map->mPlaced[pl];
 
 	Com_Printf("Placed tile %s at %d %d\n", placed->tile->id, placed->x, placed->y);
 
@@ -1018,7 +1018,7 @@ static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos
 	mAsm = map->getCurrentAssembly();
 
 	for (i = 0; i < map->numPlaced; i++) {
-		const mPlaced_t *pl = &map->mPlaced[i];
+		const mPlaced_t* pl = &map->mPlaced[i];
 
 		if (sv_dumpmapassembly->integer)
 			SV_DumpPlaced(map, i);
@@ -1054,7 +1054,7 @@ static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo *map, int tileCode, int map
 	const int ti = tileCode % TCM;
 	const int posX = pos % mapW;
 	const int posY = pos / mapW;
-	const mToPlace_t *mToPlace = map->mToPlace;
+	const mToPlace_t* mToPlace = map->mToPlace;
 	const Tile *tile = mToPlace[ti].tile;
 
 	return tile->spec[mapY - posY][mapX - posX];
@@ -1078,7 +1078,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 	static int callCnt = 0;
 	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
-	const mToPlace_t *mToPlace = map->mToPlace;
+	const mToPlace_t* mToPlace = map->mToPlace;
 	int i, j = 0;
 	int solids = 0;				/* the # of places that the remaining tiles can theoretically cover */
 	int availableTilesCnt = 0;	/* the # of different tiles remaining in posTileList */
@@ -1291,7 +1291,7 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
 {
 	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
-	const mToPlace_t *mToPlace = map->mToPlace;
+	const mToPlace_t* mToPlace = map->mToPlace;
 
 	/** initialize the list of gaps */
 	int x, y;
@@ -1466,7 +1466,7 @@ static bool SV_AddMissingTiles (MapInfo *map)
 	const Assembly *mAsm = map->getCurrentAssembly();
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int mapW = mAsm->width;
-	const mToPlace_t *mToPlace = map->mToPlace;
+	const mToPlace_t* mToPlace = map->mToPlace;
 	short posList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];	/* array of random positions */
 	short tilenumList[MAX_TILETYPES];	/* array of tiles */
 
@@ -1595,11 +1595,11 @@ static bool SV_AddMapTiles (MapInfo *map)
 	const int mapW = mAsm->width;		/* width in x-direction */
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int numToPlace = map->numToPlace;
-	const mToPlace_t *mToPlace = map->mToPlace;		/* pointer to a tile descriptor */
+	const mToPlace_t* mToPlace = map->mToPlace;		/* pointer to a tile descriptor */
 	short prList[MAX_RANDOM_MAP_HEIGHT * MAX_RANDOM_MAP_WIDTH];	/* array of random positions */
 	const int start = map->numPlaced;
 #ifdef DEBUG
-	const mPlaced_t *mPlaced = map->mPlaced;
+	const mPlaced_t* mPlaced = map->mPlaced;
 #endif
 
 #if PRINT_RMA_PROGRESS
@@ -1950,9 +1950,9 @@ void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inher
 #if SORT_BY_SIZE
 static int cmpTileAreaSize (const void*  a, const void*  b)
 {
-	if (((const mToPlace_t *) a)->tile->area > ((const mToPlace_t *) b)->tile->area)
+	if (((const mToPlace_t* ) a)->tile->area > ((const mToPlace_t* ) b)->tile->area)
 		return -1;
-	else if (((const mToPlace_t *) a)->tile->area == ((const mToPlace_t *) b)->tile->area)
+	else if (((const mToPlace_t* ) a)->tile->area == ((const mToPlace_t* ) b)->tile->area)
 		return 0;
 	return 1;
 }

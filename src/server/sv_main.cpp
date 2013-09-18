@@ -33,26 +33,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL.h>
 
 /** password for remote server commands */
-static cvar_t *rcon_password;
-static cvar_t *sv_http_downloadserver;
-static cvar_t *sv_enablemorale;
-static cvar_t *sv_maxsoldiersperteam;
-static cvar_t *sv_maxsoldiersperplayer;
-static cvar_t *sv_hostname;
+static cvar_t* rcon_password;
+static cvar_t* sv_http_downloadserver;
+static cvar_t* sv_enablemorale;
+static cvar_t* sv_maxsoldiersperteam;
+static cvar_t* sv_maxsoldiersperplayer;
+static cvar_t* sv_hostname;
 /** minimum seconds between connect messages */
-static cvar_t *sv_reconnect_limit;
-static cvar_t *sv_timeout;			/* seconds without any message */
+static cvar_t* sv_reconnect_limit;
+static cvar_t* sv_timeout;			/* seconds without any message */
 
-cvar_t *sv_maxclients = nullptr;
-cvar_t *sv_dumpmapassembly;
-cvar_t *sv_threads;
-cvar_t *sv_rma;
-cvar_t *sv_rmadisplaythemap;
+cvar_t* sv_maxclients = nullptr;
+cvar_t* sv_dumpmapassembly;
+cvar_t* sv_threads;
+cvar_t* sv_rma;
+cvar_t* sv_rmadisplaythemap;
 /** should heartbeats be sent */
-cvar_t *sv_public;
-cvar_t *sv_mapname;
+cvar_t* sv_public;
+cvar_t* sv_mapname;
 
-memPool_t *sv_genericPool;
+memPool_t* sv_genericPool;
 
 typedef struct leakyBucket_s {
 	char node[64];
@@ -71,7 +71,7 @@ typedef struct leakyBucket_s {
 #define MAX_HASHES			1024
 
 static leakyBucket_t buckets[MAX_BUCKETS];
-static leakyBucket_t *bucketHashes[MAX_HASHES];
+static leakyBucket_t* bucketHashes[MAX_HASHES];
 static leakyBucket_t outboundLeakyBucket;
 
 char* SV_GetConfigString (int index)
@@ -126,10 +126,10 @@ char* SV_SetConfigString (int index, ...)
  * @brief Iterates through clients
  * @param[in] lastClient Pointer of the client to iterate from. call with nullptr to get the first one.
  */
-client_t *SV_GetNextClient (client_t *lastClient)
+client_t* SV_GetNextClient (client_t* lastClient)
 {
-	client_t *endOfClients = &svs.clients[sv_maxclients->integer];
-	client_t *client;
+	client_t* endOfClients = &svs.clients[sv_maxclients->integer];
+	client_t* client;
 
 	if (!sv_maxclients->integer)
 		return nullptr;
@@ -148,7 +148,7 @@ client_t *SV_GetNextClient (client_t *lastClient)
 		return client;
 }
 
-client_t *SV_GetClient (int index)
+client_t* SV_GetClient (int index)
 {
 	return &svs.clients[index];
 }
@@ -158,7 +158,7 @@ client_t *SV_GetClient (int index)
  * or unwillingly. This is NOT called if the entire server is quitting
  * or crashing.
  */
-void SV_DropClient (client_t *drop, const char* message)
+void SV_DropClient (client_t* drop, const char* message)
 {
 	/* add the disconnect */
 	dbuffer msg(2 + strlen(message));
@@ -183,7 +183,7 @@ void SV_DropClient (client_t *drop, const char* message)
 
 	if (svs.abandon) {
 		int count = 0;
-		client_t *cl = nullptr;
+		client_t* cl = nullptr;
 		while ((cl = SV_GetNextClient(cl)) != nullptr)
 			if (cl->state >= cs_connected)
 				count++;
@@ -201,7 +201,7 @@ CONNECTIONLESS COMMANDS
 /**
  * @brief Find or allocate a bucket for an address
  */
-static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burst, int period)
+static leakyBucket_t* SVC_BucketForAddress (struct net_stream &address, int burst, int period)
 {
 	char node[64];
 	NET_StreamPeerToName(&address, node, sizeof(node), false);
@@ -209,7 +209,7 @@ static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burs
 	const long hash = Com_HashKey(node, MAX_HASHES);
 	const int now = Sys_Milliseconds();
 
-	for (leakyBucket_t *bucket = bucketHashes[hash]; bucket; bucket = bucket->next) {
+	for (leakyBucket_t* bucket = bucketHashes[hash]; bucket; bucket = bucket->next) {
 		if (!Q_streq(bucket->node, node))
 			continue;
 
@@ -217,7 +217,7 @@ static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burs
 	}
 
 	for (int i = 0; i < MAX_BUCKETS; i++) {
-		leakyBucket_t *bucket = &buckets[i];
+		leakyBucket_t* bucket = &buckets[i];
 		const int interval = now - bucket->lastTime;
 
 		/* Reclaim expired buckets */
@@ -258,7 +258,7 @@ static leakyBucket_t *SVC_BucketForAddress (struct net_stream &address, int burs
 	return nullptr;
 }
 
-static bool SVC_RateLimit (leakyBucket_t *bucket, int burst = 10, int period = 100)
+static bool SVC_RateLimit (leakyBucket_t* bucket, int burst = 10, int period = 100)
 {
 	if (bucket == nullptr)
 		return true;
@@ -289,7 +289,7 @@ static bool SVC_RateLimit (leakyBucket_t *bucket, int burst = 10, int period = 1
  */
 static bool SVC_RateLimitAddress (struct net_stream &from, int burst = 10, int period = 1000)
 {
-	leakyBucket_t *bucket = SVC_BucketForAddress(from, burst, period);
+	leakyBucket_t* bucket = SVC_BucketForAddress(from, burst, period);
 	return SVC_RateLimit(bucket, burst, period);
 }
 
@@ -320,7 +320,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(&msg, "teaminfo\n");
 	NET_WriteString(&msg, infoGlobal);
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state < cs_connected)
 			continue;
@@ -364,7 +364,7 @@ static void SVC_Status (struct net_stream *s)
 	NET_WriteRawString(&msg, Cvar_Serverinfo(info, sizeof(info)));
 	NET_WriteRawString(&msg, "\n");
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state <= cs_free)
 			continue;
@@ -413,7 +413,7 @@ static void SVC_Info (struct net_stream *s)
 
 	int count = 0;
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state >= cs_spawning)
 			count++;
@@ -481,7 +481,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
 	/* find a client slot */
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr)
 		if (cl->state == cs_free)
 			break;
@@ -645,7 +645,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
  */
 void SV_ReadPacket (struct net_stream *s)
 {
-	client_t *cl = static_cast<client_t *>(NET_StreamGetData(s));
+	client_t* cl = static_cast<client_t* >(NET_StreamGetData(s));
 	dbuffer *msg;
 
 	while ((msg = NET_ReadMsg(s))) {
@@ -726,7 +726,7 @@ static void SV_CheckSpawnSoldiers (void)
 	if (sv->spawned)
 		return;
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		/* all players must be connected and all of them must have set
 		 * the ready flag */
@@ -744,7 +744,7 @@ static void SV_CheckSpawnSoldiers (void)
 
 static void SV_CheckStartMatch (void)
 {
-	client_t *cl;
+	client_t* cl;
 
 	if (!sv->spawned || sv->started)
 		return;
@@ -781,7 +781,7 @@ static void SV_PingPlayers (void)
 		return;					/* not time to send yet */
 
 	svs.lastPing = svs.realtime;
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state == cs_free)
 			continue;
@@ -798,7 +798,7 @@ static void SV_CheckTimeouts (void)
 	if (sv_maxclients->integer == 1)
 		return;
 
-	client_t *cl = nullptr;
+	client_t* cl = nullptr;
 	while ((cl = SV_GetNextClient(cl)) != nullptr) {
 		if (cl->state == cs_free)
 			continue;
@@ -899,7 +899,7 @@ static void Master_Shutdown (void)
 /**
  * @brief Pull specific info from a newly changed userinfo string into a more C friendly form.
  */
-void SV_UserinfoChanged (client_t *cl)
+void SV_UserinfoChanged (client_t* cl)
 {
 	unsigned int i;
 
@@ -921,18 +921,18 @@ void SV_UserinfoChanged (client_t *cl)
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }
 
-static bool SV_CheckMaxSoldiersPerPlayer (cvar_t *cvar)
+static bool SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 {
 	const int max = MAX_ACTIVETEAM;
 	return Cvar_AssertValue(cvar, 1, max, true);
 }
 
-mapData_t *SV_GetMapData (void)
+mapData_t* SV_GetMapData (void)
 {
 	return &sv->mapData;
 }
 
-mapTiles_t *SV_GetMapTiles (void)
+mapTiles_t* SV_GetMapTiles (void)
 {
 	return &sv->mapTiles;
 }
@@ -984,7 +984,7 @@ void SV_Init (void)
  */
 static void SV_FinalMessage (const char* message, bool reconnect)
 {
-	client_t *cl;
+	client_t* cl;
 	dbuffer msg(2 + strlen(message));
 
 	if (reconnect)
@@ -1041,7 +1041,7 @@ void SV_Shutdown (const char* finalmsg, bool reconnect)
 	SV_Stop();
 
 	for (i = 0; i < sv->numSVModels; i++) {
-		sv_model_t *model = &sv->svModels[i];
+		sv_model_t* model = &sv->svModels[i];
 		Mem_Free(model->name);
 	}
 
@@ -1081,7 +1081,7 @@ void SV_ShutdownWhenEmpty (void)
 int SV_CountPlayers (void)
 {
 	int count = 0;
-	client_t *cl;
+	client_t* cl;
 
 	if (!svs.initialized)
 		return 0;
