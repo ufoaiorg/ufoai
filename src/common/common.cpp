@@ -1456,6 +1456,8 @@ ScheduleEventPtr Dequeue_Event (int now)
 		/* delay all other events if this one is blocked */
 		if (event->delayFollowing > 0) {
 			Delay_Events(now, i);
+			if (event->notifyDelay != nullptr)
+				event->notifyDelay(now, event->notifyDelayUserData, event->delayFollowing);
 			break;
 		}
 	}

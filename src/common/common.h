@@ -312,6 +312,7 @@ void Con_Print(const char* txt);
 typedef void event_func(int now, void* data);
 typedef bool event_check_func(int now, void* data);
 typedef bool event_delay_func(int now, void* data);
+typedef void event_notify_delay_func(int now, void* data, int delay);
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
@@ -331,6 +332,8 @@ struct scheduleEvent_t {
 	 * @param[in] data The event userdata
 	 */
 	event_delay_func *delay;
+	event_notify_delay_func *notifyDelay;
+	void* notifyDelayUserData;
 	event_clean_func *clean;
 	void* data;
 };

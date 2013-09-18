@@ -120,6 +120,24 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
 }
 
 /**
+ * @brief If we delayed the battlescape events due to event locking (e.g. le is locked or camera is locked),
+ * we have to advance the time for new events, too. Otherwise they might be scheduled before the just delayed
+ * events.
+ * @param[in] now
+ * @param[in] data The userdata that is passed to the function callback. In our case this is the
+ * @c eventTiming_t data
+ * @param[in] delay The milliseconds that the battlescape events were delayed and that we have to use to
+ * advance the @c eventTiming_t values.
+ */
+static void CL_NotifyBattlescapeEventDelay (int now, void* data, int delay)
+{
+	eventTiming_t *eventTiming = (eventTiming_t *)data;
+	eventTiming->impactTime += delay;
+	eventTiming->nextTime += delay;
+	eventTiming->shootTime += delay;
+}
+
+/**
  * @brief Checks if a given battlescape event should get delayed.
  * @param now The current time.
  */
@@ -269,6 +287,8 @@ event_t CL_ParseEvent (dbuffer *msg)
 		const int when = CL_GetEventTime(cur->eType, msg, &eventTiming);
 		ScheduleEventPtr e = Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
 		e->delayFollowing = 50;
+		e->notifyDelay = &CL_NotifyBattlescapeEventDelay;
+		e->notifyDelayUserData = (void*)&eventTiming;
 		e->delay = &CL_DelayBattlescapeEvent;
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
