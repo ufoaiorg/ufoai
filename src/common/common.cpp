@@ -1410,7 +1410,7 @@ ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *c
 	return event;
 }
 
-static void Delay_Events (int now, EventPriorityQueue::iterator i)
+static size_t Delay_Events (int now, EventPriorityQueue::iterator i)
 {
 	ScheduleEventPtr event = *i;
 	EventPriorityQueue reOrder;
@@ -1433,6 +1433,7 @@ static void Delay_Events (int now, EventPriorityQueue::iterator i)
 	for (EventPriorityQueue::iterator r = reOrder.begin(); r != reOrder.end(); ++r) {
 		eventQueue.insert(*r);
 	}
+	return reOrder.size();
 }
 
 ScheduleEventPtr Dequeue_Event(int now);
