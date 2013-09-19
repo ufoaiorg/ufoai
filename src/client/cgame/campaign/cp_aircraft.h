@@ -99,9 +99,9 @@ typedef enum {
 /** @brief slot of aircraft */
 typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
-	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
-	struct installation_s *installation;	/**< A link to the installation. (if defined by aircraftItemType_t) */
-	struct aircraft_s *aircraft;	/**< A link to the aircraft (if defined by aircraftItemType_t). */
+	struct base_s* base;		/**< A link to the base. (if defined by aircraftItemType_t) */
+	struct installation_s* installation;	/**< A link to the installation. (if defined by aircraftItemType_t) */
+	struct aircraft_s* aircraft;	/**< A link to the aircraft (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
 
 	const objDef_t *item;		/**< Item that is currently in the slot. nullptr if empty. */
@@ -148,7 +148,7 @@ typedef struct aircraft_s {
 						 * For aircraftTemplates[] aircraft this is the index in that array.
 						 * this should be references only with the variable name aircraftIdx
 						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
-	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
+	struct aircraft_s* tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char* id;			/**< Internal id from script file. */
 	char name[MAX_VAR];			/**< Aircraft name (user can change this). */
 	char* defaultName;	/**< Translatable default name for aircraft. */
@@ -181,7 +181,7 @@ typedef struct aircraft_s {
 	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
 	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft  (empty or not) */
 
-	struct base_s *homebase;			/**< Pointer to homebase for faster access. */
+	struct base_s* homebase;			/**< Pointer to homebase for faster access. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemTypes;						/**< How many types of items we collected. */
 
@@ -191,7 +191,7 @@ typedef struct aircraft_s {
 								 * The mission the UFO is involved if this is a UFO */
 	char* missionID;			/**< aircraft loaded before missions, we need this temporary as reference
 								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
-	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
+	struct aircraft_s* aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
 	bool leader;				/**< try to follow this aircraft */
 	struct radar_s radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
@@ -224,8 +224,8 @@ void AIR_ListCraftIndexes_f(void);
 #define AIR_IsAircraftOfBase(aircraft, base) ((aircraft)->homebase == (base) && (aircraft)->status != AIR_CRASHED)
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
-aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
-bool AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
+aircraft_t *AIR_Add(struct base_s* base, const aircraft_t *aircraftTemplate);
+bool AIR_Delete(struct base_s* base, const aircraft_t *aircraft);
 
 #define AIR_ForeachFromBase(var, base) \
 	AIR_Foreach(var) \
@@ -233,11 +233,11 @@ bool AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
 #define AIR_ForeachSorted(var, sorter, userdata, sortedlist) LIST_ForeachSorted(ccs.aircraft, aircraft_t, var, sorter, userdata, sortedlist)
 
-aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
+aircraft_t* AIR_GetFirstFromBase(const struct base_s* base);
 
-bool AIR_BaseHasAircraft(const struct base_s *base);
-int AIR_BaseCountAircraft(const struct base_s *base);
-aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
+bool AIR_BaseHasAircraft(const struct base_s* base);
+int AIR_BaseCountAircraft(const struct base_s* base);
+aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s* base, int index);
 const char* AIR_AircraftStatusToName(const aircraft_t *aircraft);
 bool AIR_IsAircraftInBase(const aircraft_t *aircraft);
 bool AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
@@ -266,15 +266,15 @@ void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, bool destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 bool AIR_ScriptSanityCheck(void);
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
-int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
-int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
+int AIR_CountTypeInBase(const struct base_s* base, aircraftType_t aircraftType);
+int AIR_CountInBaseByTemplate(const struct base_s* base, const aircraft_t *aircraftTemplate);
 const char* AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float* weaponRanges);
 baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
 const char* AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base);
-void AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
+void AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s* base);
 
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);

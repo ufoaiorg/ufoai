@@ -60,17 +60,17 @@ struct uiMessageListNodeMessage_s {
 	date_t date;
 	const char* iconName;
 	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
-	struct uiMessageListNodeMessage_s *next;
+	struct uiMessageListNodeMessage_s* next;
 
 	/** override some campaign specific stuff */
 	messageType_t type;
-	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
-	struct eventMail_s *eventMail;
+	struct technology_s* pedia;		/**< link to UFOpaedia if a research has finished. */
+	struct eventMail_s* eventMail;
 };
 
 typedef struct uiMessageListNodeMessage_s uiMessageListNodeMessage_t;
 
-uiMessageListNodeMessage_t *MS_AddNewMessage(const char* title, const char* text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = nullptr, bool popup = false, bool playSound = true);
+uiMessageListNodeMessage_t *MS_AddNewMessage(const char* title, const char* text, messageType_t type = MSG_STANDARD, struct technology_s* pedia = nullptr, bool popup = false, bool playSound = true);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];

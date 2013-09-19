@@ -46,8 +46,8 @@ typedef enum {
 typedef struct {
 	union productionItem_t {
 		const objDef_t *item;				/**< Item to be produced. */
-		const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
-		struct storedUFO_s *ufo;
+		const struct aircraft_s* aircraft;	/**< Aircraft (sample) to be produced. */
+		struct storedUFO_s* ufo;
 		const void* pointer;				/**< if you just wanna check whether a valid pointer was set */
 	} data;
 	productionType_t type;
@@ -106,7 +106,7 @@ void PR_ProductionRun(void);
 
 bool PR_ItemIsProduceable(const objDef_t *item);
 
-struct base_s *PR_ProductionBase(const production_t *production);
+struct base_s* PR_ProductionBase(const production_t *production);
 
 int PR_IncreaseProduction(production_t *prod, int amount);
 int PR_DecreaseProduction(production_t *prod, int amount);
@@ -114,16 +114,16 @@ int PR_DecreaseProduction(production_t *prod, int amount);
 const char* PR_GetName(const productionData_t *data);
 technology_t* PR_GetTech(const productionData_t *data);
 
-void PR_UpdateProductionCap(struct base_s *base, int workerChange = 0);
+void PR_UpdateProductionCap(struct base_s* base, int workerChange = 0);
 
-void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t *reqs);
-int PR_RequirementsMet(int amount, const requirements_t *reqs, struct base_s *base);
+void PR_UpdateRequiredItemsInBasestorage(struct base_s* base, int amount, const requirements_t *reqs);
+int PR_RequirementsMet(int amount, const requirements_t *reqs, struct base_s* base);
 
 int PR_GetRemainingMinutes(const production_t *prod);
 int PR_GetRemainingHours(const production_t *prod);
-int PR_GetProductionHours(const struct base_s *base, const productionData_t *prodData);
+int PR_GetProductionHours(const struct base_s* base, const productionData_t *prodData);
 
-production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
+production_t *PR_QueueNew(struct base_s* base, const productionData_t *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
-void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
-void PR_QueueNext(struct base_s *base);
+void PR_QueueDelete(struct base_s* base, production_queue_t *queue, int index);
+void PR_QueueNext(struct base_s* base);

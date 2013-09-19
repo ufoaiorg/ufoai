@@ -72,10 +72,10 @@ typedef struct requirement_s {
 	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
 	char* id;	/**< Dependency id (text-id) */
 	union typelink_t {
-		const struct technology_s *tech;
-		const struct objDef_s *od;
-		const struct teamDef_s *td;
-		const struct aircraft_s *aircraft;
+		const struct technology_s* tech;
+		const struct objDef_s* od;
+		const struct teamDef_s* td;
+		const struct aircraft_s* aircraft;
 	} link;
 	int amount;	/**< How many items are needed for research ... if any. (fix) */
 	int collected;	/**< How many items have been collected. (varies) */
@@ -142,7 +142,7 @@ typedef struct technology_s {
 	technologyDescriptions_t preDescription;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
-	struct technology_s *redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
+	struct technology_s* redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
 									 * Mostly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
 
 	requirements_t requireAND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
@@ -187,15 +187,15 @@ typedef struct technology_s {
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	struct pediaChapter_s *upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
-	struct technology_s *upPrev;	/**< Previous tech in pedia. */
-	struct technology_s *upNext;	/**< Next tech in pedia. */
+	struct pediaChapter_s* upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
+	struct technology_s* upPrev;	/**< Previous tech in pedia. */
+	struct technology_s* upNext;	/**< Next tech in pedia. */
 
 	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
 	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equal to TECHMAIL_MAX both mailtypes are available. */
 
-	struct technology_s *hashNext;
-	struct technology_s *hashProvidedNext;
+	struct technology_s* hashNext;
+	struct technology_s* hashProvidedNext;
 } technology_t;
 
 #define RS_Collected_(tech) ((tech)->statusCollected)
@@ -211,31 +211,31 @@ technology_t* RS_GetTechForItem(const objDef_t *item);
 technology_t* RS_GetTechForTeam(const teamDef_t *team);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
-void RS_InitTree(const struct campaign_s *campaign, bool load);
+void RS_InitTree(const struct campaign_s* campaign, bool load);
 const char* RS_GetDescription(technologyDescriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
-void RS_MarkResearchable(const struct base_s *base, bool init = false);
+void RS_MarkResearchable(const struct base_s* base, bool init = false);
 bool RS_MarkStoryLineEventResearched(const char* techID);
 void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 
-void RS_AssignScientist(technology_t* tech, struct base_s *base, Employee *employee = nullptr);
+void RS_AssignScientist(technology_t* tech, struct base_s* base, Employee *employee = nullptr);
 void RS_RemoveScientist(technology_t* tech, Employee *employee);
-void RS_RemoveFiredScientist(struct base_s *base, Employee *employee);
-void RS_RemoveScientistsExceedingCapacity(struct base_s *base);
+void RS_RemoveFiredScientist(struct base_s* base, Employee *employee);
+void RS_RemoveScientistsExceedingCapacity(struct base_s* base);
 
 technology_t *RS_GetTechByID(const char* id);
 technology_t *RS_GetTechByProvided(const char* idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);
-technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
+technology_t *RS_GetTechWithMostScientists(const struct base_s* base);
 int RS_GetTechIdxByName(const char* name);
-int RS_CountScientistsInBase(const struct base_s *base);
+int RS_CountScientistsInBase(const struct base_s* base);
 bool RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */
 void UP_AircraftDescription(const technology_t* t);
-void UP_UGVDescription(const struct ugv_s *ugvType);
+void UP_UGVDescription(const struct ugv_s* ugvType);
 
 void RS_CheckRequirements(void);
-bool RS_RequirementsMet(const technology_t *tech, const struct base_s *base);
+bool RS_RequirementsMet(const technology_t *tech, const struct base_s* base);

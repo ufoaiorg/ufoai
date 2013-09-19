@@ -92,9 +92,9 @@ typedef struct messageSettings_s {
 #define MAX_MESSAGECATEGORIES 16
 typedef struct msgCategoryEntry_s {
 	const char* notifyType;					/**< notification type or category name */
-	struct msgCategory_s *category; 		/**< associated category */
-	struct msgCategoryEntry_s *next;		/**< pointer to next in category */
-	struct msgCategoryEntry_s *previous;	/**< pointer to previous in category */
+	struct msgCategory_s* category; 		/**< associated category */
+	struct msgCategoryEntry_s* next;		/**< pointer to next in category */
+	struct msgCategoryEntry_s* previous;	/**< pointer to previous in category */
 	messageSettings_t *settings;			/**< associated settings */
 	bool isCategory;					/**< flag indicating that this is a category and no notification type */
 } msgCategoryEntry_t;

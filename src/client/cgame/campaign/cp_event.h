@@ -95,7 +95,7 @@ typedef struct {
 
 #define MAX_CAMPAIGN_TRIGGER_EVENTS 32
 
-void CP_CheckCampaignEvents(struct campaign_s *campaign);
+void CP_CheckCampaignEvents(struct campaign_s* campaign);
 void CL_ParseCampaignEvents(const char* name, const char** text);
 void CP_ParseEventTrigger(const char* name, const char** text);
 bool CP_TriggerEventLoadXML(xmlNode_t *p);

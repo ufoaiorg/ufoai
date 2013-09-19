@@ -31,8 +31,8 @@ typedef struct pediaChapter_s {
 	int idx;				/**< self-link */
 	char	*id;			/**< script file id */
 	char	*name;			/**< translatable chapter names */
-	struct technology_s *first;
-	struct technology_s *last;
+	struct technology_s* first;
+	struct technology_s* last;
 } pediaChapter_t;
 
 void UP_InitStartup(void);

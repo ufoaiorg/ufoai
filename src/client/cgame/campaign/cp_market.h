@@ -54,5 +54,5 @@ bool BS_SellItem(const objDef_t *od, base_t *base, int count);
 bool BS_BuyUGV(const ugv_t *ugv, base_t *base);
 bool BS_SellUGV(Employee *robot);
 
-void BS_InitMarket(const struct campaign_s *campaign);
-void CP_CampaignRunMarket(struct campaign_s *campaign);
+void BS_InitMarket(const struct campaign_s* campaign);
+void CP_CampaignRunMarket(struct campaign_s* campaign);

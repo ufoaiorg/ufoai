@@ -32,7 +32,7 @@ struct battleParam_s;
 struct missionResults_s;
 struct mission_s;
 
-void AM_Go(struct mission_s *mission, struct aircraft_s *aircraft, const struct campaign_s *campaign, const struct battleParam_s *battleParameters, struct missionResults_s *results);
+void AM_Go(struct mission_s* mission, struct aircraft_s* aircraft, const struct campaign_s* campaign, const struct battleParam_s* battleParameters, struct missionResults_s* results);
 
 void AM_InitStartup(void);
 void AM_Shutdown(void);

@@ -54,7 +54,7 @@ typedef struct clientBattleScape_s {
 
 	/** locally derived information from server state */
 	model_t* model_draw[MAX_MODELS];
-	const struct cBspModel_s *model_clip[MAX_MODELS];
+	const struct cBspModel_s* model_clip[MAX_MODELS];
 
 	bool radarInitialized;		/**< every radar image (for every level [1-8]) is loaded */
 

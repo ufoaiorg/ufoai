@@ -69,7 +69,7 @@ void AIRFIGHT_CampaignRunProjectiles(const struct campaign_s* campaign, int dt);
 void AIRFIGHT_CampaignRunBaseDefence(int dt);
 int AIRFIGHT_CheckWeapon(const aircraftSlot_t *slot, float distance);
 int AIRFIGHT_ChooseWeapon(const aircraftSlot_t *slot, int maxSlot, const vec2_t pos, const vec2_t targetPos);
-bool AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
+bool AIRFIGHT_BaseCanTargetUFO(const struct base_s* base, const aircraft_t *ufo);
 void AIRFIGHT_RemoveProjectileAimingAircraft(const aircraft_t *aircraft);
 
 bool AIRFIGHT_SaveXML(xmlNode_t *parent);

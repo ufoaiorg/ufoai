@@ -40,7 +40,7 @@ void GAME_InitStartup(void);
 void GAME_Shutdown(void);
 void GAME_InitUIData(void);
 void GAME_UnloadGame(void);
-void GAME_SetMode(const struct cgame_export_s *gametype);
+void GAME_SetMode(const struct cgame_export_s* gametype);
 void GAME_ReloadMode(void);
 void GAME_Init(bool load);
 void GAME_DisplayItemInfo(uiNode_t *node, const char* string);

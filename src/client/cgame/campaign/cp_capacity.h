@@ -43,7 +43,7 @@ typedef struct capacities_s {
 	int cur;		/**< Currently used capacity. */
 } capacities_t;
 
-void CAP_UpdateStorageCap(struct base_s *base);
+void CAP_UpdateStorageCap(struct base_s* base);
 /**
  * @brief Capacity macros
  */
@@ -55,7 +55,7 @@ void CAP_AddMax(struct base_s* base, baseCapacities_t capacity, int value);
 void CAP_SetCurrent(struct base_s* base, baseCapacities_t capacity, int value);
 void CAP_AddCurrent(struct base_s* base, baseCapacities_t capacity, int value);
 
-void CAP_RemoveAntimatterExceedingCapacity(struct base_s *base);
+void CAP_RemoveAntimatterExceedingCapacity(struct base_s* base);
 
-int CAP_GetFreeCapacity(const struct base_s *base, baseCapacities_t cap);
+int CAP_GetFreeCapacity(const struct base_s* base, baseCapacities_t cap);
 void CAP_CheckOverflow(void);

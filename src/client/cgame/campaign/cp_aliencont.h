@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Collecting aliens functions.
  */
 
-void AL_AddAliens(struct aircraft_s *aircraft);
-bool AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, bool dead);
+void AL_AddAliens(struct aircraft_s* aircraft);
+bool AL_AddAlienTypeToAircraftCargo(struct aircraft_s* aircraft, const teamDef_t *teamDef, int amount, bool dead);
 
 int AL_CountAll(void);
 void AC_InitStartup(void);

@@ -64,7 +64,7 @@ typedef struct installationTemplate_s {
 	int buildTime;						/**< Time to build the installation, in days. */
 	char* model;						/**< Model used on 3D geoscape */
 	char* image;						/**< Image used on 2D geoscape */
-	struct technology_s *tech;			/**< Link to the installation-technology. */
+	struct technology_s* tech;			/**< Link to the installation-technology. */
 	bool once;
 } installationTemplate_t;
 

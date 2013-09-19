@@ -50,5 +50,5 @@ void GAME_MP_PingServers_f(void);
 void GAME_MP_ParseTeamInfoMessage(dbuffer *msg);
 void CL_ParseServerInfoMessage(dbuffer *msg, const char* hostname);
 
-void GAME_MP_ServerListInit(const struct cgame_import_s *import);
+void GAME_MP_ServerListInit(const struct cgame_import_s* import);
 void GAME_MP_ServerListShutdown(void);

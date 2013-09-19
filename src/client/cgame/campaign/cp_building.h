@@ -75,8 +75,8 @@ typedef enum {
 /** @brief A building with all it's data. */
 typedef struct building_s {
 	int idx;						/**< Index in in the base buildings list. */
-	struct building_s *tpl;			/**< Self link in "buildingTemplates" list. */
-	struct base_s *base;			/**< The base this building is located in. */
+	struct building_s* tpl;			/**< Self link in "buildingTemplates" list. */
+	struct base_s* base;			/**< The base this building is located in. */
 
 	const char* id;
 	char* name;						/**< translatable name of the building */
@@ -111,8 +111,8 @@ typedef struct building_s {
 	int maxEmployees;
 
 	buildingType_t buildingType;	/**< This way we can rename the buildings without loosing the control. @note Not to be confused with "tpl".*/
-	struct technology_s *tech;		/**< Link to the building-technology. */
-	const struct building_s *dependsBuilding;	/**< If the building needs another one to work (= to be buildable). @sa "buildingTemplates" list*/
+	struct technology_s* tech;		/**< Link to the building-technology. */
+	const struct building_s* dependsBuilding;	/**< If the building needs another one to work (= to be buildable). @sa "buildingTemplates" list*/
 
 	int capacity;					/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
@@ -142,4 +142,4 @@ bool B_CheckBuildingDependencesStatus(const building_t* building);
 bool B_IsBuildingBuiltUp(const building_t *building);
 float B_GetConstructionTimeRemain(const building_t *building);
 
-bool B_FireEvent(const building_t *buildingTemplate, const struct base_s *base, buildingEvent_t eventType);
+bool B_FireEvent(const building_t *buildingTemplate, const struct base_s* base, buildingEvent_t eventType);

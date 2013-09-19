@@ -42,8 +42,8 @@ typedef enum {
 #define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
 #define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
-typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t* ent);
-typedef void (*localEntityThinkFunc_t) (struct le_s * le);
+typedef bool (*localEntitiyAddFunc_t) (struct le_s*  le, entity_t* ent);
+typedef void (*localEntityThinkFunc_t) (struct le_s*  le);
 
 #define LE_CHECK_LEVELFLAGS		0x0001
 #define LE_ALWAYS_VISIBLE		0x0002
@@ -58,7 +58,7 @@ typedef struct leStep_s {
 	int lastMoveTime;
 	int lastMoveDuration;
 	int stepTimes[MAX_ROUTE]; 	/**< the time each steps needs */
-	struct leStep_s *next;
+	struct leStep_s* next;
 } leStep_t;
 
 /** @brief a local entity */
@@ -102,7 +102,7 @@ typedef struct le_s {
 	 */
 	byte actorMoveLength;
 
-	struct le_s *clientAction;	/**< entity from server that is currently triggered and wait for client action */
+	struct le_s* clientAction;	/**< entity from server that is currently triggered and wait for client action */
 
 	int contents;				/**< content flags for this LE - used for tracing */
 	AABB aabb;					/**< the bounding box */
@@ -151,7 +151,7 @@ typedef struct le_s {
 	int levelflags;			/**< the levels this local entity should be visible at */
 	ptl_t* ptl;				/**< particle pointer to display */
 	const char* ref1, *ref2;
-	const struct le_s *ref3;
+	const struct le_s* ref3;
 	Inventory inv;
 	int left, right, headgear;	/**< item indices that the actor holds in his hands */
 	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_* */
@@ -189,7 +189,7 @@ typedef struct le_s {
 	{
 		inv.setFloorContainer(il);
 	}
-	inline void setFloor (le_s *other)
+	inline void setFloor (le_s* other)
 	{
 		inv.setFloorContainer(other->getFloorContainer());
 	}
@@ -210,7 +210,7 @@ typedef struct localModel_s {
 	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
 	char animname[MAX_QPATH];	/**< is this an animated model */
 
-	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
+	struct localModel_s* parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	bool inuse;
 
 	vec3_t origin;
@@ -227,7 +227,7 @@ typedef struct localModel_s {
 	lighting_t lighting;
 
 	/** is called every frame */
-	void (*think) (struct localModel_s * localModel);
+	void (*think) (struct localModel_s*  localModel);
 
 	model_t* model;
 } localModel_t;

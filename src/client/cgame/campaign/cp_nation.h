@@ -89,7 +89,7 @@ void CITY_Parse(const char* name, const char** text);
 
 bool NAT_ScriptSanityCheck(void);
 
-void NAT_HandleBudget(const struct campaign_s *campaign);
+void NAT_HandleBudget(const struct campaign_s* campaign);
 void NAT_BackupMonthlyData(void);
 
 void NAT_InitStartup(void);

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct missionResults_s;
 
-void MIS_InitResultScreen(const struct missionResults_s *results);
+void MIS_InitResultScreen(const struct missionResults_s* results);
 
 void MIS_InitCallbacks(void);
 void MIS_ShutdownCallbacks(void);
