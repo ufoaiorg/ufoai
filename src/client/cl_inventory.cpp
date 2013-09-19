@@ -116,16 +116,12 @@ bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *src
 		}
 	} else if (weapon->isReloadable()) {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
-		int i = 0;
-		Item *ic = nullptr;
 		/* search an ammo */
-		while (i < weapon->numAmmos && !ic) {
+		for (int i = 0; i < weapon->numAmmos; i++) {
 			const objDef_t *ammo = weapon->ammos[i];
-			ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
-			i++;
-		}
-		if (ic) {
-			return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, nullptr);
+			Item *ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
+			if (ic)
+				return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, nullptr);
 		}
 	}
 
