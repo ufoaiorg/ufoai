@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ActorUse
  * @todo Hud should have a button that should be activated now
  */
-void CL_ActorClientAction (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorClientAction (const eventRegister_t* self, dbuffer* msg)
 {
 	int number, actionEntityNumber;
 

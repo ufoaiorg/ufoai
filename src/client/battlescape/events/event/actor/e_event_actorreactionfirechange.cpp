@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param msg The network message to parse the event data from
  * @sa HUD_UpdateReactionFiremodes
  */
-void CL_ActorReactionFireChange (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorReactionFireChange (const eventRegister_t* self, dbuffer* msg)
 {
 	actorHands_t hand;
 	int entnum, fmIdx, odIdx;

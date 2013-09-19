@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorStartShootTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_ActorStartShootTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 
@@ -50,7 +50,7 @@ int CL_ActorStartShootTime (const eventRegister_t* self, dbuffer *msg, eventTimi
  * @todo Improve detection of left- or right animation.
  * @sa EV_ACTOR_START_SHOOT
  */
-void CL_ActorStartShoot (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorStartShoot (const eventRegister_t* self, dbuffer* msg)
 {
 	pos3_t from, target;
 	int entnum;

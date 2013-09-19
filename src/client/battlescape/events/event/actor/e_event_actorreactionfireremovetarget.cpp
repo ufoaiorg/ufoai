@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfireremovetarget.h"
 
-int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	int targetEntNum;
 	int unused;
@@ -54,7 +54,7 @@ int CL_ActorReactionFireRemoveTargetTime (const eventRegister_t* self, dbuffer *
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReactionFireRemoveTarget (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorReactionFireRemoveTarget (const eventRegister_t* self, dbuffer* msg)
 {
 	int shooterEntNum;
 	int targetEntNum;

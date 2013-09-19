@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
-void CL_ActorRevitalised (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorRevitalised (const eventRegister_t* self, dbuffer* msg)
 {
 	int entnum, state;
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);

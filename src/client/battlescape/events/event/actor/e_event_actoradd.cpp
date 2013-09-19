@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note EV_ACTOR_ADD
  * @sa G_SendInvisible
  */
-void CL_ActorAdd (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorAdd (const eventRegister_t* self, dbuffer* msg)
 {
 	/* check if the actor is already visible */
 	const int entnum = NET_ReadShort(msg);

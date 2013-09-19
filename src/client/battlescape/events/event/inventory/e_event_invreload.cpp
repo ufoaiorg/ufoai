@@ -28,14 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_invreload.h"
 
-int CL_InvReloadTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_InvReloadTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 	eventTiming->nextTime += 600;
 	return eventTime;
 }
 
-void CL_InvReload (const eventRegister_t* self, dbuffer *msg)
+void CL_InvReload (const eventRegister_t* self, dbuffer* msg)
 {
 	int		number;
 	int		ammo, type, x, y;

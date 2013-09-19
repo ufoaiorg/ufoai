@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ParseEvent
  * @sa G_SendStats
  */
-void CL_ActorWound (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorWound (const eventRegister_t* self, dbuffer* msg)
 {
 	int entnum, bodyPart, wounds, treatment;
 	NET_ReadFormat(msg, self->formatString, &entnum, &bodyPart, &wounds, &treatment);

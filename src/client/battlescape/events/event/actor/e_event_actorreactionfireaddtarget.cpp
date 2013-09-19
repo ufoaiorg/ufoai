@@ -42,7 +42,7 @@ static void CL_GetReactionFireHead (const le_t* le, const char** model, int* ski
 	*robot = le->teamDef->robot;
 }
 
-int CL_ActorReactionFireAddTargetTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_ActorReactionFireAddTargetTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	int targetEntNum;
 	int unused;
@@ -67,7 +67,7 @@ int CL_ActorReactionFireAddTargetTime (const eventRegister_t* self, dbuffer *msg
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReactionFireAddTarget (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorReactionFireAddTarget (const eventRegister_t* self, dbuffer* msg)
 {
 	int shooterEntNum;
 	int targetEntNum;

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Decides if following events should be delayed. The delay is the amount of time the actor needs to walk
  * from the start to the end pos.
  */
-int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	int time = 0;
 
@@ -103,7 +103,7 @@ int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t
  * @sa LET_PathMove
  * @note EV_ACTOR_MOVE
  */
-void CL_ActorDoMove (const eventRegister_t* self, dbuffer *msg)
+void CL_ActorDoMove (const eventRegister_t* self, dbuffer* msg)
 {
 	const int number = NET_ReadShort(msg);
 

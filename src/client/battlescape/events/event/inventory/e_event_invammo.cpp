@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_invammo.h"
 
-void CL_InvAmmo (const eventRegister_t* self, dbuffer *msg)
+void CL_InvAmmo (const eventRegister_t* self, dbuffer* msg)
 {
 	int		number;
 	int		ammo, type, x, y;
