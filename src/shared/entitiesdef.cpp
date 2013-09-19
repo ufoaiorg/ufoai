@@ -97,7 +97,7 @@ static int ED_AllocEntityDef (entityKeyDef_t* newKeyDefs, int numKeyDefs, int en
 	entityDef_t* eDef = &entityDefs[entityIndex];
 
 	/* now we know how many there are in this entity, malloc */
-	eDef->keyDefs = (entityKeyDef_t* ) malloc((numKeyDefs + 1) * sizeof(entityKeyDef_t));
+	eDef->keyDefs = (entityKeyDef_t*) malloc((numKeyDefs + 1) * sizeof(entityKeyDef_t));
 	ED_TEST_RETURN_ERROR(!eDef->keyDefs, "ED_AllocEntityDef: out of memory");
 	eDef->numKeyDefs = numKeyDefs;
 
@@ -491,7 +491,7 @@ static int ED_AllocRange (entityKeyDef_t* kd, const char* rangeStr)
 	entityKeyRange_t** newRanges;
 	/* start a new range */
 	char* newStr = strdup(rangeStr);
-	entityKeyRange_t* newRange = (entityKeyRange_t* )malloc(sizeof(entityKeyRange_t));
+	entityKeyRange_t* newRange = (entityKeyRange_t*)malloc(sizeof(entityKeyRange_t));
 	OBJZERO(*newRange);
 	/* resize array of pointers */
 	newRanges = (entityKeyRange_t**)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t*));
@@ -499,7 +499,7 @@ static int ED_AllocRange (entityKeyDef_t* kd, const char* rangeStr)
 	newRange->str = newStr;
 	newRanges[kd->numRanges] = newRange;
 	if (kd->ranges) {
-		memcpy(newRanges, kd->ranges, kd->numRanges * sizeof(entityKeyRange_t* ));
+		memcpy(newRanges, kd->ranges, kd->numRanges * sizeof(entityKeyRange_t*));
 		free(kd->ranges);
 	}
 	kd->numRanges++;

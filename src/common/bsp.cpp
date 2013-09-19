@@ -56,7 +56,7 @@ static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t* l
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const dBspModel_t* ) (base + l->fileofs);
+	in = (const dBspModel_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
@@ -99,7 +99,7 @@ static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t* l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const dBspTexinfo_t* ) (base + l->fileofs);
+	in = (const dBspTexinfo_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -140,7 +140,7 @@ static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t* l, co
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const dBspNode_t* ) (base + l->fileofs);
+	in = (const dBspNode_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -190,7 +190,7 @@ static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t* l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const dBspBrush_t* ) (base + l->fileofs);
+	in = (const dBspBrush_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -227,7 +227,7 @@ static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t* l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const dBspLeaf_t* ) (base + l->fileofs);
+	in = (const dBspLeaf_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -281,7 +281,7 @@ static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t* l, c
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const dBspPlane_t* ) (base + l->fileofs);
+	in = (const dBspPlane_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -363,7 +363,7 @@ static void CMod_LoadBrushSides (MapTile &tile, const byte* base, const lump_t* 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const dBspBrushSide_t* ) (base + l->fileofs);
+	in = (const dBspBrushSide_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -809,7 +809,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
-	header = *(dBspHeader_t* ) buf;
+	header = *(dBspHeader_t*) buf;
 	BSP_SwapHeader(&header, filename);
 
 	if (header.version != BSPVERSION)

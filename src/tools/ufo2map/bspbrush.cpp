@@ -177,7 +177,7 @@ bspbrush_t* AllocBrush (int numsides)
 	if (threadstate.numthreads == 1)
 		c_active_brushes++;
 
-	return (bspbrush_t* )Mem_Alloc(size);
+	return (bspbrush_t*)Mem_Alloc(size);
 }
 
 /**

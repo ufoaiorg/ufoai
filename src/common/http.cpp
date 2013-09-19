@@ -95,7 +95,7 @@ size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 	Q_strncpyz(headerBuff, (const char*)ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
-		dlhandle_t* dl = (dlhandle_t* )stream;
+		dlhandle_t* dl = (dlhandle_t*)stream;
 		if (dl->file)
 			dl->fileSize = strtoul(headerBuff + 16, nullptr, 10);
 	}
@@ -111,7 +111,7 @@ size_t HTTP_Recv (void* ptr, size_t size, size_t nmemb, void* stream)
 	size_t bytes;
 	dlhandle_t* dl;
 
-	dl = (dlhandle_t* )stream;
+	dl = (dlhandle_t*)stream;
 
 	bytes = size * nmemb;
 

@@ -393,7 +393,7 @@ bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
 
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
-		hidePathingTable = (pathing_t* ) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
+		hidePathingTable = (pathing_t*) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
 	/* search hiding spot */
 	G_MoveCalcLocal(hidePathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
@@ -450,7 +450,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 	Edict* enemy = nullptr;
 
 	if (!herdPathingTable)
-		herdPathingTable = (pathing_t* ) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
+		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 	/* find the nearest enemy actor to the target*/
 	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);

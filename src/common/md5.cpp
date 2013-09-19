@@ -39,7 +39,7 @@ static void byteReverse (unsigned char* buf, unsigned longs)
 {
 	do {
 		const uint32_t t = SDL_SwapLE32(*(uint32_t*)buf);
-		*(uint32_t* ) buf = t;
+		*(uint32_t*) buf = t;
 		buf += 4;
 	} while (--longs);
 }
@@ -188,7 +188,7 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigne
 		}
 		memcpy(p, buf, t);
 		byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (uint32_t* ) ctx->in);
+		MD5Transform(ctx->buf, (uint32_t*) ctx->in);
 		buf += t;
 		len -= t;
 	}
@@ -197,7 +197,7 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigne
 	while (len >= 64) {
 		memcpy(ctx->in, buf, 64);
 		byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (uint32_t* ) ctx->in);
+		MD5Transform(ctx->buf, (uint32_t*) ctx->in);
 		buf += 64;
 		len -= 64;
 	}
@@ -232,7 +232,7 @@ static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
 		/* Two lots of padding:  Pad the first block to 64 bytes */
 		memset(p, 0, count);
 		byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (uint32_t* ) ctx->in);
+		MD5Transform(ctx->buf, (uint32_t*) ctx->in);
 
 		/* Now fill the next block with 56 bytes */
 		memset(ctx->in, 0, 56);
@@ -243,10 +243,10 @@ static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
 	byteReverse(ctx->in, 14);
 
 	/* Append length in bits and transform */
-	((uint32_t* ) ctx->in)[14] = ctx->bits[0];
-	((uint32_t* ) ctx->in)[15] = ctx->bits[1];
+	((uint32_t*) ctx->in)[14] = ctx->bits[0];
+	((uint32_t*) ctx->in)[15] = ctx->bits[1];
 
-	MD5Transform(ctx->buf, (uint32_t* ) ctx->in);
+	MD5Transform(ctx->buf, (uint32_t*) ctx->in);
 	byteReverse((unsigned char*) ctx->buf, 4);
 
 	if (digest != nullptr)

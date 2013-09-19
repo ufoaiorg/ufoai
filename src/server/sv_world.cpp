@@ -528,10 +528,10 @@ float SV_GetBounceFraction (const char* texture)
  */
 static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte* buffer)
 {
-	const dMD2Model_t* md2 = (const dMD2Model_t* )buffer;
+	const dMD2Model_t* md2 = (const dMD2Model_t*)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
 	const int frameSize = LittleLong(md2->framesize);
-	const dMD2Frame_t* frame = (const dMD2Frame_t* ) ((const byte*) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
+	const dMD2Frame_t* frame = (const dMD2Frame_t*) ((const byte*) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
 	vec3_t scale, mins, maxs;
 	int j;
 
@@ -555,8 +555,8 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte* buffer)
  */
 static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte* buffer)
 {
-	const dmd3_t* md3 = (const dmd3_t* )buffer;
-	const dmd3frame_t* frame = (const dmd3frame_t* )((const byte*)md3 + LittleLong(md3->ofs_frames));
+	const dmd3_t* md3 = (const dmd3_t*)buffer;
+	const dmd3frame_t* frame = (const dmd3frame_t*)((const byte*)md3 + LittleLong(md3->ofs_frames));
 	const int num_frames = LittleLong(md3->num_frames);
 	vec3_t mins, maxs;
 	int j;

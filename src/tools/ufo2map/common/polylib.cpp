@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 winding_t* AllocWinding (int points)
 {
-	return (winding_t* )Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
+	return (winding_t*)Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
 }
 
 /**
@@ -197,7 +197,7 @@ winding_t* BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 winding_t* CopyWinding (const winding_t* w)
 {
 	winding_t* c = AllocWinding(w->numpoints);
-	const ptrdiff_t size = (ptrdiff_t)((winding_t* )0)->p[w->numpoints];
+	const ptrdiff_t size = (ptrdiff_t)((winding_t*)0)->p[w->numpoints];
 	memcpy(c, w, size);
 	return c;
 }

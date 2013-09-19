@@ -51,7 +51,7 @@ void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r
 
 	if (currentSize == pq->maxSize) {
 		const int new_size = pq->maxSize * 2;
-		pq->elements = (priorityQueueElement_t* )Mem_ReAlloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
+		pq->elements = (priorityQueueElement_t*)Mem_ReAlloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
 		pq->maxSize = new_size;
 	}
 

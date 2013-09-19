@@ -247,7 +247,7 @@ namespace routing
 		InputStream &stream = file.getInputStream();
 		const std::size_t size = file.size();
 		byte* buf = (byte*) malloc(size + 1);
-		dBspHeader_t* header = (dBspHeader_t* ) buf;
+		dBspHeader_t* header = (dBspHeader_t*) buf;
 		stream.read(buf, size);
 
 		CMod_LoadRouting(_routingLump, file.getName(), &header->lumps[LUMP_ROUTING], (byte*) buf, 0, 0, 0);

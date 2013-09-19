@@ -1950,9 +1950,9 @@ void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inher
 #if SORT_BY_SIZE
 static int cmpTileAreaSize (const void*  a, const void*  b)
 {
-	if (((const mToPlace_t* ) a)->tile->area > ((const mToPlace_t* ) b)->tile->area)
+	if (((const mToPlace_t*) a)->tile->area > ((const mToPlace_t*) b)->tile->area)
 		return -1;
-	else if (((const mToPlace_t* ) a)->tile->area == ((const mToPlace_t* ) b)->tile->area)
+	else if (((const mToPlace_t*) a)->tile->area == ((const mToPlace_t*) b)->tile->area)
 		return 0;
 	return 1;
 }

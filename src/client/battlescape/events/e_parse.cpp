@@ -110,7 +110,7 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
 	if (CL_AreBattlescapeEventsBlocked())
 		return false;
 
-	const evTimes_t* event = (evTimes_t* )data;
+	const evTimes_t* event = (evTimes_t*)data;
 	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 
 	if (eventData->eventCheck == nullptr)
@@ -131,7 +131,7 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
  */
 static void CL_NotifyBattlescapeEventDelay (int now, void* data, int delay)
 {
-	eventTiming_t* eventTiming = (eventTiming_t* )data;
+	eventTiming_t* eventTiming = (eventTiming_t*)data;
 	eventTiming->impactTime += delay;
 	eventTiming->nextTime += delay;
 	eventTiming->shootTime += delay;
@@ -145,7 +145,7 @@ static bool CL_DelayBattlescapeEvent (int now, void* data)
 {
 	if (!CL_AreBattlescapeEventsBlocked())
 		return false;
-	const evTimes_t* event = (evTimes_t* )data;
+	const evTimes_t* event = (evTimes_t*)data;
 	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 	Com_DPrintf(DEBUG_EVENTSYS, "delay event %p type %s from %i\n", (void*)event, eventData->name, now);
 	return true;
@@ -156,7 +156,7 @@ static bool CL_DelayBattlescapeEvent (int now, void* data)
  */
 static void CL_ExecuteBattlescapeEvent (int now, void* data)
 {
-	evTimes_t* event = (evTimes_t* )data;
+	evTimes_t* event = (evTimes_t*)data;
 	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 
 	if (event->eType <= EV_START || cls.state == ca_active) {
@@ -179,7 +179,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void* data)
 
 static void CL_FreeBattlescapeEvent (void* data)
 {
-	evTimes_t* event = (evTimes_t* )data;
+	evTimes_t* event = (evTimes_t*)data;
 	delete event->msg;
 	Mem_Free(event);
 }
@@ -190,7 +190,7 @@ static void CL_FreeBattlescapeEvent (void* data)
 static bool CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void* data)
 {
 	if (func == &CL_ExecuteBattlescapeEvent) {
-		const evTimes_t* event = (const evTimes_t* )data;
+		const evTimes_t* event = (const evTimes_t*)data;
 		const eventRegister_t* e = CL_GetEvent(event->eType);
 		Com_Printf("Remove pending event %s\n", e->name);
 		return false;

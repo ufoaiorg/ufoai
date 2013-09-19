@@ -371,7 +371,7 @@ static void HUD_ShotReserve_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
 		return;
 
-	const reserveShot_t* reserveShotData = (const reserveShot_t* )LIST_GetByIdx(popupListData, selectedPopupIndex);
+	const reserveShot_t* reserveShotData = (const reserveShot_t*)LIST_GetByIdx(popupListData, selectedPopupIndex);
 	if (!reserveShotData)
 		return;
 

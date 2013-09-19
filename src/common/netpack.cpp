@@ -434,13 +434,13 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 			*va_arg(ap, int*) = NET_ReadLong(buf);
 			break;
 		case 'p':
-			NET_ReadPos(buf, *va_arg(ap, vec3_t* ));
+			NET_ReadPos(buf, *va_arg(ap, vec3_t*));
 			break;
 		case 'g':
-			NET_ReadGPos(buf, *va_arg(ap, pos3_t* ));
+			NET_ReadGPos(buf, *va_arg(ap, pos3_t*));
 			break;
 		case 'd':
-			NET_ReadDir(buf, *va_arg(ap, vec3_t* ));
+			NET_ReadDir(buf, *va_arg(ap, vec3_t*));
 			break;
 		case 'a':
 			*va_arg(ap, float* ) = NET_ReadAngle(buf);
