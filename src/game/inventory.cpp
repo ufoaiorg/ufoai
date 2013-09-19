@@ -54,7 +54,7 @@ void InventoryInterface::removeInvList (Item *invList)
 	}
 }
 
-Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t* container)
+Item *InventoryInterface::addInvList (Inventory* const inv, const invDef_t* container)
 {
 	Item *newEntry = static_cast<Item*>(alloc(sizeof(Item)));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
@@ -89,7 +89,7 @@ Item *InventoryInterface::addInvList (Inventory *const inv, const invDef_t* cont
  * @sa removeFromInventory
  * @return the @c Item pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
-Item *InventoryInterface::addToInventory (Inventory *const inv, const Item* const item, const invDef_t* container, int x, int y, int amount)
+Item *InventoryInterface::addToInventory (Inventory* const inv, const Item* const item, const invDef_t* container, int x, int y, int amount)
 {
 	if (!item->def())
 		return nullptr;
@@ -543,7 +543,7 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
  * @param[out] slowestFd The TU needed to use the slowest fireDef in the inventory.
  * @note temp containers are excluded.
  */
-float InventoryInterface::GetInventoryState (const Inventory *inventory, int &slowestFd)
+float InventoryInterface::GetInventoryState (const Inventory* inventory, int &slowestFd)
 {
 	float weight = 0;
 

@@ -230,7 +230,7 @@ static void testItemReload (void)
 	CU_ASSERT(inv.containsItem(container->id, &item) == true);
 }
 
-static bool testAddSingle (Inventory *inv, const objDef_t *od, const invDef_t *container)
+static bool testAddSingle (Inventory* inv, const objDef_t *od, const invDef_t *container)
 {
 	Item item(od);
 

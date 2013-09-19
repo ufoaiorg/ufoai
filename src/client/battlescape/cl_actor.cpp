@@ -952,7 +952,7 @@ void CL_ActorShoot (const le_t* le, const pos3_t at)
  * @param weapon The weapon to reload
  * @return @c NONE if no container was found, the container id otherwise.
  */
-int CL_ActorGetContainerForReload (Item* *invList, const Inventory *inv, const objDef_t* weapon)
+int CL_ActorGetContainerForReload (Item** invList, const Inventory* inv, const objDef_t* weapon)
 {
 	containerIndex_t container;
 	int tu = 100;
@@ -987,7 +987,7 @@ int CL_ActorGetContainerForReload (Item* *invList, const Inventory *inv, const o
  */
 void CL_ActorReload (le_t* le, containerIndex_t containerID)
 {
-	Inventory *inv;
+	Inventory* inv;
 	Item* ic;
 	const objDef_t* weapon;
 	containerIndex_t bestContainer;

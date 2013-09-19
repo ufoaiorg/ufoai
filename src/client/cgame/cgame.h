@@ -97,7 +97,7 @@ typedef enum {
 /** @todo define the import interface */
 typedef struct cgame_import_s {
 	csi_t *csi;
-	Inventory **ui_inventory;
+	Inventory* *ui_inventory;
 	const cgameType_t *cgameType;
 
 	/* UI functions */
@@ -132,7 +132,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_PopupButton) (const char *title, const char *text, const char *clickAction1, const char *clickText1, const char *tooltip1,
 		const char *clickAction2, const char *clickText2, const char *tooltip2, const char *clickAction3, const char *clickText3, const char *tooltip3);
 	uiSprite_t* (IMPORT *UI_GetSpriteByName) (const char* name);
-	void (IMPORT *UI_ContainerNodeUpdateEquipment) (Inventory *inv, const equipDef_t *ed);
+	void (IMPORT *UI_ContainerNodeUpdateEquipment) (Inventory* inv, const equipDef_t *ed);
 	void (IMPORT *UI_RegisterLineStrip) (int dataId, struct lineStrip_s *lineStrip);
 	uiNode_t* (IMPORT *UI_GetNodeByPath) (const char* path);
 	void (IMPORT *UI_DisplayNotice) (const char *text, int time, const char* windowName);
@@ -325,7 +325,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT *GetNextUniqueCharacterNumber) (void);
 
-	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory *));
+	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory* ));
 	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, bool));
 
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);

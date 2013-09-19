@@ -141,7 +141,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t* shape, const uint32_t ite
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const Inventory *const inv, const invDef_t* container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invDef_t* container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
 {
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 

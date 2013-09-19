@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo need refactoring to remove, reduce use... of that var
  * Global access to many node content like that is very bad.
  */
-Inventory *ui_inventory = nullptr;
+Inventory* ui_inventory = nullptr;
 
 #define EXTRADATA_TYPE containerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -95,7 +95,7 @@ static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
  * to the ground container of @c inv
  * @todo not used nor called by the container node; should be move somewhere else
  */
-void UI_ContainerNodeUpdateEquipment (Inventory *inv, const equipDef_t *ed)
+void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t *ed)
 {
 	int i;
 	/* make a copy, because we are not really using these items,
@@ -330,7 +330,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory *inv)
+static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory* inv)
 {
 	const objDef_t *od = UI_DNDGetItem()->def();	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;

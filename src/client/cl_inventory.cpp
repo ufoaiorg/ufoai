@@ -98,7 +98,7 @@ bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-bool INV_LoadWeapon (const Item* weaponList, Inventory *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	assert(weaponList);
 
@@ -135,7 +135,7 @@ bool INV_LoadWeapon (const Item* weaponList, Inventory *inv, const invDef_t *src
  * @param[in] container Inventory definition where to put the removed ammo.
  * @return @c true if the ammo was moved to the container, @c false otherwise
  */
-bool INV_UnloadWeapon (Item* weapon, Inventory *inv, const invDef_t *container)
+bool INV_UnloadWeapon (Item* weapon, Inventory* inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {

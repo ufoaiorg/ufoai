@@ -137,7 +137,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
 void CP_SetEquipContainer (character_t *chr)
 {
 	/* get the inventory the UI uses for all the work */
-	Inventory *uiInv = *cgi->ui_inventory;
+	Inventory* uiInv = *cgi->ui_inventory;
 	/* if it was not already set to our character's inventory ... */
 	if (uiInv && uiInv != &chr->inv) {
 		/* ...use the UI equip cont for our character's equipment container */

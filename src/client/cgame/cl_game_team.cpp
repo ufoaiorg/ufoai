@@ -491,7 +491,7 @@ void GAME_LoadTeam_f (void)
 	}
 }
 
-static void GAME_UpdateInventory (Inventory *inv, const equipDef_t *ed)
+static void GAME_UpdateInventory (Inventory* inv, const equipDef_t *ed)
 {
 	if (!LIST_IsEmpty(chrDisplayList))
 		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
@@ -603,7 +603,7 @@ static void GAME_SaveItem (xmlNode_t *p, const Item* item, containerIndex_t cont
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
-static void GAME_SaveInventory (xmlNode_t *p, const Inventory *inv)
+static void GAME_SaveInventory (xmlNode_t *p, const Inventory* inv)
 {
 	const Container *cont = nullptr;
 	while ((cont = inv->getNextCont(cont, false))) {
@@ -670,7 +670,7 @@ static void GAME_LoadItem (xmlNode_t *n, Item* item, containerIndex_t *container
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
   */
-static void GAME_LoadInventory (xmlNode_t *p, Inventory *inv, int maxLoad)
+static void GAME_LoadInventory (xmlNode_t *p, Inventory* inv, int maxLoad)
 {
 	xmlNode_t *s;
 

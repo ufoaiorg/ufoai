@@ -263,7 +263,7 @@ static inline void AII_CollectItem_ (void* data, const objDef_t *item, int amoun
  * @param[in] soldierInventory Pointer to inventory from a soldier of our team.
  * @sa AII_CollectingItems
  */
-static void AII_CarriedItems (const Inventory *soldierInventory)
+static void AII_CarriedItems (const Inventory* soldierInventory)
 {
 	Item* item;
 	equipDef_t *ed = &ccs.eMission;

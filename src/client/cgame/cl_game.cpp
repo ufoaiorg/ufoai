@@ -393,7 +393,7 @@ static void GAME_Free (void* ptr)
 	Mem_Free(ptr);
 }
 
-static void GAME_DestroyInventory (Inventory * const inv)
+static void GAME_DestroyInventory (Inventory*  const inv)
 {
 	cls.i.destroyInventory(inv);
 }
@@ -448,7 +448,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item* ), void (*ownitems) (const Inventory *))
+static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item* ), void (*ownitems) (const Inventory* ))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
@@ -1283,7 +1283,7 @@ static void GAME_NetSendItem (dbuffer *buf, const Item* item, containerIndex_t c
 /**
  * @sa G_SendInventory
  */
-static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
+static void GAME_NetSendInventory (dbuffer *buf, const Inventory* inv)
 {
 	const int nr = inv->countItems();
 
@@ -1364,7 +1364,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 	NET_WriteByte(buf, teamSize);
 
 	LIST_Foreach(team, character_t, chr) {
-		Inventory *inv = &chr->inv;
+		Inventory* inv = &chr->inv;
 
 		/* unlink all temp containers */
 		inv->resetTempContainers();
