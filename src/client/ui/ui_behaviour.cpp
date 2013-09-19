@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @see UI_RegisterExtradataNodeProperty
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour, const char* name, int type, size_t pos, size_t size)
+const struct value_s* UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour, const char* name, int type, size_t pos, size_t size)
 {
 	value_t *property = (value_t*) UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, false);
 	if (property == nullptr)
@@ -79,7 +79,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour,
  * @param function function to execute the node method
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodeMethod (uiBehaviour_t *behaviour, const char* name, uiNodeMethod_t function)
+const struct value_s* UI_RegisterNodeMethod (uiBehaviour_t *behaviour, const char* name, uiNodeMethod_t function)
 {
 	return UI_RegisterNodePropertyPosSize_(behaviour, name, V_UI_NODEMETHOD, (size_t)function, 0);
 }

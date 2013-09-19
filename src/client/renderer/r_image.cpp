@@ -34,7 +34,7 @@ static image_t *imageHash[MAX_IMAGEHASH];
 #define IMAGE_ARRAY_SIZE 128
 typedef struct imageArray_s {
 	image_t images[IMAGE_ARRAY_SIZE];
-	struct imageArray_s *next;
+	struct imageArray_s* next;
 } imageArray_t;
 
 imageArray_t r_images;

@@ -46,7 +46,7 @@ struct sequenceContext_s;
  * @brief execution function of a command
  * @return @c 0 if the same command should be executed again - or @c 1 to execute the next event
  */
-typedef int (*sequenceHandler_t) (struct sequenceContext_s *context, const char* name, const char* data);
+typedef int (*sequenceHandler_t) (struct sequenceContext_s* context, const char* name, const char* data);
 
 typedef struct seqCmd_s {
 	sequenceHandler_t handler;

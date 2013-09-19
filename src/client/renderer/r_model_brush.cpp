@@ -594,7 +594,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
 				s = DotProduct(point, sdir) + soff;
 				s -= surf->stmins[0];
-				s += surf->light_s * surf->lightmap_scale;
+				s += surf->light_s*  surf->lightmap_scale;
 				s += surf->lightmap_scale / 2.0;
 				s /= r_lightmaps.size * surf->lightmap_scale;
 

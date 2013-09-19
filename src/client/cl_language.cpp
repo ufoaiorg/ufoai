@@ -43,7 +43,7 @@ static memPool_t *cl_msgidPool;
 typedef struct msgid_s {
 	const char* id;				/**< the msgid id used for referencing via *msgid: 'id' */
 	const char* text;			/**< the pointer to the po file */
-	struct msgid_s *hash_next;	/**< hash map next pointer in case of collision */
+	struct msgid_s* hash_next;	/**< hash map next pointer in case of collision */
 } msgid_t;
 
 static msgid_t msgIDs[MAX_MSGIDS];
@@ -166,7 +166,7 @@ void CL_ParseMessageIDs (void)
  */
 typedef struct localeMapping_s {
 	char* localeMapping;	/**< string that contains e.g. en_US.UTF-8 */
-	struct localeMapping_s *next;	/**< next entry in the linked list */
+	struct localeMapping_s* next;	/**< next entry in the linked list */
 } localeMapping_t;
 
 /**
@@ -178,7 +178,7 @@ typedef struct language_s {
 	const char* localeString;		/**< translatable locale string to show in menus */
 	const char* nativeString;		/**< Name of the language in the native language itself */
 	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
-	struct language_s *next;	/**< next language in this list */
+	struct language_s* next;	/**< next language in this list */
 } language_t;
 
 static language_t *languageList;	/**< linked list of all parsed languages */

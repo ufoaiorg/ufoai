@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed.
  */
-int CL_InvDelTime (const struct eventRegister_s *self, dbuffer* msg, eventTiming_t* eventTiming)
+int CL_InvDelTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		return eventTiming->impactTime + 400;

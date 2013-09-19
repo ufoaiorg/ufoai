@@ -88,9 +88,9 @@ void UI_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t sca
  * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
-const struct image_s *UI_LoadImage (const char* name)
+const struct image_s* UI_LoadImage (const char* name)
 {
-	const struct image_s *image = R_FindImage(va("pics/%s", name), it_pic);
+	const struct image_s* image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
 		return nullptr;
 	return image;
@@ -103,9 +103,9 @@ const struct image_s *UI_LoadImage (const char* name)
  * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
-const struct image_s *UI_LoadWrappedImage (const char* name)
+const struct image_s* UI_LoadWrappedImage (const char* name)
 {
-	const struct image_s *image = R_FindImage(va("pics/%s", name), it_wrappic);
+	const struct image_s* image = R_FindImage(va("pics/%s", name), it_wrappic);
 	if (image == r_noTexture)
 		return nullptr;
 	return image;
@@ -204,7 +204,7 @@ void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, 
  */
 const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name)
 {
-	const struct image_s *image;
+	const struct image_s* image;
 
 	image = UI_LoadImage(name);
 	if (!image) {

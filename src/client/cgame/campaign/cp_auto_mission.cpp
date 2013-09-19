@@ -832,7 +832,7 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
  * @param[in] battle The battle we fought
  * @param[in, out] aircraft Dropship soldiers are on
  */
-static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
+static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s* aircraft)
 {
 	assert(battle);
 	assert(battle->results);

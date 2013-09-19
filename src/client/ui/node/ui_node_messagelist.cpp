@@ -58,7 +58,7 @@ typedef struct uiMessageListNodeMessage_s {
 	date_t date;
 	const char* iconName;
 	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
-	struct uiMessageListNodeMessage_s *next;
+	struct uiMessageListNodeMessage_s* next;
 } uiMessageListNodeMessage_t;
 
 /** @todo implement this on a per-node basis */

@@ -26,5 +26,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../e_main.h"
 
-int CL_ExplodeTime(const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming);
+int CL_ExplodeTime(const struct eventRegister_s* self, dbuffer *msg, eventTiming_t *eventTiming);
 void CL_Explode(const eventRegister_t *self, dbuffer *msg);

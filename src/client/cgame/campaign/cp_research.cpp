@@ -1662,7 +1662,7 @@ technology_t *RS_GetTechByProvided (const char* idProvided)
  * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base In what base the tech should be researched.
  */
-technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
+technology_t *RS_GetTechWithMostScientists (const struct base_s* base)
 {
 	technology_t *tech;
 	int i, max;

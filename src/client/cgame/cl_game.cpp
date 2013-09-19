@@ -67,7 +67,7 @@ static inline const cgame_export_t *GAME_GetCurrentType (void)
 class GAMECvarListener: public CvarListener
 {
 private:
-	typedef std::set<const struct cvar_s *> GameCvars;
+	typedef std::set<const struct cvar_s* > GameCvars;
 	GameCvars _cvars;
 public:
 	~GAMECvarListener ()
@@ -75,14 +75,14 @@ public:
 		_cvars.clear();
 	}
 
-	void onCreate (const struct cvar_s *cvar)
+	void onCreate (const struct cvar_s* cvar)
 	{
 		const cgame_export_t *list = GAME_GetCurrentType();
 		if (list)
 			_cvars.insert(cvar);
 	}
 
-	void onDelete (const struct cvar_s *cvar)
+	void onDelete (const struct cvar_s* cvar)
 	{
 		_cvars.erase(cvar);
 	}
@@ -91,7 +91,7 @@ public:
 	{
 		GameCvars copy = _cvars;
 		for (GameCvars::const_iterator i = copy.begin(); i != copy.end(); ++i) {
-			const struct cvar_s *cvar = *i;
+			const struct cvar_s* cvar = *i;
 			if (cvar->flags == 0) {
 				const cgame_export_t *list = GAME_GetCurrentType();
 				Com_DPrintf(DEBUG_CLIENT, "Delete cvar %s because it was created in the context of the cgame %s\n",

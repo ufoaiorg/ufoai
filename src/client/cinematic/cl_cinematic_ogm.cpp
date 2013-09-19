@@ -804,8 +804,8 @@ void CIN_OGM_Init (void)
 	}
 }
 #else
-int CIN_OGM_OpenCinematic(struct cinematic_s *cin, const char* filename) {return 0;}
-void CIN_OGM_CloseCinematic(struct cinematic_s *cin) {}
-bool CIN_OGM_RunCinematic(struct cinematic_s *cin) {return false;}
+int CIN_OGM_OpenCinematic(struct cinematic_s* cin, const char* filename) {return 0;}
+void CIN_OGM_CloseCinematic(struct cinematic_s* cin) {}
+bool CIN_OGM_RunCinematic(struct cinematic_s* cin) {return false;}
 void CIN_OGM_Init(void) {}
 #endif

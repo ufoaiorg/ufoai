@@ -85,7 +85,7 @@ static const struct buildingTypeMapping_s {
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char* buildingID)
 {
-	for (const struct buildingTypeMapping_s *v = buildingTypeMapping; v->id; v++)
+	for (const struct buildingTypeMapping_s* v = buildingTypeMapping; v->id; v++)
 		if (Q_streq(buildingID, v->id))
 			return v->type;
 	return MAX_BUILDING_TYPE;

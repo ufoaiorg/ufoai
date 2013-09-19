@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides when the explode event should get executed. This in the impact time.
  */
-int CL_ExplodeTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ExplodeTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t *eventTiming)
 {
 	return eventTiming->impactTime;
 }

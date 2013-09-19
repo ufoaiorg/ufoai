@@ -56,21 +56,21 @@ typedef struct eventRegister_s {
 	 * @param self A pointer to this struct
 	 * @param msg The buffer with the event data
 	 */
-	void (*eventCallback)(const struct eventRegister_s *self, dbuffer *msg);
+	void (*eventCallback)(const struct eventRegister_s* self, dbuffer *msg);
 	/**
 	 * @brief Callback that is returning the time that is needed to execute this event
 	 * @param self A pointer to this struct
 	 * @param msg The buffer with the event data
 	 * @param eventTiming The delta time value
 	 */
-	int (*timeCallback)(const struct eventRegister_s *self, dbuffer *msg, eventTiming_t* eventTiming);
+	int (*timeCallback)(const struct eventRegister_s* self, dbuffer *msg, eventTiming_t* eventTiming);
 
 	/**
 	 * @brief Called to determine if this event is ok to run at this point. Should check any
 	 * conflicts with other ongoing events (see @c LE_LOCKED ).
 	 * @return @c true if OK to run, @c false if not.
 	 */
-	bool (*eventCheck)(const struct eventRegister_s *self, const dbuffer *msg);
+	bool (*eventCheck)(const struct eventRegister_s* self, const dbuffer *msg);
 } eventRegister_t;
 
 const eventRegister_t* CL_GetEvent(const event_t eType);

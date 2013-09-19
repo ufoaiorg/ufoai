@@ -69,7 +69,7 @@ typedef struct {
 typedef struct wrapCache_s {
 	char text[MAX_CACHE_STRING];	/**< hash id */
 	const font_t *font;	/**< font used for wrapping/rendering this text */
-	struct wrapCache_s *next;		/**< next hash entry in case of collision */
+	struct wrapCache_s* next;		/**< next hash entry in case of collision */
 	int maxWidth;		/**< width to which this text was wrapped */
 	longlines_t method;		/**< were long lines wrapped or truncated? */
 	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */

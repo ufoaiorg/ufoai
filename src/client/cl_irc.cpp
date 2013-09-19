@@ -64,7 +64,7 @@ static bool irc_connected;
 
 typedef struct irc_user_s {
 	char key[MAX_VAR];
-	struct irc_user_s *next;
+	struct irc_user_s* next;
 } irc_user_t;
 
 typedef struct irc_channel_s {
@@ -333,7 +333,7 @@ static cvar_t *irc_characterBucketRate;
 typedef struct irc_bucket_message_s {
 	char* msg;
 	size_t msg_len;
-	struct irc_bucket_message_s *next;
+	struct irc_bucket_message_s* next;
 } irc_bucket_message_t;
 
 typedef struct irc_bucket_s {

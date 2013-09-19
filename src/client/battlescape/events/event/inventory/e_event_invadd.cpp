@@ -55,7 +55,7 @@ static void CL_NetReceiveItem (dbuffer* buf, Item* item, containerIndex_t* conta
 /**
  * @brief Decides if following events should be delayed.
  */
-int CL_InvAddTime (const struct eventRegister_s *self, dbuffer* msg, eventTiming_t* eventTiming)
+int CL_InvAddTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		/* EV_INV_ADD messages are the last events sent after a death */
