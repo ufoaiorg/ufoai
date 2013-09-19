@@ -576,6 +576,7 @@
 		<Unit filename="../../src/client/renderer/r_particle.cpp" />
 		<Unit filename="../../src/client/renderer/r_particle.h" />
 		<Unit filename="../../src/client/renderer/r_program.cpp" />
+		<Unit filename="../../src/client/renderer/r_program.h" />
 		<Unit filename="../../src/client/renderer/r_sdl.cpp" />
 		<Unit filename="../../src/client/renderer/r_sdl.h" />
 		<Unit filename="../../src/client/renderer/r_sphere.cpp" />
