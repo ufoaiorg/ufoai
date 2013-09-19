@@ -58,17 +58,17 @@ typedef struct {
 	model_t *model;			/**< the loaded model */
 	const char* name;		/**< model path (resolved in the renderer on model loading time) */
 
-	float *origin;			/**< pointer to node/menumodel origin */
-	float *angles;			/**< pointer to node/menumodel angles */
-	float *scale;			/**< pointer to node/menumodel scale */
-	float *center;			/**< pointer to node/menumodel center */
+	float* origin;			/**< pointer to node/menumodel origin */
+	float* angles;			/**< pointer to node/menumodel angles */
+	float* scale;			/**< pointer to node/menumodel scale */
+	float* center;			/**< pointer to node/menumodel center */
 
 	int frame, oldframe;	/**< animation frames */
 	float backlerp;			/**< linear interpolation from previous frame */
 
 	int skin;				/**< skin number */
 	int mesh;				/**< which mesh? @note md2 models only have one mesh */
-	float *color;
+	float* color;
 } modelInfo_t;
 
 typedef struct ptlCmd_s {

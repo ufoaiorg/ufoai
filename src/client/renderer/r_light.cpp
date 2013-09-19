@@ -135,8 +135,8 @@ void R_EnableWorldLights (void)
 		Vector4Set(lightParams[i], 0, 0, 0, 1);
 
 	/* Send light data to shaders */
-	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
-	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat* )lightPositions);
+	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat* )lightParams);
 
 	R_EnableAttribute("TANGENTS");
 }
@@ -208,8 +208,8 @@ void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, 
 					Vector4Set(lightParams[i], 0, 0, 0, 1);
 
 				/* Send light data to shaders */
-				R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
-				R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+				R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat* )lightPositions);
+				R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat* )lightParams);
 			}
 		}
 
@@ -251,8 +251,8 @@ void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, 
 		Vector4Set(lightParams[i], 0, 0, 0, 1);
 
 	/* Send light data to shaders */
-	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
-	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat* )lightPositions);
+	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat* )lightParams);
 }
 
 /**

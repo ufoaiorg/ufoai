@@ -128,7 +128,7 @@ void R_ProgramParameter1f (const char* name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
-void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat *value)
+void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -138,7 +138,7 @@ void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat *value)
 	qglUniform1fv(v->location, size, value);
 }
 
-void R_ProgramParameter2fv (const char* name, GLfloat *value)
+void R_ProgramParameter2fv (const char* name, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -148,7 +148,7 @@ void R_ProgramParameter2fv (const char* name, GLfloat *value)
 	qglUniform2fv(v->location, 1, value);
 }
 
-void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat *value)
+void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -158,7 +158,7 @@ void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat *value)
 	qglUniform2fv(v->location, size, value);
 }
 
-void R_ProgramParameter3fv (const char* name, GLfloat *value)
+void R_ProgramParameter3fv (const char* name, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -168,7 +168,7 @@ void R_ProgramParameter3fv (const char* name, GLfloat *value)
 	qglUniform3fv(v->location, 1, value);
 }
 
-void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat *value)
+void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -178,7 +178,7 @@ void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat *value)
 	qglUniform3fv(v->location, size, value);
 }
 
-void R_ProgramParameter4fv (const char* name, GLfloat *value)
+void R_ProgramParameter4fv (const char* name, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -188,7 +188,7 @@ void R_ProgramParameter4fv (const char* name, GLfloat *value)
 	qglUniform4fv(v->location, 1, value);
 }
 
-void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat *value)
+void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -198,7 +198,7 @@ void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat *value)
 	qglUniform4fv(v->location, size, value);
 }
 
-void R_ProgramParameterMatrix4fv (const char* name, GLfloat *value)
+void R_ProgramParameterMatrix4fv (const char* name, GLfloat* value)
 {
 	r_progvar_t *v;
 
@@ -969,7 +969,7 @@ static void R_InitConvolveProgram (r_program_t *prog)
 static void R_UseConvolveProgram (r_program_t *prog)
 {
 	int i;
-	const float *userdata= (float *)prog->userdata;
+	const float* userdata= (float* )prog->userdata;
 	float offsets[FILTER_SIZE * 2];
 	const float halfWidth = (FILTER_SIZE - 1) * 0.5;
 	const float offset = 1.2f / userdata[0];

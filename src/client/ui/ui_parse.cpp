@@ -169,7 +169,7 @@ const value_t* UI_FindPropertyByName (const value_t* propertyList, const char* n
  */
 float* UI_AllocStaticFloat (int count)
 {
-	float *result;
+	float* result;
 	assert(count > 0);
 	result = (float*) UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), false);
 	if (result == nullptr)
@@ -1410,5 +1410,5 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 	}
 
 	/* just get the data */
-	return *(const float *) ref;
+	return *(const float* ) ref;
 }

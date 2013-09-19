@@ -48,7 +48,7 @@ typedef struct gltexunit_s {
 	GLenum texture;		/**< e.g. GL_TEXTURE0 */
 	GLint texnum;		/**< e.g 123 */
 	GLenum texenv;		/**< e.g. GL_MODULATE */
-	GLfloat *texcoord_array;
+	GLfloat* texcoord_array;
 	/* Size of the array above - it's dynamically reallocated */
 	int array_size;
 } gltexunit_t;
@@ -95,15 +95,15 @@ typedef struct rstate_s {
 	bool fullscreen;
 
 	/* arrays */
-	GLfloat *vertex_array_3d;
+	GLfloat* vertex_array_3d;
 	GLshort* vertex_array_2d;
-	GLfloat *color_array;
+	GLfloat* color_array;
 	GLint* index_array;
-	GLfloat *normal_array;
-	GLfloat *tangent_array;
-	GLfloat *next_vertex_array_3d;
-	GLfloat *next_normal_array;
-	GLfloat *next_tangent_array;
+	GLfloat* normal_array;
+	GLfloat* tangent_array;
+	GLfloat* next_vertex_array_3d;
+	GLfloat* next_normal_array;
+	GLfloat* next_tangent_array;
 
 	/* Size of all arrays above - it's dynamically reallocated */
 	int array_size;

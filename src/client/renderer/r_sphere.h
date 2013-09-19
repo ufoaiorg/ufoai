@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct sphere_s {
 	GLint list;			/**< the opengl list id */
-	float *texes;		/**< globe tex coords, points in 2D on the texture to be mapped onto the sphere */
-	float *verts;		/**< globe vertices, points in 3D on the surface of the sphere */
-	float *normals;		/**< vertex normal array */
+	float* texes;		/**< globe tex coords, points in 2D on the texture to be mapped onto the sphere */
+	float* verts;		/**< globe vertices, points in 3D on the surface of the sphere */
+	float* normals;		/**< vertex normal array */
 	image_t* texture;	/**< the texture for this globe - @note scaled texture matrix */
 	image_t* blendTexture;	/**< the texture for the next season (for blending) */
 	image_t* overlay;	/**< the overlay for the world (e.g. nation borders) */

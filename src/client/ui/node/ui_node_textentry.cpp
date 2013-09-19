@@ -283,7 +283,7 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 
 void uiTextEntryNode::draw (uiNode_t *node)
 {
-	const float *textColor;
+	const float* textColor;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	const char* font = UI_GetFontFromNode(node);

@@ -643,7 +643,7 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
  * @param[in] orthogonalVector The orthogonal vector.
  * @param[out] finalPoint The next point from the original point + movement in "angle" direction.
  */
-static void AIRFIGHT_GetNextPointInPathFromVector (const float *movement, const vec2_t originalPoint, const vec3_t orthogonalVector, vec2_t finalPoint)
+static void AIRFIGHT_GetNextPointInPathFromVector (const float* movement, const vec2_t originalPoint, const vec3_t orthogonalVector, vec2_t finalPoint)
 {
 	vec3_t startPoint, finalVectorPoint;
 
@@ -661,7 +661,7 @@ static void AIRFIGHT_GetNextPointInPathFromVector (const float *movement, const 
  * @param[out] finalPoint The next point from the original point + movement in "angle" direction.
  * @param[out] orthogonalVector The orthogonal vector.
  */
-static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t originalPoint, const vec2_t targetPoint, float *angle, vec2_t finalPoint, vec3_t orthogonalVector)
+static void AIRFIGHT_GetNextPointInPath (const float* movement, const vec2_t originalPoint, const vec2_t targetPoint, float* angle, vec2_t finalPoint, vec3_t orthogonalVector)
 {
 	*angle = GEO_AngleOfPath(originalPoint, targetPoint, nullptr, orthogonalVector);
 	AIRFIGHT_GetNextPointInPathFromVector(movement, originalPoint, orthogonalVector, finalPoint);

@@ -230,11 +230,11 @@ typedef struct mBspModel_s {
 	int* surfedges;
 
 	/* vertex arrays */
-	float *verts;
-	float *texcoords;
-	float *lmtexcoords;
-	float *tangents;
-	float *normals;
+	float* verts;
+	float* texcoords;
+	float* lmtexcoords;
+	float* tangents;
+	float* normals;
 	glElementIndex_t *indexes; /*< TODO: on Android glElementIndex_t is unsigned short, which can be only up to 65536 and might overflow */
 	int numIndexes;
 

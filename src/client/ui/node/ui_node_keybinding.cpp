@@ -104,7 +104,7 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 void uiKeyBindingNode::draw (uiNode_t *node)
 {
 	const char* binding, *description, *command;
-	const float *textColor;
+	const float* textColor;
 	vec2_t pos;
 	const char* font = UI_GetFontFromNode(node);
 	const int bindingWidth = EXTRADATA(node).bindingWidth;

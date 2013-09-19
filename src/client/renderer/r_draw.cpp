@@ -665,7 +665,7 @@ void R_DrawBoundingBoxes (void)
 	R_Color(nullptr);
 
 	for (i = 0; i < bboxes; i++) {
-		const float *bbox = &r_bbox_array.bboxes[i * step];
+		const float* bbox = &r_bbox_array.bboxes[i * step];
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 		/* Draw top and sides */
 		glDrawElements(GL_TRIANGLE_FAN, 15, GL_UNSIGNED_SHORT, indexes);

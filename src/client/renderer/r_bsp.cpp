@@ -176,8 +176,8 @@ void R_DrawBspNormals (int tile)
 
 		for (j = 0; j < surf->numedges; j++) {
 			vec3_t end;
-			const GLfloat *vertex = &bsp->verts[(surf->index + j) * 3];
-			const GLfloat *normal = &bsp->normals[(surf->index + j) * 3];
+			const GLfloat* vertex = &bsp->verts[(surf->index + j) * 3];
+			const GLfloat* normal = &bsp->normals[(surf->index + j) * 3];
 
 			VectorMA(vertex, 12.0, normal, end);
 

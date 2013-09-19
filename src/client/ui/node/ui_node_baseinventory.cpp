@@ -253,7 +253,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		Item tempItem(obj, nullptr, 1);
 		vec3_t pos;
 		vec3_t ammopos;
-		const float *color;
+		const float* color;
 		bool isHighlight = false;
 		int amount;
 		const int col = items % EXTRADATA(node).columns;

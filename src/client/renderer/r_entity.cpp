@@ -535,10 +535,10 @@ void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
  * @brief Calculates transformation matrix for the model and its tags
  * @note The transformation matrix is only calculated once
  */
-static float *R_CalcTransform (entity_t *e)
+static float* R_CalcTransform (entity_t *e)
 {
 	transform_t *t;
-	float *mp;
+	float* mp;
 	float mt[16], mc[16];
 
 	/* check if this entity is already transformed */

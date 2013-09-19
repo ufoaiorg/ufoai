@@ -61,7 +61,7 @@ void uiButtonNode::onLeftClick (uiNode_t *node, int x, int y)
  */
 void uiButtonNode::draw (uiNode_t *node)
 {
-	const float *textColor;
+	const float* textColor;
 	vec2_t pos;
 	static const vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;

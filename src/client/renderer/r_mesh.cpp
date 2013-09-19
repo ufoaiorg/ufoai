@@ -140,7 +140,7 @@ static void R_DrawAliasStaticWithReset (const mAliasMesh_t *mesh, const vec4_t s
  * @li 12-14: translation
  * @li 15:
  */
-static void R_ComputeGLMatrixFromTag (float *glMatrix, const mAliasTagOrientation_t *orient)
+static void R_ComputeGLMatrixFromTag (float* glMatrix, const mAliasTagOrientation_t *orient)
 {
 	glMatrix[0] = orient->axis[0][0];
 	glMatrix[4] = orient->axis[1][0];
@@ -209,7 +209,7 @@ bool R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float m
  * @param[in] backLerp the linear interpolation value [0.0,1.0]
  * @param[in] numframes The max frames of the tag data
  */
-void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float *interpolated)
+void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float* interpolated)
 {
 	/* right on a frame? */
 	if (backLerp == 0.0) {

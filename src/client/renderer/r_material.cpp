@@ -357,8 +357,8 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 	R_ReallocateTexunitArray(&texunit_lightmap, surf->numedges);
 
 	for (i = 0; i < surf->numedges; i++) {
-		const float *v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
-		const float *st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
+		const float* v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
+		const float* st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
 
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
@@ -375,11 +375,11 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 
 		/* normals and tangents */
 		if (r_state.lighting_enabled) {
-			const float *n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
+			const float* n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
 			memcpy(&r_state.normal_array[i * 3], n, sizeof(vec3_t));
 
 			if (r_state.active_normalmap) {
-				const float *t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
+				const float* t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
 				memcpy(&r_state.tangent_array[i * 4], t, sizeof(vec3_t));
 			}
 		}

@@ -415,7 +415,7 @@ static int oldMousePosY = 0;
 
 void uiModelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	float *rotateAngles = EXTRADATA(node).angles;
+	float* rotateAngles = EXTRADATA(node).angles;
 
 	/* rotate a model */
 	rotateAngles[YAW] -= ROTATE_SPEED * (x - oldMousePosX);

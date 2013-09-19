@@ -517,9 +517,9 @@ static void R_LoadBspVertexArrays (model_t *mod)
 {
 	int i, j;
 	int vertOfs, texCoordOfs, tangOfs;
-	float *vecShifted;
+	float* vecShifted;
 	float soff, toff, s, t;
-	float *point, *sdir, *tdir;
+	float* point, *sdir, *tdir;
 	vec4_t tangent;
 	vec3_t binormal;
 	mBspSurface_t *surf;
@@ -551,7 +551,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		surf->firstTriangle = -1; /* Mark as "no triangles generated yet" */
 
 		for (j = 0; j < surf->numedges; j++) {
-			const float *normal;
+			const float* normal;
 			const int index = mod->bsp.surfedges[surf->firstedge + j];
 
 			/* vertex */

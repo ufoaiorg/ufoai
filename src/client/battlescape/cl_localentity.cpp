@@ -774,7 +774,7 @@ void LE_AddProjectile (const fireDef_t* fd, int flags, const vec3_t muzzle, cons
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
 			ptl_t* ptl = nullptr;
-			const float *dir = bytedirs[le->angle];
+			const float* dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound != nullptr) {
 					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
@@ -1613,8 +1613,8 @@ void LM_List_f (void)
 /** @brief Client side moveclip */
 typedef struct moveclip_s {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	const float *mins, *maxs;	/**< size of the moving object */
-	const float *start, *end;
+	const float* mins, *maxs;	/**< size of the moving object */
+	const float* start, *end;
 	trace_t trace;
 	const le_t* passle, *passle2;		/**< ignore these for clipping */
 	int contentmask;			/**< search these in your trace - see MASK_* */

@@ -81,7 +81,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 	int lineHeight;
 	vec2_t pos;
 	int currentY;
-	const float *textColor;
+	const float* textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 

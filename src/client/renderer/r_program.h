@@ -72,15 +72,15 @@ void R_EnableAttribute(const char *name);
 void R_DisableAttribute(const char *name);
 
 void R_ProgramParameter1f(const char *name, GLfloat value);
-void R_ProgramParameter1fvs(const char *name, GLint size, GLfloat *value);
+void R_ProgramParameter1fvs(const char *name, GLint size, GLfloat* value);
 void R_ProgramParameter1i(const char *name, GLint value);
-void R_ProgramParameter2fv(const char *name, GLfloat *value);
-void R_ProgramParameter2fvs(const char *name, GLint size, GLfloat *value);
-void R_ProgramParameter3fv(const char *name, GLfloat *value);
-void R_ProgramParameter3fvs(const char *name, GLint size, GLfloat *value);
-void R_ProgramParameter4fv(const char *name, GLfloat *value);
-void R_ProgramParameter4fvs(const char *name, GLint size, GLfloat *value);
-void R_ProgramParameterMatrix4fv(const char *name, GLfloat *value);
+void R_ProgramParameter2fv(const char *name, GLfloat* value);
+void R_ProgramParameter2fvs(const char *name, GLint size, GLfloat* value);
+void R_ProgramParameter3fv(const char *name, GLfloat* value);
+void R_ProgramParameter3fvs(const char *name, GLint size, GLfloat* value);
+void R_ProgramParameter4fv(const char *name, GLfloat* value);
+void R_ProgramParameter4fvs(const char *name, GLint size, GLfloat* value);
+void R_ProgramParameterMatrix4fv(const char *name, GLfloat* value);
 
 void R_InitParticleProgram(r_program_t *prog);
 void R_UseParticleProgram(r_program_t *prog);
