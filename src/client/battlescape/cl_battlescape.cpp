@@ -34,10 +34,10 @@ clientBattleScape_t cl;
  * @param[in] includingStunned Also search for stunned actors if @c true.
  * @param[in] actor The current selected actor
  */
-le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, bool includingStunned, const le_t *actor)
+le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, bool includingStunned, const le_t* actor)
 {
-	le_t *le;
-	le_t *nonActor = nullptr;
+	le_t* le;
+	le_t* nonActor = nullptr;
 
 	/* search for an actor on this field */
 	le = nullptr;
@@ -185,7 +185,7 @@ int CL_GetHitProbability (const le_t* actor)
 		VectorCopy(mousePos, toPos);
 
 	/** @todo use LE_FindRadius */
-	const le_t *le = LE_GetFromPos(toPos);
+	const le_t* le = LE_GetFromPos(toPos);
 	if (!le)
 		return 0;
 
@@ -214,7 +214,7 @@ int CL_GetHitProbability (const le_t* actor)
 	float width = 2 * PLAYER_WIDTH * pseudosin;
 	float height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
-	const character_t *chr = CL_ActorGetChr(actor);
+	const character_t* chr = CL_ActorGetChr(actor);
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
@@ -317,7 +317,7 @@ bool CL_OutsideMap (const vec3_t position, const float delta)
  */
 int CL_CountVisibleEnemies (void)
 {
-	le_t *le;
+	le_t* le;
 	int count;
 
 	count = 0;

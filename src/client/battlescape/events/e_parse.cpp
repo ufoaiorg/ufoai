@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_localentity.h"
 #include "../../cgame/cl_game.h"
 
-cvar_t *cl_log_battlescape_events;
+cvar_t* cl_log_battlescape_events;
 
 typedef struct evTimes_s {
 	event_t eType;					/**< event type to handle */
@@ -58,7 +58,7 @@ typedef struct evTimes_s {
 /**
  * @sa CL_ExecuteBattlescapeEvent
  */
-static void CL_LogEvent (const eventRegister_t *eventData)
+static void CL_LogEvent (const eventRegister_t* eventData)
 {
 	if (!cl_log_battlescape_events->integer)
 		return;
@@ -110,8 +110,8 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
 	if (CL_AreBattlescapeEventsBlocked())
 		return false;
 
-	const evTimes_t *event = (evTimes_t *)data;
-	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+	const evTimes_t* event = (evTimes_t* )data;
+	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 
 	if (eventData->eventCheck == nullptr)
 		return true;
@@ -131,7 +131,7 @@ static bool CL_CheckBattlescapeEvent (int now, void* data)
  */
 static void CL_NotifyBattlescapeEventDelay (int now, void* data, int delay)
 {
-	eventTiming_t *eventTiming = (eventTiming_t *)data;
+	eventTiming_t* eventTiming = (eventTiming_t* )data;
 	eventTiming->impactTime += delay;
 	eventTiming->nextTime += delay;
 	eventTiming->shootTime += delay;
@@ -145,8 +145,8 @@ static bool CL_DelayBattlescapeEvent (int now, void* data)
 {
 	if (!CL_AreBattlescapeEventsBlocked())
 		return false;
-	const evTimes_t *event = (evTimes_t *)data;
-	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+	const evTimes_t* event = (evTimes_t* )data;
+	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 	Com_DPrintf(DEBUG_EVENTSYS, "delay event %p type %s from %i\n", (void*)event, eventData->name, now);
 	return true;
 }
@@ -156,8 +156,8 @@ static bool CL_DelayBattlescapeEvent (int now, void* data)
  */
 static void CL_ExecuteBattlescapeEvent (int now, void* data)
 {
-	evTimes_t *event = (evTimes_t *)data;
-	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+	evTimes_t* event = (evTimes_t* )data;
+	const eventRegister_t* eventData = CL_GetEvent(event->eType);
 
 	if (event->eType <= EV_START || cls.state == ca_active) {
 		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching at %d): %s %p\n", now, eventData->name, (void*)event);
@@ -179,7 +179,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void* data)
 
 static void CL_FreeBattlescapeEvent (void* data)
 {
-	evTimes_t *event = (evTimes_t *)data;
+	evTimes_t* event = (evTimes_t* )data;
 	delete event->msg;
 	Mem_Free(event);
 }
@@ -190,8 +190,8 @@ static void CL_FreeBattlescapeEvent (void* data)
 static bool CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void* data)
 {
 	if (func == &CL_ExecuteBattlescapeEvent) {
-		const evTimes_t *event = (const evTimes_t *)data;
-		const eventRegister_t *e = CL_GetEvent(event->eType);
+		const evTimes_t* event = (const evTimes_t* )data;
+		const eventRegister_t* e = CL_GetEvent(event->eType);
 		Com_Printf("Remove pending event %s\n", e->name);
 		return false;
 	}
@@ -217,9 +217,9 @@ int CL_ClearBattlescapeEvents (void)
  * E.g. @c impactTime is used to delay some events in case the projectile needs
  * some time to reach its target.
  */
-static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t *eventTiming)
+static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t* eventTiming)
 {
-	const eventRegister_t *eventData = CL_GetEvent(eType);
+	const eventRegister_t* eventData = CL_GetEvent(eType);
 
 	/* get event time */
 	if (eventTiming->nextTime < cl.time)
@@ -263,7 +263,7 @@ event_t CL_ParseEvent (dbuffer *msg)
 	if (eType >= EV_NUM_EVENTS || eType < 0)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
-	const eventRegister_t *eventData = CL_GetEvent((event_t)eType);
+	const eventRegister_t* eventData = CL_GetEvent((event_t)eType);
 	if (!eventData->eventCallback)
 		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 

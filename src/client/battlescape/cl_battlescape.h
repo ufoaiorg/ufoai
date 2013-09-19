@@ -40,7 +40,7 @@ typedef struct clientBattleScape_s {
 								 * is rendering at.  always <= cls.realtime */
 	camera_t cam;
 
-	le_t *teamList[MAX_ACTIVETEAM];
+	le_t* teamList[MAX_ACTIVETEAM];
 	int numTeamList;
 	int numEnemiesSpotted;
 
@@ -53,7 +53,7 @@ typedef struct clientBattleScape_s {
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
 	/** locally derived information from server state */
-	model_t *model_draw[MAX_MODELS];
+	model_t* model_draw[MAX_MODELS];
 	const struct cBspModel_s *model_clip[MAX_MODELS];
 
 	bool radarInitialized;		/**< every radar image (for every level [1-8]) is loaded */
@@ -77,18 +77,18 @@ typedef struct clientBattleScape_s {
 							 * our team is not yet spawned */
 	bool started;		/**< match already started? */
 
-	mapData_t *mapData;
+	mapData_t* mapData;
 
 	pathing_t pathMap;		/**< This is where the data for TUS used to move and actor locations go */
 
-	mapTiles_t *mapTiles;
+	mapTiles_t* mapTiles;
 
-	linkedList_t *chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
+	linkedList_t* chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } clientBattleScape_t;
 
 extern clientBattleScape_t cl;
 
-le_t* CL_BattlescapeSearchAtGridPos(const pos3_t pos, bool includingStunned, const le_t *actor);
+le_t* CL_BattlescapeSearchAtGridPos(const pos3_t pos, bool includingStunned, const le_t* actor);
 bool CL_OnBattlescape(void);
 bool CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);

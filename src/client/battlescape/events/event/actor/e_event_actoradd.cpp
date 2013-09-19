@@ -34,11 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note EV_ACTOR_ADD
  * @sa G_SendInvisible
  */
-void CL_ActorAdd (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorAdd (const eventRegister_t* self, dbuffer *msg)
 {
 	/* check if the actor is already visible */
 	const int entnum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (le) {
 		Com_Printf("CL_ActorAdd: Actor with number %i already exists\n", entnum);
 		NET_SkipFormat(msg, self->formatString);

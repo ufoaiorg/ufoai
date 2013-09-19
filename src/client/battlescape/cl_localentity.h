@@ -42,7 +42,7 @@ typedef enum {
 #define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
 #define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
-typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t *ent);
+typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t* ent);
 typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 
 #define LE_CHECK_LEVELFLAGS		0x0001
@@ -113,7 +113,7 @@ typedef struct le_s {
 	unsigned int modelnum2;		/**< the number of the head model in the cl.model_draw array */
 	unsigned int bodySkin;		/**< the skin number of the body */
 	unsigned int headSkin;		/**< the skin number of the head */
-	model_t *model1, *model2;	/**< pointers to the cl.model_draw array
+	model_t* model1, *model2;	/**< pointers to the cl.model_draw array
 								* that holds the models for body and head - model1 is body,
 								* model2 is head */
 
@@ -127,7 +127,7 @@ typedef struct le_s {
 	int pathContents[MAX_ROUTE];	/**< content flags of the brushes the actor is walking in */
 	int positionContents;			/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
-	leStep_t *stepList;				/**< list of steps - each new step is appended to this list (fifo) */
+	leStep_t* stepList;				/**< list of steps - each new step is appended to this list (fifo) */
 	int stepIndex;					/**< marks the current step in the @c stepList that should be used to get the
 									 * event time for following step based events */
 	int startTime, endTime;
@@ -149,7 +149,7 @@ typedef struct le_s {
 	animState_t as;			/**< holds things like the current active frame and so on */
 	const char* particleID;
 	int levelflags;			/**< the levels this local entity should be visible at */
-	ptl_t *ptl;				/**< particle pointer to display */
+	ptl_t* ptl;				/**< particle pointer to display */
 	const char* ref1, *ref2;
 	const struct le_s *ref3;
 	Inventory inv;
@@ -158,9 +158,9 @@ typedef struct le_s {
 
 	lighting_t lighting;
 
-	teamDef_t *teamDef;
+	teamDef_t* teamDef;
 	int gender;	/**< @sa @c nametypes_t */
-	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
+	const fireDef_t* fd;	/**< in case this is a projectile or an actor */
 
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
@@ -229,23 +229,23 @@ typedef struct localModel_s {
 	/** is called every frame */
 	void (*think) (struct localModel_s * localModel);
 
-	model_t *model;
+	model_t* model;
 } localModel_t;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
-extern cvar_t *cl_le_debug;
-extern cvar_t *cl_trace_debug;
-extern cvar_t *cl_leshowinvis;
-extern cvar_t *cl_map_draw_rescue_zone;
+extern cvar_t* cl_le_debug;
+extern cvar_t* cl_trace_debug;
+extern cvar_t* cl_leshowinvis;
+extern cvar_t* cl_map_draw_rescue_zone;
 
 const char* LE_GetAnim(const char* anim, int right, int left, int state);
-void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
-void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
+void LE_AddProjectile(const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t* leVictim);
+void LE_AddGrenade(const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
 void LE_AddAmbientSound(const char* sound, const vec3_t origin, int levelflags, float volume, float attenuation);
-int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
+int LE_ActorGetStepTime(const le_t* le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
@@ -277,54 +277,54 @@ void LE_List_f(void);
 void LM_List_f(void);
 #endif
 
-void LE_SetThink(le_t *le, localEntityThinkFunc_t think);
-void LE_ExecuteThink(le_t *le);
+void LE_SetThink(le_t* le, localEntityThinkFunc_t think);
+void LE_ExecuteThink(le_t* le);
 void LE_Think(void);
 /* think functions */
-void LET_StartIdle(le_t *le);
-void LET_Appear(le_t *le);
-void LET_StartPathMove(le_t *le);
-void LET_BrushModel(le_t *le);
-void LE_DoEndPathMove(le_t *le);
+void LET_StartIdle(le_t* le);
+void LET_Appear(le_t* le);
+void LET_StartPathMove(le_t* le);
+void LET_BrushModel(le_t* le);
+void LE_DoEndPathMove(le_t* le);
 
 /* local model functions */
 void LM_Think(void);
-void LMT_Init(localModel_t *localModel);
-localModel_t *LM_AddModel(const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
+void LMT_Init(localModel_t* localModel);
+localModel_t* LM_AddModel(const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
 void LM_Perish(dbuffer *msg);
 void LM_AddToScene(void);
 
-bool LE_BrushModelAction(le_t *le, entity_t *ent);
-void CL_RecalcRouting(const le_t *le);
+bool LE_BrushModelAction(le_t* le, entity_t* ent);
+void CL_RecalcRouting(const le_t* le);
 void CL_CompleteRecalcRouting(void);
 
-void LE_LinkFloorContainer(le_t *le);
-bool LE_IsLivingAndVisibleActor(const le_t *le);
-bool LE_IsLivingActor(const le_t *le);
-bool LE_IsActor(const le_t *le);
-le_t *LE_Add(int entnum);
-le_t *LE_Get(int entnum);
+void LE_LinkFloorContainer(le_t* le);
+bool LE_IsLivingAndVisibleActor(const le_t* le);
+bool LE_IsLivingActor(const le_t* le);
+bool LE_IsActor(const le_t* le);
+le_t* LE_Add(int entnum);
+le_t* LE_Get(int entnum);
 le_t* LE_GetNextInUse(le_t* lastLE);
 le_t* LE_GetNext(le_t* lastLE);
-void LE_Lock(le_t *le);
-void LE_Unlock(le_t *le);
+void LE_Lock(le_t* le);
+void LE_Unlock(le_t* le);
 bool LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, -1, __FILE__, __LINE__)
 #define LE_NotFoundWithTypeError(entnum, type) _LE_NotFoundError(entnum, type, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, int type, const char* file, const int line) __attribute__((noreturn));
-le_t *LE_Find(entity_type_t type, const pos3_t pos);
-le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
-le_t *LE_GetFromPos(const pos3_t pos);
-void LE_PlaceItem(le_t *le);
+le_t* LE_Find(entity_type_t type, const pos3_t pos);
+le_t* LE_FindRadius(le_t* from, const vec3_t org, float rad, entity_type_t type);
+le_t* LE_GetFromPos(const pos3_t pos);
+void LE_PlaceItem(le_t* le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);
-void LE_CenterView(const le_t *le);
-const cBspModel_t *LE_GetClipModel(const le_t *le);
-model_t *LE_GetDrawModel(unsigned int modelIndex);
-void LET_SlideDoor(le_t *le, int speed);
-void LET_RotateDoor(le_t *le, int speed);
+void LE_CenterView(const le_t* le);
+const cBspModel_t* LE_GetClipModel(const le_t* le);
+model_t* LE_GetDrawModel(unsigned int modelIndex);
+void LET_SlideDoor(le_t* le, int speed);
+void LET_RotateDoor(le_t* le, int speed);
 
-trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB &box, const le_t *passle, le_t *passle2, int contentmask, int worldLevel);
+trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB &box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
-localModel_t *LM_GetByID(const char* id);
+localModel_t* LM_GetByID(const char* id);

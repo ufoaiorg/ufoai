@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/tracing.h"
 #include "../../common/grid.h"
 
-cvar_t *cl_le_debug;
-cvar_t *cl_trace_debug;
-cvar_t *cl_map_draw_rescue_zone;
+cvar_t* cl_le_debug;
+cvar_t* cl_trace_debug;
+cvar_t* cl_map_draw_rescue_zone;
 
 /*===========================================================================
 Local Model (LM) handling
@@ -45,7 +45,7 @@ Local Model (LM) handling
 
 static inline void LE_GenerateInlineModelList (void)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 	int i = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
@@ -55,9 +55,9 @@ static inline void LE_GenerateInlineModelList (void)
 	cl.leInlineModelList[i] = nullptr;
 }
 
-static void CL_GridRecalcRouting (const le_t *le)
+static void CL_GridRecalcRouting (const le_t* le)
 {
-	const cBspModel_t *model;
+	const cBspModel_t* model;
 	vec3_t minVec, maxVec;
 
 	/* We ALWAYS check against a model, even if it isn't in use.
@@ -109,7 +109,7 @@ void CL_RecalcRouting (const le_t* le)
 
 static void LM_AddToSceneOrder (bool parents)
 {
-	localModel_t *lm;
+	localModel_t* lm;
 	int i;
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
@@ -182,7 +182,7 @@ void LM_AddToScene (void)
 /**
  * @brief Checks whether a local model with the same entity number is already registered
  */
-static inline localModel_t *LM_Find (int entnum)
+static inline localModel_t* LM_Find (int entnum)
 {
 	int i;
 
@@ -196,9 +196,9 @@ static inline localModel_t *LM_Find (int entnum)
 /**
  * @brief link any floor container into the actor temp floor container
  */
-void LE_LinkFloorContainer (le_t *le)
+void LE_LinkFloorContainer (le_t* le)
 {
-	le_t *floorItem = LE_Find(ET_ITEM, le->pos);
+	le_t* floorItem = LE_Find(ET_ITEM, le->pos);
 	if (floorItem)
 		le->setFloor(floorItem);
 	else
@@ -210,7 +210,7 @@ void LE_LinkFloorContainer (le_t *le)
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
  */
-bool LE_IsActor (const le_t *le)
+bool LE_IsActor (const le_t* le)
 {
 	assert(le);
 	return le->type == ET_ACTOR || le->type == ET_ACTOR2x2 || le->type == ET_ACTORHIDDEN;
@@ -222,7 +222,7 @@ bool LE_IsActor (const le_t *le)
  * @sa G_IsLivingActor
  * @sa LE_IsActor
  */
-bool LE_IsLivingActor (const le_t *le)
+bool LE_IsLivingActor (const le_t* le)
 {
 	assert(le);
 	return LE_IsActor(le) && (LE_IsStunned(le) || !LE_IsDead(le));
@@ -234,7 +234,7 @@ bool LE_IsLivingActor (const le_t *le)
  * @sa G_IsLivingActor
  * @sa LE_IsActor
  */
-bool LE_IsLivingAndVisibleActor (const le_t *le)
+bool LE_IsLivingAndVisibleActor (const le_t* le)
 {
 	assert(le);
 	if (LE_IsInvisible(le))
@@ -251,7 +251,7 @@ bool LE_IsLivingAndVisibleActor (const le_t *le)
  */
 void LM_Register (void)
 {
-	localModel_t *lm;
+	localModel_t* lm;
 	int i;
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
@@ -268,12 +268,12 @@ void LM_Register (void)
 	}
 }
 
-void LE_SetThink (le_t *le, localEntityThinkFunc_t think)
+void LE_SetThink (le_t* le, localEntityThinkFunc_t think)
 {
 	le->think = think;
 }
 
-localModel_t *LM_GetByID (const char* id)
+localModel_t* LM_GetByID (const char* id)
 {
 	int i;
 
@@ -281,7 +281,7 @@ localModel_t *LM_GetByID (const char* id)
 		return nullptr;
 
 	for (i = 0; i < cl.numLMs; i++) {
-		localModel_t *lm = &cl.LMs[i];
+		localModel_t* lm = &cl.LMs[i];
 		if (Q_streq(lm->id, id))
 			return lm;
 	}
@@ -301,9 +301,9 @@ localModel_t *LM_GetByID (const char* id)
  * @sa CL_SpawnParseEntitystring
  * @sa LM_AddToScene
  */
-localModel_t *LM_AddModel (const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
+localModel_t* LM_AddModel (const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
-	localModel_t *lm;
+	localModel_t* lm;
 
 	lm = &cl.LMs[cl.numLMs++];
 
@@ -333,7 +333,7 @@ LE thinking
 /**
  * @brief Call think function for the given local entity if its still in use
  */
-void LE_ExecuteThink (le_t *le)
+void LE_ExecuteThink (le_t* le)
 {
 	if (le->inuse && le->think) {
 		le->think(le);
@@ -351,7 +351,7 @@ void LE_ExecuteThink (le_t *le)
  */
 void LE_Think (void)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	if (cls.state != ca_active)
 		return;
@@ -366,7 +366,7 @@ void LE_Think (void)
 void LM_Think (void)
 {
 	int i;
-	localModel_t *lm;
+	localModel_t* lm;
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
 		if (lm->think)
@@ -418,7 +418,7 @@ const char* LE_GetAnim (const char* anim, int right, int left, int state)
 			}
 		}
 	} else {
-		const objDef_t *od = INVSH_GetItemByIDX(right);
+		const objDef_t* od = INVSH_GetItemByIDX(right);
 		animationIndex = od->animationIndex;
 		type = od->type;
 		if (left != NONE && Q_streq(od->type, "pistol") && Q_streq(INVSH_GetItemByIDX(left)->type, "pistol")) {
@@ -443,7 +443,7 @@ const char* LE_GetAnim (const char* anim, int right, int left, int state)
  * @note Think function
  * @note See the *.anm files in the models dir
  */
-void LET_StartIdle (le_t *le)
+void LET_StartIdle (le_t* le)
 {
 	/* hidden actors don't have models assigned, thus we can not change the
 	 * animation for any model */
@@ -458,7 +458,7 @@ void LET_StartIdle (le_t *le)
 
 	le->pathPos = le->pathLength = 0;
 	if (le->stepList != nullptr) {
-		leStep_t *step = le->stepList->next;
+		leStep_t* step = le->stepList->next;
 		Mem_Free(le->stepList);
 		le->stepList = step;
 		if (step != nullptr) {
@@ -511,7 +511,7 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
  */
 static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char* textureName)
 {
-	const terrainType_t *t;
+	const terrainType_t* t;
 	vec3_t origin;
 
 	t = Com_GetTerrainType(textureName);
@@ -537,7 +537,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char* texture
 /**
  * sqrt(2) for diagonal movement
  */
-int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int speed)
+int LE_ActorGetStepTime (const le_t* le, const pos3_t pos, const pos3_t oldPos, const int dir, const int speed)
 {
 	if (dir != DIRECTION_FALL) {
 		return (((dir & (CORE_DIRECTIONS - 1)) >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / speed);
@@ -551,7 +551,7 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	}
 }
 
-static void LE_PlayFootStepSound (le_t *le)
+static void LE_PlayFootStepSound (le_t* le)
 {
 	if (Q_strvalid(le->teamDef->footstepSound)) {
 		S_LoadAndPlaySample(le->teamDef->footstepSound, le->origin, SOUND_ATTN_NORM, SND_VOLUME_FOOTSTEPS);
@@ -574,7 +574,7 @@ static void LE_PlayFootStepSound (le_t *le)
 		LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
 }
 
-static void LE_DoPathMove (le_t *le)
+static void LE_DoPathMove (le_t* le)
 {
 	/* next part */
 	const dvec_t dvec = le->dvtab[le->pathPos];
@@ -603,7 +603,7 @@ static void LE_DoPathMove (le_t *le)
 /**
  * @brief Ends the move of an actor
  */
-void LE_DoEndPathMove (le_t *le)
+void LE_DoEndPathMove (le_t* le)
 {
 	/* Verify the current position */
 	if (!VectorCompare(le->pos, le->newPos))
@@ -630,7 +630,7 @@ void LE_DoEndPathMove (le_t *le)
  * @param[in] impact The impact location (where the particles are spawned).
  * @param[in] normal The index of the normal vector of the particles (think: impact angle).
  */
-static void LE_ActorBodyHit (const le_t *le, const vec3_t impact, int normal)
+static void LE_ActorBodyHit (const le_t* le, const vec3_t impact, int normal)
 {
 	if (le->teamDef) {
 		/* Spawn "hit_particle" if defined in teamDef. */
@@ -644,7 +644,7 @@ static void LE_ActorBodyHit (const le_t *le, const vec3_t impact, int normal)
  * @note Think function
  * @sa CL_ActorDoMove
  */
-static void LET_PathMove (le_t *le)
+static void LET_PathMove (le_t* le)
 {
 	float frac;
 	vec3_t start, dest, delta;
@@ -685,7 +685,7 @@ static void LET_PathMove (le_t *le)
  * @brief Change the actors animation to walking
  * @note See the *.anm files in the models dir
  */
-void LET_StartPathMove (le_t *le)
+void LET_StartPathMove (le_t* le)
 {
 	/* center view (if wanted) */
 	if (!cls.isOurRound() && le->team != TEAM_CIVILIAN)
@@ -704,7 +704,7 @@ void LET_StartPathMove (le_t *le)
 /**
  * @note Think function
  */
-static void LET_Projectile (le_t *le)
+static void LET_Projectile (le_t* le)
 {
 	if (cl.time >= le->endTime) {
 		vec3_t impact;
@@ -740,9 +740,9 @@ static void LET_Projectile (le_t *le)
  LE Special Effects
 =========================================================================== */
 
-void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim)
+void LE_AddProjectile (const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t* leVictim)
 {
-	le_t *le;
+	le_t* le;
 	vec3_t delta;
 	float dist;
 
@@ -773,7 +773,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
-			ptl_t *ptl = nullptr;
+			ptl_t* ptl = nullptr;
 			const float *dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound != nullptr) {
@@ -831,10 +831,10 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
  * @return the item index in the @c csi.ods array
  * @note Only call this for none empty Item
  */
-static const objDef_t *LE_BiggestItem (const Item* ic)
+static const objDef_t* LE_BiggestItem (const Item* ic)
 {
 	assert(ic);
-	const objDef_t *max;
+	const objDef_t* max;
 	int maxSize = 0;
 
 	for (max = ic->def(); ic; ic = ic->getNext()) {
@@ -854,9 +854,9 @@ static const objDef_t *LE_BiggestItem (const Item* ic)
  * @sa CL_BiggestItem
  * @param[in] le The local entity (ET_ITEM) with the floor container
  */
-void LE_PlaceItem (le_t *le)
+void LE_PlaceItem (le_t* le)
 {
-	le_t *actor = nullptr;
+	le_t* actor = nullptr;
 
 	assert(LE_IsItem(le));
 
@@ -874,7 +874,7 @@ void LE_PlaceItem (le_t *le)
 	 * deactivated */
 	Item* floorCont = le->getFloorContainer();
 	if (floorCont) {
-		const objDef_t *biggest = LE_BiggestItem(floorCont);
+		const objDef_t* biggest = LE_BiggestItem(floorCont);
 		le->model1 = cls.modelPool[biggest->idx];
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
@@ -899,9 +899,9 @@ void LE_PlaceItem (le_t *le)
  * @param[in] dt delta seconds
  * @param[in] leVictim The actor the grenade is thrown at (not yet supported)
  */
-void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim)
+void LE_AddGrenade (const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim)
 {
-	le_t *le;
+	le_t* le;
 	vec3_t accel;
 
 	/* add le */
@@ -947,7 +947,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
  * @brief Add function for brush models
  * @sa LE_AddToScene
  */
-bool LE_BrushModelAction (le_t *le, entity_t *ent)
+bool LE_BrushModelAction (le_t* le, entity_t* ent)
 {
 	switch (le->type) {
 	case ET_ROTATING:
@@ -1012,7 +1012,7 @@ bool LE_BrushModelAction (le_t *le, entity_t *ent)
 	return true;
 }
 
-void LET_BrushModel (le_t *le)
+void LET_BrushModel (le_t* le)
 {
 	const int delay = cl.time - le->thinkDelay;
 
@@ -1046,7 +1046,7 @@ void LMT_Init (localModel_t* localModel)
  * @param[in] le The local entity of the door to rotate
  * @param[in] speed The speed to rotate the door with
  */
-void LET_RotateDoor (le_t *le, int speed)
+void LET_RotateDoor (le_t* le, int speed)
 {
 	/** @todo lerp the rotation */
 	const int angle = speed > 0 ? DOOR_ROTATION_ANGLE : -DOOR_ROTATION_ANGLE;
@@ -1075,7 +1075,7 @@ void LET_RotateDoor (le_t *le, int speed)
  * @param[in] speed The speed to slide with - a negative value to close the door
  * @sa Door_SlidingUse
  */
-void LET_SlideDoor (le_t *le, int speed)
+void LET_SlideDoor (le_t* le, int speed)
 {
 	vec3_t moveAngles, moveDir;
 	bool endPos = false;
@@ -1112,7 +1112,7 @@ void LET_SlideDoor (le_t *le, int speed)
 		vec3_t distanceVec;
 		/* the door finished its move - either close or open, so make sure to recalc the routing
 		 * data and set the mins/maxs for the inline brush model */
-		cBspModel_t *model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
+		cBspModel_t* model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
 
 		assert(model);
 
@@ -1179,9 +1179,9 @@ void LE_AddAmbientSound (const char* sound, const vec3_t origin, int levelflags,
  * @param[in] entnum The entity number (server side)
  * @sa LE_Get
  */
-le_t *LE_Add (int entnum)
+le_t* LE_Add (int entnum)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	while ((le = LE_GetNext(le))) {
 		if (!le->inuse)
@@ -1227,7 +1227,7 @@ void _LE_NotFoundError (int entnum, int type, const char* file, const int line)
  * @sa CL_ViewCenterAtGridPosition
  * @sa CL_CameraRoute
  */
-void LE_CenterView (const le_t *le)
+void LE_CenterView (const le_t* le)
 {
 	if (!cl_centerview->integer)
 		return;
@@ -1257,9 +1257,9 @@ void LE_CenterView (const le_t *le)
  * @param[in] entnum The entity number (server side)
  * @sa LE_Add
  */
-le_t *LE_Get (int entnum)
+le_t* LE_Get (int entnum)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	if (entnum == SKIP_LOCAL_ENTITY)
 		return nullptr;
@@ -1281,7 +1281,7 @@ le_t *LE_Get (int entnum)
  */
 bool LE_IsLocked (int entnum)
 {
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	return (le != nullptr && (le->flags & LE_LOCKED));
 }
 
@@ -1292,7 +1292,7 @@ bool LE_IsLocked (int entnum)
  * @note Always make sure you call LE_Unlock at the end of the event
  *  (might be in a different function), to allow other events on this le_t.
  */
-void LE_Lock (le_t *le)
+void LE_Lock (le_t* le)
 {
 	if (le->flags & LE_LOCKED)
 		Com_Error(ERR_DROP, "LE_Lock: Trying to lock %i which is already locked\n", le->entnum);
@@ -1311,7 +1311,7 @@ void LE_Lock (le_t *le)
  * @todo If the event loop ever becomes multithreaded, this should
  *  be a real mutex lock.
  */
-void LE_Unlock (le_t *le)
+void LE_Unlock (le_t* le)
 {
 	if (!(le->flags & LE_LOCKED))
 		Com_Error(ERR_DROP, "LE_Unlock: Trying to unlock %i which is already unlocked\n", le->entnum);
@@ -1323,9 +1323,9 @@ void LE_Unlock (le_t *le)
  * @brief Searches a local entity on a given grid field
  * @param[in] pos The grid pos to search for an item of the given type
  */
-le_t *LE_GetFromPos (const pos3_t pos)
+le_t* LE_GetFromPos (const pos3_t pos)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (VectorCompare(le->pos, pos))
@@ -1387,9 +1387,9 @@ le_t* LE_GetNextInUse (le_t* lastLE)
  * @param[in] rad radius to search an edict in.
  * @param[in] type Type of local entity. @c ET_NULL to ignore the type.
  */
-le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type)
+le_t* LE_FindRadius (le_t* from, const vec3_t org, float rad, entity_type_t type)
 {
-	le_t *le = from;
+	le_t* le = from;
 
 	while ((le = LE_GetNextInUse(le))) {
 		int j;
@@ -1411,9 +1411,9 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
  * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
-le_t *LE_Find (entity_type_t type, const pos3_t pos)
+le_t* LE_Find (entity_type_t type, const pos3_t pos)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->type == type && VectorCompare(le->pos, pos))
@@ -1435,7 +1435,7 @@ le_t *LE_Find (entity_type_t type, const pos3_t pos)
  * @param le The local entity to check
  * @return @c true if the given local entity is a func_door or func_rotating
  */
-static inline bool LE_IsOriginBrush (const le_t *const le)
+static inline bool LE_IsOriginBrush (const le_t* const le)
 {
 	return (le->type == ET_DOOR || le->type == ET_ROTATING);
 }
@@ -1443,9 +1443,9 @@ static inline bool LE_IsOriginBrush (const le_t *const le)
 /**
  * @brief Adds a box that highlights the current active door
  */
-static void LE_AddEdictHighlight (const le_t *le)
+static void LE_AddEdictHighlight (const le_t* le)
 {
-	const cBspModel_t *model = LE_GetClipModel(le);
+	const cBspModel_t* model = LE_GetClipModel(le);
 
 	entity_t ent(RF_BOX);
 	VectorSet(ent.color, 1, 1, 1);
@@ -1461,7 +1461,7 @@ static void LE_AddEdictHighlight (const le_t *le)
  */
 void LE_AddToScene (void)
 {
-	le_t *le;
+	le_t* le;
 	int i;
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
@@ -1521,7 +1521,7 @@ void LE_AddToScene (void)
 			}
 
 			if (LE_IsSelected(le) && le->clientAction != nullptr) {
-				const le_t *action = le->clientAction;
+				const le_t* action = le->clientAction;
 				LE_AddEdictHighlight(action);
 			}
 
@@ -1547,7 +1547,7 @@ void LE_AddToScene (void)
 void LE_Cleanup (void)
 {
 	int i;
-	le_t *le;
+	le_t* le;
 
 	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", cl.numLEs);
 	for (i = cl.numLEs - 1, le = &cl.LEs[cl.numLEs - 1]; i >= 0; i--, le--) {
@@ -1569,7 +1569,7 @@ void LE_Cleanup (void)
 void LE_List_f (void)
 {
 	int i;
-	le_t *le;
+	le_t* le;
 
 	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | level | model/ptl\n");
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
@@ -1594,7 +1594,7 @@ void LE_List_f (void)
 void LM_List_f (void)
 {
 	int i;
-	localModel_t *lm;
+	localModel_t* lm;
 
 	Com_Printf("number | entnum | skin | frame | lvlflg | renderflags | origin          | name\n");
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
@@ -1616,13 +1616,13 @@ typedef struct moveclip_s {
 	const float *mins, *maxs;	/**< size of the moving object */
 	const float *start, *end;
 	trace_t trace;
-	const le_t *passle, *passle2;		/**< ignore these for clipping */
+	const le_t* passle, *passle2;		/**< ignore these for clipping */
 	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
-const cBspModel_t *LE_GetClipModel (const le_t *le)
+const cBspModel_t* LE_GetClipModel (const le_t* le)
 {
-	const cBspModel_t *model;
+	const cBspModel_t* model;
 	const unsigned int index = le->modelnum1;
 	if (index > lengthof(cl.model_clip))
 		Com_Error(ERR_DROP, "Clip model index out of bounds");
@@ -1632,9 +1632,9 @@ const cBspModel_t *LE_GetClipModel (const le_t *le)
 	return model;
 }
 
-model_t *LE_GetDrawModel (unsigned int index)
+model_t* LE_GetDrawModel (unsigned int index)
 {
-	model_t *model;
+	model_t* model;
 	if (index == 0 || index > lengthof(cl.model_draw))
 		Com_Error(ERR_DROP, "Draw model index out of bounds");
 	model = cl.model_draw[index];
@@ -1655,11 +1655,11 @@ model_t *LE_GetDrawModel (unsigned int index)
  * @return The headnode for the local entity
  * @sa SV_HullForEntity
  */
-static int32_t CL_HullForEntity (const le_t *le, int* tile, vec3_t rmaShift, vec3_t angles)
+static int32_t CL_HullForEntity (const le_t* le, int* tile, vec3_t rmaShift, vec3_t angles)
 {
 	/* special case for bmodels */
 	if (le->contents & CONTENTS_SOLID) {
-		const cBspModel_t *model = LE_GetClipModel(le);
+		const cBspModel_t* model = LE_GetClipModel(le);
 		/* special value for bmodel */
 		if (!model)
 			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with nullptr bmodel (%i)\n", le->type);
@@ -1681,9 +1681,9 @@ static int32_t CL_HullForEntity (const le_t *le, int* tile, vec3_t rmaShift, vec
  * @sa CL_Trace
  * @sa SV_ClipMoveToEntities
  */
-static void CL_ClipMoveToLEs (moveclip_t *clip)
+static void CL_ClipMoveToLEs (moveclip_t* clip)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	if (clip->trace.allsolid)
 		return;
@@ -1768,7 +1768,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t *passle, le_t *passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 

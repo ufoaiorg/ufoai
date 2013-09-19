@@ -95,7 +95,7 @@ static void CL_ParseServerData (dbuffer *msg)
  */
 static void CL_ParseClientinfo (unsigned int player)
 {
-	clientinfo_t *ci = &cl.clientinfo[player];
+	clientinfo_t* ci = &cl.clientinfo[player];
 	const char* s = CL_GetConfigString(CS_PLAYERNAMES + player);
 
 	/* isolate the player's name */
@@ -114,7 +114,7 @@ int CL_GetPlayerNum (void)
  */
 const char* CL_PlayerGetName (unsigned int player)
 {
-	const clientinfo_t *ci = &cl.clientinfo[player];
+	const clientinfo_t* ci = &cl.clientinfo[player];
 	return ci->name;
 }
 

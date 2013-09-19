@@ -57,16 +57,16 @@ const float MAX_ZOOM = 32.0;
 #define MIN_CAMZOOM_QUANT	0.05
 #define MAX_CAMZOOM_QUANT	1.0
 
-static cvar_t *cl_camrotspeed;
-static cvar_t *cl_cammovespeed;
-static cvar_t *cl_cammoveaccel;
-static cvar_t *cl_campitchmin;
-static cvar_t *cl_campitchmax;
-static cvar_t *cl_camzoomspeed;
-cvar_t *cl_camzoommax;
-cvar_t *cl_camzoomquant;
-cvar_t *cl_camzoommin;
-cvar_t *cl_centerview;
+static cvar_t* cl_camrotspeed;
+static cvar_t* cl_cammovespeed;
+static cvar_t* cl_cammoveaccel;
+static cvar_t* cl_campitchmin;
+static cvar_t* cl_campitchmax;
+static cvar_t* cl_camzoomspeed;
+cvar_t* cl_camzoommax;
+cvar_t* cl_camzoomquant;
+cvar_t* cl_camzoommin;
+cvar_t* cl_centerview;
 
 /**
  * @brief forces the camera to stay within the horizontal bounds of the

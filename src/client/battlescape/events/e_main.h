@@ -63,7 +63,7 @@ typedef struct eventRegister_s {
 	 * @param msg The buffer with the event data
 	 * @param eventTiming The delta time value
 	 */
-	int (*timeCallback)(const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming);
+	int (*timeCallback)(const struct eventRegister_s *self, dbuffer *msg, eventTiming_t* eventTiming);
 
 	/**
 	 * @brief Called to determine if this event is ok to run at this point. Should check any
@@ -73,7 +73,7 @@ typedef struct eventRegister_s {
 	bool (*eventCheck)(const struct eventRegister_s *self, const dbuffer *msg);
 } eventRegister_t;
 
-const eventRegister_t *CL_GetEvent(const event_t eType);
-int CL_GetNextTime(const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime);
-int CL_GetStepTime(const eventTiming_t *eventTiming, const le_t* le, int step);
+const eventRegister_t* CL_GetEvent(const event_t eType);
+int CL_GetNextTime(const eventRegister_t* event, eventTiming_t* eventTiming, int nextTime);
+int CL_GetStepTime(const eventTiming_t* eventTiming, const le_t* le, int step);
 const char* CL_ConvertSoundFromEvent(char* sound, size_t size);

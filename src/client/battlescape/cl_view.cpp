@@ -38,16 +38,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
 
-cvar_t *cl_map_debug;
-static cvar_t *cl_precache;
-static cvar_t *cl_map_displayavailablecells;
+cvar_t* cl_map_debug;
+static cvar_t* cl_precache;
+static cvar_t* cl_map_displayavailablecells;
 
 /**
  * @brief Call before entering a new level, or after vid_restart
  */
 void CL_ViewLoadMedia (void)
 {
-	le_t *le;
+	le_t* le;
 	int i, max;
 	float loadingPercent;
 
@@ -119,7 +119,7 @@ void CL_ViewLoadMedia (void)
  */
 static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
-	teamDef_t *td;
+	teamDef_t* td;
 	int i, j;
 	char model[MAX_QPATH];
 	const float percent = 40.0f;
@@ -166,7 +166,7 @@ void CL_ViewPrecacheModels (void)
 		percent = 100 - alreadyLoadedPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 
 		alreadyLoadedPercent += percent / csi.numODs;
 		SCR_DrawLoadingScreen(true, alreadyLoadedPercent);

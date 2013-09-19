@@ -44,10 +44,10 @@ typedef struct camera_s {
 #define CAMERA_START_HEIGHT UNIT_HEIGHT * 1.5
 #define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
 
-extern cvar_t *cl_centerview;
-extern cvar_t *cl_camzoommax;
-extern cvar_t *cl_camzoommin;
-extern cvar_t *cl_camzoomquant;
+extern cvar_t* cl_centerview;
+extern cvar_t* cl_camzoommax;
+extern cvar_t* cl_camzoommin;
+extern cvar_t* cl_camzoomquant;
 
 extern const float MIN_ZOOM, MAX_ZOOM;
 

@@ -41,7 +41,7 @@ typedef enum {
 	WALKTYPE_MAX
 } walkType_t;
 
-extern le_t *selActor;
+extern le_t* selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
 
@@ -51,55 +51,55 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);
 
-int CL_ActorCheckAction(const le_t *le);
-void CL_ActorInvMove(const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY);
+int CL_ActorCheckAction(const le_t* le);
+void CL_ActorInvMove(const le_t* le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY);
 
-le_t *CL_ActorGetFromCharacter(const character_t *chr);
-character_t *CL_ActorGetChr(const le_t *le);
-int CL_ActorUsableTUs(const le_t *le);
-int CL_ActorReservedTUs(const le_t *le, reservation_types_t type);
-void CL_ActorReserveTUs(const le_t *le, reservation_types_t type, int tus);
-bool CL_ActorIsReactionFireOutOfRange(const le_t *shooter, const le_t *target);
-const fireDef_t *CL_ActorGetReactionFireFireDef(const le_t *shooter);
+le_t* CL_ActorGetFromCharacter(const character_t* chr);
+character_t* CL_ActorGetChr(const le_t* le);
+int CL_ActorUsableTUs(const le_t* le);
+int CL_ActorReservedTUs(const le_t* le, reservation_types_t type);
+void CL_ActorReserveTUs(const le_t* le, reservation_types_t type, int tus);
+bool CL_ActorIsReactionFireOutOfRange(const le_t* shooter, const le_t* target);
+const fireDef_t* CL_ActorGetReactionFireFireDef(const le_t* shooter);
 
-int CL_ActorMoveMode(const le_t *le);
-void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);
+int CL_ActorMoveMode(const le_t* le);
+void CL_ActorSetMode(le_t* actor, actorModes_t actorMode);
 bool CL_ActorFireModeActivated(const actorModes_t mode);
-void CL_ActorConditionalMoveCalc(le_t *le);
+void CL_ActorConditionalMoveCalc(le_t* le);
 le_t* CL_ActorGetClosest(const vec3_t origin, int team);
-bool CL_ActorSelect(le_t *le);
+bool CL_ActorSelect(le_t* le);
 bool CL_ActorSelectList(int num);
 bool CL_ActorSelectNext(void);
 bool CL_ActorSelectPrev(void);
-void CL_ActorAddToTeamList(le_t *le);
-void CL_ActorRemoveFromTeamList(le_t *le);
-void CL_ActorCleanup(le_t *le);
+void CL_ActorAddToTeamList(le_t* le);
+void CL_ActorRemoveFromTeamList(le_t* le);
+void CL_ActorCleanup(le_t* le);
 void CL_ActorSelectMouse(void);
-void CL_ActorReload(le_t *le, containerIndex_t containerID);
+void CL_ActorReload(le_t* le, containerIndex_t containerID);
 void CL_ActorTurnMouse(void);
-void CL_ActorStartMove(le_t *le, const pos3_t to);
-void CL_ActorShoot(const le_t *le, const pos3_t at);
-int CL_ActorGetContainerForReload(Item **ic, const Inventory* inv, const objDef_t *weapon);
-void CL_ActorPlaySound(const le_t *le, actorSound_t soundType);
-float CL_ActorInjuryModifier(const le_t *le, const modifier_types_t type);
-int CL_ActorTimeForFireDef(const le_t *le, const fireDef_t *fd, bool reaction = false);
+void CL_ActorStartMove(le_t* le, const pos3_t to);
+void CL_ActorShoot(const le_t* le, const pos3_t at);
+int CL_ActorGetContainerForReload(Item **ic, const Inventory* inv, const objDef_t* weapon);
+void CL_ActorPlaySound(const le_t* le, actorSound_t soundType);
+float CL_ActorInjuryModifier(const le_t* le, const modifier_types_t type);
+int CL_ActorTimeForFireDef(const le_t* le, const fireDef_t* fd, bool reaction = false);
 
 void CL_ActorActionMouse(void);
-void CL_ActorSetFireDef(le_t *actor, const fireDef_t *fd);
+void CL_ActorSetFireDef(le_t* actor, const fireDef_t* fd);
 
 void CL_NextRound_f(void);
 
 void CL_ResetMouseLastPos(void);
-void CL_ActorResetMoveLength(le_t *le);
+void CL_ActorResetMoveLength(le_t* le);
 bool CL_ActorMouseTrace(void);
 void CL_GetWorldCoordsUnderMouse(vec3_t groundIntersection, vec3_t upperTracePoint, vec3_t lowerTracePoint);
 void CL_InitBattlescapeMouseDragging(void);
 void CL_BattlescapeMouseDragging(void);
 
-bool CL_AddActor(le_t *le, entity_t *ent);
-bool CL_AddUGV(le_t *le, entity_t *ent);
+bool CL_AddActor(le_t* le, entity_t* ent);
+bool CL_AddUGV(le_t* le, entity_t* ent);
 
-int CL_ActorGetNumber(const le_t *le);
+int CL_ActorGetNumber(const le_t* le);
 
 void CL_AddTargeting(void);
 void CL_AddPathing(void);

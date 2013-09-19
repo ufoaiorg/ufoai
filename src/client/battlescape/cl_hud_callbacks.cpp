@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * This function only returns @c nullptr if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
-Item* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
+Item* HUD_GetLeftHandWeapon (const le_t* actor, containerIndex_t* container)
 {
 	Item* item = actor->getLeftHandItem();
 
@@ -54,7 +54,7 @@ Item* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
  * @param[in] hand Which hand to use
  * @return the used @c fireDef_t
  */
-const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHands_t hand)
+const fireDef_t* HUD_GetFireDefinitionForHand (const le_t* actor, const actorHands_t hand)
 {
 	if (!actor)
 		return nullptr;
@@ -105,7 +105,7 @@ static bool HUD_CheckShooting (const le_t* le, Item* weapon)
  */
 static void HUD_FireWeapon_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s <l|r> <firemode number>\n", Cmd_Argv(0));
@@ -120,11 +120,11 @@ static void HUD_FireWeapon_f (void)
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0)
 		return;
 
-	const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
+	const fireDef_t* fd = HUD_GetFireDefinitionForHand(actor, hand);
 	if (fd == nullptr)
 		return;
 
-	const objDef_t *ammo = fd->obj;
+	const objDef_t* ammo = fd->obj;
 
 	/* Let's check if shooting is possible. */
 	if (!HUD_CheckShooting(actor, actor->getHandItem(hand)))
@@ -147,7 +147,7 @@ static void HUD_FireWeapon_f (void)
 
 static void HUD_SetMoveMode_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (actor == nullptr)
 		return;
@@ -160,7 +160,7 @@ static void HUD_SetMoveMode_f (void)
  */
 static void HUD_ToggleCrouchReservation_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (!CL_ActorCheckAction(actor))
 		return;
@@ -182,7 +182,7 @@ static void HUD_ToggleCrouchReservation_f (void)
 static void HUD_ToggleReaction_f (void)
 {
 	int state = 0;
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (!CL_ActorCheckAction(actor))
 		return;
@@ -215,7 +215,7 @@ static void HUD_ToggleReaction_f (void)
  * @sa HUD_UpdateButtons
  * @sa HUD_CheckReload
  */
-int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t toContainer)
+int HUD_CalcReloadTime (const le_t* le, const objDef_t* weapon, containerIndex_t toContainer)
 {
 	if (toContainer == NONE)
 		return -1;
@@ -279,7 +279,7 @@ static bool HUD_CheckReload (const le_t* le, const Item* weapon, containerIndex_
  */
 static void HUD_ReloadLeft_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (actor == nullptr)
 		return;
@@ -296,7 +296,7 @@ static void HUD_ReloadLeft_f (void)
  */
 static void HUD_ReloadRight_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (!actor || !HUD_CheckReload(actor, actor->getRightHandItem(), CID_RIGHT))
 		return;

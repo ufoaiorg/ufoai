@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorAppearTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorAppearTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 
@@ -49,7 +49,7 @@ int CL_ActorAppearTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 /**
  * @brief draw a simple 'spotted' line from a spotter to the spotted
  */
-static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
+static void CL_DrawLineOfSight (const le_t* watcher, const le_t* target)
 {
 	if (!watcher || !target)
 		return;
@@ -62,7 +62,7 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 	else
 		eyes[2] += EYE_HT_STAND;
 
-	ptl_t *ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin);
+	ptl_t* ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin);
 	if (ptl == nullptr)
 		return;
 
@@ -76,14 +76,14 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
  * @sa CL_ActorAdd
  * @note EV_ACTOR_APPEAR
  */
-void CL_ActorAppear (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorAppear (const eventRegister_t* self, dbuffer *msg)
 {
 
 	/* check if the actor is already visible */
 	const int entnum = NET_ReadShort(msg);
 	const int entnumResponsible = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
-	le_t *leResponsible = LE_Get(entnumResponsible);
+	le_t* le = LE_Get(entnum);
+	le_t* leResponsible = LE_Get(entnumResponsible);
 
 	if (entnumResponsible != SKIP_LOCAL_ENTITY && !leResponsible)
 		LE_NotFoundError(entnumResponsible);

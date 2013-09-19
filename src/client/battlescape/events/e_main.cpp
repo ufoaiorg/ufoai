@@ -74,7 +74,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param msg The buffer containing event information.  It is not changed during the
  *  call, so it doesn't need to be copied before, and can be used as new afterwards.
  */
-static bool CL_CheckDefault (const eventRegister_t *self, const dbuffer *msg)
+static bool CL_CheckDefault (const eventRegister_t* self, const dbuffer *msg)
 {
 	const int number = NET_PeekShort(msg);
 	const bool result = LE_IsLocked(number);
@@ -150,7 +150,7 @@ const eventRegister_t events[] = {
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
-const eventRegister_t *CL_GetEvent (const event_t eType)
+const eventRegister_t* CL_GetEvent (const event_t eType)
 {
 	for (int i = EV_NULL; i < EV_NUM_EVENTS; i++) {
 		if (events[i].type == eType)
@@ -170,9 +170,9 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
  * @param[in] step The step we want to calculate the time for
  * @return @c -1 on error (invalid input data), otherwise the timestamp the move event was executed for that step
  */
-int CL_GetStepTime (const eventTiming_t *eventTiming, const le_t* le, int step)
+int CL_GetStepTime (const eventTiming_t* eventTiming, const le_t* le, int step)
 {
-	const leStep_t *list = le->stepList;
+	const leStep_t* list = le->stepList;
 	if (list == nullptr)
 		return eventTiming->nextTime;
 	for (int i = 0; i < le->stepIndex; i++) {
@@ -196,7 +196,7 @@ int CL_GetStepTime (const eventTiming_t *eventTiming, const le_t* le, int step)
 	return eventTime;
 }
 
-int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime)
+int CL_GetNextTime (const eventRegister_t* event, eventTiming_t* eventTiming, int nextTime)
 {
 	if (nextTime < eventTiming->nextTime) {
 		Com_DPrintf(DEBUG_EVENTSYS, "CL_GetNextTime: nexttime is invalid (%i/%i): %s\n", nextTime, eventTiming->nextTime, event->name);

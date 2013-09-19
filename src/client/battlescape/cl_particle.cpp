@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define PTL_INTENSITY_TO_RADIUS 256 /** @todo better scale factor: is 256 too big or not? */
 
-static cvar_t *cl_particleweather;
+static cvar_t* cl_particleweather;
 
 /** @brief map particles */
 typedef struct mapParticle_s {
@@ -54,7 +54,7 @@ typedef struct timedParticle_s {
 	vec3_t s;	/**< current position */
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
-	ptl_t *parent;
+	ptl_t* parent;
 	bool children;	/**< spawn as children of @c parent */
 	int levelFlags;
 	int max;	/**< the amount of particles to spawn */
@@ -239,7 +239,7 @@ static byte stackType[MAX_STACK_DEPTH];
  * @param[in] deltaTime The time to wait until this particle should get spawned
  * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
  */
-static void CL_ParticleSpawnTimed (const char* name, ptl_t *parent, bool children, int deltaTime, int n)
+static void CL_ParticleSpawnTimed (const char* name, ptl_t* parent, bool children, int deltaTime, int n)
 {
 	const size_t length = lengthof(timedParticles);
 	int i;
@@ -251,7 +251,7 @@ static void CL_ParticleSpawnTimed (const char* name, ptl_t *parent, bool childre
 		Com_Error(ERR_DROP, "Delta time for timed particle is invalid");
 
 	for (i = 0; i < length; i++) {
-		timedParticle_t *tp = &timedParticles[i];
+		timedParticle_t* tp = &timedParticles[i];
 		if (tp->n != tp->max)
 			continue;
 		/* found a free slot */
@@ -277,7 +277,7 @@ static void CL_ParticleSpawnTimed (const char* name, ptl_t *parent, bool childre
  */
 void CL_AddMapParticle (const char* ptl, const vec3_t origin, const vec2_t wait, const char* info, int levelflags)
 {
-	mapParticle_t *mp;
+	mapParticle_t* mp;
 
 	mp = &mapParticles[cl.numMapParticles];
 
@@ -301,7 +301,7 @@ void CL_AddMapParticle (const char* ptl, const vec3_t origin, const vec2_t wait,
 /**
  * @brief Loads the image or model for a given particle art
  */
-static inline void CL_ParticleLoadArt (ptlArt_t *a)
+static inline void CL_ParticleLoadArt (ptlArt_t* a)
 {
 	/* register the art */
 	switch (a->type) {
@@ -329,7 +329,7 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a)
 
 void CL_ParticleRegisterArt (void)
 {
-	ptlArt_t *a;
+	ptlArt_t* a;
 	int i;
 
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
@@ -342,9 +342,9 @@ void CL_ParticleRegisterArt (void)
  * @return index of global art array
  * have their names at the beginning of their structs
  */
-static ptlArt_t *CL_ParticleGetArt (const char* name, int frame, artType_t type)
+static ptlArt_t* CL_ParticleGetArt (const char* name, int frame, artType_t type)
 {
-	ptlArt_t *a;
+	ptlArt_t* a;
 	int i;
 
 	/* search for the pic in the list */
@@ -380,7 +380,7 @@ static ptlArt_t *CL_ParticleGetArt (const char* name, int frame, artType_t type)
  * @param cmd The command to get the data location for.
  * @return The position where the command stores the data.
  */
-static inline void* CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t *cmd)
+static inline void* CL_ParticleCommandGetDataLocation (ptl_t* p, const ptlCmd_t* cmd)
 {
 	if (cmd->ref < 0)
 		/* a negative ref value is relative to the particle */
@@ -389,7 +389,7 @@ static inline void* CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t 
 	return (byte*)pcmdData + cmd->ref;
 }
 
-static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
+static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 {
 	int stackIdx;
 	ptrdiff_t e;
@@ -397,7 +397,7 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 	int i, j, n;
 	void* cmdData;
 	float arg;
-	ptl_t *pnew;
+	ptl_t* pnew;
 
 	/* test for null cmd */
 	if (!cmd)
@@ -683,14 +683,14 @@ static void CL_ParticleFunction (ptl_t *p, ptlCmd_t *cmd)
 	}
 }
 
-ptlDef_t *CL_ParticleGet (const char* name)
+ptlDef_t* CL_ParticleGet (const char* name)
 {
 	if (Q_strnull(name))
 		return nullptr;
 
 	/* find the particle definition */
 	for (int i = 0; i < numPtlDefs; i++) {
-		ptlDef_t *pd = &ptlDef[i];
+		ptlDef_t* pd = &ptlDef[i];
 		if (Q_streq(name, pd->name)) {
 			return pd;
 		}
@@ -710,7 +710,7 @@ ptlDef_t *CL_ParticleGet (const char* name)
  * @sa CL_ViewUpdateRenderData
  * @sa R_DrawParticles
  */
-ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+ptl_t* CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
 	int i;
 
@@ -718,7 +718,7 @@ ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
 		return nullptr;
 
 	/* find the particle definition */
-	ptlDef_t *pd = CL_ParticleGet(name);
+	ptlDef_t* pd = CL_ParticleGet(name);
 	if (pd == nullptr) {
 		Com_Printf("Particle definition \"%s\" not found\n", name);
 		return nullptr;
@@ -739,7 +739,7 @@ ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
 	}
 
 	/* allocate particle */
-	ptl_t *p = &r_particleArray[i];
+	ptl_t* p = &r_particleArray[i];
 	OBJZERO(*p);
 
 	/* set basic values */
@@ -782,9 +782,9 @@ ptl_t *CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
  * @param[in] p the particle to free
  * @sa CL_ParticleSpawn
  */
-void CL_ParticleFree (ptl_t *p)
+void CL_ParticleFree (ptl_t* p)
 {
-	ptl_t *c;
+	ptl_t* c;
 
 	p->inuse = false;
 	p->invis = true;
@@ -839,7 +839,7 @@ static void CL_Fading (vec4_t color, fade_t fade, float frac, bool onlyAlpha)
  */
 void CL_ParticleCheckRounds (void)
 {
-	ptl_t *p;
+	ptl_t* p;
 	int i;
 
 	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++) {
@@ -869,7 +869,7 @@ typedef struct ptlTraceCache_s {
 /**
  * @brief Particle tracing with caching
  */
-static inline trace_t PTL_Trace (ptl_t *ptl, const vec3_t mins, const vec3_t maxs)
+static inline trace_t PTL_Trace (ptl_t* ptl, const vec3_t mins, const vec3_t maxs)
 {
 	static ptlTraceCache_t ptlCache;
 	const float epsilonPos = 3.0f;
@@ -896,7 +896,7 @@ static inline trace_t PTL_Trace (ptl_t *ptl, const vec3_t mins, const vec3_t max
  * @sa CL_ParticleRun
  * @param[in,out] p The particle to handle
  */
-static void CL_ParticleRun2 (ptl_t *p)
+static void CL_ParticleRun2 (ptl_t* p)
 {
 	/* advance time */
 	p->dt = cls.frametime;
@@ -1045,7 +1045,7 @@ static void CL_ParticleRunTimed (void)
 	const size_t length = lengthof(timedParticles);
 
 	for (i = 0; i < length; i++) {
-		timedParticle_t *tp = &timedParticles[i];
+		timedParticle_t* tp = &timedParticles[i];
 		if (!tp->parent || !tp->parent->inuse)
 			continue;
 		if (tp->n >= tp->max)
@@ -1063,7 +1063,7 @@ static void CL_ParticleRunTimed (void)
 		}
 		tp->n++;
 		tp->lastTime = CL_Milliseconds();
-		ptl_t *p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+		ptl_t* p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
 		if (p && tp->children) {
 			p->next = tp->parent->children;
 			p->parent = tp->parent;
@@ -1079,12 +1079,12 @@ static void CL_ParticleRunTimed (void)
  * @param[in] afterwards If this is true you can modify the particle after the init
  * function for the particle was already called
  */
-static void CL_ParseMapParticle (ptl_t *ptl, const char* es, bool afterwards)
+static void CL_ParseMapParticle (ptl_t* ptl, const char* es, bool afterwards)
 {
 	char keyname[MAX_VAR];
 	const char* token;
 	char* key;
-	const value_t *pp;
+	const value_t* pp;
 
 	key = keyname + 1;
 	do {
@@ -1135,7 +1135,7 @@ static void CL_ParseMapParticle (ptl_t *ptl, const char* es, bool afterwards)
 
 static void CL_RunMapParticles (void)
 {
-	mapParticle_t *mp;
+	mapParticle_t* mp;
 	int i;
 
 	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++) {
@@ -1144,7 +1144,7 @@ static void CL_RunMapParticles (void)
 		if (cl.time < mp->nextTime)
 			continue;
 		/* spawn a new particle */
-		ptl_t *ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin);
+		ptl_t* ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin);
 		if (!ptl) {
 			Com_Printf(S_COLOR_YELLOW "Could not spawn particle '%s'\n", mp->ptl);
 			mp->nextTime = 0;
@@ -1170,7 +1170,7 @@ static void CL_RunMapParticles (void)
  */
 void CL_ParticleRun (void)
 {
-	ptl_t *p;
+	ptl_t* p;
 	int i;
 
 	CL_RunMapParticles();
@@ -1184,8 +1184,8 @@ void CL_ParticleRun (void)
 
 static void CL_ParsePtlCmds (const char* name, const char** text)
 {
-	ptlCmd_t *pc;
-	const value_t *pp;
+	ptlCmd_t* pc;
+	const value_t* pp;
 	const char* errhead = "CL_ParsePtlCmds: unexpected end of file";
 	const char* token;
 	int i, j;
@@ -1381,7 +1381,7 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 void CL_ParseParticle (const char* name, const char** text)
 {
 	const char* errhead = "CL_ParseParticle: unexpected end of file (particle ";
-	ptlDef_t *pd;
+	ptlDef_t* pd;
 	const char* token;
 	int i;
 
@@ -1475,9 +1475,9 @@ static void PTL_DebugList_f (void)
 
 	Com_Printf("%i particles\n", r_numParticles);
 	for (i = 0; i < r_numParticles; i++) {
-		const ptl_t *p = &r_particleArray[i];
-		const ptlDef_t *def = p->ctrl;
-		const value_t *pp = pps;
+		const ptl_t* p = &r_particleArray[i];
+		const ptlDef_t* def = p->ctrl;
+		const value_t* pp = pps;
 		if (!p->inuse)
 			continue;
 		Com_Printf("particle %i\n", i);

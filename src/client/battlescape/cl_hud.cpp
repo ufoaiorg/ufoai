@@ -40,10 +40,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../../common/grid.h"
 
-static cvar_t *cl_hud_message_timeout;
-static cvar_t *cl_show_cursor_tooltips;
-static cvar_t *cl_hud;
-cvar_t *cl_worldlevel;
+static cvar_t* cl_hud_message_timeout;
+static cvar_t* cl_show_cursor_tooltips;
+static cvar_t* cl_hud;
+cvar_t* cl_worldlevel;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
@@ -141,7 +141,7 @@ void HUD_DisplayMessage (const char* text)
 	UI_DisplayNotice(text, cl_hud_message_timeout->integer, cl_hud->string);
 }
 
-void HUD_UpdateActorStats (const le_t *le)
+void HUD_UpdateActorStats (const le_t* le)
 {
 	if (LE_IsDead(le))
 		return;
@@ -150,7 +150,7 @@ void HUD_UpdateActorStats (const le_t *le)
 	if ((!item || !item->def() || !item->isHeldTwoHanded()) && le->getLeftHandItem())
 		item = le->getLeftHandItem();
 
-	const character_t *chr = CL_ActorGetChr(le);
+	const character_t* chr = CL_ActorGetChr(le);
 	assert(chr);
 	const char* tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 		chr->name, le->HP, le->maxHP, le->TU, (item && item->def()) ? _(item->def()->name) : "");
@@ -195,7 +195,7 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  * @todo Maybe only return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
  */
-static int HUD_UsableReactionTUs (const le_t *le)
+static int HUD_UsableReactionTUs (const le_t* le)
 {
 	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
 	if (le->state & STATE_REACTION)
@@ -220,11 +220,11 @@ static bool HUD_CheckFiremodeReservation (void)
 	actorHands_t hand;
 	foreachhand(hand) {
 		/* Get weapon (and its ammo) from the hand. */
-		const fireDef_t *fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
+		const fireDef_t* fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
 		if (!fireDef)
 			continue;
 
-		const objDef_t *ammo = fireDef->obj;
+		const objDef_t* ammo = fireDef->obj;
 		for (int i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
 			/* Check if at least one firemode is available for reservation. */
 			if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= CL_ActorTimeForFireDef(selActor, &ammo->fd[fireDef->weapFdsIdx][i]))
@@ -245,7 +245,7 @@ static bool HUD_CheckFiremodeReservation (void)
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
  */
-static void HUD_SetShootReservation (const le_t* le, const int tus, const actorHands_t hand, const int fireModeIndex, const objDef_t *weapon)
+static void HUD_SetShootReservation (const le_t* le, const int tus, const actorHands_t hand, const int fireModeIndex, const objDef_t* weapon)
 {
 	character_t* chr = CL_ActorGetChr(le);
 	assert(chr);
@@ -254,7 +254,7 @@ static void HUD_SetShootReservation (const le_t* le, const int tus, const actorH
 	chr->reservedTus.shotSettings.set(hand, fireModeIndex, weapon);
 }
 
-static linkedList_t *popupListData;
+static linkedList_t* popupListData;
 static uiNode_t* popupListNode;
 
 /**
@@ -266,12 +266,12 @@ static uiNode_t* popupListNode;
  * @sa HUD_CheckFiremodeReservation
  * @todo use components and confuncs here
  */
-static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
+static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 {
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
-	linkedList_t *popupListText = nullptr;
+	linkedList_t* popupListText = nullptr;
 	reserveShot_t reserveShotData;
 
 	/* reset the list */
@@ -290,15 +290,15 @@ static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 
 	actorHands_t hand;
 	foreachhand(hand) {
-		const fireDef_t *fd = HUD_GetFireDefinitionForHand(le, hand);
+		const fireDef_t* fd = HUD_GetFireDefinitionForHand(le, hand);
 		if (!fd)
 			continue;
 		character_t* chr = CL_ActorGetChr(le);
 		assert(chr);
 
-		const objDef_t *ammo = fd->obj;
+		const objDef_t* ammo = fd->obj;
 		for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
-			const fireDef_t *ammoFD = &ammo->fd[fd->weapFdsIdx][i];
+			const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 			const int time = CL_ActorTimeForFireDef(le, ammoFD);
 			if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
 				/* Get firemode name and TUs. */
@@ -371,7 +371,7 @@ static void HUD_ShotReserve_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
 		return;
 
-	const reserveShot_t* reserveShotData = (const reserveShot_t *)LIST_GetByIdx(popupListData, selectedPopupIndex);
+	const reserveShot_t* reserveShotData = (const reserveShot_t* )LIST_GetByIdx(popupListData, selectedPopupIndex);
 	if (!reserveShotData)
 		return;
 
@@ -383,7 +383,7 @@ static void HUD_ShotReserve_f (void)
 	/** @todo do this on the server */
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
-		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
+		const objDef_t* od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		if (GAME_ItemIsUseable(od)) {
 			HUD_SetShootReservation(selActor, std::max(0, reserveShotData->TUs), reserveShotData->hand, reserveShotData->fireModeIndex, od);
 			if (popupListNode)
@@ -401,13 +401,13 @@ static void HUD_ShotReserve_f (void)
  * @param hand What list to display
  * @param index Index of the actual firemode
  */
-static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t *ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
+static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, const int index)
 {
 	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
 
 	/* We have a defined fd ... */
-	const fireDef_t *fd = &ammo->fd[weapFdsIdx][index];
+	const fireDef_t* fd = &ammo->fd[weapFdsIdx][index];
 	const int time = CL_ActorTimeForFireDef(actor, fd);
 
 	assert(actor);
@@ -463,13 +463,13 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 	switch (type) {
 	case FIRE_RIGHT: {
 		const actorHands_t hand = ACTOR_HAND_RIGHT;
-		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
+		const fireDef_t* fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == nullptr) {
 			UI_PopWindow();
 			return;
 		}
 
-		const objDef_t *ammo = fd->obj;
+		const objDef_t* ammo = fd->obj;
 		if (!ammo) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
@@ -503,13 +503,13 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 
 	case FIRE_LEFT: {
 		const actorHands_t hand = ACTOR_HAND_LEFT;
-		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
+		const fireDef_t* fd = HUD_GetFireDefinitionForHand(actor, hand);
 		if (fd == nullptr) {
 			UI_PopWindow();
 			return;
 		}
 
-		const objDef_t *ammo = fd->obj;
+		const objDef_t* ammo = fd->obj;
 		if (!ammo) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
@@ -600,10 +600,10 @@ static void HUD_DisplayFiremodes_f (void)
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void HUD_UpdateReactionFiremodes (const le_t *actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
+static void HUD_UpdateReactionFiremodes (const le_t* actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
 {
-	const fireDef_t *fd;
-	const objDef_t *ammo, *od;
+	const fireDef_t* fd;
+	const objDef_t* ammo, *od;
 
 	assert(actor);
 
@@ -678,7 +678,7 @@ static int HUD_GetMinimumTUsForUsage (const Item* item)
 
 	assert(item->def());
 
-	const fireDef_t *fdArray = item->getFiredefs();
+	const fireDef_t* fdArray = item->getFiredefs();
 	if (fdArray == nullptr)
 		return time;
 
@@ -700,7 +700,7 @@ static int HUD_GetMinimumTUsForUsage (const Item* item)
  * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char** reason)
+static int HUD_WeaponCanBeReloaded (const le_t* le, containerIndex_t containerID, const char** reason)
 {
 	const Item* invList = le->inv.getContainer2(containerID);
 
@@ -710,7 +710,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
 		return -1;
 	}
 
-	const objDef_t *weapon = invList->def();
+	const objDef_t* weapon = invList->def();
 	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
@@ -750,7 +750,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
  * @todo at the moment of writing, this should be impossible: reaction
  * should be disabled whenever the actor loses its reaction weapon.
  */
-static bool HUD_DisplayImpossibleReaction (const le_t *actor)
+static bool HUD_DisplayImpossibleReaction (const le_t* actor)
 {
 	if (!actor)
 		return false;
@@ -777,7 +777,7 @@ static bool HUD_DisplayImpossibleReaction (const le_t *actor)
  * @brief Display 'usable' (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
-static void HUD_DisplayPossibleReaction (const le_t *actor)
+static void HUD_DisplayPossibleReaction (const le_t* actor)
 {
 	if (!actor)
 		return;
@@ -800,7 +800,7 @@ static void HUD_DisplayPossibleReaction (const le_t *actor)
  * @param[in] actor the actor to check for his reaction TUs.
  * @return The TUs needed for the reaction fireDef for this actor or -1 if no valid reaction settings
  */
-int HUD_ReactionFireGetTUs (const le_t *actor)
+int HUD_ReactionFireGetTUs (const le_t* actor)
 {
 	if (!actor)
 		return -1;
@@ -814,7 +814,7 @@ int HUD_ReactionFireGetTUs (const le_t *actor)
 		weapon = actor->getLeftHandItem();
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon()) {
-		const fireDef_t *fdArray = weapon->getFiredefs();
+		const fireDef_t* fdArray = weapon->getFiredefs();
 		if (fdArray == nullptr)
 			return -1;
 
@@ -831,7 +831,7 @@ int HUD_ReactionFireGetTUs (const le_t *actor)
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  */
-static void HUD_UpdateButtons (const le_t *le)
+static void HUD_UpdateButtons (const le_t* le)
 {
 	if (!le)
 		return;
@@ -1011,13 +1011,13 @@ void HUD_UpdateCursor (void)
 {
 	/* Offset of the first icon on the x-axis. */
 	const int iconOffsetX = 16;
-	le_t *le = selActor;
+	le_t* le = selActor;
 	if (le) {
 		/* Offset of the first icon on the y-axis. */
 		int iconOffsetY = 16;
 		/* the space between different icons. */
 		const int iconSpacing = 2;
-		image_t *image;
+		image_t* image;
 		/* icon width */
 		const int iconW = 16;
 		/* icon height. */
@@ -1085,7 +1085,7 @@ void HUD_UpdateCursor (void)
  * @brief Shows map pathfinding debugging parameters (if activated)
  * @param[in] le The current selected actors entity
  */
-static void HUD_MapDebugCursor (const le_t *le)
+static void HUD_MapDebugCursor (const le_t* le)
 {
 	if (!(cl_map_debug->integer & MAPDEBUG_TEXT))
 		return;
@@ -1116,7 +1116,7 @@ static void HUD_MapDebugCursor (const le_t *le)
  * @param actor The actor to update the hud for
  * @return The amount of TUs needed for the current pending action
  */
-static int HUD_UpdateActorFireMode (le_t *actor)
+static int HUD_UpdateActorFireMode (le_t* actor)
 {
 	const Item* selWeapon;
 
@@ -1138,19 +1138,19 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 	static char infoText[UI_MAX_SMALLTEXTLEN];
 	int time = 0;
-	const objDef_t *def = selWeapon->def();
+	const objDef_t* def = selWeapon->def();
 	if (!def) {
 		/* No valid weapon in the hand. */
 		CL_ActorSetFireDef(actor, nullptr);
 	} else {
 		/* Check whether this item uses/has ammo. */
 		if (!selWeapon->ammoDef()) {
-			const fireDef_t *old = nullptr;
+			const fireDef_t* old = nullptr;
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			/* This is supposed to be a weapon or other usable item. */
 			if (def->numWeapons > 0) {
 				if (selWeapon->isWeapon() || def->weapons[0] == def) {
-					const fireDef_t *fdArray = selWeapon->getFiredefs();
+					const fireDef_t* fdArray = selWeapon->getFiredefs();
 					if (fdArray != nullptr) {
 						/* Get firedef from the weapon (or other usable item) entry instead. */
 						old = FIRESH_GetFiredef(def, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
@@ -1159,9 +1159,9 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			}
 			CL_ActorSetFireDef(actor, old);
 		} else {
-			const fireDef_t *fdArray = selWeapon->getFiredefs();
+			const fireDef_t* fdArray = selWeapon->getFiredefs();
 			if (fdArray != nullptr) {
-				const fireDef_t *old = FIRESH_GetFiredef(selWeapon->ammoDef(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+				const fireDef_t* old = FIRESH_GetFiredef(selWeapon->ammoDef(), fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 				/* reset the align if we switched the firemode */
 				CL_ActorSetFireDef(actor, old);
 			}
@@ -1201,7 +1201,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
  * @param[in] actor The actor to update the hud for
  * @return The amount of TUs needed for the current pending action
  */
-static int HUD_UpdateActorMove (const le_t *actor)
+static int HUD_UpdateActorMove (const le_t* actor)
 {
 	const int reservedTUs = CL_ActorReservedTUs(actor, RES_ALL_ACTIVE);
 	static char infoText[UI_MAX_SMALLTEXTLEN];
@@ -1235,7 +1235,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	return actor->actorMoveLength;
 }
 
-static void HUD_UpdateActorCvar (const le_t *actor)
+static void HUD_UpdateActorCvar (const le_t* actor)
 {
 	Cvar_SetValue("mn_hp", actor->HP);
 	Cvar_SetValue("mn_hpmax", actor->maxHP);
@@ -1314,8 +1314,8 @@ static void HUD_ActorWoundData_f (void)
 		return;
 
 	int bodyPart;
-	woundInfo_t *wounds = &selActor->wounds;
-	const character_t *chr = CL_ActorGetChr(selActor);
+	woundInfo_t* wounds = &selActor->wounds;
+	const character_t* chr = CL_ActorGetChr(selActor);
 	const BodyData *bodyData = chr->teamDef->bodyTemplate;
 
 	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
@@ -1349,7 +1349,7 @@ static void HUD_UpdateActorLoad_f (void)
 	if (!selActor)
 		return;
 
-	const character_t *chr = CL_ActorGetChr(selActor);
+	const character_t* chr = CL_ActorGetChr(selActor);
 	const float invWeight = selActor->inv.getWeight();
 	const int maxWeight = GAME_GetChrMaxLoad(chr);
 	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
@@ -1362,7 +1362,7 @@ static void HUD_UpdateActorLoad_f (void)
 	while ((cont = chr->inv.getNextCont(cont))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			const fireDef_t *fireDef = item->getFiredefs();
+			const fireDef_t* fireDef = item->getFiredefs();
 			if (fireDef == nullptr)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
@@ -1391,7 +1391,7 @@ static void HUD_UpdateActorLoad_f (void)
  * @brief Updates the hud for one actor
  * @param actor The actor to update the hud values for
  */
-static void HUD_UpdateActor (le_t *actor)
+static void HUD_UpdateActor (le_t* actor)
 {
 	int time;
 
@@ -1567,7 +1567,7 @@ static void HUD_TUChangeListener (const char* cvarName, const char* oldValue, co
 	HUD_UpdateButtons(selActor);
 }
 
-static bool CL_CvarWorldLevel (cvar_t *cvar)
+static bool CL_CvarWorldLevel (cvar_t* cvar)
 {
 	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
 	return Cvar_AssertValue(cvar, 0, maxLevel, true);
@@ -1578,9 +1578,9 @@ static bool CL_CvarWorldLevel (cvar_t *cvar)
  * @param cvar The cvar to check
  * @return @c true if cvar is valid, @c false otherwise
  */
-static bool HUD_CheckCLHud (cvar_t *cvar)
+static bool HUD_CheckCLHud (cvar_t* cvar)
 {
-	const uiNode_t *window = UI_GetWindow(cvar->string);
+	const uiNode_t* window = UI_GetWindow(cvar->string);
 	if (window == nullptr) {
 		return false;
 	}
@@ -1615,7 +1615,7 @@ void HUD_InitUI (const char* optionWindowName)
  * @param cvar The cvar to check and to modify if the value is invalid
  * @return @c true if the valid is invalid, @c false otherwise
  */
-static bool HUD_CvarCheckMNHud (cvar_t *cvar)
+static bool HUD_CvarCheckMNHud (cvar_t* cvar)
 {
 	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Reset(cvar);

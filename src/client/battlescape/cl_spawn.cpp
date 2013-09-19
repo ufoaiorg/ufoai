@@ -107,15 +107,15 @@ static const value_t localEntityValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void SP_worldspawn(const localEntityParse_t *entData);
-static void SP_misc_model(const localEntityParse_t *entData);
-static void SP_misc_particle(const localEntityParse_t *entData);
-static void SP_misc_sound(const localEntityParse_t *entData);
-static void SP_light(const localEntityParse_t *entData);
+static void SP_worldspawn(const localEntityParse_t* entData);
+static void SP_misc_model(const localEntityParse_t* entData);
+static void SP_misc_particle(const localEntityParse_t* entData);
+static void SP_misc_sound(const localEntityParse_t* entData);
+static void SP_light(const localEntityParse_t* entData);
 
 typedef struct {
 	const char* name;
-	void (*spawn) (const localEntityParse_t *entData);
+	void (*spawn) (const localEntityParse_t* entData);
 } spawn_t;
 
 static const spawn_t spawns[] = {
@@ -131,9 +131,9 @@ static const spawn_t spawns[] = {
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
-static void CL_SpawnCall (const localEntityParse_t *entData)
+static void CL_SpawnCall (const localEntityParse_t* entData)
 {
-	const spawn_t *s;
+	const spawn_t* s;
 
 	if (entData->classname[0] == '\0')
 		return;
@@ -191,7 +191,7 @@ void CL_SpawnParseEntitystring (void)
 
 		/* go through all the dictionary pairs */
 		while (1) {
-			const value_t *v;
+			const value_t* v;
 			/* parse key */
 			entityToken = Com_Parse(&es);
 			if (entityToken[0] == '}')
@@ -223,7 +223,7 @@ void CL_SpawnParseEntitystring (void)
 #define MIN_AMBIENT_SUM 0.50
 
 /** @note Defaults should match those of ufo2map, or lighting will be inconsistent between world and models */
-static void SP_worldspawn (const localEntityParse_t *entData)
+static void SP_worldspawn (const localEntityParse_t* entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	int i;
@@ -314,9 +314,9 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	VectorSet(refdef.fogColor, 0.75, 0.75, 0.75);
 }
 
-static void SP_misc_model (const localEntityParse_t *entData)
+static void SP_misc_model (const localEntityParse_t* entData)
 {
-	localModel_t *lm;
+	localModel_t* lm;
 	int renderFlags = 0;
 
 	if (entData->model[0] == '\0') {
@@ -355,14 +355,14 @@ static void SP_misc_model (const localEntityParse_t *entData)
 	}
 }
 
-static void SP_misc_particle (const localEntityParse_t *entData)
+static void SP_misc_particle (const localEntityParse_t* entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 		CL_AddMapParticle(entData->particle, entData->origin, entData->wait, entData->entStringPos, (entData->spawnflags & 0xFF));
 }
 
-static void SP_misc_sound (const localEntityParse_t *entData)
+static void SP_misc_sound (const localEntityParse_t* entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
@@ -372,7 +372,7 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 /**
  * @param entData
  */
-static void SP_light (const localEntityParse_t *entData)
+static void SP_light (const localEntityParse_t* entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 
