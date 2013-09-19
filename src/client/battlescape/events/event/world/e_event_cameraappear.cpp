@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Adds a camera edicts to the client for displaying them
  * @sa EV_CAMERA_APPEAR
  */
-void CL_CameraAppear (const eventRegister_t *self, dbuffer *msg)
+void CL_CameraAppear (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum;
 	int team;
@@ -43,7 +43,7 @@ void CL_CameraAppear (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &origin, &team, &dir, &cameraType, &levelflags, &rotate);
 
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (!le) {
 		le = LE_Add(entnum);
 	} else {

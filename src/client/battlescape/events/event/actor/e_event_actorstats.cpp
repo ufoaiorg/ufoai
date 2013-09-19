@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ParseEvent
  * @sa G_SendStats
  */
-void CL_ActorStats (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorStats (const eventRegister_t* self, dbuffer *msg)
 {
 	const int entnum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfireaddtarget.h"
 
-static void CL_GetReactionFireHead (const le_t *le, const char** model, int* skin, bool *robot)
+static void CL_GetReactionFireHead (const le_t* le, const char** model, int* skin, bool *robot)
 {
 	/* hack for robots, they don't have a head */
 	if (le->teamDef->robot) {
@@ -42,7 +42,7 @@ static void CL_GetReactionFireHead (const le_t *le, const char** model, int* ski
 	*robot = le->teamDef->robot;
 }
 
-int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorReactionFireAddTargetTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	int targetEntNum;
 	int unused;
@@ -50,7 +50,7 @@ int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg
 
 	NET_ReadFormat(msg, self->formatString, &unused, &targetEntNum, &unused, &step);
 
-	const le_t *target = LE_Get(targetEntNum);
+	const le_t* target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 	if (step >= MAX_ROUTE)
@@ -67,7 +67,7 @@ int CL_ActorReactionFireAddTargetTime (const eventRegister_t *self, dbuffer *msg
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorReactionFireAddTarget (const eventRegister_t* self, dbuffer *msg)
 {
 	int shooterEntNum;
 	int targetEntNum;
@@ -77,11 +77,11 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &shooterEntNum, &targetEntNum, &tusUntilTriggered, &unused);
 
-	const le_t *shooter = LE_Get(shooterEntNum);
+	const le_t* shooter = LE_Get(shooterEntNum);
 	if (!shooter)
 		LE_NotFoundError(shooterEntNum);
 
-	const le_t *target = LE_Get(targetEntNum);
+	const le_t* target = LE_Get(targetEntNum);
 	if (!target)
 		LE_NotFoundError(targetEntNum);
 
@@ -89,7 +89,7 @@ void CL_ActorReactionFireAddTarget (const eventRegister_t *self, dbuffer *msg)
 	int shooterSkin;
 	bool shooterRobot;
 	CL_GetReactionFireHead(shooter, &shooterModel, &shooterSkin, &shooterRobot);
-	const fireDef_t *shooterFiredef = CL_ActorGetReactionFireFireDef(shooter);
+	const fireDef_t* shooterFiredef = CL_ActorGetReactionFireFireDef(shooter);
 	const float distance = VectorDist(shooter->origin, target->origin);
 	const bool outOfRange = shooterFiredef->range < distance;
 

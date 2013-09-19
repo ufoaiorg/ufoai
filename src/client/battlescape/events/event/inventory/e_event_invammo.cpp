@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_invammo.h"
 
-void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
+void CL_InvAmmo (const eventRegister_t* self, dbuffer *msg)
 {
 	int		number;
 	int		ammo, type, x, y;
@@ -35,7 +35,7 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "InvAmmo message ignored... LE not found\n");
 		return;

@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_actor.h"
 #include "e_event_actorstatechange.h"
 
-void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorStateChange (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, state;
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);
 
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
@@ -68,7 +68,7 @@ void CL_ActorStateChange (const eventRegister_t *self, dbuffer *msg)
 	}
 
 	/* save those states that the actor should also carry over to other missions */
-	character_t *chr = CL_ActorGetChr(le);
+	character_t* chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 

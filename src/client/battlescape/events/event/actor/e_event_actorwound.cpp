@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ParseEvent
  * @sa G_SendStats
  */
-void CL_ActorWound (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorWound (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, bodyPart, wounds, treatment;
 	NET_ReadFormat(msg, self->formatString, &entnum, &bodyPart, &wounds, &treatment);
 
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
@@ -53,7 +53,7 @@ void CL_ActorWound (const eventRegister_t *self, dbuffer *msg)
 
 	if (le->wounds.woundLevel[bodyPart] < wounds && wounds > le->maxHP *
 			le->teamDef->bodyTemplate->woundThreshold(bodyPart) && !LE_IsDead(le)) {
-		const character_t *chr = CL_ActorGetChr(le);
+		const character_t* chr = CL_ActorGetChr(le);
 		char tmpbuf[128];
 		Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s has been wounded"), chr->name);
 		HUD_DisplayMessage(tmpbuf);

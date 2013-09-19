@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_results.h"
 
-int CL_ParseResultsTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ParseResultsTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	return eventTiming->nextTime + 1400;
 }
@@ -37,7 +37,7 @@ int CL_ParseResultsTime (const struct eventRegister_s *self, dbuffer *msg, event
  * @sa G_MatchSendResults
  * @sa GAME_CP_Results_f
  */
-void CL_ParseResults (const eventRegister_t *self, dbuffer *msg)
+void CL_ParseResults (const eventRegister_t* self, dbuffer *msg)
 {
 	/* get number of teams */
 	const int num = NET_ReadByte(msg);

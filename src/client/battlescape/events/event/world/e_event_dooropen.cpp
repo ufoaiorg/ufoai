@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_dooropen.h"
 
-static void LET_DoorSlidingOpen (le_t *le)
+static void LET_DoorSlidingOpen (le_t* le)
 {
 	assert(le->slidingSpeed > 0);
 	LET_SlideDoor(le, le->slidingSpeed);
 }
 
-static void LET_DoorRotatingOpen (le_t *le)
+static void LET_DoorRotatingOpen (le_t* le)
 {
 	assert(le->rotationSpeed > 0);
 	LET_RotateDoor(le, le->rotationSpeed);
@@ -42,14 +42,14 @@ static void LET_DoorRotatingOpen (le_t *le)
  * @brief Callback for EV_DOOR_OPEN event - rotates the inline model and recalc routing
  * @sa Touch_DoorTrigger
  */
-void CL_DoorOpen (const eventRegister_t *self, dbuffer *msg)
+void CL_DoorOpen (const eventRegister_t* self, dbuffer *msg)
 {
 	/* get local entity */
 	int number;
 
 	NET_ReadFormat(msg, self->formatString, &number);
 
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 

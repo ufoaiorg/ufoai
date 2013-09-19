@@ -30,14 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Decides if following events should be delayed. The delay is the amount of time the actor needs to walk
  * from the start to the end pos.
  */
-int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	int time = 0;
 
 	const int eventTime = eventTiming->nextTime;
 	const int number = NET_ReadShort(msg);
 	/* get le */
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 
@@ -45,13 +45,13 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
 	VectorCopy(le->pos, pos);
 	byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 
-	leStep_t *newStep = Mem_AllocType(leStep_t);
+	leStep_t* newStep = Mem_AllocType(leStep_t);
 	if (le->stepList == nullptr) {
 		le->stepList = newStep;
 		le->stepIndex = 0;
 	} else {
 		/* append to the list */
-		leStep_t *step = le->stepList;
+		leStep_t* step = le->stepList;
 		while (step) {
 			if (step->next == nullptr) {
 				step->next = newStep;
@@ -103,12 +103,12 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t
  * @sa LET_PathMove
  * @note EV_ACTOR_MOVE
  */
-void CL_ActorDoMove (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorDoMove (const eventRegister_t* self, dbuffer *msg)
 {
 	const int number = NET_ReadShort(msg);
 
 	/* get le */
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 

@@ -32,14 +32,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_RESET_CLIENT_ACTION
  * @sa G_ClientMove
  */
-void CL_ActorResetClientAction (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorResetClientAction (const eventRegister_t* self, dbuffer *msg)
 {
 	int number;
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &number);
 
 	/* get actor le */
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		LE_NotFoundError(number);
 

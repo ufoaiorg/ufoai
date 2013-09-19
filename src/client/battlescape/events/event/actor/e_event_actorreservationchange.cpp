@@ -33,16 +33,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param self The event pointer
  * @param msg The network message to parse the event data from
  */
-void CL_ActorReservationChange (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorReservationChange (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, reaction, shot, crouch;
 	NET_ReadFormat(msg, self->formatString, &entnum, &reaction, &shot, &crouch);
 
-	const le_t *le = LE_Get(entnum);
+	const le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	character_t *chr = CL_ActorGetChr(le);
+	character_t* chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed.
  */
-int CL_InvDelTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_InvDelTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		return eventTiming->impactTime + 400;
@@ -44,7 +44,7 @@ int CL_InvDelTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming
 /**
  * @sa CL_InvAdd
  */
-void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
+void CL_InvDel (const eventRegister_t* self, dbuffer *msg)
 {
 	int		number;
 	int		x, y;
@@ -52,7 +52,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);
 
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 

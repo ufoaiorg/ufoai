@@ -34,13 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
-void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorRevitalised (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, state;
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);
 
 	/* get les */
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
@@ -50,7 +50,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 	LE_Lock(le);
 
 	/* link any floor container into the actor temp floor container */
-	le_t *floor = LE_Find(ET_ITEM, le->pos);
+	le_t* floor = LE_Find(ET_ITEM, le->pos);
 	if (floor)
 		le->setFloor(floor);
 
@@ -61,7 +61,7 @@ void CL_ActorRevitalised (const eventRegister_t *self, dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		const character_t *chr = CL_ActorGetChr(le);
+		const character_t* chr = CL_ActorGetChr(le);
 		if (chr) {
 			char tmpbuf[128];
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was revitalised\n"), chr->name);

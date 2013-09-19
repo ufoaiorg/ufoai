@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_ClientBegin
  * @note EV_START
  */
-void CL_StartGame (const eventRegister_t *self, dbuffer *msg)
+void CL_StartGame (const eventRegister_t* self, dbuffer *msg)
 {
 	const int isTeamPlay = NET_ReadByte(msg);
 
@@ -56,7 +56,7 @@ void CL_StartGame (const eventRegister_t *self, dbuffer *msg)
 	/* center on first actor */
 	cl_worldlevel->modified = true;
 	if (cl.numTeamList) {
-		const le_t *le = cl.teamList[0];
+		const le_t* le = cl.teamList[0];
 		CL_ViewCenterAtGridPosition(le->pos);
 	}
 

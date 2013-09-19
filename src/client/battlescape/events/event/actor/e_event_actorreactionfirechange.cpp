@@ -36,22 +36,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param msg The network message to parse the event data from
  * @sa HUD_UpdateReactionFiremodes
  */
-void CL_ActorReactionFireChange (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorReactionFireChange (const eventRegister_t* self, dbuffer *msg)
 {
 	actorHands_t hand;
 	int entnum, fmIdx, odIdx;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &fmIdx, &hand, &odIdx);
 
-	const le_t *le = LE_Get(entnum);
+	const le_t* le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	character_t *chr = CL_ActorGetChr(le);
+	character_t* chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 
-	const objDef_t *od = INVSH_GetItemByIDX(odIdx);
+	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	chr->RFmode.set(hand, fmIdx, od);
 
 	UI_ExecuteConfunc("reactionfire_updated");

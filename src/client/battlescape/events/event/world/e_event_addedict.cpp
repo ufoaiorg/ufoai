@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Draw the bounding boxes for the server side edicts
  */
-static bool CL_AddEdictFunc (le_t *le, entity_t *ent)
+static bool CL_AddEdictFunc (le_t* le, entity_t* ent)
 {
 	ent->flags = RF_BOX;
 	VectorSet(ent->color, 1, 1, 1);
@@ -46,7 +46,7 @@ static bool CL_AddEdictFunc (le_t *le, entity_t *ent)
  * @sa EV_ADD_EDICT
  * @sa CL_EntAppear
  */
-void CL_AddEdict (const eventRegister_t *self, dbuffer *msg)
+void CL_AddEdict (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum;
 	entity_type_t type;
@@ -55,7 +55,7 @@ void CL_AddEdict (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &entnum, &type, &mins, &maxs);
 
 	/* use an offset to ensure that we don't conflict with any other solid edict that is already spawned */
-	le_t *le = LE_Get(entnum + MAX_EDICTS);
+	le_t* le = LE_Get(entnum + MAX_EDICTS);
 	if (!le) {
 		le = LE_Add(entnum + MAX_EDICTS);
 	} else {

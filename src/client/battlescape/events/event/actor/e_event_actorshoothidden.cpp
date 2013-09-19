@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Decides if following events should be delayed
  */
-int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	int first;
 	int objIdx;
@@ -38,12 +38,12 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTim
 
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 
-	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
+	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
 		eventTiming->nextTime += 500;
 		eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
 	} else {
-		const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
+		const fireDef_t* fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
 		/* impact right away - we don't see it at all
 		 * bouncing is not needed here, too (we still don't see it) */
 		eventTiming->impactTime = eventTiming->shootTime;
@@ -60,7 +60,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, dbuffer *msg, eventTim
  * @brief Shoot with weapon but don't bother with animations - actor is hidden.
  * @sa CL_ActorShoot
  */
-void CL_ActorShootHidden (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorShootHidden (const eventRegister_t* self, dbuffer *msg)
 {
 	int first;
 	int objIdx;
@@ -70,8 +70,8 @@ void CL_ActorShootHidden (const eventRegister_t *self, dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx);
 
 	/* get the fire def */
-	const objDef_t *obj = INVSH_GetItemByIDX(objIdx);
-	const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
+	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
+	const fireDef_t* fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* start the sound */
 	if ((first || !fd->soundOnce) && fd->fireSound != nullptr)

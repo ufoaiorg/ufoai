@@ -34,11 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_ADD_BRUSH_MODEL
  * @sa CL_SpawnParseEntitystring
  */
-void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
+void CL_AddBrushModel (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, modelnum1, levelflags, speed, dir;
 	entity_type_t type;
-	const cBspModel_t *model;
+	const cBspModel_t* model;
 	int angle;
 	vec3_t origin, angles;
 
@@ -50,7 +50,7 @@ void CL_AddBrushModel (const eventRegister_t *self, dbuffer *msg)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
 
 	/* check if the ent is already visible */
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 	if (le)
 		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ADD_BRUSH_MODEL)\n", entnum, type);
 

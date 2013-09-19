@@ -28,14 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_invreload.h"
 
-int CL_InvReloadTime (const eventRegister_t *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_InvReloadTime (const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 	eventTiming->nextTime += 600;
 	return eventTime;
 }
 
-void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
+void CL_InvReload (const eventRegister_t* self, dbuffer *msg)
 {
 	int		number;
 	int		ammo, type, x, y;
@@ -43,7 +43,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
-	le_t *le = LE_Get(number);
+	le_t* le = LE_Get(number);
 	if (!le)
 		return;
 
@@ -60,7 +60,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
-	equipDef_t *ed = GAME_GetEquipmentDefinition();
+	equipDef_t* ed = GAME_GetEquipmentDefinition();
 	if (ed && ic->getAmmoLeft() > 0 && ic->getAmmoLeft() != ic->def()->ammo) {
 		assert(ammo == ic->def()->ammo);
 		/* Accumulate loose ammo into clips (only accessible post-mission) */

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Some events will be delayed if they are executed in the context of a dying actor. That's why we set
  * the @c parsedDeath value to @c true here.
  */
-int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	eventTiming->parsedDeath = true;
 	if (eventTiming->impactTime > cl.time)
@@ -47,14 +47,14 @@ int CL_ActorDieTime (const struct eventRegister_s *self, dbuffer *msg, eventTimi
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
-void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
+void CL_ActorDie (const eventRegister_t* self, dbuffer *msg)
 {
 	int entnum, state, playerNum, attacker;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum, &attacker);
 
 	/* get les */
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 
 	if (!le)
 		LE_NotFoundError(entnum);
@@ -88,7 +88,7 @@ void CL_ActorDie (const eventRegister_t *self, dbuffer *msg)
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s lost a soldier\n"), playerName);
 			HUD_DisplayMessage(tmpbuf);
 		} else {
-			const character_t *chr = CL_ActorGetChr(le);
+			const character_t* chr = CL_ActorGetChr(le);
 			if (chr) {
 				char tmpbuf[128];
 				if (LE_IsStunned(le)) {
