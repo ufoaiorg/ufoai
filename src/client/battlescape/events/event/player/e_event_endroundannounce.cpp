@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note event EV_ENDROUNDANNOUNCE
  * @todo Build into hud
  */
-void CL_EndRoundAnnounce (const eventRegister_t* self, dbuffer *msg)
+void CL_EndRoundAnnounce (const eventRegister_t* self, dbuffer* msg)
 {
 	/* get the needed values */
 	const int playerNum = NET_ReadByte(msg);

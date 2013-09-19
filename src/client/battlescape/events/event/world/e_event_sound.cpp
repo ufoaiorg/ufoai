@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_actor.h"
 #include "e_event_sound.h"
 
-int CL_SoundEventTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_SoundEventTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	char sound[MAX_QPATH];
 	vec3_t origin;
@@ -57,7 +57,7 @@ int CL_SoundEventTime (const struct eventRegister_s* self, dbuffer *msg, eventTi
  * server is a '+', we will select a random sound file by replacing the '+'
  * character with a number between 01..99
  */
-void CL_SoundEvent (const eventRegister_t* self, dbuffer *msg)
+void CL_SoundEvent (const eventRegister_t* self, dbuffer* msg)
 {
 	char sound[MAX_QPATH];
 	vec3_t origin;

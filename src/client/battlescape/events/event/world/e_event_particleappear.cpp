@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_particle.h"
 #include "e_event_particleappear.h"
 
-int CL_ParticleAppearTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_ParticleAppearTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		return eventTiming->impactTime + 400;
@@ -45,7 +45,7 @@ int CL_ParticleAppearTime (const struct eventRegister_s* self, dbuffer *msg, eve
  * @sa CL_ParticleSpawn
  * @sa EV_PARTICLE_APPEAR
  */
-void CL_ParticleAppear (const eventRegister_t* self, dbuffer *msg)
+void CL_ParticleAppear (const eventRegister_t* self, dbuffer* msg)
 {
 	char particle[MAX_VAR];
 	int entnum, levelflags;

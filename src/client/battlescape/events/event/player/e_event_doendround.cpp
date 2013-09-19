@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] msg The netchannel message
  * @sa CL_EndRoundAnnounce
  */
-void CL_DoEndRound (const eventRegister_t* self, dbuffer *msg)
+void CL_DoEndRound (const eventRegister_t* self, dbuffer* msg)
 {
 	/* hud changes */
 	if (cls.isOurRound())

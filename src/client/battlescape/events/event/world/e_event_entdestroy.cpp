@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Called whenever an entity is destroyed in the server
  * @sa CL_EntPerish
  */
-void CL_EntDestroy (const eventRegister_t* self, dbuffer *msg)
+void CL_EntDestroy (const eventRegister_t* self, dbuffer* msg)
 {
 	int entnum;
 

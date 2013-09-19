@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_ADD_BRUSH_MODEL
  * @sa CL_SpawnParseEntitystring
  */
-void CL_AddBrushModel (const eventRegister_t* self, dbuffer *msg)
+void CL_AddBrushModel (const eventRegister_t* self, dbuffer* msg)
 {
 	int entnum, modelnum1, levelflags, speed, dir;
 	entity_type_t type;

@@ -48,7 +48,7 @@ cvar_t* cl_log_battlescape_events;
 
 typedef struct evTimes_s {
 	event_t eType;					/**< event type to handle */
-	dbuffer *msg;		/**< the parsed network channel data */
+	dbuffer* msg;		/**< the parsed network channel data */
 } evTimes_t;
 
 /**********************************************************
@@ -217,7 +217,7 @@ int CL_ClearBattlescapeEvents (void)
  * E.g. @c impactTime is used to delay some events in case the projectile needs
  * some time to reach its target.
  */
-static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t* eventTiming)
+static int CL_GetEventTime (const event_t eType, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	const eventRegister_t* eventData = CL_GetEvent(eType);
 
@@ -244,7 +244,7 @@ static int CL_GetEventTime (const event_t eType, dbuffer *msg, eventTiming_t* ev
  * @sa CL_ParseServerMessage
  * @param[in] msg The client stream message buffer to read from
  */
-event_t CL_ParseEvent (dbuffer *msg)
+event_t CL_ParseEvent (dbuffer* msg)
 {
 	static eventTiming_t eventTiming;
 	int eType = NET_ReadByte(msg);

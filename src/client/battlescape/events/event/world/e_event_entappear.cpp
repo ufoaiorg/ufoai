@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_entappear.h"
 #include "../../../../../common/grid.h"
 
-int CL_EntAppearTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t* eventTiming)
+int CL_EntAppearTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		return eventTiming->impactTime + 400;
@@ -44,7 +44,7 @@ int CL_EntAppearTime (const struct eventRegister_s* self, dbuffer *msg, eventTim
  * @sa CL_EntPerish
  * @sa CL_AddEdict
  */
-void CL_EntAppear (const eventRegister_t* self, dbuffer *msg)
+void CL_EntAppear (const eventRegister_t* self, dbuffer* msg)
 {
 	int		entnum;
 	entity_type_t type;
