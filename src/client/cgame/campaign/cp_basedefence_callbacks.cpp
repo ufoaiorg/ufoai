@@ -64,9 +64,9 @@ static const char* BDEF_GetIDFromItemType (aircraftItemType_t type)
  * @brief Update the list of item you can choose
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
  */
-static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
+static void BDEF_UpdateAircraftItemList (const aircraftSlot_t* slot)
 {
-	linkedList_t *itemList = nullptr;
+	linkedList_t* itemList = nullptr;
 	technology_t** list;
 
 	assert(slot);
@@ -91,9 +91,9 @@ static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
  */
 static void BDEF_SelectItem_f (void)
 {
-	aircraftSlot_t *slot;
+	aircraftSlot_t* slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	aircraftItemType_t bdefType;
 	int slotIDX;
 	int itemIDX;
@@ -113,13 +113,13 @@ static void BDEF_SelectItem_f (void)
 	}
 
 	if (slotIDX >= 0) {
-		const objDef_t *item;
+		const objDef_t* item;
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : nullptr;
 		UP_AircraftItemDescription(item);
 	} else if (itemIDX >= 0) {
 		technology_t** list;
-		technology_t *itemTech = nullptr;
+		technology_t* itemTech = nullptr;
 		int i = 0;
 
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, 0) : BDEF_GetBaseSlotByIDX(base, bdefType, 0);
@@ -138,7 +138,7 @@ static void BDEF_SelectItem_f (void)
 	}
 }
 
-static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t** slotList)
+static void BDEF_AddSlotToSlotList (const aircraftSlot_t* slot, linkedList_t** slotList)
 {
 	char defBuffer[512];
 	const int size = cgi->LIST_Count(*slotList) + 1;
@@ -146,7 +146,7 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t** s
 		Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), size);
 		cgi->LIST_AddString(slotList, defBuffer);
 	} else {
-		const technology_t *tech;
+		const technology_t* tech;
 		const char* status;
 		if (!slot->installationTime)
 			status = _("Working");
@@ -167,14 +167,14 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t** s
 	}
 }
 
-static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, linkedList_t** slotList)
+static void BDEF_FillSlotList (const baseWeapon_t* batteries, int maxBatteries, linkedList_t** slotList)
 {
 	int i;
 
 	BDEF_UpdateAircraftItemList(&batteries->slot);
 
 	for (i = 0; i < maxBatteries; i++, batteries++) {
-		const aircraftSlot_t *slot = &batteries->slot;
+		const aircraftSlot_t* slot = &batteries->slot;
 		BDEF_AddSlotToSlotList(slot, slotList);
 	}
 }
@@ -186,10 +186,10 @@ static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, 
 static void BDEF_BaseDefenceMenuUpdate_f (void)
 {
 	char type[MAX_VAR];
-	base_t *base = B_GetCurrentSelectedBase();
-	installation_t *installation = INS_GetCurrentSelectedInstallation();
+	base_t* base = B_GetCurrentSelectedBase();
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	aircraftItemType_t bdefType;
-	linkedList_t *slotList = nullptr;
+	linkedList_t* slotList = nullptr;
 	const bool missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 	const bool laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
 
@@ -307,11 +307,11 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
  */
 static void BDEF_AddItem_f (void)
 {
-	aircraftSlot_t *slot;
+	aircraftSlot_t* slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	technology_t** list;
-	technology_t *itemTech = nullptr;
+	technology_t* itemTech = nullptr;
 	aircraftItemType_t bdefType;
 	int slotIDX;
 
@@ -401,9 +401,9 @@ static void BDEF_AddItem_f (void)
  */
 static void BDEF_RemoveItem_f (void)
 {
-	aircraftSlot_t *slot;
+	aircraftSlot_t* slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	aircraftItemType_t bdefType;
 	int slotIDX;
 
@@ -479,7 +479,7 @@ static void BDEF_RemoveBattery_f (void)
 {
 	basedefenceType_t basedefType;
 	int baseIdx;
-	base_t *base;
+	base_t* base;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
@@ -531,7 +531,7 @@ static void BDEF_RemoveBattery_f (void)
 		/* Check if the removed building was under construction */
 		buildingType_t type;
 		int workingNum, max;
-		building_t *building;
+		building_t* building;
 
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
@@ -575,7 +575,7 @@ static void BDEF_RemoveBattery_f (void)
 static void BDEF_AddBattery_f (void)
 {
 	basedefenceType_t basedefType;
-	base_t *base;
+	base_t* base;
 	const char* type;
 
 	if (cgi->Cmd_Argc() < 3) {
@@ -610,7 +610,7 @@ static void BDEF_AddBattery_f (void)
  * @param[in] state New status for autofire
  * @note on turning off it also reset the target so the defence weapon stop shoting
  */
-static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
+static void BDEF_SetAutoFire (baseWeapon_t* weapon, bool state)
 {
 	assert(weapon);
 	weapon->autofire = state;
@@ -625,7 +625,7 @@ static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
  */
 static void BDEF_UpdateActiveBattery_f (void)
 {
-	base_t *base;
+	base_t* base;
 	const char* type;
 	int count;
 
@@ -660,7 +660,7 @@ static void BDEF_UpdateActiveBattery_f (void)
 static void BDEF_ChangeAutoFire (void)
 {
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	int i;
 
 	if (!base && !installation)

@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AC_Init_f (void)
 {
-	base_t *base;
+	base_t* base;
 	if (cgi->Cmd_Argc() < 2)
 		base = B_GetCurrentSelectedBase();
 	else
@@ -54,9 +54,9 @@ static void AC_Init_f (void)
 	cgi->UI_ExecuteConfunc("ui_aliencont_clear");
 	if (!base->alienContainment)
 		return;
-	linkedList_t *list = base->alienContainment->list();
+	linkedList_t* list = base->alienContainment->list();
 	LIST_Foreach(list, alienCargo_t, item) {
-		const technology_t *tech = RS_GetTechForTeam(item->teamDef);
+		const technology_t* tech = RS_GetTechForTeam(item->teamDef);
 		cgi->UI_ExecuteConfunc("ui_aliencont_add \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %f %d %d",
 			item->teamDef->id, _(item->teamDef->name), tech->id, tech->image,
 			(RS_IsResearched_ptr(tech)) ? _("Researched") : _("Awaiting autopsy"),
@@ -72,7 +72,7 @@ static void AC_Init_f (void)
  */
 static void AC_KillAll_f (void)
 {
-	base_t *base;
+	base_t* base;
 
 	if (cgi->Cmd_Argc() < 2) {
 		base = B_GetCurrentSelectedBase();
@@ -85,7 +85,7 @@ static void AC_KillAll_f (void)
 	if (!base->alienContainment)
 		return;
 
-	linkedList_t *list = base->alienContainment->list();
+	linkedList_t* list = base->alienContainment->list();
 	LIST_Foreach(list, alienCargo_t, item) {
 		base->alienContainment->add(item->teamDef, -item->alive, item->alive);
 	}
@@ -99,7 +99,7 @@ static void AC_KillAll_f (void)
  */
 static void AC_KillOne_f (void)
 {
-	base_t *base;
+	base_t* base;
 	const int argc = cgi->Cmd_Argc();
 
 	if (argc < 3) {
@@ -120,9 +120,9 @@ static void AC_KillOne_f (void)
 	/* this function should work by teamDef ID (or raceID), but currently multple teams defined per race
 	 * that makes the thing more complicated */
 	const char* techId = cgi->Cmd_Argv(argc - 1);
-	linkedList_t *list = base->alienContainment->list();
+	linkedList_t* list = base->alienContainment->list();
 	LIST_Foreach(list, alienCargo_t, item) {
-		const technology_t *tech = RS_GetTechForTeam(item->teamDef);
+		const technology_t* tech = RS_GetTechForTeam(item->teamDef);
 		if (!Q_streq(tech->id, techId))
 			continue;
 		base->alienContainment->add(item->teamDef, -1, 1);

@@ -45,7 +45,7 @@ static aircraft_t baseAttackFakeAircraft;
  * @note Base attack mission
  * @sa CP_BaseAttackMissionStart
  */
-void CP_BaseAttackMissionIsSuccess (mission_t *mission)
+void CP_BaseAttackMissionIsSuccess (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
@@ -58,9 +58,9 @@ void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 /**
  * @brief Base attack mission is over and is a failure (from an alien point of view): change interest values.
  */
-void CP_BaseAttackMissionIsFailure (mission_t *mission)
+void CP_BaseAttackMissionIsFailure (mission_t* mission)
 {
-	base_t *base = mission->data.base;
+	base_t* base = mission->data.base;
 
 	if (base) {
 		base->baseStatus = BASE_WORKING;
@@ -96,7 +96,7 @@ void CP_BaseAttackMissionOnSpawn (void)
  * @brief Base attack mission ends: UFO leave earth.
  * @note Base attack mission -- Stage 3
  */
-void CP_BaseAttackMissionLeave (mission_t *mission)
+void CP_BaseAttackMissionLeave (mission_t* mission)
 {
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -116,9 +116,9 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
  * @note Base attack mission -- Stage 3
  * @note UFO attacking this base will be redirected when notify function will be called, don't set new destination here.
  */
-void CP_BaseAttackMissionDestroyBase (mission_t *mission)
+void CP_BaseAttackMissionDestroyBase (mission_t* mission)
 {
-	base_t *base = mission->data.base;
+	base_t* base = mission->data.base;
 	assert(base);
 	/* Base attack is over, alien won */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
@@ -142,12 +142,12 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
  * @brief Prepare things for baseattack battle
  * @param[in] mission Mission to prepare battle for
  */
-static void CP_BaseAttackPrepareBattle (mission_t *mission)
+static void CP_BaseAttackPrepareBattle (mission_t* mission)
 {
 	if (!mission)
 		return;
 
-	base_t *base = mission->data.base;
+	base_t* base = mission->data.base;
 
 	GEO_SelectMission(mission);
 	mission->active = true;
@@ -183,9 +183,9 @@ static void CP_BaseAttackPrepareBattle (mission_t *mission)
  * @brief Start Base Attack.
  * @param[in] mission Pointer to the baseattack mission
  */
-void CP_BaseAttackStartMission (mission_t *mission)
+void CP_BaseAttackStartMission (mission_t* mission)
 {
-	base_t *base = mission->data.base;
+	base_t* base = mission->data.base;
 	int soldiers;
 
 	assert(base);
@@ -246,11 +246,11 @@ void CP_CheckBaseAttacks (void)
  * @return Pointer to the base, nullptr if no base set
  * @note Base attack mission -- Stage 1
  */
-static base_t *CP_BaseAttackChooseBase (void)
+static base_t* CP_BaseAttackChooseBase (void)
 {
 	float randomNumber;
 	float sum = 0.0f;
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
 	while ((base = B_GetNext(base)) != nullptr)
@@ -279,9 +279,9 @@ static base_t *CP_BaseAttackChooseBase (void)
  * @brief Set base attack mission, and go to base position.
  * @note Base attack mission -- Stage 1
  */
-static void CP_BaseAttackGoToBase (mission_t *mission)
+static void CP_BaseAttackGoToBase (mission_t* mission)
 {
-	base_t *base;
+	base_t* base;
 
 	mission->stage = STAGE_MISSION_GOTO;
 
@@ -319,7 +319,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
  * @note Base Attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_BaseAttackMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_BaseAttackMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 	if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
@@ -338,7 +338,7 @@ int CP_BaseAttackMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoT
  * @brief Determine what action should be performed when a Base Attack mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_BaseAttackMissionNextStage (mission_t *mission)
+void CP_BaseAttackMissionNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

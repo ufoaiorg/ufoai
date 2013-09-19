@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] projectile The projectile to remove
  * @sa AIRFIGHT_AddProjectile
  */
-static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
+static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t* projectile)
 {
 	const ptrdiff_t num = (ptrdiff_t)(projectile - ccs.projectiles);
 	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, num, ccs.numProjectiles);
@@ -55,9 +55,9 @@ static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t* attacker, aircraft_t* target, aircraftSlot_t* weaponSlot)
 {
-	aircraftProjectile_t *projectile;
+	aircraftProjectile_t* projectile;
 
 	if (ccs.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
@@ -155,7 +155,7 @@ static void AIRFIGHT_ProjectileList_f (void)
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] projectile The projectile to update
  */
-static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile)
+static void AIRFIGHT_MissTarget (aircraftProjectile_t* projectile)
 {
 	vec3_t newTarget;
 	float offset;
@@ -196,7 +196,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile)
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if it can't shoot atm,
  * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if it will never be able to shoot.
  */
-int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
+int AIRFIGHT_CheckWeapon (const aircraftSlot_t* slot, float distance)
 {
 	assert(slot);
 
@@ -230,7 +230,7 @@ int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if no weapon to use at all.
  * @sa AIRFIGHT_CheckWeapon
  */
-int AIRFIGHT_ChooseWeapon (const aircraftSlot_t *slot, int maxSlot, const vec2_t pos, const vec2_t targetPos)
+int AIRFIGHT_ChooseWeapon (const aircraftSlot_t* slot, int maxSlot, const vec2_t pos, const vec2_t targetPos)
 {
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i;
@@ -269,7 +269,7 @@ int AIRFIGHT_ChooseWeapon (const aircraftSlot_t *slot, int maxSlot, const vec2_t
  * @pre slotIdx must have a weapon installed, with ammo available (see AIRFIGHT_ChooseWeapon)
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
-static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraft_t *target, const aircraftSlot_t *slot)
+static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraft_t* target, const aircraftSlot_t* slot)
 {
 	float probability = 0.0f;
 
@@ -355,8 +355,8 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
-		aircraftSlot_t *weaponSlot = &shooter->weapons[slotIdx];
-		const objDef_t *ammo = weaponSlot->ammo;
+		aircraftSlot_t* weaponSlot = &shooter->weapons[slotIdx];
+		const objDef_t* ammo = weaponSlot->ammo;
 
 		/* shoot */
 		if (AIRFIGHT_AddProjectile(nullptr, nullptr, shooter, target, weaponSlot)) {
@@ -410,9 +410,9 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
  * @note This function is called when @c aircraft is destroyed.
  * @sa AIRFIGHT_ActionsAfterAirfight
  */
-void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t *aircraft)
+void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t* aircraft)
 {
-	aircraftProjectile_t *projectile;
+	aircraftProjectile_t* projectile;
 	int idx = 0;
 
 	if (!aircraft)
@@ -435,13 +435,13 @@ void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t *aircraft)
  * @param[in] aircraft Pointer to the destroyed aircraft.
  * @note This function is called when @c aircraft is destroyed.
  */
-static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t *aircraft)
+static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t* aircraft)
 {
-	aircraftProjectile_t *projectile;
+	aircraftProjectile_t* projectile;
 	int idx;
 
 	for (idx = 0, projectile = ccs.projectiles; idx < ccs.numProjectiles; projectile++, idx++) {
-		const aircraft_t *attacker = projectile->attackingAircraft;
+		const aircraft_t* attacker = projectile->attackingAircraft;
 
 		if (attacker == aircraft)
 			projectile->attackingAircraft = nullptr;
@@ -460,7 +460,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t *air
  * @sa CP_Load
  * @sa CP_SpawnCrashSiteMission
  */
-void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, bool phalanxWon)
+void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t* shooter, aircraft_t* aircraft, bool phalanxWon)
 {
 	if (phalanxWon) {
 		const byte* color;
@@ -545,7 +545,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
  * @param[in] movement distance that the projectile will do up to next draw of geoscape
  * @sa AIRFIGHT_CampaignRunProjectiles
  */
-static bool AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projectile, float movement)
+static bool AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t* projectile, float movement)
 {
 	float distance;
 
@@ -579,7 +579,7 @@ static bool AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projec
  * @sa AII_UpdateAircraftStats
  * @note ECM is handled in AIRFIGHT_ProbabilityToHit
  */
-static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
+static int AIRFIGHT_GetDamage (const objDef_t* od, const aircraft_t* target)
 {
 	int damage;
 
@@ -604,9 +604,9 @@ static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
  * @param[in] projectile Pointer to the projectile.
  * @note the target loose (base damage - shield of target) hit points
  */
-static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProjectile_t *projectile)
+static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProjectile_t* projectile)
 {
-	aircraft_t *target;
+	aircraft_t* target;
 
 	assert(projectile);
 	target = projectile->aimedAircraft;
@@ -678,7 +678,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
 
 	/* ccs.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
 	for (idx = ccs.numProjectiles - 1; idx >= 0; idx--) {
-		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
+		aircraftProjectile_t* projectile = &ccs.projectiles[idx];
 		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		projectile->time += dt;
 		projectile->hasMoved = true;
@@ -719,13 +719,13 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
  * @param[in] weapons The base weapon to check and fire.
  * @param[in] maxWeapons The number of weapons in that base.
  */
-static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
+static void AIRFIGHT_BaseShoot (const base_t* base, baseWeapon_t* weapons, int maxWeapons)
 {
 	int i;
 
 	for (i = 0; i < maxWeapons; i++) {
-		aircraft_t *target = weapons[i].target;
-		aircraftSlot_t *slot = &(weapons[i].slot);
+		aircraft_t* target = weapons[i].target;
+		aircraftSlot_t* slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
 		if (!target)
 			continue;
@@ -775,13 +775,13 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
  * @param[in] weapons The installation weapons to check and fire.
  * @param[in] maxWeapons The number of weapons in that installation.
  */
-static void AIRFIGHT_InstallationShoot (const installation_t *installation, baseWeapon_t *weapons, int maxWeapons)
+static void AIRFIGHT_InstallationShoot (const installation_t* installation, baseWeapon_t* weapons, int maxWeapons)
 {
 	int i;
 
 	for (i = 0; i < maxWeapons; i++) {
-		aircraft_t *target = weapons[i].target;
-		aircraftSlot_t *slot = &(weapons[i].slot);
+		aircraft_t* target = weapons[i].target;
+		aircraftSlot_t* slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
 		if (!target)
 			continue;
@@ -831,7 +831,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
  */
 void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
-	base_t *base;
+	base_t* base;
 
 	base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
@@ -841,8 +841,8 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 			continue;
 
 		for (idx = 0; idx < base->numBatteries; idx++) {
-			baseWeapon_t *battery = &base->batteries[idx];
-			aircraftSlot_t *slot = &battery->slot;
+			baseWeapon_t* battery = &base->batteries[idx];
+			aircraftSlot_t* slot = &battery->slot;
 			if (slot->delayNextShot > 0)
 				slot->delayNextShot -= dt;
 			if (slot->ammoLeft <= 0)
@@ -850,8 +850,8 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 		}
 
 		for (idx = 0; idx < base->numLasers; idx++) {
-			baseWeapon_t *battery = &base->lasers[idx];
-			aircraftSlot_t *slot = &battery->slot;
+			baseWeapon_t* battery = &base->lasers[idx];
+			aircraftSlot_t* slot = &battery->slot;
 			if (slot->delayNextShot > 0)
 				slot->delayNextShot -= dt;
 			if (slot->ammoLeft <= 0)
@@ -873,8 +873,8 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 			continue;
 
 		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
-			baseWeapon_t *battery = &installation->batteries[idx];
-			aircraftSlot_t *slot = &battery->slot;
+			baseWeapon_t* battery = &installation->batteries[idx];
+			aircraftSlot_t* slot = &battery->slot;
 			if (slot->delayNextShot > 0)
 				slot->delayNextShot -= dt;
 			if (slot->ammoLeft <= 0)
@@ -891,14 +891,14 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-bool AIRFIGHT_SaveXML (xmlNode_t *parent)
+bool AIRFIGHT_SaveXML (xmlNode_t* parent)
 {
 	int i;
 
 	for (i = 0; i < ccs.numProjectiles; i++) {
 		int j;
-		aircraftProjectile_t *projectile = &ccs.projectiles[i];
-		xmlNode_t *node = cgi->XML_AddNode(parent, SAVE_AIRFIGHT_PROJECTILE);
+		aircraftProjectile_t* projectile = &ccs.projectiles[i];
+		xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_AIRFIGHT_PROJECTILE);
 
 		cgi->XML_AddString(node, SAVE_AIRFIGHT_ITEMID, projectile->aircraftItem->id);
 		for (j = 0; j < projectile->numProjectiles; j++)
@@ -911,7 +911,7 @@ bool AIRFIGHT_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddBoolValue(node, SAVE_AIRFIGHT_BEAM, projectile->beam);
 
 		if (projectile->attackingAircraft) {
-			xmlNode_t *attacking =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT);
+			xmlNode_t* attacking =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT);
 
 			cgi->XML_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, projectile->attackingAircraft->type == AIRCRAFT_UFO);
 			if (projectile->attackingAircraft->type == AIRCRAFT_UFO)
@@ -922,7 +922,7 @@ bool AIRFIGHT_SaveXML (xmlNode_t *parent)
 		cgi->XML_AddPos3(node, SAVE_AIRFIGHT_ATTACKERPOS, projectile->attackerPos);
 
 		if (projectile->aimedAircraft) {
-			xmlNode_t *aimed =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
+			xmlNode_t* aimed =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
 
 			cgi->XML_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, projectile->aimedAircraft->type == AIRCRAFT_UFO);
 			if (projectile->aimedAircraft->type == AIRCRAFT_UFO)
@@ -939,19 +939,19 @@ bool AIRFIGHT_SaveXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-bool AIRFIGHT_LoadXML (xmlNode_t *parent)
+bool AIRFIGHT_LoadXML (xmlNode_t* parent)
 {
 	int i;
-	xmlNode_t *node;
+	xmlNode_t* node;
 
 	for (i = 0, node = cgi->XML_GetNode(parent, SAVE_AIRFIGHT_PROJECTILE); i < MAX_PROJECTILESONGEOSCAPE && node;
 			node = cgi->XML_GetNextNode(node, parent, SAVE_AIRFIGHT_PROJECTILE), i++) {
-		technology_t *tech = RS_GetTechByProvided(cgi->XML_GetString(node, SAVE_AIRFIGHT_ITEMID));
+		technology_t* tech = RS_GetTechByProvided(cgi->XML_GetString(node, SAVE_AIRFIGHT_ITEMID));
 		int j;
-		xmlNode_t *positions;
-		xmlNode_t *attackingAircraft;
-		xmlNode_t *aimedAircraft;
-		aircraftProjectile_t *projectile = &ccs.projectiles[i];
+		xmlNode_t* positions;
+		xmlNode_t* attackingAircraft;
+		xmlNode_t* aimedAircraft;
+		aircraftProjectile_t* projectile = &ccs.projectiles[i];
 
 		if (!tech) {
 			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);

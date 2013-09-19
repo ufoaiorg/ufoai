@@ -35,9 +35,9 @@ extern void GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 CGAME_HARD_LINKED_FUNCTIONS
 
 #ifndef HARD_LINKED_CGAME
-const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 #else
-const cgame_export_t *GetCGameCampaignAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameCampaignAPI (const cgame_import_t* import)
 #endif
 {
 	static cgame_export_t e;

@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Recon mission is over and is a success: change interest values.
  * @note Recon mission
  */
-static void CP_ReconMissionIsSuccess (mission_t *mission)
+static void CP_ReconMissionIsSuccess (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_RECON);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
@@ -53,7 +53,7 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
  * @brief Recon mission is over and is a failure: change interest values.
  * @note Recon mission
  */
-void CP_ReconMissionIsFailure (mission_t *mission)
+void CP_ReconMissionIsFailure (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_RECON);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
@@ -66,7 +66,7 @@ void CP_ReconMissionIsFailure (mission_t *mission)
  * @brief Recon mission ends: UFO leave earth.
  * @note Recon mission -- Stage 2
  */
-void CP_ReconMissionLeave (mission_t *mission)
+void CP_ReconMissionLeave (mission_t* mission)
 {
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -88,7 +88,7 @@ void CP_ReconMissionLeave (mission_t *mission)
  * @return true if recon mission is aerial, false if this is a ground mission
  * @sa CP_ReconMissionSelect
  */
-static bool CP_ReconMissionChoose (mission_t *mission)
+static bool CP_ReconMissionChoose (mission_t* mission)
 {
 	/* mission without UFO is always a ground mission */
 	if (!mission->ufo)
@@ -102,7 +102,7 @@ static bool CP_ReconMissionChoose (mission_t *mission)
  * @note Recon mission -- Stage 1
  * @sa CP_ReconMissionSelect
  */
-void CP_ReconMissionAerial (mission_t *mission)
+void CP_ReconMissionAerial (mission_t* mission)
 {
 	const date_t minReconDelay = {1, 0};
 	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
@@ -120,7 +120,7 @@ void CP_ReconMissionAerial (mission_t *mission)
  * @note ground mission can be spawned without UFO
  * @sa CP_ReconMissionSelect
  */
-void CP_ReconMissionGroundGo (mission_t *mission)
+void CP_ReconMissionGroundGo (mission_t* mission)
 {
 
 	mission->stage = STAGE_MISSION_GOTO;
@@ -166,7 +166,7 @@ void CP_ReconMissionGroundGo (mission_t *mission)
  * @brief Start ground mission.
  * @note Recon mission -- Stage 1
  */
-static void CP_ReconMissionGround (mission_t *mission)
+static void CP_ReconMissionGround (mission_t* mission)
 {
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
@@ -188,7 +188,7 @@ static void CP_ReconMissionGround (mission_t *mission)
  * @note Already one ground mission has been made
  * @sa CP_ReconMissionSelect
  */
-static bool CP_ReconMissionNewGroundMission (mission_t *mission)
+static bool CP_ReconMissionNewGroundMission (mission_t* mission)
 {
 	return (frand() > 0.7f);
 }
@@ -197,7 +197,7 @@ static bool CP_ReconMissionNewGroundMission (mission_t *mission)
  * @brief Set recon mission type (aerial or ground).
  * @note Recon mission -- Stage 1
  */
-static void CP_ReconMissionSelect (mission_t *mission)
+static void CP_ReconMissionSelect (mission_t* mission)
 {
 	if (mission->stage == STAGE_COME_FROM_ORBIT) {
 		/* this is the begining of the mission: choose between aerial or ground mission */
@@ -223,7 +223,7 @@ static void CP_ReconMissionSelect (mission_t *mission)
  * @note Recon mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_ReconMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_ReconMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 
@@ -239,7 +239,7 @@ int CP_ReconMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
  * @brief Determine what action should be performed when a Recon mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_ReconMissionNextStage (mission_t *mission)
+void CP_ReconMissionNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Actions to be done when UFO arrived at rescue mission location
  * @param[in,out] mission Pointer to the finished mission
  */
-static void CP_BeginRescueMission (mission_t *mission)
+static void CP_BeginRescueMission (mission_t* mission)
 {
 	/* How long the rescue mission will stay before aliens leave / die */
 	const date_t minCrashDelay = {7, 0};
@@ -61,9 +61,9 @@ static void CP_BeginRescueMission (mission_t *mission)
  * @param[in,out] aircraft Pointer to the dropship done the mission
  * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
  */
-void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, bool won)
+void CP_EndRescueMission (mission_t* mission, aircraft_t* aircraft, bool won)
 {
-	aircraft_t *crashedAircraft = mission->data.aircraft;
+	aircraft_t* crashedAircraft = mission->data.aircraft;
 
 	assert(crashedAircraft);
 	if (won) {
@@ -90,7 +90,7 @@ void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, bool won)
  * @brief Rescue mission expired, UFO leave earth.
  * @param[in,out] mission Pointer to the mission
  */
-static void CP_LeaveRescueMission (mission_t *mission)
+static void CP_LeaveRescueMission (mission_t* mission)
 {
 	CP_EndRescueMission(mission, nullptr, false);
 	mission->stage = STAGE_RETURN_TO_ORBIT;
@@ -111,7 +111,7 @@ static void CP_LeaveRescueMission (mission_t *mission)
  * @brief Determine what action should be performed when a Rescue mission stage ends.
  * @param[in,out] mission Pointer to the mission which stage ended.
  */
-void CP_RescueNextStage (mission_t *mission)
+void CP_RescueNextStage (mission_t* mission)
 {
 	assert(mission);
 	switch (mission->stage) {

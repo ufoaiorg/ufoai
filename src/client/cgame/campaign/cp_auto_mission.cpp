@@ -53,7 +53,7 @@ typedef enum autoMission_teamType_s {
 typedef struct autoUnit_s {
 	int idx;
 	autoMissionTeamType_t team;					/**< Team of the unit */
-	character_t *chr;							/**< Character */
+	character_t* chr;							/**< Character */
 	double attackStrength;						/**< How good at attacking a unit is, from 0.0 (can't fight at all) to 1.0 (Higher is better) */
 	double defendStrength;						/**< A unit's armor or protection, from 0.0 (no armor, can't even dodge/stationary) to 1.0 (Higher is better) */
 } autoUnit_t;
@@ -75,7 +75,7 @@ typedef struct autoMissionBattle_s {
 	int teamAccomplishment[AUTOMISSION_TEAM_TYPE_MAX];							/**< Used for calculating experience gain, and for friendly fire (including hit civilians) */
 
 	int winningTeam;								/**< Which team is victorious */
-	missionResults_t *results;						/**< Manual mission "compatible" result structure */
+	missionResults_t* results;						/**< Manual mission "compatible" result structure */
 } autoMissionBattle_t;
 
 /**
@@ -98,7 +98,7 @@ typedef struct autoMissionBattle_s {
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
  * @param[in,out] battle The battle that should be initialized to defaults
  */
-static void AM_ClearBattle (autoMissionBattle_t *battle)
+static void AM_ClearBattle (autoMissionBattle_t* battle)
 {
 	int team;
 
@@ -132,7 +132,7 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMissionTeamType_t teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+static void AM_FillTeamFromAircraft (autoMissionBattle_t* battle, const autoMissionTeamType_t teamNum, const aircraft_t* aircraft, const campaign_t* campaign)
 {
 	int teamSize;
 	int unitsAlive;
@@ -144,7 +144,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
 	teamSize = 0;
 	unitsAlive = 0;
 	LIST_Foreach(aircraft->acTeam, Employee, employee) {
-		autoUnit_t *unit = AM_GetUnit(battle, teamNum, teamSize);
+		autoUnit_t* unit = AM_GetUnit(battle, teamNum, teamSize);
 
 		unit->chr = &employee->chr;
 		unit->team = teamNum;
@@ -213,14 +213,14 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
  * @param[in] ed The equipment to use
  * @sa AM_DestroyUnitChr
  */
-static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
+static void AM_CreateUnitChr (autoUnit_t* unit, const teamDef_t* teamDef, const equipDef_t* ed)
 {
 	unit->chr = Mem_PoolAllocType(character_t, cp_campaignPool);
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {
 		if (teamDef->robot && teamDef->onlyWeapon) {
-			const objDef_t *weapon = teamDef->onlyWeapon;
+			const objDef_t* weapon = teamDef->onlyWeapon;
 			if (weapon->numAmmos > 0)
 				cgi->INV_EquipActorRobot(&unit->chr->inv, weapon);
 			else if (weapon->fireTwoHanded)
@@ -240,7 +240,7 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
  * @param[out] unit The unit to create character for
  * @sa AM_CreateUnitChr
  */
-static void AM_DestroyUnitChr (autoUnit_t *unit)
+static void AM_DestroyUnitChr (autoUnit_t* unit)
 {
 	cgi->INV_DestroyInventory(&unit->chr->inv);
 	Mem_Free(unit->chr);
@@ -251,7 +251,7 @@ static void AM_DestroyUnitChr (autoUnit_t *unit)
  * @param[in,out] battle The auto mission battle to add team data to
  * @param[in] missionParams Mission parameters data to use
  */
-static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const battleParam_t *missionParams)
+static void AM_FillTeamFromBattleParams (autoMissionBattle_t* battle, const battleParam_t* missionParams)
 {
 	assert(battle);
 	assert(missionParams);
@@ -260,12 +260,12 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
 	battle->actUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
 	if (missionParams->aliens > 0) {
-		const equipDef_t *ed = cgi->INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
-		const alienTeamGroup_t *alienTeamGroup = missionParams->alienTeamGroup;
+		const equipDef_t* ed = cgi->INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
+		const alienTeamGroup_t* alienTeamGroup = missionParams->alienTeamGroup;
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->aliens; unitIDX++) {
-			const teamDef_t *teamDef = alienTeamGroup->alienTeams[rand() % alienTeamGroup->numAlienTeams];
-			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
+			const teamDef_t* teamDef = alienTeamGroup->alienTeams[rand() % alienTeamGroup->numAlienTeams];
+			autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 			AM_CreateUnitChr(unit, teamDef, ed);
 			unit->team = AUTOMISSION_TEAM_TYPE_ALIEN;
@@ -278,10 +278,10 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	battle->actUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	if (missionParams->civilians > 0) {
-		const teamDef_t *teamDef = cgi->Com_GetTeamDefinitionByID(missionParams->civTeam);
+		const teamDef_t* teamDef = cgi->Com_GetTeamDefinitionByID(missionParams->civTeam);
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
-			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
+			autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
 			AM_CreateUnitChr(unit, teamDef, nullptr);
 			unit->team = AUTOMISSION_TEAM_TYPE_CIVILIAN;
@@ -298,7 +298,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
  * @param[in, out] battle The battle to set up team hostility values for.
  * @param[in] civsInfected Set to @c true if civs have XVI influence, otherwise @c false for a normal mission.
  */
-static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const bool civsInfected)
+static void AM_SetDefaultHostilities (autoMissionBattle_t* battle, const bool civsInfected)
 {
 	int i;
 	bool civsInverted = !civsInfected;
@@ -344,7 +344,7 @@ static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const bool ci
  * @brief Calcuates Team strength scores for autobattle
  * @param[in, out] battle The battle to set up teamscores for
  */
-static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
+static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 {
 	int unitTotal = 0;
 	int isHostileTotal = 0;
@@ -409,8 +409,8 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 			double skillAdjCalcAbs;
 
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				autoUnit_t *unit = AM_GetUnit(battle, team, currentUnit);
-				const character_t *chr = unit->chr;
+				autoUnit_t* unit = AM_GetUnit(battle, team, currentUnit);
+				const character_t* chr = unit->chr;
 
 				if (chr->HP <= 0)
 					continue;
@@ -459,7 +459,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
  * @param[in] currTeam Current team we search for
  * @param[in] enemy If the team should be enemy or friendly
  */
-static int AM_GetRandomTeam (autoMissionBattle_t *battle, int currTeam, bool enemy)
+static int AM_GetRandomTeam (autoMissionBattle_t* battle, int currTeam, bool enemy)
 {
 	int eTeam;
 
@@ -489,10 +489,10 @@ static int AM_GetRandomTeam (autoMissionBattle_t *battle, int currTeam, bool ene
  * @param[in] battle The battle we fight
  * @param[in] team Team to get unit from
  */
-static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, int team)
+static autoUnit_t* AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t* battle, int team)
 {
 	int idx;
-	autoUnit_t *unit;
+	autoUnit_t* unit;
 
 	assert(battle);
 	if (team < 0 || team >= AUTOMISSION_TEAM_TYPE_MAX)
@@ -529,11 +529,11 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
  * @param[in] currTeam Current team we search for
  * @param[in] enemy If the team should be enemy or friendly
  */
-static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int currTeam, bool enemy)
+static autoUnit_t* AM_GetRandomActiveUnit (autoMissionBattle_t* battle, int currTeam, bool enemy)
 {
 	int eTeam;
 	int nextTeam;
-	autoUnit_t *unit;
+	autoUnit_t* unit;
 
 	assert(battle);
 	assert(currTeam >= 0 && currTeam < AUTOMISSION_TEAM_TYPE_MAX);
@@ -564,11 +564,11 @@ static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int curr
  * @param[in] currUnit Soldier idx who attacks
  * @param[in] effective Effectiveness of the attack
  */
-static bool AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit, autoUnit_t *eUnit, const double effective)
+static bool AM_CheckFire (autoMissionBattle_t* battle, autoUnit_t* currUnit, autoUnit_t* eUnit, const double effective)
 {
-	character_t *currChr = currUnit->chr;
-	chrScoreGlobal_t *score = &currChr->score;
-	character_t *eChr = eUnit->chr;
+	character_t* currChr = currUnit->chr;
+	chrScoreGlobal_t* score = &currChr->score;
+	character_t* eChr = eUnit->chr;
 	double calcRand = frand();
 	int strikeDamage;
 
@@ -668,9 +668,9 @@ static bool AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit, aut
  * @param[in] currUnit Unit that attacks
  * @param[in] effective Effectiveness of the attack
  */
-static bool AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *currUnit, const double effective)
+static bool AM_UnitAttackEnemy (autoMissionBattle_t* battle, autoUnit_t* currUnit, const double effective)
 {
-	autoUnit_t *eUnit;
+	autoUnit_t* eUnit;
 
 	eUnit = AM_GetRandomActiveUnit(battle, currUnit->team, true);
 	/* no more enemies */
@@ -692,7 +692,7 @@ static bool AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *currUni
  * @brief Main Battle loop function
  * @param[in, out] battle The battle we fight
  */
-static void AM_DoFight (autoMissionBattle_t *battle)
+static void AM_DoFight (autoMissionBattle_t* battle)
 {
 	bool combatActive = true;
 
@@ -721,8 +721,8 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			aliveUnits = 0;
 			/* Is this unit still alive (has any health left?) */
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				autoUnit_t *unit = AM_GetUnit(battle, team, currentUnit);
-				character_t *chr = unit->chr;
+				autoUnit_t* unit = AM_GetUnit(battle, team, currentUnit);
+				character_t* chr = unit->chr;
 				/* Wounded units don't fight quite as well */
 				const double hpLeftRatio = chr->HP / chr->maxHP;
 				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
@@ -755,7 +755,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
  * @todo results should be set in missionResult and this code should be merged with manual
  * mission result screen code, possibly in a new file: cp_mission_callbacks.c/h
  */
-static void AM_DisplayResults (const autoMissionBattle_t *battle)
+static void AM_DisplayResults (const autoMissionBattle_t* battle)
 {
 	assert(battle);
 
@@ -777,7 +777,7 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
  * @param[in, out] aircraft The craft with the team (and thus equipment) onboard.
  * @param[in, out] chr The character whose inventory should be moved
  */
-static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, character_t *chr)
+static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t* aircraft, character_t* chr)
 {
 	assert(aircraft != nullptr);
 	assert(chr != nullptr);
@@ -802,7 +802,7 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t *aircraft, charac
  * @param[out] aircraft Mission aircraft that will bring stuff home
  * @param[in] battle The battle we fought
  */
-static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *battle)
+static void AM_AlienCollect (aircraft_t* aircraft, const autoMissionBattle_t* battle)
 {
 	int unitIDX;
 	int collected = 0;
@@ -812,7 +812,7 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
 
 	/* Aliens */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
-		const autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
+		const autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 		if (AM_IsUnitActive(unit))
 			continue;
@@ -832,7 +832,7 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
  * @param[in] battle The battle we fought
  * @param[in, out] aircraft Dropship soldiers are on
  */
-static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s* aircraft)
+static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t* battle, struct aircraft_s* aircraft)
 {
 	assert(battle);
 	assert(battle->results);
@@ -846,7 +846,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 
 		unit++;
 
-		character_t *chr = &soldier->chr;
+		character_t* chr = &soldier->chr;
 		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
 		if (chr->HP <= 0) {
 			if (battle->results->state == WON)
@@ -855,7 +855,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 			continue;
 		}
 
-		chrScoreGlobal_t *score = &chr->score;
+		chrScoreGlobal_t* score = &chr->score;
 		for (int expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++) {
 			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
 			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
@@ -886,7 +886,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
  * @brief Clean up alien and civilian teams
  * @param[in,out] battle The common autobattle descriptor structure
  */
-static void AM_CleanBattleParameters (autoMissionBattle_t *battle)
+static void AM_CleanBattleParameters (autoMissionBattle_t* battle)
 {
 	int unitIDX;
 
@@ -894,14 +894,14 @@ static void AM_CleanBattleParameters (autoMissionBattle_t *battle)
 
 	/* Aliens */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
-		autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
+		autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 		AM_DestroyUnitChr(unit);
 	}
 
 	/* Civilians */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN]; unitIDX++) {
-		autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
+		autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
 		AM_DestroyUnitChr(unit);
 	}
@@ -915,7 +915,7 @@ static void AM_CleanBattleParameters (autoMissionBattle_t *battle)
  * @param[in] battleParameters Structure that holds the battle related parameters
  * @param[out] results Result of the mission
  */
-void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
+void AM_Go (mission_t* mission, aircraft_t* aircraft, const campaign_t* campaign, const battleParam_t* battleParameters, missionResults_t* results)
 {
 	autoMissionBattle_t autoBattle;
 

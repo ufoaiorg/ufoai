@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Intercept mission is over and is a success: change interest values.
  * @note Intercept mission
  */
-void CP_InterceptMissionIsSuccess (mission_t *mission)
+void CP_InterceptMissionIsSuccess (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
 	INT_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_INTERCEPT);
@@ -49,7 +49,7 @@ void CP_InterceptMissionIsSuccess (mission_t *mission)
  * @brief Intercept mission is over and is a failure: change interest values.
  * @note Intercept mission
  */
-void CP_InterceptMissionIsFailure (mission_t *mission)
+void CP_InterceptMissionIsFailure (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
@@ -67,9 +67,9 @@ void CP_InterceptMissionIsFailure (mission_t *mission)
  * @param[in] destroyed true if the UFO actually destroyed the installation, false else
  * @note Intercept mission -- Stage 3
  */
-void CP_InterceptMissionLeave (mission_t *mission, bool destroyed)
+void CP_InterceptMissionLeave (mission_t* mission, bool destroyed)
 {
-	installation_t *installation;
+	installation_t* installation;
 
 	assert(mission->ufo);
 
@@ -97,11 +97,11 @@ void CP_InterceptMissionLeave (mission_t *mission, bool destroyed)
  * @brief UFO starts to attack the installation.
  * @note Intercept mission -- Stage 2
  */
-static void CP_InterceptAttackInstallation (mission_t *mission)
+static void CP_InterceptAttackInstallation (mission_t* mission)
 {
 	const date_t minAttackDelay = {0, 3600};
 	const date_t attackDelay = {0, 21600};		/* How long the UFO should stay on earth */
-	installation_t *installation;
+	installation_t* installation;
 	vec3_t missionPos;
 
 	mission->stage = STAGE_INTERCEPT;
@@ -122,7 +122,7 @@ static void CP_InterceptAttackInstallation (mission_t *mission)
  * @brief Set Intercept mission: UFO looks for new aircraft target.
  * @note Intercept mission -- Stage 1
  */
-void CP_InterceptAircraftMissionSet (mission_t *mission)
+void CP_InterceptAircraftMissionSet (mission_t* mission)
 {
 	const date_t minReconDelay = {3, 0};
 	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
@@ -136,10 +136,10 @@ void CP_InterceptAircraftMissionSet (mission_t *mission)
  * @note Base attack mission -- Stage 1
  * @return Pointer to the base, nullptr if no base set
  */
-static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
+static installation_t* CP_InterceptChooseInstallation (const mission_t* mission)
 {
 	float randomNumber, sum = 0.0f;
-	installation_t *installation = nullptr;
+	installation_t* installation = nullptr;
 
 	assert(mission);
 
@@ -166,9 +166,9 @@ static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
  * @brief Set Intercept mission: UFO chooses an installation an flies to it.
  * @note Intercept mission -- Stage 1
  */
-void CP_InterceptGoToInstallation (mission_t *mission)
+void CP_InterceptGoToInstallation (mission_t* mission)
 {
-	installation_t *installation;
+	installation_t* installation;
 	assert(mission->ufo);
 
 	mission->stage = STAGE_MISSION_GOTO;
@@ -192,7 +192,7 @@ void CP_InterceptGoToInstallation (mission_t *mission)
  * @brief Set Intercept mission: choose between attacking aircraft or installations.
  * @note Intercept mission -- Stage 1
  */
-static void CP_InterceptMissionSet (mission_t *mission)
+static void CP_InterceptMissionSet (mission_t* mission)
 {
 	assert(mission->ufo);
 
@@ -217,7 +217,7 @@ static void CP_InterceptMissionSet (mission_t *mission)
  * @note Intercept mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_InterceptMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_InterceptMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 	/* Probability to get a UFO that targets installations. Note
@@ -245,7 +245,7 @@ int CP_InterceptMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTy
  * @brief Determine what action should be performed when a Intercept mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_InterceptNextStage (mission_t *mission)
+void CP_InterceptNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] alive Number of alive aliens
  * @param[in] dead Number of dead aliens
  */
-bool AlienCargo::add(const teamDef_t *team, int alive, int dead)
+bool AlienCargo::add(const teamDef_t* team, int alive, int dead)
 {
 	if (!team)
 		return false;
@@ -87,7 +87,7 @@ bool AlienCargo::add(const char* teamId, int alive, int dead)
 {
 	if (!teamId)
 		return false;
-	const teamDef_t *team = cgi->Com_GetTeamDefinitionByID(teamId);
+	const teamDef_t* team = cgi->Com_GetTeamDefinitionByID(teamId);
 	if (!team)
 		return false;
 	return this->add(team, alive, dead);
@@ -97,7 +97,7 @@ bool AlienCargo::add(const char* teamId, int alive, int dead)
  * @brief Return number of alive aliens of a type in the cargo
  * @param[in] team Pointer to the alien Team Definition entry
  */
-int AlienCargo::getAlive(const teamDef_t *team) const
+int AlienCargo::getAlive(const teamDef_t* team) const
 {
 	if (!team)
 		return -1;
@@ -114,7 +114,7 @@ int AlienCargo::getAlive(const teamDef_t *team) const
  * @brief Return number of dead alien bodies of a type in the cargo
  * @param[in] team Pointer to the alien Team Definition entry
  */
-int AlienCargo::getDead(const teamDef_t *team) const
+int AlienCargo::getDead(const teamDef_t* team) const
 {
 	if (!team)
 		return -1;
@@ -147,9 +147,9 @@ int AlienCargo::getDead(void) const
  * @brief Returns a copy of the cargo list
  * @return linked list of alienCargo_t structures
  */
-linkedList_t *AlienCargo::list(void) const
+linkedList_t* AlienCargo::list(void) const
 {
-	linkedList_t *listing = 0;
+	linkedList_t* listing = 0;
 
 	LIST_Foreach(this->cargo, alienCargo_t, item) {
 		if (!cgi->LIST_Add(&listing, (void*)item, sizeof(*item))) {
@@ -164,12 +164,12 @@ linkedList_t *AlienCargo::list(void) const
  * @brief Load alien cargo from xml savegame
  * @param[in] root Root xml node to load data from
  */
-bool AlienCargo::load(xmlNode_t *root)
+bool AlienCargo::load(xmlNode_t* root)
 {
 	if (!root)
 		return false;
 
-	for (xmlNode_t *alienNode = cgi->XML_GetNode(root, SAVE_ALIENCARGO_ITEM); alienNode;
+	for (xmlNode_t* alienNode = cgi->XML_GetNode(root, SAVE_ALIENCARGO_ITEM); alienNode;
 		alienNode = cgi->XML_GetNextNode(alienNode, root, SAVE_ALIENCARGO_ITEM))
 	{
 		const char* teamId = cgi->XML_GetString(alienNode, SAVE_ALIENCARGO_TEAMDEFID);
@@ -185,12 +185,12 @@ bool AlienCargo::load(xmlNode_t *root)
  * @brief Save alien cargo to xml savegame
  * @param[out] root Root xml node to save data under
  */
-bool AlienCargo::save(xmlNode_t *root) const
+bool AlienCargo::save(xmlNode_t* root) const
 {
 	if (!root)
 		return false;
 	LIST_Foreach(this->cargo, alienCargo_t, item) {
-		xmlNode_t *alienNode = cgi->XML_AddNode(root, SAVE_ALIENCARGO_ITEM);
+		xmlNode_t* alienNode = cgi->XML_AddNode(root, SAVE_ALIENCARGO_ITEM);
 		if (!alienNode)
 			return false;
 		cgi->XML_AddString(alienNode, SAVE_ALIENCARGO_TEAMDEFID, item->teamDef->id);
@@ -213,7 +213,7 @@ AlienCargo::AlienCargo(void) : cargo (0), sumAlive (0), sumDead(0)
  */
 AlienCargo::AlienCargo(AlienCargo& alienCargo) : cargo (0), sumAlive (0), sumDead(0)
 {
-	linkedList_t *list = alienCargo.list();
+	linkedList_t* list = alienCargo.list();
 
 	LIST_Foreach(list, alienCargo_t, cargoItem) {
 		if (cgi->LIST_Add(&this->cargo, (void*)cargoItem, sizeof(*cargoItem))) {

@@ -104,7 +104,7 @@ alienBase_t* AB_BuildBase (const vec2_t pos)
  * @brief Destroy an alien base.
  * @param[in] base Pointer to the alien base.
  */
-void AB_DestroyBase (alienBase_t *base)
+void AB_DestroyBase (alienBase_t* base)
 {
 	assert(base);
 
@@ -132,9 +132,9 @@ alienBase_t* AB_GetByIDX (int baseIDX)
 /**
  * @brief Spawn a new alien base mission after it has been discovered.
  */
-void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
+void CP_SpawnAlienBaseMission (alienBase_t* alienBase)
 {
-	mission_t *mission;
+	mission_t* mission;
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, true);
 	if (!mission) {
@@ -168,7 +168,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
  * inside @c radarratio times radar range.
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, alienBase_t *base)
+static void AB_UpdateStealthForOneBase (const aircraft_t* aircraft, alienBase_t* base)
 {
 	float distance;
 	float probability = 0.0001f;			/**< base probability, will be modified below */
@@ -211,7 +211,7 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, alienBase_t 
  */
 void AB_UpdateStealthForAllBase (void)
 {
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		AIR_ForeachFromBase(aircraft, base) {
 			/* Only aircraft on geoscape can detect alien bases */
@@ -241,11 +241,11 @@ void AB_BaseSearchedByNations (void)
 		return;
 
 	AB_Foreach(base) {
-		const nation_t *nation = GEO_GetNation(base->pos);
+		const nation_t* nation = GEO_GetNation(base->pos);
 
 		/* If nation is a lot infected, it won't help in finding base (government infected) */
 		if (nation) {
-			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->xviInfection)
 				probability /= 1.0f + stats->xviInfection / xviLevel;
 		}
@@ -295,7 +295,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
  * @param[in] base Pointer to the supplied base.
  * @param[in] decreaseStealth If the stealth level of the base should be decreased.
  */
-void AB_SupplyBase (alienBase_t *base, bool decreaseStealth)
+void AB_SupplyBase (alienBase_t* base, bool decreaseStealth)
 {
 	const float decreasedStealthValue = 5.0f;				/**< How much stealth is reduced because Supply UFO was seen */
 
@@ -350,10 +350,10 @@ static void AB_AlienBaseList_f (void)
  * @param[in] p XML Node structure, where we get the information from
  * @sa AB_SaveXML
  */
-bool AB_LoadXML (xmlNode_t *p)
+bool AB_LoadXML (xmlNode_t* p)
 {
 	int i; /**< @todo this is for old saves now only */
-	xmlNode_t *n, *s;
+	xmlNode_t* n, *s;
 
 	n = cgi->XML_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
 	if (!n)
@@ -384,12 +384,12 @@ bool AB_LoadXML (xmlNode_t *p)
  * @param[out] p XML Node structure, where we write the information to
  * @sa AB_LoadXML
  */
-bool AB_SaveXML (xmlNode_t *p)
+bool AB_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
 
 	AB_Foreach(base) {
-		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_ALIENBASE_BASE);
+		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_ALIENBASE_BASE);
 		cgi->XML_AddInt(s, SAVE_ALIENBASE_IDX, base->idx);
 		cgi->XML_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
 		cgi->XML_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);

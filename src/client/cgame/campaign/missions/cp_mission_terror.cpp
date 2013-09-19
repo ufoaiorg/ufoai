@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Terror attack mission is over and is a success: change interest values.
  * @note Terror attack mission
  */
-void CP_TerrorMissionIsSuccess (mission_t *mission)
+void CP_TerrorMissionIsSuccess (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_BASE_ATTACK);
 	INT_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_HARVEST);
@@ -47,7 +47,7 @@ void CP_TerrorMissionIsSuccess (mission_t *mission)
  * @brief Terror attack mission is over and is a failure: change interest values.
  * @note Terror attack mission
  */
-void CP_TerrorMissionIsFailure (mission_t *mission)
+void CP_TerrorMissionIsFailure (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
@@ -72,7 +72,7 @@ void CP_TerrorMissionOnSpawn (void)
  * @brief Start Terror attack mission.
  * @note Terror attack mission -- Stage 2
  */
-void CP_TerrorMissionStart (mission_t *mission)
+void CP_TerrorMissionStart (mission_t* mission)
 {
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
@@ -102,7 +102,7 @@ static city_t* CP_ChooseCity (void)
 	return nullptr;
 }
 
-static const mission_t* CP_TerrorInCity (const city_t *city)
+static const mission_t* CP_TerrorInCity (const city_t* city)
 {
 	if (!city)
 		return nullptr;
@@ -121,7 +121,7 @@ static const mission_t* CP_TerrorInCity (const city_t *city)
  * @note Terror attack mission -- Stage 1
  * @note Terror missions can only take place in city: pick one in ccs.cities.
  */
-static void CP_TerrorMissionGo (mission_t *mission)
+static void CP_TerrorMissionGo (mission_t* mission)
 {
 	int counter;
 
@@ -129,7 +129,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 	/* Choose a map */
 	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-		city_t *city = CP_ChooseCity();
+		city_t* city = CP_ChooseCity();
 
 		if (!city)
 			continue;
@@ -171,7 +171,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
  * @note Terror attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_TerrorMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_TerrorMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 
@@ -191,7 +191,7 @@ int CP_TerrorMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes
  * @brief Determine what action should be performed when a Terror attack mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_TerrorMissionNextStage (mission_t *mission)
+void CP_TerrorMissionNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

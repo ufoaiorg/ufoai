@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param mission The mission to check
  * @return
  */
-bool CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
+bool CP_BasemissionIsSubvertingGovernmentMission (const mission_t* mission)
 {
 	return mission->initialOverallInterest < ccs.curCampaign->alienBaseInterest;
 }
@@ -47,14 +47,14 @@ bool CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
  * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
  * @note Build Base mission
  */
-void CP_BuildBaseMissionIsSuccess (mission_t *mission)
+void CP_BuildBaseMissionIsSuccess (mission_t* mission)
 {
 	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
 		INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	} else {
 		/* An alien base has been built */
-		const alienBase_t *base = mission->data.alienBase;
+		const alienBase_t* base = mission->data.alienBase;
 		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
 
@@ -71,7 +71,7 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
  * @brief Build Base mission is over and is a failure (from an alien point of view): change interest values.
  * @note Build Base mission
  */
-void CP_BuildBaseMissionIsFailure (mission_t *mission)
+void CP_BuildBaseMissionIsFailure (mission_t* mission)
 {
 	/* Restore some alien interest for build base that has been removed when mission has been created */
 	INT_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BUILDING);
@@ -92,10 +92,10 @@ void CP_BuildBaseMissionOnSpawn (void)
  * @brief Alien base has been destroyed: change interest values.
  * @note Build Base mission
  */
-void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
+void CP_BuildBaseMissionBaseDestroyed (mission_t* mission)
 {
 	/* An alien base has been built */
-	alienBase_t *base = mission->data.alienBase;
+	alienBase_t* base = mission->data.alienBase;
 	assert(base);
 
 	INT_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
@@ -110,7 +110,7 @@ void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
  * @brief Build Base mission ends: UFO leave earth.
  * @note Build Base mission -- Stage 3
  */
-static void CP_BuildBaseMissionLeave (mission_t *mission)
+static void CP_BuildBaseMissionLeave (mission_t* mission)
 {
 	assert(mission->ufo);
 	/* there must be an alien base set */
@@ -129,9 +129,9 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
  * @param[in,out] mission Pointer to the mission
  * @note Build Base mission -- Stage 2
  */
-static void CP_BuildBaseSetUpBase (mission_t *mission)
+static void CP_BuildBaseSetUpBase (mission_t* mission)
 {
-	alienBase_t *base;
+	alienBase_t* base;
 	const date_t minBuildingTime = {5, 0};	/**< Minimum time needed to start a new base construction */
 	const date_t buildingTime = {10, 0};	/**< Maximum time needed to start a new base construction */
 
@@ -158,7 +158,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  * @param[in,out] mission Pointer to the mission
  * @note Build Base mission -- Stage 1
  */
-static void CP_BuildBaseGoToBase (mission_t *mission)
+static void CP_BuildBaseGoToBase (mission_t* mission)
 {
 	assert(mission->ufo);
 
@@ -173,9 +173,9 @@ static void CP_BuildBaseGoToBase (mission_t *mission)
  * @brief Subverting Mission ends: UFO leave earth.
  * @note Build Base mission -- Stage 3
  */
-static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *mission)
+static void CP_BuildBaseGovernmentLeave (const campaign_t* campaign, mission_t* mission)
 {
-	nation_t *nation;
+	nation_t* nation;
 
 	assert(mission);
 	assert(mission->ufo);
@@ -187,7 +187,7 @@ static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *
 	/** @todo when the mission is created, we should select a position where nation exists,
 	 * otherwise subverting a government is meaningless */
 	if (nation) {
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		NAT_SetHappiness(campaign->minhappiness, nation, stats->happiness + HAPPINESS_SUBVERSION_LOSS);
 	}
 
@@ -201,7 +201,7 @@ static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *
  * @brief Start Subverting Mission.
  * @note Build Base mission -- Stage 2
  */
-static void CP_BuildBaseSubvertGovernment (mission_t *mission)
+static void CP_BuildBaseSubvertGovernment (mission_t* mission)
 {
 	const date_t minMissionDelay = {3, 0};
 	const date_t missionDelay = {5, 0};
@@ -222,7 +222,7 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
  * @brief Choose if the mission should be an alien infiltration or a build base mission.
  * @note Build Base mission -- Stage 1
  */
-static void CP_BuildBaseChooseMission (mission_t *mission)
+static void CP_BuildBaseChooseMission (mission_t* mission)
 {
 	if (CP_BasemissionIsSubvertingGovernmentMission(mission))
 		CP_ReconMissionGroundGo(mission);
@@ -237,7 +237,7 @@ static void CP_BuildBaseChooseMission (mission_t *mission)
  * @note Base Attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_BuildBaseMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_BuildBaseMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 
@@ -263,7 +263,7 @@ int CP_BuildBaseMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTy
  * @param[in] campaign The campaign data structure
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_BuildBaseMissionNextStage (const campaign_t *campaign, mission_t *mission)
+void CP_BuildBaseMissionNextStage (const campaign_t* campaign, mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

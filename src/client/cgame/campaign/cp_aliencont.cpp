@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] amount The amount of aliens of the given race (@c teamDef ) that should be added to the alien cargo
  * @param[in] dead true for cases where the aliens should be added as dead to the alien cargo - false for living aliens
  */
-bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, bool dead)
+bool AL_AddAlienTypeToAircraftCargo (aircraft_t* aircraft, const teamDef_t* teamDef, int amount, bool dead)
 {
 	if (aircraft->alienCargo == nullptr)
 		aircraft->alienCargo = new AlienCargo();
@@ -66,7 +66,7 @@ bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *team
  * @sa AL_FillInContainment
  * @note an event mail about missing breathing tech will be triggered if necessary.
  */
-void AL_AddAliens (aircraft_t *aircraft)
+void AL_AddAliens (aircraft_t* aircraft)
 {
 	if (!aircraft)
 		return;
@@ -87,7 +87,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		return;
 
 	bool messageSent = false;
-	linkedList_t *cargo = aircraft->alienCargo->list();
+	linkedList_t* cargo = aircraft->alienCargo->list();
 	LIST_Foreach(cargo, alienCargo_t, item) {
 		const bool lifeSupported = AlienContainment::isLifeSupported(item->teamDef);
 
@@ -128,7 +128,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 int AL_CountAll (void)
 {
 	int amount = 0;
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
 		if (base->alienContainment)
@@ -143,7 +143,7 @@ int AL_CountAll (void)
  */
 static void AC_AddOne_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base) {
 		Com_Printf("%s: No base selected\n", cgi->Cmd_Argv(0));
@@ -190,14 +190,14 @@ void AC_InitStartup (void)
  * @param[in] parent Parent XML node in the savegame
  * @todo Remove: Fallback for compatibility
  */
-bool AC_LoadXML (xmlNode_t *parent)
+bool AC_LoadXML (xmlNode_t* parent)
 {
-	xmlNode_t *aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	xmlNode_t* aliencont = cgi->XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
 	if (!aliencont)
 		return true;
 	FOREACH_XMLNODE(contNode, aliencont, SAVE_ALIENCONT_CONT) {
 		const int baseIdx = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t* base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base) {
 			Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", baseIdx);
 			continue;

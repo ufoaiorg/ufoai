@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AIM_AircraftReturnToBase_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (base && base->aircraftCurrent) {
 		AIR_AircraftReturnToBase(base->aircraftCurrent);
@@ -57,7 +57,7 @@ static void AIM_AircraftReturnToBase_f (void)
  */
 static void AIM_SelectAircraft_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -67,7 +67,7 @@ static void AIM_SelectAircraft_f (void)
 			AIR_AircraftSelect(base->aircraftCurrent);
 	} else {
 		const int i = atoi(cgi->Cmd_Argv(1));
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
+		aircraft_t* aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
 		if (aircraft != nullptr)
 			AIR_AircraftSelect(aircraft);
 	}
@@ -78,8 +78,8 @@ static void AIM_SelectAircraft_f (void)
  */
 static void AIM_AircraftStart_f (void)
 {
-	aircraft_t *aircraft;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -122,10 +122,10 @@ static void AIM_AircraftStart_f (void)
  * @param[in] aircraft The aircraft to count the items for (may not be nullptr)
  * @return The amount of assigned items for the given slot
  */
-static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
+static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t* aircraft)
 {
 	int i, max, cnt = 0;
-	const aircraftSlot_t *slot;
+	const aircraftSlot_t* slot;
 
 	assert(aircraft);
 
@@ -163,7 +163,7 @@ static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	static char aircraftInfo[256];
-	base_t *base;
+	base_t* base;
 	int id;
 
 	if (aircraft != nullptr)
@@ -221,8 +221,8 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
  */
 static void AIR_AircraftUpdateList_f (void)
 {
-	linkedList_t *list = nullptr;
-	base_t *base = B_GetCurrentSelectedBase();
+	linkedList_t* list = nullptr;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	AIR_ForeachFromBase(aircraft, base) {
 		cgi->LIST_AddString(&list, _(aircraft->name));
@@ -241,9 +241,9 @@ static void AIR_AircraftUpdateList_f (void)
  */
 static void AIR_ChangeAircraftName_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 	const char* newName = cgi->Cvar_GetString("mn_aircraftname");
-	aircraft_t *aircraft;
+	aircraft_t* aircraft;
 
 	if (!base)
 		return;

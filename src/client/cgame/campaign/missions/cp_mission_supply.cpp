@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Supply mission is over and is a success (from an alien point of view): change interest values.
  * @note Supply mission
  */
-void CP_SupplyMissionIsSuccess (mission_t *mission)
+void CP_SupplyMissionIsSuccess (mission_t* mission)
 {
-	alienBase_t *base;
+	alienBase_t* base;
 	INT_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
 
 	/* Spread XVI */
@@ -53,7 +53,7 @@ void CP_SupplyMissionIsSuccess (mission_t *mission)
  * @brief Supply mission is over and is a failure (from an alien point of view): change interest values.
  * @note Supply mission
  */
-void CP_SupplyMissionIsFailure (mission_t *mission)
+void CP_SupplyMissionIsFailure (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
@@ -66,7 +66,7 @@ void CP_SupplyMissionIsFailure (mission_t *mission)
  * @brief Supply mission ends: UFO leave earth.
  * @note Supply mission -- Stage 3
  */
-static void CP_SupplyMissionLeave (mission_t *mission)
+static void CP_SupplyMissionLeave (mission_t* mission)
 {
 	assert(mission->ufo);
 	/* there must be an alien base set */
@@ -85,7 +85,7 @@ static void CP_SupplyMissionLeave (mission_t *mission)
  * @param[in,out] mission Pointer to the mission
  * @note Supply mission -- Stage 2
  */
-static void CP_SupplySetStayAtBase (mission_t *mission)
+static void CP_SupplySetStayAtBase (mission_t* mission)
 {
 	const date_t minSupplyTime = {3, 0};
 	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
@@ -116,9 +116,9 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
  * @param[in,out] mission Pointer to the mission
  * @note Supply mission -- Stage 1
  */
-static void CP_SupplyGoToBase (mission_t *mission)
+static void CP_SupplyGoToBase (mission_t* mission)
 {
-	alienBase_t *alienBase;
+	alienBase_t* alienBase;
 
 	assert(mission->ufo);
 
@@ -143,7 +143,7 @@ static void CP_SupplyGoToBase (mission_t *mission)
  * @brief Supply mission begins: UFO arrive on earth.
  * @note Supply mission -- Stage 0
  */
-static void CP_SupplyMissionCreate (mission_t *mission)
+static void CP_SupplyMissionCreate (mission_t* mission)
 {
 	ufoType_t ufoType;
 
@@ -177,7 +177,7 @@ static void CP_SupplyMissionCreate (mission_t *mission)
  * @note Supply mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_SupplyMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_SupplyMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 
@@ -191,7 +191,7 @@ int CP_SupplyMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes
  * @brief Determine what action should be performed when a Supply mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_SupplyMissionNextStage (mission_t *mission)
+void CP_SupplyMissionNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

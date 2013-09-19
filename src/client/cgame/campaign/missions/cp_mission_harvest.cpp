@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Harvesting mission is over and is a success: change interest values.
  * @note Harvesting mission
  */
-static void CP_HarvestMissionIsSuccess (mission_t *mission)
+static void CP_HarvestMissionIsSuccess (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_HARVEST);
 	INT_ChangeIndividualInterest(0.2f, INTERESTCATEGORY_RECON);
@@ -51,7 +51,7 @@ static void CP_HarvestMissionIsSuccess (mission_t *mission)
  * @brief Harvesting mission is over and is a failure: change interest values.
  * @note Harvesting mission
  */
-void CP_HarvestMissionIsFailure (mission_t *mission)
+void CP_HarvestMissionIsFailure (mission_t* mission)
 {
 	INT_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	INT_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_BASE_ATTACK);
@@ -64,7 +64,7 @@ void CP_HarvestMissionIsFailure (mission_t *mission)
  * @brief Start Harvesting mission.
  * @note Harvesting mission -- Stage 2
  */
-static void CP_HarvestMissionStart (mission_t *mission)
+static void CP_HarvestMissionStart (mission_t* mission)
 {
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
@@ -91,7 +91,7 @@ static void CP_HarvestMissionStart (mission_t *mission)
  * @note nationList should be empty if no nation should be favoured.
  * @return True if nationList has been filled, false else.
  */
-static bool CP_ChooseNation (const mission_t *mission, linkedList_t** nationList)
+static bool CP_ChooseNation (const mission_t* mission, linkedList_t** nationList)
 {
 	int randomNumber, max = 0;
 	/* Increase this factor to make probability to select non-infected nation higher
@@ -104,8 +104,8 @@ static bool CP_ChooseNation (const mission_t *mission, linkedList_t** nationList
 
 	/* favour mission with higher XVI level */
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		max += OFFSET + stats->xviInfection;
 	}
 
@@ -113,8 +113,8 @@ static bool CP_ChooseNation (const mission_t *mission, linkedList_t** nationList
 
 	/* Select the corresponding nation */
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		randomNumber -= OFFSET + stats->xviInfection;
 		if (randomNumber < 0) {
 			cgi->LIST_AddString(nationList, nation->id);
@@ -132,14 +132,14 @@ static bool CP_ChooseNation (const mission_t *mission, linkedList_t** nationList
  * This function should take a location close to an XVI infection point
  * see gameplay proposal on wiki
  */
-void CP_HarvestMissionGo (mission_t *mission)
+void CP_HarvestMissionGo (mission_t* mission)
 {
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, nullptr)) {
 		int counter;
-		linkedList_t *nationList = nullptr;
+		linkedList_t* nationList = nullptr;
 		const bool nationTest = CP_ChooseNation(mission, &nationList);
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : nullptr))
@@ -177,7 +177,7 @@ void CP_HarvestMissionGo (mission_t *mission)
  * @note Harvesting mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_HarvestMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
+int CP_HarvestMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
 	int num = 0;
 
@@ -191,7 +191,7 @@ int CP_HarvestMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoType
  * @brief Determine what action should be performed when a Harvesting mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_HarvestMissionNextStage (mission_t *mission)
+void CP_HarvestMissionNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:

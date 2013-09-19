@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] teamDef Pointer to the alien Team Definition
  * @param[in] isDead If the alien to calculate for is dead
  */
-int AlienContainment::getCapacityNeedForAlien(const teamDef_t *teamDef, const bool isDead) const
+int AlienContainment::getCapacityNeedForAlien(const teamDef_t* teamDef, const bool isDead) const
 {
 	return 1;
 }
@@ -54,7 +54,7 @@ void AlienContainment::resetCurrentCapacities(void)
  * @brief Returns if storing a specific life form is supported by the containment
  * @param[in] team Pointer to the alien Team Definition
  */
-bool AlienContainment::isLifeSupported(const teamDef_t *team)
+bool AlienContainment::isLifeSupported(const teamDef_t* team)
 {
 	/* No team - not supported */
 	if (!team)
@@ -70,7 +70,7 @@ bool AlienContainment::isLifeSupported(const teamDef_t *team)
 
 	/* Organic aliens need breathing apparatus known */
 	/** @todo find a way that doesn't need a tech ID hardcoded */
-	const technology_t *tech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
+	const technology_t* tech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!tech)
 		return false;
 
@@ -83,7 +83,7 @@ bool AlienContainment::isLifeSupported(const teamDef_t *team)
  * @param[in] alive Number of alive aliens
  * @param[in] dead Number of dead aliens
  */
-bool AlienContainment::add(const teamDef_t *team, int alive, int dead)
+bool AlienContainment::add(const teamDef_t* team, int alive, int dead)
 {
 	if (!team)
 		return false;
@@ -99,7 +99,7 @@ bool AlienContainment::add(const teamDef_t *team, int alive, int dead)
 		if (this->deadCapacity)
 			this->deadCapacity->cur += dead * getCapacityNeedForAlien(team, true);
 		if (this->getAlive(team) > 0 || this->getDead(team) > 0) {
-			technology_t *tech = RS_GetTechForTeam(team);
+			technology_t* tech = RS_GetTechForTeam(team);
 			RS_MarkCollected(tech);
 		}
 		return true;
@@ -117,7 +117,7 @@ bool AlienContainment::add(const char* teamId, int alive, int dead)
 {
 	if (!teamId)
 		return false;
-	const teamDef_t *team = cgi->Com_GetTeamDefinitionByID(teamId);
+	const teamDef_t* team = cgi->Com_GetTeamDefinitionByID(teamId);
 	if (!team)
 		return false;
 	return this->add(team, alive, dead);
@@ -126,7 +126,7 @@ bool AlienContainment::add(const char* teamId, int alive, int dead)
 /**
  * @brief Creates and initializes AlienContainment object
  */
-AlienContainment::AlienContainment (capacities_t *aliveCapacity, capacities_t *deadCapacity) : aliveCapacity(aliveCapacity), deadCapacity(deadCapacity)
+AlienContainment::AlienContainment (capacities_t* aliveCapacity, capacities_t* deadCapacity) : aliveCapacity(aliveCapacity), deadCapacity(deadCapacity)
 {
 	this->resetCurrentCapacities();
 }

@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Used from menu scripts as parameter for mn_base_select */
 #define CREATE_NEW_BASE_ID -1
 
-static cvar_t *mn_base_title;
-static cvar_t *cl_start_buildings;
-static building_t *buildingConstructionList[MAX_BUILDINGS];
+static cvar_t* mn_base_title;
+static cvar_t* cl_start_buildings;
+static building_t* buildingConstructionList[MAX_BUILDINGS];
 static int buildingNumber = 0;
 
 /**
@@ -47,7 +47,7 @@ static int buildingNumber = 0;
  */
 static void B_Destroy_AntimaterStorage_f (void)
 {
-	base_t *base;
+	base_t* base;
 	const float prob = frand();
 
 	if (cgi->Cmd_Argc() < 4) {	/** note: third parameter not used but we must be sure we have probability parameter */
@@ -81,7 +81,7 @@ static void B_Destroy_AntimaterStorage_f (void)
  * get available. The content is updated everytime B_BuildingInit is called
  * (i.e everytime the buildings-list is displayed/updated)
  */
-static void B_BuildingAddToList (linkedList_t** buildingList, building_t *building)
+static void B_BuildingAddToList (linkedList_t** buildingList, building_t* building)
 {
 	int count;
 	assert(building);
@@ -109,7 +109,7 @@ static void B_SelectBase_f (void)
 	 * if we would check against ccs.numBases here, a click on the base summary
 	 * base nodes would try to select unfounded bases */
 	if (baseID >= 0 && baseID < MAX_BASES) {
-		const base_t *base = B_GetFoundedBaseByIDX(baseID);
+		const base_t* base = B_GetFoundedBaseByIDX(baseID);
 		/* don't create a new base if the index was valid */
 		if (base)
 			B_SelectBase(base);
@@ -126,7 +126,7 @@ static void B_SelectBase_f (void)
  */
 static void B_NextBase_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -147,9 +147,9 @@ static void B_NextBase_f (void)
  */
 static void B_PrevBase_f (void)
 {
-	const base_t *currentBase = B_GetCurrentSelectedBase();
-	const base_t *prevBase;
-	base_t *base;
+	const base_t* currentBase = B_GetCurrentSelectedBase();
+	const base_t* prevBase;
+	base_t* base;
 
 	if (!currentBase)
 		return;
@@ -209,15 +209,15 @@ static void B_SetBaseTitle_f (void)
  */
 static void B_BuildBase_f (void)
 {
-	const campaign_t *campaign = ccs.curCampaign;
+	const campaign_t* campaign = ccs.curCampaign;
 
 	if (ccs.mapAction == MA_NEWBASE)
 		ccs.mapAction = MA_NONE;
 
 	if (ccs.credits - campaign->basecost > 0) {
-		const nation_t *nation;
+		const nation_t* nation;
 		const char* baseName = mn_base_title->string;
-		base_t *base;
+		base_t* base;
 		/* there may be no " in the base name */
 		if (!Com_IsValidName(baseName))
 			baseName = _("Base");
@@ -255,7 +255,7 @@ static void B_BuildBase_f (void)
  */
 static void B_ChangeBaseName_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	/* maybe called without base initialized or active */
 	if (!base)
@@ -277,7 +277,7 @@ static void B_ChangeBaseName_f (void)
  */
 static void B_ResetBuildingCurrent_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	B_ResetBuildingCurrent(base);
 }
@@ -291,7 +291,7 @@ static void B_ResetBuildingCurrent_f (void)
 static void B_BaseInit_f (void)
 {
 	int i;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -403,10 +403,10 @@ static void B_BaseInit_f (void)
 	/* Get the research item closest to completion in the base if it exists */
 	cgi->UI_ExecuteConfunc("clear_research");
 	if (RS_ResearchAllowed(base)) {
-		const technology_t *closestTech = nullptr;
+		const technology_t* closestTech = nullptr;
 		double finished = -1;
 		for (i = 0; i < ccs.numTechnologies; i++) {
-			const technology_t *tech = RS_GetTechByIDX(i);
+			const technology_t* tech = RS_GetTechByIDX(i);
 			if (!tech)
 				continue;
 			if (tech->base != base)
@@ -426,9 +426,9 @@ static void B_BaseInit_f (void)
 	/* Get the production item closest to completion in the base if it exists */
 	cgi->UI_ExecuteConfunc("clear_production");
 	if (PR_ProductionAllowed(base)) {
-		const production_queue_t *queue = PR_GetProductionForBase(base);
+		const production_queue_t* queue = PR_GetProductionForBase(base);
 		if (queue->numItems > 0) {
-			const production_t *production = &queue->items[0];
+			const production_t* production = &queue->items[0];
 			cgi->UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
 		}
 	}
@@ -441,7 +441,7 @@ static void B_BaseInit_f (void)
 static void B_BuildingSpace_f (void)
 {
 	int i;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -479,14 +479,14 @@ static void B_BuildingSpace_f (void)
 static void B_BuildingInit (base_t* base)
 {
 	int i;
-	linkedList_t *buildingList = nullptr;
+	linkedList_t* buildingList = nullptr;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
 		return;
 
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		building_t *tpl = &ccs.buildingTemplates[i];
+		building_t* tpl = &ccs.buildingTemplates[i];
 		/* make an entry in list for this building */
 
 		if (tpl->mapPart) {
@@ -517,7 +517,7 @@ static void B_BuildingInit (base_t* base)
  */
 static void B_BuildingInit_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -530,7 +530,7 @@ static void B_BuildingInit_f (void)
  */
 static void B_BuildingInfoClick_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -544,8 +544,8 @@ static void B_BuildingInfoClick_f (void)
  */
 static void B_BuildingClick_f (void)
 {
-	building_t *building;
-	base_t *base = B_GetCurrentSelectedBase();
+	building_t* building;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -579,7 +579,7 @@ static void B_BuildingClick_f (void)
 static void B_MarkBuildingDestroy (building_t* building)
 {
 	baseCapacities_t cap;
-	base_t *base = building->base;
+	base_t* base = building->base;
 
 	/* you can't destroy buildings if base is under attack */
 	if (B_IsUnderAttack(base)) {
@@ -654,8 +654,8 @@ static void B_MarkBuildingDestroy (building_t* building)
  */
 static void B_BuildingDestroy_f (void)
 {
-	base_t *base;
-	building_t *building;
+	base_t* base;
+	building_t* building;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", cgi->Cmd_Argv(0));
@@ -689,7 +689,7 @@ static void B_BuildingDestroy_f (void)
  */
 static void B_BuildingStatus_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	/* maybe someone called this command before the buildings are parsed?? */
 	if (!base || !base->buildingCurrent)
@@ -728,8 +728,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 {
 	int num;
 	const char* buildingID;
-	const building_t *building;
-	const base_t *base = B_GetCurrentSelectedBase();
+	const building_t* building;
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <buildingID>\n", cgi->Cmd_Argv(0));
@@ -761,7 +761,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		B_CheckBuildingTypeStatus(base, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
-			building_t *b = nullptr;
+			building_t* b = nullptr;
 
 			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
 				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
@@ -776,7 +776,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		}
 
 		if (!B_CheckBuildingDependencesStatus(building)) {
-			const building_t *dependenceBuilding = building->dependsBuilding;
+			const building_t* dependenceBuilding = building->dependsBuilding;
 			assert(building->dependsBuilding);
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
@@ -786,7 +786,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				/* maybe the dependence of the building is under construction
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
-				building_t *b = nullptr;
+				building_t* b = nullptr;
 
 				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
 					if (!B_IsBuildingBuiltUp(b)) {
@@ -823,11 +823,11 @@ static void B_CheckBuildingStatusForMenu_f (void)
  * @brief Base Summary menu init function.
  * @note Should be called whenever the Base Summary menu gets active.
  */
-static void BaseSummary_Init (const base_t *base)
+static void BaseSummary_Init (const base_t* base)
 {
 	/* Init base switcher */
 	cgi->UI_ExecuteConfunc("bsum_clear_bases");
-	base_t *otherBase = NULL;
+	base_t* otherBase = NULL;
 	while ((otherBase = B_GetNext(otherBase))) {
 		cgi->UI_ExecuteConfunc("bsum_add_base %d %d", otherBase->idx, (otherBase == base ? 1 : 0));
 	}
@@ -861,10 +861,10 @@ static void BaseSummary_Init (const base_t *base)
 	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"\" \"\" \"\" 0", line++);
 
 	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Production"), _("Quantity"), _("Percent"), 1);
-	const production_queue_t *queue = PR_GetProductionForBase(base);
+	const production_queue_t* queue = PR_GetProductionForBase(base);
 	if (queue->numItems > 0) {
 		for (i = 0; i < queue->numItems; i++) {
-			const production_t *production = &queue->items[i];
+			const production_t* production = &queue->items[i];
 			const char* name = PR_GetName(&production->data);
 			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, name,
 				production->amount, PR_GetProgress(production) * 100, 0);
@@ -877,7 +877,7 @@ static void BaseSummary_Init (const base_t *base)
 	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Research"), _("Scientists"), _("Percent"), 1);
 	bool anyResearch = false;
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		const technology_t *tech = RS_GetTechByIDX(i);
+		const technology_t* tech = RS_GetTechByIDX(i);
 		if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, _(tech->name),
 				tech->scientists, (1.0f - tech->time / tech->overallTime) * 100, 0);
@@ -914,7 +914,7 @@ static void BaseSummary_Init (const base_t *base)
 
 	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BAliens\n"));
 	if (base->alienContainment) {
-		linkedList_t *list = base->alienContainment->list();
+		linkedList_t* list = base->alienContainment->list();
 		LIST_Foreach(list, alienCargo_t, item) {
 			Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i/%i\n",
 				_(item->teamDef->name), item->alive, item->dead);
@@ -929,7 +929,7 @@ static void BaseSummary_Init (const base_t *base)
  */
 static void BaseSummary_SelectBase_f (void)
 {
-	const base_t *base;
+	const base_t* base;
 
 	if (cgi->Cmd_Argc() >= 2) {
 		const int i = atoi(cgi->Cmd_Argv(1));

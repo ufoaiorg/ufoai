@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
-static mission_t *CP_GetCarrierMission (void)
+static mission_t* CP_GetCarrierMission (void)
 {
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_UFOCARRIER)
@@ -46,14 +46,14 @@ static mission_t *CP_GetCarrierMission (void)
 /**
  * @brief Start UFO-Carrier mission.
  */
-static void CP_UFOCarrierMissionStart (mission_t *mission)
+static void CP_UFOCarrierMissionStart (mission_t* mission)
 {
 	mission->idx = ++ccs.campaignStats.missions;
 	mission->finalDate = ccs.date;
 	mission->stage = STAGE_RECON_AIR;
 }
 
-static void CP_UFOCarrierMissionUpdate (mission_t *mission)
+static void CP_UFOCarrierMissionUpdate (mission_t* mission)
 {
 	/* delay the next update for some time */
 	const date_t delay = {2, 0};
@@ -71,7 +71,7 @@ static void CP_UFOCarrierMissionUpdate (mission_t *mission)
  * @brief Determine what action should be performed when a UFOCarriering mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_UFOCarrierNextStage (mission_t *mission)
+void CP_UFOCarrierNextStage (mission_t* mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
@@ -92,7 +92,7 @@ void CP_SpawnUFOCarrier_f (void)
 	if (CP_GetCarrierMission() != nullptr)
 		return;
 
-	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_ORBIT);
+	const installationTemplate_t* installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_ORBIT);
 	if (!installationTemplate)
 		return;
 
@@ -114,7 +114,7 @@ void CP_SpawnUFOCarrier_f (void)
  */
 void CP_AttackUFOCarrier_f (void)
 {
-	mission_t *mission = CP_GetCarrierMission();
+	mission_t* mission = CP_GetCarrierMission();
 	if (mission == nullptr)
 		return;
 
@@ -131,7 +131,7 @@ void CP_AttackUFOCarrier_f (void)
 		return;
 
 	const aircraft_t* ufoTemplate = UFO_GetTemplate(UFO_CARRIER);
-	aircraft_t *ufo = UFO_CreateFromTemplate(ufoTemplate);
+	aircraft_t* ufo = UFO_CreateFromTemplate(ufoTemplate);
 	if (ufo == nullptr) {
 		cgi->Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
 		return;

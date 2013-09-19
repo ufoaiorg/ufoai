@@ -91,7 +91,7 @@ void INT_ChangeIndividualInterest (float interestFactor, interestCategory_t cate
  * @sa CP_CampaignRun
  * @note hourly called
  */
-void INT_IncreaseAlienInterest (const campaign_t *campaign)
+void INT_IncreaseAlienInterest (const campaign_t* campaign)
 {
 	/* Adjust interest increase rate by difficulty. */
 	const int delayBetweenIncrease = HOURS_PER_ONE_INTEREST - campaign->difficulty;
@@ -108,9 +108,9 @@ void INT_IncreaseAlienInterest (const campaign_t *campaign)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-bool INT_SaveXML (xmlNode_t *parent)
+bool INT_SaveXML (xmlNode_t* parent)
 {
-	xmlNode_t *interestsNode = cgi->XML_AddNode(parent, SAVE_INTERESTS);
+	xmlNode_t* interestsNode = cgi->XML_AddNode(parent, SAVE_INTERESTS);
 	int i;
 
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
@@ -118,7 +118,7 @@ bool INT_SaveXML (xmlNode_t *parent)
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
 	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		xmlNode_t *interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
+		xmlNode_t* interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
 		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, cgi->Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
 		cgi->XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
@@ -130,10 +130,10 @@ bool INT_SaveXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-bool INT_LoadXML (xmlNode_t *parent)
+bool INT_LoadXML (xmlNode_t* parent)
 {
-	xmlNode_t *node;
-	xmlNode_t *interestsNode = cgi->XML_GetNode(parent, SAVE_INTERESTS);
+	xmlNode_t* node;
+	xmlNode_t* interestsNode = cgi->XML_GetNode(parent, SAVE_INTERESTS);
 	bool success = true;
 
 	ccs.lastInterestIncreaseDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
