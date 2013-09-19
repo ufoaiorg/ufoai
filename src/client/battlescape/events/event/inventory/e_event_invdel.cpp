@@ -67,7 +67,7 @@ void CL_InvDel (const eventRegister_t *self, dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	Item *item = le->inv.getItemAtPos(INVDEF(container), x, y);
+	Item* item = le->inv.getItemAtPos(INVDEF(container), x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
 	 * the object index */
 	if (!item)

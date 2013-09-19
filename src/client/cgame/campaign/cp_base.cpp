@@ -1802,8 +1802,8 @@ static int CL_GetSkillIndicator (const character_t* chr, abilityskills_t skill)
 {
 	const fireDef_t* fdRight = nullptr;
 	const fireDef_t* fdHolster = nullptr;
-	const Item *rightHand = chr->inv.getRightHandContainer();
-	const Item *holster = chr->inv.getHolsterContainer();
+	const Item* rightHand = chr->inv.getRightHandContainer();
+	const Item* holster = chr->inv.getHolsterContainer();
 
 	if (rightHand && rightHand->ammoDef() && rightHand->def())
 		fdRight = rightHand->getFiredefs();

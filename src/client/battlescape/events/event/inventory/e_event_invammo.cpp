@@ -46,7 +46,7 @@ void CL_InvAmmo (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	Item *item = le->inv.getItemAtPos(INVDEF(container), x, y);
+	Item* item = le->inv.getItemAtPos(INVDEF(container), x, y);
 	if (!item)
 		return;
 

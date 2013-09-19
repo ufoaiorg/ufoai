@@ -63,7 +63,7 @@ static int dragInfoFromY = -1;
  * The current invList pointer (only used for ignoring the dragged item
  * for finding free space right now)
  */
-static const Item *dragInfoIC;
+static const Item* dragInfoIC;
 
 /**
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
@@ -75,7 +75,7 @@ static const Item *dragInfoIC;
  * @return Item Pointer to the Item/item that is located at x/y or equals "item".
  * @sa Inventory::getItemAtPos
  */
-static Item *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
+static Item* UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
@@ -97,7 +97,7 @@ typedef struct {
 	itemFilterTypes_t filterEquipType;
 
 	int itemID;				/**< ID into csi.ods array */
-	Item *itemFound;	/**< If item foundID into csi.ods array */
+	Item* itemFound;	/**< If item foundID into csi.ods array */
 } containerItemIterator_t;
 
 /**
@@ -258,7 +258,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		int amount;
 		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
-		const Item *icItem = iterator.itemFound;
+		const Item* icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
 		if (outOfNode || currentHeight < EXTRADATA(node).scrollY.viewPos) {
@@ -456,7 +456,7 @@ void uiBaseInventoryNode::draw (uiNode_t *node)
 /**
  * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneeded code)
  */
-static Item *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static Item* UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	bool outOfNode = false;
 	vec2_t nodepos;
@@ -482,7 +482,7 @@ static Item *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
 		vec2_t ammopos;
 		const int col = items % EXTRADATACONST(node).columns;
 		int cellHeight = 0;
-		Item *icItem = iterator.itemFound;
+		Item* icItem = iterator.itemFound;
 		int height;
 
 		/* skip items over and bellow the node view */
@@ -591,7 +591,7 @@ static Item *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
 void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	/* Find out where the mouse is. */
-	const Item *itemHover = UI_BaseInventoryNodeGetItem(node, x, y, nullptr, nullptr);
+	const Item* itemHover = UI_BaseInventoryNodeGetItem(node, x, y, nullptr, nullptr);
 	if (!itemHover)
 		return;
 
@@ -630,7 +630,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	assert(EXTRADATA(node).super.container);
 
 	int fromX, fromY;
-	Item *ic = UI_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
+	Item* ic = UI_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
 	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
 	if (!ic)
 		return;

@@ -209,7 +209,7 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  * @param[in] data Pointer to aircraft used in this mission.
  * @param[in] magazine Pointer to Item being magazine.
  */
-static void AII_CollectingAmmo (void* data, const Item *magazine)
+static void AII_CollectingAmmo (void* data, const Item* magazine)
 {
 	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
@@ -265,7 +265,7 @@ static inline void AII_CollectItem_ (void* data, const objDef_t *item, int amoun
  */
 static void AII_CarriedItems (const Inventory *soldierInventory)
 {
-	Item *item;
+	Item* item;
 	equipDef_t *ed = &ccs.eMission;
 
 	const Container *cont = nullptr;
@@ -770,7 +770,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	LIST_Foreach(aircraft->acTeam, Employee, employee) {
 		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			Item *item = nullptr;
+			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				const objDef_t *obj = item->def();
 				size += obj->size;
@@ -824,7 +824,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 {
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont, true))) {
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			const objDef_t *obj = item->def();
 			B_AddToStorage(sourceBase, obj, -1);
@@ -2949,11 +2949,11 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 	LIST_Foreach(aircraft.acTeam, Employee, employee) {
 		const Container *cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
-			Item *ic = cont->getNextItem(nullptr);
+			Item* ic = cont->getNextItem(nullptr);
 			while (ic) {
 				const Item item = *ic;
 				const objDef_t *type = item.def();
-				Item *next = ic->getNext();
+				Item* next = ic->getNext();
 
 				ed.numItems[type->idx]++;
 				if (item.getAmmoLeft() && type->isReloadable()) {

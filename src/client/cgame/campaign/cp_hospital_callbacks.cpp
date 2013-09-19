@@ -116,7 +116,7 @@ static void HOS_UpdateCharacterImplantList (const character_t& c)
 
 static Item* HOS_GetImplant (const character_t& chr, const implantDef_t& def)
 {
-	Item *item = chr.inv.getContainer2(CID_IMPLANT);
+	Item* item = chr.inv.getContainer2(CID_IMPLANT);
 	while (item) {
 		if (item->def() == def.item) {
 			return item;
@@ -150,7 +150,7 @@ static void HOS_ImplantChange_f (void)
 		return;
 	const implant_t* implant = e->isSoldier() ? CHRSH_ApplyImplant(chr, *def) : nullptr;
 	if (implant == nullptr) {
-		Item *item = HOS_GetImplant(chr, *def);
+		Item* item = HOS_GetImplant(chr, *def);
 		if (item != nullptr) {
 			const Container& container = chr.inv.getContainer(CID_IMPLANT);
 			cgi->INV_RemoveFromInventory(&chr.inv, container.def(), item);

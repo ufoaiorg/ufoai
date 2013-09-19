@@ -413,7 +413,7 @@ static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
 	cls.i.EquipActorRobot(inv, weapon);
 }
 
-static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, Item *fItem)
+static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, Item* fItem)
 {
 	return cls.i.removeFromInventory(i, container, fItem);
 }
@@ -448,7 +448,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item *), void (*ownitems) (const Inventory *))
+static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item* ), void (*ownitems) (const Inventory *))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
@@ -457,7 +457,7 @@ static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, c
 		 * members carry. */
 		if (LE_IsItem(le)) {
 			if (won) {
-				Item *i = le->getFloorContainer();
+				Item* i = le->getFloorContainer();
 				for ( ; i; i = i->getNext()) {
 					collectItem(data, i->def(), 1);
 					if (i->isReloadable() && i->getAmmoLeft() > 0)
@@ -469,7 +469,7 @@ static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, c
 			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
 			if (won && LE_IsDead(le)) {
-				Item *item = le->inv.getArmour();
+				Item* item = le->inv.getArmour();
 				if (item)
 					collectItem(data, item->def(), 1);
 			} else if (le->team == cls.team && !LE_IsDead(le)) {
@@ -1270,7 +1270,7 @@ void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAliv
  * @note The amount of the Item should not be needed here - because
  * the amount is only valid for CID_FLOOR and CID_EQUIP
  */
-static void GAME_NetSendItem (dbuffer *buf, const Item *item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (dbuffer *buf, const Item* item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item->ammoDef() ? item->ammoDef()->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
@@ -1293,7 +1293,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const Inventory *inv)
 	for (container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
-		const Item *ic;
+		const Item* ic;
 		for (ic = inv->getContainer2(container); ic; ic = ic->getNext()) {
 			GAME_NetSendItem(buf, ic, container, ic->getX(), ic->getY());
 		}

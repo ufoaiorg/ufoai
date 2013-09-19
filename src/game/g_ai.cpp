@@ -278,7 +278,7 @@ static bool AI_HideNeeded (const Edict* ent)
 		if (G_IsCivilian(from))
 			continue;
 
-		const Item *item = ent->getRightHandItem();
+		const Item* item = ent->getRightHandItem();
 		if (!item)
 			item = ent->getLeftHandItem();
 		if (!item)
@@ -306,12 +306,12 @@ static bool AI_HideNeeded (const Edict* ent)
  * @param ic The inventory to search a useable weapon in.
  * @return Ready to fire weapon.
  */
-static inline const Item *AI_GetItemFromInventory (const Item *ic)
+static inline const Item* AI_GetItemFromInventory (const Item* ic)
 {
 	if (ic == nullptr)
 		return nullptr;
 
-	const Item *item = ic;
+	const Item* item = ic;
 	if (item->ammoDef() && item->isWeapon() && !item->mustReload())
 		return item;
 
@@ -325,7 +325,7 @@ static inline const Item *AI_GetItemFromInventory (const Item *ic)
  * @return The item that was selected for the given shoot type. This might be @c nullptr if
  * no item was found.
  */
-const Item *AI_GetItemForShootType (shoot_types_t shootType, const Edict* ent)
+const Item* AI_GetItemForShootType (shoot_types_t shootType, const Edict* ent)
 {
 	/* optimization: reaction fire is automatic */
 	if (IS_SHOT_REACTION(shootType))
@@ -334,10 +334,10 @@ const Item *AI_GetItemForShootType (shoot_types_t shootType, const Edict* ent)
 	/* check that the current selected shoot type also has a valid item in its
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		const Item *item = ent->getRightHandItem();
+		const Item* item = ent->getRightHandItem();
 		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_LEFT(shootType)) {
-		const Item *item = ent->getLeftHandItem();
+		const Item* item = ent->getLeftHandItem();
 		return AI_GetItemFromInventory(item);
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return nullptr;
@@ -543,7 +543,7 @@ static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t* fd)
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check, const Item *item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -711,17 +711,17 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 /**
  * @brief Search the edict's inventory for a grenade or other one-use weapon.
  */
-static const invDef_t* AI_SearchGrenade (const Edict* ent, Item **ip)
+static const invDef_t* AI_SearchGrenade (const Edict* ent, Item* *ip)
 {
 	/* search for grenades and select the one that is available easily */
 	const Container *cont = nullptr;
 	const invDef_t* bestContainer = nullptr;
-	Item *weapon = nullptr;
+	Item* weapon = nullptr;
 	int cost = 100;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= cost)
 			continue;
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			assert(item->def());
 			const objDef_t* obj = item->def();
@@ -747,12 +747,12 @@ static const invDef_t* AI_SearchGrenade (const Edict* ent, Item **ip)
 static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict* ent)
 {
 	if (IS_SHOT_RIGHT(shootType)) {
-		const Item *item = ent->getRightHandItem();
+		const Item* item = ent->getRightHandItem();
 		return item == nullptr;
 	}
 	if (IS_SHOT_LEFT(shootType)) {
-		const Item *left = ent->getLeftHandItem();
-		const Item *right = ent->getRightHandItem();
+		const Item* left = ent->getLeftHandItem();
+		const Item* right = ent->getRightHandItem();
 		return left == nullptr && (right == nullptr || !right->isHeldTwoHanded());
 	}
 
@@ -780,7 +780,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
 	G_EdictSetOrigin(ent, to);
 
 	/* pre-find a grenade */
-	Item *grenade = nullptr;
+	Item* grenade = nullptr;
 	const invDef_t* fromCont = AI_SearchGrenade(ent, &grenade);
 
 	/* search best target */
@@ -797,7 +797,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
 		maxDmg = 0.0;
 		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 			const bool freeHand = AI_IsHandForForShootTypeFree(shootType, ent);
-			const Item *item = freeHand ? grenade : AI_GetItemForShootType(shootType, ent);
+			const Item* item = freeHand ? grenade : AI_GetItemForShootType(shootType, ent);
 			if (!item)
 				continue;
 
@@ -1305,7 +1305,7 @@ static aiAction_t AI_PrepBestAction (const Player &player, Edict* ent)
 
 	/* if we are throwing a grenade from the inventory grab it now */
 	if (bestAia.target && AI_IsHandForForShootTypeFree(bestAia.shootType, ent)) {
-		Item *grenade = nullptr;
+		Item* grenade = nullptr;
 		const invDef_t* fromCont = AI_SearchGrenade(ent, &grenade);
 		const invDef_t* toCont = INVDEF_FOR_SHOOTTYPE(bestAia.shootType);
 		if (!grenade || !fromCont || !toCont || !G_ActorInvMove(ent, fromCont, grenade, toCont, NONE, NONE, true))
@@ -1376,8 +1376,8 @@ void AI_ActorThink (Player &player, Edict* ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	Item *rightH = ent->getRightHandItem();
-	Item *leftH = ent->getLeftHandItem();
+	Item* rightH = ent->getRightHandItem();
+	Item* leftH = ent->getLeftHandItem();
 	if (!G_IsPanicked(ent)) {
 		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(ent, CID_RIGHT);

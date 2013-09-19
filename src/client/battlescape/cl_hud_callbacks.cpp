@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * This function only returns @c nullptr if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
-Item *HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
+Item* HUD_GetLeftHandWeapon (const le_t *actor, containerIndex_t *container)
 {
-	Item *item = actor->getLeftHandItem();
+	Item* item = actor->getLeftHandItem();
 
 	if (!item) {
 		item = actor->getRightHandItem();
@@ -59,7 +59,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
 	if (!actor)
 		return nullptr;
 
-	const Item *weapon = actor->getHandItem(hand);
+	const Item* weapon = actor->getHandItem(hand);
 	if (!weapon || !weapon->def())
 		return nullptr;
 
@@ -74,7 +74,7 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t *actor, const actorHan
  * @sa HUD_FireWeapon_f
  * @return false when action is not possible, otherwise true
  */
-static bool HUD_CheckShooting (const le_t* le, Item *weapon)
+static bool HUD_CheckShooting (const le_t* le, Item* weapon)
 {
 	if (!le)
 		return false;
@@ -223,7 +223,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
 	assert(le);
 	assert(weapon);
 
-	Item *ic;
+	Item* ic;
 	const containerIndex_t container = CL_ActorGetContainerForReload(&ic, &le->inv, weapon);
 	if (container == NONE)
 		return -1;
@@ -242,7 +242,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
  * @sa HUD_ReloadLeft_f
  * @sa HUD_ReloadRight_f
  */
-static bool HUD_CheckReload (const le_t* le, const Item *weapon, containerIndex_t container)
+static bool HUD_CheckReload (const le_t* le, const Item* weapon, containerIndex_t container)
 {
 	if (!le)
 		return false;

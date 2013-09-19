@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return Updated item in any case, even if there was no update.
  * @sa CP_CleanupAircraftCrew
  */
-void CP_AddWeaponAmmo (equipDef_t *ed, Item *item)
+void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
 {
 	const objDef_t *type = item->def();
 
@@ -181,7 +181,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		/* This is an UGV */
 		if (employee->getUGV()) {
 			/* Check if there is a weapon and add it if there isn't. */
-			Item *rightH = chr->inv.getRightHandContainer();
+			Item* rightH = chr->inv.getRightHandContainer();
 			if (!rightH || !rightH->def())
 				cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->getUGV()->weapon));
 		}
@@ -194,7 +194,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 			if (employee->transfer)
 				continue;
 
-			Item *ic, *next;
+			Item* ic, *next;
 			character_t *chr = &employee->chr;
 #if 0
 			/* ignore items linked from any temp container */
@@ -237,13 +237,13 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 
 	for (container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
-			Item *ic, *next;
+			Item* ic, *next;
 			character_t *chr = &employee->chr;
 
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 			if (employee->getUGV()) {
 				/* Check if there is a weapon and add it if there isn't. */
-				Item *rightH = chr->inv.getRightHandContainer();
+				Item* rightH = chr->inv.getRightHandContainer();
 				if (!rightH || !rightH->def())
 					cgi->INV_EquipActorRobot(&chr->inv, INVSH_GetItemByID(employee->getUGV()->weapon));
 				continue;

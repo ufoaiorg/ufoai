@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note The amount of the Item should not be needed here - because
  * the amount is only valid for CID_FLOOR and CID_EQUIP
  */
-static void CL_NetReceiveItem (dbuffer *buf, Item *item, containerIndex_t *container, int* x, int* y)
+static void CL_NetReceiveItem (dbuffer *buf, Item* item, containerIndex_t *container, int* x, int* y)
 {
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 

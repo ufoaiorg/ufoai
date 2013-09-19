@@ -63,7 +63,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char* name)
  * @return true if the move was successful.
  */
 bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY,
-	const invDef_t *fromContainer, Item *fItem, Item **uponItem)
+	const invDef_t *fromContainer, Item* fItem, Item* *uponItem)
 {
 	if (toX >= SHAPE_BIG_MAX_WIDTH || toY >= SHAPE_BIG_MAX_HEIGHT)
 		return false;
@@ -98,7 +98,7 @@ bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+bool INV_LoadWeapon (const Item* weaponList, Inventory *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	assert(weaponList);
 
@@ -109,7 +109,7 @@ bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *src
 
 	const objDef_t *weapon = weaponList->def();
 	if (weapon->weapons[0]) {
-		Item *ic = inv->getItemAtPos(destContainer, x, y);
+		Item* ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
 			ic->setAmmoLeft(weapon->ammo);
 			ic->setAmmoDef(weapon);
@@ -135,7 +135,7 @@ bool INV_LoadWeapon (const Item *weaponList, Inventory *inv, const invDef_t *src
  * @param[in] container Inventory definition where to put the removed ammo.
  * @return @c true if the ammo was moved to the container, @c false otherwise
  */
-bool INV_UnloadWeapon (Item *weapon, Inventory *inv, const invDef_t *container)
+bool INV_UnloadWeapon (Item* weapon, Inventory *inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {
@@ -363,9 +363,9 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @return @c Item Pointer to the Item/item that is located at x/y or equals "item".
  * @sa Inventory::getItemAtPos
  */
-Item *INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
+Item* INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
 {
-	Item *ic;
+	Item* ic;
 
 	if (inv == nullptr)
 		return nullptr;

@@ -156,7 +156,7 @@ int G_ActorGetTUForReactionFire (const Edict* ent)
 {
 	const FiremodeSettings *fm = &ent->chr.RFmode;
 
-	const Item *weapon = ent->getHandItem(fm->getHand());
+	const Item* weapon = ent->getHandItem(fm->getHand());
 	assert(weapon);
 	assert(weapon->def());
 
@@ -536,11 +536,11 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item *fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
 {
 	Edict* floor;
 	bool newFloor;
-	Item *tc;
+	Item* tc;
 	playermask_t mask;
 	inventory_action_t ia;
 	Item fromItemBackup, toItemBackup;
@@ -593,7 +593,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item *fItem, co
 	}
 
 	/* search for space */
-	Item *item2;
+	Item* item2;
 	if (tx == NONE) {
 		item2 = actor->chr.inv.getItemAtPos(fromContType, fItem->getX(), fItem->getY());
 		if (item2)
@@ -769,7 +769,7 @@ void G_ActorReload (Edict* ent, const invDef_t* invDef)
 	/* search for clips and select the one that is available easily */
 	/* also try the temp containers */
 	const invDef_t* bestContainer = nullptr;
-	Item *ammoItem = nullptr;
+	Item* ammoItem = nullptr;
 	int tu = 100;
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
@@ -779,7 +779,7 @@ void G_ActorReload (Edict* ent, const invDef_t* invDef)
 		 * searching other containers if it would take longer
 		 * to retrieve the ammo from them than the one
 		 * we've already found. */
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (item->def()->isLoadableInWeapon(weapon)) {
 				ammoItem = item;

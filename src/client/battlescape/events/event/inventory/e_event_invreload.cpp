@@ -52,7 +52,7 @@ void CL_InvReload (const eventRegister_t *self, dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	Item *ic = le->inv.getItemAtPos(INVDEF(container), x, y);
+	Item* ic = le->inv.getItemAtPos(INVDEF(container), x, y);
 	if (!ic)
 		return;
 

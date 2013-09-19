@@ -79,7 +79,7 @@ static int dragInfoToY = -1;
  * The current invList pointer (only used for ignoring the dragged item
  * for finding free space right now)
  */
-static const Item *dragInfoIC;
+static const Item* dragInfoIC;
 
 static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
 {
@@ -144,7 +144,7 @@ void UI_ContainerNodeUpdateEquipment (Inventory *inv, const equipDef_t *ed)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item *item, int x, int y, const vec3_t scale, const vec4_t color)
+void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item* item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	const objDef_t *od = item->def();
 	vec4_t col;
@@ -446,7 +446,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	const invDef_t *contType = EXTRADATA(node).container;
 	if (contType->isLeftDef() && !ui_inventory->getLeftHandContainer()) {
 		if (ui_inventory->getRightHandContainer()) {
-			const Item *item = ui_inventory->getRightHandContainer();
+			const Item* item = ui_inventory->getRightHandContainer();
 			assert(item);
 			assert(item->def());
 
@@ -461,7 +461,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 		}
 	} else if (ui_inventory->getContainer2(contType->id)) {
 		bool disabled = false;
-		const Item *item;
+		const Item* item;
 
 		if (ui_inventory->getRightHandContainer()) {
 			item = ui_inventory->getRightHandContainer();
@@ -507,7 +507,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 	pos[2] = 0;
 
 	const Container &cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
-	Item *item = nullptr;
+	Item* item = nullptr;
 	while ((item = cont.getNextItem(item))) {
 		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def()))
@@ -621,7 +621,7 @@ void uiContainerNode::draw (uiNode_t *node)
  * @param[out] contY Y location in the container (row).
  * @sa UI_ContainerNodeSearchInScrollableContainer
  */
-static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
+static Item* UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX = nullptr, int* contY = nullptr)
 {
 	if (!ui_inventory)
 		return nullptr;
@@ -641,7 +641,7 @@ static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int 
 	if (contY)
 		*contY = fromY;
 
-	Item *result = ui_inventory->getItemAtPos(EXTRADATACONST(node).container, fromX, fromY);
+	Item* result = ui_inventory->getItemAtPos(EXTRADATACONST(node).container, fromX, fromY);
 	return result;
 }
 
@@ -654,7 +654,7 @@ static Item *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int 
 void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 {
 	/* Find out where the mouse is. */
-	const Item *itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
+	const Item* itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
 
 	if (itemHover) {
 		static char tooltiptext[MAX_VAR * 2];
@@ -670,7 +670,7 @@ void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	}
 }
 
-static bool UI_ContainerNodeAddItem (const invDef_t *container, Item *ic, containerIndex_t containerID, Item **icp)
+static bool UI_ContainerNodeAddItem (const invDef_t *container, Item* ic, containerIndex_t containerID, Item* *icp)
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
@@ -684,7 +684,7 @@ static bool UI_ContainerNodeAddItem (const invDef_t *container, Item *ic, contai
  * @param[in] ic An item from the node container
  * @todo We should use an item ID, and get the item inside the function, to avoid wrong uses.
  */
-void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic)
+void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 {
 	containerIndex_t target;
 	bool ammoChanged = false;
@@ -731,7 +731,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic)
 			 * for available space here, too */
 			const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
 			const size_t size = lengthof(idxArray);
-			Item *tItem = nullptr;
+			Item* tItem = nullptr;
 			unsigned int i;
 			for (i = 0; i < size; i++) {
 				target = idxArray[i];
@@ -790,7 +790,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 
 	assert(EXTRADATA(node).container);
 
-	Item *ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY);
+	Item* ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY);
 	if (!ic)
 		return;
 	UI_ContainerNodeAutoPlaceItem(node, ic);
@@ -879,7 +879,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	bool exists;
 	int itemX = 0;
 	int itemY = 0;
-	Item *dragItem = UI_DNDGetItem();
+	Item* dragItem = UI_DNDGetItem();
 
 	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
@@ -931,7 +931,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	}
 
 	{
-		Item *fItem;
+		Item* fItem;
 
 		/* is there empty slot? */
 		const int checkedTo = ui_inventory->canHoldItem(containerType, dragItem->def(), dragInfoToX, dragInfoToY, dragInfoIC);
@@ -962,7 +962,7 @@ void uiContainerNode::onDndLeave (uiNode_t *node)
  */
 bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 {
-	Item *dragItem = UI_DNDGetItem();
+	Item* dragItem = UI_DNDGetItem();
 	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
 
 	/* if the target can't finalize the DND we stop */
@@ -982,8 +982,8 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 	} else {
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
-			Item *fItem;
-			Item *tItem;
+			Item* fItem;
+			Item* tItem;
 			bool moved = false;
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);

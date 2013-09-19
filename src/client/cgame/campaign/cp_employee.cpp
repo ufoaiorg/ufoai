@@ -1066,7 +1066,7 @@ void E_RemoveInventoryFromStorage (Employee *employee)
 
 	const Container *cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			/* Remove ammo */
 			if (item->ammoDef() && item->ammoDef() != item->def())
