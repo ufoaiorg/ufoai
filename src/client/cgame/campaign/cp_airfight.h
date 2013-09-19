@@ -46,8 +46,8 @@ typedef struct aircraftProjectile_s {
 	vec3_t pos[MAX_MULTIPLE_PROJECTILES];	/**< array of positions of the projectile (latitude and longitude) - @todo why vec3_t this is long/lat */
 	vec3_t projectedPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if projected positions of the projectile (latitude and longitude). */
 	vec3_t oldDrawPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if old draw positions of the projectile (latitude and longitude). */
-	int numProjectiles;      /**< Number of projectile positions used for this projectile. */
-	bool hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
+	int numProjectiles;		/**< Number of projectile positions used for this projectile. */
+	bool hasMoved;			/**< Has the projectile been moved by the CampaignRunProjectiles function */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is nullptr) */
@@ -58,8 +58,8 @@ typedef struct aircraftProjectile_s {
 								 ** used only if the projectile will touch its target (otherwise it's nullptr) */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
-	bool bullets;		/**< projectile has active bullets on geoscape */
-	bool beam;			/**< projectile has an active (laser) beam on geoscape */
+	bool bullets;			/**< projectile has active bullets on geoscape */
+	bool beam;				/**< projectile has an active (laser) beam on geoscape */
 	bool rocket;
 } aircraftProjectile_t;
 

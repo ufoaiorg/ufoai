@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo Maybe we should also move the "funding" stuff (see nation_t) in here? It is static right now though so i see no reason to do that yet.
  */
 typedef struct nationInfo_s {
-	bool	inuse;	/**< Is this entry used? */
+	bool	inuse;		/**< Is this entry used? */
 
 	/* Relationship */
 	float happiness;	/**< percentage (0.00 - 1.00) of how the nation appreciates PHALANX. 1.00 is the maximum happiness */
@@ -43,11 +43,11 @@ typedef struct nationInfo_s {
  */
 typedef struct nation_s {
 	const char* id;		/**< Unique ID of this nation. */
-	const char* name;		/**< Full name of the nation. */
-	int idx;		/**< position in the nations array */
+	const char* name;	/**< Full name of the nation. */
+	int idx;			/**< position in the nations array */
 
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
-	vec2_t pos;		/**< Nation position on geoscape. */
+	vec2_t pos;			/**< Nation position on geoscape. */
 
 	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.

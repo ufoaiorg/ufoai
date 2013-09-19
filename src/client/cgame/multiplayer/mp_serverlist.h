@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct serverList_s {
 	char* node;						/**< node ip address */
 	char* service;					/**< node port */
-	bool pinged;				/**< already pinged */
+	bool pinged;					/**< already pinged */
 	char sv_hostname[MAX_OSPATH];	/**< the server hostname */
 	char mapname[16];				/**< currently running map */
 	char version[8];				/**< the game version */
 	char gametype[8];				/**< the game type */
-	bool sv_dedicated;			/**< dedicated server */
+	bool sv_dedicated;				/**< dedicated server */
 	int sv_maxclients;				/**< max. client amount allowed */
 	int clients;					/**< already connected clients */
 	int serverListPos;				/**< position in the server list array */

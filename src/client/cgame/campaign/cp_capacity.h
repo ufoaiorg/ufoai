@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief All possible capacities in base. */
 typedef enum {
-	CAP_ALIENS,		/**< Live aliens stored in base. */
+	CAP_ALIENS,			/**< Live aliens stored in base. */
 	CAP_AIRCRAFT_SMALL,	/**< Small aircraft in base. */
 	CAP_AIRCRAFT_BIG,	/**< Big aircraft in base. */
 	CAP_EMPLOYEES,		/**< Personel in base. */
-	CAP_ITEMS,		/**< Items in base. */
+	CAP_ITEMS,			/**< Items in base. */
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
 	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
@@ -39,8 +39,8 @@ typedef enum {
 
 /** @brief Store capacities in base. */
 typedef struct capacities_s {
-	int max;		/**< Maximum capacity. */
-	int cur;		/**< Currently used capacity. */
+	int max;			/**< Maximum capacity. */
+	int cur;			/**< Currently used capacity. */
 } capacities_t;
 
 void CAP_UpdateStorageCap(struct base_s* base);

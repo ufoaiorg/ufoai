@@ -237,7 +237,7 @@ typedef struct alienTeamCategory_s {
 
 	alienTeamGroup_t alienTeamGroups[MAX_ALIEN_GROUP_PER_CATEGORY];		/**< Different alien group available
 																 * for this category */
-	int numAlienTeamGroups;		/**< Number of alien group defined for this category */
+	int numAlienTeamGroups;			/**< Number of alien group defined for this category */
 } alienTeamCategory_t;
 
 /** @brief mission definition
@@ -248,7 +248,7 @@ typedef struct mission_s {
 	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id */
 	mapDef_t *mapDef;				/**< mapDef used for this mission */
-	bool active;				/**< aircraft at place? */
+	bool active;					/**< aircraft at place? */
 	union missionData_t {
 		base_t *base;
 		aircraft_t *aircraft;
@@ -265,12 +265,12 @@ typedef struct mission_s {
 									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;						/**< Position of the mission */
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be nullptr) */
-	bool onGeoscape;			/**< Should the mission be displayed on geoscape */
-	bool crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
+	bool onGeoscape;				/**< Should the mission be displayed on geoscape */
+	bool crashed;					/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 
 	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
 	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
-	bool posAssigned;			/**< is the position of this mission already set? */
+	bool posAssigned;				/**< is the position of this mission already set? */
 } mission_t;
 
 /**

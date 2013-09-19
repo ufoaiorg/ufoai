@@ -96,11 +96,11 @@ typedef struct msgCategoryEntry_s {
 	struct msgCategoryEntry_s* next;		/**< pointer to next in category */
 	struct msgCategoryEntry_s* previous;	/**< pointer to previous in category */
 	messageSettings_t *settings;			/**< associated settings */
-	bool isCategory;					/**< flag indicating that this is a category and no notification type */
+	bool isCategory;						/**< flag indicating that this is a category and no notification type */
 } msgCategoryEntry_t;
 
 typedef struct msgCategory_s {
-	int idx;				/**< self-link */
+	int idx;					/**< self-link */
 	const char* name;			/**< script file id / translatable category name */
 	msgCategoryEntry_t *first;
 	msgCategoryEntry_t *last;

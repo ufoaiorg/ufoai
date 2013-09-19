@@ -154,12 +154,12 @@ typedef struct le_s {
 	const struct le_s* ref3;
 	Inventory inv;
 	int left, right, headgear;	/**< item indices that the actor holds in his hands */
-	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_* */
+	actorSizeEnum_t fieldSize;	/**< ACTOR_SIZE_* */
 
 	lighting_t lighting;
 
 	teamDef_t* teamDef;
-	int gender;	/**< @sa @c nametypes_t */
+	int gender;				/**< @sa @c nametypes_t */
 	const fireDef_t* fd;	/**< in case this is a projectile or an actor */
 
 	/** is called before adding a le to scene */
@@ -203,25 +203,25 @@ typedef struct le_s {
 
 /** @brief local models */
 typedef struct localModel_s {
-	char id[MAX_VAR];	/**< in case this local model is referenced by some other local
-						 * model (e.g. for tags) - this id is set in the mapeditor */
-	char name[MAX_QPATH];	/**< the name of the model file */
+	char id[MAX_VAR];				/**< in case this local model is referenced by some other local
+									 * model (e.g. for tags) - this id is set in the mapeditor */
+	char name[MAX_QPATH];			/**< the name of the model file */
 	char target[MAX_VAR];
-	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
-	char animname[MAX_QPATH];	/**< is this an animated model */
+	char tagname[MAX_VAR];			/**< in case a tag should be used to place the model */
+	char animname[MAX_QPATH];		/**< is this an animated model */
 
 	struct localModel_s* parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	bool inuse;
 
 	vec3_t origin;
 	vec3_t angles;
-	vec3_t scale;	/**< default is 1.0 - no scaling */
+	vec3_t scale;			/**< default is 1.0 - no scaling */
 
-	int entnum;	/**< entnum from the entity string (if available in the server, they match) */
+	int entnum;				/**< entnum from the entity string (if available in the server, they match) */
 	int renderEntityNum;	/**< entity number in the renderer entity array */
 	int skin;
-	int renderFlags;	/**< effect flags */
-	int frame;	/**< which static frame to show (this can't be used if animname is set) */
+	int renderFlags;		/**< effect flags */
+	int frame;				/**< which static frame to show (this can't be used if animname is set) */
 	int levelflags;
 	animState_t as;
 	lighting_t lighting;

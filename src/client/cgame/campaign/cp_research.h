@@ -70,15 +70,15 @@ typedef enum requirementType_s {
 
 typedef struct requirement_s {
 	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
-	char* id;	/**< Dependency id (text-id) */
+	char* id;				/**< Dependency id (text-id) */
 	union typelink_t {
 		const struct technology_s* tech;
 		const struct objDef_s* od;
 		const struct teamDef_s* td;
 		const struct aircraft_s* aircraft;
 	} link;
-	int amount;	/**< How many items are needed for research ... if any. (fix) */
-	int collected;	/**< How many items have been collected. (varies) */
+	int amount;				/**< How many items are needed for research ... if any. (fix) */
+	int collected;			/**< How many items have been collected. (varies) */
 } requirement_t;
 
 typedef struct requirements_s {
@@ -95,7 +95,7 @@ typedef struct markResearched_s {
 
 /** @brief Types for tech mail definitions - see tech->mail[] */
 typedef enum {
-	TECHMAIL_PRE,		/**< this is a mail_pre (proposal) definition */
+	TECHMAIL_PRE,			/**< this is a mail_pre (proposal) definition */
 	TECHMAIL_RESEARCHED,	/**< this is the mail definition (after research was completed) */
 
 	TECHMAIL_MAX
@@ -106,15 +106,15 @@ typedef enum {
  * @sa eventMail_t
  */
 typedef struct techMail_s {
-	char* from;			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
-	const char* to;		/**< recipient (_mail_to_base_commander) */
+	char* from;				/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
+	const char* to;			/**< recipient (_mail_to_base_commander) */
 	const char* subject;	/**< mail subject line - if mail and mail_pre are available
 								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
 								 * automatically */
 	const char* date;		/**< date string, if empty use the date of research */
 	const char* icon;		/**< name of an image file to display in the mail client */
 	const char* model;		/**< model name of the sender */
-	bool read;		/**< already read the mail? */
+	bool read;				/**< already read the mail? */
 } techMail_t;
 
 typedef enum {
@@ -136,22 +136,22 @@ typedef struct technologyDescriptions_s {
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
 	char* id;		/**< Short (unique) id/name. */
-	int idx;			/**< Self-link in the global list */
+	int idx;		/**< Self-link in the global list */
 	char* name;		/**< Full name of this technology. */
-	technologyDescriptions_t description;	/**< Descriptions of researched item.  */
+	technologyDescriptions_t description;		/**< Descriptions of researched item.  */
 	technologyDescriptions_t preDescription;	/**< Descriptions of item before it's researched. */
-	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
+	researchType_t type;			/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	struct technology_s* redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
 									 * Mostly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
 
 	requirements_t requireAND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t requireOR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
-	bool statusCollected;	/**< Did we loot any items of this tech?
-					 * This is updated from the info stored in the requireOR and requireAND lists.
-					 * @see RS_CheckCollected. */
+	bool statusCollected;		/**< Did we loot any items of this tech?
+								* This is updated from the info stored in the requireOR and requireAND lists.
+								* @see RS_CheckCollected. */
 
-	char* provides;		/**< The item that this technology enables. */
+	char* provides;				/**< The item that this technology enables. */
 
 	float overallTime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overallTime" stays always the same,
@@ -175,7 +175,7 @@ typedef struct technology_s {
 	bool statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many hours the production of this items runs. */
-	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
+	mailSentType_t mailSent;	/**< Store if a Mail has been sent to the commander (player). */
 	requirements_t requireForProduction;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
@@ -187,12 +187,12 @@ typedef struct technology_s {
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	struct pediaChapter_s* upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
-	struct technology_s* upPrev;	/**< Previous tech in pedia. */
-	struct technology_s* upNext;	/**< Next tech in pedia. */
+	struct pediaChapter_s* upChapter;	/**< UFOpaedia chapter as stored in research.ufo. */
+	struct technology_s* upPrev;		/**< Previous tech in pedia. */
+	struct technology_s* upNext;		/**< Next tech in pedia. */
 
-	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
-	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equal to TECHMAIL_MAX both mailtypes are available. */
+	techMail_t mail[TECHMAIL_MAX];		/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
+	int numTechMails;					/**< Used to store which "mail" entry to display in pedia. if It's equal to TECHMAIL_MAX both mailtypes are available. */
 
 	struct technology_s* hashNext;
 	struct technology_s* hashProvidedNext;

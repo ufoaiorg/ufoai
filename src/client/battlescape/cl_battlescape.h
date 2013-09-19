@@ -44,7 +44,7 @@ typedef struct clientBattleScape_s {
 	int numTeamList;
 	int numEnemiesSpotted;
 
-	bool eventsBlocked;		/**< if the client interrupts the event execution, this is true */
+	bool eventsBlocked;	/**< if the client interrupts the event execution, this is true */
 
 	/** server state information */
 	int pnum;			/**< player num you have on the server */

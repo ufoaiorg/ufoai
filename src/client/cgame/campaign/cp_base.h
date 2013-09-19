@@ -85,17 +85,17 @@ typedef enum {
 
 typedef struct baseBuildingTile_s {
 	building_t *building;	/**< nullptr if free spot */
-	bool	blocked;	/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
+	bool	blocked;		/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
 	/* These are only used for baseTemplates: */
-	int posX;	/**< The x screen coordinate for the building on the basemap. */
-	int posY;	/**< The y screen coordinate for the building on the basemap. */
+	int posX;				/**< The x screen coordinate for the building on the basemap. */
+	int posY;				/**< The y screen coordinate for the building on the basemap. */
 } baseBuildingTile_t;
 
 typedef struct baseWeapon_s {
 	/* int idx; */
 	aircraftSlot_t slot;	/**< Weapon. */
 	aircraft_t *target;		/**< Aimed target for the weapon. */
-	bool autofire;		/**< If it should automatically open fire on ufos */
+	bool autofire;			/**< If it should automatically open fire on ufos */
 } baseWeapon_t;
 
 /** @brief A base with all it's data */
@@ -115,26 +115,26 @@ typedef struct base_s {
 	 */
 	bool hasBuilding[MAX_BUILDING_TYPE];
 
-	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
+	aircraft_t *aircraftCurrent;	/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
-	baseStatus_t baseStatus; /**< the current base status */
+	baseStatus_t baseStatus; 		/**< the current base status */
 
-	float alienInterest;	/**< How much aliens know this base (and may attack it) */
+	float alienInterest;			/**< How much aliens know this base (and may attack it) */
 
 	struct radar_s radar;
 
 	class AlienContainment* alienContainment;	/**< alien containment data */
 
-	capacities_t capacities[MAX_CAP];		/**< Capacities. */
+	capacities_t capacities[MAX_CAP];			/**< Capacities. */
 
-	equipDef_t storage;	/**< weapons, etc. stored in base */
+	equipDef_t storage;							/**< weapons, etc. stored in base */
 
-	Inventory bEquipment;	/**< The equipment of the base; needn't be saved */
+	Inventory bEquipment;						/**< The equipment of the base; needn't be saved */
 
-	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
+	baseWeapon_t batteries[MAX_BASE_SLOT];		/**< Missile batteries assigned to base. */
 	int numBatteries;
 	int numActiveBatteries;
-	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
+	baseWeapon_t lasers[MAX_BASE_SLOT];			/**< Laser batteries assigned to base. */
 	int numLasers;
 	int numActiveLasers;
 

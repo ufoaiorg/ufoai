@@ -30,7 +30,7 @@ typedef struct market_s {
 	int bidItems[MAX_OBJDEFS];					/**< price of item for selling */
 	int askItems[MAX_OBJDEFS];					/**< price of item for buying */
 	double currentEvolutionItems[MAX_OBJDEFS];	/**< evolution of the market */
-	bool autosell[MAX_OBJDEFS];				/**< True if item has autosell enabled */
+	bool autosell[MAX_OBJDEFS];					/**< True if item has autosell enabled */
 	int numAircraft[AIRCRAFTTYPE_MAX];			/**< number of Aircraft on the market */
 	int bidAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for selling */
 	int askAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for buying */
