@@ -26,5 +26,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../e_main.h"
 
-void CL_ActorStartShoot(const eventRegister_t* self, dbuffer *msg);
-int CL_ActorStartShootTime(const eventRegister_t* self, dbuffer *msg, eventTiming_t* eventTiming);
+void CL_ActorStartShoot(const eventRegister_t* self, dbuffer* msg);
+int CL_ActorStartShootTime(const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming);
