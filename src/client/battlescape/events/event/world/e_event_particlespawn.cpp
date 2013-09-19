@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_particle.h"
 #include "e_event_particlespawn.h"
 
-int CL_ParticleSpawnEventTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t *eventTiming)
+int CL_ParticleSpawnEventTime (const struct eventRegister_s* self, dbuffer *msg, eventTiming_t* eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		return eventTiming->impactTime + 400;
@@ -45,7 +45,7 @@ int CL_ParticleSpawnEventTime (const struct eventRegister_s* self, dbuffer *msg,
  * @sa CL_ParticleSpawn
  * @sa EV_PARTICLE_SPAWN
  */
-void CL_ParticleSpawnEvent (const eventRegister_t *self, dbuffer *msg)
+void CL_ParticleSpawnEvent (const eventRegister_t* self, dbuffer *msg)
 {
 	char particle[MAX_VAR];
 	int levelflags;

@@ -31,19 +31,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Called whenever an entity disappears from view
  * @sa CL_EntAppear
  */
-void CL_EntPerish (const eventRegister_t *self, dbuffer *msg)
+void CL_EntPerish (const eventRegister_t* self, dbuffer *msg)
 {
 	int		entnum;
 	int		type;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &type);
 
-	le_t *le = LE_Get(entnum);
+	le_t* le = LE_Get(entnum);
 
 	if (!le)
 		LE_NotFoundWithTypeError(entnum, type);
 
-	le_t *actor = nullptr;
+	le_t* actor = nullptr;
 	switch (le->type) {
 	case ET_ITEM:
 		cls.i.emptyContainer(&le->inv, CID_FLOOR);
