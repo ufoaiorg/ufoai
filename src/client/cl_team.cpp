@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_nodes.h"
 
 /** @brief List of currently displayed or equipable characters. */
-linkedList_t *chrDisplayList;
+linkedList_t* chrDisplayList;
 
 /**
  * @brief Allocate a skin from the cls structure
@@ -44,7 +44,7 @@ linkedList_t *chrDisplayList;
 actorSkin_t* CL_AllocateActorSkin (const char* name)
 {
 	int index;
-	actorSkin_t *skin;
+	actorSkin_t* skin;
 
 	if (cls.numActorSkins >= lengthof(cls.actorSkins))
 		Sys_Error("CL_AllocateActorSkin: Max actorskin hit");
@@ -80,9 +80,9 @@ static const actorSkin_t* CL_GetActorSkinByIDS (unsigned int idx)
 	return &cls.actorSkins[idx];
 }
 
-static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
+static void CL_CharacterSkillAndScoreCvars (const character_t* chr)
 {
-	const chrScoreGlobal_t *score = &chr->score;
+	const chrScoreGlobal_t* score = &chr->score;
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
 	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
@@ -141,7 +141,7 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-static void CL_ActorCvars (const character_t *chr)
+static void CL_ActorCvars (const character_t* chr)
 {
 	Item *weapon;
 	assert(chr);
@@ -209,7 +209,7 @@ const char* CL_ActorGetSkillString (const int skill)
  * @sa CL_ActorCvars
  * @sa CL_ActorSelect
  */
-static void CL_UGVCvars (const character_t *chr)
+static void CL_UGVCvars (const character_t* chr)
 {
 	Cvar_Set("mn_lweapon", "");
 	Cvar_Set("mn_rweapon", "");
@@ -217,7 +217,7 @@ static void CL_UGVCvars (const character_t *chr)
 	Cvar_Set("mn_tmnd", "%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]));
 }
 
-void CL_UpdateCharacterValues (const character_t *chr)
+void CL_UpdateCharacterValues (const character_t* chr)
 {
 	CL_CharacterSkillAndScoreCvars(chr);
 
@@ -234,7 +234,7 @@ void CL_UpdateCharacterValues (const character_t *chr)
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
  */
-void CL_GenerateCharacter (character_t *chr, const char* teamDefName)
+void CL_GenerateCharacter (character_t* chr, const char* teamDefName)
 {
 	chr->init();
 
@@ -258,9 +258,9 @@ static void CL_InitSkin_f (void)
 {
 	/* create option for singleplayer skins */
 	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == nullptr) {
-		uiNode_t *skins = nullptr;
+		uiNode_t* skins = nullptr;
 		int idx = 0;
-		const actorSkin_t *skin;
+		const actorSkin_t* skin;
 		while ((skin = CL_GetActorSkinByIDS(idx++))) {
 			if (!skin->singleplayer)
 				continue;
@@ -271,9 +271,9 @@ static void CL_InitSkin_f (void)
 
 	/* create option for multiplayer skins */
 	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == nullptr) {
-		uiNode_t *skins = nullptr;
+		uiNode_t* skins = nullptr;
 		int idx = 0;
-		const actorSkin_t *skin;
+		const actorSkin_t* skin;
 		while ((skin = CL_GetActorSkinByIDS(idx++))) {
 			if (!skin->multiplayer)
 				continue;
@@ -288,7 +288,7 @@ static void CL_InitSkin_f (void)
  */
 static int CL_FixActorSkinIDX (int idx)
 {
-	const actorSkin_t *skin = CL_GetActorSkinByIDS(idx);
+	const actorSkin_t* skin = CL_GetActorSkinByIDS(idx);
 
 	/** @todo we should check somewhere there is at least 1 skin */
 	if (skin == nullptr) {

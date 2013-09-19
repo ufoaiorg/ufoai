@@ -36,7 +36,7 @@ static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at
  * @brief Iterates through the UFOs
  * @param[in] lastUFO Pointer of the aircraft to iterate from. call with nullptr to get the first one.
  */
-aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
+aircraft_t* UFO_GetNext (aircraft_t* lastUFO)
 {
 	aircraft_t* endOfUFOs = &ccs.ufos[ccs.numUFOs];
 	aircraft_t* ufo;
@@ -61,7 +61,7 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 /**
  * @sa AIR_IsAircraftOnGeoscape
  */
-aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
+aircraft_t* UFO_GetNextOnGeoscape (aircraft_t* lastUFO)
 {
 	aircraft_t* ufo = lastUFO;
 	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
@@ -95,7 +95,7 @@ aircraft_t* UFO_GetByIDX (const int idx)
 const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
 {
 	const char* id = cgi->Com_UFOTypeToShortName(type);
-	const technology_t *tech = RS_GetTechByProvided(id);
+	const technology_t* tech = RS_GetTechByProvided(id);
 	return tech;
 }
 
@@ -109,7 +109,7 @@ const aircraft_t* UFO_GetByType (const ufoType_t type)
 	int i;
 
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		aircraft_t *ufo = &ccs.aircraftTemplates[i];
+		aircraft_t* ufo = &ccs.aircraftTemplates[i];
 		if (ufo->ufotype == type)
 			return ufo;
 	}
@@ -124,7 +124,7 @@ const aircraft_t* UFO_GetByType (const ufoType_t type)
  */
 bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
 {
-	const aircraft_t *ufo = UFO_GetByType(type);
+	const aircraft_t* ufo = UFO_GetByType(type);
 
 	return ufo->ufoInterestOnGeoscape <= ccs.overallInterest;
 }
@@ -138,7 +138,7 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
  */
 const char* UFO_TypeToName (const ufoType_t type)
 {
-	const technology_t *tech = UFO_GetTechnologyFromType(type);
+	const technology_t* tech = UFO_GetTechnologyFromType(type);
 	if (tech)
 		return _(tech->name);
 	cgi->Com_Error(ERR_DROP, "UFO_TypeToName(): Unknown UFO type %i\n", type);
@@ -148,9 +148,9 @@ const char* UFO_TypeToName (const ufoType_t type)
  * @brief Returns names of the UFO is UFO has been researched.
  * @param[in] ufocraft Pointer to the UFO.
  */
-const char* UFO_GetName (const aircraft_t *ufocraft)
+const char* UFO_GetName (const aircraft_t* ufocraft)
 {
-	const technology_t *tech = ufocraft->tech;
+	const technology_t* tech = ufocraft->tech;
 
 	assert(tech);
 
@@ -214,7 +214,7 @@ static void UFO_SetRandomPos (aircraft_t* ufocraft)
  * @param[in] base Pointer to the base
  * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
-static int UFO_IsTargetOfBase (const aircraft_t *ufo, const base_t *base)
+static int UFO_IsTargetOfBase (const aircraft_t* ufo, const base_t* base)
 {
 	int i;
 
@@ -237,7 +237,7 @@ static int UFO_IsTargetOfBase (const aircraft_t *ufo, const base_t *base)
  * @param[in] installation Pointer to the installation
  * @return UFO_IS_NO_TARGET if ufo is not a target, UFO_IS_TARGET_OF_MISSILE if target of a missile
  */
-static int UFO_IsTargetOfInstallation (const aircraft_t *ufo, const installation_t *installation)
+static int UFO_IsTargetOfInstallation (const aircraft_t* ufo, const installation_t* installation)
 {
 	int i;
 
@@ -260,7 +260,7 @@ static int UFO_IsTargetOfInstallation (const aircraft_t *ufo, const installation
  * @sa UFO_UpdateAlienInterestForAllBases
  * @sa AB_UpdateStealthForOneBase
  */
-static void UFO_UpdateAlienInterestForOneBase (const aircraft_t *ufo, base_t *base)
+static void UFO_UpdateAlienInterestForOneBase (const aircraft_t* ufo, base_t* base)
 {
 	float probability;
 	float distance;
@@ -302,7 +302,7 @@ static void UFO_UpdateAlienInterestForOneBase (const aircraft_t *ufo, base_t *ba
  * @param[in] installation Pointer to the installation
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t *ufo, installation_t *installation)
+static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t* ufo, installation_t* installation)
 {
 	float probability;
 	float distance;
@@ -346,11 +346,11 @@ static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t *ufo, in
  */
 void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 {
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 
 	ufo = nullptr;
 	while ((ufo = UFO_GetNext(ufo)) != nullptr) {
-		base_t *base;
+		base_t* base;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
@@ -368,7 +368,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 /**
  * @brief Check if the ufo can shoot at a PHALANX aircraft and whether it should follow another ufo
  */
-static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo, float maxDetectionRange = MAX_DETECTING_RANGE)
+static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t* ufo, float maxDetectionRange = MAX_DETECTING_RANGE)
 {
 	float distance = 999999.;
 
@@ -415,7 +415,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 	/* if this ufo is a leader, it does not try to search another one */
 	if (ufo->leader)
 		return;
-	aircraft_t *otherUFO = nullptr;
+	aircraft_t* otherUFO = nullptr;
 	const float polarCoordinatesOffset = 1.0f;
 	while ((otherUFO = UFO_GetNextOnGeoscape(otherUFO)) != nullptr) {
 		if (otherUFO == ufo)
@@ -485,7 +485,7 @@ void UFO_SendToDestination (aircraft_t* ufo, const vec2_t dest)
  * @param[in,out] ufo The ufo to check the shotting for
  * @param[in,out] phalanxAircraft The possible target
  */
-void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t *ufo, aircraft_t* phalanxAircraft)
+void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t* ufo, aircraft_t* phalanxAircraft)
 {
 	/* check if the ufo is already attacking an aircraft */
 	if (ufo->aircraftTarget) {
@@ -514,7 +514,7 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
-		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
+		aircraft_t* ufo = UFO_GetByIDX(ufoIdx);
 		/* don't run a landed ufo */
 		if (ufo->landed)
 			continue;
@@ -549,7 +549,7 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 
 		/* Update delay to launch next projectile */
 		for (k = 0; k < ufo->maxWeapons; k++) {
-			aircraftSlot_t *slot = &ufo->weapons[k];
+			aircraftSlot_t* slot = &ufo->weapons[k];
 			if (slot->delayNextShot > 0)
 				slot->delayNextShot -= deltaTime;
 		}
@@ -612,7 +612,7 @@ const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
 	int newUFONum;
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
-		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
 		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype)
 			break;
 	}
@@ -635,7 +635,7 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 	int newUFONum;
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
-		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
 		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
 			break;
 	}
@@ -653,9 +653,9 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
  * @return @c nullptr if the max allowed amount of ufos are already on the geoscape, otherwise
  * the newly created ufo pointer
  */
-aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
+aircraft_t* UFO_CreateFromTemplate (const aircraft_t* ufoTemplate)
 {
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 
 	if (ufoTemplate == nullptr)
 		return nullptr;
@@ -685,10 +685,10 @@ aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
-aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, mission_t *mission)
+aircraft_t* UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, mission_t* mission)
 {
-	aircraft_t *ufo;
-	const aircraft_t *ufoTemplate;
+	aircraft_t* ufo;
+	const aircraft_t* ufoTemplate;
 
 	ufoTemplate = UFO_GetTemplateForGeoscape(ufoType);
 	if (ufoTemplate == nullptr)
@@ -754,7 +754,7 @@ static void UFO_RemoveFromGeoscape_f (void)
  * @brief Perform actions when a new UFO is detected.
  * @param[in] ufocraft Pointer to the UFO that has just been detected.
  */
-void UFO_DetectNewUFO (aircraft_t *ufocraft)
+void UFO_DetectNewUFO (aircraft_t* ufocraft)
 {
 	if (ufocraft->detected)
 		return;
@@ -782,7 +782,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 bool UFO_CampaignCheckEvents (void)
 {
 	bool newDetection;
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 
 	newDetection = false;
 
@@ -794,7 +794,7 @@ bool UFO_CampaignCheckEvents (void)
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
 		bool detected = false;
-		base_t *base;
+		base_t* base;
 
 		/* don't update UFO status id UFO is landed or crashed */
 		if (ufo->landed)
@@ -884,14 +884,14 @@ bool UFO_CampaignCheckEvents (void)
  * @brief Notify to UFOs that a Phalanx aircraft has been destroyed.
  * @param[in] aircraft Pointer to the Phalanx aircraft that has been removed.
  */
-void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
+void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t* const aircraft)
 {
 	int ufoIdx;
 
 	assert(aircraft);
 
 	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		aircraft_t *ufo = UFO_GetByIDX(ufoIdx);
+		aircraft_t* ufo = UFO_GetByIDX(ufoIdx);
 
 		if (ufo->aircraftTarget == aircraft)
 			ufo->aircraftTarget = nullptr;
@@ -903,7 +903,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
  * @return true or false whether UFO should be seen or not on geoscape.
  * @sa AIR_IsAircraftOnGeoscape
  */
-bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
+bool UFO_IsUFOSeenOnGeoscape (const aircraft_t* ufo)
 {
 	bool seen = !ufo->landed && ufo->detected;
 #ifdef DEBUG

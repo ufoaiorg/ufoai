@@ -55,11 +55,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_campaign.h"
 #include "cp_auto_mission.h"
 
-memPool_t *cp_campaignPool;		/**< reset on every game restart */
+memPool_t* cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
-cvar_t *cp_campaign;
-cvar_t *cp_start_employees;
-cvar_t *cp_missiontest;
+cvar_t* cp_campaign;
+cvar_t* cp_start_employees;
+cvar_t* cp_missiontest;
 
 typedef struct {
 	int ucn;
@@ -120,7 +120,7 @@ int CP_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
  * @brief Updates the character skills after a mission.
  * @param[in,out] chr Pointer to the character that should get the skills updated.
  */
-void CP_UpdateCharacterSkills (character_t *chr)
+void CP_UpdateCharacterSkills (character_t* chr)
 {
 	for (int i = 0; i < SKILL_NUM_TYPES; ++i)
 		chr->score.skills[i] = std::min(MAX_SKILL, chr->score.initialSkills[i] +
@@ -134,7 +134,7 @@ void CP_UpdateCharacterSkills (character_t *chr)
  * @brief Transforms the battlescape values to the character
  * @sa CP_ParseCharacterData
  */
-void CP_UpdateCharacterData (linkedList_t *updateCharacters)
+void CP_UpdateCharacterData (linkedList_t* updateCharacters)
 {
 	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
 		Employee *employee = E_GetEmployeeFromChrUCN(c->ucn);
@@ -144,7 +144,7 @@ void CP_UpdateCharacterData (linkedList_t *updateCharacters)
 			continue;
 		}
 
-		character_t *chr = &employee->chr;
+		character_t* chr = &employee->chr;
 		const bool fullHP = c->HP >= chr->maxHP;
 		chr->STUN = c->STUN;
 		chr->morale = c->morale;
@@ -224,7 +224,7 @@ bool CP_IsRunning (void)
  * @param[in] md The map description data (what it is suitable for)
  * @return false if map is not selectable
  */
-static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, const vec2_t pos)
+static bool CP_MapIsSelectable (const mission_t* mission, const mapDef_t* md, const vec2_t pos)
 {
 	if (md->storyRelated)
 		return false;
@@ -260,14 +260,14 @@ static bool CP_MapIsSelectable (const mission_t *mission, const mapDef_t *md, co
  * @param[in] pos position of the mission (nullptr if the position will be chosen afterwards)
  * @return false if could not set mission
  */
-bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
+bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
 {
 	if (mission->mapDef)
 		return true;
 
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
-	mapDef_t *md = nullptr;
+	mapDef_t* md = nullptr;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))
@@ -363,7 +363,7 @@ void CP_EndCampaign (bool won)
 /**
  * @brief Checks whether the player has lost the campaign
  */
-void CP_CheckLostCondition (const campaign_t *campaign)
+void CP_CheckLostCondition (const campaign_t* campaign)
 {
 	bool endCampaign = false;
 
@@ -396,8 +396,8 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 			/* check for nation happiness */
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < ccs.numNations; j++) {
-				const nation_t *nation = NAT_GetNationByIDX(j);
-				const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+				const nation_t* nation = NAT_GetNationByIDX(j);
+				const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 				if (stats->happiness < campaign->minhappiness) {
 					nationBelowLimit++;
 				}
@@ -432,7 +432,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CP_HandleNationData (float minHappiness, mission_t *mis, const nation_t *affectedNation, const missionResults_t *results)
+void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
@@ -466,8 +466,8 @@ void CP_HandleNationData (float minHappiness, mission_t *mis, const nation_t *af
 		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		float happinessFactor;
 
 		/* update happiness. */
@@ -552,7 +552,7 @@ static inline void CP_AdvanceTimeBySeconds (int seconds)
 /**
  * @return @c true if a month has passed
  */
-static inline bool CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong_t *date)
+static inline bool CP_IsBudgetDue (const dateLong_t* oldDate, const dateLong_t* date)
 {
 	if (oldDate->year < date->year) {
 		return true;
@@ -567,7 +567,7 @@ static inline bool CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong_t *
  * @sa B_UpdateBaseData
  * @sa AIR_CampaignRun
  */
-void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
+void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 {
 	/* advance time */
 	ccs.frametime = secondsSinceLastFrame;
@@ -716,13 +716,13 @@ void CP_UpdateCredits (int credits)
  * @brief Load mapDef statistics
  * @param[in] parent XML Node structure, where we get the information from
  */
-static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
+static bool CP_LoadMapDefStatXML (xmlNode_t* parent)
 {
-	xmlNode_t *node;
+	xmlNode_t* node;
 
 	for (node = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = cgi->XML_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
 		const char* s = cgi->XML_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
-		mapDef_t *map;
+		mapDef_t* map;
 
 		if (s[0] == '\0') {
 			Com_Printf("Warning: MapDef with no id in xml!\n");
@@ -743,13 +743,13 @@ static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-bool CP_LoadXML (xmlNode_t *parent)
+bool CP_LoadXML (xmlNode_t* parent)
 {
-	xmlNode_t *campaignNode;
-	xmlNode_t *mapNode;
+	xmlNode_t* campaignNode;
+	xmlNode_t* mapNode;
 	const char* name;
-	campaign_t *campaign;
-	xmlNode_t *mapDefStat;
+	campaign_t* campaign;
+	xmlNode_t* mapDefStat;
 
 	campaignNode = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
@@ -808,13 +808,13 @@ bool CP_LoadXML (xmlNode_t *parent)
  * @brief Save mapDef statistics
  * @param[out] parent XML Node structure, where we write the information to
  */
-static bool CP_SaveMapDefStatXML (xmlNode_t *parent)
+static bool CP_SaveMapDefStatXML (xmlNode_t* parent)
 {
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	MapDef_ForeachSingleplayerCampaign(md) {
 		if (md->timesAlreadyUsed > 0) {
-			xmlNode_t *node = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
+			xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
 			cgi->XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, md->id);
 			cgi->XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, md->timesAlreadyUsed);
 		}
@@ -827,11 +827,11 @@ static bool CP_SaveMapDefStatXML (xmlNode_t *parent)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-bool CP_SaveXML (xmlNode_t *parent)
+bool CP_SaveXML (xmlNode_t* parent)
 {
-	xmlNode_t *campaign;
-	xmlNode_t *map;
-	xmlNode_t *mapDefStat;
+	xmlNode_t* campaign;
+	xmlNode_t* map;
+	xmlNode_t* mapDefStat;
 
 	campaign = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
@@ -865,10 +865,10 @@ bool CP_SaveXML (xmlNode_t *parent)
  */
 void CP_StartSelectedMission (void)
 {
-	mission_t *mis;
-	aircraft_t *aircraft = GEO_GetMissionAircraft();
-	base_t *base;
-	battleParam_t *battleParam = &ccs.battleParameters;
+	mission_t* mis;
+	aircraft_t* aircraft = GEO_GetMissionAircraft();
+	base_t* base;
+	battleParam_t* battleParam = &ccs.battleParameters;
 
 	if (!aircraft) {
 		Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
@@ -919,7 +919,7 @@ void CP_StartSelectedMission (void)
  * @param[in] chr The character to check a potential promotion for
  * @todo (Zenerka 20080301) extend ranks and change calculations here.
  */
-static bool CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
+static bool CP_ShouldUpdateSoldierRank (const rank_t* rank, const character_t* chr)
 {
 	if (rank->type != EMPL_SOLDIER)
 		return false;
@@ -945,7 +945,7 @@ static bool CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* c
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
  */
-void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
+void CP_UpdateCharacterStats (const base_t* base, const aircraft_t* aircraft)
 {
 	assert(aircraft);
 
@@ -955,7 +955,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 			continue;
 		if (!AIR_IsEmployeeInAircraft(employee, aircraft))
 			continue;
-		character_t *chr = &employee->chr;
+		character_t* chr = &employee->chr;
 
 		/* Remember the number of assigned mission for this character. */
 		chr->score.assignedMissions++;
@@ -970,7 +970,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 			continue;
 
 		for (int j = ccs.numRanks - 1; j > chr->score.rank; j--) {
-			const rank_t *rank = CL_GetRankByIdx(j);
+			const rank_t* rank = CL_GetRankByIdx(j);
 			if (!CP_ShouldUpdateSoldierRank(rank, chr))
 				continue;
 
@@ -994,7 +994,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 static void CP_DebugShowItems_f (void)
 {
 	int i;
-	base_t *base;
+	base_t* base;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
@@ -1009,7 +1009,7 @@ static void CP_DebugShowItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
+		const objDef_t* obj = INVSH_GetItemByIDX(i);
 		Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
 	}
 }
@@ -1027,8 +1027,8 @@ static void CP_DebugAddItem_f (void)
 		return;
 	}
 
-	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
-	const objDef_t *obj = INVSH_GetItemByID(cgi->Cmd_Argv(2));
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	const objDef_t* obj = INVSH_GetItemByID(cgi->Cmd_Argv(2));
 	const int count = atoi(cgi->Cmd_Argv(3));
 
 	if (!base) {
@@ -1043,7 +1043,7 @@ static void CP_DebugAddItem_f (void)
 	Com_Printf("%s %s %d\n", base->name, obj->id, count);
 	B_AddToStorage(base, obj, count);
 	if (B_ItemInBase(obj, base) > 0) {
-		technology_t *tech = RS_GetTechForItem(obj);
+		technology_t* tech = RS_GetTechForItem(obj);
 		RS_MarkCollected(tech);
 	}
 }
@@ -1061,7 +1061,7 @@ static void CP_DebugAddAntimatter_f (void)
 		return;
 	}
 
-	base_t *base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	const int amount = atoi(cgi->Cmd_Argv(2));
 
 	if (!base) {
@@ -1128,7 +1128,7 @@ static void CP_AddCampaignCallbackCommands (void)
 
 static void CP_AddCampaignCommands (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = game_commands; commands->name; commands++)
 		cgi->Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -1160,7 +1160,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 
 static void CP_RemoveCampaignCommands (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = game_commands; commands->name; commands++)
 		cgi->Cmd_RemoveCommand(commands->name);
@@ -1173,7 +1173,7 @@ static void CP_RemoveCampaignCommands (void)
  * @param[in] load @c true if we are loading game, @c false otherwise
  * @param[in] campaign Pointer to campaign - it will be set to @c ccs.curCampaign here.
  */
-void CP_CampaignInit (campaign_t *campaign, bool load)
+void CP_CampaignInit (campaign_t* campaign, bool load)
 {
 	ccs.curCampaign = campaign;
 
@@ -1248,7 +1248,7 @@ void CP_Shutdown (void)
 
 		/** @todo Where does this belong? */
 		for (i = 0; i < ccs.numAlienCategories; i++) {
-			alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
+			alienTeamCategory_t* alienCat = &ccs.alienCategories[i];
 			cgi->LIST_Delete(&alienCat->equipment);
 		}
 
@@ -1289,7 +1289,7 @@ campaign_t* CP_GetCampaign (const char* name)
  */
 void CP_ResetCampaignData (void)
 {
-	mapDef_t *md;
+	mapDef_t* md;
 
 	cgi->UI_MessageResetStack();
 
@@ -1319,13 +1319,13 @@ void CP_ResetCampaignData (void)
 static void CP_DebugChangeCharacterStats_f (void)
 {
 	int j;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
 	E_Foreach(EMPL_SOLDIER, employee) {
-		character_t *chr;
+		character_t* chr;
 
 		if (!employee->isHiredInBase(base))
 			continue;
@@ -1374,7 +1374,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
  * @note When all parameters are nullptr, the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
  */
-bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations)
+bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	float x, y;
 	int num;
@@ -1452,7 +1452,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t *te
 	return true;
 }
 
-int CP_GetSalaryAdministrative (const salary_t *salary)
+int CP_GetSalaryAdministrative (const salary_t* salary)
 {
 	int i, costs;
 
@@ -1464,25 +1464,25 @@ int CP_GetSalaryAdministrative (const salary_t *salary)
 	return costs;
 }
 
-int CP_GetSalaryBaseEmployee (const salary_t *salary, employeeType_t type)
+int CP_GetSalaryBaseEmployee (const salary_t* salary, employeeType_t type)
 {
 	return salary->base[type];
 }
 
-int CP_GetSalaryAdminEmployee (const salary_t *salary, employeeType_t type)
+int CP_GetSalaryAdminEmployee (const salary_t* salary, employeeType_t type)
 {
 	return salary->admin[type];
 }
 
-int CP_GetSalaryRankBonusEmployee (const salary_t *salary, employeeType_t type)
+int CP_GetSalaryRankBonusEmployee (const salary_t* salary, employeeType_t type)
 {
 	return salary->rankBonus[type];
 }
 
-int CP_GetSalaryUpKeepBase (const salary_t *salary, const base_t *base)
+int CP_GetSalaryUpKeepBase (const salary_t* salary, const base_t* base)
 {
 	int cost = salary->baseUpkeep;	/* base cost */
-	building_t *building = nullptr;
+	building_t* building = nullptr;
 	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingStatus == B_STATUS_WORKING
 		 || building->buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)

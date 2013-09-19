@@ -35,4 +35,4 @@ class uiSelectBoxNode : public uiAbstractOptionNode {
 	void onLoaded(uiNode_t* node) override;
 };
 
-void UI_RegisterSelectBoxNode(uiBehaviour_t *behaviour);
+void UI_RegisterSelectBoxNode(uiBehaviour_t* behaviour);

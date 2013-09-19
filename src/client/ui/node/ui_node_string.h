@@ -30,7 +30,7 @@ class uiStringNode : public uiLocatedNode {
 	void onLoading(uiNode_t* node) override;
 };
 
-void UI_RegisterStringNode(uiBehaviour_t *behaviour);
+void UI_RegisterStringNode(uiBehaviour_t* behaviour);
 
 typedef struct {
 	int longlines;				/**< what to do with long lines */

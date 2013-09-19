@@ -40,13 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/grid.h"
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
-static cvar_t *confirm_actions;
+static cvar_t* confirm_actions;
 /** @brief Player preference: should the server make guys stand for long walks, to save TU. */
-static cvar_t *cl_autostand;
-static cvar_t *cl_showactors;
+static cvar_t* cl_autostand;
+static cvar_t* cl_showactors;
 
 /* public */
-le_t *selActor;
+le_t* selActor;
 pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
 static vec3_t mouseDraggingPos; /**< The world pos, which we "grab" to scroll the world in touchscreen mode. */
@@ -61,8 +61,8 @@ static vec3_t mouseDraggingPos; /**< The world pos, which we "grab" to scroll th
  */
 static int mousePosTargettingAlign = 0;
 
-static le_t *mouseActor;
-static le_t *interactEntity;
+static le_t* mouseActor;
+static le_t* interactEntity;
 static pos3_t mouseLastPos;
 
 /**
@@ -88,7 +88,7 @@ ACTOR MENU UPDATING
 ==============================================================
 */
 
-void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
+void CL_ActorSetFireDef (le_t* actor, const fireDef_t* fd)
 {
 	if (actor->fd != fd)
 		mousePosTargettingAlign = 0;
@@ -99,7 +99,7 @@ void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
  * @brief Decide how the actor will walk, taking into account autostanding.
  * @param[in] le Pointer to an actor for which we set the moving mode.
  */
-int CL_ActorMoveMode (const le_t *le)
+int CL_ActorMoveMode (const le_t* le)
 {
 	assert(le);
 	if (!LE_IsCrouched(le))
@@ -122,7 +122,7 @@ int CL_ActorMoveMode (const le_t *le)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
  */
-int CL_ActorGetNumber (const le_t *le)
+int CL_ActorGetNumber (const le_t* le)
 {
 	int actorIdx;
 
@@ -140,7 +140,7 @@ int CL_ActorGetNumber (const le_t *le)
  * @param[in] chr The character to search the local entity for.
  * @return A pointer to a le_t struct.
  */
-le_t *CL_ActorGetFromCharacter (const character_t *chr)
+le_t* CL_ActorGetFromCharacter (const character_t* chr)
 {
 	for (int i = 0; i < cl.numTeamList; ++i) {
 		if (cl.teamList[i] && cl.teamList[i]->ucn == chr->ucn)
@@ -154,9 +154,9 @@ le_t *CL_ActorGetFromCharacter (const character_t *chr)
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
  */
-character_t *CL_ActorGetChr (const le_t *le)
+character_t* CL_ActorGetChr (const le_t* le)
 {
-	const linkedList_t *chrList = cl.chrList;
+	const linkedList_t* chrList = cl.chrList;
 
 	LIST_Foreach(chrList, character_t, chr) {
 		if (chr->ucn == le->ucn)
@@ -170,9 +170,9 @@ character_t *CL_ActorGetChr (const le_t *le)
  * @param[in] shooter The local entity to get the reaction fire firedef from
  * @return The current selected firedef for reaction fire or @c nullptr if there is none
  */
-const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
+const fireDef_t* CL_ActorGetReactionFireFireDef (const le_t* shooter)
 {
-	const character_t *chr = CL_ActorGetChr(shooter);
+	const character_t* chr = CL_ActorGetChr(shooter);
 	if (chr == nullptr)
 		return nullptr;
 
@@ -181,7 +181,7 @@ const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
 	if (weapon == nullptr)
 		return nullptr;
 
-	const fireDef_t *fdArray = weapon->getFiredefs();
+	const fireDef_t* fdArray = weapon->getFiredefs();
 	if (fdArray == nullptr)
 		return nullptr;
 
@@ -189,7 +189,7 @@ const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
 	if (fmIdx < 0 || fmIdx >= MAX_FIREDEFS_PER_WEAPON)
 		return nullptr;
 
-	const fireDef_t *fd = &fdArray[fmIdx];
+	const fireDef_t* fd = &fdArray[fmIdx];
 	return fd;
 }
 
@@ -198,10 +198,10 @@ const fireDef_t *CL_ActorGetReactionFireFireDef (const le_t *shooter)
  * @param[in] target The target to calculate the distance to
  * @return @c true if the given @c target is out of range for the @c shooter with the current selected fire mode
  */
-bool CL_ActorIsReactionFireOutOfRange (const le_t *shooter, const le_t *target)
+bool CL_ActorIsReactionFireOutOfRange (const le_t* shooter, const le_t* target)
 {
 	const float distance = VectorDist(shooter->origin, target->origin);
-	const fireDef_t *fd = CL_ActorGetReactionFireFireDef(shooter);
+	const fireDef_t* fd = CL_ActorGetReactionFireFireDef(shooter);
 	const bool outOfRange = fd->range < distance;
 	return outOfRange;
 }
@@ -213,9 +213,9 @@ bool CL_ActorIsReactionFireOutOfRange (const le_t *shooter, const le_t *target)
  * @return The reserved TUs for the given type.
  * @return -1 on error.
  */
-int CL_ActorReservedTUs (const le_t *le, const reservation_types_t type)
+int CL_ActorReservedTUs (const le_t* le, const reservation_types_t type)
 {
-	character_t *chr;
+	character_t* chr;
 	int reservedReaction, reservedCrouch, reservedShot;
 
 	if (!le)
@@ -261,7 +261,7 @@ int CL_ActorReservedTUs (const le_t *le, const reservation_types_t type)
  * @return The remaining/usable TUs for this actor
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  */
-int CL_ActorUsableTUs (const le_t *le)
+int CL_ActorUsableTUs (const le_t* le)
 {
 	if (!le)
 		return -1;
@@ -275,9 +275,9 @@ int CL_ActorUsableTUs (const le_t *le)
  * @param[in] type The reservation type to be changed (i.e be replaced).
  * @param[in] tus How many TUs to set.
  */
-void CL_ActorReserveTUs (const le_t *le, const reservation_types_t type, const int tus)
+void CL_ActorReserveTUs (const le_t* le, const reservation_types_t type, const int tus)
 {
-	character_t *chr;
+	character_t* chr;
 
 	assert(type != RES_REACTION);
 
@@ -303,12 +303,12 @@ void CL_ActorReserveTUs (const le_t *le, const reservation_types_t type, const i
  * @param[in] type The injury modifier type.
  * @return The injury modifier for this actor.
  */
-float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
+float CL_ActorInjuryModifier (const le_t* le, const modifier_types_t type)
 {
 	float mod = 0;
 
 	if (le) {
-		const character_t *chr = CL_ActorGetChr(le);
+		const character_t* chr = CL_ActorGetChr(le);
 		int bodyPart;
 		if (!chr)
 			return 0;
@@ -347,7 +347,7 @@ float CL_ActorInjuryModifier (const le_t *le, const modifier_types_t type)
  * @param[in] reaction Whether this is a normal or reaction fire shot.
  * @return The TUs needed for the fireDef for this actor.
  */
-int CL_ActorTimeForFireDef (const le_t *le, const fireDef_t *fd, bool reaction)
+int CL_ActorTimeForFireDef (const le_t* le, const fireDef_t* fd, bool reaction)
 {
 	if (!fd)
 		return -1;
@@ -367,7 +367,7 @@ ACTOR SELECTION AND TEAM LIST
  * @sa CL_ActorRemoveFromTeamList
  * @param le Pointer to local entity struct
  */
-void CL_ActorAddToTeamList (le_t *le)
+void CL_ActorAddToTeamList (le_t* le)
 {
 	int actorIdx;
 	const size_t size = lengthof(cl.teamList);
@@ -396,7 +396,7 @@ void CL_ActorAddToTeamList (le_t *le)
 	}
 }
 
-void CL_ActorCleanup (le_t *le)
+void CL_ActorCleanup (le_t* le)
 {
 	cls.i.destroyInventory(&le->inv);
 }
@@ -407,7 +407,7 @@ void CL_ActorCleanup (le_t *le)
  * @sa CL_ActorAddToTeamList
  * @param[in,out] le Pointer to local entity struct of the actor of your team
  */
-void CL_ActorRemoveFromTeamList (le_t *le)
+void CL_ActorRemoveFromTeamList (le_t* le)
 {
 	int i;
 
@@ -436,7 +436,7 @@ void CL_ActorRemoveFromTeamList (le_t *le)
 	/* check selection */
 	if (LE_IsSelected(le)) {
 		for (i = 0; i < cl.numTeamList; i++) {
-			le_t *tl = cl.teamList[i];
+			le_t* tl = cl.teamList[i];
 			if (tl && CL_ActorSelect(tl))
 				break;
 		}
@@ -452,7 +452,7 @@ void CL_ActorRemoveFromTeamList (le_t *le)
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
-bool CL_ActorSelect (le_t *le)
+bool CL_ActorSelect (le_t* le)
 {
 	int actorIdx;
 	character_t* chr;
@@ -523,7 +523,7 @@ bool CL_ActorSelect (le_t *le)
  */
 bool CL_ActorSelectList (int num)
 {
-	le_t *le;
+	le_t* le;
 
 	/* check if actor exists */
 	if (num >= cl.numTeamList || num < 0)
@@ -552,7 +552,7 @@ bool CL_ActorSelectNext (void)
 
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
-		const le_t *le = cl.teamList[i];
+		const le_t* le = cl.teamList[i];
 		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
 			break;
@@ -584,7 +584,7 @@ bool CL_ActorSelectPrev (void)
 
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
-		const le_t *le = cl.teamList[i];
+		const le_t* le = cl.teamList[i];
 		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
 			break;
@@ -618,7 +618,7 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-static pos_t *forbiddenList[MAX_FORBIDDENLIST];
+static pos_t* forbiddenList[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
  * @note all byte pointers in the fb_list list (pos + fieldSize)
@@ -636,7 +636,7 @@ static int forbiddenListLength;
  */
 static void CL_BuildForbiddenList (void)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	forbiddenListLength = 0;
 
@@ -666,9 +666,9 @@ static void CL_BuildForbiddenList (void)
  */
 static void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 	int j;
-	ptl_t *ptl;
+	ptl_t* ptl;
 	vec3_t s;
 
 	while ((le = LE_GetNextInUse(le))) {
@@ -696,7 +696,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		if (le->fieldSize == ACTOR_SIZE_2x2) {
 			/* If this actor blocks 4 fields draw them as well. */
 			for (j = 0; j < 3; j++) {
-				ptl_t *ptl2 = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
+				ptl_t* ptl2 = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
 				ptl2->rounds = ptl->rounds;
 				ptl2->roundsCnt = ptl->roundsCnt;
 				ptl2->life = ptl->life;
@@ -713,7 +713,7 @@ static void CL_DisplayBlockedPaths_f (void)
  * @note An attempt to do this with le->TU to save time ended up with the first actor not being able to move at gamestart.
  * @todo seems like this function is called *before* the TUs are set
  */
-void CL_ActorConditionalMoveCalc (le_t *le)
+void CL_ActorConditionalMoveCalc (le_t* le)
 {
 	CL_BuildForbiddenList();
 	if (le && LE_IsSelected(le)) {
@@ -744,7 +744,7 @@ le_t* CL_ActorGetClosest (const vec3_t origin, int team)
  * @param[in] le Pointer to actor for which we check an action.
  * @return true if action is valid.
  */
-int CL_ActorCheckAction (const le_t *le)
+int CL_ActorCheckAction (const le_t* le)
 {
 	if (!le)
 		return false;
@@ -768,7 +768,7 @@ int CL_ActorCheckAction (const le_t *le)
  * @param[in] le Pointer to actor for which we calculate move lenght.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
+static byte CL_ActorMoveLength (const le_t* le, const pos3_t to)
 {
 	const bool useAutostand = LE_IsCrouched(le) && cl_autostand->integer
 				&& Grid_ShouldUseAutostand(&cl.pathMap, to);
@@ -795,7 +795,7 @@ static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
  * @brief Recalculates the currently selected Actor's move length.
  * @param[in,out] le Pointer to actor for which we reset move lenght.
  */
-void CL_ActorResetMoveLength (le_t *le)
+void CL_ActorResetMoveLength (le_t* le)
 {
 	le->actorMoveLength = CL_ActorMoveLength(le, mousePos);
 }
@@ -849,7 +849,7 @@ static bool CL_ActorTraceMove (const pos3_t to)
  * @param[in,out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
-static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
+static void CL_ActorMaximumMove (const pos3_t to, const le_t* le, pos3_t pos)
 {
 	int dvec;
 	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
@@ -868,7 +868,7 @@ static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 	}
 }
 
-void CL_ActorSetMode (le_t *actor, actorModes_t actorMode)
+void CL_ActorSetMode (le_t* actor, actorModes_t actorMode)
 {
 	actor->actorMode = actorMode;
 }
@@ -880,7 +880,7 @@ void CL_ActorSetMode (le_t *actor, actorModes_t actorMode)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove (le_t *le, const pos3_t to)
+void CL_ActorStartMove (le_t* le, const pos3_t to)
 {
 	byte length;
 	pos3_t toReal;
@@ -923,7 +923,7 @@ void CL_ActorStartMove (le_t *le, const pos3_t to)
  * @param[in] le Who is shooting
  * @param[in] at Position you are targeting to
  */
-void CL_ActorShoot (const le_t *le, const pos3_t at)
+void CL_ActorShoot (const le_t* le, const pos3_t at)
 {
 	int type;
 
@@ -952,7 +952,7 @@ void CL_ActorShoot (const le_t *le, const pos3_t at)
  * @param weapon The weapon to reload
  * @return @c NONE if no container was found, the container id otherwise.
  */
-int CL_ActorGetContainerForReload (Item **invList, const Inventory *inv, const objDef_t *weapon)
+int CL_ActorGetContainerForReload (Item **invList, const Inventory *inv, const objDef_t* weapon)
 {
 	containerIndex_t container;
 	int tu = 100;
@@ -967,7 +967,7 @@ int CL_ActorGetContainerForReload (Item **invList, const Inventory *inv, const o
 		 * to retrieve the ammo from them than the one
 		 * we've already found. */
 		for (Item *ic = inv->getContainer2(container); ic; ic = ic->getNext()) {
-			const objDef_t *od = ic->def();
+			const objDef_t* od = ic->def();
 			if (!od->isLoadableInWeapon(weapon) || !GAME_ItemIsUseable(od))
 				continue;
 			tu = INVDEF(container)->out;
@@ -985,11 +985,11 @@ int CL_ActorGetContainerForReload (Item **invList, const Inventory *inv, const o
  * @param[in] containerID The container to reload
  * @sa CL_ActorCheckAction
  */
-void CL_ActorReload (le_t *le, containerIndex_t containerID)
+void CL_ActorReload (le_t* le, containerIndex_t containerID)
 {
 	Inventory *inv;
 	Item *ic;
-	const objDef_t *weapon;
+	const objDef_t* weapon;
 	containerIndex_t bestContainer;
 
 	if (!CL_ActorCheckAction(le))
@@ -1044,9 +1044,9 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
  * @param toX The x position in the container to move the item to
  * @param toY The y position in the container to move the item to
  */
-void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
+void CL_ActorInvMove (const le_t* le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
 {
-	const invDef_t *fromPtr = INVDEF(fromContainer);
+	const invDef_t* fromPtr = INVDEF(fromContainer);
 
 	assert(CL_BattlescapeRunning());
 	assert(le);
@@ -1055,7 +1055,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 	const Item *item = le->inv.getItemAtPos(fromPtr, fromX, fromY);
 
 	if (item != nullptr) {
-		const character_t *chr = CL_ActorGetChr(le);
+		const character_t* chr = CL_ActorGetChr(le);
 		if (!le->inv.canHoldItemWeight(fromContainer, toContainer, *item, GAME_GetChrMaxLoad(chr))) {
 			UI_Popup(_("Warning"), _("This soldier can not carry anything else."));
 			return;
@@ -1068,7 +1068,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
  * @brief Uses the current selected entity in the battlescape. Can e.g. open the selected door.
  * @sa G_ClientUseEdict
  */
-static void CL_ActorUse (const le_t *le)
+static void CL_ActorUse (const le_t* le)
 {
 	if (!CL_ActorCheckAction(le))
 		return;
@@ -1084,7 +1084,7 @@ static void CL_ActorUse (const le_t *le)
  */
 static void CL_ActorUse_f (void)
 {
-	le_t *actor = selActor;
+	le_t* actor = selActor;
 
 	if (!CL_ActorCheckAction(actor))
 		return;
@@ -1421,7 +1421,7 @@ bool CL_ActorMouseTrace (void)
 	vec3_t from, stop, end;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
-	le_t *interactLe;
+	le_t* interactLe;
 
 	CL_GetWorldCoordsUnderMouse(end, from, stop);
 	VecToPos(end, testPos);
@@ -1539,7 +1539,7 @@ ACTOR GRAPHICS
 static inline bool CL_AddActorWeapon (int objID)
 {
 	if (objID != NONE) {
-		const objDef_t *od = INVSH_GetItemByIDX(objID);
+		const objDef_t* od = INVSH_GetItemByIDX(objID);
 		if (od->isVirtual)
 			return false;
 		return true;
@@ -1556,7 +1556,7 @@ static inline bool CL_AddActorWeapon (int objID)
  * @sa CL_ActorAppear
  * @note Called via addfunc for each local entity in every frame
  */
-bool CL_AddActor (le_t *le, entity_t *ent)
+bool CL_AddActor (le_t* le, entity_t* ent)
 {
 	entity_t add(RF_NONE);
 
@@ -1678,7 +1678,7 @@ TARGETING GRAPHICS
  */
 static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
-	ptl_t *particle = CL_ParticleSpawn("circle", 0, center);
+	ptl_t* particle = CL_ParticleSpawn("circle", 0, center);
 	if (particle != nullptr)
 		particle->size[0] = radius;
 }
@@ -1698,7 +1698,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	bool crossNo;
-	le_t *target = nullptr;
+	le_t* target = nullptr;
 	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd)
@@ -1781,7 +1781,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	vec3_t v0, ds, next;
 	bool obstructed = false;
 	int i;
-	le_t *target = nullptr;
+	le_t* target = nullptr;
 	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
@@ -2174,7 +2174,7 @@ void CL_AddActorPathing (void)
  * @param[in] le The actor
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_ActorPlaySound (const le_t *le, actorSound_t soundType)
+void CL_ActorPlaySound (const le_t* le, actorSound_t soundType)
 {
 	const char* actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
@@ -2373,7 +2373,7 @@ static void CL_ActorUpdate_f (void)
  * @param[in] check The local entity to check the visibility for
  * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
  */
-static bool CL_ActorVis (const le_t *le, const le_t *check)
+static bool CL_ActorVis (const le_t* le, const le_t* check)
 {
 	vec3_t test, dir;
 	float delta;
@@ -2438,7 +2438,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 
 	i = lastAlien;
 	do {
-		const le_t *le;
+		const le_t* le;
 		if (++i >= cl.numLEs)
 			i = 0;
 		le = &cl.LEs[i];
@@ -2471,7 +2471,7 @@ static void CL_NextAlien_f (void)
 
 	i = lastAlien;
 	do {
-		const le_t *le;
+		const le_t* le;
 		if (++i >= cl.numLEs)
 			i = 0;
 		le = &cl.LEs[i];
@@ -2502,7 +2502,7 @@ static void CL_PrevAlien_f (void)
 
 	i = lastAlien;
 	do {
-		const le_t *le;
+		const le_t* le;
 		if (--i < 0)
 			i = cl.numLEs - 1;
 		le = &cl.LEs[i];
@@ -2520,7 +2520,7 @@ static void CL_PrevAlien_f (void)
  * Performs pending actions for the given actor
  * @param le The actor that should perform the pending actions
  */
-static void CL_ActorConfirmAction (le_t *le)
+static void CL_ActorConfirmAction (le_t* le)
 {
 	if (le->team != cl.actTeam)
 		return;
@@ -2553,7 +2553,7 @@ static void CL_ActorConfirmAction_f (void)
 	static int time = 0;
 
 	if (time - cl.time < 1000) {
-		le_t *le = nullptr;
+		le_t* le = nullptr;
 		while ((le = LE_GetNextInUse(le))) {
 			if (LE_IsLivingActor(le) && !LE_IsStunned(le) && le->team == cls.team)
 				CL_ActorConfirmAction(le);

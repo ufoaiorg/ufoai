@@ -37,13 +37,13 @@ struct checkboxExtraData_t {
 	abstractValueExtraData_t super;
 
 	/** Sprite used as an icon for checked state */
-	uiSprite_t *iconChecked;
+	uiSprite_t* iconChecked;
 	/** Sprite used as an icon for unchecked state */
-	uiSprite_t *iconUnchecked;
+	uiSprite_t* iconUnchecked;
 	/** Sprite used as an icon for indeterminate state */
-	uiSprite_t *iconIndeterminate;
+	uiSprite_t* iconIndeterminate;
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 };
 
-void UI_RegisterCheckBoxNode(uiBehaviour_t *behaviour);
+void UI_RegisterCheckBoxNode(uiBehaviour_t* behaviour);

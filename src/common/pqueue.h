@@ -39,12 +39,12 @@ typedef struct priorityQueueElement_s {
 typedef struct priorityQueue_s {
 	uint32_t maxSize;
 	uint32_t currentSize;
-	priorityQueueElement_t *elements;
+	priorityQueueElement_t* elements;
 } priorityQueue_t;
 
-void PQueueInitialise(priorityQueue_t *pq, uint32_t maxElements);
-void PQueueFree(priorityQueue_t *pq);
+void PQueueInitialise(priorityQueue_t* pq, uint32_t maxElements);
+void PQueueFree(priorityQueue_t* pq);
 
 #define PQueueIsEmpty(pq) ((pq)->currentSize == 0)
-void PQueuePush(priorityQueue_t *pq, const pos4_t item, priorityQueueRating_t rating);
-void PQueuePop(priorityQueue_t *pq, pos4_t item);
+void PQueuePush(priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t rating);
+void PQueuePop(priorityQueue_t* pq, pos4_t item);

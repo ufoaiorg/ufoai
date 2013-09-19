@@ -54,7 +54,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
  */
 uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
 {
-	node_index_t *a;
+	node_index_t* a;
 	unsigned int hash;
 
 	hash = Com_HashKey(childName, INDEXEDCHILD_HASH_SIZE);
@@ -71,7 +71,7 @@ uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
  */
 bool UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
-	node_index_t *a;
+	node_index_t* a;
 	unsigned int hash;
 
 	hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
@@ -111,7 +111,7 @@ bool UI_WindowIsFullScreen (const uiNode_t* const node)
 	return EXTRADATACONST(node).isFullScreen;
 }
 
-void uiWindowNode::draw (uiNode_t *node)
+void uiWindowNode::draw (uiNode_t* node)
 {
 	const char* text;
 	vec2_t pos;
@@ -154,7 +154,7 @@ void uiWindowNode::draw (uiNode_t *node)
 		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text);
 }
 
-void uiWindowNode::doLayout (uiNode_t *node)
+void uiWindowNode::doLayout (uiNode_t* node)
 {
 	if (!node->invalidated)
 		return;
@@ -188,7 +188,7 @@ void uiWindowNode::doLayout (uiNode_t *node)
 /**
  * @brief Called when we init the node on the screen
  */
-void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiWindowNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	uiLocatedNode::onWindowOpened(node, nullptr);
 
@@ -202,7 +202,7 @@ void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when we close the node on the screen
  */
-void uiWindowNode::onWindowClosed (uiNode_t *node)
+void uiWindowNode::onWindowClosed (uiNode_t* node)
 {
 	uiLocatedNode::onWindowClosed(node);
 
@@ -214,7 +214,7 @@ void uiWindowNode::onWindowClosed (uiNode_t *node)
 /**
  * @brief Called when a windows gets active again after some other window was popped from the stack
  */
-void uiWindowNode::onWindowActivate (uiNode_t *node)
+void uiWindowNode::onWindowActivate (uiNode_t* node)
 {
 	uiLocatedNode::onWindowActivate(node);
 
@@ -226,7 +226,7 @@ void uiWindowNode::onWindowActivate (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-void uiWindowNode::onLoading (uiNode_t *node)
+void uiWindowNode::onLoading (uiNode_t* node)
 {
 	node->box.size[0] = VID_NORM_WIDTH;
 	node->box.size[1] = VID_NORM_HEIGHT;
@@ -237,11 +237,11 @@ void uiWindowNode::onLoading (uiNode_t *node)
 /**
  * @brief Called at the end of the load from script
  */
-void uiWindowNode::onLoaded (uiNode_t *node)
+void uiWindowNode::onLoaded (uiNode_t* node)
 {
 	/* create a drag zone, if it is requested */
 	if (EXTRADATA(node).dragButton) {
-		uiNode_t *control = UI_AllocNode("move_window_button", "controls", node->dynamic);
+		uiNode_t* control = UI_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
 		control->box.size[0] = node->box.size[0];
 		control->box.size[1] = TOP_HEIGHT;
@@ -253,7 +253,7 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 
 	/* create a close button, if it is requested */
 	if (EXTRADATA(node).closeButton) {
-		uiNode_t *button = UI_AllocNode("close_window_button", "button", node->dynamic);
+		uiNode_t* button = UI_AllocNode("close_window_button", "button", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		static const char* closeCommand = "ui_close <path:root>;";
 
@@ -276,7 +276,7 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 		UI_Invalidate(node);
 }
 
-void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
+void uiWindowNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
 	/* clean up index */
 	EXTRADATA(clone).index = nullptr;
@@ -288,7 +288,7 @@ void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
  * @param node A window node
  * @return A position, else nullptr if no notice position
  */
-vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node)
+vec_t* UI_WindowNodeGetNoticePosition(uiNode_t* node)
 {
 	if (Vector2Empty(EXTRADATA(node).noticePos))
 		return nullptr;
@@ -322,14 +322,14 @@ bool UI_WindowIsModal(uiNode_t const* const node)
  * @param binding Key binding to link with the window (structure should not be already linked somewhere)
  * @todo Rework that function to remove possible wrong use of that function
  */
-void UI_WindowNodeRegisterKeyBinding (uiNode_t* node, uiKeyBinding_t *binding)
+void UI_WindowNodeRegisterKeyBinding (uiNode_t* node, uiKeyBinding_t* binding)
 {
 	assert(UI_NodeInstanceOf(node, "window"));
 	binding->next = EXTRADATA(node).keyList;
 	EXTRADATA(node).keyList = binding;
 }
 
-const uiKeyBinding_t *binding;
+const uiKeyBinding_t* binding;
 
 /**
  * @brief Search a a key binding from a window node.
@@ -337,9 +337,9 @@ const uiKeyBinding_t *binding;
  * @param node A window node
  * @param key A key code, either K_ value or lowercase ascii
  */
-uiKeyBinding_t *UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned int key)
+uiKeyBinding_t* UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned int key)
 {
-	uiKeyBinding_t *binding = EXTRADATACONST(node).keyList;
+	uiKeyBinding_t* binding = EXTRADATACONST(node).keyList;
 	assert(UI_NodeInstanceOf(node, "window"));
 	while (binding) {
 		if (binding->key == key)
@@ -349,7 +349,7 @@ uiKeyBinding_t *UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned
 	return binding;
 }
 
-void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
+void UI_RegisterWindowNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "window";
 	behaviour->manager = UINodePtr(new uiWindowNode());

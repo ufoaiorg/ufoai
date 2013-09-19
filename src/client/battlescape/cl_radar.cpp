@@ -108,7 +108,7 @@ static void CL_BattlescapeRadarGenerate_f (void)
 	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, nullptr);
 }
 
-static void CL_BattlescapeRadarGenerateAll (uiNode_t *node, uiTimer_t *timer)
+static void CL_BattlescapeRadarGenerateAll (uiNode_t* node, uiTimer_t* timer)
 {
 	int level = (timer->calledTime - 1) / 2;
 	int mode = (timer->calledTime - 1) % 2;

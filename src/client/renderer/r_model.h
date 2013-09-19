@@ -66,22 +66,22 @@ typedef struct model_s {
 /*============================================================================ */
 
 void R_ModModellist_f(void);
-image_t* R_AliasModelState(const model_t *mod, int* mesh, int* frame, int* oldFrame, int* skin);
+image_t* R_AliasModelState(const model_t* mod, int* mesh, int* frame, int* oldFrame, int* skin);
 image_t* R_AliasModelGetSkin(const char* modelFileName, const char* skin);
-void R_DrawAliasModel(entity_t *e);
+void R_DrawAliasModel(entity_t* e);
 void R_ShutdownModels(bool complete);
 void R_ModReloadSurfacesArrays(void);
 int R_ModAllocateActorSkin(const char* name);
-void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t *defaultSkin);
+void R_LoadActorSkinsFromModel(mAliasMesh_t* outMesh, image_t* defaultSkin);
 bool R_UseActorSkin(void);
 
-model_t *R_FindModel(const char* name);
+model_t* R_FindModel(const char* name);
 bool R_ModelExists(const char* name);
-model_t *R_GetModel(const char* name);
-model_t *R_AllocModelSlot(void);
+model_t* R_GetModel(const char* name);
+model_t* R_AllocModelSlot(void);
 
 /** @brief The world model(s) */
-extern model_t *r_mapTiles[MAX_MAPTILES];
+extern model_t* r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;
 
 extern model_t r_modelsInline[MAX_MOD_KNOWN];

@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 uiGlobal_t ui_global;
 
-memPool_t *ui_dynStringPool;
-memPool_t *ui_dynPool;
-memPool_t *ui_sysPool;
+memPool_t* ui_dynStringPool;
+memPool_t* ui_dynPool;
+memPool_t* ui_sysPool;
 
 #ifdef DEBUG
-static cvar_t *ui_debug;
+static cvar_t* ui_debug;
 #endif
 
 /**
@@ -75,13 +75,13 @@ static void UI_Memory_f (void)
 	Com_Printf("\t-Model structure size: " UFO_SIZE_T " B\n", sizeof(uiModel_t));
 	Com_Printf("\t-Node structure size: " UFO_SIZE_T " B x%d\n", sizeof(uiNode_t), ui_global.numNodes);
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
-		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
+		uiBehaviour_t* b = UI_GetNodeBehaviourByIndex(i);
 		Com_Printf("\t -Behaviour %20s structure size: " UFO_SIZE_T " (+" UFO_SIZE_T " B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
 
 	size = 0;
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
-		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
+		uiBehaviour_t* b = UI_GetNodeBehaviourByIndex(i);
 		size += nodeSize * b->count + b->extraDataSize * b->count;
 	}
 	Com_Printf("Global memory:\n");
@@ -149,7 +149,7 @@ void UI_Reinit (void)
 void UI_Shutdown (void)
 {
 	int i;
-	const uiBehaviour_t *confunc;
+	const uiBehaviour_t* confunc;
 
 	/* MN is not yet initialized */
 	if (ui_global.adata == nullptr)
@@ -159,7 +159,7 @@ void UI_Shutdown (void)
 
 	/* remove all confunc commands */
 	for (i = 0; i < ui_global.numWindows; i++) {
-		uiNode_t *node = ui_global.windows[i];
+		uiNode_t* node = ui_global.windows[i];
 		while (node) {
 
 			/* remove the command */
@@ -216,7 +216,7 @@ void UI_FinishInit (void)
 
 void UI_Init (void)
 {
-	cvar_t *ui_hunkSize = Cvar_Get("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
+	cvar_t* ui_hunkSize = Cvar_Get("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
 
 #ifdef DEBUG
 	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");

@@ -118,7 +118,7 @@ static inline byte CIN_ROQ_ClampByte (int value)
 /**
  * @sa CIN_ROQ_DecodeVideo
  */
-static void CIN_ROQ_ApplyVector2x2 (cinematic_t *cin, int x, int y, const byte* indices)
+static void CIN_ROQ_ApplyVector2x2 (cinematic_t* cin, int x, int y, const byte* indices)
 {
 	int i;
 
@@ -141,7 +141,7 @@ static void CIN_ROQ_ApplyVector2x2 (cinematic_t *cin, int x, int y, const byte* 
 /**
  * @sa CIN_ROQ_DecodeVideo
  */
-static void CIN_ROQ_ApplyVector4x4 (cinematic_t *cin, int x, int y, const byte* indices)
+static void CIN_ROQ_ApplyVector4x4 (cinematic_t* cin, int x, int y, const byte* indices)
 {
 	int i;
 
@@ -182,7 +182,7 @@ static void CIN_ROQ_ApplyVector4x4 (cinematic_t *cin, int x, int y, const byte* 
 /**
  * @sa CIN_ROQ_DecodeVideo
  */
-static void CIN_ROQ_ApplyMotion4x4 (cinematic_t *cin, int x, int y, int mx, int my, int mv)
+static void CIN_ROQ_ApplyMotion4x4 (cinematic_t* cin, int x, int y, int mx, int my, int mv)
 {
 	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
@@ -201,7 +201,7 @@ static void CIN_ROQ_ApplyMotion4x4 (cinematic_t *cin, int x, int y, int mx, int 
 /**
  * @sa CIN_ROQ_DecodeVideo
  */
-static void CIN_ROQ_ApplyMotion8x8 (cinematic_t *cin, int x, int y, int mx, int my, int mv)
+static void CIN_ROQ_ApplyMotion8x8 (cinematic_t* cin, int x, int y, int mx, int my, int mv)
 {
 	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
@@ -224,7 +224,7 @@ static void CIN_ROQ_ApplyMotion8x8 (cinematic_t *cin, int x, int y, int mx, int 
 /**
  * @sa CIN_ROQ_DecodeChunk
  */
-static void CIN_ROQ_DecodeInfo (cinematic_t *cin, const byte* data)
+static void CIN_ROQ_DecodeInfo (cinematic_t* cin, const byte* data)
 {
 	if (ROQCIN.frameBuffer[0] && ROQCIN.frameBuffer[1])
 		return;		/* Already allocated */
@@ -246,7 +246,7 @@ static void CIN_ROQ_DecodeInfo (cinematic_t *cin, const byte* data)
 /**
  * @sa CIN_ROQ_DecodeChunk
  */
-static void CIN_ROQ_DecodeCodeBook (cinematic_t *cin, const byte* data)
+static void CIN_ROQ_DecodeCodeBook (cinematic_t* cin, const byte* data)
 {
 	int		numQuadVectors, numQuadCells;
 	int		i;
@@ -305,7 +305,7 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t *cin, const byte* data)
 /**
  * @sa CIN_ROQ_DecodeChunk
  */
-static void CIN_ROQ_DecodeVideo (cinematic_t *cin, const byte* data)
+static void CIN_ROQ_DecodeVideo (cinematic_t* cin, const byte* data)
 {
 	int		vqFlag, vqFlagPos, vqCode;
 	int		xPos, yPos, xMot, yMot;
@@ -413,7 +413,7 @@ static void CIN_ROQ_DecodeVideo (cinematic_t *cin, const byte* data)
  * @sa CIN_ROQ_DecodeSoundStereo
  * @sa CIN_ROQ_DecodeChunk
  */
-static void CIN_ROQ_DecodeSoundMono (cinematic_t *cin, const byte* data)
+static void CIN_ROQ_DecodeSoundMono (cinematic_t* cin, const byte* data)
 {
 	short samples[ROQ_MAX_CHUNK_SIZE * 2];
 	int prev = 0;
@@ -432,7 +432,7 @@ static void CIN_ROQ_DecodeSoundMono (cinematic_t *cin, const byte* data)
  * @sa CIN_ROQ_DecodeSoundMono
  * @sa CIN_ROQ_DecodeChunk
  */
-static void CIN_ROQ_DecodeSoundStereo (cinematic_t *cin, const byte* data)
+static void CIN_ROQ_DecodeSoundStereo (cinematic_t* cin, const byte* data)
 {
 	short samples[ROQ_MAX_CHUNK_SIZE];
 	int i;
@@ -454,7 +454,7 @@ static void CIN_ROQ_DecodeSoundStereo (cinematic_t *cin, const byte* data)
  * @sa CIN_ROQ_RunCinematic
  * @return true if the cinematic is still running, false otherwise
  */
-static bool CIN_ROQ_DecodeChunk (cinematic_t *cin)
+static bool CIN_ROQ_DecodeChunk (cinematic_t* cin)
 {
 	int frame;
 
@@ -516,7 +516,7 @@ static bool CIN_ROQ_DecodeChunk (cinematic_t *cin)
 /**
  * @sa R_UploadData
  */
-static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
+static void CIN_ROQ_DrawCinematic (cinematic_t* cin)
 {
 	int texnum;
 
@@ -531,7 +531,7 @@ static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-bool CIN_ROQ_RunCinematic (cinematic_t *cin)
+bool CIN_ROQ_RunCinematic (cinematic_t* cin)
 {
 	bool runState = CIN_ROQ_DecodeChunk(cin);
 	if (runState)
@@ -539,7 +539,7 @@ bool CIN_ROQ_RunCinematic (cinematic_t *cin)
 	return runState;
 }
 
-void CIN_ROQ_CloseCinematic (cinematic_t *cin)
+void CIN_ROQ_CloseCinematic (cinematic_t* cin)
 {
 	if (ROQCIN.file.f || ROQCIN.file.z)
 		FS_CloseFile(&ROQCIN.file);
@@ -555,7 +555,7 @@ void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 	cin->codecData = nullptr;
 }
 
-int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char* fileName)
+int CIN_ROQ_OpenCinematic (cinematic_t* cin, const char* fileName)
 {
 	roqChunk_t chunk;
 	int size;

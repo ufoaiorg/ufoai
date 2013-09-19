@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void INS_SetInstallationTitle (installationType_t type)
 {
-	const installationTemplate_t *insTemp = INS_GetInstallationTemplateByType(type);
+	const installationTemplate_t* insTemp = INS_GetInstallationTemplateByType(type);
 	cgi->Cvar_Set("mn_installation_title", "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
 	if (!insTemp || !Q_strvalid(insTemp->description))
 		cgi->UI_ResetData(TEXT_BUILDING_INFO);
@@ -53,7 +53,7 @@ static void INS_SetInstallationTitle (installationType_t type)
  * @note This is (and should be) the only place where installationCurrent is set
  * to a value that is not @c nullptr
  */
-void INS_SelectInstallation (installation_t *installation)
+void INS_SelectInstallation (installation_t* installation)
 {
 	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
@@ -84,7 +84,7 @@ void INS_SelectInstallation (installation_t *installation)
  */
 static void INS_BuildInstallation_f (void)
 {
-	const installationTemplate_t *installationTemplate;
+	const installationTemplate_t* installationTemplate;
 
 	if (cgi->Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", cgi->Cmd_Argv(0));
@@ -105,13 +105,13 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		installation_t *installation = INS_Build(installationTemplate, ccs.newBasePos, cgi->Cvar_GetString("mn_installation_title"));
+		installation_t* installation = INS_Build(installationTemplate, ccs.newBasePos, cgi->Cvar_GetString("mn_installation_title"));
 
 		CP_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 		cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
 
-		const nation_t *nation = GEO_GetNation(installation->pos);
+		const nation_t* nation = GEO_GetNation(installation->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
 		else
@@ -137,7 +137,7 @@ static void INS_BuildInstallation_f (void)
 static void INS_SelectInstallation_f (void)
 {
 	int installationID;
-	installation_t *installation;
+	installation_t* installation;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <installationID>\n", cgi->Cmd_Argv(0));
@@ -157,7 +157,7 @@ static void INS_SelectInstallation_f (void)
  */
 static void INS_ChangeInstallationName_f (void)
 {
-	installation_t *installation = INS_GetCurrentSelectedInstallation();
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 
 	/* maybe called without installation initialized or active */
 	if (!installation)
@@ -172,7 +172,7 @@ static void INS_ChangeInstallationName_f (void)
  */
 static void INS_DestroyInstallation_f (void)
 {
-	installation_t *installation;
+	installation_t* installation;
 
 	if (cgi->Cmd_Argc() < 2 || atoi(cgi->Cmd_Argv(1)) < 0) {
 		installation = INS_GetCurrentSelectedInstallation();
@@ -211,7 +211,7 @@ static void INS_UpdateInstallationLimit_f (void)
  */
 static void INS_FillUFOYardData_f (void)
 {
-	installation_t *ins;
+	installation_t* ins;
 
 	cgi->UI_ExecuteConfunc("ufolist_clear");
 	if (cgi->Cmd_Argc() < 2 || atoi(cgi->Cmd_Argv(1)) < 0) {
@@ -225,7 +225,7 @@ static void INS_FillUFOYardData_f (void)
 	}
 
 	if (ins) {
-		const nation_t *nat = GEO_GetNation(ins->pos);
+		const nation_t* nat = GEO_GetNation(ins->pos);
 		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
 		const char* buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
 		const int freeCap = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
@@ -254,7 +254,7 @@ static void INS_FillTypes_f (void)
 	if (INS_GetCount() < B_GetInstallationLimit()) {
 		int i;
 		for (i = 0; i < ccs.numInstallationTemplates; i++) {
-			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
+			const installationTemplate_t* tpl = &ccs.installationTemplates[i];
 			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
 			if (tpl->tech == nullptr || RS_IsResearched_ptr(tpl->tech)) {
@@ -284,7 +284,7 @@ static void INS_SelectType_f (void)
 		return;
 	}
 
-	const installationTemplate_t *tpl = INS_GetInstallationTemplateByID(id);
+	const installationTemplate_t* tpl = INS_GetInstallationTemplateByID(id);
 	if (!tpl) {
 		Com_Printf("Invalid installation template\n");
 		return;

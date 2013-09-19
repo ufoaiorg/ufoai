@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE lineChartExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-void uiLineChartNode::draw (uiNode_t *node)
+void uiLineChartNode::draw (uiNode_t* node)
 {
-	lineStrip_t *lineStrip;
+	lineStrip_t* lineStrip;
 	const int dataId = EXTRADATA(node).dataId;
 	vec3_t pos;
 
@@ -81,7 +81,7 @@ void uiLineChartNode::draw (uiNode_t *node)
 	UI_Transform(nullptr, nullptr, nullptr);
 }
 
-void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
+void UI_RegisterLineChartNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "linechart";
 	behaviour->manager = UINodePtr(new uiLineChartNode());

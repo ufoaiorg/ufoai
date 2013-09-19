@@ -93,7 +93,7 @@ typedef struct client_static_s {
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
 
 	/** these models must only be loaded once */
-	model_t *modelPool[MAX_OBJDEFS];
+	model_t* modelPool[MAX_OBJDEFS];
 
 	/* unique character id */
 	int nextUniqueCharacterNumber;
@@ -123,11 +123,11 @@ extern client_static_t cls;
 /*============================================================================= */
 
 /* cvars */
-extern cvar_t *cl_fps;
-extern cvar_t *cl_selected;
-extern cvar_t *cl_teamnum;
+extern cvar_t* cl_fps;
+extern cvar_t* cl_selected;
+extern cvar_t* cl_teamnum;
 
-extern cvar_t *s_language;
+extern cvar_t* s_language;
 
 /* cl_main.c */
 int CL_GetClientState(void);
