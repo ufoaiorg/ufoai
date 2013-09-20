@@ -446,6 +446,7 @@
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_ufocarrier.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_ufocarrier.h" />
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_xvi.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_xvi.h" />
 		<Unit filename="../../src/client/cgame/campaign/save/save.h" />
 		<Unit filename="../../src/client/cgame/campaign/save/save_aircraft.h" />
 		<Unit filename="../../src/client/cgame/campaign/save/save_airfight.h" />
