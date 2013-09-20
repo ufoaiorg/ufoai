@@ -38,7 +38,7 @@ typedef struct cgame_export_s {
 	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
-	bool (EXPORT *Spawn) (linkedList_t **chrList);
+	bool (EXPORT *Spawn) (linkedList_t** chrList);
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
@@ -69,7 +69,7 @@ typedef struct cgame_export_s {
 	void (EXPORT *DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (bool isTeamPlay);
-	void (EXPORT *InitMissionBriefing) (const char **title, linkedList_t **victoryConditionsMsgIDs, linkedList_t **missionBriefingMsgIDs);
+	void (EXPORT *InitMissionBriefing) (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs);
 	const char* (EXPORT *GetTeamDef) (void);
 	void (EXPORT *NotifyEvent) (event_t eventType);
 	void (EXPORT *AddChatMessage) (const char *message);
@@ -147,14 +147,14 @@ typedef struct cgame_import_s {
 	linkedList_t* (IMPORT *LIST_Add) (linkedList_t** list, void const* data, size_t length);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
 	linkedList_t* (IMPORT *LIST_GetPointer) (linkedList_t* list, const void* data);
-	void (IMPORT *LIST_Delete) (linkedList_t **list);
-	bool (IMPORT *LIST_RemoveEntry) (linkedList_t **list, linkedList_t *entry);
+	void (IMPORT *LIST_Delete) (linkedList_t** list);
+	bool (IMPORT *LIST_RemoveEntry) (linkedList_t** list, linkedList_t *entry);
 	bool (IMPORT *LIST_IsEmpty) (const linkedList_t *list);
 	int (IMPORT *LIST_Count) (const linkedList_t *list);
 	linkedList_t *(IMPORT *LIST_CopyStructure) (linkedList_t* src);
 	void *(IMPORT *LIST_GetByIdx) (linkedList_t *list, int index);
-	bool (IMPORT *LIST_Remove) (linkedList_t **list, const void *data);
-	void (IMPORT *LIST_Sort) (linkedList_t **list, linkedListSort_t sorter, const void* userData);
+	bool (IMPORT *LIST_Remove) (linkedList_t** list, const void *data);
+	void (IMPORT *LIST_Sort) (linkedList_t** list, linkedListSort_t sorter, const void* userData);
 	void* (IMPORT *LIST_GetRandom) (linkedList_t *list);
 
 	void (IMPORT *SV_ShutdownWhenEmpty) (void);
@@ -190,7 +190,7 @@ typedef struct cgame_import_s {
 
 	/* renderer functions */
 	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
-	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
+	void (IMPORT *R_LoadImage) (const char *name, byte** pic, int *width, int *height);
 	bool (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT *R_Color) (const vec4_t rgba);
 	void (IMPORT *R_DrawLineStrip) (int points, int *verts);
@@ -259,12 +259,12 @@ typedef struct cgame_import_s {
 	xmlNode_t * (IMPORT *XML_GetNextNode) (xmlNode_t *current, xmlNode_t *parent, const char *name);
 
 	/* filesystem functions */
-	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
+	int (IMPORT *FS_LoadFile) (const char *path, byte** buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
 	int (IMPORT *FS_CheckFile) (const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	int (IMPORT *FS_BuildFileList) (const char *files);
 	const char* (IMPORT *FS_NextFileFromFileList) (const char *files);
-	char *(IMPORT *FS_NextScriptHeader) (const char *files, const char **name, const char **text);
+	char *(IMPORT *FS_NextScriptHeader) (const char *files, const char** name, const char** text);
 
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
@@ -284,7 +284,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cmd_AddCommand) (const char *cmdName, xcommand_t function, const char *desc);
 	void (IMPORT *Cmd_RemoveCommand) (const char *cmdName);
 	void (IMPORT *Cmd_ExecuteString) (const char *text, ...) __attribute__((format(__printf__, 1, 2)));
-	void (IMPORT *Cmd_AddParamCompleteFunction) (const char *cmd_name, int (*function)(const char *partial, const char **match));
+	void (IMPORT *Cmd_AddParamCompleteFunction) (const char *cmd_name, int (*function)(const char *partial, const char** match));
 	bool (IMPORT *Cmd_GenericCompleteFunction) (char const* candidate, char const* partial, char const** match);
 	mapDef_t* (IMPORT *Com_GetMapDefinitionByID) (const char *mapDefID);
 
@@ -308,7 +308,7 @@ typedef struct cgame_import_s {
 	const char* (IMPORT *Com_GetConstVariable) (const char *space, int value);
 	bool (IMPORT *Com_GetConstIntFromNamespace) (const char *space, const char *variable, int *value);
 	bool (IMPORT *Com_GetConstInt) (const char *name, int *value);
-	const char *(IMPORT *Com_EParse) (const char **text, const char *errhead, const char *errinfo);
+	const char *(IMPORT *Com_EParse) (const char** text, const char *errhead, const char *errinfo);
 	int (IMPORT *Com_EParseValue) (void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 	const char *(IMPORT *Com_ValueToStr) (const void *base, const valueTypes_t type, const int ofs);
 	const teamDef_t* (IMPORT *Com_GetTeamDefinitionByID) (const char *team);
