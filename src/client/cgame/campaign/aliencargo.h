@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief alien cargo entry
  */
 typedef struct alienCargo_s {
-	const teamDef_t *teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
+	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int alive;						/**< Amount of live captured aliens. */
 	int dead;						/**< Amount of alien corpses. */
 } alienCargo_t;
@@ -40,22 +40,22 @@ typedef struct alienCargo_s {
  */
 class AlienCargo {
 	protected:
-		linkedList_t *cargo;		/**< internal linkedlist of teams and amounts */
+		linkedList_t* cargo;		/**< internal linkedlist of teams and amounts */
 		int sumAlive;				/**< cache of number of alive aliens of all kinds in the cargo*/
 		int sumDead;				/**< cache of number of dead bodies of all kinds in the cargo*/
 	public:
-		virtual bool add (const teamDef_t *team, int alive, int dead);
+		virtual bool add (const teamDef_t* team, int alive, int dead);
 		virtual bool add (const char* teamId, int alive, int dead);
 
-		int getAlive (const teamDef_t *team) const;
-		int getDead (const teamDef_t *team) const;
+		int getAlive (const teamDef_t* team) const;
+		int getDead (const teamDef_t* team) const;
 		int getAlive (void) const;
 		int getDead (void) const;
 
-		linkedList_t *list (void) const;
+		linkedList_t* list (void) const;
 
-		bool load(xmlNode_t *root);
-		bool save(xmlNode_t *root) const;
+		bool load(xmlNode_t* root);
+		bool save(xmlNode_t* root) const;
 
 		AlienCargo (void);
 		AlienCargo (AlienCargo& alienCargo);

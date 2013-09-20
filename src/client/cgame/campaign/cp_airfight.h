@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief projectile used during fight between two or more aircraft */
 typedef struct aircraftProjectile_s {
-	const objDef_t *aircraftItem;		/**< Corresponding ammo */
+	const objDef_t* aircraftItem;		/**< Corresponding ammo */
 	int idx;				/**< self link of the idx in ccs.projectiles[] @todo: is this really needed? */
 	vec3_t pos[MAX_MULTIPLE_PROJECTILES];	/**< array of positions of the projectile (latitude and longitude) - @todo why vec3_t this is long/lat */
 	vec3_t projectedPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if projected positions of the projectile (latitude and longitude). */
@@ -51,10 +51,10 @@ typedef struct aircraftProjectile_s {
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is nullptr) */
-	aircraft_t *attackingAircraft;	/**< Aircraft which shot the projectile. nullptr if aircraft is destroyed or base is shooting */
+	aircraft_t* attackingAircraft;	/**< Aircraft which shot the projectile. nullptr if aircraft is destroyed or base is shooting */
 	vec3_t attackerPos;		/**< position of the attacker.
 							 ** used only if base or samsite is shooting (attackingAircraft == nullptr) */
-	aircraft_t *aimedAircraft;	/**< target of the projectile/
+	aircraft_t* aimedAircraft;	/**< target of the projectile/
 								 ** used only if the projectile will touch its target (otherwise it's nullptr) */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
@@ -67,11 +67,11 @@ void AIRFIGHT_ExecuteActions(const struct campaign_s* campaign, aircraft_t* air,
 void AIRFIGHT_ActionsAfterAirfight(const struct campaign_s* campaign, aircraft_t* shooter, aircraft_t* aircraft, bool phalanxWon);
 void AIRFIGHT_CampaignRunProjectiles(const struct campaign_s* campaign, int dt);
 void AIRFIGHT_CampaignRunBaseDefence(int dt);
-int AIRFIGHT_CheckWeapon(const aircraftSlot_t *slot, float distance);
-int AIRFIGHT_ChooseWeapon(const aircraftSlot_t *slot, int maxSlot, const vec2_t pos, const vec2_t targetPos);
-bool AIRFIGHT_BaseCanTargetUFO(const struct base_s* base, const aircraft_t *ufo);
-void AIRFIGHT_RemoveProjectileAimingAircraft(const aircraft_t *aircraft);
+int AIRFIGHT_CheckWeapon(const aircraftSlot_t* slot, float distance);
+int AIRFIGHT_ChooseWeapon(const aircraftSlot_t* slot, int maxSlot, const vec2_t pos, const vec2_t targetPos);
+bool AIRFIGHT_BaseCanTargetUFO(const struct base_s* base, const aircraft_t* ufo);
+void AIRFIGHT_RemoveProjectileAimingAircraft(const aircraft_t* aircraft);
 
-bool AIRFIGHT_SaveXML(xmlNode_t *parent);
-bool AIRFIGHT_LoadXML(xmlNode_t *parent);
+bool AIRFIGHT_SaveXML(xmlNode_t* parent);
+bool AIRFIGHT_LoadXML(xmlNode_t* parent);
 void AIRFIGHT_InitStartup(void);

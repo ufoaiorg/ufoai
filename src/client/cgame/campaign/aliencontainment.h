@@ -32,18 +32,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 class AlienContainment : public AlienCargo {
 	protected:
-		capacities_t *aliveCapacity;
-		capacities_t *deadCapacity;
+		capacities_t* aliveCapacity;
+		capacities_t* deadCapacity;
 
 	public:
-		virtual bool add (const teamDef_t *team, int alive, int dead);
+		virtual bool add (const teamDef_t* team, int alive, int dead);
 		virtual bool add (const char* teamId, int alive, int dead);
 
-		static bool isLifeSupported (const teamDef_t *team);
+		static bool isLifeSupported (const teamDef_t* team);
 
-		AlienContainment (capacities_t *aliveCapacity, capacities_t *deadCapacity);
+		AlienContainment (capacities_t* aliveCapacity, capacities_t* deadCapacity);
 		virtual ~AlienContainment (void);
 	private:
 		void resetCurrentCapacities (void);
-		int getCapacityNeedForAlien (const teamDef_t *teamDef, const bool isDead) const;
+		int getCapacityNeedForAlien (const teamDef_t* teamDef, const bool isDead) const;
 };

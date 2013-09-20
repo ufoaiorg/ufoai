@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
  * @param[in] base Pointer to the base.
  */
-void CAP_RemoveAntimatterExceedingCapacity (base_t *base)
+void CAP_RemoveAntimatterExceedingCapacity (base_t* base)
 {
 	const int amount = CAP_GetCurrent(base, CAP_ANTIMATTER) - CAP_GetMax(base, CAP_ANTIMATTER);
 	if (amount <= 0)
@@ -49,14 +49,14 @@ void CAP_RemoveAntimatterExceedingCapacity (base_t *base)
  * @param[in] base Pointer to the base
  * @sa B_ResetAllStatusAndCapacities_f
  */
-void CAP_UpdateStorageCap (base_t *base)
+void CAP_UpdateStorageCap (base_t* base)
 {
 	int i;
 
 	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *obj = INVSH_GetItemByIDX(i);
+		const objDef_t* obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
@@ -118,9 +118,9 @@ void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
  * @param[in] capacityType Capacity type
  * @sa baseCapacities_t
  */
-int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
+int CAP_GetFreeCapacity (const base_t* base, baseCapacities_t capacityType)
 {
-	const capacities_t *cap = CAP_Get(base, capacityType);
+	const capacities_t* cap = CAP_Get(base, capacityType);
 	return cap->max - cap->cur;
 }
 
@@ -130,14 +130,14 @@ int CAP_GetFreeCapacity (const base_t *base, baseCapacities_t capacityType)
  */
 void CAP_CheckOverflow (void)
 {
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
 		int i;
 
 		for (i = CAP_ALIENS; i < MAX_CAP; i++) {
 			baseCapacities_t capacityType = (baseCapacities_t)i;
-			capacities_t *cap = CAP_Get(base, capacityType);
+			capacities_t* cap = CAP_Get(base, capacityType);
 
 			if (cap->cur <= cap->max)
 				continue;
@@ -159,7 +159,7 @@ void CAP_CheckOverflow (void)
 			case CAP_ITEMS:
 				if (base->baseStatus != BASE_DESTROYED) {
 					const buildingType_t bldgType = B_GetBuildingTypeByCapacity((baseCapacities_t)i);
-					const building_t *bldg = B_GetBuildingTemplateByType(bldgType);
+					const building_t* bldg = B_GetBuildingTemplateByType(bldgType);
 					CP_GameTimeStop();
 					cgi->Cmd_ExecuteString("ui_push popup_cap_overload base %d \"%s\" \"%s\" %d %d",
 						base->idx, base->name, _(bldg->name), cap->max - cap->cur, cap->max);

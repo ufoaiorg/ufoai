@@ -36,7 +36,7 @@ char cp_messageBuffer[MAX_MESSAGE_TEXT];
  * @param[in] message The message to convert into text
  * @param[in] textsize The maximum length for text
  */
-static void MS_TimestampedText (char* text, uiMessageListNodeMessage_t *message, size_t textsize)
+static void MS_TimestampedText (char* text, uiMessageListNodeMessage_t* message, size_t textsize)
 {
 	dateLong_t date;
 	CP_DateConvertLong(&message->date, &date);
@@ -58,7 +58,7 @@ static void MS_TimestampedText (char* text, uiMessageListNodeMessage_t *message,
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = true @endcode
  */
-uiMessageListNodeMessage_t *MS_AddNewMessage (const char* title, const char* text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
+uiMessageListNodeMessage_t* MS_AddNewMessage (const char* title, const char* text, messageType_t type, technology_t* pedia, bool popup, bool playSound)
 {
 	assert(type < MSG_MAX);
 
@@ -196,9 +196,9 @@ uiMessageListNodeMessage_t *MS_AddNewMessage (const char* title, const char* tex
  * @param[in] message The first message to save
  * @note this saves messages in reversed order
  */
-static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message)
+static void MS_MessageSaveXML (xmlNode_t* p, uiMessageListNodeMessage_t* message)
 {
-	xmlNode_t *n;
+	xmlNode_t* n;
 
 	if (!message)
 		return;
@@ -231,9 +231,9 @@ static void MS_MessageSaveXML (xmlNode_t *p, uiMessageListNodeMessage_t *message
  * @param[out] p XML Node structure, where we write the information to
  * @sa MS_MessageSaveXML
  */
-bool MS_SaveXML (xmlNode_t *p)
+bool MS_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cgi->UI_MessageGetStack());
@@ -246,10 +246,10 @@ bool MS_SaveXML (xmlNode_t *p)
  * @sa MS_SaveXML
  * @sa UI_AddNewMessageSound
  */
-bool MS_LoadXML (xmlNode_t *p)
+bool MS_LoadXML (xmlNode_t* p)
 {
 	int i;
-	xmlNode_t *n, *sn;
+	xmlNode_t* n, *sn;
 	n = cgi->XML_GetNode(p, SAVE_MESSAGES_MESSAGES);
 
 	if (!n)
@@ -262,14 +262,14 @@ bool MS_LoadXML (xmlNode_t *p)
 
 	cgi->Com_RegisterConstList(saveMessageConstants);
 	for (sn = cgi->XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = cgi->XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
-		eventMail_t *mail;
+		eventMail_t* mail;
 		const char* type = cgi->XML_GetString(sn, SAVE_MESSAGES_TYPE);
 		int mtype;
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];
 		char id[MAX_VAR];
-		technology_t *tech = nullptr;
-		uiMessageListNodeMessage_t *mess;
+		technology_t* tech = nullptr;
+		uiMessageListNodeMessage_t* mess;
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
 			Com_Printf("Invalid message type '%s'\n", type);

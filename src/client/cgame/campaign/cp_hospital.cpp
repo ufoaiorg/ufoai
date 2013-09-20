@@ -133,7 +133,7 @@ void HOS_HealAll (const base_t* const base)
 static void HOS_HealAll_f (void)
 {
 	int type;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -153,7 +153,7 @@ static void HOS_HealAll_f (void)
 static void HOS_HurtAll_f (void)
 {
 	int type, amount;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -192,7 +192,7 @@ void HOS_InitStartup (void)
  * @sa HOS_LoadXML
  * @sa SAV_GameSaveXML
  */
-bool HOS_SaveXML (xmlNode_t *p)
+bool HOS_SaveXML (xmlNode_t* p)
 {
 	/* nothing to save here */
 	return true;
@@ -203,7 +203,7 @@ bool HOS_SaveXML (xmlNode_t *p)
  * @sa HOS_SaveXML
  * @sa SAV_GameLoadXML
  */
-bool HOS_LoadXML (xmlNode_t *p)
+bool HOS_LoadXML (xmlNode_t* p)
 {
 	return true;
 }

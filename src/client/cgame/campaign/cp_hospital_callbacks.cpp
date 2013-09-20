@@ -46,7 +46,7 @@ static void HOS_EntryWoundData (const character_t& chr)
 	}
 }
 
-static float HOS_GetInjuryLevel (const character_t *const chr)
+static float HOS_GetInjuryLevel (const character_t* const chr)
 {
 	float injuryLevel = 0.0f;
 
@@ -60,7 +60,7 @@ static const char* HOS_GetRank (const Employee &employee)
 {
 	/* Print rank for soldiers or type for other employees. */
 	if (employee.isSoldier()) {
-		const rank_t *rankPtr = CL_GetRankByIdx(employee.chr.score.rank);
+		const rank_t* rankPtr = CL_GetRankByIdx(employee.chr.score.rank);
 		return _(rankPtr->name);
 	}
 	return E_GetEmployeeString(employee.getType(), 1);
@@ -104,7 +104,7 @@ static void HOS_UpdateCharacterImplantList (const character_t& c)
 	cgi->UI_ExecuteConfunc("hospital_employee_clear_implants");
 	for (int i = 0; i < lengthof(c.implants); i++) {
 		const implant_t& implant = c.implants[i];
-		const implantDef_t *def = implant.def;
+		const implantDef_t* def = implant.def;
 		if (def == nullptr)
 			continue;
 		const objDef_t& od = *def->item;
@@ -145,7 +145,7 @@ static void HOS_ImplantChange_f (void)
 	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	if (od == nullptr)
 		return;
-	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
+	const implantDef_t* def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
 	const implant_t* implant = e->isSoldier() ? CHRSH_ApplyImplant(chr, *def) : nullptr;
@@ -166,7 +166,7 @@ static void HOS_ImplantDetails_f (void)
 	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
 	if (od == nullptr)
 		return;
-	const implantDef_t *def = INVSH_GetImplantForObjDef(od);
+	const implantDef_t* def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
 }
@@ -177,7 +177,7 @@ static void HOS_ImplantDetails_f (void)
  */
 static void HOS_Init_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
@@ -218,12 +218,12 @@ static void HOS_EmployeeInit_f (void)
 	const char* rankImage = "";
 
 	if (score.rank >= 0) {
-		const rank_t *r = CL_GetRankByIdx(score.rank);
+		const rank_t* r = CL_GetRankByIdx(score.rank);
 		rank = va(_("Rank: %s"), _(r->name));
 		rankImage = r->image;
 	}
 
-	base_t *base = emp->baseHired;
+	base_t* base = emp->baseHired;
 	CP_CleanTempInventory(base);
 	equipDef_t unused = base->storage;
 	CP_CleanupTeam(base, &unused);

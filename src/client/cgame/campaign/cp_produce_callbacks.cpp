@@ -40,10 +40,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static itemFilterTypes_t produceCategory = FILTER_S_PRIMARY;
 
 /** Holds the current active selected queue entry. */
-static production_t *selectedProduction = nullptr;
+static production_t* selectedProduction = nullptr;
 
 /** A list if all producable items. */
-static linkedList_t *productionItemList;
+static linkedList_t* productionItemList;
 
 /** Currently selected entry in the productionItemList (depends on content) */
 static productionData_t selectedData;
@@ -78,10 +78,10 @@ static void PR_ClearSelected (void)
 static void PR_UpdateProductionList (const base_t* base)
 {
 	int i;
-	linkedList_t *productionList = nullptr;
-	linkedList_t *productionQueued = nullptr;
-	linkedList_t *productionAmount = nullptr;
-	const production_queue_t *queue;
+	linkedList_t* productionList = nullptr;
+	linkedList_t* productionQueued = nullptr;
+	linkedList_t* productionAmount = nullptr;
+	const production_queue_t* queue;
 
 	assert(base);
 
@@ -89,20 +89,20 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
-		const production_t *prod = &queue->items[i];
+		const production_t* prod = &queue->items[i];
 		if (PR_IsItem(prod)) {
-			const objDef_t *od = prod->data.data.item;
+			const objDef_t* od = prod->data.data.item;
 			cgi->LIST_AddString(&productionList, va("%s", _(od->name)));
 			cgi->LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->data.data.item, base)));
 			cgi->LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (PR_IsAircraft(prod)) {
-			const aircraft_t *aircraftTemplate = prod->data.data.aircraft;
+			const aircraft_t* aircraftTemplate = prod->data.data.aircraft;
 
 			cgi->LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
 			cgi->LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
 			cgi->LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (PR_IsDisassembly(prod)) {
-			const storedUFO_t *ufo = prod->data.data.ufo;
+			const storedUFO_t* ufo = prod->data.data.ufo;
 
 			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
 			cgi->LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
@@ -140,7 +140,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		}
 	} else if (produceCategory == FILTER_AIRCRAFT) {
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
-			aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
+			aircraft_t* aircraftTemplate = &ccs.aircraftTemplates[i];
 			/* don't allow producing ufos */
 			if (AIR_IsUFO(aircraftTemplate))
 				continue;
@@ -160,9 +160,9 @@ static void PR_UpdateProductionList (const base_t* base)
 			}
 		}
 	} else {
-		objDef_t *od;
+		objDef_t* od;
 		for (i = 0, od = cgi->csi->ods; i < cgi->csi->numODs; i++, od++) {
-			const technology_t *tech;
+			const technology_t* tech;
 			if (od->isVirtual)
 				continue;
 			tech = RS_GetTechForItem(od);
@@ -186,15 +186,15 @@ static void PR_UpdateProductionList (const base_t* base)
 	cgi->UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
-static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs) {
+static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs) {
 	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	int i;
-	uiNode_t *req_root = nullptr;
-	uiNode_t *req_items = nullptr;
+	uiNode_t* req_root = nullptr;
+	uiNode_t* req_items = nullptr;
 #if 0
-	uiNode_t *req_techs = nullptr;
-	uiNode_t *req_technots = nullptr;
+	uiNode_t* req_techs = nullptr;
+	uiNode_t* req_technots = nullptr;
 #endif
 
 	cgi->UI_ResetData(OPTION_PRODUCTION_REQUIREMENTS);
@@ -203,11 +203,11 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 		return;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		const requirement_t *req = &reqs->links[i];
+		const requirement_t* req = &reqs->links[i];
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				uiNode_t *node = cgi->UI_AddOption(&req_items, req->link.od->id, va("%i %s", req->amount, _(req->link.od->name)), va("%i", i));
+				uiNode_t* node = cgi->UI_AddOption(&req_items, req->link.od->id, va("%i %s", req->amount, _(req->link.od->name)), va("%i", i));
 				if (B_ItemInBase(req->link.od, base) >= req->amount)
 					Vector4Copy(green, node->color);
 				else
@@ -215,8 +215,8 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 				break;
 			}
 		case RS_LINK_ANTIMATTER: {
-				technology_t *tech = RS_GetTechByID(ANTIMATTER_TECH_ID);
-				uiNode_t *node;
+				technology_t* tech = RS_GetTechByID(ANTIMATTER_TECH_ID);
+				uiNode_t* node;
 
 				assert(tech);
 				node = cgi->UI_AddOption(&req_items, ANTIMATTER_TECH_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
@@ -239,7 +239,7 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 		}
 	}
 	if (req_items) {
-		uiNode_t *node = cgi->UI_AddOption(&req_root, "items", "_Items", "item");
+		uiNode_t* node = cgi->UI_AddOption(&req_root, "items", "_Items", "item");
 		node->firstChild = req_items;
 	}
 	cgi->UI_RegisterOption(OPTION_PRODUCTION_REQUIREMENTS, req_root);
@@ -252,7 +252,7 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int remainingHours)
+static void PR_ItemProductionInfo (const base_t* base, const objDef_t* od, int remainingHours)
 {
 	static char productionInfo[512];
 
@@ -264,7 +264,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 		cgi->Cvar_Set("mn_item", "");
 	} else {
-		const technology_t *tech = RS_GetTechForItem(od);
+		const technology_t* tech = RS_GetTechForItem(od);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Cost per item\t%i c\n"), PR_GetPrice(od));
@@ -284,7 +284,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
+static void PR_DisassemblyInfo (const storedUFO_t* ufo, int remainingHours)
 {
 	static char productionInfo[512];
 	int i;
@@ -298,7 +298,7 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Components:\n"));
 	/* Print components. */
 	for (i = 0; i < ufo->comp->numItemtypes; i++) {
-		const objDef_t *compOd = ufo->comp->items[i];
+		const objDef_t* compOd = ufo->comp->items[i];
 		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
 
 		if (amount == 0)
@@ -319,7 +319,7 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
  * @param[in] remainingHours The remaining hours until this production is finished
  * @sa PR_ProductionInfo
  */
-static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTemplate, int remainingHours)
+static void PR_AircraftInfo (const base_t* base, const aircraft_t* aircraftTemplate, int remainingHours)
 {
 	static char productionInfo[512];
 
@@ -339,10 +339,10 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
  */
-static void PR_ProductionInfo (const base_t *base)
+static void PR_ProductionInfo (const base_t* base)
 {
 	if (selectedProduction) {
-		const production_t *prod = selectedProduction;
+		const production_t* prod = selectedProduction;
 		const int time = PR_GetRemainingHours(prod);
 		cgi->UI_ExecuteConfunc("prod_taskselected");
 
@@ -393,8 +393,8 @@ static void PR_ProductionInfo (const base_t *base)
 static void PR_ProductionListRightClick_f (void)
 {
 	int num;
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
+	production_queue_t* queue;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a base set */
 	if (!base)
@@ -413,7 +413,7 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
-		production_t *prod = &queue->items[num];
+		production_t* prod = &queue->items[num];
 		const technology_t* tech = PR_GetTech(&prod->data);
 		selectedProduction = prod;
 		UP_OpenWith(tech->id);
@@ -422,20 +422,20 @@ static void PR_ProductionListRightClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraftTemplate = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			const aircraft_t* aircraftTemplate = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			/* aircraftTemplate may be empty if rclicked below real entry.
 			 * UFO research definition must not have a tech assigned,
 			 * only RS_CRAFT types have */
 			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			const storedUFO_t *ufo = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			const storedUFO_t* ufo = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			if (ufo && ufo->ufoTemplate && ufo->ufoTemplate->tech) {
 				UP_OpenWith(ufo->ufoTemplate->tech->id);
 			}
 		} else {
-			objDef_t *od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
-			const technology_t *tech = RS_GetTechForItem(od);
+			objDef_t* od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			const technology_t* tech = RS_GetTechForItem(od);
 
 			/* Open up UFOpaedia for this entry. */
 			if (RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
@@ -460,8 +460,8 @@ static void PR_ProductionListRightClick_f (void)
 static void PR_ProductionListClick_f (void)
 {
 	int num;
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
+	production_queue_t* queue;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a base set */
 	if (!base)
@@ -487,14 +487,14 @@ static void PR_ProductionListClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_DISASSEMBLY) {
-			storedUFO_t *ufo = (storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			storedUFO_t* ufo = (storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 
 			PR_ClearSelected();
 			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, ufo);
 
 			PR_ProductionInfo(base);
 		} else if (produceCategory == FILTER_AIRCRAFT) {
-			aircraft_t *aircraftTemplate = (aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			aircraft_t* aircraftTemplate = (aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			if (!aircraftTemplate) {
 				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 				return;
@@ -509,8 +509,8 @@ static void PR_ProductionListClick_f (void)
 				PR_ProductionInfo(base);
 			}
 		} else {
-			objDef_t *od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
-			const technology_t *tech = RS_GetTechForItem(od);
+			objDef_t* od = (objDef_t*)cgi->LIST_GetByIdx(productionItemList, idx);
+			const technology_t* tech = RS_GetTechForItem(od);
 
 			/* We can only produce items that fulfill the following conditions... */
 			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
@@ -528,7 +528,7 @@ static void PR_ProductionListClick_f (void)
 static void PR_ProductionType_f (void)
 {
 	itemFilterTypes_t cat;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
@@ -557,19 +557,19 @@ static void PR_ProductionType_f (void)
 	/* Select first entry in the list (if any). */
 	if (cgi->LIST_Count(productionItemList) > 0) {
 		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraft = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, 0);
+			const aircraft_t* aircraft = (const aircraft_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_AIRCRAFT, aircraft);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			const storedUFO_t *storedUFO = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, 0);
+			const storedUFO_t* storedUFO = (const storedUFO_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, storedUFO);
 		} else {
-			const objDef_t *item = (const objDef_t*)cgi->LIST_GetByIdx(productionItemList, 0);
+			const objDef_t* item = (const objDef_t*)cgi->LIST_GetByIdx(productionItemList, 0);
 			PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, item);
 		}
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
-		const production_queue_t *prod = PR_GetProductionForBase(base);
+		const production_queue_t* prod = PR_GetProductionForBase(base);
 		cgi->UI_ExecuteConfunc("prod_selectline %i", prod->numItems + QUEUE_SPACERS);
 	}
 
@@ -583,7 +583,7 @@ static void PR_ProductionType_f (void)
  */
 static void PR_ProductionList_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	/* can be called from everywhere without a started game */
 	if (!base)
 		return;
@@ -607,9 +607,9 @@ static void PR_ProductionList_f (void)
  */
 static void PR_ProductionIncrease_f (void)
 {
-	production_t *prod;
-	base_t *base = B_GetCurrentSelectedBase();
-	technology_t *tech = nullptr;
+	production_t* prod;
+	base_t* base = B_GetCurrentSelectedBase();
+	technology_t* tech = nullptr;
 	int amount = 1;
 	int producibleAmount;
 
@@ -709,8 +709,8 @@ static void PR_ProductionIncrease_f (void)
  */
 static void PR_ProductionStop_f (void)
 {
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
+	production_queue_t* queue;
+	base_t* base = B_GetCurrentSelectedBase();
 	int prodIDX;
 
 	if (!base || !selectedProduction)
@@ -739,8 +739,8 @@ static void PR_ProductionStop_f (void)
 static void PR_ProductionDecrease_f (void)
 {
 	int amount = 1;
-	const base_t *base = B_GetCurrentSelectedBase();
-	production_t *prod = selectedProduction;
+	const base_t* base = B_GetCurrentSelectedBase();
+	production_t* prod = selectedProduction;
 
 	if (cgi->Cmd_Argc() == 2)
 		amount = atoi(cgi->Cmd_Argv(1));
@@ -793,8 +793,8 @@ static void PR_ProductionChange_f (void)
  */
 static void PR_ProductionUp_f (void)
 {
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
+	production_queue_t* queue;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base || !selectedProduction)
 		return;
@@ -816,8 +816,8 @@ static void PR_ProductionUp_f (void)
  */
 static void PR_ProductionDown_f (void)
 {
-	production_queue_t *queue;
-	base_t *base = B_GetCurrentSelectedBase();
+	production_queue_t* queue;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base || !selectedProduction)
 		return;

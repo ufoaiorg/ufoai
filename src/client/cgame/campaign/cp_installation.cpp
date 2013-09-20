@@ -110,7 +110,7 @@ const installationTemplate_t* INS_GetInstallationTemplateByID (const char* id)
 	int idx;
 
 	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
-		const installationTemplate_t *t = &ccs.installationTemplates[idx];
+		const installationTemplate_t* t = &ccs.installationTemplates[idx];
 		if (Q_streq(t->id, id))
 			return t;
 	}
@@ -128,7 +128,7 @@ const installationTemplate_t* INS_GetInstallationTemplateByType (installationTyp
 	int idx;
 
 	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
-		const installationTemplate_t *t = &ccs.installationTemplates[idx];
+		const installationTemplate_t* t = &ccs.installationTemplates[idx];
 		if (t->type == type)
 			return t;
 	}
@@ -142,7 +142,7 @@ const installationTemplate_t* INS_GetInstallationTemplateByType (installationTyp
  * @param[in] pos Position on Globe to build at
  * @param[in] name The name of the installation - might already be in utf-8
  */
-installation_t* INS_Build (const installationTemplate_t *installationTemplate, const vec2_t pos, const char* name)
+installation_t* INS_Build (const installationTemplate_t* installationTemplate, const vec2_t pos, const char* name)
 {
 	installation_t installation;
 	const int newInstallationAlienInterest = 1.0f;
@@ -173,7 +173,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
  * @brief Destroys an installation
  * @param[in,out] installation Pointer to the installation to be destroyed
  */
-void INS_DestroyInstallation (installation_t *installation)
+void INS_DestroyInstallation (installation_t* installation)
 {
 	if (!installation)
 		return;
@@ -196,7 +196,7 @@ void INS_DestroyInstallation (installation_t *installation)
 /**
  * @brief Returns the current selected installation
  */
-installation_t *INS_GetCurrentSelectedInstallation (void)
+installation_t* INS_GetCurrentSelectedInstallation (void)
 {
 	INS_Foreach(installation) {
 		if (installation->selected)
@@ -211,7 +211,7 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
  * @param installation Pointer to the installation to select
  * @sa INS_SelectInstallation
  */
-void INS_SetCurrentSelectedInstallation (const installation_t *installation)
+void INS_SetCurrentSelectedInstallation (const installation_t* installation)
 {
 	INS_Foreach(ins)
 		ins->selected = (ins == installation);
@@ -232,7 +232,7 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
  * @sa INS_UpdateInstallationData
  * @sa INS_ConstructionFinished_f
  */
-static void INS_FinishInstallation (installation_t *installation)
+static void INS_FinishInstallation (installation_t* installation)
 {
 	if (!installation)
 		cgi->Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation.\n");
@@ -311,7 +311,7 @@ static void INS_ConstructionFinished_f (void)
  * @param[in] free On true it gives the first UFO Yard with free space
  * @return installation_t Pointer to the UFO Yard
  */
-installation_t *INS_GetFirstUFOYard (bool free)
+installation_t* INS_GetFirstUFOYard (bool free)
 {
 	INS_ForeachOfType(installation, INSTALLATION_UFOYARD) {
 		if (free && installation->ufoCapacity.cur >= installation->ufoCapacity.max)
@@ -390,7 +390,7 @@ static const value_t installation_vals[] = {
  */
 void INS_ParseInstallations (const char* name, const char** text)
 {
-	installationTemplate_t *installation;
+	installationTemplate_t* installation;
 	const char* errhead = "INS_ParseInstallations: unexpected end of file (names ";
 	const char* token;
 	int i;
@@ -456,7 +456,7 @@ void INS_LinkTechnologies (void)
 	int i;
 
 	for (i = 0; i < ccs.numInstallationTemplates; i++) {
-		installationTemplate_t *ins = &ccs.installationTemplates[i];
+		installationTemplate_t* ins = &ccs.installationTemplates[i];
 		technology_t* techLink = RS_GetTechByProvided(ins->id);
 		if (techLink)
 			ins->tech = techLink;
@@ -469,14 +469,14 @@ void INS_LinkTechnologies (void)
  * @sa INS_LoadXML
  * @sa SAV_GameSaveXML
  */
-bool INS_SaveXML (xmlNode_t *p)
+bool INS_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t *n;
+	xmlNode_t* n;
 
 	n = cgi->XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	cgi->Com_RegisterConstList(saveInstallationConstants);
 	INS_Foreach(inst) {
-		xmlNode_t *s, *ss;
+		xmlNode_t* s, *ss;
 
 		s = cgi->XML_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
 		cgi->XML_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
@@ -503,10 +503,10 @@ bool INS_SaveXML (xmlNode_t *p)
  * @sa SAV_GameLoadXML
  * @sa INS_LoadItemSlots
  */
-bool INS_LoadXML (xmlNode_t *p)
+bool INS_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *n = cgi->XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
-	xmlNode_t *s;
+	xmlNode_t* n = cgi->XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	xmlNode_t* s;
 	bool success = true;
 
 	if (!n)
@@ -514,7 +514,7 @@ bool INS_LoadXML (xmlNode_t *p)
 
 	cgi->Com_RegisterConstList(saveInstallationConstants);
 	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
-		xmlNode_t *ss;
+		xmlNode_t* ss;
 		installation_t inst;
 		const char* instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
 		const char* instStat = cgi->XML_GetString(s, SAVE_INSTALLATION_STATUS);

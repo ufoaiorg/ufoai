@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] item Pointer to the item to check
  * @note this function doesn't check if the item is available on market (buyable > 0)
  */
-bool BS_IsOnMarket (const objDef_t *item)
+bool BS_IsOnMarket (const objDef_t* item)
 {
 	assert(item);
 	return !(item->isVirtual || item->notOnMarket);
@@ -47,9 +47,9 @@ bool BS_IsOnMarket (const objDef_t *item)
  * @param[in] od the item (objDef) to search the market for
  * @return The amount of items for the given type
  */
-int BS_GetItemOnMarket (const objDef_t *od)
+int BS_GetItemOnMarket (const objDef_t* od)
 {
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 	return BS_IsOnMarket(od) ? market->numItems[od->idx] : 0;
 }
 
@@ -58,9 +58,9 @@ int BS_GetItemOnMarket (const objDef_t *od)
  * @param[in] od Object definition (the item itself)
  * @param[in] amount Non-negative number of items to add
  */
-static void BS_AddItemToMarket (const objDef_t *od, int amount)
+static void BS_AddItemToMarket (const objDef_t* od, int amount)
 {
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 	assert(amount >= 0);
 	market->numItems[od->idx] += amount;
 }
@@ -70,9 +70,9 @@ static void BS_AddItemToMarket (const objDef_t *od, int amount)
  * @param[in] od Object definition (the item itself)
  * @param[in] amount Non-negative number of items to remove
  */
-static void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
+static void BS_RemoveItemFromMarket (const objDef_t* od, int amount)
 {
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 
 	assert(amount >= 0);
 
@@ -84,9 +84,9 @@ static void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
  * @param[in] od The item to sell
  * @return The price of the item
  */
-int BS_GetItemSellingPrice (const objDef_t *od)
+int BS_GetItemSellingPrice (const objDef_t* od)
 {
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 	return market->bidItems[od->idx];
 }
 
@@ -95,9 +95,9 @@ int BS_GetItemSellingPrice (const objDef_t *od)
  * @param[in] od The item to buy
  * @return The price of the item
  */
-int BS_GetItemBuyingPrice (const objDef_t *od)
+int BS_GetItemBuyingPrice (const objDef_t* od)
 {
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 	return market->askItems[od->idx];
 }
 
@@ -106,7 +106,7 @@ int BS_GetItemBuyingPrice (const objDef_t *od)
  * @param aircraft The aircraft to check
  * @return @c true if the aircraft should appear on the market
  */
-bool BS_AircraftIsOnMarket (const aircraft_t *aircraft)
+bool BS_AircraftIsOnMarket (const aircraft_t* aircraft)
 {
 	if (aircraft->type == AIRCRAFT_UFO)
 		return false;
@@ -121,10 +121,10 @@ bool BS_AircraftIsOnMarket (const aircraft_t *aircraft)
  * @param[in] aircraft The aircraft to search the market for
  * @return The amount of aircraft for the given type
  */
-int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
+int BS_GetAircraftOnMarket (const aircraft_t* aircraft)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 
 	return BS_AircraftIsOnMarket(aircraft) ? market->numAircraft[type] : 0;
 }
@@ -134,10 +134,10 @@ int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
  * @param[in] aircraft Aircraft template definition
  * @param[in] amount Non-negative number of aircraft to add
  */
-static void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
+static void BS_AddAircraftToMarket (const aircraft_t* aircraft, int amount)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
 	market->numAircraft[type] += amount;
@@ -148,10 +148,10 @@ static void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
  * @param[in] aircraft Aircraft template definition
  * @param[in] amount Non-negative number of aircraft to remove
  */
-static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
+static void BS_RemoveAircraftFromMarket (const aircraft_t* aircraft, int amount)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
@@ -164,10 +164,10 @@ static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
  * @param[in] aircraft The aircraft to sell
  * @return The price of the aircraft
  */
-int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
+int BS_GetAircraftSellingPrice (const aircraft_t* aircraft)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 	int sellPrice = market->bidAircraft[type];
 
 	assert(aircraft->type != AIRCRAFT_UFO);
@@ -205,10 +205,10 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
  * @param[in] aircraft The aircraft to buy
  * @return The price of the aircraft
  */
-int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
+int BS_GetAircraftBuyingPrice (const aircraft_t* aircraft)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
-	const market_t *market = BS_GetMarket();
+	const market_t* market = BS_GetMarket();
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return market->askAircraft[type];
 }
@@ -217,7 +217,7 @@ int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
  * @brief Update storage, the market, and the player's credits
  * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
  */
-static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numItems)
+static void BS_ProcessCraftItemSale (const objDef_t* craftitem, const int numItems)
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
@@ -231,7 +231,7 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
  * @param[out] base Base to buy at
  * @return @c true if the aircraft could get bought, @c false otherwise
  */
-bool BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
+bool BS_BuyAircraft (const aircraft_t* aircraftTemplate, base_t* base)
 {
 	if (!base)
 		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No base given.");
@@ -255,7 +255,7 @@ bool BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
  * @param aircraft The aircraft to sell
  * @return @c true if the aircraft could get sold, @c false otherwise
  */
-bool BS_SellAircraft (aircraft_t *aircraft)
+bool BS_SellAircraft (aircraft_t* aircraft)
 {
 	int j;
 
@@ -267,7 +267,7 @@ bool BS_SellAircraft (aircraft_t *aircraft)
 
 	/* sell off any items which are mounted on it */
 	for (j = 0; j < aircraft->maxWeapons; j++) {
-		const aircraftSlot_t *slot = &aircraft->weapons[j];
+		const aircraftSlot_t* slot = &aircraft->weapons[j];
 		BS_ProcessCraftItemSale(slot->item, 1);
 		BS_ProcessCraftItemSale(slot->ammo, 1);
 	}
@@ -277,7 +277,7 @@ bool BS_SellAircraft (aircraft_t *aircraft)
 	BS_ProcessCraftItemSale(aircraft->shield.ammo, 1);
 
 	for (j = 0; j < aircraft->maxElectronics; j++) {
-		const aircraftSlot_t *slot = &aircraft->electronics[j];
+		const aircraftSlot_t* slot = &aircraft->electronics[j];
 		BS_ProcessCraftItemSale(slot->item, 1);
 		/* there should be no ammo here, but checking can't hurt */
 		BS_ProcessCraftItemSale(slot->ammo, 1);
@@ -298,9 +298,9 @@ bool BS_SellAircraft (aircraft_t *aircraft)
  * @return @c true if the ugv could get bought, @c false otherwise
  * @todo Implement this correctly once we have UGV
  */
-bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
+bool BS_BuyUGV (const ugv_t* ugv, base_t* base)
 {
-	const objDef_t *ugvWeapon;
+	const objDef_t* ugvWeapon;
 
 	if (!ugv)
 		cgi->Com_Error(ERR_DROP, "BS_BuyUGV: Called on nullptr UGV!");
@@ -336,9 +336,9 @@ bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
  */
 bool BS_SellUGV (Employee *robot)
 {
-	const objDef_t *ugvWeapon;
-	const ugv_t *ugv;
-	base_t *base;
+	const objDef_t* ugvWeapon;
+	const ugv_t* ugv;
+	base_t* base;
 
 	if (!robot)
 		cgi->Com_Error(ERR_DROP, "Selling nullptr UGV!");
@@ -372,7 +372,7 @@ bool BS_SellUGV (Employee *robot)
  * @param[in ] count Number of items to buy
  * @return @c true if the ugv could get bought, @c false otherwise
  */
-bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
+bool BS_BuyItem (const objDef_t* od, base_t* base, int count)
 {
 	if (!od)
 		cgi->Com_Error(ERR_DROP, "BS_BuyItem: Called on nullptr objDef!");
@@ -404,7 +404,7 @@ bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
  * @param[in ] count Number of items to sell
  * @return @c true if the ugv could get sold, @c false otherwise
  */
-bool BS_SellItem (const objDef_t *od, base_t *base, int count)
+bool BS_SellItem (const objDef_t* od, base_t* base, int count)
 {
 	if (!od)
 		cgi->Com_Error(ERR_DROP, "BS_SellItem: Called on nullptr objDef!");
@@ -432,18 +432,18 @@ bool BS_SellItem (const objDef_t *od, base_t *base, int count)
  * @sa BS_LoadXML
  * @sa SAV_GameSaveXML
  */
-bool BS_SaveXML (xmlNode_t *parent)
+bool BS_SaveXML (xmlNode_t* parent)
 {
 	int i;
-	xmlNode_t *node;
-	const market_t *market = BS_GetMarket();
+	xmlNode_t* node;
+	const market_t* market = BS_GetMarket();
 
 	/* store market */
 	node = cgi->XML_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (BS_IsOnMarket(od)) {
-			xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_MARKET_ITEM);
+			xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_MARKET_ITEM);
 			cgi->XML_AddString(snode, SAVE_MARKET_ID, od->id);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numItems[i]);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidItems[i]);
@@ -454,7 +454,7 @@ bool BS_SaveXML (xmlNode_t *parent)
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
-			xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
+			xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			const char* shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 			cgi->XML_AddString(snode, SAVE_MARKET_ID, shortName);
 			cgi->XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
@@ -472,10 +472,10 @@ bool BS_SaveXML (xmlNode_t *parent)
  * @sa BS_Save
  * @sa SAV_GameLoad
  */
-bool BS_LoadXML (xmlNode_t *parent)
+bool BS_LoadXML (xmlNode_t* parent)
 {
-	xmlNode_t *node, *snode;
-	market_t *market = BS_GetMarket();
+	xmlNode_t* node, *snode;
+	market_t* market = BS_GetMarket();
 
 	node = cgi->XML_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
@@ -483,7 +483,7 @@ bool BS_LoadXML (xmlNode_t *parent)
 
 	for (snode = cgi->XML_GetNode(node, SAVE_MARKET_ITEM); snode; snode = cgi->XML_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
 		const char* s = cgi->XML_GetString(snode, SAVE_MARKET_ID);
-		const objDef_t *od = INVSH_GetItemByID(s);
+		const objDef_t* od = INVSH_GetItemByID(s);
 
 		if (!od) {
 			Com_Printf("BS_LoadXML: Could not find item '%s'\n", s);
@@ -515,13 +515,13 @@ bool BS_LoadXML (xmlNode_t *parent)
  * @sa B_SetUpFirstBase
  * @sa BS_Load (Market load function)
  */
-void BS_InitMarket (const campaign_t *campaign)
+void BS_InitMarket (const campaign_t* campaign)
 {
 	int i;
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (market->askItems[i] == 0) {
 			market->askItems[i] = od->price;
 			market->bidItems[i] = floor(market->askItems[i] * BID_FACTOR);
@@ -541,7 +541,7 @@ void BS_InitMarket (const campaign_t *campaign)
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		const char* name = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
-		const aircraft_t *aircraft = AIR_GetAircraft(name);
+		const aircraft_t* aircraft = AIR_GetAircraft(name);
 		if (market->askAircraft[i] == 0) {
 			market->askAircraft[i] = aircraft->price;
 			market->bidAircraft[i] = floor(market->askAircraft[i] * BID_FACTOR);
@@ -567,20 +567,20 @@ void BS_InitMarket (const campaign_t *campaign)
  * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
  * If an item has just been researched, it's not available on market until RESEARCH_LIMIT_DELAY days is reached.
  */
-void CP_CampaignRunMarket (campaign_t *campaign)
+void CP_CampaignRunMarket (campaign_t* campaign)
 {
 	int i;
 	const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
 	const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
 												 * items added on market */
-	market_t *market = BS_GetMarket();
+	market_t* market = BS_GetMarket();
 
 	assert(campaign->marketDef);
 	assert(campaign->asymptoticMarketDef);
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
-		const technology_t *tech = RS_GetTechForItem(od);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
+		const technology_t* tech = RS_GetTechForItem(od);
 		int asymptoticNumber;
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
@@ -611,7 +611,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
 		const humanAircraftType_t type = (humanAircraftType_t)i;
 		const char* aircraftID = cgi->Com_DropShipTypeToShortName(type);
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
-		const technology_t *tech = aircraft->tech;
+		const technology_t* tech = aircraft->tech;
 		int asymptoticNumber;
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {

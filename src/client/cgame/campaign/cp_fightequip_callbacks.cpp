@@ -33,7 +33,7 @@ static aircraftItemType_t airequipID = MAX_ACITEMS;				/**< value of aircraftIte
 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
-static technology_t *aimSelectedTechnology = nullptr;		/**< Selected technology in equip menu */
+static technology_t* aimSelectedTechnology = nullptr;		/**< Selected technology in equip menu */
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
@@ -57,7 +57,7 @@ static void AIM_CheckAirequipID (void)
  * @note airequipSelectedSlot concerns only weapons and electronics
  * @sa aircraft Pointer to the aircraft
  */
-static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
+static void AIM_CheckAirequipSelectedSlot (const aircraft_t* aircraft)
 {
 	switch (airequipID) {
 	case AC_ITEM_AMMO:
@@ -85,9 +85,9 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
  * @note also used by BDEF_ functions
  * @return Pointer to the slot corresponding to airequipID
  */
-aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, aircraftItemType_t type)
+aircraftSlot_t* AII_SelectAircraftSlot (aircraft_t* aircraft, aircraftItemType_t type)
 {
-	aircraftSlot_t *slot;
+	aircraftSlot_t* slot;
 
 	AIM_CheckAirequipSelectedSlot(aircraft);
 	switch (type) {
@@ -113,7 +113,7 @@ aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, aircraftItemType_t
  * @brief Check that airequipSelectedZone is available
  * @sa slot Pointer to the slot
  */
-static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
+static void AIM_CheckAirequipSelectedZone (aircraftSlot_t* slot)
 {
 	assert(slot);
 
@@ -151,9 +151,9 @@ static inline const char* AIM_AircraftItemtypeName (const int equiptype)
 /**
  * @return @c true if the technology is available and matches the filter
  */
-static bool AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterType, const technology_t *tech)
+static bool AIM_CrafttypeFilter (const base_t* base, aircraftItemType_t filterType, const technology_t* tech)
 {
-	const objDef_t *item;
+	const objDef_t* item;
 	if (!base)
 		return false;
 
@@ -189,14 +189,14 @@ static bool AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterTy
  * @brief Update the list of item you can choose
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
  */
-static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
+static void AIM_UpdateAircraftItemList (const aircraftSlot_t* slot)
 {
-	linkedList_t *amountList = nullptr;
+	linkedList_t* amountList = nullptr;
 	technology_t** techList;
 	technology_t** currentTech;
-	const base_t *base = slot->aircraft->homebase;
+	const base_t* base = slot->aircraft->homebase;
 	int count = 0;
-	uiNode_t *AIM_items = nullptr;
+	uiNode_t* AIM_items = nullptr;
 
 	/* Add all items corresponding to airequipID to list */
 	techList = AII_GetCraftitemTechsByType(airequipID);
@@ -213,8 +213,8 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	currentTech = techList;
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, airequipID, *currentTech)) {
-			uiNode_t *option;
-			const objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
+			uiNode_t* option;
+			const objDef_t* item = INVSH_GetItemByID((*currentTech)->provides);
 			const int amount = B_ItemInBase(item, base);
 
 			cgi->LIST_AddString(&amountList, va("%d", amount));
@@ -233,7 +233,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
  * @brief Draw only slots existing for this aircraft, and emphases selected one
  * @return[out] aircraft Pointer to the aircraft
  */
-static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
+static void AIM_DrawAircraftSlots (const aircraft_t* aircraft)
 {
 	int i;
 
@@ -242,7 +242,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 		cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
 	for (i = 0; i < AIR_POSITIONS_MAX; i++) {
-		const aircraftSlot_t *slot;
+		const aircraftSlot_t* slot;
 		int max, j;
 
 		/* Default value */
@@ -307,9 +307,9 @@ static void AIM_AircraftEquipMenuUpdate (void)
 	static char smallbuffer1[256];
 	static char smallbuffer2[128];
 	const char* typeName;
-	aircraft_t *aircraft;
-	aircraftSlot_t *slot;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
+	aircraftSlot_t* slot;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -362,8 +362,8 @@ static void AIM_AircraftEquipMenuUpdate (void)
 		Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("This slot is for %s or smaller items."),
 			AII_WeightToName(slot->size));
 	} else {
-		technology_t *itemTech = RS_GetTechForItem(slot->item);
-		technology_t *nextItemTech = slot->nextItem ? RS_GetTechForItem(slot->nextItem) : nullptr;
+		technology_t* itemTech = RS_GetTechForItem(slot->item);
+		technology_t* nextItemTech = slot->nextItem ? RS_GetTechForItem(slot->nextItem) : nullptr;
 		/* Print next item if we are removing item currently installed and a new item has been added. */
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", slot->nextItem ? _(nextItemTech->name) : _(itemTech->name));
 		if (!slot->installationTime) {
@@ -389,8 +389,8 @@ static void AIM_AircraftEquipMenuUpdate (void)
 			AIM_EmphazeAmmoSlotText();
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No ammo assigned to this weapon."));
 		} else {
-			const objDef_t *ammo = slot->nextAmmo ? slot->nextAmmo : slot->ammo;
-			const technology_t *tech = RS_GetTechForItem(ammo);
+			const objDef_t* ammo = slot->nextAmmo ? slot->nextAmmo : slot->ammo;
+			const technology_t* tech = RS_GetTechForItem(ammo);
 			AIM_NoEmphazeAmmoSlotText();
 			if (!ammo->isVirtual)
 				Q_strncpyz(smallbuffer2, _(tech->name), sizeof(smallbuffer2));
@@ -422,9 +422,9 @@ static void AIM_AircraftEquipMenuUpdate (void)
  * @param[in] tech Pointer to the technology to test
  * @return The status of the technology versus the slot
  */
-static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const technology_t *tech)
+static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t* slot, const technology_t* tech)
 {
-	const objDef_t *item;
+	const objDef_t* item;
 
 	if (!tech)
 		return AIM_LOADING_NOTECHNOLOGYSELECTED;
@@ -440,7 +440,7 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 		return AIM_LOADING_NOTECHNOLOGYSELECTED;
 
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
-		const objDef_t *weapon = slot->item;
+		const objDef_t* weapon = slot->item;
 		int k;
 		if (slot->nextItem != nullptr)
 			weapon = slot->nextItem;
@@ -450,7 +450,7 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 
 		/* Is the ammo is usable with the slot */
 		for (k = 0; k < weapon->numAmmos; k++) {
-			const objDef_t *usable = weapon->ammos[k];
+			const objDef_t* usable = weapon->ammos[k];
 			if (usable && item->idx == usable->idx)
 				break;
 		}
@@ -498,9 +498,9 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 static void AIM_UpdateItemDescription (bool fromList, bool fromSlot)
 {
 	int status;
-	aircraft_t *aircraft;
-	aircraftSlot_t *slot;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
+	aircraftSlot_t* slot;
+	base_t* base = B_GetCurrentSelectedBase();
 	assert(base);
 
 	aircraft = base->aircraftCurrent;
@@ -606,8 +606,8 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 {
 	int i;
 	itemPos_t pos;
-	aircraft_t *aircraft;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
+	base_t* base = B_GetCurrentSelectedBase();
 	int updateZone = 0;
 
 	if (!base)
@@ -680,9 +680,9 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 static void AIM_AircraftEquipZoneSelect_f (void)
 {
 	int zone;
-	aircraft_t *aircraft;
-	aircraftSlot_t *slot;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
+	aircraftSlot_t* slot;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -736,9 +736,9 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 static void AIM_AircraftEquipAddItem_f (void)
 {
 	int zone;
-	aircraftSlot_t *slot;
-	aircraft_t *aircraft = nullptr;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraftSlot_t* slot;
+	aircraft_t* aircraft = nullptr;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
 
@@ -822,9 +822,9 @@ static void AIM_AircraftEquipAddItem_f (void)
 static void AIM_AircraftEquipRemoveItem_f (void)
 {
 	int zone;
-	aircraftSlot_t *slot;
-	aircraft_t *aircraft = nullptr;
-	base_t *base = B_GetCurrentSelectedBase();
+	aircraftSlot_t* slot;
+	aircraft_t* aircraft = nullptr;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
 

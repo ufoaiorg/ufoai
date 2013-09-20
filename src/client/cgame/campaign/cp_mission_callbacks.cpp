@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AM_Go_f (void)
 {
-	mission_t *mission = GEO_GetSelectedMission();
-	missionResults_t *results = &ccs.missionResults;
-	battleParam_t *battleParam = &ccs.battleParameters;
+	mission_t* mission = GEO_GetSelectedMission();
+	missionResults_t* results = &ccs.missionResults;
+	battleParam_t* battleParam = &ccs.battleParameters;
 
 	if (!mission) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
@@ -87,7 +87,7 @@ static void AM_Go_f (void)
  */
 static void AM_Check_f (void)
 {
-	const mission_t *mission = GEO_GetSelectedMission();
+	const mission_t* mission = GEO_GetSelectedMission();
 
 	if (!mission || GEO_GetInterceptorAircraft() == nullptr) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
@@ -107,9 +107,9 @@ static void AM_Check_f (void)
  * @brief Updates mission result menu text with appropriate values
  * @param[in] results Initialized mission results
  */
-void MIS_InitResultScreen (const missionResults_t *results)
+void MIS_InitResultScreen (const missionResults_t* results)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 
 	/* init result text */
 	cgi->UI_ResetData(TEXT_LIST2);

@@ -57,7 +57,7 @@ typedef enum {
  */
 typedef struct popup_aircraft_s {
 	int numItems;			/**< Count of items displayed in popup_aircraft */
-	aircraft_t *aircraft;		/**< Aircraft linked to popup_aircraft */
+	aircraft_t* aircraft;		/**< Aircraft linked to popup_aircraft */
 	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
 	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];		/**< IDs corresponding to items */
 	char textPopup[POPUP_AIRCRAFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
@@ -74,7 +74,7 @@ static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 typedef struct popup_intercept_s {
 	int numAircraft;	/**< Count of aircraft displayed in list */
-	aircraft_t *aircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< List of aircrafts. */
+	aircraft_t* aircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< List of aircrafts. */
 	mission_t* mission;	/**< Mission the selected aircraft have to move to */
 	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
 } popup_intercept_t;
@@ -83,7 +83,7 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
-static linkedList_t *popupListData = nullptr;		/**< Further datas needed when popup is clicked */
+static linkedList_t* popupListData = nullptr;		/**< Further datas needed when popup is clicked */
 static uiNode_t* popupListNode = nullptr;		/**< Node used for popup */
 
 static int INVALID_BASE = -1;
@@ -98,12 +98,12 @@ POPUP_HOMEBASE
  * @param[in] alwaysDisplay False if popup should be displayed only if at least one base is available.
  * @return true if popup is displayed.
  */
-bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
+bool CL_DisplayHomebasePopup (aircraft_t* aircraft, bool alwaysDisplay)
 {
 	int homebase;
 	int numAvailableBases = 0;
-	linkedList_t *popupListText = nullptr;
-	base_t *base;
+	linkedList_t* popupListText = nullptr;
+	base_t* base;
 
 	assert(aircraft);
 
@@ -156,12 +156,12 @@ bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
  */
 static void CL_PopupChangeHomebase_f (void)
 {
-	linkedList_t *data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
+	linkedList_t* data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
 	int i;
-	base_t *base;
+	base_t* base;
 	int baseIdx;
-	aircraft_t *aircraft = GEO_GetSelectedAircraft();
+	aircraft_t* aircraft = GEO_GetSelectedAircraft();
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!aircraft) {
@@ -251,7 +251,7 @@ static void CL_PopupAircraftClick_f (void)
 {
 	int num;
 	aircraft_t* aircraft;
-	mission_t *mission;
+	mission_t* mission;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupAircraftClick\n");
 
@@ -298,11 +298,11 @@ static void CL_PopupAircraftClick_f (void)
 POPUP_INTERCEPT
 ========================================*/
 
-static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircraftEntry2, const void* userData)
+static int AIR_SortByDistance (linkedList_t* aircraftEntry1, linkedList_t* aircraftEntry2, const void* userData)
 {
 	const vec_t* pos = (const vec_t*)userData;
-	const aircraft_t *aircraft1 = (const aircraft_t*)aircraftEntry1->data;
-	const aircraft_t *aircraft2 = (const aircraft_t*)aircraftEntry2->data;
+	const aircraft_t* aircraft1 = (const aircraft_t*)aircraftEntry1->data;
+	const aircraft_t* aircraft2 = (const aircraft_t*)aircraftEntry2->data;
 
 	return GetDistanceOnGlobe(aircraft1->pos, pos) - GetDistanceOnGlobe(aircraft2->pos, pos);
 }
@@ -313,8 +313,8 @@ static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircr
  */
 void CL_DisplayPopupInterceptMission (mission_t* mission)
 {
-	linkedList_t *aircraftList = nullptr;
-	linkedList_t *aircraftListSorted;
+	linkedList_t* aircraftList = nullptr;
+	linkedList_t* aircraftListSorted;
 
 	if (!mission)
 		return;
@@ -366,10 +366,10 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
  */
 void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 {
-	linkedList_t *aircraftList = nullptr;
-	linkedList_t *aircraftListSorted;
-	linkedList_t *baseList = nullptr;
-	base_t *base;
+	linkedList_t* aircraftList = nullptr;
+	linkedList_t* aircraftListSorted;
+	linkedList_t* baseList = nullptr;
+	base_t* base;
 
 	if (!ufo)
 		return;
@@ -469,8 +469,8 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
  */
 static void CL_PopupInterceptClick_f (void)
 {
-	aircraft_t *aircraft;
-	base_t *base;
+	aircraft_t* aircraft;
+	base_t* base;
 
 	/* Get the selected aircraft */
 	aircraft = CL_PopupInterceptGetAircraft();
@@ -520,7 +520,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, i;
 	base_t* base;
-	installation_t *installation;
+	installation_t* installation;
 	bool atLeastOneBase = false;
 
 	if (cgi->Cmd_Argc() < 2) {

@@ -42,13 +42,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 technology_t** AII_GetCraftitemTechsByType (aircraftItemType_t type)
 {
-	static technology_t *techList[MAX_TECHNOLOGIES];
+	static technology_t* techList[MAX_TECHNOLOGIES];
 	int i, j = 0;
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
+		const objDef_t* aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
-			technology_t *tech = RS_GetTechForItem(aircraftitem);
+			technology_t* tech = RS_GetTechForItem(aircraftitem);
 			assert(j < MAX_TECHNOLOGIES);
 			techList[j] = tech;
 			j++;
@@ -70,7 +70,7 @@ technology_t** AII_GetCraftitemTechsByType (aircraftItemType_t type)
  * @return itemWeight_t
  * @sa AII_WeightToName
  */
-itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
+itemWeight_t AII_GetItemWeightBySize (const objDef_t* od)
 {
 	assert(od);
 
@@ -88,9 +88,9 @@ itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
  * @param[in] tech Pointer to the technology to test
  * @return true if the craft item should be displayed, false else
  */
-bool AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *tech)
+bool AIM_SelectableCraftItem (const aircraftSlot_t* slot, const technology_t* tech)
 {
-	const objDef_t *item;
+	const objDef_t* item;
 
 	if (!slot)
 		return false;
@@ -103,7 +103,7 @@ bool AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *te
 		return false;
 
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
-		const objDef_t *weapon = slot->item;
+		const objDef_t* weapon = slot->item;
 		int k;
 		if (slot->nextItem != nullptr)
 			weapon = slot->nextItem;
@@ -113,7 +113,7 @@ bool AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *te
 
 		/* Is the ammo is usable with the slot */
 		for (k = 0; k < weapon->numAmmos; k++) {
-			const objDef_t *usable = weapon->ammos[k];
+			const objDef_t* usable = weapon->ammos[k];
 			if (usable && item->idx == usable->idx)
 				break;
 		}
@@ -226,7 +226,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
  *       it removes the last one if every one equipped
  * @sa BDEF_AddBattery
  */
-void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
+void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 {
 	int i;
 	assert(base);
@@ -280,7 +280,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
  * @brief Initialise all values of base slot defence.
  * @param[in] base Pointer to the base which needs initalisation of its slots.
  */
-void BDEF_InitialiseBaseSlots (base_t *base)
+void BDEF_InitialiseBaseSlots (base_t* base)
 {
 	int i;
 
@@ -300,7 +300,7 @@ void BDEF_InitialiseBaseSlots (base_t *base)
  * @brief Initialise all values of installation slot defence.
  * @param[in] installation Pointer to the installation which needs initialisation of its slots.
  */
-void BDEF_InitialiseInstallationSlots (installation_t *installation)
+void BDEF_InitialiseInstallationSlots (installation_t* installation)
 {
 	int i;
 
@@ -321,7 +321,7 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
  * @param[in] slot Pointer to the slot to update
  * @sa AII_AddItemToSlot
  */
-static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* installation, aircraft_t *aircraft, aircraftSlot_t *slot)
+static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* installation, aircraft_t* aircraft, aircraftSlot_t* slot)
 {
 	assert(base || installation);
 
@@ -356,7 +356,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			if (aircraft && aircraft->homebase != base)
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
-			const objDef_t *olditem = slot->item;
+			const objDef_t* olditem = slot->item;
 			AII_RemoveItemFromSlot(base, slot, false);
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
@@ -395,7 +395,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
  */
 void AII_UpdateInstallationDelay (void)
 {
-	base_t *base;
+	base_t* base;
 	int k;
 
 	INS_Foreach(installation) {
@@ -434,10 +434,10 @@ void AII_UpdateInstallationDelay (void)
  * @sa AIM_AircraftEquipAddItem_f
  * @sa AII_RemoveItemFromSlot
  */
-void AII_AutoAddAmmo (aircraftSlot_t *slot)
+void AII_AutoAddAmmo (aircraftSlot_t* slot)
 {
 	int k;
-	const objDef_t *item;
+	const objDef_t* item;
 
 	assert(slot);
 
@@ -457,9 +457,9 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 		return;
 	/* Try every ammo usable with this weapon until we find one we have in storage */
 	for (k = 0; k < item->numAmmos; k++) {
-		const objDef_t *ammo = item->ammos[k];
+		const objDef_t* ammo = item->ammos[k];
 		if (ammo) {
-			const technology_t *ammoTech = RS_GetTechForItem(ammo);
+			const technology_t* ammoTech = RS_GetTechForItem(ammo);
 			if (AIM_SelectableCraftItem(slot, ammoTech)) {
 				base_t* base;
 				if (ammo->isVirtual)
@@ -486,7 +486,7 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
  * @sa AII_AddAmmoToSlot
  * @sa AII_RemoveNextItemFromSlot
  */
-void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
+void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t* slot, bool ammo)
 {
 	assert(slot);
 
@@ -539,7 +539,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
  * @sa AII_AddAmmoToSlot
  * @sa AII_RemoveItemFromSlot
  */
-void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
+void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t* slot, bool ammo)
 {
 	assert(slot);
 
@@ -571,7 +571,7 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, bool ammo)
  * @param[in,out] slot Pointer to the aircraftSlot where weapon is attached to
  * @returns true on success - if the weapon was reloaded OR it didn't need reload
  */
-bool AII_ReloadWeapon (aircraftSlot_t *slot)
+bool AII_ReloadWeapon (aircraftSlot_t* slot)
 {
 	assert(slot);
 
@@ -634,7 +634,7 @@ bool AII_ReloadWeapon (aircraftSlot_t *slot)
  * @brief Reload the weapons of an aircraft
  * @param[in,out] aircraft Pointer to the aircraft to reload
  */
-void AII_ReloadAircraftWeapons (aircraft_t *aircraft)
+void AII_ReloadAircraftWeapons (aircraft_t* aircraft)
 {
 	int i;
 
@@ -651,7 +651,7 @@ void AII_ReloadAircraftWeapons (aircraft_t *aircraft)
  * @param[in,out] installation Pointer to the samsite to reload
  * @note only one of the parameters can be non-nullptr
  */
-void BDEF_ReloadBaseWeapons (base_t *base, installation_t *installation)
+void BDEF_ReloadBaseWeapons (base_t* base, installation_t* installation)
 {
 	int i;
 
@@ -682,10 +682,10 @@ void BDEF_ReloadBaseWeapons (base_t *base, installation_t *installation)
  * @param[in] slot Pointer to the slot where you want to add ammos
  * @sa AII_AddItemToSlot
  */
-bool AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
+bool AII_AddAmmoToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* slot)
 {
-	const objDef_t *ammo;
-	const objDef_t *item;
+	const objDef_t* ammo;
+	const objDef_t* item;
 	int k;
 
 	if (slot == nullptr || slot->item == nullptr)
@@ -703,7 +703,7 @@ bool AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *
 
 	/* Is the ammo is usable with the slot */
 	for (k = 0; k < item->numAmmos; k++) {
-		const objDef_t *usable = item->ammos[k];
+		const objDef_t* usable = item->ammos[k];
 		if (usable && ammo->idx == usable->idx)
 			break;
 	}
@@ -760,9 +760,9 @@ bool AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *
  * @sa AII_UpdateOneInstallationDelay
  * @sa AII_AddAmmoToSlot
  */
-bool AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot_t *slot, bool nextItem)
+bool AII_AddItemToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* slot, bool nextItem)
 {
-	const objDef_t *item;
+	const objDef_t* item;
 
 	assert(slot);
 	assert(tech);
@@ -822,12 +822,12 @@ bool AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot_t *
  * @note This is used to auto equip interceptor of first base.
  * @sa B_SetUpBase
  */
-void AIM_AutoEquipAircraft (aircraft_t *aircraft)
+void AIM_AutoEquipAircraft (aircraft_t* aircraft)
 {
 	int i;
-	const objDef_t *item;
+	const objDef_t* item;
 	/** @todo Eliminate hardcoded techs here. */
-	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
+	const technology_t* tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
 	if (!tech)
 		cgi->Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_sparrowhawk");
@@ -840,7 +840,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		return;
 
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		aircraftSlot_t *slot = &aircraft->weapons[i];
+		aircraftSlot_t* slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
 		if (!B_BaseHasItem(aircraft->homebase, item))
@@ -862,7 +862,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		return;
 
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		aircraftSlot_t *slot = &aircraft->weapons[i];
+		aircraftSlot_t* slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
 		if (!B_BaseHasItem(aircraft->homebase, item))
@@ -885,7 +885,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
  * @param[in] installation Pointer to the thing being installed.
  * @param[in] type The type of item that can fit in this slot.
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, installation_t *installation, aircraftItemType_t type)
+void AII_InitialiseSlot (aircraftSlot_t* slot, aircraft_t* aircraftTemplate, base_t* base, installation_t* installation, aircraftItemType_t type)
 {
 	/* Only one of them is allowed. */
 	assert((!base && aircraftTemplate) || (base && !aircraftTemplate) || (installation && !aircraftTemplate));
@@ -913,7 +913,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, bas
  * @param[in] stat the stat that should be checked
  * @return true if the item should change the stat.
  */
-static bool AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int stat)
+static bool AII_CheckUpdateAircraftStats (const aircraftSlot_t* slot, int stat)
 {
 	assert(slot);
 
@@ -923,7 +923,7 @@ static bool AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int stat)
 
 	/* you can not have advantages from items if it is being installed or removed, but only disavantages */
 	if (slot->installationTime != 0) {
-		const objDef_t *item = slot->item;
+		const objDef_t* item = slot->item;
 		if (item->craftitem.stats[stat] > 1.0f) /* advantages for relative and absolute values */
 			return false;
 	}
@@ -938,14 +938,14 @@ static bool AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int stat)
  * @param[in] idx index of aircraftslot
  * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
  */
-aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, int idx)
+aircraftSlot_t* BDEF_GetBaseSlotByIDX (base_t* base, aircraftItemType_t type, int idx)
 {
 	switch (type) {
 	case AC_ITEM_BASE_MISSILE:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < base->numBatteries; i++) {
-				aircraftSlot_t *slot = &base->batteries[i].slot;
+				aircraftSlot_t* slot = &base->batteries[i].slot;
 				if (!slot->item && !slot->nextItem)
 					return slot;
 			}
@@ -956,7 +956,7 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < base->numLasers; i++) {
-				aircraftSlot_t *slot = &base->lasers[i].slot;
+				aircraftSlot_t* slot = &base->lasers[i].slot;
 				if (!slot->item && !slot->nextItem)
 					return slot;
 			}
@@ -976,14 +976,14 @@ aircraftSlot_t *BDEF_GetBaseSlotByIDX (base_t *base, aircraftItemType_t type, in
  * @param[in] idx index of aircraftslot
  * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
  */
-aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, aircraftItemType_t type, int idx)
+aircraftSlot_t* BDEF_GetInstallationSlotByIDX (installation_t* installation, aircraftItemType_t type, int idx)
 {
 	switch (type) {
 	case AC_ITEM_BASE_MISSILE:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < installation->numBatteries; i++) {
-				aircraftSlot_t *slot = &installation->batteries[i].slot;
+				aircraftSlot_t* slot = &installation->batteries[i].slot;
 				if (!slot->item && !slot->nextItem)
 					return slot;
 			}
@@ -1003,14 +1003,14 @@ aircraftSlot_t *BDEF_GetInstallationSlotByIDX (installation_t *installation, air
  * @param[in] idx index of aircraftslot
  * @returns the aircraftSlot at the index idx if idx non-negative the first free slot otherwise
  */
-aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType_t type, int idx)
+aircraftSlot_t* AII_GetAircraftSlotByIDX (aircraft_t* aircraft, aircraftItemType_t type, int idx)
 {
 	switch (type) {
 	case AC_ITEM_WEAPON:
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < aircraft->maxWeapons; i++) {
-				aircraftSlot_t *slot = &aircraft->weapons[i];
+				aircraftSlot_t* slot = &aircraft->weapons[i];
 				if (!slot->item && !slot->nextItem)
 					return slot;
 			}
@@ -1025,7 +1025,7 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
 		if (idx < 0) {			/* returns the first free slot on negative */
 			int i;
 			for (i = 0; i < aircraft->maxElectronics; i++) {
-				aircraftSlot_t *slot = &aircraft->electronics[i];
+				aircraftSlot_t* slot = &aircraft->electronics[i];
 				if (!slot->item && !slot->nextItem)
 					return slot;
 			}
@@ -1045,7 +1045,7 @@ aircraftSlot_t *AII_GetAircraftSlotByIDX (aircraft_t *aircraft, aircraftItemType
  * @param[in] maxSlot maximum number of weapon slots in aircraft.
  * @return Maximum weapon range for this aircaft as an angle.
  */
-float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
+float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t* slot, int maxSlot)
 {
 	int i;
 	float range = 0.0f;
@@ -1054,8 +1054,8 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 
 	/* We choose the usable weapon with the biggest range */
 	for (i = 0; i < maxSlot; i++) {
-		const aircraftSlot_t *weapon = slot + i;
-		const objDef_t *ammo = weapon->ammo;
+		const aircraftSlot_t* weapon = slot + i;
+		const objDef_t* ammo = weapon->ammo;
 
 		if (!ammo)
 			continue;
@@ -1079,7 +1079,7 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
  */
 void AII_RepairAircraft (void)
 {
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
 		AIR_ForeachFromBase(aircraft, base) {
@@ -1096,10 +1096,10 @@ void AII_RepairAircraft (void)
  * @param[in] aircraft Pointer to the aircraft
  * @note This should be called when an item starts to be added/removed and when addition/removal is over.
  */
-void AII_UpdateAircraftStats (aircraft_t *aircraft)
+void AII_UpdateAircraftStats (aircraft_t* aircraft)
 {
 	int i, currentStat;
-	const aircraft_t *source;
+	const aircraft_t* source;
 
 	assert(aircraft);
 
@@ -1115,8 +1115,8 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
-			const aircraftSlot_t *slot = &aircraft->electronics[i];
-			const objDef_t *item;
+			const aircraftSlot_t* slot = &aircraft->electronics[i];
+			const objDef_t* item;
 			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
 				continue;
 			item = slot->item;
@@ -1129,8 +1129,8 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
-			const aircraftSlot_t *slot = &aircraft->weapons[i];
-			const objDef_t *item;
+			const aircraftSlot_t* slot = &aircraft->weapons[i];
+			const objDef_t* item;
 			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
 				continue;
 			item = slot->item;
@@ -1142,7 +1142,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by shield (do nothing if the value of stat is 0) */
 		if (AII_CheckUpdateAircraftStats(&aircraft->shield, currentStat)) {
-			const objDef_t *item = aircraft->shield.item;
+			const objDef_t* item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
 			else if (!EQUAL(item->craftitem.stats[currentStat], 0))
@@ -1177,7 +1177,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
  * @return true if the base can fight, false else
  * @sa AII_BaseCanShoot
  */
-static bool AII_WeaponsCanShoot (const baseWeapon_t *weapons, int numWeapons)
+static bool AII_WeaponsCanShoot (const baseWeapon_t* weapons, int numWeapons)
 {
 	int i;
 
@@ -1195,7 +1195,7 @@ static bool AII_WeaponsCanShoot (const baseWeapon_t *weapons, int numWeapons)
  * @return true if the base can shoot, qflase else
  * @sa AII_AircraftCanShoot
  */
-int AII_BaseCanShoot (const base_t *base)
+int AII_BaseCanShoot (const base_t* base)
 {
 	assert(base);
 
@@ -1218,7 +1218,7 @@ int AII_BaseCanShoot (const base_t *base)
  * @return true if the installation can shoot, qflase else
  * @sa AII_AircraftCanShoot
  */
-bool AII_InstallationCanShoot (const installation_t *installation)
+bool AII_InstallationCanShoot (const installation_t* installation)
 {
 	assert(installation);
 
@@ -1236,17 +1236,17 @@ bool AII_InstallationCanShoot (const installation_t *installation)
  * @param[in,out] weapons Weapons array
  * @param[in] maxWeapons Number of weapons
  */
-static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
+static void BDEF_AutoTarget (baseWeapon_t* weapons, int maxWeapons)
 {
-	const installation_t *inst;
-	const base_t *base;
-	aircraft_t *closestCraft = nullptr;
+	const installation_t* inst;
+	const base_t* base;
+	aircraft_t* closestCraft = nullptr;
 	float minCraftDistance = -1;
-	aircraft_t *closestAttacker = nullptr;
+	aircraft_t* closestAttacker = nullptr;
 	float minAttackerDistance = -1;
-	const aircraftSlot_t *slot;
+	const aircraftSlot_t* slot;
 	int i;
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 
 	if (maxWeapons <= 0)
 		return;
@@ -1280,7 +1280,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 
 	/* Loop weaponslots */
 	for (i = 0; i < maxWeapons; i++) {
-		baseWeapon_t *weapon  = &weapons[i];
+		baseWeapon_t* weapon  = &weapons[i];
 		slot = &weapon->slot;
 		/* skip if autofire is disabled */
 		if (!weapon->autofire)
@@ -1317,7 +1317,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
  */
 void BDEF_AutoSelectTarget (void)
 {
-	base_t *base;
+	base_t* base;
 
 	base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
@@ -1358,7 +1358,7 @@ const char* AII_WeightToName (itemWeight_t weight)
  * @param[in] slot The aircraftslot to save
  * @param[in] weapon True if this is a weapon slot
  */
-void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, bool weapon)
+void AII_SaveOneSlotXML (xmlNode_t* p, const aircraftSlot_t* slot, bool weapon)
 {
 	cgi->XML_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
 	cgi->XML_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
@@ -1382,12 +1382,12 @@ void AII_SaveOneSlotXML (xmlNode_t *p, const aircraftSlot_t* slot, bool weapon)
  * @sa B_Load
  * @sa B_SaveAircraftSlots
  */
-void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
+void AII_LoadOneSlotXML (xmlNode_t* node, aircraftSlot_t* slot, bool weapon)
 {
 	const char* name;
 	name = cgi->XML_GetString(node, SAVE_SLOT_ITEMID);
 	if (name[0] != '\0') {
-		const technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t* tech = RS_GetTechByProvided(name);
 		/* base is nullptr here to not check against the storage amounts - they
 		* are already loaded in the campaign load function and set to the value
 		* after the craftitem was already removed from the initial game - thus
@@ -1400,7 +1400,7 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 	/* item to install after current one is removed */
 	name = cgi->XML_GetString(node, SAVE_SLOT_NEXTITEMID);
 	if (name && name[0] != '\0') {
-		const technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t* tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddItemToSlot(nullptr, tech, slot, true);
 	}
@@ -1416,7 +1416,7 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 	slot->ammoLeft = cgi->XML_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
 	name = cgi->XML_GetString(node, SAVE_SLOT_AMMOID);
 	if (name && name[0] != '\0') {
-		const technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t* tech = RS_GetTechByProvided(name);
 		/* next Item must not be loaded yet in order to install ammo properly */
 		if (tech)
 			AII_AddAmmoToSlot(nullptr, tech, slot);
@@ -1424,7 +1424,7 @@ void AII_LoadOneSlotXML (xmlNode_t *node, aircraftSlot_t* slot, bool weapon)
 	/* ammo to install after current one is removed */
 	name = cgi->XML_GetString(node, SAVE_SLOT_NEXTAMMOID);
 	if (name && name[0] != '\0') {
-		const technology_t *tech = RS_GetTechByProvided(name);
+		const technology_t* tech = RS_GetTechByProvided(name);
 		if (tech)
 			AII_AddAmmoToSlot(nullptr, tech, slot);
 	}

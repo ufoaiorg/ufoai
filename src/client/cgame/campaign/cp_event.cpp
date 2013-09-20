@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_event_callbacks.h"
 #include "save/save_triggerevents.h"
 
-static linkedList_t *eventMails = nullptr;
+static linkedList_t* eventMails = nullptr;
 
 /**
  * @brief Searches all event mails for a given id
@@ -91,7 +91,7 @@ static const value_t eventMail_vals[] = {
  */
 void CL_ParseEventMails (const char* name, const char** text)
 {
-	eventMail_t *eventMail;
+	eventMail_t* eventMail;
 
 	if (ccs.numEventMails >= MAX_EVENTMAILS) {
 		Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);
@@ -109,9 +109,9 @@ void CL_ParseEventMails (const char* name, const char** text)
 	Com_ParseBlock(name, text, eventMail, eventMail_vals, cp_campaignPool);
 }
 
-void CP_CheckCampaignEvents (campaign_t *campaign)
+void CP_CheckCampaignEvents (campaign_t* campaign)
 {
-	const campaignEvents_t *events = campaign->events;
+	const campaignEvents_t* events = campaign->events;
 	int i;
 
 	/* no events for the current campaign */
@@ -123,7 +123,7 @@ void CP_CheckCampaignEvents (campaign_t *campaign)
 		return;
 
 	for (i = 0; i < events->numCampaignEvents; i++) {
-		const campaignEvent_t *event = &events->campaignEvents[i];
+		const campaignEvent_t* event = &events->campaignEvents[i];
 		if (event->interest <= ccs.overallInterest) {
 			RS_MarkStoryLineEventResearched(event->tech);
 		}
@@ -135,16 +135,16 @@ void CP_CheckCampaignEvents (campaign_t *campaign)
  * @note Also performs some sanity check
  * @param name The events id
  */
-const campaignEvents_t *CP_GetEventsByID (const char* name)
+const campaignEvents_t* CP_GetEventsByID (const char* name)
 {
 	int i;
 
 	for (i = 0; i < ccs.numCampaignEventDefinitions; i++) {
-		const campaignEvents_t *events = &ccs.campaignEvents[i];
+		const campaignEvents_t* events = &ccs.campaignEvents[i];
 		if (Q_streq(events->id, name)) {
 			int j;
 			for (j = 0; j < events->numCampaignEvents; j++) {
-				const campaignEvent_t *event = &events->campaignEvents[j];
+				const campaignEvent_t* event = &events->campaignEvents[j];
 				if (!RS_GetTechByID(event->tech))
 					Sys_Error("Illegal tech '%s' given in events '%s'", event->tech, events->id);
 			}
@@ -199,8 +199,8 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		int i;
 		/* check for XVI infection rate */
 		for (i = 0; i < ccs.numNations; i++) {
-			const nation_t *nation = NAT_GetNationByIDX(i);
-			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			const nation_t* nation = NAT_GetNationByIDX(i);
+			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->xviInfection >= xvi)
 				return 1;
 		}
@@ -215,7 +215,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		char value[MAX_VAR];
 		Q_strncpyz(value, type + 1, sizeof(value));
 		value[strlen(value) - 1] = '\0';
-		technology_t *tech = RS_GetTechByID(value);
+		technology_t* tech = RS_GetTechByID(value);
 		if (tech == nullptr)
 			return -1;
 		if (RS_IsResearched_ptr(tech))
@@ -233,8 +233,8 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 
 		int j, nationBelowLimit = 0;
 		for (j = 0; j < ccs.numNations; j++) {
-			const nation_t *nation = NAT_GetNationByIDX(j);
-			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			const nation_t* nation = NAT_GetNationByIDX(j);
+			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->happiness < ccs.curCampaign->minhappiness) {
 				nationBelowLimit++;
 				if (nationBelowLimit >= nationAmount)
@@ -294,7 +294,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		INS_ForeachOfType(installation, INSTALLATION_DEFENCE) {
 			if (installation->installationStatus == INSTALLATION_WORKING) {
 				for (int i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-					const aircraftSlot_t *slot = &installation->batteries[i].slot;
+					const aircraftSlot_t* slot = &installation->batteries[i].slot;
 					if (slot->ammoLeft > 0)
 						return 1;
 				}
@@ -319,7 +319,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 	int i;
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
-		campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+		campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[i];
 		if (event->type != type || (!event->active && event->reactivate == nullptr))
 			continue;
 
@@ -384,7 +384,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 
 	cgi->Com_RegisterConstList(eventConstants);
 
-	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
+	campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
 	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
 	ccs.numCampaignTriggerEvents++;
@@ -405,16 +405,16 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 	cgi->Com_UnregisterConstList(eventConstants);
 }
 
-bool CP_TriggerEventSaveXML (xmlNode_t *p)
+bool CP_TriggerEventSaveXML (xmlNode_t* p)
 {
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
 	int i;
 
 	for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
-		const campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+		const campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[i];
 		if (event->active)
 			continue;
-		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
+		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT);
 
 		cgi->XML_AddString(s, SAVE_TRIGGEREVENTS_NAME, event->id);
 		cgi->XML_AddBool(s, SAVE_TRIGGEREVENTS_STATE, event->active);
@@ -423,9 +423,9 @@ bool CP_TriggerEventSaveXML (xmlNode_t *p)
 	return true;
 }
 
-bool CP_TriggerEventLoadXML (xmlNode_t *p)
+bool CP_TriggerEventLoadXML (xmlNode_t* p)
 {
-	xmlNode_t *n, *s;
+	xmlNode_t* n, *s;
 
 	n = cgi->XML_GetNode(p, SAVE_TRIGGEREVENTS_TRIGGEREVENTS);
 	if (!n)
@@ -437,7 +437,7 @@ bool CP_TriggerEventLoadXML (xmlNode_t *p)
 
 		int i;
 		for (i = 0; i < ccs.numCampaignTriggerEvents; i++) {
-			campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[i];
+			campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[i];
 			if (Q_streq(event->id, id)) {
 				event->active = state;
 				break;
@@ -479,7 +479,7 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 	ccs.numCampaignEventDefinitions++;
 
 	do {
-		campaignEvent_t *event;
+		campaignEvent_t* event;
 		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
@@ -541,7 +541,7 @@ void CL_EventAddMail (const char* eventMailId)
 	eventMail->sent = true;
 
 	if (!eventMail->skipMessage) {
-		uiMessageListNodeMessage_t *m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
+		uiMessageListNodeMessage_t* m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
 		if (m)
 			m->eventMail = eventMail;
 		else

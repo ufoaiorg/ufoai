@@ -41,7 +41,7 @@ static void CP_AddTechAsResearchable_f (void)
 	}
 
 	const char* techID = cgi->Cmd_Argv(1);
-	technology_t *tech = RS_GetTechByID(techID);
+	technology_t* tech = RS_GetTechByID(techID);
 	RS_MarkOneResearchable(tech);
 }
 
@@ -56,8 +56,8 @@ static void CP_AddItemAsCollected_f (void)
 {
 	int baseID;
 	const char* id;
-	base_t *base;
-	const objDef_t *item;
+	base_t* base;
+	const objDef_t* item;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item>\n", cgi->Cmd_Argv(0));
@@ -73,7 +73,7 @@ static void CP_AddItemAsCollected_f (void)
 	/* i = item index */
 	item = INVSH_GetItemByIDSilent(id);
 	if (item) {
-		technology_t *tech = RS_GetTechForItem(item);
+		technology_t* tech = RS_GetTechForItem(item);
 		base->storage.numItems[item->idx]++;
 		Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
 		RS_MarkCollected(tech);
@@ -87,9 +87,9 @@ static void CP_AddItemAsCollected_f (void)
 static void CP_ChangeNationHappiness_f (void)
 {
 	float change;
-	nation_t *nation;
-	const nationInfo_t *stats;
-	const mission_t *mission = GEO_GetSelectedMission();
+	nation_t* nation;
+	const nationInfo_t* stats;
+	const mission_t* mission = GEO_GetSelectedMission();
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", cgi->Cmd_Argv(0));
@@ -145,7 +145,7 @@ static const cmdList_t cp_commands[] = {
  */
 void CP_CampaignTriggerFunctions (bool add)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = cp_commands; commands->name; commands++)
 		if (add)

@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa UP_AircraftDescription
  * @sa UP_AircraftItemDescription
  */
-static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
+static void BS_MarketAircraftDescription (const aircraft_t* aircraftTemplate)
 {
-	const technology_t *tech;
+	const technology_t* tech;
 
 	/* Break if no aircraft was given or if  it's no sample-aircraft (i.e. template). */
 	if (!aircraftTemplate || aircraftTemplate != aircraftTemplate->tpl)
@@ -57,7 +57,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 static void BS_MarketInfoClick_f (void)
 {
 	const char* item = cgi->Cvar_GetString("mn_item");
-	const technology_t *tech = RS_GetTechByProvided(item);
+	const technology_t* tech = RS_GetTechByProvided(item);
 
 	if (tech)
 		UP_OpenWith(tech->id);
@@ -68,8 +68,8 @@ static void BS_MarketInfoClick_f (void)
  */
 static void BS_SetAutosell_f (void)
 {
-	const objDef_t *od;
-	const technology_t *tech;
+	const objDef_t* od;
+	const technology_t* tech;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n",
@@ -114,10 +114,10 @@ static void BS_Buy_f (void)
 {
 	const char* itemid;
 	int count;
-	base_t *base = B_GetCurrentSelectedBase();
-	const aircraft_t *aircraft;
-	const ugv_t *ugv;
-	const objDef_t *od;
+	base_t* base = B_GetCurrentSelectedBase();
+	const aircraft_t* aircraft;
+	const ugv_t* ugv;
+	const objDef_t* od;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is omitted buys on the currently selected base.\n",
@@ -134,7 +134,7 @@ static void BS_Buy_f (void)
 	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
 		/* aircraft sell - with aircraft golbal idx */
 		int idx = atoi(rest);
-		aircraft_t *aircraft = AIR_AircraftGetFromIDX(idx);
+		aircraft_t* aircraft = AIR_AircraftGetFromIDX(idx);
 
 		if (!aircraft) {
 			Com_Printf("Invalid aircraft index!\n");
@@ -197,7 +197,7 @@ static void BS_Buy_f (void)
 
 	ugv = cgi->Com_GetUGVByIDSilent(itemid);
 	if (ugv) {
-		const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+		const objDef_t* ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 		if (!ugvWeapon)
 			cgi->Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
@@ -282,9 +282,9 @@ static void BS_Buy_f (void)
 static void BS_ShowInfo_f (void)
 {
 	const char* itemid;
-	const aircraft_t *aircraft;
-	const ugv_t *ugv;
-	const objDef_t *od;
+	const aircraft_t* aircraft;
+	const ugv_t* ugv;
+	const objDef_t* od;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item-id>\n", cgi->Cmd_Argv(0));
@@ -354,7 +354,7 @@ static void BS_ShowInfo_f (void)
  */
 static void BS_FillMarket_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 	itemFilterTypes_t type;
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -374,7 +374,7 @@ static void BS_FillMarket_f (void)
 	case FILTER_UGVITEM:
 		/* show own UGV */
 		E_Foreach(EMPL_ROBOT, robot) {
-			const ugv_t *ugv = robot->getUGV();
+			const ugv_t* ugv = robot->getUGV();
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 
 			if (!robot->isHiredInBase(base))
@@ -384,9 +384,9 @@ static void BS_FillMarket_f (void)
 		}
 		/* show buyable UGV */
 		for (int i = 0; i < cgi->csi->numUGV; i++) {
-			const ugv_t *ugv = &cgi->csi->ugvs[i];
+			const ugv_t* ugv = &cgi->csi->ugvs[i];
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
-			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+			const objDef_t* ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			const int buyable = std::min(E_CountUnhiredRobotsByType(ugv), BS_GetItemOnMarket(ugvWeapon));
 
 			assert(tech);
@@ -408,8 +408,8 @@ static void BS_FillMarket_f (void)
 	case FILTER_CRAFTITEM:
 	case MAX_FILTERTYPES: {
 		for (int i = 0; i < cgi->csi->numODs; i++) {
-			const objDef_t *od = &cgi->csi->ods[i];
-			const technology_t *tech = RS_GetTechForItem(od);
+			const objDef_t* od = &cgi->csi->ods[i];
+			const technology_t* tech = RS_GetTechForItem(od);
 
 			if (!BS_IsOnMarket(od))
 				continue;
@@ -426,7 +426,7 @@ static void BS_FillMarket_f (void)
 			cgi->UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
 		}
 		for (int i = 0; i < ccs.numAircraftTemplates; i++) {
-			const aircraft_t *aircraft = &ccs.aircraftTemplates[i];
+			const aircraft_t* aircraft = &ccs.aircraftTemplates[i];
 			if (!BS_AircraftIsOnMarket(aircraft))
 				continue;
 			if (!RS_IsResearched_ptr(aircraft->tech))

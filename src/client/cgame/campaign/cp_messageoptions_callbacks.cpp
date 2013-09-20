@@ -43,8 +43,8 @@ messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding b
  */
 static void MSO_InitList (void)
 {
-	uiNode_t *messageSetting = nullptr;
-	uiNode_t *lastCategory = nullptr;
+	uiNode_t* messageSetting = nullptr;
+	uiNode_t* lastCategory = nullptr;
 	int idx;
 
 	/* option already allocated, nothing to do */
@@ -53,7 +53,7 @@ static void MSO_InitList (void)
 
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
-		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
+		const msgCategoryEntry_t* entry = &ccs.msgCategoryEntries[idx];
 		const char* id = va("%d", idx);
 
 		if (entry->isCategory) {
@@ -77,15 +77,15 @@ static void MSO_UpdateVisibleButtons (void)
 {
 	int visible;/* current line */
 	uiOptionIterator_t iterator;
-	uiNode_t *messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
+	uiNode_t* messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
 	UI_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
 	/* update visible button lines based on current displayed values */
 	for (visible = 0; visible < messageList_size; visible++) {
-		const uiNode_t *option = iterator.option;
+		const uiNode_t* option = iterator.option;
 		int idx;
-		msgCategoryEntry_t *entry;
+		msgCategoryEntry_t* entry;
 
 		if (!option)
 			break;
@@ -158,11 +158,11 @@ static void MSO_Toggle_f (void)
 		uiOptionIterator_t iterator;
 		const int listIndex = atoi(cgi->Cmd_Argv(1));
 		int idx;
-		const msgCategoryEntry_t *selectedEntry;
+		const msgCategoryEntry_t* selectedEntry;
 		int optionType;
 		bool activate;
 		int type;
-		uiNode_t *messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
+		uiNode_t* messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
 		UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)

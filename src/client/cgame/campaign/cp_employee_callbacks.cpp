@@ -40,7 +40,7 @@ static const int maxEmployeesPerPage = 14;
 static int employeeScrollPos = 0;
 
 /* List of (hired) emplyoees in the current category (employeeType). */
-static linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+static linkedList_t* employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 /* How many employees in current list (changes on every category change, too) */
 static int employeesInCurrentList;
 
@@ -50,7 +50,7 @@ static int employeesInCurrentList;
 static void E_UpdateGUICount_f (void)
 {
 	int max;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -65,13 +65,13 @@ static void E_UpdateGUICount_f (void)
 
 static void E_EmployeeSelect (Employee *employee)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
 	selectedEmployee = employee;
 	if (selectedEmployee) {
-		const character_t *chr = &selectedEmployee->chr;
+		const character_t* chr = &selectedEmployee->chr;
 		/* mn_employee_hired is needed to allow renaming */
 		cgi->Cvar_SetValue("mn_employee_hired", selectedEmployee->isHired() ? 1 : 0);
 		cgi->Cvar_SetValue("mn_ucn", chr->ucn);
@@ -88,7 +88,7 @@ static void E_EmployeeSelect (Employee *employee)
 static void E_EmployeeListScroll_f (void)
 {
 	int j, cnt = 0;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -145,8 +145,8 @@ static void E_EmployeeList_f (void)
 {
 	Employee* employee;
 	int hiredEmployeeIdx;
-	linkedList_t *employeeListName;
-	base_t *base = B_GetCurrentSelectedBase();
+	linkedList_t* employeeListName;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -241,7 +241,7 @@ static void E_ChangeName_f (void)
  * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
  * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
  */
-int E_GenerateHiredEmployeesList (const base_t *base)
+int E_GenerateHiredEmployeesList (const base_t* base)
 {
 	assert(base);
 	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
@@ -301,7 +301,7 @@ static void E_EmployeeDelete_f (void)
  */
 static void E_EmployeeHire_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

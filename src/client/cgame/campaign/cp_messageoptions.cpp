@@ -79,7 +79,7 @@ messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding actual 
  */
 void MSO_Set (const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands)
 {
-	messageSettings_t *settings = &messageSettings[type];
+	messageSettings_t* settings = &messageSettings[type];
 
 	if (activate) {
 		if ((optionType & NTMASK_PAUSE) == NTMASK_PAUSE)
@@ -205,10 +205,10 @@ static void MSO_SetAll_f (void)
  * @return message_t pointer if message was added
  * @sa MS_AddNewMessageSound
  */
-uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char* title, const char* text, messageType_t type, technology_t *pedia, bool popup)
+uiMessageListNodeMessage_t* MSO_CheckAddNewMessage (const notify_t messagecategory, const char* title, const char* text, messageType_t type, technology_t* pedia, bool popup)
 {
-	uiMessageListNodeMessage_t *result = nullptr;
-	const messageSettings_t *settings = &messageSettings[messagecategory];
+	uiMessageListNodeMessage_t* result = nullptr;
+	const messageSettings_t* settings = &messageSettings[messagecategory];
 
 	if (settings->doNotify)
 		result = MS_AddNewMessage(title, text, type, pedia, popup, settings->doSound);
@@ -221,15 +221,15 @@ uiMessageListNodeMessage_t *MSO_CheckAddNewMessage (const notify_t messagecatego
  * @brief saves current notification and pause settings
  * @sa MSO_LoadXML
  */
-bool MSO_SaveXML (xmlNode_t *p)
+bool MSO_SaveXML (xmlNode_t* p)
 {
 	int type;
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; ++type) {
 		messageSettings_t actualSetting = messageSettings[type];
-		xmlNode_t *s = cgi->XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
+		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
 
 		cgi->XML_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
 		cgi->XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
@@ -244,9 +244,9 @@ bool MSO_SaveXML (xmlNode_t *p)
  * @brief Restores the notification and pause settings from savegame
  * @sa MSO_SaveXML
  */
-bool MSO_LoadXML (xmlNode_t *p)
+bool MSO_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *n, *s;
+	xmlNode_t* n, *s;
 
 	n = cgi->XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)
@@ -292,7 +292,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 	}
 
 	int messageType = -1;
-	linkedList_t *status = nullptr;
+	linkedList_t* status = nullptr;
 
 	do {
 		/* get the msg type*/
@@ -326,7 +326,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 		return -1;
 	}
 
-	for (linkedList_t *element = status; element != nullptr; element = element->next) {
+	for (linkedList_t* element = status; element != nullptr; element = element->next) {
 		const char* value = (const char*)element->data;
 		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
@@ -350,8 +350,8 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 {
 	const char* errhead = "MSO_ParseCategory: unexpected end of file (names ";
 	const char* token;
-	msgCategory_t *category;
-	msgCategoryEntry_t *categoryEntry;
+	msgCategory_t* category;
+	msgCategoryEntry_t* categoryEntry;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -400,8 +400,8 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 				cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: error while parsing option from \"%s\".\n", blockName);
 			}
 			/* prepare a new msgcategory entry */
-			msgCategoryEntry_t *previous = ccs.messageCategories[ccs.numMsgCategories].last;
-			msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
+			msgCategoryEntry_t* previous = ccs.messageCategories[ccs.numMsgCategories].last;
+			msgCategoryEntry_t* entry = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 			OBJZERO(*entry);
 			ccs.messageCategories[ccs.numMsgCategories].last = entry;
 			previous->next = entry;

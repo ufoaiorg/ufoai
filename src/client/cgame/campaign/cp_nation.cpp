@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_main.h" /* ui_node_linechart.h */
 #include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
 
-nation_t *NAT_GetNationByIDX (const int index)
+nation_t* NAT_GetNationByIDX (const int index)
 {
 	assert(index >= 0);
 	assert(index < ccs.numNations);
@@ -46,7 +46,7 @@ nation_t *NAT_GetNationByIDX (const int index)
  * @param[in] nationID nation id as defined in (nation_t->id)
  * @return nation_t pointer or nullptr if nothing found (=error).
  */
-nation_t *NAT_GetNationByID (const char* nationID)
+nation_t* NAT_GetNationByID (const char* nationID)
 {
 	int i;
 
@@ -55,7 +55,7 @@ nation_t *NAT_GetNationByID (const char* nationID)
 		return nullptr;
 	}
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = NAT_GetNationByIDX(i);
+		nation_t* nation = NAT_GetNationByIDX(i);
 		if (Q_streq(nation->id, nationID))
 			return nation;
 	}
@@ -75,13 +75,13 @@ nation_t *NAT_GetNationByID (const char* nationID)
 void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
 	MIS_Foreach(mission) {
-		nation_t *nation = GEO_GetNation(mission->pos);
+		nation_t* nation = GEO_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
 
 		/* Some non-water location have no nation */
 		if (nation) {
 			float happinessFactor;
-			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			switch (mission->stage) {
 			case STAGE_TERROR_MISSION:
 			case STAGE_SUBVERT_GOV:
@@ -134,7 +134,7 @@ const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
  */
 const char* NAT_GetHappinessString (const nation_t* nation)
 {
-	const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+	const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 	if (stats->happiness < 0.015)
 		return _("Giving up");
 	else if (stats->happiness < 0.025)
@@ -165,11 +165,11 @@ const char* NAT_GetHappinessString (const nation_t* nation)
  * @param[in] nation The nation to update the happiness for
  * @param[in] happiness The new happiness value to set for the given nation
  */
-void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float happiness)
+void NAT_SetHappiness (const float minhappiness, nation_t* nation, const float happiness)
 {
 	const char* oldString = NAT_GetHappinessString(nation);
 	const char* newString;
-	nationInfo_t *stats = &nation->stats[0];
+	nationInfo_t* stats = &nation->stats[0];
 	const float oldHappiness = stats->happiness;
 	const float middleHappiness = (minhappiness + 1.0) / 2;
 	notify_t notifyType = NT_NUM_NOTIFYTYPE;
@@ -205,14 +205,14 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
  * @brief Nation saving callback
  * @param[out] p XML Node structure, where we write the information to
  */
-bool NAT_SaveXML (xmlNode_t *p)
+bool NAT_SaveXML (xmlNode_t* p)
 {
 	int i;
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_NATION_NATIONS);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_NATION_NATIONS);
 
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = NAT_GetNationByIDX(i);
-		xmlNode_t *s;
+		nation_t* nation = NAT_GetNationByIDX(i);
+		xmlNode_t* s;
 		int j;
 
 		if (!nation)
@@ -221,8 +221,8 @@ bool NAT_SaveXML (xmlNode_t *p)
 		s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
 		cgi->XML_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			const nationInfo_t *stats = &nation->stats[j];
-			xmlNode_t *ss;
+			const nationInfo_t* stats = &nation->stats[j];
+			xmlNode_t* ss;
 
 			if (!stats->inuse)
 				continue;
@@ -240,10 +240,10 @@ bool NAT_SaveXML (xmlNode_t *p)
  * @brief Nation loading xml callback
  * @param[in] p XML Node structure, where we get the information from
  */
-bool NAT_LoadXML (xmlNode_t *p)
+bool NAT_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *n;
-	xmlNode_t *s;
+	xmlNode_t* n;
+	xmlNode_t* s;
 
 	n = cgi->XML_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
@@ -251,8 +251,8 @@ bool NAT_LoadXML (xmlNode_t *p)
 
 	/* nations loop */
 	for (s = cgi->XML_GetNode(n, SAVE_NATION_NATION); s; s = cgi->XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
-		xmlNode_t *ss;
-		nation_t *nation = NAT_GetNationByID(cgi->XML_GetString(s, SAVE_NATION_ID));
+		xmlNode_t* ss;
+		nation_t* nation = NAT_GetNationByID(cgi->XML_GetString(s, SAVE_NATION_ID));
 
 		if (!nation)
 			return false;
@@ -260,7 +260,7 @@ bool NAT_LoadXML (xmlNode_t *p)
 		/* month loop */
 		for (ss = cgi->XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
 			int monthIDX = cgi->XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
-			nationInfo_t *stats = &nation->stats[monthIDX];
+			nationInfo_t* stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return false;
@@ -301,7 +301,7 @@ static const value_t nation_vals[] = {
  */
 void CL_ParseNations (const char* name, const char** text)
 {
-	nation_t *nation;
+	nation_t* nation;
 	int i;
 
 	if (ccs.numNations >= MAX_NATIONS) {
@@ -311,7 +311,7 @@ void CL_ParseNations (const char* name, const char** text)
 
 	/* search for nations with same name */
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *n = NAT_GetNationByIDX(i);
+		const nation_t* n = NAT_GetNationByIDX(i);
 		if (Q_streq(name, n->id))
 			break;
 	}
@@ -338,7 +338,7 @@ void CL_ParseNations (const char* name, const char** text)
  * @brief Finds a city by it's scripted identifier
  * @param[in] cityId Scripted ID of the city
  */
-city_t *CITY_GetById (const char* cityId)
+city_t* CITY_GetById (const char* cityId)
 {
 	LIST_Foreach(ccs.cities, city_t, city) {
 		if (Q_streq(cityId, city->id))
@@ -351,7 +351,7 @@ city_t *CITY_GetById (const char* cityId)
  * @brief Finds a city by it's geoscape coordinates
  * @param[in] pos Position of the city
  */
-city_t *CITY_GetByPos (vec2_t pos)
+city_t* CITY_GetByPos (vec2_t pos)
 {
 	LIST_Foreach(ccs.cities, city_t, city) {
 		if (Vector2Equal(pos, city->pos))
@@ -407,7 +407,7 @@ bool NAT_ScriptSanityCheck (void)
 		bool parametersFit = false;
 		ufoType_t ufoTypes[UFO_MAX];
 		int numTypes;
-		const mapDef_t *md;
+		const mapDef_t* md;
 
 		if (!city->name) {
 			error++;
@@ -520,7 +520,7 @@ static int CL_NationsMaxFunding (void)
 	int max = 0;
 
 	for (n = 0; n < ccs.numNations; n++) {
-		const nation_t *nation = NAT_GetNationByIDX(n);
+		const nation_t* nation = NAT_GetNationByIDX(n);
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				const int funding = NAT_GetFunding(nation, m);
@@ -548,7 +548,7 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isn't really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStrip_t *funding, int maxFunding, int color)
+static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStrip_t* funding, int maxFunding, int color)
 {
 	int width, height, dx;
 	int m;
@@ -594,7 +594,7 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 	funding->pointList = (int*)fundingPts[usedFundPtslist];
 	funding->numPoints = ptsNumber;
 	if (color < 0) {
-		const nation_t *nation = NAT_GetNationByIDX(selectedNation);
+		const nation_t* nation = NAT_GetNationByIDX(selectedNation);
 		cgi->Cvar_Set("mn_nat_symbol", "nations/%s", nation->id);
 		Vector4Copy(graphColorSelected, funding->color);
 	} else {
@@ -613,8 +613,8 @@ static lineStrip_t colorLineStrip[MAX_NATIONS];
 static void CL_NationStatsUpdate_f (void)
 {
 	int i;
-	uiNode_t *colorNode;
-	uiNode_t *graphNode;
+	uiNode_t* colorNode;
+	uiNode_t* graphNode;
 	int dy = 10;
 
 	usedColPtslists = 0;
@@ -625,8 +625,8 @@ static void CL_NationStatsUpdate_f (void)
 	}
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		lineStrip_t *color = &colorLineStrip[i];
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		lineStrip_t* color = &colorLineStrip[i];
 		const int funding = NAT_GetFunding(nation, 0);
 
 		OBJZERO(*color);
@@ -676,8 +676,8 @@ static void CL_NationStatsUpdate_f (void)
 		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
 		for (i = 0; i < ccs.numNations; i++) {
-			const nation_t *nation = NAT_GetNationByIDX(i);
-			lineStrip_t *funding = &fundingLineStrip[i];
+			const nation_t* nation = NAT_GetNationByIDX(i);
+			lineStrip_t* funding = &fundingLineStrip[i];
 
 			/* init the structure */
 			OBJZERO(*funding);
@@ -739,7 +739,7 @@ static void NAT_NationList_f (void)
 {
 	int i;
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
+		const nation_t* nation = &ccs.nations[i];
 		Com_Printf("Nation ID: %s\n", nation->id);
 		Com_Printf("...max-funding %i c\n", nation->maxFunding);
 		Com_Printf("...happiness %0.2f\n", nation->stats[0].happiness);
@@ -766,22 +766,22 @@ static void NAT_NationList_f (void)
  * @sa B_CreateEmployee
  * @todo This is very redundant with CP_StatsUpdate_f. Investigate and clean up.
  */
-void NAT_HandleBudget (const campaign_t *campaign)
+void NAT_HandleBudget (const campaign_t* campaign)
 {
 	char message[1024];
 	int cost;
 	int totalIncome = 0;
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
-	const salary_t *salary = &campaign->salaries;
+	const salary_t* salary = &campaign->salaries;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
 	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, true);
 
 	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
 		int newScientists = 0, newSoldiers = 0, newPilots = 0, newWorkers = 0;
 
@@ -830,7 +830,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		E_Foreach(i, employee) {
 			if (!employee->isHired())
 				continue;
-			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
 			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())
 					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->getType());
 		}
@@ -856,7 +856,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		cost = CP_GetSalaryUpKeepBase(salary, base);
 		totalExpenditure += cost;
@@ -895,7 +895,7 @@ void NAT_BackupMonthlyData (void)
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
 	for (int nat = 0; nat < ccs.numNations; nat++) {
-		nation_t *nation = NAT_GetNationByIDX(nat);
+		nation_t* nation = NAT_GetNationByIDX(nat);
 
 		for (int i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];

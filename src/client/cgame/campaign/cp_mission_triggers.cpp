@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (const mission_t *mission, bool won)
+void CP_ExecuteMissionTrigger (const mission_t* mission, bool won)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 

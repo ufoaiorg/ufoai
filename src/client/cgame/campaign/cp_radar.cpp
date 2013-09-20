@@ -47,7 +47,7 @@ static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
  */
 void RADAR_UpdateStaticRadarCoverage (void)
 {
-	base_t *base;
+	base_t* base;
 
 	/* Initialise radar range (will be filled below) */
 	CP_InitializeRadarOverlay(true);
@@ -104,7 +104,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
  */
 void RADAR_DeactivateRadarOverlay (void)
 {
-	base_t *base;
+	base_t* base;
 
 	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
@@ -215,7 +215,7 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
  */
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
 {
-	base_t *base;
+	base_t* base;
 
 	base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
@@ -239,7 +239,7 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
  * @param[in] level The tech level of the radar
  * @param[in] updateSourceRadarMap if the radar overlay should be updated.
  */
-void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float level, bool updateSourceRadarMap)
+void RADAR_Initialise (radar_t* radar, float range, float trackingRange, float level, bool updateSourceRadarMap)
 {
 	const int oldrange = radar->range;
 
@@ -265,7 +265,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
  * @brief Reset UFO sensored on radar.
  * @param[out] radar The radar to initialize.
  */
-void RADAR_InitialiseUFOs (radar_t *radar)
+void RADAR_InitialiseUFOs (radar_t* radar)
 {
 	radar->numUFOs = 0;
 	OBJZERO(radar->ufos);
@@ -280,7 +280,7 @@ void RADAR_InitialiseUFOs (radar_t *radar)
 void RADAR_UpdateBaseRadarCoverage_f (void)
 {
 	int baseIdx;
-	base_t *base;
+	base_t* base;
 	float level;
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -311,7 +311,7 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
  * @param[in] radarRange New range of the radar
  * @param[in] trackingRadarRange New tracking range of the radar
  */
-void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange, const float trackingRadarRange)
+void RADAR_UpdateInstallationRadarCoverage (installation_t* installation, const float radarRange, const float trackingRadarRange)
 {
 	/* Sanity check */
 	if (!installation || !installation->installationTemplate)
@@ -333,9 +333,9 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
  * @brief Adds detected UFO to any radar in range (if not already detected).
  * @param[in] ufo Pointer to the UFO to check.
  */
-void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t *ufo)
+void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t* ufo)
 {
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	AIR_Foreach(aircraft) {
 		if (!AIR_IsAircraftOnGeoscape(aircraft))
@@ -379,7 +379,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t *ufo)
  */
 bool RADAR_CheckRadarSensored (const vec2_t pos)
 {
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
 		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
@@ -408,8 +408,8 @@ bool RADAR_CheckRadarSensored (const vec2_t pos)
  * @sa UFO_CampaignCheckEvents
  * @sa CP_CheckNewMissionDetectedOnGeoscape
  */
-bool RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
-	const aircraft_t *ufo, bool detected)
+bool RADAR_CheckUFOSensored (radar_t* radar, const vec2_t posRadar,
+	const aircraft_t* ufo, bool detected)
 {
 	int dist;
 	bool ufoIsSensored;
@@ -455,7 +455,7 @@ bool RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
  */
 void RADAR_SetRadarAfterLoading (void)
 {
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 
 	ufo = nullptr;
 	while ((ufo = UFO_GetNext(ufo)) != nullptr) {

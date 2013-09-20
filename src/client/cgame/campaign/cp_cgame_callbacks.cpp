@@ -33,7 +33,7 @@
 #include "../../battlescape/cl_hud.h"
 #include "cp_mission_callbacks.h"
 
-const cgame_import_t *cgi;
+const cgame_import_t* cgi;
 
 /**
  * @sa CL_ParseResults
@@ -42,8 +42,8 @@ const cgame_import_t *cgi;
  */
 static void GAME_CP_Results_f (void)
 {
-	mission_t *mission = GEO_GetSelectedMission();
-	battleParam_t *bp = &ccs.battleParameters;
+	mission_t* mission = GEO_GetSelectedMission();
+	battleParam_t* bp = &ccs.battleParameters;
 
 	if (!mission)
 		return;
@@ -101,10 +101,10 @@ static inline const char* CP_ToDifficultyName (const int difficulty)
 static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
-	uiNode_t *campaignOption = nullptr;
+	uiNode_t* campaignOption = nullptr;
 
 	for (i = 0; i < ccs.numCampaigns; i++) {
-		const campaign_t *c = &ccs.campaigns[i];
+		const campaign_t* c = &ccs.campaigns[i];
 		if (c->visible)
 			cgi->UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
 	}
@@ -120,7 +120,7 @@ static char campaignDesc[MAXCAMPAIGNTEXT];
 static void GAME_CP_CampaignDescription_f (void)
 {
 	const char* racetype;
-	const campaign_t *campaign;
+	const campaign_t* campaign;
 
 	if (cgi->Cmd_Argc() < 2 || Q_streq(cgi->Cmd_Argv(1), "")) {
 		if (ccs.numCampaigns > 0)
@@ -167,7 +167,7 @@ static void GAME_CP_CampaignDescription_f (void)
  */
 static void GAME_CP_Start_f (void)
 {
-	campaign_t *campaign;
+	campaign_t* campaign;
 
 	campaign = CP_GetCampaign(cgi->Cmd_Argv(1));
 	if (!campaign) {
@@ -184,9 +184,9 @@ static void GAME_CP_Start_f (void)
 	cgi->Cbuf_AddText("seq_start intro\n");
 }
 
-static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t *teamDef, int amount, bool dead)
+static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t* teamDef, int amount, bool dead)
 {
-	AL_AddAlienTypeToAircraftCargo((aircraft_t *) data, teamDef, amount, dead);
+	AL_AddAlienTypeToAircraftCargo((aircraft_t* ) data, teamDef, amount, dead);
 }
 
 /**
@@ -210,9 +210,9 @@ void GAME_CP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, 
 	const int currentTeam = cgi->GAME_GetCurrentTeam();
 	const bool won = (winner == currentTeam);
 	const bool draw = (winner == -1 || winner == 0);
-	missionResults_t *results;
-	aircraft_t *aircraft = GEO_GetMissionAircraft();
-	battleParam_t *bp = &ccs.battleParameters;
+	missionResults_t* results;
+	aircraft_t* aircraft = GEO_GetMissionAircraft();
+	battleParam_t* bp = &ccs.battleParameters;
 
 	CP_ParseCharacterData(msg, &ccs.updateCharacters);
 
@@ -324,7 +324,7 @@ void GAME_CP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, 
 
 bool GAME_CP_Spawn (linkedList_t** chrList)
 {
-	aircraft_t *aircraft = GEO_GetMissionAircraft();
+	aircraft_t* aircraft = GEO_GetMissionAircraft();
 	if (!aircraft)
 		return false;
 
@@ -339,9 +339,9 @@ bool GAME_CP_Spawn (linkedList_t** chrList)
 	return true;
 }
 
-bool GAME_CP_ItemIsUseable (const objDef_t *od)
+bool GAME_CP_ItemIsUseable (const objDef_t* od)
 {
-	const technology_t *tech = RS_GetTechForItem(od);
+	const technology_t* tech = RS_GetTechForItem(od);
 	return RS_IsResearched_ptr(tech);
 }
 
@@ -350,7 +350,7 @@ bool GAME_CP_ItemIsUseable (const objDef_t *od)
  * @param[in] teamDef The team definition of the alien team
  * @return @c true if known, @c false otherwise.
  */
-bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
+bool GAME_CP_TeamIsKnown (const teamDef_t* teamDef)
 {
 	if (!CHRSH_IsTeamDefAlien(teamDef))
 		return true;
@@ -396,7 +396,7 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
 
 void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
-	const base_t *base = B_GetBaseByIDX(baseIdx);
+	const base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	int y = y1 + padding;
@@ -418,10 +418,10 @@ void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w,
 
 void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 {
-	const base_t *base = B_GetBaseByIDX(baseIdx);
+	const base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
-	const building_t *building = base->map[row][col].building;
+	const building_t* building = base->map[row][col].building;
 	if (!building)
 		return;
 
@@ -434,7 +434,7 @@ void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 
 void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
 {
-	const base_t *base = B_GetBaseByIDX(baseIdx);
+	const base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	if (!base) {
@@ -451,7 +451,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 		const char* image = nullptr;
 		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
 			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
-			const building_t *building;
+			const building_t* building;
 			/* base tile */
 			if (B_IsTileBlocked(base, baseCol, baseRow)) {
 				building = nullptr;
@@ -496,7 +496,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	/* if we are building */
 	if (hover && ccs.baseAction == BA_NEWBUILDING) {
 		static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
-		const building_t *building = base->buildingCurrent;
+		const building_t* building = base->buildingCurrent;
 		const vec2_t& size = building->size;
 		assert(building);
 
@@ -517,12 +517,12 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 
 void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
-	base_t *base = B_GetBaseByIDX(baseIdx);
+	base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	if (base == nullptr)
 		return;
-	const building_t *entry = base->map[row][col].building;
+	const building_t* entry = base->map[row][col].building;
 	if (key == K_MOUSE3) {
 		if (entry) {
 			assert(!B_IsTileBlocked(base, col, row));
@@ -534,7 +534,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 		}
 	} else if (key == K_MOUSE1) {
 		if (ccs.baseAction == BA_NEWBUILDING) {
-			const building_t *building = base->buildingCurrent;
+			const building_t* building = base->buildingCurrent;
 
 			assert(building);
 
@@ -551,7 +551,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 			return;
 		}
 
-		const building_t *entry = B_GetBuildingAt(base, col, row);
+		const building_t* entry = B_GetBuildingAt(base, col, row);
 		if (entry != nullptr) {
 			if (B_IsTileBlocked(base, col, row))
 				cgi->Com_Error(ERR_DROP, "tile with building is not blocked");
@@ -571,9 +571,9 @@ const char* GAME_CP_GetTeamDef (void)
 
 void GAME_CP_InitMissionBriefing (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs)
 {
-	const battleParam_t *bp = &ccs.battleParameters;
-	const mission_t *mission = bp->mission;
-	const mapDef_t *md = mission->mapDef;
+	const battleParam_t* bp = &ccs.battleParameters;
+	const mission_t* mission = bp->mission;
+	const mapDef_t* md = mission->mapDef;
 	if (Q_strvalid(md->victoryCondition)) {
 		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
 	}
@@ -592,7 +592,7 @@ void GAME_CP_InitMissionBriefing (const char** title, linkedList_t** victoryCond
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t *team)
+dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t* team)
 {
 	const int teamSize = cgi->LIST_Count(team);
 	dbuffer *msg = new dbuffer(2 + teamSize * 10);
@@ -611,16 +611,16 @@ dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t *team)
 	return msg;
 }
 
-equipDef_t *GAME_CP_GetEquipmentDefinition (void)
+equipDef_t* GAME_CP_GetEquipmentDefinition (void)
 {
 	return &ccs.eMission;
 }
 
-void GAME_CP_CharacterCvars (const character_t *chr)
+void GAME_CP_CharacterCvars (const character_t* chr)
 {
 	/* Display rank if the character has one. */
 	if (chr->score.rank >= 0) {
-		const rank_t *rank = CL_GetRankByIdx(chr->score.rank);
+		const rank_t* rank = CL_GetRankByIdx(chr->score.rank);
 		cgi->Cvar_Set("mn_chrrank", _("Rank: %s"), _(rank->name));
 		cgi->Cvar_Set("mn_chrrank_img", "%s", rank->image);
 		cgi->Cvar_Set("mn_chrrankprefix", "%s ", _(rank->shortname));
@@ -638,12 +638,12 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 
 const char* GAME_CP_GetItemModel (const char* string)
 {
-	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
+	const aircraft_t* aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {
 		assert(aircraft->tech);
 		return aircraft->tech->mdl;
 	} else {
-		const technology_t *tech = RS_GetTechByProvided(string);
+		const technology_t* tech = RS_GetTechByProvided(string);
 		if (tech)
 			return tech->mdl;
 		return nullptr;

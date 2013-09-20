@@ -92,7 +92,7 @@ bool Employee::isAwayFromBase () const
  * @param[in] num how many employees, if -1, hire building->maxEmployees
  * @sa B_SetUpBase
  */
-void E_HireForBuilding (base_t *base, building_t *building, int num)
+void E_HireForBuilding (base_t* base, building_t* building, int num)
 {
 	if (num < 0)
 		num = building->maxEmployees;
@@ -136,10 +136,10 @@ void E_HireForBuilding (base_t *base, building_t *building, int num)
  * @param newBase The base where the employee should be located at
  * @return @c false if @c employee was a @c nullptr pointer
  */
-bool E_MoveIntoNewBase (Employee *employee, base_t *newBase)
+bool E_MoveIntoNewBase (Employee *employee, base_t* newBase)
 {
 	if (employee) {
-		base_t *oldBase = employee->baseHired;
+		base_t* oldBase = employee->baseHired;
 		assert(oldBase);
 		employee->baseHired = newBase;
 		/* Remove employee from corresponding capacity */
@@ -234,7 +234,7 @@ employeeType_t E_GetEmployeeType (const char* type)
  * @return Employee pointer on success or nullptr on error.
  * @sa E_GetHiredRobot
  */
-Employee* E_GetUnhiredRobot (const ugv_t *ugvType)
+Employee* E_GetUnhiredRobot (const ugv_t* ugvType)
 {
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!employee->isHired()) {
@@ -282,9 +282,9 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
  * @return Employee pointer on success or nullptr on error.
  * @sa E_GetUnhiredRobot
  */
-Employee* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
+Employee* E_GetHiredRobot (const base_t* const base, const ugv_t* ugvType)
 {
-	linkedList_t *hiredEmployees = nullptr;
+	linkedList_t* hiredEmployees = nullptr;
 	Employee *employee;
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
@@ -406,7 +406,7 @@ bool E_HireEmployeeByType (base_t* base, employeeType_t type)
  * @param[in] ugvType What type of ugv/robot should be hired.
  * @return true if everything went ok (the ugv was added), otherwise false.
  */
-bool E_HireRobot (base_t* base, const ugv_t *ugvType)
+bool E_HireRobot (base_t* base, const ugv_t* ugvType)
 {
 	Employee* employee = E_GetUnhiredRobot(ugvType);
 	return employee ? E_HireEmployee(base, employee) : false;
@@ -415,10 +415,10 @@ bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 /**
  * @brief Removes the inventory of the employee and also removes him from buildings
  */
-base_t *Employee::unassign ()
+base_t* Employee::unassign ()
 {
 	/* get the base where the employee is hired in */
-	base_t *base = baseHired;
+	base_t* base = baseHired;
 	if (!base)
 		return base;
 
@@ -469,7 +469,7 @@ bool Employee::unhire ()
 		return false;
 	}
 
-	base_t *base = unassign();
+	base_t* base = unassign();
 
 	/* Remove employee from corresponding capacity */
 	switch (_type) {
@@ -516,7 +516,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. nullptr if something goes wrong.
  * @sa E_DeleteEmployee
  */
-Employee* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
+Employee* E_CreateEmployee (employeeType_t type, const nation_t* nation, const ugv_t* ugvType)
 {
 	const char* teamID;
 	char teamDefName[MAX_VAR];
@@ -629,7 +629,7 @@ void E_DeleteAllEmployees (base_t* base)
  * @note employees are not randomly chosen. Reason is that all Quarter will be destroyed at the same time,
  *	so all employees are going to be killed anyway.
  */
-void E_DeleteEmployeesExceedingCapacity (base_t *base)
+void E_DeleteEmployeesExceedingCapacity (base_t* base)
 {
 	int i;
 
@@ -666,7 +666,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
  */
 int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool excludeUnhappyNations)
 {
-	const nation_t *happyNations[MAX_NATIONS];
+	const nation_t* happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
 	int idx, nationIdx, cnt;
 
@@ -674,8 +674,8 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool ex
 	/* get a list of nations,  if excludeHappyNations is true then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
-		const nation_t *nation = NAT_GetNationByIDX(idx);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(idx);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		if (stats->happiness > 0 || !excludeUnhappyNations) {
 			happyNations[numHappyNations] = nation;
 			numHappyNations++;
@@ -732,7 +732,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
  * @param[in] ugvType What type of robot/ugv we are looking for.
  * @return Count of Robots/UGVs.
  */
-int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
+int E_CountHiredRobotByType (const base_t* const base, const ugv_t* ugvType)
 {
 	int count = 0;
 
@@ -788,7 +788,7 @@ int E_CountUnhired (employeeType_t type)
  * @param[in] ugvType What type of robot/ugv we are looking for.
  * @return count of available robots/ugvs.
  */
-int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
+int E_CountUnhiredRobotsByType (const ugv_t* ugvType)
 {
 	int count = 0;
 
@@ -822,7 +822,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 /**
  * @brief Hack to get a random nation for the initial
  */
-static inline const nation_t *E_RandomNation (void)
+static inline const nation_t* E_RandomNation (void)
 {
 	const int nationIndex = rand() % ccs.numNations;
 	return NAT_GetNationByIDX(nationIndex);
@@ -831,7 +831,7 @@ static inline const nation_t *E_RandomNation (void)
 /**
  * @brief Create initial hireable employees
  */
-void E_InitialEmployees (const campaign_t *campaign)
+void E_InitialEmployees (const campaign_t* campaign)
 {
 	int i;
 
@@ -879,7 +879,7 @@ static void E_ListHired_f (void)
 static void CL_DebugNewEmployees_f (void)
 {
 	int j;
-	nation_t *nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
+	nation_t* nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
@@ -942,19 +942,19 @@ Employee* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
  * @sa CP_ParseCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-bool E_SaveXML (xmlNode_t *p)
+bool E_SaveXML (xmlNode_t* p)
 {
 	int i;
 
 	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		xmlNode_t *snode = cgi->XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
+		xmlNode_t* snode = cgi->XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
 		cgi->XML_AddString(snode, SAVE_EMPLOYEE_TYPE, cgi->Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {
-			xmlNode_t *chrNode;
-			xmlNode_t *ssnode = cgi->XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
+			xmlNode_t* chrNode;
+			xmlNode_t* ssnode = cgi->XML_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			if (employee->baseHired)
@@ -981,15 +981,15 @@ bool E_SaveXML (xmlNode_t *p)
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we get the information from
  */
-bool E_LoadXML (xmlNode_t *p)
+bool E_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *snode;
+	xmlNode_t* snode;
 	bool success = true;
 
 	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
 			snode = cgi->XML_GetNextNode(snode, p, SAVE_EMPLOYEE_EMPLOYEES)) {
-		xmlNode_t *ssnode;
+		xmlNode_t* ssnode;
 		employeeType_t emplType;
 		const char* type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
@@ -1002,17 +1002,17 @@ bool E_LoadXML (xmlNode_t *p)
 		for (ssnode = cgi->XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
 				ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE)) {
 			int baseIDX;
-			xmlNode_t *chrNode;
+			xmlNode_t* chrNode;
 
 			/* nation */
-			const nation_t *nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
+			const nation_t* nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!nation) {
 				Com_Printf("No nation defined for employee\n");
 				success = false;
 				break;
 			}
 			/* UGV-Type */
-			const ugv_t *ugv = cgi->Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			const ugv_t* ugv = cgi->Com_GetUGVByIDSilent(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			Employee e(emplType, nation, ugv);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			/* base */
@@ -1060,7 +1060,7 @@ bool E_HireAllowed (const base_t* base)
  */
 void E_RemoveInventoryFromStorage (Employee *employee)
 {
-	const character_t *chr = &employee->chr;
+	const character_t* chr = &employee->chr;
 
 	assert(employee->baseHired);
 

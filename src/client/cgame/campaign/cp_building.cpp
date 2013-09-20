@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] building Pointer to the building to check
  * @note it always return @c true for buildings with {0, 0} timeStart
  */
-bool B_IsBuildingBuiltUp (const building_t *building)
+bool B_IsBuildingBuiltUp (const building_t* building)
 {
 	if (!building)
 		return false;
@@ -48,7 +48,7 @@ bool B_IsBuildingBuiltUp (const building_t *building)
  * @brief Returns the time remaining time of a building construction
  * @param[in] building Pointer to the building to check
  */
-float B_GetConstructionTimeRemain (const building_t *building)
+float B_GetConstructionTimeRemain (const building_t* building)
 {
 	date_t diff = Date_Substract(building->timeStart, ccs.date);
 	diff.day += building->buildTime;
@@ -134,8 +134,8 @@ static const value_t valid_building_vars[] = {
  */
 void B_ParseBuildings (const char* name, const char** text, bool link)
 {
-	building_t *building;
-	technology_t *techLink;
+	building_t* building;
+	technology_t* techLink;
 	const char* errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char* token;
 
@@ -227,7 +227,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 				break;
 			/* get values */
 			if (Q_streq(token, "depends")) {
-				const building_t *dependsBuilding = B_GetBuildingTemplate(cgi->Com_EParse(text, errhead, name));
+				const building_t* dependsBuilding = B_GetBuildingTemplate(cgi->Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					cgi->Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;
@@ -274,14 +274,14 @@ bool B_BuildingScriptSanityCheck (void)
  * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
-building_t *B_GetBuildingTemplateSilent (const char* buildingName)
+building_t* B_GetBuildingTemplateSilent (const char* buildingName)
 {
 	int i = 0;
 
 	if (!buildingName)
 		return nullptr;
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		building_t *buildingTemplate = &ccs.buildingTemplates[i];
+		building_t* buildingTemplate = &ccs.buildingTemplates[i];
 		if (Q_streq(buildingTemplate->id, buildingName))
 			return buildingTemplate;
 	}
@@ -294,14 +294,14 @@ building_t *B_GetBuildingTemplateSilent (const char* buildingName)
  * @return Building template pointer if found, nullptr otherwise
  * @todo make the returned pointer const
  */
-building_t *B_GetBuildingTemplate (const char* buildingName)
+building_t* B_GetBuildingTemplate (const char* buildingName)
 {
 	if (!buildingName || buildingName[0] == '\0') {
 		Com_Printf("No, or empty building ID\n");
 		return nullptr;
 	}
 
-	building_t *buildingTemplate = B_GetBuildingTemplateSilent(buildingName);
+	building_t* buildingTemplate = B_GetBuildingTemplateSilent(buildingName);
 	if (!buildingTemplate)
 		Com_Printf("Building %s not found\n", buildingName);
 	return buildingTemplate;
@@ -311,10 +311,10 @@ building_t *B_GetBuildingTemplate (const char* buildingName)
  * @brief Returns the building template in the global building-types list for a buildingType.
  * @param[in] type Building type.
  */
-const building_t *B_GetBuildingTemplateByType(buildingType_t type)
+const building_t* B_GetBuildingTemplateByType(buildingType_t type)
 {
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t *buildingTemplate = &ccs.buildingTemplates[i];
+		const building_t* buildingTemplate = &ccs.buildingTemplates[i];
 		if (buildingTemplate->buildingType == type)
 			return buildingTemplate;
 	}
@@ -346,7 +346,7 @@ bool B_CheckBuildingDependencesStatus (const building_t* building)
  * @param[in] eventType Type of the event to run
  * @return @c true if an event was fired @c false otherwise (the building may not have one)
  */
-bool B_FireEvent (const building_t *buildingTemplate, const base_t *base, buildingEvent_t eventType)
+bool B_FireEvent (const building_t* buildingTemplate, const base_t* base, buildingEvent_t eventType)
 {
 	const char* command = nullptr;
 
