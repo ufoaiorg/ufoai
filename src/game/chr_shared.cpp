@@ -297,12 +297,15 @@ const char* CHRSH_CharGetHead (const character_t* const chr)
 	return returnModel;
 }
 
-BodyData::BodyData (void)  : _totalBodyArea(0.0f), _numBodyParts(0) { }
+BodyData::BodyData (void) :
+		_totalBodyArea(0.0f), _numBodyParts(0)
+{
+}
 
 short BodyData::getRandomBodyPart (void) const
 {
 	const float rnd = frand() * _totalBodyArea;
-	float  currentArea = 0;
+	float currentArea = 0.0f;
 	short bodyPart;
 
 	for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
@@ -334,17 +337,17 @@ const char* BodyData::name (const short bodyPart) const
 
 float BodyData::penalty (const short bodyPart, const modifier_types_t type) const
 {
-	return _bodyParts[bodyPart].penalties[type] * 0.01;
+	return _bodyParts[bodyPart].penalties[type] * 0.01f;
 }
 
 float BodyData::bleedingFactor (const short bodyPart) const
 {
-	return _bodyParts[bodyPart].bleedingFactor * 0.01;
+	return _bodyParts[bodyPart].bleedingFactor * 0.01f;
 }
 
 float BodyData::woundThreshold (const short bodyPart) const
 {
-	return _bodyParts[bodyPart].woundThreshold * 0.01;
+	return _bodyParts[bodyPart].woundThreshold * 0.01f;
 }
 
 short BodyData::numBodyParts (void) const
@@ -374,7 +377,7 @@ short BodyData::getHitBodyPart (const byte direction, const float height) const
 		Vector4Copy(_bodyParts[bodyPart].shape, shape);
 		if (height <= shape[3] || height > shape[2] + shape[3])
 			continue;
-		curRand += (direction < 2 ? shape[0] : (direction < 4 ? shape[1] : (shape[0] + shape[1]) * 0.5));
+		curRand += (direction < 2 ? shape[0] : (direction < 4 ? shape[1] : (shape[0] + shape[1]) * 0.5f));
 		if (rnd <= curRand)
 			break;
 	}
@@ -385,6 +388,7 @@ short BodyData::getHitBodyPart (const byte direction, const float height) const
 	return bodyPart;
 }
 
-float BodyData::getArea(const short bodyPart) const {
-	return (_bodyParts[bodyPart].shape[0] + _bodyParts[bodyPart].shape[1]) * 0.5 * _bodyParts[bodyPart].shape[2];
+float BodyData::getArea(const short bodyPart) const
+{
+	return (_bodyParts[bodyPart].shape[0] + _bodyParts[bodyPart].shape[1]) * 0.5f * _bodyParts[bodyPart].shape[2];
 }
