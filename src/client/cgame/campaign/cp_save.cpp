@@ -47,8 +47,8 @@ typedef struct saveFileHeader_s {
 
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
-static cvar_t *save_compressed;
-static cvar_t *cl_lastsave;
+static cvar_t* save_compressed;
+static cvar_t* cl_lastsave;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
@@ -129,7 +129,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 	char filename[MAX_OSPATH];
 	qFILE f;
 	int i, clen;
-	xmlNode_t *topNode, *node;
+	xmlNode_t* topNode, *node;
 	saveFileHeader_t header;
 
 	/* open file */
@@ -248,7 +248,7 @@ bool SAV_GameLoad (const char* file, const char** error)
  */
 static bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
-	xmlNode_t *topNode, *node;
+	xmlNode_t* topNode, *node;
 	char savegame[MAX_OSPATH];
 	int res;
 	int requiredBufferLength;
@@ -527,7 +527,7 @@ static void SAV_GameContinue_f (void)
  * @note The order is _not_ important
  * @sa SAV_Init
  */
-bool SAV_AddSubsystem (saveSubsystems_t *subsystem)
+bool SAV_AddSubsystem (saveSubsystems_t* subsystem)
 {
 	if (saveSubsystemsAmount >= MAX_SAVESUBSYSTEMS)
 		return false;

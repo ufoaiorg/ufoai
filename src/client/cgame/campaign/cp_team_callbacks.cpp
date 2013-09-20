@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CP_TEAM_AssignSoldierByUCN_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-	aircraft_t *aircraft;
+	base_t* base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft;
 	int ucn;
 	const employeeType_t employeeType = EMPL_SOLDIER;
 	Employee* employee;
@@ -83,9 +83,9 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 static void CP_TEAM_SelectActorByUCN_f (void)
 {
 	Employee* employee;
-	character_t *chr;
+	character_t* chr;
 	int ucn;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -121,9 +121,9 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 static void CP_TEAM_DeEquipActor_f (void)
 {
 	Employee* employee;
-	character_t *chr;
+	character_t* chr;
 	int ucn;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -163,9 +163,9 @@ static void CP_TEAM_DeEquipActor_f (void)
  */
 static void CP_TeamListDebug_f (void)
 {
-	base_t *base;
-	aircraft_t *aircraft;
-	linkedList_t *l;
+	base_t* base;
+	aircraft_t* aircraft;
+	linkedList_t* l;
 
 	aircraft = GEO_GetSelectedAircraft();
 	if (!aircraft) {
@@ -192,8 +192,8 @@ static void CP_TeamListDebug_f (void)
  */
 static void CP_TEAM_FillEmployeeList_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
-	aircraft_t *aircraft = base->aircraftCurrent;
+	base_t* base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft = base->aircraftCurrent;
 	employeeType_t employeeType;
 	char typeId[MAX_VAR];
 
@@ -224,7 +224,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	const int teamSize = employeeType == EMPL_PILOT ? (AIR_GetPilot(aircraft) != nullptr ? 1 : 0) : AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = employeeType == EMPL_PILOT ? 1 : aircraft->maxTeamSize;
 	E_Foreach(employeeType, employee) {
-		const aircraft_t *assignedCraft;
+		const aircraft_t* assignedCraft;
 		const char* tooltip;
 
 		if (!employee->isHiredInBase(base))
@@ -260,11 +260,11 @@ static void CP_TEAM_FillEmployeeList_f (void)
  */
 static void CP_TEAM_FillEquipSoldierList_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
-	aircraft_t *aircraft = base->aircraftCurrent;
+	aircraft_t* aircraft = base->aircraftCurrent;
 
 	if (cgi->Cmd_Argc() > 1 ) {
 		int idx = atoi(cgi->Cmd_Argv(1));
@@ -287,7 +287,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	cgi->UI_ExecuteConfunc("equipment_soldierlist_clear");
 	if (aircraft) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
-			character_t *chr = &employee->chr;
+			character_t* chr = &employee->chr;
 			CP_SetEquipContainer(chr);
 			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
 			count++;
@@ -300,7 +300,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 				continue;
 			if (employee->isAwayFromBase())
 				continue;
-			character_t *chr = &employee->chr;
+			character_t* chr = &employee->chr;
 			CP_SetEquipContainer(chr);
 			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
 			count++;
@@ -320,11 +320,11 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
  */
 static void CP_TEAM_FillBDEFEmployeeList_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 	if (!base)
 		return;
 
-	const aircraft_t *aircraft = base->aircraftCurrent;
+	const aircraft_t* aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
@@ -346,7 +346,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 		else
 			tooltip = "";
 
-		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+		const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
 		cgi->UI_ExecuteConfunc("soldierlist_add %d \"%s %s\" %d \"%s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name, isInTeam, tooltip);
 	}
 }

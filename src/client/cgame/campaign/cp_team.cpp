@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return Updated item in any case, even if there was no update.
  * @sa CP_CleanupAircraftCrew
  */
-void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
+void CP_AddWeaponAmmo (equipDef_t* ed, Item* item)
 {
-	const objDef_t *type = item->def();
+	const objDef_t* type = item->def();
 
 	assert(ed->numItems[type->idx] > 0);
 	--ed->numItems[type->idx];
@@ -81,7 +81,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (int i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type)) {
 			if (ed->numItems[i] > 0) {
 				--ed->numItems[i];
@@ -110,7 +110,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item->setAmmoLeft(NONE_AMMO);
 	for (int i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (od->isLoadableInWeapon(type) && ed->numItemsLoose[i] > item->getAmmoLeft()) {
 			if (item->getAmmoLeft() > 0) {
 				/* We previously found some ammo, but we've now found other
@@ -134,7 +134,7 @@ void CP_AddWeaponAmmo (equipDef_t *ed, Item* item)
  * @brief Set up equip (floor) container for soldiers
  * @param[in,out] chr Pointer to soldiers character structure
  */
-void CP_SetEquipContainer (character_t *chr)
+void CP_SetEquipContainer (character_t* chr)
 {
 	/* get the inventory the UI uses for all the work */
 	Inventory* uiInv = *cgi->ui_inventory;
@@ -163,7 +163,7 @@ void CP_SetEquipContainer (character_t *chr)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CP_CleanupTeam (base_t *base, equipDef_t *ed)
+void CP_CleanupTeam (base_t* base, equipDef_t* ed)
 {
 	containerIndex_t container;
 
@@ -176,7 +176,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 		if (employee->transfer)
 			continue;
 
-		character_t *chr = &employee->chr;
+		character_t* chr = &employee->chr;
 
 		/* This is an UGV */
 		if (employee->getUGV()) {
@@ -195,7 +195,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
 				continue;
 
 			Item* ic, *next;
-			character_t *chr = &employee->chr;
+			character_t* chr = &employee->chr;
 #if 0
 			/* ignore items linked from any temp container */
 			if (INVDEF(container)->temp)
@@ -229,7 +229,7 @@ void CP_CleanupTeam (base_t *base, equipDef_t *ed)
  * the first person in the squad filling their backpack with spare ammo
  * leaving others with unloaded guns in their hands...
  */
-void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
+void CP_CleanupAircraftTeam (aircraft_t* aircraft, equipDef_t* ed)
 {
 	containerIndex_t container;
 
@@ -238,7 +238,7 @@ void CP_CleanupAircraftTeam (aircraft_t *aircraft, equipDef_t *ed)
 	for (container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			Item* ic, *next;
-			character_t *chr = &employee->chr;
+			character_t* chr = &employee->chr;
 
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 			if (employee->getUGV()) {
@@ -296,7 +296,7 @@ void CP_CleanTempInventory (base_t* base)
  * @returns the number of employees that are in the aircraft and were added to
  * the character list
  */
-void CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
+void CP_UpdateActorAircraftVar (aircraft_t* aircraft, employeeType_t employeeType)
 {
 	int numOnAircraft;
 	const Employee* pilot = AIR_GetPilot(aircraft);

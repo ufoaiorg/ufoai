@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Entries on Sell UFO dialog
  */
 typedef struct ufoRecoveryNation_s {
-	const nation_t *nation;
+	const nation_t* nation;
 	int price;										/**< price proposed by nation. */
 } ufoRecoveryNation_t;
 
@@ -45,7 +45,7 @@ typedef struct ufoRecoveryNation_s {
  * @brief Pointer to compare function
  * @note This function is used by sorting algorithm.
  */
-typedef int (*COMP_FUNCTION)(ufoRecoveryNation_t *a, ufoRecoveryNation_t *b);
+typedef int (*COMP_FUNCTION)(ufoRecoveryNation_t* a, ufoRecoveryNation_t* b);
 
 /**
  * @brief Constants for Sell UFO menu order
@@ -60,8 +60,8 @@ typedef enum {
 
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
-	const aircraft_t *ufoTemplate;					/**< the ufo type of the current ufo recovery */
-	const nation_t *nation;							/**< selected nation to sell to for current ufo recovery */
+	const aircraft_t* ufoTemplate;					/**< the ufo type of the current ufo recovery */
+	const nation_t* nation;							/**< selected nation to sell to for current ufo recovery */
 	bool recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
 	float condition;								/**< How much the UFO is damaged - used for disassembies */
 	ufoRecoveryNation_t ufoNations[MAX_NATIONS];	/**< Sorted array of nations. */
@@ -87,7 +87,7 @@ static void UR_DialogRecoveryDone (void)
 static void UR_DialogInit_f (void)
 {
 	char ufoID[MAX_VAR];
-	const aircraft_t *ufoCraft;
+	const aircraft_t* ufoCraft;
 	float cond = 1.0f;
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -126,8 +126,8 @@ static void UR_DialogInit_f (void)
 static void UR_DialogInitStore_f (void)
 {
 	int count = 0;
-	linkedList_t *recoveryYardName = nullptr;
-	linkedList_t *recoveryYardCapacity = nullptr;
+	linkedList_t* recoveryYardName = nullptr;
+	linkedList_t* recoveryYardCapacity = nullptr;
 	static char cap[MAX_VAR];
 
 	/* Do nothing if recovery process is finished. */
@@ -136,7 +136,7 @@ static void UR_DialogInitStore_f (void)
 
 	/* Check how many bases can store this UFO. */
 	INS_Foreach(installation) {
-		const capacities_t *capacity = &installation->ufoCapacity;
+		const capacities_t* capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
 			Com_sprintf(cap, lengthof(cap), "%i/%i", (capacity->max - capacity->cur), capacity->max);
 			cgi->LIST_AddString(&recoveryYardName, installation->name);
@@ -164,7 +164,7 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t *installation = nullptr;
+	installation_t* installation = nullptr;
 	int idx;
 	int count = 0;
 	date_t date;
@@ -206,10 +206,10 @@ static void UR_DialogStartStore_f (void)
 static void UR_DialogFillNations (void)
 {
 	int i;
-	linkedList_t *nationList = nullptr;
+	linkedList_t* nationList = nullptr;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = ufoRecovery.ufoNations[i].nation;
+		const nation_t* nation = ufoRecovery.ufoNations[i].nation;
 		if (!nation)
 			continue;
 		char row[512];
@@ -227,7 +227,7 @@ static void UR_DialogFillNations (void)
  * @param[in] b Second item to compare
  * @sa UR_SortNations
  */
-static int UR_CompareByName (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+static int UR_CompareByName (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
 {
 	return strcmp(_(a->nation->name), _(b->nation->name));
 }
@@ -241,7 +241,7 @@ static int UR_CompareByName (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
  * @return 0 if a == b
  * @sa UR_SortNations
  */
-static int UR_CompareByPrice (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+static int UR_CompareByPrice (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
 {
 	if (a->price > b->price)
 		return 1;
@@ -259,10 +259,10 @@ static int UR_CompareByPrice (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
  * @return 0 if a == b
  * @sa UR_SortNations
  */
-static int UR_CompareByHappiness (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+static int UR_CompareByHappiness (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
 {
-	const nationInfo_t *statsA = NAT_GetCurrentMonthInfo(a->nation);
-	const nationInfo_t *statsB = NAT_GetCurrentMonthInfo(b->nation);
+	const nationInfo_t* statsA = NAT_GetCurrentMonthInfo(a->nation);
+	const nationInfo_t* statsB = NAT_GetCurrentMonthInfo(b->nation);
 
 	if (statsA->happiness > statsB->happiness)
 		return 1;
@@ -342,8 +342,8 @@ static void UR_DialogInitSell_f (void)
 		return;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		int price;
 
 		price = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
@@ -430,7 +430,7 @@ static void UR_DialogSortByColumn_f (void)
 static void UR_DialogSelectSellNation_f (void)
 {
 	int num;
-	const nation_t *nation;
+	const nation_t* nation;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nationid>\n", cgi->Cmd_Argv(0));
@@ -459,7 +459,7 @@ static void UR_DialogSelectSellNation_f (void)
 static void UR_DialogStartSell_f (void)
 {
 	int price = -1;
-	const nation_t *nation;
+	const nation_t* nation;
 	int i;
 
 	if (!ufoRecovery.nation)
@@ -485,7 +485,7 @@ static void UR_DialogStartSell_f (void)
 
 	/* update nation happiness */
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nat = NAT_GetNationByIDX(i);
+		nation_t* nat = NAT_GetNationByIDX(i);
 		float ufoHappiness;
 
 		assert(nat);
@@ -507,7 +507,7 @@ static void UR_DialogStartSell_f (void)
  * @brief Returns string representation of the stored UFO's status
  * @note uses stored ufo status and disassembly
  */
-const char* US_StoredUFOStatus (const storedUFO_t *ufo)
+const char* US_StoredUFOStatus (const storedUFO_t* ufo)
 {
 	assert(ufo);
 
@@ -531,7 +531,7 @@ const char* US_StoredUFOStatus (const storedUFO_t *ufo)
  */
 static void US_SelectStoredUfo_f (void)
 {
-	const storedUFO_t *ufo;
+	const storedUFO_t* ufo;
 
 	if (cgi->Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)))) == nullptr) {
 		cgi->UI_ExecuteConfunc("show_storedufo -");
@@ -563,7 +563,7 @@ static void US_DestroySoredUFO_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
+	storedUFO_t* ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ufo) {
 		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
@@ -594,7 +594,7 @@ static void US_FillUFOTransfer_f (void)
 		return;
 	}
 
-	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
+	storedUFO_t* ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ufo) {
 		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
@@ -604,7 +604,7 @@ static void US_FillUFOTransfer_f (void)
 	INS_ForeachOfType(ins, INSTALLATION_UFOYARD) {
 		if (ins == ufo->installation)
 			continue;
-		nation_t *nat = GEO_GetNation(ins->pos);
+		nation_t* nat = GEO_GetNation(ins->pos);
 		const char* nationName = nat ? _(nat->name) : "";
 		const int freeSpace = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 		cgi->UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
@@ -621,7 +621,7 @@ static void US_FillUFOTransferUFOs_f (void)
 		return;
 	}
 
-	installation_t *ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
+	installation_t* ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!ins) {
 		Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(cgi->Cmd_Argv(1)));
 		return;
@@ -640,8 +640,8 @@ static void US_FillUFOTransferUFOs_f (void)
  */
 static void US_TransferUFO_f (void)
 {
-	storedUFO_t *ufo;
-	installation_t *ins = nullptr;
+	storedUFO_t* ufo;
+	installation_t* ins = nullptr;
 
 	if (cgi->Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", cgi->Cmd_Argv(0));

@@ -95,7 +95,7 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
  * @return storedUFO_t pointer to the newly stored UFO (or nullptr if failed)
  */
-storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)
+storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* installation, date_t date, float condition)
 {
 	if (!ufoTemplate) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
@@ -143,13 +143,13 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
  * @brief Removes an UFO from the storage
  * @param[in,out] ufo stored UFO to remove
  */
-void US_RemoveStoredUFO (storedUFO_t *ufo)
+void US_RemoveStoredUFO (storedUFO_t* ufo)
 {
 	assert(ufo);
 
 	/* Stop disassembling */
 	if (ufo->disassembly) {
-		base_t *prodBase = PR_ProductionBase(ufo->disassembly);
+		base_t* prodBase = PR_ProductionBase(ufo->disassembly);
 
 		assert(prodBase);
 
@@ -175,7 +175,7 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
  * @returns the number of ufos stored of the given ufotype at given installation or overall
  * @note installation == nullptr means count on every ufoyards
  */
-int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *installation)
+int US_UFOsInStorage (const aircraft_t* ufoTemplate, const installation_t* installation)
 {
 	int count = 0;
 
@@ -197,12 +197,12 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
  * @brief Removes ufos which are over the storing capacity
  * @param[in] installation pointer to the ufoyard the ufos are stored in
  */
-void US_RemoveUFOsExceedingCapacity (installation_t *installation)
+void US_RemoveUFOsExceedingCapacity (installation_t* installation)
 {
 	if (!installation)
 		cgi->Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
 
-	const capacities_t *ufoCap = &installation->ufoCapacity;
+	const capacities_t* ufoCap = &installation->ufoCapacity;
 
 	US_Foreach(ufo) {
 		if (ufoCap->cur <= ufoCap->max)
@@ -220,7 +220,7 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
  * @param[in,out] ufoyard Destination of the UFO transfer
  * @return success or failure indicator
  */
-bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
+bool US_TransferUFO (storedUFO_t* ufo, installation_t* ufoyard)
 {
 	date_t date;
 
@@ -261,10 +261,10 @@ bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
  * @param[in] base Pointer to the base. If it's @c nullptr the function simply return the first stored UFO of type
  * @return Pointer to the first stored UFO matches the conditions
  */
-storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
+storedUFO_t* US_GetClosestStoredUFO (const aircraft_t* ufoTemplate, const base_t* base)
 {
 	float minDistance = -1;
-	storedUFO_t *closestUFO = nullptr;
+	storedUFO_t* closestUFO = nullptr;
 
 	US_Foreach(ufo) {
 		float distance = 0;
@@ -299,13 +299,13 @@ int US_StoredUFOCount (void)
  * @sa US_LoadXML
  * @sa SAV_GameSaveXML
  */
-bool US_SaveXML (xmlNode_t *p)
+bool US_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t *node = cgi->XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+	xmlNode_t* node = cgi->XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	cgi->Com_RegisterConstList(saveStoredUFOConstants);
 	US_Foreach(ufo) {
-		xmlNode_t *snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
+		xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_UFORECOVERY_UFO);
 
 		cgi->XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
 		cgi->XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
@@ -326,9 +326,9 @@ bool US_SaveXML (xmlNode_t *p)
  * @sa US_SaveXML
  * @sa SAV_GameLoadXML
  */
-bool US_LoadXML (xmlNode_t *p)
+bool US_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *node, *snode;
+	xmlNode_t* node, *snode;
 
 	node = cgi->XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
@@ -392,7 +392,7 @@ bool US_LoadXML (xmlNode_t *p)
 static void US_ListStoredUFOs_f (void)
 {
 	US_Foreach(ufo) {
-		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
+		const base_t* prodBase = PR_ProductionBase(ufo->disassembly);
 		dateLong_t date;
 
 		Com_Printf("IDX: %i\n", ufo->idx);
@@ -417,8 +417,8 @@ static void US_StoreUFO_f (void)
 {
 	char ufoId[MAX_VAR];
 	int installationIDX;
-	installation_t *installation;
-	aircraft_t *ufoType = nullptr;
+	installation_t* installation;
+	aircraft_t* ufoType = nullptr;
 	int i;
 
 	if (cgi->Cmd_Argc() <= 2) {
@@ -465,7 +465,7 @@ static void US_RemoveStoredUFO_f (void)
 		return;
 	} else {
 		const int idx = atoi(cgi->Cmd_Argv(1));
-		storedUFO_t *storedUFO = US_GetStoredUFOByIDX(idx);
+		storedUFO_t* storedUFO = US_GetStoredUFOByIDX(idx);
 		if (!storedUFO) {
 			Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
 			return;

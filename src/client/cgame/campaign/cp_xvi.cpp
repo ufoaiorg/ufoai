@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_xvi.h"
 
 /** @brief technology for XVI event */
-static technology_t *rsAlienXVI;
+static technology_t* rsAlienXVI;
 
 /** @brief boolean used to know if each nation XVI level should be updated this day. */
 static bool xviNationInfectionNeedsUpdate = false;
@@ -166,8 +166,8 @@ int CP_GetAverageXVIRate (void)
 
 	/* check for XVI infection rate */
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
-		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		xviRate += stats->xviInfection;
 	}
 	xviRate /= ccs.numNations;
@@ -212,12 +212,12 @@ void CP_XVIInit (void)
  * @sa SAV_InitXML
  * @sa XVI_LoadXML
  */
-bool XVI_SaveXML (xmlNode_t *p)
+bool XVI_SaveXML (xmlNode_t* p)
 {
 	int y;
 	int width;
 	int height;
-	xmlNode_t *n;
+	xmlNode_t* n;
 
 	CP_GetXVIMapDimensions(&width, &height);
 
@@ -231,7 +231,7 @@ bool XVI_SaveXML (xmlNode_t *p)
 			const int xviLevel = CP_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {
-				xmlNode_t *s = cgi->XML_AddNode(n, SAVE_XVI_ENTRY);
+				xmlNode_t* s = cgi->XML_AddNode(n, SAVE_XVI_ENTRY);
 				cgi->XML_AddInt(s, SAVE_XVI_X, x);
 				cgi->XML_AddInt(s, SAVE_XVI_Y, y);
 				cgi->XML_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
@@ -247,11 +247,11 @@ bool XVI_SaveXML (xmlNode_t *p)
  * @sa SAV_InitXML
  * @sa XVI_SaveXML
  */
-bool XVI_LoadXML (xmlNode_t *p)
+bool XVI_LoadXML (xmlNode_t* p)
 {
 	int width, height;
-	xmlNode_t *s;
-	xmlNode_t *n = cgi->XML_GetNode(p, SAVE_XVI_XVI);
+	xmlNode_t* s;
+	xmlNode_t* n = cgi->XML_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
 		CP_InitializeXVIOverlay();
@@ -279,7 +279,7 @@ bool XVI_LoadXML (xmlNode_t *p)
 void CP_StartXVISpreading_f (void)
 {
 	int i, numAlienBases;
-	const campaign_t *campaign = ccs.curCampaign;
+	const campaign_t* campaign = ccs.curCampaign;
 
 	ccs.startXVI = true;
 

@@ -47,7 +47,7 @@ int CL_GetRankIdx (const char* rankID)
  * @return nullptr on invalid index
  * @return pointer to the rank definition otherwise
  */
-rank_t *CL_GetRankByIdx (const int index)
+rank_t* CL_GetRankByIdx (const int index)
 {
 	if (index < 0 || index >= ccs.numRanks)
 		return nullptr;
@@ -73,7 +73,7 @@ static const value_t rankValues[] = {
  */
 void CL_ParseRanks (const char* name, const char** text)
 {
-	rank_t *rank;
+	rank_t* rank;
 	const char* errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";
 	const char* token;
 	int i;

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void RS_Max_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -43,7 +43,7 @@ static void RS_Max_f (void)
 		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
+	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
 		Com_Printf("RS_Max_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
@@ -71,13 +71,13 @@ static void RS_Max_f (void)
  */
 static void RS_Change_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
+	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
 		Com_Printf("RS_ChangeScientist_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
@@ -106,13 +106,13 @@ static void RS_Change_f (void)
  */
 static void RS_Stop_f (void)
 {
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
+	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
 		Com_Printf("RS_Stop_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
@@ -141,7 +141,7 @@ static void RS_GetDetails_f (void)
 		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	const technology_t *tech = RS_GetTechByID(cgi->Cmd_Argv(1));
+	const technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
 		Com_Printf("RS_GetDetails_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
@@ -154,7 +154,7 @@ static void RS_GetDetails_f (void)
  */
 static void RS_FillTechnologyList_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -165,7 +165,7 @@ static void RS_FillTechnologyList_f (void)
 		E_CountHired(base, EMPL_SCIENTIST), CAP_GetFreeCapacity(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
 	cgi->UI_ExecuteConfunc("ui_techlist_clear");
 	for (int i = 0; i < ccs.numTechnologies; i++) {
-		technology_t *tech = RS_GetTechByIDX(i);
+		technology_t* tech = RS_GetTechByIDX(i);
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
 		if (tech->time == 0)
 			continue;

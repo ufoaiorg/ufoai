@@ -69,7 +69,7 @@ const char* CP_SecondConvert (int second)
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
   */
-void CP_DateConvertLong (const date_t *date, dateLong_t *dateLong)
+void CP_DateConvertLong (const date_t* date, dateLong_t* dateLong)
 {
 	byte i;
 	int d;
@@ -227,7 +227,7 @@ void CP_SetGameTime_f (void)
  * @param[in] date The date in date_t format
  * @return the date in seconds
  */
-int Date_DateToSeconds (const date_t *date)
+int Date_DateToSeconds (const date_t* date)
 {
 	return date->day * 86400 + date->sec;
 }
@@ -238,7 +238,7 @@ int Date_DateToSeconds (const date_t *date)
  * @param[in] compare Date to compare.
  * @return True if current date is later than given one.
  */
-bool Date_LaterThan (const date_t *now, const date_t *compare)
+bool Date_LaterThan (const date_t* now, const date_t* compare)
 {
 	if (now->day > compare->day)
 		return true;
@@ -254,7 +254,7 @@ bool Date_LaterThan (const date_t *now, const date_t *compare)
  * @param date The date to check
  * @return @c true if the given date is equal or earlier than the current campaign date, @c false otherwise
  */
-bool Date_IsDue (const date_t *date)
+bool Date_IsDue (const date_t* date)
 {
 	if (date->day < ccs.date.day)
 		return true;

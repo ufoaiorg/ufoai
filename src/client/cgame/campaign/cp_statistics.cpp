@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_StatsUpdate_f (void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
-	const campaign_t *campaign = ccs.curCampaign;
+	const campaign_t* campaign = ccs.curCampaign;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
@@ -66,7 +66,7 @@ void CP_StatsUpdate_f (void)
 	int totalfunds = 0;
 	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = NAT_GetNationByIDX(i);
+		const nation_t* nation = NAT_GetNationByIDX(i);
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation));
 		totalfunds += NAT_GetFunding(nation, 0);
 	}
@@ -74,7 +74,7 @@ void CP_StatsUpdate_f (void)
 
 	/* costs */
 	int costs = 0;
-	const salary_t *salary = &campaign->salaries;
+	const salary_t* salary = &campaign->salaries;
 	int hired[MAX_EMPL];
 	OBJZERO(hired);
 	for (int i = 0; i < MAX_EMPL; i++) {
@@ -82,7 +82,7 @@ void CP_StatsUpdate_f (void)
 			const employeeType_t type = (employeeType_t)i;
 			if (!employee->isHired())
 				continue;
-			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
 			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);
 			hired[employee->getType()]++;
 		}
@@ -111,7 +111,7 @@ void CP_StatsUpdate_f (void)
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Aircraft:\t%i c\n"), costs);
 	sum += costs;
 
-	base_t *base = nullptr;
+	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		costs = CP_GetSalaryUpKeepBase(salary, base);
 		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Base (%s):\t%i c\n"), base->name, costs);
@@ -150,9 +150,9 @@ void CP_StatsUpdate_f (void)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-bool STATS_SaveXML (xmlNode_t *parent)
+bool STATS_SaveXML (xmlNode_t* parent)
 {
-	xmlNode_t *stats;
+	xmlNode_t* stats;
 
 	stats = cgi->XML_AddNode(parent, SAVE_STATS_STATS);
 
@@ -185,9 +185,9 @@ bool STATS_SaveXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-bool STATS_LoadXML (xmlNode_t *parent)
+bool STATS_LoadXML (xmlNode_t* parent)
 {
-	xmlNode_t *stats;
+	xmlNode_t* stats;
 	bool success = true;
 
 	stats = cgi->XML_GetNode(parent, SAVE_STATS_STATS);
@@ -229,8 +229,8 @@ bool STATS_LoadXML (xmlNode_t *parent)
  */
 static void CP_CampaignStats_f (void)
 {
-	campaign_t *campaign = ccs.curCampaign;
-	const salary_t *salary;
+	campaign_t* campaign = ccs.curCampaign;
+	const salary_t* salary;
 
 	if (!CP_IsRunning()) {
 		Com_Printf("No campaign active\n");

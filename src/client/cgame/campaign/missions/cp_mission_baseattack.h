@@ -25,12 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_BaseAttackStartMission(mission_t *mission);
-void CP_BaseAttackMissionLeave(mission_t *mission);
-void CP_BaseAttackMissionIsSuccess(mission_t *mission);
-void CP_BaseAttackMissionIsFailure(mission_t *mission);
+void CP_BaseAttackStartMission(mission_t* mission);
+void CP_BaseAttackMissionLeave(mission_t* mission);
+void CP_BaseAttackMissionIsSuccess(mission_t* mission);
+void CP_BaseAttackMissionIsFailure(mission_t* mission);
 void CP_BaseAttackMissionOnSpawn(void);
-int CP_BaseAttackMissionAvailableUFOs(const mission_t *mission, ufoType_t *ufoTypes);
-void CP_BaseAttackMissionNextStage(mission_t *mission);
-void CP_BaseAttackMissionDestroyBase(mission_t *mission);
+int CP_BaseAttackMissionAvailableUFOs(const mission_t* mission, ufoType_t* ufoTypes);
+void CP_BaseAttackMissionNextStage(mission_t* mission);
+void CP_BaseAttackMissionDestroyBase(mission_t* mission);
 void CP_CheckBaseAttacks(void);

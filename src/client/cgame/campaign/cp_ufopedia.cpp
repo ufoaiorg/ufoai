@@ -34,14 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_mapfightequip.h"
 #include "cp_time.h"
 
-static cvar_t *mn_uppretext;
-static cvar_t *mn_uppreavailable;
+static cvar_t* mn_uppretext;
+static cvar_t* mn_uppreavailable;
 
-static pediaChapter_t *upChaptersDisplayList[MAX_PEDIACHAPTERS];
+static pediaChapter_t* upChaptersDisplayList[MAX_PEDIACHAPTERS];
 static int numChaptersDisplayList;
 
 static technology_t	*upCurrentTech;
-static pediaChapter_t *currentChapter;
+static pediaChapter_t* currentChapter;
 
 #define MAX_UPTEXT 4096
 static char upBuffer[MAX_UPTEXT];
@@ -72,9 +72,9 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
  * @return true if the tech gets displayed at all, otherwise false.
  * @sa UP_Article
  */
-static bool UP_TechGetsDisplayed (const technology_t *tech)
+static bool UP_TechGetsDisplayed (const technology_t* tech)
 {
-	const objDef_t *item;
+	const objDef_t* item;
 
 	assert(tech);
 	/* virtual items are hidden */
@@ -167,8 +167,8 @@ static const char* UP_AircraftStatToName (int stat)
  */
 static void UP_DisplayTechTree (const technology_t* t)
 {
-	linkedList_t *upTechtree;
-	const requirements_t *required;
+	linkedList_t* upTechtree;
+	const requirements_t* required;
 
 	required = &t->requireAND;
 	upTechtree = nullptr;
@@ -178,9 +178,9 @@ static void UP_DisplayTechTree (const technology_t* t)
 	else {
 		int i;
 		for (i = 0; i < required->numLinks; i++) {
-			const requirement_t *req = &required->links[i];
+			const requirement_t* req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
-				const technology_t *techRequired = req->link.tech;
+				const technology_t* techRequired = req->link.tech;
 				if (!techRequired)
 					cgi->Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
 
@@ -229,10 +229,10 @@ static void UP_BuildingDescription (const technology_t* t)
  * @todo Don't display things like speed for base defence items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
  */
-void UP_AircraftItemDescription (const objDef_t *item)
+void UP_AircraftItemDescription (const objDef_t* item)
 {
 	static char itemText[1024];
-	const technology_t *tech;
+	const technology_t* tech;
 
 	/* Set menu text node content to null. */
 	cgi->INV_ItemDescription(nullptr);
@@ -259,7 +259,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
 		int i;
-		const objDef_t *ammo = nullptr;
+		const objDef_t* ammo = nullptr;
 
 		switch (item->craftitem.type) {
 		case AC_ITEM_WEAPON:
@@ -362,7 +362,7 @@ void UP_AircraftDescription (const technology_t* tech)
 
 		const baseCapacities_t cap = AIR_GetCapacityByAircraftWeight(aircraft);
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
-		const building_t *building = B_GetBuildingTemplateByType(buildingType);
+		const building_t* building = B_GetBuildingTemplateByType(buildingType);
 
 		Q_strcat(upBuffer, sizeof(upBuffer), _("Required Hangar:\t%s\n"), _(building->name));
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
@@ -387,10 +387,10 @@ void UP_AircraftDescription (const technology_t* tech)
  * @sa BS_MarketClick_f
  * @sa UP_Article
  */
-void UP_UGVDescription (const ugv_t *ugvType)
+void UP_UGVDescription (const ugv_t* ugvType)
 {
 	static char itemText[512];
-	const technology_t *tech;
+	const technology_t* tech;
 
 	assert(ugvType);
 
@@ -424,7 +424,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
  */
 int UP_GetUnreadMails (void)
 {
-	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
+	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 
 	if (ccs.numUnreadMails != -1)
 		return ccs.numUnreadMails;
@@ -494,7 +494,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		/* reread the unread mails in UP_GetUnreadMails */
 		ccs.numUnreadMails = -1;
 	} else {
-		techMail_t *mail;
+		techMail_t* mail;
 		assert(tech);
 		assert(type < TECHMAIL_MAX);
 
@@ -565,10 +565,10 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
  */
 static void UP_DrawAssociatedAmmo (const technology_t* tech)
 {
-	const objDef_t *od = INVSH_GetItemByID(tech->provides);
+	const objDef_t* od = INVSH_GetItemByID(tech->provides);
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (od->numAmmos > 0) {
-		const technology_t *associated = RS_GetTechForItem(od->ammos[0]);
+		const technology_t* associated = RS_GetTechForItem(od->ammos[0]);
 		cgi->Cvar_Set("mn_upmodel_bottom", "%s", associated->mdl);
 	}
 }
@@ -579,7 +579,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
  * @param[in] mail The mail parameters in case we produce a mail
  * @sa UP_Article
  */
-static void UP_Article (technology_t* tech, eventMail_t *mail)
+static void UP_Article (technology_t* tech, eventMail_t* mail)
 {
 	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
 
@@ -645,7 +645,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_ARMOUR:
 			case RS_WEAPON:
 				for (i = 0; i < cgi->csi->numODs; i++) {
-					const objDef_t *od = INVSH_GetItemByIDX(i);
+					const objDef_t* od = INVSH_GetItemByIDX(i);
 					if (Q_streq(tech->provides, od->id)) {
 						cgi->INV_ItemDescription(od);
 						UP_DisplayTechTree(tech);
@@ -752,7 +752,7 @@ void UP_OpenCopyWith (const char* techID)
 static void UP_FindEntry_f (void)
 {
 	const char* id;
-	technology_t *tech;
+	technology_t* tech;
 
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <id>\n", cgi->Cmd_Argv(0));
@@ -785,9 +785,9 @@ static void UP_FindEntry_f (void)
  * @param[in] parentChapter requested chapter
  * @return The first option of the list, else nullptr if no articles
  */
-static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
+static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t* parentChapter)
 {
-	technology_t *tech = parentChapter->first;
+	technology_t* tech = parentChapter->first;
 	uiNode_t* first = nullptr;
 
 	while (tech) {
@@ -810,14 +810,14 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 static void UP_GenerateSummary (void)
 {
 	int i;
-	uiNode_t *chapters = nullptr;
+	uiNode_t* chapters = nullptr;
 	int num = 0;
 
 	numChaptersDisplayList = 0;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* hide chapters without name */
-		pediaChapter_t *chapter = &ccs.upChapters[i];
+		pediaChapter_t* chapter = &ccs.upChapters[i];
 		if (chapter->name == nullptr)
 			continue;
 
@@ -834,7 +834,7 @@ static void UP_GenerateSummary (void)
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researchedEntries) {
-			uiNode_t *chapterOption;
+			uiNode_t* chapterOption;
 			if (numChaptersDisplayList >= sizeof(upChaptersDisplayList))
 				cgi->Com_Error(ERR_DROP, "MAX_PEDIACHAPTERS hit");
 			upChaptersDisplayList[numChaptersDisplayList++] = chapter;
@@ -898,8 +898,8 @@ static void UP_TechTreeClick_f (void)
 {
 	int num;
 	int i;
-	const requirements_t *required_AND;
-	const technology_t *techRequired;
+	const requirements_t* required_AND;
+	const technology_t* techRequired;
 
 	if (cgi->Cmd_Argc() < 2)
 		return;
@@ -914,7 +914,7 @@ static void UP_TechTreeClick_f (void)
 
 	/* skip every tech which have not been displayed in techtree */
 	for (i = 0; i <= num; i++) {
-		const requirement_t *r = &required_AND->links[i];
+		const requirement_t* r = &required_AND->links[i];
 		if (r->type != RS_LINK_TECH && r->type != RS_LINK_TECH_NOT)
 			num++;
 	}
@@ -945,7 +945,7 @@ static void UP_Update_f (void)
  */
 static void UP_MailClientClick_f (void)
 {
-	uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
+	uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 	int num;
 	int cnt = -1;
 
@@ -1006,7 +1006,7 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_ResearchedLinkClick_f (void)
 {
-	const objDef_t *od;
+	const objDef_t* od;
 
 	if (!upCurrentTech) /* if called from console */
 		return;
@@ -1015,11 +1015,11 @@ static void UP_ResearchedLinkClick_f (void)
 	assert(od);
 
 	if (od->isAmmo()) {
-		const technology_t *t = RS_GetTechForItem(od->weapons[0]);
+		const technology_t* t = RS_GetTechForItem(od->weapons[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	} else if (od->weapon && od->isReloadable()) {
-		const technology_t *t = RS_GetTechForItem(od->ammos[0]);
+		const technology_t* t = RS_GetTechForItem(od->ammos[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	}
@@ -1034,7 +1034,7 @@ static void UP_ResearchedLinkClick_f (void)
 static void UP_SetMailButtons_f (void)
 {
 	int i = 0, num;
-	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
+	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 
 	if (cgi->Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <pos>\n", cgi->Cmd_Argv(0));
@@ -1112,7 +1112,7 @@ static void UP_SetMailButtons_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
+	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 	dateLong_t date;
 
 	mailBuffer[0] = '\0';
@@ -1199,7 +1199,7 @@ static void UP_OpenMail_f (void)
  */
 static void UP_SetAllMailsRead_f (void)
 {
-	const uiMessageListNodeMessage_t *m = cgi->UI_MessageGetStack();
+	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 
 	while (m) {
 		switch (m->type) {

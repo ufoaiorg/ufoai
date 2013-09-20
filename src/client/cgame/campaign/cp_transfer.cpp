@@ -42,12 +42,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
-static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bool success)
+static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bool success)
 {
 	assert(transfer);
 
 	if (transfer->hasItems && success) {	/* Items. */
-		const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+		const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 		int i;
 
 		/* antimatter */
@@ -101,7 +101,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Alien Containment, Aliens are removed!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 			} else {
-				linkedList_t *cargo = transfer->alienCargo->list();
+				linkedList_t* cargo = transfer->alienCargo->list();
 				LIST_Foreach(cargo, alienCargo_t, item) {
 					destination->alienContainment->add(item->teamDef, item->alive, item->dead);
 				}
@@ -124,7 +124,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, bo
  * @brief Ends the transfer.
  * @param[in] transfer Pointer to transfer in ccs.transfers
  */
-static void TR_TransferEnd (transfer_t *transfer)
+static void TR_TransferEnd (transfer_t* transfer)
 {
 	base_t* destination = transfer->destBase;
 	assert(destination);
@@ -142,7 +142,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 	cgi->LIST_Remove(&ccs.transfers, transfer);
 }
 
-bool TR_AddData (transferData_t *transferData, transferCargoType_t type, const void* data)
+bool TR_AddData (transferData_t* transferData, transferCargoType_t type, const void* data)
 {
 	if (transferData->trCargoCountTmp >= MAX_CARGO)
 		return false;
@@ -157,7 +157,7 @@ bool TR_AddData (transferData_t *transferData, transferCargoType_t type, const v
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
+transfer_t* TR_TransferStart (base_t* srcBase, transferData_t &transData)
 {
 	transfer_t transfer;
 	float time;
@@ -237,7 +237,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t &transData)
  * @param[in] aircraft Aircraft that was removed from the game
  * @sa AIR_DeleteAircraft
  */
-void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
+void TR_NotifyAircraftRemoved (const aircraft_t* aircraft)
 {
 	if (!aircraft)
 		return;
@@ -305,7 +305,7 @@ static void TR_ListTransfers_f (void)
 			int j;
 			Com_Printf("...ItemCargo:\n");
 			for (j = 0; j < cgi->csi->numODs; j++) {
-				const objDef_t *od = INVSH_GetItemByIDX(j);
+				const objDef_t* od = INVSH_GetItemByIDX(j);
 				if (transfer->itemAmount[od->idx])
 					Com_Printf("......%s: %i\n", od->id, transfer->itemAmount[od->idx]);
 			}
@@ -337,7 +337,7 @@ static void TR_ListTransfers_f (void)
 		/* AlienCargo */
 		if (transfer->alienCargo != nullptr) {
 			Com_Printf("...AlienCargo:\n");
-			linkedList_t *cargo = transfer->alienCargo->list();
+			linkedList_t* cargo = transfer->alienCargo->list();
 			LIST_Foreach(cargo, alienCargo_t, item) {
 				Com_Printf("......%s alive: %i dead: %i\n", item->teamDef->id, item->alive, item->dead);
 			}
@@ -360,13 +360,13 @@ static void TR_ListTransfers_f (void)
  * @sa TR_LoadXML
  * @sa SAV_GameSaveXML
  */
-bool TR_SaveXML (xmlNode_t *p)
+bool TR_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t *n = cgi->XML_AddNode(p, SAVE_TRANSFER_TRANSFERS);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
 	TR_Foreach(transfer) {
 		int j;
-		xmlNode_t *s;
+		xmlNode_t* s;
 
 		s = cgi->XML_AddNode(n, SAVE_TRANSFER_TRANSFER);
 		cgi->XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
@@ -384,8 +384,8 @@ bool TR_SaveXML (xmlNode_t *p)
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
 				if (transfer->itemAmount[j] > 0) {
-					const objDef_t *od = INVSH_GetItemByIDX(j);
-					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ITEM);
+					const objDef_t* od = INVSH_GetItemByIDX(j);
+					xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ITEM);
 
 					assert(od);
 					cgi->XML_AddString(ss, SAVE_TRANSFER_ITEMID, od->id);
@@ -395,7 +395,7 @@ bool TR_SaveXML (xmlNode_t *p)
 		}
 		/* save aliens */
 		if (transfer->alienCargo != nullptr) {
-			xmlNode_t *alienNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIENCARGO);
+			xmlNode_t* alienNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ALIENCARGO);
 			if (!alienNode)
 				return false;
 			transfer->alienCargo->save(alienNode);
@@ -404,7 +404,7 @@ bool TR_SaveXML (xmlNode_t *p)
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
 				TR_ForeachEmployee(employee, transfer, j) {
-					xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
+					xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
 					cgi->XML_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
 				}
 			}
@@ -412,7 +412,7 @@ bool TR_SaveXML (xmlNode_t *p)
 		/* save aircraft */
 		if (transfer->hasAircraft) {
 			TR_ForeachAircraft(aircraft, transfer) {
-				xmlNode_t *ss = cgi->XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+				xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
 				cgi->XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 			}
 		}
@@ -426,9 +426,9 @@ bool TR_SaveXML (xmlNode_t *p)
  * @sa TR_SaveXML
  * @sa SAV_GameLoadXML
  */
-bool TR_LoadXML (xmlNode_t *p)
+bool TR_LoadXML (xmlNode_t* p)
 {
-	xmlNode_t *n, *s;
+	xmlNode_t* n, *s;
 
 	n = cgi->XML_GetNode(p, SAVE_TRANSFER_TRANSFERS);
 	if (!n)
@@ -437,7 +437,7 @@ bool TR_LoadXML (xmlNode_t *p)
 	assert(B_AtLeastOneExists());
 
 	for (s = cgi->XML_GetNode(n, SAVE_TRANSFER_TRANSFER); s; s = cgi->XML_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
-		xmlNode_t *ss;
+		xmlNode_t* ss;
 		transfer_t transfer;
 
 		OBJZERO(transfer);
@@ -464,7 +464,7 @@ bool TR_LoadXML (xmlNode_t *p)
 			transfer.hasItems = true;
 			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
 				const char* itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
-				const objDef_t *od = INVSH_GetItemByID(itemId);
+				const objDef_t* od = INVSH_GetItemByID(itemId);
 
 				if (od)
 					transfer.itemAmount[od->idx] = cgi->XML_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
@@ -516,7 +516,7 @@ bool TR_LoadXML (xmlNode_t *p)
 			transfer.hasAircraft = true;
 			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
 				const int j = cgi->XML_GetInt(ss, SAVE_TRANSFER_ID, -1);
-				aircraft_t *aircraft = AIR_AircraftGetFromIDX(j);
+				aircraft_t* aircraft = AIR_AircraftGetFromIDX(j);
 
 				if (aircraft)
 					cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
