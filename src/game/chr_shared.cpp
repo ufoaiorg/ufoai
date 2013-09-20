@@ -184,7 +184,6 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
  */
 void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char* templateId)
 {
-	int i;
 	const chrTemplate_t* chrTemplate;
 	const teamDef_t* teamDef = chr->teamDef;
 
@@ -199,7 +198,7 @@ void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char*
 	} else if (teamDef->characterTemplates[0]) {
 		if (teamDef->numTemplates > 1) {
 			float sumRate = 0.0;
-			for (i = 0; i < teamDef->numTemplates; i++) {
+			for (int i = 0; i < teamDef->numTemplates; i++) {
 				chrTemplate = teamDef->characterTemplates[i];
 				sumRate += chrTemplate->rate;
 			}
@@ -227,7 +226,7 @@ void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char*
 	const int (*skillsTemplate)[2] = chrTemplate->skills;
 
 	/* Abilities and skills -- random within the range */
-	for (i = 0; i < SKILL_NUM_TYPES; i++) {
+	for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 		const int abilityWindow = skillsTemplate[i][1] - skillsTemplate[i][0];
 		/* Reminder: In case if abilityWindow==0 the ability will be set to the lower limit. */
 		const int temp = (frand() * abilityWindow) + skillsTemplate[i][0];
@@ -235,14 +234,12 @@ void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char*
 		chr->score.initialSkills[i] = temp;
 	}
 
-	{
-		/* Health. */
-		const int abilityWindow = skillsTemplate[i][1] - skillsTemplate[i][0];
-		const int temp = (frand() * abilityWindow) + skillsTemplate[i][0];
-		chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
-		chr->maxHP = temp;
-		chr->HP = temp;
-	}
+	/* Health. */
+	const int abilityWindow = skillsTemplate[SKILL_NUM_TYPES][1] - skillsTemplate[SKILL_NUM_TYPES][0];
+	const int temp = (frand() * abilityWindow) + skillsTemplate[SKILL_NUM_TYPES][0];
+	chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
+	chr->maxHP = temp;
+	chr->HP = temp;
 
 	/* Morale */
 	chr->morale = GET_MORALE(chr->score.skills[ABILITY_MIND]);
@@ -250,7 +247,7 @@ void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char*
 		chr->morale = MAX_SKILL;
 
 	/* Initialize the experience values */
-	for (i = 0; i <= SKILL_NUM_TYPES; i++) {
+	for (int i = 0; i <= SKILL_NUM_TYPES; i++) {
 		chr->score.experience[i] = 0;
 	}
 }
