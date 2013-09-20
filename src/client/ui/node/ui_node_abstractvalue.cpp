@@ -131,7 +131,7 @@ bool uiAbstractValueNode::setValue(uiNode_t* node, float value)
 
 	/* save result */
 	EXTRADATA(node).lastdiff = value - last;
-	const char* cvar = Q_strstart((char* )EXTRADATA(node).value, "*cvar:");
+	const char* cvar = Q_strstart((char*)EXTRADATA(node).value, "*cvar:");
 	if (cvar)
 		Cvar_SetValue(cvar, value);
 	else

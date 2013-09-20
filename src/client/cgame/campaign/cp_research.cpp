@@ -440,7 +440,7 @@ void RS_RequiredLinksAssign (void)
 	while (ll) {
 		/* Get the data stored in the linked list. */
 		assert(ll);
-		technology_t* redirectedTech = (technology_t* ) ll->data;
+		technology_t* redirectedTech = (technology_t*) ll->data;
 		ll = ll->next;
 
 		assert(redirectedTech);

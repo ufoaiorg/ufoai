@@ -746,7 +746,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void* data)
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->d.terminal.d1.constString = Mem_PoolStrDup((const char* )data, ui_sysPool, 0);
+		(*action)->d.terminal.d1.constString = Mem_PoolStrDup((const char*)data, ui_sysPool, 0);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);

@@ -325,7 +325,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT *GetNextUniqueCharacterNumber) (void);
 
-	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory* ));
+	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory*));
 	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, bool));
 
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char* name);

@@ -211,7 +211,7 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  */
 static void AII_CollectingAmmo (void* data, const Item* magazine)
 {
-	aircraft_t* aircraft = (aircraft_t* )data;
+	aircraft_t* aircraft = (aircraft_t*)data;
 	/* Let's add remaining ammo to market. */
 	eTempEq.numItemsLoose[magazine->ammoDef()->idx] += magazine->getAmmoLeft();
 	if (eTempEq.numItemsLoose[magazine->ammoDef()->idx] >= magazine->def()->ammo) {
@@ -255,7 +255,7 @@ void AII_CollectItem (aircraft_t* aircraft, const objDef_t* item, int amount)
 
 static inline void AII_CollectItem_ (void* data, const objDef_t* item, int amount)
 {
-	AII_CollectItem((aircraft_t* )data, item, amount);
+	AII_CollectItem((aircraft_t*)data, item, amount);
 }
 
 /**

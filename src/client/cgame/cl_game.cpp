@@ -448,7 +448,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
-static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item* ), void (*ownitems) (const Inventory* ))
+static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item*), void (*ownitems) (const Inventory*))
 {
 	le_t *le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {

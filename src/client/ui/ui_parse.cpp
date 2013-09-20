@@ -1410,5 +1410,5 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 	}
 
 	/* just get the data */
-	return *(const float* ) ref;
+	return *(const float*) ref;
 }

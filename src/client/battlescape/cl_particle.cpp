@@ -423,7 +423,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 				/* stack reference to element of vector */
 				if ((1 << stackType[stackIdx]) & V_VECS) {
 					cmd->type = V_FLOAT;
-					cmdData = (float* ) stackPtr[stackIdx] + (i - 1);
+					cmdData = (float*) stackPtr[stackIdx] + (i - 1);
 				} else {
 					Com_Error(ERR_DROP, "CL_ParticleFunction: can't get components of a non-vector type (particle %s)", p->ctrl->name);
 				}
@@ -498,10 +498,10 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 
 			for (i = 0; i < n; i++) {
 				if (cmd->cmd == PC_SUB)
-					arg = -(*((float* ) cmdData + i));
+					arg = -(*((float*) cmdData + i));
 				else
-					arg = *((float* ) cmdData + i);
-				*((float* ) stackPtr[stackIdx - 1] + i) += arg;
+					arg = *((float*) cmdData + i);
+				*((float*) stackPtr[stackIdx - 1] + i) += arg;
 			}
 			break;
 
@@ -524,10 +524,10 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 
 				for (i = 0; i < n; i++) {
 					if (cmd->cmd == PC_DIV)
-						arg = 1.0 / (*((float* ) cmdData + i));
+						arg = 1.0 / (*((float*) cmdData + i));
 					else
-						arg = *((float* ) cmdData + i);
-					*((float* ) stackPtr[stackIdx - 1] + i) *= arg;
+						arg = *((float*) cmdData + i);
+					*((float*) stackPtr[stackIdx - 1] + i) *= arg;
 				}
 				break;
 			}
@@ -537,11 +537,11 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 
 			/* scalar multiplication with scalar in second argument */
 			if (cmd->cmd == PC_DIV)
-				arg = 1.0 / (*(float* ) cmdData);
+				arg = 1.0 / (*(float*) cmdData);
 			else
-				arg = *(float* ) cmdData;
+				arg = *(float*) cmdData;
 			for (i = 0; i < n; i++)
-				*((float* ) stackPtr[stackIdx - 1] + i) *= arg;
+				*((float*) stackPtr[stackIdx - 1] + i) *= arg;
 
 			break;
 
@@ -550,7 +550,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for sin (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float* ) stackPtr[stackIdx++] = sin(*(float* ) cmdData * (2 * M_PI));
+			*(float*) stackPtr[stackIdx++] = sin(*(float*) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
@@ -559,7 +559,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for cos (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float* ) stackPtr[stackIdx++] = sin(*(float* ) cmdData * (2 * M_PI));
+			*(float*) stackPtr[stackIdx++] = sin(*(float*) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
@@ -568,7 +568,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for tan (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float* ) stackPtr[stackIdx++] = sin(*(float* ) cmdData * (2 * M_PI));
+			*(float*) stackPtr[stackIdx++] = sin(*(float*) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
@@ -581,10 +581,10 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 
 			if (cmd->cmd == PC_RAND)
 				for (i = 0; i < n; i++)
-					*((float* ) stackPtr[stackIdx] + i) = *((float* ) cmdData + i) * frand();
+					*((float*) stackPtr[stackIdx] + i) = *((float*) cmdData + i) * frand();
 			else
 				for (i = 0; i < n; i++)
-					*((float* ) stackPtr[stackIdx] + i) = *((float* ) cmdData + i) * crand();
+					*((float*) stackPtr[stackIdx] + i) = *((float*) cmdData + i) * crand();
 
 			e += n * sizeof(float);
 			stackIdx++;
@@ -631,13 +631,13 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 			type = stackType[--stackIdx];
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
-			n = *(int* ) stackPtr[stackIdx];
+			n = *(int*) stackPtr[stackIdx];
 
 			/* delta time */
 			type = stackType[--stackIdx];
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
-			i = *(int* ) stackPtr[stackIdx];
+			i = *(int*) stackPtr[stackIdx];
 
 			/** @todo make the children boolean configurable */
 			CL_ParticleSpawnTimed((const char*) cmdData, p, true, i, n);
@@ -655,7 +655,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
 
-			n = *(int* ) stackPtr[stackIdx];
+			n = *(int*) stackPtr[stackIdx];
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {

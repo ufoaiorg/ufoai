@@ -186,7 +186,7 @@ static void GAME_CP_Start_f (void)
 
 static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t* teamDef, int amount, bool dead)
 {
-	AL_AddAlienTypeToAircraftCargo((aircraft_t* ) data, teamDef, amount, dead);
+	AL_AddAlienTypeToAircraftCargo((aircraft_t*) data, teamDef, amount, dead);
 }
 
 /**

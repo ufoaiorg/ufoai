@@ -165,13 +165,13 @@ void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
 			NET_WriteLong(buf, va_arg(ap, int));
 			break;
 		case 'p':
-			NET_WritePos(buf, va_arg(ap, float* ));
+			NET_WritePos(buf, va_arg(ap, float*));
 			break;
 		case 'g':
 			NET_WriteGPos(buf, va_arg(ap, byte*));
 			break;
 		case 'd':
-			NET_WriteDir(buf, va_arg(ap, float* ));
+			NET_WriteDir(buf, va_arg(ap, float*));
 			break;
 		case 'a':
 			/* NOTE: float is promoted to double through ... */
@@ -443,7 +443,7 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 			NET_ReadDir(buf, *va_arg(ap, vec3_t*));
 			break;
 		case 'a':
-			*va_arg(ap, float* ) = NET_ReadAngle(buf);
+			*va_arg(ap, float*) = NET_ReadAngle(buf);
 			break;
 		case '!':
 			format++;

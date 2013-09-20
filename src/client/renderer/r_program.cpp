@@ -969,7 +969,7 @@ static void R_InitConvolveProgram (r_program_t *prog)
 static void R_UseConvolveProgram (r_program_t *prog)
 {
 	int i;
-	const float* userdata= (float* )prog->userdata;
+	const float* userdata= (float*)prog->userdata;
 	float offsets[FILTER_SIZE * 2];
 	const float halfWidth = (FILTER_SIZE - 1) * 0.5;
 	const float offset = 1.2f / userdata[0];

@@ -62,7 +62,7 @@ static void R_ModLoadTags (model_t *mod, void* buffer, int bufSize)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file for %s has no frames", mod->name);
 
 	/* load tag matrices */
-	inmat = (float* ) ((byte*) pintag + pheader.ofs_tags);
+	inmat = (float*) ((byte*) pintag + pheader.ofs_tags);
 
 	if (bufSize != pheader.ofs_end)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i",

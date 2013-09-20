@@ -206,7 +206,7 @@ static void testLinkedList (void)
 	entry = LIST_Add(&list, data, length);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
 	CU_ASSERT_TRUE(entry != nullptr);
-	returnedData = (const char* )LIST_GetByIdx(list, 0);
+	returnedData = (const char*)LIST_GetByIdx(list, 0);
 	CU_ASSERT_TRUE(returnedData != nullptr);
 	entry2 = LIST_ContainsString(list, returnedData);
 	CU_ASSERT_TRUE(entry2 != nullptr);
@@ -294,8 +294,8 @@ static void testPrependStringList (void)
 	LIST_PrependString(&list, "test2");
 	LIST_PrependString(&list, "test1");
 
-	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 0), "test1");
-	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 1), "test2");
+	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 1), "test2");
 
 	LIST_Delete(&list);
 }
@@ -308,7 +308,7 @@ static void testLinkedListStringSort (void)
 	LIST_AddStringSorted(&list, "test1");
 	LIST_AddStringSorted(&list, "test3");
 
-	CU_ASSERT_STRING_EQUAL((const char* )LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 0), "test1");
 
 	LIST_Delete(&list);
 }
@@ -662,7 +662,7 @@ static void testEntitiesDef (void)
 
 	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
 
-	buf = (const char* ) fileBuffer;
+	buf = (const char*) fileBuffer;
 	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
 
 	CU_ASSERT_TRUE(numEntityDefs > 0);

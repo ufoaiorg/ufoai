@@ -125,7 +125,7 @@ static void CIN_ROQ_ApplyVector2x2 (cinematic_t* cin, int x, int y, const byte* 
 	for (i = 0; i < 4; i++) {
 		const int xp = x + roqCin_quadOffsets2[0][i];
 		const int yp = y + roqCin_quadOffsets2[1][i];
-		const unsigned int* src = (const unsigned int* )ROQCIN.quadVectors + (indices[i] * 4);
+		const unsigned int* src = (const unsigned int*)ROQCIN.quadVectors + (indices[i] * 4);
 		unsigned* dst = ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
 
 		dst[0] = src[0];
@@ -148,7 +148,7 @@ static void CIN_ROQ_ApplyVector4x4 (cinematic_t* cin, int x, int y, const byte* 
 	for (i = 0; i < 4; i++) {
 		const int xp = x + roqCin_quadOffsets4[0][i];
 		const int yp = y + roqCin_quadOffsets4[1][i];
-		const unsigned int* src = (const unsigned int* )ROQCIN.quadVectors + (indices[i] * 4);
+		const unsigned int* src = (const unsigned int*)ROQCIN.quadVectors + (indices[i] * 4);
 		unsigned* dst = ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
 
 		dst[0] = src[0];
@@ -469,7 +469,7 @@ static bool CIN_ROQ_DecodeChunk (cinematic_t* cin)
 
 		/* Parse the chunk header */
 		ROQCIN.chunk.id = LittleShort(*(short*)&ROQCIN.header[0]);
-		ROQCIN.chunk.size = LittleLong(*(int* )&ROQCIN.header[2]);
+		ROQCIN.chunk.size = LittleLong(*(int*)&ROQCIN.header[2]);
 		ROQCIN.chunk.flags = LittleShort(*(short*)&ROQCIN.header[6]);
 
 		if (ROQCIN.chunk.id == ROQ_IDENT || ROQCIN.chunk.size > ROQ_MAX_CHUNK_SIZE) {
@@ -582,7 +582,7 @@ int CIN_ROQ_OpenCinematic (cinematic_t* cin, const char* fileName)
 
 	/* first 8 bytes are the header */
 	chunk.id = LittleShort(*(short*)&header[0]);
-	chunk.size = LittleLong(*(int* )&header[2]);
+	chunk.size = LittleLong(*(int*)&header[2]);
 	chunk.flags = LittleShort(*(short*)&header[6]);
 
 	if (chunk.id != ROQ_IDENT) {

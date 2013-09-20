@@ -374,7 +374,7 @@ void Com_MakeTimestamp (char* ts, const size_t tslen)
  */
 int Q_FloatSort (const void* float1, const void* float2)
 {
-	return (*(const float* )float1 - *(const float* )float2);
+	return (*(const float*)float1 - *(const float*)float2);
 }
 
 /**

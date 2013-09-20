@@ -112,7 +112,7 @@ static void testMapDefsMassRMA (void)
 			else
 				continue;
 
-			const char* ass = (const char* )LIST_GetByIdx(md->params, 0);
+			const char* ass = (const char*)LIST_GetByIdx(md->params, 0);
 			Com_Printf("\nMap: %s Assembly: %s AssNr: %i\n", p, ass, mapCount);
 
 			sv_threads->integer = 0;
@@ -138,7 +138,7 @@ static void testMapDefsMassRMA (void)
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
 					const char* ufo = nullptr;
 					if (iterUfo)
-						ufo = (const char* ) (iterUfo->data);
+						ufo = (const char*) (iterUfo->data);
 					if (ufo)
 						Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 					else
@@ -195,7 +195,7 @@ static void testMapDefsMassRMA (void)
 						if (Q_streq(p, "ufocrash"))
 							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
-							ass = (const char* )LIST_GetByIdx(md->params, 0);
+							ass = (const char*)LIST_GetByIdx(md->params, 0);
 
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
