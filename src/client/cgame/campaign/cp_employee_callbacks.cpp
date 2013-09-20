@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 /** Currently selected employee. */
-static Employee *selectedEmployee = nullptr;
+static Employee* selectedEmployee = nullptr;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
 
@@ -63,7 +63,7 @@ static void E_UpdateGUICount_f (void)
 	cgi->Cvar_Set("mn_hirepeople", "%d/%d", E_CountAllHired(base), max);
 }
 
-static void E_EmployeeSelect (Employee *employee)
+static void E_EmployeeSelect (Employee* employee)
 {
 	const base_t* base = B_GetCurrentSelectedBase();
 	if (!base)
@@ -224,7 +224,7 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	Employee *employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
+	Employee* employee = E_GetEmployeeFromChrUCN(cgi->Cvar_GetInteger("mn_ucn"));
 	if (!employee)
 		return;
 
@@ -329,7 +329,7 @@ static void E_EmployeeHire_f (void)
 		num = button + employeeScrollPos;
 	}
 
-	Employee *employee = E_GetEmployeeByMenuIndex(num);
+	Employee* employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
 	if (!employee)
 		return;

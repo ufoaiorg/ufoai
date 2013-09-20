@@ -120,7 +120,7 @@ public:
 #define E_Foreach(employeeType, var) LIST_Foreach(ccs.employees[employeeType], Employee, var)
 
 Employee* E_CreateEmployee(employeeType_t type, const struct nation_s* nation, const struct ugv_s* ugvType = nullptr);
-bool E_DeleteEmployee(Employee *employee);
+bool E_DeleteEmployee(Employee* employee);
 
 /* count */
 int E_CountByType(employeeType_t type);
@@ -138,7 +138,7 @@ bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-base_t *E_Unassign(Employee *employee);
+base_t *E_Unassign(Employee* employee);
 int E_GenerateHiredEmployeesList(const base_t *base);
 
 employeeType_t E_GetEmployeeType(const char* type);
@@ -165,8 +165,8 @@ void E_DeleteEmployeesExceedingCapacity(base_t *base);
 void E_HireForBuilding(base_t* base, building_t *building, int num);
 void E_InitialEmployees(const struct campaign_s* campaign);
 
-bool E_MoveIntoNewBase(Employee *employee, base_t *newBase);
-void E_RemoveInventoryFromStorage(Employee *employee);
+bool E_MoveIntoNewBase(Employee* employee, base_t *newBase);
+void E_RemoveInventoryFromStorage(Employee* employee);
 
 void E_InitStartup(void);
 void E_Shutdown(void);

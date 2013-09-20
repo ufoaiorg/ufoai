@@ -148,7 +148,7 @@ static void BS_Buy_f (void)
 	if (char const* const rest = Q_strstart(itemid, "ugv-")) {
 		/* ugv sell - with unique character number index */
 		int ucn = atoi(rest);
-		Employee *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
+		Employee* robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {
 			Com_Printf("Invalid UCN for UGV!\n");
@@ -310,7 +310,7 @@ static void BS_ShowInfo_f (void)
 	if (char const* const rest = Q_strstart(itemid, "ugv-")) {
 		/* PHALANX ugv - with unique character number index */
 		int ucn = atoi(rest);
-		Employee *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
+		Employee* robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {
 			Com_Printf("Invalid UCN for UGV!\n");

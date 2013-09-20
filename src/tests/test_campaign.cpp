@@ -250,7 +250,7 @@ static void testEmployeeHandling (void)
 		employeeType_t type = (employeeType_t)i;
 		if (type != EMPL_ROBOT) {
 			int cnt;
-			Employee *e = E_CreateEmployee(type, nullptr, nullptr);
+			Employee* e = E_CreateEmployee(type, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(type);
@@ -266,7 +266,7 @@ static void testEmployeeHandling (void)
 	{
 		const int amount = 3;
 		for (i = 0; i < amount; i++) {
-			Employee *e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
+			Employee* e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 		}
 		{
@@ -288,7 +288,7 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		Employee *e = E_CreateEmployee(EMPL_PILOT, nullptr, nullptr);
+		Employee* e = E_CreateEmployee(EMPL_PILOT, nullptr, nullptr);
 		int cnt;
 		CU_ASSERT_PTR_NOT_NULL(e);
 		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, false);
@@ -300,7 +300,7 @@ static void testEmployeeHandling (void)
 
 	{
 		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
-		Employee *e = E_CreateEmployee(EMPL_ROBOT, nullptr, ugvType);
+		Employee* e = E_CreateEmployee(EMPL_ROBOT, nullptr, ugvType);
 		CU_ASSERT_PTR_NOT_NULL(e);
 		CU_ASSERT_TRUE(E_DeleteEmployee(e));
 	}
@@ -308,7 +308,7 @@ static void testEmployeeHandling (void)
 	{
 		int i, cnt;
 		for (i = 0; i < 512; i++) {
-			Employee *e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
+			Employee* e = E_CreateEmployee(EMPL_SOLDIER, nullptr, nullptr);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(EMPL_SOLDIER);
@@ -974,7 +974,7 @@ static void testSaveMassEmployees (void)
 
 	const int employees = 10000;
 	for (int i = 0; i < employees; i++) {
-		Employee *e = E_CreateEmployee(EMPL_SOLDIER, nation);
+		Employee* e = E_CreateEmployee(EMPL_SOLDIER, nation);
 		if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) > 0)
 			CU_ASSERT_TRUE(E_HireEmployee(base, e));
 	}

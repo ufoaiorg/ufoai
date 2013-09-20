@@ -220,9 +220,9 @@ void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 
-void RS_AssignScientist(technology_t* tech, struct base_s* base, Employee *employee = nullptr);
-void RS_RemoveScientist(technology_t* tech, Employee *employee);
-void RS_RemoveFiredScientist(struct base_s* base, Employee *employee);
+void RS_AssignScientist(technology_t* tech, struct base_s* base, Employee* employee = nullptr);
+void RS_RemoveScientist(technology_t* tech, Employee* employee);
+void RS_RemoveFiredScientist(struct base_s* base, Employee* employee);
 void RS_RemoveScientistsExceedingCapacity(struct base_s* base);
 
 technology_t *RS_GetTechByID(const char* id);

@@ -137,7 +137,7 @@ void CP_UpdateCharacterSkills (character_t* chr)
 void CP_UpdateCharacterData (linkedList_t* updateCharacters)
 {
 	LIST_Foreach(updateCharacters, updateCharacter_t, c) {
-		Employee *employee = E_GetEmployeeFromChrUCN(c->ucn);
+		Employee* employee = E_GetEmployeeFromChrUCN(c->ucn);
 
 		if (!employee) {
 			Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);

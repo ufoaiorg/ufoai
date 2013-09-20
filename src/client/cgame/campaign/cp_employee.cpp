@@ -136,7 +136,7 @@ void E_HireForBuilding (base_t* base, building_t* building, int num)
  * @param newBase The base where the employee should be located at
  * @return @c false if @c employee was a @c nullptr pointer
  */
-bool E_MoveIntoNewBase (Employee *employee, base_t* newBase)
+bool E_MoveIntoNewBase (Employee* employee, base_t* newBase)
 {
 	if (employee) {
 		base_t* oldBase = employee->baseHired;
@@ -285,7 +285,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 Employee* E_GetHiredRobot (const base_t* const base, const ugv_t* ugvType)
 {
 	linkedList_t* hiredEmployees = nullptr;
-	Employee *employee;
+	Employee* employee;
 
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
@@ -579,7 +579,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t* nation, const u
  * the aircraft can point to wrong employees now. This has to be taken into
  * account
  */
-bool E_DeleteEmployee (Employee *employee)
+bool E_DeleteEmployee (Employee* employee)
 {
 	employeeType_t type;
 
@@ -924,7 +924,7 @@ Employee* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		Employee *employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
+		Employee* employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
 		if (employee)
 			return employee;
 	}
@@ -1058,7 +1058,7 @@ bool E_HireAllowed (const base_t* base)
  * @brief Removes the items of an employee (soldier) from the base storage (s)he is hired at
  * @param[in] employee Pointer to the soldier whose items should be removed
  */
-void E_RemoveInventoryFromStorage (Employee *employee)
+void E_RemoveInventoryFromStorage (Employee* employee)
 {
 	const character_t* chr = &employee->chr;
 

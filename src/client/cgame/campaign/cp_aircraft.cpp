@@ -964,7 +964,7 @@ void AIR_DeleteAircraft (aircraft_t* aircraft)
  */
 void AIR_DestroyAircraft (aircraft_t* aircraft, bool killPilot)
 {
-	Employee *pilot;
+	Employee* pilot;
 
 	assert(aircraft);
 
@@ -2059,7 +2059,7 @@ bool AIR_AddToAircraftTeam (aircraft_t* aircraft, Employee* employee)
  * @param[in] employee Employee to check.
  * @return @c true if the given employee is assigned to the given aircraft.
  */
-bool AIR_IsInAircraftTeam (const aircraft_t* aircraft, const Employee *employee)
+bool AIR_IsInAircraftTeam (const aircraft_t* aircraft, const Employee* employee)
 {
 	assert(aircraft);
 	assert(employee);
@@ -2085,7 +2085,7 @@ int AIR_GetTeamSize (const aircraft_t* aircraft)
  * assigned), @c false if there was already a pilot assigned and we tried
  * to assign a new one (@c pilot isn't @c nullptr).
  */
-bool AIR_SetPilot (aircraft_t* aircraft, Employee *pilot)
+bool AIR_SetPilot (aircraft_t* aircraft, Employee* pilot)
 {
 	if (aircraft->pilot == nullptr || pilot == nullptr) {
 		aircraft->pilot = pilot;
@@ -2102,7 +2102,7 @@ bool AIR_SetPilot (aircraft_t* aircraft, Employee *pilot)
  */
 Employee* AIR_GetPilot (const aircraft_t* aircraft)
 {
-	const Employee *e = aircraft->pilot;
+	const Employee* e = aircraft->pilot;
 
 	if (!e)
 		return nullptr;
@@ -2279,7 +2279,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 	xmlNode_t* node;
 	xmlNode_t* subnode;
 	int l;
-	const Employee *pilot;
+	const Employee* pilot;
 
 	cgi->Com_RegisterConstList(saveAircraftConstants);
 
@@ -2846,7 +2846,7 @@ bool AIR_ScriptSanityCheck (void)
  * Use @c nullptr to remove the soldier from any aircraft.
  * @sa AIR_AddEmployee
  */
-bool AIR_RemoveEmployee (Employee *employee, aircraft_t* aircraft)
+bool AIR_RemoveEmployee (Employee* employee, aircraft_t* aircraft)
 {
 	if (!employee)
 		return false;
@@ -2885,7 +2885,7 @@ bool AIR_RemoveEmployee (Employee *employee, aircraft_t* aircraft)
  * check if the soldier is in @b any aircraft.
  * @return true if the soldier was found in the aircraft otherwise false.
  */
-const aircraft_t* AIR_IsEmployeeInAircraft (const Employee *employee, const aircraft_t* aircraft)
+const aircraft_t* AIR_IsEmployeeInAircraft (const Employee* employee, const aircraft_t* aircraft)
 {
 	if (!employee)
 		return nullptr;
@@ -2975,7 +2975,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
  * @sa AIR_RemoveEmployee
  * @sa AIR_AddToAircraftTeam
  */
-bool AIR_AddEmployee (Employee *employee, aircraft_t* aircraft)
+bool AIR_AddEmployee (Employee* employee, aircraft_t* aircraft)
 {
 	if (!employee || !aircraft)
 		return false;

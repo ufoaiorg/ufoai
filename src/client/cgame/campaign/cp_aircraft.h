@@ -173,7 +173,7 @@ typedef struct aircraft_s {
 	int maxTeamSize;	/**< Max amount of soldiers onboard. */
 	linkedList_t* acTeam;			/**< List of employees. i.e. current team for this aircraft */
 
-	Employee *pilot;			/**< Current Pilot assigned to the aircraft. */
+	Employee* pilot;			/**< Current Pilot assigned to the aircraft. */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft (empty or not) */
@@ -287,9 +287,9 @@ bool AIR_PilotSurvivedCrash(const aircraft_t* aircraft);
 void AIR_AutoAddPilotToAircraft(const struct base_s* base, Employee* pilot);
 void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const Employee* pilot);
 void AIR_RemoveEmployees(aircraft_t &aircraft);
-bool AIR_AddEmployee(Employee *employee, aircraft_t* aircraft);
-bool AIR_RemoveEmployee(Employee *employee, aircraft_t* aircraft);
-const aircraft_t* AIR_IsEmployeeInAircraft(const Employee *employee, const aircraft_t* aircraft);
+bool AIR_AddEmployee(Employee* employee, aircraft_t* aircraft);
+bool AIR_RemoveEmployee(Employee* employee, aircraft_t* aircraft);
+const aircraft_t* AIR_IsEmployeeInAircraft(const Employee* employee, const aircraft_t* aircraft);
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t &aircraft, equipDef_t &equip);
 
 void AIR_AssignInitial(aircraft_t* aircraft);

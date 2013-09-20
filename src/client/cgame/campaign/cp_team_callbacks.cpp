@@ -43,7 +43,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 	aircraft_t *aircraft;
 	int ucn;
 	const employeeType_t employeeType = EMPL_SOLDIER;
-	Employee *employee;
+	Employee* employee;
 
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1 ) {
@@ -82,7 +82,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
  */
 static void CP_TEAM_SelectActorByUCN_f (void)
 {
-	Employee *employee;
+	Employee* employee;
 	character_t *chr;
 	int ucn;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -120,7 +120,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
  */
 static void CP_TEAM_DeEquipActor_f (void)
 {
-	Employee *employee;
+	Employee* employee;
 	character_t *chr;
 	int ucn;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -181,7 +181,7 @@ static void CP_TeamListDebug_f (void)
 
 	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
 	for (l = aircraft->acTeam; l != nullptr; l = l->next) {
-		const Employee *employee = (const Employee *)l->data;
+		const Employee* employee = (const Employee* )l->data;
 		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
 }
@@ -363,7 +363,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 	int ucn = atoi(cgi->Cmd_Argv(1));
 	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
-	Employee *soldier = E_GetEmployeeFromChrUCN(ucn);
+	Employee* soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == nullptr || !soldier->isSoldier()) {
 		Com_Printf("Invalid soldier UCN: %i\n", ucn);
 		return;

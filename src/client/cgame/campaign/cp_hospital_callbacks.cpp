@@ -134,7 +134,7 @@ static void HOS_ImplantChange_f (void)
 	}
 
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee *e = E_GetEmployeeFromChrUCN(ucn);
+	Employee* e = E_GetEmployeeFromChrUCN(ucn);
 	if (e == nullptr) {
 		Com_Printf("No employee for ucn %i found\n", ucn);
 		return;
@@ -208,7 +208,7 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee *emp = E_GetEmployeeFromChrUCN(ucn);
+	Employee* emp = E_GetEmployeeFromChrUCN(ucn);
 	if (emp == nullptr)
 		return;
 

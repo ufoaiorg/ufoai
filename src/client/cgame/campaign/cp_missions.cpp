@@ -1249,7 +1249,7 @@ void CP_SpawnRescueMission (aircraft_t* aircraft, aircraft_t* ufo)
 
 	bool pilotSurvived = AIR_PilotSurvivedCrash(aircraft);
 	if (!pilotSurvived) {
-		Employee *pilot = AIR_GetPilot(aircraft);
+		Employee* pilot = AIR_GetPilot(aircraft);
 		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
 		E_DeleteEmployee(pilot);
 	}

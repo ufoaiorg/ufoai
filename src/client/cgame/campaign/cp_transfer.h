@@ -77,7 +77,7 @@ typedef struct transferCargo_s {
 	union transferItem_t {
 		const objDef_t *item;
 		const aircraft_t *aircraft;
-		const Employee *employee;
+		const Employee* employee;
 		const teamDef_t *alienTeam;
 		const void* pointer;		/**< if you just wanna check whether a valid pointer was set */
 	} data;

@@ -499,7 +499,7 @@ bool TR_LoadXML (xmlNode_t *p)
 			transfer.hasEmployees = true;
 			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
 				const int ucn = cgi->XML_GetInt(ss, SAVE_TRANSFER_UCN, -1);
-				Employee *empl = E_GetEmployeeFromChrUCN(ucn);
+				Employee* empl = E_GetEmployeeFromChrUCN(ucn);
 
 				if (!empl) {
 					Com_Printf("Error: No employee found with UCN: %i\n", ucn);

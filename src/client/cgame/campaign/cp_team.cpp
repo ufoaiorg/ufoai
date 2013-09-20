@@ -299,7 +299,7 @@ void CP_CleanTempInventory (base_t* base)
 void CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int numOnAircraft;
-	const Employee *pilot = AIR_GetPilot(aircraft);
+	const Employee* pilot = AIR_GetPilot(aircraft);
 
 	assert(aircraft);
 
