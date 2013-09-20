@@ -29,14 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const vec3_t v_epsilon = { 1, 1, 1 };
 int brush_start, brush_end;
 
-vec3_t worldMins, worldMaxs;
-
 static int oldmodels, oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnormals, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
-
-void ClearWorldBounds (void)
-{
-	ClearBounds(worldMins, worldMaxs);
-}
 
 void PushInfo (void)
 {
@@ -115,9 +108,6 @@ static int32_t BuildNodeChildren (const int n[3])
 
 			node = curTile->numnodes - 1;
 		}
-
-		AddPointToBounds(aabb.mins, worldMins, worldMaxs);
-		AddPointToBounds(aabb.maxs, worldMins, worldMaxs);
 
 		Verb_Printf(VERB_DUMP, "BuildNodeChildren: node=%i (%i %i %i) (%i %i %i)\n", node,
 			curTile->nodes[node].mins[0], curTile->nodes[node].mins[1], curTile->nodes[node].mins[2], curTile->nodes[node].maxs[0], curTile->nodes[node].maxs[1], curTile->nodes[node].maxs[2]);

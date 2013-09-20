@@ -42,8 +42,6 @@ static void ProcessWorldModel (int entityNumber)
 	brush_start = e->firstbrush;
 	brush_end = brush_start + e->numbrushes;
 
-	ClearWorldBounds();
-
 	/* This is set so the Emit* functions in writebsp.c work correctly. */
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
