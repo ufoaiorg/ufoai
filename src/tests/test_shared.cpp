@@ -51,7 +51,7 @@ void TEST_Shutdown (void)
 	com_genericPool = nullptr;
 }
 
-void TEST_vPrintf (const char *fmt, va_list argptr)
+void TEST_vPrintf (const char* fmt, va_list argptr)
 {
 	char text[1024];
 	Q_vsnprintf(text, sizeof(text), fmt, argptr);
@@ -101,7 +101,7 @@ void TEST_Init (void)
 
 typedef struct test_property_s {
 	char name[MAX_PROPERTY_NAME];
-	const char *value;
+	const char* value;
 	struct test_property_s *hash_next;
 	struct test_property_s *next;
 } test_property_t;

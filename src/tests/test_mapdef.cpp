@@ -88,7 +88,7 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static void testMapDefsMassRMA (void)
 {
 	/** You can test a certain assembly by passing "-Dmapdef-id=assembly" to testall. */
-	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
 	int mapCount = 0;
 
@@ -105,14 +105,14 @@ static void testMapDefsMassRMA (void)
 			continue;
 
 		{
-			char *p = md->map;
+			char* p = md->map;
 
 			if (*p == '+')
 				p++;
 			else
 				continue;
 
-			const char* ass = (const char *)LIST_GetByIdx(md->params, 0);
+			const char* ass = (const char* )LIST_GetByIdx(md->params, 0);
 			Com_Printf("\nMap: %s Assembly: %s AssNr: %i\n", p, ass, mapCount);
 
 			sv_threads->integer = 0;
@@ -136,9 +136,9 @@ static void testMapDefsMassRMA (void)
 
 				linkedList_t *iterUfo;
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
-					const char *ufo = nullptr;
+					const char* ufo = nullptr;
 					if (iterUfo)
-						ufo = (const char *) (iterUfo->data);
+						ufo = (const char* ) (iterUfo->data);
 					if (ufo)
 						Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 					else
@@ -195,7 +195,7 @@ static void testMapDefsMassRMA (void)
 						if (Q_streq(p, "ufocrash"))
 							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
-							ass = (const char *)LIST_GetByIdx(md->params, 0);
+							ass = (const char* )LIST_GetByIdx(md->params, 0);
 
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
@@ -231,7 +231,7 @@ static void testMapDefStatistic (void)
 {
 	int j, k;
 	int required, solids;
-	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -246,7 +246,7 @@ static void testMapDefStatistic (void)
 
 		MapInfo *theMap = Mem_AllocType(MapInfo);
 		char mapAssName[80];
-		const char *p = md->map;
+		const char* p = md->map;
 
 		if (*p == '+')
 			p++;
@@ -295,7 +295,7 @@ static void testMapDefStatistic (void)
  */
 static void testMapDefsFootSteps (void)
 {
-	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
@@ -363,7 +363,7 @@ static void testMapDefsFootSteps (void)
 					if (!trace.surface)
 						continue;
 
-					const char *snd = SV_GetFootstepSound(trace.surface->name);
+					const char* snd = SV_GetFootstepSound(trace.surface->name);
 					if (snd)
 						continue;
 
@@ -411,7 +411,7 @@ static void testMapDefsFootSteps (void)
  */
 static void testMapDefsSingleplayer (void)
 {
-	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t *md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -450,7 +450,7 @@ static void testMapDefsSingleplayer (void)
 
 static void testMapDefsMultiplayer (void)
 {
-	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	char userinfo[MAX_INFO_STRING];
 	const mapDef_t *md;
 
@@ -510,8 +510,8 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == nullptr)
 		return CU_get_error();
 
-	const char *specialtest = TEST_GetStringProperty("mapspecialtest");
-//	const char *specialtest = "seed";
+	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
+//	const char* specialtest = "seed";
 	if (specialtest && Q_streq(specialtest, "seed")) {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == nullptr)
 			return CU_get_error();

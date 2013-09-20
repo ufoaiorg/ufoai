@@ -48,7 +48,7 @@ static int UFO_InitSuiteUILevel2 (void)
 /** @todo move it somewhere */
 static void TEST_ParseScript (const char* scriptName)
 {
-	const char *type, *name, *text;
+	const char* type, *name, *text;
 	int nbWrongScripts = 0;
 
 	/* parse ui node script */
@@ -109,12 +109,12 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 			/** @note Useful to count number of tests */
 			CU_ASSERT_TRUE(true);
 		} else if (isRed) {
-			const char *message = va("%s.%s failed.", windowName, node->name);
+			const char* message = va("%s.%s failed.", windowName, node->name);
 			/*Com_Printf("Error: %s\n", message);*/
 			/*CU_FAIL(message);*/
 			CU_assertImplementation(CU_FALSE, 0, va("CU_FAIL(%s)", message), va("base/ufos/uitest/%s.ufo", windowName), "", CU_FALSE);
 		} else {
-			const char *message = va("%s.%s have an unknown status.", windowName, node->name);
+			const char* message = va("%s.%s have an unknown status.", windowName, node->name);
 			/*Com_Printf("Warning: %s\n", message);*/
 			/*CU_FAIL(message);*/
 			CU_assertImplementation(CU_FALSE, 0, va("CU_FAIL(%s)", message), va("base/ufos/uitest/%s.ufo", windowName), "", CU_FALSE);

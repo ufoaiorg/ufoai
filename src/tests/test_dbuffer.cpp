@@ -113,7 +113,7 @@ static void testDBufferBigData (void)
 	dbuffer buf;
 
 	for (i = 0; i < count; i++) {
-		buf.add((char *)data, size);
+		buf.add((char* )data, size);
 	}
 
 	CU_ASSERT_EQUAL(size * count, buf.length());

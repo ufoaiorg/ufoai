@@ -65,7 +65,7 @@ static void testSpawnAndConnect (void)
 {
 	char userinfo[MAX_INFO_STRING];
 	player_t *player;
-	const char *name = "name";
+	const char* name = "name";
 	bool day = true;
 	byte* buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
@@ -81,7 +81,7 @@ static void testSpawnAndConnect (void)
 	SV_ClearWorld();
 
 	player = G_PlayerGetNextHuman(0);
-	svs.ge->SpawnEntities(name, day, (const char *)buf);
+	svs.ge->SpawnEntities(name, day, (const char* )buf);
 	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
 
@@ -98,7 +98,7 @@ static void testSpawnAndConnect (void)
 
 static void testDoorTrigger (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *e = nullptr;
 		int cnt = 0;
@@ -135,7 +135,7 @@ static void testDoorTrigger (void)
 
 static void testShooting (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
@@ -164,7 +164,7 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 
 static void testVisFlags (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *ent;
 		int num;
@@ -178,8 +178,8 @@ static void testVisFlags (void)
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
 			const teammask_t teamMask = G_TeamToVisMask(ent->team);
 			const bool visible = ent->visflags & teamMask;
-			char *visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
-			char *teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
+			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
+			char* teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
 			CU_ASSERT_EQUAL(ent->team, TEAM_ALIEN);
 			UFO_CU_ASSERT_TRUE_MSG(visible, va("visflags: %s, teamMask: %s", visFlagsBuf, teamMaskBuf));
 			Mem_Free(visFlagsBuf);
@@ -195,7 +195,7 @@ static void testVisFlags (void)
 }
 static void testInventoryForDiedAlien (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *diedEnt;
 		edict_t *ent;
@@ -259,7 +259,7 @@ static void testInventoryForDiedAlien (void)
 
 static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *diedEnt;
 		edict_t *diedEnt2;
@@ -339,7 +339,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 
 static void testInventoryTempContainerLinks (void)
 {
-	const char *mapName = "test_game";
+	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t *ent;
 		int nr;

@@ -49,7 +49,7 @@ static int CleanSuite (void)
 	return 0;
 }
 
-static character_t* GetCharacter (const char *teamDefID = "phalanx")
+static character_t* GetCharacter (const char* teamDefID = "phalanx")
 {
 	static character_t chr;
 	CL_GenerateCharacter(&chr, teamDefID);

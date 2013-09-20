@@ -63,9 +63,9 @@ static int UFO_CleanSuiteScripts (void)
 	return 0;
 }
 
-static bool TEST_CheckImage (const char *path)
+static bool TEST_CheckImage (const char* path)
 {
-	const char *extensions[] = {"png", "tga", "jpg", nullptr};
+	const char* extensions[] = {"png", "tga", "jpg", nullptr};
 	int i = 0;
 
 	if (Q_strnull(path))
@@ -80,9 +80,9 @@ static bool TEST_CheckImage (const char *path)
 	return false;
 }
 
-static bool TEST_CheckModel (const char *path)
+static bool TEST_CheckModel (const char* path)
 {
-	const char *extensions[] = {"md2", "md3", "obj", nullptr};
+	const char* extensions[] = {"md2", "md3", "obj", nullptr};
 	int i = 0;
 	if (Q_strnull(path))
 		return true;
@@ -96,9 +96,9 @@ static bool TEST_CheckModel (const char *path)
 	return false;
 }
 
-static bool TEST_CheckSound (const char *path)
+static bool TEST_CheckSound (const char* path)
 {
-	const char *extensions[] = {"wav", "ogg", nullptr};
+	const char* extensions[] = {"wav", "ogg", nullptr};
 	int i = 0;
 
 	if (Q_strnull(path))
@@ -113,7 +113,7 @@ static bool TEST_CheckSound (const char *path)
 	return false;
 }
 
-static bool TEST_CheckParticle (const char *particleID)
+static bool TEST_CheckParticle (const char* particleID)
 {
 	if (Q_strnull(particleID))
 		return true;

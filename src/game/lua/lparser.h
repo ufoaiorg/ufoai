@@ -76,7 +76,7 @@ typedef struct FuncState {
 
 
 LUAI_FUNC Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff,
-                                            const char *name);
+                                            const char* name);
 
 
 #endif
