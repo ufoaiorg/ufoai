@@ -55,6 +55,13 @@ public:
 	inline void setMins (const vec3_t mini);
 	inline void setMaxs (const vec3_t maxi);
 
+	inline const vec3_t& getMins() const {
+		return mins;
+	}
+	inline const vec3_t& getMaxs() const {
+		return maxs;
+	}
+
 	/**
 	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
 	 * @note Not fully verified so far
@@ -101,6 +108,7 @@ public:
 		clipToWorld();
 	}
 	/** we explicitly don't make them private for now, because the goal of this class is to NOT handle them separately */
+//	private:
 	vec3_t mins;
 	vec3_t maxs;
 };

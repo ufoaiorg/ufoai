@@ -128,8 +128,8 @@ public:
 	}
 
 	GridBox(const AABB& aabb) {
-		VecToPos(aabb.mins, mins);
-		VecToPos(aabb.maxs, maxs);
+		VecToPos(aabb.getMins(), mins);
+		VecToPos(aabb.getMaxs(), maxs);
 	}
 
 	inline bool isZero() const {

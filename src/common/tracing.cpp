@@ -1004,7 +1004,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
 	/* Calculate the offset needed to center the trace about the line */
-	VectorCenterFromMinsMaxs(traceBox.mins, traceBox.maxs, offset);
+	VectorCenterFromMinsMaxs(traceBox.getMins(), traceBox.getMaxs(), offset);
 
 	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
