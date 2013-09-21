@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-aircraftSlot_t *AII_SelectAircraftSlot(aircraft_t *aircraft, aircraftItemType_t type);
+aircraftSlot_t* AII_SelectAircraftSlot(aircraft_t* aircraft, aircraftItemType_t type);
 
 void AIM_InitCallbacks(void);
 void AIM_ShutdownCallbacks(void);

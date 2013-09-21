@@ -98,7 +98,7 @@ typedef struct {
 void CP_CheckCampaignEvents(struct campaign_s* campaign);
 void CL_ParseCampaignEvents(const char* name, const char** text);
 void CP_ParseEventTrigger(const char* name, const char** text);
-bool CP_TriggerEventLoadXML(xmlNode_t *p);
-bool CP_TriggerEventSaveXML(xmlNode_t *p);
+bool CP_TriggerEventLoadXML(xmlNode_t* p);
+bool CP_TriggerEventSaveXML(xmlNode_t* p);
 void CP_TriggerEvent(campaignTriggerEventType_t type, const void* userdata = nullptr);
-const campaignEvents_t *CP_GetEventsByID(const char* name);
+const campaignEvents_t* CP_GetEventsByID(const char* name);

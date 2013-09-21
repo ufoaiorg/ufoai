@@ -42,4 +42,4 @@ typedef struct rank_s {
 
 void CL_ParseRanks(const char* name, const char** text);
 int CL_GetRankIdx(const char* rankID);
-rank_t *CL_GetRankByIdx(const int index);
+rank_t* CL_GetRankByIdx(const int index);

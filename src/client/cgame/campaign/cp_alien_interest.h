@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 void INT_ResetAlienInterest(void);
-void INT_IncreaseAlienInterest(const campaign_t *campaign);
+void INT_IncreaseAlienInterest(const campaign_t* campaign);
 void INT_ChangeIndividualInterest(float percentage, interestCategory_t category);
 
 #ifdef DEBUG

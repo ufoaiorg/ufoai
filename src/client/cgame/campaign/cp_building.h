@@ -133,13 +133,13 @@ typedef struct building_s {
 void B_ParseBuildings(const char* name, const char** text, bool link);
 bool B_BuildingScriptSanityCheck(void);
 
-building_t *B_GetBuildingTemplate(const char* buildingName);
-building_t *B_GetBuildingTemplateSilent(const char* buildingName);
-const building_t *B_GetBuildingTemplateByType(buildingType_t type);
+building_t* B_GetBuildingTemplate(const char* buildingName);
+building_t* B_GetBuildingTemplateSilent(const char* buildingName);
+const building_t* B_GetBuildingTemplateByType(buildingType_t type);
 
 buildingType_t B_GetBuildingTypeByBuildingID(const char* buildingID);
 bool B_CheckBuildingDependencesStatus(const building_t* building);
-bool B_IsBuildingBuiltUp(const building_t *building);
-float B_GetConstructionTimeRemain(const building_t *building);
+bool B_IsBuildingBuiltUp(const building_t* building);
+float B_GetConstructionTimeRemain(const building_t* building);
 
-bool B_FireEvent(const building_t *buildingTemplate, const struct base_s* base, buildingEvent_t eventType);
+bool B_FireEvent(const building_t* buildingTemplate, const struct base_s* base, buildingEvent_t eventType);

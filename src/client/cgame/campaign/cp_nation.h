@@ -73,18 +73,18 @@ typedef struct city_s {
 	vec2_t pos;				/**< City position on geoscape. */
 } city_t;
 
-nation_t *NAT_GetNationByIDX(const int index);
-nation_t *NAT_GetNationByID(const char* nationID);
+nation_t* NAT_GetNationByIDX(const int index);
+nation_t* NAT_GetNationByID(const char* nationID);
 void NAT_UpdateHappinessForAllNations(const float minhappiness);
-void NAT_SetHappiness(const float minhappiness, nation_t *nation, const float happiness);
+void NAT_SetHappiness(const float minhappiness, nation_t* nation, const float happiness);
 int NAT_GetFunding(const nation_t* const nation, int month);
 const nationInfo_t* NAT_GetCurrentMonthInfo(const nation_t* const nation);
 const char* NAT_GetHappinessString(const nation_t* nation);
 
 void CL_ParseNations(const char* name, const char** text);
 
-city_t *CITY_GetById(const char* cityId);
-city_t *CITY_GetByPos(vec2_t pos);
+city_t* CITY_GetById(const char* cityId);
+city_t* CITY_GetByPos(vec2_t pos);
 void CITY_Parse(const char* name, const char** text);
 
 bool NAT_ScriptSanityCheck(void);

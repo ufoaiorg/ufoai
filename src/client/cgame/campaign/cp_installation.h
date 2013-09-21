@@ -74,7 +74,7 @@ typedef struct installation_s {
 	int idx;						/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];				/**< Name of the installation */
 
-	const installationTemplate_t *installationTemplate; /** The template used for the installation. */
+	const installationTemplate_t* installationTemplate; /** The template used for the installation. */
 
 	vec3_t pos;						/**< pos on geoscape */
 
@@ -95,7 +95,7 @@ typedef struct installation_s {
 } installation_t;
 
 /** Currently displayed/accessed base. */
-extern installation_t *installationCurrent;
+extern installation_t* installationCurrent;
 
 /** Coordinates to place the new installation at (long, lat) */
 extern vec2_t newInstallationPos;
@@ -107,14 +107,14 @@ extern vec2_t newInstallationPos;
 		if ((var)->installationTemplate->type != (installationType)) continue; else
 
 #define INS_GetInstallationIDX(installation) ((installation)->idx)
-installation_t *INS_GetByIDX(int idx);
-installation_t *INS_GetFirstUFOYard(bool free);
+installation_t* INS_GetByIDX(int idx);
+installation_t* INS_GetFirstUFOYard(bool free);
 int INS_GetCount(void);
 
 /* Installation template */
 void INS_ParseInstallations(const char* name, const char** text);
-const installationTemplate_t *INS_GetInstallationTemplateByID(const char* id);
-const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
+const installationTemplate_t* INS_GetInstallationTemplateByID(const char* id);
+const installationTemplate_t* INS_GetInstallationTemplateByType(installationType_t type);
 void INS_LinkTechnologies(void);
 
 bool INS_HasAny(installationStatus_t status = INSTALLATION_WORKING);
@@ -122,14 +122,14 @@ bool INS_HasType(installationType_t type, installationStatus_t status = INSTALLA
 installationType_t INS_GetType(const char* type);
 
 /* Lifecycle: build/update/destroy */
-installation_t *INS_Build(const installationTemplate_t *installationTemplate, const vec2_t pos, const char* name);
+installation_t* INS_Build(const installationTemplate_t* installationTemplate, const vec2_t pos, const char* name);
 void INS_UpdateInstallationData(void);
-void INS_DestroyInstallation(installation_t *installation);
+void INS_DestroyInstallation(installation_t* installation);
 
 /* selection */
-installation_t *INS_GetCurrentSelectedInstallation(void);
-void INS_SetCurrentSelectedInstallation(const installation_t *installation);
-void INS_SelectInstallation(installation_t *installation);
+installation_t* INS_GetCurrentSelectedInstallation(void);
+void INS_SetCurrentSelectedInstallation(const installation_t* installation);
+void INS_SelectInstallation(installation_t* installation);
 
 void INS_InitStartup(void);
 void INS_Shutdown(void);

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-extern memPool_t *cp_campaignPool;
+extern memPool_t* cp_campaignPool;
 
 struct aircraft_s;
 struct installation_s;
@@ -216,9 +216,9 @@ typedef struct alienTeamGroup_s {
 	int minAlienCount;	/**< Minimum number of aliens in this group */
 	int maxAlienCount;	/**< Maximum number of aliens in this group */
 
-	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
+	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
 													 * that will be used in mission */
-	const chrTemplate_t *alienChrTemplates[MAX_TEAMS_PER_MISSION];
+	const chrTemplate_t* alienChrTemplates[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;		/**< Number of alienTeams defined in this group. */
 } alienTeamGroup_t;
 
@@ -233,7 +233,7 @@ typedef struct alienTeamCategory_s {
 															 * alien team Category. */
 	int numMissionCategories;					/**< Number of category using this alien team Category. */
 
-	linkedList_t *equipment;		/**< Equipment definitions that may be used for this def. */
+	linkedList_t* equipment;		/**< Equipment definitions that may be used for this def. */
 
 	alienTeamGroup_t alienTeamGroups[MAX_ALIEN_GROUP_PER_CATEGORY];		/**< Different alien group available
 																 * for this category */
@@ -247,14 +247,14 @@ typedef struct alienTeamCategory_s {
 typedef struct mission_s {
 	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id */
-	mapDef_t *mapDef;				/**< mapDef used for this mission */
+	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	bool active;					/**< aircraft at place? */
 	union missionData_t {
-		base_t *base;
-		aircraft_t *aircraft;
-		installation_t *installation;
-		alienBase_t *alienBase;
-		city_t *city;
+		base_t* base;
+		aircraft_t* aircraft;
+		installation_t* installation;
+		alienBase_t* alienBase;
+		city_t* city;
 	} data;							/**< may be related to mission type (like pointer to base attacked, or to alien base) */
 	interestCategory_t category;	/**< The category of the event */
 	missionStage_t stage;			/**< in which stage is this event? */
@@ -264,7 +264,7 @@ typedef struct mission_s {
 	date_t finalDate;				/**< Date when the event should finish (e.g. for aerial recon)
 									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;						/**< Position of the mission */
-	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be nullptr) */
+	aircraft_t* ufo;				/**< UFO on geoscape fulfilling the mission (may be nullptr) */
 	bool onGeoscape;				/**< Should the mission be displayed on geoscape */
 	bool crashed;					/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 
@@ -280,8 +280,8 @@ typedef struct mission_s {
 
 /** battlescape parameters that were used */
 typedef struct battleParam_s {
-	mission_t *mission;
-	alienTeamGroup_t *alienTeamGroup;	/**< Races of aliens present in battle */
+	mission_t* mission;
+	alienTeamGroup_t* alienTeamGroup;	/**< Races of aliens present in battle */
 	char* param;						/**< in case of a random map assembly we can't use the param from mapDef - because
 										 * this is global for the mapDef - but we need a local mission param */
 	char alienEquipment[MAX_VAR];		/**< Equipment of alien team */
@@ -299,7 +299,7 @@ typedef enum {
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
-	const mission_t *mission;
+	const mission_t* mission;
 	missionState_t state;
 	bool recovery;		/**< @c true if player secured a UFO (landed or crashed). */
 	bool crashsite;		/**< @c true if secured UFO was crashed one. */
@@ -342,8 +342,8 @@ typedef struct campaign_s {
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
 	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
 	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */
-	const equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
-	const equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
+	const equipDef_t* marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
+	const equipDef_t* asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	int soldiers;				/**< start with x soldiers */
@@ -362,7 +362,7 @@ typedef struct campaign_s {
 	int basecost;				/**< base building cost for empty base */
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
 	bool finished;
-	const campaignEvents_t *events;
+	const campaignEvents_t* events;
 	salary_t salaries;
 	float produceRate;			/**< higher number = faster production */
 	float researchRate;			/**< specifies the number of research hours that a single scientist produces in a single hour of game time */
@@ -375,11 +375,11 @@ typedef struct campaign_s {
 	int alienBaseInterest;		/**< the alien interest level at which aliens begin trying to build bases. */
 } campaign_t;
 
-int CP_GetSalaryBaseEmployee(const salary_t *salary, employeeType_t type);
-int CP_GetSalaryAdminEmployee(const salary_t *salary, employeeType_t type);
-int CP_GetSalaryRankBonusEmployee(const salary_t *salary, employeeType_t type);
-int CP_GetSalaryAdministrative(const salary_t *salary);
-int CP_GetSalaryUpKeepBase(const salary_t *salary, const base_t *base);
+int CP_GetSalaryBaseEmployee(const salary_t* salary, employeeType_t type);
+int CP_GetSalaryAdminEmployee(const salary_t* salary, employeeType_t type);
+int CP_GetSalaryRankBonusEmployee(const salary_t* salary, employeeType_t type);
+int CP_GetSalaryAdministrative(const salary_t* salary);
+int CP_GetSalaryUpKeepBase(const salary_t* salary, const base_t* base);
 
 /** possible geoscape actions */
 typedef enum mapAction_s {
@@ -392,7 +392,7 @@ typedef enum mapAction_s {
 } mapAction_t;
 
 typedef void (*missionSpawnFunction_t) (void);
-typedef void (*missionResultFunction_t) (const missionResults_t *results);
+typedef void (*missionResultFunction_t) (const missionResults_t* results);
 
 /**
  * @brief client campaign structure
@@ -403,7 +403,7 @@ typedef struct ccs_s {
 											 * we don't want to "waste" items on a retry. */
 	market_t eMarket;						/**< Prices, evolution and number of items on market */
 
-	linkedList_t *missions;					/**< Missions spawned (visible on geoscape or not) */
+	linkedList_t* missions;					/**< Missions spawned (visible on geoscape or not) */
 
 	battleParam_t battleParameters;			/**< Structure used to remember every parameter used during last battle */
 
@@ -421,11 +421,11 @@ typedef struct ccs_s {
 	float frametime;
 
 	struct {
-		mission_t *selectedMission;			/**< Currently selected mission on geoscape */
-		aircraft_t *selectedAircraft;		/**< Currently selected aircraft on geoscape */
-		aircraft_t *selectedUFO;			/**< Currently selected UFO on geoscape */
-		aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
-		aircraft_t *missionAircraft;		/**< aircraft pointer for mission handling */
+		mission_t* selectedMission;			/**< Currently selected mission on geoscape */
+		aircraft_t* selectedAircraft;		/**< Currently selected aircraft on geoscape */
+		aircraft_t* selectedUFO;			/**< Currently selected UFO on geoscape */
+		aircraft_t* interceptAircraft;		/**< selected aircraft for interceptions */
+		aircraft_t* missionAircraft;		/**< aircraft pointer for mission handling */
 	} geoscape;
 
 	/* == misc == */
@@ -448,7 +448,7 @@ typedef struct ccs_s {
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
-	linkedList_t *employees[MAX_EMPL];
+	linkedList_t* employees[MAX_EMPL];
 
 	/* == technologies == */
 	/* A list of all research-topics resp. the research-tree. */
@@ -467,17 +467,17 @@ typedef struct ccs_s {
 	int numBaseTemplates;
 
 	/* == aircraft == */
-	linkedList_t *aircraft;
+	linkedList_t* aircraft;
 
 	/* == Alien bases == */
-	linkedList_t *alienBases;
+	linkedList_t* alienBases;
 
 	/* == Nations == */
 	nation_t nations[MAX_NATIONS];
 	int numNations;
 
 	/* == Cities == */
-	linkedList_t *cities;
+	linkedList_t* cities;
 	int numCities;
 
 	/* Projectiles on geoscape (during fights) */
@@ -485,14 +485,14 @@ typedef struct ccs_s {
 	int numProjectiles;
 
 	/* == Transfers == */
-	linkedList_t *transfers;
+	linkedList_t* transfers;
 
 	/* UFO components. */
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
 
 	/* == stored UFOs == */
-	linkedList_t *storedUFOs;
+	linkedList_t* storedUFOs;
 
 	/* Alien Team Package used during battle */
 	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
@@ -530,7 +530,7 @@ typedef struct ccs_s {
 	int numInstallationTemplates;
 
 	/* A list of _all_ installations */
-	linkedList_t *installations;
+	linkedList_t* installations;
 
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
@@ -551,12 +551,12 @@ typedef struct ccs_s {
 	int numRanks;
 
 	/* cache for techdef technologies */
-	technology_t *teamDefTechs[MAX_TEAMDEFS];
+	technology_t* teamDefTechs[MAX_TEAMDEFS];
 
 	/* cache for item technologies */
-	technology_t *objDefTechs[MAX_OBJDEFS];
+	technology_t* objDefTechs[MAX_OBJDEFS];
 
-	campaign_t *curCampaign;			/**< Current running campaign */
+	campaign_t* curCampaign;			/**< Current running campaign */
 	stats_t campaignStats;
 	missionResults_t missionResults;
 
@@ -569,7 +569,7 @@ typedef struct ccs_s {
 	missionSpawnFunction_t missionSpawnCallback;
 	missionResultFunction_t missionResultCallback;
 
-	linkedList_t *updateCharacters;
+	linkedList_t* updateCharacters;
 } ccs_t;
 
 typedef struct {
@@ -578,25 +578,25 @@ typedef struct {
 
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
-extern cvar_t *cp_campaign;
-extern cvar_t *cp_missiontest;
-extern cvar_t *cp_start_employees;
+extern cvar_t* cp_campaign;
+extern cvar_t* cp_missiontest;
+extern cvar_t* cp_start_employees;
 
 #define MAX_CREDITS 10000000
 
 #include "../cgame.h"
-extern const cgame_import_t *cgi;
+extern const cgame_import_t* cgi;
 
 /* Campaign functions */
 void CP_InitStartup(void);
 campaign_t* CP_GetCampaign(const char* name);
-void CP_CampaignInit(campaign_t *campaign, bool load);
+void CP_CampaignInit(campaign_t* campaign, bool load);
 void CP_ParseCampaignData(void);
-void CP_ReadCampaignData(const campaign_t *campaign);
+void CP_ReadCampaignData(const campaign_t* campaign);
 bool CP_IsRunning(void);
 
-void CP_CampaignRun(campaign_t *campaign, float secondsSinceLastFrame);
-void CP_CheckLostCondition(const campaign_t *campaign);
+void CP_CampaignRun(campaign_t* campaign, float secondsSinceLastFrame);
+void CP_CheckLostCondition(const campaign_t* campaign);
 void CP_EndCampaign(bool won);
 
 void CP_Shutdown(void);
@@ -605,17 +605,17 @@ void CP_ResetCampaignData(void);
 /* Mission related functions */
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-int CP_TerrorMissionAvailableUFOs(const mission_t *mission, ufoType_t *ufoTypes);
-bool AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
-void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
+int CP_TerrorMissionAvailableUFOs(const mission_t* mission, ufoType_t* ufoTypes);
+bool AIR_SendAircraftToMission(aircraft_t* aircraft, mission_t* mission);
+void AIR_AircraftsNotifyMissionRemoved(const mission_t* mission);
 
-void CP_UFOProceedMission(const campaign_t *campaign, aircraft_t *ufocraft);
-mission_t *CP_CreateNewMission(interestCategory_t category, bool beginNow);
-bool CP_ChooseMap(mission_t *mission, const vec2_t pos);
+void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t* ufocraft);
+mission_t* CP_CreateNewMission(interestCategory_t category, bool beginNow);
+bool CP_ChooseMap(mission_t* mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
-void CP_HandleNationData(float minHappiness, mission_t *mis, const nation_t *nation, const missionResults_t *results);
-void CP_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
+void CP_HandleNationData(float minHappiness, mission_t* mis, const nation_t* nation, const missionResults_t* results);
+void CP_UpdateCharacterStats(const base_t* base, const aircraft_t* aircraft);
 
 /* Credits management */
 bool CP_CheckCredits (int costs);
@@ -623,16 +623,16 @@ void CP_UpdateCredits(int credits);
 
 /* Other functions */
 int CP_CharacterGetMaxExperiencePerMission(const abilityskills_t skill);
-void CP_UpdateCharacterSkills(character_t *chr);
-void CP_UpdateCharacterData(linkedList_t *updateCharacters);
+void CP_UpdateCharacterSkills(character_t* chr);
+void CP_UpdateCharacterData(linkedList_t* updateCharacters);
 void CP_ParseCharacterData(dbuffer *msg, linkedList_t** updateCharacters);
-bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
+bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t* ufo);
 
-aircraft_t* AIR_NewAircraft(base_t *base, const aircraft_t *aircraftTemplate);
+aircraft_t* AIR_NewAircraft(base_t* base, const aircraft_t* aircraftTemplate);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, bool noWater);
-bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 
-void CP_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
+void CP_GameAutoGo(mission_t* mission, aircraft_t* aircraft, const campaign_t* campaign, const battleParam_t* battleParameters, missionResults_t* results);
 
 bool CP_OnGeoscape(void);

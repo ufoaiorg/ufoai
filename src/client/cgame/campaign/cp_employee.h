@@ -109,10 +109,10 @@ public:
 	}
 
 	bool isAwayFromBase () const;
-	base_t *unassign ();
+	base_t* unassign ();
 	bool unhire ();
 
-	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
+	base_t* baseHired;				/**< Base where the soldier is hired it atm. */
 	bool transfer;				/**< Is this employee currently transferred? */
 	character_t chr;				/**< employee stats */
 };
@@ -138,8 +138,8 @@ bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-base_t *E_Unassign(Employee* employee);
-int E_GenerateHiredEmployeesList(const base_t *base);
+base_t* E_Unassign(Employee* employee);
+int E_GenerateHiredEmployeesList(const base_t* base);
 
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type, int n);
@@ -160,12 +160,12 @@ Employee* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
 
-void E_DeleteEmployeesExceedingCapacity(base_t *base);
+void E_DeleteEmployeesExceedingCapacity(base_t* base);
 
-void E_HireForBuilding(base_t* base, building_t *building, int num);
+void E_HireForBuilding(base_t* base, building_t* building, int num);
 void E_InitialEmployees(const struct campaign_s* campaign);
 
-bool E_MoveIntoNewBase(Employee* employee, base_t *newBase);
+bool E_MoveIntoNewBase(Employee* employee, base_t* newBase);
 void E_RemoveInventoryFromStorage(Employee* employee);
 
 void E_InitStartup(void);

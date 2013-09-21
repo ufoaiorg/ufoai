@@ -37,21 +37,21 @@ typedef struct market_s {
 	double currentEvolutionAircraft[AIRCRAFTTYPE_MAX];	/**< evolution of the market */
 } market_t;
 
-bool BS_AircraftIsOnMarket(const aircraft_t *aircraft);
-int BS_GetAircraftOnMarket(const aircraft_t *aircraft);
-int BS_GetAircraftSellingPrice(const aircraft_t *aircraft);
-int BS_GetAircraftBuyingPrice(const aircraft_t *aircraft);
-bool BS_BuyAircraft(const aircraft_t *aircraftTemplate, base_t *base);
-bool BS_SellAircraft(aircraft_t *aircraft);
+bool BS_AircraftIsOnMarket(const aircraft_t* aircraft);
+int BS_GetAircraftOnMarket(const aircraft_t* aircraft);
+int BS_GetAircraftSellingPrice(const aircraft_t* aircraft);
+int BS_GetAircraftBuyingPrice(const aircraft_t* aircraft);
+bool BS_BuyAircraft(const aircraft_t* aircraftTemplate, base_t* base);
+bool BS_SellAircraft(aircraft_t* aircraft);
 
-bool BS_IsOnMarket(const objDef_t *item);
-int BS_GetItemOnMarket(const objDef_t *od);
-int BS_GetItemSellingPrice(const objDef_t *od);
-int BS_GetItemBuyingPrice(const objDef_t *od);
-bool BS_BuyItem(const objDef_t *od, base_t *base, int count);
-bool BS_SellItem(const objDef_t *od, base_t *base, int count);
+bool BS_IsOnMarket(const objDef_t* item);
+int BS_GetItemOnMarket(const objDef_t* od);
+int BS_GetItemSellingPrice(const objDef_t* od);
+int BS_GetItemBuyingPrice(const objDef_t* od);
+bool BS_BuyItem(const objDef_t* od, base_t* base, int count);
+bool BS_SellItem(const objDef_t* od, base_t* base, int count);
 
-bool BS_BuyUGV(const ugv_t *ugv, base_t *base);
+bool BS_BuyUGV(const ugv_t* ugv, base_t* base);
 bool BS_SellUGV(Employee* robot);
 
 void BS_InitMarket(const struct campaign_s* campaign);

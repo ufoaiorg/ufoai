@@ -50,7 +50,7 @@ void RADAR_UpdateWholeRadarOverlay(void);
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, bool destroyed);
 void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, bool updateSourceRadarMap);
-void RADAR_InitialiseUFOs(radar_t *radar);
+void RADAR_InitialiseUFOs(radar_t* radar);
 void RADAR_UpdateBaseRadarCoverage_f(void);
 void RADAR_UpdateInstallationRadarCoverage(struct installation_s* installation, const float radarRange, const float trackingRadarRange);
 void RADAR_AddDetectedUFOToEveryRadar(const struct aircraft_s* ufo);

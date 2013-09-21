@@ -76,7 +76,7 @@ const byte* GEO_GetColor(const vec2_t pos, mapType_t type, bool *coast);
 void GEO_Init(const char* map);
 void GEO_Reset(const char* map);
 void GEO_Shutdown(void);
-bool GEO_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+bool GEO_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void GEO_SetOverlay(const char* overlayID);
 void GEO_DeactivateOverlay(const char* overlayID);
 void GEO_UpdateGeoscapeDock(void);

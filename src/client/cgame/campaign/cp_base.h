@@ -84,7 +84,7 @@ typedef enum {
 } baseAction_t;
 
 typedef struct baseBuildingTile_s {
-	building_t *building;	/**< nullptr if free spot */
+	building_t* building;	/**< nullptr if free spot */
 	bool	blocked;		/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
 	/* These are only used for baseTemplates: */
 	int posX;				/**< The x screen coordinate for the building on the basemap. */
@@ -94,7 +94,7 @@ typedef struct baseBuildingTile_s {
 typedef struct baseWeapon_s {
 	/* int idx; */
 	aircraftSlot_t slot;	/**< Weapon. */
-	aircraft_t *target;		/**< Aimed target for the weapon. */
+	aircraft_t* target;		/**< Aimed target for the weapon. */
 	bool autofire;			/**< If it should automatically open fire on ufos */
 } baseWeapon_t;
 
@@ -115,7 +115,7 @@ typedef struct base_s {
 	 */
 	bool hasBuilding[MAX_BUILDING_TYPE];
 
-	aircraft_t *aircraftCurrent;	/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
+	aircraft_t* aircraftCurrent;	/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
 	baseStatus_t baseStatus; 		/**< the current base status */
 
@@ -142,7 +142,7 @@ typedef struct base_s {
 	production_queue_t productions;
 
 	bool selected;		/**< the current selected base */
-	building_t *buildingCurrent; /**< needn't be saved */
+	building_t* buildingCurrent; /**< needn't be saved */
 } base_t;
 
 /** @brief template for creating a base */
@@ -156,27 +156,27 @@ void B_UpdateBaseData(void);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 void B_ParseBaseTemplate(const char* name, const char** text);
 void B_BaseResetStatus(base_t* const base);
-const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, bool onlyWorking);
-const baseTemplate_t *B_GetBaseTemplate(const char* baseTemplateName);
+const building_t* B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, bool onlyWorking);
+const baseTemplate_t* B_GetBaseTemplate(const char* baseTemplateName);
 
 void B_InitStartup(void);
 
 /* base functions */
-base_t *B_Build(const struct campaign_s* campaign, const vec2_t pos, const char* name);
+base_t* B_Build(const struct campaign_s* campaign, const vec2_t pos, const char* name);
 void B_SetUpFirstBase(const struct campaign_s* campaign, base_t* base);
-base_t *B_GetNext(base_t *lastBase);
+base_t* B_GetNext(base_t* lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 int B_GetCount(void);
-void B_SelectBase(const base_t *base);
-void B_Destroy(base_t *base);
-void B_SetName(base_t *base, const char* name);
+void B_SelectBase(const base_t* base);
+void B_Destroy(base_t* base);
+void B_SetName(base_t* base, const char* name);
 
-base_t *B_GetFirstUnfoundedBase(void);
-base_t *B_GetCurrentSelectedBase(void);
-void B_SetCurrentSelectedBase(const base_t *base);
+base_t* B_GetFirstUnfoundedBase(void);
+base_t* B_GetCurrentSelectedBase(void);
+void B_SetCurrentSelectedBase(const base_t* base);
 
-bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLength, const base_t *base);
+bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLength, const base_t* base);
 
 /* building functions */
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked
@@ -184,54 +184,54 @@ bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLen
 
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
-building_t* B_GetNextBuilding(const base_t *base, building_t *lastBuilding);
-building_t* B_GetNextBuildingByType(const base_t *base, building_t *lastBuilding, buildingType_t buildingType);
+building_t* B_GetNextBuilding(const base_t* base, building_t* lastBuilding);
+building_t* B_GetNextBuildingByType(const base_t* base, building_t* lastBuilding, buildingType_t buildingType);
 void B_BuildingStatus(const building_t* building);
 bool B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int* cnt);
 bool B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, bool newStatus);
 
-bool B_MapIsCellFree(const base_t *base, int col, int row);
-building_t* B_SetBuildingByClick(base_t *base, const building_t *buildingTemplate, int row, int col);
-bool B_IsBuildingDestroyable(const building_t *building);
+bool B_MapIsCellFree(const base_t* base, int col, int row);
+building_t* B_SetBuildingByClick(base_t* base, const building_t* buildingTemplate, int row, int col);
+bool B_IsBuildingDestroyable(const building_t* building);
 bool B_BuildingDestroy(building_t* building);
 
-building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
-int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t *base, const buildingType_t type);
+building_t* B_GetFreeBuildingType(buildingType_t type);
+int B_GetNumberOfBuildingsInBaseByTemplate(const base_t* base, const building_t* type);
+int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t* base, const buildingType_t type);
 
-void B_BuildingOpenAfterClick(const building_t *building);
+void B_BuildingOpenAfterClick(const building_t* building);
 void B_ResetBuildingCurrent(base_t* base);
 
 /* storage functions */
-bool B_ItemIsStoredInBaseStorage(const objDef_t *obj);
-bool B_BaseHasItem(const base_t *base, const objDef_t *item);
-int B_ItemInBase(const objDef_t *item, const base_t *base);
+bool B_ItemIsStoredInBaseStorage(const objDef_t* obj);
+bool B_BaseHasItem(const base_t* base, const objDef_t* item);
+int B_ItemInBase(const objDef_t* item, const base_t* base);
 
-int B_AddToStorage(base_t* base, const objDef_t *obj, int amount);
+int B_AddToStorage(base_t* base, const objDef_t* obj, int amount);
 
 /* aircraft functions */
 void B_AircraftReturnedToHomeBase(aircraft_t* aircraft);
-void B_DumpAircraftToHomeBase(aircraft_t *aircraft);
+void B_DumpAircraftToHomeBase(aircraft_t* aircraft);
 
 /* capacity functions */
-void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
+void B_UpdateBaseCapacities(baseCapacities_t cap, base_t* base);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
-void B_ResetAllStatusAndCapacities(base_t *base, bool firstEnable);
+void B_ResetAllStatusAndCapacities(base_t* base, bool firstEnable);
 
 /* menu functions */
-void B_BaseMenuInit(const base_t *base);
+void B_BaseMenuInit(const base_t* base);
 void B_DrawBuilding(const building_t* building);
 
 /* antimatter */
-int B_AntimatterInBase(const base_t *base);
-void B_ManageAntimatter(base_t *base, int amount, bool add);
+int B_AntimatterInBase(const base_t* base);
+void B_ManageAntimatter(base_t* base, int amount, bool add);
 
 /* savesystem */
-void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, xmlNode_t *p);
-int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, xmlNode_t *p);
-bool B_SaveStorageXML(xmlNode_t *parent, const equipDef_t &equip);
-bool B_LoadStorageXML(xmlNode_t *parent, equipDef_t *equip);
+void B_SaveBaseSlotsXML(const baseWeapon_t* weapons, const int numWeapons, xmlNode_t* p);
+int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, xmlNode_t* p);
+bool B_SaveStorageXML(xmlNode_t* parent, const equipDef_t &equip);
+bool B_LoadStorageXML(xmlNode_t* parent, equipDef_t* equip);
 
 /* other */
 int B_GetInstallationLimit(void);

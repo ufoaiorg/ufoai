@@ -205,30 +205,30 @@ void RS_ResetTechs(void);
 int RS_ResearchRun(void);
 void RS_ParseTechnologies(const char* name, const char** text);
 bool RS_IsResearched_idx(int techIdx);
-bool RS_IsResearched_ptr(const technology_t *tech);
+bool RS_IsResearched_ptr(const technology_t* tech);
 
-technology_t* RS_GetTechForItem(const objDef_t *item);
-technology_t* RS_GetTechForTeam(const teamDef_t *team);
+technology_t* RS_GetTechForItem(const objDef_t* item);
+technology_t* RS_GetTechForTeam(const teamDef_t* team);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(const struct campaign_s* campaign, bool load);
-const char* RS_GetDescription(technologyDescriptions_t *desc);
-void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
+const char* RS_GetDescription(technologyDescriptions_t* desc);
+void RS_MarkCollected(technology_t* tech) __attribute__((nonnull));
 void RS_MarkResearchable(const struct base_s* base, bool init = false);
 bool RS_MarkStoryLineEventResearched(const char* techID);
 void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
-void RS_MarkOneResearchable(technology_t *tech);
+void RS_MarkOneResearchable(technology_t* tech);
 
 void RS_AssignScientist(technology_t* tech, struct base_s* base, Employee* employee = nullptr);
 void RS_RemoveScientist(technology_t* tech, Employee* employee);
 void RS_RemoveFiredScientist(struct base_s* base, Employee* employee);
 void RS_RemoveScientistsExceedingCapacity(struct base_s* base);
 
-technology_t *RS_GetTechByID(const char* id);
-technology_t *RS_GetTechByProvided(const char* idProvided);
+technology_t* RS_GetTechByID(const char* id);
+technology_t* RS_GetTechByProvided(const char* idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);
-technology_t *RS_GetTechWithMostScientists(const struct base_s* base);
+technology_t* RS_GetTechWithMostScientists(const struct base_s* base);
 int RS_GetTechIdxByName(const char* name);
 int RS_CountScientistsInBase(const struct base_s* base);
 bool RS_ScriptSanityCheck(void);
@@ -238,4 +238,4 @@ void UP_AircraftDescription(const technology_t* t);
 void UP_UGVDescription(const struct ugv_s* ugvType);
 
 void RS_CheckRequirements(void);
-bool RS_RequirementsMet(const technology_t *tech, const struct base_s* base);
+bool RS_RequirementsMet(const technology_t* tech, const struct base_s* base);

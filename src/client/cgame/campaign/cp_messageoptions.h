@@ -95,21 +95,21 @@ typedef struct msgCategoryEntry_s {
 	struct msgCategory_s* category; 		/**< associated category */
 	struct msgCategoryEntry_s* next;		/**< pointer to next in category */
 	struct msgCategoryEntry_s* previous;	/**< pointer to previous in category */
-	messageSettings_t *settings;			/**< associated settings */
+	messageSettings_t* settings;			/**< associated settings */
 	bool isCategory;						/**< flag indicating that this is a category and no notification type */
 } msgCategoryEntry_t;
 
 typedef struct msgCategory_s {
 	int idx;					/**< self-link */
 	const char* name;			/**< script file id / translatable category name */
-	msgCategoryEntry_t *first;
-	msgCategoryEntry_t *last;
+	msgCategoryEntry_t* first;
+	msgCategoryEntry_t* last;
 } msgCategory_t;
 
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern char const* const nt_strings[NT_NUM_NOTIFYTYPE];
 
-uiMessageListNodeMessage_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char* title, const char* text, messageType_t type = MSG_STANDARD, technology_t *pedia = nullptr, bool popup = false);
+uiMessageListNodeMessage_t* MSO_CheckAddNewMessage(const notify_t messagecategory, const char* title, const char* text, messageType_t type = MSG_STANDARD, technology_t* pedia = nullptr, bool popup = false);
 void MSO_ParseMessageSettings(const char* name, const char** text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands);
 void MSO_Init(void);
