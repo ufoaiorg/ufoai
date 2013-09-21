@@ -403,13 +403,10 @@ static void SAV_GameReadGameComment (bool save, const int idx)
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
 
+	const char* confunc = save ? "update_save_game_info" : "update_load_game_info";
 	FS_OpenFile(filename, &f, FILE_READ);
 	if (!f.f && !f.z) {
-		if (save) {
-			cgi->UI_ExecuteConfunc("update_save_game_info %i \"\" \"\" \"\" \"\"", idx);
-		} else {
-			cgi->UI_ExecuteConfunc("update_load_game_info %i \"\" \"\" \"\" \"\"", idx);
-		}
+		cgi->UI_ExecuteConfunc("%s %i \"\" \"\" \"\" \"\"", confunc, idx);
 		return;
 	}
 
@@ -428,11 +425,7 @@ static void SAV_GameReadGameComment (bool save, const int idx)
 		return;
 	}
 
-	if (save) {
-		cgi->UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
-	} else {
-		cgi->UI_ExecuteConfunc("update_load_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
-	}
+	cgi->UI_ExecuteConfunc("%s %i \"%s\" \"%s\" \"%s\" \"%s\"", confunc, idx, header.name, header.gameDate, header.realDate, basename);
 }
 
 /**
