@@ -308,17 +308,15 @@ static int CL_FixActorSkinIDX (int idx)
 static void CL_ChangeSkin_f (void)
 {
 	const int sel = cl_selected->integer;
-
-	int i = 0;
-	LIST_Foreach(chrDisplayList, character_t, chr) {
-		if (i++ != sel)
-			continue;
-		const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
-		/** @todo Get the skin id from the model by using the actorskin id */
-		/** @todo Or remove skins from models and convert character_t->skin to string */
-		chr->bodySkin = newSkin;
-		Cvar_SetValue("mn_body_skin", newSkin);
+	character_t* chr = (character_t*)LIST_GetByIdx(chrDisplayList, sel);
+	if (chr == nullptr) {
+		return;
 	}
+	const int newSkin = CL_FixActorSkinIDX(Cvar_GetInteger("mn_body_skin"));
+	Cvar_SetValue("mn_body_skin", newSkin);
+	/** @todo Get the skin id from the model by using the actorskin id */
+	/** @todo Or remove skins from models and convert character_t->skin to string */
+	chr->bodySkin = newSkin;
 }
 
 /**
