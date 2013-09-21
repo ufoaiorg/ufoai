@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
-void uiImageNode::onLoaded (uiNode_t *node)
+void uiImageNode::onLoaded (uiNode_t* node)
 {
 	/* update the size when its possible */
 	if (Vector2Empty(node->box.size)) {
@@ -60,7 +60,7 @@ void uiImageNode::onLoaded (uiNode_t *node)
 			node->box.size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
 			node->box.size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
 		} else if (EXTRADATA(node).source) {
-			const image_t *image = UI_LoadImage(EXTRADATA(node).source);
+			const image_t* image = UI_LoadImage(EXTRADATA(node).source);
 			if (image) {
 				node->box.size[0] = image->width;
 				node->box.size[1] = image->height;
@@ -118,11 +118,11 @@ static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2
  * @brief Draws the image node
  * @param[in] node The UI node to draw
  */
-void uiImageNode::draw (uiNode_t *node)
+void uiImageNode::draw (uiNode_t* node)
 {
 	vec2_t size;
 	vec2_t nodepos;
-	const image_t *image;
+	const image_t* image;
 	vec2_t imagepos;
 	vec2_t nodesize;
 

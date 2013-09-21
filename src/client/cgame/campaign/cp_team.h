@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_CleanTempInventory(base_t *base);
-void CP_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType);
-void CP_CleanupAircraftTeam(aircraft_t *aircraft, equipDef_t *ed);
-void CP_CleanupTeam(base_t *base, equipDef_t *ed);
-void CP_SetEquipContainer(character_t *chr);
-void CP_AddWeaponAmmo(equipDef_t *ed, Item *item);
+void CP_CleanTempInventory(base_t* base);
+void CP_UpdateActorAircraftVar(aircraft_t* aircraft, employeeType_t employeeType);
+void CP_CleanupAircraftTeam(aircraft_t* aircraft, equipDef_t* ed);
+void CP_CleanupTeam(base_t* base, equipDef_t* ed);
+void CP_SetEquipContainer(character_t* chr);
+void CP_AddWeaponAmmo(equipDef_t* ed, Item *item);

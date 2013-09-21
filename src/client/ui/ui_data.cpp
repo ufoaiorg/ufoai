@@ -153,7 +153,7 @@ void UI_RegisterText (int dataId, const char* text)
  * @brief share a linked list of text with a data id
  * @note The UI code manage the linked list memory (linked list is freed by the UI code)
  */
-void UI_RegisterLinkedListText (int dataId, linkedList_t *text)
+void UI_RegisterLinkedListText (int dataId, linkedList_t* text)
 {
 	/** @todo FIXME It is a hack to disable release memory, if we only want to update the same list */
 	if (ui_global.sharedData[dataId].type == UI_SHARED_LINKEDLISTTEXT && ui_global.sharedData[dataId].data.linkedListText == text) {
@@ -177,7 +177,7 @@ const char* UI_GetTextFromList (int textId, int line)
 {
 	if (ui_global.sharedData[textId].type != UI_SHARED_LINKEDLISTTEXT)
 		return nullptr;
-	linkedList_t *list = ui_global.sharedData[textId].data.linkedListText;
+	linkedList_t* list = ui_global.sharedData[textId].data.linkedListText;
 	return static_cast<const char*>(LIST_GetByIdx(list, line));
 }
 
@@ -196,8 +196,8 @@ int UI_GetDataVersion (int textId)
  */
 uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
 {
-	uiNode_t *last;
-	uiNode_t *option;
+	uiNode_t* last;
+	uiNode_t* option;
 	assert(tree != nullptr);
 
 	option = UI_AllocOptionNode(name, label, value);
@@ -262,11 +262,11 @@ void UI_ResetData (int dataId)
  * @todo option should start with '_' if we need to translate it
  * @warning update parent
  */
-static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t** option)
+static uiNode_t* UI_OptionNodeRemoveHigherOption (uiNode_t** option)
 {
-	uiNode_t *prev = *option;
-	uiNode_t *prevfind = nullptr;
-	uiNode_t *search = (*option)->next;
+	uiNode_t* prev = *option;
+	uiNode_t* prevfind = nullptr;
+	uiNode_t* search = (*option)->next;
 	const char* label = CL_Translate(OPTIONEXTRADATA(*option).label);
 
 	/* search the smaller element */
@@ -282,11 +282,11 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t** option)
 
 	/* remove the first element */
 	if (prevfind == nullptr) {
-		uiNode_t *tmp = *option;
+		uiNode_t* tmp = *option;
 		*option = (*option)->next;
 		return tmp;
 	} else {
-		uiNode_t *tmp = prevfind->next;
+		uiNode_t* tmp = prevfind->next;
 		prevfind->next = tmp->next;
 		return tmp;
 	}
@@ -297,7 +297,7 @@ static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t** option)
  */
 void UI_SortOptions (uiNode_t** first)
 {
-	uiNode_t *option;
+	uiNode_t* option;
 
 	/* unlink the unsorted list */
 	option = *first;
@@ -307,7 +307,7 @@ void UI_SortOptions (uiNode_t** first)
 
 	/* construct a sorted list */
 	while (option) {
-		uiNode_t *element;
+		uiNode_t* element;
 		element = UI_OptionNodeRemoveHigherOption(&option);
 		element->next = *first;
 		*first = element;
@@ -319,7 +319,7 @@ void UI_SortOptions (uiNode_t** first)
  * @param[in,out] option Option list we want to update
  * @param[in] stringList List of option name (ID) we want to display
  */
-void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
+void UI_UpdateInvisOptions (uiNode_t* option, const linkedList_t* stringList)
 {
 	if (option == nullptr || stringList == nullptr)
 		return;
@@ -333,7 +333,7 @@ void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 	}
 }
 
-void UI_RegisterOption (int dataId, uiNode_t *option)
+void UI_RegisterOption (int dataId, uiNode_t* option)
 {
 	/** Hack to disable release option memory, if we only want to update the same option */
 	if (ui_global.sharedData[dataId].type == UI_SHARED_OPTION && ui_global.sharedData[dataId].data.option == option) {
@@ -346,7 +346,7 @@ void UI_RegisterOption (int dataId, uiNode_t *option)
 	ui_global.sharedData[dataId].versionId++;
 }
 
-void UI_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
+void UI_RegisterLineStrip (int dataId, lineStrip_t* lineStrip)
 {
 	UI_ResetData(dataId);
 	ui_global.sharedData[dataId].type = UI_SHARED_LINESTRIP;
@@ -354,7 +354,7 @@ void UI_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 	ui_global.sharedData[dataId].versionId++;
 }
 
-uiNode_t *UI_GetOption (int dataId)
+uiNode_t* UI_GetOption (int dataId)
 {
 	if (ui_global.sharedData[dataId].type == UI_SHARED_OPTION) {
 		return ui_global.sharedData[dataId].data.option;

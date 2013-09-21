@@ -72,7 +72,7 @@ static inline void CLMN_AddUIBindings (linkedList_t** list)
  */
 static void CLMN_InitKeyList_f (void)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 
 	LIST_AddString(&list, _("^BGlobal bindings"));
 	LIST_AddString(&list, "");
@@ -94,7 +94,7 @@ static void CLMN_InitKeyList_f (void)
 
 static void CLMN_Mods_f (void)
 {
-	linkedList_t *mods = nullptr;
+	linkedList_t* mods = nullptr;
 	FS_GetModList(&mods);
 	while (mods) {
 		Cbuf_AddText("mn_mods_result %s\n", (const char*)mods->data);

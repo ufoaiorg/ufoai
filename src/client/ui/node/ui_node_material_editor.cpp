@@ -71,9 +71,9 @@ static const materialDescription_t materialDescriptions[] = {
 	{nullptr, 0}
 };
 
-static materialStage_t *UI_MaterialEditorGetStage (material_t *material, int stageIndex)
+static materialStage_t* UI_MaterialEditorGetStage (material_t* material, int stageIndex)
 {
-	materialStage_t *materialStage = material->stages;
+	materialStage_t* materialStage = material->stages;
 	while (stageIndex-- > 0) {
 		if (materialStage)
 			materialStage = materialStage->next;
@@ -86,14 +86,14 @@ static materialStage_t *UI_MaterialEditorGetStage (material_t *material, int sta
 /**
  * @brief return the number of images we can display
  */
-static int UI_MaterialEditorNodeGetImageCount (uiNode_t *node)
+static int UI_MaterialEditorNodeGetImageCount (uiNode_t* node)
 {
 	int i;
 	int cnt = 0;
 
 	for (i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
-		const image_t *image = R_GetImageAtIndex(i);
+		const image_t* image = R_GetImageAtIndex(i);
 		/* filter */
 		if (image->type != it_world)
 			continue;
@@ -109,7 +109,7 @@ static int UI_MaterialEditorNodeGetImageCount (uiNode_t *node)
 /**
  * @brief Update the scrollable view
  */
-void uiMaterialEditorNode::updateView (uiNode_t *node, bool reset)
+void uiMaterialEditorNode::updateView (uiNode_t* node, bool reset)
 {
 	const int imageCount = UI_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
@@ -126,7 +126,7 @@ void uiMaterialEditorNode::updateView (uiNode_t *node, bool reset)
 /**
  * @param node The node to draw
  */
-void uiMaterialEditorNode::draw (uiNode_t *node)
+void uiMaterialEditorNode::draw (uiNode_t* node)
 {
 	int i;
 	vec2_t pos;
@@ -145,7 +145,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 
 	/* display images */
 	for (i = 0; i < r_numImages; i++) {
-		image_t *image = R_GetImageAtIndex(i);
+		image_t* image = R_GetImageAtIndex(i);
 		vec2_t imagepos;
 
 #ifndef ANYIMAGES
@@ -187,7 +187,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 /**
  * @brief Return index of the image (r_images[i]) else nullptr
  */
-static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y)
+static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t* node, int x, int y)
 {
 	int i;
 	vec2_t pos;
@@ -219,7 +219,7 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y
 	for (i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
 		/* filter */
-		image_t *image = R_GetImageAtIndex(i);
+		image_t* image = R_GetImageAtIndex(i);
 		if (image->type != it_world)
 			continue;
 
@@ -247,9 +247,9 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y
 	return -1;
 }
 
-static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char* buf, size_t size)
+static void UI_MaterialEditorStagesToName (const materialStage_t* stage, char* buf, size_t size)
 {
-	const materialDescription_t *md = materialDescriptions;
+	const materialDescription_t* md = materialDescriptions;
 
 	while (md->name) {
 		if (stage->flags & md->stageFlag)
@@ -263,9 +263,9 @@ static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char* b
  * @param image The image to load into the material editor
  * @param materialStage The material stage to display
  */
-static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
+static void UI_MaterialEditorUpdate (image_t* image, materialStage_t* materialStage)
 {
-	linkedList_t *materialStagesList = nullptr;
+	linkedList_t* materialStagesList = nullptr;
 
 	if (image->normalmap == nullptr)
 		UI_ExecuteConfunc("hideshaders true 0 0 0 0");
@@ -290,7 +290,7 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 		} else
 			Cvar_Set("me_stage_id", "-1");
 		for (i = 0; i < image->material.num_stages; i++) {
-			const materialStage_t *stage = UI_MaterialEditorGetStage(&image->material, i);
+			const materialStage_t* stage = UI_MaterialEditorGetStage(&image->material, i);
 			char stageName[MAX_VAR] = "stage ";
 			if (stage == materialStage) {
 				UI_ExecuteConfunc("updatestagevalues %f %f %f %f %f %f %f %f %f %f %f %f %f %f",
@@ -314,7 +314,7 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
  */
 static int UI_MaterialEditorNameToStage (const char* stageName)
 {
-	const materialDescription_t *md = materialDescriptions;
+	const materialDescription_t* md = materialDescriptions;
 
 	while (md->name) {
 		if (!strncmp(md->name, stageName, strlen(md->name)))
@@ -324,7 +324,7 @@ static int UI_MaterialEditorNameToStage (const char* stageName)
 	return -1;
 }
 
-void uiMaterialEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiMaterialEditorNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	int id;
 	if (button != K_MOUSE1)
@@ -337,7 +337,7 @@ void uiMaterialEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button
 	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
 	/* have we selected a new image? */
 	if (node->num != id) {
-		image_t *image = R_GetImageAtIndex(id);
+		image_t* image = R_GetImageAtIndex(id);
 		UI_MaterialEditorUpdate(image, nullptr);
 
 		node->num = id;
@@ -350,7 +350,7 @@ void uiMaterialEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button
 /**
  * @brief Called when we push a window with this node
  */
-void uiMaterialEditorNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiMaterialEditorNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	node->num = -1;
 	updateView(node, true);
@@ -359,7 +359,7 @@ void uiMaterialEditorNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-bool uiMaterialEditorNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMaterialEditorNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;
@@ -423,7 +423,7 @@ static const value_t materialStageValues[] = {
 
 static void UI_MaterialEditorChangeValue_f (void)
 {
-	image_t *image;
+	image_t* image;
 	int id, stageType;
 	const char* var, *value;
 	size_t bytes;
@@ -446,16 +446,16 @@ static void UI_MaterialEditorChangeValue_f (void)
 
 	stageType = UI_MaterialEditorNameToStage(var);
 	if (stageType == -1) {
-		const value_t *val = UI_FindPropertyByName(materialValues, var);
+		const value_t* val = UI_FindPropertyByName(materialValues, var);
 		if (!val) {
 			Com_Printf("Could not find material variable for '%s'\n", var);
 			return;
 		}
 		Com_ParseValue(&image->material, value, val->type, val->ofs, val->size, &bytes);
 	} else {
-		materialStage_t *stage;
+		materialStage_t* stage;
 		int stageID;
-		const value_t *val = UI_FindPropertyByName(materialStageValues, var);
+		const value_t* val = UI_FindPropertyByName(materialStageValues, var);
 
 		if (!val) {
 			Com_Printf("Could not find material stage variable for '%s'\n", var);
@@ -488,9 +488,9 @@ static void UI_MaterialEditorChangeValue_f (void)
 
 static void UI_MaterialEditorSelectStage_f (void)
 {
-	image_t *image;
+	image_t* image;
 	int id, stageID;
-	materialStage_t *materialStage;
+	materialStage_t* materialStage;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <image index> <stage index>\n", Cmd_Argv(0));
@@ -517,7 +517,7 @@ static void UI_MaterialEditorSelectStage_f (void)
 
 static void UI_MaterialEditorRemoveStage_f (void)
 {
-	image_t *image;
+	image_t* image;
 	int id, stageID;
 
 	if (Cmd_Argc() < 3) {
@@ -551,7 +551,7 @@ static void UI_MaterialEditorRemoveStage_f (void)
 
 static void UI_MaterialEditorNewStage_f (void)
 {
-	material_t *m;
+	material_t* m;
 	int id;
 
 	if (Cmd_Argc() < 2) {
@@ -573,7 +573,7 @@ static void UI_MaterialEditorNewStage_f (void)
 	if (!m->stages)
 		m->stages = s;
 	else {
-		materialStage_t *ss = m->stages;
+		materialStage_t* ss = m->stages;
 		while (ss->next)
 			ss = ss->next;
 		ss->next = s;
@@ -582,7 +582,7 @@ static void UI_MaterialEditorNewStage_f (void)
 	UI_MaterialEditorUpdate(R_GetImageAtIndex(id), s);
 }
 
-void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
+void UI_RegisterMaterialEditorNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";

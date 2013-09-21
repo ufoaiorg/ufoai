@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_TodoNodeDrawTooltip (uiNode_t* node, int x, int y)
 {
 	const int tooltipWidth = 250;
 	static char tooltiptext[1024];
@@ -54,7 +54,7 @@ static void UI_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
 	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
 }
 
-void uiTodoNode::draw (uiNode_t *node)
+void uiTodoNode::draw (uiNode_t* node)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	vec2_t pos;
@@ -66,17 +66,17 @@ void uiTodoNode::draw (uiNode_t *node)
 		UI_CaptureDrawOver(node);
 }
 
-void uiTodoNode::drawOverWindow (uiNode_t *node)
+void uiTodoNode::drawOverWindow (uiNode_t* node)
 {
 	UI_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
-void uiTodoNode::onLoading (uiNode_t *node)
+void uiTodoNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiTodoNode::onLoaded (uiNode_t *node)
+void uiTodoNode::onLoaded (uiNode_t* node)
 {
 #ifndef DEBUG
 	node->invis = true;
@@ -85,7 +85,7 @@ void uiTodoNode::onLoaded (uiNode_t *node)
 	node->box.size[1] = 10;
 }
 
-void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
+void UI_RegisterTodoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "todo";
 	behaviour->extends = "string";

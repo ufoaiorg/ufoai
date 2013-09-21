@@ -136,7 +136,7 @@ static bool R_AllocLightmapBlock (int w, int h, int* x, int* y)
  * @brief Fullbridght lightmap
  * @sa R_BuildLightmap
  */
-static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte* sout, byte* dout, int stride)
+static void R_BuildDefaultLightmap (mBspSurface_t* surf, byte* sout, byte* dout, int stride)
 {
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
@@ -172,7 +172,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte* sout, byte* dout,
  * and write them into the strided block in the atlas page
  * @sa R_BuildDefaultLightmap
  */
-static void R_BuildLightmap (mBspSurface_t *surf, byte* sout, byte* dout, int stride)
+static void R_BuildLightmap (mBspSurface_t* surf, byte* sout, byte* dout, int stride)
 {
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
@@ -221,7 +221,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte* sout, byte* dout, int st
 /**
  * @sa R_ModLoadSurfaces
  */
-void R_CreateSurfaceLightmap (mBspSurface_t *surf)
+void R_CreateSurfaceLightmap (mBspSurface_t* surf)
 {
 	int smax, tmax;
 	byte* samples, *directions;
@@ -244,10 +244,10 @@ void R_CreateSurfaceLightmap (mBspSurface_t *surf)
 	surf->deluxemap_texnum = r_lightmaps.deluxemap_texnums[r_lightmaps.deluxemap_count];
 
 	samples = r_lightmaps.sample_buffer;
-	samples += (surf->light_t * r_lightmaps.size + surf->light_s) * LIGHTMAP_SAMPLE_SIZE;
+	samples += (surf->light_t*  r_lightmaps.size + surf->light_s) * LIGHTMAP_SAMPLE_SIZE;
 
 	directions = r_lightmaps.direction_buffer;
-	directions += (surf->light_t * r_lightmaps.size + surf->light_s) * DELUXEMAP_SAMPLE_SIZE;
+	directions += (surf->light_t*  r_lightmaps.size + surf->light_s) * DELUXEMAP_SAMPLE_SIZE;
 
 	if (!surf->samples)  /* make it fullbright */
 		R_BuildDefaultLightmap(surf, samples, directions, r_lightmaps.size);
@@ -338,8 +338,8 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 
 	/* check bsp models */
 	for (i = 0; i < refdef.numEntities; i++) {
-		entity_t *ent = R_GetEntity(i);
-		const model_t *m = ent->model;
+		entity_t* ent = R_GetEntity(i);
+		const model_t* m = ent->model;
 
 		if (!m || m->type != mod_bsp_submodel)
 			continue;

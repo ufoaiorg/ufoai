@@ -61,8 +61,8 @@ typedef struct music_s {
 static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
 static music_t music;
-static cvar_t *snd_music;
-static cvar_t *snd_music_volume;
+static cvar_t* snd_music;
+static cvar_t* snd_music_volume;
 
 /**
  * @brief Parses music definitions for different situations
@@ -82,19 +82,19 @@ void M_ParseMusic (const char* name, const char** text)
 		i = MUSIC_MAIN;
 	else {
 		Com_Printf("M_ParseMusic: Invalid music id '%s'!\n", name);
-		linkedList_t *list;
+		linkedList_t* list;
 		Com_ParseList(text, &list);
 		LIST_Delete(&list);
 		return;
 	}
 
 	/* get it's body */
-	linkedList_t *list;
+	linkedList_t* list;
 	if (!Com_ParseList(text, &list)) {
 		Com_Error(ERR_DROP, "M_ParseMusic: error while reading music \"%s\"", name);
 	}
 
-	for (linkedList_t *element = list; element != nullptr; element = element->next) {
+	for (linkedList_t* element = list; element != nullptr; element = element->next) {
 		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
 			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'!\n", name);
 			break;
@@ -374,7 +374,7 @@ void M_Shutdown (void)
 	Cmd_RemoveCommand("music_randomtrack");
 }
 
-static void M_MusicStreamCallback (musicStream_t *userdata, byte* stream, int length)
+static void M_MusicStreamCallback (musicStream_t* userdata, byte* stream, int length)
 {
 	int tries = 0;
 	while (1) {
@@ -405,7 +405,7 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte* stream, int le
 	}
 }
 
-static void M_PlayMusicStream (musicStream_t *userdata)
+static void M_PlayMusicStream (musicStream_t* userdata)
 {
 	if (userdata->playing)
 		return;
@@ -426,7 +426,7 @@ static void M_PlayMusicStream (musicStream_t *userdata)
  * @param[in,out] userdata The music stream
  * @param[in] rate The sample rate
  */
-void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const byte* data)
+void M_AddToSampleBuffer (musicStream_t* userdata, int rate, int samples, const byte* data)
 {
 	int i;
 
@@ -462,7 +462,7 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 	}
 }
 
-void M_StopMusicStream (musicStream_t *userdata)
+void M_StopMusicStream (musicStream_t* userdata)
 {
 	if (userdata != nullptr)
 		userdata->playing = false;

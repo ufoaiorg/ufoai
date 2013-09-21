@@ -44,8 +44,8 @@ typedef enum {
 typedef struct storedUFO_s {
 	int idx;
 	char id[MAX_VAR];
-	components_t *comp;
-	const aircraft_t *ufoTemplate;
+	components_t* comp;
+	const aircraft_t* ufoTemplate;
 
 	storedUFOStatus_t status;
 	/* arrival date (recovery/transfer) */
@@ -54,24 +54,24 @@ typedef struct storedUFO_s {
 	float condition;
 
 	/* installation UFO is stored */
-	installation_t *installation;
+	installation_t* installation;
 
 	/* link to disassembly item */
-	production_t *disassembly;
+	production_t* disassembly;
 } storedUFO_t;
 
 void UR_ProcessActive(void);
 
 #define US_Foreach(var) LIST_Foreach(ccs.storedUFOs, storedUFO_t, var)
 
-storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition);
-storedUFO_t *US_GetStoredUFOByIDX(const int idx);
-storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);
-void US_RemoveStoredUFO(storedUFO_t *ufo);
-int US_UFOsInStorage(const aircraft_t *ufoTemplate, const installation_t *installation);
+storedUFO_t* US_StoreUFO(const aircraft_t* ufoTemplate, installation_t* installation, date_t date, float condition);
+storedUFO_t* US_GetStoredUFOByIDX(const int idx);
+storedUFO_t* US_GetClosestStoredUFO(const aircraft_t* ufoTemplate, const base_t* base);
+void US_RemoveStoredUFO(storedUFO_t* ufo);
+int US_UFOsInStorage(const aircraft_t* ufoTemplate, const installation_t* installation);
 int US_StoredUFOCount(void);
-void US_RemoveUFOsExceedingCapacity(installation_t *installation);
-bool US_TransferUFO(storedUFO_t *ufo, installation_t *ufoyard);
+void US_RemoveUFOsExceedingCapacity(installation_t* installation);
+bool US_TransferUFO(storedUFO_t* ufo, installation_t* ufoyard);
 
 /**
  * @brief returns if any UFOs are stored in UFO Yards

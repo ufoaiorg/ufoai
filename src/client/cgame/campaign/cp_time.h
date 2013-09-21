@@ -40,7 +40,7 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-void CP_DateConvertLong(const date_t *date, dateLong_t *dateLong);
+void CP_DateConvertLong(const date_t* date, dateLong_t* dateLong);
 const char* CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
@@ -50,9 +50,9 @@ void CP_GameTimeFast(void);
 void CP_GameTimeSlow(void);
 void CP_SetGameTime_f(void);
 
-int Date_DateToSeconds(const date_t *date);
-bool Date_LaterThan(const date_t *now, const date_t *compare);
-bool Date_IsDue(const date_t *date);
+int Date_DateToSeconds(const date_t* date);
+bool Date_LaterThan(const date_t* now, const date_t* compare);
+bool Date_IsDue(const date_t* date);
 date_t Date_Add(date_t a, const date_t &b);
 date_t Date_Substract(date_t a, const date_t &b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);

@@ -39,16 +39,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE zoneExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static uiTimer_t *capturedTimer;
+static uiTimer_t* capturedTimer;
 
-static void UI_ZoneNodeRepeat (uiNode_t *node, uiTimer_t *timer)
+static void UI_ZoneNodeRepeat (uiNode_t* node, uiTimer_t* timer)
 {
 	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
 	}
 }
 
-void uiZoneNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiZoneNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -59,7 +59,7 @@ void uiZoneNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiZoneNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiZoneNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -72,7 +72,7 @@ void uiZoneNode::onMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiZoneNode::onCapturedMouseLost (uiNode_t *node)
+void uiZoneNode::onCapturedMouseLost (uiNode_t* node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -83,12 +83,12 @@ void uiZoneNode::onCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Call before the script initialized the node
  */
-void uiZoneNode::onLoading (uiNode_t *node)
+void uiZoneNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).clickDelay = 1000;
 }
 
-void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
+void UI_RegisterZoneNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "zone";
 	behaviour->manager = UINodePtr(new uiZoneNode());

@@ -77,7 +77,7 @@ typedef struct seqCamera_s {
 typedef struct seqEnt_s {
 	bool inuse;
 	char name[MAX_VAR];
-	model_t *model;		/**< the loaded model structure */
+	model_t* model;		/**< the loaded model structure */
 	int skin;			/**< the skin number of the model - starts at 0 for the first one */
 	vec3_t origin;		/**< the origin of the model */
 	vec3_t speed;		/**< advance origin in time with this speed */
@@ -88,7 +88,7 @@ typedef struct seqEnt_s {
 	char parent[MAX_VAR];	/**< in case this is a child model (should get placed onto a tag of the parent) */
 	char tag[MAX_VAR];		/**< the tag to place this model onto */
 	animState_t as;			/**< the current animation state */
-	entity_t *ep;
+	entity_t* ep;
 } seqEnt_t;
 
 /**
@@ -125,7 +125,7 @@ static sequence_t sequences[MAX_SEQUENCES];
 static int numSequences;
 
 /** Store all sequence commands */
-static seqCmd_t *seqCmds;
+static seqCmd_t* seqCmds;
 static int numSeqCmds;
 
 /** Sequence context
@@ -212,7 +212,7 @@ static const value_t seq2D_vals[] = {
  * @brief Set the camera values for a sequence
  * @sa CL_SequenceRender3D
  */
-static void SEQ_SetCamera (sequenceContext_t *context)
+static void SEQ_SetCamera (sequenceContext_t* context)
 {
 	if (!context->size[0] || !context->size[1])
 		return;
@@ -241,9 +241,9 @@ static void SEQ_SetCamera (sequenceContext_t *context)
  * @brief Finds a given entity in all sequence entities
  * @sa CL_SequenceFind2D
  */
-static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char* name)
+static seqEnt_t* SEQ_FindEnt (sequenceContext_t* context, const char* name)
 {
-	seqEnt_t *se;
+	seqEnt_t* se;
 	int i;
 
 	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
@@ -259,9 +259,9 @@ static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char* name)
  * @brief Finds a given 2d object in the current sequence data
  * @sa CL_SequenceFindEnt
  */
-static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char* name)
+static seq2D_t* SEQ_Find2D (sequenceContext_t* context, const char* name)
 {
-	seq2D_t *s2d;
+	seq2D_t* s2d;
 	int i;
 
 	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
@@ -279,9 +279,9 @@ static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char* name)
  * @sa UI_PopWindow
  * @sa CL_SequenceFindEnt
  */
-static void SEQ_Render3D (sequenceContext_t *context)
+static void SEQ_Render3D (sequenceContext_t* context)
 {
-	seqEnt_t *se;
+	seqEnt_t* se;
 	int i;
 
 	if (context->numEnts == 0)
@@ -315,7 +315,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
 		VectorCopy(se->angles, ent.angles);
 
 		if (se->parent && se->tag) {
-			seqEnt_t *parent;
+			seqEnt_t* parent;
 
 			parent = SEQ_FindEnt(context, se->parent);
 			if (parent)
@@ -353,9 +353,9 @@ static void SEQ_Render3D (sequenceContext_t *context)
  * @param[in] context Sequence context
  * @param[in] backgroundObjects if true, draw background objects, else display foreground objects
  */
-static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
+static void SEQ_Render2D (sequenceContext_t* context, bool backgroundObjects)
 {
-	seq2D_t *s2d;
+	seq2D_t* s2d;
 	int i, j;
 	int height = 0;
 
@@ -393,7 +393,7 @@ static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
 
 		/* image can be background */
 		if (s2d->image[0] != '\0') {
-			const image_t *image = R_FindImage(s2d->image, it_pic);
+			const image_t* image = R_FindImage(s2d->image, it_pic);
 			R_DrawImage(s2d->pos[0], s2d->pos[1], image);
 		}
 
@@ -420,7 +420,7 @@ static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-void SEQ_SendClickEvent (sequenceContext_t *context)
+void SEQ_SendClickEvent (sequenceContext_t* context)
 {
 	context->endClickLoop = true;
 }
@@ -431,7 +431,7 @@ void SEQ_SendClickEvent (sequenceContext_t *context)
  * @param pos Position of the context screen
  * @param size Size of the context screen
  */
-void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
+void SEQ_SetView (sequenceContext_t* context, vec2_t pos, vec2_t size)
 {
 	context->pos[0] = pos[0];
 	context->pos[1] = pos[1];
@@ -445,9 +445,9 @@ void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
  * @param name
  * @return True if the sequence is initialized.
  */
-bool SEQ_InitContext (sequenceContext_t *context, const char* name)
+bool SEQ_InitContext (sequenceContext_t* context, const char* name)
 {
-	sequence_t *sp;
+	sequence_t* sp;
 	int i;
 
 	/* find sequence */
@@ -470,7 +470,7 @@ bool SEQ_InitContext (sequenceContext_t *context, const char* name)
 	return true;
 }
 
-static void SEQ_StopSequence (sequenceContext_t *context)
+static void SEQ_StopSequence (sequenceContext_t* context)
 {
 	context->endClickLoop = true;
 }
@@ -480,7 +480,7 @@ static void SEQ_StopSequence (sequenceContext_t *context)
  * @param context
  * @return True is the sequence is alive, false if it is the end of the sequence
  */
-static bool SEQ_Execute (sequenceContext_t *context)
+static bool SEQ_Execute (sequenceContext_t* context)
 {
 	/* we are inside a waiting command */
 	if (context->time > cl.time) {
@@ -500,7 +500,7 @@ static bool SEQ_Execute (sequenceContext_t *context)
 		}
 
 		/* call handler */
-		seqCmd_t *sc = &seqCmds[context->currentCmd];
+		seqCmd_t* sc = &seqCmds[context->currentCmd];
 		context->currentCmd += sc->handler(context, sc->name, sc->data);
 	}
 
@@ -512,7 +512,7 @@ static bool SEQ_Execute (sequenceContext_t *context)
  * @param context Sequence context
  * @return True if the sequence is alive.
  */
-bool SEQ_Render (sequenceContext_t *context)
+bool SEQ_Render (sequenceContext_t* context)
 {
 	vec3_t pos;
 
@@ -540,9 +540,9 @@ bool SEQ_Render (sequenceContext_t *context)
  * @brief Allocate a sequence context
  * @return Context
  */
-sequenceContext_t *SEQ_AllocContext (void)
+sequenceContext_t* SEQ_AllocContext (void)
 {
-	sequenceContext_t *context;
+	sequenceContext_t* context;
 	context = Mem_AllocType(sequenceContext_t);
 	return context;
 }
@@ -551,7 +551,7 @@ sequenceContext_t *SEQ_AllocContext (void)
  * @brief Free a sequence context
  * @return Context
  */
-void SEQ_FreeContext (sequenceContext_t *context)
+void SEQ_FreeContext (sequenceContext_t* context)
 {
 	Mem_Free(context);
 }
@@ -563,7 +563,7 @@ void SEQ_FreeContext (sequenceContext_t *context)
  * @return 0 if you wait for the click
  * @return 1 if the click occurred
  */
-static int SEQ_ExecuteClick (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteClick (sequenceContext_t* context, const char* name, const char* data)
 {
 	/* if a CL_SequenceClick_f event was called */
 	if (context->endClickLoop) {
@@ -580,7 +580,7 @@ static int SEQ_ExecuteClick (sequenceContext_t *context, const char* name, const
  * @brief Increase the sequence time
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_ExecuteWait (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteWait (sequenceContext_t* context, const char* name, const char* data)
 {
 	context->time += 1000 * atof(name);
 	return 1;
@@ -590,7 +590,7 @@ static int SEQ_ExecuteWait (sequenceContext_t *context, const char* name, const 
  * @brief Set the animation speed, default value is 1000
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_ExecuteAnimSpeed (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteAnimSpeed (sequenceContext_t* context, const char* name, const char* data)
 {
 	context->animspeed = atoi(name);
 	return 1;
@@ -602,7 +602,7 @@ static int SEQ_ExecuteAnimSpeed (sequenceContext_t *context, const char* name, c
  * @sa R_RegisterModelShort
  * @sa R_RegisterImage
  */
-static int SEQ_ExecutePrecache (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecutePrecache (sequenceContext_t* context, const char* name, const char* data)
 {
 	if (Q_streq(name, "models")) {
 		while (*data) {
@@ -624,11 +624,11 @@ static int SEQ_ExecutePrecache (sequenceContext_t *context, const char* name, co
 /**
  * @brief Parse the values for the camera like given in seqCamera
  */
-static int SEQ_ExecuteCamera (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteCamera (sequenceContext_t* context, const char* name, const char* data)
 {
 	/* get values */
 	while (*data) {
-		const value_t *vp;
+		const value_t* vp;
 		for (vp = seqCamera_vals; vp->string; vp++)
 			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
@@ -649,10 +649,10 @@ static int SEQ_ExecuteCamera (sequenceContext_t *context, const char* name, cons
  * @sa seqEnt_vals
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_ExecuteModel (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteModel (sequenceContext_t* context, const char* name, const char* data)
 {
 	/* get sequence entity */
-	seqEnt_t *se = SEQ_FindEnt(context, name);
+	seqEnt_t* se = SEQ_FindEnt(context, name);
 	if (!se) {
 		int i;
 		/* create new sequence entity */
@@ -673,7 +673,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char* name, const
 
 	/* get values */
 	while (*data) {
-		const value_t *vp;
+		const value_t* vp;
 		for (vp = seqEnt_vals; vp->string; vp++)
 			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
@@ -706,7 +706,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char* name, const
  * @brief Changes the music in the sequence
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_ExecuteMusic (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteMusic (sequenceContext_t* context, const char* name, const char* data)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Change music to %s\n", name);
 	Cvar_Set("snd_music", "%s", name);
@@ -717,7 +717,7 @@ static int SEQ_ExecuteMusic (sequenceContext_t *context, const char* name, const
  * @brief Plays a sound in a sequence
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_ExecuteSound (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteSound (sequenceContext_t* context, const char* name, const char* data)
 {
 	S_StartLocalSample(name, SND_VOLUME_DEFAULT);
 	return 1;
@@ -729,12 +729,12 @@ static int SEQ_ExecuteSound (sequenceContext_t *context, const char* name, const
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteObj2D (sequenceContext_t* context, const char* name, const char* data)
 {
-	const value_t *vp;
+	const value_t* vp;
 
 	/* get sequence text */
-	seq2D_t *s2d = SEQ_Find2D(context, name);
+	seq2D_t* s2d = SEQ_Find2D(context, name);
 	if (!s2d) {
 		/* create new sequence text */
 		int i;
@@ -786,10 +786,10 @@ static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char* name, const
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_ExecuteDelete (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteDelete (sequenceContext_t* context, const char* name, const char* data)
 {
-	seqEnt_t *se;
-	seq2D_t *s2d;
+	seqEnt_t* se;
+	seq2D_t* s2d;
 
 	se = SEQ_FindEnt(context, name);
 	if (se)
@@ -813,7 +813,7 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char* name, cons
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-static int SEQ_ExecuteCommand (sequenceContext_t *context, const char* name, const char* data)
+static int SEQ_ExecuteCommand (sequenceContext_t* context, const char* name, const char* data)
 {
 	/* add the command */
 	Cbuf_AddText("%s\n", name);
@@ -882,7 +882,7 @@ static int CL_FindSequenceCommand (const char* commandName)
 void CL_ParseSequence (const char* name, const char** text)
 {
 	const char* errhead = "CL_ParseSequence: unexpected end of file (sequence ";
-	sequence_t *sp;
+	sequence_t* sp;
 	const char* token;
 	int i;
 
@@ -926,7 +926,7 @@ void CL_ParseSequence (const char* name, const char** text)
 		if (i != -1) {
 			int maxLength = MAX_DATA_LENGTH;
 			char* data;
-			seqCmd_t *sc;
+			seqCmd_t* sc;
 
 			/* found a command */
 			token = Com_EParse(text, errhead, name);
@@ -975,13 +975,13 @@ void CL_ParseSequence (const char* name, const char** text)
 					}
 				}
 			} else if (*token == '(') {
-				linkedList_t *list;
+				linkedList_t* list;
 				Com_UnParseLastToken();
 				if (!Com_ParseList(text, &list)) {
 					Com_Error(ERR_DROP, "CL_ParseSequence: error while reading list (sequence \"%s\")", name);
 				}
 				data = &sc->data[0];
-				for (linkedList_t *element = list; element != nullptr; element = element->next) {
+				for (linkedList_t* element = list; element != nullptr; element = element->next) {
 					if (maxLength <= 0) {
 						Com_Printf("Too much data for sequence %s", sc->name);
 						break;

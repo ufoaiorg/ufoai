@@ -104,12 +104,12 @@ static void R_PlantGrass (Clump &clump)
 		VectorInverse(yt);
 
 	/* marker */
-	vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
+	vec_t* ptr = gfv_pos[clumpTriangleCount * 3];
 	VectorMA(clump.position, 1, zt, ptr);
 	VectorMA(ptr, 16, yt, ptr + 3);
 	VectorMA(ptr, 16, xt, ptr + 6);
 
-	vec_t *texc = gfv_texcoord[clumpTriangleCount * 3];
+	vec_t* texc = gfv_texcoord[clumpTriangleCount * 3];
 	Vector2Set(texc, 0, 0);
 	Vector2Set(texc + 2, 1, 0);
 	Vector2Set(texc + 4, 0, 1);
@@ -136,12 +136,12 @@ static void R_PlantGrass (Clump &clump)
 		VectorRotate(rot, tmp, sdir);
 #if 0
 		/* debug marker */
-		vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
+		vec_t* ptr = gfv_pos[clumpTriangleCount * 3];
 		VectorCopy(clump.position, ptr);
 		VectorMA(ptr, 16, sdir, ptr + 3);
 		VectorMA(ptr, 16, tdir, ptr + 6);
 
-		vec_t *texc = gfv_texcoord[clumpTriangleCount * 3];
+		vec_t* texc = gfv_texcoord[clumpTriangleCount * 3];
 		Vector2Set(texc, 0, 0);
 		Vector2Set(texc + 2, 1, 0);
 		Vector2Set(texc + 4, 0, 1);
@@ -149,7 +149,7 @@ static void R_PlantGrass (Clump &clump)
 		clumpTriangleCount++;
 #else
 		/* billboard sprite */
-		vec_t *ptr = gfv_pos[clumpTriangleCount * 3];
+		vec_t* ptr = gfv_pos[clumpTriangleCount * 3];
 		VectorCopy(clump.position, ptr);
 		/** @todo use UNIT_SIZE and co defines here */
 		VectorMA(clump.position, -24, sdir, ptr); /* quad vertex 0 */
@@ -160,7 +160,7 @@ static void R_PlantGrass (Clump &clump)
 		VectorCopy(ptr + 6, ptr + 12); /* quad vertex 2 */
 		VectorMA(ptr + 6, -32, tdir, ptr + 15); /* quad vertex 3 */
 
-		vec_t *texc = gfv_texcoord[clumpTriangleCount * 3];
+		vec_t* texc = gfv_texcoord[clumpTriangleCount * 3];
 		Vector2Set(texc, 0, 1);
 		Vector2Set(texc + 2, 0, 0);
 		Vector2Set(texc + 4, 1, 0);
@@ -236,15 +236,15 @@ void R_GenerateGrass ()
 	for (int tile = 0; tile < r_numMapTiles; tile++) {
 		/* ignore weaponclip, actorclip and stepon */
 		for (int i = 0; i <= LEVEL_LASTVISIBLE; i++) {
-			const mBspModel_t *const bspModel = &r_mapTiles[tile]->bsp;
-			const mBspHeader_t *const header = &bspModel->submodels[i];
+			const mBspModel_t* const bspModel = &r_mapTiles[tile]->bsp;
+			const mBspHeader_t* const header = &bspModel->submodels[i];
 
 			if (!header->numfaces)
 				continue;
 
 			for (int j = 0; j < header->numfaces; j++) {
-				mBspSurface_t *const surf = &bspModel->surfaces[header->firstface + j];
-				const cBspPlane_t *const plane = surf->plane;
+				mBspSurface_t* const surf = &bspModel->surfaces[header->firstface + j];
+				const cBspPlane_t* const plane = surf->plane;
 
 				if (surf->frame == GRASS_MARK)
 					continue; /* already processed it */
@@ -302,8 +302,8 @@ void R_GenerateGrass ()
 	for (int tile = 0; tile < r_numMapTiles; tile++) {
 		/* ignore weaponclip, actorclip and stepon */
 		for (int i = 0; i <= LEVEL_LASTVISIBLE; i++) {
-			const mBspModel_t *const bspModel = &r_mapTiles[tile]->bsp;
-			const mBspHeader_t *const header = &bspModel->submodels[i];
+			const mBspModel_t* const bspModel = &r_mapTiles[tile]->bsp;
+			const mBspHeader_t* const header = &bspModel->submodels[i];
 
 			if (!header->numfaces)
 				continue;
@@ -315,8 +315,8 @@ void R_GenerateGrass ()
 					break;
 
 			for (int j = 0; j < header->numfaces; j++) {
-				mBspSurface_t *const surf = &bspModel->surfaces[header->firstface + j];
-				const cBspPlane_t *const plane = surf->plane;
+				mBspSurface_t* const surf = &bspModel->surfaces[header->firstface + j];
+				const cBspPlane_t* const plane = surf->plane;
 
 				if (surf->frame != GRASS_MARK)
 					continue; /* not suitable for grass or got grass already generated */

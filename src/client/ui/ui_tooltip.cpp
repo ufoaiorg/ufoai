@@ -70,7 +70,7 @@ int UI_DrawTooltip (const char* string, int x, int y, int maxWidth)
 /**
  * @brief Wrapper for UI tooltips
  */
-void UI_Tooltip (const uiNode_t *node, int x, int y)
+void UI_Tooltip (const uiNode_t* node, int x, int y)
 {
 	const char* string;
 	const char* key = nullptr;

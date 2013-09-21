@@ -55,7 +55,7 @@ static int mouseScrollY;
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
+static void UI_OptionListNodeUpdateScroll (uiNode_t* node)
 {
 	int lineHeight;
 	bool updated;
@@ -73,7 +73,7 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
-void uiOptionListNode::draw (uiNode_t *node)
+void uiOptionListNode::draw (uiNode_t* node)
 {
 	uiNode_t* option;
 	const char* ref;
@@ -168,7 +168,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 	UI_OptionListNodeUpdateScroll(node);
 }
 
-static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t *node, int x, int y)
+static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 	vec2_t pos;
@@ -205,7 +205,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t *node, int x, in
 /**
  * @brief Handles selectboxes clicks
  */
-void uiOptionListNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiOptionListNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 
@@ -223,7 +223,7 @@ void uiOptionListNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-bool uiOptionListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiOptionListNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	bool updated;
@@ -252,14 +252,14 @@ bool uiOptionListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiOptionListNode::onLoading (uiNode_t *node)
+void uiOptionListNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-void uiOptionListNode::onLoaded (uiNode_t *node)
+void uiOptionListNode::onLoaded (uiNode_t* node)
 {
 }
 
@@ -283,7 +283,7 @@ void uiOptionListNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-void uiOptionListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiOptionListNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -305,7 +305,7 @@ void uiOptionListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiOptionListNode::getCellHeight (uiNode_t *node)
+int uiOptionListNode::getCellHeight (uiNode_t* node)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -313,7 +313,7 @@ int uiOptionListNode::getCellHeight (uiNode_t *node)
 	return lineHeight;
 }
 
-void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionListNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "optionlist";
 	behaviour->extends = "abstractoption";

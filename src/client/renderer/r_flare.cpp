@@ -21,10 +21,10 @@
 
 #include "r_local.h"
 
-void R_CreateSurfaceFlare (mBspSurface_t *surf)
+void R_CreateSurfaceFlare (mBspSurface_t* surf)
 {
-	material_t *m;
-	const materialStage_t *s;
+	material_t* m;
+	const materialStage_t* s;
 	vec3_t span;
 
 	m = &surf->texinfo->image->material;
@@ -69,9 +69,9 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
  * trace.  Flares are also faded according to the angle of their surface to the
  * view origin.
  */
-void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
+void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr)
 {
-	const image_t *image;
+	const image_t* image;
 	int i, j, k, l, m;
 	vec3_t view, verts[4];
 	vec3_t right, up, upright, downright;
@@ -101,8 +101,8 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPt
 
 	j = k = l = 0;
 	for (i = 0; i < surfs->count; i++) {
-		mBspSurface_t *surf = surfs->surfaces[i];
-		mBspFlare_t *f;
+		mBspSurface_t* surf = surfs->surfaces[i];
+		mBspFlare_t* f;
 
 		if (surf->frame != r_locals.frame)
 			continue;

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cgame/cl_game.h"
 #include "ui/ui_popup.h"
 
-static const objDef_t *currentDisplayedObject;
+static const objDef_t* currentDisplayedObject;
 static int itemIndex;
 static int fireModeIndex;
 
@@ -62,7 +62,7 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
  * weapon and ammo statistics
  * @todo Do we need to add checks for @c od->isDummy here somewhere?
  */
-void INV_ItemDescription (const objDef_t *od)
+void INV_ItemDescription (const objDef_t* od)
 {
 	static char itemText[UI_MAX_SMALLTEXTLEN];
 	int i;
@@ -135,13 +135,13 @@ void INV_ItemDescription (const objDef_t *od)
 			Q_strcat(itemText, sizeof(itemText), "\n");
 			Q_strcat(itemText, sizeof(itemText), _("^BDamage type:\tProtection:\n"));
 			for (i = 0; i < csi.numDTs; i++) {
-				const damageType_t *dt = &csi.dts[i];
+				const damageType_t* dt = &csi.dts[i];
 				if (!dt->showInMenu)
 					continue;
 				Q_strcat(itemText, sizeof(itemText), _("%s\t%i\n"), _(dt->id), od->ratings[i]);
 			}
 		} else if ((od->weapon && od->numAmmos) || od->isAmmo()) {
-			const objDef_t *odAmmo;
+			const objDef_t* odAmmo;
 
 			if (count > 0) {
 				int weaponIndex;
@@ -160,7 +160,7 @@ void INV_ItemDescription (const objDef_t *od)
 				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
-					const fireDef_t *fd;
+					const fireDef_t* fd;
 					numFiredefs = odAmmo->numFiredefs[weaponIndex];
 
 					/* This contains everything common for weapons and ammos */
@@ -194,7 +194,7 @@ void INV_ItemDescription (const objDef_t *od)
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
-				const fireDef_t *fd = &od->fd[0][0];
+				const fireDef_t* fd = &od->fd[0][0];
 				Q_strcat(itemText, sizeof(itemText), _("Action:\t%s\n"), _(fd->name));
 				Q_strcat(itemText, sizeof(itemText), _("Time units:\t%i\n"), fd->time);
 				Q_strcat(itemText, sizeof(itemText), _("Range:\t%g\n"), fd->range / UNIT_SIZE);
@@ -244,7 +244,7 @@ static void INV_DecreaseFiremode_f (void)
  */
 static void INV_IncreaseItem_f (void)
 {
-	const objDef_t *od = currentDisplayedObject;
+	const objDef_t* od = currentDisplayedObject;
 
 	if (!od)
 		return;
@@ -275,7 +275,7 @@ static void INV_IncreaseItem_f (void)
  */
 static void INV_DecreaseItem_f (void)
 {
-	const objDef_t *od = currentDisplayedObject;
+	const objDef_t* od = currentDisplayedObject;
 
 	if (!od)
 		return;
@@ -320,11 +320,11 @@ static void INV_UpdateObject_f (void)
 		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
 		return;
 	}
-	const objDef_t *obj = INVSH_GetItemByIDX(num);
+	const objDef_t* obj = INVSH_GetItemByIDX(num);
 
 	/* update tab */
 	if (changeTab) {
-		const cvar_t *var = Cvar_FindVar("mn_equiptype");
+		const cvar_t* var = Cvar_FindVar("mn_equiptype");
 		const int filter = INV_GetFilterFromItem(obj);
 		if (var && var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
@@ -346,7 +346,7 @@ static void INV_UpdateActorLoad_f (void)
 		return;
 	}
 
-	const character_t *chr = GAME_GetSelectedChr();
+	const character_t* chr = GAME_GetSelectedChr();
 	if (chr == nullptr)
 		return;
 
@@ -362,7 +362,7 @@ static void INV_UpdateActorLoad_f (void)
 	while ((cont = chr->inv.getNextCont(cont))) {
 		for (Item* invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();
-			const fireDef_t *fireDef = invList->getFiredefs();
+			const fireDef_t* fireDef = invList->getFiredefs();
 			if (fireDef == nullptr)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {

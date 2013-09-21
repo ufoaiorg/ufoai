@@ -45,14 +45,14 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers). */
 typedef struct transfer_s {
-	base_t *destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */
-	base_t *srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */
+	base_t* destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */
+	base_t* srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
 
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
 	class AlienCargo *alienCargo;			/**< Alien cargo */
-	linkedList_t *employees[MAX_EMPL];
-	linkedList_t *aircraft;
+	linkedList_t* employees[MAX_EMPL];
+	linkedList_t* aircraft;
 
 	bool hasItems;				/**< Transfer of items. */
 	bool hasEmployees;			/**< Transfer of employees. */
@@ -75,10 +75,10 @@ typedef enum {
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
 	union transferItem_t {
-		const objDef_t *item;
-		const aircraft_t *aircraft;
+		const objDef_t* item;
+		const aircraft_t* aircraft;
 		const Employee* employee;
-		const teamDef_t *alienTeam;
+		const teamDef_t* alienTeam;
 		const void* pointer;		/**< if you just wanna check whether a valid pointer was set */
 	} data;
 	transferCargoType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
@@ -86,10 +86,10 @@ typedef struct transferCargo_s {
 
 typedef struct transferData_s {
 	/** @brief Current selected aircraft for transfer (if transfer started from mission). */
-	aircraft_t *transferStartAircraft;
+	aircraft_t* transferStartAircraft;
 
 	/** @brief Current selected base for transfer. */
-	base_t *transferBase;
+	base_t* transferBase;
 
 	/** @brief Current transfer type (item, employee, alien, aircraft). */
 	transferType_t currentTransferType;
@@ -104,10 +104,10 @@ typedef struct transferData_s {
 	class AlienCargo *alienCargo;
 
 	/** @brief Current personnel cargo. */
-	linkedList_t *trEmployeesTmp[MAX_EMPL];
+	linkedList_t* trEmployeesTmp[MAX_EMPL];
 
 	/** @brief Current aircraft for transfer. */
-	linkedList_t *aircraft;
+	linkedList_t* aircraft;
 
 	/** @brief Current cargo type count (updated in TR_CargoList) */
 	int trCargoCountTmp;
@@ -118,11 +118,11 @@ typedef struct transferData_s {
 #define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], Employee, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
-bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
+bool TR_AddData(transferData_t* transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
-void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
+void TR_NotifyAircraftRemoved(const aircraft_t* aircraft);
 
-transfer_t* TR_TransferStart(base_t *srcBase, transferData_t &transData);
+transfer_t* TR_TransferStart(base_t* srcBase, transferData_t &transData);
 
 void TR_InitStartup(void);
 void TR_Shutdown(void);

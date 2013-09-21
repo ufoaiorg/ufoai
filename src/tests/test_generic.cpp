@@ -71,7 +71,7 @@ static void STRHUNK_VisitorTestEntry2 (const char* string)
 
 static void testStringHunks (void)
 {
-	stringHunk_t *hunk = STRHUNK_Create(20);
+	stringHunk_t* hunk = STRHUNK_Create(20);
 	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
 	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 1);
 	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 15);
@@ -189,18 +189,18 @@ static void testConstInt (void)
 	Com_UnregisterConstList(list2);
 }
 
-static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const void* userData)
+static int testListSorter (linkedList_t* entry1, linkedList_t* entry2, const void* userData)
 {
 	return strcmp((const char*)entry1->data, (const char*)entry2->data);
 }
 
 static void testLinkedList (void)
 {
-	linkedList_t *list = nullptr, *list2;
+	linkedList_t* list = nullptr, *list2;
 	const char* data = "SomeDataForTheLinkedList";
 	const size_t length = strlen(data);
-	linkedList_t *entry;
-	const linkedList_t *entry2;
+	linkedList_t* entry;
+	const linkedList_t* entry2;
 	const char* returnedData;
 
 	entry = LIST_Add(&list, data, length);
@@ -246,7 +246,7 @@ static void testLinkedList (void)
 
 static void testLinkedListIterator (void)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 	int cnt;
 
 	LIST_AddString(&list, "test1");
@@ -273,7 +273,7 @@ static void testLinkedListIterator (void)
 
 static void testLinkedListIteratorRemove (void)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 
 	LIST_AddString(&list, "test1");
 	LIST_AddString(&list, "test2");
@@ -289,7 +289,7 @@ static void testLinkedListIteratorRemove (void)
 
 static void testPrependStringList (void)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 
 	LIST_PrependString(&list, "test2");
 	LIST_PrependString(&list, "test1");
@@ -302,7 +302,7 @@ static void testPrependStringList (void)
 
 static void testLinkedListStringSort (void)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 
 	LIST_AddStringSorted(&list, "test2");
 	LIST_AddStringSorted(&list, "test1");
@@ -679,7 +679,7 @@ static void testEntitiesDef (void)
 
 			CU_ASSERT_TRUE(e->numKeyDefs > 10);
 			for (j = 0; j < e->numKeyDefs; j++) {
-				const entityKeyDef_t *keyDef = &e->keyDefs[j];
+				const entityKeyDef_t* keyDef = &e->keyDefs[j];
 				CU_ASSERT_PTR_NOT_NULL(keyDef);
 			}
 		}
