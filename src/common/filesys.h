@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include <stdio.h>
+#include <string.h>
 #include "../shared/ufotypes.h"
 
 #define	BASEDIRNAME	"base"
@@ -56,6 +57,11 @@ typedef struct qFILE_s {
 	char name[MAX_OSPATH];
 	unsigned long filepos;
 	unsigned long size;
+
+	inline FILE* getFile () const
+	{
+		return f;
+	}
 } qFILE;
 
 typedef enum {
@@ -176,3 +182,37 @@ const char* FS_GetFileData(const char* files);
  * @brief cleanup function
  */
 void FS_Shutdown(void);
+
+class ScopedFile {
+private:
+	qFILE _file;
+public:
+	ScopedFile ()
+	{
+		memset(&_file, 0, sizeof(_file));
+	}
+	~ScopedFile ()
+	{
+		FS_CloseFile(&_file);
+	}
+	inline qFILE* operator& ()
+	{
+		return &_file;
+	}
+	inline operator bool () const
+	{
+		return file() || zip();
+	}
+	inline bool file () const
+	{
+		return _file.f;
+	}
+	inline bool zip () const
+	{
+		return _file.z;
+	}
+	inline FILE* getFile () const
+	{
+		return _file.getFile();
+	}
+};
