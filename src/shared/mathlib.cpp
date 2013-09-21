@@ -1043,6 +1043,7 @@ float AngleNormalize180 (float angle)
  * @param[in] mins The lower end of the bounding box
  * @param[in] maxs The upper end of the bounding box
  * @param[out] center The target center vector calculated from @c mins and @c maxs
+ * @note If the mins/maxs come from an AABB, use getCenter() instead
  */
 void VectorCenterFromMinsMaxs (const vec3_t mins, const vec3_t maxs, vec3_t center)
 {
