@@ -27,17 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
-	const char* id;		/**< Unique identifier as parsed from the ufo files. */
-	const char* name;	/**< Rank name (Captain, Squad Leader) */
+	const char* id;			/**< Unique identifier as parsed from the ufo files. */
+	const char* name;		/**< Rank name (Captain, Squad Leader) */
 	const char* shortname;	/**< Rank shortname (Cpt, Sqd Ldr) */
 	const char* image;		/**< Image to show in menu */
-	int type;			/**< employeeType_t */
-	int mind;			/**< character mind attribute needed */
+	int type;				/**< employeeType_t */
+	int mind;				/**< character mind attribute needed */
 	int killedEnemies;		/**< needed amount of enemies killed */
 	int killedOthers;		/**< needed amount of other actors killed */
-	float factor;		/**< a factor that is used to e.g. increase the win
-						 * probability for auto missions */
-	int level;			/**< rank level for given employee type */
+	float factor;			/**< a factor that is used to e.g. increase the win
+							 * probability for auto missions */
+	int level;				/**< rank level for given employee type */
 } rank_t;
 
 void CL_ParseRanks(const char* name, const char** text);
