@@ -849,7 +849,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapTiles, mapData->mapMin, mapData->mapMax);
+	RT_GetMapSize(mapTiles, mapData->mapBox.mins, mapData->mapBox.maxs);
 
 	FS_FreeFile(buf);
 
@@ -864,7 +864,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 
 	start = time(nullptr);
 
-	GridBox rBox(mapData->mapMin, mapData->mapMax);	/* the box we will actually reroute */
+	GridBox rBox(mapData->mapBox.mins, mapData->mapBox.maxs);	/* the box we will actually reroute */
 	rBox.clipToMaxBoundaries();
 
 	/* Floor pass */

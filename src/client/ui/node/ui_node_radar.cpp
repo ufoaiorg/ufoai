@@ -324,8 +324,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	}
 
 	/* center tiles into the minMap/maxMap */
-	Vector2Copy(cl.mapData->mapMax, min);
-	Vector2Copy(cl.mapData->mapMin, max);
+	Vector2Copy(cl.mapData->mapBox.maxs, min);
+	Vector2Copy(cl.mapData->mapBox.mins, max);
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
 		if (tile->mapX < min[0])
@@ -347,8 +347,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	}
 
 	/* get the three points of the triangle */
-	VectorSubtract(cl.mapData->mapMin, offset, radar.a);
-	VectorAdd(cl.mapData->mapMax, offset, radar.c);
+	VectorSubtract(cl.mapData->mapBox.mins, offset, radar.a);
+	VectorAdd(cl.mapData->mapBox.maxs, offset, radar.c);
 	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
 
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);

@@ -338,25 +338,25 @@ typedef struct mapData_s {
 	 * @sa CMod_GetMapSize
 	 * @sa SV_ClearWorld
 	 */
-	vec3_t mapMin, mapMax;
+	AABB mapBox;
 
 	inline float getMinX () const {
-		return mapMin[0];
+		return mapBox.mins[0];
 	}
 	inline float getMinY () const {
-		return mapMin[1];
+		return mapBox.mins[1];
 	}
 	inline float getMaxX () const {
-		return mapMax[0];
+		return mapBox.maxs[0];
 	}
 	inline float getMaxY () const {
-		return mapMax[1];
+		return mapBox.maxs[1];
 	}
 	inline float getWidthX () const {
-		return mapMax[0] - getMinX();
+		return mapBox.maxs[0] - getMinX();
 	}
 	inline float getWidthY () const {
-		return mapMax[1] - mapMin[1];
+		return mapBox.maxs[1] - mapBox.mins[1];
 	}
 } mapData_t;
 

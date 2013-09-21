@@ -334,7 +334,7 @@ static void testMapDefsFootSteps (void)
 		SV_Map(true, md->map, md->params);
 
 		/* now that we have loaded the map, check all cells for walkable places */
-		GridBox mBox(sv->mapData.mapMin, sv->mapData.mapMax);	// test ALL the cells
+		GridBox mBox(sv->mapData.mapBox.mins, sv->mapData.mapBox.maxs);	// test ALL the cells
 #if !FOOTSTEPS_FULL
 		if (mapCount >= skipCount + 4) {	// after the first 4 maps, reduce the testing area
 			const pos3_t center = {148, 128, 0};

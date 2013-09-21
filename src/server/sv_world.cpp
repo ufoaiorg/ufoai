@@ -84,7 +84,7 @@ static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const 
  */
 void SV_ClearWorld (void)
 {
-	SV_CreateWorldSector(0, sv->mapData.mapMin, sv->mapData.mapMax);
+	SV_CreateWorldSector(0, sv->mapData.mapBox.mins, sv->mapData.mapBox.maxs);
 }
 
 static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t* ent)
