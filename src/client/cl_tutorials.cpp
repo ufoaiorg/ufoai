@@ -38,10 +38,9 @@ static int numTutorials;
 
 static void TUT_GetTutorials_f (void)
 {
-	int i;
 	linkedList_t *tutorialList = nullptr;
 
-	for (i = 0; i < numTutorials; i++) {
+	for (int i = 0; i < numTutorials; i++) {
 		const tutorial_t *t = &tutorials[i];
 		LIST_AddString(&tutorialList, va("%s", _(t->name)));
 	}
@@ -50,10 +49,8 @@ static void TUT_GetTutorials_f (void)
 
 static void TUT_List_f (void)
 {
-	int i;
-
 	Com_Printf("Tutorials: %i\n", numTutorials);
-	for (i = 0; i < numTutorials; i++) {
+	for (int i = 0; i < numTutorials; i++) {
 		Com_Printf("tutorial: %s\n", tutorials[i].name);
 		Com_Printf("..sequence: %s\n", tutorials[i].sequence);
 	}
@@ -64,14 +61,12 @@ static void TUT_List_f (void)
  */
 static void TUT_ListClick_f (void)
 {
-	int num;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	const int num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= numTutorials)
 		return;
 
@@ -88,7 +83,6 @@ void TUT_InitStartup (void)
 	numTutorials = 0;
 }
 
-
 static const value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
 	{"sequence", V_STRING, offsetof(tutorial_t, sequence), 0},
@@ -100,14 +94,12 @@ static const value_t tutValues[] = {
  */
 void TUT_ParseTutorials (const char* name, const char** text)
 {
-	tutorial_t *t;
-
 	/* parse tutorials */
 	if (numTutorials >= MAX_TUTORIALS) {
 		Com_Printf("Too many tutorials, '%s' ignored.\n", name);
 		return;
 	}
-	t = &tutorials[numTutorials++];
+	tutorial_t *t = &tutorials[numTutorials++];
 	OBJZERO(*t);
 
 	Com_ParseBlock(name, text, t, tutValues, nullptr);
