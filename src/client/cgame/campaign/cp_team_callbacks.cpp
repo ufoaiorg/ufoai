@@ -360,8 +360,8 @@ static void CP_TEAM_ChangeSkin_f (void)
 		Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	int ucn = atoi(cgi->Cmd_Argv(1));
-	int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
+	const int ucn = atoi(cgi->Cmd_Argv(1));
+	const int bodySkinIdx = atoi(cgi->Cmd_Argv(2));
 
 	Employee* soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == nullptr || !soldier->isSoldier()) {
