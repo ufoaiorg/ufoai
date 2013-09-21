@@ -310,36 +310,36 @@ typedef struct game_export_s {
 	/** the init function will only be called when a game starts,
 	 * not each time a level is loaded.  Persistant data for clients
 	 * and the server can be allocated in init */
-	void (EXPORT *Init) (void);
-	void (EXPORT *Shutdown) (void);
+	void (EXPORT* Init) (void);
+	void (EXPORT* Shutdown) (void);
 
 	/* each new level entered will cause a call to G_SpawnEntities */
-	void (EXPORT *SpawnEntities) (const char* mapname, bool day, const char* entstring);
+	void (EXPORT* SpawnEntities) (const char* mapname, bool day, const char* entstring);
 
-	bool (EXPORT *ClientConnect) (player_t* client, char* userinfo, size_t userinfoSize);
-	bool (EXPORT *ClientBegin) (player_t &client);
-	void (EXPORT *ClientStartMatch) (player_t &client);
-	void (EXPORT *ClientUserinfoChanged) (player_t &client, const char* userinfo);
-	void (EXPORT *ClientDisconnect) (player_t &client);
-	void (EXPORT *ClientCommand) (player_t &client);
+	bool (EXPORT* ClientConnect) (player_t* client, char* userinfo, size_t userinfoSize);
+	bool (EXPORT* ClientBegin) (player_t &client);
+	void (EXPORT* ClientStartMatch) (player_t &client);
+	void (EXPORT* ClientUserinfoChanged) (player_t &client, const char* userinfo);
+	void (EXPORT* ClientDisconnect) (player_t &client);
+	void (EXPORT* ClientCommand) (player_t &client);
 
-	int (EXPORT *ClientAction) (player_t &client);
-	void (EXPORT *ClientEndRound) (player_t &client);
-	void (EXPORT *ClientTeamInfo) (const player_t &client);
-	void (EXPORT *ClientInitActorStates) (const player_t &client);
-	int (EXPORT *ClientGetTeamNum) (const player_t &client);
-	bool (EXPORT *ClientIsReady) (const player_t* client);	/* assert ! */
+	int (EXPORT* ClientAction) (player_t &client);
+	void (EXPORT* ClientEndRound) (player_t &client);
+	void (EXPORT* ClientTeamInfo) (const player_t &client);
+	void (EXPORT* ClientInitActorStates) (const player_t &client);
+	int (EXPORT* ClientGetTeamNum) (const player_t &client);
+	bool (EXPORT* ClientIsReady) (const player_t* client);	/* assert ! */
 
-	int (EXPORT *ClientGetActiveTeam) (void);
-	const char* (EXPORT *ClientGetName) (int pnum);
+	int (EXPORT* ClientGetActiveTeam) (void);
+	const char* (EXPORT* ClientGetName) (int pnum);
 
-	bool (EXPORT *RunFrame) (void);
+	bool (EXPORT* RunFrame) (void);
 
 	/** ServerCommand will be called when an "sv <command>" command is issued on the
 	 * server console.
 	 * The game can issue gi.Cmd_Argc() / gi.Cmd_Argv() commands to get the rest
 	 * of the parameters */
-	void (EXPORT *ServerCommand) (void);
+	void (EXPORT* ServerCommand) (void);
 
 	/* global variables shared between game and server */
 

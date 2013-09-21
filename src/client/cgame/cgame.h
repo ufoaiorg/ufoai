@@ -35,49 +35,49 @@ typedef struct cgame_export_s {
 	const char* name;
 	const char* menu;
 	int isMultiplayer;
-	void (EXPORT *Init) (void);
-	void (EXPORT *Shutdown) (void);
+	void (EXPORT* Init) (void);
+	void (EXPORT* Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
-	bool (EXPORT *Spawn) (linkedList_t** chrList);
+	bool (EXPORT* Spawn) (linkedList_t** chrList);
 	/** some gametypes only support special maps */
-	const mapDef_t* (EXPORT *MapInfo) (int step);
+	const mapDef_t* (EXPORT* MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (EXPORT *Results) (dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], bool nextmap);
+	void (EXPORT* Results) (dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], bool nextmap);
 	/** check whether the given item is usable in the current game mode */
-	bool (EXPORT *IsItemUseable) (const objDef_t *od);
+	bool (EXPORT* IsItemUseable) (const objDef_t *od);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
-	const char* (EXPORT *GetModelForItem) (const char* string);
+	const char* (EXPORT* GetModelForItem) (const char* string);
 	/** returns the equipment definition the game mode is using */
-	equipDef_t* (EXPORT *GetEquipmentDefinition) (void);
+	equipDef_t* (EXPORT* GetEquipmentDefinition) (void);
 	/** update character display values for game type dependent stuff */
-	void (EXPORT *UpdateCharacterValues) (const character_t *chr);
+	void (EXPORT* UpdateCharacterValues) (const character_t *chr);
 	/** checks whether the given team is known in the particular gamemode */
-	bool (EXPORT *IsTeamKnown) (const teamDef_t *teamDef);
+	bool (EXPORT* IsTeamKnown) (const teamDef_t *teamDef);
 	/** returns the selected character */
-	character_t* (EXPORT *GetSelectedChr) (void);
+	character_t* (EXPORT* GetSelectedChr) (void);
 	/** if you want to have a different control on how much a soldier can carry implement this (but max is still limited to actor strength) */
-	int (EXPORT *GetChrMaxLoad) (const character_t *chr);
+	int (EXPORT* GetChrMaxLoad) (const character_t *chr);
 	/** called on errors */
-	void (EXPORT *Drop) (void);
+	void (EXPORT* Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	dbuffer *(EXPORT *InitializeBattlescape) (const linkedList_t *team);
+	dbuffer *(EXPORT* InitializeBattlescape) (const linkedList_t *team);
 	/** callback that is executed every frame */
-	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
-	void (EXPORT *HandleBaseClick) (int baseIdx, int key, int col, int row);
-	void (EXPORT *DrawBase) (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
-	void (EXPORT *DrawBaseLayout) (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
-	void (EXPORT *DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
-	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
-	void (EXPORT *StartBattlescape) (bool isTeamPlay);
-	void (EXPORT *InitMissionBriefing) (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs);
-	const char* (EXPORT *GetTeamDef) (void);
-	void (EXPORT *NotifyEvent) (event_t eventType);
-	void (EXPORT *AddChatMessage) (const char* message);
-	bool (EXPORT *HandleServerCommand) (const char* command, dbuffer *msg);
+	void (EXPORT* RunFrame) (float secondsSinceLastFrame);
+	void (EXPORT* HandleBaseClick) (int baseIdx, int key, int col, int row);
+	void (EXPORT* DrawBase) (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
+	void (EXPORT* DrawBaseLayout) (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
+	void (EXPORT* DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
+	void (EXPORT* EndRoundAnnounce) (int playerNum, int team);
+	void (EXPORT* StartBattlescape) (bool isTeamPlay);
+	void (EXPORT* InitMissionBriefing) (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs);
+	const char* (EXPORT* GetTeamDef) (void);
+	void (EXPORT* NotifyEvent) (event_t eventType);
+	void (EXPORT* AddChatMessage) (const char* message);
+	bool (EXPORT* HandleServerCommand) (const char* command, dbuffer *msg);
 
-	void (EXPORT *MapDraw) (geoscapeData_t *data);
-	void (EXPORT *MapDrawMarkers) (const uiNode_t* node);
-	void (EXPORT *MapClick) (const uiNode_t *node, int x, int y, const vec2_t pos);
+	void (EXPORT* MapDraw) (geoscapeData_t *data);
+	void (EXPORT* MapDrawMarkers) (const uiNode_t* node);
+	void (EXPORT* MapClick) (const uiNode_t *node, int x, int y, const vec2_t pos);
 } cgame_export_t;
 
 typedef struct cgameType_s {

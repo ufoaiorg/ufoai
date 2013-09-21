@@ -95,11 +95,11 @@ struct OpenGLBinding
 		}
 
 		// GL_ARB_multitexture
-		void (QGL_DLLEXPORT *m_glActiveTexture) (GLenum texture);
-		void (QGL_DLLEXPORT *m_glClientActiveTexture) (GLenum texture);
+		void (QGL_DLLEXPORT* m_glActiveTexture) (GLenum texture);
+		void (QGL_DLLEXPORT* m_glClientActiveTexture) (GLenum texture);
 
 		// GL_ARB_imaging
-		void (QGL_DLLEXPORT *m_glBlendColor) (GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+		void (QGL_DLLEXPORT* m_glBlendColor) (GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
 
 		bool support_ARB_multitexture;
 		bool ARB_multitexture ()
