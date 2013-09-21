@@ -238,7 +238,7 @@ bodydef humanoid_standard {
 		shape "1 0.3 0.4 0.47"
 		bleed 10
 		threshold 10
-		penalty (reaction 25)
+		penalty (shooting 25)
 	}
 	bodypart humanoid_legs {
 		name "_Legs"
