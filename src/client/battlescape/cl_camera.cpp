@@ -388,7 +388,7 @@ static void CL_CamSetZoom_f (void)
 
 static void CL_CenterCameraIntoMap_f (void)
 {
-	VectorCenterFromMinsMaxs(cl.mapData->mapBox.mins, cl.mapData->mapBox.maxs, cl.cam.origin);
+	cl.mapData->mapBox.getCenter(cl.cam.origin);
 }
 
 void CL_CameraInit (void)
