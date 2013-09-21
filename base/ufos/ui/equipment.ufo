@@ -604,6 +604,7 @@ window equipment extends objectinfo
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_body_skin
+		// TODO: ui_team_changeskin is only available in the campaign cgame
 		onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
 		dataid	OPTION_SINGLEPLAYER_SKINS
 	}
