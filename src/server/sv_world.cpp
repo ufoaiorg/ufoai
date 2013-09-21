@@ -38,14 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const vec3_t maxs)
 {
-	worldSector_t* anode;
-	vec3_t size;
-	vec3_t mins1, maxs1, mins2, maxs2;
-
 	if (sv->numWorldSectors >= lengthof(sv->worldSectors))
 		Com_Error(ERR_DROP, "SV_CreateWorldSector: overflow");
 
-	anode = &sv->worldSectors[sv->numWorldSectors];
+	worldSector_t* anode = &sv->worldSectors[sv->numWorldSectors];
 	sv->numWorldSectors++;
 
 	anode->entities = nullptr;
@@ -56,12 +52,14 @@ static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const 
 		return anode;
 	}
 
+	vec3_t size;
 	VectorSubtract(maxs, mins, size);
 	if (size[0] > size[1])
 		anode->axis = PLANE_X;
 	else
 		anode->axis = PLANE_Y;
 
+	vec3_t mins1, maxs1, mins2, maxs2;
 	anode->dist = 0.5f * (maxs[anode->axis] + mins[anode->axis]);
 	VectorCopy(mins, mins1);
 	VectorCopy(mins, mins2);
