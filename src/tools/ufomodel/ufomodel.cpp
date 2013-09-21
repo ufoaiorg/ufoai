@@ -228,14 +228,14 @@ static model_t* LoadModel (const char* name)
 static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const char* fileName)
 {
 	int i;
-	qFILE f;
 	uint32_t version = MDX_VERSION;
 	int32_t numIndexes, numVerts;
 
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
+	ScopedFile f;
 	FS_OpenFile(fileName, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("  \\ - can not open '%s' for writing\n", fileName);
 		return;
 	}
@@ -253,8 +253,6 @@ static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const cha
 		const int32_t idx = LittleLong(mesh->indexes[i]);
 		FS_Write(&idx, sizeof(idx), &f);
 	}
-
-	FS_CloseFile(&f);
 }
 
 static int PrecalcNormalsAndTangents (const char* filename)

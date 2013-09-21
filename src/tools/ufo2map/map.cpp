@@ -502,7 +502,6 @@ static int materialsCnt = 0;
  */
 static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t* s)
 {
-	qFILE f;
 	bool terrainByTexture = false;
 	char fileBase[MAX_OSPATH], materialPath[MAX_OSPATH];
 
@@ -518,8 +517,9 @@ static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t*
 	Com_StripExtension(filename, fileBase, sizeof(fileBase));
 	Com_sprintf(materialPath, sizeof(materialPath), "materials/%s.mat", Com_SkipPath(fileBase));
 
+	ScopedFile f;
 	FS_OpenFile(materialPath, &f, FILE_APPEND);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("Could not open material file '%s' for writing\n", materialPath);
 		config.generateMaterialFile = false;
 		return;
@@ -557,8 +557,6 @@ static void GenerateMaterialFile (const char* filename, int mipTexIndex, side_t*
 		textureref[mipTexIndex].materialMarked = true;
 		materialsCnt++;
 	}
-
-	FS_CloseFile(&f);
 }
 
 /** @brief Amount of footstep surfaces found in this map */
@@ -574,9 +572,6 @@ static int footstepsCnt = 0;
  */
 static void GenerateFootstepList (const char* filename, int mipTexIndex)
 {
-	qFILE f;
-	char fileBase[MAX_OSPATH];
-
 	if (!config.generateFootstepFile)
 		return;
 
@@ -585,10 +580,12 @@ static void GenerateFootstepList (const char* filename, int mipTexIndex)
 
 	assert(filename);
 
+	char fileBase[MAX_OSPATH];
 	Com_StripExtension(filename, fileBase, sizeof(fileBase));
 
+	ScopedFile f;
 	FS_OpenFile(va("%s.footsteps", fileBase), &f, FILE_APPEND);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("Could not open footstep file '%s.footsteps' for writing\n", fileBase);
 		config.generateFootstepFile = false;
 		return;
@@ -598,7 +595,6 @@ static void GenerateFootstepList (const char* filename, int mipTexIndex)
 #else
 	FS_Printf(&f, "%s\n", textureref[mipTexIndex].name);
 #endif
-	FS_CloseFile(&f);
 	footstepsCnt++;
 	textureref[mipTexIndex].footstepMarked = true;
 }
@@ -1066,19 +1062,18 @@ static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE *f)
  */
 void WriteMapFile (const char* filename)
 {
-	qFILE f;
-	int i, j, jc;
 	int removed;
 
 	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
 
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_WRITE);
-	if (!f.f)
+	if (!f)
 		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
 	FS_Printf(&f, "\n");
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const entity_t* mapent = &entities[i];
 		const epair_t* e = mapent->epairs;
 
@@ -1093,6 +1088,7 @@ void WriteMapFile (const char* filename)
 		/* need 2 counters. j counts the brushes in the source entity.
 		 * jc counts the brushes written back. they may differ if some are skipped,
 		 * eg they are microbrushes */
+		int j, jc;
 		for (j = 0, jc = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t* brush = &mapbrushes[mapent->firstbrush + j];
 			if (brush->skipWriteBack)
@@ -1105,8 +1101,7 @@ void WriteMapFile (const char* filename)
 			int numToAdd;
 			mapbrush_t** brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
 			if (brushesToAdd != nullptr) {
-				int k;
-				for (k = 0; k < numToAdd; k++) {
+				for (int k = 0; k < numToAdd; k++) {
 					if (brushesToAdd[k]->skipWriteBack)
 						continue;
 					WriteMapBrush(brushesToAdd[k], j++, &f);
@@ -1119,7 +1114,6 @@ void WriteMapFile (const char* filename)
 
 	if (removed)
 		Verb_Printf(VERB_NORMAL, "removed %i entities\n", removed);
-	FS_CloseFile(&f);
 }
 
 /**

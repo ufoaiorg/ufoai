@@ -317,20 +317,19 @@ static void AddLump (qFILE *bspfile, dBspHeader_t* header, int lumpnum, void* da
  */
 long WriteBSPFile (const char* filename)
 {
-	qFILE bspfile;
 	dBspHeader_t outheader;
 	long size;
 
 	OBJZERO(outheader);
-	OBJZERO(bspfile);
 
 	SwapBSPFile();
 
 	outheader.ident = LittleLong(IDBSPHEADER);
 	outheader.version = LittleLong(BSPVERSION);
 
+	ScopedFile bspfile;
 	FS_OpenFile(filename, &bspfile, FILE_WRITE);
-	if (!bspfile.f)
+	if (!bspfile)
 		Sys_Error("Could not write bsp file");
 	FS_Write(&outheader, sizeof(outheader), &bspfile);	/* overwritten later */
 
@@ -351,11 +350,10 @@ long WriteBSPFile (const char* filename)
 	AddLump(&bspfile, &outheader, LUMP_LIGHTING_DAY, curTile->lightdata[1], curTile->lightdatasize[1]);
 	AddLump(&bspfile, &outheader, LUMP_ROUTING, curTile->routedata, curTile->routedatasize);
 	AddLump(&bspfile, &outheader, LUMP_ENTITIES, curTile->entdata, curTile->entdatasize);
-	size = ftell(bspfile.f);
+	size = ftell(bspfile.getFile());
 
-	fseek(bspfile.f, 0L, SEEK_SET);
+	fseek(bspfile.getFile(), 0L, SEEK_SET);
 	FS_Write(&outheader, sizeof(outheader), &bspfile);
-	FS_CloseFile(&bspfile);
 
 	SwapBSPFile();
 

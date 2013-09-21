@@ -63,16 +63,15 @@ static void CL_LogEvent (const eventRegister_t* eventData)
 	if (!cl_log_battlescape_events->integer)
 		return;
 
-	qFILE f;
+	ScopedFile f;
 	FS_OpenFile("events.log", &f, FILE_APPEND);
-	if (!f.f)
+	if (!f)
 		return;
 
 	char tbuf[32];
 	Com_MakeTimestamp(tbuf, sizeof(tbuf));
 
 	FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, CL_GetConfigString(CS_MAPTITLE), cl.time, eventData->name);
-	FS_CloseFile(&f);
 }
 
 /**

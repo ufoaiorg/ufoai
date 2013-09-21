@@ -105,10 +105,9 @@ static void ASE_FreeGeomObject(int ndx);
 
 void ASE_Load (const char* filename, bool verbose)
 {
-	qFILE file;
-
+	ScopedFile file;
 	FS_OpenFile(filename, &file, FILE_READ);
-	if (!file.f && !file.z)
+	if (!file)
 		Sys_Error("File not found '%s'", filename);
 
 	OBJZERO(ase);
@@ -123,11 +122,8 @@ void ASE_Load (const char* filename, bool verbose)
 	Verb_Printf(VERB_EXTRA, "Processing '%s'\n", filename);
 
 	if (FS_Read(ase.buffer, ase.len, &file) != 1) {
-		FS_CloseFile(&file);
 		Sys_Error("fread() != -1 for '%s'", filename);
 	}
-
-	FS_CloseFile(&file);
 
 	ASE_Process();
 }

@@ -102,7 +102,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char* filename, co
 {
 	char	checkName[MAX_OSPATH];
 	int		type, quality = 100;
-	qFILE	f;
 	int rowPack;
 
 	glGetIntegerv(GL_PACK_ALIGNMENT, &rowPack);
@@ -161,8 +160,9 @@ void R_ScreenShot (int x, int y, int width, int height, const char* filename, co
 	}
 
 	/* Open it */
+	ScopedFile f;
 	FS_OpenFile(checkName, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);
 		return;
 	}
@@ -171,7 +171,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char* filename, co
 	byte* const buffer = Mem_PoolAllocTypeN(byte, width * height * 3, vid_imagePool);
 	if (!buffer) {
 		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", width * height * 3);
-		FS_CloseFile(&f);
 		return;
 	}
 
@@ -195,7 +194,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char* filename, co
 	}
 
 	/* Finish */
-	FS_CloseFile(&f);
 	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s to %s\n", checkName, FS_Gamedir());

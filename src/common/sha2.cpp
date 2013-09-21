@@ -270,7 +270,7 @@ void Com_SHA2Finish (sha2_context *ctx, byte digest[32])
 
 bool Com_SHA2File (const char* filename, byte digest[32])
 {
-	qFILE f;
+	ScopedFile f;
 	const int filelen = FS_OpenFile(filename, &f, FILE_READ);
 	if (filelen < 1)
 		return false;
@@ -287,8 +287,6 @@ bool Com_SHA2File (const char* filename, byte digest[32])
 	}
 
 	Com_SHA2Finish(&ctx, digest);
-
-	FS_CloseFile(&f);
 	return true;
 }
 

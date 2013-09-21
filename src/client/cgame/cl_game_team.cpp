@@ -152,10 +152,10 @@ void GAME_TeamSlotComments_f (void)
 
 	FS_BuildFileList(pattern);
 	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
-		qFILE f;
+		ScopedFile f;
 		const char* savePath = va("%s/%s", relSavePath, filename);
 		FS_OpenFile(savePath, &f, FILE_READ);
-		if (!f.f && !f.z) {
+		if (!f) {
 			Com_Printf("Warning: Could not open '%s'\n", filename);
 			continue;
 		}
@@ -163,10 +163,8 @@ void GAME_TeamSlotComments_f (void)
 		const int clen = sizeof(header);
 		if (FS_Read(&header, clen, &f) != clen) {
 			Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-			FS_CloseFile(&f);
 			continue;
 		}
-		FS_CloseFile(&f);
 		if (LittleLong(header.version) != TEAM_SAVE_FILE_VERSION) {
 			Com_Printf("Warning: Version mismatch in '%s'\n", filename);
 			continue;
@@ -330,15 +328,15 @@ void GAME_SaveTeam_f (void)
  */
 static bool GAME_LoadTeam (const char* filename)
 {
-	qFILE f;
 	int clen;
 	xmlNode_t* topNode, *node, *snode, *ssnode;
 	teamSaveFileHeader_t header;
 	equipDef_t* ed;
 
 	/* open file */
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_READ);
-	if (!f.f && !f.z) {
+	if (!f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		return false;
 	}
@@ -347,11 +345,9 @@ static bool GAME_LoadTeam (const char* filename)
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen, cl_genericPool);
 	if (FS_Read(cbuf, clen, &f) != clen) {
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-		FS_CloseFile(&f);
 		Mem_Free(cbuf);
 		return false;
 	}
-	FS_CloseFile(&f);
 
 	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */

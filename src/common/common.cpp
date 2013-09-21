@@ -1012,10 +1012,10 @@ static bool Com_CvarCheckMaxFPS (cvar_t* cvar)
  */
 void Com_WriteConfigToFile (const char* filename)
 {
-	qFILE f;
+	ScopedFile f;
 
 	FS_OpenFile(filename, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f.file()) {
 		Com_Printf("Couldn't write %s.\n", filename);
 		return;
 	}
@@ -1025,7 +1025,6 @@ void Com_WriteConfigToFile (const char* filename)
 	Cvar_WriteVariables(&f);
 	FS_Printf(&f, "// aliases\n");
 	Cmd_WriteAliases(&f);
-	FS_CloseFile(&f);
 	Com_Printf("Wrote %s.\n", filename);
 }
 

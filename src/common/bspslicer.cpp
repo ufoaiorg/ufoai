@@ -12,15 +12,13 @@
 
 static bool SL_CreatePNGFile (const char* filename, unsigned char* buffer, int width, int height)
 {
-	qFILE f;
+	ScopedFile f;
 
 	/* create the .bmp file... */
 	if (FS_OpenFile(filename, &f, FILE_WRITE) == -1)
 		return false;
 
 	R_WritePNG(&f, buffer, width, height);
-
-	FS_CloseFile(&f);
 
 	return true;
 }

@@ -57,15 +57,14 @@ void MD2SkinEdit (const byte* buf, const char* fileName, int bufSize, void* user
 		scanf(va("%%%is", MD2_MAX_SKINNAME), name);
 	}
 
-	qFILE md2ModelFile;
+	ScopedFile md2ModelFile;
 	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
-	if (!md2ModelFile.f) {
+	if (!md2ModelFile) {
 		Com_Printf("Error writing md2 file %s\n", fileName);
 		Mem_Free(copy);
 		return;
 	}
 	FS_Write(copy, bufSize, &md2ModelFile);
-	FS_CloseFile(&md2ModelFile);
 	Mem_Free(copy);
 }
 
@@ -200,15 +199,14 @@ void MD2SkinNum (const byte* buf, const char* fileName, int bufSize, void* userD
 			scanf(va("%%%is", MD2_MAX_SKINNAME), name);
 		}
 	}
-	qFILE md2ModelFile;
+	ScopedFile md2ModelFile;
 	FS_OpenFile(fileName, &md2ModelFile, FILE_WRITE);
-	if (!md2ModelFile.f) {
+	if (!md2ModelFile) {
 		Com_Printf("Error writing md2 file %s\n", fileName);
 		Mem_Free(copy);
 		return;
 	}
 	FS_Write(copy, md2->ofs_end, &md2ModelFile);
-	FS_CloseFile(&md2ModelFile);
 	Mem_Free(copy);
 }
 

@@ -1465,16 +1465,16 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing &routing, const in
 void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
-	qFILE f;
-	int i, x, y, z;
+	int x, y, z;
 
 	/* An elevation files- dumps the floor and ceiling levels relative to each cell. */
-	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
+	for (int i = 1; i <= ACTOR_MAX_SIZE; i++) {
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.elevation.csv", i);
 		Com_DefaultExtension(filename, sizeof(filename), ext);
+		ScopedFile f;
 		FS_OpenFile(filename, &f, FILE_WRITE);
-		if (!f.f)
+		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
 		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
@@ -1491,16 +1491,16 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 			}
 			FS_Printf(&f, "\n");
 		}
-		FS_CloseFile(&f);
 	}
 
 	/* Output the walls/passage files. */
-	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
+	for (int i = 1; i <= ACTOR_MAX_SIZE; i++) {
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.walls.csv", i);
 		Com_DefaultExtension(filename, sizeof(filename), ext);
+		ScopedFile f;
 		FS_OpenFile(filename, &f, FILE_WRITE);
-		if (!f.f)
+		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
 		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
@@ -1550,7 +1550,6 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
 			}
 			FS_Printf(&f, "\n");
 		}
-		FS_CloseFile(&f);
 	}
 }
 

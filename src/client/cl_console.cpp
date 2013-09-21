@@ -228,20 +228,18 @@ void Con_CheckResize (void)
  */
 void Con_LoadConsoleHistory (void)
 {
-	qFILE f;
 	char line[MAXCMDLINE];
 
 	if (!con_history->integer)
 		return;
 
-	OBJZERO(f);
-
+	ScopedFile f;
 	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_READ);
-	if (!f.f)
+	if (!f)
 		return;
 
 	/* we have to skip the initial line char and the string end char. */
-	while (fgets(line, MAXCMDLINE - 2, f.f)) {
+	while (fgets(line, MAXCMDLINE - 2, f.getFile())) {
 		if (line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = 0;
 		Q_strncpyz(&keyLines[editLine][1], line, MAXCMDLINE - 1);
@@ -249,8 +247,6 @@ void Con_LoadConsoleHistory (void)
 		historyLine = editLine;
 		keyLines[editLine][1] = 0;
 	}
-
-	FS_CloseFile(&f);
 }
 
 /**
@@ -260,15 +256,15 @@ void Con_LoadConsoleHistory (void)
 void Con_SaveConsoleHistory (void)
 {
 	int i;
-	qFILE f;
 	const char* lastLine = nullptr;
 
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)
 		return;
 
+	ScopedFile f;
 	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f.file()) {
 		Com_Printf("Can not open " CONSOLE_HISTORY_FILENAME " for writing\n");
 		return;
 	}
@@ -283,7 +279,6 @@ void Con_SaveConsoleHistory (void)
 			FS_Write("\n", 1, &f);
 		}
 	}
-	FS_CloseFile(&f);
 }
 
 void Con_Init (void)

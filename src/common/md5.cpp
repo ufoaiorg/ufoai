@@ -262,7 +262,7 @@ static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
  */
 const char* Com_MD5File (const char* fn, int length)
 {
-	qFILE f;
+	ScopedFile f;
 	const int filelen = FS_OpenFile(fn, &f, FILE_READ);
 	if (filelen < 1)
 		return "unknown";
@@ -286,7 +286,6 @@ const char* Com_MD5File (const char* fn, int length)
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
-	FS_CloseFile(&f);
 	unsigned char digest[16] = { "" };
 	MD5Final(&md5, digest);
 

@@ -328,22 +328,19 @@ static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t *node, int depth)
  */
 static void UI_EditorNodeExtract_f (void)
 {
-	uiNode_t* window;
-	qFILE file;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <windowname>\n", Cmd_Argv(0));
 		return;
 	}
-	window = UI_GetWindow(Cmd_Argv(1));
+	uiNode_t* window = UI_GetWindow(Cmd_Argv(1));
 	if (!window) {
 		Com_Printf("Window '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 
+	ScopedFile file;
 	FS_OpenFile(va("window_%s_extracted.ufo", window->name), &file, FILE_WRITE);
 	UI_EditorNodeExtractNode(&file, window, 0);
-	FS_CloseFile(&file);
 
 	Com_Printf("Window '%s' extracted.\n", Cmd_Argv(1));
 }

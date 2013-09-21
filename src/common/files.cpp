@@ -301,8 +301,6 @@ int FS_Seek (qFILE * f, long offset, int origin)
  */
 int FS_CheckFile (const char* fmt, ...)
 {
-	int result;
-	qFILE file;
 	va_list ap;
 	char filename[MAX_QPATH];
 
@@ -310,11 +308,8 @@ int FS_CheckFile (const char* fmt, ...)
 	Q_vsnprintf(filename, sizeof(filename), fmt, ap);
 	va_end(ap);
 
-	result = FS_OpenFile(filename, &file, FILE_READ);
-	if (result != -1)
-		FS_CloseFile(&file);
-
-	return result;
+	ScopedFile file;
+	return FS_OpenFile(filename, &file, FILE_READ);
 }
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
@@ -395,19 +390,18 @@ int FS_Read (void* buffer, int len, qFILE * f)
  */
 int FS_LoadFile (const char* path, byte** buffer)
 {
-	qFILE h;
+	ScopedFile h;
 	int len;
 
 	/* look for it in the filesystem or pack files */
 	len = FS_OpenFile(path, &h, FILE_READ);
-	if (!h.f && !h.z) {
+	if (!h) {
 		if (buffer)
 			*buffer = nullptr;
 		return -1;
 	}
 
 	if (!buffer) {
-		FS_CloseFile(&h);
 		return len;
 	}
 
@@ -418,8 +412,6 @@ int FS_LoadFile (const char* path, byte** buffer)
 
 	FS_Read(buf, len, &h);
 	buf[len] = 0;
-
-	FS_CloseFile(&h);
 
 	return len;
 }
@@ -1373,23 +1365,19 @@ static int FS_MapDefSort (const void* map1, const void* map2)
  */
 static int CheckBSPFile (const char* filename)
 {
-	int i;
-	int header[2];
-	qFILE file;
-	char name[MAX_QPATH];
-
 	/* load the file */
+	char name[MAX_QPATH];
 	Com_sprintf(name, sizeof(name), "maps/%s.bsp", filename);
 
+	ScopedFile file;
 	FS_OpenFile(name, &file, FILE_READ);
-	if (!file.f && !file.z)
+	if (!file)
 		return 1;
 
+	int header[2];
 	FS_Read(header, sizeof(header), &file);
 
-	FS_CloseFile(&file);
-
-	for (i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
 		header[i] = LittleLong(header[i]);
 
 	if (header[0] != IDBSPHEADER)
@@ -1584,17 +1572,13 @@ int FS_Write (const void* buffer, int len, qFILE * f)
 
 int FS_WriteFile (const void* buffer, size_t len, const char* filename)
 {
-	qFILE f;
-	int c, lencheck;
-
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_WRITE);
-	if (f.f)
-		c = FS_Write(buffer, len, &f);
-	else
+	if (!f)
 		return 0;
 
-	lencheck = FS_FileLength(&f);
-	FS_CloseFile(&f);
+	const int c = FS_Write(buffer, len, &f);
+	const int lencheck = FS_FileLength(&f);
 
 	/* if file write failed (file is incomplete) then delete it */
 	if (c != len || lencheck != len) {

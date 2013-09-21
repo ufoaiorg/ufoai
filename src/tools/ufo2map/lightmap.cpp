@@ -888,13 +888,9 @@ void BuildFacelights (unsigned int facenum)
 #define TGA_HEADER_SIZE 18
 static void WriteTGA24 (const char* filename, const byte*  data, int width, int height, int offset)
 {
-	int i, size;
-	byte* buffer;
-	qFILE file;
-
-	size = width * height * 3;
+	const int size = width * height * 3;
 	/* allocate a buffer and set it up */
-	buffer = Mem_AllocTypeN(byte, size + TGA_HEADER_SIZE);
+	byte* buffer = Mem_AllocTypeN(byte, size + TGA_HEADER_SIZE);
 	memset(buffer, 0, TGA_HEADER_SIZE);
 	buffer[2] = 2;
 	buffer[12] = width & 255;
@@ -906,20 +902,20 @@ static void WriteTGA24 (const char* filename, const byte*  data, int width, int 
 	buffer[17] = 32;
 
 	/* swap rgb to bgr */
-	for (i = 0; i < size; i += 3) {
+	for (int i = 0; i < size; i += 3) {
 		buffer[i + TGA_HEADER_SIZE] = data[i*2 + offset + 2];	/* blue */
 		buffer[i + TGA_HEADER_SIZE + 1] = data[i*2 + offset + 1];	/* green */
 		buffer[i + TGA_HEADER_SIZE + 2] = data[i*2 + offset + 0];	/* red */
 	}
 
 	/* write it and free the buffer */
+	ScopedFile file;
 	if (FS_OpenFile(filename, &file, FILE_WRITE) > 0)
 		Sys_Error("Unable to open %s for writing", filename);
 
 	FS_Write(buffer, size + TGA_HEADER_SIZE, &file);
 
 	/* close the file */
-	FS_CloseFile(&file);
 	Mem_Free(buffer);
 }
 
@@ -934,9 +930,8 @@ static void CalcTextureSize (const dBspSurface_t* s, vec2_t texsize, int scale)
 {
 	const float* stmins = face_extents[s - curTile->faces].stmins;
 	const float* stmaxs = face_extents[s - curTile->faces].stmaxs;
-	int i;
 
-	for (i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++) {
 		const float mins = floor(stmins[i] / scale);
 		const float maxs = ceil(stmaxs[i] / scale);
 
@@ -952,13 +947,12 @@ static void CalcTextureSize (const dBspSurface_t* s, vec2_t texsize, int scale)
  */
 static void ExportLightmap (const char* path, const char* name, bool day)
 {
-	int i;
 	const int lightmapIndex = day ? 1 : 0;
 	const byte* bspLightBytes = curTile->lightdata[lightmapIndex];
 	const byte quant = *bspLightBytes;
 	const int scale = 1 << quant;
 
-	for (i = 0; i < curTile->numfaces; i++) {
+	for (int i = 0; i < curTile->numfaces; i++) {
 		const dBspSurface_t* face = &curTile->faces[i];
 		const byte* lightmap = bspLightBytes + face->lightofs[lightmapIndex];
 		vec2_t texSize;

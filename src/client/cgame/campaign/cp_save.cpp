@@ -127,7 +127,6 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
 bool SAV_GameLoad (const char* file, const char** error)
 {
 	char filename[MAX_OSPATH];
-	qFILE f;
 	int i, clen;
 	xmlNode_t* topNode, *node;
 	saveFileHeader_t header;
@@ -135,8 +134,9 @@ bool SAV_GameLoad (const char* file, const char** error)
 	/* open file */
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "%s.%s", file, SAVEGAME_EXTENSION);
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_READ);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		*error = "File not found";
 		return false;
@@ -146,7 +146,6 @@ bool SAV_GameLoad (const char* file, const char** error)
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen + 1 /* for '\0' if not compressed */, cp_campaignPool);
 	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	FS_CloseFile(&f);
 	Com_Printf("Loading savegame xml (size %d)\n", clen);
 
 	memcpy(&header, cbuf, sizeof(header));
@@ -396,23 +395,22 @@ static void SAV_GameSave_f (void)
  */
 static void SAV_GameReadGameComment (bool save, const int idx)
 {
-	saveFileHeader_t header;
-	qFILE f;
+	const char* confunc = save ? "update_save_game_info" : "update_load_game_info";
 
 	char filename[MAX_OSPATH];
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
 
-	const char* confunc = save ? "update_save_game_info" : "update_load_game_info";
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_READ);
-	if (!f.f && !f.z) {
+	if (!f) {
 		cgi->UI_ExecuteConfunc("%s %i \"\" \"\" \"\" \"\"", confunc, idx);
 		return;
 	}
 
+	saveFileHeader_t header;
 	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
-	FS_CloseFile(&f);
 
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
@@ -540,8 +538,6 @@ bool SAV_AddSubsystem (saveSubsystems_t* subsystem)
  */
 static void SAV_GameQuickLoadInit_f (void)
 {
-	qFILE f;
-
 	if (cgi->CL_OnBattlescape()) {
 		return;
 	}
@@ -549,10 +545,11 @@ static void SAV_GameQuickLoadInit_f (void)
 	char buf[MAX_OSPATH];
 	cgi->GetRelativeSavePath(buf, sizeof(buf));
 	Q_strcat(buf, sizeof(buf), "slotquick.%s", SAVEGAME_EXTENSION);
+
+	ScopedFile f;
 	FS_OpenFile(buf, &f, FILE_READ);
-	if (f.f || f.z) {
+	if (f) {
 		cgi->UI_PushWindow("quickload");
-		FS_CloseFile(&f);
 	}
 }
 

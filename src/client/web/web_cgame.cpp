@@ -193,21 +193,18 @@ bool WEB_CGameDownloadFromUser (const char* cgameId, int category, const char* f
 	GAME_GetRelativeSavePath(buf, sizeof(buf));
 	Q_strcat(buf, sizeof(buf), "%s", filename);
 
-	qFILE f;
+	ScopedFile f;
 	FS_OpenFile(buf, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("Could not open the target file\n");
-		FS_CloseFile(&f);
 		return false;
 	}
 
 	/* no login is needed here */
-	if (!HTTP_GetToFile(encodedURL, f.f)) {
+	if (!HTTP_GetToFile(encodedURL, f.getFile())) {
 		Com_Printf("cgame file download failed from '%s'\n", url);
-		FS_CloseFile(&f);
 		return false;
 	}
-	FS_CloseFile(&f);
 	return true;
 }
 

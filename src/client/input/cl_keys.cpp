@@ -673,12 +673,11 @@ void Key_WriteBindings (const char* filename)
 	int i;
 	/* this gets true in case of an error */
 	bool deleteFile = false;
-	qFILE f;
 	int cnt = 0;
 
-	OBJZERO(f);
+	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_WRITE);
-	if (!f.f) {
+	if (!f) {
 		Com_Printf("Couldn't write %s.\n", filename);
 		return;
 	}
@@ -725,7 +724,6 @@ void Key_WriteBindings (const char* filename)
 			deleteFile = true;
 	}
 
-	FS_CloseFile(&f);
 	if (!deleteFile && cnt)
 		Com_Printf("Wrote %s\n", filename);
 	else
