@@ -2301,7 +2301,7 @@ static void CL_DebugPath_f (void)
 
 	RT_DebugPathDisplay(cl.mapData->routing, actorSize, x, y, z);
 
-	GridBox mbox(cl.mapData->mapBox.mins, cl.mapData->mapBox.maxs);
+	GridBox mbox(cl.mapData->mapBox);
 	int xW = mbox.maxs[0] - mbox.mins[0];
 	int yW = mbox.maxs[1] - mbox.mins[1];
 	int zW = mbox.maxs[2] - mbox.mins[2];

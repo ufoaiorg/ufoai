@@ -864,7 +864,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 
 	start = time(nullptr);
 
-	GridBox rBox(mapData->mapBox.mins, mapData->mapBox.maxs);	/* the box we will actually reroute */
+	GridBox rBox(mapData->mapBox);	/* the box we will actually reroute */
 	rBox.clipToMaxBoundaries();
 
 	/* Floor pass */
