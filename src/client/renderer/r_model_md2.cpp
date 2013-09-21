@@ -31,15 +31,15 @@ MD2 ALIAS MODELS
 ==============================================================================
 */
 
-static void R_ModLoadTags (model_t *mod, void* buffer, int bufSize)
+static void R_ModLoadTags (model_t* mod, void* buffer, int bufSize)
 {
-	dMD2tag_t *pintag;
+	dMD2tag_t* pintag;
 	int version;
 	int i, j;
 	float* inmat;
 	dMD2tag_t pheader;
 
-	pintag = (dMD2tag_t *) buffer;
+	pintag = (dMD2tag_t* ) buffer;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
@@ -104,13 +104,13 @@ static void R_ModLoadTags (model_t *mod, void* buffer, int bufSize)
 /**
  * @brief Assume that the indexArray is *NOT* filled, and load data for the model accordingly
  */
-static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, bool loadNormals)
+static void R_ModLoadAliasMD2MeshUnindexed (model_t* mod, const dMD2Model_t* md2, int bufSize, bool loadNormals)
 {
 	int i, j;
-	const dMD2Triangle_t *pintri;
-	const dMD2Coord_t *pincoord;
-	mAliasMesh_t *outMesh;
-	mAliasFrame_t *outFrameTmp;
+	const dMD2Triangle_t* pintri;
+	const dMD2Coord_t* pincoord;
+	mAliasMesh_t* outMesh;
+	mAliasFrame_t* outFrameTmp;
 	int32_t tempIndex[MD2_MAX_TRIANGLES * 3];
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
@@ -135,7 +135,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	if (mod->alias.num_meshes == 1) {
 		const char* md2Path;
 		if (R_UseActorSkin() && Q_strstart(outMesh->name, "models/soldiers/")) {
-			image_t *defaultSkin;
+			image_t* defaultSkin;
 			md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
 			defaultSkin = R_AliasModelGetSkin(mod->name, md2Path);
 			R_LoadActorSkinsFromModel(outMesh, defaultSkin);
@@ -174,8 +174,8 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	isw = 1.0 / (double)outMesh->skinWidth;
 
 	/* load triangle lists */
-	pintri = (const dMD2Triangle_t *) ((const byte*) md2 + LittleLong(md2->ofs_tris));
-	pincoord = (const dMD2Coord_t *) ((const byte*) md2 + LittleLong(md2->ofs_st));
+	pintri = (const dMD2Triangle_t* ) ((const byte*) md2 + LittleLong(md2->ofs_tris));
+	pincoord = (const dMD2Coord_t* ) ((const byte*) md2 + LittleLong(md2->ofs_st));
 
 	for (i = 0; i < outMesh->num_tris; i++) {
 		for (j = 0; j < 3; j++) {
@@ -244,7 +244,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of frames for lod model for '%s'\n", mod->name);
 
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
-		const dMD2Frame_t *pinframe = (const dMD2Frame_t *) ((const byte*) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+		const dMD2Frame_t* pinframe = (const dMD2Frame_t* ) ((const byte*) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
 		for (j = 0; j < 3; j++)
 			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
@@ -262,7 +262,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 
 		for (j = 0; j < outMesh->num_indexes; j++) {
 			const int index = tempIndex[indRemap[j]];
-			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			const dMD2TriangleVertex_t* v = &pinframe->verts[index];
 			float* ov = outVertex[outIndex[j]].point;
 			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
 			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
@@ -281,17 +281,17 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 /**
  * @brief Assume that the indexArray is already filled, and load data for the model accordingly
  */
-static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, int bufSize)
+static void R_ModLoadAliasMD2MeshIndexed (model_t* mod, const dMD2Model_t* md2, int bufSize)
 {
 	int i, j;
-	const dMD2Triangle_t *pintri;
-	const dMD2Coord_t *pincoord;
-	mAliasMesh_t *outMesh;
-	mAliasFrame_t *outFrameTmp;
-	mAliasVertex_t *outVertex;
+	const dMD2Triangle_t* pintri;
+	const dMD2Coord_t* pincoord;
+	mAliasMesh_t* outMesh;
+	mAliasFrame_t* outFrameTmp;
+	mAliasVertex_t* outVertex;
 	int32_t tempIndex[MD2_MAX_TRIANGLES * 3];
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
-	int32_t *outIndex;
+	int32_t* outIndex;
 	int frameSize, numIndexes, numVerts;
 	double isw;
 	int md2Verts;
@@ -346,8 +346,8 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	isw = 1.0 / (double)outMesh->skinWidth;
 
 	/* load triangle lists */
-	pintri = (const dMD2Triangle_t *) ((const byte*) md2 + LittleLong(md2->ofs_tris));
-	pincoord = (const dMD2Coord_t *) ((const byte*) md2 + LittleLong(md2->ofs_st));
+	pintri = (const dMD2Triangle_t* ) ((const byte*) md2 + LittleLong(md2->ofs_tris));
+	pincoord = (const dMD2Coord_t* ) ((const byte*) md2 + LittleLong(md2->ofs_st));
 
 	for (i = 0; i < outMesh->num_tris; i++) {
 		for (j = 0; j < 3; j++) {
@@ -380,7 +380,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of frames for lod model for '%s'\n", mod->name);
 
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
-		const dMD2Frame_t *pinframe = (const dMD2Frame_t *) ((const byte*) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+		const dMD2Frame_t* pinframe = (const dMD2Frame_t* ) ((const byte*) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
 		for (j = 0; j < 3; j++)
 			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
@@ -398,7 +398,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 
 		for (j = 0; j < outMesh->num_indexes; j++) {
 			const int index = tempIndex[j];
-			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			const dMD2TriangleVertex_t* v = &pinframe->verts[index];
 			float* ov = outVertex[outIndex[j]].point;
 			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
 			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
@@ -413,7 +413,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 /**
  * @brief See if the model has an MDX file, and then load the model data appropriately for either case
  */
-static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, bool loadNormals)
+static void R_ModLoadAliasMD2Mesh (model_t* mod, const dMD2Model_t* md2, int bufSize, bool loadNormals)
 {
 	int version;
 	size_t size;
@@ -430,9 +430,9 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
 
 	if (mod->alias.meshes == nullptr)
-		mod->alias.meshes = (mAliasMesh_t *)Mem_PoolAlloc(size, vid_modelPool, 0);
+		mod->alias.meshes = (mAliasMesh_t* )Mem_PoolAlloc(size, vid_modelPool, 0);
 	else {
-		mod->alias.meshes = (mAliasMesh_t *)Mem_ReAlloc(mod->alias.meshes, size);
+		mod->alias.meshes = (mAliasMesh_t* )Mem_ReAlloc(mod->alias.meshes, size);
 	}
 
 	if (loadNormals) {
@@ -467,7 +467,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, bool loadNormals)
 			byte* buf;
 			int bufSize;
 			char fileName[MAX_QPATH];
-			const dMD2Model_t *md2;
+			const dMD2Model_t* md2;
 
 			Com_Printf("found lod model for %s\n", mod->name);
 
@@ -478,7 +478,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, bool loadNormals)
 				return;
 
 			/* get the disk data */
-			md2 = (const dMD2Model_t *) buf;
+			md2 = (const dMD2Model_t* ) buf;
 
 			R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
@@ -490,14 +490,14 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, bool loadNormals)
 /**
  * @brief Load MD2 models from file.
  */
-void R_ModLoadAliasMD2Model (model_t *mod, byte* buffer, int bufSize, bool loadNormals)
+void R_ModLoadAliasMD2Model (model_t* mod, byte* buffer, int bufSize, bool loadNormals)
 {
-	dMD2Model_t *md2;
+	dMD2Model_t* md2;
 	byte* tagbuf = nullptr;
 	char tagname[MAX_QPATH];
 
 	/* get the disk data */
-	md2 = (dMD2Model_t *) buffer;
+	md2 = (dMD2Model_t* ) buffer;
 
 	/* only one mesh for md2 models */
 	mod->alias.num_frames = LittleLong(md2->num_frames);

@@ -29,7 +29,7 @@ static model_t r_models[MAX_MOD_KNOWN];
 static int r_numModels;
 static int r_numModelsStatic;
 
-model_t *r_mapTiles[MAX_MAPTILES];
+model_t* r_mapTiles[MAX_MAPTILES];
 int r_numMapTiles;
 
 /* the inline * models from the current map are kept separate */
@@ -53,7 +53,7 @@ static char const* const mod_extensions[] = {
 void R_ModModellist_f (void)
 {
 	int i;
-	model_t *mod;
+	model_t* mod;
 
 	Com_Printf("Loaded models:\n");
 	Com_Printf("Type | #Slot | #Tris   | #Meshes | Filename\n");
@@ -86,7 +86,7 @@ void R_ModModellist_f (void)
 			int j;
 			Com_Printf(" | %5i | %7i | %7i | %s (skins: %i)\n", i, mod->alias.num_meshes, mod->alias.meshes[0].num_tris, mod->name, mod->alias.meshes[0].num_skins);
 			for (j = 0; j < mod->alias.meshes[0].num_skins; j++) {
-				mAliasSkin_t *skin = &mod->alias.meshes[0].skins[j];
+				mAliasSkin_t* skin = &mod->alias.meshes[0].skins[j];
 				Com_Printf("     \\-- skin %i: '%s' (texnum %i and image type %i)\n", j + 1, skin->name, skin->skin->texnum, skin->skin->type);
 			}
 		} else
@@ -98,7 +98,7 @@ void R_ModModellist_f (void)
 	Com_Printf(" - %4i inline models\n", r_numModelsInline);
 }
 
-model_t *R_AllocModelSlot (void)
+model_t* R_AllocModelSlot (void)
 {
 	/* get new model */
 	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
@@ -112,7 +112,7 @@ model_t *R_AllocModelSlot (void)
  * @param[in,out] mod Structure to initialize
  * @return True if the loading was succeed. True or false structure mod was edited.
  */
-static bool R_LoadModel (model_t *mod, const char* filename)
+static bool R_LoadModel (model_t* mod, const char* filename)
 {
 	byte* buf;
 	int modfilelen;
@@ -196,9 +196,9 @@ bool R_ModelExists (const char* name)
  * try to load one of the supported model formats
  * @return nullptr if no model could be found with the given name, model_t otherwise
  */
-model_t *R_FindModel (const char* name)
+model_t* R_FindModel (const char* name)
 {
-	model_t *mod;
+	model_t* mod;
 	model_t model;
 	bool loaded = false;
 	int i;
@@ -262,9 +262,9 @@ model_t *R_FindModel (const char* name)
  * @sa R_FindModel
  * @param[in] name Short name of the model relative to base dir without (models/model)
  */
-model_t *R_GetModel (const char* name)
+model_t* R_GetModel (const char* name)
 {
-	model_t *mod;
+	model_t* mod;
 	int i;
 
 	if (name[0] == '\0')
@@ -306,11 +306,11 @@ void R_SwitchModelMemPoolTag (void)
 		if (!mod->alias.num_meshes)
 			Com_Printf("Model '%s' has no meshes\n", mod->name);
 		for (j = 0; j < mod->alias.num_meshes; j++) {
-			mAliasMesh_t *mesh = &mod->alias.meshes[j];
+			mAliasMesh_t* mesh = &mod->alias.meshes[j];
 			if (!mesh->num_skins)
 				Com_Printf("Model '%s' has no skins\n", mod->name);
 			for (k = 0; k < mesh->num_skins; k++) {
-				mAliasSkin_t *modelSkin = &mesh->skins[k];
+				mAliasSkin_t* modelSkin = &mesh->skins[k];
 				if (modelSkin->skin != r_noTexture)
 					modelSkin->skin->type = it_static;
 				else
@@ -352,7 +352,7 @@ static const char* R_GetActorSkin (int id)
  * @param outMesh Mesh target of skins
  * @param defaultSkin Default skin of the mesh
  */
-void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t *defaultSkin)
+void R_LoadActorSkinsFromModel (mAliasMesh_t* outMesh, image_t* defaultSkin)
 {
 	int i;
 	assert(outMesh);
@@ -364,7 +364,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t *defaultSkin)
 		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);
 
 	for (i = 0; i < outMesh->num_skins; i++) {
-		mAliasSkin_t *modelSkin = &outMesh->skins[i];
+		mAliasSkin_t* modelSkin = &outMesh->skins[i];
 		if (i == 0) {
 			modelSkin->skin = defaultSkin;
 		} else {
@@ -392,8 +392,8 @@ void R_ShutdownModels (bool complete)
 	 * the world, the submodels and all the misc_models are located in the
 	 * r_models array */
 	for (i = start; i < r_numModels; i++) {
-		model_t *mod = &r_models[i];
-		mBspModel_t *bsp = &mod->bsp;
+		model_t* mod = &r_models[i];
+		mBspModel_t* bsp = &mod->bsp;
 
 		if (bsp->vertex_buffer)
 			qglDeleteBuffers(1, &bsp->vertex_buffer);

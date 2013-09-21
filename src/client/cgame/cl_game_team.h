@@ -41,5 +41,5 @@ void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_ActorSelect_f(void);
 bool GAME_LoadDefaultTeam(bool force);
-bool GAME_SaveCharacter(xmlNode_t *p, const character_t *chr);
-bool GAME_LoadCharacter(xmlNode_t *p, character_t *chr);
+bool GAME_SaveCharacter(xmlNode_t* p, const character_t* chr);
+bool GAME_LoadCharacter(xmlNode_t* p, character_t* chr);

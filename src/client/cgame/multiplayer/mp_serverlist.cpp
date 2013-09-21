@@ -33,14 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SERVERLIST 128
 
-static const cgame_import_t *cgi;
+static const cgame_import_t* cgi;
 
 static serverList_t serverList[MAX_SERVERLIST];
-serverList_t *selectedServer;
+serverList_t* selectedServer;
 static char serverText[1024];
 static int serverListLength;
 static int serverListPos;
-static cvar_t *cl_serverlist;
+static cvar_t* cl_serverlist;
 static struct datagram_socket *netDatagramSocket;
 
 /**
@@ -52,7 +52,7 @@ static struct datagram_socket *netDatagramSocket;
  * @return @c true if the server is compatible, @c msg is not @c null and the server
  * wasn't pinged already, @c false otherwise
  */
-static bool GAME_MP_ProcessPingReply (serverList_t *server, const char* msg)
+static bool GAME_MP_ProcessPingReply (serverList_t* server, const char* msg)
 {
 	if (!msg)
 		return false;
@@ -94,7 +94,7 @@ typedef enum {
  * @param[in] server The server data
  * @return @c true if the server should be visible for the current filter settings, @c false otherwise
  */
-static inline bool GAME_MP_ShowServer (const serverList_t *server)
+static inline bool GAME_MP_ShowServer (const serverList_t* server)
 {
 	if (cl_serverlist->integer == SERVERLIST_SHOWALL)
 		return true;
@@ -113,7 +113,7 @@ static void GAME_MP_PingServerCallback (struct net_stream *s)
 		cgi->NET_StreamFree(s);
 		return;
 	}
-	serverList_t *server = (serverList_t *)cgi->NET_StreamGetData(s);
+	serverList_t* server = (serverList_t* )cgi->NET_StreamGetData(s);
 	const int cmd = cgi->NET_ReadByte(buf);
 	if (cmd != svc_oob) {
 		cgi->NET_StreamFree(s);
@@ -150,7 +150,7 @@ static void GAME_MP_PingServerCallback (struct net_stream *s)
  * @sa CL_AddServerToList
  * @sa GAME_MP_ParseServerInfoMessage
  */
-static void GAME_MP_PingServer (serverList_t *server)
+static void GAME_MP_PingServer (serverList_t* server)
 {
 	struct net_stream *s = cgi->NET_Connect(server->node, server->service, nullptr);
 	if (s == nullptr) {
@@ -171,7 +171,7 @@ static void GAME_MP_PrintServerList_f (void)
 	cgi->Com_Printf("%i servers on the list\n", serverListLength);
 
 	for (int i = 0; i < serverListLength; i++) {
-		const serverList_t *list = &serverList[i];
+		const serverList_t* list = &serverList[i];
 		cgi->Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, list->node, list->service, list->pinged);
 	}
 }
@@ -222,8 +222,8 @@ void GAME_MP_ParseTeamInfoMessage (dbuffer *msg)
 	teamData.maxPlayersPerTeam = Info_IntegerForKey(str, "sv_maxplayersperteam");
 
 	int cnt = 0;
-	linkedList_t *userList = nullptr;
-	linkedList_t *userTeam = nullptr;
+	linkedList_t* userList = nullptr;
+	linkedList_t* userTeam = nullptr;
 
 	/* for each lines */
 	while (cgi->NET_ReadString(msg, str, sizeof(str)) > 0) {
@@ -577,7 +577,7 @@ void GAME_MP_PingServers_f (void)
 	}
 }
 
-void GAME_MP_ServerListInit (const cgame_import_t *import)
+void GAME_MP_ServerListInit (const cgame_import_t* import)
 {
 	cgi = import;
 	/* register our variables */

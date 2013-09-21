@@ -59,7 +59,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cgameType_t cgameTypes[MAX_CGAMETYPES];
 static int numCGameTypes;
 
-static inline const cgame_export_t *GAME_GetCurrentType (void)
+static inline const cgame_export_t* GAME_GetCurrentType (void)
 {
 	return cls.gametype;
 }
@@ -77,7 +77,7 @@ public:
 
 	void onCreate (const struct cvar_s* cvar)
 	{
-		const cgame_export_t *list = GAME_GetCurrentType();
+		const cgame_export_t* list = GAME_GetCurrentType();
 		if (list)
 			_cvars.insert(cvar);
 	}
@@ -93,7 +93,7 @@ public:
 		for (GameCvars::const_iterator i = copy.begin(); i != copy.end(); ++i) {
 			const struct cvar_s* cvar = *i;
 			if (cvar->flags == 0) {
-				const cgame_export_t *list = GAME_GetCurrentType();
+				const cgame_export_t* list = GAME_GetCurrentType();
 				Com_DPrintf(DEBUG_CLIENT, "Delete cvar %s because it was created in the context of the cgame %s\n",
 						cvar->name, list ? list->name : "none");
 				Cvar_Delete(cvar->name);
@@ -120,7 +120,7 @@ static const cgame_api_t gameTypeList[] = {
 
 static const char* cgameMenu;
 
-const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 {
 	const size_t len = lengthof(gameTypeList);
 	int i;
@@ -130,7 +130,7 @@ const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 
 	for (i = 0; i < len; i++) {
 		const cgame_api_t list = gameTypeList[i];
-		const cgame_export_t *cgame = list(import);
+		const cgame_export_t* cgame = list(import);
 		if (Q_streq(cgame->menu, cgameMenu)) {
 			return cgame;
 		}
@@ -174,7 +174,7 @@ character_t* GAME_GetCharacterByUCN (int ucn)
 {
 	const int size = lengthof(characters);
 	for (int i = 0; i < size; i++) {
-		character_t *chr = &characters[i];
+		character_t* chr = &characters[i];
 		if (chr->ucn == ucn)
 			return chr;
 	}
@@ -211,9 +211,9 @@ void GAME_ResetCharacters (void)
 	UI_ExecuteConfunc("team_membersclear");
 }
 
-void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipDef_t *ed)
+void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipDef_t* ed)
 {
-	character_t *chr;
+	character_t* chr;
 
 	if (ed == nullptr)
 		Com_Error(ERR_DROP, "No equipment definition given");
@@ -229,7 +229,7 @@ void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipD
 	UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", memberIndex, chr->name, chr->head, chr->headSkin);
 }
 
-void GAME_GenerateTeam (const char* teamDefID, const equipDef_t *ed, int teamMembers)
+void GAME_GenerateTeam (const char* teamDefID, const equipDef_t* ed, int teamMembers)
 {
 	int i;
 
@@ -247,7 +247,7 @@ void GAME_GenerateTeam (const char* teamDefID, const equipDef_t *ed, int teamMem
 
 void GAME_ReloadMode (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list != nullptr) {
 		GAME_SetMode(nullptr);
 		GAME_SetMode(list);
@@ -256,7 +256,7 @@ void GAME_ReloadMode (void)
 
 bool GAME_IsMultiplayer (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list != nullptr) {
 		const bool isMultiplayer = list->isMultiplayer == 1;
 		return isMultiplayer;
@@ -283,7 +283,7 @@ void GAME_EndBattlescape (void)
 void GAME_EndRoundAnnounce (int playerNum, int team)
 {
 	/** @todo do we need the team number here? isn't the playernum enough to get the team? */
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list != nullptr && list->EndRoundAnnounce)
 		list->EndRoundAnnounce(playerNum, team);
 }
@@ -293,9 +293,9 @@ void GAME_EndRoundAnnounce (int playerNum, int team)
  * @param[in] node The menu node to show the information in.
  * @param[in] string The id of the 'thing' to show information for.
  */
-void GAME_DisplayItemInfo (uiNode_t *node, const char* string)
+void GAME_DisplayItemInfo (uiNode_t* node, const char* string)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list != nullptr && list->GetModelForItem) {
 		const char* model = list->GetModelForItem(string);
 		UI_DrawModelNode(node, model);
@@ -318,7 +318,7 @@ static void CL_QueryMasterServer (const char* action, http_callback_t callback)
 
 bool GAME_HandleServerCommand (const char* command, dbuffer *msg)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (!list || list->HandleServerCommand == nullptr)
 		return false;
 
@@ -330,7 +330,7 @@ void GAME_AddChatMessage (const char* format, ...)
 	va_list argptr;
 	char string[4096];
 
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (!list || list->AddChatMessage == nullptr)
 		return;
 
@@ -398,22 +398,22 @@ static void GAME_DestroyInventory (Inventory*  const inv)
 	cls.i.destroyInventory(inv);
 }
 
-static void GAME_EquipActor (character_t* const chr, const equipDef_t *ed, int maxWeight)
+static void GAME_EquipActor (character_t* const chr, const equipDef_t* ed, int maxWeight)
 {
 	cls.i.EquipActor(chr, ed, maxWeight);
 }
 
-static void GAME_EquipActorMelee (Inventory* const inv, const teamDef_t *td)
+static void GAME_EquipActorMelee (Inventory* const inv, const teamDef_t* td)
 {
 	cls.i.EquipActorMelee(inv, td);
 }
 
-static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t *weapon)
+static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t* weapon)
 {
 	cls.i.EquipActorRobot(inv, weapon);
 }
 
-static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t *container, Item* fItem)
+static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t* container, Item* fItem)
 {
 	return cls.i.removeFromInventory(i, container, fItem);
 }
@@ -450,7 +450,7 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 
 static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, const objDef_t*, int), void (*collectAmmo) (void* , const Item*), void (*ownitems) (const Inventory*))
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		/* Winner collects everything on the floor, and everything carried
 		 * by surviving actors. Loser only gets what their living team
@@ -485,7 +485,7 @@ static void GAME_CollectItems (void* data, int won, void (*collectItem)(void*, c
  */
 static void GAME_CollectAliens (void* data, void (*collect)(void*, const teamDef_t*, int, bool))
 {
-	le_t *le = nullptr;
+	le_t* le = nullptr;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsActor(le) && LE_IsAlien(le)) {
@@ -516,7 +516,7 @@ static void UI_DrawNormImageByName_ (bool flip, float x, float y, float w, float
 
 static void R_UploadAlpha_ (const char* name, const byte* alphaData)
 {
-	image_t *image = R_GetImage(name);
+	image_t* image = R_GetImage(name);
 	if (!image) {
 		Com_Printf("Could not find image '%s'\n", name);
 		return;
@@ -526,7 +526,7 @@ static void R_UploadAlpha_ (const char* name, const byte* alphaData)
 
 static void R_DrawImageCentered (int x, int y, const char* name)
 {
-	image_t *image = R_FindImage(name, it_pic);
+	image_t* image = R_FindImage(name, it_pic);
 	if (image)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 }
@@ -536,10 +536,10 @@ static const char* Com_EParse_ (const char** text, const char* errhead, const ch
 	return Com_EParse(text, errhead, errinfo);
 }
 
-static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
+static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 {
 	static cgame_import_t gameImport;
-	static cgame_import_t *cgi = nullptr;
+	static cgame_import_t* cgi = nullptr;
 
 	if (cgi == nullptr) {
 		cgi = &gameImport;
@@ -840,7 +840,7 @@ void GAME_SwitchCurrentSelectedMap (int step)
 	cls.currentSelectedMap %= csi.numMDs;
 }
 
-const mapDef_t *GAME_GetCurrentSelectedMap (void)
+const mapDef_t* GAME_GetCurrentSelectedMap (void)
 {
 	return Com_GetMapDefByIDX(cls.currentSelectedMap);
 }
@@ -850,30 +850,30 @@ int GAME_GetCurrentTeam (void)
 	return cls.team;
 }
 
-void GAME_DrawMap (geoscapeData_t *data)
+void GAME_DrawMap (geoscapeData_t* data)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->MapDraw)
 		list->MapDraw(data);
 }
 
-void GAME_DrawMapMarkers (uiNode_t *node)
+void GAME_DrawMapMarkers (uiNode_t* node)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->MapDrawMarkers)
 		list->MapDrawMarkers(node);
 }
 
-void GAME_MapClick (uiNode_t *node, int x, int y, const vec2_t pos)
+void GAME_MapClick (uiNode_t* node, int x, int y, const vec2_t pos)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->MapClick)
 		list->MapClick(node, x, y, pos);
 }
 
-void GAME_SetMode (const cgame_export_t *gametype)
+void GAME_SetMode (const cgame_export_t* gametype)
 {
-	const cgame_export_t *list;
+	const cgame_export_t* list;
 
 	if (cls.gametype == gametype)
 		return;
@@ -916,7 +916,7 @@ static void UI_MapInfoGetNext (int step)
 			cls.currentSelectedMap = csi.numMDs - 1;
 		cls.currentSelectedMap %= csi.numMDs;
 
-		const mapDef_t *md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+		const mapDef_t* md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 		/* avoid infinite loop */
 		if (ref == cls.currentSelectedMap)
@@ -938,8 +938,8 @@ static void UI_MapInfoGetNext (int step)
 static void UI_MapInfo (int step)
 {
 	const char* mapname;
-	const mapDef_t *md;
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const mapDef_t* md;
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (!list)
 		return;
@@ -982,7 +982,7 @@ static void UI_MapInfo (int step)
 static void UI_RequestMapList_f (void)
 {
 	const char* callbackCmd;
-	const mapDef_t *md;
+	const mapDef_t* md;
 	const bool multiplayer = GAME_IsMultiplayer();
 
 	if (Cmd_Argc() != 2) {
@@ -1045,7 +1045,7 @@ static void UI_PreviousMap_f (void)
 static void UI_SelectMap_f (void)
 {
 	const char* mapname;
-	const mapDef_t *md;
+	const mapDef_t* md;
 	int i;
 
 	if (Cmd_Argc() != 2) {
@@ -1092,7 +1092,7 @@ static const value_t cgame_vals[] = {
 
 void GAME_ParseModes (const char* name, const char** text)
 {
-	cgameType_t *cgame;
+	cgameType_t* cgame;
 	int i;
 
 	/* search for equipments with same name */
@@ -1140,7 +1140,7 @@ static bool GAME_LoadGame (const char* path, const char* name)
 }
 #endif
 
-static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
+static const cgame_export_t* GAME_GetCGameAPI (const cgameType_t* t)
 {
 	const char* name = t->id;
 #ifndef HARD_LINKED_CGAME
@@ -1185,7 +1185,7 @@ static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 	return GetCGameAPI(GAME_GetImportData(t));
 }
 
-static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
+static const cgame_export_t* GAME_GetCGameAPI_ (const cgameType_t* t)
 {
 #ifdef HARD_LINKED_CGAME
 	cgameMenu = t->window;
@@ -1210,9 +1210,9 @@ static void GAME_SetMode_f (void)
 		return;
 
 	for (i = 0; i < numCGameTypes; i++) {
-		cgameType_t *t = &cgameTypes[i];
+		cgameType_t* t = &cgameTypes[i];
 		if (Q_streq(t->window, modeName)) {
-			const cgame_export_t *gametype;
+			const cgame_export_t* gametype;
 			GAME_UnloadGame();
 
 			gametype = GAME_GetCGameAPI_(t);
@@ -1224,13 +1224,13 @@ static void GAME_SetMode_f (void)
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
-bool GAME_ItemIsUseable (const objDef_t *od)
+bool GAME_ItemIsUseable (const objDef_t* od)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (od->isArmour()) {
 		const char* teamDefID = GAME_GetTeamDef();
-		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(teamDefID);
+		const teamDef_t* teamDef = Com_GetTeamDefinitionByID(teamDefID);
 
 		/* Don't allow armour for other teams */
 		if (teamDef != nullptr && !CHRSH_IsArmourUseableForTeam(od, teamDef))
@@ -1257,7 +1257,7 @@ bool GAME_ItemIsUseable (const objDef_t *od)
  */
 void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list)
 		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned, nextmap);
 	else
@@ -1273,7 +1273,7 @@ void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAliv
 static void GAME_NetSendItem (dbuffer *buf, const Item* item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item->ammoDef() ? item->ammoDef()->idx : NONE;
-	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
+	const eventRegister_t* eventData = CL_GetEvent(EV_INV_TRANSFER);
 	assert(item->def());
 	Com_DPrintf(DEBUG_CLIENT, "GAME_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item->def()->id, container, item->def()->idx, item->getAmmoLeft(), ammoIdx, x, y);
@@ -1305,7 +1305,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const Inventory* inv)
  * @param[out] buf The net channel buffer to write the character data into.
  * @param[in] chr The character to get the data from.
  */
-static void GAME_NetSendCharacter (dbuffer *buf, const character_t *chr)
+static void GAME_NetSendCharacter (dbuffer *buf, const character_t* chr)
 {
 	int j;
 
@@ -1355,7 +1355,7 @@ static void GAME_NetSendCharacter (dbuffer *buf, const character_t *chr)
  * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
-static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
+static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t* team)
 {
 	const int teamSize = LIST_Count(team);
 
@@ -1377,7 +1377,7 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t *team)
 const char* GAME_GetTeamDef (void)
 {
 	const char* teamDefID;
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (list && list->GetTeamDef)
 		return list->GetTeamDef();
@@ -1396,7 +1396,7 @@ static bool GAME_Spawn (linkedList_t** chrList)
 	 * This is e.g. the case when someone starts a map with the map command */
 	if (GAME_GetCurrentType() == nullptr || LIST_IsEmpty(chrDisplayList)) {
 		const char* teamDefID = GAME_GetTeamDef();
-		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+		const equipDef_t* ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
 		/* inventory structure switched/initialized */
 		cls.i.destroyInventoryInterface();
@@ -1422,7 +1422,7 @@ static bool GAME_Spawn (linkedList_t** chrList)
  */
 void GAME_StartBattlescape (bool isTeamPlay)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	Cvar_Set("cl_onbattlescape", "1");
 
@@ -1437,10 +1437,10 @@ void GAME_StartBattlescape (bool isTeamPlay)
 
 void GAME_InitMissionBriefing (const char* title)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
-	linkedList_t *victoryConditionsMsgIDs = nullptr;
-	linkedList_t *missionBriefingMsgIDs = nullptr;
+	linkedList_t* victoryConditionsMsgIDs = nullptr;
+	linkedList_t* missionBriefingMsgIDs = nullptr;
 
 	/* allow the server to add e.g. the misc_mission victory condition */
 	const char* serverVictoryMsgID = CL_GetConfigString(CS_VICTORY_CONDITIONS);
@@ -1470,11 +1470,11 @@ void GAME_InitMissionBriefing (const char* title)
  * the server). This callback can e.g. be used to set initial actor states. E.g. request crouch and so on.
  * These events are executed without consuming time
  */
-static void GAME_InitializeBattlescape (linkedList_t *team)
+static void GAME_InitializeBattlescape (linkedList_t* team)
 {
 	int i;
 	const size_t size = lengthof(cl.teamList);
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	for (i = 0; i < size; i++) {
 		UI_ExecuteConfunc("huddisable %i", i);
@@ -1494,7 +1494,7 @@ static void GAME_InitializeBattlescape (linkedList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	bool spawnStatus;
 
 	/* this callback is responsible to set up the teamlist */
@@ -1537,9 +1537,9 @@ const char* GAME_GetAbsoluteSavePath (char* buf, size_t bufSize)
 	return buf;
 }
 
-equipDef_t *GAME_GetEquipmentDefinition (void)
+equipDef_t* GAME_GetEquipmentDefinition (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (list && list->GetEquipmentDefinition != nullptr)
 		return list->GetEquipmentDefinition();
@@ -1548,14 +1548,14 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 
 void GAME_NotifyEvent (event_t eventType)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->NotifyEvent)
 		list->NotifyEvent(eventType);
 }
 
-bool GAME_TeamIsKnown (const teamDef_t *teamDef)
+bool GAME_TeamIsKnown (const teamDef_t* teamDef)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (!teamDef)
 		return false;
@@ -1565,9 +1565,9 @@ bool GAME_TeamIsKnown (const teamDef_t *teamDef)
 	return true;
 }
 
-void GAME_CharacterCvars (const character_t *chr)
+void GAME_CharacterCvars (const character_t* chr)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->UpdateCharacterValues != nullptr)
 		list->UpdateCharacterValues(chr);
 }
@@ -1583,7 +1583,7 @@ static void GAME_Abort_f (void)
 
 void GAME_Drop (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (list && list->Drop) {
 		list->Drop();
@@ -1612,7 +1612,7 @@ static void GAME_Exit_f (void)
  */
 void GAME_Frame (void)
 {
-	const cgame_export_t *list;
+	const cgame_export_t* list;
 
 	/* don't run the cgame in console mode */
 	if (cls.keyDest == key_console)
@@ -1625,28 +1625,28 @@ void GAME_Frame (void)
 
 void GAME_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->DrawBase != nullptr)
 		list->DrawBase(baseIdx, x, y, w, h, col, row, hover, overlap);
 }
 
 void GAME_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->DrawBaseTooltip != nullptr)
 		list->DrawBaseTooltip(baseIdx, x, y, col, row);
 }
 
 void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->DrawBaseLayout != nullptr)
 		list->DrawBaseLayout(baseIdx, x, y, totalMarge, w, h, padding, bgcolor, color);
 }
 
 void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->HandleBaseClick != nullptr)
 		list->HandleBaseClick(baseIdx, key, col, row);
 }
@@ -1657,9 +1657,9 @@ void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
  * @param[out] uiModel The menu model pointer.
  * @return The model path for the item. Never @c nullptr.
  */
-const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
+const char* GAME_GetModelForItem (const objDef_t* od, uiModel_t** uiModel)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->GetModelForItem != nullptr) {
 		const char* model = list->GetModelForItem(od->id);
 		if (model != nullptr) {
@@ -1680,12 +1680,12 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
  */
 character_t* GAME_GetSelectedChr (void)
 {
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->GetSelectedChr != nullptr)
 		return list->GetSelectedChr();
 
 	const int ucn = Cvar_GetInteger("mn_ucn");
-	character_t *chr = nullptr;
+	character_t* chr = nullptr;
 	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
 		if (ucn == chrTmp->ucn) {
 			chr = chrTmp;
@@ -1700,12 +1700,12 @@ character_t* GAME_GetSelectedChr (void)
  * @param[in] chr The character to find the max load for.
  * @return The max load the character can carry or @c NONE.
  */
-int GAME_GetChrMaxLoad (const character_t *chr)
+int GAME_GetChrMaxLoad (const character_t* chr)
 {
 	if (chr == nullptr)
 		return NONE;
 
-	const cgame_export_t *list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	const int strength = chr->score.skills[ABILITY_POWER];
 	if (list && list->GetChrMaxLoad != nullptr)
 		return std::min(strength, list->GetChrMaxLoad(chr));
@@ -1715,9 +1715,9 @@ int GAME_GetChrMaxLoad (const character_t *chr)
 /**
  * @brief Changed the given cvar to the next/prev equipment definition
  */
-const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEquipType_t changeType, const char* equipID)
+const equipDef_t* GAME_ChangeEquip (const linkedList_t* equipmentList, changeEquipType_t changeType, const char* equipID)
 {
-	const equipDef_t *ed;
+	const equipDef_t* ed;
 
 	if (LIST_IsEmpty(equipmentList)) {
 		int index;
@@ -1742,7 +1742,7 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 		}
 		ed = &csi.eds[index];
 	} else {
-		const linkedList_t *entry = LIST_ContainsString(equipmentList, equipID);
+		const linkedList_t* entry = LIST_ContainsString(equipmentList, equipID);
 		if (entry == nullptr) {
 			equipID = (const char*)equipmentList->data;
 		} else if (changeType == FORWARD) {
@@ -1779,8 +1779,8 @@ void GAME_InitUIData (void)
 
 	Com_Printf("----------- game modes -------------\n");
 	for (i = 0; i < numCGameTypes; i++) {
-		const cgameType_t *t = &cgameTypes[i];
-		const cgame_export_t *e = GAME_GetCGameAPI_(t);
+		const cgameType_t* t = &cgameTypes[i];
+		const cgame_export_t* e = GAME_GetCGameAPI_(t);
 		if (e == nullptr)
 			continue;
 

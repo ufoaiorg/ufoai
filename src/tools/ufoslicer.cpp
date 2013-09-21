@@ -11,9 +11,9 @@
 #include "../common/tracing.h"
 #include "../tools/ufo2map/common/bspfile.h"
 
-memPool_t *com_fileSysPool;
-memPool_t *com_genericPool;
-dMapTile_t *curTile;
+memPool_t* com_fileSysPool;
+memPool_t* com_genericPool;
+dMapTile_t* curTile;
 mapTiles_t mapTiles;
 
 typedef struct slicerConfig_s {

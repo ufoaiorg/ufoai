@@ -30,14 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
-static cvar_t *cl_equip;
-static const cgame_import_t *cgi;
+static cvar_t* cl_equip;
+static const cgame_import_t* cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
 static void GAME_SK_InitMissionBriefing (const char** title, linkedList_t** victoryConditionsMsgIDs, linkedList_t** missionBriefingMsgIDs)
 {
-	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t* md = cgi->GAME_GetCurrentSelectedMap();
 	if (Q_strvalid(md->victoryCondition)) {
 		cgi->LIST_AddString(victoryConditionsMsgIDs, md->victoryCondition);
 	}
@@ -58,7 +58,7 @@ static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char* 
  * @brief Register some data in the shared client/server structs to ensure that e.g. every known
  * alien race is used in a skirmish game
  */
-static void GAME_SK_SetMissionParameters (const mapDef_t *md)
+static void GAME_SK_SetMissionParameters (const mapDef_t* md)
 {
 	int i;
 
@@ -74,7 +74,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 	 * have access to this data, too */
 	cgi->csi->numAlienTeams = 0;
 	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
-		const teamDef_t *td = &cgi->csi->teamDef[i];
+		const teamDef_t* td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
 			cgi->csi->alienTeams[cgi->csi->numAlienTeams++] = td;
 		if (cgi->csi->numAlienTeams >= MAX_TEAMS_PER_MISSION)
@@ -87,7 +87,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
  */
 static void GAME_SK_Start_f (void)
 {
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	if (cgi->GAME_IsTeamEmpty()) {
 		cgi->GAME_LoadDefaultTeam(false);
@@ -98,7 +98,7 @@ static void GAME_SK_Start_f (void)
 		/** @todo make the teamdef configurable */
 		const char* ugvTeamDefID = "phalanx_ugv_phoenix";
 		const char* name = cgi->Cvar_GetString("cl_equip");
-		const equipDef_t *ed = cgi->INV_GetEquipmentDefinitionByID(name);
+		const equipDef_t* ed = cgi->INV_GetEquipmentDefinitionByID(name);
 		const size_t size = cgi->GAME_GetCharacterArraySize();
 		uint32_t maxSoldiers = cgi->Cvar_GetInteger("sv_maxsoldiersperplayer");
 		uint32_t ugvs = cgi->Cvar_GetInteger("cl_ugvs");
@@ -140,7 +140,7 @@ static void GAME_SK_ChangeEquip_f (void)
 	const char* cvarName;
 	const char* command;
 	changeEquipType_t type;
-	const equipDef_t *ed;
+	const equipDef_t* ed;
 	char cvarBuf[MAX_VAR];
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -229,7 +229,7 @@ static void GAME_SK_Results (dbuffer *msg, int winner, int* numSpawned, int* num
  * @param dropships if @c nullptr, the dropship selection panel will be hidden, otherwise it
  * will be shown with the given list entries as content.
  */
-static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
+static inline void GAME_SK_HideDropships (const linkedList_t* dropships)
 {
 	const bool hide = (dropships == nullptr);
 	if (hide) {
@@ -250,7 +250,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
  * @param ufos if @c nullptr, the ufo selection panel will be hidden, otherwise it
  * will be shown with the given list entries as content.
  */
-static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
+static inline void GAME_SK_HideUFOs (const linkedList_t* ufos)
 {
 	const bool hide = (ufos == nullptr);
 	if (hide) {
@@ -267,9 +267,9 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 	cgi->Cvar_Set("rm_crashed", "");
 }
 
-static const mapDef_t *GAME_SK_MapInfo (int step)
+static const mapDef_t* GAME_SK_MapInfo (int step)
 {
-	const mapDef_t *md;
+	const mapDef_t* md;
 	int i = 0;
 
 	while (!cgi->GAME_GetCurrentSelectedMap()->singleplayer) {
@@ -349,9 +349,9 @@ static void GAME_SK_Shutdown (void)
 }
 
 #ifndef HARD_LINKED_CGAME
-const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 #else
-const cgame_export_t *GetCGameSkirmishAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameSkirmishAPI (const cgame_import_t* import)
 #endif
 {
 	static cgame_export_t e;

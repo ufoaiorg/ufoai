@@ -33,10 +33,10 @@ ALIAS MODELS
 ==============================================================================
 */
 
-void R_ModLoadAnims (mAliasModel_t *mod, const char* animname)
+void R_ModLoadAnims (mAliasModel_t* mod, const char* animname)
 {
 	const char* text;
-	mAliasAnim_t *anim;
+	mAliasAnim_t* anim;
 	int n;
 	/* load the tags */
 	byte* animbuf = nullptr;
@@ -116,13 +116,13 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char* animname)
  * @param backlerp Whether to store the results in the GL arrays for the previous keyframe or the next keyframe
  * @sa R_ModCalcUniqueNormalsAndTangents
  */
-static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const vec3_t translate, bool backlerp)
+static void R_ModCalcNormalsAndTangents (mAliasMesh_t* mesh, int framenum, const vec3_t translate, bool backlerp)
 {
 	int i, j;
-	mAliasVertex_t *vertexes = &mesh->vertexes[framenum * mesh->num_verts];
-	mAliasCoord_t *stcoords = mesh->stcoords;
+	mAliasVertex_t* vertexes = &mesh->vertexes[framenum * mesh->num_verts];
+	mAliasCoord_t* stcoords = mesh->stcoords;
 	const int numIndexes = mesh->num_tris * 3;
-	const int32_t *indexArray = mesh->indexes;
+	const int32_t* indexArray = mesh->indexes;
 	vec3_t triangleNormals[MAX_ALIAS_TRIS];
 	vec3_t triangleTangents[MAX_ALIAS_TRIS];
 	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
@@ -186,7 +186,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		vec3_t n, b, v;
 		vec4_t t;
 		const int len = mesh->revIndexes[i].length;
-		const int32_t *list = mesh->revIndexes[i].list;
+		const int32_t* list = mesh->revIndexes[i].list;
 
 		VectorClear(n);
 		VectorClear(t);
@@ -230,14 +230,14 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
  * @sa R_ModCalcUniqueNormalsAndTangents
  * @param mod The model to load the mdx file for
  */
-bool R_ModLoadMDX (model_t *mod)
+bool R_ModLoadMDX (model_t* mod)
 {
 	int i;
 	for (i = 0; i < mod->alias.num_meshes; i++) {
-		mAliasMesh_t *mesh = &mod->alias.meshes[i];
+		mAliasMesh_t* mesh = &mod->alias.meshes[i];
 		char mdxFileName[MAX_QPATH];
 		byte* buffer = nullptr, *buf;
-		const int32_t *intbuf;
+		const int32_t* intbuf;
 		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];
 
@@ -261,7 +261,7 @@ bool R_ModLoadMDX (model_t *mod)
 		}
 		buffer += sizeof(uint32_t);
 
-		intbuf = (const int32_t *) buffer;
+		intbuf = (const int32_t* ) buffer;
 
 		mesh->num_verts = LittleLong(*intbuf);
 		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS) {
@@ -310,18 +310,18 @@ bool R_ModLoadMDX (model_t *mod)
  * @param smoothness How aggressively should normals be smoothed; value is compared with dotproduct of vectors to decide if they should be merged
  * @sa R_ModCalcNormalsAndTangents
  */
-void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float smoothness)
+void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t* mesh, int nFrames, float smoothness)
 {
 	int i, j;
 	vec3_t triangleNormals[MAX_ALIAS_TRIS];
 	vec3_t triangleTangents[MAX_ALIAS_TRIS];
 	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
-	const mAliasVertex_t *vertexes = mesh->vertexes;
-	mAliasCoord_t *stcoords = mesh->stcoords;
+	const mAliasVertex_t* vertexes = mesh->vertexes;
+	mAliasCoord_t* stcoords = mesh->stcoords;
 	mAliasComplexVertex_t tmpVertexes[MAX_ALIAS_VERTS];
 	vec3_t tmpBitangents[MAX_ALIAS_VERTS];
 	const int numIndexes = mesh->num_tris * 3;
-	const int32_t *indexArray = mesh->indexes;
+	const int32_t* indexArray = mesh->indexes;
 	int indRemap[MAX_ALIAS_VERTS];
 	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
@@ -528,7 +528,7 @@ image_t* R_AliasModelGetSkin (const char* modelFileName, const char* skin)
 	return result;
 }
 
-image_t* R_AliasModelState (const model_t *mod, int* mesh, int* frame, int* oldFrame, int* skin)
+image_t* R_AliasModelState (const model_t* mod, int* mesh, int* frame, int* oldFrame, int* skin)
 {
 	/* check animations */
 	if ((*frame >= mod->alias.num_frames) || *frame < 0) {
@@ -573,11 +573,11 @@ image_t* R_AliasModelState (const model_t *mod, int* mesh, int* frame, int* oldF
  * @note If GLSL programs are enabled, the actual interpolation will be done on the GPU, but
  * this function is still needed to fill the GL arrays for the keyframes
  */
-void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, bool prerender)
+void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t* mesh, float backlerp, int framenum, int oldframenum, bool prerender)
 {
-	const mAliasFrame_t *frame, *oldframe;
+	const mAliasFrame_t* frame, *oldframe;
 	const float frontlerp = 1.0 - backlerp;
-	vec_t *texcoord_array, *vertex_array_3d;
+	vec_t* texcoord_array, *vertex_array_3d;
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
@@ -590,9 +590,9 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 			 * time through will be our "previous" keyframe now, so we can swap pointers
 			 * instead of generating it again from scratch */
 			if (mod->curFrame == oldframenum) {
-				vec_t *tmp1 = mesh->verts;
-				vec_t *tmp2 = mesh->normals;
-				vec_t *tmp3 = mesh->tangents;
+				vec_t* tmp1 = mesh->verts;
+				vec_t* tmp2 = mesh->normals;
+				vec_t* tmp3 = mesh->tangents;
 
 				mesh->verts = mesh->next_verts;
 				mesh->next_verts = tmp1;
@@ -618,7 +618,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 			mod->curFrame = framenum;
 		}
 	} else { /* otherwise, we have to do it on the CPU */
-		const mAliasVertex_t *v, *ov;
+		const mAliasVertex_t* v, *ov;
 		vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
 		vec3_t move;
 		int i;
@@ -663,7 +663,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 /**
  * @brief Allocates data arrays for animated models. Only called once at loading time.
  */
-void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, bool loadNormals)
+void R_ModLoadArrayData (mAliasModel_t* mod, mAliasMesh_t* mesh, bool loadNormals)
 {
 	const int v = mesh->num_tris * 3 * 3;
 	const int t = mesh->num_tris * 3 * 4;

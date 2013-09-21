@@ -189,10 +189,10 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 
 		/* loop through all the faces of the BSP file... */
 		for (j = 0; j < tile->nummodels; j++) {
-			const dBspModel_t *model = &tile->models[j];
+			const dBspModel_t* model = &tile->models[j];
 			for (int faceIndex = 0; faceIndex < model->numfaces; faceIndex++) {
-				const dBspSurface_t *face = &tile->faces[model->firstface + faceIndex];
-				const dBspTexinfo_t *texinfo = &tile->texinfo[face->texinfo];
+				const dBspSurface_t* face = &tile->faces[model->firstface + faceIndex];
+				const dBspTexinfo_t* texinfo = &tile->texinfo[face->texinfo];
 				if (texinfo->surfaceFlags & (SURF_NODRAW|SURF_HINT|SURF_SKIP|SURF_BLEND33|SURF_BLEND66))
 					continue;
 				/** @todo handle content flags */
@@ -323,7 +323,7 @@ void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, bool si
 		return;
 
 	for (i = 0; i < model->nummodels; i++) {
-		const dBspModel_t *d = &model->models[i];
+		const dBspModel_t* d = &model->models[i];
 		AddPointToBounds(d->mins, mins, maxs);
 		AddPointToBounds(d->maxs, mins, maxs);
 	}

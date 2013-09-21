@@ -34,10 +34,10 @@ typedef struct teamData_s {
 } teamData_t;
 
 extern teamData_t teamData;
-extern cvar_t *rcon_client_password;
-extern cvar_t *cl_maxsoldiersperteam;
-extern cvar_t *cl_maxsoldiersperplayer;
-extern cvar_t *cl_roundtimelimit;
+extern cvar_t* rcon_client_password;
+extern cvar_t* cl_maxsoldiersperteam;
+extern cvar_t* cl_maxsoldiersperplayer;
+extern cvar_t* cl_roundtimelimit;
 
 struct cgame_import_s;
 

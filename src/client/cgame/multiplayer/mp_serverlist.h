@@ -41,7 +41,7 @@ typedef struct serverList_s {
 	int serverListPos;				/**< position in the server list array */
 } serverList_t;
 
-extern serverList_t *selectedServer;
+extern serverList_t* selectedServer;
 
 struct cgame_import_s;
 

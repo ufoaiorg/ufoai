@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VERSION "0.2"
 
 rstate_t r_state;
-image_t *r_noTexture;
+image_t* r_noTexture;
 
 typedef enum {
 	ACTION_NONE,
@@ -69,11 +69,11 @@ typedef struct modelConfig_s {
 
 static modelConfig_t config;
 
-memPool_t *com_genericPool;
-memPool_t *com_fileSysPool;
-memPool_t *vid_modelPool;
-memPool_t *vid_lightPool;	/* compilation dependency */
-memPool_t *vid_imagePool;
+memPool_t* com_genericPool;
+memPool_t* com_fileSysPool;
+memPool_t* vid_modelPool;
+memPool_t* vid_lightPool;	/* compilation dependency */
+memPool_t* vid_imagePool;
 
 static void Exit(int exitCode) __attribute__ ((__noreturn__));
 
@@ -110,9 +110,9 @@ void Com_DPrintf (int level, const char* fmt, ...)
 	}
 }
 
-image_t *R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
+image_t* R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
 {
-	image_t *image;
+	image_t* image;
 	size_t len;
 
 	len = strlen(name);
@@ -137,10 +137,10 @@ image_t *R_LoadImageData (const char* name, const byte* pic, int width, int heig
 	return image;
 }
 
-image_t *R_FindImage (const char* pname, imagetype_t type)
+image_t* R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
-	image_t *image;
+	image_t* image;
 	SDL_Surface *surf;
 
 	if (!pname || !pname[0])
@@ -186,7 +186,7 @@ void Com_Error (int code, const char* fmt, ...)
  * @brief Loads in a model for the given name
  * @param[in] name Filename relative to base dir and with extension (models/model.md2)
  */
-static model_t *LoadModel (const char* name)
+static model_t* LoadModel (const char* name)
 {
 	byte* buf;
 	int modfilelen;
@@ -225,7 +225,7 @@ static model_t *LoadModel (const char* name)
 	return mod;
 }
 
-static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char* fileName)
+static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const char* fileName)
 {
 	int i;
 	qFILE f;
@@ -260,7 +260,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 static int PrecalcNormalsAndTangents (const char* filename)
 {
 	char mdxFileName[MAX_QPATH];
-	model_t *mod;
+	model_t* mod;
 	int i;
 	int cntCalculated = 0;
 
@@ -281,7 +281,7 @@ static int PrecalcNormalsAndTangents (const char* filename)
 	Com_Printf("  \\ - # meshes '%i', # frames '%i'\n", mod->alias.num_meshes, mod->alias.num_frames);
 
 	for (i = 0; i < mod->alias.num_meshes; i++) {
-		mAliasMesh_t *mesh = &mod->alias.meshes[i];
+		mAliasMesh_t* mesh = &mod->alias.meshes[i];
 		R_ModCalcUniqueNormalsAndTangents(mesh, mod->alias.num_frames, config.smoothness);
 		/** @todo currently md2 models only have one mesh - for
 		 * md3 files this would get overwritten for each mesh */
@@ -437,7 +437,7 @@ static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void
 	const char* md2Path;
 	uint32_t numSkins;
 	int i;
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	const dMD2Model_t* md2 = (const dMD2Model_t* )buf;
 	byte* model = nullptr;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
@@ -461,7 +461,7 @@ static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void
 			errors++;
 
 		if (errors > 0) {
-			dMD2Model_t *fixedMD2;
+			dMD2Model_t* fixedMD2;
 			char* skinPath;
 			char path[MD2_MAX_SKINNAME];
 			char pathBuf[MD2_MAX_SKINNAME];
@@ -470,7 +470,7 @@ static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void
 				model = Mem_Dup(byte, buf, bufSize);
 				Com_Printf("model: %s\n", fileName);
 			}
-			fixedMD2 = (dMD2Model_t *)model;
+			fixedMD2 = (dMD2Model_t* )model;
 			skinPath = (char*) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
 
 			OBJZERO(path);
@@ -503,7 +503,7 @@ static void MD2Check (const byte* buf, const char* fileName, int bufSize, void* 
 	uint32_t numSkins;
 	int i;
 	bool headline = false;
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	const dMD2Model_t* md2 = (const dMD2Model_t* )buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -587,7 +587,7 @@ void R_ReallocateStateArrays(int size)
 	r_state.array_size = size;
 }
 
-void R_ReallocateTexunitArray (gltexunit_t *texunit, int size)
+void R_ReallocateTexunitArray (gltexunit_t* texunit, int size)
 {
 	/* TODO: check if stub without code would be sufficient here */
 	if (size <= texunit->array_size)

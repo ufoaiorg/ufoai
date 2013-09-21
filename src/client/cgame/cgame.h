@@ -44,23 +44,23 @@ typedef struct cgame_export_s {
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
 	void (EXPORT* Results) (dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], bool nextmap);
 	/** check whether the given item is usable in the current game mode */
-	bool (EXPORT* IsItemUseable) (const objDef_t *od);
+	bool (EXPORT* IsItemUseable) (const objDef_t* od);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
 	const char* (EXPORT* GetModelForItem) (const char* string);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t* (EXPORT* GetEquipmentDefinition) (void);
 	/** update character display values for game type dependent stuff */
-	void (EXPORT* UpdateCharacterValues) (const character_t *chr);
+	void (EXPORT* UpdateCharacterValues) (const character_t* chr);
 	/** checks whether the given team is known in the particular gamemode */
-	bool (EXPORT* IsTeamKnown) (const teamDef_t *teamDef);
+	bool (EXPORT* IsTeamKnown) (const teamDef_t* teamDef);
 	/** returns the selected character */
 	character_t* (EXPORT* GetSelectedChr) (void);
 	/** if you want to have a different control on how much a soldier can carry implement this (but max is still limited to actor strength) */
-	int (EXPORT* GetChrMaxLoad) (const character_t *chr);
+	int (EXPORT* GetChrMaxLoad) (const character_t* chr);
 	/** called on errors */
 	void (EXPORT* Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	dbuffer *(EXPORT* InitializeBattlescape) (const linkedList_t *team);
+	dbuffer *(EXPORT* InitializeBattlescape) (const linkedList_t* team);
 	/** callback that is executed every frame */
 	void (EXPORT* RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT* HandleBaseClick) (int baseIdx, int key, int col, int row);
@@ -75,16 +75,16 @@ typedef struct cgame_export_s {
 	void (EXPORT* AddChatMessage) (const char* message);
 	bool (EXPORT* HandleServerCommand) (const char* command, dbuffer *msg);
 
-	void (EXPORT* MapDraw) (geoscapeData_t *data);
+	void (EXPORT* MapDraw) (geoscapeData_t* data);
 	void (EXPORT* MapDrawMarkers) (const uiNode_t* node);
-	void (EXPORT* MapClick) (const uiNode_t *node, int x, int y, const vec2_t pos);
+	void (EXPORT* MapClick) (const uiNode_t* node, int x, int y, const vec2_t pos);
 } cgame_export_t;
 
 typedef struct cgameType_s {
 	char id[MAX_VAR];		/**< the id is also the file basename */
 	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
 	char name[MAX_VAR];		/**< translatable ui name */
-	linkedList_t *equipmentList; /**< the list of valid equipment definitions for this gametype - if this
+	linkedList_t* equipmentList; /**< the list of valid equipment definitions for this gametype - if this
 								 * is @c nullptr, every equipment may be used */
 } cgameType_t;
 
@@ -96,9 +96,9 @@ typedef enum {
 
 /** @todo define the import interface */
 typedef struct cgame_import_s {
-	csi_t *csi;
+	csi_t* csi;
 	Inventory* *ui_inventory;
-	const cgameType_t *cgameType;
+	const cgameType_t* cgameType;
 
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
@@ -110,20 +110,20 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t* option);
 	void (IMPORT *UI_RegisterText) (int textId, const char* text);
 	void (IMPORT *UI_ResetData) (int dataId);
-	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
+	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t* text);
 	struct uiMessageListNodeMessage_s* (IMPORT *UI_MessageGetStack) (void);
 	void (IMPORT *UI_MessageAddStack) (struct uiMessageListNodeMessage_s*);
 	void (IMPORT *UI_MessageResetStack) (void);
 	void (IMPORT *UI_TextScrollEnd) (const char* nodePath);
 	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t* node, int num);
 	uiNode_t* (IMPORT *UI_PopupList) (const char* title, const char* headline, linkedList_t* entries, const char* clickAction);
-	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t* option, const linkedList_t *stringList);
+	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t* option, const linkedList_t* stringList);
 	void (IMPORT *HUD_InitUI) (const char* optionWindowName);
 	void (IMPORT *HUD_DisplayMessage) (const char* text);
 	uiNode_t* (IMPORT *UI_GetOption) (int dataId);
 	void (IMPORT *UI_SortOptions) (uiNode_t** first);
 	int (IMPORT *UI_DrawString) (const char* fontID, align_t align, int x, int y, const char* c);
-	const char*  (IMPORT *UI_GetFontFromNode) (const uiNode_t * const node);
+	const char*  (IMPORT *UI_GetFontFromNode) (const uiNode_t*  const node);
 	void (IMPORT *UI_DrawNormImageByName) (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
 	void (IMPORT *UI_DrawRect) (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
 	void (IMPORT *UI_DrawFill) (int x, int y, int w, int h, const vec4_t color);
@@ -132,7 +132,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_PopupButton) (const char* title, const char* text, const char* clickAction1, const char* clickText1, const char* tooltip1,
 		const char* clickAction2, const char* clickText2, const char* tooltip2, const char* clickAction3, const char* clickText3, const char* tooltip3);
 	uiSprite_t* (IMPORT *UI_GetSpriteByName) (const char* name);
-	void (IMPORT *UI_ContainerNodeUpdateEquipment) (Inventory* inv, const equipDef_t *ed);
+	void (IMPORT *UI_ContainerNodeUpdateEquipment) (Inventory* inv, const equipDef_t* ed);
 	void (IMPORT *UI_RegisterLineStrip) (int dataId, struct lineStrip_s* lineStrip);
 	uiNode_t* (IMPORT *UI_GetNodeByPath) (const char* path);
 	void (IMPORT *UI_DisplayNotice) (const char* text, int time, const char* windowName);
@@ -148,14 +148,14 @@ typedef struct cgame_import_s {
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
 	linkedList_t* (IMPORT *LIST_GetPointer) (linkedList_t* list, const void* data);
 	void (IMPORT *LIST_Delete) (linkedList_t** list);
-	bool (IMPORT *LIST_RemoveEntry) (linkedList_t** list, linkedList_t *entry);
-	bool (IMPORT *LIST_IsEmpty) (const linkedList_t *list);
-	int (IMPORT *LIST_Count) (const linkedList_t *list);
-	linkedList_t *(IMPORT *LIST_CopyStructure) (linkedList_t* src);
-	void *(IMPORT *LIST_GetByIdx) (linkedList_t *list, int index);
+	bool (IMPORT *LIST_RemoveEntry) (linkedList_t** list, linkedList_t* entry);
+	bool (IMPORT *LIST_IsEmpty) (const linkedList_t* list);
+	int (IMPORT *LIST_Count) (const linkedList_t* list);
+	linkedList_t* (IMPORT *LIST_CopyStructure) (linkedList_t* src);
+	void *(IMPORT *LIST_GetByIdx) (linkedList_t* list, int index);
 	bool (IMPORT *LIST_Remove) (linkedList_t** list, const void *data);
 	void (IMPORT *LIST_Sort) (linkedList_t** list, linkedListSort_t sorter, const void* userData);
-	void* (IMPORT *LIST_GetRandom) (linkedList_t *list);
+	void* (IMPORT *LIST_GetRandom) (linkedList_t* list);
 
 	void (IMPORT *SV_ShutdownWhenEmpty) (void);
 	void (IMPORT *SV_Shutdown) (const char* finalmsg, bool reconnect);
@@ -174,14 +174,14 @@ typedef struct cgame_import_s {
 	int (IMPORT *GAME_GetCurrentTeam) (void);
 	char* (IMPORT *GAME_StrDup) (const char* string);
 	void (IMPORT *GAME_AutoTeam) (const char* equipmentDefinitionID, int teamMembers);
-	const equipDef_t *(IMPORT *GAME_ChangeEquip) (const linkedList_t *equipmentList, changeEquipType_t changeType, const char* equipID);
+	const equipDef_t* (IMPORT *GAME_ChangeEquip) (const linkedList_t* equipmentList, changeEquipType_t changeType, const char* equipID);
 	size_t (IMPORT *GAME_GetCharacterArraySize) (void);
 	bool (IMPORT *GAME_IsTeamEmpty) (void);
 	bool (IMPORT *GAME_LoadDefaultTeam) (bool force);
 	void (IMPORT *GAME_SetServerInfo) (const char* server, const char* serverport);
-	void (IMPORT *GAME_AppendTeamMember) (int memberIndex, const char* teamDefID, const equipDef_t *ed);
+	void (IMPORT *GAME_AppendTeamMember) (int memberIndex, const char* teamDefID, const equipDef_t* ed);
 	void (IMPORT *GAME_ReloadMode) (void);
-	int (IMPORT *GAME_GetChrMaxLoad) (const character_t *chr);
+	int (IMPORT *GAME_GetChrMaxLoad) (const character_t* chr);
 	void (IMPORT *Free) (void *ptr);
 
 	/* sound functions */
@@ -221,42 +221,42 @@ typedef struct cgame_import_s {
 	void (IMPORT *NET_DatagramSocketClose) (struct datagram_socket *s);
 
 	/* xml functions */
-	xmlNode_t * (IMPORT *XML_AddNode) (xmlNode_t *parent, const char* name);
-	void (IMPORT *XML_AddString) (xmlNode_t *parent, const char* name, const char* value);
-	void (IMPORT *XML_AddBool) (xmlNode_t *parent, const char* name, bool value);
-	void (IMPORT *XML_AddFloat) (xmlNode_t *parent, const char* name, float value);
-	void (IMPORT *XML_AddDouble) (xmlNode_t *parent, const char* name, double value);
-	void (IMPORT *XML_AddByte) (xmlNode_t *parent, const char* name, byte value);
-	void (IMPORT *XML_AddShort) (xmlNode_t *parent, const char* name, short value);
-	void (IMPORT *XML_AddInt) (xmlNode_t *parent, const char* name, int value);
-	void (IMPORT *XML_AddLong) (xmlNode_t *parent, const char* name, long value);
-	void (IMPORT *XML_AddPos3) (xmlNode_t *parent, const char* name, const vec3_t pos);
-	void (IMPORT *XML_AddPos2) (xmlNode_t *parent, const char* name, const vec2_t pos);
-	void (IMPORT *XML_AddDate) (xmlNode_t *parent, const char* name, const int day, const int sec);
-	void (IMPORT *XML_AddStringValue) (xmlNode_t *parent, const char* name, const char* value);
-	void (IMPORT *XML_AddBoolValue) (xmlNode_t *parent, const char* name, bool value);
-	void (IMPORT *XML_AddFloatValue) (xmlNode_t *parent, const char* name, float value);
-	void (IMPORT *XML_AddDoubleValue) (xmlNode_t *parent, const char* name, double value);
-	void (IMPORT *XML_AddByteValue) (xmlNode_t *parent, const char* name, byte value);
-	void (IMPORT *XML_AddShortValue) (xmlNode_t *parent, const char* name, short value);
-	void (IMPORT *XML_AddIntValue) (xmlNode_t *parent, const char* name, int value);
-	void (IMPORT *XML_AddLongValue) (xmlNode_t *parent, const char* name, long value);
+	xmlNode_t*  (IMPORT *XML_AddNode) (xmlNode_t* parent, const char* name);
+	void (IMPORT *XML_AddString) (xmlNode_t* parent, const char* name, const char* value);
+	void (IMPORT *XML_AddBool) (xmlNode_t* parent, const char* name, bool value);
+	void (IMPORT *XML_AddFloat) (xmlNode_t* parent, const char* name, float value);
+	void (IMPORT *XML_AddDouble) (xmlNode_t* parent, const char* name, double value);
+	void (IMPORT *XML_AddByte) (xmlNode_t* parent, const char* name, byte value);
+	void (IMPORT *XML_AddShort) (xmlNode_t* parent, const char* name, short value);
+	void (IMPORT *XML_AddInt) (xmlNode_t* parent, const char* name, int value);
+	void (IMPORT *XML_AddLong) (xmlNode_t* parent, const char* name, long value);
+	void (IMPORT *XML_AddPos3) (xmlNode_t* parent, const char* name, const vec3_t pos);
+	void (IMPORT *XML_AddPos2) (xmlNode_t* parent, const char* name, const vec2_t pos);
+	void (IMPORT *XML_AddDate) (xmlNode_t* parent, const char* name, const int day, const int sec);
+	void (IMPORT *XML_AddStringValue) (xmlNode_t* parent, const char* name, const char* value);
+	void (IMPORT *XML_AddBoolValue) (xmlNode_t* parent, const char* name, bool value);
+	void (IMPORT *XML_AddFloatValue) (xmlNode_t* parent, const char* name, float value);
+	void (IMPORT *XML_AddDoubleValue) (xmlNode_t* parent, const char* name, double value);
+	void (IMPORT *XML_AddByteValue) (xmlNode_t* parent, const char* name, byte value);
+	void (IMPORT *XML_AddShortValue) (xmlNode_t* parent, const char* name, short value);
+	void (IMPORT *XML_AddIntValue) (xmlNode_t* parent, const char* name, int value);
+	void (IMPORT *XML_AddLongValue) (xmlNode_t* parent, const char* name, long value);
 
-	bool (IMPORT *XML_GetBool) (xmlNode_t *parent, const char* name, const bool defaultval);
-	int (IMPORT *XML_GetInt) (xmlNode_t *parent, const char* name, const int defaultval);
-	short (IMPORT *XML_GetShort) (xmlNode_t *parent, const char* name, const short defaultval);
-	long (IMPORT *XML_GetLong) (xmlNode_t *parent, const char* name, const long defaultval);
-	const char*  (IMPORT *XML_GetString) (xmlNode_t *parent, const char* name);
-	float (IMPORT *XML_GetFloat) (xmlNode_t *parent, const char* name, const float defaultval);
-	double (IMPORT *XML_GetDouble) (xmlNode_t *parent, const char* name, const double defaultval);
-	xmlNode_t *(IMPORT *XML_Parse) (const char* buffer);
-	xmlNode_t * (IMPORT *XML_GetPos2) (xmlNode_t *parent, const char* name, vec2_t pos);
-	xmlNode_t * (IMPORT *XML_GetNextPos2) (xmlNode_t *actual, xmlNode_t *parent, const char* name, vec2_t pos);
-	xmlNode_t * (IMPORT *XML_GetPos3) (xmlNode_t *parent, const char* name, vec3_t pos);
-	xmlNode_t * (IMPORT *XML_GetNextPos3) (xmlNode_t *actual, xmlNode_t *parent, const char* name, vec3_t pos);
-	xmlNode_t * (IMPORT *XML_GetDate) (xmlNode_t *parent, const char* name, int *day, int *sec);
-	xmlNode_t * (IMPORT *XML_GetNode) (xmlNode_t *parent, const char* name);
-	xmlNode_t * (IMPORT *XML_GetNextNode) (xmlNode_t *current, xmlNode_t *parent, const char* name);
+	bool (IMPORT *XML_GetBool) (xmlNode_t* parent, const char* name, const bool defaultval);
+	int (IMPORT *XML_GetInt) (xmlNode_t* parent, const char* name, const int defaultval);
+	short (IMPORT *XML_GetShort) (xmlNode_t* parent, const char* name, const short defaultval);
+	long (IMPORT *XML_GetLong) (xmlNode_t* parent, const char* name, const long defaultval);
+	const char*  (IMPORT *XML_GetString) (xmlNode_t* parent, const char* name);
+	float (IMPORT *XML_GetFloat) (xmlNode_t* parent, const char* name, const float defaultval);
+	double (IMPORT *XML_GetDouble) (xmlNode_t* parent, const char* name, const double defaultval);
+	xmlNode_t* (IMPORT *XML_Parse) (const char* buffer);
+	xmlNode_t*  (IMPORT *XML_GetPos2) (xmlNode_t* parent, const char* name, vec2_t pos);
+	xmlNode_t*  (IMPORT *XML_GetNextPos2) (xmlNode_t* actual, xmlNode_t* parent, const char* name, vec2_t pos);
+	xmlNode_t*  (IMPORT *XML_GetPos3) (xmlNode_t* parent, const char* name, vec3_t pos);
+	xmlNode_t*  (IMPORT *XML_GetNextPos3) (xmlNode_t* actual, xmlNode_t* parent, const char* name, vec3_t pos);
+	xmlNode_t*  (IMPORT *XML_GetDate) (xmlNode_t* parent, const char* name, int *day, int *sec);
+	xmlNode_t*  (IMPORT *XML_GetNode) (xmlNode_t* parent, const char* name);
+	xmlNode_t*  (IMPORT *XML_GetNextNode) (xmlNode_t* current, xmlNode_t* parent, const char* name);
 
 	/* filesystem functions */
 	int (IMPORT *FS_LoadFile) (const char* path, byte** buffer);
@@ -267,15 +267,15 @@ typedef struct cgame_import_s {
 	char* (IMPORT *FS_NextScriptHeader) (const char* files, const char** name, const char** text);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
+	cvar_t* (IMPORT *Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
+	cvar_t* (IMPORT *Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 	void (IMPORT *Cvar_SetValue) (const char* varName, float value);
 	const char* (IMPORT *Cvar_GetString) (const char* varName);
 	int (IMPORT *Cvar_GetInteger) (const char* varName);
 	const char* (IMPORT *Cvar_VariableStringOld) (const char* varName);
 	float (IMPORT *Cvar_GetValue) (const char* varName);
 	bool (IMPORT *Cvar_Delete) (const char* varName);
-	cvar_t * (IMPORT *Cvar_ForceSet) (const char* varName, const char* value);
+	cvar_t*  (IMPORT *Cvar_ForceSet) (const char* varName, const char* value);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);
@@ -315,11 +315,11 @@ typedef struct cgame_import_s {
 	ufoType_t (IMPORT *Com_UFOShortNameToID) (const char* token);
 	const char* (IMPORT *Com_GetRandomMapAssemblyNameForCrashedCraft) (const char* craftID);
 	void (IMPORT *Com_Drop) (void);
-	const ugv_t *(IMPORT *Com_GetUGVByID) (const char* ugvID);
-	const ugv_t *(IMPORT *Com_GetUGVByIDSilent) (const char* ugvID);
+	const ugv_t* (IMPORT *Com_GetUGVByID) (const char* ugvID);
+	const ugv_t* (IMPORT *Com_GetUGVByIDSilent) (const char* ugvID);
 	humanAircraftType_t (IMPORT *Com_DropShipShortNameToID) (const char* token);
 
-	void (IMPORT *CL_GenerateCharacter) (character_t *chr, const char* teamDefName);
+	void (IMPORT *CL_GenerateCharacter) (character_t* chr, const char* teamDefName);
 	bool (IMPORT *CL_OnBattlescape) (void);
 
 	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
@@ -328,14 +328,14 @@ typedef struct cgame_import_s {
 	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item *), void (*ownitems) (const Inventory*));
 	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, bool));
 
-	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char* name);
+	const equipDef_t* (IMPORT *INV_GetEquipmentDefinitionByID) (const char* name);
 	void (IMPORT *INV_DestroyInventory) (Inventory* const i) __attribute__((nonnull(1)));
-	void (IMPORT *INV_EquipActor) (character_t* const chr, const equipDef_t *ed, int maxWeight);
+	void (IMPORT *INV_EquipActor) (character_t* const chr, const equipDef_t* ed, int maxWeight);
 	void (IMPORT *INV_EquipActorMelee) (Inventory* const inv, const teamDef_t* td);
 	void (IMPORT *INV_EquipActorRobot) (Inventory* const inv, const objDef_t* weapon);
-	bool (IMPORT *INV_RemoveFromInventory) (Inventory* const i, const invDef_t * container, Item *fItem);
+	bool (IMPORT *INV_RemoveFromInventory) (Inventory* const i, const invDef_t*  container, Item *fItem);
 
-	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
+	void (IMPORT *INV_ItemDescription) (const objDef_t* od);
 
 	void (IMPORT *WEB_Upload) (int category, const char* filename);
 	void (IMPORT *WEB_Delete) (int category, const char* filename);
@@ -351,6 +351,6 @@ typedef struct cgame_import_s {
 	byte *r_radarSourcePic;
 } cgame_import_t;
 
-extern "C" const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
+extern "C" const cgame_export_t* GetCGameAPI(const cgame_import_t* import);
 
-typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
+typedef const cgame_export_t* (*cgame_api_t) (const cgame_import_t* );

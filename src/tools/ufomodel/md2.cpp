@@ -8,7 +8,7 @@
 #include "../../common/common.h"
 #include "../../shared/byte.h"
 
-void MD2HeaderCheck (const dMD2Model_t *md2, const char* fileName, int bufSize)
+void MD2HeaderCheck (const dMD2Model_t* md2, const char* fileName, int bufSize)
 {
 	/* sanity checks */
 	const uint32_t version = LittleLong(md2->version);
@@ -40,7 +40,7 @@ void MD2SkinEdit (const byte* buf, const char* fileName, int bufSize, void* user
 {
 	uint32_t numSkins;
 	byte* const copy = Mem_Dup(byte, buf, bufSize);
-	dMD2Model_t *md2 = (dMD2Model_t *)copy;
+	dMD2Model_t* md2 = (dMD2Model_t* )copy;
 	char* md2Path;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
@@ -71,7 +71,7 @@ void MD2SkinEdit (const byte* buf, const char* fileName, int bufSize, void* user
 
 void MD2Info (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	const dMD2Model_t* md2 = (const dMD2Model_t* )buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -121,7 +121,7 @@ void MD2Info (const byte* buf, const char* fileName, int bufSize, void* userData
 void MD2SkinNum (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	byte* copy = Mem_Dup(byte, buf, bufSize);
-	dMD2Model_t *md2 = (dMD2Model_t *)copy;
+	dMD2Model_t* md2 = (dMD2Model_t* )copy;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -180,7 +180,7 @@ void MD2SkinNum (const byte* buf, const char* fileName, int bufSize, void* userD
 	Com_Printf("change to %i skins\n", newSkins);
 	if (deltaSkins > 0) {
 		copy = (byte*)Mem_ReAlloc(copy, md2->ofs_end);
-		md2 = (dMD2Model_t *)copy;
+		md2 = (dMD2Model_t* )copy;
 	}
 
 	const int n = ofsEnd - moveOffset;
@@ -215,7 +215,7 @@ void MD2SkinNum (const byte* buf, const char* fileName, int bufSize, void* userD
 void MD2GLCmdsRemove (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
 	uint32_t numGLCmds;
-	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	const dMD2Model_t* md2 = (const dMD2Model_t* )buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
@@ -223,7 +223,7 @@ void MD2GLCmdsRemove (const byte* buf, const char* fileName, int bufSize, void* 
 
 	if (numGLCmds > 0) {
 		byte        *const copy     = Mem_Dup(byte, buf, bufSize);
-		dMD2Model_t *const fixedMD2 = (dMD2Model_t*)copy;
+		dMD2Model_t* const fixedMD2 = (dMD2Model_t*)copy;
 		const size_t delta = numGLCmds * sizeof(uint32_t);
 		const uint32_t offset = LittleLong(fixedMD2->ofs_glcmds);
 
@@ -242,7 +242,7 @@ void MD2GLCmdsRemove (const byte* buf, const char* fileName, int bufSize, void* 
 
 		Mem_Free(copy);
 
-		*(size_t *)userData += delta;
+		*(size_t* )userData += delta;
 		Com_Printf("  \\ - removed %i glcmds from '%s' (save " UFO_SIZE_T " bytes)\n",
 				numGLCmds, fileName, delta);
 	}

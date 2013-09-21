@@ -58,7 +58,7 @@ static void GAME_UpdateActiveTeamList (void)
 
 void GAME_AutoTeam (const char* equipmentDefinitionID, int teamMembers)
 {
-	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(equipmentDefinitionID);
+	const equipDef_t* ed = INV_GetEquipmentDefinitionByID(equipmentDefinitionID);
 	const char* teamDefID = GAME_GetTeamDef();
 	cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
 
@@ -185,10 +185,10 @@ void GAME_TeamSlotComments_f (void)
  * @note Called by GAME_SaveTeam to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void GAME_SaveTeamInfo (xmlNode_t *p)
+static void GAME_SaveTeamInfo (xmlNode_t* p)
 {
 	LIST_Foreach(chrDisplayList, character_t, chr) {
-		xmlNode_t *n = XML_AddNode(p, SAVE_TEAM_CHARACTER);
+		xmlNode_t* n = XML_AddNode(p, SAVE_TEAM_CHARACTER);
 		GAME_SaveCharacter(n, chr);
 	}
 }
@@ -198,10 +198,10 @@ static void GAME_SaveTeamInfo (xmlNode_t *p)
  * @note Called by GAME_LoadTeam to load the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-static void GAME_LoadTeamInfo (xmlNode_t *p)
+static void GAME_LoadTeamInfo (xmlNode_t* p)
 {
 	int i;
-	xmlNode_t *n;
+	xmlNode_t* n;
 	const size_t size = GAME_GetCharacterArraySize();
 
 	GAME_ResetCharacters();
@@ -209,7 +209,7 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 
 	/* header */
 	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
-		character_t *chr = GAME_GetCharacter(i);
+		character_t* chr = GAME_GetCharacter(i);
 		GAME_LoadCharacter(n, chr);
 		UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", i, chr->name, chr->head, chr->headSkin);
 		LIST_AddPointer(&chrDisplayList, (void*)chr);
@@ -227,8 +227,8 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 	teamSaveFileHeader_t header;
 	char dummy[2];
 	int i;
-	xmlNode_t *topNode, *node, *snode;
-	equipDef_t *ed = GAME_GetEquipmentDefinition();
+	xmlNode_t* topNode, *node, *snode;
+	equipDef_t* ed = GAME_GetEquipmentDefinition();
 
 	topNode = mxmlNewXML("1.0");
 	node = XML_AddNode(topNode, SAVE_TEAM_ROOTNODE);
@@ -242,9 +242,9 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 
 	snode = XML_AddNode(node, SAVE_TEAM_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (ed->numItems[od->idx] || ed->numItemsLoose[od->idx]) {
-			xmlNode_t *ssnode = XML_AddNode(snode, SAVE_TEAM_ITEM);
+			xmlNode_t* ssnode = XML_AddNode(snode, SAVE_TEAM_ITEM);
 			XML_AddString(ssnode, SAVE_TEAM_ID, od->id);
 			XML_AddIntValue(ssnode, SAVE_TEAM_NUM, ed->numItems[od->idx]);
 			XML_AddIntValue(ssnode, SAVE_TEAM_NUMLOOSE, ed->numItemsLoose[od->idx]);
@@ -332,9 +332,9 @@ static bool GAME_LoadTeam (const char* filename)
 {
 	qFILE f;
 	int clen;
-	xmlNode_t *topNode, *node, *snode, *ssnode;
+	xmlNode_t* topNode, *node, *snode, *ssnode;
 	teamSaveFileHeader_t header;
-	equipDef_t *ed;
+	equipDef_t* ed;
 
 	/* open file */
 	FS_OpenFile(filename, &f, FILE_READ);
@@ -398,7 +398,7 @@ static bool GAME_LoadTeam (const char* filename)
 	ed = GAME_GetEquipmentDefinition();
 	for (ssnode = XML_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
 		const char* objID = XML_GetString(ssnode, SAVE_TEAM_ID);
-		const objDef_t *od = INVSH_GetItemByID(objID);
+		const objDef_t* od = INVSH_GetItemByID(objID);
 
 		if (od) {
 			ed->numItems[od->idx] = XML_GetInt(snode, SAVE_TEAM_NUM, 0);
@@ -491,7 +491,7 @@ void GAME_LoadTeam_f (void)
 	}
 }
 
-static void GAME_UpdateInventory (Inventory* inv, const equipDef_t *ed)
+static void GAME_UpdateInventory (Inventory* inv, const equipDef_t* ed)
 {
 	if (!LIST_IsEmpty(chrDisplayList))
 		ui_inventory = &((character_t*)chrDisplayList->data)->inv;
@@ -510,9 +510,9 @@ static void GAME_GetEquipment (void)
 {
 	const char* equipmentName = Cvar_GetString("cl_equip");
 	/* search equipment definition */
-	const equipDef_t *edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
+	const equipDef_t* edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
 
-	equipDef_t *ed = GAME_GetEquipmentDefinition();
+	equipDef_t* ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
 
 	game_inventory.init();
@@ -549,7 +549,7 @@ void GAME_ActorSelect_f (void)
 	}
 
 	const int ucn = atoi(Cmd_Argv(1));
-	character_t *chr = nullptr;
+	character_t* chr = nullptr;
 	LIST_Foreach(chrDisplayList, character_t, chrTmp) {
 		if (ucn == chrTmp->ucn) {
 			chr = chrTmp;
@@ -579,7 +579,7 @@ void GAME_ActorSelect_f (void)
  * @param[in] y Vertical coordinate of the item in the container
  * @sa GAME_LoadItem
  */
-static void GAME_SaveItem (xmlNode_t *p, const Item* item, containerIndex_t container, int x, int y)
+static void GAME_SaveItem (xmlNode_t* p, const Item* item, containerIndex_t container, int x, int y)
 {
 	assert(item->def() != nullptr);
 
@@ -603,13 +603,13 @@ static void GAME_SaveItem (xmlNode_t *p, const Item* item, containerIndex_t cont
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
-static void GAME_SaveInventory (xmlNode_t *p, const Inventory* inv)
+static void GAME_SaveInventory (xmlNode_t* p, const Inventory* inv)
 {
 	const Container *cont = nullptr;
 	while ((cont = inv->getNextCont(cont, false))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
-			xmlNode_t *s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
+			xmlNode_t* s = XML_AddNode(p, SAVE_INVENTORY_ITEM);
 			GAME_SaveItem(s, item, cont->id, item->getX(), item->getY());
 		}
 	}
@@ -624,7 +624,7 @@ static void GAME_SaveInventory (xmlNode_t *p, const Inventory* inv)
  * @param[out] y Vertical coordinate of the item in the container
  * @sa GAME_SaveItem
  */
-static void GAME_LoadItem (xmlNode_t *n, Item* item, containerIndex_t *container, int* x, int* y)
+static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container, int* x, int* y)
 {
 	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
@@ -670,9 +670,9 @@ static void GAME_LoadItem (xmlNode_t *n, Item* item, containerIndex_t *container
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
   */
-static void GAME_LoadInventory (xmlNode_t *p, Inventory* inv, int maxLoad)
+static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
 {
-	xmlNode_t *s;
+	xmlNode_t* s;
 
 	for (s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		Item item;
@@ -696,12 +696,12 @@ static void GAME_LoadInventory (xmlNode_t *p, Inventory* inv, int maxLoad)
  * @param[in] p The node to which we should save the character
  * @param[in] chr The character we should save
  */
-bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
+bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
 {
-	xmlNode_t *sScore;
-	xmlNode_t *sInventory;
-	xmlNode_t *sInjuries;
-	const chrScoreGlobal_t *score;
+	xmlNode_t* sScore;
+	xmlNode_t* sInventory;
+	xmlNode_t* sInjuries;
+	const chrScoreGlobal_t* score;
 
 	assert(chr);
 	Com_RegisterConstList(saveCharacterConstants);
@@ -723,13 +723,13 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	XML_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
 
 	const int implants = lengthof(chr->implants);
-	xmlNode_t *sImplants = XML_AddNode(p, SAVE_CHARACTER_IMPLANTS);
+	xmlNode_t* sImplants = XML_AddNode(p, SAVE_CHARACTER_IMPLANTS);
 	for (int i = 0; i < implants; i++) {
 		const implant_t& implant = chr->implants[i];
 		if (implant.def == nullptr)
 			continue;
 
-		xmlNode_t *sImplant = XML_AddNode(sImplants, SAVE_CHARACTER_IMPLANT);
+		xmlNode_t* sImplant = XML_AddNode(sImplants, SAVE_CHARACTER_IMPLANT);
 		XML_AddIntValue(sImplant, SAVE_CHARACTER_IMPLANT_INSTALLEDTIME, implant.installedTime);
 		XML_AddIntValue(sImplant, SAVE_CHARACTER_IMPLANT_REMOVETIME, implant.removedTime);
 		XML_AddString(sImplant, SAVE_CHARACTER_IMPLANT_IMPLANT, implant.def->id);
@@ -740,7 +740,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	for (int k = 0; k < chr->teamDef->bodyTemplate->numBodyParts(); ++k) {
 		if (!chr->wounds.treatmentLevel[k])
 			continue;
-		xmlNode_t *sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
+		xmlNode_t* sWound = XML_AddNode(sInjuries, SAVE_CHARACTER_WOUND);
 
 		XML_AddString(sWound, SAVE_CHARACTER_WOUNDEDPART, chr->teamDef->bodyTemplate->id(k));
 		XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
@@ -753,7 +753,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	for (int k = 0; k <= SKILL_NUM_TYPES; k++) {
 		if (score->experience[k] || score->initialSkills[k]
 		 || (k < SKILL_NUM_TYPES && score->skills[k])) {
-			xmlNode_t *sSkill = XML_AddNode(sScore, SAVE_CHARACTER_SKILLS);
+			xmlNode_t* sSkill = XML_AddNode(sScore, SAVE_CHARACTER_SKILLS);
 			const int initial = score->initialSkills[k];
 			const int experience = score->experience[k];
 
@@ -770,7 +770,7 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	/* Store kills */
 	for (int k = 0; k < KILLED_NUM_TYPES; k++) {
 		if (score->kills[k] || score->stuns[k]) {
-			xmlNode_t *sKill = XML_AddNode(sScore, SAVE_CHARACTER_KILLS);
+			xmlNode_t* sKill = XML_AddNode(sScore, SAVE_CHARACTER_KILLS);
 			XML_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
 			XML_AddIntValue(sKill, SAVE_CHARACTER_KILLED, score->kills[k]);
 			XML_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, score->stuns[k]);
@@ -792,15 +792,15 @@ bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
  * @param[in] p The node from which we should load the character.
  * @param[in] chr Pointer to the character we should load.
  */
-bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
+bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 {
 	const char* s;
-	xmlNode_t *sScore;
-	xmlNode_t *sSkill;
-	xmlNode_t *sKill;
-	xmlNode_t *sInventory;
-	xmlNode_t *sInjuries;
-	xmlNode_t *sWound;
+	xmlNode_t* sScore;
+	xmlNode_t* sSkill;
+	xmlNode_t* sKill;
+	xmlNode_t* sInventory;
+	xmlNode_t* sInjuries;
+	xmlNode_t* sWound;
 	bool success = true;
 
 	/* Load the character data */
@@ -850,7 +850,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 		chr->wounds.treatmentLevel[bodyPart] = XML_GetInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, 0);
 	}
 
-	xmlNode_t *sImplants = XML_GetNode(p, SAVE_CHARACTER_IMPLANTS);
+	xmlNode_t* sImplants = XML_GetNode(p, SAVE_CHARACTER_IMPLANTS);
 	/* Load implants */
 	int implantCnt = 0;
 	for (xmlNode_t* sImplant = XML_GetNode(sImplants, SAVE_CHARACTER_IMPLANT); sImplant; sImplant = XML_GetNextNode(sImplant, sImplants, SAVE_CHARACTER_IMPLANT)) {

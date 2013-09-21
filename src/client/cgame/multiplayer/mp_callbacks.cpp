@@ -29,15 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mp_serverlist.h"
 #include "../cl_game.h"
 
-static const cgame_import_t *cgi;
+static const cgame_import_t* cgi;
 
 teamData_t teamData;
-cvar_t *rcon_client_password;
-cvar_t *cl_maxsoldiersperteam;
-cvar_t *cl_maxsoldiersperplayer;
-cvar_t *cl_roundtimelimit;
-static cvar_t *rcon_address;
-static cvar_t *info_password;
+cvar_t* rcon_client_password;
+cvar_t* cl_maxsoldiersperteam;
+cvar_t* cl_maxsoldiersperplayer;
+cvar_t* cl_roundtimelimit;
+static cvar_t* rcon_address;
+static cvar_t* info_password;
 
 static void GAME_MP_Connect_f (void)
 {
@@ -276,15 +276,15 @@ static int GAME_MP_CompleteNetworkAddress (const char* partial, const char** mat
 
 static void GAME_MP_InitUI_f (void)
 {
-	uiNode_t *gameTypes = nullptr;
+	uiNode_t* gameTypes = nullptr;
 	for (int i = 0; i < cgi->csi->numGTs; i++) {
-		const gametype_t *gt = &cgi->csi->gts[i];
+		const gametype_t* gt = &cgi->csi->gts[i];
 		cgi->UI_AddOption(&gameTypes, gt->id, _(gt->name), gt->id);
 	}
 	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
 }
 
-void GAME_MP_CallbacksInit (const cgame_import_t *import)
+void GAME_MP_CallbacksInit (const cgame_import_t* import)
 {
 	cgi = import;
 	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");

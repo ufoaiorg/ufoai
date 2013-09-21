@@ -49,17 +49,17 @@ typedef struct mobj_s {
 
 	int num_tris;
 	int num_tris_parsed;
-	mobjtri_t *tris;
+	mobjtri_t* tris;
 } mobj_t;
 
 #include "r_local.h"
 #include "../../shared/parse.h"
 
-static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
+static void R_LoadObjModelVertexArrays (mobj_t* obj, model_t* mod)
 {
-	const mobjtri_t *t;
+	const mobjtri_t* t;
 	int i, j, vertind, coordind;
-	mAliasMesh_t *mesh = mod->alias.meshes;
+	mAliasMesh_t* mesh = mod->alias.meshes;
 	const int v = obj->num_tris * 3 * 3;
 	const int st = obj->num_tris * 3 * 2;
 
@@ -76,7 +76,7 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 
 	/* fill the arrays */
 	for (i = 0; i < obj->num_tris; i++, t++) {
-		const mobjvert_t *v = t->verts;
+		const mobjvert_t* v = t->verts;
 
 		/* each vert */
 		for (j = 0; j < 3; j++, v++) {
@@ -104,7 +104,7 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 /**
  * @brief Assembles count tris on the model from the specified array of verts.
  */
-static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
+static void R_LoadObjModelTris (mobj_t* obj, const mobjvert_t* verts, int count)
 {
 	int i;
 
@@ -118,7 +118,7 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
 		const int v1 = 1 + i;
 		const int v2 = 2 + i;
 
-		mobjtri_t *t = &obj->tris[obj->num_tris_parsed + i];
+		mobjtri_t* t = &obj->tris[obj->num_tris_parsed + i];
 		assert(obj->num_tris_parsed + i < obj->num_tris);
 
 		t->verts[0] = verts[v0];
@@ -137,9 +137,9 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
  *
  * @return the number of triangles produced for the specified line.
  */
-static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char* line)
+static int R_LoadObjModelFace (const model_t* mod, mobj_t* obj, const char* line)
 {
-	mobjvert_t *v, verts[MAX_OBJ_FACE_VERTS];
+	mobjvert_t* v, verts[MAX_OBJ_FACE_VERTS];
 	const char* d;
 	char* e;
 	char tok[32];
@@ -220,7 +220,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char* line
  * @brief Parse the object file line. If the structures have been allocated,
  * populate them. Otherwise simply accumulate counts.
  */
-static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
+static void R_LoadObjModelLine (model_t* mod, mobj_t* obj, char* line)
 {
 	if (Q_strnull(line))  /* don't bother */
 		return;
@@ -270,10 +270,10 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char* line)
 	}
 }
 
-static void R_LoadObjSkin (model_t *mod)
+static void R_LoadObjSkin (model_t* mod)
 {
 	char skinPath[MAX_QPATH];
-	mAliasMesh_t *mesh = &mod->alias.meshes[0];
+	mAliasMesh_t* mesh = &mod->alias.meshes[0];
 
 	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
 	if (FS_CheckFile("%s.mtl", skinPath) != -1) {
@@ -304,7 +304,7 @@ static void R_LoadObjSkin (model_t *mod)
 
 			if (Q_streq(token, "map_Kd")) {
 				const char* skin = Com_Parse(&buffer);
-				mAliasSkin_t *aliasSkin = &mesh->skins[i++];
+				mAliasSkin_t* aliasSkin = &mesh->skins[i++];
 
 				Com_sprintf(skinPath, sizeof(skinPath), ".%s", skin);
 
@@ -326,7 +326,7 @@ static void R_LoadObjSkin (model_t *mod)
  * @brief Drives the actual parsing of the object file.  The file is read twice:
  * once to acquire primitive counts, and a second time to load them.
  */
-static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte* buffer, int bufSize)
+static void R_LoadObjModel_ (model_t* mod, mobj_t* obj, const byte* buffer, int bufSize)
 {
 	char line[MAX_STRING_CHARS];
 	const byte* c;
@@ -360,7 +360,7 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte* buffer, int 
 	}
 }
 
-void R_LoadObjModel (model_t *mod, byte* buffer, int bufSize)
+void R_LoadObjModel (model_t* mod, byte* buffer, int bufSize)
 {
 	mobj_t obj;
 	const float* v;

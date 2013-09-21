@@ -37,9 +37,9 @@ material_t defaultMaterial = {0, 0.0f, DEFAULT_BUMP, DEFAULT_PARALLAX, DEFAULT_H
 /**
  * @brief Materials "think" every few milliseconds to advance animations.
  */
-static void R_UpdateMaterial (material_t *m)
+static void R_UpdateMaterial (material_t* m)
 {
-	materialStage_t *s;
+	materialStage_t* s;
 
 	if (refdef.time - m->time < UPDATE_THRESHOLD)
 		return;
@@ -108,9 +108,9 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
-static void R_StageGlow (const materialStage_t *stage)
+static void R_StageGlow (const materialStage_t* stage)
 {
-	image_t *glowmap;
+	image_t* glowmap;
 
 	if (stage->flags & STAGE_GLOWMAPLINK)
 		glowmap = stage->image;
@@ -129,7 +129,7 @@ static void R_StageGlow (const materialStage_t *stage)
 /**
  * @brief Manages state for stages supporting static, dynamic, and per-pixel lighting.
  */
-static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
+static void R_StageLighting (const mBspSurface_t* surf, const materialStage_t* stage)
 {
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
 	if ((surf->flags & MSURF_LIGHTMAP) &&
@@ -161,7 +161,7 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
  * @brief Vertex deformation
  * @todo implement this
  */
-static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
+static inline void R_StageVertex (const mBspSurface_t* surf, const materialStage_t* stage, const vec3_t in, vec3_t out)
 {
 	VectorCopy(in, out);
 }
@@ -170,7 +170,7 @@ static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage
  * @brief Manages texture matrix manipulations for stages supporting rotations,
  * scrolls, and stretches (rotate, translate, scale).
  */
-static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materialStage_t *stage)
+static inline void R_StageTextureMatrix (const mBspSurface_t* surf, const materialStage_t* stage)
 {
 	static bool identity = true;
 	float s, t;
@@ -218,7 +218,7 @@ static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materi
 /**
  * @brief Generates a single texture coordinate for the specified stage and vertex.
  */
-static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
+static void R_StageTexCoord (const materialStage_t* stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
 		vec3_t tmp;
@@ -239,7 +239,7 @@ static const float dirtmap[] = {
 /**
  * @brief Generates a single color for the specified stage and vertex.
  */
-static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
+static void R_StageColor (const materialStage_t* stage, const vec3_t v, vec4_t color)
 {
 	if (stage->flags & (STAGE_TERRAIN | STAGE_TAPE)) {
 		float a;
@@ -291,7 +291,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
  * @brief Manages all state for the specified surface and stage.
  * @sa R_DrawMaterialSurfaces
  */
-static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialStage_t *stage)
+static void R_SetSurfaceStageState (const mBspSurface_t* surf, const materialStage_t* stage)
 {
 	/* bind the texture */
 	R_BindTexture(stage->image->texnum);
@@ -348,7 +348,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
  * @brief Render the specified stage for the surface. Resolve vertex attributes via
  * helper functions, outputting to the default vertex arrays.
  */
-static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
+static void R_DrawSurfaceStage (mBspSurface_t* surf, materialStage_t* stage)
 {
 	int i;
 
@@ -398,7 +398,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
  * throughout the iteration, so there is a concerted effort to restore the
  * state after all surface stages have been rendered.
  */
-void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
+void R_DrawMaterialSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr)
 {
 	int i;
 
@@ -431,9 +431,9 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *inde
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
 
 	for (i = 0; i < surfs->count; i++) {
-		materialStage_t *s;
-		mBspSurface_t *surf = surfs->surfaces[i];
-		material_t *m = &surf->texinfo->image->material;
+		materialStage_t* s;
+		mBspSurface_t* surf = surfs->surfaces[i];
+		material_t* m = &surf->texinfo->image->material;
 		int j = -1;
 
 		if (surf->frame != r_locals.frame)
@@ -505,12 +505,12 @@ static GLenum R_ConstByName (const char* c)
 	return GL_ZERO;
 }
 
-static void R_CreateMaterialData_ (model_t *mod)
+static void R_CreateMaterialData_ (model_t* mod)
 {
 	int i;
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++) {
-		mBspSurface_t *surf = &mod->bsp.surfaces[i];
+		mBspSurface_t* surf = &mod->bsp.surfaces[i];
 		/* create flare */
 		R_CreateSurfaceFlare(surf);
 	}
@@ -527,7 +527,7 @@ static void R_CreateMaterialData (void)
 		R_CreateMaterialData_(&r_modelsInline[i]);
 }
 
-static int R_LoadAnimImages (materialStage_t *s)
+static int R_LoadAnimImages (materialStage_t* s)
 {
 	char name[MAX_QPATH];
 	int i, j;
@@ -554,7 +554,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 	/* now load the rest */
 	for (i = 0; i < s->anim.num_frames; i++) {
 		const char* c = va("%s%d", name, i);
-		image_t *image = R_FindImage(c, it_material);
+		image_t* image = R_FindImage(c, it_material);
 		s->anim.images[i] = image;
 		if (image == r_noTexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
@@ -569,7 +569,7 @@ static int R_LoadAnimImages (materialStage_t *s)
  * @brief Material stage parser
  * @sa R_LoadMaterials
  */
-static int R_ParseStage (materialStage_t *s, const char** buffer)
+static int R_ParseStage (materialStage_t* s, const char** buffer)
 {
 	int i;
 
@@ -957,8 +957,8 @@ void R_LoadMaterials (const char* map)
 	const char* buffer = (const char*)fileBuffer;
 
 	bool inmaterial = false;
-	image_t *image = nullptr;
-	material_t *m = nullptr;
+	image_t* image = nullptr;
+	material_t* m = nullptr;
 
 	while (true) {
 		const char* c = Com_Parse(&buffer);
@@ -1066,7 +1066,7 @@ void R_LoadMaterials (const char* map)
 			if (!m->stages)
 				m->stages = s;
 			else {
-				materialStage_t *ss = m->stages;
+				materialStage_t* ss = m->stages;
 				while (ss->next)
 					ss = ss->next;
 				ss->next = s;
@@ -1082,7 +1082,7 @@ void R_LoadMaterials (const char* map)
 			inmaterial = false;
 			image = nullptr;
 			/* multiply stage glowscale values by material glowscale */
-			materialStage_t *ss = m->stages;
+			materialStage_t* ss = m->stages;
 			while (ss) {
 				ss->glowscale *= m->glowscale;
 				ss = ss->next;

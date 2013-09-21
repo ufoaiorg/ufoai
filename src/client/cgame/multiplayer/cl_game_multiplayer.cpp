@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mp_serverlist.h"
 #include "../../ui/ui_data.h"
 
-static const cgame_import_t *cgi;
+static const cgame_import_t* cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
@@ -70,7 +70,7 @@ static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
  */
 static void GAME_MP_StartServer_f (void)
 {
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	if (!cgi->Cvar_GetInteger("sv_dedicated") && cgi->GAME_IsTeamEmpty())
 		cgi->GAME_AutoTeam("multiplayer_initial", cgi->GAME_GetCharacterArraySize());
@@ -115,7 +115,7 @@ static void GAME_MP_StartServer_f (void)
  */
 static void GAME_MP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
-	linkedList_t *list = nullptr;
+	linkedList_t* list = nullptr;
 	int enemiesKilled, enemiesStunned;
 	const int team = cgi->GAME_GetCurrentTeam();
 
@@ -137,7 +137,7 @@ static void GAME_MP_Results (dbuffer *msg, int winner, int* numSpawned, int* num
 	}
 }
 
-static const mapDef_t *GAME_MP_MapInfo (int step)
+static const mapDef_t* GAME_MP_MapInfo (int step)
 {
 	int i = 0;
 	const char* gameType = cgi->Cvar_GetString("sv_gametype");
@@ -146,16 +146,16 @@ static const mapDef_t *GAME_MP_MapInfo (int step)
 		if (i > 100000)
 			break;
 
-		const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+		const mapDef_t* md = cgi->GAME_GetCurrentSelectedMap();
 		if (md == nullptr)
 			break;
 		if (!md->multiplayer || !cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 			cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
 			continue;
 		}
-		linkedList_t *gameNames = nullptr;
+		linkedList_t* gameNames = nullptr;
 		for (int j = 0; j < cgi->csi->numGTs; j++) {
-			const gametype_t *gt = &cgi->csi->gts[j];
+			const gametype_t* gt = &cgi->csi->gts[j];
 			if (cgi->LIST_ContainsString(md->gameTypes, gt->id)) {
 				cgi->LIST_AddString(&gameNames, _(gt->name));
 			}
@@ -183,7 +183,7 @@ static void GAME_MP_UpdateGametype_f (void)
 	cgi->Com_SetGameType();
 
 	const char* gameType = cgi->Cvar_GetString("sv_gametype");
-	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t* md = cgi->GAME_GetCurrentSelectedMap();
 	if (md != nullptr && md->multiplayer && cgi->LIST_ContainsString(md->gameTypes, gameType)) {
 		/* no change needed, gametype is supported */
 		return;
@@ -192,7 +192,7 @@ static void GAME_MP_UpdateGametype_f (void)
 	GAME_MP_MapInfo(1);
 }
 
-static linkedList_t *mp_chatMessageStack = nullptr;
+static linkedList_t* mp_chatMessageStack = nullptr;
 
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
@@ -257,7 +257,7 @@ static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 		}
 	}
 
-	cvar_t *cvars[] = {cl_maxsoldiersperteam, cl_maxsoldiersperplayer, cl_roundtimelimit};
+	cvar_t* cvars[] = {cl_maxsoldiersperteam, cl_maxsoldiersperplayer, cl_roundtimelimit};
 	for (int i = 0; i < lengthof(cvars); i++) {
 		if (!cvars[i]->modified) {
 			continue;
@@ -270,9 +270,9 @@ static void GAME_MP_RunFrame (float secondsSinceLastFrame)
 }
 
 #ifndef HARD_LINKED_CGAME
-const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 #else
-const cgame_export_t *GetCGameMultiplayerAPI (const cgame_import_t *import)
+const cgame_export_t* GetCGameMultiplayerAPI (const cgame_import_t* import)
 #endif
 {
 	static cgame_export_t e;
