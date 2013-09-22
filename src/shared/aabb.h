@@ -61,6 +61,9 @@ public:
 	inline float getMinX () const {
 		return mins[0];
 	}
+	inline float getMinY () const {
+		return mins[1];
+	}
 	inline const vec3_t& getMaxs() const {
 		return maxs;
 	}
