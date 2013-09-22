@@ -144,6 +144,8 @@ void FS_CloseFile (qFILE * f)
 	} else if (f->z) {
 		unzCloseCurrentFile(f->z);
 		fs_openedFiles--;
+	} else {
+		return;
 	}
 	assert(fs_openedFiles >= 0);
 
