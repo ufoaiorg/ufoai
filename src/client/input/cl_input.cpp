@@ -73,8 +73,8 @@ static struct {
 static int keyq_head = 0;
 static int keyq_tail = 0;
 
-static cvar_t *in_debug;
-cvar_t *cl_isometric;
+static cvar_t* in_debug;
+cvar_t* cl_isometric;
 
 mouseSpace_t mouseSpace;
 int mousePosX, mousePosY;
@@ -114,7 +114,7 @@ static kbutton_t in_pantilt;
  * @note Called from console callbacks with two parameters, the
  * key and the milliseconds when the key was released
  */
-static void IN_KeyDown (kbutton_t *b)
+static void IN_KeyDown (kbutton_t* b)
 {
 	int k;
 	const char* c = Cmd_Argv(1);
@@ -160,7 +160,7 @@ static void IN_KeyDown (kbutton_t *b)
  * key and the milliseconds when the key was released
  * @param[in,out] b the button state to
  */
-static void IN_KeyUp (kbutton_t *b)
+static void IN_KeyUp (kbutton_t* b)
 {
 	int k;
 	unsigned uptime;

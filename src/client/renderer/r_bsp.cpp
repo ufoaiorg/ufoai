@@ -40,7 +40,7 @@ BRUSH MODELS
 #define MAX_BSPS_TO_RENDER 1024
 
 typedef struct bspRenderRef_s {
-	const mBspModel_t *bsp;
+	const mBspModel_t* bsp;
 	vec3_t origin;
 	vec3_t angles;
 } bspRenderRef_t;
@@ -84,7 +84,7 @@ bool R_CullSphere (const vec3_t centre, const float radius, const unsigned int c
 {
 	unsigned int i;
 	unsigned int bit;
-	const cBspPlane_t *p;
+	const cBspPlane_t* p;
 
 	if (r_nocull->integer)
 		return false;
@@ -105,7 +105,7 @@ bool R_CullSphere (const vec3_t centre, const float radius, const unsigned int c
  * @param[in] e The entity to check
  * @sa R_CullBox
  */
-bool R_CullBspModel (const entity_t *e)
+bool R_CullBspModel (const entity_t* e)
 {
 	vec3_t mins, maxs;
 
@@ -140,8 +140,8 @@ WORLD MODEL
 void R_DrawBspNormals (int tile)
 {
 	int i, j, k;
-	const mBspSurface_t *surf;
-	const mBspModel_t *bsp;
+	const mBspSurface_t* surf;
+	const mBspModel_t* bsp;
 	const vec4_t color = {1.0, 0.0, 0.0, 1.0};
 
 	if (!r_shownormals->integer)
@@ -206,7 +206,7 @@ void R_DrawBspNormals (int tile)
  * @param[in] node The bsp node to mark
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
+static void R_RecursiveVisibleWorldNode (const mBspNode_t* node, int tile)
 {
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
@@ -215,7 +215,7 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	mBspSurface_t *surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	mBspSurface_t* surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
 	for (int i = 0; i < node->numsurfaces; i++, surf++)
 		surf->frame = r_locals.frame;
 
@@ -233,11 +233,11 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t *node, int tile)
  * @param[in] node The bsp node to check
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (const mBspNode_t *node, int tile)
+static void R_RecursiveWorldNode (const mBspNode_t* node, int tile)
 {
 	int i;
 	int cullState;
-	mBspSurface_t *surf;
+	mBspSurface_t* surf;
 
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
@@ -275,7 +275,7 @@ static void R_RecursiveWorldNode (const mBspNode_t *node, int tile)
  * @param[in] tile The maptile (map assembly)
  * @sa R_ModLoadNodes about pathfinding nodes
  */
-static void R_RecurseWorld (const mBspNode_t *node, int tile)
+static void R_RecurseWorld (const mBspNode_t* node, int tile)
 {
 	/* skip special pathfinding nodes */
 	if (node->contents == CONTENTS_PATHFINDING_NODE) {
@@ -305,8 +305,8 @@ void R_GetLevelSurfaceLists (void)
 			if (i && !(i & mask))
 				continue;
 
-			mBspModel_t *bspModel = &r_mapTiles[tile]->bsp;
-			mBspHeader_t *header = &bspModel->submodels[i];
+			mBspModel_t* bspModel = &r_mapTiles[tile]->bsp;
+			mBspHeader_t* header = &bspModel->submodels[i];
 			if (!header->numfaces)
 				continue;
 
@@ -334,7 +334,7 @@ void R_ClearBspRRefs (void)
  * @param[in] angles
  * @param[in] forceVisibility force model to be fully visible
  */
-void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const bool forceVisibility)
+void R_AddBspRRef (const mBspModel_t* model, const vec3_t origin, const vec3_t angles, const bool forceVisibility)
 {
 	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
 		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
@@ -346,7 +346,7 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 		return;
 	}
 
-	bspRenderRef_t *bspRR = &bspRRefs[numBspRRefs++];
+	bspRenderRef_t* bspRR = &bspRRefs[numBspRRefs++];
 	bspRR->bsp = model;
 	VectorCopy(origin, bspRR->origin);
 	VectorCopy(angles, bspRR->angles);
@@ -354,14 +354,14 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	if (!forceVisibility)
 		return;
 
-	mBspSurface_t *surf = &model->surfaces[model->firstmodelsurface];
+	mBspSurface_t* surf = &model->surfaces[model->firstmodelsurface];
 	for (int i = 0; i < model->nummodelsurfaces; i++, surf++) {
 		/* visible flag for rendering */
 		surf->frame = r_locals.frame;
 	}
 }
 
-typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
+typedef void (*drawSurfaceFunc)(const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr);
 
 /**
  * @param[in] drawFunc The function pointer to the surface draw function
@@ -372,10 +372,10 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 	glCullFace(GL_FRONT); /* our triangles are backwards to what OpenGL expects, so tell it to render only back faces */
 
 	for (int i = 0; i < numBspRRefs; i++) {
-		const bspRenderRef_t *const bspRR = &bspRRefs[i];
-		const mBspModel_t *const bsp = bspRR->bsp;
-		const mBspModel_t *const tile = &r_mapTiles[bsp->maptile]->bsp; /* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
-		glElementIndex_t *indexPtr;
+		const bspRenderRef_t* const bspRR = &bspRRefs[i];
+		const mBspModel_t* const bsp = bspRR->bsp;
+		const mBspModel_t* const tile = &r_mapTiles[bsp->maptile]->bsp; /* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
+		glElementIndex_t* indexPtr;
 
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
@@ -401,7 +401,7 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 #if 0
 		/* show model bounding box */
 		if (r_showbox->integer) {
-			const model_t *model = bspRR->bsp;
+			const model_t* model = bspRR->bsp;
 			R_DrawBoundingBox(model->mins, model->maxs);
 		}
 #endif

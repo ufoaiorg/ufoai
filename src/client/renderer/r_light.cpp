@@ -57,7 +57,7 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
  */
 void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, float sustain)
 {
-	sustain_t *s;
+	sustain_t* s;
 	int i;
 
 	s = r_sustainArray;
@@ -84,7 +84,7 @@ void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, fl
  */
 void R_UpdateSustainedLights (void)
 {
-	sustain_t *s;
+	sustain_t* s;
 	int i;
 
 	/* sustains must be recalculated every frame */
@@ -123,7 +123,7 @@ void R_EnableWorldLights (void)
 		return;
 
 	for (i = 0; i < refdef.numDynamicLights && i < maxLights; i++) {
-		const light_t *light = &refdef.dynamicLights[i];
+		const light_t* light = &refdef.dynamicLights[i];
 
 		GLPositionTransform(r_locals.world_matrix, light->origin, lightPositions[i]);
 		VectorCopy(light->color, lightParams[i]);
@@ -239,7 +239,7 @@ void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, 
 		return;
 
 	for (i = 0; i < numLights; i++) {
-		const light_t *light = lights[i];
+		const light_t* light = lights[i];
 
 		GLPositionTransform(r_locals.world_matrix, light->origin, lightPositions[i]);
 		VectorCopy(light->color, lightParams[i]);
@@ -262,7 +262,7 @@ void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, 
  */
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
-	light_t *l;
+	light_t* l;
 	if (refdef.numStaticLights >= MAX_STATIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
@@ -351,7 +351,7 @@ void R_ClearStaticLights (void)
  * @param[in] distSqr Squared distance from entity's origin to the light
  * @sa R_UpdateLightList
  */
-static void R_AddLightToEntity (const vec_t *pos, lighting_t *ltng, const light_t *light, const float distSqr)
+static void R_AddLightToEntity (const vec_t* pos, lighting_t* ltng, const light_t* light, const float distSqr)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
@@ -369,7 +369,7 @@ static void R_AddLightToEntity (const vec_t *pos, lighting_t *ltng, const light_
 			}
 
 			while (i < ltng->numLights) {
-				const light_t *tmp = el[i];
+				const light_t* tmp = el[i];
 				el[i++] = light;
 				light = tmp;
 			}
@@ -395,12 +395,12 @@ static lighting_t fakeLightingData; /**< To return if no actual lighting data is
  * @param[in] ent Entity to recalculate lights for
  * @sa R_AddLightToEntity
  */
-void R_UpdateLightList (entity_t *ent)
+void R_UpdateLightList (entity_t* ent)
 {
 	int i;
-	vec_t *pos; /**< Worldspace position for which lighting is calculated */
-	entity_t *rootEnt; /**< The root entitity of tagent tree, which holds the lighting data (af any) */
-	lighting_t *ltng; /**< Lighting data for the entity being processed */
+	vec_t* pos; /**< Worldspace position for which lighting is calculated */
+	entity_t* rootEnt; /**< The root entitity of tagent tree, which holds the lighting data (af any) */
+	lighting_t* ltng; /**< Lighting data for the entity being processed */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
 	bool cached = false;
@@ -458,7 +458,7 @@ void R_UpdateLightList (entity_t *ent)
 	if (!cached) {
 		/* Rebuild list of static lights */
 		for (i = 0; i < refdef.numStaticLights; i++) {
-			light_t *light = &refdef.staticLights[i];
+			light_t* light = &refdef.staticLights[i];
 			const float distSqr = VectorDistSqr(pos, light->origin);
 
 			if (distSqr > (diameter + light->radius) * (diameter + light->radius))
@@ -482,7 +482,7 @@ void R_UpdateLightList (entity_t *ent)
 
 	/* add dynamic lights, too */
 	for (i = 0; i < refdef.numDynamicLights; i++) {
-		light_t *light = &refdef.dynamicLights[i];
+		light_t* light = &refdef.dynamicLights[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))

@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const float MESH_SHADOW_MAX_DISTANCE = 512.0;
 static const float MESH_SHADOW_ALPHA = 0.3;
 
-static void R_TransformModelDirect (modelInfo_t *mi)
+static void R_TransformModelDirect (modelInfo_t* mi)
 {
 	/* translate and rotate */
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
@@ -58,7 +58,7 @@ static void R_TransformModelDirect (modelInfo_t *mi)
  * re-lerping or re-scaling the entity, the currently bound vertex arrays
  * are simply re-drawn using a small depth offset and varying texcoord delta.
  */
-static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
+static void R_DrawMeshModelShell (const mAliasMesh_t* mesh, const vec4_t color)
 {
 	/* check whether rgb is set */
 	if (!VectorNotEmpty(color))
@@ -83,7 +83,7 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
  * @brief Animated model render function
  * @see R_DrawAliasStatic
  */
-static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
+static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t* mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
 {
 	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, false);
 
@@ -104,7 +104,7 @@ static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float 
  * @brief Static model render function
  * @sa R_DrawAliasFrameLerp
  */
-static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor)
+static void R_DrawAliasStatic (const mAliasMesh_t* mesh, const vec4_t shellColor)
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
@@ -128,7 +128,7 @@ static void R_ResetArraysAfterStaticMeshRender (void)
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
 
-static void R_DrawAliasStaticWithReset (const mAliasMesh_t *mesh, const vec4_t shellColor)
+static void R_DrawAliasStaticWithReset (const mAliasMesh_t* mesh, const vec4_t shellColor)
 {
 	R_DrawAliasStatic(mesh, shellColor);
 	R_ResetArraysAfterStaticMeshRender();
@@ -140,7 +140,7 @@ static void R_DrawAliasStaticWithReset (const mAliasMesh_t *mesh, const vec4_t s
  * @li 12-14: translation
  * @li 15:
  */
-static void R_ComputeGLMatrixFromTag (float* glMatrix, const mAliasTagOrientation_t *orient)
+static void R_ComputeGLMatrixFromTag (float* glMatrix, const mAliasTagOrientation_t* orient)
 {
 	glMatrix[0] = orient->axis[0][0];
 	glMatrix[4] = orient->axis[1][0];
@@ -189,7 +189,7 @@ void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int o
 bool R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float matrix[16])
 {
 	const int index = R_GetTagIndexByName(mod, tagName);
-	mAliasTagOrientation_t *orient;
+	mAliasTagOrientation_t* orient;
 
 	if (index == -1) {
 		Com_Printf("Could not get tag matrix for tag %s of model %s\n", tagName, mod->name);
@@ -209,7 +209,7 @@ bool R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float m
  * @param[in] backLerp the linear interpolation value [0.0,1.0]
  * @param[in] numframes The max frames of the tag data
  */
-void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float* interpolated)
+void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrientation_t* current, const mAliasTagOrientation_t* old, float* interpolated)
 {
 	/* right on a frame? */
 	if (backLerp == 0.0) {
@@ -261,7 +261,7 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
 
 	/* find the right tag in the first frame - the index is the same in every other frame */
 	for (i = 0; i < mod->alias.num_tags; i++) {
-		const mAliasTag_t *tag = &mod->alias.tags[i];
+		const mAliasTag_t* tag = &mod->alias.tags[i];
 		if (Q_streq(tag->name, tagName)) {
 			return i;
 		}
@@ -280,7 +280,7 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
  * struct only holds pointers to the vectors.
  * @todo Take the rotation info from @c modelInfo_t into account
  */
-void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
+void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t* mi, vec3_t scale, vec3_t center)
 {
 	const float width = mi->model->maxs[0] - mi->model->mins[0];
 	const float height = mi->model->maxs[2] - mi->model->mins[2];
@@ -308,10 +308,10 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
  * @c tagname of tag_rweapon will transform the location to the right hand of an actor.
  * @sa R_DrawAliasModel
  */
-void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char* tagname)
+void R_DrawModelDirect (modelInfo_t* mi, modelInfo_t* pmi, const char* tagname)
 {
-	image_t *skin;
-	mAliasMesh_t *mesh;
+	image_t* skin;
+	mAliasMesh_t* mesh;
 
 	if (Q_strnull(mi->name))
 		return;
@@ -346,8 +346,8 @@ void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char* tagname)
 
 		/* tag transformation */
 		if (tagname) {
-			const mAliasTagOrientation_t *current = nullptr;
-			const mAliasTagOrientation_t *old = nullptr;
+			const mAliasTagOrientation_t* current = nullptr;
+			const mAliasTagOrientation_t* old = nullptr;
 			R_GetTags(pmi->model, tagname, pmi->frame, pmi->oldframe, &current, &old);
 			if (current != nullptr && old != nullptr) {
 				float interpolated[16];
@@ -395,10 +395,10 @@ void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, const char* tagname)
  * @param[in,out] mi The model information that is used to render the particle model.
  * @sa R_DrawPtlModel
  */
-void R_DrawModelParticle (modelInfo_t *mi)
+void R_DrawModelParticle (modelInfo_t* mi)
 {
-	image_t *skin;
-	mAliasMesh_t *mesh;
+	image_t* skin;
+	mAliasMesh_t* mesh;
 
 	/* check if the model exists */
 	if (!mi->model)
@@ -444,7 +444,7 @@ void R_DrawModelParticle (modelInfo_t *mi)
  * @param[in] e The entity to check
  * @return @c false if visible, @c true if the entity is outside the current view
  */
-bool R_CullMeshModel (const entity_t *e)
+bool R_CullMeshModel (const entity_t* e)
 {
 	int i;
 	uint32_t aggregatemask;
@@ -502,7 +502,7 @@ bool R_CullMeshModel (const entity_t *e)
 		const int size = lengthof(r_locals.frustum);
 
 		for (j = 0; j < size; j++) {
-			const cBspPlane_t *bspPlane = &r_locals.frustum[j];
+			const cBspPlane_t* bspPlane = &r_locals.frustum[j];
 			/* get the distance between the frustum normal vector and the
 			 * current vector of the bounding box */
 			const float f = DotProduct(bspPlane->normal, bbox[i]);
@@ -548,7 +548,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 	}
 }
 
-static void R_DrawAliasTags (const mAliasModel_t *mod)
+static void R_DrawAliasTags (const mAliasModel_t* mod)
 {
 	int i;
 	const uint32_t color[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
@@ -558,10 +558,10 @@ static void R_DrawAliasTags (const mAliasModel_t *mod)
 
 	for (i = 0; i < mod->num_tags; i++) {
 		int j;
-		const mAliasTag_t *tag = &mod->tags[i];
+		const mAliasTag_t* tag = &mod->tags[i];
 		for (j = 0; j < 3; j++) {
 			vec3_t out;
-			const mAliasTagOrientation_t *o = &tag->orient[mod->curFrame];
+			const mAliasTagOrientation_t* o = &tag->orient[mod->curFrame];
 			VectorMA(o->origin, 5, o->axis[j], out);
 			const vec3_t points[] = { { o->origin[0], o->origin[1], o->origin[2] }, { out[0], out[1], out[2] } };
 			GLbyte colorArray[8];
@@ -586,9 +586,9 @@ static void R_DrawAliasTags (const mAliasModel_t *mod)
 	glDisable(GL_LINE_SMOOTH);
 }
 
-static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
+static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t* e)
 {
-	mAliasModel_t *mod = &e->model->alias;
+	mAliasModel_t* mod = &e->model->alias;
 	mAliasMesh_t* lodMesh;
 
 	R_ResetArrayState();
@@ -608,7 +608,7 @@ static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
 	return lodMesh;
 }
 
-static bool R_UpdateShadowOrigin (entity_t *e)
+static bool R_UpdateShadowOrigin (entity_t* e)
 {
 	vec3_t start, end;
 
@@ -642,7 +642,7 @@ static bool R_UpdateShadowOrigin (entity_t *e)
  * entity. In order to reuse the vertex arrays from the primary rendering
  * pass, the shadow origin must transformed into model-view space.
  */
-static void R_RotateForMeshShadow (const entity_t *e)
+static void R_RotateForMeshShadow (const entity_t* e)
 {
 	if (!e) {
 		glPopMatrix();
@@ -665,12 +665,12 @@ static void R_RotateForMeshShadow (const entity_t *e)
  * @brief Re-draws the mesh using the stencil test.  Meshes with stale lighting
  * information, or with a lighting point above our view, are not drawn.
  */
-static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
+static void R_DrawMeshShadow (entity_t* e, const mAliasMesh_t* mesh)
 {
 	vec4_t color;
 	const bool oldBlend = r_state.blend_enabled;
 	const bool lighting = r_state.lighting_enabled;
-	r_program_t *program = r_state.active_program;
+	r_program_t* program = r_state.active_program;
 
 	if (!r_stencilshadows->integer)
 		return;
@@ -718,15 +718,15 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
  * @brief Draw a model from the battlescape entity list
  * @sa R_GetEntityLists
  */
-void R_DrawAliasModel (entity_t *e)
+void R_DrawAliasModel (entity_t* e)
 {
-	mAliasModel_t *mod = &e->model->alias;
+	mAliasModel_t* mod = &e->model->alias;
 	/* the values are sane here already - see R_GetEntityLists */
-	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
+	const image_t* skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
-	mAliasMesh_t *mesh;
+	mAliasMesh_t* mesh;
 
 	/* IR goggles override color for entities that are affected */
 	if ((refdef.rendererFlags & RDF_IRGOGGLES) && (e->flags & RF_IRGOGGLES))

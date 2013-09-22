@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_screen.h"
 
 #define MAX_IMAGEHASH 256
-static image_t *imageHash[MAX_IMAGEHASH];
+static image_t* imageHash[MAX_IMAGEHASH];
 
 #define IMAGE_ARRAY_SIZE 128
 typedef struct imageArray_s {
@@ -40,17 +40,17 @@ typedef struct imageArray_s {
 imageArray_t r_images;
 int r_numImages;
 
-/* Wicked for()-loop to go through all images in the r_images linked list. Parameters are: (int i, image_t *image, imageArray_t *imageArray) */
+/* Wicked for()-loop to go through all images in the r_images linked list. Parameters are: (int i, image_t* image, imageArray_t* imageArray) */
 #define FOR_EACH_IMAGE(i, image, imageArray) \
 	for (i = 0, imageArray = &r_images, image = &imageArray->images[0]; i < r_numImages; i++, image++, \
 			(i % IMAGE_ARRAY_SIZE) ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : nullptr))
 
 
 /* generic environment map */
-image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
+image_t* r_envmaptextures[MAX_ENVMAPTEXTURES];
 
 /* lense flares */
-image_t *r_flaretextures[NUM_FLARETEXTURES];
+image_t* r_flaretextures[NUM_FLARETEXTURES];
 
 #define MAX_TEXTURE_SIZE 8192
 
@@ -61,16 +61,16 @@ image_t *r_flaretextures[NUM_FLARETEXTURES];
 void R_ImageClearMaterials (void)
 {
 	int i;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 
 	/* clear previously loaded materials */
 	FOR_EACH_IMAGE(i, image, images) {
-		material_t *m = &image->material;
-		materialStage_t *s = m->stages;
+		material_t* m = &image->material;
+		materialStage_t* s = m->stages;
 
 		while (s) {  /* free the stages chain */
-			materialStage_t *ss = s->next;
+			materialStage_t* ss = s->next;
 			Mem_Free(s);
 			s = ss;
 		}
@@ -85,8 +85,8 @@ void R_ImageClearMaterials (void)
 void R_ImageList_f (void)
 {
 	int i, cnt;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 	int texels;
 
 	Com_Printf("------------------\n");
@@ -380,7 +380,7 @@ void R_SoftenTexture (byte* in, int width, int height, int bpp)
 	Mem_Free(out);
 }
 
-void R_UploadAlpha (const image_t *image, const byte* alphaData)
+void R_UploadAlpha (const image_t* image, const byte* alphaData)
 {
 	R_BindTexture(image->texnum);
 
@@ -392,7 +392,7 @@ void R_UploadAlpha (const image_t *image, const byte* alphaData)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 }
 
-static inline void R_DeleteImage (image_t *image)
+static inline void R_DeleteImage (image_t* image)
 {
 	const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
 	for (image_t** anchor = &imageHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
@@ -409,9 +409,9 @@ static inline void R_DeleteImage (image_t *image)
 	OBJZERO(*image);
 }
 
-image_t *R_GetImage (const char* name)
+image_t* R_GetImage (const char* name)
 {
-	image_t *image;
+	image_t* image;
 	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);
 
 	/* look for it */
@@ -432,10 +432,10 @@ image_t *R_GetImage (const char* name)
  * @param[in] height The height of the image (power of two, please)
  * @param[in] type The image type @sa imagetype_t
  */
-image_t *R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
+image_t* R_LoadImageData (const char* name, const byte* pic, int width, int height, imagetype_t type)
 {
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 	int i;
 	size_t len;
 	unsigned hash;
@@ -506,7 +506,7 @@ image_t *R_LoadImageData (const char* name, const byte* pic, int width, int heig
 
 image_t* R_RenderToTexture (const char* name, int x, int y, int w, int h)
 {
-	image_t *img = R_GetImage(name);
+	image_t* img = R_GetImage(name);
 	const bool dimensionDiffer = img != nullptr && img->width != w && img->height != h;
 	if (img == nullptr || dimensionDiffer) {
 		if (dimensionDiffer) {
@@ -532,7 +532,7 @@ image_t* R_RenderToTexture (const char* name, int x, int y, int w, int h)
  * @brief Set up new image type and change texturemapping paramenters accordingly
  * @note Mipmapping mode is not updated
  */
-static void R_ChangeImageType(image_t *img, imagetype_t type)
+static void R_ChangeImageType(image_t* img, imagetype_t type)
 {
 	if (!img)
 		return;
@@ -560,10 +560,10 @@ static void R_ChangeImageType(image_t *img, imagetype_t type)
  * @sa R_LoadJPG
  * @sa R_LoadPNG
  */
-image_t *R_FindImage (const char* pname, imagetype_t type)
+image_t* R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
-	image_t *image;
+	image_t* image;
 	SDL_Surface *surf;
 
 	if (!pname || !pname[0])
@@ -630,9 +630,9 @@ image_t *R_FindImage (const char* pname, imagetype_t type)
  * @return nullptr on error or image_t pointer on success
  * @sa R_FindImage
  */
-const image_t *R_FindPics (const char* name)
+const image_t* R_FindPics (const char* name)
 {
-	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
+	const image_t* image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
 		return nullptr;
 	return image;
@@ -660,9 +660,9 @@ bool R_ImageExists (const char* pname, ...)
  * @brief Returns an index of the image pointer in the r_images linked list, as if r_images would be a plain contiguous array
  * @param imagePtr The image pointer
  */
-int R_GetImageIndex (image_t *imagePtr)
+int R_GetImageIndex (image_t* imagePtr)
 {
-	imageArray_t *images;
+	imageArray_t* images;
 
 	for (images = &r_images; images; images = images->next) {
 		if (imagePtr >= &images->images[0] && imagePtr <= &images->images[IMAGE_ARRAY_SIZE - 1])
@@ -676,9 +676,9 @@ int R_GetImageIndex (image_t *imagePtr)
  * @brief Returns an image pointer from the r_images linked list, as if r_images would be a plain contiguous array
  * @param i The image index inside r_images
  */
-image_t *R_GetImageAtIndex (int i)
+image_t* R_GetImageAtIndex (int i)
 {
-	imageArray_t *images;
+	imageArray_t* images;
 
 	if (i >= r_numImages || i < 0)
 		return nullptr;
@@ -693,7 +693,7 @@ image_t *R_GetImageAtIndex (int i)
  * @brief Free the image and its assigned maps (roughness, normal, specular, glow - if there are any)
  * @param image The image that should be freed
  */
-void R_FreeImage (image_t *image)
+void R_FreeImage (image_t* image)
 {
 	/* free image slot */
 	if (!image || !image->texnum)
@@ -718,8 +718,8 @@ void R_FreeImage (image_t *image)
 void R_FreeWorldImages (void)
 {
 	int i;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 
 	R_CheckError();
 	/* Wicked for()-loop (tm) */
@@ -757,8 +757,8 @@ void R_InitImages (void)
 void R_ShutdownImages (void)
 {
 	int i;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 
 	R_CheckError();
 	/* Wicked for()-loop (tm) */
@@ -772,7 +772,7 @@ void R_ShutdownImages (void)
 	r_numImages = 0;
 }
 
-static void R_ReloadImageData (image_t *image)
+static void R_ReloadImageData (image_t* image)
 {
 	SDL_Surface *surf;
 	if (image == r_noTexture || !image || !image->texnum)
@@ -796,8 +796,8 @@ static void R_ReloadImageData (image_t *image)
 void R_ReloadImages (void)
 {
 	int i;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 
 	R_CheckError();
 	glEnable(GL_TEXTURE_2D);
@@ -830,10 +830,10 @@ static const glTextureMode_t gl_texture_modes[] = {
 void R_TextureMode (const char* string)
 {
 	int i;
-	image_t *image;
-	imageArray_t *images;
+	image_t* image;
+	imageArray_t* images;
 	const size_t size = lengthof(gl_texture_modes);
-	const glTextureMode_t *mode;
+	const glTextureMode_t* mode;
 
 	mode = nullptr;
 	for (i = 0; i < size; i++) {
@@ -897,7 +897,7 @@ void R_TextureAlphaMode (const char* string)
 	const size_t size = lengthof(gl_alpha_modes);
 
 	for (i = 0; i < size; i++) {
-		const gltmode_t *mode = &gl_alpha_modes[i];
+		const gltmode_t* mode = &gl_alpha_modes[i];
 		if (!Q_strcasecmp(mode->name, string)) {
 			r_config.gl_alpha_format = mode->mode;
 			return;
@@ -933,7 +933,7 @@ void R_TextureSolidMode (const char* string)
 	const size_t size = lengthof(gl_solid_modes);
 
 	for (i = 0; i < size; i++) {
-		const gltmode_t *mode = &gl_solid_modes[i];
+		const gltmode_t* mode = &gl_solid_modes[i];
 		if (!Q_strcasecmp(mode->name, string)) {
 			r_config.gl_solid_format = mode->mode;
 			return;

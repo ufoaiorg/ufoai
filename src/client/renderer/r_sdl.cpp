@@ -188,7 +188,7 @@ bool Rimp_Init (void)
 /**
  * @brief Init the SDL window
  */
-bool R_InitGraphics (const viddefContext_t *context)
+bool R_InitGraphics (const viddefContext_t* context)
 {
 	uint32_t flags;
 	int i;

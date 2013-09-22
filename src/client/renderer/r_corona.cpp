@@ -23,7 +23,7 @@
 
 void R_AddCorona (const vec3_t org, float radius, const vec3_t color)
 {
-	corona_t *c;
+	corona_t* c;
 
 	if (!r_coronas->integer)
 		return;
@@ -58,7 +58,7 @@ void R_DrawCoronas (void)
 	R_BlendFunc(GL_ONE, GL_ONE);
 
 	for (k = 0; k < refdef.numCoronas; k++) {
-		const corona_t *c = &refdef.coronas[k];
+		const corona_t* c = &refdef.coronas[k];
 		int verts, vertind;
 
 		if (!c->radius)

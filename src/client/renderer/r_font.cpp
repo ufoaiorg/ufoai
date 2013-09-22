@@ -68,7 +68,7 @@ typedef struct {
  */
 typedef struct wrapCache_s {
 	char text[MAX_CACHE_STRING];	/**< hash id */
-	const font_t *font;	/**< font used for wrapping/rendering this text */
+	const font_t* font;	/**< font used for wrapping/rendering this text */
 	struct wrapCache_s* next;		/**< next hash entry in case of collision */
 	int maxWidth;		/**< width to which this text was wrapped */
 	longlines_t method;		/**< were long lines wrapped or truncated? */
@@ -83,7 +83,7 @@ static font_t fonts[MAX_FONTS];
 
 static chunkCache_t chunkCache[MAX_CHUNK_CACHE];
 static wrapCache_t wrapCache[MAX_WRAP_CACHE];
-static wrapCache_t *hash[MAX_WRAP_HASH];
+static wrapCache_t* hash[MAX_WRAP_HASH];
 static int numChunks = 0;
 static int numWraps = 0;
 
@@ -166,9 +166,9 @@ void R_FontShutdown (void)
 /**
  * @todo Check whether font is already loaded
  */
-static font_t *R_FontAnalyze (const char* name, const char* path, int renderStyle, int size)
+static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyle, int size)
 {
-	font_t *f;
+	font_t* f;
 	int ttfSize;
 
 	if (numFonts >= MAX_FONTS)
@@ -210,7 +210,7 @@ static font_t *R_FontAnalyze (const char* name, const char* path, int renderStyl
 /**
  * @brief Searches the array of available fonts (see fonts.ufo)
  */
-font_t *R_GetFont (const char* name)
+font_t* R_GetFont (const char* name)
 {
 	int i;
 
@@ -240,7 +240,7 @@ void R_FontListCache_f (void)
 	Com_Printf("...chunk cache size: %i - used %i\n", MAX_CHUNK_CACHE, numChunks);
 
 	for (i = 0; i < numWraps; i++) {
-		const wrapCache_t *wrap = &wrapCache[i];
+		const wrapCache_t* wrap = &wrapCache[i];
 		int collCount = 0;
 		while (wrap->next) {
 			collCount++;
@@ -257,7 +257,7 @@ void R_FontListCache_f (void)
  * @param[in] string String to build the hash value for
  * @return hash value for given string
  */
-static int R_FontHash (const char* string, const font_t *font)
+static int R_FontHash (const char* string, const font_t* font)
 {
 	register int hashValue, i;
 
@@ -273,7 +273,7 @@ static int R_FontHash (const char* string, const font_t *font)
  * @brief Calculate the width in pixels needed to render a piece of text.
  * Can temporarily modify the caller's string but leaves it unchanged.
  */
-static int R_FontChunkLength (const font_t *f, char* text, int len)
+static int R_FontChunkLength (const font_t* f, char* text, int len)
 {
 	int width;
 	char old;
@@ -297,7 +297,7 @@ static int R_FontChunkLength (const font_t *f, char* text, int len)
  * @param[out] widthp Pixel width of part that fits.
  * @return String length of part that fits.
  */
-static int R_FontFindFit (const font_t *f, char* text, int maxlen, int maxWidth, int* widthp)
+static int R_FontFindFit (const font_t* f, char* text, int maxlen, int maxWidth, int* widthp)
 {
 	int bestbreak = 0;
 	int width;
@@ -352,7 +352,7 @@ static int R_FontFindFit (const font_t *f, char* text, int maxlen, int maxWidth,
  * truncated.
  * Assumes whole string won't fit.
  */
-static int R_FontFindTruncFit (const font_t *f, const char* text, int maxlen, int maxWidth, bool mark, int* widthp)
+static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, int maxWidth, bool mark, int* widthp)
 {
 	char buf[BUF_SIZE];
 	int width;
@@ -385,7 +385,7 @@ static int R_FontFindTruncFit (const font_t *f, const char* text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t *f, const char* text, int maxWidth, longlines_t method, int* lines, bool *aborted)
+static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, longlines_t method, int* lines, bool *aborted)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -474,9 +474,9 @@ static int R_FontMakeChunks (const font_t *f, const char* text, int maxWidth, lo
  * @brief Wrap text according to provided parameters.
  * Pull wrapping from cache if possible.
  */
-static wrapCache_t *R_FontWrapText (const font_t *f, const char* text, int maxWidth, longlines_t method)
+static wrapCache_t* R_FontWrapText (const font_t* f, const char* text, int maxWidth, longlines_t method)
 {
-	wrapCache_t *wrap;
+	wrapCache_t* wrap;
 	int hashValue = R_FontHash(text ,f);
 	int chunksUsed;
 	int lines;
@@ -537,8 +537,8 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char* text, int maxWi
  */
 void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlines_t method, int* width, int* height, int* lines, bool *isTruncated)
 {
-	const font_t *font = R_GetFont(fontId);
-	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
+	const font_t* font = R_GetFont(fontId);
+	const wrapCache_t* wrap = R_FontWrapText(font, text, maxWidth, method);
 
 	if (width) {
 		int i;
@@ -567,7 +567,7 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static void R_FontGenerateTexture (const font_t *font, const char* text, chunkCache_t *chunk)
+static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCache_t* chunk)
 {
 	int w, h;
 	SDL_Surface *textSurface;
@@ -706,8 +706,8 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 int R_FontDrawString (const char* fontId, align_t align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char* c, int boxHeight, int scrollPos, int* curLine, longlines_t method)
 {
-	const font_t *font = R_GetFont(fontId);
-	const wrapCache_t *wrap;
+	const font_t* font = R_GetFont(fontId);
+	const wrapCache_t* wrap;
 	int i;
 	const align_t horizontalAlign = (align_t)(align % 3); /* left, center, right */
 	int xalign = 0;
@@ -718,7 +718,7 @@ int R_FontDrawString (const char* fontId, align_t align, int x, int y, int absX,
 		boxHeight = wrap->numLines;
 
 	for (i = 0; i < wrap->numChunks; i++) {
-		chunkCache_t *chunk = &chunkCache[wrap->chunkIdx + i];
+		chunkCache_t* chunk = &chunkCache[wrap->chunkIdx + i];
 		int linenum = chunk->linenum;
 
 		if (curLine)

@@ -48,12 +48,12 @@ static ipos3_t shift;
  * @brief The currently loaded world model for the actual tile
  * @sa r_mapTiles
  */
-static model_t *r_worldmodel;
+static model_t* r_worldmodel;
 
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (const lump_t *l)
+static void R_ModLoadLighting (const lump_t* l)
 {
 	/* map has no lightmap */
 	if (l->filelen == 0)
@@ -64,12 +64,12 @@ static void R_ModLoadLighting (const lump_t *l)
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
-static void R_ModLoadVertexes (const lump_t *l)
+static void R_ModLoadVertexes (const lump_t* l)
 {
-	const dBspVertex_t *in;
+	const dBspVertex_t* in;
 	int i, count;
 
-	in = (const dBspVertex_t *) (mod_base + l->fileofs);
+	in = (const dBspVertex_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -86,13 +86,13 @@ static void R_ModLoadVertexes (const lump_t *l)
 	}
 }
 
-static void R_ModLoadNormals (const lump_t *l)
+static void R_ModLoadNormals (const lump_t* l)
 {
-	const dBspNormal_t *in;
-	mBspVertex_t *out;
+	const dBspNormal_t* in;
+	mBspVertex_t* out;
 	int i, count;
 
-	in = (const dBspNormal_t *)(mod_base + l->fileofs);
+	in = (const dBspNormal_t* )(mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in)) {
 		Com_Error(ERR_DROP, "R_LoadNormals: Funny lump size in %s.", r_worldmodel->name);
 	}
@@ -128,12 +128,12 @@ static inline float R_RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
  * @brief Loads brush entities like func_door and func_breakable
  * @sa CMod_LoadSubmodels
  */
-static void R_ModLoadSubmodels (const lump_t *l)
+static void R_ModLoadSubmodels (const lump_t* l)
 {
-	const dBspModel_t *in;
+	const dBspModel_t* in;
 	int i, j, count;
 
-	in = (const dBspModel_t *) (mod_base + l->fileofs);
+	in = (const dBspModel_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -157,12 +157,12 @@ static void R_ModLoadSubmodels (const lump_t *l)
 	}
 }
 
-static void R_ModLoadEdges (const lump_t *l)
+static void R_ModLoadEdges (const lump_t* l)
 {
-	const dBspEdge_t *in;
+	const dBspEdge_t* in;
 	int i, count;
 
-	in = (const dBspEdge_t *) (mod_base + l->fileofs);
+	in = (const dBspEdge_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -181,13 +181,13 @@ static void R_ModLoadEdges (const lump_t *l)
 /**
  * @sa BATTLE_Start
  */
-static void R_ModLoadTexinfo (const char* mapZone, const lump_t *l)
+static void R_ModLoadTexinfo (const char* mapZone, const lump_t* l)
 {
-	const dBspTexinfo_t *in;
+	const dBspTexinfo_t* in;
 	int i, j, count;
 	char name[MAX_QPATH];
 
-	in = (const dBspTexinfo_t *) (mod_base + l->fileofs);
+	in = (const dBspTexinfo_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -220,12 +220,12 @@ static void R_ModLoadTexinfo (const char* mapZone, const lump_t *l)
 /**
  * @brief Fills in s->stmins[] and s->stmaxs[]
  */
-static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
+static void R_SetSurfaceExtents (mBspSurface_t* surf, const model_t* mod)
 {
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int i, j;
-	const mBspTexInfo_t *tex;
+	const mBspTexInfo_t* tex;
 
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
@@ -237,7 +237,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
-		const mBspVertex_t *v;
+		const mBspVertex_t* v;
 		vec3_t position;
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
@@ -280,12 +280,12 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	}
 }
 
-static void R_ModLoadSurfaces (bool day, const lump_t *l)
+static void R_ModLoadSurfaces (bool day, const lump_t* l)
 {
-	const dBspSurface_t *in;
+	const dBspSurface_t* in;
 	int count, surfnum;
 
-	in = (const dBspSurface_t *) (mod_base + l->fileofs);
+	in = (const dBspSurface_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -352,13 +352,13 @@ static void R_ModLoadSurfaces (bool day, const lump_t *l)
  * @sa TR_BuildTracingNode_r
  * @sa R_RecurseSetParent
  */
-static void R_ModLoadNodes (const lump_t *l)
+static void R_ModLoadNodes (const lump_t* l)
 {
 	int i, j, count;
-	const dBspNode_t *in;
-	mBspNode_t *parent = nullptr;
+	const dBspNode_t* in;
+	mBspNode_t* parent = nullptr;
 
-	in = (const dBspNode_t *) (mod_base + l->fileofs);
+	in = (const dBspNode_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -400,16 +400,16 @@ static void R_ModLoadNodes (const lump_t *l)
 				out->children[j] = r_worldmodel->bsp.nodes + p2;
 			} else {
 				assert((LEAFNODE - p2) < r_worldmodel->bsp.numleafs);
-				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p2));
+				out->children[j] = (mBspNode_t* ) (r_worldmodel->bsp.leafs + (LEAFNODE - p2));
 			}
 			out->children[j]->parent = parent;
 		}
 	}
 }
 
-static void R_ModLoadLeafs (const lump_t *l)
+static void R_ModLoadLeafs (const lump_t* l)
 {
-	const dBspLeaf_t *in = (const dBspLeaf_t *) (mod_base + l->fileofs);
+	const dBspLeaf_t* in = (const dBspLeaf_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	const int count = l->filelen / sizeof(*in);
@@ -429,7 +429,7 @@ static void R_ModLoadLeafs (const lump_t *l)
 	}
 }
 
-static void R_ModLoadSurfedges (const lump_t *l)
+static void R_ModLoadSurfedges (const lump_t* l)
 {
 	int i, count;
 	const int* in;
@@ -454,13 +454,13 @@ static void R_ModLoadSurfedges (const lump_t *l)
 /**
  * @sa CMod_LoadPlanes
  */
-static void R_ModLoadPlanes (const lump_t *l)
+static void R_ModLoadPlanes (const lump_t* l)
 {
 	int i, j;
-	const dBspPlane_t *in;
+	const dBspPlane_t* in;
 	int count;
 
-	in = (const dBspPlane_t *) (mod_base + l->fileofs);
+	in = (const dBspPlane_t* ) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -489,8 +489,8 @@ static void R_ModLoadPlanes (const lump_t *l)
  */
 static void R_ModShiftTile (void)
 {
-	mBspVertex_t *vert;
-	cBspPlane_t *plane;
+	mBspVertex_t* vert;
+	cBspPlane_t* plane;
 	int i, j;
 
 	/* we can't do this instantly, because of rounding errors on extents calculation */
@@ -513,7 +513,7 @@ static void R_ModShiftTile (void)
  * @todo Don't use the buffers from r_state here - they might overflow
  * @todo Decrease MAX_GL_ARRAY_LENGTH to 32768 again when this is fixed
  */
-static void R_LoadBspVertexArrays (model_t *mod)
+static void R_LoadBspVertexArrays (model_t* mod)
 {
 	int i, j;
 	int vertOfs, texCoordOfs, tangOfs;
@@ -522,8 +522,8 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	float* point, *sdir, *tdir;
 	vec4_t tangent;
 	vec3_t binormal;
-	mBspSurface_t *surf;
-	mBspVertex_t *vert;
+	mBspSurface_t* surf;
+	mBspVertex_t* vert;
 	int vertexCount, indexCount;
 
 	vertOfs = texCoordOfs = tangOfs = 0;
@@ -556,10 +556,10 @@ static void R_LoadBspVertexArrays (model_t *mod)
 
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
-				const mBspEdge_t *edge = &mod->bsp.edges[index];
+				const mBspEdge_t* edge = &mod->bsp.edges[index];
 				vert = &mod->bsp.vertexes[edge->v[0]];
 			} else {
-				const mBspEdge_t *edge = &mod->bsp.edges[-index];
+				const mBspEdge_t* edge = &mod->bsp.edges[-index];
 				vert = &mod->bsp.vertexes[edge->v[1]];
 			}
 
@@ -600,7 +600,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 
 				t = DotProduct(point, tdir) + toff;
 				t -= surf->stmins[1];
-				t += surf->light_t * surf->lightmap_scale;
+				t += surf->light_t*  surf->lightmap_scale;
 				t += surf->lightmap_scale / 2.0;
 				t /= r_lightmaps.size * surf->lightmap_scale;
 			}
@@ -654,7 +654,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	}
 }
 
-static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t** r_sorted_surfaces)
+static void R_SortSurfacesArrays_ (mBspSurfaces_t* surfs, mBspSurfaces_t** r_sorted_surfaces)
 {
 	int i, j;
 
@@ -668,7 +668,7 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t** r_sor
 	surfs->count = 0;
 
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *sorted = r_sorted_surfaces[i];
+		mBspSurfaces_t* sorted = r_sorted_surfaces[i];
 		if (sorted && sorted->count) {
 			for (j = 0; j < sorted->count; j++)
 				R_AddSurfaceToArray(surfs, sorted->surfaces[j]);
@@ -682,11 +682,11 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t** r_sor
  * @brief Reorders all surfaces arrays for the specified model, grouping the surface
  * pointers by texture.  This dramatically reduces glBindTexture calls.
  */
-static void R_SortSurfacesArrays (const model_t *mod)
+static void R_SortSurfacesArrays (const model_t* mod)
 {
-	const mBspSurface_t *surf, *s;
+	const mBspSurface_t* surf, *s;
 	int i, ns;
-	mBspSurfaces_t** r_sorted_surfaces = Mem_AllocTypeN(mBspSurfaces_t *, r_numImages);
+	mBspSurfaces_t** r_sorted_surfaces = Mem_AllocTypeN(mBspSurfaces_t* , r_numImages);
 
 	/* resolve the start surface and total surface count */
 	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
@@ -695,7 +695,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
 		int index = R_GetImageIndex(surf->texinfo->image);
-		mBspSurfaces_t *surfs = r_sorted_surfaces[index];
+		mBspSurfaces_t* surfs = r_sorted_surfaces[index];
 		if (!surfs) {  /* allocate it */
 			surfs = Mem_PoolAllocType(mBspSurfaces_t, vid_modelPool);
 			r_sorted_surfaces[index] = surfs;
@@ -706,7 +706,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 
 	/* allocate the surfaces pointers based on counts */
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[i];
+		mBspSurfaces_t* surfs = r_sorted_surfaces[i];
 		if (surfs) {
 			surfs->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfs->count, vid_modelPool);
 			surfs->count = 0;
@@ -723,7 +723,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 
 	/* free the per-texture surfaces arrays */
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[i];
+		mBspSurfaces_t* surfs = r_sorted_surfaces[i];
 		if (surfs) {
 			Mem_Free(surfs->surfaces);
 			Mem_Free(surfs);
@@ -733,9 +733,9 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	Mem_Free(r_sorted_surfaces);
 }
 
-static void R_LoadSurfacesArrays_ (model_t *mod)
+static void R_LoadSurfacesArrays_ (model_t* mod)
 {
-	mBspSurface_t *surf, *s;
+	mBspSurface_t* surf, *s;
 	int i, ns;
 
 	/* allocate the surfaces array structures */
@@ -750,8 +750,8 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		const mBspTexInfo_t *texinfo = surf->texinfo;
-		const material_t *material = &texinfo->image->material;
+		const mBspTexInfo_t* texinfo = surf->texinfo;
+		const material_t* material = &texinfo->image->material;
 		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (texinfo->flags & SURF_WARP)
 				mod->bsp.blend_warp_surfaces->count++;
@@ -775,7 +775,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 
 	/* allocate the surfaces pointers based on the counts */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
-		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
+		mBspSurfaces_t* surfaces = mod->bsp.sorted_surfaces[i];
 		if (surfaces->count) {
 			surfaces->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfaces->count, vid_modelPool);
 			surfaces->count = 0;
@@ -785,8 +785,8 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* iterate the surfaces again, populating the allocated arrays based
 	 * on primary render type */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		const mBspTexInfo_t *texinfo = surf->texinfo;
-		const material_t *material = &texinfo->image->material;
+		const mBspTexInfo_t* texinfo = surf->texinfo;
+		const material_t* material = &texinfo->image->material;
 		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (texinfo->flags & SURF_WARP)
 				R_AddSurfaceToArray(mod->bsp.blend_warp_surfaces, surf);
@@ -825,20 +825,20 @@ static void R_LoadSurfacesArrays (void)
 
 static int totalBspTriangles;
 
-static void R_GenerateTriangleSoup_ (model_t *mod)
+static void R_GenerateTriangleSoup_ (model_t* mod)
 {
-	mBspModel_t *bsp = &mod->bsp; /* can be aliased with baseTile, so beware */
-	mBspModel_t *baseTile = &r_mapTiles[bsp->maptile]->bsp; /**< owns vertex arrays */
+	mBspModel_t* bsp = &mod->bsp; /* can be aliased with baseTile, so beware */
+	mBspModel_t* baseTile = &r_mapTiles[bsp->maptile]->bsp; /**< owns vertex arrays */
 	int i, j, k;
 	int tris = 0;
 
 	Com_DPrintf(DEBUG_RENDERER, "Soup: model %i/%i\n", bsp->maptile, bsp->firstmodelsurface);
 
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
-		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
+		mBspSurfaces_t* surfaces = mod->bsp.sorted_surfaces[i];
 
 		for (j = 0; j < surfaces->count; j++) {
-			mBspSurface_t *surf = surfaces->surfaces[j];
+			mBspSurface_t* surf = surfaces->surfaces[j];
 
 			if (surf->firstTriangle >= 0)
 				continue; /* Already allocated */
@@ -884,7 +884,7 @@ static void R_GenerateTriangleSoup ()
 	/* Create buffer objects for indexes */
 	if (qglBindBuffer) {
 		for (i = 0; i < r_numMapTiles; i++) {
-			mBspModel_t *bsp = &r_mapTiles[i]->bsp;
+			mBspModel_t* bsp = &r_mapTiles[i]->bsp;
 
 			qglGenBuffers(1, &bsp->index_buffer);
 			qglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bsp->index_buffer);
@@ -898,7 +898,7 @@ static void R_GenerateTriangleSoup ()
 /**
  * @sa R_SetParent
  */
-static void R_SetModel (mBspNode_t *node, model_t *mod)
+static void R_SetModel (mBspNode_t* node, model_t* mod)
 {
 	node->model = mod;
 
@@ -913,7 +913,7 @@ static void R_SetModel (mBspNode_t *node, model_t *mod)
 /**
  * @sa R_RecurseSetParent
  */
-static void R_RecursiveSetModel (mBspNode_t *node, model_t *mod)
+static void R_RecursiveSetModel (mBspNode_t* node, model_t* mod)
 {
 	/* skip special pathfinding nodes */
 	if (node->contents == CONTENTS_PATHFINDING_NODE) {
@@ -934,8 +934,8 @@ static void R_SetupSubmodels (void)
 	/* set up the submodels, the first 255 submodels are the models of the
 	 * different levels, don't care about them */
 	for (i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
-		model_t *mod = &r_modelsInline[r_numModelsInline];
-		const mBspHeader_t *sub = &r_worldmodel->bsp.submodels[i];
+		model_t* mod = &r_modelsInline[r_numModelsInline];
+		const mBspHeader_t* sub = &r_worldmodel->bsp.submodels[i];
 
 		/* copy most info from world */
 		*mod = *r_worldmodel;
@@ -984,7 +984,7 @@ static void R_SetupWorldModel (void)
 	/* start with inverted range to simplify code */
 	int first = surfCount, last = -1; /* @note range is [,) */
 	for (; i < r_worldmodel->bsp.numsubmodels; i++) {
-		const mBspHeader_t *sub = &r_worldmodel->bsp.submodels[i];
+		const mBspHeader_t* sub = &r_worldmodel->bsp.submodels[i];
 		int firstFace = sub->firstface;
 		int lastFace = firstFace + sub->numfaces;
 
@@ -1031,7 +1031,7 @@ static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, in
 {
 	int i;
 	byte* buffer;
-	dBspHeader_t *header;
+	dBspHeader_t* header;
 	const int lightingLump = day ? LUMP_LIGHTING_DAY : LUMP_LIGHTING_NIGHT;
 
 	if (r_numMapTiles < 0 || r_numMapTiles >= MAX_MAPTILES)
@@ -1056,7 +1056,7 @@ static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, in
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
 
 	/* test version */
-	header = (dBspHeader_t *) buffer;
+	header = (dBspHeader_t* ) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);
@@ -1194,7 +1194,7 @@ void R_ModReloadSurfacesArrays (void)
 	int i, j;
 
 	for (i = 0; i < r_numMapTiles; i++) {
-		model_t *mod = r_mapTiles[i];
+		model_t* mod = r_mapTiles[i];
 		const size_t size = lengthof(mod->bsp.sorted_surfaces);
 		for (j = 0; j < size; j++)
 			if (mod->bsp.sorted_surfaces[j]) {

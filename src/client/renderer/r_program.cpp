@@ -40,7 +40,7 @@ const char* shaderQualityLevelNames[SHQ_NUM][2] = {
 	{"world_med","model_high"} /** @todo high quality world shader */
 };
 
-void R_UseProgram  (r_program_t *prog)
+void R_UseProgram  (r_program_t* prog)
 {
 	if (!qglUseProgram || r_state.active_program == prog)
 		return;
@@ -64,9 +64,9 @@ void R_UseProgram  (r_program_t *prog)
 	}
 }
 
-static r_progvar_t *R_ProgramVariable (int type, const char* name)
+static r_progvar_t* R_ProgramVariable (int type, const char* name)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 	int i;
 
 	if (!r_state.active_program) {
@@ -110,7 +110,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char* name)
 
 void R_ProgramParameter1i (const char* name, GLint value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -120,7 +120,7 @@ void R_ProgramParameter1i (const char* name, GLint value)
 
 void R_ProgramParameter1f (const char* name, GLfloat value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -130,7 +130,7 @@ void R_ProgramParameter1f (const char* name, GLfloat value)
 
 void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -140,7 +140,7 @@ void R_ProgramParameter1fvs (const char* name, GLint size, GLfloat* value)
 
 void R_ProgramParameter2fv (const char* name, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -150,7 +150,7 @@ void R_ProgramParameter2fv (const char* name, GLfloat* value)
 
 void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -160,7 +160,7 @@ void R_ProgramParameter2fvs (const char* name, GLint size, GLfloat* value)
 
 void R_ProgramParameter3fv (const char* name, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -170,7 +170,7 @@ void R_ProgramParameter3fv (const char* name, GLfloat* value)
 
 void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -180,7 +180,7 @@ void R_ProgramParameter3fvs (const char* name, GLint size, GLfloat* value)
 
 void R_ProgramParameter4fv (const char* name, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -190,7 +190,7 @@ void R_ProgramParameter4fv (const char* name, GLfloat* value)
 
 void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -200,7 +200,7 @@ void R_ProgramParameter4fvs (const char* name, GLint size, GLfloat* value)
 
 void R_ProgramParameterMatrix4fv (const char* name, GLfloat* value)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
@@ -210,7 +210,7 @@ void R_ProgramParameterMatrix4fv (const char* name, GLfloat* value)
 
 void R_AttributePointer (const char* name, GLuint size, const GLvoid* array)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
 		return;
@@ -220,7 +220,7 @@ void R_AttributePointer (const char* name, GLuint size, const GLvoid* array)
 
 void R_EnableAttribute (const char* name)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
 		return;
@@ -230,7 +230,7 @@ void R_EnableAttribute (const char* name)
 
 void R_DisableAttribute (const char* name)
 {
-	r_progvar_t *v;
+	r_progvar_t* v;
 
 	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
 		return;
@@ -238,13 +238,13 @@ void R_DisableAttribute (const char* name)
 	qglDisableVertexAttribArray(v->location);
 }
 
-static void R_ShutdownShader (r_shader_t *sh)
+static void R_ShutdownShader (r_shader_t* sh)
 {
 	qglDeleteShader(sh->id);
 	OBJZERO(*sh);
 }
 
-static void R_ShutdownProgram (r_program_t *prog)
+static void R_ShutdownProgram (r_program_t* prog)
 {
 	if (prog->v) {
 		qglDetachShader(prog->id, prog->v->id);
@@ -288,7 +288,7 @@ void R_ShutdownPrograms (void)
  * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return strlen(in)
  */
-static size_t R_PreprocessShaderAddToShaderBuf (const char* name, const char* in, char** out, size_t *len)
+static size_t R_PreprocessShaderAddToShaderBuf (const char* name, const char* in, char** out, size_t* len)
 {
 	const size_t inLength = strlen(in);
 	strcpy(*out, in);
@@ -581,7 +581,7 @@ static size_t R_PreprocessShaderR (const char* name, const char** inPtr, char* o
  * @param[in,out] remainingOutChars The number of characters left in the out buffer.
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShader (const char* name, const char* in, char* out, size_t *remainingOutChars)
+static size_t R_PreprocessShader (const char* name, const char* in, char* out, size_t* remainingOutChars)
 {
 	long remainingOutCharsAsLong = *remainingOutChars;
 	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, false, false);
@@ -595,9 +595,9 @@ static size_t R_PreprocessShader (const char* name, const char* in, char* out, s
  * @param[in] name The file name of the shader to load from ./base/shaders/ (e.g. "world_fs.glsl").
  * @return A structure used as a handle to the compiled shader (program).
  */
-static r_shader_t *R_LoadShader (const GLenum type, const char* name)
+static r_shader_t* R_LoadShader (const GLenum type, const char* name)
 {
-	r_shader_t *sh;
+	r_shader_t* sh;
 	char path[MAX_QPATH], *src[1];
 	unsigned e, length[1];
 	char* srcBuf;
@@ -684,9 +684,9 @@ static r_shader_t *R_LoadShader (const GLenum type, const char* name)
 	return sh;
 }
 
-r_program_t *R_LoadProgram (const char* name, programInitFunc_t init, programUseFunc_t use)
+r_program_t* R_LoadProgram (const char* name, programInitFunc_t init, programUseFunc_t use)
 {
-	r_program_t *prog;
+	r_program_t* prog;
 	unsigned e;
 	int i;
 
@@ -758,7 +758,7 @@ r_program_t *R_LoadProgram (const char* name, programInitFunc_t init, programUse
 
 extern vec2_t fogRange;
 
-static void R_InitWorldProgram (r_program_t *prog)
+static void R_InitWorldProgram (r_program_t* prog)
 {
 	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
 	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
@@ -793,7 +793,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	}
 }
 
-static void R_UseWorldProgram (r_program_t *prog)
+static void R_UseWorldProgram (r_program_t* prog)
 {
 	if (r_programs->integer > 1) {
 		R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
@@ -810,7 +810,7 @@ static void R_UseWorldProgram (r_program_t *prog)
 	}
 }
 
-static void R_InitModelProgram (r_program_t *prog)
+static void R_InitModelProgram (r_program_t* prog)
 {
 	vec4_t sunDirection;
 
@@ -854,7 +854,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	}
 }
 
-static void R_UseModelProgram (r_program_t *prog)
+static void R_UseModelProgram (r_program_t* prog)
 {
 	vec4_t sunDirection;
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
@@ -877,7 +877,7 @@ static void R_UseModelProgram (r_program_t *prog)
 	}
 }
 
-static void R_InitWarpProgram (r_program_t *prog)
+static void R_InitWarpProgram (r_program_t* prog)
 {
 	static vec4_t offset;
 
@@ -897,7 +897,7 @@ static void R_InitWarpProgram (r_program_t *prog)
 	}
 }
 
-static void R_UseWarpProgram (r_program_t *prog)
+static void R_UseWarpProgram (r_program_t* prog)
 {
 	static vec4_t offset;
 
@@ -914,7 +914,7 @@ static void R_UseWarpProgram (r_program_t *prog)
 	}
 }
 
-static void R_InitGeoscapeProgram (r_program_t *prog)
+static void R_InitGeoscapeProgram (r_program_t* prog)
 {
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
 	static vec4_t cityLightColor = {1.0, 1.0, 0.8, 1.0};
@@ -943,7 +943,7 @@ static int R_PascalTriangle (int row, int col)
 /** @brief width of convolution filter (for blur/bloom effects) */
 #define FILTER_SIZE 3
 
-static void R_InitConvolveProgram (r_program_t *prog)
+static void R_InitConvolveProgram (r_program_t* prog)
 {
 	float filter[FILTER_SIZE];
 	float sum = 0;
@@ -966,7 +966,7 @@ static void R_InitConvolveProgram (r_program_t *prog)
 /**
  * @brief Use the filter convolution glsl program
  */
-static void R_UseConvolveProgram (r_program_t *prog)
+static void R_UseConvolveProgram (r_program_t* prog)
 {
 	int i;
 	const float* userdata= (float*)prog->userdata;
@@ -984,7 +984,7 @@ static void R_UseConvolveProgram (r_program_t *prog)
 	R_ProgramParameter2fvs("OFFSETS", FILTER_SIZE, offsets);
 }
 
-static void R_InitCombine2Program (r_program_t *prog)
+static void R_InitCombine2Program (r_program_t* prog)
 {
 	GLfloat defaultColor[4] = {0.0, 0.0, 0.0, 0.0};
 
@@ -994,7 +994,7 @@ static void R_InitCombine2Program (r_program_t *prog)
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 }
 
-static void R_InitAtmosphereProgram (r_program_t *prog)
+static void R_InitAtmosphereProgram (r_program_t* prog)
 {
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
@@ -1006,21 +1006,21 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 	R_ProgramParameter2fv("UVSCALE", uvScale);
 }
 
-static void R_InitSimpleGlowProgram (r_program_t *prog)
+static void R_InitSimpleGlowProgram (r_program_t* prog)
 {
 	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
 	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
-void R_InitParticleProgram (r_program_t *prog)
+void R_InitParticleProgram (r_program_t* prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 }
 
-void R_UseParticleProgram (r_program_t *prog)
+void R_UseParticleProgram (r_program_t* prog)
 {
-/*	ptl_t *ptl = (ptl_t *)prog->userdata;*/
+/*	ptl_t* ptl = (ptl_t* )prog->userdata;*/
 }
 
 void R_InitPrograms (void)

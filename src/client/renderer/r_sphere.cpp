@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_geoscape.h"
 
-static cvar_t *r_sphereDetails;
+static cvar_t* r_sphereDetails;
 
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
@@ -48,7 +48,7 @@ static inline float rhoSpiral (const int index, const float deltaRho,const float
  * @param[in] radius The radius of the sphere
  * @sa R_Draw3DGlobe
  */
-void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
+void R_SphereGenerate (sphere_t* sphere, const int tris, const float radius)
 {
 	const float drho = M_PI / tris; /**< angle from the pole (z-axis) */
 	/* must multiply pi by 2, rather than do integer division of tris by two,
@@ -130,21 +130,21 @@ void R_SphereInit (void)
 	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
 }
 
-static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void* texCoordBuffer)
+static inline void R_SphereActivateTextureUnit (gltexunit_t* texunit, void* texCoordBuffer)
 {
 	R_SelectTexture(texunit);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texCoordBuffer);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-static inline void R_SphereDeactivateTextureUnit (gltexunit_t *texunit)
+static inline void R_SphereDeactivateTextureUnit (gltexunit_t* texunit)
 {
 	R_SelectTexture(texunit);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-static void R_SphereRenderTris (const sphere_t *sphere)
+static void R_SphereRenderTris (const sphere_t* sphere)
 {
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_NORMALIZE);
@@ -161,7 +161,7 @@ static void R_SphereRenderTris (const sphere_t *sphere)
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
  */
-static inline bool R_SphereCheckGLSL (const sphere_t *sphere)
+static inline bool R_SphereCheckGLSL (const sphere_t* sphere)
 {
 	return sphere->glslProgram && qglUseProgram && r_programs->integer;
 }
@@ -169,7 +169,7 @@ static inline bool R_SphereCheckGLSL (const sphere_t *sphere)
 /**
  * @brief render sphere using standard OpenGL lighting
  */
-static void R_SphereShade (const sphere_t *sphere)
+static void R_SphereShade (const sphere_t* sphere)
 {
 	if (sphere->overlay)
 		R_BindTexture(sphere->overlay->texnum);
@@ -200,7 +200,7 @@ static void R_SphereShade (const sphere_t *sphere)
 /**
  * @brief render sphere using GLSL (bump mapping, specularity, and season-blending)
  */
-static void R_SphereShadeGLSL (const sphere_t *sphere)
+static void R_SphereShadeGLSL (const sphere_t* sphere)
 {
 	if (Vector4NotEmpty(sphere->nightLightPos))
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
@@ -246,7 +246,7 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
  * @param[in] scale The scale of the matrix
  * @param[in] lightPos Set this to nullptr if you don't want to change the light position
  */
-void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
+void R_SphereRender (const sphere_t* sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
 {
 	/* go to a new matrix */
 	glPushMatrix();

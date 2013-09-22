@@ -37,7 +37,7 @@ static r_program_t* lastProgram = nullptr;
 /**
  * @brief Returns false if the texunit is not supported
  */
-bool R_SelectTexture (gltexunit_t *texunit)
+bool R_SelectTexture (gltexunit_t* texunit)
 {
 	if (texunit == r_state.active_texunit)
 		return true;
@@ -74,7 +74,7 @@ void R_BindTextureDebug (int texnum, const char* file, int line, const char* fun
 	R_BindTexture_(texnum);
 }
 
-void R_BindTextureForTexUnit (GLuint texnum, gltexunit_t *texunit)
+void R_BindTextureForTexUnit (GLuint texnum, gltexunit_t* texunit)
 {
 	/* small optimization to save state changes */
 	if (texnum == texunit->texnum)
@@ -102,7 +102,7 @@ void R_BindNormalmapTexture (GLuint texnum)
 	R_BindTextureForTexUnit(texnum, &texunit_normalmap);
 }
 
-void R_UseMaterial (const material_t *material)
+void R_UseMaterial (const material_t* material)
 {
 	static float last_b, last_p, last_s, last_h;
 	float b;
@@ -298,7 +298,7 @@ void R_EnableStencilTest (bool enable)
 		glDisable(GL_STENCIL_TEST);
 }
 
-void R_EnableTexture (gltexunit_t *texunit, bool enable)
+void R_EnableTexture (gltexunit_t* texunit, bool enable)
 {
 	if (enable == texunit->enabled)
 		return;
@@ -345,7 +345,7 @@ void R_EnableColorArray (bool enable)
  * should be called after any texture units which will be active for lighting
  * have been enabled.
  */
-bool R_EnableLighting (r_program_t *program, bool enable)
+bool R_EnableLighting (r_program_t* program, bool enable)
 {
 	if (!r_programs->integer)
 		return r_state.lighting_enabled;
@@ -371,7 +371,7 @@ bool R_EnableLighting (r_program_t *program, bool enable)
 	return r_state.lighting_enabled;
 }
 
-void R_SetupSpotLight (int index, const light_t *light)
+void R_SetupSpotLight (int index, const light_t* light)
 {
 	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 	vec4_t position;
@@ -425,7 +425,7 @@ void R_DisableSpotLight (int index)
  * @param backlerp The temporal proximity to the previous keyframe (in the range 0.0 to 1.0)
  * @param enable Whether to turn animation on or off
  */
-void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, bool enable)
+void R_EnableAnimation (const mAliasMesh_t* mesh, float backlerp, bool enable)
 {
 	if (!r_programs->integer || !r_state.lighting_enabled)
 		return;
@@ -460,7 +460,7 @@ void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, bool enable)
  * @note Don't forget to bind the deluxe map, too.
  * @sa R_BindDeluxemapTexture
  */
-void R_EnableBumpmap (const image_t *normalmap)
+void R_EnableBumpmap (const image_t* normalmap)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -491,7 +491,7 @@ void R_EnableBumpmap (const image_t *normalmap)
 	r_state.active_normalmap = normalmap;
 }
 
-void R_EnableWarp (r_program_t *program, bool enable)
+void R_EnableWarp (r_program_t* program, bool enable)
 {
 	if (!r_programs->integer)
 		return;
@@ -518,7 +518,7 @@ void R_EnableWarp (r_program_t *program, bool enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_EnableBlur (r_program_t *program, bool enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
+void R_EnableBlur (r_program_t* program, bool enable, r_framebuffer_t* source, r_framebuffer_t* dest, int dir)
 {
 	if (!r_programs->integer)
 		return;
@@ -659,7 +659,7 @@ static void R_UpdateGlowBufferBinding (void)
 #endif
 }
 
-void R_EnableGlowMap (const image_t *image)
+void R_EnableGlowMap (const image_t* image)
 {
 	if (!r_programs->integer)
 		return;
@@ -702,7 +702,7 @@ void R_EnableDrawAsGlow (bool enable)
 	R_UpdateGlowBufferBinding();
 }
 
-void R_EnableSpecularMap (const image_t *image, bool enable)
+void R_EnableSpecularMap (const image_t* image, bool enable)
 {
 	if (!r_state.dynamic_lighting_enabled)
 		return;
@@ -720,7 +720,7 @@ void R_EnableSpecularMap (const image_t *image, bool enable)
 	}
 }
 
-void R_EnableRoughnessMap (const image_t *image, bool enable)
+void R_EnableRoughnessMap (const image_t* image, bool enable)
 {
 	if (!r_state.dynamic_lighting_enabled)
 		return;
@@ -910,7 +910,7 @@ void R_SetDefaultState (void)
 
 	/* setup texture units */
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
-		gltexunit_t *tex = &r_state.texunits[i];
+		gltexunit_t* tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
 		tex->enabled = false;
 
@@ -1056,7 +1056,7 @@ void R_ReallocateStateArrays (int size)
  * @note Also resets active texunit
  * @sa R_ReallocateStateArrays
 */
-void R_ReallocateTexunitArray (gltexunit_t *texunit, int size)
+void R_ReallocateTexunitArray (gltexunit_t* texunit, int size)
 {
 	if (size <= texunit->array_size)
 		return;

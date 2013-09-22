@@ -31,10 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_abstractoption.h"
 
 static SDL_Joystick *stick = nullptr;
-static cvar_t *in_joystick;
-static cvar_t *in_joystickNo;
-static cvar_t *in_joystickThreshold;
-static cvar_t *in_joystickSpeed;
+static cvar_t* in_joystick;
+static cvar_t* in_joystickNo;
+static cvar_t* in_joystickThreshold;
+static cvar_t* in_joystickSpeed;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 #define SDL_JoystickName SDL_JoystickNameForIndex

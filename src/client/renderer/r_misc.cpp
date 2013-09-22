@@ -369,10 +369,10 @@ void R_ReinitOpenglContext (void)
 		return;
 
 	for (int tile = 0; tile < r_numMapTiles; tile++) {
-		model_t *mod = r_mapTiles[tile];
+		model_t* mod = r_mapTiles[tile];
 
 		int vertind = 0, coordind = 0, tangind = 0;
-		mBspSurface_t *surf = mod->bsp.surfaces;
+		mBspSurface_t* surf = mod->bsp.surfaces;
 
 		for (int i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 			vertind += 3 * surf->numedges;

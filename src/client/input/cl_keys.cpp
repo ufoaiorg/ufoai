@@ -457,7 +457,7 @@ static void Key_Console (int key, int unicode)
  */
 int Key_StringToKeynum (const char* str)
 {
-	const keyName_t *kn;
+	const keyName_t* kn;
 
 	if (Q_strnull(str))
 		return -1;
@@ -482,7 +482,7 @@ int Key_StringToKeynum (const char* str)
  */
 const char* Key_KeynumToString (int keynum)
 {
-	const keyName_t *kn;
+	const keyName_t* kn;
 	static char tinystr[2];
 
 	if (keynum == -1)

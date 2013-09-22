@@ -82,7 +82,7 @@ static yuvTable_t ogmCin_yuvTable;
 
 #ifdef HAVE_XVID_H
 
-static int CIN_XVID_Init (cinematic_t *cin)
+static int CIN_XVID_Init (cinematic_t* cin)
 {
 	int ret;
 
@@ -115,7 +115,7 @@ static int CIN_XVID_Init (cinematic_t *cin)
 	return ret;
 }
 
-static int CIN_XVID_Decode (cinematic_t *cin, unsigned char* input, int inputSize)
+static int CIN_XVID_Decode (cinematic_t* cin, unsigned char* input, int inputSize)
 {
 	int ret;
 
@@ -149,7 +149,7 @@ static int CIN_XVID_Decode (cinematic_t *cin, unsigned char* input, int inputSiz
 	return ret;
 }
 
-static int CIN_XVID_Shutdown (cinematic_t *cin)
+static int CIN_XVID_Shutdown (cinematic_t* cin)
 {
 	int ret = 0;
 
@@ -163,7 +163,7 @@ static int CIN_XVID_Shutdown (cinematic_t *cin)
 /**
  * @returns !0 -> no data transferred
  */
-static int CIN_OGM_LoadBlockToSync (cinematic_t *cin)
+static int CIN_OGM_LoadBlockToSync (cinematic_t* cin)
 {
 	int r = -1;
 
@@ -182,7 +182,7 @@ static int CIN_OGM_LoadBlockToSync (cinematic_t *cin)
 /**
  * @return !0 -> no data transferred (or not for all streams)
  */
-static int CIN_OGM_LoadPagesToStream (cinematic_t *cin)
+static int CIN_OGM_LoadPagesToStream (cinematic_t* cin)
 {
 	int r = -1;
 	int audioPages = 0;
@@ -220,7 +220,7 @@ static byte rawBuffer[SIZEOF_RAWBUFF];
 /**
  * @return true if audio wants more packets
  */
-static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
+static bool CIN_OGM_LoadAudioFrame (cinematic_t* cin)
 {
 	vorbis_block vb;
 
@@ -275,7 +275,7 @@ static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
  * <0 -> error
  */
 #ifdef HAVE_XVID_H
-static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
+static int CIN_XVID_LoadVideoFrame (cinematic_t* cin)
 {
 	int r = 0;
 	ogg_packet op;
@@ -375,7 +375,7 @@ static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned c
 	}
 }
 
-static int CIN_THEORA_NextNeededFrame (cinematic_t *cin)
+static int CIN_THEORA_NextNeededFrame (cinematic_t* cin)
 {
 	return (int) (OGMCIN.currentTime * (ogg_int64_t) 10000 / OGMCIN.Vtime_unit);
 }
@@ -384,7 +384,7 @@ static int CIN_THEORA_NextNeededFrame (cinematic_t *cin)
  * @return 1 -> loaded a new frame (OGMCIN.outputBuffer points to the actual frame)
  * 0 -> no new frame <0 -> error
  */
-static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
+static int CIN_THEORA_LoadVideoFrame (cinematic_t* cin)
 {
 	int r = 0;
 	ogg_packet op;
@@ -453,7 +453,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
  * @return 1 -> loaded a new frame (OGMCIN.outputBuffer points to the actual frame), 0 -> no new frame
  * <0 -> error
  */
-static int CIN_OGM_LoadVideoFrame (cinematic_t *cin)
+static int CIN_OGM_LoadVideoFrame (cinematic_t* cin)
 {
 #ifdef HAVE_XVID_H
 	if (OGMCIN.videoStreamIsXvid)
@@ -478,7 +478,7 @@ static int CIN_OGM_LoadVideoFrame (cinematic_t *cin)
 /**
  * @return true => noDataTransfered
  */
-static bool CIN_OGM_LoadFrame (cinematic_t *cin)
+static bool CIN_OGM_LoadFrame (cinematic_t* cin)
 {
 	bool anyDataTransferred = true;
 	bool needVOutputData = true;
@@ -554,7 +554,7 @@ typedef struct
  * @todo vorbis/theora-header & init in sub-functions
  * @todo "clean" error-returns ...
  */
-int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
+int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
 {
 	int status;
 	ogg_page og;
@@ -718,7 +718,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 /**
  * @sa R_UploadData
  */
-static void CIN_OGM_DrawCinematic (cinematic_t *cin)
+static void CIN_OGM_DrawCinematic (cinematic_t* cin)
 {
 	int texnum;
 
@@ -733,7 +733,7 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-bool CIN_OGM_RunCinematic (cinematic_t *cin)
+bool CIN_OGM_RunCinematic (cinematic_t* cin)
 {
 	/* no video stream found */
 	if (!OGMCIN.os_video.serialno)
@@ -751,7 +751,7 @@ bool CIN_OGM_RunCinematic (cinematic_t *cin)
 	return true;
 }
 
-void CIN_OGM_CloseCinematic (cinematic_t *cin)
+void CIN_OGM_CloseCinematic (cinematic_t* cin)
 {
 #ifdef HAVE_XVID_H
 	/** @todo is it at the right place? StopCinematic mean we only stop 1 cinematic */

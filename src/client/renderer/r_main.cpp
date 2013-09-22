@@ -47,63 +47,63 @@ rconfig_t r_config;
 rstate_t r_state;
 rlocals_t r_locals;
 
-image_t *r_noTexture;			/* use for bad textures */
-image_t *r_warpTexture;
-image_t *r_dummyTexture; /* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
+image_t* r_noTexture;			/* use for bad textures */
+image_t* r_warpTexture;
+image_t* r_dummyTexture; /* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 
-static cvar_t *r_maxtexres;
+static cvar_t* r_maxtexres;
 
-cvar_t *r_drawentities;
-cvar_t *r_drawworld;
-cvar_t *r_nocull;
-cvar_t *r_isometric;
-cvar_t *r_anisotropic;
-cvar_t *r_texture_lod;			/* lod_bias */
-cvar_t *r_screenshot_format;
-cvar_t *r_screenshot_jpeg_quality;
-cvar_t *r_lightmap;
-cvar_t *r_debug_normals;
-cvar_t *r_debug_tangents;
-cvar_t *r_debug_lights;
-static cvar_t *r_deluxemap;
-cvar_t *r_ext_texture_compression;
-static cvar_t *r_ext_s3tc_compression;
-static cvar_t *r_ext_nonpoweroftwo;
-static cvar_t *r_intel_hack;
-static cvar_t *r_texturemode;
-static cvar_t *r_texturealphamode;
-static cvar_t *r_texturesolidmode;
-cvar_t *r_materials;
-cvar_t *r_overridematerial;
-cvar_t *r_default_specular;
-cvar_t *r_default_hardness;
-cvar_t *r_checkerror;
-cvar_t *r_drawbuffer;
-cvar_t *r_driver;
-cvar_t *r_shadows;
-cvar_t *r_stencilshadows;
-cvar_t *r_swapinterval;
-cvar_t *r_multisample;
-cvar_t *r_wire;
-cvar_t *r_showbox;
-cvar_t *r_threads;
-cvar_t *r_vertexbuffers;
-cvar_t *r_warp;
-cvar_t *r_dynamic_lights;
-cvar_t *r_programs;
+cvar_t* r_drawentities;
+cvar_t* r_drawworld;
+cvar_t* r_nocull;
+cvar_t* r_isometric;
+cvar_t* r_anisotropic;
+cvar_t* r_texture_lod;			/* lod_bias */
+cvar_t* r_screenshot_format;
+cvar_t* r_screenshot_jpeg_quality;
+cvar_t* r_lightmap;
+cvar_t* r_debug_normals;
+cvar_t* r_debug_tangents;
+cvar_t* r_debug_lights;
+static cvar_t* r_deluxemap;
+cvar_t* r_ext_texture_compression;
+static cvar_t* r_ext_s3tc_compression;
+static cvar_t* r_ext_nonpoweroftwo;
+static cvar_t* r_intel_hack;
+static cvar_t* r_texturemode;
+static cvar_t* r_texturealphamode;
+static cvar_t* r_texturesolidmode;
+cvar_t* r_materials;
+cvar_t* r_overridematerial;
+cvar_t* r_default_specular;
+cvar_t* r_default_hardness;
+cvar_t* r_checkerror;
+cvar_t* r_drawbuffer;
+cvar_t* r_driver;
+cvar_t* r_shadows;
+cvar_t* r_stencilshadows;
+cvar_t* r_swapinterval;
+cvar_t* r_multisample;
+cvar_t* r_wire;
+cvar_t* r_showbox;
+cvar_t* r_threads;
+cvar_t* r_vertexbuffers;
+cvar_t* r_warp;
+cvar_t* r_dynamic_lights;
+cvar_t* r_programs;
 /** @brief The GLSL version being used (not necessarily a supported version by the OpenGL implementation). Stored as a c-string and integer.*/
-cvar_t *r_glsl_version;
-cvar_t *r_postprocess;
-cvar_t *r_maxlightmap;
-cvar_t *r_shownormals;
-cvar_t *r_bumpmap;
-cvar_t *r_specular;
-cvar_t *r_hardness;
-cvar_t *r_parallax;
-cvar_t *r_fog;
-cvar_t *r_flares;
-cvar_t *r_coronas;
-cvar_t *r_drawtags;
+cvar_t* r_glsl_version;
+cvar_t* r_postprocess;
+cvar_t* r_maxlightmap;
+cvar_t* r_shownormals;
+cvar_t* r_bumpmap;
+cvar_t* r_specular;
+cvar_t* r_hardness;
+cvar_t* r_parallax;
+cvar_t* r_fog;
+cvar_t* r_flares;
+cvar_t* r_coronas;
+cvar_t* r_drawtags;
 
 static void R_PrintInfo (const char* pre, const char* msg)
 {
@@ -319,8 +319,8 @@ void R_RenderFrame (void)
 		R_CheckError();
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
+			const model_t* mapTile = r_mapTiles[tile];
+			const mBspModel_t* bsp = &mapTile->bsp;
 
 			R_AddBspRRef(bsp, vec3_origin, vec3_origin, false);
 		}
@@ -353,11 +353,11 @@ void R_RenderFrame (void)
 			int i;
 
 			for (i = 0; i < refdef.numStaticLights; i++) {
-				const light_t *l = &refdef.staticLights[i];
+				const light_t* l = &refdef.staticLights[i];
 				R_AddCorona(l->origin, l->radius, l->color);
 			}
 			for (i = 0; i < refdef.numDynamicLights; i++) {
-				const light_t *l = &refdef.dynamicLights[i];
+				const light_t* l = &refdef.dynamicLights[i];
 				R_AddCorona(l->origin, l->radius, l->color);
 			}
 		}
@@ -472,7 +472,7 @@ static const cmdList_t r_commands[] = {
 	{nullptr, nullptr, nullptr}
 };
 
-static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
+static bool R_CvarCheckMaxLightmap (cvar_t* cvar)
 {
 	int maxSize = !r_config.maxTextureSize || LIGHTMAP_MAX_PAGE_SIZE < r_config.maxTextureSize ? LIGHTMAP_MAX_PAGE_SIZE : r_config.maxTextureSize;
 
@@ -491,7 +491,7 @@ static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_MAX_PAGE_SIZE, true);
 }
 
-static bool R_CvarCheckDynamicLights (cvar_t *cvar)
+static bool R_CvarCheckDynamicLights (cvar_t* cvar)
 {
 	float maxLights = r_config.maxLights;
 
@@ -501,7 +501,7 @@ static bool R_CvarCheckDynamicLights (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 0, maxLights, true);
 }
 
-static bool R_CvarPrograms (cvar_t *cvar)
+static bool R_CvarPrograms (cvar_t* cvar)
 {
 	if (qglUseProgram) {
 		return Cvar_AssertValue(cvar, 0, 3, true);
@@ -514,7 +514,7 @@ static bool R_CvarPrograms (cvar_t *cvar)
 /**
  * @brief Callback that is called when the r_glsl_version cvar is changed,
  */
-static bool R_CvarGLSLVersionCheck (cvar_t *cvar)
+static bool R_CvarGLSLVersionCheck (cvar_t* cvar)
 {
 	int glslVersionMajor, glslVersionMinor;
 	sscanf(cvar->string, "%d.%d", &glslVersionMajor, &glslVersionMinor);
@@ -531,7 +531,7 @@ static bool R_CvarGLSLVersionCheck (cvar_t *cvar)
 	return true;
 }
 
-static bool R_CvarPostProcess (cvar_t *cvar)
+static bool R_CvarPostProcess (cvar_t* cvar)
 {
 	if (r_config.frameBufferObject && r_config.drawBuffers)
 		return Cvar_AssertValue(cvar, 0, 1, true);
@@ -540,14 +540,14 @@ static bool R_CvarPostProcess (cvar_t *cvar)
 	return true;
 }
 
-static bool R_CvarCheckMultisample (cvar_t *cvar)
+static bool R_CvarCheckMultisample (cvar_t* cvar)
 {
 	return Cvar_AssertValue(cvar, 0, 4, true);
 }
 
 static void R_RegisterSystemVars (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
@@ -624,7 +624,7 @@ static void R_RegisterImageVars (void)
  * All the system is updated according to this new value (viddef and cvars)
  * @param context New graphical context
  */
-static void R_UpdateVidDef (const viddefContext_t *context)
+static void R_UpdateVidDef (const viddefContext_t* context)
 {
 	viddef.context = *context;
 
@@ -1289,7 +1289,7 @@ bool R_Init (void)
  */
 void R_Shutdown (void)
 {
-	const cmdList_t *commands;
+	const cmdList_t* commands;
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);

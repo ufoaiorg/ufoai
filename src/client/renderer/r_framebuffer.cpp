@@ -124,7 +124,7 @@ void R_InitFBObjects (void)
 /**
  * @brief Delete framebuffer object along with attached render buffer
  */
-void R_DeleteFBObject (r_framebuffer_t *buf)
+void R_DeleteFBObject (r_framebuffer_t* buf)
 {
 	if (buf->depth)
 		qglDeleteRenderbuffersEXT(1, &buf->depth);
@@ -176,9 +176,9 @@ void R_ShutdownFBObjects (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int* filters)
+r_framebuffer_t* R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int* filters)
 {
-	r_framebuffer_t *buf;
+	r_framebuffer_t* buf;
 	int i;
 
 	if (!r_state.frameBufferObjectsInitialized) {
@@ -297,7 +297,7 @@ r_framebuffer_t *R_CreateFramebuffer (int width, int height, int ntextures, bool
  * @brief Forces multisample antialiasing resolve on given framebuffer, if needed
  * @param[in] buf the framebuffer to use
  */
-void R_ResolveMSAA (const r_framebuffer_t *buf)
+void R_ResolveMSAA (const r_framebuffer_t* buf)
 {
 	int i;
 
@@ -326,7 +326,7 @@ void R_ResolveMSAA (const r_framebuffer_t *buf)
  * @brief bind specified framebuffer object so we render to it
  * @param[in] buf the framebuffer to use, if @c nullptr the screen buffer will be used.
  */
-void R_UseFramebuffer (const r_framebuffer_t *buf)
+void R_UseFramebuffer (const r_framebuffer_t* buf)
 {
 	if (!r_config.frameBufferObject || !r_programs->integer || !r_postprocess->integer)
 		return;
@@ -363,7 +363,7 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
  * @param[out] buf The framebuffer to initialize the viewport for. If @c nullptr the screen buffer will be taken.
  * @sa R_UseViewport
  */
-void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
+void R_SetupViewport (r_framebuffer_t* buf, int x, int y, int width, int height)
 {
 	if (!buf)
 		buf = &screenBuffer;
@@ -379,7 +379,7 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
  * @param[out] buf The framebuffer to set the viewport for. If @c nullptr the screen buffer will be taken.
  * @sa R_SetupViewport
  */
-void R_UseViewport (const r_framebuffer_t *buf)
+void R_UseViewport (const r_framebuffer_t* buf)
 {
 	if (!r_state.frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;

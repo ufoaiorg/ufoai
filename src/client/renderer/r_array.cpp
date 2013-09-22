@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ARRAY_ELEMENT	0x1000
 
 typedef struct r_array_state_s {
-	const mBspModel_t *bspmodel;
+	const mBspModel_t* bspmodel;
 	int arrays;
 } r_array_state_t;
 
@@ -148,7 +148,7 @@ static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
 	}
 }
 
-void R_SetArrayState (const mBspModel_t *bsp)
+void R_SetArrayState (const mBspModel_t* bsp)
 {
 	int arrays, mask;
 

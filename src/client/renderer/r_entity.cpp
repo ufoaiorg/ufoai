@@ -34,17 +34,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static entity_t r_entities[MAX_ENTITIES];
 
-entity_t *r_opaque_mesh_entities;
-entity_t *r_blend_mesh_entities;
-entity_t *r_null_entities;
-entity_t *r_special_entities;
+entity_t* r_opaque_mesh_entities;
+entity_t* r_blend_mesh_entities;
+entity_t* r_null_entities;
+entity_t* r_special_entities;
 
 /**
  * @brief setter for entity origin
  * @param[out] ent The entity to set the origin for
  * @param[in] origin The new origin for the given entity
  */
-void R_EntitySetOrigin (entity_t *ent, const vec3_t origin)
+void R_EntitySetOrigin (entity_t* ent, const vec3_t origin)
 {
 	VectorCopy(origin, ent->origin);
 }
@@ -54,7 +54,7 @@ void R_EntitySetOrigin (entity_t *ent, const vec3_t origin)
  * @param[in,out] ent The entity to translate
  * @param[in] offset The translation vector
  */
-void R_EntityAddToOrigin (entity_t *ent, const vec3_t offset)
+void R_EntityAddToOrigin (entity_t* ent, const vec3_t offset)
 {
 	VectorAdd(ent->origin, offset, ent->origin);
 }
@@ -64,7 +64,7 @@ void R_EntityAddToOrigin (entity_t *ent, const vec3_t offset)
  * @sa CL_AddTargeting
  * @sa RF_BOX
  */
-static void R_DrawBox (const entity_t *e)
+static void R_DrawBox (const entity_t* e)
 {
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
@@ -128,12 +128,12 @@ static void R_DrawBox (const entity_t *e)
  * @sa CL_AddPathing
  * @sa RF_BOX
  */
-static void R_DrawFloor (const entity_t *e)
+static void R_DrawFloor (const entity_t* e)
 {
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
-	image_t *cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
+	image_t* cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
 	const float dx = PLAYER_WIDTH * 2;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 	const float size = 4.0;
@@ -172,7 +172,7 @@ static void R_DrawFloor (const entity_t *e)
  * @sa CL_AddArrow
  * @sa RF_BOX
  */
-static void R_DrawArrow (const entity_t *e)
+static void R_DrawArrow (const entity_t* e)
 {
 	const vec3_t upper = { e->origin[0] + 2, e->origin[1], e->origin[2] };
 	const vec3_t mid = { e->origin[0], e->origin[1] + 2, e->origin[2] };
@@ -198,8 +198,8 @@ static void R_DrawArrow (const entity_t *e)
 	R_Color(nullptr);
 }
 
-static image_t *selectedActorIndicator;
-static image_t *actorIndicator;
+static image_t* selectedActorIndicator;
+static image_t* actorIndicator;
 
 /**
  * @brief Draws shadow and highlight effects for the entities (actors)
@@ -220,7 +220,7 @@ void R_DrawEntityEffects (void)
 	}
 
 	for (i = 0; i < refdef.numEntities; i++) {
-		const entity_t *e = &r_entities[i];
+		const entity_t* e = &r_entities[i];
 
 		if (e->flags <= RF_BOX)
 			continue;
@@ -314,9 +314,9 @@ void R_DrawEntityEffects (void)
  * @param[in,out] ents The list of entities that are going to get rendered
  * @sa R_GetEntityLists
  */
-void R_DrawMeshEntities (entity_t *ents)
+void R_DrawMeshEntities (entity_t* ents)
 {
-	entity_t *e;
+	entity_t* e;
 
 	e = ents;
 
@@ -337,7 +337,7 @@ void R_DrawMeshEntities (entity_t *ents)
 /**
  * @sa R_GetEntityLists
  */
-void R_DrawOpaqueMeshEntities (entity_t *ents)
+void R_DrawOpaqueMeshEntities (entity_t* ents)
 {
 	if (!ents)
 		return;
@@ -355,9 +355,9 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 /**
  * Merge sort merge helper function.
  */
-static entity_t *R_MergeSortMerge (entity_t *a, entity_t *b)
+static entity_t* R_MergeSortMerge (entity_t* a, entity_t* b)
 {
-	entity_t *c;
+	entity_t* c;
 
 	if (a == nullptr)
 		return b;
@@ -384,9 +384,9 @@ static entity_t *R_MergeSortMerge (entity_t *a, entity_t *b)
  *
  * @return the first entity to render
  */
-static entity_t *R_MergeSortEntList (entity_t *c)
+static entity_t* R_MergeSortEntList (entity_t* c)
 {
-	entity_t *a, *b;
+	entity_t* a, *b;
 
 	/* list containing one or no entities is already sorted by definition */
 	if (c == nullptr || c->next == nullptr)
@@ -409,7 +409,7 @@ static entity_t *R_MergeSortEntList (entity_t *c)
 /**
  * @sa R_GetEntityLists
  */
-void R_DrawBlendMeshEntities (entity_t *ents)
+void R_DrawBlendMeshEntities (entity_t* ents)
 {
 	if (!ents)
 		return;
@@ -432,7 +432,7 @@ void R_DrawBlendMeshEntities (entity_t *ents)
  * @brief Draw replacement model (e.g. when model wasn't found)
  * @sa R_DrawNullEntities
  */
-static void R_DrawNullModel (const entity_t *e)
+static void R_DrawNullModel (const entity_t* e)
 {
 	int i;
 	vec3_t points[6];
@@ -471,9 +471,9 @@ static void R_DrawNullModel (const entity_t *e)
 	R_EnableTexture(&texunit_diffuse, true);
 }
 
-void R_DrawSpecialEntities (const entity_t *ents)
+void R_DrawSpecialEntities (const entity_t* ents)
 {
-	const entity_t *e;
+	const entity_t* e;
 
 	if (!ents)
 		return;
@@ -501,9 +501,9 @@ void R_DrawSpecialEntities (const entity_t *ents)
 /**
  * @brief Draw entities which models couldn't be loaded
  */
-void R_DrawNullEntities (const entity_t *ents)
+void R_DrawNullEntities (const entity_t* ents)
 {
-	const entity_t *e;
+	const entity_t* e;
 
 	if (!ents)
 		return;
@@ -520,7 +520,7 @@ void R_DrawNullEntities (const entity_t *ents)
  * Transforms a point by the inverse of the world-model matrix for the
  * specified entity.
  */
-void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
+void R_TransformForEntity (const entity_t* e, const vec3_t in, vec3_t out)
 {
 	matrix4x4_t tmp, mat;
 
@@ -535,9 +535,9 @@ void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
  * @brief Calculates transformation matrix for the model and its tags
  * @note The transformation matrix is only calculated once
  */
-static float* R_CalcTransform (entity_t *e)
+static float* R_CalcTransform (entity_t* e)
 {
-	transform_t *t;
+	transform_t* t;
 	float* mp;
 	float mt[16], mc[16];
 
@@ -557,10 +557,10 @@ static float* R_CalcTransform (entity_t *e)
 	/* do parent object transformations first */
 	if (e->tagent) {
 		/* tag transformation */
-		const model_t *model = e->tagent->model;
-		const mAliasTagOrientation_t *current = nullptr;
-		const mAliasTagOrientation_t *old = nullptr;
-		const animState_t *as = &e->tagent->as;
+		const model_t* model = e->tagent->model;
+		const mAliasTagOrientation_t* current = nullptr;
+		const mAliasTagOrientation_t* old = nullptr;
+		const animState_t* as = &e->tagent->as;
 
 		R_GetTags(model, e->tagname, as->frame, as->oldframe, &current, &old);
 		if (current != nullptr && old != nullptr) {
@@ -602,7 +602,7 @@ static float* R_CalcTransform (entity_t *e)
  * @return @c false if visible, @c true is the origin of the entity is outside the
  * current frustum view
  */
-static bool R_CullEntity (entity_t *e)
+static bool R_CullEntity (entity_t* e)
 {
 	if (refdef.rendererFlags & RDF_NOWORLDMODEL)
 		return false;
@@ -635,7 +635,7 @@ void R_GetEntityLists (void)
 		r_blend_mesh_entities = r_null_entities = nullptr;
 
 	for (i = 0; i < refdef.numEntities; i++) {
-		entity_t *e = &r_entities[i];
+		entity_t* e = &r_entities[i];
 
 		/* frustum cull check */
 		if (R_CullEntity(e))
@@ -649,7 +649,7 @@ void R_GetEntityLists (void)
 			else
 				chain = &r_null_entities;
 		} else {
-			const image_t *skin;
+			const image_t* skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
 				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, true);
@@ -681,7 +681,7 @@ void R_GetEntityLists (void)
  * @note This can't overflow, because R_AddEntity checks the bounds
  * @sa R_AddEntity
  */
-entity_t *R_GetFreeEntity (void)
+entity_t* R_GetFreeEntity (void)
 {
 	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_GetFreeEntity: MAX_ENTITIES exceeded");
@@ -691,7 +691,7 @@ entity_t *R_GetFreeEntity (void)
 /**
  * @brief Returns a specific entity from the list
  */
-entity_t *R_GetEntity (int id)
+entity_t* R_GetEntity (int id)
 {
 	if (id < 0 || id >= refdef.numEntities)
 		return nullptr;
@@ -703,7 +703,7 @@ entity_t *R_GetEntity (int id)
  * @sa R_GetFreeEntity
  * @return The position of the entity in the render entity array or @c -1 in case the entity wasn't added.
  */
-int R_AddEntity (const entity_t *ent)
+int R_AddEntity (const entity_t* ent)
 {
 	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");

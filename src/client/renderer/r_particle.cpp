@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ptl_t r_particleArray[MAX_PTLS];
 int r_numParticles;
 
-cvar_t *r_particles;
+cvar_t* r_particles;
 
 /*
 =============================================================
@@ -44,7 +44,7 @@ PARTICLE DRAWING
  * @param[out] up the output up vector for the particle
  * @sa R_DrawSprite
  */
-static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
+static void R_GetSpriteVectors (const ptl_t* p, vec3_t right, vec3_t up)
 {
 	/* get transformation */
 	switch (p->style) {
@@ -77,7 +77,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
  * @brief Fills float array with texture coordinates
  * @note Also cares for sprite scrolling (if any)
  */
-static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
+static inline void R_SpriteTexcoords (const ptl_t* p, float out[8])
 {
 	const float s = p->scrollS * refdef.time;
 	const float t = p->scrollT * refdef.time;
@@ -98,9 +98,9 @@ static inline void R_SpriteTexcoords (const ptl_t *p, float out[8])
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawSprite (const ptl_t *p)
+static void R_DrawSprite (const ptl_t* p)
 {
-	const ptl_t *q;
+	const ptl_t* q;
 	vec3_t up, right;
 	vec3_t nup, nright;
 	vec3_t pos;
@@ -161,7 +161,7 @@ static void R_DrawSprite (const ptl_t *p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawParticleModel (ptl_t *p)
+static void R_DrawParticleModel (ptl_t* p)
 {
 	modelInfo_t mi;
 
@@ -198,7 +198,7 @@ static void R_DrawPtlCircle (const ptl_t* p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawPtlLine (const ptl_t *p)
+static void R_DrawPtlLine (const ptl_t* p)
 {
 	const vec3_t points[] = { { p->s[0], p->s[1], p->s[2] }, { p->v[0], p->v[1], p->v[2] } };
 
@@ -265,7 +265,7 @@ static void R_SetBlendMode (int mode)
  */
 void R_DrawParticles (void)
 {
-	ptl_t *p;
+	ptl_t* p;
 	int i;
 
 	if (!r_particles->integer)

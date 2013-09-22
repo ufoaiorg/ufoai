@@ -43,9 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  * @param[in] overlayNation,overlayXVI,overlayRadar Whether these overlays should be drawn or not
  */
-void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char* map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char* map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t* r_dayandnightTexture, image_t* r_xviTexture, image_t* r_radarTexture)
 {
-	image_t *gl;
+	image_t* gl;
 	float geoscape_texcoords[4 * 2];
 	short geoscape_verts[4 * 2];
 
@@ -415,8 +415,8 @@ static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t
  * @sa R_SphereGenerate
  */
 void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, const vec3_t rotate, float zoom, const char* map,
-					bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture,
-					image_t *r_radarTexture, bool renderNationGlow)
+					bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t* r_xviTexture,
+					image_t* r_radarTexture, bool renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -428,10 +428,10 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	static const vec4_t brightDiffuseLightColor = { 5.0f, 5.0f, 5.0f, 1.0f };
 	const vec4_t ambientLightColor = { ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f };
 	/* billboard textures */
-	image_t *starfield;
-	image_t *halo;
-	image_t *sun;
-	image_t *sunOverlay;
+	image_t* starfield;
+	image_t* halo;
+	image_t* sun;
+	image_t* sunOverlay;
 
 	/* set distance of the sun and moon to make them static on starfield when
 	 * time is stoped.  this distance should be used for any celestial body
@@ -710,7 +710,7 @@ static inline void R_DrawQuad (void)
  * @brief does 1D filter convolution to blur a framebuffer texture.
  * dir=0 for horizontal, dir=1 for vertical
  */
-static void R_Blur (r_framebuffer_t *source, r_framebuffer_t *dest, int tex, int dir)
+static void R_Blur (r_framebuffer_t* source, r_framebuffer_t* dest, int tex, int dir)
 {
 	R_EnableBlur(r_state.convolve_program, true, source, dest, dir);
 

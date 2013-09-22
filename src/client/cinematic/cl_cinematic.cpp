@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_video.h"	/* viddef */
 #include "../../shared/shared.h"	/* Q_strncpyz */
 
-void CIN_InitCinematic (cinematic_t *cin)
+void CIN_InitCinematic (cinematic_t* cin)
 {
 	OBJZERO(*cin);
 }
@@ -44,7 +44,7 @@ void CIN_InitCinematic (cinematic_t *cin)
  * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are normalized inside this function
  */
-void CIN_SetParameters (cinematic_t *cin, int x, int y, int w, int h, int status, bool noSound)
+void CIN_SetParameters (cinematic_t* cin, int x, int y, int w, int h, int status, bool noSound)
 {
 	cin->x = x * viddef.rx;
 	cin->y = y * viddef.ry;
@@ -58,7 +58,7 @@ void CIN_SetParameters (cinematic_t *cin, int x, int y, int w, int h, int status
 /**
  * @sa CL_Frame
  */
-void CIN_RunCinematic (cinematic_t *cin)
+void CIN_RunCinematic (cinematic_t* cin)
 {
 	assert(cin->status != CIN_STATUS_NONE);
 
@@ -83,7 +83,7 @@ void CIN_RunCinematic (cinematic_t *cin)
  * @brief Open a cinematic file and store status to a structure
  * @sa CIN_CloseCinematic
  */
-void CIN_OpenCinematic (cinematic_t *cin, const char* fileName)
+void CIN_OpenCinematic (cinematic_t* cin, const char* fileName)
 {
 	char name[MAX_OSPATH];
 	int status = 1;
@@ -108,7 +108,7 @@ void CIN_OpenCinematic (cinematic_t *cin, const char* fileName)
  * @brief Close a cinematic, and clean up status and memory
  * @sa CIN_PlayCinematic
  */
-void CIN_CloseCinematic (cinematic_t *cin)
+void CIN_CloseCinematic (cinematic_t* cin)
 {
 	if (cin->status == CIN_STATUS_NONE)
 		return;			/* Not playing */
