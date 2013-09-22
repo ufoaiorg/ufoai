@@ -79,8 +79,8 @@ static inline void CL_ClampCamToMap (const float border)
 	else if (cl.cam.origin[0] > cl.mapData->mapBox.maxs[0] + border)
 		cl.cam.origin[0] = cl.mapData->mapBox.maxs[0] + border;
 
-	if (cl.cam.origin[1] < cl.mapData->mapBox.mins[1] - border)
-		cl.cam.origin[1] = cl.mapData->mapBox.mins[1] - border;
+	if (cl.cam.origin[1] < cl.mapData->mapBox.getMinY() - border)
+		cl.cam.origin[1] = cl.mapData->mapBox.getMinY() - border;
 	else if (cl.cam.origin[1] > cl.mapData->mapBox.maxs[1] + border)
 		cl.cam.origin[1] = cl.mapData->mapBox.maxs[1] + border;
 }
