@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa SV_ClearWorld
  * @sa SV_LinkEdict
  */
-static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const vec3_t maxs)
+static worldSector_t* SV_CreateWorldSector (int depth, const AABB& sBox)
 {
 	if (sv->numWorldSectors >= lengthof(sv->worldSectors))
 		Com_Error(ERR_DROP, "SV_CreateWorldSector: overflow");
@@ -53,23 +53,20 @@ static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const 
 	}
 
 	vec3_t size;
-	VectorSubtract(maxs, mins, size);
+	VectorSubtract(sBox.maxs, sBox.mins, size);
 	if (size[0] > size[1])
 		anode->axis = PLANE_X;
 	else
 		anode->axis = PLANE_Y;
 
-	vec3_t mins1, maxs1, mins2, maxs2;
-	anode->dist = 0.5f * (maxs[anode->axis] + mins[anode->axis]);
-	VectorCopy(mins, mins1);
-	VectorCopy(mins, mins2);
-	VectorCopy(maxs, maxs1);
-	VectorCopy(maxs, maxs2);
+	anode->dist = 0.5f * (sBox.maxs[anode->axis] + sBox.mins[anode->axis]);
+	AABB sBox1(sBox);
+	AABB sBox2(sBox);
 
-	maxs1[anode->axis] = mins2[anode->axis] = anode->dist;
+	sBox1.maxs[anode->axis] = sBox2.mins[anode->axis] = anode->dist;
 
-	anode->children[0] = SV_CreateWorldSector(depth + 1, mins2, maxs2);
-	anode->children[1] = SV_CreateWorldSector(depth + 1, mins1, maxs1);
+	anode->children[0] = SV_CreateWorldSector(depth + 1, sBox2);
+	anode->children[1] = SV_CreateWorldSector(depth + 1, sBox1);
 
 	return anode;
 }
@@ -82,7 +79,7 @@ static worldSector_t* SV_CreateWorldSector (int depth, const vec3_t mins, const 
  */
 void SV_ClearWorld (void)
 {
-	SV_CreateWorldSector(0, sv->mapData.mapBox.mins, sv->mapData.mapBox.maxs);
+	SV_CreateWorldSector(0, sv->mapData.mapBox);
 }
 
 static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t* ent)
