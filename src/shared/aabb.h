@@ -42,18 +42,31 @@ public:
 	AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t maxX, const vec_t maxY, const vec_t maxZ);
 	AABB (const Line &line);
 
-	inline bool isZero () const;
-	void add (const vec3_t point);
-	void add (const AABB& other);
-
 	/**
 	 * @brief Copies the values from the given aabb
 	 * @param[in] other The other aabb
 	 */
-	inline void set (const AABB& other);
-	inline void set (const vec3_t mini, const vec3_t maxi);
-	inline void setMins (const vec3_t mini);
-	inline void setMaxs (const vec3_t maxi);
+	inline void set (const AABB& other) {
+		VectorCopy(other.mins, mins);
+		VectorCopy(other.maxs, maxs);
+	}
+	inline void set (const vec3_t mini, const vec3_t maxi) {
+		VectorCopy(mini, mins);
+		VectorCopy(maxi, maxs);
+	}
+	inline void setMins (const vec3_t mini) {
+		VectorCopy(mini, mins);
+	}
+	inline void setMaxs (const vec3_t maxi) {
+		VectorCopy(maxi, maxs);
+	}
+	/**
+	 * @brief Sets mins and maxs to their starting points before using addPoint
+	 */
+	inline void clearBounds () {
+		mins[0] = mins[1] = mins[2] = 99999;
+		maxs[0] = maxs[1] = maxs[2] = -99999;
+	}
 
 	inline const vec3_t& getMins() const {
 		return mins;
@@ -80,28 +93,36 @@ public:
 	inline float getWidthY () const {
 		return getMaxY() - getMinY();
 	}
-	/**
-	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
-	 * @note Not fully verified so far
-	 */
-	void rotateAround(vec3_t origin, vec3_t angles);
-
-	/**
-	 * @brief Checks if the aabb touches or intersects with the given aabb
-	 * @param[in] other The other aabb
-	 */
-	inline bool doesIntersect (const AABB& other) const;
 
 	/**
 	 * @brief Calculates the center of the bounding box
 	 * @param[out] center The target center vector
 	 */
-	inline void getCenter (vec3_t center) const;
+	inline void getCenter (vec3_t center) const {
+		VectorAdd(mins, maxs, center);
+		VectorScale(center, 0.5, center);
+	}
+
+	inline bool isZero () const {
+		return VectorEmpty(mins) && VectorEmpty(maxs);
+	}
+	/**
+	 * @brief Checks if the aabb touches or intersects with the given aabb
+	 * @param[in] other The other aabb
+	 */
+	inline bool doesIntersect (const AABB& other) const {
+		return !(mins[0] > other.getMaxX() || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || getMaxX() < other.mins[0]
+				|| maxs[1] < other.mins[1] || maxs[2] < other.mins[2]);
+	}
+
+	void add (const vec3_t point);
+	void add (const AABB& other);
 
 	/**
-	 * @brief Sets mins and maxs to their starting points before using addPoint
+	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
+	 * @note Not fully verified so far
 	 */
-	inline void clearBounds ();
+	void rotateAround(vec3_t origin, vec3_t angles);
 
 	/** @brief clip the box to the maximum boundaries */
 	inline void clipToWorld () {
@@ -130,48 +151,3 @@ public:
 	vec3_t mins;
 	vec3_t maxs;
 };
-
-inline void AABB::set (const AABB& other)
-{
-	VectorCopy(other.mins, mins);
-	VectorCopy(other.maxs, maxs);
-}
-
-inline void AABB::set (const vec3_t mini, const vec3_t maxi)
-{
-	VectorCopy(mini, mins);
-	VectorCopy(maxi, maxs);
-}
-
-inline void AABB::setMins (const vec3_t mini)
-{
-	VectorCopy(mini, mins);
-}
-
-inline void AABB::setMaxs (const vec3_t maxi)
-{
-	VectorCopy(maxi, maxs);
-}
-
-inline bool AABB::isZero () const
-{
-	return VectorEmpty(mins) && VectorEmpty(maxs);
-}
-
-inline bool AABB::doesIntersect (const AABB& other) const
-{
-	return !(mins[0] > other.getMaxX() || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || getMaxX() < other.mins[0]
-			|| maxs[1] < other.mins[1] || maxs[2] < other.mins[2]);
-}
-
-inline void AABB::clearBounds ()
-{
-	mins[0] = mins[1] = mins[2] = 99999;
-	maxs[0] = maxs[1] = maxs[2] = -99999;
-}
-
-inline void AABB::getCenter (vec3_t center) const
-{
-	VectorAdd(mins, maxs, center);
-	VectorScale(center, 0.5, center);
-}
