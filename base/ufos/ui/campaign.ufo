@@ -429,11 +429,11 @@ window save {
 			}
 		}
 		*node:this.parent.slots.slot<1>.name@onChange = {
-			cmd "game_save slot<node:this.parent.index@integer> <node:this.parent.name@string>;"
+			cmd "game_save \"slot<node:this.parent.index@integer>\" \"<node:this.parent.name@string>\";"
 			*cvar:mn_fastexit = 1
 		}
 		*node:this.parent.slots.slot<1>.upload@onClick = {
-			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
 		}
 		//*node:this.parent.slots.slot<1>.delete@onClick = {}
 		*node:this.parent.slots.slot<1>.upload@invis = false
