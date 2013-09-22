@@ -337,7 +337,7 @@ static void CL_Packet_f (void)
  * @sa SVC_DirectConnect
  * @param[in,out] msg The client stream message buffer to read from
  */
-static void CL_ConnectionlessPacket (dbuffer *msg)
+static void CL_ConnectionlessPacket (dbuffer* msg)
 {
 	char s[512];
 	NET_ReadStringLine(msg, s, sizeof(s));
@@ -446,7 +446,7 @@ static void CL_ConnectionlessPacket (dbuffer *msg)
  */
 static void CL_ReadPackets (void)
 {
-	dbuffer *msg;
+	dbuffer* msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
 		const svc_ops_t cmd = NET_ReadByte(msg);
 		if (cmd == svc_oob)

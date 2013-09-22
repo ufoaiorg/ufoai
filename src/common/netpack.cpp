@@ -30,33 +30,33 @@ const vec3_t bytedirs[] = {
 
 static const float POSSCALE = 32.0f;
 
-void NET_WriteChar (dbuffer *buf, char c)
+void NET_WriteChar (dbuffer* buf, char c)
 {
 	buf->add(&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "char event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
-void NET_WriteByte (dbuffer *buf, byte c)
+void NET_WriteByte (dbuffer* buf, byte c)
 {
 	buf->add((const char*)&c, 1);
 	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
-void NET_WriteShort (dbuffer *buf, int c)
+void NET_WriteShort (dbuffer* buf, int c)
 {
 	const unsigned short v = LittleShort(c);
 	buf->add((const char*)&v, 2);
 	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
-void NET_WriteLong (dbuffer *buf, int c)
+void NET_WriteLong (dbuffer* buf, int c)
 {
 	const int v = LittleLong(c);
 	buf->add((const char*)&v, 4);
 	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
-void NET_WriteString (dbuffer *buf, const char* str)
+void NET_WriteString (dbuffer* buf, const char* str)
 {
 	if (!str)
 		buf->add("", 1);
@@ -68,7 +68,7 @@ void NET_WriteString (dbuffer *buf, const char* str)
 /**
  * @brief Skip the zero string terminal character. If you need it, use @c NET_WriteString.
  */
-void NET_WriteRawString (dbuffer *buf, const char* str)
+void NET_WriteRawString (dbuffer* buf, const char* str)
 {
 	if (!str)
 		return;
@@ -76,7 +76,7 @@ void NET_WriteRawString (dbuffer *buf, const char* str)
 	Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
 }
 
-void NET_WriteCoord (dbuffer *buf, float f)
+void NET_WriteCoord (dbuffer* buf, float f)
 {
 	NET_WriteLong(buf, (int) (f * 32));
 }
@@ -84,7 +84,7 @@ void NET_WriteCoord (dbuffer *buf, float f)
 /**
  * @sa NET_Read2Pos
  */
-void NET_Write2Pos (dbuffer *buf, const vec2_t pos)
+void NET_Write2Pos (dbuffer* buf, const vec2_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * POSSCALE));
 	NET_WriteLong(buf, (long) (pos[1] * POSSCALE));
@@ -93,26 +93,26 @@ void NET_Write2Pos (dbuffer *buf, const vec2_t pos)
 /**
  * @sa NET_ReadPos
  */
-void NET_WritePos (dbuffer *buf, const vec3_t pos)
+void NET_WritePos (dbuffer* buf, const vec3_t pos)
 {
 	NET_WriteLong(buf, (long) (pos[0] * POSSCALE));
 	NET_WriteLong(buf, (long) (pos[1] * POSSCALE));
 	NET_WriteLong(buf, (long) (pos[2] * POSSCALE));
 }
 
-void NET_WriteGPos (dbuffer *buf, const pos3_t pos)
+void NET_WriteGPos (dbuffer* buf, const pos3_t pos)
 {
 	NET_WriteByte(buf, pos[0]);
 	NET_WriteByte(buf, pos[1]);
 	NET_WriteByte(buf, pos[2]);
 }
 
-void NET_WriteAngle (dbuffer *buf, float f)
+void NET_WriteAngle (dbuffer* buf, float f)
 {
 	NET_WriteByte(buf, (int) (f * 256 / 360) & 255);
 }
 
-void NET_WriteAngle16 (dbuffer *buf, float f)
+void NET_WriteAngle16 (dbuffer* buf, float f)
 {
 	NET_WriteShort(buf, ANGLE2SHORT(f));
 }
@@ -121,7 +121,7 @@ void NET_WriteAngle16 (dbuffer *buf, float f)
  * @note EV_ACTOR_SHOOT is using WriteDir for writing the normal, but ReadByte
  * for reading it - keep that in mind when you change something here
  */
-void NET_WriteDir (dbuffer *buf, const vec3_t dir)
+void NET_WriteDir (dbuffer* buf, const vec3_t dir)
 {
 	if (!dir) {
 		NET_WriteByte(buf, 0);
@@ -146,7 +146,7 @@ void NET_WriteDir (dbuffer *buf, const vec3_t dir)
  * for variable arguments, to call it from other functions with variable arguments
  * @note short and char are promoted to int when passed to variadic functions!
  */
-void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
+void NET_vWriteFormat (dbuffer* buf, const char* format, va_list ap)
 {
 	while (*format) {
 		const char typeID = *format++;
@@ -204,7 +204,7 @@ void NET_vWriteFormat (dbuffer *buf, const char* format, va_list ap)
 /**
  * @brief The user-friendly version of NET_WriteFormat that writes variable arguments to buffer according to format
  */
-void NET_WriteFormat (dbuffer *buf, const char* format, ...)
+void NET_WriteFormat (dbuffer* buf, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -218,7 +218,7 @@ void NET_WriteFormat (dbuffer *buf, const char* format, ...)
 /**
  * returns -1 if no more characters are available
  */
-int NET_ReadChar (dbuffer *buf)
+int NET_ReadChar (dbuffer* buf)
 {
 	char c;
 	if (buf->extract(&c, 1) == 0)
@@ -231,7 +231,7 @@ int NET_ReadChar (dbuffer *buf)
  * @note Beware that you don't put this into a byte or short - this will overflow
  * use an int value to store the return value when you read this via the net format strings!!!
  */
-int NET_ReadByte (dbuffer *buf)
+int NET_ReadByte (dbuffer* buf)
 {
 	unsigned char c;
 	if (buf->extract((char*)&c, 1) == 0)
@@ -239,7 +239,7 @@ int NET_ReadByte (dbuffer *buf)
 	return c;
 }
 
-int NET_ReadShort (dbuffer *buf)
+int NET_ReadShort (dbuffer* buf)
 {
 	unsigned short v;
 	if (buf->extract((char*)&v, 2) < 2)
@@ -248,7 +248,7 @@ int NET_ReadShort (dbuffer *buf)
 	return LittleShort(v);
 }
 
-int NET_PeekByte (const dbuffer *buf)
+int NET_PeekByte (const dbuffer* buf)
 {
 	unsigned char c;
 	if (buf->get((char*)&c, 1) == 0)
@@ -261,7 +261,7 @@ int NET_PeekByte (const dbuffer *buf)
  * @param buf The buffer, returned unchanged, no need to be copied before.
  * @return The short at the beginning of the buffer, -1 if it couldn't be read.
  */
-int NET_PeekShort (const dbuffer *buf)
+int NET_PeekShort (const dbuffer* buf)
 {
 	uint16_t v;
 	if (buf->get((char*)&v, 2) < 2)
@@ -270,7 +270,7 @@ int NET_PeekShort (const dbuffer *buf)
 	return LittleShort(v);
 }
 
-int NET_PeekLong (const dbuffer *buf)
+int NET_PeekLong (const dbuffer* buf)
 {
 	uint32_t v;
 	if (buf->get((char*)&v, 4) < 4)
@@ -279,7 +279,7 @@ int NET_PeekLong (const dbuffer *buf)
 	return LittleLong(v);
 }
 
-int NET_ReadLong (dbuffer *buf)
+int NET_ReadLong (dbuffer* buf)
 {
 	unsigned int v;
 	if (buf->extract((char*)&v, 4) < 4)
@@ -299,7 +299,7 @@ int NET_ReadLong (dbuffer *buf)
  * @param[out] string The output buffer to read the string into
  * @param[in] length The size of the output buffer
  */
-int NET_ReadString (dbuffer *buf, char* string, size_t length)
+int NET_ReadString (dbuffer* buf, char* string, size_t length)
 {
 	unsigned int l = 0;
 
@@ -325,7 +325,7 @@ int NET_ReadString (dbuffer *buf, char* string, size_t length)
 /**
  * @sa NET_ReadString
  */
-int NET_ReadStringLine (dbuffer *buf, char* string, size_t length)
+int NET_ReadStringLine (dbuffer* buf, char* string, size_t length)
 {
 	unsigned int l;
 
@@ -346,7 +346,7 @@ int NET_ReadStringLine (dbuffer *buf, char* string, size_t length)
 	return l;
 }
 
-float NET_ReadCoord (dbuffer *buf)
+float NET_ReadCoord (dbuffer* buf)
 {
 	return (float) NET_ReadLong(buf) * (1.0 / 32);
 }
@@ -354,7 +354,7 @@ float NET_ReadCoord (dbuffer *buf)
 /**
  * @sa NET_Write2Pos
  */
-void NET_Read2Pos (dbuffer *buf, vec2_t pos)
+void NET_Read2Pos (dbuffer* buf, vec2_t pos)
 {
 	pos[0] = NET_ReadLong(buf) / POSSCALE;
 	pos[1] = NET_ReadLong(buf) / POSSCALE;
@@ -363,7 +363,7 @@ void NET_Read2Pos (dbuffer *buf, vec2_t pos)
 /**
  * @sa NET_WritePos
  */
-void NET_ReadPos (dbuffer *buf, vec3_t pos)
+void NET_ReadPos (dbuffer* buf, vec3_t pos)
 {
 	pos[0] = NET_ReadLong(buf) / POSSCALE;
 	pos[1] = NET_ReadLong(buf) / POSSCALE;
@@ -375,25 +375,25 @@ void NET_ReadPos (dbuffer *buf, vec3_t pos)
  * @sa NET_ReadByte
  * @note pos3_t are byte values
  */
-void NET_ReadGPos (dbuffer *buf, pos3_t pos)
+void NET_ReadGPos (dbuffer* buf, pos3_t pos)
 {
 	pos[0] = NET_ReadByte(buf);
 	pos[1] = NET_ReadByte(buf);
 	pos[2] = NET_ReadByte(buf);
 }
 
-float NET_ReadAngle (dbuffer *buf)
+float NET_ReadAngle (dbuffer* buf)
 {
 	return (float) NET_ReadChar(buf) * (360.0 / 256);
 }
 
-float NET_ReadAngle16 (dbuffer *buf)
+float NET_ReadAngle16 (dbuffer* buf)
 {
 	const short s = NET_ReadShort(buf);
 	return (float) SHORT2ANGLE(s);
 }
 
-void NET_ReadData (dbuffer *buf, void* data, int len)
+void NET_ReadData (dbuffer* buf, void* data, int len)
 {
 	int i;
 
@@ -401,7 +401,7 @@ void NET_ReadData (dbuffer *buf, void* data, int len)
 		((byte*) data)[i] = NET_ReadByte(buf);
 }
 
-void NET_ReadDir (dbuffer *buf, vec3_t dir)
+void NET_ReadDir (dbuffer* buf, vec3_t dir)
 {
 	const int b = NET_ReadByte(buf);
 	if (b >= lengthof(bytedirs))
@@ -415,7 +415,7 @@ void NET_ReadDir (dbuffer *buf, vec3_t dir)
  * @param[in] buf The buffer we read the data from
  * @param[in] format The format string may not be nullptr
  */
-void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
+void NET_vReadFormat (dbuffer* buf, const char* format, va_list ap)
 {
 	while (*format) {
 		const char typeID = *format++;
@@ -478,7 +478,7 @@ void NET_vReadFormat (dbuffer *buf, const char* format, va_list ap)
 #endif
 }
 
-void NET_SkipFormat (dbuffer *buf, const char* format)
+void NET_SkipFormat (dbuffer* buf, const char* format)
 {
 	while (*format) {
 		const char typeID = *format++;
@@ -535,7 +535,7 @@ void NET_SkipFormat (dbuffer *buf, const char* format)
 /**
  * @brief The user-friendly version of NET_ReadFormat that reads variable arguments from a buffer according to format
  */
-void NET_ReadFormat (dbuffer *buf, const char* format, ...)
+void NET_ReadFormat (dbuffer* buf, const char* format, ...)
 {
 	va_list ap;
 
@@ -605,7 +605,7 @@ void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
 	}
 }
 
-void NET_VPrintf (dbuffer *buf, const char* format, va_list ap, char* str, size_t length)
+void NET_VPrintf (dbuffer* buf, const char* format, va_list ap, char* str, size_t length)
 {
 	const int len = Q_vsnprintf(str, length, format, ap);
 	buf->add(str, len);

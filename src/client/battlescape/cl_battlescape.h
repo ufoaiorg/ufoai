@@ -96,7 +96,7 @@ bool CL_OutsideMap(const vec3_t impact, const float delta);
 int CL_CountVisibleEnemies(void);
 char* CL_GetConfigString(int index);
 int CL_GetConfigStringInteger(int index);
-char* CL_SetConfigString(int index, dbuffer *msg);
+char* CL_SetConfigString(int index, dbuffer* msg);
 #ifdef DEBUG
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);

@@ -179,7 +179,7 @@ void CP_UpdateCharacterData (linkedList_t* updateCharacters)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa E_Save
  */
-void CP_ParseCharacterData (dbuffer *msg, linkedList_t** updateCharacters)
+void CP_ParseCharacterData (dbuffer* msg, linkedList_t** updateCharacters)
 {
 	int i, j;
 	const int num = cgi->NET_ReadByte(msg);

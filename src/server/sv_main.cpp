@@ -612,7 +612,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  * @param[out] stream The stream to write to
  * @param msg The message buffer to read the connectionless data from
  */
-static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
+static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer* msg)
 {
 	char s[512];
 
@@ -646,7 +646,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer *msg)
 void SV_ReadPacket (struct net_stream *s)
 {
 	client_t* cl = static_cast<client_t* >(NET_StreamGetData(s));
-	dbuffer *msg;
+	dbuffer* msg;
 
 	while ((msg = NET_ReadMsg(s))) {
 		const int cmd = NET_ReadByte(msg);

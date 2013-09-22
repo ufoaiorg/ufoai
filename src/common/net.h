@@ -58,4 +58,4 @@ void NET_StreamFree(struct net_stream *s);
 void NET_StreamFinished(struct net_stream *s);
 void NET_StreamSetCallback(struct net_stream *s, stream_callback_func *func);
 
-dbuffer *NET_ReadMsg(struct net_stream *s);
+dbuffer* NET_ReadMsg(struct net_stream *s);

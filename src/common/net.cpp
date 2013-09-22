@@ -786,7 +786,7 @@ int NET_StreamDequeue (struct net_stream *s, char* data, int len)
  * order
  * @sa NET_StreamDequeue
  */
-dbuffer *NET_ReadMsg (struct net_stream *s)
+dbuffer* NET_ReadMsg (struct net_stream *s)
 {
 	unsigned int v;
 	const ScopedMutex scopedMutex(netMutex);
@@ -802,7 +802,7 @@ dbuffer *NET_ReadMsg (struct net_stream *s)
 	const int size = sizeof(tmp);
 	NET_StreamDequeue(s, tmp, 4);
 
-	dbuffer *buf = new dbuffer();
+	dbuffer* buf = new dbuffer();
 	while (len > 0) {
 		const int x = NET_StreamDequeue(s, tmp, std::min(len, size));
 		buf->add(tmp, x);

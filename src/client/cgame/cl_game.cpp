@@ -316,7 +316,7 @@ static void CL_QueryMasterServer (const char* action, http_callback_t callback)
 	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
 }
 
-bool GAME_HandleServerCommand (const char* command, dbuffer *msg)
+bool GAME_HandleServerCommand (const char* command, dbuffer* msg)
 {
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (!list || list->HandleServerCommand == nullptr)
@@ -1255,7 +1255,7 @@ bool GAME_ItemIsUseable (const objDef_t* od)
  * the attacker team, the second the victim team
  * @param nextmap Indicates if there is another map to follow within the same msission
  */
-void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_HandleResults (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list)
@@ -1270,7 +1270,7 @@ void GAME_HandleResults (dbuffer *msg, int winner, int* numSpawned, int* numAliv
  * @note The amount of the Item should not be needed here - because
  * the amount is only valid for CID_FLOOR and CID_EQUIP
  */
-static void GAME_NetSendItem (dbuffer *buf, const Item* item, containerIndex_t container, int x, int y)
+static void GAME_NetSendItem (dbuffer* buf, const Item* item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item->ammoDef() ? item->ammoDef()->idx : NONE;
 	const eventRegister_t* eventData = CL_GetEvent(EV_INV_TRANSFER);
@@ -1283,7 +1283,7 @@ static void GAME_NetSendItem (dbuffer *buf, const Item* item, containerIndex_t c
 /**
  * @sa G_SendInventory
  */
-static void GAME_NetSendInventory (dbuffer *buf, const Inventory* inv)
+static void GAME_NetSendInventory (dbuffer* buf, const Inventory* inv)
 {
 	const int nr = inv->countItems();
 
@@ -1305,7 +1305,7 @@ static void GAME_NetSendInventory (dbuffer *buf, const Inventory* inv)
  * @param[out] buf The net channel buffer to write the character data into.
  * @param[in] chr The character to get the data from.
  */
-static void GAME_NetSendCharacter (dbuffer *buf, const character_t* chr)
+static void GAME_NetSendCharacter (dbuffer* buf, const character_t* chr)
 {
 	int j;
 
@@ -1355,7 +1355,7 @@ static void GAME_NetSendCharacter (dbuffer *buf, const character_t* chr)
  * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
-static void GAME_SendCurrentTeamSpawningInfo (dbuffer *buf, linkedList_t* team)
+static void GAME_SendCurrentTeamSpawningInfo (dbuffer* buf, linkedList_t* team)
 {
 	const int teamSize = LIST_Count(team);
 
@@ -1481,7 +1481,7 @@ static void GAME_InitializeBattlescape (linkedList_t* team)
 	}
 
 	if (list && list->InitializeBattlescape) {
-		dbuffer *msg = list->InitializeBattlescape(team);
+		dbuffer* msg = list->InitializeBattlescape(team);
 		if (msg != nullptr) {
 			NET_WriteMsg(cls.netStream, *msg);
 			delete msg;

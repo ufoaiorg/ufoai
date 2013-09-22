@@ -70,7 +70,7 @@ typedef struct pending_event_s {
 	int playerMask;
 	int type;
 	int entnum;
-	dbuffer *buf;
+	dbuffer* buf;
 } pending_event_t;
 
 typedef struct serverInstanceStatic_s {
@@ -116,7 +116,7 @@ typedef struct serverInstanceGame_s {
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	dbuffer *messageBuffer;		/**< the message buffer that was received from the client. */
+	dbuffer* messageBuffer;		/**< the message buffer that was received from the client. */
 	pending_event_t pendingEvent;
 	pending_event_t eventQueue[64];
 	int eventQueuePos;
@@ -202,7 +202,7 @@ void SV_ClientPrintf(client_t *cl, int level, const char* fmt, ...) __attribute_
 void SV_BroadcastPrintf(int level, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
 
 /* sv_user.c */
-void SV_ExecuteClientMessage(client_t *cl, int cmd, dbuffer *msg);
+void SV_ExecuteClientMessage(client_t *cl, int cmd, dbuffer* msg);
 void SV_SetClientState(client_t *client, client_state_t state);
 
 /* sv_ccmds.c */

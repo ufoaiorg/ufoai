@@ -291,7 +291,7 @@ void LE_DoEndPathMove(le_t* le);
 void LM_Think(void);
 void LMT_Init(localModel_t* localModel);
 localModel_t* LM_AddModel(const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
-void LM_Perish(dbuffer *msg);
+void LM_Perish(dbuffer* msg);
 void LM_AddToScene(void);
 
 bool LE_BrushModelAction(le_t* le, entity_t* ent);

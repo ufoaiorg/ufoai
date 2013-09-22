@@ -113,7 +113,7 @@ static void GAME_MP_StartServer_f (void)
  * the attacker team, the second the victim team
  * @param nextmap Indicates if there is another map to follow within the same mission
  */
-static void GAME_MP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+static void GAME_MP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	linkedList_t* list = nullptr;
 	int enemiesKilled, enemiesStunned;
@@ -209,7 +209,7 @@ static void GAME_MP_AddChatMessage (const char* text)
 	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
-static bool GAME_MP_HandleServerCommand (const char* command, dbuffer *msg)
+static bool GAME_MP_HandleServerCommand (const char* command, dbuffer* msg)
 {
 	if (Q_streq(command, SV_CMD_TEAMINFO)) {
 		GAME_MP_ParseTeamInfoMessage(msg);

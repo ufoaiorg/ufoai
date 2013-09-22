@@ -205,7 +205,7 @@ static void GAME_MP_AddServerToList (const char* node, const char* service)
  * @sa SVC_TeamInfo
  * @sa GAME_MP_SelectTeam_Init_f
  */
-void GAME_MP_ParseTeamInfoMessage (dbuffer *msg)
+void GAME_MP_ParseTeamInfoMessage (dbuffer* msg)
 {
 	char str[4096];
 	if (cgi->NET_ReadString(msg, str, sizeof(str)) == 0) {
@@ -272,7 +272,7 @@ static char userInfoText[256];
  * @sa CL_ServerInfoCallback
  * @sa SVC_Info
  */
-static void GAME_MP_ParseServerInfoMessage (dbuffer *msg, const char* hostname)
+static void GAME_MP_ParseServerInfoMessage (dbuffer* msg, const char* hostname)
 {
 	const char* value;
 	char str[MAX_INFO_STRING];

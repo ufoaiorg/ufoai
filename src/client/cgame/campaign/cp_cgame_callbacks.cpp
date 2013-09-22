@@ -201,7 +201,7 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t*
  * @param nextmap If it was a follow-up map of the same mission
  * the attacker team, the second the victim team
  */
-void GAME_CP_Results (dbuffer *msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
+void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
@@ -592,10 +592,10 @@ void GAME_CP_InitMissionBriefing (const char** title, linkedList_t** victoryCond
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-dbuffer *GAME_CP_InitializeBattlescape (const linkedList_t* team)
+dbuffer* GAME_CP_InitializeBattlescape (const linkedList_t* team)
 {
 	const int teamSize = cgi->LIST_Count(team);
-	dbuffer *msg = new dbuffer(2 + teamSize * 10);
+	dbuffer* msg = new dbuffer(2 + teamSize * 10);
 
 	NET_WriteByte(msg, clc_initactorstates);
 	NET_WriteByte(msg, teamSize);
