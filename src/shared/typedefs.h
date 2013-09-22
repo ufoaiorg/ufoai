@@ -341,7 +341,7 @@ typedef struct mapData_s {
 	AABB mapBox;
 
 	inline float getWidthX () const {
-		return mapBox.maxs[0] - mapBox.mins[0];
+		return mapBox.getMaxX() - mapBox.mins[0];
 	}
 	inline float getWidthY () const {
 		return mapBox.maxs[1] - mapBox.mins[1];

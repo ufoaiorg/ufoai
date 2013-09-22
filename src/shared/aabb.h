@@ -154,7 +154,7 @@ inline bool AABB::isZero () const
 
 inline bool AABB::doesIntersect (const AABB& other) const
 {
-	return !(mins[0] > other.maxs[0] || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || maxs[0] < other.mins[0]
+	return !(mins[0] > other.getMaxX() || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || getMaxX() < other.mins[0]
 			|| maxs[1] < other.mins[1] || maxs[2] < other.mins[2]);
 }
 

@@ -294,7 +294,7 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
  */
 bool CL_OutsideMap (const vec3_t position, const float delta)
 {
-	if (position[0] < cl.mapData->mapBox.getMinX() - delta || position[0] > cl.mapData->mapBox.maxs[0] + delta)
+	if (position[0] < cl.mapData->mapBox.getMinX() - delta || position[0] > cl.mapData->mapBox.getMaxX() + delta)
 		return true;
 
 	if (position[1] < cl.mapData->mapBox.getMinY() - delta || position[1] > cl.mapData->mapBox.maxs[1] + delta)
