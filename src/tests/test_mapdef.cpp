@@ -345,7 +345,7 @@ static void testMapDefsFootSteps (void)
 #endif
 		mBox.clipToMaxBoundaries();
 
-		for (int x = mBox.mins[0]; x <= mBox.maxs[0] && !done; x++) {
+		for (int x = mBox.getMinX(); x <= mBox.maxs[0] && !done; x++) {
 			for (int y = mBox.mins[1]; y <= mBox.maxs[1] && !done; y++) {
 				for (int z = mBox.mins[2]; z <= mBox.maxs[2]; z++) {
 					const int floor = sv->mapData.routing.getFloor(1, x, y,z);
