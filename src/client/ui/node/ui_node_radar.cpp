@@ -319,7 +319,7 @@ static void UI_InitRadar (const uiNode_t *node)
 			}
 		}
 		if (tile->isTile) {
-			tile->mapY = cl.mapData->getMaxY() - tile->mapY - tile->mapHeight;
+			tile->mapY = cl.mapData->mapBox.getMaxY() - tile->mapY - tile->mapHeight;
 		}
 	}
 
@@ -564,7 +564,7 @@ void uiRadarNode::draw (uiNode_t *node)
 		radar.gridHeight = 6;
 
 #ifdef RADARSIZE_DEBUG
-	UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f %fx%f map", cl.mapData->getMinX(), cl.mapData->getMinY(), cl.mapData->getMaxX(), cl.mapData->getMaxY()));
+	UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f %fx%f map", cl.mapData->mapBox.getMinX(), cl.mapData->mapBox.getMinY(), cl.mapData->getMaxX(), cl.mapData->getMaxY()));
 	textposy += 25;
 	UI_DrawStringInBox("f_small", ALIGN_UL, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight));
 	textposy += 25;
@@ -648,7 +648,7 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 
 	/* from node to map */
 	pos[0] = cl.mapData->mapBox.getMinX() + x / mapCoefX;
-	pos[1] = cl.mapData->getMaxY() - y / mapCoefY;
+	pos[1] = cl.mapData->mapBox.getMaxY() - y / mapCoefY;
 	pos[2] = 0;
 
 	VectorCopy(pos, cl.cam.origin);

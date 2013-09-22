@@ -67,6 +67,12 @@ public:
 	inline const vec3_t& getMaxs() const {
 		return maxs;
 	}
+	inline float getMaxX () const {
+		return maxs[0];
+	}
+	inline float getMaxY () const {
+		return maxs[1];
+	}
 
 	/**
 	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
