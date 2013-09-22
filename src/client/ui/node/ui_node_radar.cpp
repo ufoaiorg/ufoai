@@ -103,7 +103,7 @@ static void UI_FreeRadarImages (void)
 static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 {
 	const float mapMidX = cl.mapData->getWidthX() * 0.5;
-	const float mapMidY = (cl.mapData->getMaxY() + cl.mapData->mapBox.getMinY()) * 0.5;
+	const float mapMidY = cl.mapData->getWidthY() * 0.5;
 
 	/* load tiles */
 	while (tiles) {
