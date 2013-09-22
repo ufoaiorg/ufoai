@@ -74,6 +74,12 @@ public:
 		return maxs[1];
 	}
 
+	inline float getWidthX () const {
+		return getMaxX() - getMinX();
+	}
+	inline float getWidthY () const {
+		return getMaxY() - getMinY();
+	}
 	/**
 	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
 	 * @note Not fully verified so far

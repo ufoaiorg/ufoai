@@ -339,13 +339,6 @@ typedef struct mapData_s {
 	 * @sa SV_ClearWorld
 	 */
 	AABB mapBox;
-
-	inline float getWidthX () const {
-		return mapBox.getMaxX() - mapBox.mins[0];
-	}
-	inline float getWidthY () const {
-		return mapBox.maxs[1] - mapBox.mins[1];
-	}
 } mapData_t;
 
 typedef struct {
