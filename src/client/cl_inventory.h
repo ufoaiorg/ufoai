@@ -57,7 +57,7 @@ typedef enum {
 	FILTER_ENSURE_32BIT = 0x7FFFFFFF
 } itemFilterTypes_t;
 
-bool INV_MoveItem(Inventory* inv, const invDef_t *toContainer, int px, int py, const invDef_t *fromContainer, Item *fItem, Item **tItem);
+bool INV_MoveItem(Inventory* inv, const invDef_t *toContainer, int px, int py, const invDef_t *fromContainer, Item *fItem, Item** tItem);
 bool INV_LoadWeapon(const Item *weapon, Inventory* inv, const invDef_t *srcContainer, const invDef_t *destContainer);
 bool INV_UnloadWeapon(Item *weapon, Inventory* inv, const invDef_t *container);
 const equipDef_t *INV_GetEquipmentDefinitionByID(const char* name);

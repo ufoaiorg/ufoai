@@ -165,15 +165,15 @@ typedef struct le_s {
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
 
-	inline Item *getRightHandItem () const
+	inline Item* getRightHandItem () const
 	{
 		return inv.getRightHandContainer();
 	}
-	inline Item *getLeftHandItem () const
+	inline Item* getLeftHandItem () const
 	{
 		return inv.getLeftHandContainer();
 	}
-	inline Item *getHandItem (actorHands_t hand) const
+	inline Item* getHandItem (actorHands_t hand) const
 	{
 		if (hand == ACTOR_HAND_RIGHT)
 			return inv.getRightHandContainer();
@@ -181,11 +181,11 @@ typedef struct le_s {
 			return inv.getLeftHandContainer();
 		return nullptr;
 	}
-	inline Item *getFloorContainer () const
+	inline Item* getFloorContainer () const
 	{
 		return inv.getFloorContainer();
 	}
-	inline void setFloorContainer (Item *il)
+	inline void setFloorContainer (Item* il)
 	{
 		inv.setFloorContainer(il);
 	}

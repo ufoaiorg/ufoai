@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void HOS_EntryWoundData (const character_t& chr)
 {
-	const BodyData *bodyData = chr.teamDef->bodyTemplate;
+	const BodyData* bodyData = chr.teamDef->bodyTemplate;
 	const woundInfo_t& wounds = chr.wounds;
 
 	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {

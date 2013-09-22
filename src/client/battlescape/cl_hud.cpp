@@ -1316,7 +1316,7 @@ static void HUD_ActorWoundData_f (void)
 	int bodyPart;
 	woundInfo_t* wounds = &selActor->wounds;
 	const character_t* chr = CL_ActorGetChr(selActor);
-	const BodyData *bodyData = chr->teamDef->bodyTemplate;
+	const BodyData* bodyData = chr->teamDef->bodyTemplate;
 
 	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 		const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);

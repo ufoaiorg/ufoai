@@ -312,7 +312,7 @@ float CL_ActorInjuryModifier (const le_t* le, const modifier_types_t type)
 		int bodyPart;
 		if (!chr)
 			return 0;
-		const BodyData *bodyTemplate = chr->teamDef->bodyTemplate;
+		const BodyData* bodyTemplate = chr->teamDef->bodyTemplate;
 		for (bodyPart = 0; bodyPart < bodyTemplate->numBodyParts(); ++bodyPart) {
 			const int threshold = le->maxHP * bodyTemplate->woundThreshold(bodyPart);
 			const int injury = (le->wounds.woundLevel[bodyPart] + le->wounds.treatmentLevel[bodyPart] * 0.5);

@@ -338,7 +338,7 @@ typedef struct teamDef_s {
 	const chrTemplate_t* characterTemplates[MAX_TEMPLATES_PER_TEAM];
 	int numTemplates;
 
-	const BodyData *bodyTemplate;
+	const BodyData* bodyTemplate;
 
 //	can't add this simple constructor because in scripts.cpp, teamDefValues 'offsetof' is used on teamdef_t
 //	inline teamDef_s () {

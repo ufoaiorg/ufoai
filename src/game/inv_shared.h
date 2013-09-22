@@ -409,7 +409,7 @@ typedef struct invDef_s {
 class Item {
 	const objDef_t* _itemDef;	/**< The weapon definition. */
 	const objDef_t* _ammoDef;	/**< Pointer to ammo definition. */
-	Item *_next;				/**< Next entry in this list. */
+	Item* _next;				/**< Next entry in this list. */
 	int _x, _y;					/**< Position (aka origin location) of the item in the container/invlist.
 								 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
 								 * The shape as defined in the Item may be empty at this location! */
@@ -449,11 +449,11 @@ public:
 		_ammoLeft = value;
 	}
 
-	inline Item *getNext () const {
+	inline Item* getNext () const {
 		return _next;
 	}
 
-	inline void setNext (Item *nx) {
+	inline void setNext (Item* nx) {
 		_next = nx;
 	}
 
@@ -505,7 +505,7 @@ public:
 		return _itemDef->isArmour();
 	}
 
-	bool isSameAs (const Item *const other) const;
+	bool isSameAs (const Item* const other) const;
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t* getReactionFireWeaponType () const;
@@ -518,11 +518,11 @@ class Container
 	const invDef_t* _def;	/* container attributes (invDef_t) */
 public:
 	int id;
-	Item *_invList;	/* start of the list of items */
+	Item* _invList;	/* start of the list of items */
 
 	Container();
 	const invDef_t* def () const;
-	Item *getNextItem (const Item *prev) const;
+	Item* getNextItem (const Item* prev) const;
 	int countItems () const;
 };
 
@@ -548,11 +548,11 @@ public:
 	 * getContainer2 will return an item, while
 	 * @todo this should return a reference - can't be null
 	 */
-	inline Item *getContainer2 (const containerIndex_t idx) const {
+	inline Item* getContainer2 (const containerIndex_t idx) const {
 		return getContainer(idx)._invList;
 	}
 
-	inline void setContainer (const containerIndex_t idx, Item *cont) {
+	inline void setContainer (const containerIndex_t idx, Item* cont) {
 		_containers[idx]._invList = cont;
 	}
 
@@ -574,29 +574,29 @@ public:
 	 * @param[in] item The item to search for.
 	 * @return true if there already is at least one item of this type, otherwise false.
 	 */
-	inline bool containsItem (const containerIndex_t contId, const Item *const item) const {
+	inline bool containsItem (const containerIndex_t contId, const Item* const item) const {
 		return findInContainer(contId, item) ? true : false;
 	}
 
-	Item *getArmour () const;
-	Item *getHeadgear() const;
+	Item* getArmour () const;
+	Item* getHeadgear() const;
 	/** @todo this should return a reference - can't be null */
-	Item *getRightHandContainer() const;
+	Item* getRightHandContainer() const;
 	/** @todo this should return a reference - can't be null */
-	Item *getLeftHandContainer () const;
+	Item* getLeftHandContainer () const;
 	/** @todo this should return a reference - can't be null */
-	Item *getHolsterContainer() const;
+	Item* getHolsterContainer() const;
 	/** @todo this should return a reference - can't be null */
-	Item *getEquipContainer () const;
+	Item* getEquipContainer () const;
 	/** @todo this should return a reference - can't be null */
-	Item *getFloorContainer() const;
-	void setFloorContainer(Item *cont);
+	Item* getFloorContainer() const;
+	void setFloorContainer(Item* cont);
 
-	void findSpace (const invDef_t* container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const;
-	Item *findInContainer (const containerIndex_t contId, const Item * const item) const;
-	Item *getItemAtPos (const invDef_t* container, const int x, const int y) const;
+	void findSpace (const invDef_t* container, const Item* item, int* const px, int* const py, const Item* ignoredItem) const;
+	Item* findInContainer (const containerIndex_t contId, const Item*  const item) const;
+	Item* getItemAtPos (const invDef_t* container, const int x, const int y) const;
 	float getWeight () const;
-	int canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item *ignoredItem) const;
+	int canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item* ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo: convert into iterator */
@@ -615,7 +615,7 @@ typedef struct equipDef_s {
 	int minInterest;			/**< Minimum overall interest to use this equipment definition (only for alien) */
 	int maxInterest;			/**< Maximum overall interest to use this equipment definition (only for alien) */
 
-	void addClip(const Item *item);	/** Combine the rounds of partially used clips. */
+	void addClip(const Item* item);	/** Combine the rounds of partially used clips. */
 } equipDef_t;
 
 /* Maximum number of alien teams per alien group */

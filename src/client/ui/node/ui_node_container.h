@@ -50,10 +50,10 @@ public:
 extern Inventory* ui_inventory;
 
 void UI_RegisterContainerNode(uiBehaviour_t *behaviour);
-void UI_DrawItem(uiNode_t* node, const vec3_t org, const Item *item, int x, int y, const vec3_t scale, const vec4_t color);
+void UI_DrawItem(uiNode_t* node, const vec3_t org, const Item* item, int x, int y, const vec3_t scale, const vec4_t color);
 void UI_ContainerNodeUpdateEquipment(Inventory* inv, const equipDef_t *ed);
 uiNode_t *UI_GetContainerNodeByContainerIDX(const uiNode_t* const parent, const int index);
-void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item *ic);
+void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic);
 void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLength);
 
 /**

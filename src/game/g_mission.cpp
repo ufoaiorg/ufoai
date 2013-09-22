@@ -84,7 +84,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		/* ignore items linked from any temp container the actor must have this in his hands */
 		const Container *cont = nullptr;
 		while ((cont = activator->chr.inv.getNextCont(cont))) {
-			Item *item = nullptr;
+			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				const objDef_t* od = item->def();
 				/* check whether we found the searched item in the actor's inventory */
@@ -163,7 +163,7 @@ void G_MissionThink (Edict* self)
 	while (chain) {
 		if (chain->type == ET_MISSION) {
 			if (chain->item) {
-				const Item *ic;
+				const Item* ic;
 				G_GetFloorItems(chain);
 				ic = chain->getFloor();
 				if (!ic) {

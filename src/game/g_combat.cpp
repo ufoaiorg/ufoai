@@ -575,7 +575,7 @@ static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot
  * @param[in] pos The grid position to spawn the item at
  * @param[in] item The item to spawn
  */
-static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
+static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 {
 	Edict* floor;
 
@@ -622,7 +622,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item *item)
  * @param[out] impact The location of the target (-center?)
  */
 static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* fd,
-	const vec3_t from, const pos3_t at, int mask, const Item *weapon, shot_mock_t* mock, int z_align, vec3_t impact)
+	const vec3_t from, const pos3_t at, int mask, const Item* weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent))
@@ -840,7 +840,7 @@ static void DumpAllEntities (void)
  * @sa CL_TargetingStraight
  */
 static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, const pos3_t at,
-	int mask, const Item *weapon, shot_mock_t* mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
+	int mask, const Item* weapon, shot_mock_t* mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent)) {
@@ -1057,10 +1057,10 @@ void G_GetShotOrigin (const Edict* shooter, const fireDef_t* fd, const vec3_t di
  * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
-static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t firemode, Item **weapon, containerIndex_t* container, const fireDef_t** fd)
+static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t firemode, Item** weapon, containerIndex_t* container, const fireDef_t** fd)
 {
 	const fireDef_t* fdArray;
-	Item *item;
+	Item* item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
 		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
@@ -1117,7 +1117,7 @@ bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_typ
 	 * ai - no readable feedback needed */
 	const bool quiet = (mock != nullptr) || G_IsAIPlayer(&player);
 
-	Item *weapon = nullptr;
+	Item* weapon = nullptr;
 	const fireDef_t* fd = nullptr;
 	containerIndex_t container = 0;
 	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {

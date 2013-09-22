@@ -29,18 +29,18 @@ InventoryInterface::InventoryInterface () :
 {
 }
 
-void InventoryInterface::removeInvList (Item *invList)
+void InventoryInterface::removeInvList (Item* invList)
 {
 	Com_DPrintf(DEBUG_SHARED, "removeInvList: remove one slot (%s)\n", invName);
 
 	/* first entry */
 	if (this->_invList == invList) {
-		Item *ic = this->_invList;
+		Item* ic = this->_invList;
 		this->_invList = ic->getNext();
 		free(ic);
 	} else {
-		Item *ic = this->_invList;
-		Item *prev = nullptr;
+		Item* ic = this->_invList;
+		Item* prev = nullptr;
 		while (ic) {
 			if (ic == invList) {
 				if (prev)
@@ -54,20 +54,20 @@ void InventoryInterface::removeInvList (Item *invList)
 	}
 }
 
-Item *InventoryInterface::addInvList (Inventory* const inv, const invDef_t* container)
+Item* InventoryInterface::addInvList (Inventory* const inv, const invDef_t* container)
 {
-	Item *newEntry = static_cast<Item*>(alloc(sizeof(Item)));
+	Item* newEntry = static_cast<Item*>(alloc(sizeof(Item)));
 	newEntry->setNext(nullptr);	/* not really needed - but for better readability */
 
 	Com_DPrintf(DEBUG_SHARED, "AddInvList: add one slot (%s)\n", invName);
 
-	Item *firstEntry = inv->getContainer2(container->id);
+	Item* firstEntry = inv->getContainer2(container->id);
 	if (!firstEntry) {
 		/* create the list */
 		inv->setContainer(container->id, newEntry);
 	} else {
 		/* read up to the end of the list */
-		Item *list = firstEntry;
+		Item* list = firstEntry;
 		while (list->getNext())
 			list = list->getNext();
 		/* append our new item as the last in the list */
@@ -89,7 +89,7 @@ Item *InventoryInterface::addInvList (Inventory* const inv, const invDef_t* cont
  * @sa removeFromInventory
  * @return the @c Item pointer the item was added to, or @c nullptr in case of an error (item wasn't added)
  */
-Item *InventoryInterface::addToInventory (Inventory* const inv, const Item* const item, const invDef_t* container, int x, int y, int amount)
+Item* InventoryInterface::addToInventory (Inventory* const inv, const Item* const item, const invDef_t* container, int x, int y, int amount)
 {
 	if (!item->def())
 		return nullptr;
@@ -103,7 +103,7 @@ Item *InventoryInterface::addToInventory (Inventory* const inv, const Item* cons
 	if (container->single && inv->getContainer2(container->id))
 		return nullptr;
 
-	Item *ic;
+	Item* ic;
 	/* CID_EQUIP and CID_FLOOR */
 	if (container->temp) {
 		for (ic = inv->getContainer2(container->id); ic; ic = ic->getNext())
@@ -150,13 +150,13 @@ Item *InventoryInterface::addToInventory (Inventory* const inv, const Item* cons
  * @return false If nothing was removed or an error occurred.
  * @sa addToInventory
  */
-bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t* container, Item *fItem)
+bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef_t* container, Item* fItem)
 {
 	assert(inv);
 	assert(container);
 	assert(fItem);
 
-	Item *ic = inv->getContainer2(container->id);
+	Item* ic = inv->getContainer2(container->id);
 	if (!ic)
 		return false;
 
@@ -191,7 +191,7 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
 		return true;
 	}
 
-	for (Item *previous = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
+	for (Item* previous = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
 		if (ic != fItem) {
 			previous = ic;
 			continue;
@@ -237,9 +237,9 @@ bool InventoryInterface::removeFromInventory (Inventory* const inv, const invDef
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t* from, Item *fItem, const invDef_t* to, int tx, int ty, int* TU, Item ** uponItem)
+inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, const invDef_t* from, Item* fItem, const invDef_t* to, int tx, int ty, int* TU, Item**  uponItem)
 {
-	Item *ic;
+	Item* ic;
 
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
@@ -274,7 +274,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 			return IA_NONE;
 
 		const Container &cont = inv->getContainer(from->id);
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont.getNextItem(item))) {
 			if (item != fItem)
 				continue;
@@ -322,7 +322,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 
 	if (to->armour && from != to && !checkedTo) {
 		Item cacheItem2;
-		Item *icTo;
+		Item* icTo;
 		/* Store x/y origin coordinates of removed (source) item.
 		 * When we re-add it we can use this. */
 		const int cacheFromX = fItem->getX();
@@ -473,7 +473,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
  * @sa findSpace
  * @sa addToInventory
  */
-bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *const item, const invDef_t* container)
+bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item* const item, const invDef_t* container)
 {
 	int x, y;
 
@@ -506,10 +506,10 @@ bool InventoryInterface::tryAddToInventory (Inventory* const inv, const Item *co
  */
 void InventoryInterface::emptyContainer (Inventory* const inv, const containerIndex_t containerId)
 {
-	Item *ic = inv->getContainer2(containerId);
+	Item* ic = inv->getContainer2(containerId);
 
 	while (ic) {
-		Item *old = ic;
+		Item* old = ic;
 		ic = ic->getNext();
 		removeInvList(old);
 	}
@@ -550,7 +550,7 @@ float InventoryInterface::GetInventoryState (const Inventory* inventory, int &sl
 	slowestFd = 0;
 	const Container *cont = nullptr;
 	while ((cont = inventory->getNextCont(cont))) {
-		for (Item *ic = cont->_invList, *next; ic; ic = next) {
+		for (Item* ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
 			weight += ic->getWeight();
 			const fireDef_t* fireDef = (*ic).getSlowestFireDef();
@@ -976,7 +976,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* e
 int InventoryInterface::GetUsedSlots ()
 {
 	int i = 0;
-	const Item *slot = _invList;
+	const Item* slot = _invList;
 	while (slot) {
 		slot = slot->getNext();
 		i++;

@@ -80,7 +80,7 @@ Edict* G_GetFloorItems (Edict* ent)
  */
 bool G_InventoryRemoveItemByID (const char* itemID, Edict* ent, containerIndex_t container)
 {
-	Item *ic = ent->getContainer(container);
+	Item* ic = ent->getContainer(container);
 	while (ic) {
 		const objDef_t* item = ic->def();
 		if (item != nullptr && Q_streq(item->id, itemID)) {
@@ -110,7 +110,7 @@ static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 	if (container == CID_ARMOUR || container == CID_IMPLANT)
 		return false;
 
-	Item *ic = ent->getContainer(container);
+	Item* ic = ent->getContainer(container);
 	if (!ic)
 		return false;
 
@@ -118,7 +118,7 @@ static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 	while (ic) {
 		assert(ic->def());
 		if (ic->def()->isVirtual) {
-			Item *next = ic->getNext();
+			Item* next = ic->getNext();
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove virtual item '%s' from inventory %i",
@@ -259,7 +259,7 @@ void G_InventoryToFloor (Edict* ent)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
-		Item *ic, *next;
+		Item* ic, *next;
 		for (ic = ent->getContainer(container); ic; ic = next) {
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
@@ -298,7 +298,7 @@ void G_InventoryToFloor (Edict* ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_ReadItem (Item *item, const invDef_t** container, int* x, int* y)
+void G_ReadItem (Item* item, const invDef_t** container, int* x, int* y)
 {
 	int t, m;
 	int ammoleft;
@@ -373,7 +373,7 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
 		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
 			continue;
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			/* send a single item */
 			assert(item->def());

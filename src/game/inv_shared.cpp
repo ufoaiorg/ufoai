@@ -141,7 +141,7 @@ static bool INVSH_CheckShapeCollision (const uint32_t* shape, const uint32_t ite
  * @sa canHoldItem
  * @return false if the item does not fit, true if it fits.
  */
-static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invDef_t* container, const uint32_t itemShape, const int x, const int y, const Item *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invDef_t* container, const uint32_t itemShape, const int x, const int y, const Item* ignoredItem)
 {
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
@@ -162,7 +162,7 @@ static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invD
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
 		const Container &cont = inv->getContainer(container->id);
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont.getNextItem(item))) {
 			if (ignoredItem == item)
 				continue;
@@ -204,7 +204,7 @@ static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int 
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static bool INVSH_ShapeCheckPosition (const Item *item, const int x, const int y)
+static bool INVSH_ShapeCheckPosition (const Item* item, const int x, const int y)
 {
 	uint32_t shape;
 
@@ -543,7 +543,7 @@ float Item::getWeight () const
  * @param[in] other Second item to compare.
  * @return true if they are identical or false otherwise.
  */
-bool Item::isSameAs (const Item *const other) const
+bool Item::isSameAs (const Item* const other) const
 {
 	if (this == other)
 		return true;
@@ -656,7 +656,7 @@ const invDef_t* Container::def () const
 {
 	return &CSI->ids[id];
 }
-Item *Container::getNextItem (const Item *prev) const
+Item* Container::getNextItem (const Item* prev) const
 {
 	if (!prev)
 		return _invList;	/* the first one */
@@ -669,7 +669,7 @@ Item *Container::getNextItem (const Item *prev) const
 int Container::countItems () const
 {
 	int nr = 0;
-	Item *item = nullptr;
+	Item* item = nullptr;
 	while ((item = getNextItem(item))) {
 		/** For temp containers, we neglect Item::amount. */
 		++nr;
@@ -746,7 +746,7 @@ int Inventory::countItems () const
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item *ignoredItem) const
+int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item* ignoredItem) const
 {
 	int fits;
 	assert(container);
@@ -830,7 +830,7 @@ int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const
  * @param[in] x/y Position in the container that you want to check.
  * @return Item Pointer to the Item/item that is located at x/y.
  */
-Item *Inventory::getItemAtPos (const invDef_t* container, const int x, const int y) const
+Item* Inventory::getItemAtPos (const invDef_t* container, const int x, const int y) const
 {
 	assert(container);
 
@@ -843,7 +843,7 @@ Item *Inventory::getItemAtPos (const invDef_t* container, const int x, const int
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	const Container &cont = getContainer(container->id);
-	Item *item = nullptr;
+	Item* item = nullptr;
 	while ((item = cont.getNextItem(item)))
 		if (INVSH_ShapeCheckPosition(item, x, y))
 			return item;
@@ -862,7 +862,7 @@ Item *Inventory::getItemAtPos (const invDef_t* container, const int x, const int
  * @sa canHoldItem
  * @note x and y are NONE if no free space is available
  */
-void Inventory::findSpace (const invDef_t* container, const Item *item, int* const px, int* const py, const Item *ignoredItem) const
+void Inventory::findSpace (const invDef_t* container, const Item* item, int* const px, int* const py, const Item* ignoredItem) const
 {
 	assert(container);
 	assert(!cacheCheckToInventory);
@@ -928,7 +928,7 @@ float Inventory::getWeight () const
 	float weight = 0;
 	const Container *cont = nullptr;
 	while ((cont = getNextCont(cont))) {
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			weight += item->getWeight();
 		}
@@ -936,42 +936,42 @@ float Inventory::getWeight () const
 	return weight;
 }
 
-void Inventory::setFloorContainer(Item *cont)
+void Inventory::setFloorContainer(Item* cont)
 {
 	setContainer(CID_FLOOR, cont);
 }
 
-Item *Inventory::getRightHandContainer () const
+Item* Inventory::getRightHandContainer () const
 {
 	return getContainer2(CID_RIGHT);
 }
 
-Item *Inventory::getLeftHandContainer () const
+Item* Inventory::getLeftHandContainer () const
 {
 	return getContainer2(CID_LEFT);
 }
 
-Item *Inventory::getHeadgear () const
+Item* Inventory::getHeadgear () const
 {
 	return getContainer2(CID_HEADGEAR);
 }
 
-Item *Inventory::getHolsterContainer () const
+Item* Inventory::getHolsterContainer () const
 {
 	return getContainer2(CID_HOLSTER);
 }
 
-Item *Inventory::getFloorContainer () const
+Item* Inventory::getFloorContainer () const
 {
 	return getContainer2(CID_FLOOR);
 }
 
-Item *Inventory::getEquipContainer () const
+Item* Inventory::getEquipContainer () const
 {
 	return getContainer2(CID_EQUIP);
 }
 
-Item *Inventory::getArmour () const
+Item* Inventory::getArmour () const
 {
 	return getContainer2(CID_ARMOUR);
 }
@@ -982,10 +982,10 @@ Item *Inventory::getArmour () const
  * @param[in] searchItem The item to search for.
  * @return Pointer to the first item of this type found, otherwise @c nullptr.
  */
-Item *Inventory::findInContainer (const containerIndex_t contId, const Item *const searchItem) const
+Item* Inventory::findInContainer (const containerIndex_t contId, const Item* const searchItem) const
 {
 	const Container &cont = getContainer(contId);
-	Item *item = nullptr;
+	Item* item = nullptr;
 	while ((item = cont.getNextItem(item)))
 		if (item->isSameAs(searchItem)) {
 			return item;
@@ -1009,7 +1009,7 @@ bool Inventory::holdsReactionFireWeapon () const
 /**
  * @brief Combine the rounds of partially used clips.
  */
-void equipDef_t::addClip (const Item *item)
+void equipDef_t::addClip (const Item* item)
 {
 	const int ammoIdx = item->ammoDef()->idx;
 	numItemsLoose[ammoIdx] += item->getAmmoLeft();

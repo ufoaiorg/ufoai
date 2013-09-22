@@ -305,7 +305,7 @@ void G_InvList_f (const Player &player)
 		const Container *cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 			Com_Printf("Container: %i\n", cont->id);
-			Item *item = nullptr;
+			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {
 				Com_Printf(".. item.def(): %i, item.ammo: %i, item.ammoLeft: %i, x: %i, y: %i\n",
 						(item->def() ? item->def()->idx : NONE), (item->ammoDef() ? item->ammoDef()->idx : NONE),

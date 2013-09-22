@@ -552,7 +552,7 @@ bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
 	/* also try the temp containers */
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (item->def()->isLoadableInWeapon(weapon))
 				return true;
@@ -575,13 +575,13 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
 
 	/* search for weapons and select the one that is available easily */
 	const invDef_t* bestContainer = nullptr;
-	Item *theWeapon = nullptr;
+	Item* theWeapon = nullptr;
 	int tu = 100;
 	const Container *cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= tu)
 			continue;
-		Item *item = nullptr;
+		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			/* We are looking for the *fastest* way to get a weapon,
 			 * no matter what kind of weapon it is. */
@@ -692,7 +692,7 @@ int G_ClientAction (Player &player)
 		} else {
 			const invDef_t* fromPtr = INVDEF(from);
 			const invDef_t* toPtr = INVDEF(to);
-			Item *fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
+			Item* fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
 			if (fromItem)
 				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
 		}

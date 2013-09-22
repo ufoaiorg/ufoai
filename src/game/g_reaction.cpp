@@ -437,7 +437,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
 	if (!fmSetting->isSaneFiremode())
 		return nullptr;
 
-	const Item *weapon = shooter->getHandItem(fmSetting->getHand());
+	const Item* weapon = shooter->getHandItem(fmSetting->getHand());
 
 	if (weapon && weapon->ammoDef() && weapon->isWeapon() && !weapon->mustReload()) {
 		const fireDef_t* fdArray = weapon->getFiredefs();
@@ -488,7 +488,7 @@ static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
-	const Item *weapon = actor->getHandItem(fmSettings->getHand());
+	const Item* weapon = actor->getHandItem(fmSettings->getHand());
 	if (!weapon)
 		return false;
 	const fireDef_t* fd = weapon->getFiredefs();
@@ -552,7 +552,7 @@ static bool G_ReactionFireSettingsSetDefault (Edict* ent)
 		return true;
 
 	actorHands_t hand = ACTOR_HAND_RIGHT;
-	const Item *item = ent->getHandItem(hand);
+	const Item* item = ent->getHandItem(hand);
 	if (!item) {
 		hand = ACTOR_HAND_LEFT;
 		item = ent->getHandItem(hand);
