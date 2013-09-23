@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 typedef struct tipOfTheDay_s {
-	const char* tipString;	/**< untranslated tips string from script files */
+	const char* tipString;			/**< untranslated tips string from script files */
 	struct tipOfTheDay_s* next;
 } tipOfTheDay_t;
 
-static tipOfTheDay_t* tipList;	/**< linked list of all parsed tips */
-static int tipCount; /**< how many tips do we have */
+static tipOfTheDay_t* tipList;		/**< linked list of all parsed tips */
+static int tipCount;				/**< how many tips do we have */
 
 static cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 

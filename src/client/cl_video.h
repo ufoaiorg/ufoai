@@ -44,7 +44,7 @@ typedef struct {
 	unsigned width;			/**< game screen/window width */
 	unsigned height;		/**< game screen/window height */
 	int mode;				/**< resolution mode - see vidmode_t */
-	bool fullscreen;	/**< currently in fullscreen mode? */
+	bool fullscreen;		/**< currently in fullscreen mode? */
 	int multisample;		/**< number of multisample used by the context */
 	int swapinterval;		/**< number of swapinterval used by the context */
 } viddefContext_t;
