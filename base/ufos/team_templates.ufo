@@ -13,7 +13,7 @@
 //========================================================================
 
 chrtemplate soldier {
-	rate	74
+	rate	100
 	strength	"30 40"
 	speed	"15 25"
 	accuracy	"20 30"
@@ -29,7 +29,6 @@ chrtemplate soldier {
 }
 
 chrtemplate pilot {
-	rate		100
 	strength	"0 0"
 	speed		"0 0"
 	accuracy	"0 0"
@@ -226,8 +225,8 @@ chrtemplate soldier_mp {
 bodydef default_unipart {
 	bodypart default_body {
 		name "_Body"
-		shape "1 1 1 0"
-		threshold 10
+		hit_area "1 1 1 0"
+		wound_threshold 10
 		penalty (max_tu 10)
 	}
 }
@@ -235,32 +234,32 @@ bodydef default_unipart {
 bodydef humanoid_standard {
 	bodypart humanoid_torso {
 		name "_Torso"
-		shape "1 0.3 0.4 0.47"
-		bleed 10
-		threshold 10
-		penalty (shooting 25)
+		hit_area "1 0.3 0.4 0.47"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (shooting_tu 25)
 	}
 	bodypart humanoid_legs {
 		name "_Legs"
-		shape "1 1 0.47 0"
-		bleed 10
-		threshold 10
-		penalty (movement 1)
+		hit_area "1 1 0.47 0"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (movement_tu 1)
 	}
 	bodypart humanoid_arms {
 		name "_Arms"
-		shape "0 0.7 0.4 0.47"
-		bleed 10
-		threshold 10
+		hit_area "0 0.7 0.4 0.47"
+		bleeding_rate 10
+		wound_threshold 10
 		penalty (accuracy 50)
-		penalty (shooting 25)
+		penalty (shooting_tu 25)
 	}
 	bodypart humanoid_head {
 		name "_Head"
-		shape "1 1 0.13 0.87"
-		bleed 10
-		threshold 10
+		hit_area "1 1 0.13 0.87"
+		bleeding_rate 10
+		wound_threshold 10
 		penalty (accuracy 50)
-		penalty (visibility 50)
+		penalty (detection 50)
 	}
 }

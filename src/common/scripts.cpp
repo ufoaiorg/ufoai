@@ -2971,15 +2971,15 @@ static void Com_ParseCharacterTemplate (const char *name, const char** text)
 
 static const value_t bodyPartValues[] = {
 		{"name", V_TRANSLATION_STRING, offsetof(BodyPartData, name), 0},
-		{"shape", V_COLOR, offsetof(BodyPartData, shape), MEMBER_SIZEOF(BodyPartData, shape)},
-		{"bleed", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
-		{"threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
+		{"hit_area", V_COLOR, offsetof(BodyPartData, shape), MEMBER_SIZEOF(BodyPartData, shape)},
+		{"bleeding_rate", V_INT, offsetof(BodyPartData, bleedingFactor), MEMBER_SIZEOF(BodyPartData, bleedingFactor)},
+		{"wound_threshold", V_INT, offsetof(BodyPartData, woundThreshold), MEMBER_SIZEOF(BodyPartData, woundThreshold)},
 
 		{nullptr, V_NULL, 0, 0}
 };
 
 static const char *const penaltyNames[MODIFIER_MAX] = {
-		"accuracy", "shooting", "movement", "visibility", "reaction", "max_tu"
+		"accuracy", "shooting_tu", "movement_tu", "detection", "reaction_time", "max_tu"
 };
 
 static void Com_ParseBodyPart (const char *name, const char** text, BodyData *bd)
