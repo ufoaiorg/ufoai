@@ -206,18 +206,23 @@ chrtemplate soldier_mp {
 //	 defines a part of the body
 //		name
 //			Translatable name for the body part
-//		shape
-//			Shape of this body part (front, side, tall, height)
-//		threshold
+//		hit_area
+//			Defines the chances to hit this part of the body
+//			First number is the chance this part will be hit from the front or back (as long as the impact is at the correct height -- see the last two numbers)
+//			Second number same as above, but for the sides
+//			Third number is the heigth of this body part, given as a fraction of the character's bounding box
+//			Fourth number is the vertical offset at which this part 'starts', again given as a fraction of the bounding box
+//		wound_threshold
 //			Damage needed before this part is considered wounded (% of max HP)
 //		penalty
-//			Penalties received when this part is wounded, number is the median penalty (roughly equivalent to a wound worth 50% of character's max HP)
+//			Penalties received when this part is wounded, number is the median penalty
+//			(a wound worth 50% of character's max HP would have the penalty listed -- adjusted linearly according with the actual damage recieved)
 //			Valid penalties:
 //				accuracy: reduced accuracy (%)
-//				visibility: reduced detection range (%)
-//				shooting: increased shooting TU cost (%)
-//				reaction: increased TU cost for using reaction fire (%)
-//				movement: increased movement TU cost (absolute number per tile moved)
+//				detection: reduced detection range (%)
+//				shooting_tu: increased shooting TU cost (%)
+//				reaction_time: increased TUs needed to trigger reaction fire (%)
+//				movement_tu: increased movement TU cost (absolute number per tile moved)
 //				max_tu: reduced max TU (%)
 //
 //========================================================================
