@@ -67,7 +67,7 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 	uiSprite_t* sprite = nullptr;
 	const char* suffix[SPRITE_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
 	char basePicNameBuf[MAX_QPATH];
-	const image_t *pic;
+	const image_t* pic;
 	int i;
 
 	Q_strncpyz(basePicNameBuf, name, sizeof(basePicNameBuf));
@@ -225,7 +225,7 @@ void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t s
 		return;
 
 	if (sprite->blend) {
-		const vec_t *color = sprite->color[status];
+		const vec_t* color = sprite->color[status];
 		R_Color(color);
 	}
 

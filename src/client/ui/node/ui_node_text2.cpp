@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
+static void UI_TextNodeGenerateLineSplit (uiNode_t* node)
 {
 	const char* data;
 	int bufferSize = 1024;
@@ -52,7 +52,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	if (node->text != nullptr)
 		data = UI_GetReferenceString(node, node->text);
 	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
-		const uiSharedData_t *shared;
+		const uiSharedData_t* shared;
 		shared = &ui_global.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
 		case UI_SHARED_TEXT:
@@ -100,7 +100,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
+static int UI_TextNodeGetLine (const uiNode_t* node, int x, int y)
 {
 	int lineHeight;
 	int line;
@@ -127,7 +127,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-void uiText2Node::onMouseMove (uiNode_t *node, int x, int y)
+void uiText2Node::onMouseMove (uiNode_t* node, int x, int y)
 {
 	EXTRADATA(node).super.lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -140,7 +140,7 @@ void uiText2Node::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] list The test to draw else nullptr
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
-void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDraw)
+void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDraw)
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = nullptr;
@@ -227,9 +227,9 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t *list, bool noDra
 	R_Color(nullptr);
 }
 
-void uiText2Node::updateCache (uiNode_t *node)
+void uiText2Node::updateCache (uiNode_t* node)
 {
-	const uiSharedData_t *shared;
+	const uiSharedData_t* shared;
 
 	UI_TextNodeGenerateLineSplit(node);
 
@@ -252,9 +252,9 @@ void uiText2Node::updateCache (uiNode_t *node)
 /**
  * @brief Draw a text node
  */
-void uiText2Node::draw (uiNode_t *node)
+void uiText2Node::draw (uiNode_t* node)
 {
-	const uiSharedData_t *shared;
+	const uiSharedData_t* shared;
 
 	validateCache(node);
 
@@ -283,7 +283,7 @@ void uiText2Node::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiText2Node::onLeftClick (uiNode_t *node, int x, int y)
+void uiText2Node::onLeftClick (uiNode_t* node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -300,7 +300,7 @@ void uiText2Node::onLeftClick (uiNode_t *node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-void uiText2Node::onRightClick (uiNode_t *node, int x, int y)
+void uiText2Node::onRightClick (uiNode_t* node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -313,7 +313,7 @@ void uiText2Node::onRightClick (uiNode_t *node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-void uiText2Node::onLoading (uiNode_t *node)
+void uiText2Node::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
 	EXTRADATA(node).super.textSelected = "";
@@ -321,7 +321,7 @@ void uiText2Node::onLoading (uiNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiText2Node::onLoaded (uiNode_t *node)
+void uiText2Node::onLoaded (uiNode_t* node)
 {
 	int lineheight = EXTRADATA(node).super.lineHeight;
 	/* auto compute lineheight */
@@ -362,7 +362,7 @@ void uiText2Node::onLoaded (uiNode_t *node)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
-void UI_RegisterText2Node (uiBehaviour_t *behaviour)
+void UI_RegisterText2Node (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "text2";
 	behaviour->extends = "text";

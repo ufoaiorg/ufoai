@@ -42,8 +42,8 @@ static bool positionAcceptDND = false;	/**< Save if the current position accept 
 static uiDNDType_t objectType;				/**< Save the type of the object we are dragging */
 static Item draggingItem;					/**< Save the dragging object */
 
-static uiNode_t *sourceNode;				/**< Node where come from the DND object */
-static uiNode_t *targetNode;				/**< Current node under the mouse */
+static uiNode_t* sourceNode;				/**< Node where come from the DND object */
+static uiNode_t* targetNode;				/**< Current node under the mouse */
 
 
 /**
@@ -85,7 +85,7 @@ int UI_DNDGetType (void)
 /**
  * @brief Return target of the DND
  */
-uiNode_t *UI_DNDGetTargetNode (void)
+uiNode_t* UI_DNDGetTargetNode (void)
 {
 	assert(UI_DNDIsDragging());
 	return targetNode;
@@ -94,7 +94,7 @@ uiNode_t *UI_DNDGetTargetNode (void)
 /**
  * @brief Return source of the DND
  */
-uiNode_t *UI_DNDGetSourceNode (void)
+uiNode_t* UI_DNDGetSourceNode (void)
 {
 	assert(UI_DNDIsDragging());
 	return sourceNode;
@@ -106,7 +106,7 @@ uiNode_t *UI_DNDGetSourceNode (void)
  * @sa UI_DNDDrop
  * @sa UI_DNDAbort
  */
-static void UI_DNDDrag (uiNode_t *node)
+static void UI_DNDDrag (uiNode_t* node)
 {
 	assert(!UI_DNDIsDragging());
 	objectType = DND_SOMETHING;
@@ -121,7 +121,7 @@ static void UI_DNDDrag (uiNode_t *node)
  * @sa UI_DNDDrop
  * @sa UI_DNDAbort
  */
-void UI_DNDDragItem (uiNode_t *node, const Item* item)
+void UI_DNDDragItem (uiNode_t* node, const Item* item)
 {
 	UI_DNDDrag(node);
 	assert(UI_DNDIsDragging());
@@ -198,7 +198,7 @@ Item* UI_DNDGetItem (void)
  */
 static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 {
-	uiNode_t *node = UI_GetNodeAtPosition(mousePosX, mousePosY);
+	uiNode_t* node = UI_GetNodeAtPosition(mousePosX, mousePosY);
 
 	if (node != targetNode) {
 		if (nodeAcceptDND && targetNode) {

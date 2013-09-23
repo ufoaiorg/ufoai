@@ -65,13 +65,13 @@ static const char HIDECHAR = '*';	/**< use as a mask for password */
 
 /* global data */
 static char cvarValueBackup[MAX_CVAR_EDITING_LENGTH];
-static cvar_t *editedCvar = nullptr;
+static cvar_t* editedCvar = nullptr;
 static bool isAborted = false;
 
 /**
  * @brief callback from the keyboard
  */
-static void UI_TextEntryNodeValidateEdition (uiNode_t *node)
+static void UI_TextEntryNodeValidateEdition (uiNode_t* node)
 {
 	/* invalidate cache */
 	editedCvar = nullptr;
@@ -86,7 +86,7 @@ static void UI_TextEntryNodeValidateEdition (uiNode_t *node)
 /**
  * @brief callback from the keyboard
  */
-static void UI_TextEntryNodeAbortEdition (uiNode_t *node)
+static void UI_TextEntryNodeAbortEdition (uiNode_t* node)
 {
 	assert(editedCvar);
 
@@ -107,7 +107,7 @@ static void UI_TextEntryNodeAbortEdition (uiNode_t *node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active window
  */
-static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *context)
+static void UI_TextEntryNodeFocus (uiNode_t* node, const uiCallContext_t* context)
 {
 	/* remove the focus to show changes */
 	if (!UI_HasFocus(node)) {
@@ -118,7 +118,7 @@ static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *contex
 /**
  * @brief Called when the user click with the right mouse button
  */
-void uiTextEntryNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiTextEntryNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -140,7 +140,7 @@ void uiTextEntryNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node got the focus
  */
-void uiTextEntryNode::onFocusGained (uiNode_t *node)
+void uiTextEntryNode::onFocusGained (uiNode_t* node)
 {
 	assert(editedCvar == nullptr);
 	/* skip '*cvar ' */
@@ -172,7 +172,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-void uiTextEntryNode::onFocusLost (uiNode_t *node)
+void uiTextEntryNode::onFocusLost (uiNode_t* node)
 {
 	/* already aborted/changed with the keyboard */
 	if (editedCvar == nullptr)
@@ -192,7 +192,7 @@ void uiTextEntryNode::onFocusLost (uiNode_t *node)
 /**
  * @brief edit the current cvar with a char
  */
-static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int unicode)
+static void UI_TextEntryNodeEdit (uiNode_t* node, unsigned int unicode)
 {
 	char buffer[MAX_CVAR_EDITING_LENGTH];
 
@@ -230,7 +230,7 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int unicode)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiTextEntryNode::onKeyPressed (uiNode_t* node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char. */
@@ -281,7 +281,7 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 	return true;
 }
 
-void uiTextEntryNode::draw (uiNode_t *node)
+void uiTextEntryNode::draw (uiNode_t* node)
 {
 	const float* textColor;
 	vec2_t pos;
@@ -347,7 +347,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-void uiTextEntryNode::onLoading (uiNode_t *node)
+void uiTextEntryNode::onLoading (uiNode_t* node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;
@@ -355,7 +355,7 @@ void uiTextEntryNode::onLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
-void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextEntryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->manager = UINodePtr(new uiTextEntryNode());

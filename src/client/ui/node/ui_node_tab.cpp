@@ -65,7 +65,7 @@ static const int TILE_SIZE = 40;
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
-static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
+static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t* node, int x, int y)
 {
 	const char* font;
 	uiNode_t* option;
@@ -123,7 +123,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 /**
  * @brief Handles tab clicks
  */
-void uiTabNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 
@@ -173,7 +173,7 @@ static inline void UI_TabNodeDrawJunction (const char* image, int x, int y, ui_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
-void uiTabNode::draw (uiNode_t *node)
+void uiTabNode::draw (uiNode_t* node)
 {
 	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
@@ -287,9 +287,9 @@ void uiTabNode::draw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiTabNode::drawTooltip (const uiNode_t *node, int x, int y) const
+void uiTabNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
-	uiNode_t *option;
+	uiNode_t* option;
 	const int tooltipWidth = 250;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
@@ -307,7 +307,7 @@ void uiTabNode::drawTooltip (const uiNode_t *node, int x, int y) const
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-void uiTabNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiTabNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	/* no cvar given? */
 	if (!(EXTRADATA(node).cvar))
@@ -331,7 +331,7 @@ void uiTabNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-void UI_RegisterTabNode (uiBehaviour_t *behaviour)
+void UI_RegisterTabNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";

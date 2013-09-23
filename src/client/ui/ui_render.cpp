@@ -123,7 +123,7 @@ const struct image_s* UI_LoadWrappedImage (const char* name)
  * @param[in] tl The t part of the texture coordinate (vertical)
  * @param[in] image The image to draw
  */
-void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
+void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t* image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 
@@ -202,7 +202,7 @@ void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, 
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name)
+const image_t* UI_DrawNormImageByName (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name)
 {
 	const struct image_s* image;
 
@@ -231,7 +231,7 @@ const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, flo
  */
 void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, const int panelDef[7])
 {
-	const image_t *image = UI_LoadImage(texture);
+	const image_t* image = UI_LoadImage(texture);
 	if (!image)
 		return;
 
@@ -294,7 +294,7 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char* texture, int
  */
 void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, int texW, int texH, int border)
 {
-	const image_t *image = UI_LoadImage(texture);
+	const image_t* image = UI_LoadImage(texture);
 	if (!image)
 		return;
 
@@ -374,7 +374,7 @@ int UI_DrawStringInBox (const char* fontID, align_t align, int x, int y, int wid
 int UI_DrawString (const char* fontID, align_t align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char* c, int boxHeight, int scrollPos, int* curLine, bool increaseLine, longlines_t method)
 {
-	const uiFont_t *font = UI_GetFontByID(fontID);
+	const uiFont_t* font = UI_GetFontByID(fontID);
 	const align_t verticalAlign = (align_t)(align / 3);  /* top, center, bottom */
 	int lines;
 

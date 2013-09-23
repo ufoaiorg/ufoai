@@ -57,13 +57,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-void uiStringNode::draw (uiNode_t *node)
+void uiStringNode::draw (uiNode_t* node)
 {
 	vec2_t nodepos;
 	const char* font = UI_GetFontFromNode(node);
 	const char* ref = UI_GetReferenceString(node, node->text);
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	vec_t *color;
+	vec_t* color;
 
 	if (!ref)
 		return;
@@ -88,7 +88,7 @@ void uiStringNode::draw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
+void uiStringNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
 	if (node->tooltip) {
 		UI_Tooltip(node, x, y);
@@ -113,14 +113,14 @@ void uiStringNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
 }
 
-void uiStringNode::onLoading (uiNode_t *node)
+void uiStringNode::onLoading (uiNode_t* node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 	EXTRADATA(node).longlines = LONGLINES_PRETTYCHOP;
 }
 
-void UI_RegisterStringNode (uiBehaviour_t *behaviour)
+void UI_RegisterStringNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "string";
 	behaviour->manager = UINodePtr(new uiStringNode());

@@ -49,7 +49,7 @@ static const value_t fontValues[] = {
  * fonts for every translation
  * @param[in] font Font to register
  */
-static void UI_RegisterFont (const uiFont_t *font)
+static void UI_RegisterFont (const uiFont_t* font)
 {
 	const char* path = _(font->path);
 
@@ -67,10 +67,10 @@ static void UI_RegisterFont (const uiFont_t *font)
  */
 bool UI_ParseFont (const char* name, const char** text)
 {
-	uiFont_t *font;
+	uiFont_t* font;
 	const char* errhead = "UI_ParseFont: unexpected end of file (font";
 	const char* token;
-	const value_t *v = nullptr;
+	const value_t* v = nullptr;
 
 	/* search for font with same name */
 	if (UI_GetFontByID(name)) {
@@ -142,7 +142,7 @@ bool UI_ParseFont (const char* name, const char** text)
  * @param[in] node Context node
  * @return char pointer with font name (default is f_small)
  */
-const char* UI_GetFontFromNode (const uiNode_t *const node)
+const char* UI_GetFontFromNode (const uiNode_t* const node)
 {
 	if (node && node->font) {
 		return UI_GetReferenceString(node, node->font);
@@ -154,7 +154,7 @@ const char* UI_GetFontFromNode (const uiNode_t *const node)
 /**
  * @brief Return the font for a specific id
  */
-const uiFont_t *UI_GetFontByID (const char* name)
+const uiFont_t* UI_GetFontByID (const char* name)
 {
 	int i;
 
@@ -167,7 +167,7 @@ const uiFont_t *UI_GetFontByID (const char* name)
 
 int UI_FontGetHeight (const char* fontID)
 {
-	font_t *font = R_GetFont(fontID);
+	font_t* font = R_GetFont(fontID);
 	if (font != nullptr)
 		return font->height;
 	return -1;

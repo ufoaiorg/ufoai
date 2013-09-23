@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TEXTURE_WIDTH 250.0
 
-void uiTBarNode::draw (uiNode_t *node)
+void uiTBarNode::draw (uiNode_t* node)
 {
 	/* dataImageOrModel is the texture name */
 	float shx;
@@ -72,7 +72,7 @@ void uiTBarNode::draw (uiNode_t *node)
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
-void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
+void UI_RegisterTBarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";

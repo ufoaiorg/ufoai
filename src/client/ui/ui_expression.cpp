@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[out] property A node property
  * @return A node (else nullptr, if no node found) and a property (else nullptr if no/wrong property defined)
  */
-uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_t *context, const value_t** property)
+uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_t* context, const value_t** property)
 {
 	if (property != nullptr)
 		*property = nullptr;
@@ -49,7 +49,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		switch (expression->type) {
 		case EA_VALUE_VAR:
 			{
-				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				uiValue_t* variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
 				switch (variable->type) {
 				case EA_VALUE_NODE:
 					return variable->value.node;
@@ -62,8 +62,8 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		case EA_VALUE_PATHNODE:
 		case EA_VALUE_PATHNODE_WITHINJECTION:
 		{
-			uiNode_t *node;
-			const value_t *propertyTmp;
+			uiNode_t* node;
+			const value_t* propertyTmp;
 			const char* path = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
 				path = UI_GenInjectedString(path, false, context);
@@ -82,8 +82,8 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		case EA_VALUE_PATHPROPERTY:
 		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
 			{
-				uiNode_t *node;
-				const value_t *propertyTmp;
+				uiNode_t* node;
+				const value_t* propertyTmp;
 				const char* path = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 					path = UI_GenInjectedString(path, false, context);
@@ -120,9 +120,9 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		switch (expression->type) {
 		case EA_OPERATOR_PATHPROPERTYFROM:
 			{
-				uiNode_t *relativeTo = UI_GetNodeFromExpression(expression->d.nonTerminal.left, context, nullptr);
-				uiNode_t *node;
-				const value_t *propertyTmp;
+				uiNode_t* relativeTo = UI_GetNodeFromExpression(expression->d.nonTerminal.left, context, nullptr);
+				uiNode_t* node;
+				const value_t* propertyTmp;
 				const char* path = expression->d.terminal.d2.constString;
 				UI_ReadNodePath(path, relativeTo, &node, &propertyTmp);
 				if (!node) {
@@ -152,14 +152,14 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 /**
  * @return A float value, else 0
  */
-float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+float UI_GetFloatFromExpression (uiAction_t* expression, const uiCallContext_t* context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
 		switch (expression->type) {
 		case EA_VALUE_VAR:
 			{
-				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				uiValue_t* variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
 				switch (variable->type) {
 				case EA_VALUE_STRING:
 					if (variable->value.string == nullptr) {
@@ -171,7 +171,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 					return variable->value.number;
 				case EA_VALUE_CVAR:
 					{
-						cvar_t *cvar = variable->value.cvar;
+						cvar_t* cvar = variable->value.cvar;
 						if (cvar == nullptr) {
 							Com_Printf("UI_GetFloatFromExpression: Cvar variable not initialized. '0' returned");
 							return 0;
@@ -196,7 +196,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_CVARNAME:
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 			{
-				cvar_t *cvar = nullptr;
+				cvar_t* cvar = nullptr;
 				const char* cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, false, context);
@@ -206,8 +206,8 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_PATHPROPERTY:
 		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
 			{
-				uiNode_t *node;
-				const value_t *property;
+				uiNode_t* node;
+				const value_t* property;
 				node = UI_GetNodeFromExpression(expression, context, &property);
 				if (!node) {
 					Com_Printf("UI_GetFloatFromParam: Node wasn't found; '0'\n");
@@ -267,8 +267,8 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		switch (expression->type) {
 		case EA_OPERATOR_PATHPROPERTYFROM:
 		{
-			uiNode_t *node;
-			const value_t *property;
+			uiNode_t* node;
+			const value_t* property;
 			node = UI_GetNodeFromExpression(expression, context, &property);
 			return UI_GetFloatFromNodeProperty(node, property);
 		}
@@ -287,14 +287,14 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
  * @todo this should not work very well, because too much va are used
  * then we should locally cache values, or manage a temporary string structure
  */
-const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+const char* UI_GetStringFromExpression (uiAction_t* expression, const uiCallContext_t* context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
 		switch (expression->type) {
 		case EA_VALUE_VAR:
 			{
-				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				uiValue_t* variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
 				switch (variable->type) {
 				case EA_VALUE_STRING:
 					if (variable->value.string == nullptr) {
@@ -314,7 +314,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 					}
 				case EA_VALUE_CVAR:
 					{
-						cvar_t *cvar = variable->value.cvar;
+						cvar_t* cvar = variable->value.cvar;
 						if (cvar == nullptr) {
 							Com_Printf("UI_GetStringFromExpression: Cvar variable not initialized. Empty string returned");
 							return "";
@@ -347,7 +347,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_CVARNAME:
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
-			cvar_t *cvar = nullptr;
+			cvar_t* cvar = nullptr;
 			const char* cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 				cvarName = UI_GenInjectedString(cvarName, false, context);
@@ -357,8 +357,8 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_PATHPROPERTY:
 		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
 			{
-				uiNode_t *node;
-				const value_t *property;
+				uiNode_t* node;
+				const value_t* property;
 				const char* string;
 				node = UI_GetNodeFromExpression(expression, context, &property);
 				if (!node) {
@@ -388,8 +388,8 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		switch (expression->type) {
 		case EA_OPERATOR_PATHPROPERTYFROM:
 		{
-			uiNode_t *node;
-			const value_t *property;
+			uiNode_t* node;
+			const value_t* property;
 			node = UI_GetNodeFromExpression(expression, context, &property);
 			return UI_GetStringFromNodeProperty(node, property);
 		}
@@ -425,7 +425,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
  * @brief Check if an expression is true
  * @return True if the expression is true
  */
-bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+bool UI_GetBooleanFromExpression (uiAction_t* expression, const uiCallContext_t* context)
 {
 	if (expression == nullptr)
 		return false;
@@ -480,7 +480,7 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 		switch (expression->type) {
 		case EA_OPERATOR_EXISTS:
 			{
-				const uiAction_t *e = expression->d.nonTerminal.left;
+				const uiAction_t* e = expression->d.nonTerminal.left;
 				const char* name;
 				assert(e);
 				name = e->d.terminal.d1.constString;
@@ -493,7 +493,7 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 					name = UI_GenInjectedString(name, false, context);
 				case EA_VALUE_PATHNODE: {
 					uiNode_t* node = nullptr;
-					const value_t *property;
+					const value_t* property;
 					UI_ReadNodePath(name, context->source, &node, &property);
 					return node != nullptr;
 				}
@@ -532,10 +532,10 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
  * @param[in] description String describing a condition
  * @return The condition if everything is ok, nullptr otherwise
  */
-uiAction_t *UI_AllocStaticStringCondition (const char* description)
+uiAction_t* UI_AllocStaticStringCondition (const char* description)
 {
 	const char* text, *base;
-	uiAction_t *expression;
+	uiAction_t* expression;
 
 	base = va("( %s )", description);
 	text = base;
@@ -552,10 +552,10 @@ uiAction_t *UI_AllocStaticStringCondition (const char* description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else nullptr
  */
-static uiAction_t *UI_ParseValueExpression (const char** text)
+static uiAction_t* UI_ParseValueExpression (const char** text)
 {
 	const char* token;
-	uiAction_t *expression = UI_AllocStaticAction();
+	uiAction_t* expression = UI_AllocStaticAction();
 
 	token = Com_Parse(text);
 	if (*text == nullptr) {
@@ -606,7 +606,7 @@ static uiAction_t *UI_ParseValueExpression (const char** text)
 	if (char const* path = Q_strstart(token, "*")) {
 		const char* propertyName;
 #if 0	/* it looks useless, an unused cache */
-		const value_t *property;
+		const value_t* property;
 #endif
 
 		char const* const relativeToNode = Q_strstart(path, "node:");
@@ -662,7 +662,7 @@ static uiAction_t *UI_ParseValueExpression (const char** text)
 	Com_Error(ERR_FATAL, "UI_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
-uiAction_t *UI_ParseExpression (const char** text)
+uiAction_t* UI_ParseExpression (const char** text)
 {
 	const char* token;
 
@@ -671,8 +671,8 @@ uiAction_t *UI_ParseExpression (const char** text)
 		return nullptr;
 
 	if (Q_streq(token, "(")) {
-		uiAction_t *expression;
-		uiAction_t *e;
+		uiAction_t* expression;
+		uiAction_t* e;
 
 		e = UI_ParseExpression(text);
 
@@ -711,8 +711,8 @@ uiAction_t *UI_ParseExpression (const char** text)
 			Com_UnParseLastToken();
 			return UI_ParseValueExpression(text);
 		} else {
-			uiAction_t *expression = UI_AllocStaticAction();
-			uiAction_t *e;
+			uiAction_t* expression = UI_AllocStaticAction();
+			uiAction_t* e;
 
 			e = UI_ParseExpression(text);
 			expression->type = type;

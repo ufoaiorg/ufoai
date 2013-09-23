@@ -71,7 +71,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-void uiSelectBoxNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 	int posy;
@@ -92,7 +92,7 @@ void uiSelectBoxNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiSelectBoxNode::draw (uiNode_t *node)
+void uiSelectBoxNode::draw (uiNode_t* node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -100,7 +100,7 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 	const char* font;
 	vec2_t nodepos;
 	const char* imageName;
-	const image_t *image;
+	const image_t* image;
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
@@ -152,7 +152,7 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 	}
 }
 
-void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
+void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -160,7 +160,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 	const char* font;
 	vec2_t nodepos;
 	const char* imageName;
-	const image_t *image;
+	const image_t* image;
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == nullptr)
@@ -236,7 +236,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-void uiSelectBoxNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 	int clickedAtOption;
@@ -291,18 +291,18 @@ void uiSelectBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiSelectBoxNode::onLoading (uiNode_t *node)
+void uiSelectBoxNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 0.6, 0.6, 0.6, 0.3);
 }
 
-void uiSelectBoxNode::onLoaded (uiNode_t *node)
+void uiSelectBoxNode::onLoaded (uiNode_t* node)
 {
 	/* force a size (according to the texture) */
 	node->box.size[1] = SELECTBOX_DEFAULT_HEIGHT;
 }
 
-void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
+void UI_RegisterSelectBoxNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";

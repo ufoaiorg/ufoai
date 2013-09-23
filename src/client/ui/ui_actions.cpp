@@ -83,7 +83,7 @@ static const ui_typedActionToken_t actionTokens[] = {
 	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 };
 
-static void UI_ExecuteActions(const uiAction_t* firstAction, uiCallContext_t *context);
+static void UI_ExecuteActions(const uiAction_t* firstAction, uiCallContext_t* context);
 
 /**
  * @brief Check if the action token list is sorted by alphabet,
@@ -161,7 +161,7 @@ static inline const char* UI_GenCommandReadProperty (const char* input, char* ou
  * @param[in] context The execution context
  * @return The requested param
  */
-int UI_GetParamNumber (const uiCallContext_t *context)
+int UI_GetParamNumber (const uiCallContext_t* context)
 {
 	if (context->useCmdParam)
 		return Cmd_Argc() - 1;
@@ -174,9 +174,9 @@ int UI_GetParamNumber (const uiCallContext_t *context)
  * @param[in] paramID The ID of the requested param (first param is integer 1)
  * @return The requested param
  */
-const char* UI_GetParam (const uiCallContext_t *context, int paramID)
+const char* UI_GetParam (const uiCallContext_t* context, int paramID)
 {
-	linkedList_t *current;
+	linkedList_t* current;
 	assert(paramID >= 1);
 
 	if (context->useCmdParam)
@@ -204,7 +204,7 @@ const char* UI_GetParam (const uiCallContext_t *context, int paramID)
  * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
-const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCallContext_t *context)
+const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCallContext_t* context)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
@@ -226,8 +226,8 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 					length -= l;
 					continue;
 				} else if (char const* const path = Q_strstart(propertyName, "node:")) {
-					uiNode_t *node;
-					const value_t *property;
+					uiNode_t* node;
+					const value_t* property;
 					const char* string;
 					int l;
 					UI_ReadNodePath(path, context->source, &node, &property);
@@ -256,7 +256,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 				/* source path injection */
 				} else if (char const* const command = Q_strstart(propertyName, "path:")) {
 					if (context->source) {
-						const uiNode_t *node = nullptr;
+						const uiNode_t* node = nullptr;
 						if (Q_streq(command, "root"))
 							node = context->source->root;
 						else if (Q_streq(command, "this"))
@@ -280,7 +280,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 					/* source property injection */
 					if (context->source) {
 						/* find property definition */
-						const value_t *property = UI_GetPropertyFromBehaviour(context->source->behaviour, propertyName);
+						const value_t* property = UI_GetPropertyFromBehaviour(context->source->behaviour, propertyName);
 						if (property) {
 							const char* value;
 							int l;
@@ -337,7 +337,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
  * @todo refactoring it to remove "context", we should only call that function when the action
  * value is a leaf (then a value, and not an expression)
  */
-static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *property, const uiCallContext_t *context, uiAction_t* value)
+static void UI_NodeSetPropertyFromActionValue (uiNode_t* node, const value_t* property, const uiCallContext_t* context, uiAction_t* value)
 {
 	/* @todo we can use a new EA_VALUE type to flag already parsed values, we dont need to do it again and again */
 	/* pre compute value if possible */
@@ -365,13 +365,13 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	}
 }
 
-static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallContext_t *context)
+static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallContext_t* context)
 {
 	const char* path;
-	uiNode_t *node;
-	const value_t *property;
-	const uiAction_t *left;
-	uiAction_t *right;
+	uiNode_t* node;
+	const value_t* property;
+	const uiAction_t* left;
+	uiAction_t* right;
 
 	left = action->d.nonTerminal.left;
 	if (left == nullptr) {
@@ -419,7 +419,7 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	UI_NodeSetPropertyFromActionValue(node, property, context, right);
 }
 
-static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t *context)
+static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t* context)
 {
 	uiNode_t* callNode = nullptr;
 	uiAction_t* param;
@@ -454,7 +454,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		newContext.useCmdParam = context->useCmdParam;
 
 		if (!newContext.useCmdParam) {
-			linkedList_t *p = context->params;
+			linkedList_t* p = context->params;
 			while (p) {
 				const char* value = (char*) p->data;
 				LIST_AddString(&newContext.params, value);
@@ -494,7 +494,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
  * @param context Call context
  * @param relativeVarId id of the variable relative to the context
  */
-uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId)
+uiValue_t* UI_GetVariable (const uiCallContext_t* context, int relativeVarId)
 {
 	const int varId = context->varPosition + relativeVarId;
 	assert(relativeVarId >= 0);
@@ -502,7 +502,7 @@ uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId)
 	return &(ui_global.variableStack[varId]);
 }
 
-static void UI_ReleaseVariable (uiValue_t *variable)
+static void UI_ReleaseVariable (uiValue_t* variable)
 {
 	/** @todo most of cases here are useless, it only should be EA_VALUE_STRING */
 	switch (variable->type) {
@@ -527,7 +527,7 @@ static void UI_ReleaseVariable (uiValue_t *variable)
  * @param[in] context Context node
  * @param[in] action Action to execute
  */
-static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context)
+static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context)
 {
 	switch (action->type) {
 	case EA_NULL:
@@ -624,10 +624,10 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 	}
 }
 
-static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t *context)
+static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* context)
 {
 	static int callnumber = 0;
-	const uiAction_t *action;
+	const uiAction_t* action;
 	if (callnumber++ > 20) {
 		Com_Printf("UI_ExecuteActions: Break possible infinite recursion\n");
 		return;
@@ -659,7 +659,7 @@ void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 	UI_ExecuteActions(firstAction, &context);
 }
 
-void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params)
+void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t* params)
 {
 	uiCallContext_t context;
 	OBJZERO(context);
@@ -759,7 +759,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void* data)
  * @param[in] property The property of the node to add the listener to.
  * @param[in] functionNode The node of the listener callback.
  */
-void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *functionNode)
+void UI_AddListener (uiNode_t* node, const value_t* property, const uiNode_t* functionNode)
 {
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
@@ -793,9 +793,9 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
  */
 static void UI_AddListener_f (void)
 {
-	uiNode_t *node;
-	uiNode_t *function;
-	const value_t *property;
+	uiNode_t* node;
+	uiNode_t* function;
+	const value_t* property;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
@@ -827,7 +827,7 @@ static void UI_AddListener_f (void)
  * @param[in] property The property of the node to remove the listener from.
  * @param[in] functionNode The node of the listener callback.
  */
-void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
+void UI_RemoveListener (uiNode_t* node, const value_t* property, uiNode_t* functionNode)
 {
 	void* data;
 
@@ -837,7 +837,7 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 	/* remove the action */
 	uiAction_t*& action = Com_GetValue<uiAction_t*>(node, property);
 	if (uiAction_t* lastAction = action) {
-		uiAction_t *tmp = nullptr;
+		uiAction_t* tmp = nullptr;
 		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.constData == data) {
 			tmp = lastAction;
 			action = lastAction->next;
@@ -868,9 +868,9 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
  */
 static void UI_RemoveListener_f (void)
 {
-	uiNode_t *node;
-	uiNode_t *function;
-	const value_t *property;
+	uiNode_t* node;
+	uiNode_t* function;
+	const value_t* property;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
@@ -898,7 +898,7 @@ static void UI_RemoveListener_f (void)
 
 static void UI_CvarChangeListener (const char* cvarName, const char* oldValue, const char* newValue, void* data)
 {
-	linkedList_t *list = static_cast<linkedList_t*>(data);
+	linkedList_t* list = static_cast<linkedList_t*>(data);
 	LIST_Foreach(list, char const, confunc) {
 		UI_ExecuteConfunc("%s %s %s", confunc, oldValue, newValue);
 	}
@@ -908,7 +908,7 @@ static void UI_AddCvarListener_f (void)
 {
 	const char* cvarName;
 	const char* confuncName;
-	cvarChangeListener_t *l;
+	cvarChangeListener_t* l;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <cvar> <confunc>\n", Cmd_Argv(0));
@@ -926,7 +926,7 @@ static void UI_RemoveCvarListener_f (void)
 {
 	const char* cvarName;
 	const char* confuncName;
-	cvar_t *var;
+	cvar_t* var;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <cvar> <confunc>\n", Cmd_Argv(0));
@@ -940,10 +940,10 @@ static void UI_RemoveCvarListener_f (void)
 	if (var == nullptr)
 		return;
 
-	cvarChangeListener_t *l = var->changeListener;
+	cvarChangeListener_t* l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarChangeListener) {
-			linkedList_t *entry = const_cast<linkedList_t*>(LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName));
+			linkedList_t* entry = const_cast<linkedList_t*>(LIST_ContainsString(static_cast<linkedList_t*>(l->data), confuncName));
 			if (entry != nullptr)
 				LIST_RemoveEntry(reinterpret_cast<linkedList_t**>(&l->data), entry);
 			if (LIST_IsEmpty(static_cast<linkedList_t*>(l->data))) {

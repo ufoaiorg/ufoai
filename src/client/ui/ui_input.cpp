@@ -58,7 +58,7 @@ static uiNode_t* hoveredNode;
 /**
  * @brief save the previous hovered node
  */
-static uiNode_t *oldHoveredNode;
+static uiNode_t* oldHoveredNode;
 
 /**
  * @brief save old position of the mouse
@@ -78,7 +78,7 @@ static uiNode_t* capturedNode;
 /**
  * @brief Store node which receive a mouse down event
  */
-static uiNode_t *pressedNode;
+static uiNode_t* pressedNode;
 
 /**
  * @brief X position of the mouse when pressedNode != nullptr
@@ -109,7 +109,7 @@ static int pressedNodeButton;
 /**
  * @brief Timer used to manage long press event
  */
-static uiTimer_t *longPressTimer;
+static uiTimer_t* longPressTimer;
 
 
 /**
@@ -144,7 +144,7 @@ static bool UI_FocusExecuteActionNode (void)
  * @sa UI_FocusExecuteActionNode
  * @note node must be in a window
  */
-static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
+static uiNode_t* UI_GetNextActionNode (uiNode_t* node)
 {
 	if (node)
 		node = node->next;
@@ -181,7 +181,7 @@ static bool UI_FocusNextActionNode (void)
 	assert(i >= 0);
 
 	if (focusNode) {
-		uiNode_t *node = UI_GetNextActionNode(focusNode);
+		uiNode_t* node = UI_GetNextActionNode(focusNode);
 		if (node)
 			return UI_FocusSetNode(node);
 	}
@@ -304,9 +304,9 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
  */
 static void UI_SetKeyBindingEx (const char* path, int key, const char* description, bool inherited)
 {
-	uiNode_t *node;
-	uiKeyBinding_t *binding;
-	const value_t *property = nullptr;
+	uiNode_t* node;
+	uiKeyBinding_t* binding;
+	const value_t* property = nullptr;
 	int windowId;
 	char newPath[256];
 
@@ -336,7 +336,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 
 	/* search and update windows extend node->root */
 	for (windowId = 0; windowId < ui_global.numWindows; windowId++) {
-		uiNode_t *window = ui_global.windows[windowId];
+		uiNode_t* window = ui_global.windows[windowId];
 
 		/* skip window which are not direct extends of the main window */
 		if (window->super != node->root)
@@ -367,10 +367,10 @@ void UI_SetKeyBinding (const char* path, int key, const char* description)
 /**
  * @brief Check if a key binding exists for a window and execute it
  */
-static bool UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
+static bool UI_KeyPressedInWindow (unsigned int key, const uiNode_t* window)
 {
-	uiNode_t *node;
-	const uiKeyBinding_t *binding;
+	uiNode_t* node;
+	const uiKeyBinding_t* binding;
 
 	/* search requested key binding */
 	binding = UI_WindowNodeGetKeyBinding(window, key);
@@ -473,7 +473,7 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 
 	/* check "active" window from top to down */
 	for (windowId = ui_global.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
-		const uiNode_t *window = ui_global.windowStack[windowId];
+		const uiNode_t* window = ui_global.windowStack[windowId];
 		if (!window)
 			return false;
 		if (UI_KeyPressedInWindow(key, window))
@@ -520,7 +520,7 @@ void UI_SetMouseCapture (uiNode_t* node)
  */
 void UI_MouseRelease (void)
 {
-	uiNode_t *tmp = capturedNode;
+	uiNode_t* tmp = capturedNode;
 
 	if (capturedNode == nullptr)
 		return;
@@ -544,7 +544,7 @@ void UI_ResetInput (void)
  * @brief Get the current hovered node
  * @return A node, else nullptr if the mouse hover nothing
  */
-uiNode_t *UI_GetHoveredNode (void)
+uiNode_t* UI_GetHoveredNode (void)
 {
 	return hoveredNode;
 }
@@ -590,7 +590,7 @@ void UI_MouseMove (int x, int y)
 			UI_TimerStop(longPressTimer);
 			int dist = abs(pressedNodeLocationX - x) + abs(pressedNodeLocationY - y);
 			if (dist > 4) {
-				uiNode_t *node = pressedNode;
+				uiNode_t* node = pressedNode;
 				while (node) {
 					if (UI_Node_StartDragging(node, pressedNodeLocationX, pressedNodeLocationY, x, y, pressedNodeButton))
 						break;
@@ -611,8 +611,8 @@ void UI_MouseMove (int x, int y)
 
 	/* update houvered node by sending messages */
 	if (oldHoveredNode != hoveredNode) {
-		uiNode_t *commonNode = hoveredNode;
-		uiNode_t *node;
+		uiNode_t* commonNode = hoveredNode;
+		uiNode_t* node;
 
 		/* search the common node */
 		while (commonNode) {
@@ -683,7 +683,7 @@ static void UI_LeftClick (int x, int y)
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	/** @todo this code must be on mouse down */
 	if (!pressedNode && ui_global.windowStackPos != 0) {
-		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
+		uiNode_t* window = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (UI_WindowIsDropDown(window)) {
 			UI_PopWindow();
 		}
@@ -750,7 +750,7 @@ static void UI_MiddleClick (int x, int y)
  */
 void UI_MouseScroll (int deltaX, int deltaY)
 {
-	uiNode_t *node;
+	uiNode_t* node;
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -771,7 +771,7 @@ void UI_MouseScroll (int deltaX, int deltaY)
 /**
  * Callback function waked up to send long click event
  */
-static void UI_LongPressCallback (uiNode_t *, uiTimer_t *timer)
+static void UI_LongPressCallback (uiNode_t* , uiTimer_t* timer)
 {
 	UI_TimerStop(timer);
 
@@ -779,7 +779,7 @@ static void UI_LongPressCallback (uiNode_t *, uiTimer_t *timer)
 	if (pressedNode == nullptr)
 		return;
 
-	uiNode_t *node = pressedNode;
+	uiNode_t* node = pressedNode;
 	while (node) {
 		if (UI_Node_MouseLongPress(node, pressedNodeLocationX, pressedNodeLocationY, pressedNodeButton))
 			break;
@@ -799,7 +799,7 @@ void UI_MouseDown (int x, int y, int button)
 	if (longPressTimer)
 		UI_TimerStop(longPressTimer);
 
-	uiNode_t *node;
+	uiNode_t* node;
 
 	/* captured or hover node */
 	node = capturedNode ? capturedNode : hoveredNode;
@@ -854,7 +854,7 @@ void UI_MouseUp (int x, int y, int button)
 	}
 
 	/* captured or hovered node */
-	uiNode_t *node = nullptr;
+	uiNode_t* node = nullptr;
 	if (capturedNode) {
 		node = capturedNode;
 	} else if (pressedNode == hoveredNode) {

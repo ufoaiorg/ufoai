@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int mouseScrollX;
 static int mouseScrollY;
 
-void uiTextNode::validateCache (uiNode_t *node)
+void uiTextNode::validateCache (uiNode_t* node)
 {
 	int v;
 	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != nullptr)
@@ -57,7 +57,7 @@ void uiTextNode::validateCache (uiNode_t *node)
 	}
 }
 
-const char* UI_TextNodeGetSelectedText (uiNode_t *node, int num)
+const char* UI_TextNodeGetSelectedText (uiNode_t* node, int num)
 {
 	const char* text = UI_GetTextFromList(EXTRADATA(node).dataID, num);
 	if (text == nullptr)
@@ -68,7 +68,7 @@ const char* UI_TextNodeGetSelectedText (uiNode_t *node, int num)
 /**
  * @brief Change the selected line
  */
-void UI_TextNodeSelectLine (uiNode_t *node, int num)
+void UI_TextNodeSelectLine (uiNode_t* node, int num)
 {
 	if (EXTRADATA(node).textLineSelected == num)
 		return;
@@ -84,7 +84,7 @@ void UI_TextNodeSelectLine (uiNode_t *node, int num)
  */
 void UI_TextScrollEnd (const char* nodePath)
 {
-	uiNode_t *node = UI_GetNodeByPath(nodePath);
+	uiNode_t* node = UI_GetNodeByPath(nodePath);
 	if (!node) {
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodePath);
 		return;
@@ -111,7 +111,7 @@ void UI_TextScrollEnd (const char* nodePath)
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
+static int UI_TextNodeGetLine (const uiNode_t* node, int x, int y)
 {
 	int lineHeight;
 	int line;
@@ -138,7 +138,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::onMouseMove (uiNode_t* node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -153,7 +153,7 @@ void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  * @note text or list but be used, not both
  */
-void uiTextNode::drawText (uiNode_t* node, const char* text, const linkedList_t *list, bool noDraw)
+void uiTextNode::drawText (uiNode_t* node, const char* text, const linkedList_t* list, bool noDraw)
 {
 	static char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];
@@ -346,9 +346,9 @@ void uiTextNode::drawText (uiNode_t* node, const char* text, const linkedList_t 
 	R_Color(nullptr);
 }
 
-void uiTextNode::updateCache (uiNode_t *node)
+void uiTextNode::updateCache (uiNode_t* node)
 {
-	const uiSharedData_t *shared;
+	const uiSharedData_t* shared;
 
 	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != nullptr)
 		return;
@@ -375,9 +375,9 @@ void uiTextNode::updateCache (uiNode_t *node)
 /**
  * @brief Draw a text node
  */
-void uiTextNode::draw (uiNode_t *node)
+void uiTextNode::draw (uiNode_t* node)
 {
-	const uiSharedData_t *shared;
+	const uiSharedData_t* shared;
 
 	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != nullptr) {
 		const char* t = CL_Translate(UI_GetReferenceString(node, node->text));
@@ -408,7 +408,7 @@ void uiTextNode::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiTextNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiTextNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -425,7 +425,7 @@ void uiTextNode::onLeftClick (uiNode_t *node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-void uiTextNode::onRightClick (uiNode_t *node, int x, int y)
+void uiTextNode::onRightClick (uiNode_t* node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -440,7 +440,7 @@ void uiTextNode::onRightClick (uiNode_t *node, int x, int y)
 
 /**
  */
-bool uiTextNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiTextNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool updated;
 	bool down = deltaY > 0;
@@ -464,7 +464,7 @@ bool uiTextNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return updated;
 }
 
-void uiTextNode::onLoading (uiNode_t *node)
+void uiTextNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	EXTRADATA(node).textSelected = "";
@@ -472,7 +472,7 @@ void uiTextNode::onLoading (uiNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiTextNode::onLoaded (uiNode_t *node)
+void uiTextNode::onLoaded (uiNode_t* node)
 {
 	int lineheight = EXTRADATA(node).lineHeight;
 	/* auto compute lineheight */
@@ -533,7 +533,7 @@ void uiTextNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-void uiTextNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -552,7 +552,7 @@ void uiTextNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiTextNode::getCellHeight (uiNode_t *node)
+int uiTextNode::getCellHeight (uiNode_t* node)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -560,7 +560,7 @@ int uiTextNode::getCellHeight (uiNode_t *node)
 	return lineHeight;
 }
 
-void UI_RegisterTextNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "text";
 	behaviour->extends = "abstractscrollable";

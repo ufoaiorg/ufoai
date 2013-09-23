@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int UI_TextListNodeGetLine (const uiNode_t *node, int x, int y)
+static int UI_TextListNodeGetLine (const uiNode_t* node, int x, int y)
 {
 	int lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
@@ -59,7 +59,7 @@ static int UI_TextListNodeGetLine (const uiNode_t *node, int x, int y)
 	return (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-void uiTextListNode::onMouseMove (uiNode_t *node, int x, int y)
+void uiTextListNode::onMouseMove (uiNode_t* node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextListNodeGetLine(node, x, y);
 }
@@ -69,7 +69,7 @@ void uiTextListNode::onMouseMove (uiNode_t *node, int x, int y)
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */
-void uiTextListNode::drawText (uiNode_t* node, const linkedList_t *list)
+void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
@@ -155,9 +155,9 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t *list)
 /**
  * @brief Draw a text node
  */
-void uiTextListNode::draw (uiNode_t *node)
+void uiTextListNode::draw (uiNode_t* node)
 {
-	const uiSharedData_t *shared;
+	const uiSharedData_t* shared;
 	shared = &ui_global.sharedData[EXTRADATA(node).dataID];
 
 	/* nothing set yet? */
@@ -176,7 +176,7 @@ void uiTextListNode::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiTextListNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiTextListNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	const int line = UI_TextListNodeGetLine(node, x, y);
 
@@ -198,7 +198,7 @@ void uiTextListNode::onLeftClick (uiNode_t *node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @todo we should delete that function
  */
-void uiTextListNode::onRightClick (uiNode_t *node, int x, int y)
+void uiTextListNode::onRightClick (uiNode_t* node, int x, int y)
 {
 	const int line = UI_TextListNodeGetLine(node, x, y);
 
@@ -216,7 +216,7 @@ void uiTextListNode::onRightClick (uiNode_t *node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-void uiTextListNode::onLoading (uiNode_t *node)
+void uiTextListNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	EXTRADATA(node).textSelected = "";
@@ -225,7 +225,7 @@ void uiTextListNode::onLoading (uiNode_t *node)
 	node->contentAlign = ALIGN_CL;	/**< left center of each cells */
 }
 
-void UI_RegisterTextListNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextListNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "textlist";
 	behaviour->extends = "text";

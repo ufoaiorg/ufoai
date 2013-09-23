@@ -77,7 +77,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
 
-typedef void (*registerFunction_t)(uiBehaviour_t *node);
+typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
 /**
  * @brief List of functions to register nodes
@@ -151,7 +151,7 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
  * @sa V_UI_IF
  * @returns false if the node is not drawn due to not meet if conditions
  */
-bool UI_CheckVisibility (uiNode_t *node)
+bool UI_CheckVisibility (uiNode_t* node)
 {
 	uiCallContext_t context;
 	if (!node->visibilityCondition)
@@ -206,7 +206,7 @@ const char* UI_GetPath (const uiNode_t* node)
  * @param[out] resultProperty Property found. Else nullptr.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
-void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t** resultProperty)
+void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, uiNode_t** resultNode, const value_t** resultProperty)
 {
 	char name[MAX_VAR];
 	uiNode_t* node = nullptr;
@@ -291,7 +291,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t**
 uiNode_t* UI_GetNodeByPath (const char* path)
 {
 	uiNode_t* node = nullptr;
-	const value_t *property;
+	const value_t* property;
 	UI_ReadNodePath(path, nullptr, &node, &property);
 	/** @todo FIXME warning if it return a property */
 	return node;
@@ -308,7 +308,7 @@ uiNode_t* UI_GetNodeByPath (const char* path)
 static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, bool isDynamic)
 {
 	uiNode_t* node;
-	uiBehaviour_t *behaviour;
+	uiBehaviour_t* behaviour;
 	int nodeSize;
 
 	behaviour = UI_GetNodeBehaviour(type);
@@ -373,9 +373,9 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
  * @param[in] ry Relative y position to the parent of the node
  * @return The first visible node at position, else nullptr
  */
-static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
+static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
 {
-	uiNode_t *find;
+	uiNode_t* find;
 
 	if (node->invis || UI_Node_IsVirtual(node) || !UI_CheckVisibility(node))
 		return nullptr;
@@ -391,7 +391,7 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 	/** @todo we should improve the loop (last-to-first) */
 	find = nullptr;
 	if (node->firstChild) {
-		uiNode_t *child;
+		uiNode_t* child;
 		vec2_t clientPosition = {0, 0};
 
 		if (UI_Node_IsScrollableContainer(node))
@@ -401,7 +401,7 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 		ry -= clientPosition[1];
 
 		for (child = node->firstChild; child; child = child->next) {
-			uiNode_t *tmp;
+			uiNode_t* tmp;
 			tmp = UI_GetNodeInTreeAtPosition(child, rx, ry);
 			if (tmp)
 				find = tmp;
@@ -415,7 +415,7 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 
 	/* disable ghost/excluderect in debug mode 2 */
 	if (UI_DebugMode() != 2) {
-		uiExcludeRect_t *excludeRect;
+		uiExcludeRect_t* excludeRect;
 		/* is the node tangible */
 		if (node->ghost)
 			return nullptr;
@@ -437,14 +437,14 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 /**
  * @brief Return the first visible node at a position
  */
-uiNode_t *UI_GetNodeAtPosition (int x, int y)
+uiNode_t* UI_GetNodeAtPosition (int x, int y)
 {
 	int pos;
 
 	/* find the first window under the mouse */
 	for (pos = ui_global.windowStackPos - 1; pos >= 0; pos--) {
-		uiNode_t *window = ui_global.windowStack[pos];
-		uiNode_t *find;
+		uiNode_t* window = ui_global.windowStack[pos];
+		uiNode_t* find;
 
 		/* update the layout */
 		UI_Validate(window);
@@ -510,10 +510,10 @@ int UI_GetNodeBehaviourCount (void)
  */
 void UI_DeleteAllChild (uiNode_t* node)
 {
-	uiNode_t *child;
+	uiNode_t* child;
 	child = node->firstChild;
 	while (child) {
-		uiNode_t *next = child->next;
+		uiNode_t* next = child->next;
 		UI_DeleteNode(child);
 		child = next;
 	}
@@ -532,7 +532,7 @@ static void UI_BeforeDeletingNode (const uiNode_t* node)
  */
 void UI_DeleteNode (uiNode_t* node)
 {
-	uiBehaviour_t *behaviour;
+	uiBehaviour_t* behaviour;
 
 	if (!node->dynamic) {
 		Com_Printf("UI_DeleteNode: Can't delete the static node '%s'\n", UI_GetPath(node));
@@ -582,7 +582,7 @@ void UI_DeleteNode (uiNode_t* node)
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursive, const char* newName, bool isDynamic)
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic)
 {
 	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
 
@@ -628,7 +628,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursiv
 void UI_InitNodes (void)
 {
 	int i = 0;
-	uiBehaviour_t *current = nodeBehaviourList;
+	uiBehaviour_t* current = nodeBehaviourList;
 
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
@@ -643,8 +643,8 @@ void UI_InitNodes (void)
 	current = nodeBehaviourList;
 	assert(current);
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS - 1; i++) {
-		const uiBehaviour_t *a = current;
-		const uiBehaviour_t *b = current + 1;
+		const uiBehaviour_t* a = current;
+		const uiBehaviour_t* b = current + 1;
 		assert(b);
 		if (strcmp(a->name, b->name) >= 0) {
 #ifdef DEBUG

@@ -39,12 +39,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const value_t *propertySource;
+static const value_t* propertySource;
 
-static const uiBehaviour_t *localBehaviour;
+static const uiBehaviour_t* localBehaviour;
 
 
-void uiSequenceNode::draw (uiNode_t *node)
+void uiSequenceNode::draw (uiNode_t* node)
 {
 	if (EXTRADATA(node).context != nullptr && EXTRADATA(node).playing) {
 		bool finished = false;
@@ -70,7 +70,7 @@ void uiSequenceNode::draw (uiNode_t *node)
 	}
 }
 
-void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiSequenceNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	if (EXTRADATA(node).context == nullptr)
 		EXTRADATA(node).context = SEQ_AllocContext();
@@ -80,7 +80,7 @@ void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-void uiSequenceNode::onWindowClosed (uiNode_t *node)
+void uiSequenceNode::onWindowClosed (uiNode_t* node)
 {
 	if (EXTRADATA(node).context != nullptr) {
 		SEQ_FreeContext(EXTRADATA(node).context);
@@ -89,14 +89,14 @@ void uiSequenceNode::onWindowClosed (uiNode_t *node)
 	EXTRADATA(node).playing = false;
 }
 
-void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiSequenceNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (EXTRADATA(node).context != nullptr) {
 		SEQ_SendClickEvent(EXTRADATA(node).context);
 	}
 }
 
-void uiSequenceNode::onPropertyChanged (uiNode_t *node, const value_t *property)
+void uiSequenceNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 {
 	if (property == propertySource) {
 		if (EXTRADATA(node).source != nullptr) {

@@ -234,7 +234,7 @@ void UI_Node_DeleteNode (uiNode_t* node)
 
 /* system callback */
 
-void UI_Node_WindowOpened (uiNode_t* node, linkedList_t *params)
+void UI_Node_WindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	uiNode *b = node->behaviour->manager.get();
 	b->onWindowOpened(node, params);
@@ -266,7 +266,7 @@ void UI_Node_Activate (uiNode_t* node)
 	b->onActivate(node);
 }
 
-void UI_Node_PropertyChanged (uiNode_t* node, const value_t *property)
+void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property)
 {
 	uiNode *b = node->behaviour->manager.get();
 	b->onPropertyChanged(node, property);
@@ -371,9 +371,9 @@ void UI_Node_DebugCountWidget (uiNode_t* node, int count)
  * @param[in] behaviourName Behaviour name we check
  * @return True if the node inherits from the behaviour
  */
-bool UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
+bool UI_NodeInstanceOf (const uiNode_t* node, const char* behaviourName)
 {
-	const uiBehaviour_t *behaviour;
+	const uiBehaviour_t* behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		if (Q_streq(behaviour->name, behaviourName))
 			return true;
@@ -387,9 +387,9 @@ bool UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
  * @param[in] behaviour Behaviour we check
  * @return True if the node inherits from the behaviour
  */
-bool UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
+bool UI_NodeInstanceOfPointer (const uiNode_t* node, const uiBehaviour_t* behaviour)
 {
-	const uiBehaviour_t *b;
+	const uiBehaviour_t* b;
 	for (b = node->behaviour; b; b = b->super) {
 		if (b == behaviour)
 			return true;
@@ -591,9 +591,9 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-uiNode_t *UI_GetNode (const uiNode_t* const node, const char* name)
+uiNode_t* UI_GetNode (const uiNode_t* const node, const char* name)
 {
-	uiNode_t *current = nullptr;
+	uiNode_t* current = nullptr;
 
 	if (!node)
 		return nullptr;
@@ -611,7 +611,7 @@ uiNode_t *UI_GetNode (const uiNode_t* const node, const char* name)
  * @param[in] prevNode previous node, will became before the newNode; else nullptr if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
-void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
+void UI_InsertNode (uiNode_t* const node, uiNode_t* prevNode, uiNode_t* newNode)
 {
 	if (newNode->root == nullptr)
 		newNode->root = node->root;
@@ -643,7 +643,7 @@ void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
  * @param[in] node Node where is the child
  * @param[in] child Node we want to remove
  */
-uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
+uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t* child)
 {
 	assert(node);
 	assert(child);
@@ -675,7 +675,7 @@ uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
 	return child;
 }
 
-void UI_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
+void UI_UpdateRoot (uiNode_t* node, uiNode_t* newRoot)
 {
 	node->root = newRoot;
 	node = node->firstChild;
@@ -688,12 +688,12 @@ void UI_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
 /**
  * @brief add a node at the end of the node child
  */
-void UI_AppendNode (uiNode_t* const node, uiNode_t *newNode)
+void UI_AppendNode (uiNode_t* const node, uiNode_t* newNode)
 {
 	UI_InsertNode(node, node->lastChild, newNode);
 }
 
-void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const void* rawValue, int rawType)
+void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t* property, const void* rawValue, int rawType)
 {
 	if (property->type != rawType) {
 		Com_Printf("UI_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, UI_GetPath(node), property->string);
@@ -722,7 +722,7 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 /**
  * @brief Set node property
  */
-bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
+bool UI_NodeSetProperty (uiNode_t* node, const value_t* property, const char* value)
 {
 	const int specialType = property->type & V_UI_MASK;
 	int result;
@@ -859,7 +859,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 		void* const b = Com_GetValue<void*>(node, property);
 		if (char const* const cvarName = Q_strstart((char const*)b, "*cvar:")) {
-			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
+			const cvar_t* cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
 		} else if (property->type == V_CVAR_OR_FLOAT) {
 			return *(const float*) b;
@@ -884,7 +884,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 /**
  * @brief Invalidate a node and all his parent to request a layout update
  */
-void UI_Invalidate (uiNode_t *node)
+void UI_Invalidate (uiNode_t* node)
 {
 	while (node) {
 		if (node->invalidated)
@@ -897,7 +897,7 @@ void UI_Invalidate (uiNode_t *node)
 /**
  * @brief Validate a node tree
  */
-void UI_Validate (uiNode_t *node)
+void UI_Validate (uiNode_t* node)
 {
 	if (node->invalidated)
 		UI_Node_DoLayout(node);

@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-void uiVideoNode::drawOverWindow (uiNode_t *node)
+void uiVideoNode::drawOverWindow (uiNode_t* node)
 {
 	if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
 		/** @todo Maybe draw a black screen? */
@@ -73,7 +73,7 @@ void uiVideoNode::drawOverWindow (uiNode_t *node)
 	}
 }
 
-void uiVideoNode::draw (uiNode_t *node)
+void uiVideoNode::draw (uiNode_t* node)
 {
 	if (!EXTRADATA(node).source)
 		return;
@@ -86,12 +86,12 @@ void uiVideoNode::draw (uiNode_t *node)
 	drawOverWindow(node);
 }
 
-void uiVideoNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiVideoNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 }
 
-void uiVideoNode::onWindowClosed (uiNode_t *node)
+void uiVideoNode::onWindowClosed (uiNode_t* node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));

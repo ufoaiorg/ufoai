@@ -41,27 +41,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 
-static cvar_t *ui_show_tooltips;
+static cvar_t* ui_show_tooltips;
 static bool tooltipVisible = false;
-static uiTimer_t *tooltipTimer;
+static uiTimer_t* tooltipTimer;
 
 static int noticeTime;
 static char noticeText[256];
-static uiNode_t *noticeWindow;
+static uiNode_t* noticeWindow;
 
 /**
  * @brief Node we will draw over
  * @sa UI_CaptureDrawOver
  * @sa uiBehaviour_t.drawOverWindow
  */
-static uiNode_t *drawOverNode;
+static uiNode_t* drawOverNode;
 
 /**
  * @brief Capture a node we will draw over all nodes (per window)
  * @note The node must be captured every frames
  * @todo it can be better to capture the draw over only one time (need new event like mouseEnter, mouseLeave)
  */
-void UI_CaptureDrawOver (uiNode_t *node)
+void UI_CaptureDrawOver (uiNode_t* node)
 {
 	drawOverNode = node;
 }
@@ -72,7 +72,7 @@ static int debugTextPositionY = 0;
 static int debugPositionX = 0;
 #define DEBUG_PANEL_WIDTH 300
 
-static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
+static void UI_HighlightNode (const uiNode_t* node, const vec4_t color)
 {
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
@@ -106,7 +106,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 
 	/* exclude rect */
 	if (node->firstExcludeRect) {
-		uiExcludeRect_t *current;
+		uiExcludeRect_t* current;
 		vec4_t trans = {1, 1, 1, 1};
 		Vector4Copy(color, trans);
 		trans[3] = trans[3] / 2;
@@ -131,7 +131,7 @@ static void UI_DrawDebugNodeNames (void)
 	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
 	static const vec4_t white = {1, 1.0, 1.0, 1.0};
 	static const vec4_t background = {0.0, 0.0, 0.0, 0.5};
-	uiNode_t *hoveredNode;
+	uiNode_t* hoveredNode;
 	int stackPosition;
 
 	debugTextPositionY = 100;
@@ -165,7 +165,7 @@ static void UI_DrawDebugNodeNames (void)
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "window stack:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	for (stackPosition = 0; stackPosition < ui_global.windowStackPos; stackPosition++) {
-		uiNode_t *window = ui_global.windowStack[stackPosition];
+		uiNode_t* window = ui_global.windowStack[stackPosition];
 		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, window->name, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
@@ -184,7 +184,7 @@ static void UI_DrawDebugNodeNames (void)
 
 	/* target node */
 	if (UI_DNDIsDragging()) {
-		uiNode_t *targetNode = UI_DNDGetTargetNode();
+		uiNode_t* targetNode = UI_DNDGetTargetNode();
 		if (targetNode) {
 			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
@@ -200,13 +200,13 @@ static void UI_DrawDebugNodeNames (void)
 #endif
 
 
-static void UI_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
+static void UI_CheckTooltipDelay (uiNode_t* node, uiTimer_t* timer)
 {
 	tooltipVisible = true;
 	UI_TimerStop(timer);
 }
 
-static void UI_DrawNode (uiNode_t *node)
+static void UI_DrawNode (uiNode_t* node)
 {
 	/* update the layout */
 	UI_Validate(node);
@@ -265,7 +265,7 @@ static void UI_DrawNode (uiNode_t *node)
 		}
 
 		/** @todo we can skip nodes outside visible rect */
-		for (uiNode_t *child = node->firstChild; child; child = child->next)
+		for (uiNode_t* child = node->firstChild; child; child = child->next)
 			UI_DrawNode(child);
 
 		/** @todo move it at the right position */
@@ -282,7 +282,7 @@ static void UI_DrawNode (uiNode_t *node)
 		UI_PopClipRect();
 	}
 
-	for (uiNode_t *iter = node->firstChild; iter; ) {
+	for (uiNode_t* iter = node->firstChild; iter; ) {
 		uiNode_t* child = iter;
 		iter = iter->next;
 		if (child->deleteTime > 0 && child->deleteTime < CL_Milliseconds()) {
@@ -305,7 +305,7 @@ static void UI_DrawNotice (void)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 	int x, y;
-	vec_t *noticePosition;
+	vec_t* noticePosition;
 
 	noticePosition = UI_WindowNodeGetNoticePosition(noticeWindow);
 	if (noticePosition) {
@@ -347,7 +347,7 @@ void UI_Draw (void)
 	assert(ui_global.windowStackPos >= 0);
 
 	const bool mouseMoved = UI_CheckMouseMove();
-	uiNode_t *hoveredNode = UI_GetHoveredNode();
+	uiNode_t* hoveredNode = UI_GetHoveredNode();
 
 	/* handle delay time for tooltips */
 	if (mouseMoved && tooltipVisible) {
@@ -364,7 +364,7 @@ void UI_Draw (void)
 
 	/* draw all visible windows */
 	for (; pos < ui_global.windowStackPos; pos++) {
-		uiNode_t *window;
+		uiNode_t* window;
 		window = ui_global.windowStack[pos];
 
 		drawOverNode = nullptr;

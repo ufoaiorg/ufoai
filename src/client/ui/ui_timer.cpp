@@ -40,13 +40,13 @@ static uiTimer_t ui_timerSlots[UI_TIMER_SLOT_NUMBER];
  * @brief First timer from the timer list.
  * This list is ordered from smaller to bigger nextTime value
  */
-static uiTimer_t *ui_firstTimer;
+static uiTimer_t* ui_firstTimer;
 
 /**
  * @brief Remove a timer from the active linked list
  * @note The function doesn't set to null next and previous attributes of the timer
  */
-static inline void UI_RemoveTimerFromActiveList (uiTimer_t *timer)
+static inline void UI_RemoveTimerFromActiveList (uiTimer_t* timer)
 {
 	assert(timer >= ui_timerSlots && timer < ui_timerSlots + UI_TIMER_SLOT_NUMBER);
 	if (timer->prev) {
@@ -99,7 +99,7 @@ void UI_HandleTimers (void)
 {
 	/* is first element is out of date? */
 	while (ui_firstTimer && ui_firstTimer->nextTime <= CL_Milliseconds()) {
-		uiTimer_t *timer = ui_firstTimer;
+		uiTimer_t* timer = ui_firstTimer;
 
 		/* throw event */
 		timer->calledTime++;
@@ -120,9 +120,9 @@ void UI_HandleTimers (void)
  * @param[in] firstDelay millisecond delay to wait the callback
  * @param[in] callback callback function to call every delay
  */
-uiTimer_t* UI_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callback)
+uiTimer_t* UI_AllocTimer (uiNode_t* node, int firstDelay, timerCallback_t callback)
 {
-	uiTimer_t *timer = nullptr;
+	uiTimer_t* timer = nullptr;
 	int i;
 
 	/* search empty slot */
@@ -148,7 +148,7 @@ uiTimer_t* UI_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callba
 /**
  * @brief Restart a timer
  */
-void UI_TimerStart (uiTimer_t *timer)
+void UI_TimerStart (uiTimer_t* timer)
 {
 	if (timer->isRunning)
 		return;
@@ -161,7 +161,7 @@ void UI_TimerStart (uiTimer_t *timer)
 /**
  * @brief Stop a timer
  */
-void UI_TimerStop (uiTimer_t *timer)
+void UI_TimerStop (uiTimer_t* timer)
 {
 	if (!timer->isRunning)
 		return;
@@ -174,7 +174,7 @@ void UI_TimerStop (uiTimer_t *timer)
 /**
  * @brief Release the timer. It no more exists
  */
-void UI_TimerRelease (uiTimer_t *timer)
+void UI_TimerRelease (uiTimer_t* timer)
 {
 	UI_RemoveTimerFromActiveList(timer);
 	timer->prev = nullptr;
@@ -195,7 +195,7 @@ void UI_ResetTimers (void)
  * @brief Return the first timer.
  * Only used for white box unittests
  */
-const uiTimer_t *UI_PrivateGetFirstTimer (void)
+const uiTimer_t* UI_PrivateGetFirstTimer (void)
 {
 	return ui_firstTimer;
 }

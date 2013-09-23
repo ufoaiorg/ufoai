@@ -45,10 +45,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Draws the texture node
  * @param[in] node The UI node to draw
  */
-void uiTextureNode::draw (uiNode_t *node)
+void uiTextureNode::draw (uiNode_t* node)
 {
 	vec2_t nodepos;
-	const image_t *image;
+	const image_t* image;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (Q_strnull(imageName))

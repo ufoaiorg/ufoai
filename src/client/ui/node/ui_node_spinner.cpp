@@ -59,21 +59,21 @@ enum spinnerMode_t {
 };
 
 static bool capturedDownButton;
-static uiTimer_t *capturedTimer = nullptr;
+static uiTimer_t* capturedTimer = nullptr;
 
 /**
  * @brief change the value of the spinner of one step
  * @param[in] node Spinner to change
  * @param[in] down Direction of the step (if down is true, decrease the value)
  */
-bool uiSpinnerNode::step (uiNode_t *node, bool down)
+bool uiSpinnerNode::step (uiNode_t* node, bool down)
 {
 	if (!down)
 		return incValue(node);
 	return decValue(node);
 }
 
-void uiSpinnerNode::repeat (uiNode_t *node, uiTimer_t *timer)
+void uiSpinnerNode::repeat (uiNode_t* node, uiTimer_t* timer)
 {
 	step(node, capturedDownButton);
 	switch (timer->calledTime) {
@@ -83,7 +83,7 @@ void uiSpinnerNode::repeat (uiNode_t *node, uiTimer_t *timer)
 	}
 }
 
-static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
+static void UI_SpinnerNodeRepeat (uiNode_t* node, uiTimer_t* timer)
 {
 	uiSpinnerNode* b = dynamic_cast<uiSpinnerNode*>(node->behaviour->manager.get());
 	b->repeat(node, timer);
@@ -97,7 +97,7 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
  * @param y Relative location y to the node
  * @return True if the current location can increase the value
  */
-bool uiSpinnerNode::isPositionIncrease(uiNode_t *node, int x, int y)
+bool uiSpinnerNode::isPositionIncrease(uiNode_t* node, int x, int y)
 {
 	switch ((spinnerMode_t)EXTRADATA(node).mode) {
 	case ONLY_INCREASE:
@@ -113,7 +113,7 @@ bool uiSpinnerNode::isPositionIncrease(uiNode_t *node, int x, int y)
 	}
 }
 
-void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	const bool disabled = node->disabled || node->parent->disabled;
 	if (disabled)
@@ -131,7 +131,7 @@ void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiSpinnerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button == K_MOUSE1 && UI_GetMouseCapture() == node) {
 		UI_MouseRelease();
@@ -142,7 +142,7 @@ void uiSpinnerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiSpinnerNode::onCapturedMouseLost (uiNode_t *node)
+void uiSpinnerNode::onCapturedMouseLost (uiNode_t* node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -153,7 +153,7 @@ void uiSpinnerNode::onCapturedMouseLost (uiNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-bool uiSpinnerNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiSpinnerNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	const bool disabled = node->disabled || node->parent->disabled;
@@ -164,7 +164,7 @@ bool uiSpinnerNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return step(node, down);
 }
 
-void uiSpinnerNode::draw (uiNode_t *node)
+void uiSpinnerNode::draw (uiNode_t* node)
 {
 	vec2_t pos;
 	const float delta = getDelta(node);
@@ -231,12 +231,12 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	}
 }
 
-void uiSpinnerNode::onLoading (uiNode_t *node)
+void uiSpinnerNode::onLoading (uiNode_t* node)
 {
 	uiAbstractValueNode::onLoading(node);
 }
 
-void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
+void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";

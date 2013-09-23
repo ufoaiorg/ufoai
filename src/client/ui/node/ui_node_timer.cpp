@@ -35,19 +35,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called when we init the node on the screen
  */
-void uiTimerNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiTimerNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	EXTRADATA(node).lastTime = CL_Milliseconds();
 }
 
-void uiTimerNode::onWindowClosed (uiNode_t *node)
+void uiTimerNode::onWindowClosed (uiNode_t* node)
 {
 }
 
 /**
  * @todo Use a real timer and not that hack
  */
-void uiTimerNode::draw (uiNode_t *node)
+void uiTimerNode::draw (uiNode_t* node)
 {
 	uiLocatedNode::draw(node);
 	timerExtraData_t& data = EXTRADATA(node);
@@ -64,7 +64,7 @@ void uiTimerNode::draw (uiNode_t *node)
 	}
 }
 
-void UI_RegisterTimerNode (uiBehaviour_t *behaviour)
+void UI_RegisterTimerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "timer";
 	behaviour->manager = UINodePtr(new uiTimerNode());

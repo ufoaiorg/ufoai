@@ -44,9 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @see UI_RegisterExtradataNodeProperty
  * @return A link to the node property
  */
-const struct value_s* UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour, const char* name, int type, size_t pos, size_t size)
+const struct value_s* UI_RegisterNodePropertyPosSize_ (uiBehaviour_t* behaviour, const char* name, int type, size_t pos, size_t size)
 {
-	value_t *property = (value_t*) UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, false);
+	value_t* property = (value_t*) UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, false);
 	if (property == nullptr)
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: UI memory hunk exceeded - increase the size");
 
@@ -79,7 +79,7 @@ const struct value_s* UI_RegisterNodePropertyPosSize_ (uiBehaviour_t *behaviour,
  * @param function function to execute the node method
  * @return A link to the node property
  */
-const struct value_s* UI_RegisterNodeMethod (uiBehaviour_t *behaviour, const char* name, uiNodeMethod_t function)
+const struct value_s* UI_RegisterNodeMethod (uiBehaviour_t* behaviour, const char* name, uiNodeMethod_t function)
 {
 	return UI_RegisterNodePropertyPosSize_(behaviour, name, V_UI_NODEMETHOD, (size_t)function, 0);
 }
@@ -91,7 +91,7 @@ const struct value_s* UI_RegisterNodeMethod (uiBehaviour_t *behaviour, const cha
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else nullptr
  */
-const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
+const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, const char* name)
 {
 	for (; behaviour; behaviour = behaviour->super) {
 		unsigned char min = 0;
@@ -174,9 +174,9 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	if (behaviour->super && behaviour->localProperties) {
 		const value_t** property = behaviour->localProperties;
 		while (*property) {
-			const value_t *p = UI_GetPropertyFromBehaviour(behaviour->super, (*property)->string);
+			const value_t* p = UI_GetPropertyFromBehaviour(behaviour->super, (*property)->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
-			const uiBehaviour_t *b = UI_GetNodeBehaviour(current->string);
+			const uiBehaviour_t* b = UI_GetNodeBehaviour(current->string);
 #endif
 			if (p != nullptr)
 				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", (*property)->string, behaviour->name);

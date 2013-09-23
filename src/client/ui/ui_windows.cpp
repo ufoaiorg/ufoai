@@ -41,12 +41,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Window name use as alternative for option
  */
-static cvar_t *ui_sys_main;
+static cvar_t* ui_sys_main;
 
 /**
  * @brief Main window of a stack
  */
-static cvar_t *ui_sys_active;
+static cvar_t* ui_sys_active;
 
 /**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
@@ -71,7 +71,7 @@ int UI_GetLastFullScreenWindow (void)
  * with the same window parent.
  * @param window Window we want to move
  */
-void UI_MoveWindowOnTop (uiNode_t *window)
+void UI_MoveWindowOnTop (uiNode_t* window)
 {
 	int i, j;
 
@@ -107,7 +107,7 @@ void UI_MoveWindowOnTop (uiNode_t *window)
  * @param[in] window The window to remove from the stack
  * @todo Why dont we call onClose?
  */
-static void UI_DeleteWindowFromStack (uiNode_t *window)
+static void UI_DeleteWindowFromStack (uiNode_t* window)
 {
 	int i;
 
@@ -145,7 +145,7 @@ static inline int UI_GetWindowPositionFromStackByName (const char* name)
  * @param[in] window The window to insert
  * @param[in] position Where we want to add the window (0 is the deeper element of the stack)
  */
-static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
+static inline void UI_InsertWindowIntoStack (uiNode_t* window, int position)
 {
 	int i;
 	assert(position <= ui_global.windowStackPos);
@@ -169,9 +169,9 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
  * It can be nullptr when there is no parameters, else this object must be freed by the caller.
  * @return A pointer to @c uiNode_t
  */
-uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t *params)
+uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params)
 {
-	uiNode_t *window;
+	uiNode_t* window;
 
 	UI_ReleaseInput();
 
@@ -243,7 +243,7 @@ static void UI_PushChildWindow_f (void)
  */
 static void UI_PushWindow_f (void)
 {
-	linkedList_t *params = nullptr;
+	linkedList_t* params = nullptr;
 	int i;
 
 	if (Cmd_Argc() == 0) {
@@ -270,7 +270,7 @@ static void UI_PushDropDownWindow_f (void)
 {
 	vec2_t source;
 	vec2_t destination;
-	uiNode_t *node;
+	uiNode_t* node;
 	int direction;
 	size_t writtenBytes;
 	int result;
@@ -343,7 +343,7 @@ static void UI_CloseAllWindow (void)
 {
 	int i;
 	for (i = ui_global.windowStackPos - 1; i >= 0; i--) {
-		uiNode_t *window = ui_global.windowStack[i];
+		uiNode_t* window = ui_global.windowStack[i];
 
 		UI_Node_WindowClosed(window);
 
@@ -389,7 +389,7 @@ bool UI_IsWindowOnStack (const char* name)
 /**
  * @todo Find  better name
  */
-static void UI_CloseWindowByRef (uiNode_t *window)
+static void UI_CloseWindowByRef (uiNode_t* window)
 {
 	int i;
 
@@ -405,7 +405,7 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 
 	/* close child */
 	while (i + 1 < ui_global.windowStackPos) {
-		uiNode_t *m = ui_global.windowStack[i + 1];
+		uiNode_t* m = ui_global.windowStack[i + 1];
 		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
@@ -425,7 +425,7 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 
 void UI_CloseWindow (const char* name)
 {
-	uiNode_t *window = UI_GetWindow(name);
+	uiNode_t* window = UI_GetWindow(name);
 	if (window == nullptr) {
 		Com_Printf("Window '%s' not found\n", name);
 		return;
@@ -442,12 +442,12 @@ void UI_CloseWindow (const char* name)
  */
 void UI_PopWindow (bool all)
 {
-	uiNode_t *oldfirst = ui_global.windowStack[0];
+	uiNode_t* oldfirst = ui_global.windowStack[0];
 
 	if (all) {
 		UI_CloseAllWindow();
 	} else {
-		uiNode_t *mainWindow = ui_global.windowStack[ui_global.windowStackPos - 1];
+		uiNode_t* mainWindow = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (!ui_global.windowStackPos)
 			return;
 		if (WINDOWEXTRADATA(mainWindow).parent)
@@ -471,7 +471,7 @@ void UI_PopWindow (bool all)
 			}
 		}
 
-		uiNode_t *activeWindow = UI_GetActiveWindow();
+		uiNode_t* activeWindow = UI_GetActiveWindow();
 		UI_Node_WindowActivate(activeWindow);
 	}
 
@@ -495,7 +495,7 @@ static void UI_CloseWindow_f (void)
 
 void UI_PopWindowWithEscKey (void)
 {
-	const uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
+	const uiNode_t* window = ui_global.windowStack[ui_global.windowStackPos - 1];
 
 	/* nothing if stack is empty */
 	if (ui_global.windowStackPos == 0)
@@ -551,7 +551,7 @@ const char* UI_GetActiveWindowName (void)
  */
 bool UI_IsMouseOnWindow (void)
 {
-	const uiNode_t *hovered;
+	const uiNode_t* hovered;
 
 	if (UI_GetMouseCapture() != nullptr)
 		return true;
@@ -580,7 +580,7 @@ bool UI_IsMouseOnWindow (void)
  * @note Use dichotomic search
  * @sa UI_GetActiveWindow
  */
-uiNode_t *UI_GetWindow (const char* name)
+uiNode_t* UI_GetWindow (const char* name)
 {
 	unsigned char min = 0;
 	unsigned char max = ui_global.numWindows;
@@ -662,7 +662,7 @@ void UI_FinishWindowsInit (void)
 {
 	int i;
 	for (i = 0; i < ui_global.numWindows; i++) {
-		uiNode_t *window = ui_global.windows[i];
+		uiNode_t* window = ui_global.windows[i];
 		if (WINDOWEXTRADATA(window).onScriptLoaded)
 			UI_ExecuteEventActions(window, WINDOWEXTRADATA(window).onScriptLoaded);
 	}
@@ -687,9 +687,9 @@ static void UI_InitStack_f (void)
 /**
  * @brief Display in the conde the tree of nodes
  */
-static void UI_DebugTree (const uiNode_t *node, int depth)
+static void UI_DebugTree (const uiNode_t* node, int depth)
 {
-	const uiNode_t *child = node->firstChild;
+	const uiNode_t* child = node->firstChild;
 	int i;
 
 	for (i = 0; i < depth; i++) {
@@ -711,7 +711,7 @@ static void UI_DebugTree_f (void)
 	}
 
 	const char* window = Cmd_Argv(1);
-	const uiNode_t *node = UI_GetWindow(window);
+	const uiNode_t* node = UI_GetWindow(window);
 	UI_DebugTree(node, 0);
 }
 
