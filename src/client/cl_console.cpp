@@ -69,9 +69,9 @@ typedef struct {
 } console_t;
 
 static console_t con;
-static cvar_t *con_notifytime;
-static cvar_t *con_history;
-static cvar_t *con_background;
+static cvar_t* con_notifytime;
+static cvar_t* con_history;
+static cvar_t* con_background;
 const int con_fontHeight = 12;
 const int con_fontWidth = 10;
 const int con_fontShift = 3;

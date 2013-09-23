@@ -56,11 +56,11 @@ static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
 static bool screenInitialized = false;/* ready to draw */
 
-static cvar_t *scr_conspeed;
-static cvar_t *scr_consize;
-static cvar_t *scr_rspeed;
-static cvar_t *scr_cursor;
-static cvar_t *scr_showcursor;
+static cvar_t* scr_conspeed;
+static cvar_t* scr_consize;
+static cvar_t* scr_rspeed;
+static cvar_t* scr_cursor;
+static cvar_t* scr_showcursor;
 
 static char cursorImage[MAX_QPATH];
 
@@ -98,7 +98,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawLoadingScreen (bool string, int percent)
 {
-	const image_t *image;
+	const image_t* image;
 
 	R_BeginFrame();
 
@@ -198,7 +198,7 @@ static void SCR_DrawCursor (void)
 
 	if (!UI_DNDIsDragging()) {
 		const char* pic;
-		image_t *image;
+		image_t* image;
 
 		if (!cls.isOurRound() && CL_BattlescapeRunning())
 			pic = "pics/cursors/wait";

@@ -92,29 +92,29 @@ void R_ShutdownImages(void);
 void R_ReloadImages (void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
-void R_UploadAlpha(const image_t *image, const byte* alphaData);
+void R_UploadAlpha(const image_t* image, const byte* alphaData);
 void R_TextureMode(const char* string);
 void R_TextureAlphaMode(const char* string);
 void R_TextureSolidMode(const char* string);
 
-void R_FreeImage(image_t *image);
+void R_FreeImage(image_t* image);
 
-image_t *R_LoadImageData(const char* name, const byte* pic, int width, int height, imagetype_t type);
-image_t *R_GetImage(const char* name);
-image_t *R_FindImage(const char* pname, imagetype_t type);
-const image_t *R_FindPics(const char* name);
+image_t* R_LoadImageData(const char* name, const byte* pic, int width, int height, imagetype_t type);
+image_t* R_GetImage(const char* name);
+image_t* R_FindImage(const char* pname, imagetype_t type);
+const image_t* R_FindPics(const char* name);
 
 bool R_ImageExists(const char* pname, ...) __attribute__((format(__printf__, 1, 2)));
-image_t *R_GetImageAtIndex(int i);
-int R_GetImageIndex(image_t *image);
+image_t* R_GetImageAtIndex(int i);
+int R_GetImageIndex(image_t* image);
 
 #define MAX_ENVMAPTEXTURES 2
-extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
+extern image_t* r_envmaptextures[MAX_ENVMAPTEXTURES];
 
 #define NUM_FLARETEXTURES 10
-extern image_t *r_flaretextures[NUM_FLARETEXTURES];
+extern image_t* r_flaretextures[NUM_FLARETEXTURES];
 
-extern image_t *shadow;	/**< draw this when actor is alive */
-extern image_t *r_noTexture;
-extern image_t *r_warpTexture;
-extern image_t *r_dummyTexture;  /**< 1x1 pixel white texture to be used when texturing is required, but texture is not available */
+extern image_t* shadow;	/**< draw this when actor is alive */
+extern image_t* r_noTexture;
+extern image_t* r_warpTexture;
+extern image_t* r_dummyTexture;  /**< 1x1 pixel white texture to be used when texturing is required, but texture is not available */

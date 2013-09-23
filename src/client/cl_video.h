@@ -84,22 +84,22 @@ typedef struct vidmode_s {
 	int mode;
 } vidmode_t;
 
-extern memPool_t *vid_genericPool;
-extern memPool_t *vid_imagePool;
-extern memPool_t *vid_lightPool;
-extern memPool_t *vid_modelPool;
+extern memPool_t* vid_genericPool;
+extern memPool_t* vid_imagePool;
+extern memPool_t* vid_lightPool;
+extern memPool_t* vid_modelPool;
 
 extern viddef_t viddef;			/* global video state */
 
-extern cvar_t *vid_fullscreen;
-extern cvar_t *vid_stretch;
-extern cvar_t *vid_mode;
-extern cvar_t *vid_gamma;
-extern cvar_t *vid_ignoregamma;
-extern cvar_t *vid_grabmouse;
+extern cvar_t* vid_fullscreen;
+extern cvar_t* vid_stretch;
+extern cvar_t* vid_mode;
+extern cvar_t* vid_gamma;
+extern cvar_t* vid_ignoregamma;
+extern cvar_t* vid_grabmouse;
 
 /* Video module initialisation etc */
 void VID_Init(void);
 void VID_Minimize(void);
 int VID_GetModeNums(void);
-bool VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
+bool VID_GetModeInfo(int modeIndex, vidmode_t* modeInfo);

@@ -50,11 +50,11 @@ typedef struct cinematic_s {
 	void* codecData;
 } cinematic_t;
 
-void CIN_OpenCinematic(cinematic_t *cin, const char* name);
-void CIN_CloseCinematic(cinematic_t *cin);
-void CIN_SetParameters(cinematic_t *cin, int x, int y, int w, int h, int cinStatus, bool noSound);
-void CIN_RunCinematic(cinematic_t *cin);
-void CIN_InitCinematic(cinematic_t *cin);
+void CIN_OpenCinematic(cinematic_t* cin, const char* name);
+void CIN_CloseCinematic(cinematic_t* cin);
+void CIN_SetParameters(cinematic_t* cin, int x, int y, int w, int h, int cinStatus, bool noSound);
+void CIN_RunCinematic(cinematic_t* cin);
+void CIN_InitCinematic(cinematic_t* cin);
 
 void CIN_Init(void);
 void CIN_Shutdown(void);

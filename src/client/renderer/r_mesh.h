@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void R_DrawModelDirect(modelInfo_t *mi, modelInfo_t *pmi, const char* tagname);
-void R_ModelAutoScale(const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center);
+void R_DrawModelDirect(modelInfo_t* mi, modelInfo_t* pmi, const char* tagname);
+void R_ModelAutoScale(const vec2_t boxSize, modelInfo_t* mi, vec3_t scale, vec3_t center);
 int R_GetTagIndexByName(const model_t* mod, const char* tagName);
 void R_GetTags(const model_t* mod, const char* tagName, int currentFrame, int oldFrame, const mAliasTagOrientation_t** current, const mAliasTagOrientation_t** old);
 bool R_GetTagMatrix(const model_t* mod, const char* tagName, int frame, float matrix[16]);

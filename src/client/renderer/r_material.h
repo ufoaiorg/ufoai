@@ -161,7 +161,7 @@ typedef struct material_s {
 	float hardness;
 	float specular;
 	float glowscale;
-	materialStage_t *stages;
+	materialStage_t* stages;
 	int num_stages;
 } material_t;
 

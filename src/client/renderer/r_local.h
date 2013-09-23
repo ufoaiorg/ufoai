@@ -44,57 +44,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MIN_GL_CONSTANT_ATTENUATION 0.01
 
-void R_DrawSurfaces(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
-void R_DrawMaterialSurfaces(const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr);
+void R_DrawSurfaces(const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr);
+void R_DrawMaterialSurfaces(const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr);
 
-void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap, const image_t *specularMap);
+void R_SetSurfaceBumpMappingParameters(const mBspSurface_t* surf, const image_t* normalMap, const image_t* specularMap);
 
 /*==================================================== */
 
-extern cvar_t *r_drawworld;
-extern cvar_t *r_drawentities;
-extern cvar_t *r_nocull;
-extern cvar_t *r_isometric;
-extern cvar_t *r_anisotropic;
-extern cvar_t *r_texture_lod;   /* lod_bias */
-extern cvar_t *r_materials;
-extern cvar_t *r_overridematerial;
-extern cvar_t *r_default_specular;
-extern cvar_t *r_default_hardness;
-extern cvar_t *r_screenshot_format;
-extern cvar_t *r_screenshot_jpeg_quality;
-extern cvar_t *r_lightmap;
-extern cvar_t *r_debug_normals;
-extern cvar_t *r_debug_tangents;
-extern cvar_t *r_debug_lights;
-extern cvar_t *r_ext_texture_compression;
-extern cvar_t *r_checkerror;
-extern cvar_t *r_particles;
-extern cvar_t *r_showbox;
-extern cvar_t *r_shadows;
-extern cvar_t *r_stencilshadows;
-extern cvar_t *r_drawbuffer;
-extern cvar_t *r_driver;
-extern cvar_t *r_swapinterval;
-extern cvar_t *r_multisample;
-extern cvar_t *r_threads;
-extern cvar_t *r_wire;
-extern cvar_t *r_vertexbuffers;
-extern cvar_t *r_maxlightmap;
-extern cvar_t *r_warp;
-extern cvar_t *r_programs;
-extern cvar_t *r_glsl_version;
-extern cvar_t *r_postprocess;
-extern cvar_t *r_shownormals;
-extern cvar_t *r_bumpmap;
-extern cvar_t *r_specular;
-extern cvar_t *r_hardness;
-extern cvar_t *r_parallax;
-extern cvar_t *r_fog;
-extern cvar_t *r_flares;
-extern cvar_t *r_coronas;
-extern cvar_t *r_dynamic_lights;
-extern cvar_t *r_drawtags;
+extern cvar_t* r_drawworld;
+extern cvar_t* r_drawentities;
+extern cvar_t* r_nocull;
+extern cvar_t* r_isometric;
+extern cvar_t* r_anisotropic;
+extern cvar_t* r_texture_lod;   /* lod_bias */
+extern cvar_t* r_materials;
+extern cvar_t* r_overridematerial;
+extern cvar_t* r_default_specular;
+extern cvar_t* r_default_hardness;
+extern cvar_t* r_screenshot_format;
+extern cvar_t* r_screenshot_jpeg_quality;
+extern cvar_t* r_lightmap;
+extern cvar_t* r_debug_normals;
+extern cvar_t* r_debug_tangents;
+extern cvar_t* r_debug_lights;
+extern cvar_t* r_ext_texture_compression;
+extern cvar_t* r_checkerror;
+extern cvar_t* r_particles;
+extern cvar_t* r_showbox;
+extern cvar_t* r_shadows;
+extern cvar_t* r_stencilshadows;
+extern cvar_t* r_drawbuffer;
+extern cvar_t* r_driver;
+extern cvar_t* r_swapinterval;
+extern cvar_t* r_multisample;
+extern cvar_t* r_threads;
+extern cvar_t* r_wire;
+extern cvar_t* r_vertexbuffers;
+extern cvar_t* r_maxlightmap;
+extern cvar_t* r_warp;
+extern cvar_t* r_programs;
+extern cvar_t* r_glsl_version;
+extern cvar_t* r_postprocess;
+extern cvar_t* r_shownormals;
+extern cvar_t* r_bumpmap;
+extern cvar_t* r_specular;
+extern cvar_t* r_hardness;
+extern cvar_t* r_parallax;
+extern cvar_t* r_fog;
+extern cvar_t* r_flares;
+extern cvar_t* r_coronas;
+extern cvar_t* r_dynamic_lights;
+extern cvar_t* r_drawtags;
 
 /* private renderer variables */
 typedef struct rlocals_s {
@@ -120,11 +120,11 @@ typedef struct rlocals_s {
 
 extern rlocals_t r_locals;
 
-bool R_CullMeshModel(const entity_t *e);
+bool R_CullMeshModel(const entity_t* e);
 
-void R_DrawModelParticle(modelInfo_t *mi);
+void R_DrawModelParticle(modelInfo_t* mi);
 void R_DrawBspNormals(int tile);
-bool R_CullBspModel(const entity_t *e);
+bool R_CullBspModel(const entity_t* e);
 bool R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
 void R_GetLevelSurfaceLists(void);
 void R_GetEntityLists(void);
@@ -133,7 +133,7 @@ void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
 void R_ClearBspRRefs(void);
-void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const bool forceVisibility);
+void R_AddBspRRef(const mBspModel_t* model, const vec3_t origin, const vec3_t angles, const bool forceVisibility);
 void R_RenderOpaqueBspRRefs(void);
 void R_RenderOpaqueWarpBspRRefs(void);
 void R_RenderAlphaTestBspRRefs(void);
@@ -212,4 +212,4 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 bool Rimp_Init(void);
 void Rimp_Shutdown(void);
-bool R_InitGraphics(const viddefContext_t *context);
+bool R_InitGraphics(const viddefContext_t* context);

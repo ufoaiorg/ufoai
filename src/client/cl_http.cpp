@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef NO_HTTP
 
-static cvar_t *cl_http_downloads;
-static cvar_t *cl_http_filelists;
-static cvar_t *cl_http_max_connections;
+static cvar_t* cl_http_downloads;
+static cvar_t* cl_http_filelists;
+static cvar_t* cl_http_max_connections;
 
 enum {
 	HTTPDL_ABORT_NONE,
@@ -80,9 +80,9 @@ static inline bool isvalidchar (int c)
  */
 static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {
-	dlhandle_t *dl;
+	dlhandle_t* dl;
 
-	dl = (dlhandle_t *)clientp;
+	dl = (dlhandle_t* )clientp;
 
 	dl->position = (unsigned)dlnow;
 
@@ -143,7 +143,7 @@ static void CL_EscapeHTTPPath (const char* filePath, char* escaped)
 /**
  * @brief Actually starts a download by adding it to the curl multi handle.
  */
-static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
+static void CL_StartHTTPDownload (dlqueue_t* entry, dlhandle_t* dl)
 {
 	char escapedFilePath[MAX_QPATH * 4];
 	const char* extension = Com_GetExtension(entry->ufoPath);
@@ -274,12 +274,12 @@ void CL_CancelHTTPDownloads (bool permKill)
 /**
  * @brief Find a free download handle to start another queue entry on.
  */
-static dlhandle_t *CL_GetFreeDLHandle (void)
+static dlhandle_t* CL_GetFreeDLHandle (void)
 {
 	int i;
 
 	for (i = 0; i < 4; i++) {
-		dlhandle_t *dl = &cls.HTTPHandles[i];
+		dlhandle_t* dl = &cls.HTTPHandles[i];
 		if (!dl->queueEntry || dl->queueEntry->state == DLQ_STATE_DONE)
 			return dl;
 	}
@@ -495,7 +495,7 @@ static void CL_CheckAndQueueDownload (char* path)
 /**
  * @brief A filelist is in memory, scan and validate it and queue up the files.
  */
-static void CL_ParseFileList (dlhandle_t *dl)
+static void CL_ParseFileList (dlhandle_t* dl)
 {
 	char* list;
 
@@ -548,7 +548,7 @@ void CL_HTTP_Cleanup (void)
 	int i;
 
 	for (i = 0; i < 4; i++) {
-		dlhandle_t *dl = &cls.HTTPHandles[i];
+		dlhandle_t* dl = &cls.HTTPHandles[i];
 
 		if (dl->file) {
 			fclose(dl->file);
@@ -591,7 +591,7 @@ static void CL_FinishHTTPDownload (void)
 
 	do {
 		CURLMsg *msg = curl_multi_info_read(multi, &messagesInQueue);
-		dlhandle_t *dl = nullptr;
+		dlhandle_t* dl = nullptr;
 
 		if (!msg) {
 			Com_Printf("CL_FinishHTTPDownload: Odd, no message for us...\n");
@@ -746,7 +746,7 @@ static void CL_StartNextHTTPDownload (void)
 	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED) {
 			size_t len;
-			dlhandle_t *dl = CL_GetFreeDLHandle();
+			dlhandle_t* dl = CL_GetFreeDLHandle();
 			if (!dl)
 				return;
 

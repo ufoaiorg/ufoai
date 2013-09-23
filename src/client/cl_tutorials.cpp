@@ -38,10 +38,10 @@ static int numTutorials;
 
 static void TUT_GetTutorials_f (void)
 {
-	linkedList_t *tutorialList = nullptr;
+	linkedList_t* tutorialList = nullptr;
 
 	for (int i = 0; i < numTutorials; i++) {
-		const tutorial_t *t = &tutorials[i];
+		const tutorial_t* t = &tutorials[i];
 		LIST_AddString(&tutorialList, va("%s", _(t->name)));
 	}
 	UI_RegisterLinkedListText(TEXT_LIST, tutorialList);
@@ -99,7 +99,7 @@ void TUT_ParseTutorials (const char* name, const char** text)
 		Com_Printf("Too many tutorials, '%s' ignored.\n", name);
 		return;
 	}
-	tutorial_t *t = &tutorials[numTutorials++];
+	tutorial_t* t = &tutorials[numTutorials++];
 	OBJZERO(*t);
 
 	Com_ParseBlock(name, text, t, tutValues, nullptr);

@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/node/ui_node_abstractoption.h"
 
-static cvar_t *fs_i18ndir;
-static memPool_t *cl_msgidPool;
+static cvar_t* fs_i18ndir;
+static memPool_t* cl_msgidPool;
 
 #define MAX_MSGIDS 512
 /**
@@ -49,7 +49,7 @@ typedef struct msgid_s {
 static msgid_t msgIDs[MAX_MSGIDS];
 static int numMsgIDs;
 #define MAX_MSGIDHASH 256
-static msgid_t *msgIDHash[MAX_MSGIDHASH];
+static msgid_t* msgIDHash[MAX_MSGIDHASH];
 
 #define MSGIDSIZE 65536
 static char* msgIDText;
@@ -70,7 +70,7 @@ static void CL_ParseMessageID (const char* name, const char** text)
 			break;
 
 	if (i == numMsgIDs) {
-		msgid_t *msgid = &msgIDs[numMsgIDs++];
+		msgid_t* msgid = &msgIDs[numMsgIDs++];
 
 		if (numMsgIDs >= MAX_MSGIDS)
 			Sys_Error("CL_ParseMessageID: MAX_MSGIDS exceeded");
@@ -177,11 +177,11 @@ typedef struct language_s {
 	const char* localeID;			/**< short locale id */
 	const char* localeString;		/**< translatable locale string to show in menus */
 	const char* nativeString;		/**< Name of the language in the native language itself */
-	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
+	localeMapping_t* localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s* next;	/**< next language in this list */
 } language_t;
 
-static language_t *languageList;	/**< linked list of all parsed languages */
+static language_t* languageList;	/**< linked list of all parsed languages */
 static int languageCount; /**< how many languages do we have */
 
 /**
@@ -191,10 +191,10 @@ static int languageCount; /**< how many languages do we have */
 static const char* CL_GetLocaleID (const char* fullLocale)
 {
 	int i;
-	language_t *language;
+	language_t* language;
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		localeMapping_t *mapping = language->localeMapping;
+		localeMapping_t* mapping = language->localeMapping;
 
 		while (mapping) {
 			if (Q_streq(fullLocale, mapping->localeMapping))
@@ -239,11 +239,11 @@ void CL_ParseLanguages (const char* name, const char** text)
 			break;
 		/* inner locale id definition */
 		if (Q_streq(token, "code")) {
-			linkedList_t *list;
+			linkedList_t* list;
 			if (!Com_ParseList(text, &list)) {
 				Com_Error(ERR_DROP, "CL_ParseLanguages: error while reading language codes \"%s\"", name);
 			}
-			for (linkedList_t *element = list; element != nullptr; element = element->next) {
+			for (linkedList_t* element = list; element != nullptr; element = element->next) {
 				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool);
 				mapping->localeMapping = Mem_PoolStrDup((char*)element->data, cl_genericPool, 0);
 				/* link it in */
@@ -362,7 +362,7 @@ void CL_LanguageInit (void)
 {
 	int i;
 	language_t* language;
-	uiNode_t *languageOption = nullptr;
+	uiNode_t* languageOption = nullptr;
 	char systemLanguage[MAX_VAR];
 
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
@@ -388,7 +388,7 @@ void CL_LanguageInit (void)
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 		bool available;
 		available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
-		uiNode_t *option;
+		uiNode_t* option;
 #if 0
 		option = UI_AddOption(&languageOption, "", language->localeString, language->localeID);
 #else

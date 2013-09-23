@@ -43,19 +43,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #	include <fcntl.h>
 #endif
 
-static cvar_t *irc_server;
-static cvar_t *irc_port;
-static cvar_t *irc_channel;
-static cvar_t *irc_nick;
-static cvar_t *irc_user;
-static cvar_t *irc_password;
-static cvar_t *irc_topic;
-static cvar_t *irc_defaultChannel;
-static cvar_t *irc_logConsole;
-static cvar_t *irc_showIfNotInMenu;
+static cvar_t* irc_server;
+static cvar_t* irc_port;
+static cvar_t* irc_channel;
+static cvar_t* irc_nick;
+static cvar_t* irc_user;
+static cvar_t* irc_password;
+static cvar_t* irc_topic;
+static cvar_t* irc_defaultChannel;
+static cvar_t* irc_logConsole;
+static cvar_t* irc_showIfNotInMenu;
 /* menu cvar */
-static cvar_t *irc_send_buffer;
-static memPool_t *cl_ircSysPool;
+static cvar_t* irc_send_buffer;
+static memPool_t* cl_ircSysPool;
 
 static bool irc_connected;
 
@@ -71,7 +71,7 @@ typedef struct irc_channel_s {
 	char name[MAX_VAR];
 	char topic[256];
 	int users;
-	irc_user_t *user;
+	irc_user_t* user;
 } irc_channel_t;
 
 /* numeric commands as specified by RFC 1459 - Internet Relay Chat Protocol */
@@ -261,18 +261,18 @@ static struct net_stream *irc_stream;
 static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 
 static irc_channel_t ircChan;
-static irc_channel_t *chan;
+static irc_channel_t* chan;
 
 static char irc_buffer[4096];
 
-static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char* nick);
-static void Irc_Logic_AddChannelName(irc_channel_t *channel, irc_nick_prefix_t prefix, const char* nick);
+static void Irc_Logic_RemoveChannelName(irc_channel_t* channel, const char* nick);
+static void Irc_Logic_AddChannelName(irc_channel_t* channel, irc_nick_prefix_t prefix, const char* nick);
 static void Irc_Client_Names_f(void);
 static bool Irc_Client_Join(const char* channel, const char* password);
 static void Irc_Logic_Disconnect(const char* reason);
 
 static bool Irc_AppendToBuffer(const char* const msg, ...) __attribute__((format(__printf__, 1, 2)));
-static bool Irc_Proto_ParseServerMsg(const char* txt, size_t txt_len, irc_server_msg_t *msg);
+static bool Irc_Proto_ParseServerMsg(const char* txt, size_t txt_len, irc_server_msg_t* msg);
 static bool Irc_Proto_Enqueue(const char* msg, size_t msg_len);
 
 static bool Irc_Net_Connect(const char* host, const char* port);
@@ -295,7 +295,7 @@ static inline bool Irc_IsChannel (const char* target)
 	return (target[0] == '#' || target[0] == '&');
 }
 
-static void Irc_ParseName (const char* mask, char* nick, size_t size, irc_nick_prefix_t *prefix)
+static void Irc_ParseName (const char* mask, char* nick, size_t size, irc_nick_prefix_t* prefix)
 {
 	const char* emph;
 	if (mask[0] == IRC_NICK_PREFIX_OP || mask[0] == IRC_NICK_PREFIX_VOICE) {
@@ -324,11 +324,11 @@ Protocol functions
 ===============================================================
 */
 
-static cvar_t *irc_messageBucketSize;
-static cvar_t *irc_messageBucketBurst;
-static cvar_t *irc_characterBucketSize;
-static cvar_t *irc_characterBucketBurst;
-static cvar_t *irc_characterBucketRate;
+static cvar_t* irc_messageBucketSize;
+static cvar_t* irc_messageBucketBurst;
+static cvar_t* irc_characterBucketSize;
+static cvar_t* irc_characterBucketBurst;
+static cvar_t* irc_characterBucketRate;
 
 typedef struct irc_bucket_message_s {
 	char* msg;
@@ -337,7 +337,7 @@ typedef struct irc_bucket_message_s {
 } irc_bucket_message_t;
 
 typedef struct irc_bucket_s {
-	irc_bucket_message_t *first_msg;	/**< pointer to first message in queue */
+	irc_bucket_message_t* first_msg;	/**< pointer to first message in queue */
 	unsigned int message_size;			/**< number of messages in bucket */
 	unsigned int character_size;		/**< number of characters in bucket */
 	int last_refill;				/**< last refill timestamp */
@@ -369,9 +369,9 @@ static bool Irc_Proto_Disconnect (void)
 {
 	const bool status = Irc_Net_Disconnect();
 	if (!status) {
-		irc_bucket_message_t *msg = irc_bucket.first_msg;
+		irc_bucket_message_t* msg = irc_bucket.first_msg;
 		while (msg) {
-			irc_bucket_message_t *prev = msg;
+			irc_bucket_message_t* prev = msg;
 			msg = msg->next;
 			Mem_Free(prev->msg);
 			Mem_Free(prev);
@@ -580,7 +580,7 @@ static bool Irc_Proto_Whowas (const char* nick)
 /**
  * @sa Irc_Logic_ReadMessages
  */
-static bool Irc_Proto_PollServerMsg (irc_server_msg_t *msg, bool *msg_complete)
+static bool Irc_Proto_PollServerMsg (irc_server_msg_t* msg, bool *msg_complete)
 {
 	static char buf[IRC_RECV_BUF_SIZE];
 	static char* last = buf;
@@ -1034,7 +1034,7 @@ static void Irc_Client_CmdRplEndofnames (const char* params, const char* trailin
 /**
  * @sa Irc_Logic_ReadMessages
  */
-static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
+static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t* msg)
 {
 	irc_command_t cmd;
 	const char* p = nullptr;
@@ -1214,7 +1214,7 @@ static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	return false;
 }
 
-static bool Irc_Proto_ParseServerMsg (const char* txt, size_t txt_len, irc_server_msg_t *msg)
+static bool Irc_Proto_ParseServerMsg (const char* txt, size_t txt_len, irc_server_msg_t* msg)
 {
 	const char* c = txt;
 	const char* end = txt + txt_len;
@@ -1370,11 +1370,11 @@ static void Irc_Proto_RefillBucket (void)
 static void Irc_Proto_DrainBucket (void)
 {
 	const double characterBucketBurst = irc_characterBucketBurst->value;
-	irc_bucket_message_t *msg;
+	irc_bucket_message_t* msg;
 
 	/* remove messages whose size exceed our burst size (we can not send them) */
 	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
-		irc_bucket_message_t * const next = msg->next;
+		irc_bucket_message_t*  const next = msg->next;
 		/* update bucket sizes */
 		--irc_bucket.message_size;
 		irc_bucket.character_size -= msg->msg_len;
@@ -1494,7 +1494,7 @@ void Irc_Logic_Frame (void)
 	irc_channel->modified = false;
 }
 
-static const char* Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
+static const char* Irc_Logic_GetChannelTopic (const irc_channel_t* channel)
 {
 	assert(channel);
 	return channel->topic;
@@ -1504,7 +1504,7 @@ static const char* Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
  * @brief Adds a new username to the channel username list
  * @sa Irc_Logic_RemoveChannelName
  */
-static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t prefix, const char* nick)
+static void Irc_Logic_AddChannelName (irc_channel_t* channel, irc_nick_prefix_t prefix, const char* nick)
 {
 	int i;
 	/* first one */
@@ -1527,7 +1527,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
  * @brief Removes a username from the channel username list
  * @sa Irc_Logic_AddChannelName
  */
-static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char* nick)
+static void Irc_Logic_RemoveChannelName (irc_channel_t* channel, const char* nick)
 {
 	int i;
 	/* first one */
@@ -1782,7 +1782,7 @@ static void Irc_Client_Names_f (void)
 		Com_Printf("Not joined\n");
 		return;
 	}
-	linkedList_t *irc_names_buffer = nullptr;
+	linkedList_t* irc_names_buffer = nullptr;
 	int i;
 	irc_user_t* user = chan->user;
 	for (i = 0; i < chan->users; i++) {
@@ -1822,7 +1822,7 @@ static void Irc_Client_Kick_f (void)
 
 static void Irc_GetExternalIP (const char* externalIP, void* userdata)
 {
-	const irc_user_t *user;
+	const irc_user_t* user;
 	char buf[128];
 
 	if (!externalIP) {

@@ -33,14 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 viddef_t viddef;	/* global video state; used by other modules */
 
-cvar_t *vid_stretch;
-cvar_t *vid_fullscreen;
-cvar_t *vid_mode;
-cvar_t *vid_grabmouse;
-cvar_t *vid_gamma;
-cvar_t *vid_ignoregamma;
-static cvar_t *vid_height;
-static cvar_t *vid_width;
+cvar_t* vid_stretch;
+cvar_t* vid_fullscreen;
+cvar_t* vid_mode;
+cvar_t* vid_grabmouse;
+cvar_t* vid_gamma;
+cvar_t* vid_ignoregamma;
+static cvar_t* vid_height;
+static cvar_t* vid_width;
 
 /**
  * @brief All possible video modes
@@ -83,7 +83,7 @@ int VID_GetModeNums (void)
 	return lengthof(vid_modes);
 }
 
-bool VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
+bool VID_GetModeInfo (int modeIndex, vidmode_t* modeInfo)
 {
 	if (modeIndex < 0) {
 		modeInfo->width = vid_width->integer;
@@ -126,12 +126,12 @@ static void VID_Restart_f (void)
 	GAME_ReloadMode();
 }
 
-static bool CL_CvarCheckVidGamma (cvar_t *cvar)
+static bool CL_CvarCheckVidGamma (cvar_t* cvar)
 {
 	return Cvar_AssertValue(cvar, 0.1, 3.0, false);
 }
 
-static bool CL_CvarCheckVidMode (cvar_t *cvar)
+static bool CL_CvarCheckVidMode (cvar_t* cvar)
 {
 	return Cvar_AssertValue(cvar, -1, VID_GetModeNums(), true);
 }

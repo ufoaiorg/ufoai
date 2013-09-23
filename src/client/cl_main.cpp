@@ -66,28 +66,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 #include "../ports/system.h"
 
-cvar_t *cl_fps;
-cvar_t *cl_leshowinvis;
-cvar_t *cl_selected;
+cvar_t* cl_fps;
+cvar_t* cl_leshowinvis;
+cvar_t* cl_selected;
 
-static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
+static cvar_t* cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
-static cvar_t *cl_introshown;
+static cvar_t* cl_introshown;
 
 /* userinfo */
-static cvar_t *cl_name;
-static cvar_t *cl_msg;
-static cvar_t *cl_ready;
-cvar_t *cl_teamnum;
+static cvar_t* cl_name;
+static cvar_t* cl_msg;
+static cvar_t* cl_ready;
+cvar_t* cl_teamnum;
 
 client_static_t cls;
 static bool isdown;
 
-memPool_t *cl_genericPool;	/**< permanent client data - menu, fonts */
-memPool_t *vid_genericPool;	/**< also holds all the static models */
-memPool_t *vid_imagePool;
-memPool_t *vid_lightPool;	/**< lightmap - wiped with every new map */
-memPool_t *vid_modelPool;	/**< modeldata - wiped with every new map */
+memPool_t* cl_genericPool;	/**< permanent client data - menu, fonts */
+memPool_t* vid_genericPool;	/**< also holds all the static models */
+memPool_t* vid_imagePool;
+memPool_t* vid_lightPool;	/**< lightmap - wiped with every new map */
+memPool_t* vid_modelPool;	/**< modeldata - wiped with every new map */
 /*====================================================================== */
 
 /**
@@ -714,7 +714,7 @@ static void CL_TeamDefInitMenu (void)
 		return;
 
 	for (int i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *td = &csi.teamDef[i];
+		const teamDef_t* td = &csi.teamDef[i];
 		if (td->team != TEAM_CIVILIAN)
 			UI_AddOption(&option, td->id, va("_%s", td->name), td->id);
 	}
@@ -740,7 +740,7 @@ static void CL_ParseActorSkin (const char* name, const char** text)
 		}
 	}
 
-	actorSkin_t *skin = CL_AllocateActorSkin(name);
+	actorSkin_t* skin = CL_AllocateActorSkin(name);
 
 	Com_ParseBlock(name, text, skin, actorskin_vals, nullptr);
 }
@@ -750,8 +750,8 @@ static void CL_ParseActorSkin (const char* name, const char** text)
  */
 static int Com_MapDefSort (const void* mapDef1, const void* mapDef2)
 {
-	const char* map1 = ((const mapDef_t *)mapDef1)->map;
-	const char* map2 = ((const mapDef_t *)mapDef2)->map;
+	const char* map1 = ((const mapDef_t* )mapDef1)->map;
+	const char* map2 = ((const mapDef_t* )mapDef2)->map;
 
 	/* skip special map chars for rma and base attack */
 	if (map1[0] == '+' || map1[0] == '.')
@@ -855,10 +855,10 @@ static cvarList_t checkcvar[] = {
  */
 static void CL_CheckCvars_f (void)
 {
-	cvarList_t *c;
+	cvarList_t* c;
 
 	for (c = checkcvar; c->name != nullptr; c++) {
-		cvar_t *var = Cvar_Get(c->name);
+		cvar_t* var = Cvar_Get(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
 			UI_PushWindow("checkcvars");
@@ -1202,11 +1202,11 @@ static void CL_RImagesCvarChange (const char* cvarName, const char* oldValue, co
  */
 void CL_Init (void)
 {
-	const cvar_t *var;
+	const cvar_t* var;
 
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
-	cvar_t *fs_i18ndir;
+	cvar_t* fs_i18ndir;
 
 	isdown = false;
 
@@ -1276,7 +1276,7 @@ int CL_Milliseconds (void)
  */
 void CL_Shutdown (void)
 {
-	const cvar_t *var;
+	const cvar_t* var;
 
 	if (isdown) {
 		printf("recursive shutdown\n");

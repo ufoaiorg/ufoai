@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c nullptr if no equipment definition found.
  */
-const equipDef_t *INV_GetEquipmentDefinitionByID (const char* name)
+const equipDef_t* INV_GetEquipmentDefinitionByID (const char* name)
 {
 	int i;
 
 	for (i = 0; i < csi.numEDs; i++) {
-		const equipDef_t *ed = &csi.eds[i];
+		const equipDef_t* ed = &csi.eds[i];
 		if (Q_streq(name, ed->id))
 			return ed;
 	}
@@ -62,8 +62,8 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char* name)
  * @note a free spot in the targetContainer
  * @return true if the move was successful.
  */
-bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY,
-	const invDef_t *fromContainer, Item* fItem, Item* *uponItem)
+bool INV_MoveItem (Inventory* inv, const invDef_t* toContainer, int toX, int toY,
+	const invDef_t* fromContainer, Item* fItem, Item* *uponItem)
 {
 	if (toX >= SHAPE_BIG_MAX_WIDTH || toY >= SHAPE_BIG_MAX_HEIGHT)
 		return false;
@@ -98,7 +98,7 @@ bool INV_MoveItem (Inventory* inv, const invDef_t *toContainer, int toX, int toY
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t* srcContainer, const invDef_t* destContainer)
 {
 	assert(weaponList);
 
@@ -107,7 +107,7 @@ bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t *src
 	x += weaponList->getX();
 	y += weaponList->getY();
 
-	const objDef_t *weapon = weaponList->def();
+	const objDef_t* weapon = weaponList->def();
 	if (weapon->weapons[0]) {
 		Item* ic = inv->getItemAtPos(destContainer, x, y);
 		if (ic) {
@@ -118,7 +118,7 @@ bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t *src
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
 		/* search an ammo */
 		for (int i = 0; i < weapon->numAmmos; i++) {
-			const objDef_t *ammo = weapon->ammos[i];
+			const objDef_t* ammo = weapon->ammos[i];
 			Item *ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
 			if (ic)
 				return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, nullptr);
@@ -135,7 +135,7 @@ bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t *src
  * @param[in] container Inventory definition where to put the removed ammo.
  * @return @c true if the ammo was moved to the container, @c false otherwise
  */
-bool INV_UnloadWeapon (Item* weapon, Inventory* inv, const invDef_t *container)
+bool INV_UnloadWeapon (Item* weapon, Inventory* inv, const invDef_t* container)
 {
 	assert(weapon);
 	if (container && inv) {
@@ -164,7 +164,7 @@ static void INV_InventoryList_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		int j;
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 
 		Com_Printf("Item: %s\n", od->id);
 		Com_Printf("... name          -> %s\n", od->name);
@@ -196,7 +196,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 	bool result = true;
 
 	for (i = 0; i < csi.numEDs; i++) {
-		const equipDef_t *const ed = &csi.eds[i];
+		const equipDef_t* const ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
 		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
 			continue;
@@ -204,7 +204,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 		/* Check primary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t *const obj = INVSH_GetItemByIDX(j);
+			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
 				sum += ed->numItems[j];
@@ -217,7 +217,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 		/* Check secondary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t *const obj = INVSH_GetItemByIDX(j);
+			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->isReloadable() && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
 		}
@@ -229,7 +229,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 		/* Check armour */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t *const obj = INVSH_GetItemByIDX(j);
+			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
 				sum += ed->numItems[j];
 		}
@@ -244,7 +244,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 	return result;
 }
 
-itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
+itemFilterTypes_t INV_GetFilterFromItem (const objDef_t* obj)
 {
 	assert(obj);
 
@@ -272,7 +272,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
  * @param[in] filterType Filter type to check against.
  * @return @c true if obj is in filterType
  */
-bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
+bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterType)
 {
 	int i;
 
@@ -286,7 +286,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			const objDef_t *weapon = obj->weapons[i];
+			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
 		}
@@ -298,7 +298,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			const objDef_t *weapon = obj->weapons[i];
+			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
 		}
@@ -310,7 +310,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			const objDef_t *weapon = obj->weapons[i];
+			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
 		}
@@ -363,7 +363,7 @@ bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterT
  * @return @c Item Pointer to the Item/item that is located at x/y or equals "item".
  * @sa Inventory::getItemAtPos
  */
-Item* INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t *container, const objDef_t *itemType,  const itemFilterTypes_t filterType)
+Item* INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t* container, const objDef_t* itemType,  const itemFilterTypes_t filterType)
 {
 	Item* ic;
 
