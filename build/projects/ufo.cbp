@@ -535,6 +535,7 @@
 		<Unit filename="../../src/client/renderer/r_entity.h" />
 		<Unit filename="../../src/client/renderer/r_error.h" />
 		<Unit filename="../../src/client/renderer/r_flare.cpp" />
+		<Unit filename="../../src/client/renderer/r_flare.h" />
 		<Unit filename="../../src/client/renderer/r_font.cpp" />
 		<Unit filename="../../src/client/renderer/r_font.h" />
 		<Unit filename="../../src/client/renderer/r_framebuffer.cpp" />
