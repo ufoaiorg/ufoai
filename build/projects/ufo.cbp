@@ -549,6 +549,7 @@
 		<Unit filename="../../src/client/renderer/r_image.h" />
 		<Unit filename="../../src/client/renderer/r_light.cpp" />
 		<Unit filename="../../src/client/renderer/r_light.h" />
+		<Unit filename="../../src/client/renderer/r_lighting.h" />
 		<Unit filename="../../src/client/renderer/r_lightmap.cpp" />
 		<Unit filename="../../src/client/renderer/r_lightmap.h" />
 		<Unit filename="../../src/client/renderer/r_local.h" />
