@@ -98,9 +98,6 @@ void R_DrawInitLocal (void)
  */
 void R_DrawChar (int x, int y, int num, uint32_t color)
 {
-	int row, col;
-	float frow, fcol;
-
 	num &= 255;
 
 	if ((num & 127) == ' ')		/* space */
@@ -112,12 +109,12 @@ void R_DrawChar (int x, int y, int num, uint32_t color)
 	if (r_char_arrays.vert_index >= lengthof(r_char_arrays.verts))
 		return;
 
-	row = (int) num >> 4;
-	col = (int) num & 15;
+	int row = (int) num >> 4;
+	int col = (int) num & 15;
 
 	/* 0.0625 => 16 cols (conchars images) */
-	frow = row * 0.0625;
-	fcol = col * 0.0625;
+	float frow = row * 0.0625;
+	float fcol = col * 0.0625;
 
 	memcpy(&r_char_arrays.colors[r_char_arrays.color_index +  0], &color, 4);
 	memcpy(&r_char_arrays.colors[r_char_arrays.color_index +  4], &color, 4);
@@ -458,8 +455,6 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 
 static inline void R_Draw2DArray (int points, int* verts, GLenum mode)
 {
-	int i;
-
 	/* fit it on screen */
 	if (points > MAX_LINEVERTS * 2)
 		points = MAX_LINEVERTS * 2;
@@ -467,7 +462,7 @@ static inline void R_Draw2DArray (int points, int* verts, GLenum mode)
 	/* set vertex array pointer */
 	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
-	for (i = 0; i < points * 2; i += 2) {
+	for (int i = 0; i < points * 2; i += 2) {
 		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
 		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
 	}
@@ -639,10 +634,8 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
  */
 static void R_ComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
 {
-	int i;
-
 	/* compute a full bounding box */
-	for (i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++) {
 		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
 		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
 		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
@@ -651,7 +644,6 @@ static void R_ComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t b
 
 void R_DrawBoundingBoxes (void)
 {
-	int i;
 	const int step = 3 * 8;
 	const int bboxes = r_bbox_array.bboxes_index / step;
 	const GLushort indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
@@ -664,7 +656,7 @@ void R_DrawBoundingBoxes (void)
 
 	R_Color(nullptr);
 
-	for (i = 0; i < bboxes; i++) {
+	for (int i = 0; i < bboxes; i++) {
 		const float* bbox = &r_bbox_array.bboxes[i * step];
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 		/* Draw top and sides */
@@ -682,7 +674,6 @@ void R_DrawBoundingBoxes (void)
 
 void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 {
-	int i;
 	vec3_t bbox[8];
 	const size_t max = lengthof(r_bbox_array.bboxes);
 
@@ -691,7 +682,7 @@ void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 
 	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
-	for (i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++) {
 		VectorCopy(bbox[i], &r_bbox_array.bboxes[r_bbox_array.bboxes_index]);
 		r_bbox_array.bboxes_index += 3;
 	}
