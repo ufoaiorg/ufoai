@@ -240,12 +240,12 @@ window mailclient
 	}
 
 	/**
-	 * @brief
-	 * @param <1> index
-	 * @param <2> headline
-	 * @param <3> icon
+	 * @brief Adds a new mail header entry to the mail panel
+	 * @param <1> index The index that can be used to reference a mail header entry
+	 * @param <2> headline The headline
+	 * @param <3> icon The icon of the mail entry
 	 * @param <4> 1=read 0=unread
-	 * @param <5> date
+	 * @param <5> date The date the mail was sent
 	 */
 	confunc add_mail
 	{
