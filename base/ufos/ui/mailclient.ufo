@@ -97,6 +97,56 @@ window mail
 	}
 }
 
+component mailheader extends panel
+{
+	{
+		size			"890 28"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	10
+	}
+
+	image icon
+	{
+		src	""
+		size	"28 28"
+	}
+
+	panel header
+	{
+		{
+			size	"900 28"
+		}
+
+		data index
+		{
+			integer		-1
+		}
+
+		image background
+		{
+			src		"ui/mail_button"
+			texl	"0 0"
+			texh	"852 28"
+		}
+
+		string headline
+		{
+			string	""
+			pos		"10 2"
+			size	"660 24"
+			font	"f_small"
+		}
+
+		string date
+		{
+			string		""
+			pos			"690 2"
+			size		"100 24"
+			font		"f_small"
+		}
+	}
+}
+
 window mailclient
 {
 	/** @todo Remove me */
@@ -171,375 +221,55 @@ window mailclient
 		onClick		{ cmd "mn_mail_readall 0;" }
 	}
 
-	image mail_icon_0
+	panel mails
 	{
-		src		*cvar:mn_mail_icon0
-		pos			"50 124"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_1
-	{
-		src		*cvar:mn_mail_icon1
-		pos			"50 162"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_2
-	{
-		src		*cvar:mn_mail_icon2
-		pos			"50 200"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_3
-	{
-		src		*cvar:mn_mail_icon3
-		pos			"50 238"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_4
-	{
-		src		*cvar:mn_mail_icon4
-		pos			"50 276"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_5
-	{
-		src		*cvar:mn_mail_icon5
-		pos			"50 314"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_6
-	{
-		src		*cvar:mn_mail_icon6
-		pos			"50 352"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_7
-	{
-		src		*cvar:mn_mail_icon7
-		pos			"50 390"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_8
-	{
-		src		*cvar:mn_mail_icon8
-		pos			"50 428"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_9
-	{
-		src		*cvar:mn_mail_icon9
-		pos			"50 466"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_10
-	{
-		src		*cvar:mn_mail_icon10
-		pos			"50 504"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_11
-	{
-		src		*cvar:mn_mail_icon11
-		pos			"50 542"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_12
-	{
-		src		*cvar:mn_mail_icon12
-		pos			"50 580"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_13
-	{
-		src		*cvar:mn_mail_icon13
-		pos			"50 618"
-		texl		"0 0"
-		texh		"28 28"
-	}
-	image mail_icon_14
-	{
-		src		*cvar:mn_mail_icon14
-		pos			"50 656"
-		texl		"0 0"
-		texh		"28 28"
-	}
+		{
+			pos				"50 130"
+			size			"890 570"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	10
+			ghost			true
+			wheelscrollable	true
 
-	image mail_button_0
-	{
-		visiblewhen "*cvar:mn_mail_read0 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 124"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_1
-	{
-		visiblewhen "*cvar:mn_mail_read1 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 162"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_2
-	{
-		visiblewhen "*cvar:mn_mail_read2 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 200"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_3
-	{
-		visiblewhen "*cvar:mn_mail_read3 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 238"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_4
-	{
-		visiblewhen "*cvar:mn_mail_read4 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 276"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_5
-	{
-		visiblewhen "*cvar:mn_mail_read5 == 1"
-		src		"ui/mail_button"
-		pos			"90 314"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_6
-	{
-		visiblewhen "*cvar:mn_mail_read6 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 352"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_7
-	{
-		visiblewhen "*cvar:mn_mail_read7 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 390"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_8
-	{
-		visiblewhen "*cvar:mn_mail_read8 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 428"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_9
-	{
-		visiblewhen "*cvar:mn_mail_read9 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 466"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_10
-	{
-		visiblewhen "*cvar:mn_mail_read10 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 504"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_11
-	{
-		visiblewhen "*cvar:mn_mail_read11 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 542"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_12
-	{
-		visiblewhen "*cvar:mn_mail_read12 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 580"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_13
-	{
-		visiblewhen "*cvar:mn_mail_read13 == 1"
-		src	 	"ui/mail_button"
-		pos			"90 618"
-		texl		"0 0"
-		texh		"852 28"
-	}
-	image mail_button_14
-	{
-		visiblewhen "*cvar:mn_mail_read14 == 1"
-		src 		"ui/mail_button"
-		pos			"90 656"
-		texl		"0 0"
-		texh		"852 28"
-	}
-
-	image mail_button_un_0
-	{
-		visiblewhen "*cvar:mn_mail_read0 == 0"
-		src 		"ui/mail_button"
-		pos			"90 124"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_1
-	{
-		visiblewhen "*cvar:mn_mail_read1 == 0"
-		src 		"ui/mail_button"
-		pos			"90 162"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_2
-	{
-		visiblewhen "*cvar:mn_mail_read2 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 200"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_3
-	{
-		visiblewhen "*cvar:mn_mail_read3 == 0"
-		src 		"ui/mail_button"
-		pos			"90 238"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_4
-	{
-		visiblewhen "*cvar:mn_mail_read4 == 0"
-		src 		"ui/mail_button"
-		pos			"90 276"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_5
-	{
-		visiblewhen "*cvar:mn_mail_read5 == 0"
-		src 		"ui/mail_button"
-		pos			"90 314"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_6
-	{
-		visiblewhen "*cvar:mn_mail_read6 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 352"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_7
-	{
-		visiblewhen "*cvar:mn_mail_read7 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 390"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_8
-	{
-		visiblewhen "*cvar:mn_mail_read8 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 428"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_9
-	{
-		visiblewhen "*cvar:mn_mail_read9 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 466"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_10
-	{
-		visiblewhen "*cvar:mn_mail_read10 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 504"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_11
-	{
-		visiblewhen "*cvar:mn_mail_read11 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 542"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_12
-	{
-		visiblewhen "*cvar:mn_mail_read12 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 580"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_13
-	{
-		visiblewhen "*cvar:mn_mail_read13 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 618"
-		texl		"0 28"
-		texh		"852 56"
-	}
-	image mail_button_un_14
-	{
-		visiblewhen "*cvar:mn_mail_read14 == 0"
-		src	 	"ui/mail_button"
-		pos			"90 656"
-		texl		"0 28"
-		texh		"852 56"
-	}
-
-	/* tabbed and bolded textlist */
-	text mailclient
-	{
-		dataid		TEXT_UFOPEDIA_MAIL
-		pos			"100 130"
-		width		"870"
-		rows		"15"
-		font		"f_small"
-		lineheight	38
-		tabwidth	700
-		mousefx		true
-		onClick		{ cmd "mailclient_click <lineselected>;" }
-		onViewChange	{
-			*node:root.mailclient_scroll@fullsize = <fullsize>
-			*node:root.mailclient_scroll@current = <viewpos>
-			*node:root.mailclient_scroll@viewsize = <viewsize>
-			cmd "ufopedia_scrollmail <viewpos>;"
+			onViewChange {
+				*node:root.mailclient_scroll@fullsize = <fullsize>
+				*node:root.mailclient_scroll@current = <viewpos>
+				*node:root.mailclient_scroll@viewsize = <viewsize>
+			}
 		}
 	}
 
-	vscrollbar mailclient_scroll {
+	/**
+	 * @brief
+	 * @param <1> index
+	 * @param <2> headline
+	 * @param <3> icon
+	 * @param <4> 1=read 0=unread
+	 * @param <5> date
+	 */
+	confunc add_mail
+	{
+		call *node:root.mails@createChild("mail<1>", "mailheader")
+		*node:root.mails.mail<1>.header.index@integer = <1>
+
+		*node:root.mails.mail<1>.header.headline@string = <2>
+		*node:root.mails.mail<1>.header.headline@onClick = { cmd "mailclient_click <node:this.parent.index@integer>;" }
+
+		*node:root.mails.mail<1>.header.date@string = <5>
+		*node:root.mails.mail<1>.icon@src = <3>
+		if ( <4> eq 0 ) {
+			*node:root.mails.mail<1>.header.background@texl = "0 28"
+			*node:root.mails.mail<1>.header.background@texh	= "852 56"
+		}
+	}
+
+	confunc clear_mails
+	{
+		call *node:root.mails@removeAllChild
+	}
+
+	vscrollbar mailclient_scroll
+	{
 		image		"ui/scrollbar_v_green"
 		pos			"950 125"
 		height		560
@@ -548,8 +278,7 @@ window mailclient
 		fullsize	50
 		hidewhenunused true
 		onChange		{
-			*node:root.mailclient@viewpos = <current>
-			cmd "ufopedia_scrollmail <current>;"
+			*node:root.mails@viewpos = <current>
 		}
 	}
 
@@ -563,19 +292,13 @@ window mailclient
 		onClick		{ cmd "ui_pop;" }
 	}
 
-	func update
-	{
-		cmd "ufopedia_openmail <node:root.mailclient@viewpos>;"
-	}
-
 	func onWindowOpened
 	{
-		cmd "ui_addlistener mail@onWindowClosed <path:root>.update"
-		call *node:this.update
+		cmd "ufopedia_openmail;"
 	}
 
-	func onWindowClosed
+	func onWindowActivate
 	{
-		cmd "ui_removelistener mail@onWindowClosed <path:root>.update"
+		cmd "ufopedia_openmail;"
 	}
 }

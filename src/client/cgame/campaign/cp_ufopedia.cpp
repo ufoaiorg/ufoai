@@ -46,12 +46,6 @@ static pediaChapter_t* currentChapter;
 #define MAX_UPTEXT 4096
 static char upBuffer[MAX_UPTEXT];
 
-#define MAIL_LENGTH 256
-#define MAIL_BUFFER_SIZE 0x4000
-static char mailBuffer[MAIL_BUFFER_SIZE];
-#define CHECK_MAIL_EOL if (mailBuffer[MAIL_LENGTH-3] != '\n') mailBuffer[MAIL_LENGTH-2] = '\n';
-#define MAIL_CLIENT_LINES 15
-
 /**
  * @note don't change the order or you have to change the if statements about mn_updisplay cvar
  * in menu_ufopedia.ufo, too
@@ -945,15 +939,13 @@ static void UP_Update_f (void)
  */
 static void UP_MailClientClick_f (void)
 {
-	uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
-	int num;
-	int cnt = -1;
-
 	if (cgi->Cmd_Argc() < 2)
 		return;
 
-	num = atoi(cgi->Cmd_Argv(1));
+	int cnt = -1;
+	const int num = atoi(cgi->Cmd_Argv(1));
 
+	uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
@@ -1026,84 +1018,6 @@ static void UP_ResearchedLinkClick_f (void)
 }
 
 /**
- * @brief Set up mail icons
- * @sa UP_OpenMail_f
- * @note @c UP_OpenMail_f must be called before using this function - we need the
- * @c mailClientListNode pointer here
- */
-static void UP_SetMailButtons_f (void)
-{
-	int i = 0, num;
-	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
-
-	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <pos>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(cgi->Cmd_Argv(1));
-
-	while (m && (i < MAIL_CLIENT_LINES)) {
-		switch (m->type) {
-		case MSG_RESEARCH_PROPOSAL:
-			if (!m->pedia->mail[TECHMAIL_PRE].from)
-				break;
-			if (num) {
-				num--;
-			} else {
-				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-				cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_PRE].icon);
-			}
-			break;
-		case MSG_RESEARCH_FINISHED:
-			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
-				break;
-			if (num) {
-				num--;
-			} else {
-				cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-				cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_RESEARCHED].icon);
-			}
-			break;
-		case MSG_NEWS:
-			if (m->pedia->mail[TECHMAIL_PRE].from) {
-				if (num) {
-					num--;
-				} else {
-					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_PRE].icon);
-				}
-			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
-				if (num) {
-					num--;
-				} else {
-					cgi->Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->pedia->mail[TECHMAIL_RESEARCHED].icon);
-				}
-			}
-			break;
-		case MSG_EVENT:
-			if (m->eventMail->from) {
-				if (num) {
-					num--;
-				} else {
-					cgi->Cvar_Set(va("mn_mail_read%i", i), m->eventMail->read ? "1": "0");
-					cgi->Cvar_Set(va("mn_mail_icon%i", i++), "%s", m->eventMail->icon ? m->eventMail->icon : "");
-				}
-			}
-			break;
-		default:
-			break;
-		}
-		m = m->next;
-	}
-	while (i < MAIL_CLIENT_LINES) {
-		cgi->Cvar_Set(va("mn_mail_read%i", i), "-1");
-		cgi->Cvar_Set(va("mn_mail_icon%i", i++), "");
-	}
-}
-
-/**
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
  * @sa CP_GetUnreadMails
@@ -1112,86 +1026,69 @@ static void UP_SetMailButtons_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack();
-	dateLong_t date;
-
-	mailBuffer[0] = '\0';
-
-	while (m) {
+	cgi->UI_ExecuteConfunc("clear_mails");
+	int idx = 0;
+	for (const uiMessageListNodeMessage_t* m = cgi->UI_MessageGetStack(); m; m = m->next) {
+		dateLong_t date;
+		char headline[256] = "";
+		char dateBuf[64] = "";
+		const char* icon;
+		bool read;
 		switch (m->type) {
-		case MSG_RESEARCH_PROPOSAL:
-			if (!m->pedia->mail[TECHMAIL_PRE].from)
-				break;
+		case MSG_RESEARCH_PROPOSAL: {
+			const techMail_t& mail = m->pedia->mail[TECHMAIL_PRE];
+			if (!mail.from)
+				continue;
 			CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
-			if (!m->pedia->mail[TECHMAIL_PRE].read)
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^BProposal: %s\t%i %s %02i\n"),
-					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					date.year, Date_GetMonthName(date.month - 1), date.day);
-			else
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("Proposal: %s\t%i %s %02i\n"),
-					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					date.year, Date_GetMonthName(date.month - 1), date.day);
-			CHECK_MAIL_EOL
-			break;
-		case MSG_RESEARCH_FINISHED:
-			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
-				break;
-			CP_DateConvertLong(&m->pedia->researchedDate, &date);
-			if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^BRe: %s\t%i %s %02i\n"),
-					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					date.year, Date_GetMonthName(date.month - 1), date.day);
-			else
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("Re: %s\t%i %s %02i\n"),
-					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					date.year, Date_GetMonthName(date.month - 1), date.day);
-			CHECK_MAIL_EOL
-			break;
-		case MSG_NEWS:
-			if (m->pedia->mail[TECHMAIL_PRE].from) {
-				CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
-				if (!m->pedia->mail[TECHMAIL_PRE].read)
-					Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%i %s %02i\n"),
-						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						date.year, Date_GetMonthName(date.month - 1), date.day);
-				else
-					Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%i %s %02i\n"),
-						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						date.year, Date_GetMonthName(date.month - 1), date.day);
-				CHECK_MAIL_EOL
-			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
-				CP_DateConvertLong(&m->pedia->researchedDate, &date);
-				if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
-					Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%i %s %02i\n"),
-						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						date.year, Date_GetMonthName(date.month - 1), date.day);
-				else
-					Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%i %s %02i\n"),
-						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						date.year, Date_GetMonthName(date.month - 1), date.day);
-				CHECK_MAIL_EOL
-			}
-			break;
-		case MSG_EVENT:
-			assert(m->eventMail);
-			if (!m->eventMail->from)
-				break;
-			if (!m->eventMail->read)
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("^B%s\t%s\n"),
-					_(m->eventMail->subject), _(m->eventMail->date));
-			else
-				Q_strcat(mailBuffer, sizeof(mailBuffer), _("%s\t%s\n"),
-					_(m->eventMail->subject), _(m->eventMail->date));
-			CHECK_MAIL_EOL
-			break;
-		default:
+			Com_sprintf(headline, sizeof(headline), _("Proposal: %s"), _(m->pedia->mail[TECHMAIL_PRE].subject));
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
+			icon = mail.icon;
+			read = mail.read;
 			break;
 		}
-		m = m->next;
+		case MSG_RESEARCH_FINISHED: {
+			const techMail_t& mail = m->pedia->mail[TECHMAIL_RESEARCHED];
+			if (!mail.from)
+				continue;
+			CP_DateConvertLong(&m->pedia->researchedDate, &date);
+			Com_sprintf(headline, sizeof(headline), _("Re: %s"), _(m->pedia->mail[TECHMAIL_PRE].subject));
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
+			icon = mail.icon;
+			read = mail.read;
+			break;
+		}
+		case MSG_NEWS: {
+			const techMail_t* mail = &m->pedia->mail[TECHMAIL_PRE];
+			if (mail->from) {
+				CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
+			} else {
+				CP_DateConvertLong(&m->pedia->researchedDate, &date);
+				mail = &m->pedia->mail[TECHMAIL_RESEARCHED];
+			}
+			if (!mail->from)
+				continue;
+			Com_sprintf(headline, sizeof(headline), "%s", _(mail->subject));
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
+			icon = mail->icon;
+			read = mail->read;
+			break;
+		}
+		case MSG_EVENT: {
+			assert(m->eventMail);
+			const eventMail_t& mail = *m->eventMail;
+			if (!mail.from)
+				break;
+			Com_sprintf(headline, sizeof(headline), "%s", _(mail.subject));
+			Com_sprintf(dateBuf, sizeof(dateBuf), "%s", mail.date);
+			icon = mail.icon;
+			read = mail.read;
+			break;
+		}
+		default:
+			continue;
+		}
+		cgi->UI_ExecuteConfunc("add_mail %i \"%s\" \"%s\" %i \"%s\"", idx++, headline, icon, read, dateBuf);
 	}
-	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAIL, mailBuffer);
-
-	UP_SetMailButtons_f();
 }
 
 /**
@@ -1244,7 +1141,6 @@ void UP_InitStartup (void)
 	cgi->Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, nullptr);
 	cgi->Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
 	cgi->Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
-	cgi->Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, nullptr);
 	cgi->Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, nullptr);
 	cgi->Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, nullptr);
 
@@ -1267,7 +1163,6 @@ void UP_Shutdown (void)
 	cgi->Cmd_RemoveCommand("mailclient_click");
 	cgi->Cmd_RemoveCommand("mn_mail_readall");
 	cgi->Cmd_RemoveCommand("ufopedia_openmail");
-	cgi->Cmd_RemoveCommand("ufopedia_scrollmail");
 	cgi->Cmd_RemoveCommand("techtree_click");
 	cgi->Cmd_RemoveCommand("mn_upgotoresearchedlink");
 
