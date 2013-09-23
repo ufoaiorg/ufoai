@@ -1612,7 +1612,7 @@ static void Com_ParseFireEffect (fireDef_t *fd, const char *name, const char **t
 		return;
 	}
 
-	itemEffect_t **stagePtr;
+	itemEffect_t **stagePtr = nullptr;
 	switch (stage) {
 	case EFFECT_ACTIVE:
 		stagePtr = &fd->activeEffect;
