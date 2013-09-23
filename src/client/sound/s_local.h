@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/cvar.h"		/* for cvar_t */
 #include "../../common/mem.h"
 
-extern memPool_t *cl_soundSysPool;
+extern memPool_t* cl_soundSysPool;
 
 /** @brief Supported sound file extensions */
 #define SAMPLE_TYPES { "ogg", "wav", nullptr }
@@ -49,7 +49,7 @@ typedef struct s_sample_s {
 
 typedef struct s_channel_s {
 	vec3_t org;  /**< for temporary entities and other positioned sounds */
-	s_sample_t *sample;
+	s_sample_t* sample;
 	float atten;
 	int count;
 } s_channel_t;
@@ -70,7 +70,7 @@ typedef struct s_env_s {
 	bool initialized;
 } s_env_t;
 
-extern cvar_t *snd_volume;
-extern cvar_t *snd_distance_scale;
+extern cvar_t* snd_volume;
+extern cvar_t* snd_distance_scale;
 
 extern s_env_t s_env;

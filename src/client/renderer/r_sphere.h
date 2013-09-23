@@ -37,7 +37,7 @@ typedef struct sphere_s {
 	int num_tris;		/**< number of tris */
 
 	/** @note  extra stuff for new GLSL renderer*/
-	r_program_t *glslProgram;
+	r_program_t* glslProgram;
 	float blendScale;
 	float glowScale;
 	vec4_t nightLightPos;
@@ -48,6 +48,6 @@ extern sphere_t r_globeEarth;
 extern sphere_t r_globeMoon;
 extern sphere_t r_globeEarthAtmosphere;
 
-void R_SphereGenerate(sphere_t *sphere, const int tris, const float radius);
-void R_SphereRender(const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos);
+void R_SphereGenerate(sphere_t* sphere, const int tris, const float radius);
+void R_SphereRender(const sphere_t* sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos);
 void R_SphereInit(void);

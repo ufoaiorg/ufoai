@@ -65,14 +65,14 @@ static inline void ResetInventoryList (void)
 	cls.i.initInventory("testCampaign", &csi, &inventoryImport);
 }
 
-static campaign_t *GetCampaign (void)
+static campaign_t* GetCampaign (void)
 {
 	return CP_GetCampaign(cp_campaign->string);
 }
 
 static void ResetCampaignData (void)
 {
-	campaign_t *campaign;
+	campaign_t* campaign;
 
 	CP_ResetCampaignData();
 	CP_ParseCampaignData();
@@ -135,8 +135,8 @@ static int UFO_CleanSuiteCampaign (void)
 
 static installation_t* CreateInstallation (const char* name, const vec2_t pos)
 {
-	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_UFOYARD);
-	installation_t *installation;
+	const installationTemplate_t* installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_UFOYARD);
+	installation_t* installation;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);
 
@@ -154,8 +154,8 @@ static installation_t* CreateInstallation (const char* name, const vec2_t pos)
 
 static base_t* CreateBase (const char* name, const vec2_t pos)
 {
-	const campaign_t *campaign = GetCampaign();
-	base_t *base;
+	const campaign_t* campaign = GetCampaign();
+	base_t* base;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
 
@@ -175,10 +175,10 @@ static base_t* CreateBase (const char* name, const vec2_t pos)
 static void testAircraftHandling (void)
 {
 	const vec2_t destination = { 10, 10 };
-	base_t *base;
-	aircraft_t *aircraft;
-	aircraft_t *newAircraft;
-	aircraft_t *aircraftTemplate;
+	base_t* base;
+	aircraft_t* aircraft;
+	aircraft_t* newAircraft;
+	aircraft_t* aircraftTemplate;
 	int firstIdx;
 	int initialCount;
 	int count;
@@ -299,7 +299,7 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
+		const ugv_t* ugvType = Com_GetUGVByID("ugv_ares_w");
 		Employee* e = E_CreateEmployee(EMPL_ROBOT, nullptr, ugvType);
 		CU_ASSERT_PTR_NOT_NULL(e);
 		CU_ASSERT_TRUE(E_DeleteEmployee(e));
@@ -324,7 +324,7 @@ static void testEmployeeHandling (void)
 static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
-	base_t *base;
+	base_t* base;
 	int i;
 
 	ResetCampaignData();
@@ -351,12 +351,12 @@ static void testBaseBuilding (void)
 static void testAutoMissions (void)
 {
 	const vec2_t pos = {-73.2, 18.5};
-	base_t *base;
+	base_t* base;
 	missionResults_t result;
 	battleParam_t battleParameters;
 	aircraft_t* aircraft;
-	mission_t *mission;
-	campaign_t *campaign;
+	mission_t* mission;
+	campaign_t* campaign;
 
 	ResetCampaignData();
 
@@ -396,13 +396,13 @@ static void testAutoMissions (void)
 
 static void testTransferItem (void)
 {
-	const campaign_t *campaign = GetCampaign();
+	const campaign_t* campaign = GetCampaign();
 	const vec2_t pos = {0, 0};
 	const vec2_t posTarget = {51, 0};
-	base_t *base, *targetBase;
+	base_t* base, *targetBase;
 	transferData_t td;
-	const objDef_t *od;
-	transfer_t *transfer;
+	const objDef_t* od;
+	transfer_t* transfer;
 
 	ResetCampaignData();
 
@@ -495,9 +495,9 @@ static void testTransferEmployee (void)
 static void testUFORecovery (void)
 {
 	const vec2_t pos = {0, 0};
-	const aircraft_t *ufo;
-	storedUFO_t *storedUFO;
-	installation_t *installation;
+	const aircraft_t* ufo;
+	storedUFO_t* storedUFO;
+	installation_t* installation;
 	date_t date = ccs.date;
 
 	ResetCampaignData();
@@ -533,7 +533,7 @@ static void testAlienPSIDevice (void)
 	ResetCampaignData();
 	RS_MarkResearchable(nullptr, true);
 
-	technology_t *alienPsiDevice = RS_GetTechByID("rs_alien_psi_device");
+	technology_t* alienPsiDevice = RS_GetTechByID("rs_alien_psi_device");
 	RS_MarkOneResearchable(alienPsiDevice);
 	CU_ASSERT_TRUE(alienPsiDevice->statusResearchable);
 }
@@ -543,13 +543,13 @@ static void testResearch (void)
 	ResetCampaignData();
 	RS_MarkResearchable(nullptr, true);
 
-	technology_t *laserTech = RS_GetTechByID("rs_laser");
+	technology_t* laserTech = RS_GetTechByID("rs_laser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
-	technology_t *otherLaserTech = RS_GetTechByID("rs_baselaser");
+	technology_t* otherLaserTech = RS_GetTechByID("rs_baselaser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(otherLaserTech);
 
 	const vec2_t pos = {0, 0};
-	base_t *base = CreateBase("unittestbase", pos);
+	base_t* base = CreateBase("unittestbase", pos);
 
 	CU_ASSERT_TRUE(laserTech->statusResearchable);
 
@@ -583,13 +583,13 @@ static void testResearch (void)
 static void testProductionItem (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base;
-	const objDef_t *od;
-	const technology_t *tech;
+	base_t* base;
+	const objDef_t* od;
+	const technology_t* tech;
 	int old;
 	int i, n;
 	productionData_t data;
-	production_t *prod;
+	production_t* prod;
 
 	ResetCampaignData();
 
@@ -628,12 +628,12 @@ static void testProductionItem (void)
 static void testProductionAircraft (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base;
-	const aircraft_t *aircraft;
+	base_t* base;
+	const aircraft_t* aircraft;
 	int old;
 	int i, n;
 	productionData_t data;
-	production_t *prod;
+	production_t* prod;
 
 	ResetCampaignData();
 
@@ -678,14 +678,14 @@ static void testProductionAircraft (void)
 static void testDisassembly (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base;
-	const aircraft_t *ufo;
+	base_t* base;
+	const aircraft_t* ufo;
 	int old;
 	int i, n;
-	storedUFO_t *storedUFO;
+	storedUFO_t* storedUFO;
 	productionData_t data;
-	installation_t *installation;
-	production_t *prod;
+	installation_t* installation;
+	production_t* prod;
 
 	ResetCampaignData();
 
@@ -750,15 +750,15 @@ static void testMap (void)
 static void testAirFight (void)
 {
 	const vec2_t destination = { 10, 10 };
-	mission_t *mission;
-	aircraft_t *aircraft;
-	aircraft_t *ufo;
-	base_t *base;
+	mission_t* mission;
+	aircraft_t* aircraft;
+	aircraft_t* ufo;
+	base_t* base;
 	int i, cnt;
 	/* just some random delta time value that is high enough
 	 * to ensure that all the weapons are reloaded */
 	const int deltaTime = 1000;
-	campaign_t *campaign;
+	campaign_t* campaign;
 
 	ResetCampaignData();
 
@@ -779,7 +779,7 @@ static void testAirFight (void)
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
 
 	/* ensure that a FIGHTER can spawn */
-	const aircraft_t *ufoTemplate = UFO_GetByType(UFO_FIGHTER);
+	const aircraft_t* ufoTemplate = UFO_GetByType(UFO_FIGHTER);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufoTemplate);
 	ccs.overallInterest = ufoTemplate->ufoInterestOnGeoscape + 1;
 
@@ -840,10 +840,10 @@ static void testGeoscape (void)
 
 static void testRadar (void)
 {
-	base_t *base;
+	base_t* base;
 	const vec2_t destination = { 10, 10 };
-	aircraft_t *ufo;
-	mission_t *mission;
+	aircraft_t* ufo;
+	mission_t* mission;
 	ufoType_t ufoType = UFO_FIGHTER;
 
 	ResetCampaignData();
@@ -868,8 +868,8 @@ static void testRadar (void)
 
 static void testNation (void)
 {
-	const nation_t *nation;
-	campaign_t *campaign;
+	const nation_t* nation;
+	campaign_t* campaign;
 
 	ResetCampaignData();
 
@@ -884,7 +884,7 @@ static void testNation (void)
 
 static void testMarket (void)
 {
-	campaign_t *campaign;
+	campaign_t* campaign;
 
 	ResetCampaignData();
 
@@ -906,8 +906,8 @@ static void testXVI (void)
 static void testSaveLoad (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base;
-	campaign_t *campaign;
+	base_t* base;
+	campaign_t* campaign;
 
 	ResetCampaignData();
 
@@ -958,7 +958,7 @@ static void testSaveMassEmployees (void)
 {
 	ResetCampaignData();
 
-	campaign_t *campaign = GetCampaign();
+	campaign_t* campaign = GetCampaign();
 
 	SAV_Init();
 
@@ -967,9 +967,9 @@ static void testSaveMassEmployees (void)
 	Cvar_Set("save_compressed", "0");
 
 	const vec2_t pos = {0, 0};
-	base_t *base = CreateBase("unittestmassemployees", pos);
+	base_t* base = CreateBase("unittestmassemployees", pos);
 
-	nation_t *nation = NAT_GetNationByID("europe");
+	nation_t* nation = NAT_GetNationByID("europe");
 	CU_ASSERT_PTR_NOT_NULL(nation);
 
 	const int employees = 10000;
@@ -1001,8 +1001,8 @@ static void testCampaignRun (void)
 {
 	int i;
 	int startDay;
-	campaign_t *campaign;
-	base_t *base;
+	campaign_t* campaign;
+	base_t* base;
 	const vec2_t destination = { 10, 10 };
 	const int days = 10;
 	const int seconds = days * SECONDS_PER_DAY;
@@ -1033,7 +1033,7 @@ static void testCampaignRun (void)
 static void testLoad (void)
 {
 	int i;
-	aircraft_t *ufo;
+	aircraft_t* ufo;
 	const char* error;
 
 	ResetCampaignData();
@@ -1092,8 +1092,8 @@ static void testDateHandling (void)
  */
 static void testCampaignDateHandling (void)
 {
-	campaign_t *campaign;
-	base_t *base;
+	campaign_t* campaign;
+	base_t* base;
 	const vec2_t destination = { 10, 10 };
 
 	ResetCampaignData();
@@ -1125,7 +1125,7 @@ static void testCampaignDateHandling (void)
 
 static void testHospital (void)
 {
-	base_t *base;
+	base_t* base;
 	const vec2_t destination = { 10, 10 };
 	int i, n;
 
@@ -1168,9 +1168,9 @@ static void testBuildingConstruction (void)
 {
 	const vec2_t pos = {0, 0};
 	int x, y;
-	base_t *base;
-	const building_t *buildingTemplate;
-	building_t *entrance, *building1, *building2;
+	base_t* base;
+	const building_t* buildingTemplate;
+	building_t* entrance, *building1, *building2;
 
 	ResetCampaignData();
 
@@ -1268,7 +1268,7 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
-static bool skipTest (const mapDef_t *md)
+static bool skipTest (const mapDef_t* md)
 {
 	const char* map = md->id;
 	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "alienbase");
@@ -1278,7 +1278,7 @@ static void testTerrorMissions (void)
 {
 	int numUfoTypes;
 	ufoType_t ufoTypes[UFO_MAX];
-	mapDef_t *md;
+	mapDef_t* md;
 	int i;
 
 	ResetCampaignData();
@@ -1286,7 +1286,7 @@ static void testTerrorMissions (void)
 	/* Set overall interest level so every UFO can be used for missions */
 	for (i = UFO_SCOUT; i < UFO_MAX; i++) {
 		ufoType_t ufoType = (ufoType_t)i;
-		const aircraft_t *ufo = UFO_GetByType(ufoType);
+		const aircraft_t* ufo = UFO_GetByType(ufoType);
 
 		if (!ufo)
 			continue;
@@ -1306,7 +1306,7 @@ static void testTerrorMissions (void)
 	for (i = 0; i < numUfoTypes; i++) {
 		ufoType_t ufoType = (ufoType_t)i;
 		mission_t mission;
-		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], nullptr, &mission);
+		aircraft_t* ufo = UFO_AddToGeoscape(ufoTypes[ufoType], nullptr, &mission);
 
 		OBJZERO(mission);
 		mission.ufo = ufo;
@@ -1337,7 +1337,7 @@ static void testTerrorMissions (void)
 			bool found = false;
 			for (i = 0; i < numUfoTypes; i++) {
 				ufoType_t ufoType = (ufoType_t)i;
-				const aircraft_t *ufo = UFO_GetByType(ufoTypes[ufoType]);
+				const aircraft_t* ufo = UFO_GetByType(ufoTypes[ufoType]);
 
 				if (!ufo)
 					continue;
@@ -1356,7 +1356,7 @@ static void testTerrorMissions (void)
 
 static void testRandomPosMissions (void)
 {
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	ResetCampaignData();
 
@@ -1387,7 +1387,7 @@ static void testEventTrigger (void)
 		ccs.date.day++;
 	}
 	Cmd_AddCommand("test_eventtrigger", testEventTrigger_f);
-	campaignTriggerEvent_t *event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents++];
+	campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents++];
 	OBJZERO(*event);
 	event->active = true;
 	event->type = UFO_DETECTION;
@@ -1418,7 +1418,7 @@ static void testAssembleMap (void)
 	ResetCampaignData();
 
 	const vec2_t destination = { 10, 10 };
-	base_t *base = CreateBase("unittestassemble", destination);
+	base_t* base = CreateBase("unittestassemble", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	char maps[2048];
 	char coords[2048];

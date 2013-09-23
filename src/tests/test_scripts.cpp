@@ -127,7 +127,7 @@ static void testTeamDefs (void)
 	int i;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *teamDef = &csi.teamDef[i];
+		const teamDef_t* teamDef = &csi.teamDef[i];
 		int k;
 
 		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id));
@@ -146,16 +146,16 @@ static void testTeamDefs (void)
 static void testTeamDefsModelScriptData (void)
 {
 	int i;
-	linkedList_t *armourPaths = nullptr;
+	linkedList_t* armourPaths = nullptr;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		int j;
-		const teamDef_t *teamDef = &csi.teamDef[i];
+		const teamDef_t* teamDef = &csi.teamDef[i];
 		if (!teamDef->armour)
 			continue;
 
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t *od = INVSH_GetItemByIDX(j);
+			const objDef_t* od = INVSH_GetItemByIDX(j);
 			if (!od->isArmour())
 				continue;
 
@@ -205,7 +205,7 @@ static void testItems (void)
 	int j;
 
 	for (j = 0; j < csi.numODs; j++) {
-		const objDef_t *od = INVSH_GetItemByIDX(j);
+		const objDef_t* od = INVSH_GetItemByIDX(j);
 		int i;
 
 		if (od->isVirtual || od->isDummy)
@@ -219,7 +219,7 @@ static void testItems (void)
 			int k;
 
 			for (k = 0; k < od->numFiredefs[i]; k++) {
-				const fireDef_t *fd = &od->fd[i][k];
+				const fireDef_t* fd = &od->fd[i][k];
 				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->bounceSound), va("sound %s does not exist (firedef %s for item %s)", fd->bounceSound, fd->name, od->id));
 				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->fireSound), va("sound %s does not exist (firedef %s for item %s)", fd->fireSound, fd->name, od->id));
 				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->impactSound), va("sound %s does not exist (firedef %s for item %s)", fd->impactSound, fd->name, od->id));
@@ -237,7 +237,7 @@ static void testNations (void)
 	int i;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nat = NAT_GetNationByIDX(i);
+		const nation_t* nat = NAT_GetNationByIDX(i);
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(va("nations/%s", nat->id)), va("nation %s has no image", nat->id));
 		CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(nat->id));
 	}
@@ -254,7 +254,7 @@ static void testAircraft (void)
 static void testMapDef (void)
 {
 	int i;
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	i = 0;
 	MapDef_Foreach(md) {

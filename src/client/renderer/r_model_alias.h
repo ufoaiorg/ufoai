@@ -83,18 +83,18 @@ typedef struct mAliasTag_s {
 	/** the tagname */
 	char name[MODEL_MAX_PATH];
 	/** a list of rotation and translation vectors for each frame */
-	mAliasTagOrientation_t *orient;
+	mAliasTagOrientation_t* orient;
 } mAliasTag_t;
 
 typedef	struct mAliasSkin_s {
 	char	name[MODEL_MAX_PATH];
 	int	shader;
-	image_t *skin;
+	image_t* skin;
 } mAliasSkin_t;
 
 typedef struct mIndexList_s {
 	int length;
-	int32_t *list;
+	int32_t* list;
 } mIndexList_t;
 
 typedef	struct mAliasMesh_s {
@@ -104,18 +104,18 @@ typedef	struct mAliasMesh_s {
 	mAliasCoord_t	*stcoords;
 
 	/* static meshes have vertex arrays */
-	vec_t *verts;
-	vec_t *texcoords;
-	vec_t *normals;
-	vec_t *tangents;
-	vec_t *next_verts;
-	vec_t *next_normals;
-	vec_t *next_tangents;
+	vec_t* verts;
+	vec_t* texcoords;
+	vec_t* normals;
+	vec_t* tangents;
+	vec_t* next_verts;
+	vec_t* next_normals;
+	vec_t* next_tangents;
 
 	int	num_tris;
 	int32_t	*indexes;
 	int32_t num_indexes;
-	mIndexList_t *revIndexes;
+	mIndexList_t* revIndexes;
 
 	int		num_bones;
 	mAliasBoneVertex_t	*bonesVertexes;
@@ -161,12 +161,12 @@ typedef	struct	mAliasModel_s {
 
 	/** animation data */
 	int num_anims;
-	mAliasAnim_t *animdata;
+	mAliasAnim_t* animdata;
 	int curAnim;
 } mAliasModel_t;
 
-void R_ModLoadAnims(mAliasModel_t *mod, const char* animname);
+void R_ModLoadAnims(mAliasModel_t* mod, const char* animname);
 bool R_ModLoadMDX(struct model_s *mod);
-void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float smoothness);
-void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, bool prerender);
-void R_ModLoadArrayData(mAliasModel_t *mod, mAliasMesh_t *mesh, bool loadNormals);
+void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t* mesh, int nFrames, float smoothness);
+void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t* mesh, float backlerp, int framenum, int oldframenum, bool prerender);
+void R_ModLoadArrayData(mAliasModel_t* mod, mAliasMesh_t* mesh, bool loadNormals);

@@ -68,20 +68,20 @@ typedef struct mBspTexInfo_s {
 	vec3_t vv;
 	float v_offset;
 	uint32_t flags;	/**< surfaceflags */
-	image_t *image;
+	image_t* image;
 } mBspTexInfo_t;
 
 typedef struct mBspFlare_s {
 	vec3_t origin;
 	float radius;
-	const image_t *image;
+	const image_t* image;
 	vec3_t color;
 	float time;
 	float alpha;
 } mBspFlare_t;
 
 typedef struct mBspSurface_s {
-	cBspPlane_t *plane;
+	cBspPlane_t* plane;
 	int flags;
 	int tile;					/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
@@ -112,9 +112,9 @@ typedef struct mBspSurface_s {
 
 	int tracenum;
 
-	mBspTexInfo_t *texinfo;
+	mBspTexInfo_t* texinfo;
 
-	mBspFlare_t *flare;
+	mBspFlare_t* flare;
 
 	int lightmap_texnum;
 	int deluxemap_texnum;
@@ -178,7 +178,7 @@ typedef struct mBspNode_s {
 	struct model_s *model;
 
 	/* node specific */
-	cBspPlane_t *plane;
+	cBspPlane_t* plane;
 	struct mBspNode_s *children[2];
 
 	unsigned short firstsurface;
@@ -190,7 +190,7 @@ typedef struct mBspLeaf_s {
 	int contents;				/**< will be a negative contents number */
 	float minmaxs[6];			/**< for bounding box culling */
 
-	mBspNode_t *parent;
+	mBspNode_t* parent;
 
 	struct model_s *model;
 } mBspLeaf_t;
@@ -202,29 +202,29 @@ typedef struct mBspModel_s {
 	int maptile;		/**< the maptile the surface indices belongs to */
 
 	int numsubmodels;
-	mBspHeader_t *submodels;
+	mBspHeader_t* submodels;
 
 	int numplanes;
-	cBspPlane_t *planes;
+	cBspPlane_t* planes;
 
 	int numleafs;				/**< number of visible leafs, not counting 0 */
-	mBspLeaf_t *leafs;
+	mBspLeaf_t* leafs;
 
 	int numvertexes;
-	mBspVertex_t *vertexes;
+	mBspVertex_t* vertexes;
 
 	int numedges;
-	mBspEdge_t *edges;
+	mBspEdge_t* edges;
 
 	int numnodes;
 	int firstnode;
-	mBspNode_t *nodes;
+	mBspNode_t* nodes;
 
 	int numtexinfo;
-	mBspTexInfo_t *texinfo;
+	mBspTexInfo_t* texinfo;
 
 	int numsurfaces;
-	mBspSurface_t *surfaces;
+	mBspSurface_t* surfaces;
 
 	int numsurfedges;
 	int* surfedges;
@@ -235,7 +235,7 @@ typedef struct mBspModel_s {
 	float* lmtexcoords;
 	float* tangents;
 	float* normals;
-	glElementIndex_t *indexes; /*< TODO: on Android glElementIndex_t is unsigned short, which can be only up to 65536 and might overflow */
+	glElementIndex_t* indexes; /*< TODO: on Android glElementIndex_t is unsigned short, which can be only up to 65536 and might overflow */
 	int numIndexes;
 
 	/* vertex buffer objects */
@@ -250,5 +250,5 @@ typedef struct mBspModel_s {
 	byte* lightdata;
 
 	/* sorted surfaces arrays */
-	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];
+	mBspSurfaces_t* sorted_surfaces[NUM_SURFACES_ARRAYS];
 } mBspModel_t;

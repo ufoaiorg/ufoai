@@ -106,8 +106,8 @@ typedef struct test_property_s {
 	struct test_property_s *next;
 } test_property_t;
 
-static test_property_t *test_property;
-static test_property_t *test_property_hash[PROPERTY_HASH_SIZE];
+static test_property_t* test_property;
+static test_property_t* test_property_hash[PROPERTY_HASH_SIZE];
 
 /**
  * Register a property name-value to a global structure for all tests
@@ -117,7 +117,7 @@ static test_property_t *test_property_hash[PROPERTY_HASH_SIZE];
 void TEST_RegisterProperty (const char* name, const char* value)
 {
 	unsigned int hash;
-	test_property_t *element;
+	test_property_t* element;
 
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(name, PROPERTY_HASH_SIZE);
@@ -128,7 +128,7 @@ void TEST_RegisterProperty (const char* name, const char* value)
 	}
 
 	if (!element) {
-		element = (test_property_t *) malloc(sizeof(*element));
+		element = (test_property_t* ) malloc(sizeof(*element));
 		Q_strncpyz(element->name, name, sizeof(element->name));
 		/** TODO maybe copy the value instead of copying the pointer of the value */
 		element->value = value;
@@ -148,7 +148,7 @@ void TEST_RegisterProperty (const char* name, const char* value)
 static const test_property_t* TEST_GetProperty (const char* name)
 {
 	unsigned int hash;
-	const test_property_t *element;
+	const test_property_t* element;
 
 	hash = Com_HashKey(name, PROPERTY_HASH_SIZE);
 	for (element = test_property_hash[hash]; element; element = element->hash_next) {
@@ -176,7 +176,7 @@ bool TEST_ExistsProperty (const char* name)
  */
 const char* TEST_GetStringProperty (const char* name)
 {
-	const test_property_t *element = TEST_GetProperty(name);
+	const test_property_t* element = TEST_GetProperty(name);
 	if (element == nullptr) {
 		Com_Printf("WARNING: Test property \"%s\" not found. nullptr returned.\n", name);
 		return nullptr;
@@ -191,7 +191,7 @@ const char* TEST_GetStringProperty (const char* name)
  */
 int TEST_GetIntProperty (const char* name)
 {
-	const test_property_t *element = TEST_GetProperty(name);
+	const test_property_t* element = TEST_GetProperty(name);
 	if (element == nullptr) {
 		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
 		return 0;
@@ -206,7 +206,7 @@ int TEST_GetIntProperty (const char* name)
  */
 long TEST_GetLongProperty (const char* name)
 {
-	const test_property_t *element = TEST_GetProperty(name);
+	const test_property_t* element = TEST_GetProperty(name);
 	if (element == nullptr) {
 		Com_Printf("WARNING: Test property \"%s\" not found. 0 returned.\n", name);
 		return 0;

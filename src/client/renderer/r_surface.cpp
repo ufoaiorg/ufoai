@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 
-void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t *normalMap, const image_t *specularMap)
+void R_SetSurfaceBumpMappingParameters (const mBspSurface_t* surf, const image_t* normalMap, const image_t* specularMap)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -40,7 +40,7 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 	assert(surf);
 
 	if (normalMap && (surf->flags & MSURF_LIGHTMAP)) {
-		const image_t *image = surf->texinfo->image;
+		const image_t* image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
 		R_EnableBumpmap(normalMap);
 		R_EnableSpecularMap(specularMap, true);
@@ -56,9 +56,9 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
  * @brief Set the surface state according to surface flags and bind the texture
  * @sa R_DrawSurfaces
  */
-static void R_SetSurfaceState (const mBspSurface_t *surf)
+static void R_SetSurfaceState (const mBspSurface_t* surf)
 {
-	image_t *image;
+	image_t* image;
 
 	if (r_state.blend_enabled) {  /* alpha blend */
 		vec4_t color = {1.0, 1.0, 1.0, 1.0};
@@ -95,22 +95,22 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-void R_DrawSurfaces (const mBspSurfaces_t *surfs, glElementIndex_t *indexPtr)
+void R_DrawSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr)
 {
 	int numSurfaces = surfs->count;
 	mBspSurface_t** surfPtrList = surfs->surfaces;
 	const int frame = r_locals.frame;
 
 	int lastLightMap = 0, lastDeluxeMap = 0;
-	image_t *lastTexture = nullptr;
+	image_t* lastTexture = nullptr;
 	uint32_t lastFlags = ~0;
 
 	int batchStart = 0, batchSize = 0; /* in triangles */
 
 	while (numSurfaces--) {
-		const mBspSurface_t *surf = *surfPtrList++;
+		const mBspSurface_t* surf = *surfPtrList++;
 		const int numTriangles = surf->numTriangles;
-		mBspTexInfo_t *texInfo;
+		mBspTexInfo_t* texInfo;
 		int texFlags;
 		bool newBatch = false;
 

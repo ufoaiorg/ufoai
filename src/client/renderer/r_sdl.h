@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef int rect_t[2];
 
 typedef struct r_sdl_config_s {
-	rect_t *modes;
+	rect_t* modes;
 	int numModes;
 } r_sdl_config_t;
 

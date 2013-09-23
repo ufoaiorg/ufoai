@@ -31,6 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void S_PrecacheSamples(void);
 void S_FreeSamples(void);
-s_sample_t *S_LoadSample(const char* s);
-s_sample_t *S_GetSample (const int soundIdx);
+s_sample_t* S_LoadSample(const char* s);
+s_sample_t* S_GetSample (const int soundIdx);
 void S_PlaySample(const vec3_t origin, s_sample_t* sample, float atten, float volume);

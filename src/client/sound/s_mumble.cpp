@@ -26,9 +26,9 @@ void S_MumbleUpdate (const vec3_t origin, const vec3_t forward, const vec3_t rig
 #else
 #include <libmumblelink.h>
 
-static cvar_t *snd_mumble;
-static cvar_t *snd_mumble_alltalk;
-static cvar_t *snd_mumble_scale;
+static cvar_t* snd_mumble;
+static cvar_t* snd_mumble_alltalk;
+static cvar_t* snd_mumble_scale;
 
 void S_MumbleInit (void)
 {

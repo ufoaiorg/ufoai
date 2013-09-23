@@ -52,8 +52,8 @@ typedef void (*programUseFunc_t)(struct r_program_s *prog);
 typedef struct r_program_s {
 	GLuint id;
 	char name[MAX_VAR];
-	r_shader_t *v;	/**< vertex shader */
-	r_shader_t *f;	/**< fragment shader */
+	r_shader_t* v;	/**< vertex shader */
+	r_shader_t* f;	/**< fragment shader */
 	r_progvar_t vars[MAX_PROGRAM_VARS];
 	programInitFunc_t init;
 	programUseFunc_t use;
@@ -63,7 +63,7 @@ typedef struct r_program_s {
 #define MAX_PROGRAMS 16
 #define MAX_SHADERS MAX_PROGRAMS * 2
 
-void R_UseProgram(r_program_t *prog);
+void R_UseProgram(r_program_t* prog);
 void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 
@@ -82,8 +82,8 @@ void R_ProgramParameter4fv(const char* name, GLfloat* value);
 void R_ProgramParameter4fvs(const char* name, GLint size, GLfloat* value);
 void R_ProgramParameterMatrix4fv(const char* name, GLfloat* value);
 
-void R_InitParticleProgram(r_program_t *prog);
-void R_UseParticleProgram(r_program_t *prog);
+void R_InitParticleProgram(r_program_t* prog);
+void R_UseParticleProgram(r_program_t* prog);
 
-r_program_t *R_LoadProgram(const char* name, programInitFunc_t init, programUseFunc_t use);
+r_program_t* R_LoadProgram(const char* name, programInitFunc_t init, programUseFunc_t use);
 void R_RestartPrograms_f(void);

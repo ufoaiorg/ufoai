@@ -31,13 +31,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define WEB_API_SERVER "http://ufoai.org/"
 
-extern cvar_t *web_username;
-extern cvar_t *web_password;
-extern cvar_t *web_userid;
+extern cvar_t* web_username;
+extern cvar_t* web_password;
+extern cvar_t* web_userid;
 
 bool WEB_CheckAuth(void);
 bool WEB_Auth(const char* username, const char* password);
 void WEB_InitStartup(void);
 bool WEB_GetURL(const char* url, http_callback_t callback, void* userdata = nullptr);
 bool WEB_GetToFile(const char* url, FILE* file);
-bool WEB_PutFile(const char* formName, const char* fileName, const char* url, upparam_t *params = nullptr);
+bool WEB_PutFile(const char* formName, const char* fileName, const char* url, upparam_t* params = nullptr);

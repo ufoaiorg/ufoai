@@ -29,24 +29,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"	/* for many */
 
 #define SAMPLE_HASH_SIZE 64
-static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
+static s_sample_t* sampleHash[SAMPLE_HASH_SIZE];
 
 /* an index into the sampleHash to retrieve samples by an ID/number */
 #define SAMPLE_MAX_COUNT 1000
-static s_sample_t *sampleIndex[SAMPLE_MAX_COUNT];
+static s_sample_t* sampleIndex[SAMPLE_MAX_COUNT];
 static int sampleIndexLast = 0;
 
 /** this pool is reloaded on every sound system restart */
-s_sample_t *stdSoundPool[MAX_SOUNDIDS];
+s_sample_t* stdSoundPool[MAX_SOUNDIDS];
 
 /**
  * @brief Searches the hash for a given sound file
  * @param name The soundfile (relative to the sound dir and without extension)
  * @return @c nullptr if not yet loaded
  */
-static s_sample_t *S_FindByName (const char* name)
+static s_sample_t* S_FindByName (const char* name)
 {
-	s_sample_t *sample;
+	s_sample_t* sample;
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 
 	for (sample = sampleHash[hash]; sample; sample = sample->hashNext)
@@ -134,7 +134,7 @@ int S_LoadSampleIdx (const char* soundFile)
 	return sample->index;
 }
 
-s_sample_t *S_GetSample (const int soundIdx)
+s_sample_t* S_GetSample (const int soundIdx)
 {
 	if (soundIdx > 0 && soundIdx <= sampleIndexLast)
 		return sampleIndex[soundIdx];
@@ -176,10 +176,10 @@ void S_PrecacheSamples (void)
 
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
 			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
-				const fireDef_t *fd = &od->fd[j][k];
+				const fireDef_t* fd = &od->fd[j][k];
 				if (fd->fireSound != nullptr)
 					S_LoadSample(fd->fireSound);
 				if (fd->impactSound != nullptr)

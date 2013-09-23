@@ -34,13 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/game.h"
 #include <SDL_thread.h>
 
-extern memPool_t *sv_genericPool;
+extern memPool_t* sv_genericPool;
 
 typedef struct sv_edict_s {
 	struct worldSector_s *worldSector;	/**< the sector this edict is linked into */
 	struct sv_edict_s *nextEntityInWorldSector;
 	bool linked;		/**< linked into the world */
-	edict_t *ent;
+	edict_t* ent;
 } sv_edict_t;
 
 /** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
@@ -58,7 +58,7 @@ typedef struct worldSector_s {
 	int axis;					/**< -1 = leaf node */
 	float dist;
 	struct worldSector_s *children[2];
-	sv_edict_t *entities;
+	sv_edict_t* entities;
 } worldSector_t;
 
 #define	AREA_NODES	32
@@ -89,7 +89,7 @@ typedef struct serverInstanceStatic_s {
 #ifndef HARD_LINKED_GAME
 	void* gameLibrary;
 #endif
-	game_export_t *ge;
+	game_export_t* ge;
 } serverInstanceStatic_t;
 
 typedef enum server_state_e {
@@ -131,10 +131,10 @@ typedef struct serverInstanceGame_s {
 	worldSector_t worldSectors[AREA_NODES];
 	unsigned int numWorldSectors;
 
-	memPool_t *gameSysPool;		/**< the mempool for the game lib */
+	memPool_t* gameSysPool;		/**< the mempool for the game lib */
 } serverInstanceGame_t;
 
-#define PLAYER_NUM(n) ((player_t *)((byte*)svs.ge->players + svs.ge->player_size * (n)))
+#define PLAYER_NUM(n) ((player_t* )((byte*)svs.ge->players + svs.ge->player_size * (n)))
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
@@ -155,7 +155,7 @@ typedef enum {
 typedef struct client_s {
 	client_state_t state;
 	char userinfo[MAX_INFO_STRING];
-	player_t *player;			/**< game client structure */
+	player_t* player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
 	int lastmessage;			/**< when packet was last received */
@@ -164,29 +164,29 @@ typedef struct client_s {
 } client_t;
 
 extern serverInstanceStatic_t svs;	/**< persistant server instance info */
-extern serverInstanceGame_t *sv;	/**< server data per game/map */
+extern serverInstanceGame_t* sv;	/**< server data per game/map */
 
-extern cvar_t *sv_mapname;
-extern cvar_t *sv_rma;
+extern cvar_t* sv_mapname;
+extern cvar_t* sv_rma;
 /** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
-extern cvar_t *sv_rmadisplaythemap;
-extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
-extern cvar_t *sv_dumpmapassembly;
-extern cvar_t *sv_threads;			/**< run the game lib threaded */
+extern cvar_t* sv_rmadisplaythemap;
+extern cvar_t* sv_public;			/**< should heartbeats be sent? (only for public servers) */
+extern cvar_t* sv_dumpmapassembly;
+extern cvar_t* sv_threads;			/**< run the game lib threaded */
 
 /* sv_main.c */
-void SV_DropClient(client_t *drop, const char* message);
+void SV_DropClient(client_t* drop, const char* message);
 int SV_CountPlayers(void);
 void SV_InitOperatorCommands(void);
-void SV_UserinfoChanged(client_t *cl);
+void SV_UserinfoChanged(client_t* cl);
 void SV_ReadPacket(struct net_stream *s);
 char* SV_GetConfigString(int index);
 int SV_GetConfigStringInteger(int index);
 char* SV_SetConfigString(int index, ...);
 /* ensure that always two parameters are used */
 #define SV_SetConfigString(index, value) SV_SetConfigString(index, value)
-client_t *SV_GetNextClient(client_t *lastClient);
-client_t *SV_GetClient(int index);
+client_t* SV_GetNextClient(client_t* lastClient);
+client_t* SV_GetClient(int index);
 
 /* sv_mapcycle.c */
 void SV_MapcycleInit(void);
@@ -197,13 +197,13 @@ void SV_MapcycleClear(void);
 void SV_Map(bool day, const char* levelstring, const char* assembly);
 
 void SV_Multicast(int mask, const dbuffer &msg);
-void SV_ClientCommand(client_t *client, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
-void SV_ClientPrintf(client_t *cl, int level, const char* fmt, ...) __attribute__((format(__printf__,3,4)));
+void SV_ClientCommand(client_t* client, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
+void SV_ClientPrintf(client_t* cl, int level, const char* fmt, ...) __attribute__((format(__printf__,3,4)));
 void SV_BroadcastPrintf(int level, const char* fmt, ...) __attribute__((format(__printf__,2,3)));
 
 /* sv_user.c */
-void SV_ExecuteClientMessage(client_t *cl, int cmd, dbuffer* msg);
-void SV_SetClientState(client_t *client, client_state_t state);
+void SV_ExecuteClientMessage(client_t* cl, int cmd, dbuffer* msg);
+void SV_SetClientState(client_t* client, client_state_t state);
 
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);
@@ -220,8 +220,8 @@ void SV_ShutdownGameProgs(void);
 
 void SV_ClearWorld(void);
 
-void SV_UnlinkEdict(edict_t *ent);
-void SV_LinkEdict(edict_t *ent);
+void SV_UnlinkEdict(edict_t* ent);
+void SV_LinkEdict(edict_t* ent);
 int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t** list, int maxcount);
 
 /*=================================================================== */
@@ -231,6 +231,6 @@ int SV_PointContents(const vec3_t p);
 const char* SV_GetFootstepSound(const char* texture);
 float SV_GetBounceFraction(const char* texture);
 bool SV_LoadModelAABB(const char* model, int frame, AABB& aabb);
-trace_t SV_Trace(const vec3_t start, const AABB &box, const vec3_t end, const edict_t *passedict, int contentmask);
+trace_t SV_Trace(const vec3_t start, const AABB &box, const vec3_t end, const edict_t* passedict, int contentmask);
 server_state_t SV_GetServerState(void);
 void SV_SetServerState(server_state_t);

@@ -103,7 +103,7 @@ static void testMove (void)
 		const int maxTUs = MAX_ROUTE_TUS;
 		int lengthStored;
 		pos3_t to;
-		pathing_t *path = Mem_AllocType(pathing_t);
+		pathing_t* path = Mem_AllocType(pathing_t);
 
 		VectorSet(vec, 80, 80, 32);
 		VecToPos(vec, pos);
@@ -217,8 +217,8 @@ static void testMoveEntities (void)
 {
 	pos3_t pos;
 	vec3_t vec;
-	pathing_t *path = Mem_AllocType(pathing_t);
-	pos_t *forbiddenList[MAX_FORBIDDENLIST];
+	pathing_t* path = Mem_AllocType(pathing_t);
+	pos_t* forbiddenList[MAX_FORBIDDENLIST];
 	int forbiddenListLength = 0;
 	const byte crouchingState = 0;
 	const int maxTUs = MAX_ROUTE_TUS;
@@ -232,7 +232,7 @@ static void testMoveEntities (void)
 	G_CompleteRecalcRouting();
 
 	{
-		edict_t *ent = nullptr;
+		edict_t* ent = nullptr;
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			/* Dead 2x2 unit will stop walking, too. */
 			if (ent->type == ET_SOLID) {

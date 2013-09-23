@@ -30,10 +30,10 @@
 #include "../ui/ui_main.h"
 #include "../../shared/parse.h"
 
-static cvar_t *web_cgamedownloadurl;
-static cvar_t *web_cgamedeleteurl;
-static cvar_t *web_cgameuploadurl;
-static cvar_t *web_cgamelisturl;
+static cvar_t* web_cgamedownloadurl;
+static cvar_t* web_cgamedeleteurl;
+static cvar_t* web_cgameuploadurl;
+static cvar_t* web_cgamelisturl;
 
 #define URL_SIZE 576
 
@@ -272,7 +272,7 @@ static void WEB_ListCGameFilesCallback (const char* responseBuf, void* userdata)
 			continue;
 		}
 
-		const value_t *value;
+		const value_t* value;
 		for (value = values; value->string; value++) {
 			if (!Q_streq(token, value->string))
 				continue;

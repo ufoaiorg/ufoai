@@ -358,7 +358,7 @@ static void testParserListOk (void)
 {
 	const char* string = " (  aaa \n \"bbb\" \t ccc \n \n ) ";
 	const char* cursor = string;
-	linkedList_t *list;
+	linkedList_t* list;
 
 	if (!Com_ParseList(&cursor, &list)) {
 		CU_FAIL_FATAL("List parsing failed");
@@ -381,7 +381,7 @@ static void testParserListOkEmpty (void)
 {
 	const char* string = " (  \n ) ()";
 	const char* cursor = string;
-	linkedList_t *list;
+	linkedList_t* list;
 
 	if (!Com_ParseList(&cursor, &list)) {
 		CU_FAIL_FATAL("List parsing failed");
@@ -403,7 +403,7 @@ static void testParserListKoEOF (void)
 {
 	const char* string = " (  aaa \n bbb \t ccc \n \n";
 	const char* cursor = string;
-	linkedList_t *list;
+	linkedList_t* list;
 
 	if (Com_ParseList(&cursor, &list)) {
 		CU_FAIL_FATAL("List parsing succeed, which is wrong");
@@ -418,7 +418,7 @@ static void testParserListKoWrongToken (void)
 	const char* string = " (  aaa \n bbb \t ccc \n \n } ";
 	const char* cursor = string;
 
-	linkedList_t *list;
+	linkedList_t* list;
 	if (Com_ParseList(&cursor, &list)) {
 		CU_FAIL_FATAL("List parsing succeed, which is wrong");
 	}
@@ -431,7 +431,7 @@ static void testParserListKoNewList (void)
 {
 	const char* string = " (  aaa \n bbb \t ccc \n \n ( ";
 	const char* cursor = string;
-	linkedList_t *list;
+	linkedList_t* list;
 
 	if (Com_ParseList(&cursor, &list)) {
 		CU_FAIL_FATAL("List parsing succeed, which is wrong");

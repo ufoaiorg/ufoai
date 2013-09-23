@@ -39,16 +39,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 s_env_t s_env;
 
-cvar_t *snd_volume;
-cvar_t *snd_distance_scale;
-static cvar_t *snd_init;
-static cvar_t *snd_rate;
-static cvar_t *snd_chunkbufsize;
+cvar_t* snd_volume;
+cvar_t* snd_distance_scale;
+static cvar_t* snd_init;
+static cvar_t* snd_rate;
+static cvar_t* snd_chunkbufsize;
 
-memPool_t *cl_soundSysPool;
+memPool_t* cl_soundSysPool;
 
 /* I know this decl shouldn't be here (Duke). Interim solution...*/
-extern s_sample_t *stdSoundPool[MAX_SOUNDIDS];
+extern s_sample_t* stdSoundPool[MAX_SOUNDIDS];
 
 static void S_Restart_f(void);
 
@@ -81,8 +81,8 @@ void S_Frame (void)
 
 	if (CL_OnBattlescape()) {
 		int i;
-		s_channel_t *ch;
-		le_t *le;
+		s_channel_t* ch;
+		le_t* le;
 
 		/* update right angle for stereo panning */
 		VectorCopy(cl.cam.axis[AXIS_RIGHT], s_env.right);
@@ -105,7 +105,7 @@ void S_Frame (void)
 		le = nullptr;
 		while ((le = LE_GetNextInUse(le))) {
 			if (le->type == ET_SOUND) {
-				s_sample_t *sample = S_GetSample(le->sampleIdx);
+				s_sample_t* sample = S_GetSample(le->sampleIdx);
 				int j;
 				for (j = 0; j < MAX_CHANNELS; j++) {
 					if (s_env.channels[j].sample == sample)
@@ -322,7 +322,7 @@ bool S_LoadAndPlaySample (const char* s, const vec3_t origin, float attenuation,
 	if (Q_strnull(s))
 		return false;
 
-	s_sample_t *sample = S_LoadSample(s);
+	s_sample_t* sample = S_LoadSample(s);
 	if (!sample)
 		return false;
 	S_PlaySample(origin, sample, attenuation, volume);
@@ -345,7 +345,7 @@ void S_PlayStdSample (const stdsound_t sId, const vec3_t origin, float attenuati
  * @brief Loads and registers a sound file for later use
  * @param[in] soundFile The name of the soundfile, relative to the sounds dir
  */
-s_sample_t *S_LoadSample (const char* soundFile)
+s_sample_t* S_LoadSample (const char* soundFile)
 {
 	int sampleIdx = S_LoadSampleIdx(soundFile);
 	return S_GetSample(sampleIdx);

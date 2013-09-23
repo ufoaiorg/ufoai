@@ -89,7 +89,7 @@ static void testMapDefsMassRMA (void)
 {
 	/** You can test a certain assembly by passing "-Dmapdef-id=assembly" to testall. */
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t *md;
+	const mapDef_t* md;
 	int mapCount = 0;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
@@ -134,7 +134,7 @@ static void testMapDefsMassRMA (void)
 				else
 					Cvar_Set("rm_drop", "");
 
-				linkedList_t *iterUfo;
+				linkedList_t* iterUfo;
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
 					const char* ufo = nullptr;
 					if (iterUfo)
@@ -232,7 +232,7 @@ static void testMapDefStatistic (void)
 	int j, k;
 	int required, solids;
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
@@ -296,7 +296,7 @@ static void testMapDefStatistic (void)
 static void testMapDefsFootSteps (void)
 {
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t *md;
+	const mapDef_t* md;
 	int mapCount = 0;				// the number of maps read
 	int badMapCount = 0;
 	const int skipCount = 20;		// to skip the first n mapDefs
@@ -412,7 +412,7 @@ static void testMapDefsFootSteps (void)
 static void testMapDefsSingleplayer (void)
 {
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
@@ -452,7 +452,7 @@ static void testMapDefsMultiplayer (void)
 {
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	char userinfo[MAX_INFO_STRING];
-	const mapDef_t *md;
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 

@@ -63,7 +63,7 @@ void S_FreeChannel (int c)
  * @brief Set distance and stereo panning for the specified channel.
  * @param[in] ch The channel to perform the spatialization for.
  */
-void S_SpatializeChannel (const s_channel_t *ch)
+void S_SpatializeChannel (const s_channel_t* ch)
 {
 	vec3_t delta;
 	float dist, angle;
@@ -97,7 +97,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
  */
 void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float relVolume)
 {
-	s_channel_t *ch;
+	s_channel_t* ch;
 	int i;
 	float volume;
 
@@ -135,9 +135,9 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 /**
  * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_LoopSample (const vec3_t org, s_sample_t *sample, float relVolume, float attenuation)
+void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float attenuation)
 {
-	s_channel_t *ch;
+	s_channel_t* ch;
 	int i;
 
 	if (!sample || !sample->chunk)
@@ -191,7 +191,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float relVolume, float 
  */
 void S_StartLocalSample (const char* name, float relVolume)
 {
-	s_sample_t *sample;
+	s_sample_t* sample;
 
 	if (!s_env.initialized)
 		return;

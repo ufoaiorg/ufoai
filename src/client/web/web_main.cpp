@@ -30,10 +30,10 @@
 #include "web_cgame.h"
 #include "../../common/sha1.h"
 
-static cvar_t *web_authurl;
-cvar_t *web_username;
-cvar_t *web_password;
-cvar_t *web_userid;
+static cvar_t* web_authurl;
+cvar_t* web_username;
+cvar_t* web_password;
+cvar_t* web_userid;
 
 /**
  * @brief Downloads the given url and notify the callback. The login credentials are automatically added as GET parameters
@@ -85,7 +85,7 @@ bool WEB_GetToFile (const char* url, FILE* file)
  * @param[in] params Additional parameters for the form. The username and password values are automatically
  * filled in and don't have to be specified here.
  */
-bool WEB_PutFile (const char* formName, const char* fileName, const char* url, upparam_t *params)
+bool WEB_PutFile (const char* formName, const char* fileName, const char* url, upparam_t* params)
 {
 	upparam_t paramUser;
 	upparam_t paramPassword;

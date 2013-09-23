@@ -138,7 +138,7 @@ static void testCharacterAnimationFiles (void)
 			while (*animList != nullptr) {
 				int i;
 				for (i = 0; i < mod.num_anims; i++) {
-					const mAliasAnim_t *a = &mod.animdata[i];
+					const mAliasAnim_t* a = &mod.animdata[i];
 					if (Q_streq(a->name, *animList))
 						break;
 				}
