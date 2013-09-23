@@ -197,14 +197,14 @@ void CHRSH_CharGenAbilitySkills (character_t* chr, bool multiplayer, const char*
 			Sys_Error("CHRSH_CharGenAbilitySkills: Character template not found (%s) in %s", templateId, teamDef->id);
 	} else if (teamDef->characterTemplates[0]) {
 		if (teamDef->numTemplates > 1) {
-			float sumRate = 0.0;
+			float sumRate = 0.0f;
 			for (int i = 0; i < teamDef->numTemplates; i++) {
 				chrTemplate = teamDef->characterTemplates[i];
 				sumRate += chrTemplate->rate;
 			}
-			if (sumRate) {
+			if (sumRate > 0.0f) {
 				const float soldierRoll = frand();
-				float curRate = 0.0;
+				float curRate = 0.0f;
 				for (chrTemplate = teamDef->characterTemplates[0]; chrTemplate->id; chrTemplate++) {
 					curRate += chrTemplate->rate;
 					if (curRate && soldierRoll <= (curRate / sumRate))
