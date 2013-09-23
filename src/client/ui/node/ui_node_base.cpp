@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** 20 is the height of the part where the images overlap */
 #define BASE_IMAGE_OVERLAY 20
 
-void uiAbstractBaseNode::onLoading (uiNode_t *node)
+void uiAbstractBaseNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).baseid = -1;
 }
@@ -53,14 +53,14 @@ void uiAbstractBaseNode::onLoading (uiNode_t *node)
 /**
  * @brief Called after the node is completely loaded from the ufo-script (all data and/or children are set)
  */
-void uiAbstractBaseNode::onLoaded (uiNode_t *node)
+void uiAbstractBaseNode::onLoaded (uiNode_t* node)
 {
 }
 
 /**
  * @brief Draw a small square with the layout of the given base
  */
-void uiBaseLayoutNode::draw (uiNode_t *node)
+void uiBaseLayoutNode::draw (uiNode_t* node)
 {
 	const int totalMarge = node->padding * (BASE_SIZE + 1);
 	const int width = (node->box.size[0] - totalMarge) / BASE_SIZE;
@@ -80,7 +80,7 @@ void uiBaseLayoutNode::draw (uiNode_t *node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int* col, int* row) const
+void uiBaseMapNode::getCellAtPos (const uiNode_t* node, int x, int y, int* col, int* row) const
 {
 	assert(col);
 	assert(row);
@@ -99,7 +99,7 @@ void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int* col, 
 /**
  * @brief Draws a base.
  */
-void uiBaseMapNode::draw (uiNode_t *node)
+void uiBaseMapNode::draw (uiNode_t* node)
 {
 	int col, row;
 	bool hover = node->state;
@@ -122,7 +122,7 @@ void uiBaseMapNode::draw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiBaseMapNode::drawTooltip (const uiNode_t *node, int x, int y) const
+void uiBaseMapNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
 	int col, row;
 
@@ -140,7 +140,7 @@ void uiBaseMapNode::drawTooltip (const uiNode_t *node, int x, int y) const
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
-void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	assert(node);
 	assert(node->root);
@@ -160,7 +160,7 @@ void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
  * @param[in] x Absolute x mouse coordinate (screen coordinates)
  * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
-void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onRightClick (uiNode_t* node, int x, int y)
 {
 	int row, col;
 	assert(node);
@@ -181,7 +181,7 @@ void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent
  */
-void uiBaseMapNode::onMiddleClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onMiddleClick (uiNode_t* node, int x, int y)
 {
 	assert(node);
 	assert(node->root);
@@ -197,7 +197,7 @@ void uiBaseMapNode::onMiddleClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiBaseLayoutNode::onLoading (uiNode_t *node)
+void uiBaseLayoutNode::onLoading (uiNode_t* node)
 {
 	uiAbstractBaseNode::onLoading(node);
 	node->padding = 3;
@@ -205,7 +205,7 @@ void uiBaseLayoutNode::onLoading (uiNode_t *node)
 	Vector4Set(node->bgcolor, 0.5, 0.5, 0.5, 1);
 }
 
-void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractBaseNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = true;
@@ -216,14 +216,14 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
 }
 
-void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)
+void UI_RegisterBaseMapNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseMapNode());
 }
 
-void UI_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
+void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";

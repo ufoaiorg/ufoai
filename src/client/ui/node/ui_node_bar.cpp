@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE barExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-void uiBarNode::draw (uiNode_t *node)
+void uiBarNode::draw (uiNode_t* node)
 {
 	vec4_t color;
 	float fac;
@@ -90,7 +90,7 @@ void uiBarNode::draw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiBarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiBarNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
@@ -129,7 +129,7 @@ void uiBarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	setValue(node, min + frac * (max - min));
 }
 
-void uiBarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiBarNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (node->disabled || EXTRADATA(node).readOnly)
 		return;
@@ -140,7 +140,7 @@ void uiBarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiBarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiBarNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
@@ -149,13 +149,13 @@ void uiBarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiBarNode::onLoading (uiNode_t *node)
+void uiBarNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).orientation = ALIGN_CR;
 }
 
-void UI_RegisterBarNode (uiBehaviour_t *behaviour)
+void UI_RegisterBarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";

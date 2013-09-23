@@ -62,7 +62,7 @@ typedef struct uiMessageListNodeMessage_s {
 } uiMessageListNodeMessage_t;
 
 /** @todo implement this on a per-node basis */
-static uiMessageListNodeMessage_t *messageStack;
+static uiMessageListNodeMessage_t* messageStack;
 
 struct uiMessageListNodeMessage_s* UI_MessageGetStack (void)
 {
@@ -83,7 +83,7 @@ void UI_MessageAddStack (struct uiMessageListNodeMessage_s* message)
 /**
  * @return Number of lines need to display this message
  */
-static int UI_MessageGetLines (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int width)
+static int UI_MessageGetLines (const uiNode_t* node, uiMessageListNodeMessage_t* message, const char* fontID, int width)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -100,7 +100,7 @@ static char* lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static uiSprite_t *UI_MessageGetIcon (const uiMessageListNodeMessage_t *message)
+static uiSprite_t* UI_MessageGetIcon (const uiMessageListNodeMessage_t* message)
 {
 	const char* iconName = message->iconName;
 	if (Q_strnull(iconName))
@@ -109,7 +109,7 @@ static uiSprite_t *UI_MessageGetIcon (const uiMessageListNodeMessage_t *message)
 	return UI_GetSpriteByName(message->iconName);
 }
 
-static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *message, const char* fontID, int x, int y, int width, int* screenLines)
+static void UI_MessageDraw (const uiNode_t* node, uiMessageListNodeMessage_t* message, const char* fontID, int x, int y, int width, int* screenLines)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -131,7 +131,7 @@ static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *me
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
-		const uiSprite_t *icon = UI_MessageGetIcon(message);
+		const uiSprite_t* icon = UI_MessageGetIcon(message);
 		R_Color(nullptr);
 		UI_DrawSpriteInBox(false, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
@@ -148,9 +148,9 @@ static void UI_MessageDraw (const uiNode_t *node, uiMessageListNodeMessage_t *me
  * @brief Draws the messagesystem node
  * @param[in] node The context node
  */
-void uiMessageListNode::draw (uiNode_t *node)
+void uiMessageListNode::draw (uiNode_t* node)
 {
-	uiMessageListNodeMessage_t *message;
+	uiMessageListNodeMessage_t* message;
 	int screenLines;
 	const char* font = UI_GetFontFromNode(node);
 	vec2_t pos;
@@ -229,7 +229,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 	}
 }
 
-bool uiMessageListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMessageListNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	bool updated;
@@ -252,7 +252,7 @@ bool uiMessageListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return updated;
 }
 
-void uiMessageListNode::onLoading (uiNode_t *node)
+void uiMessageListNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
@@ -277,7 +277,7 @@ void uiMessageListNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-void uiMessageListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiMessageListNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -296,12 +296,12 @@ void uiMessageListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiMessageListNode::getCellHeight (uiNode_t *node)
+int uiMessageListNode::getCellHeight (uiNode_t* node)
 {
 	return LINEHEIGHT;
 }
 
-void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
+void UI_RegisterMessageListNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";

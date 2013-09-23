@@ -40,9 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Draw an item node
  */
-void uiItemNode::draw (uiNode_t *node)
+void uiItemNode::draw (uiNode_t* node)
 {
-	const objDef_t *od;
+	const objDef_t* od;
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	vec2_t pos;
 
@@ -76,7 +76,7 @@ void uiItemNode::draw (uiNode_t *node)
 	}
 }
 
-void UI_RegisterItemNode (uiBehaviour_t *behaviour)
+void UI_RegisterItemNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "item";
 	behaviour->extends = "model";

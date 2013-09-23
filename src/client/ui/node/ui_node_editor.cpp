@@ -58,7 +58,7 @@ static zoneNode_t dragStatus = ZONE_NONE;
 static int startX;
 static int startY;
 
-static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, bool displayAnchor)
+static void UI_EditorNodeHighlightNode (uiNode_t* node, const vec4_t color, bool displayAnchor)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
@@ -73,7 +73,7 @@ static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, bool
 	}
 }
 
-static zoneNode_t UI_EditorNodeGetElementAtPosition (uiNode_t *node, int x, int y)
+static zoneNode_t UI_EditorNodeGetElementAtPosition (uiNode_t* node, int x, int y)
 {
 	UI_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
 
@@ -97,12 +97,12 @@ static zoneNode_t UI_EditorNodeGetElementAtPosition (uiNode_t *node, int x, int 
 	return ZONE_NONE;
 }
 
-void uiEditorNode::draw (uiNode_t *node)
+void uiEditorNode::draw (uiNode_t* node)
 {
 	UI_CaptureDrawOver(node);
 }
 
-void uiEditorNode::drawOverWindow (uiNode_t *node)
+void uiEditorNode::drawOverWindow (uiNode_t* node)
 {
 	uiNode_t* hovered = nullptr;
 
@@ -130,7 +130,7 @@ void uiEditorNode::drawOverWindow (uiNode_t *node)
 		UI_EditorNodeHighlightNode(anchoredNode, red, true);
 }
 
-void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiEditorNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	vec2_t size;
 	const int diffX = x - startX;
@@ -185,12 +185,12 @@ void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node have lost the captured node
  */
-void uiEditorNode::onCapturedMouseLost (uiNode_t *node)
+void uiEditorNode::onCapturedMouseLost (uiNode_t* node)
 {
 	dragStatus = ZONE_NONE;
 }
 
-void uiEditorNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() != node)
 		return;
@@ -199,7 +199,7 @@ void uiEditorNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 	dragStatus = ZONE_NONE;
 }
 
-static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
+static void UI_EditorNodeSelectNode (uiNode_t* node, uiNode_t* selected)
 {
 	if (selected == nullptr)
 		return;
@@ -211,7 +211,7 @@ static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 	Cvar_Set("ui_sys_editor_window", "%s", anchoredNode->root->name);
 }
 
-void uiEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	uiNode_t* hovered;
 
@@ -250,17 +250,17 @@ void uiEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	UI_EditorNodeSelectNode(node, hovered);
 }
 
-static void UI_EditorNodeStart (uiNode_t *node, const uiCallContext_t *context)
+static void UI_EditorNodeStart (uiNode_t* node, const uiCallContext_t* context)
 {
 	UI_SetMouseCapture(node);
 }
 
-static void UI_EditorNodeStop (uiNode_t *node, const uiCallContext_t *context)
+static void UI_EditorNodeStop (uiNode_t* node, const uiCallContext_t* context)
 {
 	UI_MouseRelease();
 }
 
-static void UI_EditorNodeSelectNext (uiNode_t *node, const uiCallContext_t *context)
+static void UI_EditorNodeSelectNext (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -269,7 +269,7 @@ static void UI_EditorNodeSelectNext (uiNode_t *node, const uiCallContext_t *cont
 	UI_EditorNodeSelectNode(node, anchoredNode->next);
 }
 
-static void UI_EditorNodeSelectParent (uiNode_t *node, const uiCallContext_t *context)
+static void UI_EditorNodeSelectParent (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -278,7 +278,7 @@ static void UI_EditorNodeSelectParent (uiNode_t *node, const uiCallContext_t *co
 	UI_EditorNodeSelectNode(node, anchoredNode->parent);
 }
 
-static void UI_EditorNodeSelectFirstChild (uiNode_t *node, const uiCallContext_t *context)
+static void UI_EditorNodeSelectFirstChild (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -287,11 +287,11 @@ static void UI_EditorNodeSelectFirstChild (uiNode_t *node, const uiCallContext_t
 	UI_EditorNodeSelectNode(node, anchoredNode->firstChild);
 }
 
-static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t *node, int depth)
+static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t* node, int depth)
 {
 	int i;
 	char tab[16];
-	uiNode_t *child;
+	uiNode_t* child;
 	assert(depth < 16);
 
 	for (i = 0; i < depth; i++) {
@@ -345,7 +345,7 @@ static void UI_EditorNodeExtract_f (void)
 	Com_Printf("Window '%s' extracted.\n", Cmd_Argv(1));
 }
 
-void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
+void UI_RegisterEditorNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "editor";
 	behaviour->manager = UINodePtr(new uiEditorNode());

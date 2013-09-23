@@ -45,12 +45,12 @@ static void UI_SetRenderRect (int x, int y, int width, int height)
 /**
  * @brief Call before the script initialized the node
  */
-void uiBattleScapeNode::onLoading (uiNode_t *node)
+void uiBattleScapeNode::onLoading (uiNode_t* node)
 {
 	/* node->ghost = true; */
 }
 
-void uiBattleScapeNode::draw (uiNode_t *node)
+void uiBattleScapeNode::draw (uiNode_t* node)
 {
 	/** Note: hack to fix everytime renderrect (for example when we close hud_nohud) */
 	vec2_t pos;
@@ -58,7 +58,7 @@ void uiBattleScapeNode::draw (uiNode_t *node)
 	UI_SetRenderRect(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
-void uiBattleScapeNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiBattleScapeNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
@@ -66,14 +66,14 @@ void uiBattleScapeNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 }
 
 
-void uiBattleScapeNode::onSizeChanged (uiNode_t *node)
+void uiBattleScapeNode::onSizeChanged (uiNode_t* node)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 	UI_SetRenderRect(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
-void uiBattleScapeNode::onWindowClosed (uiNode_t *node)
+void uiBattleScapeNode::onWindowClosed (uiNode_t* node)
 {
 	UI_SetRenderRect(0, 0, 0, 0);
 }
@@ -81,7 +81,7 @@ void uiBattleScapeNode::onWindowClosed (uiNode_t *node)
 /**
  * @brief Called when user request scrolling on the battlescape.
  */
-bool uiBattleScapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiBattleScapeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	while (deltaY < 0) {
 		CL_CameraZoomIn();
@@ -94,7 +94,7 @@ bool uiBattleScapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return true;
 }
 
-void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
+void UI_RegisterBattlescapeNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "battlescape";
 	behaviour->manager = UINodePtr(new uiBattleScapeNode());

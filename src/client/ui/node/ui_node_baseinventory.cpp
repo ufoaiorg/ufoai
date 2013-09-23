@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 extern bool CL_BattlescapeRunning(void);
-extern cvar_t *cl_selected;
+extern cvar_t* cl_selected;
 
 /**
  * self cache for drag item
@@ -75,7 +75,7 @@ static const Item* dragInfoIC;
  * @return Item Pointer to the Item/item that is located at x/y or equals "item".
  * @sa Inventory::getItemAtPos
  */
-static Item* UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
+static Item* UI_ContainerNodeGetExistingItem (const uiNode_t* node, const objDef_t* item, const itemFilterTypes_t filterType)
 {
 	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
@@ -106,7 +106,7 @@ typedef struct {
  * @note If item is available into the container iterator->itemFound point to this element
  * @note If nothing found (no next element) then iterator->itemID >= csi.numODs
  */
-static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
+static void UI_ContainerItemIteratorNext (containerItemIterator_t* iterator)
 {
 	assert(iterator->groupSteps[iterator->groupID] != CII_END);
 
@@ -118,7 +118,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 		/* iterate all item type*/
 		for (;iterator->itemID < csi.numODs; iterator->itemID++) {
-			const objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
+			const objDef_t* obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
 			if (!GAME_ItemIsUseable(obj))
@@ -163,7 +163,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 /**
  * @brief Use a container node to init an item iterator
  */
-static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, const uiNode_t* const node)
+static void UI_ContainerItemIteratorInit (containerItemIterator_t* iterator, const uiNode_t* const node)
 {
 	int groupID = 0;
 	iterator->itemID = -1;
@@ -235,7 +235,7 @@ static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
  * @brief Draw the base inventory
  * @return The full height requested by the current view (not the node height)
  */
-static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highlightType)
+static int UI_BaseInventoryNodeDrawItems (uiNode_t* node, const objDef_t* highlightType)
 {
 	bool outOfNode = false;
 	vec2_t nodepos;
@@ -249,7 +249,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		const objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t* obj = INVSH_GetItemByIDX(id);
 		Item tempItem(obj, nullptr, 1);
 		vec3_t pos;
 		vec3_t ammopos;
@@ -389,7 +389,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 /**
  * @brief Draw the inventory of the base
  */
-static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlightType)
+static void UI_BaseInventoryNodeDraw2 (uiNode_t* node, const objDef_t* highlightType)
 {
 	bool updateScroll = false;
 	int visibleHeight = 0;
@@ -433,9 +433,9 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 /**
  * @brief Main function to draw a container node
  */
-void uiBaseInventoryNode::draw (uiNode_t *node)
+void uiBaseInventoryNode::draw (uiNode_t* node)
 {
-	const objDef_t *highlightType = nullptr;
+	const objDef_t* highlightType = nullptr;
 
 	if (!EXTRADATA(node).super.container)
 		return;
@@ -477,7 +477,7 @@ static Item* UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		const objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t* obj = INVSH_GetItemByIDX(id);
 		vec2_t pos;
 		vec2_t ammopos;
 		const int col = items % EXTRADATACONST(node).columns;
@@ -536,7 +536,7 @@ static Item* UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
 		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				const objDef_t *objammo = obj->ammos[ammoIdx];
+				const objDef_t* objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
 				if (!GAME_ItemIsUseable(objammo))
@@ -588,7 +588,7 @@ static Item* UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiBaseInventoryNode::drawTooltip (const uiNode_t *node, int x, int y) const
+void uiBaseInventoryNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
 	/* Find out where the mouse is. */
 	const Item* itemHover = UI_BaseInventoryNodeGetItem(node, x, y, nullptr, nullptr);
@@ -643,7 +643,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-void uiBaseInventoryNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiBaseInventoryNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -652,7 +652,7 @@ void uiBaseInventoryNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -686,7 +686,7 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiBaseInventoryNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -698,7 +698,7 @@ void uiBaseInventoryNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-bool uiBaseInventoryNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiBaseInventoryNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	if (deltaY == 0)
 		return false;
@@ -710,7 +710,7 @@ bool uiBaseInventoryNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return false;
 }
 
-void uiBaseInventoryNode::onLoading (uiNode_t *node)
+void uiBaseInventoryNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).super.container = nullptr;
 	EXTRADATA(node).columns = 1;
@@ -720,7 +720,7 @@ void uiBaseInventoryNode::onLoading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
+bool uiBaseInventoryNode::onDndEnter (uiNode_t* target)
 {
 	/* The node is invalid */
 	if (EXTRADATA(target).super.container == nullptr)
@@ -733,7 +733,7 @@ bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-bool uiBaseInventoryNode::onDndMove (uiNode_t *target, int x, int y)
+bool uiBaseInventoryNode::onDndMove (uiNode_t* target, int x, int y)
 {
 	return true;
 }
@@ -741,14 +741,14 @@ bool uiBaseInventoryNode::onDndMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-void uiBaseInventoryNode::onDndLeave (uiNode_t *node)
+void uiBaseInventoryNode::onDndLeave (uiNode_t* node)
 {
 }
 
 /**
  * @brief Call when we open the window containing the node
  */
-void uiBaseInventoryNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiBaseInventoryNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 }
 

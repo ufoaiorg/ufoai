@@ -83,7 +83,7 @@ static void UI_FreeRadarImages (void)
 	int i, j;
 
 	for (i = 0; i < radar.numImages; i++) {
-		hudRadarImage_t *image = &radar.images[i];
+		hudRadarImage_t* image = &radar.images[i];
 		Mem_Free(image->name);
 		for (j = 0; j < image->maxlevel; j++)
 			Mem_Free(image->path[j]);
@@ -110,7 +110,7 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 		int i;
 		vec3_t sh;
 		char name[MAX_VAR];
-		hudRadarImage_t *image;
+		hudRadarImage_t* image;
 		/* get tile name */
 		const char* token = Com_Parse(&tiles);
 		if (!tiles) {
@@ -163,7 +163,7 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
  * @param[in] gridSize size of the radar picture, in grid units.
  * @sa UI_InitRadar
  */
-static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
+static void UI_GetRadarWidth (const uiNode_t* node, vec2_t gridSize)
 {
 	int j;
 	int tileWidth[2];		/**< Contains the width of the first and the last tile of the first line (in screen unit) */
@@ -188,7 +188,7 @@ static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 	Vector2Set(tileHeight, 0, 0);
 
 	for (j = 0; j < radar.numImages; j++) {
-		const hudRadarImage_t *image = &radar.images[j];
+		const hudRadarImage_t* image = &radar.images[j];
 
 		assert(image->gridX >= radar.gridMin[0]);
 		assert(image->gridY >= radar.gridMin[1]);
@@ -265,7 +265,7 @@ static bool UI_CheckRadarImage (const char* imageName, const int level)
  * @note Called for every new map (client_state_t is wiped with every
  * level change)
  */
-static void UI_InitRadar (const uiNode_t *node)
+static void UI_InitRadar (const uiNode_t* node)
 {
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
@@ -284,11 +284,11 @@ static void UI_InitRadar (const uiNode_t *node)
 
 	/* only check once per map whether all the needed images exist */
 	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *tile = &radar.images[j];
+		hudRadarImage_t* tile = &radar.images[j];
 		/* map_mins, map_maxs */
 		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
 			char imagePath[MAX_QPATH];
-			const image_t *image;
+			const image_t* image;
 			if (!UI_CheckRadarImage(tile->name, i + 1)) {
 				if (i == 0) {
 					/* there should be at least one level */
@@ -327,7 +327,7 @@ static void UI_InitRadar (const uiNode_t *node)
 	Vector2Copy(cl.mapData->mapBox.maxs, min);
 	Vector2Copy(cl.mapData->mapBox.mins, max);
 	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *tile = &radar.images[j];
+		hudRadarImage_t* tile = &radar.images[j];
 		if (tile->mapX < min[0])
 			min[0] = tile->mapX;
 		if (tile->mapY < min[1])
@@ -341,7 +341,7 @@ static void UI_InitRadar (const uiNode_t *node)
 	min[0] = cl.mapData->mapBox.getMinX() + (cl.mapData->mapBox.getWidthX() - (max[0] - min[0])) * 0.5 - min[0];
 	min[1] = cl.mapData->mapBox.getMinY() + (cl.mapData->mapBox.getWidthY() - (max[1] - min[1])) * 0.5 - min[1];
 	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *tile = &radar.images[j];
+		hudRadarImage_t* tile = &radar.images[j];
 		tile->mapX += min[0];
 		tile->mapY += min[1];
 	}
@@ -369,7 +369,7 @@ static void UI_InitRadar (const uiNode_t *node)
 		const float gridFactorX = radar.w / radarLength;
 		const float gridFactorY = radar.h / radarHeight;
 		for (j = 0; j < radar.numImages; j++) {
-			hudRadarImage_t *image = &radar.images[j];
+			hudRadarImage_t* image = &radar.images[j];
 
 			image->x = (image->gridX - radar.gridMin[0]) * gridFactorX;
 			image->y = radar.h - (image->gridY - radar.gridMin[1]) * gridFactorY - image->height;
@@ -385,7 +385,7 @@ static void UI_InitRadar (const uiNode_t *node)
  DRAW FUNCTIONS
 =========================================*/
 
-static void UI_RadarNodeGetActorColor (const le_t *le, vec4_t color)
+static void UI_RadarNodeGetActorColor (const le_t* le, vec4_t color)
 {
 	const int actorLevel = le->pos[2];
 	Vector4Set(color, 0, 1, 0, 1);
@@ -410,18 +410,18 @@ static void UI_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 	}
 }
 
-static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t *image)
+static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t* image)
 {
 	R_Color(color);
-	R_DrawImageArray((const vec2_t *)coords, (const vec2_t *)vertices, image);
+	R_DrawImageArray((const vec2_t* )coords, (const vec2_t* )vertices, image);
 	R_Color(nullptr);
 }
 
-static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
+static void UI_RadarNodeDrawItem (const le_t* le, const vec3_t pos)
 {
 }
 
-static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
+static void UI_RadarNodeDrawActor (const le_t* le, const vec3_t pos)
 {
 	vec2_t coords[4];
 	vec2_t vertices[4];
@@ -429,7 +429,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	const float size = 10;
 	const int tileSize = 28;
 	int tilePos = 4;
-	const image_t *image;
+	const image_t* image;
 	vec4_t color;
 	const float pov = directionAngles[le->angle] * torad + M_PI;
 
@@ -517,9 +517,9 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node Node description of the radar
  */
-void uiRadarNode::draw (uiNode_t *node)
+void uiRadarNode::draw (uiNode_t* node)
 {
-	le_t *le;
+	le_t* le;
 	int i;
 	vec2_t pos;
 	vec2_t screenPos;
@@ -573,7 +573,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	/* draw background */
 	for (i = 0; i < radar.numImages; i++) {
 		vec2_t imagePos;
-		hudRadarImage_t *tile = &radar.images[i];
+		hudRadarImage_t* tile = &radar.images[i];
 		int maxlevel = cl_worldlevel->integer;
 
 		/* check the max level value for this map tile */
@@ -635,7 +635,7 @@ void uiRadarNode::draw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiRadarNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const float mapWidth = cl.mapData->mapBox.getWidthX();
 	const float mapHeight = cl.mapData->mapBox.getWidthY();
@@ -654,7 +654,7 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	VectorCopy(pos, cl.cam.origin);
 }
 
-void uiRadarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (node->disabled)
 		return;
@@ -665,21 +665,21 @@ void uiRadarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiRadarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
 }
 
-void uiRadarNode::onWindowClosed (uiNode_t *node)
+void uiRadarNode::onWindowClosed (uiNode_t* node)
 {
 }
 
-void uiRadarNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiRadarNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 }
 
-void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
+void UI_RegisterRadarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->manager = UINodePtr(new uiRadarNode());

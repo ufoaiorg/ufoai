@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t
 
-void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractScrollbarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = true;

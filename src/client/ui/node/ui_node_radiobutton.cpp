@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Height of a status in a 4 status 256*256 texture */
 #define UI_4STATUS_TEX_HEIGHT 64
 
-static bool UI_RadioButtonNodeIsSelected (uiNode_t *node)
+static bool UI_RadioButtonNodeIsSelected (uiNode_t* node)
 {
 	if (EXTRADATA(node).string == nullptr) {
 		const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
@@ -68,7 +68,7 @@ static bool UI_RadioButtonNodeIsSelected (uiNode_t *node)
  * @brief Handles RadioButton draw
  * @todo need to implement image. We can't do everything with only one icon (or use another icon)
  */
-void uiRadioButtonNode::draw (uiNode_t *node)
+void uiRadioButtonNode::draw (uiNode_t* node)
 {
 	vec2_t pos;
 	uiSpriteStatus_t iconStatus;
@@ -112,7 +112,7 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiRadioButtonNode::onActivate (uiNode_t *node)
+void uiRadioButtonNode::onActivate (uiNode_t* node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
@@ -143,7 +143,7 @@ void uiRadioButtonNode::onActivate (uiNode_t *node)
 /**
  * @brief Handles radio button clicks
  */
-void uiRadioButtonNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
@@ -151,7 +151,7 @@ void uiRadioButtonNode::onLeftClick (uiNode_t *node, int x, int y)
 	onActivate(node);
 }
 
-void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
+void UI_RegisterRadioButtonNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radiobutton";
 	behaviour->manager = UINodePtr(new uiRadioButtonNode());

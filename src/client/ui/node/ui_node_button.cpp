@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Handles Button clicks
  * @todo it is useless !
  */
-void uiButtonNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
@@ -59,7 +59,7 @@ void uiButtonNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Handles Button draw
  */
-void uiButtonNode::draw (uiNode_t *node)
+void uiButtonNode::draw (uiNode_t* node)
 {
 	const float* textColor;
 	vec2_t pos;
@@ -154,7 +154,7 @@ void uiButtonNode::draw (uiNode_t *node)
 /**
  * @brief Handles Button before loading. Used to set default attribute values
  */
-void uiButtonNode::onLoading (uiNode_t *node)
+void uiButtonNode::onLoading (uiNode_t* node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CC;
@@ -167,7 +167,7 @@ void uiButtonNode::onLoading (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-void uiButtonNode::onLoaded (uiNode_t *node)
+void uiButtonNode::onLoaded (uiNode_t* node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->box.size[1] == 0) {
@@ -176,7 +176,7 @@ void uiButtonNode::onLoaded (uiNode_t *node)
 	}
 }
 
-void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
+void UI_RegisterButtonNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "button";
 	behaviour->manager = UINodePtr(new uiButtonNode());

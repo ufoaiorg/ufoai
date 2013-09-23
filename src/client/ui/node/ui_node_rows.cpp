@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles Button draw
  */
-void uiRowsNode::draw (uiNode_t *node)
+void uiRowsNode::draw (uiNode_t* node)
 {
 	int current = 0;
 	int i = EXTRADATA(node).current;
@@ -56,7 +56,7 @@ void uiRowsNode::draw (uiNode_t *node)
 	}
 }
 
-void uiRowsNode::onLoaded (uiNode_t *node)
+void uiRowsNode::onLoaded (uiNode_t* node)
 {
 	/* prevent infinite loop into the draw */
 	if (EXTRADATA(node).lineHeight == 0) {
@@ -64,7 +64,7 @@ void uiRowsNode::onLoaded (uiNode_t *node)
 	}
 }
 
-void UI_RegisterRowsNode (uiBehaviour_t *behaviour)
+void UI_RegisterRowsNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "rows";
 	behaviour->manager = UINodePtr(new uiRowsNode());

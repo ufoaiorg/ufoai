@@ -37,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void UI_NodeGetProperty_f (void)
 {
-	uiNode_t *node;
-	const value_t *property;
+	uiNode_t* node;
+	const value_t* property;
 	const char* sValue;
 	float fValue;
 
@@ -77,8 +77,8 @@ static void UI_NodeGetProperty_f (void)
  */
 static void UI_NodeSetProperty_f (void)
 {
-	uiNode_t *node;
-	const value_t *property;
+	uiNode_t* node;
+	const value_t* property;
 
 	if (Cmd_Argc() != 4) {
 		Com_Printf("Usage: %s <nodepath> <prop> <value>\n", Cmd_Argv(0));
@@ -117,26 +117,26 @@ void uiLocatedNode::onMouseLeave(uiNode_t* node)
 	UI_ExecuteEventActions(node, node->onMouseLeave);
 }
 
-bool uiLocatedNode::onDndEnter (uiNode_t *node)
+bool uiLocatedNode::onDndEnter (uiNode_t* node)
 {
 	return false;
 }
 
-bool uiLocatedNode::onDndMove (uiNode_t *node, int x, int y)
+bool uiLocatedNode::onDndMove (uiNode_t* node, int x, int y)
 {
 	return true;
 }
 
-void uiLocatedNode::onDndLeave (uiNode_t *node)
+void uiLocatedNode::onDndLeave (uiNode_t* node)
 {
 }
 
-bool uiLocatedNode::onDndDrop (uiNode_t *node, int x, int y)
+bool uiLocatedNode::onDndDrop (uiNode_t* node, int x, int y)
 {
 	return true;
 }
 
-bool uiLocatedNode::onDndFinished (uiNode_t *node, bool isDroped)
+bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDroped)
 {
 	return isDroped;
 }
@@ -144,7 +144,7 @@ bool uiLocatedNode::onDndFinished (uiNode_t *node, bool isDroped)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiNode::onActivate (uiNode_t *node)
+void uiNode::onActivate (uiNode_t* node)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
@@ -153,9 +153,9 @@ void uiNode::onActivate (uiNode_t *node)
 /**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
-void uiLocatedNode::doLayout (uiNode_t *node)
+void uiLocatedNode::doLayout (uiNode_t* node)
 {
-	uiNode_t *child;
+	uiNode_t* child;
 	if (!node->invalidated)
 		return;
 
@@ -166,7 +166,7 @@ void uiLocatedNode::doLayout (uiNode_t *node)
 	node->invalidated = false;
 }
 
-void uiNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
+void uiNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -174,7 +174,7 @@ void uiNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-void uiNode::onWindowClosed (uiNode_t *node)
+void uiNode::onWindowClosed (uiNode_t* node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -182,7 +182,7 @@ void uiNode::onWindowClosed (uiNode_t *node)
 	}
 }
 
-void uiNode::onWindowActivate (uiNode_t *node)
+void uiNode::onWindowActivate (uiNode_t* node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -193,24 +193,24 @@ void uiNode::onWindowActivate (uiNode_t *node)
 /**
  * @brief Callback stub
  */
-void uiLocatedNode::onSizeChanged (uiNode_t *node)
+void uiLocatedNode::onSizeChanged (uiNode_t* node)
 {
 	if (node->firstChild != nullptr)
 		UI_Invalidate(node);
 }
 
-static void UI_AbstractNodeVisibilityChange (uiNode_t *node)
+static void UI_AbstractNodeVisibilityChange (uiNode_t* node)
 {
 	if (node->parent != nullptr)
 		UI_Invalidate(node->parent);
 }
 
-static const value_t *propertyWidth;
-static const value_t *propertyHeight;
-static const value_t *propertySize;
-static const value_t *propertyInvis;
+static const value_t* propertyWidth;
+static const value_t* propertyHeight;
+static const value_t* propertySize;
+static const value_t* propertyInvis;
 
-void uiNode::onPropertyChanged (uiNode_t *node, const value_t *property)
+void uiNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
 		UI_Node_SizeChanged(node);
@@ -219,7 +219,7 @@ void uiNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 	}
 }
 
-static void UI_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallRemovaAllChild (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (UI_GetParamNumber(context) != 0) {
 		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalid number of parameters\n");
@@ -228,10 +228,10 @@ static void UI_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallConte
 	UI_DeleteAllChild(node);
 }
 
-static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallCreateChild (uiNode_t* node, const uiCallContext_t* context)
 {
-	uiNode_t *child;
-	uiNode_t *component;
+	uiNode_t* child;
+	uiNode_t* component;
 	const char* name;
 	const char* type;
 
@@ -263,7 +263,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	UI_AppendNode(node, child);
 }
 
-static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallDelete (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (UI_GetParamNumber(context) != 0) {
 		Com_Printf("UI_AbstractNodeCallDelete: Invalid number of parameters\n");
@@ -272,7 +272,7 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
-static void UI_AbstractNodeCallDeleteTimed (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallDeleteTimed (uiNode_t* node, const uiCallContext_t* context)
 {
 	if (UI_GetParamNumber(context) != 1) {
 		Com_Printf("UI_AbstractNodeCallDeleteTimed: Invalid number of parameters\n");
@@ -287,7 +287,7 @@ static void UI_AbstractNodeCallDeleteTimed (uiNode_t *node, const uiCallContext_
 	}
 }
 
-bool uiLocatedNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiLocatedNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	if (node->onWheelUp && deltaY < 0) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -333,7 +333,7 @@ void uiLocatedNode::onMiddleClick (uiNode_t* node, int x, int y)
 	}
 }
 
-void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = true;

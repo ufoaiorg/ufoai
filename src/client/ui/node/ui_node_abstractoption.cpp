@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Sort options by alphabet
  */
-void UI_OptionNodeSortOptions (uiNode_t *node)
+void UI_OptionNodeSortOptions (uiNode_t* node)
 {
-	uiNode_t *option;
+	uiNode_t* option;
 	assert(UI_Node_IsOptionContainer(node));
 	UI_SortOptions(&node->firstChild);
 
@@ -51,7 +51,7 @@ void UI_OptionNodeSortOptions (uiNode_t *node)
 	node->lastChild = option;
 }
 
-const char* UI_AbstractOptionGetCurrentValue (uiNode_t *node)
+const char* UI_AbstractOptionGetCurrentValue (uiNode_t* node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
@@ -66,7 +66,7 @@ const char* UI_AbstractOptionGetCurrentValue (uiNode_t *node)
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
 
-void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char* value)
+void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value)
 {
 	const char* cvarName = &EXTRADATA(node).cvar[6];
 	Cvar_Set(cvarName, "%s", value);
@@ -74,9 +74,9 @@ void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char* value)
 		UI_ExecuteEventActions(node, node->onChange);
 }
 
-void uiAbstractOptionNode::doLayout (uiNode_t *node)
+void uiAbstractOptionNode::doLayout (uiNode_t* node)
 {
-	uiNode_t *option = node->firstChild;
+	uiNode_t* option = node->firstChild;
 
 	if (EXTRADATA(node).dataId == 0) {
 		int count = 0;
@@ -97,7 +97,7 @@ void uiAbstractOptionNode::doLayout (uiNode_t *node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t *node)
+uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t* node)
 {
 	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;
@@ -105,7 +105,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t *node)
 		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).versionId) {
 			int count = 0;
-			uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
+			uiNode_t* option = UI_GetOption(EXTRADATA(node).dataId);
 			while (option) {
 				if (!option->invis)
 					count++;
@@ -123,7 +123,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t *node)
  * Here expect the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiAbstractOptionNode::getCellWidth (uiNode_t *node)
+int uiAbstractOptionNode::getCellWidth (uiNode_t* node)
 {
 	return 1;
 }
@@ -133,12 +133,12 @@ int uiAbstractOptionNode::getCellWidth (uiNode_t *node)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiAbstractOptionNode::getCellHeight (uiNode_t *node)
+int uiAbstractOptionNode::getCellHeight (uiNode_t* node)
 {
 	return 1;
 }
 
-void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = true;

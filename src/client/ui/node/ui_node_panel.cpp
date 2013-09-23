@@ -38,16 +38,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const value_t *propertyLayoutMargin;
-static const value_t *propertyLayoutColumns;
-static const value_t *propertyPadding;
+static const value_t* propertyLayoutMargin;
+static const value_t* propertyLayoutColumns;
+static const value_t* propertyPadding;
 
-static const uiBehaviour_t *localBehaviour;
+static const uiBehaviour_t* localBehaviour;
 
 /**
  * @brief Handles Button draw
  */
-void uiPanelNode::draw (uiNode_t *node)
+void uiPanelNode::draw (uiNode_t* node)
 {
 	vec2_t pos;
 
@@ -66,11 +66,11 @@ void uiPanelNode::draw (uiNode_t *node)
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
+static void UI_TopDownFlowLayout (uiNode_t* node, int margin)
 {
 	const int width = node->box.size[0] - node->padding - node->padding;
 	int positionY = node->padding;
-	uiNode_t *child = node->firstChild;
+	uiNode_t* child = node->firstChild;
 	vec2_t newSize = Vector2FromInt(width, 0);
 
 	while (child) {
@@ -104,11 +104,11 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
  * @param[in,out] node The panel node to render the children for
  * @param[in] margin The margin between all children nodes in their x-position of the panel
  */
-static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
+static void UI_LeftRightFlowLayout (uiNode_t* node, int margin)
 {
 	const int height = node->box.size[1] - node->padding - node->padding;
 	int positionX = node->padding;
-	uiNode_t *child = node->firstChild;
+	uiNode_t* child = node->firstChild;
 	vec2_t newSize = Vector2FromInt(0, height);
 
 	while (child) {
@@ -136,9 +136,9 @@ static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void UI_BorderLayout (uiNode_t *node, int margin)
+static void UI_BorderLayout (uiNode_t* node, int margin)
 {
-	uiNode_t *child;
+	uiNode_t* child;
 	vec2_t newSize;
 	int minX = node->padding;
 	int maxX = node->box.size[0] - node->padding;
@@ -225,9 +225,9 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes
  * @note test only
  */
-static void UI_PackLayout (uiNode_t *node, int margin)
+static void UI_PackLayout (uiNode_t* node, int margin)
 {
-	uiNode_t *child;
+	uiNode_t* child;
 	vec2_t newSize;
 	int minX = node->padding;
 	int maxX = node->box.size[0] - node->padding;
@@ -292,9 +292,9 @@ static void UI_PackLayout (uiNode_t *node, int margin)
  * 10=fill
  * @todo Tag it static when it is possible
  */
-void UI_StarLayout (uiNode_t *node)
+void UI_StarLayout (uiNode_t* node)
 {
-	uiNode_t *child;
+	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align <= LAYOUTALIGN_NONE)
 			continue;
@@ -321,11 +321,11 @@ void UI_StarLayout (uiNode_t *node)
 /**
  * Update the client zone
  */
-static void UI_ClientLayout (uiNode_t *node)
+static void UI_ClientLayout (uiNode_t* node)
 {
 	int width = 0;
 	int height = 0;
-	uiNode_t *child;
+	uiNode_t* child;
 	bool updated;
 	for (child = node->firstChild; child; child = child->next) {
 		int value;
@@ -353,12 +353,12 @@ static void UI_ClientLayout (uiNode_t *node)
  * @todo Use child\@align to align each nodes inside respective cell.
  * @image html http://ufoai.org/wiki/images/Layout_column.png
  */
-static void UI_ColumnLayout (uiNode_t *node)
+static void UI_ColumnLayout (uiNode_t* node)
 {
 	int rowHeight = 0;
 	int i;
 	int y;
-	uiNode_t *child;
+	uiNode_t* child;
 
 	if (EXTRADATA(node).layoutColumns <= 0) {
 		Com_Printf("UI_ColumnLayout: Column number must be positive (%s). Layout ignored.", UI_GetPath(node));
@@ -422,7 +422,7 @@ static void UI_ColumnLayout (uiNode_t *node)
 	Mem_Free(columnSize);
 }
 
-void uiPanelNode::doLayout (uiNode_t *node)
+void uiPanelNode::doLayout (uiNode_t* node)
 {
 	if (!node->invalidated)
 		return;
@@ -462,7 +462,7 @@ void uiPanelNode::doLayout (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-void uiPanelNode::onLoading (uiNode_t *node)
+void uiPanelNode::onLoading (uiNode_t* node)
 {
 	uiLocatedNode::onLoading(node);
 	EXTRADATA(node).wheelScrollable = true;
@@ -496,7 +496,7 @@ void uiPanelNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-void uiPanelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiPanelNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	/** @todo do it as well for x */
 	if (mouseScrollY != y) {
@@ -509,19 +509,19 @@ void uiPanelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-void uiPanelNode::onLoaded (uiNode_t *node)
+void uiPanelNode::onLoaded (uiNode_t* node)
 {
 	if (EXTRADATA(node).layout != LAYOUT_NONE)
 		UI_Invalidate(node);
 }
 
-void uiPanelNode::getClientPosition (const uiNode_t *node, vec2_t position)
+void uiPanelNode::getClientPosition (const uiNode_t* node, vec2_t position)
 {
 	position[0] = -EXTRADATACONST(node).super.scrollX.viewPos;
 	position[1] = -EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-void uiPanelNode::onPropertyChanged (uiNode_t *node, const value_t *property)
+void uiPanelNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 {
 	/** @todo move it to registration code when it is possible */
 	if (propertyPadding == nullptr) {
@@ -541,7 +541,7 @@ void uiPanelNode::onPropertyChanged (uiNode_t *node, const value_t *property)
  * @param[in] deltaX horizontal scrolling value (not used)
  * @param[in] deltaY vertical scrolling value
  */
-bool uiPanelNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiPanelNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool updated;
 
@@ -570,7 +570,7 @@ bool uiPanelNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return updated;
 }
 
-void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
+void UI_RegisterPanelNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->extends = "abstractscrollable";

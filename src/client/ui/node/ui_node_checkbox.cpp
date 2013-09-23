@@ -50,7 +50,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 {
 	const float value = getValue(node);
 	vec2_t pos;
-	uiSprite_t *icon = nullptr;
+	uiSprite_t* icon = nullptr;
 	uiSpriteStatus_t status = SPRITE_STATUS_NORMAL;
 
 	/* outer status */
@@ -84,7 +84,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiCheckBoxNode::onActivate (uiNode_t *node)
+void uiCheckBoxNode::onActivate (uiNode_t* node)
 {
 	const float last = getValue(node);
 	float value;
@@ -101,7 +101,7 @@ void uiCheckBoxNode::onActivate (uiNode_t *node)
 	setValue(node, value);
 }
 
-static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
+static void UI_CheckBoxNodeCallActivate (uiNode_t* node, const uiCallContext_t* context)
 {
 	UI_Node_Activate(node);
 }
@@ -109,7 +109,7 @@ static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *
 /**
  * @brief Handles checkboxes clicks
  */
-void uiCheckBoxNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiCheckBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
@@ -120,13 +120,13 @@ void uiCheckBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-void uiCheckBoxNode::onLoading (uiNode_t *node)
+void uiCheckBoxNode::onLoading (uiNode_t* node)
 {
 	uiAbstractValueNode::onLoading(node);
 	setRange(node, -1, 1);
 }
 
-void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
+void UI_RegisterCheckBoxNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";

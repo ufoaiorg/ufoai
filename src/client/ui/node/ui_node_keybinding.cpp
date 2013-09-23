@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called when the user click with the right mouse button
  */
-void uiKeyBindingNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiKeyBindingNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -68,7 +68,7 @@ void uiKeyBindingNode::onLeftClick (uiNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiKeyBindingNode::onKeyPressed (uiNode_t* node, unsigned int key, unsigned short unicode)
 {
 	const char* binding;
 
@@ -101,7 +101,7 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 	return true;
 }
 
-void uiKeyBindingNode::draw (uiNode_t *node)
+void uiKeyBindingNode::draw (uiNode_t* node)
 {
 	const char* binding, *description, *command;
 	const float* textColor;
@@ -162,7 +162,7 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-void uiKeyBindingNode::onLoading (uiNode_t *node)
+void uiKeyBindingNode::onLoading (uiNode_t* node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;
@@ -171,7 +171,7 @@ void uiKeyBindingNode::onLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 0.5);
 }
 
-void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
+void UI_RegisterKeyBindingNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "keybinding";
 	behaviour->manager = UINodePtr(new uiKeyBindingNode());

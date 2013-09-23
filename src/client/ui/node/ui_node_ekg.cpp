@@ -35,10 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE ekgExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-void uiEkgNode::draw (uiNode_t *node)
+void uiEkgNode::draw (uiNode_t* node)
 {
 	vec2_t nodepos;
-	const image_t *image;
+	const image_t* image;
 
 	const char* imageName = UI_GetReferenceString(node, EXTRADATA(node).super.source);
 	if (Q_strnull(imageName))
@@ -103,7 +103,7 @@ void uiEkgNode::draw (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-void uiEkgNode::onLoading (uiNode_t *node)
+void uiEkgNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
 	EXTRADATA(node).scrollSpeed = 0.07f;

@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int deltaMouseX;
 static int deltaMouseY;
 
-void uiControlNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiControlNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
@@ -52,7 +52,7 @@ void uiControlNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiControlNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiControlNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
@@ -61,7 +61,7 @@ void uiControlNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiControlNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiControlNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	/* compute new x position of the window */
 	x -= deltaMouseX;
@@ -80,7 +80,7 @@ void uiControlNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	UI_SetNewWindowPos(node->root, x, y);
 }
 
-void UI_RegisterControlsNode (uiBehaviour_t *behaviour)
+void UI_RegisterControlsNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->extends = "image";

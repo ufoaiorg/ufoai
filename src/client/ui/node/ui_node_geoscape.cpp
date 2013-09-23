@@ -84,20 +84,20 @@ static const float GLOBE_ROTATE = -90.0f;
 static const float SMOOTHING_STEP_2D = 0.02f;
 static const float SMOOTHACCELERATION = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 
-static cvar_t *cl_3dmap;						/**< 3D geoscape or flat geoscape */
-static cvar_t *cl_3dmapAmbient;
-static cvar_t *cl_mapzoommax;
-static cvar_t *cl_mapzoommin;
-static cvar_t *cl_geoscape_overlay;
+static cvar_t* cl_3dmap;						/**< 3D geoscape or flat geoscape */
+static cvar_t* cl_3dmapAmbient;
+static cvar_t* cl_mapzoommax;
+static cvar_t* cl_mapzoommin;
+static cvar_t* cl_geoscape_overlay;
 
 // FIXME: don't make this static
-static uiNode_t *geoscapeNode;
+static uiNode_t* geoscapeNode;
 
 /** this is the mask that is used to display day/night on (2d-)geoscape */
-image_t *r_dayandnightTexture;
+image_t* r_dayandnightTexture;
 
-image_t *r_radarTexture;				/**< radar texture */
-image_t *r_xviTexture;					/**< XVI alpha mask texture */
+image_t* r_radarTexture;				/**< radar texture */
+image_t* r_xviTexture;					/**< XVI alpha mask texture */
 
 #define DAWN		0.03
 
@@ -161,7 +161,7 @@ void uiGeoscapeNode::smoothRotate (uiNode_t* node)
  * @note updates slowly values of @c center so that its value goes to @c smoothFinal2DGeoscapeCenter
  * @note updates slowly values of @c zoom so that its value goes to @c ZOOM_LIMIT
  */
-void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
+void uiGeoscapeNode::smoothTranslate (uiNode_t* node)
 {
 	const float dist1 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[0] - UI_MAPEXTRADATACONST(node).center[0];
 	const float dist2 = UI_MAPEXTRADATACONST(node).smoothFinal2DGeoscapeCenter[1] - UI_MAPEXTRADATACONST(node).center[1];
@@ -185,7 +185,7 @@ void uiGeoscapeNode::smoothTranslate (uiNode_t *node)
  * @param[in] node The current menuNode we have clicked on (3dmap or map)
  * @param[in] q The angle the sun is standing against the equator on earth
  */
-void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t *node, float q)
+void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t* node, float q)
 {
 	int x, y;
 	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -222,7 +222,7 @@ void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t *node, float q)
 	R_UploadAlpha(r_dayandnightTexture, UI_MAPEXTRADATA(node).r_dayandnightAlpha);
 }
 
-void uiGeoscapeNode::draw (uiNode_t *node)
+void uiGeoscapeNode::draw (uiNode_t* node)
 {
 	vec2_t screenPos;
 
@@ -298,7 +298,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 	UI_PopClipRect();
 }
 
-void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiGeoscapeNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
@@ -362,7 +362,7 @@ void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
+void uiGeoscapeNode::startMouseShifting (uiNode_t* node, int x, int y)
 {
 	UI_SetMouseCapture(node);
 	if (UI_MAPEXTRADATACONST(node).flatgeoscape)
@@ -482,7 +482,7 @@ bool uiGeoscapeNode::onStartDragging (uiNode_t* node, int startX, int startY, in
 	return false;
 }
 
-void uiGeoscapeNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiGeoscapeNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (mode != MODE_NULL) {
 		UI_MouseRelease();
@@ -494,7 +494,7 @@ void uiGeoscapeNode::onMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
+void uiGeoscapeNode::onCapturedMouseLost (uiNode_t* node)
 {
 	mode = MODE_NULL;
 }
@@ -503,7 +503,7 @@ void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
  * Zoom on the node
  * @todo it should use an int param for smooth zoom
  */
-void uiGeoscapeNode::zoom (uiNode_t *node, bool out)
+void uiGeoscapeNode::zoom (uiNode_t* node, bool out)
 {
 	UI_MAPEXTRADATA(node).zoom *= pow(0.995, (out ? 10: -10));
 	if (UI_MAPEXTRADATACONST(node).zoom < UI_MAPEXTRADATACONST(node).mapzoommin)
@@ -520,7 +520,7 @@ void uiGeoscapeNode::zoom (uiNode_t *node, bool out)
 	UI_MAPEXTRADATA(node).smoothRotation = false;
 }
 
-bool uiGeoscapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiGeoscapeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	if (deltaY == 0)
@@ -532,7 +532,7 @@ bool uiGeoscapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiGeoscapeNode::onLoading (uiNode_t *node)
+void uiGeoscapeNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 
@@ -555,13 +555,13 @@ void uiGeoscapeNode::onLoading (uiNode_t *node)
 	r_xviTexture = R_LoadImageData("***r_xvitexture***", nullptr, XVI_WIDTH, XVI_HEIGHT, it_effect);
 }
 
-static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
+static void UI_GeoscapeNodeZoomIn (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager.get());
 	m->zoom(node, false);
 }
 
-static void UI_GeoscapeNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
+static void UI_GeoscapeNodeZoomOut (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager.get());
 	m->zoom(node, true);
@@ -582,7 +582,7 @@ static void UI_GeoscapeNodeZoom_f (void)
 	}
 
 	cmd = Cmd_Argv(1);
-	uiNode_t *node = geoscapeNode;
+	uiNode_t* node = geoscapeNode;
 	if (!node)
 		return;
 
@@ -634,7 +634,7 @@ static void UI_GeoscapeNodeScroll_f (void)
 
 	cmd = Cmd_Argv(1);
 
-	uiNode_t *node = geoscapeNode;
+	uiNode_t* node = geoscapeNode;
 	if (!node)
 		return;
 
@@ -705,7 +705,7 @@ static void UI_GeoscapeNodeScroll_f (void)
 	}
 }
 
-void UI_RegisterGeoscapeNode (uiBehaviour_t *behaviour)
+void UI_RegisterGeoscapeNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "geoscape";
 	behaviour->manager = UINodePtr(new uiGeoscapeNode());

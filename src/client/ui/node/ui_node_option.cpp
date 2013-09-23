@@ -33,13 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * Allow to check if a node is an option without string check
  */
-const uiBehaviour_t *ui_optionBehaviour = nullptr;
+const uiBehaviour_t* ui_optionBehaviour = nullptr;
 
 #define EXTRADATA_TYPE optionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const value_t *propertyCollapsed;
+static const value_t* propertyCollapsed;
 
 
 /**
@@ -72,9 +72,9 @@ int UI_OptionUpdateCache (uiNode_t* option)
 	return count;
 }
 
-void uiOptionNode::doLayout (uiNode_t *node)
+void uiOptionNode::doLayout (uiNode_t* node)
 {
-	uiNode_t *child = node->firstChild;
+	uiNode_t* child = node->firstChild;
 	int count = 0;
 
 	while (child && child->behaviour == ui_optionBehaviour) {
@@ -91,7 +91,7 @@ void uiOptionNode::doLayout (uiNode_t *node)
 	node->invalidated = false;
 }
 
-void uiOptionNode::onPropertyChanged (uiNode_t *node, const value_t *property)
+void uiOptionNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 {
 	if (property == propertyCollapsed) {
 		UI_Invalidate(node);
@@ -120,15 +120,15 @@ static void UI_InitOption (uiNode_t* option, const char* label, const char* valu
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */
-uiNode_t *UI_AllocOptionNode (const char* name, const char* label, const char* value)
+uiNode_t* UI_AllocOptionNode (const char* name, const char* label, const char* value)
 {
-	uiNode_t *option;
+	uiNode_t* option;
 	option = UI_AllocNode(name, "option", true);
 	UI_InitOption(option, label, value);
 	return option;
 }
 
-void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

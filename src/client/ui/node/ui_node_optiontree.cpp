@@ -47,8 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int COLLAPSEBUTTON_WIDTH = 20;		/**< Size used for the collapse button */
 static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
-static uiSprite_t *systemCollapse;
-static uiSprite_t *systemExpand;
+static uiSprite_t* systemCollapse;
+static uiSprite_t* systemExpand;
 
 /* Used for drag&drop-like scrolling */
 static int mouseScrollX;
@@ -58,7 +58,7 @@ static int mouseScrollY;
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
+static void UI_OptionTreeNodeUpdateScroll (uiNode_t* node)
 {
 	const char* font;
 	int fontHeight;
@@ -77,9 +77,9 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 }
 
 /** @todo we should remove this call loop */
-static uiNode_t* UI_OptionTreeNodeGetFirstOption(uiNode_t *node);
+static uiNode_t* UI_OptionTreeNodeGetFirstOption(uiNode_t* node);
 
-static void UI_OptionTreeNodeUpdateCache (uiNode_t *node)
+static void UI_OptionTreeNodeUpdateCache (uiNode_t* node)
 {
 	uiNode_t* option = UI_OptionTreeNodeGetFirstOption(node);
 	if (option)
@@ -90,7 +90,7 @@ static void UI_OptionTreeNodeUpdateCache (uiNode_t *node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t *node)
+static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t* node)
 {
 	if (node->firstChild) {
 		/** @todo FIXME it MUST be an option behaviour */
@@ -98,7 +98,7 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t *node)
 		return node->firstChild;
 	} else {
 		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);
-		uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
+		uiNode_t* option = UI_GetOption(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).versionId) {
 			EXTRADATA(node).versionId = v;
 			UI_OptionTreeNodeUpdateCache(node);
@@ -107,7 +107,7 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t *node)
 	}
 }
 
-void uiOptionTreeNode::draw (uiNode_t *node)
+void uiOptionTreeNode::draw (uiNode_t* node)
 {
 	uiNode_t* option;
 	const char* ref;
@@ -181,7 +181,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 
 		R_Color(nullptr);
 		if (option->firstChild) {
-			uiSprite_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
+			uiSprite_t* icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
 			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
@@ -210,7 +210,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	R_Color(nullptr);
 }
 
-static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, int y, int* depth)
+static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t* node, int x, int y, int* depth)
 {
 	uiNode_t* option;
 	const char* font;
@@ -235,7 +235,7 @@ static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t *node, int x, in
 /**
  * @brief Handles selectboxes clicks
  */
-void uiOptionTreeNode::onLeftClick (uiNode_t *node, int x, int y)
+void uiOptionTreeNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 	int depth;
@@ -266,7 +266,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-bool uiOptionTreeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiOptionTreeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	bool updated;
@@ -295,22 +295,22 @@ bool uiOptionTreeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiOptionTreeNode::onLoading (uiNode_t *node)
+void uiOptionTreeNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-void uiOptionTreeNode::onLoaded (uiNode_t *node)
+void uiOptionTreeNode::onLoaded (uiNode_t* node)
 {
 }
 
-static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t *context)
+static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiOptionIterator_t iterator;
-	uiNode_t *option;
-	uiNode_t *firstOption;
+	uiNode_t* option;
+	uiNode_t* firstOption;
 	const char* value;
 	int pos, i;
 
@@ -355,7 +355,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
-void uiOptionTreeNode::doLayout (uiNode_t *node)
+void uiOptionTreeNode::doLayout (uiNode_t* node)
 {
 	UI_OptionTreeNodeUpdateCache(node);
 	node->invalidated = false;
@@ -381,7 +381,7 @@ void uiOptionTreeNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-void uiOptionTreeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiOptionTreeNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -403,7 +403,7 @@ void uiOptionTreeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-int uiOptionTreeNode::getCellHeight (uiNode_t *node)
+int uiOptionTreeNode::getCellHeight (uiNode_t* node)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -411,7 +411,7 @@ int uiOptionTreeNode::getCellHeight (uiNode_t *node)
 	return lineHeight;
 }
 
-void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionTreeNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";

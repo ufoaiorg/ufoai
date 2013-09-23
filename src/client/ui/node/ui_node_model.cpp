@@ -49,19 +49,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
-static const uiBehaviour_t *localBehaviour;
+static const uiBehaviour_t* localBehaviour;
 
 /**
  * @brief Returns pointer to UI model
  * @param[in] modelName model id from script files
  * @return uiModel_t pointer
  */
-uiModel_t *UI_GetUIModel (const char* modelName)
+uiModel_t* UI_GetUIModel (const char* modelName)
 {
 	int i;
 
 	for (i = 0; i < ui_global.numModels; i++) {
-		uiModel_t *m = &ui_global.models[i];
+		uiModel_t* m = &ui_global.models[i];
 		if (Q_streq(m->id, modelName))
 			return m;
 	}
@@ -75,13 +75,13 @@ static void UI_ListUIModels_f (void)
 	/* search for UI models with same name */
 	Com_Printf("UI models: %i\n", ui_global.numModels);
 	for (i = 0; i < ui_global.numModels; i++) {
-		const uiModel_t *m = &ui_global.models[i];
+		const uiModel_t* m = &ui_global.models[i];
 		const char* need = m->next != nullptr ? m->next->id : "none";
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
 	}
 }
 
-void uiModelNode::draw (uiNode_t *node)
+void uiModelNode::draw (uiNode_t* node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
@@ -98,7 +98,7 @@ static vec3_t nullVector = {0, 0, 0};
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
  * @todo the param "model" is not used !?
  */
-static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiModel_t *model)
+static inline void UI_InitModelInfoView (uiNode_t* node, modelInfo_t* mi, uiModel_t* model)
 {
 	vec3_t nodeorigin;
 	UI_GetNodeAbsPos(node, nodeorigin);
@@ -116,7 +116,7 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiMode
 /**
  * @brief Draw a model using UI model definition
  */
-static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char* source, modelInfo_t *mi, uiModel_t *model)
+static void UI_DrawModelNodeWithUIModel (uiNode_t* node, const char* source, modelInfo_t* mi, uiModel_t* model)
 {
 	bool autoScaleComputed = false;
 	vec3_t autoScale;
@@ -147,10 +147,10 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char* source, mod
 
 		if (model->tag && model->parent) {
 			/* tag and parent defined */
-			uiModel_t *parentModel;
+			uiModel_t* parentModel;
 			modelInfo_t pmi;
 			vec3_t pmiorigin;
-			animState_t *as;
+			animState_t* as;
 			/* place this model part on an already existing model tag */
 			parentModel = UI_GetUIModel(model->parent);
 			if (!parentModel) {
@@ -224,7 +224,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char* source, mod
 
 			/* only base models have animations */
 			if (ref && *ref) {
-				animState_t *as = &model->animState;
+				animState_t* as = &model->animState;
 				const char* anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
 				if (anim == nullptr || !Q_streq(anim, ref))
@@ -247,10 +247,10 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char* source, mod
 /**
  * @todo need to merge UI model case, and the common case (looks to be a copy-pasted code)
  */
-void UI_DrawModelNode (uiNode_t *node, const char* source)
+void UI_DrawModelNode (uiNode_t* node, const char* source)
 {
 	modelInfo_t mi;
-	uiModel_t *model;
+	uiModel_t* model;
 	vec3_t nodeorigin;
 	vec2_t screenPos;
 
@@ -362,7 +362,7 @@ void UI_DrawModelNode (uiNode_t *node, const char* source)
 
 	/* draw all children */
 	if (node->firstChild) {
-		uiNode_t *child;
+		uiNode_t* child;
 		modelInfo_t pmi = mi;
 		for (child = node->firstChild; child; child = child->next) {
 			const char* tag;
@@ -413,7 +413,7 @@ void UI_DrawModelNode (uiNode_t *node, const char* source)
 static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 
-void uiModelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiModelNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	float* rotateAngles = EXTRADATA(node).angles;
 
@@ -433,7 +433,7 @@ void uiModelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiModelNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiModelNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -444,7 +444,7 @@ void uiModelNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	oldMousePosY = y;
 }
 
-void uiModelNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiModelNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -456,7 +456,7 @@ void uiModelNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiModelNode::onLoading (uiNode_t *node)
+void uiModelNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
@@ -466,26 +466,26 @@ void uiModelNode::onLoading (uiNode_t *node)
 /**
  * @brief Call to update a cloned node
  */
-void uiModelNode::clone (const uiNode_t *source, uiNode_t *clone)
+void uiModelNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
 	uiLocatedNode::clone(source, clone);
 	if (!clone->dynamic)
 		EXTRADATA(clone).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-void uiModelNode::newNode (uiNode_t *node)
+void uiModelNode::newNode (uiNode_t* node)
 {
 	EXTRADATA(node).oldRefValue = Mem_PoolAllocTypeN(char, MAX_OLDREFVALUE, ui_dynPool);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 
-void uiModelNode::deleteNode (uiNode_t *node)
+void uiModelNode::deleteNode (uiNode_t* node)
 {
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = nullptr;
 }
 
-void uiModelNode::onLoaded (uiNode_t *node)
+void uiModelNode::onLoaded (uiNode_t* node)
 {
 	/* a tag without but not a submodel */
 	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
@@ -502,7 +502,7 @@ void uiModelNode::onLoaded (uiNode_t *node)
 	}
 }
 
-void UI_RegisterModelNode (uiBehaviour_t *behaviour)
+void UI_RegisterModelNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "model";

@@ -95,7 +95,7 @@ static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
  * to the ground container of @c inv
  * @todo not used nor called by the container node; should be move somewhere else
  */
-void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t *ed)
+void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t* ed)
 {
 	int i;
 	/* make a copy, because we are not really using these items,
@@ -108,7 +108,7 @@ void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t* od = INVSH_GetItemByIDX(i);
 		/* Don't allow to show unuseable items. */
 		if (!GAME_ItemIsUseable(od))
 			continue;
@@ -144,9 +144,9 @@ void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t *ed)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item* item, int x, int y, const vec3_t scale, const vec4_t color)
+void UI_DrawItem (uiNode_t* node, const vec3_t org, const Item* item, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	const objDef_t *od = item->def();
+	const objDef_t* od = item->def();
 	vec4_t col;
 	vec3_t origin;
 
@@ -196,7 +196,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const Item* item, int x, int
 		UI_DrawNormImageByName(false, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(nullptr);
 	} else {
-		uiModel_t *model = nullptr;
+		uiModel_t* model = nullptr;
 		const char* modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
@@ -272,7 +272,7 @@ void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLen
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, stringMaxLength, _("Usable in:\n"));
 				for (i = 0; i < item.def()->numWeapons; i++) {
-					const objDef_t *weapon = item.def()->weapons[i];
+					const objDef_t* weapon = item.def()->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, stringMaxLength, "* %s\n", _(weapon->name));
 					}
@@ -286,10 +286,10 @@ void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLen
  * @brief Search a child container node by the given container id
  * @note Only search with one depth
  */
-uiNode_t *UI_GetContainerNodeByContainerIDX (const uiNode_t* const parent, const int index)
+uiNode_t* UI_GetContainerNodeByContainerIDX (const uiNode_t* const parent, const int index)
 {
 	const invDef_t* const container = INVDEF(index);
-	uiNode_t *containerNode = UI_GetNode(parent, container->name);
+	uiNode_t* containerNode = UI_GetNode(parent, container->name);
 	return containerNode;
 }
 
@@ -308,10 +308,10 @@ static void UI_DrawDisabled (const uiNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, bool showTUs)
+static void UI_DrawFree (containerIndex_t container, const uiNode_t* node, int posx, int posy, int sizex, int sizey, bool showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
-	invDef_t *inv = INVDEF(container);
+	invDef_t* inv = INVDEF(container);
 	vec2_t nodepos;
 
 	UI_GetNodeAbsPos(node, nodepos);
@@ -330,9 +330,9 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory* inv)
+static void UI_ContainerNodeDrawFreeSpace (uiNode_t* node, Inventory* inv)
 {
-	const objDef_t *od = UI_DNDGetItem()->def();	/**< Get the 'type' of the dragged item. */
+	const objDef_t* od = UI_DNDGetItem()->def();	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
@@ -384,7 +384,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, Inventory* inv)
 void uiContainerNode::onLoaded (uiNode_t* const node)
 {
 	const char* name;
-	const invDef_t *container;
+	const invDef_t* container;
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
@@ -432,7 +432,7 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @param node Context node
  * @param highlightType Current selected object
  */
-static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highlightType)
+static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
@@ -443,7 +443,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	const invDef_t *contType = EXTRADATA(node).container;
+	const invDef_t* contType = EXTRADATA(node).container;
 	if (contType->isLeftDef() && !ui_inventory->getLeftHandContainer()) {
 		if (ui_inventory->getRightHandContainer()) {
 			const Item* item = ui_inventory->getRightHandContainer();
@@ -499,7 +499,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 /**
  * @brief Draw a grip container
  */
-static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightType)
+static void UI_ContainerNodeDrawGrid (uiNode_t* node, const objDef_t* highlightType)
 {
 	vec3_t pos;
 
@@ -520,7 +520,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightT
 /**
  * @brief Draw a preview of the DND item dropped into the node
  */
-static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
+static void UI_ContainerNodeDrawDropPreview (uiNode_t* target)
 {
 	Item previewItem;
 	int checkedTo;
@@ -577,9 +577,9 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 /**
  * @brief Main function to draw a container node
  */
-void uiContainerNode::draw (uiNode_t *node)
+void uiContainerNode::draw (uiNode_t* node)
 {
-	const objDef_t *highlightType = nullptr;
+	const objDef_t* highlightType = nullptr;
 
 	if (!EXTRADATA(node).container)
 		return;
@@ -651,7 +651,7 @@ static Item* UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int 
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
+void uiContainerNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
 	/* Find out where the mouse is. */
 	const Item* itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y);
@@ -670,10 +670,10 @@ void uiContainerNode::drawTooltip (const uiNode_t *node, int x, int y) const
 	}
 }
 
-static bool UI_ContainerNodeAddItem (const invDef_t *container, Item* ic, containerIndex_t containerID, Item* *icp)
+static bool UI_ContainerNodeAddItem (const invDef_t* container, Item* ic, containerIndex_t containerID, Item* *icp)
 {
 	int px, py;
-	const invDef_t *target = INVDEF(containerID);
+	const invDef_t* target = INVDEF(containerID);
 	ui_inventory->findSpace(target, ic, &px, &py, nullptr);
 	return INV_MoveItem(ui_inventory, target, px, py, container, ic, icp);
 }
@@ -688,7 +688,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 {
 	containerIndex_t target;
 	bool ammoChanged = false;
-	const invDef_t *container = EXTRADATA(node).container;
+	const invDef_t* container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != CID_EQUIP) {
@@ -753,7 +753,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 	}
 	/* Run onChange events */
-	uiNode_t *targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
+	uiNode_t* targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
 	if (targetNode != nullptr && node != targetNode && targetNode->onChange)
@@ -762,7 +762,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 	 * Maybe there's a better way to do this? */
 	if (ic->def()->isAmmo() || ammoChanged) {
 		/** @todo hard coded node name, remove it when it is possible */
-		uiNode_t *ammoNode = UI_GetNode(node->root, "equip_ammo");
+		uiNode_t* ammoNode = UI_GetNode(node->root, "equip_ammo");
 		if (ammoNode != nullptr && node != ammoNode && ammoNode->onChange)
 			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
 	}
@@ -799,7 +799,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-void uiContainerNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiContainerNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -808,7 +808,7 @@ void uiContainerNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiContainerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -842,7 +842,7 @@ void uiContainerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiContainerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -854,7 +854,7 @@ void uiContainerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiContainerNode::onLoading (uiNode_t *node)
+void uiContainerNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).container = nullptr;
 	node->color[3] = 1.0;
@@ -863,7 +863,7 @@ void uiContainerNode::onLoading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-bool uiContainerNode::onDndEnter (uiNode_t *target)
+bool uiContainerNode::onDndEnter (uiNode_t* target)
 {
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() != target);
@@ -873,7 +873,7 @@ bool uiContainerNode::onDndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
+bool uiContainerNode::onDndMove (uiNode_t* target, int x, int y)
 {
 	vec2_t nodepos;
 	bool exists;
@@ -883,7 +883,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 
 	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
-	const invDef_t *containerType = EXTRADATA(target).container;
+	const invDef_t* containerType = EXTRADATA(target).container;
 
 	UI_GetNodeAbsPos(target, nodepos);
 
@@ -951,7 +951,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-void uiContainerNode::onDndLeave (uiNode_t *node)
+void uiContainerNode::onDndLeave (uiNode_t* node)
 {
 	dragInfoToX = -1;
 	dragInfoToY = -1;
@@ -960,10 +960,10 @@ void uiContainerNode::onDndLeave (uiNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
+bool uiContainerNode::onDndFinished (uiNode_t* source, bool isDropped)
 {
 	Item* dragItem = UI_DNDGetItem();
-	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
+	const invDef_t* sourceContainer = EXTRADATACONST(source).container;
 
 	/* if the target can't finalize the DND we stop */
 	if (!isDropped) {
@@ -974,18 +974,18 @@ bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 
 	/* on tactical mission */
 	if (CL_BattlescapeRunning()) {
-		const uiNode_t *target = UI_DNDGetTargetNode();
-		const invDef_t *targetContainer = EXTRADATACONST(target).container;
+		const uiNode_t* target = UI_DNDGetTargetNode();
+		const invDef_t* targetContainer = EXTRADATACONST(target).container;
 		assert(targetContainer);
 		CL_ActorInvMove(selActor, sourceContainer->id, dragInfoFromX, dragInfoFromY,
 				targetContainer->id, dragInfoToX, dragInfoToY);
 	} else {
-		uiNode_t *target = UI_DNDGetTargetNode();
+		uiNode_t* target = UI_DNDGetTargetNode();
 		if (target) {
 			Item* fItem;
 			Item* tItem;
 			bool moved = false;
-			const invDef_t *targetContainer = EXTRADATACONST(target).container;
+			const invDef_t* targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
 				fItem = INV_SearchInInventoryWithFilter(ui_inventory, sourceContainer, dragItem->def(), MAX_FILTERTYPES);
