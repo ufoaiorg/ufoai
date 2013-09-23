@@ -132,8 +132,7 @@ static void UI_DeleteWindowFromStack (uiNode_t* window)
  */
 static inline int UI_GetWindowPositionFromStackByName (const char* name)
 {
-	int i;
-	for (i = 0; i < ui_global.windowStackPos; i++)
+	for (int i = 0; i < ui_global.windowStackPos; i++)
 		if (Q_streq(ui_global.windowStack[i]->name, name))
 			return i;
 
@@ -147,13 +146,12 @@ static inline int UI_GetWindowPositionFromStackByName (const char* name)
  */
 static inline void UI_InsertWindowIntoStack (uiNode_t* window, int position)
 {
-	int i;
 	assert(position <= ui_global.windowStackPos);
 	assert(position > 0);
 	assert(window != nullptr);
 
 	/* create space for the new window */
-	for (i = ui_global.windowStackPos; i > position; i--) {
+	for (int i = ui_global.windowStackPos; i > position; i--) {
 		ui_global.windowStack[i] = ui_global.windowStack[i - 1];
 	}
 	/* insert */
@@ -171,11 +169,9 @@ static inline void UI_InsertWindowIntoStack (uiNode_t* window, int position)
  */
 uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params)
 {
-	uiNode_t* window;
-
 	UI_ReleaseInput();
 
-	window = UI_GetWindow(name);
+	uiNode_t* window = UI_GetWindow(name);
 	if (window == nullptr) {
 		Com_Printf("Window \"%s\" not found.\n", name);
 		return nullptr;
@@ -243,15 +239,13 @@ static void UI_PushChildWindow_f (void)
  */
 static void UI_PushWindow_f (void)
 {
-	linkedList_t* params = nullptr;
-	int i;
-
 	if (Cmd_Argc() == 0) {
 		Com_Printf("Usage: %s <name> <params>\n", Cmd_Argv(0));
 		return;
 	}
 
-	for (i = 2; i < Cmd_Argc(); i++) {
+	linkedList_t* params = nullptr;
+	for (int i = 2; i < Cmd_Argc(); i++) {
 		LIST_AddString(&params, Cmd_Argv(i));
 	}
 	UI_PushWindow(Cmd_Argv(1), nullptr, params);
@@ -268,29 +262,26 @@ static void UI_PushWindow_f (void)
  */
 static void UI_PushDropDownWindow_f (void)
 {
-	vec2_t source;
-	vec2_t destination;
-	uiNode_t* node;
-	int direction;
-	size_t writtenBytes;
-	int result;
-
 	if (Cmd_Argc() != 4 && Cmd_Argc() != 5) {
 		Com_Printf("Usage: %s <source-anchor> <point-in-source-anchor> <dest-anchor> <point-in-dest-anchor>\n", Cmd_Argv(0));
 		return;
 	}
 
 	/* get the source anchor */
-	node = UI_GetNodeByPath(Cmd_Argv(1));
+	uiNode_t* node = UI_GetNodeByPath(Cmd_Argv(1));
 	if (node == nullptr) {
 		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
-	result = Com_ParseValue(&direction, Cmd_Argv(2), V_INT, 0, sizeof(direction), &writtenBytes);
+	size_t writtenBytes;
+	int direction;
+	int result = Com_ParseValue(&direction, Cmd_Argv(2), V_INT, 0, sizeof(direction), &writtenBytes);
 	if (result != RESULT_OK) {
 		Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_INT\n", Cmd_Argv(2));
 		return;
 	}
+	vec2_t source;
+	vec2_t destination;
 	UI_NodeGetPoint(node, source, direction);
 	UI_NodeRelativeToAbsolutePoint(node, source);
 
@@ -328,12 +319,11 @@ static void UI_PushDropDownWindow_f (void)
 
 static void UI_RemoveWindowAtPositionFromStack (int position)
 {
-	int i;
 	assert(position < ui_global.windowStackPos);
 	assert(position >= 0);
 
 	/* create space for the new window */
-	for (i = position; i < ui_global.windowStackPos; i++) {
+	for (int i = position; i < ui_global.windowStackPos; i++) {
 		ui_global.windowStack[i] = ui_global.windowStack[i + 1];
 	}
 	ui_global.windowStack[ui_global.windowStackPos--] = nullptr;
@@ -341,8 +331,7 @@ static void UI_RemoveWindowAtPositionFromStack (int position)
 
 static void UI_CloseAllWindow (void)
 {
-	int i;
-	for (i = ui_global.windowStackPos - 1; i >= 0; i--) {
+	for (int i = ui_global.windowStackPos - 1; i >= 0; i--) {
 		uiNode_t* window = ui_global.windowStack[i];
 
 		UI_Node_WindowClosed(window);
@@ -391,13 +380,11 @@ bool UI_IsWindowOnStack (const char* name)
  */
 static void UI_CloseWindowByRef (uiNode_t* window)
 {
-	int i;
-
 	/** @todo If the focus is not on the window we close, we don't need to remove it */
 	UI_ReleaseInput();
 
 	assert(ui_global.windowStackPos);
-	i = UI_GetWindowPositionFromStackByName(window->name);
+	int i = UI_GetWindowPositionFromStackByName(window->name);
 	if (i == -1) {
 		Com_Printf("Window '%s' is not on the active stack\n", window->name);
 		return;
@@ -495,13 +482,12 @@ static void UI_CloseWindow_f (void)
 
 void UI_PopWindowWithEscKey (void)
 {
-	const uiNode_t* window = ui_global.windowStack[ui_global.windowStackPos - 1];
-
 	/* nothing if stack is empty */
 	if (ui_global.windowStackPos == 0)
 		return;
 
 	/* some window can prevent escape */
+	const uiNode_t* window = ui_global.windowStack[ui_global.windowStackPos - 1];
 	if (WINDOWEXTRADATACONST(window).preventTypingEscape)
 		return;
 
@@ -551,8 +537,6 @@ const char* UI_GetActiveWindowName (void)
  */
 bool UI_IsMouseOnWindow (void)
 {
-	const uiNode_t* hovered;
-
 	if (UI_GetMouseCapture() != nullptr)
 		return true;
 
@@ -561,7 +545,7 @@ bool UI_IsMouseOnWindow (void)
 			return true;
 	}
 
-	hovered = UI_GetHoveredNode();
+	const uiNode_t* hovered = UI_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
 		if (UI_Node_IsBattleScape(hovered)) {
@@ -608,8 +592,7 @@ uiNode_t* UI_GetWindow (const char* name)
  */
 void UI_InvalidateStack (void)
 {
-	int pos;
-	for (pos = 0; pos < ui_global.windowStackPos; pos++) {
+	for (int pos = 0; pos < ui_global.windowStackPos; pos++) {
 		UI_Invalidate(ui_global.windowStack[pos]);
 	}
 	Cvar_SetValue("ui_sys_screenwidth", viddef.virtualWidth);
@@ -632,13 +615,12 @@ void UI_SetNewWindowPos (uiNode_t* window, int x, int y)
  */
 void UI_InsertWindow (uiNode_t* window)
 {
-	int pos = 0;
-	int i;
 
 	if (ui_global.numWindows >= UI_MAX_WINDOWS)
 		Com_Error(ERR_FATAL, "UI_InsertWindow: hit UI_MAX_WINDOWS");
 
 	/* search the insertion position */
+	int pos;
 	for (pos = 0; pos < ui_global.numWindows; pos++) {
 		const uiNode_t* node = ui_global.windows[pos];
 		if (strcmp(window->name, node->name) < 0)
@@ -646,7 +628,7 @@ void UI_InsertWindow (uiNode_t* window)
 	}
 
 	/* create the space */
-	for (i = ui_global.numWindows - 1; i >= pos; i--)
+	for (int i = ui_global.numWindows - 1; i >= pos; i--)
 		ui_global.windows[i + 1] = ui_global.windows[i];
 
 	/* insert */
@@ -660,8 +642,7 @@ void UI_InsertWindow (uiNode_t* window)
  */
 void UI_FinishWindowsInit (void)
 {
-	int i;
-	for (i = 0; i < ui_global.numWindows; i++) {
+	for (int i = 0; i < ui_global.numWindows; i++) {
 		uiNode_t* window = ui_global.windows[i];
 		if (WINDOWEXTRADATA(window).onScriptLoaded)
 			UI_ExecuteEventActions(window, WINDOWEXTRADATA(window).onScriptLoaded);
@@ -689,14 +670,12 @@ static void UI_InitStack_f (void)
  */
 static void UI_DebugTree (const uiNode_t* node, int depth)
 {
-	const uiNode_t* child = node->firstChild;
-	int i;
-
-	for (i = 0; i < depth; i++) {
+	for (int i = 0; i < depth; i++) {
 		Com_Printf("    ");
 	}
 	Com_Printf("+ %s %s\n", UI_Node_GetWidgetName(node), node->name);
 
+	const uiNode_t* child = node->firstChild;
 	while (child) {
 		UI_DebugTree(child, depth + 1);
 		child = child->next;
