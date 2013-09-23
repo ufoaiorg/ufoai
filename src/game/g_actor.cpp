@@ -162,7 +162,7 @@ int G_ActorGetTUForReactionFire (const Edict* ent)
 
 	const fireDef_t* fd = weapon->getFiredefs();
 	assert(fd);
-	return G_ActorGetModifiedTimeForFiredef(ent, &fd[fm->getFmIdx()], true);
+	return G_ActorGetModifiedTimeForFiredef(ent, &fd[fm->getFmIdx()], false);
 }
 
 /**

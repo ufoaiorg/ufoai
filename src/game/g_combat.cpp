@@ -1129,7 +1129,7 @@ bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_typ
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
-	const int tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, IS_SHOT_REACTION(shootType));
+	const int tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, false);
 	if (allowReaction) {
 		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded))
 			return false;
