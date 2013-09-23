@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-16 10:44+0200\n"
-"PO-Revision-Date: 2013-08-12 10:40-0600\n"
+"PO-Revision-Date: 2013-09-23 13:10-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -2928,9 +2928,8 @@ msgid "Warehouse"
 msgstr "Almacén"
 
 #: ../base/ufos/maps.ufo:4184
-#, fuzzy
 msgid "Village 2"
-msgstr "Aldea"
+msgstr "Aldea 2"
 
 #: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
@@ -3029,14 +3028,12 @@ msgid "Frozen Industrial Site (MP)"
 msgstr "Sitio Industrial Helado (MJ)"
 
 #: ../base/ufos/maps.ufo:5420
-#, fuzzy
 msgid "A container harbour."
-msgstr "Un puerto local."
+msgstr "Un puerto de carga."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
-#, fuzzy
 msgid "Village MP (2v2)"
-msgstr "Aldea"
+msgstr "Aldea MJ (2vs2)"
 
 #: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
@@ -5869,7 +5866,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
-#, fuzzy
 msgid ""
 "Commander, we've finished taking a look at the advanced alien propulsion "
 "systems and I've prepared a report for you.\n"
@@ -5906,11 +5902,9 @@ msgstr ""
 "aniquilación materia-antimateria.\n"
 "\n"
 "La naturaleza especifica de estos cambios sugieren que los alienígenas están "
-"adaptando su tecnología sobre la marcha. La Nave de Abastecimiento OVNI "
-"puede ser una creación reciente. El impulso extra fue probablemente diseñada "
-"para hacer posible que la Nave de Abastecimiento transporte cargamento "
-"pesado en la atmósfera terrestre, y será vital si planean desplegar OVNI más "
-"pesados.\n"
+"adaptando su tecnología sobre la marcha. El impulso extra fue probablemente "
+"diseñado para hacer posible que OVNI más pesados sean capaces de volar en la "
+"atmósfera terrestre.\n"
 "\n"
 "Creo que podemos adaptar estos conocimientos para diseñar un mecanismo de "
 "propulsión más potente, pero el riesgo para la integridad estructural de un "
@@ -7974,7 +7968,7 @@ msgstr ""
 "reproductivos. Al analizar la zona inguinal, descubrimos que fueron "
 "removidos por alguna razón.\n"
 "\n"
-"En combate, los espécimenes sirven como una forma de infantería pesada o "
+"En combate, los especímenes sirven como una forma de infantería pesada o "
 "artillería de apoyo. No tienen muy buena precisión con sus armas, pero en "
 "grupos son capaces de aniquilar un escuadrón completo de PHALLANX. Los "
 "Ortnok no ocupan puestos especializados; de acuerdo con las grabaciones, no "
@@ -8133,7 +8127,7 @@ msgstr ""
 "reproductivos. Al analizar la zona inguinal, descubrimos que fueron "
 "removidos por alguna razón.\n"
 "\n"
-"En combate, los espécimenes sirven como una forma de infantería pesada o "
+"En combate, los especímenes sirven como una forma de infantería pesada o "
 "artillería de apoyo. No tienen muy buena precisión con sus armas, pero en "
 "grupos son capaces de aniquilar un escuadrón completo de PHALLANX. Los "
 "Ortnok no ocupan puestos especializados; de acuerdo con las grabaciones, no "
@@ -12483,7 +12477,6 @@ msgstr ""
 "aturdidora enfrente del soldado perderán todas sus UT para el próximo turno."
 
 #: ../base/ufos/msgid/concepts.ufo:69
-#, fuzzy
 msgid ""
 "Units can fire on enemy units when they wander into their field of view "
 "during the enemy's turn. Soldiers will execute a reaction shot when an enemy "
@@ -12529,11 +12522,12 @@ msgstr ""
 "\n"
 "Apéndice\n"
 "\n"
-"Un soldado no realizará disparos de reacción a menos que haya reservado "
-"suficientes Unidades de Tiempo durante su turno previo y el disparo de "
-"reacción esté activado en el panel de control del soldado. Cada comandante "
-"puede escoger el modo de disparo que deberá usar el soldado para sus "
-"disparos de reacción en la ventana de selección de modo de disparo.\n"
+"Un soldado no realizará disparos de reacción a menos que el disparo de "
+"reacción esté activado en el panel de control del soldado. Cuando está "
+"activado el soldado reservará suficientes Unidades de Tiempo para realizar "
+"un disparo durante el turno enemigo.  Cada comandante puede escoger el modo "
+"de disparo que deberá usar el soldado para sus disparos de reacción en la "
+"ventana de selección de modo de disparo.\n"
 "\n"
 "Si la unidad enemiga sale del campo de visión del soldado -incluso por solo "
 "un momento- el conteo de disparo de reacción se reiniciará. Una unidad debe "
@@ -12648,7 +12642,7 @@ msgstr ""
 "\n"
 "Si un soldado se encuentra cara a cara con un alienígena y no es capaz de "
 "eliminarlo sin exponerse a un disparo de reacción posiblemente mortal, armas "
-"que causen daño inderecto tales como granadas -lanzadas a mano o desde un "
+"que causen daño indirecto tales como granadas -lanzadas a mano o desde un "
 "lanzagranadas- deberán usarse desde una posición segura.\n"
 "\n"
 "Las armas convencionales siempre serán necesarias en el campo de batalla, "
@@ -13095,7 +13089,7 @@ msgstr ""
 "Comandante,\n"
 "\n"
 "Temo que tengo malas noticias. A pesar de nuestros mayores esfuerzos, los "
-"espécimenes alienígenas recuperados durante la última misión táctica han "
+"especímenes alienígenas recuperados durante la última misión táctica han "
 "perecido en la celda de contención. Fuimos completamente incapaces de "
 "estabilizar su condición médica lo suficiente como para obtener alguna "
 "información útil.\n"
@@ -14876,7 +14870,7 @@ msgstr ""
 "posibilidades, desde predigestores de alimento hasta dispositivos de "
 "suicidio, aunque finalmente la respuesta más obvia resultó ser la correcta: "
 "es una especie de respirador que permite a los extraterrestres sobrevivir en "
-"nuestra atmósfera, y posiblemente también en otras. Todos los espécimenes "
+"nuestra atmósfera, y posiblemente también en otras. Todos los especímenes "
 "orgánicos a los que hemos hecho una autopsia llevaban implantado uno de "
 "estos aparatos, todos ellos con la misma función básica, lo que quiere decir "
 "que su operación continua resulta necesaria bien para su supervivencia en su "
@@ -14955,7 +14949,7 @@ msgstr ""
 "\n"
 "Durante la autopsia de los cadáveres de extraterrestres que hemos "
 "recuperado, mi equipo y yo descubrimos un extraño dispositivo mecánico "
-"implantado en la garganta de los espécimenes en cuestión. Se trata de dos "
+"implantado en la garganta de los especímenes en cuestión. Se trata de dos "
 "esferas de metal localizadas a ambos lados del tallo cerebral, conectadas "
 "directamente a la tráquea por medio de un tubo estrecho. Esta última está "
 "protegida por una especie de válvula o filtro. Creemos que el conjunto "
@@ -15041,7 +15035,7 @@ msgstr ""
 "momento de los intentos del primer individuo. Sabemos lo que esto parece, "
 "Comandante, pero le aseguro que mi equipo y yo hemos sido rigurosamente "
 "meticulosos en lo referente a la seguridad y a la separación de los "
-"espécimenes. No hemos permitido ninguna clase de comunicación entre los "
+"especímenes. No hemos permitido ninguna clase de comunicación entre los "
 "alienígenas. Todavía no queremos aventurar ninguna hipótesis definitiva "
 "sobre estos acontecimientos, si bien estamos trabajando en ello.\n"
 "\n"
@@ -15058,7 +15052,7 @@ msgstr ""
 "\n"
 "En cualquier caso, creo que estamos haciendo progresos, aunque lentamente. "
 "Ciertamente, la comunicación con los alienígenas entra en el marco de lo "
-"posible. Nuestros estudios confirman que todos los espécimenes alienígenas "
+"posible. Nuestros estudios confirman que todos los especímenes alienígenas "
 "reaccionan frente a los estímulos externos. Esto significa que podemos "
 "provocar su respuesta, ya sea de una manera o de otra. Actualmente, el Dr. "
 "Yamamura está trabajando en enseñar a un grupo aislado cómo expresar deseo, "
@@ -15211,7 +15205,7 @@ msgstr ""
 "\n"
 "En nuestras grabaciones, hemos visto a menudo a alienígenas buscar "
 "cobertura, coordinar su ataque y trabajar en equipo sin aparentemente llevar "
-"ningún aparato de comunicación. Sin embargo, cuando capturábamos espécimenes "
+"ningún aparato de comunicación. Sin embargo, cuando capturábamos especímenes "
 "vivos en nuestra Unidad de Contención, ellos nunca exhibían un "
 "comportamiento más allá del instinto animal, lo que parece contradecir las "
 "evidencias: grandes y bien desarrolladas estructuras cerebrales y un "
@@ -15219,7 +15213,7 @@ msgstr ""
 "\n"
 "Intentamos conciliar estas ideas en una nueva hipótesis, y nuestros "
 "experimentos han comenzado a producir resultados tangibles. Los nuevos "
-"espécimenes son sin duda los responsables por el comportamiento extraño que "
+"especímenes son sin duda los responsables por el comportamiento extraño que "
 "hemos observado, pero habíamos supuesto originalmente que se trataban de "
 "algún tipo de oficiales actuando según rango de autoridad. Ahora creemos que "
 "esta teoría es incorrecta: nuestros experimentos prueban que cuando se les "
@@ -15242,10 +15236,10 @@ msgstr ""
 "los alienígenas, el 'cómo' es menos problemático que el 'porqué'.\n"
 "\n"
 "Los nuevos descubrimientos también parecen sugerir que en la Tierra los "
-"espécimenes están separados de su fuente de inteligencia. Mientras que esto "
+"especímenes están separados de su fuente de inteligencia. Mientras que esto "
 "puede ser una ventaja importante para las fuerzas de PHALANX, también trae "
 "consigo amenazas que todavía no habíamos considerado. Nuestra investigación "
-"en fisiología alienígena ha establecido que los espécimenes aislados no "
+"en fisiología alienígena ha establecido que los especímenes aislados no "
 "pueden sobrevivir por mucho tiempo en nuestro medio ambiente, y actúan con "
 "muy poca inteligencia mientras están en la superficie; pero si un gran "
 "número de ellos consigue escapar y coordinar sus fuerzas -incluso con las de "
@@ -15297,12 +15291,12 @@ msgstr ""
 "Los alienígenas vivos en nuestra Unidad de Contención han comenzado a "
 "exhibir un comportamiento errático desde la última misión táctica.\n"
 "\n"
-"Antes, los espécimenes apenas eran inteligentes, funcionando tan sólo "
+"Antes, los especímenes apenas eran inteligentes, funcionando tan sólo "
 "instintivamente, a pesar de las estructuras significativamente desarrolladas "
 "de su cerebro. Sin embargo, ahora muestran señales de inteligencia, "
 "comunicándose claramente a través de las celdas insonorizadas y actuando en "
 "equipo, incluso llegando a urdir tentativas de fuga. Hemos usado dardos "
-"sedativos para someter a los espécimenes más activos.\n"
+"sedativos para someter a los especímenes más activos.\n"
 "\n"
 "Creemos que los individuos recientemente incorporados a la Contención están "
 "de algún modo afectando al resto del grupo; podrían ser miembros de la alta "
@@ -15481,7 +15475,7 @@ msgstr ""
 "presencia de algún tipo de 'pensamiento compartido' entre ellas, una mente "
 "colectiva más inteligente cuanto están juntos.'\n"
 "\n"
-"'Ahora que poseemos varios espécimenes capturados, su inteligencia parece "
+"'Ahora que poseemos varios especímenes capturados, su inteligencia parece "
 "acercarse al nivel de los humanos. Si somos capaces de crear un dispositivo "
 "apropiado de traducción, o un lenguaje común, podríamos finalmente "
 "comunicarnos con los cautivos. Quizás algunos de nuestros lingüistas o "
@@ -15646,7 +15640,7 @@ msgstr ""
 "flexibles y sueltos de lengua, siempre que mantengamos inyectados a todos "
 "los individuos de nuestra Unidad de Contención. Lamentablemente, la "
 "resistencia natural de la mente colectiva a los interrogatorios sigue siendo "
-"una traba en los trabajos. Incluso con todos nuestros espécimenes totalmente "
+"una traba en los trabajos. Incluso con todos nuestros especímenes totalmente "
 "drogados, no hemos conseguido romper dicha resistencia, y la exactitud de "
 "nuestra información de prueba no ha alcanzado aún el 100% de fiabilidad. "
 "Todos los datos que obtenemos aún requieren un cierto grado de tiempo de "
@@ -15721,7 +15715,7 @@ msgstr ""
 "mente alienígenas, propongo un nuevo programa de investigación para "
 "descubrir un conjunto universal de sueros que podamos utilizar para extraer "
 "información más fiable de una forma más rápida y sencilla. Es obvio que hay "
-"una gran cantidad de información dentro de estos espécimenes a la espera de "
+"una gran cantidad de información dentro de estos especímenes a la espera de "
 "ser extraída, Comandante; sólo necesitamos las herramientas adecuadas para "
 "romper sus defensas.\n"
 "\n"
@@ -16606,7 +16600,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:452
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16678,8 +16671,8 @@ msgstr ""
 "La característica más impactante que hemos visto en la invasión es que los "
 "alienígenas han estado recolectando tejido humano, incluso a veces a "
 "personas completas, para sus propios oscuros propósitos. Esto la hacen de "
-"una manera bastante horrible que no muestra respeto por la vida; sus sables "
-"Kerr cortan seres humanos como si estuvieran destazando ganado, y sus Arañas "
+"una manera bastante horrible que no muestra respeto por la vida; cortan "
+"seres humanos como si estuvieran destazando ganado, y sus Arañas "
 "Sanguinarias simplemente diseccionarán a alguien en el lugar para tomar un "
 "órgano particularmente interesante o una muestra de sangre. Es algo por "
 "completo amoralmente práctico.\n"
@@ -16846,7 +16839,6 @@ msgstr ""
 "Cnl. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:516
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16942,8 +16934,8 @@ msgstr ""
 "\n"
 "3) Nuestra red de satélites está completamente expuesta y podría ser borrada "
 "del mapa en un instante. Existen líneas terrestres de emergencia, pero solo "
-"para uso militar. Si la red es atacada, la comunicación entre los centros de "
-"comando de PHALANX y el personal de campo -- aeronaves y equipos tácticos -- "
+"para uso militar. Si la red es atacada, la comunicación entre los Centros de "
+"Comando de PHALANX y el personal de campo -- aeronaves y equipos tácticos -- "
 "se verá interrumpida.\n"
 "\n"
 "4) No hay duda de que existen naves alienígenas moviéndose en órbita, "
@@ -21663,7 +21655,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1201
-#, fuzzy
 msgid ""
 "Commander, I'd like to report that we've successfully prototyped the new "
 "electrolaser design and have approved final plans for a production model. We "
@@ -21738,10 +21729,7 @@ msgstr ""
 "a distancias medias o cortas, dependiendo de las condiciones atmosféricas, y "
 "enviar voltajes nunca antes vistos al objetivo. Es efectivo contra enemigos "
 "orgánicos pero los enemigos robóticos probablemente estén diseñados para "
-"dispersar la carga. Puede ser ajustado a distintos niveles de potencia "
-"dependiendo de las necesidades del momento, desde un simple choque "
-"paralizante hasta una electrocución completa la cual puede matar a los "
-"objetivos más débiles en el acto.\n"
+"dispersar la carga.\n"
 "\n"
 "Ahora los contras.\n"
 "\n"
@@ -21789,7 +21777,7 @@ msgstr ""
 "\n"
 "Usted sabe que las limitaciones del bastón aturdidor del Dr. Connor me han "
 "preocupado seriamente desde la primera propuesta. Poner a nuestros soldados "
-"en peligro extremo para capturar algunos espécimenes biológicos de ninguna "
+"en peligro extremo para capturar algunos especímenes biológicos de ninguna "
 "manera vale la pena el riesgo. Es por ello que nosotros en la División de "
 "Ingeniería hemos estado investigando posibles alternativas, y hemos llegado "
 "a una propuesta que será tanto tecnológicamente factible como efectiva en "
@@ -21914,7 +21902,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1283
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -22117,7 +22104,18 @@ msgstr ""
 "\n"
 "Apéndices\n"
 "\n"
-"Ninguno."
+"El Kit Médico viene preparado con tres formas de tratamiento. Aplicar "
+"Primeros Auxilios tratará las heridas del soldado, frenando la perdida de "
+"sangre causada por la herida en un esfuerzo por mantenerlo con vida. "
+"Restaurará un poco de salud, pero los soldados tendrán que recuperarse de "
+"regreso en la base.\n"
+"\n"
+"Los Estimulantes pueden usarse para revivir a un soldado que ha perdido el "
+"conocimiento como resultado de la exposición a armas no letales.\n"
+"\n"
+"Los Antipsicóticos proveerán una inyección de endorfinas. Muchos comandantes "
+"desesperados lo han encontrado útil para aumentar la moral durante "
+"enfrentamientos altamente estresantes."
 
 # longer bursts recoil
 #: ../base/ufos/msgid/weapons.ufo:1301
@@ -22456,7 +22454,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1371
-#, fuzzy
 msgid ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all "
 "the alien weapons, it's very nasty and very dangerous.\n"
@@ -22503,12 +22500,10 @@ msgstr ""
 "replicarla. El gatillo es de particular interés, ya que contiene un pequeño "
 "escáner de huellas digitales el cual verifica que la granada no sea activada "
 "por accidente. Una activación legitima (no accidental) inicia el conteo del "
-"cronometro. La duración del conteo es variable dependiendo de la cantidad de "
-"segundos que se mantenga presionado el gatillo, pero tiene un mínimo "
-"predefinido de tres segundos.\n"
+"cronometro.\n"
 "\n"
 "Una vez que el conteo llega a cero, la batería libera su poder, calentando "
-"el núcleo de hidrogeno aun estado plasmático en milisegundos. La carga "
+"el núcleo de hidrógeno aun estado plasmático en milisegundos. La carga "
 "explosiva eleva a la granada en el aire, y una vez que esta alcanza una "
 "orientación vertical y la altura ideal, se apaga el mecanismo de contención "
 "de la cámara de plasma. La rápida expansión de plasma causa que la cápsula "
@@ -22516,8 +22511,8 @@ msgstr ""
 "por toda el área. Debido a la naturaleza inestable del plasma sin "
 "contención, la granada tiene un radio de impacto limitado, más allá del cual "
 "las partículas de plasma se enfrían demasiado y pierden velocidad por lo que "
-"dejan de ser peligrosas. Este radio es aproximadamente 50% mayor que el de "
-"una granada de fragmentación estándar.\n"
+"dejan de ser peligrosas. Este radio es aproximadamente ligeramente mayor que "
+"el de una granada de fragmentación estándar.\n"
 "\n"
 "Quienquiera que se encuentre dentro del área de efecto terminará gravemente "
 "herido o muerto.\n"
@@ -24193,13 +24188,13 @@ msgstr ""
 "genética o sus posibles debilidades. Esto nos dejó impotentes en los campos "
 "de la guerra biológica y química.\n"
 "\n"
-"Nuestro estudio de los varios espécimenes alienígenas - tanto vivos como "
+"Nuestro estudio de los varios especímenes alienígenas - tanto vivos como "
 "muertos - que hemos recuperado ha sido esclarecedor. Gracias a los "
 "descubrimientos que hemos hecho en los últimos meses, mi equipo y yo hemos "
 "llegado a creer que estamos listos para iniciar un programa de guerra "
 "bioquímica en contra de los alienígenas. Tenemos muestras de tejido, datos "
-"de autopsia, espécimenes vivos para realizar pruebas; todos los materiales "
-"necesarios para investigar métodos para incapacitar espécimenes en el campo "
+"de autopsia, especímenes vivos para realizar pruebas; todos los materiales "
+"necesarios para investigar métodos para incapacitar especímenes en el campo "
 "de batalla sin enviar a las tropas de PHALANX a combatir cuerpo a cuerpo.\n"
 "\n"
 "Esto será un desafío dada la constante protección y filtración que ofrece el "
@@ -24388,7 +24383,7 @@ msgstr ""
 "directamente a usted con la propuesta.\n"
 "\n"
 "Ahora que sabemos cómo mantener alienígenas vivos en cautiverio, nuestra "
-"falta de espécimenes se está volviendo un serio impedimento para nuestra "
+"falta de especímenes se está volviendo un serio impedimento para nuestra "
 "investigación bioquímica. Necesitamos tejido vivo que estudiar, realizando "
 "sus funciones naturales dentro de un cuerpo vivo, y no tenemos la habilidad "
 "de clonar algunos alienígenas para experimentar. Necesitamos prisioneros. "
@@ -25313,12 +25308,11 @@ msgstr "Vacuna Humana"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "Implante de Anfetaminas"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
-#, fuzzy
 msgid "Muscle Stimulant"
-msgstr "Estimulantes"
+msgstr "Estimulante Muscular"
 
 #: ../base/ufos/seq_credits.ufo:44
 msgid "http://www.ufoai.org"
@@ -25568,7 +25562,7 @@ msgstr "Ataque secundario"
 
 #: ../base/ufos/seq_tutorials.ufo:684
 msgid "Turn reaction-fire on or off"
-msgstr "Activar/Desactivar la Reacción de Disparo"
+msgstr "Activar/Desactivar el Disparo de Reacción"
 
 #: ../base/ufos/seq_tutorials.ufo:706
 msgid "Crouch (kneel down) or stand up"
@@ -25822,8 +25816,8 @@ msgid ""
 "You can use a flashbang to deactivate your opponents' Reaction Fire mode or "
 "to take all of his remaining Time Units (TUs) from his next round."
 msgstr ""
-"Puedes utilizar una granada aturdidora para desactivar el modo de Reacción "
-"de Disparo de tu oponente o quitarle todas sus Unidades de Tiempo (UTs) para "
+"Puedes utilizar una granada aturdidora para desactivar el Disparo de "
+"Reacción de tu oponente y quitarle todas sus Unidades de Tiempo (UTs) para "
 "el siguiente turno."
 
 #: ../base/ufos/tips.ufo:16
@@ -26056,7 +26050,6 @@ msgstr ""
 "cerca de tu base para evitar una persecución prolongada."
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
 "seem to ignore unconscious civilians."
@@ -26153,6 +26146,9 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"Durante los ataques a tu base, coloca un soldado de reserva en el cuarto de "
+"circuito cerrado en el Centro de Comando. Tu soldado será capaz de utilizar "
+"las cámaras de seguridad alrededor de la base para localizar a los enemigos."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -26218,43 +26214,36 @@ msgid "Day"
 msgstr "Día"
 
 #: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
-#, fuzzy
 msgid "Upload"
-msgstr "No Nombrado"
+msgstr "Subir"
 
 #: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
-#, fuzzy
 msgid "Delete this team"
-msgstr "Borrar este marcador"
+msgstr "Borrar este Equipo"
 
 #: ../base/ufos/ui/_menu.ufo:440
-#, fuzzy
 msgid "Currently loaded"
-msgstr "Nodo Actual"
+msgstr "Equipo Actual"
 
 #: ../base/ufos/ui/_menu.ufo:515
-#, fuzzy
 msgid "Generate New Team"
-msgstr "Generar un nuevo equipo al azar"
+msgstr "Generar un Nuevo Equipo"
 
 #: ../base/ufos/ui/_menu.ufo:596
-#, fuzzy
 msgid "Download new teams"
-msgstr "Descargando [%s]"
+msgstr "Descargar nuevos equipos"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "No Nombrado"
+msgstr "Descargar"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
 msgstr "Guardar el equipo actual"
 
 #: ../base/ufos/ui/_menu.ufo:615
-#, fuzzy
 msgid "Save Team"
-msgstr "Guardar tu equipo"
+msgstr "Guardar el Equipo"
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
@@ -26740,7 +26729,7 @@ msgstr "Cargar"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Bajar juegos guardados"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -26826,18 +26815,16 @@ msgid "Do not quit."
 msgstr "No salir"
 
 #: ../base/ufos/ui/cgame.ufo:26
-#, fuzzy
 msgid "Remove this file from the server"
-msgstr "Remover al soldado de esta aeronave"
+msgstr "Remover este archivo del servidor"
 
 #: ../base/ufos/ui/cgame.ufo:53
-#, fuzzy
 msgid "Available files:"
-msgstr "Lenguajes Disponibles"
+msgstr "Archivos disponibles:"
 
 #: ../base/ufos/ui/cgame.ufo:93
 msgid "No files uploaded yet"
-msgstr ""
+msgstr "Aún no se han subido archivos"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -26856,9 +26843,8 @@ msgstr "Mano Derecha"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
 #: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
-#, fuzzy
 msgid "Implant"
-msgstr "Implantes"
+msgstr "Implante"
 
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:79
@@ -27210,9 +27196,8 @@ msgid "Heavily wounded"
 msgstr "Heridas serias"
 
 #: ../base/ufos/ui/hospital.ufo:188
-#, fuzzy
 msgid "Healthy"
-msgstr "Salud"
+msgstr "Saludable"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -27229,7 +27214,7 @@ msgstr "UTs"
 
 #: ../base/ufos/ui/hud_.ufo:100 ../base/ufos/ui/hud_phone.ufo:38
 msgid "Check to use this firemode for reaction fire"
-msgstr "Utilizar este modo de disparo para la reacción de disparo"
+msgstr "Utilizar este modo de disparo para el disparo de reacción"
 
 #: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory_callbacks.cpp:388
@@ -27317,9 +27302,8 @@ msgid "Chat messages"
 msgstr "Mensajes de conversación"
 
 #: ../base/ufos/ui/hud_default.ufo:887
-#, fuzzy
 msgid "Please wait"
-msgstr "Láser"
+msgstr "Espera un momento"
 
 #: ../base/ufos/ui/hud_default.ufo:989
 msgid "Hide rescue zone"
@@ -27330,29 +27314,24 @@ msgid "Reserve TUs for shooting."
 msgstr "Reservar UTs para disparar."
 
 #: ../base/ufos/ui/hud_default.ufo:1019
-#, fuzzy
 msgid "Disable reaction fire"
-msgstr "Alterna el disparo de reacción."
+msgstr "Desactivar el disparo de reacción."
 
 #: ../base/ufos/ui/hud_default.ufo:1025
-#, fuzzy
 msgid "Reaction fire (not available)"
-msgstr "Reacción de disparo (no es posible)"
+msgstr "Disparo de reacción (no es posible)"
 
 #: ../base/ufos/ui/hud_default.ufo:1031
-#, fuzzy
 msgid "Enable reaction fire"
-msgstr "Alterna el disparo de reacción."
+msgstr "Activar el disparo de reacción."
 
 #: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
-#, fuzzy
 msgid "Target out of range"
-msgstr "Apunta tu disparo hacia el suelo"
+msgstr "Objetivo fuera de alcance"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
-#, fuzzy
 msgid "Target acquired"
-msgstr "¡La zona objetivo está ocupada!"
+msgstr "Objetivo en la mira"
 
 #: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
@@ -27531,20 +27510,19 @@ msgstr "Salir del cliente de correo"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Danos un me gusta en facebook"
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Síguenos en twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -28050,27 +28028,23 @@ msgstr "¿Estás listo?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "Control del Administrador"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
-#, fuzzy
 msgid "Round time limit:"
-msgstr "Tiempo máximo del turno en segundos:"
+msgstr "Tiempo máximo del turno:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Force start"
 msgstr "Forzar inicio"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
-msgstr ""
-"Iniciar el juego incluso si no todos los equipos están listo o se han "
-"conectado"
+msgstr "Iniciar el juego antes de que todos los equipos estén listos"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Control Remoto (Administrador)"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -28634,14 +28608,12 @@ msgid "Intel Graphics Hardware Hack:"
 msgstr "Hack del Hardware de Gráficos de Intel:"
 
 #: ../base/ufos/ui/options.ufo:1128
-#, fuzzy
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
-"Este hack activa la compresión de texturas y desactiva el sombreado GLSL en "
-"los chips de Intel. Desactívalo para poder utilizar las características "
-"avanzadas de renderizado."
+"Este hack desactiva el sombreado GLSL en los chips de Intel. Desactívalo "
+"para poder utilizar las características avanzadas de renderizado."
 
 #: ../base/ufos/ui/options.ufo:1161
 msgid ""
@@ -29390,19 +29362,16 @@ msgid "Save your team"
 msgstr "Guardar tu equipo"
 
 #: ../base/ufos/ui/team.ufo:714
-#, fuzzy
 msgid "Generate a team"
-msgstr "Generar un nuevo equipo al azar"
+msgstr "Generar un equipo"
 
 #: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
-#, fuzzy
 msgid "Generate Team"
-msgstr "Equipo Actual"
+msgstr "Generar Equipo"
 
 #: ../base/ufos/ui/team.ufo:731
-#, fuzzy
 msgid "Generate a new team with the selected race"
-msgstr "Actualizar la interfaz con el objeto seleccionado"
+msgstr "Generar un nuevo equipo con la raza seleccionada"
 
 #: ../base/ufos/ui/transfer.ufo:31
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -29504,12 +29473,11 @@ msgstr "Requisito(s):"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Iniciar Sesión"
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
-msgstr "Clave:"
+msgstr "Contraseña:"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -30841,9 +30809,9 @@ msgid "Working 100%"
 msgstr "Trabajando al 100%"
 
 #: client/cgame/campaign/cp_base.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "Not operational, depends on %s"
-msgstr "No está funcionando, depende de"
+msgstr "No está funcionando, depende de %s"
 
 #: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
@@ -31384,11 +31352,11 @@ msgstr ""
 "no está en operación, depende de %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "Falta %3.1f día."
-msgstr[1] "Faltan %3.1f días."
+msgstr[0] "Falta %d día."
+msgstr[1] "Faltan %d días."
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -31766,13 +31734,12 @@ msgid "Unknown weight"
 msgstr "Peso desconocido"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
-#, fuzzy
 msgid ""
 "No Command Centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
-"Esta base no tiene un centro de comando.\n"
-"Los hangares no funcionan.\n"
+"Esta base no tiene un Centro de Comando.\n"
+"Los hangares no pueden funcionar.\n"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 msgid ""
@@ -32017,9 +31984,8 @@ msgid "Alien terror in %s"
 msgstr "Alienígenas aterrorizan %s"
 
 #: client/cgame/campaign/cp_missions.cpp:462
-#, fuzzy
 msgid "Alien terror"
-msgstr "Alienígenas aterrorizan %s"
+msgstr "Ataque alienígena"
 
 #: client/cgame/campaign/cp_missions.cpp:465
 #, c-format
@@ -32267,9 +32233,9 @@ msgid "Not enough credits to finish production in %s."
 msgstr "No tienes suficientes créditos para completar la producción en %s."
 
 #: client/cgame/campaign/cp_produce.cpp:442
-#, fuzzy, c-format
+#, c-format
 msgid "Work on %s at %s has finished."
-msgstr "La producción de %s en %s se ha completado."
+msgstr "El trabajo en el proyecto %s en %s se ha completado."
 
 #: client/cgame/campaign/cp_produce.cpp:443
 #: client/cgame/campaign/cp_produce.cpp:479
@@ -32379,7 +32345,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "El trabajo ha comenzado en el proyecto %s"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -32957,15 +32923,15 @@ msgstr ""
 "FECHA: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:625
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr "Contenido de la OVNIpedia"
+msgstr "OVNIpedia: %s (completo)"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:678
 #: client/cgame/campaign/cp_ufopedia.cpp:687
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s"
-msgstr "OVNIpedia"
+msgstr "OVNIpedia: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:684
 msgid "No pre-research description available."
@@ -33132,14 +33098,12 @@ msgid "Error saving team. Nothing to save yet."
 msgstr "Error al guardar el equipo. Aún no hay nada que guardar"
 
 #: client/cgame/cl_game_team.cpp:316
-#, fuzzy
 msgid "New Team"
-msgstr "Nuevo Equipo"
+msgstr "Equipo Nuevo"
 
 #: client/cgame/cl_game_team.cpp:320
-#, fuzzy
 msgid "Error saving team. Too many teams!"
-msgstr "Error al guardar el equipo. Aún no hay nada que guardar"
+msgstr "Error al guardar el equipo. Hay demasiados equipos."
 
 #: client/cgame/cl_game_team.cpp:325
 msgid "Error saving team. Check free disk space!"
@@ -33470,57 +33434,50 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:369
-#, fuzzy
 msgid "Loading"
 msgstr "Cargando"
 
 #: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
 #: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "Connection failure"
-msgstr "Reacción de disparo"
+msgstr "Fallo en la conexión."
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "La contraseña especificada es errónea."
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "¡Este cambio requiere reiniciar el juego!"
+msgstr "Este servidor requiere contraseña."
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "El objeto está funcionando.\n"
+msgstr "El servidor está lleno."
 
 #: client/cl_main.cpp:417
-#, fuzzy
 msgid "You are banned on this server."
-msgstr "Conectar a este servidor"
+msgstr "Tienes prohibida la conexión con este servidor."
 
 #: client/cl_main.cpp:420
-#, fuzzy
 msgid "The game has already started."
-msgstr "El equipo ya está en uso"
+msgstr "El juego ya ha comenzado."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "El servidor está corriendo una versión diferente del juego."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "Contraseña rcon errónea"
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "La contraseña rcon especificada es errónea."
 
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "The server refused the connection."
-msgstr "El servidor cerró la conexión"
+msgstr "El servidor rechazó la conexión."
 
 #: client/cl_main.cpp:558
 #, c-format
@@ -33882,7 +33839,7 @@ msgstr "No se ha seleccionado un modo de disparo para disparo de reacción."
 
 #: game/g_reaction.cpp:609
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "No hay suficientes UT para activar disparo de reacción."
+msgstr "No hay suficientes UT para activar el disparo de reacción."
 
 #: game/g_round.cpp:54
 msgid "4 minutes left until forced turn end."
