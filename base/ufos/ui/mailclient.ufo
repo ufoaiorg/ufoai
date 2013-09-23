@@ -263,6 +263,9 @@ window mailclient
 		}
 	}
 
+	/**
+	 * @brief Removes all dynamic mail nodes
+	 */
 	confunc clear_mails
 	{
 		call *node:root.mails@removeAllChild
