@@ -428,7 +428,7 @@ void R_UpdateLightList (entity_t* ent)
 	/* we have to use the offset from (accumulated) transform matrix, because entity origin is not necessarily the point where model is acually rendered */
 	pos = ent->transform.matrix + 12; /* type system hack, sorry */
 
-	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
+	VectorSubtract(ent->eBox.maxs, ent->eBox.mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
 	/** @todo clear caches when r_dynamic_lights cvar is changed OR always keep maximal # of static lights in the cache */

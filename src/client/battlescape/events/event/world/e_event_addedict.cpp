@@ -35,8 +35,7 @@ static bool CL_AddEdictFunc (le_t* le, entity_t* ent)
 	ent->flags = RF_BOX;
 	VectorSet(ent->color, 1, 1, 1);
 	ent->alpha = 1.0;
-	VectorCopy(le->aabb.mins, ent->mins);
-	VectorCopy(le->aabb.maxs, ent->maxs);
+	ent->eBox.set(le->aabb);
 	R_EntitySetOrigin(ent, le->origin);
 	return true;
 }

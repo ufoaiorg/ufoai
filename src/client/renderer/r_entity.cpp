@@ -71,8 +71,8 @@ static void R_DrawBox (const entity_t* e)
 	if (e->texture) {
 		R_Color(color);
 		R_BindTexture(e->texture->texnum);
-		if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-			R_DrawTexturedBox(e->mins, e->maxs);
+		if (VectorNotEmpty(e->eBox.mins) && VectorNotEmpty(e->eBox.maxs)) {
+			R_DrawTexturedBox(e->eBox.mins, e->eBox.maxs);
 		} else {
 			R_DrawTexturedBox(e->oldorigin, e->origin);
 		}
@@ -84,8 +84,8 @@ static void R_DrawBox (const entity_t* e)
 
 	R_Color(color);
 
-	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-		R_DrawBoundingBox(e->mins, e->maxs);
+	if (VectorNotEmpty(e->eBox.mins) && VectorNotEmpty(e->eBox.maxs)) {
+		R_DrawBoundingBox(e->eBox.mins, e->eBox.maxs);
 	} else {
 		vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { e->oldorigin[0], e->origin[1],
 				e->oldorigin[2] }, { e->origin[0], e->origin[1], e->oldorigin[2] }, { e->origin[0], e->oldorigin[1],

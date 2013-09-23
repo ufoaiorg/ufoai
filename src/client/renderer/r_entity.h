@@ -81,8 +81,7 @@ typedef struct entity_s {
 	vec3_t color;
 	vec3_t origin;
 	vec3_t oldorigin;
-
-	vec3_t mins, maxs;
+	AABB eBox;
 
 	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
