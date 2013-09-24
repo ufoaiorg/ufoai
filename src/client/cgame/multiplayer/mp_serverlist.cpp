@@ -113,7 +113,7 @@ static void GAME_MP_PingServerCallback (struct net_stream *s)
 		cgi->NET_StreamFree(s);
 		return;
 	}
-	serverList_t* server = (serverList_t* )cgi->NET_StreamGetData(s);
+	serverList_t* server = (serverList_t*)cgi->NET_StreamGetData(s);
 	const int cmd = cgi->NET_ReadByte(buf);
 	if (cmd != svc_oob) {
 		cgi->NET_StreamFree(s);

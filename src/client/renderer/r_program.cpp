@@ -1020,7 +1020,7 @@ void R_InitParticleProgram (r_program_t* prog)
 
 void R_UseParticleProgram (r_program_t* prog)
 {
-/*	ptl_t* ptl = (ptl_t* )prog->userdata;*/
+/*	ptl_t* ptl = (ptl_t*)prog->userdata;*/
 }
 
 void R_InitPrograms (void)

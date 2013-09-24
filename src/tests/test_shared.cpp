@@ -128,7 +128,7 @@ void TEST_RegisterProperty (const char* name, const char* value)
 	}
 
 	if (!element) {
-		element = (test_property_t* ) malloc(sizeof(*element));
+		element = (test_property_t*) malloc(sizeof(*element));
 		Q_strncpyz(element->name, name, sizeof(element->name));
 		/** TODO maybe copy the value instead of copying the pointer of the value */
 		element->value = value;

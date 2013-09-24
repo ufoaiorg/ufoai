@@ -144,4 +144,4 @@ public:
 
 };
 
-void UI_RegisterAbstractNode(uiBehaviour_t* );
+void UI_RegisterAbstractNode(uiBehaviour_t*);

@@ -82,7 +82,7 @@ static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double
 {
 	dlhandle_t* dl;
 
-	dl = (dlhandle_t* )clientp;
+	dl = (dlhandle_t*)clientp;
 
 	dl->position = (unsigned)dlnow;
 

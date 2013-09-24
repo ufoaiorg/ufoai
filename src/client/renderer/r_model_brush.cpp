@@ -69,7 +69,7 @@ static void R_ModLoadVertexes (const lump_t* l)
 	const dBspVertex_t* in;
 	int i, count;
 
-	in = (const dBspVertex_t* ) (mod_base + l->fileofs);
+	in = (const dBspVertex_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -92,7 +92,7 @@ static void R_ModLoadNormals (const lump_t* l)
 	mBspVertex_t* out;
 	int i, count;
 
-	in = (const dBspNormal_t* )(mod_base + l->fileofs);
+	in = (const dBspNormal_t*)(mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in)) {
 		Com_Error(ERR_DROP, "R_LoadNormals: Funny lump size in %s.", r_worldmodel->name);
 	}
@@ -133,7 +133,7 @@ static void R_ModLoadSubmodels (const lump_t* l)
 	const dBspModel_t* in;
 	int i, j, count;
 
-	in = (const dBspModel_t* ) (mod_base + l->fileofs);
+	in = (const dBspModel_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -162,7 +162,7 @@ static void R_ModLoadEdges (const lump_t* l)
 	const dBspEdge_t* in;
 	int i, count;
 
-	in = (const dBspEdge_t* ) (mod_base + l->fileofs);
+	in = (const dBspEdge_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -187,7 +187,7 @@ static void R_ModLoadTexinfo (const char* mapZone, const lump_t* l)
 	int i, j, count;
 	char name[MAX_QPATH];
 
-	in = (const dBspTexinfo_t* ) (mod_base + l->fileofs);
+	in = (const dBspTexinfo_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -285,7 +285,7 @@ static void R_ModLoadSurfaces (bool day, const lump_t* l)
 	const dBspSurface_t* in;
 	int count, surfnum;
 
-	in = (const dBspSurface_t* ) (mod_base + l->fileofs);
+	in = (const dBspSurface_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -358,7 +358,7 @@ static void R_ModLoadNodes (const lump_t* l)
 	const dBspNode_t* in;
 	mBspNode_t* parent = nullptr;
 
-	in = (const dBspNode_t* ) (mod_base + l->fileofs);
+	in = (const dBspNode_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -400,7 +400,7 @@ static void R_ModLoadNodes (const lump_t* l)
 				out->children[j] = r_worldmodel->bsp.nodes + p2;
 			} else {
 				assert((LEAFNODE - p2) < r_worldmodel->bsp.numleafs);
-				out->children[j] = (mBspNode_t* ) (r_worldmodel->bsp.leafs + (LEAFNODE - p2));
+				out->children[j] = (mBspNode_t*) (r_worldmodel->bsp.leafs + (LEAFNODE - p2));
 			}
 			out->children[j]->parent = parent;
 		}
@@ -409,7 +409,7 @@ static void R_ModLoadNodes (const lump_t* l)
 
 static void R_ModLoadLeafs (const lump_t* l)
 {
-	const dBspLeaf_t* in = (const dBspLeaf_t* ) (mod_base + l->fileofs);
+	const dBspLeaf_t* in = (const dBspLeaf_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	const int count = l->filelen / sizeof(*in);
@@ -460,7 +460,7 @@ static void R_ModLoadPlanes (const lump_t* l)
 	const dBspPlane_t* in;
 	int count;
 
-	in = (const dBspPlane_t* ) (mod_base + l->fileofs);
+	in = (const dBspPlane_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -1056,7 +1056,7 @@ static void R_ModAddMapTile (const char* name, const char* mapZone, bool day, in
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
 
 	/* test version */
-	header = (dBspHeader_t* ) buffer;
+	header = (dBspHeader_t*) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);

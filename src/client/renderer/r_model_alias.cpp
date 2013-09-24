@@ -261,7 +261,7 @@ bool R_ModLoadMDX (model_t* mod)
 		}
 		buffer += sizeof(uint32_t);
 
-		intbuf = (const int32_t* ) buffer;
+		intbuf = (const int32_t*) buffer;
 
 		mesh->num_verts = LittleLong(*intbuf);
 		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS) {

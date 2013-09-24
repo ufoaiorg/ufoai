@@ -305,7 +305,7 @@ static bool UI_ParseSetAction (uiNode_t* node, uiAction_t* action, const char** 
 		return true;
 	}
 
-	property = (const value_t* ) action->d.nonTerminal.left->d.terminal.d2.data;
+	property = (const value_t*) action->d.nonTerminal.left->d.terminal.d2.data;
 
 	*token = Com_EParse(text, errhead, nullptr);
 	if (!*text)

@@ -54,7 +54,7 @@ static int UFO_CleanSuiteUI (void)
  */
 static void testTimerDataStructure (void)
 {
-	uiNode_t* dummyNode = (uiNode_t* ) 0x1;
+	uiNode_t* dummyNode = (uiNode_t*) 0x1;
 	timerCallback_t dummyCallback = (timerCallback_t) 0x1;
 
 	uiTimer_t* a, *b, *c;

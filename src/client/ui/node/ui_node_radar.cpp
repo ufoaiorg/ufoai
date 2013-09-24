@@ -413,7 +413,7 @@ static void UI_RadarNodeGetActorColor (const le_t* le, vec4_t color)
 static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t* image)
 {
 	R_Color(color);
-	R_DrawImageArray((const vec2_t* )coords, (const vec2_t* )vertices, image);
+	R_DrawImageArray((const vec2_t*)coords, (const vec2_t*)vertices, image);
 	R_Color(nullptr);
 }
 
