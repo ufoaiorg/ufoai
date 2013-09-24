@@ -618,6 +618,7 @@
 		<Unit filename="../../src/client/ui/node/ui_node_baseinventory.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_baseinventory.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_battlescape.cpp" />
+		<Unit filename="../../src/client/ui/node/ui_node_battlescape.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_button.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_button.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_checkbox.cpp" />
