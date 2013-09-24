@@ -670,7 +670,7 @@ void uiContainerNode::drawTooltip (const uiNode_t* node, int x, int y) const
 	}
 }
 
-static bool UI_ContainerNodeAddItem (const invDef_t* container, Item* ic, containerIndex_t containerID, Item* *icp)
+static bool UI_ContainerNodeAddItem (const invDef_t* container, Item* ic, containerIndex_t containerID, Item** icp)
 {
 	int px, py;
 	const invDef_t* target = INVDEF(containerID);

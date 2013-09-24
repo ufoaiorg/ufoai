@@ -63,7 +63,7 @@ const equipDef_t* INV_GetEquipmentDefinitionByID (const char* name)
  * @return true if the move was successful.
  */
 bool INV_MoveItem (Inventory* inv, const invDef_t* toContainer, int toX, int toY,
-	const invDef_t* fromContainer, Item* fItem, Item* *uponItem)
+	const invDef_t* fromContainer, Item* fItem, Item** uponItem)
 {
 	if (toX >= SHAPE_BIG_MAX_WIDTH || toY >= SHAPE_BIG_MAX_HEIGHT)
 		return false;

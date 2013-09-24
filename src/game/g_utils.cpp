@@ -481,7 +481,7 @@ void G_CompleteRecalcRouting (void)
  * @param touched The edicts that the activating ent currently touches
  * @param num The amount of edicts in the @c touched list
  */
-static void G_ResetTriggers (Edict* ent, Edict* *touched, int num)
+static void G_ResetTriggers (Edict* ent, Edict** touched, int num)
 {
 	Edict* trigger = nullptr;
 
@@ -515,7 +515,7 @@ static void G_ResetTriggers (Edict* ent, Edict* *touched, int num)
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-static int G_GetTouchingEdicts (const AABB& aabb, Edict* *list, int maxCount, Edict* skip)
+static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Edict* skip)
 {
 	int num = 0;
 

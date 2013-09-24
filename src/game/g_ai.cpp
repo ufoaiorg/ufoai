@@ -711,7 +711,7 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 /**
  * @brief Search the edict's inventory for a grenade or other one-use weapon.
  */
-static const invDef_t* AI_SearchGrenade (const Edict* ent, Item* *ip)
+static const invDef_t* AI_SearchGrenade (const Edict* ent, Item** ip)
 {
 	/* search for grenades and select the one that is available easily */
 	const Container *cont = nullptr;
