@@ -33,8 +33,8 @@ typedef void (*timerCallback_t)(uiNode_t* node, struct uiTimer_s *timer);
  * @todo We can use void* for the owner type, and allow to use it outside nodes
  */
 typedef struct uiTimer_s {
-	struct uiTimer_s *next;	/**< next timer in the ordered list of active timers */
-	struct uiTimer_s *prev;	/**< previous timer in the ordered list of active timers */
+	struct uiTimer_s *next;		/**< next timer in the ordered list of active timers */
+	struct uiTimer_s *prev;		/**< previous timer in the ordered list of active timers */
 	int nextTime;				/**< next time we must call the callback function. Must node be edited, it used to sort linkedlist of timers */
 
 	uiNode_t* owner;            /**< owner node of the timer */
@@ -43,7 +43,7 @@ typedef struct uiTimer_s {
 
 	int delay;					/**< delay in millisecond between each call of */
 	void* userData;				/**< free to use data, not used by the core functions */
-	bool isRunning;			/**< true if the timer is running */
+	bool isRunning;				/**< true if the timer is running */
 } uiTimer_t;
 
 uiTimer_t* UI_AllocTimer(uiNode_t* node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));

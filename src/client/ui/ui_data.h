@@ -62,7 +62,7 @@ typedef struct uiSharedData_s {
 typedef struct {
 	uiNode_t* option;		/**< current option */
 	uiNode_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
-	int depthPos;				/**< current cache position */
+	int depthPos;			/**< current cache position */
 	bool skipInvisible;		/**< skip invisible options when we iterate */
 	bool skipCollapsed;		/**< skip collapsed options when we iterate */
 } uiOptionIterator_t;

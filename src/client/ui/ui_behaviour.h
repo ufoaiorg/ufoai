@@ -40,18 +40,18 @@ struct uiBehaviour_t {
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
 	UINodePtr manager;				/**< manager of the behaviour */
-	bool registration;			/**< True if we can define the behavior with registration function */
-	bool isVirtual;				/**< true, if the node doesn't have any position on the screen */
-	bool isFunction;			/**< true, if the node is a function */
-	bool isAbstract;			/**< true, if we can't instantiate the behaviour */
-	bool isInitialized;			/**< cache if we already have initialized the node behaviour */
-	bool focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
-	bool drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
+	bool registration;				/**< True if we can define the behavior with registration function */
+	bool isVirtual;					/**< true, if the node doesn't have any position on the screen */
+	bool isFunction;				/**< true, if the node is a function */
+	bool isAbstract;				/**< true, if we can't instantiate the behaviour */
+	bool isInitialized;				/**< cache if we already have initialized the node behaviour */
+	bool focusEnabled;				/**< true if the node can win the focus (should be use when type TAB) */
+	bool drawItselfChild;			/**< if true, the node draw function must draw child, the core code will not do it */
 
 	const value_t** localProperties;	/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
-	uiBehaviour_t* super;	/**< link to the extended node */
+	uiBehaviour_t* super;			/**< link to the extended node */
 #ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
