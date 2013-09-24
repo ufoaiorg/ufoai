@@ -89,7 +89,7 @@ bool UI_Node_IsFunction (uiNode_t const* node)
  */
 bool UI_Node_IsScrollableContainer (uiNode_t const* node)
 {
-	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
+	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	return b != nullptr;
 }
 
@@ -105,98 +105,98 @@ intptr_t UI_Node_GetMemorySize (uiNode_t const* node)
 
 void UI_Node_Draw (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->draw(node);
 }
 
 void UI_Node_DrawTooltip (const uiNode_t* node, int x, int y)
 {
-	const uiLocatedNode *b = dynamic_cast<const uiLocatedNode*>(node->behaviour->manager.get());
+	const uiLocatedNode* b = dynamic_cast<const uiLocatedNode*>(node->behaviour->manager.get());
 	b->drawTooltip(node, x, y);
 }
 
 void UI_Node_DrawOverWindow (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->drawOverWindow(node);
 }
 
 /* mouse events */
 void UI_Node_LeftClick (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onLeftClick(node, x, y);
 }
 
 void UI_Node_RightClick (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onRightClick(node, x, y);
 }
 
 void UI_Node_MiddleClick (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMiddleClick(node, x, y);
 }
 
 bool UI_Node_Scroll (uiNode_t* node, int deltaX, int deltaY)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onScroll(node, deltaX, deltaY);
 }
 
 void UI_Node_MouseMove (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMouseMove(node, x, y);
 }
 
 void UI_Node_MouseDown (uiNode_t* node, int x, int y, int button)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMouseDown(node, x, y, button);
 }
 
 void UI_Node_MouseUp (uiNode_t* node, int x, int y, int button)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMouseUp(node, x, y, button);
 }
 
 void UI_Node_MouseEnter (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMouseEnter(node);
 }
 
 void UI_Node_MouseLeave (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onMouseLeave(node);
 }
 
 bool UI_Node_MouseLongPress (uiNode_t* node, int x, int y, int button)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onMouseLongPress(node, x, y, button);
 }
 
 bool UI_Node_StartDragging (uiNode_t* node, int startX, int startY, int currentX, int currentY, int button)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onStartDragging(node, startX, startY, currentX, currentY, button);
 }
 
 void UI_Node_CapturedMouseMove (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onCapturedMouseMove(node, x, y);
 }
 
 void UI_Node_CapturedMouseLost (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onCapturedMouseLost(node);
 }
 
@@ -204,31 +204,31 @@ void UI_Node_CapturedMouseLost (uiNode_t* node)
 
 void UI_Node_Loading (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onLoading(node);
 }
 
 void UI_Node_Loaded (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onLoaded(node);
 }
 
 void UI_Node_Clone (uiNode_t const* source, uiNode_t* clone)
 {
-	uiNode *b = source->behaviour->manager.get();
+	uiNode* b = source->behaviour->manager.get();
 	b->clone(source, clone);
 }
 
 void UI_Node_NewNode (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->newNode(node);
 }
 
 void UI_Node_DeleteNode (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->deleteNode(node);
 }
 
@@ -236,51 +236,51 @@ void UI_Node_DeleteNode (uiNode_t* node)
 
 void UI_Node_WindowOpened (uiNode_t* node, linkedList_t* params)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onWindowOpened(node, params);
 }
 
 void UI_Node_WindowClosed (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onWindowClosed(node);
 }
 
 void UI_Node_WindowActivate (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onWindowActivate(node);
 }
 
 void UI_Node_DoLayout (uiNode_t* node)
 {
 	if (UI_Node_IsDrawable(node)) {
-		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+		uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 		b->doLayout(node);
 	}
 }
 
 void UI_Node_Activate (uiNode_t* node)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onActivate(node);
 }
 
 void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property)
 {
-	uiNode *b = node->behaviour->manager.get();
+	uiNode* b = node->behaviour->manager.get();
 	b->onPropertyChanged(node, property);
 }
 
 void UI_Node_SizeChanged (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onSizeChanged(node);
 }
 
 void UI_Node_GetClientPosition (uiNode_t const* node, vec2_t position)
 {
-	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
+	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	b->getClientPosition(node, position);
 }
 
@@ -288,31 +288,31 @@ void UI_Node_GetClientPosition (uiNode_t const* node, vec2_t position)
 
 bool UI_Node_DndEnter (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onDndEnter(node);
 }
 
 bool UI_Node_DndMove (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onDndMove(node, x, y);
 }
 
 void UI_Node_DndLeave (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onDndLeave(node);
 }
 
 bool UI_Node_DndDrop (uiNode_t* node, int x, int y)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onDndDrop(node, x, y);
 }
 
 bool UI_Node_DndFinished (uiNode_t* node, bool isDroped)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onDndFinished(node, isDroped);
 }
 
@@ -320,25 +320,25 @@ bool UI_Node_DndFinished (uiNode_t* node, bool isDroped)
 
 void UI_Node_FocusGained (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onFocusGained(node);
 }
 
 void UI_Node_FocusLost (uiNode_t* node)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	b->onFocusLost(node);
 }
 
 bool UI_Node_KeyPressed (uiNode_t* node, unsigned int key, unsigned short unicode)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onKeyPressed(node, key, unicode);
 }
 
 bool UI_Node_KeyReleased (uiNode_t* node, unsigned int key, unsigned short unicode)
 {
-	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
 	return b->onKeyReleased(node, key, unicode);
 }
 
@@ -346,13 +346,13 @@ bool UI_Node_KeyReleased (uiNode_t* node, unsigned int key, unsigned short unico
 
 int UI_Node_GetCellWidth (uiNode_t* node)
 {
-	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
+	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	return b->getCellWidth(node);
 }
 
 int UI_Node_GetCellHeight (uiNode_t* node)
 {
-	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
+	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	return b->getCellHeight(node);
 }
 
