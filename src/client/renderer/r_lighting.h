@@ -29,11 +29,11 @@
 typedef struct lighting_s {
 	/* Cache */
 	vec3_t lastCachePos;	/**< Static light interaction was last calculated for this coords */
-	const light_t *cachedLights[MAX_ENTITY_LIGHTS]; /**< cached static lights */
+	const light_t* cachedLights[MAX_ENTITY_LIGHTS]; /**< cached static lights */
 	int numCachedLights;	/**< How many static lights are in cache */
 
 	/* Lights */
-	const light_t *lights[MAX_ENTITY_LIGHTS]; /**< static and dynamic lights sorted by distance */
+	const light_t* lights[MAX_ENTITY_LIGHTS]; /**< static and dynamic lights sorted by distance */
 	int numLights;
 	int lastLitFrame;		/**< renderer frame for which those lights were calculated */
 

@@ -62,12 +62,12 @@ void UI_Node_Loaded (uiNode_t* node);
 void UI_Node_Clone (uiNode_t const* source, uiNode_t* clone);
 void UI_Node_NewNode (uiNode_t* node);
 void UI_Node_DeleteNode (uiNode_t* node);
-void UI_Node_WindowOpened (uiNode_t* node, linkedList_t *params);
+void UI_Node_WindowOpened (uiNode_t* node, linkedList_t* params);
 void UI_Node_WindowClosed (uiNode_t* node);
 void UI_Node_WindowActivate (uiNode_t* node);
 void UI_Node_DoLayout (uiNode_t* node);
 void UI_Node_Activate (uiNode_t* node);
-void UI_Node_PropertyChanged (uiNode_t* node, const value_t *property);
+void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property);
 void UI_Node_SizeChanged (uiNode_t* node);
 void UI_Node_GetClientPosition (uiNode_t const* node, vec2_t position);
 bool UI_Node_DndEnter (uiNode_t* node);
@@ -86,10 +86,10 @@ int UI_Node_GetCellHeight (uiNode_t* node);
 void UI_Node_DebugCountWidget (uiNode_t* node, int count);
 #endif
 
-bool UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
-bool UI_NodeInstanceOfPointer(const uiNode_t *node, const uiBehaviour_t* behaviour);
-bool UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
-void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, const void* rawValue, int rawType);
+bool UI_NodeInstanceOf(const uiNode_t* node, const char* behaviourName);
+bool UI_NodeInstanceOfPointer(const uiNode_t* node, const uiBehaviour_t* behaviour);
+bool UI_NodeSetProperty(uiNode_t* node, const value_t* property, const char* value);
+void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t* property, const void* rawValue, int rawType);
 float UI_GetFloatFromNodeProperty(uiNode_t const* node, const value_t* property);
 const char* UI_GetStringFromNodeProperty(const uiNode_t* node, const value_t* property);
 
@@ -112,4 +112,4 @@ uiNode_t* UI_GetNode(uiNode_t const* node, const char* name);
 void UI_InsertNode(uiNode_t* node, uiNode_t* prevNode, uiNode_t* newNode);
 void UI_AppendNode(uiNode_t* node, uiNode_t* newNode);
 uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
-void UI_UpdateRoot(uiNode_t *node, uiNode_t *newRoot);
+void UI_UpdateRoot(uiNode_t* node, uiNode_t* newRoot);

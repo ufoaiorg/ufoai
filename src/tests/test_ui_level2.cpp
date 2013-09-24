@@ -84,9 +84,9 @@ static int UFO_CleanSuiteUILevel2 (void)
  */
 static void UFO_AnalyseTestWindow (const char* windowName)
 {
-	const uiBehaviour_t *stringBehaviour = UI_GetNodeBehaviour("string");
-	const uiNode_t *node;
-	const uiNode_t *window = UI_GetWindow(windowName);
+	const uiBehaviour_t* stringBehaviour = UI_GetNodeBehaviour("string");
+	const uiNode_t* node;
+	const uiNode_t* window = UI_GetWindow(windowName);
 	CU_ASSERT_FATAL(window != nullptr);
 	CU_ASSERT_FATAL(stringBehaviour != nullptr);
 
@@ -152,7 +152,7 @@ static void UFO_ExecuteTestWindow (const char* windowName)
  */
 static void testKnownBehaviours (void)
 {
-	uiBehaviour_t *behaviour;
+	uiBehaviour_t* behaviour;
 
 	behaviour = UI_GetNodeBehaviour("button");
 	CU_ASSERT_FATAL(behaviour != nullptr);

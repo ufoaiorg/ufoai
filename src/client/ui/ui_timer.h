@@ -47,13 +47,13 @@ typedef struct uiTimer_s {
 } uiTimer_t;
 
 uiTimer_t* UI_AllocTimer(uiNode_t* node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
-void UI_TimerStart(uiTimer_t *timer);
-void UI_TimerStop(uiTimer_t *timer);
-void UI_TimerRelease(uiTimer_t *timer);
+void UI_TimerStart(uiTimer_t* timer);
+void UI_TimerStop(uiTimer_t* timer);
+void UI_TimerRelease(uiTimer_t* timer);
 void UI_ResetTimers(void);
 void UI_HandleTimers(void);
 
 #ifdef COMPILE_UNITTESTS
-const uiTimer_t *UI_PrivateGetFirstTimer(void);
+const uiTimer_t* UI_PrivateGetFirstTimer(void);
 void UI_PrivateInsertTimerInActiveList(uiTimer_t* first, uiTimer_t* newTimer);
 #endif

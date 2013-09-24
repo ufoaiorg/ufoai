@@ -207,7 +207,7 @@ typedef struct uiCallContext_s {
 	uiNode_t* source;
 	/** is the function can use param from command line */
 	bool useCmdParam;
-	linkedList_t *params;
+	linkedList_t* params;
 	int paramNumber;
 	int varPosition;
 	int varNumber;
@@ -215,18 +215,18 @@ typedef struct uiCallContext_s {
 
 void UI_ExecuteEventActions(uiNode_t* source, const uiAction_t* firstAction);
 void UI_ExecuteConFuncActions(uiNode_t* source, const uiAction_t* firstAction);
-void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params);
+void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t* params);
 bool UI_IsInjectedString(const char* string);
 void UI_FreeStringProperty(void* pointer);
-const char* UI_GenInjectedString(const char* input, bool addNewLine, const uiCallContext_t *context);
+const char* UI_GenInjectedString(const char* input, bool addNewLine, const uiCallContext_t* context);
 int UI_GetActionTokenType(const char* token, int group);
-uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
+uiValue_t* UI_GetVariable (const uiCallContext_t* context, int relativeVarId);
 
 void UI_PoolAllocAction(uiAction_t** action, int type, const void* data);
 uiAction_t* UI_AllocStaticCommandAction(const char* command);
 void UI_InitActions(void);
-void UI_AddListener(uiNode_t* node, const value_t *property, uiNode_t const* functionNode);
-void UI_RemoveListener(uiNode_t* node, const value_t *property, uiNode_t* functionNode);
+void UI_AddListener(uiNode_t* node, const value_t* property, uiNode_t const* functionNode);
+void UI_RemoveListener(uiNode_t* node, const value_t* property, uiNode_t* functionNode);
 
-const char* UI_GetParam(const uiCallContext_t *context, int paramID);
-int UI_GetParamNumber(const uiCallContext_t *context);
+const char* UI_GetParam(const uiCallContext_t* context, int paramID);
+int UI_GetParamNumber(const uiCallContext_t* context);

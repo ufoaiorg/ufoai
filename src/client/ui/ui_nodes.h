@@ -77,7 +77,7 @@ struct uiBox_t {
 struct uiNode_t {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
-	uiBehaviour_t *behaviour;
+	uiBehaviour_t* behaviour;
 	uiNode_t const* super;      /**< Node inherited, else nullptr */
 	bool dynamic;				/** If true, it use dynamic memory */
 	bool indexed;				/** If true, the node name indexed into his window */
@@ -109,7 +109,7 @@ struct uiNode_t {
 	int deleteTime;				/**< delayed delete time */
 
 	/** linked list of exclude rect, which exclude node zone for hover or click functions */
-	uiExcludeRect_t *firstExcludeRect;
+	uiExcludeRect_t* firstExcludeRect;
 
 	/* other attributes */
 	/** @todo needs cleanup */
@@ -153,11 +153,11 @@ void UI_InitNodes(void);
 /* nodes */
 uiNode_t* UI_AllocNode(const char* name, const char* type, bool isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
-void UI_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t** resultProperty);
+void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, uiNode_t** resultNode, const value_t** resultProperty);
 uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
 uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic) __attribute__ ((warn_unused_result));
-bool UI_CheckVisibility(uiNode_t *node);
+bool UI_CheckVisibility(uiNode_t* node);
 void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);
 

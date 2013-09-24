@@ -48,7 +48,7 @@ typedef struct uiSharedData_s {
 		/** @brief Holds static array of characters to display */
 		const char* text;
 		/** @brief Holds a linked list for displaying in the UI */
-		linkedList_t *linkedListText;
+		linkedList_t* linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
 		uiNode_t* option;
 		/** @brief Holds a line strip, a list of point */
@@ -79,7 +79,7 @@ const char* UI_GetText(int textId) __attribute__ ((warn_unused_result));
 const char* UI_GetTextFromList(int textId, int line) __attribute__ ((warn_unused_result));
 
 /* linked list */
-void UI_RegisterLinkedListText(int textId, linkedList_t *text);
+void UI_RegisterLinkedListText(int textId, linkedList_t* text);
 
 /* option */
 void UI_RegisterOption(int dataId, uiNode_t* option);
@@ -87,7 +87,7 @@ uiNode_t* UI_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void UI_SortOptions(uiNode_t** option);
 uiNode_t* UI_InitOptionIteratorAtIndex(int index, uiNode_t* option, uiOptionIterator_t* iterator);
 uiNode_t* UI_OptionIteratorNextOption(uiOptionIterator_t* iterator);
-void UI_UpdateInvisOptions(uiNode_t* option, const linkedList_t *stringList);
+void UI_UpdateInvisOptions(uiNode_t* option, const linkedList_t* stringList);
 uiNode_t* UI_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
 int UI_FindOptionPosition(uiOptionIterator_t* iterator, uiNode_t const* option);
 uiNode_t* UI_AddOption(uiNode_t** tree, const char* name, const char* label, const char* value);

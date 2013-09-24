@@ -95,12 +95,12 @@ typedef struct pack_s {
 	char filename[MAX_OSPATH];
 	qFILE handle;
 	int numfiles;
-	packfile_t *files;
+	packfile_t* files;
 } pack_t;
 
 typedef struct searchpath_s {
 	char filename[MAX_OSPATH];
-	pack_t *pack;				/**< only one of filename / pack will be used */
+	pack_t* pack;				/**< only one of filename / pack will be used */
 	bool write;				/**< this is the path for writing configs and savegames - may
 								 * only be once set to true in the whole list */
 	struct searchpath_s *next;

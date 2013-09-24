@@ -74,7 +74,7 @@ typedef struct uiGlobal_s {
 	byte* adata, *curadata;
 	int adataize;
 
-	uiNode_t *windowStack[UI_MAX_WINDOWSTACK];
+	uiNode_t* windowStack[UI_MAX_WINDOWSTACK];
 	int windowStackPos;
 
 	uiAction_t actions[UI_MAX_ACTIONS];
@@ -93,9 +93,9 @@ typedef struct uiGlobal_s {
 
 extern uiGlobal_t ui_global;
 
-extern memPool_t *ui_sysPool;
-extern memPool_t *ui_dynStringPool;
-extern memPool_t *ui_dynPool;
+extern memPool_t* ui_sysPool;
+extern memPool_t* ui_dynStringPool;
+extern memPool_t* ui_dynPool;
 
 /**
  * Alignment memory for structures
