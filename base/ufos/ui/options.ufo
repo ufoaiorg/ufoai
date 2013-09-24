@@ -3,11 +3,39 @@
 // =============
 
 component cmpMenuPageHeader extends string {
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			contentalign	ALIGN_CC
-			color		"0 0.5 0 1"
+	pos			"55 67"
+	size		"465 35"
+	font		"f_menubig"
+	contentalign	ALIGN_CC
+	color		"0 0.5 0 1"
+}
+
+component cmpKeyBinding extends panel {
+	{
+		size 	"425 25"
+		layout	LAYOUT_LEFT_RIGHT_FLOW
+	}
+	data id {
+		integer	-1
+	}
+	string key {
+		size	"150 25"
+	}
+	string description {
+		size	"250 25"
+	}
+}
+
+component cmpKeyList extends panel {
+	pos		"50 150"
+	size	"450 530"
+	layout	LAYOUT_TOP_DOWN_FLOW
+	wheelscrollable	true
+	onViewChange {
+		*node:this.parent.keylist_scroll@fullsize = <fullsize>
+		*node:this.parent.keylist_scroll@current = <viewpos>
+		*node:this.parent.keylist_scroll@viewsize = <viewsize>
+	}
 }
 
 window options
@@ -150,7 +178,7 @@ window options
 			selectcolor	"1 1 1 1"
 			padding		6
 			contentalign	ALIGN_CC
-			onViewchange	{
+			onViewChange	{
 				*node:root.options_overall.select_language_scroll@current = <viewpos>
 				*node:root.options_overall.select_language_scroll@fullsize = <fullsize>
 				*node:root.options_overall.select_language_scroll@viewsize = <viewsize>
@@ -188,7 +216,7 @@ window options
 			selectcolor	"1 1 1 1"
 			padding		6
 			contentalign	ALIGN_CC
-			onViewchange	{
+			onViewChange	{
 				*node:root.options_overall.select_mods_scroll@current = <viewpos>
 				*node:root.options_overall.select_mods_scroll@fullsize = <fullsize>
 				*node:root.options_overall.select_mods_scroll@viewsize = <viewsize>
@@ -1979,35 +2007,71 @@ window options
 			contentalign	ALIGN_CC
 			color		"0 0.79 0 1"
 		}
-		// only show the current binding - no support for changing them atm
-		text keylist
-		{
-			dataid		TEXT_LIST
-			pos			"55 120"
-			size		"450 575"
-			rows		"28"
-			lineheight	"20"
-			tabwidth	"120"
-			font		"f_verysmall"
-			onViewChange
+
+		tab nav {
 			{
-				*node:root.options_keys.keyscroll@fullsize = <fullsize>
-				*node:root.options_keys.keyscroll@current = <viewpos>
+				pos		"47 106"
+				size	"480 39"
+				cvar	*cvar:ui_keybindingspace
+				onChange {
+					*node:this.parent.keylist0@invis = true
+					*node:this.parent.keylist1@invis = true
+					*node:this.parent.keylist2@invis = true
+					*node:this.parent.keylist<cvar:ui_keybindingspace>@invis = false
+					*node:this.parent.keylist<cvar:ui_keybindingspace>@viewpos = 0
+					*node:this.parent.keylist_scroll@current = 0
+				}
 			}
-			onWheel
-			{
-				*node:root.options_keys.keyscroll@current = <viewpos>
+			option menu {
+				label	"_Menu"
+				value	"0"
+			}
+			option global {
+				label	"_Global"
+				value	"1"
+			}
+			option battlescape {
+				label	"_Battlescape"
+				value	"2"
 			}
 		}
-		vscrollbar keyscroll
-		{
+		cmpKeyList keylist0 {
+			invis false
+		}
+		cmpKeyList keylist1 {
+			invis true
+		}
+		cmpKeyList keylist2 {
+			invis true
+		}
+		vscrollbar keylist_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"508 120"
-			height		"575"
-			current		0
-			viewsize	28
-			fullsize	50
-			onChange	{ *node:root.options_keys.keylist@viewpos = <current> }
+			pos			"500 150"
+			height		"535"
+			hidewhenunused true
+			onChange {
+				*node:this.parent.keylist<cvar:ui_keybindingspace>@viewpos = <current>
+			}
+		}
+
+		/*
+		 * @brief Confunc to add a keybinding entry
+		 * <1> id
+		 * <2> keyspace menu = 0, global = 1 or battlescape = 2
+		 * <3> the key name
+		 * <4> description
+	     */
+		confunc keybinding_add {
+			call *node:this.parent.keylist<2>@createChild("key_<1>", "cmpKeyBinding")
+			*node:this.parent.keylist<2>.key_<1>.id@integer = <1>
+			*node:this.parent.keylist<2>.key_<1>.key@string = "<3>"
+			*node:this.parent.keylist<2>.key_<1>.description@string = "<4>"
+			*node:this.parent.keylist<2>.key_<1>.description@tooltip = "<4>"
+		}
+		confunc keybinding_clear {
+			call *node:this.parent.keylist0@removeAllChild
+			call *node:this.parent.keylist1@removeAllChild
+			call *node:this.parent.keylist2@removeAllChild
 		}
 	}
 
@@ -2022,7 +2086,7 @@ window options
 	func onWindowOpened
 	{
 		*cvar:mn_vidratio = "all"
-		cmd "cl_setratiofilter <cvar:mn_vidratio>"
+		cmd "cl_setratiofilter <cvar:mn_vidratio>;set ui_keybindingspace 0;"
 		call *node:root.hidepanels
 
 		call *node:root.options_overall.select_mods@removeallchild

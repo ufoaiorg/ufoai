@@ -142,7 +142,7 @@ window market  {
 					size			"713 463"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
-					onViewchange	{
+					onViewChange	{
 						*node:parent.list_scroll@current = <viewpos>
 						*node:parent.list_scroll@fullsize = <fullsize>
 						*node:parent.list_scroll@viewsize = <viewsize>

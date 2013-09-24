@@ -32,30 +32,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_popup.h"
 #include "ui/node/ui_node_abstractnode.h"
 
-static inline void CLMN_AddBindings (linkedList_t** list, char** bindings)
+static inline void CLMN_AddBindings (keyBindSpace_t scope, char** bindings, int offset = 0)
 {
-	int i;
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++) {
+	for (int i = K_FIRST_KEY; i < K_LAST_KEY; i++) {
 		if (Q_strnull(bindings[i]))
 			continue;
 		const char* binding = Cmd_GetCommandDesc(bindings[i]);
 		if (Q_strvalid(binding))
 			binding = _(binding);
-		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), binding));
+		UI_ExecuteConfunc("keybinding_add %i %i \"%s\" \"%s\"", i + offset, scope, Key_KeynumToString(i), binding);
 	}
 }
 
 /**
  * @brief Adds UI Keybindings to the list for the Keylist UI
- * @param[in,out] list Linked list of strings to add to
  */
-static inline void CLMN_AddUIBindings (linkedList_t** list)
+static inline int CLMN_AddUIBindings (keyBindSpace_t scope)
 {
-	int i;
-
-	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
+	int cnt = 0;
+	const int num = UI_GetKeyBindingCount();
+	for (int i = 0; i < num; i++) {
 		const uiKeyBinding_t* binding = UI_GetKeyBindingByIndex(i);
-
 		if (binding == nullptr)
 			continue;
 		if (binding->inherited)
@@ -63,8 +60,9 @@ static inline void CLMN_AddUIBindings (linkedList_t** list)
 		if (!Q_strvalid(binding->description))
 			continue;
 
-		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(binding->key), _(binding->description)));
+		UI_ExecuteConfunc("keybinding_add %i %i \"%s\" \"%s\"", cnt++, scope, Key_KeynumToString(binding->key), _(binding->description));
 	}
+	return cnt;
 }
 
 /**
@@ -72,24 +70,12 @@ static inline void CLMN_AddUIBindings (linkedList_t** list)
  */
 static void CLMN_InitKeyList_f (void)
 {
-	linkedList_t* list = nullptr;
+	UI_ExecuteConfunc("keybinding_clear");
 
-	LIST_AddString(&list, _("^BGlobal bindings"));
-	LIST_AddString(&list, "");
-	CLMN_AddBindings(&list, keyBindings);
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, _("^BMenu bindings"));
-	LIST_AddString(&list, "");
-	CLMN_AddBindings(&list, menuKeyBindings);
-	CLMN_AddUIBindings(&list);
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, _("^BBattlescape bindings"));
-	LIST_AddString(&list, "");
-	CLMN_AddBindings(&list, battleKeyBindings);
-
-	UI_RegisterLinkedListText(TEXT_LIST, list);
+	CLMN_AddBindings(KEYSPACE_GAME, keyBindings);
+	CLMN_AddBindings(KEYSPACE_UI, menuKeyBindings);
+	const int uiBindings = CLMN_AddUIBindings(KEYSPACE_UI);
+	CLMN_AddBindings(KEYSPACE_BATTLE, battleKeyBindings, uiBindings);
 }
 
 static void CLMN_Mods_f (void)

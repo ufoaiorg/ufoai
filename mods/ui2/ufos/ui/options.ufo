@@ -170,7 +170,7 @@ window options
 					selectcolor		"1 1 1 0.9"
 					padding			6
 					contentalign	ALIGN_CC
-					onViewchange	{
+					onViewChange	{
 						*node:parent.select_language_scroll@current = <viewpos>
 						*node:parent.select_language_scroll@fullsize = <fullsize>
 						*node:parent.select_language_scroll@viewsize = <viewsize>
