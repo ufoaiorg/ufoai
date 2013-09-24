@@ -63,7 +63,7 @@ typedef struct baseInventoryExtraData_s {
 	/* scroll status */
 	uiScroll_t scrollY;
 	/* scroll callback when the status change */
-	struct uiAction_s *onViewChange;
+	struct uiAction_s* onViewChange;
 
 } baseInventoryExtraData_t;
 

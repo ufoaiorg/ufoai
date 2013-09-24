@@ -46,5 +46,5 @@ typedef struct {
 	const char* source;
 	cinematic_t cin;
 	bool nosound;
-	struct uiAction_s *onEnd;
+	struct uiAction_s* onEnd;
 } videoExtraData_t;

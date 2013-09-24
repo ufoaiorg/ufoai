@@ -48,8 +48,8 @@ class uiWindowNode : public uiLocatedNode {
 
 typedef struct node_index_s {
 	uiNode_t* node;
-	struct node_index_s *hash_next;
-	struct node_index_s *next;
+	struct node_index_s* hash_next;
+	struct node_index_s* next;
 } node_index_t;
 
 /**
@@ -68,13 +68,13 @@ typedef struct {
 
 	uiNode_t* parent;	/**< to create child window */
 
-	struct uiKeyBinding_s *keyList;	/** list of key binding */
+	struct uiKeyBinding_s* keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
-	struct uiAction_s *onWindowOpened; 	/**< Invoked when the window is added to the rendering stack */
-	struct uiAction_s *onWindowClosed;	/**< Invoked when the window is removed from the rendering stack */
-	struct uiAction_s *onWindowActivate;/**< Called when a windows gets active again after some other window was popped from the stack */
-	struct uiAction_s *onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
+	struct uiAction_s* onWindowOpened; 	/**< Invoked when the window is added to the rendering stack */
+	struct uiAction_s* onWindowClosed;	/**< Invoked when the window is removed from the rendering stack */
+	struct uiAction_s* onWindowActivate;/**< Called when a windows gets active again after some other window was popped from the stack */
+	struct uiAction_s* onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
 
 	node_index_t* index;
 	node_index_t* index_hash[INDEXEDCHILD_HASH_SIZE];
@@ -87,8 +87,8 @@ void UI_RegisterWindowNode(uiBehaviour_t* behaviour);
 bool UI_WindowIsFullScreen(uiNode_t const* window);
 bool UI_WindowIsDropDown(uiNode_t const* window);
 bool UI_WindowIsModal(uiNode_t const* window);
-void UI_WindowNodeRegisterKeyBinding(uiNode_t* window, struct uiKeyBinding_s *binding);
-struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(uiNode_t const* node, unsigned int key);
+void UI_WindowNodeRegisterKeyBinding(uiNode_t* window, struct uiKeyBinding_s* binding);
+struct uiKeyBinding_s* UI_WindowNodeGetKeyBinding(uiNode_t const* node, unsigned int key);
 vec_t* UI_WindowNodeGetNoticePosition(uiNode_t* node);
 /* child index */
 uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);

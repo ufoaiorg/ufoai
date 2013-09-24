@@ -123,7 +123,7 @@ typedef enum {
 typedef struct anim_s {
 	int num_frames;
 	animLoop_t type;
-	struct image_s *images[MAX_ANIM_FRAMES];
+	struct image_s* images[MAX_ANIM_FRAMES];
 	float fps;
 	float dtime;
 	int dframe;
@@ -131,7 +131,7 @@ typedef struct anim_s {
 
 typedef struct materialStage_s {
 	unsigned flags;
-	struct image_s *image;
+	struct image_s* image;
 	blendmode_t blend;
 	vec3_t color;
 	pulse_t pulse;
@@ -144,7 +144,7 @@ typedef struct materialStage_s {
 	dirt_t dirt;
 	anim_t anim;
 	float glowscale;
-	struct materialStage_s *next;
+	struct materialStage_s* next;
 } materialStage_t;
 
 #define DEFAULT_BUMP 1.0f

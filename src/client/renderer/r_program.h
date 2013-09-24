@@ -45,8 +45,8 @@ typedef struct r_progvar_s {
 
 struct r_program_s;
 
-typedef void (*programInitFunc_t)(struct r_program_s *prog);
-typedef void (*programUseFunc_t)(struct r_program_s *prog);
+typedef void (*programInitFunc_t)(struct r_program_s* prog);
+typedef void (*programUseFunc_t)(struct r_program_s* prog);
 
 /* and glsl programs */
 typedef struct r_program_s {

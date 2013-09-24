@@ -69,7 +69,7 @@ typedef struct {
 	uiScroll_t scrollX;
 	uiScroll_t scrollY;
 
-	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
+	struct uiAction_s* onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
 void UI_RegisterAbstractScrollableNode(uiBehaviour_t* behaviour);

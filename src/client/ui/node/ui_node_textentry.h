@@ -42,7 +42,7 @@ typedef struct textEntryExtraData_s {
 	bool isPassword;	/**< Display '*' instead of the real text */
 	bool clickOutAbort;	/**< If we click out an activated node, it abort the edition */
 	int cursorPosition;	/**< Cursor position (offset of next UTF-8 char to the right) */
-	struct uiAction_s *onAbort;
+	struct uiAction_s* onAbort;
 	uiSprite_t* background; /**< Sprite used as a background */
 } textEntryExtraData_t;
 

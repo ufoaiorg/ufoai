@@ -65,5 +65,5 @@ typedef struct containerExtraData_s {
 	const invDef_t* container;	/**< The container linked to this node. */
 
 	int lastSelectedId;		/**< id oject the object type selected */
-	struct uiAction_s *onSelect;	/**< call when we select an item */
+	struct uiAction_s* onSelect;	/**< call when we select an item */
 } containerExtraData_t;

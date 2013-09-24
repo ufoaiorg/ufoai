@@ -66,11 +66,11 @@ typedef struct image_s {
 	GLuint texnum;						/**< gl texture binding */
 	bool has_alpha;
 	material_t material;
-	struct image_s *normalmap;			/**< normalmap texture  */
-	struct image_s *glowmap;			/**< glowmap texture  */
-	struct image_s *specularmap;		/**< specularity texture (for reflection color) */
-	struct image_s *roughnessmap;		/**< roughness texture (for Cook-Torrance shading) */
-	struct image_s *hash_next;			/**< hash map next pointer in case of collision */
+	struct image_s* normalmap;			/**< normalmap texture  */
+	struct image_s* glowmap;			/**< glowmap texture  */
+	struct image_s* specularmap;		/**< specularity texture (for reflection color) */
+	struct image_s* roughnessmap;		/**< roughness texture (for Cook-Torrance shading) */
+	struct image_s* hash_next;			/**< hash map next pointer in case of collision */
 } image_t;
 
 #define MAX_GL_TEXTURES		1024

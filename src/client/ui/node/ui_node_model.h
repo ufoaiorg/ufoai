@@ -53,7 +53,7 @@ typedef struct uiModel_s {
 	animState_t animState;
 	vec3_t origin, scale, angles, center;	/**< to cache the calculated values */
 	vec4_t color;			/**< rgba */
-	struct uiModel_s *next;
+	struct uiModel_s* next;
 } uiModel_t;
 
 /**

@@ -26,4 +26,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 void R_ResetArrayState(void);
-void R_SetArrayState(const struct mBspModel_s *bsp);
+void R_SetArrayState(const struct mBspModel_s* bsp);

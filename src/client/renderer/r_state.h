@@ -161,7 +161,7 @@ typedef struct rstate_s {
 	bool animation_enabled;
 	bool renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
 
-	const struct image_s *active_normalmap;
+	const struct image_s* active_normalmap;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -194,17 +194,17 @@ void R_EnableBlend(bool enable);
 void R_EnableAlphaTest(bool enable);
 void R_EnableColorArray(bool enable);
 bool R_EnableLighting(r_program_t* program, bool enable);
-void R_EnableBumpmap(const struct image_s *normalmap);
+void R_EnableBumpmap(const struct image_s* normalmap);
 void R_EnableWarp(r_program_t* program, bool enable);
 void R_EnableBlur(r_program_t* program, bool enable, r_framebuffer_t* source, r_framebuffer_t* dest, int dir);
 void R_EnableShell(bool enable);
 void R_EnableFog(bool enable);
 void R_EnableDrawAsGlow(bool enable);
-void R_EnableGlowMap(const struct image_s *image);
-void R_EnableSpecularMap(const struct image_s *image, bool enable);
-void R_EnableRoughnessMap(const struct image_s *image, bool enable);
+void R_EnableGlowMap(const struct image_s* image);
+void R_EnableSpecularMap(const struct image_s* image, bool enable);
+void R_EnableRoughnessMap(const struct image_s* image, bool enable);
 void R_SetupSpotLight(int index, const light_t* light);
 void R_DisableSpotLight(int index);
-void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, bool enable);
+void R_EnableAnimation(const struct mAliasMesh_s* mesh, float backlerp, bool enable);
 
 void R_UseMaterial (const material_t* material);

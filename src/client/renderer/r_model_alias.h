@@ -166,7 +166,7 @@ typedef	struct	mAliasModel_s {
 } mAliasModel_t;
 
 void R_ModLoadAnims(mAliasModel_t* mod, const char* animname);
-bool R_ModLoadMDX(struct model_s *mod);
+bool R_ModLoadMDX(struct model_s* mod);
 void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t* mesh, int nFrames, float smoothness);
 void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t* mesh, float backlerp, int framenum, int oldframenum, bool prerender);
 void R_ModLoadArrayData(mAliasModel_t* mod, mAliasMesh_t* mesh, bool loadNormals);

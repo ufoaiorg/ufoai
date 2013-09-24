@@ -34,7 +34,7 @@ class uiSpinnerNode : public uiAbstractValueNode {
 	void onCapturedMouseLost(uiNode_t* node) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 public:
-	void repeat (uiNode_t* node, struct uiTimer_s *timer);
+	void repeat (uiNode_t* node, struct uiTimer_s* timer);
 protected:
 	bool isPositionIncrease(uiNode_t* node, int x, int y);
 	bool step (uiNode_t* node, bool down);

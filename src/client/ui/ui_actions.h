@@ -159,8 +159,8 @@ typedef struct uiAction_s {
 		 * @note The action type must be a command or an operator
 		 */
 		struct {
-			struct uiAction_s *left;
-			struct uiAction_s *right;
+			struct uiAction_s* left;
+			struct uiAction_s* right;
 		} nonTerminal;
 
 		/**
@@ -177,7 +177,7 @@ typedef struct uiAction_s {
 	/**
 	 * @brief Next element in the action list
 	 */
-	struct uiAction_s *next;
+	struct uiAction_s* next;
 } uiAction_t;
 
 /* prototype */
@@ -194,7 +194,7 @@ typedef struct uiValue_s {
 		int integer;
 		float number;
 		char* string;
-		struct cvar_s *cvar;
+		struct cvar_s* cvar;
 		uiNode_t* node;
 	} value;
 } uiValue_t;

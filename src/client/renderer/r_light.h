@@ -56,4 +56,4 @@ void R_DisableLights(void);
 
 void R_AddStaticLight(const vec3_t origin, float radius, const vec3_t color);
 void R_ClearStaticLights(void);
-void R_UpdateLightList(struct entity_s *ent);
+void R_UpdateLightList(struct entity_s* ent);

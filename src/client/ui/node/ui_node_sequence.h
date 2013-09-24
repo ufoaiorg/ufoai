@@ -42,7 +42,7 @@ typedef struct {
 	const char* source;
 
 	/** Called when the sequence end */
-	struct uiAction_s *onEnd;
+	struct uiAction_s* onEnd;
 
 	/** Link to the current sequence context, else nullptr */
 	pSequenceContext_t context;

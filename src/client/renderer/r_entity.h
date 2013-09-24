@@ -75,7 +75,7 @@ typedef struct {
 } transform_t;
 
 typedef struct entity_s {
-	struct model_s *model;
+	struct model_s* model;
 	vec3_t angles;
 	vec3_t scale;
 	vec3_t color;
@@ -84,7 +84,7 @@ typedef struct entity_s {
 	AABB eBox;
 
 	/* tag positioning */
-	struct entity_s *tagent;	/**< pointer to the parent entity */
+	struct entity_s* tagent;	/**< pointer to the parent entity */
 	const char* tagname;		/**< name of the tag */
 
 	/* misc */
@@ -105,7 +105,7 @@ typedef struct entity_s {
 
 	lighting_t* lighting;		/**< cached static light source information */
 
-	struct entity_s *next;		/**< for chaining */
+	struct entity_s* next;		/**< for chaining */
 
 	inline void init () {
 		OBJZERO(*this);
