@@ -45,14 +45,14 @@ class uiModelNode : public uiLocatedNode {
 /** @brief Model that have more than one part (top and down part of an aircraft) */
 typedef struct uiModel_s {
 	char* id;
-	char* anim;	/**< animation to run for this model */
-	char* parent;	/**< parent model id */
-	char* tag;	/**< the tag the model should placed onto */
-	int skin;		/**< skin number to use - default 0 (first skin) */
+	char* anim;				/**< animation to run for this model */
+	char* parent;			/**< parent model id */
+	char* tag;				/**< the tag the model should placed onto */
+	int skin;				/**< skin number to use - default 0 (first skin) */
 	char* model;
 	animState_t animState;
 	vec3_t origin, scale, angles, center;	/**< to cache the calculated values */
-	vec4_t color;				/**< rgba */
+	vec4_t color;			/**< rgba */
 	struct uiModel_s *next;
 } uiModel_t;
 
@@ -60,16 +60,16 @@ typedef struct uiModel_s {
  * @brief extradata for the model node
  */
 typedef struct modelExtraData_s {
-	char* oldRefValue;	/**< used for storing old reference values */
+	char* oldRefValue;		/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
 	vec3_t omega;
 	vec3_t scale;
 	const char* skin;
 	const char* model;
-	const char* tag;					/**< the tag to place the model onto */
-	animState_t* animationState;		/**< holds then anim state for the current model */
-	const char* animation;			/**< Anim string from the *.anm files */
+	const char* tag;		/**< the tag to place the model onto */
+	animState_t* animationState;	/**< holds then anim state for the current model */
+	const char* animation;	/**< Anim string from the *.anm files */
 	bool autoscale;			/**< If true autoscale the model when we draw it */
 	bool rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
 	bool clipOverflow;		/**< If true (default) model outside the node are clipped */
