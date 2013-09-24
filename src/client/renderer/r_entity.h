@@ -69,9 +69,9 @@ typedef struct animState_s {
  * @brief entity transform matrix
  */
 typedef struct {
-	bool done;			/**< already calculated */
-	bool processing;	/**< currently doing the calculation */
-	float matrix[16];		/**< the matrix that holds the result */
+	bool done;					/**< already calculated */
+	bool processing;			/**< currently doing the calculation */
+	float matrix[16];			/**< the matrix that holds the result */
 } transform_t;
 
 typedef struct entity_s {

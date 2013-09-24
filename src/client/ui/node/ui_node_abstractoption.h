@@ -39,13 +39,13 @@ typedef struct {
 	/* link to shared data (can be used if internal data is null) */
 	int dataId;							/**< Shared data id where we can find option */
 	int versionId;						/**< Cached version of the shared data, to check update */
-	const char* cvar;							/**< Cvar containing current value */
+	const char* cvar;					/**< Cvar containing current value */
 
 	/* information */
 	int count;							/**< number of elements */
 	int lineHeight;
 
-	uiScroll_t scrollY;				/**< Scroll position, if need */
+	uiScroll_t scrollY;					/**< Scroll position, if need */
 
 	struct uiAction_s* onViewChange;	/**< called when view change (number of elements...) */
 

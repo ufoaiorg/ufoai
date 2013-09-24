@@ -67,7 +67,7 @@ typedef struct mBspTexInfo_s {
 	float u_offset;
 	vec3_t vv;
 	float v_offset;
-	uint32_t flags;	/**< surfaceflags */
+	uint32_t flags;				/**< surfaceflags */
 	image_t* image;
 } mBspTexInfo_t;
 
@@ -199,7 +199,7 @@ typedef struct mBspLeaf_s {
 typedef struct mBspModel_s {
 	/* range of surface numbers in this (sub)model */
 	int firstmodelsurface, nummodelsurfaces;
-	int maptile;		/**< the maptile the surface indices belongs to */
+	int maptile;				/**< the maptile the surface indices belongs to */
 
 	int numsubmodels;
 	mBspHeader_t* submodels;

@@ -43,7 +43,7 @@ protected:
 struct spinnerExtraData_t {
 	abstractValueExtraData_s super;
 
-	uiSprite_t* background;	/**< Link to the background */
+	uiSprite_t* background;		/**< Link to the background */
 	uiSprite_t* bottomIcon;		/**< Link to the icon used for the bottom button */
 	uiSprite_t* topIcon;		/**< Link to the icon used for the top button */
 	int mode;					/**< The way the node react to input (see spinnerMode_t) */

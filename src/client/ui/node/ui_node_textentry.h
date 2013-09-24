@@ -39,11 +39,11 @@ class uiTextEntryNode : public uiLocatedNode {
  * @brief extradata for the textentry, to custom draw and behaviour
  */
 typedef struct textEntryExtraData_s {
-	bool isPassword;	/**< Display '*' instead of the real text */
-	bool clickOutAbort;	/**< If we click out an activated node, it abort the edition */
-	int cursorPosition;	/**< Cursor position (offset of next UTF-8 char to the right) */
+	bool isPassword;		/**< Display '*' instead of the real text */
+	bool clickOutAbort;		/**< If we click out an activated node, it abort the edition */
+	int cursorPosition;		/**< Cursor position (offset of next UTF-8 char to the right) */
 	struct uiAction_s* onAbort;
-	uiSprite_t* background; /**< Sprite used as a background */
+	uiSprite_t* background;	/**< Sprite used as a background */
 } textEntryExtraData_t;
 
 void UI_RegisterTextEntryNode(uiBehaviour_t* behaviour);

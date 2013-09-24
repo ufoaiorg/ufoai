@@ -62,8 +62,8 @@ void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLen
  */
 typedef struct containerExtraData_s {
 	/* for all containers */
-	const invDef_t* container;	/**< The container linked to this node. */
+	const invDef_t* container;		/**< The container linked to this node. */
 
-	int lastSelectedId;		/**< id oject the object type selected */
+	int lastSelectedId;				/**< id oject the object type selected */
 	struct uiAction_s* onSelect;	/**< call when we select an item */
 } containerExtraData_t;

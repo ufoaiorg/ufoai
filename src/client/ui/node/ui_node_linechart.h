@@ -48,7 +48,7 @@ typedef struct lineStrip_s {
  */
 typedef struct lineChartExtraData_s {
 	int dataId;					/**< ID of the line strips */
-	bool displayAxes;		/**< If true the node display axes */
+	bool displayAxes;			/**< If true the node display axes */
 	vec4_t axesColor;			/**< color of the axes */
 } lineChartExtraData_t;
 

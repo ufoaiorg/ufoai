@@ -47,10 +47,10 @@ typedef struct mAliasBoneMatrix_s {
 } mAliasBoneMatrix_t;
 
 typedef struct mAliasBoneVertex_s {
-	vec3_t	origin; /**< vertex location (these blend) */
-	float	influence; /**< influence fraction (these must add up to 1) */
-	vec3_t	normal; /**< surface normal (these blend) */
-	unsigned int bonenum; /**< number of the bone */
+	vec3_t	origin;			/**< vertex location (these blend) */
+	float	influence;		/**< influence fraction (these must add up to 1) */
+	vec3_t	normal;			/**< surface normal (these blend) */
+	unsigned int bonenum;	/**< number of the bone */
 } mAliasBoneVertex_t;
 
 typedef struct mAliasFrame_s {

@@ -56,7 +56,7 @@ typedef struct node_index_s {
  * @brief extradata for the window node
  */
 typedef struct {
-	vec2_t noticePos; 				/**< the position where the cl.msgText messages are rendered */
+	vec2_t noticePos; 			/**< the position where the cl.msgText messages are rendered */
 	bool dragButton;			/**< If true, we init the window with a header to move it */
 	bool closeButton;			/**< If true, we init the window with a header button to close it */
 	bool preventTypingEscape;	/**< If true, we can't use ESC button to close the window */
@@ -66,9 +66,9 @@ typedef struct {
 	bool fill;					/**< If true, use all the screen space allowed */
 	bool starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
-	uiNode_t* parent;	/**< to create child window */
+	uiNode_t* parent;			/**< to create child window */
 
-	struct uiKeyBinding_s* keyList;	/** list of key binding */
+	struct uiKeyBinding_s* keyList;		/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
 	struct uiAction_s* onWindowOpened; 	/**< Invoked when the window is added to the rendering stack */
