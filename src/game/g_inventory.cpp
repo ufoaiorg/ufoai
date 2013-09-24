@@ -225,7 +225,7 @@ void G_InventoryToFloor (Edict* ent)
 {
 	/* check for items that should be dropped */
 	/* ignore items linked from any temp container */
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont))) {
 		if (G_InventoryDropToFloorCheck(ent, cont->id))
 			break;	/* found at least one item */
@@ -357,7 +357,7 @@ void G_SendInventory (playermask_t playerMask, const Edict &ent)
 	if (!playerMask)
 		return;
 
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = ent.chr.inv.getNextCont(cont, true))) {
 		if (!G_IsItem(&ent) && INVDEF(cont->id)->temp)
 			continue;

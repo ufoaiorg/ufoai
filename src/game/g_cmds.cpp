@@ -302,7 +302,7 @@ void G_InvList_f (const Player &player)
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 			Com_Printf("Container: %i\n", cont->id);
 			Item* item = nullptr;

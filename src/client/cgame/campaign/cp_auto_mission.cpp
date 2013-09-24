@@ -783,7 +783,7 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t* aircraft, charac
 	assert(chr != nullptr);
 
 	/* add items to itemcargo */
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {

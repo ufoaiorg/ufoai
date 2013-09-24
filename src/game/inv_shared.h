@@ -532,7 +532,7 @@ protected:
 	Container _containers[MAX_CONTAINERS];
 
 	/** @todo: convert into iterator */
-	const Container *_getNextCont (const Container *prev) const;
+	const Container* _getNextCont (const Container* prev) const;
 
 public:
 	Inventory ();
@@ -560,7 +560,7 @@ public:
 		_containers[idx]._invList = nullptr;
 	}
 	inline void resetTempContainers () {
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = getNextCont(cont, true))) {
 			/* CID_FLOOR and CID_EQUIP are temp */
 			if (cont->def()->temp)
@@ -600,7 +600,7 @@ public:
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo: convert into iterator */
-	const Container *getNextCont (const Container *prev, bool inclTemp = false) const;
+	const Container* getNextCont (const Container* prev, bool inclTemp = false) const;
 	int countItems () const;
 };
 

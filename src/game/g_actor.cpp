@@ -771,7 +771,7 @@ void G_ActorReload (Edict* ent, const invDef_t* invDef)
 	const invDef_t* bestContainer = nullptr;
 	Item* ammoItem = nullptr;
 	int tu = 100;
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= tu)
 			continue;

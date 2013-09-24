@@ -82,7 +82,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 
 		/* search the item in the activator's inventory */
 		/* ignore items linked from any temp container the actor must have this in his hands */
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = activator->chr.inv.getNextCont(cont))) {
 			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {

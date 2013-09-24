@@ -358,7 +358,7 @@ static void INV_UpdateActorLoad_f (void)
 	const int tuPenalty = tus - normalTU;
 	int count = 0;
 
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		for (Item* invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();

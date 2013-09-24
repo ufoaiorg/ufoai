@@ -1358,7 +1358,7 @@ static void HUD_UpdateActorLoad_f (void)
 	const int tuPenalty = tus - normalTU;
 	int count = 0;
 
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {

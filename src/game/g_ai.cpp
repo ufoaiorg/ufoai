@@ -714,7 +714,7 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 static const invDef_t* AI_SearchGrenade (const Edict* ent, Item** ip)
 {
 	/* search for grenades and select the one that is available easily */
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	const invDef_t* bestContainer = nullptr;
 	Item* weapon = nullptr;
 	int cost = 100;

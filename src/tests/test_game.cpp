@@ -352,7 +352,7 @@ static void testInventoryTempContainerLinks (void)
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		nr = 0;
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 			if (cont->id == CID_ARMOUR || cont->id == CID_FLOOR)
 				continue;

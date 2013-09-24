@@ -268,7 +268,7 @@ static void AII_CarriedItems (const Inventory* soldierInventory)
 	Item* item;
 	equipDef_t* ed = &ccs.eMission;
 
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = soldierInventory->getNextCont(cont))) {
 		/* Items on the ground are collected as ET_ITEM */
 		for (item = cont->_invList; item; item = item->getNext()) {
@@ -768,7 +768,7 @@ static int AIR_GetStorageRoom (const aircraft_t* aircraft)
 	int size = 0;
 
 	LIST_Foreach(aircraft->acTeam, Employee, employee) {
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {
@@ -822,7 +822,7 @@ const char* AIR_CheckMoveIntoNewHomebase (const aircraft_t* aircraft, const base
  */
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t* chr, base_t* sourceBase, base_t* destBase)
 {
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont, true))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
@@ -2947,7 +2947,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_
 	}
 
 	LIST_Foreach(aircraft.acTeam, Employee, employee) {
-		const Container *cont = nullptr;
+		const Container* cont = nullptr;
 		while ((cont = employee->chr.inv.getNextCont(cont, true))) {
 			Item* ic = cont->getNextItem(nullptr);
 			while (ic) {

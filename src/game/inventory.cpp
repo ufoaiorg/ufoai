@@ -529,7 +529,7 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
 	if (!inv)
 		return;
 
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = inv->getNextCont(cont))) {
 		emptyContainer(inv, cont->id);
 	}
@@ -548,7 +548,7 @@ float InventoryInterface::GetInventoryState (const Inventory* inventory, int &sl
 	float weight = 0;
 
 	slowestFd = 0;
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = inventory->getNextCont(cont))) {
 		for (Item* ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();

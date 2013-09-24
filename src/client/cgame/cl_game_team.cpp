@@ -601,7 +601,7 @@ static void GAME_SaveItem (xmlNode_t* p, const Item* item, containerIndex_t cont
  */
 static void GAME_SaveInventory (xmlNode_t* p, const Inventory* inv)
 {
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = inv->getNextCont(cont, false))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {

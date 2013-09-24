@@ -695,7 +695,7 @@ void Inventory::init ()
 		_containers[i].id = i;
 }
 
-const Container *Inventory::_getNextCont (const Container *prev) const
+const Container* Inventory::_getNextCont (const Container* prev) const
 {
 	if (!prev)
 		/* the first one */
@@ -707,9 +707,9 @@ const Container *Inventory::_getNextCont (const Container *prev) const
 	return ++prev;
 }
 
-const Container *Inventory::getNextCont (const Container *prev, bool inclTemp) const
+const Container* Inventory::getNextCont (const Container* prev, bool inclTemp) const
 {
-	const Container *cont = prev;
+	const Container* cont = prev;
 
 	while ((cont = _getNextCont(cont))) {
 		/* if we don't want to include the temp containers ... */
@@ -729,7 +729,7 @@ const Container *Inventory::getNextCont (const Container *prev, bool inclTemp) c
 int Inventory::countItems () const
 {
 	int nr = 0;
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = getNextCont(cont))) {	/* skips the temp containers */
 		nr += cont->countItems();
 	}
@@ -926,7 +926,7 @@ bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, c
 float Inventory::getWeight () const
 {
 	float weight = 0;
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = getNextCont(cont))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {

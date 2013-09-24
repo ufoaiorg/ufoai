@@ -550,7 +550,7 @@ bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
 	assert(weapon);
 
 	/* also try the temp containers */
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
@@ -577,7 +577,7 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
 	const invDef_t* bestContainer = nullptr;
 	Item* theWeapon = nullptr;
 	int tu = 100;
-	const Container *cont = nullptr;
+	const Container* cont = nullptr;
 	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= tu)
 			continue;
