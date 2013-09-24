@@ -48,7 +48,7 @@ public:
 	/* system callback */
 
 	/** Invoked when the window is added to the rendering stack */
-	virtual void onWindowOpened(uiNode_t* node, linkedList_t *params);
+	virtual void onWindowOpened(uiNode_t* node, linkedList_t* params);
 	/** Invoked when the window is removed from the rendering stack */
 	virtual void onWindowClosed(uiNode_t* node);
 	/** Called when a windows gets active again after some other window was popped from the stack */
@@ -56,7 +56,7 @@ public:
 	/** Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	virtual void onActivate(uiNode_t* node);
 	/** Called when a property change */
-	virtual void onPropertyChanged(uiNode_t* node, const value_t *property);
+	virtual void onPropertyChanged(uiNode_t* node, const value_t* property);
 
 	virtual ~uiNode() {}
 };
@@ -138,10 +138,10 @@ public:
 	/** Return the position of the client zone into the node */
 	virtual void getClientPosition(uiNode_t const* node, vec2_t position) {}
 	/** cell size */
-	virtual int getCellWidth (uiNode_t *node) {return 1;}
+	virtual int getCellWidth (uiNode_t* node) {return 1;}
 	/** cell size */
-	virtual int getCellHeight (uiNode_t *node) {return 1;}
+	virtual int getCellHeight (uiNode_t* node) {return 1;}
 
 };
 
-void UI_RegisterAbstractNode(uiBehaviour_t *);
+void UI_RegisterAbstractNode(uiBehaviour_t* );

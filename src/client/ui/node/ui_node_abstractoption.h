@@ -50,13 +50,13 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 } abstractOptionExtraData_t;
 
 struct uiBehaviour_t;
 
-void UI_RegisterAbstractOptionNode(uiBehaviour_t *behaviour);
+void UI_RegisterAbstractOptionNode(uiBehaviour_t* behaviour);
 void UI_OptionNodeSortOptions(uiNode_t* node);
 uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
-const char* UI_AbstractOptionGetCurrentValue(uiNode_t *node);
-void UI_AbstractOptionSetCurrentValue(uiNode_t *node, const char* value);
+const char* UI_AbstractOptionGetCurrentValue(uiNode_t* node);
+void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value);

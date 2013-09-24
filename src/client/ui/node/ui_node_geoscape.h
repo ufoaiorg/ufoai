@@ -34,7 +34,7 @@ protected:
 	void smoothRotate (uiNode_t* node);
 	void screenTo3DMap (const uiNode_t* node, int x, int y, vec2_t pos);
 	void screenToMap (const uiNode_t* node, int x, int y, vec2_t pos);
-	void calcAndUploadDayAndNightTexture (uiNode_t *node, float q);
+	void calcAndUploadDayAndNightTexture (uiNode_t* node, float q);
 public:
 	void draw(uiNode_t* node) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
@@ -44,8 +44,8 @@ public:
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 	void onLeftClick(uiNode_t* node, int x, int y) override;
 	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) override;
-	void zoom(uiNode_t *node, bool out);
-	void startMouseShifting(uiNode_t *node, int x, int y);
+	void zoom(uiNode_t* node, bool out);
+	void startMouseShifting(uiNode_t* node, int x, int y);
 };
 
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t
@@ -90,8 +90,8 @@ typedef struct mapExtraData_s {
 	float mapzoommax;
 	float paddingRight;
 	int32_t overlayMask;
-	geoscapeData_t *geoscapeData;
+	geoscapeData_t* geoscapeData;
 	byte* r_dayandnightAlpha;
 } mapExtraData_t;
 
-void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);
+void UI_RegisterGeoscapeNode(uiBehaviour_t* behaviour);

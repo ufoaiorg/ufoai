@@ -28,13 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiOptionNode : public uiLocatedNode {
-	void onPropertyChanged(uiNode_t* node, const value_t *property) override;
+	void onPropertyChanged(uiNode_t* node, const value_t* property) override;
 	void doLayout(uiNode_t* node) override;
 };
 
-void UI_RegisterOptionNode(uiBehaviour_t *behaviour);
+void UI_RegisterOptionNode(uiBehaviour_t* behaviour);
 
-extern const uiBehaviour_t *ui_optionBehaviour;
+extern const uiBehaviour_t* ui_optionBehaviour;
 
 #define OPTIONEXTRADATA_TYPE optionExtraData_t
 #define OPTIONEXTRADATA(node) UI_EXTRADATA(node, OPTIONEXTRADATA_TYPE)
@@ -45,7 +45,7 @@ typedef struct optionExtraData_s {
 	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
-	uiSprite_t *icon;	/**< Link to an icon */
+	uiSprite_t* icon;	/**< Link to an icon */
 	bool flipIcon;		/**< Flip the icon rendering (horizontal) */
 
 	/* status */
@@ -59,4 +59,4 @@ typedef struct optionExtraData_s {
 } optionExtraData_t;
 
 int UI_OptionUpdateCache(uiNode_t* option);
-uiNode_t *UI_AllocOptionNode(const char* name, const char* label, const char* value);
+uiNode_t* UI_AllocOptionNode(const char* name, const char* label, const char* value);

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiMaterialEditorNode : public uiAbstractScrollableNode {
 	void draw(uiNode_t* node) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 protected:
@@ -35,4 +35,4 @@ protected:
 };
 
 struct uiBehaviour_t;
-void UI_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
+void UI_RegisterMaterialEditorNode(uiBehaviour_t* behaviour);

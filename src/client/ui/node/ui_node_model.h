@@ -76,6 +76,6 @@ typedef struct modelExtraData_s {
 	bool containerLike;		/**< Display an item like an item from the container */
 } modelExtraData_t;
 
-uiModel_t *UI_GetUIModel(const char* modelName);
+uiModel_t* UI_GetUIModel(const char* modelName);
 void UI_DrawModelNode(uiNode_t* node, const char* source);
-void UI_RegisterModelNode(uiBehaviour_t *behaviour);
+void UI_RegisterModelNode(uiBehaviour_t* behaviour);

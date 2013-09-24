@@ -38,4 +38,4 @@ class uiOptionListNode : public uiAbstractOptionNode {
 	int getCellHeight(uiNode_t* node) override;
 };
 
-void UI_RegisterOptionListNode(uiBehaviour_t *behaviour);
+void UI_RegisterOptionListNode(uiBehaviour_t* behaviour);

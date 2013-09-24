@@ -34,7 +34,7 @@ class uiBaseInventoryNode : public uiContainerNode {
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
 	bool onDndEnter(uiNode_t* node) override;
@@ -72,4 +72,4 @@ typedef struct baseInventoryExtraData_s {
  */
 CASSERT(offsetof(baseInventoryExtraData_t, super) == 0);
 
-void UI_RegisterBaseInventoryNode(uiBehaviour_t *behaviour);
+void UI_RegisterBaseInventoryNode(uiBehaviour_t* behaviour);

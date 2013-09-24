@@ -34,7 +34,7 @@ struct uiAction_s;
 class uiTimerNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node);
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 };
 
@@ -47,4 +47,4 @@ struct timerExtraData_t {
 	struct uiAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 };
 
-void UI_RegisterTimerNode(uiBehaviour_t *behaviour);
+void UI_RegisterTimerNode(uiBehaviour_t* behaviour);

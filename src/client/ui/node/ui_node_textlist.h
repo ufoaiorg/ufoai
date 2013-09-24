@@ -31,10 +31,10 @@ class uiTextListNode : public uiTextNode {
 	void onMouseMove(uiNode_t* node, int x, int y) override;
 	void onLoading(uiNode_t* node) override;
 protected:
-	void drawText (uiNode_t* node, const linkedList_t *list);
+	void drawText (uiNode_t* node, const linkedList_t* list);
 };
 
 struct uiBehaviour_t;
 struct uiAction_s;
 
-void UI_RegisterTextListNode(uiBehaviour_t *behaviour);
+void UI_RegisterTextListNode(uiBehaviour_t* behaviour);

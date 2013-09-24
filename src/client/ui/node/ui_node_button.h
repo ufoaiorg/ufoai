@@ -36,11 +36,11 @@ public:
 
 typedef struct buttonExtraData_s {
 	/** Sprite used as an icon */
-	uiSprite_t *icon;
+	uiSprite_t* icon;
 	/** Flip the icon rendering (horizontal) */
 	bool flipIcon;
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 } buttonExtraData_t;
 
-void UI_RegisterButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterButtonNode(uiBehaviour_t* behaviour);

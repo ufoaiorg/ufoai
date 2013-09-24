@@ -42,7 +42,7 @@ typedef struct keyBindingExtraData_s {
 	keyBindSpace_t keySpace;
 	int bindingWidth;
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 } keyBindingExtraData_t;
 
-void UI_RegisterKeyBindingNode(uiBehaviour_t *behaviour);
+void UI_RegisterKeyBindingNode(uiBehaviour_t* behaviour);

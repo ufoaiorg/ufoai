@@ -33,4 +33,4 @@ public:
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
 };
 
-void UI_RegisterControlsNode(uiBehaviour_t *behaviour);
+void UI_RegisterControlsNode(uiBehaviour_t* behaviour);

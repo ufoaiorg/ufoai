@@ -72,4 +72,4 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
-void UI_RegisterAbstractScrollableNode(uiBehaviour_t *behaviour);
+void UI_RegisterAbstractScrollableNode(uiBehaviour_t* behaviour);

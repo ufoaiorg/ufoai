@@ -30,11 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiVideoNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
 	void drawOverWindow(uiNode_t* node) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 };
 
-void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
+void UI_RegisterVideoNode(uiBehaviour_t* behaviour);
 
 #define UI_VIDEOEXTRADATA_TYPE videoExtraData_t
 #define UI_VIDEOEXTRADATA(node) UI_EXTRADATA(node, UI_VIDEOEXTRADATA_TYPE)

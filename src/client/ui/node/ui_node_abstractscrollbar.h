@@ -43,4 +43,4 @@ typedef struct abstractScrollbarExtraData_s {
 
 struct uiBehaviour_t; /* prototype */
 
-void UI_RegisterAbstractScrollbarNode(uiBehaviour_t *behaviour);
+void UI_RegisterAbstractScrollbarNode(uiBehaviour_t* behaviour);

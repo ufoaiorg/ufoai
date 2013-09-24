@@ -29,11 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiRadarNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
 };
 
-void UI_RegisterRadarNode(uiBehaviour_t *behaviour);
+void UI_RegisterRadarNode(uiBehaviour_t* behaviour);

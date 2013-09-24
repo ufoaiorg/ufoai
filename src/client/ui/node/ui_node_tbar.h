@@ -30,7 +30,7 @@ class uiTBarNode : public uiAbstractValueNode {
 	void draw(uiNode_t* node) override;
 };
 
-void UI_RegisterTBarNode(uiBehaviour_t *behaviour);
+void UI_RegisterTBarNode(uiBehaviour_t* behaviour);
 
 typedef struct tbarExtraData_s {
 	abstractValueExtraData_t super;

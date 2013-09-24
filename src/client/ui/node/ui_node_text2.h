@@ -36,18 +36,18 @@ class uiText2Node : public uiTextNode {
 	void onLoaded(uiNode_t* node) override;
 	void updateCache (uiNode_t* node) override;
 protected:
-	void drawText (uiNode_t* node, const linkedList_t *list, bool noDraw);
+	void drawText (uiNode_t* node, const linkedList_t* list, bool noDraw);
 };
 
 struct uiBehaviour_t;
 struct uiAction_s;
 
-void UI_RegisterText2Node(uiBehaviour_t *behaviour);
+void UI_RegisterText2Node(uiBehaviour_t* behaviour);
 
 typedef struct {
 	textExtraData_t super;
 
-	linkedList_t *lineSplit;
+	linkedList_t* lineSplit;
 
 } text2ExtraData_t;
 

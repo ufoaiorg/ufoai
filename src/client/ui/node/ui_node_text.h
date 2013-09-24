@@ -42,7 +42,7 @@ public:
 public:
 	void validateCache(uiNode_t* node);
 protected:
-	void drawText (uiNode_t* node, const char* text, const linkedList_t *list, bool noDraw);
+	void drawText (uiNode_t* node, const char* text, const linkedList_t* list, bool noDraw);
 	virtual void updateCache (uiNode_t* node);
 };
 
@@ -51,9 +51,9 @@ struct uiAction_s;
 
 void UI_TextScrollEnd(const char* nodePath);
 void UI_TextNodeSelectLine(uiNode_t* node, int num);
-const char* UI_TextNodeGetSelectedText(uiNode_t *node, int num);
+const char* UI_TextNodeGetSelectedText(uiNode_t* node, int num);
 
-void UI_RegisterTextNode(uiBehaviour_t *behaviour);
+void UI_RegisterTextNode(uiBehaviour_t* behaviour);
 
 typedef struct {
 	abstractScrollableExtraData_t super;

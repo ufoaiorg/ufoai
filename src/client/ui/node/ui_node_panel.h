@@ -32,7 +32,7 @@ class uiPanelNode : public uiAbstractScrollableNode {
 	void onLoading(uiNode_t* node) override;
 	void doLayout(uiNode_t* node) override;
 	void getClientPosition(uiNode_t const* node, vec2_t position) override;
-	void onPropertyChanged(uiNode_t* node, const value_t *property) override;
+	void onPropertyChanged(uiNode_t* node, const value_t* property) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	bool onMouseLongPress(uiNode_t* node, int x, int y, int button) override;
@@ -111,8 +111,8 @@ typedef struct {
 	int layoutColumns;			/**< The number of columns (only used by LAYOUT_COLUMN)  */
 	bool wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 } panelExtraData_t;
 
-void UI_RegisterPanelNode(uiBehaviour_t *behaviour);
+void UI_RegisterPanelNode(uiBehaviour_t* behaviour);
 void UI_StarLayout(uiNode_t* node);

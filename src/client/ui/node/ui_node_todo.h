@@ -33,4 +33,4 @@ class uiTodoNode : public uiStringNode {
 	void onLoaded(uiNode_t* node) override;
 };
 
-void UI_RegisterTodoNode(uiBehaviour_t *behaviour);
+void UI_RegisterTodoNode(uiBehaviour_t* behaviour);

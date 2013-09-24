@@ -30,4 +30,4 @@ class uiItemNode : public uiModelNode {
 	void draw(uiNode_t* node) override;
 };
 
-void UI_RegisterItemNode(uiBehaviour_t *behaviour);
+void UI_RegisterItemNode(uiBehaviour_t* behaviour);

@@ -38,4 +38,4 @@ typedef struct {
 
 struct uiBehaviour_t;
 
-void UI_RegisterZoneNode(uiBehaviour_t *behaviour);
+void UI_RegisterZoneNode(uiBehaviour_t* behaviour);

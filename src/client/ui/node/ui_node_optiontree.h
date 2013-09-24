@@ -39,4 +39,4 @@ class uiOptionTreeNode : public uiAbstractOptionNode {
 	void doLayout(uiNode_t* node) override;
 };
 
-void UI_RegisterOptionTreeNode(uiBehaviour_t *behaviour);
+void UI_RegisterOptionTreeNode(uiBehaviour_t* behaviour);

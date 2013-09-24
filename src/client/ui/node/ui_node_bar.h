@@ -47,4 +47,4 @@ typedef struct {
 	bool noHover;	/**< True to show the bar at 100% opacity - even if not hovered */
 } barExtraData_t;
 
-void UI_RegisterBarNode(uiBehaviour_t *behaviour);
+void UI_RegisterBarNode(uiBehaviour_t* behaviour);

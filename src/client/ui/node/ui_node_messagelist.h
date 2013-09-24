@@ -33,14 +33,14 @@ class uiMessageListNode : public uiAbstractScrollableNode {
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
-	int getCellHeight (uiNode_t *node) override;
+	int getCellHeight (uiNode_t* node) override;
 };
 
 struct uiMessageListNodeMessage_s;
 struct uiBehaviour_t;
 struct uiAction_s;
 
-void UI_RegisterMessageListNode(uiBehaviour_t *behaviour);
+void UI_RegisterMessageListNode(uiBehaviour_t* behaviour);
 struct uiMessageListNodeMessage_s* UI_MessageGetStack (void);
 void UI_MessageAddStack(struct uiMessageListNodeMessage_s* message);
 void UI_MessageResetStack(void);

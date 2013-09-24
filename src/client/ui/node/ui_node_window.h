@@ -38,9 +38,9 @@ class uiWindowNode : public uiLocatedNode {
 	void doLayout(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
-	void onWindowActivate(uiNode_t *node) override;
+	void onWindowActivate(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
 };
 
@@ -76,20 +76,20 @@ typedef struct {
 	struct uiAction_s *onWindowActivate;/**< Called when a windows gets active again after some other window was popped from the stack */
 	struct uiAction_s *onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
 
-	node_index_t *index;
-	node_index_t *index_hash[INDEXEDCHILD_HASH_SIZE];
+	node_index_t* index;
+	node_index_t* index_hash[INDEXEDCHILD_HASH_SIZE];
 
 	/** Sprite used as a background */
-	uiSprite_t *background;
+	uiSprite_t* background;
 } windowExtraData_t;
 
-void UI_RegisterWindowNode(uiBehaviour_t *behaviour);
+void UI_RegisterWindowNode(uiBehaviour_t* behaviour);
 bool UI_WindowIsFullScreen(uiNode_t const* window);
 bool UI_WindowIsDropDown(uiNode_t const* window);
 bool UI_WindowIsModal(uiNode_t const* window);
 void UI_WindowNodeRegisterKeyBinding(uiNode_t* window, struct uiKeyBinding_s *binding);
 struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(uiNode_t const* node, unsigned int key);
-vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node);
+vec_t* UI_WindowNodeGetNoticePosition(uiNode_t* node);
 /* child index */
 uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
 bool UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);

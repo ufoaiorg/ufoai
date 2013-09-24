@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiConFuncNode : public uiNode {
 	void onLoaded(uiNode_t* node) override;
-	void onWindowOpened(uiNode_t* node, linkedList_t *params) override;
+	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
 };
@@ -38,13 +38,13 @@ class uiFuncNode : public uiNode {
 };
 
 class uiCvarNode : public uiNode {
-	void onWindowOpened(uiNode_t* node, linkedList_t *params);
+	void onWindowOpened(uiNode_t* node, linkedList_t* params);
 	void onWindowClosed(uiNode_t* node);
 	void clone(uiNode_t const* source, uiNode_t* clone);
 	void deleteNode(uiNode_t* node);
 };
 
-void UI_RegisterConFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterCvarFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterNullNode(uiBehaviour_t *behaviour);
+void UI_RegisterConFuncNode(uiBehaviour_t* behaviour);
+void UI_RegisterCvarFuncNode(uiBehaviour_t* behaviour);
+void UI_RegisterFuncNode(uiBehaviour_t* behaviour);
+void UI_RegisterNullNode(uiBehaviour_t* behaviour);
