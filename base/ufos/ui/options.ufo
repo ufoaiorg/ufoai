@@ -657,8 +657,8 @@ window options
 			// ================
 			string intro_video
 			{
-				tooltip		"_Do not play the intro movie when starting the game."
-				string		"_Hold Back Intro Video:"
+				tooltip		"_Don't play the video when loading the game."
+				string		"_Skip Intro Video:"
 				pos			"32 490"
 				size		"320 20"
 			}
