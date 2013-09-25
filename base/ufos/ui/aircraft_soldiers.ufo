@@ -171,54 +171,54 @@ window team extends iaircraft
 	}
 
 	panel actormodel_background {
-	{
-		pos		"12 12"
-		size	"179 296"
-		background	"ui/panel_green"
-	}
-
-	image	rank_img {
-		pos "8 8"
-		size "50 50"
-		src *cvar:mn_chrrank_img
-	}
-
-	model body
-	{
 		{
-			src		*cvar:mn_body
-			skin	*cvar:mn_body_skin
-			anim	"stand2"
-			angles	"0 70 90"
-			scale	"5.5 5.5 5.5"
-			pos		"6 6"
-			size	"168 283"
-			origin	"0 -35 0"
+			pos		"12 12"
+			size	"179 296"
+			background	"ui/panel_green"
 		}
 
-		model head
-		{
-			src		*cvar:mn_head
-			skin	*cvar:mn_head_skin
-			tag		"tag_head"
-			scale	"1.0 1.0 1.0"
+		image	rank_img {
+			pos "8 8"
+			size "50 50"
+			src *cvar:mn_chrrank_img
 		}
 
-		model right_rweapon
+		model body
 		{
-			src		*cvar:mn_rweapon
-			tag		"tag_rweapon"
+			{
+				src		*cvar:mn_body
+				skin	*cvar:mn_body_skin
+				anim	"stand2"
+				angles	"0 70 90"
+				scale	"5.5 5.5 5.5"
+				pos		"6 6"
+				size	"168 283"
+				origin	"0 -35 0"
+			}
+
+			model head
+			{
+				src		*cvar:mn_head
+				skin	*cvar:mn_head_skin
+				tag		"tag_head"
+				scale	"1.0 1.0 1.0"
+			}
+
+			model right_rweapon
+			{
+				src		*cvar:mn_rweapon
+				tag		"tag_rweapon"
+			}
+
+			model right_lweapon
+			{
+				src		*cvar:mn_lweapon
+				tag		"tag_lweapon"
+			}
 		}
 
-		model right_lweapon
-		{
-			src		*cvar:mn_lweapon
-			tag		"tag_lweapon"
-		}
-	}
-
-	string	name { pos "8 247" size "165 20" string *cvar:mn_name }
-	string	rank_lbl { pos "8 267" size "165 20" string *cvar:mn_chrrank }
+		string	name { pos "8 247" size "165 20" string *cvar:mn_name }
+		string	rank_lbl { pos "8 267" size "165 20" string *cvar:mn_chrrank }
 	}
 
 	tab actor_stat {
