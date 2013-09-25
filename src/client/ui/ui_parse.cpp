@@ -1387,10 +1387,6 @@ const char* UI_GetReferenceString (const uiNode_t* const node, const char* ref)
 	if (token[0] == '\0')
 		return nullptr;
 
-	if (char const* const binding = Q_strstart(token, "binding:")) {
-		return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);
-	}
-
 	Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 }
 

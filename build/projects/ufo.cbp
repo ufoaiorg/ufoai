@@ -639,8 +639,6 @@
 		<Unit filename="../../src/client/ui/node/ui_node_image.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_item.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_item.h" />
-		<Unit filename="../../src/client/ui/node/ui_node_keybinding.cpp" />
-		<Unit filename="../../src/client/ui/node/ui_node_keybinding.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_linechart.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_linechart.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_material_editor.cpp" />
