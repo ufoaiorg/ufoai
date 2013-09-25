@@ -5447,7 +5447,7 @@ mapdef vil2_mp2p
 {
 	map				"+village2"
 	params			("mp2p_01")
-	description		"_Village MP (2v2)"
+	description		"_Village MP (2)"
 	multiplayer		true
 	campaign		false
 	singleplayer	false
@@ -5457,35 +5457,16 @@ mapdef vil2_mp2p
 	gametypes
 	(
 		fight1on1
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-	)
-
-	ufos
-	(
-	)
-
-	terrains
-	(
-	)
-
-	cultures
-	(
-	)
-
-	populations
-	(
+		fight2on2
+		fight3on3
 	)
 }
 
 mapdef vil2_mp4p
 {
 	map				"+village2"
-	params			("mp4p_01")
-	description		"_Village MP (2v2)"
+	params			("mp2p_02")
+	description		"_Village MP (2)"
 	multiplayer		true
 	campaign		false
 	singleplayer	false
@@ -5496,27 +5477,7 @@ mapdef vil2_mp4p
 	(
 		fight1on1
 		fight2on2
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-	)
-
-	ufos
-	(
-	)
-
-	terrains
-	(
-	)
-
-	cultures
-	(
-	)
-
-	populations
-	(
+		fight3on3
 	)
 }
 
