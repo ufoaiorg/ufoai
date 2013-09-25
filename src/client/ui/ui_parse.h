@@ -40,8 +40,8 @@ const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* na
 char* UI_AllocStaticString(const char* string, int size) __attribute__ ((warn_unused_result));
 float* UI_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
 vec4_t* UI_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
-struct uiAction_s *UI_AllocStaticAction(void) __attribute__ ((warn_unused_result));
-bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s *property, const char* string);
+struct uiAction_s* UI_AllocStaticAction(void) __attribute__ ((warn_unused_result));
+bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s* property, const char* string);
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

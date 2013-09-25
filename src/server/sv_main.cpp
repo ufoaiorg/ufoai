@@ -62,8 +62,8 @@ typedef struct leakyBucket_s {
 
 	long hash;
 
-	struct leakyBucket_s *prev;
-	struct leakyBucket_s *next;
+	struct leakyBucket_s* prev;
+	struct leakyBucket_s* next;
 } leakyBucket_t;
 
 /* This is deliberately quite large to make it more of an effort to DoS */

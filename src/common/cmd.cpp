@@ -45,8 +45,8 @@ typedef struct cmd_alias_s {
 	char name[MAX_ALIAS_NAME];
 	char* value;
 	bool archive;	/**< store the alias and reload it on the next game start */
-	struct cmd_alias_s *hash_next;
-	struct cmd_alias_s *next;
+	struct cmd_alias_s* hash_next;
+	struct cmd_alias_s* next;
 } cmd_alias_t;
 
 static cmd_alias_t* cmd_alias;
@@ -485,8 +485,8 @@ COMMAND EXECUTION
 #define CMD_HASH_SIZE 32
 
 typedef struct cmd_function_s {
-	struct cmd_function_s *next;
-	struct cmd_function_s *hash_next;
+	struct cmd_function_s* next;
+	struct cmd_function_s* hash_next;
 	const char* name;
 	const char* description;
 	xcommand_t function;

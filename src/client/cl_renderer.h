@@ -198,7 +198,7 @@ typedef struct {
 	corona_t coronas[MAX_CORONAS];
 
 	trace_t trace;				/**< occlusion testing */
-	struct entity_s *traceEntity;
+	struct entity_s* traceEntity;
 
 	mapTiles_t* mapTiles;
 } rendererData_t;

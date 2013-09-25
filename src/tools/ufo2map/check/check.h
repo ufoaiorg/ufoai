@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @sa Check_FindCompositeSides */
 typedef struct compositeSide_s {
-	struct side_s **memberSides;
+	struct side_s** memberSides;
 	int numMembers;
 } compositeSide_t;
 

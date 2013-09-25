@@ -110,7 +110,7 @@ typedef struct itemEffect_s {
 typedef struct implantDef_s {
 	const char* id;
 	int idx;
-	const struct objDef_s *item;	/**< the assigned implant effect */
+	const struct objDef_s* item;	/**< the assigned implant effect */
 	int installationTime;	/**< the time that is needed in order to install the implant */
 	int removeTime;			/**< the time that is needed in order to remove the implant */
 } implantDef_t;
@@ -131,7 +131,7 @@ typedef struct fireDef_s {
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
-	const struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
+	const struct objDef_s* obj;		/**< The weapon/ammo item this fd is located in. */
 	weaponFireDefIndex_t weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
 						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
@@ -311,11 +311,11 @@ typedef struct objDef_s {
 	int useable;		/**< Defines which team can use this item: TEAM_*.
 						 * Used in checking the right team when filling the containers with available armour. */
 
-	const struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
+	const struct objDef_s* ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
 	int numAmmos;		/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];	/**< List of weapon-object pointers where this item can be used in.
+	const struct objDef_s* weapons[MAX_WEAPONS_PER_OBJDEF];	/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 															 * getFiredefs(). */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
@@ -346,7 +346,7 @@ typedef struct objDef_s {
 	uint32_t getShapeRotated () const;
 	bool isCraftItem () const;
 	bool isBaseDefenceItem () const;
-	bool isLoadableInWeapon (const objDef_s *weapon) const;
+	bool isLoadableInWeapon (const objDef_s* weapon) const;
 	inline bool isAmmo () const {
 		return Q_streq(this->type, "ammo");
 	}
@@ -643,7 +643,7 @@ typedef enum {
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
 /* ================================ */
 
-void INVSH_InitCSI(const struct csi_s *import) __attribute__((nonnull));
+void INVSH_InitCSI(const struct csi_s* import) __attribute__((nonnull));
 
 const objDef_t* INVSH_GetItemByID(const char* id);
 const objDef_t* INVSH_GetItemByIDX(int index);

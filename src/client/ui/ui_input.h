@@ -31,11 +31,11 @@ struct uiNode_t;
 
 typedef struct uiKeyBinding_s {
 	uiNode_t* node;				/**< Node target. */
-	const struct value_s *property;		/**< Property target, else nullptr. */
+	const struct value_s* property;		/**< Property target, else nullptr. */
 	int key;							/**< Keynum to catch. */
 	const char* description;			/**< Description of this binding */
 	bool inherited;					/**< True if this binding is inherited from another binding. */
-	struct uiKeyBinding_s *next;		/**< Next binding from the window list. */
+	struct uiKeyBinding_s* next;		/**< Next binding from the window list. */
 } uiKeyBinding_t;
 
 void UI_SetKeyBinding(const char* path, int key, const char* description);

@@ -356,7 +356,7 @@ local uLong unzlocal_SearchCentralDir (const zlib_filefunc_def* pzlib_filefunc_d
 unzFile ZEXPORT unzOpen2 (const char* path, zlib_filefunc_def* pzlib_filefunc_def)
 {
     unz_s us;
-    unz_s *s;
+    unz_s* s;
     uLong central_pos,uL;
 
     uLong number_disk;          /* number of the current dist, used for

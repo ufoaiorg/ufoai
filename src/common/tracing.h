@@ -61,7 +61,7 @@ typedef struct trace_s {
 	uint32_t contentFlags;		/**< contents on other side of surface hit */
 	int32_t leafnum;
 	int mapTile;				/**< the map tile we hit something */
-	struct le_s *le;			/**< not set by CM_*() functions */
+	struct le_s* le;			/**< not set by CM_*() functions */
 	int entNum;					/**< not set by CM_*() functions */
 
 	inline trace_s () {

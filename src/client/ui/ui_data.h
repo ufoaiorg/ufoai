@@ -93,4 +93,4 @@ int UI_FindOptionPosition(uiOptionIterator_t* iterator, uiNode_t const* option);
 uiNode_t* UI_AddOption(uiNode_t** tree, const char* name, const char* label, const char* value);
 
 /* line strip */
-void UI_RegisterLineStrip(int dataId, struct lineStrip_s *text);
+void UI_RegisterLineStrip(int dataId, struct lineStrip_s* text);
