@@ -3360,6 +3360,7 @@ mapdef vil2_dev
 	ufos
 	(
 		craft_ufo_scout
+		craft_ufo_fighter
 	)
 
 	terrains
