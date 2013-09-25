@@ -96,9 +96,8 @@ static void CLMN_Mods_f (void)
 {
 	linkedList_t* mods = nullptr;
 	FS_GetModList(&mods);
-	while (mods) {
-		Cbuf_AddText("mn_mods_result %s\n", (const char*)mods->data);
-		mods = mods->next;
+	LIST_Foreach(mods, const char, mod) {
+		Cbuf_AddText("mn_mods_result %s\n", mod);
 	}
 }
 
