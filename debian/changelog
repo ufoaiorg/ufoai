@@ -1,3 +1,10 @@
+ufoai (2.6-dev-1) oneiric; urgency=low
+
+  [ Martin Gerhardy ]
+  * Bump version to 2.6
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 25 Sep 2013 20:49:00 -0100
+
 ufoai (2.5-dev-1) oneiric; urgency=low
 
   [ Martin Gerhardy ]

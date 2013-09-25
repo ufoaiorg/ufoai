@@ -3,7 +3,7 @@
 !define SHORT_PRODUCT_PATH "UFOAI"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
 !ifndef PRODUCT_VERSION
-!define PRODUCT_VERSION "2.5-dev"
+!define PRODUCT_VERSION "2.6-dev"
 !endif
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://ufoai.sf.net"
