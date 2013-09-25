@@ -30,11 +30,11 @@ struct uiNode_t;
 #define UI_MAX_KEYBINDING	128
 
 typedef struct uiKeyBinding_s {
-	uiNode_t* node;				/**< Node target. */
+	uiNode_t* node;						/**< Node target. */
 	const struct value_s* property;		/**< Property target, else nullptr. */
 	int key;							/**< Keynum to catch. */
 	const char* description;			/**< Description of this binding */
-	bool inherited;					/**< True if this binding is inherited from another binding. */
+	bool inherited;						/**< True if this binding is inherited from another binding. */
 	struct uiKeyBinding_s* next;		/**< Next binding from the window list. */
 } uiKeyBinding_t;
 

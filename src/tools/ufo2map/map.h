@@ -64,17 +64,17 @@ typedef struct side_s {
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
 	uint32_t	contentFlags;	/**< from miptex */
 	uint32_t	surfaceFlags;	/**< from miptex */
-	bool	visible;		/**< choose visible planes first */
-	bool	tested;			/**< this plane already checked as a split */
-	bool	bevel;			/**< don't ever use for bsp splitting */
+	bool	visible;			/**< choose visible planes first */
+	bool	tested;				/**< this plane already checked as a split */
+	bool	bevel;				/**< don't ever use for bsp splitting */
 	bool	isCompositeMember;	/**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
 
-	struct mapbrush_s* brush;		/**< backlink to the brush this side belongs to */
+	struct mapbrush_s* brush;	/**< backlink to the brush this side belongs to */
 } side_t;
 
 typedef struct mapbrush_s {
-	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
-	int		brushnum;		/**< the brush number in the map */
+	int		entitynum;			/**< the entity number in the map - 0 is the world - everything else is a bmodel */
+	int		brushnum;			/**< the brush number in the map */
 
 	uint32_t	contentFlags;
 
@@ -109,12 +109,12 @@ typedef struct plane_s {
 
 typedef struct portal_s {
 	plane_t		plane;
-	struct node_s		*onnode;		/**< nullptr = outside box */
-	struct node_s		*nodes[2];		/**< [0] = front side of plane */
-	struct portal_s	*next[2];
+	struct node_s* onnode;		/**< nullptr = outside box */
+	struct node_s* nodes[2];	/**< [0] = front side of plane */
+	struct portal_s* next[2];
 	winding_t	*winding;
 
-	bool	sidefound;		/**< false if ->side hasn't been checked */
-	struct side_s		*side;			/**< nullptr = non-visible */
-	face_t		*face[2];		/**< output face in bsp file */
+	bool sidefound;				/**< false if ->side hasn't been checked */
+	struct side_s* side;		/**< nullptr = non-visible */
+	face_t* face[2];			/**< output face in bsp file */
 } portal_t;

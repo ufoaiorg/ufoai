@@ -80,8 +80,8 @@ typedef struct ptlCmd_s {
 
 typedef struct ptlDef_s {
 	char name[MAX_VAR];	/**< script id of the particle */
-	ptlCmd_t* init; /**< only called at particle spawn time */
-	ptlCmd_t* run;	/**< called every frame */
+	ptlCmd_t* init;		/**< only called at particle spawn time */
+	ptlCmd_t* run;		/**< called every frame */
 	ptlCmd_t* think;	/**< depends on the tps value of the particle */
 	ptlCmd_t* round;	/**< called for each ended round */
 	ptlCmd_t* physics;	/**< called when the particle origin hits something solid */
@@ -96,30 +96,30 @@ typedef enum artType_s {
 typedef struct ptlArt_s {
 	char name[MAX_VAR];	/**< the path of the particle art - must be the first entry because the parsing code relies on this */
 	int frame;
-	int skin;		/**< the skin of the model */
+	int skin;			/**< the skin of the model */
 	union {
 		const image_t* image;
 		model_t* model;
 	} art;
-	artType_t type;	/**< the type of the particle art */
+	artType_t type;		/**< the type of the particle art */
 } ptlArt_t;
 
 typedef struct ptl_s {
-	bool inuse;			/**< particle active? */
-	bool invis;			/**< is this particle invisible */
+	bool inuse;				/**< particle active? */
+	bool invis;				/**< is this particle invisible */
 
 	r_program_t* program;	/**< this glsl program is bound before the particle is executed */
 
 	ptlArt_t* pic;			/**< Picture link. */
 	ptlArt_t* model;		/**< Model link. */
 
-	blend_t blend;				/**< blend mode */
-	style_t style;				/**< style mode */
+	blend_t blend;			/**< blend mode */
+	style_t style;			/**< style mode */
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
-	vec3_t s;			/**< current position */
-	vec3_t origin;		/**< start position - set initial s position to get this value */
+	vec3_t s;				/**< current position */
+	vec3_t origin;			/**< start position - set initial s position to get this value */
 	vec3_t offset;
 	vec3_t angles;
 	vec3_t lightColor;
@@ -127,30 +127,30 @@ typedef struct ptl_s {
 	float lightSustain;
 	int levelFlags;
 
-	int skin;		/**< model skin to use for this particle */
+	int skin;				/**< model skin to use for this particle */
 
 	struct ptl_s* children;	/**< list of children */
 	struct ptl_s* next;		/**< next peer in list */
 	struct ptl_s* parent;   /**< pointer to parent */
 
 	/* private */
-	ptlDef_t* ctrl;		/**< pointer to the particle definition */
+	ptlDef_t* ctrl;			/**< pointer to the particle definition */
 	int startTime;
 	int frame, endFrame;
-	float fps;	/**< how many frames per second (animate) */
-	float lastFrame;	/**< time (in seconds) when the think function was last executed (perhaps this can be used to delay or speed up particle actions). */
-	float tps; /**< think per second - call the think function tps times each second, the first call at 1/tps seconds */
+	float fps;				/**< how many frames per second (animate) */
+	float lastFrame;		/**< time (in seconds) when the think function was last executed (perhaps this can be used to delay or speed up particle actions). */
+	float tps;				/**< think per second - call the think function tps times each second, the first call at 1/tps seconds */
 	float lastThink;
 	fade_t thinkFade, frameFade;
-	float t;	/**< time that the particle has been active already */
-	float dt;	/**< time increment for rendering this particle (delta time) */
-	float life;	/**< specifies how long a particle will be active (seconds) */
-	int rounds;	/**< specifies how many rounds a particle will be active */
+	float t;		/**< time that the particle has been active already */
+	float dt;		/**< time increment for rendering this particle (delta time) */
+	float life;		/**< specifies how long a particle will be active (seconds) */
+	int rounds;		/**< specifies how many rounds a particle will be active */
 	int roundsCnt;
 	float scrollS;
 	float scrollT;
-	vec3_t a;	/**< acceleration vector */
-	vec3_t v;	/**< velocity vector */
+	vec3_t a;		/**< acceleration vector */
+	vec3_t v;		/**< velocity vector */
 	vec3_t oldV;	/**< old velocity vector (in case the particle e.g. bounces) */
 	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */
 	bool physics;	/**< basic physics */
@@ -172,7 +172,7 @@ typedef struct {
 	vec3_t viewOrigin;
 	vec3_t viewAngles;
 	float time;					/**< time is used to auto animate */
-	int rendererFlags;				/**< RDF_NOWORLDMODEL, etc */
+	int rendererFlags;			/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 	int brushCount, aliasCount, batchCount;
 	int FFPToShaderCount, shaderToShaderCount, shaderToFFPCount;
@@ -180,10 +180,10 @@ typedef struct {
 	int weather;				/**< weather effects */
 	vec4_t fogColor;
 	vec4_t ambientColor;
-	vec4_t modelAmbientColor; /**< clamped to avoid black models */
+	vec4_t modelAmbientColor;	/**< clamped to avoid black models */
 	vec4_t sunDiffuseColor;
 	vec4_t sunSpecularColor;
-	vec4_t sunVector;		/**< pointing towards the sun, should be x y z 0 to match the OpengGL logic */
+	vec4_t sunVector;			/**< pointing towards the sun, should be x y z 0 to match the OpengGL logic */
 
 	/* entity, dynamic lights and corona lists are repopulated each frame, don't use them as persistent */
 	int numEntities;

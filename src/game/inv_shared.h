@@ -96,8 +96,8 @@ typedef enum {
 
 typedef struct itemEffect_s {
 	bool isPermanent;	/**< @c true if this effect does not expire */
-	int duration;	/**< the turns that the effect is active */
-	int period;		/**< Frequency to add attribute. This is for effects that are handled outside of the battlescape. */
+	int duration;		/**< the turns that the effect is active */
+	int period;			/**< Frequency to add attribute. This is for effects that are handled outside of the battlescape. */
 
 	/* all in percent */
 	float accuracy;
@@ -251,14 +251,14 @@ typedef enum {
  * @todo move into campaign only structure
  */
 typedef struct craftitem_s {
-	aircraftItemType_t type;		/**< The type of the aircraft item. */
+	aircraftItemType_t type;	/**< The type of the aircraft item. */
 	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
 	float weaponDamage;			/**< The base damage inflicted by an ammo */
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
-	bool bullets;			/**< create bullets for the projectiles */
-	bool beam;				/**< create (laser/particle) beam particles for the projectiles */
+	bool bullets;				/**< create bullets for the projectiles */
+	bool beam;					/**< create (laser/particle) beam particles for the projectiles */
 	vec4_t beamColor;
 } craftItem;
 

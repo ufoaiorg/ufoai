@@ -75,7 +75,7 @@ typedef struct cvar_s {
 	char* oldString;		/**< value of the cvar before we changed it */
 	char* description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
-	bool modified;		/**< set each time the cvar is changed */
+	bool modified;			/**< set each time the cvar is changed */
 	float value;			/**< value as float */
 	int integer;			/**< value as integer */
 	bool (*check) (struct cvar_s* cvar);	/**< cvar check function */
