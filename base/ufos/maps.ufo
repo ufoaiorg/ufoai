@@ -3339,6 +3339,53 @@ mapdef village_small
 	)
 }
 
+////////////////////
+// VILLAGE 2 MAPS //
+////////////////////
+
+mapdef vil2_dev
+{
+	map				"+village2"
+	params			("default")
+	description		"_Village 2"
+	multiplayer		false
+	campaign		false
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+	)
+
+	ufos
+	(
+		craft_ufo_scout
+	)
+
+	terrains
+	(
+		"cold"
+		"mountain"
+		"tropical"
+		"grass"
+		"coast"
+	)
+
+	cultures
+	(
+		"western"
+		"eastern"
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 // ===================== //
 // RMA MAPS WITHOUT UFOS //
 // ===================== //
@@ -4169,53 +4216,6 @@ mapdef transport
 	(
 		"village"
 		"suburban"
-	)
-}
-
-// ================= //
-
-// VILLAGE 2 MAPS //
-////////////////////
-
-mapdef vil2_dev
-{
-	map				"+village2"
-	params			("default")
-	description		"_Village 2"
-	multiplayer		false
-	campaign		false
-	maxaliens		30
-
-	aircraft
-	(
-		craft_drop_firebird
-	)
-
-	ufos
-	(
-	)
-
-	terrains
-	(
-		"cold"
-		"mountain"
-		"tropical"
-		"grass"
-		"coast"
-	)
-
-	cultures
-	(
-		"western"
-		"eastern"
-		"african"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
 	)
 }
 
