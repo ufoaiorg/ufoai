@@ -69,7 +69,7 @@ typedef struct side_s {
 	bool	bevel;			/**< don't ever use for bsp splitting */
 	bool	isCompositeMember;	/**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
 
-	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
+	struct mapbrush_s* brush;		/**< backlink to the brush this side belongs to */
 } side_t;
 
 typedef struct mapbrush_s {
@@ -86,7 +86,7 @@ typedef struct mapbrush_s {
 	/**list of brushes that are near to this one.
 	 * not necessarily initialised. call Check_NearList() to make sure it has been initialised
 	 * this will return quickly if it has already been done. */
-	struct	mapbrush_s **nearBrushes;
+	struct	mapbrush_s** nearBrushes;
 	int	numNear;
 
 	bool skipWriteBack; /**< in fix mode do not write back to the source .map file */

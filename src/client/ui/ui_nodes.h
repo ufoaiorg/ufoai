@@ -94,7 +94,7 @@ struct uiNode_t {
 
 	/* common attributes */
 	const char* tooltip;		/**< holds the tooltip */
-	struct uiKeyBinding_s *key;	/**< key bindings - used as tooltip */
+	struct uiKeyBinding_s* key;	/**< key bindings - used as tooltip */
 	bool invis;					/**< true if the node is invisible */
 	bool disabled;				/**< true if the node is inactive */
 	bool invalidated;			/**< true if we need to update the layout */
@@ -125,15 +125,15 @@ struct uiNode_t {
 	vec4_t flashColor;			/**< rgbx The color of the flashing effect. */
 
 	/* common events */
-	struct uiAction_s *onClick;
-	struct uiAction_s *onRightClick;
-	struct uiAction_s *onMiddleClick;
-	struct uiAction_s *onWheel;
-	struct uiAction_s *onMouseEnter;
-	struct uiAction_s *onMouseLeave;
-	struct uiAction_s *onWheelUp;
-	struct uiAction_s *onWheelDown;
-	struct uiAction_s *onChange;	/**< called when the widget change from an user action */
+	struct uiAction_s* onClick;
+	struct uiAction_s* onRightClick;
+	struct uiAction_s* onMiddleClick;
+	struct uiAction_s* onWheel;
+	struct uiAction_s* onMouseEnter;
+	struct uiAction_s* onMouseLeave;
+	struct uiAction_s* onWheelUp;
+	struct uiAction_s* onWheelDown;
+	struct uiAction_s* onChange;	/**< called when the widget change from an user action */
 };
 
 

@@ -27,11 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_nodes.h"
 #include "../cl_renderer.h"
 
-const struct image_s *UI_LoadImage(const char* name);
-const struct image_s *UI_LoadWrappedImage(const char* name);
+const struct image_s* UI_LoadImage(const char* name);
+const struct image_s* UI_LoadWrappedImage(const char* name);
 
-void UI_DrawNormImage(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const struct image_s *image);
-const struct image_s *UI_DrawNormImageByName(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
+void UI_DrawNormImage(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const struct image_s* image);
+const struct image_s* UI_DrawNormImageByName(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
 
 void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, const int panelDef[7]);
 void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, int texW, int texH, int border);

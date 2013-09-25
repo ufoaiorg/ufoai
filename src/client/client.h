@@ -62,7 +62,7 @@ typedef struct client_static_s {
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
 	int disableScreen;
 
-	const struct cgame_export_s *gametype;		/**< singleplayer or multiplayer */
+	const struct cgame_export_s* gametype;		/**< singleplayer or multiplayer */
 
 	/* connection information */
 	char servername[MAX_VAR];		/**< name of server from original connect */

@@ -141,7 +141,7 @@ image_t* R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	image_t* image;
-	SDL_Surface *surf;
+	SDL_Surface* surf;
 
 	if (!pname || !pname[0])
 		Com_Error(ERR_FATAL, "R_FindImage: invalid name");

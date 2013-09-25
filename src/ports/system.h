@@ -60,7 +60,7 @@ char* Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
 void Sys_ListFilteredFiles(const char* basedir, const char* subdirs, const char* filter, linkedList_t** list);
 void Sys_Mkdir(const char* path);
-void Sys_Mkfifo(const char* ospath, struct qFILE_s *f);
+void Sys_Mkfifo(const char* ospath, struct qFILE_s* f);
 char* Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);

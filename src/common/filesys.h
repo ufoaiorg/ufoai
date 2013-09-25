@@ -79,7 +79,7 @@ typedef enum {
 
 /** @brief Links one file onto another - like a symlink */
 typedef struct filelink_s {
-	struct filelink_s *next;
+	struct filelink_s* next;
 	char* from;
 	int fromlength;
 	char* to;
@@ -103,7 +103,7 @@ typedef struct searchpath_s {
 	pack_t* pack;				/**< only one of filename / pack will be used */
 	bool write;				/**< this is the path for writing configs and savegames - may
 								 * only be once set to true in the whole list */
-	struct searchpath_s *next;
+	struct searchpath_s* next;
 } searchpath_t;
 
 /** file opening modes */

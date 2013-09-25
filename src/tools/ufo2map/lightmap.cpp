@@ -280,7 +280,7 @@ typedef enum {
 
 /** @brief a light source */
 typedef struct light_s {
-	struct light_s *next;	/**< next light in the chain */
+	struct light_s* next;	/**< next light in the chain */
 	emittype_t	type;		/**< light type */
 
 	float		intensity;	/**< brightness */

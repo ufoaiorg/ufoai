@@ -37,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern memPool_t* sv_genericPool;
 
 typedef struct sv_edict_s {
-	struct worldSector_s *worldSector;	/**< the sector this edict is linked into */
-	struct sv_edict_s *nextEntityInWorldSector;
+	struct worldSector_s* worldSector;	/**< the sector this edict is linked into */
+	struct sv_edict_s* nextEntityInWorldSector;
 	bool linked;		/**< linked into the world */
 	edict_t* ent;
 } sv_edict_t;
@@ -57,7 +57,7 @@ typedef struct sv_model_s {
 typedef struct worldSector_s {
 	int axis;					/**< -1 = leaf node */
 	float dist;
-	struct worldSector_s *children[2];
+	struct worldSector_s* children[2];
 	sv_edict_t* entities;
 } worldSector_t;
 
@@ -77,7 +77,7 @@ typedef struct serverInstanceStatic_s {
 	bool initialized;			/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket* netDatagramSocket;
-	struct client_s *clients;	/**< [sv_maxclients->value]; */
+	struct client_s* clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 	int lastPing;
@@ -108,7 +108,7 @@ typedef struct serverInstanceGame_s {
 
 	char name[MAX_QPATH];		/**< map name */
 	char assembly[MAX_QPATH];	/**< random map assembly name */
-	struct cBspModel_s *models[MAX_MODELS];
+	struct cBspModel_s* models[MAX_MODELS];
 
 	bool endgame;
 	bool spawned;				/**< set when the actors have spawned - no further connections are allowed in this case */

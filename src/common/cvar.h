@@ -59,7 +59,7 @@ typedef void (*cvarChangeListenerFunc_t) (const char* cvarName, const char* oldV
 
 typedef struct cvarChangeListener_s {
 	cvarChangeListenerFunc_t exec;
-	struct cvarChangeListener_s *next;
+	struct cvarChangeListener_s* next;
 	void* data;
 } cvarChangeListener_t;
 
@@ -80,9 +80,9 @@ typedef struct cvar_s {
 	int integer;			/**< value as integer */
 	bool (*check) (struct cvar_s* cvar);	/**< cvar check function */
 	cvarChangeListener_t* changeListener;
-	struct cvar_s *next;
-	struct cvar_s *prev;
-	struct cvar_s *hash_next;
+	struct cvar_s* next;
+	struct cvar_s* prev;
+	struct cvar_s* hash_next;
 } cvar_t;
 
 typedef struct cvarList_s {
@@ -97,8 +97,8 @@ typedef struct cvarList_s {
 class CvarListener {
 public:
 	virtual ~CvarListener() {}
-	virtual void onCreate (const struct cvar_s *cvar) = 0;
-	virtual void onDelete (const struct cvar_s *cvar) = 0;
+	virtual void onCreate (const struct cvar_s* cvar) = 0;
+	virtual void onDelete (const struct cvar_s* cvar) = 0;
 };
 
 typedef SharedPtr<CvarListener> CvarListenerPtr;

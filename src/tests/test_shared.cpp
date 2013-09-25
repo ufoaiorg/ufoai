@@ -102,8 +102,8 @@ void TEST_Init (void)
 typedef struct test_property_s {
 	char name[MAX_PROPERTY_NAME];
 	const char* value;
-	struct test_property_s *hash_next;
-	struct test_property_s *next;
+	struct test_property_s* hash_next;
+	struct test_property_s* next;
 } test_property_t;
 
 static test_property_t* test_property;

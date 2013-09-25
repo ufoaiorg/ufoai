@@ -957,7 +957,7 @@ void FS_InitFilesystem (bool writeToHomeDir)
 typedef struct listBlock_s {
 	char path[MAX_QPATH];
 	linkedList_t* files;
-	struct listBlock_s *next;
+	struct listBlock_s* next;
 } listBlock_t;
 
 static listBlock_t* fs_blocklist = nullptr;
