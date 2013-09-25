@@ -1077,7 +1077,7 @@ static void UP_OpenMail_f (void)
 			assert(m->eventMail);
 			const eventMail_t& mail = *m->eventMail;
 			if (!mail.from)
-				break;
+				continue;
 			Com_sprintf(headline, sizeof(headline), "%s", _(mail.subject));
 			Com_sprintf(dateBuf, sizeof(dateBuf), "%s", mail.date);
 			icon = mail.icon;
