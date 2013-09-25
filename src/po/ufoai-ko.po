@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-16 10:44+0200\n"
+"POT-Creation-Date: 2013-09-25 22:12+0200\n"
 "PO-Revision-Date: 2013-05-13 01:00-0500\n"
 "Last-Translator: Ganama <nijimania@hotmail.com>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -24646,7 +24646,7 @@ msgstr "우리 호스팅을 제공한 나인엑스"
 msgid "To the community and everyone who supported us"
 msgstr "우리를 지원해 준 사람들"
 
-#: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
+#: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:103
 msgid "Gameplay"
 msgstr "기타"
 
@@ -24905,23 +24905,23 @@ msgstr "Phalanx"
 msgid "Ares W"
 msgstr "Ares W"
 
-#: ../base/ufos/team_templates.ufo:228
+#: ../base/ufos/team_templates.ufo:232
 msgid "Body"
 msgstr "몸"
 
-#: ../base/ufos/team_templates.ufo:237
+#: ../base/ufos/team_templates.ufo:241
 msgid "Torso"
 msgstr "몸통"
 
-#: ../base/ufos/team_templates.ufo:244
+#: ../base/ufos/team_templates.ufo:248
 msgid "Legs"
 msgstr "다리"
 
-#: ../base/ufos/team_templates.ufo:251
+#: ../base/ufos/team_templates.ufo:255
 msgid "Arms"
 msgstr "팔"
 
-#: ../base/ufos/team_templates.ufo:259
+#: ../base/ufos/team_templates.ufo:263
 msgid "Head"
 msgstr "머리"
 
@@ -25492,7 +25492,7 @@ msgstr "탄약"
 #: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:50
 #: ../base/ufos/ui/team.ufo:222
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
-#: client/cgame/campaign/cp_ufopedia.cpp:146
+#: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
 msgstr "방탄복"
 
@@ -25571,7 +25571,7 @@ msgstr "힘:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:263 ../base/ufos/ui/equipment.ufo:414
 #: ../base/ufos/ui/hire.ufo:361 ../base/ufos/ui/hospital.ufo:334
-#: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:236
+#: ../base/ufos/ui/options.ufo:1944 ../base/ufos/ui/physdat.ufo:236
 #: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:383
 msgid "Speed:"
 msgstr "속도:"
@@ -25889,8 +25889,8 @@ msgid "Select building"
 msgstr "건물 선택"
 
 #: ../base/ufos/ui/buildings.ufo:180 ../base/ufos/ui/geoscape.ufo:560
-#: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:853
+#: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:113
+#: client/cgame/campaign/cp_ufopedia.cpp:847
 msgid "UFOpaedia"
 msgstr "UFO 백과사전"
 
@@ -25928,7 +25928,7 @@ msgstr "마지막에 저장된 게임을 읽어오거나, 현재의 게임을 �
 
 #: ../base/ufos/ui/campaign.ufo:56 ../base/ufos/ui/campaign.ufo:317
 #: ../base/ufos/ui/campaign.ufo:444 ../base/ufos/ui/multiplayer.ufo:92
-#: ../base/ufos/ui/options.ufo:86 ../base/ufos/ui/singleplayer.ufo:70
+#: ../base/ufos/ui/options.ufo:114 ../base/ufos/ui/singleplayer.ufo:70
 #: ../base/ufos/ui/skirmish.ufo:135 ../base/ufos/ui/tutorials.ufo:30
 msgid "Back"
 msgstr "돌아가기"
@@ -26103,12 +26103,12 @@ msgstr "상세내용"
 msgid "Rename your unit"
 msgstr "유닛의 이름을 변경합니다"
 
-#: ../base/ufos/ui/equipment.ufo:682 ../base/ufos/ui/inventory.ufo:252
+#: ../base/ufos/ui/equipment.ufo:683 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:616
 msgid "0/0 Kg"
 msgstr "0/0 킬로그램"
 
-#: ../base/ufos/ui/equipment.ufo:708 ../base/ufos/ui/team.ufo:633
+#: ../base/ufos/ui/equipment.ufo:709 ../base/ufos/ui/team.ufo:633
 msgid "Done"
 msgstr "완료"
 
@@ -26157,7 +26157,7 @@ msgid "Change message and pause settings"
 msgstr "메시지 알림 및 일시정지 관련 설정을 변경합니다"
 
 #: ../base/ufos/ui/geoscape.ufo:515 ../base/ufos/ui/geoscape.ufo:532
-#: ../base/ufos/ui/mailclient.ufo:120
+#: ../base/ufos/ui/mailclient.ufo:170
 msgid "Mailclient"
 msgstr "메일 클라이언트"
 
@@ -26415,19 +26415,19 @@ msgstr "사용탄수:"
 msgid "Chat"
 msgstr "대화"
 
-#: ../base/ufos/ui/hud_.ufo:639
+#: ../base/ufos/ui/hud_.ufo:640
 msgid "Party chat"
 msgstr "파티 대화"
 
-#: ../base/ufos/ui/hud_.ufo:643
+#: ../base/ufos/ui/hud_.ufo:644
 msgid "Global lobby (IRC)"
 msgstr "전체 대기실 (IRC)"
 
-#: ../base/ufos/ui/hud_.ufo:724 ../base/ufos/ui/hud_.ufo:787
+#: ../base/ufos/ui/hud_.ufo:725 ../base/ufos/ui/hud_.ufo:789
 msgid "Say:"
 msgstr "Say:"
 
-#: ../base/ufos/ui/hud_.ufo:795
+#: ../base/ufos/ui/hud_.ufo:797
 msgid "Team chat"
 msgstr "팀 대화"
 
@@ -26683,19 +26683,19 @@ msgstr "매각"
 msgid "Begin UFO sell process"
 msgstr "UFO 판매를 진행합니다"
 
-#: ../base/ufos/ui/mailclient.ufo:130
+#: ../base/ufos/ui/mailclient.ufo:180
 msgid "Time:"
 msgstr "시간:"
 
-#: ../base/ufos/ui/mailclient.ufo:148
+#: ../base/ufos/ui/mailclient.ufo:198
 msgid "Date:"
 msgstr "날짜:"
 
-#: ../base/ufos/ui/mailclient.ufo:167
+#: ../base/ufos/ui/mailclient.ufo:217
 msgid "Mark all messages read"
 msgstr "모두 읽은 것으로 표시"
 
-#: ../base/ufos/ui/mailclient.ufo:558
+#: ../base/ufos/ui/mailclient.ufo:290
 msgid "Leave mailclient"
 msgstr "메일 클라이언트를 나옵니다"
 
@@ -26740,7 +26740,7 @@ msgstr "초기설정"
 msgid "User Information"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1303
+#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1331
 msgid "Volume Control"
 msgstr "음량"
 
@@ -26748,7 +26748,7 @@ msgstr "음량"
 msgid "Effects:"
 msgstr "효과음:"
 
-#: ../base/ufos/ui/main.ufo:192 ../base/ufos/ui/options.ufo:1346
+#: ../base/ufos/ui/main.ufo:192 ../base/ufos/ui/options.ufo:1374
 msgid "Music:"
 msgstr "음악:"
 
@@ -26801,8 +26801,8 @@ msgstr "물품 구매/매각"
 msgid "Craft items"
 msgstr "항공 기자재"
 
-#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:348
-#: ../base/ufos/ui/options.ufo:1151 ../base/ufos/ui/production.ufo:66
+#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:376
+#: ../base/ufos/ui/options.ufo:1179 ../base/ufos/ui/production.ufo:66
 msgid "Other"
 msgstr "기타"
 
@@ -26811,7 +26811,7 @@ msgid "UGV items"
 msgstr "무인전투차량 물품"
 
 #: ../base/ufos/ui/market.ufo:175 ../base/ufos/ui/multiplayer.ufo:200
-#: ../base/ufos/ui/options.ufo:110 ../base/ufos/ui/web.ufo:16
+#: ../base/ufos/ui/options.ufo:138 ../base/ufos/ui/web.ufo:16
 msgid "Name"
 msgstr "이름"
 
@@ -27282,298 +27282,298 @@ msgstr ""
 msgid "Abort Game"
 msgstr "게임 포기"
 
-#: ../base/ufos/ui/options.ufo:41
+#: ../base/ufos/ui/options.ufo:69
 msgid "Overall game settings"
 msgstr "전반적 게임 설정"
 
-#: ../base/ufos/ui/options.ufo:42
+#: ../base/ufos/ui/options.ufo:70
 msgid "Overall"
 msgstr "일반"
 
-#: ../base/ufos/ui/options.ufo:52
+#: ../base/ufos/ui/options.ufo:80
 msgid "Video settings"
 msgstr "비디오 설정"
 
-#: ../base/ufos/ui/options.ufo:53
+#: ../base/ufos/ui/options.ufo:81
 msgid "Video"
 msgstr "비디오"
 
-#: ../base/ufos/ui/options.ufo:63
+#: ../base/ufos/ui/options.ufo:91
 msgid "Sound settings"
 msgstr "음향 설정"
 
-#: ../base/ufos/ui/options.ufo:64
+#: ../base/ufos/ui/options.ufo:92
 msgid "Audio"
 msgstr "오디오"
 
-#: ../base/ufos/ui/options.ufo:74
+#: ../base/ufos/ui/options.ufo:102
 msgid "Battlescape camera, gameplay and input settings"
 msgstr "전장 카메라, 게임플레이 및 입력 설정"
 
-#: ../base/ufos/ui/options.ufo:85
+#: ../base/ufos/ui/options.ufo:113
 msgid "Leave the options menu"
 msgstr "설정 메뉴에서 나가기"
 
-#: ../base/ufos/ui/options.ufo:103
+#: ../base/ufos/ui/options.ufo:131
 msgid "Overall Game Settings"
 msgstr "전반적인 사항 설정"
 
-#: ../base/ufos/ui/options.ufo:135
+#: ../base/ufos/ui/options.ufo:163
 msgid "Language Settings"
 msgstr "언어 설정"
 
-#: ../base/ufos/ui/options.ufo:142
+#: ../base/ufos/ui/options.ufo:170
 msgid "Available languages"
 msgstr "가능한 언어들"
 
-#: ../base/ufos/ui/options.ufo:175
+#: ../base/ufos/ui/options.ufo:203
 msgid "Mods"
 msgstr "Mod들"
 
-#: ../base/ufos/ui/options.ufo:182
+#: ../base/ufos/ui/options.ufo:210
 msgid "Available game modifications"
 msgstr "가능한 게임 변경들"
 
-#: ../base/ufos/ui/options.ufo:211
+#: ../base/ufos/ui/options.ufo:239
 msgid "Activate mod"
 msgstr "Mod 켜기"
 
-#: ../base/ufos/ui/options.ufo:222
+#: ../base/ufos/ui/options.ufo:250
 msgid "Several Tips"
 msgstr "유용한 정보"
 
-#: ../base/ufos/ui/options.ufo:232
+#: ../base/ufos/ui/options.ufo:260
 msgid "Show cursor tooltips in menus."
 msgstr "메뉴에 커서 도움말을 활성화 시킵니다."
 
-#: ../base/ufos/ui/options.ufo:233
+#: ../base/ufos/ui/options.ufo:261
 msgid "Tooltips (menu):"
 msgstr "툴팁 (메뉴):"
 
-#: ../base/ufos/ui/options.ufo:249
+#: ../base/ufos/ui/options.ufo:277
 msgid "Show cursor tooltips in tactical mode."
 msgstr "전술 모드에서 커서 툴팁을 보여줍니다."
 
-#: ../base/ufos/ui/options.ufo:250
+#: ../base/ufos/ui/options.ufo:278
 msgid "Tooltips (battlescape):"
 msgstr "툴팁 (전장):"
 
-#: ../base/ufos/ui/options.ufo:265
+#: ../base/ufos/ui/options.ufo:293
 msgid "Show 'Tip of the Day':"
 msgstr "'오늘의 조언'을 보이기:"
 
-#: ../base/ufos/ui/options.ufo:281
+#: ../base/ufos/ui/options.ufo:309
 msgid "Menu Options"
 msgstr "메뉴설정"
 
-#: ../base/ufos/ui/options.ufo:291
+#: ../base/ufos/ui/options.ufo:319
 msgid "Precache Models:"
 msgstr "모델 미리읽기:"
 
-#: ../base/ufos/ui/options.ufo:297
+#: ../base/ufos/ui/options.ufo:325
 msgid "Precaching of models means having faster menus."
 msgstr "모델의 미리읽기는 더욱 빠른 메뉴를 의미합니다."
 
-#: ../base/ufos/ui/options.ufo:315
+#: ../base/ufos/ui/options.ufo:343
 msgid "Video Settings"
 msgstr "비디오 설정"
 
-#: ../base/ufos/ui/options.ufo:340
+#: ../base/ufos/ui/options.ufo:368
 msgid "General"
 msgstr "일반"
 
-#: ../base/ufos/ui/options.ufo:344
+#: ../base/ufos/ui/options.ufo:372
 msgid "Advanced"
 msgstr "고급"
 
-#: ../base/ufos/ui/options.ufo:367
+#: ../base/ufos/ui/options.ufo:395
 msgid "Resolution and Display Settings"
 msgstr "해상도와 화면설정"
 
-#: ../base/ufos/ui/options.ufo:378
+#: ../base/ufos/ui/options.ufo:406
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
 msgstr "UFO:AI에서 사용될 픽셀단위 해상도."
 
-#: ../base/ufos/ui/options.ufo:379
+#: ../base/ufos/ui/options.ufo:407
 msgid "Resolution:"
 msgstr "해상도:"
 
-#: ../base/ufos/ui/options.ufo:389
+#: ../base/ufos/ui/options.ufo:417
 msgid "Display only resolutions using this screen ratio."
 msgstr "이 화면 비율의 해상도만 출력하기."
 
-#: ../base/ufos/ui/options.ufo:397
+#: ../base/ufos/ui/options.ufo:425
 msgid "All ratios"
 msgstr "모든 비율"
 
-#: ../base/ufos/ui/options.ufo:427
+#: ../base/ufos/ui/options.ufo:455
 msgid "Others"
 msgstr "기타"
 
-#: ../base/ufos/ui/options.ufo:436
+#: ../base/ufos/ui/options.ufo:464
 msgid "Select your desired screen resolution."
 msgstr "원하시는 화면 해상도를 고르세요."
 
-#: ../base/ufos/ui/options.ufo:447
+#: ../base/ufos/ui/options.ufo:475
 msgid "Fullscreen:"
 msgstr "전체 화면:"
 
-#: ../base/ufos/ui/options.ufo:453
+#: ../base/ufos/ui/options.ufo:481
 msgid "Play UFO:AI in fullscreen."
 msgstr "UFO:AI를 전체화면으로 실행함."
 
-#: ../base/ufos/ui/options.ufo:463
+#: ../base/ufos/ui/options.ufo:491
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "4:3 비율로 화면을 늘림:"
 
-#: ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:506
 msgid "Prevent the mousepointer from leaving the game window."
 msgstr "마우스 포인터가 게임 창을 떠나는 것을 방지함."
 
-#: ../base/ufos/ui/options.ufo:479
+#: ../base/ufos/ui/options.ufo:507
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr "힌트: CTRL+G를 눌러 마우스 포인터를 잡거나 풀 수 있습니다."
 
-#: ../base/ufos/ui/options.ufo:490
+#: ../base/ufos/ui/options.ufo:518
 msgid "Calibrate your display here."
 msgstr "이곳에서 화면을 조정하십시오."
 
-#: ../base/ufos/ui/options.ufo:491
+#: ../base/ufos/ui/options.ufo:519
 msgid "Monitor Calibration Controls"
 msgstr "모니터 교정 조절"
 
-#: ../base/ufos/ui/options.ufo:501
+#: ../base/ufos/ui/options.ufo:529
 msgid "Gamma:"
 msgstr "감마:"
 
-#: ../base/ufos/ui/options.ufo:524
+#: ../base/ufos/ui/options.ufo:552
 msgid "The default key to make screenshots is F12."
 msgstr "화면저장을 위한 기본 단축키는 F12 입니다."
 
-#: ../base/ufos/ui/options.ufo:525
+#: ../base/ufos/ui/options.ufo:553
 msgid "Screenshot Settings"
 msgstr "스크린샷 설정"
 
-#: ../base/ufos/ui/options.ufo:535
+#: ../base/ufos/ui/options.ufo:563
 msgid "The file format used for compressing and saving your screenshots."
 msgstr "스크린샷을 압축하고 저장하는 데 쓰일 파일 형식."
 
-#: ../base/ufos/ui/options.ufo:536
+#: ../base/ufos/ui/options.ufo:564
 msgid "Screenshot Format:"
 msgstr "스크린샷 확장자:"
 
-#: ../base/ufos/ui/options.ufo:583
+#: ../base/ufos/ui/options.ufo:611
 msgid "jpeg Quality:"
 msgstr "JPEG 품질:"
 
-#: ../base/ufos/ui/options.ufo:604
+#: ../base/ufos/ui/options.ufo:632
 msgid "Other Display Settings"
 msgstr "기타 화면설정"
 
-#: ../base/ufos/ui/options.ufo:615
+#: ../base/ufos/ui/options.ufo:643
 msgid "Show FPS:"
 msgstr "FPS표시:"
 
-#: ../base/ufos/ui/options.ufo:621
+#: ../base/ufos/ui/options.ufo:649
 msgid "Display the number of rendered frames per second."
 msgstr "초당 렌더되는 프레임 수를 표시하기."
 
-#: ../base/ufos/ui/options.ufo:632
+#: ../base/ufos/ui/options.ufo:660
 msgid "Do not play the intro movie when starting the game."
 msgstr "게임 시작할 때 시작 동영상 재생하지 말기."
 
-#: ../base/ufos/ui/options.ufo:633
+#: ../base/ufos/ui/options.ufo:661
 msgid "Hold Back Intro Video:"
 msgstr "시작 동영상 틀지 말기:"
 
-#: ../base/ufos/ui/options.ufo:639
+#: ../base/ufos/ui/options.ufo:667
 msgid "Default is to play the intro video just once at the first game start."
 msgstr "기본세팅상 첫 게임 시작시 소개 동영상을 단 한번만 재생합니다."
 
-#: ../base/ufos/ui/options.ufo:663
+#: ../base/ufos/ui/options.ufo:691
 msgid "Texture Settings"
 msgstr "텍스처 설정"
 
-#: ../base/ufos/ui/options.ufo:671
+#: ../base/ufos/ui/options.ufo:699
 msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
 "텍스쳐의 최대 크기를 정하고, 그 숫자보다 높은 해상도는 상한선으로 취급합니다."
 
-#: ../base/ufos/ui/options.ufo:672
+#: ../base/ufos/ui/options.ufo:700
 msgid "Resolution Cap:"
 msgstr "해상도:"
 
-#: ../base/ufos/ui/options.ufo:679
+#: ../base/ufos/ui/options.ufo:707
 msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:685 ../base/ufos/ui/options.ufo:1086
-#: ../base/ufos/ui/options.ufo:1242
+#: ../base/ufos/ui/options.ufo:713 ../base/ufos/ui/options.ufo:1114
+#: ../base/ufos/ui/options.ufo:1270
 msgid "Low"
 msgstr "낮음"
 
-#: ../base/ufos/ui/options.ufo:689 ../base/ufos/ui/options.ufo:1090
-#: ../base/ufos/ui/options.ufo:1256
+#: ../base/ufos/ui/options.ufo:717 ../base/ufos/ui/options.ufo:1118
+#: ../base/ufos/ui/options.ufo:1284
 msgid "Medium"
 msgstr "중간"
 
-#: ../base/ufos/ui/options.ufo:693 ../base/ufos/ui/options.ufo:1094
+#: ../base/ufos/ui/options.ufo:721 ../base/ufos/ui/options.ufo:1122
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Normal"
 msgstr "보통"
 
-#: ../base/ufos/ui/options.ufo:697 ../base/ufos/ui/options.ufo:1098
-#: ../base/ufos/ui/options.ufo:1270
+#: ../base/ufos/ui/options.ufo:725 ../base/ufos/ui/options.ufo:1126
+#: ../base/ufos/ui/options.ufo:1298
 msgid "High"
 msgstr "높음"
 
-#: ../base/ufos/ui/options.ufo:701 client/cl_team.cpp:191
+#: ../base/ufos/ui/options.ufo:729 client/cl_team.cpp:191
 msgid "Excellent"
 msgstr "훌륭함"
 
-#: ../base/ufos/ui/options.ufo:705
+#: ../base/ufos/ui/options.ufo:733
 msgid "Extreme"
 msgstr "최고"
 
-#: ../base/ufos/ui/options.ufo:715
+#: ../base/ufos/ui/options.ufo:743
 msgid "Sets the texture filtering and mipmapping method."
 msgstr "텍스쳐 필터링과 밉맵 방식을 결정합니다."
 
-#: ../base/ufos/ui/options.ufo:716
+#: ../base/ufos/ui/options.ufo:744
 msgid "Filtering:"
 msgstr "필터링:"
 
-#: ../base/ufos/ui/options.ufo:729
+#: ../base/ufos/ui/options.ufo:757
 #, fuzzy
 msgid "No filtering, no mipmaps"
 msgstr "No filtering, no mipmaps"
 
-#: ../base/ufos/ui/options.ufo:733
+#: ../base/ufos/ui/options.ufo:761
 msgid "Bilinear filtering, no mipmaps"
 msgstr "바이리니어 필터링, 밉맵 없음"
 
-#: ../base/ufos/ui/options.ufo:737
+#: ../base/ufos/ui/options.ufo:765
 #, fuzzy
 msgid "No filtering, mipmaps"
 msgstr "No filtering, mipmaps"
 
-#: ../base/ufos/ui/options.ufo:741
+#: ../base/ufos/ui/options.ufo:769
 msgid "Bilinear filtering, mipmaps"
 msgstr "바이리니어 필터링, 밉맵"
 
-#: ../base/ufos/ui/options.ufo:745
+#: ../base/ufos/ui/options.ufo:773
 msgid "Trilinear filtering, mipmaps"
 msgstr "트라이리니어 필터링, 밉맵"
 
-#: ../base/ufos/ui/options.ufo:749
+#: ../base/ufos/ui/options.ufo:777
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
 msgstr "바이리니어 필터링, 트라이리니어 필터링, 밉맵"
 
-#: ../base/ufos/ui/options.ufo:759
+#: ../base/ufos/ui/options.ufo:787
 msgid ""
 "Enable texture compression for better memory performance, disable for better "
 "rendering quality."
@@ -27581,11 +27581,11 @@ msgstr ""
 "더 나은 메모리 성능을 위해 텍스쳐 압축을 활성화 하거나, 비활성화 하여 렌더링 "
 "품질을 향상 시킵니다."
 
-#: ../base/ufos/ui/options.ufo:760
+#: ../base/ufos/ui/options.ufo:788
 msgid "Compression:"
 msgstr "압축:"
 
-#: ../base/ufos/ui/options.ufo:775
+#: ../base/ufos/ui/options.ufo:803
 msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
@@ -27594,11 +27594,11 @@ msgstr ""
 "수 있습니다."
 
 # Assumes LoD stands for Level-of-Detail.
-#: ../base/ufos/ui/options.ufo:776
+#: ../base/ufos/ui/options.ufo:804
 msgid "LoD:"
 msgstr "상세수준:"
 
-#: ../base/ufos/ui/options.ufo:791
+#: ../base/ufos/ui/options.ufo:819
 msgid ""
 "The degree or ratio of anisotropic filtering. High ratios will make distant "
 "textures appear more sharp. Very high ratios are only recommended when "
@@ -27607,21 +27607,21 @@ msgstr ""
 "이방성 필터링의 비율. 고비율은 멀리 있는 텍스쳐를 더 예리해 보이게 합니다. 매"
 "우 높은 비율은 고해상도에서 플레이 할 때만 추천됩니다."
 
-#: ../base/ufos/ui/options.ufo:792
+#: ../base/ufos/ui/options.ufo:820
 msgid "Anisotropy Level:"
 msgstr "비등방성 수준:"
 
-#: ../base/ufos/ui/options.ufo:805
+#: ../base/ufos/ui/options.ufo:833
 msgid ""
 "Very high values are only recommended when playing in very high screen "
 "resolutions."
 msgstr "매우 높은 수치는 매우 높은 화면 해상도에서 게임할 때에만 추천됩니다."
 
-#: ../base/ufos/ui/options.ufo:818
+#: ../base/ufos/ui/options.ufo:846
 msgid "OpenGL Settings"
 msgstr "OpenGL 설정"
 
-#: ../base/ufos/ui/options.ufo:828
+#: ../base/ufos/ui/options.ufo:856
 msgid ""
 "OpenGL GLSL Shaders are available only if your graphics-card driver fully "
 "supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading "
@@ -27630,41 +27630,41 @@ msgstr ""
 "OpenGL GLSL 셰이더 그래픽 카드가 OpenGL 2.0+를 완전히 지원해야 하며, 이설정"
 "은 UFO:AI의 고급 셰이딩 기술을 향상시킬 것입니다."
 
-#: ../base/ufos/ui/options.ufo:829
+#: ../base/ufos/ui/options.ufo:857
 msgid "GLSL Shaders:"
 msgstr "GLSL 셰이더:"
 
-#: ../base/ufos/ui/options.ufo:836
+#: ../base/ufos/ui/options.ufo:864
 msgid "Set the OpenGL shader quality - or disable them."
 msgstr "OpenGL 셰이더 수준을 정하거나 기능을 끄기."
 
-#: ../base/ufos/ui/options.ufo:846
+#: ../base/ufos/ui/options.ufo:874
 msgid "Disabled"
 msgstr "해제"
 
-#: ../base/ufos/ui/options.ufo:851
+#: ../base/ufos/ui/options.ufo:879
 msgid "Low quality"
 msgstr "낮은 퀄리티"
 
-#: ../base/ufos/ui/options.ufo:856
+#: ../base/ufos/ui/options.ufo:884
 msgid "Medium quality"
 msgstr "보통 퀄리티"
 
-#: ../base/ufos/ui/options.ufo:861
+#: ../base/ufos/ui/options.ufo:889
 msgid "High quality"
 msgstr "높은 퀄리티"
 
-#: ../base/ufos/ui/options.ufo:884
+#: ../base/ufos/ui/options.ufo:912
 msgid ""
 "Vertex Buffers are submitting extensible arrays of vertex attributes to be "
 "mapped into the GPU for fast drawing."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:885
+#: ../base/ufos/ui/options.ufo:913
 msgid "Vertex Buffers:"
 msgstr "Vertex 버퍼:"
 
-#: ../base/ufos/ui/options.ufo:900
+#: ../base/ufos/ui/options.ufo:928
 msgid ""
 "OpenGL multisample buffers provide a mechanism to antialias all GL "
 "primitives. / The Swap Interval selects when a buffer swap will occur. The "
@@ -27672,17 +27672,17 @@ msgid ""
 "off')."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:901
+#: ../base/ufos/ui/options.ufo:929
 msgid "Multisample Buffers / Swap Interval:"
 msgstr "Multisample Buffers / Swap Interval:"
 
-#: ../base/ufos/ui/options.ufo:907
+#: ../base/ufos/ui/options.ufo:935
 msgid ""
 "Choose between 0-4 Multisample Buffers. Higher values will provide better "
 "antialiasing and will enhance picture quality."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:922
+#: ../base/ufos/ui/options.ufo:950
 msgid ""
 "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync "
 "on (better quality)."
@@ -27690,79 +27690,79 @@ msgstr ""
 "'0'으로 설정하면 v-sync가 꺼집니다 (빨라짐). '1' 이상으로 설정하면 v-sync가 "
 "켜집니다 (더 나은 화질)."
 
-#: ../base/ufos/ui/options.ufo:940
+#: ../base/ufos/ui/options.ufo:968
 msgid "Post-processing shader effects like glowing textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:941
+#: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:947
+#: ../base/ufos/ui/options.ufo:975
 msgid "Enable post processing shader effects."
 msgstr "포스트 프로세싱 셰이더 효과 활성화 하기."
 
-#: ../base/ufos/ui/options.ufo:957
+#: ../base/ufos/ui/options.ufo:985
 msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:958
+#: ../base/ufos/ui/options.ufo:986
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "실시간 광원효과 / 최대 동적 조명:"
 
-#: ../base/ufos/ui/options.ufo:970
+#: ../base/ufos/ui/options.ufo:998
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:999
+#: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
 msgstr "Bumpmapping(범프매핑)이라고도 함."
 
-#: ../base/ufos/ui/options.ufo:1000
+#: ../base/ufos/ui/options.ufo:1028
 msgid "Texture Normalmapping:"
 msgstr "텍스처 노말맵핑:"
 
-#: ../base/ufos/ui/options.ufo:1006
+#: ../base/ufos/ui/options.ufo:1034
 msgid "Enable normal-/bumpmapping."
 msgstr "노멀-/범프매핑 활성화 하기."
 
-#: ../base/ufos/ui/options.ufo:1017
+#: ../base/ufos/ui/options.ufo:1045
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "태양에서 발광되어 지구에 비춰지는 빛의 양."
 
-#: ../base/ufos/ui/options.ufo:1018
+#: ../base/ufos/ui/options.ufo:1046
 msgid "Geo Ambient Lighting:"
 msgstr "환경광 설정:"
 
-#: ../base/ufos/ui/options.ufo:1043
+#: ../base/ufos/ui/options.ufo:1071
 msgid "At the moment these are just drop-shadows."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1044
+#: ../base/ufos/ui/options.ufo:1072
 msgid "Shadows:"
 msgstr "그림자:"
 
-#: ../base/ufos/ui/options.ufo:1050
+#: ../base/ufos/ui/options.ufo:1078
 msgid "Enable shadows."
 msgstr "그림자 효과를 사용함."
 
-#: ../base/ufos/ui/options.ufo:1062
+#: ../base/ufos/ui/options.ufo:1090
 msgid "Light and Shadow"
 msgstr "광원과 그림자"
 
-#: ../base/ufos/ui/options.ufo:1072
+#: ../base/ufos/ui/options.ufo:1100
 msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1073
+#: ../base/ufos/ui/options.ufo:1101
 msgid "Lightmap Block Size:"
 msgstr "광원맵 블록 크기:"
 
-#: ../base/ufos/ui/options.ufo:1080
+#: ../base/ufos/ui/options.ufo:1108
 msgid ""
 "Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
 "2048x2048 pixel."
@@ -27770,39 +27770,39 @@ msgstr ""
 "낮은 값은 최대 512x512 해상도의 광원맵을, 최대값은 2048x2048 까지를 의미합니"
 "다."
 
-#: ../base/ufos/ui/options.ufo:1121
+#: ../base/ufos/ui/options.ufo:1149
 msgid "Enabled by default for compatibility reasons."
 msgstr "호환성을 위해 기본적으로 가동되어 있습니다."
 
-#: ../base/ufos/ui/options.ufo:1122
+#: ../base/ufos/ui/options.ufo:1150
 msgid "Intel Graphics Hardware Hack:"
 msgstr "인텔 그래픽스 하드웨어 해킹:"
 
-#: ../base/ufos/ui/options.ufo:1128
+#: ../base/ufos/ui/options.ufo:1156
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1161
+#: ../base/ufos/ui/options.ufo:1189
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1162
+#: ../base/ufos/ui/options.ufo:1190
 msgid "Flares:"
 msgstr "플레어:"
 
-#: ../base/ufos/ui/options.ufo:1177
+#: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1178
+#: ../base/ufos/ui/options.ufo:1206
 msgid "Coronas:"
 msgstr "코로나:"
 
-#: ../base/ufos/ui/options.ufo:1193
+#: ../base/ufos/ui/options.ufo:1221
 msgid ""
 "Fog does not relate to any weather effect here, but when enabled distant "
 "textures on the battlescape are faded out."
@@ -27810,19 +27810,19 @@ msgstr ""
 "여기에서 안개는 그 어떤 날씨 효과와도 관계 없으나, 활성화 시키면 멀리 있는 전"
 "장 텍스쳐가 흐려집니다."
 
-#: ../base/ufos/ui/options.ufo:1194
+#: ../base/ufos/ui/options.ufo:1222
 msgid "Fog:"
 msgstr "안개"
 
-#: ../base/ufos/ui/options.ufo:1209
+#: ../base/ufos/ui/options.ufo:1237
 msgid "Weather effects like rain or snow."
 msgstr "기상효과는 눈이나 비를 의미합니다."
 
-#: ../base/ufos/ui/options.ufo:1210
+#: ../base/ufos/ui/options.ufo:1238
 msgid "Weather Effects:"
 msgstr "날씨 효과:"
 
-#: ../base/ufos/ui/options.ufo:1225
+#: ../base/ufos/ui/options.ufo:1253
 msgid ""
 "The material system is used to display texture animations, effects like "
 "rotating or stretching or scrolling textures and manipulate rendering "
@@ -27833,82 +27833,82 @@ msgstr ""
 "과를 표시하는 데에 쓰이고, 정의된 텍스쳐의 반사성이나 경도 등 특수 소재 성질"
 "을 적용하여 렌더링을 조작합니다."
 
-#: ../base/ufos/ui/options.ufo:1226
+#: ../base/ufos/ui/options.ufo:1254
 msgid "Material System:"
 msgstr "재질 시스템:"
 
-#: ../base/ufos/ui/options.ufo:1239
+#: ../base/ufos/ui/options.ufo:1267
 msgid "Switch to low video settings"
 msgstr "낮은 비디오 설정으로 바꾸기"
 
-#: ../base/ufos/ui/options.ufo:1253
+#: ../base/ufos/ui/options.ufo:1281
 msgid "Switch to medium video settings"
 msgstr "보통 비디오 설정으로 바꾸기"
 
-#: ../base/ufos/ui/options.ufo:1267
+#: ../base/ufos/ui/options.ufo:1295
 msgid "Switch to very high video settings"
 msgstr "매우 높은 비디오 설정으로 바꾸기"
 
-#: ../base/ufos/ui/options.ufo:1296
+#: ../base/ufos/ui/options.ufo:1324
 msgid "Audio Settings"
 msgstr "음향 설정"
 
-#: ../base/ufos/ui/options.ufo:1313
+#: ../base/ufos/ui/options.ufo:1341
 msgid "Enable or disable sound."
 msgstr "소리를 사용하거나 사용하지 않도록 함."
 
-#: ../base/ufos/ui/options.ufo:1314
+#: ../base/ufos/ui/options.ufo:1342
 msgid "Enable Audio:"
 msgstr "오디오 사용:"
 
-#: ../base/ufos/ui/options.ufo:1370
+#: ../base/ufos/ui/options.ufo:1398
 msgid "Sound Effects:"
 msgstr "음향 효과:"
 
-#: ../base/ufos/ui/options.ufo:1395
+#: ../base/ufos/ui/options.ufo:1423
 msgid "Menu Sounds:"
 msgstr "음향 메뉴:"
 
-#: ../base/ufos/ui/options.ufo:1401
+#: ../base/ufos/ui/options.ufo:1429
 msgid "Turn the menu sounds on or off."
 msgstr "메뉴 소리를 켜거나 끕니다."
 
-#: ../base/ufos/ui/options.ufo:1411
+#: ../base/ufos/ui/options.ufo:1439
 msgid "Advanced Audio Options"
 msgstr "고급 오디오 설정"
 
-#: ../base/ufos/ui/options.ufo:1421
+#: ../base/ufos/ui/options.ufo:1449
 msgid ""
 "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr ""
 "kHz 단위의 샘플 레이트 주파수. 더 나은 음질을 위해서는 더 높은 수치를 쓰십시"
 "오."
 
-#: ../base/ufos/ui/options.ufo:1422
+#: ../base/ufos/ui/options.ufo:1450
 msgid "Audio Sample Rate:"
 msgstr "오디오 샘플링레이트:"
 
-#: ../base/ufos/ui/options.ufo:1456
+#: ../base/ufos/ui/options.ufo:1484
 msgid "Restart the sound-engine and apply your settings."
 msgstr "사운드 엔진을 재시작하여 설정을 적용합니다."
 
-#: ../base/ufos/ui/options.ufo:1479
+#: ../base/ufos/ui/options.ufo:1507
 msgid "Gameplay Settings"
 msgstr "게임진행 설정"
 
-#: ../base/ufos/ui/options.ufo:1486
+#: ../base/ufos/ui/options.ufo:1514
 msgid "Battlescape Camera Settings"
 msgstr "전술화면 카메라"
 
-#: ../base/ufos/ui/options.ufo:1496
+#: ../base/ufos/ui/options.ufo:1524
 msgid "Scroll Speed:"
 msgstr "스크롤 속도:"
 
-#: ../base/ufos/ui/options.ufo:1520
+#: ../base/ufos/ui/options.ufo:1548
 msgid "Rotation Speed:"
 msgstr "회전 속도:"
 
-#: ../base/ufos/ui/options.ufo:1544
+#: ../base/ufos/ui/options.ufo:1572
 msgid ""
 "The move deceleration of the battlescape camera. Lower this value if you "
 "want smoother camera movement, increase it if you want cameramovement to "
@@ -27917,21 +27917,21 @@ msgstr ""
 "전술화면 카메라의 이동 감속도. 더 부드러운 카메라 움직임을 위해서는 이 수치"
 "를 낮추고, 더 빨리 감속하거나 즉시 멈추기를 원한다면 수치를 높이십시오."
 
-#: ../base/ufos/ui/options.ufo:1545
+#: ../base/ufos/ui/options.ufo:1573
 msgid "Move Deceleration:"
 msgstr "이동 감속:"
 
-#: ../base/ufos/ui/options.ufo:1569
+#: ../base/ufos/ui/options.ufo:1597
 msgid ""
 "Isometric Mode means the 3D world will be rendered without perspective "
 "correction."
 msgstr "등축도법은 원근법에 의한 보정 없이 세상을 그려내는 것을 의미합니다."
 
-#: ../base/ufos/ui/options.ufo:1570
+#: ../base/ufos/ui/options.ufo:1598
 msgid "Isometric Mode:"
 msgstr "고각도 부감 모드:"
 
-#: ../base/ufos/ui/options.ufo:1585
+#: ../base/ufos/ui/options.ufo:1613
 msgid ""
 "Center the camera view automatically at the soldier when selecting it, or at "
 "the enemy when he is shooting or appearing."
@@ -27939,23 +27939,23 @@ msgstr ""
 "병사를 선택할 때, 혹은 적군이 사격을 하거나 나타날 때 카메라가 자동으로 화면 "
 "중심에 보여주게 합니다."
 
-#: ../base/ufos/ui/options.ufo:1586
+#: ../base/ufos/ui/options.ufo:1614
 msgid "Center View:"
 msgstr "캐릭터 중심표시:"
 
-#: ../base/ufos/ui/options.ufo:1601
+#: ../base/ufos/ui/options.ufo:1629
 msgid "Battlescape Gameplay Settings"
 msgstr "전술화면"
 
-#: ../base/ufos/ui/options.ufo:1611
+#: ../base/ufos/ui/options.ufo:1639
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "전술화면에서 사용할 HUD를 선택합니다."
 
-#: ../base/ufos/ui/options.ufo:1612
+#: ../base/ufos/ui/options.ufo:1640
 msgid "HUD Design:"
 msgstr "HUD 디자인:"
 
-#: ../base/ufos/ui/options.ufo:1628
+#: ../base/ufos/ui/options.ufo:1656
 msgid ""
 "Enabling this will give you a preview of your actions on the battlescape "
 "which you then have to confirm."
@@ -27963,11 +27963,11 @@ msgstr ""
 "이것을 켜면 전술화면상 행동들의 미리보기가 나오고 당신이 이를 확정해야 합니"
 "다."
 
-#: ../base/ufos/ui/options.ufo:1629
+#: ../base/ufos/ui/options.ufo:1657
 msgid "Confirm Actions:"
 msgstr "행동 확인:"
 
-#: ../base/ufos/ui/options.ufo:1636
+#: ../base/ufos/ui/options.ufo:1664
 msgid ""
 "'No' means all your orders on the battlescape will be executed immediately. "
 "'Yes' means you will be prompted to confirm all of your orders before the "
@@ -27979,19 +27979,19 @@ msgstr ""
 "만'을 고르면 병사의 이동경로를 당신이 확정하기 전에 경로가 미리 표시될 것입니"
 "다."
 
-#: ../base/ufos/ui/options.ufo:1642 po/OTHER_STRINGS:4
+#: ../base/ufos/ui/options.ufo:1670 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "예"
 
-#: ../base/ufos/ui/options.ufo:1646 po/OTHER_STRINGS:5
+#: ../base/ufos/ui/options.ufo:1674 po/OTHER_STRINGS:5
 msgid "No"
 msgstr "아니오"
 
-#: ../base/ufos/ui/options.ufo:1650
+#: ../base/ufos/ui/options.ufo:1678
 msgid "Moving only"
 msgstr "이동만 하기"
 
-#: ../base/ufos/ui/options.ufo:1659
+#: ../base/ufos/ui/options.ufo:1687
 msgid ""
 "Autostand regulates if your soldier should automatically stand up when he is "
 "getting the order to move while being crouched."
@@ -27999,23 +27999,23 @@ msgstr ""
 "자동 기상 모드는 병사가 웅크린 상태에서 이동명령을 받을 시 자동으로 일어서는"
 "가를 결정합니다."
 
-#: ../base/ufos/ui/options.ufo:1660
+#: ../base/ufos/ui/options.ufo:1688
 msgid "Autostand:"
 msgstr "알아서 일어나기:"
 
-#: ../base/ufos/ui/options.ufo:1675
+#: ../base/ufos/ui/options.ufo:1703
 msgid "Actor Speed:"
 msgstr "캐릭터 속도:"
 
-#: ../base/ufos/ui/options.ufo:1686
+#: ../base/ufos/ui/options.ufo:1714
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr "0-9 사이의 값을 선택합니다. 높은 값 일수록 캐릭터가 빠르게 움직입니다."
 
-#: ../base/ufos/ui/options.ufo:1699
+#: ../base/ufos/ui/options.ufo:1727
 msgid "Geoscape Options"
 msgstr "전략화면 옵션"
 
-#: ../base/ufos/ui/options.ufo:1709
+#: ../base/ufos/ui/options.ufo:1737
 msgid ""
 "3D or 2D geoscape. To enable this option you have to start a new campaign "
 "first."
@@ -28023,79 +28023,79 @@ msgstr ""
 "3D 혹은 2D 전략화면. 이 옵션을 활성화 하려면 먼저 새 캠페인을 시작해야 합니"
 "다."
 
-#: ../base/ufos/ui/options.ufo:1710
+#: ../base/ufos/ui/options.ufo:1738
 msgid "3D Geoscape:"
 msgstr "3D 전략화면:"
 
-#: ../base/ufos/ui/options.ufo:1725
+#: ../base/ufos/ui/options.ufo:1753
 msgid "Show/Hide the panel decoration on the geoscape."
 msgstr "전략화면에서 패널 장식을 보이기/숨기기."
 
-#: ../base/ufos/ui/options.ufo:1726
+#: ../base/ufos/ui/options.ufo:1754
 msgid "Show decoration:"
 msgstr "장식품 보이기:"
 
-#: ../base/ufos/ui/options.ufo:1741
+#: ../base/ufos/ui/options.ufo:1769
 msgid "The minimum/maximum zoom of the geoscape camera"
 msgstr "지오스케이프 카메라의 최소/최대 확대 비율."
 
-#: ../base/ufos/ui/options.ufo:1742
+#: ../base/ufos/ui/options.ufo:1770
 msgid "Min/Max Geo-Cam Zoom:"
 msgstr "지구 카메라 줌의 최소/최고치:"
 
-#: ../base/ufos/ui/options.ufo:1749
+#: ../base/ufos/ui/options.ufo:1777
 msgid "Minimum zoom level of the geoscape camera"
 msgstr "지오스케이프 카메라의 최소 확대 비율."
 
-#: ../base/ufos/ui/options.ufo:1783
+#: ../base/ufos/ui/options.ufo:1811
 msgid "1.00"
 msgstr "1.00"
 
-#: ../base/ufos/ui/options.ufo:1790
+#: ../base/ufos/ui/options.ufo:1818
 msgid "Maximum zoom level of the geoscape camera"
 msgstr "지오스케이프 카메라의 최대 확대 비율."
 
-#: ../base/ufos/ui/options.ufo:1797
+#: ../base/ufos/ui/options.ufo:1825
 msgid "2.0"
 msgstr "2.0"
 
-#: ../base/ufos/ui/options.ufo:1802
+#: ../base/ufos/ui/options.ufo:1830
 msgid "4.00"
 msgstr "4.00"
 
-#: ../base/ufos/ui/options.ufo:1808
+#: ../base/ufos/ui/options.ufo:1836
 msgid "6.00"
 msgstr "6.00"
 
-#: ../base/ufos/ui/options.ufo:1813
+#: ../base/ufos/ui/options.ufo:1841
 msgid "8.00"
 msgstr "8.00"
 
-#: ../base/ufos/ui/options.ufo:1818
+#: ../base/ufos/ui/options.ufo:1846
 msgid "10.00"
 msgstr "100000 c"
 
-#: ../base/ufos/ui/options.ufo:1823
+#: ../base/ufos/ui/options.ufo:1851
 msgid "12.00"
 msgstr "100000 c"
 
-#: ../base/ufos/ui/options.ufo:1832
+#: ../base/ufos/ui/options.ufo:1860
 msgid "Joystick Settings"
 msgstr "조이스틱"
 
-#: ../base/ufos/ui/options.ufo:1842
+#: ../base/ufos/ui/options.ufo:1870
 msgid "Enable:"
 msgstr "활성화:"
 
-#: ../base/ufos/ui/options.ufo:1874
+#: ../base/ufos/ui/options.ufo:1902
 msgid "Joystick or Joypad:"
 msgstr "조이스틱/조이패드:"
 
-#: ../base/ufos/ui/options.ufo:1880
+#: ../base/ufos/ui/options.ufo:1908
 msgid "Available game controllers."
 msgstr "가능한 게임 컨트롤러."
 
-#: ../base/ufos/ui/options.ufo:1891
+#: ../base/ufos/ui/options.ufo:1919
 msgid ""
 "Adjust the joystick threshold to a high enough value, so movement of the "
 "analogue stick will be recognized."
@@ -28103,17 +28103,30 @@ msgstr ""
 "조이스틱의 기준점을 충분히 높은 수치로 조정하여 아날로그 스틱의 움직임이 인식"
 "되도록 하십시오."
 
-#: ../base/ufos/ui/options.ufo:1892
+#: ../base/ufos/ui/options.ufo:1920
 msgid "Threshold:"
 msgstr "경곗값:"
 
-#: ../base/ufos/ui/options.ufo:1941
+#: ../base/ufos/ui/options.ufo:1969
 msgid "Show Keys"
 msgstr "단축키 보기"
 
-#: ../base/ufos/ui/options.ufo:1975
+#: ../base/ufos/ui/options.ufo:2003
 msgid "Key Bindings"
 msgstr "단축키"
+
+#: ../base/ufos/ui/options.ufo:2026
+msgid "Menu"
+msgstr "메뉴"
+
+#: ../base/ufos/ui/options.ufo:2030
+msgid "Global"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:2034
+#, fuzzy
+msgid "Battlescape"
+msgstr "전술화면 카메라"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -29161,70 +29174,70 @@ msgstr "25점사"
 msgid "Autocannon Module"
 msgstr "Autocannon Module"
 
-#: client/battlescape/cl_actor.cpp:739
+#: client/battlescape/cl_actor.cpp:756
 #: client/battlescape/events/e_server.cpp:40
 msgid "It is not your turn!"
 msgstr "지금은 당신의 차례가 아닙니다!"
 
-#: client/battlescape/cl_actor.cpp:1003
+#: client/battlescape/cl_actor.cpp:1020
 msgid "You cannot reload this unknown item."
 msgstr "이 미확인 물품을 재장전 할 수 없습니다."
 
-#: client/battlescape/cl_actor.cpp:1043 client/cl_inventory.cpp:76
+#: client/battlescape/cl_actor.cpp:1060 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
 msgstr "이 병사는 더 이상 아무것도 소지할 수 없습니다."
 
-#: client/battlescape/cl_actor.cpp:1043 client/battlescape/cl_hud.cpp:1381
+#: client/battlescape/cl_actor.cpp:1060 client/battlescape/cl_hud.cpp:1381
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
 msgid "Warning"
 msgstr "경고"
 
-#: client/battlescape/cl_actor.cpp:1890
+#: client/battlescape/cl_actor.cpp:1907
 msgid "Unknown alien race"
 msgstr "알 수 없는 외계인 종족"
 
-#: client/battlescape/cl_actor.cpp:2557
+#: client/battlescape/cl_actor.cpp:2574
 msgid "Toggle to next living actor"
 msgstr "다음 전투원 선택"
 
-#: client/battlescape/cl_actor.cpp:2558
+#: client/battlescape/cl_actor.cpp:2575
 msgid "Toggle to previous living actor"
 msgstr "이전 전투원 선택"
 
-#: client/battlescape/cl_actor.cpp:2559
+#: client/battlescape/cl_actor.cpp:2576
 msgid "Select an actor from list"
 msgstr "리스트에서 전투원를 선택"
 
-#: client/battlescape/cl_actor.cpp:2560
+#: client/battlescape/cl_actor.cpp:2577
 msgid "Update an actor"
 msgstr "전투원의 이름을 변경합니다"
 
-#: client/battlescape/cl_actor.cpp:2561
+#: client/battlescape/cl_actor.cpp:2578
 msgid "Toggle stand/crouch."
 msgstr "일어서기/앉기 교체"
 
-#: client/battlescape/cl_actor.cpp:2562
+#: client/battlescape/cl_actor.cpp:2579
 msgid "Toggle the headgear"
 msgstr "헤드기어 사용 토글"
 
-#: client/battlescape/cl_actor.cpp:2563
+#: client/battlescape/cl_actor.cpp:2580
 msgid "Use"
 msgstr "사용하기"
 
-#: client/battlescape/cl_actor.cpp:2564
+#: client/battlescape/cl_actor.cpp:2581
 msgid "Confirm the current action"
 msgstr "현재 행동을 실행"
 
-#: client/battlescape/cl_actor.cpp:2565
+#: client/battlescape/cl_actor.cpp:2582
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "현재 대원에서부터 보이는 다음 외계인으로 토글"
 
-#: client/battlescape/cl_actor.cpp:2567
+#: client/battlescape/cl_actor.cpp:2584
 msgid "Toggle camera to the next visible alien."
 msgstr "다음 외계인 보이기"
 
-#: client/battlescape/cl_actor.cpp:2568
+#: client/battlescape/cl_actor.cpp:2585
 msgid "Toggle camera to the previous visible alien."
 msgstr "이전 외계인 보이기"
 
@@ -29878,7 +29891,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "연료:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:196
-#: client/cgame/campaign/cp_ufopedia.cpp:351
+#: client/cgame/campaign/cp_ufopedia.cpp:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "작전반경:\t%i km\n"
@@ -30007,13 +30020,13 @@ msgstr[0] "%i 일 후에 완공됩니다.\n"
 msgstr[1] "%i 일 후에 완공됩니다.\n"
 
 #: client/cgame/campaign/cp_base.cpp:1449
-#: client/cgame/campaign/cp_ufopedia.cpp:216
+#: client/cgame/campaign/cp_ufopedia.cpp:210
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "유지비:\t%i c\n"
 
 #: client/cgame/campaign/cp_base.cpp:1452
-#: client/cgame/campaign/cp_ufopedia.cpp:213
+#: client/cgame/campaign/cp_ufopedia.cpp:207
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "필요시설:\t%s\n"
@@ -30030,9 +30043,9 @@ msgstr ""
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
-#: client/cgame/cl_game_team.cpp:310 client/cgame/cl_game_team.cpp:320
-#: client/cgame/cl_game_team.cpp:325
+#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
+#: client/cgame/cl_game_team.cpp:308 client/cgame/cl_game_team.cpp:318
+#: client/cgame/cl_game_team.cpp:323
 msgid "Note"
 msgstr "Note"
 
@@ -30348,7 +30361,7 @@ msgstr "제거"
 
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:216
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:619
-#: client/cgame/campaign/cp_ufopedia.cpp:213 client/input/cl_joystick.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:207 client/input/cl_joystick.cpp:282
 msgid "None"
 msgstr "없음"
 
@@ -30546,10 +30559,13 @@ msgstr "인원을 고용할 수 없습니다"
 
 #: client/cgame/campaign/cp_event.cpp:536
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:286 client/cgame/campaign/cp_save.cpp:308
+#: client/cgame/campaign/cp_save.cpp:285 client/cgame/campaign/cp_save.cpp:307
 #: client/cgame/campaign/cp_time.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:513
-#: client/cgame/campaign/cp_ufopedia.cpp:518
+#: client/cgame/campaign/cp_ufopedia.cpp:507
+#: client/cgame/campaign/cp_ufopedia.cpp:512
+#: client/cgame/campaign/cp_ufopedia.cpp:1044
+#: client/cgame/campaign/cp_ufopedia.cpp:1055
+#: client/cgame/campaign/cp_ufopedia.cpp:1071
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i년 %s %02i일"
@@ -31569,62 +31585,62 @@ msgstr "상세내용이 없습니다."
 msgid "No research proposal available."
 msgstr "연구 제안서가 없습니다."
 
-#: client/cgame/campaign/cp_save.cpp:182
+#: client/cgame/campaign/cp_save.cpp:181
 msgid "Error decompressing data"
 msgstr "압축 해제 시 오류가 발생했습니다"
 
-#: client/cgame/campaign/cp_save.cpp:264
+#: client/cgame/campaign/cp_save.cpp:263
 msgid "No campaign active."
 msgstr "진행 중인 캠페인이 없습니다"
 
-#: client/cgame/campaign/cp_save.cpp:270
+#: client/cgame/campaign/cp_save.cpp:269
 msgid "Nothing to save yet."
 msgstr "저장할 것이 없습니다."
 
-#: client/cgame/campaign/cp_save.cpp:318
+#: client/cgame/campaign/cp_save.cpp:317
 msgid "Could not allocate enough memory to save this game"
 msgstr "이 게임을 저장하는데 충분한 메모리를 할당하지 못했습니다"
 
-#: client/cgame/campaign/cp_save.cpp:340
+#: client/cgame/campaign/cp_save.cpp:339
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "게임 저장 데이타를 압축에 메모리 에러 - save_compressed cvar를 0으로 설정하시"
 "오"
 
-#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
+#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
 msgid "Error saving game."
 msgstr "게임을 저장하는데 문제가 발생했습니다."
 
-#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:484 client/cgame/campaign/cp_save.cpp:507
+#: client/cgame/campaign/cp_save.cpp:589
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1209
 #: client/cl_irc.cpp:1434 client/cl_main.cpp:559 client/cl_main.cpp:563
 #: client/cl_main.cpp:588
 msgid "Error"
 msgstr "문제발생"
 
-#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:484 client/cgame/campaign/cp_save.cpp:507
+#: client/cgame/campaign/cp_save.cpp:589
 msgid "Error loading game."
 msgstr "게임을 불러들이는데 문제가 발생했습니다."
 
-#: client/cgame/campaign/cp_save.cpp:577
+#: client/cgame/campaign/cp_save.cpp:567
 msgid "QuickSave"
 msgstr "빠른저장"
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:571
 msgid "Campaign was successfully saved."
 msgstr "게임이 성공적으로 저장되었습니다."
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:571
 msgid "Quicksave"
 msgstr "빠른 저장"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:591
 msgid "Campaign loaded"
 msgstr "캠페인을 읽어왔습니다"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:591
 msgid "Quicksave campaign was successfully loaded."
 msgstr "캠페인의 빠른 저장이 성공적으로 읽어졌습니다."
 
@@ -31651,7 +31667,6 @@ msgstr ""
 "공격을 받은 횟수:\t%i\n"
 
 #: client/cgame/campaign/cp_statistics.cpp:70
-#: client/cgame/campaign/cp_ufopedia.cpp:1183
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -31938,124 +31953,124 @@ msgstr "레이더가 %s를 %s 근처에서 탐지했습니다"
 msgid "Our radar has lost the tracking on %s"
 msgstr "레이더가 %s의 추적을 놓쳤습니다"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:142
+#: client/cgame/campaign/cp_ufopedia.cpp:136
 msgid "Cruising speed"
 msgstr "순항속도"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:144
+#: client/cgame/campaign/cp_ufopedia.cpp:138
 msgid "Maximum speed"
 msgstr "최고속도"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:148
+#: client/cgame/campaign/cp_ufopedia.cpp:142
 msgid "ECM"
 msgstr "ECM(전파교란장치)"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:150
+#: client/cgame/campaign/cp_ufopedia.cpp:144
 msgid "Aircraft damage"
 msgstr "항공기 손상율"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:152
+#: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "명중률"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:154
+#: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "Fuel size"
 msgstr "탑재연료"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:156
+#: client/cgame/campaign/cp_ufopedia.cpp:150
 msgid "Weapon range"
 msgstr "사거리"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:158
+#: client/cgame/campaign/cp_ufopedia.cpp:152
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Unknown weapon skill"
 msgstr "무기 사용방법을 알 수 없음"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:177
+#: client/cgame/campaign/cp_ufopedia.cpp:171
 msgid "No requirements"
 msgstr "요구사항 없음"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:211
+#: client/cgame/campaign/cp_ufopedia.cpp:205
 msgid "Error - could not find building"
 msgstr "문제발생 - 건물을 찾을 수 없습니다"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:214
+#: client/cgame/campaign/cp_ufopedia.cpp:208
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "생산소요시간:\t%i 일\n"
 msgstr[1] "생산소요시간:\t%i 일\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:215
+#: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "비용:\t%i c\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:266
+#: client/cgame/campaign/cp_ufopedia.cpp:260
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "중량:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:270
+#: client/cgame/campaign/cp_ufopedia.cpp:264
 msgid "Weapon for base defence system\n"
 msgstr "기지 방어체계를 위한 무기\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:290
+#: client/cgame/campaign/cp_ufopedia.cpp:284
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "탄약:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:292
+#: client/cgame/campaign/cp_ufopedia.cpp:286
 #: client/cl_inventory_callbacks.cpp:180
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "손상:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:293
+#: client/cgame/campaign/cp_ufopedia.cpp:287
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "재장전시간:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:310
+#: client/cgame/campaign/cp_ufopedia.cpp:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:312
+#: client/cgame/campaign/cp_ufopedia.cpp:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:315
-#: client/cgame/campaign/cp_ufopedia.cpp:374
-#: client/cgame/campaign/cp_ufopedia.cpp:376
-#: client/cgame/campaign/cp_ufopedia.cpp:412
-#: client/cgame/campaign/cp_ufopedia.cpp:414
+#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:368
+#: client/cgame/campaign/cp_ufopedia.cpp:370
+#: client/cgame/campaign/cp_ufopedia.cpp:406
+#: client/cgame/campaign/cp_ufopedia.cpp:408
 msgid "Unknown - need to research this"
 msgstr "미지의 아이템 - 연구가 필요합니다"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:342
-#: client/cgame/campaign/cp_ufopedia.cpp:347
+#: client/cgame/campaign/cp_ufopedia.cpp:336
+#: client/cgame/campaign/cp_ufopedia.cpp:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:355
+#: client/cgame/campaign/cp_ufopedia.cpp:349
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:367
+#: client/cgame/campaign/cp_ufopedia.cpp:361
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr "필요한 격납고:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:371
+#: client/cgame/campaign/cp_ufopedia.cpp:365
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "최대 전투원수:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:409
+#: client/cgame/campaign/cp_ufopedia.cpp:403
 #, c-format
 msgid ""
 "%s\n"
@@ -32064,15 +32079,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:535
+#: client/cgame/campaign/cp_ufopedia.cpp:529
 msgid "Proposal: "
 msgstr "연구 제안서: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:538
+#: client/cgame/campaign/cp_ufopedia.cpp:532
 msgid "Re: "
 msgstr "답장: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:552
+#: client/cgame/campaign/cp_ufopedia.cpp:546
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -32083,57 +32098,30 @@ msgstr ""
 "받는 사람: %s\n"
 "수신일시: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:625
+#: client/cgame/campaign/cp_ufopedia.cpp:619
 #, fuzzy, c-format
 msgid "UFOpaedia: %s (complete)"
 msgstr "UFO 백과사전 내용"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:678
-#: client/cgame/campaign/cp_ufopedia.cpp:687
+#: client/cgame/campaign/cp_ufopedia.cpp:672
+#: client/cgame/campaign/cp_ufopedia.cpp:681
 #, fuzzy, c-format
 msgid "UFOpaedia: %s"
 msgstr "UFO 백과사전"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:684
+#: client/cgame/campaign/cp_ufopedia.cpp:678
 msgid "No pre-research description available."
 msgstr "선행 연구 내용이 없습니다."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1127
-#, c-format
-msgid "^BProposal: %s\t%i %s %02i\n"
-msgstr "^B연구 제안서: %s\t%i %s %02i\n"
+#: client/cgame/campaign/cp_ufopedia.cpp:1043
+#, fuzzy, c-format
+msgid "Proposal: %s"
+msgstr "연구 제안서: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1131
-#, c-format
-msgid "Proposal: %s\t%i %s %02i\n"
-msgstr "연구 제안서: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1141
-#, c-format
-msgid "^BRe: %s\t%i %s %02i\n"
-msgstr "^B답장: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1145
-#, c-format
-msgid "Re: %s\t%i %s %02i\n"
-msgstr "답장: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1154
-#: client/cgame/campaign/cp_ufopedia.cpp:1165
-#, c-format
-msgid "^B%s\t%i %s %02i\n"
-msgstr "^B%s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1158
-#: client/cgame/campaign/cp_ufopedia.cpp:1169
-#, c-format
-msgid "%s\t%i %s %02i\n"
-msgstr "%s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1180
-#, c-format
-msgid "^B%s\t%s\n"
-msgstr "^B%s\t%s\n"
+#: client/cgame/campaign/cp_ufopedia.cpp:1054
+#, fuzzy, c-format
+msgid "Re: %s"
+msgstr "답장: "
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32248,21 +32236,21 @@ msgstr "UFO-캐리어를 지금 공격하십시오"
 msgid "Launch"
 msgstr "발사"
 
-#: client/cgame/cl_game_team.cpp:310
+#: client/cgame/cl_game_team.cpp:308
 msgid "Error saving team. Nothing to save yet."
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
-#: client/cgame/cl_game_team.cpp:316
+#: client/cgame/cl_game_team.cpp:314
 #, fuzzy
 msgid "New Team"
 msgstr "새로운 팀"
 
-#: client/cgame/cl_game_team.cpp:320
+#: client/cgame/cl_game_team.cpp:318
 #, fuzzy
 msgid "Error saving team. Too many teams!"
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
-#: client/cgame/cl_game_team.cpp:325
+#: client/cgame/cl_game_team.cpp:323
 msgid "Error saving team. Check free disk space!"
 msgstr "팀을 저장할 수 없습니다. 하드가 남아있는지 확인하십시오!"
 
@@ -32466,7 +32454,7 @@ msgstr "다음 판은 행운이 따르기를 기원합니다"
 msgid "You've lost the game!"
 msgstr "게임에서 졌습니다!"
 
-#: client/cl_console.cpp:298
+#: client/cl_console.cpp:293
 msgid "Show/hide ufoconsole."
 msgstr "ufoconsole 보이기/숨기기."
 
@@ -32667,20 +32655,6 @@ msgstr "이 변경사항은 재시작을 해야 합니다!"
 msgid "This change might require a restart."
 msgstr "이 변경사항은 재시작을 필요로 할 수도 있습니다."
 
-#: client/cl_menu.cpp:77
-msgid "^BGlobal bindings"
-msgstr ""
-
-#: client/cl_menu.cpp:82
-#, fuzzy
-msgid "^BMenu bindings"
-msgstr "단축키"
-
-#: client/cl_menu.cpp:88
-#, fuzzy
-msgid "^BBattlescape bindings"
-msgstr "전술화면 카메라"
-
 #: client/cl_screen.cpp:127
 #, c-format
 msgid "Downloading [%s]"
@@ -32850,15 +32824,6 @@ msgstr "사용가능 무기:\n"
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "In: %i Out: %i"
-
-#: client/ui/node/ui_node_keybinding.cpp:90
-#, c-format
-msgid "Key %s already bound"
-msgstr "Key %s already bound"
-
-#: client/ui/node/ui_node_keybinding.cpp:139
-msgid "NONE"
-msgstr "없음"
 
 #: client/ui/node/ui_node_window.cpp:250
 msgid "Drag to move window"
@@ -33048,6 +33013,37 @@ msgstr "외계인"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "스크린샷 저장"
+
+#~ msgid "^BProposal: %s\t%i %s %02i\n"
+#~ msgstr "^B연구 제안서: %s\t%i %s %02i\n"
+
+#~ msgid "Proposal: %s\t%i %s %02i\n"
+#~ msgstr "연구 제안서: %s\t%i %s %02i\n"
+
+#~ msgid "^BRe: %s\t%i %s %02i\n"
+#~ msgstr "^B답장: %s\t%i %s %02i\n"
+
+#~ msgid "Re: %s\t%i %s %02i\n"
+#~ msgstr "답장: %s\t%i %s %02i\n"
+
+#~ msgid "^B%s\t%i %s %02i\n"
+#~ msgstr "^B%s\t%i %s %02i\n"
+
+#~ msgid "%s\t%i %s %02i\n"
+#~ msgstr "%s\t%i %s %02i\n"
+
+#~ msgid "^B%s\t%s\n"
+#~ msgstr "^B%s\t%s\n"
+
+#, fuzzy
+#~ msgid "^BMenu bindings"
+#~ msgstr "단축키"
+
+#~ msgid "Key %s already bound"
+#~ msgstr "Key %s already bound"
+
+#~ msgid "NONE"
+#~ msgstr "없음"
 
 #~ msgid "Full Campaign"
 #~ msgstr "정식 캠페인"
@@ -34266,9 +34262,6 @@ msgstr "스크린샷 저장"
 
 #~ msgid "Message Log"
 #~ msgstr "메시지 기록"
-
-#~ msgid "Menu"
-#~ msgstr "메뉴"
 
 #~ msgid "Stop Music"
 #~ msgstr "음악 정지"
