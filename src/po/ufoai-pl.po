@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-16 10:44+0200\n"
+"POT-Creation-Date: 2013-09-25 22:12+0200\n"
 "PO-Revision-Date: 2013-05-07 21:31+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team:  <radius75@interia.pl>\n"
@@ -24476,7 +24476,7 @@ msgstr "NineX za hosting"
 msgid "To the community and everyone who supported us"
 msgstr "Dla społeczności i każdego kto nas wspierał"
 
-#: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
+#: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:103
 msgid "Gameplay"
 msgstr "Rozgrywka"
 
@@ -24742,23 +24742,23 @@ msgstr "Phalanx"
 msgid "Ares W"
 msgstr "Ares W"
 
-#: ../base/ufos/team_templates.ufo:228
+#: ../base/ufos/team_templates.ufo:232
 msgid "Body"
 msgstr "Ciało"
 
-#: ../base/ufos/team_templates.ufo:237
+#: ../base/ufos/team_templates.ufo:241
 msgid "Torso"
 msgstr "Tułów"
 
-#: ../base/ufos/team_templates.ufo:244
+#: ../base/ufos/team_templates.ufo:248
 msgid "Legs"
 msgstr "Nogi"
 
-#: ../base/ufos/team_templates.ufo:251
+#: ../base/ufos/team_templates.ufo:255
 msgid "Arms"
 msgstr "Ręce"
 
-#: ../base/ufos/team_templates.ufo:259
+#: ../base/ufos/team_templates.ufo:263
 msgid "Head"
 msgstr "Głowa"
 
@@ -25342,7 +25342,7 @@ msgstr "Amunicja"
 #: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:50
 #: ../base/ufos/ui/team.ufo:222
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
-#: client/cgame/campaign/cp_ufopedia.cpp:146
+#: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
 msgstr "Pancerz"
 
@@ -25421,7 +25421,7 @@ msgstr "Siła:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:263 ../base/ufos/ui/equipment.ufo:414
 #: ../base/ufos/ui/hire.ufo:361 ../base/ufos/ui/hospital.ufo:334
-#: ../base/ufos/ui/options.ufo:1916 ../base/ufos/ui/physdat.ufo:236
+#: ../base/ufos/ui/options.ufo:1944 ../base/ufos/ui/physdat.ufo:236
 #: ../base/ufos/ui/popup_baseattack.ufo:185 ../base/ufos/ui/team.ufo:383
 msgid "Speed:"
 msgstr "Szybkość:"
@@ -25742,8 +25742,8 @@ msgid "Select building"
 msgstr "Wybierz moduł"
 
 #: ../base/ufos/ui/buildings.ufo:180 ../base/ufos/ui/geoscape.ufo:560
-#: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:853
+#: ../base/ufos/ui/market.ufo:436 client/cgame/campaign/cp_ufopedia.cpp:113
+#: client/cgame/campaign/cp_ufopedia.cpp:847
 msgid "UFOpaedia"
 msgstr "UFOpedia"
 
@@ -25781,7 +25781,7 @@ msgstr "Wczytaj ostatnio zapisaną grę lub kontynuuj."
 
 #: ../base/ufos/ui/campaign.ufo:56 ../base/ufos/ui/campaign.ufo:317
 #: ../base/ufos/ui/campaign.ufo:444 ../base/ufos/ui/multiplayer.ufo:92
-#: ../base/ufos/ui/options.ufo:86 ../base/ufos/ui/singleplayer.ufo:70
+#: ../base/ufos/ui/options.ufo:114 ../base/ufos/ui/singleplayer.ufo:70
 #: ../base/ufos/ui/skirmish.ufo:135 ../base/ufos/ui/tutorials.ufo:30
 msgid "Back"
 msgstr "Powrót"
@@ -25957,12 +25957,12 @@ msgstr "Specyfikacja"
 msgid "Rename your unit"
 msgstr "Zmień nazwę jednostki"
 
-#: ../base/ufos/ui/equipment.ufo:682 ../base/ufos/ui/inventory.ufo:252
+#: ../base/ufos/ui/equipment.ufo:683 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:616
 msgid "0/0 Kg"
 msgstr "0/0 Kg"
 
-#: ../base/ufos/ui/equipment.ufo:708 ../base/ufos/ui/team.ufo:633
+#: ../base/ufos/ui/equipment.ufo:709 ../base/ufos/ui/team.ufo:633
 msgid "Done"
 msgstr "Zrobione"
 
@@ -26011,7 +26011,7 @@ msgid "Change message and pause settings"
 msgstr "Zmień ustawienia powiadomień i pauzy"
 
 #: ../base/ufos/ui/geoscape.ufo:515 ../base/ufos/ui/geoscape.ufo:532
-#: ../base/ufos/ui/mailclient.ufo:120
+#: ../base/ufos/ui/mailclient.ufo:170
 msgid "Mailclient"
 msgstr "Poczta"
 
@@ -26269,19 +26269,19 @@ msgstr "Strzały:"
 msgid "Chat"
 msgstr "Czat"
 
-#: ../base/ufos/ui/hud_.ufo:639
+#: ../base/ufos/ui/hud_.ufo:640
 msgid "Party chat"
 msgstr "Czat potyczki"
 
-#: ../base/ufos/ui/hud_.ufo:643
+#: ../base/ufos/ui/hud_.ufo:644
 msgid "Global lobby (IRC)"
 msgstr "Czat globalny (IRC)"
 
-#: ../base/ufos/ui/hud_.ufo:724 ../base/ufos/ui/hud_.ufo:787
+#: ../base/ufos/ui/hud_.ufo:725 ../base/ufos/ui/hud_.ufo:789
 msgid "Say:"
 msgstr "Mów:"
 
-#: ../base/ufos/ui/hud_.ufo:795
+#: ../base/ufos/ui/hud_.ufo:797
 msgid "Team chat"
 msgstr "Czat drużynowy"
 
@@ -26537,19 +26537,19 @@ msgstr "Sprzedaj"
 msgid "Begin UFO sell process"
 msgstr "Rozpocznij proces sprzedaży pojazdu UFO"
 
-#: ../base/ufos/ui/mailclient.ufo:130
+#: ../base/ufos/ui/mailclient.ufo:180
 msgid "Time:"
 msgstr "Czas:"
 
-#: ../base/ufos/ui/mailclient.ufo:148
+#: ../base/ufos/ui/mailclient.ufo:198
 msgid "Date:"
 msgstr "Data:"
 
-#: ../base/ufos/ui/mailclient.ufo:167
+#: ../base/ufos/ui/mailclient.ufo:217
 msgid "Mark all messages read"
 msgstr "Oznacz wszystkie jako przeczytane"
 
-#: ../base/ufos/ui/mailclient.ufo:558
+#: ../base/ufos/ui/mailclient.ufo:290
 msgid "Leave mailclient"
 msgstr "Opuść pocztę"
 
@@ -26594,7 +26594,7 @@ msgstr "Ustawienia początkowe"
 msgid "User Information"
 msgstr "Informacja o użytkowniku"
 
-#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1303
+#: ../base/ufos/ui/main.ufo:166 ../base/ufos/ui/options.ufo:1331
 msgid "Volume Control"
 msgstr "Głośność"
 
@@ -26602,7 +26602,7 @@ msgstr "Głośność"
 msgid "Effects:"
 msgstr "Efekty:"
 
-#: ../base/ufos/ui/main.ufo:192 ../base/ufos/ui/options.ufo:1346
+#: ../base/ufos/ui/main.ufo:192 ../base/ufos/ui/options.ufo:1374
 msgid "Music:"
 msgstr "Muzyka:"
 
@@ -26655,8 +26655,8 @@ msgstr "Kup/sprzedaj przedmiot"
 msgid "Craft items"
 msgstr "Sprzęt lotniczy"
 
-#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:348
-#: ../base/ufos/ui/options.ufo:1151 ../base/ufos/ui/production.ufo:66
+#: ../base/ufos/ui/market.ufo:142 ../base/ufos/ui/options.ufo:376
+#: ../base/ufos/ui/options.ufo:1179 ../base/ufos/ui/production.ufo:66
 msgid "Other"
 msgstr "Inne"
 
@@ -26665,7 +26665,7 @@ msgid "UGV items"
 msgstr "Wyposażenie BPN"
 
 #: ../base/ufos/ui/market.ufo:175 ../base/ufos/ui/multiplayer.ufo:200
-#: ../base/ufos/ui/options.ufo:110 ../base/ufos/ui/web.ufo:16
+#: ../base/ufos/ui/options.ufo:138 ../base/ufos/ui/web.ufo:16
 msgid "Name"
 msgstr "Nazwa"
 
@@ -27135,295 +27135,295 @@ msgstr ""
 msgid "Abort Game"
 msgstr "Przerwij grę"
 
-#: ../base/ufos/ui/options.ufo:41
+#: ../base/ufos/ui/options.ufo:69
 msgid "Overall game settings"
 msgstr "Ustawienia ogólne gry"
 
-#: ../base/ufos/ui/options.ufo:42
+#: ../base/ufos/ui/options.ufo:70
 msgid "Overall"
 msgstr "Ogólne"
 
-#: ../base/ufos/ui/options.ufo:52
+#: ../base/ufos/ui/options.ufo:80
 msgid "Video settings"
 msgstr "Ustawienia obrazu"
 
-#: ../base/ufos/ui/options.ufo:53
+#: ../base/ufos/ui/options.ufo:81
 msgid "Video"
 msgstr "Obraz"
 
-#: ../base/ufos/ui/options.ufo:63
+#: ../base/ufos/ui/options.ufo:91
 msgid "Sound settings"
 msgstr "Ustawienia dźwięku"
 
-#: ../base/ufos/ui/options.ufo:64
+#: ../base/ufos/ui/options.ufo:92
 msgid "Audio"
 msgstr "Dźwięk"
 
-#: ../base/ufos/ui/options.ufo:74
+#: ../base/ufos/ui/options.ufo:102
 msgid "Battlescape camera, gameplay and input settings"
 msgstr "Kamera w trybie taktycznym, rozgrywka i skróty klawiszowe"
 
-#: ../base/ufos/ui/options.ufo:85
+#: ../base/ufos/ui/options.ufo:113
 msgid "Leave the options menu"
 msgstr "Opuść to menu opcji"
 
-#: ../base/ufos/ui/options.ufo:103
+#: ../base/ufos/ui/options.ufo:131
 msgid "Overall Game Settings"
 msgstr "Ustawienia Ogólne"
 
-#: ../base/ufos/ui/options.ufo:135
+#: ../base/ufos/ui/options.ufo:163
 msgid "Language Settings"
 msgstr "Ustawienia językowe"
 
-#: ../base/ufos/ui/options.ufo:142
+#: ../base/ufos/ui/options.ufo:170
 msgid "Available languages"
 msgstr "Dostępne języki"
 
-#: ../base/ufos/ui/options.ufo:175
+#: ../base/ufos/ui/options.ufo:203
 msgid "Mods"
 msgstr "Mody"
 
-#: ../base/ufos/ui/options.ufo:182
+#: ../base/ufos/ui/options.ufo:210
 msgid "Available game modifications"
 msgstr "Dostępne modyfikacje gry"
 
-#: ../base/ufos/ui/options.ufo:211
+#: ../base/ufos/ui/options.ufo:239
 msgid "Activate mod"
 msgstr "Aktywuj mod"
 
-#: ../base/ufos/ui/options.ufo:222
+#: ../base/ufos/ui/options.ufo:250
 msgid "Several Tips"
 msgstr "Kilka podpowiedzi"
 
-#: ../base/ufos/ui/options.ufo:232
+#: ../base/ufos/ui/options.ufo:260
 msgid "Show cursor tooltips in menus."
 msgstr "Pokazuj wskazówki kursora w menu."
 
-#: ../base/ufos/ui/options.ufo:233
+#: ../base/ufos/ui/options.ufo:261
 msgid "Tooltips (menu):"
 msgstr "Podpowiedzi (menu):"
 
-#: ../base/ufos/ui/options.ufo:249
+#: ../base/ufos/ui/options.ufo:277
 msgid "Show cursor tooltips in tactical mode."
 msgstr "Pokazuj wskazówki kursora w trybie taktycznym."
 
-#: ../base/ufos/ui/options.ufo:250
+#: ../base/ufos/ui/options.ufo:278
 msgid "Tooltips (battlescape):"
 msgstr "Podpowiedzi (misja taktyczna):"
 
-#: ../base/ufos/ui/options.ufo:265
+#: ../base/ufos/ui/options.ufo:293
 msgid "Show 'Tip of the Day':"
 msgstr "Pokazuj \"Porady dnia\":"
 
-#: ../base/ufos/ui/options.ufo:281
+#: ../base/ufos/ui/options.ufo:309
 msgid "Menu Options"
 msgstr "Opcje menu"
 
-#: ../base/ufos/ui/options.ufo:291
+#: ../base/ufos/ui/options.ufo:319
 msgid "Precache Models:"
 msgstr "Ładowanie modeli z wyprzedzeniem:"
 
-#: ../base/ufos/ui/options.ufo:297
+#: ../base/ufos/ui/options.ufo:325
 msgid "Precaching of models means having faster menus."
 msgstr "Ładowanie modeli z wyprzedzeniem skutkuje szybszym działaniem menu."
 
-#: ../base/ufos/ui/options.ufo:315
+#: ../base/ufos/ui/options.ufo:343
 msgid "Video Settings"
 msgstr "Ustawienia Obrazu"
 
-#: ../base/ufos/ui/options.ufo:340
+#: ../base/ufos/ui/options.ufo:368
 msgid "General"
 msgstr "Główny"
 
-#: ../base/ufos/ui/options.ufo:344
+#: ../base/ufos/ui/options.ufo:372
 msgid "Advanced"
 msgstr "Zaawansowany"
 
-#: ../base/ufos/ui/options.ufo:367
+#: ../base/ufos/ui/options.ufo:395
 msgid "Resolution and Display Settings"
 msgstr "Ustawienia Rozdzielczości i Wyświetlania"
 
-#: ../base/ufos/ui/options.ufo:378
+#: ../base/ufos/ui/options.ufo:406
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
 msgstr "Rozdzielczość w pikselach (x*y), którą chcesz użyć."
 
-#: ../base/ufos/ui/options.ufo:379
+#: ../base/ufos/ui/options.ufo:407
 msgid "Resolution:"
 msgstr "Rozdzielczość:"
 
-#: ../base/ufos/ui/options.ufo:389
+#: ../base/ufos/ui/options.ufo:417
 msgid "Display only resolutions using this screen ratio."
 msgstr "Filtr rozdzielczości dla proporcji ekranu."
 
-#: ../base/ufos/ui/options.ufo:397
+#: ../base/ufos/ui/options.ufo:425
 msgid "All ratios"
 msgstr "Wszystkie"
 
-#: ../base/ufos/ui/options.ufo:427
+#: ../base/ufos/ui/options.ufo:455
 msgid "Others"
 msgstr "Inne"
 
-#: ../base/ufos/ui/options.ufo:436
+#: ../base/ufos/ui/options.ufo:464
 msgid "Select your desired screen resolution."
 msgstr "Wybór wyznaczonej przez Ciebie rozdzielczości."
 
-#: ../base/ufos/ui/options.ufo:447
+#: ../base/ufos/ui/options.ufo:475
 msgid "Fullscreen:"
 msgstr "Tryb pełnoekranowy:"
 
-#: ../base/ufos/ui/options.ufo:453
+#: ../base/ufos/ui/options.ufo:481
 msgid "Play UFO:AI in fullscreen."
 msgstr "Tryb pełnoekranowy."
 
-#: ../base/ufos/ui/options.ufo:463
+#: ../base/ufos/ui/options.ufo:491
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Ustaw proporcje ekranu na 4:3"
 
-#: ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:506
 msgid "Prevent the mousepointer from leaving the game window."
 msgstr "Zapobiega temu by wskaźnik myszy opuszczał okno gry."
 
-#: ../base/ufos/ui/options.ufo:479
+#: ../base/ufos/ui/options.ufo:507
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr "Podpowiedź: CTRL+G blokuje/uwalnia wskaźnik myszy w oknie gry."
 
-#: ../base/ufos/ui/options.ufo:490
+#: ../base/ufos/ui/options.ufo:518
 msgid "Calibrate your display here."
 msgstr "Tu możesz kalibrować wyświetlacz."
 
-#: ../base/ufos/ui/options.ufo:491
+#: ../base/ufos/ui/options.ufo:519
 msgid "Monitor Calibration Controls"
 msgstr "Narzędzia Kalibracji Monitora"
 
-#: ../base/ufos/ui/options.ufo:501
+#: ../base/ufos/ui/options.ufo:529
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../base/ufos/ui/options.ufo:524
+#: ../base/ufos/ui/options.ufo:552
 msgid "The default key to make screenshots is F12."
 msgstr "F12 to standardowo klawisz aby wykonanać 'screenshot'."
 
-#: ../base/ufos/ui/options.ufo:525
+#: ../base/ufos/ui/options.ufo:553
 msgid "Screenshot Settings"
 msgstr "Ustawienia dla 'Screenshot'"
 
-#: ../base/ufos/ui/options.ufo:535
+#: ../base/ufos/ui/options.ufo:563
 msgid "The file format used for compressing and saving your screenshots."
 msgstr "Format pliku użyty do kompresji i zapisu Twojego 'screenshot'."
 
-#: ../base/ufos/ui/options.ufo:536
+#: ../base/ufos/ui/options.ufo:564
 msgid "Screenshot Format:"
 msgstr "Format dla 'Screenshot':"
 
-#: ../base/ufos/ui/options.ufo:583
+#: ../base/ufos/ui/options.ufo:611
 msgid "jpeg Quality:"
 msgstr "Jakość jpeg:"
 
-#: ../base/ufos/ui/options.ufo:604
+#: ../base/ufos/ui/options.ufo:632
 msgid "Other Display Settings"
 msgstr "Pozostałe Ustawienia Wyświetlania"
 
-#: ../base/ufos/ui/options.ufo:615
+#: ../base/ufos/ui/options.ufo:643
 msgid "Show FPS:"
 msgstr "Pokazuj FPS:"
 
-#: ../base/ufos/ui/options.ufo:621
+#: ../base/ufos/ui/options.ufo:649
 msgid "Display the number of rendered frames per second."
 msgstr "Wyświetlaj ilość klatek generowanych na sekundę."
 
-#: ../base/ufos/ui/options.ufo:632
+#: ../base/ufos/ui/options.ufo:660
 msgid "Do not play the intro movie when starting the game."
 msgstr "Nie odtwarzaj Intro przy starcie gry."
 
-#: ../base/ufos/ui/options.ufo:633
+#: ../base/ufos/ui/options.ufo:661
 msgid "Hold Back Intro Video:"
 msgstr "Pomiń Intro:"
 
-#: ../base/ufos/ui/options.ufo:639
+#: ../base/ufos/ui/options.ufo:667
 msgid "Default is to play the intro video just once at the first game start."
 msgstr "Standardowo odtwarza Intro tylko przy pierwszym uruchomieniu gry."
 
-#: ../base/ufos/ui/options.ufo:663
+#: ../base/ufos/ui/options.ufo:691
 msgid "Texture Settings"
 msgstr "Ustawienia Tekstur"
 
-#: ../base/ufos/ui/options.ufo:671
+#: ../base/ufos/ui/options.ufo:699
 msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:672
+#: ../base/ufos/ui/options.ufo:700
 msgid "Resolution Cap:"
 msgstr "Rozdzielczość:"
 
-#: ../base/ufos/ui/options.ufo:679
+#: ../base/ufos/ui/options.ufo:707
 msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:685 ../base/ufos/ui/options.ufo:1086
-#: ../base/ufos/ui/options.ufo:1242
+#: ../base/ufos/ui/options.ufo:713 ../base/ufos/ui/options.ufo:1114
+#: ../base/ufos/ui/options.ufo:1270
 msgid "Low"
 msgstr "Niski"
 
-#: ../base/ufos/ui/options.ufo:689 ../base/ufos/ui/options.ufo:1090
-#: ../base/ufos/ui/options.ufo:1256
+#: ../base/ufos/ui/options.ufo:717 ../base/ufos/ui/options.ufo:1118
+#: ../base/ufos/ui/options.ufo:1284
 msgid "Medium"
 msgstr "Średni"
 
-#: ../base/ufos/ui/options.ufo:693 ../base/ufos/ui/options.ufo:1094
+#: ../base/ufos/ui/options.ufo:721 ../base/ufos/ui/options.ufo:1122
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Normal"
 msgstr "Standardowy"
 
-#: ../base/ufos/ui/options.ufo:697 ../base/ufos/ui/options.ufo:1098
-#: ../base/ufos/ui/options.ufo:1270
+#: ../base/ufos/ui/options.ufo:725 ../base/ufos/ui/options.ufo:1126
+#: ../base/ufos/ui/options.ufo:1298
 msgid "High"
 msgstr "Wysoki"
 
-#: ../base/ufos/ui/options.ufo:701 client/cl_team.cpp:191
+#: ../base/ufos/ui/options.ufo:729 client/cl_team.cpp:191
 msgid "Excellent"
 msgstr "Wyśmienity"
 
-#: ../base/ufos/ui/options.ufo:705
+#: ../base/ufos/ui/options.ufo:733
 msgid "Extreme"
 msgstr "Ekstramalny"
 
-#: ../base/ufos/ui/options.ufo:715
+#: ../base/ufos/ui/options.ufo:743
 msgid "Sets the texture filtering and mipmapping method."
 msgstr "Ustaw filtrowanie tekstur i metodę mip-mapowania."
 
-#: ../base/ufos/ui/options.ufo:716
+#: ../base/ufos/ui/options.ufo:744
 msgid "Filtering:"
 msgstr "Filtrowanie:"
 
-#: ../base/ufos/ui/options.ufo:729
+#: ../base/ufos/ui/options.ufo:757
 msgid "No filtering, no mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:733
+#: ../base/ufos/ui/options.ufo:761
 msgid "Bilinear filtering, no mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:737
+#: ../base/ufos/ui/options.ufo:765
 msgid "No filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:741
+#: ../base/ufos/ui/options.ufo:769
 msgid "Bilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:745
+#: ../base/ufos/ui/options.ufo:773
 msgid "Trilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:749
+#: ../base/ufos/ui/options.ufo:777
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:759
+#: ../base/ufos/ui/options.ufo:787
 msgid ""
 "Enable texture compression for better memory performance, disable for better "
 "rendering quality."
@@ -27431,11 +27431,11 @@ msgstr ""
 "Włącz kompresję tekstur dla lepszej wydajności pamięci, wyłącz dla lepszej "
 "jakości renderowania."
 
-#: ../base/ufos/ui/options.ufo:760
+#: ../base/ufos/ui/options.ufo:788
 msgid "Compression:"
 msgstr "Kompresja:"
 
-#: ../base/ufos/ui/options.ufo:775
+#: ../base/ufos/ui/options.ufo:803
 msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
@@ -27443,11 +27443,11 @@ msgstr ""
 "Poziom szczegółów tekstur 'LoD'. Włączenie może skutkować rozmyciem tekstur "
 "w niewielkim zbliżeniu."
 
-#: ../base/ufos/ui/options.ufo:776
+#: ../base/ufos/ui/options.ufo:804
 msgid "LoD:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:791
+#: ../base/ufos/ui/options.ufo:819
 msgid ""
 "The degree or ratio of anisotropic filtering. High ratios will make distant "
 "textures appear more sharp. Very high ratios are only recommended when "
@@ -27457,11 +27457,11 @@ msgstr ""
 "dalsze obiekty będą bardziej ostre. Bardzo wysoki wskaźnik jest polecany "
 "jedynie grając w wysokich rozdzielczościach."
 
-#: ../base/ufos/ui/options.ufo:792
+#: ../base/ufos/ui/options.ufo:820
 msgid "Anisotropy Level:"
 msgstr "Stopień anizotropi:"
 
-#: ../base/ufos/ui/options.ufo:805
+#: ../base/ufos/ui/options.ufo:833
 msgid ""
 "Very high values are only recommended when playing in very high screen "
 "resolutions."
@@ -27469,52 +27469,52 @@ msgstr ""
 "Bardzo duże wartości są polecane jedynie przy grze w bardzo wysokiej "
 "rozdzielczości."
 
-#: ../base/ufos/ui/options.ufo:818
+#: ../base/ufos/ui/options.ufo:846
 msgid "OpenGL Settings"
 msgstr "Ustawienia OpenGL"
 
-#: ../base/ufos/ui/options.ufo:828
+#: ../base/ufos/ui/options.ufo:856
 msgid ""
 "OpenGL GLSL Shaders are available only if your graphics-card driver fully "
 "supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading "
 "techniques."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:829
+#: ../base/ufos/ui/options.ufo:857
 msgid "GLSL Shaders:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:836
+#: ../base/ufos/ui/options.ufo:864
 msgid "Set the OpenGL shader quality - or disable them."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:846
+#: ../base/ufos/ui/options.ufo:874
 msgid "Disabled"
 msgstr "Wyłączone"
 
-#: ../base/ufos/ui/options.ufo:851
+#: ../base/ufos/ui/options.ufo:879
 msgid "Low quality"
 msgstr "Niska jakość"
 
-#: ../base/ufos/ui/options.ufo:856
+#: ../base/ufos/ui/options.ufo:884
 msgid "Medium quality"
 msgstr "Średnia jakość"
 
-#: ../base/ufos/ui/options.ufo:861
+#: ../base/ufos/ui/options.ufo:889
 msgid "High quality"
 msgstr "Wysoka jakość"
 
-#: ../base/ufos/ui/options.ufo:884
+#: ../base/ufos/ui/options.ufo:912
 msgid ""
 "Vertex Buffers are submitting extensible arrays of vertex attributes to be "
 "mapped into the GPU for fast drawing."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:885
+#: ../base/ufos/ui/options.ufo:913
 msgid "Vertex Buffers:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:900
+#: ../base/ufos/ui/options.ufo:928
 msgid ""
 "OpenGL multisample buffers provide a mechanism to antialias all GL "
 "primitives. / The Swap Interval selects when a buffer swap will occur. The "
@@ -27522,154 +27522,154 @@ msgid ""
 "off')."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:901
+#: ../base/ufos/ui/options.ufo:929
 msgid "Multisample Buffers / Swap Interval:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:907
+#: ../base/ufos/ui/options.ufo:935
 msgid ""
 "Choose between 0-4 Multisample Buffers. Higher values will provide better "
 "antialiasing and will enhance picture quality."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:922
+#: ../base/ufos/ui/options.ufo:950
 msgid ""
 "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync "
 "on (better quality)."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:940
+#: ../base/ufos/ui/options.ufo:968
 msgid "Post-processing shader effects like glowing textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:941
+#: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:947
+#: ../base/ufos/ui/options.ufo:975
 #, fuzzy
 msgid "Enable post processing shader effects."
 msgstr "Włącz efekty pogody."
 
-#: ../base/ufos/ui/options.ufo:957
+#: ../base/ufos/ui/options.ufo:985
 msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:958
+#: ../base/ufos/ui/options.ufo:986
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:970
+#: ../base/ufos/ui/options.ufo:998
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:999
+#: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1000
+#: ../base/ufos/ui/options.ufo:1028
 #, fuzzy
 msgid "Texture Normalmapping:"
 msgstr "Kompresja tekstur:"
 
-#: ../base/ufos/ui/options.ufo:1006
+#: ../base/ufos/ui/options.ufo:1034
 msgid "Enable normal-/bumpmapping."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1017
+#: ../base/ufos/ui/options.ufo:1045
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "Ilośc światła emitowanego przez słońce i padającego na ziemię."
 
-#: ../base/ufos/ui/options.ufo:1018
+#: ../base/ufos/ui/options.ufo:1046
 msgid "Geo Ambient Lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1043
+#: ../base/ufos/ui/options.ufo:1071
 msgid "At the moment these are just drop-shadows."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1044
+#: ../base/ufos/ui/options.ufo:1072
 msgid "Shadows:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1050
+#: ../base/ufos/ui/options.ufo:1078
 msgid "Enable shadows."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1062
+#: ../base/ufos/ui/options.ufo:1090
 msgid "Light and Shadow"
 msgstr "Swiatło i Cień"
 
-#: ../base/ufos/ui/options.ufo:1072
+#: ../base/ufos/ui/options.ufo:1100
 msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1073
+#: ../base/ufos/ui/options.ufo:1101
 msgid "Lightmap Block Size:"
 msgstr "Rozmiar bloku lightmap:"
 
-#: ../base/ufos/ui/options.ufo:1080
+#: ../base/ufos/ui/options.ufo:1108
 msgid ""
 "Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
 "2048x2048 pixel."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1121
+#: ../base/ufos/ui/options.ufo:1149
 msgid "Enabled by default for compatibility reasons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1122
+#: ../base/ufos/ui/options.ufo:1150
 msgid "Intel Graphics Hardware Hack:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1128
+#: ../base/ufos/ui/options.ufo:1156
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1161
+#: ../base/ufos/ui/options.ufo:1189
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1162
+#: ../base/ufos/ui/options.ufo:1190
 msgid "Flares:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1177
+#: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1178
+#: ../base/ufos/ui/options.ufo:1206
 #, fuzzy
 msgid "Coronas:"
 msgstr "Kontrast:"
 
-#: ../base/ufos/ui/options.ufo:1193
+#: ../base/ufos/ui/options.ufo:1221
 msgid ""
 "Fog does not relate to any weather effect here, but when enabled distant "
 "textures on the battlescape are faded out."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1194
+#: ../base/ufos/ui/options.ufo:1222
 msgid "Fog:"
 msgstr "Mgła:"
 
-#: ../base/ufos/ui/options.ufo:1209
+#: ../base/ufos/ui/options.ufo:1237
 msgid "Weather effects like rain or snow."
 msgstr "Efekty pogodowe jak deszcz lub śnieg."
 
-#: ../base/ufos/ui/options.ufo:1210
+#: ../base/ufos/ui/options.ufo:1238
 msgid "Weather Effects:"
 msgstr "Efekty pogody:"
 
-#: ../base/ufos/ui/options.ufo:1225
+#: ../base/ufos/ui/options.ufo:1253
 msgid ""
 "The material system is used to display texture animations, effects like "
 "rotating or stretching or scrolling textures and manipulate rendering "
@@ -27677,81 +27677,81 @@ msgid ""
 "defined textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1226
+#: ../base/ufos/ui/options.ufo:1254
 msgid "Material System:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1239
+#: ../base/ufos/ui/options.ufo:1267
 msgid "Switch to low video settings"
 msgstr "Przełącz na niską jakość obrazu"
 
-#: ../base/ufos/ui/options.ufo:1253
+#: ../base/ufos/ui/options.ufo:1281
 msgid "Switch to medium video settings"
 msgstr "Przełącz na średnią jakość obrazu"
 
-#: ../base/ufos/ui/options.ufo:1267
+#: ../base/ufos/ui/options.ufo:1295
 msgid "Switch to very high video settings"
 msgstr "Przełącz na wysoką jakość obrazu"
 
-#: ../base/ufos/ui/options.ufo:1296
+#: ../base/ufos/ui/options.ufo:1324
 msgid "Audio Settings"
 msgstr "Ustawienia Dźwięku"
 
-#: ../base/ufos/ui/options.ufo:1313
+#: ../base/ufos/ui/options.ufo:1341
 msgid "Enable or disable sound."
 msgstr "Włącz lub wyłącz dźwięk."
 
-#: ../base/ufos/ui/options.ufo:1314
+#: ../base/ufos/ui/options.ufo:1342
 msgid "Enable Audio:"
 msgstr "Włącz Dźwięk:"
 
-#: ../base/ufos/ui/options.ufo:1370
+#: ../base/ufos/ui/options.ufo:1398
 msgid "Sound Effects:"
 msgstr "Efekty Dźwiękowe:"
 
-#: ../base/ufos/ui/options.ufo:1395
+#: ../base/ufos/ui/options.ufo:1423
 msgid "Menu Sounds:"
 msgstr "Dźwięki w Menu:"
 
-#: ../base/ufos/ui/options.ufo:1401
+#: ../base/ufos/ui/options.ufo:1429
 msgid "Turn the menu sounds on or off."
 msgstr "Załącza lub wyłącza dźwięki w menu."
 
-#: ../base/ufos/ui/options.ufo:1411
+#: ../base/ufos/ui/options.ufo:1439
 msgid "Advanced Audio Options"
 msgstr "Zaawansowane Opcje Dźwięku"
 
-#: ../base/ufos/ui/options.ufo:1421
+#: ../base/ufos/ui/options.ufo:1449
 msgid ""
 "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr ""
 "Częstotliwość próbkowania w kHz. Wyskoka wartość to lepsza jakość dźwięku."
 
-#: ../base/ufos/ui/options.ufo:1422
+#: ../base/ufos/ui/options.ufo:1450
 msgid "Audio Sample Rate:"
 msgstr "Próbkowanie Audio:"
 
-#: ../base/ufos/ui/options.ufo:1456
+#: ../base/ufos/ui/options.ufo:1484
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Uruchom ponownie system dźwięku i zartwierdź swoje ustawienia."
 
-#: ../base/ufos/ui/options.ufo:1479
+#: ../base/ufos/ui/options.ufo:1507
 msgid "Gameplay Settings"
 msgstr "Ustawienia Rozgrywki"
 
-#: ../base/ufos/ui/options.ufo:1486
+#: ../base/ufos/ui/options.ufo:1514
 msgid "Battlescape Camera Settings"
 msgstr "Ustawienia Kamery Taktycznej"
 
-#: ../base/ufos/ui/options.ufo:1496
+#: ../base/ufos/ui/options.ufo:1524
 msgid "Scroll Speed:"
 msgstr "Szybk. przewijania:"
 
-#: ../base/ufos/ui/options.ufo:1520
+#: ../base/ufos/ui/options.ufo:1548
 msgid "Rotation Speed:"
 msgstr "Szybk. obrotu:"
 
-#: ../base/ufos/ui/options.ufo:1544
+#: ../base/ufos/ui/options.ufo:1572
 msgid ""
 "The move deceleration of the battlescape camera. Lower this value if you "
 "want smoother camera movement, increase it if you want cameramovement to "
@@ -27760,11 +27760,11 @@ msgstr ""
 "Obniż tę wartość dla płynnego ruchu kamery. Zwiększ ją jeżeli chcesz by ruch "
 "kamery zwalniał szybciej, lub zatrzymywał się natychmiast."
 
-#: ../base/ufos/ui/options.ufo:1545
+#: ../base/ufos/ui/options.ufo:1573
 msgid "Move Deceleration:"
 msgstr "Opóźnienie Ruchu:"
 
-#: ../base/ufos/ui/options.ufo:1569
+#: ../base/ufos/ui/options.ufo:1597
 msgid ""
 "Isometric Mode means the 3D world will be rendered without perspective "
 "correction."
@@ -27772,11 +27772,11 @@ msgstr ""
 "Tryb Izometryczny oznacza że świat 3D będzie przedstawiony bez korygowania "
 "perspektywy."
 
-#: ../base/ufos/ui/options.ufo:1570
+#: ../base/ufos/ui/options.ufo:1598
 msgid "Isometric Mode:"
 msgstr "Tryb izometryczny:"
 
-#: ../base/ufos/ui/options.ufo:1585
+#: ../base/ufos/ui/options.ufo:1613
 msgid ""
 "Center the camera view automatically at the soldier when selecting it, or at "
 "the enemy when he is shooting or appearing."
@@ -27784,23 +27784,23 @@ msgstr ""
 "Centruje automatycznie widok kamery na wybranym żołnierzu, lub na wrogu "
 "kiedy strzela albo pojawia się."
 
-#: ../base/ufos/ui/options.ufo:1586
+#: ../base/ufos/ui/options.ufo:1614
 msgid "Center View:"
 msgstr "Centruj widok:"
 
-#: ../base/ufos/ui/options.ufo:1601
+#: ../base/ufos/ui/options.ufo:1629
 msgid "Battlescape Gameplay Settings"
 msgstr "Ustawienia Rozgrywki Taktycznej"
 
-#: ../base/ufos/ui/options.ufo:1611
+#: ../base/ufos/ui/options.ufo:1639
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "Wybór rodzaju 'HUD' w trybie taktycznym. "
 
-#: ../base/ufos/ui/options.ufo:1612
+#: ../base/ufos/ui/options.ufo:1640
 msgid "HUD Design:"
 msgstr "Widok HUD:"
 
-#: ../base/ufos/ui/options.ufo:1628
+#: ../base/ufos/ui/options.ufo:1656
 msgid ""
 "Enabling this will give you a preview of your actions on the battlescape "
 "which you then have to confirm."
@@ -27808,11 +27808,11 @@ msgstr ""
 "Załączenie tej opcji daje ci możliwość podglądu zaplanowanej w trybie "
 "taktycznym akcji, której wykonanie musisz potem potwierdzać."
 
-#: ../base/ufos/ui/options.ufo:1629
+#: ../base/ufos/ui/options.ufo:1657
 msgid "Confirm Actions:"
 msgstr "Potwierdzaj akcje:"
 
-#: ../base/ufos/ui/options.ufo:1636
+#: ../base/ufos/ui/options.ufo:1664
 msgid ""
 "'No' means all your orders on the battlescape will be executed immediately. "
 "'Yes' means you will be prompted to confirm all of your orders before the "
@@ -27824,19 +27824,19 @@ msgstr ""
 "dodatkowym potwierdzaniem. 'Tylko ruch' wyświetla jedynie trasę marszu nim "
 "potwierdzisz ruch żołnierza."
 
-#: ../base/ufos/ui/options.ufo:1642 po/OTHER_STRINGS:4
+#: ../base/ufos/ui/options.ufo:1670 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Tak"
 
-#: ../base/ufos/ui/options.ufo:1646 po/OTHER_STRINGS:5
+#: ../base/ufos/ui/options.ufo:1674 po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Nie"
 
-#: ../base/ufos/ui/options.ufo:1650
+#: ../base/ufos/ui/options.ufo:1678
 msgid "Moving only"
 msgstr "Tylko ruch"
 
-#: ../base/ufos/ui/options.ufo:1659
+#: ../base/ufos/ui/options.ufo:1687
 msgid ""
 "Autostand regulates if your soldier should automatically stand up when he is "
 "getting the order to move while being crouched."
@@ -27844,117 +27844,130 @@ msgstr ""
 "Automatyczne Wstawanie decyduje o tym czy Twój żołnierz podniesie się "
 "automatycznie gdy otrzyma polecenie ruchu."
 
-#: ../base/ufos/ui/options.ufo:1660
+#: ../base/ufos/ui/options.ufo:1688
 msgid "Autostand:"
 msgstr "Automatyczne Wstawanie:"
 
-#: ../base/ufos/ui/options.ufo:1675
+#: ../base/ufos/ui/options.ufo:1703
 msgid "Actor Speed:"
 msgstr "Szybkość postaci:"
 
-#: ../base/ufos/ui/options.ufo:1686
+#: ../base/ufos/ui/options.ufo:1714
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr "Wybierz pomiędzy 0-9, wyższa wartość oznacza większą prędkość postaci."
 
-#: ../base/ufos/ui/options.ufo:1699
+#: ../base/ufos/ui/options.ufo:1727
 msgid "Geoscape Options"
 msgstr "Opcje Widoku Globu"
 
-#: ../base/ufos/ui/options.ufo:1709
+#: ../base/ufos/ui/options.ufo:1737
 msgid ""
 "3D or 2D geoscape. To enable this option you have to start a new campaign "
 "first."
 msgstr "Glob 3D lub 2D. Aktywacja tej opcji wymaga rozpoczęcia nowej kampanii."
 
-#: ../base/ufos/ui/options.ufo:1710
+#: ../base/ufos/ui/options.ufo:1738
 msgid "3D Geoscape:"
 msgstr "Widok 3D globu:"
 
-#: ../base/ufos/ui/options.ufo:1725
+#: ../base/ufos/ui/options.ufo:1753
 msgid "Show/Hide the panel decoration on the geoscape."
 msgstr "Pokaż/Ukryj panel dekoracyjny w widoku globu."
 
-#: ../base/ufos/ui/options.ufo:1726
+#: ../base/ufos/ui/options.ufo:1754
 msgid "Show decoration:"
 msgstr "Pokazuj dekorację:"
 
-#: ../base/ufos/ui/options.ufo:1741
+#: ../base/ufos/ui/options.ufo:1769
 msgid "The minimum/maximum zoom of the geoscape camera"
 msgstr "Minimalna/maksymalna odległość kamery w widoku globu"
 
-#: ../base/ufos/ui/options.ufo:1742
+#: ../base/ufos/ui/options.ufo:1770
 msgid "Min/Max Geo-Cam Zoom:"
 msgstr "Min./Maks. odległość Glob-Kam:"
 
-#: ../base/ufos/ui/options.ufo:1749
+#: ../base/ufos/ui/options.ufo:1777
 msgid "Minimum zoom level of the geoscape camera"
 msgstr "Minimalna odległość ustawienia kamery w widoku globu."
 
-#: ../base/ufos/ui/options.ufo:1783
+#: ../base/ufos/ui/options.ufo:1811
 msgid "1.00"
 msgstr "1.00"
 
-#: ../base/ufos/ui/options.ufo:1790
+#: ../base/ufos/ui/options.ufo:1818
 msgid "Maximum zoom level of the geoscape camera"
 msgstr "Maksymalna odległość ustawienia kamery w widoku globu"
 
-#: ../base/ufos/ui/options.ufo:1797
+#: ../base/ufos/ui/options.ufo:1825
 msgid "2.0"
 msgstr "2.00"
 
-#: ../base/ufos/ui/options.ufo:1802
+#: ../base/ufos/ui/options.ufo:1830
 msgid "4.00"
 msgstr "4.00"
 
-#: ../base/ufos/ui/options.ufo:1808
+#: ../base/ufos/ui/options.ufo:1836
 msgid "6.00"
 msgstr "6.00"
 
-#: ../base/ufos/ui/options.ufo:1813
+#: ../base/ufos/ui/options.ufo:1841
 msgid "8.00"
 msgstr "8.00"
 
-#: ../base/ufos/ui/options.ufo:1818
+#: ../base/ufos/ui/options.ufo:1846
 msgid "10.00"
 msgstr "10.00"
 
-#: ../base/ufos/ui/options.ufo:1823
+#: ../base/ufos/ui/options.ufo:1851
 msgid "12.00"
 msgstr "12.00"
 
-#: ../base/ufos/ui/options.ufo:1832
+#: ../base/ufos/ui/options.ufo:1860
 msgid "Joystick Settings"
 msgstr "Ustawienia joysticka"
 
-#: ../base/ufos/ui/options.ufo:1842
+#: ../base/ufos/ui/options.ufo:1870
 msgid "Enable:"
 msgstr "Włączone:"
 
-#: ../base/ufos/ui/options.ufo:1874
+#: ../base/ufos/ui/options.ufo:1902
 msgid "Joystick or Joypad:"
 msgstr "Joystick:"
 
-#: ../base/ufos/ui/options.ufo:1880
+#: ../base/ufos/ui/options.ufo:1908
 msgid "Available game controllers."
 msgstr "Dostępne kontrolery gry."
 
-#: ../base/ufos/ui/options.ufo:1891
+#: ../base/ufos/ui/options.ufo:1919
 msgid ""
 "Adjust the joystick threshold to a high enough value, so movement of the "
 "analogue stick will be recognized."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1892
+#: ../base/ufos/ui/options.ufo:1920
 msgid "Threshold:"
 msgstr "Próg:"
 
-#: ../base/ufos/ui/options.ufo:1941
+#: ../base/ufos/ui/options.ufo:1969
 msgid "Show Keys"
 msgstr "Pokaż Klawisze"
 
-#: ../base/ufos/ui/options.ufo:1975
+#: ../base/ufos/ui/options.ufo:2003
 msgid "Key Bindings"
 msgstr "Skróty Klawiszowe"
+
+#: ../base/ufos/ui/options.ufo:2026
+msgid "Menu"
+msgstr "Menu"
+
+#: ../base/ufos/ui/options.ufo:2030
+msgid "Global"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:2034
+#, fuzzy
+msgid "Battlescape"
+msgstr "^BTryb Taktyczny"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -28987,70 +29000,70 @@ msgstr "Seria 25 pocisków"
 msgid "Autocannon Module"
 msgstr "Moduł Działka Automatycznego"
 
-#: client/battlescape/cl_actor.cpp:739
+#: client/battlescape/cl_actor.cpp:756
 #: client/battlescape/events/e_server.cpp:40
 msgid "It is not your turn!"
 msgstr "To nie jest Twoja tura!"
 
-#: client/battlescape/cl_actor.cpp:1003
+#: client/battlescape/cl_actor.cpp:1020
 msgid "You cannot reload this unknown item."
 msgstr "Nie możesz przeładować ten nieznany przedmiot."
 
-#: client/battlescape/cl_actor.cpp:1043 client/cl_inventory.cpp:76
+#: client/battlescape/cl_actor.cpp:1060 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
 msgstr "Ten żołnierz nie może nieść nic więcej."
 
-#: client/battlescape/cl_actor.cpp:1043 client/battlescape/cl_hud.cpp:1381
+#: client/battlescape/cl_actor.cpp:1060 client/battlescape/cl_hud.cpp:1381
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
 msgid "Warning"
 msgstr "Uwaga"
 
-#: client/battlescape/cl_actor.cpp:1890
+#: client/battlescape/cl_actor.cpp:1907
 msgid "Unknown alien race"
 msgstr "Nieznana rasa obcych"
 
-#: client/battlescape/cl_actor.cpp:2557
+#: client/battlescape/cl_actor.cpp:2574
 msgid "Toggle to next living actor"
 msgstr "Przełącza na następną żywą postać"
 
-#: client/battlescape/cl_actor.cpp:2558
+#: client/battlescape/cl_actor.cpp:2575
 msgid "Toggle to previous living actor"
 msgstr "Przełącza na poprzednią żywą postać"
 
-#: client/battlescape/cl_actor.cpp:2559
+#: client/battlescape/cl_actor.cpp:2576
 msgid "Select an actor from list"
 msgstr "Wybierz postać z listy."
 
-#: client/battlescape/cl_actor.cpp:2560
+#: client/battlescape/cl_actor.cpp:2577
 msgid "Update an actor"
 msgstr "Uaktualnij postać"
 
-#: client/battlescape/cl_actor.cpp:2561
+#: client/battlescape/cl_actor.cpp:2578
 msgid "Toggle stand/crouch."
 msgstr "Przełącza przyklęknij/powstań"
 
-#: client/battlescape/cl_actor.cpp:2562
+#: client/battlescape/cl_actor.cpp:2579
 msgid "Toggle the headgear"
 msgstr "Zmień wyp. nagłowne"
 
-#: client/battlescape/cl_actor.cpp:2563
+#: client/battlescape/cl_actor.cpp:2580
 msgid "Use"
 msgstr "Użyj"
 
-#: client/battlescape/cl_actor.cpp:2564
+#: client/battlescape/cl_actor.cpp:2581
 msgid "Confirm the current action"
 msgstr "Potwierdź bieżącą akcję"
 
-#: client/battlescape/cl_actor.cpp:2565
+#: client/battlescape/cl_actor.cpp:2582
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Pokaż następnego obcego w zasięgu wzroku postaci."
 
-#: client/battlescape/cl_actor.cpp:2567
+#: client/battlescape/cl_actor.cpp:2584
 msgid "Toggle camera to the next visible alien."
 msgstr "Przełącza widok na następnego obcego."
 
-#: client/battlescape/cl_actor.cpp:2568
+#: client/battlescape/cl_actor.cpp:2585
 msgid "Toggle camera to the previous visible alien."
 msgstr "Przełącza widok na poprzedniego obcego"
 
@@ -29707,7 +29720,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Paliwo:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:196
-#: client/cgame/campaign/cp_ufopedia.cpp:351
+#: client/cgame/campaign/cp_ufopedia.cpp:345
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Zasięg:\t%i km\n"
@@ -29838,13 +29851,13 @@ msgstr[1] "%i dni do ukończenia\n"
 msgstr[2] "%i dni do ukończenia\n"
 
 #: client/cgame/campaign/cp_base.cpp:1449
-#: client/cgame/campaign/cp_ufopedia.cpp:216
+#: client/cgame/campaign/cp_ufopedia.cpp:210
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Opłaty:\t%i c\n"
 
 #: client/cgame/campaign/cp_base.cpp:1452
-#: client/cgame/campaign/cp_ufopedia.cpp:213
+#: client/cgame/campaign/cp_ufopedia.cpp:207
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Zależy od:\t%s\n"
@@ -29862,9 +29875,9 @@ msgstr ""
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
-#: client/cgame/cl_game_team.cpp:310 client/cgame/cl_game_team.cpp:320
-#: client/cgame/cl_game_team.cpp:325
+#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
+#: client/cgame/cl_game_team.cpp:308 client/cgame/cl_game_team.cpp:318
+#: client/cgame/cl_game_team.cpp:323
 msgid "Note"
 msgstr "Adnotacja"
 
@@ -30183,7 +30196,7 @@ msgstr "Usuwanie"
 
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:216
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:619
-#: client/cgame/campaign/cp_ufopedia.cpp:213 client/input/cl_joystick.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:207 client/input/cl_joystick.cpp:282
 msgid "None"
 msgstr "Brak"
 
@@ -30391,10 +30404,13 @@ msgstr "Nie można zatrudnić tej osoby"
 
 #: client/cgame/campaign/cp_event.cpp:536
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:286 client/cgame/campaign/cp_save.cpp:308
+#: client/cgame/campaign/cp_save.cpp:285 client/cgame/campaign/cp_save.cpp:307
 #: client/cgame/campaign/cp_time.cpp:119
-#: client/cgame/campaign/cp_ufopedia.cpp:513
-#: client/cgame/campaign/cp_ufopedia.cpp:518
+#: client/cgame/campaign/cp_ufopedia.cpp:507
+#: client/cgame/campaign/cp_ufopedia.cpp:512
+#: client/cgame/campaign/cp_ufopedia.cpp:1044
+#: client/cgame/campaign/cp_ufopedia.cpp:1055
+#: client/cgame/campaign/cp_ufopedia.cpp:1071
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -31396,60 +31412,60 @@ msgstr "Brak opisu."
 msgid "No research proposal available."
 msgstr "Brak propozycji badań."
 
-#: client/cgame/campaign/cp_save.cpp:182
+#: client/cgame/campaign/cp_save.cpp:181
 msgid "Error decompressing data"
 msgstr "Błąd podczas dekompresji danych"
 
-#: client/cgame/campaign/cp_save.cpp:264
+#: client/cgame/campaign/cp_save.cpp:263
 msgid "No campaign active."
 msgstr "Brak aktywnej kampanii."
 
-#: client/cgame/campaign/cp_save.cpp:270
+#: client/cgame/campaign/cp_save.cpp:269
 msgid "Nothing to save yet."
 msgstr "Nic do zapisania."
 
-#: client/cgame/campaign/cp_save.cpp:318
+#: client/cgame/campaign/cp_save.cpp:317
 msgid "Could not allocate enough memory to save this game"
 msgstr "Nie można zapisać - zbyt mało pamięci"
 
-#: client/cgame/campaign/cp_save.cpp:340
+#: client/cgame/campaign/cp_save.cpp:339
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "Błąd podczas kompresji danych - ustaw save_compressed na 0"
 
-#: client/cgame/campaign/cp_save.cpp:387 client/cgame/campaign/cp_save.cpp:389
+#: client/cgame/campaign/cp_save.cpp:386 client/cgame/campaign/cp_save.cpp:388
 msgid "Error saving game."
 msgstr "Błąd podczas zapisu gry."
 
-#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:484 client/cgame/campaign/cp_save.cpp:507
+#: client/cgame/campaign/cp_save.cpp:589
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1209
 #: client/cl_irc.cpp:1434 client/cl_main.cpp:559 client/cl_main.cpp:563
 #: client/cl_main.cpp:588
 msgid "Error"
 msgstr "Błąd"
 
-#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:484 client/cgame/campaign/cp_save.cpp:507
+#: client/cgame/campaign/cp_save.cpp:589
 msgid "Error loading game."
 msgstr "Błąd podczas wczytywania gry."
 
-#: client/cgame/campaign/cp_save.cpp:577
+#: client/cgame/campaign/cp_save.cpp:567
 msgid "QuickSave"
 msgstr "Szybki zapis"
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:571
 msgid "Campaign was successfully saved."
 msgstr "Poprawnie zapisano kampanię."
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:571
 msgid "Quicksave"
 msgstr "Szybkie zapisywanie"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:591
 msgid "Campaign loaded"
 msgstr "Kampania załadowana"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:591
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Kampania załadowana ze slotu \"quicksave\""
 
@@ -31476,7 +31492,6 @@ msgstr ""
 "Atakowanych:\t%i\n"
 
 #: client/cgame/campaign/cp_statistics.cpp:70
-#: client/cgame/campaign/cp_ufopedia.cpp:1183
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -31764,48 +31779,48 @@ msgstr "Nasz radar wykrył %s blisko %s"
 msgid "Our radar has lost the tracking on %s"
 msgstr "Radar zgubił namiar na %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:142
+#: client/cgame/campaign/cp_ufopedia.cpp:136
 msgid "Cruising speed"
 msgstr "Prędkość przelotowa"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:144
+#: client/cgame/campaign/cp_ufopedia.cpp:138
 msgid "Maximum speed"
 msgstr "Prędkość maksymalna"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:148
+#: client/cgame/campaign/cp_ufopedia.cpp:142
 msgid "ECM"
 msgstr "ESZ"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:150
+#: client/cgame/campaign/cp_ufopedia.cpp:144
 msgid "Aircraft damage"
 msgstr "Uszkodzenia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:152
+#: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Celność"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:154
+#: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "Fuel size"
 msgstr "Paliwo"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:156
+#: client/cgame/campaign/cp_ufopedia.cpp:150
 msgid "Weapon range"
 msgstr "Zasięg broni"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:158
+#: client/cgame/campaign/cp_ufopedia.cpp:152
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Unknown weapon skill"
 msgstr "Nieznana właściwość broni"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:177
+#: client/cgame/campaign/cp_ufopedia.cpp:171
 msgid "No requirements"
 msgstr "Brak wymagań"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:211
+#: client/cgame/campaign/cp_ufopedia.cpp:205
 msgid "Error - could not find building"
 msgstr "Błąd - nie można znaleźć modułu"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:214
+#: client/cgame/campaign/cp_ufopedia.cpp:208
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
@@ -31813,76 +31828,76 @@ msgstr[0] "Czas budowy:\t%i dzień\n"
 msgstr[1] "Czas budowy:\t%i dni\n"
 msgstr[2] "Czas budowy:\t%i dni\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:215
+#: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Koszt:\t%i c\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:266
+#: client/cgame/campaign/cp_ufopedia.cpp:260
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Waga:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:270
+#: client/cgame/campaign/cp_ufopedia.cpp:264
 msgid "Weapon for base defence system\n"
 msgstr "Uzbrojenie do system obronnego bazy\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:290
+#: client/cgame/campaign/cp_ufopedia.cpp:284
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Amunicja:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:292
+#: client/cgame/campaign/cp_ufopedia.cpp:286
 #: client/cl_inventory_callbacks.cpp:180
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Uszkodzenia:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:293
+#: client/cgame/campaign/cp_ufopedia.cpp:287
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Przeładowanie:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:310
+#: client/cgame/campaign/cp_ufopedia.cpp:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:312
+#: client/cgame/campaign/cp_ufopedia.cpp:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:315
-#: client/cgame/campaign/cp_ufopedia.cpp:374
-#: client/cgame/campaign/cp_ufopedia.cpp:376
-#: client/cgame/campaign/cp_ufopedia.cpp:412
-#: client/cgame/campaign/cp_ufopedia.cpp:414
+#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:368
+#: client/cgame/campaign/cp_ufopedia.cpp:370
+#: client/cgame/campaign/cp_ufopedia.cpp:406
+#: client/cgame/campaign/cp_ufopedia.cpp:408
 msgid "Unknown - need to research this"
 msgstr "Przedmiot nieznany - należy zbadać"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:342
-#: client/cgame/campaign/cp_ufopedia.cpp:347
+#: client/cgame/campaign/cp_ufopedia.cpp:336
+#: client/cgame/campaign/cp_ufopedia.cpp:341
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:355
+#: client/cgame/campaign/cp_ufopedia.cpp:349
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:367
+#: client/cgame/campaign/cp_ufopedia.cpp:361
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr "Wymaga Hangaru:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:371
+#: client/cgame/campaign/cp_ufopedia.cpp:365
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Maks. liczba żołnierzy:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:409
+#: client/cgame/campaign/cp_ufopedia.cpp:403
 #, c-format
 msgid ""
 "%s\n"
@@ -31891,15 +31906,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:535
+#: client/cgame/campaign/cp_ufopedia.cpp:529
 msgid "Proposal: "
 msgstr "Propozycja:"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:538
+#: client/cgame/campaign/cp_ufopedia.cpp:532
 msgid "Re: "
 msgstr "Odp:"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:552
+#: client/cgame/campaign/cp_ufopedia.cpp:546
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -31910,57 +31925,30 @@ msgstr ""
 "DO: %s\n"
 "DATA: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:625
+#: client/cgame/campaign/cp_ufopedia.cpp:619
 #, fuzzy, c-format
 msgid "UFOpaedia: %s (complete)"
 msgstr "Zawartość UFOpedii"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:678
-#: client/cgame/campaign/cp_ufopedia.cpp:687
+#: client/cgame/campaign/cp_ufopedia.cpp:672
+#: client/cgame/campaign/cp_ufopedia.cpp:681
 #, fuzzy, c-format
 msgid "UFOpaedia: %s"
 msgstr "UFOpedia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:684
+#: client/cgame/campaign/cp_ufopedia.cpp:678
 msgid "No pre-research description available."
 msgstr "Brak informacji przed zakończeniem badań."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1127
-#, c-format
-msgid "^BProposal: %s\t%i %s %02i\n"
-msgstr "^BPropozycja: %s\t%i %s %02i\n"
+#: client/cgame/campaign/cp_ufopedia.cpp:1043
+#, fuzzy, c-format
+msgid "Proposal: %s"
+msgstr "Propozycja:"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1131
-#, c-format
-msgid "Proposal: %s\t%i %s %02i\n"
-msgstr "Propozycja: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1141
-#, c-format
-msgid "^BRe: %s\t%i %s %02i\n"
-msgstr "^BOdp: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1145
-#, c-format
-msgid "Re: %s\t%i %s %02i\n"
-msgstr "Re: %s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1154
-#: client/cgame/campaign/cp_ufopedia.cpp:1165
-#, c-format
-msgid "^B%s\t%i %s %02i\n"
-msgstr "^B%s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1158
-#: client/cgame/campaign/cp_ufopedia.cpp:1169
-#, c-format
-msgid "%s\t%i %s %02i\n"
-msgstr "%s\t%i %s %02i\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:1180
-#, c-format
-msgid "^B%s\t%s\n"
-msgstr "^B%s\t%s\n"
+#: client/cgame/campaign/cp_ufopedia.cpp:1054
+#, fuzzy, c-format
+msgid "Re: %s"
+msgstr "Odp:"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32076,21 +32064,21 @@ msgstr "Zaatakuj teraz UFO - Krążownik"
 msgid "Launch"
 msgstr "Odpalenie"
 
-#: client/cgame/cl_game_team.cpp:310
+#: client/cgame/cl_game_team.cpp:308
 msgid "Error saving team. Nothing to save yet."
 msgstr "Błąd podczas zapisu drużyny. Nie ma jeszcze nic do zapisania."
 
-#: client/cgame/cl_game_team.cpp:316
+#: client/cgame/cl_game_team.cpp:314
 #, fuzzy
 msgid "New Team"
 msgstr "Nowa Drużyna"
 
-#: client/cgame/cl_game_team.cpp:320
+#: client/cgame/cl_game_team.cpp:318
 #, fuzzy
 msgid "Error saving team. Too many teams!"
 msgstr "Błąd podczas zapisu drużyny. Nie ma jeszcze nic do zapisania."
 
-#: client/cgame/cl_game_team.cpp:325
+#: client/cgame/cl_game_team.cpp:323
 msgid "Error saving team. Check free disk space!"
 msgstr "Błąd podczas zapisu drużyny. Sprawdź wolne miejsce na dysku!"
 
@@ -32292,7 +32280,7 @@ msgstr "Więcej szczęścia następnym razem"
 msgid "You've lost the game!"
 msgstr "Przegrałeś grę!"
 
-#: client/cl_console.cpp:298
+#: client/cl_console.cpp:293
 msgid "Show/hide ufoconsole."
 msgstr "Pokaż/ukryj 'ufoconsole'."
 
@@ -32493,18 +32481,6 @@ msgstr "Ta zmiana wymaga ponownego uruchomienia!"
 msgid "This change might require a restart."
 msgstr "Ta zmiana może wymagać ponownego uruchomienia."
 
-#: client/cl_menu.cpp:77
-msgid "^BGlobal bindings"
-msgstr "^BOgólne"
-
-#: client/cl_menu.cpp:82
-msgid "^BMenu bindings"
-msgstr "^BMenu"
-
-#: client/cl_menu.cpp:88
-msgid "^BBattlescape bindings"
-msgstr "^BTryb Taktyczny"
-
 #: client/cl_screen.cpp:127
 #, c-format
 msgid "Downloading [%s]"
@@ -32673,15 +32649,6 @@ msgstr "Do użycia w:\n"
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Do: %i Z: %i"
-
-#: client/ui/node/ui_node_keybinding.cpp:90
-#, c-format
-msgid "Key %s already bound"
-msgstr "Klawisz %s już został przypisany"
-
-#: client/ui/node/ui_node_keybinding.cpp:139
-msgid "NONE"
-msgstr "ŻADEN"
 
 #: client/ui/node/ui_node_window.cpp:250
 msgid "Drag to move window"
@@ -32870,6 +32837,39 @@ msgstr "Obcy"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Zrzut ekranu [Screenshot]"
+
+#~ msgid "^BProposal: %s\t%i %s %02i\n"
+#~ msgstr "^BPropozycja: %s\t%i %s %02i\n"
+
+#~ msgid "Proposal: %s\t%i %s %02i\n"
+#~ msgstr "Propozycja: %s\t%i %s %02i\n"
+
+#~ msgid "^BRe: %s\t%i %s %02i\n"
+#~ msgstr "^BOdp: %s\t%i %s %02i\n"
+
+#~ msgid "Re: %s\t%i %s %02i\n"
+#~ msgstr "Re: %s\t%i %s %02i\n"
+
+#~ msgid "^B%s\t%i %s %02i\n"
+#~ msgstr "^B%s\t%i %s %02i\n"
+
+#~ msgid "%s\t%i %s %02i\n"
+#~ msgstr "%s\t%i %s %02i\n"
+
+#~ msgid "^B%s\t%s\n"
+#~ msgstr "^B%s\t%s\n"
+
+#~ msgid "^BGlobal bindings"
+#~ msgstr "^BOgólne"
+
+#~ msgid "^BMenu bindings"
+#~ msgstr "^BMenu"
+
+#~ msgid "Key %s already bound"
+#~ msgstr "Klawisz %s już został przypisany"
+
+#~ msgid "NONE"
+#~ msgstr "ŻADEN"
 
 #~ msgid "Full Campaign"
 #~ msgstr "Pełna Kampania"
@@ -34180,9 +34180,6 @@ msgstr "Zrzut ekranu [Screenshot]"
 
 #~ msgid "Message Log"
 #~ msgstr "Rejestr Wiadomości"
-
-#~ msgid "Menu"
-#~ msgstr "Menu"
 
 #~ msgid "Stop Music"
 #~ msgstr "Muzyka Stop"

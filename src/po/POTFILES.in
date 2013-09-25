@@ -62,13 +62,11 @@
 ./client/cl_irc.cpp
 ./client/cl_language.cpp
 ./client/cl_main.cpp
-./client/cl_menu.cpp
 ./client/cl_screen.cpp
 ./client/cl_team.cpp
 ./client/input/cl_input.cpp
 ./client/input/cl_joystick.cpp
 ./client/ui/node/ui_node_container.cpp
-./client/ui/node/ui_node_keybinding.cpp
 ./client/ui/node/ui_node_window.cpp
 ./client/ui/ui_tooltip.cpp
 ./game/g_actor.cpp
