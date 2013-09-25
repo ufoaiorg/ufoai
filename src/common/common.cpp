@@ -89,7 +89,7 @@ struct timer {
 	int checks_high;
 	int checks_low;
 
-	event_func *func;
+	event_func* func;
 	void* data;
 };
 
@@ -103,7 +103,7 @@ public:
 typedef std::multiset<ScheduleEventPtr, CompareScheduleEvent> EventPriorityQueue;
 static EventPriorityQueue eventQueue;
 
-static void Schedule_Timer(cvar_t* freq, event_func *func, event_check_func *check, void* data);
+static void Schedule_Timer(cvar_t* freq, event_func* func, event_check_func* check, void* data);
 
 /*
 ==============================================================================
@@ -1361,7 +1361,7 @@ static void tick_timer (int now, void* data)
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, nullptr, nullptr, timer);
 }
 
-static void Schedule_Timer (cvar_t* freq, event_func *func, event_check_func *check, void* data)
+static void Schedule_Timer (cvar_t* freq, event_func* func, event_check_func* check, void* data)
 {
 	struct timer* const timer = Mem_PoolAllocType(struct timer, com_genericPool);
 	int i;
@@ -1393,7 +1393,7 @@ static void Schedule_Timer (cvar_t* freq, event_func *func, event_check_func *ch
  * @param delayFollowing Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false.
  *  This is needed e.g. for battlescape events to not play events too fast because the beginning of the event queue was blocked.
  */
-ScheduleEventPtr Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void* data)
+ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* check, event_clean_func *clean, void* data)
 {
 	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;
@@ -1506,7 +1506,7 @@ int CL_FilterEventQueue (event_filter *filter)
  * @param[in] check The event check callback that can be used to delay event
  * @param[in] data The userdata that was given at event scheduling
  */
-static bool Event_FilterAll (int when, event_func *func, event_check_func *check, void* data)
+static bool Event_FilterAll (int when, event_func* func, event_check_func* check, void* data)
 {
 	return false;
 }

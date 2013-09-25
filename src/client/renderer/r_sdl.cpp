@@ -35,7 +35,7 @@ static void R_SetSDLIcon (void)
 {
 #ifndef _WIN32
 #include "../../ports/linux/ufoicon.xbm"
-	SDL_Surface *icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
+	SDL_Surface* icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == nullptr)
 		return;
 #if SDL_VERSION_ATLEAST(2,0,0)

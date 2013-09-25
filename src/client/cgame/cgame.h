@@ -207,18 +207,18 @@ typedef struct cgame_import_s {
 	int (IMPORT* NET_ReadByte)  (dbuffer* buf);
 	int (IMPORT* NET_ReadStringLine)  (dbuffer* buf, char* string, size_t length);
 	int (IMPORT* NET_ReadString)  (dbuffer* buf, char* string, size_t length);
-	struct net_stream *(IMPORT* NET_Connect)  (const char* node, const char* service, stream_onclose_func *onclose);
-	void (IMPORT* NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func *func);
+	struct net_stream *(IMPORT* NET_Connect)  (const char* node, const char* service, stream_onclose_func* onclose);
+	void (IMPORT* NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func* func);
 	void (IMPORT* NET_OOB_Printf) (struct net_stream *s, const char* format, ...) __attribute__((format(__printf__,2,3)));
 	void (IMPORT* NET_OOB_Printf2) (const char* format, ...) __attribute__((format(__printf__,1,2)));
 	void *(IMPORT* NET_StreamGetData) (struct net_stream *s);
 	void (IMPORT* NET_StreamSetData) (struct net_stream *s, void *data);
 	void (IMPORT* NET_StreamFree) (struct net_stream *s);
 	const char* (IMPORT* NET_StreamPeerToName) (struct net_stream *s, char* dst, int len, bool appendPort);
-	void (IMPORT* NET_SockaddrToStrings) (struct datagram_socket *s, struct sockaddr *addr, char* node, size_t nodelen, char* service, size_t servicelen);
-	struct datagram_socket *(IMPORT* NET_DatagramSocketNew) (const char* node, const char* service, datagram_callback_func *func);
-	void (IMPORT* NET_DatagramBroadcast) (struct datagram_socket *s, const char* buf, int len, int port);
-	void (IMPORT* NET_DatagramSocketClose) (struct datagram_socket *s);
+	void (IMPORT* NET_SockaddrToStrings) (struct datagram_socket* s, struct sockaddr* addr, char* node, size_t nodelen, char* service, size_t servicelen);
+	struct datagram_socket* (IMPORT* NET_DatagramSocketNew) (const char* node, const char* service, datagram_callback_func* func);
+	void (IMPORT* NET_DatagramBroadcast) (struct datagram_socket* s, const char* buf, int len, int port);
+	void (IMPORT* NET_DatagramSocketClose) (struct datagram_socket* s);
 
 	/* xml functions */
 	xmlNode_t*  (IMPORT* XML_AddNode) (xmlNode_t* parent, const char* name);

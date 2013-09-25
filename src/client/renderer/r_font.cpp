@@ -570,8 +570,8 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
 static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCache_t* chunk)
 {
 	int w, h;
-	SDL_Surface *textSurface;
-	SDL_Surface *openGLSurface;
+	SDL_Surface* textSurface;
+	SDL_Surface* openGLSurface;
 	SDL_Rect rect = {0, 0, 0, 0};
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */

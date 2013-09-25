@@ -152,7 +152,7 @@ void R_ImageList_f (void)
 void R_LoadImage (const char* name, byte** pic, int* width, int* height)
 {
 	char filenameTemp[MAX_QPATH];
-	SDL_Surface *surf;
+	SDL_Surface* surf;
 
 	if (Q_strnull(name))
 		Com_Error(ERR_FATAL, "R_LoadImage: nullptr name");
@@ -564,7 +564,7 @@ image_t* R_FindImage (const char* pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	image_t* image;
-	SDL_Surface *surf;
+	SDL_Surface* surf;
 
 	if (!pname || !pname[0])
 		Com_Error(ERR_FATAL, "R_FindImage: nullptr name");
@@ -774,7 +774,7 @@ void R_ShutdownImages (void)
 
 static void R_ReloadImageData (image_t* image)
 {
-	SDL_Surface *surf;
+	SDL_Surface* surf;
 	if (image == r_noTexture || !image || !image->texnum)
 		return;
 

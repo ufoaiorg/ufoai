@@ -76,7 +76,7 @@ typedef struct pending_event_s {
 typedef struct serverInstanceStatic_s {
 	bool initialized;			/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
-	struct datagram_socket *netDatagramSocket;
+	struct datagram_socket* netDatagramSocket;
 	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */

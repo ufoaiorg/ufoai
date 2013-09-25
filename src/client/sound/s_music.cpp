@@ -48,7 +48,7 @@ enum {
 typedef struct music_s {
 	char currentTrack[MAX_QPATH];
 	char nextTrack[MAX_QPATH];
-	Mix_Music *data;
+	Mix_Music* data;
 	int category;
 	byte* buffer;
 	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run

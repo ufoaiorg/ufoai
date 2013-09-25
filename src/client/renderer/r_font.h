@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct font_s {
 	const char* name;
-	TTF_Font *font;
-	SDL_RWops *rw;				/**< ttf font reading structure for SDL_RWops */
+	TTF_Font* font;
+	SDL_RWops* rw;				/**< ttf font reading structure for SDL_RWops */
 	byte* buffer;				/**< loaded file */
 	int style;					/**< see also fontRenderStyle_t */
 	int lineSkip;				/**< TTF_FontLineSkip */

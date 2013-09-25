@@ -82,7 +82,7 @@ void AL_AddAliens (aircraft_t* aircraft)
 	if (aircraft->homebase->alienContainment == nullptr)
 		aircraft->homebase->alienContainment = new AlienContainment(CAP_Get(aircraft->homebase, CAP_ALIENS), nullptr);
 
-	AlienContainment *cont = aircraft->homebase->alienContainment;
+	AlienContainment* cont = aircraft->homebase->alienContainment;
 	if (!cont)
 		return;
 

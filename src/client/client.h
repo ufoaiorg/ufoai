@@ -74,7 +74,7 @@ typedef struct client_static_s {
 	struct net_stream *netStream;
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
-	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
+	int team;				/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
 	int teamSaveSlotIndex;	/**< currently loaded team slot, -1 if no team slot was loaded */
 
 	int currentSelectedMap;	/**< current selected multiplayer or skirmish map */
@@ -87,7 +87,7 @@ typedef struct client_static_s {
 #ifndef NO_HTTP
 	dlqueue_t* downloadQueue;	/**< queue of paths we need */
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
-	CURL *curl;
+	CURL* curl;
 #endif
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
@@ -113,7 +113,7 @@ typedef struct client_static_s {
 #endif
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-	SDL_Window *window;
+	SDL_Window* window;
 	SDL_GLContext context;
 #endif
 } client_static_t;

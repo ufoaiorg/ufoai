@@ -31,7 +31,7 @@ static r_framebuffer_t frameBufferObjects[MAX_GL_FRAMEBUFFERS];
 static GLuint frameBufferTextures[MAX_GL_FRAMEBUFFERS];
 
 static r_framebuffer_t screenBuffer;
-static GLenum *colorAttachments;
+static GLenum* colorAttachments;
 
 static GLuint R_GetFreeFBOTexture (void)
 {

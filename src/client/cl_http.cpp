@@ -459,7 +459,7 @@ static void CL_CheckAndQueueDownload (char* path)
 		/* search the user homedir to find the pk3 file */
 		if (pak) {
 			char gamePath[MAX_OSPATH];
-			FILE *f;
+			FILE* f;
 			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
 			f = fopen(gamePath, "rb");
 			if (!f)
@@ -583,14 +583,14 @@ static void CL_FinishHTTPDownload (void)
 {
 	int messagesInQueue, i;
 	CURLcode result;
-	CURL *curl;
+	CURL* curl;
 	long responseCode;
 	double timeTaken, fileSize;
 	char tempName[MAX_OSPATH];
 	bool isFile;
 
 	do {
-		CURLMsg *msg = curl_multi_info_read(multi, &messagesInQueue);
+		CURLMsg* msg = curl_multi_info_read(multi, &messagesInQueue);
 		dlhandle_t* dl = nullptr;
 
 		if (!msg) {

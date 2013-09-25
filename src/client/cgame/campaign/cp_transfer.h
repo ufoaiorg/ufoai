@@ -50,7 +50,7 @@ typedef struct transfer_s {
 	date_t event;					/**< When the transfer finish process should start. */
 
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
-	class AlienCargo *alienCargo;			/**< Alien cargo */
+	class AlienCargo* alienCargo;			/**< Alien cargo */
 	linkedList_t* employees[MAX_EMPL];
 	linkedList_t* aircraft;
 
@@ -101,7 +101,7 @@ typedef struct transferData_s {
 	int trItemsTmp[MAX_OBJDEFS];
 
 	/** @brief Current alien cargo. */
-	class AlienCargo *alienCargo;
+	class AlienCargo* alienCargo;
 
 	/** @brief Current personnel cargo. */
 	linkedList_t* trEmployeesTmp[MAX_EMPL];

@@ -62,7 +62,7 @@ static const char* SV_GetMapTitle (const MapInfo *map, const char* const mapname
 /**
  * @sa CL_ServerListDiscoveryCallback
  */
-static void SV_DiscoveryCallback (struct datagram_socket *s, const char* buf, int len, struct sockaddr *from)
+static void SV_DiscoveryCallback (struct datagram_socket* s, const char* buf, int len, struct sockaddr* from)
 {
 	const char match[] = "discover";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {

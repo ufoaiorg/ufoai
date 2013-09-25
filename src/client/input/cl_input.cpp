@@ -899,7 +899,7 @@ static bool IN_ToggleFullscreen (void)
 #ifdef _WIN32
 	return false;
 #else
-	SDL_Surface *surface = SDL_GetVideoSurface();
+	SDL_Surface* surface = SDL_GetVideoSurface();
 	if (!SDL_WM_ToggleFullScreen(surface)) {
 		const int flags = surface->flags ^= SDL_FULLSCREEN;
 		SDL_SetVideoMode(surface->w, surface->h, 0, flags);

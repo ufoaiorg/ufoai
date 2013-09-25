@@ -186,7 +186,7 @@ static void CL_FreeBattlescapeEvent (void* data)
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
-static bool CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void* data)
+static bool CL_FilterBattlescapeEvents (int when, event_func* func, event_check_func* check, void* data)
 {
 	if (func == &CL_ExecuteBattlescapeEvent) {
 		const evTimes_t* event = (const evTimes_t*)data;

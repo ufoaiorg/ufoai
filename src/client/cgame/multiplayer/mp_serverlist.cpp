@@ -41,7 +41,7 @@ static char serverText[1024];
 static int serverListLength;
 static int serverListPos;
 static cvar_t* cl_serverlist;
-static struct datagram_socket *netDatagramSocket;
+static struct datagram_socket* netDatagramSocket;
 
 /**
  * @brief Parsed the server ping response.
@@ -415,7 +415,7 @@ static void GAME_MP_QueryMasterServerThread (const char* responseBuf, void* user
 /**
  * @sa SV_DiscoveryCallback
  */
-static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket *s, const char* buf, int len, struct sockaddr *from)
+static void GAME_MP_ServerListDiscoveryCallback (struct datagram_socket* s, const char* buf, int len, struct sockaddr* from)
 {
 	const char match[] = "discovered";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {

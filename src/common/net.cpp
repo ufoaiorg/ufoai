@@ -121,8 +121,8 @@ struct net_stream {
 	dbufferptr inbound;
 	dbufferptr outbound;
 
-	stream_onclose_func *onclose;
-	stream_callback_func *func;
+	stream_onclose_func* onclose;
+	stream_callback_func* func;
 	struct net_stream *loopback_peer;
 };
 
@@ -147,11 +147,11 @@ static fd_set read_fds;
 static fd_set write_fds;
 static SOCKET maxfd;
 static struct net_stream *streams[MAX_STREAMS];
-static struct datagram_socket *datagram_sockets[MAX_DATAGRAM_SOCKETS];
+static struct datagram_socket* datagram_sockets[MAX_DATAGRAM_SOCKETS];
 
 static bool loopback_ready = false;
 static bool server_running = false;
-static stream_callback_func *server_func = nullptr;
+static stream_callback_func* server_func = nullptr;
 static SOCKET server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
 
@@ -550,7 +550,7 @@ void NET_Wait (int timeout)
 	}
 
 	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
-		struct datagram_socket *s = datagram_sockets[i];
+		struct datagram_socket* s = datagram_sockets[i];
 
 		if (!s)
 			continue;
@@ -558,7 +558,7 @@ void NET_Wait (int timeout)
 		if (FD_ISSET(s->socket, &write_fds_out)) {
 			if (s->queue) {
 				struct datagram *dgram = s->queue;
-				const int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr *)dgram->addr, s->addrlen);
+				const int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr* )dgram->addr, s->addrlen);
 				if (len == -1)
 					Com_Printf("sendto on socket %d failed: %s\n", s->socket, netStringError(netError));
 				/* Regardless of whether it worked, we don't retry datagrams */
@@ -577,11 +577,11 @@ void NET_Wait (int timeout)
 			char buf[256];
 			char addrbuf[256];
 			socklen_t addrlen = sizeof(addrbuf);
-			const int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr *)addrbuf, &addrlen);
+			const int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr* )addrbuf, &addrlen);
 			if (len == -1)
 				Com_Printf("recvfrom on socket %d failed: %s\n", s->socket, netStringError(netError));
 			else
-				s->func(s, buf, len, (struct sockaddr *)addrbuf);
+				s->func(s, buf, len, (struct sockaddr* )addrbuf);
 		}
 	}
 
@@ -598,7 +598,7 @@ static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 	return true;
 }
 
-static struct net_stream *NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func *onclose)
+static struct net_stream *NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func* onclose)
 {
 	struct net_stream *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -650,7 +650,7 @@ static struct net_stream *NET_DoConnect (const char* node, const char* service, 
  * @sa NET_ConnectToLoopBack
  * @todo What about a timeout
  */
-struct net_stream *NET_Connect (const char* node, const char* service, stream_onclose_func *onclose)
+struct net_stream *NET_Connect (const char* node, const char* service, stream_onclose_func* onclose)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -690,7 +690,7 @@ struct net_stream *NET_Connect (const char* node, const char* service, stream_on
  * this pointer is invalid.
  * @sa NET_Connect
  */
-struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
+struct net_stream *NET_ConnectToLoopBack (stream_onclose_func* onclose)
 {
 	struct net_stream *client, *server;
 	int server_index, client_index;
@@ -894,12 +894,12 @@ const char* NET_StreamPeerToName (struct net_stream *s, char* dst, int len, bool
 
 	char buf[128];
 	socklen_t addrlen = s->addrlen;
-	if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
+	if (getpeername(s->socket, (struct sockaddr* )buf, &addrlen) != 0)
 		return "(error)";
 
 	char node[64];
 	char service[64];
-	const int rc = getnameinfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
+	const int rc = getnameinfo((struct sockaddr* )buf, addrlen, node, sizeof(node), service, sizeof(service),
 			NI_NUMERICHOST | NI_NUMERICSERV);
 	if (rc != 0) {
 		Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
@@ -915,7 +915,7 @@ const char* NET_StreamPeerToName (struct net_stream *s, char* dst, int len, bool
 	return dst;
 }
 
-void NET_StreamSetCallback (struct net_stream *s, stream_callback_func *func)
+void NET_StreamSetCallback (struct net_stream *s, stream_callback_func* func)
 {
 	if (!s)
 		return;
@@ -1003,7 +1003,7 @@ static struct addrinfo* NET_GetAddrinfoForNode (const char* node, const char* se
  * @sa server_func
  * @sa SV_Stop
  */
-bool SV_Start (const char* node, const char* service, stream_callback_func *func)
+bool SV_Start (const char* node, const char* service, stream_callback_func* func)
 {
 	if (!func)
 		return false;
@@ -1050,7 +1050,7 @@ void SV_Stop (void)
 /**
  * @sa NET_DatagramSocketNew
  */
-static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *addr)
+static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo *addr)
 {
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
@@ -1112,9 +1112,9 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
  * @param[in] service The port number
  * @param[in] func Callback function for data handling
  */
-struct datagram_socket *NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func *func)
+struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func *func)
 {
-	struct datagram_socket *s;
+	struct datagram_socket* s;
 	struct addrinfo *res;
 	struct addrinfo hints;
 	int rc;
@@ -1147,7 +1147,7 @@ struct datagram_socket *NET_DatagramSocketNew (const char* node, const char* ser
 /**
  * @sa NET_DatagramSocketNew
  */
-void NET_DatagramSend (struct datagram_socket *s, const char* buf, int len, struct sockaddr *to)
+void NET_DatagramSend (struct datagram_socket* s, const char* buf, int len, struct sockaddr* to)
 {
 	if (!s || len <= 0 || !buf || !to)
 		return;
@@ -1171,20 +1171,20 @@ void NET_DatagramSend (struct datagram_socket *s, const char* buf, int len, stru
  * @sa NET_DatagramSocketNew
  * @todo This is only sending on the first available device, what if we have several devices?
  */
-void NET_DatagramBroadcast (struct datagram_socket *s, const char* buf, int len, int port)
+void NET_DatagramBroadcast (struct datagram_socket* s, const char* buf, int len, int port)
 {
 	if (s->family == AF_INET) {
 		struct sockaddr_in addr;
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(port);
 		addr.sin_addr.s_addr = INADDR_BROADCAST;
-		NET_DatagramSend(s, buf, len, (struct sockaddr *)&addr);
+		NET_DatagramSend(s, buf, len, (struct sockaddr* )&addr);
 	} else if (s->family == AF_INET6) {
 		struct sockaddr_in addr;
 		addr.sin_family = AF_INET6;
 		addr.sin_port = htons(port);
 		addr.sin_addr.s_addr = INADDR_BROADCAST;
-		NET_DatagramSend(s, buf, len, (struct sockaddr *)&addr);
+		NET_DatagramSend(s, buf, len, (struct sockaddr* )&addr);
 	} else {
 		Com_Error(ERR_DROP, "Broadcast unsupported on address family %d\n", s->family);
 	}
@@ -1194,7 +1194,7 @@ void NET_DatagramBroadcast (struct datagram_socket *s, const char* buf, int len,
  * @sa NET_DatagramSocketNew
  * @sa NET_DatagramSocketDoNew
  */
-void NET_DatagramSocketClose (struct datagram_socket *s)
+void NET_DatagramSocketClose (struct datagram_socket* s)
 {
 	if (!s)
 		return;
@@ -1224,7 +1224,7 @@ void NET_DatagramSocketClose (struct datagram_socket *s)
  * @param[out] service The target service name buffer
  * @param[in] servicelen The length of the service name buffer
  */
-void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, char* node, size_t nodelen, char* service, size_t servicelen)
+void NET_SockaddrToStrings (struct datagram_socket* s, struct sockaddr* addr, char* node, size_t nodelen, char* service, size_t servicelen)
 {
 	const int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
 			NI_NUMERICHOST | NI_NUMERICSERV | NI_DGRAM);

@@ -43,7 +43,7 @@ void CalcTextureReflectivity (void)
 	int i, j, texels = 0;
 	char path[MAX_QPATH];
 	int color[3];
-	SDL_Surface *surf;
+	SDL_Surface* surf;
 
 	/* always set index 0 even if no textures */
 	VectorSet(texture_reflectivity[0], 0.5, 0.5, 0.5);

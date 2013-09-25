@@ -62,8 +62,8 @@ static Mix_Chunk* S_LoadSampleChunk (const char* sound)
 	byte* buf;
 	const char* soundExtensions[] = SAMPLE_TYPES;
 	const char** extension = soundExtensions;
-	SDL_RWops *rw;
-	Mix_Chunk *chunk;
+	SDL_RWops* rw;
+	Mix_Chunk* chunk;
 
 	if (!sound || sound[0] == '*')
 		return nullptr;
@@ -106,7 +106,7 @@ static Mix_Chunk* S_LoadSampleChunk (const char* sound)
  */
 int S_LoadSampleIdx (const char* soundFile)
 {
-	Mix_Chunk *chunk;
+	Mix_Chunk* chunk;
 	char name[MAX_QPATH];
 	unsigned hash;
 
