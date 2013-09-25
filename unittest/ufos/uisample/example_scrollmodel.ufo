@@ -13,7 +13,7 @@ window unittest_scrollmodel
 		{
 			pos "20 50"
 			size "240 430"
-			onViewchange	{
+			onViewChange	{
 				*node:root.scroll@current = <viewpos>
 				*node:root.scroll@fullsize = <fullsize>
 				*node:root.scroll@viewsize = <viewsize>

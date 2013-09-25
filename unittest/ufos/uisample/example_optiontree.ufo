@@ -16,7 +16,7 @@ window unittest_optiontree
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 
-		onViewchange	{
+		onViewChange	{
 			*node:root.scroll@current = <viewpos>
 			*node:root.scroll@fullsize = <fullsize>
 			*node:root.scroll@viewsize = <viewsize>
