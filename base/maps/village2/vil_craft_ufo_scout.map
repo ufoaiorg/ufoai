@@ -3793,3 +3793,35 @@
 "origin" "208 80 28"
 "angle" "180"
 }
+// entity 27
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "296 216 40"
+"spawnflags" "1"
+}
+// entity 28
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "216 216 40"
+"spawnflags" "1"
+}
+// entity 29
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "312 312 40"
+"spawnflags" "1"
+}
+// entity 30
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "200 312 40"
+"spawnflags" "1"
+}
