@@ -192,11 +192,6 @@ void G_ActorReserveTUs (Edict* ent, int resReaction, int resShot, int resCrouch)
  */
 int G_ActorDoTurn (Edict* ent, byte dir)
 {
-	float angleDiv;
-	const byte* rot;
-	int i, num;
-	int status;
-
 	assert(ent->dir < CORE_DIRECTIONS);
 	assert(dir < PATHFINDING_DIRECTIONS);
 
@@ -219,7 +214,7 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 		return 0;
 
 	/* calculate angle difference */
-	angleDiv = directionAngles[dir] - directionAngles[ent->dir];
+	float angleDiv = directionAngles[dir] - directionAngles[ent->dir];
 	if (angleDiv > 180.0)
 		angleDiv -= 360.0;
 	if (angleDiv < -180.0)
@@ -229,6 +224,8 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 	 * shoulder or the right - this is needed the get the rotation vector
 	 * that is used below to check in each of the rotation steps
 	 * (1/8, 22.5 degree) whether something became visible while turning */
+	const byte* rot;
+	int num;
 	if (angleDiv > 0) {
 		const int angleStep = (360.0 / CORE_DIRECTIONS);
 		rot = dvleft;
@@ -240,12 +237,12 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 	}
 
 	/* do rotation and vis checks */
-	status = 0;
+	int status = 0;
 
 	/* check every angle (1/8 steps - on the way to the end direction) in the rotation
 	 * whether something becomes visible and stop before reaching the final direction
 	 * if this happened */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
 		status |= G_CheckVisTeamAll(ent->team, 0, ent);
