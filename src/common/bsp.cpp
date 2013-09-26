@@ -870,7 +870,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	/* Floor pass */
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = rBox.getMinY(); y <= rBox.maxs[1]; y++) {
-			for (x = rBox.getMinX(); x <= rBox.maxs[0]; x++) {
+			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.maxs[2]; z >= rBox.mins[2]; z--) {
 						const int newZ = RT_CheckCell(mapTiles, mapData->routing, size + 1, x, y, z, nullptr);
@@ -885,7 +885,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	/* Wall pass */
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = rBox.getMinY(); y <= rBox.maxs[1]; y++) {
-			for (x = rBox.getMinX(); x <= rBox.maxs[0]; x++) {
+			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				const byte tile = mapData->reroute[size][y][x];
 				if (tile) {
 					/** @note The new R_UpdateConnection updates both directions at the same time,
