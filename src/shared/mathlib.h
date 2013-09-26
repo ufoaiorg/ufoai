@@ -132,6 +132,15 @@ public:
 		VecToPos(aabb.getMaxs(), maxs);
 	}
 
+	inline pos_t getMinX () const {
+		return mins[0];
+	}
+	inline pos_t getMinY () const {
+		return mins[1];
+	}
+	inline pos_t getMinZ () const {
+		return mins[2];
+	}
 	inline bool isZero() const {
 		return VectorIntZero(mins) && VectorIntZero(maxs);
 	}
