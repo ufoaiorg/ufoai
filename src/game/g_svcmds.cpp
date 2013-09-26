@@ -98,8 +98,8 @@ static bool StringToFilter (const char* s, ipfilter_t* f)
 		s++;
 	}
 
-	f->mask = *(unsigned *) m;
-	f->compare = *(unsigned *) b;
+	f->mask = *(unsigned* ) m;
+	f->compare = *(unsigned* ) b;
 
 	return true;
 }
@@ -124,7 +124,7 @@ bool SV_FilterPacket (const char* from)
 		i++, p++;
 	}
 
-	in = *(unsigned *) m;
+	in = *(unsigned* ) m;
 
 	for (i = 0; i < numipfilters; i++)
 		if ((in & ipfilters[i].mask) == ipfilters[i].compare)
@@ -198,7 +198,7 @@ static void SVCmd_ListIP_f (void)
 
 	gi.DPrintf("Filter list:\n");
 	for (i = 0; i < numipfilters; i++) {
-		*(unsigned *) b = ipfilters[i].compare;
+		*(unsigned* ) b = ipfilters[i].compare;
 		gi.DPrintf("%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
 	}
 }
@@ -226,7 +226,7 @@ static void SVCmd_WriteIP_f (void)
 	fprintf(f, "set sv_filterban %d\n", sv_filterban->integer);
 
 	for (i = 0; i < numipfilters; i++) {
-		*(unsigned *) b = ipfilters[i].compare;
+		*(unsigned* ) b = ipfilters[i].compare;
 		fprintf(f, "sv addip %i.%i.%i.%i\n", b[0], b[1], b[2], b[3]);
 	}
 

@@ -70,7 +70,7 @@ static void lookup_section (bfd *abfd, asection *sec, void* opaque_data)
 			&(data->file), &(data->func), &(data->line));
 }
 
-void find (struct bfd_ctx * b, size_t offset, const char** file, const char** func, unsigned *line)
+void find (struct bfd_ctx * b, size_t offset, const char** file, const char** func, unsigned* line)
 {
 	struct find_info data;
 	data.func = nullptr;

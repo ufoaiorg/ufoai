@@ -169,7 +169,7 @@ void R_LoadImage (const char* name, byte** pic, int* width, int* height)
 	}
 }
 
-void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+void R_ScaleTexture (const unsigned* in, int inwidth, int inheight, unsigned* out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned frac;
@@ -191,9 +191,9 @@ void R_ScaleTexture (const unsigned *in, int inwidth, int inheight, unsigned *ou
 
 	for (i = 0; i < outheight; i++, out += outwidth) {
 		const int index = inwidth * (int) ((i + 0.25) * inheight / outheight);
-		const unsigned *inrow = in + index;
+		const unsigned* inrow = in + index;
 		const int index2 = inwidth * (int) ((i + 0.75) * inheight / outheight);
-		const unsigned *inrow2 = in + index2;
+		const unsigned* inrow2 = in + index2;
 
 		assert(index < inwidth * inheight);
 		assert(index2 < inwidth * inheight);
@@ -251,9 +251,9 @@ inline static bool R_IsClampedImageType (imagetype_t type)
  * @param height Height of the image
  * @param[in,out] image Pointer to the image structure to initialize
  */
-void R_UploadTexture (const unsigned *data, int width, int height, image_t* image)
+void R_UploadTexture (const unsigned* data, int width, int height, image_t* image)
 {
-	unsigned *scaled = nullptr;
+	unsigned* scaled = nullptr;
 	int scaledWidth, scaledHeight;
 #ifdef GL_VERSION_ES_CM_1_0
 	GLint texFormat = GL_RGB;
@@ -499,7 +499,7 @@ image_t* R_LoadImageData (const char* name, const byte* pic, int width, int heig
 
 	if (pic) {
 		R_BindTexture(image->texnum);
-		R_UploadTexture((const unsigned *) pic, width, height, image);
+		R_UploadTexture((const unsigned* ) pic, width, height, image);
 	}
 	return image;
 }
@@ -789,7 +789,7 @@ static void R_ReloadImageData (image_t* image)
 	R_BindTexture(image->texnum);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
+	R_UploadTexture((unsigned* )surf->pixels, surf->w, surf->h, image);
 	SDL_FreeSurface(surf);
 }
 

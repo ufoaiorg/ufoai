@@ -50,7 +50,7 @@ typedef struct lightmaps_s {
 
 	int size;				/**< lightmap atlas page (NxN) */
 
-	unsigned *allocated;	/**< current atlas page heightmap */
+	unsigned* allocated;	/**< current atlas page heightmap */
 
 	byte* sample_buffer;	/**< RGB color buffer for assembling the atlas page */
 	byte* direction_buffer;	/**< XYZ direction buffer for assembling the atlas page */

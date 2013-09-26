@@ -202,7 +202,7 @@ static model_t* LoadModel (const char* name)
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 
 	/* call the appropriate loader */
-	switch (LittleLong(*(unsigned *) buf)) {
+	switch (LittleLong(*(unsigned* ) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
 		R_ModLoadAliasMD2Model(mod, buf, modfilelen, false);
@@ -413,7 +413,7 @@ static void ModelWorker (modelWorker_t worker, const char* fileName, void* userD
 	if (!buf)
 		Com_Error(ERR_FATAL, "%s not found", fileName);
 
-	switch (LittleLong(*(unsigned *) buf)) {
+	switch (LittleLong(*(unsigned* ) buf)) {
 	case IDALIASHEADER:
 	case IDMD3HEADER:
 	case IDBSPHEADER:

@@ -267,10 +267,10 @@ void R_DrawFills (void)
  * @param[in] height The height of the texture
  * @return the texture number of the uploaded images
  */
-int R_UploadData (const char* name, unsigned *frame, int width, int height)
+int R_UploadData (const char* name, unsigned* frame, int width, int height)
 {
 	image_t* img;
-	unsigned *scaled;
+	unsigned* scaled;
 	int scaledWidth, scaledHeight;
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 #ifdef GL_VERSION_ES_CM_1_0

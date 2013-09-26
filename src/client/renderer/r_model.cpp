@@ -130,7 +130,7 @@ static bool R_LoadModel (model_t* mod, const char* filename)
 	Q_strncpyz(mod->name, filename, sizeof(mod->name));
 
 	/* call the appropriate loader */
-	switch (LittleLong(*(unsigned *) buf)) {
+	switch (LittleLong(*(unsigned* ) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
 		R_ModLoadAliasMD2Model(mod, buf, modfilelen, true);

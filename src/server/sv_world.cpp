@@ -651,7 +651,7 @@ bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 	mod->aabb.clearBounds();
 
 	/* call the appropriate loader */
-	switch (LittleLong(*(unsigned *) buf)) {
+	switch (LittleLong(*(unsigned* ) buf)) {
 	case IDALIASHEADER:
 		SV_ModLoadAliasMD2Model(mod, buf);
 		break;

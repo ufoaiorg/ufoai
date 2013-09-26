@@ -45,9 +45,9 @@ winding_t* AllocWinding (int points)
  */
 void FreeWinding (winding_t* w)
 {
-	if (*(unsigned *)w == 0xdeaddead)
+	if (*(unsigned* )w == 0xdeaddead)
 		Sys_Error("FreeWinding: freed a freed winding");
-	*(unsigned *)w = 0xdeaddead;
+	*(unsigned* )w = 0xdeaddead;
 
 	Mem_Free(w);
 }
