@@ -867,12 +867,13 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 	}
 
 	INS_Foreach(installation) {
-		int idx;
+		if (installation->installationStatus != INSTALLATION_WORKING)
+			continue;
 
 		if (installation->installationTemplate->maxBatteries <= 0)
 			continue;
 
-		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
+		for (int idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
 			baseWeapon_t* battery = &installation->batteries[idx];
 			aircraftSlot_t* slot = &battery->slot;
 			if (slot->delayNextShot > 0)
