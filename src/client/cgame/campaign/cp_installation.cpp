@@ -453,9 +453,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 
 void INS_LinkTechnologies (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numInstallationTemplates; i++) {
+	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 		installationTemplate_t* ins = &ccs.installationTemplates[i];
 		technology_t* techLink = RS_GetTechByProvided(ins->id);
 		if (techLink)
@@ -471,9 +469,7 @@ void INS_LinkTechnologies (void)
  */
 bool INS_SaveXML (xmlNode_t* p)
 {
-	xmlNode_t* n;
-
-	n = cgi->XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	cgi->Com_RegisterConstList(saveInstallationConstants);
 	INS_Foreach(inst) {
 		xmlNode_t* s, *ss;
