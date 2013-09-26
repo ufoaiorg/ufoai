@@ -643,35 +643,6 @@ void AII_ReloadAircraftWeapons (aircraft_t* aircraft)
 }
 
 /**
- * @brief Reload the weapons of a base or intallation
- * @param[in,out] base Pointer to the base to reload
- * @param[in,out] installation Pointer to the samsite to reload
- * @note only one of the parameters can be non-nullptr
- */
-void BDEF_ReloadBaseWeapons (base_t* base, installation_t* installation)
-{
-	int i;
-
-	if (base && installation)
-		cgi->Com_Error(ERR_DROP, "BDEF_ReloadBattery: Both base and Installation pointer set!\n");
-	if (!(base || installation))
-		cgi->Com_Error(ERR_DROP, "BDEF_ReloadBattery: Neither base nor Installation pointer set!\n");
-
-	if (base) {
-		for (i = 0; i < base->numBatteries; i++) {
-			AII_ReloadWeapon(&(base->batteries[i].slot));
-		}
-		for (i = 0; i < base->numLasers; i++) {
-			AII_ReloadWeapon(&(base->lasers[i].slot));
-		}
-	} else if (installation) {
-		for (i = 0; i < installation->numBatteries; i++) {
-			AII_ReloadWeapon(&(installation->batteries[i].slot));
-		}
-	}
-}
-
-/**
  * @brief Add an ammo to an aircraft weapon slot
  * @note No check for the _type_ of item is done here, so it must be done before.
  * @param[in] base Pointer to the base which provides items (nullptr if items shouldn't be removed of storage)
