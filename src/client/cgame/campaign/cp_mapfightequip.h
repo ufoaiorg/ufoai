@@ -97,7 +97,6 @@ aircraftSlot_t* AII_GetAircraftSlotByIDX(aircraft_t* aircraft, aircraftItemType_
 
 bool AII_ReloadWeapon(aircraftSlot_t* slot);
 void AII_ReloadAircraftWeapons(aircraft_t* aircraft);
-void BDEF_ReloadBaseWeapons(base_t* base, installation_t* installation);
 
 void AII_SaveOneSlotXML(xmlNode_t* p, const aircraftSlot_t* slot, bool weapon);
 void AII_LoadOneSlotXML(xmlNode_t* node, aircraftSlot_t* slot, bool weapon);
