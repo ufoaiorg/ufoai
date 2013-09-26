@@ -436,16 +436,13 @@ void AII_UpdateInstallationDelay (void)
  */
 void AII_AutoAddAmmo (aircraftSlot_t* slot)
 {
-	int k;
-	const objDef_t* item;
-
 	assert(slot);
 
 	if (slot->aircraft && !AIR_IsUFO(slot->aircraft) && !AIR_IsAircraftInBase(slot->aircraft))
 		return;
 
 	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
-	item = slot->nextItem ? slot->nextItem : slot->item;
+	const objDef_t* item = slot->nextItem ? slot->nextItem : slot->item;
 	/* no items assigned */
 	if (!item)
 		return;
@@ -456,22 +453,22 @@ void AII_AutoAddAmmo (aircraftSlot_t* slot)
 	if (slot->nextItem ? slot->nextAmmo : slot->ammo)
 		return;
 	/* Try every ammo usable with this weapon until we find one we have in storage */
-	for (k = 0; k < item->numAmmos; k++) {
+	for (int k = 0; k < item->numAmmos; k++) {
 		const objDef_t* ammo = item->ammos[k];
-		if (ammo) {
-			const technology_t* ammoTech = RS_GetTechForItem(ammo);
-			if (AIM_SelectableCraftItem(slot, ammoTech)) {
-				base_t* base;
-				if (ammo->isVirtual)
-					base = nullptr;
-				else if (slot->aircraft)
-					base = slot->aircraft->homebase;
-				else
-					base = slot->base;
-				AII_AddAmmoToSlot(base, ammoTech, slot);
-				break;
-			}
-		}
+		if (!ammo)
+			continue;
+		const technology_t* ammoTech = RS_GetTechForItem(ammo);
+		if (!AIM_SelectableCraftItem(slot, ammoTech))
+			continue;
+		base_t* base;
+		if (ammo->isVirtual)
+			base = nullptr;
+		else if (slot->aircraft)
+			base = slot->aircraft->homebase;
+		else
+			base = slot->base;
+		AII_AddAmmoToSlot(base, ammoTech, slot);
+		break;
 	}
 }
 
@@ -1179,9 +1176,7 @@ void AII_UpdateAircraftStats (aircraft_t* aircraft)
  */
 static bool AII_WeaponsCanShoot (const baseWeapon_t* weapons, int numWeapons)
 {
-	int i;
-
-	for (i = 0; i < numWeapons; i++) {
+	for (int i = 0; i < numWeapons; i++) {
 		if (AIRFIGHT_CheckWeapon(&weapons[i].slot, 0) != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			return true;
 	}
