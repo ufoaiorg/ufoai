@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-09-26 15:45+0100\n"
+"PO-Revision-Date: 2013-09-26 16:09+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -19576,7 +19576,7 @@ msgstr "Lyd"
 
 #: ../base/ufos/ui/options.ufo:102
 msgid "Battlescape camera, gameplay and input settings"
-msgstr "Battlescapekamera, spillbarhet og input-innstillinger"
+msgstr "Kamparenakamera, spillbarhet og input-innstillinger"
 
 #: ../base/ufos/ui/options.ufo:113
 msgid "Leave the options menu"
@@ -19624,7 +19624,7 @@ msgstr "Vis markørverktøytips i taktisk modus."
 
 #: ../base/ufos/ui/options.ufo:278
 msgid "Tooltips (battlescape):"
-msgstr "Verktøytips (battlescape):"
+msgstr "Verktøytips (kamparena):"
 
 #: ../base/ufos/ui/options.ufo:293
 msgid "Show 'Tip of the Day':"
@@ -20099,7 +20099,7 @@ msgid ""
 "textures on the battlescape are faded out."
 msgstr ""
 "Tåke forholder seg ikke til noe slags væreffekt her, men når den er aktivert "
-"vil fjerntliggende teksturer i battlescape være nedtonet."
+"vil fjerntliggende teksturer i kamparenaen være nedtonet."
 
 #: ../base/ufos/ui/options.ufo:1222
 msgid "Fog:"
@@ -20190,7 +20190,7 @@ msgstr "Gameplay-innstillinger"
 
 #: ../base/ufos/ui/options.ufo:1514
 msgid "Battlescape Camera Settings"
-msgstr "Battlescape-kamerainnstillinger"
+msgstr "Kamparena-kamerainnstillinger"
 
 #: ../base/ufos/ui/options.ufo:1524
 msgid "Scroll Speed:"
@@ -20206,7 +20206,7 @@ msgid ""
 "want smoother camera movement, increase it if you want cameramovement to "
 "decelerate faster or stop immediately."
 msgstr ""
-"Fartsredusering av battlescape kameraet. Senk denne verdien hvis du ønsker "
+"Fartsredusering av Kamparenakameraet. Senk denne verdien hvis du ønsker "
 "jevnere kamerabevegelser, øk det hvis du ønsker kamerabevegelser redusert "
 "raskere eller stoppe umiddelbart."
 
@@ -20240,11 +20240,11 @@ msgstr "Sentrer visning:"
 
 #: ../base/ufos/ui/options.ufo:1629
 msgid "Battlescape Gameplay Settings"
-msgstr "Battlescape spilleinnstillinger"
+msgstr "Kamparena spillinnstillinger"
 
 #: ../base/ufos/ui/options.ufo:1639
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr "Velg Head-Up-Display for battlescape."
+msgstr "Velg Head-Up-Display for bamparena."
 
 #: ../base/ufos/ui/options.ufo:1640
 msgid "HUD Design:"
@@ -20256,7 +20256,7 @@ msgid ""
 "which you then have to confirm."
 msgstr ""
 "Aktivering av denne vil gi deg en forhåndsvisning av dine handlinger på "
-"battlescape som du må da bekrefte."
+"kamparenaen som du må da bekrefte."
 
 #: ../base/ufos/ui/options.ufo:1657
 msgid "Confirm Actions:"
@@ -20269,7 +20269,7 @@ msgid ""
 "soldier begins to execute them. 'Only for moving' means the path will be "
 "displayed before you confirm a soldier's move."
 msgstr ""
-"'Nei' betyr at alle ordrene dine på battlescape vil bli utført umiddelbart. "
+"'Nei' betyr at alle ordrene dine på kamparenaen vil bli utført umiddelbart. "
 "'Ja' betyr at du vil bli bedt om å bekrefte alle dine bestillinger før "
 "soldaten begynner å utføre dem. 'Bare for å flytte' betyr at banen blir vist "
 "før du bekrefter en soldats trekk."
@@ -20420,7 +20420,7 @@ msgstr "Global"
 
 #: ../base/ufos/ui/options.ufo:2034
 msgid "Battlescape"
-msgstr "Battlescape"
+msgstr "Kamparena"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -20638,7 +20638,7 @@ msgstr "Tilbake til hovedmenyen."
 
 #: ../base/ufos/ui/singleplayer.ufo:109
 msgid "Go back to the battlescape."
-msgstr "Tilbake til battlescape"
+msgstr "Tilbake til kamparenaen"
 
 #: ../base/ufos/ui/singleplayer.ufo:116
 msgid "Abort"
@@ -20646,7 +20646,7 @@ msgstr "Avbryt"
 
 #: ../base/ufos/ui/singleplayer.ufo:117
 msgid "Abort this battlescape mission."
-msgstr "Avbryt battlescape-oppdraget."
+msgstr "Avbryt kamparenaoppdraget."
 
 #: ../base/ufos/ui/singleplayer.ufo:125
 msgid "Retry this battlescape mission."
@@ -24965,55 +24965,55 @@ msgstr "Overmenneskelig"
 
 #: client/input/cl_input.cpp:1183
 msgid "Rotate battlescape camera anti-clockwise"
-msgstr "Roter battlescape-kameraet mot klokken"
+msgstr "Roter kamparenakameraet mot klokken"
 
 #: client/input/cl_input.cpp:1185
 msgid "Rotate battlescape camera clockwise"
-msgstr "Roter battlescape-kameraet med klokken"
+msgstr "Roter kamparenakameraet med klokken"
 
 #: client/input/cl_input.cpp:1187
 msgid "Tilt battlescape camera up"
-msgstr "Vipp battlescape kameraet opp"
+msgstr "Vipp kamparenakameraet opp"
 
 #: client/input/cl_input.cpp:1189
 msgid "Tilt battlescape camera down"
-msgstr "Vipp battlescape-kameraet ned"
+msgstr "Vipp kamparenakameraet ned"
 
 #: client/input/cl_input.cpp:1191
 msgid "Move battlescape camera"
-msgstr "Flytt battlescape-kameraet"
+msgstr "Flytt kamparenakameraet"
 
 #: client/input/cl_input.cpp:1193
 msgid "Move battlescape camera left"
-msgstr " Flytt battlescape-kameraet mot venstre"
+msgstr "Flytt kamparenakameraet mot venstre"
 
 #: client/input/cl_input.cpp:1195
 msgid "Move battlescape camera top left"
-msgstr "Flytt battlescape-kameraet mot venstre"
+msgstr "Flytt kamparenakameraet mot venstre"
 
 #: client/input/cl_input.cpp:1197
 msgid "Move battlescape camera bottom left"
-msgstr "Flytt battlescape-kameraet mot venstre"
+msgstr "Flytt kamparenakameraet mot venstre"
 
 #: client/input/cl_input.cpp:1199
 msgid "Move battlescape camera right"
-msgstr "Flytt battlescape-kameraet mot høyre"
+msgstr "Flytt kamparenakameraet mot høyre"
 
 #: client/input/cl_input.cpp:1201
 msgid "Move battlescape camera top right"
-msgstr "Flytt battlescape-kameraet mot høyre"
+msgstr "Flytt kamparenakameraet mot høyre"
 
 #: client/input/cl_input.cpp:1203
 msgid "Move battlescape camera bottom right"
-msgstr "Flytt battlescape-kameraet mot høyre"
+msgstr "Flytt kamparenakameraet mot høyre"
 
 #: client/input/cl_input.cpp:1205
 msgid "Move battlescape camera forward"
-msgstr "Flytt battlescape-kameraet forover"
+msgstr "Flytt kamparenakameraet forover"
 
 #: client/input/cl_input.cpp:1207
 msgid "Move battlescape camera backward"
-msgstr "Flytt battlescape-kameraet bakover"
+msgstr "Flytt kamparenakameraet bakover"
 
 #: client/input/cl_input.cpp:1209 client/input/cl_input.cpp:1233
 msgid "Zoom in"
