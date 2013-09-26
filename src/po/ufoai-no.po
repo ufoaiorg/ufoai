@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-09-17 00:01+0100\n"
+"PO-Revision-Date: 2013-09-26 15:45+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -2944,9 +2944,8 @@ msgid "Warehouse"
 msgstr "Varehus"
 
 #: ../base/ufos/maps.ufo:4184
-#, fuzzy
 msgid "Village 2"
-msgstr "Landsby"
+msgstr "Landsby 2"
 
 #: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
@@ -3049,9 +3048,8 @@ msgid "A container harbour."
 msgstr "En containerhavn."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
-#, fuzzy
 msgid "Village MP (2v2)"
-msgstr "Landsby"
+msgstr "Landsby MP (2v2)"
 
 #: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
@@ -5520,7 +5518,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
-#, fuzzy
 msgid ""
 "Commander, we've finished taking a look at the advanced alien propulsion "
 "systems and I've prepared a report for you.\n"
@@ -5550,7 +5547,7 @@ msgstr ""
 "\n"
 "Som vi mistenkte har disse motorene blitt endret. I hovedsak har de "
 "oppgradert innvendig men latt det ytre dekselet være intakt. De fleste "
-"modifikasjoner har gått med til å utvide kapasiteten til reaksjonskammeret, "
+"modifikasjoner har gått med til å utvide kapasiteten til reaksjonskammeret "
 "slik at de kan kanalisere enda mer kraft gjennom baksiden av motoren. Men de "
 "har også ganske smart redesignet mate-mekanismen for å oppnå raskere "
 "hastighet av materie-antimaterieforbrenning.\n"
@@ -8917,7 +8914,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr ""
+msgstr "For mange mennesker på jorden, det virker som ting går greit."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -16792,7 +16789,7 @@ msgstr "Menneskelig vaksine"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "AmfetaminImplantat"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
 msgid "Muscle Stimulant"
@@ -17606,6 +17603,9 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"Under angrep på basen, plasser en ekstra soldat i kommandosenterets "
+"videoovervåkningsrom. Soldaten vil være i stand til å bruke "
+"overvåkingskameraer rundt basen for å finne fiender."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -17680,9 +17680,8 @@ msgstr "Slett dette teamet"
 
 # # in game
 #: ../base/ufos/ui/_menu.ufo:440
-#, fuzzy
 msgid "Currently loaded"
-msgstr "Nåværende node:"
+msgstr "lastet inn for øyeblikket"
 
 #: ../base/ufos/ui/_menu.ufo:515
 msgid "Generate New Team"
@@ -18192,7 +18191,7 @@ msgstr "Last inn"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Last ned lagrede spill"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -18792,9 +18791,8 @@ msgid "Target out of range"
 msgstr "Målet er utenfor rekkevidde"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
-#, fuzzy
 msgid "Target acquired"
-msgstr "Målområdet er okkupert!"
+msgstr ""
 
 #: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
@@ -18973,11 +18971,11 @@ msgstr "Avslutt e-post-klient"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Lik oss på facebook"
 
 #: ../base/ufos/ui/main.ufo:26
 msgid "Twitter"
@@ -18985,7 +18983,7 @@ msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Følg oss på twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -19490,7 +19488,7 @@ msgstr "Er du klar?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "Administrasjonskontroll"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
 msgid "Round time limit:"
@@ -19506,7 +19504,7 @@ msgstr "Start spillet før alle team er klare"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Ekstern administrasjonskontroll"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -20418,12 +20416,11 @@ msgstr "Meny"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../base/ufos/ui/options.ufo:2034
-#, fuzzy
 msgid "Battlescape"
-msgstr "^BBattlescape-bindinger"
+msgstr "Battlescape"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -20949,7 +20946,7 @@ msgstr "Krav:"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Logg inn"
 
 #: ../base/ufos/ui/web.ufo:37
 msgid "Password"
@@ -23804,7 +23801,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "Arbeid begynt ved %s"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -24381,7 +24378,7 @@ msgstr ""
 #: client/cgame/campaign/cp_ufopedia.cpp:619
 #, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr ""
+msgstr "UFOpaedia: %s (fullført)"
 
 # #ufopedia
 #: client/cgame/campaign/cp_ufopedia.cpp:672
@@ -24395,14 +24392,14 @@ msgid "No pre-research description available."
 msgstr "Ingen tidligere forskningsbeskrivelse tilgjengelig."
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "Proposal: %s"
-msgstr "Forslag: "
+msgstr "Forslag: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "Re: "
+msgstr "Re: %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -24862,7 +24859,7 @@ msgstr "Tilkoblingsfeil"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "Passordet du har angitt er feil."
 
 #: client/cl_main.cpp:410
 msgid "This server requires a password."
@@ -24882,15 +24879,15 @@ msgstr "Spillet er allerede i gang."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "Serveren kjører en annen versjon av spillet."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "Feil rcon-passord"
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "rcon-passordet du har angitt er feil."
 
 #: client/cl_main.cpp:429
 msgid "The server refused the connection."
