@@ -2011,7 +2011,7 @@ static const char* GEO_GetPopulationType (const byte* color)
  * @param[out] coast GEO_GetColor will set this to true if the given position is a coast line.
  * @return returns the zone name
  */
-static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
+static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool* coast)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return GEO_GetTerrainType(color);
@@ -2133,7 +2133,7 @@ bool GEO_IsNight (const vec2_t pos)
  * @return Returns the color value at given position.
  * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  */
-const byte* GEO_GetColor (const vec2_t pos, mapType_t type, bool *coast)
+const byte* GEO_GetColor (const vec2_t pos, mapType_t type, bool* coast)
 {
 	int x, y;
 	int width, height;

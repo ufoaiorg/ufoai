@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/xml.h"
 
 #define NO_TEAM_SLOT_LOADED -1
-bool GAME_TeamGetFreeFilename(char *filename, size_t size);
-bool GAME_GetTeamFileName(unsigned int index, char *filename, size_t filenameLength);
+bool GAME_TeamGetFreeFilename(char* filename, size_t size);
+bool GAME_GetTeamFileName(unsigned int index, char* filename, size_t filenameLength);
 void GAME_SaveTeam_f(void);
 void GAME_LoadTeam_f(void);
 void GAME_TeamSlotComments_f(void);
@@ -37,7 +37,7 @@ void GAME_TeamDelete_f(void);
 void GAME_SaveTeamState_f(void);
 void GAME_ToggleActorForTeam_f(void);
 void GAME_AutoTeam_f(void);
-void GAME_AutoTeam(const char *equipmentDefinitionID, int teamMembers);
+void GAME_AutoTeam(const char* equipmentDefinitionID, int teamMembers);
 void GAME_UpdateTeamMenuParameters_f(void);
 void GAME_ActorSelect_f(void);
 bool GAME_LoadDefaultTeam(bool force);

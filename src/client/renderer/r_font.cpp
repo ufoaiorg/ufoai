@@ -385,7 +385,7 @@ static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, longlines_t method, int* lines, bool *aborted)
+static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, longlines_t method, int* lines, bool* aborted)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -535,7 +535,7 @@ static wrapCache_t* R_FontWrapText (const font_t* f, const char* text, int maxWi
  * @param[out] lines receives total number of lines in text, including blank ones
  * @param[out] isTruncated receives true, if the text must be trucated
  */
-void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlines_t method, int* width, int* height, int* lines, bool *isTruncated)
+void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlines_t method, int* width, int* height, int* lines, bool* isTruncated)
 {
 	const font_t* font = R_GetFont(fontId);
 	const wrapCache_t* wrap = R_FontWrapText(font, text, maxWidth, method);

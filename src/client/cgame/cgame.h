@@ -152,8 +152,8 @@ typedef struct cgame_import_s {
 	bool (IMPORT* LIST_IsEmpty) (const linkedList_t* list);
 	int (IMPORT* LIST_Count) (const linkedList_t* list);
 	linkedList_t* (IMPORT* LIST_CopyStructure) (linkedList_t* src);
-	void *(IMPORT* LIST_GetByIdx) (linkedList_t* list, int index);
-	bool (IMPORT* LIST_Remove) (linkedList_t** list, const void *data);
+	void* (IMPORT* LIST_GetByIdx) (linkedList_t* list, int index);
+	bool (IMPORT* LIST_Remove) (linkedList_t** list, const void* data);
 	void (IMPORT* LIST_Sort) (linkedList_t** list, linkedListSort_t sorter, const void* userData);
 	void* (IMPORT* LIST_GetRandom) (linkedList_t* list);
 
@@ -182,25 +182,25 @@ typedef struct cgame_import_s {
 	void (IMPORT* GAME_AppendTeamMember) (int memberIndex, const char* teamDefID, const equipDef_t* ed);
 	void (IMPORT* GAME_ReloadMode) (void);
 	int (IMPORT* GAME_GetChrMaxLoad) (const character_t* chr);
-	void (IMPORT* Free) (void *ptr);
+	void (IMPORT* Free) (void* ptr);
 
 	/* sound functions */
 	void (IMPORT* S_StartLocalSample) (const char* s, float volume);
 	void (IMPORT* S_SetSampleRepeatRate) (int sampleRepeatRate);
 
 	/* renderer functions */
-	void (IMPORT* R_SoftenTexture) (byte *in, int width, int height, int bpp);
-	void (IMPORT* R_LoadImage) (const char* name, byte** pic, int *width, int *height);
+	void (IMPORT* R_SoftenTexture) (byte* in, int width, int height, int bpp);
+	void (IMPORT* R_LoadImage) (const char* name, byte** pic, int* width, int* height);
 	bool (IMPORT* R_ImageExists) (const char* pname, ...) __attribute__((format(__printf__, 1, 2)));
 	void (IMPORT* R_Color) (const vec4_t rgba);
-	void (IMPORT* R_DrawLineStrip) (int points, int *verts);
-	void (IMPORT* R_DrawLine) (int *verts, float thickness);
+	void (IMPORT* R_DrawLineStrip) (int points, int* verts);
+	void (IMPORT* R_DrawLine) (int* verts, float thickness);
 	void (IMPORT* R_DrawRect) (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
 	void (IMPORT* R_DrawFill) (int x, int y, int w, int h, const vec4_t color);
 	void (IMPORT* R_Draw2DMapMarkers) (const vec2_t screenPos, float direction, const char* model, int skin);
 	void (IMPORT* R_Draw3DMapMarkers) (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char* model, int skin);
 	void (IMPORT* R_DrawBloom) (void);
-	void (IMPORT* R_UploadAlpha) (const char* name, const byte *alphaData);
+	void (IMPORT* R_UploadAlpha) (const char* name, const byte* alphaData);
 	void (IMPORT* R_DrawImageCentered) (int x, int y, const char* name);
 
 	dbuffer* (IMPORT* NET_ReadMsg)  (struct net_stream *s);
@@ -211,8 +211,8 @@ typedef struct cgame_import_s {
 	void (IMPORT* NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func* func);
 	void (IMPORT* NET_OOB_Printf) (struct net_stream *s, const char* format, ...) __attribute__((format(__printf__,2,3)));
 	void (IMPORT* NET_OOB_Printf2) (const char* format, ...) __attribute__((format(__printf__,1,2)));
-	void *(IMPORT* NET_StreamGetData) (struct net_stream *s);
-	void (IMPORT* NET_StreamSetData) (struct net_stream *s, void *data);
+	void* (IMPORT* NET_StreamGetData) (struct net_stream *s);
+	void (IMPORT* NET_StreamSetData) (struct net_stream *s, void* data);
 	void (IMPORT* NET_StreamFree) (struct net_stream *s);
 	const char* (IMPORT* NET_StreamPeerToName) (struct net_stream *s, char* dst, int len, bool appendPort);
 	void (IMPORT* NET_SockaddrToStrings) (struct datagram_socket* s, struct sockaddr* addr, char* node, size_t nodelen, char* service, size_t servicelen);
@@ -254,13 +254,13 @@ typedef struct cgame_import_s {
 	xmlNode_t*  (IMPORT* XML_GetNextPos2) (xmlNode_t* actual, xmlNode_t* parent, const char* name, vec2_t pos);
 	xmlNode_t*  (IMPORT* XML_GetPos3) (xmlNode_t* parent, const char* name, vec3_t pos);
 	xmlNode_t*  (IMPORT* XML_GetNextPos3) (xmlNode_t* actual, xmlNode_t* parent, const char* name, vec3_t pos);
-	xmlNode_t*  (IMPORT* XML_GetDate) (xmlNode_t* parent, const char* name, int *day, int *sec);
+	xmlNode_t*  (IMPORT* XML_GetDate) (xmlNode_t* parent, const char* name, int* day, int* sec);
 	xmlNode_t*  (IMPORT* XML_GetNode) (xmlNode_t* parent, const char* name);
 	xmlNode_t*  (IMPORT* XML_GetNextNode) (xmlNode_t* current, xmlNode_t* parent, const char* name);
 
 	/* filesystem functions */
 	int (IMPORT* FS_LoadFile) (const char* path, byte** buffer);
-	void (IMPORT* FS_FreeFile) (void *buffer);
+	void (IMPORT* FS_FreeFile) (void* buffer);
 	int (IMPORT* FS_CheckFile) (const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
 	int (IMPORT* FS_BuildFileList) (const char* files);
 	const char* (IMPORT* FS_NextFileFromFileList) (const char* files);
@@ -306,11 +306,11 @@ typedef struct cgame_import_s {
 	void (IMPORT* Com_RegisterConstList) (const constListEntry_t constList[]);
 	bool (IMPORT* Com_UnregisterConstList) (const constListEntry_t constList[]);
 	const char* (IMPORT* Com_GetConstVariable) (const char* space, int value);
-	bool (IMPORT* Com_GetConstIntFromNamespace) (const char* space, const char* variable, int *value);
-	bool (IMPORT* Com_GetConstInt) (const char* name, int *value);
+	bool (IMPORT* Com_GetConstIntFromNamespace) (const char* space, const char* variable, int* value);
+	bool (IMPORT* Com_GetConstInt) (const char* name, int* value);
 	const char* (IMPORT* Com_EParse) (const char** text, const char* errhead, const char* errinfo);
-	int (IMPORT* Com_EParseValue) (void *base, const char* token, valueTypes_t type, int ofs, size_t size);
-	const char* (IMPORT* Com_ValueToStr) (const void *base, const valueTypes_t type, const int ofs);
+	int (IMPORT* Com_EParseValue) (void* base, const char* token, valueTypes_t type, int ofs, size_t size);
+	const char* (IMPORT* Com_ValueToStr) (const void* base, const valueTypes_t type, const int ofs);
 	const teamDef_t* (IMPORT* Com_GetTeamDefinitionByID) (const char* team);
 	ufoType_t (IMPORT* Com_UFOShortNameToID) (const char* token);
 	const char* (IMPORT* Com_GetRandomMapAssemblyNameForCrashedCraft) (const char* craftID);
@@ -325,8 +325,8 @@ typedef struct cgame_import_s {
 	void (IMPORT* SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT* GetNextUniqueCharacterNumber) (void);
 
-	void (IMPORT* CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const Item* ), void (*ownitems) (const Inventory*));
-	void (IMPORT* CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, bool));
+	void (IMPORT* CollectItems) (void* target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void* , const Item* ), void (*ownitems) (const Inventory*));
+	void (IMPORT* CollectAliens) (void* data, void (*collect)(void*, const teamDef_t*, int, bool));
 
 	const equipDef_t* (IMPORT* INV_GetEquipmentDefinitionByID) (const char* name);
 	void (IMPORT* INV_DestroyInventory) (Inventory* const i) __attribute__((nonnull(1)));
@@ -346,9 +346,9 @@ typedef struct cgame_import_s {
 	const char* (IMPORT* GetAbsoluteSavePath) (char* buf, size_t bufSize);
 
 	/** @todo: remove me */
-	byte *r_xviAlpha;
-	byte *r_radarPic;
-	byte *r_radarSourcePic;
+	byte* r_xviAlpha;
+	byte* r_radarPic;
+	byte* r_radarSourcePic;
 } cgame_import_t;
 
 extern "C" const cgame_export_t* GetCGameAPI(const cgame_import_t* import);

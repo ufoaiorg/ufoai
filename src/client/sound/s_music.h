@@ -41,7 +41,7 @@ typedef struct musicStream_s {
 	int samplePos;
 } musicStream_t;
 
-void M_AddToSampleBuffer(musicStream_t* userdata, int rate, int samples, const byte *data);
+void M_AddToSampleBuffer(musicStream_t* userdata, int rate, int samples, const byte* data);
 void M_StopMusicStream(musicStream_t* userdata);
 void M_ParseMusic(const char* name, const char** text);
 void M_Frame(void);

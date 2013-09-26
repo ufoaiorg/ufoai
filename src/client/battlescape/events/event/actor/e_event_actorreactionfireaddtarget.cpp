@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "e_event_actorreactionfireaddtarget.h"
 
-static void CL_GetReactionFireHead (const le_t* le, const char** model, int* skin, bool *robot)
+static void CL_GetReactionFireHead (const le_t* le, const char** model, int* skin, bool* robot)
 {
 	/* hack for robots, they don't have a head */
 	if (le->teamDef->robot) {

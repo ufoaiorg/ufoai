@@ -580,7 +580,7 @@ static bool Irc_Proto_Whowas (const char* nick)
 /**
  * @sa Irc_Logic_ReadMessages
  */
-static bool Irc_Proto_PollServerMsg (irc_server_msg_t* msg, bool *msg_complete)
+static bool Irc_Proto_PollServerMsg (irc_server_msg_t* msg, bool* msg_complete)
 {
 	static char buf[IRC_RECV_BUF_SIZE];
 	static char* last = buf;
