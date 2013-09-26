@@ -27,7 +27,7 @@ const char* const luaT_typenames[] = {
 };
 
 
-void luaT_init (lua_State *L) {
+void luaT_init (lua_State* L) {
   static const char* const luaT_eventname[] = {  /* ORDER TM */
     "__index", "__newindex",
     "__gc", "__mode", "__eq",
@@ -58,7 +58,7 @@ const TValue *luaT_gettm (Table *events, TMS event, TString *ename) {
 }
 
 
-const TValue *luaT_gettmbyobj (lua_State *L, const TValue *o, TMS event) {
+const TValue *luaT_gettmbyobj (lua_State* L, const TValue *o, TMS event) {
   Table *mt;
   switch (ttype(o)) {
     case LUA_TTABLE:

@@ -20,7 +20,7 @@
 
 
 
-Closure *luaF_newCclosure (lua_State *L, int nelems, Table *e) {
+Closure *luaF_newCclosure (lua_State* L, int nelems, Table *e) {
   Closure *c = cast(Closure *, luaM_malloc(L, sizeCclosure(nelems)));
   luaC_link(L, obj2gco(c), LUA_TFUNCTION);
   c->c.isC = 1;
@@ -30,7 +30,7 @@ Closure *luaF_newCclosure (lua_State *L, int nelems, Table *e) {
 }
 
 
-Closure *luaF_newLclosure (lua_State *L, int nelems, Table *e) {
+Closure *luaF_newLclosure (lua_State* L, int nelems, Table *e) {
   Closure *c = cast(Closure *, luaM_malloc(L, sizeLclosure(nelems)));
   luaC_link(L, obj2gco(c), LUA_TFUNCTION);
   c->l.isC = 0;
@@ -41,7 +41,7 @@ Closure *luaF_newLclosure (lua_State *L, int nelems, Table *e) {
 }
 
 
-UpVal *luaF_newupval (lua_State *L) {
+UpVal *luaF_newupval (lua_State* L) {
   UpVal *uv = luaM_new(L, UpVal);
   luaC_link(L, obj2gco(uv), LUA_TUPVAL);
   uv->v = &uv->u.value;
@@ -50,7 +50,7 @@ UpVal *luaF_newupval (lua_State *L) {
 }
 
 
-UpVal *luaF_findupval (lua_State *L, StkId level) {
+UpVal *luaF_findupval (lua_State* L, StkId level) {
   global_State *g = G(L);
   GCObject **pp = &L->openupval;
   UpVal *p;
@@ -86,14 +86,14 @@ static void unlinkupval (UpVal *uv) {
 }
 
 
-void luaF_freeupval (lua_State *L, UpVal *uv) {
+void luaF_freeupval (lua_State* L, UpVal *uv) {
   if (uv->v != &uv->u.value)  /* is it open? */
     unlinkupval(uv);  /* remove from open list */
   luaM_free(L, uv);  /* free upvalue */
 }
 
 
-void luaF_close (lua_State *L, StkId level) {
+void luaF_close (lua_State* L, StkId level) {
   UpVal *uv;
   global_State *g = G(L);
   while (L->openupval != nullptr && (uv = ngcotouv(L->openupval))->v >= level) {
@@ -112,7 +112,7 @@ void luaF_close (lua_State *L, StkId level) {
 }
 
 
-Proto *luaF_newproto (lua_State *L) {
+Proto *luaF_newproto (lua_State* L) {
   Proto *f = luaM_new(L, Proto);
   luaC_link(L, obj2gco(f), LUA_TPROTO);
   f->k = nullptr;
@@ -138,7 +138,7 @@ Proto *luaF_newproto (lua_State *L) {
 }
 
 
-void luaF_freeproto (lua_State *L, Proto *f) {
+void luaF_freeproto (lua_State* L, Proto *f) {
   luaM_freearray(L, f->code, f->sizecode, Instruction);
   luaM_freearray(L, f->p, f->sizep, Proto *);
   luaM_freearray(L, f->k, f->sizek, TValue);
@@ -149,7 +149,7 @@ void luaF_freeproto (lua_State *L, Proto *f) {
 }
 
 
-void luaF_freeclosure (lua_State *L, Closure *c) {
+void luaF_freeclosure (lua_State* L, Closure *c) {
   int size = (c->c.isC) ? sizeCclosure(c->c.nupvalues) :
                           sizeLclosure(c->l.nupvalues);
   luaM_freemem(L, c, size);

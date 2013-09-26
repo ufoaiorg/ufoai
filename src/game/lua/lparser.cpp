@@ -326,7 +326,7 @@ static void pushclosure (LexState *ls, FuncState *func, expdesc *v) {
 
 
 static void open_func (LexState *ls, FuncState *fs) {
-  lua_State *L = ls->L;
+  lua_State* L = ls->L;
   Proto *f = luaF_newproto(L);
   fs->f = f;
   fs->prev = ls->fs;  /* linked list of funcstates */
@@ -354,7 +354,7 @@ static void open_func (LexState *ls, FuncState *fs) {
 
 
 static void close_func (LexState *ls) {
-  lua_State *L = ls->L;
+  lua_State* L = ls->L;
   FuncState *fs = ls->fs;
   Proto *f = fs->f;
   removevars(ls, 0);
@@ -380,7 +380,7 @@ static void close_func (LexState *ls) {
 }
 
 
-Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char* name) {
+Proto *luaY_parser (lua_State* L, ZIO *z, Mbuffer *buff, const char* name) {
   struct LexState lexstate;
   struct FuncState funcstate;
   lexstate.buff = buff;
