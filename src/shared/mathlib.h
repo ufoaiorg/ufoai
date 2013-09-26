@@ -141,6 +141,15 @@ public:
 	inline pos_t getMinZ () const {
 		return mins[2];
 	}
+	inline pos_t getMaxX () const {
+		return mins[0];
+	}
+	inline pos_t getMaxY () const {
+		return mins[1];
+	}
+	inline pos_t getMaxZ () const {
+		return mins[2];
+	}
 	inline bool isZero() const {
 		return VectorIntZero(mins) && VectorIntZero(maxs);
 	}
