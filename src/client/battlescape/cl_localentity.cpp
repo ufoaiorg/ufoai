@@ -989,7 +989,7 @@ bool LE_BrushModelAction (le_t* le, entity_t* ent)
 		xmax = roundf(le->aabb.getMaxX() / UNIT_SIZE) * UNIT_SIZE - 0.1f;
 		for (x = roundf(le->aabb.getMinX() / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
 			const float ymax = roundf(le->aabb.maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
-			for (y = roundf(le->aabb.mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
+			for (y = roundf(le->aabb.getMinY() / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
 				const vec3_t pos = {x + UNIT_SIZE / 4.0f, y + UNIT_SIZE / 4.0f, z};
 				entity_t circle(RF_PATH);
 				VectorCopy(pos, circle.origin);

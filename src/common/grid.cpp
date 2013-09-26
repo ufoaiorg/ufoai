@@ -887,7 +887,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBo
 		rBox.expandXY(actorSize - 1);
 		/* also start one level above the box to measure high floors correctly */
 		rBox.addOneZ();
-		for (y = rBox.mins[1]; y <= rBox.maxs[1]; y++) {
+		for (y = rBox.getMinY(); y <= rBox.maxs[1]; y++) {
 			for (x = rBox.getMinX(); x <= rBox.maxs[0]; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = rBox.maxs[2]; z >= 0; z--) {
@@ -903,7 +903,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBo
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		GridBox rBox(box);			/* the box we will actually reroute */
 		rBox.expandXY(actorSize);	/* for connections, expand by the full size of the actor */
-		for (y = rBox.mins[1]; y <= rBox.maxs[1]; y++) {
+		for (y = rBox.getMinY(); y <= rBox.maxs[1]; y++) {
 			for (x = rBox.getMinX(); x <= rBox.maxs[0]; x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
@@ -920,13 +920,13 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBo
 					if (actorSize == ACTOR_SIZE_NORMAL) {
 						if (x < box.getMinX() && dir != 0 && dir != 4 && dir != 7)
 							continue;
-						if (y < box.mins[1] && dir != 2 && dir != 4 && dir != 6)
+						if (y < box.getMinY() && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					} else {
 						/* the position of 2x2 actors is their lower left cell */
 						if (x < box.getMinX() - 1 && dir != 0 && dir != 4 && dir != 7)
 							continue;
-						if (y < box.mins[1] - 1 && dir != 2 && dir != 4 && dir != 6)
+						if (y < box.getMinY() - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
 					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);

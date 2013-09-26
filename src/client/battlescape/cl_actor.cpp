@@ -2303,12 +2303,12 @@ static void CL_DebugPath_f (void)
 
 	GridBox mbox(cl.mapData->mapBox);
 	int xW = mbox.maxs[0] - mbox.getMinX();
-	int yW = mbox.maxs[1] - mbox.mins[1];
+	int yW = mbox.maxs[1] - mbox.getMinY();
 	int zW = mbox.maxs[2] - mbox.mins[2];
 	Com_Printf("Statistics:\nWorldsize(x/y/z) %i/%i/%i\n", xW, yW, zW);
 	int numCells = xW * yW * zW;
 	Com_Printf("number of Cells: %i\n", numCells);
-	Com_Printf("Base Coords (x/y/z) %i/%i/%i\n", mbox.getMinX(), mbox.mins[1], mbox.mins[2]);
+	Com_Printf("Base Coords (x/y/z) %i/%i/%i\n", mbox.getMinX(), mbox.getMinY(), mbox.mins[2]);
 }
 #endif
 

@@ -123,8 +123,8 @@ public:
 	 * @param[in] other The other aabb
 	 */
 	inline bool doesIntersect (const AABB& other) const {
-		return !(mins[0] > other.getMaxX() || mins[1] > other.maxs[1] || mins[2] > other.maxs[2] || getMaxX() < other.getMinX()
-				|| maxs[1] < other.mins[1] || maxs[2] < other.mins[2]);
+		return !(mins[0] > other.getMaxX() || getMinY() > other.maxs[1] || mins[2] > other.maxs[2] || getMaxX() < other.getMinX()
+				|| maxs[1] < other.getMinY() || maxs[2] < other.mins[2]);
 	}
 
 	/** ------------------
