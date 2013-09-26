@@ -123,7 +123,7 @@ struct net_stream {
 
 	stream_onclose_func* onclose;
 	stream_callback_func* func;
-	struct net_stream *loopback_peer;
+	struct net_stream* loopback_peer;
 };
 
 struct datagram {
@@ -146,7 +146,7 @@ struct datagram_socket {
 static fd_set read_fds;
 static fd_set write_fds;
 static SOCKET maxfd;
-static struct net_stream *streams[MAX_STREAMS];
+static struct net_stream* streams[MAX_STREAMS];
 static struct datagram_socket* datagram_sockets[MAX_DATAGRAM_SOCKETS];
 
 static bool loopback_ready = false;
@@ -209,7 +209,7 @@ static const char* netStringErrorWin (int code)
 }
 #endif
 
-static inline int NET_StreamGetLength (struct net_stream *s)
+static inline int NET_StreamGetLength (struct net_stream* s)
 {
 	return s ? dbuffer_len(s->inbound) : 0;
 }
@@ -259,7 +259,7 @@ static int NET_DatagramFindFreeSocket (void)
  * @sa NET_StreamGetFree
  * @sa NET_StreamClose
  */
-static struct net_stream *NET_StreamNew (int index)
+static struct net_stream* NET_StreamNew (int index)
 {
 	net_stream* const s = Mem_PoolAllocType(net_stream, com_networkPool);
 	s->data = nullptr;
@@ -352,7 +352,7 @@ void NET_Shutdown (void)
  * @sa NET_StreamFinished
  * @sa NET_StreamNew
  */
-static void NET_StreamClose (struct net_stream *s)
+static void NET_StreamClose (struct net_stream* s)
 {
 	if (!s || s->closed)
 		return;
@@ -401,7 +401,7 @@ static void NET_StreamClose (struct net_stream *s)
 static void do_accept (SOCKET sock)
 {
 	const int index = NET_StreamGetFree();
-	struct net_stream *s;
+	struct net_stream* s;
 	if (index == -1) {
 		Com_Printf("Too many streams open, rejecting inbound connection\n");
 		netCloseSocket(sock);
@@ -471,7 +471,7 @@ void NET_Wait (int timeout)
 	}
 
 	for (i = 0; i < MAX_STREAMS; i++) {
-		struct net_stream *s = streams[i];
+		struct net_stream* s = streams[i];
 
 		if (!s)
 			continue;
@@ -598,9 +598,9 @@ static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 	return true;
 }
 
-static struct net_stream *NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func* onclose)
+static struct net_stream* NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func* onclose)
 {
-	struct net_stream *s;
+	struct net_stream* s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (sock == INVALID_SOCKET) {
 		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
@@ -650,12 +650,12 @@ static struct net_stream *NET_DoConnect (const char* node, const char* service, 
  * @sa NET_ConnectToLoopBack
  * @todo What about a timeout
  */
-struct net_stream *NET_Connect (const char* node, const char* service, stream_onclose_func* onclose)
+struct net_stream* NET_Connect (const char* node, const char* service, stream_onclose_func* onclose)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
 	int rc;
-	struct net_stream *s = nullptr;
+	struct net_stream* s = nullptr;
 	int index;
 
 	OBJZERO(hints);
@@ -690,9 +690,9 @@ struct net_stream *NET_Connect (const char* node, const char* service, stream_on
  * this pointer is invalid.
  * @sa NET_Connect
  */
-struct net_stream *NET_ConnectToLoopBack (stream_onclose_func* onclose)
+struct net_stream* NET_ConnectToLoopBack (stream_onclose_func* onclose)
 {
-	struct net_stream *client, *server;
+	struct net_stream* client, *server;
 	int server_index, client_index;
 
 	if (!server_running)
@@ -731,7 +731,7 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func* onclose)
  * @brief Enqueue a network message into a stream
  * @sa NET_StreamDequeue
  */
-void NET_StreamEnqueue (struct net_stream *s, const char* data, int len)
+void NET_StreamEnqueue (struct net_stream* s, const char* data, int len)
 {
 	if (len <= 0 || !s || s->closed || s->finished)
 		return;
@@ -757,7 +757,7 @@ void NET_StreamEnqueue (struct net_stream *s, const char* data, int len)
 /**
  * @brief Returns the length of the waiting inbound buffer
  */
-static int NET_StreamPeek (struct net_stream *s, char* data, int len)
+static int NET_StreamPeek (struct net_stream* s, char* data, int len)
 {
 	if (len <= 0 || !s)
 		return 0;
@@ -772,7 +772,7 @@ static int NET_StreamPeek (struct net_stream *s, char* data, int len)
 /**
  * @sa NET_StreamEnqueue
  */
-int NET_StreamDequeue (struct net_stream *s, char* data, int len)
+int NET_StreamDequeue (struct net_stream* s, char* data, int len)
 {
 	if (len <= 0 || !s || s->finished)
 		return 0;
@@ -786,7 +786,7 @@ int NET_StreamDequeue (struct net_stream *s, char* data, int len)
  * order
  * @sa NET_StreamDequeue
  */
-dbuffer* NET_ReadMsg (struct net_stream *s)
+dbuffer* NET_ReadMsg (struct net_stream* s)
 {
 	unsigned int v;
 	const ScopedMutex scopedMutex(netMutex);
@@ -812,12 +812,12 @@ dbuffer* NET_ReadMsg (struct net_stream *s)
 	return buf;
 }
 
-void* NET_StreamGetData (struct net_stream *s)
+void* NET_StreamGetData (struct net_stream* s)
 {
 	return s ? s->data : nullptr;
 }
 
-void NET_StreamSetData (struct net_stream *s, void* data)
+void NET_StreamSetData (struct net_stream* s, void* data)
 {
 	if (!s)
 		return;
@@ -829,7 +829,7 @@ void NET_StreamSetData (struct net_stream *s, void* data)
  * @sa NET_StreamClose
  * @sa NET_StreamFinished
  */
-void NET_StreamFree (struct net_stream *s)
+void NET_StreamFree (struct net_stream* s)
 {
 	if (!s)
 		return;
@@ -844,7 +844,7 @@ void NET_StreamFree (struct net_stream *s)
  * s will become an invalid pointer, so it should not be further
  * referenced.
  */
-void NET_StreamFinished (struct net_stream *s)
+void NET_StreamFinished (struct net_stream* s)
 {
 	if (!s)
 		return;
@@ -871,7 +871,7 @@ void NET_StreamFinished (struct net_stream *s)
  * @brief Returns the numerical representation of a @c net_stream
  * @note Not thread safe!
  */
-const char* NET_StreamToString (struct net_stream *s)
+const char* NET_StreamToString (struct net_stream* s)
 {
 	static char node[64];
 	NET_StreamPeerToName(s, node, sizeof(node), false);
@@ -884,7 +884,7 @@ const char* NET_StreamToString (struct net_stream *s)
  * @param[in] len The length of the target buffer
  * @param[in] appendPort Also append the port number to the target buffer
  */
-const char* NET_StreamPeerToName (struct net_stream *s, char* dst, int len, bool appendPort)
+const char* NET_StreamPeerToName (struct net_stream* s, char* dst, int len, bool appendPort)
 {
 	if (!s)
 		return "(null)";
@@ -915,14 +915,14 @@ const char* NET_StreamPeerToName (struct net_stream *s, char* dst, int len, bool
 	return dst;
 }
 
-void NET_StreamSetCallback (struct net_stream *s, stream_callback_func* func)
+void NET_StreamSetCallback (struct net_stream* s, stream_callback_func* func)
 {
 	if (!s)
 		return;
 	s->func = func;
 }
 
-bool NET_StreamIsLoopback (struct net_stream *s)
+bool NET_StreamIsLoopback (struct net_stream* s)
 {
 	return s && s->loopback;
 }

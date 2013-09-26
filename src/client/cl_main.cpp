@@ -303,7 +303,7 @@ static void CL_Packet_f (void)
 		return;
 	}
 
-	struct net_stream *s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
+	struct net_stream* s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
 	if (!s) {
 		Com_Printf("Could not connect to %s at port %s\n", Cmd_Argv(1), Cmd_Argv(2));
 		return;

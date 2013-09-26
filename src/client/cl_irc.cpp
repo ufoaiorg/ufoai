@@ -256,7 +256,7 @@ typedef struct irc_server_msg_s {
 	char trailing[IRC_SEND_BUF_SIZE];
 } irc_server_msg_t;
 
-static struct net_stream *irc_stream;
+static struct net_stream* irc_stream;
 
 static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 

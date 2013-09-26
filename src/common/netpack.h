@@ -48,12 +48,12 @@ void NET_WriteFormat(dbuffer* buf, const char* format, ...);
 void NET_VPrintf(dbuffer* buf, const char* format, va_list ap, char* str, size_t length);
 
 /* This frees the buf argument */
-void NET_WriteMsg(struct net_stream *s, dbuffer &buf);
+void NET_WriteMsg(struct net_stream* s, dbuffer &buf);
 
 /* This keeps buf intact */
-void NET_WriteConstMsg(struct net_stream *s, const dbuffer &buf);
+void NET_WriteConstMsg(struct net_stream* s, const dbuffer &buf);
 
-void NET_OOB_Printf(struct net_stream *s, const char* format, ...) __attribute__((format(__printf__,2,3)));
+void NET_OOB_Printf(struct net_stream* s, const char* format, ...) __attribute__((format(__printf__,2,3)));
 
 int NET_ReadChar(dbuffer* buf);
 int NET_ReadByte(dbuffer* buf);

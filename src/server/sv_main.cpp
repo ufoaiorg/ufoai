@@ -297,7 +297,7 @@ static bool SVC_RateLimitAddress (struct net_stream &from, int burst = 10, int p
  * @brief Responds with teaminfo such as free team num
  * @sa CL_ParseTeamInfoMessage
  */
-static void SVC_TeamInfo (struct net_stream *s)
+static void SVC_TeamInfo (struct net_stream* s)
 {
 	if (SVC_RateLimitAddress(*s)) {
 		Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
@@ -344,7 +344,7 @@ static void SVC_TeamInfo (struct net_stream *s)
  * @brief Responds with all the info that the server browser can see
  * @sa SV_StatusString
  */
-static void SVC_Status (struct net_stream *s)
+static void SVC_Status (struct net_stream* s)
 {
 	if (SVC_RateLimitAddress(*s)) {
 		Com_DPrintf(DEBUG_SERVER, "SVC_Status: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
@@ -385,7 +385,7 @@ static void SVC_Status (struct net_stream *s)
  * @sa CL_ParseStatusMessage
  * @sa CL_ProcessPingReply
  */
-static void SVC_Info (struct net_stream *s)
+static void SVC_Info (struct net_stream* s)
 {
 	if (SVC_RateLimitAddress(*s)) {
 		Com_DPrintf(DEBUG_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_StreamToString(s));
@@ -436,7 +436,7 @@ static void SVC_Info (struct net_stream *s)
  * @brief A connection request that did not come from the master
  * @sa CL_ConnectionlessPacket
  */
-static void SVC_DirectConnect (struct net_stream *stream)
+static void SVC_DirectConnect (struct net_stream* stream)
 {
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
@@ -559,7 +559,7 @@ static inline bool Rcon_Validate (const char* password)
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
-static void SVC_RemoteCommand (struct net_stream *stream)
+static void SVC_RemoteCommand (struct net_stream* stream)
 {
 	char buf[64];
 	const char* peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
@@ -612,7 +612,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  * @param[out] stream The stream to write to
  * @param msg The message buffer to read the connectionless data from
  */
-static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer* msg)
+static void SV_ConnectionlessPacket (struct net_stream* stream, dbuffer* msg)
 {
 	char s[512];
 
@@ -643,7 +643,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, dbuffer* msg)
  * @sa NET_ReadMsg
  * @sa SV_Start
  */
-void SV_ReadPacket (struct net_stream *s)
+void SV_ReadPacket (struct net_stream* s)
 {
 	client_t* cl = static_cast<client_t* >(NET_StreamGetData(s));
 	dbuffer* msg;

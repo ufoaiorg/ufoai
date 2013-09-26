@@ -348,7 +348,7 @@ bool GAME_IsTeamEmpty (void)
 	return LIST_IsEmpty(chrDisplayList);
 }
 
-static void GAME_NET_OOB_Printf (struct net_stream *s, const char* format, ...)
+static void GAME_NET_OOB_Printf (struct net_stream* s, const char* format, ...)
 {
 	va_list argptr;
 	char string[4096];

@@ -71,7 +71,7 @@ typedef struct client_static_s {
 	int reconnectTime;				/**< time until the reconnect to a server is triggered */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
 
-	struct net_stream *netStream;
+	struct net_stream* netStream;
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;				/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */

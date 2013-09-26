@@ -106,7 +106,7 @@ static inline bool GAME_MP_ShowServer (const serverList_t* server)
 	return false;
 }
 
-static void GAME_MP_PingServerCallback (struct net_stream *s)
+static void GAME_MP_PingServerCallback (struct net_stream* s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -152,7 +152,7 @@ static void GAME_MP_PingServerCallback (struct net_stream *s)
  */
 static void GAME_MP_PingServer (serverList_t* server)
 {
-	struct net_stream *s = cgi->NET_Connect(server->node, server->service, nullptr);
+	struct net_stream* s = cgi->NET_Connect(server->node, server->service, nullptr);
 	if (s == nullptr) {
 		cgi->Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
 		return;
@@ -352,7 +352,7 @@ static void GAME_MP_ParseServerInfoMessage (dbuffer* msg, const char* hostname)
  * @sa GAME_MP_ServerInfo_f
  * @sa GAME_MP_ParseServerInfoMessage
  */
-static void GAME_MP_ServerInfoCallback (struct net_stream *s)
+static void GAME_MP_ServerInfoCallback (struct net_stream* s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -483,7 +483,7 @@ static void GAME_MP_ServerInfo_f (void)
 		}
 		break;
 	}
-	struct net_stream *s = cgi->NET_Connect(host, port, nullptr);
+	struct net_stream* s = cgi->NET_Connect(host, port, nullptr);
 	if (s != nullptr) {
 		cgi->NET_OOB_Printf(s, SV_CMD_STATUS " %i", PROTOCOL_VERSION);
 		cgi->NET_StreamSetCallback(s, &GAME_MP_ServerInfoCallback);

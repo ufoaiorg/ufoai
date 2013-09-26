@@ -550,7 +550,7 @@ void NET_ReadFormat (dbuffer* buf, const char* format, ...)
  * @sa CL_ReadPackets
  * @sa SV_ConnectionlessPacket
  */
-void NET_OOB_Printf (struct net_stream *s, const char* format, ...)
+void NET_OOB_Printf (struct net_stream* s, const char* format, ...)
 {
 	va_list argptr;
 	char string[256];
@@ -571,7 +571,7 @@ void NET_OOB_Printf (struct net_stream *s, const char* format, ...)
  * @note Frees the msg buffer
  * @sa NET_WriteConstMsg
  */
-void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
+void NET_WriteMsg (struct net_stream* s, dbuffer &buf)
 {
 	char tmp[256];
 	int len = LittleLong(buf.length());
@@ -590,7 +590,7 @@ void NET_WriteMsg (struct net_stream *s, dbuffer &buf)
  * @note Make sure that you free the msg buffer after you called this
  * @sa NET_WriteMsg
  */
-void NET_WriteConstMsg (struct net_stream *s, const dbuffer &buf)
+void NET_WriteConstMsg (struct net_stream* s, const dbuffer &buf)
 {
 	char tmp[256];
 	const int len = LittleLong(buf.length());

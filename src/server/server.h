@@ -160,7 +160,7 @@ typedef struct client_s {
 	int messagelevel;			/**< for filtering printed messages */
 	int lastmessage;			/**< when packet was last received */
 	char peername[256];
-	struct net_stream *stream;
+	struct net_stream* stream;
 } client_t;
 
 extern serverInstanceStatic_t svs;	/**< persistant server instance info */
@@ -179,7 +179,7 @@ void SV_DropClient(client_t* drop, const char* message);
 int SV_CountPlayers(void);
 void SV_InitOperatorCommands(void);
 void SV_UserinfoChanged(client_t* cl);
-void SV_ReadPacket(struct net_stream *s);
+void SV_ReadPacket(struct net_stream* s);
 char* SV_GetConfigString(int index);
 int SV_GetConfigStringInteger(int index);
 char* SV_SetConfigString(int index, ...);

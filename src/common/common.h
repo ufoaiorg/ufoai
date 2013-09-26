@@ -221,7 +221,7 @@ MISC
 #define CON_COLOR_WHITE		7
 #define MAX_COLORS			8
 
-void Com_BeginRedirect(struct net_stream *stream, char* buffer, int buffersize);
+void Com_BeginRedirect(struct net_stream* stream, char* buffer, int buffersize);
 void Com_EndRedirect(void);
 void Com_vPrintf(const char* fmt, va_list);
 

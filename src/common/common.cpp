@@ -297,7 +297,7 @@ CLIENT / SERVER interactions
 
 static char* rd_buffer;
 static unsigned int rd_buffersize;
-static struct net_stream *rd_stream;
+static struct net_stream* rd_stream;
 
 /**
  * @brief Redirect packets/output from server to client
@@ -305,7 +305,7 @@ static struct net_stream *rd_stream;
  *
  * This is used to redirect printf outputs for rcon commands
  */
-void Com_BeginRedirect (struct net_stream *stream, char* buffer, int buffersize)
+void Com_BeginRedirect (struct net_stream* stream, char* buffer, int buffersize)
 {
 	if (!buffer || !buffersize)
 		return;

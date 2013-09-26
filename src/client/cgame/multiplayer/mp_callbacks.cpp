@@ -81,7 +81,7 @@ static void GAME_MP_Connect_f (void)
 	cgi->HUD_InitUI("multiplayerInGame");
 }
 
-static void GAME_MP_RconCallback (struct net_stream *s)
+static void GAME_MP_RconCallback (struct net_stream* s)
 {
 	AutoPtr<dbuffer> buf(cgi->NET_ReadMsg(s));
 	if (!buf) {
@@ -127,7 +127,7 @@ bool GAME_MP_Rcon (const char* password, const char* command)
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		struct net_stream *s = cgi->NET_Connect(rcon_address->string, port, nullptr);
+		struct net_stream* s = cgi->NET_Connect(rcon_address->string, port, nullptr);
 		if (s) {
 			cgi->NET_OOB_Printf(s, SV_CMD_RCON " %s %s", password, command);
 			cgi->NET_StreamSetCallback(s, &GAME_MP_RconCallback);
