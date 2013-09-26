@@ -119,7 +119,7 @@ bool INV_LoadWeapon (const Item* weaponList, Inventory* inv, const invDef_t* src
 		/* search an ammo */
 		for (int i = 0; i < weapon->numAmmos; i++) {
 			const objDef_t* ammo = weapon->ammos[i];
-			Item *ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
+			Item* ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
 			if (ic)
 				return INV_MoveItem(inv, destContainer, x, y, srcContainer, ic, nullptr);
 		}

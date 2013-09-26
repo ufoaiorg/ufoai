@@ -104,7 +104,7 @@ static void testItemDel (void)
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container;
-	Item *addedItem;
+	Item* addedItem;
 
 	ResetInventoryList();
 
@@ -132,7 +132,7 @@ static void testItemMove (void)
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container, *containerTo;
-	Item *addedItem;
+	Item* addedItem;
 
 	ResetInventoryList();
 
@@ -165,7 +165,7 @@ static void testItemReload (void)
 	Inventory inv;
 	const objDef_t* od, *ad;
 	const invDef_t* container, *containerFrom;
-	Item *addedItem;
+	Item* addedItem;
 
 	ResetInventoryList();
 
