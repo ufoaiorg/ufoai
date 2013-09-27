@@ -134,7 +134,7 @@ static int arrayindex (const TValue *key) {
 ** elements in the array part, then elements in the hash part. The
 ** beginning of a traversal is signalled by -1.
 */
-static int findindex (lua_State* L, Table *t, StkId key) {
+static int findindex (lua_State *L, Table *t, StkId key) {
   int i;
   if (ttisnil(key)) return -1;  /* first iteration */
   i = arrayindex(key);
@@ -159,7 +159,7 @@ static int findindex (lua_State* L, Table *t, StkId key) {
 }
 
 
-int luaH_next (lua_State* L, Table *t, StkId key) {
+int luaH_next (lua_State *L, Table *t, StkId key) {
   int i = findindex(L, t, key);  /* find original element */
   for (i++; i < t->sizearray; i++) {  /* try first array part */
     if (!ttisnil(&t->array[i])) {  /* a non-nil value? */
@@ -260,7 +260,7 @@ static int numusehash (const Table *t, int* nums, int* pnasize) {
 }
 
 
-static void setarrayvector (lua_State* L, Table *t, int size) {
+static void setarrayvector (lua_State *L, Table *t, int size) {
   int i;
   luaM_reallocvector(L, t->array, t->sizearray, size, TValue);
   for (i=t->sizearray; i<size; i++)
@@ -269,7 +269,7 @@ static void setarrayvector (lua_State* L, Table *t, int size) {
 }
 
 
-static void setnodevector (lua_State* L, Table *t, int size) {
+static void setnodevector (lua_State *L, Table *t, int size) {
   int lsize;
   if (size == 0) {  /* no elements to hash part? */
     t->node = cast(Node *, dummynode);  /* use common `dummynode' */
@@ -294,7 +294,7 @@ static void setnodevector (lua_State* L, Table *t, int size) {
 }
 
 
-static void resize (lua_State* L, Table *t, int nasize, int nhsize) {
+static void resize (lua_State *L, Table *t, int nasize, int nhsize) {
   int i;
   int oldasize = t->sizearray;
   int oldhsize = t->lsizenode;
@@ -324,13 +324,13 @@ static void resize (lua_State* L, Table *t, int nasize, int nhsize) {
 }
 
 
-void luaH_resizearray (lua_State* L, Table *t, int nasize) {
+void luaH_resizearray (lua_State *L, Table *t, int nasize) {
   int nsize = (t->node == dummynode) ? 0 : sizenode(t);
   resize(L, t, nasize, nsize);
 }
 
 
-static void rehash (lua_State* L, Table *t, const TValue *ek) {
+static void rehash (lua_State *L, Table *t, const TValue *ek) {
   int nasize, na;
   int nums[MAXBITS+1];  /* nums[i] = number of keys between 2^(i-1) and 2^i */
   int i;
@@ -355,7 +355,7 @@ static void rehash (lua_State* L, Table *t, const TValue *ek) {
 */
 
 
-Table *luaH_new (lua_State* L, int narray, int nhash) {
+Table *luaH_new (lua_State *L, int narray, int nhash) {
   Table *t = luaM_new(L, Table);
   luaC_link(L, obj2gco(t), LUA_TTABLE);
   t->metatable = nullptr;
@@ -371,7 +371,7 @@ Table *luaH_new (lua_State* L, int narray, int nhash) {
 }
 
 
-void luaH_free (lua_State* L, Table *t) {
+void luaH_free (lua_State *L, Table *t) {
   if (t->node != dummynode)
     luaM_freearray(L, t->node, sizenode(t), Node);
   luaM_freearray(L, t->array, t->sizearray, TValue);
@@ -396,7 +396,7 @@ static Node *getfreepos (Table *t) {
 ** put new key in its main position; otherwise (colliding node is in its main
 ** position), new key goes to an empty position.
 */
-static TValue *newkey (lua_State* L, Table *t, const TValue *key) {
+static TValue *newkey (lua_State *L, Table *t, const TValue *key) {
   Node *mp = mainposition(t, key);
   if (!ttisnil(gval(mp)) || mp == dummynode) {
     Node *othern;
@@ -491,7 +491,7 @@ TValue *luaH_get (Table *t, const TValue *key) {
 }
 
 
-TValue *luaH_set (lua_State* L, Table *t, const TValue *key) {
+TValue *luaH_set (lua_State *L, Table *t, const TValue *key) {
   TValue *p = luaH_get(t, key);
   t->flags = 0;
   if (p != luaO_nilobject)
@@ -505,7 +505,7 @@ TValue *luaH_set (lua_State* L, Table *t, const TValue *key) {
 }
 
 
-TValue *luaH_setnum (lua_State* L, Table *t, int key) {
+TValue *luaH_setnum (lua_State *L, Table *t, int key) {
   TValue *p = luaH_getnum(t, key);
   if (p != luaO_nilobject)
     return cast(TValue *, p);
@@ -517,7 +517,7 @@ TValue *luaH_setnum (lua_State* L, Table *t, int key) {
 }
 
 
-TValue *luaH_setstr (lua_State* L, Table *t, TString *key) {
+TValue *luaH_setstr (lua_State *L, Table *t, TString *key) {
   TValue *p = luaH_getstr(t, key);
   if (p != luaO_nilobject)
     return cast(TValue *, p);

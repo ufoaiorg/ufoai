@@ -61,7 +61,7 @@ static void save (LexState *ls, int c) {
 }
 
 
-void luaX_init (lua_State* L) {
+void luaX_init (lua_State *L) {
   int i;
   for (i=0; i<NUM_RESERVED; i++) {
     TString *ts = luaS_new(L, luaX_tokens[i]);
@@ -115,7 +115,7 @@ void luaX_syntaxerror (LexState *ls, const char* msg) {
 
 
 TString *luaX_newstring (LexState *ls, const char* str, size_t l) {
-  lua_State* L = ls->L;
+  lua_State *L = ls->L;
   TString *ts = luaS_newlstr(L, str, l);
   TValue *o = luaH_setstr(L, ls->fs->h, ts);  /* entry for `str' */
   if (ttisnil(o)) {
@@ -137,7 +137,7 @@ static void inclinenumber (LexState *ls) {
 }
 
 
-void luaX_setinput (lua_State* L, LexState *ls, ZIO *z, TString *source) {
+void luaX_setinput (lua_State *L, LexState *ls, ZIO *z, TString *source) {
   ls->decpoint = '.';
   ls->L = L;
   ls->lookahead.token = TK_EOS;  /* no look-ahead token */

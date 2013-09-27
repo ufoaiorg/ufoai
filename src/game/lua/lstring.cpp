@@ -19,7 +19,7 @@
 
 
 
-void luaS_resize (lua_State* L, int newsize) {
+void luaS_resize (lua_State *L, int newsize) {
   GCObject **newhash;
   stringtable *tb;
   int i;
@@ -47,7 +47,7 @@ void luaS_resize (lua_State* L, int newsize) {
 }
 
 
-static TString *newlstr (lua_State* L, const char* str, size_t l,
+static TString *newlstr (lua_State *L, const char* str, size_t l,
                                        unsigned int h) {
   TString *ts;
   stringtable *tb;
@@ -72,7 +72,7 @@ static TString *newlstr (lua_State* L, const char* str, size_t l,
 }
 
 
-TString *luaS_newlstr (lua_State* L, const char* str, size_t l) {
+TString *luaS_newlstr (lua_State *L, const char* str, size_t l) {
   GCObject *o;
   unsigned int h = cast(unsigned int, l);  /* seed */
   size_t step = (l>>5)+1;  /* if string is too long, don't hash all its chars */
@@ -93,7 +93,7 @@ TString *luaS_newlstr (lua_State* L, const char* str, size_t l) {
 }
 
 
-Udata *luaS_newudata (lua_State* L, size_t s, Table *e) {
+Udata *luaS_newudata (lua_State *L, size_t s, Table *e) {
   Udata *u;
   if (s > MAX_SIZET - sizeof(Udata))
     luaM_toobig(L);

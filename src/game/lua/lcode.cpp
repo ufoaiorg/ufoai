@@ -227,7 +227,7 @@ static void freeexp (FuncState *fs, expdesc *e) {
 
 
 static int addk (FuncState *fs, TValue *k, TValue *v) {
-  lua_State* L = fs->L;
+  lua_State *L = fs->L;
   TValue *idx = luaH_set(L, fs->h, k);
   Proto *f = fs->f;
   int oldsize = f->sizek;

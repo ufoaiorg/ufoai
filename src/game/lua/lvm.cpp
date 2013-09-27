@@ -44,7 +44,7 @@ const TValue *luaV_tonumber (const TValue *obj, TValue *n) {
 }
 
 
-int luaV_tostring (lua_State* L, StkId obj) {
+int luaV_tostring (lua_State *L, StkId obj) {
   if (!ttisnumber(obj))
     return 0;
   else {
@@ -57,7 +57,7 @@ int luaV_tostring (lua_State* L, StkId obj) {
 }
 
 
-static void traceexec (lua_State* L, const Instruction *pc) {
+static void traceexec (lua_State *L, const Instruction *pc) {
   lu_byte mask = L->hookmask;
   const Instruction *oldpc = L->savedpc;
   L->savedpc = pc;
@@ -77,7 +77,7 @@ static void traceexec (lua_State* L, const Instruction *pc) {
 }
 
 
-static void callTMres (lua_State* L, StkId res, const TValue *f,
+static void callTMres (lua_State *L, StkId res, const TValue *f,
                         const TValue *p1, const TValue *p2) {
   ptrdiff_t result = savestack(L, res);
   setobj2s(L, L->top, f);  /* push function */
@@ -93,7 +93,7 @@ static void callTMres (lua_State* L, StkId res, const TValue *f,
 
 
 
-static void callTM (lua_State* L, const TValue *f, const TValue *p1,
+static void callTM (lua_State *L, const TValue *f, const TValue *p1,
                     const TValue *p2, const TValue *p3) {
   setobj2s(L, L->top, f);  /* push function */
   setobj2s(L, L->top+1, p1);  /* 1st argument */
@@ -105,7 +105,7 @@ static void callTM (lua_State* L, const TValue *f, const TValue *p1,
 }
 
 
-void luaV_gettable (lua_State* L, const TValue *t, TValue *key, StkId val) {
+void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
   int loop;
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
     const TValue *tm;
@@ -131,7 +131,7 @@ void luaV_gettable (lua_State* L, const TValue *t, TValue *key, StkId val) {
 }
 
 
-void luaV_settable (lua_State* L, const TValue *t, TValue *key, StkId val) {
+void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
   int loop;
   TValue temp;
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
@@ -162,7 +162,7 @@ void luaV_settable (lua_State* L, const TValue *t, TValue *key, StkId val) {
 }
 
 
-static int call_binTM (lua_State* L, const TValue *p1, const TValue *p2,
+static int call_binTM (lua_State *L, const TValue *p1, const TValue *p2,
                        StkId res, TMS event) {
   const TValue *tm = luaT_gettmbyobj(L, p1, event);  /* try first operand */
   if (ttisnil(tm))
@@ -173,7 +173,7 @@ static int call_binTM (lua_State* L, const TValue *p1, const TValue *p2,
 }
 
 
-static const TValue *get_compTM (lua_State* L, Table *mt1, Table *mt2,
+static const TValue *get_compTM (lua_State *L, Table *mt1, Table *mt2,
                                   TMS event) {
   const TValue *tm1 = fasttm(L, mt1, event);
   const TValue *tm2;
@@ -187,7 +187,7 @@ static const TValue *get_compTM (lua_State* L, Table *mt1, Table *mt2,
 }
 
 
-static int call_orderTM (lua_State* L, const TValue *p1, const TValue *p2,
+static int call_orderTM (lua_State *L, const TValue *p1, const TValue *p2,
                          TMS event) {
   const TValue *tm1 = luaT_gettmbyobj(L, p1, event);
   const TValue *tm2;
@@ -222,7 +222,7 @@ static int l_strcmp (const TString *ls, const TString *rs) {
 }
 
 
-int luaV_lessthan (lua_State* L, const TValue *l, const TValue *r) {
+int luaV_lessthan (lua_State *L, const TValue *l, const TValue *r) {
   int res;
   if (ttype(l) != ttype(r))
     return luaG_ordererror(L, l, r);
@@ -236,7 +236,7 @@ int luaV_lessthan (lua_State* L, const TValue *l, const TValue *r) {
 }
 
 
-static int lessequal (lua_State* L, const TValue *l, const TValue *r) {
+static int lessequal (lua_State *L, const TValue *l, const TValue *r) {
   int res;
   if (ttype(l) != ttype(r))
     return luaG_ordererror(L, l, r);
@@ -252,7 +252,7 @@ static int lessequal (lua_State* L, const TValue *l, const TValue *r) {
 }
 
 
-int luaV_equalval (lua_State* L, const TValue *t1, const TValue *t2) {
+int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
   const TValue *tm;
   lua_assert(ttype(t1) == ttype(t2));
   switch (ttype(t1)) {
@@ -279,7 +279,7 @@ int luaV_equalval (lua_State* L, const TValue *t1, const TValue *t2) {
 }
 
 
-void luaV_concat (lua_State* L, int total, int last) {
+void luaV_concat (lua_State *L, int total, int last) {
   do {
     StkId top = L->base + last + 1;
     int n = 2;  /* number of elements handled in this pass (at least 2) */
@@ -314,7 +314,7 @@ void luaV_concat (lua_State* L, int total, int last) {
 }
 
 
-static void Arith (lua_State* L, StkId ra, const TValue *rb,
+static void Arith (lua_State *L, StkId ra, const TValue *rb,
                    const TValue *rc, TMS op) {
   TValue tempb, tempc;
   const TValue *b, *c;
@@ -374,7 +374,7 @@ static void Arith (lua_State* L, StkId ra, const TValue *rb,
 
 
 
-void luaV_execute (lua_State* L, int nexeccalls) {
+void luaV_execute (lua_State *L, int nexeccalls) {
   LClosure *cl;
   StkId base;
   TValue *k;

@@ -101,14 +101,14 @@ int luaO_str2d (const char* s, lua_Number *result) {
 
 
 
-static void pushstr (lua_State* L, const char* str) {
+static void pushstr (lua_State *L, const char* str) {
   setsvalue2s(L, L->top, luaS_new(L, str));
   incr_top(L);
 }
 
 
 /* this function handles only `%d', `%c', %f, %p, and `%s' formats */
-const char* luaO_pushvfstring (lua_State* L, const char* fmt, va_list argp) {
+const char* luaO_pushvfstring (lua_State *L, const char* fmt, va_list argp) {
   int n = 1;
   pushstr(L, "");
   for (;;) {
@@ -169,7 +169,7 @@ const char* luaO_pushvfstring (lua_State* L, const char* fmt, va_list argp) {
 }
 
 
-const char* luaO_pushfstring (lua_State* L, const char* fmt, ...) {
+const char* luaO_pushfstring (lua_State *L, const char* fmt, ...) {
   const char* msg;
   va_list argp;
   va_start(argp, fmt);
