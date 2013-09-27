@@ -36,11 +36,11 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
  * @brief Structure to map (script) strings and integer (enum) values
  */
 typedef struct com_constNameInt_s {
-	char name[MAX_CONSTNAMEINT_NAME];	/**< script id */
-	char* fullname;			/**< only set in case there was a namespace given */
-	int value;				/**< integer value */
+	char name[MAX_CONSTNAMEINT_NAME];		/**< script id */
+	char* fullname;							/**< only set in case there was a namespace given */
+	int value;								/**< integer value */
 	struct com_constNameInt_s *hash_next;	/**< hash next pointer */
-	struct com_constNameInt_s *next;	/**< linked list next pointer */
+	struct com_constNameInt_s *next;		/**< linked list next pointer */
 } com_constNameInt_t;
 
 /** @brief Linked list of all the registeres mappings */
