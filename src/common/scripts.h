@@ -82,7 +82,7 @@ typedef enum {
 	V_ENSURE32BIT = 0xffffffff
 } valueTypes_t;
 
-extern const char *const vt_names[];
+extern const char* const vt_names[];
 
 /** @brief We need this here for checking the boundaries from script values */
 
@@ -161,16 +161,16 @@ typedef enum {
 	UFO_MAX
 } ufoType_t;
 
-extern const char *const align_names[];
-extern const char *const blend_names[];
-extern const char *const style_names[];
-extern const char *const fade_names[];
-extern const char *const longlines_names[];
-extern const char *const air_slot_type_strings[];
+extern const char* const align_names[];
+extern const char* const blend_names[];
+extern const char* const style_names[];
+extern const char* const fade_names[];
+extern const char* const longlines_names[];
+extern const char* const air_slot_type_strings[];
 
 /** used e.g. in our parsers */
 typedef struct value_s {
-	const char *string;
+	const char* string;
 	valueTypes_t type;
 	size_t ofs;
 	size_t size;
@@ -193,40 +193,40 @@ typedef enum {
 } resultStatus_t;
 
 #ifdef DEBUG
-int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+int Com_SetValueDebug(void* base, const void* set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 #define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
 #else
-int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
+int Com_SetValue(void* base, const void* set, valueTypes_t type, int ofs, size_t size);
 #endif
-int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
-bool Com_ParseBlock(const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool);
-bool Com_ParseBlockToken(const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool, const char *token);
+int Com_EParseValue(void* base, const char* token, valueTypes_t type, int ofs, size_t size);
+bool Com_ParseBlock(const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool);
+bool Com_ParseBlockToken(const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool, const char* token);
 bool Com_ParseList(const char** text, linkedList_t** list);
-void *Com_AlignPtr(const void *memory, valueTypes_t type);
-const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
-const char *Com_GetLastParseError(void);
-resultStatus_t Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
-bool Com_ParseBoolean(const char *token);
+void* Com_AlignPtr(const void* memory, valueTypes_t type);
+const char* Com_ValueToStr(const void* base, const valueTypes_t type, const int ofs);
+const char* Com_GetLastParseError(void);
+resultStatus_t Com_ParseValue(void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
+bool Com_ParseBoolean(const char* token);
 
 /*==============================================================
 SCRIPT PARSING
 ==============================================================*/
 
-extern const char *const name_strings[];
+extern const char* const name_strings[];
 
 #define SND_VOLUME_FOOTSTEPS 0.4f
 
 /** @brief Different terrain definitions for footsteps and particles */
 typedef struct terrainType_s {
-	const char *texture;			/**< script id is the texture name/path */
-	const char *footstepSound;		/**< sound to play when walking on this terrain type */
-	const char *particle;			/**< particle to spawn when walking on this type of terrain */
+	const char* texture;			/**< script id is the texture name/path */
+	const char* footstepSound;		/**< sound to play when walking on this terrain type */
+	const char* particle;			/**< particle to spawn when walking on this type of terrain */
 	float bounceFraction;			/**< the impact on the bounce fraction given in the weapon definition */
 	float footstepVolume;			/**< footstep sound volume */
 	struct terrainType_s *hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 
-const terrainType_t *Com_GetTerrainType(const char *textureName);
+const terrainType_t *Com_GetTerrainType(const char* textureName);
 
 /**
  * @brief list of script aliases to register
@@ -234,23 +234,23 @@ const terrainType_t *Com_GetTerrainType(const char *textureName);
  * @sa saveEmployeeConstants[]
  */
 typedef struct constListEntry_s {
-	const char *name;
+	const char* name;
 	int value;
 } constListEntry_t;
 
-bool Com_GetConstInt(const char *name, int *value);
-bool Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
-const char* Com_GetConstVariable(const char *space, int value);
-bool Com_UnregisterConstVariable(const char *name);
-void Com_RegisterConstInt(const char *name, int value);
+bool Com_GetConstInt(const char* name, int* value);
+bool Com_GetConstIntFromNamespace(const char* space, const char* variable, int* value);
+const char* Com_GetConstVariable(const char* space, int value);
+bool Com_UnregisterConstVariable(const char* name);
+void Com_RegisterConstInt(const char* name, int value);
 void Com_RegisterConstList(const constListEntry_t constList[]);
 bool Com_UnregisterConstList(const constListEntry_t constList[]);
 
 void Com_ParseScripts(bool onlyServer);
-const char *Com_EParse(const char** text, const char *errhead, const char *errinfo, char *target = 0, size_t size = 0);
-const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
-const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);
-ufoType_t Com_UFOShortNameToID(const char *token);
+const char* Com_EParse(const char** text, const char* errhead, const char* errinfo, char* target = 0, size_t size = 0);
+const char* Com_GetRandomMapAssemblyNameForCraft(const char* craftID);
+const char* Com_GetRandomMapAssemblyNameForCrashedCraft(const char* craftID);
+ufoType_t Com_UFOShortNameToID(const char* token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
 int Com_GetScriptChecksum(void);
@@ -258,12 +258,12 @@ void Com_Shutdown(void);
 
 #include "../game/q_shared.h"
 
-const ugv_t *Com_GetUGVByIDSilent(const char *ugvID);
-const ugv_t *Com_GetUGVByID(const char *ugvID);
+const ugv_t *Com_GetUGVByIDSilent(const char* ugvID);
+const ugv_t *Com_GetUGVByID(const char* ugvID);
 const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
-humanAircraftType_t Com_DropShipShortNameToID(const char *token);
-void Com_GetCharacterValues(const char *teamDefition, character_t *chr);
+humanAircraftType_t Com_DropShipShortNameToID(const char* token);
+void Com_GetCharacterValues(const char* teamDefition, character_t *chr);
 bool Com_GetCharacterModel(character_t *chr);
 const char* Com_GetActorSound(teamDef_t *td, int gender, actorSound_t soundType);
-const teamDef_t *Com_GetTeamDefinitionByID(const char *team);
-const chrTemplate_t *Com_GetCharacterTemplateByID(const char *chrTemplate);
+const teamDef_t *Com_GetTeamDefinitionByID(const char* team);
+const chrTemplate_t *Com_GetCharacterTemplateByID(const char* chrTemplate);

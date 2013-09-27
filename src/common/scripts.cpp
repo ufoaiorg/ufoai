@@ -37,7 +37,7 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
  */
 typedef struct com_constNameInt_s {
 	char name[MAX_CONSTNAMEINT_NAME];	/**< script id */
-	char *fullname;			/**< only set in case there was a namespace given */
+	char* fullname;			/**< only set in case there was a namespace given */
 	int value;				/**< integer value */
 	struct com_constNameInt_s *hash_next;	/**< hash next pointer */
 	struct com_constNameInt_s *next;	/**< linked list next pointer */
@@ -53,9 +53,9 @@ static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
  * @param name The name of the script entry to map to an integer
  * @return The namespace in case one was found, @c nullptr otherwise
  */
-static const char *Com_ConstIntGetVariable (const char *name)
+static const char* Com_ConstIntGetVariable (const char* name)
 {
-	const char *space = strstr(name, "::");
+	const char* space = strstr(name, "::");
 	if (space)
 		return space + 2;
 	return name;
@@ -70,11 +70,11 @@ static const char *Com_ConstIntGetVariable (const char *name)
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
  */
-bool Com_GetConstInt (const char *name, int *value)
+bool Com_GetConstInt (const char* name, int* value)
 {
 	com_constNameInt_t *a;
 	unsigned int hash;
-	const char *variable;
+	const char* variable;
 
 	variable = Com_ConstIntGetVariable(name);
 
@@ -103,7 +103,7 @@ bool Com_GetConstInt (const char *name, int *value)
  * @sa Com_ParseValue
  * @sa Com_GetConstInt
  */
-bool Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
+bool Com_GetConstIntFromNamespace (const char* space, const char* variable, int* value)
 {
 	if (Q_strnull(variable))
 		return false;
@@ -122,7 +122,7 @@ bool Com_GetConstIntFromNamespace (const char *space, const char *variable, int 
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
  */
-const char *Com_GetConstVariable (const char *space, int value)
+const char* Com_GetConstVariable (const char* space, int value)
 {
 	com_constNameInt_t *a;
 	const size_t namespaceLength = strlen(space);
@@ -148,7 +148,7 @@ const char *Com_GetConstVariable (const char *space, int value)
  * @sa Com_RegisterConstInt
  * @sa Com_GetConstVariable
  */
-bool Com_UnregisterConstVariable (const char *name)
+bool Com_UnregisterConstVariable (const char* name)
 {
 	com_constNameInt_t *prev = nullptr;
 
@@ -167,7 +167,7 @@ bool Com_UnregisterConstVariable (const char *name)
 
 		prev = nullptr;
 
-		const char *variable = Com_ConstIntGetVariable(name);
+		const char* variable = Com_ConstIntGetVariable(name);
 		const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 		for (com_constNameInt_t *b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
 			if (!b->fullname)
@@ -199,11 +199,11 @@ bool Com_UnregisterConstVariable (const char *name)
  * @sa Com_GetConstInt
  * @sa Com_UnregisterConstVariable
  */
-void Com_RegisterConstInt (const char *name, int value)
+void Com_RegisterConstInt (const char* name, int value)
 {
 	com_constNameInt_t *a;
 	unsigned int hash;
-	const char *variable;
+	const char* variable;
 
 	variable = Com_ConstIntGetVariable(name);
 
@@ -270,7 +270,7 @@ void Com_RegisterConstList (const constListEntry_t constList[])
  * Find name type id by is name
  * @return id of the name type, else -1 if not found
  */
-static int Com_FindNameType (const char *nameType)
+static int Com_FindNameType (const char* nameType)
 {
 	int i;
 	for (i = 0; i < NAME_NUM_TYPES; i++) {
@@ -285,9 +285,9 @@ static int Com_FindNameType (const char *nameType)
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
  */
-const char *Com_EParse (const char** text, const char *errhead, const char *errinfo, char *target, size_t size)
+const char* Com_EParse (const char** text, const char* errhead, const char* errinfo, char* target, size_t size)
 {
-	const char *token;
+	const char* token;
 
 	token = Com_Parse(text, target, size);
 	if (!*text) {
@@ -304,7 +304,7 @@ const char *Com_EParse (const char** text, const char *errhead, const char *erri
 
 static bool versionParsed;
 
-static void Com_ParseVersion (const char *version)
+static void Com_ParseVersion (const char* version)
 {
 	if (!versionParsed) {
 		if (!Q_streq(version, UFO_VERSION))
@@ -320,7 +320,7 @@ static void Com_ParseVersion (const char *version)
  * @brief possible values for parsing functions
  * @sa valueTypes_t
  */
-const char *const vt_names[] = {
+const char* const vt_names[] = {
 	"",
 	"bool",
 	"char",
@@ -351,22 +351,22 @@ const char *const vt_names[] = {
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
-const char *const align_names[] = {
+const char* const align_names[] = {
 	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr", "ul_rsl", "uc_rsl", "ur_rsl", "cl_rsl", "cc_rsl", "cr_rsl", "ll_rsl", "lc_rsl", "lr_rsl"
 };
 CASSERT(lengthof(align_names) == ALIGN_LAST);
 
-const char *const blend_names[] = {
+const char* const blend_names[] = {
 	"replace", "one", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
 
-const char *const style_names[] = {
+const char* const style_names[] = {
 	"facing", "rotated", "beam", "line", "axis", "circle"
 };
 CASSERT(lengthof(style_names) == STYLE_LAST);
 
-const char *const fade_names[] = {
+const char* const fade_names[] = {
 	"none", "in", "out", "sin", "saw"
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
@@ -441,7 +441,7 @@ static char parseErrorMessage[256];
  * Returns the last error message
  * @return string that contains the last error message
  */
-const char *Com_GetLastParseError (void)
+const char* Com_GetLastParseError (void)
 {
 	return parseErrorMessage;
 }
@@ -450,7 +450,7 @@ const char *Com_GetLastParseError (void)
  * @brief Align a memory to use a natural address for the data type we will write
  * @note it speed up data read, and fix crash on PPC processors
  */
-void *Com_AlignPtr (const void *memory, valueTypes_t type)
+void* Com_AlignPtr (const void* memory, valueTypes_t type)
 {
 	const size_t align = vt_aligns[type];
 	assert(memory != nullptr);
@@ -473,7 +473,7 @@ void *Com_AlignPtr (const void *memory, valueTypes_t type)
  * @note instead of , this function separate error message and write byte result
  * @todo This function has much in common with Com_SetValue. Refactor them !
  */
-resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
+resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
 {
 	byte *b;
 	int x, y, w, h;
@@ -530,17 +530,17 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal end of string. '\\0' explected but 0x%x found", token[1]);
 			return RESULT_ERROR;
 		}
-		*(char *) b = token[0];
+		*(char*) b = token[0];
 		*writtenBytes = sizeof(char);
 		break;
 
 	case V_TEAM:
 		if (Q_streq(token, "civilian"))
-			*(int *) b = TEAM_CIVILIAN;
+			*(int*) b = TEAM_CIVILIAN;
 		else if (Q_streq(token, "phalanx"))
-			*(int *) b = TEAM_PHALANX;
+			*(int*) b = TEAM_PHALANX;
 		else if (Q_streq(token, "alien"))
-			*(int *) b = TEAM_ALIEN;
+			*(int*) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
 		*writtenBytes = sizeof(int);
@@ -621,8 +621,8 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		break;
 
 	case V_INT:
-		if (sscanf(token, "%i", &((int *) b)[0]) != 1) {
-			if (!Com_GetConstInt(token, &((int *) b)[0])) {
+		if (sscanf(token, "%i", &((int*) b)[0]) != 1) {
+			if (!Com_GetConstInt(token, &((int*) b)[0])) {
 				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int statement '%s'", token);
 				return RESULT_ERROR;
 			}
@@ -631,7 +631,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		break;
 
 	case V_INT2:
-		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2) {
+		if (sscanf(token, "%i %i", &((int*) b)[0], &((int*) b)[1]) != 2) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int2 statement '%s'", token);
 			return RESULT_ERROR;
 		}
@@ -674,7 +674,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		break;
 
 	case V_STRING:
-		Q_strncpyz((char *) b, token, MAX_VAR);
+		Q_strncpyz((char*) b, token, MAX_VAR);
 		w = (int)strlen(token) + 1;
 		*writtenBytes = w;
 		break;
@@ -684,13 +684,13 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		if (*token == '_')
 			token++;
 
-		Q_strncpyz((char *) b, token, MAX_VAR);
-		w = (int)strlen((char *) b) + 1;
+		Q_strncpyz((char*) b, token, MAX_VAR);
+		w = (int)strlen((char*) b) + 1;
 		*writtenBytes = w;
 		break;
 
 	case V_LONGSTRING:
-		strcpy((char *) b, token);
+		strcpy((char*) b, token);
 		w = (int)strlen(token) + 1;
 		*writtenBytes = w;
 		break;
@@ -838,7 +838,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
  * }
  * @endcode
  */
-int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
+int Com_EParseValue (void* base, const char* token, valueTypes_t type, int ofs, size_t size)
 {
 	size_t writtenBytes;
 	const resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writtenBytes);
@@ -860,7 +860,7 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
  * @param token The token to convert into a boolean
  * @return @c false if the string could not get parsed
  */
-bool Com_ParseBoolean (const char *token)
+bool Com_ParseBoolean (const char* token)
 {
 	bool b;
 	size_t writtenBytes;
@@ -881,9 +881,9 @@ bool Com_ParseBoolean (const char *token)
  * @note The offset is most likely given by the offsetof macro
  */
 #ifdef DEBUG
-int Com_SetValueDebug (void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+int Com_SetValueDebug (void* base, const void* set, valueTypes_t type, int ofs, size_t size, const char* file, int line)
 #else
-int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_t size)
+int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_t size)
 #endif
 {
 	byte *b;
@@ -923,98 +923,98 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return sizeof(bool);
 
 	case V_CHAR:
-		*(char *) b = *(const char *) set;
+		*(char*) b = *(const char*) set;
 		return sizeof(char);
 
 	case V_TEAM:
-		if (Q_streq((const char *)set, "civilian"))
-			*(int *) b = TEAM_CIVILIAN;
-		else if (Q_streq((const char *)set, "phalanx"))
-			*(int *) b = TEAM_PHALANX;
-		else if (Q_streq((const char *)set, "alien"))
-			*(int *) b = TEAM_ALIEN;
+		if (Q_streq((const char*)set, "civilian"))
+			*(int*) b = TEAM_CIVILIAN;
+		else if (Q_streq((const char*)set, "phalanx"))
+			*(int*) b = TEAM_PHALANX;
+		else if (Q_streq((const char*)set, "alien"))
+			*(int*) b = TEAM_ALIEN;
 		else
-			Sys_Error("Unknown team given: '%s'", (const char *)set);
+			Sys_Error("Unknown team given: '%s'", (const char*)set);
 		return sizeof(int);
 
 	case V_AIRCRAFTTYPE:
-		if (Q_streq((const char *)set, "craft_drop_firebird"))
+		if (Q_streq((const char*)set, "craft_drop_firebird"))
 			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
-		else if (Q_streq((const char *)set, "craft_drop_herakles"))
+		else if (Q_streq((const char*)set, "craft_drop_herakles"))
 			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
-		else if (Q_streq((const char *)set, "craft_drop_raptor"))
+		else if (Q_streq((const char*)set, "craft_drop_raptor"))
 			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
-		else if (Q_streq((const char *)set, "craft_inter_stiletto"))
+		else if (Q_streq((const char*)set, "craft_inter_stiletto"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
-		else if (Q_streq((const char *)set, "craft_inter_saracen"))
+		else if (Q_streq((const char*)set, "craft_inter_saracen"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
-		else if (Q_streq((const char *)set, "craft_inter_dragon"))
+		else if (Q_streq((const char*)set, "craft_inter_dragon"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
-		else if (Q_streq((const char *)set, "craft_inter_starchaser"))
+		else if (Q_streq((const char*)set, "craft_inter_starchaser"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
-		else if (Q_streq((const char *)set, "craft_inter_stingray"))
+		else if (Q_streq((const char*)set, "craft_inter_stingray"))
 			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
 		else
-			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
+			Sys_Error("Unknown aircrafttype type: '%s'", (const char*)set);
 		return sizeof(humanAircraftType_t);
 
 	case V_UFO:
-		if (Q_streq((const char *)set, "craft_ufo_bomber"))
+		if (Q_streq((const char*)set, "craft_ufo_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (Q_streq((const char *)set, "craft_ufo_carrier"))
+		else if (Q_streq((const char*)set, "craft_ufo_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (Q_streq((const char *)set, "craft_ufo_corrupter"))
+		else if (Q_streq((const char*)set, "craft_ufo_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (Q_streq((const char *)set, "craft_ufo_fighter"))
+		else if (Q_streq((const char*)set, "craft_ufo_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (Q_streq((const char *)set, "craft_ufo_harvester"))
+		else if (Q_streq((const char*)set, "craft_ufo_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (Q_streq((const char *)set, "craft_ufo_scout"))
+		else if (Q_streq((const char*)set, "craft_ufo_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (Q_streq((const char *)set, "craft_ufo_supply"))
+		else if (Q_streq((const char*)set, "craft_ufo_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (Q_streq((const char *)set, "craft_ufo_gunboat"))
+		else if (Q_streq((const char*)set, "craft_ufo_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (Q_streq((const char *)set, "craft_ufo_ripper"))
+		else if (Q_streq((const char*)set, "craft_ufo_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (Q_streq((const char *)set, "craft_ufo_mothership"))
+		else if (Q_streq((const char*)set, "craft_ufo_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
-			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
+			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
 
 	case V_UFOCRASHED:
-		if (Q_streq((const char *)set, "craft_crash_bomber"))
+		if (Q_streq((const char*)set, "craft_crash_bomber"))
 			*(ufoType_t *) b = UFO_BOMBER;
-		else if (Q_streq((const char *)set, "craft_crash_carrier"))
+		else if (Q_streq((const char*)set, "craft_crash_carrier"))
 			*(ufoType_t *) b = UFO_CARRIER;
-		else if (Q_streq((const char *)set, "craft_crash_corrupter"))
+		else if (Q_streq((const char*)set, "craft_crash_corrupter"))
 			*(ufoType_t *) b = UFO_CORRUPTER;
-		else if (Q_streq((const char *)set, "craft_crash_fighter"))
+		else if (Q_streq((const char*)set, "craft_crash_fighter"))
 			*(ufoType_t *) b = UFO_FIGHTER;
-		else if (Q_streq((const char *)set, "craft_crash_harvester"))
+		else if (Q_streq((const char*)set, "craft_crash_harvester"))
 			*(ufoType_t *) b = UFO_HARVESTER;
-		else if (Q_streq((const char *)set, "craft_crash_scout"))
+		else if (Q_streq((const char*)set, "craft_crash_scout"))
 			*(ufoType_t *) b = UFO_SCOUT;
-		else if (Q_streq((const char *)set, "craft_crash_supply"))
+		else if (Q_streq((const char*)set, "craft_crash_supply"))
 			*(ufoType_t *) b = UFO_SUPPLY;
-		else if (Q_streq((const char *)set, "craft_crash_gunboat"))
+		else if (Q_streq((const char*)set, "craft_crash_gunboat"))
 			*(ufoType_t *) b = UFO_GUNBOAT;
-		else if (Q_streq((const char *)set, "craft_crash_ripper"))
+		else if (Q_streq((const char*)set, "craft_crash_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
-		else if (Q_streq((const char *)set, "craft_crash_mothership"))
+		else if (Q_streq((const char*)set, "craft_crash_mothership"))
 			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
-			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
+			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
 
 	case V_INT:
-		*(int *) b = *(const int *) set;
+		*(int*) b = *(const int*) set;
 		return sizeof(int);
 
 	case V_INT2:
-		((int *) b)[0] = ((const int *) set)[0];
-		((int *) b)[1] = ((const int *) set)[1];
+		((int*) b)[0] = ((const int*) set)[0];
+		((int*) b)[1] = ((const int*) set)[1];
 		return 2 * sizeof(int);
 
 	case V_FLOAT:
@@ -1040,15 +1040,15 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return 4 * sizeof(float);
 
 	case V_STRING:
-		Q_strncpyz((char *) b, (const char *) set, MAX_VAR);
-		len = (int)strlen((const char *) set) + 1;
+		Q_strncpyz((char*) b, (const char*) set, MAX_VAR);
+		len = (int)strlen((const char*) set) + 1;
 		if (len > MAX_VAR)
 			len = MAX_VAR;
 		return len;
 
 	case V_LONGSTRING:
-		strcpy((char *) b, (const char *) set);
-		len = (int)strlen((const char *) set) + 1;
+		strcpy((char*) b, (const char*) set);
+		len = (int)strlen((const char*) set) + 1;
 		return len;
 
 	case V_ALIGN:
@@ -1068,7 +1068,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return sizeof(fade_t);
 
 	case V_SHAPE_SMALL:
-		*(int *) b = *(const int *) set;
+		*(int*) b = *(const int*) set;
 		return SHAPE_SMALL_MAX_HEIGHT;
 
 	case V_SHAPE_BIG:
@@ -1095,7 +1095,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
  * @sa Com_SetValue
  * @return char pointer with translated data type value
  */
-const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int ofs)
+const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
 	const byte *b;
@@ -1126,11 +1126,11 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "false";
 
 	case V_CHAR:
-		return (const char *) b;
+		return (const char*) b;
 		break;
 
 	case V_TEAM:
-		switch (*(const int *) b) {
+		switch (*(const int*) b) {
 		case TEAM_CIVILIAN:
 			return "civilian";
 		case TEAM_PHALANX:
@@ -1138,7 +1138,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case TEAM_ALIEN:
 			return "alien";
 		default:
-			Sys_Error("Unknown team id '%i'", *(const int *) b);
+			Sys_Error("Unknown team id '%i'", *(const int*) b);
 		}
 
 	case V_AIRCRAFTTYPE:
@@ -1216,11 +1216,11 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		}
 
 	case V_INT:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(const int *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(const int*) b);
 		return valuestr;
 
 	case V_INT2:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((const int *) b)[0], ((const int *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((const int*) b)[0], ((const int*) b)[1]);
 		return valuestr;
 
 	case V_FLOAT:
@@ -1245,7 +1245,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		if (b == nullptr)
 			return "(null)";
 		else
-			return (const char *) b;
+			return (const char*) b;
 
 	case V_ALIGN:
 		assert(*(const align_t *)b < ALIGN_LAST);
@@ -1296,10 +1296,10 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-bool Com_ParseBlockToken (const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool, const char *token)
+bool Com_ParseBlockToken (const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool, const char* token)
 {
 	const value_t *v;
-	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
+	const char* errhead = "Com_ParseBlockToken: unexpected end of file (";
 
 	for (v = values; v->string; v++)
 		if (Q_streq(token, v->string)) {
@@ -1379,10 +1379,10 @@ bool Com_ParseList (const char** text, linkedList_t** list)
 	return true;
 }
 
-bool Com_ParseBlock (const char *name, const char** text, void *base, const value_t *values, memPool_t *mempool)
+bool Com_ParseBlock (const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool)
 {
-	const char *errhead = "Com_ParseBlock: unexpected end of file (";
-	const char *token;
+	const char* errhead = "Com_ParseBlock: unexpected end of file (";
+	const char* token;
 
 	/* get name/id */
 	token = Com_Parse(text);
@@ -1412,7 +1412,7 @@ OBJECT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static const char *const skillNames[SKILL_NUM_TYPES + 1] = {
+static const char* const skillNames[SKILL_NUM_TYPES + 1] = {
 	"strength",
 	"speed",
 	"accuracy",
@@ -1548,11 +1548,11 @@ static const value_t fdps[] = {
  * @brief Parses the item effect.
  * @param[in,out] e The item effect that is filled in here.
  */
-static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char *name, const char **text)
+static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char* name, const char** text)
 {
 	effectStages_t stage = EFFECT_MAX;
 
-	const char *token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text) {
 		Com_Printf("Com_ParseItemEffect: syntax error for item '%s'\n", name);
 		return stage;
@@ -1603,7 +1603,7 @@ static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char *name, co
  * @brief Parses the effect that is bound to a fire definitions.
  * @param[in,out] fd The fire definition to add the effect to
  */
-static void Com_ParseFireEffect (fireDef_t *fd, const char *name, const char **text)
+static void Com_ParseFireEffect (fireDef_t *fd, const char* name, const char** text)
 {
 	itemEffect_t *e = Mem_AllocType(itemEffect_t);
 	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
@@ -1649,10 +1649,10 @@ static void Com_ParseFireEffect (fireDef_t *fd, const char *name, const char **t
  * @brief Parses the firemode
  * @param[in,out] fd The fire definition to fill
  */
-static bool Com_ParseFire (const char *name, const char** text, fireDef_t *fd)
+static bool Com_ParseFire (const char* name, const char** text, fireDef_t *fd)
 {
-	const char *errhead = "Com_ParseFire: unexpected end of file";
-	const char *token;
+	const char* errhead = "Com_ParseFire: unexpected end of file";
+	const char* token;
 
 	/* get its body */
 	token = Com_Parse(text);
@@ -1729,10 +1729,10 @@ static bool Com_ParseFire (const char *name, const char** text, fireDef_t *fd)
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmourOrResistance (const char *name, const char** text, short *ad, bool rating)
+static void Com_ParseArmourOrResistance (const char* name, const char** text, short *ad, bool rating)
 {
-	const char *errhead = "Com_ParseArmourOrResistance: unexpected end of file";
-	const char *token;
+	const char* errhead = "Com_ParseArmourOrResistance: unexpected end of file";
+	const char* token;
 	int i;
 
 	/* get its body */
@@ -1774,7 +1774,7 @@ static void Com_ParseArmourOrResistance (const char *name, const char** text, sh
  * @brief List of valid strings for slot types
  * @note slot names are the same as the item types (and must be in the same order)
  */
-const char *const air_slot_type_strings[] = {
+const char* const air_slot_type_strings[] = {
 	"base_missile",
 	"base_laser",
 	"weapon",
@@ -1796,12 +1796,12 @@ static linkedList_t *parseItemWeapons = nullptr;
 struct parseItemWeapon_t {
 	objDef_t *od;
 	int numWeapons;
-	char *token;
+	char* token;
 };
 
-static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char** text)
+static void Com_ParseFireDefinition (objDef_t *od, const char* name, const char** text)
 {
-	const char *token;
+	const char* token;
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* get it's body */
 		token = Com_Parse(text);
@@ -1828,7 +1828,7 @@ static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char*
 
 		/* For each firedef entry for this weapon.  */
 		do {
-			const char *errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
+			const char* errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
@@ -1860,7 +1860,7 @@ static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char*
 	}
 }
 
-static void Com_ParseObjDefEffect (objDef_t *od, const char *name, const char **text)
+static void Com_ParseObjDefEffect (objDef_t *od, const char* name, const char** text)
 {
 	itemEffect_t *e = Mem_AllocType(itemEffect_t);
 	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
@@ -1881,11 +1881,11 @@ static void Com_ParseObjDefEffect (objDef_t *od, const char *name, const char **
  * @brief Parses weapon, equipment, craft items and armour
  * @sa Com_ParseArmour
  */
-static void Com_ParseItem (const char *name, const char** text)
+static void Com_ParseItem (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
+	const char* errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	objDef_t *od;
-	const char *token;
+	const char* token;
 	int i;
 
 	/* search for items with same name */
@@ -2013,7 +2013,7 @@ static const value_t implant_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseImplant (const char *name, const char **text)
+static void Com_ParseImplant (const char* name, const char** text)
 {
 	/* search for implants with same name */
 	if (INVSH_GetItemByIDSilent(name) != nullptr) {
@@ -2036,7 +2036,7 @@ static void Com_ParseImplant (const char *name, const char **text)
 	implant->idx = csi.numImplants - 1;
 
 	/* get it's body */
-	const char *token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseImplant: implant def \"%s\" without body ignored\n", name);
@@ -2044,7 +2044,7 @@ static void Com_ParseImplant (const char *name, const char **text)
 		return;
 	}
 
-	const char *errhead = "Com_ParseImplant: unexpected end of file (implant ";
+	const char* errhead = "Com_ParseImplant: unexpected end of file (implant ";
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
@@ -2102,7 +2102,7 @@ static const value_t idps[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseInventory (const char *name, const char** text)
+static void Com_ParseInventory (const char* name, const char** text)
 {
 	containerIndex_t cid;
 
@@ -2157,7 +2157,7 @@ EQUIPMENT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-const char *const name_strings[NAME_NUM_TYPES] = {
+const char* const name_strings[NAME_NUM_TYPES] = {
 	"neutral",
 	"female",
 	"male",
@@ -2175,11 +2175,11 @@ static const value_t equipment_definition_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseEquipment (const char *name, const char** text)
+static void Com_ParseEquipment (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
+	const char* errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
-	const char *token;
+	const char* token;
 	int i, n;
 
 	/* search for equipments with same name */
@@ -2225,8 +2225,8 @@ static void Com_ParseEquipment (const char *name, const char** text)
 				if (LIST_Count(list) != 2) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment item tuple must contains 2 elements (id amount)");
 				}
-				const char *itemToken = (char*)list->data;
-				const char *amountToken = (char*)list->next->data;
+				const char* itemToken = (char*)list->data;
+				const char* amountToken = (char*)list->next->data;
 
 				const objDef_t *od;
 				od = INVSH_GetItemByID(itemToken);
@@ -2249,8 +2249,8 @@ static void Com_ParseEquipment (const char *name, const char** text)
 				if (LIST_Count(list) != 2) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment aircraft tuple must contains 2 elements (id amount)");
 				}
-				const char *aircraftToken = (char*)list->data;
-				const char *amountToken = (char*)list->next->data;
+				const char* aircraftToken = (char*)list->data;
+				const char* amountToken = (char*)list->next->data;
 
 				humanAircraftType_t type;
 				type = Com_DropShipShortNameToID(aircraftToken);
@@ -2280,7 +2280,7 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
-static const char *Com_GiveName (int gender, const teamDef_t *td)
+static const char* Com_GiveName (int gender, const teamDef_t *td)
 {
 	int j, name = 0;
 	linkedList_t *list;
@@ -2346,7 +2346,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
  * @param[in] gender The gender of the actor
  * @param[in] soundType Which sound category (actorSound_t)
  */
-const char *Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType)
+const char* Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType)
 {
 	int random, j;
 	linkedList_t *list;
@@ -2380,7 +2380,7 @@ const char *Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
-const teamDef_t *Com_GetTeamDefinitionByID (const char *team)
+const teamDef_t *Com_GetTeamDefinitionByID (const char* team)
 {
 	int i;
 
@@ -2445,7 +2445,7 @@ static int Com_GetGender (const teamDef_t *teamDef)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
+void Com_GetCharacterValues (const char* teamDefition, character_t *chr)
 {
 	int retry = 1000;
 
@@ -2462,7 +2462,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
 
 	/* get the models */
 	while (retry--) {
-		const char *str;
+		const char* str;
 		const int gender = Com_GetGender(chr->teamDef);
 
 		chr->gender = gender;
@@ -2490,10 +2490,10 @@ void Com_GetCharacterValues (const char *teamDefition, character_t *chr)
  * @sa Com_ParseActors
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorNames (const char *name, const char** text)
+static void Com_ParseActorNames (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
-	const char *token;
+	const char* errhead = "Com_ParseNames: unexpected end of file (names ";
+	const char* token;
 	teamNames_t nameList;
 
 	LIST_Foreach(csi.actorNames, teamNames_t, names) {
@@ -2530,7 +2530,7 @@ static void Com_ParseActorNames (const char *name, const char** text)
 
 		for (linkedList_t *element = list; element != nullptr; element = element->next) {
 			/* some names can be translatable */
-			const char *n = (char*)element->data;
+			const char* n = (char*)element->data;
 			if (*n == '_')
 				token++;
 			LIST_AddString(&nameList.names[nameType], n);
@@ -2564,10 +2564,10 @@ static void Com_ParseActorNames (const char *name, const char** text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorModels (const char *name, const char** text, teamDef_t *td)
+static void Com_ParseActorModels (const char* name, const char** text, teamDef_t *td)
 {
-	const char *errhead = "Com_ParseActorModels: unexpected end of file (actors ";
-	const char *token;
+	const char* errhead = "Com_ParseActorModels: unexpected end of file (actors ";
+	const char* token;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -2600,15 +2600,15 @@ static void Com_ParseActorModels (const char *name, const char** text, teamDef_t
 		}
 
 		linkedList_t *element = list;
-		const char *pathToken = (const char*)element->data;
+		const char* pathToken = (const char*)element->data;
 		element = element->next;
-		const char *bodyToken = (const char*)element->data;
+		const char* bodyToken = (const char*)element->data;
 		element = element->next;
-		const char *headToken = (const char*)element->data;
+		const char* headToken = (const char*)element->data;
 		element = element->next;
-		const char *bodySkinToken = (const char*)element->data;
+		const char* bodySkinToken = (const char*)element->data;
 		element = element->next;
-		const char *headSkinToken = (const char*)element->data;
+		const char* headSkinToken = (const char*)element->data;
 
 		teamDef_t::model_t model;
 		model.path = Mem_StrDup(pathToken);
@@ -2629,10 +2629,10 @@ static void Com_ParseActorModels (const char *name, const char** text, teamDef_t
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char *name, const char** text, teamDef_t *td)
+static void Com_ParseActorSounds (const char* name, const char** text, teamDef_t *td)
 {
-	const char *const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
-	const char *token;
+	const char* const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
+	const char* token;
 	int i;
 
 	/* get name list body body */
@@ -2691,7 +2691,7 @@ static void Com_ParseActorSounds (const char *name, const char** text, teamDef_t
 	} while (*text);
 }
 
-static const BodyData* Com_GetBodyTemplateByID (const char *id)
+static const BodyData* Com_GetBodyTemplateByID (const char* id)
 {
 	LIST_Foreach(csi.bodyTemplates, BodyData, bd)
 		if (Q_streq(id, bd->id()))
@@ -2700,7 +2700,7 @@ static const BodyData* Com_GetBodyTemplateByID (const char *id)
 	return nullptr;
 }
 
-static const teamNames_t *Com_GetNameListByID (const char *id)
+static const teamNames_t *Com_GetNameListByID (const char* id)
 {
 	LIST_Foreach(csi.actorNames, teamNames_t, names)
 		if (Q_streq(id, names->id))
@@ -2725,11 +2725,11 @@ static const value_t teamDefValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseTeam (const char *name, const char** text)
+static void Com_ParseTeam (const char* name, const char** text)
 {
 	teamDef_t *td;
-	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
-	const char *token;
+	const char* errhead = "Com_ParseTeam: unexpected end of file (team ";
+	const char* token;
 	int i;
 
 	/* check for additions to existing name categories */
@@ -2851,7 +2851,7 @@ static void Com_ParseTeam (const char *name, const char** text)
  * array
  * @param[in] chrTemplate The character template id (given in ufo-script files)
  */
-const chrTemplate_t *Com_GetCharacterTemplateByID (const char *chrTemplate)
+const chrTemplate_t *Com_GetCharacterTemplateByID (const char* chrTemplate)
 {
 	int i;
 
@@ -2881,7 +2881,7 @@ static const value_t ugvValues[] = {
  * @brief Parse 2x2 units (e.g. UGVs)
  * @sa CL_ParseClientData
  */
-static void Com_ParseUGVs (const char *name, const char** text)
+static void Com_ParseUGVs (const char* name, const char** text)
 {
 	ugv_t *ugv;
 	int i;
@@ -2912,10 +2912,10 @@ static void Com_ParseUGVs (const char *name, const char** text)
 /**
  * @brief Parses character templates from scripts
  */
-static void Com_ParseCharacterTemplate (const char *name, const char** text)
+static void Com_ParseCharacterTemplate (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseCharacterTemplate: unexpected end of file";
-	const char *token;
+	const char* errhead = "Com_ParseCharacterTemplate: unexpected end of file";
+	const char* token;
 	chrTemplate_t *ct;
 	int i;
 
@@ -2978,14 +2978,14 @@ static const value_t bodyPartValues[] = {
 		{nullptr, V_NULL, 0, 0}
 };
 
-static const char *const penaltyNames[MODIFIER_MAX] = {
+static const char* const penaltyNames[MODIFIER_MAX] = {
 		"accuracy", "shooting_tu", "movement_tu", "detection", "reaction_time", "max_tu"
 };
 
-static void Com_ParseBodyPart (const char *name, const char** text, BodyData *bd)
+static void Com_ParseBodyPart (const char* name, const char** text, BodyData *bd)
 {
-	const char *errhead = "Com_ParseBodyPart: unexpected end of file";
-	const char *token;
+	const char* errhead = "Com_ParseBodyPart: unexpected end of file";
+	const char* token;
 	BodyPartData bp;
 	int i;
 
@@ -3049,10 +3049,10 @@ static void Com_ParseBodyPart (const char *name, const char** text, BodyData *bd
 	bd->addBodyPart(bp);
 }
 
-static void Com_ParseBodyTemplate (const char *name, const char** text)
+static void Com_ParseBodyTemplate (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseBodyTemplate: unexpected end of file";
-	const char *token;
+	const char* errhead = "Com_ParseBodyTemplate: unexpected end of file";
+	const char* token;
 	BodyData bd;
 
 	LIST_Foreach(csi.bodyTemplates, BodyData, bt) {
@@ -3118,7 +3118,7 @@ static const value_t terrainTypeValues[] = {
  * @param[in] textureName The terrain definition id from script files
  * which is the texture name relative to base/textures
  */
-const terrainType_t *Com_GetTerrainType (const char *textureName)
+const terrainType_t *Com_GetTerrainType (const char* textureName)
 {
 	unsigned hash;
 	const terrainType_t *t;
@@ -3138,7 +3138,7 @@ const terrainType_t *Com_GetTerrainType (const char *textureName)
  * @note Terrain definitions are used for footstep sounds and terrain particles
  * @sa Com_ParseScripts
  */
-static void Com_ParseTerrain (const char *name, const char** text)
+static void Com_ParseTerrain (const char* name, const char** text)
 {
 
 	/* check for additions to existing name categories */
@@ -3174,10 +3174,10 @@ static const value_t gameTypeValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseGameTypes (const char *name, const char** text)
+static void Com_ParseGameTypes (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
-	const char *token;
+	const char* errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
+	const char* token;
 	int i;
 	gametype_t *gt;
 	cvarlist_t *cvarlist;
@@ -3252,10 +3252,10 @@ DAMAGE TYPES INTERPRETER
 ==============================================================================
 */
 
-static void Com_ParseDamageTypes (const char *name, const char** text)
+static void Com_ParseDamageTypes (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
-	const char *token;
+	const char* errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
+	const char* token;
 	int i;
 
 	/* get it's body */
@@ -3336,7 +3336,7 @@ MAIN SCRIPT PARSING FUNCTION
  * put it into a proper location. Otherwise it will get overwritten with the next call
  * of this function.
  */
-const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
+const char* Com_GetRandomMapAssemblyNameForCraft (const char* craftID)
 {
 	return va("+%s", craftID);
 }
@@ -3344,7 +3344,7 @@ const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
 /**
  * @todo implement this in a better way
  */
-const char *Com_GetRandomMapAssemblyNameForCrashedCraft (const char *craftID)
+const char* Com_GetRandomMapAssemblyNameForCrashedCraft (const char* craftID)
 {
 	if (Q_streq(craftID, "craft_drop_firebird"))
 		return "+craft_crash_drop_firebird";
@@ -3366,7 +3366,7 @@ const char *Com_GetRandomMapAssemblyNameForCrashedCraft (const char *craftID)
  * be mapped to an human aircraft type
  * @sa Com_DropShipTypeToShortName
  */
-humanAircraftType_t Com_DropShipShortNameToID (const char *token)
+humanAircraftType_t Com_DropShipShortNameToID (const char* token)
 {
 	humanAircraftType_t aircraftType;
 	size_t dummy;
@@ -3378,7 +3378,7 @@ humanAircraftType_t Com_DropShipShortNameToID (const char *token)
  * @brief Translate DropShip type to short name.
  * @sa Com_DropShipShortNameToID
  */
-const char *Com_DropShipTypeToShortName (humanAircraftType_t type)
+const char* Com_DropShipTypeToShortName (humanAircraftType_t type)
 {
 	return Com_ValueToStr(&type, V_AIRCRAFTTYPE, 0);
 }
@@ -3388,7 +3388,7 @@ const char *Com_DropShipTypeToShortName (humanAircraftType_t type)
  * @sa UFO_TypeToName
  * @sa Com_UFOTypeToShortName
  */
-ufoType_t Com_UFOShortNameToID (const char *token)
+ufoType_t Com_UFOShortNameToID (const char* token)
 {
 	ufoType_t ufoType;
 	size_t dummy;
@@ -3401,7 +3401,7 @@ ufoType_t Com_UFOShortNameToID (const char *token)
  * @sa UFO_TypeToName
  * @sa Com_UFOShortNameToID
  */
-const char *Com_UFOTypeToShortName (ufoType_t type)
+const char* Com_UFOTypeToShortName (ufoType_t type)
 {
 	return Com_ValueToStr(&type, V_UFO, 0);
 }
@@ -3410,7 +3410,7 @@ const char *Com_UFOTypeToShortName (ufoType_t type)
  * @brief Translate UFO type to short name when UFO is crashed.
  * @sa Com_UFOTypeToShortName
  */
-const char *Com_UFOCrashedTypeToShortName (ufoType_t type)
+const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
 {
 	return Com_ValueToStr(&type, V_UFOCRASHED, 0);
 }
@@ -3421,7 +3421,7 @@ const char *Com_UFOCrashedTypeToShortName (ufoType_t type)
  * @return ugv_t pointer or nullptr if not found.
  * @note This function gives no warning on null name or if no ugv found
  */
-const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
+const ugv_t *Com_GetUGVByIDSilent (const char* ugvID)
 {
 	int i;
 
@@ -3441,7 +3441,7 @@ const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
  * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or nullptr if not found.
  */
-const ugv_t *Com_GetUGVByID (const char *ugvID)
+const ugv_t *Com_GetUGVByID (const char* ugvID)
 {
 	const ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
 
@@ -3460,7 +3460,7 @@ static void Com_AddObjectLinks (void)
 	/* Add links to weapons. */
 	LIST_Foreach (parseItemWeapons, parseItemWeapon_t, parse) {
 		const int weaponsIdx = parse->numWeapons;
-		const char *id = parse->token;
+		const char* id = parse->token;
 
 		/* Link the weapon pointers for this item. */
 		parse->od->weapons[weaponsIdx] = INVSH_GetItemByID(id);
@@ -3533,11 +3533,11 @@ static const value_t mapdef_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void Com_ParseMapDefinition (const char *name, const char** text)
+static void Com_ParseMapDefinition (const char* name, const char** text)
 {
-	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
+	const char* errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
 	mapDef_t *md;
-	const char *token;
+	const char* token;
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -3602,7 +3602,7 @@ mapDef_t *Com_GetMapDefByIDX (int index)
 	return &csi.mds[index];
 }
 
-mapDef_t *Com_GetMapDefinitionByID (const char *mapDefID)
+mapDef_t *Com_GetMapDefinitionByID (const char* mapDefID)
 {
 	mapDef_t *md;
 
@@ -3625,7 +3625,7 @@ mapDef_t *Com_GetMapDefinitionByID (const char *mapDefID)
  */
 void Com_ParseScripts (bool onlyServer)
 {
-	const char *type, *name, *text;
+	const char* type, *name, *text;
 
 	Com_Printf("\n----------- parse scripts ----------\n");
 
@@ -3713,7 +3713,7 @@ void Com_ParseScripts (bool onlyServer)
 int Com_GetScriptChecksum (void)
 {
 	static int checksum = 0;
-	const char *buf;
+	const char* buf;
 
 	if (checksum != 0)
 		return checksum;
