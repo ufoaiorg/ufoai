@@ -2304,7 +2304,7 @@ static void CL_DebugPath_f (void)
 	GridBox mbox(cl.mapData->mapBox);
 	int xW = mbox.getMaxX() - mbox.getMinX();
 	int yW = mbox.getMaxY() - mbox.getMinY();
-	int zW = mbox.maxs[2] - mbox.getMinZ();
+	int zW = mbox.getMaxZ() - mbox.getMinZ();
 	Com_Printf("Statistics:\nWorldsize(x/y/z) %i/%i/%i\n", xW, yW, zW);
 	int numCells = xW * yW * zW;
 	Com_Printf("number of Cells: %i\n", numCells);

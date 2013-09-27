@@ -347,7 +347,7 @@ static void testMapDefsFootSteps (void)
 
 		for (int x = mBox.getMinX(); x <= mBox.getMaxX() && !done; x++) {
 			for (int y = mBox.getMinY(); y <= mBox.getMaxY() && !done; y++) {
-				for (int z = mBox.getMinZ(); z <= mBox.maxs[2]; z++) {
+				for (int z = mBox.getMinZ(); z <= mBox.getMaxZ(); z++) {
 					const int floor = sv->mapData.routing.getFloor(1, x, y,z);
 					if (floor < 0)						// if we have a floor in that cell
 						continue;

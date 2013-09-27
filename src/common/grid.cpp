@@ -890,7 +890,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBo
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
-				for (z = rBox.maxs[2]; z >= 0; z--) {
+				for (z = rBox.getMaxZ(); z >= 0; z--) {
 					const int newZ = RT_CheckCell(mapTiles, routing, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
