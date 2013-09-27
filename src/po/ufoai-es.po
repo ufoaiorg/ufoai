@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-09-23 13:10-0600\n"
+"PO-Revision-Date: 2013-09-28 13:19-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -13024,7 +13024,7 @@ msgstr ""
 "Bienvenido a su nuevo destino, Comandante. Ahora usted tiene control "
 "completo sobre la Unidad de Respuesta Extraterrestre PHALANX. Su misión es "
 "proteger a los ciudadanos de la tierra y detener la incipiente amenaza "
-"alienígenaa toda costa. Cómo conseguirlo es su decisión; la única condición "
+"alienígena a toda costa. Cómo conseguirlo es su decisión; la única condición "
 "es que lo logre.\n"
 "\n"
 "Su primera orden es establecer un cuartel general. Las Naciones Unidas "
@@ -28962,12 +28962,11 @@ msgstr "Menú"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../base/ufos/ui/options.ufo:2034
-#, fuzzy
 msgid "Battlescape"
-msgstr "^BAtajos del combate"
+msgstr "Combate"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -30262,7 +30261,7 @@ msgstr "Rango de visión"
 
 #: client/battlescape/cl_hud.cpp:1299
 msgid "reaction speed"
-msgstr "Velocidad de Reacción:"
+msgstr "Velocidad de Reacción"
 
 #: client/battlescape/cl_hud.cpp:1301
 msgid "TU"
@@ -32953,14 +32952,14 @@ msgid "No pre-research description available."
 msgstr "No hay descripción previa disponible."
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "Proposal: %s"
-msgstr "Propuesta: "
+msgstr "Propuesta: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "Re: "
+msgstr "Re: %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
