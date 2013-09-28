@@ -913,7 +913,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t* base)
 
 /**
  * @brief Destroy a base.
- * @param[in] base Pointer to base to be destroyed.
+ * @param[in,out] base Pointer to base to be destroyed.
  * @note If you want to sell items or unhire employees, you should do it before
  * calling this function - they are going to be killed / destroyed.
  */
@@ -1023,7 +1023,7 @@ void B_BuildingStatus (const building_t* building)
 
 /**
  * @brief Updates base status for particular buildings as well as capacities.
- * @param[in] building Pointer to building.
+ * @param[in,out] building Pointer to building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * then updates base status for particular buildings and base capacities.
@@ -1086,7 +1086,7 @@ static void B_AddBuildingToBasePos (base_t* base, const building_t* buildingTemp
 /**
  * @brief builds a base from template
  * @param[out] base The base to build
- * @param[in] templateName Templated used for building. If @c nullptr no template
+ * @param[in] templateName Template used for building. If @c nullptr no template
  * will be used.
  * @param[in] hire If hiring employee needed
  * @note It builds an empty base on nullptr (or empty) templatename
