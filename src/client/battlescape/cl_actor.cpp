@@ -1776,26 +1776,19 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
  */
 static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
-	vec3_t from, at, cross;
-	float vz, dt;
-	vec3_t v0, ds, next;
-	bool obstructed = false;
-	int i;
-	le_t* target = nullptr;
-	actorSizeEnum_t toActorSize;
-
 	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
+	le_t* target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
 
 	/* Determine the target's size. */
-	toActorSize = target
+	actorSizeEnum_t toActorSize = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
 	/* get vectors, paint cross */
+	vec3_t from, at, cross;
 	Grid_PosToVec(cl.mapData->routing, fromActorSize, fromPos, from);
 	Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, at);
 	from[2] += selActor->fd->shotOrg[1];
@@ -1807,6 +1800,8 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	VectorCopy(at, cross);
 
 	/* calculate parabola */
+	float vz, dt;
+	vec3_t v0, ds;
 	dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross);
@@ -1821,7 +1816,9 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	/* paint */
 	vz = v0[2];
 
-	for (i = 0; i < GRENADE_PARTITIONS; i++) {
+	bool obstructed = false;
+	for (int i = 0; i < GRENADE_PARTITIONS; i++) {
+		vec3_t next;
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
 		vz -= GRAVITY * dt;
