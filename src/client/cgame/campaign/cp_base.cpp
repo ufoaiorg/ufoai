@@ -497,11 +497,10 @@ bool B_GetBuildingStatus (const base_t* const base, const buildingType_t buildin
  */
 void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, bool newStatus)
 {
-	assert(base);
-
 	if (buildingType == B_MISC) {
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
 	} else if (buildingType < MAX_BUILDING_TYPE) {
+		assert(base);
 		base->hasBuilding[buildingType] = newStatus;
 		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
 	} else {
