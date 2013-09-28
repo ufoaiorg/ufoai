@@ -111,10 +111,13 @@ static void UI_CheckBoxNodeCallActivate (uiNode_t* node, const uiCallContext_t* 
  */
 void uiCheckBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 {
+	if (node->disabled)
+		return;
+
+	onActivate(node);
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
 	UI_PlaySound("click1");
-	onActivate(node);
 }
 
 /**
