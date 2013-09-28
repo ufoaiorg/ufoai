@@ -39,14 +39,14 @@ typedef struct com_constNameInt_s {
 	char name[MAX_CONSTNAMEINT_NAME];		/**< script id */
 	char* fullname;							/**< only set in case there was a namespace given */
 	int value;								/**< integer value */
-	struct com_constNameInt_s *hash_next;	/**< hash next pointer */
-	struct com_constNameInt_s *next;		/**< linked list next pointer */
+	struct com_constNameInt_s* hash_next;	/**< hash next pointer */
+	struct com_constNameInt_s* next;		/**< linked list next pointer */
 } com_constNameInt_t;
 
 /** @brief Linked list of all the registeres mappings */
-static com_constNameInt_t *com_constNameInt;
+static com_constNameInt_t* com_constNameInt;
 /** @brief Hash of all the registeres mappings */
-static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
+static com_constNameInt_t* com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
 
 /**
  * @brief Will extract the variable from a string<=>int mapping string which contain a namespace
@@ -72,7 +72,7 @@ static const char* Com_ConstIntGetVariable (const char* name)
  */
 bool Com_GetConstInt (const char* name, int* value)
 {
-	com_constNameInt_t *a;
+	com_constNameInt_t* a;
 	unsigned int hash;
 	const char* variable;
 
@@ -124,7 +124,7 @@ bool Com_GetConstIntFromNamespace (const char* space, const char* variable, int*
  */
 const char* Com_GetConstVariable (const char* space, int value)
 {
-	com_constNameInt_t *a;
+	com_constNameInt_t* a;
 	const size_t namespaceLength = strlen(space);
 
 	a = com_constNameInt;
@@ -150,9 +150,9 @@ const char* Com_GetConstVariable (const char* space, int value)
  */
 bool Com_UnregisterConstVariable (const char* name)
 {
-	com_constNameInt_t *prev = nullptr;
+	com_constNameInt_t* prev = nullptr;
 
-	com_constNameInt_t *a = com_constNameInt;
+	com_constNameInt_t* a = com_constNameInt;
 	while (a) {
 		if (!a->fullname || !Q_streq(a->fullname, name)) {
 			prev = a;
@@ -169,7 +169,7 @@ bool Com_UnregisterConstVariable (const char* name)
 
 		const char* variable = Com_ConstIntGetVariable(name);
 		const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
-		for (com_constNameInt_t *b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
+		for (com_constNameInt_t* b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
 			if (!b->fullname)
 				continue;
 			if (!Q_streq(name, b->fullname))
@@ -201,7 +201,7 @@ bool Com_UnregisterConstVariable (const char* name)
  */
 void Com_RegisterConstInt (const char* name, int value)
 {
-	com_constNameInt_t *a;
+	com_constNameInt_t* a;
 	unsigned int hash;
 	const char* variable;
 
@@ -473,13 +473,13 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
  * @note instead of , this function separate error message and write byte result
  * @todo This function has much in common with Com_SetValue. Refactor them !
  */
-resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
+resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t* writtenBytes)
 {
-	byte *b;
+	byte* b;
 	int x, y, w, h;
 	byte num;
 	resultStatus_t status = RESULT_OK;
-	b = (byte *) base + ofs;
+	b = (byte*) base + ofs;
 	*writtenBytes = 0;
 
 #ifdef DEBUG
@@ -548,21 +548,21 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_AIRCRAFTTYPE:
 		if (Q_streq(token, "craft_drop_firebird"))
-			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
+			*(humanAircraftType_t*) b = DROPSHIP_FIREBIRD;
 		else if (Q_streq(token, "craft_drop_herakles"))
-			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
+			*(humanAircraftType_t*) b = DROPSHIP_HERAKLES;
 		else if (Q_streq(token, "craft_drop_raptor"))
-			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
+			*(humanAircraftType_t*) b = DROPSHIP_RAPTOR;
 		else if (Q_streq(token, "craft_inter_stiletto"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STILETTO;
 		else if (Q_streq(token, "craft_inter_saracen"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
+			*(humanAircraftType_t*) b = INTERCEPTOR_SARACEN;
 		else if (Q_streq(token, "craft_inter_dragon"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
+			*(humanAircraftType_t*) b = INTERCEPTOR_DRAGON;
 		else if (Q_streq(token, "craft_inter_starchaser"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STARCHASER;
 		else if (Q_streq(token, "craft_inter_stingray"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
 		*writtenBytes = sizeof(humanAircraftType_t);
@@ -570,25 +570,25 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_UFO:
 		if (Q_streq(token, "craft_ufo_bomber"))
-			*(ufoType_t *) b = UFO_BOMBER;
+			*(ufoType_t*) b = UFO_BOMBER;
 		else if (Q_streq(token, "craft_ufo_carrier"))
-			*(ufoType_t *) b = UFO_CARRIER;
+			*(ufoType_t*) b = UFO_CARRIER;
 		else if (Q_streq(token, "craft_ufo_corrupter"))
-			*(ufoType_t *) b = UFO_CORRUPTER;
+			*(ufoType_t*) b = UFO_CORRUPTER;
 		else if (Q_streq(token, "craft_ufo_fighter"))
-			*(ufoType_t *) b = UFO_FIGHTER;
+			*(ufoType_t*) b = UFO_FIGHTER;
 		else if (Q_streq(token, "craft_ufo_harvester"))
-			*(ufoType_t *) b = UFO_HARVESTER;
+			*(ufoType_t*) b = UFO_HARVESTER;
 		else if (Q_streq(token, "craft_ufo_scout"))
-			*(ufoType_t *) b = UFO_SCOUT;
+			*(ufoType_t*) b = UFO_SCOUT;
 		else if (Q_streq(token, "craft_ufo_supply"))
-			*(ufoType_t *) b = UFO_SUPPLY;
+			*(ufoType_t*) b = UFO_SUPPLY;
 		else if (Q_streq(token, "craft_ufo_gunboat"))
-			*(ufoType_t *) b = UFO_GUNBOAT;
+			*(ufoType_t*) b = UFO_GUNBOAT;
 		else if (Q_streq(token, "craft_ufo_ripper"))
-			*(ufoType_t *) b = UFO_RIPPER;
+			*(ufoType_t*) b = UFO_RIPPER;
 		else if (Q_streq(token, "craft_ufo_mothership"))
-			*(ufoType_t *) b = UFO_MOTHERSHIP;
+			*(ufoType_t*) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
 		*writtenBytes = sizeof(ufoType_t);
@@ -596,25 +596,25 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_UFOCRASHED:
 		if (Q_streq(token, "craft_crash_bomber"))
-			*(ufoType_t *) b = UFO_BOMBER;
+			*(ufoType_t*) b = UFO_BOMBER;
 		else if (Q_streq(token, "craft_crash_carrier"))
-			*(ufoType_t *) b = UFO_CARRIER;
+			*(ufoType_t*) b = UFO_CARRIER;
 		else if (Q_streq(token, "craft_crash_corrupter"))
-			*(ufoType_t *) b = UFO_CORRUPTER;
+			*(ufoType_t*) b = UFO_CORRUPTER;
 		else if (Q_streq(token, "craft_crash_fighter"))
-			*(ufoType_t *) b = UFO_FIGHTER;
+			*(ufoType_t*) b = UFO_FIGHTER;
 		else if (Q_streq(token, "craft_crash_harvester"))
-			*(ufoType_t *) b = UFO_HARVESTER;
+			*(ufoType_t*) b = UFO_HARVESTER;
 		else if (Q_streq(token, "craft_crash_scout"))
-			*(ufoType_t *) b = UFO_SCOUT;
+			*(ufoType_t*) b = UFO_SCOUT;
 		else if (Q_streq(token, "craft_crash_supply"))
-			*(ufoType_t *) b = UFO_SUPPLY;
+			*(ufoType_t*) b = UFO_SUPPLY;
 		else if (Q_streq(token, "craft_crash_gunboat"))
-			*(ufoType_t *) b = UFO_GUNBOAT;
+			*(ufoType_t*) b = UFO_GUNBOAT;
 		else if (Q_streq(token, "craft_crash_ripper"))
-			*(ufoType_t *) b = UFO_RIPPER;
+			*(ufoType_t*) b = UFO_RIPPER;
 		else if (Q_streq(token, "craft_crash_mothership"))
-			*(ufoType_t *) b = UFO_MOTHERSHIP;
+			*(ufoType_t*) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
 		*writtenBytes = sizeof(ufoType_t);
@@ -639,7 +639,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_FLOAT:
-		if (sscanf(token, "%f", &((float *) b)[0]) != 1) {
+		if (sscanf(token, "%f", &((float*) b)[0]) != 1) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal float statement '%s'", token);
 			return RESULT_ERROR;
 		}
@@ -647,7 +647,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_POS:
-		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2) {
+		if (sscanf(token, "%f %f", &((float*) b)[0], &((float*) b)[1]) != 2) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal pos statement '%s'", token);
 			return RESULT_ERROR;
 		}
@@ -655,7 +655,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_VECTOR:
-		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3) {
+		if (sscanf(token, "%f %f %f", &((float*) b)[0], &((float*) b)[1], &((float*) b)[2]) != 3) {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal vector statement '%s'", token);
 			return RESULT_ERROR;
 		}
@@ -664,7 +664,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_COLOR:
 		{
-			float* f = (float *) b;
+			float* f = (float*) b;
 			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
 				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal color statement '%s'", token);
 				return RESULT_ERROR;
@@ -703,7 +703,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal align token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(align_t *)b = (align_t)num;
+		*(align_t*)b = (align_t)num;
 		*writtenBytes = sizeof(align_t);
 		break;
 
@@ -715,7 +715,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal blend token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(blend_t *)b = (blend_t)num;
+		*(blend_t*)b = (blend_t)num;
 		*writtenBytes = sizeof(blend_t);
 		break;
 
@@ -727,7 +727,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal style token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(style_t *)b = (style_t)num;
+		*(style_t*)b = (style_t)num;
 		*writtenBytes = sizeof(style_t);
 		break;
 
@@ -739,7 +739,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal fade token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(fade_t *)b = (fade_t)num;
+		*(fade_t*)b = (fade_t)num;
 		*writtenBytes = sizeof(fade_t);
 		break;
 
@@ -758,7 +758,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			return RESULT_ERROR;
 		}
 		for (h += y; y < h; y++)
-			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
+			*(uint32_t*) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
 		*writtenBytes = SHAPE_SMALL_MAX_HEIGHT;
 		break;
 
@@ -777,7 +777,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		}
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
-			((uint32_t *) b)[y] |= w;
+			((uint32_t*) b)[y] |= w;
 		*writtenBytes = SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT;
 		break;
 
@@ -798,8 +798,8 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 			return RESULT_ERROR;
 		}
 
-		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
-		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
+		((date_t*) b)->day = DAYS_PER_YEAR * x + y;
+		((date_t*) b)->sec = SECONDS_PER_HOUR * w;
 		*writtenBytes = sizeof(date_t);
 		break;
 
@@ -810,15 +810,15 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 				status = RESULT_WARNING;
 			}
 			if (token[0] == '-')
-				*(float *) b = atof(token + 1) * (-1);
+				*(float*) b = atof(token + 1) * (-1);
 			else
-				*(float *) b = atof(token + 1);
+				*(float*) b = atof(token + 1);
 		} else {
 			if (fabs(atof(token)) > 2.0f) {
 				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
 				status = RESULT_WARNING;
 			}
-			*(float *) b = atof(token);
+			*(float*) b = atof(token);
 		}
 		*writtenBytes = sizeof(float);
 		break;
@@ -886,10 +886,10 @@ int Com_SetValueDebug (void* base, const void* set, valueTypes_t type, int ofs, 
 int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_t size)
 #endif
 {
-	byte *b;
+	byte* b;
 	int len;
 
-	b = (byte *) base + ofs;
+	b = (byte*) base + ofs;
 
 	if (size) {
 #ifdef DEBUG
@@ -939,71 +939,71 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 
 	case V_AIRCRAFTTYPE:
 		if (Q_streq((const char*)set, "craft_drop_firebird"))
-			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
+			*(humanAircraftType_t*) b = DROPSHIP_FIREBIRD;
 		else if (Q_streq((const char*)set, "craft_drop_herakles"))
-			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
+			*(humanAircraftType_t*) b = DROPSHIP_HERAKLES;
 		else if (Q_streq((const char*)set, "craft_drop_raptor"))
-			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
+			*(humanAircraftType_t*) b = DROPSHIP_RAPTOR;
 		else if (Q_streq((const char*)set, "craft_inter_stiletto"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STILETTO;
 		else if (Q_streq((const char*)set, "craft_inter_saracen"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
+			*(humanAircraftType_t*) b = INTERCEPTOR_SARACEN;
 		else if (Q_streq((const char*)set, "craft_inter_dragon"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
+			*(humanAircraftType_t*) b = INTERCEPTOR_DRAGON;
 		else if (Q_streq((const char*)set, "craft_inter_starchaser"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STARCHASER;
 		else if (Q_streq((const char*)set, "craft_inter_stingray"))
-			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
+			*(humanAircraftType_t*) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", (const char*)set);
 		return sizeof(humanAircraftType_t);
 
 	case V_UFO:
 		if (Q_streq((const char*)set, "craft_ufo_bomber"))
-			*(ufoType_t *) b = UFO_BOMBER;
+			*(ufoType_t*) b = UFO_BOMBER;
 		else if (Q_streq((const char*)set, "craft_ufo_carrier"))
-			*(ufoType_t *) b = UFO_CARRIER;
+			*(ufoType_t*) b = UFO_CARRIER;
 		else if (Q_streq((const char*)set, "craft_ufo_corrupter"))
-			*(ufoType_t *) b = UFO_CORRUPTER;
+			*(ufoType_t*) b = UFO_CORRUPTER;
 		else if (Q_streq((const char*)set, "craft_ufo_fighter"))
-			*(ufoType_t *) b = UFO_FIGHTER;
+			*(ufoType_t*) b = UFO_FIGHTER;
 		else if (Q_streq((const char*)set, "craft_ufo_harvester"))
-			*(ufoType_t *) b = UFO_HARVESTER;
+			*(ufoType_t*) b = UFO_HARVESTER;
 		else if (Q_streq((const char*)set, "craft_ufo_scout"))
-			*(ufoType_t *) b = UFO_SCOUT;
+			*(ufoType_t*) b = UFO_SCOUT;
 		else if (Q_streq((const char*)set, "craft_ufo_supply"))
-			*(ufoType_t *) b = UFO_SUPPLY;
+			*(ufoType_t*) b = UFO_SUPPLY;
 		else if (Q_streq((const char*)set, "craft_ufo_gunboat"))
-			*(ufoType_t *) b = UFO_GUNBOAT;
+			*(ufoType_t*) b = UFO_GUNBOAT;
 		else if (Q_streq((const char*)set, "craft_ufo_ripper"))
-			*(ufoType_t *) b = UFO_RIPPER;
+			*(ufoType_t*) b = UFO_RIPPER;
 		else if (Q_streq((const char*)set, "craft_ufo_mothership"))
-			*(ufoType_t *) b = UFO_MOTHERSHIP;
+			*(ufoType_t*) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
 
 	case V_UFOCRASHED:
 		if (Q_streq((const char*)set, "craft_crash_bomber"))
-			*(ufoType_t *) b = UFO_BOMBER;
+			*(ufoType_t*) b = UFO_BOMBER;
 		else if (Q_streq((const char*)set, "craft_crash_carrier"))
-			*(ufoType_t *) b = UFO_CARRIER;
+			*(ufoType_t*) b = UFO_CARRIER;
 		else if (Q_streq((const char*)set, "craft_crash_corrupter"))
-			*(ufoType_t *) b = UFO_CORRUPTER;
+			*(ufoType_t*) b = UFO_CORRUPTER;
 		else if (Q_streq((const char*)set, "craft_crash_fighter"))
-			*(ufoType_t *) b = UFO_FIGHTER;
+			*(ufoType_t*) b = UFO_FIGHTER;
 		else if (Q_streq((const char*)set, "craft_crash_harvester"))
-			*(ufoType_t *) b = UFO_HARVESTER;
+			*(ufoType_t*) b = UFO_HARVESTER;
 		else if (Q_streq((const char*)set, "craft_crash_scout"))
-			*(ufoType_t *) b = UFO_SCOUT;
+			*(ufoType_t*) b = UFO_SCOUT;
 		else if (Q_streq((const char*)set, "craft_crash_supply"))
-			*(ufoType_t *) b = UFO_SUPPLY;
+			*(ufoType_t*) b = UFO_SUPPLY;
 		else if (Q_streq((const char*)set, "craft_crash_gunboat"))
-			*(ufoType_t *) b = UFO_GUNBOAT;
+			*(ufoType_t*) b = UFO_GUNBOAT;
 		else if (Q_streq((const char*)set, "craft_crash_ripper"))
-			*(ufoType_t *) b = UFO_RIPPER;
+			*(ufoType_t*) b = UFO_RIPPER;
 		else if (Q_streq((const char*)set, "craft_crash_mothership"))
-			*(ufoType_t *) b = UFO_MOTHERSHIP;
+			*(ufoType_t*) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
@@ -1018,25 +1018,25 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return 2 * sizeof(int);
 
 	case V_FLOAT:
-		*(float *) b = *(const float *) set;
+		*(float*) b = *(const float*) set;
 		return sizeof(float);
 
 	case V_POS:
-		((float *) b)[0] = ((const float *) set)[0];
-		((float *) b)[1] = ((const float *) set)[1];
+		((float*) b)[0] = ((const float*) set)[0];
+		((float*) b)[1] = ((const float*) set)[1];
 		return 2 * sizeof(float);
 
 	case V_VECTOR:
-		((float *) b)[0] = ((const float *) set)[0];
-		((float *) b)[1] = ((const float *) set)[1];
-		((float *) b)[2] = ((const float *) set)[2];
+		((float*) b)[0] = ((const float*) set)[0];
+		((float*) b)[1] = ((const float*) set)[1];
+		((float*) b)[2] = ((const float*) set)[2];
 		return 3 * sizeof(float);
 
 	case V_COLOR:
-		((float *) b)[0] = ((const float *) set)[0];
-		((float *) b)[1] = ((const float *) set)[1];
-		((float *) b)[2] = ((const float *) set)[2];
-		((float *) b)[3] = ((const float *) set)[3];
+		((float*) b)[0] = ((const float*) set)[0];
+		((float*) b)[1] = ((const float*) set)[1];
+		((float*) b)[2] = ((const float*) set)[2];
+		((float*) b)[3] = ((const float*) set)[3];
 		return 4 * sizeof(float);
 
 	case V_STRING:
@@ -1052,19 +1052,19 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return len;
 
 	case V_ALIGN:
-		*(align_t *)b = *(const align_t *) set;
+		*(align_t*)b = *(const align_t*) set;
 		return sizeof(align_t);
 
 	case V_BLEND:
-		*(blend_t *)b = *(const blend_t *) set;
+		*(blend_t*)b = *(const blend_t*) set;
 		return sizeof(blend_t);
 
 	case V_STYLE:
-		*(style_t *)b = *(const style_t *) set;
+		*(style_t*)b = *(const style_t*) set;
 		return sizeof(style_t);
 
 	case V_FADE:
-		*(fade_t *)b = *(const fade_t *) set;
+		*(fade_t*)b = *(const fade_t*) set;
 		return sizeof(fade_t);
 
 	case V_SHAPE_SMALL:
@@ -1076,7 +1076,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return SHAPE_BIG_MAX_HEIGHT * 4;
 
 	case V_DAMAGE:
-		*b = *(const byte *) set;
+		*b = *(const byte*) set;
 		return 1;
 
 	case V_DATE:
@@ -1098,9 +1098,9 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
-	const byte *b;
+	const byte* b;
 
-	b = (const byte *) base + ofs;
+	b = (const byte*) base + ofs;
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type)) {
@@ -1142,7 +1142,7 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		}
 
 	case V_AIRCRAFTTYPE:
-		switch (*(const humanAircraftType_t *) b) {
+		switch (*(const humanAircraftType_t*) b) {
 		case DROPSHIP_FIREBIRD:
 			return "craft_drop_firebird";
 		case DROPSHIP_HERAKLES:
@@ -1160,11 +1160,11 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		case INTERCEPTOR_STINGRAY:
 			return "craft_inter_stingray";
 		default:
-			Sys_Error("Unknown aircrafttype type: '%i'", *(const humanAircraftType_t *) b);
+			Sys_Error("Unknown aircrafttype type: '%i'", *(const humanAircraftType_t*) b);
 		}
 
 	case V_UFO:
-		switch (*(const ufoType_t *) b) {
+		switch (*(const ufoType_t*) b) {
 		case UFO_BOMBER:
 			return "craft_ufo_bomber";
 		case UFO_CARRIER:
@@ -1186,11 +1186,11 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		case UFO_MOTHERSHIP:
 			return "craft_ufo_mothership";
 		default:
-			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t *) b);
+			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 		}
 
 	case V_UFOCRASHED:
-		switch (*(const ufoType_t *) b) {
+		switch (*(const ufoType_t*) b) {
 		case UFO_BOMBER:
 			return "craft_crash_bomber";
 		case UFO_CARRIER:
@@ -1212,7 +1212,7 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		case UFO_MOTHERSHIP:
 			return "craft_crash_mothership";
 		default:
-			Sys_Error("Unknown crashed ufo type: '%i'", *(const ufoType_t *) b);
+			Sys_Error("Unknown crashed ufo type: '%i'", *(const ufoType_t*) b);
 		}
 
 	case V_INT:
@@ -1224,19 +1224,19 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		return valuestr;
 
 	case V_FLOAT:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float*) b);
 		return valuestr;
 
 	case V_POS:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((const float *) b)[0], ((const float *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((const float*) b)[0], ((const float*) b)[1]);
 		return valuestr;
 
 	case V_VECTOR:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((const float *) b)[0], ((const float *) b)[1], ((const float *) b)[2]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((const float*) b)[0], ((const float*) b)[1], ((const float*) b)[2]);
 		return valuestr;
 
 	case V_COLOR:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((const float *) b)[0], ((const float *) b)[1], ((const float *) b)[2], ((const float *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((const float*) b)[0], ((const float*) b)[1], ((const float*) b)[2], ((const float*) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
@@ -1248,23 +1248,23 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 			return (const char*) b;
 
 	case V_ALIGN:
-		assert(*(const align_t *)b < ALIGN_LAST);
-		Q_strncpyz(valuestr, align_names[*(const align_t *)b], sizeof(valuestr));
+		assert(*(const align_t*)b < ALIGN_LAST);
+		Q_strncpyz(valuestr, align_names[*(const align_t*)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_BLEND:
-		assert(*(const blend_t *)b < BLEND_LAST);
-		Q_strncpyz(valuestr, blend_names[*(const blend_t *)b], sizeof(valuestr));
+		assert(*(const blend_t*)b < BLEND_LAST);
+		Q_strncpyz(valuestr, blend_names[*(const blend_t*)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_STYLE:
-		assert(*(const style_t *)b < STYLE_LAST);
-		Q_strncpyz(valuestr, style_names[*(const style_t *)b], sizeof(valuestr));
+		assert(*(const style_t*)b < STYLE_LAST);
+		Q_strncpyz(valuestr, style_names[*(const style_t*)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_FADE:
-		assert(*(const fade_t *)b < FADE_LAST);
-		Q_strncpyz(valuestr, fade_names[*(const fade_t *)b], sizeof(valuestr));
+		assert(*(const fade_t*)b < FADE_LAST);
+		Q_strncpyz(valuestr, fade_names[*(const fade_t*)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_SHAPE_SMALL:
@@ -1272,23 +1272,23 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		return "";
 
 	case V_DAMAGE:
-		assert(*(const byte *)b < MAX_DAMAGETYPES);
-		return csi.dts[*(const byte *)b].id;
+		assert(*(const byte*)b < MAX_DAMAGETYPES);
+		return csi.dts[*(const byte*)b].id;
 
 	case V_DATE:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t *) b)->day / DAYS_PER_YEAR, ((const date_t *) b)->day % DAYS_PER_YEAR, ((const date_t *) b)->sec);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t*) b)->day / DAYS_PER_YEAR, ((const date_t*) b)->day % DAYS_PER_YEAR, ((const date_t*) b)->sec);
 		return valuestr;
 
 	case V_RELABS:
 		/* absolute value */
-		if (*(const float *) b > 2.0)
-			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(const float *) b);
+		if (*(const float*) b > 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(const float*) b);
 		/* absolute value */
-		else if (*(const float *) b < 2.0)
-			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(const float *) b);
+		else if (*(const float*) b < 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(const float*) b);
 		/* relative value */
 		else
-			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float *) b);
+			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float*) b);
 		return valuestr;
 
 	default:
@@ -1296,9 +1296,9 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 	}
 }
 
-bool Com_ParseBlockToken (const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool, const char* token)
+bool Com_ParseBlockToken (const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool, const char* token)
 {
-	const value_t *v;
+	const value_t* v;
 	const char* errhead = "Com_ParseBlockToken: unexpected end of file (";
 
 	for (v = values; v->string; v++)
@@ -1379,7 +1379,7 @@ bool Com_ParseList (const char** text, linkedList_t** list)
 	return true;
 }
 
-bool Com_ParseBlock (const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool)
+bool Com_ParseBlock (const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool)
 {
 	const char* errhead = "Com_ParseBlock: unexpected end of file (";
 	const char* token;
@@ -1548,7 +1548,7 @@ static const value_t fdps[] = {
  * @brief Parses the item effect.
  * @param[in,out] e The item effect that is filled in here.
  */
-static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char* name, const char** text)
+static effectStages_t Com_ParseItemEffect (itemEffect_t* e, const char* name, const char** text)
 {
 	effectStages_t stage = EFFECT_MAX;
 
@@ -1603,16 +1603,16 @@ static effectStages_t Com_ParseItemEffect (itemEffect_t *e, const char* name, co
  * @brief Parses the effect that is bound to a fire definitions.
  * @param[in,out] fd The fire definition to add the effect to
  */
-static void Com_ParseFireEffect (fireDef_t *fd, const char* name, const char** text)
+static void Com_ParseFireEffect (fireDef_t* fd, const char* name, const char** text)
 {
-	itemEffect_t *e = Mem_AllocType(itemEffect_t);
+	itemEffect_t* e = Mem_AllocType(itemEffect_t);
 	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
 	if (stage == EFFECT_MAX) {
 		Mem_Free(e);
 		return;
 	}
 
-	itemEffect_t **stagePtr = nullptr;
+	itemEffect_t** stagePtr = nullptr;
 	switch (stage) {
 	case EFFECT_ACTIVE:
 		stagePtr = &fd->activeEffect;
@@ -1649,7 +1649,7 @@ static void Com_ParseFireEffect (fireDef_t *fd, const char* name, const char** t
  * @brief Parses the firemode
  * @param[in,out] fd The fire definition to fill
  */
-static bool Com_ParseFire (const char* name, const char** text, fireDef_t *fd)
+static bool Com_ParseFire (const char* name, const char** text, fireDef_t* fd)
 {
 	const char* errhead = "Com_ParseFire: unexpected end of file";
 	const char* token;
@@ -1729,7 +1729,7 @@ static bool Com_ParseFire (const char* name, const char** text, fireDef_t *fd)
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmourOrResistance (const char* name, const char** text, short *ad, bool rating)
+static void Com_ParseArmourOrResistance (const char* name, const char** text, short* ad, bool rating)
 {
 	const char* errhead = "Com_ParseArmourOrResistance: unexpected end of file";
 	const char* token;
@@ -1791,15 +1791,15 @@ CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
  * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod \<id\>"
  * in Com_ParseItem and used in Com_AddObjectLinks.
  */
-static linkedList_t *parseItemWeapons = nullptr;
+static linkedList_t* parseItemWeapons = nullptr;
 
 struct parseItemWeapon_t {
-	objDef_t *od;
+	objDef_t* od;
 	int numWeapons;
 	char* token;
 };
 
-static void Com_ParseFireDefinition (objDef_t *od, const char* name, const char** text)
+static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char** text)
 {
 	const char* token;
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
@@ -1839,7 +1839,7 @@ static void Com_ParseFireDefinition (objDef_t *od, const char* name, const char*
 				const weaponFireDefIndex_t weapFdsIdx = od->numWeapons;
 				if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 					const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
-					fireDef_t *fd = &od->fd[weapFdsIdx][fdIdx];
+					fireDef_t* fd = &od->fd[weapFdsIdx][fdIdx];
 					fd->fireAttenuation = SOUND_ATTN_NORM;
 					fd->impactAttenuation = SOUND_ATTN_NORM;
 					/* Parse firemode into fd[IDXweapon][IDXfiremode] */
@@ -1860,9 +1860,9 @@ static void Com_ParseFireDefinition (objDef_t *od, const char* name, const char*
 	}
 }
 
-static void Com_ParseObjDefEffect (objDef_t *od, const char* name, const char** text)
+static void Com_ParseObjDefEffect (objDef_t* od, const char* name, const char** text)
 {
-	itemEffect_t *e = Mem_AllocType(itemEffect_t);
+	itemEffect_t* e = Mem_AllocType(itemEffect_t);
 	const effectStages_t stage = Com_ParseItemEffect(e, name, text);
 	if (stage != EFFECT_STRENGTHEN) {
 		Com_Printf("Com_ParseObjDefEffect: ignore invalid item effect stage for item: '%s'\n", name);
@@ -1884,7 +1884,7 @@ static void Com_ParseObjDefEffect (objDef_t *od, const char* name, const char** 
 static void Com_ParseItem (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseItem: unexpected end of file (weapon ";
-	objDef_t *od;
+	objDef_t* od;
 	const char* token;
 	int i;
 
@@ -2027,7 +2027,7 @@ static void Com_ParseImplant (const char* name, const char** text)
 	Com_DPrintf(DEBUG_SHARED, "...found implant: '%s' (%i)\n", name, csi.numImplants);
 
 	/* initialize the implant definition */
-	implantDef_t *implant = &csi.implants[csi.numImplants++];
+	implantDef_t* implant = &csi.implants[csi.numImplants++];
 	OBJZERO(*implant);
 	implant->id = Mem_StrDup(name);
 	if (Q_strnull(implant->id))
@@ -2139,7 +2139,7 @@ static void Com_ParseInventory (const char* name, const char** text)
 	}
 
 	/* initialize the inventory definition */
-	invDef_t *id = &csi.ids[cid];
+	invDef_t* id = &csi.ids[cid];
 	OBJZERO(*id);
 
 	if (!Com_ParseBlock(name, text, id, idps, nullptr))
@@ -2178,7 +2178,7 @@ static const value_t equipment_definition_vals[] = {
 static void Com_ParseEquipment (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
-	equipDef_t *ed;
+	equipDef_t* ed;
 	const char* token;
 	int i, n;
 
@@ -2218,7 +2218,7 @@ static void Com_ParseEquipment (const char* name, const char** text)
 
 		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, com_genericPool, token)) {
 			if (Q_streq(token, "item")) {
-				linkedList_t *list;
+				linkedList_t* list;
 				if (!Com_ParseList(text, &list)) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: error while reading equipment item tuple");
 				}
@@ -2228,7 +2228,7 @@ static void Com_ParseEquipment (const char* name, const char** text)
 				const char* itemToken = (char*)list->data;
 				const char* amountToken = (char*)list->next->data;
 
-				const objDef_t *od;
+				const objDef_t* od;
 				od = INVSH_GetItemByID(itemToken);
 				if (od) {
 					n = atoi(amountToken);
@@ -2242,7 +2242,7 @@ static void Com_ParseEquipment (const char* name, const char** text)
 				}
 				LIST_Delete(&list);
 			} else if (Q_streq(token, "aircraft")) {
-				linkedList_t *list;
+				linkedList_t* list;
 				if (!Com_ParseList(text, &list)) {
 					Com_Error(ERR_DROP, "Com_ParseEquipment: error while reading equipment aircraft tuple");
 				}
@@ -2280,10 +2280,10 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
-static const char* Com_GiveName (int gender, const teamDef_t *td)
+static const char* Com_GiveName (int gender, const teamDef_t* td)
 {
 	int j, name = 0;
-	linkedList_t *list;
+	linkedList_t* list;
 
 #ifdef DEBUG
 	for (j = 0; j < NAME_NUM_TYPES; j++)
@@ -2316,9 +2316,9 @@ static const char* Com_GiveName (int gender, const teamDef_t *td)
  * @param[in] td The team definition
  * @sa Com_GetCharacterValues
  */
-static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
+static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t* td)
 {
-	const linkedList_t *list;
+	const linkedList_t* list;
 
 	/* found category */
 	if (!td->numModels[gender]) {
@@ -2346,10 +2346,10 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
  * @param[in] gender The gender of the actor
  * @param[in] soundType Which sound category (actorSound_t)
  */
-const char* Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType)
+const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
 	int random, j;
-	linkedList_t *list;
+	linkedList_t* list;
 
 	if (!td)
 		return nullptr;
@@ -2380,13 +2380,13 @@ const char* Com_GetActorSound (teamDef_t *td, int gender, actorSound_t soundType
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
-const teamDef_t *Com_GetTeamDefinitionByID (const char* team)
+const teamDef_t* Com_GetTeamDefinitionByID (const char* team)
 {
 	int i;
 
 	/* get team definition */
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t *t = &csi.teamDef[i];
+		const teamDef_t* t = &csi.teamDef[i];
 		if (Q_streq(team, t->id))
 			return t;
 	}
@@ -2395,7 +2395,7 @@ const teamDef_t *Com_GetTeamDefinitionByID (const char* team)
 	return nullptr;
 }
 
-bool Com_GetCharacterModel (character_t *chr)
+bool Com_GetCharacterModel (character_t* chr)
 {
 	if (!chr->teamDef)
 		return false;
@@ -2419,7 +2419,7 @@ bool Com_GetCharacterModel (character_t *chr)
  * @param[in] teamDef pointer to the teamDef to get the gender for.
  * @return A valid gender for the teamDef.
  */
-static int Com_GetGender (const teamDef_t *teamDef)
+static int Com_GetGender (const teamDef_t* teamDef)
 {
 	int gender;
 	int numModels = 0;
@@ -2445,7 +2445,7 @@ static int Com_GetGender (const teamDef_t *teamDef)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-void Com_GetCharacterValues (const char* teamDefition, character_t *chr)
+void Com_GetCharacterValues (const char* teamDefition, character_t* chr)
 {
 	int retry = 1000;
 
@@ -2523,12 +2523,12 @@ static void Com_ParseActorNames (const char* name, const char** text)
 
 		int nameType = Com_FindNameType(token);
 
-		linkedList_t *list;
+		linkedList_t* list;
 		if (!Com_ParseList(text, &list)) {
 			Com_Error(ERR_DROP, "Com_ParseActorNames: error while reading names (%s)", name);
 		}
 
-		for (linkedList_t *element = list; element != nullptr; element = element->next) {
+		for (linkedList_t* element = list; element != nullptr; element = element->next) {
 			/* some names can be translatable */
 			const char* n = (char*)element->data;
 			if (*n == '_')
@@ -2564,7 +2564,7 @@ static void Com_ParseActorNames (const char* name, const char** text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorModels (const char* name, const char** text, teamDef_t *td)
+static void Com_ParseActorModels (const char* name, const char** text, teamDef_t* td)
 {
 	const char* errhead = "Com_ParseActorModels: unexpected end of file (actors ";
 	const char* token;
@@ -2590,7 +2590,7 @@ static void Com_ParseActorModels (const char* name, const char** text, teamDef_t
 			Com_Error(ERR_DROP, "Com_ParseActorModels: name type \"%s\" unknown", token);
 		}
 
-		linkedList_t *list;
+		linkedList_t* list;
 		if (!Com_ParseList(text, &list)) {
 			Com_Error(ERR_DROP, "Com_ParseActorModels: error while reading model tuple (%s)", name);
 		}
@@ -2599,7 +2599,7 @@ static void Com_ParseActorModels (const char* name, const char** text, teamDef_t
 			Com_Error(ERR_DROP, "Com_ParseActorModels: model tuple must contains 5 elements");
 		}
 
-		linkedList_t *element = list;
+		linkedList_t* element = list;
 		const char* pathToken = (const char*)element->data;
 		element = element->next;
 		const char* bodyToken = (const char*)element->data;
@@ -2629,7 +2629,7 @@ static void Com_ParseActorModels (const char* name, const char** text, teamDef_t
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char* name, const char** text, teamDef_t *td)
+static void Com_ParseActorSounds (const char* name, const char** text, teamDef_t* td)
 {
 	const char* const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
 	const char* token;
@@ -2700,7 +2700,7 @@ static const BodyData* Com_GetBodyTemplateByID (const char* id)
 	return nullptr;
 }
 
-static const teamNames_t *Com_GetNameListByID (const char* id)
+static const teamNames_t* Com_GetNameListByID (const char* id)
 {
 	LIST_Foreach(csi.actorNames, teamNames_t, names)
 		if (Q_streq(id, names->id))
@@ -2727,7 +2727,7 @@ static const value_t teamDefValues[] = {
 
 static void Com_ParseTeam (const char* name, const char** text)
 {
-	teamDef_t *td;
+	teamDef_t* td;
 	const char* errhead = "Com_ParseTeam: unexpected end of file (team ";
 	const char* token;
 	int i;
@@ -2778,7 +2778,7 @@ static void Com_ParseTeam (const char* name, const char** text)
 
 		if (!Com_ParseBlockToken(name, text, td, teamDefValues, nullptr, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
-				const objDef_t *od;
+				const objDef_t* od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -2789,12 +2789,12 @@ static void Com_ParseTeam (const char* name, const char** text)
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (Q_streq(token, "templates")) {
-				linkedList_t *list;
+				linkedList_t* list;
 				if (!Com_ParseList(text, &list)) {
 					Com_Error(ERR_DROP, "Com_ParseTeam: error while reading templates (team \"%s\")", name);
 				}
 
-				for (linkedList_t *element = list; element != nullptr; element = element->next) {
+				for (linkedList_t* element = list; element != nullptr; element = element->next) {
 					for (i = 0; i < td->numTemplates; i++) {
 						if (Q_streq(token, td->characterTemplates[i]->id)) {
 							Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", (char*)element->data, name);
@@ -2802,7 +2802,7 @@ static void Com_ParseTeam (const char* name, const char** text)
 						}
 					}
 					if (i >= td->numTemplates) {
-						const chrTemplate_t *ct = Com_GetCharacterTemplateByID((char*)element->data);
+						const chrTemplate_t* ct = Com_GetCharacterTemplateByID((char*)element->data);
 						if (ct)
 							td->characterTemplates[td->numTemplates++] = ct;
 						else
@@ -2819,7 +2819,7 @@ static void Com_ParseTeam (const char* name, const char** text)
 					Sys_Error("Com_ParseTeam: Could not find body type %s in team def %s\n", token, name);
 				td->bodyTemplate = bd;
 			} else if (Q_streq(token, "names")) {
-				const teamNames_t *nameList;
+				const teamNames_t* nameList;
 				token = Com_EParse(text, errhead, name);
 				nameList = Com_GetNameListByID(token);
 				if (nameList == nullptr)
@@ -2851,7 +2851,7 @@ static void Com_ParseTeam (const char* name, const char** text)
  * array
  * @param[in] chrTemplate The character template id (given in ufo-script files)
  */
-const chrTemplate_t *Com_GetCharacterTemplateByID (const char* chrTemplate)
+const chrTemplate_t* Com_GetCharacterTemplateByID (const char* chrTemplate)
 {
 	int i;
 
@@ -2883,7 +2883,7 @@ static const value_t ugvValues[] = {
  */
 static void Com_ParseUGVs (const char* name, const char** text)
 {
-	ugv_t *ugv;
+	ugv_t* ugv;
 	int i;
 
 	for (i = 0; i < csi.numUGV; i++) {
@@ -2916,7 +2916,7 @@ static void Com_ParseCharacterTemplate (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseCharacterTemplate: unexpected end of file";
 	const char* token;
-	chrTemplate_t *ct;
+	chrTemplate_t* ct;
 	int i;
 
 	for (i = 0; i < csi.numChrTemplates; i++)
@@ -3017,7 +3017,7 @@ static void Com_ParseBodyPart (const char* name, const char** text, BodyData *bd
 
 		if (!Com_ParseBlockToken(name, text, &bp, bodyPartValues, nullptr, token)) {
 			if (Q_streq(token, "penalty")) {
-				linkedList_t *list;
+				linkedList_t* list;
 				if (!Com_ParseList(text, &list)) {
 					Com_Error(ERR_DROP, "Com_ParseBodyPart: error while reading penalties ('%s')", name);
 				}
@@ -3027,7 +3027,7 @@ static void Com_ParseBodyPart (const char* name, const char** text, BodyData *bd
 					Com_Error(ERR_DROP, "Com_ParseBodyPart: penalty tuple must contain 2 elements ('%s')", name);
 				}
 
-				linkedList_t *element = list;
+				linkedList_t* element = list;
 				for (i = 0; i < MODIFIER_MAX; i++) {
 					if (Q_streq(static_cast<const char*>(element->data), penaltyNames[i])) {
 						/* Found a definition */
@@ -3102,7 +3102,7 @@ TERRAIN PARSERS
 */
 
 #define TERRAIN_HASH_SIZE 64
-static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
+static terrainType_t* terrainTypesHash[TERRAIN_HASH_SIZE];
 
 static const value_t terrainTypeValues[] = {
 	{"footstepsound", V_HUNK_STRING, offsetof(terrainType_t, footstepSound), 0},
@@ -3118,10 +3118,10 @@ static const value_t terrainTypeValues[] = {
  * @param[in] textureName The terrain definition id from script files
  * which is the texture name relative to base/textures
  */
-const terrainType_t *Com_GetTerrainType (const char* textureName)
+const terrainType_t* Com_GetTerrainType (const char* textureName)
 {
 	unsigned hash;
-	const terrainType_t *t;
+	const terrainType_t* t;
 
 	assert(textureName);
 	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
@@ -3179,8 +3179,8 @@ static void Com_ParseGameTypes (const char* name, const char** text)
 	const char* errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	const char* token;
 	int i;
-	gametype_t *gt;
-	cvarlist_t *cvarlist;
+	gametype_t* gt;
+	cvarlist_t* cvarlist;
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -3421,14 +3421,14 @@ const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
  * @return ugv_t pointer or nullptr if not found.
  * @note This function gives no warning on null name or if no ugv found
  */
-const ugv_t *Com_GetUGVByIDSilent (const char* ugvID)
+const ugv_t* Com_GetUGVByIDSilent (const char* ugvID)
 {
 	int i;
 
 	if (!ugvID)
 		return nullptr;
 	for (i = 0; i < csi.numUGV; i++) {
-		const ugv_t *ugv = &csi.ugvs[i];
+		const ugv_t* ugv = &csi.ugvs[i];
 		if (Q_streq(ugv->id, ugvID)) {
 			return ugv;
 		}
@@ -3441,9 +3441,9 @@ const ugv_t *Com_GetUGVByIDSilent (const char* ugvID)
  * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or nullptr if not found.
  */
-const ugv_t *Com_GetUGVByID (const char* ugvID)
+const ugv_t* Com_GetUGVByID (const char* ugvID)
 {
-	const ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
+	const ugv_t* ugv = Com_GetUGVByIDSilent(ugvID);
 
 	if (!ugvID)
 		Com_Printf("Com_GetUGVByID Called with nullptr ugvID!\n");
@@ -3481,14 +3481,14 @@ static void Com_AddObjectLinks (void)
 	LIST_Delete(&parseItemWeapons);
 
 	/* Add links to ammos */
-	objDef_t *od;
+	objDef_t* od;
 	int i;
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
 		if (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (int n = 0; n < csi.numODs; n++) {
-				const objDef_t *weapon = INVSH_GetItemByIDX(n);
+				const objDef_t* weapon = INVSH_GetItemByIDX(n);
 				for (int m = 0; m < weapon->numWeapons; m++) {
 					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
@@ -3536,7 +3536,7 @@ static const value_t mapdef_vals[] = {
 static void Com_ParseMapDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
-	mapDef_t *md;
+	mapDef_t* md;
 	const char* token;
 
 	/* get it's body */
@@ -3597,14 +3597,14 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 	}
 }
 
-mapDef_t *Com_GetMapDefByIDX (int index)
+mapDef_t* Com_GetMapDefByIDX (int index)
 {
 	return &csi.mds[index];
 }
 
-mapDef_t *Com_GetMapDefinitionByID (const char* mapDefID)
+mapDef_t* Com_GetMapDefinitionByID (const char* mapDefID)
 {
-	mapDef_t *md;
+	mapDef_t* md;
 
 	assert(mapDefID);
 

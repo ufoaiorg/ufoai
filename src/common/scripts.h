@@ -199,13 +199,13 @@ int Com_SetValueDebug(void* base, const void* set, valueTypes_t type, int ofs, s
 int Com_SetValue(void* base, const void* set, valueTypes_t type, int ofs, size_t size);
 #endif
 int Com_EParseValue(void* base, const char* token, valueTypes_t type, int ofs, size_t size);
-bool Com_ParseBlock(const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool);
-bool Com_ParseBlockToken(const char* name, const char** text, void* base, const value_t *values, memPool_t *mempool, const char* token);
+bool Com_ParseBlock(const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool);
+bool Com_ParseBlockToken(const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool, const char* token);
 bool Com_ParseList(const char** text, linkedList_t** list);
 void* Com_AlignPtr(const void* memory, valueTypes_t type);
 const char* Com_ValueToStr(const void* base, const valueTypes_t type, const int ofs);
 const char* Com_GetLastParseError(void);
-resultStatus_t Com_ParseValue(void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
+resultStatus_t Com_ParseValue(void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t* writtenBytes);
 bool Com_ParseBoolean(const char* token);
 
 /*==============================================================
@@ -223,10 +223,10 @@ typedef struct terrainType_s {
 	const char* particle;			/**< particle to spawn when walking on this type of terrain */
 	float bounceFraction;			/**< the impact on the bounce fraction given in the weapon definition */
 	float footstepVolume;			/**< footstep sound volume */
-	struct terrainType_s *hash_next;	/**< next entry in the hash list */
+	struct terrainType_s* hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 
-const terrainType_t *Com_GetTerrainType(const char* textureName);
+const terrainType_t* Com_GetTerrainType(const char* textureName);
 
 /**
  * @brief list of script aliases to register
@@ -258,12 +258,12 @@ void Com_Shutdown(void);
 
 #include "../game/q_shared.h"
 
-const ugv_t *Com_GetUGVByIDSilent(const char* ugvID);
-const ugv_t *Com_GetUGVByID(const char* ugvID);
+const ugv_t* Com_GetUGVByIDSilent(const char* ugvID);
+const ugv_t* Com_GetUGVByID(const char* ugvID);
 const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char* token);
-void Com_GetCharacterValues(const char* teamDefition, character_t *chr);
-bool Com_GetCharacterModel(character_t *chr);
-const char* Com_GetActorSound(teamDef_t *td, int gender, actorSound_t soundType);
-const teamDef_t *Com_GetTeamDefinitionByID(const char* team);
-const chrTemplate_t *Com_GetCharacterTemplateByID(const char* chrTemplate);
+void Com_GetCharacterValues(const char* teamDefition, character_t* chr);
+bool Com_GetCharacterModel(character_t* chr);
+const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
+const teamDef_t* Com_GetTeamDefinitionByID(const char* team);
+const chrTemplate_t* Com_GetCharacterTemplateByID(const char* chrTemplate);
