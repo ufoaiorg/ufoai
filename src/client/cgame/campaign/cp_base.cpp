@@ -300,8 +300,7 @@ base_t* B_GetNext (base_t* lastBase)
 	base++;
 	if (base >= endOfBases)
 		return nullptr;
-	else
-		return base;
+	return base;
 }
 
 /**
