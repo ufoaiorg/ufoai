@@ -985,7 +985,7 @@ bool LE_BrushModelAction (le_t* le, entity_t* ent)
 			return false;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
-		z = roundf(le->aabb.mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
+		z = roundf(le->aabb.getMinZ() / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
 		xmax = roundf(le->aabb.getMaxX() / UNIT_SIZE) * UNIT_SIZE - 0.1f;
 		for (x = roundf(le->aabb.getMinX() / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
 			const float ymax = roundf(le->aabb.getMaxY() / UNIT_SIZE) * UNIT_SIZE - 0.1f;

@@ -77,7 +77,7 @@ public:
 	/** ------------------
 	 *		getters
 	 *	------------------*/
-	inline const vec3_t& getMins() const {
+	inline const vec3_t& getMins () const {
 		return mins;
 	}
 	inline float getMinX () const {
@@ -86,7 +86,10 @@ public:
 	inline float getMinY () const {
 		return mins[1];
 	}
-	inline const vec3_t& getMaxs() const {
+	inline float getMinZ () const {
+		return mins[2];
+	}
+	inline const vec3_t& getMaxs () const {
 		return maxs;
 	}
 	inline float getMaxX () const {
@@ -94,6 +97,9 @@ public:
 	}
 	inline float getMaxY () const {
 		return maxs[1];
+	}
+	inline float getMaxZ () const {
+		return maxs[2];
 	}
 
 	inline float getWidthX () const {
@@ -123,8 +129,8 @@ public:
 	 * @param[in] other The other aabb
 	 */
 	inline bool doesIntersect (const AABB& other) const {
-		return !(mins[0] > other.getMaxX() || getMinY() > other.getMaxY() || mins[2] > other.maxs[2] || getMaxX() < other.getMinX()
-				|| getMaxY() < other.getMinY() || maxs[2] < other.mins[2]);
+		return !(mins[0] > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
+				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
 
 	/** ------------------
