@@ -788,14 +788,11 @@ void B_ResetAllStatusAndCapacities (base_t* base, bool firstEnable)
  */
 bool B_BuildingDestroy (building_t* building)
 {
-	const buildingType_t buildingType = building->buildingType;
-	const building_t* buildingTemplate = building->tpl;
-	const bool runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
-	base_t* base = building->base;
-
 	/* Don't allow to destroy a mandatory building. */
 	if (building->mandatory)
 		return false;
+
+	base_t* base = building->base;
 
 	if (base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		cgi->Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
@@ -807,6 +804,9 @@ bool B_BuildingDestroy (building_t* building)
 		return false;
 	}
 
+	const buildingType_t buildingType = building->buildingType;
+	const building_t* buildingTemplate = building->tpl;
+	const bool runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	building->buildingStatus = B_STATUS_NOT_SET;
 
 	/* Update buildingCurrent */
