@@ -1095,13 +1095,12 @@ static void B_BuildFromTemplate (base_t* base, const char* templateName, bool hi
 {
 	const baseTemplate_t* baseTemplate = B_GetBaseTemplate(templateName);
 	int freeSpace = BASE_SIZE * BASE_SIZE;
-	int i;
 
 	assert(base);
 
 	if (baseTemplate) {
 		/* find each building in the template */
-		for (i = 0; i < baseTemplate->numBuildings; i++) {
+		for (int i = 0; i < baseTemplate->numBuildings; i++) {
 			const baseBuildingTile_t* buildingTile = &baseTemplate->buildings[i];
 
 			if (base->map[buildingTile->posY][buildingTile->posX].building)
@@ -1115,7 +1114,7 @@ static void B_BuildFromTemplate (base_t* base, const char* templateName, bool hi
 	}
 
 	/* we need to set up the mandatory buildings */
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t* building = &ccs.buildingTemplates[i];
 		vec2_t pos;
 
@@ -1138,7 +1137,7 @@ static void B_BuildFromTemplate (base_t* base, const char* templateName, bool hi
 	}
 
 	/* set building tile positions */
-	for (i = 0; i < BASE_SIZE; i++) {
+	for (int i = 0; i < BASE_SIZE; i++) {
 		for (int j = 0; j < BASE_SIZE; j++) {
 			base->map[i][j].posY = i;
 			base->map[i][j].posX = j;
@@ -2482,10 +2481,6 @@ bool B_SaveXML (xmlNode_t* parent)
 	bases = cgi->XML_AddNode(parent, SAVE_BASES_BASES);
 	b = nullptr;
 	while ((b = B_GetNext(b)) != nullptr) {
-		int row;
-		xmlNode_t* act_base;
-		xmlNode_t* node;
-		building_t* building;
 
 		if (!b->founded) {
 			Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
@@ -2494,7 +2489,7 @@ bool B_SaveXML (xmlNode_t* parent)
 
 		cgi->Com_RegisterConstList(saveBaseConstants);
 
-		act_base = cgi->XML_AddNode(bases, SAVE_BASES_BASE);
+		xmlNode_t* act_base = cgi->XML_AddNode(bases, SAVE_BASES_BASE);
 		cgi->XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
 		cgi->XML_AddString(act_base, SAVE_BASES_NAME, b->name);
 		cgi->XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
@@ -2502,10 +2497,9 @@ bool B_SaveXML (xmlNode_t* parent)
 		cgi->XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
 
 		/* building space */
-		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
-		for (row = 0; row < BASE_SIZE; row++) {
-			int column;
-			for (column = 0; column < BASE_SIZE; column++) {
+		xmlNode_t* node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
+		for (int row = 0; row < BASE_SIZE; row++) {
+			for (int column = 0; column < BASE_SIZE; column++) {
 				xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_BASES_BUILDING);
 				/** @todo save it as vec2t if needed, also it's opposite */
 				cgi->XML_AddInt(snode, SAVE_BASES_X, row);
@@ -2517,7 +2511,7 @@ bool B_SaveXML (xmlNode_t* parent)
 		}
 		/* buildings */
 		node = cgi->XML_AddNode(act_base, SAVE_BASES_BUILDINGS);
-		building = nullptr;
+		building_t* building = nullptr;
 		while ((building = B_GetNextBuilding(b, building))) {
 			xmlNode_t* snode;
 
@@ -2593,7 +2587,7 @@ static bool B_PostLoadInitCapacity (void)
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
-bool  B_PostLoadInit (void)
+bool B_PostLoadInit (void)
 {
 	return B_PostLoadInitCapacity();
 }
@@ -2605,17 +2599,15 @@ bool  B_PostLoadInit (void)
  */
 bool B_LoadStorageXML (xmlNode_t* parent, equipDef_t* equip)
 {
-	xmlNode_t* node;
-	for (node = cgi->XML_GetNode(parent, SAVE_BASES_ITEM); node; node = cgi->XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
+	for (xmlNode_t* node = cgi->XML_GetNode(parent, SAVE_BASES_ITEM); node; node = cgi->XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
 		const char* s = cgi->XML_GetString(node, SAVE_BASES_ODS_ID);
 		const objDef_t* od = INVSH_GetItemByID(s);
-
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
-		} else {
-			equip->numItems[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUM, 0);
-			equip->numItemsLoose[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
+			continue;
 		}
+		equip->numItems[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUM, 0);
+		equip->numItemsLoose[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
 	}
 	return true;
 }
