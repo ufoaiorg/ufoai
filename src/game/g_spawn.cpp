@@ -463,6 +463,17 @@ static void G_SpawnSmoke (const vec3_t vec, const char* particle, int rounds)
 	ent->count = rounds;
 }
 
+static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
+{
+	switch (fieldtype) {
+	case ET_SMOKE:
+		G_SpawnSmoke(vec, particle, rounds);
+		break;
+	default:
+		break;
+	}
+}
+
 /**
  * @brief Spawns a smoke field that is available for some rounds
  * @param[in] vec The position in the world that is the center of the smoke field
@@ -475,7 +486,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_
 {
 	vec_t x, y;
 
-	G_SpawnSmoke(vec, particle, rounds);
+	G_SpawnFieldPart(ET_SMOKE, vec, particle, rounds, 0);
 
 	/* for all cells in a square of +/- radius */
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
@@ -492,7 +503,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
 			}
-			G_SpawnSmoke(end, particle, rounds);
+			G_SpawnFieldPart(ET_SMOKE, end, particle, rounds, 0);
 		}
 	}
 }
