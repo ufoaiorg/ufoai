@@ -227,10 +227,10 @@ void G_TakeDamage (Edict* ent, int damage)
  * @param start The start vector of the trace
  * @param end The end vector of the trace
  */
-static inline void G_TraceDraw (const vec3_t start, const vec3_t end)
+static inline void G_TraceDraw (const Line& traceLine)
 {
 	if (g_drawtraces->integer)
-		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, start, end, vec3_origin);
+		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, traceLine.start, traceLine.stop, vec3_origin);
 }
 
 /**
@@ -244,7 +244,7 @@ bool G_TestLineWithEnts (const vec3_t start, const vec3_t end)
 	const char* entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
-	G_TraceDraw(start, end);
+	G_TraceDraw(Line(start, end));
 	/* test for visibility */
 	return gi.TestLineWithEnt(start, end, TL_FLAG_NONE, entList);
 }
@@ -257,7 +257,7 @@ bool G_TestLineWithEnts (const vec3_t start, const vec3_t end)
  */
 bool G_TestLine (const vec3_t start, const vec3_t end)
 {
-	G_TraceDraw(start, end);
+	G_TraceDraw(Line(start, end));
 	return gi.TestLine(start, end, TL_FLAG_NONE);
 }
 
@@ -270,7 +270,7 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
 trace_t G_Trace (const vec3_t start, const vec3_t end, const Edict* passent, int contentmask)
 {
 	const AABB box(vec3_origin, vec3_origin);
-	G_TraceDraw(start, end);
+	G_TraceDraw(Line(start, end));
 	return gi.Trace(start, box, end, passent, contentmask);
 }
 
