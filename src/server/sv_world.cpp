@@ -447,23 +447,22 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
  * @sa CL_Trace
- * @param[in] start The starting position in the world for this trace
- * @param[in] end The position in the world where this trace should stop
+ * @param[in] traceLine The from/to position in the world for this trace
+ * @param[in] box The bounding box that is moved through the world
  * @param[in] passedict is explicitly excluded from clipping checks (normally nullptr)
  * if the entire move stays in a solid volume, trace.allsolid will be set,
  * trace.startsolid will be set, and trace.fraction will be 0
  * if the starting point is in a solid, it will be allowed to move out to an open area
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
- * @param[in] box The bounding box that is moved through the world
  */
-trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const edict_t* passedict, int contentmask)
+trace_t SV_Trace (const Line& traceLine, const AABB &box, const edict_t* passedict, int contentmask)
 {
 	moveclip_t clip;
 
 	OBJZERO(clip);
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, start, end, box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(&sv->mapTiles, traceLine.start, traceLine.stop, box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.entNum = 0; /* the first edict is the world */
@@ -471,14 +470,14 @@ trace_t SV_Trace (const vec3_t start, const AABB &box, const vec3_t end, const e
 		return clip.trace;		/* blocked by the world */
 
 	clip.contentmask = contentmask;
-	clip.start = start;
-	clip.end = end;
+	clip.start = traceLine.start;
+	clip.end = traceLine.stop;
 	clip.mins = box.mins;
 	clip.maxs = box.maxs;
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */
-	SV_TraceBounds(start, clip.mins, clip.maxs, end, clip.boxmins, clip.boxmaxs);
+	SV_TraceBounds(traceLine.start, clip.mins, clip.maxs, traceLine.stop, clip.boxmins, clip.boxmaxs);
 
 #if 0
 	/* Output the trace bounds */

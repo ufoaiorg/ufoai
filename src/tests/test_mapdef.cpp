@@ -359,7 +359,7 @@ static void testMapDefsFootSteps (void)
 					from[2] -= UNIT_HEIGHT / 2;			// bottom of the cell
 					from[2] += (floor + 2) * QUANT;		// add the height of the floor plus 2 QUANTS
 					to[2] -= 2 * UNIT_HEIGHT;			// we should really hit the ground with this
-					const trace_t trace = SV_Trace(from, noBox, to, nullptr, MASK_SOLID);
+					const trace_t trace = SV_Trace(Line(from, to), noBox, nullptr, MASK_SOLID);
 					if (!trace.surface)
 						continue;
 
