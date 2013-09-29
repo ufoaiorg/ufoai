@@ -331,7 +331,7 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 	VectorSet(maxs, size, size, size);
 	AABB box(mins, maxs);
 
-	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, start, end, box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, Line(start, end), box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	refdef.traceEntity = nullptr;
 
 	frac = refdef.trace.fraction;

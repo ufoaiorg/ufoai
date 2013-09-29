@@ -298,7 +298,7 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
-trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const AABB &box, int levelmask, int brushmask, int brushreject)
+trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB &box, int levelmask, int brushmask, int brushreject)
 {
 	int tile, i;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
@@ -309,10 +309,10 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec
 
 	/* Prep the mins and maxs */
 	for (i = 0; i < 3; i++) {
-		smin[i] = start[i] + std::min(box.mins[i], box.maxs[i]);
-		smax[i] = start[i] + std::max(box.mins[i], box.maxs[i]);
-		emin[i] = end[i] + std::min(box.mins[i], box.maxs[i]);
-		emax[i] = end[i] + std::max(box.mins[i], box.maxs[i]);
+		smin[i] = trLine.start[i] + std::min(box.mins[i], box.maxs[i]);
+		smax[i] = trLine.start[i] + std::max(box.mins[i], box.maxs[i]);
+		emin[i] = trLine.stop[i] + std::min(box.mins[i], box.maxs[i]);
+		emax[i] = trLine.stop[i] + std::max(box.mins[i], box.maxs[i]);
 	}
 
 	/* trace against all loaded map tiles */
@@ -335,7 +335,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec
 			continue;
 		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
 			continue;
-		trace_t newtr = TR_TileBoxTrace(&myTile, start, end, box, levelmask, brushmask, brushreject);
+		trace_t newtr = TR_TileBoxTrace(&myTile, trLine.start, trLine.stop, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
@@ -364,7 +364,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec
 trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
 	/* trace against world first */
-	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
+	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine, *traceBox, levelmask, brushmask, brushreject);
 	if (!list || tr.fraction == 0.0)
 		return tr;
 

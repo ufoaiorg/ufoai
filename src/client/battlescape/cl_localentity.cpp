@@ -1772,7 +1772,7 @@ trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const l
 		R_DrawBoundingBoxBatched(box.mins, box.maxs);
 
 	/* clip to world */
-	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, start, end, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, Line(start, end), box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = nullptr;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
