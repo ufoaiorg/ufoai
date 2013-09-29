@@ -74,7 +74,7 @@ TRACING NODES
 static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenum)
 {
 	tnode_t* t;				/* the tracing node to build */
-	TR_PLANE_TYPE *plane;
+	TR_PLANE_TYPE* plane;
 	int i;
 	TR_NODE_TYPE *node;		/* the node we are investigating */
 
@@ -494,7 +494,7 @@ BOX TRACING
 /**
  * @brief Returns PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
  */
-int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane)
+int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE* plane)
 {
 	int side, i;
 	vec3_t corners[2];
@@ -561,7 +561,7 @@ static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check
 		assert(nodenum < myTile->numnodes + 6); /* +6 => bbox */
 		TR_NODE_TYPE *node = &myTile->nodes[nodenum];
 
-		TR_PLANE_TYPE *plane;
+		TR_PLANE_TYPE* plane;
 #ifdef COMPILE_UFO
 		plane = node->plane;
 #else
@@ -615,7 +615,7 @@ static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int li
 static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEAF_TYPE *leaf)
 {
 	int i, j;
-	TR_PLANE_TYPE *clipplane;
+	TR_PLANE_TYPE* clipplane;
 	int clipplanenum;
 	float dist;
 	float enterfrac, leavefrac;
@@ -640,9 +640,9 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 	for (i = 0; i < brush->numsides; i++) {
 		TR_BRUSHSIDE_TYPE *side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
-		TR_PLANE_TYPE *plane = side->plane;
+		TR_PLANE_TYPE* plane = side->plane;
 #else
-		TR_PLANE_TYPE *plane = myTile->planes + side->planenum;
+		TR_PLANE_TYPE* plane = myTile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
@@ -723,7 +723,7 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 {
 	int i, j;
-	TR_PLANE_TYPE *plane;
+	TR_PLANE_TYPE* plane;
 	vec3_t ofs;
 	TR_TILE_TYPE* myTile = traceData->tile;
 
@@ -862,7 +862,7 @@ static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
 static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
 	TR_NODE_TYPE *node;
-	TR_PLANE_TYPE *plane;
+	TR_PLANE_TYPE* plane;
 	float t1, t2, offset;
 	float frac, frac2;
 	int side;

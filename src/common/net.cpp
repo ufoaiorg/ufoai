@@ -130,7 +130,7 @@ struct datagram {
 	int len;
 	char* msg;
 	char* addr;
-	struct datagram *next;
+	struct datagram* next;
 };
 
 struct datagram_socket {
@@ -138,8 +138,8 @@ struct datagram_socket {
 	int index;
 	int family;
 	int addrlen;
-	struct datagram *queue;
-	struct datagram **queue_tail;
+	struct datagram* queue;
+	struct datagram** queue_tail;
 	datagram_callback_func* func;
 };
 
@@ -557,7 +557,7 @@ void NET_Wait (int timeout)
 
 		if (FD_ISSET(s->socket, &write_fds_out)) {
 			if (s->queue) {
-				struct datagram *dgram = s->queue;
+				struct datagram* dgram = s->queue;
 				const int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr* )dgram->addr, s->addrlen);
 				if (len == -1)
 					Com_Printf("sendto on socket %d failed: %s\n", s->socket, netStringError(netError));
@@ -598,7 +598,7 @@ static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 	return true;
 }
 
-static struct net_stream* NET_DoConnect (const char* node, const char* service, const struct addrinfo *addr, int i, stream_onclose_func* onclose)
+static struct net_stream* NET_DoConnect (const char* node, const char* service, const struct addrinfo* addr, int i, stream_onclose_func* onclose)
 {
 	struct net_stream* s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -652,7 +652,7 @@ static struct net_stream* NET_DoConnect (const char* node, const char* service, 
  */
 struct net_stream* NET_Connect (const char* node, const char* service, stream_onclose_func* onclose)
 {
-	struct addrinfo *res;
+	struct addrinfo* res;
 	struct addrinfo hints;
 	int rc;
 	struct net_stream* s = nullptr;
@@ -927,7 +927,7 @@ bool NET_StreamIsLoopback (struct net_stream* s)
 	return s && s->loopback;
 }
 
-static int NET_DoStartServer (const struct addrinfo *addr)
+static int NET_DoStartServer (const struct addrinfo* addr)
 {
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
@@ -974,7 +974,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 
 static struct addrinfo* NET_GetAddrinfoForNode (const char* node, const char* service)
 {
-	struct addrinfo *res;
+	struct addrinfo* res;
 	struct addrinfo hints;
 	int rc;
 
@@ -1014,7 +1014,7 @@ bool SV_Start (const char* node, const char* service, stream_callback_func* func
 	}
 
 	if (service) {
-		struct addrinfo *res = NET_GetAddrinfoForNode(node, service);
+		struct addrinfo* res = NET_GetAddrinfoForNode(node, service);
 
 		server_socket = NET_DoStartServer(res);
 		if (server_socket == INVALID_SOCKET) {
@@ -1050,7 +1050,7 @@ void SV_Stop (void)
 /**
  * @sa NET_DatagramSocketNew
  */
-static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo *addr)
+static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo* addr)
 {
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
@@ -1115,7 +1115,7 @@ static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo *a
 struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func* func)
 {
 	struct datagram_socket* s;
-	struct addrinfo *res;
+	struct addrinfo* res;
 	struct addrinfo hints;
 	int rc;
 
@@ -1204,7 +1204,7 @@ void NET_DatagramSocketClose (struct datagram_socket* s)
 	netCloseSocket(s->socket);
 
 	while (s->queue) {
-		struct datagram *dgram = s->queue;
+		struct datagram* dgram = s->queue;
 		s->queue = dgram->next;
 		Mem_Free(dgram->msg);
 		Mem_Free(dgram->addr);
@@ -1235,7 +1235,7 @@ void NET_SockaddrToStrings (struct datagram_socket* s, struct sockaddr* addr, ch
 	}
 }
 
-static void NET_AddrinfoToString (const struct addrinfo *addr, char* buf, size_t bufLength)
+static void NET_AddrinfoToString (const struct addrinfo* addr, char* buf, size_t bufLength)
 {
 	char* service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
 	Q_strncpyz(buf, service, bufLength);

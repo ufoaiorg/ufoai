@@ -511,9 +511,9 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_BOOL:
 		if (Q_streq(token, "true") || *token == '1')
-			*(bool *)b = true;
+			*(bool*)b = true;
 		else if (Q_streq(token, "false") || *token == '0')
-			*(bool *)b = false;
+			*(bool*)b = false;
 		else {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
 			return RESULT_ERROR;
@@ -916,10 +916,10 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return 0;
 
 	case V_BOOL:
-		if (*(const bool *) set)
-			*(bool *)b = true;
+		if (*(const bool*) set)
+			*(bool*)b = true;
 		else
-			*(bool *)b = false;
+			*(bool*)b = false;
 		return sizeof(bool);
 
 	case V_CHAR:
@@ -1120,7 +1120,7 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 			return (const char*)b;
 
 	case V_BOOL:
-		if (*(const bool *)b)
+		if (*(const bool*)b)
 			return "true";
 		else
 			return "false";
