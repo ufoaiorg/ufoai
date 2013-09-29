@@ -105,16 +105,16 @@ static Player* AIL_player; /**< Player currently running the Lua AI. */
  * Actor metatable.
  */
 /* Internal functions. */
-static int actorL_register(lua_State *L);
-static int lua_isactor(lua_State *L, int index);
-static aiActor_t* lua_toactor(lua_State *L, int index);
-static aiActor_t* lua_pushactor(lua_State *L, aiActor_t* actor);
+static int actorL_register(lua_State* L);
+static int lua_isactor(lua_State* L, int index);
+static aiActor_t* lua_toactor(lua_State* L, int index);
+static aiActor_t* lua_pushactor(lua_State* L, aiActor_t* actor);
 /* Metatable functions. */
-static int actorL_tostring(lua_State *L);
-static int actorL_pos(lua_State *L);
-static int actorL_shoot(lua_State *L);
-static int actorL_face(lua_State *L);
-static int actorL_team(lua_State *L);
+static int actorL_tostring(lua_State* L);
+static int actorL_pos(lua_State* L);
+static int actorL_shoot(lua_State* L);
+static int actorL_face(lua_State* L);
+static int actorL_team(lua_State* L);
 /** Lua Actor metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -132,14 +132,14 @@ static const luaL_reg actorL_methods[] = {
  * pos3 metatable.
  */
 /* Internal functions. */
-static int pos3L_register(lua_State *L);
-static int lua_ispos3(lua_State *L, int index);
-static pos3_t* lua_topos3(lua_State *L, int index);
-static pos3_t* lua_pushpos3(lua_State *L, pos3_t* pos);
+static int pos3L_register(lua_State* L);
+static int lua_ispos3(lua_State* L, int index);
+static pos3_t* lua_topos3(lua_State* L, int index);
+static pos3_t* lua_pushpos3(lua_State* L, pos3_t* pos);
 /* Metatable functions. */
-static int pos3L_tostring(lua_State *L);
-static int pos3L_goto(lua_State *L);
-static int pos3L_face(lua_State *L);
+static int pos3L_tostring(lua_State* L);
+static int pos3L_goto(lua_State* L);
+static int pos3L_face(lua_State* L);
 /** Lua Pos3 metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -154,21 +154,21 @@ static const luaL_reg pos3L_methods[] = {
 /**
  * General AI bindings.
  */
-static int AIL_print(lua_State *L);
-static int AIL_see(lua_State *L);
-static int AIL_crouch(lua_State *L);
-static int AIL_isinjured(lua_State *L);
-static int AIL_TU(lua_State *L);
-static int AIL_HP(lua_State *L);
-static int AIL_morale(lua_State *L);
-static int AIL_reactionfire(lua_State *L);
-static int AIL_roundsleft(lua_State *L);
-static int AIL_canreload(lua_State *L);
-static int AIL_reload(lua_State *L);
-static int AIL_positionshoot(lua_State *L);
-static int AIL_positionhide(lua_State *L);
-static int AIL_positionherd(lua_State *L);
-static int AIL_distance(lua_State *L);
+static int AIL_print(lua_State* L);
+static int AIL_see(lua_State* L);
+static int AIL_crouch(lua_State* L);
+static int AIL_isinjured(lua_State* L);
+static int AIL_TU(lua_State* L);
+static int AIL_HP(lua_State* L);
+static int AIL_morale(lua_State* L);
+static int AIL_reactionfire(lua_State* L);
+static int AIL_roundsleft(lua_State* L);
+static int AIL_canreload(lua_State* L);
+static int AIL_reload(lua_State* L);
+static int AIL_positionshoot(lua_State* L);
+static int AIL_positionhide(lua_State* L);
+static int AIL_positionherd(lua_State* L);
+static int AIL_distance(lua_State* L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -201,7 +201,7 @@ static const luaL_reg AIL_methods[] = {
  * @param[in,out] L State to register the metatable in.
  * @return 0 on success.
  */
-static int actorL_register (lua_State *L)
+static int actorL_register (lua_State* L)
 {
 	/* Create the metatable */
 	luaL_newmetatable(L, ACTOR_METATABLE);
@@ -225,7 +225,7 @@ static int actorL_register (lua_State *L)
  * @param[in] index Index to check for a actor metatable.
  * @return 1 if index has a actor metatable otherwise returns 0.
  */
-static int lua_isactor (lua_State *L, int index)
+static int lua_isactor (lua_State* L, int index)
 {
 	int ret;
 
@@ -244,7 +244,7 @@ static int lua_isactor (lua_State *L, int index)
 /**
  * @brief Returns the actor from the metatable at index.
  */
-static aiActor_t* lua_toactor (lua_State *L, int index)
+static aiActor_t* lua_toactor (lua_State* L, int index)
 {
 	if (lua_isactor(L, index)) {
 		return (aiActor_t*) lua_touserdata(L, index);
@@ -256,7 +256,7 @@ static aiActor_t* lua_toactor (lua_State *L, int index)
 /**
  * @brief Pushes a actor as a metatable at the top of the stack.
  */
-static aiActor_t* lua_pushactor (lua_State *L, aiActor_t* actor)
+static aiActor_t* lua_pushactor (lua_State* L, aiActor_t* actor)
 {
 	aiActor_t* a;
 	a = (aiActor_t*) lua_newuserdata(L, sizeof(*a));
@@ -269,7 +269,7 @@ static aiActor_t* lua_pushactor (lua_State *L, aiActor_t* actor)
 /**
  * @brief Pushes the actor as a string.
  */
-static int actorL_tostring (lua_State *L)
+static int actorL_tostring (lua_State* L)
 {
 	aiActor_t* target;
 	char buf[MAX_VAR];
@@ -286,7 +286,7 @@ static int actorL_tostring (lua_State *L)
 /**
  * @brief Gets the actors position.
  */
-static int actorL_pos (lua_State *L)
+static int actorL_pos (lua_State* L)
 {
 	aiActor_t* target;
 
@@ -300,7 +300,7 @@ static int actorL_pos (lua_State *L)
 /**
  * @brief Shoots the actor.
  */
-static int actorL_shoot (lua_State *L)
+static int actorL_shoot (lua_State* L)
 {
 	int tu, shots;
 	shoot_types_t shootType;
@@ -358,7 +358,7 @@ static int actorL_shoot (lua_State *L)
 /**
  * @brief Makes the actor face the position.
  */
-static int actorL_face (lua_State *L)
+static int actorL_face (lua_State* L)
 {
 	aiActor_t* target;
 
@@ -377,7 +377,7 @@ static int actorL_face (lua_State *L)
 /**
  * @brief Gets the actor's team.
  */
-static int actorL_team (lua_State *L)
+static int actorL_team (lua_State* L)
 {
 	const aiActor_t* target;
 	const char* team;
@@ -401,7 +401,7 @@ static int actorL_team (lua_State *L)
  * @param[in] L State to register the metatable in.
  * @return 0 on success.
  */
-static int pos3L_register (lua_State *L)
+static int pos3L_register (lua_State* L)
 {
 	/* Create the metatable */
 	luaL_newmetatable(L, POS3_METATABLE);
@@ -425,7 +425,7 @@ static int pos3L_register (lua_State *L)
  * @param[in] index Index to check for a pos3 metatable.
  * @return 1 if index has a pos3 metatable otherwise returns 0.
  */
-static int lua_ispos3 (lua_State *L, int index)
+static int lua_ispos3 (lua_State* L, int index)
 {
 	int ret;
 
@@ -444,7 +444,7 @@ static int lua_ispos3 (lua_State *L, int index)
 /**
  * @brief Returns the pos3 from the metatable at index.
  */
-static pos3_t* lua_topos3 (lua_State *L, int index)
+static pos3_t* lua_topos3 (lua_State* L, int index)
 {
 	if (lua_ispos3(L, index)) {
 		return (pos3_t*) lua_touserdata(L, index);
@@ -456,7 +456,7 @@ static pos3_t* lua_topos3 (lua_State *L, int index)
 /**
  * @brief Pushes a pos3 as a metatable at the top of the stack.
  */
-static pos3_t* lua_pushpos3 (lua_State *L, pos3_t* pos)
+static pos3_t* lua_pushpos3 (lua_State* L, pos3_t* pos)
 {
 	pos3_t* p;
 	p = (pos3_t*) lua_newuserdata(L, sizeof(*p));
@@ -469,7 +469,7 @@ static pos3_t* lua_pushpos3 (lua_State *L, pos3_t* pos)
 /**
  * @brief Puts the pos3 information in a string.
  */
-static int pos3L_tostring (lua_State *L)
+static int pos3L_tostring (lua_State* L)
 {
 	pos3_t* p;
 	char buf[MAX_VAR];
@@ -486,7 +486,7 @@ static int pos3L_tostring (lua_State *L)
 /**
  * @brief Makes the actor head to the position.
  */
-static int pos3L_goto (lua_State *L)
+static int pos3L_goto (lua_State* L)
 {
 	pos3_t* pos;
 
@@ -507,7 +507,7 @@ static int pos3L_goto (lua_State *L)
 /**
  * @brief Makes the actor face the position.
  */
-static int pos3L_face (lua_State *L)
+static int pos3L_face (lua_State* L)
 {
 	pos3_t* pos;
 
@@ -526,7 +526,7 @@ static int pos3L_face (lua_State *L)
 /**
  * @brief Works more or less like Lua's builtin print.
  */
-static int AIL_print (lua_State *L)
+static int AIL_print (lua_State* L)
 {
 	int i;
 	const int n = lua_gettop(L);  /* number of arguments */
@@ -570,7 +570,7 @@ static int AIL_print (lua_State *L)
 /**
  * @brief Returns what the actor can see.
  */
-static int AIL_see (lua_State *L)
+static int AIL_see (lua_State* L)
 {
 	int vision, team;
 	int i, j, k, n, cur;
@@ -659,7 +659,7 @@ static int AIL_see (lua_State *L)
 /**
  * @brief Toggles crouch state with true/false and returns current crouch state.
  */
-static int AIL_crouch (lua_State *L)
+static int AIL_crouch (lua_State* L)
 {
 	if (lua_gettop(L) > 0) {
 		if (lua_isboolean(L, 1)) {
@@ -677,7 +677,7 @@ static int AIL_crouch (lua_State *L)
 /**
 * @brief Checks to see if the actor is injured
 */
-static int AIL_isinjured (lua_State *L)
+static int AIL_isinjured (lua_State* L)
 {
 	lua_pushboolean(L, AIL_ent->HP != AIL_ent->chr.maxHP);
 	return 1;
@@ -686,7 +686,7 @@ static int AIL_isinjured (lua_State *L)
 /**
  * @brief Gets the number of TU the actor has left.
  */
-static int AIL_TU (lua_State *L)
+static int AIL_TU (lua_State* L)
 {
 	lua_pushnumber(L, AIL_ent->TU);
 	return 1;
@@ -695,7 +695,7 @@ static int AIL_TU (lua_State *L)
 /**
  * @brief Gets the number of HP the actor has left.
  */
-static int AIL_HP (lua_State *L)
+static int AIL_HP (lua_State* L)
 {
 	lua_pushnumber(L, AIL_ent->HP);
 	return 1;
@@ -704,7 +704,7 @@ static int AIL_HP (lua_State *L)
 /**
  * @brief Gets the current morale of the actor onto the stack.
  */
-static int AIL_morale (lua_State *L)
+static int AIL_morale (lua_State* L)
 {
 	lua_pushnumber(L, AIL_ent->morale);
 	return 1;
@@ -713,7 +713,7 @@ static int AIL_morale (lua_State *L)
 /**
  * @brief Sets the actor's reaction fire mode.
  */
-static int AIL_reactionfire (lua_State *L)
+static int AIL_reactionfire (lua_State* L)
 {
 	int reactionState = 0;
 	if (lua_gettop(L) > 0) {
@@ -740,7 +740,7 @@ static int AIL_reactionfire (lua_State *L)
 /**
  * @brief Checks to see how many rounds the actor has left.
  */
-static int AIL_roundsleft (lua_State *L)
+static int AIL_roundsleft (lua_State* L)
 {
 	/* Right hand */
 	Item* rightHand = AIL_ent->getRightHandItem();
@@ -761,7 +761,7 @@ static int AIL_roundsleft (lua_State *L)
 /**
  * @brief Checks to see if the actor can reload.
  */
-static int AIL_canreload (lua_State *L)
+static int AIL_canreload (lua_State* L)
 {
 	lua_pushboolean(L, G_ClientCanReload(AIL_ent, CID_RIGHT));
 	lua_pushboolean(L, G_ClientCanReload(AIL_ent, CID_LEFT));
@@ -771,7 +771,7 @@ static int AIL_canreload (lua_State *L)
 /**
  * @brief Actor reloads his weapons.
  */
-static int AIL_reload (lua_State *L)
+static int AIL_reload (lua_State* L)
 {
 	containerIndex_t container;
 
@@ -799,7 +799,7 @@ static int AIL_reload (lua_State *L)
 /**
  * @brief Moves the actor into a position in which he can shoot his target.
  */
-static int AIL_positionshoot (lua_State *L)
+static int AIL_positionshoot (lua_State* L)
 {
 	pos3_t to, bestPos;
 	vec3_t check;
@@ -871,7 +871,7 @@ static int AIL_positionshoot (lua_State *L)
  * @note @c team (parameter is passed through the lua stack) means that the AI tries to find
  * a hide position from the @c team members, if parameter is empty - from any enemy
  */
-static int AIL_positionhide (lua_State *L)
+static int AIL_positionhide (lua_State* L)
 {
 	pos3_t save;
 	int tus = G_ActorUsableTUs(AIL_ent);
@@ -909,7 +909,7 @@ static int AIL_positionhide (lua_State *L)
  * @note @c target (parameter is passed through the lua stack) The actor
  * to which AI tries to become closer
  */
-static int AIL_positionherd (lua_State *L)
+static int AIL_positionherd (lua_State* L)
 {
 	pos3_t save;
 	aiActor_t* target;
@@ -936,7 +936,7 @@ static int AIL_positionherd (lua_State *L)
  * @brief Returns distance between AI and target
  * @note @c target (passed trough the lua stack) The target to which the distance is calculated
  */
-static int AIL_distance (lua_State *L)
+static int AIL_distance (lua_State* L)
 {
 	vec_t dist;
 	aiActor_t* target;
@@ -962,7 +962,7 @@ static int AIL_distance (lua_State *L)
  */
 void AIL_ActorThink (Player &player, Edict* ent)
 {
-	lua_State *L;
+	lua_State* L;
 
 	/* The Lua State we will work with. */
 	L = ent->AI.L;
