@@ -189,7 +189,7 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t* fd)
  */
 Player* G_GetPlayerForTeam (int team)
 {
-	Player *p;
+	Player* p;
 
 	/* search corresponding player (even ai players) */
 	p = nullptr;

@@ -495,7 +495,7 @@ static void SVC_DirectConnect (struct net_stream* stream)
 	 * this is the only place a client_t is ever initialized */
 	OBJZERO(*cl);
 	const int playernum = cl - SV_GetClient(0);
-	SrvPlayer *player = PLAYER_NUM(playernum);
+	SrvPlayer* player = PLAYER_NUM(playernum);
 	cl->player = player;
 	cl->player->setNum(playernum);
 

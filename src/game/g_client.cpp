@@ -55,10 +55,10 @@ static int scoreMissionNum = 0;
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
-Player *G_PlayerGetNextHuman (Player *lastPlayer)
+Player* G_PlayerGetNextHuman (Player* lastPlayer)
 {
-	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam];
-	Player *player;
+	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam];
+	Player* player;
 
 	if (!game.sv_maxplayersperteam)
 		return nullptr;
@@ -81,10 +81,10 @@ Player *G_PlayerGetNextHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
-Player *G_PlayerGetNextAI (Player *lastPlayer)
+Player* G_PlayerGetNextAI (Player* lastPlayer)
 {
-	Player *endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
-	Player *player;
+	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
+	Player* player;
 
 	if (!game.sv_maxplayersperteam)
 		return nullptr;
@@ -107,9 +107,9 @@ Player *G_PlayerGetNextAI (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
-Player *G_PlayerGetNextActiveHuman (Player *lastPlayer)
+Player* G_PlayerGetNextActiveHuman (Player* lastPlayer)
 {
-	Player *player = lastPlayer;
+	Player* player = lastPlayer;
 
 	while ((player = G_PlayerGetNextHuman(player))) {
 		if (player->isInUse())
@@ -123,9 +123,9 @@ Player *G_PlayerGetNextActiveHuman (Player *lastPlayer)
  * @brief Iterate through the list of players
  * @param lastPlayer The player found in the previous iteration; if nullptr, we start at the beginning
  */
-Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
+Player* G_PlayerGetNextActiveAI (Player* lastPlayer)
 {
-	Player *player = lastPlayer;
+	Player* player = lastPlayer;
 
 	while ((player = G_PlayerGetNextAI(player))) {
 		if (player->isInUse())
@@ -144,7 +144,7 @@ Player *G_PlayerGetNextActiveAI (Player *lastPlayer)
 playermask_t G_TeamToPM (int team)
 {
 	playermask_t playerMask = 0;
-	Player *p = nullptr;
+	Player* p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextHuman(p))) {
@@ -165,7 +165,7 @@ playermask_t G_TeamToPM (int team)
 teammask_t G_PMToVis (playermask_t playerMask)
 {
 	teammask_t teamMask = 0;
-	Player *p = nullptr;
+	Player* p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -186,7 +186,7 @@ teammask_t G_PMToVis (playermask_t playerMask)
 playermask_t G_VisToPM (teammask_t teamMask)
 {
 	playermask_t playerMask = 0;
-	Player *p = nullptr;
+	Player* p = nullptr;
 
 	/* don't handle the ai players, here */
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
@@ -749,7 +749,7 @@ static void G_GetTeam (Player &player)
 
 	/* number of currently connected players (no ai players) */
 	int playersInGame = 0;
-	Player *p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		playersInGame++;
 
@@ -861,7 +861,7 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 			return false;
 	} else {
 		if (!sv_teamplay->integer) {
-			Player *p = nullptr;
+			Player* p = nullptr;
 			while ((p = G_PlayerGetNextHuman(p)) != nullptr) {
 				if (p->getTeam() == team)
 					return false;
@@ -905,7 +905,7 @@ int G_ClientGetTeamNumPref (const Player &player)
 /**
  * @return @c true if the player is for starting the multiplayer match
  */
-bool G_ClientIsReady (const Player *player)
+bool G_ClientIsReady (const Player* player)
 {
 	assert(player);
 	return player->isReady();
@@ -921,7 +921,7 @@ static void G_GetStartingTeam (const Player &player)
 	int teamCount;
 	int playerCount;
 	int knownTeams[MAX_TEAMS];
-	Player *p;
+	Player* p;
 
 	/* return with no action if activeTeam already assigned or if are in single-player mode */
 	if (G_MatchIsRunning())
@@ -1438,7 +1438,7 @@ void G_ClientUserinfoChanged (Player &player, const char* userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-bool G_ClientConnect (Player *player, char* userinfo, size_t userinfoSize)
+bool G_ClientConnect (Player* player, char* userinfo, size_t userinfoSize)
 {
 	const char* value;
 

@@ -311,7 +311,7 @@ static void SVCmd_AddItem_f (void)
  */
 static void SVCmd_ActorInvList_f (void)
 {
-	Player *player;
+	Player* player;
 	int i;
 
 	/* show inventory of all players around - include even the ai players */

@@ -1474,7 +1474,7 @@ void AI_Run (void)
 		return;
 
 	/* set players to ai players and cycle over all of them */
-	Player *player = nullptr;
+	Player* player = nullptr;
 	while ((player = G_PlayerGetNextActiveAI(player))) {
 		AI_PlayerRun(*player);
 	}
@@ -1692,7 +1692,7 @@ void AI_CheckRespawn (int team)
 	const equipDef_t* ed = G_GetEquipmentForAISpawn(team);
 
 	while (diff > 0) {
-		const Player *player = G_GetPlayerForTeam(team);
+		const Player* player = G_GetPlayerForTeam(team);
 		Edict* ent = G_SpawnAIPlayer(*player, ed);
 		if (ent == nullptr)
 			break;
@@ -1712,7 +1712,7 @@ void AI_CheckRespawn (int team)
  * @return Player pointer
  * @note see cvars ai_singleplayeraliens, ai_numcivilians, ai_multiplayeraliens
  */
-Player *AI_CreatePlayer (int team)
+Player* AI_CreatePlayer (int team)
 {
 	if (!sv_ai->integer) {
 		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
@@ -1720,7 +1720,7 @@ Player *AI_CreatePlayer (int team)
 	}
 
 	/* set players to ai players and cycle over all of them */
-	Player *p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextAI(p))) {
 		if (p->isInUse())
 			continue;

@@ -42,7 +42,7 @@ static void G_Players_f (const Player &player)
 	/* print information */
 	largeBuf[0] = 0;
 
-	Player *p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->getNum(),
 				p->getTeam(), p->pers.netname, (p->roundDone ? "waiting" : "playing"));
@@ -115,7 +115,7 @@ static void G_Say_f (Player &player, bool arg0, bool team)
 			gi.DPrintf("^B%s (team): %s\n", player.pers.netname, s);
 	}
 
-	Player *p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (team && p->getTeam() != player.getTeam())
 			continue;

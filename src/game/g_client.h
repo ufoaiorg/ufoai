@@ -28,10 +28,10 @@
 
 #include "g_local.h"
 
-Player *G_PlayerGetNextHuman(Player *lastPlayer);
-Player *G_PlayerGetNextAI(Player *lastPlayer);
-Player *G_PlayerGetNextActiveHuman(Player *lastPlayer);
-Player *G_PlayerGetNextActiveAI(Player *lastPlayer);
+Player* G_PlayerGetNextHuman(Player* lastPlayer);
+Player* G_PlayerGetNextAI(Player* lastPlayer);
+Player* G_PlayerGetNextActiveHuman(Player* lastPlayer);
+Player* G_PlayerGetNextActiveAI(Player* lastPlayer);
 playermask_t G_TeamToPM(int team);
 teammask_t G_PMToVis(playermask_t playerMask);
 playermask_t G_VisToPM(teammask_t teamMask);
@@ -50,13 +50,13 @@ int G_ClientAction(Player &player);
 bool G_SetTeamForPlayer(Player &player, const int team);
 int G_ClientGetTeamNum(const Player &player);
 int G_ClientGetTeamNumPref(const Player &player);
-bool G_ClientIsReady(const Player *player);
+bool G_ClientIsReady(const Player* player);
 Edict* G_ClientGetFreeSpawnPointForActorSize(const Player &player, const actorSizeEnum_t actorSize);
 void G_ClientInitActorStates(const Player &player);
 void G_ClientTeamInfo(const Player &player);
 bool G_ClientBegin(Player &player);
 void G_ClientStartMatch(Player &player);
 void G_ClientUserinfoChanged(Player &player, const char* userinfo);
-bool G_ClientConnect(Player *player, char* userinfo, size_t userinfoSize);  /* can't change to Player&. Conflict with SrvPlayer ! */
+bool G_ClientConnect(Player* player, char* userinfo, size_t userinfoSize);  /* can't change to Player&. Conflict with SrvPlayer ! */
 void G_ClientDisconnect(Player &player);
 void G_ResetClientData(void);

@@ -79,7 +79,7 @@ void G_CheckForceEndRound (void)
 	/* store this in a local variable, as the global variable is changed in G_ClientEndRound */
 	const int activeTeam = level.activeTeam;
 	/* set all team members to ready (only human players) */
-	Player *p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (p->getTeam() == activeTeam) {
 			G_ClientEndRound(*p);
@@ -174,7 +174,7 @@ static void G_GetNextActiveTeam (void)
  */
 void G_ClientEndRound (Player &player)
 {
-	Player *p;
+	Player* p;
 
 	const int lastTeamIndex = (G_GetActiveTeam() + level.teamOfs) % MAX_TEAMS;
 

@@ -98,7 +98,7 @@ typedef struct aiActor_s {
  * Current AI Actor.
  */
 static Edict* AIL_ent; /**< Actor currently running the Lua AI. */
-static Player *AIL_player; /**< Player currently running the Lua AI. */
+static Player* AIL_player; /**< Player currently running the Lua AI. */
 
 
 /*

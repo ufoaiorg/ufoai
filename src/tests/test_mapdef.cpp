@@ -460,7 +460,7 @@ static void testMapDefsMultiplayer (void)
 
 	MapDef_ForeachCondition(md, md->multiplayer) {
 		unsigned int seed;
-		SrvPlayer *player;
+		SrvPlayer* player;
 
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;

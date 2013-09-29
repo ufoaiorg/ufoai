@@ -36,7 +36,7 @@ extern Edict* ai_waypointList;
 void G_AddToWayPointList(Edict* ent);
 void AI_Run(void);
 void AI_ActorThink(Player &player, Edict* ent);
-Player *AI_CreatePlayer(int team);
+Player* AI_CreatePlayer(int team);
 bool AI_CheckUsingDoor(const Edict* ent, const Edict* door);
 
 /*
