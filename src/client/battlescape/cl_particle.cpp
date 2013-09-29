@@ -869,7 +869,7 @@ typedef struct ptlTraceCache_s {
 /**
  * @brief Particle tracing with caching
  */
-static inline trace_t PTL_Trace (ptl_t* ptl, const vec3_t mins, const vec3_t maxs)
+static trace_t PTL_Trace (ptl_t* ptl, const vec3_t mins, const vec3_t maxs)
 {
 	static ptlTraceCache_t ptlCache;
 	const float epsilonPos = 3.0f;
