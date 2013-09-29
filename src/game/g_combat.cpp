@@ -611,7 +611,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
  * @sa G_ShootSingle
  * @sa Com_GrenadeTarget
  * @param[in] player The shooting player
- * @param[in] ent The shooting actor
+ * @param[in] shooter The shooting actor
  * @param[in] fd The firedefinition the actor is shooting with
  * @param[in] from The position the actor is shooting from
  * @param[in] at The grid position the actor is shooting to (or trying to shoot to)
@@ -621,18 +621,18 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* fd,
+static void G_ShootGrenade (const Player &player, Edict* shooter, const fireDef_t* fd,
 	const vec3_t from, const pos3_t at, int mask, const Item* weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (G_IsDead(ent))
+	if (G_IsDead(shooter))
 		return;
 
 	/* get positional data */
 	vec3_t last;
 	VectorCopy(from, last);
 	vec3_t target;
-	gi.GridPosToVec(ent->fieldSize, at, target);
+	gi.GridPosToVec(shooter->fieldSize, at, target);
 	/* first apply z_align value */
 	target[2] -= z_align;
 
@@ -656,15 +656,15 @@ static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* f
 	/* add random effects and get new dir */
 	vec3_t angles;
 	VecToAngles(startV, angles);
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Get 2 gaussian distributed random values */
 	float gauss1;
 	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
-	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY);
+	if (G_IsCrouched(shooter) && fd->crouch > 0.0) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
@@ -692,11 +692,11 @@ static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* f
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
-		trace_t tr = G_Trace(Line(oldPos, newPos), ent, MASK_SHOT);
+		trace_t tr = G_Trace(Line(oldPos, newPos), shooter, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
-			/* the ent possibly hit by the trace */
+			/* the shooter possibly hit by the trace */
 			const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
-			if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
+			if (trEnt && (trEnt->team == shooter->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
 				dt += GRENADE_DT;
 				VectorCopy(newPos, oldPos);
 				VectorCopy(newPos, impact);
@@ -743,7 +743,7 @@ static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* f
 
 				/* check if this is a stone, ammo clip or grenade */
 				if (fd->splrad > 0.0) {
-					G_SplashDamage(ent, fd, impact, mock, &tr);
+					G_SplashDamage(shooter, fd, impact, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
 					if (fd->ammo && !fd->splrad && weapon->def()->thrown) {
