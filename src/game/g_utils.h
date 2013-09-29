@@ -39,7 +39,7 @@ Player* G_GetPlayerForTeam(int team);
 void G_TakeDamage(Edict* ent, int damage);
 bool G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 bool G_TestLine(const vec3_t start, const vec3_t end);
-trace_t G_Trace(const vec3_t start, const vec3_t end, const Edict* passent, int contentmask);
+trace_t G_Trace(const Line& trLine, const Edict* passent, int contentmask);
 const char* G_GetPlayerName(int pnum);
 void G_PrintStats(const char* format, ...) __attribute__((format(__printf__, 1, 2)));
 void G_PrintActorStats(const Edict* victim, const Edict* attacker, const fireDef_t* fd);

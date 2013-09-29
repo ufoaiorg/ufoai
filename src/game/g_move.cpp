@@ -206,7 +206,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
 	} else {
 		/* we should really hit the ground with this */
 		const vec3_t to = {ent->origin[0], ent->origin[1], ent->origin[2] - UNIT_HEIGHT};
-		const trace_t trace = G_Trace(ent->origin, to, nullptr, MASK_SOLID);
+		const trace_t trace = G_Trace(Line(ent->origin, to), nullptr, MASK_SOLID);
 		if (trace.surface) {
 			snd = gi.GetFootstepSound(trace.surface->name);
 		}

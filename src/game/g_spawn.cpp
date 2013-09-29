@@ -487,7 +487,7 @@ void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_
 			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -535,7 +535,7 @@ void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int d
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
@@ -584,7 +584,7 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, 
 
 			if (VectorDist(end, vec) > radius)
 				continue;
-			const trace_t tr = G_Trace(vec, end, nullptr, MASK_SMOKE_AND_FIRE);
+			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;

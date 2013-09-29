@@ -587,7 +587,7 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 				G_GetShotOrigin(ent, fd, dir, origin);
 				if (!fd->gravity) {
 					/* gun-to-target line free? */
-					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
+					const trace_t trace = G_Trace(Line(origin, check->origin), ent, MASK_SHOT);
 					const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
 					const bool hitBreakable = G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
 					const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
@@ -611,7 +611,7 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 						VectorAdd(origin, dir, target);
 						target[2] += dt * (vz - 0.5 * GRAVITY * dt);
 						vz -= GRAVITY * dt;
-						const trace_t trace = G_Trace(origin, target, ent, MASK_SHOT);
+						const trace_t trace = G_Trace(Line(origin, target), ent, MASK_SHOT);
 						const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
 						if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, check->pos))) {
 							break;
