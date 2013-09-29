@@ -274,14 +274,15 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int max
 }
 
 /** @brief Server side moveclip - see cmodel.c */
-typedef struct moveclip_s {
+class MoveClipSV {
+public:
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float* mins, *maxs;	/**< size of the moving object */
 	const float* start, *end;
 	trace_t trace;
 	const edict_t* passedict;
 	int contentmask;
-} moveclip_t;
+};
 
 
 /**
@@ -328,7 +329,7 @@ static int SV_HullForEntity (const edict_t* ent, int* tile, vec3_t rmaShift)
  * @sa SV_AreaEdicts
  * @sa CL_ClipMoveToLEs
  */
-static void SV_ClipMoveToEntities (moveclip_t* clip)
+static void SV_ClipMoveToEntities (MoveClipSV* clip)
 {
 	int i;
 	edict_t* touchlist[MAX_EDICTS];
@@ -457,7 +458,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  */
 trace_t SV_Trace (const Line& traceLine, const AABB &box, const edict_t* passedict, int contentmask)
 {
-	moveclip_t clip;
+	MoveClipSV clip;
 
 	OBJZERO(clip);
 
