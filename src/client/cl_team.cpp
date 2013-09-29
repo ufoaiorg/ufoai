@@ -43,17 +43,13 @@ linkedList_t* chrDisplayList;
  */
 actorSkin_t* CL_AllocateActorSkin (const char* name)
 {
-	int index;
-	actorSkin_t* skin;
-
 	if (cls.numActorSkins >= lengthof(cls.actorSkins))
 		Sys_Error("CL_AllocateActorSkin: Max actorskin hit");
 
-	index = R_ModAllocateActorSkin(name);
-	skin = &cls.actorSkins[index];
+	const int index = R_ModAllocateActorSkin(name);
+	actorSkin_t* skin = &cls.actorSkins[index];
 	OBJZERO(*skin);
 	skin->idx = index;
-
 	skin->id = Mem_PoolStrDup(name, com_genericPool, 0);
 
 	cls.numActorSkins++;
@@ -80,6 +76,9 @@ static const actorSkin_t* CL_GetActorSkinByIDS (unsigned int idx)
 	return &cls.actorSkins[idx];
 }
 
+/**
+ * @todo: replace this cvar hell with confuncs
+ */
 static void CL_CharacterSkillAndScoreCvars (const character_t* chr)
 {
 	const chrScoreGlobal_t* score = &chr->score;
