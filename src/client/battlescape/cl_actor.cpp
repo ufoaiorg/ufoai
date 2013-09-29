@@ -2125,12 +2125,11 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
  */
 void CL_AddPathing (void)
 {
-	pos3_t pos;
-
 	if (selActor == nullptr) {
 		return;
 	}
 
+	pos3_t pos;
 	pos[2] = cl_worldlevel->integer;
 	for (pos[1] = std::max(mousePos[1] - 8, 0); pos[1] <= std::min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++) {
 		for (pos[0] = std::max(mousePos[0] - 8, 0); pos[0] <= std::min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++) {
@@ -2146,17 +2145,15 @@ void CL_AddPathing (void)
  */
 void CL_AddActorPathing (void)
 {
-	int x, y;
-	pos3_t pos;
-	int i = 0;
-
 	if (selActor == nullptr) {
 		return;
 	}
 
+	pos3_t pos;
 	pos[2] = cl_worldlevel->integer;
-	for (y = 0; y <= PATHFINDING_WIDTH; y++) {
-		for (x = 0; x <= PATHFINDING_WIDTH; x++) {
+	int i = 0;
+	for (int y = 0; y <= PATHFINDING_WIDTH; y++) {
+		for (int x = 0; x <= PATHFINDING_WIDTH; x++) {
 			pos[0] = (pos_t)x;
 			pos[1] = (pos_t)y;
 			i += CL_AddPathingBox(pos, false);
@@ -2374,7 +2371,6 @@ static bool CL_ActorVis (const le_t* le, const le_t* check)
 {
 	vec3_t test, dir;
 	float delta;
-	int i;
 	vec3_t from;
 
 	VectorCopy(le->origin, from);
@@ -2400,7 +2396,7 @@ static bool CL_ActorVis (const le_t* le, const le_t* check)
 	VectorMA(test, -7, dir, test);
 
 	/* do 3 tests */
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		const trace_t tr = CL_Trace(from, test, AABB(), le, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		/* trace didn't reach the target - something was hit before */
 		if (tr.fraction < 1.0) {
@@ -2425,7 +2421,6 @@ static bool CL_ActorVis (const le_t* le, const le_t* check)
 static void CL_NextAlienVisibleFromActor_f (void)
 {
 	static int lastAlien = 0;
-	int i;
 
 	if (!selActor)
 		return;
@@ -2433,12 +2428,11 @@ static void CL_NextAlienVisibleFromActor_f (void)
 	if (lastAlien >= cl.numLEs)
 		lastAlien = 0;
 
-	i = lastAlien;
+	int i = lastAlien;
 	do {
-		const le_t* le;
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &cl.LEs[i];
+		const le_t* le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
 			if (CL_ActorVis(selActor, le)) {
@@ -2457,16 +2451,13 @@ static void CL_NextAlienVisibleFromActor_f (void)
  */
 static void CL_NextAlien_f (void)
 {
-	int lastAlien;
-	int i;
-
 	if (cl.numLEs <= 0)
 		return;
 
-	lastAlien = Cvar_GetInteger("ui_lastalien");
+	int lastAlien = Cvar_GetInteger("ui_lastalien");
 	lastAlien = std::max(0, std::min(cl.numLEs - 1, lastAlien));
 
-	i = lastAlien;
+	int i = lastAlien;
 	do {
 		const le_t* le;
 		if (++i >= cl.numLEs)
@@ -2488,16 +2479,13 @@ static void CL_NextAlien_f (void)
  */
 static void CL_PrevAlien_f (void)
 {
-	int lastAlien;
-	int i;
-
 	if (cl.numLEs <= 0)
 		return;
 
-	lastAlien = Cvar_GetInteger("ui_lastalien");
+	int lastAlien = Cvar_GetInteger("ui_lastalien");
 	lastAlien = std::max(0, std::min(cl.numLEs - 1, lastAlien));
 
-	i = lastAlien;
+	int i = lastAlien;
 	do {
 		const le_t* le;
 		if (--i < 0)
