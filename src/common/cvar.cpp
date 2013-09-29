@@ -875,7 +875,7 @@ static void Cvar_Copy_f (void)
  * with the archive flag set to true.
  * @note Stores the archive cvars
  */
-void Cvar_WriteVariables (qFILE *f)
+void Cvar_WriteVariables (qFILE* f)
 {
 	const cvar_t* var;
 

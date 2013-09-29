@@ -313,7 +313,7 @@ static void create_local_pid (void)
 {
 	std::string g_pidGameFile = GlobalRegistry().get(RKEY_SETTINGS_PATH) + "/radiant.pid";
 
-	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
+	FILE* pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
 		fclose(pid);
 

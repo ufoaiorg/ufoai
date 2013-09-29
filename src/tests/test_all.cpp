@@ -98,7 +98,7 @@ static const char* resultPrefix = "ufoai";
 
 static config_t config;
 
-static FILE *logFile;
+static FILE* logFile;
 
 /**
  * @brief List storing all removed suite from CUnit (disabled suite)

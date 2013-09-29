@@ -1017,7 +1017,7 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
  * @brief Recurse down the epair list
  * @note First writes the last element
  */
-static inline void WriteMapEntities (qFILE *f, const epair_t* e)
+static inline void WriteMapEntities (qFILE* f, const epair_t* e)
 {
 	if (!e)
 		return;
@@ -1035,7 +1035,7 @@ static inline void WriteMapEntities (qFILE *f, const epair_t* e)
  * @param[in] j the index of the brush in the entity, to label the brush in the comment in the map file
  * @param[in] f file to write to
  */
-static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE *f)
+static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE* f)
 {
 	int k = 0;
 	FS_Printf(f, "// brush %i\n{\n", j);

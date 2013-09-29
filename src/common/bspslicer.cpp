@@ -136,7 +136,7 @@ static bool SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vector, c
 /**
  * @brief slice the world in Z planes going from min_z to max_z by stepsize...
  */
-static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleContour, bool multipleContour)
+static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleContour, bool multipleContour)
 {
 	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
@@ -310,7 +310,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 /**
  * @param[in] thickness the thickness of the brushes to render to the 2d map
  */
-void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, bool singleContour, bool multipleContour)
+void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleContour, bool multipleContour)
 {
 	int i;
 	/** @todo remove these values once the mins/maxs calculation works */

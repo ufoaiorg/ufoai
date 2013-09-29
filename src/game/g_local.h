@@ -154,7 +154,7 @@ extern cvar_t* sv_dedicated;
 extern cvar_t* developer;
 
 extern cvar_t* logstats;
-extern FILE *logstatsfile;
+extern FILE* logstatsfile;
 
 extern cvar_t* sv_filterban;
 

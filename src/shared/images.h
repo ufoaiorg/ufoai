@@ -32,6 +32,6 @@
 
 char const* const* Img_GetImageTypes(void);
 SDL_Surface* Img_LoadImage(char const* name);
-void R_WriteCompressedTGA(qFILE *f, const byte* buffer, int width, int height);
-void R_WritePNG(qFILE *f, byte* buffer, int width, int height);
-void R_WriteJPG(qFILE *f, byte* buffer, int width, int height, int quality);
+void R_WriteCompressedTGA(qFILE* f, const byte* buffer, int width, int height);
+void R_WritePNG(qFILE* f, byte* buffer, int width, int height);
+void R_WriteJPG(qFILE* f, byte* buffer, int width, int height, int quality);

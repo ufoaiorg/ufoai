@@ -55,7 +55,7 @@ typedef struct boxtrace_s {
 	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
 	bool ispoint;				/* optimized case */
 
-	TR_TILE_TYPE *tile;
+	TR_TILE_TYPE* tile;
 } boxtrace_t;
 
 /** @note For multi-check avoidance.
@@ -71,7 +71,7 @@ TRACING NODES
 /**
  * @brief Converts the disk node structure into the efficient tracing structure for LineTraces
  */
-static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenum)
+static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenum)
 {
 	tnode_t* t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
@@ -115,7 +115,7 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t no
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t**  tnode, int32_t nodenum, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenum, int level)
 {
 	assert(nodenum < tile->numnodes + 6); /* +6 => bbox */
 
@@ -206,7 +206,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end)
+int TR_TestLine_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, const vec3_t end)
 {
 	tnode_t* tnode;
 	float front, back;
@@ -277,7 +277,7 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, cons
  * 0x100: Actorclip bit.  If this bit is set, the actorclip level will be traced.
  * 0x200: Weaponclip bit.  If this bit is set, the weaponclip level will be traced.
  */
-static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const int levelmask)
+static bool TR_TileTestLine (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const int levelmask)
 {
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
@@ -337,7 +337,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end, vec3_t tr_end)
+static int TR_TestLineDist_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, const vec3_t end, vec3_t tr_end)
 {
 	tnode_t* tnode;
 	float front, back;
@@ -417,7 +417,7 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
  * @sa CL_ActorMouseTrace
  * @return false if no connection between start and end - 1 otherwise
  */
-static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
+static bool TR_TileTestLineDM (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
 #ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
@@ -546,7 +546,7 @@ typedef struct leaf_check_s {
  */
 static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check_t* lc)
 {
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	while (1) {
 		if (nodenum <= LEAFNODE) {
@@ -624,7 +624,7 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 #ifdef COMPILE_UFO
 	TR_BRUSHSIDE_TYPE *leadside = nullptr;
 #endif
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	enterfrac = -1.0;
 	leavefrac = 1.0;
@@ -725,7 +725,7 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 	int i, j;
 	TR_PLANE_TYPE *plane;
 	vec3_t ofs;
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	if (!brush || !brush->numsides)
 		return;
@@ -779,7 +779,7 @@ static void TR_TraceToLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
 	int k;
 	TR_LEAF_TYPE *leaf;
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= myTile->numleafs);
@@ -815,7 +815,7 @@ static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
 	int k;
 	const TR_LEAF_TYPE *leaf;
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= myTile->numleafs);
@@ -868,7 +868,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
 	int side;
 	float midf;
 	vec3_t mid;
-	TR_TILE_TYPE *myTile = traceData->tile;
+	TR_TILE_TYPE* myTile = traceData->tile;
 
 	if (traceData->trace.fraction <= p1f)
 		return;					/* already hit something nearer */
@@ -980,7 +980,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
@@ -1082,7 +1082,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  */
-trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
 {
 	int i;
 	cBspHead_t* h;

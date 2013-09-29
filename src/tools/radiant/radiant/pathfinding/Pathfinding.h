@@ -25,7 +25,7 @@ class Pathfinding: public IPathfindingSystem, public PreferenceConstructor, publ
 
 		bool _showIn2D;
 
-		Routing *_routingRender;
+		Routing* _routingRender;
 
 		bool _showAllLowerLevels;
 

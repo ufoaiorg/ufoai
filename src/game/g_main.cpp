@@ -46,7 +46,7 @@ cvar_t* developer;
 #endif
 
 cvar_t* logstats;
-FILE *logstatsfile;
+FILE* logstatsfile;
 
 cvar_t* sv_needpass;
 cvar_t* sv_maxplayersperteam;

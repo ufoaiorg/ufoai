@@ -86,14 +86,14 @@ BOX AND LINE TRACING
 
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
 
-void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t** tnode, int32_t nodenum, int level);
+void TR_BuildTracingNode_r(TR_TILE_TYPE* tile, tnode_t** tnode, int32_t nodenum, int level);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(mapTiles_t* mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject);
 #endif
-int TR_TestLine_r(TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t end);
-trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int brushmask, const int brushreject, const float fraction);
+int TR_TestLine_r(TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, const vec3_t end);
+trace_t TR_BoxTrace(TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
 bool TR_TestLine(mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const int levelmask);
 bool TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask);
-trace_t TR_TileBoxTrace(TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject);
+trace_t TR_TileBoxTrace(TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject);

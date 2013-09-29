@@ -42,7 +42,7 @@ static filelink_t* fs_links;
 static searchpath_t* fs_searchpaths;
 #define MODS_DIR "mods"
 
-void FS_CreateOpenPipeFile (const char* filename, qFILE *f)
+void FS_CreateOpenPipeFile (const char* filename, qFILE* f)
 {
 	if (fs_searchpaths == nullptr) {
 		Sys_Error("Filesystem call made without initialization");
@@ -88,7 +88,7 @@ void FS_NormPath (char* path)
 /**
  * @brief Returns the size of a given file or -1 if no file is opened
  */
-int FS_FileLength (qFILE * f)
+int FS_FileLength (qFILE*  f)
 {
 	if (f->f) {
 		const int pos = ftell(f->f);
@@ -136,7 +136,7 @@ void FS_CreatePath (const char* path)
  * @brief Closes a file handle
  * @sa FS_OpenFile
  */
-void FS_CloseFile (qFILE * f)
+void FS_CloseFile (qFILE*  f)
 {
 	if (f->f) {
 		fclose(f->f);
@@ -161,7 +161,7 @@ void FS_CloseFile (qFILE * f)
  * @return the filesize or -1 in case of an error
  * @note Used for streaming data out of either a pak file or a separate file.
  */
-int FS_OpenFile (const char* filename, qFILE *file, filemode_t mode)
+int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 {
 	searchpath_t* search;
 	char netpath[MAX_OSPATH];
@@ -249,7 +249,7 @@ int FS_OpenFile (const char* filename, qFILE *file, filemode_t mode)
  * @param[in] offset The offset you want to do the
  * @sa FS_Read
  */
-int FS_Seek (qFILE * f, long offset, int origin)
+int FS_Seek (qFILE*  f, long offset, int origin)
 {
 	if (f->z) {
 		byte buffer[PK3_SEEK_BUFFER_SIZE];
@@ -329,7 +329,7 @@ int FS_CheckFile (const char* fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-int FS_Read2 (void* buffer, int len, qFILE *f, bool failOnEmptyRead)
+int FS_Read2 (void* buffer, int len, qFILE* f, bool failOnEmptyRead)
 {
 	int read;
 	byte* buf;
@@ -377,7 +377,7 @@ int FS_Read2 (void* buffer, int len, qFILE *f, bool failOnEmptyRead)
 	return len;
 }
 
-int FS_Read (void* buffer, int len, qFILE * f)
+int FS_Read (void* buffer, int len, qFILE*  f)
 {
 	return FS_Read2(buffer, len, f, true);
 }
@@ -1522,7 +1522,7 @@ void FS_GetMaps (bool reset)
  * @brief Can print chunks for 1024 chars into a file.
  * @note The file must already be opened and may not be a zip file handle
  */
-int FS_Printf (qFILE *f, const char* msg, ...)
+int FS_Printf (qFILE* f, const char* msg, ...)
 {
 	va_list ap;
 	int len;
@@ -1539,7 +1539,7 @@ int FS_Printf (qFILE *f, const char* msg, ...)
 /**
  * @brief Properly handles partial writes
  */
-int FS_Write (const void* buffer, int len, qFILE * f)
+int FS_Write (const void* buffer, int len, qFILE*  f)
 {
 	if (!f->f)
 		return 0;
@@ -1683,7 +1683,7 @@ void FS_RestartFilesystem (const char* gamedir)
  */
 void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 {
-	FILE *f;
+	FILE* f;
 	int len;
 
 	if (!fs_searchpaths)

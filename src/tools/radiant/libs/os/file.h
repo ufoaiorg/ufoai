@@ -136,7 +136,7 @@ typedef unsigned char byte;
 /**
  * @brief Properly handles partial writes
  */
-inline int file_write (const void* buffer, int len, FILE * f)
+inline int file_write (const void* buffer, int len, FILE*  f)
 {
 	int block, remaining;
 	int written;

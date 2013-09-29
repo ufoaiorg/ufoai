@@ -294,7 +294,7 @@ dMapTile_t* LoadBSPFile (const char* filename)
  * @sa WriteBSPFile
  * @todo Implement this without the ftell stuff - don't write the bsp file twice
  */
-static void AddLump (qFILE *bspfile, dBspHeader_t* header, int lumpnum, void* data, int len)
+static void AddLump (qFILE* bspfile, dBspHeader_t* header, int lumpnum, void* data, int len)
 {
 	lump_t* lump;
 	long offset;

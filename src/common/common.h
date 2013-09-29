@@ -242,7 +242,7 @@ void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
 void Com_BreakIntoDebugger(void);
 void Com_WriteConfigToFile(const char* filename);
-void Cvar_WriteVariables(qFILE *f);
+void Cvar_WriteVariables(qFILE* f);
 
 int Com_ServerState(void);
 void Com_SetServerState(int state);

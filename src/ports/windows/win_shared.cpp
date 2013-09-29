@@ -480,7 +480,7 @@ void Sys_InitSignals (void)
 {
 }
 
-void Sys_Mkfifo (const char* ospath, qFILE *f)
+void Sys_Mkfifo (const char* ospath, qFILE* f)
 {
 }
 

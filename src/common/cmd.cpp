@@ -458,7 +458,7 @@ static void Cmd_Alias_f (void)
  * with the archive flag set to true
  * @param f Filehandle to write the aliases to
  */
-void Cmd_WriteAliases (qFILE *f)
+void Cmd_WriteAliases (qFILE* f)
 {
 	cmd_alias_t* a;
 

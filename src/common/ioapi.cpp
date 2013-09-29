@@ -52,7 +52,7 @@ static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, in
 static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void* buf, uLong size)
 {
     uLong ret;
-    ret = (uLong)fread(buf, 1, (size_t)size, (FILE *)stream);
+    ret = (uLong)fread(buf, 1, (size_t)size, (FILE* )stream);
     return ret;
 }
 
@@ -60,14 +60,14 @@ static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void* buf,
 static uLong ZCALLBACK fwrite_file_func (voidpf opaque, voidpf stream, const void* buf, uLong size)
 {
     uLong ret;
-    ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE *)stream);
+    ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE* )stream);
     return ret;
 }
 
 static long ZCALLBACK ftell_file_func (voidpf opaque, voidpf stream)
 {
     long ret;
-    ret = ftell((FILE *)stream);
+    ret = ftell((FILE* )stream);
     return ret;
 }
 
@@ -89,21 +89,21 @@ static long ZCALLBACK fseek_file_func (voidpf opaque, voidpf stream, uLong offse
     default: return -1;
     }
     ret = 0;
-    fseek((FILE *)stream, offset, fseek_origin);
+    fseek((FILE* )stream, offset, fseek_origin);
     return ret;
 }
 
 static int ZCALLBACK fclose_file_func (voidpf opaque, voidpf stream)
 {
     int ret;
-    ret = fclose((FILE *)stream);
+    ret = fclose((FILE* )stream);
     return ret;
 }
 
 static int ZCALLBACK ferror_file_func (voidpf opaque, voidpf stream)
 {
     int ret;
-    ret = ferror((FILE *)stream);
+    ret = ferror((FILE* )stream);
     return ret;
 }
 

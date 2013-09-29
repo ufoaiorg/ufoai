@@ -53,7 +53,7 @@ FILESYSTEM
 */
 typedef struct qFILE_s {
 	void* z; /**< in case of the file being a zip archive */
-	FILE *f; /**< in case the file being part of a pak or the actual file */
+	FILE* f; /**< in case the file being part of a pak or the actual file */
 	char name[MAX_OSPATH];
 	unsigned long filepos;
 	unsigned long size;
@@ -126,17 +126,17 @@ extern int fs_numInstalledMaps;
 #define SFF_SUBDIR  0x08
 #define SFF_SYSTEM  0x10
 
-int FS_FileLength(qFILE * f);
-int FS_Seek(qFILE * f, long offset, int origin);
+int FS_FileLength(qFILE*  f);
+int FS_Seek(qFILE*  f, long offset, int origin);
 int FS_WriteFile(const void* buffer, size_t len, const char* filename);
-int FS_Write(const void* buffer, int len, qFILE * f);
-int FS_Printf(qFILE *f, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
+int FS_Write(const void* buffer, int len, qFILE*  f);
+int FS_Printf(qFILE* f, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
 void FS_InitFilesystem(bool writeToHomeDir);
 void FS_AddGameDirectory(const char* dir, bool write);
 void FS_AddHomeAsGameDirectory(const char* dir, bool write);
 void FS_RestartFilesystem(const char* gamedir);
 const char* FS_Gamedir(void);
-void FS_CreateOpenPipeFile(const char* filename, qFILE *f);
+void FS_CreateOpenPipeFile(const char* filename, qFILE* f);
 const char* FS_NextPath(const char* prevpath);
 void FS_ExecAutoexec(void);
 int FS_GetModList(struct linkedList_t** mods);
@@ -146,8 +146,8 @@ bool FS_FileExists(const char* filename, ...) __attribute__((format(__printf__, 
 
 void FS_GetMaps(bool reset);
 
-int FS_OpenFile(const char* filename, qFILE * file, filemode_t mode);
-void FS_CloseFile(qFILE * f);
+int FS_OpenFile(const char* filename, qFILE*  file, filemode_t mode);
+void FS_CloseFile(qFILE*  f);
 
 bool FS_RenameFile(const char* from, const char* to, bool relative);
 void FS_RemoveFile(const char* osPath);
@@ -160,8 +160,8 @@ int FS_LoadFile(const char* path, byte** buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-int FS_Read2(void* buffer, int len, qFILE *f, bool failOnEmptyRead);
-int FS_Read(void* buffer, int len, qFILE * f);
+int FS_Read2(void* buffer, int len, qFILE* f, bool failOnEmptyRead);
+int FS_Read(void* buffer, int len, qFILE*  f);
 /* properly handles partial reads */
 
 void FS_FreeFile(void* buffer);

@@ -208,7 +208,7 @@ static void SVCmd_ListIP_f (void)
  */
 static void SVCmd_WriteIP_f (void)
 {
-	FILE *f;
+	FILE* f;
 	char name[MAX_OSPATH];
 	byte b[4];
 	int i;

@@ -179,7 +179,7 @@ void Cmd_BufClear(void);
  * @brief Writes the persistent aliases to the given filehandle
  * @param f Filehandle to write the aliases to
  */
-void Cmd_WriteAliases(qFILE *f);
+void Cmd_WriteAliases(qFILE* f);
 
 /**
  * @brief Dummy binding if you don't want unknown commands forwarded to the server
