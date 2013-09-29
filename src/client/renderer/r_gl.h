@@ -107,7 +107,7 @@ QGL_EXTERN void (APIENTRY* qglDetachShader)(GLuint prog, GLuint shader);
 QGL_EXTERN void (APIENTRY* qglLinkProgram)(GLuint id);
 QGL_EXTERN void (APIENTRY* qglUseProgram)(GLuint id);
 QGL_EXTERN void (APIENTRY* qglGetProgramiv)(GLuint id, GLenum field, GLuint* dest);
-QGL_EXTERN void (APIENTRY* qglGetActiveUniform)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint* size, GLenum *type, GLchar* name);
+QGL_EXTERN void (APIENTRY* qglGetActiveUniform)(GLuint program, GLuint index, GLsizei bufSize, GLsizei* length, GLint* size, GLenum* type, GLchar* name);
 QGL_EXTERN void (APIENTRY* qglGetProgramInfoLog)(GLuint id, GLuint maxlen, GLuint* len, GLchar* dest);
 QGL_EXTERN GLint (APIENTRY* qglGetUniformLocation)(GLuint id, const GLchar* name);
 QGL_EXTERN void (APIENTRY* qglUniform1i)(GLint location, GLint i);
@@ -138,7 +138,7 @@ QGL_EXTERN void (APIENTRY* qglFramebufferTexture3DEXT) (GLenum, GLenum, GLenum, 
 QGL_EXTERN void (APIENTRY* qglFramebufferRenderbufferEXT) (GLenum, GLenum, GLenum, GLuint);
 QGL_EXTERN void (APIENTRY* qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLenum, GLint*);
 QGL_EXTERN void (APIENTRY* qglGenerateMipmapEXT) (GLenum);
-QGL_EXTERN void (APIENTRY* qglDrawBuffers) (GLsizei, const GLenum *);
+QGL_EXTERN void (APIENTRY* qglDrawBuffers) (GLsizei, const GLenum*);
 QGL_EXTERN void (APIENTRY* qglBlitFramebuffer)( GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);
 
 /* multitexture */
@@ -169,7 +169,7 @@ typedef void (APIENTRY* AttachShader_t)(GLuint prog, GLuint shader);
 typedef void (APIENTRY* DetachShader_t)(GLuint prog, GLuint shader);
 typedef void (APIENTRY* LinkProgram_t)(GLuint id);
 typedef void (APIENTRY* UseProgram_t)(GLuint id);
-typedef void (APIENTRY* GetActiveUniforms_t)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint* size, GLenum *type, GLchar* name);
+typedef void (APIENTRY* GetActiveUniforms_t)(GLuint program, GLuint index, GLsizei bufSize, GLsizei* length, GLint* size, GLenum* type, GLchar* name);
 typedef void (APIENTRY* GetProgramiv_t)(GLuint id, GLenum field, GLuint* dest);
 typedef void (APIENTRY* GetProgramInfoLog_t)(GLuint id, GLuint maxlen, GLuint* len, GLchar* dest);
 typedef GLint (APIENTRY* GetUniformLocation_t)(GLuint id, const GLchar* name);
@@ -201,5 +201,5 @@ typedef void (APIENTRY* FramebufferTexture3DEXT_t) (GLenum, GLenum, GLenum, GLui
 typedef void (APIENTRY* FramebufferRenderbufferEXT_t) (GLenum, GLenum, GLenum, GLuint);
 typedef void (APIENTRY* GetFramebufferAttachmentParameterivEXT_t) (GLenum, GLenum, GLenum, GLint*);
 typedef void (APIENTRY* GenerateMipmapEXT_t) (GLenum);
-typedef void (APIENTRY* DrawBuffers_t) (GLsizei, const GLenum *);
+typedef void (APIENTRY* DrawBuffers_t) (GLsizei, const GLenum*);
 typedef void (APIENTRY* BlitFramebuffer_t)( GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);

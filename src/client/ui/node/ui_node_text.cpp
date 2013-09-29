@@ -95,7 +95,7 @@ void UI_TextScrollEnd (const char* nodePath)
 		return;
 	}
 
-	uiTextNode *b = dynamic_cast<uiTextNode*>(node->behaviour->manager.get());
+	uiTextNode* b = dynamic_cast<uiTextNode*>(node->behaviour->manager.get());
 	b->validateCache(node);
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {

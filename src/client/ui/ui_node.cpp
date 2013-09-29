@@ -62,7 +62,7 @@ bool UI_Node_IsWindow (uiNode_t const* node)
 
 bool UI_Node_IsBattleScape (uiNode_t const* node)
 {
-	uiBattleScapeNode *b = dynamic_cast<uiBattleScapeNode*>(node->behaviour->manager.get());
+	uiBattleScapeNode* b = dynamic_cast<uiBattleScapeNode*>(node->behaviour->manager.get());
 	return b != nullptr;
 }
 

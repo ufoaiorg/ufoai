@@ -111,7 +111,7 @@ bool Rimp_Init (void)
 	if (info != nullptr) {
 		SDL_VideoInfo videoInfo;
 		SDL_PixelFormat pixelFormat;
-		SDL_Rect **modes;
+		SDL_Rect** modes;
 		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
 		r_config.videoMemory = info->video_mem;
 		Com_Printf("I: video memory: %i\n", r_config.videoMemory);
@@ -120,7 +120,7 @@ bool Rimp_Init (void)
 		videoInfo.vfmt = &pixelFormat;
 		modes = SDL_ListModes(videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
 		if (modes) {
-			if (modes == (SDL_Rect **)-1) {
+			if (modes == (SDL_Rect**)-1) {
 				Com_Printf("I: Available resolutions: any resolution is supported\n");
 				r_sdl_config.modes = nullptr;
 			} else {

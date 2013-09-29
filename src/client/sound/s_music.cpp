@@ -136,7 +136,7 @@ static void M_Start (const char* file)
 	size_t len;
 	byte* musicBuf;
 	int size;
-	SDL_RWops *rw;
+	SDL_RWops* rw;
 
 	if (Q_strnull(file))
 		return;

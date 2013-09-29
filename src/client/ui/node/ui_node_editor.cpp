@@ -287,7 +287,7 @@ static void UI_EditorNodeSelectFirstChild (uiNode_t* node, const uiCallContext_t
 	UI_EditorNodeSelectNode(node, anchoredNode->firstChild);
 }
 
-static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t* node, int depth)
+static void UI_EditorNodeExtractNode (qFILE* file, uiNode_t* node, int depth)
 {
 	int i;
 	char tab[16];

@@ -292,8 +292,8 @@ int Matrix4x4_Invert_Full (matrix4x4_t* out, const matrix4x4_t* in1)
 #else
 int Matrix4x4_Invert_Full (matrix4x4_t* out, const matrix4x4_t* in1)
 {
-	double *temp;
-	double *r[4];
+	double* temp;
+	double* r[4];
 	double rtemp[4][8];
 	double m[4];
 	double s;

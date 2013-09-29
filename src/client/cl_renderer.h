@@ -223,7 +223,7 @@ typedef enum {
 } longlines_t;
 
 typedef struct renderer_threadstate_s {
-	SDL_Thread *thread;
+	SDL_Thread* thread;
 	threadstate_t state;
 } renderer_threadstate_t;
 
