@@ -361,7 +361,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
  * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
 	/* trace against world first */
 	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine, *traceBox, levelmask, brushmask, brushreject);

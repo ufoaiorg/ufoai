@@ -1302,7 +1302,7 @@ void Com_ReadFromPipe (void)
 
 static void tick_timer (int now, void* data)
 {
-	struct timer *timer = (struct timer *)data;
+	struct timer* timer = (struct timer*)data;
 	const int old_interval = timer->interval;
 
 	/* Compute and store the lateness, updating the total */
@@ -1472,7 +1472,7 @@ ScheduleEventPtr Dequeue_Event (int now)
  * @param filter Pointer to the filter function.
  *  When called with event info, it should return true if the event is to be kept.
  */
-int CL_FilterEventQueue (event_filter *filter)
+int CL_FilterEventQueue (event_filter* filter)
 {
 	int filtered = 0;
 

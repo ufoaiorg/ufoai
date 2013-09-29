@@ -341,7 +341,7 @@ struct scheduleEvent_t {
 typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
 
 ScheduleEventPtr Schedule_Event(int when, event_func* func, event_check_func* check, event_clean_func* clean, void* data);
-int CL_FilterEventQueue(event_filter *filter);
+int CL_FilterEventQueue(event_filter* filter);
 
 /*
 ==============================================================

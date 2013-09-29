@@ -102,7 +102,7 @@ typedef int SOCKET;
 #define dbuffer_len(dbuf) (dbuf ? (dbuf)->length() : 0)
 
 static cvar_t* net_ipv4;
-static SDL_mutex *netMutex;
+static SDL_mutex* netMutex;
 
 struct net_stream {
 	void* data;
@@ -1237,7 +1237,7 @@ void NET_SockaddrToStrings (struct datagram_socket* s, struct sockaddr* addr, ch
 
 static void NET_AddrinfoToString (const struct addrinfo* addr, char* buf, size_t bufLength)
 {
-	char* service = inet_ntoa(((struct sockaddr_in *)addr->ai_addr)->sin_addr);
+	char* service = inet_ntoa(((struct sockaddr_in*)addr->ai_addr)->sin_addr);
 	Q_strncpyz(buf, service, bufLength);
 }
 

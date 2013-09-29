@@ -2812,7 +2812,7 @@ static void Com_ParseTeam (const char* name, const char** text)
 				}
 				LIST_Delete(&list);
 			} else if (Q_streq(token, "bodytype")) {
-				const BodyData *bd;
+				const BodyData* bd;
 				token = Com_EParse(text, errhead, name);
 				bd = Com_GetBodyTemplateByID(token);
 				if (bd == nullptr)
@@ -2982,7 +2982,7 @@ static const char* const penaltyNames[MODIFIER_MAX] = {
 		"accuracy", "shooting_tu", "movement_tu", "detection", "reaction_time", "max_tu"
 };
 
-static void Com_ParseBodyPart (const char* name, const char** text, BodyData *bd)
+static void Com_ParseBodyPart (const char* name, const char** text, BodyData* bd)
 {
 	const char* errhead = "Com_ParseBodyPart: unexpected end of file";
 	const char* token;

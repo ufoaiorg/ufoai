@@ -69,7 +69,7 @@ struct memPool_t {
 #define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF
 #define MEM_FOOT_SENTINEL		0xF00DF00D
 
-static SDL_mutex *z_lock;
+static SDL_mutex* z_lock;
 
 #define MEM_MAX_POOLCOUNT	32
 

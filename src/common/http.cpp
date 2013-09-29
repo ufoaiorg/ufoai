@@ -244,7 +244,7 @@ bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, 
 		return false;
 	}
 
-	CURL *curl = curl_easy_init();
+	CURL* curl = curl_easy_init();
 	if (curl == nullptr) {
 		Com_Printf("could not init curl\n");
 		return false;
@@ -309,7 +309,7 @@ bool HTTP_GetToFile (const char* url, FILE* file, const char* postfields)
  */
 bool HTTP_Encode (const char* url, char* out, size_t outLength)
 {
-	CURL *curl = curl_easy_init();
+	CURL* curl = curl_easy_init();
 	char* encoded = curl_easy_escape(curl, url, 0);
 	if (encoded == nullptr) {
 		curl_easy_cleanup(curl);
