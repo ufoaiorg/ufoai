@@ -163,7 +163,7 @@ void ReactionFireTargets::reset (void)
 void ReactionFireTargets::notifyClientOnStep (const Edict* target, int step)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
-		ReactionFireTargetList *rfts = &rfData[i];
+		ReactionFireTargetList* rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
 			continue;
 		const Edict* shooter = G_EdictsGetByNum(rfts->entnum);
@@ -197,7 +197,7 @@ void ReactionFireTargets::notifyClientOnShot (const Edict* target, int tusTarget
 void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool startMove)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
-		ReactionFireTargetList *rfts = &rfData[i];
+		ReactionFireTargetList* rfts = &rfData[i];
 		if (rfts->entnum == RF_NO_ENTNUM)
 			continue;
 		const Edict* shooter = G_EdictsGetByNum(rfts->entnum);
@@ -221,7 +221,7 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool 
 ReactionFireTargetList* ReactionFireTargets::find (const Edict* shooter)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
-		ReactionFireTargetList *rfts = &rfData[i];
+		ReactionFireTargetList* rfts = &rfData[i];
 		if (rfts->entnum == shooter->number) {
 			return rfts;
 		}
@@ -236,7 +236,7 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict* shooter)
  */
 void ReactionFireTargets::create (const Edict* shooter)
 {
-	ReactionFireTargetList *rfts = find(shooter);
+	ReactionFireTargetList* rfts = find(shooter);
 
 	if (rfts)
 		gi.Error("Entity already has rfData");
@@ -261,7 +261,7 @@ void ReactionFireTargets::create (const Edict* shooter)
 void ReactionFireTargets::add (const Edict* shooter, const Edict* target, const int tusForShot)
 {
 	int i;
-	ReactionFireTargetList *rfts = find(shooter);
+	ReactionFireTargetList* rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -290,7 +290,7 @@ void ReactionFireTargets::add (const Edict* shooter, const Edict* target, const 
  */
 void ReactionFireTargets::remove (const Edict* shooter, const Edict* target)
 {
-	ReactionFireTargetList *rfts = find(shooter);
+	ReactionFireTargetList* rfts = find(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -331,7 +331,7 @@ void ReactionFireTargets::resetTargetList (const Edict* shooter)
  */
 int ReactionFireTargets::getTriggerTUs (const Edict* shooter, const Edict* target)
 {
-	const ReactionFireTargetList *rfts = find(shooter);
+	const ReactionFireTargetList* rfts = find(shooter);
 
 	if (!rfts)
 		return -2;	/* the shooter doesn't aim at anything */
@@ -356,7 +356,7 @@ int ReactionFireTargets::getTriggerTUs (const Edict* shooter, const Edict* targe
  */
 bool ReactionFireTargets::hasExpired (const Edict* shooter, const Edict* target, const int tusTarget)
 {
-	const ReactionFireTargetList *rfts = find(shooter);
+	const ReactionFireTargetList* rfts = find(shooter);
 
 	if (!rfts)
 		return false;	/* the shooter doesn't aim at anything */
@@ -380,7 +380,7 @@ bool ReactionFireTargets::hasExpired (const Edict* shooter, const Edict* target,
  */
 void ReactionFireTargets::advance (const Edict* shooter, const int tusShot)
 {
-	ReactionFireTargetList *rfts = find(shooter);
+	ReactionFireTargetList* rfts = find(shooter);
 	assert(rfts);
 
 	for (int i = 0; i < rfts->count; i++) {
@@ -433,7 +433,7 @@ static ReactionFire rf;
  */
 const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
 {
-	const FiremodeSettings *fmSetting = &shooter->chr.RFmode;
+	const FiremodeSettings* fmSetting = &shooter->chr.RFmode;
 	if (!fmSetting->isSaneFiremode())
 		return nullptr;
 
@@ -484,7 +484,7 @@ static int G_ReactionFireGetTUsForItem (const Edict* shooter, const Edict* targe
  */
 static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
 {
-	const FiremodeSettings *fmSettings = &actor->chr.RFmode;
+	const FiremodeSettings* fmSettings = &actor->chr.RFmode;
 	if (!fmSettings->isSaneFiremode())	/* just checks for valid values */
 		return false;
 
@@ -739,7 +739,7 @@ void ReactionFire::updateAllTargets (const Edict* target)
 	}
 }
 
-void ReactionFire::resetTargets (const Edict *shooter)
+void ReactionFire::resetTargets (const Edict* shooter)
 {
 	rft.resetTargetList(shooter);
 }

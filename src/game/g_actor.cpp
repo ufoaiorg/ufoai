@@ -154,7 +154,7 @@ int G_ActorUsableTUs (const Edict* ent)
  */
 int G_ActorGetTUForReactionFire (const Edict* ent)
 {
-	const FiremodeSettings *fm = &ent->chr.RFmode;
+	const FiremodeSettings* fm = &ent->chr.RFmode;
 
 	const Item* weapon = ent->getHandItem(fm->getHand());
 	assert(weapon);

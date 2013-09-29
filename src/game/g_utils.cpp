@@ -317,7 +317,7 @@ void G_PrintStats (const char* format, ...)
 
 	gi.DPrintf("[STATS] %s\n", buffer);
 	if (logstatsfile) {
-		struct tm *t;
+		struct tm* t;
 		char tbuf[32];
 		time_t aclock;
 
