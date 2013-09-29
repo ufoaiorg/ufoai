@@ -296,14 +296,14 @@ typedef struct teamNames_s {
 } teamNames_t;
 
 typedef struct teamDef_s {
-	int idx;			/**< The index in the teamDef array. */
-	char id[MAX_VAR];	/**< id from script file. */
-	char name[MAX_VAR];	/**< Translatable name. */
-	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+	int idx;					/**< The index in the teamDef array. */
+	char id[MAX_VAR];			/**< id from script file. */
+	char name[MAX_VAR];			/**< Translatable name. */
+	char tech[MAX_VAR];			/**< technology_t id from research.ufo */
 	char footstepSound[MAX_VAR];
 
 	linkedList_t* const* names;	/**< Names list per gender. */
-	const int* numNames;	/**< Amount of names in this list for all different genders. */
+	const int* numNames;		/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
 		char* path;
@@ -314,12 +314,12 @@ typedef struct teamDef_s {
 	};
 
 	linkedList_t* models[NAME_LAST];	/**< Models list per gender. */
-	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
+	int numModels[NAME_LAST];			/**< Amount of models in this list for all different genders. */
 
 	linkedList_t* sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
 	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
 
-	int team;	/**< What is the race of this team? */
+	int team;		/**< What is the race of this team? */
 
 	bool robot;
 	bool armour;	/**< Does this team use armour. */
@@ -329,8 +329,8 @@ typedef struct teamDef_s {
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefinitions */
 
-	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
+	actorSizeEnum_t size;			/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	char hitParticle[MAX_VAR];		/**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
 	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
 
 	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
@@ -359,8 +359,8 @@ typedef struct woundInfo_s {
 #define MAX_CHARACTER_IMPLANTS 4
 typedef struct implant_s {
 	const implantDef_t* def;	/**< if @c null, the slot is still empty */
-	int installedTime;	/**< the remaining days until the implant is ready */
-	int removedTime;	/**< the remaining days until the removal is ready */
+	int installedTime;			/**< the remaining days until the implant is ready */
+	int removedTime;			/**< the remaining days until the removal is ready */
 	int trigger;
 } implant_t;
 
