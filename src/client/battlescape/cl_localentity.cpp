@@ -1391,13 +1391,12 @@ le_t* LE_FindRadius (le_t* from, const vec3_t org, float rad, entity_type_t type
 	le_t* le = from;
 
 	while ((le = LE_GetNextInUse(le))) {
-		int j;
+		if (type != ET_NULL && le->type != type)
+			continue;
 		vec3_t eorg;
-		for (j = 0; j < 3; j++)
+		for (int j = 0; j < 3; j++)
 			eorg[j] = org[j] - (le->origin[j] + (le->aabb.mins[j] + le->aabb.maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
-			continue;
-		if (type != ET_NULL && le->type != type)
 			continue;
 		return le;
 	}
