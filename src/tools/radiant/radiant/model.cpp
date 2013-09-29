@@ -184,7 +184,7 @@ void ModelModules_Init (void)
 	while (*modules != 0) {
 		const picoModule_t* module = *modules++;
 		if (module->canload && module->load) {
-			for (const char* const * ext = module->defaultExts; *ext != 0; ++ext) {
+			for (const char* const* ext = module->defaultExts; *ext != 0; ++ext) {
 				PicoModelModule *picomodule = new PicoModelModule(PicoModelAPIConstructor(*ext, module));
 				StaticModuleRegistryList().instance().addModule(*picomodule);
 				/** @todo do we have to delete these PicoModelModules anywhere? */

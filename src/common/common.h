@@ -331,16 +331,16 @@ struct scheduleEvent_t {
 	 * @param[in] now The current time
 	 * @param[in] data The event userdata
 	 */
-	event_delay_func *delay;
-	event_notify_delay_func *notifyDelay;
+	event_delay_func* delay;
+	event_notify_delay_func* notifyDelay;
 	void* notifyDelayUserData;
-	event_clean_func *clean;
+	event_clean_func* clean;
 	void* data;
 };
 
 typedef SharedPtr<scheduleEvent_t> ScheduleEventPtr;
 
-ScheduleEventPtr Schedule_Event(int when, event_func* func, event_check_func* check, event_clean_func *clean, void* data);
+ScheduleEventPtr Schedule_Event(int when, event_func* func, event_check_func* check, event_clean_func* clean, void* data);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*

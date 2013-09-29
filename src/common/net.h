@@ -35,7 +35,7 @@ typedef void datagram_callback_func(struct datagram_socket* s, const char* buf, 
 bool SV_Start(const char* node, const char* service, stream_callback_func* func);
 void SV_Stop(void);
 
-struct datagram_socket* NET_DatagramSocketNew(const char* node, const char* service, datagram_callback_func *datagram_func);
+struct datagram_socket* NET_DatagramSocketNew(const char* node, const char* service, datagram_callback_func* datagram_func);
 void NET_DatagramSend(struct datagram_socket* s, const char* buf, int len, struct sockaddr* to);
 void NET_DatagramBroadcast(struct datagram_socket* s, const char* buf, int len, int port);
 void NET_DatagramSocketClose(struct datagram_socket* s);

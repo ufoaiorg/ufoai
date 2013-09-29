@@ -145,7 +145,7 @@ inline int file_write (const void* buffer, int len, FILE*  f)
 	if (!f)
 		return 0;
 
-	byte const *buf = static_cast<byte const*>(buffer);
+	byte const* buf = static_cast<byte const*>(buffer);
 
 	remaining = len;
 	tries = 0;

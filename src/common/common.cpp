@@ -1393,7 +1393,7 @@ static void Schedule_Timer (cvar_t* freq, event_func* func, event_check_func* ch
  * @param delayFollowing Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false.
  *  This is needed e.g. for battlescape events to not play events too fast because the beginning of the event queue was blocked.
  */
-ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* check, event_clean_func *clean, void* data)
+ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* check, event_clean_func* clean, void* data)
 {
 	ScheduleEventPtr event = ScheduleEventPtr(new scheduleEvent_t());
 	event->when = when;

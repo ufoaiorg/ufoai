@@ -140,7 +140,7 @@ struct datagram_socket {
 	int addrlen;
 	struct datagram *queue;
 	struct datagram **queue_tail;
-	datagram_callback_func *func;
+	datagram_callback_func* func;
 };
 
 static fd_set read_fds;
@@ -1112,7 +1112,7 @@ static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo *a
  * @param[in] service The port number
  * @param[in] func Callback function for data handling
  */
-struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func *func)
+struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func* func)
 {
 	struct datagram_socket* s;
 	struct addrinfo *res;

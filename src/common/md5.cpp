@@ -163,7 +163,7 @@ static void MD5Transform (uint32_t buf[4], uint32_t const in[16])
  * @brief Update context to reflect the concatenation of another buffer full
  * of bytes.
  */
-static void MD5Update (struct MD5Context *ctx, unsigned char const *buf, unsigned len)
+static void MD5Update (struct MD5Context *ctx, unsigned char const* buf, unsigned len)
 {
 	uint32_t t;
 

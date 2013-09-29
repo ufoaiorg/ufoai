@@ -688,14 +688,14 @@ int FS_GetModList (linkedList_t** mods)
 	const char* homedir;
 
 	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
-		char const * const append = "/" MODS_DIR;
+		char const*  const append = "/" MODS_DIR;
 		Q_strcat(gdir, sizeof(gdir), append);
 		homedir = gdir;
 	} else {
 		homedir = nullptr;
 	}
 
-	char const * searchpaths[] = {
+	char const*  searchpaths[] = {
 #ifdef PKGDATADIR
 			PKGDATADIR "/" MODS_DIR,
 #endif
@@ -809,7 +809,7 @@ static void FS_Link_f (void)
  */
 static void FS_Dir_f (void)
 {
-	char const *wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
+	char const* wildcard = Cmd_Argc() != 1 ? Cmd_Argv(1) : "*.*";
 	const char* path = nullptr;
 	char findname[1024];
 	int ndirs;
@@ -826,7 +826,7 @@ static void FS_Dir_f (void)
 			int i;
 
 			for (i = 0; i < ndirs - 1; i++) {
-				char const *const slash = strrchr(dirnames[i], '/');
+				char const* const slash = strrchr(dirnames[i], '/');
 				Com_Printf("%s\n", slash ? slash + 1 : dirnames[i]);
 
 				Mem_Free(dirnames[i]);
@@ -839,7 +839,7 @@ static void FS_Dir_f (void)
 
 static void FS_List_f (void)
 {
-	char const *wildcard = Cmd_Argc() == 2 ? Cmd_Argv(1) : "*.*";
+	char const* wildcard = Cmd_Argc() == 2 ? Cmd_Argv(1) : "*.*";
 	const char* filename;
 
 	Com_Printf("Show files for '%s'\n", wildcard);
@@ -1343,8 +1343,8 @@ static bool fs_mapsInstalledInit = false;
  */
 static int FS_MapDefSort (const void* map1, const void* map2)
 {
-	const char* mapStr1 = *(const char*  const *)map1;
-	const char* mapStr2 = *(const char*  const *)map2;
+	const char* mapStr1 = *(const char* const*)map1;
+	const char* mapStr2 = *(const char* const*)map2;
 
 	/* skip special map chars for rma and base attack */
 	if (mapStr1[0] == '+')

@@ -88,7 +88,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class ReactionFireTarget
 {
 public:
-	Edict const *target;
+	Edict const* target;
 	int triggerTUs;		/* the amount of TUS of the target(!) at which the reaction takes place */
 };
 

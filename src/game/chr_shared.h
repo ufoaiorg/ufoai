@@ -302,7 +302,7 @@ typedef struct teamDef_s {
 	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
 	char footstepSound[MAX_VAR];
 
-	linkedList_t* const *names;	/**< Names list per gender. */
+	linkedList_t* const* names;	/**< Names list per gender. */
 	const int* numNames;	/**< Amount of names in this list for all different genders. */
 
 	struct model_t {
