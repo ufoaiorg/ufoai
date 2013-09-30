@@ -876,10 +876,12 @@
 		<Unit filename="../../src/shared/mathlib_extra.h" />
 		<Unit filename="../../src/shared/parse.cpp" />
 		<Unit filename="../../src/shared/parse.h" />
+		<Unit filename="../../src/shared/scopedmutex.h" />
 		<Unit filename="../../src/shared/shared.cpp" />
 		<Unit filename="../../src/shared/shared.h" />
 		<Unit filename="../../src/shared/sharedptr.h" />
 		<Unit filename="../../src/shared/stringhunk.cpp" />
+		<Unit filename="../../src/shared/stringhunk.h" />
 		<Unit filename="../../src/shared/typedefs.h" />
 		<Unit filename="../../src/shared/ufotypes.h" />
 		<Unit filename="../../src/shared/utf8.cpp" />
