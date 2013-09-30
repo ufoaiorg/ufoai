@@ -198,8 +198,7 @@ static void CP_DrawXVIOverlayRow (float latMin, float latMax, const vec2_t cente
 /**
  * @brief Applies spreading on xvi transparency channel centered on a given pos
  * @param pos The x/y-location in the flat XVI map
- * @param[in] xCenter X Position of the center of XVI spreading (in degrees)
- * @param[in] yCenter Y Position of the center of XVI spreading (in degrees)
+ * @param[in] xCenter,yCenter Position of the center of XVI spreading (in degrees)
  * @param factor The factor of the XVI raise
  * @sa R_DecreaseXVILevel
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha

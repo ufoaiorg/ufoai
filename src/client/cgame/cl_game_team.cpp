@@ -571,8 +571,7 @@ void GAME_ActorSelect_f (void)
  * @param[out] p XML Node structure, where we write the information to
  * @param[in] item Pointer to the item to save
  * @param[in] container Index of the container the item is in
- * @param[in] x Horizontal coordinate of the item in the container
- * @param[in] y Vertical coordinate of the item in the container
+ * @param[in] x,y Coordinates of the item in the container
  * @sa GAME_LoadItem
  */
 static void GAME_SaveItem (xmlNode_t* p, const Item* item, containerIndex_t container, int x, int y)

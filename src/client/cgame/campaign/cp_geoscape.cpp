@@ -251,8 +251,7 @@ static inline bool GEO_IsXVIOverlayActivated (void)
 /**
  * @brief Click on the map/geoscape
  * @param[in] node UI Node of the geoscape map
- * @param[in] x Mouse click X coordinate
- * @param[in] y Mouse click Y coordinate
+ * @param[in] x,y Mouse click coordinates
  * @param[in] pos Geoscape (longitude, latitude) coordinate of the click
  * @return True if the event is used for something
  */
