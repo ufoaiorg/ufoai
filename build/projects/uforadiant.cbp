@@ -98,6 +98,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-I../../src/libs" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />

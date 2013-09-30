@@ -7,8 +7,8 @@ $(TARGET)_LDFLAGS  += -static
 endif
 
 $(TARGET)_LINKER   := $(CXX)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS) $(SDL_CFLAGS)
-$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm $(SO_LIBS)
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS) $(SDL_CFLAGS) $(LUA_CFLAGS)
+$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm $(SO_LIBS) $(LUA_LIBS)
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 # Lua apicheck adds asserts to make sure stack is sane
@@ -17,38 +17,9 @@ ifeq ($(DEBUG),1)
 endif
 
 $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
-	$(wildcard $(SRCDIR)/game/g_*.cpp) \
+	$(wildcard $(SRCDIR)/game/g_*.cpp) ) \
 	\
-	game/lua/lapi.cpp \
-	game/lua/lauxlib.cpp \
-	game/lua/lbaselib.cpp \
-	game/lua/lcode.cpp \
-	game/lua/ldblib.cpp \
-	game/lua/ldebug.cpp \
-	game/lua/ldo.cpp \
-	game/lua/ldump.cpp \
-	game/lua/lfunc.cpp \
-	game/lua/lgc.cpp \
-	game/lua/linit.cpp \
-	game/lua/liolib.cpp \
-	game/lua/llex.cpp \
-	game/lua/lmathlib.cpp \
-	game/lua/lmem.cpp \
-	game/lua/loadlib.cpp \
-	game/lua/lobject.cpp \
-	game/lua/lopcodes.cpp \
-	game/lua/loslib.cpp \
-	game/lua/lparser.cpp \
-	game/lua/lstate.cpp \
-	game/lua/lstring.cpp \
-	game/lua/lstrlib.cpp \
-	game/lua/ltable.cpp \
-	game/lua/ltablib.cpp \
-	game/lua/ltm.cpp \
-	game/lua/lundump.cpp \
-	game/lua/lvm.cpp \
-	game/lua/lzio.cpp \
-	game/lua/print.cpp )
+	$(LUA_SRCS)
 
 ifneq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS += shared/mathlib.cpp \

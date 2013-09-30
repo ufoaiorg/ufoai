@@ -1,6 +1,45 @@
 PKG_CONFIG               ?= PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(CROSS)pkg-config
 CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
 CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
+ifdef HAVE_LUA_H
+LUA_LIBS                 ?= $(call PKG_LIBS,lua5.1)
+LUA_CFLAGS               ?= $(call PKG_CFLAGS,lua5.1)
+LUA_SRCS                  =
+else
+LUA_CFLAGS               ?= -Isrc/libs/lua
+LUA_LIBS                  =
+LUA_SRCS                  = \
+	libs/lua/lapi.cpp \
+	libs/lua/lauxlib.cpp \
+	libs/lua/lbaselib.cpp \
+	libs/lua/lcode.cpp \
+	libs/lua/ldblib.cpp \
+	libs/lua/ldebug.cpp \
+	libs/lua/ldo.cpp \
+	libs/lua/ldump.cpp \
+	libs/lua/lfunc.cpp \
+	libs/lua/lgc.cpp \
+	libs/lua/linit.cpp \
+	libs/lua/liolib.cpp \
+	libs/lua/llex.cpp \
+	libs/lua/lmathlib.cpp \
+	libs/lua/lmem.cpp \
+	libs/lua/loadlib.cpp \
+	libs/lua/lobject.cpp \
+	libs/lua/lopcodes.cpp \
+	libs/lua/loslib.cpp \
+	libs/lua/lparser.cpp \
+	libs/lua/lstate.cpp \
+	libs/lua/lstring.cpp \
+	libs/lua/lstrlib.cpp \
+	libs/lua/ltable.cpp \
+	libs/lua/ltablib.cpp \
+	libs/lua/ltm.cpp \
+	libs/lua/lundump.cpp \
+	libs/lua/lvm.cpp \
+	libs/lua/lzio.cpp \
+	libs/lua/print.cpp
+endif
 ifdef HAVE_LIBPNG_PNG_H
 PNG_LIBS                 ?= -lpng
 PNG_CFLAGS               ?=
