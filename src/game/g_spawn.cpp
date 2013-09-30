@@ -463,51 +463,6 @@ static void G_SpawnSmoke (const vec3_t vec, const char* particle, int rounds)
 	ent->count = rounds;
 }
 
-static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
-{
-	switch (fieldtype) {
-	case ET_SMOKE:
-		G_SpawnSmoke(vec, particle, rounds);
-		break;
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Spawns a smoke field that is available for some rounds
- * @param[in] vec The position in the world that is the center of the smoke field
- * @param[in] particle The id of the particle (see ptl_*.ufo script files in base/ufos)
- * @param[in] rounds The number of rounds the particle will last
- * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
- * @param[in] radius The max distance of a cell from the center to get a particle
- */
-void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_t radius)
-{
-	vec_t x, y;
-
-	G_SpawnFieldPart(ET_SMOKE, vec, particle, rounds, 0);
-
-	/* for all cells in a square of +/- radius */
-	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
-		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
-			vec3_t end;
-
-			VectorSet(end, x, y, vec[2]);
-
-			/* cut off the edges of the square to resemble a circle */
-			if (VectorDist(end, vec) > radius)
-				continue;
-			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
-				continue;
-			}
-			G_SpawnFieldPart(ET_SMOKE, end, particle, rounds, 0);
-		}
-	}
-}
-
 static void G_SpawnFire (const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
@@ -531,30 +486,6 @@ static void G_SpawnFire (const vec3_t vec, const char* particle, int rounds, int
 	}
 
 	ent->count = rounds;
-}
-
-void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
-{
-	vec_t x, y;
-
-	G_SpawnFire(vec, particle, rounds, damage);
-
-	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
-		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
-			vec3_t end;
-			VectorSet(end, x, y, vec[2]);
-
-			if (VectorDist(end, vec) > radius)
-				continue;
-			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
-				continue;
-			}
-
-			G_SpawnFire(end, particle, rounds, damage);
-		}
-	}
 }
 
 static void G_SpawnStunSmoke (const vec3_t vec, const char* particle, int rounds, int damage)
@@ -582,11 +513,61 @@ static void G_SpawnStunSmoke (const vec3_t vec, const char* particle, int rounds
 	ent->count = rounds;
 }
 
-void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
+static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
+{
+	switch (fieldtype) {
+	case ET_SMOKE:
+		G_SpawnSmoke(vec, particle, rounds);
+		break;
+	case ET_FIRE:
+		G_SpawnFire(vec, particle, rounds, damage);
+		break;
+	case ET_SMOKESTUN:
+		G_SpawnStunSmoke(vec, particle, rounds, damage);
+		break;
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Spawns a smoke field that is available for some rounds
+ * @param[in] vec The position in the world that is the center of the smoke field
+ * @param[in] particle The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] rounds The number of rounds the particle will last
+ * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
+ * @param[in] radius The max distance of a cell from the center to get a particle
+ */
+void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_t radius)
 {
 	vec_t x, y;
 
-	G_SpawnStunSmoke(vec, particle, rounds, damage);
+	G_SpawnFieldPart(ET_SMOKE, vec, particle, rounds, 0);
+
+	/* for all cells in a square of +/- radius */
+	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
+		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
+			vec3_t end;
+			VectorSet(end, x, y, vec[2]);
+
+			/* cut off the edges of the square to resemble a circle */
+			if (VectorDist(end, vec) > radius)
+				continue;
+			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
+				continue;
+			}
+			G_SpawnFieldPart(ET_SMOKE, end, particle, rounds, 0);
+		}
+	}
+}
+
+void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
+{
+	vec_t x, y;
+
+	G_SpawnFieldPart(ET_FIRE, vec, particle, rounds, damage);
 
 	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
 		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
@@ -600,8 +581,30 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, 
 			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
 			}
+			G_SpawnFieldPart(ET_FIRE, end, particle, rounds, damage);
+		}
+	}
+}
 
-			G_SpawnStunSmoke(end, particle, rounds, damage);
+void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
+{
+	vec_t x, y;
+
+	G_SpawnFieldPart(ET_SMOKESTUN, vec, particle, rounds, damage);
+
+	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
+		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
+			vec3_t end;
+			VectorSet(end, x, y, vec[2]);
+
+			if (VectorDist(end, vec) > radius)
+				continue;
+			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
+				continue;
+			}
+			G_SpawnFieldPart(ET_SMOKESTUN, end, particle, rounds, damage);
 		}
 	}
 }
