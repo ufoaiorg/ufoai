@@ -61,7 +61,7 @@ static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 static void testUMPExtends (void)
 {
-	MapInfo *randomMap;
+	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
@@ -72,7 +72,7 @@ static void testUMPExtends (void)
 
 static void testAssembly (void)
 {
-	MapInfo *randomMap;
+	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
@@ -92,7 +92,7 @@ static void testMassAssemblyTimeout (void)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
-		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
+		MapInfo* randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
 		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -112,7 +112,7 @@ static void testMassAssemblyParallel (void)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
-		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
+		MapInfo* randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
 		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -132,7 +132,7 @@ static void testMassAssemblySequential (void)
 	for (i = 0; i < 10; i++) {
 		srand(i);
 		long time = Sys_Milliseconds();
-		MapInfo *randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
+		MapInfo* randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
 		CU_ASSERT_PTR_NOT_NULL(randomMap);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
@@ -147,7 +147,7 @@ static void testSeedlists (void)
 {
 	int i, n;
 	long time, timeSum = 0;
-	MapInfo *randomMap;
+	MapInfo* randomMap;
 	size_t length;
 	const char* assNames[][2] = {
 		{"farm", "medium"},
@@ -191,7 +191,7 @@ static void testNewSeedlists (void)
 {
 	int i;
 	long time, timeSum = 0;
-	MapInfo *randomMap;
+	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_rmadisplaythemap->integer = 1;	/* print out the RMA analysis */

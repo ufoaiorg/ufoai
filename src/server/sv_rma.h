@@ -95,7 +95,7 @@ public:
  * @sa Tile
  */
 typedef struct mToPlace_s {
-	Tile *tile;		/**< The tile to place. */
+	Tile* tile;		/**< The tile to place. */
 	int min, max;	/**< Minimum and maximum count of placements. */
 	int cnt;		/**< Current count of placements */
 } mToPlace_t;
@@ -105,7 +105,7 @@ typedef struct mToPlace_s {
  * @sa Tile
  */
 typedef struct mPlaced_s {
-	const Tile *tile;	/**< The tile that was/is placed. */
+	const Tile* tile;	/**< The tile that was/is placed. */
 	int x, y;			/**< The position in the map the tile was/is placed in. */
 	int idx, pos;		/**< Stores the state of the placement algorithm */
 } mPlaced_t;
@@ -150,5 +150,5 @@ public:
 MapInfo* SV_AssembleMap(const char* name, const char* assembly, char* asmMap, char* asmPos, char* entityString, const unsigned int seed, bool print);
 
 /* the next two functions are only exported for cunits tests */
-void SV_ParseUMP(const char* name, char* entityString, MapInfo *map, bool inherit);
-void SV_PrepareTilesToPlace(MapInfo *map);
+void SV_ParseUMP(const char* name, char* entityString, MapInfo* map, bool inherit);
+void SV_PrepareTilesToPlace(MapInfo* map);

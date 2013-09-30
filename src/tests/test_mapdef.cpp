@@ -244,7 +244,7 @@ static void testMapDefStatistic (void)
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
-		MapInfo *theMap = Mem_AllocType(MapInfo);
+		MapInfo* theMap = Mem_AllocType(MapInfo);
 		char mapAssName[80];
 		const char* p = md->map;
 
@@ -267,7 +267,7 @@ static void testMapDefStatistic (void)
 		}
 
 		SV_PrepareTilesToPlace(theMap);
-		const Assembly *ass = theMap->getCurrentAssembly();
+		const Assembly* ass = theMap->getCurrentAssembly();
 
 		required = 0;
 		solids = 0;

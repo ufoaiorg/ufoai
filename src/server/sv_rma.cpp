@@ -165,9 +165,9 @@ static void SV_TileMaskToString (unsigned long m, char* str)
 #define ACH 3	/* ascii cell height */
 #define MMW 13	/* map max width 13 means we support 12 */
 #define MMH 13	/* map max height */
-static void SV_RmaPrintMap (const MapInfo *map)
+static void SV_RmaPrintMap (const MapInfo* map)
 {
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	char screen[(MMH + 1) * ACH][(MMW + 1) * ACW];
 	int i, j;
 
@@ -185,7 +185,7 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	/* fill in the data */
 	for (i = 0; i < map->numPlaced; i++) {
 		const mPlaced_t* mp = &map->mPlaced[i];
-		const Tile *tile = mp->tile;
+		const Tile* tile = mp->tile;
 		int tx, ty;
 		const char* tn = tile->id + 1;
 
@@ -274,12 +274,12 @@ static void SV_RmaPrintMap (const MapInfo *map)
 	Com_Printf("%s", underscores + w);
 }
 
-static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char* tileSetName)
+static const TileSet* SV_GetMapTileSet (const MapInfo* map, const char* tileSetName)
 {
 	int i;
 
 	for (i = 0; i < map->numTileSets; i++) {
-		const TileSet *tileSet = &map->tileSets[i];
+		const TileSet* tileSet = &map->tileSets[i];
 		if (Q_streq(tileSetName, tileSet->id))
 			return tileSet;
 	}
@@ -287,12 +287,12 @@ static const TileSet *SV_GetMapTileSet (const MapInfo *map, const char* tileSetN
 	return nullptr;
 }
 
-static inline const Tile *SV_GetMapTile (const MapInfo *map, const char* tileName)
+static inline const Tile* SV_GetMapTile (const MapInfo* map, const char* tileName)
 {
 	int i;
 
 	for (i = 0; i < map->numTiles; i++) {
-		const Tile *tile = &map->mTile[i];
+		const Tile* tile = &map->mTile[i];
 		if (Q_streq(tileName, tile->id))
 			return tile;
 	}
@@ -305,11 +305,11 @@ static inline const Tile *SV_GetMapTile (const MapInfo *map, const char* tileNam
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo* map, bool inherit)
 {
 	const char* errhead = "SV_ParseMapTileSet: Unexpected end of file (";
 	const char* token;
-	TileSet *target = &map->tileSets[map->numTileSets];
+	TileSet* target = &map->tileSets[map->numTileSets];
 
 	OBJZERO(*target);
 
@@ -365,12 +365,12 @@ static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo *map, bool inherit)
+static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* map, bool inherit)
 {
 	const char* errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char* token;
 	int x, y, i;
-	Tile *target = &map->mTile[map->numTiles];
+	Tile* target = &map->mTile[map->numTiles];
 	target->area = 0;
 
 	/* get tile name */
@@ -450,7 +450,7 @@ static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo *m
  * @param errhead Error header
  * @return @c nullptr if file has invalid format, @c the tilename of the cvar otherwise.
  */
-static const char* SV_GetCvarToken (const MapInfo *map, const Assembly *a, const char* token, const char* filename, const char** text, const char* errhead)
+static const char* SV_GetCvarToken (const MapInfo* map, const Assembly* a, const char* token, const char* filename, const char** text, const char* errhead)
 {
 	const cvar_t* cvar;
 
@@ -494,10 +494,10 @@ static const char* SV_GetCvarToken (const MapInfo *map, const Assembly *a, const
 	return cvar->string;
 }
 
-static const char* SV_GetTileFromTileSet (const MapInfo *map, const char* filename, const char** text, const Assembly *a)
+static const char* SV_GetTileFromTileSet (const MapInfo* map, const char* filename, const char** text, const Assembly* a)
 {
 	const char* errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
-	const TileSet *tileSet;
+	const TileSet* tileSet;
 	int random;
 	const char* token;
 
@@ -522,7 +522,7 @@ static const char* SV_GetTileFromTileSet (const MapInfo *map, const char* filena
  * @param[in] text The text of the ump file to parse
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssemblySeeds (MapInfo *map, const char* filename, const char** text, Assembly *a)
+static bool SV_ParseAssemblySeeds (MapInfo* map, const char* filename, const char** text, Assembly* a)
 {
 	const char* errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
 	const char* token;
@@ -550,10 +550,10 @@ static bool SV_ParseAssemblySeeds (MapInfo *map, const char* filename, const cha
 	return true;
 }
 
-static void SV_GetTilesFromTileSet (const MapInfo *map, const char* filename, const char** text, Assembly *a)
+static void SV_GetTilesFromTileSet (const MapInfo* map, const char* filename, const char** text, Assembly* a)
 {
 	const char* errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
-	const TileSet *tileSet;
+	const TileSet* tileSet;
 	int min, max;
 	const char* token;
 
@@ -579,7 +579,7 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char* filename, co
 	/* set min and max tile numbers (increasing random tiles until the required number is reached) */
 	for (int i = max, j = min; i > 0; --i) {
 		const int random = rand() % tileSet->numTiles;
-		const Tile *tile = SV_GetMapTile(map, tileSet->tiles[random]);
+		const Tile* tile = SV_GetMapTile(map, tileSet->tiles[random]);
 		if (tile != nullptr) {
 			const ptrdiff_t tileIdx = tile - map->mTile;
 			++a->max[tileIdx];
@@ -606,12 +606,12 @@ static void SV_GetTilesFromTileSet (const MapInfo *map, const char* filename, co
  * @note: format of tile: "[tilename] min max"
  * @return @c true if it was parsed, @c false if not.
  */
-static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** text, Assembly *a)
+static bool SV_ParseAssembly (MapInfo* map, const char* filename, const char** text, Assembly* a)
 {
 	const char* errhead = "SV_ParseAssembly: Unexpected end of file (";
 	const char* token;
 	int x, y;
-	const Tile *tile;
+	const Tile* tile;
 
 	/* get assembly name */
 	token = Com_EParse(text, errhead, filename);
@@ -653,7 +653,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** t
 			/* a multiplayer only tile - forced to be exactly once in the map when
 			 * we are playing a multiplayer match */
 			if (sv_maxclients->integer > 1) {
-				const Tile *t = SV_GetMapTile(map, token);
+				const Tile* t = SV_GetMapTile(map, token);
 				if (t != nullptr) {
 					const ptrdiff_t i = t - map->mTile;
 					a->min[i] = 1;
@@ -690,7 +690,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** t
 			continue;
 		/* fix tilename "x y" */
 		} else if (Q_streq(token, "fix")) {
-			const Tile *t;
+			const Tile* t;
 
 			/* get tile */
 			token = Com_EParse(text, errhead, filename);
@@ -772,7 +772,7 @@ static bool SV_ParseAssembly (MapInfo *map, const char* filename, const char** t
  * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
-static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long tileAlts)
+static void SV_CombineAlternatives (unsigned long* mapAlts, const unsigned long tileAlts)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
 	if (IS_SOLID(*mapAlts) || (tileAlts == ALL_TILES))
@@ -790,10 +790,10 @@ static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long 
 /**
  * @brief Reset the map to empty state.
  */
-static void SV_ClearMap (MapInfo *map)
+static void SV_ClearMap (MapInfo* map)
 {
-	unsigned long *mp = &map->curMap[0][0];
-	const unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
+	unsigned long* mp = &map->curMap[0][0];
+	const unsigned long* end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
 	while (mp <= end)
 		*(mp++) = ALL_TILES;
@@ -807,12 +807,12 @@ static void SV_ClearMap (MapInfo *map)
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
  * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
  */
-static bool SV_FitTile (const MapInfo *map, const Tile * tile, const int x, const int y)
+static bool SV_FitTile (const MapInfo* map, const Tile*  tile, const int x, const int y)
 {
 	int tx, ty;
-	const unsigned long *spec = nullptr;
-	const unsigned long *m = nullptr;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const unsigned long* spec = nullptr;
+	const unsigned long* m = nullptr;
+	const Assembly* mAsm = map->getCurrentAssembly();
 
 	/* check for valid grid positions */
 	assert(x % mAsm->dx == 0);
@@ -858,10 +858,10 @@ static bool SV_FitTile (const MapInfo *map, const Tile * tile, const int x, cons
  * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
-static bool SV_TestFilled (const MapInfo *map)
+static bool SV_TestFilled (const MapInfo* map)
 {
 	int x, y;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 
 	for (y = 1; y < mAsm->height + 1; y++)
 		for (x = 1; x < mAsm->width + 1; x++)
@@ -874,10 +874,10 @@ static bool SV_TestFilled (const MapInfo *map)
 /**
  * @brief Debug function to dump the map location of a placed tile.
  */
-static void SV_DumpPlaced (const MapInfo *map, int pl)
+static void SV_DumpPlaced (const MapInfo* map, int pl)
 {
 	int x, y;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int h = mAsm->height;
 	const int w = mAsm->width;
 	const mPlaced_t* placed = &map->mPlaced[pl];
@@ -912,11 +912,11 @@ static void SV_DumpPlaced (const MapInfo *map, int pl)
  * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
-static void SV_AddTile (MapInfo *map, const Tile *tile, int x, int y, int idx, int pos)
+static void SV_AddTile (MapInfo* map, const Tile* tile, int x, int y, int idx, int pos)
 {
 	int tx, ty;
 #ifdef DEBUG
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 
 	/* check vor valid grid positions */
 	assert(x % mAsm->dx == 0);
@@ -958,7 +958,7 @@ static void SV_AddTile (MapInfo *map, const Tile *tile, int x, int y, int idx, i
  * @sa SV_AddTile
  * @sa SV_FitTile
  */
-static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
+static void SV_RemoveTile (MapInfo* map, int* idx, int* pos)
 {
 	int tx, ty;
 	int i, index;
@@ -976,7 +976,7 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
 	}
 
 	for (i = map->numPlaced; i--;) {
-		const Tile *tile = map->mPlaced[i].tile;
+		const Tile* tile = map->mPlaced[i].tile;
 		const int x = map->mPlaced[i].x;
 		const int y = map->mPlaced[i].y;
 		assert(i >= 0);
@@ -1011,10 +1011,10 @@ static void SV_RemoveTile (MapInfo *map, int* idx, int* pos)
  * string asmPos contains three coordinates for shifting the given tile names.
  * @param[in] print Print out the mapStrings or not
  */
-static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos, bool print)
+static void SV_BuildMapStrings (const MapInfo* map, char* asmTiles, char* asmPos, bool print)
 {
 	int i;
-	const Assembly *mAsm;
+	const Assembly* mAsm;
 	mAsm = map->getCurrentAssembly();
 
 	for (i = 0; i < map->numPlaced; i++) {
@@ -1048,14 +1048,14 @@ static void SV_BuildMapStrings (const MapInfo *map, char* asmTiles, char* asmPos
  * @param mapY y of the gap
  * @return the flags
  */
-static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo *map, int tileCode, int mapW, int mapX, int mapY)
+static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo* map, int tileCode, int mapW, int mapX, int mapY)
 {
 	const int pos = tileCode / TCM;
 	const int ti = tileCode % TCM;
 	const int posX = pos % mapW;
 	const int posY = pos / mapW;
 	const mToPlace_t* mToPlace = map->mToPlace;
-	const Tile *tile = mToPlace[ti].tile;
+	const Tile* tile = mToPlace[ti].tile;
 
 	return tile->spec[mapY - posY][mapX - posX];
 }
@@ -1073,10 +1073,10 @@ static unsigned long SV_GapGetFlagsAtAbsPos (MapInfo *map, int tileCode, int map
  */
 static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
 
-static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short myPosList[], const Tile *prevTile, int prevX, int prevY)
+static bool SV_AddMissingTiles_r (MapInfo* map, int rec, int posListCnt, short myPosList[], const Tile* prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	const mToPlace_t* mToPlace = map->mToPlace;
 	int i, j = 0;
@@ -1103,7 +1103,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 		if (mToPlace[ti].cnt >= mToPlace[ti].max)
 			continue;
 
-		const Tile *cTile = mToPlace[ti].tile;
+		const Tile* cTile = mToPlace[ti].tile;
 		bool ok = false;
 		/** try to reduce the # of calls to SV_FitTile by checking only those gaps affected by the placement of the previous tile */
 		if (rec > 0) {	/* the first recursion doesn't have a previous tile */
@@ -1173,7 +1173,7 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
 		const int ti = posTileList[rec][i] % TCM;
 		const int x = pos % mapW;
 		const int y = pos / mapW;
-		const Tile *tile = mToPlace[ti].tile;
+		const Tile* tile = mToPlace[ti].tile;
 		int tx, ty;
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
@@ -1287,9 +1287,9 @@ static bool SV_AddMissingTiles_r (MapInfo *map, int rec, int posListCnt, short m
  * @param tilePosListCnt The number of remaining possible tile positions
  * @return false if we detect a gap that NO tile can cover
  */
-static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
+static bool SV_GapListBuild (MapInfo* map, int tilePosListCnt)
 {
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	const mToPlace_t* mToPlace = map->mToPlace;
 
@@ -1310,7 +1310,7 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
 		const int ti = posTileList[0][i] % TCM;
 		x = pos % mapW;
 		y = pos / mapW;
-		Tile *tile = mToPlace[ti].tile;
+		Tile* tile = mToPlace[ti].tile;
 		for (int ty = 0; ty < tile->h; ty++) {
 			for (int tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {
@@ -1343,7 +1343,7 @@ static bool SV_GapListBuild (MapInfo *map, int tilePosListCnt)
  * @param ny y of the absolute map position to investigate
  * @return @c true if no matching tile was found
  */
-static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW,  int mapH, int nx, int ny)
+static bool SV_GapCheckNeighbour (MapInfo* map, int tc1, int mapW,  int mapH, int nx, int ny)
 {
 	if (nx < 1)
 		/* map border */
@@ -1388,9 +1388,9 @@ static bool SV_GapCheckNeighbour (MapInfo *map, int tc1, int mapW,  int mapH, in
  * @param map All we know about the map to assemble
  * @return the number of tiles that could be eliminated
  */
-static int SV_GapListReduce (MapInfo *map)
+static int SV_GapListReduce (MapInfo* map)
 {
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;
 	const int mapH = mAsm->height;
 	int x, y;
@@ -1460,10 +1460,10 @@ static int SV_GapListReduce (MapInfo *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static bool SV_AddMissingTiles (MapInfo *map)
+static bool SV_AddMissingTiles (MapInfo* map)
 {
 	static int attempts = 0;			/* how often this function is called in the RMA process */
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int mapW = mAsm->width;
 	const mToPlace_t* mToPlace = map->mToPlace;
@@ -1587,11 +1587,11 @@ static bool SV_AddMissingTiles (MapInfo *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static bool SV_AddMapTiles (MapInfo *map)
+static bool SV_AddMapTiles (MapInfo* map)
 {
 	int idx;	/* index in the array of available tiles */
 	int pos;	/* index in the array of random positions */
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 	const int mapW = mAsm->width;		/* width in x-direction */
 	const int mapSize = mAsm->size;		/* the # of grid squares in the assembly. A grid suare is usually 8x8 cells. */
 	const int numToPlace = map->numToPlace;
@@ -1698,10 +1698,10 @@ static bool SV_AddMapTiles (MapInfo *map)
  * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
-void SV_PrepareTilesToPlace (MapInfo *map)
+void SV_PrepareTilesToPlace (MapInfo* map)
 {
 	int i;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 
 	map->numToPlace = 0;
 	OBJZERO(map->mToPlace);
@@ -1728,7 +1728,7 @@ void SV_PrepareTilesToPlace (MapInfo *map)
  */
 static int SV_AssemblyThread (void* data)
 {
-	MapInfo *map = static_cast<MapInfo*>(data);
+	MapInfo* map = static_cast<MapInfo*>(data);
 
 	Com_SetRandomSeed(time(nullptr));
 
@@ -1775,10 +1775,10 @@ static int SV_AssemblyThread (void* data)
  *  So, main() checks the semaphore to see if it is taken, and if so doesn't restart, despite the timeout.
  *  @todo Maybe we also need to reduce the timeout value a bit every time it succeeds?
  */
-static int SV_ParallelSearch (MapInfo *map)
+static int SV_ParallelSearch (MapInfo* map)
 {
 	SDL_Thread *threads[ASSEMBLE_THREADS];
-	MapInfo *maps[ASSEMBLE_THREADS];
+	MapInfo* maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
 	const int threadno = std::min(sv_threads->integer, ASSEMBLE_THREADS);
@@ -1864,7 +1864,7 @@ static int SV_ParallelSearch (MapInfo *map)
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * from another ump file (no assemblies)
  */
-void SV_ParseUMP (const char* name, char* entityString, MapInfo *map, bool inherit)
+void SV_ParseUMP (const char* name, char* entityString, MapInfo* map, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte* buf;
@@ -1958,10 +1958,10 @@ static int cmpTileAreaSize (const void*  a, const void*  b)
 }
 #endif
 
-static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed, bool print)
+static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed, bool print)
 {
 	int i;
-	const Assembly *mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 
@@ -2068,7 +2068,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo *map, const char* assembly, char* asmT
  */
 MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
 {
-	MapInfo *map;
+	MapInfo* map;
 
 	map = Mem_AllocType(MapInfo);
 	Q_strncpyz(map->name, mapName, sizeof(map->name));
