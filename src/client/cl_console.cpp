@@ -87,8 +87,7 @@ static void Con_Clear (void)
 
 /**
  * @param text The character buffer to draw - color encoded
- * @param x The x coordinate on the screen
- * @param y The y coordinate on the screen
+ * @param x,y The coordinates on the screen
  * @param width Characters to draw
  */
 static void Con_DrawText (const short* text, int x, int y, size_t width)
@@ -102,8 +101,7 @@ static void Con_DrawText (const short* text, int x, int y, size_t width)
 
 /**
  * @param txt The character buffer to draw
- * @param x The x coordinate on the screen
- * @param y The y coordinate on the screen
+ * @param x,y The coordinates on the screen
  * @param width Characters to draw
  */
 void Con_DrawString (const char* txt, int x, int y, unsigned int width)

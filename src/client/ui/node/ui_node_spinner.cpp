@@ -93,8 +93,7 @@ static void UI_SpinnerNodeRepeat (uiNode_t* node, uiTimer_t* timer)
  * @brief Check a position relative to the node to check action
  * is can produce.
  * @param node This node
- * @param x Relative location x to the node
- * @param y Relative location y to the node
+ * @param x,y Relative location to the node
  * @return True if the current location can increase the value
  */
 bool uiSpinnerNode::isPositionIncrease(uiNode_t* node, int x, int y)

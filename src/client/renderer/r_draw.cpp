@@ -337,8 +337,7 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 
 /**
  * @brief Draws an image or parts of it
- * @param x X position to draw the image to
- * @param y Y position to draw the image to
+ * @param x,y position to draw the image to
  * @param[in] image Pointer to the imlage to display
  */
 void R_DrawImage (float x, float y, const image_t* image)
