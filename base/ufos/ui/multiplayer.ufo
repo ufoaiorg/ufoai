@@ -636,7 +636,7 @@ window mp_create_server extends abstract_multiplayer
 			pos			"85 70"
 			size		"280 20"
 		}
-		checkbox_blue server_teamplay_value
+		checkbox_ui2 server_teamplay_value
 		{
 			current		*cvar:sv_teamplay
 			pos			"245 70"
@@ -701,7 +701,7 @@ window mp_create_server extends abstract_multiplayer
 			pos			"25 0"
 			size		"300 20"
 		}
-		checkbox_blue morale_value
+		checkbox_ui2 morale_value
 		{
 			current		*cvar:sv_enablemorale
 			pos			"350 1"
@@ -718,7 +718,7 @@ window mp_create_server extends abstract_multiplayer
 			tooltip		"_Enemies respawn when killed."
 			visiblewhen "*cvar:ai_multiplayeraliens >= 1"
 		}
-		checkbox_blue alienrush_value
+		checkbox_ui2 alienrush_value
 		{
 			current		*cvar:g_endlessaliens
 			pos			"350 26"
@@ -898,7 +898,7 @@ window mp_create_server extends abstract_multiplayer
 			pos			"85 20"
 			size		"280 20"
 		}
-		checkbox_blue public_value
+		checkbox_ui2 public_value
 		{
 			current		*cvar:sv_public
 			pos			"410 20"
@@ -1261,7 +1261,7 @@ window multiplayer_wait extends levelbuttons
 			onClick		{ cmd "teamnum_dec;" }
 		}
 
-		checkbox_green cb_ready
+		checkbox_ui2 cb_ready
 		{
 			tooltip		"_Finish the teamselection and start the game"
 			pos			"200 130"

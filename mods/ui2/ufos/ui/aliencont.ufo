@@ -1,9 +1,0 @@
-/*
- * Dummy window to prevent default UI from blocking my confuncs
- */
-window aliencont
-{
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-}

@@ -558,7 +558,7 @@ window popup_ufoyards {
 			contentalign	ALIGN_UR
 		}
 
-		checkbox_green confirm {
+		checkbox_ui2 confirm {
 			tooltip		"_Confirm destroying"
 			pos			"120 221"
 			size		"20 20"
@@ -658,7 +658,7 @@ window popup_ufoyards {
 				call *node:root.ufoyardtabs@onChange
 			}
 		}
-		checkbox_green confirm {
+		checkbox_ui2 confirm {
 			tooltip		"_Confirm destroying"
 			pos			"120 221"
 			size		"20 20"

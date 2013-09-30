@@ -255,7 +255,7 @@ component ObjectInfo extends panel
 			dataid		TEXT_ITEMDESCRIPTION
 			pos			"30 10"
 			size		"420 135"
-			rows		"8"
+			rows		"9"
 			lineheight	15
 			tabwidth	168
 			color		"0.56 0.81 0.76 1"
@@ -274,8 +274,8 @@ component ObjectInfo extends panel
 			pos			"430 10"
 			height		"135"
 			current		0
-			viewsize	8
-			fullsize	8
+			viewsize	9
+			fullsize	9
 			hidewhenunused true
 			onChange {
 				*node:parent.description@viewpos = <current>

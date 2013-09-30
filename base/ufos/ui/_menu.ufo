@@ -616,22 +616,6 @@ component cmpTeamPanel extends panel
 	}
 }
 
-component checkbox_blue extends checkbox
-{
-	iconChecked      "icons/checkbox_blue_checked"
-	iconUnchecked    "icons/checkbox_blue_unchecked"
-	iconIndeterminate "icons/checkbox_blue_indeterminate"
-	size "22 22"
-}
-
-component checkbox_green extends checkbox
-{
-	iconChecked      "icons/checkbox_green_checked"
-	iconUnchecked    "icons/checkbox_green_unchecked"
-	iconIndeterminate "icons/checkbox_green_indeterminate"
-	size "20 20"
-}
-
 component spinner_blue extends spinner
 {
 	topIcon	"ui/spinner_blue_up"

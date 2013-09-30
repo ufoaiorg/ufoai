@@ -11,7 +11,7 @@ component teamSoldier extends panel {
 		string		""
 	}
 
-	checkbox_green selected {
+	checkbox_ui2 selected {
 		pos			"0 2"
 		size		"20 20"
 		onChange {

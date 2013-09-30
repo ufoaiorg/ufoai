@@ -17,9 +17,9 @@ component cmpGameModeButton extends cmpMenuButton
 	}
 }
 
+/*
 window singleplayer
 {
-	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
 	// ==================
@@ -42,10 +42,8 @@ window singleplayer
 	// buttons
 	// ==================
 
-	/**
 	 * @param <1> window id
 	 * @param <2> name
-	 */
 	confunc game_addmode_singleplayer
 	{
 		call *node:root.gamemodeslistpanel@createChild ( "<1><2>" , "cmpGameModeButton" )
@@ -73,6 +71,7 @@ window singleplayer
 		onClick		{ cmd "ui_pop;" }
 	}
 }
+*/
 
 // ==================
 // SINGLE PLAYER MISSION MENU
@@ -80,74 +79,65 @@ window singleplayer
 
 window singleplayermission
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/main_bg"
+		fill		true
+		starlayout	true
+		bgcolor		"0 0 0 0.5"
+	}
+	panel buttons
+	{
+		{
+			size			"400 700"
+			align			LAYOUTALIGN_TOP
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+			contentalign	LAYOUTALIGN_MIDDLE
+		}
+		panel spacer
+		{
+			{
+				size	"0 235"
+			}
+		}
+		MainMenuBtn continue
+		{
+			onClick	{ cmd "ui_pop;" }
+			string	"_CONTINUE"
+		}
+		MainMenu2Btn restart
+		{
+			onClick	{ cmd "game_go;" }
+			string	"_RESTART MISSION"
+		}
+		MainMenu2Btn abort
+		{
+			onClick	{ cmd "game_abort;" }
+			string	"_ABORT MISSION"
+		}
+		MainMenu2Btn options
+		{
+			onClick	{ cmd "ui_push options;" }
+			string	"_OPTIONS"
+		}
+		MainMenuExitBtn exit
+		{
+			onClick		{ cmd "quit;" }
+			string		"_QUIT"
+		}
 	}
 
-	string version
-	{
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	cmpMenuButton button_continue
-	{
-		string		"_Continue"
-		tooltip		"_Go back to the battlescape."
-		pos			"640 170"
-		onClick		{ cmd "ui_pop;" }
-	}
-
-	cmpMenuButton button_abort
-	{
-		string		"_Abort"
-		tooltip		"_Abort this battlescape mission."
-		pos			"640 240"
-		onClick		{ cmd "game_abort;" }
-	}
-
-	cmpMenuButton button_retry
-	{
-		string		"_Retry"
-		tooltip		"_Retry this battlescape mission."
-		pos			"640 310"
-		onClick		{ cmd "game_go;" }
-	}
-
-	cmpMenuButton button_options
-	{
-		string		"_Options"
-		tooltip		"_Enter the game options menu."
-		pos			"640 380"
-		onClick		{ cmd "ui_push options;" }
-	}
-
-	cmpMenuButton button_exit_battlescape
-	{
-		string		"_Exit"
-		tooltip		"_You will lose all your progress."
-		pos			"640 520"
-		onClick		{ cmd "check_if_in_campaign_mode;" }
-	}
-
+	// TODO: This should be a general cgame method
 	confunc check_if_in_campaign_mode
 	{
-		if ( *cvar:mn_base_count > 0 ) { cmd "ui_push popup_exit_campaign_confirmation;" }
-		else { cmd "game_exit;" }
+		if ( *cvar:mn_base_count > 0 ) {
+			cmd "ui_push popup_exit_campaign_confirmation;"
+		} else {
+			cmd "game_exit;"
+		}
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
 
 // ========================

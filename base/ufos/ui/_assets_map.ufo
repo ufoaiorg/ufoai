@@ -87,10 +87,10 @@ component SetEnemyCount extends panel
 			*node:this.enemy_count_val@color = "1 1 1 0.5"
 		}
 		onWheelUp		{
-			cmd "increase_enemy_count;"
+			call *node:this.increase_enemy_count
 		}
 		onWheelDown		{
-			cmd "decrease_enemy_count;"
+			call *node:this.decrease_enemy_count
 		}
 	}
 
@@ -106,7 +106,7 @@ component SetEnemyCount extends panel
 
 	string enemy_count_val
 	{
-		string			*cvar:ai_numaliens
+		string			*cvar:ai_multiplayeraliens
 		pos				"420 5"
 		size			"40 30"
 		font			"f_big"
@@ -123,7 +123,7 @@ component SetEnemyCount extends panel
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
 		onClick		{
-			cmd "increase_enemy_count;"
+			call *node:this.increase_enemy_count
 		}
 	}
 
@@ -135,21 +135,21 @@ component SetEnemyCount extends panel
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
 		onClick		{
-			cmd "decrease_enemy_count;"
+			call *node:this.decrease_enemy_count
 		}
 	}
 
-	confunc increase_enemy_count
+	func increase_enemy_count
 	{
-		if (*cvar:ai_numaliens < 30) {
-			*cvar:ai_numaliens = (*cvar:ai_numaliens + 1)
+		if (*cvar:ai_multiplayeraliens < 30) {
+			*cvar:ai_multiplayeraliens = (*cvar:ai_multiplayeraliens + 1)
 		}
 	}
 
-	confunc decrease_enemy_count
+	func decrease_enemy_count
 	{
-		if (*cvar:ai_numaliens > 1) {
-			*cvar:ai_numaliens = (*cvar:ai_numaliens - 1)
+		if (*cvar:ai_multiplayeraliens > 1) {
+			*cvar:ai_multiplayeraliens = (*cvar:ai_multiplayeraliens - 1)
 		}
 	}
 }
@@ -185,11 +185,13 @@ component SelDropship extends panel
 	 * This is called from within the game. confunc name must not be changed.
 	 * @param<1> boolean to hide or show
 	 */
+	/*
 	confunc skirmish_hide_dropships
 	{
 		*node:parent@invis = <1>
 		*node:parent@ghost = <1>
 	}
+	*/
 }
 
 // UFO selection panel
@@ -226,11 +228,13 @@ component SelUFO extends panel
 	 * This is called from within the game. confunc name must not be changed.
 	 * @param<1> boolean to hide or show
 	 */
+	/*
 	confunc skirmish_hide_ufos
 	{
 		*node:parent@invis = <1>
 		*node:parent@ghost = <1>
 	}
+	*/
 }
 
 // ========================

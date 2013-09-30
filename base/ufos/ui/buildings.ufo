@@ -74,7 +74,7 @@ window buildings
 		}
 	}
 
-	checkbox_green building_preview
+	checkbox_ui2 building_preview
 	{
 		tooltip		"_Open/close Building preview window"
 		pos			"770 700"

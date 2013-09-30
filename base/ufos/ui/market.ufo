@@ -2,255 +2,339 @@
 // MARKET MENU
 // ==================
 
-component cmpMarketItem extends panel {
+/*
+ * @TODO
+ * - Make autosell button work properly
+ */
+window market  {
+	{ size	"1024 768" }
+
+	// Base name and container panel
+	panel base_container
 	{
-		size "425 25"
-		onClick {
-			cmd "ui_market_select <node:this.id@string>;"
-		}
-	}
-
-	data id {
-	}
-
-	checkbox_blue autosell {
-		current		0
-		pos			"0 0"
-		size		"22 18"
-
-		onChange {
-			cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@current>;"
-			cmd "ui_market_fill <cvar:ui_market_category>;"
-			cmd "ui_market_select <node:parent.id@string>;"
-		}
-	}
-
-	string name {
-		color		"0 .78 0 1"
-		pos			"25 0"
-		size		"250 25"
-		ghost		true
-	}
-	string storage {
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-		pos			"280 0"
-		size		"60 25"
-		ghost		true
-	}
-	string market {
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-		pos			"370 0"
-		size		"46 25"
-		ghost true
-	}
-	string price {
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-		pos			"432 0"
-		size		"60 25"
-		ghost		true
-	}
-
-	spinner_blue buysell {
-		tooltip		"_Buy and sell item"
-		pos			"346 0"
-		onChange {
-			if ( ( ( <node:parent.storage@string> + <node:parent.market@string> ) + <lastdiff> ) < 1 ) {
-				*node:root.selected@string = ""
-			}
-			cmd "ui_market_buy \"<node:parent.id@string>\" <lastdiff>;"
-			cmd "ui_market_fill <cvar:ui_market_category>;"
-			if ( *node:root.selected@string ne "" ) {
-				cmd "ui_market_select \"<node:parent.id@string>\";"
-			}
-		}
-	}
-}
-
-window market extends objectinfo {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background {
-		src		"background/base_bg"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// ==================
-	// tab
-	// ==================
-
-	data selected {
-		string	""
-	}
-
-	panel tab_background {
-		pos		"24 96"
-		size	"986 56"
-		background	"ui/panel_tab"
-	}
-
-	tab market_navigation {
 		{
-			pos		"47 106"
-			size	"938 39"
-			cvar	*cvar:ui_market_category
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
 
-			onChange {
-				*node:root.selected@string = ""
-				cmd "ui_market_fill <cvar:ui_market_category>;"
+		// @TODO: make next/prev base btns work
+		button prev
+		{
+			icon			"icons/windowprev"
+			tooltip			"_Previous base"
+			pos				"90 6"
+			size			"18	18"
+			onClick			{ cmd "ui_pop; mn_base_prev;" }
+		}
+		button next
+		{
+			icon			"icons/windownext"
+			tooltip			"_Next base"
+			pos				"115 6"
+			size			"18	18"
+			onClick			{ cmd "ui_pop; mn_base_next;" }
+		}
+		// Base name
+		textentry name
+		{
+			string		*cvar:mn_base_title
+			pos			"135 0"
+			size		"465 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CL
+			onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
+		}
+		// Base selector
+		panel base_selector
+		{
+			{
+				pos		"440 7"
+				size	"160 16"
+				layout			LAYOUT_COLUMN
+				layoutColumns	8
+				layoutMargin	4
+			}
+			BaseLayoutMini base0 { baseid 0 }
+			BaseLayoutMini base1 { baseid 1 }
+			BaseLayoutMini base2 { baseid 2 }
+			BaseLayoutMini base3 { baseid 3 }
+			BaseLayoutMini base4 { baseid 4 }
+			BaseLayoutMini base5 { baseid 5 }
+			BaseLayoutMini base6 { baseid 6 }
+			BaseLayoutMini base7 { baseid 7 }
+		}
+		string credits
+		{
+			string		*cvar:mn_credits
+			pos			"600 0"
+			size		"120 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CR
+		}
+
+		// Market panel
+		panel market
+		{
+			{
+				pos				"4 30"
+				size			"715 534"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+				string title
+				{
+					string			"_Market"
+					pos				"90 1"
+					size			"593 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+				button back
+				{
+					icon			"icons/windownext"
+					tooltip			"_Back to base"
+					pos				"683 7"
+					size			"18	18"
+					onClick			{ cmd "ui_pop; base_init; reset_base;" }
+				}
+			}
+			// Market list headings (base / market)
+			panel list_header
+			{
+				{
+					pos			"1 40"
+					size		"713 32"
+				}
+				string base
+				{
+					string			"_Base"
+					pos				"320 0"
+					size			"80 32"
+					color			"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CR
+				}
+				string market
+				{
+					string			"_Market"
+					pos				"586 0"
+					size			"100 32"
+					color			"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+			}
+			// Market items list
+			panel list
+			{
+				{
+					pos				"1 70"
+					size			"713 463"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					onViewChange	{
+						*node:parent.list_scroll@current = <viewpos>
+						*node:parent.list_scroll@fullsize = <fullsize>
+						*node:parent.list_scroll@viewsize = <viewsize>
+					}
+				}
+				data selected { string "" }
+				data category_height { integer 30 }
+				MarketCategory primary_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "primary"
+							cmd "ui_market_fill primary;"
+						}
+					}
+					string name { string "_Primary Weapons" }
+				}
+				MarketList primary { }
+				MarketCategory secondary_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "secondary"
+							cmd "ui_market_fill secondary;"
+						}
+					}
+					string name { string "_Secondary Weapons" }
+				}
+				MarketList secondary { }
+				MarketCategory heavy_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "heavy"
+							cmd "ui_market_fill heavy;"
+						}
+					}
+					string name { string "_Heavy Weapons" }
+				}
+				MarketList heavy { }
+				MarketCategory misc_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "misc"
+							cmd "ui_market_fill misc;"
+						}
+					}
+					string name { string "_Equipment" }
+				}
+				MarketList misc { }
+				MarketCategory armour_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "armour"
+							cmd "ui_market_fill armour;"
+						}
+					}
+					string name { string "_Armour" }
+				}
+				MarketList armour { }
+				MarketCategory craftitem_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "craftitem"
+							cmd "ui_market_fill craftitem;"
+						}
+					}
+					string name { string "_Aircraft Equipment" }
+				}
+				MarketList craftitem { }
+				MarketCategory aircraft_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "aircraft"
+							cmd "ui_market_fill aircraft;"
+						}
+					}
+					string name { string "_Aircraft" }
+				}
+				MarketList aircraft { }
+				MarketCategory dummy_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "dummy"
+							cmd "ui_market_fill dummy;"
+						}
+					}
+					string name { string "_Other Items" }
+				}
+				MarketList dummy { }
+				MarketCategory ugvitem_label
+				{
+					{
+						onClick {
+							*cvar:ui_market_category = "ugvitem"
+							cmd "ui_market_fill ugvitem;"
+						}
+					}
+					string name { string "_Unmanned Ground Vehicles" }
+				}
+				MarketList ugvitem { }
+			}
+			vscrollbar list_scroll {
+				image			"ui/scrollbar_v_green"
+				pos				"697 70"
+				height			"463"
+				current			0
+				viewsize		8
+				fullsize		22
+				hidewhenunused	true
+				onChange		{
+					*node:parent.list@viewpos = <current>
+				}
 			}
 		}
-
-		option primary {
-			label	"_Primary"
-			value	"primary"
-		}
-		option secondary {
-			label	"_Secondary"
-			value	"secondary"
-		}
-		option heavy {
-			label	"_Heavy"
-			value	"heavy"
-		}
-		option misc {
-			label	"_Misc"
-			value	"misc"
-		}
-		option armour {
-			label	"_Armour"
-			value	"armour"
-		}
-		option craftitem {
-			label	"_Craft items"
-			value	"craftitem"
-		}
-		option aircraft {
-			label	"_Aircraft"
-			value	"aircraft"
-		}
-		option dummy {
-			label	"_Other"
-			value	"dummy"
-		}
-		option ugvitem {
-			label	"_UGV items"
-			value	"ugvitem"
+		// Object description panel
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
 		}
 	}
 
-	// ==================
-	// lists
-	// ==================
+	// Storage count
+	BuildingSpace storage
+	{
+		{ pos "739 0" }
 
-	rows lines {
-		pos			"28 175"
-		size		"530 568"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
+		button smlicon { icon	"icons/building_storage" }
+		string label { string	"_Storage" }
+		button alert { invis true }
 	}
 
-	panel verticalline {
-		pos		"451 175"
-		size	"4 565"
-		bgcolor	"0.03 0.42 0.03 1"
-	}
-
-	panel itemlist_back {
-		pos		"12 160"
-		size	"553 597"
-		background	"ui/panel_grey_green_large2"
-	}
-	string name_label {
-		string		"_Name"
-		pos			"55 180"
-		size		"250 25"
-		color		"0 .78 0 1"
-	}
-	string storage_label {
-		string		"_Store"
-		tooltip		"_Number of such items in base"
-		pos			"325 180"
-		size		"60 25"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-	}
-	string market_label {
-		string		"_Market"
-		tooltip		"_Number of such items on the market"
-		pos			"390 180"
-		size		"60 25"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-	}
-	string price {
-		string		"_Price"
-		pos			"462 180"
-		size		"60 25"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-	}
-
-	panel itemlist {
-		pos		"30 205"
-		size	"500 535"
-		layout	LAYOUT_TOP_DOWN_FLOW
-		wheelscrollable	true
-		onViewChange {
-			*node:parent.itemlist_scroll@fullsize = <fullsize>
-			*node:parent.itemlist_scroll@current = <viewpos>
-			*node:parent.itemlist_scroll@viewsize = <viewsize>
+	// Shopping cart / confirm transaction window
+	panel transaction
+	{
+		{
+			pos		"739 35"
+			size	"285 728"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+		string label
+		{
+			string			"_Transactions"
+			pos				"1 1"
+			size			"283 727"
+			contentalign	ALIGN_CC
+			color			"0.56 0.81 0.76 1"
+			bgcolor			"0.56 0.81 0.76 0.3"
 		}
 	}
-	vscrollbar itemlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"530 205"
-		height		"535"
-		current		0
-		viewsize	21
-		fullsize	21
-		hidewhenunused true
-		onChange {
-			*node:parent.itemlist@viewpos = <current>
-		}
-	}
+
+	// Back to geoscape
+	Geoscape geoscape_button { }
 
 	/*
-	 * @brief Select an entry from thelist
-	 * <1> item id
-	 */
-	confunc ui_market_select {
-		if ( *node:root.selected@string ne "" ) {
-			*node:root.itemlist.item_<node:root.selected@string>.name@color = "0 .78 0 1"
-			*node:root.itemlist.item_<node:root.selected@string>.storage@color = "0 .78 0 1"
-			*node:root.itemlist.item_<node:root.selected@string>.market@color = "0 .78 0 1"
-			*node:root.itemlist.item_<node:root.selected@string>.price@color = "0 .78 0 1"
-		}
-		*node:root.selected@string = <1>
-		if ( *node:root.selected@string ne "" ) {
-			*node:root.itemlist.item_<node:root.selected@string>.name@color = "1 1 1 1"
-			*node:root.itemlist.item_<node:root.selected@string>.storage@color = "1 1 1 1"
-			*node:root.itemlist.item_<node:root.selected@string>.market@color = "1 1 1 1"
-			*node:root.itemlist.item_<node:root.selected@string>.price@color = "1 1 1 1"
-			cmd "ui_market_showinfo <1>;"
-		}
-	}
-	/*
-	 * @brief Confunc to clear the itemlist
+	 * @brief Confunc to clear the market list
 	 */
 	confunc ui_market_clear {
-		call *node:root.itemlist@removeAllchild
+		// Reset stored height integer
+		*node:root.base_container.market.list.category_height@integer = 0
+
+		// Empty and reset height for all categories
+		call *node:root.base_container.market.list.primary@removeAllchild
+		*node:root.base_container.market.list.primary@size = "713 0"
+		call *node:root.base_container.market.list.secondary@removeAllchild
+		*node:root.base_container.market.list.secondary@size = "713 0"
+		call *node:root.base_container.market.list.heavy@removeAllchild
+		*node:root.base_container.market.list.heavy@size = "713 0"
+		call *node:root.base_container.market.list.misc@removeAllchild
+		*node:root.base_container.market.list.misc@size = "713 0"
+		call *node:root.base_container.market.list.armour@removeAllchild
+		*node:root.base_container.market.list.armour@size = "713 0"
+		call *node:root.base_container.market.list.craftitem@removeAllchild
+		*node:root.base_container.market.list.craftitem@size = "713 0"
+		call *node:root.base_container.market.list.aircraft@removeAllchild
+		*node:root.base_container.market.list.aircraft@size = "713 0"
+		call *node:root.base_container.market.list.dummy@removeAllchild
+		*node:root.base_container.market.list.dummy@size = "713 0"
+		call *node:root.base_container.market.list.ugvitem@removeAllchild
+		*node:root.base_container.market.list.ugvitem@size = "713 0"
 	}
+
 	/*
 	 * @brief Confunc to add the item to market's itemlist
 	 * <1> reference id
@@ -263,315 +347,68 @@ window market extends objectinfo {
 	 * <8> tooltip for disabled entries, "-" otherwise
      */
 	confunc ui_market_add {
-		call *node:root.itemlist@createChild("item_<1>", "cmpMarketItem")
+		//cmd "echo <cvar:ui_market_category>"
+		call *node:root.base_container.market.list.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
 
-		// autosell
-		*node:root.itemlist.item_<1>.id@string = <7>
-		if ( *node:root.itemlist.item_<1>.id@string eq "-" ) {
-			*node:root.itemlist.item_<1>.autosell@invis = true
+		// Temporary implementation for layout
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.id@string = <1>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
+
+		// Set buy/sell spinners
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@current = <3>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@min = 0
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@current = <3>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+
+		// Set autosell
+		if ( param7 eq "-" ) {
+			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@invis = true
 		} else {
-			*node:root.itemlist.item_<1>.autosell@current = <7>
-			if ( *node:root.itemlist.item_<1>.autosell@current != 0 ) {
-				*node:root.itemlist.item_<1>.autosell@tooltip = "_Item autosell enabled"
-			} else {
-				*node:root.itemlist.item_<1>.autosell@tooltip = "_Item autosell disabled"
-			}
-		}
-		*node:root.itemlist.item_<1>.id@string = <8>
-		if ( *node:root.itemlist.item_<1>.id@string ne "-" ) {
-			*node:root.itemlist.item_<1>.autosell@tooltip = <8>
-			*node:root.itemlist.item_<1>.autosell@disabled = true
-			*node:root.itemlist.item_<1>.buysell@disabled = true
-			*node:root.itemlist.item_<1>.buysell@tooltip = <8>
+			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
 		}
 
-		*node:root.itemlist.item_<1>.id@string = <1>
-		*node:root.itemlist.item_<1>.name@string = <2>
-		*node:root.itemlist.item_<1>.storage@string = <3>
-		*node:root.itemlist.item_<1>.market@string = <4>
-		*node:root.itemlist.item_<1>.price@string = <5>
-		if ( *node:root.itemlist.item_<1>.price@string eq "0" ) {
-			*node:root.itemlist.item_<1>.price@string = <6>
-		}
-		*node:root.itemlist.item_<1>.buysell@min = 0
-		*node:root.itemlist.item_<1>.buysell@current = <3>
-		*node:root.itemlist.item_<1>.buysell@max = ( <3> + <4> )
+		// Increase height of category panel
+		*node:root.base_container.market.list.category_height@integer = ( *node:root.base_container.market.list.category_height@integer + 30 )
+		*node:root.base_container.market.list.<cvar:ui_market_category>@size = "713 <node:root.base_container.market.list.category_height@integer>"
+	}
 
-		if ( *node:root.selected@string eq "" ) {
-			call *node:root.ui_market_select ( "<1>" )
+	confunc ui_market_update_caps {
+	}
+
+	/*
+	 * @brief Select an item from the list
+	 * <1> item id
+	 */
+	confunc ui_market_select {
+		if ( *node:root.base_container.market.list.selected@string ne "" ) {
+			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 0.7"
+		}
+		*node:root.base_container.market.list.selected@string = <1>
+		if ( *node:root.base_container.market.list.selected@string ne "" ) {
+			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 1"
+			cmd "ui_market_showinfo <1>;"
 		}
 	}
 
-	panel basedescription {
-		{
-			pos		"588 167"
-			size	"410 115"
-			background	"ui/panel_grey_green"
-		}
-
-		string header_capacity {
-			string 		"_Capacity"
-			pos			"15 20"
-			size		"230 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CL
-		}
-		string header_free {
-			string 		"_free"
-			pos			"245 20"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-		string header_all {
-			string 		"_all"
-			pos			"320 20"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-
-		string storage_caption {
-			string 		"_Storage"
-			pos			"15 40"
-			size		"230 20"
-			font		"f_small"
-		}
-		string storage_free {
-			pos			"245 40"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string storage_all {
-			pos			"320 40"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string interceptor_caption {
-			string 		"_Interceptor Hangar"
-			pos			"15 60"
-			size		"230 20"
-			font		"f_small"
-		}
-		string interceptor_free {
-			pos			"245 60"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string interceptor_all {
-			pos			"320 60"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string dropship_caption {
-			string 		"_Dropship Hangar"
-			pos			"15 80"
-			size		"230 20"
-			font		"f_small"
-		}
-		string dropship_free {
-			pos			"245 80"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string dropship_all {
-			pos			"320 80"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-
-		confunc ui_market_update_caps {
-			*node:parent.storage_free@string = "<1>"
-			*node:parent.storage_all@string = "<2>"
-			*node:parent.interceptor_free@string = "<3>"
-			*node:parent.interceptor_all@string = "<4>"
-			*node:parent.dropship_free@string = "<5>"
-			*node:parent.dropship_all@string = "<6>"
-		}
-
-	}
-
-	confunc listen_openpedia {
-		cmd "ui_market_select \"<node:root.selected@string>\";"
-		cmd "ui_removelistener ufopedia@onWindowClosed <path:this>;"
-	}
-
-	panel itemdescription {
-		{
-			pos		"588 303"
-			size	"410 455"
-			background	"ui/panel_grey_green"
-		}
-
-		// ==================
-		// item description
-		// ==================
-
-		string itemname
-		{
-			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
-			string		*cvar:mn_itemname
-			pos			"22 25"
-			size		"365 20"
-			contentalign	ALIGN_UC
-		}
-		string aircraftname
-		{
-			visiblewhen "*cvar:ui_market_category eq \"aircraft\""	// Only for aircraft.
-			string		*cvar:mn_aircraftname
-			pos			"22 25"
-			size		"365 20"
-			contentalign	ALIGN_UC
-		}
-
-		button ufopedia_link
-		{
-			icon		"icons/bordered_magnifying_glass"
-			tooltip		"_UFOpaedia"
-			pos			"370 27"
-			size		"16 16"
-			onClick		{
-				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
-				cmd "market_openpedia;"
-			}
-		}
-
-		item itemmodel
-		{
-			src			*cvar:mn_item
-			pos			"13 55"
-			size		"384 200"
-			angles		"0 180 90"
-			omega		"0 10 0"
-			autoscale	true
-		}
-
-		text description
-		{
-			dataid		TEXT_ITEMDESCRIPTION
-			pos			"32 257"
-			size		"336 120"
-			rows		"8"
-			lineheight	15
-			tabwidth	168
-			font		"f_verysmall"
-			onViewChange {
-				*node:root.itemdescription.description_scroll@fullsize = <fullsize>
-				*node:root.itemdescription.description_scroll@current = <viewpos>
-			}
-			onWheel {
-				*node:root.itemdescription.description_scroll@current = <viewpos>
-			}
-		}
-		vscrollbar description_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"370 257"
-			height		"120"
-			current		0
-			viewsize	8
-			fullsize	8
-			hidewhenunused true
-			onChange {
-				*node:root.itemdescription.description@viewpos = <current>
-			}
-		}
-
-		// ======================
-		// useable weapon or ammo
-		// ======================
-
-		string header_item
-		{
-			string	"_With:"
-			pos		"32 390"
-			size	"100 16"
-			font	"f_small"
-		}
-
-		button action_dec
-		{
-			pos		"142 390"
-			icon	"icons/prev"
-			size	"16 16"
-			onClick	{ cmd "mn_decreaseitem;" }
-		}
-
-		string item_name
-		{
-			string	*cvar:mn_linkname
-			pos		"162 390"
-			size	"190 16"
-			contentalign	ALIGN_CC
-			font	"f_small"
-		}
-
-		button action_inc
-		{
-			pos		"356 390"
-			icon	"icons/next"
-			size	"16 16"
-			onClick	{ cmd "mn_increaseitem;" }
-		}
-
-		// ==================
-		// firemode
-		// ==================
-
-		string header_firemode
-		{
-			string	"_Firemode:"
-			pos		"32 414"
-			size	"100 16"
-			font	"f_small"
-		}
-
-		button firemode_dec
-		{
-			tooltip "_Previous firemode"
-			pos		"142 414"
-			icon	"icons/prev"
-			size	"16 16"
-			onClick	{ cmd "mn_decreasefiremode;" }
-		}
-
-		string firemode_name
-		{
-			string	*cvar:mn_firemodename
-			pos		"162 414"
-			size	"190 16"
-			contentalign	ALIGN_CC
-			font	"f_small"
-		}
-
-		button firemode_inc
-		{
-			tooltip "_Next firemode"
-			pos		"356 414"
-			icon	"icons/next"
-			size	"16 16"
-			onClick	{ cmd "mn_increasefiremode;" }
-		}
-
-	}
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 
 	// ==================
 	// init
 	// ==================
 
-	func onWindowOpened {
-		*node:root.selected@string = ""
-		cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-		*cvar:mn_lastsubmenu = "market"
-	}
+	func onWindowOpened { }
 
 	func onWindowClosed {
-		call *node:root.ui_market_clear
+
 		// Call base_init so that storage data can be updated
 		cmd "base_init;"
 	}

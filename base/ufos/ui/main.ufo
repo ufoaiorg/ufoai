@@ -5,7 +5,25 @@
 window main
 {
 	{
-		background	"background/main_bg"
+		background		"ui/main_bg"
+	}
+
+	string title {
+		string			"_UFO: ALIEN INVASION"
+		size			"500 50"
+		pos				"262 50"
+		font			"f_title"
+		color			"0.59 0.78 0.56 1"
+		contentalign	ALIGN_CC
+	}
+
+	/**
+	 * @brief Adds cgame games to the main menu (like skirmish and campaign)
+	 * @param <1> window id
+	 * @param <2> name
+	 */
+	confunc game_addmode_singleplayer
+	{
 	}
 
 	button facebook
@@ -32,79 +50,72 @@ window main
 		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
 	}
 
-	panel bottom {
-		{
-			pos			"10 743"
-			size		"800 25"
-			layout		LAYOUT_LEFT_RIGHT_FLOW
-			layoutMargin	2
-		}
-
-		string version
-		{
-			string		*cvar:version
-			size		"550 20"
-		}
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
 	panel buttons {
 		{
-			pos			"640 170"
-			size		"256 344"
+			pos			"312 250"
+			size		"400 400"
 			layout		LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	6
-			wheelscrollable	false
+			layoutMargin	15
 		}
-
-		cmpMenuButton button_singleplayer
-		{
-			onClick	{ cmd "ui_push singleplayer;" }
-			string	"_Single-player"
-			tooltip	"_Choose between Campaign or Skirmish mode."
+		MainMenuBtn btn_campaign {
+			string		"_CAMPAIGN"
+			onClick	{
+				cmd "ui_push campaign;"
+			}
 		}
-
-		cmpMenuButton button_multiplayer
-		{
-			onClick	{ cmd "mn_push_multiplayer;" }
-			string	"_Multiplayer"
+		MainMenuBtn btn_skirmish {
+			string		"_SKIRMISH"
+			onClick {
+				cmd "ui_push skirmish;"
+			}
 		}
-
-		cmpMenuButton button_options
-		{
-			onClick	{ cmd "ui_push options;" }
-			string	"_Options"
+		MainMenuBtn btn_multiplayer {
+			string		"_MULTIPLAYER"
+			onClick {
+				cmd "mn_push_multiplayer;"
+			}
 		}
-
-		cmpMenuButton button_tut
-		{
-			onClick	{ cmd "ui_push tutorials;" }
-			string	"_Tutorials"
+		MainMenu2Btn btn_options {
+			string		"_OPTIONS"
+			onClick {
+				cmd "ui_push options;"
+			}
 		}
-
-		cmpMenuButton button_developers
-		{
-			onClick	{ cmd "seq_start developers;" }
-			string	"_Developers"
+		MainMenu2Btn btn_tutorials {
+			string	"_TUTORIALS"
+			onClick	{
+				cmd "ui_push tutorials;"
+			}
+		}
+		MainMenu2Btn btn_credits {
+			string	"_DEVELOPERS"
+			onClick {
+				cmd "seq_start developers;"
+			}
+		}
+		MainMenuExitBtn btn_exit {
+			string	"_EXIT"
+			onClick {
+				cmd "quit;"
+			}
 		}
 	}
 
-	cmpMenuButton button_exit
-	{
-		pos			"640 520"
-		onClick		{ cmd "quit;" }
-		string		"_Exit"
+	string version {
+		string	*cvar:version
+		pos		"10 744"
+		size	"1004 20"
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 
 	func onWindowOpened
 	{
 		cmd "music_change main;"
-		cmd "ui_push_child popup_tipoftheday main;check_cvars;"
-		// enable geoscape decoration by default
-		*cvar:mn_geoscape_deco = 1
+		// TODO: activate this again
+		//cmd "ui_push_child popup_tipoftheday main;"
+		cmd "check_cvars;"
 		if ( *cvar:cl_introshown != 1 ) {
 			cmd "ui_push intro;"
 			*cvar:cl_introshown = 1
@@ -226,7 +237,7 @@ window checkcvars
 	optionlist select_language
 	{
 		pos			"531 78"
-		font		"f_language"
+		font            "f_language"
 		cvar		*cvar:s_language
 		background		"ui/panel_green_slim"
 		size		"155 226"
@@ -293,7 +304,7 @@ window popup_tipoftheday
 		string		"_Tip of the day"
 	}
 
-	checkbox_blue activate
+	checkbox_ui2 activate
 	{
 		current		*cvar:cl_showTipOfTheDay
 		pos			"36 194"

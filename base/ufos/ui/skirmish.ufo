@@ -2,38 +2,47 @@
 // SKIRMISH MENU
 // ==============
 
+// @TODO
+// - Team selection broken
+// - Make dropship/ufo selection the renders with a prev/next select option
+// - The map selection system needs to be fit into new style a bit better.
+//   border, etc.
+// - Seem to be missing *cvar:cl_equip and *cvar:cl_equipname (player equipment)
+// - use cmpTeamPanel
+
 component cmpMapPreviewButton extends radiobutton
 {
 	{
-		icon	"icons/mapselection"
-		size	"130 140"
-		cvar	"*cvar:mn_svmapid"
+		icon		"icons/map_prev"
+		size		"132 140"
+		cvar		"*cvar:mn_svmapid"
 		stringValue	" "
+		padding		10
 		onClick {
 			cmd "mn_selectmap \"<node:this.id@string>\";"
 		}
 	}
 
 	image preview {
-		pos	"8 20"
-		size	"114 80"
-		src	"maps/shots/default"
+		pos		"2 2"
+		size	"128 96"
+		src		""
 		ghost	true
 	}
 
 	string name {
-		string	"The map name"
+		string			""
 		contentalign	ALIGN_CC
-		font		"f_verysmall"
-		pos	"14 96"
-		size	"100 32"
-		ghost	true
+		font			"f_verysmall"
+		pos				"8 101"
+		size			"110 32"
+		ghost			true
 	}
 
 	string id {
 		invis	true
-		string	"The map name"
-		pos	"14 96"
+		string	""
+		pos		"14 96"
 		size	"100 32"
 	}
 
@@ -48,444 +57,316 @@ component cmpMapPreviewButton extends radiobutton
 	}
 }
 
-window skirmish
+window skirmish extends cgame_download
 {
-	/** @todo Remove me */
-	{ }
-	// empty properties to fix parsing problem with "image" token (behaviour or property?)
-	// ===========
-	// BACKGROUND
-	// ===========
-	image background
 	{
-		src		"background/skirmish2"
+		background	"ui/main_bg"
 	}
 
-	panel maplist {
-		pos	"61 50"
-		size	"282 588"
-		layout		LAYOUT_COLUMN
-		layoutColumns	2
-		layoutMargin	5
-		padding		5
-		wheelscrollable true
+	// Toolbar across the top of the screen
+	MainMenuToolbar mmtoolbar { }
 
-		onViewChange {
-			*node:root.maplist_scroll@fullsize = <fullsize>
-			*node:root.maplist_scroll@current = <viewpos>
-			*node:root.maplist_scroll@viewsize = <viewsize>
+	// ===================
+	// MAP SELECTION PANEL
+	// ===================
+	panel sk_map_sel
+	{
+		{
+			size		"504 435"
+			pos			"0 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
 		}
 
-		// subnode buttons added at runtime
-	}
+		panel maplist {
+			pos				"0 0"
+			size			"504 435"
+			layout			LAYOUT_COLUMN
+			layoutColumns	3
+			layoutMargin	5
+			padding			5
 
-	/**
-	 * Callback the receive maplist from client
-	 * @param <1> "begin", "add" or "end"
-	 * @param <2> If <1> == "add", map id, else nothing
-	 * @param <3> If <1> == "add", map picture name, else nothing
-	 */
-	confunc	sk_maplist_listener {
-		if (param1 eq "begin") {
-			*cvar:count = 0
-			*cvar:mn_svmapid = ""
-			call *node:root.maplist@removeAllChild
-		} elif (param1 eq "add") {
-//			cmd "echo <1> <2> <3>"
-			call *node:root.maplist@createchild("map<cvar:count>", "cmpMapPreviewButton")
-			call *node:root.maplist.map<cvar:count>.init(param2, param3)
-			*cvar:count = (*cvar:count + 1)
-			if (*cvar:mn_svmapid eq "") {
-				*cvar:mn_svmapid = param2
+			onViewChange {
+				*node:root.sk_map_sel.maplist_scroll@fullsize = <fullsize>
+				*node:root.sk_map_sel.maplist_scroll@current = <viewpos>
+				*node:root.sk_map_sel.maplist_scroll@viewsize = <viewsize>
 			}
-		} elif (param1 eq "end") {
-			delete *cvar:count
-			cmd "mn_selectmap \"<cvar:mn_svmapid>\""
-		} else {
-			cmd "echo sk_maplist_listener: command \"<1>\" unknown."
+
+			// subnode buttons added at runtime
+		}
+
+		/**
+		 * Callback to receive maplist from client
+		 * @param <1> "begin", "add" or "end"
+		 * @param <2> If <1> == "add", map id, else nothing
+		 * @param <3> If <1> == "add", map picture name, else nothing
+		 */
+		confunc	sk_maplist_listener {
+			if (param1 eq "begin") {
+				*cvar:count = 0
+				*cvar:mn_svmapid = ""
+				call *node:root.sk_map_sel.maplist@removeAllChild
+			} elif (param1 eq "add") {
+				call *node:root.sk_map_sel.maplist@createchild("map<cvar:count>", "cmpMapPreviewButton")
+				call *node:root.sk_map_sel.maplist.map<cvar:count>.init(param2, param3)
+				*cvar:count = (*cvar:count + 1)
+				if (*cvar:mn_svmapid eq "") {
+					*cvar:mn_svmapid = param2
+				}
+			} elif (param1 eq "end") {
+				delete *cvar:count
+				cmd "mn_selectmap \"<cvar:mn_svmapid>\""
+			} else {
+				cmd "echo sk_maplist_listener: command \"<1>\" unknown."
+			}
+		}
+
+		vscrollbar maplist_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"484 0"
+			height		"435"
+			onChange	{ *node:root.sk_map_sel.maplist@viewpos = <current> }
 		}
 	}
 
-	vscrollbar maplist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos		"345 50"
-		height		"588"
-		onChange	{ *node:root.maplist@viewpos = <current> }
-	}
-
-	// ==================
-	// START GAME BUTTON
-	// ==================
-	cmpMenuButton button_start
+	// =================
+	// OPTIONS PANEL
+	// =================
+	panel sk_options
 	{
-		string		"_Start Game"
-		pos		"468 515"
-		width		"240"
-		onClick
 		{
-			cmd "sk_start;"
+			size		"510 435"
+			pos			"517 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
 		}
-	}
 
-	// ============
-	// BACK BUTTON
-	// ============
-	cmpMenuButton button_back
-	{
-		string		"_Back"
-		tooltip		"_Return to the main menu."
-		pos		"721 515"
-		width		"240"
-		onClick
+		button btn_map
 		{
-			cmd "ui_pop;"
+			size 		"125 30"
+			pos 		"0 0"
+			string		"_MAP"
+			font		"f_small_bold"
+			bgcolor		"0.4 0.515 0.5 1"
+			color		"0 0 0 0.9"
+			onClick		{ call *node:root.toggle_sk_map }
 		}
-	}
 
-	// ==============================
-	// SKIRMISH GAME SETTINGS STRING
-	// ==============================
-	string settings
-	{
-		string		"_Skirmish Game Settings"
-		pos			"500 66"
-		size		"450 30"
-		font		"f_big"
-	}
-
-	// =================================
-	// MAP/OPTIONS/TEAM NAVIGATION TABS
-	// =================================
-	tab create_navigation
-	{
+		button btn_squad
 		{
-			pos	"457 106"
-			size	"512 40"
-			cvar	*cvar:mn_skirmish_config_tab
-			onChange
+			size 		"125 30"
+			pos 		"135 0"
+			string		"_SQUAD"
+			font		"f_small_bold"
+			bgcolor		"0.4 0.515 0.5 0.25"
+			color		"1 1 1 0.5"
+			onClick		{ call *node:root.toggle_sk_squad }
+		}
+
+		button btn_download
+		{
+			size 		"125 30"
+			pos 		"270 0"
+			string		"_DOWNLOAD"
+			font		"f_small_bold"
+			bgcolor		"0.4 0.515 0.5 1"
+			color		"0 0 0 0.9"
+			onClick		{ call *node:root.toggle_sk_download }
+		}
+
+		MainMenu3Btn btn_begin
+		{
+			size 			"250 30"
+			pos 			"260 405"
+			string			"_BEGIN"
+			bgcolor			"0.38 0.48 0.36 1"
+			onMouseEnter 	{ *node:this@bgcolor = "0.59 0.78 0.56 1" }
+			onMouseLeave 	{ *node:this@bgcolor = "0.38 0.48 0.36 1" }
+			onClick			{ cmd "sk_start;" }
+		}
+
+		MainMenuExitBtn btn_back
+		{
+			size 			"250 30"
+			pos 			"0 405"
+			string			"_BACK"
+			onClick			{ cmd "ui_pop;" }
+		}
+
+		// ============
+		// MAP SETTINGS
+		// ============
+		panel sk_map_opts
+		{
 			{
-				call *node:root.sk_update_config_navigation
+				pos			"10 50"
+				size		"490 320"
+			}
+
+			MapOptions panel_map
+			{
+				{
+					pos		"0 0"
+					size	"490 320"
+				}
+				SetEnemyCount sk_sel_enemy
+				{
+					{
+						pos		"0 210"
+					}
+				}
+
+				SelDropship map_sel_drop
+				{
+					{
+						pos		"0 250"
+					}
+				}
+				SelUFO map_sel_ufo
+				{
+					{
+						pos		"0 290"
+					}
+				}
 			}
 		}
-		option map
-		{
-			label	"_Map"
-			value	"1"
-//			icon	"icons/tab_map"
-		}
-		option options
-		{
-			label	"_Options"
-			value	"2"
-//			icon	"icons/tab_options"
-		}
-		option team
-		{
-			label	"_Team"
-			value	"3"
-//			icon	"icons/tab_team"
-		}
-	}
-	// ========
-	// MAP TAB
-	// ========
-	cmpMapPanel panel_map
-	{
-		{
-			pos	"495 150"
-			size	"475 330"
-		}
-		// =================
-		// UFO(S) SELECTBOX
-		// =================
-		string ufos_str
-		{
-			string		"_UFO:"
-			pos			"10 250"
-			size		"220 20"
-			tooltip		"_Select the UFO that should be used (only possible if available for that map)."
-		}
-		selectbox ufos_box
-		{
-			pos		"240 250"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:rm_ufo
-			dataid	OPTION_UFOS
-		}
-		// ======================
-		// DROPSHIP(S) SELECTBOX
-		// ======================
-		string dropships_str
-		{
-			string		"_Dropship:"
-			pos			"10 300"
-			size		"220 20"
-			tooltip		"_Select the dropship that should be used (only possible if available for that map)."
-		}
-		selectbox dropships_box
-		{
-			pos		"240 300"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:rm_drop
-			dataid	OPTION_DROPSHIPS
-		}
-	}
-	// ============
-	// OPTIONS TAB
-	// ============
-	panel panel_options
-	{
-		{
-			pos	"495 150"
-			size	"475 355"
-		}
-		// ==============================================
-		// EQUIPMENT PLAYER STRINGS & BUTTONS
-		// ==============================================
-		string equipment
-		{
-			string		"_Equipment of your team."
-			pos			"10 50"
-			size		"450 20"
-		}
-		button slot_equipment
-		{
-			string		*cvar:cl_equipname
-			background		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			contentalign	ALIGN_CC
-			padding		8
-			font		"f_verysmall"
-			pos			"30 80"
-			size		"260 34"
-			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-		}
-		button prev_equipment
-		{
-			pos			"0 80"
-			size		"35 35"
-			icon		"icons/prev"
-			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-			onClick		{ cmd "sk_prevequip cl_equip;" }
-		}
-		button next_equipment
-		{
-			pos			"284 80"
-			size		"35 35"
-			icon		"icons/next"
-			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-			onClick		{ cmd "sk_nextequip cl_equip;" }
-		}
-		// ==========================================
-		// EQUIPMENT AI STRINGS & BUTTONS
-		// ==========================================
-		string equipment_alien
-		{
-			string		"_Equipment AI Team."
-			pos			"10 150"
-			size		"450 20"
-		}
-		button slot_alien_equipment
-		{
-			string		*cvar:ai_equipmentname
-			background		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			contentalign	ALIGN_CC
-			padding		8
-			font		"f_verysmall"
-			pos			"30 180"
-			size		"260 34"
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-		}
-		button prev_alien_equipment
-		{
-			pos			"0 180"
-			size		"35 35"
-			icon		"icons/prev"
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-			onClick		{ cmd "sk_prevequip ai_equipment;" }
-		}
-		button next_alien_equipment
-		{
-			pos			"284 180"
-			size		"35 35"
-			icon		"icons/next"
-			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-			onClick		{ cmd "sk_nextequip ai_equipment;" }
-		}
 
-		// ======================================
-		// NUMBER OF AI ACTORS STRINGS & SPINNER
-		// ======================================
-		string ai_multiplayeraliens_str
+		// ==============
+		// SQUAD SETTINGS
+		// ==============
+		panel sk_squad_opts
 		{
-			string		"_Max. AI actors:"
-			pos			"10 250"
-			size		"300 20"
-			tooltip		"_The maximum of AI actors for this game."
+			{
+				pos			"0 50"
+				size		"510 320"
+			}
+
+			EnemyEquip enemy_equip
+			{
+				{
+					pos		"10 0"
+				}
+			}
+
+			PlayerSquad player_squad
+			{
+				{
+					pos		"0 40"
+				}
+			}
 		}
-		string ai_multiplayeraliens_value
+		// List of available downloads
+		panel sk_download_opts
 		{
-			string		*cvar:ai_singleplayeraliens
-			pos			"310 250"
-			size		"50 20"
-			contentalign	ALIGN_CC
-		}
-		spinner_blue ai_multiplayeraliens_change
-		{
-			current		*cvar:ai_singleplayeraliens
-			pos			"368 249"
-			min			1
-			max			30
-			delta		1
-		}
-		// ===========================================
-		// MAXSOLDIER(S) PER PLAYER STRINGS & SPINNER
-		// ===========================================
-		string maxsoldierperplayer_str
-		{
-			string		"_Max. Soldiers:"
-			tooltip		"_Sets the maximum amount of soldiers."
-			pos			"10 275"
-			size		"300 20"
-		}
-		string maxsoldierperplayer_value
-		{
-			string		*cvar:sv_maxsoldiersperplayer
-			pos			"310 275"
-			size		"50 20"
-			contentalign	ALIGN_UC
-		}
-		spinner_blue maxsoldierperplayer_change
-		{
-			current		*cvar:sv_maxsoldiersperplayer
-			pos		"368 274"
-			min		1
-			max		12
-			delta		1
-		}
-		// =======================
-		// UGVS STRINGS & SPINNER
-		// =======================
-		string numugvs_str
-		{
-			string		"_UGVs:"
-			pos			"10 300"
-			size		"300 20"
-			tooltip		"_UGVs for this game - only valid if enough free soldier slots are available."
-		}
-		string numugvs_value
-		{
-			string		*cvar:cl_ugvs
-			pos			"310 300"
-			size		"50 20"
-			contentalign	ALIGN_CC
-		}
-		spinner_blue numugvs_change
-		{
-			current		*cvar:cl_ugvs
-			pos			"368 299"
-			min			0
-			max			2
-			delta		1
-		}
-		// =======================
-		// ALIEN RUSH
-		// =======================
-		string alienrush_str
-		{
-			string		"_Alien rush:"
-			pos			"10 325"
-			size		"300 20"
-			tooltip		"_Enemies respawn when killed."
-		}
-		checkbox_blue alienrush_value
-		{
-			current		*cvar:g_endlessaliens
-			pos			"366 325"
-			size		"20 18"
-		}
-		// ========================
-		// TEAM STRING & SELECTBOX
-		// ========================
-		string team_str
-		{
-			string		"_Team:"
-			pos			"10 0"
-			size		"220 20"
-			tooltip		"_Select which side you want to play with."
-		}
-		selectbox team_box
-		{
-			pos		"240 0"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:cl_teamdef
-			dataid	OPTION_TEAMDEFS
+			{
+				pos				"0 50"
+				size			"510 320"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	5
+				invis			true
+			}
+
+			panel downloadable
+			{
+				{
+					pos		"35 70"
+					size	"440 270"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+			}
 		}
 	}
 
-	// =========
-	// TEAM TAB
-	// =========
-	cmpTeamPanel panel_team
-	{
-		{
-			pos		"495 150"
-			size	"475 363"
-		}
+	// Switch display when user chooses Map/Squad options
+	func toggle_sk_map {
+		*node:root.sk_options.btn_map@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.sk_options.btn_map@color = "0 0 0 0.9"
+		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_squad@color = "1 1 1 0.5"
+		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_download@color = "1 1 1 0.5"
+		*node:root.sk_options.sk_map_opts@invis = false
+		*node:root.sk_options.sk_squad_opts@invis = true
+		*node:root.sk_options.sk_download_opts@invis = true
 	}
-
-	// ============
-	// INTERACTION
-	// ============
+	func toggle_sk_squad {
+		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.sk_options.btn_squad@color = "0 0 0 0.9"
+		*node:root.sk_options.btn_map@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_map@color = "1 1 1 0.5"
+		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_download@color = "1 1 1 0.5"
+		*node:root.sk_options.sk_map_opts@invis = true
+		*node:root.sk_options.sk_squad_opts@invis = false
+		*node:root.sk_options.sk_download_opts@invis = true
+	}
+	func toggle_sk_download {
+		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.sk_options.btn_download@color = "1 1 1 0.9"
+		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_squad@color = "0 0 0 0.5"
+		*node:root.sk_options.btn_map@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.sk_options.btn_map@color = "1 1 1 0.5"
+		*node:root.sk_options.sk_map_opts@invis = true
+		*node:root.sk_options.sk_squad_opts@invis = true
+		*node:root.sk_options.sk_download_opts@invis = false
+	}
 	/**
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_dropships
 	{
-		*node:root.panel_map.dropships_str@invis = <1>
-		*node:root.panel_map.dropships_box@invis = <1>
+		*node:root.sk_options.sk_map_opts.panel_map.map_sel_drop@invis = <1>
 	}
 	/**
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_ufos
 	{
-		*node:root.panel_map.ufos_str@invis = <1>
-		*node:root.panel_map.ufos_box@invis = <1>
+		*node:root.sk_options.sk_map_opts.panel_map.map_sel_ufo@invis = <1>
 	}
-	func sk_update_config_navigation
+
+	/**
+	 * @brief Add a server stored file to the list of downloadable files
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 * @param <4> The file name
+	 * @param <5> The title
+	 * @param <6> Own file = 1, other users file = 0
+	 */
+	confunc cgamefiles_add
 	{
-		*node:root.panel_map@invis = true
-		*node:root.panel_options@invis = true
-		*node:root.panel_team@invis = true
-		if ( *cvar:mn_skirmish_config_tab == 1 )
-		{
-			*node:root.panel_map@invis = false
-		}
-		elif ( *cvar:mn_skirmish_config_tab == 2 )
-		{
-			*node:root.panel_options@invis = false
-		}
-		elif ( *cvar:mn_skirmish_config_tab == 3 )
-		{
-			*node:root.panel_team@invis = false
+		call *node:root.root.sk_options.sk_download_opts.downloadable@createChild("download<1>-<2>-<3>", "downloadentry")
+		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.category@integer = <2>
+		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.userid@integer = <3>
+		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.filename@string = <4>
+		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.download@string = <5>
+		if ( <6> == 1 ) {
+			*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.delete@invis = false
+		} else {
+			*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.delete@invis = true
 		}
 	}
 
-	func onWindowActivate
+	confunc cgamefiles_nofilesfound
 	{
-		cmd	"game_teamcomments;"
+		call *node:root.root.sk_options.sk_download_opts.downloadable@createChild("nofiles", "string")
+		*node:root.root.sk_options.sk_download_opts.downloadable.nofiles@string = "_No files uploaded yet"
+	}
+
+	/**
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 */
+	confunc cgame_deletesuccessful
+	{
+		call *node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>@delete
+	}
+
+	confunc cgamefiles_clear
+	{
+		call *node:root.root.sk_options.sk_download_opts.downloadable@removeAllChild
 	}
 
 	// =====
@@ -494,14 +375,27 @@ window skirmish
 	func onWindowOpened
 	{
 		// TODO: Allow changing the difficulty via menu
-		cmd "game_setmode;set ai_equipment multiplayer_alien;set g_difficulty 0;"
+		cmd	"game_setmode;set ai_equipment multiplayer_alien;set difficulty 0;"
 		cmd "set mn_serverday 1;"
 		cmd "mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
-		*cvar:mn_skirmish_config_tab = 1
 		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener;"
-		call *node:root.sk_update_config_navigation
-		cmd "game_teamcomments;sk_initequip cl_equip;sk_initequip ai_equipment;"
+		cmd	"game_teamcomments;sk_initequip cl_equip;sk_initequip ai_equipment;"
 		cmd "define g_endlessaliens 0;"
+		cmd	"web_listcgame 0;"
+
+		// Resets map choices when Skirmish menu reloaded
+		call *node:root.toggle_sk_map
+
+		// Resets squad choices when Skirmish menu reloaded
+		cmd "toggle_custom_team_opts;"
 	}
+
+	func onWindowActivate
+	{
+		cmd "game_teamcomments;"
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }

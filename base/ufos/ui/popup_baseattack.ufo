@@ -16,7 +16,7 @@ component cmp_soldierentry extends panel {
 		}
 	}
 
-	checkbox_green selected {
+	checkbox_ui2 selected {
 		tooltip		"_Add/remove soldier to the team"
 		pos			"275 0"
 		size		"25 25"
@@ -372,7 +372,7 @@ window popup_baseattack
 		lineheight	16
 	}
 
-	checkbox_blue killaliens {
+	checkbox_ui2 killaliens {
 		current		0
 		pos			"26 120"
 		size		"20 18"
@@ -382,7 +382,7 @@ window popup_baseattack
 		pos			"55 120"
 		size		"220 20"
 	}
-	checkbox_blue liftcrafts {
+	checkbox_ui2 liftcrafts {
 		current		0
 		disabled	true
 		tooltip		"_Not implemented"
@@ -396,7 +396,7 @@ window popup_baseattack
 		pos			"55 145"
 		size		"220 20"
 	}
-	checkbox_blue powerdown {
+	checkbox_ui2 powerdown {
 		current		0
 		disabled	true
 		tooltip		"_Not implemented"

@@ -1438,7 +1438,7 @@ window geoscape_options {
 			pos			"30 130"
 			size		"320 20"
 		}
-		checkbox_blue value
+		checkbox_ui2 value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
@@ -1462,7 +1462,7 @@ window geoscape_options {
 			pos			"30 160"
 			size		"320 20"
 		}
-		checkbox_blue value
+		checkbox_ui2 value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
@@ -1482,7 +1482,7 @@ window geoscape_options {
 			pos			"30 190"
 			size		"320 20"
 		}
-		checkbox_blue value
+		checkbox_ui2 value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"

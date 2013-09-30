@@ -2,174 +2,460 @@
 // CAMPAIGN MENU
 // ==================
 
-window campaign {
+// TODO
+// - Add alert if user tries to begin without selecting a load game
+// - Add info about a save when it becomes available
+// - Once we can get the data about a campaign in not just one chunk, display them better
+// - Several campaign windows not yet changed (end game, save game, etc.)
+// - Saving doesn't use fixed slots anymore
+// - cgame webapi support
+
+component LoadSlot extends panel
+{
 	{
-		background	"background/options_bg"
+		size		"320 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
 	}
 
-	string version {
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
+	data filename
+	{
+		string		""
 	}
 
-	string c_headline {
-		string		"_Campaigns"
-		pos			"640 80"
-		font		"f_big"
+	data index
+	{
+		integer		-1
 	}
 
-	cmpMenuButton c_button_start {
-		pos			"80 170"
-		string		"_Start campaign"
-		tooltip		"_Start a new singleplayer campaign."
+	TextBtn button
+	{
+	}
 
-		onClick	{
+	button upload
+	{
+		background		"icons/upload"
+		tooltip		"_Upload"
+		size		"34 34"
+	}
+
+	button delete
+	{
+		size		"34 34"
+		icon 		"icons/delete"
+		tooltip		"_Delete this team"
+	}
+}
+
+window campaign extends cgame_download
+{
+	{
+		background	"ui/main_bg"
+	}
+
+	// Toolbar across the top of the screen
+	MainMenuToolbar mmtoolbar { }
+
+	// ==================
+	// buttons
+	// ==================
+
+	panel cmp_sel {
+		{
+			size		"1024 435"
+			pos			"0 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
+		}
+
+		MainMenuTab btn_new
+		{
+			pos 		"0 0"
+			string		"_NEW"
+			bgcolor		"0.4 0.515 0.5 1"
+			color		"0 0 0 0.9"
+			onClick		{ call *node:root.toggle_cmp_new }
+		}
+
+		MainMenuTab btn_load
+		{
+			pos 		"135 0"
+			string		"_LOAD"
+			onClick		{ call *node:root.toggle_cmp_load }
+		}
+
+		MainMenuTab btn_download
+		{
+			pos 		"270 0"
+			string		"_DOWNLOAD"
+			onClick		{ call *node:root.toggle_cmp_download }
+		}
+
+		MainMenu3Btn btn_begin
+		{
+			size 			"250 30"
+			pos 			"774 405"
+			string			"_BEGIN"
+			bgcolor			"0.38 0.48 0.36 1"
+			onMouseEnter 	{ *node:this@bgcolor = "0.59 0.78 0.56 1" }
+			onMouseLeave 	{ *node:this@bgcolor = "0.38 0.48 0.36 1" }
+			onClick			{ call *node:root.cmp_sel_begin }
+		}
+
+		MainMenuExitBtn btn_back
+		{
+			size 			"250 30"
+			pos 			"514 405"
+			string			"_BACK"
+			onClick			{ cmd "ui_pop;" }
+		}
+
+		// Campaigns and descriptions panel
+		panel cmp_cmps {
+			{
+				pos				"10 50"
+				size			"1014 355"
+			}
+
+			// List of campaigns
+			optionlist cmp_list
+			{
+				pos				"10 0"
+				size			"250 355"
+				lineheight		"25"
+				dataid			OPTION_CAMPAIGN_LIST
+				cvar			*cvar:cp_campaign
+				onClick			{ cmd "campaignlist_click <lineselected>;" }
+				color			"0.4 0.515 0.5 1"
+				selectcolor		"1 1 1 1"
+				onChange {
+					cmd "cp_getdescription <cvar:cp_campaign>;"
+				}
+			}
+
+			// Description of selected campaign
+			text cmp_desc
+			{
+				dataid		TEXT_STANDARD
+				pos			"280 0"
+				size		"720 360"
+				lineheight	20
+				rows		18
+			}
+		}
+
+		// List of saved games to load
+		panel cmp_saves
+		{
+			{
+				pos				"10 50"
+				size			"320 355"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	5
+				invis			true
+			}
+
+			LoadSlot save0 {
+			}
+
+			LoadSlot save1 {
+			}
+
+			LoadSlot save2 {
+			}
+
+			LoadSlot save3 {
+			}
+
+			LoadSlot save4 {
+			}
+
+			LoadSlot save5 {
+			}
+
+			LoadSlot save6 {
+			}
+
+			LoadSlot save7 {
+			}
+		}
+		// List of available downloads
+		panel cmp_downloads
+		{
+			{
+				pos				"10 50"
+				size			"320 355"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	5
+				invis			true
+			}
+
+			panel downloadable
+			{
+				{
+					pos		"35 70"
+					size	"440 550"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+			}
+		}
+	}
+
+	/**
+	 * @brief Add a server stored file to the list of downloadable files
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 * @param <4> The file name
+	 * @param <5> The title
+	 * @param <6> Own file = 1, other users file = 0
+	 */
+	confunc cgamefiles_add
+	{
+		call *node:root.cmp_sel.cmp_downloads.downloadable@createChild("download<1>-<2>-<3>", "downloadentry")
+		*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.category@integer = <2>
+		*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.userid@integer = <3>
+		*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.filename@string = <4>
+		*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.download@string = <5>
+		if ( <6> == 1 ) {
+			*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.delete@invis = false
+		} else {
+			*node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>.delete@invis = true
+		}
+	}
+
+	confunc cgamefiles_nofilesfound
+	{
+		call *node:root.cmp_sel.cmp_downloads.downloadable@createChild("nofiles", "string")
+		*node:root.cmp_sel.cmp_downloads.downloadable.nofiles@string = "_No files uploaded yet"
+	}
+
+	/**
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 */
+	confunc cgame_deletesuccessful
+	{
+		call *node:root.cmp_sel.cmp_downloads.downloadable.download<1>-<2>-<3>@delete
+	}
+
+	confunc cgamefiles_clear
+	{
+		call *node:root.cmp_sel.cmp_downloads.downloadable@removeAllChild
+	}
+
+	/**
+	 * @param[in] <1> id of the savegame slot
+	 * @param[in] <2> name of the savegame slot
+	 * @param[in] <3> game date of the savegame slot
+	 * @param[in] <4> real date of the savegame slot
+	 * @param[in] <5> filename
+	 */
+	confunc update_load_game_info {
+		//call *node:this.parent.slots@createChild("slot<1>", "LoadSlot")
+		*node:root.cmp_sel.cmp_saves.save<1>.filename@string = <5>
+		*node:root.cmp_sel.cmp_saves.save<1>.index@integer = <1>
+		if ( "<3>" ne "" ) {
+			*node:root.cmp_sel.cmp_saves.save<1>.button@string = "<2> - <3>"
+		} else {
+			*node:root.cmp_sel.cmp_saves.save<1>.button@string = "<2>"
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.button@tooltip = <4>
+		*node:root.cmp_sel.cmp_saves.save<1>.button@onClick = {
+			call *node:root.set_sel_load_slot(<node:this.parent.index@integer>)
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.upload@onClick = {
+			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+		}
+		//*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {}
+		*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = false
+		*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = true
+	}
+
+	/**
+	 * @brief Save the proper load slot into a cvar to use later
+	 * @param <1> Number of the load slot
+	 */
+	func set_sel_load_slot {
+		*cvar:sel_load_slot = <1>
+		*node:root.cmp_sel.btn_begin@ghost = false
+		*node:root.cmp_sel.btn_begin@bgcolor = "0.38 0.48 0.36 1"
+		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.9"
+
+		// Remove white color from any button that might be saved
+		// Then add it back to the selected button
+		*cvar:i = 0;
+		while ( *cvar:i < 8 ) {
+			*node:root.cmp_sel.cmp_saves.save<cvar:i>@color = "1 1 1 0.5"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+		*node:root.cmp_sel.cmp_saves.save<cvar:sel_load_slot>@color = "1 1 1 0.9"
+	}
+
+	// Tell the begin button what to do depending on the
+	// current selection (start campaign, load campaign)
+	func cmp_sel_begin {
+		if (*node:root.cmp_sel.cmp_saves@invis == true) {
 			cmd "cp_start <cvar:cp_campaign>;"
 		}
-	}
-	cmpMenuButton button_load {
-		string		"_Load"
-		pos			"80 240"
-		onClick	{
-			cmd "ui_push load;"
-		}
-	}
-	cmpMenuButton button_download {
-		string	"_Download"
-		tooltip	"_Download savegames"
-		pos	"80 310"
-		onClick	{
-			cmd "ui_push cgame_download;"
-		}
-	}
-	cmpMenuButton button_continue {
-		string		"_Continue"
-		tooltip		"_Load last saved game or continue playing."
-		pos			"640 380"
-		invis		true
-		onClick	{
-			cmd "game_continue;"
-		}
-	}
-	cmpMenuButton c_button_exit {
-		string		"_Back"
-		pos			"80 470"
-		onClick	{
-			cmd "ui_pop;"
+		else {
+			if (*cvar:sel_load_slot == 0) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 1) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 2) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 3) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 4) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 5) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 6) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			if (*cvar:sel_load_slot == 7) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			/*
+			 * It should be possible to check whether a save
+			 * has been selected from the cvar and so avoid
+			 * setting out all the if's,  but I can't seem to
+			 * figure out how to test if the cvar is false.
+			if (*cvar:sel_load_slot != false) {
+				cmd "game_load slot<cvar:sel_load_slot>;"
+			}
+			 */
+			else {
+				// Popup message that says SELECT A LOAD
+			}
+
+			// Remove unnecessary cvar
+			delete *cvar:sel_load_slot;
 		}
 	}
 
-	optionlist campaignlist {
-		dataid		OPTION_CAMPAIGN_LIST
-		cvar		*cvar:cp_campaign
-		pos			"500 140"
-		size		"400 120"
-		color		"0.60 0.60 0.60 1"
-		selectcolor	"1 1 1 1"
-		padding		6
-
-		onChange {
-			cmd "cp_getdescription <cvar:cp_campaign>;"
-		}
-		onViewChange	{
-			*node:root.campaignlist_scroll@fullsize = <fullsize>
-			*node:root.campaignlist_scroll@current = <viewpos>
-			*node:root.campaignlist_scroll@viewsize = <viewsize>
-		}
+	// Switch display when user chooses New Campaign/Load Campaign
+	func toggle_cmp_new {
+		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.cmp_sel.btn_new@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
+		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
+		*node:root.cmp_sel.cmp_cmps@invis = false
+		*node:root.cmp_sel.cmp_saves@invis = true
+		*node:root.cmp_sel.cmp_downloads@invis = true
+		*node:root.cmp_sel.btn_begin@ghost = false
+		*node:root.cmp_sel.btn_begin@bgcolor = "0.38 0.48 0.36 1"
+		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.9"
+		*node:root.cmp_sel.cmp_saves.save<cvar:sel_load_slot>@color = "0.4 0.515 0.5 1"
+		*cvar:sel_load_slot = false
 	}
-	vscrollbar campaignlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"905 140"
-		height		"120"
-		current		0
-		viewsize	6
-		fullsize	6
-		hidewhenunused true
-		onChange	{
-			*node:root.campaignlist@viewpos = <current>
-		}
+	func toggle_cmp_load {
+		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.cmp_sel.btn_load@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
+		*node:root.cmp_sel.cmp_cmps@invis = true
+		*node:root.cmp_sel.cmp_saves@invis = false
+		*node:root.cmp_sel.cmp_downloads@invis = true
+		*node:root.cmp_sel.btn_begin@ghost = true
+		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
+		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
 	}
-
-	text campaign_desc
-	{
-		dataid		TEXT_STANDARD
-		pos			"500 320"
-		size		"415 360"
-		lineheight	20
-		rows		18
-		onViewChange {
-			*node:root.campaign_desc_scroll@fullsize = <fullsize>
-			*node:root.campaign_desc_scroll@current = <viewpos>
-			*node:root.campaign_desc_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar campaign_desc_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"923 320"
-		height		360
-		current		0
-		viewsize	19
-		fullsize	19
-		hidewhenunused true
-		onChange	{
-			*node:root.campaign_desc@viewpos = <current>
-		}
+	func toggle_cmp_download {
+		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.cmp_sel.btn_download@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
+		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		*node:root.cmp_sel.cmp_cmps@invis = true
+		*node:root.cmp_sel.cmp_saves@invis = true
+		*node:root.cmp_sel.cmp_downloads@invis = false
+		*node:root.cmp_sel.btn_begin@ghost = true
+		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
+		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
 	}
 
 	func onWindowOpened
 	{
-		if ( ! exists *cvar:cp_campaign ) {
-			*cvar:cp_campaign = "main"
-		}
-		if ( exists *cvar:mn_lastsave ) {
-			*node:root.button_continue@invis = false
-		} else {
-			*node:root.button_continue@invis = true
-		}
-
-		cmd "game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;"
+		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments load;"
+		cmd	"web_listcgame 0;"
+		call *node:root.toggle_cmp_new
 	}
-}
 
-window staticcampaign extends campaign
-{
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
 
 window campaign_main
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	// ==================
+	// background
+	// ==================
+
+	image background
 	{
-		background	"background/main_bg"
+		src		"background/main_bg"
 	}
 
-	string version {
+	string version
+	{
 		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
 
-	cmpMenuButton button_continue {
+	// ==================
+	// buttons
+	// ==================
+
+	cmpMenuButton button_continue
+	{
 		string		"_Continue"
 		tooltip		"_Leave this menu and continue playing."
 		pos			"640 170"
 		onClick		{ cmd "game_continue;" }
 	}
-	cmpMenuButton button_load {
+
+	cmpMenuButton button_load
+	{
 		string		"_Load"
 		pos			"640 240"
 		onClick		{ cmd "ui_push load;" }
 	}
-	cmpMenuButton button_save {
+
+	cmpMenuButton button_save
+	{
 		string		"_Save"
 		pos			"640 310"
 		onClick		{ cmd "ui_push save;" }
 	}
-	cmpMenuButton button_options {
+
+	cmpMenuButton button_options
+	{
 		string		"_Options"
 		pos			"640 380"
 		onClick		{ cmd "ui_push options;" }
 	}
-	cmpMenuButton button_back {
+
+	cmpMenuButton button_back
+	{
 		string		"_Exit"
 		pos			"640 520"
 		onClick {
@@ -197,14 +483,16 @@ window quickload
 		closebutton	true
 	}
 
-	string name_label {
+	string name_label
+	{
 		string		"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos			"26 58"
 		size		"440 104"
 		longlines	LONGLINES_WRAP
 	}
 
-	cmpPopupButton button_go {
+	cmpPopupButton button_go
+	{
 		string		"_Load"
 		pos			"266 188"
 		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
@@ -457,11 +745,21 @@ window save {
 
 window lostgame
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		background	"background/losegame_bg"
+		src		"background/losegame_bg"
 	}
 
-	string title {
+	func onWindowOpened
+	{
+		cmd "music_stop;snd_music Crystan-LooseGame;"
+	}
+
+	string title
+	{
 		string		"_You've lost the game"
 		pos			"12 20"
 		size		"1000 35"
@@ -470,7 +768,8 @@ window lostgame
 		color		"0 0.8 0 1"
 	}
 
-	string lostgame_click {
+	string lostgame_click
+	{
 		string		"_Click to continue"
 		pos			"814 750"
 		size		"200 20"
@@ -480,7 +779,8 @@ window lostgame
 		ghost		true
 	}
 
-	zone leave {
+	zone leave
+	{
 		pos "0 0"
 		size "1024 768"
 		onClick {
@@ -489,7 +789,8 @@ window lostgame
 	}
 
 	// reason why you've lost
-	text reason {
+	text reason
+	{
 		dataid	TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
@@ -505,6 +806,7 @@ window lostgame
 			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
+
 	vscrollbar reason_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"992 600"
@@ -516,10 +818,6 @@ window lostgame
 		onClick		{ call *node:parent.leave@click }
 		onChange	{ *node:root.reason@viewpos = <current> }
 	}
-
-	func onWindowOpened {
-		cmd "music_stop;snd_music Crystan-LooseGame;"
-	}
 }
 
 // ==================
@@ -528,12 +826,17 @@ window lostgame
 
 window endgame
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		background	"background/wingame_bg"
+		src		"background/wingame_bg"
 	}
 
-	string title {
-		string		"_Thank you for playing UFO: Alien Invasion"
+	string title
+	{
+		string		"_Thank you for playing UFO:Alien Invasion"
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
@@ -541,7 +844,8 @@ window endgame
 		color		"0 0.8 0 1"
 	}
 
-	string endgame_click {
+	string endgame_click
+	{
 		string		"_Click to continue"
 		pos			"814 750"
 		size		"200 20"
@@ -554,7 +858,8 @@ window endgame
 		}
 	}
 
-	zone leave {
+	zone leave
+	{
 		pos "0 0"
 		size "1024 768"
 		onClick {
@@ -562,7 +867,8 @@ window endgame
 		}
 	}
 
-	text reason {
+	text reason
+	{
 		dataid		TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
@@ -578,6 +884,7 @@ window endgame
 			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
+
 	vscrollbar reason_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"992 500"
@@ -620,9 +927,9 @@ window popup_exit_confirmation
 		string		"_Quit anyway"
 		pos			"28 188"
 		onClick		{
-						cmd "ui_pop;"
-						cmd "game_exit;"
-					}
+			cmd "ui_pop;"
+			cmd "game_exit;"
+		}
 	}
 	cmpCancelButton bt_dontquit
 	{

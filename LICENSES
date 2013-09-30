@@ -3023,6 +3023,9 @@ base/pics/hudphone/sprites/team.png | Public Domain | bayo | SVG from data_sourc
 base/pics/hudphone/sprites/team_disabled.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/time.png | Public Domain | bayo | SVG from data_source
 base/pics/hudphone/sprites/time_disabled.png | Public Domain | bayo | SVG from data_source
+base/pics/icons/abortmission.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/abortmission0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/aircraft.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/aircraft_return.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_disabled.png | GNU General Public License 2.0 or later
 base/pics/icons/aircraft_return_hovered.png | GNU General Public License 2.0 or later
@@ -3034,15 +3037,58 @@ base/pics/icons/alien_kill_hovered.png | GNU General Public License 2.0 or later
 base/pics/icons/alien_surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien_surgery_hovered.png | GNU General Public License 2.0 | MCR | Gerd Heisse
 base/pics/icons/alien_unused.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/alienhead.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/aliens.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/ammosml.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/arrow_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/arrow_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/arrow_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/arrow_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrowtext_lft.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/arrowtext_lft0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/arrowtext_rgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/arrowtext_rgt0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/autopsy.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/autopsy0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/bighead_medic.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_soldier.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
+base/pics/icons/circle.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/circle0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/circle_disabled0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/circle_halo.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/circlelrg.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/circlelrg0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/civhead.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/craft_drop_firebird.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_drop_firebird_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_drop_herakles.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_drop_herakles_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_drop_raptor.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_drop_raptor_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_dragon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_dragon_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_saracen.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_saracen_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_starchaser.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_starchaser_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_stiletto.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_stiletto_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_stingray.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/craft_inter_stingray_off.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/crouch.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/crouch0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/dblarrowrgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/dblarrowrgt0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/earthlrg.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/facilities.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/fire.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/fire0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/firemodesml.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/firemodesml0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/firemodesmlhover.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/geo_center.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_center_hovered.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_nations.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
@@ -3060,12 +3106,25 @@ base/pics/icons/geo_xvi.png | GNU General Public License 2.0 or later
 base/pics/icons/geo_xvi_active.png | GNU General Public License 2.0 or later
 base/pics/icons/geo_xvi_active_hovered.png | GNU General Public License 2.0 or later
 base/pics/icons/geo_xvi_hovered.png | GNU General Public License 2.0 or later
+base/pics/icons/head_injured.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/head_scientist.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/head_soldier.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/head_worker.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/headgear.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/headgear0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/healing.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/healthsml.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/healthsml0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/info.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/info0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/information.png | GNU General Public License 2.0 | Kostia "Kildor" Romanov
+base/pics/icons/inv.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/inv0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/levels.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/mail_air.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
@@ -3077,6 +3136,9 @@ base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mapselection.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/mapselection_clicked.png | Public Domain | bayo | SVG from data_source
+base/pics/icons/market.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/moralesml.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
+base/pics/icons/moralesml0.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
@@ -3084,16 +3146,32 @@ base/pics/icons/off.png | GNU General Public License 2.0 or later | MCR | bayo
 base/pics/icons/off_hovered.png | GNU General Public License 2.0 or later | MCR | bayo
 base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/on_hovered.png | GNU General Public License 2.0 or later | MCR | bayo
+base/pics/icons/options.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/options0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/pen.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/radar.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/radar0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reaction0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reaction1.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reaction2.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reload.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reload0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reload_disabled.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reload_full.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/rescue_zone.png | GNU General Public License 2.0 | Nate Wright
 base/pics/icons/rescue_zone_hovered.png | GNU General Public License 2.0 | Nate Wright
+base/pics/icons/research.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_top.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
+base/pics/icons/stand.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/stand0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/stats.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/stats0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/system_capture.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_child.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_close.png | GNU General Public License 2.0 or later | bayo;MCR
@@ -3127,6 +3205,9 @@ base/pics/icons/tab_options.png | GNU General Public License 2.0 | MCR | based o
 base/pics/icons/tab_preresearch.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_statistics.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_team.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/transfer.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/tusml.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/tusml0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/ufopedia_alienarmour.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf);MCR
 base/pics/icons/ufopedia_aliencrafts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf);MCR
 base/pics/icons/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
@@ -3144,6 +3225,31 @@ base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3
 base/pics/icons/ufopedia_ugvs.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf);MCR
 base/pics/icons/upload.png | GNU General Public License 2.0 | Nate Wright
 base/pics/icons/upload_hovered.png | GNU General Public License 2.0 | Nate Wright
+base/pics/icons/windowalert.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowclose.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowclose_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowdown.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowdown_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowinfo.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowinfo_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowlock.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowlock_light.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowminusb.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowminusb_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowminusy.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowminusy_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windownext.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windownext_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowplusb.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowplusb_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowplusy.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowplusy_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowprev.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowprev_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowup.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/windowup_hovered.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/wrench.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/wrench0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/maps/shots/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy

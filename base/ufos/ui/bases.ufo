@@ -1,387 +1,861 @@
-// ===============
-// BASEMANAGEMENT
-// ===============
-
-component cmpBaseButton extends button
-{
-	background		"ui/button_green_small"
-	size		"230 35"
-	color		"0 0.8 0 1"
-	selectcolor "1 1 1 1"
-	font		"f_menu"
-}
-
-component cmpBuildingSpace extends panel
-{
-	{
-		size	"230 25"
-	}
-	string label
-	{
-		pos				"0 0"
-		size			"140 15"
-		font			"f_verysmall"
-		color			"0 0.8 0 1"
-		contentalign	ALIGN_CL
-	}
-	string data
-	{
-		pos				"140 0"
-		size			"90 15"
-		font			"f_verysmall"
-		color			"0 0.8 0 1"
-		contentalign	ALIGN_CR
-	}
-	bar data_bar
-	{
-		pos		"3 15"
-		size	"224 5"
-		color	"0 0.8 0 1"
-		bordercolor	"0 0.8 0 1"
-		border	1
-		current	0
-		max		100
-		readonly	true
-	}
-}
+/*
+ * @TODO:
+ *   See here: http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commit;h=6f98e6620c75363f51b7e736052ac80f9ac50b7a
+ * - Soldiers
+ * - Market
+ * - Production
+ * - Base summary
+ * - Transfers
+ * - Aircraft
+ * - Clicking on aircraft just leads to aircraft window, but should also select the aircraft the user clicked
+ * - Add injured soldiers to employee count list
+ * - Icons for UFOPaedia, kill alien (aliencontainment)
+ * - Alien containment requires several delete cvar calls on cvars that may not exist, which leads to errors printed in console.
+ * LATER IMPROVEMENTS:
+ * - Build facility: make building preview appear below each option when clicked
+ * - Build facility: make building capacity (+) buttons automatically select that building type
+ * - Build facility: Make the add building button turn to a warning if it is
+ *   too high/low (low is for antimatter only)
+ * - Don't show progress bar in alien containment if alien is already researched
+ */
 
 window bases
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image back_ul
 	{
-		src		"ui/base_ul"
-		pos			"0 0"
+		size	"1024 768"
 	}
 
-	image back_ur
-	{
-		src		"ui/base_ur"
-		pos			"512 0"
-	}
-
-	image back_lr
-	{
-		src		"ui/base_lr"
-		pos			"512 256"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// here we need the back-to-geoscape button
-	button bt_back_to_geoscape
-	{
-		tooltip		"_Back to geoscape"
-		icon		"icons/geoscape"
-		background	"buttons/big_blue"
-		pos			"950 20"
-		size		"59 55"
-		onClick		{ *cvar:mn_lastsubmenu = "bases" cmd "ui_pop;" }
-	}
-
-	basemap thebasemap
-	{
-		pos			"0 96"
-		size		"721 672"
-	}
-
-	// ===============
-	// buttons
-	// ===============
-	panel base_buttons
+	// Left base panel
+	panel base_container
 	{
 		{
-			pos "758 118"
-			size "230 640"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	6
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
 		}
 
-		cmpBaseButton buildings
+		button prev
 		{
-			string		"_Buildings"
-			tooltip		"_Build base facilities"
-			onClick		{ cmd "ui_push buildings;" }
+			icon			"icons/windowprev"
+			tooltip			"_Previous base"
+			pos				"90 6"
+			size			"18	18"
+			onClick	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
+			onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+			onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
 		}
-
-		cmpBaseButton aircraft
+		button next
 		{
-			string		"_Aircraft"
-			tooltip		"_Aircraft management and crew equipment"
-			onClick		{ cmd "ui_push aircraft;" }
+			icon			"icons/windownext"
+			tooltip			"_Next base"
+			pos				"115 6"
+			size			"18	18"
+			onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+			onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
+			onClick			{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
 		}
-
-		cmpBaseButton buysell
+		// Base name
+		textentry name
 		{
-			string		"_Buy/Sell"
-			tooltip		"_Buy/Sell equipment, aircraft and UGV"
-			onClick		{ cmd "ui_push market;" }
+			string		*cvar:mn_base_title
+			pos			"135 0"
+			size		"465 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CL
+			onChange 	{ cmd "base_changename;" } 	// stores the value of the cvar in the base structure
 		}
-
-		cmpBaseButton transfer
-		{
-			string		"_Transfer"
-			tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-			onClick		{ cmd "ui_push transfer;" }
-		}
-
-		cmpBaseButton research
-		{
-			string		"_Research"
-			tooltip		"_Research new technology"
-			onClick		{ cmd "ui_push research;" }
-		}
-
-		cmpBaseButton production
-		{
-			string		"_Production"
-			tooltip		"_Produce equipment, aircraft and UGV"
-			onClick		{ cmd "ui_push production;" }
-		}
-
-		cmpBaseButton hire
-		{
-			string		"_Employees"
-			tooltip		"_Hire or dismiss employees"
-			onClick		{ cmd "ui_push employees;" }
-		}
-
-		cmpBaseButton containment
-		{
-			string		"_Containment"
-			tooltip		"_Manage captured aliens"
-			onClick		{ cmd "ui_push aliencont;" }
-		}
-
-		cmpBaseButton hospital
-		{
-			string		"_Hospital"
-			tooltip		"_Treat wounded soldiers and perform implant surgery"
-			onClick		{ cmd "ui_push hospital;" }
-		}
-
-		cmpBaseButton summary
-		{
-			string		"_Base Summary"
-			tooltip		"_Information about this base (available storage space, production, research, etc.)"
-			onClick		{ cmd "ui_push basesummary;" }
-		}
-		panel spacer { size "230 10" }
-
-		/*
-		 * Bars indicating storage/living/lab/workshop space are added with
-		 * confunc show_bld_space
-		 */
-		panel bld_space
+		// Base selector
+		panel base_selector
 		{
 			{
-				size	"230 130"
-				layout		LAYOUT_TOP_DOWN_FLOW
-				layoutMargin	1
+				pos		"440 7"
+				size	"160 16"
+				layout			LAYOUT_COLUMN
+				layoutColumns	8
+				layoutMargin	4
+			}
+			BaseLayoutMini base0 { baseid 0 }
+			BaseLayoutMini base1 { baseid 1 }
+			BaseLayoutMini base2 { baseid 2 }
+			BaseLayoutMini base3 { baseid 3 }
+			BaseLayoutMini base4 { baseid 4 }
+			BaseLayoutMini base5 { baseid 5 }
+			BaseLayoutMini base6 { baseid 6 }
+			BaseLayoutMini base7 { baseid 7 }
+		}
+		string credits
+		{
+			string		*cvar:mn_credits
+			pos			"600 0"
+			size		"120 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CR
+		}
+
+		// The base map
+		panel base_map_container
+		{
+			{
+				pos				"4 30"
+				size			"715 670"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			basemap thebasemap
+			{
+				pos				"1 1"
+				size			"715 667"
 			}
 		}
 
-		/*
-		 * Panel showing how many soldiers, scientists and engineers are in the base
-		 */
+		// Employee panel
+		// @TODO: add support for injured soldiers
 		panel cur_employees
 		{
 			{
-				size	"230 70"
+				pos		"0 705"
+				size	"400 48"
 			}
-			button soldier
+			EmployeeCount scientists
 			{
-				tooltip	"_Soldiers"
-				icon	"icons/bighead_soldier"
-				pos		"4 0"
-				size	"42 42"
+				{
+					pos		"0 0"
+					onClick { cmd "alien_containment false; show_facility false; ui_push research;" }
+				}
+				string label { string "_Scientists" }
+				button icon { icon "icons/head_scientist" }
 			}
-			string soldier_val
+			EmployeeCount workers
 			{
-				tooltip	"_Soldiers"
-				pos		"30 40"
-				size	"30 15"
-				font			"f_verysmall"
-				color			"0 0.8 0 1"
-				contentalign	ALIGN_CL
+				{
+					pos		"120 0"
+					onClick { cmd "alien_containment false; show_facility false; ui_push production;" }
+				}
+				string label { string "_Engineers" }
+				button icon { icon "icons/head_worker" }
 			}
-			button pilot
+			EmployeeCount soldiers
 			{
-				tooltip	"_Pilots"
-				icon	"icons/bighead_pilot"
-				pos		"64 0"
-				size	"42 42"
-			}
-			string pilot_val
-			{
-				tooltip	"_Pilots"
-				pos		"90 40"
-				size	"30 15"
-				font			"f_verysmall"
-				color			"0 0.8 0 1"
-				contentalign	ALIGN_CL
-			}
-			button scientist
-			{
-				tooltip	"_Scientists"
-				icon	"icons/bighead_scientist"
-				pos		"124 0"
-				size	"42 42"
-			}
-			string scientist_val
-			{
-				tooltip	"_Scientists"
-				pos		"150 40"
-				size	"30 15"
-				font			"f_verysmall"
-				color			"0 0.8 0 1"
-				contentalign	ALIGN_CL
-			}
-			button worker
-			{
-				tooltip	"_Workers"
-				icon	"icons/bighead_worker"
-				pos		"184 0"
-				size	"42 42"
-			}
-			string worker_val
-			{
-				tooltip	"_Workers"
-				pos		"210 40"
-				size	"30 15"
-				font			"f_verysmall"
-				color			"0 0.8 0 1"
-				contentalign	ALIGN_CL
+				{
+					pos		"240 0"
+					onClick { cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
+				}
+				string label { string "_Soldiers" }
+				button icon { icon "icons/head_soldier" }
 			}
 		}
 
-		/*
-		 * Passes information on building space for living quarters, storage
-		 * workshop and lab.
-		 * param1 = name
-		 * param2 = type (building_lab,building_quarters,building_storage,building_workshop,building_amstorage)
-		 * param3 = current
-		 * param4 = capacity
-		 */
-		confunc show_bld_space
+		// Base summary, transfers, options, UFOpaedia
+		panel buttons
 		{
-			/* Don't show building space if building is not completed (max = 0) */
-			if (param4 != 0) {
-				call *node:parent.bld_space@createChild ( "<2>", "cmpBuildingSpace" )
-				*node:parent.bld_space.<2>.label@string = "<1>"
-				*node:parent.bld_space.<2>.data@string = "<3>/<4>"
-				*node:parent.bld_space.<2>.data_bar@max = <4>
-				if ( <3> <= <4> ) {
-					*node:parent.bld_space.<2>.data_bar@current = <3>
-				} else {
-					*node:parent.bld_space.<2>.data_bar@current = <4>
-					*node:parent.bld_space.<2>.data_bar@color = "1 0 0 1"
-					*node:parent.bld_space.<2>.data_bar@bordercolor = "1 0 0 1"
+			{
+				pos		"400 705"
+				size	"323 48"
+			}
+			button basesummary
+			{
+				pos		"270 0"
+				size	"48 48"
+				icon		"icons/stats"
+				background	"icons/circle0"
+				onMouseEnter	{ *node:this@background = "icons/circle" }
+				onMouseLeave	{ *node:this@background = "icons/circle0" }
+				onClick			{ cmd "ui_push basesummary;" }
+			}
+			button transfers
+			{
+				pos		"215 0"
+				size	"48 48"
+				icon		"icons/transfer"
+				background	"icons/circle0"
+				onMouseEnter	{ *node:this@background = "icons/circle" }
+				onMouseLeave	{ *node:this@background = "icons/circle0" }
+				onClick			{ cmd "ui_push basesummary;" }
+			}
+			button ufopaedia
+			{
+				pos		"160 0"
+				size	"48 48"
+				icon		"icons/info"
+				background	"icons/circle0"
+				onMouseEnter	{ *node:this@background = "icons/circle" }
+				onMouseLeave	{ *node:this@background = "icons/circle0" }
+			}
+			button options
+			{
+				pos		"105 0"
+				size	"48 48"
+				icon		"icons/options"
+				background	"icons/circle0"
+				onMouseEnter	{ *node:this@background = "icons/circle" }
+				onMouseLeave	{ *node:this@background = "icons/circle0" }
+			}
+		}
+
+		// Alien containment
+		panel alien_containment
+		{
+			{
+				pos				"4 30"
+				size			"715 720"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+				invis			true
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+				string title
+				{
+					string			"_Alien Containment"
+					pos				"90 1"
+					size			"593 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+				button back
+				{
+					icon			"icons/windownext"
+					tooltip			"_Back to base"
+					pos				"683 7"
+					size			"18	18"
+					onClick			{ cmd "alien_containment false;" }
+				}
+			}
+			// List of aliens
+			panel aliens
+			{
+				{
+					pos				"10 60"
+					size			"425 650"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	10
+				}
+			}
+			// Alien autopsy image and body counts
+			panel info
+			{
+				{
+					pos			"442 60"
+					size		"263 650"
+					onClick		{ cmd "aliencont_pedia <node:this.selected@integer>;" }
+					invis		true
+				}
+				data selected { integer 0 }
+				image autopsy_image
+				{
+					src		*cvar:mn_al_alienimage
+					pos		"0 0"
+					size	"263 600"
+					ghost	true
+				}
+				string label
+				{
+					string			*cvar:mn_al_alientype
+					pos				"0 570"
+					size			"263 30"
+					font			"f_small_bold"
+					color			"0.56 0.81 0.76 1"
+					bgcolor			"0 0 0 0.6"
+					contentalign	ALIGN_CC
+					ghost			true
+				}
+				button ufopedia
+				{
+					icon		"icons/bordered_magnifying_glass"
+					tooltip		"_UFOpaedia"
+					pos			"240 577"
+					size		"16 16"
+					ghost		true
+				}
+				panel stats
+				{
+					{
+						pos		"0 610"
+						size	"263 40"
+					}
+					string living_label
+					{
+						string			"_Alive"
+						pos				"0 0"
+						size			"70 20"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CL
+					}
+					string living_data
+					{
+						string			*cvar:mn_al_alive
+						pos				"100 0"
+						size			"163 20"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CR
+					}
+					string dead_label
+					{
+						string			"_Dead"
+						pos				"0 20"
+						size			"70 20"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CL
+					}
+					string dead_data
+					{
+						string			*cvar:mn_al_dead
+						pos				"100 20"
+						size			"163 20"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CR
+					}
+				}
+			}
+		}
+	}
+
+	// Main base sections
+	panel sections
+	{
+		{
+			pos			"726 5"
+			size		"298 672"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+		}
+		BaseSection facilities
+		{
+			{
+				onClick		{ cmd "alien_containment false; show_facility <node:this.state@string>;" }
+			}
+			string label { string "_Facilities" }
+			button icon { icon "icons/facilities" }
+			data state { string "true" }
+			data height { integer 48 }
+
+			panel bld_panel
+			{
+				{
+					pos 			"0 48"
+					size 			"298 0"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	0
+				}
+				data height { integer 0 }
+
+				// Current and maximum building capacity for buildings
+				// Shows living space, production, lab, storage, antimatter storage
+				// OR shows all when facilities tab is clicked on.
+				panel bld_space
+				{
+					{
+						size			"298 0"
+						layout			LAYOUT_TOP_DOWN_FLOW
+						layoutMargin	0
+					}
+					data height { integer 0 }
+				}
+				// Preview of currently selected building
+				panel preview
+				{
+					{
+						size		"298 185"
+						onClick		{ cmd "building_ufopedia;" }
+					}
+					image bld_image
+					{
+						src				*cvar:mn_building_image
+						preventratio	true
+						pos				"29 0"
+						size			"224 90"
+						contentalign	ALIGN_UL
+						ghost			true
+					}
+					/*
+					button ufopedia
+					{
+						icon		"icons/bordered_magnifying_glass"
+						tooltip		"_UFOpaedia"
+						pos			"29 74"
+						size		"16 16"
+						ghost		true
+					}
+					*/
+					text info
+					{
+						pos				"29 100"
+						size			"224 60"
+						lineheight		15
+						tabwidth		140
+						font			"f_verysmall"
+						color			"0.56 0.81 0.76 1"
+						dataid			TEXT_BUILDING_INFO
+						rows			4
+						contentalign	ALIGN_UL
+						ghost			true
+					}
+					string status
+					{
+						string			*cvar:mn_building_status
+						pos				"29 160"
+						size			"224 20"
+						font			"f_verysmall"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_UL
+						ghost			true
+					}
 				}
 			}
 		}
 
-		/*
-		 * Prepare the building space indicators.
-		 * Bases which are missing a facility will not call show_bld_space.
-		 * This ensures all indicators appear even if there is no bld space.
-		 * @todo: Make anti-matter show 0/0 if it is researched but no bld
-		 *        is present.
-		 */
-		confunc clear_bld_space
+		BaseSection aircraft
 		{
-			call *node:parent.bld_space@removeAllChild
+			{
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+			}
+			string label { string "_Aircraft" }
+			button icon { icon "icons/aircraft" }
+
+			// Aircraft added as child nodes to this panel
+			panel aircraft_list
+			{
+				{
+					pos 			"29 48"
+					size 			"250 48"
+					invis			true
+					layout			LAYOUT_COLUMN
+					layoutColumns	5
+					layoutMargin	0
+				}
+			}
 		}
-
-
-		/*
-		 * Current employees of a particular base
-		 * param1 = number of soldiers
-		 * param1 = number of pilots
-		 * param3 = number of scientists
-		 * param4 = number of workers
-		 */
-		confunc current_employees
+		BaseSection soldiers
 		{
-			*node:parent.cur_employees.soldier_val@string = "<1>"
-			*node:parent.cur_employees.pilot_val@string = "<2>"
-			*node:parent.cur_employees.scientist_val@string = "<3>"
-			*node:parent.cur_employees.worker_val@string = "<4>"
+			{
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
+			}
+			string label { string "_Soldiers" }
+			button icon { icon "icons/crouch" }
 		}
+		BaseSection buysell
+		{
+			{
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push market;" }
+			}
+			string label { string "_Market" }
+			button icon { icon "icons/market" }
+		}
+		BaseSection research
+		{
+			{
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push research;" }
+			}
+			string label { string "_Research" }
+			button icon { icon "icons/research" }
 
-		/*
-		 * Show the base's aircraft (not currently used in default UI)
-		 * param1 = id (in list of aircraft in base -- not global idx)
-		 * param2 = name
-		 * param3 = aircraft template (model)
-		 * param4 = status
-		 * param5 = (1 = aircraft is in base, 0 = aircraft is not in base)
-		 */
-		confunc clear_aircraft { }
-		confunc show_aircraft { }
+			// Aircraft added as child nodes to this panel
+			panel research_list
+			{
+				{
+					pos 			"29 48"
+					size 			"250 28"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	0
+					ghost			true
+				}
+			}
+		}
+		BaseSection production
+		{
+			{
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push production;" }
+			}
+			string label { string "_Production" }
+			button icon { icon "icons/wrench" }
 
-		/*
-		 * Show a research item in the base overview (not used in default UI)
-		 * param1 = name
-		 * param2 = number of scientists working on it
-		 * param3 = percent complete
-		 */
-		confunc clear_research { }
-		confunc show_research { }
-
-		/*
-		 * Show the production item closest to completion in the base overview (not used in default UI)
-		 * param1 = name
-		 * param2 = percent complete
-		 */
-		confunc clear_production { }
-		confunc show_production { }
+			// Production added as child nodes to this panel
+			panel production_list
+			{
+				{
+					pos 			"29 48"
+					size 			"250 28"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	0
+					ghost			true
+				}
+			}
+		}
+		BaseSection containment
+		{
+			{
+				onClick		{ cmd "show_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
+			}
+			string label { string "_Alien Containment" }
+			button icon { icon "icons/aliens" }
+			data state { string "true" }
+		}
 	}
+
+	// Back to geoscape
+	Geoscape geoscape_button { }
+
+	/**
+	 * @brief Used to enable/disable the overall base buttons
+	 * @param <1> button
+	 * @param <2> state
+	 * @param <3> tooltip
+	 * @TODO: handle hospital/transfer
+	 * @TODO: some buttons don't have windows
+	 * @TODO: Check tooltips only show when disabled
+	 */
 	confunc update_basebutton
 	{
-		*node:root.base_buttons.<1>@disabled = <2>
-		*node:root.base_buttons.<1>@tooltip = <3>
+		if (param2 eq "true") {
+			if (param1 eq "hire") {
+				*node:parent.sections.soldiers.bg@bgcolor = "1 1 1 0.2"
+				*node:parent.sections.soldiers@onMouseEnter = { }
+				*node:parent.sections.soldiers@onMouseLeave = { }
+				*node:parent.sections.soldiers@onClick = { }
+				*node:parent.sections.soldiers@tooltip = "_<3>"
+			} elif (param1 eq "hospital") {
+			} elif (param1 eq "transfer") {
+			} else {
+				*node:parent.sections.<1>.bg@bgcolor = "1 1 1 0.2"
+				*node:parent.sections.<1>@onMouseEnter = { }
+				*node:parent.sections.<1>@onMouseLeave = { }
+				*node:parent.sections.<1>@onClick = { }
+				*node:parent.sections.<1>@tooltip = "_<3>"
+			}
+		} else {
+			if (param1 eq "hire") {
+				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
+				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
+				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
+				*node:parent.sections.soldiers@onClick = { cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
+				*node:parent.sections.soldiers@tooltip = ""
+			} elif (param1 eq "hospital") {
+			} elif (param1 eq "transfer") {
+			} else {
+				*node:parent.sections.<1>.bg@bgcolor = "0.527 0.6 0.21 0.2"
+				*node:parent.sections.<1>@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
+				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
+				*node:parent.sections.<1>@tooltip = ""
+				if (param1 eq "aircraft") {
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+				} elif (param1 eq "buysell") {
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push market;" }
+				} elif (param1 eq "research") {
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push research;" }
+				} elif (param1 eq "production") {
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push production;" }
+				} elif (param1 eq "containment") {
+					*node:parent.sections.<1>@onClick = { cmd "show_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
+				}
+			}
+		}
 	}
 
-	// this confunc checks which base submenu was opened before and reopens it only if available and functional in the currently opened base
-	confunc check_and_switch_submenu
+	/**
+	 * @brief Passes information on capacity for available buildings
+	 * @param <1> building name
+	 * @param <2> building id (building_lab, building_quarters, building_storage, etc.)
+	 * @param <3> currently used capacity
+	 * @param <4> actual max capacity
+	 * @param <5> number of buildings built of this type
+	 * @param <6> max number of buildings can be built from this type
+	 */
+	confunc show_bld_space
 	{
-		if ( ( *cvar:mn_lastsubmenu eq "aircraft" ) && ( *node:bases.base_buttons.aircraft@disabled == false ) ) { cmd "ui_push aircraft;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "aliencont" ) && ( *node:bases.base_buttons.containment@disabled == false ) ) { cmd "ui_push aliencont;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "employees" ) && ( *node:bases.base_buttons.hire@disabled == false ) ) { cmd "ui_push employees;" }
-		// hospital is a special case, because it has a submenu window: hospital_employee
-		elif ( ( *cvar:mn_lastsubmenu eq "hospital" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) { cmd "ui_push hospital;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "hospital_employee" ) && ( *node:bases.base_buttons.hospital@disabled == true ) ) { cmd "ui_close hospital;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "hospital_employee" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) { cmd "ui_push hospital;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "market" ) && ( *node:bases.base_buttons.buysell@disabled == false ) ) { cmd "ui_push market;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "production" ) && ( *node:bases.base_buttons.production@disabled == false ) ) { cmd "ui_push production;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "research" ) && ( *node:bases.base_buttons.research@disabled == false ) ) { cmd "ui_push research;" }
-		// the following submenus are valid for every base, so those do not need an additional availability check
-		elif ( *cvar:mn_lastsubmenu eq "buildings" ) { cmd "ui_push buildings;" }
-		elif ( *cvar:mn_lastsubmenu eq "transfer" ) { cmd "ui_push transfer;" }
-		elif ( *cvar:mn_lastsubmenu eq "basesummary" ) { cmd "ui_push basesummary;" }
-		// no submenu was open before or the submenu opened is not valid (should rather not happen, but this is a fail-safe protection),
-		// reset cvar mn_lastsubmenu to "bases"
-		else { *cvar:mn_lastsubmenu = "bases" }
+		// Set the appropriate size of the panel
+		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 30)
+		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 <node:parent.sections.facilities.bld_panel.bld_space.height@integer>"
+
+		// If showing a few facilities, don't show building preview panel
+		if (*node:parent.sections.facilities.state@string eq "true") {
+			*node:parent.sections.facilities.bld_panel.height@integer = <node:parent.sections.facilities.bld_panel.bld_space.height@integer>
+		// Show building preview panel for all facilities
+		} else {
+			*node:parent.sections.facilities.bld_panel.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 185)
+		}
+		// Expand parent panels appropriately
+		*node:parent.sections.facilities.bld_panel@size = "298 <node:parent.sections.facilities.bld_panel.height@integer>"
+		*node:parent.sections.facilities.height@integer = (<node:parent.sections.facilities.bld_panel.height@integer> + 48)
+		*node:parent.sections.facilities@size = "298 <node:parent.sections.facilities.height@integer>"
+
+		// Add the capacity bar
+		call *node:parent.sections.facilities.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.id@string = "<2>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>@tooltip = "<1>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.label@string = "<1>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@current = <3>
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@max = <4>
+
+		// Only show the capacity string if max isn't 0
+		if (param4 ne 0) {
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <3>/<4>
+		} elif (param6 > 0) {
+			// Show current/max number of buildings of a type if limited
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <5>/<6>
+		}
+		// Show/Hide "add" building button
+		if (param5 == param6 ) {
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = true
+		} else {
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = false
+		}
 	}
+
+	/**
+	 * @brief Clear building space indicators in preparation for updating the list
+	 */
+	confunc clear_bld_space
+	{
+		call *node:parent.sections.facilities.bld_panel.bld_space@removeAllChild
+		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 0"
+		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = 0
+		*node:parent.sections.facilities.bld_panel@size = "298 0"
+		*node:parent.sections.facilities.bld_panel.height@integer = 0
+		*node:parent.sections.facilities@size = "298 48"
+		*node:parent.sections.facilities.height@integer = 48
+	}
+
+	/**
+	 * @brief Show the facilities panel
+	 * @param <1> true (show) or false (hide)
+	 */
+	confunc show_facility
+	{
+		if (<1> eq "true") {
+			// Show capacity for all base buildings
+			cmd "base_building_space;"
+
+			// Set the state for subsequent clicks
+			*node:parent.sections.facilities.state@string = "false"
+		} else {
+			// Resets list selection
+			cmd "reset_building_current 0;"
+
+			// Set the state/invis for subsequent clicks
+			*node:parent.sections.facilities.state@string = "true"
+
+			// Show capacity for just main base buildings
+			cmd "base_init;"
+		}
+
+		// Hide/show the other base sections
+		*node:parent.sections.aircraft@invis = <1>
+		*node:parent.sections.soldiers@invis = <1>
+		*node:parent.sections.buysell@invis = <1>
+		*node:parent.sections.research@invis = <1>
+		*node:parent.sections.production@invis = <1>
+		*node:parent.sections.containment@invis = <1>
+	}
+
+	/**
+	 * @brief Current employees of a particular base
+	 * @param <1> number of soldiers
+	 * @param <2> number of scientists
+	 * @param <3> number of workers
+	 */
+	confunc current_employees
+	{
+		*node:parent.base_container.cur_employees.soldiers.data@string = "<1>"
+		*node:parent.base_container.cur_employees.scientists.data@string = "<2>"
+		*node:parent.base_container.cur_employees.workers.data@string = "<3>"
+	}
+
+	/*
+	 * @brief Show the base's aircraft (not currently used in default UI)
+	 * @param <1> id (in list of aircraft in base -- not global idx)
+	 * @param <2> name
+	 * @param <3> aircraft type
+	 * @param <4> status
+	 * @param <5> aircraft in base?
+	 */
+	confunc clear_aircraft {
+		*node:parent.sections.aircraft@size	= "298 48"
+		*node:parent.sections.aircraft.aircraft_list@invis = true
+		call *node:parent.sections.aircraft.aircraft_list@removeAllChild
+	}
+	confunc show_aircraft
+	{
+		*node:parent.sections.aircraft@size	= "298 96"
+		call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
+		*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
+		if (param5 eq 1) {
+			*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>"
+		} else {
+			*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
+		}
+		*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <1>
+		*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft <node:parent.aircraft_id@string>;" }
+		*node:parent.sections.aircraft.aircraft_list@invis = false
+		 /*
+			THEN ADD THIS TO AIRCRAFT onWindowOpened
+			if (<1> ne "") {
+				*cvar:mn_aircraft_id = <1>
+				cmd "mn_select_aircraft \"<1>\";"
+			}
+		 */
+	}
+
+	/**
+	 * @brief Show a research item in the base overview (not used in default UI)
+	 * @param <1> name
+	 * @param <2> number of scientists working on it
+	 * @param <3> percent complete
+	 * @TODO: to work properly, research window must call base_init when it
+	 *        closes. Currently, it will not update after research changed
+	 */
+	confunc clear_research
+	{
+		*node:parent.sections.research@size	= "298 48"
+		call *node:parent.sections.research.research_list@removeAllChild
+	}
+	confunc show_research
+	{
+		*node:parent.sections.research@size	= "298 80"
+		call *node:parent.sections.research.research_list@createChild("<1>", "ProgressBar")
+		*node:parent.sections.research.research_list.<1>.label@string = _<1>
+		*node:parent.sections.research.research_list.<1>.data_bar@current = <3>
+	}
+
+	/*
+	 * @brief Show the production item closest to completion in the base overview (not used in default UI)
+	 * @param <1> name
+	 * @param <2> percent complete
+	 */
+	confunc clear_production
+	{
+		*node:parent.sections.production@size	= "298 48"
+		call *node:parent.sections.production.production_list@removeAllChild
+	}
+	confunc show_production
+	{
+		*node:parent.sections.production@size	= "298 80"
+		call *node:parent.sections.production.production_list@createChild("<1>", "ProgressBar")
+		*node:parent.sections.production.production_list.<1>.label@string = _<1>
+		*node:parent.sections.production.production_list.<1>.data_bar@current = <2>
+	}
+
+	/**
+	 * @brief Show and hide the alien containment panel
+	 * @param <1> true (show alien containment), false (hide alien containment)
+	 */
+	confunc alien_containment
+	{
+		if (<1> eq "true") {
+			// Show the alien containment area
+			*node:parent.base_container.alien_containment@invis = false
+
+			// Show the aliens
+			*cvar:i = 0;
+			while ( *cvar:i < 8 ) {
+				if (*cvar:mn_ac_name<cvar:i> ne "None") {
+					call *node:parent.base_container.alien_containment.aliens@createChild("<cvar:i>", "AlienPanel")
+					*node:parent.base_container.alien_containment.aliens.<cvar:i>.label@string = *cvar:mn_ac_name<cvar:i>
+					*node:parent.base_container.alien_containment.aliens.<cvar:i>.status@string = *cvar:mn_ac_statusstr<cvar:i>
+					*node:parent.base_container.alien_containment.aliens.<cvar:i>.data_bar@current = *cvar:mn_ac_progress<cvar:i>
+					*node:parent.base_container.alien_containment.aliens.<cvar:i>.alien_num@string = <cvar:i>
+					if (*cvar:mn_alien<cvar:i>_option eq "autopsy") {
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@tooltip = "_Perform Autopsy"
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@icon = "icons/autopsy0"
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onMouseEnter = { *node:this@icon = "icons/autopsy" }
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onMouseLeave = { *node:this@icon = "icons/autopsy0" }
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onClick = { cmd "aliencont_research <node:parent.alien_num@string>;" }
+					} elif (*cvar:mn_alien<cvar:i>_option eq "kill") {
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@tooltip = "_Kill Alien"
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@icon = "icons/alien_kill"
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onMouseEnter = { *node:this@icon = "icons/alien_kill" }
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onMouseLeave = { *node:this@icon = "icons/alien_kill" }
+						*node:parent.base_container.alien_containment.aliens.<cvar:i>.action@onClick = { cmd "aliencont_killone <node:parent.alien_num@string>;" }
+					} else {
+						*node:parent.base_container.alien_containment.aliens.<1>.action@invis = true
+					}
+				}
+				*cvar:i = ( *cvar:i + 1 )
+			}
+			delete *cvar:mn_alien0_option
+			delete *cvar:mn_alien1_option
+			delete *cvar:mn_alien2_option
+			delete *cvar:mn_alien3_option
+			delete *cvar:mn_alien4_option
+			delete *cvar:mn_alien5_option
+			delete *cvar:mn_alien6_option
+			delete *cvar:mn_alien7_option
+
+			// Set the state for subsequent clicks
+			*node:parent.sections.containment.state@string = false
+		} else {
+			// Remove alien panels and hide the image/info when loaded
+			call *node:parent.base_container.alien_containment.aliens@removeAllChild
+			*node:parent.base_container.alien_containment.info@invis = true
+
+			// Hide the alien containment area
+			*node:parent.base_container.alien_containment@invis = true
+
+			// Set the state for subsequent clicks
+			*node:parent.sections.containment.state@string = true
+		}
+
+		// Show or hide the base map, employees and buttons under the map
+		*node:parent.base_container.base_map_container@invis = <1>
+		*node:parent.base_container.cur_employees@invis = <1>
+		*node:parent.base_container.buttons@invis = <1>
+	}
+
+	/**
+	 * @brief Clear the alien containment panel
+	 */
+	confunc aliencont_clear { }
+
+	/**
+	 * @brief Place the correct button by each alien in containment (kill or autopsy)
+	 * @param <1> id of the alien slot in the UI
+	 */
+	confunc aliencontneedautopsy
+	{
+		*cvar:mn_alien<1>_option = "autopsy"
+	}
+	confunc aliencontkill
+	{
+		*cvar:mn_alien<1>_option = "kill"
+	}
+
+	/*
+	 * Select an alien in containment
+	 * param1 = id of the alien
+	 */
+	confunc select_alien
+	{
+		*node:parent.base_container.alien_containment.info.selected@integer = <1>
+		*node:parent.base_container.alien_containment.info@invis = false
+	}
+
+	/**
+	 * @brief Reset base status/display info when the player switches to a new base
+	 * or comes back from another window
+	 */
+	confunc reset_base
+	{
+		cmd "show_facility false; alien_containment false;"
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 
 	func onWindowOpened
 	{
+		// Get the parameters needed for this window
 		cmd "base_init;"
-		// just check_and_switch_submenu if the last submenu was not "bases"
-		if ( *cvar:mn_lastsubmenu ne "bases" ) { cmd "check_and_switch_submenu;" }
-	}
 
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-		cmd "clear_bld_space;"
+		// Close all panels and reset base to default position
+		cmd "reset_base;"
 	}
 }

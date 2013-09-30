@@ -1,410 +1,492 @@
-// ===================
-// BASE RESEARCH MENU
-// ===================
-
-component cmpTechItem extends panel {
-	{
-		size		"530 50"
-
-		onClick	{
-			cmd "ui_research_select <node:this.id@string>;"
-		}
-	}
-
-	data id {
-		integer		-1
-		string		""
-	}
-
-	button pedia {
-		tooltip		"_Open UFOPaedia"
-		icon		"icons/bordered_question"
-		pos			"5 4"
-		size		"16 16"
-		padding		0
-
-		onClick	{
-			cmd "ui_research_select <node:parent.id@string>; ui_push ufopedia <node:parent.id@string>;"
-		}
-	}
-
-	string name {
-		pos			"25 0"
-		size		"345 20"
-		color		"0 .78 0 1"
-		longlines	LONGLINES_PRETTYCHOP
-		ghost		true
-	}
-
-	bar progress {
-		pos			"5 30"
-		size		"224 5"
-		color		"0 0.8 0 1"
-		bordercolor	"0 0.8 0 1"
-		border		1
-		current		0
-		max			100
-		readonly	true
-		ghost		true
-	}
-	string progress_label {
-		pos			"235 25"
-		size		"50 11"
-		color		"0 .78 0 1"
-		font		"f_verysmall"
-		contentalign	ALIGN_UL
-		padding		0
-		ghost		true
-	}
-
-	panel rsrc_control {
-		{
-			pos 	"400 0"
-			size	"130 32"
-			ghost	true
-			invis	true
-		}
-		button stop {
-			tooltip		"_Stop researching this project"
-			icon		"icons/speed_stop"
-			pos			"0 4"
-			size		"25 25"
-
-			onclick {
-				cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.parent.id@string>;"
-			}
-		}
-		button less {
-			tooltip		"_Assign less scientists on this project"
-			icon		"icons/minus"
-			pos			"25 4"
-			size		"25 25"
-
-			onclick {
-				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> -1;"
-			}
-		}
-		string scientists {
-			string		"0"
-			pos			"45 4"
-			size		"30 25"
-			color		"0 .78 0 1"
-			contentalign	ALIGN_CR
-			ghost		true
-		}
-		button more {
-			tooltip		"_Assign more scientists on this project"
-			icon		"icons/plus"
-			pos			"75 4"
-			size		"25 25"
-
-			onclick {
-				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> 1;"
-			}
-		}
-		button max {
-			tooltip		"_Assign all free scientists on this project"
-			icon		"icons/speed_play3"
-			pos			"100 4"
-			size		"25 25"
-			onclick {
-				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.parent.id@string>;"
-			}
-		}
-	}
-
-	panel rsrc_baselink {
-		{
-			pos 	"350 0"
-			size	"180 32"
-			invis	true
-
-			onclick {
-				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.id@integer>;"
-			}
-		}
-		string basename {
-			string		"0"
-			pos			"0 4"
-			size		"155 25"
-			color		"0 .78 0 1"
-			contentalign	ALIGN_CR
-			ghost		true
-
-		}
-		button go {
-			tooltip		"_Go to base"
-			icon		"icons/speed_play1"
-			pos			"155 4"
-			size		"25 25"
-
-			onclick {
-				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.parent.id@integer>;"
-			}
-		}
-	}
-	panel rsrc_missing {
-		{
-			pos 	"350 0"
-			size	"180 32"
-			invis	true
-		}
-		string note {
-			string		"_N/A"
-			tooltip		"_An artifact or prerequisite is missing for this topic"
-			pos			"0 4"
-			size		"155 25"
-			color		"1 0.874 0.294 1"
-			contentalign	ALIGN_CR
-
-		}
-		button show {
-			tooltip		"_Expand/Collapse"
-			icon		"icons/scroll_bottom"
-			pos			"155 4"
-			size		"25 25"
-			invis		true
-		}
-	}
-	/** @TODO implement research requirements listing */
-}
-
-// ================
-// RESEARCH WINDOW
-// ================
+/*
+ * @TODO:
+ * - The back to Geoscape button actually takes you back to base. When putting an extra ui_pop in, it
+ *   takes you to campaign options (load, save, etc) instead of geoscape.
+ * - After clicking on a UFOpaedia link for an item, the base names for external research disappear.
+ * - Scientists hired are not correct values, just place-holder text
+ * --- Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
+ * - Make research scrollable and find a way to test it.
+ * - Clicking on another base name should take the player to that base (see research_changebase).
+ * -- Maybe we need an icon that suggests clicking will switch bases.
+ */
 
 window research
 {
+	{ size	"1024 768" }
+
+	// Base name and container panel
+	panel base_container
 	{
-		background	"background/base_bg"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// Techlist Panel (left)
-	panel techlist_border {
 		{
-			pos			"9 120"
-			size		"587 620"
-			bgcolor		"0 0.08 0 1"
-			background		"ui/panel_grey_green_large2"
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
 		}
 
-		data selected {
-			string	""
-		}
-
-		string topics {
-			string		"_Topics"
-			pos			"45 25"
-			size		"365 25"
-			font		"f_small_bold"
-		}
-		string scientist {
-			string		"_Scientists"
-			pos			"410 25"
-			size		"150 25"
-			font		"f_small_bold"
-			contentalign	ALIGN_CC
-		}
-
-		panel techlist {
-			pos			"20 50"
-			size		"530 550"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			wheelscrollable	true
-			onViewChange {
-				*node:parent.techlist_scroll@fullsize = <fullsize>
-				*node:parent.techlist_scroll@current = <viewpos>
-				*node:parent.techlist_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar techlist_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"550 41"
-			height		"560"
-			current		0
-			viewsize	21
-			fullsize	21
-			hidewhenunused true
-			onChange {
-				*node:parent.techlist@viewpos = <current>
-			}
-		}
-
-		confunc ui_techlist_clear {
-			call *node:parent.techlist@removeAllchild
-		}
-		confunc ui_research_select {
-			if ( *node:parent.selected@string ne "" ) {
-				*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
-				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
-				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
-			}
-			*node:parent.selected@string = "<1>"
-			*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
-			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
-			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
-			cmd "ui_research_getdetails <1>;"
-		}
-		confunc ui_techlist_add {
-			call *node:parent.techlist@createChild("tech_<1>", "cmpTechItem")
-
-			*node:parent.techlist.tech_<1>.id@string = "<1>"
-			*node:parent.techlist.tech_<1>.name@string = "<2>"
-			*node:parent.techlist.tech_<1>.progress@current = <4>
-
-			if ( <4> > 0 ) {
-				*node:parent.techlist.tech_<1>.progress_label@string = "<4>%"
-			}
-
-			if ( paramCount >= 5 ) {
-				if ( "<5>" eq "base" ) {
-					*node:parent.techlist.tech_<1>.id@integer = <6>
-					*node:parent.techlist.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
-					*node:parent.techlist.tech_<1>.rsrc_baselink@invis = false
-				}
-				if ( "<5>" eq "missing" ) {
-					*node:parent.techlist.tech_<1>.rsrc_missing@invis = false
-				}
-			} else {
-				*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<3>"
-				*node:parent.techlist.tech_<1>.rsrc_control@invis = false
-			}
-
-			if ( *node:parent.selected@string eq "" ) {
-				call *node:parent.ui_research_select ( "<1>" )
-			}
-		}
-		confunc ui_research_update_topic {
-			*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<2>"
-		}
-	}
-
-	// Capacity Box (top right)
-	panel capbox {
+		// @TODO: make next/prev base btns work
+		button prev
 		{
-			pos		"605 120"
-			size	"410 115"
-			background	"ui/panel_grey_green"
+			icon			"icons/windowprev"
+			tooltip			"_Previous base"
+			pos				"90 6"
+			size			"18	18"
+			onClick			{ cmd "ui_pop; mn_base_prev;" }
 		}
-
-		string header_capacity {
-			string 		"_Capacity"
-			pos			"25 25"
-			size		"210 20"
+		button next
+		{
+			icon			"icons/windownext"
+			tooltip			"_Next base"
+			pos				"115 6"
+			size			"18	18"
+			onClick			{ cmd "ui_pop; mn_base_next;" }
+		}
+		// Base name
+		textentry name
+		{
+			string		*cvar:mn_base_title
+			pos			"135 0"
+			size		"465 32"
 			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
 			contentalign	ALIGN_CL
+			onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
 		}
-		string header_free {
-			string 		"_idle"
-			pos			"235 25"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-		string header_all {
-			string 		"_all"
-			pos			"310 25"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-
-		string scientists_caption {
-			string 		"_Scientists"
-			pos			"25 50"
-			size		"230 20"
-			font		"f_small"
-		}
-		string scientists_free {
-			pos			"235 50"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string scientists_all {
-			pos			"310 50"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string labspace_caption {
-			string 		"_Laboratory"
-			pos			"25 70"
-			size		"230 20"
-			font		"f_small"
-		}
-		string labspace_free {
-			pos			"235 70"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string labspace_all {
-			pos			"310 70"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-
-		confunc ui_research_update_caps {
-			*node:parent.scientists_free@string = "<1>"
-			*node:parent.scientists_all@string = "<2>"
-			*node:parent.labspace_free@string = "<3>"
-			*node:parent.labspace_all@string = "<4>"
-		}
-	}
-
-	// Research info box (bottom right)
-	panel researchinfo {
+		// Base selector
+		panel base_selector
 		{
-			pos			"605 260"
-			size		"410 480"
-			background	"ui/panel_grey_green_large"
+			{
+				pos		"440 7"
+				size	"160 16"
+				layout			LAYOUT_COLUMN
+				layoutColumns	8
+				layoutMargin	4
+			}
+			BaseLayoutMini base0 { baseid 0 }
+			BaseLayoutMini base1 { baseid 1 }
+			BaseLayoutMini base2 { baseid 2 }
+			BaseLayoutMini base3 { baseid 3 }
+			BaseLayoutMini base4 { baseid 4 }
+			BaseLayoutMini base5 { baseid 5 }
+			BaseLayoutMini base6 { baseid 6 }
+			BaseLayoutMini base7 { baseid 7 }
 		}
-
-		string name {
-			pos			"25 25"
-			size		"360 20"
+		string credits
+		{
+			string		*cvar:mn_credits
+			pos			"600 0"
+			size		"120 32"
 			font		"f_small_bold"
-			longlines	LONGLINES_PRETTYCHOP
-			contentalign	ALIGN_CC
-			ghost		true
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CR
 		}
-		image img {
-			pos			"25 50"
-			size		"360 410"
+
+		// Research panel
+		panel research
+		{
+			{
+				pos				"4 30"
+				size			"715 590"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+				string title
+				{
+					string			"_Research"
+					pos				"90 1"
+					size			"593 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+				button back
+				{
+					icon			"icons/windownext"
+					tooltip			"_Back to base"
+					pos				"683 7"
+					size			"18	18"
+					onClick			{ cmd "ui_pop; base_init; reset_base;" }
+				}
+			}
+
+			// Unassigned scientists
+			button idle_scientists
+			{
+				icon	"icons/head_scientist"
+				pos		"522 40"
+				size	"48 48"
+				ghost	true
+			}
+			string idle_scientists_count
+			{
+				string	*cvar:mn_scientists_available
+				pos		"560 49"
+				size	"100 25"
+				font	"f_small_bold"
+				color	"0.56 0.81 0.76 1"
+				contentalign	ALIGN_CL
+			}
+			string idle_scientists_label
+			{
+				string	"_idle scientists"
+				pos		"560 62"
+				size	"100 23"
+				font	"f_verysmall"
+				color	"0.56 0.81 0.76 1"
+				contentalign	ALIGN_CL
+			}
+
+			// List of research techs
+			panel techs
+			{
+				{
+					pos				"1 80"
+					size			"713 420"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+			}
+
+			// Base scientists/lab stats
+			panel base_stats
+			{
+				{
+					pos		"1 505"
+					size	"713 84"
+				}
+				panel scientists
+				{
+					{
+						pos		"5 0"
+						size	"350 84"
+					}
+					button scientist
+					{
+						icon	"icons/head_scientist"
+						pos		"0 0"
+						size	"48 48"
+					}
+					string scientists_count
+					{
+						string	*cvar:mn_scientists_available_string
+						pos		"40 9"
+						size	"300 25"
+						font	"f_small_bold"
+						color	"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CL
+					}
+					texture data_bg
+					{
+						pos			"43 29"
+						size		"282 8"
+						src			"ui/bar_bg"
+						ghost		true
+					}
+					bar data_bar
+					{
+						pos			"43 29"
+						size		"282 8"
+						color		"0.56 0.81 0.76 1"
+						current		0
+						max			1
+						ghost		true
+					}
+					MainMenu3Btn hire
+					{
+						string			"_HIRE"
+						pos				"250 42"
+						size			"75 26"
+						font			"f_small_bold"
+						color			"0 0 0 0.9"
+						selectcolor		"0 0 0 1"
+						onClick			{ cmd "echo hire_clicked;" }
+					}
+					MainMenuExitBtn fire
+					{
+						string			"_FIRE"
+						pos				"165 42"
+						size			"75 26"
+						font			"f_small_bold"
+						color			"0 0 0 0.9"
+						selectcolor		"0 0 0 1"
+						onClick			{ cmd "echo fire_clicked;" }
+					}
+				}
+				panel lab_space
+				{
+					{
+						pos		"365 0"
+						size	"350 84"
+					}
+					button labs
+					{
+						icon	"icons/research"
+						pos		"0 0"
+						size	"48 48"
+					}
+					string labs_space_current
+					{
+						string	*cvar:mn_lab_space_string
+						pos		"40 9"
+						size	"200 25"
+						font	"f_small_bold"
+						color	"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CL
+					}
+					texture data_bg
+					{
+						pos			"43 29"
+						size		"282 8"
+						src			"ui/bar_bg"
+						ghost		true
+					}
+					bar data_bar
+					{
+						pos			"43 29"
+						size		"282 8"
+						color		"0.56 0.81 0.76 1"
+						current		*cvar:mn_current_labspace
+						max			*cvar:mn_max_labspace
+						ghost		true
+					}
+					MainMenu3Btn build_lab
+					{
+						string			"_BUILD LAB"
+						pos				"175 42"
+						size			"150 26"
+						font			"f_small_bold"
+						color			"0 0 0 0.9"
+						selectcolor		"0 0 0 1"
+						onClick			{ cmd "ui_pop; build_facility true;" }
+					}
+				}
+			}
+
+			/*
+			 * Add research techs to the list for this base
+			 * param1 = nnumber of item in research tech list (see cp_research_callbacks.c)
+			 */
+			confunc research_research
+			{
+				call *node:parent.techs@createChild("tech<1>", "ResearchItem")
+				*node:parent.techs.tech<1>@tooltip = *cvar:mn_rsstatus<1>
+				*node:parent.techs.tech<1>.title@string = *cvar:mn_researchitem<1>
+				*node:parent.techs.tech<1>.status@current = *cvar:mn_rsstatus<1>
+				*node:parent.techs.tech<1>.scientists@string = *cvar:mn_researchassigned<1>
+				*node:parent.techs.tech<1>.itemnum@integer = <1>
+			}
+		}
+
+		// Research in other bases panel
+		panel research_ext
+		{
+			{
+				pos				"4 629"
+				size			"715 125"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+				string title
+				{
+					string			"_Other Bases"
+					pos				"30 1"
+					size			"593 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+			}
+
+			// Research on other bases
+			panel techs_ext
+			{
+				{
+					pos				"1 34"
+					size			"713 90"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+			}
+			/*
+			 * Get the base name before listing research options
+			 * param1 = number of item in research tech list (see cp_research_callbacks.c)
+			 */
+			confunc research_basetitle
+			{
+				*cvar:rs_cur_base_itemid = <1>
+			}
+			/*
+			 * Add items being researched in other bases
+			 * param1 = number of item in research tech list (see cp_research_callbacks.c)
+			 */
+			confunc research_outterresearch
+			{
+				call *node:parent.techs_ext@createChild("tech<1>", "ExtResearchItem")
+				*node:parent.techs_ext.tech<1>@tooltip = *cvar:mn_rsstatus<1>
+				*node:parent.techs_ext.tech<1>.title@string = *cvar:mn_researchitem<1>
+				*node:parent.techs_ext.tech<1>.status@current = *cvar:mn_rsstatus<1>
+				*node:parent.techs_ext.tech<1>.base@string = *cvar:mn_researchitem<cvar:rs_cur_base_itemid>
+				*node:parent.techs_ext.tech<1>.itemnum@integer = <1>
+			}
+		}
+
+		/**
+		 * @brief Switch to another reserch base
+		 * @param[in] <1> New base id
+		 * @param[in] <2> Selected item row
+		 */
+		confunc research_changebase {
+			cmd "ui_pop;ui_pop;mn_base_select <1>;ui_push research;"
+			cmd "research_select <2>;"
+		}
+
+		// Intended to make an empty line.
+		confunc research_hide { }
+
+		// Intended to set number of unassigned scientists in bases.
+		confunc research_baseinfo { }
+
+		// Other unused confuncs for items that can't be researched.
+		confunc research_missingitem { }
+		confunc research_missingitemtitle { }
+		confunc research_unresearchableitem { }
+		confunc research_unresearchableitemtitle { }
+
+		// Called on selected item (highlight selected)
+		confunc research_selected { }
+
+		// Set in cp_research_callbacks.c to show research status at the moment
+		// Under research, paused, not started yet.
+		confunc research_running { }
+		confunc research_paused { }
+		confunc research_normal { }
+
+		//Intended to update values for an item, called with research_init
+		confunc research_updateitem { }
+	}
+
+	// Research item display panel
+	panel res_item
+	{
+		{
+			pos		"739 0"
+			size	"277 768"
+		}
+		image img
+		{
+			src			*cvar:mn_research_image
+			pos				"0 80"
+			size			"277 632"
 			preventratio	true
+			contentalign	ALIGN_UC
+		}
+		model mdl
+		{
+			src				*cvar:mn_research_model
+			angles			"-30 135 45"
+			pos				"0 80"
+			size			"277 277"
+			autoscale		true
+		}
+		string label
+		{
+			string			*cvar:mn_research_selname
+			pos				"0 80"
+			size			"277 30"
+			color			"0.56 0.81 0.76 1"
+			bgcolor			"0 0 0 0.6"
 			contentalign	ALIGN_CC
-			ghost		true
-		}
-		model mdl {
-			angles		"0 0 90"
-			pos			"25 50"
-			size		"360 410"
-			autoscale	true
-			omega		"0 -3 0"
-			rotatewithmouse	true
-		}
-
-		confunc	ui_research_details {
-			*node:parent.name@string = "<1>"
-			*node:parent.img@src = "<2>"
-			*node:parent.mdl@src = "<3>"
 		}
 	}
 
-	func onWindowOpened {
-		*node:root.techlist_border.selected@string = ""
-		cmd "ui_research_fill;"
-		*cvar:mn_lastsubmenu = "research"
+	// Back to geoscape
+	Geoscape geoscape_button { }
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
+	/*
+	 * Concatenates the string for lab space
+	 * Called from onWindowOpened, but must be in a confunc so that it is
+	 * executed after the cvars have been set
+	 * TODO: Call this from the code and don't use cvars, but confunc parameters
+	 */
+	confunc get_lab_space_string
+	{
+		*cvar:mn_lab_space_string = "<cvar:mn_current_labspace> / <cvar:mn_max_labspace> laboratory space"
 	}
 
-	func onWindowClosed {
-		// call base init function because the amount of workers, scientists and
-		// so on can also change the button state in the base view
+	/*
+	 * Gets the string for hired/total scientists
+	 * param1 = hired
+	 * param2 = available
+	 * TODO: unused
+	 */
+	confunc available_scientists
+	{
+		*cvar:mn_total_scientists = ( <1> + <2> )
+		*cvar:mn_scientists_available_string = "<1> / <cvar:mn_total_scientists> scientists hired"
+	}
+
+	// Clear temp cvars not needed after init
+	func clear_temp
+	{
+		delete *cvar:rs_cur_base_itemid
+	}
+
+	// Clear all research items and cvars
+	func clear_all
+	{
+		// Clear all research items in this base and others
+		call *node:root.base_container.research.techs@removeAllChild
+		call *node:root.base_container.research_ext.techs_ext@removeAllChild
+
+		// Clear all cvars related to research item details
+		if ( exists *cvar:mn_research_image ) { delete *cvar:mn_research_image }
+		if ( exists *cvar:mn_research_model ) { delete *cvar:mn_research_model }
+		if ( exists *cvar:mn_research_selname ) { delete *cvar:mn_research_selname }
+		if ( exists *cvar:mn_research_selstatus ) { delete *cvar:mn_research_selstatus }
+		if ( exists *cvar:mn_research_selstatus_long ) { delete *cvar:mn_research_selstatus_long }
+		if ( exists *cvar:mn_research_selbase ) { delete *cvar:mn_research_selbase }
+		if ( exists *cvar:mn_research_seltime ) { delete *cvar:mn_research_seltime }
+		if ( exists *cvar:mn_research_seltimebar ) { delete *cvar:mn_research_seltimebar }
+		if ( exists *cvar:mn_research_labs ) { delete *cvar:mn_research_labs }
+		if ( exists *cvar:mn_current_labspace ) { delete *cvar:mn_current_labspace }
+		if ( exists *cvar:mn_max_labspace ) { delete *cvar:mn_max_labspace }
+		if ( exists *cvar:mn_research_scis ) { delete *cvar:mn_research_scis }
+		if ( exists *cvar:mn_scientists_available ) { delete *cvar:mn_scientists_available }
+		if ( exists *cvar:mn_scientists_hired ) { delete *cvar:mn_scientists_hired }
+	}
+
+	func onWindowOpened
+	{
+		cmd "research_init;"
+		call *node:root.clear_temp
+
+		// Concatenate the string for the lab space
+		cmd "get_lab_space_string;"
+	}
+
+	func onWindowClosed
+	{
+		// Clear all research items and cvars
+		call *node:root.clear_all
+
+		// Update values for overall base display
 		cmd "base_init;"
 	}
 }

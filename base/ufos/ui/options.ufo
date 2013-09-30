@@ -2,2109 +2,2636 @@
 // OPTIONS MENU
 // =============
 
-component cmpMenuPageHeader extends string {
-	pos			"55 67"
-	size		"465 35"
-	font		"f_menubig"
-	contentalign	ALIGN_CC
-	color		"0 0.5 0 1"
-}
+/*
+ * @TODO
+ * - Joystick options
+ * - Add new tab for mods
+ */
 
-component cmpKeyBinding extends panel {
+component KeyBinding extends panel {
 	{
-		size 	"425 25"
+		size 	"315 25"
 		layout	LAYOUT_LEFT_RIGHT_FLOW
 	}
 	data id {
 		integer	-1
 	}
 	string key {
-		size	"150 25"
+		size	"130 25"
+		font	"f_verysmall_bold"
 	}
 	string description {
-		size	"250 25"
+		size	"185 25"
+		font	"f_verysmall_bold"
 	}
 }
 
-component cmpKeyList extends panel {
-	pos		"50 150"
-	size	"450 530"
-	layout	LAYOUT_TOP_DOWN_FLOW
-	wheelscrollable	true
-	onViewChange {
-		*node:this.parent.keylist_scroll@fullsize = <fullsize>
-		*node:this.parent.keylist_scroll@current = <viewpos>
-		*node:this.parent.keylist_scroll@viewsize = <viewsize>
+component KeyList extends panel {
+	{
+		size	"335 360"
+	}
+	panel list {
+		{
+			size	"335 360"
+			layout	LAYOUT_TOP_DOWN_FLOW
+		}
+		string label
+		{
+			size		"335 30"
+			font		"f_small_bold"
+			bgcolor		"0.4 0.52 0.5 1"
+			color		"0.065 0.065 0.065 1"
+			contentalign	ALIGN_CC
+		}
+		panel keylist {
+			size	"315 330"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			wheelscrollable	true
+			onViewChange {
+				*node:this.parent.parent.keylist_scroll@fullsize = <fullsize>
+				*node:this.parent.parent.keylist_scroll@current = <viewpos>
+				*node:this.parent.parent.keylist_scroll@viewsize = <viewsize>
+			}
+		}
+	}
+	vscrollbar keylist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"317 30"
+		height		"330"
+		hidewhenunused true
+		onChange {
+			*node:this.parent.list.keylist@viewpos = <current>
+		}
 	}
 }
 
 window options
 {
 	{
-		noticepos	"512 110"
-	}
-	// ===========
-	// BACKGROUND
-	// ===========
-	image background
-	{
-		src		"background/options_bg"
-	}
-	// ============
-	// HIDE PANELS
-	// ============
-	func hidepanels
-	{
-		*node:root.options_overall@invis = true
-		*node:root.options_video@invis = true
-		*node:root.options_gameplay@invis = true
-		*node:root.options_keys@invis = true
-		*node:root.options_sound@invis = true
-	}
-	// =================================================
-	// MAIN OPTIONS MENU (OVERALL/VIDEO/SOUND/GAMEPLAY)
-	// =================================================
-	cmpMenuButton button_overall
-	{
-		tooltip		"_Overall game settings"
-		string		"_Overall"
-		pos			"80 170"
-		onClick
-		{
-			call *node:root.hidepanels
-			*node:root.options_overall@invis = false
-		}
-	}
-	cmpMenuButton button_video
-	{
-		tooltip		"_Video settings"
-		string		"_Video"
-		pos			"80 240"
-		onClick
-		{
-			call *node:root.hidepanels
-			*node:root.options_video@invis = false
-		}
-	}
-	cmpMenuButton button_sound
-	{
-		tooltip		"_Sound settings"
-		string		"_Audio"
-		pos			"80 310"
-		onClick
-		{
-			call *node:root.hidepanels
-			*node:root.options_sound@invis = false
-		}
-	}
-	cmpMenuButton button_gameplay
-	{
-		tooltip		"_Battlescape camera, gameplay and input settings"
-		string		"_Gameplay"
-		pos			"80 380"
-		onClick
-		{
-			call *node:root.hidepanels
-			*node:root.options_gameplay@invis = false
-		}
-	}
-	cmpMenuButton button_back
-	{
-		tooltip		"_Leave the options menu"
-		string		"_Back"
-		pos			"80 470"
-		onClick		{ cmd "ui_pop;" }
+		background	"ui/main_bg"
+//		noticepos	"512 110"
 	}
 
-	// ===============================
-	// MAIN OVERALL GAME OPTIONS MENU
-	// ===============================
-	panel options_overall
+	// Toolbar across the top of the screen
+	MainMenuToolbar mmtoolbar { }
+
+	panel opts_windows
 	{
 		{
-			pos			"415 0"
-			size		"608 768"
+			size		"1024 435"
+			pos			"0 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
 		}
 
-		cmpMenuPageHeader overallsettings
+		/*
+		 * Hides all windows and shows selected one
+		 */
+		func hidepanels
 		{
-			string		"_Overall Game Settings"
-		}
-		// ======================
-		// PLAYER'S NAME SUBMENU
-		// ======================
-		string settings_name
-		{
-			string 		"_Name"
-			pos			"62 110"
-			size		"200 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =====================
-		// CHANGE PLAYER'S NAME
-		// =====================
-		textentry slot_name
-		{
-			string		*cvar:cl_name
-			background		"ui/button_green_verysmall"
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			contentalign	ALIGN_CL
-			padding		8
-			font		"f_verysmall"
-			pos			"72 135"
-			size		"192 30"
-		}
-		// =================
-		// LANGUAGE SUBMENU
-		// =================
-		string settings_language
-		{
-			string		"_Language Settings"
-			pos			"287 110"
-			size		"200 20"
-			color		"1.0 0.75 0 1"
-		}
-		optionlist select_language
-		{
-			tooltip		"_Available languages"
-			dataid		OPTION_LANGUAGES
-			font		"f_language"
-			pos			"297 135"
-			cvar		*cvar:s_language
-			background		"ui/panel_green_slim"
-			size		"185 250"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			padding		6
-			contentalign	ALIGN_CC
-			onViewChange	{
-				*node:root.options_overall.select_language_scroll@current = <viewpos>
-				*node:root.options_overall.select_language_scroll@fullsize = <fullsize>
-				*node:root.options_overall.select_language_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar select_language_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"485 135"
-			height		"250"
-			current		0
-			viewsize	8
-			fullsize	22
-			onChange		{
-				*node:root.options_overall.select_language@viewpos = <current>
-			}
-		}
-		// =================
-		// MODS SUBMENU
-		// =================
-		string settings_mods
-		{
-			string		"_Mods"
-			pos			"62 170"
-			size		"200 20"
-			color		"1.0 0.75 0 1"
-		}
-		optionlist select_mods
-		{
-			tooltip		"_Available game modifications"
-			pos			"72 195"
-			cvar		*cvar:fs_gamedir
-			background	"ui/panel_green_slim"
-			size		"175 185"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			padding		6
-			contentalign	ALIGN_CC
-			onViewChange	{
-				*node:root.options_overall.select_mods_scroll@current = <viewpos>
-				*node:root.options_overall.select_mods_scroll@fullsize = <fullsize>
-				*node:root.options_overall.select_mods_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar select_mods_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"248 195"
-			height		"185"
-			current		0
-			viewsize	8
-			fullsize	22
-			onChange		{
-				*node:root.options_overall.select_mods@viewpos = <current>
-			}
-		}
-		cmpPopupButton mod_load
-		{
-			pos			"72 385"
-			string		"_Activate mod"
-			font		"f_small"
-			size		"200 36"
-			onClick		{ cmd "fs_restart *cvar:fs_gamedir;" }
+			*node:parent.opts_general@invis = true
+			*node:parent.opts_general_btn@bgcolor = "0.4 0.515 0.5 0.25"
+			*node:parent.opts_general_btn@color = "1 1 1 0.5"
+			*node:parent.opts_video@invis = true
+			*node:parent.opts_video_btn@bgcolor = "0.4 0.515 0.5 0.25"
+			*node:parent.opts_video_btn@color = "1 1 1 0.5"
+			*node:parent.opts_sound@invis = true
+			*node:parent.opts_sound_btn@bgcolor = "0.4 0.515 0.5 0.25"
+			*node:parent.opts_sound_btn@color = "1 1 1 0.5"
+			*node:parent.opts_gameplay@invis = true
+			*node:parent.opts_gameplay_btn@bgcolor = "0.4 0.515 0.5 0.25"
+			*node:parent.opts_gameplay_btn@color = "1 1 1 0.5"
+			*node:parent.opts_keys@invis = true
+			*node:parent.opts_keys_btn@bgcolor = "0.4 0.515 0.5 0.25"
+			*node:parent.opts_keys_btn@color = "1 1 1 0.5"
 		}
 
-		// =====================
-		// SEVERAL TIPS SUBMENU
-		// =====================
-		string settings_tips
+		MainMenuTab opts_general_btn
 		{
-			string 		"_Several Tips"
-			pos			"62 445"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =================================
-		// MOUSEOVER CURSOR TOOLTIPS (MENU)
-		// =================================
-		string tooltip_str
-		{
-			tooltip		"_Show cursor tooltips in menus."
-			string		"_Tooltips (menu):"
-			pos			"72 470"
-			size		"280 20"
-		}
-		checkbox_blue tooltip
-		{
-			current		*cvar:mn_show_tooltips
-			pos			"485 470"
-			size		"20 18"
+			pos 		"0 0"
+			string		"_GENERAL"
+			bgcolor		"0.4 0.515 0.5 1"
+			color		"0 0 0 0.9"
+			onClick		{
+				call *node:root.opts_windows.hidepanels
+				*node:parent.opts_general@invis = false
+				*node:this@bgcolor = "0.4 0.515 0.5 1"
+				*node:this@color =  "0 0 0 0.9"
+			}
 		}
 
-		// ========================================
-		// MOUSEOVER CURSOR TOOLTIPS (BATTLESCAPE)
-		// ========================================
-		string c_tooltip_str
+		MainMenuTab opts_video_btn
 		{
-			tooltip		"_Show cursor tooltips in tactical mode."
-			string		"_Tooltips (battlescape):"
-			pos			"72 495"
-			size		"280 20"
+			pos 		"135 0"
+			string		"_VIDEO"
+			onClick		{
+				call *node:parent.hidepanels
+				*node:parent.opts_video@invis = false
+				*node:this@bgcolor = "0.4 0.515 0.5 1"
+				*node:this@color =  "0 0 0 0.9"
+			}
 		}
-		checkbox_blue c_tooltip
+
+		MainMenuTab opts_sound_btn
 		{
-			current		*cvar:cl_show_cursor_tooltips
-			pos			"485 495"
-			size		"20 18"
+			pos 		"270 0"
+			string		"_SOUND"
+			onClick		{
+				call *node:root.opts_windows.hidepanels
+				*node:parent.opts_sound@invis = false
+				*node:this@bgcolor = "0.4 0.515 0.5 1"
+				*node:this@color =  "0 0 0 0.9"
+			}
 		}
+
+		MainMenuTab opts_keys_btn
+		{
+			pos 		"405 0"
+			string		"_KEYS"
+			onClick		{
+				call *node:root.opts_windows.hidepanels
+				*node:parent.opts_keys@invis = false
+				*node:this@bgcolor = "0.4 0.515 0.5 1"
+				*node:this@color =  "0 0 0 0.9"
+			}
+		}
+
+		MainMenuTab opts_gameplay_btn
+		{
+			pos 		"540 0"
+			string		"_GAMEPLAY"
+			onClick		{
+				call *node:root.opts_windows.hidepanels
+				*node:parent.opts_gameplay@invis = false
+				*node:this@bgcolor = "0.4 0.515 0.5 1"
+				*node:this@color =  "0 0 0 0.9"
+			}
+		}
+
+		MainMenuExitBtn btn_back_btn
+		{
+			size 			"250 30"
+			pos 			"774 405"
+			string			"_DONE"
+			onClick			{ cmd "ui_pop;" }
+		}
+
 		// ===============
-		// TIP OF THE DAY
+		// GENERAL OPTIONS
 		// ===============
-		string tipoftheday_string
-		{
-			string		"_Show 'Tip of the Day':"
-			pos			"72 520"
-			size		"280 20"
-			font		"f_small"
-		}
-		checkbox_blue tipoftheday
-		{
-			current		*cvar:cl_showTipOfTheDay
-			pos			"485 520"
-			size		"20 18"
-		}
-		// =====================
-		// MENU OPTIONS SUBMENU
-		// =====================
-		string settings_menu
-		{
-			string 		"_Menu Options"
-			pos			"62 575"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ================
-		// PRECACHE MODELS
-		// ================
-		string precache_str
-		{
-			string		"_Precache Models:"
-			pos			"72 600"
-			size		"320 20"
-		}
-		checkbox_blue precache
-		{
-			tooltip		"_Precaching of models means having faster menus."
-			current		*cvar:cl_precache
-			pos			"485 600"
-			size		"20 18"
-		}
-	}
-	// ========================
-	// MAIN VIDEO OPTIONS MENU
-	// ========================
-	panel options_video
-	{
-		{
-			pos			"415 0"
-			size		"608 768"
-		}
-
-		cmpMenuPageHeader videosettings
-		{
-			string		"_Video Settings"
-		}
-
-		tab video_tabs {
-			{
-				pos		"47 100"
-				size	"483 39"
-				cvar	*cvar:mn_videotab
-				onChange {
-					if ( *cvar:mn_videotab eq "general" ) {
-						*node:root.options_video.options_general_video@invis = false
-						*node:root.options_video.options_advanced_video@invis = true
-						*node:root.options_video.options_other_video@invis = true
-					} elif ( *cvar:mn_videotab eq "advanced" ) {
-						*node:root.options_video.options_general_video@invis = true
-						*node:root.options_video.options_advanced_video@invis = false
-						*node:root.options_video.options_other_video@invis = true
-					} else {
-						*node:root.options_video.options_general_video@invis = true
-						*node:root.options_video.options_advanced_video@invis = true
-						*node:root.options_video.options_other_video@invis = false
-					}
-				}
-			}
-			option general {
-				label	"_General"
-				value	"general"
-			}
-			option advanced {
-				label	"_Advanced"
-				value	"advanced"
-			}
-			option other {
-				label	"_Other"
-				value	"other"
-			}
-		}
-
-		// ================================
-		// GENERAL VIDEO OPTIONS TAB PANEL
-		// ================================
-		panel options_general_video
+		panel opts_general
 		{
 			{
-				pos			"45 145"
-				size		"498 680"
-			}
-			// ============================
-			// RESOLUTION SETTINGS SUBMENU
-			// ============================
-			string settings_resolution
-			{
-				string 		"_Resolution and Display Settings"
-				pos			"22 10"
-				size		"320 20"
-				color		"1.0 0.75 0 1"
+				pos 	"0 40"
+				size	"1024 365"
 			}
 
-			// ===========
-			// RESOLUTION
-			// ===========
-			string res_str
+			// Change the player's name
+			panel player_name
 			{
-				tooltip		"_The resolution (x*y) in pixel which UFO:AI should use."
-				string		"_Resolution:"
-				pos			"32 35"
-				size		"240 20"
-			}
-			// ===============================
-			// SELECT SCREEN RESOLUTION RATIO
-			// ===============================
-			selectbox select_ratio
-			{
-				{
-					tooltip		"_Display only resolutions using this screen ratio."
-					cvar		*cvar:mn_vidratio
-					pos			"215 37"
-					size		"121 20"
-					onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
-				}
-				option all
-				{
-					label	"_All ratios"
-					value	"all"
-				}
-				option r5_4
-				{
-					label	"5:4"
-					value	"1.25"
-				}
-				option r4_3
-				{
-					label	"4:3"
-					value	"1.3333333"
-				}
-				option r3_2
-				{
-					label	"3:2"
-					value	"1.5"
-				}
-				option r16_10
-				{
-					label	"16:10"
-					value	"1.6"
-				}
-				option r16_9
-				{
-					label	"16:9"
-					value	"1.7777777"
-				}
-				option custom
-				{
-					label	"_Others"
-					value	"custom"
-				}
-			}
-			// =========================
-			// SELECT SCREEN RESOLUTION
-			// =========================
-			selectbox select_res
-			{
-				tooltip		"_Select your desired screen resolution."
-				cvar		*cvar:vid_mode
-				pos			"340 37"
-				size		"125 20"
-				dataid		OPTION_VIDEO_RESOLUTIONS
-			}
-			// ===========
-			// FULLSCREEN
-			// ===========
-			string fullscreen_str
-			{
-				string		"_Fullscreen:"
-				pos			"32 60"
-				size		"320 20"
-			}
-			checkbox_blue fullscreen
-			{
-				tooltip		"_Play UFO:AI in fullscreen."
-				current		*cvar:vid_fullscreen
-				pos			"445 60"
-				size		"20 18"
-			}
-			// ===============
-			// STRETCH SCREEN
-			// ===============
-			string stretch_str
-			{
-				string		"_Stretch the Screen with a 4:3 Ratio:"
-				pos			"32 85"
-				size		"370 20"
-			}
-			checkbox_blue stretch
-			{
-				current		*cvar:vid_stretch
-				pos			"445 85"
-				size		"20 18"
-			}
-			// =============================================
-			// INFORM THE PLAYER ABOUT CTRL+G MOUSEGRABBING
-			// =============================================
-			string mousegrabbing_info_str
-			{
-				tooltip		"_Prevent the mousepointer from leaving the game window."
-				string		"_Hint: Press CTRL+G to grab/release the mousepointer."
-				pos			"32 110"
-				size		"410 20"
-				visiblewhen	"*cvar:vid_fullscreen == 0"
-				font		"f_verysmall"
-			}
-			// =====================================
-			// MONITOR CALIBRATION CONTROLS SUBMENU
-			// =====================================
-			string settings_calibration
-			{
-				tooltip		"_Calibrate your display here."
-				string 		"_Monitor Calibration Controls"
-				pos			"22 165"
-				size		"320 20"
-				color		"1.0 0.75 0 1"
-			}
-			// ======
-			// GAMMA
-			// ======
-			string gamma_str
-			{
-				string		"_Gamma:"
-				pos			"32 190"
-				size		"170 20"
-			}
-			image gamma_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"208 192"
-			}
-			bar gamma_bar
-			{
-				current		*cvar:vid_gamma
-				pos			"217 197"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			3.0
-				onClick		{ }
-			}
-			// ============================
-			// SCREENSHOT SETTINGS SUBMENU
-			// ============================
-			string settings_screenshot
-			{
-				tooltip		"_The default key to make screenshots is F12."
-				string 		"_Screenshot Settings"
-				pos			"22 320"
-				size		"256 20"
-				color		"1.0 0.75 0 1"
-			}
-			// ==================
-			// SCREENSHOT FORMAT
-			// ==================
-			string screenshot_format_str
-			{
-				tooltip		"_The file format used for compressing and saving your screenshots."
-				string		"_Screenshot Format:"
-				pos			"32 345"
-				size		"320 20"
-			}
-			selectbox screenshot_format
-			{
-				{
-					cvar		*cvar:r_screenshot_format
-					pos			"340 345"
-					size		"125 20"
-
-					onChange {
-						call *node:root.options_video.options_general_video.show_jpeg_options
-					}
-				}
-				option screenshot_format_jpeg
-				{
-					label	"jpg"
-					value	"jpg"
-				}
-				option screenshot_format_png
-				{
-					label	"png"
-					value	"png"
-				}
-				option screenshot_format_tga
-				{
-					label	"tga"
-					value	"tga"
-				}
-			}
-			// ========================
-			// JPEG SCREENSHOT QUALITY
-			// ========================
-			func show_jpeg_options {
-				if ( *cvar:r_screenshot_format eq "jpg" ) {
-					*node:parent.jpeg_options@invis = false
-				} else {
-					*node:parent.jpeg_options@invis = true
-				}
-			}
-			panel jpeg_options {
-				{
-					pos		"30 370"
-					size	"440 25"
-				}
-				string jpeg_quality_str {
-					string	"_jpeg Quality:"
-					pos		"0 0"
-					size	"170 20"
-				}
-				image jpeg_quality_rahmen {
-					src		"ui/bar_rahmen"
-					pos		"178 2"
-				}
-				bar jpeg_quality_bar {
-					current	*cvar:r_screenshot_jpeg_quality
-					pos		"187 7"
-					size	"180 6"
-					color	"0 0.8 0 1"
-					max		100
-				}
-			}
-			// ==============================
-			// OTHER DISPLAY OPTIONS SUBMENU
-			// ==============================
-			string settings_display_other
-			{
-				string 		"_Other Display Settings"
-				pos			"22 440"
-				size		"320 20"
-				color		"1.0 0.75 0 1"
-			}
-
-			// ============================
-			// SHOW FRAMES/SECOND RENDERED
-			// ============================
-			string fps_str
-			{
-				string		"_Show FPS:"
-				pos			"32 465"
-				size		"320 20"
-			}
-			checkbox_blue fps
-			{
-				tooltip		"_Display the number of rendered frames per second."
-				current		*cvar:cl_fps
-				pos			"445 465"
-				size		"20 18"
-			}
-
-			// ================
-			// SHOW INTROVIDEO
-			// ================
-			string intro_video
-			{
-				tooltip		"_Don't play the video when loading the game."
-				string		"_Skip Intro Video:"
-				pos			"32 490"
-				size		"320 20"
-			}
-			checkbox_blue intro
-			{
-				tooltip		"_Default is to play the intro video just once at the first game start."
-				current		*cvar:cl_introshown
-				pos			"445 490"
-				size		"20 18"
-			}
-		}
-
-		// =================================
-		// ADVANCED VIDEO OPTIONS TAB PANEL
-		// =================================
-		panel options_advanced_video
-		{
-			{
-				pos			"45 145"
-				size		"498 680"
-			}
-
-			// =========================
-			// TEXTURE SETTINGS SUBMENU
-			// =========================
-			string settins_h_texture
-			{
-				size		"320 20"
-				color		"1.0 0.75 0 1"
-				string 		"_Texture Settings"
-				pos			"22 10"
-			}
-			// =======================
-			// TEXTURE RESOLUTION CAP
-			// =======================
-			string texres_str
-			{
-				tooltip		"_Sets the maximum size for textures and caps resolutions higher than that value."
-				string		"_Resolution Cap:"
-				pos			"32 35"
-				size		"250 20"
-			}
-			selectbox texres_box
-			{
-				{
-					tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
-					cvar		*cvar:r_maxtexres
-					pos			"340 37"
-					size		"125 20"
-				}
-				option low_value {
-					label	"_Low"
-					value	"256"
-				}
-				option medium_value {
-					label	"_Medium"
-					value	"512"
-				}
-				option normal_value {
-					label	"_Normal"
-					value	"1024"
-				}
-				option high_value {
-					label	"_High"
-					value	"2048"
-				}
-				option excellent_value {
-					label	"_Excellent"
-					value	"4096"
-				}
-				option extrem_value {
-					label	"_Extreme"
-					value	"8192"
-				}
-			}
-
-			// =======================
-			// TEXTURE FILTERING
-			// =======================
-			string texmode_str
-			{
-				tooltip		"_Sets the texture filtering and mipmapping method."
-				string		"_Filtering:"
-				pos			"32 60"
-				size		"150 20"
-			}
-			selectbox texmode_box
-			{
-				{
-					cvar		*cvar:r_texturemode
-					pos			"169 62"
-					size		"296 20"
-				}
-
-				option low_value {
-					label	"_No filtering, no mipmaps"
-					value	"GL_NEAREST"
-				}
-				option medium_value {
-					label	"_Bilinear filtering, no mipmaps"
-					value	"GL_LINEAR"
-				}
-				option normal_value {
-					label	"_No filtering, mipmaps"
-					value	"GL_NEAREST_MIPMAP_NEAREST"
-				}
-				option high_value {
-					label	"_Bilinear filtering, mipmaps"
-					value	"GL_LINEAR_MIPMAP_NEAREST"
-				}
-				option excellent_value {
-					label	"_Trilinear filtering, mipmaps"
-					value	"GL_NEAREST_MIPMAP_LINEAR"
-				}
-				option extrem_value {
-					label	"_Bilinear filtering, trilinear filtering, mipmaps"
-					value	"GL_LINEAR_MIPMAP_LINEAR"
-				}
-			}
-
-			// ====================
-			// TEXTURE COMPRESSION
-			// ====================
-			string compression_str
-			{
-				tooltip		"_Enable texture compression for better memory performance, disable for better rendering quality."
-				string		"_Compression:"
-				pos			"32 85"
-				size		"320 20"
-			}
-			checkbox_blue compression
-			{
-				current		*cvar:r_ext_texture_compression
-				pos			"445 85"
-				size		"20 18"
-			}
-			// ============
-			// TEXTURE LOD
-			// ============
-			string lod_str
-			{
-				tooltip		"_Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
-				string		"_LoD:"
-				pos			"32 110"
-				size		"250 20"
-			}
-			checkbox_blue lod
-			{
-				current		*cvar:r_texture_lod
-				pos			"445 110"
-				size		"20 18"
-			}
-			// ======================
-			// ANISOTROPIC FILTERING
-			// ======================
-			string aniso_str
-			{
-				tooltip		"_The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
-				string		"_Anisotropy Level:"
-				pos			"32 135"
-				size		"320 20"
-			}
-			string aniso_value
-			{
-				string		*cvar:r_anisotropic
-				pos			"420 135"
-				size		"32 20"
-			}
-			/** @todo update max with GL max anisotropic */
-			spinner_blue aniso_change
-			{
-				tooltip		"_Very high values are only recommended when playing in very high screen resolutions."
-				current		*cvar:r_anisotropic
-				pos			"448 135"
-				min			0
-				max			16
-				delta		1
-			}
-
-			// ========================
-			// OPENGL SETTINGS SUBMENU
-			// ========================
-			string settings_opengl
-			{
-				string 		"_OpenGL Settings"
-				pos			"22 190"
-				size		"256 20"
-				color		"1.0 0.75 0 1"
-			}
-			// =============
-			// GLSL SHADERS
-			// =============
-			string glsl_str
-			{
-				tooltip		"_OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
-				string		"_GLSL Shaders:"
-				pos			"32 215"
-				size		"240 20"
-			}
-			selectbox glsl_ver
-			{
-				{
-					tooltip	"_Set the OpenGL shader quality - or disable them."
-					cvar	*cvar:r_programs
-					pos		"300 215"
-					size	"165 20"
-					onChange {
-						call *node:root.options_video.options_advanced_video.show_opengl_options
-					}
-				}
-				option disabled_value
-				{
-					label   "_Disabled"
-					value   "0"
-				}
-				option low_value
-				{
-					label   "_Low quality"
-					value   "1"
-				}
-				option medium_value
-				{
-					label   "_Medium quality"
-					value   "2"
-				}
-				option high_value
-				{
-					label   "_High quality"
-					value   "3"
-				}
-			}
-			// we only show OpenGL options if shaders are enabled
-			func show_opengl_options {
-				if ( *cvar:r_programs == "0" ) {
-					*node:parent.opengl_options@invis = true
-				} else {
-					*node:parent.opengl_options@invis = false
-				}
-			}
-			panel opengl_options {
 				{
 					pos		"0 0"
-					size	"608 768"
-					ghost	true
+					size	"512 30"
+					onMouseEnter 	{ *node:this.name_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.name_label@color = "1 1 1 0.5" }
 				}
-				// ===============
-				// VERTEX BUFFERS
-				// ===============
-				string vbo_str
+				string name_label
 				{
-					tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
-					string		"_Vertex Buffers:"
-					pos			"32 240"
-					size		"240 20"
+					string 			"_Name"
+					pos				"5 5"
+					size			"256 20"
+					color			"1 1 1 0.5"
 				}
-				checkbox_blue vbo
+				textentry slot_name
 				{
-					current		*cvar:r_vertexbuffers
-					pos			"445 240"
+					string			*cvar:cl_name
+					pos				"292 5"
+					size			"200 20"
+					background			"ui/textentry"
+					color			"1 1 1 0.5"
+					selectcolor		"1 1 1 0.9"
+					contentalign	ALIGN_CL
+					padding			8
+				}
+			}
+
+			// Change the language used
+			panel language
+			{
+				{
+					pos		"0 30"
+					size	"512 145"
+					onMouseEnter 	{ *node:this.lng_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.lng_label@color = "1 1 1 0.5" }
+				}
+				string lng_label
+				{
+					string			"_Language Settings"
+					pos				"5 5"
+					size			"256 20"
+					color			"1 1 1 0.5"
+				}
+				optionlist select_language
+				{
+					dataid			OPTION_LANGUAGES
+					pos				"292 5"
+					font			"f_language"
+					size			"200 135"
+					cvar			*cvar:s_language
+					background			"ui/panel"
+					color			"1 1 1 0.5"
+					selectcolor		"1 1 1 0.9"
+					padding			6
+					contentalign	ALIGN_CC
+					onViewChange	{
+						*node:parent.select_language_scroll@current = <viewpos>
+						*node:parent.select_language_scroll@fullsize = <fullsize>
+						*node:parent.select_language_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar select_language_scroll {
+					image		"ui/scrollbar_v_green"
+					pos			"472 5"
+					height		"135"
+					current		0
+					viewsize	8
+					fullsize	8
+					onChange		{
+						*node:parent.select_language@viewpos = <current>
+					}
+				}
+			}
+
+			// Mouseover tooltips options
+			panel mtooltips
+			{
+				{
+					pos		"0 175"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.mtooltips_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.mtooltips_label@color = "1 1 1 0.5" }
+				}
+
+				string mtooltips_label
+				{
+					string		"_Tooltips"
+					pos			"5 5"
+					size		"450 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 mtooltips_opt
+				{
+					current		*cvar:mn_show_tooltips
+					pos			"472 6"
 					size		"20 18"
 				}
-				// ==================================================================
-				// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC)
-				// ==================================================================
-				string samplebuf_swapcontrol_str
+			}
+
+			// Cursor tooltips options
+			panel ctooltips
+			{
 				{
-					tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-					string		"_Multisample Buffers / Swap Interval:"
-					pos			"32 265"
-					size		"320 20"
+					pos		"0 205"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.ctooltips_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.ctooltips_label@color = "1 1 1 0.5" }
 				}
-				string samplebuf_value
+
+				string ctooltips_label
 				{
-					tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
-					string		*cvar:r_multisample
-					pos			"360 265"
-					size		"24 20"
+					string		"_Cursor tooltips"
+					pos			"5 5"
+					size		"450 20"
+					color		"1 1 1 0.5"
 				}
-				spinner_blue samplebuf_change
+
+				checkbox_ui2 ctooltips_opt
 				{
-					current		*cvar:r_multisample
-					pos			"388 265"
-					min			0
-					max			4
-					delta		1
-				}
-				string swapcontrol_value
-				{
-					tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
-					string		*cvar:r_swapinterval
-					pos			"420 265"
-					size		"20 20"
-				}
-				spinner_blue swapinterval_change
-				{
-					current		*cvar:r_swapinterval
-					pos			"448 265"
-					min			0
-					max			2
-					delta		1
-				}
-				// ==============================
-				// POSTPROCESSING SHADER EFFECTS
-				// ==============================
-				string postprocess_str
-				{
-					tooltip		"_Post-processing shader effects like glowing textures."
-					string		"_Post-Processing Shader Effects:"
-					pos			"32 290"
-					size		"370 20"
-				}
-				checkbox_blue postprocess
-				{
-					tooltip		"_Enable post processing shader effects."
-					current		*cvar:r_postprocess
-					pos			"445 290"
+					current		*cvar:cl_show_cursor_tooltips
+					pos			"472 6"
 					size		"20 18"
 				}
-				// =======================================================
-				// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS
-				// =======================================================
-				string light_dynamiclights_str
+			}
+
+			// Tip of the day options
+			panel tipoftheday
+			{
 				{
-					tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
-					string		"_Realtime Lighting / Max Dynamic Lights:"
-					pos			"32 395"
-					size		"320 20"
+					pos		"0 235"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.tipoftheday_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tipoftheday_label@color = "1 1 1 0.5" }
 				}
-				string dynamiclights_value
+
+				string tipoftheday_label
 				{
-					string		*cvar:r_dynamic_lights
-					pos			"420 395"
-					size		"100 20"
+					string		"_Main menu tips"
+					pos			"5 5"
+					size		"450 20"
+					color		"1 1 1 0.5"
 				}
-				spinner_blue dynamiclights_change
+
+				checkbox_ui2 tipoftheday_opt
 				{
-					tooltip		"_Change the number of allowed hardware accelerated dynamic lights."
-					current		*cvar:r_dynamic_lights
-					pos			"448 395"
-					min			0
-					max			7
-					delta		1
-					onChange {
-						call *node:root.options_video.options_advanced_video.opengl_options.show_lighting_options
-					}
+					current		*cvar:cl_showTipOfTheDay
+					pos			"472 6"
+					size		"20 18"
 				}
-				// we only show lighting options if realtime lighting is enabled
-				func show_lighting_options {
-					if ( *cvar:r_dynamic_lights == "0" ) {
-						*node:parent.lighting_options@invis = true
-					} else {
-						*node:parent.lighting_options@invis = false
-					}
+			}
+
+			// Pre-cache menu models
+			panel precache
+			{
+				{
+					pos		"0 265"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.precache_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.precache_label@color = "1 1 1 0.5" }
 				}
-				panel lighting_options {
+
+				string precache_label
+				{
+					string		"_Pre-cache menu models"
+					tooltip		"_Increases speed of game menus"
+					pos			"5 5"
+					size		"450 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 precache_opt
+				{
+					current		*cvar:cl_precache
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// ===============
+			// GENERAL OPTIONS
+			// Second Column
+			// ===============
+			string geoscape_opts_label
+			{
+				string		"_Geoscape Options"
+				pos			"512 0"
+				size		"512 30"
+				font		"f_small_bold"
+				bgcolor		"0.4 0.52 0.5 1"
+				color		"0.065 0.065 0.065 1"
+				contentalign	ALIGN_CC
+			}
+
+			// 3D Geoscape
+			panel geo3d
+			{
+				{
+					pos		"512 40"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.geo3d_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.geo3d_label@color = "1 1 1 0.5" }
+				}
+
+				string geo3d_label
+				{
+					string		"_3D geoscape"
+					tooltip		"_View the geoscape as a 3D globe"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 geo3d_opt
+				{
+					current		*cvar:cl_3dmap
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// 3D Geoscape camera zoom minimum and maximums
+			panel geo_camera_zoom
+			{
+				{
+					pos		"512 70"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.5" }
+				}
+
+				string geo_camera_zoom_label
+				{
+					string		"_Camera zoom"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				string geo_camera_zoom_min_label
+				{
+					string		"_Min"
+					pos			"260 5"
+					size		"40 20"
+					font		"f_verysmall_bold"
+					color		"1 1 1 0.5"
+					contentalign	ALIGN_CR
+				}
+
+				selectbox geo_camera_zoom_min
+				{
 					{
-						pos		"0 0"
-						size	"608 768"
-						ghost	true
+						cvar			*cvar:cl_mapzoommin
+						pos				"305 5"
+						size			"60 20"
+						contentalign	ALIGN_CL
 					}
-					// ====================
-					// NORMAL-/BUMPMAPPING
-					// ====================
-					string bumpmapping_str
+					option geocamzoom_min00
 					{
-						tooltip		"_Also known as bumpmapping."
-						string		"_Texture Normalmapping:"
-						pos			"32 420"
-						size		"320 20"
+						label	"0.0"
+						value	"0"
 					}
-					checkbox_blue bumpmapping
+					option geocamzoom_min020
 					{
-						tooltip		"_Enable normal-/bumpmapping."
-						current		*cvar:r_bumpmap
-						pos			"445 420"
-						size		"20 18"
+						label	"0.2"
+						value	"0.20"
+					}
+					option geocamzoom_min040
+					{
+						label	"0.4"
+						value	"0.40"
+					}
+					option geocamzoom_min060
+					{
+						label	"0.6"
+						value	"0.60"
+					}
+					option geocamzoom_min080
+					{
+						label	"0.8"
+						value	"0.80"
+					}
+					option geocamzoom_min100
+					{
+						label	"_1.0"
+						value	"1.0"
 					}
 				}
-				// ========================
-				// GEOSCAPE 3DMAP LIGHTING
-				// ========================
-				string m3dmapambient_str
+
+				string geo_camera_zoom_max_label
 				{
-					tooltip		"_Amount of light emitting from the sun and shining on the earth."
-					string		"_Geo Ambient Lighting:"
-					pos			"32 445"
-					size		"320 20"
+					string		"_Max"
+					pos			"405 5"
+					size		"40 20"
+					font		"f_verysmall_bold"
+					color		"1 1 1 0.5"
 				}
-				image m3dmapambient_rahmen
+
+				selectbox geocamzoom_max
 				{
-					src		"ui/bar_rahmen"
-					pos			"204 472"
+					{
+						cvar		*cvar:cl_mapzoommax
+						pos			"440 5"
+						size		"50 20"
+					}
+					option geocamzoom_max20
+					{
+						label	"_2"
+						value	"2.0"
+					}
+					option geocamzoom_max40
+					{
+						label	"_4"
+						value	"4.0"
+					}
+					option geocamzoom_max60
+					{
+						label	"_6"
+						value	"6.0"
+					}
+					option geocamzoom_max80
+					{
+						label	"_8"
+						value	"8.0"
+					}
+					option geocamzoom_max100
+					{
+						label	"_10"
+						value	"10.0"
+					}
+					option geocamzoom_max120
+					{
+						label	"_12"
+						value	"12.0"
+					}
 				}
-				bar m3dmapambient_bar
+			}
+
+			// Show FPS
+			panel show_fps
+			{
+				{
+					pos		"512 200"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.show_fps_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.show_fps_label@color = "1 1 1 0.5" }
+				}
+
+				string show_fps_label
+				{
+					string		"_Display FPS"
+					tooltip		"_Display the number of frames rendered per second"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 show_fps_opt
+				{
+					current		*cvar:cl_fps
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Show FPS
+			panel intro_video
+			{
+				{
+					pos		"512 230"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.intro_video_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.intro_video_label@color = "1 1 1 0.5" }
+				}
+
+				string intro_video_label
+				{
+					string		"_Skip Intro Video"
+					tooltip		"_Don't play the video when loading the game."
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 intro_video_opt
+				{
+					current		*cvar:cl_introshown
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+		}
+
+		// ==================
+		// VIDEO OPTIONS MENU
+		// ==================
+		panel opts_video
+		{
+			{
+				pos 	"0 40"
+				size	"1024 365"
+				invis	true
+			}
+
+			panel resolution
+			{
+				{
+					pos 	"0 0"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.resolution_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.resolution_label@color = "1 1 1 0.5" }
+				}
+
+				string resolution_label
+				{
+					string		"_Resolution"
+					pos			"5 5"
+					size		"150 20"
+					color		"1 1 1 0.5"
+				}
+
+				string ratio_label
+				{
+					string		"_Ratio"
+					pos			"200 5"
+					size		"40 20"
+					font		"f_verysmall_bold"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox select_ratio
+				{
+					{
+						tooltip		"_Display resolutions in this ratio"
+						cvar		*cvar:mn_vidratio
+						pos			"250 5"
+						size		"80 20"
+						onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
+					}
+					option all
+					{
+						label	"_All"
+						value	"all"
+					}
+					option r5_4
+					{
+						label	"5:4"
+						value	"1.25"
+					}
+					option r4_3
+					{
+						label	"4:3"
+						value	"1.3333333"
+					}
+					option r3_2
+					{
+						label	"3:2"
+						value	"1.5"
+					}
+					option r16_10
+					{
+						label	"16:10"
+						value	"1.6"
+					}
+					option r16_9
+					{
+						label	"16:9"
+						value	"1.7777777"
+					}
+					option custom
+					{
+						label	"_Others"
+						value	"custom"
+					}
+				}
+
+				selectbox select_res
+				{
+					cvar		*cvar:vid_mode
+					pos			"340 5"
+					size		"152 20"
+					dataid		OPTION_VIDEO_RESOLUTIONS
+				}
+			}
+
+			// Full screen or windowed mode
+			panel fullscreen
+			{
+				{
+					pos		"0 30"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.fullscreen_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.fullscreen_label@color = "1 1 1 0.5" }
+				}
+
+				string fullscreen_label
+				{
+					string		"_Fullscreen"
+					tooltip		"_View the game in fullscreen instead of windowed mode"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 fullscreen_opt
+				{
+					current		*cvar:vid_fullscreen
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Full screen or windowed mode
+			panel stretch
+			{
+				{
+					pos		"0 60"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.stretch_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.stretch_label@color = "1 1 1 0.5" }
+				}
+
+				string stretch_label
+				{
+					string		"_Stretch screen"
+					tooltip		"_Stretch screen to fit monitors with 4:3 ratio"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 stretch_opt
+				{
+					current		*cvar:vid_strech
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Gamma / Brightness
+			panel gamma
+			{
+				{
+					pos		"0 90"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.gamma_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.gamma_label@color = "1 1 1 0.5" }
+				}
+
+				string gamma_label
+				{
+					string		"_Gamma / Brightness"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar gamma_bar
+				{
+					current		*cvar:vid_gamma
+					pos			"237 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
+					max			3.0
+					onClick		{ }
+				}
+			}
+
+			// Sunlight brightness on geoscape
+			panel geo_sun
+			{
+				{
+					pos		"0 120"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.geo_sun_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.geo_sun_label@color = "1 1 1 0.5" }
+				}
+
+				string geo_sun_label
+				{
+					string		"_Geoscape sunlight"
+					tooltip		"_Brightness of sunlight on the geoscape"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar geo_sun_bar
 				{
 					current		*cvar:cl_3dmapAmbient
-					pos			"213 477"
-					size		"238 6"
-					color		"0 .8 0 1"
+					pos			"237 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
 					min			-1
 					max			3
 					onClick		{ }
 				}
-				// ========
-				// SHADOWS
-				// ========
-				/*
-				string shadows_str
+			}
+
+			// Screenshot settings
+			panel screenshot
+			{
 				{
-					tooltip		"_At the moment these are just drop-shadows."
-					string		"_Shadows:"
-					pos			"32 370"
-					size		"240 20"
+					pos		"0 150"
+					size	"512 60"
+					onMouseEnter 	{ *node:this.screenshot_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.screenshot_label@color = "1 1 1 0.5" }
 				}
-				checkbox_blue shadows
+
+				string screenshot_label
 				{
-					tooltip		"_Enable shadows."
-					current		*cvar:r_shadows
-					pos			"445 370"
+					string		"_Screenshot format"
+					tooltip		"_The file format screenshots will be saved in"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox screenshot_format
+				{
+					{
+						cvar		*cvar:r_screenshot_format
+						pos			"367 5"
+						size		"125 20"
+						onChange	{
+							call *node:root.opts_windows.opts_video.hide_screenshot_quality
+						}
+					}
+					option screenshot_format_jpeg
+					{
+						label	"jpg"
+						value	"jpg"
+					}
+					option screenshot_format_png
+					{
+						label	"png"
+						value	"png"
+					}
+					option screenshot_format_tga
+					{
+						label	"tga"
+						value	"tga"
+					}
+				}
+			}
+
+			// Screenshot quality
+			panel screenshot_quality
+			{
+				{
+					pos		"0 210"
+					size	"512 30"
+					invis	true
+					onMouseEnter 	{ *node:this.screenshot_quality_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.screenshot_quality_label@color = "1 1 1 0.5" }
+				}
+
+				string screenshot_quality_label
+				{
+					string		"_Screenshot quality"
+					font		"f_verysmall_bold"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar screenshot_quality_bar
+				{
+					current		*cvar:r_screenshot_jpeg_quality
+					pos			"237 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
+					max			100
+					onClick		{ }
+				}
+			}
+
+			// Hide screenshot quality if JPG not selected
+			func hide_screenshot_quality {
+				if ( *cvar:r_screenshot_format eq "jpg" ) {
+					*node:parent.screenshot_quality@invis = false
+				} else {
+					*node:parent.screenshot_quality@invis = true
+				}
+			}
+
+			// Buttons to set low/med/high video configurations
+			panel video_auto
+			{
+				{
+					pos		"5 275"
+					size	"487 100"
+					bgcolor		"0 0 0 0.5"
+					onMouseEnter 	{ *node:this.video_auto_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.video_auto_label@color = "1 1 1 0.5" }
+				}
+
+				string video_auto_label
+				{
+					string		"_Video quality"
+					pos			"5 10"
+					size		"482 30"
+				}
+				string video_auto_desc
+				{
+					string		"_Default video configuration settings"
+					pos			"5 30"
+					size		"492 15"
+					font		"f_verysmall"
+					color		"1 1 1 0.5"
+					contentalign	ALIGN_CL
+				}
+
+				MainMenu3Btn video_low
+				{
+					pos			"5 55"
+					size		"140 30"
+					string		"_LOW"
+					font		"f_small_bold"
+					onClick
+					{
+						cmd "exec video-low.cfg;"
+					}
+				}
+
+				MainMenu3Btn video_medium
+				{
+					pos		"171 55"
+					size	"140 30"
+					string	"_MEDIUM"
+					font		"f_small_bold"
+					onClick
+					{
+						cmd "exec video-medium.cfg;"
+					}
+				}
+
+				MainMenu3Btn video_high
+				{
+					pos		"337 55"
+					size	"140 30"
+					string	"_HIGH"
+					font		"f_small_bold"
+					onClick
+					{
+						cmd "exec video-high.cfg;"
+					}
+				}
+			}
+
+			// =============
+			// VIDEO OPTIONS
+			// Second Column
+			// =============
+
+			// Turn GLSL on/off
+			panel shaders
+			{
+				{
+					pos			"512 0"
+					size		"512 90"
+					onMouseEnter 	{ *node:this.shaders_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.shaders_label@color = "1 1 1 0.5" }
+				}
+
+				string shaders_label
+				{
+					string		"_Shaders"
+					tooltip		"_Enhanced visual techniques like post-processing effects"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 shaders_opt
+				{
+					current		*cvar:r_programs
+					pos			"472 6"
+					size		"20 18"
+					onClick		{ call *node:root.toggle_shaders_opts }
+				}
+
+				// Turn post-processing shader effects on/off
+				panel postprocessing
+				{
+					{
+						pos			"0 30"
+						size		"512 30"
+						invis		true
+						onMouseEnter 	{ *node:this.postprocessing_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.postprocessing_label@color = "1 1 1 0.5" }
+					}
+
+					string postprocessing_label
+					{
+						string		"_Post-processing effects"
+						tooltip		"_Effects like light bloom and reflected light"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					checkbox_ui2 postprocessing_opt
+					{
+						current		*cvar:r_postprocess
+						pos			"472 6"
+						size		"20 18"
+					}
+				}
+
+				// Button to view advanced OpenGL options
+				MainMenu2Btn opengl_adv_btn
+				{
+					string			"_Advanced OpenGL options"
+					pos				"300 65"
+					size			"192 20"
+					invis			true
+					font			"f_verysmall_bold"
+					selectcolor		"0 0 0 0.9"
+					onClick			{ call *node:root.toggle_panel("opengl_adv", 1) }
+				}
+			}
+
+			// Turn real-time lighting on/off
+			panel light_realtime
+			{
+				{
+					pos			"512 90"
+					size		"512 90"
+					onMouseEnter 	{ *node:this.light_realtime_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.light_realtime_label@color = "1 1 1 0.5" }
+				}
+
+				string light_realtime_label
+				{
+					string		"_Real-time lighting effects"
+					pos			"5 5"
+					size		"250 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 light_realtime_opt
+				{
+					current		*cvar:r_lights
+					pos			"472 6"
+					size		"20 18"
+					onClick		{
+						call *node:root.opts_windows.opts_video.light_realtime.toggle_realtime_lighting_opts
+					}
+				}
+
+				// The number of dynamic lights
+				panel light_realtime_count
+				{
+					{
+						pos			"0 30"
+						size		"512 30"
+						invis		true
+						onMouseEnter 	{ *node:this.light_realtime_count_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.light_realtime_count_label@color = "1 1 1 0.5" }
+					}
+
+					string light_realtime_count_label
+					{
+						string		"_Max dynamic lights"
+						tooltip		"_Set available hardware-accelerated dynamic lights"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					string dynamiclights_value
+					{
+						string		*cvar:r_dynamic_lights
+						pos			"452 5"
+						size		"40 20"
+					}
+
+					spinner_green dynamiclights_change
+					{
+						current		*cvar:r_dynamic_lights
+						pos			"472 6"
+						width		20
+						height		25
+						min			0
+						max			8
+						delta		1
+					}
+				}
+
+				// Bumpmapping / Normalmapping
+				panel light_bumpmapping
+				{
+					{
+						pos			"0 60"
+						size		"512 30"
+						invis		true
+						onMouseEnter 	{ *node:this.light_bumpmapping_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.light_bumpmapping_label@color = "1 1 1 0.5" }
+					}
+
+					string light_bumpmapping_label
+					{
+						string		"_Bumpmapping / Normalmapping"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"250 20"
+						color		"1 1 1 0.5"
+					}
+
+					checkbox_ui2 light_bumpmapping_opt
+					{
+						current		*cvar:r_bumpmap
+						pos			"472 6"
+						size		"20 18"
+					}
+				}
+
+				// Display or hide the real-time lighting options
+				func toggle_realtime_lighting_opts {
+					if ( *cvar:r_lights >= 1 ) {
+						*node:parent.light_realtime_count@invis = false
+						*node:parent.light_bumpmapping@invis = false
+					} else {
+						*node:parent.light_realtime_count@invis = true
+						*node:parent.light_bumpmapping@invis = true
+					}
+				}
+			}
+
+			// Environmental effects (weather, material system, coronas, etc.)
+			panel env_effects
+			{
+				{
+					pos			"512 210"
+					size		"512 60"
+					onMouseEnter 	{ *node:this.env_effects_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.env_effects_label@color = "1 1 1 0.5" }
+				}
+
+				string env_effects_label
+				{
+					string		"_Environmental effects"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				string env_effects_coronas_label
+				{
+					string		"_Coronas"
+					tooltip		"_Lighting effect"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos			"190 5"
+					size		"75 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				checkbox_ui2 env_effects_coronas_opt
+				{
+					current		*cvar:r_coronas
+					pos			"270 6"
 					size		"20 18"
 				}
-				*/
+
+				string env_effects_fog_label
+				{
+					string		"_Fog"
+					tooltip		"_Fades distant objects on the battlescape"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos			"290 5"
+					size		"75 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				checkbox_ui2 env_effects_fog_opt
+				{
+					current		*cvar:r_fog
+					pos			"370 6"
+					size		"20 18"
+				}
+
+				string env_effects_weather_label
+				{
+					string		"_Weather"
+					tooltip		"_Rain and snow on the battlescape"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos			"390 5"
+					size		"75 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				checkbox_ui2 env_effects_weather_opt
+				{
+					current		*cvar:cl_particleweather
+					pos			"472 6"
+					size		"20 18"
+				}
+
+				string env_effects_flares_label
+				{
+					string		"_Flares"
+					tooltip		"_Light reflections"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos			"390 35"
+					size		"75 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				checkbox_ui2 env_effects_flares_opt
+				{
+					current		*cvar:r_flares
+					pos			"472 36"
+					size		"20 18"
+				}
+
+				string env_effects_materials_label
+				{
+					string		"_Materials"
+					tooltip		"_Texture animations, blending and other effects"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos			"290 35"
+					size		"75 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				checkbox_ui2 env_effects_materials_opt
+				{
+					current		*cvar:r_materials
+					pos			"370 36"
+					size		"20 18"
+				}
 			}
-			// ==================================
-			// LIGHT AND SHADOW SETTINGS SUBMENU
-			// ==================================
-			string settings_light_shadow
-			{
-				string 		"_Light and Shadow"
-				pos			"22 345"
-				size		"256 20"
-				color		"1.0 0.75 0 1"
-			}
-			// ===============================
-			// LIGHTMAP RESOLUTION BLOCK SIZE
-			// ===============================
-			string lightmapres_str
-			{
-				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
-				string		"_Lightmap Block Size:"
-				pos			"32 370"
-				size		"240 20"
-			}
-			selectbox lightmapres_box
+
+			// Advanced Video Options Button
+			panel video_adv_line
 			{
 				{
-					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
-					cvar		*cvar:r_maxlightmap
-					pos			"339 372"
-					size		"125 20"
+					pos			"512 285"
+					size		"512 30"
+					onMouseEnter 	{ *node:this.video_adv_line_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.video_adv_line_label@color = "1 1 1 0.5" }
 				}
-				option low_value {
-					label	"_Low"
-					value	"256"
+
+				string video_adv_line_label
+				{
+					string		"_Video performance"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
 				}
-				option medium_value {
-					label	"_Medium"
-					value	"512"
-				}
-				option normal_value {
-					label	"_Normal"
-					value	"1024"
-				}
-				option high_value {
-					label	"_High"
-					value	"2048"
-				}
-			}
-			// we only show the option to disable the intel hack if we are using the intel driver
-			func show_intel_hack_option {
-				if ( *cvar:r_vendor_non_intel == "1" ) {
-					*node:parent.intel_hack_option@invis = true
-				} else {
-					*node:parent.intel_hack_option@invis = false
+
+				MainMenu2Btn video_adv_line_btn
+				{
+					string			"_Advanced Video Options"
+					pos				"300 5"
+					size			"192 20"
+					font			"f_verysmall_bold"
+					selectcolor		"0 0 0 0.9"
+					onClick			{ call *node:root.toggle_panel("video_adv", 1) }
 				}
 			}
-			panel intel_hack_option {
+		}
+
+		// ==================
+		// SOUND OPTIONS MENU
+		// ==================
+		panel opts_sound
+		{
+			{
+				pos 	"0 40"
+				size	"1024 365"
+				invis	true
+			}
+
+			// Enable/disable audio
+			panel audio_toggle
+			{
 				{
 					pos		"0 0"
-					size	"608 768"
-					ghost	true
+					size	"512 30"
+					onMouseEnter 	{ *node:this.audio_toggle_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.audio_toggle_label@color = "1 1 1 0.5" }
 				}
-				// ====================
-				// RENDERER INTEL HACK
-				// ====================
-				string intelhack_str
+
+				string audio_toggle_label
 				{
-					tooltip		"_Enabled by default for compatibility reasons."
-					string		"_Intel Graphics Hardware Hack:"
-					pos			"32 535"
-					size		"320 20"
+					string		"_Enable audio"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
 				}
-				checkbox_blue intelhack
+
+				checkbox_ui2 audio_toggle_opt
 				{
-					tooltip		"_This hack deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
-					current		*cvar:r_intel_hack
-					pos			"445 535"
+					current		*cvar:snd_init
+					pos			"472 6"
 					size		"20 18"
 				}
 			}
+
+			// Music volume
+			panel audio_music
+			{
+				{
+					pos		"0 30"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.audio_music_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.audio_music_label@color = "1 1 1 0.5" }
+				}
+
+				string audio_music_label
+				{
+					string		"_Music volume"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar audio_music_bar
+				{
+					current		*cvar:snd_music_volume
+					pos			"237 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
+					max			128
+					onClick		{ }
+				}
+			}
+
+			// Sound effects volume
+			panel audio_effects_volume
+			{
+				{
+					pos		"0 60"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.audio_effects_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.audio_effects_label@color = "1 1 1 0.5" }
+				}
+
+				string audio_effects_label
+				{
+					string		"_Sound effects"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar audio_effects_bar
+				{
+					current		*cvar:snd_volume
+					pos			"237 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
+					max			1.0
+					onClick		{ }
+				}
+			}
+
+			// Enable/disable menu sounds
+			panel audio_menu
+			{
+				{
+					pos		"0 90"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.audio_menu_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.audio_menu_label@color = "1 1 1 0.5" }
+				}
+
+				string audio_menu_label
+				{
+					string		"_Menu sounds"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 audio_menu_opt
+				{
+					current		*cvar:ui_sounds
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Audio sample rate
+			panel audio_sample
+			{
+				{
+					pos		"0 150"
+					size	"512 60"
+					onMouseEnter 	{ *node:this.audio_sample_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.audio_sample_label@color = "1 1 1 0.5" }
+				}
+
+				string audio_sample_label
+				{
+					string		"_Audio sample rate"
+					tooltip		"_Higher sample rates provide better audio quality"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox audio_sample_opt
+				{
+					{
+						cvar		*cvar:snd_rate
+						pos			"367 5"
+						size		"125 20"
+					}
+					option low_value
+					{
+						label	"_11025 kHz"
+						value	"11025"
+					}
+					option medium_value
+					{
+						label	"_22050 kHz"
+						value	"22050"
+					}
+					option normal_value
+					{
+						label	"_44100 kHz"
+						value	"44100"
+					}
+					option high_value
+					{
+						label	"_48000 kHz"
+						value	"48000"
+					}
+				}
+
+				MainMenu2Btn video_adv_line_btn
+				{
+					string			"_Apply Sample Rate"
+					pos				"300 35"
+					size			"192 20"
+					font			"f_verysmall_bold"
+					selectcolor		"0 0 0 0.9"
+					onClick			{ cmd "snd_restart;" }
+				}
+			}
 		}
 
-		// ================
-		// OTHER TAB PANEL
-		// ================
-		panel options_other_video
+		// ==================
+		// SHOW KEY BINDINGS
+		// ==================
+		panel opts_keys
 		{
 			{
-				pos			"45 145"
-				size		"498 680"
+				pos 	"6 40"
+				size	"1018 365"
+				invis	true
+				layout	LAYOUT_LEFT_RIGHT_FLOW
+				layoutmargin 3
+			}
+			KeyList keylist0 {
+			}
+			KeyList keylist1 {
+			}
+			KeyList keylist2 {
+			}
+		}
+
+		// ====================
+		// GAMPLAY OPTIONS MENU
+		// ====================
+		panel opts_gameplay
+		{
+			{
+				pos 	"0 40"
+				size	"1024 365"
+				invis	true
 			}
 
-			// =======================
-			// OTHER SETTINGS SUBMENU
-			// =======================
-			string settings_othergfx
+			// Battlescape camera settings
+			panel battle_camera
 			{
-				string 		"_Other"
-				pos			"22 10"
-				size		"320 20"
-				color		"1.0 0.75 0 1"
-			}
-			// =======
-			// FLARES
-			// =======
-			string flares_str
-			{
-				tooltip		"_Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
-				string		"_Flares:"
-				pos			"32 35"
-				size		"240 20"
-			}
-			checkbox_blue flares
-			{
-				current		*cvar:r_flares
-				pos			"445 35"
-				size		"20 18"
-			}
-			// ========
-			// CORONAS
-			// ========
-			string coronas_str
-			{
-				tooltip		"_Coronas are soft, alpha-blended, rounded polygons."
-				string		"_Coronas:"
-				pos			"32 60"
-				size		"240 20"
-			}
-			checkbox_blue coronas
-			{
-				current		*cvar:r_coronas
-				pos			"445 60"
-				size		"20 18"
-			}
-			// ====
-			// FOG
-			// ====
-			string fog_str
-			{
-				tooltip		"_Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
-				string		"_Fog:"
-				pos			"32 85"
-				size		"240 20"
-			}
-			checkbox_blue fog
-			{
-				current		*cvar:r_fog
-				pos			"445 85"
-				size		"20 18"
-			}
-			// =========================
-			// WEATHER PARTICLE EFFECTS
-			// =========================
-			string ptlweather_str
-			{
-				tooltip		"_Weather effects like rain or snow."
-				string		"_Weather Effects:"
-				pos			"32 110"
-				size		"240 20"
-			}
-			checkbox_blue ptlweather
-			{
-				current		*cvar:cl_particleweather
-				pos			"445 110"
-				size		"20 18"
-			}
-			// ================
-			// MATERIAL SYSTEM
-			// ================
-			string materialsys_str
-			{
-				tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
-				string		"_Material System:"
-				pos			"32 135"
-				size		"240 20"
-			}
-			checkbox_blue materialsys
-			{
-				current		*cvar:r_materials
-				pos			"445 135"
-				size		"20 18"
+				{
+					pos		"0 0"
+					size	"512 270"
+					onMouseEnter 	{ *node:this.battle_camera_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.battle_camera_label@color = "1 1 1 0.5" }
+				}
+
+				string battle_camera_label
+				{
+					string		"_Battlescape view configuration"
+					pos			"5 5"
+					size		"300 20"
+					color		"1 1 1 0.5"
+				}
+
+				// Camera rotation speed
+				panel camera_speed
+				{
+					{
+						pos		"0 30"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_speed_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_speed_label
+					{
+						string		"_Scroll speed"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					bar camera_speed_bar
+					{
+						current		*cvar:cl_cammovespeed
+						pos			"237 11"
+						size		"251 8"
+						color		"0.582 0.808 0.758 1"
+						border		"1"
+						bordercolor	"0.582 0.808 0.758 1"
+						min			5
+						max			3000
+						onClick		{ }
+					}
+				}
+
+				// Camera rotation speed
+				panel camera_rot_speed
+				{
+					{
+						pos		"0 60"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_rot_speed_label
+					{
+						string		"_Rotation speed"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					bar camera_rot_speed_bar
+					{
+						current		*cvar:cl_camrotspeed
+						pos			"237 11"
+						size		"251 8"
+						color		"0.582 0.808 0.758 1"
+						border		"1"
+						bordercolor	"0.582 0.808 0.758 1"
+						min			5
+						max			1000
+						onClick		{ }
+					}
+				}
+
+				// Camera deceleration speed
+				panel camera_dec_speed
+				{
+					{
+						pos		"0 90"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_dec_speed_label
+					{
+						string		"_Inertia"
+						tooltip		"_Higher values will cause the camera to stop more gradually"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					bar camera_dec_speed_bar
+					{
+						current		*cvar:cl_cammoveaccel
+						pos			"237 11"
+						size		"251 8"
+						color		"0.582 0.808 0.758 1"
+						border		"1"
+						bordercolor	"0.582 0.808 0.758 1"
+						min			0
+						max			3000
+						onClick		{ }
+					}
+				}
+
+				// Camera pitch minimum and maximum
+				panel camera_pitch
+				{
+					{
+						pos		"0 120"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_pitch_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_pitch_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_pitch_label
+					{
+						string		"_Pitch"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					string camera_pitch_min_label
+					{
+						string			"_Min"
+						tooltip			"_Maps optimized for values above 10"
+						pos				"260 5"
+						size			"40 20"
+						font			"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color			"1 1 1 0.5"
+						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+					selectbox camera_pitch_min_opt
+					{
+						{
+							cvar		*cvar:cl_campitchmin
+							pos			"300 5"
+							size		"70 20"
+							contentalign	ALIGN_CR
+						}
+						option minus90degrees
+						{
+							label	"-90"
+							value	"-90"
+						}
+						option minus45degrees
+						{
+							label	"-45"
+							value	"-45"
+						}
+						option minus15degrees
+						{
+							label	"-15"
+							value	"-15"
+						}
+						option plus0degrees
+						{
+							label	"0"
+							value	"0"
+						}
+						// default
+						option plus10degrees
+						{
+							label	"10"
+							value	"10"
+						}
+						option plus15degrees
+						{
+							label	"15"
+							value	"15"
+						}
+						option plus45degrees
+						{
+							label	"45"
+							value	"45"
+						}
+					}
+
+					string camera_pitch_max_label
+					{
+						string			"_Max"
+						tooltip			"_Values above 90 will result in inverted views"
+						pos				"382 5"
+						size			"40 20"
+						font			"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color			"1 1 1 0.5"
+						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+					selectbox camera_pitch_max_opt
+					{
+						{
+							cvar		*cvar:cl_campitchmax
+							pos			"422 5"
+							size		"70 20"
+						}
+						option plus45degrees
+						{
+							label	"45"
+							value	"45"
+						}
+						option plus60degrees
+						{
+							label	"60"
+							value	"60"
+						}
+						option plus75degrees
+						{
+							label	"75"
+							value	"75"
+						}
+						// default
+						option plus89degrees
+						{
+							label	"89"
+							value	"89"
+						}
+						option plus135degrees
+						{
+							label	"135"
+							value	"135"
+						}
+						option plus180degrees
+						{
+							label	"180"
+							value	"180"
+						}
+					}
+				}
+
+				// Camera zoom minimum and maximum
+				panel camera_zoom
+				{
+					{
+						pos		"0 150"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_zoom_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_zoom_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_zoom_label
+					{
+						string		"_Zoom constraints"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					string camera_zoom_min_label
+					{
+						string			"_Min"
+						pos				"260 5"
+						size			"40 20"
+						font			"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color			"1 1 1 0.5"
+						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+					selectbox camera_zoom_min_opt
+					{
+						{
+							cvar		*cvar:cl_camzoommin
+							pos			"300 5"
+							size		"70 20"
+							contentalign	ALIGN_CR
+						}
+						option zoom_min0
+						{
+							label	"0"
+							value	"0"
+						}
+						option zoom_min005
+						{
+							label	"0.05"
+							value	"0.05"
+						}
+						option zoom_min010
+						{
+							label	"0.10"
+							value	"0.10"
+						}
+						option zoom_min015
+						{
+							label	"0.15"
+							value	"0.15"
+						}
+						option zoom_min020
+						{
+							label	"0.20"
+							value	"0.20"
+						}
+						option zoom_min025
+						{
+							label	"0.25"
+							value	"0.25"
+						}
+						// default
+						option zoom_min030
+						{
+							label	"0.30"
+							value	"0.3"
+						}
+					}
+
+					string camera_zoom_max_label
+					{
+						string			"_Max"
+						pos				"382 5"
+						size			"40 20"
+						font			"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color			"1 1 1 0.5"
+						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+					selectbox camera_zoom_max_opt
+					{
+						{
+							cvar		*cvar:cl_camzoommax
+							pos			"422 5"
+							size		"70 20"
+						}
+						option zoom_max200
+						{
+							label	"2"
+							value	"2.0"
+						}
+						// default
+						option zoom_max340
+						{
+							label	"3.4"
+							value	"3.4"
+						}
+						option zoom_max600
+						{
+							label	"6"
+							value	"6.0"
+						}
+						option zoom_max800
+						{
+							label	"8"
+							value	"8.0"
+						}
+						option zoom_max1000
+						{
+							label	"10"
+							value	"10.0"
+						}
+						option zoom_max1200
+						{
+							label	"12"
+							value	"12.0"
+						}
+					}
+				}
+
+				// Camera zoom speed (quant)
+				panel camera_zoom_speed
+				{
+					{
+						pos		"0 180"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_zoom_speed_label
+					{
+						string		"_Zoom speed"
+						pos			"5 5"
+						size		"200 20"
+						font		"f_verysmall_bold"
+						color		"1 1 1 0.5"
+					}
+
+					bar camera_zoom_speed_bar
+					{
+						current		*cvar:cl_camzoomquant
+						pos			"237 11"
+						size		"251 8"
+						color		"0.582 0.808 0.758 1"
+						border		"1"
+						bordercolor	"0.582 0.808 0.758 1"
+						min			0
+						max			0.30
+						onClick		{ }
+					}
+				}
+
+				// Center camera on action
+				panel camera_center
+				{
+					{
+						pos		"0 210"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_center_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_center_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_center_label
+					{
+						string		"_Center view"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					checkbox_ui2 camera_center_opt
+					{
+						current		*cvar:cl_centerview
+						pos			"472 6"
+						size		"20 18"
+					}
+				}
+
+				// Isometric view
+				panel camera_iso
+				{
+					{
+						pos		"0 240"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.camera_iso_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.camera_iso_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_iso_label
+					{
+						string		"_Isometric view"
+						tooltip		"_3D rendering without perspective for an old-school look"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					checkbox_ui2 camera_iso_opt
+					{
+						current		*cvar:r_isometric
+						pos			"472 6"
+						size		"20 18"
+					}
+				}
 			}
 
-			button video_low
+			// ====================
+			// GAMPLAY OPTIONS MENU
+			// 2nd column
+			// ====================
+			panel battle_gameplay
 			{
-				tooltip	"_Switch to low video settings"
-				pos		"32 200"
-				size	"120 40"
-				string	"_Low"
-				background	"ui/button_green_small"
-				color	"0 0.5 0 1"
-				selectcolor "1 1 1 1"
-				onClick
 				{
-					cmd "exec video-low.cfg;"
+					pos		"512 0"
+					size	"512 150"
+					onMouseEnter 	{ *node:this.battle_gameplay_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.battle_gameplay_label@color = "1 1 1 0.5" }
 				}
-			}
-			button video_medium
-			{
-				tooltip	"_Switch to medium video settings"
-				pos		"162 200"
-				size	"120 40"
-				string	"_Medium"
-				background	"ui/button_green_small"
-				color	"0 0.5 0 1"
-				selectcolor "1 1 1 1"
-				onClick
+
+				string battle_gameplay_label
 				{
-					cmd "exec video-medium.cfg;"
+					string		"_Battlescape gameplay options"
+					pos			"5 5"
+					size		"300 20"
+					color		"1 1 1 0.5"
 				}
-			}
-			button video_high
-			{
-				tooltip	"_Switch to very high video settings"
-				pos		"292 200"
-				size	"120 40"
-				string	"_High"
-				background	"ui/button_green_small"
-				color	"0 0.5 0 1"
-				selectcolor "1 1 1 1"
-				onClick
+
+				// Actor speed
+				panel battle_actor_speed
 				{
-					cmd "exec video-high.cfg;"
+					{
+						pos		"0 30"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.5" }
+					}
+
+					string battle_actor_speed_label
+					{
+						string		"_Actor speed"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					bar battle_actor_speed_bar
+					{
+						current		*cvar:g_actorspeed
+						pos			"237 11"
+						size		"251 8"
+						color		"0.582 0.808 0.758 1"
+						border		"1"
+						bordercolor	"0.582 0.808 0.758 1"
+						max			9
+						onClick		{ }
+					}
+				}
+
+				// Confirm actions
+				panel battle_confirm
+				{
+					{
+						pos		"0 60"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.battle_confirm_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.battle_confirm_label@color = "1 1 1 0.5" }
+					}
+
+					string battle_confirm_label
+					{
+						string		"_Confirm actions"
+						tooltip		"_Confirm your actions on the battlefield before committing"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					selectbox battle_confirm_opt
+					{
+						{
+							cvar		*cvar:confirm_actions
+							pos			"342 5"
+							size		"150 20"
+						}
+						option confirm_value {
+							label	"_Never"
+							value	"0"
+						}
+						option noconfirm_value {
+							label	"_When moving"
+							value	"2"
+						}
+						option moveconfirm_value {
+							label	"_Always"
+							value	"1"
+						}
+					}
+				}
+
+				// Auto-stand
+				panel battle_autostand
+				{
+					{
+						pos		"0 90"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.battle_autostand_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.battle_autostand_label@color = "1 1 1 0.5" }
+					}
+
+					string battle_autostand_label
+					{
+						string		"_Stand when moving"
+						tooltip		"_Soldiers will automatically stand when ordered to move while they are crouched"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					checkbox_ui2 battle_autostand_opt
+					{
+						current		*cvar:cl_autostand
+						pos			"472 6"
+						size		"20 18"
+					}
+				}
+
+				// HUD choice
+				panel battle_hud
+				{
+					{
+						pos		"0 120"
+						size	"512 30"
+						onMouseEnter 	{ *node:this.battle_hud_label@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this.battle_hud_label@color = "1 1 1 0.5" }
+					}
+
+					string battle_hud_label
+					{
+						string		"_Battlescape interface"
+						font		"f_verysmall_bold"
+						pos			"5 5"
+						size		"200 20"
+						color		"1 1 1 0.5"
+					}
+
+					selectbox battle_hud_opt
+					{
+						cvar		*cvar:cl_hud
+						pos			"312 5"
+						size		"180 20"
+					}
+					/**
+					 * Add a hud window the user can use to play battlescape
+					 * <1> HUD identifier name
+					 * <2> HUD label
+					 */
+					confunc add_hud_name {
+						call *node:parent.battle_hud_opt@createchild("option<1>", "option")
+						*node:parent.battle_hud_opt.option<1>@value = <1>
+						*node:parent.battle_hud_opt.option<1>@label = <2>
+					}
 				}
 			}
 		}
 	}
 
-	// ========================
-	// MAIN SOUND OPTIONS MENU
-	// ========================
-	panel options_sound
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
+	// Advanced Video Options Window
+	panel video_adv
 	{
 		{
-			pos			"415 0"
-			size		"608 768"
+			pos		"0 0"
+			size	"1024 768"
+			invis	true
+			bgcolor	"0 0 0 0.9"
+			onClick		{ call *node:root.toggle_panel("video_adv", 0) }
 		}
-		// ===============
-		// AUDIO SETTINGS
-		// ===============
-		cmpMenuPageHeader soundsettings
+		panel video_adv_window
 		{
-			string		"_Audio Settings"
-		}
-		// =======================
-		// VOLUME CONTROL SUBMENU
-		// =======================
-		string settings_volume
-		{
-			string		"_Volume Control"
-			pos			"62 110"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =====================
-		// ENABLE/DISABLE AUDIO
-		// =====================
-		string sound_init_str
-		{
-			tooltip		"_Enable or disable sound."
-			string		"_Enable Audio:"
-			pos			"72 135"
-			size		"240 20"
-		}
-		checkbox_blue sound_init
-		{
-			current		*cvar:snd_init
-			pos			"485 135"
-			size		"20 18"
-			onChange {
-				call *node:root.options_sound.show_advanced_sound_options
-			}
-		}
-		// we only show advanced_sound_options if audio is enabled
-		func show_advanced_sound_options {
-			if ( *cvar:snd_init == 1 ) {
-				*node:parent.advanced_sound_options@invis = false
-			} else {
-				*node:parent.advanced_sound_options@invis = true
-			}
-		}
-		panel advanced_sound_options {
 			{
-				pos		"0 0"
-				size	"608 768"
-				ghost	true
+				pos		"256 128"
+				size	"512 512"
+				bgcolor	"0.4 0.52 0.5 0.4"
 			}
-			// =============
-			// MUSIC VOLUME
-			// =============
-			string music_str
+			string opengl_adv_label
 			{
-				string		"_Music:"
-				pos			"72 160"
-				size		"150 20"
-			}
-			image music_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"248 162"
-			}
-			bar music_bar
-			{
-				current		*cvar:snd_music_volume
-				pos			"257 167"
-				size		"238 6"
-				color		"0 .8 0 1"
-				max			128
-				onClick		{ }
+				string			"_Advanced Video options"
+				pos				"0 0"
+				size			"512 40"
+				font			"f_small_bold"
+				color			"0.065 0.065 0.065 1"
+				bgcolor			"0.53 0.61 0.21 1"
+				contentalign	ALIGN_CC
 			}
 
-			// =====================
-			// SOUND EFFECTS VOLUME
-			// =====================
-			string effects_str
-			{
-				string		"_Sound Effects:"
-				pos			"72 185"
-				size		"170 20"
-			}
-			image effects_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"248 187"
-			}
-			bar effects_bar
-			{
-				current		*cvar:snd_volume
-				pos			"257 192"
-				size		"238 6"
-				color		"0 .8 0 1"
-				max			1.0
-				onClick		{ }
-			}
-			// ============
-			// MENU SOUNDS
-			// ============
-			// on/off only at the moment
-			//
-			string menusounds_str
-			{
-				string		"_Menu Sounds:"
-				pos			"72 210"
-				size		"170 20"
-			}
-			checkbox_blue menu_sounds_checkbox
-			{
-				tooltip		"_Turn the menu sounds on or off."
-				current		*cvar:ui_sounds
-				pos			"485 210"
-				size		"20 18"
-			}
-			// ============================
-			// OTHER AUDIO OPTIONS SUBMENU
-			// ============================
-			string settings_sound_other
-			{
-				string		"_Advanced Audio Options"
-				pos			"62 265"
-				size		"240 20"
-				color		"1.0 0.75 0 1"
-			}
-			// ==================
-			// AUDIO SAMPLE RATE
-			// ==================
-			string rate_str
-			{
-				tooltip		"_The sample rate frequency in kHz. Use higher values for better sound quality."
-				string		"_Audio Sample Rate:"
-				pos			"72 290"
-				size		"240 20"
-			}
-			selectbox rate_box
+			// Texture resolution
+			panel tex_res
 			{
 				{
-					cvar		*cvar:snd_rate
-					pos			"359 295"
-					size		"125 20"
+					pos		"10 50"
+					size	"492 30"
+					onMouseEnter 	{ *node:this.tex_res_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tex_res_label@color = "1 1 1 0.5" }
 				}
-				option low_value
+
+				string tex_res_label
 				{
-					label	"11025"
-					value	"11025"
+					string		"_Max texture resolution"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
 				}
-				option medium_value
+
+				selectbox tex_res_opt
 				{
-					label	"22050"
-					value	"22050"
-				}
-				option normal_value
-				{
-					label	"44100"
-					value	"44100"
-				}
-				option high_value
-				{
-					label	"48000"
-					value	"48000"
+					{
+						cvar		*cvar:r_maxtexres
+						pos			"367 5"
+						size		"125 20"
+					}
+					option o256 {
+						label	"_256"
+						value	"256"
+					}
+					option o512 {
+						label	"_512"
+						value	"512"
+					}
+					option o1024 {
+						label	"_1024"
+						value	"1024"
+					}
+					option o2048 {
+						label	"_2048"
+						value	"2048"
+					}
+					option o4096 {
+						label	"_4096"
+						value	"4096"
+					}
+					option o8192 {
+						label	"_8192"
+						value	"8192"
+					}
 				}
 			}
-			button rate_test_pic
+
+			// Texture filtering
+			panel tex_filtering
 			{
-				tooltip		"_Restart the sound-engine and apply your settings."
-				icon		"icons/bordered_magnifying_glass"
-				pos			"486 297"
-				size		"16 16"
-				padding		0
-				onClick		{ cmd "snd_restart;" }
+				{
+					pos		"10 80"
+					size	"492 30"
+					onMouseEnter 	{ *node:this.tex_filtering_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tex_filtering_label@color = "1 1 1 0.5" }
+				}
+
+				string tex_filtering_label
+				{
+					string		"_Texture filtering"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox tex_filtering_opt
+				{
+					{
+						cvar		*cvar:r_texturemode
+						pos			"242 5"
+						size		"250 20"
+					}
+					option nearest {
+						label	"_None"
+						value	"GL_NEAREST"
+					}
+					option linear {
+						label	"_Bilinear only"
+						value	"GL_LINEAR"
+					}
+					option nearest_mipmap_nearest {
+						label	"_Mipmaps only"
+						value	"GL_NEAREST_MIPMAP_NEAREST"
+					}
+					option linear_mipmap_nearest {
+						label	"_Bilinear and mipmaps"
+						value	"GL_LINEAR_MIPMAP_NEAREST"
+					}
+					option nearest_mipmap_linear {
+						label	"_Trilinear and mipmaps"
+						value	"GL_NEAREST_MIPMAP_LINEAR"
+					}
+					option linear_mipmap_linear {
+						label	"_Bi-/trilinear and mipmaps"
+						value	"GL_LINEAR_MIPMAP_LINEAR"
+					}
+				}
 			}
+
+			// Texture compression
+			panel tex_compression
+			{
+				{
+					pos		"10 110"
+					size	"492 30"
+					onMouseEnter 	{ *node:this.tex_compression_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tex_compression_label@color = "1 1 1 0.5" }
+				}
+
+				string tex_compression_label
+				{
+					string		"_Texture compression"
+					tooltip		"_Improves memory performance but reduces visual quality"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 tex_compression_opt
+				{
+					current		*cvar:r_ext_texture_compression
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Texture level of detail (LOD)
+			panel tex_lod
+			{
+				{
+					pos		"10 140"
+					size	"492 30"
+					onMouseEnter 	{ *node:this.tex_lod_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tex_lod_label@color = "1 1 1 0.5" }
+				}
+
+				string tex_lod_label
+				{
+					string		"_LOD"
+					tooltip		"_Reduce distant texture sizes for better performance"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 tex_lod_opt
+				{
+					current		*cvar:r_texture_lod
+					pos			"472 6"
+					size		"20 18"
+				}
+			}
+
+			// Anisotropic filtering
+			panel tex_aniso
+			{
+				{
+					pos			"10 170"
+					size		"492 30"
+					onMouseEnter 	{ *node:this.tex_aniso_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.tex_aniso_label@color = "1 1 1 0.5" }
+				}
+
+				string tex_aniso_label
+				{
+					string		"_Anisotropic filtering"
+					tooltip		"_Distant textures appear sharper at higher resolutions"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				string tex_aniso_value
+				{
+					string		*cvar:r_anisotropic
+					pos			"452 5"
+					size		"40 20"
+				}
+
+				spinner_green tex_aniso_change
+				{
+					current		*cvar:r_anisotropic
+					pos			"472 6"
+					min			0
+					max			16
+					delta		1
+				}
+			}
+
+			// Texture filtering
+			panel lightmap_res
+			{
+				{
+					pos		"10 200"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.lightmap_res_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.lightmap_res_label@color = "1 1 1 0.5" }
+				}
+
+				string lightmap_res_label
+				{
+					string		"_Lightmap size"
+					tooltip		"_High resolution creates smoother shadows"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox lightmap_res_opt
+				{
+					{
+						cvar		*cvar:r_maxlightmap
+						pos			"367 5"
+						size		"125 20"
+					}
+					option o256 {
+						label	"_256"
+						value	"256"
+					}
+					option o512 {
+						label	"_512"
+						value	"512"
+					}
+					option o1024 {
+						label	"_1024"
+						value	"1024"
+					}
+					option o2048 {
+						label	"_2048"
+						value	"2048"
+					}
+				}
+			}
+
+			// Lightmap brightness
+			panel lightmap_bright
+			{
+				{
+					pos		"10 230"
+					size	"512 30"
+					onMouseEnter 	{ *node:this.lightmap_bright_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.lightmap_bright_label@color = "1 1 1 0.5" }
+				}
+
+				string lightmap_bright_label
+				{
+					string		"_Lightmap brightness"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				bar lightmap_bright_bar
+				{
+					current		*cvar:r_modulate
+					pos			"241 11"
+					size		"251 8"
+					color		"0.582 0.808 0.758 1"
+					border		"1"
+					bordercolor	"0.582 0.808 0.758 1"
+					max			4.0
+					onClick		{ }
+				}
+			}
+
+			// Done button
+			MainMenuExitBtn done_btn
+			{
+				size 			"250 30"
+				pos 			"262 482"
+				string			"_DONE"
+				onClick			{ call *node:root.toggle_panel("video_adv", 0) }
+			}
+
+			// Fuzzy screen effect (see assets.ufo)
+			screen overlay { }
 		}
 	}
-	// ========================================
-	// MAIN CAMERA/GAMEPLAY/INPUT OPTIONS MENU
-	// ========================================
-	panel options_gameplay
+
+	// Advanced OpenGL options
+	panel opengl_adv
 	{
 		{
-			pos			"415 0"
-			size		"608 768"
+			pos		"0 0"
+			size	"1024 768"
+			invis	true
+			bgcolor	"0 0 0 0.9"
+			onClick			{ call *node:root.toggle_panel("opengl_adv", 0) }
 		}
-		// ==================
-		// GAMEPLAY SETTINGS
-		// ==================
-		cmpMenuPageHeader gameplaysettings_str
-		{
-			string		"_Gameplay Settings"
-		}
-		// ====================================
-		// BATTLESCAPE CAMERA SETTINGS SUBMENU
-		// ====================================
-		string settings_camera
-		{
-			string		"_Battlescape Camera Settings"
-			pos			"62 110"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ================================
-		// BATTLESCAPE CAMERA SCROLL SPEED
-		// ================================
-		string camspeed_str
-		{
-			string		"_Scroll Speed:"
-			pos			"72 135"
-			size		"170 20"
-		}
-		image camspeed_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 137"
-		}
-		bar camspeed_bar
-		{
-			current		*cvar:cl_cammovespeed
-			pos			"257 142"
-			size		"238 6"
-			color		"0 .8 0 1"
-			min			5
-			max			3000
-			onClick		{ }
-		}
-		// ============================
-		// BATTLESCAPE CAMERA ROTATION
-		// ============================
-		string camrot_str
-		{
-			string		"_Rotation Speed:"
-			pos			"72 160"
-			size		"170 20"
-		}
-		image camrot_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 162"
-		}
-		bar camrot_bar
-		{
-			current		*cvar:cl_camrotspeed
-			pos			"257 167"
-			size		"238 6"
-			color		"0 .8 0 1"
-			min			5
-			max			1000
-			onClick		{ }
-		}
-		// =======================================================
-		// BATTLESCAPE CAMERA MOVE DECELERATION (cl_cammoveaccel)
-		// =======================================================
-		string cammovedecel_str
-		{
-			tooltip		"_The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
-			string		"_Move Deceleration:"
-			pos			"72 185"
-			size		"170 20"
-		}
-		image cammovedecel_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 187"
-		}
-		bar cammovedecel_bar
-		{
-			current		*cvar:cl_cammoveaccel
-			pos			"257 192"
-			size		"238 6"
-			color		"0 .8 0 1"
-			min			0
-			max			3000
-			onClick		{ }
-		}
-		// ==================================
-		// BATTLESCAPE CAMERA ISOMETRIC MODE
-		// ==================================
-		string isomode_str
-		{
-			tooltip		"_Isometric Mode means the 3D world will be rendered without perspective correction."
-			string		"_Isometric Mode:"
-			pos			"72 210"
-			size		"320 20"
-		}
-		checkbox_blue isomode
-		{
-			current		*cvar:r_isometric
-			pos			"485 210"
-			size		"20 18"
-		}
-		// ===============================
-		// BATTLESCAPE CAMERA CENTER VIEW
-		// ===============================
-		string centerview_str
-		{
-			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-			string		"_Center View:"
-			pos			"72 235"
-			size		"320 20"
-		}
-		checkbox_blue centerview_value
-		{
-			current		*cvar:cl_centerview
-			pos			"485 235"
-			size		"20 18"
-		}
-		// ======================================
-		// BATTLESCAPE GAMEPLAY SETTINGS SUBMENU
-		// ======================================
-		string settings_gameplay
-		{
-			string		"_Battlescape Gameplay Settings"
-			pos			"62 290"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ================
-		// BATTLESCAPE HUD
-		// ================
-		string hud_str
-		{
-			tooltip		"_Select the Head-Up-Display for the battlescape."
-			string		"_HUD Design:"
-			pos			"72 315"
-			size		"250 20"
-		}
-		// @note selectbox completed by the confunc add_hud_name
-		selectbox select_hud
-		{
-			cvar		*cvar:cl_hud
-			pos			"350 315"
-			size		"155 20"
-		}
-		// ============================
-		// BATTLESCAPE CONFIRM ACTIONS
-		// ============================
-		string confirm_str
-		{
-			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
-			string		"_Confirm Actions:"
-			pos			"72 340"
-			size		"240 20"
-		}
-		selectbox select_confirmactions
+		panel opengl_adv_opts
 		{
 			{
-				tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
-				cvar		*cvar:confirm_actions
-				pos			"350 340"
-				size		"155 20"
+				pos			"256 256"
+				size		"512 256"
+				bgcolor		"0.4 0.52 0.5 0.4"
 			}
-			option confirm_value {
-				label	"_Yes"
-				value	"1"
+			string opengl_adv_label
+			{
+				string			"_Advanced OpenGL options"
+				pos				"0 0"
+				size			"512 40"
+				font			"f_small_bold"
+				color			"0.065 0.065 0.065 1"
+				bgcolor			"0.53 0.61 0.21 1"
+				contentalign	ALIGN_CC
 			}
-			option noconfirm_value {
-				label	"_No"
-				value	"0"
+
+			// Vertex buffers
+			panel vertexbuffers
+			{
+				{
+					pos		"10 70"
+					size	"492 30"
+					onMouseEnter 	{ *node:this.vertexbuffers_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.vertexbuffers_label@color = "1 1 1 0.5" }
+				}
+
+				string vertexbuffers_label
+				{
+					string		"_Vertex Buffers"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				checkbox_ui2 vertexbuffers_opt
+				{
+					current		*cvar:r_vertexbuffers
+					pos			"472 6"
+					size		"20 18"
+				}
 			}
-			option moveconfirm_value {
-				label	"_Moving only"
-				value	"2"
+
+			// Multisample buffers
+			panel multisamplebuffers
+			{
+				{
+					pos			"10 100"
+					size		"492 30"
+					onMouseEnter 	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.5" }
+				}
+
+				string multisamplebuffers_label
+				{
+					string		"_Multisample Buffers"
+					tooltip		"_Antialias GL primitives (more buffers create smoother edges)"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				string multisamplebuffers_value
+				{
+					string		*cvar:r_multisample
+					pos			"452 5"
+					size		"40 20"
+				}
+
+				spinner_green multisamplebuffers_change
+				{
+					current		*cvar:r_multisample
+					pos			"472 6"
+					min			0
+					max			4
+					delta		1
+				}
 			}
+
+			// Swap control for multisample buffers
+			panel swapinterval
+			{
+				{
+					pos			"10 130"
+					size		"492 30"
+					onMouseEnter 	{ *node:this.swapinterval_label@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this.swapinterval_label@color = "1 1 1 0.5" }
+				}
+
+				string swapinterval_label
+				{
+					string		"_Swap Interval"
+					tooltip		"_Higher values will typically provide better results"
+					pos			"5 5"
+					size		"200 20"
+					color		"1 1 1 0.5"
+				}
+
+				string swapinterval_value
+				{
+					string		*cvar:r_swapinterval
+					pos			"452 5"
+					size		"40 20"
+				}
+
+				spinner_green swapinterval_change
+				{
+					current		*cvar:r_swapinterval
+					pos			"472 6"
+					min			0
+					max			2
+					delta		1
+				}
+			}
+			MainMenuExitBtn done_btn
+			{
+				size 			"250 30"
+				pos 			"262 226"
+				string			"_DONE"
+				onClick			{ call *node:root.toggle_panel("opengl_adv", 0) }
+			}
+
+			// Fuzzy screen effect (see assets.ufo)
+			screen overlay { }
 		}
-		// ======================
-		// BATTLESCAPE AUTOSTAND
-		// ======================
-		string autostand_str
-		{
-			tooltip		"_Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
-			string		"_Autostand:"
-			pos			"72 365"
-			size		"320 20"
-		}
-		checkbox_blue autostand_value
-		{
-			current		*cvar:cl_autostand
-			pos			"485 365"
-			size		"20 18"
-		}
-		// ============
-		// ACTOR SPEED
-		// ============
-		string actorsspeed_str
-		{
-			string		"_Actor Speed:"
-			pos			"72 390"
-			size		"170 20"
-		}
-		image actorsspeed_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 392"
-		}
-		bar actorsspeed_bar
-		{
-			tooltip		"_Choose between 0-9, higher values mean higher actor speed."
-			current		*cvar:g_actorspeed
-			pos			"257 397"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			9
-			onClick		{ }
-		}
-		// =========================
-		// GEOSCAPE OPTIONS SUBMENU
-		// =========================
-		string settings_geoscape
-		{
-			string 		"_Geoscape Options"
-			pos			"62 445"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ==================
-		// GEOSCAPE 2D/3DMAP
-		// ==================
-		string m3dmap_str
-		{
-			tooltip		"_3D or 2D geoscape. To enable this option you have to start a new campaign first."
-			string		"_3D Geoscape:"
-			pos			"72 470"
-			size		"280 20"
-		}
-		checkbox_blue m3dmap
-		{
-			current		*cvar:cl_3dmap
-			pos			"485 470"
-			size		"20 18"
-		}
-		// ====================
-		// GEOSCAPE DECORATION
-		// ====================
-		string geoscape_deco_str
-		{
-			tooltip		"_Show/Hide the panel decoration on the geoscape."
-			string		"_Show decoration:"
-			pos			"72 495"
-			size		"280 20"
-		}
-		checkbox_blue geoscape_deco
-		{
-			current		*cvar:mn_geoscape_deco
-			pos			"485 495"
-			size		"20 18"
-		}
-		// =====================================
-		// GEOSCAPE CAMERA MINIMUM/MAXIMUM ZOOM
-		// =====================================
-		string geocamzoommin_str
-		{
-			tooltip		"_The minimum/maximum zoom of the geoscape camera"
-			string		"_Min/Max Geo-Cam Zoom:"
-			pos			"72 520"
-			size		"280 20"
-		}
-		selectbox geocamzoom_min
-		{
-			{
-				tooltip		"_Minimum zoom level of the geoscape camera"
-				cvar		*cvar:cl_mapzoommin
-				pos			"355 520"
-				size		"75 20"
-				contentalign	ALIGN_CR
-			}
-			option geocamzoom_min000
-			{
-				label	"0.00"
-				value	"0"
-			}
-			option geocamzoom_min020
-			{
-				label	"0.20"
-				value	"0.20"
-			}
-			option geocamzoom_min040
-			{
-				label	"0.40"
-				value	"0.40"
-			}
-			option geocamzoom_min060
-			{
-				label	"0.60"
-				value	"0.60"
-			}
-			option geocamzoom_min080
-			{
-				label	"0.80"
-				value	"0.80"
-			}
-			// default
-			option geocamzoom_min100
-			{
-				label	"_1.00"
-				value	"1.0"
-			}
-		}
-		selectbox geocamzoom_max
-		{
-			{
-				tooltip		"_Maximum zoom level of the geoscape camera"
-				cvar		*cvar:cl_mapzoommax
-				pos			"430 520"
-				size		"75 20"
-			}
-			option geocamzoom_max20
-			{
-				label	"_2.0"
-				value	"2.0"
-			}
-			option geocamzoom_max40
-			{
-				label	"_4.00"
-				value	"4.0"
-			}
-			// default
-			option geocamzoom_max60
-			{
-				label	"_6.00"
-				value	"6.0"
-			}
-			option geocamzoom_max80
-			{
-				label	"_8.00"
-				value	"8.0"
-			}
-			option geocamzoom_max100
-			{
-				label	"_10.00"
-				value	"10.0"
-			}
-			option geocamzoom_max120
-			{
-				label	"_12.00"
-				value	"12.0"
-			}
-		}
-		// =================================
-		// JOYSTICK/JOYPAD SETTINGS SUBMENU
-		// =================================
-		string settings_joystick
-		{
-			string		"_Joystick Settings"
-			pos			"62 575"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ================
-		// JOYSTICK/JOYPAD
-		// ================
-		string joystick_enable_str
-		{
-			string		"_Enable:"
-			pos			"72 600"
-			size		"240 20"
-		}
-		checkbox_blue joystick_enable
-		{
-			current		*cvar:in_joystick
-			pos			"485 600"
-			size		"20 18"
-			onChange {
-				call *node:root.options_gameplay.show_joystick_options
-			}
-		}
-		// we only show joystick_options if the joystick is enabled
-		func show_joystick_options {
-			if ( *cvar:in_joystick == 1 ) {
-				*node:parent.joystick_options@invis = false
-			} else {
-				*node:parent.joystick_options@invis = true
-			}
-		}
-		panel joystick_options {
-			{
-				pos		"0 0"
-				size	"608 768"
-				ghost	true
-			}
-			// ==========================
-			// JOYSTICK/JOYPAD SELECTION
-			// ==========================
-			string joystick_str
-			{
-				string		"_Joystick or Joypad:"
-				pos			"72 545"
-				size		"250 20"
-			}
-			selectbox select_joystick
-			{
-				tooltip		"_Available game controllers."
-				cvar		*cvar:in_joystickNo
-				dataid		OPTION_JOYSTICKS
-				pos			"350 545"
-				size		"155 20"
-			}
-			// ===================
-			// JOYSTICK THRESHOLD
-			// ===================
-			string joystick_threshold_str
-			{
-				tooltip		"_Adjust the joystick threshold to a high enough value, so movement of the analogue stick will be recognized."
-				string		"_Threshold:"
-				pos			"72 570"
-				size		"150 20"
-			}
-			image joystick_threshold_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"248 572"
-			}
-			bar joystick_threshold_bar
-			{
-				current		*cvar:in_joystickThreshold
-				pos			"257 577"
-				size		"238 6"
-				color		"0 .8 0 1"
-				min			0.0
-				max			1.0
-				onClick		{ }
-			}
-			// ===============
-			// JOYSTICK SPEED
-			// ===============
-			string joystick_speed_str
-			{
-				string		"_Speed:"
-				pos			"72 595"
-				size		"150 20"
-			}
-			image joystick_speed_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"248 597"
-			}
-			bar joystick_speed_bar
-			{
-				current		*cvar:in_joystickSpeed
-				pos			"257 602"
-				size		"238 6"
-				color		"0 .8 0 1"
-				min			5
-				max			30
-				onClick		{ }
-			}
-		}
-		// =============
-		// KEY BINDINGS
-		// =============
-		cmpMenuButton button_keys
-		{
-			string		"_Show Keys"
-			pos			"162 635"
-			onClick
-			{
-				*node:root.options_gameplay@invis = true
-				*node:root.options_keys@invis = false
-				cmd "mn_init_keylist;"
-			}
+	}
+
+	// Display or hide the GLSL options
+	func toggle_shaders_opts {
+		if ( *cvar:r_programs == 1 ) {
+			*node:root.opts_windows.opts_video.shaders.postprocessing@invis = false
+			*node:root.opts_windows.opts_video.shaders.opengl_adv_btn@invis = false
+		} else {
+			*node:root.opts_windows.opts_video.shaders.postprocessing@invis = true
+			*node:root.opts_windows.opts_video.shaders.opengl_adv_btn@invis = true
 		}
 	}
 
 	/**
-	 * Add a hud window the user can use to play battlescape
-	 * <1> HUD identifier name
-	 * <2> HUD label
+	 * @brief Toggles specified panel visibility
+	 * @param <1> The panel id
+	 * @param <2> 0 or 1 to hide/show the panel
 	 */
-	confunc add_hud_name {
-		call *node:root.options_gameplay.select_hud@createchild("option<1>", "option")
-		*node:root.options_gameplay.select_hud.option<1>@value = <1>
-		*node:root.options_gameplay.select_hud.option<1>@label = <2>
-	}
-
-	// ==================
-	// SHOW KEY BINDINGS
-	// ==================
-	panel options_keys
-	{
-		{
-			pos			"415 0"
-			size		"608 768"
-		}
-
-		string showkeys
-		{
-			string		"_Key Bindings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			contentalign	ALIGN_CC
-			color		"0 0.79 0 1"
-		}
-
-		tab nav {
-			{
-				pos		"47 106"
-				size	"480 39"
-				cvar	*cvar:ui_keybindingspace
-				onChange {
-					*node:this.parent.keylist0@invis = true
-					*node:this.parent.keylist1@invis = true
-					*node:this.parent.keylist2@invis = true
-					*node:this.parent.keylist<cvar:ui_keybindingspace>@invis = false
-					*node:this.parent.keylist<cvar:ui_keybindingspace>@viewpos = 0
-					*node:this.parent.keylist_scroll@current = 0
-				}
-			}
-			option menu {
-				label	"_Menu"
-				value	"0"
-			}
-			option global {
-				label	"_Global"
-				value	"1"
-			}
-			option battlescape {
-				label	"_Battlescape"
-				value	"2"
-			}
-		}
-		cmpKeyList keylist0 {
-			invis false
-		}
-		cmpKeyList keylist1 {
-			invis true
-		}
-		cmpKeyList keylist2 {
-			invis true
-		}
-		vscrollbar keylist_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"500 150"
-			height		"535"
-			hidewhenunused true
-			onChange {
-				*node:this.parent.keylist<cvar:ui_keybindingspace>@viewpos = <current>
-			}
-		}
-
-		/*
-		 * @brief Confunc to add a keybinding entry
-		 * <1> id
-		 * <2> keyspace menu = 0, global = 1 or battlescape = 2
-		 * <3> the key name
-		 * <4> description
-	     */
-		confunc keybinding_add {
-			call *node:this.parent.keylist<2>@createChild("key_<1>", "cmpKeyBinding")
-			*node:this.parent.keylist<2>.key_<1>.id@integer = <1>
-			*node:this.parent.keylist<2>.key_<1>.key@string = "<3>"
-			*node:this.parent.keylist<2>.key_<1>.description@string = "<4>"
-			*node:this.parent.keylist<2>.key_<1>.description@tooltip = "<4>"
-		}
-		confunc keybinding_clear {
-			call *node:this.parent.keylist0@removeAllChild
-			call *node:this.parent.keylist1@removeAllChild
-			call *node:this.parent.keylist2@removeAllChild
+	func toggle_panel {
+		if (<2> eq 1) {
+			*node:parent.<1>@invis = false
+		} else {
+			*node:parent.<1>@invis = true
 		}
 	}
-
-	game_mod_listener listener {
-		confunc mn_mods_result {
-			call *node:root.options_overall.select_mods@createchild("option<1>", "option")
-			*node:root.options_overall.select_mods.option<1>@value = <1>
-			*node:root.options_overall.select_mods.option<1>@label = <1>
-		}
+	/*
+	 * @brief Confunc to add a keybinding entry
+	 * <1> id
+	 * <2> keyspace menu = 0, global = 1 or battlescape = 2
+	 * <3> the key name
+	 * <4> description
+	 */
+	confunc keybinding_add {
+		call *node:root.opts_windows.opts_keys.keylist<2>.list.keylist@createChild("key_<1>", "KeyBinding")
+		*node:root.opts_windows.opts_keys.keylist<2>.list.keylist.key_<1>.id@integer = <1>
+		*node:root.opts_windows.opts_keys.keylist<2>.list.keylist.key_<1>.key@string = "<3>"
+		*node:root.opts_windows.opts_keys.keylist<2>.list.keylist.key_<1>.description@string = "<4>"
+		*node:root.opts_windows.opts_keys.keylist<2>.list.keylist.key_<1>.description@tooltip = "<4>"
 	}
-
+	confunc keybinding_clear {
+		call *node:root.opts_windows.opts_keys.keylist0.list.keylist@removeAllChild
+		call *node:root.opts_windows.opts_keys.keylist1.list.keylist@removeAllChild
+		call *node:root.opts_windows.opts_keys.keylist2.list.keylist@removeAllChild
+	}
 	func onWindowOpened
 	{
+		// Checks the screenshot type and hides the quality
+		// bar if it's not JPG
+		call *node:root.opts_windows.opts_video.hide_screenshot_quality
+
+		// Sets default display of all video ratios so it
+		// appears selected in the selectbox
 		*cvar:mn_vidratio = "all"
-		cmd "cl_setratiofilter <cvar:mn_vidratio>;set ui_keybindingspace 0;"
-		call *node:root.hidepanels
 
-		call *node:root.options_overall.select_mods@removeallchild
-		cmd "mn_mods;"
+		// Displays or hides the openGL options, the real-time
+		// lighting options, and the advanced video options
+		call *node:root.toggle_panel("video_adv", 0)
+		call *node:root.toggle_panel("opengl_adv", 0)
+		call *node:root.toggle_shaders_opts
+		call *node:root.opts_windows.opts_video.light_realtime.toggle_realtime_lighting_opts
+		cmd "mn_mods;mn_init_keylist;"
 
-		*cvar:mn_videotab = "general"
-		*node:root.options_video.options_advanced_video@invis = true
-		*node:root.options_video.options_other_video@invis = true
-		*node:root.options_video.options_general_video@invis = false
-
-		*node:root.options_overall@invis = false
-
-		// hide unnecessary options
-		call *node:root.options_video.options_general_video.show_jpeg_options
-		call *node:root.options_video.options_advanced_video.show_opengl_options
-		call *node:root.options_video.options_advanced_video.opengl_options.show_lighting_options
-		call *node:root.options_video.options_advanced_video.show_intel_hack_option
-		call *node:root.options_sound.show_advanced_sound_options
-		call *node:root.options_gameplay.show_joystick_options
+		*node:root.opts_windows.opts_keys.keylist0.list.label@string = "_MENU"
+		*node:root.opts_windows.opts_keys.keylist1.list.label@string = "_GLOBAL"
+		*node:root.opts_windows.opts_keys.keylist2.list.label@string = "_BATTLESCAPE"
 	}
 }

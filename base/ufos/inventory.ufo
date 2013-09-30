@@ -86,9 +86,7 @@ inventory implant
 // Battlescape floor
 inventory floor
 {
-	shape	"3 0 12 1"
-	shape	"0 1 15 4"
-	shape	"15 0 3 3"
+	shape	"0 0 14 5"
 	temp	true
 	in		1
 	out		2

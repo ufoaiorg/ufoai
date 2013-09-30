@@ -2,6 +2,13 @@
 // HUD INTERFACE
 // ==================
 
+/*
+ * @TODO:
+ * - Most of this is built for the old UI, but there are some things that have to
+ *   stay. It's not yet clear to me what, but cmpFiremodeEntry has been changed to
+ *   new UI.
+ */
+
 // Components for the soldier number strings
 
 component cmp_str_soldier_shadow extends string
@@ -68,100 +75,86 @@ component cmp_str_numspotted extends string
 	contentalign	ALIGN_CC
 }
 
-
+// Firemode entry
 component cmpFiremodeEntry extends panel {
 	{
-		pos		"0 0"
-		size	"214 63"
-		align	LAYOUTALIGN_TOP
-	}
-
-	image bg
-	{
-		src	"hud/firemode"
-		pos		"0 0"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		onMouseEnter { *node:this@src = "hud/firemode_hover" }
-		onMouseLeave { *node:this@src = "hud/firemode" }
+		pos				"0 0"
+		size			"206 45"
+		bgcolor			"0 0.15 0.1 0.7"
+		bordercolor		"0.58 0.81 0.758 0.7"
+		border			"2"
+		align			LAYOUTALIGN_TOP
+		onMouseEnter	{ *node:this@bgcolor = "0 0.21 0.158 0.7" }
+		onMouseLeave	{ *node:this@bgcolor = "0 0.15 0.1 0.7"	}
 		onClick	{
 			cmd "ui_close <path:root>;"
-			cmd "hud_executeaction <node:parent.actionid@string>;"
-		}
-		onRClick {
-			cmd "ui_close <path:root>;"
+			cmd "hud_executeaction <node:this.actionid@string>;"
 		}
 	}
-
-	image cb
+	string name
 	{
-		src	"hud/checkbox"
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 32"
-		texl	"0 0"
-		texh	"31 31"
-		onClick	{
-			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>;"
-		}
+		pos 		"5 0"
+		size 		"196 25"
+		color		"0.58 0.81 0.758 0.7"
+		contentalign ALIGN_CL
+		ghost 		true
 	}
-
-	/** store the actionid */
+	button fm_res
+	{
+		pos		"5 25"
+		size	"15 15"
+		icon	"icons/firemodesml0"
+		tooltip	"_Use this firemode for reaction fire"
+		onMouseEnter { if (*node:this@icon eq "icons/firemodesml0") { *node:this@icon = "icons/firemodesmlhover" } }
+		onMouseLeave { if (*node:this@icon eq "icons/firemodesmlhover") { *node:this@icon = "icons/firemodesml0" } }
+		onClick	{ cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>;" }
+	}
+	button tu_icon
+	{
+		pos		"110 23"
+		size	"18 19"
+		icon	"icons/tusml"
+		ghost	true
+	}
+	string tu
+	{
+		pos 		"130 27"
+		size 		"35 15"
+		color		"0.58 0.81 0.758 0.7"
+		contentalign ALIGN_CL
+		ghost 		true
+		font		"f_verysmall"
+	}
+	button ammo_icon
+	{
+		pos		"165 25"
+		size	"12 15"
+		icon	"icons/ammosml"
+		ghost	true
+	}
+	string shot
+	{
+		pos 		"180 27"
+		size 		"25 15"
+		color		"0.58 0.81 0.758 0.7"
+		contentalign ALIGN_CL
+		ghost 		true
+		font		"f_verysmall"
+	}
+	// store the actionid
 	string actionid {
 		size	"0 0"
 		invis	true
 	}
-
-	/** store the hand */
+	// store the hand
 	string hand {
 		size	"0 0"
 		invis	true
 	}
-
-	/** store the index of the firemode */
+	// store the index of the firemode
 	string index {
 		size	"0 0"
 		invis	true
-	}
-
-	string name
-	{
-		pos "27 4"
-		size "183 25"
-		contentalign ALIGN_CL
-		ghost true
-	}
-	string tu_label {
-		pos "17 32"
-		size "50 28"
-		contentalign ALIGN_CR
-		ghost true
-		string		"_TU:"
-		font		"f_verysmall"
-	}
-	string tu
-	{
-		pos "67 32"
-		size "29 28"
-		contentalign ALIGN_CL
-		ghost true
-		font		"f_verysmall"
-	}
-	string shot_label {
-		pos "99 32"
-		size "80 28"
-		contentalign ALIGN_CR
-		ghost true
-		string		"_Shots:"
-		font		"f_verysmall"
-	}
-	string shot
-	{
-		pos "179 32"
-		size "30 28"
-		contentalign ALIGN_CL
-		ghost true
-		font		"f_verysmall"
 	}
 
 	/**
@@ -186,15 +179,13 @@ component cmpFiremodeEntry extends panel {
 		*node:parent.tu@tooltip = "<9>"
 
 		if ( <5> eq "1" ) {
-			*node:parent.bg@texl = "0 0"
-			*node:parent.bg@texh = "214 63"
+			*node:parent.name@color = "0.58 0.81 0.758 0.7"
 		} else {
-			*node:parent.bg@texl = "0 64"
-			*node:parent.bg@texh = "214 128"
+			*node:parent.name@color = "0.58 0.81 0.758 0.3"
 		}
 
 		if ( <4> eq "0" ) {
-			*node:parent.cb@invis = true
+			*node:parent.fm_res@invis = true
 		}
 	}
 
@@ -203,13 +194,9 @@ component cmpFiremodeEntry extends panel {
 	 */
 	func init_reaction {
 		if ( <1> eq "1" ) {
-			*node:parent.cb@texl = "0 32"
-			*node:parent.cb@texh = "31 63"
-			*node:parent.cb@invis = false
+			*node:parent.fm_res@icon = "icons/firemodesml"
 		} else {
-			*node:parent.cb@texl = "0 0"
-			*node:parent.cb@texh = "31 31"
-			*node:parent.cb@invis = false
+			*node:parent.fm_res@icon = "icons/firemodesml0"
 		}
 	}
 }
@@ -232,11 +219,6 @@ window reactionfire_listener {
 	 * @note no parameters
 	 */
 	confunc reactionfire_updated { }
-	/**
-	 * @brief Cvar listener callback - used in the firemode panels
-	 * @note no parameters
-	 */
-	confunc actor_updated { }
 }
 
 /**
@@ -331,36 +313,6 @@ window hud extends levelbuttons {
 
 	confunc startround { }
 	confunc endround { }
-
-	/**
-	 * @brief Adds a new possible target to the list of reaction fire targets for the given shooter
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 * @param <3> shooter head model
-	 * @param <4> shooter head skin
-	 * @param <5> boolean whether shooter is a robot
-	 * @param <6> TUs left until rf is triggered
-	 * @param <7> Out of range = 1, in range = 0
-	 * @param <8> Name of the selected firedef of the shooter
-	 */
-	confunc reactionfire_addtarget { }
-
-	/**
-	 * @brief The target is no longer in the reaction fire scope of the shooter
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 */
-	confunc reactionfire_removetarget { }
-
-	/**
-	 * @brief Called when the amount of TUs that are needed to trigger the reaction fire changed.
-	 * This might e.g. happen if the target is moving in front of the shooter.
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 * @param <3> TUs left until rf is triggered
-	 * @param <4> Out of range = 1, in range = 0
-	 */
-	confunc reactionfire_updatetarget { }
 
 	// confuncs to show/hide inventory, physdat and radar windows
 	confunc show_hide_inventory
@@ -469,8 +421,8 @@ window hud extends levelbuttons {
 	vis ... visible
 	inv ... invisible
 */
-
-window firemode_left extends reactionfire_listener {
+window firemode_left extends reactionfire_listener
+{
 	{
 		pos			"622 0"
 		size		"255 700"
@@ -491,11 +443,6 @@ window firemode_left extends reactionfire_listener {
 
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener l;"
-		cmd "ui_addcvarlistener cl_selected actor_updated;"
-	}
-
-	func onWindowClosed {
-		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
 	/**
@@ -504,10 +451,6 @@ window firemode_left extends reactionfire_listener {
 	 */
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener l;"
-	}
-
-	confunc actor_updated {
-		cmd "ui_pop;"
 	}
 }
 
@@ -532,11 +475,6 @@ window firemode_right extends reactionfire_listener {
 
 	func onWindowOpened {
 		cmd "hud_listfiremodes firemode_listener r;"
-		cmd "ui_addcvarlistener cl_selected actor_updated;"
-	}
-
-	func onWindowClosed {
-		cmd "ui_removecvarlistener cl_selected actor_updated;"
 	}
 
 	/**
@@ -546,14 +484,10 @@ window firemode_right extends reactionfire_listener {
 	confunc reactionfire_updated {
 		cmd "hud_listfiremodes firemode_listener r;"
 	}
-
-	confunc actor_updated {
-		cmd "ui_pop;"
-	}
 }
 
-window hud_general {
-
+window hud_general
+{
 	func hide_firemodes {
 		call *node:firemode_left.elements@removeAllChild
 		call *node:firemode_right.elements@removeAllChild
@@ -593,7 +527,6 @@ window hud_general {
 			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
 	}
-
 }
 
 window hud_chat
@@ -788,7 +721,7 @@ window hud_chat
 					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
-				checkbox_green chat_team
+				checkbox_ui2 chat_team
 				{
 					width		"20"
 					pos			"0 4"

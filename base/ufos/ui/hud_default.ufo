@@ -1,18 +1,31 @@
-// ==================
-// HUD MAIN
-// ==================
+// ======================
+// NEW HUD UNNAMED SO FAR
+// ======================
 
-component actorButton extends radiobutton
-{
-	size		"27 35"
-	background	"buttons/blue2-1"
-	cvar		*cvar:selected_soldier
-	onClick		{ cmd "actor_select <value>;" }
-	onWheelUp	{ cmd "actor_next;"}
-	onWheelDown	{ cmd "actor_prev;"}
-}
+/*
+ * @TODO
+ * - No ammo models/bar because cvars don't exist
+ * - Some way to see which ammo is loaded
+ * - Currently selected firemode name on weapon panel
+ * - Second weapon panel
+ * -- Reload button disappears when full, but it would
+ *    be great to have full/not-full/empty icons
+ * -- Need to figure out grenades, and sometimes pistols
+ *    they say can't be fired two-handed, and reload btn
+ *    doesn't appear. Try to figure out when this happens.
+ * - Fire weapon seems off: sometimes no line of fire is drawn
+ * - Soldier models don't always update
+ * - Inventory/Stats windows
+ * -- Turn it into panel so i can use next/prev soldier confuncs
+ * - Chat windows, and other MP-specific needs
+ * - Message panel (log lines use old style)
+ * - Show keys
+ * - Level selection needs up/down arrows
+ * - Tooltips: look for UI_DrawTooltip
+ * - Rescue zone button
+ */
 
-component rfShooter extends panel
+component ReactionFireShooter extends panel
 {
 	{
 		size	"210 35"
@@ -52,988 +65,1081 @@ component rfShooter extends panel
 	}
 }
 
+//window hud_unnamed extends hud
 window hud_default extends hud
 {
 	{
 		fill		true
 		starlayout	true
-		noticepos	"512 50"
+		noticepos	"256 10"
 	}
 
-	// ==================
-	// render rectangle
-	// ==================
-	battlescape battlescape
+	func onScriptLoaded {
+		// Add the window to the list of HUDs
+		cmd "add_hud_name <path:root> \"_Default\""
+	}
+
+	func showinventory
+	{
+		cmd "ui_push hudinv;"
+	}
+
+	battlescape render
 	{
 		pos			"0 0"
 		size		"1024 768"
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ============================
-	// reaction fire tracking panel
-	// parameter to display the panel
-	// ============================
-	panel reactions
+	// ==============
+	// SOLDIERS PANEL
+	// ==============
+	panel soldier
 	{
 		{
-			pos				"122 62"
-			size			"210 500"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	4
-			ghost			true
-		}
-	}
-
-	// ==================
-	// floor bar
-	// ==================
-
-	panel floor {
-		{
-			pos		"0 128"
-			size	"40 363"
-			align	LAYOUTALIGN_LEFT
-			excluderect	{ pos "0 0" size "40 4" }
-			excluderect	{ pos "6 358" size "35 6" }
-			excluderect	{ pos "32 350" size "8 8" }
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		image bar_floor
-		{
-			src	"hud/bar_floor"
-			pos		"0 0"
-			size	"40 363"
-			texh	"40 363"
-			ghost	true
-		}
-
-		radiobutton bt0
-		{
-			tooltip	"_Level 1"
-			pos		"6 310"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	0
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_1"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt1
-		{
-			tooltip	"_Level 2"
-			pos		"6 270"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	1
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_2"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt2
-		{
-			tooltip	"_Level 3"
-			pos		"6 230"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	2
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_3"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt3
-		{
-			tooltip	"_Level 4"
-			pos		"6 190"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	3
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_4"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt4
-		{
-			tooltip	"_Level 5"
-			pos		"6 150"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	4
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_5"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt5
-		{
-			tooltip	"_Level 6"
-			pos		"6 110"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	5
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_6"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt6
-		{
-			tooltip	"_Level 7"
-			pos		"6 70"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	6
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_7"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		radiobutton bt7
-		{
-			tooltip	"_Level 8"
-			pos		"6 30"
-			size	"27 35"
-			background	"buttons/blue2-1"
-			value	7
-			cvar	*cvar:cl_worldlevel
-			icon	"icons/number_8"
-			onWheelUp {
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown {
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-	}
-
-	/**
-	 * @brief Updates the level status
-	 * @param <1> Level id (0-7)
-	 * @param <2> State
-	 *   0 = disabled (map doesn't have this level),
-	 *   1 = available (user can switch to this level)
-	 *   2 = active (the current selected level)
-	 */
-	confunc updateLevelStatus {
-		if ( <2> == 0 ) {
-			*node:root.floor.bt<1>@disabled = true
-			*node:root.floor.bt<1>@ghost = true
-		} elif ( <2> >= 1 ) {
-			*node:root.floor.bt<1>@disabled = false
-		}
-	}
-
-	// ==================
-	// actor and team bar
-	// ==================
-
-	panel soldier_selected {
-		{
-			pos		"0 0"
-			size	"504 104"
-			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
-			excluderect { pos	"407 39"	size	"97 9" }
-			excluderect { pos	"112 48"	size	"400 56" }
-			align	LAYOUTALIGN_TOPLEFT
-		}
-
-		image background
-		{
-			src	"hud/bar_head"
-			pos		"0 0"
-			size	"504 104"
-			texh	"504 104"
-			ghost	true
-		}
-
-		model head
-		{
-			src		*cvar:mn_head
-			skin	*cvar:mn_head_skin
-			angles	"0 60 90"
-			autoscale	true
-			pos		"20 20"
-			size	"74 66"
-			origin	"0 0 0"
-			onClick { cmd "show_hide_inventory;" }
-			onRClick { cmd "show_hide_physdat;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-		}
-
-		string actorname
-		{
-			string	*cvar:mn_name
-			pos		"130 13"
-			size	"170 20"
-			onClick { cmd "show_hide_inventory;" }
-			onRClick { cmd "show_hide_physdat;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-		}
-	}
-
-	panel team_selection {
-		{
-			pos		"465 0"
-			size	"415 56"
-			align	LAYOUTALIGN_TOP
-		}
-
-		image background
-		{
-			src	"hud/bar_teammember"
-			pos		"20 0"
-			size	"395 56"
-			texh	"395 56"
-			ghost	true
-		}
-
-		panel buttonList {
-			{
-				pos "49 10"
-				size "395 35"
-			}
-
-			actorButton bt_actor0
-			{
-				pos			"0 0"
-				value		0
-				icon		"icons/number_1"
-			}
-
-			actorButton bt_actor1
-			{
-				pos			"29 0"
-				value		1
-				icon		"icons/number_2"
-			}
-
-			actorButton bt_actor2
-			{
-				pos			"59 0"
-				value		2
-				icon		"icons/number_3"
-			}
-
-			actorButton bt_actor3
-			{
-				pos			"89 0"
-				value		3
-				icon		"icons/number_4"
-			}
-
-			actorButton bt_actor4
-			{
-				pos			"119 0"
-				value		4
-				icon		"icons/number_5"
-			}
-
-			actorButton bt_actor5
-			{
-				pos			"149 0"
-				value		5
-				icon		"icons/number_6"
-			}
-
-			actorButton bt_actor6
-			{
-				pos			"179 0"
-				value		6
-				icon		"icons/number_7"
-			}
-
-			actorButton bt_actor7
-			{
-				pos			"209 0"
-				value		7
-				icon		"icons/number_8"
-			}
-
-			actorButton bt_actor8
-			{
-				pos			"239 0"
-				value		8
-				icon		"icons/number_9"
-			}
-
-			actorButton bt_actor9
-			{
-				pos			"269 0"
-				value		9
-				icon		"icons/number_10"
-			}
-
-			actorButton bt_actor10
-			{
-				pos			"299 0"
-				value		10
-				icon		"icons/number_11"
-			}
-
-			actorButton bt_actor11
-			{
-				pos			"329 0"
-				value		11
-				icon		"icons/number_12"
-			}
-		}
-	}
-
-	panel next {
-		{
-			pos		"808 0"
-			size	"216 56"
-			align	LAYOUTALIGN_TOPRIGHT
-		}
-
-		image bar_nextround
-		{
-			src	"hud/bar_nextround"
-			pos		"0 0"
-			size	"216 56"
-			texh	"216 56"
-			ghost	true
-		}
-
-		button bt_rescuezone
-		{
-			tooltip	"_Show rescue zone"
-			background	"buttons/large_blue"
-			pos		"64 10"
-			size	"64 37"
-			icon	"icons/rescue_zone"
-			contentalign	ALIGN_CC
-			invis	false
-			onClick			{ cmd "toggle_rescuezone;" }
-		}
-
-		button bt_nextround
-		{
-			tooltip	"_Finish round"
-			background	"buttons/large_blue"
-			pos		"142 10"
-			size	"64 37"
-			icon	"icons/return"
-			onClick	{ cmd "nextround;" }
-		}
-		// number of spotted enemies string
-		cmp_str_numspotted str_numspotted
-		{
-			pos		"8 11"
-			size	"48 34"
-		}
-	}
-
-	// ==================
-	// weapon bars
-	// ==================
-
-	/** @note this is the right arm (at left of the screen) */
-	panel right {
-		{
-			pos		"0 616"
-			size	"256 152"
-			excluderect { pos	"176 0"	size	"80 24" }
-			align	LAYOUTALIGN_BOTTOMLEFT
-		}
-
-		image background
-		{
-			src	"hud/bar_leftweapon"
-			pos		"0 0"
-			size	"256 152"
-			texh	"256 152"
-			ghost	true
-		}
-
-		image bt_pfire
-		{
-			tooltip	"_Primary fire mode"
-			pos		"174 34"
-			texl	"0 76"
-			texh	"75 128"
-			mousefx	true
-			onClick	{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
-		}
-
-		image bt_reload
-		{
-			tooltip	*cvar:mn_reloadright_tt
-			src	"hud/buttons2g"
-			pos		"103 104"
-			texl	"0 38"
-			texh	"64 74"
-			mousefx	true
-			onClick	{ cmd "hud_reloadright;" }
-			onMouseEnter		{ cmd "hud_remainingtus reload_r 1;" }
-			onMouseLeave		{ cmd "hud_remainingtus reload_r 0;" }
-		}
-
-		string ammoright
-		{
-			string	*cvar:mn_ammoright
-			pos		"17 112"
-			size	"65 20"
-			contentalign	ALIGN_UC
-		}
-
-		container right
-		{
-			pos		"26 32"
-		}
-
-		image hud_bt_use_headgear
-		{
-			tooltip	"_Use headgear"
-			src	"hud/buttons2g"
-			pos		"180 104"
-			texl	"64 0"
-			texh	"128 37"
-			mousefx	true
-			onClick	{ cmd "actor_useheadgear;" }
-		}
-	}
-
-	/** @note this is the left arm (at right of the screen) */
-	panel left {
-		{
-			pos		"768 616"
-			size	"256 152"
-			align	LAYOUTALIGN_BOTTOMRIGHT
-			excluderect { pos	"0 0"	size	"80 24" }
-		}
-
-		image background
-		{
-			src	"hud/bar_rightweapon"
-			pos		"0 0"
-			size	"256 152"
-			texh	"256 152"
-			ghost	true
-		}
-
-		image bt_pfire
-		{
-			tooltip	"_Use Item"
-			pos		"8 34"
-			texl	"0 76"
-			texh	"75 128"
-			mousefx	true
-			onClick	{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud_default.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
-		}
-
-		image bt_reload
-		{
-			tooltip	*cvar:mn_reloadleft_tt
-			src	"hud/buttons2g"
-			pos		"89 104"
-			texl	"0 38"
-			texh	"64 74"
-			mousefx	true
-			onClick	{ cmd "hud_reloadleft;" }
-			onMouseEnter		{ cmd "hud_remainingtus reload_l 1;" }
-			onMouseLeave		{ cmd "hud_remainingtus reload_l 0;" }
-		}
-
-		string ammoleft
-		{
-			string	*cvar:mn_ammoleft
-			pos		"171 112"
-			size	"65 20"
-			contentalign	ALIGN_UC
-		}
-
-		container left
-		{
-			pos		"108 32"
-		}
-
-		image bt_duck
-		{
-			tooltip	*cvar:mn_crouchstand_tt
-
-			src	"hud/buttons2g"
-			pos		"8 107"
-			texl	"0 75"
-			texh	"52 112"
-			onClick	{ cmd "actor_standcrouch;" }
-			onMouseEnter		{ cmd "hud_remainingtus crouch 1;" }
-			onMouseLeave		{ cmd "hud_remainingtus crouch 0;" }
-		}
-
-		checkbox_blue bt_crouch_reservation
-		{
-			tooltip	*cvar:mn_crouch_reservation_tt
-			pos		"60 107"
-			size	"20 18"
-			current	0
-			onChange	{ cmd "hud_togglecrouchreserve;" }
-		}
-	}
-
-	// ==================
-	// info bar
-	// ==================
-
-	panel info {
-		{
-			pos		"292 649"
-			size	"457 119"
-			align	LAYOUTALIGN_BOTTOM
-			excluderect { pos	"0 0"	size	"73 9" }
-		}
-
-		image background
-		{
-			src	"hud/bar_infoscreen"
-			pos		"0 0"
-			size	"457 119"
-			texh	"457 119"
-			ghost	true
-		}
-
-		image bt_shot_reservation
-		{
-			tooltip	*cvar:mn_shot_reservation_tt
-			src "hud/button_reserve_shot"
-			pos		"11 32"
-			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
-			texh	"115 64"
-			mousefx	true
-			onClick	{ cmd "hud_shotreservationpopup;" }
-			onRClick	{ cmd "hud_shotreservationpopup 0;" }
-		}
-
-		image bt_reaction_s
-		{
-			src	"hud/button_guard"
-			pos		"11 74"
-			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
-			texh	"31 63"
-			mousefx	true
-			onClick	{ cmd "hud_togglereaction;" }
-		}
-
-		string tus
-		{
-			string	*cvar:mn_tu
-			pos		"82 11"
-			size	"40 20"
-			contentalign	ALIGN_UR
-		}
-
-		string hp
-		{
-			string	*cvar:mn_hp
-			pos		"82 25"
-			size	"40 20"
-			contentalign	ALIGN_UR
-		}
-
-		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips).
-		string tu_tooltips
-		{
-			string	" "
-			tooltip	*cvar:mn_tu_tooltips
-			pos		"130 21"
-			size	"305 6"
-		}
-
-		bar timeall
-		{
-			pos		"130 21"
-			size	"298 6"
-			color	".1 .1 .7 1"
-			current	*cvar:mn_tu
-			max		*cvar:mn_tumax
-			disabled	true
-		}
-		bar timeremain
-		{
-			pos		"130 21"
-			size	"298 6"
-			color	".2 .2 1 1"
-			current	*cvar:mn_turemain
-			max		*cvar:mn_tumax
-			disabled	true
-		}
-
-		bar timereserved
-		{
-			pos		"130 21"
-			size	"298 3"
-			color	"0 .5 0 1"
-			current	*cvar:mn_tureserved
-			max		*cvar:mn_tumax
-			disabled	true
-		}
-
-		bar health
-		{
-			pos		"130 33"
-			size	"298 6"
-			color	"1 0 0 1"
-			current	*cvar:mn_hp
-			max		*cvar:mn_hpmax
-			disabled	true
-		}
-
-		bar stun
-		{
-			pos		"130 33"
-			size	"298 6"
-			color	".3 .3 .3 .9"
-			current	*cvar:mn_stun
-			max		*cvar:mn_hpmax
-			disabled	true
-		}
-
-		string moral_text
-		{
-			string	*cvar:mn_morale
-			pos		"82 38"
-			size	"40 20"
-			contentalign	ALIGN_UR
-		}
-
-		bar morale
-		{
-			pos		"130 45"
-			size	"298 6"
-			color	"1 1 0.5 1"
-			current	*cvar:mn_morale
-			max		*cvar:mn_moralemax
-			disabled	true
-		}
-
-		text infoscreen
-		{
-			dataid		TEXT_STANDARD
-			pos			"118 61"
-			size		"290 50"
-			lineheight	20
-			tabwidth	100
-			rows		"2"
-		}
-	}
-
-	// ==================
-	// right popup bar
-	// ==================
-
-	panel popup {
-		{
-			pos		"977 129"
-			size	"47 399"
-			align	LAYOUTALIGN_RIGHT
-			excluderect { pos	"0 95"	size	"8 33" }
-			excluderect { pos	"0 223"	size	"16 16" }
-		}
-
-		image background_chat
-		{
-			visiblewhen	"*cvar:sv_maxclients >= 2"
-			src			"hud/bar_chat"
-			pos			"0 0"
-			texl		"16 0"
-			texh		"64 64"
-			size		"64 64"
+			pos			"0 418"
+			size		"1024 220"
+			align		LAYOUTALIGN_BOTTOMLEFT
 			ghost		true
 		}
 
-		image button_chat
+		panel soldier_opts
 		{
-			visiblewhen	"*cvar:sv_maxclients >= 2"
-			tooltip		"_Chat messages"
-			src			"hud/event_log"
-			pos			"10 8"
-			texl		"0 0"
-			texh		"32 36"
-			onClick {
-				cmd "ui_push hud_chat;"
+			{
+				pos			"10 130"
+				size		"780 76"
+//				bgcolor		"0.38 0.48 0.36 0.5"
+				bgcolor		"0 0.15 0.1 0.7"
+				bordercolor	"0.58 0.81 0.758 0.7"
+				border		"2"
+				onMouseEnter	{
+					*node:this@bgcolor = "0 0.21 0.158 0.7"
+				}
+				onMouseLeave	{
+					*node:this@bgcolor = "0 0.15 0.1 0.7"
+				}
+			}
+
+			// Soldier name
+			string sel_soldier_name
+			{
+				string			*cvar:mn_name
+				pos				"105 6"
+				size			"300 15"
+				font			"f_small_bold"
+				color			"0.56 0.81 0.76 1"
+				longlines		LONGLINES_CHOP
+				contentalign	ALIGN_CL
+				ghost			true
+			}
+
+			// Soldier status bars
+			panel soldier_status
+			{
+				{
+					pos		"105 18"
+					size	"355 60" // 420
+					ghost	true
+				}
+
+				// Health bar
+				texture health_bg
+				{
+					pos			"0 5"
+					size		"300 10"
+					src			"ui/bar_bg"
+					ghost		true
+				}
+				bar health
+				{
+					pos			"0 5"
+					size		"300 10"
+					color		".1875 .65625 .164 1"
+					current		*cvar:mn_hp
+					max			*cvar:mn_hpmax
+					disabled	true
+					nohover		true
+				}
+				string health_count
+				{
+					string			*cvar:mn_hp
+					pos				"305 4"
+					size			"30	12"
+					font			"f_verysmall_bold"
+					color			"0.56 0.81 0.76 0.5"
+					contentalign	ALIGN_CL
+				}
+				button health_icon
+				{
+					icon			"icons/healthsml0"
+					pos				"335 0"
+					size			"18	19"
+				}
+
+				// Time units bar
+				texture tu_bg
+				{
+					pos			"0 22"
+					size		"300 10"
+					src			"ui/bar_bg"
+					ghost		true
+				}
+				bar tu
+				{
+					pos			"0 22"
+					size		"300 10"
+					color		".582 .808 .758 1"
+					current		*cvar:mn_tu
+					max			*cvar:mn_tumax
+					disabled	true
+					nohover		true
+				}
+				string tu_count
+				{
+					string			*cvar:mn_tu
+					pos				"305 21"
+					size			"30	12"
+					font			"f_verysmall_bold"
+					color			"0.56 0.81 0.76 0.5"
+					contentalign	ALIGN_CL
+				}
+				button tu_icon
+				{
+					icon			"icons/tusml0"
+					pos				"335 17"
+					size			"18	19"
+				}
+
+				// Morale bar
+				texture morale_bg
+				{
+					pos			"0 39"
+					size		"300 10"
+					src			"ui/bar_bg"
+					ghost		true
+				}
+				bar morale
+				{
+					pos			"0 39"
+					size		"300 10"
+					color		".825 .92 .437 1"
+					current		*cvar:mn_morale
+					max			*cvar:mn_moralemax
+					disabled	true
+					nohover		true
+				}
+				string morale_count
+				{
+					string			*cvar:mn_morale
+					pos				"305 38"
+					size			"30	12"
+					font			"f_verysmall_bold"
+					color			"0.56 0.81 0.76 0.5"
+					contentalign	ALIGN_CL
+				}
+				button morale_icon
+				{
+					icon			"icons/moralesml0"
+					pos				"335 34"
+					size			"18	19"
+				}
+			}
+
+			// Soldier buttons
+			// @TODO: inventory button should stay "on" when window is open
+			// @TODO: stats button should stay "on" when window is open
+			panel soldier_buttons
+			{
+				{
+					pos			"470 13"
+					size		"310 50"
+					ghost		true
+				}
+
+				// Inventory button
+				CircleBtn inventory_bg
+				{
+					{
+						pos			"0 0"
+					}
+
+					button icon
+					{
+						icon		"icons/inv0"
+						background	"icons/circle0"
+						pos			"0 0"
+						size		"48 48"
+						tooltip		"_Equipment"
+						onClick		{ cmd "toggle_button inventory_bg inv;ui_push inv_stats_hud;" }
+						onMouseEnter	{ *node:this@icon = "icons/inv" }
+						onMouseLeave	{ *node:this@icon = "icons/inv0" }
+					}
+				}
+
+				// Soldier stats button
+				CircleBtn stats_bg
+				{
+					{
+						pos			"55 0"
+					}
+
+					button icon
+					{
+						icon		"icons/stats0"
+						background	"icons/circle0"
+						pos			"0 0"
+						size		"48 48"
+						tooltip		"_Stats"
+						onClick		{ cmd "toggle_button stats_bg stats;ui_push inv_stats_hud;" }
+						onMouseEnter	{ *node:this@icon = "icons/stats" }
+						onMouseLeave	{ *node:this@icon = "icons/stats0"	}
+					}
+				}
+
+				// Headgear button
+				CircleBtn headgear_bg
+				{
+					{
+						pos		"110 0"
+					}
+
+					button icon
+					{
+						icon		"icons/headgear"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						onClick	{
+							cmd "actor_useheadgear;"
+							*node:this@icon = "icons/headgear0"
+							*node:this@background = "icons/circle0"
+						}
+					}
+
+					CircleBtnDisabled headgear_d
+					{
+						pos			"0 0"
+					}
+
+					confunc deselect_headgear
+					{
+						*node:parent.icon@icon = "icons/headgear"
+						*node:parent.icon@background = "icons/circle"
+						*node:parent.headgear_d@invis = true
+					}
+					confunc disable_headgear
+					{
+						*node:parent.headgear_d@invis = false
+					}
+				}
+
+				// Reaction fire button
+				CircleBtn reaction
+				{
+					{
+						pos			"165 0"
+					}
+
+					button icon_on
+					{
+						icon		"icons/reaction2"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						invis		true
+						onClick		{ cmd "hud_togglereaction;" }
+					}
+
+					button icon_single
+					{
+						icon		"icons/reaction1"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						onClick		{ cmd "hud_togglereaction;" }
+					}
+
+					button icon_off
+					{
+						icon		"icons/reaction0"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						onClick		{ cmd "hud_togglereaction;" }
+					}
+
+					// Disable icon over reaction button
+					button reaction_d
+					{
+						pos			"0 0"
+						size		"48 48"
+						icon		"icons/circle_disabled0"
+						invis		true
+					}
+				}
+
+				// Stand button when not selected
+				CircleBtn stand_off
+				{
+					{
+						pos			"220 0"
+					}
+
+					button icon
+					{
+						icon		"icons/stand0"
+						background	"icons/circle0"
+						pos			"0 0"
+						size		"48 48"
+						onClick		{ cmd "actor_standcrouch;" }
+						onMouseEnter	{ *node:this@icon = "icons/stand" }
+						onMouseLeave	{ *node:this@icon = "icons/stand0"	}
+					}
+				}
+
+				// Crouch button when not selected
+				CircleBtn crouch_off
+				{
+					{
+						pos			"250 0"
+					}
+
+					button icon
+					{
+						icon		"icons/crouch0"
+						background	"icons/circle0"
+						pos			"0 0"
+						size		"48 48"
+						onClick		{ cmd "actor_standcrouch;" }
+						onMouseEnter	{ *node:this@icon = "icons/crouch" }
+						onMouseLeave	{ *node:this@icon = "icons/crouch0"	}
+					}
+				}
+
+				// Crouch button when selected
+				CircleBtn crouch
+				{
+					{
+						pos			"250 0"
+						invis		true
+					}
+
+					button icon
+					{
+						icon		"icons/crouch"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						ghost		true
+					}
+				}
+
+				// Disable icon over crouch button
+				button crouch_d
+				{
+					pos			"250 0"
+					size		"48 48"
+					icon		"icons/circle_disabled0"
+					invis		true
+				}
+
+				// Stand button when selected
+				CircleBtn stand
+				{
+					{
+						pos			"220 0"
+						invis		false
+					}
+
+					button icon
+					{
+						icon		"icons/stand"
+						background	"icons/circle"
+						pos			"0 0"
+						size		"48 48"
+						ghost		true
+					}
+				}
+
+				// Disable icon over stand button
+				button stand_d
+				{
+					pos			"220 0"
+					size		"48 48"
+					icon		"icons/circle_disabled0"
+					invis		true
+				}
+
+				// Sets the proper display for the stand/crouch buttons
+				confunc deselect_stand
+				{
+					*node:parent.stand@invis = false
+					*node:parent.crouch@invis = true
+					*node:parent.stand_d@invis = true
+					*node:parent.crouch_d@invis = true
+				}
+				confunc deselect_crouch
+				{
+					*node:parent.stand@invis = true
+					*node:parent.crouch@invis = false
+					*node:parent.stand_d@invis = true
+					*node:parent.crouch_d@invis = true
+				}
+				// Disables the stand/crouch buttons when no TUs remain
+				confunc disable_stand
+				{
+					*node:parent.stand@invis = false
+					*node:parent.crouch@invis = false
+					*node:parent.stand_d@invis = false
+					*node:parent.crouch_d@invis = false
+				}
+				confunc disable_crouch
+				{
+					*node:parent.stand@invis = false
+					*node:parent.crouch@invis = false
+					*node:parent.stand_d@invis = false
+					*node:parent.crouch_d@invis = false
+				}
 			}
 		}
 
-		image background
+		// Right-hand weapon panel
+		// @TODO implement firemode selection
+		// @TODO add button to show left-hand weapon panel
+		panel weapon
 		{
-			src	"hud/bar_popup"
-			pos		"0 64"
-			size	"47 335"
-			texh	"47 335"
-			ghost	true
+			{
+				pos			"800 130"
+				size		"206 76"
+//				bgcolor		"0.38 0.48 0.36 0.5"
+				bgcolor		"0 0.15 0.1 0.7"
+				bordercolor	"0.58 0.81 0.758 0.7"
+				border		"2"
+				onClick			{ cmd "hud_fireweapon r 0;" }
+				onMouseEnter	{ *node:this@bgcolor = "0 0.21 0.158 0.7" }
+				onMouseLeave	{ *node:this@bgcolor = "0 0.15 0.1 0.7"	}
+			}
+			container right
+			{
+				pos		"10 10"
+			}
+			container left
+			{
+				invis	true
+				pos		"10 10"
+			}
+			/*
+			string fmode_label
+			{
+				string 			*cvar:fm_selected
+				pos				"5 60"
+				size			"196 10"
+				font			"f_small_bold"
+				color			"0.58 0.81 0.758 1"
+				contentalign	ALIGN_CR
+				longlines		LONGLINES_CHOP
+				ghost			true
+			}
+			*/
+			button fire_r
+			{
+				pos		"5 5"
+				size	"35 35"
+				invis	false
+				icon	"icons/fire0"
+				onClick			{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;" }
+				onMouseEnter	{ *node:this@icon = "icons/fire" }
+				onMouseLeave	{ *node:this@icon = "icons/fire0" }
+			}
+			button fire_l
+			{
+				pos		"5 5"
+				size	"35 35"
+				invis	true
+				icon	"icons/fire0"
+				onClick			{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;" }
+				onMouseEnter	{ *node:this@icon = "icons/fire" }
+				onMouseLeave	{ *node:this@icon = "icons/fire0" }
+			}
+			button reload_r
+			{
+				pos				"173 5"
+				size			"28 23"
+				invis			false
+				icon			"icons/reload0"
+				onMouseEnter	{
+					*node:this@icon = "icons/reload"
+					cmd "hud_remainingtus reload_r 1;"
+				}
+				onMouseLeave	{
+					*node:this@icon = "icons/reload0"
+					cmd "hud_remainingtus reload_r 1;"
+				}
+				onClick			{ cmd "hud_reloadright;" }
+			}
+			button reload_r_disabled
+			{
+				pos				"173 5"
+				size			"28 23"
+				invis			true
+				icon			"icons/reload_disabled"
+				onClick			{ cmd "hud_reloadright;" }
+			}
+			button reload_l
+			{
+				pos				"173 5"
+				size			"28 23"
+				invis			true
+				icon			"icons/reload0"
+				onMouseEnter {
+					*node:this@icon = "icons/reload"
+					cmd "hud_remainingtus reload_l 1;"
+				}
+				onMouseLeave {
+					*node:this@icon = "icons/reload0"
+					cmd "hud_remainingtus reload_l 1;"
+				}
+				onClick			{ cmd "hud_reloadleft;" }
+			}
+			button reload_l_disabled
+			{
+				pos				"173 5"
+				size			"28 23"
+				invis			true
+				icon			"icons/reload_disabled"
+				onClick			{ cmd "hud_reloadleft;" }
+			}
+			string ammo_count
+			{
+				string			*cvar:mn_ammoright
+				pos				"130 18"
+				size			"40 10"
+				font			"f_small_bold"
+				color			"0.58 0.81 0.758 1"
+				contentalign	ALIGN_CR
+				ghost			true
+			}
+			model oweapon
+			{
+				src			*cvar:mn_lweapon
+				angles		"-15 170 90"
+				scale		"1.8 1.8 1.8"
+				tooltip		"_View other hand"
+				pos			"130 33"
+				size 		"72 39"
+				bgcolor			"0 0.1 0 0.5"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+				onMouseEnter	{
+					*node:this@bgcolor = "0 0.1 0 0.9"
+					*node:this@bordercolor = "0.824 0.917 0.437 1"
+				}
+				onMouseLeave	{
+					*node:this@bgcolor = "0 0.1 0 0.5"
+					*node:this@bordercolor = "0.527 0.6 0.21 1"
+				}
+				onClick			{ call *node:root.soldier.weapon.switchhands }
+			}
+
+			// Displays oweapon only if another weapon exists
+			func show_oweapon
+			{
+				if (*cvar:sldcurhand eq "r") {
+					if (*cvar:mn_lweapon eq "") {
+						*node:parent.oweapon@invis = true
+					} else {
+						*node:parent.oweapon@invis = false
+					}
+				} else {
+					if (*cvar:mn_rweapon eq "") {
+						*node:parent.oweapon@invis = true
+					} else {
+						*node:parent.oweapon@invis = false
+					}
+				}
+			}
+
+			func switchhands
+			{
+				if (*cvar:sldcurhand eq "r") {
+					*cvar:sldcurhand = "l"
+					*node:parent.right@invis = true
+					*node:parent.left@invis = false
+					*node:parent.fire_r@invis = true
+					*node:parent.fire_l@invis = false
+					*node:parent.reload_r@invis = true
+					*node:parent.reload_r_disabled@invis = true
+//					*node:parent.reload_l@invis = false
+					*node:parent.oweapon@src = *cvar:mn_rweapon
+					*node:parent.ammo_count@string = *cvar:mn_ammoleft
+				} else {
+					*cvar:sldcurhand = "r"
+					*node:parent.right@invis = false
+					*node:parent.left@invis = true
+					*node:parent.fire_r@invis = false
+					*node:parent.fire_l@invis = true
+//					*node:parent.reload_r@invis = false
+					*node:parent.reload_l@invis = true
+					*node:parent.reload_l_disabled@invis = true
+					*node:parent.oweapon@src = *cvar:mn_lweapon
+					*node:parent.ammo_count@string = *cvar:mn_ammoright
+				}
+				call *node:root.soldier.weapon.show_oweapon
+			}
+			confunc deselect_primaryleft
+			{
+				*node:parent.fire_l@invis = false
+			}
+			confunc deselect_primaryright
+			{
+				*node:parent.fire_r@invis = false
+			}
+			confunc deselect_reloadleft
+			{
+				if (*cvar:sldcurhand eq "l") {
+					*node:parent.reload_l@invis = false
+					*node:parent.reload_l_disabled@invis = true
+				}
+			}
+			confunc deselect_reloadright
+			{
+				if (*cvar:sldcurhand eq "r") {
+					*node:parent.reload_r@invis = false
+					*node:parent.reload_r_disabled@invis = true
+				}
+			}
+			confunc disable_primaryleft { *node:parent.fire_l@invis = true }
+			confunc disable_primaryright { *node:parent.fire_r@invis = true }
+			confunc disable_reloadleft
+			{
+				if (*cvar:sldcurhand eq "l") {
+					*node:parent.reload_l@invis = true
+					*node:parent.reload_l_disabled@invis = false
+				}
+			}
+			confunc disable_reloadright
+			{
+				if (*cvar:sldcurhand eq "r") {
+					*node:parent.reload_r@invis = true
+					*node:parent.reload_r_disabled@invis = false
+				}
+			}
 		}
 
-		image bt_game
+		// Soldier selection
+		panel squad
 		{
-			tooltip	"_Options"
-			src	"hud/buttons1"
-			mousefx true
-			pos		"6 74"
-			texl	"165 0"
-			texh	"201 75"
-			onClick	{ cmd "ui_pop;" }
-		}
+			{
+				pos			"105 56"
+				size		"555 68"
+				invis		false
+				ghost		true
+			}
+			button squadtoggle
+			{
+				icon		"icons/windowprev"
+				tooltip		"_Hide squad"
+				pos			"10 0"
+				size		"18 18"
+				onClick			{
+					*node:root.soldier.squadtoggle@invis = false
+					*node:parent@invis = true
+				}
+			}
+			button health_btn
+			{
+				pos		"34 0"
+				size	"18 19"
+				icon	"icons/healthsml"
+				onMouseEnter	{ *node:this@icon = "icons/healthsml" }
+				onMouseLeave	{ cmd "squad_hoveroff health;" }
+				onClick			{ cmd "sel_squad_panel health;" }
+			}
+			button tu_btn
+			{
+				pos		"54 0"
+				size	"18 19"
+				icon	"icons/tusml0"
+				onMouseEnter	{ *node:this@icon = "icons/tusml" }
+				onMouseLeave	{ cmd "squad_hoveroff tu;" }
+				onClick			{ cmd "sel_squad_panel tu;" }
+			}
+			button morale_btn
+			{
+				pos		"74 0"
+				size	"18 19"
+				icon	"icons/moralesml0"
+				onMouseEnter	{ *node:this@icon = "icons/moralesml" }
+				onMouseLeave	{ cmd "squad_hoveroff morale;" }
+				onClick			{ cmd "sel_squad_panel morale;" }
+			}
 
-		image bt_physdata
+			// Select which attribute to show on squad panel
+			// param1 = attribute
+			confunc sel_squad_panel
+			{
+				// Set a cvar with the currently selected option
+				*cvar:squad_bar = <1>
+
+				// Remove any selected buttons
+				*node:parent.health_btn@icon = "icons/healthsml0"
+				*node:parent.tu_btn@icon = "icons/tusml0"
+				*node:parent.morale_btn@icon = "icons/moralesml0"
+
+				// Update the bars with the new selection and highlight
+				// the correct button
+				*cvar:i = 0;
+				if (param1 eq "health") {
+					*node:parent.health_btn@icon = "icons/healthsml"
+					while ( *cvar:i < 8 ) {
+						*node:parent.sld<cvar:i>.health@invis = false
+						*node:parent.sld<cvar:i>.tu@invis = true
+						*node:parent.sld<cvar:i>.morale@invis = true
+						*cvar:i = ( *cvar:i + 1 )
+					}
+				} elif (param1 eq "tu") {
+					*node:parent.tu_btn@icon = "icons/tusml"
+					while ( *cvar:i < 8 ) {
+						*node:parent.sld<cvar:i>.health@invis = true
+						*node:parent.sld<cvar:i>.tu@invis = false
+						*node:parent.sld<cvar:i>.morale@invis = true
+						*cvar:i = ( *cvar:i + 1 )
+					}
+				} else {
+					*node:parent.morale_btn@icon = "icons/moralesml"
+					while ( *cvar:i < 8 ) {
+						*node:parent.sld<cvar:i>.health@invis = true
+						*node:parent.sld<cvar:i>.tu@invis = true
+						*node:parent.sld<cvar:i>.morale@invis = false
+						*cvar:i = ( *cvar:i + 1 )
+					}
+				}
+				delete *cvar:i
+			}
+
+			// Stop mouseover effect from turning off the button
+			// selecting which attribute is display in soldier squad panel
+			// param1 = attribute to check
+			confunc squad_hoveroff
+			{
+				if (*cvar:squad_bar ne param1) {
+					*node:parent.<1>_btn@icon = "icons/<1>sml0"
+				}
+			}
+
+			// Soldiers
+			SoldierSelect sld0
+			{
+				pos "12 22"
+			}
+			SoldierSelect sld1
+			{
+				pos "58 22"
+			}
+			SoldierSelect sld2
+			{
+				pos "104 22"
+			}
+			SoldierSelect sld3
+			{
+				pos "150 22"
+			}
+			SoldierSelect sld4
+			{
+				pos "196 22"
+			}
+			SoldierSelect sld5
+			{
+				pos "242 22"
+			}
+			SoldierSelect sld6
+			{
+				pos "288 22"
+			}
+			SoldierSelect sld7
+			{
+				pos "334 22"
+			}
+		}
+		// Squad panel toggle button
+		button squadtoggle
 		{
-			tooltip	"_Physical stats"
-			src	"hud/buttons1"
-			mousefx true
-			pos		"6 201"
-			texl	"202 0"
-			texh	"238 75"
-			onClick	{ cmd "show_hide_physdat;" }
-			onRClick	{ cmd "show_hide_physdat;" }
+			icon		"icons/windownext"
+			tooltip		"_Show squad"
+			pos			"115 106"
+			size		"18 18"
+			invis		true
+			onClick			{
+				*node:parent.squad@invis = false
+				*node:this@invis = true
+			}
 		}
 
-		image bt_inventory
+		// Soldier model
+		model sel_soldier_model
 		{
-			tooltip	"_Inventory"
-			src	"hud/buttons1"
-			mousefx true
-			pos		"6 311"
-			texl	"128 0"
-			texh	"164 75"
-			onClick { cmd "show_hide_inventory;" }
-			onRClick	{ cmd "show_hide_inventory;" }
+			{
+				src			*cvar:mn_body
+				skin		*cvar:mn_body_skin
+				anim		*cvar:mn_anim
+				angles		"0 80 90"
+				pos			"-20 0"
+				size		"160 220"
+				scale		"5 5 5"
+				ghost		true
+			}
+			model sel_soldier_head
+			{
+				src			*cvar:mn_head
+				skin		*cvar:mn_head_skin
+				tag			"tag_head"
+			}
+			model sel_soldier_rweapon
+			{
+				src			*cvar:mn_rweapon
+				tag			"tag_rweapon"
+			}
+			model sel_soldier_lweapon
+			{
+				src			*cvar:mn_lweapon
+				tag			"tag_lweapon"
+			}
 		}
 	}
 
-	string overlay
+	// Alien and civilian counts; Level selection
+	panel battle_info
 	{
-		string	"_Please wait"
-		color	"1 0 0 1"
-		font	"f_verybig_bold"
-		ghost	true
-		pos		"0 0"
-		size	"1024 768"
-		contentalign	ALIGN_CC
-	}
-
-	// ==================
-	// override ahud confunc
-	// ==================
-
-	confunc crouch_checkbox_disable {
-		*node:root.left.bt_crouch_reservation@disabled = true
-	}
-	confunc crouch_checkbox_clear {
-		*node:root.left.bt_crouch_reservation@disabled = false
-		*node:root.left.bt_crouch_reservation@current = 0
-	}
-	confunc crouch_checkbox_check {
-		*node:root.left.bt_crouch_reservation@disabled = false
-		*node:root.left.bt_crouch_reservation@current = 1
-	}
-
-	confunc hudinit {
-		*cvar:i = 0
-		while ( *cvar:i < 12 ) {
-			*node:root.team_selection.buttonList.bt_actor<cvar:i>@disabled = true
-			*cvar:i = ( *cvar:i + 1 )
+		{
+			pos			"0 0"
+			size		"512 50"
+			align		LAYOUTALIGN_TOPLEFT
+			ghost		true
 		}
-		delete *cvar:i
-	}
+		panel alien_count
+		{
+			{
+				pos			"10 10"
+				size		"80 25"
+				ghost		true
+			}
+			button alienhead
+			{
+				pos		"5 3"
+				size	"17 19"
+				icon	"icons/alienhead"
+				tooltip	"_Jump to alien"
+				onClick	{ cmd "nextalien;" }
+			}
+			string aliencount
+			{
+				string			*cvar:mn_numaliensspotted
+				pos				"27 2"
+				size			"50 25"
+				font			"f_normal_bold"
+				color			"0.56 0.81 0.76 1"
+				longlines		LONGLINES_CHOP
+				contentalign	ALIGN_CL
+				ghost			true
+			}
+		}
+		/* @TODO: add civilian count when we have a cvar
+		panel civ_count
+		{
+			{
+				pos			"10 40"
+				size		"100 25"
+				ghost		true
+			}
+			button civhead
+			{
+				pos		"5 3"
+				size	"17 19"
+				icon	"icons/civhead"
+				tooltip	"_Jump to civilian"
+			}
+			string civcount
+			{
+				string			"_*"
+				pos				"27 0"
+				size			"50 25"
+				font			"f_normal_bold"
+				color			"0.56 0.81 0.76 1"
+				longlines		LONGLINES_CHOP
+				contentalign	ALIGN_CL
+				ghost			true
+			}
+		}
+		*/
+		// @TODO: Make up/down arrows for levels
+		panel level
+		{
+			{
+				pos			"90 10"
+				size		"100 40"
+				ghost		true
+			}
+			button icon
+			{
+				pos		"4 3"
+				size	"19 19"
+				icon	"icons/levels"
+				tooltip	"_Current level"
+			}
+			string levelnum
+			{
+				string			*cvar:cl_worldlevel
+				pos				"27 5"
+				size			"30 25"
+				font			"f_normal_bold"
+				color			"0.56 0.81 0.76 1"
+				longlines		LONGLINES_CHOP
+				contentalign	ALIGN_CL
+				ghost			true
+			}
 
-	confunc hudselect {
-		*cvar:selected_soldier = <1>
-	}
-	confunc hudenable {
-		*node:root.team_selection.buttonList.bt_actor<1>@disabled = false
-	}
-	confunc huddisable {
-		*node:root.team_selection.buttonList.bt_actor<1>@disabled = true
-		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
-	}
+			/* Up/down arrows don't look good and
+			 * don't update when max/min is hit using
+			 * the up/down arrows
+			button up
+			{
+				pos		"57 3"
+				size	"18 18"
+				icon	"icons/windowup"
+				tooltip	"_Raise the level"
+				onClick	{ cmd "lvlchange 1;" }
+			}
+			button down
+			{
+				pos		"57 21"
+				size	"18 18"
+				icon	"icons/windowdown"
+				tooltip	"_Lower the level"
+				onClick	{ cmd "lvlchange 0;" }
+			}
 
-	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@src = "hud/buttons2" }
-	confunc deselect_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@src = "hud/buttons2" }
-	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@src = "hud/buttons2g" }
-	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@src = "hud/buttons2g" }
-
-	confunc deselect_primaryleft { *node:root.left.bt_pfire@src = "hud/buttons1" }
-	confunc deselect_primaryright { *node:root.right.bt_pfire@src = "hud/buttons1" }
-	confunc deselect_reloadleft { *node:root.left.bt_reload@src = "hud/buttons2" }
-	confunc deselect_reloadright { *node:root.right.bt_reload@src = "hud/buttons2" }
-
-	confunc disable_primaryleft { *node:root.left.bt_pfire@src = "hud/buttons1g" }
-	confunc disable_primaryright { *node:root.right.bt_pfire@src = "hud/buttons1g" }
-	confunc disable_reloadleft { *node:root.left.bt_reload@src = "hud/buttons2g" }
-	confunc disable_reloadright { *node:root.right.bt_reload@src = "hud/buttons2g" }
-
-	confunc deselect_headgear { *node:root.right.hud_bt_use_headgear@src = "hud/buttons2" }
-	confunc disable_headgear { *node:root.right.hud_bt_use_headgear@src = "hud/buttons2g" }
-
-	// ==================
-	// round events
-	// ==================
-
-	confunc startround
-	{
-		*node:root.next.bt_nextround@disabled = false
-		*node:root.overlay@invis = true
-	}
-
-	confunc endround
-	{
-		*node:root.next.bt_nextround@disabled = true
-		*node:root.overlay@invis = false
-		cmd "hud_movemode;"
-	}
-
-	/**
-	 * This is called when a rescuezone is available in the given map
-	 */
-	confunc enable_rescuezone
-	{
-		*node:root.next.bt_rescuezone@invis = false
-	}
-	/**
-	 * This is called when no rescuezone is available in the given map
-	 */
-	confunc disable_rescuezone
-	{
-		*node:root.next.bt_rescuezone@invis = true
-	}
-	/**
-	 * This is called by the button to show or hide the rescue zone
-	 */
-	confunc toggle_rescuezone
-	{
-		if (*cvar:cl_map_draw_rescue_zone eq 0) {
-			*cvar:cl_map_draw_rescue_zone = 2
-			*node:root.next.bt_rescuezone@tooltip = "_Hide rescue zone"
-		} else {
-			*cvar:cl_map_draw_rescue_zone = 0
-			*node:root.next.bt_rescuezone@tooltip = "_Show rescue zone"
+			// Raise/lower the level
+			// param1: direction (0 = down, 1 = up)
+			confunc lvlchange
+			{
+				if (param1 eq "1") {
+					if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+						*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+					}
+				} else {
+					if (*cvar:cl_worldlevel > "0") {
+						*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+					}
+				}
+				// Change icon if we're at top or bottom level
+				if (*cvar:cl_worldlevel eq "0") {
+					*node:parent.down@icon = "icons/windowdown_hovered"
+					*node:parent.up@icon = "icons/windowup"
+				} elif (*cvar:cl_worldlevel eq *cvar:cl_maxworldlevel) {
+					*node:parent.up@icon = "icons/windowup_hovered"
+					*node:parent.down@icon = "icons/windowdown"
+				} else {
+					*node:parent.down@icon = "icons/windowdown"
+					*node:parent.up@icon = "icons/windowup"
+				}
+			}
+			 */
 		}
 	}
 
-	// "RESERVATION FOR SHOT" BUTTON
-	confunc reserve_shot_clear
+	// End turn, options, abort mission
+	panel game_controls
 	{
-		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*node:root.info.bt_shot_reservation@texl	= "0 0"
-		*node:root.info.bt_shot_reservation@texh	= "51 32"
-	}
-	confunc reserve_shot_check
-	{
-		*node:root.info.bt_shot_reservation@texl	= "0 32"
-		*node:root.info.bt_shot_reservation@texh	= "51 64"
-	}
-	confunc reserve_shot_disable
-	{
-		*node:root.info.bt_shot_reservation@texl	= "64 32"
-		*node:root.info.bt_shot_reservation@texh	= "115 64"
-	}
+		{
+			pos			"0 0"
+			size		"200 500"
+			align		LAYOUTALIGN_TOPRIGHT
+			ghost		true
+		}
 
-	// REACTION MODE BUTTON
-	confunc startreaction
-	{
-		*node:root.info.bt_reaction_s@texl	= "0 64"
-		*node:root.info.bt_reaction_s@texh	= "31 95"
-		*node:root.info.bt_reaction_s@tooltip = "_Disable reaction fire"
-	}
-	confunc startreaction_impos
-	{
-		*node:root.info.bt_reaction_s@texl	= "32 64"
-		*node:root.info.bt_reaction_s@texh	= "63 95"
-		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (not available)"
-	}
-	confunc deselect_reaction
-	{
-		*node:root.info.bt_reaction_s@texl	= "0 32"
-		*node:root.info.bt_reaction_s@texh	= "31 63"
-		*node:root.info.bt_reaction_s@tooltip = "_Enable reaction fire"
-	}
-	confunc disable_reaction
-	{
-		*node:root.info.bt_reaction_s@texl	= "0 0"
-		*node:root.info.bt_reaction_s@texh	= "31 31"
+		// End turn button
+		CircleBtn end_turn
+		{
+			{
+				pos			"145 5"
+			}
+
+			button icon
+			{
+				icon		"icons/dblarrowrgt0"
+				background	"icons/circle0"
+				pos			"0 0"
+				size		"48 48"
+				tooltip		"_End Turn"
+				onClick			{ cmd "nextround;" }
+				onMouseEnter	{ *node:this@icon = "icons/dblarrowrgt" }
+				onMouseLeave	{ *node:this@icon = "icons/dblarrowrgt0"	}
+			}
+		}
+
+		// Options button
+		CircleBtn options
+		{
+			{
+				pos			"145 60"
+			}
+
+			button icon
+			{
+				icon		"icons/options0"
+				background	"icons/circle0"
+				pos			"0 0"
+				size		"48 48"
+				tooltip		"_Options"
+				onClick			{ cmd "ui_push options;" }
+				onMouseEnter	{ *node:this@icon = "icons/options" }
+				onMouseLeave	{ *node:this@icon = "icons/options0"	}
+			}
+		}
+
+		// Abort button
+		CircleBtn abort
+		{
+			{
+				pos			"145 115"
+			}
+
+			button icon
+			{
+				icon		"icons/abortmission0"
+				background	"icons/circle0"
+				pos			"0 0"
+				size		"48 48"
+				tooltip		"_Abort"
+				onClick		{ cmd "ui_push singleplayermission;" }
+				onMouseEnter	{ *node:this@icon = "icons/abortmission" }
+				onMouseLeave	{ *node:this@icon = "icons/abortmission0"	}
+			}
+		}
+
+		// Radar button
+		CircleBtn radar
+		{
+			{
+				pos			"145 170"
+			}
+
+			button icon
+			{
+				icon		"icons/radar0"
+				background	"icons/circle0"
+				pos			"0 0"
+				size		"48 48"
+				tooltip		"_Radar"
+				onClick	{ cmd "ui_push radar;" }
+				onMouseEnter	{ *node:this@icon = "icons/radar" }
+				onMouseLeave	{ *node:this@icon = "icons/radar0"	}
+			}
+		}
+
+		// Chat window
+		// @TODO: Add button to show chat
+		// @TODO: To make it appear on MP-only, use: visiblewhen	"*cvar:sv_maxclients >= 2"
 	}
 
 	// ==========================
@@ -1052,7 +1158,7 @@ window hud_default extends hud
 	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget {
-		call *node:root.reactions@createChild("rf-<1>-<2>", "rfShooter")
+		call *node:root.reactions@createChild("rf-<1>-<2>", "ReactionFireShooter")
 		*node:root.reactions.rf-<1>-<2>.head_shooter@src = "<3>"
 		*node:root.reactions.rf-<1>-<2>.head_shooter@skin = "<4>"
 		if ( <5> == 1 ) {
@@ -1121,21 +1227,332 @@ window hud_default extends hud
 		}
 	}
 
-	// ==================
-	// init function
-	// ==================
+	// Resets the reaction fire button when new soldier is selected
+	confunc startreactionmany
+	{
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = false
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
+	}
+	confunc startreactiononce
+	{
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = false
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
+	}
+	confunc deselect_reaction
+	{
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = false
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = true
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
+	}
+	confunc disable_reaction
+	{
+		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = false
+	}
+
+	// Handles turning a button "on" when clicked
+	// param1 = path to node from parent
+	// param2 = icon image
+	confunc toggle_button
+	{
+		if (*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@background eq "icons/circle0") {
+			*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@icon = "icons/<2>"
+			*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@background = "icons/circle"
+		} else {
+			*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@icon = "icons/<2>0"
+			*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@background = "icons/circle0"
+		}
+	}
+
+	// Select the soldier from the squad selection
+	confunc hudselect
+	{
+		*cvar:selected_soldier = <1>
+		*cvar:i = 0;
+		while ( *cvar:i < 8 ) {
+			*node:root.soldier.squad.sld<cvar:i>@bordercolor = "0.527 0.6 0.21 1"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+		*node:root.soldier.squad.sld<1>@bordercolor = "0.824 0.917 0.437 1"
+
+		// Resets the weapon display panel when soldier changes
+		*cvar:sldcurhand = "l"
+		call *node:root.soldier.weapon.switchhands
+		call *node:root.soldier.weapon.show_oweapon
+	}
 
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
 
+		// Input soldier information squad selection
+		*cvar:i = 0;
+		while ( *cvar:i < 8 ) {
+			*node:root.soldier.squad.sld<cvar:i>@num = <cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.health@max = *cvar:mn_hpmax<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.health@current = *cvar:mn_hp<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.tu@max = *cvar:mn_tumax<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.tu@current = *cvar:mn_tu<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.morale@max = *cvar:mn_moralemax<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.morale@current = *cvar:mn_morale<cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+
+		// Select the current soldier and update the squad selection
+		cmd "hudselect 0;"
+
+		// Sets the attribute displayed in the squad panel bars
+		*cvar:squad_bar = "health"
+
 		// Hide the rescue zone on startup
 		*cvar:cl_map_draw_rescue_zone = 0
+
+		// Notices when the weapon has changed and calls the confunc that
+		// shows or hides the otherweapon
+		cmd "ui_addcvarlistener mn_lweapon show_oweapon;"
+		cmd "ui_addcvarlistener mn_rweapon show_oweapon;"
+	}
+}
+
+// Inventory and stats window
+window inv_stats_hud
+{
+	{
+		pos			"236 60"
+		size		"560 418"
+		bgcolor		"0 0.15 0.1 0.7"
+		bordercolor	"0.58 0.81 0.758 0.7"
+		border		"2"
+		onMouseEnter	{
+			*node:this@bgcolor = "0 0.21 0.158 0.7"
+		}
+		onMouseLeave	{
+			*node:this@bgcolor = "0 0.15 0.1 0.7"
+		}
+	}
+	// Top bar
+	string name
+	{
+		string			*cvar:mn_name
+		pos				"8 0"
+		size			"300 25"
+		font			"f_small_bold"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_LL
+		ghost			true
+	}
+	string rank
+	{
+		string			*cvar:mn_chrrank
+		pos				"8 25"
+		size			"300 15"
+		font			"f_verysmall"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_UL
+		ghost			true
+	}
+	controls drag
+	{
+		pos		"0 0"
+		size	"560 40"
+    }
+	button close
+	{
+		icon			"icons/windowclose"
+		tooltip			"_Close"
+		pos				"530 10"
+		size			"18	18"
+		onClick			{ cmd "ui_pop;" }
+	}
+	// @TODO: make next/prev soldier btns work
+	button next
+	{
+		icon			"icons/windownext"
+		tooltip			"_Next soldier"
+		pos				"506 10"
+		size			"18	18"
+		onClick			{ cmd "nextsoldier;" }
+	}
+	button prev
+	{
+		icon			"icons/windowprev"
+		tooltip			"_Previous soldier"
+		pos				"482 10"
+		size			"18	18"
+		onClick			{ cmd "prevsoldier;" }
+	}
+	// Inventory area
+	image rank_img
+	{
+		pos 		"10 46"
+		size 		"64 64"
+		src 		*cvar:mn_chrrank_img
+	}
+	model actor
+	{
+		{
+			src		*cvar:mn_body
+			skin	*cvar:mn_body_skin
+			anim	"stand_menu"
+			origin	"0 -25 0"
+			angles	"0 82 90"
+			scale	"5 5 5"
+			pos		"86 81"
+			size	"191 262"
+		}
+		model head
+		{
+			src		*cvar:mn_head
+			skin	*cvar:mn_head_skin
+			tag		"tag_head"
+			scale	"1.0 1.0 1.0"
+		}
+	}
+	image inv_bg
+	{
+		pos		"10 59"
+		size	"351 349"
+		src		"/ui/inv_bg"
+	}
+	container headgear	{ pos "88 85" }
+	container backpack	{ pos "236 59" }
+	container right		{ pos "13 146" }
+	container left		{ pos "236 146" }
+	// Armour is not switchable in combat - thus no display of "container armour" needed.
+	container belt		{ pos "13 204" }
+	container holster	{ pos "285 204" }
+	container floor		{ pos "10 282" }
+
+	// Abilities panel
+	// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
+	panel abilities
+	{
+		{
+			pos			"370 60"
+			size		"180 140"
+			ghost		true
+		}
+		StatBar strength
+		{
+			{
+				pos		"0 0"
+			}
+			string label { string "_Strength" }
+			bar valuebar { current *cvar:mn_vpwr }
+			string valuenum { string *cvar:mn_tpwr }
+		}
+		StatBar speed
+		{
+			{
+				pos		"0 35"
+			}
+			string label { string "_Speed" }
+			bar valuebar { current *cvar:mn_vspd }
+			string valuenum { string *cvar:mn_tspd }
+		}
+		StatBar accuracy
+		{
+			{
+				pos		"0 70"
+			}
+			string label { string "_Accuracy" }
+			bar valuebar { current *cvar:mn_vacc }
+			string valuenum { string *cvar:mn_tacc }
+		}
+		StatBar mind
+		{
+			{
+				pos		"0 105"
+			}
+			string label { string "_Mind" }
+			bar valuebar { current *cvar:mn_vmnd }
+			string valuenum { string *cvar:mn_tmnd }
+		}
+	}
+	// Skills panel
+	panel skills
+	{
+		{
+			pos			"370 243"
+			size		"180 175"
+			ghost		true
+		}
+		StatBar cls
+		{
+			{
+				pos		"0 0"
+			}
+			string label { string "_CQB" tooltip "_Close Quarters Battle" }
+			bar valuebar { current *cvar:mn_vcls }
+			string valuenum { string *cvar:mn_tcls }
+		}
+		StatBar hvy
+		{
+			{
+				pos		"0 35"
+			}
+			string label { string "_Heavy" tooltip "_Heavy Weapons" }
+			bar valuebar { current *cvar:mn_vhvy }
+			string valuenum { string *cvar:mn_thvy }
+		}
+		StatBar ass
+		{
+			{
+				pos		"0 70"
+			}
+			string label { string "_Assault" }
+			bar valuebar { current *cvar:mn_vass }
+			string valuenum { string *cvar:mn_tass }
+		}
+		StatBar snp
+		{
+			{
+				pos		"0 105"
+			}
+			string label { string "_Sniper" }
+			bar valuebar { current *cvar:mn_vsnp }
+			string valuenum { string *cvar:mn_tsnp }
+		}
+		StatBar exp
+		{
+			{
+				pos		"0 140"
+			}
+			string label { string "_Explosives" }
+			bar valuebar { current *cvar:mn_vexp }
+			string valuenum { string *cvar:mn_texp }
+		}
 	}
 
-	func onScriptLoaded {
-		// Register the window to the HUD list
-		cmd "add_hud_name <path:root> \"_Original HUD\""
+	// Select the next soldier
+	confunc nextsoldier
+	{
+		if ( *cvar:selected_soldier eq "7" ) {
+			cmd "hudselect 0;"
+		} else {
+			*cvar:next_soldier = ( *cvar:selected_soldier + 1 )
+			cmd "hudselect <*cvar:next_soldier>;"
+			delete *cvar:next_soldier
+		}
 	}
-
+	// Select the previous soldier
+	confunc prevsoldier
+	{
+		if ( *cvar:selected_soldier eq "0" ) {
+			cmd "hudselect 7;"
+		} else {
+			*cvar:prev_soldier = ( *cvar:selected_soldier - 1 )
+			cmd "hudselect <*cvar:prev_soldier>;"
+			delete *cvar:prev_soldier
+		}
+	}
 }
