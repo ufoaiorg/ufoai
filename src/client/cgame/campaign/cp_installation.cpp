@@ -515,6 +515,7 @@ bool INS_LoadXML (xmlNode_t* p)
 		const char* instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
 		const char* instStat = cgi->XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
+		OBJZERO(inst);
 		inst.idx = cgi->XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
 			Com_Printf("Invalid installation index %i\n", inst.idx);
