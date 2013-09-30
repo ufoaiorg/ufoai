@@ -354,7 +354,7 @@ unsigned int Com_HashKey (const char* name, int hashsize)
  */
 void Com_MakeTimestamp (char* ts, const size_t tslen)
 {
-	struct tm *t;
+	struct tm* t;
 	time_t aclock;
 
 	time(&aclock);

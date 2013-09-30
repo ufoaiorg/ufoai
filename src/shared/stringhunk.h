@@ -29,17 +29,17 @@
 
 typedef struct stringHunk_s {
 	size_t size;
-	char *pos;
-	char *hunk;
+	char* pos;
+	char* hunk;
 	int entries;
 } stringHunk_t;
 
-typedef void (*stringHunkVisitor_t)(const char *string);
+typedef void (*stringHunkVisitor_t)(const char* string);
 
-bool STRHUNK_Add(stringHunk_t *hunk, const char *string);
-void STRHUNK_Reset(stringHunk_t *hunk);
-void STRHUNK_Visit(stringHunk_t *hunk, stringHunkVisitor_t visitor);
-stringHunk_t *STRHUNK_Create(size_t size);
-void STRHUNK_Delete(stringHunk_t **hunk);
-int STRHUNK_Size(const stringHunk_t *hunk);
-size_t STRHUNK_GetFreeSpace(const stringHunk_t *hunk);
+bool STRHUNK_Add(stringHunk_t* hunk, const char* string);
+void STRHUNK_Reset(stringHunk_t* hunk);
+void STRHUNK_Visit(stringHunk_t* hunk, stringHunkVisitor_t visitor);
+stringHunk_t* STRHUNK_Create(size_t size);
+void STRHUNK_Delete(stringHunk_t** hunk);
+int STRHUNK_Size(const stringHunk_t* hunk);
+size_t STRHUNK_GetFreeSpace(const stringHunk_t* hunk);

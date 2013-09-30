@@ -224,7 +224,7 @@ int ED_GetIntVector (const entityKeyDef_t* kd, int v[], const int n)
  * @sa ED_GetLastError
  * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
-static int ED_CheckNumber (const char* value, const int floatOrInt, const int insistPositive, int_float_tu *parsedNumber)
+static int ED_CheckNumber (const char* value, const int floatOrInt, const int insistPositive, int_float_tu* parsedNumber)
 {
 	char* end_p;
 	/* V_INTs are protected from octal and hex as strtol with base 10 is used.

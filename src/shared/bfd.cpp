@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef HAVE_BFD_H
 #include "bfd.h"
 
-void output_init (struct output_buffer *ob, char*  buf, size_t sz)
+void output_init (struct output_buffer* ob, char*  buf, size_t sz)
 {
 	ob->buf = buf;
 	ob->sz = sz;
@@ -38,7 +38,7 @@ void output_init (struct output_buffer *ob, char*  buf, size_t sz)
 	ob->buf[0] = '\0';
 }
 
-void output_print (struct output_buffer *ob, const char*  format, ...)
+void output_print (struct output_buffer* ob, const char*  format, ...)
 {
 	va_list ap;
 	if (ob->sz == ob->ptr)
@@ -51,9 +51,9 @@ void output_print (struct output_buffer *ob, const char*  format, ...)
 	ob->ptr = strlen(ob->buf + ob->ptr) + ob->ptr;
 }
 
-static void lookup_section (bfd *abfd, asection *sec, void* opaque_data)
+static void lookup_section (bfd* abfd, asection* sec, void* opaque_data)
 {
-	struct find_info *data = (struct find_info *)opaque_data;
+	struct find_info* data = (struct find_info*)opaque_data;
 	bfd_vma vma;
 
 	if (data->func)
@@ -92,7 +92,7 @@ void find (struct bfd_ctx * b, size_t offset, const char** file, const char** fu
 	}
 }
 
-static void list_matching_formats (struct output_buffer *ob, const char*  procname, char** p)
+static void list_matching_formats (struct output_buffer* ob, const char*  procname, char** p)
 {
 	if (!p || !*p)
 		return;
@@ -103,9 +103,9 @@ static void list_matching_formats (struct output_buffer *ob, const char*  procna
 	output_print(ob, "\n");
 }
 
-static int init_bfd_ctx (struct bfd_ctx *bc, const char*  procname, struct output_buffer *ob)
+static int init_bfd_ctx (struct bfd_ctx* bc, const char*  procname, struct output_buffer* ob)
 {
-	bfd *b;
+	bfd* b;
 	void* symbol_table;
 	unsigned dummy = 0;
 	char** matching = nullptr;
@@ -159,7 +159,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char*  procname, struct outpu
 	return 0;
 }
 
-static void close_bfd_ctx (struct bfd_ctx *bc)
+static void close_bfd_ctx (struct bfd_ctx* bc)
 {
 	free(bc->symbol);
 	if (bc->handle) {
@@ -167,7 +167,7 @@ static void close_bfd_ctx (struct bfd_ctx *bc)
 	}
 }
 
-struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const char* procname)
+struct bfd_ctx* get_bc (struct output_buffer* ob, struct bfd_set* set, const char* procname)
 {
 	struct bfd_ctx bc;
 
@@ -188,10 +188,10 @@ struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const cha
 	return set->bc;
 }
 
-void release_set (struct bfd_set *set)
+void release_set (struct bfd_set* set)
 {
 	while (set->next) {
-		struct bfd_set * temp = set->next;
+		struct bfd_set* temp = set->next;
 		free(set->name);
 		close_bfd_ctx(set->bc);
 		free(set);

@@ -7,7 +7,7 @@
  */
 class ScopedMutex {
 private:
-	SDL_mutex *_mutex;
+	SDL_mutex* _mutex;
 public:
 	ScopedMutex (SDL_mutex *mutex) :
 			_mutex(mutex)
