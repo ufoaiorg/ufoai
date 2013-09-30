@@ -235,20 +235,20 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
+ * @param[out] hit The position where the line hits a object or the stop position if nothing is in the line
  * @param[in] levelmask
  * @param[in] entlist The local models list
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist)
+bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t hit, const int levelmask, const char** entlist)
 {
 	const char** name;
 	bool blocked;
 	float fraction = 2.0f;
 
 	/* trace against world first */
-	blocked = TR_TestLineDM(mapTiles, start, stop, end, levelmask);
+	blocked = TR_TestLineDM(mapTiles, start, stop, hit, levelmask);
 	if (!entlist)
 		return blocked;
 
@@ -269,18 +269,18 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, end, AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, hit, AABB(),
 				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
-			VectorCopy(start, end);
+			VectorCopy(start, hit);
 			return true;
 		}
 		/* trace not finished */
 		if (trace.fraction < fraction) {
 			blocked = true;
 			fraction = trace.fraction;
-			VectorCopy(trace.endpos, end);
+			VectorCopy(trace.endpos, hit);
 		}
 	}
 
