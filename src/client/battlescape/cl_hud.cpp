@@ -268,9 +268,7 @@ static uiNode_t* popupListNode;
  */
 static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 {
-	int i;
 	static char text[MAX_VAR];
-	int selectedEntry;
 	linkedList_t* popupListText = nullptr;
 	reserveShot_t reserveShotData;
 
@@ -286,7 +284,7 @@ static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 	reserveShotData.weaponIndex = NONE;
 	reserveShotData.TUs = -1;
 	LIST_Add(&popupListData, reserveShotData);
-	selectedEntry = 0;
+	int selectedEntry = 0;
 
 	actorHands_t hand;
 	foreachhand(hand) {
@@ -297,7 +295,7 @@ static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 		assert(chr);
 
 		const objDef_t* ammo = fd->obj;
-		for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
+		for (int i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
 			const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 			const int time = CL_ActorTimeForFireDef(le, ammoFD);
 			if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
@@ -1461,8 +1459,7 @@ void HUD_Update (void)
 
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
-		int i;
-		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+		for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 			int status = 0;
 			if (i == cl_worldlevel->integer)
 				status = 2;

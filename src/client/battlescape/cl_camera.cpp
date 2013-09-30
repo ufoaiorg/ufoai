@@ -92,10 +92,6 @@ static inline void CL_ClampCamToMap (const float border)
  */
 void CL_CameraMove (void)
 {
-	float frac;
-	vec3_t delta;
-	int i;
-
 	/* get relevant variables */
 	const float rotspeed =
 		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
@@ -114,9 +110,9 @@ void CL_CameraMove (void)
 
 	/* calculate camera omega */
 	/* stop acceleration */
-	frac = cls.frametime * moveaccel * 2.5;
+	float frac = cls.frametime * moveaccel * 2.5;
 
-	for (i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++) {
 		if (fabs(cl.cam.omega[i]) > frac) {
 			if (cl.cam.omega[i] > 0)
 				cl.cam.omega[i] -= frac;
@@ -149,6 +145,7 @@ void CL_CameraMove (void)
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
 	/* camera route overrides user input */
+	vec3_t delta;
 	if (cameraRouteEnd > 0) {
 		if (cameraRouteEnd <= cl.time) {
 			CL_BlockBattlescapeEvents(false);
