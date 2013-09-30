@@ -30,7 +30,7 @@
 #include "../shared/stringhunk.h"
 #include <SDL_thread.h>
 
-static SDL_mutex *svLogMutex;
+static SDL_mutex* svLogMutex;
 static stringHunk_t* svLogHunk;
 
 static void SV_LogPrintOutput (const char* string)

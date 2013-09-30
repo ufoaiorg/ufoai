@@ -64,9 +64,9 @@ static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
 /** @brief for every x/y we can store the tiles that can cover that place here */
 static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
 static int minMissingSolids;
-static SDL_sem *mapSem;
-static SDL_cond *mapCond;
-static SDL_mutex *mapLock;
+static SDL_sem* mapSem;
+static SDL_cond* mapCond;
+static SDL_mutex* mapLock;
 static Uint32 threadID;
 
 /**
@@ -1777,7 +1777,7 @@ static int SV_AssemblyThread (void* data)
  */
 static int SV_ParallelSearch (MapInfo* map)
 {
-	SDL_Thread *threads[ASSEMBLE_THREADS];
+	SDL_Thread* threads[ASSEMBLE_THREADS];
 	MapInfo* maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */

@@ -666,7 +666,7 @@ void SV_ReadPacket (struct net_stream* s)
 
 #define	HEARTBEAT_SECONDS	30
 
-static SDL_Thread *masterServerHeartBeatThread;
+static SDL_Thread* masterServerHeartBeatThread;
 
 /**
  * @brief Send a message to the master every few minutes to
