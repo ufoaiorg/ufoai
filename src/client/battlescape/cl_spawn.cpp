@@ -226,7 +226,6 @@ void CL_SpawnParseEntitystring (void)
 static void SP_worldspawn (const localEntityParse_t* entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
-	int i;
 	vec3_t sunAngles;
 	vec4_t sunColor;
 	vec_t sunIntensity;
@@ -297,7 +296,7 @@ static void SP_worldspawn (const localEntityParse_t* entData)
 
 	/* clamp ambient for models */
 	Vector4Copy(refdef.ambientColor, refdef.modelAmbientColor);
-	for (i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 		if (refdef.modelAmbientColor[i] < MIN_AMBIENT_COMPONENT)
 			refdef.modelAmbientColor[i] = MIN_AMBIENT_COMPONENT;
 

@@ -241,16 +241,14 @@ static byte stackType[MAX_STACK_DEPTH];
  */
 static void CL_ParticleSpawnTimed (const char* name, ptl_t* parent, bool children, int deltaTime, int n)
 {
-	const size_t length = lengthof(timedParticles);
-	int i;
-
 	if (n <= 0)
 		Com_Error(ERR_DROP, "Timed particle should spawn particles");
 
 	if (deltaTime <= 0)
 		Com_Error(ERR_DROP, "Delta time for timed particle is invalid");
 
-	for (i = 0; i < length; i++) {
+	const size_t length = lengthof(timedParticles);
+	for (int i = 0; i < length; i++) {
 		timedParticle_t* tp = &timedParticles[i];
 		if (tp->n != tp->max)
 			continue;
@@ -1039,10 +1037,9 @@ static void CL_ParticleRun2 (ptl_t* p)
  */
 static void CL_ParticleRunTimed (void)
 {
-	int i;
 	const size_t length = lengthof(timedParticles);
 
-	for (i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++) {
 		timedParticle_t* tp = &timedParticles[i];
 		if (!tp->parent || !tp->parent->inuse)
 			continue;
@@ -1469,10 +1466,8 @@ static void PTL_DebugSpawnMarker_f (void)
 
 static void PTL_DebugList_f (void)
 {
-	int i;
-
 	Com_Printf("%i particles\n", r_numParticles);
-	for (i = 0; i < r_numParticles; i++) {
+	for (int i = 0; i < r_numParticles; i++) {
 		const ptl_t* p = &r_particleArray[i];
 		const ptlDef_t* def = p->ctrl;
 		const value_t* pp = pps;

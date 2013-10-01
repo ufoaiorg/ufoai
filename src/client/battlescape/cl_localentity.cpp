@@ -184,9 +184,7 @@ void LM_AddToScene (void)
  */
 static inline localModel_t* LM_Find (int entnum)
 {
-	int i;
-
-	for (i = 0; i < cl.numLMs; i++)
+	for (int i = 0; i < cl.numLMs; i++)
 		if (cl.LMs[i].entnum == entnum)
 			return &cl.LMs[i];
 
@@ -275,12 +273,10 @@ void LE_SetThink (le_t* le, localEntityThinkFunc_t think)
 
 localModel_t* LM_GetByID (const char* id)
 {
-	int i;
-
 	if (Q_strnull(id))
 		return nullptr;
 
-	for (i = 0; i < cl.numLMs; i++) {
+	for (int i = 0; i < cl.numLMs; i++) {
 		localModel_t* lm = &cl.LMs[i];
 		if (Q_streq(lm->id, id))
 			return lm;
@@ -1737,9 +1733,7 @@ static void CL_ClipMoveToLEs (moveclip_t* clip)
  */
 static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t stop, vec3_t boxmins, vec3_t boxmaxs)
 {
-	int i;
-
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (stop[i] > start[i]) {
 			boxmins[i] = start[i] + mins[i] - 1;
 			boxmaxs[i] = stop[i] + maxs[i] + 1;
