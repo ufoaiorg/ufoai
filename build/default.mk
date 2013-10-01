@@ -1,7 +1,7 @@
 PKG_CONFIG               ?= PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(CROSS)pkg-config
 CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
 CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
-ifdef HAVE_LUA_H
+ifdef HAVE_LUA5_1_LUA_H
 LUA_LIBS                 ?= $(call PKG_LIBS,lua5.1)
 LUA_CFLAGS               ?= $(call PKG_CFLAGS,lua5.1)
 LUA_SRCS                  =

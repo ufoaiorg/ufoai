@@ -206,6 +206,7 @@ check_headers() {
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h" "mxml"
 	check_header "SDL.h" "sdl"
+	check_header "lua.h" "lua5.1"
 	check_header "SDL_mixer.h" "SDL_mixer"
 	check_header "SDL_ttf.h" "SDL_ttf"
 	if [ "$DISABLE_SDL2" != "1" ]; then
