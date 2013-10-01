@@ -2919,7 +2919,7 @@ const aircraft_t* AIR_IsEmployeeInAircraft (const Employee* employee, const airc
  * @param[in,out] aircraft The aircraft to remove the soldiers from.
  * @sa AIR_RemoveEmployee
  */
-void AIR_RemoveEmployees (aircraft_t &aircraft)
+void AIR_RemoveEmployees (aircraft_t& aircraft)
 {
 	LIST_Foreach(aircraft.acTeam, Employee, employee) {
 		/* use global aircraft index here */
@@ -2939,7 +2939,7 @@ void AIR_RemoveEmployees (aircraft_t &aircraft)
  * @param[in] aircraft The craft with the team (and thus equipment) onboard.
  * @param[out] ed The equipment definition which will receive all the stuff from the aircraft-team.
  */
-void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t &aircraft, equipDef_t &ed)
+void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t& aircraft, equipDef_t &ed)
 {
 	if (AIR_GetTeamSize(&aircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
