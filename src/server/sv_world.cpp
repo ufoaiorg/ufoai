@@ -273,15 +273,20 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int max
 	return ap.areaEdictListCount;
 }
 
-/** @brief Server side moveclip - see cmodel.c */
-class MoveClipSV {
+class MoveClip
+{
 public:
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float* mins, *maxs;	/**< size of the moving object */
 	const float* start, *end;
 	trace_t trace;
-	const edict_t* passedict;
 	int contentmask;
+};
+/** @brief Server side moveclip - see cmodel.c */
+class MoveClipSV : public MoveClip
+{
+public:
+	const edict_t* passedict;
 };
 
 
