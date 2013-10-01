@@ -1758,7 +1758,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB &box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 

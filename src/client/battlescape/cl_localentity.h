@@ -324,7 +324,7 @@ model_t* LE_GetDrawModel(unsigned int modelIndex);
 void LET_SlideDoor(le_t* le, int speed);
 void LET_RotateDoor(le_t* le, int speed);
 
-trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB &box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel);
+trace_t CL_Trace(const vec3_t start, const vec3_t end, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
 localModel_t* LM_GetByID(const char* id);

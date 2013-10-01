@@ -231,6 +231,6 @@ int SV_PointContents(const vec3_t p);
 const char* SV_GetFootstepSound(const char* texture);
 float SV_GetBounceFraction(const char* texture);
 bool SV_LoadModelAABB(const char* model, int frame, AABB& aabb);
-trace_t SV_Trace(const Line& traceLine, const AABB &box, const edict_t* passedict, int contentmask);
+trace_t SV_Trace(const Line& traceLine, const AABB& box, const edict_t* passedict, int contentmask);
 server_state_t SV_GetServerState(void);
 void SV_SetServerState(server_state_t);

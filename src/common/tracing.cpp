@@ -980,7 +980,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
@@ -1082,7 +1082,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  */
-trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t end, const AABB &aabb, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t end, const AABB& aabb, const int levelmask, const int brushmask, const int brushreject)
 {
 	int i;
 	cBspHead_t* h;

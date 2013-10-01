@@ -456,7 +456,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * if the starting point is in a solid, it will be allowed to move out to an open area
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
  */
-trace_t SV_Trace (const Line& traceLine, const AABB &box, const edict_t* passedict, int contentmask)
+trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedict, int contentmask)
 {
 	MoveClipSV clip;
 

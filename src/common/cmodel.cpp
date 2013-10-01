@@ -93,7 +93,7 @@ static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBs
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const vec3_t end, const AABB &traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	vec3_t start_l, end_l;
 	vec3_t forward, right, up;
@@ -297,7 +297,7 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
-trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB &box, int levelmask, int brushmask, int brushreject)
+trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject)
 {
 	int tile, i;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
