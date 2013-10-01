@@ -388,7 +388,7 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int* x, i
 	/* rotate the vector to switch of reference frame.
 	 * We switch from the static frame of the earth to the local frame of the player */
 	VectorSet(rotationAxis, 0, 0, 1);
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	RotatePointAroundVector(v1, rotationAxis, v, - data.angles[PITCH]);
 
 	VectorSet(rotationAxis, 0, 1, 0);
@@ -429,7 +429,7 @@ static bool GEO_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int* x, i
  */
 static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int* y)
 {
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	/* get "raw" position */
 	float sx = pos[0] / 360 + data.center[0] - 0.5;
 
@@ -460,7 +460,7 @@ static bool GEO_MapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int
  */
 static bool GEO_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int* x, int* y, int* z)
 {
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	if (!data.flatgeoscape)
 		return GEO_3DMapToScreen(node, pos, x, y, z);
 
@@ -499,7 +499,7 @@ static bool GEO_IsPositionSelected (const uiNode_t* node, const vec2_t pos, int 
  */
 static void GEO_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char* model, int skin)
 {
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	if (data.flatgeoscape) {
 		int x, y;
 		vec3_t screenPos;
@@ -616,7 +616,7 @@ static void GEO_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 	/* draw */
 	cgi->R_Color(color);
 	start = 0;
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	old = data.mapSize[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
 		GEO_MapToScreen(node, line->point[i], &p->x, &p->y);
@@ -707,7 +707,7 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 	PerpendicularVector(rotationAxis, centerPos);
 	RotatePointAroundVector(initialVector, rotationAxis, centerPos, angle);
 
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		bool draw = false;
@@ -871,7 +871,7 @@ float GEO_AngleOfPath (const vec2_t start, const vec2_t end, vec3_t direction, v
 	if (!node)
 		return 0.0f;
 
-	const mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATA(node);
 	if (!data.flatgeoscape)
 		return GEO_AngleOfPath3D(start, end, direction, ortVector);
 	return GEO_AngleOfPath2D(start, end, direction, ortVector);
@@ -927,7 +927,7 @@ static void GEO_GetUFOAngle (bool flatgeoscape, float* vector, int idx)
  */
 static void GEO_StartCenter (uiNode_t* node)
 {
-	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	mapExtraData_t& data = UI_MAPEXTRADATA(node);
 	if (data.flatgeoscape) {
 		/* case 2D geoscape */
 		vec2_t diff;
@@ -964,7 +964,7 @@ void GEO_CenterPosition (const vec2_t pos)
 	uiNode_t* node = geoscapeNode;
 	if (!node)
 		return;
-	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	mapExtraData_t& data = UI_MAPEXTRADATA(node);
 	const bool flatgeoscape = data.flatgeoscape;
 	float* vector;
 	if (flatgeoscape)
@@ -992,7 +992,7 @@ static void GEO_SelectObject_f (void)
 
 	const char* type = cgi->Cmd_Argv(1);
 	const int idx = atoi(cgi->Cmd_Argv(2));
-	mapExtraData_t &data = UI_MAPEXTRADATA(node);
+	mapExtraData_t& data = UI_MAPEXTRADATA(node);
 	const bool flatgeoscape = data.flatgeoscape;
 
 	float* vector;
@@ -1196,7 +1196,7 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t* missio
 	if (!GEO_AllMapToScreen(node, mission->pos, &x, &y, nullptr))
 		return;
 
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	if (isCurrentSelectedMission) {
 		/* Draw circle around the mission */
 		if (data.flatgeoscape) {
@@ -1377,7 +1377,7 @@ static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t* base,
  */
 static void GEO_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t* aircraft)
 {
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	const int width = 8 * data.zoom;
 	const int height = 1 * data.zoom * 0.9f;
 	vec4_t color;
@@ -1428,7 +1428,7 @@ static void GEO_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t* air
 	if (oneUFOVisible)
 		GEO_MapDrawEquidistantPoints(node, aircraft->pos, aircraft->stats[AIR_STATS_WRANGE] / 1000.0f, red);
 
-	const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	/* Draw aircraft route */
 	if (aircraft->status >= AIR_TRANSIT) {
 		/* aircraft is moving */
@@ -1640,7 +1640,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 #endif
 		{
 			const float angle = GEO_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, nullptr);
-			const mapExtraData_t &data = UI_MAPEXTRADATACONST(node);
+			const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 
 			if (!data.flatgeoscape)
 				GEO_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, white);
