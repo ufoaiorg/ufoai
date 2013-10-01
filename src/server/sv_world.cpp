@@ -203,7 +203,7 @@ static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t* ent)
 }
 
 typedef struct {
-	const float* areaMins, *areaMaxs;
+	AABB areaBox;
 	edict_t** areaEdictList;
 	int areaEdictListCount, areaEdictListMaxCount;
 } areaParms_t;
@@ -228,7 +228,7 @@ static void SV_AreaEdicts_r (worldSector_t* node, areaParms_t* ap)
 		if (!check->ent->inuse)
 			continue;
 
-		if (!SV_BoundingBoxesIntersect(AABB(ap->areaMins, ap->areaMaxs), check->ent))
+		if (!SV_BoundingBoxesIntersect(ap->areaBox, check->ent))
 			continue;			/* not touching */
 
 		if (ap->areaEdictListCount == ap->areaEdictListMaxCount) {
@@ -244,9 +244,9 @@ static void SV_AreaEdicts_r (worldSector_t* node, areaParms_t* ap)
 		return;					/* terminal node - end of tree */
 
 	/* recurse down both sides */
-	if (ap->areaMaxs[node->axis] > node->dist)
+	if (ap->areaBox.maxs[node->axis] > node->dist)
 		SV_AreaEdicts_r(node->children[0], ap);
-	if (ap->areaMins[node->axis] < node->dist)
+	if (ap->areaBox.mins[node->axis] < node->dist)
 		SV_AreaEdicts_r(node->children[1], ap);
 }
 
@@ -262,8 +262,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int max
 {
 	areaParms_t	ap;
 
-	ap.areaMins = mins;
-	ap.areaMaxs = maxs;
+	ap.areaBox.set(mins, maxs);
 	ap.areaEdictList = list;
 	ap.areaEdictListCount = 0;
 	ap.areaEdictListMaxCount = maxCount;
