@@ -563,7 +563,7 @@ static void LE_PlayFootStepSound (le_t* le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		const trace_t trace = CL_Trace(from, to, AABB(), nullptr, nullptr, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t trace = CL_Trace(Line(from, to), AABB(), nullptr, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
@@ -1750,15 +1750,14 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @sa CL_TraceBounds
  * @sa CL_ClipMoveToLEs
  * @sa SV_Trace
- * @param[in] start Start vector to start the trace from
- * @param[in] end End vector to stop the trace at
+ * @param[in] traceLine Start and end vector of the trace
  * @param[in] box Bounding box used for tracing
  * @param[in] passle Ignore this local entity in the trace (might be nullptr)
  * @param[in] passle2 Ignore this local entity in the trace (might be nullptr)
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 
@@ -1766,21 +1765,21 @@ trace_t CL_Trace (const vec3_t start, const vec3_t end, const AABB& box, const l
 		R_DrawBoundingBoxBatched(box.mins, box.maxs);
 
 	/* clip to world */
-	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, Line(start, end), box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, traceLine, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = nullptr;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 
 	clip.contentmask = contentmask;
-	clip.start = start;
-	clip.end = end;
+	clip.start = traceLine.start;
+	clip.end = traceLine.stop;
 	clip.mins = box.mins;
 	clip.maxs = box.maxs;
 	clip.passle = passle;
 	clip.passle2 = passle2;
 
 	/* create the bounding box of the entire move */
-	CL_TraceBounds(start, box.mins, box.maxs, end, clip.boxmins, clip.boxmaxs);
+	CL_TraceBounds(traceLine.start, box.mins, box.maxs, traceLine.stop, clip.boxmins, clip.boxmaxs);
 
 	/* clip to other solid entities */
 	CL_ClipMoveToLEs(&clip);
