@@ -150,7 +150,7 @@ private:
 
 	int actorHeight;		/**< The actor's height in QUANT units. */
 	int actorCrouchedHeight;
-	const Routing &routing;
+	const Routing& routing;
 public:
 	const int dir;
 	pos3_t fromPos;
@@ -159,7 +159,7 @@ public:
 	const byte crouchingState;
 	byte TUsAfter;
 
-	Step (const Routing &r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
+	Step (const Routing& r, const pos3_t fromPos, const actorSizeEnum_t actorSize, const byte crouchingState, const int dir);
 	bool init ();
 	bool calcNewPos ();
 	void calcNewTUs (const pathing_t* path);
@@ -177,7 +177,7 @@ public:
  * @param[in] _crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] _dir Direction vector index (see DIRECTIONS and dvecs)
  */
-Step::Step (const Routing &r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) :
+Step::Step (const Routing& r, const pos3_t _fromPos, const actorSizeEnum_t _actorSize, const byte _crouchingState, const int _dir) :
 		flier(false), hasLadderToClimb(false), hasLadderSupport(false), actorHeight(0), actorCrouchedHeight(0), routing(
 				r), dir(_dir), actorSize(_actorSize), crouchingState(_crouchingState), TUsAfter(0)
 {
@@ -506,7 +506,7 @@ bool Step::isPossible (const pathing_t* path)
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
+void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
 {
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
@@ -609,7 +609,7 @@ void Grid_CalcPathing (const Routing &routing, const actorSizeEnum_t actorSize, 
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-bool Grid_FindPath (const Routing &routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
+bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
 {
 	bool found = false;
 	int count;
@@ -763,7 +763,7 @@ int Grid_MoveNext (const pathing_t* path, const pos3_t toPos, byte crouchingStat
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's ceiling.
  */
-unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
+unsigned int Grid_Ceiling (const Routing& routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(routing.getCeiling(actorSize, pos[0], pos[1], pos[2] & 7));
@@ -776,7 +776,7 @@ unsigned int Grid_Ceiling (const Routing &routing, const actorSizeEnum_t actorSi
  * @param[in] pos Position in the map to check the height
  * @return The actual model height of the cell's floor.
  */
-int Grid_Floor (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
+int Grid_Floor (const Routing& routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	assert(pos[2] < PATHFINDING_HEIGHT);
 	return QuantToModel(routing.getFloor(actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
@@ -805,7 +805,7 @@ int Grid_GetTUsForDirection (const int dir, const int crouched)
  * @return New z (height) value.
  * @return 0xFF if an error occurred.
  */
-pos_t Grid_Fall (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos)
+pos_t Grid_Fall (const Routing& routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	bool flier = false; /** @todo if an actor can fly, then set this to true. */
@@ -854,7 +854,7 @@ bool Grid_ShouldUseAutostand (const pathing_t* path, const pos3_t toPos)
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (const Routing& routing, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec)
 {
 	SizedPosToVec(pos, actorSize, vec);
 #ifdef PARANOID
@@ -876,7 +876,7 @@ void Grid_PosToVec (const Routing &routing, const actorSizeEnum_t actorSize, con
  * @param[in] box The box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBox &box, const char** list)
+void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBox &box, const char** list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -950,7 +950,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing &routing, const GridBo
  * @param[in] box The box around the inline model (alternative to name)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing &routing, const char* name, const GridBox &box, const char** list)
+void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* name, const GridBox &box, const char** list)
 {
 	if (box.isZero()) {
 		pos3_t min, max;

@@ -69,14 +69,14 @@ class RoutingData
 {
 public:
 	mapTiles_t* mapTiles;
-	Routing &routing;			/**< The routing tables */
+	Routing& routing;			/**< The routing tables */
 	actorSizeEnum_t actorSize;	/**< The size of the actor, in cells */
 	const char** list;			/**< The local models list */
 
-	RoutingData (mapTiles_t* mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list);
+	RoutingData (mapTiles_t* mapTiles, Routing& r, actorSizeEnum_t actorSize, const char** list);
 };
 
-RoutingData::RoutingData (mapTiles_t* mapTiles, Routing &r, actorSizeEnum_t actorSize, const char** list) : routing(r)
+RoutingData::RoutingData (mapTiles_t* mapTiles, Routing& r, actorSizeEnum_t actorSize, const char** list) : routing(r)
 {
 	this->mapTiles = mapTiles;
 	this->actorSize = actorSize;
@@ -111,7 +111,7 @@ typedef struct place_s {
 	}
 } place_t;
 
-static inline void RT_PlaceInit (const Routing &routing, const actorSizeEnum_t actorSize, place_t* p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (const Routing& routing, const actorSizeEnum_t actorSize, place_t* p, const int x, const int y, const int z)
 {
 	p->cell[0] = x;
 	p->cell[1] = y;
@@ -174,7 +174,7 @@ typedef struct opening_s {
  * @param[in] hy The high end of the y range updated
  * @param[in] hz The high end of the z range updated
  */
-static void RT_DumpMap (const Routing &routing, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -204,7 +204,7 @@ static void RT_DumpMap (const Routing &routing, actorSizeEnum_t actorSize, int l
  * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
-void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing &routing)
+void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
 	AABB box;
 	vec3_t normal, origin;
@@ -264,7 +264,7 @@ void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing &routing)
 /**
  * @brief Check if an actor can stand(up) in the cell given by pos
  */
-bool RT_CanActorStandHere (const Routing &routing, const int actorSize, const pos3_t pos)
+bool RT_CanActorStandHere (const Routing& routing, const int actorSize, const pos3_t pos)
 {
 	if (routing.getCeiling(actorSize, pos) - routing.getFloor(actorSize, pos) >= PLAYER_STANDING_HEIGHT / QUANT)
 		return true;
@@ -359,7 +359,7 @@ NEW MAP TRACING FUNCTIONS
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const Routing& routing, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -391,7 +391,7 @@ bool RT_AllCellsBelowAreFilled (const Routing &routing, const int actorSize, con
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int z, const char** list)
+int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int z, const char** list)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -1421,7 +1421,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
+void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	/* the essential data passed down the calltree */
@@ -1462,7 +1462,7 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing &routing, const in
 	}
 }
 
-void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	int x, y, z;
@@ -1564,7 +1564,7 @@ void RT_WriteCSVFiles (const Routing &routing, const char* baseFilename, const i
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int RT_DebugSpecial (mapTiles_t* mapTiles, Routing &routing, const int actorSize, const int x, const int y, const int dir, const char** list)
+int RT_DebugSpecial (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
@@ -1583,7 +1583,7 @@ int RT_DebugSpecial (mapTiles_t* mapTiles, Routing &routing, const int actorSize
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-void RT_DebugPathDisplay (Routing &routing, actorSizeEnum_t actorSize, int x, int y, int z)
+void RT_DebugPathDisplay (Routing& routing, actorSizeEnum_t actorSize, int x, int y, int z)
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		routing.getFloor(actorSize, x, y, z),

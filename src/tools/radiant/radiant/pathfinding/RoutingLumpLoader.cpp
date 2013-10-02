@@ -58,7 +58,7 @@ namespace routing
 	 * @param pos position to evaluate
 	 * @return access state as enum value for later rendering
 	 */
-	static EAccessState evaluateAccessState (const Routing &routing, const pos3_t pos, const int actorSize)
+	static EAccessState evaluateAccessState (const Routing& routing, const pos3_t pos, const int actorSize)
 	{
 		const int height = QuantToModel(routing.getCeiling(actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
 				- routing.getFloor(actorSize, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)));
@@ -70,7 +70,7 @@ namespace routing
 			return ACC_DISABLED;
 	}
 
-	static EConnectionState evaluateConnectionState (const Routing &routing, const pos3_t pos,
+	static EConnectionState evaluateConnectionState (const Routing& routing, const pos3_t pos,
 			const int actorSize, const EDirection direction)
 	{
 		byte route = 0;
@@ -129,7 +129,7 @@ namespace routing
 	 * @param routing The routing tables
 	 * @param pos position to evaluate
 	 */
-	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, Routing &routing, pos3_t pos)
+	static void FillRoutingLumpEntry (RoutingLumpEntry &entry, Routing& routing, pos3_t pos)
 	{
 		entry.setAccessState(evaluateAccessState(routing, pos, ACTOR_SIZE_NORMAL));
 		for (EDirection direction = DIR_WEST; direction < MAX_DIRECTIONS; direction++) {
