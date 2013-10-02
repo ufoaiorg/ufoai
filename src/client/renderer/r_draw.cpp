@@ -379,8 +379,7 @@ const image_t* R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 /**
  * @brief Draws a rect to the screen. Also has support for stippled rendering of the rect.
  *
- * @param[in] x X-position of the rect
- * @param[in] y Y-position of the rect
+ * @param[in] x,y X/Y-position of the rect
  * @param[in] w Width of the rect
  * @param[in] h Height of the rect
  * @param[in] color RGBA color of the rect

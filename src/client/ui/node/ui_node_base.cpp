@@ -75,8 +75,7 @@ void uiBaseLayoutNode::draw (uiNode_t* node)
 /**
  * @brief Return col and row of a cell, at an absolute position
  * @param[in] node Node definition for the base map
- * @param[in] x Absolute x-position requested
- * @param[in] y Absolute y-position requested
+ * @param[in] x,y Absolute x- and y-position requested
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
@@ -119,8 +118,7 @@ void uiBaseMapNode::draw (uiNode_t* node)
 /**
  * @brief Custom tooltip
  * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
+ * @param[in] x,y Position of the mouse
  */
 void uiBaseMapNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
@@ -137,8 +135,7 @@ void uiBaseMapNode::drawTooltip (const uiNode_t* node, int x, int y) const
  * @brief Left click on the basemap
  * @sa UI_BaseMapRightClick
  * @param[in] node Node definition for the base map
- * @param[in] x Absolute X mouse position into the screen
- * @param[in] y Absolute Y mouse position into the screen
+ * @param[in] x,y Absolute mouse position into the screen
  */
 void uiBaseMapNode::onLeftClick (uiNode_t* node, int x, int y)
 {
@@ -157,8 +154,7 @@ void uiBaseMapNode::onLeftClick (uiNode_t* node, int x, int y)
  * @brief Right click on the basemap
  * @sa UI_BaseMapNodeClick
  * @param[in] node Context node
- * @param[in] x Absolute x mouse coordinate (screen coordinates)
- * @param[in] y Absolute y mouse coordinate (screen coordinates)
+ * @param[in] x,y Absolute mouse coordinate (screen coordinates)
  */
 void uiBaseMapNode::onRightClick (uiNode_t* node, int x, int y)
 {
@@ -177,8 +173,7 @@ void uiBaseMapNode::onRightClick (uiNode_t* node, int x, int y)
  * @brief Middle click on the basemap
  * @sa UI_BaseMapNodeClick
  * @param[in] node Node definition for the base map
- * @param[in] x The x screen coordinate
- * @param[in] y The y screen coordinate
+ * @param[in] x,y The screen coordinates
  * @note relies on @c baseCurrent
  */
 void uiBaseMapNode::onMiddleClick (uiNode_t* node, int x, int y)
