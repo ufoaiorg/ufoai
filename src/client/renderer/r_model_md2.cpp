@@ -256,8 +256,8 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t* mod, const dMD2Model_t* md2
 			VectorCopy(outFrame->translate, outFrame->mins);
 			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
 
-			AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
-			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
+			AddPointToBounds(outFrame->mins, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->maxs, mod->modBox.mins, mod->modBox.maxs);
 		}
 
 		for (j = 0; j < outMesh->num_indexes; j++) {
@@ -392,8 +392,8 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t* mod, const dMD2Model_t* md2, 
 			VectorCopy(outFrame->translate, outFrame->mins);
 			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
 
-			AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
-			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
+			AddPointToBounds(outFrame->mins, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->maxs, mod->modBox.mins, mod->modBox.maxs);
 		}
 
 		for (j = 0; j < outMesh->num_indexes; j++) {
@@ -507,7 +507,7 @@ void R_ModLoadAliasMD2Model (model_t* mod, byte* buffer, int bufSize, bool loadN
 	/* fixed values */
 	mod->type = mod_alias_md2;
 
-	ClearBounds(mod->mins, mod->maxs);
+	ClearBounds(mod->modBox.mins, mod->modBox.maxs);
 
 	R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 

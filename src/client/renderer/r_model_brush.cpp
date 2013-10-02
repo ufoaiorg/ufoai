@@ -944,8 +944,8 @@ static void R_SetupSubmodels (void)
 		Com_sprintf(mod->name, sizeof(mod->name), "*%d", i);
 
 		/* copy the rest from the submodel */
-		VectorCopy(sub->maxs, mod->maxs);
-		VectorCopy(sub->mins, mod->mins);
+		VectorCopy(sub->maxs, mod->modBox.maxs);
+		VectorCopy(sub->mins, mod->modBox.mins);
 		mod->radius = sub->radius;
 
 		mod->bsp.firstnode = sub->headnode;

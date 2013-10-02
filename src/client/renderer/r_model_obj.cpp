@@ -393,7 +393,7 @@ void R_LoadObjModel (model_t* mod, byte* buffer, int bufSize)
 	v = obj.verts;
 	/* resolve mins/maxs */
 	for (i = 0; i < obj.num_verts; i++, v += 3)
-		AddPointToBounds(v, mod->mins, mod->maxs);
+		AddPointToBounds(v, mod->modBox.mins, mod->modBox.maxs);
 
 	/* we only have one mesh in obj files */
 	mod->alias.meshes = Mem_PoolAllocType(mAliasMesh_t, vid_modelPool);

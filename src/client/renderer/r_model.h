@@ -48,7 +48,7 @@ typedef struct model_s {
 	int flags;
 
 	/** volume occupied by the model graphics */
-	vec3_t mins, maxs;
+	AABB modBox;
 	float radius;
 
 	/** solid volume for clipping */

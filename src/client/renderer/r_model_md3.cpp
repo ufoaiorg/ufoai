@@ -78,7 +78,7 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 	mAliasFrame_t* poutframe = mod->alias.frames = Mem_PoolAllocTypeN(mAliasFrame_t, mod->alias.num_frames, vid_modelPool);
 
 	mod->radius = 0;
-	ClearBounds(mod->mins, mod->maxs);
+	ClearBounds(mod->modBox.mins, mod->modBox.maxs);
 
 	for (i = 0; i < mod->alias.num_frames; i++, pinframe++, poutframe++) {
 		for (j = 0; j < 3; j++) {
@@ -89,8 +89,8 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 
 		poutframe->radius = LittleFloat(pinframe->radius);
 		mod->radius = std::max(mod->radius, poutframe->radius);
-		AddPointToBounds(poutframe->mins, mod->mins, mod->maxs);
-		AddPointToBounds(poutframe->maxs, mod->mins, mod->maxs);
+		AddPointToBounds(poutframe->mins, mod->modBox.mins, mod->modBox.maxs);
+		AddPointToBounds(poutframe->maxs, mod->modBox.mins, mod->modBox.maxs);
 	}
 
 	/* load the tags */

@@ -282,14 +282,14 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
  */
 void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t* mi, vec3_t scale, vec3_t center)
 {
-	const float width = mi->model->maxs[0] - mi->model->mins[0];
-	const float height = mi->model->maxs[2] - mi->model->mins[2];
+	const float width = mi->model->modBox.maxs[0] - mi->model->modBox.mins[0];
+	const float height = mi->model->modBox.maxs[2] - mi->model->modBox.mins[2];
 	const float factorX = boxSize[0] / width;
 	const float factorY = boxSize[1] / height;
 	const float size = std::min(factorX, factorY);
 
 	/* get center */
-	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
+	VectorCenterFromMinsMaxs(mi->model->modBox.mins, mi->model->modBox.maxs, center);
 	VectorNegate(center, center);
 	VectorSet(scale, size, size, size);
 
@@ -466,11 +466,11 @@ bool R_CullMeshModel (const entity_t* e)
 	/* determine scaled mins/maxs */
 	for (i = 0; i < 3; i++) {
 		if (e->scale[i]) {
-			mins[i] = e->model->mins[i] * e->scale[i];
-			maxs[i] = e->model->maxs[i] * e->scale[i];
+			mins[i] = e->model->modBox.mins[i] * e->scale[i];
+			maxs[i] = e->model->modBox.maxs[i] * e->scale[i];
 		} else {
-			mins[i] = e->model->mins[i];
-			maxs[i] = e->model->maxs[i];
+			mins[i] = e->model->modBox.mins[i];
+			maxs[i] = e->model->modBox.maxs[i];
 		}
 	}
 
