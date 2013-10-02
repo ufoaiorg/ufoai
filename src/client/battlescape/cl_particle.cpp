@@ -867,24 +867,24 @@ typedef struct ptlTraceCache_s {
 /**
  * @brief Particle tracing with caching
  */
-static trace_t PTL_Trace (ptl_t* ptl, const vec3_t mins, const vec3_t maxs)
+static trace_t PTL_Trace (ptl_t* ptl, const AABB& aabb)
 {
 	static ptlTraceCache_t ptlCache;
 	const float epsilonPos = 3.0f;
 	const float epsilonBBox = 1.0f;
 
 	if (VectorCompareEps(ptlCache.start, ptl->origin, epsilonPos) && VectorCompareEps(ptlCache.end, ptl->s, epsilonPos)
-			&& VectorCompareEps(ptlCache.mins, mins, epsilonBBox) && VectorCompareEps(ptlCache.maxs, maxs, epsilonBBox)) {
+			&& VectorCompareEps(ptlCache.mins, aabb.mins, epsilonBBox) && VectorCompareEps(ptlCache.maxs, aabb.maxs, epsilonBBox)) {
 		ptlCache.count++;
 		return ptlCache.trace;
 	}
 
 	VectorCopy(ptl->origin, ptlCache.start);
 	VectorCopy(ptl->s, ptlCache.end);
-	VectorCopy(mins, ptlCache.mins);
-	VectorCopy(maxs, ptlCache.maxs);
+	VectorCopy(aabb.mins, ptlCache.mins);
+	VectorCopy(aabb.maxs, ptlCache.maxs);
 
-	ptlCache.trace = CL_Trace(Line(ptl->origin, ptl->s), AABB(mins, maxs), nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1);
+	ptlCache.trace = CL_Trace(Line(ptl->origin, ptl->s), aabb, nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1);
 	return ptlCache.trace;
 }
 
@@ -940,7 +940,7 @@ static void CL_ParticleRun2 (ptl_t* p)
 			return;
 
 		AABB ptlbox(-size, -size, -size, size, size, size);
-		const trace_t tr = PTL_Trace(p, ptlbox.mins, ptlbox.maxs);
+		const trace_t tr = PTL_Trace(p, ptlbox);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
