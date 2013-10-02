@@ -121,7 +121,6 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
 	teamDef_t* td;
 	int i, j;
-	char model[MAX_QPATH];
 	const float percent = 40.0f;
 
 	if (!cl_precache->integer)
@@ -134,6 +133,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 			for (linkedList_t const* list = td->models[j]; list; list = list->next) {
 				teamDef_t::model_t const& m = *static_cast<teamDef_t::model_t const*>(list->data);
 				/* register body */
+				char model[MAX_QPATH];
 				Com_sprintf(model, sizeof(model), "%s/%s", m.path, m.body);
 				if (!R_FindModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
@@ -155,17 +155,15 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
  */
 void CL_ViewPrecacheModels (void)
 {
-	int i;
 	float percent = 30.0f;
 	float alreadyLoadedPercent = 30.0f;
-	float loaded;
 
-	loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
+	float loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
 	alreadyLoadedPercent += loaded;
 	if (loaded == 0)
 		percent = 100 - alreadyLoadedPercent;
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (int i = 0; i < csi.numODs; i++) {
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 
 		alreadyLoadedPercent += percent / csi.numODs;
