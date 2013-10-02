@@ -36,15 +36,15 @@ cBspModel_t* CM_InlineModel(const mapTiles_t* mapTiles, const char* name);
 cBspModel_t* CM_SetInlineModelOrientation(mapTiles_t* mapTiles, const char* name, const vec3_t origin, const vec3_t angles);
 void CM_GetInlineModelAABB(mapTiles_t* mapTiles, const char* name, AABB& aabb);
 float CM_GetVisibility(const mapTiles_t* mapTiles, const pos3_t position);
-void CM_LoadBsp(MapTile &tile, const dBspHeader_t& header, const vec3_t shift, const byte* base);
+void CM_LoadBsp(MapTile& tile, const dBspHeader_t& header, const vec3_t shift, const byte* base);
 
 /*==============================================================
 CMODEL BOX TRACING
 ==============================================================*/
 
 /** creates a clipping hull for an arbitrary box */
-int32_t CM_HeadnodeForBox(MapTile &tile, const vec3_t mins, const vec3_t maxs);
-trace_t CM_HintedTransformedBoxTrace(MapTile &tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
+int32_t CM_HeadnodeForBox(MapTile& tile, const vec3_t mins, const vec3_t maxs);
+trace_t CM_HintedTransformedBoxTrace(MapTile& tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
 #define CM_TransformedBoxTrace(tile, start, end, box, headnode, brushmask, brushreject, origin, angles) CM_HintedTransformedBoxTrace(tile, start, end, box, headnode, brushmask, brushreject, origin, angles, vec3_origin, 1.0f);
 trace_t CM_EntCompleteBoxTrace(mapTiles_t* mapTiles, const Line &traceLine, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char** list);
 bool CM_EntTestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist);

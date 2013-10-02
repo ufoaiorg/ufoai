@@ -48,7 +48,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	const dBspModel_t* in;
 	int i, j, count;
@@ -91,7 +91,7 @@ static void CMod_LoadSubmodels (MapTile &tile, const byte* base, const lump_t* l
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* l)
 {
 	const dBspTexinfo_t* in;
 	int i, count;
@@ -131,7 +131,7 @@ static void CMod_LoadSurfaces (MapTile &tile, const byte* base, const lump_t* l)
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	const dBspNode_t* in;
 	int child;
@@ -182,7 +182,7 @@ static void CMod_LoadNodes (MapTile &tile, const byte* base, const lump_t* l, co
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
 {
 	const dBspBrush_t* in;
 	int i, count;
@@ -218,7 +218,7 @@ static void CMod_LoadBrushes (MapTile &tile, const byte* base, const lump_t* l)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
 {
 	int i;
 	const dBspLeaf_t* in;
@@ -272,7 +272,7 @@ static void CMod_LoadLeafs (MapTile &tile, const byte* base, const lump_t* l)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	int i, j;
 	const dBspPlane_t* in;
@@ -317,7 +317,7 @@ static void CMod_LoadPlanes (MapTile &tile, const byte* base, const lump_t* l, c
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t* l)
 {
 	int i;
 	const unsigned short* in;
@@ -354,7 +354,7 @@ static void CMod_LoadLeafBrushes (MapTile &tile, const byte* base, const lump_t*
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* l)
 {
 	int i;
 	const dBspBrushSide_t* in;
@@ -438,7 +438,7 @@ TRACING NODES
  * @note tile->tnodes is expected to have enough memory malloc'ed for the function to work.
  * @sa BuildTracingNode_r
  */
-static void CM_MakeTracingNodes (MapTile &tile)
+static void CM_MakeTracingNodes (MapTile& tile)
 {
 	int i;
 
@@ -475,7 +475,7 @@ static void CM_MakeTracingNodes (MapTile &tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (MapTile &tile, mapData_t* mapData, const byte* base, const char* name, const lump_t* lump, const int sX, const int sY, const int sZ)
+static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* base, const char* name, const lump_t* lump, const int sX, const int sY, const int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	Routing* tempMap = static_cast<Routing*>(Mem_Alloc(sizeof(Routing)));
@@ -593,7 +593,7 @@ static void CMod_LoadRouting (MapTile &tile, mapData_t* mapData, const byte* bas
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapData_t* mapData, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadEntityString (MapTile& tile, const char* entityString, mapData_t* mapData, const byte* base, const lump_t* l, const vec3_t shift)
 {
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given (entitystring: '%s')", entityString ? entityString : "none");
@@ -681,7 +681,7 @@ static void CMod_LoadEntityString (MapTile &tile, const char* entityString, mapD
  * @brief Loads the lightmap for server side visibility lookup
  * @todo Implement this
  */
-static void CMod_LoadLighting (MapTile &tile, const byte* base, const lump_t* l)
+static void CMod_LoadLighting (MapTile& tile, const byte* base, const lump_t* l)
 {
 	if (l->filelen == 0)
 		return;
@@ -694,7 +694,7 @@ static void CMod_LoadLighting (MapTile &tile, const byte* base, const lump_t* l)
  * @brief Set up the planes and nodes so that the six floats of a bounding
  * box can just be stored out and get a proper clipping hull structure.
  */
-static void CM_InitBoxHull (MapTile &tile)
+static void CM_InitBoxHull (MapTile& tile)
 {
 	int i;
 
@@ -754,7 +754,7 @@ static void CM_InitBoxHull (MapTile &tile)
 	}
 }
 
-void CM_LoadBsp (MapTile &tile, const dBspHeader_t& header, const vec3_t shift, const byte* base)
+void CM_LoadBsp (MapTile& tile, const dBspHeader_t& header, const vec3_t shift, const byte* base)
 {
 	/* load into heap */
 	CMod_LoadSurfaces(tile, base, &header.lumps[LUMP_TEXINFO]);
@@ -821,7 +821,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	if (mapTiles->numTiles >= MAX_MAPTILES)
 		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", mapTiles->numTiles);
 
-	MapTile &tile = mapTiles->mapTiles[mapTiles->numTiles];
+	MapTile& tile = mapTiles->mapTiles[mapTiles->numTiles];
 	OBJZERO(tile);
 	tile.idx = mapTiles->numTiles;
 	Q_strncpyz(tile.name, name, sizeof(tile.name));
@@ -1069,7 +1069,7 @@ float CM_GetVisibility (const mapTiles_t* mapTiles, const pos3_t position)
 	int i;
 
 	for (i = 0; i < mapTiles->numTiles; i++) {
-		const MapTile &tile = mapTiles->mapTiles[i];
+		const MapTile& tile = mapTiles->mapTiles[i];
 		if (VectorInside(position, tile.wpMins, tile.wpMaxs)) {
 			if (tile.lightdata == nullptr)
 				return 1.0f;

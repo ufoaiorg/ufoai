@@ -93,7 +93,7 @@ static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBs
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	vec3_t start_l, end_l;
 	vec3_t forward, right, up;
@@ -157,7 +157,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile &tile, const vec3_t start, const v
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int32_t CM_HeadnodeForBox (MapTile &tile, const vec3_t mins, const vec3_t maxs)
+int32_t CM_HeadnodeForBox (MapTile& tile, const vec3_t mins, const vec3_t maxs)
 {
 	tile.box_planes[0].dist = maxs[0];
 	tile.box_planes[1].dist = -maxs[0];
@@ -316,7 +316,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 
 	/* trace against all loaded map tiles */
 	for (tile = 0; tile < mapTiles->numTiles; tile++) {
-		MapTile &myTile = mapTiles->mapTiles[tile];
+		MapTile& myTile = mapTiles->mapTiles[tile];
 		PosToVec(myTile.wpMins, wpmins);
 		VectorSubtract(wpmins, offset, wpmins);
 		PosToVec(myTile.wpMaxs, wpmaxs);
