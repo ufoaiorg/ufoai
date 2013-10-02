@@ -93,7 +93,7 @@ void G_CheckForceEndRound (void)
 /**
  * @brief Counts the still living actors for a player
  */
-static int G_PlayerSoldiersCount (const Player &player)
+static int G_PlayerSoldiersCount (const Player& player)
 {
 	int cnt = 0;
 	Edict* ent = nullptr;
@@ -172,7 +172,7 @@ static void G_GetNextActiveTeam (void)
 /**
  * @sa G_PlayerSoldiersCount
  */
-void G_ClientEndRound (Player &player)
+void G_ClientEndRound (Player& player)
 {
 	Player* p;
 

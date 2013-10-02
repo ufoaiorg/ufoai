@@ -213,7 +213,7 @@ public:
 	inline void resetFloor () {
 		chr.inv.setFloorContainer(nullptr);
 	}
-	inline Player &getPlayer () const {
+	inline Player& getPlayer () const {
 		return game.players[this->pnum];
 	}
 };

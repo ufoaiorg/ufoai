@@ -71,7 +71,7 @@ void G_VisFlagsSwap(Edict &ent, teammask_t teamMask);
 void G_VisFlagsReset(Edict &ent);
 void G_VisMakeEverythingVisible(void);
 void G_CheckVis(Edict* check, const vischeckflags_t visFlags = VT_PERISHCHK);
-void G_CheckVisPlayer(Player &player, const vischeckflags_t visFlags);
+void G_CheckVisPlayer(Player& player, const vischeckflags_t visFlags);
 int G_CheckVisTeamAll(const int team, const vischeckflags_t visFlags, const Edict* ent);
 int G_TestVis(const int team, Edict* check, const vischeckflags_t flags);
 bool G_Vis(const int team, const Edict* from, const Edict* check, const vischeckflags_t flags);

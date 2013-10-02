@@ -621,7 +621,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player &player, Edict* shooter, const fireDef_t* fd,
+static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_t* fd,
 	const vec3_t from, const pos3_t at, int mask, const Item* weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
@@ -1110,7 +1110,7 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-bool G_ClientShoot (const Player &player, Edict* ent, const pos3_t at, shoot_types_t shootType,
+bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align)
 {
 	/* just in 'test-whether-it's-possible'-mode or the player is an

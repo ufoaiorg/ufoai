@@ -758,7 +758,7 @@ bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, f
 	const int minhit = 30;
 	shot_mock_t mock;
 	int i;
-	const Player &player = shooter->getPlayer();
+	const Player& player = shooter->getPlayer();
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 

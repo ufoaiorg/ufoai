@@ -960,7 +960,7 @@ static int AIL_distance (lua_State* L)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AIL_ActorThink (Player &player, Edict* ent)
+void AIL_ActorThink (Player& player, Edict* ent)
 {
 	lua_State* L;
 

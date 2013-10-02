@@ -310,7 +310,7 @@ pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t t
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t to)
+void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t to)
 {
 	pos3_t pos;
 	int oldHP;

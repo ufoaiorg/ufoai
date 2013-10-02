@@ -236,9 +236,9 @@ void G_InitCamera(Edict* ent, camera_type_t cameraType, float angle, bool rotate
 Edict* G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_cmds.c */
-void G_ClientCommand(Player &player);
+void G_ClientCommand(Player& player);
 #ifdef DEBUG
-void G_InvList_f(const Player &player);
+void G_InvList_f(const Player& player);
 #endif
 
 /* g_morale */
@@ -247,11 +247,11 @@ void G_MoraleBehaviour(int team);
 
 /* g_round */
 void G_CheckForceEndRound(void);
-void G_ClientEndRound(Player &player);
+void G_ClientEndRound(Player& player);
 
 /* g_stats */
 void G_SendStats(Edict &ent);
-void G_SendPlayerStats(const Player &player);
+void G_SendPlayerStats(const Player& player);
 
 /* g_svcmds.c */
 void G_ServerCommand(void);

@@ -1122,7 +1122,7 @@ static bool AI_FindMissionLocation (Edict* ent, const pos3_t to)
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const Player &player, Edict* ent, aiAction_t* aia)
+static int AI_CheckForMissionTargets (const Player& player, Edict* ent, aiAction_t* aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	int actionScore;
@@ -1220,7 +1220,7 @@ static int AI_CheckForMissionTargets (const Player &player, Edict* ent, aiAction
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (const Player &player, Edict* ent)
+static aiAction_t AI_PrepBestAction (const Player& player, Edict* ent)
 {
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
@@ -1371,7 +1371,7 @@ static void AI_TryToReloadWeapon (Edict* ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (Player &player, Edict* ent)
+void AI_ActorThink (Player& player, Edict* ent)
 {
 	aiAction_t bestAia;
 
@@ -1436,7 +1436,7 @@ void AI_ActorThink (Player &player, Edict* ent)
 	}
 }
 
-static void AI_PlayerRun (Player &player)
+static void AI_PlayerRun (Player& player)
 {
 	if (level.activeTeam != player.getTeam() || player.roundDone)
 		return;
@@ -1588,7 +1588,7 @@ static void AI_SetEquipment (Edict* ent, const equipDef_t* ed)
  * @param[in,out] ent Pointer to Edict representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c nullptr.
  */
-static void AI_InitPlayer (const Player &player, Edict* ent, const equipDef_t* ed)
+static void AI_InitPlayer (const Player& player, Edict* ent, const equipDef_t* ed)
 {
 	const int team = player.getTeam();
 
@@ -1633,7 +1633,7 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	return ed;
 }
 
-static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t* ed)
+static Edict* G_SpawnAIPlayer (const Player& player, const equipDef_t* ed)
 {
 	Edict* ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
@@ -1659,7 +1659,7 @@ static Edict* G_SpawnAIPlayer (const Player &player, const equipDef_t* ed)
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayers (const Player &player, int numSpawn)
+static void G_SpawnAIPlayers (const Player& player, int numSpawn)
 {
 	const equipDef_t* ed = G_GetEquipmentForAISpawn(player.getTeam());
 

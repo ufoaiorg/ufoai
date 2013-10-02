@@ -543,7 +543,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	Item fromItemBackup, toItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
-	Player &player = actor->getPlayer();
+	Player& player = actor->getPlayer();
 
 	assert(fItem);
 	assert(fItem->def());

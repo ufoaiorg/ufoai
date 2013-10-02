@@ -316,7 +316,7 @@ static int G_DoTestVis (const int team, Edict* check, const vischeckflags_t visF
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-void G_CheckVisPlayer (Player &player, const vischeckflags_t visFlags)
+void G_CheckVisPlayer (Player& player, const vischeckflags_t visFlags)
 {
 	Edict* ent = nullptr;
 

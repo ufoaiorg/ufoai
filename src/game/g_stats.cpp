@@ -46,7 +46,7 @@ void G_SendStats (Edict &ent)
  * @brief Write player stats to network buffer
  * @sa G_SendStats
  */
-void G_SendPlayerStats (const Player &player)
+void G_SendPlayerStats (const Player& player)
 {
 	Edict* ent = nullptr;
 

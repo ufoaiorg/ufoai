@@ -203,7 +203,7 @@ playermask_t G_VisToPM (teammask_t teamMask)
  * @param printLevel A numeric value to restrict and channel the printing (CONSOLE, HUD, CHAT...)
  * @param fmt A format string as in printf
  */
-void G_ClientPrintf (const Player &player, int printLevel, const char* fmt, ...)
+void G_ClientPrintf (const Player& player, int printLevel, const char* fmt, ...)
 {
 	va_list ap;
 
@@ -300,7 +300,7 @@ void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict &check, co
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (const Player &player)
+void G_SendInvisible (const Player& player)
 {
 	const int team = player.getTeam();
 
@@ -335,7 +335,7 @@ int G_GetActiveTeam (void)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  */
-static bool G_ActionCheck (const Player &player, Edict* ent)
+static bool G_ActionCheck (const Player& player, Edict* ent)
 {
 	if (!ent || !ent->inuse) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!"));
@@ -378,7 +378,7 @@ static bool G_ActionCheck (const Player &player, Edict* ent)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-bool G_ActionCheckForCurrentTeam (const Player &player, Edict* ent, int TU)
+bool G_ActionCheckForCurrentTeam (const Player& player, Edict* ent, int TU)
 {
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player.getTeam()) {
@@ -401,7 +401,7 @@ bool G_ActionCheckForCurrentTeam (const Player &player, Edict* ent, int TU)
  * the action with
  * @sa G_ActionCheck
  */
-bool G_ActionCheckForReaction (const Player &player, Edict* ent, int TU)
+bool G_ActionCheckForReaction (const Player& player, Edict* ent, int TU)
 {
 	if (TU > ent->TU) {
 		return false;
@@ -413,7 +413,7 @@ bool G_ActionCheckForReaction (const Player &player, Edict* ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player &player, Edict* ent, dvec_t dvec)
+static void G_ClientTurn (Player& player, Edict* ent, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
@@ -472,7 +472,7 @@ static void G_ClientStateChangeUpdate (Edict &ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player &player, Edict* ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player& player, Edict* ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
@@ -611,7 +611,7 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
  * @sa CL_ActorUse
  * @sa G_UseEdict
  */
-bool G_ClientUseEdict (const Player &player, Edict* actor, Edict* edict)
+bool G_ClientUseEdict (const Player& player, Edict* actor, Edict* edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
@@ -635,7 +635,7 @@ bool G_ClientUseEdict (const Player &player, Edict* actor, Edict* edict)
  * @param[in] player The player to execute the action for (the actor belongs to this player)
  * @note a client action will also send the server side edict number to determine the actor
  */
-int G_ClientAction (Player &player)
+int G_ClientAction (Player& player)
 {
 	player_action_t action;
 	int num;
@@ -739,7 +739,7 @@ int G_ClientAction (Player &player)
  * @param[in] player Pointer to connected player
  * @todo Check whether there are enough free spawnpoints in all cases
  */
-static void G_GetTeam (Player &player)
+static void G_GetTeam (Player& player)
 {
 	/* player has already a team */
 	if (player.getTeam() > 0) {
@@ -852,7 +852,7 @@ static void G_GetTeam (Player &player)
  * @param[in] team The team to set for the given player
  * @return <code>true</code> if the team was set successfully, <code>false</code> otherwise.
  */
-bool G_SetTeamForPlayer (Player &player, const int team)
+bool G_SetTeamForPlayer (Player& player, const int team)
 {
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
 
@@ -889,7 +889,7 @@ bool G_SetTeamForPlayer (Player &player, const int team)
 /**
  * @brief Returns the assigned team number of the player
  */
-int G_ClientGetTeamNum (const Player &player)
+int G_ClientGetTeamNum (const Player& player)
 {
 	return player.getTeam();
 }
@@ -897,7 +897,7 @@ int G_ClientGetTeamNum (const Player &player)
 /**
  * @brief Returns the preferred team number for the player
  */
-int G_ClientGetTeamNumPref (const Player &player)
+int G_ClientGetTeamNumPref (const Player& player)
 {
 	return Info_IntegerForKey(player.pers.userinfo, "cl_teamnum");
 }
@@ -916,7 +916,7 @@ bool G_ClientIsReady (const Player* player)
  * @param[in] player In singleplayer mode the team of this player will get the first turn
  * @sa SVCmd_StartGame_f
  */
-static void G_GetStartingTeam (const Player &player)
+static void G_GetStartingTeam (const Player& player)
 {
 	int teamCount;
 	int playerCount;
@@ -967,7 +967,7 @@ static void G_GetStartingTeam (const Player &player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or nullptr if nothing was found or on error.
  */
-static Edict* G_ClientGetFreeSpawnPoint (const Player &player, int spawnType)
+static Edict* G_ClientGetFreeSpawnPoint (const Player& player, int spawnType)
 {
 	Edict* ent = nullptr;
 
@@ -1041,7 +1041,7 @@ static void G_ThinkActorGoCrouch (Edict* ent)
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c nullptr if no free spawning point was found
  */
-Edict* G_ClientGetFreeSpawnPointForActorSize (const Player &player, const actorSizeEnum_t actorSize)
+Edict* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorSizeEnum_t actorSize)
 {
 	Edict* ent;
 
@@ -1223,7 +1223,7 @@ static void G_ClientAssignDefaultActorValues (Edict* ent)
  * @brief This is called after the actors are spawned and will set actor states without consuming TUs
  * @param player The player to perform the action for
  */
-void G_ClientInitActorStates (const Player &player)
+void G_ClientInitActorStates (const Player& player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1257,7 +1257,7 @@ void G_ClientInitActorStates (const Player &player)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
  */
-void G_ClientTeamInfo (const Player &player)
+void G_ClientTeamInfo (const Player& player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 	int i;
@@ -1298,7 +1298,7 @@ void G_ClientTeamInfo (const Player &player)
  * @sa EV_ADD_BRUSH_MODEL
  * @param[in] player The player the edicts are send to
  */
-static void G_ClientSendEdictsAndBrushModels (const Player &player)
+static void G_ClientSendEdictsAndBrushModels (const Player& player)
 {
 	const int mask = G_PlayerToPM(player);
 	/* skip the world */
@@ -1325,7 +1325,7 @@ static void G_ClientSendEdictsAndBrushModels (const Player &player)
  * @sa G_ClientStartMatch
  * @sa CL_StartGame
  */
-bool G_ClientBegin (Player &player)
+bool G_ClientBegin (Player& player)
 {
 	player.began = true;
 	level.numplayers++;
@@ -1363,7 +1363,7 @@ bool G_ClientBegin (Player &player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientStartMatch (Player &player)
+void G_ClientStartMatch (Player& player)
 {
 	G_GetStartingTeam(player);
 
@@ -1395,7 +1395,7 @@ void G_ClientStartMatch (Player &player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged (Player &player, const char* userinfo)
+void G_ClientUserinfoChanged (Player& player, const char* userinfo)
 {
 	const bool alreadyReady = player.isReady();
 	const int oldTeamnum = Info_IntegerForKey(player.pers.userinfo, "cl_teamnum");
@@ -1480,7 +1480,7 @@ bool G_ClientConnect (Player* player, char* userinfo, size_t userinfoSize)
 /**
  * @sa G_ClientConnect
  */
-void G_ClientDisconnect (Player &player)
+void G_ClientDisconnect (Player& player)
 {
 #if 0
 	Edict* ent = nullptr;
