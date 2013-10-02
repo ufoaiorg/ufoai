@@ -531,8 +531,9 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
 }
 
 /**
- * @brief Spawns a smoke field that is available for some rounds
- * @param[in] vec The position in the world that is the center of the smoke field
+ * @brief Spawns a field that is available for some rounds
+ * @param[in] fieldtype The kind of field eg. smoke, fire, ...
+ * @param[in] vec The position in the world that is the center of the field
  * @param[in] particle The id of the particle (see ptl_*.ufo script files in base/ufos)
  * @param[in] rounds The number of rounds the particle will last
  * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
