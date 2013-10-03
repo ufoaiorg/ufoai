@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (playermask_t playerMask, const Edict &ent, const vec3_t origin, const char* sound)
+void G_EventSpawnSound (playermask_t playerMask, const Edict& ent, const vec3_t origin, const char* sound)
 {
 	G_EventAdd(playerMask, EV_SOUND, ent.number);
 
@@ -60,7 +60,7 @@ void G_EventSpawnSound (playermask_t playerMask, const Edict &ent, const vec3_t 
 	G_EventEnd();
 }
 
-void G_EventSpawnFootstepSound (const Edict &ent, const char* sound)
+void G_EventSpawnFootstepSound (const Edict& ent, const char* sound)
 {
 	const playermask_t playerMask = ~G_VisToPM(ent.visflags);
 	gi.QueueEvent(playerMask, EV_SOUND, ent.number);
@@ -75,7 +75,7 @@ void G_EventSpawnFootstepSound (const Edict &ent, const char* sound)
  * @note Every player that can see this ent will reveive the turn event data
  * @note Make sure that the direction to turn into is already set
  */
-void G_EventActorTurn (const Edict &ent)
+void G_EventActorTurn (const Edict& ent)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_TURN, ent.number);
 	gi.WriteByte(ent.dir);
@@ -86,7 +86,7 @@ void G_EventActorTurn (const Edict &ent)
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that is dying
  */
-void G_EventActorDie (const Edict &ent, bool attacker)
+void G_EventActorDie (const Edict& ent, bool attacker)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_DIE, ent.number);
 	gi.WriteShort(ent.state);
@@ -99,7 +99,7 @@ void G_EventActorDie (const Edict &ent, bool attacker)
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that was healed and woke up again
  */
-void G_EventActorRevitalise (const Edict &ent)
+void G_EventActorRevitalise (const Edict& ent)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_REVITALISED, ent.number);
 	gi.WriteShort(ent.state);
@@ -110,7 +110,7 @@ void G_EventActorRevitalise (const Edict &ent)
  * @brief Will inform the player about the real TU reservation
  * @param ent The actors edict.
  */
-void G_EventActorSendReservations (const Edict &ent)
+void G_EventActorSendReservations (const Edict& ent)
 {
 	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_RESERVATIONCHANGE, ent.number);
 	const chrReservations_t &reservedTUs = ent.chr.reservedTus;
@@ -129,7 +129,7 @@ void G_EventActorSendReservations (const Edict &ent)
  * @param[in] x Position of item in container.
  * @param[in] y Position of item in container.
  */
-void G_EventInventoryDelete (const Edict &ent, playermask_t playerMask, const containerIndex_t containerId, int x, int y)
+void G_EventInventoryDelete (const Edict& ent, playermask_t playerMask, const containerIndex_t containerId, int x, int y)
 {
 	G_EventAdd(playerMask, EV_INV_DEL, ent.number);
 	gi.WriteByte(containerId);
@@ -145,7 +145,7 @@ void G_EventInventoryDelete (const Edict &ent, playermask_t playerMask, const co
  * @param[in] itemAmount How many items to add.
  * @note This event must be followed by a @c G_WriteItem call
  */
-void G_EventInventoryAdd (const Edict &ent, playermask_t playerMask, int itemAmount)
+void G_EventInventoryAdd (const Edict& ent, playermask_t playerMask, int itemAmount)
 {
 	G_EventAdd(playerMask, EV_INV_ADD, ent.number);
 	gi.WriteShort(itemAmount);
@@ -156,7 +156,7 @@ void G_EventInventoryAdd (const Edict &ent, playermask_t playerMask, int itemAmo
  * @brief Send an event to all clients that are seeing the given edict, that it just has disappeared
  * @param ent The edict that disappeared
  */
-void G_EventPerish (const Edict &ent)
+void G_EventPerish (const Edict& ent)
 {
 	G_EventEdictPerish(G_VisToPM(ent.visflags), ent);
 }
@@ -165,7 +165,7 @@ void G_EventPerish (const Edict &ent)
  * @brief Unregister an edict at the client
  * @param ent The edict to unregister
  */
-void G_EventDestroyEdict (const Edict &ent)
+void G_EventDestroyEdict (const Edict& ent)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_ENT_DESTROY, ent.number);
@@ -179,7 +179,7 @@ void G_EventDestroyEdict (const Edict &ent)
  * @param amount The new amount of the left ammo
  * @param shootType The shooting type to determine which container to use
  */
-void G_EventInventoryAmmo (const Edict &ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
+void G_EventInventoryAmmo (const Edict& ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_INV_AMMO, ent.number);
 	gi.WriteByte(amount);
@@ -201,7 +201,7 @@ void G_EventInventoryAmmo (const Edict &ent, const objDef_t* ammo, int amount, s
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const Edict &ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const Edict& ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
 {
 	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_START_SHOOT, ent.number);
 	gi.WriteByte(shootType);
@@ -238,7 +238,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstSho
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const Edict& ent, teammask_t teamMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const Edict* targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
@@ -260,7 +260,7 @@ void G_EventShoot (const Edict &ent, teammask_t teamMask, const fireDef_t* fd, b
 	G_EventEnd();
 }
 
-void G_EventReactionFireChange (const Edict &ent)
+void G_EventReactionFireChange (const Edict& ent)
 {
 	const FiremodeSettings &fireMode = ent.chr.RFmode;
 	const objDef_t* od = fireMode.getWeapon();
@@ -273,7 +273,7 @@ void G_EventReactionFireChange (const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target, int tus, int step)
+void G_EventReactionFireAddTarget (const Edict& shooter, const Edict& target, int tus, int step)
 {
 	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);
 	gi.QueueWriteShort(target.number);
@@ -281,14 +281,14 @@ void G_EventReactionFireAddTarget (const Edict &shooter, const Edict &target, in
 	gi.QueueWriteByte(step);
 }
 
-void G_EventReactionFireRemoveTarget (const Edict &shooter, const Edict &target, int step)
+void G_EventReactionFireRemoveTarget (const Edict& shooter, const Edict& target, int step)
 {
 	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.number);
 	gi.QueueWriteShort(target.number);
 	gi.QueueWriteByte(step);
 }
 
-void G_EventReactionFireTargetUpdate (const Edict &shooter, const Edict &target, int tus, int step)
+void G_EventReactionFireTargetUpdate (const Edict& shooter, const Edict& target, int tus, int step)
 {
 	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIRETARGETUPDATE, shooter.number);
 	gi.QueueWriteShort(target.number);
@@ -316,7 +316,7 @@ void G_EventParticleSpawn (playermask_t playerMask, const char* name, int levelF
 	G_EventEnd();
 }
 
-void G_EventActorFall (const Edict &ent)
+void G_EventActorFall (const Edict& ent)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_MOVE, ent.number);
 	gi.WriteByte(1);
@@ -334,7 +334,7 @@ void G_EventActorFall (const Edict &ent)
  * @note It's assumed that the clientAction is already set
  * @param[in] ent The edict that can execute the action (an actor)
  */
-void G_EventSetClientAction (const Edict &ent)
+void G_EventSetClientAction (const Edict& ent)
 {
 	assert(ent.clientAction);
 	assert(ent.clientAction->flags & FL_CLIENTACTION);
@@ -350,14 +350,14 @@ void G_EventSetClientAction (const Edict &ent)
  * @param[in] ent The entity to reset the client action for
  * @note This event is send to the player this edict belongs to
  */
-void G_EventResetClientAction (const Edict &ent)
+void G_EventResetClientAction (const Edict& ent)
 {
 	const int playerMask = G_PlayerToPM(ent.getPlayer());
 	G_EventAdd(playerMask, EV_RESET_CLIENT_ACTION, ent.number);
 	G_EventEnd();
 }
 
-void G_EventActorStats (const Edict &ent, playermask_t playerMask)
+void G_EventActorStats (const Edict& ent, playermask_t playerMask)
 {
 	G_EventAdd(playerMask, EV_ACTOR_STATS, ent.number);
 	gi.WriteByte(ent.TU);
@@ -373,7 +373,7 @@ void G_EventActorStats (const Edict &ent, playermask_t playerMask)
  * @param[in] bodyPart The body part index we are sending wound info about.
  * @note This event is sent to the player this actor belongs to
  */
-void G_EventActorWound (const Edict &ent, const int bodyPart)
+void G_EventActorWound (const Edict& ent, const int bodyPart)
 {
 	const int mask = G_PlayerToPM(ent.getPlayer());
 	G_EventAdd(mask, EV_ACTOR_WOUND, ent.number);
@@ -395,7 +395,7 @@ void G_EventEndRound (void)
 	G_EventEnd();
 }
 
-void G_EventInventoryReload (const Edict &ent, playermask_t playerMask, const Item* item, const invDef_t* invDef, const Item* ic)
+void G_EventInventoryReload (const Edict& ent, playermask_t playerMask, const Item* item, const invDef_t* invDef, const Item* ic)
 {
 	G_EventAdd(playerMask, EV_INV_RELOAD, ent.number);
 	gi.WriteByte(item->def()->ammo);
@@ -431,7 +431,7 @@ void G_EventThrow (teammask_t teamMask, const fireDef_t* fd, float dt, byte flag
  * @brief Send the bounding box info to the client.
  * @param[in] ent The edict to send the bounding box for
  */
-void G_EventSendEdict (const Edict &ent)
+void G_EventSendEdict (const Edict& ent)
 {
 	G_EventAdd(PM_ALL, EV_ADD_EDICT, ent.number);
 	gi.WriteByte(ent.type);
@@ -440,7 +440,7 @@ void G_EventSendEdict (const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventSendState (playermask_t playerMask, const Edict &ent)
+void G_EventSendState (playermask_t playerMask, const Edict& ent)
 {
 	G_EventActorStateChange(playerMask & G_TeamToPM(ent.team), ent);
 
@@ -453,7 +453,7 @@ void G_EventSendState (playermask_t playerMask, const Edict &ent)
  * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
  * @param[in] ent The edict to use the position from
  */
-void G_EventCenterView (const Edict &ent)
+void G_EventCenterView (const Edict& ent)
 {
 	G_EventCenterViewAt(G_VisToPM(ent.visflags), ent.pos);
 }
@@ -485,7 +485,7 @@ void G_EventMoveCameraTo (playermask_t playerMask, const pos3_t pos)
 /**
  * @sa CL_ActorAdd
  */
-void G_EventActorAdd (playermask_t playerMask, const Edict &ent)
+void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_ACTOR_ADD, ent.number);
 	gi.WriteByte(ent.team);
@@ -503,7 +503,7 @@ void G_EventActorAdd (playermask_t playerMask, const Edict &ent)
  * @param[in] playerMask The clients that should see the particle
  * @param[in] ent The particle to spawn
  */
-void G_EventSendParticle (playermask_t playerMask, const Edict &ent)
+void G_EventSendParticle (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_PARTICLE_APPEAR, ent.number);
 	gi.WriteShort(ent.spawnflags);
@@ -517,7 +517,7 @@ void G_EventSendParticle (playermask_t playerMask, const Edict &ent)
  * @param playerMask The players to send the event to
  * @param ent The camera that should appear to the players included in the given mask.
  */
-void G_EventCameraAppear (playermask_t playerMask, const Edict &ent)
+void G_EventCameraAppear (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent.number);
 	gi.WritePos(ent.origin);
@@ -537,7 +537,7 @@ void G_EventCameraAppear (playermask_t playerMask, const Edict &ent)
  * @note Each following event that is relying on the fact that this edict must already
  * be known in the client, must also adopt the client side parsing of the event times.
  */
-void G_EventEdictAppear (playermask_t playerMask, const Edict &ent)
+void G_EventEdictAppear (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_ENT_APPEAR, ent.number);
 	gi.WriteByte(ent.type);
@@ -545,7 +545,7 @@ void G_EventEdictAppear (playermask_t playerMask, const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventActorAppear (playermask_t playerMask, const Edict &check, const Edict* ent)
+void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edict* ent)
 {
 	const int mask = G_TeamToPM(check.team) & playerMask;
 
@@ -598,7 +598,7 @@ void G_EventActorAppear (playermask_t playerMask, const Edict &check, const Edic
  * @param[in] playerMask The bitmask to determine the clients this event is send to
  * @param[in,out] ent The edict that perished
  */
-void G_EventEdictPerish (playermask_t playerMask, const Edict &ent)
+void G_EventEdictPerish (playermask_t playerMask, const Edict& ent)
 {
 	assert(ent.inuse);
 	G_EventAdd(playerMask, EV_ENT_PERISH, ent.number);
@@ -606,14 +606,14 @@ void G_EventEdictPerish (playermask_t playerMask, const Edict &ent)
 	G_EventEnd();
 }
 
-void G_EventActorStateChange (playermask_t playerMask, const Edict &ent)
+void G_EventActorStateChange (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_ACTOR_STATECHANGE, ent.number);
 	gi.WriteShort(ent.state);
 	G_EventEnd();
 }
 
-void G_EventAddBrushModel (playermask_t playerMask, const Edict &ent)
+void G_EventAddBrushModel (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_ADD_BRUSH_MODEL, ent.number);
 	gi.WriteByte(ent.type);
@@ -651,19 +651,19 @@ void G_EventReset (const Player& player, int activeTeam)
 	G_EventEnd();
 }
 
-void G_EventDoorOpen (const Edict &door)
+void G_EventDoorOpen (const Edict& door)
 {
 	G_EventAdd(PM_ALL, EV_DOOR_OPEN, door.number);
 	G_EventEnd();
 }
 
-void G_EventDoorClose (const Edict &door)
+void G_EventDoorClose (const Edict& door)
 {
 	G_EventAdd(PM_ALL, EV_DOOR_CLOSE, door.number);
 	G_EventEnd();
 }
 
-void G_EventModelExplodeTriggered (const Edict &ent, const char* sound)
+void G_EventModelExplodeTriggered (const Edict& ent, const char* sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED, ent.number);
@@ -671,7 +671,7 @@ void G_EventModelExplodeTriggered (const Edict &ent, const char* sound)
 	G_EventEnd();
 }
 
-void G_EventModelExplode (const Edict &ent, const char* sound)
+void G_EventModelExplode (const Edict& ent, const char* sound)
 {
 	assert(ent.inuse);
 	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE, ent.number);

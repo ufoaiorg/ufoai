@@ -243,7 +243,7 @@ void G_GiveTimeUnits (int team)
  * or perish. Might be @c nullptr.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict &check, const Edict* ent)
+void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict& check, const Edict* ent)
 {
 	teammask_t teamMaskDiff;
 
@@ -445,7 +445,7 @@ static void G_ClientTurn (Player& player, Edict* ent, dvec_t dvec)
  * are seeing him already.
  * @param ent The actor edict
  */
-static void G_ClientStateChangeUpdate (Edict &ent)
+static void G_ClientStateChangeUpdate (Edict& ent)
 {
 	/* Send the state change. */
 	G_EventSendState(G_VisToPM(ent.visflags), ent);

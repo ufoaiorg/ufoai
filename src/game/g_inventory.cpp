@@ -349,7 +349,7 @@ void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (playermask_t playerMask, const Edict &ent)
+void G_SendInventory (playermask_t playerMask, const Edict& ent)
 {
 	int nr = 0;
 

@@ -424,17 +424,17 @@ void G_VisFlagsClear (int team)
 	}
 }
 
-void G_VisFlagsAdd (Edict &ent, teammask_t teamMask)
+void G_VisFlagsAdd (Edict& ent, teammask_t teamMask)
 {
 	ent.visflags |= teamMask;
 }
 
-void G_VisFlagsReset (Edict &ent)
+void G_VisFlagsReset (Edict& ent)
 {
 	ent.visflags = 0;
 }
 
-void G_VisFlagsSwap (Edict &ent, teammask_t teamMask)
+void G_VisFlagsSwap (Edict& ent, teammask_t teamMask)
 {
 	ent.visflags ^= teamMask;
 }
