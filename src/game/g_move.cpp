@@ -215,6 +215,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
 		G_EventSpawnFootstepSound(*ent, snd);
 	}
 }
+
 /**
  * @brief Writes a step of the move event to the net
  * @param[in] ent Edict to move
@@ -240,7 +241,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 	gi.WriteShort(ent->speed);
 	gi.WriteShort(contentFlags);
 
-	/* Send the sound effect to everyone how's not seeing the actor */
+	/* Send the sound effect to everyone who's not seeing the actor */
 	if (!G_IsCrouched(ent)) {
 		G_SendFootstepSound(ent, contentFlags);
 	}
