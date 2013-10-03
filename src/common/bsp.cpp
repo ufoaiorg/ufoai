@@ -888,10 +888,6 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				const byte tile = mapData->reroute[actorSize][y][x];
 				if (tile) {
-					/** @note The new R_UpdateConnection updates both directions at the same time,
-					 * so we only need to check every other direction. */
-					/* Not needed until inverse tracing works again.
-					 * for (dir = 0; dir < CORE_DIRECTIONS; dir += 2) { */
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						const int dx = x + dvecs[dir][0];
 						const int dy = y + dvecs[dir][1];
