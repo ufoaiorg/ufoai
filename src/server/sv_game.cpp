@@ -758,7 +758,6 @@ void SV_InitGameProgs (void)
 	import.Trace = SV_Trace;
 	import.LinkEdict = SV_LinkEdict;
 	import.UnlinkEdict = SV_UnlinkEdict;
-	import.BoxEdicts = SV_AreaEdicts;
 
 	import.TestLine = SV_TestLine;
 	import.TestLineWithEnt = SV_TestLineWithEnt;
