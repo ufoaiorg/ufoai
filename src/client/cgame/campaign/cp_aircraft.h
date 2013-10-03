@@ -290,7 +290,7 @@ void AIR_RemoveEmployees(aircraft_t& aircraft);
 bool AIR_AddEmployee(Employee* employee, aircraft_t* aircraft);
 bool AIR_RemoveEmployee(Employee* employee, aircraft_t* aircraft);
 const aircraft_t* AIR_IsEmployeeInAircraft(const Employee* employee, const aircraft_t* aircraft);
-void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t& aircraft, equipDef_t &equip);
+void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t& aircraft, equipDef_t& equip);
 
 void AIR_AssignInitial(aircraft_t* aircraft);
 

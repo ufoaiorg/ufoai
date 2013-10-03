@@ -597,7 +597,7 @@ public:
 	Item* getItemAtPos (const invDef_t* container, const int x, const int y) const;
 	float getWeight () const;
 	int canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item* ignoredItem) const;
-	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const;
+	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item& item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;
 	/** @todo convert into iterator */
 	const Container* getNextCont (const Container* prev, bool inclTemp = false) const;

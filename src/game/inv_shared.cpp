@@ -905,7 +905,7 @@ void Inventory::findSpace (const invDef_t* container, const Item* item, int* con
  * @param[in] maxWeight The max permitted weight.
  * @return @c true if it is Ok to add the item @c false otherwise.
  */
-bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item &item, int maxWeight) const
+bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item& item, int maxWeight) const
 {
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;

@@ -262,7 +262,7 @@ void G_EventShoot (const Edict& ent, teammask_t teamMask, const fireDef_t* fd, b
 
 void G_EventReactionFireChange (const Edict& ent)
 {
-	const FiremodeSettings &fireMode = ent.chr.RFmode;
+	const FiremodeSettings& fireMode = ent.chr.RFmode;
 	const objDef_t* od = fireMode.getWeapon();
 
 	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_REACTIONFIRECHANGE, ent.number);

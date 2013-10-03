@@ -242,7 +242,7 @@ void UI_DrawItem (uiNode_t* node, const vec3_t org, const Item* item, int x, int
  * @param[in] stringMaxLength Max. string size of @c tooltipText.
  * @return Number of lines
  */
-void UI_GetItemTooltip (const Item &item, char* tooltipText, size_t stringMaxLength)
+void UI_GetItemTooltip (const Item& item, char* tooltipText, size_t stringMaxLength)
 {
 	assert(item.def());
 

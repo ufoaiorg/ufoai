@@ -803,7 +803,7 @@ int HUD_ReactionFireGetTUs (const le_t* actor)
 	if (!actor)
 		return -1;
 
-	const FiremodeSettings &fmSetting = CL_ActorGetChr(actor)->RFmode;
+	const FiremodeSettings& fmSetting = CL_ActorGetChr(actor)->RFmode;
 	const Item* weapon = actor->getHandItem(fmSetting.getHand());
 
 	if (!weapon)
@@ -1364,7 +1364,7 @@ static void HUD_UpdateActorLoad_f (void)
 			if (fireDef == nullptr)
 				continue;
 			for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-				const fireDef_t &fd = fireDef[i];
+				const fireDef_t& fd = fireDef[i];
 				if (fd.time > 0 && fd.time > tus) {
 					if (count <= 0)
 						Com_sprintf(popupText, sizeof(popupText), _("This soldier no longer has enough TUs to use the following items:\n\n"));

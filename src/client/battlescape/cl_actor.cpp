@@ -176,7 +176,7 @@ const fireDef_t* CL_ActorGetReactionFireFireDef (const le_t* shooter)
 	if (chr == nullptr)
 		return nullptr;
 
-	const FiremodeSettings &fmSetting = chr->RFmode;
+	const FiremodeSettings& fmSetting = chr->RFmode;
 	const Item* weapon = shooter->getHandItem(fmSetting.getHand());
 	if (weapon == nullptr)
 		return nullptr;

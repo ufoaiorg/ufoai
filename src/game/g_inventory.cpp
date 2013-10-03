@@ -336,7 +336,7 @@ void G_ReadItem (Item* item, const invDef_t** container, int* x, int* y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_WriteItem (const Item &item, const containerIndex_t contId, int x, int y)
+void G_WriteItem (const Item& item, const containerIndex_t contId, int x, int y)
 {
 	assert(item.def());
 	gi.WriteFormat("sbsbbbbs", item.def()->idx, item.getAmmoLeft(), item.ammoDef() ? item.ammoDef()->idx : NONE, contId, x, y, item.rotated, item.getAmount());
