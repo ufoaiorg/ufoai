@@ -224,8 +224,7 @@ void G_TakeDamage (Edict* ent, int damage)
 
 /**
  * @brief Renders all the traces on the client side if the cvar @c g_drawtraces is activated
- * @param start The start vector of the trace
- * @param end The end vector of the trace
+ * @param traceLine The start and end vectors of the line to trace
  */
 static inline void G_TraceDraw (const Line& traceLine)
 {
