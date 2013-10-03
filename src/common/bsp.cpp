@@ -858,7 +858,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 
 static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 {
-	actorSizeEnum_t size;
+	actorSizeEnum_t actorSize;
 	int x, y, z, dir;
 	double start, end;	/* stopwatch */
 
@@ -868,12 +868,12 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	rBox.clipToMaxBoundaries();
 
 	/* Floor pass */
-	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
+	for (actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
-				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
+				if (mapData->reroute[actorSize][y][x] == ROUTING_NOT_REACHABLE) {
 					for (z = rBox.getMaxZ(); z >= rBox.getMinZ(); z--) {
-						const int newZ = RT_CheckCell(mapTiles, mapData->routing, size + 1, x, y, z, nullptr);
+						const int newZ = RT_CheckCell(mapTiles, mapData->routing, actorSize + 1, x, y, z, nullptr);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -883,10 +883,10 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	}
 
 	/* Wall pass */
-	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
+	for (actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
-				const byte tile = mapData->reroute[size][y][x];
+				const byte tile = mapData->reroute[actorSize][y][x];
 				if (tile) {
 					/** @note The new R_UpdateConnection updates both directions at the same time,
 					 * so we only need to check every other direction. */
@@ -895,14 +895,13 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						const int dx = x + dvecs[dir][0];
 						const int dy = y + dvecs[dir][1];
-						int tile2; /**< Can't const: need to check bounds first. */
 						/* Skip if the destination is out of bounds. */
 						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 							continue;
-						tile2 = mapData->reroute[size][dy][dx];
+						const int tile2 = mapData->reroute[actorSize][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							RT_UpdateConnectionColumn(mapTiles, mapData->routing, size + 1, x, y, dir, nullptr);
+							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir, nullptr);
 						}
 					}
 				}
