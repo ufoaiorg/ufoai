@@ -259,11 +259,11 @@ static void SV_AreaEdicts_r (worldSector_t* node, areaParms_t* ap)
  * @param[in] maxCount The size of the given @c list
  * @return the number of pointers filled in
  */
-static int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int maxCount)
+static int SV_AreaEdicts (const AABB& abox, edict_t** list, int maxCount)
 {
 	areaParms_t	ap;
 
-	ap.areaBox.set(mins, maxs);
+	ap.areaBox.set(abox);
 	ap.areaEdictList = list;
 	ap.areaEdictListCount = 0;
 	ap.areaEdictListMaxCount = maxCount;
@@ -332,7 +332,7 @@ static void SV_ClipMoveToEntities (MoveClipSV* clip)
 	edict_t* touchlist[MAX_EDICTS];
 	const float* angles;
 	int headnode = 0;
-	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS);
+	const int num = SV_AreaEdicts(AABB(clip->boxmins, clip->boxmaxs), touchlist, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
