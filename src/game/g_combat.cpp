@@ -604,8 +604,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 	}
 }
 
-#define GRENADE_DT			0.1
-#define GRENADE_STOPSPEED	60.0
+#define GRENADE_DT			0.1f
+#define GRENADE_STOPSPEED	60.0f
 /**
  * @brief A parabola-type shoot (grenade, throw).
  * @sa G_ShootSingle
@@ -664,7 +664,7 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	gaussrand(&gauss1, &gauss2);
 
 	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY);
-	if (G_IsCrouched(shooter) && fd->crouch > 0.0) {
+	if (G_IsCrouched(shooter) && fd->crouch > 0.0f) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
@@ -679,8 +679,8 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	VectorCopy(last, oldPos);
 	vec3_t curV;
 	VectorCopy(startV, curV);
-	float time = 0;
-	dt = 0;
+	float time = 0.0f;
+	dt = 0.0f;
 	int bounce = 0;
 	byte flags = SF_BOUNCING;
 	vec3_t newPos;
@@ -688,12 +688,12 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	for (;;) {
 		/* kinematics */
 		VectorMA(oldPos, GRENADE_DT, curV, newPos);
-		newPos[2] -= 0.5 * GRAVITY * GRENADE_DT * GRENADE_DT;
+		newPos[2] -= 0.5f * GRAVITY * GRENADE_DT * GRENADE_DT;
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
 		trace_t tr = G_Trace(Line(oldPos, newPos), shooter, MASK_SHOT);
-		if (tr.fraction < 1.0 || time + dt > 4.0) {
+		if (tr.fraction < 1.0f || time + dt > 4.0f) {
 			/* the shooter possibly hit by the trace */
 			const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
 			if (trEnt && (trEnt->team == shooter->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
@@ -704,25 +704,24 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 			}
 
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
-			int i;
 
 			/* advance time */
 			dt += tr.fraction * GRENADE_DT;
 			time += dt;
 			bounce++;
 
-			if (tr.fraction < 1.0)
+			if (tr.fraction < 1.0f)
 				VectorCopy(tr.endpos, newPos);
 
 			/* calculate additional visibility */
 			if (!mock) {
-				for (i = 0; i < MAX_TEAMS; i++)
+				for (int i = 0; i < MAX_TEAMS; i++)
 					if (player.getTeam() != level.activeTeam && G_TeamPointVis(i, newPos))
 						mask |= 1 << i;
 			}
 
 			/* enough bouncing around or we have hit an actor */
-			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
+			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0f || bounce > fd->bounce
 			 || (!fd->delay && trEnt && G_IsActor(trEnt))) {
 				if (!mock) {
 					/* explode */
@@ -735,14 +734,14 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 				}
 
 				/* Grenade flew out of map! */
-				if (tr.fraction > 1.0)
+				if (tr.fraction > 1.0f)
 					return;
 
-				tr.endpos[2] += 10;
+				tr.endpos[2] += 10.0f;
 				VectorCopy(tr.endpos, impact);
 
 				/* check if this is a stone, ammo clip or grenade */
-				if (fd->splrad > 0.0) {
+				if (fd->splrad > 0.0f) {
 					G_SplashDamage(shooter, fd, impact, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
@@ -771,7 +770,7 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 			VectorCopy(tr.endpos, last);
 			VectorCopy(tr.endpos, oldPos);
 			VectorCopy(curV, startV);
-			dt = 0;
+			dt = 0.0f;
 		} else {
 			dt += GRENADE_DT;
 			VectorCopy(newPos, oldPos);
@@ -877,7 +876,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
 	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
-	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
+	if (G_IsCrouched(ent) && fd->crouch > 0.0f) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
@@ -904,7 +903,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 	trace_t tr = G_Trace(Line(cur_loc, impact), ent, MASK_SHOT);
 	Edict* trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
-		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
+		VectorMA(cur_loc, UNIT_SIZE * 1.4f, dir, cur_loc);
 
 	vec3_t tracefrom;	/* sum */
 	VectorCopy(cur_loc, tracefrom);
@@ -934,7 +933,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 		VectorCopy(tr.endpos, impact);
 
 		/* set flags when trace hit something */
-		if (tr.fraction < 1.0) {
+		if (tr.fraction < 1.0f) {
 			if (trEnt && G_IsActor(trEnt)
 				/* check if we differentiate between body and wall */
 				&& !fd->delay)
@@ -965,7 +964,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 			}
 		}
 
-		if (tr.fraction < 1.0 && !fd->bounce) {
+		if (tr.fraction < 1.0f && !fd->bounce) {
 			/* check for shooting through wall */
 			if (throughWall && (tr.contentFlags & CONTENTS_SOLID)) {
 				throughWall--;
@@ -979,7 +978,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 			}
 
 			/* do splash damage */
-			if (fd->splrad > 0.0) {
+			if (fd->splrad > 0.0f) {
 				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 				G_SplashDamage(ent, fd, impact, mock, &tr);
 			}
@@ -989,7 +988,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 		/* bounce is checked here to see if the rubber rocket hit walls enough times to wear out*/
 		bounce++;
 		/* stop, we hit something or have bounced enough */
-		if (hitEnt || bounce > fd->bounce || tr.fraction >= 1.0) {
+		if (hitEnt || bounce > fd->bounce || tr.fraction >= 1.0f) {
 			if (!mock) {
 				/* spawn the throwable item on the floor but only if it is not depletable */
 				if (fd->ammo && !fd->splrad && weapon->def()->thrown && !weapon->def()->deplete) {
@@ -998,7 +997,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 					if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
 						VectorCopy(at, drop);
 					} else {
-						impact[2] -= 20; /* a hack: no-gravity items are flying high */
+						impact[2] -= 20.0f; /* a hack: no-gravity items are flying high */
 						VecToPos(impact, drop);
 					}
 
