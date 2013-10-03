@@ -57,15 +57,10 @@ typedef struct mobj_s {
 
 static void R_LoadObjModelVertexArrays (mobj_t* obj, model_t* mod)
 {
-	const mobjtri_t* t;
-	int i, j, vertind, coordind;
 	mAliasMesh_t* mesh = mod->alias.meshes;
 	const int v = obj->num_tris * 3 * 3;
 	const int st = obj->num_tris * 3 * 2;
-
-	vertind = coordind = 0;
-
-	t = obj->tris;
+	const mobjtri_t* t = obj->tris;
 
 	mesh->num_tris = obj->num_tris;
 	mesh->num_verts = obj->num_verts;
@@ -75,11 +70,12 @@ static void R_LoadObjModelVertexArrays (mobj_t* obj, model_t* mod)
 	mesh->texcoords = Mem_PoolAllocTypeN(float, st, vid_modelPool);
 
 	/* fill the arrays */
-	for (i = 0; i < obj->num_tris; i++, t++) {
+	int vertind = 0, coordind = 0;
+	for (int i = 0; i < obj->num_tris; i++, t++) {
 		const mobjvert_t* v = t->verts;
 
 		/* each vert */
-		for (j = 0; j < 3; j++, v++) {
+		for (int j = 0; j < 3; j++, v++) {
 			assert(v->vert - 1 >= 0);
 			VectorCopy((&obj->verts[(v->vert - 1) * 3]), (&mesh->verts[vertind + j * 3]));
 
@@ -106,14 +102,12 @@ static void R_LoadObjModelVertexArrays (mobj_t* obj, model_t* mod)
  */
 static void R_LoadObjModelTris (mobj_t* obj, const mobjvert_t* verts, int count)
 {
-	int i;
-
 	if (!obj->tris)
 		return;
 
 	assert(count < MAX_OBJ_FACE_VERTS);
 
-	for (i = 0; i < count; i++) {  /* walk around the polygon */
+	for (int i = 0; i < count; i++) {  /* walk around the polygon */
 		const int v0 = 0;
 		const int v1 = 1 + i;
 		const int v2 = 2 + i;
@@ -328,14 +322,10 @@ static void R_LoadObjSkin (model_t* mod)
  */
 static void R_LoadObjModel_ (model_t* mod, mobj_t* obj, const byte* buffer, int bufSize)
 {
+	const byte* c = buffer;
+	bool comment = false;
+	int i = 0;
 	char line[MAX_STRING_CHARS];
-	const byte* c;
-	bool comment;
-	int i;
-
-	c = buffer;
-	comment = false;
-	i = 0;
 
 	while (c[0] != '\0') {
 		if (c[0] == '#') {
@@ -363,8 +353,6 @@ static void R_LoadObjModel_ (model_t* mod, mobj_t* obj, const byte* buffer, int 
 void R_LoadObjModel (model_t* mod, byte* buffer, int bufSize)
 {
 	mobj_t obj;
-	const float* v;
-	int i;
 
 	mod->type = mod_obj;
 
@@ -390,9 +378,9 @@ void R_LoadObjModel (model_t* mod, byte* buffer, int bufSize)
 	/* load the primitives */
 	R_LoadObjModel_(mod, &obj, buffer, bufSize);
 
-	v = obj.verts;
+	const float* v = obj.verts;
 	/* resolve mins/maxs */
-	for (i = 0; i < obj.num_verts; i++, v += 3)
+	for (int i = 0; i < obj.num_verts; i++, v += 3)
 		AddPointToBounds(v, mod->modBox.mins, mod->modBox.maxs);
 
 	/* we only have one mesh in obj files */
