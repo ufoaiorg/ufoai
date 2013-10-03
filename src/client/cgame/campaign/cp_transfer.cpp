@@ -157,7 +157,7 @@ bool TR_AddData (transferData_t* transferData, transferCargoType_t type, const v
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-transfer_t* TR_TransferStart (base_t* srcBase, transferData_t &transData)
+transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 {
 	transfer_t transfer;
 	float time;

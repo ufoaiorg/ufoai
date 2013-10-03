@@ -61,7 +61,7 @@ void R_ClearGrass ()
 	OBJZERO(clumpTrianglesForLevel);
 }
 
-static void R_PlantGrass (Clump &clump)
+static void R_PlantGrass (Clump& clump)
 {
 	if (clumpTriangleCount + TRIS_PER_CLUMP >= MAX_CLUMP_TRIS) {
 		clump.firstTriangle = clumpTriangleCount;
@@ -185,7 +185,7 @@ static void R_AddClump (const vec3_t pos, const vec3_t normal, int level)
 	if (clumpCount >= MAX_CLUMPS)
 		return;
 
-	Clump &cp = clumps[clumpCount];
+	Clump& cp = clumps[clumpCount];
 
 	VectorCopy(pos, cp.position);
 	VectorCopy(normal, cp.normal);
@@ -385,7 +385,7 @@ void R_GenerateGrass ()
 		for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 			if (clumpsForLevel[i] > lastClumpCount) {
 				lastClumpCount = clumpsForLevel[i];
-				const Clump &clump = clumps[lastClumpCount - 1];
+				const Clump& clump = clumps[lastClumpCount - 1];
 				triangles = clump.firstTriangle + clump.numTriangles;
 			}
 			clumpTrianglesForLevel[i] = triangles;

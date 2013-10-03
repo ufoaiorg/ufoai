@@ -524,7 +524,7 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 
 		/* reached target and not following a phalanx aircraft? then we need a new destination */
 		if (AIR_AircraftMakeMove(deltaTime, ufo) && ufo->status != AIR_UFO) {
-			const vec2_t &end = ufo->route.point[ufo->route.numPoints - 1];
+			const vec2_t& end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
 			GEO_CheckPositionBoundaries(ufo->pos);
 			if (ufo->mission->stage == STAGE_INTERCEPT && ufo->mission->data.aircraft) {

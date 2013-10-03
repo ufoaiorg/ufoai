@@ -56,7 +56,7 @@ static float HOS_GetInjuryLevel (const character_t* const chr)
 	return injuryLevel;
 }
 
-static const char* HOS_GetRank (const Employee &employee)
+static const char* HOS_GetRank (const Employee& employee)
 {
 	/* Print rank for soldiers or type for other employees. */
 	if (employee.isSoldier()) {
@@ -66,7 +66,7 @@ static const char* HOS_GetRank (const Employee &employee)
 	return E_GetEmployeeString(employee.getType(), 1);
 }
 
-static const char* HOS_GetInjuryLevelString (const Employee &employee, float injuryLevel)
+static const char* HOS_GetInjuryLevelString (const Employee& employee, float injuryLevel)
 {
 	/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 	if (employee.chr.HP <= (int) (employee.chr.maxHP * 0.5) || injuryLevel >= 0.5)
