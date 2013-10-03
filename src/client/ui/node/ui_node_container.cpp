@@ -506,7 +506,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t* node, const objDef_t* highlightT
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	const Container &cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
+	const Container& cont = ui_inventory->getContainer(EXTRADATA(node).container->id);
 	Item* item = nullptr;
 	while ((item = cont.getNextItem(item))) {
 		assert(item->def());

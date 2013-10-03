@@ -1751,7 +1751,7 @@ static void Com_ParseArmourOrResistance (const char* name, const char** text, sh
 			return;
 
 		for (i = 0; i < csi.numDTs; i++) {
-			const damageType_t &dt = csi.dts[i];
+			const damageType_t& dt = csi.dts[i];
 			if (Q_streq(token, dt.id)) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)

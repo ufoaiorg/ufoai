@@ -762,7 +762,7 @@ static int NET_StreamPeek (struct net_stream* s, char* data, int len)
 	if (len <= 0 || !s)
 		return 0;
 
-	dbufferptr &dbuf = s->inbound;
+	dbufferptr& dbuf = s->inbound;
 	if ((s->closed || s->finished) && dbuffer_len(dbuf) == 0)
 		return 0;
 

@@ -70,7 +70,7 @@ static const char* WEB_CGameGetURL (char* out, size_t outSize, const char* url, 
 
 	const size_t entries = lengthof(urlIds);
 	for (int i = 0; i < entries; i++) {
-		const urlIds_s &id = urlIds[i];
+		const urlIds_s& id = urlIds[i];
 		if (strstr(out, id.id) != nullptr) {
 			char encoded[256] = { '\0' };
 			const char* replace = encoded;

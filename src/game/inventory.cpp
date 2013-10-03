@@ -273,7 +273,7 @@ inventory_action_t InventoryInterface::moveInInventory (Inventory* const inv, co
 		if (from->scroll)
 			return IA_NONE;
 
-		const Container &cont = inv->getContainer(from->id);
+		const Container& cont = inv->getContainer(from->id);
 		Item* item = nullptr;
 		while ((item = cont.getNextItem(item))) {
 			if (item != fItem)

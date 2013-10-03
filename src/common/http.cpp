@@ -161,7 +161,7 @@ static void HTTP_ResolvURL (const char* url, char* buf, size_t size)
  * @brief Gets a specific url
  * @note Make sure, that you free the string that is returned by this function
  */
-static bool HTTP_GetURLInternal (dlhandle_t &dl, const char* url, FILE* file, const char* postfields)
+static bool HTTP_GetURLInternal (dlhandle_t& dl, const char* url, FILE* file, const char* postfields)
 {
 	if (Q_strnull(url)) {
 		Com_Printf("invalid url given\n");

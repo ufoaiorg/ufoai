@@ -284,7 +284,7 @@ public:
 	short getRandomBodyPart(void) const;
 	short numBodyParts (void) const;
 	void setId(const char* id);
-	void addBodyPart(const BodyPartData &bodyPart);
+	void addBodyPart(const BodyPartData& bodyPart);
 	short getHitBodyPart(const byte direction, const float height) const;
 	float getArea(const short bodyPart) const;
 };

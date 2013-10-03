@@ -161,7 +161,7 @@ static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invD
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
-		const Container &cont = inv->getContainer(container->id);
+		const Container& cont = inv->getContainer(container->id);
 		Item* item = nullptr;
 		while ((item = cont.getNextItem(item))) {
 			if (ignoredItem == item)
@@ -842,7 +842,7 @@ Item* Inventory::getItemAtPos (const invDef_t* container, const int x, const int
 		Sys_Error("getItemAtPos: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
-	const Container &cont = getContainer(container->id);
+	const Container& cont = getContainer(container->id);
 	Item* item = nullptr;
 	while ((item = cont.getNextItem(item)))
 		if (INVSH_ShapeCheckPosition(item, x, y))
@@ -984,7 +984,7 @@ Item* Inventory::getArmour () const
  */
 Item* Inventory::findInContainer (const containerIndex_t contId, const Item* const searchItem) const
 {
-	const Container &cont = getContainer(contId);
+	const Container& cont = getContainer(contId);
 	Item* item = nullptr;
 	while ((item = cont.getNextItem(item)))
 		if (item->isSameAs(searchItem)) {

@@ -657,7 +657,7 @@ static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, co
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (const RoutingData* rtd, const Line &traceLine, int hi, int lo)
+static trace_t RT_ObstructedTrace (const RoutingData* rtd, const Line& traceLine, int hi, int lo)
 {
 	AABB box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * rtd->actorSize / 2 - WALL_SIZE - DIST_EPSILON;

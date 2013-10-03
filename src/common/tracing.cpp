@@ -1124,7 +1124,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in the first tile.  Used by ufo2map.
  */
-trace_t TR_SingleTileBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_SingleTileBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, const AABB* traceBox, const int levelmask, const int brushmask, const int brushreject)
 {
 	/* Trace the whole line against the first tile. */
 	trace_t tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);

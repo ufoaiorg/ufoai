@@ -45,7 +45,7 @@ AABB::AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t ma
 	maxs[1] = maxY;
 	maxs[2] = maxZ;
 }
-AABB::AABB (const Line &line)
+AABB::AABB (const Line& line)
 {
 	VectorSet(mins, std::min(line.start[0], line.stop[0]), std::min(line.start[1], line.stop[1]), std::min(line.start[2], line.stop[2]));
 	VectorSet(maxs, std::max(line.start[0], line.stop[0]), std::max(line.start[1], line.stop[1]), std::max(line.start[2], line.stop[2]));
