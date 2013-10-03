@@ -26,7 +26,7 @@ private:
 
 public:
 	dbuffer (int reserve = 512);
-	dbuffer (const dbuffer &other);
+	dbuffer (const dbuffer& other);
 	virtual ~dbuffer ();
 
 	/* Append the given byte string to the buffer */

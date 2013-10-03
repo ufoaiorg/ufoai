@@ -29,7 +29,7 @@ dbuffer::dbuffer (int reserve) : _length(0)
 	_data.reserve(reserve);
 }
 
-dbuffer::dbuffer (const dbuffer &other)
+dbuffer::dbuffer (const dbuffer& other)
 {
 	_data = other._data;
 	_length = other._length;

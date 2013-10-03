@@ -123,7 +123,7 @@ void SV_BroadcastPrintf (int level, const char* fmt, ...)
  * @param[in] mask Bitmask of the players to send the multicast to
  * @param[in,out] msg The message to send to the clients
  */
-void SV_Multicast (int mask, const dbuffer &msg)
+void SV_Multicast (int mask, const dbuffer& msg)
 {
 	/* send the data to all relevant clients */
 	client_t* cl = nullptr;
