@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../shared/moveclip.h"
 #include "server.h"
 #include "../common/qfiles.h"
 
@@ -272,19 +273,11 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t** list, int max
 	return ap.areaEdictListCount;
 }
 
-class MoveClip
-{
-public:
-	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	const float* mins, *maxs;	/**< size of the moving object */
-	const float* start, *end;
-	trace_t trace;
-	int contentmask;
-};
 /** @brief Server side moveclip - see cmodel.c */
 class MoveClipSV : public MoveClip
 {
 public:
+	trace_t trace;
 	const edict_t* passedict;
 };
 
