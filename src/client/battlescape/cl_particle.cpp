@@ -859,8 +859,7 @@ typedef struct ptlTraceCache_s {
 	int count;
 	vec3_t start;
 	vec3_t end;
-	vec3_t mins;
-	vec3_t maxs;
+	AABB pBox;
 	trace_t trace;
 } ptlTraceCache_t;
 
@@ -874,15 +873,14 @@ static trace_t PTL_Trace (ptl_t* ptl, const AABB& aabb)
 	const float epsilonBBox = 1.0f;
 
 	if (VectorCompareEps(ptlCache.start, ptl->origin, epsilonPos) && VectorCompareEps(ptlCache.end, ptl->s, epsilonPos)
-			&& VectorCompareEps(ptlCache.mins, aabb.mins, epsilonBBox) && VectorCompareEps(ptlCache.maxs, aabb.maxs, epsilonBBox)) {
+			&& VectorCompareEps(ptlCache.pBox.mins, aabb.mins, epsilonBBox) && VectorCompareEps(ptlCache.pBox.maxs, aabb.maxs, epsilonBBox)) {
 		ptlCache.count++;
 		return ptlCache.trace;
 	}
 
 	VectorCopy(ptl->origin, ptlCache.start);
 	VectorCopy(ptl->s, ptlCache.end);
-	VectorCopy(aabb.mins, ptlCache.mins);
-	VectorCopy(aabb.maxs, ptlCache.maxs);
+	ptlCache.pBox.set(aabb);
 
 	ptlCache.trace = CL_Trace(Line(ptl->origin, ptl->s), aabb, nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1);
 	return ptlCache.trace;
