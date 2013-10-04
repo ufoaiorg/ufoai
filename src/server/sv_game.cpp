@@ -322,7 +322,7 @@ static void SV_AbortEvents (void)
 static void SV_SendQueuedEvents (void)
 {
 	for (int i = 0; i < sv->eventQueuePos; i++) {
-		pending_event_t &entry = sv->eventQueue[i];
+		pending_event_t& entry = sv->eventQueue[i];
 		NET_WriteByte(entry.buf, EV_NULL);
 		SV_Multicast(entry.playerMask, *entry.buf);
 		delete entry.buf;
@@ -462,7 +462,7 @@ static void SV_QueueEvent (unsigned int mask, int eType, int entnum)
 	if (sv->eventQueuePos > lengthof(sv->eventQueue))
 		Com_Error(ERR_DROP, "overflow in SV_QueueEvent");
 
-	pending_event_t &p = sv->eventQueue[sv->eventQueuePos++];
+	pending_event_t& p = sv->eventQueue[sv->eventQueuePos++];
 
 	/* start the new event */
 	p.pending = false;
@@ -518,7 +518,7 @@ static edict_t* SV_GetEventEdict (void)
 	if (p->entnum == -1)
 		return nullptr;
 
-	const sv_edict_t &e = sv->edicts[p->entnum];
+	const sv_edict_t& e = sv->edicts[p->entnum];
 	return e.ent;
 }
 

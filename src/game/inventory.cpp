@@ -543,7 +543,7 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
  * @param[out] slowestFd The TU needed to use the slowest fireDef in the inventory.
  * @note temp containers are excluded.
  */
-float InventoryInterface::GetInventoryState (const Inventory* inventory, int &slowestFd)
+float InventoryInterface::GetInventoryState (const Inventory* inventory, int& slowestFd)
 {
 	float weight = 0;
 

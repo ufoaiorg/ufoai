@@ -81,6 +81,6 @@ protected:
 	}
 	void removeInvList (Item* invList);
 	Item* addInvList (Inventory* const inv, const invDef_t* container);
-	float GetInventoryState (const Inventory* inventory, int &slowestFd);
+	float GetInventoryState (const Inventory* inventory, int& slowestFd);
 	int PackAmmoAndWeapon (character_t* const chr, const objDef_t* weapon, int missedPrimary, const equipDef_t* ed, int maxWeight);
 };

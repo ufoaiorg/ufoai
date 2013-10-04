@@ -113,7 +113,7 @@ void G_EventActorRevitalise (const Edict& ent)
 void G_EventActorSendReservations (const Edict& ent)
 {
 	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_RESERVATIONCHANGE, ent.number);
-	const chrReservations_t &reservedTUs = ent.chr.reservedTus;
+	const chrReservations_t& reservedTUs = ent.chr.reservedTus;
 	gi.WriteShort(reservedTUs.reaction);
 	gi.WriteShort(reservedTUs.shot);
 	gi.WriteShort(reservedTUs.crouch);
