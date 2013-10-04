@@ -136,8 +136,7 @@ void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t* ed)
  * @param[in] node Context node
  * @param[in] org Node position on the screen (pixel). Single nodes: Use the center of the node.
  * @param[in] item The item to draw.
- * @param[in] x Position in container. Set this to -1 if it's drawn in a single container.
- * @param[in] y Position in container. Set this to -1 if it's drawn in a single container.
+ * @param[in] x,y Position in container. Set both to -1 if it's drawn in a single container.
  * @param[in] scale
  * @param[in] color
  * @sa SCR_DrawCursor
@@ -648,8 +647,7 @@ static Item* UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int 
 /**
  * @brief Custom tooltip for container node
  * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
+ * @param[in] x,y Position of the mouse
  */
 void uiContainerNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {
