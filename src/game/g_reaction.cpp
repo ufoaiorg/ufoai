@@ -296,7 +296,7 @@ void ReactionFireTargets::remove (const Edict* shooter, const Edict* target)
 	assert(target);
 
 	for (int i = 0; i < rfts->count; i++) {
-		ReactionFireTarget &t = rfts->targets[i];
+		ReactionFireTarget& t = rfts->targets[i];
 		if (t.target != target)
 			continue;
 
@@ -339,7 +339,7 @@ int ReactionFireTargets::getTriggerTUs (const Edict* shooter, const Edict* targe
 	assert(target);
 
 	for (int i = 0; i < rfts->count; i++) {
-		const ReactionFireTarget &t = rfts->targets[i];
+		const ReactionFireTarget& t = rfts->targets[i];
 		if (t.target == target)
 			return t.triggerTUs;
 	}
@@ -364,7 +364,7 @@ bool ReactionFireTargets::hasExpired (const Edict* shooter, const Edict* target,
 	assert(target);
 
 	for (int i = 0; i < rfts->count; i++) {
-		const ReactionFireTarget &t = rfts->targets[i];
+		const ReactionFireTarget& t = rfts->targets[i];
 		if (t.target == target)
 			return t.triggerTUs >= target->TU - tusTarget;
 	}
@@ -384,7 +384,7 @@ void ReactionFireTargets::advance (const Edict* shooter, const int tusShot)
 	assert(rfts);
 
 	for (int i = 0; i < rfts->count; i++) {
-		ReactionFireTarget &t = rfts->targets[i];
+		ReactionFireTarget& t = rfts->targets[i];
 		t.triggerTUs -= tusShot;
 	}
 }

@@ -201,7 +201,7 @@ CONNECTIONLESS COMMANDS
 /**
  * @brief Find or allocate a bucket for an address
  */
-static leakyBucket_t* SVC_BucketForAddress (struct net_stream &address, int burst, int period)
+static leakyBucket_t* SVC_BucketForAddress (struct net_stream& address, int burst, int period)
 {
 	char node[64];
 	NET_StreamPeerToName(&address, node, sizeof(node), false);
@@ -287,7 +287,7 @@ static bool SVC_RateLimit (leakyBucket_t* bucket, int burst = 10, int period = 1
 /**
  * @brief Rate limit for a particular address
  */
-static bool SVC_RateLimitAddress (struct net_stream &from, int burst = 10, int period = 1000)
+static bool SVC_RateLimitAddress (struct net_stream& from, int burst = 10, int period = 1000)
 {
 	leakyBucket_t* bucket = SVC_BucketForAddress(from, burst, period);
 	return SVC_RateLimit(bucket, burst, period);

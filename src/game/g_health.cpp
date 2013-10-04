@@ -143,7 +143,7 @@ void G_BleedWounds (const int team)
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
 		const teamDef_t* const teamDef = ent->chr.teamDef;
-		woundInfo_t &wounds = ent->chr.wounds;
+		woundInfo_t& wounds = ent->chr.wounds;
 		for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
 				damage += wounds.woundLevel[bodyPart] * teamDef->bodyTemplate->bleedingFactor(bodyPart);
@@ -166,7 +166,7 @@ void G_SendWoundStats (Edict* const ent)
 	int i;
 	for (i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
 		/* Sanity checks */
-		woundInfo_t &wounds = ent->chr.wounds;
+		woundInfo_t& wounds = ent->chr.wounds;
 		wounds.woundLevel[i] = std::max(0, wounds.woundLevel[i]);
 		wounds.treatmentLevel[i] = std::max(0, wounds.treatmentLevel[i]);
 		wounds.woundLevel[i] = std::min(255, wounds.woundLevel[i]);
