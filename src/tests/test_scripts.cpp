@@ -58,7 +58,6 @@ static int UFO_InitSuiteScripts (void)
  */
 static int UFO_CleanSuiteScripts (void)
 {
-	UI_Shutdown();
 	TEST_Shutdown();
 	return 0;
 }

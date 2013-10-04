@@ -127,7 +127,6 @@ static int UFO_InitSuiteCampaign (void)
  */
 static int UFO_CleanSuiteCampaign (void)
 {
-	UI_Shutdown();
 	CP_ResetCampaignData();
 	TEST_Shutdown();
 	return 0;
