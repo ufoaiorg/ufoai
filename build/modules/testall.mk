@@ -94,7 +94,7 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	game/q_shared.cpp \
 	game/chr_shared.cpp \
 	game/inv_shared.cpp \
-	game/inventory.cpp \
+	game/inventory.cpp ) \
 	\
 	$(game_SRCS) \
 	\
@@ -108,7 +108,7 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
-	$(JPEG_SRCS) )
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS_TMP += \

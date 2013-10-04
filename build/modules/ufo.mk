@@ -91,7 +91,7 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	game/q_shared.cpp \
 	game/chr_shared.cpp \
 	game/inv_shared.cpp \
-	game/inventory.cpp \
+	game/inventory.cpp ) \
 	\
 	$(MXML_SRCS)\
 	\
@@ -103,7 +103,7 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
-	$(JPEG_SRCS) )
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
