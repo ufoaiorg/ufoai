@@ -108,6 +108,9 @@ public:
 	inline float getWidthY () const {
 		return getMaxY() - getMinY();
 	}
+	inline float getWidthZ () const {
+		return getMaxZ() - getMinZ();
+	}
 
 	/**
 	 * @brief Calculates the center of the bounding box
