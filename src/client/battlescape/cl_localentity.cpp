@@ -1611,7 +1611,7 @@ typedef struct moveclip_s {
 	const float* start, *end;
 	trace_t trace;
 	const le_t* passle, *passle2;		/**< ignore these for clipping */
-	int contentmask;			/**< search these in your trace - see MASK_* */
+	int contentmask;
 } moveclip_t;
 
 const cBspModel_t* LE_GetClipModel (const le_t* le)
