@@ -966,13 +966,13 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 	/* only check the first two values for being zero */
 	if (Vector2Empty(value1)) {
 		yaw = 0.0f;
-		if (value1[2] > 0)
+		if (value1[2] > 0.0f)
 			pitch = 90.0f;
 		else
 			pitch = 270.0f;
 	} else {
 		const float forward = sqrt(value1[0] * value1[0] + value1[1] * value1[1]);
-		if (!EQUAL(value1[0], 0.0))
+		if (!EQUAL(value1[0], 0.0f))
 			yaw = atan2(value1[1], value1[0]) * todeg;
 		else if (value1[1] > 0.0f)
 			yaw = 90.0f;
