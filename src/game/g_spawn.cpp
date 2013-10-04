@@ -580,48 +580,12 @@ void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_
 
 void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	vec_t x, y;
-
-	G_SpawnFieldPart(ET_FIRE, vec, particle, rounds, damage);
-
-	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
-		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
-			vec3_t end;
-			VectorSet(end, x, y, vec[2]);
-
-			if (VectorDist(end, vec) > radius)
-				continue;
-			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
-				continue;
-			}
-			G_SpawnFieldPart(ET_FIRE, end, particle, rounds, damage);
-		}
-	}
+	G_SpawnField(ET_FIRE, vec, particle, rounds, damage, radius);
 }
 
 void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	vec_t x, y;
-
-	G_SpawnFieldPart(ET_SMOKESTUN, vec, particle, rounds, damage);
-
-	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
-		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
-			vec3_t end;
-			VectorSet(end, x, y, vec[2]);
-
-			if (VectorDist(end, vec) > radius)
-				continue;
-			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
-				continue;
-			}
-			G_SpawnFieldPart(ET_SMOKESTUN, end, particle, rounds, damage);
-		}
-	}
+	G_SpawnField(ET_SMOKESTUN, vec, particle, rounds, damage, radius);
 }
 
 /**
