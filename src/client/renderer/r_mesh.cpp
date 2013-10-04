@@ -282,7 +282,7 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
  */
 void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t* mi, vec3_t scale, vec3_t center)
 {
-	const float width = mi->model->modBox.maxs[0] - mi->model->modBox.mins[0];
+	const float width = mi->model->modBox.getWidthX();
 	const float height = mi->model->modBox.maxs[2] - mi->model->modBox.mins[2];
 	const float factorX = boxSize[0] / width;
 	const float factorY = boxSize[1] / height;
