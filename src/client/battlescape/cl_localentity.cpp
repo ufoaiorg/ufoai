@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../../common/tracing.h"
 #include "../../common/grid.h"
+#include "../../shared/moveclip.h"
 
 cvar_t* cl_le_debug;
 cvar_t* cl_trace_debug;
@@ -1605,14 +1606,12 @@ void LM_List_f (void)
 =========================================================================== */
 
 /** @brief Client side moveclip */
-typedef struct moveclip_s {
-	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	const float* mins, *maxs;	/**< size of the moving object */
-	const float* start, *end;
+class MoveClipCL : public MoveClip
+{
+public:
 	trace_t trace;
 	const le_t* passle, *passle2;		/**< ignore these for clipping */
-	int contentmask;
-} moveclip_t;
+};
 
 const cBspModel_t* LE_GetClipModel (const le_t* le)
 {
@@ -1675,7 +1674,7 @@ static int32_t CL_HullForEntity (const le_t* le, int* tile, vec3_t rmaShift, vec
  * @sa CL_Trace
  * @sa SV_ClipMoveToEntities
  */
-static void CL_ClipMoveToLEs (moveclip_t* clip)
+static void CL_ClipMoveToLEs (MoveClipCL* clip)
 {
 	le_t* le = nullptr;
 
@@ -1759,7 +1758,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  */
 trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
 {
-	moveclip_t clip;
+	MoveClipCL clip;
 
 	if (cl_trace_debug->integer)
 		R_DrawBoundingBoxBatched(box.mins, box.maxs);
