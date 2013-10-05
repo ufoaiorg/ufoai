@@ -903,6 +903,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		GridBox rBox(box);			/* the box we will actually reroute */
 		rBox.expandXY(actorSize);	/* for connections, expand by the full size of the actor */
+		rBox.addOneZ();
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
@@ -929,8 +930,8 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 						if (y < box.getMinY() - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
-					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);
-				//	RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list, box.getMinZ(), box.getMaxZ());
+				//	RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);
+					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list, rBox.getMinZ(), rBox.getMaxZ());
 				}
 			}
 		}
