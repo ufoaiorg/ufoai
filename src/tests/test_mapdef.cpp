@@ -331,7 +331,9 @@ static void testMapDefsFootSteps (void)
 
 		int count = 0;
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
-		SV_Map(true, md->map, md->params);
+
+		const char* ass = (const char*)LIST_GetByIdx(md->params, 0);
+		SV_Map(true, md->map, ass);
 
 		/* now that we have loaded the map, check all cells for walkable places */
 		GridBox mBox(sv->mapData.mapBox);	// test ALL the cells
