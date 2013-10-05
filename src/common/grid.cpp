@@ -929,7 +929,8 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 						if (y < box.getMinY() - 1 && dir != 2 && dir != 4 && dir != 6)
 							continue;
 					}
-					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list, box.getMinZ(), box.getMaxZ());
+					RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list);
+				//	RT_UpdateConnectionColumn(mapTiles, routing, actorSize, x, y, dir, list, box.getMinZ(), box.getMaxZ());
 				}
 			}
 		}
