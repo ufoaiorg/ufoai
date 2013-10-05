@@ -1421,9 +1421,9 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list)
+void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list, const int minZ, const int maxZ)
 {
-	int z = 0; /**< The current z value that we are testing. */
+	int z = minZ;	/**< The current z value that we are testing. */
 	/* the essential data passed down the calltree */
 	RoutingData rtd(mapTiles, routing, actorSize, list);
 
@@ -1454,7 +1454,7 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const in
 	}
 
 	/* Main loop */
-	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
+	for (z = minZ; z < maxZ; z++) {
 		/* The last z value processed by the tracing function.  */
 		const int new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
 		assert(new_z >= z);
