@@ -856,6 +856,9 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	mapData->mapChecksum += checksum;
 }
 
+/**
+ * @brief Recalculate the seams of the tiles after an RMA
+ */
 static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 {
 	actorSizeEnum_t actorSize;
