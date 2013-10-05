@@ -132,7 +132,7 @@ static void testMapDefsMassRMA (void)
 				if (craft)
 					Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(craft));
 				else
-					Cvar_Set("rm_drop", "");
+					Cvar_Set("rm_drop", "+craft_drop_firebird");
 
 				linkedList_t* iterUfo;
 				for (iterUfo = md->ufos; iterUfo || !didItOnce; iterUfo = iterUfo->next) {
@@ -142,7 +142,7 @@ static void testMapDefsMassRMA (void)
 					if (ufo)
 						Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 					else
-						Cvar_Set("rm_ufo", "");
+						Cvar_Set("rm_ufo", "+craft_ufo_scout");
 
 					Com_Printf("\nDrop: %s Ufo: %s", craft, ufo);
 					Com_Printf("\nSeed:");
@@ -510,8 +510,8 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == nullptr)
 		return CU_get_error();
 
-	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
-//	const char* specialtest = "seed";
+//	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
+	const char* specialtest = "seed";
 	if (specialtest && Q_streq(specialtest, "seed")) {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == nullptr)
 			return CU_get_error();
