@@ -510,8 +510,8 @@ int UFO_AddMapDefTests (void)
 	if (mapDefSuite == nullptr)
 		return CU_get_error();
 
-//	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
-	const char* specialtest = "seed";
+	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
+//	const char* specialtest = "seed";
 	if (specialtest && Q_streq(specialtest, "seed")) {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == nullptr)
 			return CU_get_error();
