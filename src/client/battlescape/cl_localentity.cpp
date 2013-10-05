@@ -86,13 +86,16 @@ static void CL_GridRecalcRouting (const le_t* le)
  */
 void CL_CompleteRecalcRouting (void)
 {
-	le_t* le;
-	int i;
+	double start = time(nullptr);	/* stopwatch */
 
 	LE_GenerateInlineModelList();
 
+	le_t* le;
+	int i;
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		CL_GridRecalcRouting(le);
+
+	Com_Printf("Rerouted for LEs in %5.1fs\n", time(nullptr) - start);
 }
 
 /**
