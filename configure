@@ -31,6 +31,7 @@ DISABLE_SDL2=
 W2K=
 SSE=
 DISABLE_DEPENDENCY_TRACKING=
+WITH_EMBEDDED_LUA=
 DEFAULT_COMPILER_CC=cc
 DEFAULT_COMPILER_CXX=c++
 
@@ -206,7 +207,13 @@ check_headers() {
 	check_header "CUnit/Basic.h"
 	check_header "mxml.h" "mxml"
 	check_header "SDL.h" "sdl"
-	check_header "lua.h" "lua5.1"
+	if [ "$WITH_EMBEDDED_LUA" != "1" ]; then
+		check_header "lua.h" "lua5.1"
+	else
+		HAVE_LUA5_1_LUA_H=
+		add_to_config_h HAVE_LUA5_1_LUA_H "" "Embedded lua requested"
+		add_to_makefile_local HAVE_LUA5_1_LUA_H
+	fi
 	check_header "SDL_mixer.h" "SDL_mixer"
 	check_header "SDL_ttf.h" "SDL_ttf"
 	if [ "$DISABLE_SDL2" != "1" ]; then
@@ -313,6 +320,7 @@ usage() {
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --disable-signals        disable the use of a signal handler"
 	echo " --disable-sdl2           disable the use of SDL2.x and prefer to use SDL1.x"
+	echo " --use-embedded-lua       use the copy of lua bundled with the source"
 	echo
 	echo " --target-os=             specify the target os"
 	(cd build/platforms; for i in *.mk; do echo "  * ${i%.mk}"; done)
@@ -528,6 +536,9 @@ while [ $# -gt 0 ]; do
 		;;
 	--disable-sdl2)
 		DISABLE_SDL2=1
+		;;
+	--with-embedded-lua)
+		WITH_EMBEDDED_LUA=1
 		;;
 	--disable-signals)
 		USE_SIGNALS=
