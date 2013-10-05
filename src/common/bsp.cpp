@@ -900,7 +900,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						const int tile2 = mapData->reroute[actorSize][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir, nullptr);
+							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir);
 						}
 					}
 				}
