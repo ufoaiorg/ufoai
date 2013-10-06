@@ -907,12 +907,6 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
-					 * trace every other dir, unless we are on the edge. */
-#if RT_IS_BIDIRECTIONAL == 1
-					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
-						continue;
-#endif
 					/* for places outside the model box, skip dirs that can not be affected by the model */
 					if (x > box.getMaxX() && dir != 1 && dir != 5 && dir != 6)
 						continue;

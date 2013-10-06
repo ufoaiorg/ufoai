@@ -1340,9 +1340,6 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	const int absAdjFloor = rtd->routing.getFloor(rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
 	int new_z1, az = z;
-#if RT_IS_BIDIRECTIONAL == 1
-	int new_z2;
-#endif
 
 	if (debugTrace)
 		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, rtd->actorSize);
@@ -1351,20 +1348,10 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	if (adjCeiling == 0 && (extAdjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
-#if RT_IS_BIDIRECTIONAL == 1
-		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
-#endif
 		if (debugTrace)
 			Com_Printf("Current cell filled. c:%i ac:%i\n", rtd->routing.getCeiling(rtd->actorSize, x, y, z), rtd->routing.getCeiling(rtd->actorSize, ax, ay, z));
 		return z;
 	}
-
-#if RT_IS_BIDIRECTIONAL == 1
-	/** In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
-	if (ceiling == 0 && adjCeiling != 0) {
-		return RT_UpdateConnection(rtd, ax, ay, x, y, z, dir ^ 1);
-	}
-#endif
 
 	/**
 	 * @note OK, simple test here.  We know both cells have a ceiling, so they are both open.
@@ -1373,9 +1360,6 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	if (absCeiling < absAdjFloor || absExtAdjCeiling < absFloor) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
-#if RT_IS_BIDIRECTIONAL == 1
-		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
-#endif
 		if (debugTrace)
 			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
 		return z;
@@ -1393,21 +1377,11 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
-#if RT_IS_BIDIRECTIONAL == 1
-		RT_ConnSetNoGo(rtd, ax, ay, z, dir ^ 1);
-#endif
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
 	}
-#if RT_IS_BIDIRECTIONAL == 1
-	new_z2 = RT_FillPassageData(rtd, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
-	if (new_z2 == az && az < z)
-		new_z2++;
-	return std::min(new_z1, new_z2);
-#else
 	return new_z1;
-#endif
 }
 
 
