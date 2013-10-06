@@ -540,7 +540,7 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
  * @param[in] damage The damage dealt by the field
  * @param[in] radius The max distance of a cell from the center to get a particle
  */
-static void G_SpawnField (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
+static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
 	vec_t x, y;
 
@@ -575,17 +575,17 @@ static void G_SpawnField (const entity_type_t fieldtype, const vec3_t vec, const
  */
 void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_t radius)
 {
-	G_SpawnField(ET_SMOKE, vec, particle, rounds, 0, radius);
+	G_SpawnFieldGroup(ET_SMOKE, vec, particle, rounds, 0, radius);
 }
 
 void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	G_SpawnField(ET_FIRE, vec, particle, rounds, damage, radius);
+	G_SpawnFieldGroup(ET_FIRE, vec, particle, rounds, damage, radius);
 }
 
 void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	G_SpawnField(ET_SMOKESTUN, vec, particle, rounds, damage, radius);
+	G_SpawnFieldGroup(ET_SMOKESTUN, vec, particle, rounds, damage, radius);
 }
 
 /**
