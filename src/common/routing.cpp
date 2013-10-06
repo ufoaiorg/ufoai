@@ -1339,7 +1339,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	const int absFloor = rtd->routing.getFloor(rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
 	const int absAdjFloor = rtd->routing.getFloor(rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
 	opening_t opening;	/** the opening between the two cells */
-	int new_z1, az = z;
+	int newZ, az = z;
 
 	if (debugTrace)
 		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, rtd->actorSize);
@@ -1373,7 +1373,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
-	new_z1 = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
+	newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		/* ^ 1 reverses the direction of dir */
@@ -1381,7 +1381,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
 	}
-	return new_z1;
+	return newZ;
 }
 
 
