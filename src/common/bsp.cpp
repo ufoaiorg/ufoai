@@ -870,6 +870,33 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	GridBox rBox(mapData->mapBox);	/* the box we will actually reroute */
 	rBox.clipToMaxBoundaries();
 
+	/* First, close the borders of the map. This is needed once we produce tiles with open borders.
+	 * It's done by setting the connection (height) to 0 */
+	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+		for (z = rBox.getMinZ(); z <= rBox.getMaxZ(); z++) {
+			for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
+				x = rBox.getMinX();
+				mapData->routing.setConn(actorSize, x, y, z, 6, 0);	/* NX-PY */
+				mapData->routing.setConn(actorSize, x, y, z, 1, 0);	/* NX */
+				mapData->routing.setConn(actorSize, x, y, z, 5, 0);	/* NX-NY */
+				x = rBox.getMaxX();
+				mapData->routing.setConn(actorSize, x, y, z, 4, 0);	/* PX-PY */
+				mapData->routing.setConn(actorSize, x, y, z, 0, 0);	/* PX */
+				mapData->routing.setConn(actorSize, x, y, z, 7, 0);	/* PX-NY */
+			}
+			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
+				y = rBox.getMinY();
+				mapData->routing.setConn(actorSize, x, y, z, 5, 0);	/* NY-NX */
+				mapData->routing.setConn(actorSize, x, y, z, 3, 0);	/* NY */
+				mapData->routing.setConn(actorSize, x, y, z, 7, 0);	/* NY-PX */
+				y = rBox.getMaxY();
+				mapData->routing.setConn(actorSize, x, y, z, 6, 0);	/* PY-NX */
+				mapData->routing.setConn(actorSize, x, y, z, 2, 0);	/* PY */
+				mapData->routing.setConn(actorSize, x, y, z, 4, 0);	/* PY-PX */
+			}
+		}
+	}
+
 	/* Floor pass */
 	for (actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
