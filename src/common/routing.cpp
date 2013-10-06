@@ -1321,10 +1321,8 @@ static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const i
 /**
  * @brief Routing Function to update the connection between two fields
  * @param[in] rtd The essential routing data with map, actorsize, ents
- * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
- * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
- * @param[in] ax The x of the adjacent cell
- * @param[in] ay The y of the adjacent cell
+ * @param[in] x,y The x/y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] ax,ay The x/y of the adjacent cell
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
