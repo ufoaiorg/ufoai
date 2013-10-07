@@ -71,7 +71,7 @@ window hud_default extends hud
 	{
 		fill		true
 		starlayout	true
-		noticepos	"256 10"
+		noticepos	"512 50"
 	}
 
 	func onScriptLoaded {
