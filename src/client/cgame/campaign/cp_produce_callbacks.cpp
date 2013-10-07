@@ -215,7 +215,7 @@ static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs)
 				break;
 			}
 		case RS_LINK_ANTIMATTER: {
-				technology_t* tech = RS_GetTechByID(ANTIMATTER_TECH_ID);
+				technology_t* tech = RS_GetTechForItem(INVSH_GetItemByID(ANTIMATTER_TECH_ID));
 				uiNode_t* node;
 
 				assert(tech);
