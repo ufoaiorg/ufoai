@@ -121,14 +121,14 @@ def upgrade(repository):
         else:
             print 'Line "%s" corrupted' % l
 
-	print 'Start updating files to ' + UFOAI_ROOT
+    print 'Start updating files to ' + UFOAI_ROOT
     updated = missmatch = uptodate = 0
     mapnames = maps.keys()
     mapnames.sort()
     for i in mapnames:
         map_name = i[:-4] + ".map"
-        mappath = UFOAI_ROOT + '/' + map_name
-        bsppath = UFOAI_ROOT + '/' + i
+        mappath = os.path.join(UFOAI_ROOT, map_name)
+        bsppath = os.path.join(UFOAI_ROOT, i)
 
         if not os.path.exists(mappath):
             print '* %s not found' % map_name
@@ -174,7 +174,7 @@ def main(argv=None):
     parser.add_option("", "--repository", action="store", default=REPOSITORY, type="string", dest="repository",
         help='Use a custom repository. The default one is "%s"' % REPOSITORY)
     parser.add_option("", "--branch", action="store", default="auto", type="string", dest="branch",
-        help='Use a custom a custom branch version for the repository, Default value is "auto"')
+        help='Use a custom branch version for the repository, Default value is "auto"')
 
     options, args = parser.parse_args()
 
