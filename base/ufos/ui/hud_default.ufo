@@ -1286,6 +1286,30 @@ window hud_default extends hud
 		cmd "show_oweapon;"
 	}
 
+	string overlay
+	{
+		string  "_Please wait"
+		color   "1 0 0 1"
+		font    "f_verybig_bold"
+		ghost   true
+		pos             "0 0"
+		size    "1024 768"
+		contentalign    ALIGN_CC
+	}
+
+	// ==================
+	// round events
+	// ==================
+	confunc startround
+	{
+		*node:root.overlay@invis = true
+	}
+	confunc endround
+	{
+		*node:root.overlay@invis = false
+		cmd "hud_movemode;"
+	}
+
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
