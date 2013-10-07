@@ -332,7 +332,7 @@ static void SV_ClipMoveToEntities (MoveClipSV* clip)
 	edict_t* touchlist[MAX_EDICTS];
 	const float* angles;
 	int headnode = 0;
-	const int num = SV_AreaEdicts(AABB(clip->boxmins, clip->boxmaxs), touchlist, MAX_EDICTS);
+	const int num = SV_AreaEdicts(clip->clipBox, touchlist, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
@@ -419,7 +419,7 @@ int SV_PointContents (const vec3_t p)
  * @param[out] boxmaxs The upper bounds
  * @sa SV_Trace
  */
-static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, AABB& cBox)
 {
 #if 0
 	/* debug to test against everything */
@@ -430,11 +430,11 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
 
 	for (i = 0; i < 3; i++) {
 		if (end[i] > start[i]) {
-			boxmins[i] = start[i] + mins[i] - 1;
-			boxmaxs[i] = end[i] + maxs[i] + 1;
+			cBox.mins[i] = start[i] + mins[i] - 1;
+			cBox.maxs[i] = end[i] + maxs[i] + 1;
 		} else {
-			boxmins[i] = end[i] + mins[i] - 1;
-			boxmaxs[i] = start[i] + maxs[i] + 1;
+			cBox.mins[i] = end[i] + mins[i] - 1;
+			cBox.maxs[i] = start[i] + maxs[i] + 1;
 		}
 	}
 #endif
@@ -475,7 +475,7 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */
-	SV_TraceBounds(traceLine.start, clip.mins, clip.maxs, traceLine.stop, clip.boxmins, clip.boxmaxs);
+	SV_TraceBounds(traceLine.start, clip.mins, clip.maxs, traceLine.stop, clip.clipBox);
 
 #if 0
 	/* Output the trace bounds */

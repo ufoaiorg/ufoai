@@ -25,7 +25,7 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 #pragma once
 
 #include "ufotypes.h"
-//#include "vector.h"
+#include "aabb.h"
 //#include "line.h"
 //#include "defines.h"	/* for MAX_WORLD_WIDTH */
 //#include <algorithm>
@@ -36,7 +36,7 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 class MoveClip
 {
 public:
-	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
+	AABB clipBox;				/**< enclose the test object along entire move */
 	const float* mins, *maxs;	/**< size of the moving object */
 	const float* start, *end;
 	int contentmask;			/**< search these in your trace - see MASK_* */
