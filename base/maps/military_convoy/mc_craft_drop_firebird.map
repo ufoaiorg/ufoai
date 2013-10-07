@@ -2,9 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
-"maxlevel" "5"
-"norandomspawn" "1"
 // brush 0
 {
 ( 0 1024 64 ) ( 0 -256 -64 ) ( 0 1024 -64 ) tex_nature/desert004 192 0 0 -0.5 0.5 65280 0 0
