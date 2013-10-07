@@ -711,7 +711,7 @@ static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, b
  */
 static void B_UpdateAntimatterCap (base_t* base)
 {
-	const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 	if (od != nullptr)
 		CAP_SetCurrent(base, CAP_ANTIMATTER, B_ItemInBase(od, base));
 }
@@ -2770,7 +2770,7 @@ bool B_LoadXML (xmlNode_t* parent)
 bool B_ItemIsStoredInBaseStorage (const objDef_t* obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (obj->isVirtual || Q_streq(obj->id, ANTIMATTER_TECH_ID))
+	if (obj->isVirtual || Q_streq(obj->id, ANTIMATTER_ITEM_ID))
 		return false;
 
 	return true;
@@ -2825,9 +2825,9 @@ int B_AntimatterInBase (const base_t* base)
 #ifdef DEBUG
 	const objDef_t* od;
 
-	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 	if (od == nullptr)
-		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
+		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_ITEM_ID " object definition");
 
 	assert(base);
 	assert(B_ItemInBase(od, base) == CAP_GetCurrent(base, CAP_ANTIMATTER));
@@ -2859,9 +2859,9 @@ void B_ManageAntimatter (base_t* base, int amount, bool add)
 		return;
 	}
 
-	od = INVSH_GetItemByIDSilent(ANTIMATTER_TECH_ID);
+	od = INVSH_GetItemByIDSilent(ANTIMATTER_ITEM_ID);
 	if (od == nullptr)
-		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
+		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_ITEM_ID " object definition");
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */

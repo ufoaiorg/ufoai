@@ -227,7 +227,7 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 {
 	const objDef_t* od;
 
-	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 	if (od) {
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		const int antiMatterInSrcBase = B_AntimatterInBase(srcBase);
@@ -548,7 +548,7 @@ static void TR_Add_f (void)
 				base->alienContainment->add(teamDef, 0, -amount);
 			}
 		}
-	} else if (Q_streq(itemId, ANTIMATTER_TECH_ID)) {
+	} else if (Q_streq(itemId, ANTIMATTER_ITEM_ID)) {
 		/* antimatter */
 		const objDef_t* od = INVSH_GetItemByID(itemId);
 		if (!od)
@@ -608,7 +608,7 @@ static void TR_TransferListClear_f (void)
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
-			if (Q_streq(od->id, ANTIMATTER_TECH_ID))
+			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
 				B_ManageAntimatter(base, itemCargoAmount, true);
 			else
 				B_AddToStorage(base, od, itemCargoAmount);
@@ -821,7 +821,7 @@ static void TR_CountItemSizeInArray (int itemAmountArray[], int capacity[])
 
 		if (itemCargoAmount <= 0)
 			continue;
-		if (Q_streq(object->id, ANTIMATTER_TECH_ID))
+		if (Q_streq(object->id, ANTIMATTER_ITEM_ID))
 			capacity[CAP_ANTIMATTER] += itemCargoAmount;
 		else
 			capacity[CAP_ITEMS] += object->size * itemCargoAmount;

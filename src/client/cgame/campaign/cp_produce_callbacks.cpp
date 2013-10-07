@@ -215,11 +215,11 @@ static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs)
 				break;
 			}
 		case RS_LINK_ANTIMATTER: {
-				technology_t* tech = RS_GetTechForItem(INVSH_GetItemByID(ANTIMATTER_TECH_ID));
+				technology_t* tech = RS_GetTechForItem(INVSH_GetItemByID(ANTIMATTER_ITEM_ID));
 				uiNode_t* node;
 
 				assert(tech);
-				node = cgi->UI_AddOption(&req_items, ANTIMATTER_TECH_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
+				node = cgi->UI_AddOption(&req_items, ANTIMATTER_ITEM_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
 				if (B_AntimatterInBase(base) >= req->amount)
 					Vector4Copy(green, node->color);
 				else

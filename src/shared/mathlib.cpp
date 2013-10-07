@@ -978,7 +978,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 			yaw = 90.0f;
 		else
 			yaw = -90.0f;
-		if (yaw < 0.0)
+		if (yaw < 0.0f)
 			yaw += 360.0f;
 
 		pitch = atan2(value1[2], forward) * todeg;

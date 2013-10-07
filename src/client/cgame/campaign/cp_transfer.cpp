@@ -47,7 +47,7 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 	assert(transfer);
 
 	if (transfer->hasItems && success) {	/* Items. */
-		const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+		const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 		int i;
 
 		/* antimatter */

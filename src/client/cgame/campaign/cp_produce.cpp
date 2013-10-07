@@ -465,7 +465,7 @@ static void PR_FinishDisassembly (base_t* base, production_t* prod)
 		if (amount <= 0)
 			continue;
 
-		if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
+		if (Q_streq(compOd->id, ANTIMATTER_ITEM_ID)) {
 			B_ManageAntimatter(base, amount, true);
 		} else {
 			technology_t* tech = RS_GetTechForItem(compOd);

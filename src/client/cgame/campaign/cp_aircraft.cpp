@@ -1098,7 +1098,7 @@ static void AIR_Refuel (aircraft_t* aircraft, int deltaTime)
 	assert(aircraft->homebase);
 	if (aircraft->stats[AIR_STATS_ANTIMATTER] > 0 && fillup > 0) {
 		/* the antimatter we have */
-		const int amAvailable = B_ItemInBase(INVSH_GetItemByID(ANTIMATTER_TECH_ID), aircraft->homebase);
+		const int amAvailable = B_ItemInBase(INVSH_GetItemByID(ANTIMATTER_ITEM_ID), aircraft->homebase);
 		/* current antimatter level in craft */
 		const int amCurrentLevel = aircraft->stats[AIR_STATS_ANTIMATTER] * (aircraft->fuel / (float) aircraft->stats[AIR_STATS_FUELSIZE]);
 		/* next antimatter level in craft */
