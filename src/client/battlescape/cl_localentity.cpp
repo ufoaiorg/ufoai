@@ -1729,7 +1729,7 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
  * @param[in] start Start vector to start the trace from
  * @param[in] mins, maxs Bounding box used for tracing
  * @param[in] stop End vector to stop the trace at
- * @param[out] boxmins, boxmaxs The resulting box
+ * @param[out] cBox The resulting box
  * @sa CL_Trace
  * @note Box is expanded by 1
  */
