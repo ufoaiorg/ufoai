@@ -423,8 +423,8 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
 {
 #if 0
 	/* debug to test against everything */
-	boxmins[0] = boxmins[1] = boxmins[2] = -9999;
-	boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
+	cBox.mins[0] = cBox.mins[1] = cBox.mins[2] = -9999;
+	cBox.maxs[0] = cBox.maxs[1] = cBox.maxs[2] = 9999;
 #else
 	int i;
 
@@ -480,8 +480,8 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 #if 0
 	/* Output the trace bounds */
 	Com_Printf("Trace: (%i, %i, %i) (%i, %i, %i)\n",
-		(int) clip.boxmins[0], (int) clip.boxmins[1], (int) clip.boxmins[2],
-		(int) clip.boxmaxs[0], (int) clip.boxmaxs[1], (int) clip.boxmaxs[2]);
+		(int) clip.clipBox.mins[0], (int) clip.clipBox.mins[1], (int) clip.clipBox.mins[2],
+		(int) clip.clipBox.maxs[0], (int) clip.clipBox.maxs[1], (int) clip.clipBox.maxs[2]);
 #endif
 
 	/* clip to other solid entities */
