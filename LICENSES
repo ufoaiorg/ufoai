@@ -790,6 +790,10 @@ base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dej
 base/media/FreeMono.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSans.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSerif.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
+base/media/JuraBook.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
+base/media/JuraDemiBold.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
+base/media/JuraLight.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
+base/media/JuraMedium.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
 base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
@@ -1690,8 +1694,8 @@ base/models/objects/container/container_body.md2 | Creative Commons Attribution-
 base/models/objects/container/container_doorleft.md2 | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
 base/models/objects/container/container_doorright.md2 | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
 base/models/objects/container/container_nm.jpg | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
-base/models/objects/container/container_short.md2 | Creative Commons Attribution-Share Alike 3.0 | | Marika Speck
-base/models/objects/container/container_short_closed.md2 | Creative Commons Attribution-Share Alike 3.0 | | Marika Speck
+base/models/objects/container/container_short.md2 | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
+base/models/objects/container/container_short_closed.md2 | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
 base/models/objects/container/container_sm.jpg | Creative Commons Attribution-Share Alike 3.0 | Marika Speck
 base/models/objects/crane/crane.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/crane/crane.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -3414,9 +3418,9 @@ base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/urban_4.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/urban_5.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/urban_6.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/urban_7.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory.jpg
-base/pics/maps/shots/urban_8.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory_2.jpg
-base/pics/maps/shots/urban_9.jpg | GNU General Public License 2.0 or later || base/pics/maps/shots/laboratory_3.jpg
+base/pics/maps/shots/urban_7.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory.jpg
+base/pics/maps/shots/urban_8.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory_2.jpg
+base/pics/maps/shots/urban_9.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory_3.jpg
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
