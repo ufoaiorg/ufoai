@@ -642,7 +642,7 @@ window hud_default extends hud
 			}
 
 			// Displays oweapon only if another weapon exists
-			func show_oweapon
+			confunc show_oweapon
 			{
 				if (*cvar:sldcurhand eq "r") {
 					if (*cvar:mn_lweapon eq "") {
@@ -684,7 +684,7 @@ window hud_default extends hud
 					*node:parent.oweapon@src = *cvar:mn_lweapon
 					*node:parent.ammo_count@string = *cvar:mn_ammoright
 				}
-				call *node:root.soldier.weapon.show_oweapon
+				cmd "show_oweapon;"
 			}
 			confunc deselect_primaryleft
 			{
@@ -1283,7 +1283,7 @@ window hud_default extends hud
 		// Resets the weapon display panel when soldier changes
 		*cvar:sldcurhand = "l"
 		call *node:root.soldier.weapon.switchhands
-		call *node:root.soldier.weapon.show_oweapon
+		cmd "show_oweapon;"
 	}
 
 	func onWindowOpened
