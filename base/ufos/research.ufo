@@ -1187,8 +1187,8 @@ tech rs_weapon_bolterrifle_am_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 10)
-		item (antimatter 1)
+		item (alienmaterials 10)
+		antimatter 1
 	}
 
 	provides	bolterrifle_am_ammo
@@ -5493,7 +5493,7 @@ tech rs_craft_ammo_am_missile
 	require_for_production
 	{
 	    item (alienmaterials 20)
-	    item (antimatter 3)
+	    antimatter 3
 	}
 
 	time		5000
