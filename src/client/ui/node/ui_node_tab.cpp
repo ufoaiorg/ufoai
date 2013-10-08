@@ -59,8 +59,7 @@ static const int TILE_SIZE = 40;
 /**
  * @brief Return a tab located at a screen position
  * @param[in] node A tab node
- * @param[in] x The x position of the screen to test
- * @param[in] y The x position of the screen to test
+ * @param[in] x,y The position of the screen to test
  * @return A uiNode_t, or nullptr if nothing.
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
@@ -147,8 +146,7 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 /**
  * @brief Normalized access to the texture structure of tab to display the plain part of a tab
  * @param[in] image The normalized tab texture to use
- * @param[in] x The upper-left position of the screen to draw the texture
- * @param[in] y The upper-left position of the screen to draw the texture
+ * @param[in] x,y The upper-left position of the screen to draw the texture
  * @param[in] width The width size of the screen to use (stretch)
  * @param[in] type The status of the tab we display
  */
@@ -162,8 +160,7 @@ static inline void UI_TabNodeDrawPlain (const char* image, int x, int y, int wid
 /**
  * @brief Normalized access to the texture structure of tab to display a junction between each tabs
  * @param[in] image The normalized tab texture to use
- * @param[in] x The upper-left position of the screen to draw the texture
- * @param[in] y The upper-left position of the screen to draw the texture
+ * @param[in] x,y The upper-left position of the screen to draw the texture
  * @param[in] leftType The status of the left tab of the junction we display
  * @param[in] rightType The status of the right tab of the junction we display
  */
@@ -284,8 +281,7 @@ void uiTabNode::draw (uiNode_t* node)
 /**
  * @brief Custom tooltip of tab node
  * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
+ * @param[in] x,y Position of the mouse
  */
 void uiTabNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {

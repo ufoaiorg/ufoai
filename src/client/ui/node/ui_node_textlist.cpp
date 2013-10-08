@@ -42,8 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Get the line number under an absolute position
  * @param[in] node a text node
- * @param[in] x position x on the screen
- * @param[in] y position y on the screen
+ * @param[in] x,y position on the screen
  * @return The line number under the position (0 = first line)
  */
 static int UI_TextListNodeGetLine (const uiNode_t* node, int x, int y)

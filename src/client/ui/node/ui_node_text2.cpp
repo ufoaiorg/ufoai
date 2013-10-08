@@ -96,8 +96,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t* node)
 /**
  * @brief Get the line number under an absolute position
  * @param[in] node a text node
- * @param[in] x position x on the screen
- * @param[in] y position y on the screen
+ * @param[in] x,y position on the screen
  * @return The line number under the position (0 = first line)
  */
 static int UI_TextNodeGetLine (const uiNode_t* node, int x, int y)

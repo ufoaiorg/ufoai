@@ -37,8 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Custom tooltip of todo node
  * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
+ * @param[in] x,y Position of the mouse
  */
 static void UI_TodoNodeDrawTooltip (uiNode_t* node, int x, int y)
 {

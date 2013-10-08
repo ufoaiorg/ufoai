@@ -85,8 +85,7 @@ void uiStringNode::draw (uiNode_t* node)
 /**
  * @brief Custom tooltip of string node
  * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
+ * @param[in] x,y Position of the mouse
  */
 void uiStringNode::drawTooltip (const uiNode_t* node, int x, int y) const
 {

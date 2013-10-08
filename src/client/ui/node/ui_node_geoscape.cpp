@@ -377,8 +377,7 @@ void uiGeoscapeNode::startMouseShifting (uiNode_t* node, int x, int y)
 /**
  * @brief Return longitude and latitude of a point of the screen for 2D geoscape
  * @param[in] node The current menuNode we have clicked on (3dmap or map)
- * @param[in] x X coordinate on the screen that was clicked on
- * @param[in] y Y coordinate on the screen that was clicked on
+ * @param[in] x,y Coordinates on the screen that were clicked on
  * @param[out] pos vec2_t was filled with longitude and latitude
  */
 void uiGeoscapeNode::screenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
@@ -397,8 +396,7 @@ void uiGeoscapeNode::screenToMap (const uiNode_t* node, int x, int y, vec2_t pos
 /**
  * @brief Return longitude and latitude of a point of the screen for 3D geoscape (globe)
  * @param[in] node The current menuNode we have clicked on (3dmap or map)
- * @param[in] x X coordinate on the screen that was clicked on
- * @param[in] y Y coordinate on the screen that was clicked on
+ * @param[in] x,y Coordinates on the screen that were clicked on
  * @param[out] pos vec2_t was filled with longitude and latitude
  * @sa MAP_3DMapToScreen
  */
