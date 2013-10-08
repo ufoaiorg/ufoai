@@ -30,7 +30,7 @@
 #ifdef __WIN64__
 #include "mingw64_64.h"
 #elif defined __WIN32__
-#ifdef __MINGW64__
+#ifdef __MINGW64_VERSION_MAJOR
 #include "mingw64-config.h"
 #else
 #include "mingw32-config.h"
