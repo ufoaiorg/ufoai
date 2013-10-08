@@ -365,7 +365,7 @@ static void SV_ClipMoveToEntities (MoveClipSV* clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace_t trace = CM_HintedTransformedBoxTrace(sv->mapTiles.mapTiles[tile], clip->start, clip->end, AABB(clip->mins, clip->maxs), headnode,
+		trace_t trace = CM_HintedTransformedBoxTrace(sv->mapTiles.mapTiles[tile], clip->start, clip->end, clip->objBox, headnode,
 				clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
@@ -469,12 +469,11 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 	clip.contentmask = contentmask;
 	clip.start = traceLine.start;
 	clip.end = traceLine.stop;
-	clip.mins = box.mins;
-	clip.maxs = box.maxs;
+	clip.objBox.set(box);
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */
-	SV_TraceBounds(traceLine.start, clip.mins, clip.maxs, traceLine.stop, clip.clipBox);
+	SV_TraceBounds(traceLine.start, clip.objBox.mins, clip.objBox.maxs, traceLine.stop, clip.clipBox);
 
 #if 0
 	/* Output the trace bounds */
