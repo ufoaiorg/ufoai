@@ -690,13 +690,13 @@ void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
+void R_DrawBoundingBox (const AABB& absBox)
 {
 	vec3_t bbox[8];
 	const GLushort indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
 	const GLushort indexes2[] = { 4, 6, 7 };
 
-	R_ComputeBoundingBox(absmins, absmaxs, bbox);
+	R_ComputeBoundingBox(absBox.mins, absBox.maxs, bbox);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

@@ -85,7 +85,7 @@ static void R_DrawBox (const entity_t* e)
 	R_Color(color);
 
 	if (VectorNotEmpty(e->eBox.mins) && VectorNotEmpty(e->eBox.maxs)) {
-		R_DrawBoundingBox(e->eBox.mins, e->eBox.maxs);
+		R_DrawBoundingBox(e->eBox);
 	} else {
 		vec3_t points[] = { { e->oldorigin[0], e->oldorigin[1], e->oldorigin[2] }, { e->oldorigin[0], e->origin[1],
 				e->oldorigin[2] }, { e->origin[0], e->origin[1], e->oldorigin[2] }, { e->origin[0], e->oldorigin[1],

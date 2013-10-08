@@ -381,7 +381,7 @@ void R_DrawModelDirect (modelInfo_t* mi, modelInfo_t* pmi, const char* tagname)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].fBox.mins, mi->model->alias.frames[mi->frame].fBox.maxs);
+		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].fBox);
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -432,7 +432,7 @@ void R_DrawModelParticle (modelInfo_t* mi)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].fBox.mins, mi->model->alias.frames[mi->frame].fBox.maxs);
+		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].fBox);
 
 	glPopMatrix();
 
@@ -803,7 +803,7 @@ void R_DrawAliasModel (entity_t* e)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_DrawBoundingBox(mod->frames[e->as.frame].fBox.mins, mod->frames[e->as.frame].fBox.maxs);
+		R_DrawBoundingBox(mod->frames[e->as.frame].fBox);
 
 	R_Color(nullptr);
 }
