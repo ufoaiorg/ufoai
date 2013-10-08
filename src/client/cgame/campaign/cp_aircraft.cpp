@@ -231,10 +231,9 @@ static void AII_CollectingAmmo (void* data, const Item* magazine)
  */
 void AII_CollectItem (aircraft_t* aircraft, const objDef_t* item, int amount)
 {
-	int i;
 	itemsTmp_t* cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemTypes; i++) {
+	for (int i = 0; i < aircraft->itemTypes; i++) {
 		if (cargo[i].item == item) {
 			Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
 			cargo[i].amount += amount;
@@ -615,11 +614,9 @@ aircraft_t* AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
  */
 const aircraft_t* AIR_GetAircraftSilent (const char* name)
 {
-	int i;
-
 	if (!name)
 		return nullptr;
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+	for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		const aircraft_t* aircraftTemplate = &ccs.aircraftTemplates[i];
 		if (Q_streq(aircraftTemplate->id, name))
 			return aircraftTemplate;
@@ -649,10 +646,8 @@ const aircraft_t* AIR_GetAircraft (const char* name)
  */
 static void AII_SetAircraftInSlots (aircraft_t* aircraft)
 {
-	int i;
-
 	/* initialise weapon slots */
-	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+	for (int i = 0; i < MAX_AIRCRAFTSLOT; i++) {
 		aircraft->weapons[i].aircraft = aircraft;
 		aircraft->electronics[i].aircraft = aircraft;
 	}
@@ -904,13 +899,11 @@ void AIR_MoveAircraftIntoNewHomebase (aircraft_t* aircraft, base_t* base)
  */
 void AIR_DeleteAircraft (aircraft_t* aircraft)
 {
-	int i;
-	base_t* base;
 	/* Check if aircraft is on geoscape while it's not destroyed yet */
 	const bool aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
 
 	assert(aircraft);
-	base = aircraft->homebase;
+	base_t* base = aircraft->homebase;
 	assert(base);
 
 	GEO_NotifyAircraftRemoved(aircraft);
@@ -922,7 +915,7 @@ void AIR_DeleteAircraft (aircraft_t* aircraft)
 	/* base is nullptr here because we don't want to readd this to the inventory
 	 * If you want this in the inventory you really have to call these functions
 	 * before you are destroying a craft */
-	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+	for (int i = 0; i < MAX_AIRCRAFTSLOT; i++) {
 		AII_RemoveItemFromSlot(nullptr, aircraft->weapons, false);
 		AII_RemoveItemFromSlot(nullptr, aircraft->electronics, false);
 	}
@@ -1271,10 +1264,8 @@ bool AIR_SendAircraftToMission (aircraft_t* aircraft, mission_t* mission)
  */
 static void AII_InitialiseAircraftSlots (aircraft_t* aircraftTemplate)
 {
-	int i;
-
 	/* initialise weapon slots */
-	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+	for (int i = 0; i < MAX_AIRCRAFTSLOT; i++) {
 		AII_InitialiseSlot(aircraftTemplate->weapons + i, aircraftTemplate, nullptr, nullptr, AC_ITEM_WEAPON);
 		AII_InitialiseSlot(aircraftTemplate->electronics + i, aircraftTemplate, nullptr, nullptr, AC_ITEM_ELECTRONICS);
 	}
@@ -2260,9 +2251,7 @@ static void AIR_SaveRouteXML (xmlNode_t* node, const mapline_t* route)
  */
 static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num, xmlNode_t* p, bool weapon)
 {
-	int i;
-
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		xmlNode_t* sub = cgi->XML_AddNode(p, SAVE_AIRCRAFT_SLOT);
 		AII_SaveOneSlotXML(sub, &slot[i], weapon);
 	}
@@ -2393,18 +2382,15 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
  */
 bool AIR_SaveXML (xmlNode_t* parent)
 {
-	int i;
-	xmlNode_t* node, *snode;
-
 	/* save phalanx aircraft */
-	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
+	xmlNode_t* snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
 	AIR_Foreach(aircraft) {
 		AIR_SaveAircraftXML(snode, aircraft, false);
 	}
 
 	/* save the ufos on geoscape */
 	snode = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_UFOS);
-	for (i = 0; i < MAX_UFOONGEOSCAPE; i++) {
+	for (int i = 0; i < MAX_UFOONGEOSCAPE; i++) {
 		const aircraft_t* ufo = UFO_GetByIDX(i);
 		if (!ufo || (ufo->id == nullptr))
 			continue;
@@ -2412,7 +2398,7 @@ bool AIR_SaveXML (xmlNode_t* parent)
 	}
 
 	/* Save projectiles. */
-	node = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
+	xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
 	if (!AIRFIGHT_SaveXML(node))
 		return false;
 
