@@ -253,11 +253,11 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t* mod, const dMD2Model_t* md2
 			for (j = 0; j < 3; j++)
 				outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
 
-			VectorCopy(outFrame->translate, outFrame->mins);
-			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
+			VectorCopy(outFrame->translate, outFrame->fBox.mins);
+			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->fBox.maxs);
 
-			AddPointToBounds(outFrame->mins, mod->modBox.mins, mod->modBox.maxs);
-			AddPointToBounds(outFrame->maxs, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->fBox.mins, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->fBox.maxs, mod->modBox.mins, mod->modBox.maxs);
 		}
 
 		for (j = 0; j < outMesh->num_indexes; j++) {
@@ -389,11 +389,11 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t* mod, const dMD2Model_t* md2, 
 			for (j = 0; j < 3; j++)
 				outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
 
-			VectorCopy(outFrame->translate, outFrame->mins);
-			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
+			VectorCopy(outFrame->translate, outFrame->fBox.mins);
+			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->fBox.maxs);
 
-			AddPointToBounds(outFrame->mins, mod->modBox.mins, mod->modBox.maxs);
-			AddPointToBounds(outFrame->maxs, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->fBox.mins, mod->modBox.mins, mod->modBox.maxs);
+			AddPointToBounds(outFrame->fBox.maxs, mod->modBox.mins, mod->modBox.maxs);
 		}
 
 		for (j = 0; j < outMesh->num_indexes; j++) {

@@ -82,15 +82,15 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 
 	for (i = 0; i < mod->alias.num_frames; i++, pinframe++, poutframe++) {
 		for (j = 0; j < 3; j++) {
-			poutframe->mins[j] = LittleFloat(pinframe->mins[j]);
-			poutframe->maxs[j] = LittleFloat(pinframe->maxs[j]);
+			poutframe->fBox.mins[j] = LittleFloat(pinframe->mins[j]);
+			poutframe->fBox.maxs[j] = LittleFloat(pinframe->maxs[j]);
 			poutframe->translate[j] = LittleFloat(pinframe->translate[j]);
 		}
 
 		poutframe->radius = LittleFloat(pinframe->radius);
 		mod->radius = std::max(mod->radius, poutframe->radius);
-		AddPointToBounds(poutframe->mins, mod->modBox.mins, mod->modBox.maxs);
-		AddPointToBounds(poutframe->maxs, mod->modBox.mins, mod->modBox.maxs);
+		AddPointToBounds(poutframe->fBox.mins, mod->modBox.mins, mod->modBox.maxs);
+		AddPointToBounds(poutframe->fBox.maxs, mod->modBox.mins, mod->modBox.maxs);
 	}
 
 	/* load the tags */

@@ -54,7 +54,7 @@ typedef struct mAliasBoneVertex_s {
 } mAliasBoneVertex_t;
 
 typedef struct mAliasFrame_s {
-	vec3_t	mins, maxs;
+	AABB 	fBox;
 	vec3_t	translate;
 	vec3_t	scale;
 	float	radius;
