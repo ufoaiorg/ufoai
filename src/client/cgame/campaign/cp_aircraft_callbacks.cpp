@@ -124,7 +124,7 @@ static void AIM_AircraftStart_f (void)
  */
 static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t* aircraft)
 {
-	int i, max, cnt = 0;
+	int max;
 	const aircraftSlot_t* slot;
 
 	assert(aircraft);
@@ -149,7 +149,8 @@ static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t* aircraft
 		return 0;
 	}
 
-	for (i = 0; i < max; i++)
+	int cnt = 0;
+	for (int i = 0; i < max; i++)
 		if (slot[i].item)
 			cnt++;
 

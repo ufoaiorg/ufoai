@@ -133,9 +133,7 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
  */
 static void AIRFIGHT_ProjectileList_f (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numProjectiles; i++) {
+	for (int i = 0; i < ccs.numProjectiles; i++) {
 		Com_Printf("%i. (idx: %i)\n", i, ccs.projectiles[i].idx);
 		Com_Printf("... type '%s'\n", ccs.projectiles[i].aircraftItem->id);
 		if (ccs.projectiles[i].attackingAircraft)
@@ -233,12 +231,11 @@ int AIRFIGHT_CheckWeapon (const aircraftSlot_t* slot, float distance)
 int AIRFIGHT_ChooseWeapon (const aircraftSlot_t* slot, int maxSlot, const vec2_t pos, const vec2_t targetPos)
 {
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
-	int i;
 	float distance0 = 99999.9f;
 	const float distance = GetDistanceOnGlobe(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
-	for (i = 0; i < maxSlot; i++) {
+	for (int i = 0; i < maxSlot; i++) {
 		const int weaponStatus = AIRFIGHT_CheckWeapon(slot + i, distance);
 
 		/* set slotIdx to AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if needed */
@@ -721,9 +718,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
  */
 static void AIRFIGHT_BaseShoot (const base_t* base, baseWeapon_t* weapons, int maxWeapons)
 {
-	int i;
-
-	for (i = 0; i < maxWeapons; i++) {
+	for (int i = 0; i < maxWeapons; i++) {
 		aircraft_t* target = weapons[i].target;
 		aircraftSlot_t* slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
@@ -777,9 +772,7 @@ static void AIRFIGHT_BaseShoot (const base_t* base, baseWeapon_t* weapons, int m
  */
 static void AIRFIGHT_InstallationShoot (const installation_t* installation, baseWeapon_t* weapons, int maxWeapons)
 {
-	int i;
-
-	for (i = 0; i < maxWeapons; i++) {
+	for (int i = 0; i < maxWeapons; i++) {
 		aircraft_t* target = weapons[i].target;
 		aircraftSlot_t* slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
@@ -894,15 +887,12 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
  */
 bool AIRFIGHT_SaveXML (xmlNode_t* parent)
 {
-	int i;
-
-	for (i = 0; i < ccs.numProjectiles; i++) {
-		int j;
+	for (int i = 0; i < ccs.numProjectiles; i++) {
 		aircraftProjectile_t* projectile = &ccs.projectiles[i];
 		xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_AIRFIGHT_PROJECTILE);
 
 		cgi->XML_AddString(node, SAVE_AIRFIGHT_ITEMID, projectile->aircraftItem->id);
-		for (j = 0; j < projectile->numProjectiles; j++)
+		for (int j = 0; j < projectile->numProjectiles; j++)
 			cgi->XML_AddPos2(node, SAVE_AIRFIGHT_POS, projectile->pos[j]);
 		cgi->XML_AddPos3(node, SAVE_AIRFIGHT_IDLETARGET, projectile->idleTarget);
 
