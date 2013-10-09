@@ -39,7 +39,7 @@ typedef struct mBspVertex_s {
 } mBspVertex_t;
 
 typedef struct mBspHeader_s {
-	vec3_t mins, maxs;
+	AABB hBox;
 	vec3_t origin;
 	float radius;
 	int headnode;

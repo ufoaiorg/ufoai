@@ -146,11 +146,11 @@ static void R_ModLoadSubmodels (const lump_t* l)
 	for (i = 0; i < count; i++, in++, out++) {
 		/* spread the mins / maxs by a pixel */
 		for (j = 0; j < 3; j++) {
-			out->mins[j] = LittleFloat(in->mins[j]) - 1.0f + (float)shift[j];
-			out->maxs[j] = LittleFloat(in->maxs[j]) + 1.0f + (float)shift[j];
+			out->hBox.mins[j] = LittleFloat(in->mins[j]) - 1.0f + (float)shift[j];
+			out->hBox.maxs[j] = LittleFloat(in->maxs[j]) + 1.0f + (float)shift[j];
 			out->origin[j] = LittleFloat(in->origin[j]) + (float)shift[j];
 		}
-		out->radius = R_RadiusFromBounds(out->mins, out->maxs);
+		out->radius = R_RadiusFromBounds(out->hBox.mins, out->hBox.maxs);
 		out->headnode = LittleLong(in->headnode);
 		out->firstface = LittleLong(in->firstface);
 		out->numfaces = LittleLong(in->numfaces);
@@ -944,8 +944,7 @@ static void R_SetupSubmodels (void)
 		Com_sprintf(mod->name, sizeof(mod->name), "*%d", i);
 
 		/* copy the rest from the submodel */
-		VectorCopy(sub->maxs, mod->modBox.maxs);
-		VectorCopy(sub->mins, mod->modBox.mins);
+		mod->modBox.set(sub->hBox);
 		mod->radius = sub->radius;
 
 		mod->bsp.firstnode = sub->headnode;
