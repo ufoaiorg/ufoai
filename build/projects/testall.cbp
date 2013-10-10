@@ -392,6 +392,7 @@
 		<Unit filename="../../src/common/bsp.cpp" />
 		<Unit filename="../../src/common/cmd.cpp" />
 		<Unit filename="../../src/common/cmodel.cpp" />
+		<Unit filename="../../src/common/cmodel.h" />
 		<Unit filename="../../src/common/common.cpp" />
 		<Unit filename="../../src/common/cvar.cpp" />
 		<Unit filename="../../src/common/dbuffer.cpp" />
