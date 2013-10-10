@@ -93,7 +93,7 @@ static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBs
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	vec3_t start_l, end_l;
 	vec3_t forward, right, up;
@@ -101,8 +101,8 @@ trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const vec3_t start, const v
 	bool rotated;
 
 	/* subtract origin offset */
-	VectorSubtract(start, origin, start_l);
-	VectorSubtract(end, origin, end_l);
+	VectorSubtract(traceLine.start, origin, start_l);
+	VectorSubtract(traceLine.stop, origin, end_l);
 
 	/* rotate start and end into the models frame of reference */
 	if (headnode != tile.box_headnode && VectorNotEmpty(angles)) {
@@ -148,7 +148,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const vec3_t start, const v
 		trace.plane.normal[2] = DotProduct(temp, up);
 	}
 
-	VectorInterpolation(start, end, trace.fraction, trace.endpos);
+	VectorInterpolation(traceLine.start, traceLine.stop, trace.fraction, trace.endpos);
 
 	return trace;
 }
@@ -218,7 +218,7 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, stop, AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, stop), AABB(),
 				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -269,7 +269,7 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], start, hit, AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, hit), AABB(),
 				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
@@ -390,7 +390,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
-		const trace_t newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine.start, traceLine.stop, *traceBox,
+		const trace_t newtr = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine, *traceBox,
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */

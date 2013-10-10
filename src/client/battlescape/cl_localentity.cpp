@@ -1700,7 +1700,7 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
 
 		VectorCopy(le->origin, origin);
 
-		trace_t trace = CM_HintedTransformedBoxTrace(cl.mapTiles->mapTiles[tile], clip->moveLine.start, clip->moveLine.stop, clip->objBox,
+		trace_t trace = CM_HintedTransformedBoxTrace(cl.mapTiles->mapTiles[tile], clip->moveLine, clip->objBox,
 				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
