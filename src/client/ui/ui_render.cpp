@@ -113,8 +113,7 @@ const struct image_s* UI_LoadWrappedImage (const char* name)
 
 /**
  * @brief Draw a normalized (to the screen) image
- * @param[in] x The x coordinate (normalized)
- * @param[in] y The x coordinate (normalized)
+ * @param[in] x,y The coordinates (normalized)
  * @param[in] w The width (normalized)
  * @param[in] h The height (normalized)
  * @param[in] sh The s part of the texture coordinate (horizontal)
@@ -189,8 +188,7 @@ void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, 
 
 /**
  * @brief Draws an image or parts of it
- * @param[in] x X position to draw the image to
- * @param[in] y Y position to draw the image to
+ * @param[in] x,y position to draw the image to
  * @param[in] w Width of the image
  * @param[in] h Height of the image
  * @param[in] sh Right x corner coord of the square to draw
@@ -345,8 +343,7 @@ void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char* text
  * @brief draw a line into a bounding box
  * @param[in] fontID the font id (defined in ufos/fonts.ufo)
  * @param[in] align Align of the text into the bounding box
- * @param[in] x Current x position of the bounded box
- * @param[in] y Current y position of the bounded box
+ * @param[in] x,y Current position of the bounded box
  * @param[in] width Current width of the bounded box
  * @param[in] height Current height of the bounded box
  * @param[in] text The string to draw
