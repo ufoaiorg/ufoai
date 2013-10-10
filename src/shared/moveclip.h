@@ -38,6 +38,6 @@ class MoveClip
 public:
 	AABB clipBox;				/**< enclose the test object along entire move */
 	AABB objBox;				/**< size of the moving object */
-	const float* start, *end;
+	Line moveLine;				/**< the line along which the object moves */
 	int contentmask;			/**< search these in your trace - see MASK_* */
 };
