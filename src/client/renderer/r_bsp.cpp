@@ -120,8 +120,7 @@ bool R_CullBspModel (const entity_t* e)
 			maxs[i] = e->origin[i] + e->model->radius;
 		}
 	} else {
-		VectorAdd(e->origin, e->model->modBox.mins, mins);
-		VectorAdd(e->origin, e->model->modBox.maxs, maxs);
+		e->model->modBox.shift(e->origin);
 	}
 
 	return R_CullBox(mins, maxs) == PSIDE_BACK;
