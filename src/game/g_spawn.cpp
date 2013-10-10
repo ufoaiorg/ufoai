@@ -463,31 +463,6 @@ static void G_SpawnSmoke (const vec3_t vec, const char* particle, int rounds)
 	ent->count = rounds;
 }
 
-static void G_SpawnFire (const vec3_t vec, const char* particle, int rounds, int damage)
-{
-	pos3_t pos;
-	Edict* ent;
-
-	VecToPos(vec, pos);
-
-	ent = G_GetEdictFromPos(pos, ET_FIRE);
-	if (ent == nullptr) {
-		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
-		if (z != pos[2])
-			return;
-
-		ent = G_Spawn();
-		VectorCopy(pos, ent->pos);
-		VectorCopy(vec, ent->origin);
-		ent->dmg = damage;
-		ent->particle = particle;
-		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
-		SP_misc_fire(ent);
-	}
-
-	ent->count = rounds;
-}
-
 static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
@@ -508,6 +483,9 @@ static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t
 		ent->particle = particle;
 		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
 		switch (fieldtype) {
+		case ET_FIRE:
+			SP_misc_fire(ent);
+			break;
 		case ET_SMOKESTUN:
 			SP_misc_smokestun(ent);
 			break;
@@ -526,8 +504,6 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
 		G_SpawnSmoke(vec, particle, rounds);
 		break;
 	case ET_FIRE:
-		G_SpawnFire(vec, particle, rounds, damage);
-		break;
 	case ET_SMOKESTUN:
 		G_SpawnFieldPartGeneric(fieldtype, vec, particle, rounds, damage);
 		break;
