@@ -1416,7 +1416,7 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const in
 #endif
 
 	/* if our destination cell is out of bounds, bail. */
-	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || y > PATHFINDING_WIDTH - actorSize) {
+	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || ay > PATHFINDING_WIDTH - actorSize) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(&rtd, x, y, z, dir);
 		/* There is only one entry here: There is no inverse cell to store data for. */
