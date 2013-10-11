@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL_platform.h>
+#include <stdlib.h>
 
 #ifndef __LINUX__
 #ifndef __MACOSX__
