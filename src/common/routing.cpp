@@ -1339,15 +1339,10 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	opening_t opening;	/** the opening between the two cells */
 	int newZ, az = z;
 
-	if (debugTrace)
-		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, rtd->actorSize);
-
 	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
 	if (adjCeiling == 0 && (extAdjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
-		if (debugTrace)
-			Com_Printf("Current cell filled. c:%i ac:%i\n", rtd->routing.getCeiling(rtd->actorSize, x, y, z), rtd->routing.getCeiling(rtd->actorSize, ax, ay, z));
 		return z;
 	}
 
@@ -1358,16 +1353,12 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	if (absCeiling < absAdjFloor || absExtAdjCeiling < absFloor) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
-		if (debugTrace)
-			Com_Printf("Ceiling lower than floor. f:%i c:%i af:%i ac:%i\n", absFloor, absCeiling, absAdjFloor, absAdjCeiling);
 		return z;
 	}
 
 	/** Find an opening. */
 	RT_TracePassage(rtd, x, y, z, ax, ay, &opening);
-	if (debugTrace) {
-		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, opening.stepup);
-	}
+
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
@@ -1419,8 +1410,6 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const in
 	if (ax < 0 || ax > PATHFINDING_WIDTH - actorSize || ay < 0 || ay > PATHFINDING_WIDTH - actorSize) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(&rtd, x, y, z, dir);
-		if (debugTrace)
-			Com_Printf("Destination cell non-existant.\n");
 		return;
 	}
 
