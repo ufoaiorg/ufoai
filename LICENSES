@@ -796,13 +796,13 @@ base/media/JuraLight.ttf | GNU General Public License 3.0 and Open Font License 
 base/media/JuraMedium.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
 base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
+base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
+base/media/languages.ttf | GNU General Public License 2.0 or later | UFOAI team
 base/media/orbitron-black.ttf | Open Font License | Matt McInerney | http://www.theleagueofmoveabletype.com/orbitron
 base/media/orbitron-bold.ttf | Open Font License | Matt McInerney | http://www.theleagueofmoveabletype.com/orbitron
 base/media/orbitron-light.ttf | Open Font License | Matt McInerney | http://www.theleagueofmoveabletype.com/orbitron
 base/media/orbitron-medium.ttf | Open Font License | Matt McInerney | http://www.theleagueofmoveabletype.com/orbitron
-base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
-base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
-base/media/languages.ttf | GNU General Public License 2.0 or later | UFOAI team
 base/media/ume-pgo4.ttf | see umefont-readme_license.html | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
 base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
