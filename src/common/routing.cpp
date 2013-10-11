@@ -1365,7 +1365,6 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
-		/* ^ 1 reverses the direction of dir */
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
 		az--;
