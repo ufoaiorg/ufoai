@@ -468,7 +468,7 @@ static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t
 	pos3_t pos;
 	Edict* ent;
 
-	VecToPos(vec, pos);
+	VecToPos(vec, pos);		/* calculate grid position */
 
 	ent = G_GetEdictFromPos(pos, fieldtype);
 	if (ent == nullptr) {
@@ -478,7 +478,7 @@ static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t
 
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
-		VectorCopy(vec, ent->origin);
+		G_EdictCalcOrigin(ent);		/* allthough vec is supposed to be the origin, calc origin from pos. That's safer. */
 		ent->dmg = damage;
 		ent->particle = particle;
 		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
