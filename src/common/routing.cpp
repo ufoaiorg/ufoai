@@ -1340,7 +1340,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	int newZ, az = z;
 
 	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
-	if (adjCeiling == 0 && (upperAdjCeiling == 0 || ceiling == 0)) {
+	if ((adjCeiling == 0 && upperAdjCeiling == 0) || ceiling == 0) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
 		return z;
