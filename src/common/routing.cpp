@@ -1364,12 +1364,6 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	 * function fills it in as unpassable. */
 	int newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
-	int az = z;
-	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
-		az++;
-	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
-		az--;
-	}
 	return newZ;
 }
 
