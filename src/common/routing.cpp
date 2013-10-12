@@ -1330,7 +1330,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 {
 	const int ceiling = rtd->routing.getCeiling(rtd->actorSize, x, y, z);
 	const int adjCeiling = rtd->routing.getCeiling(rtd->actorSize, ax, ay, z);
-	const int extAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) : adjCeiling;
+	const int upperAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) : adjCeiling;
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
 	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
@@ -1340,7 +1340,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	int newZ, az = z;
 
 	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
-	if (adjCeiling == 0 && (extAdjCeiling == 0 || ceiling == 0)) {
+	if (adjCeiling == 0 && (upperAdjCeiling == 0 || ceiling == 0)) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
 		return z;
