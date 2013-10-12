@@ -1727,21 +1727,21 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
 /**
  * @brief Create the bounding box for the entire move
  * @param[in] start Start vector to start the trace from
- * @param[in] mins, maxs Bounding box used for tracing
+ * @param[in] objBox Bounding box used for tracing
  * @param[in] stop End vector to stop the trace at
  * @param[out] cBox The resulting box
  * @sa CL_Trace
  * @note Box is expanded by 1
  */
-static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t stop, AABB& cBox)
+static inline void CL_TraceBounds (const vec3_t start, const AABB& objBox, const vec3_t stop, AABB& cBox)
 {
 	for (int i = 0; i < 3; i++) {
 		if (stop[i] > start[i]) {
-			cBox.mins[i] = start[i] + mins[i] - 1;
-			cBox.maxs[i] = stop[i] + maxs[i] + 1;
+			cBox.mins[i] = start[i] + objBox.mins[i] - 1;
+			cBox.maxs[i] = stop[i] + objBox.maxs[i] + 1;
 		} else {
-			cBox.mins[i] = stop[i] + mins[i] - 1;
-			cBox.maxs[i] = start[i] + maxs[i] + 1;
+			cBox.mins[i] = stop[i] + objBox.mins[i] - 1;
+			cBox.maxs[i] = start[i] + objBox.maxs[i] + 1;
 		}
 	}
 }
@@ -1779,7 +1779,7 @@ trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le
 	clip.passle2 = passle2;
 
 	/* create the bounding box of the entire move */
-	CL_TraceBounds(traceLine.start, box.mins, box.maxs, traceLine.stop, clip.clipBox);
+	CL_TraceBounds(traceLine.start, box, traceLine.stop, clip.clipBox);
 
 	/* clip to other solid entities */
 	CL_ClipMoveToLEs(&clip);
