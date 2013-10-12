@@ -1230,8 +1230,6 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
 		}
 	}
 
-	if (debugTrace)
-		Com_Printf(" No opening found.\n");
 	opening->stepup = PATHFINDING_NO_STEPUP;
 	opening->invstepup = PATHFINDING_NO_STEPUP;
 	return 0;
@@ -1287,8 +1285,6 @@ static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const i
 		}
 	}
 	if (!placeToCheck) {
-		if (debugTrace)
-			Com_Printf(" No opening found. c:%i lc:%i.\n", from.ceiling, lowCeil);
 		/* If we got here, then there is no opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
@@ -1302,13 +1298,8 @@ static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const i
 	 * ceiling below the adjacent cell and the current floor is too small or
 	 * obstructed.  Try to move onto the adjacent floor.
 	 */
-	if (debugTrace)
-		Com_Printf(" Testing up c:%i lc:%i.\n", from.ceiling, lowCeil);
-
 	RT_TraceOnePassage(rtd, &from, placeToCheck, opening);
 	if (opening->size < PATHFINDING_MIN_OPENING) {
-		if (debugTrace)
-			Com_Printf(" No opening found.\n");
 		/* If we got here, then there is no useable opening from floor to ceiling. */
 		opening->stepup = PATHFINDING_NO_STEPUP;
 		opening->invstepup = PATHFINDING_NO_STEPUP;
