@@ -1238,11 +1238,8 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
 /**
  * @brief Performs traces to find a passage between two points.
  * @param[in] rtd The essential routing data with map, actorsize, ents
- * @param[in] x Starting x coordinate
- * @param[in] y Starting y coordinate
- * @param[in] z Starting z coordinate
- * @param[in] ax Ending x coordinate
- * @param[in] ay Ending y coordinate
+ * @param[in] x,y,z Starting coordinates
+ * @param[in] ax,ay Ending coordinates (adjacent cell)
  * @param[out] opening descriptor of the opening found, if any
  */
 static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
@@ -1364,8 +1361,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] routing Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
- * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
- * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] x,y The position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
