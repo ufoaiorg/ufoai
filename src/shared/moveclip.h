@@ -26,9 +26,6 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 
 #include "ufotypes.h"
 #include "aabb.h"
-//#include "line.h"
-//#include "defines.h"	/* for MAX_WORLD_WIDTH */
-//#include <algorithm>
 
 /**
  * @brief The bounding box of a moving object
