@@ -1332,7 +1332,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	 *  If the absolute ceiling of one is below the absolute floor of the other, then there is no intersection.
 	 */
 	const int absCeiling = ceiling + z * CELL_HEIGHT;
-	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
+//	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;		/* temporarily unused */
 	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
 	const int absFloor = rtd->routing.getFloor(rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
 	const int absAdjFloor = rtd->routing.getFloor(rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
