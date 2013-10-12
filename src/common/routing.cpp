@@ -1328,18 +1328,11 @@ static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const i
  */
 static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
+	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
 	const int ceiling = rtd->routing.getCeiling(rtd->actorSize, x, y, z);
 	const int adjCeiling = rtd->routing.getCeiling(rtd->actorSize, ax, ay, z);
 	const int upperAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) : adjCeiling;
-	const int absCeiling = ceiling + z * CELL_HEIGHT;
-	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
-	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
-	const int absFloor = rtd->routing.getFloor(rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
-	const int absAdjFloor = rtd->routing.getFloor(rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
-	opening_t opening;	/** the opening between the two cells */
-	int newZ, az = z;
 
-	/** test if the adjacent cell and the cell above it are blocked by a loaded model */
 	if ((adjCeiling == 0 && upperAdjCeiling == 0) || ceiling == 0) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
@@ -1350,6 +1343,12 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	 * @note OK, simple test here.  We know both cells have a ceiling, so they are both open.
 	 *  If the absolute ceiling of one is below the absolute floor of the other, then there is no intersection.
 	 */
+	const int absCeiling = ceiling + z * CELL_HEIGHT;
+	const int absAdjCeiling = adjCeiling + z * CELL_HEIGHT;
+	const int absExtAdjCeiling = (z < PATHFINDING_HEIGHT - 1) ? adjCeiling + (z + 1) * CELL_HEIGHT : absCeiling;
+	const int absFloor = rtd->routing.getFloor(rtd->actorSize, x, y, z) + z * CELL_HEIGHT;
+	const int absAdjFloor = rtd->routing.getFloor(rtd->actorSize, ax, ay, z) + z * CELL_HEIGHT;
+
 	if (absCeiling < absAdjFloor || absExtAdjCeiling < absFloor) {
 		/* We can't go this way. */
 		RT_ConnSetNoGo(rtd, x, y, z, dir);
@@ -1357,13 +1356,15 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	}
 
 	/** Find an opening. */
+	opening_t opening;	/** the opening between the two cells */
 	RT_TracePassage(rtd, x, y, z, ax, ay, &opening);
 
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
-	newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
+	int newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
+	int az = z;
 	if (opening.stepup & PATHFINDING_BIG_STEPUP) {
 		az++;
 	} else if (opening.stepup & PATHFINDING_BIG_STEPDOWN) {
