@@ -367,6 +367,10 @@ static bool G_RunFrame (void)
 	/* run ai */
 	AI_Run();
 
+	/* not all teams are spawned or game has already ended */
+	if (G_MatchIsRunning())
+		G_EdictsThink();
+
 	G_SendBoundingBoxes();
 
 	return false;

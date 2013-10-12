@@ -323,3 +323,24 @@ bool G_EdictPosIsSameAs (const Edict* ent, const pos3_t cmpPos)
 {
 	return VectorCompare(cmpPos, ent->pos);
 }
+
+/**
+ * @brief Called every frame to let the edicts tick
+ */
+void G_EdictsThink (void)
+{
+	/* treat each object in turn */
+	/* even the world gets a chance to think */
+	Edict* ent = nullptr;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (!ent->think)
+			continue;
+		if (ent->nextthink <= 0)
+			continue;
+		if (ent->nextthink > level.time + 0.001f)
+			continue;
+
+		ent->nextthink = level.time + SERVER_FRAME_SECONDS;
+		ent->think(ent);
+	}
+}
