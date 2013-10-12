@@ -429,13 +429,14 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
 
 	for (i = 0; i < 3; i++) {
 		if (end[i] > start[i]) {
-			cBox.mins[i] = start[i] + mins[i] - 1;
-			cBox.maxs[i] = end[i] + maxs[i] + 1;
+			cBox.mins[i] = start[i] + mins[i];
+			cBox.maxs[i] = end[i] + maxs[i];
 		} else {
-			cBox.mins[i] = end[i] + mins[i] - 1;
-			cBox.maxs[i] = start[i] + maxs[i] + 1;
+			cBox.mins[i] = end[i] + mins[i];
+			cBox.maxs[i] = start[i] + maxs[i];
 		}
 	}
+	cBox.expand(1);
 #endif
 }
 

@@ -164,6 +164,12 @@ public:
 		maxs[1] += byVal;
 		clipToWorld();
 	}
+	/** @brief expand the box in all directions, but clip them to the maximum boundaries */
+	inline void expand (const float byVal) {
+		mins[2] -= byVal;
+		maxs[2] += byVal;
+		expandXY(byVal);
+	}
 	/** @brief shove the whole box by the given vector */
 	inline void shift (const vec3_t shiftVec) {
 		VectorAdd(mins, shiftVec, mins);
