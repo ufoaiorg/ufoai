@@ -949,21 +949,18 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* name, const GridBox& box, const char** list)
 {
 	if (box.isZero()) {
-		pos3_t min, max;
-		vec3_t absmin, absmax;
-		const cBspModel_t* model;
-		unsigned int i;
 		/* get inline model, if it is one */
 		if (*name != '*') {
 			Com_Printf("Called Grid_RecalcRouting with no inline model\n");
 			return;
 		}
-		model = CM_InlineModel(mapTiles, name);
+		const cBspModel_t* model = CM_InlineModel(mapTiles, name);
 		if (!model) {
 			Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
 			return;
 		}
 
+		vec3_t absmin, absmax;
 #if 1
 		/* An attempt to fix the 'doors starting opened' bug (# 3456).
 		 * The main difference is the (missing) rotation of the halfVec.
@@ -999,6 +996,7 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			VectorAdd(model->maxs, model->origin, absmax);
 		}
 #endif
+		pos3_t min, max;
 		VecToPos(absmin, min);
 		VecToPos(absmax, max);
 
@@ -1006,7 +1004,7 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 		max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
 		max[1] = std::min(max[1], (pos_t)(PATHFINDING_WIDTH - 1));
 		max[2] = std::min(max[2], (pos_t)(PATHFINDING_HEIGHT - 1));
-		for (i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++)
 			min[i] = std::max(min[i], (pos_t)0);
 
 		/* We now have the dimensions, call the generic rerouting function. */
