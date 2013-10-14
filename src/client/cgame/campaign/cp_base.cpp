@@ -2437,9 +2437,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
  */
 void B_SaveBaseSlotsXML (const baseWeapon_t* weapons, const int numWeapons, xmlNode_t* node)
 {
-	int i;
-
-	for (i = 0; i < numWeapons; i++) {
+	for (int i = 0; i < numWeapons; i++) {
 		xmlNode_t* sub = cgi->XML_AddNode(node, SAVE_BASES_WEAPON);
 		AII_SaveOneSlotXML(sub, &weapons[i].slot, true);
 		cgi->XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);

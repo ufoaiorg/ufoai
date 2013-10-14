@@ -300,10 +300,9 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t* battle, const batt
  */
 static void AM_SetDefaultHostilities (autoMissionBattle_t* battle, const bool civsInfected)
 {
-	int i;
 	bool civsInverted = !civsInfected;
 
-	for (i = AUTOMISSION_TEAM_TYPE_PLAYER; i < AUTOMISSION_TEAM_TYPE_MAX; i++) {
+	for (int i = AUTOMISSION_TEAM_TYPE_PLAYER; i < AUTOMISSION_TEAM_TYPE_MAX; i++) {
 		int j;
 		const autoMissionTeamType_t team = (autoMissionTeamType_t)i;
 		if (battle->actUnits[team] <= 0)

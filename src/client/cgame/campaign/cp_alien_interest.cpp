@@ -35,13 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void INT_ResetAlienInterest (void)
 {
-	int i;
-
 	ccs.lastInterestIncreaseDelay = 0;
 	ccs.lastMissionSpawnedDelay = 0;
 	ccs.overallInterest = ccs.curCampaign->initialInterest;
 
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+	for (int i = 0; i < INTERESTCATEGORY_MAX; i++)
 		ccs.interest[i] = 0;
 	ccs.interest[INTERESTCATEGORY_RECON] = ccs.curCampaign->initialInterest;
 }
@@ -111,13 +109,12 @@ void INT_IncreaseAlienInterest (const campaign_t* campaign)
 bool INT_SaveXML (xmlNode_t* parent)
 {
 	xmlNode_t* interestsNode = cgi->XML_AddNode(parent, SAVE_INTERESTS);
-	int i;
 
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
 	cgi->XML_AddShortValue(interestsNode, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
 	cgi->Com_RegisterConstList(saveInterestConstants);
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
+	for (int i = 0; i < INTERESTCATEGORY_MAX; i++) {
 		xmlNode_t* interestNode = cgi->XML_AddNode(interestsNode, SAVE_INTERESTS_INTEREST);
 		cgi->XML_AddString(interestNode, SAVE_INTERESTS_ID, cgi->Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
 		cgi->XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
@@ -201,11 +198,9 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
  */
 static void INT_AlienInterestList_f (void)
 {
-	int i;
-
 	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
 	Com_Printf("Individual interest:\n");
-	for (i = INTERESTCATEGORY_NONE; i < INTERESTCATEGORY_MAX; i++)
+	for (int i = INTERESTCATEGORY_NONE; i < INTERESTCATEGORY_MAX; i++)
 		Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName((interestCategory_t)i), ccs.interest[i]);
 }
 
