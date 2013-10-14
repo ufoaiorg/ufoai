@@ -42,8 +42,8 @@ GAME RELATED TRACING USING ENTITIES
 static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3_t maxs)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
-	VectorAdd(model->origin, model->mins, mins);
-	VectorAdd(model->origin, model->maxs, maxs);
+	VectorAdd(model->origin, model->cbmBox.mins, mins);
+	VectorAdd(model->origin, model->cbmBox.maxs, maxs);
 	if (VectorNotEmpty(model->angles)) {
 		vec3_t acenter, aoffset;
 		const float offset = std::max(std::max(fabs(mins[0] - maxs[0]), fabs(mins[1] - maxs[1])), fabs(mins[2] - maxs[2])) / 2.0;

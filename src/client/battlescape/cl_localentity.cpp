@@ -74,8 +74,8 @@ static void CL_GridRecalcRouting (const le_t* le)
 	if (!model) {
 		return;
 	}
-	VectorAdd(model->mins, model->origin, minVec);
-	VectorAdd(model->maxs, model->origin, maxVec);
+	VectorAdd(model->cbmBox.mins, model->origin, minVec);
+	VectorAdd(model->cbmBox.maxs, model->origin, maxVec);
 	GridBox reroute(minVec, maxVec);
 
 	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
@@ -1121,8 +1121,8 @@ void LET_SlideDoor (le_t* le, int speed)
 		/* the bounding box of the door is updated in one step - here is no lerping needed */
 		VectorMul(distance, moveAngles, distanceVec);
 
-		VectorAdd(model->mins, distanceVec, model->mins);
-		VectorAdd(model->maxs, distanceVec, model->maxs);
+		VectorAdd(model->cbmBox.mins, distanceVec, model->cbmBox.mins);
+		VectorAdd(model->cbmBox.maxs, distanceVec, model->cbmBox.maxs);
 		CL_RecalcRouting(le);
 
 		/* reset the think function as the movement finished */
@@ -1448,7 +1448,7 @@ static void LE_AddEdictHighlight (const le_t* le)
 	entity_t ent(RF_BOX);
 	VectorSet(ent.color, 1, 1, 1);
 	ent.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
-	CalculateMinsMaxs(le->angles, model->mins, model->maxs, le->origin, ent.eBox.mins, ent.eBox.maxs);
+	CalculateMinsMaxs(le->angles, model->cbmBox.mins, model->cbmBox.maxs, le->origin, ent.eBox.mins, ent.eBox.maxs);
 	R_AddEntity(&ent);
 }
 

@@ -76,8 +76,8 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
 		VectorCopy(shift, out->shift);
 		/* spread the mins / maxs by a pixel */
 		for (j = 0; j < 3; j++) {
-			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
-			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
+			out->cbmBox.mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
+			out->cbmBox.maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);
 		out->tile = tile.idx; /* backlink to the loaded map tile */
@@ -648,8 +648,8 @@ static void CMod_LoadEntityString (MapTile& tile, const char* entityString, mapD
 				Q_strcat(mapData->mapEntityString, sizeof(mapData->mapEntityString), "%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]);
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
-					VectorSubtract(model->mins, shift, model->mins);
-					VectorSubtract(model->maxs, shift, model->maxs);
+					VectorSubtract(model->cbmBox.mins, shift, model->cbmBox.mins);
+					VectorSubtract(model->cbmBox.maxs, shift, model->cbmBox.maxs);
 					model = nullptr; /* reset it, or the next origin will shift it again */
 				}
 			} else if (Q_streq(keyname, "model") && token[0] == '*') {
@@ -1081,7 +1081,7 @@ void CM_GetInlineModelAABB (mapTiles_t* mapTiles, const char* name, AABB& aabb)
 {
 	cBspModel_t* model = CM_InlineModel(mapTiles, name);
 	assert(model);
-	CalculateMinsMaxs(model->angles, model->mins, model->maxs, model->origin, aabb.mins, aabb.maxs);
+	CalculateMinsMaxs(model->angles, model->cbmBox.mins, model->cbmBox.maxs, model->origin, aabb.mins, aabb.maxs);
 }
 
 /**
