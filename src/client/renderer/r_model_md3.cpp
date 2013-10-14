@@ -78,7 +78,7 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 	mAliasFrame_t* poutframe = mod->alias.frames = Mem_PoolAllocTypeN(mAliasFrame_t, mod->alias.num_frames, vid_modelPool);
 
 	mod->radius = 0;
-	ClearBounds(mod->modBox.mins, mod->modBox.maxs);
+	mod->modBox.clearBounds();
 
 	for (i = 0; i < mod->alias.num_frames; i++, pinframe++, poutframe++) {
 		for (j = 0; j < 3; j++) {

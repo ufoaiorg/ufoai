@@ -505,7 +505,7 @@ void R_ModLoadAliasMD2Model (model_t* mod, byte* buffer, int bufSize, bool loadN
 	/* fixed values */
 	mod->type = mod_alias_md2;
 
-	ClearBounds(mod->modBox.mins, mod->modBox.maxs);
+	mod->modBox.clearBounds();
 
 	R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
