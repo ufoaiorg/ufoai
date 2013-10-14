@@ -439,7 +439,7 @@ static void Think_SmokeAndFire (Edict* self)
 	}
 }
 
-static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
+static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
 	Edict* ent;
@@ -474,19 +474,6 @@ static void G_SpawnFieldPartGeneric (const entity_type_t fieldtype, const vec3_t
 	}
 
 	ent->count = rounds;
-}
-
-static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
-{
-	switch (fieldtype) {
-	case ET_SMOKE:
-	case ET_FIRE:
-	case ET_SMOKESTUN:
-		G_SpawnFieldPartGeneric(fieldtype, vec, particle, rounds, damage);
-		break;
-	default:
-		break;
-	}
 }
 
 /**
