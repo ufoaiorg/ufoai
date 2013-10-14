@@ -80,8 +80,7 @@ static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBs
 
 /**
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
- * @param[in] start trace start vector
- * @param[in] end trace end vector
+ * @param[in] traceLine The start and stop vectors of the trace
  * @param[in] traceBox The box we shove through the world
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] contentmask content flags the trace should stop at (see MASK_*)
