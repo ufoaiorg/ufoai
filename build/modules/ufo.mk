@@ -38,6 +38,8 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(wildcard $(SRCDIR)/client/renderer/*.cpp) \
 	\
+	) \
+	\
 	common/binaryexpressionparser.cpp \
 	common/cmd.cpp \
 	common/http.cpp \
@@ -103,7 +105,7 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
-	$(JPEG_SRCS) )
+	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
