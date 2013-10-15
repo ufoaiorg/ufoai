@@ -384,8 +384,7 @@ bool RT_AllCellsBelowAreFilled (const Routing& routing, const int actorSize, con
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] routing The map's routing data
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
- * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
- * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
+ * @param[in] x,y The x/y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
@@ -577,9 +576,7 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
  * @param[in] rtd The essential routing data with map, actorsize, ents
  * @param[in] dir Direction of movement
- * @param[in] x Starting x coordinate
- * @param[in] y Starting y coordinate
- * @param[in] z Starting z coordinate
+ * @param[in] x,y,z Grid coordinates of the starting position
  * @param[in] openingSize Absolute height in QUANT units of the opening.
  * @param[in] openingBase Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
@@ -1501,8 +1498,7 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const i
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
  * @param[in] routing Routing table of the current loaded map
  * @param[in] actorSize The size of the actor, in units
- * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
- * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
+ * @param[in] x,y The x/y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */

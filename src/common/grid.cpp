@@ -87,9 +87,7 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize width of the actor in cells
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] x Field in x direction
- * @param[in] y Field in y direction
- * @param[in] z Field in z direction
+ * @param[in] x,y,z Grid position of the cell
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList
  * @return true if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
