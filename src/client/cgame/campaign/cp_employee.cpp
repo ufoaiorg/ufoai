@@ -844,13 +844,6 @@ void E_InitialEmployees (const campaign_t* campaign)
 		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), nullptr);
 	for (i = 0; i < campaign->pilots; i++)
 		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), nullptr);
-	for (i = 0; i < campaign->ugvs; i++) {
-		/** @todo don't use hardcoded UGV ids */
-		if (frand() > 0.5)
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_ares_w"));
-		else
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_phoenix"));
-	}
 }
 
 #ifdef DEBUG

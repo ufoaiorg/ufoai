@@ -127,7 +127,6 @@ campaign main
 	xvirate			70
 	firstbase			balanced
 	researched			rslist_phalanx
-	ugvs				2
 	equipment			campaign_player
 	soldierequipment	phalanx_initial
 	market				campaign_initial_market
