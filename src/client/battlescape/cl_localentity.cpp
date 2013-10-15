@@ -58,9 +58,6 @@ static inline void LE_GenerateInlineModelList (void)
 
 static void CL_GridRecalcRouting (const le_t* le)
 {
-	const cBspModel_t* model;
-	vec3_t minVec, maxVec;
-
 	/* We ALWAYS check against a model, even if it isn't in use.
 	 * An unused model is NOT included in the inline list, so it doesn't get
 	 * traced against. */
@@ -70,10 +67,11 @@ static void CL_GridRecalcRouting (const le_t* le)
 	if (Com_ServerState())
 		return;
 
-	model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
+	const cBspModel_t* model = CM_InlineModel(cl.mapTiles, le->inlineModelName);
 	if (!model) {
 		return;
 	}
+	vec3_t minVec, maxVec;
 	VectorAdd(model->cbmBox.mins, model->origin, minVec);
 	VectorAdd(model->cbmBox.maxs, model->origin, maxVec);
 	GridBox reroute(minVec, maxVec);
