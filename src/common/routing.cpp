@@ -1364,6 +1364,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
  * @param[in] x,y The position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
+ * @param[in] minZ,maxZ Limit the update to a part of the column
  */
 void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list, const int minZ, const int maxZ)
 {
