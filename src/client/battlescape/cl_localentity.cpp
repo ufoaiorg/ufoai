@@ -1119,8 +1119,7 @@ void LET_SlideDoor (le_t* le, int speed)
 		/* the bounding box of the door is updated in one step - here is no lerping needed */
 		VectorMul(distance, moveAngles, distanceVec);
 
-		VectorAdd(model->cbmBox.mins, distanceVec, model->cbmBox.mins);
-		VectorAdd(model->cbmBox.maxs, distanceVec, model->cbmBox.maxs);
+		model->cbmBox.shift(distanceVec);
 		CL_RecalcRouting(le);
 
 		/* reset the think function as the movement finished */
