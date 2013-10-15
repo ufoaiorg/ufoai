@@ -71,10 +71,9 @@ static void CL_GridRecalcRouting (const le_t* le)
 	if (!model) {
 		return;
 	}
-	vec3_t minVec, maxVec;
-	VectorAdd(model->cbmBox.mins, model->origin, minVec);
-	VectorAdd(model->cbmBox.maxs, model->origin, maxVec);
-	GridBox reroute(minVec, maxVec);
+	AABB absBox(model->cbmBox);
+	absBox.shift(model->origin);
+	GridBox reroute(absBox);
 
 	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
 }
