@@ -248,7 +248,7 @@ void Print3Vector(const vec3_t v, const char* text);
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
 
-void CalculateMinsMaxs(const vec3_t angles, const vec3_t mins, const vec3_t maxs, const vec3_t origin, vec3_t absmin, vec3_t absmax);
+void CalculateMinsMaxs(const vec3_t angles, const AABB& relBox, const vec3_t origin, vec3_t absmin, vec3_t absmax);
 
 void VectorCreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]);
 void VectorRotatePoint(vec3_t point, vec3_t matrix[3]);

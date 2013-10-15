@@ -148,7 +148,7 @@ void SV_LinkEdict (edict_t* ent)
 	/* increase the linkcount - even for none solids */
 	ent->linkcount++;
 
-	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, ent->mins, ent->maxs, ent->origin, ent->absmin, ent->absmax);
+	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, AABB(ent->mins, ent->maxs), ent->origin, ent->absmin, ent->absmax);
 
 	/* if not solid we have to set the abs mins/maxs above but don't really link it */
 	if (ent->solid == SOLID_NOT)

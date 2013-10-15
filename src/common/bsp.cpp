@@ -1081,7 +1081,7 @@ void CM_GetInlineModelAABB (mapTiles_t* mapTiles, const char* name, AABB& aabb)
 {
 	cBspModel_t* model = CM_InlineModel(mapTiles, name);
 	assert(model);
-	CalculateMinsMaxs(model->angles, model->cbmBox.mins, model->cbmBox.maxs, model->origin, aabb.mins, aabb.maxs);
+	CalculateMinsMaxs(model->angles, model->cbmBox, model->origin, aabb.mins, aabb.maxs);
 }
 
 /**

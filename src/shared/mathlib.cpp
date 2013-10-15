@@ -549,7 +549,7 @@ void gaussrand (float* gauss1, float* gauss2)
 }
 /** @brief Calculates the bounding box in absolute coordinates, also for rotating objects.
  * WARNING: do not use this for angles other than 90, 180 or 270 !! */
-void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t maxs, const vec3_t origin, vec3_t absmin, vec3_t absmax)
+void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t origin, vec3_t absmin, vec3_t absmax)
 {
 	/* expand for rotation */
 	if (VectorNotEmpty(angles)) {
@@ -558,10 +558,10 @@ void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t max
 		vec3_t m[3];
 
 		/* Find the center of the extents. */
-		VectorCenterFromMinsMaxs(mins, maxs, centerVec);
+		relBox.getCenter(centerVec);
 
 		/* Find the half height and half width of the extents. */
-		VectorSubtract(maxs, centerVec, halfVec);
+		VectorSubtract(relBox.maxs, centerVec, halfVec);
 
 		/* Rotate the center about the origin. */
 		VectorCreateRotationMatrix(angles, m);
@@ -584,8 +584,8 @@ void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t max
 		VectorAdd(origin, minVec, absmin);
 		VectorAdd(origin, maxVec, absmax);
 	} else {  /* normal */
-		VectorAdd(origin, mins, absmin);
-		VectorAdd(origin, maxs, absmax);
+		VectorAdd(origin, relBox.mins, absmin);
+		VectorAdd(origin, relBox.maxs, absmax);
 	}
 }
 
