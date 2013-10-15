@@ -75,7 +75,7 @@ bool Employee::isAwayFromBase () const
 		return false;
 
 	/* Crashed aircraft no longer belongs to any base but poor pilot/soldiers assigned
-	 * to it are definetly away from the base so we need to iterate trought all aircraft */
+	 * to it are definitely away from the base so we need to iterate through all aircraft */
 	AIR_Foreach(aircraft) {
 		if (aircraft->homebase != baseHired)
 			continue;
