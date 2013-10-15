@@ -142,10 +142,6 @@ window market extends objectinfo {
 			label	"_Other"
 			value	"dummy"
 		}
-		option ugvitem {
-			label	"_UGV items"
-			value	"ugvitem"
-		}
 	}
 
 	// ==================

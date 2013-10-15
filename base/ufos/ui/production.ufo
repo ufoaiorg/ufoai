@@ -58,10 +58,6 @@ window production
 			label	"_Aircraft"
 			value	"aircraft"
 		}
-		option ugvitem {
-			label	"_UGV items"
-			value	"ugvitem"
-		}
 		option dummy {
 			label	"_Other"
 			value	"dummy"
