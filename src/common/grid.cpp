@@ -972,10 +972,10 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			vec3_t m[3];
 
 			/* Find the center of the extents. */
-			VectorCenterFromMinsMaxs(model->mins, model->maxs, centerVec);
+			VectorCenterFromMinsMaxs(model->cbmBox.mins, model->cbmBox.maxs, centerVec);
 
 			/* Find the half height and half width of the extents. */
-			VectorSubtract(model->maxs, centerVec, halfVec);
+			VectorSubtract(model->cbmBox.maxs, centerVec, halfVec);
 
 			/* Rotate the center about the origin. */
 			VectorCreateRotationMatrix(model->angles, m);
@@ -990,8 +990,8 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			VectorAdd(maxVec, model->origin, absmax);
 		} else {  /* normal */
 			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-			VectorAdd(model->mins, model->origin, absmin);
-			VectorAdd(model->maxs, model->origin, absmax);
+			VectorAdd(model->cbmBox.mins, model->origin, absmin);
+			VectorAdd(model->cbmBox.maxs, model->origin, absmax);
 		}
 #endif
 		pos3_t min, max;
