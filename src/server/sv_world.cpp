@@ -419,13 +419,14 @@ int SV_PointContents (const vec3_t p)
  */
 static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, AABB& cBox)
 {
+	cBox.set(mins,maxs);
 	for (int i = 0; i < 3; i++) {
 		if (end[i] > start[i]) {
-			cBox.mins[i] = start[i] + mins[i];
-			cBox.maxs[i] = end[i] + maxs[i];
+			cBox.mins[i] += start[i];
+			cBox.maxs[i] += end[i];
 		} else {
-			cBox.mins[i] = end[i] + mins[i];
-			cBox.maxs[i] = start[i] + maxs[i];
+			cBox.mins[i] += end[i];
+			cBox.maxs[i] += start[i];
 		}
 	}
 	cBox.expand(1);	/* debug: set this to eg. 9999 to test against everything */
