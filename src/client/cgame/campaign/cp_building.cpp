@@ -150,8 +150,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 		cgi->Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
 
 	if (!link) {
-		int i;
-		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 			if (Q_streq(ccs.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
@@ -276,11 +275,9 @@ bool B_BuildingScriptSanityCheck (void)
  */
 building_t* B_GetBuildingTemplateSilent (const char* buildingName)
 {
-	int i = 0;
-
 	if (!buildingName)
 		return nullptr;
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t* buildingTemplate = &ccs.buildingTemplates[i];
 		if (Q_streq(buildingTemplate->id, buildingName))
 			return buildingTemplate;

@@ -181,13 +181,12 @@ void CP_UpdateCharacterData (linkedList_t* updateCharacters)
  */
 void CP_ParseCharacterData (dbuffer* msg, linkedList_t** updateCharacters)
 {
-	int i, j;
 	const int num = cgi->NET_ReadByte(msg);
 
 	if (num < 0)
 		cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: invalid character number found in stream (%i)\n", num);
 
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		updateCharacter_t c;
 		OBJZERO(c);
 		c.ucn = NET_ReadShort(msg);
@@ -195,6 +194,7 @@ void CP_ParseCharacterData (dbuffer* msg, linkedList_t** updateCharacters)
 		c.STUN = cgi->NET_ReadByte(msg);
 		c.morale = cgi->NET_ReadByte(msg);
 
+		int j;
 		for (j = 0; j < BODYPART_MAXTYPE; ++j)
 			c.wounds.treatmentLevel[j] = cgi->NET_ReadByte(msg);
 
@@ -434,7 +434,6 @@ void CP_CheckLostCondition (const campaign_t* campaign)
  */
 void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
 {
-	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
 	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
 	float performance;
@@ -465,7 +464,7 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
 		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
 
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		float happinessFactor;
@@ -577,11 +576,8 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
-		int currenthour;
-		int currentmin;
 		int currentsecond = ccs.date.sec;
 		int currentday = ccs.date.day;
-		int i;
 		const int currentinterval = currentsecond % DETECTION_INTERVAL;
 		int dt = DETECTION_INTERVAL - currentinterval;
 		dateLong_t date, oldDate;
@@ -590,13 +586,14 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 
 		CP_DateConvertLong(&ccs.date, &oldDate);
 
-		currenthour = currentsecond / SECONDS_PER_HOUR;
-		currentmin = currentsecond / SECONDS_PER_MINUTE;
+		int currenthour = currentsecond / SECONDS_PER_HOUR;
+		int currentmin = currentsecond / SECONDS_PER_MINUTE;
 
 		/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
 		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
 		 *	- Check if any new mission is detected
 		 *	- Update stealth value of phalanx bases and installations ; alien bases */
+		int i;
 		for (i = 0; i < checks; i++) {
 			ccs.timer -= dt;
 			currentsecond += dt;
@@ -993,20 +990,17 @@ void CP_UpdateCharacterStats (const base_t* base, const aircraft_t* aircraft)
  */
 static void CP_DebugShowItems_f (void)
 {
-	int i;
-	base_t* base;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(cgi->Cmd_Argv(1));
+	int i = atoi(cgi->Cmd_Argv(1));
 	if (i >= B_GetCount()) {
 		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
-	base = B_GetBaseByIDX(i);
+	base_t* base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* obj = INVSH_GetItemByIDX(i);
@@ -1233,8 +1227,6 @@ void CP_CampaignInit (campaign_t* campaign, bool load)
 void CP_Shutdown (void)
 {
 	if (CP_IsRunning()) {
-		int i;
-
 		AB_Shutdown();
 		AIR_Shutdown();
 		INS_Shutdown();
@@ -1247,7 +1239,7 @@ void CP_Shutdown (void)
 		E_Shutdown();
 
 		/** @todo Where does this belong? */
-		for (i = 0; i < ccs.numAlienCategories; i++) {
+		for (int i = 0; i < ccs.numAlienCategories; i++) {
 			alienTeamCategory_t* alienCat = &ccs.alienCategories[i];
 			cgi->LIST_Delete(&alienCat->equipment);
 		}
@@ -1454,10 +1446,8 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 
 int CP_GetSalaryAdministrative (const salary_t* salary)
 {
-	int i, costs;
-
-	costs = salary->adminInitial;
-	for (i = 0; i < MAX_EMPL; i++) {
+	int costs = salary->adminInitial;
+	for (int i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		costs += E_CountByType(type) * CP_GetSalaryAdminEmployee(salary, type);
 	}

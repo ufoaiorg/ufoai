@@ -440,7 +440,6 @@ static void B_BaseInit_f (void)
  */
 static void B_BuildingSpace_f (void)
 {
-	int i;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -448,7 +447,7 @@ static void B_BuildingSpace_f (void)
 
 	// Clear existing entries from the UI panel
 	cgi->UI_ExecuteConfunc("clear_bld_space");
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
 		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
 		capacities_t cap;

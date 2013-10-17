@@ -169,11 +169,9 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t* slot, linkedList_t** s
 
 static void BDEF_FillSlotList (const baseWeapon_t* batteries, int maxBatteries, linkedList_t** slotList)
 {
-	int i;
-
 	BDEF_UpdateAircraftItemList(&batteries->slot);
 
-	for (i = 0; i < maxBatteries; i++, batteries++) {
+	for (int i = 0; i < maxBatteries; i++, batteries++) {
 		const aircraftSlot_t* slot = &batteries->slot;
 		BDEF_AddSlotToSlotList(slot, slotList);
 	}
