@@ -135,6 +135,11 @@ public:
 		return !(mins[0] > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
+	inline bool contains (const vec3_t point) const {
+		return (point[0] >= getMinX() && point[0] <= getMaxX()
+			&& point[1] >= getMinY() && point[1] <= getMaxY()
+			&& point[2] >= getMinZ() && point[2] <= getMaxZ() );
+	}
 
 	/** ------------------
 	 *		manipulators

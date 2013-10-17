@@ -578,8 +578,7 @@ static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 
 static bool SV_GridIsOnMap (const vec3_t vec)
 {
-	AABB dirtyTrick(vec, vec);
-	return sv->mapData.mapBox.doesIntersect(dirtyTrick);
+	return sv->mapData.mapBox.contains(vec);
 }
 
 static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, pos_t** forbiddenList, int forbiddenListLength)
