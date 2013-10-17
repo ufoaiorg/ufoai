@@ -83,8 +83,7 @@ Item* InventoryInterface::addInvList (Inventory* const inv, const invDef_t* cont
  * @param[in,out] inv Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
- * @param[in] x The x location in the container.
- * @param[in] y The x location in the container.
+ * @param[in] x,y The location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa removeFromInventory
  * @return the @c Item pointer the item was added to, or @c nullptr in case of an error (item wasn't added)

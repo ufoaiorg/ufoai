@@ -803,8 +803,7 @@ static void SV_ClearMap (MapInfo* map)
  * @brief Checks if a given map-tile fits into the empty space (in a given location) of a map.
  * @param[in,out] map All we know about the map to assemble
  * @param[in] tile The tile definition that should be fitted into the map.
- * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
- * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
+ * @param[in] x,y The position in the map where the tile is supposed to be placed/checked.
  * @return @c true if the tile fits, @c false if the tile does not fit or an error was encountered.
  */
 static bool SV_FitTile (const MapInfo* map, const Tile*  tile, const int x, const int y)
@@ -905,8 +904,7 @@ static void SV_DumpPlaced (const MapInfo* map, int pl)
  * @note The tile must fit at the given position, otherwise an assert will occur!
  * @param[in,out] map The map that will get the tile.  Modified in place.
  * @param[in] tile The tile to add to the map.
- * @param[in] x The x position in the map where the tile should be placed.
- * @param[in] y The y position in the map where the tile should be placed.
+ * @param[in] x,y The position in the map where the tile should be placed.
  * @param[in] idx The index of the placement algorithm.
  * @param[in] pos The position of the placement algorithm.
  * @sa SV_AssembleMap

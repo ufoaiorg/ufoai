@@ -201,8 +201,7 @@ static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int 
 
  * @brief Check if a position in a container is used by an item (i.e. collides with the shape).
  * @param[in] item A pointer to the Item in question.
- * @param[in] x The x location in the container.
- * @param[in] y The y location in the container.
+ * @param[in] x,y The location in the container.
  */
 static bool INVSH_ShapeCheckPosition (const Item* item, const int x, const int y)
 {
