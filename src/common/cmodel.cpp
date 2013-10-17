@@ -366,8 +366,11 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 	if (!list || tr.fraction == 0.0)
 		return tr;
 
-	AABB lineBox(traceLine);	/* Find the original bounding box for the tracing line. */
-	lineBox.add(*traceBox);		/* Now increase the bounding box by traceBox in both directions. */
+	AABB lineBox(*traceBox);
+	lineBox.shift(traceLine.start);		/* the traceBox in starting position */
+	AABB lineBoxTemp(*traceBox);
+	lineBoxTemp.shift(traceLine.stop);	/* in end position */
+	lineBox.add(lineBoxTemp);			/* bounding box for the whole trace */
 	/* Now lineBox specifies the whole volume to be traced through. */
 
 	trace_t trace = tr;
