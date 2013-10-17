@@ -61,17 +61,17 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
  * @param[in] model The entity to check
  * @return true - the line isn't anywhere near the model
  */
-static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBspModel_t* model)
+static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
 	vec3_t amins, amaxs;
 	CM_CalculateBoundingBox(model, amins, amaxs);
 	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-	if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
-		|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
-		|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
-		|| (start[0] < amins[0] && stop[0] < amins[0])
-		|| (start[1] < amins[1] && stop[1] < amins[1])
-		|| (start[2] < amins[2] && stop[2] < amins[2]))
+	if ((tLine.start[0] > amaxs[0] && tLine.stop[0] > amaxs[0])
+		|| (tLine.start[1] > amaxs[1] && tLine.stop[1] > amaxs[1])
+		|| (tLine.start[2] > amaxs[2] && tLine.stop[2] > amaxs[2])
+		|| (tLine.start[0] < amins[0] && tLine.stop[0] < amins[0])
+		|| (tLine.start[1] < amins[1] && tLine.stop[1] < amins[1])
+		|| (tLine.start[2] < amins[2] && tLine.stop[2] < amins[2]))
 		return true;
 
 	return false;
@@ -214,7 +214,7 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
-		if (CM_LineMissesModel(start, stop, model))
+		if (CM_LineMissesModel(Line(start, stop), model))
 			continue;
 
 		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, stop), AABB(),
@@ -265,7 +265,7 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
-		if (CM_LineMissesModel(start, stop, model))
+		if (CM_LineMissesModel(Line(start, stop), model))
 			continue;
 
 		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, hit), AABB(),
