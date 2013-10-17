@@ -576,6 +576,12 @@ static void SV_GridPosToVec (const int actorSize, const pos3_t pos, vec3_t vec)
 	Grid_PosToVec(sv->mapData.routing, actorSize, pos, vec);
 }
 
+static bool SV_GridIsOnMap (const vec3_t vec)
+{
+	AABB dirtyTrick(vec, vec);
+	return sv->mapData.mapBox.doesIntersect(dirtyTrick);
+}
+
 static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, pos_t** forbiddenList, int forbiddenListLength)
 {
 	Grid_CalcPathing(sv->mapData.routing, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
@@ -770,6 +776,7 @@ void SV_InitGameProgs (void)
 	import.GetTUsForDirection = Grid_GetTUsForDirection;
 	import.GridFall = SV_GridFall;
 	import.GridPosToVec = SV_GridPosToVec;
+	import.isOnMap = SV_GridIsOnMap;
 	import.GridRecalcRouting = SV_RecalcRouting;
 	import.CanActorStandHere = SV_CanActorStandHere;
 	import.GridShouldUseAutostand = Grid_ShouldUseAutostand;

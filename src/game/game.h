@@ -224,6 +224,7 @@ typedef struct game_import_s {
 	int (IMPORT* GetTUsForDirection) (int dir, int crouched);
 	pos_t (IMPORT* GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT* GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
+	bool (IMPORT* isOnMap) (const vec3_t vec);
 	void (IMPORT* GridRecalcRouting) (const char* name, const GridBox& box, const char** list);
 	bool (IMPORT* CanActorStandHere) (actorSizeEnum_t actorSize, const pos3_t pos);
 	bool (IMPORT* GridShouldUseAutostand) (const pathing_t* path, const pos3_t pos);
