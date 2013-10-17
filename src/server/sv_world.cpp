@@ -253,8 +253,7 @@ static void SV_AreaEdicts_r (worldSector_t* node, areaParms_t* ap)
 
 /**
  * @sa SV_AreaEdicts_r
- * @param[in] mins The mins of the bounding box
- * @param[in] maxs The maxs of the bounding box
+ * @param[in] abox The bounding box
  * @param[out] list The edict list that this trace is hitting
  * @param[in] maxCount The size of the given @c list
  * @return the number of pointers filled in
