@@ -792,7 +792,7 @@ window hud_default extends hud
 				*cvar:i = 0;
 				if (param1 eq "health") {
 					*node:parent.health_btn@icon = "icons/healthsml"
-					while ( *cvar:i < 8 ) {
+					while ( *cvar:i < 12 ) {
 						*node:parent.sld<cvar:i>.health@invis = false
 						*node:parent.sld<cvar:i>.tu@invis = true
 						*node:parent.sld<cvar:i>.morale@invis = true
@@ -800,7 +800,7 @@ window hud_default extends hud
 					}
 				} elif (param1 eq "tu") {
 					*node:parent.tu_btn@icon = "icons/tusml"
-					while ( *cvar:i < 8 ) {
+					while ( *cvar:i < 12 ) {
 						*node:parent.sld<cvar:i>.health@invis = true
 						*node:parent.sld<cvar:i>.tu@invis = false
 						*node:parent.sld<cvar:i>.morale@invis = true
@@ -808,7 +808,7 @@ window hud_default extends hud
 					}
 				} else {
 					*node:parent.morale_btn@icon = "icons/moralesml"
-					while ( *cvar:i < 8 ) {
+					while ( *cvar:i < 12 ) {
 						*node:parent.sld<cvar:i>.health@invis = true
 						*node:parent.sld<cvar:i>.tu@invis = true
 						*node:parent.sld<cvar:i>.morale@invis = false
@@ -860,6 +860,22 @@ window hud_default extends hud
 			SoldierSelect sld7
 			{
 				pos "334 22"
+			}
+			SoldierSelect sld8
+			{
+				pos "380 22"
+			}
+			SoldierSelect sld9
+			{
+				pos "426 22"
+			}
+			SoldierSelect sld10
+			{
+				pos "472 22"
+			}
+			SoldierSelect sld11
+			{
+				pos "518 22"
 			}
 		}
 		// Squad panel toggle button
@@ -1274,7 +1290,7 @@ window hud_default extends hud
 	{
 		*cvar:selected_soldier = <1>
 		*cvar:i = 0;
-		while ( *cvar:i < 8 ) {
+		while ( *cvar:i < 12 ) {
 			*node:root.soldier.squad.sld<cvar:i>@bordercolor = "0.527 0.6 0.21 1"
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -1317,7 +1333,7 @@ window hud_default extends hud
 
 		// Input soldier information squad selection
 		*cvar:i = 0;
-		while ( *cvar:i < 8 ) {
+		while ( *cvar:i < 12 ) {
 			*node:root.soldier.squad.sld<cvar:i>@num = <cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.health@max = *cvar:mn_hpmax<cvar:i>
@@ -1561,7 +1577,7 @@ window inv_stats_hud
 	// Select the next soldier
 	confunc nextsoldier
 	{
-		if ( *cvar:selected_soldier eq "7" ) {
+		if ( *cvar:selected_soldier eq "11" ) {
 			cmd "hudselect 0;"
 		} else {
 			*cvar:next_soldier = ( *cvar:selected_soldier + 1 )
@@ -1573,7 +1589,7 @@ window inv_stats_hud
 	confunc prevsoldier
 	{
 		if ( *cvar:selected_soldier eq "0" ) {
-			cmd "hudselect 7;"
+			cmd "hudselect 11;"
 		} else {
 			*cvar:prev_soldier = ( *cvar:selected_soldier - 1 )
 			cmd "hudselect <*cvar:prev_soldier>;"
