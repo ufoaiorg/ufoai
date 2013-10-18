@@ -1004,7 +1004,7 @@ void G_ReactionFireReset (int team)
 
 void G_ReactionFireNofityClientStartMove (const Edict* target)
 {
-	rft.notifyClientMove(target, target->moveinfo.steps - 1, true);
+	rft.notifyClientMove(target, target->moveinfo.steps, true);
 }
 
 void G_ReactionFireNofityClientEndMove (const Edict* target)

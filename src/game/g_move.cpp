@@ -226,7 +226,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
-		G_EventAdd(G_VisToPM(ent->visflags), EV_ACTOR_MOVE, ent->number);
+		G_EventAdd(PM_ALL, EV_ACTOR_MOVE, ent->number);
 	}
 
 	if (ent->moveinfo.steps >= MAX_ROUTE) {
@@ -370,6 +370,7 @@ void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t t
 		ent->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
+		ent->moveinfo.steps = 0;
 		G_ReactionFireNofityClientStartMove(ent);
 		while (numdv > 0) {
 			int step = ent->moveinfo.steps;

@@ -188,7 +188,7 @@ int CL_GetStepTime (const eventTiming_t* eventTiming, const le_t* le, int step)
 	}
 	int delay = 0;
 	for (int i = 0; i < list->steps; i++) {
-		if (i >= step)
+		if (i > step)
 			break;
 		delay += list->stepTimes[i];
 	}
