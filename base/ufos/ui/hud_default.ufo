@@ -732,7 +732,7 @@ window hud_default extends hud
 		{
 			{
 				pos			"105 56"
-				size		"555 68"
+				size		"565 68"
 				invis		false
 				ghost		true
 			}
