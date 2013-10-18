@@ -540,6 +540,49 @@ static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t* fd)
 }
 
 #define GRENADE_CHECK_PARTITIONS	4
+static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots) {
+	vec3_t dir, origin;
+	VectorSubtract(target->origin, shooter->origin, dir);
+	G_GetShotOrigin(shooter, fd, dir, origin);
+	if (!fd->gravity) {
+		/* gun-to-target line free? */
+		const trace_t trace = G_Trace(Line(origin, target->origin), shooter, MASK_SHOT);
+		const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
+		const bool hitBreakable = trEnt && G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
+		const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
+		if (trace.fraction < 1.0 && (!trEnt || (!VectorCompare(trEnt->pos, target->pos) && !shotBreakable)))
+			return false;
+	} else {
+		/* gun-to-target *parabola* free? */
+		vec3_t at, v;
+		VectorCopy(target->origin, at);
+		/* Grenades are targeted at the ground in G_ShootGrenade */
+		at[2] -= GROUND_DELTA;
+		const float dt = gi.GrenadeTarget(origin, at, fd->range, fd->launched, fd->rolled, v) / GRENADE_CHECK_PARTITIONS;
+		if (!dt)
+			return false;
+		VectorSubtract(at, origin, dir);
+		VectorScale(dir, 1.0 / GRENADE_CHECK_PARTITIONS, dir);
+		dir[2] = 0;
+		float vz = v[2];
+		int i;
+		for (i = 0; i < GRENADE_CHECK_PARTITIONS; i++) {
+			VectorAdd(origin, dir, at);
+			at[2] += dt * (vz - 0.5 * GRAVITY * dt);
+			vz -= GRAVITY * dt;
+			const trace_t trace = G_Trace(Line(origin, at), shooter, MASK_SHOT);
+			const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
+			if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, target->pos))) {
+				break;
+			}
+			VectorCopy(at, origin);
+		}
+		if (i < GRENADE_CHECK_PARTITIONS)
+			return false;
+	}
+	return true;
+}
+
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
@@ -547,6 +590,7 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
+	bool hasLineOfFire = false;
 	int shotChecked = NONE;
 
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
@@ -558,7 +602,6 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 		/* how many shoots can this actor do */
 		const int shots = tu / time;
 		if (shots) {
-			float dmg;
 			float dist;
 			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
 			if (stunWeapon && !G_IsInsane(ent) && (G_IsStunned(check) || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
@@ -582,49 +625,13 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 			const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
 			if (shotChecked != shotFlags) {
 				shotChecked = shotFlags;
-				vec3_t dir, origin;
-				VectorSubtract(check->origin, ent->origin, dir);
-				G_GetShotOrigin(ent, fd, dir, origin);
-				if (!fd->gravity) {
-					/* gun-to-target line free? */
-					const trace_t trace = G_Trace(origin, check->origin, ent, MASK_SHOT);
-					const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
-					const bool hitBreakable = trEnt && G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
-					const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
-					if (trace.fraction < 1.0 && (!trEnt || (!VectorCompare(trEnt->pos, check->pos) && !shotBreakable)))
-						continue;
-				} else {
-					/* gun-to-target *parabola* free? */
-					vec3_t target, v;
-					VectorCopy(check->origin, target);
-					/* Grenades are targeted at the ground in G_ShootGrenade */
-					target[2] -= GROUND_DELTA;
-					const float dt = gi.GrenadeTarget(origin, target, fd->range, fd->launched, fd->rolled, v) / GRENADE_CHECK_PARTITIONS;
-					if (!dt)
-						continue;
-					VectorSubtract(target, origin, dir);
-					VectorScale(dir, 1.0 / GRENADE_CHECK_PARTITIONS, dir);
-					dir[2] = 0;
-					float vz = v[2];
-					int i;
-					for (i = 0; i < GRENADE_CHECK_PARTITIONS; i++) {
-						VectorAdd(origin, dir, target);
-						target[2] += dt * (vz - 0.5 * GRAVITY * dt);
-						vz -= GRAVITY * dt;
-						const trace_t trace = G_Trace(origin, target, ent, MASK_SHOT);
-						const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
-						if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, check->pos))) {
-							break;
-						}
-						VectorCopy(target, origin);
-					}
-					if (i < GRENADE_CHECK_PARTITIONS)
-						continue;
-				}
+				hasLineOfFire = AI_CheckLineOfFire(ent, check, fd, shots);
 			}
+			if (!hasLineOfFire)
+				continue;
 
 			/* calculate expected damage */
-			dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
+			float dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
 			if (nspread && dist > nspread)
 				dmg *= nspread / dist;
 
