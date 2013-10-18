@@ -699,6 +699,19 @@ void LET_StartPathMove (le_t* le)
 }
 
 /**
+ * @note Think function.
+ * @brief Handle move for invisible actors.
+ * @todo Is there something we should do here?
+ */
+void LET_HiddenMove (le_t* le)
+{
+	VectorCopy(le->newPos, le->pos);
+	LE_SetThink(le, LET_StartIdle);
+	LE_ExecuteThink(le);
+	LE_Unlock(le);
+}
+
+/**
  * @note Think function
  */
 static void LET_Projectile (le_t* le)

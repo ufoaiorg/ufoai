@@ -284,6 +284,7 @@ void LE_Think(void);
 void LET_StartIdle(le_t* le);
 void LET_Appear(le_t* le);
 void LET_StartPathMove(le_t* le);
+void LET_HiddenMove(le_t* le);
 void LET_BrushModel(le_t* le);
 void LE_DoEndPathMove(le_t* le);
 

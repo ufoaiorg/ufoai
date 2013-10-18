@@ -154,7 +154,11 @@ void CL_ActorDoMove (const eventRegister_t* self, dbuffer* msg)
 
 	/* activate PathMove function */
 	le->resetFloor();
-	LE_SetThink(le, LET_StartPathMove);
+	if (LE_IsInvisible(le))
+		/* Hack: this relies on the visibility events interrupting the EV_ACTOR_MOVE event */
+		LE_SetThink(le, LET_HiddenMove);
+	else
+		LE_SetThink(le, LET_StartPathMove);
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
