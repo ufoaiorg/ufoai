@@ -132,7 +132,7 @@ public:
 	 * @param[in] other The other aabb
 	 */
 	inline bool doesIntersect (const AABB& other) const {
-		return !(mins[0] > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
+		return !(getMinX() > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
 	inline bool contains (const vec3_t point) const {
