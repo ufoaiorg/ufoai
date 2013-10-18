@@ -467,13 +467,6 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 	/* create the bounding box for the entire path traveled by the shot */
 	SV_TraceBounds(traceLine.start, clip.objBox.mins, clip.objBox.maxs, traceLine.stop, clip.clipBox);
 
-#if 0
-	/* Output the trace bounds */
-	Com_Printf("Trace: (%i, %i, %i) (%i, %i, %i)\n",
-		(int) clip.clipBox.mins[0], (int) clip.clipBox.mins[1], (int) clip.clipBox.mins[2],
-		(int) clip.clipBox.maxs[0], (int) clip.clipBox.maxs[1], (int) clip.clipBox.maxs[2]);
-#endif
-
 	/* clip to other solid entities */
 	SV_ClipMoveToEntities(&clip);
 
