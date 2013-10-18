@@ -34,10 +34,10 @@ int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer* msg, eventTim
 	int objIdx;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fireDefIndex;
-	const int eventTime = eventTiming->shootTime;
 
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 
+	const int eventTime = first ? eventTiming->nextTime : eventTiming->shootTime;
 	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
 		eventTiming->nextTime += 500;
