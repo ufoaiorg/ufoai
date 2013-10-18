@@ -309,6 +309,7 @@ window hud_default extends hud
 						background	"icons/circle"
 						pos			"0 0"
 						size		"48 48"
+						tooltip		"_Headgear"
 						onClick	{
 							cmd "actor_useheadgear;"
 							*node:this@icon = "icons/headgear0"
