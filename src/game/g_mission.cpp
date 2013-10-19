@@ -217,8 +217,9 @@ void G_MissionThink (Edict* self)
 				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
 							chain->item, item->number);
-				} else {
-					G_AppearPerishEvent(G_VisToPM(item->visflags), false, *item, nullptr);
+				} else if (!item->getFloor()) {
+					G_EventPerish(*item);
+					G_FreeEdict(item);
 				}
 			}
 		}
