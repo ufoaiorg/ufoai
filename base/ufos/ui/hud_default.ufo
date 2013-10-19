@@ -1018,19 +1018,20 @@ window hud_default extends hud
 			/* Up/down arrows don't look good and
 			 * don't update when max/min is hit using
 			 * the up/down arrows
+			 */
 			button up
 			{
-				pos		"57 3"
-				size	"18 18"
-				icon	"icons/windowup"
+				pos		"57 2"
+				size	"18 10"
+				icon	"icons/arrow_up"
 				tooltip	"_Raise the level"
 				onClick	{ cmd "lvlchange 1;" }
 			}
 			button down
 			{
-				pos		"57 21"
-				size	"18 18"
-				icon	"icons/windowdown"
+				pos		"57 16"
+				size	"18 10"
+				icon	"icons/arrow_down"
 				tooltip	"_Lower the level"
 				onClick	{ cmd "lvlchange 0;" }
 			}
@@ -1050,17 +1051,16 @@ window hud_default extends hud
 				}
 				// Change icon if we're at top or bottom level
 				if (*cvar:cl_worldlevel eq "0") {
-					*node:parent.down@icon = "icons/windowdown_hovered"
-					*node:parent.up@icon = "icons/windowup"
+					*node:parent.down@icon = "icons/arrow_down_off"
+					*node:parent.up@icon = "icons/arrow_up"
 				} elif (*cvar:cl_worldlevel eq *cvar:cl_maxworldlevel) {
-					*node:parent.up@icon = "icons/windowup_hovered"
-					*node:parent.down@icon = "icons/windowdown"
+					*node:parent.up@icon = "icons/arrow_up_off"
+					*node:parent.down@icon = "icons/arrow_down"
 				} else {
-					*node:parent.down@icon = "icons/windowdown"
-					*node:parent.up@icon = "icons/windowup"
+					*node:parent.down@icon = "icons/arrow_down"
+					*node:parent.up@icon = "icons/arrow_up"
 				}
 			}
-			 */
 		}
 	}
 
