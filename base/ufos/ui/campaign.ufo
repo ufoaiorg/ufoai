@@ -402,70 +402,79 @@ window campaign extends cgame_download
 
 window campaign_main
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/main_bg"
+		fill		true
+		starlayout	true
+		bgcolor		"0 0 0 0.5"
 	}
-
 	string version
 	{
 		string		*cvar:version
 		pos			"10 744"
 		size		"550 20"
 	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	cmpMenuButton button_continue
+	panel buttons
 	{
-		string		"_Continue"
-		tooltip		"_Leave this menu and continue playing."
-		pos			"640 170"
-		onClick		{ cmd "game_continue;" }
-	}
-
-	cmpMenuButton button_load
-	{
-		string		"_Load"
-		pos			"640 240"
-		onClick		{ cmd "ui_push load;" }
-	}
-
-	cmpMenuButton button_save
-	{
-		string		"_Save"
-		pos			"640 310"
-		onClick		{ cmd "ui_push save;" }
-	}
-
-	cmpMenuButton button_options
-	{
-		string		"_Options"
-		pos			"640 380"
-		onClick		{ cmd "ui_push options;" }
-	}
-
-	cmpMenuButton button_back
-	{
-		string		"_Exit"
-		pos			"640 520"
-		onClick {
-			if ( *cvar:mn_fastexit == 1 ) {
-				cmd "game_exit;"
-			} else {
-				cmd "ui_push popup_exit_confirmation;"
+		{
+			size			"400 700"
+			align			LAYOUTALIGN_TOP
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+			contentalign	LAYOUTALIGN_MIDDLE
+		}
+		panel spacer
+		{
+			{
+				size	"0 235"
 			}
 		}
+
+		MainMenuBtn continue
+		{
+            tooltip	"_Leave this menu and continue playing."
+			onClick	{ cmd "game_continue;" }
+			string	"_CONTINUE"
+		}
+		MainMenu2Btn load
+		{
+			onClick	{ cmd "ui_push load;" }
+			string	"_LOAD"
+		}
+		MainMenu2Btn save
+		{
+			onClick	{ cmd "ui_push save;" }
+			string	"_SAVE"
+		}
+		MainMenu2Btn options
+		{
+			onClick	{ cmd "ui_push options;" }
+			string	"_OPTIONS"
+		}
+		MainMenuExitBtn exit
+		{
+			onClick		{
+                if ( *cvar:mn_fastexit == 1 ) {
+                    cmd "game_exit;"
+                } else {
+                    cmd "ui_push popup_exit_confirmation;"
+                }
+            }
+			string		"_EXIT"
+		}
 	}
+
+	// TODO: This should be a general cgame method
+	confunc check_if_in_campaign_mode
+	{
+		if ( *cvar:mn_base_count > 0 ) {
+			cmd "ui_push popup_exit_campaign_confirmation;"
+		} else {
+			cmd "game_exit;"
+		}
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
 
 // ==================
