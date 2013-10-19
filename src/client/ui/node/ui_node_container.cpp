@@ -1013,7 +1013,8 @@ bool uiContainerNode::onDndFinished (uiNode_t* source, bool isDropped)
 			}
 
 			/* Add ammo on adding weapon to a soldier */
-			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->getAmmoLeft()) || fItem->def()->weapons[0]))
+			if (UI_IsScrollContainerNode(source) && ((fItem->isWeapon() && !fItem->getAmmoLeft())
+					|| (fItem->def()->weapons[0] && !fItem->def()->isAmmo())))
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
