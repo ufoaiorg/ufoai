@@ -951,7 +951,7 @@ window hud_default extends hud
 			string aliencount
 			{
 				string			*cvar:mn_numaliensspotted
-				pos				"27 2"
+				pos				"27 3"
 				size			"50 25"
 				font			"f_normal_bold"
 				color			"0.56 0.81 0.76 1"
@@ -978,7 +978,7 @@ window hud_default extends hud
 			string civcount
 			{
 				string			"_*"
-				pos				"27 0"
+				pos				"27 3"
 				size			"50 25"
 				font			"f_normal_bold"
 				color			"0.56 0.81 0.76 1"
@@ -1006,7 +1006,7 @@ window hud_default extends hud
 			string levelnum
 			{
 				string			*cvar:cl_worldlevel
-				pos				"27 5"
+				pos				"27 3"
 				size			"30 25"
 				font			"f_normal_bold"
 				color			"0.56 0.81 0.76 1"
