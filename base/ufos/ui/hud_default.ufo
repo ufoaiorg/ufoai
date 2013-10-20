@@ -391,6 +391,7 @@ window hud_default extends hud
 						background	"icons/circle0"
 						pos			"0 0"
 						size		"48 48"
+						tooltip		"_Stand"
 						onClick		{ cmd "actor_standcrouch;" }
 						onMouseEnter	{ *node:this@icon = "icons/stand" }
 						onMouseLeave	{ *node:this@icon = "icons/stand0"	}
@@ -410,6 +411,7 @@ window hud_default extends hud
 						background	"icons/circle0"
 						pos			"0 0"
 						size		"48 48"
+						tooltip		"_Crouch"
 						onClick		{ cmd "actor_standcrouch;" }
 						onMouseEnter	{ *node:this@icon = "icons/crouch" }
 						onMouseLeave	{ *node:this@icon = "icons/crouch0"	}
@@ -421,6 +423,7 @@ window hud_default extends hud
 				{
 					{
 						pos			"250 0"
+                        tooltip		"_Crouched"
 						invis		true
 					}
 
@@ -448,6 +451,7 @@ window hud_default extends hud
 				{
 					{
 						pos			"220 0"
+                        tooltip		"_Standing"
 						invis		false
 					}
 
