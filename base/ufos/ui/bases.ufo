@@ -667,14 +667,14 @@ window bases
 	/**
 	 * @brief Current employees of a particular base
 	 * @param <1> number of soldiers
-	 * @param <2> number of scientists
-	 * @param <3> number of workers
+	 * @param <3> number of scientists
+	 * @param <4> number of workers
 	 */
 	confunc current_employees
 	{
 		*node:parent.base_container.cur_employees.soldiers.data@string = "<1>"
-		*node:parent.base_container.cur_employees.scientists.data@string = "<2>"
-		*node:parent.base_container.cur_employees.workers.data@string = "<3>"
+		*node:parent.base_container.cur_employees.scientists.data@string = "<3>"
+		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
 	}
 
 	/*
