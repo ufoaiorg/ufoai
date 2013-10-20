@@ -160,16 +160,19 @@ window bases
 				pos		"270 0"
 				size	"48 48"
 				icon		"icons/stats"
+				tooltip		"_Base Summary"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
 				onClick			{ cmd "ui_push basesummary;" }
 			}
+			//Intentionally left out the underscores to not bother the translators
 			button transfers
 			{
 				pos		"215 0"
 				size	"48 48"
 				icon		"icons/transfer"
+				tooltip		"Link to transfer - not working yet"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
@@ -180,6 +183,7 @@ window bases
 				pos		"160 0"
 				size	"48 48"
 				icon		"icons/info"
+				tooltip		"Link to Ufopedia - not working yet"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
@@ -189,6 +193,7 @@ window bases
 				pos		"105 0"
 				size	"48 48"
 				icon		"icons/options"
+				tooltip		"Link to Options - not working yet"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
