@@ -138,7 +138,7 @@ static char const* const pc_strings[] = {
 CASSERT(lengthof(pc_strings) == PC_NUM_PTLCMDS);
 
 /** @brief particle commands parameter and types */
-static const int pc_types[PC_NUM_PTLCMDS] = {
+static const unsigned int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 
 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
