@@ -810,12 +810,21 @@ window endgame
 window popup_exit_confirmation
 {
 	{
-		string		"_Exit Campaign Confirmation"
-		background		"ui/popup_alpha_tile"
-		pos			"264 262"
-		size		"486 247"
+		bgcolor		"0.0784 0.1019 0.1019 1.0"
+		pos			"256 256"
+		size		"512 256"
 		dragbutton	true
 		closebutton	true
+	}
+	string title
+	{
+		pos 		"0 0"
+		string		"_EXIT CAMPAIGN CONFIRMATION"
+		size 		"512 30"
+		contentalign	ALIGN_CL
+		font		"f_small_bold"
+		bgcolor		"0.4 0.515 0.5 0.25"
+		color		"1 1 1 0.5"
 	}
 	string exit_confirmation_label
 	{
@@ -823,20 +832,20 @@ window popup_exit_confirmation
 		pos			"26 58"
 		size		"450 60"
 	}
-	cmpPopupButton bt_quit
+	MainMenuExitBtn btn_back
 	{
-		tooltip		"_Exit current campaign and return to main menu."
-		string		"_Quit anyway"
-		pos			"28 188"
-		onClick		{
-			cmd "ui_pop;"
-			cmd "game_exit;"
-		}
+		size 	"200 30"
+		pos 	"312 226"
+		string	"_QUIT"
+		onClick	{ cmd "ui_pop;game_exit;" }
 	}
-	cmpCancelButton bt_dontquit
+	MainMenu2Btn bt_dontquit
 	{
-		tooltip		"_Do not quit."
-		pos			"285 188"
-		onClick		{ cmd "ui_pop;" }
+		size 	"200 30"
+		pos		"100 226"
+		string	"_BACK"
+		onClick	{ cmd "ui_pop;" }
 	}
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
