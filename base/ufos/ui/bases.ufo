@@ -183,10 +183,11 @@ window bases
 				pos		"160 0"
 				size	"48 48"
 				icon		"icons/info"
-				tooltip		"Link to Ufopedia - not working yet"
+				tooltip		"_UFOpedia"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
+                onClick		    { cmd "ui_push ufopedia;" }
 			}
 			button options
 			{
