@@ -387,12 +387,12 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_begin@ghost = true
 		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
 		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
+		cmd	"web_listcgame 0;"
 	}
 
 	func onWindowOpened
 	{
 		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments load;"
-		cmd	"web_listcgame 0;"
 		call *node:root.toggle_cmp_new
 	}
 
