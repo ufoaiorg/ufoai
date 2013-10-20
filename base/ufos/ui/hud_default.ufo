@@ -65,7 +65,6 @@ component ReactionFireShooter extends panel
 	}
 }
 
-//window hud_unnamed extends hud
 window hud_default extends hud
 {
 	{
@@ -1015,8 +1014,7 @@ window hud_default extends hud
 				ghost			true
 			}
 
-			/* Up/down arrows don't look good and
-			 * don't update when max/min is hit using
+			/* @TODO Up/down arrows don't update when max/min is hit using
 			 * the up/down arrows
 			 */
 			button up
@@ -1064,7 +1062,7 @@ window hud_default extends hud
 		}
 	}
 
-	// End turn, options, abort mission
+	// End turn, options, abort mission, radar
 	panel game_controls
 	{
 		{
