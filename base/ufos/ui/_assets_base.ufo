@@ -5,6 +5,7 @@ component Geoscape extends button
 	size			"100 100"
 	icon			"icons/earthlrg"
 	background		"icons/circlelrg0"
+	tooltip			"_Back"
 	onMouseEnter	{ *node:this@background = "icons/circlelrg" }
 	onMouseLeave	{ *node:this@background = "icons/circlelrg0" }
 	onClick			{ cmd "ui_pop;" }
