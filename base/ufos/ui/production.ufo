@@ -2,6 +2,7 @@
 // PRODUCTION MENU
 // ==================
 window production
+//window productionOld
 {
 	{
 		background	"background/base_bg"
@@ -623,4 +624,13 @@ window production
 		// so on can also change the button state in the base view
 		cmd "base_init;"
 	}
+}
+
+window productionNew
+//window production
+{
+	{ size	"1024 768" }
+
+	// Base name and container panel
+	BaseContainerPanel base_container {}
 }
