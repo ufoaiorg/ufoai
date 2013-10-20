@@ -588,7 +588,7 @@ window load
 	 * @param[in] <4> real date of the savegame slot
 	 * @param[in] <5> filename
 	 */
-	confunc update_load2_game_info {
+	confunc update_load_game_info {
 		//call *node:this.parent.slots@createChild("slot<1>", "cmpLoadSlotPanel")
 		*node:this.parent.slots.slot<1>.filename@string = <5>
 		*node:this.parent.slots.slot<1>.index@integer = <1>
@@ -619,7 +619,7 @@ window load
 	}
 
 	func onWindowOpened {
-		cmd "game_comments load2;"
+		cmd "game_comments load;"
 	}
 }
 
