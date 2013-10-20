@@ -34,7 +34,7 @@ component LoadSlot extends panel
 
 	button upload
 	{
-		background		"icons/upload"
+		background	"icons/upload"
 		tooltip		"_Upload"
 		size		"34 34"
 	}
@@ -312,7 +312,11 @@ window campaign extends cgame_download
 			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
 		}
 		//*node:root.cmp_sel.cmp_loads.save<1>.delete@onClick = {}
-		*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = false
+		if ( "<5>" ne "" ) {
+			*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = false
+		} else {
+			*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = true
+		}
 		*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = true
 
 		// The save part
