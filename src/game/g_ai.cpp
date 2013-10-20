@@ -546,7 +546,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 	G_GetShotOrigin(shooter, fd, dir, origin);
 	if (!fd->gravity) {
 		/* gun-to-target line free? */
-		const trace_t trace = G_Trace(Line(origin, target->origin), shooter, MASK_SHOT);
+		const trace_t trace = G_Trace(origin, target->origin, shooter, MASK_SHOT);
 		const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
 		const bool hitBreakable = trEnt && G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
 		const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
@@ -570,7 +570,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 			VectorAdd(origin, dir, at);
 			at[2] += dt * (vz - 0.5 * GRAVITY * dt);
 			vz -= GRAVITY * dt;
-			const trace_t trace = G_Trace(Line(origin, at), shooter, MASK_SHOT);
+			const trace_t trace = G_Trace(origin, at, shooter, MASK_SHOT);
 			const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
 			if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, target->pos))) {
 				break;
