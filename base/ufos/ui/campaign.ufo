@@ -428,10 +428,9 @@ window campaign_main
 				size	"0 235"
 			}
 		}
-
 		MainMenuBtn continue
 		{
-            tooltip	"_Leave this menu and continue playing."
+			tooltip	"_Leave this menu and continue playing."
 			onClick	{ cmd "game_continue;" }
 			string	"_CONTINUE"
 		}
@@ -452,13 +451,13 @@ window campaign_main
 		}
 		MainMenuExitBtn exit
 		{
-			onClick		{
-                if ( *cvar:mn_fastexit == 1 ) {
-                    cmd "game_exit;"
-                } else {
-                    cmd "ui_push popup_exit_confirmation;"
-                }
-            }
+			onClick {
+				if ( *cvar:mn_fastexit == 1 ) {
+					cmd "game_exit;"
+				} else {
+					cmd "ui_push popup_exit_confirmation;"
+				}
+			}
 			string		"_EXIT"
 		}
 	}
