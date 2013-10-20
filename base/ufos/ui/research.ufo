@@ -15,71 +15,8 @@ window research
 	{ size	"1024 768" }
 
 	// Base name and container panel
-	panel base_container
+	BaseContainerPanel base_container
 	{
-		{
-			pos				"5 5"
-			size			"723 758"
-			border			"2"
-			bordercolor		"0.56 0.81 0.76 1"
-		}
-
-		// @TODO: make next/prev base btns work
-		button prev
-		{
-			icon			"icons/windowprev"
-			tooltip			"_Previous base"
-			pos				"90 6"
-			size			"18	18"
-			onClick			{ cmd "ui_pop; mn_base_prev;" }
-		}
-		button next
-		{
-			icon			"icons/windownext"
-			tooltip			"_Next base"
-			pos				"115 6"
-			size			"18	18"
-			onClick			{ cmd "ui_pop; mn_base_next;" }
-		}
-		// Base name
-		textentry name
-		{
-			string		*cvar:mn_base_title
-			pos			"135 0"
-			size		"465 32"
-			font		"f_small_bold"
-			color			"0.56 0.81 0.76 1"
-			contentalign	ALIGN_CL
-			onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
-		}
-		// Base selector
-		panel base_selector
-		{
-			{
-				pos		"440 7"
-				size	"160 16"
-				layout			LAYOUT_COLUMN
-				layoutColumns	8
-				layoutMargin	4
-			}
-			BaseLayoutMini base0 { baseid 0 }
-			BaseLayoutMini base1 { baseid 1 }
-			BaseLayoutMini base2 { baseid 2 }
-			BaseLayoutMini base3 { baseid 3 }
-			BaseLayoutMini base4 { baseid 4 }
-			BaseLayoutMini base5 { baseid 5 }
-			BaseLayoutMini base6 { baseid 6 }
-			BaseLayoutMini base7 { baseid 7 }
-		}
-		string credits
-		{
-			string		*cvar:mn_credits
-			pos			"600 0"
-			size		"120 32"
-			font		"f_small_bold"
-			color			"0.56 0.81 0.76 1"
-			contentalign	ALIGN_CR
-		}
 
 		// Research panel
 		panel research
