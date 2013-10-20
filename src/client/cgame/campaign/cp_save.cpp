@@ -393,10 +393,8 @@ static void SAV_GameSave_f (void)
  * @param[in] idx the savegame slot to retrieve gamecomment for
  * @sa SAV_GameReadGameComments_f
  */
-static void SAV_GameReadGameComment (bool save, const int idx)
+static void SAV_GameReadGameComment (const char* confunc, const int idx)
 {
-	const char* confunc = save ? "update_save_game_info" : "update_load_game_info";
-
 	char filename[MAX_OSPATH];
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
@@ -442,14 +440,15 @@ static void SAV_GameReadGameComments_f (void)
 		return;
 	}
 
-	const bool save = Q_streq("save", cgi->Cmd_Argv(1));
+	static char confunc[MAX_VAR];
+	Com_sprintf(confunc, sizeof(confunc), "update_%s_game_info", cgi->Cmd_Argv(1));
 	if (cgi->Cmd_Argc() == 3) {
 		int idx = atoi(cgi->Cmd_Argv(2));
-		SAV_GameReadGameComment(save, idx);
+		SAV_GameReadGameComment(confunc, idx);
 	} else {
 		/* read all game comments */
 		for (int i = 0; i < 8; i++) {
-			SAV_GameReadGameComment(save, i);
+			SAV_GameReadGameComment(confunc, i);
 		}
 	}
 }
