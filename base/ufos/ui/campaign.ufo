@@ -76,6 +76,14 @@ window campaign extends cgame_download
 			onClick		{ call *node:root.toggle_cmp_new }
 		}
 
+		MainMenuTab btn_save
+		{
+			invis		true
+			pos 		"0 0"
+			string		"_SAVE"
+			onClick		{ call *node:root.toggle_cmp_save }
+		}
+
 		MainMenuTab btn_load
 		{
 			pos 		"135 0"
@@ -144,7 +152,7 @@ window campaign extends cgame_download
 		}
 
 		// List of saved games to load
-		panel cmp_saves
+		panel cmp_loads
 		{
 			{
 				pos				"10 50"
@@ -176,6 +184,41 @@ window campaign extends cgame_download
 			}
 
 			LoadSlot save7 {
+			}
+		}
+		// List savegames for saving the current active game
+		panel cmp_saves
+		{
+			{
+				pos				"10 50"
+				size			"320 355"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	5
+				invis			true
+			}
+
+			cmpSaveSlotPanel save0 {
+			}
+
+			cmpSaveSlotPanel save1 {
+			}
+
+			cmpSaveSlotPanel save2 {
+			}
+
+			cmpSaveSlotPanel save3 {
+			}
+
+			cmpSaveSlotPanel save4 {
+			}
+
+			cmpSaveSlotPanel save5 {
+			}
+
+			cmpSaveSlotPanel save6 {
+			}
+
+			cmpSaveSlotPanel save7 {
 			}
 		}
 		// List of available downloads
@@ -252,21 +295,56 @@ window campaign extends cgame_download
 	 * @param[in] <4> real date of the savegame slot
 	 * @param[in] <5> filename
 	 */
-	confunc update_load_game_info {
-		//call *node:this.parent.slots@createChild("slot<1>", "LoadSlot")
-		*node:root.cmp_sel.cmp_saves.save<1>.filename@string = <5>
-		*node:root.cmp_sel.cmp_saves.save<1>.index@integer = <1>
+	confunc update_game_info {
+		//call *node:root.cmp_sel.cmp_loads@createChild("save<1>", "LoadSlot")
+		*node:root.cmp_sel.cmp_loads.save<1>.filename@string = <5>
+		*node:root.cmp_sel.cmp_loads.save<1>.index@integer = <1>
 		if ( "<3>" ne "" ) {
-			*node:root.cmp_sel.cmp_saves.save<1>.button@string = "<2> - <3>"
+			*node:root.cmp_sel.cmp_loads.save<1>.button@string = "<2> - <3>"
 		} else {
-			*node:root.cmp_sel.cmp_saves.save<1>.button@string = "<2>"
+			*node:root.cmp_sel.cmp_loads.save<1>.button@string = "<2>"
 		}
-		*node:root.cmp_sel.cmp_saves.save<1>.button@tooltip = <4>
-		*node:root.cmp_sel.cmp_saves.save<1>.button@onClick = {
+		*node:root.cmp_sel.cmp_loads.save<1>.button@tooltip = <4>
+		*node:root.cmp_sel.cmp_loads.save<1>.button@onClick = {
 			call *node:root.set_sel_load_slot(<node:this.parent.index@integer>)
 		}
-		*node:root.cmp_sel.cmp_saves.save<1>.upload@onClick = {
+		*node:root.cmp_sel.cmp_loads.save<1>.upload@onClick = {
 			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+		}
+		//*node:root.cmp_sel.cmp_loads.save<1>.delete@onClick = {}
+		*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = false
+		*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = true
+
+		// The save part
+		//call *node:root.cmp_sel.cmp_saves@createChild("save<1>", "cmpSaveSlotPanel")
+		*node:root.cmp_sel.cmp_saves.save<1>.filename@string = <5>
+		*node:root.cmp_sel.cmp_saves.save<1>.title@string = <2>
+		*node:root.cmp_sel.cmp_saves.save<1>.date@string = <3>
+		*node:root.cmp_sel.cmp_saves.save<1>.index@integer = <1>
+		*node:root.cmp_sel.cmp_saves.save<1>.name@string = *cvar:mn_slot<1>
+		if ( "<3>" ne "" ) {
+			*cvar:mn_slot<1> = "<2> <3>"
+		} else {
+			*cvar:mn_slot<1> = "<2>"
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.name@tooltip = <4>
+		*node:root.cmp_sel.cmp_saves.save<1>.name@onClick = {
+			*cvar:mn_slot<node:this.parent.index@integer> = <node:this.parent.title@string>
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.name@onAbort = {
+			if (<node:this.parent.date@string> ne "") {
+				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string> <node:this.parent.date@string>"
+			} else {
+				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string>"
+			}
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.name@onChange = {
+			cmd "game_save \"slot<node:this.parent.index@integer>\" \"<node:this.parent.name@string>\";"
+			*cvar:mn_fastexit = 1
+			cmd "game_comments;"
+		}
+		*node:root.cmp_sel.cmp_saves.save<1>.upload@onClick = {
+			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
 		}
 		//*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {}
 		*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = false
@@ -287,20 +365,19 @@ window campaign extends cgame_download
 		// Then add it back to the selected button
 		*cvar:i = 0;
 		while ( *cvar:i < 8 ) {
-			*node:root.cmp_sel.cmp_saves.save<cvar:i>@color = "1 1 1 0.5"
+			*node:root.cmp_sel.cmp_loads.save<cvar:i>@color = "1 1 1 0.5"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
-		*node:root.cmp_sel.cmp_saves.save<cvar:sel_load_slot>@color = "1 1 1 0.9"
+		*node:root.cmp_sel.cmp_loads.save<cvar:sel_load_slot>@color = "1 1 1 0.9"
 	}
 
 	// Tell the begin button what to do depending on the
 	// current selection (start campaign, load campaign)
 	func cmp_sel_begin {
-		if (*node:root.cmp_sel.cmp_saves@invis == true) {
+		if (*node:root.cmp_sel.cmp_cmps@invis == false) {
 			cmd "cp_start <cvar:cp_campaign>;"
-		}
-		else {
+		} elif (*node:root.cmp_sel.cmp_loads@invis == false) {
 			if (*cvar:sel_load_slot == 0) {
 				cmd "game_load slot<cvar:sel_load_slot>;"
 			}
@@ -347,28 +424,34 @@ window campaign extends cgame_download
 	func toggle_cmp_new {
 		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 1"
 		*node:root.cmp_sel.btn_new@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
 		*node:root.cmp_sel.cmp_cmps@invis = false
+		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
 		*node:root.cmp_sel.btn_begin@ghost = false
 		*node:root.cmp_sel.btn_begin@bgcolor = "0.38 0.48 0.36 1"
 		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.9"
-		*node:root.cmp_sel.cmp_saves.save<cvar:sel_load_slot>@color = "0.4 0.515 0.5 1"
+		*node:root.cmp_sel.cmp_loads.save<cvar:sel_load_slot>@color = "0.4 0.515 0.5 1"
 		*cvar:sel_load_slot = false
 	}
 	func toggle_cmp_load {
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 1"
 		*node:root.cmp_sel.btn_load@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
 		*node:root.cmp_sel.cmp_cmps@invis = true
-		*node:root.cmp_sel.cmp_saves@invis = false
+		*node:root.cmp_sel.cmp_loads@invis = false
+		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
 		*node:root.cmp_sel.btn_begin@ghost = true
 		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
@@ -377,11 +460,14 @@ window campaign extends cgame_download
 	func toggle_cmp_download {
 		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 1"
 		*node:root.cmp_sel.btn_download@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
 		*node:root.cmp_sel.cmp_cmps@invis = true
+		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = false
 		*node:root.cmp_sel.btn_begin@ghost = true
@@ -389,10 +475,27 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
 		cmd	"web_listcgame 0;"
 	}
+	func toggle_cmp_save {
+		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
+		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 1"
+		*node:root.cmp_sel.btn_save@color = "0 0 0 0.9"
+		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
+		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		*node:root.cmp_sel.cmp_cmps@invis = true
+		*node:root.cmp_sel.cmp_loads@invis = true
+		*node:root.cmp_sel.cmp_saves@invis = false
+		*node:root.cmp_sel.cmp_downloads@invis = true
+		*node:root.cmp_sel.btn_begin@ghost = true
+		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
+		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
+	}
 
 	func onWindowOpened
 	{
-		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments load;"
+		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments;"
 		call *node:root.toggle_cmp_new
 	}
 
@@ -400,19 +503,15 @@ window campaign extends cgame_download
 	screen overlay { }
 }
 
-window campaign_main
+window campaign_main extends campaign
 {
 	{
+		//background	"ui/main_bg"
 		fill		true
 		starlayout	true
 		bgcolor		"0 0 0 0.5"
 	}
-	string version
-	{
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
-	}
+
 	panel buttons
 	{
 		{
@@ -431,17 +530,35 @@ window campaign_main
 		MainMenuBtn continue
 		{
 			tooltip	"_Leave this menu and continue playing."
-			onClick	{ cmd "game_continue;" }
+			onClick	{ cmd "ui_pop;" }
 			string	"_CONTINUE"
 		}
 		MainMenu2Btn load
 		{
-			onClick	{ cmd "ui_push load;" }
+			onClick	{
+				*node:root.cmp_sel@invis = false
+				*node:root.cmp_sel.btn_new@invis = true
+				*node:root.cmp_sel.btn_save@invis = true
+				*node:root.cmp_sel.btn_load@invis = false
+				*node:root.cmp_sel.btn_download@invis = true
+				*node:root.buttons@invis = true
+				*node:root.cmp_sel.btn_begin@invis = false
+				call *node:root.toggle_cmp_load
+			}
 			string	"_LOAD"
 		}
 		MainMenu2Btn save
 		{
-			onClick	{ cmd "ui_push save;" }
+			onClick	{
+				*node:root.cmp_sel@invis = false
+				*node:root.cmp_sel.btn_new@invis = true
+				*node:root.cmp_sel.btn_save@invis = false
+				*node:root.cmp_sel.btn_load@invis = true
+				*node:root.cmp_sel.btn_download@invis = true
+				*node:root.buttons@invis = true
+				*node:root.cmp_sel.btn_begin@invis = true
+				call *node:root.toggle_cmp_save
+			}
 			string	"_SAVE"
 		}
 		MainMenu2Btn options
@@ -458,7 +575,7 @@ window campaign_main
 					cmd "ui_push popup_exit_confirmation;"
 				}
 			}
-			string		"_EXIT"
+			string	"_EXIT"
 		}
 	}
 
@@ -472,8 +589,25 @@ window campaign_main
 		}
 	}
 
-	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	func onWindowActivate
+	{
+		*node:root.cmp_sel@invis = true
+		*node:root.cmp_sel.btn_new@invis = true
+		*node:root.cmp_sel.btn_save@invis = true
+		*node:root.cmp_sel.btn_load@invis = true
+		*node:root.cmp_sel.btn_load@pos = "0 0"
+		*node:root.cmp_sel.btn_download@invis = true
+		*node:root.cmp_sel.btn_back@onClick = {
+			*node:root.cmp_sel@invis = true
+			*node:root.buttons@invis = false
+		}
+	}
+
+	func onWindowClosed
+	{
+		*node:root.cmp_sel@invis = true
+		*node:root.buttons@invis = false
+	}
 }
 
 // ==================
@@ -504,246 +638,6 @@ window quickload
 		string		"_Load"
 		pos			"266 188"
 		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
-	}
-}
-
-// ==================
-// LOAD MENU
-// ==================
-
-window load
-{
-	{
-		background	"background/main_bg"
-	}
-
-	string version {
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
-	}
-
-	string headline {
-		string		"_Load"
-		pos			"610 170"
-		size		"310 30"
-		contentalign	ALIGN_UC
-		font		"f_big"
-	}
-	panel slots
-	{
-		{
-			pos		"640 200"
-			size	"230 296"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
-			wheelscrollable	true
-
-			onViewChange {
-				*node:parent.slots_scroll@fullsize = <fullsize>
-				*node:parent.slots_scroll@current = <viewpos>
-				*node:parent.slots_scroll@viewsize = <viewsize>
-			}
-		}
-
-		cmpLoadSlotPanel slot0 {
-		}
-
-		cmpLoadSlotPanel slot1 {
-		}
-
-		cmpLoadSlotPanel slot2 {
-		}
-
-		cmpLoadSlotPanel slot3 {
-		}
-
-		cmpLoadSlotPanel slot4 {
-		}
-
-		cmpLoadSlotPanel slot5 {
-		}
-
-		cmpLoadSlotPanel slot6 {
-		}
-
-		cmpLoadSlotPanel slot7 {
-		}
-	}
-	vscrollbar slots_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"229 50"
-		height		"216"
-		hidewhenunused	true
-		onChange {
-			*node:parent.slots@viewpos = <current>
-		}
-	}
-
-	/**
-	 * @param[in] <1> id of the savegame slot
-	 * @param[in] <2> name of the savegame slot
-	 * @param[in] <3> game date of the savegame slot
-	 * @param[in] <4> real date of the savegame slot
-	 * @param[in] <5> filename
-	 */
-	confunc update_load_game_info {
-		//call *node:this.parent.slots@createChild("slot<1>", "cmpLoadSlotPanel")
-		*node:this.parent.slots.slot<1>.filename@string = <5>
-		*node:this.parent.slots.slot<1>.index@integer = <1>
-		if ( "<3>" ne "" ) {
-			*node:this.parent.slots.slot<1>.button@string = "<2> - <3>"
-		} else {
-			*node:this.parent.slots.slot<1>.button@string = "<2>"
-		}
-		*node:this.parent.slots.slot<1>.button@tooltip = <4>
-		*node:this.parent.slots.slot<1>.button@onClick = {
-			cmd "game_load slot<node:this.parent.index@integer>; game_timestop;"
-			*cvar:mn_fastexit = 1
-		}
-		*node:this.parent.slots.slot<1>.upload@onClick = {
-			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
-		}
-		//*node:this.parent.slots.slot<1>.delete@onClick = {}
-		*node:this.parent.slots.slot<1>.upload@invis = false
-		*node:this.parent.slots.slot<1>.delete@invis = true
-	}
-
-	cmpMenuButton button_back {
-		string		"_Back"
-		pos			"640 520"
-		onClick {
-			cmd "ui_pop;"
-		}
-	}
-
-	func onWindowOpened {
-		cmd "game_comments load;"
-	}
-}
-
-// ==================
-// SAVE MENU
-// ==================
-
-window save {
-	{
-		background	"background/main_bg"
-	}
-
-	string version {
-		string		*cvar:version
-		pos			"10 744"
-		size		"550 20"
-	}
-
-	string headline {
-		string		"_Save"
-		pos			"610 170"
-		size		"310 30"
-		contentalign	ALIGN_UC
-		font		"f_big"
-	}
-
-	panel slots
-	{
-		{
-			pos		"640 200"
-			size	"230 296"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
-			wheelscrollable	true
-
-			onViewChange {
-				*node:parent.slots_scroll@fullsize = <fullsize>
-				*node:parent.slots_scroll@current = <viewpos>
-				*node:parent.slots_scroll@viewsize = <viewsize>
-			}
-		}
-		cmpSaveSlotPanel slot0 {
-		}
-
-		cmpSaveSlotPanel slot1 {
-		}
-
-		cmpSaveSlotPanel slot2 {
-		}
-
-		cmpSaveSlotPanel slot3 {
-		}
-
-		cmpSaveSlotPanel slot4 {
-		}
-
-		cmpSaveSlotPanel slot5 {
-		}
-
-		cmpSaveSlotPanel slot6 {
-		}
-
-		cmpSaveSlotPanel slot7 {
-		}
-	}
-	vscrollbar slots_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"229 50"
-		height		"216"
-		hidewhenunused	true
-		onChange {
-			*node:parent.slots@viewpos = <current>
-		}
-	}
-
-	/**
-	 * @param[in] <1> id of the savegame slot
-	 * @param[in] <2> name of the savegame slot
-	 * @param[in] <3> game date of the savegame slot
-	 * @param[in] <4> real date of the savegame slot
-	 * @param[in] <5> filename
-	 */
-	confunc update_save_game_info {
-		//call *node:this.parent.slots@createChild("slot<1>", "cmpSaveSlotPanel")
-		*node:this.parent.slots.slot<1>.filename@string = <5>
-		*node:this.parent.slots.slot<1>.title@string = <2>
-		*node:this.parent.slots.slot<1>.date@string = <3>
-		*node:this.parent.slots.slot<1>.index@integer = <1>
-		*node:this.parent.slots.slot<1>.name@string = *cvar:mn_slot<1>
-		if ( "<3>" ne "" ) {
-			*cvar:mn_slot<1> = "<2> <3>"
-		} else {
-			*cvar:mn_slot<1> = "<2>"
-		}
-		*node:this.parent.slots.slot<1>.name@tooltip = <4>
-		*node:this.parent.slots.slot<1>.name@onClick = {
-			*cvar:mn_slot<node:this.parent.index@integer> = <node:this.parent.title@string>
-		}
-		*node:this.parent.slots.slot<1>.name@onAbort = {
-			if (<node:this.parent.date@string> ne "") {
-				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string> <node:this.parent.date@string>"
-			} else {
-				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string>"
-			}
-		}
-		*node:this.parent.slots.slot<1>.name@onChange = {
-			cmd "game_save \"slot<node:this.parent.index@integer>\" \"<node:this.parent.name@string>\";"
-			*cvar:mn_fastexit = 1
-		}
-		*node:this.parent.slots.slot<1>.upload@onClick = {
-			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
-		}
-		//*node:this.parent.slots.slot<1>.delete@onClick = {}
-		*node:this.parent.slots.slot<1>.upload@invis = false
-		*node:this.parent.slots.slot<1>.delete@invis = true
-	}
-
-	cmpMenuButton button_back {
-		string		"_Back"
-		pos			"640 520"
-		onClick		{ cmd "ui_pop;" }
-	}
-
-	func onWindowOpened {
-		cmd "game_comments save;"
 	}
 }
 

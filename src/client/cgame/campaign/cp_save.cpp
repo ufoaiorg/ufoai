@@ -393,10 +393,8 @@ static void SAV_GameSave_f (void)
  * @param[in] idx the savegame slot to retrieve gamecomment for
  * @sa SAV_GameReadGameComments_f
  */
-static void SAV_GameReadGameComment (bool save, const int idx)
+static void SAV_GameReadGameComment (const int idx)
 {
-	const char* confunc = save ? "update_save_game_info" : "update_load_game_info";
-
 	char filename[MAX_OSPATH];
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
@@ -404,7 +402,7 @@ static void SAV_GameReadGameComment (bool save, const int idx)
 	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_READ);
 	if (!f) {
-		cgi->UI_ExecuteConfunc("%s %i \"\" \"\" \"\" \"\"", confunc, idx);
+		cgi->UI_ExecuteConfunc("update_game_info %i \"\" \"\" \"\" \"\"", idx);
 		return;
 	}
 
@@ -423,7 +421,7 @@ static void SAV_GameReadGameComment (bool save, const int idx)
 		return;
 	}
 
-	cgi->UI_ExecuteConfunc("%s %i \"%s\" \"%s\" \"%s\" \"%s\"", confunc, idx, header.name, header.gameDate, header.realDate, basename);
+	cgi->UI_ExecuteConfunc("update_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
 }
 
 /**
@@ -437,19 +435,18 @@ static void SAV_GameReadGameComment (bool save, const int idx)
  */
 static void SAV_GameReadGameComments_f (void)
 {
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("usage: %s <load|save> {id}\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 1) {
+		Com_Printf("usage: %s {id}\n", Cmd_Argv(0));
 		return;
 	}
 
-	const bool save = Q_streq("save", cgi->Cmd_Argv(1));
-	if (cgi->Cmd_Argc() == 3) {
-		int idx = atoi(cgi->Cmd_Argv(2));
-		SAV_GameReadGameComment(save, idx);
+	if (cgi->Cmd_Argc() == 2) {
+		int idx = atoi(cgi->Cmd_Argv(1));
+		SAV_GameReadGameComment(idx);
 	} else {
 		/* read all game comments */
 		for (int i = 0; i < 8; i++) {
-			SAV_GameReadGameComment(save, i);
+			SAV_GameReadGameComment(i);
 		}
 	}
 }
