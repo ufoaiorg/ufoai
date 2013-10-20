@@ -392,8 +392,7 @@ window campaign extends cgame_download
 	func onWindowOpened
 	{
 		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments load;"
-//		the this menu shouldn't ask for any password by default
-//		cmd	"web_listcgame 0;"
+		cmd	"web_listcgame 0;"
 		call *node:root.toggle_cmp_new
 	}
 

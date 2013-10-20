@@ -382,8 +382,7 @@ window skirmish extends cgame_download
 		cmd "mn_requestmaplist sk_maplist_listener;"
 		cmd	"game_teamcomments;sk_initequip cl_equip;sk_initequip ai_equipment;"
 		cmd "define g_endlessaliens 0;"
-//		the this menu shouldn't ask for any password by default
-//		cmd	"web_listcgame 0;"
+		cmd	"web_listcgame 0;"
 
 		// Resets map choices when Skirmish menu reloaded
 		call *node:root.toggle_sk_map
