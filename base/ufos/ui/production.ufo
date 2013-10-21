@@ -639,15 +639,10 @@ window productionNew
 			{ size "715 234" }
 			panel header
 			{
-				/* does not work, "title is a malformed node name"
+				{}
 				string title
 				{
 					string			"_Production"
-				} */
-				/* works */
-				button back
-				{
-					tooltip			"_Get out"
 				}
 			}
 		}
