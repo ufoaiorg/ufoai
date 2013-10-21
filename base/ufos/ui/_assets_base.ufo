@@ -671,3 +671,14 @@ component BaseContainerPanelV2 extends BaseContainerPanel
 		}
 	}
 }
+
+window BaseMgmtWindow
+{
+	{ size	"1024 768" }
+
+	BaseContainerPanelV2 base_container {}
+
+	// Back to geoscape
+	Geoscape geoscape_button { }
+
+}

@@ -628,6 +628,7 @@ window production
 
 window productionNew
 //window production
+//window production extends BaseMgmtWindow
 {
 	{ size	"1024 768" }
 
