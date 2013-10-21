@@ -632,5 +632,18 @@ window productionNew
 	{ size	"1024 768" }
 
 	// Base name and container panel
-	BaseContainerPanel base_container {}
+	BaseContainerPanelV2 base_container
+	{
+		panel mainBody
+		{
+			{ size "715 234" }
+			panel header
+			{
+			/*	string title
+				{
+					string			"_Production"
+				} */
+			}
+		}
+	}
 }

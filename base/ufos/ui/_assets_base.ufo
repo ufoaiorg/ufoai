@@ -632,3 +632,42 @@ component BaseContainerPanel extends panel
 		contentalign	ALIGN_CR
 	}
 }
+
+// Base name and container panel with boy and title
+component BaseContainerPanelV2 extends BaseContainerPanel
+{
+	panel mainBody
+	{
+		{
+			pos				"4 30"
+			size			"715 534"
+			border			"2"
+			bordercolor		"0.527 0.6 0.21 1"
+		}
+		// Title bar
+		panel header
+		{
+			{
+				pos			"1 1"
+				size		"713 32"
+				bgcolor		"0.527 0.6 0.21 0.2"
+			}
+			string title
+			{
+			//	string			"_Dummy"
+				pos				"90 1"
+				size			"593 32"
+				contentalign	ALIGN_CL
+				color			"0.56 0.81 0.76 1"
+			}
+			button back
+			{
+				icon			"icons/windownext"
+				tooltip			"_Back to base"
+				pos				"683 7"
+				size			"18	18"
+				onClick			{ cmd "ui_pop; base_init; reset_base;" }
+			}
+		}
+	}
+}
