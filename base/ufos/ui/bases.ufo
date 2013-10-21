@@ -117,7 +117,7 @@ window bases
 		{
 			{
 				pos		"0 705"
-				size	"400 48"
+				size	"440 48"
 			}
 			EmployeeCount scientists
 			{
@@ -131,7 +131,7 @@ window bases
 			EmployeeCount workers
 			{
 				{
-					pos		"120 0"
+					pos		"110 0"
 					onClick { cmd "alien_containment false; show_facility false; ui_push production;" }
 				}
 				string label { string "_Engineers" }
@@ -140,11 +140,20 @@ window bases
 			EmployeeCount soldiers
 			{
 				{
-					pos		"240 0"
+					pos		"220 0"
 					onClick { cmd "alien_containment false; show_facility false; ui_push equipment -1;" }
 				}
 				string label { string "_Soldiers" }
 				button icon { icon "icons/head_soldier" }
+			}
+			EmployeeCount pilots
+			{
+				{
+					pos		"330 0"
+                    onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+				}
+				string label { string "_Pilots" }
+				button icon { icon "icons/head_pilot" }
 			}
 		}
 
@@ -667,12 +676,14 @@ window bases
 	/**
 	 * @brief Current employees of a particular base
 	 * @param <1> number of soldiers
+	 * @param <2> number of pilots
 	 * @param <3> number of scientists
 	 * @param <4> number of workers
 	 */
 	confunc current_employees
 	{
 		*node:parent.base_container.cur_employees.soldiers.data@string = "<1>"
+		*node:parent.base_container.cur_employees.pilots.data@string = "<2>"
 		*node:parent.base_container.cur_employees.scientists.data@string = "<3>"
 		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
 	}
