@@ -10,41 +10,19 @@ window market  {
 	{ size	"1024 768" }
 
 	// Base name and container panel
-	BaseContainerPanel base_container
+	BaseContainerPanelV2 base_container
 	{
-
 		// Market panel
 		panel mainBody
 		{
-			{
-				pos				"4 30"
-				size			"715 534"
-				border			"2"
-				bordercolor		"0.527 0.6 0.21 1"
-			}
+			{ size "715 534" }
 			// Title bar
 			panel header
 			{
-				{
-					pos			"1 1"
-					size		"713 32"
-					bgcolor		"0.527 0.6 0.21 0.2"
-				}
+				{}
 				string title
 				{
 					string			"_Market"
-					pos				"90 1"
-					size			"593 32"
-					contentalign	ALIGN_CL
-					color			"0.56 0.81 0.76 1"
-				}
-				button back
-				{
-					icon			"icons/windownext"
-					tooltip			"_Back to base"
-					pos				"683 7"
-					size			"18	18"
-					onClick			{ cmd "ui_pop; base_init; reset_base;" }
 				}
 			}
 			// Market list headings (base / market)
