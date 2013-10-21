@@ -654,7 +654,7 @@ component BaseContainerPanelV2 extends BaseContainerPanel
 			}
 			string title
 			{
-			//	string			"_Dummy"
+			//	string			"Dummy"
 				pos				"90 1"
 				size			"593 32"
 				contentalign	ALIGN_CL
