@@ -153,7 +153,8 @@ window bases
                     onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
 				}
 				string label { string "_Pilots" }
-				button icon { icon "icons/head_pilot" }
+				//no pilot head available
+				//button icon { icon "icons/head_pilot" }
 			}
 		}
 
@@ -161,12 +162,12 @@ window bases
 		panel buttons
 		{
 			{
-				pos		"400 705"
+				pos		"450 705"
 				size	"323 48"
 			}
 			button basesummary
 			{
-				pos		"270 0"
+				pos		"220 0"
 				size	"48 48"
 				icon		"icons/stats"
 				tooltip		"_Base Summary"
@@ -178,7 +179,7 @@ window bases
 			//Intentionally left out the underscores to not bother the translators
 			button transfers
 			{
-				pos		"215 0"
+				pos		"165 0"
 				size	"48 48"
 				icon		"icons/transfer"
 				tooltip		"Link to transfer - not working yet"
@@ -189,7 +190,7 @@ window bases
 			}
 			button ufopaedia
 			{
-				pos		"160 0"
+				pos		"110 0"
 				size	"48 48"
 				icon		"icons/info"
 				tooltip		"_UFOpedia"
@@ -200,7 +201,7 @@ window bases
 			}
 			button options
 			{
-				pos		"105 0"
+				pos		"55 0"
 				size	"48 48"
 				icon		"icons/options"
 				tooltip		"_Options"
