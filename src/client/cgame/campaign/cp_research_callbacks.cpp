@@ -29,11 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Assign as many scientists to the research project as possible.
- * @param[in] base The base the tech is researched in.
- * @param[in] tech The technology you want to max out.
  */
 static void RS_Max_f (void)
 {
+	/* The base the tech is researched in. */
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -43,6 +42,7 @@ static void RS_Max_f (void)
 		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
+	/* The technology you want to max out. */
 	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
 		Com_Printf("RS_Max_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
