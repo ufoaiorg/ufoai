@@ -14,7 +14,7 @@ window market  {
 	{
 
 		// Market panel
-		panel market
+		panel mainBody
 		{
 			{
 				pos				"4 30"
@@ -249,27 +249,27 @@ window market  {
 	 */
 	confunc ui_market_clear {
 		// Reset stored height integer
-		*node:root.base_container.market.list.category_height@integer = 0
+		*node:root.base_container.mainBody.list.category_height@integer = 0
 
 		// Empty and reset height for all categories
-		call *node:root.base_container.market.list.primary@removeAllchild
-		*node:root.base_container.market.list.primary@size = "713 0"
-		call *node:root.base_container.market.list.secondary@removeAllchild
-		*node:root.base_container.market.list.secondary@size = "713 0"
-		call *node:root.base_container.market.list.heavy@removeAllchild
-		*node:root.base_container.market.list.heavy@size = "713 0"
-		call *node:root.base_container.market.list.misc@removeAllchild
-		*node:root.base_container.market.list.misc@size = "713 0"
-		call *node:root.base_container.market.list.armour@removeAllchild
-		*node:root.base_container.market.list.armour@size = "713 0"
-		call *node:root.base_container.market.list.craftitem@removeAllchild
-		*node:root.base_container.market.list.craftitem@size = "713 0"
-		call *node:root.base_container.market.list.aircraft@removeAllchild
-		*node:root.base_container.market.list.aircraft@size = "713 0"
-		call *node:root.base_container.market.list.dummy@removeAllchild
-		*node:root.base_container.market.list.dummy@size = "713 0"
-		call *node:root.base_container.market.list.ugvitem@removeAllchild
-		*node:root.base_container.market.list.ugvitem@size = "713 0"
+		call *node:root.base_container.mainBody.list.primary@removeAllchild
+		*node:root.base_container.mainBody.list.primary@size = "713 0"
+		call *node:root.base_container.mainBody.list.secondary@removeAllchild
+		*node:root.base_container.mainBody.list.secondary@size = "713 0"
+		call *node:root.base_container.mainBody.list.heavy@removeAllchild
+		*node:root.base_container.mainBody.list.heavy@size = "713 0"
+		call *node:root.base_container.mainBody.list.misc@removeAllchild
+		*node:root.base_container.mainBody.list.misc@size = "713 0"
+		call *node:root.base_container.mainBody.list.armour@removeAllchild
+		*node:root.base_container.mainBody.list.armour@size = "713 0"
+		call *node:root.base_container.mainBody.list.craftitem@removeAllchild
+		*node:root.base_container.mainBody.list.craftitem@size = "713 0"
+		call *node:root.base_container.mainBody.list.aircraft@removeAllchild
+		*node:root.base_container.mainBody.list.aircraft@size = "713 0"
+		call *node:root.base_container.mainBody.list.dummy@removeAllchild
+		*node:root.base_container.mainBody.list.dummy@size = "713 0"
+		call *node:root.base_container.mainBody.list.ugvitem@removeAllchild
+		*node:root.base_container.mainBody.list.ugvitem@size = "713 0"
 	}
 
 	/*
@@ -285,36 +285,36 @@ window market  {
      */
 	confunc ui_market_add {
 		//cmd "echo <cvar:ui_market_category>"
-		call *node:root.base_container.market.list.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
+		call *node:root.base_container.mainBody.list.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
 
 		// Temporary implementation for layout
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.id@string = <1>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.id@string = <1>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
 
 		// Set buy/sell spinners
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@current = <3>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@min = 0
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@current = <3>
-		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@current = <3>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@min = 0
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@current = <3>
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
 
 		// Set autosell
 		if ( param7 eq "-" ) {
-			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@invis = true
+			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.autosell@invis = true
 		} else {
-			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
+			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
 		}
 
 		// Increase height of category panel
-		*node:root.base_container.market.list.category_height@integer = ( *node:root.base_container.market.list.category_height@integer + 30 )
-		*node:root.base_container.market.list.<cvar:ui_market_category>@size = "713 <node:root.base_container.market.list.category_height@integer>"
+		*node:root.base_container.mainBody.list.category_height@integer = ( *node:root.base_container.mainBody.list.category_height@integer + 30 )
+		*node:root.base_container.mainBody.list.<cvar:ui_market_category>@size = "713 <node:root.base_container.mainBody.list.category_height@integer>"
 	}
 
 	confunc ui_market_update_caps {
@@ -325,12 +325,12 @@ window market  {
 	 * <1> item id
 	 */
 	confunc ui_market_select {
-		if ( *node:root.base_container.market.list.selected@string ne "" ) {
-			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 0.7"
+		if ( *node:root.base_container.mainBody.list.selected@string ne "" ) {
+			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<node:root.base_container.mainBody.list.selected@string>.name@color = "0.56 0.81 0.76 0.7"
 		}
-		*node:root.base_container.market.list.selected@string = <1>
-		if ( *node:root.base_container.market.list.selected@string ne "" ) {
-			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 1"
+		*node:root.base_container.mainBody.list.selected@string = <1>
+		if ( *node:root.base_container.mainBody.list.selected@string ne "" ) {
+			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<node:root.base_container.mainBody.list.selected@string>.name@color = "0.56 0.81 0.76 1"
 			cmd "ui_market_showinfo <1>;"
 		}
 	}
