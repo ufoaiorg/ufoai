@@ -633,7 +633,7 @@ component BaseContainerPanel extends panel
 	}
 }
 
-// Base name and container panel with boy and title
+// Base name and container panel with body and title
 component BaseContainerPanelV2 extends BaseContainerPanel
 {
 	panel mainBody
