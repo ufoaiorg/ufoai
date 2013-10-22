@@ -164,6 +164,21 @@ window market  {
 					string name { string "_Unmanned Ground Vehicles" }
 				}
 				MarketList ugvitem { }
+
+				/*
+				 * @brief Select an item from the list
+				 * <1> item id
+				 */
+				confunc ui_market_select {
+					if ( *node:parent.selected@string ne "" ) {
+						*node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 0.7"
+					}
+					*node:parent.selected@string = <1>
+					if ( *node:parent.selected@string ne "" ) {
+						*node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
+						cmd "ui_market_showinfo <1>;"
+					}
+				}
 			}
 			vscrollbar list_scroll {
 				image			"ui/scrollbar_v_green"
@@ -296,21 +311,6 @@ window market  {
 	}
 
 	confunc ui_market_update_caps {
-	}
-
-	/*
-	 * @brief Select an item from the list
-	 * <1> item id
-	 */
-	confunc ui_market_select {
-		if ( *node:root.base_container.mainBody.list.selected@string ne "" ) {
-			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<node:root.base_container.mainBody.list.selected@string>.name@color = "0.56 0.81 0.76 0.7"
-		}
-		*node:root.base_container.mainBody.list.selected@string = <1>
-		if ( *node:root.base_container.mainBody.list.selected@string ne "" ) {
-			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<node:root.base_container.mainBody.list.selected@string>.name@color = "0.56 0.81 0.76 1"
-			cmd "ui_market_showinfo <1>;"
-		}
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
