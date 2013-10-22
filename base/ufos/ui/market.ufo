@@ -166,6 +166,78 @@ window market  {
 				MarketList ugvitem { }
 
 				/*
+				 * @brief Confunc to clear the market list
+				 */
+				confunc ui_market_clear {
+					// Reset stored height integer
+					*node:parent.category_height@integer = 0
+
+					// Empty and reset height for all categories
+					call *node:parent.primary@removeAllchild
+					*node:parent.primary@size = "713 0"
+					call *node:parent.secondary@removeAllchild
+					*node:parent.secondary@size = "713 0"
+					call *node:parent.heavy@removeAllchild
+					*node:parent.heavy@size = "713 0"
+					call *node:parent.misc@removeAllchild
+					*node:parent.misc@size = "713 0"
+					call *node:parent.armour@removeAllchild
+					*node:parent.armour@size = "713 0"
+					call *node:parent.craftitem@removeAllchild
+					*node:parent.craftitem@size = "713 0"
+					call *node:parent.aircraft@removeAllchild
+					*node:parent.aircraft@size = "713 0"
+					call *node:parent.dummy@removeAllchild
+					*node:parent.dummy@size = "713 0"
+					call *node:parent.ugvitem@removeAllchild
+					*node:parent.ugvitem@size = "713 0"
+				}
+
+				/*
+				 * @brief Confunc to add the item to market's itemlist
+				 * <1> reference id
+				 * <2> name
+				 * <3> count at base
+				 * <4> count on market
+				 * <5> buy price
+				 * <6> sell price
+				 * <7> autosell (0: off, 1: on, -: not available"
+				 * <8> tooltip for disabled entries, "-" otherwise
+				 */
+				confunc ui_market_add {
+					//cmd "echo <cvar:ui_market_category>"
+					call *node:parent.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
+
+					// Temporary implementation for layout
+					*node:parent.<cvar:ui_market_category>.item_<1>.id@string = <1>
+					*node:parent.<cvar:ui_market_category>.item_<1>.name@string = <2>
+					*node:parent.<cvar:ui_market_category>.item_<1>.base@string = <3>
+					*node:parent.<cvar:ui_market_category>.item_<1>.market@string = <4>
+					*node:parent.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
+					*node:parent.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
+					*node:parent.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
+					*node:parent.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
+
+					// Set buy/sell spinners
+					*node:parent.<cvar:ui_market_category>.item_<1>.buy@min = 0
+					*node:parent.<cvar:ui_market_category>.item_<1>.buy@current = <3>
+					*node:parent.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
+					*node:parent.<cvar:ui_market_category>.item_<1>.sell@min = 0
+					*node:parent.<cvar:ui_market_category>.item_<1>.sell@current = <3>
+					*node:parent.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+
+					// Set autosell
+					if ( param7 eq "-" ) {
+						*node:parent.<cvar:ui_market_category>.item_<1>.autosell@invis = true
+					} else {
+						*node:parent.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
+					}
+
+					// Increase height of category panel
+					*node:parent.category_height@integer = ( *node:parent.category_height@integer + 30 )
+					*node:parent.<cvar:ui_market_category>@size = "713 <node:parent.category_height@integer>"
+				}
+				/*
 				 * @brief Select an item from the list
 				 * <1> item id
 				 */
@@ -236,79 +308,6 @@ window market  {
 
 	// Back to geoscape
 	Geoscape geoscape_button { }
-
-	/*
-	 * @brief Confunc to clear the market list
-	 */
-	confunc ui_market_clear {
-		// Reset stored height integer
-		*node:root.base_container.mainBody.list.category_height@integer = 0
-
-		// Empty and reset height for all categories
-		call *node:root.base_container.mainBody.list.primary@removeAllchild
-		*node:root.base_container.mainBody.list.primary@size = "713 0"
-		call *node:root.base_container.mainBody.list.secondary@removeAllchild
-		*node:root.base_container.mainBody.list.secondary@size = "713 0"
-		call *node:root.base_container.mainBody.list.heavy@removeAllchild
-		*node:root.base_container.mainBody.list.heavy@size = "713 0"
-		call *node:root.base_container.mainBody.list.misc@removeAllchild
-		*node:root.base_container.mainBody.list.misc@size = "713 0"
-		call *node:root.base_container.mainBody.list.armour@removeAllchild
-		*node:root.base_container.mainBody.list.armour@size = "713 0"
-		call *node:root.base_container.mainBody.list.craftitem@removeAllchild
-		*node:root.base_container.mainBody.list.craftitem@size = "713 0"
-		call *node:root.base_container.mainBody.list.aircraft@removeAllchild
-		*node:root.base_container.mainBody.list.aircraft@size = "713 0"
-		call *node:root.base_container.mainBody.list.dummy@removeAllchild
-		*node:root.base_container.mainBody.list.dummy@size = "713 0"
-		call *node:root.base_container.mainBody.list.ugvitem@removeAllchild
-		*node:root.base_container.mainBody.list.ugvitem@size = "713 0"
-	}
-
-	/*
-	 * @brief Confunc to add the item to market's itemlist
-	 * <1> reference id
-	 * <2> name
-	 * <3> count at base
-	 * <4> count on market
-	 * <5> buy price
-	 * <6> sell price
-	 * <7> autosell (0: off, 1: on, -: not available"
-	 * <8> tooltip for disabled entries, "-" otherwise
-     */
-	confunc ui_market_add {
-		//cmd "echo <cvar:ui_market_category>"
-		call *node:root.base_container.mainBody.list.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
-
-		// Temporary implementation for layout
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.id@string = <1>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
-
-		// Set buy/sell spinners
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@current = <3>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@min = 0
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@current = <3>
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
-
-		// Set autosell
-		if ( param7 eq "-" ) {
-			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.autosell@invis = true
-		} else {
-			*node:root.base_container.mainBody.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
-		}
-
-		// Increase height of category panel
-		*node:root.base_container.mainBody.list.category_height@integer = ( *node:root.base_container.mainBody.list.category_height@integer + 30 )
-		*node:root.base_container.mainBody.list.<cvar:ui_market_category>@size = "713 <node:root.base_container.mainBody.list.category_height@integer>"
-	}
 
 	confunc ui_market_update_caps {
 	}
