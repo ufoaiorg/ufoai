@@ -1055,7 +1055,8 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 
 	/* reuse a node */
 	if (node) {
-		if (node->behaviour != behaviour) {
+		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (component != nullptr) ? component->behaviour : nullptr;
+		if (node->behaviour != test) {
 			Com_Printf("UI_ParseNode: we can't change node type (node \"%s\")\n", UI_GetPath(node));
 			return nullptr;
 		}

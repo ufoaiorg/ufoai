@@ -695,9 +695,7 @@ component FoldingList extends panel
 	}
 }
 
-window productionNew
-//window production
-//window production extends BaseMgmtWindow
+window productionNew extends BaseMgmtWindow
 {
 	{ size	"1024 768" }
 
