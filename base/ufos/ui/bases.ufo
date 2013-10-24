@@ -186,7 +186,7 @@ window bases
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push basesummary;" }
+				onClick			{ cmd "ui_push transfer;" }
 			}
 			button ufopaedia
 			{
