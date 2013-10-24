@@ -626,6 +626,18 @@ window production
 	}
 }
 
+component FoldingList extends panel
+{
+	// list headings
+	panel listHeader
+	{
+		{
+			pos			"1 1"
+			size		"713 32"
+		}
+	}
+}
+
 window productionNew
 //window production
 //window production extends BaseMgmtWindow
@@ -644,6 +656,35 @@ window productionNew
 				string title
 				{
 					string			"_Production"
+				}
+			}
+			FoldingList flist
+			{
+				{
+					pos "1 40"
+					size "715 200"
+				}
+				// list headings
+				panel listHeader
+				{
+					{
+					}
+					string base
+					{
+						string			"_Base"
+						pos				"320 0"
+						size			"80 32"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CR
+					}
+					string market
+					{
+						string			"_Market"
+						pos				"586 0"
+						size			"100 32"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_CL
+					}
 				}
 			}
 		}
