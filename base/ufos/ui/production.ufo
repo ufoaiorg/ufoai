@@ -626,6 +626,34 @@ window production
 	}
 }
 
+// Folding List category label
+component ProdCategory extends panel
+{
+	{
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.3"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.4" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.3" }
+	}
+	string cName
+	{
+		pos				"30 0"
+		size			"400 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+		string			"catName"
+	}
+	// List of Items in the category
+	panel itemList
+	{
+		pos				"30 30"
+		size			"713 0"
+		layout			LAYOUT_TOP_DOWN_FLOW
+		layoutMargin	2
+	}
+}
+
 component FoldingList extends panel
 {
 	// list headings
@@ -635,6 +663,23 @@ component FoldingList extends panel
 			pos			"1 1"
 			size		"713 32"
 		}
+	}
+	// list of categoies
+	panel clist
+	{
+		{
+			pos				"1 34"
+			size			"713 463"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+			onViewChange	{
+				*node:parent.list_scroll@current = <viewpos>
+				*node:parent.list_scroll@fullsize = <fullsize>
+				*node:parent.list_scroll@viewsize = <viewsize>
+			}
+		}
+		data selected { string "" }
+		data category_height { integer 30 }
 	}
 }
 
@@ -667,8 +712,7 @@ window productionNew
 				// list headings
 				panel listHeader
 				{
-					{
-					}
+					{	}
 					string base
 					{
 						string			"_Base"
@@ -685,6 +729,12 @@ window productionNew
 						color			"0.56 0.81 0.76 1"
 						contentalign	ALIGN_CL
 					}
+				}
+				panel clist
+				{
+					{ }
+					ProdCategory primary { }
+					ProdCategory secondary { }
 				}
 			}
 		}
