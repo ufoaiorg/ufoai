@@ -554,7 +554,7 @@ component MarketItem extends panel
 		contentalign	ALIGN_CL
 		ghost			true
 	}
-	// Count of items in base
+	// Count of items in the market
 	string market
 	{
 		pos				"586 0"
