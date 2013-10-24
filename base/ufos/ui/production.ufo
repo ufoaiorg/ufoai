@@ -626,6 +626,41 @@ window production
 	}
 }
 
+component ProdItem extends panel
+{
+	{
+		pos				"0 0"
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.15" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
+		onClick			{ cmd "ui_market_select <node:this.id@string>;" }
+	}
+	data id { }
+	data rate { integer 1 }
+
+	// UFOPaedia link for each item
+	button ufopaedia
+	{
+		icon			"icons/windowinfo"
+		tooltip			"_View UFOPaedia entry"
+		pos				"5 5"
+		size			"18	18"
+		onClick			{
+			cmd "ui_market_showinfo \"<node:parent.id@string>\";"
+			cmd "market_openpedia;"
+		}
+	}
+	string name
+	{
+		pos				"30 0"
+		size			"290 28"
+		color			"0.56 0.81 0.76 0.7"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+}
+
 // Folding List category label
 component ProdCategory extends panel
 {
