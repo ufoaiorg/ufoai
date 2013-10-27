@@ -23,6 +23,7 @@ window bases
 {
 	{
 		size	"1024 768"
+		onWindowClosed { cmd "trans_emptyairstorage;" }
 	}
 
 	// Left base panel
@@ -41,9 +42,9 @@ window bases
 			tooltip			"_Previous base"
 			pos				"90 6"
 			size			"18	18"
-			onClick	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
-			onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
-			onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
+			onClick			{ cmd "ui_pop; mn_base_prev;" }
+			onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+			onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
 		}
 		button next
 		{
@@ -51,9 +52,9 @@ window bases
 			tooltip			"_Next base"
 			pos				"115 6"
 			size			"18	18"
-			onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
-			onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
-			onClick			{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+			onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+			onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
+			onClick			{ cmd "ui_pop; mn_base_next;" }
 		}
 		// Base name
 		textentry name
