@@ -613,7 +613,7 @@ window research
 	BaseContainerPanelV2 baseHeader {
 		panel mainBody
 		{
-			{ size "715 334" }
+			{ size "715 584" }
 			panel header
 			{
 				{}
