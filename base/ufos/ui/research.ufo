@@ -803,13 +803,13 @@ window research
 	// Research info box (bottom right)
 	panel researchinfo {
 		{
-			pos			"605 260"
-			size		"410 480"
+			pos			"730 260"
+			size		"285 480"
 			background	"ui/panel_grey_green_large"
 		}
 
 		string name {
-			pos			"25 25"
+			pos			"15 25"
 			size		"360 20"
 			font		"f_small_bold"
 			longlines	LONGLINES_PRETTYCHOP
@@ -817,8 +817,8 @@ window research
 			ghost		true
 		}
 		image img {
-			pos			"25 50"
-			size		"360 410"
+			pos			"15 50"
+			size		"260 410"
 			preventratio	true
 			contentalign	ALIGN_CC
 			ghost		true
@@ -826,7 +826,7 @@ window research
 		model mdl {
 			angles		"0 0 90"
 			pos			"25 50"
-			size		"360 410"
+			size		"260 410"
 			autoscale	true
 			omega		"0 -3 0"
 			rotatewithmouse	true
