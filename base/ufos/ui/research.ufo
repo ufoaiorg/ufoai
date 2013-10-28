@@ -805,12 +805,11 @@ window research
 		{
 			pos			"730 260"
 			size		"285 480"
-			background	"ui/panel_grey_green_large"
 		}
 
 		string name {
 			pos			"15 25"
-			size		"360 20"
+			size		"260 20"
 			font		"f_small_bold"
 			longlines	LONGLINES_PRETTYCHOP
 			contentalign	ALIGN_CC
