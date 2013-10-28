@@ -628,8 +628,8 @@ window research
 	// Techlist Panel (left)
 	panel techlist_border {
 		{
-			pos			"9 120"
-			size		"587 620"
+			pos			"10 80"
+			size		"587 520"
 			bgcolor		"0 0.08 0 1"
 			background		"ui/panel_grey_green_large2"
 		}
