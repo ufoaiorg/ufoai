@@ -10,7 +10,8 @@
  * -- Maybe we need an icon that suggests clicking will switch bases.
  */
 
-window research
+window researchUI2
+//window research
 {
 	{ size	"1024 768" }
 
@@ -424,6 +425,418 @@ window research
 		call *node:root.clear_all
 
 		// Update values for overall base display
+		cmd "base_init;"
+	}
+}
+
+// ===================
+// BASE RESEARCH MENU
+// ===================
+
+component cmpTechItem extends panel {
+	{
+		size		"530 50"
+
+		onClick	{
+			cmd "ui_research_select <node:this.id@string>;"
+		}
+	}
+
+	data id {
+		integer		-1
+		string		""
+	}
+
+	button pedia {
+		tooltip		"_Open UFOPaedia"
+		icon		"icons/bordered_question"
+		pos			"5 4"
+		size		"16 16"
+		padding		0
+
+		onClick	{
+			cmd "ui_research_select <node:parent.id@string>; ui_push ufopedia <node:parent.id@string>;"
+		}
+	}
+
+	string name {
+		pos			"25 0"
+		size		"345 20"
+		color		"0 .78 0 1"
+		longlines	LONGLINES_PRETTYCHOP
+		ghost		true
+	}
+
+	bar progress {
+		pos			"5 30"
+		size		"224 5"
+		color		"0 0.8 0 1"
+		bordercolor	"0 0.8 0 1"
+		border		1
+		current		0
+		max			100
+		readonly	true
+		ghost		true
+	}
+	string progress_label {
+		pos			"235 25"
+		size		"50 11"
+		color		"0 .78 0 1"
+		font		"f_verysmall"
+		contentalign	ALIGN_UL
+		padding		0
+		ghost		true
+	}
+
+	panel rsrc_control {
+		{
+			pos 	"400 0"
+			size	"130 32"
+			ghost	true
+			invis	true
+		}
+		button stop {
+			tooltip		"_Stop researching this project"
+			icon		"icons/speed_stop"
+			pos			"0 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.parent.id@string>;"
+			}
+		}
+		button less {
+			tooltip		"_Assign less scientists on this project"
+			icon		"icons/minus"
+			pos			"25 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> -1;"
+			}
+		}
+		string scientists {
+			string		"0"
+			pos			"45 4"
+			size		"30 25"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CR
+			ghost		true
+		}
+		button more {
+			tooltip		"_Assign more scientists on this project"
+			icon		"icons/plus"
+			pos			"75 4"
+			size		"25 25"
+
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> 1;"
+			}
+		}
+		button max {
+			tooltip		"_Assign all free scientists on this project"
+			icon		"icons/speed_play3"
+			pos			"100 4"
+			size		"25 25"
+			onclick {
+				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.parent.id@string>;"
+			}
+		}
+	}
+
+	panel rsrc_baselink {
+		{
+			pos 	"350 0"
+			size	"180 32"
+			invis	true
+
+			onclick {
+				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.id@integer>;"
+			}
+		}
+		string basename {
+			string		"0"
+			pos			"0 4"
+			size		"155 25"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CR
+			ghost		true
+
+		}
+		button go {
+			tooltip		"_Go to base"
+			icon		"icons/speed_play1"
+			pos			"155 4"
+			size		"25 25"
+
+			onclick {
+				cmd "trans_emptyairstorage; ui_pop; mn_base_select <node:parent.parent.id@integer>;"
+			}
+		}
+	}
+	panel rsrc_missing {
+		{
+			pos 	"350 0"
+			size	"180 32"
+			invis	true
+		}
+		string note {
+			string		"_N/A"
+			tooltip		"_An artifact or prerequisite is missing for this topic"
+			pos			"0 4"
+			size		"155 25"
+			color		"1 0.874 0.294 1"
+			contentalign	ALIGN_CR
+
+		}
+		button show {
+			tooltip		"_Expand/Collapse"
+			icon		"icons/scroll_bottom"
+			pos			"155 4"
+			size		"25 25"
+			invis		true
+		}
+	}
+	/** @TODO implement research requirements listing */
+}
+
+// ================
+// RESEARCH WINDOW
+// ================
+
+//window researchOld
+window research
+{
+	{
+		background	"background/base_bg"
+	}
+
+	cmpBaseHeader baseHeader {
+	}
+
+	// Techlist Panel (left)
+	panel techlist_border {
+		{
+			pos			"9 120"
+			size		"587 620"
+			bgcolor		"0 0.08 0 1"
+			background		"ui/panel_grey_green_large2"
+		}
+
+		data selected {
+			string	""
+		}
+
+		string topics {
+			string		"_Topics"
+			pos			"45 25"
+			size		"365 25"
+			font		"f_small_bold"
+		}
+		string scientist {
+			string		"_Scientists"
+			pos			"410 25"
+			size		"150 25"
+			font		"f_small_bold"
+			contentalign	ALIGN_CC
+		}
+
+		panel techlist {
+			pos			"20 50"
+			size		"530 550"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			wheelscrollable	true
+			onViewChange {
+				*node:parent.techlist_scroll@fullsize = <fullsize>
+				*node:parent.techlist_scroll@current = <viewpos>
+				*node:parent.techlist_scroll@viewsize = <viewsize>
+			}
+		}
+		vscrollbar techlist_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"550 41"
+			height		"560"
+			current		0
+			viewsize	21
+			fullsize	21
+			hidewhenunused true
+			onChange {
+				*node:parent.techlist@viewpos = <current>
+			}
+		}
+
+		confunc ui_techlist_clear {
+			call *node:parent.techlist@removeAllchild
+		}
+		confunc ui_research_select {
+			if ( *node:parent.selected@string ne "" ) {
+				*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
+				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
+				*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
+			}
+			*node:parent.selected@string = "<1>"
+			*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
+			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
+			*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
+			cmd "ui_research_getdetails <1>;"
+		}
+		confunc ui_techlist_add {
+			call *node:parent.techlist@createChild("tech_<1>", "cmpTechItem")
+
+			*node:parent.techlist.tech_<1>.id@string = "<1>"
+			*node:parent.techlist.tech_<1>.name@string = "<2>"
+			*node:parent.techlist.tech_<1>.progress@current = <4>
+
+			if ( <4> > 0 ) {
+				*node:parent.techlist.tech_<1>.progress_label@string = "<4>%"
+			}
+
+			if ( paramCount >= 5 ) {
+				if ( "<5>" eq "base" ) {
+					*node:parent.techlist.tech_<1>.id@integer = <6>
+					*node:parent.techlist.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
+					*node:parent.techlist.tech_<1>.rsrc_baselink@invis = false
+				}
+				if ( "<5>" eq "missing" ) {
+					*node:parent.techlist.tech_<1>.rsrc_missing@invis = false
+				}
+			} else {
+				*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<3>"
+				*node:parent.techlist.tech_<1>.rsrc_control@invis = false
+			}
+
+			if ( *node:parent.selected@string eq "" ) {
+				call *node:parent.ui_research_select ( "<1>" )
+			}
+		}
+		confunc ui_research_update_topic {
+			*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<2>"
+		}
+	}
+
+	// Capacity Box (top right)
+	panel capbox {
+		{
+			pos		"605 120"
+			size	"410 115"
+			background	"ui/panel_grey_green"
+		}
+
+		string header_capacity {
+			string 		"_Capacity"
+			pos			"25 25"
+			size		"210 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CL
+		}
+		string header_free {
+			string 		"_idle"
+			pos			"235 25"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+		string header_all {
+			string 		"_all"
+			pos			"310 25"
+			size		"75 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CR
+		}
+
+		string scientists_caption {
+			string 		"_Scientists"
+			pos			"25 50"
+			size		"230 20"
+			font		"f_small"
+		}
+		string scientists_free {
+			pos			"235 50"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string scientists_all {
+			pos			"310 50"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string labspace_caption {
+			string 		"_Laboratory"
+			pos			"25 70"
+			size		"230 20"
+			font		"f_small"
+		}
+		string labspace_free {
+			pos			"235 70"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		string labspace_all {
+			pos			"310 70"
+			size		"75 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+
+		confunc ui_research_update_caps {
+			*node:parent.scientists_free@string = "<1>"
+			*node:parent.scientists_all@string = "<2>"
+			*node:parent.labspace_free@string = "<3>"
+			*node:parent.labspace_all@string = "<4>"
+		}
+	}
+
+	// Research info box (bottom right)
+	panel researchinfo {
+		{
+			pos			"605 260"
+			size		"410 480"
+			background	"ui/panel_grey_green_large"
+		}
+
+		string name {
+			pos			"25 25"
+			size		"360 20"
+			font		"f_small_bold"
+			longlines	LONGLINES_PRETTYCHOP
+			contentalign	ALIGN_CC
+			ghost		true
+		}
+		image img {
+			pos			"25 50"
+			size		"360 410"
+			preventratio	true
+			contentalign	ALIGN_CC
+			ghost		true
+		}
+		model mdl {
+			angles		"0 0 90"
+			pos			"25 50"
+			size		"360 410"
+			autoscale	true
+			omega		"0 -3 0"
+			rotatewithmouse	true
+		}
+
+		confunc	ui_research_details {
+			*node:parent.name@string = "<1>"
+			*node:parent.img@src = "<2>"
+			*node:parent.mdl@src = "<3>"
+		}
+	}
+
+	func onWindowOpened {
+		*node:root.techlist_border.selected@string = ""
+		cmd "ui_research_fill;"
+		*cvar:mn_lastsubmenu = "research"
+	}
+
+	func onWindowClosed {
+		// call base init function because the amount of workers, scientists and
+		// so on can also change the button state in the base view
 		cmd "base_init;"
 	}
 }
