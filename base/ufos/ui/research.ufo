@@ -608,10 +608,21 @@ component cmpTechItem extends panel {
 window research
 {
 	{
-		background	"background/base_bg"
 	}
 
-	cmpBaseHeader baseHeader {
+	BaseContainerPanelV2 baseHeader {
+		panel mainBody
+		{
+			{ size "715 334" }
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Research"
+				}
+			}
+		}
 	}
 
 	// Techlist Panel (left)
