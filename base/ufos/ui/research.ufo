@@ -803,8 +803,8 @@ window research
 	// Research info box (bottom right)
 	panel researchinfo {
 		{
-			pos			"730 260"
-			size		"285 480"
+			pos			"730 200"
+			size		"285 540"
 		}
 
 		string name {
@@ -817,7 +817,7 @@ window research
 		}
 		image img {
 			pos			"15 50"
-			size		"260 410"
+			size		"260 470"
 			preventratio	true
 			contentalign	ALIGN_CC
 			ghost		true
@@ -825,7 +825,7 @@ window research
 		model mdl {
 			angles		"0 0 90"
 			pos			"25 50"
-			size		"260 410"
+			size		"260 470"
 			autoscale	true
 			omega		"0 -3 0"
 			rotatewithmouse	true
