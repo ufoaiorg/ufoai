@@ -679,9 +679,9 @@ window research
 				}
 				confunc ui_research_select {
 					if ( *node:parent.selected@string ne "" ) {
-						*node:parent.techs.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
-						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
-						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0.56 0.81 0.76 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0.56 0.81 0.76 1"
 					}
 					*node:parent.selected@string = "<1>"
 					*node:parent.techs.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
