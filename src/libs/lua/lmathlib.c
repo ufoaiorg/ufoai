@@ -1,5 +1,5 @@
 /*
-** $Id: lmathlib.c,v 1.67.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lmathlib.c,v 1.67 2005/08/26 17:36:32 roberto Exp $
 ** Standard mathematical library
 ** See Copyright Notice in lua.h
 */
@@ -241,7 +241,7 @@ static const luaL_Reg mathlib[] = {
   {"sqrt",  math_sqrt},
   {"tanh",   math_tanh},
   {"tan",   math_tan},
-  {nullptr, nullptr}
+  {NULL, NULL}
 };
 
 

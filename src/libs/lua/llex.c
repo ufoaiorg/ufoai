@@ -1,5 +1,5 @@
 /*
-** $Id: llex.c,v 2.20.1.2 2009/11/23 14:58:22 roberto Exp $
+** $Id: llex.c,v 2.19 2006/02/06 18:28:16 roberto Exp $
 ** Lexical Analyzer
 ** See Copyright Notice in lua.h
 */
@@ -20,7 +20,6 @@
 #include "lparser.h"
 #include "lstate.h"
 #include "lstring.h"
-#include "ltable.h"
 #include "lzio.h"
 
 
@@ -34,14 +33,14 @@
 
 
 /* ORDER RESERVED */
-const char* const luaX_tokens [] = {
+const char *const luaX_tokens [] = {
     "and", "break", "do", "else", "elseif",
     "end", "false", "for", "function", "if",
     "in", "local", "nil", "not", "or", "repeat",
     "return", "then", "true", "until", "while",
     "..", "...", "==", ">=", "<=", "~=",
     "<number>", "<name>", "<string>", "<eof>",
-    nullptr
+    NULL
 };
 
 
@@ -75,7 +74,7 @@ void luaX_init (lua_State *L) {
 #define MAXSRC          80
 
 
-const char* luaX_token2str (LexState *ls, int token) {
+const char *luaX_token2str (LexState *ls, int token) {
   if (token < FIRST_RESERVED) {
     lua_assert(token == cast(unsigned char, token));
     return (iscntrl(token)) ? luaO_pushfstring(ls->L, "char(%d)", token) :
@@ -86,7 +85,7 @@ const char* luaX_token2str (LexState *ls, int token) {
 }
 
 
-static const char* txtToken (LexState *ls, int token) {
+static const char *txtToken (LexState *ls, int token) {
   switch (token) {
     case TK_NAME:
     case TK_STRING:
@@ -99,7 +98,7 @@ static const char* txtToken (LexState *ls, int token) {
 }
 
 
-void luaX_lexerror (LexState *ls, const char* msg, int token) {
+void luaX_lexerror (LexState *ls, const char *msg, int token) {
   char buff[MAXSRC];
   luaO_chunkid(buff, getstr(ls->source), MAXSRC);
   msg = luaO_pushfstring(ls->L, "%s:%d: %s", buff, ls->linenumber, msg);
@@ -109,19 +108,17 @@ void luaX_lexerror (LexState *ls, const char* msg, int token) {
 }
 
 
-void luaX_syntaxerror (LexState *ls, const char* msg) {
+void luaX_syntaxerror (LexState *ls, const char *msg) {
   luaX_lexerror(ls, msg, ls->t.token);
 }
 
 
-TString *luaX_newstring (LexState *ls, const char* str, size_t l) {
+TString *luaX_newstring (LexState *ls, const char *str, size_t l) {
   lua_State *L = ls->L;
   TString *ts = luaS_newlstr(L, str, l);
   TValue *o = luaH_setstr(L, ls->fs->h, ts);  /* entry for `str' */
-  if (ttisnil(o)) {
+  if (ttisnil(o))
     setbvalue(o, 1);  /* make sure `str' will not be collected */
-    luaC_checkGC(L);
-  }
   return ts;
 }
 
@@ -142,12 +139,12 @@ void luaX_setinput (lua_State *L, LexState *ls, ZIO *z, TString *source) {
   ls->L = L;
   ls->lookahead.token = TK_EOS;  /* no look-ahead token */
   ls->z = z;
-  ls->fs = nullptr;
+  ls->fs = NULL;
   ls->linenumber = 1;
   ls->lastline = 1;
   ls->source = source;
   luaZ_resizebuffer(ls->L, ls->buff, LUA_MINBUFFER);  /* initialize buffer */
-  next(ls);  /* read first character */
+  next(ls);  /* read first char */
 }
 
 
@@ -160,7 +157,7 @@ void luaX_setinput (lua_State *L, LexState *ls, ZIO *z, TString *source) {
 
 
 
-static int check_next (LexState *ls, const char* set) {
+static int check_next (LexState *ls, const char *set) {
   if (!strchr(set, ls->current))
     return 0;
   save_and_next(ls);
@@ -170,7 +167,7 @@ static int check_next (LexState *ls, const char* set) {
 
 static void buffreplace (LexState *ls, char from, char to) {
   size_t n = luaZ_bufflen(ls->buff);
-  char* p = luaZ_buffer(ls->buff);
+  char *p = luaZ_buffer(ls->buff);
   while (n--)
     if (p[n] == from) p[n] = to;
 }
@@ -178,15 +175,9 @@ static void buffreplace (LexState *ls, char from, char to) {
 
 static void trydecpoint (LexState *ls, SemInfo *seminfo) {
   /* format error: try to update decimal point separator */
-#ifndef ANDROID
   struct lconv *cv = localeconv();
-#endif
   char old = ls->decpoint;
-  ls->decpoint = (
-#ifndef ANDROID
-    cv ? cv->decimal_point[0] :
-#endif
-    '.');
+  ls->decpoint = (cv ? cv->decimal_point[0] : '.');
   buffreplace(ls, old, ls->decpoint);  /* try updated decimal separator */
   if (!luaO_str2d(luaZ_buffer(ls->buff), &seminfo->r)) {
     /* format error with correct decimal point: no more options */
@@ -355,7 +346,7 @@ static int llex (LexState *ls, SemInfo *seminfo) {
           int sep = skip_sep(ls);
           luaZ_resetbuffer(ls->buff);  /* `skip_sep' may dirty the buffer */
           if (sep >= 0) {
-            read_long_string(ls, nullptr, sep);  /* long comment */
+            read_long_string(ls, NULL, sep);  /* long comment */
             luaZ_resetbuffer(ls->buff);
             continue;
           }

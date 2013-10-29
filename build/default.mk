@@ -9,36 +9,36 @@ else
 LUA_CFLAGS               ?= -Isrc/libs/lua
 LUA_LIBS                  =
 LUA_SRCS                  = \
-	libs/lua/lapi.cpp \
-	libs/lua/lauxlib.cpp \
-	libs/lua/lbaselib.cpp \
-	libs/lua/lcode.cpp \
-	libs/lua/ldblib.cpp \
-	libs/lua/ldebug.cpp \
-	libs/lua/ldo.cpp \
-	libs/lua/ldump.cpp \
-	libs/lua/lfunc.cpp \
-	libs/lua/lgc.cpp \
-	libs/lua/linit.cpp \
-	libs/lua/liolib.cpp \
-	libs/lua/llex.cpp \
-	libs/lua/lmathlib.cpp \
-	libs/lua/lmem.cpp \
-	libs/lua/loadlib.cpp \
-	libs/lua/lobject.cpp \
-	libs/lua/lopcodes.cpp \
-	libs/lua/loslib.cpp \
-	libs/lua/lparser.cpp \
-	libs/lua/lstate.cpp \
-	libs/lua/lstring.cpp \
-	libs/lua/lstrlib.cpp \
-	libs/lua/ltable.cpp \
-	libs/lua/ltablib.cpp \
-	libs/lua/ltm.cpp \
-	libs/lua/lundump.cpp \
-	libs/lua/lvm.cpp \
-	libs/lua/lzio.cpp \
-	libs/lua/print.cpp
+	libs/lua/lapi.c \
+	libs/lua/lauxlib.c \
+	libs/lua/lbaselib.c \
+	libs/lua/lcode.c \
+	libs/lua/ldblib.c \
+	libs/lua/ldebug.c \
+	libs/lua/ldo.c \
+	libs/lua/ldump.c \
+	libs/lua/lfunc.c \
+	libs/lua/lgc.c \
+	libs/lua/linit.c \
+	libs/lua/liolib.c \
+	libs/lua/llex.c \
+	libs/lua/lmathlib.c \
+	libs/lua/lmem.c \
+	libs/lua/loadlib.c \
+	libs/lua/lobject.c \
+	libs/lua/lopcodes.c \
+	libs/lua/loslib.c \
+	libs/lua/lparser.c \
+	libs/lua/lstate.c \
+	libs/lua/lstring.c \
+	libs/lua/lstrlib.c \
+	libs/lua/ltable.c \
+	libs/lua/ltablib.c \
+	libs/lua/ltm.c \
+	libs/lua/lundump.c \
+	libs/lua/lvm.c \
+	libs/lua/lzio.c \
+	libs/lua/print.c
 endif
 ifdef HAVE_LIBPNG_PNG_H
 PNG_LIBS                 ?= -lpng

@@ -1,5 +1,5 @@
 /*
-** $Id: lgc.c,v 2.38.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lgc.c,v 2.37 2005/12/22 16:19:56 roberto Exp $
 ** Garbage Collector
 ** See Copyright Notice in lua.h
 */
@@ -130,10 +130,10 @@ size_t luaC_separateudata (lua_State *L, int all) {
   size_t deadmem = 0;
   GCObject **p = &g->mainthread->next;
   GCObject *curr;
-  while ((curr = *p) != nullptr) {
+  while ((curr = *p) != NULL) {
     if (!(iswhite(curr) || all) || isfinalized(gco2u(curr)))
       p = &curr->gch.next;  /* don't bother with them */
-    else if (fasttm(L, gco2u(curr)->metatable, TM_GC) == nullptr) {
+    else if (fasttm(L, gco2u(curr)->metatable, TM_GC) == NULL) {
       markfinalized(gco2u(curr));  /* don't need finalization */
       p = &curr->gch.next;
     }
@@ -142,7 +142,7 @@ size_t luaC_separateudata (lua_State *L, int all) {
       markfinalized(gco2u(curr));
       *p = curr->gch.next;
       /* link `curr' at the end of `tmudata' list */
-      if (g->tmudata == nullptr)  /* list is empty? */
+      if (g->tmudata == NULL)  /* list is empty? */
         g->tmudata = curr->gch.next = curr;  /* creates a circular list */
       else {
         curr->gch.next = g->tmudata->gch.next;
@@ -164,8 +164,8 @@ static int traversetable (global_State *g, Table *h) {
     markobject(g, h->metatable);
   mode = gfasttm(g, h->metatable, TM_MODE);
   if (mode && ttisstring(mode)) {  /* is there a weak mode? */
-    weakkey = (strchr(svalue(mode), 'k') != nullptr);
-    weakvalue = (strchr(svalue(mode), 'v') != nullptr);
+    weakkey = (strchr(svalue(mode), 'k') != NULL);
+    weakvalue = (strchr(svalue(mode), 'v') != NULL);
     if (weakkey || weakvalue) {  /* is really weak? */
       h->marked &= ~(KEYWEAK | VALUEWEAK);  /* clear bits */
       h->marked |= cast_byte((weakkey << KEYWEAKBIT) |
@@ -320,10 +320,8 @@ static l_mem propagatemark (global_State *g) {
 }
 
 
-static size_t propagateall (global_State *g) {
-  size_t m = 0;
-  while (g->gray) m += propagatemark(g);
-  return m;
+static void propagateall (global_State *g) {
+  while (g->gray) propagatemark(g);
 }
 
 
@@ -408,7 +406,7 @@ static GCObject **sweeplist (lua_State *L, GCObject **p, lu_mem count) {
   GCObject *curr;
   global_State *g = G(L);
   int deadmask = otherwhite(g);
-  while ((curr = *p) != nullptr && count-- > 0) {
+  while ((curr = *p) != NULL && count-- > 0) {
     if (curr->gch.tt == LUA_TTHREAD)  /* sweep open upvalues of each thread */
       sweepwholelist(L, &gco2th(curr)->openupval);
     if ((curr->gch.marked ^ WHITEBITS) & deadmask) {  /* not dead? */
@@ -449,14 +447,14 @@ static void GCTM (lua_State *L) {
   const TValue *tm;
   /* remove udata from `tmudata' */
   if (o == g->tmudata)  /* last element? */
-    g->tmudata = nullptr;
+    g->tmudata = NULL;
   else
     g->tmudata->gch.next = udata->uv.next;
   udata->uv.next = g->mainthread->next;  /* return it to `root' list */
   g->mainthread->next = o;
   makewhite(g, o);
   tm = fasttm(L, udata->uv.metatable, TM_GC);
-  if (tm != nullptr) {
+  if (tm != NULL) {
     lu_byte oldah = L->allowhook;
     lu_mem oldt = g->GCthreshold;
     L->allowhook = 0;  /* stop debug hooks during GC tag method */
@@ -500,9 +498,9 @@ static void markmt (global_State *g) {
 /* mark root set */
 static void markroot (lua_State *L) {
   global_State *g = G(L);
-  g->gray = nullptr;
-  g->grayagain = nullptr;
-  g->weak = nullptr;
+  g->gray = NULL;
+  g->grayagain = NULL;
+  g->weak = NULL;
   markobject(g, g->mainthread);
   /* make global table be traversed before main stack */
   markvalue(g, gt(g->mainthread));
@@ -531,18 +529,18 @@ static void atomic (lua_State *L) {
   propagateall(g);
   /* remark weak tables */
   g->gray = g->weak;
-  g->weak = nullptr;
+  g->weak = NULL;
   lua_assert(!iswhite(obj2gco(g->mainthread)));
   markobject(g, L);  /* mark running thread */
   markmt(g);  /* mark basic metatables (again) */
   propagateall(g);
   /* remark gray again */
   g->gray = g->grayagain;
-  g->grayagain = nullptr;
+  g->grayagain = NULL;
   propagateall(g);
   udsize = luaC_separateudata(L, 0);  /* separate userdata to be finalized */
   marktmu(g);  /* mark `preserved' userdata */
-  udsize += propagateall(g);  /* remark, to propagate `preserveness' */
+  propagateall(g);  /* remark, to propagate `preserveness' */
   cleartable(g->weak);  /* remove collected objects from weak tables */
   /* flip current white */
   g->currentwhite = cast_byte(otherwhite(g));
@@ -581,7 +579,7 @@ static l_mem singlestep (lua_State *L) {
     case GCSsweep: {
       lu_mem old = g->totalbytes;
       g->sweepgc = sweeplist(L, g->sweepgc, GCSWEEPMAX);
-      if (*g->sweepgc == nullptr) {  /* nothing more to sweep? */
+      if (*g->sweepgc == NULL) {  /* nothing more to sweep? */
         checkSizes(L);
         g->gcstate = GCSfinalize;  /* end sweep phase */
       }
@@ -592,8 +590,6 @@ static l_mem singlestep (lua_State *L) {
     case GCSfinalize: {
       if (g->tmudata) {
         GCTM(L);
-        if (g->estimate > GCFINALIZECOST)
-          g->estimate -= GCFINALIZECOST;
         return GCFINALIZECOST;
       }
       else {
@@ -640,9 +636,9 @@ void luaC_fullgc (lua_State *L) {
     g->sweepstrgc = 0;
     g->sweepgc = &g->rootgc;
     /* reset other collector lists */
-    g->gray = nullptr;
-    g->grayagain = nullptr;
-    g->weak = nullptr;
+    g->gray = NULL;
+    g->grayagain = NULL;
+    g->weak = NULL;
     g->gcstate = GCSsweepstring;
   }
   lua_assert(g->gcstate != GCSpause && g->gcstate != GCSpropagate);

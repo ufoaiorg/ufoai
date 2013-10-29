@@ -1,5 +1,5 @@
 /*
-** $Id: lvm.c,v 2.63.1.4 2009/07/01 21:10:33 roberto Exp $
+** $Id: lvm.c,v 2.62 2006/01/23 19:51:43 roberto Exp $
 ** Lua virtual machine
 ** See Copyright Notice in lua.h
 */
@@ -40,7 +40,7 @@ const TValue *luaV_tonumber (const TValue *obj, TValue *n) {
     return n;
   }
   else
-    return nullptr;
+    return NULL;
 }
 
 
@@ -61,9 +61,11 @@ static void traceexec (lua_State *L, const Instruction *pc) {
   lu_byte mask = L->hookmask;
   const Instruction *oldpc = L->savedpc;
   L->savedpc = pc;
-  if ((mask & LUA_MASKCOUNT) && L->hookcount == 0) {
-    resethookcount(L);
-    luaD_callhook(L, LUA_HOOKCOUNT, -1);
+  if (mask > LUA_MASKLINE) {  /* instruction-hook set? */
+    if (L->hookcount == 0) {
+      resethookcount(L);
+      luaD_callhook(L, LUA_HOOKCOUNT, -1);
+    }
   }
   if (mask & LUA_MASKLINE) {
     Proto *p = ci_func(L->ci)->l.p;
@@ -113,7 +115,7 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       Table *h = hvalue(t);
       const TValue *res = luaH_get(h, key); /* do a primitive get */
       if (!ttisnil(res) ||  /* result is no nil? */
-          (tm = fasttm(L, h->metatable, TM_INDEX)) == nullptr) { /* or no TM? */
+          (tm = fasttm(L, h->metatable, TM_INDEX)) == NULL) { /* or no TM? */
         setobj2s(L, val, res);
         return;
       }
@@ -133,14 +135,13 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
 
 void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
   int loop;
-  TValue temp;
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
     const TValue *tm;
     if (ttistable(t)) {  /* `t' is a table? */
       Table *h = hvalue(t);
       TValue *oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
-          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == nullptr) { /* or no TM? */
+          (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
         setobj2t(L, oldval, val);
         luaC_barriert(L, h, val);
         return;
@@ -153,10 +154,7 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       callTM(L, tm, t, key, val);
       return;
     }
-    /* else repeat with `tm' */
-    setobj(L, &temp, tm);  /* avoid pointing inside table (may rehash) */
-    t = &temp;
-    t = tm;
+    t = tm;  /* else repeat with `tm' */
   }
   luaG_runerror(L, "loop in settable");
 }
@@ -167,7 +165,7 @@ static int call_binTM (lua_State *L, const TValue *p1, const TValue *p2,
   const TValue *tm = luaT_gettmbyobj(L, p1, event);  /* try first operand */
   if (ttisnil(tm))
     tm = luaT_gettmbyobj(L, p2, event);  /* try second operand */
-  if (ttisnil(tm)) return 0;
+  if (!ttisfunction(tm)) return 0;
   callTMres(L, res, tm, p1, p2);
   return 1;
 }
@@ -177,13 +175,13 @@ static const TValue *get_compTM (lua_State *L, Table *mt1, Table *mt2,
                                   TMS event) {
   const TValue *tm1 = fasttm(L, mt1, event);
   const TValue *tm2;
-  if (tm1 == nullptr) return nullptr;  /* no metamethod */
+  if (tm1 == NULL) return NULL;  /* no metamethod */
   if (mt1 == mt2) return tm1;  /* same metatables => same metamethods */
   tm2 = fasttm(L, mt2, event);
-  if (tm2 == nullptr) return nullptr;  /* no metamethod */
+  if (tm2 == NULL) return NULL;  /* no metamethod */
   if (luaO_rawequalObj(tm1, tm2))  /* same metamethods? */
     return tm1;
-  return nullptr;
+  return NULL;
 }
 
 
@@ -201,9 +199,9 @@ static int call_orderTM (lua_State *L, const TValue *p1, const TValue *p2,
 
 
 static int l_strcmp (const TString *ls, const TString *rs) {
-  const char* l = getstr(ls);
+  const char *l = getstr(ls);
   size_t ll = ls->tsv.len;
-  const char* r = getstr(rs);
+  const char *r = getstr(rs);
   size_t lr = rs->tsv.len;
   for (;;) {
     int temp = strcoll(l, r);
@@ -273,7 +271,7 @@ int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
     }
     default: return gcvalue(t1) == gcvalue(t2);
   }
-  if (tm == nullptr) return 0;  /* no TM? */
+  if (tm == NULL) return 0;  /* no TM? */
   callTMres(L, L->top, tm, t1, t2);  /* call TM */
   return !l_isfalse(L->top);
 }
@@ -283,15 +281,13 @@ void luaV_concat (lua_State *L, int total, int last) {
   do {
     StkId top = L->base + last + 1;
     int n = 2;  /* number of elements handled in this pass (at least 2) */
-    if (!(ttisstring(top-2) || ttisnumber(top-2)) || !tostring(L, top-1)) {
+    if (!tostring(L, top-2) || !tostring(L, top-1)) {
       if (!call_binTM(L, top-2, top-1, top-2, TM_CONCAT))
         luaG_concaterror(L, top-2, top-1);
-    } else if (tsvalue(top-1)->len == 0)  /* second op is empty? */
-      (void)tostring(L, top - 2);  /* result is first op (as string) */
-    else {
+    } else if (tsvalue(top-1)->len > 0) {  /* if len=0, do nothing */
       /* at least two string values; get as many as possible */
       size_t tl = tsvalue(top-1)->len;
-      char* buffer;
+      char *buffer;
       int i;
       /* collect total length */
       for (n = 1; n < total && tostring(L, top-n-1); n++) {
@@ -318,8 +314,8 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
                    const TValue *rc, TMS op) {
   TValue tempb, tempc;
   const TValue *b, *c;
-  if ((b = luaV_tonumber(rb, &tempb)) != nullptr &&
-      (c = luaV_tonumber(rc, &tempc)) != nullptr) {
+  if ((b = luaV_tonumber(rb, &tempb)) != NULL &&
+      (c = luaV_tonumber(rc, &tempc)) != NULL) {
     lua_Number nb = nvalue(b), nc = nvalue(c);
     switch (op) {
       case TM_ADD: setnvalue(ra, luai_numadd(nb, nc)); break;
@@ -380,7 +376,6 @@ void luaV_execute (lua_State *L, int nexeccalls) {
   TValue *k;
   const Instruction *pc;
  reentry:  /* entry point */
-  lua_assert(isLua(L->ci));
   pc = L->savedpc;
   cl = &clvalue(L->ci->func)->l;
   base = L->base;

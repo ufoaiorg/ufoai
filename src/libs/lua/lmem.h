@@ -1,5 +1,5 @@
 /*
-** $Id: lmem.h,v 1.31.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lmem.h,v 1.31 2005/04/25 19:24:10 roberto Exp $
 ** Interface to Memory Manager
 ** See Copyright Notice in lua.h
 */
@@ -25,10 +25,10 @@
 #define luaM_free(L, b)		luaM_realloc_(L, (b), sizeof(*(b)), 0)
 #define luaM_freearray(L, b, n, t)   luaM_reallocv(L, (b), n, 0, sizeof(t))
 
-#define luaM_malloc(L,t)	luaM_realloc_(L, nullptr, 0, (t))
+#define luaM_malloc(L,t)	luaM_realloc_(L, NULL, 0, (t))
 #define luaM_new(L,t)		cast(t *, luaM_malloc(L, sizeof(t)))
 #define luaM_newvector(L,n,t) \
-		cast(t *, luaM_reallocv(L, nullptr, 0, n, sizeof(t)))
+		cast(t *, luaM_reallocv(L, NULL, 0, n, sizeof(t)))
 
 #define luaM_growvector(L,v,nelems,size,t,limit,e) \
           if ((nelems)+1 > (size)) \
@@ -38,11 +38,11 @@
    ((v)=cast(t *, luaM_reallocv(L, v, oldn, n, sizeof(t))))
 
 
-LUAI_FUNC void* luaM_realloc_ (lua_State *L, void* block, size_t oldsize,
+LUAI_FUNC void *luaM_realloc_ (lua_State *L, void *block, size_t oldsize,
                                                           size_t size);
-LUAI_FUNC void* luaM_toobig (lua_State *L);
-LUAI_FUNC void* luaM_growaux_ (lua_State *L, void* block, int* size,
+LUAI_FUNC void *luaM_toobig (lua_State *L);
+LUAI_FUNC void *luaM_growaux_ (lua_State *L, void *block, int *size,
                                size_t size_elem, int limit,
-                               const char* errormsg);
+                               const char *errormsg);
 
 #endif

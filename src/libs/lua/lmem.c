@@ -1,5 +1,5 @@
 /*
-** $Id: lmem.c,v 1.70.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lmem.c,v 1.70 2005/12/26 13:35:47 roberto Exp $
 ** Interface to Memory Manager
 ** See Copyright Notice in lua.h
 */
@@ -22,19 +22,19 @@
 
 /*
 ** About the realloc function:
-** void*  frealloc (void* ud, void* ptr, size_t osize, size_t nsize);
+** void * frealloc (void *ud, void *ptr, size_t osize, size_t nsize);
 ** (`osize' is the old size, `nsize' is the new size)
 **
-** Lua ensures that (ptr == nullptr) iff (osize == 0).
+** Lua ensures that (ptr == NULL) iff (osize == 0).
 **
-** * frealloc(ud, nullptr, 0, x) creates a new block of size `x'
+** * frealloc(ud, NULL, 0, x) creates a new block of size `x'
 **
 ** * frealloc(ud, p, x, 0) frees the block `p'
-** (in this specific case, frealloc must return nullptr).
-** particularly, frealloc(ud, nullptr, 0, 0) does nothing
-** (which is equivalent to free(nullptr) in ANSI C)
+** (in this specific case, frealloc must return NULL).
+** particularly, frealloc(ud, NULL, 0, 0) does nothing
+** (which is equivalent to free(NULL) in ANSI C)
 **
-** frealloc returns nullptr if it cannot create or reallocate the area
+** frealloc returns NULL if it cannot create or reallocate the area
 ** (any reallocation to an equal or smaller size cannot fail!)
 */
 
@@ -43,9 +43,9 @@
 #define MINSIZEARRAY	4
 
 
-void* luaM_growaux_ (lua_State *L, void* block, int* size, size_t size_elems,
-                     int limit, const char* errormsg) {
-  void* newblock;
+void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems,
+                     int limit, const char *errormsg) {
+  void *newblock;
   int newsize;
   if (*size >= limit/2) {  /* cannot double it? */
     if (*size >= limit)  /* cannot grow even a little? */
@@ -63,9 +63,9 @@ void* luaM_growaux_ (lua_State *L, void* block, int* size, size_t size_elems,
 }
 
 
-void* luaM_toobig (lua_State *L) {
+void *luaM_toobig (lua_State *L) {
   luaG_runerror(L, "memory allocation error: block too big");
-  return nullptr;  /* to avoid warnings */
+  return NULL;  /* to avoid warnings */
 }
 
 
@@ -73,13 +73,13 @@ void* luaM_toobig (lua_State *L) {
 /*
 ** generic allocation routine.
 */
-void* luaM_realloc_ (lua_State *L, void* block, size_t osize, size_t nsize) {
+void *luaM_realloc_ (lua_State *L, void *block, size_t osize, size_t nsize) {
   global_State *g = G(L);
-  lua_assert((osize == 0) == (block == nullptr));
+  lua_assert((osize == 0) == (block == NULL));
   block = (*g->frealloc)(g->ud, block, osize, nsize);
-  if (block == nullptr && nsize > 0)
+  if (block == NULL && nsize > 0)
     luaD_throw(L, LUA_ERRMEM);
-  lua_assert((nsize == 0) == (block == nullptr));
+  lua_assert((nsize == 0) == (block == NULL));
   g->totalbytes = (g->totalbytes - osize) + nsize;
   return block;
 }

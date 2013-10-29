@@ -1,5 +1,5 @@
 /*
-** $Id: ldump.c,v 2.8.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: ldump.c,v 1.15 2006/02/16 15:53:49 lhf Exp $
 ** save precompiled Lua chunks
 ** See Copyright Notice in lua.h
 */
@@ -15,7 +15,7 @@
 #include "lstate.h"
 #include "lundump.h"
 
-typedef struct DumpState_s {
+typedef struct {
  lua_State* L;
  lua_Writer writer;
  void* data;
@@ -60,7 +60,7 @@ static void DumpVector(const void* b, int n, size_t size, DumpState* D)
 
 static void DumpString(const TString* s, DumpState* D)
 {
- if (s==nullptr || getstr(s)==nullptr)
+ if (s==NULL || getstr(s)==NULL)
  {
   size_t size=0;
   DumpVar(size,D);
@@ -128,7 +128,7 @@ static void DumpDebug(const Proto* f, DumpState* D)
 
 static void DumpFunction(const Proto* f, const TString* p, DumpState* D)
 {
- DumpString((f->source==p || D->strip) ? nullptr : f->source,D);
+ DumpString((f->source==p || D->strip) ? NULL : f->source,D);
  DumpInt(f->linedefined,D);
  DumpInt(f->lastlinedefined,D);
  DumpChar(f->nups,D);
@@ -159,6 +159,6 @@ int luaU_dump (lua_State* L, const Proto* f, lua_Writer w, void* data, int strip
  D.strip=strip;
  D.status=0;
  DumpHeader(&D);
- DumpFunction(f,nullptr,&D);
+ DumpFunction(f,NULL,&D);
  return D.status;
 }

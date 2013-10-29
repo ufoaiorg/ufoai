@@ -1,5 +1,5 @@
 /*
-** $Id: luaconf.h,v 1.82.1.7 2008/02/11 16:25:08 roberto Exp $
+** $Id: luaconf.h,v 1.81 2006/02/10 17:44:06 roberto Exp $
 ** Configuration file for Lua
 ** See Copyright Notice in lua.h
 */
@@ -10,8 +10,6 @@
 
 #include <limits.h>
 #include <stddef.h>
-
-#include "../../shared/cxx.h"
 
 
 /*
@@ -59,18 +57,6 @@
 #define LUA_USE_POPEN
 #define LUA_USE_ULONGJMP
 #endif
-
-
-/*
-@@ LUA_PATH and LUA_CPATH are the names of the environment variables that
-@* Lua check to set its paths.
-@@ LUA_INIT is the name of the environment variable that Lua
-@* checks for initialization code.
-** CHANGE them if you want different names.
-*/
-#define LUA_PATH        "LUA_PATH"
-#define LUA_CPATH       "LUA_CPATH"
-#define LUA_INIT	"LUA_INIT"
 
 
 /*
@@ -184,7 +170,8 @@
 #define LUAI_FUNC	static
 #define LUAI_DATA	/* empty */
 
-#elif GCC_ATLEAST(3, 2) && defined __ELF__
+#elif defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
+      defined(__ELF__)
 #define LUAI_FUNC	__attribute__((visibility("hidden"))) extern
 #define LUAI_DATA	LUAI_FUNC
 
@@ -275,7 +262,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != nullptr)
+#define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
 #define lua_saveline(L,idx) \
 	if (lua_strlen(L,idx) > 0)  /* non-empty line? */ \
 	  add_history(lua_tostring(L, idx));  /* add it to history */
@@ -283,7 +270,7 @@
 #else
 #define lua_readline(L,b,p)	\
 	((void)L, fputs(p, stdout), fflush(stdout),  /* show prompt */ \
-	fgets(b, LUA_MAXINPUT, stdin) != nullptr)  /* get line */
+	fgets(b, LUA_MAXINPUT, stdin) != NULL)  /* get line */
 #define lua_saveline(L,idx)	{ (void)L; (void)idx; }
 #define lua_freeline(L,b)	{ (void)L; (void)b; }
 #endif
@@ -361,7 +348,7 @@
 /*
 @@ LUA_COMPAT_OPENLIB controls compatibility with old 'luaL_openlib'
 @* behavior.
-** CHANGE it to undefined as soon as you replace to 'luaL_register'
+** CHANGE it to undefined as soon as you replace to 'luaL_registry'
 ** your uses of 'luaL_openlib'
 */
 #define LUA_COMPAT_OPENLIB
@@ -441,10 +428,9 @@
 @* can use.
 ** CHANGE it if you need lots of (Lua) stack space for your C
 ** functions. This limit is arbitrary; its only purpose is to stop C
-** functions to consume unlimited stack space. (must be smaller than
-** -LUA_REGISTRYINDEX)
+** functions to consume unlimited stack space.
 */
-#define LUAI_MAXCSTACK	8000
+#define LUAI_MAXCSTACK	2048
 
 
 
@@ -557,24 +543,10 @@
 /* On a Pentium, resort to a trick */
 #if defined(LUA_NUMBER_DOUBLE) && !defined(LUA_ANSI) && !defined(__SSE2__) && \
     (defined(__i386) || defined (_M_IX86) || defined(__i386__))
-
-/* On a Microsoft compiler, use assembler */
-#if defined(_MSC_VER)
-
-#define lua_number2int(i,d)   __asm fld d   __asm fistp i
-#define lua_number2integer(i,n)		lua_number2int(i, n)
-
-/* the next trick should work on any Pentium, but sometimes clashes
-   with a DirectX idiosyncrasy */
-#else
-
 union luai_Cast { double l_d; long l_l; };
 #define lua_number2int(i,d) \
   { volatile union luai_Cast u; u.l_d = (d) + 6755399441055744.0; (i) = u.l_l; }
 #define lua_number2integer(i,n)		lua_number2int(i, n)
-
-#endif
-
 
 /* this option always works, but may be slow */
 #else
@@ -593,7 +565,7 @@ union luai_Cast { double l_d; long l_l; };
 ** aligned in 16-byte boundaries, then you should add long double in the
 ** union.) Probably you do not need to change this.
 */
-#define LUAI_USER_ALIGNMENT_T	union { double u; void* s; long l; }
+#define LUAI_USER_ALIGNMENT_T	union { double u; void *s; long l; }
 
 
 /*
@@ -655,7 +627,7 @@ union luai_Cast { double l_d; long l_l; };
 
 #else
 #define LUA_TMPNAMBUFSIZE	L_tmpnam
-#define lua_tmpnam(b,e)		{ e = (tmpnam(b) == nullptr); }
+#define lua_tmpnam(b,e)		{ e = (tmpnam(b) == NULL); }
 #endif
 
 #endif
@@ -668,7 +640,7 @@ union luai_Cast { double l_d; long l_l; };
 */
 #if defined(LUA_USE_POPEN)
 
-#define lua_popen(L,c,m)	((void)L, fflush(nullptr), popen(c,m))
+#define lua_popen(L,c,m)	((void)L, popen(c,m))
 #define lua_pclose(L,file)	((void)L, (pclose(file) != -1))
 
 #elif defined(LUA_WIN)

@@ -1,5 +1,5 @@
 /*
-** $Id: lparser.c,v 2.42.1.3 2007/12/28 15:32:23 roberto Exp $
+** $Id: lparser.c,v 2.40 2005/12/22 16:19:56 roberto Exp $
 ** Lua Parser
 ** See Copyright Notice in lua.h
 */
@@ -23,7 +23,7 @@
 #include "lparser.h"
 #include "lstate.h"
 #include "lstring.h"
-#include "ltable.h"
+
 
 
 
@@ -68,8 +68,8 @@ static void error_expected (LexState *ls, int token) {
 }
 
 
-static void errorlimit (FuncState *fs, int limit, const char* what) {
-  const char* msg = (fs->f->linedefined == 0) ?
+static void errorlimit (FuncState *fs, int limit, const char *what) {
+  const char *msg = (fs->f->linedefined == 0) ?
     luaO_pushfstring(fs->L, "main function has more than %d %s", limit, what) :
     luaO_pushfstring(fs->L, "function at line %d has more than %d %s",
                             fs->f->linedefined, limit, what);
@@ -146,7 +146,7 @@ static int registerlocalvar (LexState *ls, TString *varname) {
   int oldsize = f->sizelocvars;
   luaM_growvector(ls->L, f->locvars, fs->nlocvars, f->sizelocvars,
                   LocVar, SHRT_MAX, "too many local variables");
-  while (oldsize < f->sizelocvars) f->locvars[oldsize++].varname = nullptr;
+  while (oldsize < f->sizelocvars) f->locvars[oldsize++].varname = NULL;
   f->locvars[fs->nlocvars].varname = varname;
   luaC_objbarrier(ls->L, f, varname);
   return fs->nlocvars++;
@@ -194,7 +194,7 @@ static int indexupvalue (FuncState *fs, TString *name, expdesc *v) {
   luaY_checklimit(fs, f->nups + 1, LUAI_MAXUPVALUES, "upvalues");
   luaM_growvector(fs->L, f->upvalues, f->nups, f->sizeupvalues,
                   TString *, MAX_INT, "");
-  while (oldsize < f->sizeupvalues) f->upvalues[oldsize++] = nullptr;
+  while (oldsize < f->sizeupvalues) f->upvalues[oldsize++] = NULL;
   f->upvalues[f->nups] = name;
   luaC_objbarrier(fs->L, f, name);
   lua_assert(v->k == VLOCAL || v->k == VUPVAL);
@@ -222,7 +222,7 @@ static void markupval (FuncState *fs, int level) {
 
 
 static int singlevaraux (FuncState *fs, TString *n, expdesc *var, int base) {
-  if (fs == nullptr) {  /* no more levels? */
+  if (fs == NULL) {  /* no more levels? */
     init_exp(var, VGLOBAL, NO_REG);  /* default is global variable */
     return VGLOBAL;
   }
@@ -299,8 +299,7 @@ static void leaveblock (FuncState *fs) {
   removevars(fs->ls, bl->nactvar);
   if (bl->upval)
     luaK_codeABC(fs, OP_CLOSE, bl->nactvar, 0, 0);
-  /* a block either controls scope or breaks (never both) */
-  lua_assert(!bl->isbreakable || !bl->upval);
+  lua_assert(!bl->isbreakable || !bl->upval);  /* loops have no body */
   lua_assert(bl->nactvar == fs->nactvar);
   fs->freereg = fs->nactvar;  /* free registers */
   luaK_patchtohere(fs, bl->breaklist);
@@ -314,7 +313,7 @@ static void pushclosure (LexState *ls, FuncState *func, expdesc *v) {
   int i;
   luaM_growvector(ls->L, f->p, fs->np, f->sizep, Proto *,
                   MAXARG_Bx, "constant table overflow");
-  while (oldsize < f->sizep) f->p[oldsize++] = nullptr;
+  while (oldsize < f->sizep) f->p[oldsize++] = NULL;
   f->p[fs->np++] = func->f;
   luaC_objbarrier(ls->L, f, func->f);
   init_exp(v, VRELOCABLE, luaK_codeABx(fs, OP_CLOSURE, 0, fs->np-1));
@@ -341,7 +340,7 @@ static void open_func (LexState *ls, FuncState *fs) {
   fs->np = 0;
   fs->nlocvars = 0;
   fs->nactvar = 0;
-  fs->bl = nullptr;
+  fs->bl = NULL;
   f->source = ls->source;
   f->maxstacksize = 2;  /* registers 0/1 are always valid */
   fs->h = luaH_new(L, 0, 0);
@@ -372,7 +371,7 @@ static void close_func (LexState *ls) {
   luaM_reallocvector(L, f->upvalues, f->sizeupvalues, f->nups, TString *);
   f->sizeupvalues = f->nups;
   lua_assert(luaG_checkcode(f));
-  lua_assert(fs->bl == nullptr);
+  lua_assert(fs->bl == NULL);
   ls->fs = fs->prev;
   L->top -= 2;  /* remove table and prototype from the stack */
   /* last token read was anchored in defunct function; must reanchor it */
@@ -380,7 +379,7 @@ static void close_func (LexState *ls) {
 }
 
 
-Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char* name) {
+Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char *name) {
   struct LexState lexstate;
   struct FuncState funcstate;
   lexstate.buff = buff;
@@ -391,9 +390,9 @@ Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char* name) {
   chunk(&lexstate);
   check(&lexstate, TK_EOS);
   close_func(&lexstate);
-  lua_assert(funcstate.prev == nullptr);
+  lua_assert(funcstate.prev == NULL);
   lua_assert(funcstate.f->nups == 0);
-  lua_assert(lexstate.fs == nullptr);
+  lua_assert(lexstate.fs == NULL);
   return funcstate.f;
 }
 
@@ -445,7 +444,6 @@ static void recfield (LexState *ls, struct ConsControl *cc) {
   FuncState *fs = ls->fs;
   int reg = ls->fs->freereg;
   expdesc key, val;
-  int rkkey;
   if (ls->t.token == TK_NAME) {
     luaY_checklimit(fs, cc->nh, MAX_INT, "items in a constructor");
     checkname(ls, &key);
@@ -454,9 +452,10 @@ static void recfield (LexState *ls, struct ConsControl *cc) {
     yindex(ls, &key);
   cc->nh++;
   checknext(ls, '=');
-  rkkey = luaK_exp2RK(fs, &key);
+  luaK_exp2RK(fs, &key);
   expr(ls, &val);
-  luaK_codeABC(fs, OP_SETTABLE, cc->t->u.s.info, rkkey, luaK_exp2RK(fs, &val));
+  luaK_codeABC(fs, OP_SETTABLE, cc->t->u.s.info, luaK_exp2RK(fs, &key),
+                                                 luaK_exp2RK(fs, &val));
   fs->freereg = reg;  /* free registers */
 }
 
@@ -489,7 +488,7 @@ static void lastlistfield (FuncState *fs, struct ConsControl *cc) {
 
 static void listfield (LexState *ls, struct ConsControl *cc) {
   expr(ls, &cc->v);
-  luaY_checklimit(ls->fs, cc->na, MAX_INT, "items in a constructor");
+  luaY_checklimit(ls->fs, cc->na, MAXARG_Bx, "items in a constructor");
   cc->na++;
   cc->tostore++;
 }
@@ -938,8 +937,6 @@ static void assignment (LexState *ls, struct LHS_assign *lh, int nvars) {
     primaryexp(ls, &nv.v);
     if (nv.v.k == VLOCAL)
       check_conflict(ls, lh, &nv.v);
-    luaY_checklimit(ls->fs, nvars, LUAI_MAXCCALLS - ls->L->nCcalls,
-                    "variables in assignment");
     assignment(ls, &nv, nvars+1);
   }
   else {  /* assignment -> `=' explist1 */
@@ -1229,7 +1226,7 @@ static void exprstat (LexState *ls) {
   if (v.v.k == VCALL)  /* stat -> func */
     SETARG_C(getcode(fs, &v.v), 1);  /* call statement uses no results */
   else {  /* stat -> assignment */
-    v.prev = nullptr;
+    v.prev = NULL;
     assignment(ls, &v, 1);
   }
 }

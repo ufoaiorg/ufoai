@@ -1,5 +1,5 @@
 /*
-** $Id: lopcodes.c,v 1.37.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lopcodes.c,v 1.37 2005/11/08 19:45:36 roberto Exp $
 ** See Copyright Notice in lua.h
 */
 
@@ -13,7 +13,7 @@
 
 /* ORDER OP */
 
-const char* const luaP_opnames[NUM_OPCODES+1] = {
+const char *const luaP_opnames[NUM_OPCODES+1] = {
   "MOVE",
   "LOADK",
   "LOADBOOL",
@@ -52,7 +52,7 @@ const char* const luaP_opnames[NUM_OPCODES+1] = {
   "CLOSE",
   "CLOSURE",
   "VARARG",
-  nullptr
+  NULL
 };
 
 

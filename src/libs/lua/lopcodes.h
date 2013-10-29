@@ -1,5 +1,5 @@
 /*
-** $Id: lopcodes.h,v 1.125.1.1 2007/12/27 13:02:25 roberto Exp $
+** $Id: lopcodes.h,v 1.124 2005/12/02 18:42:08 roberto Exp $
 ** Opcodes for Lua virtual machine
 ** See Copyright Notice in lua.h
 */
@@ -197,8 +197,8 @@ OP_FORLOOP,/*	A sBx	R(A)+=R(A+2);
 			if R(A) <?= R(A+1) then { pc+=sBx; R(A+3)=R(A) }*/
 OP_FORPREP,/*	A sBx	R(A)-=R(A+2); pc+=sBx				*/
 
-OP_TFORLOOP,/*	A C	R(A+3), ... ,R(A+2+C) := R(A)(R(A+1), R(A+2));
-                        if R(A+3) ~= nil then R(A+2)=R(A+3) else pc++	*/
+OP_TFORLOOP,/*	A C	R(A+3), ... ,R(A+3+C) := R(A)(R(A+1), R(A+2));
+                        if R(A+3) ~= nil then { pc++; R(A+2)=R(A+3); }	*/
 OP_SETLIST,/*	A B C	R(A)[(C-1)*FPF+i] := R(A+i), 1 <= i <= B	*/
 
 OP_CLOSE,/*	A 	close all variables in the stack up to (>=) R(A)*/
@@ -258,7 +258,7 @@ LUAI_DATA const lu_byte luaP_opmodes[NUM_OPCODES];
 #define testTMode(m)	(luaP_opmodes[m] & (1 << 7))
 
 
-LUAI_DATA const char* const luaP_opnames[NUM_OPCODES+1];  /* opcode names */
+LUAI_DATA const char *const luaP_opnames[NUM_OPCODES+1];  /* opcode names */
 
 
 /* number of list items to accumulate before a SETLIST instruction */

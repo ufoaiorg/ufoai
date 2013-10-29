@@ -1,5 +1,5 @@
 /*
-** $Id: lobject.h,v 2.20.1.2 2008/08/06 13:29:48 roberto Exp $
+** $Id: lobject.h,v 2.20 2006/01/18 11:37:34 roberto Exp $
 ** Type definitions for Lua objects
 ** See Copyright Notice in lua.h
 */
@@ -58,7 +58,7 @@ typedef struct GCheader {
 */
 typedef union {
   GCObject *gc;
-  void* p;
+  void *p;
   lua_Number n;
   int b;
 } Value;
@@ -207,8 +207,8 @@ typedef union TString {
 } TString;
 
 
-#define getstr(ts)	cast(const char* , (ts) + 1)
-#define svalue(o)       getstr(rawtsvalue(o))
+#define getstr(ts)	cast(const char *, (ts) + 1)
+#define svalue(o)       getstr(tsvalue(o))
 
 
 
@@ -233,7 +233,7 @@ typedef struct Proto {
   TValue *k;  /* constants used by the function */
   Instruction *code;
   struct Proto **p;  /* functions defined inside the function */
-  int* lineinfo;  /* map from opcodes to source lines */
+  int *lineinfo;  /* map from opcodes to source lines */
   struct LocVar *locvars;  /* information about local variables */
   TString **upvalues;  /* upvalue names */
   TString  *source;
@@ -362,7 +362,7 @@ typedef struct Table {
 
 #define luaO_nilobject		(&luaO_nilobject_)
 
-LUAI_DATA TValue luaO_nilobject_;
+LUAI_DATA const TValue luaO_nilobject_;
 
 #define ceillog2(x)	(luaO_log2((x)-1) + 1)
 
@@ -370,11 +370,11 @@ LUAI_FUNC int luaO_log2 (unsigned int x);
 LUAI_FUNC int luaO_int2fb (unsigned int x);
 LUAI_FUNC int luaO_fb2int (int x);
 LUAI_FUNC int luaO_rawequalObj (const TValue *t1, const TValue *t2);
-LUAI_FUNC int luaO_str2d (const char* s, lua_Number *result);
-LUAI_FUNC const char* luaO_pushvfstring (lua_State *L, const char* fmt,
+LUAI_FUNC int luaO_str2d (const char *s, lua_Number *result);
+LUAI_FUNC const char *luaO_pushvfstring (lua_State *L, const char *fmt,
                                                        va_list argp);
-LUAI_FUNC const char* luaO_pushfstring (lua_State *L, const char* fmt, ...);
-LUAI_FUNC void luaO_chunkid (char* out, const char* source, size_t len);
+LUAI_FUNC const char *luaO_pushfstring (lua_State *L, const char *fmt, ...);
+LUAI_FUNC void luaO_chunkid (char *out, const char *source, size_t len);
 
 
 #endif

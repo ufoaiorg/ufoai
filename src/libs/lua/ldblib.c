@@ -1,5 +1,5 @@
 /*
-** $Id: ldblib.c,v 1.104.1.4 2009/08/04 18:50:18 roberto Exp $
+** $Id: ldblib.c,v 1.104 2005/12/29 15:32:11 roberto Exp $
 ** Interface from Lua to its debug API
 ** See Copyright Notice in lua.h
 */
@@ -45,7 +45,6 @@ static int db_setmetatable (lua_State *L) {
 
 
 static int db_getfenv (lua_State *L) {
-  luaL_checkany(L, 1);
   lua_getfenv(L, 1);
   return 1;
 }
@@ -61,19 +60,19 @@ static int db_setfenv (lua_State *L) {
 }
 
 
-static void settabss (lua_State *L, const char* i, const char* v) {
+static void settabss (lua_State *L, const char *i, const char *v) {
   lua_pushstring(L, v);
   lua_setfield(L, -2, i);
 }
 
 
-static void settabsi (lua_State *L, const char* i, int v) {
+static void settabsi (lua_State *L, const char *i, int v) {
   lua_pushinteger(L, v);
   lua_setfield(L, -2, i);
 }
 
 
-static lua_State *getthread (lua_State *L, int* arg) {
+static lua_State *getthread (lua_State *L, int *arg) {
   if (lua_isthread(L, 1)) {
     *arg = 1;
     return lua_tothread(L, 1);
@@ -85,7 +84,7 @@ static lua_State *getthread (lua_State *L, int* arg) {
 }
 
 
-static void treatstackoption (lua_State *L, lua_State *L1, const char* fname) {
+static void treatstackoption (lua_State *L, lua_State *L1, const char *fname) {
   if (L == L1) {
     lua_pushvalue(L, -2);
     lua_remove(L, -3);
@@ -100,7 +99,7 @@ static int db_getinfo (lua_State *L) {
   lua_Debug ar;
   int arg;
   lua_State *L1 = getthread(L, &arg);
-  const char* options = luaL_optstring(L, arg+2, "flnSu");
+  const char *options = luaL_optstring(L, arg+2, "flnSu");
   if (lua_isnumber(L, arg+1)) {
     if (!lua_getstack(L1, (int)lua_tointeger(L, arg+1), &ar)) {
       lua_pushnil(L);  /* level out of range */
@@ -145,7 +144,7 @@ static int db_getlocal (lua_State *L) {
   int arg;
   lua_State *L1 = getthread(L, &arg);
   lua_Debug ar;
-  const char* name;
+  const char *name;
   if (!lua_getstack(L1, luaL_checkint(L, arg+1), &ar))  /* out of range? */
     return luaL_argerror(L, arg+1, "level out of range");
   name = lua_getlocal(L1, &ar, luaL_checkint(L, arg+2));
@@ -177,12 +176,12 @@ static int db_setlocal (lua_State *L) {
 
 
 static int auxupvalue (lua_State *L, int get) {
-  const char* name;
+  const char *name;
   int n = luaL_checkint(L, 2);
   luaL_checktype(L, 1, LUA_TFUNCTION);
   if (lua_iscfunction(L, 1)) return 0;  /* cannot touch C upvalues from Lua */
   name = get ? lua_getupvalue(L, 1, n) : lua_setupvalue(L, 1, n);
-  if (name == nullptr) return 0;
+  if (name == NULL) return 0;
   lua_pushstring(L, name);
   lua_insert(L, -(get+1));
   return get + 1;
@@ -201,13 +200,13 @@ static int db_setupvalue (lua_State *L) {
 
 
 
-static char KEY_HOOK = 'h';
+static const char KEY_HOOK = 'h';
 
 
 static void hookf (lua_State *L, lua_Debug *ar) {
-  static const char* const hooknames[] =
+  static const char *const hooknames[] =
     {"call", "return", "line", "count", "tail return"};
-  lua_pushlightuserdata(L, (void*)&KEY_HOOK);
+  lua_pushlightuserdata(L, (void *)&KEY_HOOK);
   lua_rawget(L, LUA_REGISTRYINDEX);
   lua_pushlightuserdata(L, L);
   lua_rawget(L, -2);
@@ -222,7 +221,7 @@ static void hookf (lua_State *L, lua_Debug *ar) {
 }
 
 
-static int makemask (const char* smask, int count) {
+static int makemask (const char *smask, int count) {
   int mask = 0;
   if (strchr(smask, 'c')) mask |= LUA_MASKCALL;
   if (strchr(smask, 'r')) mask |= LUA_MASKRET;
@@ -232,7 +231,7 @@ static int makemask (const char* smask, int count) {
 }
 
 
-static char* unmakemask (int mask, char* smask) {
+static char *unmakemask (int mask, char *smask) {
   int i = 0;
   if (mask & LUA_MASKCALL) smask[i++] = 'c';
   if (mask & LUA_MASKRET) smask[i++] = 'r';
@@ -243,12 +242,12 @@ static char* unmakemask (int mask, char* smask) {
 
 
 static void gethooktable (lua_State *L) {
-  lua_pushlightuserdata(L, (void*)&KEY_HOOK);
+  lua_pushlightuserdata(L, (void *)&KEY_HOOK);
   lua_rawget(L, LUA_REGISTRYINDEX);
   if (!lua_istable(L, -1)) {
     lua_pop(L, 1);
     lua_createtable(L, 0, 1);
-    lua_pushlightuserdata(L, (void*)&KEY_HOOK);
+    lua_pushlightuserdata(L, (void *)&KEY_HOOK);
     lua_pushvalue(L, -2);
     lua_rawset(L, LUA_REGISTRYINDEX);
   }
@@ -256,25 +255,24 @@ static void gethooktable (lua_State *L) {
 
 
 static int db_sethook (lua_State *L) {
-  int arg, mask, count;
-  lua_Hook func;
+  int arg;
   lua_State *L1 = getthread(L, &arg);
   if (lua_isnoneornil(L, arg+1)) {
     lua_settop(L, arg+1);
-    func = nullptr; mask = 0; count = 0;  /* turn off hooks */
+    lua_sethook(L1, NULL, 0, 0);  /* turn off hooks */
   }
   else {
-    const char* smask = luaL_checkstring(L, arg+2);
+    const char *smask = luaL_checkstring(L, arg+2);
+    int count = luaL_optint(L, arg+3, 0);
     luaL_checktype(L, arg+1, LUA_TFUNCTION);
-    count = luaL_optint(L, arg+3, 0);
-    func = hookf; mask = makemask(smask, count);
+    lua_sethook(L1, hookf, makemask(smask, count), count);
   }
-  gethooktable(L);
-  lua_pushlightuserdata(L, L1);
+  gethooktable(L1);
+  lua_pushlightuserdata(L1, L1);
   lua_pushvalue(L, arg+1);
-  lua_rawset(L, -3);  /* set new hook */
-  lua_pop(L, 1);  /* remove hook table */
-  lua_sethook(L1, func, mask, count);  /* set hooks */
+  lua_xmove(L, L1, 1);
+  lua_rawset(L1, -3);  /* set new hook */
+  lua_pop(L1, 1);  /* remove hook table */
   return 0;
 }
 
@@ -285,13 +283,14 @@ static int db_gethook (lua_State *L) {
   char buff[5];
   int mask = lua_gethookmask(L1);
   lua_Hook hook = lua_gethook(L1);
-  if (hook != nullptr && hook != hookf)  /* external hook? */
+  if (hook != NULL && hook != hookf)  /* external hook? */
     lua_pushliteral(L, "external hook");
   else {
-    gethooktable(L);
-    lua_pushlightuserdata(L, L1);
-    lua_rawget(L, -2);   /* get hook */
-    lua_remove(L, -2);  /* remove hook table */
+    gethooktable(L1);
+    lua_pushlightuserdata(L1, L1);
+    lua_rawget(L1, -2);   /* get hook */
+    lua_remove(L1, -2);  /* remove hook table */
+    lua_xmove(L1, L, 1);
   }
   lua_pushstring(L, unmakemask(mask, buff));
   lua_pushinteger(L, lua_gethookcount(L1));
@@ -387,7 +386,7 @@ static const luaL_Reg dblib[] = {
   {"setmetatable", db_setmetatable},
   {"setupvalue", db_setupvalue},
   {"traceback", db_errorfb},
-  {nullptr, nullptr}
+  {NULL, NULL}
 };
 
 

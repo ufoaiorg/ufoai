@@ -40,7 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_edicts.h"
 #include "g_move.h"
 #include "g_vis.h"
+extern "C" {
 #include <lauxlib.h>
+}
 
 #define POS3_METATABLE	"pos3" /**< Pos3 Lua Metatable name. */
 #define ACTOR_METATABLE	"actor" /**< Actor Lua Metable name. */
