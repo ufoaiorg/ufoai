@@ -5965,7 +5965,6 @@ tech rs_human_vaccine
 	image		"techs/human_vaccine"
 }
 
-/*
 tech rs_implant_amphetamine
 {
 	name		"_Amphetamine Implant"
@@ -6013,4 +6012,3 @@ tech rs_implant_muscular
 	}
 	time		1
 }
-*/
