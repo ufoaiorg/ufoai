@@ -141,7 +141,7 @@ component SetEnemyCount extends panel
 
 	func increase_enemy_count
 	{
-		if (*cvar:ai_multiplayeraliens < 30) {
+		if (*cvar:ai_multiplayeraliens < 60) {
 			*cvar:ai_multiplayeraliens = (*cvar:ai_multiplayeraliens + 1)
 		}
 	}
