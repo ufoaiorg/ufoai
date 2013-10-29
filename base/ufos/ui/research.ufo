@@ -451,8 +451,8 @@ component cmpTechItem extends panel {
 	}
 
 	button pedia {
-		tooltip		"_Open UFOPaedia"
-		icon		"icons/bordered_question"
+		icon		"icons/windowinfo"
+		tooltip		"_View UFOPaedia entry"
 		pos			"5 4"
 		size		"16 16"
 		padding		0
