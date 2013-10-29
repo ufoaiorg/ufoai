@@ -1310,9 +1310,8 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
-		/* Ignore off-map impacts, currently only checks for shots that fly out of the path finding
-		 * height limits: mainly gravity shots falling off-map */
-		if (static_cast<pos_t>((impact[2] + MAX_WORLD_WIDTH) / UNIT_HEIGHT - MAX_WORLD_WIDTH / UNIT_HEIGHT) < PATHFINDING_HEIGHT) {
+		/* Ignore off-map impacts when spawning fire, smoke, etc fields */
+		if (gi.isOnMap(impact)) {
 			if (fd->obj->dmgtype == gi.csi->damSmoke) {
 				const int rounds = std::max(2, fd->rounds);
 				G_SpawnSmokeField(impact, "smokefield", rounds, fd->splrad);
