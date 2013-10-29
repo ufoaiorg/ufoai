@@ -650,18 +650,18 @@ window research
 					contentalign	ALIGN_CC
 				}
 
-				panel techlist {
+				panel techs {
 					pos			"20 50"
 					size		"530 550"
 					layout		LAYOUT_TOP_DOWN_FLOW
 					wheelscrollable	true
 					onViewChange {
-						*node:parent.techlist_scroll@fullsize = <fullsize>
-						*node:parent.techlist_scroll@current = <viewpos>
-						*node:parent.techlist_scroll@viewsize = <viewsize>
+						*node:parent.techs_scroll@fullsize = <fullsize>
+						*node:parent.techs_scroll@current = <viewpos>
+						*node:parent.techs_scroll@viewsize = <viewsize>
 					}
 				}
-				vscrollbar techlist_scroll {
+				vscrollbar techs_scroll {
 					image		"ui/scrollbar_v_green"
 					pos			"550 41"
 					height		"560"
@@ -670,48 +670,48 @@ window research
 					fullsize	21
 					hidewhenunused true
 					onChange {
-						*node:parent.techlist@viewpos = <current>
+						*node:parent.techs@viewpos = <current>
 					}
 				}
 
 				confunc ui_techlist_clear {
-					call *node:parent.techlist@removeAllchild
+					call *node:parent.techs@removeAllchild
 				}
 				confunc ui_research_select {
 					if ( *node:parent.selected@string ne "" ) {
-						*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
-						*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
-						*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.name@color = "0 .78 0 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0 .78 0 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0 .78 0 1"
 					}
 					*node:parent.selected@string = "<1>"
-					*node:parent.techlist.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
-					*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
-					*node:parent.techlist.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
 					cmd "ui_research_getdetails <1>;"
 				}
 				confunc ui_techlist_add {
-					call *node:parent.techlist@createChild("tech_<1>", "cmpTechItem")
+					call *node:parent.techs@createChild("tech_<1>", "cmpTechItem")
 
-					*node:parent.techlist.tech_<1>.id@string = "<1>"
-					*node:parent.techlist.tech_<1>.name@string = "<2>"
-					*node:parent.techlist.tech_<1>.progress@current = <4>
+					*node:parent.techs.tech_<1>.id@string = "<1>"
+					*node:parent.techs.tech_<1>.name@string = "<2>"
+					*node:parent.techs.tech_<1>.progress@current = <4>
 
 					if ( <4> > 0 ) {
-						*node:parent.techlist.tech_<1>.progress_label@string = "<4>%"
+						*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
 					}
 
 					if ( paramCount >= 5 ) {
 						if ( "<5>" eq "base" ) {
-							*node:parent.techlist.tech_<1>.id@integer = <6>
-							*node:parent.techlist.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
-							*node:parent.techlist.tech_<1>.rsrc_baselink@invis = false
+							*node:parent.techs.tech_<1>.id@integer = <6>
+							*node:parent.techs.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
+							*node:parent.techs.tech_<1>.rsrc_baselink@invis = false
 						}
 						if ( "<5>" eq "missing" ) {
-							*node:parent.techlist.tech_<1>.rsrc_missing@invis = false
+							*node:parent.techs.tech_<1>.rsrc_missing@invis = false
 						}
 					} else {
-						*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<3>"
-						*node:parent.techlist.tech_<1>.rsrc_control@invis = false
+						*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<3>"
+						*node:parent.techs.tech_<1>.rsrc_control@invis = false
 					}
 
 					if ( *node:parent.selected@string eq "" ) {
@@ -719,7 +719,7 @@ window research
 					}
 				}
 				confunc ui_research_update_topic {
-					*node:parent.techlist.tech_<1>.rsrc_control.scientists@string = "<2>"
+					*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<2>"
 				}
 			}
 		}
