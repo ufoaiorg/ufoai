@@ -213,12 +213,12 @@ window researchUI2
 			 */
 			confunc research_research
 			{
-				call *node:parent.techs@createChild("tech<1>", "ResearchItem")
-				*node:parent.techs.tech<1>@tooltip = *cvar:mn_rsstatus<1>
-				*node:parent.techs.tech<1>.title@string = *cvar:mn_researchitem<1>
-				*node:parent.techs.tech<1>.status@current = *cvar:mn_rsstatus<1>
-				*node:parent.techs.tech<1>.scientists@string = *cvar:mn_researchassigned<1>
-				*node:parent.techs.tech<1>.itemnum@integer = <1>
+				call *node:parent.techs@createChild("tech_<1>", "ResearchItem")
+				*node:parent.techs.tech_<1>@tooltip = *cvar:mn_rsstatus<1>
+				*node:parent.techs.tech_<1>.title@string = *cvar:mn_researchitem<1>
+				*node:parent.techs.tech_<1>.status@current = *cvar:mn_rsstatus<1>
+				*node:parent.techs.tech_<1>.scientists@string = *cvar:mn_researchassigned<1>
+				*node:parent.techs.tech_<1>.itemnum@integer = <1>
 			}
 		}
 
@@ -273,12 +273,12 @@ window researchUI2
 			 */
 			confunc research_outterresearch
 			{
-				call *node:parent.techs_ext@createChild("tech<1>", "ExtResearchItem")
-				*node:parent.techs_ext.tech<1>@tooltip = *cvar:mn_rsstatus<1>
-				*node:parent.techs_ext.tech<1>.title@string = *cvar:mn_researchitem<1>
-				*node:parent.techs_ext.tech<1>.status@current = *cvar:mn_rsstatus<1>
-				*node:parent.techs_ext.tech<1>.base@string = *cvar:mn_researchitem<cvar:rs_cur_base_itemid>
-				*node:parent.techs_ext.tech<1>.itemnum@integer = <1>
+				call *node:parent.techs_ext@createChild("tech_<1>", "ExtResearchItem")
+				*node:parent.techs_ext.tech_<1>@tooltip = *cvar:mn_rsstatus<1>
+				*node:parent.techs_ext.tech_<1>.title@string = *cvar:mn_researchitem<1>
+				*node:parent.techs_ext.tech_<1>.status@current = *cvar:mn_rsstatus<1>
+				*node:parent.techs_ext.tech_<1>.base@string = *cvar:mn_researchitem<cvar:rs_cur_base_itemid>
+				*node:parent.techs_ext.tech_<1>.itemnum@integer = <1>
 			}
 		}
 
