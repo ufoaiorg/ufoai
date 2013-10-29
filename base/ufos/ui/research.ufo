@@ -436,6 +436,9 @@ window researchUI2
 component cmpTechItem extends panel {
 	{
 		size		"530 50"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 
 		onClick	{
 			cmd "ui_research_select <node:this.id@string>;"
@@ -460,19 +463,18 @@ component cmpTechItem extends panel {
 	}
 
 	string name {
-		pos			"25 0"
-		size		"345 20"
-		color		"0 .78 0 1"
-		longlines	LONGLINES_PRETTYCHOP
-		ghost		true
+		pos				"25 0"
+		size			"345 20"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_PRETTYCHOP
+		contentalign	ALIGN_CL
+		ghost			true
 	}
 
 	bar progress {
 		pos			"5 30"
 		size		"224 5"
-		color		"0 0.8 0 1"
-		bordercolor	"0 0.8 0 1"
-		border		1
+		color		"0.56 0.81 0.76 0.3"
 		current		0
 		max			100
 		readonly	true
