@@ -117,7 +117,7 @@ window bases
 				pos		"165 0"
 				size	"48 48"
 				icon		"icons/transfer"
-				tooltip		"Link to transfer - not working yet"
+				tooltip		"_Transfer"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
