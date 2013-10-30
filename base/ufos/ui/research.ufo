@@ -521,7 +521,7 @@ component cmpTechItem extends panel {
 			string		"0"
 			pos			"45 4"
 			size		"30 25"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			contentalign	ALIGN_CR
 			ghost		true
 		}
