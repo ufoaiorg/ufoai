@@ -562,6 +562,10 @@ static inline void B_AddMap (char* maps, size_t mapsLength, char* coords, size_t
 
 /**
  * @brief Perform the base assembling in case of an alien attack
+ * @param[out] maps The string containing the list of tilenames
+ * @param[in] mapsLength The maximum length of maps string
+ * @param[out] coords The string containing the positions of the tiles
+ * @param[in] coordsLength The maximum length of coords string
  * @param[in,out] base The base to assemble
  * @return @c true if the assembly was successful, @c false if it failed
  * @todo Search a empty field and add a alien craft there
