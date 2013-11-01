@@ -174,16 +174,14 @@ void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, 
 	y2 = y1;
 	y4 = y3 = y1 + nh;
 
-	{
-		if (flip) {
-			const float tmp = sl;
-			sl = sh;
-			sh = tmp;
-		}
-		const vec2_t imageTexcoords[4] = {{sl, tl}, {sh, tl}, {sh, th}, {sl, th}};
-		const vec2_t imageVerts[4] = {{x1, y1}, {x2, y2}, {x3, y3}, {x4, y4}};
-		R_DrawImageArray(imageTexcoords, imageVerts, image);
+	if (flip) {
+		const float tmp = sl;
+		sl = sh;
+		sh = tmp;
 	}
+	const vec2_t imageTexcoords[4] = {{sl, tl}, {sh, tl}, {sh, th}, {sl, th}};
+	const vec2_t imageVerts[4] = {{x1, y1}, {x2, y2}, {x3, y3}, {x4, y4}};
+	R_DrawImageArray(imageTexcoords, imageVerts, image);
 }
 
 /**
