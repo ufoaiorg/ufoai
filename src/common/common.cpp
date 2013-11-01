@@ -1390,7 +1390,6 @@ static void Schedule_Timer (cvar_t* freq, event_func* func, event_check_func* ch
  *  for the event in the case that it is not executed.  Either this
  *  function or func will be called, but never both.
  * @param data Arbitrary data to be passed to the check and event functions.
- * @param delayFollowing Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false.
  *  This is needed e.g. for battlescape events to not play events too fast because the beginning of the event queue was blocked.
  */
 ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* check, event_clean_func* clean, void* data)
@@ -1401,7 +1400,7 @@ ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* c
 	event->check = check;
 	event->clean = clean;
 	event->data = data;
-	event->delayFollowing = 0;
+	event->delayFollowing = 0;	/* Delay the following events of the same type (same event func) by the given amount of milliseconds if the check function returned false. */
 	event->delay = nullptr;
 
 	eventQueue.insert(event);
