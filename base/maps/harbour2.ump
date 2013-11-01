@@ -3,7 +3,7 @@
 // *********************************
 
 // Idea: have a fixed mole to the "right"
-//  - the water is the lowest level an cannot be accessed
+//  - the water is the lowest level and cannot be accessed
 //  - there can or cannot be ships in the harbour
 //  - there are alien dropships but the aliens are at the mole
 //     while the Phalanx guys start at the other side = work their way
