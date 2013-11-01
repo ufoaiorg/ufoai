@@ -118,7 +118,7 @@ void Cbuf_Shutdown (void)
 
 /**
  * @brief Adds command text at the end of the buffer
- * @note Normally when a command is generate from the console or keyBindings, it will be added to the end of the command buffer.
+ * @note Normally when a command is generated from the console or keyBindings, it will be added to the end of the command buffer.
  */
 void Cbuf_AddText (const char* format, ...)
 {
