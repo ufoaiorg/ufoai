@@ -363,6 +363,56 @@ window bases
 					}
 				}
 			}
+	/**
+	 * @brief Passes information on capacity for available buildings
+	 * @param <1> building name
+	 * @param <2> building id (building_lab, building_quarters, building_storage, etc.)
+	 * @param <3> currently used capacity
+	 * @param <4> actual max capacity
+	 * @param <5> number of buildings built of this type
+	 * @param <6> max number of buildings can be built from this type
+	 */
+	confunc show_bld_space
+	{
+		// Set the appropriate size of the panel
+		*node:parent.bld_panel.bld_space.height@integer = (<node:parent.bld_panel.bld_space.height@integer> + 30)
+		*node:parent.bld_panel.bld_space@size = "298 <node:parent.bld_panel.bld_space.height@integer>"
+
+		// If showing a few facilities, don't show building preview panel
+		if (*node:parent.state@string eq "true") {
+			*node:parent.bld_panel.height@integer = <node:parent.bld_panel.bld_space.height@integer>
+		// Show building preview panel for all facilities
+		} else {
+			*node:parent.bld_panel.height@integer = (<node:parent.bld_panel.bld_space.height@integer> + 185)
+		}
+		// Expand parent panels appropriately
+		*node:parent.bld_panel@size = "298 <node:parent.bld_panel.height@integer>"
+		*node:parent.height@integer = (<node:parent.bld_panel.height@integer> + 48)
+		*node:parent@size = "298 <node:parent.height@integer>"
+
+		// Add the capacity bar
+		call *node:parent.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.bld_panel.bld_space.<2>.id@string = "<2>"
+		*node:parent.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
+		*node:parent.bld_panel.bld_space.<2>@tooltip = "<1>"
+		*node:parent.bld_panel.bld_space.<2>.label@string = "<1>"
+		*node:parent.bld_panel.bld_space.<2>.data_bar@current = <3>
+		*node:parent.bld_panel.bld_space.<2>.data_bar@max = <4>
+
+		// Only show the capacity string if max isn't 0
+		if (param4 ne 0) {
+			*node:parent.bld_panel.bld_space.<2>.data@string = <3>/<4>
+		} elif (param6 > 0) {
+			// Show current/max number of buildings of a type if limited
+			*node:parent.bld_panel.bld_space.<2>.data@string = <5>/<6>
+		}
+		// Show/Hide "add" building button
+		if (param5 == param6 ) {
+			*node:parent.bld_panel.bld_space.<2>.alert@invis = true
+		} else {
+			*node:parent.bld_panel.bld_space.<2>.alert@invis = false
+		}
+	}
 		}
 
 		BaseSection aircraft
@@ -512,56 +562,6 @@ window bases
 		}
 	}
 
-	/**
-	 * @brief Passes information on capacity for available buildings
-	 * @param <1> building name
-	 * @param <2> building id (building_lab, building_quarters, building_storage, etc.)
-	 * @param <3> currently used capacity
-	 * @param <4> actual max capacity
-	 * @param <5> number of buildings built of this type
-	 * @param <6> max number of buildings can be built from this type
-	 */
-	confunc show_bld_space
-	{
-		// Set the appropriate size of the panel
-		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 30)
-		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 <node:parent.sections.facilities.bld_panel.bld_space.height@integer>"
-
-		// If showing a few facilities, don't show building preview panel
-		if (*node:parent.sections.facilities.state@string eq "true") {
-			*node:parent.sections.facilities.bld_panel.height@integer = <node:parent.sections.facilities.bld_panel.bld_space.height@integer>
-		// Show building preview panel for all facilities
-		} else {
-			*node:parent.sections.facilities.bld_panel.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 185)
-		}
-		// Expand parent panels appropriately
-		*node:parent.sections.facilities.bld_panel@size = "298 <node:parent.sections.facilities.bld_panel.height@integer>"
-		*node:parent.sections.facilities.height@integer = (<node:parent.sections.facilities.bld_panel.height@integer> + 48)
-		*node:parent.sections.facilities@size = "298 <node:parent.sections.facilities.height@integer>"
-
-		// Add the capacity bar
-		call *node:parent.sections.facilities.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>.id@string = "<2>"
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>@tooltip = "<1>"
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>.label@string = "<1>"
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@current = <3>
-		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@max = <4>
-
-		// Only show the capacity string if max isn't 0
-		if (param4 ne 0) {
-			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <3>/<4>
-		} elif (param6 > 0) {
-			// Show current/max number of buildings of a type if limited
-			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <5>/<6>
-		}
-		// Show/Hide "add" building button
-		if (param5 == param6 ) {
-			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = true
-		} else {
-			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = false
-		}
-	}
 
 	/**
 	 * @brief Clear building space indicators in preparation for updating the list
