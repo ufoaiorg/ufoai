@@ -593,8 +593,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
 		 *	- Check if any new mission is detected
 		 *	- Update stealth value of phalanx bases and installations ; alien bases */
-		int i;
-		for (i = 0; i < checks; i++) {
+		for (int i = 0; i < checks; i++) {
 			ccs.timer -= dt;
 			currentsecond += dt;
 			CP_AdvanceTimeBySeconds(dt);
@@ -637,7 +636,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 		}
 
 		/* daily events */
-		for (i = currentday; i < ccs.date.day; i++) {
+		for (int i = currentday; i < ccs.date.day; i++) {
 			/* every day */
 			INS_UpdateInstallationData();
 			HOS_HospitalRun();

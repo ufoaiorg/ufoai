@@ -100,10 +100,9 @@ static inline const char* CP_ToDifficultyName (const int difficulty)
  */
 static void GAME_CP_GetCampaigns_f (void)
 {
-	int i;
 	uiNode_t* campaignOption = nullptr;
 
-	for (i = 0; i < ccs.numCampaigns; i++) {
+	for (int i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t* c = &ccs.campaigns[i];
 		if (c->visible)
 			cgi->UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
@@ -203,14 +202,12 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void* data, const teamDef_t*
  */
 void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
-	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const int currentTeam = cgi->GAME_GetCurrentTeam();
 	const bool won = (winner == currentTeam);
 	const bool draw = (winner == -1 || winner == 0);
-	missionResults_t* results;
 	aircraft_t* aircraft = GEO_GetMissionAircraft();
 	battleParam_t* bp = &ccs.battleParameters;
 
@@ -220,14 +217,14 @@ void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, 
 	aliensSurvived = aliensKilled = aliensStunned = 0;
 	civiliansSurvived = civiliansKilled = civiliansStunned = 0;
 
-	for (i = 0; i <= MAX_TEAMS; i++) {
+	for (int i = 0; i <= MAX_TEAMS; i++) {
 		if (i == currentTeam)
 			ownSurvived = numAlive[i];
 		else if (i == TEAM_CIVILIAN)
 			civiliansSurvived = numAlive[i];
 		else if (i < MAX_TEAMS)
 			aliensSurvived += numAlive[i];
-		for (j = 0; j < MAX_TEAMS; j++)
+		for (int j = 0; j < MAX_TEAMS; j++)
 			if (j == currentTeam) {
 				ownKilled += numKilled[i][j];
 				ownStunned += numStunned[i][j]++;
@@ -262,7 +259,7 @@ void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, 
 
 	ccs.aliensKilled += aliensKilled;
 
-	results = &ccs.missionResults;
+	missionResults_t* results = &ccs.missionResults;
 	results->mission = bp->mission;
 
 	if (nextmap) {

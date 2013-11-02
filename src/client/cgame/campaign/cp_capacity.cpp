@@ -51,11 +51,9 @@ void CAP_RemoveAntimatterExceedingCapacity (base_t* base)
  */
 void CAP_UpdateStorageCap (base_t* base)
 {
-	int i;
-
 	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
-	for (i = 0; i < cgi->csi->numODs; i++) {
+	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))
@@ -133,9 +131,7 @@ void CAP_CheckOverflow (void)
 	base_t* base = nullptr;
 
 	while ((base = B_GetNext(base)) != nullptr) {
-		int i;
-
-		for (i = CAP_ALIENS; i < MAX_CAP; i++) {
+		for (int i = CAP_ALIENS; i < MAX_CAP; i++) {
 			baseCapacities_t capacityType = (baseCapacities_t)i;
 			capacities_t* cap = CAP_Get(base, capacityType);
 
