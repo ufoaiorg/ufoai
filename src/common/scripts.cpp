@@ -1602,6 +1602,8 @@ static effectStages_t Com_ParseItemEffect (itemEffect_t* e, const char* name, co
 /**
  * @brief Parses the effect that is bound to a fire definitions.
  * @param[in,out] fd The fire definition to add the effect to
+ * @param[in] name Already parsed name of the weapon, used for error messages
+ * @param[in,out] text The string which is to be parsed
  */
 static void Com_ParseFireEffect (fireDef_t* fd, const char* name, const char** text)
 {
@@ -1647,6 +1649,8 @@ static void Com_ParseFireEffect (fireDef_t* fd, const char* name, const char** t
 
 /**
  * @brief Parses the firemode
+ * @param[in] name Already parsed name of the weapon, used for error messages
+ * @param[in,out] text The string which is to be parsed
  * @param[in,out] fd The fire definition to fill
  */
 static bool Com_ParseFire (const char* name, const char** text, fireDef_t* fd)
