@@ -364,19 +364,19 @@ window bases
 				}
 			}
 
-	/**
-	 * @brief Clear building space indicators in preparation for updating the list
-	 */
-	confunc clear_bld_space
-	{
-		call *node:parent.bld_panel.bld_space@removeAllChild
-		*node:parent.bld_panel.bld_space@size = "298 0"
-		*node:parent.bld_panel.bld_space.height@integer = 0
-		*node:parent.bld_panel@size = "298 0"
-		*node:parent.bld_panel.height@integer = 0
-		*node:parent@size = "298 48"
-		*node:parent.height@integer = 48
-	}
+			/**
+			 * @brief Clear building space indicators in preparation for updating the list
+			 */
+			confunc clear_bld_space
+			{
+				call *node:parent.bld_panel.bld_space@removeAllChild
+				*node:parent.bld_panel.bld_space@size = "298 0"
+				*node:parent.bld_panel.bld_space.height@integer = 0
+				*node:parent.bld_panel@size = "298 0"
+				*node:parent.bld_panel.height@integer = 0
+				*node:parent@size = "298 48"
+				*node:parent.height@integer = 48
+			}
 
 			/**
 			 * @brief Passes information on capacity for available buildings
