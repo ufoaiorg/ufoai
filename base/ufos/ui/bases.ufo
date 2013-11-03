@@ -612,13 +612,7 @@ window bases
 		}
 
 		// Hide/show the other base sections
-	//	call *node:parent.sections@setOthersInvis(<1>)
-		*node:parent.sections.aircraft@invis = <1>
-		*node:parent.sections.soldiers@invis = <1>
-		*node:parent.sections.buysell@invis = <1>
-		*node:parent.sections.research@invis = <1>
-		*node:parent.sections.production@invis = <1>
-		*node:parent.sections.containment@invis = <1>
+		call *node:parent.sections.setOthersInvis(<1>)
 	}
 
 	/**
