@@ -516,6 +516,17 @@ window bases
 			button icon { icon "icons/aliens" }
 			data state { string "true" }
 		}
+
+		// Hide/show the other base sections
+		func setOthersInvis
+		{
+			*node:parent.aircraft@invis = <1>
+			*node:parent.soldiers@invis = <1>
+			*node:parent.buysell@invis = <1>
+			*node:parent.research@invis = <1>
+			*node:parent.production@invis = <1>
+			*node:parent.containment@invis = <1>
+		}
 	}
 
 	// Back to geoscape
@@ -601,6 +612,7 @@ window bases
 		}
 
 		// Hide/show the other base sections
+	//	call *node:parent.sections@setOthersInvis(<1>)
 		*node:parent.sections.aircraft@invis = <1>
 		*node:parent.sections.soldiers@invis = <1>
 		*node:parent.sections.buysell@invis = <1>
