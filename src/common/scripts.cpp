@@ -1547,6 +1547,8 @@ static const value_t fdps[] = {
 /**
  * @brief Parses the item effect.
  * @param[in,out] e The item effect that is filled in here.
+ * @param[in] name Already parsed name of the weapon, used for error messages
+ * @param[in,out] text The string which is to be parsed
  */
 static effectStages_t Com_ParseItemEffect (itemEffect_t* e, const char* name, const char** text)
 {
