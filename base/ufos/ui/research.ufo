@@ -607,12 +607,12 @@ component cmpTechItem extends panel {
 // ================
 
 //window researchOld
-window research
+window research extends BaseMgmtWindow
 {
 	{
 	}
 
-	BaseContainerPanelV2 baseHeader {
+	BaseContainerPanelV2 base_container {
 		panel mainBody
 		{
 			{ size "715 584" }
