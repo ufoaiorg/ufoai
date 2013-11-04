@@ -810,6 +810,11 @@ window bases
 	// Fuzzy screen effect (see assets.ufo)
 	screen overlay { }
 
+	func onWindowActivate
+	{
+		cmd "base_init;"
+		cmd "reset_base;"
+	}
 	func onWindowOpened
 	{
 		// Get the parameters needed for this window
