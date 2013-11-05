@@ -1111,6 +1111,7 @@ static void R_ModEndLoading (const char* mapName)
  * and every of the three components must exists for every tile.
  * @param[in] mapName The mapname that the get from the server (used to identify
  * the correct name for the materials in case of a random assembly).
+ * @param[in] mapZone The terrain type for texture replacement
  * @sa R_ModAddMapTile
  * @sa CM_LoadMap
  * @note This function is called for listen servers, too. This loads the bsp
