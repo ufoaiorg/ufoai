@@ -744,6 +744,14 @@ window research extends BaseMgmtWindow
 			}
 		}
 	}
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+	//	onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	//	onClick			{ cmd "ui_close research; ui_pop;" }	// works
+		onClick			{ cmd "ui_close research; ui_close bases;" }
+	}
 
 	// Capacity Box (top right)
 	panel capbox {
