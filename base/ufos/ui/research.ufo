@@ -749,7 +749,7 @@ window research extends BaseMgmtWindow
 	panel capbox {
 		{
 			pos		"730 80"
-			size	"285 115"
+			size	"285 95"
 			background	"ui/panel_grey_green"
 		}
 
@@ -774,39 +774,20 @@ window research extends BaseMgmtWindow
 			font		"f_small_bold"
 			contentalign	ALIGN_CR
 		}
-
-		string scientists_caption {
-			string 		"_Scientists"
+		string labspace_caption {
+			string 		"_Laboratory"
 			pos			"25 50"
 			size		"230 20"
 			font		"f_small"
 		}
-		string scientists_free {
+		string labspace_free {
 			pos			"110 50"
 			size		"75 20"
 			font		"f_small"
 			contentalign	ALIGN_CR
 		}
-		string scientists_all {
-			pos			"180 50"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string labspace_caption {
-			string 		"_Laboratory"
-			pos			"25 70"
-			size		"230 20"
-			font		"f_small"
-		}
-		string labspace_free {
-			pos			"110 70"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
 		string labspace_all {
-			pos			"180 70"
+			pos			"180 50"
 			size		"75 20"
 			font		"f_small"
 			contentalign	ALIGN_CR
