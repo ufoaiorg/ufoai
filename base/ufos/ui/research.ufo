@@ -642,12 +642,32 @@ window research extends BaseMgmtWindow
 					size		"365 25"
 					font		"f_small_bold"
 				}
-				string scientist {
-					string		"_Scientists"
-					pos			"410 25"
-					size		"150 25"
-					font		"f_small_bold"
-					contentalign	ALIGN_CC
+
+				// Unassigned scientists
+				button idle_scientists
+				{
+					icon	"icons/head_scientist"
+					pos		"522 10"
+					size	"48 48"
+					ghost	true
+				}
+				string idle_scientists_count
+				{
+					string	"0"
+					pos		"560 19"
+					size	"100 25"
+					font	"f_small_bold"
+					color	"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+				string idle_scientists_label
+				{
+					string	"_idle scientists"
+					pos		"560 32"
+					size	"100 23"
+					font	"f_verysmall"
+					color	"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
 				}
 
 				panel techs {
@@ -797,6 +817,8 @@ window research extends BaseMgmtWindow
 			*node:parent.scientists_all@string = "<2>"
 			*node:parent.labspace_free@string = "<3>"
 			*node:parent.labspace_all@string = "<4>"
+			// a little hack for now
+			*node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
 		}
 	}
 
