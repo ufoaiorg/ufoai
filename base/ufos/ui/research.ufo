@@ -629,7 +629,7 @@ window research extends BaseMgmtWindow
 			panel techlist_border {
 				{
 					pos			"10 35"
-					size		"587 520"
+					size		"695 540"
 				}
 
 				data selected {
@@ -671,8 +671,8 @@ window research extends BaseMgmtWindow
 				}
 
 				panel techs {
-					pos			"20 50"
-					size		"530 550"
+					pos			"5 50"
+					size		"650 480"
 					layout		LAYOUT_TOP_DOWN_FLOW
 					wheelscrollable	true
 					onViewChange {
@@ -683,8 +683,8 @@ window research extends BaseMgmtWindow
 				}
 				vscrollbar techs_scroll {
 					image		"ui/scrollbar_v_green"
-					pos			"550 41"
-					height		"560"
+					pos			"670 50"
+					height		"480"
 					current		0
 					viewsize	21
 					fullsize	21
