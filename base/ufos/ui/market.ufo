@@ -318,7 +318,11 @@ window market  {
 	}
 
 	// Back to geoscape
-	Geoscape geoscape_button { }
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
 
 	confunc ui_market_update_caps {
 	}
