@@ -691,10 +691,7 @@ static void GEO_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
  */
 static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color)
 {
-	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
-	vec2_t posCircle;
-	bool oldDraw = false;
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
@@ -709,8 +706,11 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 
 	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	/* Now, each equidistant point is given by a rotation around centerPos */
-	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
+	for (int i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
+		int xCircle, yCircle;
+		vec2_t posCircle;
 		bool draw = false;
+		bool oldDraw = false;
 		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
@@ -1285,12 +1285,10 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
 	bool oneUFOVisible, const char* font)
 {
 	const installationTemplate_t* tpl = installation->installationTemplate;
-	int x, y;
 
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
-		int i;
-		for (i = 0; i < tpl->maxBatteries; i++) {
+		for (int i = 0; i < tpl->maxBatteries; i++) {
 			const aircraftSlot_t* slot = &installation->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
 				GEO_MapDrawEquidistantPoints(node, installation->pos,
@@ -1303,6 +1301,7 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
 	if (GEO_IsRadarOverlayActivated())
 		GEO_DrawRadarInMap(node, &installation->radar, installation->pos);
 
+	int x, y;
 	/* Draw installation */
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
 		GEO_Draw3DMarkerIfVisible(node, installation->pos, defaultBaseAngle, tpl->model, 0);
@@ -1325,8 +1324,6 @@ static void GEO_DrawMapOneInstallation (const uiNode_t* node, const installation
 static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t* base,
 	bool oneUFOVisible, const char* font)
 {
-	int x, y;
-
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_BaseCanShoot(base)) {
 		int i;
@@ -1350,6 +1347,7 @@ static void GEO_DrawMapOneBase (const uiNode_t* node, const base_t* base,
 	if (GEO_IsRadarOverlayActivated())
 		GEO_DrawRadarInMap(node, &base->radar, base->pos);
 
+	int x, y;
 	/* Draw base */
 	if (!UI_MAPEXTRADATACONST(node).flatgeoscape) {
 		if (B_IsUnderAttack(base))
@@ -1914,13 +1912,12 @@ void GEO_NotifyAircraftRemoved (const aircraft_t* aircraft)
  */
 nation_t* GEO_GetNation (const vec2_t pos)
 {
-	int i;
 	const byte* color = GEO_GetColor(pos, MAPTYPE_NATIONS, nullptr);
 	const vec3_t fcolor = {color[0] / 255.0f, color[1] / 255.0f, color[2] / 255.0f};
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
 		/* compare the first three color values with color value at pos */
 		/* 0.02 x 255 = 5.1, which allow a variation of +-5 for each color components */
