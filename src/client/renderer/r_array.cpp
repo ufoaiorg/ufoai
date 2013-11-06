@@ -77,6 +77,7 @@ static int R_ArraysMask (void)
 /**
  * @sa R_SetVertexBufferState
  * @param[in] bsp The BSP model to use arrays from
+ * @param[in] mask The bitmask representing the arrays which should be enabled according to r_state.
  */
 static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 {
@@ -111,6 +112,7 @@ static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 /**
  * @sa R_SetVertexArrayState
  * @param[in] bsp The BSP model to use arrays from
+ * @param[in] mask The bitmask representing the arrays which should be enabled according to r_state.
  * @note r_vertexbuffers must be set to 1 to use this
  */
 static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
