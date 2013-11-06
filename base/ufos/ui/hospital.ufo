@@ -241,7 +241,7 @@ window hospital
 
 	func onWindowOpened
 	{
-		call *node:root.panel@removeAllchild
+		call *node:root.base_container.mainBody.patients@removeAllchild
 		cmd "hosp_init;"
 		*cvar:mn_lastsubmenu = "hospital"
 	}
