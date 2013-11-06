@@ -745,7 +745,7 @@ window research extends BaseMgmtWindow
 		}
 	}
 	// Laboratory count
-	BuildingSpace storage
+	BuildingSpace laboratoy
 	{
 		{ pos "739 0" }
 
@@ -817,8 +817,8 @@ window research extends BaseMgmtWindow
 			*node:parent.labspace_all@string = "<4>"
 			// a little hack for now
 			*node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
-			*node:root.storage.data_bar@current = (<4> - <3>)
-			*node:root.storage.data_bar@max = <4>
+			*node:root.laboratoy.data_bar@current = (<4> - <3>)
+			*node:root.laboratoy.data_bar@max = <4>
 		}
 	}
 
