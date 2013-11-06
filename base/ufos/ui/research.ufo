@@ -509,7 +509,7 @@ component cmpTechItem extends panel {
 		}
 		button less {
 			tooltip		"_Assign less scientists on this project"
-			icon		"icons/minus"
+            icon	    "icons/windowminusb"
 			pos			"25 4"
 			size		"25 25"
 
@@ -527,7 +527,7 @@ component cmpTechItem extends panel {
 		}
 		button more {
 			tooltip		"_Assign more scientists on this project"
-			icon		"icons/plus"
+            icon	    "icons/windowplusb"
 			pos			"75 4"
 			size		"25 25"
 
@@ -743,6 +743,15 @@ window research extends BaseMgmtWindow
 				}
 			}
 		}
+	}
+	// Laboratory count
+	BuildingSpace storage
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_lab" }
+		string label { string	"_Laboratory" }
+		button alert { invis true }
 	}
 	// Back to geoscape
 	Geoscape geoscape_button
