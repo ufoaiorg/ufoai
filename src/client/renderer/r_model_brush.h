@@ -96,7 +96,7 @@ typedef struct mBspSurface_s {
 	vec2_t stcenter;
 	vec2_t stextents;
 
-	vec3_t mins;
+	AABB mbsBox;
 	vec3_t maxs;
 
 	vec3_t center;

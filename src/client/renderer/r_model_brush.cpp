@@ -264,9 +264,8 @@ static void R_SetSurfaceExtents (mBspSurface_t* surf, const model_t* mod)
 		}
 	}
 
-	VectorCopy(mins, surf->mins);
-	VectorCopy(maxs, surf->maxs);
-	VectorCenterFromMinsMaxs(surf->mins, surf->maxs, surf->center);
+	surf->mbsBox.set(mins, maxs);
+	VectorCenterFromMinsMaxs(surf->mbsBox.mins, surf->mbsBox.maxs, surf->center);
 
 	for (i = 0; i < 2; i++) {
 		const int bmins = floor(stmins[i] / surf->lightmap_scale);
