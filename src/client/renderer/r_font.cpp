@@ -297,7 +297,7 @@ static int R_FontChunkLength (const font_t* f, char* text, int len)
  * @param[out] widthp Pixel width of part that fits.
  * @return String length of part that fits.
  */
-static int R_FontFindFit (const font_t* f, char* text, int maxlen, int maxWidth, int* widthp)
+static int R_FontFindFit (const font_t* font, char* text, int maxlen, int maxWidth, int* widthp)
 {
 	int bestbreak = 0;
 	int width;
@@ -308,7 +308,7 @@ static int R_FontFindFit (const font_t* f, char* text, int maxlen, int maxWidth,
 	/* Fit whole words */
 	for (len = 1; len < maxlen; len++) {
 		if (text[len] == ' ') {
-			width = R_FontChunkLength(f, text, len);
+			width = R_FontChunkLength(font, text, len);
 			if (width > maxWidth)
 				break;
 			bestbreak = len;
@@ -319,7 +319,7 @@ static int R_FontFindFit (const font_t* f, char* text, int maxlen, int maxWidth,
 	/* Fit hyphenated word parts */
 	for (len = bestbreak + 1; len < maxlen; len++) {
 		if (text[len] == '-') {
-			width = R_FontChunkLength(f, text, len + 1);
+			width = R_FontChunkLength(font, text, len + 1);
 			if (width > maxWidth)
 				break;
 			bestbreak = len + 1;
@@ -336,7 +336,7 @@ static int R_FontFindFit (const font_t* f, char* text, int maxlen, int maxWidth,
 	for (len = 1; len < maxlen; len++) {
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
-		width = R_FontChunkLength(f, text, len);
+		width = R_FontChunkLength(font, text, len);
 		if (width > maxWidth)
 			break;
 		bestbreak = len;
