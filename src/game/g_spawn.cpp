@@ -873,15 +873,15 @@ static void SP_misc_mission_aliens (Edict* ent)
 static void G_BuildForbiddenListForEntity (Edict* ent)
 {
 	pos3_t mins, maxs, origin;
-	vec3_t center, shiftedMins, shiftedMaxs;
+	vec3_t center;
 	int xDelta, yDelta, size, i, j;
 
-	VectorAdd(ent->absmin, ent->origin, shiftedMins);
-	VectorAdd(ent->absmax, ent->origin, shiftedMaxs);
+	AABB shiftedBox(ent->absmin, ent->absmax);
+	shiftedBox.shift(ent->origin);
+	shiftedBox.getCenter(center);
 
-	VectorCenterFromMinsMaxs(shiftedMins, shiftedMaxs, center);
-	VecToPos(shiftedMins, mins);
-	VecToPos(shiftedMaxs, maxs);
+	VecToPos(shiftedBox.mins, mins);
+	VecToPos(shiftedBox.maxs, maxs);
 	VecToPos(center, origin);
 
 	xDelta = std::max(1, maxs[0] - mins[0]);
