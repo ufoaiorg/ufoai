@@ -747,7 +747,7 @@ window research extends BaseMgmtWindow
 	// Laboratory count
 	BuildingSpace laboratoy
 	{
-		{ pos "739 0" }
+		{ pos "739 5" }
 
 		button smlicon { icon	"icons/building_lab" }
 		string label { string	"_Laboratory" }
@@ -780,29 +780,29 @@ window research extends BaseMgmtWindow
 	// Research info box (bottom right)
 	panel researchinfo {
 		{
-			pos			"730 100"
-			size		"285 640"
+			pos			"731 80"
+			size		"292 680"
 		}
 
 		string name {
-			pos			"15 25"
-			size		"260 20"
+			pos			"0 2"
+			size		"292 20"
 			font		"f_small_bold"
 			longlines	LONGLINES_PRETTYCHOP
 			contentalign	ALIGN_CC
 			ghost		true
 		}
 		image img {
-			pos			"15 50"
-			size		"260 470"
+			pos			"0 20"
+			size		"292 660"
 			preventratio	true
 			contentalign	ALIGN_CC
 			ghost		true
 		}
 		model mdl {
 			angles		"0 0 90"
-			pos			"25 50"
-			size		"260 570"
+			pos			"0 20"
+			size		"292 660"
 			autoscale	true
 			omega		"0 -3 0"
 			rotatewithmouse	true
