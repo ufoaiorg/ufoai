@@ -810,11 +810,14 @@ window research extends BaseMgmtWindow
 			contentalign	ALIGN_CR
 		}
 
+        /**
+         * @brief Passes information on capacity scientiets and laboratory space
+         * @param <1> scientists free
+         * @param <2> scientists all
+         * @param <3> labspace free
+         * @param <4> labspace all
+         */
 		confunc ui_research_update_caps {
-			*node:parent.scientists_free@string = "<1>"
-			*node:parent.scientists_all@string = "<2>"
-			*node:parent.labspace_free@string = "<3>"
-			*node:parent.labspace_all@string = "<4>"
 			// a little hack for now
 			*node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
 			*node:root.laboratoy.data_bar@current = (<4> - <3>)
