@@ -780,8 +780,8 @@ window research extends BaseMgmtWindow
 	// Research info box (bottom right)
 	panel researchinfo {
 		{
-			pos			"730 200"
-			size		"285 540"
+			pos			"730 100"
+			size		"285 640"
 		}
 
 		string name {
@@ -802,7 +802,7 @@ window research extends BaseMgmtWindow
 		model mdl {
 			angles		"0 0 90"
 			pos			"25 50"
-			size		"260 470"
+			size		"260 570"
 			autoscale	true
 			omega		"0 -3 0"
 			rotatewithmouse	true
