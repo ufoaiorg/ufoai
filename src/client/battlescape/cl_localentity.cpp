@@ -1743,15 +1743,12 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
  */
 static inline void CL_TraceBounds (const Line& trLine, const AABB& objBox, AABB& cBox)
 {
-	for (int i = 0; i < 3; i++) {
-		if (trLine.stop[i] > trLine.start[i]) {
-			cBox.mins[i] = trLine.start[i] + objBox.mins[i] - 1;
-			cBox.maxs[i] = trLine.stop[i] + objBox.maxs[i] + 1;
-		} else {
-			cBox.mins[i] = trLine.stop[i] + objBox.mins[i] - 1;
-			cBox.maxs[i] = trLine.start[i] + objBox.maxs[i] + 1;
-		}
-	}
+	AABB endBox(objBox);		/* get the object */
+	endBox.shift(trLine.stop);	/* move it to end position */
+	cBox.set(objBox);
+	cBox.shift(trLine.start);	/* object in starting position */
+	cBox.add(endBox);			/* the whole box */
+	cBox.expand(1);
 }
 
 /**
