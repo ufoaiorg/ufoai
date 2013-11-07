@@ -762,69 +762,20 @@ window research extends BaseMgmtWindow
 		onClick			{ cmd "ui_close research; ui_close bases;" }
 	}
 
-	// Capacity Box (top right)
-	panel capbox {
-		{
-			pos		"730 80"
-			size	"285 95"
-			background	"ui/panel_grey_green"
-		}
-
-		string header_capacity {
-			string 		"_Capacity"
-			pos			"25 25"
-			size		"210 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CL
-		}
-		string header_free {
-			string 		"_idle"
-			pos			"110 25"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-		string header_all {
-			string 		"_all"
-			pos			"180 25"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-		string labspace_caption {
-			string 		"_Laboratory"
-			pos			"25 50"
-			size		"230 20"
-			font		"f_small"
-		}
-		string labspace_free {
-			pos			"110 50"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string labspace_all {
-			pos			"180 50"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-
-        /**
-         * @brief Passes information on capacity scientiets and laboratory space
-         * @param <1> scientists free
-         * @param <2> scientists all
-         * @param <3> labspace free
-         * @param <4> labspace all
-         */
-		confunc ui_research_update_caps {
-			// a little hack for now
-			*node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
-			*node:root.laboratoy.data_bar@current = (<4> - <3>)
-			*node:root.laboratoy.data_bar@max = <4>
-			*node:root.laboratoy.data@string = <node:root.laboratoy.data_bar@current>/<4>
-		}
-	}
+    /**
+     * @brief Passes information on capacity scientiets and laboratory space
+     * @param <1> scientists free
+     * @param <2> scientists all
+     * @param <3> labspace free
+     * @param <4> labspace all
+     */
+    confunc ui_research_update_caps {
+        // a little hack for now
+        *node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
+        *node:root.laboratoy.data_bar@current = (<4> - <3>)
+        *node:root.laboratoy.data_bar@max = <4>
+        *node:root.laboratoy.data@string = <node:root.laboratoy.data_bar@current>/<4>
+    }
 
 	// Research info box (bottom right)
 	panel researchinfo {
