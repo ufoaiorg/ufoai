@@ -364,6 +364,7 @@ typedef void (*drawSurfaceFunc)(const mBspSurfaces_t* surfs, glElementIndex_t* i
 
 /**
  * @param[in] drawFunc The function pointer to the surface draw function
+ * @param[in] surfType The primary rendering type of the surface
  */
 static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfType)
 {
