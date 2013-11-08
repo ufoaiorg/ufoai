@@ -150,6 +150,25 @@ void CP_SetEquipContainer (character_t* chr)
 }
 
 /**
+ * @brief Reload or remove weapons in container
+ */
+static void CP_CleanupContainerWeapons (equipDef_t* ed, containerIndex_t container, character_t* chr)
+{
+	Item* ic, *next;
+
+	for (ic = chr->inv.getContainer2(container); ic; ic = next) {
+		next = ic->getNext();
+		if (ed->numItems[ic->def()->idx] > 0) {
+			CP_AddWeaponAmmo(ed, ic);
+		} else {
+			/* Drop ammo used for reloading and sold carried weapons. */
+			if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
+				cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
+		}
+	}
+}
+
+/**
  * @brief Reloads weapons, removes not assigned and resets defaults
  * @param[in] base Pointer to a base for given team.
  * @param[in] ed equipDef_t pointer to equipment
@@ -194,23 +213,13 @@ void CP_CleanupTeam (base_t* base, equipDef_t* ed)
 			if (employee->transfer)
 				continue;
 
-			Item* ic, *next;
 			character_t* chr = &employee->chr;
 #if 0
 			/* ignore items linked from any temp container */
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = chr->inv.getContainer2(container); ic; ic = next) {
-				next = ic->getNext();
-				if (ed->numItems[ic->def()->idx] > 0) {
-					CP_AddWeaponAmmo(ed, ic);
-				} else {
-					/* Drop ammo used for reloading and sold carried weapons. */
-					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
-						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
-				}
-			}
+			CP_CleanupContainerWeapons(ed, container, chr);
 		}
 	}
 }
@@ -237,7 +246,6 @@ void CP_CleanupAircraftTeam (aircraft_t* aircraft, equipDef_t* ed)
 
 	for (container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
-			Item* ic, *next;
 			character_t* chr = &employee->chr;
 
 			/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
@@ -254,16 +262,7 @@ void CP_CleanupAircraftTeam (aircraft_t* aircraft, equipDef_t* ed)
 			if (INVDEF(container)->temp)
 				continue;
 #endif
-			for (ic = chr->inv.getContainer2(container); ic; ic = next) {
-				next = ic->getNext();
-				if (ed->numItems[ic->def()->idx] > 0) {
-					CP_AddWeaponAmmo(ed, ic);
-				} else {
-					/* Drop ammo used for reloading and sold carried weapons. */
-					if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
-						cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
-				}
-			}
+			CP_CleanupContainerWeapons(ed, container, chr);
 		}
 	}
 }
