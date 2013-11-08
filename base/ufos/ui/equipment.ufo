@@ -140,11 +140,11 @@ window equipment extends objectinfo
 		*node:root.equip_ammo@viewpos = 0
 	}
 
-	tab equip_type
+	tab equip_type1
 	{
 		{
 			pos		"400 420"
-			size	"505 40"
+			size	"250 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
 				cmd	"update_item_list;"
@@ -159,6 +159,18 @@ window equipment extends objectinfo
 			label	"_Secondary"
 			value	"1"
 		}
+	}
+	tab equip_type2
+	{
+		{
+			pos		"400 460"
+			size	"250 40"
+			cvar	*cvar:mn_equiptype
+			onChange {
+				cmd	"update_item_list;"
+			}
+		}
+
 		option heavy {
 			label	"_Heavy"
 			value	"2"
@@ -640,8 +652,8 @@ window equipment extends objectinfo
     }
 
 	baseinventory equip		{
-		pos						"422 470"
-		size					"207 252"
+		pos						"422 510"
+		size					"207 212"
 		displayweapon			true
 		displayammoofweapon		true
 		displayunavailableitem	true
@@ -650,20 +662,6 @@ window equipment extends objectinfo
 			*node:root.equip_scroll@current = <viewpos>
 			*node:root.equip_scroll@viewsize = <viewsize>
 			*node:root.equip_scroll@fullsize = <fullsize>
-		}
-		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
-		onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;" }
-	}
-
-	baseinventory equip_ammo	{
-		pos				"702 470"
-		size			"207 252"
-		displayammo		true
-		columns			2
-		onViewChange {
-			*node:root.equip_ammo_scroll@current = <viewpos>
-			*node:root.equip_ammo_scroll@viewsize = <viewsize>
-			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
 		onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;" }
