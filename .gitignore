@@ -34,6 +34,7 @@ gmon.out
 /base/pics/banks/autogen*
 /base/ufos/*_autogen.ufo
 crashdump.txt
+stdout.txt
 stderr.txt
 /src/po/ufoai.c1.po
 /src/po/ufoai.c.po
@@ -44,3 +45,4 @@ stderr.txt
 /debian/ufoai-uforadiant
 /stamps
 .autotools
+*.layout
