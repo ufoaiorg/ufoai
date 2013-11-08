@@ -503,32 +503,6 @@ window equipment extends objectinfo
 	}
 
 */
-	/**
-	 * @sa CL_InitSkin_f
-	 * @sa team_initskin
-	 */
-/*	selectbox skins {
-		pos		"660 290"
-		size	"120 40"
-		cvar	*cvar:mn_body_skin
-		// TODO: ui_team_changeskin is only available in the campaign cgame
-		onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
-		dataid	OPTION_SINGLEPLAYER_SKINS
-	}
-
-	// ==================
-	// Containers (see inventory.ufo for the definition)
-	// ==================
-
-	container implant	{ pos "548 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container right		{ pos "548 178"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container left		{ pos "872 178"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container backpack	{ pos "872 54"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container belt		{ pos "569 273"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container holster	{ pos "898 270"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-	container headgear	{ pos "678 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-
-*/
     // Inventory and stats panel
     panel inv_stats_hud
     {
@@ -631,7 +605,25 @@ window equipment extends objectinfo
             size	"351 349"
             src		"/ui/inv_bg"
         }
-        //container implant	{ pos "548 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        /**
+         * @sa CL_InitSkin_f
+         * @sa team_initskin
+         */
+        selectbox skins {
+            pos		"115 59"
+            size	"120 40"
+            cvar	*cvar:mn_body_skin
+            // TODO: ui_team_changeskin is only available in the campaign cgame
+            onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
+            dataid	OPTION_SINGLEPLAYER_SKINS
+        }
+
+
+	// ==================
+	// Containers (see inventory.ufo for the definition)
+	// ==================
+
+        //container implant	{ pos "13 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container headgear	{ pos "88 85" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container backpack	{ pos "236 59" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container right		{ pos "13 146" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
