@@ -631,13 +631,14 @@ window equipment extends objectinfo
             size	"351 349"
             src		"/ui/inv_bg"
         }
-        container headgear	{ pos "88 85" }
-        container backpack	{ pos "236 59" }
-        container right		{ pos "13 146" }
-        container left		{ pos "236 146" }
-        container belt		{ pos "13 204" }
-        container holster	{ pos "285 204" }
-        container floor		{ pos "10 282" }
+        //container implant	{ pos "548 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container headgear	{ pos "88 85" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container backpack	{ pos "236 59" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container right		{ pos "13 146" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container left		{ pos "236 146" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container belt		{ pos "13 204" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container holster	{ pos "285 204" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+        container floor		{ pos "10 282" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container armour	{
             pos "130 131"
             color "1 1 1 0"		// active, but display it transparent
