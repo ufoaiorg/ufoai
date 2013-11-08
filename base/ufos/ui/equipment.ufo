@@ -105,52 +105,51 @@ window equipment extends objectinfo
 	data selected {
 	}
 
-	rows soldierlist_lines {
-		pos			"55 18"
-		size		"260 320"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-	panel soldierlist {
-		pos			"55 18"
-		size		"260 320"
-		padding		6
-		layout		LAYOUT_TOP_DOWN_FLOW
-		wheelscrollable	true
+	panel soldiers
+    {
+        {
+            pos			"55 18"
+            size		"280 320"
+        }
+        panel soldierlist {
+            pos			"0 0"
+            size		"260 320"
+            padding		6
+            layout		LAYOUT_TOP_DOWN_FLOW
+            wheelscrollable	true
 
-		onViewChange {
-			*node:parent.soldierlist_scroll@fullsize = <fullsize>
-			*node:parent.soldierlist_scroll@current = <viewpos>
-			*node:parent.soldierlist_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar soldierlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"317 18"
-		height		"320"
-		current		0
-		viewsize	8
-		fullsize	50
+            onViewChange {
+                *node:parent.soldierlist_scroll@fullsize = <fullsize>
+                *node:parent.soldierlist_scroll@current = <viewpos>
+                *node:parent.soldierlist_scroll@viewsize = <viewsize>
+            }
+        }
+        vscrollbar soldierlist_scroll {
+            image		"ui/scrollbar_v_green"
+            pos			"262 0"
+            height		"320"
+            current		0
+            viewsize	8
+            fullsize	50
 
-		onChange {
-			*node:parent.soldierlist@viewpos = <current>
-		}
-	}
+            onChange {
+                *node:parent.soldierlist@viewpos = <current>
+            }
+        }
+        confunc equipment_soldierlist_clear {
+            call *node:parent.soldierlist@removeAllChild
+        }
+        confunc equipment_soldierlist_add {
+            call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
+            *node:parent.soldierlist.member<1>.id@integer = <1>
+            *node:parent.soldierlist.member<1>.name@string = <2>
 
-	confunc equipment_soldierlist_clear {
-		call *node:parent.soldierlist@removeAllChild
-	}
-	confunc equipment_soldierlist_add {
-		call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
-		*node:parent.soldierlist.member<1>.id@integer = <1>
-		*node:parent.soldierlist.member<1>.name@string = <2>
-
-		if ( *node:root.selected@integer < 0 ) {
-			cmd "equipment_soldierlist_select <1>;"
-			*node:root.selected@integer = <1>
-		}
-	}
+            if ( *node:root.selected@integer < 0 ) {
+                cmd "equipment_soldierlist_select <1>;"
+                *node:root.selected@integer = <1>
+            }
+        }
+    }
 	confunc equipment_soldierlist_select {
 		if ( *node:root.selected@integer >= 0 ) {
 			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
