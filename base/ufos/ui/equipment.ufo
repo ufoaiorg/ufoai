@@ -734,6 +734,12 @@ window equipment extends objectinfo
         container belt		{ pos "13 204" }
         container holster	{ pos "285 204" }
         container floor		{ pos "10 282" }
+        container armour	{
+            pos "130 131"
+            color "1 1 1 0"		// active, but display it transparent
+            onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
+            onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+        }
     }
 
 	baseinventory equip		{
