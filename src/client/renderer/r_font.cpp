@@ -294,6 +294,10 @@ static int R_FontChunkLength (const font_t* f, char* text, int len)
  * with a clean break such as at a word boundary.
  * Can temporarily modify the caller's string but leaves it unchanged.
  * Assumes whole string won't fit.
+ * @param[in] font The font we are using
+ * @param[in] text The text to squeeze into maxWidth
+ * @param[in] maxlen The net length of the text (without trailing spaces)
+ * @param[in] maxWidth The number of available pixels
  * @param[out] widthp Pixel width of part that fits.
  * @return String length of part that fits.
  */
