@@ -93,20 +93,6 @@ window equipment extends objectinfo
 		}
 	}
 
-	button bt_deequipsoldier {
-		string "_Remove all"
-		pos		"348 305"
-		size	"180 35"
-		background	"ui/button_blue"
-		color	"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-
-		onClick	{
-			cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
-			cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
-		}
-	}
-
 	// ==================
 	// category buttons
 	// ==================
@@ -617,6 +603,7 @@ window equipment extends objectinfo
             size	"351 349"
             src		"/ui/inv_bg"
         }
+
         /**
          * @sa CL_InitSkin_f
          * @sa team_initskin
@@ -629,6 +616,32 @@ window equipment extends objectinfo
             onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
             dataid	OPTION_SINGLEPLAYER_SKINS
         }
+
+        button bt_deequipsoldier {
+            string "_Remove all"
+            pos		"220 0"
+            size	"140 30"
+            background	"ui/button_blue"
+            color	"1 1 1 0.8"
+            selectcolor "1 1 1 1"
+
+            onClick	{
+                cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
+                cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
+            }
+        }
+
+    	button bt_load
+        {
+            pos "220 30"
+            contentalign ALIGN_CL
+            string	"_0/0 Kg"
+            color "1 1 1 1"
+            flashcolor "1 0 0 1"
+            size "285 22"
+            onClick { cmd "mn_updateactorload equip_actorload;" }
+        }
+
 
 
 	// ==================
@@ -648,6 +661,17 @@ window equipment extends objectinfo
             color "1 1 1 0"		// active, but display it transparent
             onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
             onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+        }
+
+        confunc equip_actorload {
+            *node:parent.bt_load@string = "<1>"
+            *node:parent.bt_load@tooltip = "<2>"
+            *node:root.load_warnings@integer = "<4>"
+            if ( <3> > 0 ) { *node:parent.bt_load@color = "0 1 0 1" }
+            elif ( <3> < 0 ) { *node:parent.bt_load@color = "1 1 0 1" }
+            else { *node:parent.bt_load@color = "1 1 1 1" }
+            if ( <4> > 0 ) { *node:parent.bt_load@flash = true }
+            else { *node:parent.bt_load@flash = false }
         }
     }
 
@@ -685,31 +709,10 @@ window equipment extends objectinfo
 		}
 	}
 
-/*	button bt_load
-	{
-		pos "604 311"
-		contentalign ALIGN_CL
-		string	"_0/0 Kg"
-		color "1 1 1 1"
-		flashcolor "1 0 0 1"
-		size "285 22"
-		onClick { cmd "mn_updateactorload equip_actorload;" }
-	}
-*/
 	data load_warnings {
 		integer 0
 	}
 
-	confunc equip_actorload {
-		*node:root.bt_load@string = "<1>"
-		*node:root.bt_load@tooltip = "<2>"
-		*node:root.load_warnings@integer = "<4>"
-		if ( <3> > 0 ) { *node:root.bt_load@color = "0 1 0 1" }
-		elif ( <3> < 0 ) { *node:root.bt_load@color = "1 1 0 1" }
-		else { *node:root.bt_load@color = "1 1 1 1" }
-		if ( <4> > 0 ) { *node:root.bt_load@flash = true }
-		else { *node:root.bt_load@flash = false }
-	}
 
 	// ==================
 	// additional stuff
