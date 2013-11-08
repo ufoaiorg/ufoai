@@ -30,12 +30,9 @@ window equipment extends objectinfo
 	// background
 	// ==================
 
-	image background
-	{
-		src	"background/equipment_bg"
-	}
+//	image background	{		src	"background/equipment_bg"	}
 
-	string s_backpack
+/*	string s_backpack
 	{
 		pos "852 25"
 		contentalign ALIGN_UC
@@ -97,7 +94,7 @@ window equipment extends objectinfo
 		color "0 0.6 0 1"
 		size "160 25"
 	}
-
+*/
 	// ==================
 	// names list
 	// ==================
@@ -214,7 +211,7 @@ window equipment extends objectinfo
 	tab equip_type
 	{
 		{
-			pos		"400 365"
+			pos		"400 420"
 			size	"505 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
@@ -545,7 +542,7 @@ window equipment extends objectinfo
 		}
 	}
 
-	// ==================
+/*	// ==================
 	// inventory
 	// ==================
 
@@ -594,12 +591,12 @@ window equipment extends objectinfo
 			scale	"1.0 1.0 1.0"
 		}
 	}
-
+*/
 	/**
 	 * @sa CL_InitSkin_f
 	 * @sa team_initskin
 	 */
-	selectbox skins {
+/*	selectbox skins {
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_body_skin
@@ -626,10 +623,122 @@ window equipment extends objectinfo
 		onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
 		onSelect { cmd "object_update <lastselectedid> update_item_list;" }
 	}
+*/
+    // Inventory and stats panel
+    panel inv_stats_hud
+    {
+        {
+            pos			"400 1"
+            size		"560 418"
+            bgcolor		"0 0.15 0.1 0.7"
+            bordercolor	"0.58 0.81 0.758 0.7"
+            border		"2"
+            onMouseEnter	{
+                *node:this@bgcolor = "0 0.21 0.158 0.7"
+            }
+            onMouseLeave	{
+                *node:this@bgcolor = "0 0.15 0.1 0.7"
+            }
+        }
+        // Top bar
+        string name
+        {
+            string			*cvar:mn_name
+            pos				"8 0"
+            size			"300 25"
+            font			"f_small_bold"
+            color			"0.56 0.81 0.76 1"
+            longlines		LONGLINES_CHOP
+            contentalign	ALIGN_LL
+            ghost			true
+        }
+        string rank
+        {
+            string			*cvar:mn_chrrank
+            pos				"8 25"
+            size			"300 15"
+            font			"f_verysmall"
+            color			"0.56 0.81 0.76 1"
+            longlines		LONGLINES_CHOP
+            contentalign	ALIGN_UL
+            ghost			true
+        }
+        controls drag
+        {
+            pos		"0 0"
+            size	"560 40"
+        }
+        button close
+        {
+            icon			"icons/windowclose"
+            tooltip			"_Close"
+            pos				"530 10"
+            size			"18	18"
+            onClick			{ cmd "ui_pop;" }
+        }
+        // @TODO: make next/prev soldier btns work
+        button next
+        {
+            icon			"icons/windownext"
+            tooltip			"_Next soldier"
+            pos				"506 10"
+            size			"18	18"
+            onClick			{ cmd "nextsoldier;" }
+        }
+        button prev
+        {
+            icon			"icons/windowprev"
+            tooltip			"_Previous soldier"
+            pos				"482 10"
+            size			"18	18"
+            onClick			{ cmd "prevsoldier;" }
+        }
+        // Inventory area
+        image rank_img
+        {
+            pos 		"10 46"
+            size 		"64 64"
+            src 		*cvar:mn_chrrank_img
+        }
+        model actor
+        {
+            {
+                src		*cvar:mn_body
+                skin	*cvar:mn_body_skin
+                anim	"stand_menu"
+                origin	"0 -25 0"
+                angles	"0 82 90"
+                scale	"5 5 5"
+                pos		"86 81"
+                size	"191 262"
+            }
+            model head
+            {
+                src		*cvar:mn_head
+                skin	*cvar:mn_head_skin
+                tag		"tag_head"
+                scale	"1.0 1.0 1.0"
+            }
+        }
+        image inv_bg
+        {
+            pos		"10 59"
+            size	"351 349"
+            src		"/ui/inv_bg"
+        }
+        container headgear	{ pos "88 85" }
+        container backpack	{ pos "236 59" }
+        container right		{ pos "13 146" }
+        container left		{ pos "236 146" }
+        // Armour is not switchable in combat - thus no display of "container armour" needed.
+        container belt		{ pos "13 204" }
+        container holster	{ pos "285 204" }
+        container floor		{ pos "10 282" }
+    }
 
 	baseinventory equip		{
-		pos						"422 415"
-		size					"207 317"
+		pos						"422 470"
+		size					"207 252"
 		displayweapon			true
 		displayammoofweapon		true
 		displayunavailableitem	true
@@ -644,8 +753,8 @@ window equipment extends objectinfo
 	}
 
 	baseinventory equip_ammo	{
-		pos				"702 418"
-		size			"207 317"
+		pos				"702 470"
+		size			"207 252"
 		displayammo		true
 		columns			2
 		onViewChange {
@@ -659,7 +768,7 @@ window equipment extends objectinfo
 
 	vscrollbar equip_scroll {
 		image	"ui/scrollbar_v_green"
-		pos "629 405"	height	"339"
+		pos "629 470"	height	"275"
 		hidewhenunused true
 		onChange {
 			*node:root.equip@viewpos = <current>
@@ -675,7 +784,7 @@ window equipment extends objectinfo
 		}
 	}
 
-	button bt_load
+/*	button bt_load
 	{
 		pos "604 311"
 		contentalign ALIGN_CL
@@ -685,7 +794,7 @@ window equipment extends objectinfo
 		size "285 22"
 		onClick { cmd "mn_updateactorload equip_actorload;" }
 	}
-
+*/
 	data load_warnings {
 		integer 0
 	}
