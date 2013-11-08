@@ -37,7 +37,7 @@ window equipment extends objectinfo
 	panel soldiers
     {
         {
-            pos			"55 18"
+            pos			"5 10"
             size		"280 320"
         }
         panel soldierlist {
@@ -129,8 +129,8 @@ window equipment extends objectinfo
 	tab equip_type1
 	{
 		{
-			pos		"400 420"
-			size	"250 40"
+			pos		"731 10"
+			size	"280 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
 				cmd	"update_item_list;"
@@ -149,8 +149,8 @@ window equipment extends objectinfo
 	tab equip_type2
 	{
 		{
-			pos		"400 460"
-			size	"250 40"
+			pos		"731 50"
+			size	"280 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
 				cmd	"update_item_list;"
@@ -431,7 +431,7 @@ window equipment extends objectinfo
 	panel abilities
 	{
 		{
-			pos			"731 460"
+			pos			"731 410"
 			size		"200 125"
 			ghost		true
 		}
@@ -476,7 +476,7 @@ window equipment extends objectinfo
 	panel skills
 	{
 		{
-			pos			"731 592"
+			pos			"731 552"
 			size		"200 155"
 			ghost		true
 		}
@@ -603,12 +603,12 @@ window equipment extends objectinfo
 	}
 
 */
-    // Inventory and stats panel
-    panel inv_stats_hud
+    // Paperdoll panel
+    panel paperdoll
     {
         {
-            pos			"400 1"
-            size		"560 418"
+            pos			"290 10"
+            size		"400 418"
             bgcolor		"0 0.15 0.1 0.7"
             bordercolor	"0.58 0.81 0.758 0.7"
             border		"2"
@@ -642,7 +642,7 @@ window equipment extends objectinfo
             contentalign	ALIGN_UL
             ghost			true
         }
-        controls drag
+/*        controls drag
         {
             pos		"0 0"
             size	"560 40"
@@ -671,7 +671,8 @@ window equipment extends objectinfo
             pos				"482 10"
             size			"18	18"
             onClick			{ cmd "prevsoldier;" }
-        }
+        }*/
+
         // Inventory area
         image rank_img
         {
@@ -778,8 +779,8 @@ window equipment extends objectinfo
     }
 
 	baseinventory equip		{
-		pos						"422 510"
-		size					"207 212"
+		pos						"723 90"
+		size					"257 312"
 		displayweapon			true
 		displayammoofweapon		true
 		displayunavailableitem	true
@@ -795,7 +796,7 @@ window equipment extends objectinfo
 
 	vscrollbar equip_scroll {
 		image	"ui/scrollbar_v_green"
-		pos "629 470"	height	"275"
+		pos "980 90"	height	"310"
 		hidewhenunused true
 		onChange {
 			*node:root.equip@viewpos = <current>
