@@ -26,75 +26,7 @@ window equipment extends objectinfo
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
-	// ==================
-	// background
-	// ==================
 
-//	image background	{		src	"background/equipment_bg"	}
-
-/*	string s_backpack
-	{
-		pos "852 25"
-		contentalign ALIGN_UC
-		string	"_Backpack"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_left
-	{
-		pos "852 150"
-		contentalign ALIGN_UC
-		string	"_Left Hand"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_right
-	{
-		pos "530 150"
-		contentalign ALIGN_UC
-		string	"_Right Hand"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_implant
-	{
-		pos "530 76"
-		contentalign ALIGN_UC
-		string	"_Implant"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_headgear
-	{
-		pos "620 76"
-		contentalign ALIGN_UC
-		string	"_Headgear"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_holster
-	{
-		pos "852 245"
-		contentalign ALIGN_UC
-		string	"_Holster"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
-	string s_belt
-	{
-		pos "530 245"
-		contentalign ALIGN_UC
-		string	"_Belt"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-*/
 	// ==================
 	// names list
 	// ==================
@@ -570,27 +502,6 @@ window equipment extends objectinfo
 		onClick		{ call *node:parent.name@edit }
 	}
 
-	model body
-	{
-		{
-			src		*cvar:mn_body
-			skin	*cvar:mn_body_skin
-			anim	"stand_menu"
-			angles	"0 105 90"
-			scale	"4 4 4"
-			pos		"675 75"
-			size	"197 258"
-			origin	"0 -30 0"
-		}
-
-		model head
-		{
-			src		*cvar:mn_head
-			skin	*cvar:mn_head_skin
-			tag		"tag_head"
-			scale	"1.0 1.0 1.0"
-		}
-	}
 */
 	/**
 	 * @sa CL_InitSkin_f
@@ -617,12 +528,6 @@ window equipment extends objectinfo
 	container holster	{ pos "898 270"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
 	container headgear	{ pos "678 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
 
-	container armour	{
-		pos "735 100"
-		color "1 1 1 0"		// active, but display it transparent
-		onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
-		onSelect { cmd "object_update <lastselectedid> update_item_list;" }
-	}
 */
     // Inventory and stats panel
     panel inv_stats_hud
@@ -730,7 +635,6 @@ window equipment extends objectinfo
         container backpack	{ pos "236 59" }
         container right		{ pos "13 146" }
         container left		{ pos "236 146" }
-        // Armour is not switchable in combat - thus no display of "container armour" needed.
         container belt		{ pos "13 204" }
         container holster	{ pos "285 204" }
         container floor		{ pos "10 282" }
