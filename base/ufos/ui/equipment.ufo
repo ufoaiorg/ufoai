@@ -546,4 +546,14 @@ window equipment extends objectinfo
 		}
 		cmd "update_item_list;"
 	}
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
 }
