@@ -518,16 +518,6 @@ window equipment extends objectinfo
 	// ==================
 	// additional stuff
 	// ==================
-	button bt_go {
-		tooltip			"_Done"
-		background		"buttons/large_blue"
-		pos				"940 720"
-		size			"64 37"
-		icon			"icons/return"
-		onClick {
-			cmd "ui_pop;"
-		}
-	}
 
 	func onWindowClosed {
 		/** @note Do not define action here
