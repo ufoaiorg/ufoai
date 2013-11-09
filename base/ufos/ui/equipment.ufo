@@ -17,7 +17,7 @@ component equipSoldier extends panel {
 	string name {
 		pos			"0 0"
 		color	    "0.56 0.81 0.76 1"
-		size		"260 25"
+		size		"285 25"
 		onClick {
 			cmd "equipment_soldierlist_select <node:parent.id@integer>;"
 		}
@@ -226,20 +226,6 @@ window equipment extends objectinfo
                     dataid	OPTION_SINGLEPLAYER_SKINS
                 }
 
-                button bt_deequipsoldier {
-                    string "_Remove all"
-                    pos		"220 0"
-                    size	"140 30"
-                    background	"ui/button_blue"
-                    color	"1 1 1 0.8"
-                    selectcolor "1 1 1 1"
-
-                    onClick	{
-                        cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
-                        cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
-                    }
-                }
-
                 button bt_load
                 {
                     pos "220 30"
@@ -280,6 +266,19 @@ window equipment extends objectinfo
                     else { *node:parent.bt_load@color = "1 1 1 1" }
                     if ( <4> > 0 ) { *node:parent.bt_load@flash = true }
                     else { *node:parent.bt_load@flash = false }
+                }
+            }
+
+            MainMenu3Btn bt_deequipsoldier {
+                string			"_Remove all"
+                pos				"420 475"
+                size			"140 30"
+                font			"f_small_bold"
+                color			"0 0 0 0.9"
+                selectcolor		"0 0 0 1"
+                onClick	{
+                    cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
+                    cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
                 }
             }
         }//end mainBody
