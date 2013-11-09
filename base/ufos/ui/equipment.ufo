@@ -185,7 +185,7 @@ window equipment extends objectinfo
 		}
 	}
 
-	// ==================
+/*	// ==================
 	// item description
 	// ==================
 
@@ -316,7 +316,17 @@ window equipment extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
-	}
+	}*/
+
+    // Object description panel
+    ObjectInfo details
+    {
+        {
+            pos				"4 574"
+            border			"2"
+            bordercolor		"0.527 0.6 0.21 1"
+        }
+    }
 
 	// ==================
 	// actor stats
