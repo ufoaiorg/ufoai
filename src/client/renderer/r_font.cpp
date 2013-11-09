@@ -255,6 +255,7 @@ void R_FontListCache_f (void)
 
 /**
  * @param[in] string String to build the hash value for
+ * @param[in] font The font the string uses
  * @return hash value for given string
  */
 static int R_FontHash (const char* string, const font_t* font)
@@ -490,7 +491,7 @@ static wrapCache_t* R_FontWrapText (const font_t* f, const char* text, int maxWi
 	 * matches. Since the hash value also matches and the hash was taken
 	 * over the whole string, this is good enough. */
 	for (wrap = hash[hashValue]; wrap; wrap = wrap->next)
-		/* big string are cut, we must not test the 256th character ('\0') */
+		/* big strings are cut, we must not test the 256th character ('\0') */
 		if (!strncmp(text, wrap->text, sizeof(wrap->text) - 1)
 		 && wrap->font == f
 		 && wrap->method == method
