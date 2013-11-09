@@ -38,6 +38,248 @@ window equipment extends objectinfo
 {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+	// Base name and container panel
+	BaseContainerPanelV2 base_container
+	{
+		// Equipment panel
+		panel mainBody
+		{
+			{ size "715 534" }
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Equipment"
+				}
+			}
+            panel soldiers
+            {
+                {
+                    pos			"5 40"
+                    size		"280 320"
+                }
+                panel soldierlist {
+                    pos			"0 0"
+                    size		"260 320"
+                    padding		6
+                    layout		LAYOUT_TOP_DOWN_FLOW
+                    wheelscrollable	true
+
+                    onViewChange {
+                        *node:parent.soldierlist_scroll@fullsize = <fullsize>
+                        *node:parent.soldierlist_scroll@current = <viewpos>
+                        *node:parent.soldierlist_scroll@viewsize = <viewsize>
+                    }
+                }
+                vscrollbar soldierlist_scroll {
+                    image		"ui/scrollbar_v_green"
+                    pos			"262 0"
+                    height		"320"
+                    //hidewhenunused true
+                    current		0
+                    viewsize	8
+                    fullsize	50
+
+                    onChange {
+                        *node:parent.soldierlist@viewpos = <current>
+                    }
+                }
+                confunc equipment_soldierlist_clear {
+                    call *node:parent.soldierlist@removeAllChild
+                }
+                confunc equipment_soldierlist_add {
+                    call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
+                    *node:parent.soldierlist.member<1>.id@integer = <1>
+                    *node:parent.soldierlist.member<1>.name@string = <2>
+
+                    if ( *node:root.selected@integer < 0 ) {
+                        cmd "equipment_soldierlist_select <1>;"
+                        *node:root.selected@integer = <1>
+                    }
+                }
+            }
+            confunc equipment_soldierlist_select {
+                if ( *node:root.selected@integer >= 0 ) {
+                    *node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+                }
+                *node:root.selected@integer = <1>
+                *cvar:mn_ucn = <1>
+                if ( *node:root.selected@integer >= 0 ) {
+                    *node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+                    *node:root.load_warnings@integer = 0
+                    cmd "ui_team_select_ucn <node:root.selected@integer>;"
+                    cmd "mn_updateactorload equip_actorload;"
+                }
+            }
+            // Paperdoll panel
+            panel paperdoll
+            {
+                {
+                    pos			"290 40"
+                    size		"400 418"
+                    bgcolor		"0 0.15 0.1 0.7"
+                    bordercolor	"0.58 0.81 0.758 0.7"
+                    border		"2"
+                    onMouseEnter	{
+                        *node:this@bgcolor = "0 0.21 0.158 0.7"
+                    }
+                    onMouseLeave	{
+                        *node:this@bgcolor = "0 0.15 0.1 0.7"
+                    }
+                }
+
+                textentry name
+                {
+                    string		*cvar:mn_name
+                    tooltip		"_Rename your unit"
+                    pos			"3 0"
+                    size		"220 32"
+                    color		"0.56 0.81 0.76 1"
+                    onChange	{
+                        cmd "employee_changename;"
+                        cmd "ui_team_fillequip;"
+                        cmd "update_item_list;"
+                        cmd "equipment_soldierlist_select <node:root.selected@integer>;"
+                    }
+                }
+
+                string rank
+                {
+                    string			*cvar:mn_chrrank
+                    pos				"8 25"
+                    size			"300 15"
+                    font			"f_verysmall"
+                    color			"0.56 0.81 0.76 1"
+                    longlines		LONGLINES_CHOP
+                    contentalign	ALIGN_UL
+                    ghost			true
+                }
+        /*
+                // @TODO: make next/prev soldier btns work
+                button next
+                {
+                    icon			"icons/windownext"
+                    tooltip			"_Next soldier"
+                    pos				"506 10"
+                    size			"18	18"
+                    onClick			{ cmd "nextsoldier;" }
+                }
+                button prev
+                {
+                    icon			"icons/windowprev"
+                    tooltip			"_Previous soldier"
+                    pos				"482 10"
+                    size			"18	18"
+                    onClick			{ cmd "prevsoldier;" }
+                }*/
+
+                // Inventory area
+                image rank_img
+                {
+                    pos 		"10 46"
+                    size 		"64 64"
+                    src 		*cvar:mn_chrrank_img
+                }
+                model actor
+                {
+                    {
+                        src		*cvar:mn_body
+                        skin	*cvar:mn_body_skin
+                        anim	"stand_menu"
+                        origin	"0 -25 0"
+                        angles	"0 82 90"
+                        scale	"5 5 5"
+                        pos		"86 81"
+                        size	"191 262"
+                    }
+                    model head
+                    {
+                        src		*cvar:mn_head
+                        skin	*cvar:mn_head_skin
+                        tag		"tag_head"
+                        scale	"1.0 1.0 1.0"
+                    }
+                }
+                image inv_bg
+                {
+                    pos		"10 59"
+                    size	"351 349"
+                    src		"/ui/inv_bg"
+                }
+
+                /**
+                 * @sa CL_InitSkin_f
+                 * @sa team_initskin
+                 */
+                selectbox skins {
+                    pos		"115 59"
+                    size	"120 40"
+                    cvar	*cvar:mn_body_skin
+                    // TODO: ui_team_changeskin is only available in the campaign cgame
+                    onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
+                    dataid	OPTION_SINGLEPLAYER_SKINS
+                }
+
+                button bt_deequipsoldier {
+                    string "_Remove all"
+                    pos		"220 0"
+                    size	"140 30"
+                    background	"ui/button_blue"
+                    color	"1 1 1 0.8"
+                    selectcolor "1 1 1 1"
+
+                    onClick	{
+                        cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
+                        cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
+                    }
+                }
+
+                button bt_load
+                {
+                    pos "220 30"
+                    contentalign ALIGN_CL
+                    string	"_0/0 Kg"
+                    color "1 1 1 1"
+                    flashcolor "1 0 0 1"
+                    size "285 22"
+                    onClick { cmd "mn_updateactorload equip_actorload;" }
+                }
+
+
+
+            // ==================
+            // Containers (see inventory.ufo for the definition)
+            // ==================
+
+                //container implant	{ pos "13 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container headgear	{ pos "88 85" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container backpack	{ pos "236 59" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container right		{ pos "13 146" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container left		{ pos "236 146" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container belt		{ pos "13 204" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container holster	{ pos "285 204" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                container armour	{
+                    pos "130 131"
+                    color "1 1 1 0"		// active, but display it transparent
+                    onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
+                    onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+                }
+
+                confunc equip_actorload {
+                    *node:parent.bt_load@string = "<1>"
+                    *node:parent.bt_load@tooltip = "<2>"
+                    *node:root.load_warnings@integer = "<4>"
+                    if ( <3> > 0 ) { *node:parent.bt_load@color = "0 1 0 1" }
+                    elif ( <3> < 0 ) { *node:parent.bt_load@color = "1 1 0 1" }
+                    else { *node:parent.bt_load@color = "1 1 1 1" }
+                    if ( <4> > 0 ) { *node:parent.bt_load@flash = true }
+                    else { *node:parent.bt_load@flash = false }
+                }
+            }
+        }//end mainBody
+    } // end base_container
 
 
 	// ==================
@@ -47,65 +289,6 @@ window equipment extends objectinfo
 	data selected {
 	}
 
-	panel soldiers
-    {
-        {
-            pos			"5 10"
-            size		"280 320"
-        }
-        panel soldierlist {
-            pos			"0 0"
-            size		"260 320"
-            padding		6
-            layout		LAYOUT_TOP_DOWN_FLOW
-            wheelscrollable	true
-
-            onViewChange {
-                *node:parent.soldierlist_scroll@fullsize = <fullsize>
-                *node:parent.soldierlist_scroll@current = <viewpos>
-                *node:parent.soldierlist_scroll@viewsize = <viewsize>
-            }
-        }
-        vscrollbar soldierlist_scroll {
-            image		"ui/scrollbar_v_green"
-            pos			"262 0"
-            height		"320"
-            //hidewhenunused true
-            current		0
-            viewsize	8
-            fullsize	50
-
-            onChange {
-                *node:parent.soldierlist@viewpos = <current>
-            }
-        }
-        confunc equipment_soldierlist_clear {
-            call *node:parent.soldierlist@removeAllChild
-        }
-        confunc equipment_soldierlist_add {
-            call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
-            *node:parent.soldierlist.member<1>.id@integer = <1>
-            *node:parent.soldierlist.member<1>.name@string = <2>
-
-            if ( *node:root.selected@integer < 0 ) {
-                cmd "equipment_soldierlist_select <1>;"
-                *node:root.selected@integer = <1>
-            }
-        }
-    }
-	confunc equipment_soldierlist_select {
-		if ( *node:root.selected@integer >= 0 ) {
-			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
-		}
-		*node:root.selected@integer = <1>
-		*cvar:mn_ucn = <1>
-		if ( *node:root.selected@integer >= 0 ) {
-			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
-			*node:root.load_warnings@integer = 0
-			cmd "ui_team_select_ucn <node:root.selected@integer>;"
-			cmd "mn_updateactorload equip_actorload;"
-		}
-	}
 
 	// ==================
 	// category buttons
@@ -299,171 +482,6 @@ window equipment extends objectinfo
 	}
 
 
-    // Paperdoll panel
-    panel paperdoll
-    {
-        {
-            pos			"290 10"
-            size		"400 418"
-            bgcolor		"0 0.15 0.1 0.7"
-            bordercolor	"0.58 0.81 0.758 0.7"
-            border		"2"
-            onMouseEnter	{
-                *node:this@bgcolor = "0 0.21 0.158 0.7"
-            }
-            onMouseLeave	{
-                *node:this@bgcolor = "0 0.15 0.1 0.7"
-            }
-        }
-
-        textentry name
-        {
-            string		*cvar:mn_name
-            tooltip		"_Rename your unit"
-            pos			"3 0"
-            size		"220 32"
-            color		"0.56 0.81 0.76 1"
-            onChange	{
-                cmd "employee_changename;"
-                cmd "ui_team_fillequip;"
-                cmd "update_item_list;"
-                cmd "equipment_soldierlist_select <node:root.selected@integer>;"
-            }
-        }
-
-        string rank
-        {
-            string			*cvar:mn_chrrank
-            pos				"8 25"
-            size			"300 15"
-            font			"f_verysmall"
-            color			"0.56 0.81 0.76 1"
-            longlines		LONGLINES_CHOP
-            contentalign	ALIGN_UL
-            ghost			true
-        }
-/*
-        // @TODO: make next/prev soldier btns work
-        button next
-        {
-            icon			"icons/windownext"
-            tooltip			"_Next soldier"
-            pos				"506 10"
-            size			"18	18"
-            onClick			{ cmd "nextsoldier;" }
-        }
-        button prev
-        {
-            icon			"icons/windowprev"
-            tooltip			"_Previous soldier"
-            pos				"482 10"
-            size			"18	18"
-            onClick			{ cmd "prevsoldier;" }
-        }*/
-
-        // Inventory area
-        image rank_img
-        {
-            pos 		"10 46"
-            size 		"64 64"
-            src 		*cvar:mn_chrrank_img
-        }
-        model actor
-        {
-            {
-                src		*cvar:mn_body
-                skin	*cvar:mn_body_skin
-                anim	"stand_menu"
-                origin	"0 -25 0"
-                angles	"0 82 90"
-                scale	"5 5 5"
-                pos		"86 81"
-                size	"191 262"
-            }
-            model head
-            {
-                src		*cvar:mn_head
-                skin	*cvar:mn_head_skin
-                tag		"tag_head"
-                scale	"1.0 1.0 1.0"
-            }
-        }
-        image inv_bg
-        {
-            pos		"10 59"
-            size	"351 349"
-            src		"/ui/inv_bg"
-        }
-
-        /**
-         * @sa CL_InitSkin_f
-         * @sa team_initskin
-         */
-        selectbox skins {
-            pos		"115 59"
-            size	"120 40"
-            cvar	*cvar:mn_body_skin
-            // TODO: ui_team_changeskin is only available in the campaign cgame
-            onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
-            dataid	OPTION_SINGLEPLAYER_SKINS
-        }
-
-        button bt_deequipsoldier {
-            string "_Remove all"
-            pos		"220 0"
-            size	"140 30"
-            background	"ui/button_blue"
-            color	"1 1 1 0.8"
-            selectcolor "1 1 1 1"
-
-            onClick	{
-                cmd "ui_team_deequip <node:root.selected@integer>;update_item_list;"
-                cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
-            }
-        }
-
-    	button bt_load
-        {
-            pos "220 30"
-            contentalign ALIGN_CL
-            string	"_0/0 Kg"
-            color "1 1 1 1"
-            flashcolor "1 0 0 1"
-            size "285 22"
-            onClick { cmd "mn_updateactorload equip_actorload;" }
-        }
-
-
-
-	// ==================
-	// Containers (see inventory.ufo for the definition)
-	// ==================
-
-        //container implant	{ pos "13 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container headgear	{ pos "88 85" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container backpack	{ pos "236 59" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container right		{ pos "13 146" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container left		{ pos "236 146" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container belt		{ pos "13 204" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container holster	{ pos "285 204" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container armour	{
-            pos "130 131"
-            color "1 1 1 0"		// active, but display it transparent
-            onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
-            onSelect { cmd "object_update <lastselectedid> update_item_list;" }
-        }
-
-        confunc equip_actorload {
-            *node:parent.bt_load@string = "<1>"
-            *node:parent.bt_load@tooltip = "<2>"
-            *node:root.load_warnings@integer = "<4>"
-            if ( <3> > 0 ) { *node:parent.bt_load@color = "0 1 0 1" }
-            elif ( <3> < 0 ) { *node:parent.bt_load@color = "1 1 0 1" }
-            else { *node:parent.bt_load@color = "1 1 1 1" }
-            if ( <4> > 0 ) { *node:parent.bt_load@flash = true }
-            else { *node:parent.bt_load@flash = false }
-        }
-    }
 
 	baseinventory equip		{
 		pos						"723 90"
