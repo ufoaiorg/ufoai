@@ -81,7 +81,7 @@ window equipment extends objectinfo
                     image		"ui/scrollbar_v_green"
                     pos			"287 0"
                     height		"490"
-                    //hidewhenunused true
+                    hidewhenunused true
                     current		0
                     viewsize	8
                     fullsize	50
@@ -390,7 +390,7 @@ window equipment extends objectinfo
 	panel abilities
 	{
 		{
-			pos			"740 410"
+			pos			"740 465"
 			size		"250 125"
 			ghost		true
 		}
@@ -435,7 +435,7 @@ window equipment extends objectinfo
 	panel skills
 	{
 		{
-			pos			"740 552"
+			pos			"740 600"
 			size		"250 155"
 			ghost		true
 		}
@@ -490,7 +490,7 @@ window equipment extends objectinfo
 
 	baseinventory equip		{
 		pos						"740 90"
-		size					"257 312"
+		size					"257 360"
 		displayweapon			true
 		displayammoofweapon		true
 		displayunavailableitem	true
@@ -506,7 +506,7 @@ window equipment extends objectinfo
 
 	vscrollbar equip_scroll {
 		image	"ui/scrollbar_v_green"
-		pos "980 90"	height	"310"
+		pos "980 90"	height	"360"
 		hidewhenunused true
 		onChange {
 			*node:root.equip@viewpos = <current>
