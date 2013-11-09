@@ -99,20 +99,20 @@ window equipment extends objectinfo
                         *node:root.selected@integer = <1>
                     }
                 }
-            }
-            confunc equipment_soldierlist_select {
-                if ( *node:root.selected@integer >= 0 ) {
-                    *node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+                confunc equipment_soldierlist_select {
+                    if ( *node:root.selected@integer >= 0 ) {
+                        *node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+                    }
+                    *node:root.selected@integer = <1>
+                    *cvar:mn_ucn = <1>
+                    if ( *node:root.selected@integer >= 0 ) {
+                        *node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+                        *node:root.load_warnings@integer = 0
+                        cmd "ui_team_select_ucn <node:root.selected@integer>;"
+                        cmd "mn_updateactorload equip_actorload;"
+                    }
                 }
-                *node:root.selected@integer = <1>
-                *cvar:mn_ucn = <1>
-                if ( *node:root.selected@integer >= 0 ) {
-                    *node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
-                    *node:root.load_warnings@integer = 0
-                    cmd "ui_team_select_ucn <node:root.selected@integer>;"
-                    cmd "mn_updateactorload equip_actorload;"
-                }
-            }
+            } // end soldiers
             // Paperdoll panel
             panel paperdoll
             {
@@ -279,7 +279,8 @@ window equipment extends objectinfo
                 }
             }
         }//end mainBody
-    } // end base_container
+    } // end base_container        }
+
 
 
 	// ==================
@@ -326,7 +327,7 @@ window equipment extends objectinfo
 	tab equip_type1
 	{
 		{
-			pos		"731 10"
+			pos		"740 10"
 			size	"280 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
@@ -346,7 +347,7 @@ window equipment extends objectinfo
 	tab equip_type2
 	{
 		{
-			pos		"731 50"
+			pos		"740 50"
 			size	"280 40"
 			cvar	*cvar:mn_equiptype
 			onChange {
@@ -385,7 +386,7 @@ window equipment extends objectinfo
 	panel abilities
 	{
 		{
-			pos			"731 410"
+			pos			"740 410"
 			size		"250 125"
 			ghost		true
 		}
@@ -430,7 +431,7 @@ window equipment extends objectinfo
 	panel skills
 	{
 		{
-			pos			"731 552"
+			pos			"740 552"
 			size		"250 155"
 			ghost		true
 		}
@@ -484,7 +485,7 @@ window equipment extends objectinfo
 
 
 	baseinventory equip		{
-		pos						"723 90"
+		pos						"740 90"
 		size					"257 312"
 		displayweapon			true
 		displayammoofweapon		true
