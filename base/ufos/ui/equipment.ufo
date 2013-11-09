@@ -13,7 +13,7 @@ component equipSoldier extends panel {
 
 	string name {
 		pos			"0 0"
-		color		"0 .78 0 1"
+		color	    "0.56 0.81 0.76 1"
 		size		"260 25"
 		onClick {
 			cmd "equipment_soldierlist_select <node:parent.id@integer>;"
@@ -101,7 +101,7 @@ window equipment extends objectinfo
                 }
                 confunc equipment_soldierlist_select {
                     if ( *node:root.selected@integer >= 0 ) {
-                        *node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+                        *node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
                     }
                     *node:root.selected@integer = <1>
                     *cvar:mn_ucn = <1>
