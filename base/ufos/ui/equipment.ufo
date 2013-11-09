@@ -643,18 +643,22 @@ window equipment extends objectinfo
                 *node:this@bgcolor = "0 0.15 0.1 0.7"
             }
         }
-        // Top bar
-        string name
+
+        textentry name
         {
-            string			*cvar:mn_name
-            pos				"8 0"
-            size			"300 25"
-            font			"f_small_bold"
-            color			"0.56 0.81 0.76 1"
-            longlines		LONGLINES_CHOP
-            contentalign	ALIGN_LL
-            ghost			true
+            string		*cvar:mn_name
+            tooltip		"_Rename your unit"
+            pos			"3 0"
+            size		"220 32"
+            color		"0.56 0.81 0.76 1"
+            onChange	{
+                cmd "employee_changename;"
+                cmd "ui_team_fillequip;"
+                cmd "update_item_list;"
+                cmd "equipment_soldierlist_select <node:root.selected@integer>;"
+            }
         }
+
         string rank
         {
             string			*cvar:mn_chrrank
