@@ -4,7 +4,10 @@
 
 component equipSoldier extends panel {
 	{
-		size		"260 25"
+		size		    "260 25"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 	}
 
 	data id {
@@ -57,14 +60,15 @@ window equipment extends objectinfo
             panel soldiers
             {
                 {
-                    pos			"5 40"
-                    size		"280 320"
+                    pos			"2 40"
+                    size		"305 490"
                 }
                 panel soldierlist {
-                    pos			"0 0"
-                    size		"260 320"
-                    padding		6
-                    layout		LAYOUT_TOP_DOWN_FLOW
+                    pos			    "0 0"
+                    size		    "285 490"
+                    padding		    6
+                    layout		    LAYOUT_TOP_DOWN_FLOW
+                    layoutMargin	2
                     wheelscrollable	true
 
                     onViewChange {
@@ -75,8 +79,8 @@ window equipment extends objectinfo
                 }
                 vscrollbar soldierlist_scroll {
                     image		"ui/scrollbar_v_green"
-                    pos			"262 0"
-                    height		"320"
+                    pos			"287 0"
+                    height		"490"
                     //hidewhenunused true
                     current		0
                     viewsize	8
@@ -117,7 +121,7 @@ window equipment extends objectinfo
             panel paperdoll
             {
                 {
-                    pos			"290 40"
+                    pos			"310 40"
                     size		"400 418"
                     bgcolor		"0 0.15 0.1 0.7"
                     bordercolor	"0.58 0.81 0.758 0.7"
