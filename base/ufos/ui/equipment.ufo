@@ -279,6 +279,17 @@ window equipment extends objectinfo
                 }
             }
         }//end mainBody
+
+        // Object description panel
+        ObjectInfo details
+        {
+            {
+                pos				"4 574"
+                border			"2"
+                bordercolor		"0.527 0.6 0.21 1"
+            }
+        }
+
     } // end base_container        }
 
 
@@ -369,16 +380,6 @@ window equipment extends objectinfo
 		}
 	}
 
-
-    // Object description panel
-    ObjectInfo details
-    {
-        {
-            pos				"4 574"
-            border			"2"
-            bordercolor		"0.527 0.6 0.21 1"
-        }
-    }
 
 
 	// Abilities panel
