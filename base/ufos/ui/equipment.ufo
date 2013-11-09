@@ -21,6 +21,19 @@ component equipSoldier extends panel {
 	}
 }
 
+// StatBar was designed for hud, in equipment we need a wider bar
+component StatBarWide extends StatBar
+{
+    {
+        size	"250 25"
+    }
+	string label {size "100 15" }
+    texture bg  {  size	"250 10"}
+    bar valuebar { size "250 10" }
+    string valuenum { size	"160 0" }
+}
+
+
 window equipment extends objectinfo
 {
 	/** @todo Remove me */
@@ -57,6 +70,7 @@ window equipment extends objectinfo
             image		"ui/scrollbar_v_green"
             pos			"262 0"
             height		"320"
+            //hidewhenunused true
             current		0
             viewsize	8
             fullsize	50
@@ -432,19 +446,19 @@ window equipment extends objectinfo
 	{
 		{
 			pos			"731 410"
-			size		"200 125"
+			size		"250 125"
 			ghost		true
 		}
-		StatBar strength
+		StatBarWide strength
 		{
 			{
-				pos		"0 0"
+				pos		"0    0"
 			}
 			string label { string "_Strength" }
 			bar valuebar { current *cvar:mn_vpwr }
 			string valuenum { string *cvar:mn_tpwr }
 		}
-		StatBar speed
+		StatBarWide speed
 		{
 			{
 				pos		"0 30"
@@ -453,7 +467,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vspd }
 			string valuenum { string *cvar:mn_tspd }
 		}
-		StatBar accuracy
+		StatBarWide accuracy
 		{
 			{
 				pos		"0 60"
@@ -462,7 +476,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vacc }
 			string valuenum { string *cvar:mn_tacc }
 		}
-		StatBar mind
+		StatBarWide mind
 		{
 			{
 				pos		"0 90"
@@ -477,10 +491,10 @@ window equipment extends objectinfo
 	{
 		{
 			pos			"731 552"
-			size		"200 155"
+			size		"250 155"
 			ghost		true
 		}
-		StatBar cls
+		StatBarWide cls
 		{
 			{
 				pos		"0 0"
@@ -489,7 +503,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-		StatBar hvy
+		StatBarWide hvy
 		{
 			{
 				pos		"0 30"
@@ -498,7 +512,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vhvy }
 			string valuenum { string *cvar:mn_thvy }
 		}
-		StatBar ass
+		StatBarWide ass
 		{
 			{
 				pos		"0 60"
@@ -507,7 +521,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vass }
 			string valuenum { string *cvar:mn_tass }
 		}
-		StatBar snp
+		StatBarWide snp
 		{
 			{
 				pos		"0 90"
@@ -516,7 +530,7 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vsnp }
 			string valuenum { string *cvar:mn_tsnp }
 		}
-		StatBar exp
+		StatBarWide exp
 		{
 			{
 				pos		"0 120"
@@ -758,7 +772,6 @@ window equipment extends objectinfo
         container left		{ pos "236 146" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container belt		{ pos "13 204" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container holster	{ pos "285 204" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-        container floor		{ pos "10 282" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
         container armour	{
             pos "130 131"
             color "1 1 1 0"		// active, but display it transparent
