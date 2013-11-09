@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief The <code>data</code> behaviour allow to store string/float number/integer into a node.
- * Is is a vistual node which is not displayed nor activable by input device like mouse.
+ * @brief The <code>data</code> behaviour allows to store a string/float number/integer into a node.
+ * It is a virtual node which is not displayed nor activatable by input device like mouse.
  * The node can store 3 types, which have no relations together.
  * @code
  * data mystring { string "fooo" }

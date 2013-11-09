@@ -4,7 +4,7 @@
 
 /**
  * @brief Define interface shared by all windows that are using weapon and ammo details
- * @note called "ahud" to be loaded before another menus
+ * @note filename prefixed with "_" to be loaded before any other menu
  */
 window objectinfo
 {
