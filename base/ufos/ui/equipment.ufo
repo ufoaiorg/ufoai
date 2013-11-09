@@ -15,9 +15,10 @@ component equipSoldier extends panel {
 	}
 
 	string name {
-		pos			"0 0"
-		color	    "0.56 0.81 0.76 1"
-		size		"285 25"
+		pos			    "0 0"
+		color	        "0.56 0.81 0.76 1"
+		size		    "285 25"
+        contentalign    ALIGN_CL
 		onClick {
 			cmd "equipment_soldierlist_select <node:parent.id@integer>;"
 		}
