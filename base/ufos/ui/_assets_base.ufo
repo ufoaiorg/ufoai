@@ -284,8 +284,8 @@ component ResearchItemGeneric extends panel
 		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 		onClick			{
 			cmd "ui_research_select <node:this.id@string>;"
-			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
+//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
 	}
 	data id {
@@ -322,8 +322,8 @@ component ResearchItemGeneric extends panel
 		onClick {
 			cmd "research_select <node:parent.id@integer>;"
 			cmd "mn_show_ufopedia;"
-			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
+//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
 	}
 	string title
@@ -356,7 +356,7 @@ component ResearchItem extends ResearchItemGeneric
 		onClick			{
 			cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> -1;"
 //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 			cmd "get_lab_space_string;"
 		}
 	}
@@ -368,7 +368,7 @@ component ResearchItem extends ResearchItemGeneric
 		onClick			{
 			cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> 1;"
 //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 			cmd "get_lab_space_string;"
 		}
 	}
