@@ -3,7 +3,7 @@
 // ==================
 component cmp_t_storage extends panel {
 	{
-		size		"475 20"
+		size		"260 20"
 		onClick {
 			cmd "ui_trans_add <node:this.id@string> 1;"
 		}
@@ -16,31 +16,34 @@ component cmp_t_storage extends panel {
 	}
 
 	string name {
-		pos			"0 0"
-		size		"250 20"
-		ghost		true
+		pos			    "0 0"
+		color	        "0.56 0.81 0.76 1"
+		size		    "285 20"
+		ghost		    true
 		contentalign	ALIGN_CL
 	}
 	string src_store {
-		pos			"250 0"
-		size		"100 20"
+		pos			    "250 0"
+		color	        "0.56 0.81 0.76 1"
+		size		    "100 20"
 		contentalign	ALIGN_CR
-		ghost		true
+		ghost		    true
 	}
 	spinner_blue spinner {
-		tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-		pos			"352 0"
-		size		"20 20"
+		tooltip		        "_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
+		pos			        "352 0"
+		size		    "   20 20"
 		shiftincreasefactor	100.0
 		onChange {
 			cmd "ui_trans_add <node:parent.id@string> <lastdiff>;"
 		}
 	}
 	string dst_store {
-		pos			"375 0"
-		size		"100 20"
+		pos			    "375 0"
+		color	        "0.56 0.81 0.76 1"
+		size		    "100 20"
 		contentalign	ALIGN_CR
-		ghost		true
+		ghost		    true
 	}
 }
 
@@ -104,165 +107,175 @@ window transfer
 	// background
 	// ==================
 
-	image background
+	// Base name and container panel
+	BaseContainerPanelV2 base_container
 	{
-		src		"background/base_bg"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// ==================
-	// tab
-	// ==================
-
-	panel tab_background {
-		pos		"24 96"
-		size	"986 56"
-		background	"ui/panel_tab"
-	}
-
-	tab trans_navigation {
+		// Transfer panel
+		panel mainBody
 		{
-			pos		"47 106"
-			size	"938 39"
-			cvar	*cvar:mn_itemtype
-			onChange	{
-				cmd "ui_trans_fill <cvar:mn_itemtype>;"
-				if ( *cvar:mn_itemtype eq "item" ) {
-					*cvar:mn_itemtype_name = "_Equipment"
-				} elif ( *cvar:mn_itemtype eq "employee" ) {
-					*cvar:mn_itemtype_name = "_Employees"
-				} elif ( *cvar:mn_itemtype eq "alien" ) {
-					*cvar:mn_itemtype_name = "_Aliens"
-				} elif ( *cvar:mn_itemtype eq "aircraft" ) {
-					*cvar:mn_itemtype_name = "_Aircraft"
+			{ size "715 534" }
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Transfer"
 				}
 			}
-		}
-		option item {
-			label	"_Equipment"
-			value	"item"
-			icon	"icons/tab_equipment"
-		}
-		option employee {
-			label	"_Employees"
-			value	"employee"
-			icon	"icons/tab_employees"
-		}
-		option alien {
-			label	"_Aliens"
-			value	"alien"
-			icon	"icons/tab_aliens"
-		}
-		option aircraft {
-			label	"_Aircraft"
-			value	"aircraft"
-			icon	"icons/tab_aircraft"
-		}
-	}
+            // ==================
+            // tab
+            // ==================
 
-	// ==================
-	// lists
-	// ==================
+            panel tab_background {
+                pos		"10 40"
+                size	"700 60"
+            }
 
-	panel itemlist {
-		{
-			pos			"12 160"
-			size		"552 582"
-			background	"ui/panel_grey_green_large2"
-		}
+            tab trans_navigation {
+                {
+                    pos		"10 50"
+                    size	"667 39"
+                    cvar	*cvar:mn_itemtype
+                    onChange	{
+                        cmd "ui_trans_fill <cvar:mn_itemtype>;"
+                        if ( *cvar:mn_itemtype eq "item" ) {
+                            *cvar:mn_itemtype_name = "_Equipment"
+                        } elif ( *cvar:mn_itemtype eq "employee" ) {
+                            *cvar:mn_itemtype_name = "_Employees"
+                        } elif ( *cvar:mn_itemtype eq "alien" ) {
+                            *cvar:mn_itemtype_name = "_Aliens"
+                        } elif ( *cvar:mn_itemtype eq "aircraft" ) {
+                            *cvar:mn_itemtype_name = "_Aircraft"
+                        }
+                    }
+                }
+                option item {
+                    label	"_Equipment"
+                    value	"item"
+                    icon	"icons/tab_equipment"
+                }
+                option employee {
+                    label	"_Employees"
+                    value	"employee"
+                    icon	"icons/tab_employees"
+                }
+                option alien {
+                    label	"_Aliens"
+                    value	"alien"
+                    icon	"icons/tab_aliens"
+                }
+                option aircraft {
+                    label	"_Aircraft"
+                    value	"aircraft"
+                    icon	"icons/tab_aircraft"
+                }
+            }
+            // ==================
+            // lists
+            // ==================
 
-		rows lines {
-			pos			"16 16"
-			size		"520 550"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
-			lineheight	20
-		}
+            panel itemlist {
+                {
+                    pos			"12 100"
+                    size		"552 430"
+                    background	"ui/panel_grey_green_large2"
+                }
 
-		string title_name {
-			string		*cvar:mn_itemtype_name
-			pos			"25 16"
-			size		"250 20"
-			contentalign	ALIGN_CL
-			font		"f_small_bold"
-		}
+                rows lines {
+                    pos			"16 16"
+                    size		"520 400"
+                    color1		"0 0.08 0 1"
+                    color2		"0 0.16 0 1"
+                    lineheight	20
+                }
 
-		string title_src_store {
-			string		"_From"
-			pos			"275 16"
-			size		"100 20"
-			contentalign	ALIGN_CR
-			font		"f_small_bold"
-		}
-		string dst_store {
-			string		"_To"
-			pos			"400 16"
-			size		"100 20"
-			contentalign	ALIGN_CR
-			font		"f_small_bold"
-		}
+                string title_name {
+                    string		*cvar:mn_itemtype_name
+                    pos			"25 16"
+                    size		"250 20"
+                    contentalign	ALIGN_CL
+                    font		"f_small_bold"
+                }
 
-		panel translist {
-			pos			"25 36"
-			size		"475 520"
-			layout		LAYOUT_TOP_DOWN_FLOW
+                string title_src_store {
+                    string		"_From"
+                    pos			"275 16"
+                    size		"100 20"
+                    contentalign	ALIGN_CR
+                    font		"f_small_bold"
+                }
+                string dst_store {
+                    string		"_To"
+                    pos			"400 16"
+                    size		"100 20"
+                    contentalign	ALIGN_CR
+                    font		"f_small_bold"
+                }
 
-			onViewChange {
-				*node:parent.translist_scroll@fullsize = <fullsize>
-				*node:parent.translist_scroll@current = <viewpos>
-				*node:parent.translist_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar translist_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"510 36"
-			height		"520"
-			hidewhenunused	true
-			onChange	{
-				*node:parent.translist@viewpos = <current>
-			}
-		}
+                panel translist {
+                    pos			"25 36"
+                    size		"475 375"
+                    layout		LAYOUT_TOP_DOWN_FLOW
 
-		confunc ui_translist_clear {
-			call *node:parent.translist@removeAllchild
-		}
+                    onViewChange {
+                        *node:parent.translist_scroll@fullsize = <fullsize>
+                        *node:parent.translist_scroll@current = <viewpos>
+                        *node:parent.translist_scroll@viewsize = <viewsize>
+                    }
+                }
+                vscrollbar translist_scroll {
+                    image		"ui/scrollbar_v_green"
+                    pos			"510 36"
+                    height		"380"
+                    hidewhenunused	true
+                    onChange	{
+                        *node:parent.translist@viewpos = <current>
+                    }
+                }
 
-		confunc ui_translist_add {
-			call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
+                confunc ui_translist_clear {
+                    call *node:parent.translist@removeAllchild
+                }
 
-			*node:parent.translist.trans_<1>.id@string = <1>
-			*node:parent.translist.trans_<1>.name@string = <2>
-			*node:parent.translist.trans_<1>.src_store@string = <3>
-			if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
-				*node:parent.translist.trans_<1>.src_store@invis = true
-			} else {
-				*node:parent.translist.trans_<1>.src_store@invis = false
-			}
-			*node:parent.translist.trans_<1>.dst_store@string = <4>
-			if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
-				*node:parent.translist.trans_<1>.dst_store@invis = true
-			} else {
-				*node:parent.translist.trans_<1>.dst_store@invis = false
-			}
-			*node:parent.translist.trans_<1>.spinner@min = <5>
-			*node:parent.translist.trans_<1>.spinner@current = <6>
-			*node:parent.translist.trans_<1>.spinner@max = <7>
-			if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
-				*node:parent.translist.trans_<1>.spinner@invis = true
-			} else {
-				*node:parent.translist.trans_<1>.spinner@invis = false
-			}
-		}
-	}
+                confunc ui_translist_add {
+                    call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
+
+                    *node:parent.translist.trans_<1>.id@string = <1>
+                    *node:parent.translist.trans_<1>.name@string = <2>
+                    *node:parent.translist.trans_<1>.src_store@string = <3>
+                    if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
+                        *node:parent.translist.trans_<1>.src_store@invis = true
+                    } else {
+                        *node:parent.translist.trans_<1>.src_store@invis = false
+                    }
+                    *node:parent.translist.trans_<1>.dst_store@string = <4>
+                    if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
+                        *node:parent.translist.trans_<1>.dst_store@invis = true
+                    } else {
+                        *node:parent.translist.trans_<1>.dst_store@invis = false
+                    }
+                    *node:parent.translist.trans_<1>.spinner@min = <5>
+                    *node:parent.translist.trans_<1>.spinner@current = <6>
+                    *node:parent.translist.trans_<1>.spinner@max = <7>
+                    if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
+                        *node:parent.translist.trans_<1>.spinner@invis = true
+                    } else {
+                        *node:parent.translist.trans_<1>.spinner@invis = false
+                    }
+                }
+            }
+        }
+    }
+
+
 
 	/**
 	 * @brief Cargolist
 	 */
 	panel transfer_cargolist {
 		{
-			pos		"580 440"
+			pos		"600 440"
 			size	"420 257"
 			background	"ui/panel_grey_green_large2"
 		}
@@ -330,7 +343,7 @@ window transfer
 	// ==================
 	panel infopanel {
 		{
-			pos		"580 160"
+			pos		"600 160"
 			size	"420 260"
 			background	"ui/panel_grey_green_large"
 		}
