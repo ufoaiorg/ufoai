@@ -273,8 +273,8 @@ component AlienPanel extends panel
 	data alien_num { string "" }
 }
 
-// Research item (items researched in base)
-component ResearchItem extends panel
+// Research item generic(items researched)
+component ResearchItemGeneric extends panel
 {
 	{
 		pos				"0 0"
@@ -331,6 +331,12 @@ component ResearchItem extends panel
 		contentalign	ALIGN_CL
 		ghost			true
 	}
+}
+
+// Research item (items researched in base)
+component ResearchItem extends ResearchItemGeneric
+{
+    {}
 	string scientists
 	{
 		pos				"560 0"
@@ -366,53 +372,9 @@ component ResearchItem extends panel
 }
 
 // External research item (items researched in other bases)
-component ExtResearchItem extends panel
+component ExtResearchItem extends ResearchItemGeneric
 {
-	{
-		pos				"0 0"
-		size 			"713 28"
-		bgcolor			"0.56 0.81 0.76 0.1"
-		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
-		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
-		onClick			{
-			cmd "research_select <node:this.itemnum@integer>;"
-			call *node:root.base_container.research.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-		}
-	}
-	data itemnum { }
-	bar status
-	{
-		pos		"0 0"
-		size	"713 28"
-		color	"0.56 0.81 0.76 0.3"
-		current 0
-		max		100
-		ghost	true
-	}
-	button ufopaedia
-	{
-		icon	"icons/windowinfo"
-		pos		"5 5"
-		size	"18 18"
-		/*
-		 * @sa ResearchItem.ufopaedia@onClick for explanation of this hack
-		 */
-		onClick			{
-			cmd "research_select <node:parent.itemnum@integer>;"
-			cmd "mn_show_ufopedia;"
-			call *node:root.base_container.research.techs@removeAllChild
-			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-		}
-	}
-	string title
-	{
-		pos				"30 0"
-		size			"480 28"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CL
-		ghost			true
-	}
+    {}
 	string base
 	{
 		pos				"560 0"

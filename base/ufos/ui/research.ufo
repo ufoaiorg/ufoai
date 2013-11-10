@@ -671,9 +671,10 @@ window research extends BaseMgmtWindow
 				}
 
 				panel techs {
-					pos			"5 50"
-					size		"650 480"
-					layout		LAYOUT_TOP_DOWN_FLOW
+					pos			    "5 50"
+					size		    "650 480"
+					layout		    LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
 					wheelscrollable	true
 					onViewChange {
 						*node:parent.techs_scroll@fullsize = <fullsize>
@@ -711,6 +712,7 @@ window research extends BaseMgmtWindow
 				}
 				confunc ui_techlist_add {
 					call *node:parent.techs@createChild("tech_<1>", "cmpTechItem")
+				//	call *node:parent.techs@createChild("tech_<1>", "ResearchItem")
 
 					*node:parent.techs.tech_<1>.id@string = "<1>"
 					*node:parent.techs.tech_<1>.name@string = "<2>"
