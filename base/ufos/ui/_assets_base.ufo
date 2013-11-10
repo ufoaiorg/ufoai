@@ -341,6 +341,15 @@ component ResearchItemGeneric extends panel
 component ResearchItem extends ResearchItemGeneric
 {
     {}
+	string progress_label {
+		pos			"640 10"
+		size		"40 15"
+		color		"0.56 0.81 0.76 1"
+		font		"f_verysmall"
+		contentalign	ALIGN_CR
+		padding		0
+		ghost		true
+	}
 	string scientists
 	{
 		pos				"560 0"

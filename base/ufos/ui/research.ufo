@@ -672,7 +672,7 @@ window research extends BaseMgmtWindow
 
 				panel techs {
 					pos			    "5 50"
-					size		    "650 480"
+					size		    "700 480"
 					layout		    LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
