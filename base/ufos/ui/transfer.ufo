@@ -3,7 +3,8 @@
 // ==================
 component cmp_t_storage extends panel {
 	{
-		size		"260 20"
+		size		    "260 20"
+		bgcolor			"0.56 0.81 0.76 0.1"
 		onClick {
 			cmd "ui_trans_add <node:this.id@string> 1;"
 		}
@@ -103,9 +104,6 @@ window transfer
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
-	// ==================
-	// background
-	// ==================
 
 	// Base name and container panel
 	BaseContainerPanelV2 base_container
@@ -128,13 +126,13 @@ window transfer
             // ==================
 
             panel tab_background {
-                pos		"10 40"
-                size	"700 60"
+                pos		"10 30"
+                size	"700 50"
             }
 
             tab trans_navigation {
                 {
-                    pos		"10 50"
+                    pos		"10 30"
                     size	"667 39"
                     cvar	*cvar:mn_itemtype
                     onChange	{
@@ -177,22 +175,19 @@ window transfer
 
             panel itemlist {
                 {
-                    pos			"12 100"
-                    size		"552 430"
-                    background	"ui/panel_grey_green_large2"
+                    pos			"12 80"
+                    size		"552 450"
                 }
 
                 rows lines {
                     pos			"16 16"
-                    size		"520 400"
-                    color1		"0 0.08 0 1"
-                    color2		"0 0.16 0 1"
+                    size		"520 40"
                     lineheight	20
                 }
 
                 string title_name {
                     string		*cvar:mn_itemtype_name
-                    pos			"25 16"
+                    pos			"25 0"
                     size		"250 20"
                     contentalign	ALIGN_CL
                     font		"f_small_bold"
@@ -200,23 +195,25 @@ window transfer
 
                 string title_src_store {
                     string		"_From"
-                    pos			"275 16"
+                    pos			"275 0"
                     size		"100 20"
                     contentalign	ALIGN_CR
                     font		"f_small_bold"
                 }
                 string dst_store {
                     string		"_To"
-                    pos			"400 16"
+                    pos			"400 0"
                     size		"100 20"
                     contentalign	ALIGN_CR
                     font		"f_small_bold"
                 }
 
                 panel translist {
-                    pos			"25 36"
-                    size		"475 375"
-                    layout		LAYOUT_TOP_DOWN_FLOW
+                    pos			    "25 30"
+                    size		    "475 416"
+                    layout		    LAYOUT_TOP_DOWN_FLOW
+                    layoutMargin	2
+                    wheelscrollable	true
 
                     onViewChange {
                         *node:parent.translist_scroll@fullsize = <fullsize>
@@ -226,8 +223,8 @@ window transfer
                 }
                 vscrollbar translist_scroll {
                     image		"ui/scrollbar_v_green"
-                    pos			"510 36"
-                    height		"380"
+                    pos			"510 30"
+                    height		"416"
                     hidewhenunused	true
                     onChange	{
                         *node:parent.translist@viewpos = <current>
@@ -528,6 +525,17 @@ window transfer
 		// Call base_init so storage data can be updated
 		cmd "base_init;"
 	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
 }
 
 // ===============================
