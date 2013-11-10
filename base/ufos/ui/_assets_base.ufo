@@ -358,9 +358,29 @@ component ResearchItem extends ResearchItemGeneric
 		contentalign	ALIGN_CL
 		ghost			true
 	}
+    button stop {
+        icon		"icons/speed_stop"
+        tooltip		"_Stop researching this project"
+        pos			"500 5"
+		size	    "18 18"
+
+        onclick {
+            cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.id@string>;"
+        }
+    }
+    button max {
+        icon		"icons/speed_play3"
+        tooltip		"_Assign all free scientists on this project"
+        pos			"525 4"
+		size	    "18 18"
+        onclick {
+            cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.id@string>;"
+        }
+    }
 	button remove_scientist
 	{
 		icon	"icons/windowminusb"
+        tooltip	"_Assign less scientists on this project"
 		pos		"600 5"
 		size	"18 18"
 		onClick			{
@@ -373,6 +393,7 @@ component ResearchItem extends ResearchItemGeneric
 	button add_scientist
 	{
 		icon	"icons/windowplusb"
+        tooltip	"_Assign more scientists on this project"
 		pos		"625 5"
 		size	"18 18"
 		onClick			{
