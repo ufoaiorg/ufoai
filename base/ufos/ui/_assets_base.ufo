@@ -304,6 +304,7 @@ component ResearchItemGeneric extends panel
 	button ufopaedia
 	{
 		icon	"icons/windowinfo"
+		tooltip	"_View UFOPaedia entry"
 		pos		"5 5"
 		size	"18 18"
 		/*
@@ -320,8 +321,8 @@ component ResearchItemGeneric extends panel
 		 * @sa ExtResearchItem.ufopaedia@onClick
 		 */
 		onClick {
-			cmd "research_select <node:parent.id@integer>;"
-			cmd "mn_show_ufopedia;"
+			cmd "ui_research_select <node:parent.id@string>;"
+			cmd "ui_push ufopedia <node:parent.id@string>;"
 //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
 //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
