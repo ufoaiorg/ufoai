@@ -700,23 +700,23 @@ window research extends BaseMgmtWindow
 				}
 				confunc ui_research_select {
 					if ( *node:parent.selected@string ne "" ) {
-						*node:parent.techs.tech_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
-						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0.56 0.81 0.76 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.title@color = "0.56 0.81 0.76 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.scientists@color = "0.56 0.81 0.76 1"
 						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0.56 0.81 0.76 1"
 					}
 					*node:parent.selected@string = "<1>"
-					*node:parent.techs.tech_<node:parent.selected@string>.name@color = "1 1 1 1"
-					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.title@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.scientists@color = "1 1 1 1"
 					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
 					cmd "ui_research_getdetails <1>;"
 				}
 				confunc ui_techlist_add {
-					call *node:parent.techs@createChild("tech_<1>", "cmpTechItem")
-				//	call *node:parent.techs@createChild("tech_<1>", "ResearchItem")
+				//	call *node:parent.techs@createChild("tech_<1>", "cmpTechItem")
+					call *node:parent.techs@createChild("tech_<1>", "ResearchItem")
 
 					*node:parent.techs.tech_<1>.id@string = "<1>"
-					*node:parent.techs.tech_<1>.name@string = "<2>"
-					*node:parent.techs.tech_<1>.progress@current = <4>
+					*node:parent.techs.tech_<1>.title@string = "<2>"
+					*node:parent.techs.tech_<1>.status@current = <4>
 
 					if ( <4> > 0 ) {
 						*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
@@ -732,7 +732,7 @@ window research extends BaseMgmtWindow
 							*node:parent.techs.tech_<1>.rsrc_missing@invis = false
 						}
 					} else {
-						*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<3>"
+						*node:parent.techs.tech_<1>.scientists@string = "<3>"
 						*node:parent.techs.tech_<1>.rsrc_control@invis = false
 					}
 
@@ -741,7 +741,7 @@ window research extends BaseMgmtWindow
 					}
 				}
 				confunc ui_research_update_topic {
-					*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<2>"
+					*node:parent.techs.tech_<1>.scientists@string = "<2>"
 				}
 			}
 		}
@@ -818,7 +818,7 @@ window research extends BaseMgmtWindow
 	}
 
 	func onWindowOpened {
-		*node:root.techlist_border.selected@string = ""
+		*node:root.base_container.mainBody.techlist_border.selected@string = ""
 		cmd "ui_research_fill;"
 		*cvar:mn_lastsubmenu = "research"
 	}
