@@ -123,7 +123,7 @@ component SetEnemyCount extends panel
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
 		onClick		{
-			call *node:this.increase_enemy_count
+			call *node:parent.increase_enemy_count
 		}
 	}
 
@@ -135,7 +135,7 @@ component SetEnemyCount extends panel
 		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
 		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
 		onClick		{
-			call *node:this.decrease_enemy_count
+			call *node:parent.decrease_enemy_count
 		}
 	}
 
