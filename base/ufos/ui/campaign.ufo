@@ -30,6 +30,7 @@ component LoadSlot extends panel
 
 	TextBtn button
 	{
+		onClick		{ call *node:root.set_sel_load_slot(<node:parent.index@integer>) }
 	}
 
 	button upload
@@ -311,9 +312,6 @@ window campaign extends cgame_download
 			*node:root.cmp_sel.cmp_loads.save<1>.button@string = "<2>"
 		}
 		*node:root.cmp_sel.cmp_loads.save<1>.button@tooltip = <4>
-		*node:root.cmp_sel.cmp_loads.save<1>.button@onClick = {
-			call *node:root.set_sel_load_slot(<node:this.parent.index@integer>)
-		}
 		*node:root.cmp_sel.cmp_loads.save<1>.upload@onClick = {
 			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
 		}
