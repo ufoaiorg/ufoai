@@ -98,15 +98,21 @@ window campaign extends cgame_download
 			onClick		{ call *node:root.toggle_cmp_download }
 		}
 
-		MainMenu3Btn btn_begin
-		{
-			size 			"250 30"
-			pos 			"774 405"
-			string			"_BEGIN"
-			bgcolor			"0.38 0.48 0.36 1"
-			onMouseEnter 	{ *node:this@bgcolor = "0.59 0.78 0.56 1" }
-			onMouseLeave 	{ *node:this@bgcolor = "0.38 0.48 0.36 1" }
-			onClick			{ call *node:root.cmp_sel_begin }
+		MainMenu3Btn btn_begin {
+			{
+				size 			"250 30"
+				pos 			"774 405"
+				string			"_BEGIN"
+				bgcolor			"0.38 0.48 0.36 1"
+				onMouseEnter 	{ *node:this@bgcolor = "0.59 0.78 0.56 1" }
+				onMouseLeave 	{ *node:this@bgcolor = "0.38 0.48 0.36 1" }
+				onClick			{ call *node:root.cmp_sel_begin }
+			}
+			func enable {
+				*node:parent@ghost = false
+				*node:parent@bgcolor = "0.38 0.48 0.36 1"
+				*node:parent@color = "1 1 1 0.9"
+			}
 		}
 
 		MainMenuExitBtn btn_back
@@ -361,9 +367,7 @@ window campaign extends cgame_download
 	 */
 	func set_sel_load_slot {
 		*cvar:sel_load_slot = <1>
-		*node:root.cmp_sel.btn_begin@ghost = false
-		*node:root.cmp_sel.btn_begin@bgcolor = "0.38 0.48 0.36 1"
-		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.9"
+		call *node:root.cmp_sel.btn_begin.enable
 
 		// Remove white color from any button that might be saved
 		// Then add it back to the selected button
@@ -438,9 +442,8 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
-		*node:root.cmp_sel.btn_begin@ghost = false
-		*node:root.cmp_sel.btn_begin@bgcolor = "0.38 0.48 0.36 1"
-		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.9"
+
+		call *node:root.cmp_sel.btn_begin.enable
 		*node:root.cmp_sel.cmp_loads.save<cvar:sel_load_slot>@color = "0.4 0.515 0.5 1"
 		*cvar:sel_load_slot = false
 	}
