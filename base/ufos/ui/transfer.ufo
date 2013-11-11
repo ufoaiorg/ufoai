@@ -76,30 +76,30 @@ component cmp_t_cargo extends panel {
 
 component cmp_t_capacity extends panel {
 	{
-		size		"340 20"
+		size		"285 20"
 	}
 	string name {
 		pos			"0 0"
-		size		"180 20"
+		size		"150 20"
         font			"f_verysmall"
 		contentalign	ALIGN_CL
 	}
 	string free {
-		pos			"180 0"
-		size		"70 20"
+		pos			"150 0"
+		size		"60 20"
         font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
 	string separator {
 		string		"/"
-		pos			"250 0"
+		pos			"210 0"
 		size		"20 20"
         font			"f_verysmall"
 		contentalign	ALIGN_CC
 	}
 	string max {
-		pos			"270 0"
-		size		"70 20"
+		pos			"230 0"
+		size		"60 20"
         font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
@@ -347,15 +347,14 @@ window transfer
 	// ==================
 	panel infopanel {
 		{
-			pos		    "645 160"
-			size	    "375 260"
-			background	"ui/panel_grey_green_large2"
+			pos		    "726 160"
+			size	    "295 260"
 		}
 
 		string s_current_base {
 			string		    "_Destination base"
-			pos			    "20 22"
-			size		    "380 20"
+			pos			    "0 22"
+			size		    "280 20"
 			contentalign	ALIGN_UC
             color	        "0.7 0.7 0.7 1"
 			font		    "f_small_bold"
@@ -363,7 +362,7 @@ window transfer
 
 		selectbox destination_base 	{
 			cvar		*cvar:mn_trans_base_id
-			pos			"64 45"
+			pos			"5 45"
 			size		"288 20"
 			dataid		OPTION_BASELIST
 			onChange {
@@ -374,15 +373,15 @@ window transfer
 
 		string s_cap_building {
 			string		    "_Building"
-			pos			    "20 90"
-			size		    "180 20"
+			pos			    "5 90"
+			size		    "150 20"
 			contentalign	ALIGN_UL
             color	        "0.7 0.7 0.7 1"
             font			"f_verysmall"
 		}
 		string s_cap_freespace {
 			string		    "_free"
-			pos			    "200 90"
+			pos			    "145 90"
 			size		    "70 20"
 			contentalign	ALIGN_UR
             color	        "0.7 0.7 0.7 1"
@@ -390,7 +389,7 @@ window transfer
 		}
 		string s_cap_per {
 			string		    "/"
-			pos			    "250 90"
+			pos			    "215 90"
 			size		    "20 20"
 			contentalign	ALIGN_UC
             color	        "0.7 0.7 0.7 1"
@@ -398,15 +397,15 @@ window transfer
 		}
 		string s_cap_allspace {
 			string		    "_all space"
-			pos			    "270 90"
+			pos			    "225 90"
 			size		    "70 20"
 			contentalign	ALIGN_UR
             color	        "0.7 0.7 0.7 1"
             font			"f_verysmall"
 		}
 		panel capacities {
-			pos			    "20 115"
-			size		    "340 125"
+			pos			    "5 115"
+			size		    "290 125"
             color	        "0.56 0.81 0.76 1"
 			layout		    LAYOUT_TOP_DOWN_FLOW
 			onViewChange {
