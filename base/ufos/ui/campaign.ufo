@@ -117,6 +117,11 @@ window campaign extends cgame_download
 				*node:parent@bgcolor = "0.38 0.48 0.36 1"
 				*node:parent@color = "1 1 1 0.9"
 			}
+			func disable {
+				*node:parent@ghost = true
+				*node:parent@bgcolor = "1 1 1 0.1"
+				*node:parent@color = "1 1 1 0.3"
+			}
 		}
 
 		MainMenuExitBtn btn_back
@@ -460,9 +465,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_loads@invis = false
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
-		*node:root.cmp_sel.btn_begin@ghost = true
-		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
-		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
+		call *node:root.cmp_sel.btn_begin.disable
 	}
 	func toggle_cmp_download {
 		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 1"
@@ -477,9 +480,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = false
-		*node:root.cmp_sel.btn_begin@ghost = true
-		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
-		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
+		call *node:root.cmp_sel.btn_begin.disable
 		cmd	"web_listcgame 0;"
 	}
 	func toggle_cmp_save {
@@ -495,9 +496,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = false
 		*node:root.cmp_sel.cmp_downloads@invis = true
-		*node:root.cmp_sel.btn_begin@ghost = true
-		*node:root.cmp_sel.btn_begin@bgcolor = "1 1 1 0.1"
-		*node:root.cmp_sel.btn_begin@color = "1 1 1 0.3"
+		call *node:root.cmp_sel.btn_begin.disable
 	}
 
 	func onWindowOpened
