@@ -18,15 +18,15 @@ component cmp_t_storage extends panel {
 
 	string name {
 		pos			    "0 0"
-		color	        "0.56 0.81 0.76 1"
 		size		    "285 20"
+		color	        "0.56 0.81 0.76 1"
 		ghost		    true
 		contentalign	ALIGN_CL
 	}
 	string src_store {
 		pos			    "250 0"
-		color	        "0.56 0.81 0.76 1"
 		size		    "100 20"
+		color	        "0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
 		ghost		    true
 	}
@@ -41,8 +41,8 @@ component cmp_t_storage extends panel {
 	}
 	string dst_store {
 		pos			    "375 0"
-		color	        "0.56 0.81 0.76 1"
 		size		    "100 20"
+		color	        "0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
 		ghost		    true
 	}
@@ -59,16 +59,18 @@ component cmp_t_cargo extends panel {
 	data id {
 	}
 	string name {
-		pos			"0 0"
-		size		"268 20"
-		ghost		true
+		pos			    "0 0"
+		size		    "270 20"
+		color	        "0.56 0.81 0.76 1"
+		ghost		    true
 		contentalign	ALIGN_CL
 	}
 	string amount {
-		pos			"268 0"
-		size		"100 20"
+		pos			    "248 0"
+		size		    "100 20"
+		color	        "0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
-		ghost		true
+		ghost		    true
 	}
 }
 
@@ -79,22 +81,26 @@ component cmp_t_capacity extends panel {
 	string name {
 		pos			"0 0"
 		size		"180 20"
+        font			"f_verysmall"
 		contentalign	ALIGN_CL
 	}
 	string free {
 		pos			"180 0"
 		size		"70 20"
+        font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
 	string separator {
 		string		"/"
 		pos			"250 0"
 		size		"20 20"
+        font			"f_verysmall"
 		contentalign	ALIGN_CC
 	}
 	string max {
 		pos			"270 0"
 		size		"70 20"
+        font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
 }
@@ -272,39 +278,40 @@ window transfer
 	 */
 	panel transfer_cargolist {
 		{
-			pos		"600 440"
-			size	"420 257"
-			background	"ui/panel_grey_green_large2"
+			pos		"20 570"
+			size	"420 190"
 		}
 
-		rows lines_transfer_cargolist {
+/*		rows lines_transfer_cargolist {
 			pos			"16 16"
-			size		"388 225"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
+			size		"388 145"
 			lineheight	20
 		}
-
+*/
 		string title_name {
-			string		"_Cargo"
-			pos			"16 16"
-			size		"268 20"
+			string		    "_Cargo"
+			pos			    "26 16"
+			size		    "268 20"
 			contentalign	ALIGN_CL
-			font		"f_small_bold"
+			font		    "f_small_bold"
+            color	        "0.7 0.7 0.7 1"
 		}
 
 		string title_amount {
-			string		"_Amount"
-			pos			"284 16"
-			size		"100 20"
+			string		    "_Amount"
+			pos			    "275 16"
+			size		    "100 20"
 			contentalign	ALIGN_CR
-			font		"f_small_bold"
+			font		    "f_small_bold"
+            color	        "0.7 0.7 0.7 1"
 		}
 
 		panel cargolist {
-			pos			"16 36"
-			size		"368 220"
-			layout		LAYOUT_TOP_DOWN_FLOW
+			pos			    "26 36"
+			size		    "358 135"
+            layout		    LAYOUT_TOP_DOWN_FLOW
+            layoutMargin	2
+            wheelscrollable	true
 
 			onViewChange {
 				*node:parent.cargolist_scroll@fullsize = <fullsize>
@@ -313,9 +320,9 @@ window transfer
 			}
 		}
 		vscrollbar cargolist_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"384 36"
-			height		"220"
+			image		    "ui/scrollbar_v_green"
+			pos			    "384 36"
+			height		    "135"
 			hidewhenunused	true
 			onChange	{
 				*node:parent.cargolist@viewpos = <current>
@@ -340,18 +347,18 @@ window transfer
 	// ==================
 	panel infopanel {
 		{
-			pos		"600 160"
-			size	"420 260"
-			background	"ui/panel_grey_green_large"
+			pos		    "645 160"
+			size	    "375 260"
+			background	"ui/panel_grey_green_large2"
 		}
 
 		string s_current_base {
-			string		"_Destination base"
-			pos			"20 22"
-			size		"380 20"
+			string		    "_Destination base"
+			pos			    "20 22"
+			size		    "380 20"
 			contentalign	ALIGN_UC
-			color		"0.7 0.7 0.7 1"
-			font		"f_small"
+            color	        "0.7 0.7 0.7 1"
+			font		    "f_small_bold"
 		}
 
 		selectbox destination_base 	{
@@ -366,41 +373,42 @@ window transfer
 		}
 
 		string s_cap_building {
-			string		"_Building"
-			pos			"40 90"
-			size		"180 20"
+			string		    "_Building"
+			pos			    "20 90"
+			size		    "180 20"
 			contentalign	ALIGN_UL
-			color		"0.7 0.7 0.7 1"
-			font		"f_small"
+            color	        "0.7 0.7 0.7 1"
+            font			"f_verysmall"
 		}
 		string s_cap_freespace {
-			string		"_free"
-			pos			"220 90"
-			size		"70 20"
+			string		    "_free"
+			pos			    "200 90"
+			size		    "70 20"
 			contentalign	ALIGN_UR
-			color		"0.7 0.7 0.7 1"
-			font		"f_small"
+            color	        "0.7 0.7 0.7 1"
+            font			"f_verysmall"
 		}
 		string s_cap_per {
-			string		"/"
-			pos			"290 90"
-			size		"20 20"
+			string		    "/"
+			pos			    "250 90"
+			size		    "20 20"
 			contentalign	ALIGN_UC
-			color		"0.7 0.7 0.7 1"
-			font		"f_small"
+            color	        "0.7 0.7 0.7 1"
+            font			"f_verysmall"
 		}
 		string s_cap_allspace {
-			string		"_all space"
-			pos			"310 90"
-			size		"70 20"
+			string		    "_all space"
+			pos			    "270 90"
+			size		    "70 20"
 			contentalign	ALIGN_UR
-			color		"0.7 0.7 0.7 1"
-			font		"f_small"
+            color	        "0.7 0.7 0.7 1"
+            font			"f_verysmall"
 		}
 		panel capacities {
-			pos			"40 115"
-			size		"340 125"
-			layout		LAYOUT_TOP_DOWN_FLOW
+			pos			    "20 115"
+			size		    "340 125"
+            color	        "0.56 0.81 0.76 1"
+			layout		    LAYOUT_TOP_DOWN_FLOW
 			onViewChange {
 				*node:parent.t_baseinfo_scroll@fullsize = <fullsize>
 				*node:parent.t_baseinfo_scroll@current = <viewpos>
@@ -408,15 +416,16 @@ window transfer
 			}
 		}
 
-		vscrollbar t_baseinfo_scroll {
+/*		vscrollbar t_baseinfo_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"383 115"
+			pos			"363 115"
 			height		"125"
 			hidewhenunused	true
 			onChange	{
 				*node:parent.capacities@viewpos = <current>
 			}
 		}
+*/
 
 		confunc ui_t_capacities_clear {
 			call *node:parent.capacities@removeAllchild
@@ -435,9 +444,9 @@ window transfer
 				*node:parent.capacities.cap_<1>.max@color = "1 0 0 1"
 				cmd "trans_disable disable \"_Capacity overload\";"
 			} else {
-				*node:parent.capacities.cap_<1>.name@color = "1 1 1 1"
-				*node:parent.capacities.cap_<1>.free@color = "1 1 1 1"
-				*node:parent.capacities.cap_<1>.max@color = "1 1 1 1"
+				*node:parent.capacities.cap_<1>.name@color = "0.56 0.81 0.76 1"
+				*node:parent.capacities.cap_<1>.free@color = "0.56 0.81 0.76 1"
+				*node:parent.capacities.cap_<1>.max@color = "0.56 0.81 0.76 1"
 			}
 		}
 
