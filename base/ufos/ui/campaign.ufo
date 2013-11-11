@@ -30,7 +30,10 @@ component LoadSlot extends panel
 
 	TextBtn button
 	{
-		onClick		{ call *node:root.set_sel_load_slot(<node:parent.index@integer>) }
+		onClick	{
+			call *node:root.set_sel_load_slot(<node:parent.index@integer>)
+			*node:this@color = "1 1 1 0.9"
+		}
 	}
 
 	button upload
@@ -371,11 +374,10 @@ window campaign extends cgame_download
 		// Then add it back to the selected button
 		*cvar:i = 0;
 		while ( *cvar:i < 8 ) {
-			*node:root.cmp_sel.cmp_loads.save<cvar:i>@color = "1 1 1 0.5"
+			*node:root.cmp_sel.cmp_loads.save<cvar:i>.button@color = "1 1 1 0.5"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
-		*node:root.cmp_sel.cmp_loads.save<cvar:sel_load_slot>@color = "1 1 1 0.9"
 	}
 
 	// Tell the begin button what to do depending on the
