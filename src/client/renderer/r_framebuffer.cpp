@@ -361,6 +361,8 @@ void R_UseFramebuffer (const r_framebuffer_t* buf)
 /**
  * @brief Sets the framebuffer dimensions of the viewport
  * @param[out] buf The framebuffer to initialize the viewport for. If @c nullptr the screen buffer will be taken.
+ * @param[in] x,y The position
+ * @param[in] width,height The dimensions
  * @sa R_UseViewport
  */
 void R_SetupViewport (r_framebuffer_t* buf, int x, int y, int width, int height)
