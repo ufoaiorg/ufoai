@@ -9,7 +9,7 @@ window ufopedia extends objectinfo
 		size		"1000 700"
 		dragbutton	true
 		closebutton	true
-		background		"ui/popup_alpha_tile"
+		background	"ui/popup_alpha_tile"
 		color		"1.0 0.75 0 1"
 		string		*cvar:mn_uptitle
 		modal		true				// we can't click out
@@ -24,7 +24,7 @@ window ufopedia extends objectinfo
 		{
 			pos		"22 88"
 			size	"314 593"
-			background	"ui/panel_green"
+            bgcolor		"0 0 0 0.5"
 			layout	LAYOUT_BORDER
 			padding	10
 		}
@@ -35,7 +35,7 @@ window ufopedia extends objectinfo
 			dataid		OPTION_UFOPEDIA
 			align		LAYOUTALIGN_MIDDLE
 			font		"f_small"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			selectcolor		"1 1 1 1"
 			onChange
 			{
@@ -74,7 +74,7 @@ window ufopedia extends objectinfo
 		{
 			pos		"0 34"
 			size	"638 592"
-			background	"ui/panel_green_tab"
+            bgcolor	"0 0 0 0.5"
 		}
 
 		tab navigation
@@ -133,7 +133,7 @@ window ufopedia extends objectinfo
 		{
 			pos		"420 42"
 			size	"185 187"
-			background	"ui/panel_green_slim"
+            bgcolor		"0 0 0 0.5"
 		}
 		model mdl_top
 		{
@@ -149,7 +149,7 @@ window ufopedia extends objectinfo
 		{
 			pos		"420 230"
 			size	"185 135"
-			background	"ui/panel_green_slim"
+            bgcolor		"0 0 0 0.5"
 		}
 		// ammo models
 		model mdl_bottom
@@ -186,13 +186,13 @@ window ufopedia extends objectinfo
 		{
 			pos		"8 42"
 			size	"410 575"
-			background	"ui/panel_green_slim"
+            bgcolor	"0 0 0 0.5"
 		}
 		panel main_panel_large
 		{
 			pos		"8 42"
 			size	"597 575"
-			background	"ui/panel_green_slim"
+            bgcolor	"0 0 0 0.5"
 		}
 		// The Big Picture picture and model
 		image image_bigpicture
@@ -283,7 +283,7 @@ window ufopedia extends objectinfo
 			{
 				pos		"420 466"
 				size	"185 150"
-				background	"ui/panel_green_slim"
+                bgcolor	"0 0 0 0.5"
 			}
 			string label
 			{
