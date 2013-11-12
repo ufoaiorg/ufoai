@@ -947,12 +947,12 @@ void CL_ActorShoot (const le_t* le, const pos3_t at)
 
 /**
  * @brief Searches the clip with the least TU usage to put it into the weapon
- * @param invList The inventory list that can be used outside of this function for the found ammo
+ * @param ammoItem The inventory list that can be used outside of this function for the found ammo
  * @param inv The inventory to do the search in
  * @param weapon The weapon to reload
  * @return @c NONE if no container was found, the container id otherwise.
  */
-int CL_ActorGetContainerForReload (Item** invList, const Inventory* inv, const objDef_t* weapon)
+int CL_ActorGetContainerForReload (Item** ammoItem, const Inventory* inv, const objDef_t* weapon)
 {
 	containerIndex_t container;
 	int tu = 100;
@@ -966,13 +966,13 @@ int CL_ActorGetContainerForReload (Item** invList, const Inventory* inv, const o
 		 * searching other containers if it would take longer
 		 * to retrieve the ammo from them than the one
 		 * we've already found. */
-		for (Item* ic = inv->getContainer2(container); ic; ic = ic->getNext()) {
-			const objDef_t* od = ic->def();
+		for (Item* item = inv->getContainer2(container); item; item = item->getNext()) {
+			const objDef_t* od = item->def();
 			if (!od->isLoadableInWeapon(weapon) || !GAME_ItemIsUseable(od))
 				continue;
 			tu = INVDEF(container)->out;
 			bestContainer = container;
-			*invList = ic;
+			*ammoItem = item;
 			break;
 		}
 	}
