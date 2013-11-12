@@ -121,6 +121,8 @@ void INV_ItemDescription (const objDef_t* od)
 				}
 				Cvar_ForceSet("mn_linkname", _(od->ammos[itemIndex]->name));
 			}
+		} else {
+			Cvar_ForceSet("mn_linkname", "");
 		}
 	}
 
