@@ -73,13 +73,13 @@ window ufopedia extends objectinfo
         {
             {
                 pos		"343 55"
-                size	"638 626"
+                size	"668 626"
             }
 
             panel navigation_panel
             {
                 pos		"0 34"
-                size	"638 592"
+                size	"668 592"
             }
 
             tab navigation
@@ -87,7 +87,7 @@ window ufopedia extends objectinfo
                 {
                     cvar	*cvar:ufopedia_content
                     pos		"0 2"
-                    size	"638 36"
+                    size	"668 36"
                     onChange { cmd "update_ufopedia_layout;" }
                 }
                 option preresearch
@@ -245,7 +245,7 @@ window ufopedia extends objectinfo
             vscrollbar ufopedia_scroll
             {
                 image		"ui/scrollbar_v_green"
-                pos			"609 42"
+                pos			"639 42"
                 height		"575"
                 current		0
                 viewsize	26
@@ -282,7 +282,7 @@ window ufopedia extends objectinfo
             panel requirement
             {
                 {
-                    pos		"420 466"
+                    pos		"450 446"
                     size	"185 150"
                 }
                 string label
@@ -299,7 +299,7 @@ window ufopedia extends objectinfo
                     pos			"15 40"
                     size		"156 92"
                     font		"f_verysmall"
-                    color		"0 .78 0 1"
+                    color		"0.56 0.81 0.76 1"
                     selectcolor	"1 1 1 1"
                     onChange		{ cmd "techtree_click <lineselected>;" }
                     onViewChange
