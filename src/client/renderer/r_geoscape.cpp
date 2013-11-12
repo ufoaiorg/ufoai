@@ -170,6 +170,8 @@ void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, f
  * @brief Draw 3D Marker on the 2D geoscape.
  * @param[in] screenPos Position on screenlongitude and latitude of the model to draw.
  * @param[in] direction angle giving the direction the model is heading toward.
+ * @param[in] model The name of the model of the marker.
+ * @param[in] skin Number of modelskin to draw on marker
  */
 void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char* model, int skin)
 {
