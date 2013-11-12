@@ -987,17 +987,13 @@ int CL_ActorGetContainerForReload (Item** invList, const Inventory* inv, const o
  */
 void CL_ActorReload (le_t* le, containerIndex_t containerID)
 {
-	Inventory* inv;
-	Item* ic;
-	const objDef_t* weapon;
-	containerIndex_t bestContainer;
-
 	if (!CL_ActorCheckAction(le))
 		return;
 
 	/* check weapon */
-	inv = &le->inv;
+	Inventory* inv = &le->inv;
 
+	const objDef_t* weapon;
 	if (inv->getContainer2(containerID)) {
 		weapon = inv->getContainer2(containerID)->def();
 	} else if (containerID == CID_LEFT && inv->getContainer2(CID_RIGHT)->isHeldTwoHanded()) {
@@ -1021,7 +1017,8 @@ void CL_ActorReload (le_t* le, containerIndex_t containerID)
 		return;
 	}
 
-	bestContainer = CL_ActorGetContainerForReload(&ic, inv, weapon);
+	Item* ic;
+	containerIndex_t bestContainer = CL_ActorGetContainerForReload(&ic, inv, weapon);
 	/* send request */
 	if (bestContainer != NONE) {
 		int x, y;
