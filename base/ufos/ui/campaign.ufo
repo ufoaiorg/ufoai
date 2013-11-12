@@ -73,11 +73,17 @@ window campaign extends cgame_download
 
 		MainMenuTab btn_new
 		{
+			{
 			pos 		"0 0"
 			string		"_NEW"
 			bgcolor		"0.4 0.515 0.5 1"
 			color		"0 0 0 0.9"
 			onClick		{ call *node:root.toggle_cmp_new }
+			}
+			func disable {
+				*node:parent@bgcolor = "0.4 0.515 0.5 0.25"
+				*node:parent@color = "1 1 1 0.5"
+			}
 		}
 
 		MainMenuTab btn_save
@@ -457,8 +463,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_load@color = "0 0 0 0.9"
 		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
-		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		call *node:root.cmp_sel.btn_new.disable
 		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
 		*node:root.cmp_sel.cmp_cmps@invis = true
@@ -474,8 +479,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
-		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		call *node:root.cmp_sel.btn_new.disable
 		*node:root.cmp_sel.cmp_cmps@invis = true
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
@@ -490,8 +494,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_save@color = "0 0 0 0.9"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
-		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_new@color = "1 1 1 0.5"
+		call *node:root.cmp_sel.btn_new.disable
 		*node:root.cmp_sel.cmp_cmps@invis = true
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = false
