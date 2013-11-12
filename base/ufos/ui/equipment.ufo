@@ -244,13 +244,44 @@ window equipment extends objectinfo
             // Containers (see inventory.ufo for the definition)
             // ==================
 
-                //container implant	{ pos "13 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container headgear	{ pos "88 85" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container backpack	{ pos "236 59" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container right		{ pos "13 146" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container left		{ pos "236 146" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container belt		{ pos "13 204" 	onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
-                container holster	{ pos "285 204" onSelect { cmd "object_update <lastselectedid> update_item_list;" } }
+                //container implant	{ pos "13 104"	onSelect { cmd "object_update <lastselectedid> update_item_list;" } onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"} }
+
+                container headgear	{
+						pos "88 85"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
+                container backpack	{
+						pos "236 59"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
+                container right		{
+						pos "13 146"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
+                container left		{
+						pos "236 146"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
+                container belt		{
+						pos "13 204"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
+                container holster	{
+						pos "285 204"
+						onSelect { cmd "object_update <lastselectedid> update_item_list;" }
+						onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"}
+					}
+
                 container armour	{
                     pos "130 131"
                     color "1 1 1 0"		// active, but display it transparent
@@ -502,7 +533,11 @@ window equipment extends objectinfo
 			*node:root.equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
-		onChange { cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;" }
+		onChange {
+			cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
+			//This should update soldier's look when changing armour
+			cmd "equipment_soldierlist_select <node:root.selected@integer>;"
+		}
 	}
 
 	vscrollbar equip_scroll {
