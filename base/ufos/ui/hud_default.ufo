@@ -577,7 +577,7 @@ window hud_default extends hud
 				}
 				onMouseLeave	{
 					*node:this@icon = "icons/reload0"
-					cmd "hud_remainingtus reload_r 1;"
+					cmd "hud_remainingtus reload_r 0;"
 				}
 				onClick			{ cmd "hud_reloadright;" }
 			}
