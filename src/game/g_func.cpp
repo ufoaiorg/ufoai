@@ -112,6 +112,7 @@ static bool Destroy_Breakable (Edict* self)
 
 static bool Use_Breakable (Edict* self, Edict* activator)
 {
+	self->HP = 0;
 	return Destroy_Breakable(self);
 }
 
