@@ -46,8 +46,8 @@ window ufopedia extends objectinfo
                 onChange
                 {
                     cmd "ufopedia_click <cvar:up_summary_selection>;"
-                    *node:parent.content.ufopedia_scroll@current = 0
-                    *node:parent.content.ufopedia@viewpos = 0
+                    *node:parent.parent.content.ufopedia_scroll@current = 0
+                    *node:parent.parent.content.ufopedia@viewpos = 0
                     cmd "update_ufopedia_layout;"
                 }
                 onViewChange
