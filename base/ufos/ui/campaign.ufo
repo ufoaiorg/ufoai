@@ -96,9 +96,15 @@ window campaign extends cgame_download
 
 		MainMenuTab btn_load
 		{
+			{
 			pos 		"135 0"
 			string		"_LOAD"
 			onClick		{ call *node:root.toggle_cmp_load }
+			}
+			func enable {
+				*node:parent@bgcolor = "0.4 0.515 0.5 1"
+				*node:parent@color = "0 0 0 0.9"
+			}
 		}
 
 		MainMenuTab btn_download
@@ -459,8 +465,7 @@ window campaign extends cgame_download
 		*cvar:sel_load_slot = false
 	}
 	func toggle_cmp_load {
-		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 1"
-		*node:root.cmp_sel.btn_load@color = "0 0 0 0.9"
+		call *node:root.cmp_sel.btn_load.enable
 		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		call *node:root.cmp_sel.btn_new.disable
