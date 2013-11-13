@@ -57,12 +57,16 @@ static void CL_NetReceiveItem (dbuffer* buf, Item* item, containerIndex_t* conta
  */
 int CL_InvAddTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
-	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
-		/* EV_INV_ADD messages are the last events sent after a death */
-		eventTiming->parsedDeath = false;
-		return eventTiming->impactTime + 400;
-	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
-		return eventTiming->impactTime + 75;
+	if (eventTiming->parsedShot) {
+		if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+			/* EV_INV_ADD messages are the last events sent after a death */
+			/** @todo but if the dying actor didn't have any item in its inventory this event won't be sent,
+			 * the next unrelated EV_INV_ADD event might be badly scheduled */
+			eventTiming->parsedDeath = false;
+			return eventTiming->impactTime + 400;
+		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+			return eventTiming->impactTime + 75;
+		}
 	}
 
 	return eventTiming->nextTime;

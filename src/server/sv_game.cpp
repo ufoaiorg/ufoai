@@ -386,6 +386,7 @@ static const eventNames_t eventNames[] = {
 	M(EV_ACTOR_SHOOT),
 	M(EV_ACTOR_SHOOT_HIDDEN),
 	M(EV_ACTOR_THROW),
+	M(EV_ACTOR_END_SHOOT),
 
 	M(EV_ACTOR_DIE),
 	M(EV_ACTOR_REVITALISED),
