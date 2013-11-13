@@ -234,6 +234,8 @@
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorclientaction.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actordie.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actordie.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorendshot.cpp" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorendshot.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireaddtarget.cpp" />
