@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int CL_ActorDieTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
 	eventTiming->parsedDeath = true;
-	if (eventTiming->impactTime > cl.time)
+	if (eventTiming->parsedShot && eventTiming->impactTime > cl.time)
 		return eventTiming->impactTime;
 	return eventTiming->nextTime;
 }
