@@ -35,7 +35,7 @@ bool UI_ParseComponent(const char* type, const char* name, const char** text);
 bool UI_ParseSprite(const char* name, const char** text);
 bool UI_ParseUIModel(const char* name, const char** text);
 float UI_GetReferenceFloat(uiNode_t const* node, const void* ref);
-const char* UI_GetReferenceString(const uiNode_t const* node, const char* ref) __attribute__ ((warn_unused_result));
+const char* UI_GetReferenceString(uiNode_t const* node, const char* ref) __attribute__ ((warn_unused_result));
 const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));
 char* UI_AllocStaticString(const char* string, int size) __attribute__ ((warn_unused_result));
 float* UI_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
