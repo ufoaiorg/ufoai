@@ -348,14 +348,14 @@ static const float starFieldTexCoords[] = {
  * @brief Bind and draw starfield.
  * @param[in] texnum The texture id (already uploaded of course)
  * @param[in] rotate the rotate angle of the globe
- * @param[in] p The earth rotation (time of day)
+ * @param[in] timeOfDay The earth rotation (time of day) in arcseconds
  * @note We draw a skybox: the camera is inside a cube rotating at earth rotation speed
  * (stars seems to rotate because we see earth as idle, but in reality stars are statics
  * and earth rotate around itself)
  * @sa R_Setup2D
  * @sa R_Draw3DGlobe
  */
-static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, float p)
+static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, float timeOfDay)
 {
 	vec3_t angle;		/**< Angle of rotation of starfield */
 
@@ -367,7 +367,7 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glTranslatef(pos[0], pos[1], -SKYBOX_DEPTH);
 
 	/* rotates starfield: only time and rotation of earth around itself causes starfield to rotate. */
-	VectorSet(angle, rotate[0] - p * todeg, rotate[1], rotate[2]);
+	VectorSet(angle, rotate[0] - timeOfDay * todeg, rotate[1], rotate[2]);
 	glRotatef(angle[YAW], 1, 0, 0);
 	glRotatef(angle[ROLL], 0, 1, 0);
 	glRotatef(angle[PITCH], 0, 0, 1);
