@@ -78,6 +78,7 @@ void G_EventSpawnSound(playermask_t playerMask, const Edict& ent, const vec3_t o
 void G_EventSpawnFootstepSound(const Edict& ent, const char* sound);
 void G_EventStart(const Player& player, bool teamplay);
 void G_EventStartShoot(const Edict& ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at);
+void G_EventEndShoot(const Edict& ent, teammask_t teamMask);
 void G_EventThrow(teammask_t teamMask, const fireDef_t* fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 void G_EventAdd(playermask_t playerMask, int eType, int entnum);
 void G_EventEnd(void);

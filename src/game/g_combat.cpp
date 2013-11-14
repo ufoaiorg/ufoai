@@ -1343,6 +1343,8 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 			G_SendStats(*ent);
 		}
 
+		G_EventEndShoot(*ent, mask);
+
 		/* end events */
 		G_EventEnd();
 

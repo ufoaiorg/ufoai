@@ -29,10 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ParticleAppearTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
-	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
-		return eventTiming->impactTime + 400;
-	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
-		return eventTiming->impactTime + 75;
+	if (eventTiming->parsedShot) {
+		if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+			return eventTiming->impactTime + 400;
+		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+			return eventTiming->impactTime + 75;
+		}
 	}
 
 	return eventTiming->nextTime;

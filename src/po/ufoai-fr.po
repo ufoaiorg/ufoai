@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-08-22 18:05+0100\n"
+"PO-Revision-Date: 2013-10-29 16:01+0100\n"
 "Last-Translator: Damyen <djacquot8CHEZfreePOINTfr>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -2929,9 +2929,8 @@ msgid "Warehouse"
 msgstr "Entrepôt"
 
 #: ../base/ufos/maps.ufo:4184
-#, fuzzy
 msgid "Village 2"
-msgstr "Village"
+msgstr "Village 2"
 
 #: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
@@ -3030,14 +3029,12 @@ msgid "Frozen Industrial Site (MP)"
 msgstr "Site industriel en zone glaciale (Mj)"
 
 #: ../base/ufos/maps.ufo:5420
-#, fuzzy
 msgid "A container harbour."
-msgstr "Un port local."
+msgstr "Un port de containers."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
-#, fuzzy
 msgid "Village MP (2v2)"
-msgstr "Village"
+msgstr "Village (Mj, 2 contre 2)"
 
 #: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
@@ -3845,7 +3842,7 @@ msgstr ""
 "SR-71, tant par sa forme que par son allure : il est noir comme la nuit, "
 "recouvert d'une peinture absorbant les rayonnements et le rendant presque "
 "invisible aux radars, lidars, et à la plupart des autres systèmes de "
-"détection actifs. Son fuselage est presque entièrement composé de nanotubes "
+"détection active. Son fuselage est presque entièrement composé de nanotubes "
 "de carbone et de feuilles de plastique renforcées au graphite. Cela rend "
 "l'appareil extrêmement résistant, notamment à la chaleur. Il peut ainsi "
 "supporter l'échauffement causé par une vitesse de vol de Mach 4, ce qui en "
@@ -4137,7 +4134,7 @@ msgstr ""
 "aliens de façon à leur donner une cohésion maximale, nous avons pu renforcer "
 "le blindage tout en renforçant le fuselage, ce qui nous a permis de libérer "
 "les espaces intérieurs intérieurs habituellement utilisés pour renforcer la "
-"coque. Et donc nous avons pu ajouter des emplacements pour armes lourdes qui "
+"coque. Nous donc avons pu ajouter des emplacements pour armes lourdes qui "
 "n'auraient pas été envisageables sur des avions à l'allure plus classique.\n"
 "\n"
 "Nous disposons enfin d'un appareil capable de rivaliser avec les nouveaux "
@@ -5043,12 +5040,12 @@ msgstr ""
 "Considérations générales\n"
 "\n"
 "L'électronique militaire est désormais essentielle à toute armée depuis la "
-"création du radar pendant la Seconde Guerre mondiale. Depuis cette date, des "
-"efforts constants furent déployés pour éviter toute détection : vol en rase "
-"motte, paillettes brouillant les radars, et, plusieurs années plus tard, "
-"techniques furtives. Depuis toujours, il est préférable que votre ennemi "
-"vous détecte le plus tard possible, voire jamais : l'ennemi ne peut tirer "
-"sur ce qu'il ne voit pas.\n"
+"création du radar pendant la Deuxième Guerre mondiale. Depuis cette date, "
+"des efforts constants furent déployés pour éviter toute détection : vol en "
+"rase motte, paillettes brouillant les radars, et, plusieurs années plus "
+"tard, techniques furtives. Depuis toujours, il est préférable que votre "
+"ennemi vous détecte le plus tard possible, voire jamais : l'ennemi ne peut "
+"tirer sur ce qu'il ne voit pas.\n"
 "\n"
 "Les systèmes de détection et de visée électroniques peuvent être trompés, "
 "tout comme les dispositifs anti-systèmes de détection et de visée. Cette "
@@ -5612,14 +5609,14 @@ msgstr ""
 "l'information publique.\n"
 "\n"
 "Il est possible de charger notre propre carte stellaire dans l'unité de "
-"navigation, mais je n'ose imaginer combien notre carte paraitrait primitive "
-"et incomplète comparée à celle des aliens. Je n’autoriserais aucun voyage "
-"interstellaire tant que nous n'aurons pas récupéré une carte stellaire "
-"alienne. En attendant, nous pourrions probablement utiliser ces unités de "
-"navigation pour explorer le Système solaire, si toutefois nous arrivions à "
-"concevoir un appareil spatial PHALANX. Tout voyage interplanétaire serait "
-"grandement simplifié, et nous pourrions nous lancer vers Saturne, voire "
-"Pluton, rien qu'en appuyant sur un bouton.\n"
+"navigation, mais j'imagine qu'elle paraitrait bien primitive et incomplète "
+"comparée à celle des aliens. Je n'autoriserais aucun voyage interstellaire "
+"tant que nous n'aurons pas récupéré une carte stellaire alienne. En "
+"attendant, nous pourrions probablement utiliser ces unités de navigation "
+"pour explorer le Système solaire, si toutefois nous arrivions à concevoir un "
+"appareil spatial PHALANX. Tout voyage interplanétaire serait grandement "
+"simplifié, et nous pourrions nous lancer vers Saturne, voire Pluton, rien "
+"qu'en appuyant sur un bouton.\n"
 "\n"
 "Et c'est quelque chose qu'il faudrait faire assez vite.\n"
 "\n"
@@ -5786,7 +5783,6 @@ msgstr ""
 "Cdt Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
-#, fuzzy
 msgid ""
 "Commander, we've finished taking a look at the advanced alien propulsion "
 "systems and I've prepared a report for you.\n"
@@ -5815,27 +5811,23 @@ msgstr ""
 "avancée, et je viens de finir le rapport qui vous est destiné.\n"
 "\n"
 "Comme nous nous y attendions, ces moteurs ont été modifiés. En résumé, ils "
-"ont amélioré la mécanique interne tout en ne changeant rien à l'aspect "
-"extérieur. La plus grosse des modifications a été l'augmentation du volume "
-"de la chambre de réaction, ce qui canalise encore plus de force vers "
-"l'arrière de l'appareil. Mais ils ont aussi très astucieusement modifié "
-"l'alimentation pour augmenter la rapidité de la réaction matière-"
-"antimatière.\n"
+"ont amélioré la mécanique interne sans rien changer à l'aspect extérieur. "
+"L'essentiel des modifications a porté sur l'augmentation du volume de la "
+"chambre de réaction, ce qui canalise encore plus de puissance vers l'arrière "
+"de l'appareil. Mais ils ont aussi très astucieusement modifié l'alimentation "
+"pour augmenter la rapidité de la réaction matière-antimatière.\n"
 "\n"
 "La nature semi-improvisée des changements suggère que les extraterrestres "
-"adaptent leurs technologies au fur et à mesure. L'OVNI ravitailleur pourrait "
-"être un modèle récent. Le nouveau moteur semble prévu pour permettre à ce "
-"nouvel OVNI de trimballer de grosses charges dans notre atmosphère ; et il "
-"pourrait resservir si les extraterrestres inaugurent de plus gros OVNI.\n"
+"adaptent leurs technologies au fur et à mesure. Le nouveau moteur semble "
+"prévu pour permettre à de gros OVNI se tenir dans notre atmosphère.\n"
 "\n"
 "Ces modifications pourraient nous inspirer, à nous aussi, des propulsions "
 "plus puissantes, mais cela menacerait dangereusement l'intégrité des "
 "intercepteurs actuels. Nous devons donc concevoir un nouveau chasseur "
-"capable de supporter tout cela. J'ai inclus cette proposition de nouvel "
-"avion de chasse dans votre liste de choix à faire : c'est l'occasion de "
-"concrétiser ce que nous avons appris avec leurs nouveaux moteurs et notre "
-"projet d'intercepteur Dragon. S'il vous plait, jetez-y un œil aussi vite que "
-"possible.\n"
+"capable de supporter tout cela. J'ai inclus cette proposition supplémentaire "
+"dans votre liste de choix à faire : c'est l'occasion de concrétiser ce que "
+"nous avons appris avec leurs nouveaux moteurs et notre projet d'intercepteur "
+"Dragon. S'il vous plait, jetez-y un œil aussi vite que possible.\n"
 "\n"
 "Cdt Navarre"
 
@@ -8981,7 +8973,7 @@ msgstr ""
 "qu'elles soient devenues de moins en moins efficaces entre le début du "
 "XVIIIe et la fin du XXe siècle. Les protections commencèrent à réapparaitre "
 "lors de la Première Guerre mondiale, bien que réduites à de simples casques "
-"en acier ; cette pratique perdura jusqu'à la Seconde Guerre Mondiale, puis "
+"en acier ; cette pratique perdura jusqu'à la Deuxième Guerre Mondiale, puis "
 "disparut avec l'apparition du kevlar. De nos jours, le kevlar est devenu "
 "totalement obsolète sous presque toutes ses formes : il n'est plus utilisé "
 "que par les civils et les forces de police aux budgets limités ; même les "
@@ -9004,7 +8996,7 @@ msgstr ""
 "en 2023, des tests balistiques menés par les forces de l'OTAN prouvèrent que "
 "leurs vestes en kevlar ne résistaient pas aux munitions chinoises. L'armure "
 "est constituée d'un empilement de couches de fils de soie et de polyéthylène "
-"à très haute masse moléculaire , lui conférant une résistance et une "
+"à très haute masse moléculaire, lui conférant une résistance et une "
 "flexibilité étonnante ; le tissu obtenu est environ 18 fois plus résistant "
 "que l'acier, et plus performant de 300 à 400 % par rapport au kevlar. Les "
 "premières combinaisons constituées uniquement de polyéthylène devinrent "
@@ -10174,11 +10166,12 @@ msgstr ""
 "\n"
 "Considérations générales\n"
 "\n"
-"Les missiles sont devenus de plus en plus dangereux depuis la Seconde Guerre "
-"mondiale, alors que les technologies de contre-mesures ne sont devenues "
-"efficaces que depuis le début du XXIe siècle. Entre l'attaque et la défense, "
-"il s'avère que l'attaquant a toujours eu l'avantage. Cependant, cela n'a pas "
-"empêché les aliens de développer des systèmes de défense ahurissants.\n"
+"Les missiles sont devenus de plus en plus dangereux depuis la Deuxième "
+"Guerre mondiale, alors que les technologies de contre-mesures ne sont "
+"devenues efficaces que depuis le début du XXIe siècle. Entre l'attaque et la "
+"défense, il s'avère que l'attaquant a toujours eu l'avantage. Cependant, "
+"cela n'a pas empêché les aliens de développer des systèmes de défense "
+"ahurissants.\n"
 "\n"
 "Par exemple, les forces de l'Union Européenne Élargie ont attaqué deux "
 "vaisseaux aliens avec des SAMs (missiles sol-air) dans l'espace aérien au-"
@@ -12257,7 +12250,6 @@ msgstr ""
 "toutes ses UT et l'immobilisera jusqu'à la fin du tour suivant."
 
 #: ../base/ufos/msgid/concepts.ufo:69
-#, fuzzy
 msgid ""
 "Units can fire on enemy units when they wander into their field of view "
 "during the enemy's turn. Soldiers will execute a reaction shot when an enemy "
@@ -12302,11 +12294,11 @@ msgstr ""
 "\n"
 "Addenda\n"
 "\n"
-"Un tir réflexe n'a lieu que si l'unité a conservé assez d'UT durant son "
-"tour, et que le mode de tir réflexe a été activé. Certaines armes permettent "
-"plusieurs types de tir réflexe : dans ce cas, la sélection du type de tir "
-"réflexe s'effectue par une case à cocher à l'endroit où le joueur choisit le "
-"mode de tir à utiliser.\n"
+"Un tir réflexe n'a lieu que si le mode de tir réflexe a été activé ; dans ce "
+"cas, les UT nécessaires sont mises en réserve et deviennent alors "
+"inutilisables (désactiver le tir réflexe permet de récupérer ces UT). De "
+"plus, les commandants doivent sélectionner le type de tir réflexe à utiliser "
+"dans la fenêtre qui affiche les modes de tir de l'arme en main du soldat.\n"
 "\n"
 "Si un ennemi sort du champ de vision d'un soldat, même un court instant, le "
 "compteur d'UT déclenchant le tir réflexe est remis à zéro. Autrement dit : "
@@ -13055,7 +13047,7 @@ msgstr ""
 "résolutions contraignantes, toutes ignorées. La communauté internationale "
 "débattit longuement, mais ne décida rien.\n"
 "\n"
-"La Seconde Guerre froide entre les États-Unis et la Chine commença lorsque "
+"La Deuxième Guerre froide entre les États-Unis et la Chine commença lorsque "
 "cette dernière annexa la Corée du Nord et du Sud en 2012 ; des agents "
 "secrets parvinrent à désactiver tout l’armement nucléaire de la Corée du "
 "Nord durant les trois jours qui suffirent à l'invasion. L'armée populaire, "
@@ -13066,7 +13058,7 @@ msgstr ""
 "Russie pendant les décennies suivantes.\n"
 "\n"
 "Les tensions internationales restèrent fortes pendant toute la durée de la "
-"Seconde Guerre froide, et des rebellions naissaient presque tous les jours "
+"Deuxième Guerre froide, et des rebellions naissaient presque tous les jours "
 "dans les territoires nouvellement annexés par la Chine. Cependant, ni la "
 "Chine ni les États-Unis n'osèrent utiliser l'arme nucléaire pour annihiler "
 "le camp adverse.\n"
@@ -13097,7 +13089,7 @@ msgstr ""
 "rendent le 15 aout 2036, après s'être battues jusqu'au bout et avoir "
 "pratiqué la stratégie de la terre brulée à grande échelle pendant que les "
 "rebelles les repoussaient lentement jusqu'à l'Océan Indien. Cette dernière "
-"date marque la fin officielle de la Seconde Guerre froide."
+"date marque la fin officielle de la Deuxième Guerre froide."
 
 #: ../base/ufos/msgid/news.ufo:128
 msgid ""
@@ -13523,7 +13515,7 @@ msgstr ""
 "Vague voulait concilier les principes démocratiques aux idéaux socialistes.\n"
 "\n"
 "Tout le continent assista avec horreur au bombardement nucléaire de Shanghai "
-"pendant la Seconde Guerre froide, diffusé jusqu'à la dernière seconde sur "
+"pendant la Deuxième Guerre froide, diffusé jusqu'à la dernière seconde sur "
 "toutes les chaines du monde. La chute de la Chine agit comme un nouveau coup "
 "dur pour la Nouvelle Vague, car tous pouvaient y voir un exemple flagrant du "
 "destin d'une révolution sombrant dans le totalitarisme. Les dirigeants "
@@ -13635,7 +13627,7 @@ msgstr ""
 "toutes les autres, poussa l'Union européenne à se renommer « L'Union "
 "Européenne Élargie » (l'U.E.E.).\n"
 "\n"
-"Après le Seconde Guerre froide, l'U.E.E. a su se placer au premier plan des "
+"Après la Deuxième Guerre froide, l'U.E.E. a su se placer au premier plan des "
 "discussions politiques mondiales. Avec l'Alliance du Moyen-Orient, elle fut "
 "la seule nation a voter la défiance envers les anciennes Nations unies, qui "
 "avait totalement échoué à empêcher l'expansion chinoise et la guerre civile "
@@ -13668,7 +13660,7 @@ msgstr ""
 "dizaine d'années, au bout desquelles elle se fragmenterait sous le poids de "
 "ses propres différences.\n"
 "\n"
-"Cependant, la Seconde Guerre froide a bouleversé cette prévision. La "
+"Cependant, la Deuxième Guerre froide a bouleversé cette prévision. La "
 "République populaire de Chine n'était alors plus un voisin allié contre "
 "l'occident, mais une menace potentielle avec un appétit insatiable dont les "
 "yeux gourmands regardaient le Népal, certaines régions de l'Inde, et même "
@@ -14028,7 +14020,7 @@ msgstr ""
 "au début du XXIe siècle. Malgré cela, après quelques inventions, le projet "
 "retourna dans l'ombre.\n"
 "\n"
-"La Seconde Guerre froide draina la faible vitalité restante du le projet. "
+"La Deuxième Guerre froide draina la faible vitalité restante du le projet. "
 "Ses commandants se battirent pour garder le projet actif, sans même avoir "
 "assez d'argent pour faire voler leurs appareils. Même l'invention de la soie "
 "d'araignée artificielle ne suffit pas à les sauver du crack économique "
@@ -14303,8 +14295,8 @@ msgid ""
 "the battlefield."
 msgstr ""
 "Détermine le nombre d'unités de temps (UT) qu'un soldat peut utiliser à "
-"chaque tour. Augmente lorsqu'un soldat se déplace régulièrement sur le champ "
-"de bataille."
+"chaque tour. Augmente lorsqu'un soldat est régulièrement impliqué dans des "
+"opérations de combat."
 
 #: ../base/ufos/msgid/story.ufo:16
 msgid ""
@@ -14528,7 +14520,7 @@ msgid ""
 msgstr ""
 "Commandant,\n"
 "\n"
-"Nous avons capturé un alien vivant ! La créature a été récupéré lors de "
+"Nous avons capturé un alien vivant ! La créature a été récupérée lors de "
 "notre dernière mission tactique et elle attend dans notre nouvelle unité de "
 "détention, qui semble être à la mesure de nos espérances.\n"
 "\n"
@@ -14621,7 +14613,7 @@ msgstr ""
 "destiné aux enfants est enlevé et remplacé par une version adulte.\n"
 "\n"
 "Nous avons envisagé différentes possibilités quant aux fonctions de ces "
-"appareils, de la machine à pré-digérer les aliments au mécanisme de suicide "
+"appareils, de la machine à prédigérer les aliments au mécanisme de suicide "
 "assisté. La réponse la plus évidente s'avère cependant être la bonne : il "
 "s'agit d'une sorte de filtre permettant aux aliens de survivre dans notre "
 "atmosphère, et éventuellement dans d'autres. Tous les spécimens autopsiés "
@@ -14845,21 +14837,20 @@ msgstr ""
 "Malgré nos maigres résultats jusqu'à présent, l'étude de nos captifs doit "
 "continuer. Nous aimerions mener un certain nombre d'expériences, mais elles "
 "nécessitent votre aval pour libérer des plages horaires en laboratoire et "
-"obtenir des crédits. Je vous assure que ce ne sont pas des travaux en "
-"l'air ; avec une bonne série de tests et des données comportementales, nous "
-"devrions parvenir à communiquer avec ces aliens et peut-être même réanimer "
-"leur intelligence. Nous ignorons jusqu'à quel point nous parviendrons, car "
-"nous en savons vraiment trop peu au sujet de ces aliens et notre volume de "
-"données est encore bien trop faible pour faire des prévisions. Or nous "
-"savons que chaque indice qui nous éclairera sur la psychologie des "
-"extraterrestres sera précieux.\n"
+"obtenir des crédits. Je vous assure que ce ne sont pas des travaux "
+"inutiles ; avec une bonne série de tests et des données comportementales, "
+"nous devrions parvenir à communiquer avec ces aliens et peut-être même "
+"réanimer leur intelligence. Nous ignorons jusqu'à quel point nous "
+"parviendrons, car nous en savons vraiment trop peu au sujet de ces aliens et "
+"notre volume de données est encore bien trop réduit pour faire des "
+"prévisions. Nous savons seulement que chaque indice qui nous éclairera sur "
+"la psychologie des extraterrestres sera précieux.\n"
 "\n"
 "D’un point de vue personnel, je suis convaincu qu'ils doivent savoir quelque "
 "chose, Commandant. Le tout est de les faire parler. Et nous allons y "
 "arriver...\n"
 "\n"
-"Mon équipe et moi-même attendons avec impatience l'approbation de ce "
-"programme.\n"
+"Mon équipe et moi attendons avec impatience l'approbation de ce programme.\n"
 "\n"
 "Cordialement,\n"
 "\n"
@@ -14978,7 +14969,7 @@ msgstr ""
 "à passer les frontières entre ces espèces, qui de toute évidence sont "
 "originaires de mondes différents : leurs évolutions ont été très "
 "divergentes, et certaines semblent beaucoup plus anciennes que d’autres. "
-"Cependant, étant donné l’avance technologique des aliens, le « Comment ? » "
+"Cependant, étant donné l'avance technologique des aliens, le « Comment ? » "
 "est moins énigmatique que le « Pourquoi ?».\n"
 "\n"
 "Ces découvertes suggèrent que les aliens sur Terre doivent être coupés de la "
@@ -14986,7 +14977,7 @@ msgstr ""
 "avantage pour nous, elle représente également une menace que nous n'avions "
 "pas encore considérée : nos recherches en physiologie ont établi que des "
 "extraterrestres isolés ne peuvent pas survivre très longtemps dans notre "
-"environnement, et que leur comportement est primitif tant qu’ils restent en "
+"environnement, et que leur comportement est primitif tant qu'ils restent en "
 "surface ; mais si un assez grand nombre d'entre eux arrive à s'échapper et à "
 "fusionner mentalement (ou à fusionner avec des sympathisants aliens sur "
 "Terre), nous pourrions courir un sérieux risque d'infiltration.\n"
@@ -15048,7 +15039,7 @@ msgstr ""
 "la hiérarchie alienne. Que nous ayons capturé un officier ou qu'il y ait une "
 "tout autre explication, nous devons rapidement connaitre les raisons de ces "
 "nouveaux comportements. Au nom de la division Bio, je vous demande la "
-"permission de lancer un nouveau projet de recherche afin d’étudier ce "
+"permission de lancer un nouveau projet de recherche afin d'étudier ce "
 "problème.\n"
 "\n"
 "Cordialement,\n"
@@ -15132,7 +15123,7 @@ msgstr ""
 "de profondes divergences entre leur mode de penser et le nôtre. Leur "
 "identité collective ne se considère pas comme une entité unique ; elle "
 "existe, c'est tout. Ceci, comme d'autres réponses obtenues pendant nos "
-"sessions, nous conduit à croire que tous les aliens se partagent vraiment un "
+"sessions, nous conduit à croire que tous les aliens partagent vraiment un "
 "esprit unique. Et je dis bien « tous les aliens », Commandant. Il ne s'agit "
 "pas d'un truc pour accroitre l'efficacité des équipes ou encourager l'esprit "
 "de corps, mais bien d'un élément indispensable à la société alienne. Chacun "
@@ -16307,7 +16298,6 @@ msgstr ""
 "Col Falkland"
 
 #: ../base/ufos/msgid/story.ufo:452
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16377,12 +16367,11 @@ msgstr ""
 "\n"
 "Dans cette invasion, le plus frappant est que les aliens collectent de la "
 "biomasse humaine, parfois en enlevant des individus entiers, pour des "
-"objectifs qui paraissent bien nébuleux. Il le font d'une façon plutôt "
-"dégoutante, sans aucun égard pour la vie ; leurs épées Kerr découpent les "
-"humains comme s'il s'agissait de carcasses de boucherie, et les araignées "
-"sanguinaires dissèquent les gens uniquement pour prélever un organe ou une "
-"pinte de sang. Ces actes sont strictement techniques et dépourvus "
-"considérations morales.\n"
+"objectifs qui paraissent bien nébuleux. Ils procèdent d'une façon "
+"dégoutante, sans aucun égard pour la vie, en découpant les humains comme "
+"s'il s'agissait de carcasses de boucherie, et leurs araignées sanguinaires "
+"dissèquent les gens uniquement pour prélever un organe ou une pinte de sang. "
+"Ces actes sont froidement techniques et  dépourvus considérations morales.\n"
 "\n"
 "Nous pouvons seulement supposer que ces échantillons sont prélevés dans des "
 "buts scientifiques : étude de notre physiologie, voire de notre psychologie "
@@ -16401,7 +16390,7 @@ msgstr ""
 "tentative d'infiltration discrète, pour des motifs inconnus, à des assauts à "
 "grande échelle sur des laboratoires de haute sécurité. Nous ne comprenons "
 "pas bien les raisons de ce revirement, mais nous avons recommandé aux "
-"Nations unies de renforcer les mesures de sécurités de tous ces types de "
+"Nations unies de renforcer les mesures de sécurité de tous ces types de "
 "bâtiments et d'armer des milices locales capables de repousser les aliens. "
 "Nous avons établi une liste des sites sensibles que la police doit "
 "étroitement surveiller, et nous avons distribué des manuels résumant les "
@@ -16413,17 +16402,20 @@ msgstr ""
 "que nous avons notées dans leur stratégie, le Renseignement met en place de "
 "nouvelles méthodes pour mieux s'informer, pour mieux répondre aux activités "
 "détectées, et pour faciliter la transmission des données entre les Nations "
-"unies et PHALANX. Nous espérons que toutes nos nouvelles techniques nous "
-"permettront d'augmenter de 10 % le taux total de détection de l'activité "
-"alienne sur Terre, notamment en repérant ce qui restait invisible "
-"auparavant.\n"
+"unies et PHALANX. Nous espérons que nos nouvelles techniques permettront "
+"d'augmenter de 10 % le taux total de détection de l'activité alienne sur "
+"Terre, notamment en repérant ce qui restait invisible auparavant.\n"
 "\n"
 "Nous avons également étudié la façon dont les OVNI vont et viennent sur "
 "Terre, malgré nos difficultés à suivre le grand vaisseau que nous avons "
 "observé. D'après nos enregistrements au sol faits par les radars, les "
 "lidars, et les vidéos, nous pensons désormais que ces grands vaisseaux sont "
-"des espèces de transporteurs, et ces porte-trucs servent de relais aux OVNI "
-"qui explorent la Terre.\n"
+"des espèces de transporteurs qui servent de relais aux OVNI plus petits qui "
+"explorent la Terre.\n"
+"\n"
+"Ces appareils sont d'une importance cruciale et nous devons trouver une "
+"façon de les abattre alors qu'ils sont en orbite. Nous devons faire très "
+"attention, Commandant.\n"
 "\n"
 "Très cordialement,\n"
 "\n"
@@ -16541,7 +16533,6 @@ msgstr ""
 "Col Falkland"
 
 #: ../base/ufos/msgid/story.ufo:516
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16632,14 +16623,14 @@ msgstr ""
 "\n"
 "2) Nous ne disposons que de quelques stations spatiales armées, et aucune "
 "n'est équipée pour endommager les vaisseaux aliens. De plus, les aliens "
-"peuvent détruire instantanément toute structure humaine dans le Système "
+"peuvent détruire instantanément toute infrastructure humaine dans le Système "
 "solaire.\n"
 "\n"
-"3) Notre grille de satellites n’est pas protégée et pourrait être balayée en "
-"quelques secondes. Un réseau câblé secondaire existe bien, mais il est "
-"réservé aux armées. Si la grille est attaquée, les communications entre les "
-"centres de commandements PHALANX et les forces déployées (flotte aérienne ou "
-"équipes de terrain) seraient alors réduites à néant.\n"
+"3) Notre grille de satellites n'est pas protégée et pourrait être balayée en "
+"quelques secondes. Un réseau câblé terrestre d'urgence existe bien, mais il "
+"est réservé aux armées. Si la grille est attaquée, les communications entre "
+"les centres de commandements PHALANX et les forces déployées (flotte "
+"aérienne ou équipes de terrain) seraient alors réduites à néant.\n"
 "\n"
 "4) Il y a, sans aucun doute possible, des vaisseaux aliens en orbite "
 "terrestre qui acheminent du matériel et des OVNI entre la planète mère des "
@@ -16647,7 +16638,7 @@ msgstr ""
 "\n"
 "Nous ne pouvons n'en tirer qu'une seule conclusion : l'espace autour de la "
 "Terre n'est plus sous notre contrôle. Nos infrastructures spatiales "
-"n'existent encore que parce que les aliens n’ont pas décidé de les "
+"n'existent encore que parce que les aliens n'ont pas décidé de les "
 "détruire.\n"
 "\n"
 "La preuve de notre évidente vulnérabilité depuis l'espace est que nous "
@@ -16655,18 +16646,18 @@ msgstr ""
 "appareil permettant de mener cette guerre dans l'espace, et les quelques "
 "projets qui permettrait d'y parvenir nécessiteraient encore des années de "
 "travail. Vu les technologies que nous maitrisons aujourd'hui, même PHALANX "
-"ne pourrait pas construire un appareil suffisamment rapidement pour qu’il "
+"ne pourrait pas construire un appareil suffisamment rapidement pour qu'il "
 "modifie le cours de cette guerre.\n"
 "\n"
 "Les quelques armes orbitales à notre disposition sont complètement "
-"inadaptées. Il y a bien des missiles nucléaires, mais l’ONU ne nous laisse "
+"inadaptées. Il y a bien des missiles nucléaires, mais l'ONU ne nous laisse "
 "pas les utiliser, et ils seraient beaucoup trop destructeurs pour nous "
 "contribuer à nos efforts de recherche en cas de tir réussi. Si les aliens "
 "décident de nous exterminer par bombardement, ils n'ont qu’à appuyer sur un "
-"bouton et attendre. C'est comme ça.\n"
+"bouton et attendre. Il faut donc trouver une solution à cette situation.\n"
 "\n"
-"Il ne nous reste plus qu'à nous demander comment contrer l'activité orbitale "
-"des OVNI. Jusqu'à maintenant, nous sommes resté passifs. Mais notre budget "
+"Nous pouvons seulement nous demander comment contrer l'activité orbitale des "
+"OVNI. Jusqu'à maintenant, nous sommes resté passifs. Mais notre budget "
 "croissant et notre réputation toujours meilleure auprès de l'ONU pourraient "
 "nous permettre une belle avancée stratégique.\n"
 "\n"
@@ -16682,20 +16673,20 @@ msgstr ""
 "sera facile de convaincre au moins une des agences spatiales de nous prêter "
 "un lanceur répondant au cahier des charges.\n"
 "\n"
-"Il y aura des problèmes cependant. Ces canons évidemment inamovibles : les "
-"lanceurs sont construits sur un flanc de montagne, et la cible devrait donc "
+"Il y aura des problèmes cependant. Ces canons sont évidemment inamovibles : "
+"les lanceurs sont construits sur un flanc de montagne, et la cible doit donc "
 "passer devant l'arme pour que nous ayons une chance de la toucher. Comme "
 "nous ne devons pas compter sur les aliens pour se positionner à bout "
 "portant, ce point restait bloquant. Mais nous croyons avoir trouvé une "
-"solution : si le lanceur reste immobile, alors le projectile doit trouver sa "
+"solution : si le lanceur est immobile, c'est au projectile de trouver sa "
 "cible.\n"
 "\n"
-"Ce projet nécessite le développement d'un missile capable d'ajuster sa "
-"trajectoire en utilisant des roquettes intégrées. Nous faisons actuellement "
-"du lobbying auprès de l'ONU afin qu’ils nous autorisent à utiliser une "
-"minuscule ogive nucléaire de 3 kilotonnes au maximum, qui serait fatale lors "
-"de la frappe. Ce missile orbital serait gros, lourd, et son chargement dans "
-"le lanceur sera un vrai défi, mais son existence conditionne tout le reste "
+"Ce projet nécessite le développement d'un projectile capable d'ajuster sa "
+"trajectoire grâce à des roquettes intégrées. Nous faisons du lobbying auprès "
+"de l'ONU afin qu'ils nous autorisent à utiliser une ogive nucléaire "
+"miniaturisée de 3 kilotonnes, au maximum, qui serait fatale lors de la "
+"frappe. Ce projectile orbital serait gros, lourd, et son chargement dans le "
+"lanceur sera un vrai défi, mais sa concrétisation conditionne tout le reste "
 "du projet.\n"
 "\n"
 "Comme vous pouvez le voir, Commandant, tous ces problèmes peuvent être "
@@ -17378,7 +17369,7 @@ msgstr ""
 "Utiliser un P-12 comme arme principale est en général déconseillé, étant "
 "donné que presque toutes les autres armes de notre arsenal le surpassent. "
 "Ses avantages sont ceux d'une arme de poing : petite taille, poids faible. "
-"Néanmoins, les médecins ou les techniciens qui ne pourraient emporter un "
+"Néanmoins, les médecins ou les techniciens qui ne pourraient emporter de "
 "plus gros calibre peuvent s'en servir comme arme principale.\n"
 "\n"
 "\n"
@@ -17603,16 +17594,16 @@ msgstr ""
 "arrive ainsi à des vitesses d'éjection accrues et donc à plus d’énergie "
 "cinétique. C'est un vrai pistolet automatique, capable de tirer 600 balles à "
 "la minute depuis son chargeur de 30 balles, démontable et étonnamment fin. "
-"Il permet trois modes de tir : semi-automatique, rafales de 3 balles, ou "
+"Il dispose de trois modes de tir : semi-automatique, rafales de 3 balles, ou "
 "automatique.\n"
 "\n"
 "L’APMP utilise des balles spécifiques de 4,2 x 24 mm, capables de traverser "
-"le kevlar comme dans du beurre. Une fois dans le corps humain, cette petite "
-"balle rebondit et crée des blessures énormes. Elle transperce mal les "
-"armures corporelles modernes, mais cet inconvénient est compensé par la "
-"cadence très rapide et sans dispersion. Malheureusement, sa taille explique "
-"aussi sa faible maniabilité, et la précision des tirs automatiques ou en "
-"rafale en souffre.\n"
+"le kevlar comme du beurre. Une fois dans le corps humain, cette petite balle "
+"rebondit et crée des blessures énormes. Elle transperce mal les armures "
+"corporelles modernes, mais cet inconvénient est compensé par la cadence très "
+"rapide et sans dispersion. Malheureusement, sa taille explique aussi sa "
+"faible maniabilité, et la précision des tirs automatiques ou en rafale en "
+"souffre.\n"
 "\n"
 "Lorsqu'il est nécessaire d'utiliser une arme automatique aussi petite que le "
 "P-12, alors cette arme convient parfaitement.\n"
@@ -17638,8 +17629,8 @@ msgstr ""
 "Utiliser un PA-699 comme arme principale est en général déconseillé, étant "
 "donné que presque toutes les autres armes de notre arsenal le surpassent. "
 "Ses avantages sont ceux d'une arme de poing : petite taille, poids faible. "
-"Néanmoins, les médecins ou les techniciens qui ne pourraient emporter pour "
-"un plus gros calibre peuvent s'en servir comme arme principale.\n"
+"Néanmoins, les médecins ou les techniciens qui ne pourraient emporter de "
+"plus gros calibre peuvent s'en servir comme arme principale.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -19947,7 +19938,7 @@ msgstr ""
 "d'agent incendiaire dans un corps en plastique, qui ne se fragmente pas mais "
 "permet surtout la dispersion du contenu de la grenade sur une grande "
 "surface. La M71 se présente sous une forme cylindrique lisse, et non en "
-"forme d'ananas comme les grenades utilisées pendant la Seconde Guerre "
+"forme d'ananas comme les grenades utilisées pendant la Deuxième Guerre "
 "Mondiale, qui la rend plus apte à rouler sur diverses surfaces.\n"
 "\n"
 "Comme toutes les grenades à main, la portée est limitée ; mais elles peuvent "
@@ -21091,7 +21082,6 @@ msgstr ""
 "Cdt Navarre "
 
 #: ../base/ufos/msgid/weapons.ufo:1201
-#, fuzzy
 msgid ""
 "Commander, I'd like to report that we've successfully prototyped the new "
 "electrolaser design and have approved final plans for a production model. We "
@@ -21148,8 +21138,8 @@ msgstr ""
 "qui provoque un sérieux choc électrique. Le canal plasma est créé grâce à un "
 "bref tir laser à haute énergie ionisant l'air sur son passage.\n"
 "\n"
-"Les électrolasers ne sont pas un concept nouveau. Il y quelques décennies "
-"encore, ils étaient simplement considérés comme des armes non létales. Leurs "
+"Les électrolasers ne sont pas un concept nouveau. Il y quelques décennies, "
+"ils étaient simplement considérés comme des armes non létales. Leurs "
 "versions les plus primitives ressemblaient à des tasers sans fils ; mais la "
 "technologie restait sérieusement limitée par les faibles capacités des "
 "batteries, alors qu'il fallait beaucoup d'énergie pour mettre hors service "
@@ -21157,20 +21147,19 @@ msgstr ""
 "usages civils, avec des armes qui ne pouvaient tirer qu'un seul coup à "
 "faible distance. Nous avons su aller beaucoup plus loin grâce à la puissance "
 "des lasers au deutérium de fluorure et aux nouveaux systèmes "
-"d’emmagasinement d’énergie.\n"
+"d'emmagasinement d'énergie.\n"
 "\n"
 "Notre électrolaser peut créer un canal plasma à courte ou moyenne distance, "
 "variable en fonction des conditions atmosphériques, qui délivre sur la cible "
-"un voltage inégalé. Ça fonctionne sur les êtres organiques et sur les "
-"robots. Le choc délivré peut être modulé en fonction des besoins du moment : "
-"du simple coup assommant à la secousse provoquant une mort instantané si la "
-"cible est « fragile ».\n"
+"un voltage inégalé. L'arme fonctionne bien sur les êtres organiques, mais "
+"risque d'être peu efficace face aux robots, qui pourraient facilement "
+"disperser la charge.\n"
 "\n"
 "Maintenant, les désavantages.\n"
 "\n"
 "Comparé au bâton assommant, le système électrique amélioré et le laser "
 "embarqué ont considérablement accru la taille et le poids de cet "
-"électrolaser. De plus, les cartouches au déutérium-fluorure standard ne "
+"électrolaser. De plus, les cartouches standards au deutérium-fluorure ne "
 "fournissent pas assez d'énergie pour une utilisation correcte de l'arme ; "
 "les modifications que nous avons dû apporter rendent ces nouvelles "
 "cartouches pour électrolasers NON interchangeables avec les cartouches pour "
@@ -21178,8 +21167,8 @@ msgstr ""
 "\n"
 "Malgré ces désavantages, les performances sont à des années lumières du "
 "bâton assommant du Dr Connor. Je vous recommande de remplacer dès que "
-"possible tous les bâtons assommants par des électrolasers. La survie de nos "
-"soldats est en jeu.\n"
+"possible tous les bâtons assommants par des électrolasers. Ne serait-ce que "
+"dans l'intérêt de nos soldats.\n"
 "\n"
 "Cdt Navarre"
 
@@ -21270,7 +21259,7 @@ msgstr ""
 "coups directs, mais nous avons fait de notre mieux. Les risques de fuite "
 "pendant les combats on été réduits à moins d'un pour cent.\n"
 "\n"
-"Tous les éléments d’une cartouche vide seront récupérés à la base, puis "
+"Tous les éléments d'une cartouche vide seront récupérés à la base, puis "
 "détruites par une équipe spécialisée, et nous devrons en fabriquer des "
 "nouvelles : en effet, les cartouches ne peuvent pas être reconditionnées à "
 "cause de la contamination due au deutérium.\n"
@@ -21319,7 +21308,7 @@ msgstr ""
 "besoin de tester tout cela en laboratoire, et nous avons besoin de fonds "
 "pour concevoir un prototype, puis pour en industrialiser la fabrication "
 "conformément aux règles de sécurité de l'ONU. C'est un travail ennuyeux, "
-"mais obligatoire afin de rendre nos lasers suffisamment sûrs en situation "
+"mais indispensable afin de rendre nos lasers suffisamment sûrs en situation "
 "réelle. Je ne veux pas aller trop vite et risquer ensuite d'empoisonner nos "
 "propres troupes avec du deutérium. Nous avons besoin de chargeurs fiables si "
 "nous voulons utiliser nos nouvelles armes au laser.\n"
@@ -21329,7 +21318,6 @@ msgstr ""
 "Cdt Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1283
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -21465,7 +21453,8 @@ msgstr ""
 "le cas : attendre un médecin peut impliquer la mort d'un soldat qui aurait "
 "pu être sauvé par des soins immédiats. La médecine traumatique doit être "
 "rendue la plus simple et rapide possible, afin que n'importe quel soldat un "
-"minimum entrainé puisse sauver des vies.\n"
+"minimum entrainé puisse sauver des vies. Et c'est bien là l'objectif des "
+"médikits.\n"
 "\n"
 "Chaque médikit contient un ordinateur embarqué qui peut : diagnostiquer les "
 "blessures par ultra-sons et rayons X ; réaliser des électrocardiogrammes et "
@@ -21479,10 +21468,10 @@ msgstr ""
 "cautériser les blessures grâce à outil chauffant spécial, et (le plus "
 "important) appliquer sa réserve de nanorobots sur une blessure.\n"
 "\n"
-"La vieille idée d'utiliser des nanorobots a été mise en pratique pour la "
-"première fois par des chercheurs vietnamiens, il y a une trentaine d'années. "
-"Aujourd'hui, la médecine ne peut plus se passer d'eux. Il s'agit de "
-"minuscules robots de quelques micromètres de diamètre qui peuvent être "
+"L'idée déjà ancienne d'utiliser des nanorobots a été mise en pratique pour "
+"la première fois par des chercheurs vietnamiens, il y a une trentaine "
+"d'années. Aujourd'hui, la médecine ne peut plus se passer d'eux. Il s'agit "
+"de minuscules robots de quelques micromètres de diamètre qui peuvent être "
 "programmés pour exécuter une tâche spécifique. Ils stériliseront rapidement "
 "une blessure, répareront une rupture artérielle, alerteront l'opérateur "
 "médical d'une éventuelle hémorragie interne ou de la nécessité d'une "
@@ -21491,13 +21480,13 @@ msgstr ""
 "se dissolvent sans danger dans le sang du blessé après épuisement de leurs "
 "réserves énergétiques, ce qui ne prend pas plus de 10 ou 15 secondes. Ce "
 "délai est souvent bien trop court pour stabiliser un soldat grièvement "
-"blessé, et il sera nécessaire de lui injecter au moins une dose de "
-"nanorobots supplémentaire. Il n'y a pas de limite au nombre de doses qu'un "
-"individu peut prendre, les nanorobots étant métabolisés sans effets "
+"blessé, et il sera nécessaire de lui injecter au moins une dose "
+"supplémentaire de nanorobots. Il n'y a pas de limite au nombre de doses "
+"qu'un individu peut prendre, les nanorobots étant métabolisés sans effets "
 "secondaires.\n"
 "\n"
 "Cette technologie est la plus grande révolution jamais réalisée dans le "
-"monde de la chirurgie traumatique. Elle peut tout faire sauf régénérer les "
+"monde de la chirurgie traumatique. Elle peut tout faire, sauf régénérer les "
 "tissus. Si un travail plus important est nécessaire, par exemple lorsqu'un "
 "organe vital est touché, ou qu'une balle s'est logée dans un endroit "
 "critique, le médikit fournira l'équipement et les instructions nécessaires "
@@ -21518,10 +21507,10 @@ msgstr ""
 "La pharmacie incluse dans le médikit permet également de réanimer des "
 "soldats inconscients. Dans ce cas, les troupes ranimées doivent quitter la "
 "ligne de front dès que possible et continuer leurs soins à couvert. Le "
-"soldat-soignant peut se être obligé d'engager l'ennemi pour laisser le "
-"blessé s'échapper ; c'est une pratique acceptable, à condition de fournir au "
-"médecin un soutient minimum : échanger la vie d'un soldat contre une autre "
-"n’est pas un bon calcul militaire.\n"
+"soldat-soignant peut être obligé d'engager l'ennemi pour laisser le blessé "
+"s'échapper ; c'est une pratique acceptable, à condition de fournir au "
+"médecin un soutien minimum : échanger la vie d'un soldat contre une autre "
+"n'est pas un bon calcul militaire.\n"
 "\n"
 "Une fois qu'un soldat est rentré vivant à la base, notre équipe médicale "
 "prendra en charge le traitement. Le risque qu'un individu succombe à ses "
@@ -21530,6 +21519,20 @@ msgstr ""
 "\n"
 "\n"
 "Addenda\n"
+"\n"
+"Les médikits disposent de trois systèmes de soin. Les premiers soins servent "
+"à traiter les blessures et à contenir les pertes de sang, ce qui doit "
+"augmenter les chances de survie des soldats, et ils améliorent légèrement la "
+"santé du blessé (dont la guérison complète n'est assurée qu'une fois revenu "
+"dans une base).\n"
+"\n"
+"Les stimulants permettent de réveiller un soldat inconscient, qu'il ait été "
+"étourdi ou gazé.\n"
+"\n"
+"Les antipsychotiques correspondent à une injection d'endorphines. Dans des "
+"situations désespérées, beaucoup de commandants ont trouvé cela utile pour "
+"doper le moral de leurs troupes durant ces occasions extrêmement "
+"stressantes.\n"
 "\n"
 "Aucun."
 
@@ -21618,12 +21621,12 @@ msgstr ""
 "vais essayer de tous les décrire.\n"
 "\n"
 "Un humain sans protection aspergé de ce plasma souffrira de blessures et de "
-"douleurs extrêmes sur toute la zone exposée. Ses tissus adipeux fonderont "
+"douleurs extrêmes sur toute la zone exposée. Ses tissus adipeux fondront "
 "comme neige au soleil. Son sang et ses autres fluides corporels bouilliront "
 "immédiatement. Le plasma creusera le corps, consumant les chairs jusqu'à "
 "l'os. Une grande partie du corps sera ainsi totalement dévastée.\n"
 "\n"
-"N'importe quel type de vêtement résistant fournira le début d’une protection "
+"N'importe quel type de vêtement résistant fournira un début de protection "
 "contre un tir de pistolet à plasma. Plus particulièrement, les armures de "
 "conception récente disperseront la chaleur aussi efficacement qu'elles le "
 "peuvent, et résisteront temporairement au plasma. Avec de la chance, ce sera "
@@ -21863,7 +21866,6 @@ msgstr ""
 "Cdt Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1371
-#, fuzzy
 msgid ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all "
 "the alien weapons, it's very nasty and very dangerous.\n"
@@ -21899,8 +21901,8 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Commandant, notre étude de la grenade extraterrestre à plasma est maintenant "
-"terminée. Comme toutes les autres armes aliennes, elle est très inquiétante "
-"et fort dangereuse.\n"
+"terminée. Comme toutes les autres armes aliennes, elle est dangereusement "
+"inquiétante.\n"
 "\n"
 "L'objet est divisé en sept parties principales : un boitier, un déclencheur, "
 "une batterie, un système à retardement, une charge explosive, une chambre à "
@@ -21910,27 +21912,25 @@ msgstr ""
 "extrêmement puissante et nous arrivons difficilement à la dupliquer. Le "
 "déclencheur est très intéressant, car il comporte un petit scanner à "
 "empreinte digitale pour le pouce afin d'éviter toute déclenchement "
-"accidentel. Une activation volontaire déclenche le système à retardement ; "
-"la durée du retardement dépend du temps pendant lequel le déclencheur a été "
-"maintenu, mais une sécurité impose un délai minimum de trois secondes.\n"
+"accidentel. Une activation volontaire déclenche le système à retardement.\n"
 "\n"
-"Une fois que le compteur à rebours est à zéro, la batterie libère son "
-"énergie, chauffant le cœur d'hydrogène en plasma en quelques millisecondes. "
-"La charge explosive propulse la grenade en l'air et, une fois à la bonne "
-"hauteur et si elle est orientée verticalement, la chambre à plasma est "
-"déconnectée. L'expansion rapide du plasma provoque la destruction de la "
-"grenade ; les débris d'explosion et les particules de plasma se répandent à "
-"très haute vitesse dans la zone d'effet. Le rayon d'action de la grenade est "
-"limité par nature instable du plasma non-confiné, qui devient vite trop "
-"froid et trop lent pour être dangereux. Ce rayon est quand même supérieur de "
-"50 % à celui de la grenade à fragmentation humaine.\n"
+"Une fois que le compteur à rebours atteint zéro, la batterie libère son "
+"énergie et chauffe le cœur d'hydrogène en plasma en quelques millisecondes. "
+"La charge explosive propulse la grenade en l'air. Une fois à la bonne "
+"hauteur, le système de confinement de la chambre à plasma est déconnectée ; "
+"l'expansion rapide du plasma provoque la destruction de la grenade, et les "
+"débris d'explosion et les particules de plasma se répandent à très haute "
+"vélocité dans la zone d'effet. Le rayon d'action de la grenade est limité "
+"par la nature instable du plasma non-confiné, qui devient vite trop froid et "
+"trop lent pour être dangereux, mais il reste quand même supérieur à celui de "
+"la grenade à fragmentation humaine.\n"
 "\n"
 "Toute personne dans la zone d'effet sera au minimum grièvement blessée, "
 "voire tuée.\n"
 "\n"
-"Nous avons terminé les plans ; nos ateliers peuvent désormais produire cette "
-"arme. Nous avons rédigé un manuel pour nos soldats, qui peuvent maintenant "
-"utliser cette grenade comme n’importe quelle autre grenade.\n"
+"Nous avons terminé les plans qui permettront à nos ateliers de produire "
+"cette arme. Nous avons rédigé un manuel pour nos soldats, qui peuvent "
+"maintenant utliser cette grenade comme n'importe quelle autre grenade.\n"
 "\n"
 "Cdt Navarre"
 
@@ -22894,7 +22894,7 @@ msgstr ""
 "performantes dans la section combat rapproché.\n"
 "\n"
 "Conçu et produit en Chine continentale, le pistolet mitrailleur Ohm 55 est "
-"l'une des armes les plus terrifiantes héritées de la Seconde Guerre froide. "
+"l'une des armes les plus terrifiantes héritées de la Deuxième Guerre froide. "
 "Le premier prototype date de 2035, et fut créé par des scientifiques du "
 "gouvernement communiste chinois. À la fin de la guerre, seuls quelques "
 "modèles étaient disponibles dans les unités gouvernementales, mais les "
@@ -23361,7 +23361,7 @@ msgstr ""
 "\n"
 "Ce chargeur contient 8 balles du type PML (Pistolet Mitrailleur Lourd) 20 x "
 "140 mm. Ces balles sont empilées en une seule colonne, et leur poids rend le "
-"chargeur très lourd (jusqu'à un kilogramme). Les balles, d’excellente "
+"chargeur très lourd (jusqu'à un kilogramme). Les balles, d'excellente "
 "facture, sont destinées uniquement aux fusils de précision lourds. Elles "
 "sont plus précises et plus couteuses que les munitions classiques PML.\n"
 "\n"
@@ -23468,9 +23468,9 @@ msgstr ""
 "La seule défense efficace contre le CHOC reste de se mettre à couvert. Un "
 "fragment de peau découvert ou une ouverture prévue pour respirer suffisent "
 "pour rendre une cible vulnérable. À notre connaissance, les aliens "
-"n'utilisent pas d'armures protégeant contre ce type d'attaque. Quant aux "
-"agents PHALANX, ils devraient être protégés s'ils portent un masque à gaz "
-"intégral, étant donné que nos uniformes et armures sont imperméables.\n"
+"n'utilisent pas d'armures protégeant contre ce type d'attaque. Les agents "
+"PHALANX devraient être protégés s'ils portent un masque à gaz intégral, "
+"étant donné que nos uniformes et armures sont imperméables.\n"
 "\n"
 "Nous avons développé une arme qui prend la forme d'une grenade à lancer. Nos "
 "troupes ne devraient pas rencontrer de problèmes pour l'utiliser sur le "
@@ -23640,7 +23640,7 @@ msgstr ""
 "\n"
 "Merci encore de votre compréhension, Commandant. Je suis intimement persuadé "
 "que cette arme sera d'une aide considérable pour capturer les aliens. Je "
-"m’efforcerai désormais de laisser le Cdt Navarre s'occuper des détails "
+"m'efforcerai désormais de laisser le Cdt Navarre s'occuper des détails "
 "techniques qui le concernent.\n"
 "\n"
 "Cordialement,\n"
@@ -23727,14 +23727,14 @@ msgstr ""
 "n'existe aucune autre arme électrique ayant le potentiel de neutraliser nos "
 "ennemis. Commandant, nous avons un besoin critique de cette arme pour "
 "capturer des aliens. Nous ne pouvons pas canarder nos adversaires en "
-"espérant qu'une ou deux cibles pourront être rafistolée après le combat, "
+"espérant qu'une ou deux cibles pourront être rafistolées après le combat, "
 "puis ramenées vivantes à la base. Et même si cela arrivait, par miracle, mon "
 "département ne peut mener ses recherches et ses interrogatoires qu'en "
 "disposant de nombreux prisonniers.\n"
 "\n"
 "J'espère que vous me comprenez. S'il vous plait, accordez-nous des plages "
 "horaires en laboratoire et des financements aussi rapidement que possible, "
-"et je trouverai quelques personnes de la division d’ingénierie pour nous "
+"et je trouverai quelques personnes de la division d'ingénierie pour nous "
 "aider à finaliser ce projet. Je serais évidemment ravi si vous faisiez "
 "changer d'avis le Cdt Navarre. Je suis persuadé qu'il serait heureux de "
 "recevoir un message de votre part.\n"
@@ -23783,19 +23783,17 @@ msgstr ""
 "L'armement à faisceau de particules est conçu pour frapper une cible avec un "
 "flux de particules accélérées à des vitesses presque égales à celle de la "
 "lumière, ainsi porteur d'une énergie cinétique fantastique. Jusqu'à présent, "
-"nous avions vu l'utilisation de cette technologie uniquement à partir des "
-"armes embarquées des grands OVNI. Maintenant, cependant, ils l'utilisent "
-"malheureusement aussi au sol.\n"
+"nous n'avions vu cette technologie utilisée qu'avec les armes embarquées des "
+"grands OVNI. mMalheureusement, ils l'utilisent maintenant aussi au sol.\n"
 "\n"
-"Le pistolet lui-même est de simple conception, une simple coquille couvrant "
-"une série d'aimants et de lentilles électrostatiques concentrant et "
-"contraignant un faisceau de particules.\n"
+"Le pistolet lui-même est de conception simple : une coquille couvre une "
+"série d'aimants et de lentilles électrostatiques, qui concentrent un "
+"faisceau de particules.\n"
 "\n"
-"De toute évidence, ce pistolet est la pire arme de poing que je n’ai jamais "
-"vu dans ma carrière, avec des capacités de perçage d'armure impressionnantes "
-"et un potentiel maximal de dégâts. Il est moins précis que nos pistolets "
-"lasers, mais il possède une excellente puissance d'arrêt pour une arme "
-"auxiliaire.\n"
+"De toute évidence, ce pistolet est la pire arme de poing que j'ai jamais vue "
+"dans ma carrière, avec des capacités perforantes impressionnantes et un "
+"potentiel énorme de dégâts. Il est moins précis que nos pistolets lasers, "
+"mais il possède une excellente puissance d'arrêt pour une arme auxiliaire.\n"
 "\n"
 "Cdt Navarre"
 
@@ -24636,12 +24634,11 @@ msgstr "Vaccin pour humains"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "Implant à amphétamine"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
-#, fuzzy
 msgid "Muscle Stimulant"
-msgstr "Stimulants"
+msgstr "Stimulant musculaire"
 
 #: ../base/ufos/seq_credits.ufo:44
 msgid "http://www.ufoai.org"
@@ -25378,13 +25375,12 @@ msgstr ""
 "ceux-ci sont proches de votre base. "
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
 "seem to ignore unconscious civilians."
 msgstr ""
 "Pensez à étourdir les civils pour les empêcher de courir dans tous les sens. "
-"Les aliens semblent ne pas remarquer les civils assommés."
+"Les aliens semblent ne pas remarquer les civils inconscients."
 
 #: ../base/ufos/tips.ufo:46
 msgid ""
@@ -25475,6 +25471,9 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"Lorsqu'une de vos bases est attaquée, placez un soldat dans la salle de "
+"vidéosurveillance de votre centre de commandement. Il pourra utiliser les "
+"caméras de sécurité pour localiser les ennemis."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -25540,43 +25539,36 @@ msgid "Day"
 msgstr "Jour"
 
 #: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
-#, fuzzy
 msgid "Upload"
-msgstr "Décharger"
+msgstr "Téléverser"
 
 #: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
-#, fuzzy
 msgid "Delete this team"
-msgstr "Effacer ce marque-page"
+msgstr "Effacer cette équipe"
 
 #: ../base/ufos/ui/_menu.ufo:440
-#, fuzzy
 msgid "Currently loaded"
-msgstr "Nœud actuel :"
+msgstr "Déjà chargé"
 
 #: ../base/ufos/ui/_menu.ufo:515
-#, fuzzy
 msgid "Generate New Team"
-msgstr "Créer aléatoirement une nouvelle équipe"
+msgstr "Créer une nouvelle équipe"
 
 #: ../base/ufos/ui/_menu.ufo:596
-#, fuzzy
 msgid "Download new teams"
-msgstr "Téléchargement [%s]"
+msgstr "Télécharger de nouvelles équipes"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "Décharger"
+msgstr "Télécharger"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
 msgstr "Sauvegarde de l'équipe actuelle"
 
 #: ../base/ufos/ui/_menu.ufo:615
-#, fuzzy
 msgid "Save Team"
-msgstr "Sauvegardez votre équipe"
+msgstr "Sauvegarder l'équipe"
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
@@ -26067,7 +26059,7 @@ msgstr "Charger"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Télécharger des sauvegardes"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -26152,19 +26144,16 @@ msgid "Do not quit."
 msgstr "Ne pas quitter"
 
 #: ../base/ufos/ui/cgame.ufo:26
-#, fuzzy
 msgid "Remove this file from the server"
-msgstr "Enlever le soldat de cet appareil"
+msgstr "Enlever ce fichier du serveur"
 
 #: ../base/ufos/ui/cgame.ufo:53
-#, fuzzy
 msgid "Available files:"
-msgstr "Langues disponibles"
+msgstr "Fichiers disponibles :"
 
 #: ../base/ufos/ui/cgame.ufo:93
-#, fuzzy
 msgid "No files uploaded yet"
-msgstr "Aucune particule chargée"
+msgstr "Aucun fichier n'a encore été chargé"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -26183,9 +26172,8 @@ msgstr "Main droite"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
 #: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
-#, fuzzy
 msgid "Implant"
-msgstr "Implants"
+msgstr "Implant"
 
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:79
@@ -26537,9 +26525,8 @@ msgid "Heavily wounded"
 msgstr "Gravement blessé"
 
 #: ../base/ufos/ui/hospital.ufo:188
-#, fuzzy
 msgid "Healthy"
-msgstr "Santé"
+msgstr "En bonne santé"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -26573,7 +26560,7 @@ msgstr "Messages instantanés"
 
 #: ../base/ufos/ui/hud_.ufo:640
 msgid "Party chat"
-msgstr "Discussions"
+msgstr "Discuter avec tous"
 
 #: ../base/ufos/ui/hud_.ufo:644
 msgid "Global lobby (IRC)"
@@ -26645,7 +26632,7 @@ msgstr "Messages instantanés"
 
 #: ../base/ufos/ui/hud_default.ufo:887
 msgid "Please wait"
-msgstr "Veuillez attendre"
+msgstr "Patientez..."
 
 #: ../base/ufos/ui/hud_default.ufo:989
 msgid "Hide rescue zone"
@@ -26656,29 +26643,24 @@ msgid "Reserve TUs for shooting."
 msgstr "Réserver des UT pour tirer."
 
 #: ../base/ufos/ui/hud_default.ufo:1019
-#, fuzzy
 msgid "Disable reaction fire"
-msgstr "Activer ou désactiver le tir réflexe."
+msgstr "Désactiver le tir réflexe"
 
 #: ../base/ufos/ui/hud_default.ufo:1025
-#, fuzzy
 msgid "Reaction fire (not available)"
-msgstr "Tir réflexe (impossible)"
+msgstr "Tir réflexe (non disponible)"
 
 #: ../base/ufos/ui/hud_default.ufo:1031
-#, fuzzy
 msgid "Enable reaction fire"
-msgstr "Activer ou désactiver le tir réflexe."
+msgstr "Activer le tir réflexe"
 
 #: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
-#, fuzzy
 msgid "Target out of range"
-msgstr "Ciblez le sol"
+msgstr "Cible hors de portée"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
-#, fuzzy
 msgid "Target acquired"
-msgstr "La zone cible est occupée."
+msgstr "Cible acquise"
 
 #: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
@@ -26857,20 +26839,19 @@ msgstr "Quitter la messagerie"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "« J'aime » (Facebook)"
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Suivez-nous sur Twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -26978,7 +26959,7 @@ msgstr "Stock"
 
 #: ../base/ufos/ui/market.ufo:182
 msgid "Number of such items in base"
-msgstr "Nombre d'objets de ce type en stock dans la base"
+msgstr "Nombre d'objets du même type dans la base"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
@@ -26986,7 +26967,7 @@ msgstr "Marché"
 
 #: ../base/ufos/ui/market.ufo:190
 msgid "Number of such items on the market"
-msgstr "Nombre d'objets de ce type en vente sur le marché"
+msgstr "Nombre d'objets du même type sur le marché"
 
 #: ../base/ufos/ui/market.ufo:197
 msgid "Price"
@@ -27376,26 +27357,23 @@ msgstr "Êtes-vous prêt ?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "Contrôle administrateur"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
-#, fuzzy
 msgid "Round time limit:"
-msgstr "Durée limite d'un tour en seconde :"
+msgstr "Durée limite d'un tour :"
 
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Force start"
 msgstr "Forcer le démarrage"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
-msgstr ""
-"Commencer le jeu même si toutes les équipes ne sont pas prêtes ou entrées"
+msgstr "Commencer le jeu avant que toutes les équipes ne soient prêtes"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Contrôle administrateur distant"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -27435,7 +27413,7 @@ msgid ""
 "connect button to connect to the server"
 msgstr ""
 "Vous avez reçu une invitation pour participer à un jeu multijoueur. Appuyez "
-"sur le bouton 'Se connecter' pour se connecter au serveur"
+"sur le bouton 'Se connecter' pour vous connecter au serveur"
 
 #: ../base/ufos/ui/multiplayeringame.ufo:55
 msgid "Abort Game"
@@ -27971,14 +27949,12 @@ msgid "Intel Graphics Hardware Hack:"
 msgstr "Correctif pour carte graphique Intel :"
 
 #: ../base/ufos/ui/options.ufo:1156
-#, fuzzy
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
-"Ce correctif active la compression des textures et désactive les shaders "
-"GlSK sur les puces Intel. À désactiver pour obtenir de meilleurs effets "
-"graphiques."
+"Ce correctif désactive les shaders GLSL sur les puces Intel. À désactiver "
+"pour obtenir de meilleurs effets graphiques."
 
 #: ../base/ufos/ui/options.ufo:1189
 msgid ""
@@ -28322,18 +28298,16 @@ msgid "Key Bindings"
 msgstr "Clavier, souris, manette(s)"
 
 #: ../base/ufos/ui/options.ufo:2026
-#, fuzzy
 msgid "Menu"
-msgstr "Medan"
+msgstr "Menu"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../base/ufos/ui/options.ufo:2034
-#, fuzzy
 msgid "Battlescape"
-msgstr "^BMission tactique"
+msgstr "Mission tactique"
 
 # Électrocardiogramme
 #: ../base/ufos/ui/physdat.ufo:368
@@ -28742,19 +28716,16 @@ msgid "Save your team"
 msgstr "Sauvegardez votre équipe"
 
 #: ../base/ufos/ui/team.ufo:714
-#, fuzzy
 msgid "Generate a team"
-msgstr "Créer aléatoirement une nouvelle équipe"
+msgstr "Créer une équipe"
 
 #: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
-#, fuzzy
 msgid "Generate Team"
-msgstr "Equipe Actuelle"
+msgstr "Créer équipe"
 
 #: ../base/ufos/ui/team.ufo:731
-#, fuzzy
 msgid "Generate a new team with the selected race"
-msgstr "Mettre à jour l'interface avec l'objet sélectionné"
+msgstr "Créer une équipe avec la race sélectionnée"
 
 #: ../base/ufos/ui/transfer.ufo:31
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -28855,12 +28826,11 @@ msgstr "Prérequis :"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Connexion"
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
-msgstr "Mot de passe :"
+msgstr "Mot de passe"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -29641,10 +29611,11 @@ msgstr "UT"
 msgid "Damaged %s (deterioration: %i)\n"
 msgstr "Endommagé %s (détérioration : %i)\n"
 
+# Attention : actuellement (10 2013), le mot "saignement" est trop long pour s'afficher correctement
 #: client/battlescape/cl_hud.cpp:1331
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
-msgstr "Blessé %s (saignement : %i)\n"
+msgstr "Blessé %s (saigne : %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
@@ -30185,9 +30156,9 @@ msgid "Working 100%"
 msgstr "Fonctionne à 100%"
 
 #: client/cgame/campaign/cp_base.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "Not operational, depends on %s"
-msgstr "Non opérationel, dépend de"
+msgstr "Non opérationel, dépend de %s"
 
 #: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
@@ -30735,11 +30706,11 @@ msgstr ""
 "non fonctionnel, dépend de %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "%3.1f jour restant"
-msgstr[1] "%3.1f jours restant"
+msgstr[0] "%d jour restant"
+msgstr[1] "%d jours restant"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -31118,13 +31089,12 @@ msgid "Unknown weight"
 msgstr "Poids inconnu"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
-#, fuzzy
 msgid ""
 "No Command Centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
 "Aucun centre de commandement dans cette base.\n"
-"Les hangars ne fonctionnent plus.\n"
+"Les hangars ne fonctionnent pas.\n"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 msgid ""
@@ -31371,9 +31341,8 @@ msgid "Alien terror in %s"
 msgstr "Mission terroriste extraterrestre : %s"
 
 #: client/cgame/campaign/cp_missions.cpp:462
-#, fuzzy
 msgid "Alien terror"
-msgstr "Mission terroriste extraterrestre : %s"
+msgstr "Mission terroriste extraterrestre"
 
 #: client/cgame/campaign/cp_missions.cpp:465
 #, c-format
@@ -31619,9 +31588,9 @@ msgid "Not enough credits to finish production in %s."
 msgstr "Fonds insuffisants pour terminer la production à %s."
 
 #: client/cgame/campaign/cp_produce.cpp:442
-#, fuzzy, c-format
+#, c-format
 msgid "Work on %s at %s has finished."
-msgstr "Production terminée : %s (%s)"
+msgstr "Travail terminé : %s (%s)"
 
 #: client/cgame/campaign/cp_produce.cpp:443
 #: client/cgame/campaign/cp_produce.cpp:479
@@ -31732,7 +31701,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "Travail commencé : %s"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -32309,29 +32278,29 @@ msgstr ""
 "DATE : %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:619
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr "Contenu OVNIpédia"
+msgstr "OVNIpédia : %s (terminé)"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:672
 #: client/cgame/campaign/cp_ufopedia.cpp:681
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s"
-msgstr "OVNIpédia"
+msgstr "OVNIpédia : %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:678
 msgid "No pre-research description available."
 msgstr "Pas de description préliminaire disponible."
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "Proposal: %s"
-msgstr "Proposition :"
+msgstr "Proposition : %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "Re :"
+msgstr "Re : %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32452,15 +32421,12 @@ msgstr ""
 "Erreur lors de la sauvegarde de l'équipe. Rien à sauver pour l'instant."
 
 #: client/cgame/cl_game_team.cpp:314
-#, fuzzy
 msgid "New Team"
 msgstr "Nouvelle équipe"
 
 #: client/cgame/cl_game_team.cpp:318
-#, fuzzy
 msgid "Error saving team. Too many teams!"
-msgstr ""
-"Erreur lors de la sauvegarde de l'équipe. Rien à sauver pour l'instant."
+msgstr "Erreur lors de la sauvegarde de l'équipe. Trop d'équipes."
 
 #: client/cgame/cl_game_team.cpp:323
 msgid "Error saving team. Check free disk space!"
@@ -32794,57 +32760,50 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:369
-#, fuzzy
 msgid "Loading"
-msgstr "Chargement en cours"
+msgstr "Chargement..."
 
 #: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
 #: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "Connection failure"
-msgstr "Tir réflexe"
+msgstr "Échec de connexion"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "Le mot de passe donné est erroné."
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "Ce changement nécessite un redémarrage."
+msgstr "Le serveur n'est accessible qu'avec un mot de passe."
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "Cet objet fonctionne.\n"
+msgstr "Le serveur est complet."
 
 #: client/cl_main.cpp:417
-#, fuzzy
 msgid "You are banned on this server."
-msgstr "Se connecter à ce serveur"
+msgstr "Vous êtes banni de ce serveur."
 
 #: client/cl_main.cpp:420
-#, fuzzy
 msgid "The game has already started."
-msgstr "L'équipe est déjà en service"
+msgstr "La partie a déjà commencé."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "Le serveur fait fonctionner une version différente du jeu."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "Mauvais mot de passe rcon"
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "Vous n'avez pas donné le bon mot de passe rcon."
 
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "The server refused the connection."
-msgstr "Le serveur a mis fin à la connexion"
+msgstr "Le serveur a refusé la connexion."
 
 #: client/cl_main.cpp:558
 #, c-format
@@ -32998,11 +32957,11 @@ msgstr "Roulette de la souris vers le bas"
 
 #: client/input/cl_input.cpp:1222
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr "Sélectionner objet / Marcher vers / En mode tir : tirer, etc."
+msgstr "Sélectionner objet. Marcher vers. En mode tir : tirer, etc."
 
 #: client/input/cl_input.cpp:1224
 msgid "Rotate Battlescape/In fire mode, cancel action"
-msgstr "Faire pivoter le Battlescape / En mode tir : annuler le tir"
+msgstr "Faire pivoter la caméra (mission). En mode tir : annuler le tir"
 
 #: client/input/cl_input.cpp:1226
 msgid "Turn soldier toward mouse pointer"

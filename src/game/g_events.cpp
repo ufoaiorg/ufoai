@@ -209,6 +209,17 @@ void G_EventStartShoot (const Edict& ent, teammask_t teamMask, shoot_types_t sho
 }
 
 /**
+ * @brief Start the shooting event
+ * @param ent The entity that starts the shooting
+ * @param teamMask the vis mask of the teams to determine the clients from this event is send to
+ */
+void G_EventEndShoot (const Edict &ent, teammask_t teamMask)
+{
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_END_SHOOT, ent.number);
+	G_EventEnd();
+}
+
+/**
  * @brief Start the shooting event for hidden actors
  * @param teamMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot

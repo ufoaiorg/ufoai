@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-05-13 01:00-0500\n"
-"Last-Translator: Ganama <nijimania@hotmail.com>\n"
+"PO-Revision-Date: 2013-10-21 11:32-0500\n"
+"Last-Translator: Danny Kim <danny.kim.us@gmail.com>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Bookmarks: 424,638,482,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Basepath: ../\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -40,9 +40,8 @@ msgid "Small cemetery"
 msgstr "작은 묘지"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outskirt of a big city."
-msgstr "대도시의 변두리."
+msgstr "큰 도시의 변두리."
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -547,7 +546,7 @@ msgstr "발전실"
 
 #: ../base/ufos/basemanagement.ufo:93
 msgid "Command Centre"
-msgstr "지휘통제실"
+msgstr "사령센터"
 
 #: ../base/ufos/basemanagement.ufo:109
 #: client/cgame/campaign/cp_base_callbacks.cpp:337
@@ -2767,9 +2766,8 @@ msgstr "아프리카의 마을"
 
 #: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
 #: ../base/ufos/maps.ufo:332
-#, fuzzy
 msgid "African Desert"
-msgstr "아타카마 사막"
+msgstr "아프리카 사막"
 
 #: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
@@ -2923,9 +2921,8 @@ msgid "Warehouse"
 msgstr "창고"
 
 #: ../base/ufos/maps.ufo:4184
-#, fuzzy
 msgid "Village 2"
-msgstr "마을"
+msgstr "마을 2"
 
 #: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
@@ -2986,7 +2983,6 @@ msgid "Residential Neighbourhood"
 msgstr "주택가"
 
 #: ../base/ufos/maps.ufo:4998
-#, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "하수도 건설현장"
 
@@ -3027,14 +3023,12 @@ msgid "Frozen Industrial Site (MP)"
 msgstr "얼어붙은 공업부지 (멀티플레이)"
 
 #: ../base/ufos/maps.ufo:5420
-#, fuzzy
 msgid "A container harbour."
-msgstr "지역항구."
+msgstr "컨테이너 항구."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
-#, fuzzy
 msgid "Village MP (2v2)"
-msgstr "마을"
+msgstr "마을 MP (2대2)"
 
 #: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
@@ -3453,6 +3447,27 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 아군의 새 랩터급 전투 수송선의 그림을 첨부했습니다.\n"
+"\n"
+"이 항공기는, 건보트가 우월한 공군력을 위해 디자인된 UFO에 어떻게 큰 외계인 부"
+"대를 채워넣었는가에 대한 분석을 포함하여, 외계 기술을 아군 항공기에 적용하는 "
+"과정에서 우리가 배운 모든 것을 활용합니다. 외계 물질로 항공체의 표면를 둘러 "
+"폭발물에 대한 내성을 상당하게 하였습니다. 가장 강력한 UFO들의 공격을 이겨낼 "
+"수는 없지만, 경량급 UFO들을 추격해 격추할 수 있습니다. 이러한 접전을 위하여, "
+"각 날개에 중형 무기 장착대 1개소, 기체 앞부분에 경형 무기 장착대 1개소를 지정"
+"하였습니다.\n"
+"\n"
+"랩터는 최대 10명의 병사를 안전히 태울 수 있으나, 공중전의 압력을 견디기 위해"
+"서는 안전벨트를 착용시켜야 합니다. 병사들은 높은 랜딩기어로 올려져 있는 비행"
+"선의 하단을 통해 출입하기 때문에, 착륙 직후에 선체를 방어지점으로 이용할 수"
+"가 없습니다.\n"
+"\n"
+"이 비행선은 외계인들의 반물질 엔진을 사용하는 첫 수송선이므로, 반드시 충당이 "
+"가능한 여분의 반물질을 저장하십시오. 가장 가득 찬 아군 기지에 이 항선의 제작"
+"을 지시하십시오. 하면 다른 비행선들은 더 위험한 위협요소들에 집중할 수 있습니"
+"다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/aircraft.ufo:86
 msgid ""
@@ -4093,6 +4108,25 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 드디어 해냈습니다. 제 평생 경력의 결정체인 업적, 스팅레이 헤비급 전"
+"투기를 소개합니다.\n"
+"\n"
+"처음 눈에 띄는 것은 그 유별난 모양과 장갑판입니다. 초안을 본 조종사들 일부는 "
+"그리도 외계적으로 생긴 비행선을 조종한다는 것을 걱정했음을 알지만, 장담컨데 "
+"이 비행체 디자인의 모든 구석에는 다 이유가 있습니다. 우리는 모든 추측들을 버"
+"리고 우리가 무엇을 하는가를 다시 생각해 보았습니다. 그 결과는 기쁘게도 더 가"
+"볍고 빠르며 현존하는 아군 무기들 가운데 가장 완전히 무기화된 비행선입니다.\n"
+"\n"
+"스팅레이의 후퇴익형 날개들은 놀라운 속도에서도 훌륭한 안정성을 제공합니다. 최"
+"고도의 결합력을 내도록 외계 물질들을 형성한 덕에, 비행선의 내구도를 외부 케이"
+"싱에서 얻고, 비행선의 장갑을 강화하는 내부 메카니즘을 제거할 수 있었습니다. "
+"그 결과, 전통적인 디자인으로 만들어진 동급 비행선에 비해 더 무거운 무기의 장"
+"착이 가능해졌습니다.\n"
+"\n"
+"이는 공중전에서 새로이 만날 무서운 UFO들을 상대할 무기가 될 것입니다. 스팅레"
+"이의 조속한 투입을 추천합니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/aircraft.ufo:246
 msgid ""
@@ -4114,6 +4148,21 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 건보트 UFO의 조사를 통해 뼈아프게 확실해진 것은, 우리가 더 강력한 "
+"인터셉터를 필요로 한다는 것입니다. 아군이 마지막으로 개발한 인터셉터들은 전투"
+"력의 차를 좁히는 데에 큰 도움이 되었고, 또 한 번 해낼 수 있을 것이라 생각합니"
+"다.\n"
+"\n"
+"건보트의 장갑은 더욱 가벼운 패키지에 더 많은 보호력을 더하는, 확연한 기술의 "
+"진보를 보여줍니다. 그것이 건보트가 그리 빠르고 날렵한 이유입니다. 이것을 아군"
+"의 디자인에도 복제해보고 싶습니다. 성공한다면, 과거 그 어떤 인터셉터보다도 "
+"더 강한 무기력을 갖추고도 엄청나게 빠른 인터셉터를 가지게 될 것입니다.\n"
+"\n"
+"충분한 연구기간을 주시면 우리 조종사들 인생에 다시는 없을 최고의 전투기를 만"
+"들어 낼 수 있음을 자신합니다. 외계인들이 계속 건보트를 보내온다면, 그것이 있"
+"어야만 살아남을 수 있을 것입니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/aircraft.ufo:264
 #, fuzzy
@@ -4469,6 +4518,29 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 우리가 '폭격기'라고 불러온 새 UFO의 연구를 마쳤습니다.\n"
+"\n"
+"항시 그래왔듯 비행체 자체에서 UFO의 목적을 나타내는 징후들을 찾으려 노력했으"
+"나, 전혀 찾을 수가 없습니다. 연구실 부재. 의료시설 부재. '폭격기'는 그 어떤 "
+"UFO에서도 본 적 없이 두꺼운 장갑과 탑재 기술 및 무기들을 갖추었습니다. 허나 "
+"헤비급 전투기가 목표였라면 더욱 작고 빠른 비행체에 그 설비들을 실을 수 있었"
+"을 것입니다.\n"
+"\n"
+"결국, 그 크기와 공백으로 미루어 보아 내린 결론은 이것입니다: 이 UFO의 목적은 "
+"사병들을 전투에 투입하는 것입니다. 예측에 의하면, 여타 UFO들에 비해 많게는 두"
+"배 이상의 무장 외계인들을 전장으로 안전하게 이송할 수 있습니다. 이것은 파괴"
+"의 상자나 다름 없습니다. 그 외의 어떤 다른 목적도 파악되지 않습니다.\n"
+"\n"
+"이는 우려요소입니다. 외계인들이 우리를 XVI로 감염시키려 한다는 사실을 알았을 "
+"때도 무서웠지만, 이는 적어도 인류의 다수 생존이 그들에게 유용하다는 것을 의미"
+"했지요. 우리를 제거하기로 했다면, 이제는 죽을 각오로 싸워야 할지도 모릅니"
+"다.\n"
+"\n"
+"그들의 당시의 생각이 무엇인지, 또 지금은 달라진 건지 확실히 알 수는 없으나, "
+"그들이 어디서 오고 있는지 알아내고 어디를 쳐야 피해를 줄 수 있는지를 알아내"
+"야 할 필요성은 그 언제보다도 긴급해졌습니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/aircraft.ufo:350
 msgid ""
@@ -4892,6 +4964,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:36
+#, fuzzy
 msgid ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
 "\n"
@@ -5130,7 +5203,6 @@ msgstr ""
 "나바르 중령"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:100
-#, fuzzy
 msgid ""
 "Technical Specifications: Polymer Aircraft Armour\n"
 "\n"
@@ -5201,87 +5273,63 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Technical Specifications: Polymer Aircraft Armour\n"
+"기술명세서: 폴리머 비행선 장갑\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"기밀 등급 BLACK\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"PHALANX 외계 생명체 대응부\n"
 "\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"기술 서류, 허가권 시그마 -- 사령관 검토 전용\n"
 "\n"
-"Filed: 19 March 2084\n"
+"제출일: 2084년 3월 19일\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-"Operations Command\n"
-"\n"
+"제출자: 폴 나바르 중령, 연구개발: 엔지니어링부, PHALANX, 대서양 작전 지휘실\n"
 "\n"
 "\n"
-"Overview\n"
 "\n"
-"Under the continuing efforts of the Excalibur Program, we have scoured the "
-"globe for the best components on Earth in order to fit our aircraft with the "
-"equipment they need to survive against the alien threat. As always, only the "
-"very best equipment has been selected for the defence of our planet.\n"
+"개요\n"
 "\n"
-"One of the fundamental truths in aircraft design is that it's easier to dish "
-"out damage than it is to take it and keep coming. Heavy objects don't really "
-"belong in the sky; it takes a constant input of power to keep things like "
-"aircraft, birds and balloons from coming back down, and if the source of "
-"this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses "
-"exclusively multi-engine aircraft, but even though it's possible for our "
-"interceptors to land on only one engine, the loss of an engine during combat "
-"will immediately render the aircraft combat-ineffective. With such a drastic "
-"loss of speed and manoeuvring power, continuing the engagement would be "
-"suicide\n"
+"저희는 엑스칼리버 프로그램의 지도하에, 외계인 위협으로부터 아군의 비행선들이 "
+"살아남기에 필요한 장비들을 위한 최고의 부품들을 찾아 지구를 뒤졌습니다. 언제"
+"나 그렇듯, 지구 방위를 위해서 최고의 장비들만을 엄선하였습니다.\n"
 "\n"
-"Adding extra armour to our aircraft is a weighty but effective solution to "
-"keeping them in the sky, protecting critical systems from damage and "
-"allowing the aircraft to stay in the fight longer than would otherwise be "
-"possible. It will reduce the severity of hits to the fuel tank and other "
-"vital systems that might otherwise result in the craft's instant "
-"destruction.\n"
+"비행선 디자인의 근본적 사실중 하나는, 비행기를 이용해 피해를 입히기는 쉽지만 "
+"피해를 입고도 살아남기는 어렵다는 것입니다. 무거운 사물은 하늘에 속하지 않지"
+"요; 비행기, 새, 풍선 등은 떨어지는 것을 막기 위해 지속적인 힘의 투입을 필요"
+"로 하고, 이 힘이 부양중에 떨어지면 추락을 피할 수 없습니다. PHALANX는 다중엔"
+"진 비행선만을 사용하지만, 아군의 인터셉터들이 한개의 엔진만으로 착륙하는 것 "
+"자체는 가능해도, 전투중의 엔진 손실은 비행선을 전투 무력화 시킵니다. 그리도 "
+"큰 속도와 조종력의 손실을 입고도 교전을 계속하는 건 자살행위지요.\n"
 "\n"
-"The expensive polymer used in our standard add-on armour is one of the "
-"toughest materials on the planet. It deforms wildly under heat and pressure, "
-"such as when impacted by kinetic or explosive energy, cushioning the blow "
-"across the entire armour surface. Once the energy has dissipated, the "
-"deformed plate amazingly resumes all or most of its previous shape, "
-"depending on the amount of damage received. We even have facilities in our "
-"Workshops to repair permanently-deformed polymer plates once the aircraft "
-"returns to base.\n"
+"추가 장갑을 비행선에 부착하는 것은, 무겁기는 해도 중요 시스템들을 충격으로부"
+"터 보호하고 더 오래 전투에 남아있을 수 있게 하므로 부양유지에 효과적인 해답입"
+"니다. 연료통 등 필수적 시스템들에 대한 충격을 완화해 비행선의 순간폭발을 막아"
+"주지요.\n"
 "\n"
-"On the downside, the added weight will slow the aircraft down and "
-"significantly decrease its effective range. This is less of an issue for "
-"quick short-range interceptions, but can cause problems if UFOs are spotted "
-"in areas far distant from any of our bases.\n"
+"아군의 일반 추가식 장갑에 쓰이는 값비싼 폴리머는 지구에서 가장 튼튼한 물질 "
+"중 하나로 만들어졌습니다. 동역학적 및 폭발 에너지가 내는 열과 압력에는 크게 "
+"변형되어, 장갑 표면 전체에 오는 충격을 흡수합니다. 에너지가 흩어지고 나면, 변"
+"형된 판은 놀랍게도, 받은 충격의 양에 따라 완전히 혹은 대부분 본래의 모양으로 "
+"돌아옵니다. 작업실에는, 완전히 변형된 폴리머 판을 비행선의 기지 귀환후 수리"
+"할 수 있는 시설들도 있습니다.\n"
 "\n"
-"Installing this armour add-on will completely take up the modular armour "
-"slot on one of our aircraft.\n"
+"단점은, 추가된 무게가 비행선의 속도를 낮추고 효과적 사정반경을 줄인다는 것입"
+"니다. 빠른 단거리 요격에서는 그리 큰 이슈가 아니지만, 기지에서 먼 지역에서 "
+"UFO들이 발견되면 문제가 될 수 있습니다.\n"
+"\n"
+"이 장갑의 추가설치는 비행선 한대의 모듈식 장갑 슬롯을 완전히 채울 것입니다.\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
+"추천 원칙\n"
 "\n"
-"It is recommended to restrict this armour add-on to craft which are meant to "
-"make quick, short-range interceptions not far from their base. The "
-"installation of add-on armour on our long-range interceptors is left to the "
-"Commander's discretion, but limiting their effective range in this manner "
-"can be dangerous, as it will be several hours' work to strip off the armour "
-"once it's put on. During this time the interceptor will be 'in the shop' and "
-"unable to launch. Any rearming or refuelling of the aircraft will have to "
-"wait until the installation/removal is complete. Our techs can't work on "
-"this material with dangerous munitions or fuel on-site.\n"
-"\n"
-"Scrambling an aircraft during a half-finished armour job is possible but not "
-"recommended. The craft will be highly unbalanced and in danger of crashing "
-"because of unpredictable handling and behaviour. It certainly won't be able "
-"to fight, as its targeting electronics will have been shut down for the "
-"duration of the maintenance cycle, and they cannot be booted up in time to "
-"be effective in a scramble situation.\n"
+"비행선에 장갑을 설치하는 결정은 조심해서 내리시기를 추천합니다. 속도와 사정거"
+"리간의 역관계를 고려할 때, 일부 비행선들은 빠른 UFO들 추격하기 어려울 수도 있"
+"습니다.\n"
 "\n"
 "\n"
-"Addenda\n"
+"추가사항\n"
 "\n"
-"None."
+"없음."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:112
 #, fuzzy
@@ -5839,7 +5887,6 @@ msgstr ""
 "나바르 중령"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
-#, fuzzy
 msgid ""
 "Commander, we've finished taking a look at the advanced alien propulsion "
 "systems and I've prepared a report for you.\n"
@@ -5866,16 +5913,15 @@ msgid ""
 msgstr ""
 "사령관님, 제가 보고드린 고급 외계 추진 시스템들에 대한 연구를 마쳤습니다.\n"
 "\n"
-"예상대로, 이 엔진들은 개조되었습니다. 간단히 말하자면, 외부 케이싱은 유지한"
-"채 내부를 업그레이드 했습니다. 대부분의 개조는 반작용실의 용량을 늘리는 데에 "
-"들어갔으며, 그 결과 엔진 후면으로 더욱 강한 추진력을 보내게 되었습니다. 허나 "
-"동시에 공급 장치 기술을 독창적으로 재디자인 하여 물질-반물질 소멸율을 더 빠르"
-"게 하였습니다.\n"
+"예상대로, 이 엔진들은 개조되었습니다. 간단히 말해, 그들은 외부 케이싱은 유지"
+"한채 내부를 업그레이드 했습니다. 대부분의 개조는 반작용실의 용량을 늘리는 데"
+"에 적용되었으며, 그 결과 엔진 후면으로 더욱 강한 추진력을 보내게 되었습니다. "
+"허나 동시에 공급 장치 기술을 독창적으로 재디자인 하여 물질-반물질 소멸율을 "
+"더 빠르게 하였습니다.\n"
 "\n"
 "임기 응변식 변경사항들을 볼 때, 외계인들은 상황을 보아가며 기술을 새로 적용해"
-"가는 것 같습니다. 보급선 UFO는 최근 개발된 것일지도 모릅니다. 증가된 추진력"
-"은 아마도 지구의 대기권에서 보급선이 더 과중한 적재량을 수용토록 한 것일터이"
-"며, 더 큰 UFO들을 투입하는 데에도 중요할 것입니다.\n"
+"가는 것 같습니다. 추가된 추진력은 아마도 무거운 UFO들의 지구의 대기권내 부양"
+"을 가능케 하려 디자인 되었을 가능성이 높습니다.\n"
 "\n"
 "우리도 이 사실을 기반으로 더 강한 추진 체계를 개발할 수 있을 것 같습니다만, "
 "인터셉터의 내구도에 대한 위협이 너무 크므로, 이를 수용할 수 있는 새로운 항공"
@@ -9105,6 +9151,30 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"사령관님,\n"
+"\n"
+"저희 팀이, 우리가 구해온 외계 생명체의 분석을 마쳤습니다.\n"
+"\n"
+"이 외계인의 확연히 전투기준적인 기계 증가물들을 보아 '전투형 호버네트'라고 부"
+"르고 있습니다. 그러나 그 중심부에는 일종의 \"뇌\"를 포함한 작은 바이오매스가 "
+"있고 기계를 조종하는 것으로 보입니다.\n"
+"\n"
+"이 생명체는 진보된 장갑 피복으로 쌓여있고, 공중부양과 목표물 조준을 돕는 안"
+"정 장치는 비전투시에는 필요 없을 정도로 강력합니다. 이 외계인이 갖춘 플라즈"
+"마 무기류는 유별난 탄약을 이용해 우리에게는 익숙치 않은 정확도로 3점사가 가능"
+"합니다. 이 녀석들은 쓰러뜨리기 쉽지 않을 것이며, 파괴되지 전까지 그들은 아군 "
+"병사들에 지대한 위협이 될 것입니다.\n"
+"\n"
+"다른 유닛들이 착용하는 외계인 갑옷류로 포장되어 있기 때문에, 그들은 일반 및 "
+"플라즈마 무기에 대한 저항력이 있습니다. 허나 레이저 및 화염류 무기들에 취약"
+"한 외계인 갑옷 특유의 약점 또한 공유합니다.\n"
+"\n"
+"그들이 포착되면 최대한 신속히 쓰러뜨리는 것이 좋습니다. 거리를 좁힐 때까지 기"
+"다린다면, 이미 늦을지도 모릅니다.\n"
+"\n"
+"그럼,\n"
+"\n"
+"코너 박사"
 
 #: ../base/ufos/msgid/armour.ufo:38
 #, fuzzy
@@ -9930,7 +10000,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:62
-#, fuzzy
 msgid ""
 "Blueprints -- Alien Containment Facility\n"
 "\n"
@@ -10008,13 +10077,13 @@ msgid ""
 msgstr ""
 "청사진 -- 외계인 수용시설\n"
 "\n"
-"보안등급: BLACK\n"
+"기밀 등급 BLACK\n"
 "\n"
-"PHALANX 외계생명체 대책 기구\n"
+"PHALANX 외계 생명체 대책 기구\n"
 "\n"
-"연구문서, Sigma Clearance -- 사령관 전용, 복사금지\n"
+"연구문서, 허가권 시그마 -- 사령관 검토 전용\n"
 "\n"
-"작성일: 16 February 1958\n"
+"작성일: 1958년 2월 16일\n"
 "\n"
 "작성자: Maj. Marcel LeClerc, 기지 사령관, PHALANX, 대서양 작전 본부\n"
 "\n"
@@ -10197,7 +10266,6 @@ msgstr ""
 "and effective."
 
 #: ../base/ufos/msgid/buildings.ufo:134
-#, fuzzy
 msgid ""
 "Blueprints -- Entrance\n"
 "\n"
@@ -10249,44 +10317,44 @@ msgid ""
 msgstr ""
 "청사진 -- 기지 출입구\n"
 "\n"
-"보안등급: BLACK\n"
+"기밀 등급: BLACK\n"
 "\n"
 "PHALANX 외계생명체 대책 기구\n"
 "\n"
-"시설 기능 요약, Sigma Clearance -- 사령관 전용, 복사금지\n"
+"건축 개요, 허가권 시그마 -- 사령관 검토 전용\n"
 "\n"
-"작성일: 26 January 1958\n"
+"작성일: 1958년 1월 26일\n"
 "\n"
-"작성자: Maj. Marcel LeClerc, Base Commander, PHALANX, 대서양 작전 본부\n"
+"작성자: 마르셀 르클러크 소령, 기지 사령관, PHALANX, 대서양 작전 본부\n"
 "\n"
 "\n"
 "\n"
 "내용\n"
 "\n"
-"기지 출입구는 새로운 PHALANX 기지의 첫 구조물 입니다. 그것은 최초의 -- 그리"
-"고 때때론 유일한 -- 기지에 장비나 사람이 드나들수 있는 방법이다. 그것은 기지"
-"와 지표를 잇는 자동차용 경사진 출로와 계단으로 만들어진다. 작고 위장된 입구"
-"는 보안을 위해 상단에 지어져 외계인의 정찰비행으로부터 입구를 숨겨준다. 우리"
-"의 모든 외부 건설물과 마찬가지로, 탐지율을 낮추어주는 전파/적외선 흡수물질로 "
-"칠해져 있다.\n"
+"기지 출입구는 새로운 PHALANX 기지의 첫 구조물 입니다. 그것은 기지에 장비나 사"
+"람이 드나들수 있는 주요한 -- 그리고 때로는 유일한 -- 방법입니다. 그것은 기지"
+"와 지표를 잇는 자동차용 차량용 경사로와 계단으로 구성됩니다. 작고 위장된 입구"
+"는 보안을 위해 상단에 지어졌으며, 정찰비행으로부터 입구를 숨겨줍니다. 아군의 "
+"모든 지상 건설물과 마찬가지로, 탐지율을 낮추어주는 전파/적외선 흡수 페인트로 "
+"칠해져 있습니다.\n"
 "\n"
 "\n"
-"전술적 운용방법\n"
+"추천 원칙\n"
 "\n"
-"그것의 특성상, 어떤한 기지를 막론하고 가장 노출되기 쉬운 시설입니다. 적대적"
-"인 외계인들은 이곳의 접근방법을 알아내기 위해 노력할것입니다. 그곳은 기지 방"
-"어에 있어 핵심 지역 입니다. 그리고 사령실에 위협이 되지 않도록 최대한 먼곳에"
-"서 작전중인 병사들이 공격에 대응할 수 있도록, 사령실로부터 합리적인 거리에 위"
-"치해야 합니다.\n"
+"그 특성상, 입구는 어떠한 기지를 막론하고 가장 취약한 시설입니다. 적대적인 외"
+"계인들은 반드시 이곳의 접근방법을 알아내기 위해 노력할 것입니다. 그곳은 기지 "
+"방어에 있어 핵심 지역 이며, 직무중인 병사들이 사령센터를 위험에 빠뜨리지 않"
+"고 최대한 민첩하게 공격에 대처할 수 있도록 사령센터에서 먼 거리에 위치해야 합"
+"니다.\n"
 "\n"
-"입구 시설은 전술적 가치가 적은 지역입니다. 폭발에 민감한 휘발성 물질이 없기"
-"에, 외계인들에게는 입구는 단순한 출입구와 실질적인 기지 습격의 목표로 시도되"
-"는 장소로 여겨집니다. 신형장비나 항목들이 없어 단시간에 저렴하게 빠르게 수리"
-"됩니다. 손상을 입더라도, 다른 시설물들은 기지운영에 심각한 영향을 끼치지 않"
-"고 일시적으로 입구의 기능을 못할 뿐 입니다.\n"
+"입구 시설 자체는 전술적 가치가 적습니다. 휘발성 물질이 없고 폭발에 특별히 민"
+"감한 곳도 없기에, 외계인들은 입구를 단순히 확보한 후 습격할 가치가 있는 목표"
+"물을 고를 것이라 가정할 수 있습니다. 고급장비나 부품들이 없어, 수리 또한 빠르"
+"고 저렴합니다. 만일 손상을 입으면, 다른 시설물들이 기지운영에 심각한 영향을 "
+"끼치지 않은채 일시적으로 입구의 기능을 대신할 수 있습니다.\n"
 "\n"
 "\n"
-"추가설명\n"
+"추가사항\n"
 "\n"
 "없음."
 
@@ -12097,6 +12165,11 @@ msgid ""
 "most of Earth's people, the Second Cold War is a dark shadow from the past, "
 "much like the World Wars were to the children of the late 20th."
 msgstr ""
+"때는 서기 2084년. 안정적이라기에는 어려운 이곳 지구는 상대적으로 평화적인 나"
+"날을 즐기고 있다. 폭력적이었던 21세기의 시작은 이제 먼 과거의 이야기이다 - 머"
+"나먼 기억들이지만 잊혀질만큼 멀어지지는 않은 기억들. 지구인 대부분에 있어서 "
+"제2차 냉전은, 20세기 후반의 자녀들에게 세계대전들이 그러했듯, 과거로부터 드리"
+"워진 어두운 그림자이다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:6
 msgid ""
@@ -12116,10 +12189,20 @@ msgid ""
 "they could safely fight. For the first time in the history of mankind, there "
 "is law and order across more than three quarters of the world."
 msgstr ""
+"세기말에 다가워 기술과 공통 보건이 제삼국들에도 자리를 잡으면서, 분쟁들은 드"
+"물어졌다. 구(舊)미국에서부터 황폐해진 인도 아대륙에 이르기까지, 그 참상과 냉"
+"혹함만은 아직 모두의 기억에 생생하지만, 테러리즘의 불길마저도 제2차 냉전 이"
+"후 사그러들었다. 세계의 모든 국가가 UN에 공정한 대표권을 얻었고 초빈민국가들"
+"까지 포함한 범지구 생활 수준이 서서히 오르면서, 계급 투쟁들은 정치계의 전장으"
+"로 그 자리를 옮겼다. 나라들은 뭉쳤고, 세계 정부들에 정책 지시를 하도록 재구성"
+"된 국제연합을 중심으로 안정되었다. 소규모 국가들의 조각난 조직들은 중국과 유"
+"럽 연합 주위로 뭉치는 정권에 두려움을 느껴 강력한 정치 리그들을 형성하였으"
+"나, 안전하게 싸울 수 있는 이웃들을 찾을 수 가 없었다. 인류 역사상 처음으로, "
+"세계 4분의 3에 걸쳐 법규와 질서가 자리잡았다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr ""
+msgstr "지구의 많은 이들에게는 모든 일이 잘 풀리는 것만 같다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12134,6 +12217,13 @@ msgid ""
 "their craft and vanish back into orbit, leaving only the ravaged streets of "
 "Mumbai as evidence."
 msgstr ""
+"첫 공격은 2084년 3월 3일에 뭄바이시(市)에 감행된다.  6대의 작은 UFO들이 갑자"
+"기 나타나, 뭄바이 상공을 커버하는 거대 레이다 시설에 탐지되지 않고 궤도에서 "
+"소리를 지르듯 내려왔고, 지구에서 가장 인구가 밀집된 도시에 착륙했다. 경고도, "
+"설명도 없었다. 대규모 영연방 병사들이 외계인들의 전진을 정체화하기 전까지, 공"
+"포스런 12시간동안 무고한 시민 2만명과 엘리트 병사 3개 대대가 학살당했다. 그리"
+"고는, 등장 때와 같이 갑작스레 그들의 비행선을 타고 궤도 속으로 사라진다 - 뭄"
+"바이의 파괴된 거리들만을 증거로 남긴 채."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:18
 msgid ""
@@ -12147,6 +12237,14 @@ msgid ""
 "but concrete and blood. All the UFOs disappear without a trace -- but no one "
 "doubts they'll be back."
 msgstr ""
+"UN의 비상 회의는 결정적인 방향 제시를 하지 못한다. 본, 요하네스버그, 그리고 "
+"방콕을 대상으로 전보다 더 빨라지고 커지고 더 치열한 공격들이 계속된다. 몇몇 "
+"국가들은 교외 지역들을 짓밟고 있는 외계인들을 대상으로 수없이 많은 언어들로 "
+"메시지를 보내며 외교를 시도한다. 그들의 언어는 무시된다. 몇 시간 내로, 3개 도"
+"시들에서는 생존자를 찾아볼 수 없게 된다. 여러 군부대들이 반격 허가를 받았을 "
+"즈음, 공격은 이미 끝났다. 외계인들은 콘크리트와 피 외에 아무것도 남기지 않는"
+"다. 모든 UFO들은 흔적도 없이 사라진다 -- 그러나 그들의 귀환을 아무도 의심하"
+"지 않는다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:22
 msgid ""
@@ -12155,6 +12253,9 @@ msgid ""
 "alien attackers to the best of their ability. They score precious few "
 "successes."
 msgstr ""
+"뭄바이에서의 첫 공격 87시간 후, 지구는 전쟁을 선포한다. 2주동안, 인류의 군대"
+"들은 각자 최선을 다해 불가사의한 외계 공격자들을 막아내려 한다. 그들은 적지"
+"만 값진 성공을 이룬다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:26
 msgid ""
@@ -12164,6 +12265,10 @@ msgid ""
 "resurrected under a new UN banner. Its sworn duty is to combat the alien "
 "threat, and to ensure the survival of the human race at all costs."
 msgstr ""
+"단 하나의 대안만이 남은 UN은 행동을 택한다.  일부 100년도 더 된 낡은 설비의 "
+"먼지를 털어내고, 문을 닫은지 오래된 구(舊)미국의 반외계 기관 PHALANX가 UN의 "
+"지도하에 부활된다. 이 기관의 목적은 외계 위협에 맞서 싸우고, 무슨 수를 써서라"
+"도 인류의 존속을 보장하는 것이다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:30
 msgid ""
@@ -12172,6 +12277,9 @@ msgid ""
 "first and only line of defence. It can't afford to fail; because if it does, "
 "humanity doesn't stand a chance."
 msgstr ""
+"8개 정치권력에서 지원금을 받고 그들의 군대에서 최정예 병사들을 뽑아 형성된 "
+"PHALANX는 최강중의 최강. 지구의 첫번째이자 유일한 방어선이다. 그들의 실패는 "
+"선택이 아니다; 그들마저 실패하면 인류에게는 희망이 없기 때문이다."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:45
 msgid ""
@@ -12194,6 +12302,21 @@ msgid ""
 "\n"
 "-- UFO: Alien Invasion Development Team"
 msgstr ""
+"훌륭합니다, 사령관님. 우리는 외계인 무리를 쫓아내고 지구를 보호하는 데에 성공"
+"했습니다. 적어도 지금은.\n"
+"\n"
+"그러나 편하게 쉬고 있을 수는 없습니다. 외계인들은 언제라도 돌아올 수 있습니"
+"다.\n"
+"더 많은 캐리어들이 우리의 영향권 밖에 있을 것이 틀림없습니다.\n"
+"그들은 이 게임의 개발팀이 캐리어 미션을 제작하는 즉시 돌아올 것입니다.\n"
+"귀하의 지시를 기다리고 있겠습니다.\n"
+"\n"
+"그때까지는, ufoai.org를 방문하여 언제 다음 버전이 나오는지 알아보십시오.\n"
+"충분히 빨리 나오지 않는다면, 도움을 주십시오. 이 게임은 무료이고 오픈 소스이"
+"며.\n"
+"개발인원은 부족합니다. 그럼 또 뵙죠 - 플레이 해주셔서 감사합니다.\n"
+"\n"
+"-- UFO: 외계인 침공 개발팀"
 
 #: ../base/ufos/msgid/concepts.ufo:9
 msgid ""
@@ -12214,6 +12337,20 @@ msgid ""
 "it may be stored at a different base or you may need to research another "
 "project before it can be adequately studied."
 msgstr ""
+"PHALANX는 외계 기술의 우월성에 맞서기 위해 다양한 연구 프로그램을 진행해야 "
+"할 것입니다. 우리 과학자들은 성공적인 임무에서 회수된 물품들을 연구하여 메일 "
+"클라이언트를 통해 새로운 연구 제안서들을 전달할 것입니다.\n"
+"\n"
+"연구 프로그램을 개발하기 위해서는 연구시설들을 건설하고, 과학자들을 더 고용하"
+"여 특정 연구 프로젝트에 배치하십시오. 운이 좋으면, 우리가 배운 내용을 이용하"
+"여 적들을 전장에서 더 효과적인 전개를 꾀할 수 있고, 훗날 언젠가는 적들을 선제"
+"공격할 수도 있을 것입니다.\n"
+"\n"
+"추가사항\n"
+"\n"
+"외계인 물품들은 연구가 진행될 기지에 저장되어야만 합니다. 특정 기지에서 어느 "
+"연구 프로젝트가 진행불가로 나타난다면, 물품이 다른 기지에 저장되어 있거나 다"
+"른 프로젝트의 연구가 충분히 선행되어야 하기 때문일지도 모릅니다."
 
 #: ../base/ufos/msgid/concepts.ufo:15
 msgid ""
@@ -12255,6 +12392,23 @@ msgid ""
 "doesn't reach and the funding nations will be angry when PHALANX fails to "
 "respond to these attacks."
 msgstr ""
+"외계인들이 우리를 찾아오기를 기다려서만은 안됩니다. 외계 비행체들을 탐지하고 "
+"가능할 때는 추격시켜야 합니다. 초기의 PHALANX 기지는 강력한 레이다 시설을 포"
+"함하지만, 외지에도 레이다 타워를 지어서 상공을 더 잘 커버해야 할 것입니다.\n"
+"\n"
+"UFO가 탐지되고 나면, 가장 가까운 인터셉터들을 발진시켜 추격을 시도해야 합니"
+"다. 단 아군은 공군력에서 열세이므로, 가능할 때는 다수의 비행선을 보내야 할 것"
+"입니다.\n"
+"\n"
+"추가\n"
+"\n"
+"외지의 레이다 타워들은 우리의 기지내 시설보다 좁은 탐지범위를 가졌습니다.\n"
+"\n"
+"전에 발견된 적이 없는 UFO들은, 우리 과학자들과 엔지니어들이 그들의 전투 기능"
+"들을 파악하기 전에는 극도로 신중하게 접근되어야 합니다.\n"
+"\n"
+"레이다 범위 밖의 외계인 활동들은 흔히 탐지되지 않을 것이고, PHALANX가 이 공격"
+"들에 반응하지 못할 때마다 자금 지원국가들은 화를 낼 것입니다."
 
 #: ../base/ufos/msgid/concepts.ufo:39
 msgid ""
@@ -12279,7 +12433,7 @@ msgstr ""
 "우리 엔지니어들은 그 격납고까지 가서 부속품들을 본인들의 작업장으로 수송시켜"
 "야 할 것이므로, UFO 적치장들은 해당 기지에 최대한 가까이 지어야 합니다.\n"
 "\n"
-"추신\n"
+"추가사항\n"
 "\n"
 "우리 엔지니어들이 UFO를 분해하여 사용가능한 소재들을 적출하기 전에, 그들은 연"
 "구팀들이 제공할 기술 설명서를 필요로 할 것입니다."
@@ -12320,19 +12474,19 @@ msgid ""
 "TUs are refreshed each turn, but if an enemy flashbang goes off in front of "
 "a soldier they will lose all of their TUs for the next turn."
 msgstr ""
-"한 대원이 한 턴에 할 수 있는 활동에는 한계가 있습니다. 각 병사는 한정된 활동"
-"력(TU)을 보유하여 이동하기, 숙이기, 돌아보기, 그리고 무기 발사하기에 소비할 "
-"수 있습니다. 대원들은 서있을 때 더 빨리 이동하고, 숙인 상태에서 걸을 때에 더 "
-"많은 활동력을 소비합니다.\n"
+"한 대원이 한 턴에 할 수 있는 활동에는 한계가 있습니다. 각 병사는 한정된 타임"
+"유닛(TU)을 보유하여 이동하기, 숙이기, 돌아보기, 그리고 무기 발사하기에 소비"
+"할 수 있습니다. 대원들은 서있을 때 더 빨리 이동하고, 숙인 상태에서 걸을 때에 "
+"더 많은 TU를 소비합니다.\n"
 "\n"
-"대원의 활동력을 잘 관찰하십시오. 조준 사격 및 자동 사격과 같은 일부 사격 모드"
-"들은 다른 모드보다 더 큰 활동력을 소비합니다. 위험한 장소에서 활동력을 소진하"
-"는 건 죽음을 가져오는 실수가 될 수 있습니다.\n"
+"대원의 TU를 잘 관찰하십시오. 조준 사격 및 자동 사격과 같은 일부 사격 모드들"
+"은 다른 모드보다 더 큰 TU를 소비합니다. 위험한 장소에서 활동력을 소진하는 건 "
+"죽음을 가져오는 실수가 될 수 있습니다.\n"
 "\n"
-"추신\n"
+"추가사항\n"
 "\n"
-"활동력은 모든 턴에 재충전되지만, 적군의 섬광탄이 아군 병사 앞에서 터지면 그"
-"는 다음 턴에서 모든 행동력을 잃을 것입니다."
+"TU는 모든 턴에 재충전되지만, 적군의 섬광탄이 아군 병사 앞에서 터지면 그는 다"
+"음 턴에서 모든 TU를 잃을 것입니다."
 
 #: ../base/ufos/msgid/concepts.ufo:69
 msgid ""
@@ -12362,6 +12516,28 @@ msgid ""
 "reaction fire counter will be reset. A unit must spend enough TUs "
 "consecutively in view of a unit to receive reaction fire."
 msgstr ""
+"유닛들은 적 유닛들이 적의 턴 진행중 시야에 들어오면 발포할 수 있습니다. 적 유"
+"닛이 아군 병사의 시야 내에서 소모한 타임 유닛(TU)이 아군 병사의 반사적 사격 "
+"타임 유닛 소모량보다 크면, 반사적 사격이 감행됩니다.\n"
+"\n"
+"예를 들어, 한 유닛이 8 TU를 쓰는 반사 사격을 하도록 지정되면, 그는 시야 내에"
+"서 적 유닛이 9 이상의 TU를 쓸 때 사격을 할 것입니다. 그러나 주의하십시오 -- "
+"외계인들도 PHALANX처럼 반사 사격을 취할 수 있습니다.\n"
+"\n"
+"TU 소모량이 낮은 무기를 발사하는 병사들은 TU 소모량이 더 큰 무기를 쏘는 병사"
+"에 비해 더 많은 반사 사격을 취하고, 또 더 적은 반사 사격을 적으로부터 받습니"
+"다.\n"
+"\n"
+"추가\n"
+"\n"
+"병사의 컨트롤 패널에서 활성화가 되지 않으면, 병사는 반사 사격을 하지 않습니"
+"다. 활성화가 되면, 병사는 적 턴에 사용될 분량의 타임 유닛을 쓸 수 없게 됩니"
+"다. 사령관은 사격 모드 선택창에서 병사가 반사 사격에 사용할 사격 모드를 고를 "
+"수 있습니다.\n"
+"\n"
+"적 유닛이 아군 유닛의 시각에서 한순간이라도 사라지면 반사 사격 카운터는 초기"
+"화 됩니다. 유닛은 시야가 확보된 상황에서 연속으로 TU를 충분히 소비해야만 반"
+"사 사격을 받습니다."
 
 #: ../base/ufos/msgid/concepts.ufo:77
 msgid ""
@@ -12377,6 +12553,15 @@ msgid ""
 "may not be able to use all of his fire modes. If he is carrying less than 20 "
 "per cent of his maximum capacity, he'll gain extra TUs."
 msgstr ""
+"병사들은 빠르고 효과적으로 싸울 수 있어야 합니다. 너무 많은 장비를 챙기면 느"
+"려져, 각 턴에 사용 가능한 타임 유닛(TU)의 양을 줄입니다. 병사들은 가벼운 부담"
+"량을 가졌을 때 속도 부스트를 받습니다.\n"
+"\n"
+"추가사항\n"
+"\n"
+"장비창에서 병사의 부담량을 잘 관찰하십시오. 병사의 소지품이 개인 최고 부담량"
+"의 50%를 초과하면, 그는 TU를 잃으며, 모든 사격 모드를 쓰지 못하게 될 수도 있"
+"습니다. 최고치의 20퍼센트 미만을 소지할 경우, 추가 TU를 얻게 됩니다."
 
 #: ../base/ufos/msgid/concepts.ufo:85
 msgid ""
@@ -12394,6 +12579,17 @@ msgid ""
 "to recover once they've returned to the base. Build a hospital facility to "
 "greatly increase their recovery times."
 msgstr ""
+"우리 병사들은 적군의 공격을 받을 때 상처를 입을 수 있습니다. 상처는 그들의 정"
+"확도, 사격 속도와 이동 속도에 영향을 미칠 수 있습니다. 부상은 매턴 병사의 에"
+"너지를 줄여, 구급상자로 치료하지 않으면 병사를 죽게 할 수도 있습니다. "
+"PHALANX 부대는 충분한 구급상자를 가져와 전투중의 치료를 행해야 합니다.\n"
+"\n"
+"추가\n"
+"\n"
+"상처는 캐릭터 상태창에서 확인 가능합니다. 구급상자를 이용한 치료는 병사가 전"
+"장에서 입은 상처로 인해 죽는 것을 막을 수 있지만, 매우 적은 양의 에너지만을 "
+"회복시켜 줍니다. 병사들은 기지로 복귀한 후 회복할 시간을 필요로 합니다. 병원 "
+"시설을 지어서 그들의 회복 시간을 크게 단축시키세요."
 
 #: ../base/ufos/msgid/concepts.ufo:103
 msgid ""
@@ -12430,6 +12626,32 @@ msgid ""
 "Incendiary fields cause a small amount of damage to units which pass through "
 "them."
 msgstr ""
+"외계인들은 전장에서 강력한 무기를 사용합니다. 열린 지형에서 그들과 화력전을 "
+"펼치는 것은 빠르게 죽는 지름길이므로, PHALANX 병사들은 보조 장비를 이용하는 "
+"숙달되어야 전장에서 외계 세력을 이겨낼 수 있습니다.\n"
+"\n"
+"PHALANX 병사들은 외계 세력의 시선에 들어갔을 때 그들의 위치를 숨겨줄 연막탄"
+"을 장착해야 합니다. 화염 수류탄과 로켓들은 외계 병사들이 아군의 사정거리에 들"
+"어오기 전부터 땅에 불을 붙혀 그들에게 데미지를 줄 수 있습니다. 그리고 섬광탄"
+"은 외계인 유닛을 일시적으로 무력화 하는 데에 쓰일 수 있습니다.\n"
+"\n"
+"병사가 외계인과 대면하여 반사 사격에 의한 죽음을 무릅쓰지 않고는 적을 제거할 "
+"수 없을 때는, 수류탄 같은 간접적 무기류를 이용해 -- 손으로 던지든 발사기로 쏘"
+"든 -- 안전한 위치에서 적을 제거해야 합니다.\n"
+"\n"
+"전장에서는 항상 통상적인 무기가 필요하지만, 전장에서 외계인들의 우월한 기술력"
+"을 이겨내려면 보조 무기류를 방어적으로 적용하는 것이 필수입니다.\n"
+"\n"
+"추가\n"
+"\n"
+"연기 구름은 전장에서 시야를 막습니다.\n"
+"\n"
+"섬광탄을 효과적으로 사용하면 타임 유닛을 제거합니다. 섬광탄의 영향을 받은 유"
+"닛은 탄이 터질 때 보유했던 타임 유닛을 다 잃으며, 그 다음 턴에 추가 타임 유닛"
+"을 받지 않습니다. 섬광탄은 목표물 가까이, 그리고 그의 시야 내에서 터져야만 효"
+"력이 있습니다.\n"
+"\n"
+"필드에 붙은 불을 통과하는 유닛들은 소량의 데미지를 입습니다."
 
 #: ../base/ufos/msgid/installations.ufo:34
 msgid ""
@@ -12478,6 +12700,48 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"청사진 -- 레이더 타워\n"
+"\n"
+"기밀 등급 BLACK\n"
+"\n"
+"PHALANX 외계 생명체 대책 기구\n"
+"\n"
+"건축 개요, 시그마 허가권 -- 사령관 검토 전용\n"
+"\n"
+"제출일: 2084년 3월 18일\n"
+"\n"
+"제출자: 폴 나바르 중령, 연구개발: 엔지니어링부, PHALANX, 대서양 작전 지휘실\n"
+"\n"
+"\n"
+"\n"
+"개요\n"
+"\n"
+"오늘 먼저 제출한 기지 레이더 시설 청사진에 대한 추가로, 기지외 소형 시설의 청"
+"사진을 다음과 같이 제출하고자 합니다. 아군의 기지내 시설로는 결코 전지구를 커"
+"버할 수 없으므로, 탐지 범위간의 공백을 채우기 위해 이러한 레이더 시설들을 몇 "
+"대 지어야 할 것입니다.\n"
+"\n"
+"이 청사진은 작은 시설을 지을 수 있는 세부정보를 제공합니다. 이는 즉, 각 타워"
+"의 사정거리는 적으나, 빠르고 저렴하게 세워져 아군의 작전 증력을 급속도로 증강"
+"시길 수 있음을 뜻합니다.\n"
+"\n"
+"\n"
+"추천 원칙\n"
+"\n"
+"레이더 타워는 PHALANX 기지용의 디자인된 시설들보다 제한된 사정거리를 가졌으므"
+"로, 빠르게 다수로 생산되어야 합니다.\n"
+"\n"
+"우리는 지구를 최대한 많이 커버하려 노력해야 할테지만, UFO를 격추할 수 없는데 "
+"탐색한다는 것은 무의미 합니다. 인터셉터들의 이동반경 내의 지역들에 짓는 데에 "
+"집중해야 합니다.\n"
+"\n"
+"타워의 위장은 그리 효과적이지 않습니다. 외계 비행선은 그 능동적 스캔을 감지하"
+"여 발견 즉시 파괴하려 들지도 모릅니다.\n"
+"\n"
+"\n"
+"추가사항\n"
+"\n"
+"없음."
 
 #: ../base/ufos/msgid/installations.ufo:68
 msgid ""
@@ -12524,6 +12788,45 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"청사진 -- UFO 적치장\n"
+"\n"
+"기밀 등급 BLACK\n"
+"\n"
+"PHALANX 외계 생명체 대책 기구\n"
+"\n"
+"건축 개요, 시그마 허가권 -- 사령관 검토 전용\n"
+"\n"
+"제출일: 2084년 3월 17일\n"
+"\n"
+"제출자: 폴 나바르 중령, 연구개발: 엔지니어링부, PHALANX, 대서양 작전 지휘실\n"
+"\n"
+"\n"
+"\n"
+"개요\n"
+"\n"
+"우리가 이 전쟁에서 살아남으려면, UFO들을 탐지하여 격추하는 것만으로는 부족합"
+"니다. 그 비행체들을 회수하여 외계 기술을 조사하고 아군의 비행선에 적용할 수 "
+"있는 능동적인 연구 프로그램을 실시해야 합니다.\n"
+"\n"
+"이것을 위해서는, (기지내에 배치하기에는 너무 클) 전용 보관 시설이 필요할 것입"
+"니다. 첨부된 청사진들에는, 포획 가능한 외계 비행체들을 안전하게 저장하고 위장"
+"할 수 있는 계획안의 개요가 나와 있습니다. 회수된 비행체들을 이 시설들로 이송"
+"하여 필요한 연구를 진행할 수 있을 것입니다.\n"
+"\n"
+"\n"
+"추천 원칙\n"
+"\n"
+"UFO 적치장에 저장된 UFO들은 적절한 시설들을 갖춘 그 어떤 PHALANX 기지에서도 "
+"조사하거나 분해할 수 있으나, UFO 적치장과 기지의 거리가 멀어질수록 그 활동의 "
+"진전이 느려집니다. UFO 적치장들은 이용을 감행할 기지들 가까이에 지어져야 합니"
+"다.\n"
+"\n"
+"UFO들은 다른 적치장들 사이에 이송 가능합니다.\n"
+"\n"
+"\n"
+"추가사항\n"
+"\n"
+"없음."
 
 #: ../base/ufos/msgid/installations.ufo:100
 msgid ""
@@ -12565,6 +12868,40 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"청사진 -- 지대공 미사일 시설\n"
+"\n"
+"기밀 등급 BLACK\n"
+"\n"
+"PHALANX 외계 생명체 대책 기구\n"
+"\n"
+"건축 개요, 허가권 시그마 -- 사령관 검토 전용\n"
+"\n"
+"제출일: 2084년 3월 18일\n"
+"\n"
+"제출자: 폴 나바르 중령, 연구개발: 엔지니어링부, PHALANX, 대서양 작전 지휘실\n"
+"\n"
+"\n"
+"\n"
+"개요\n"
+"\n"
+"오늘 PHALANX 기지에 지을 수 있는 지대공 미사일 방어 시설에 대하여 제출한 청사"
+"진들을 읽으실 기회가 있으셨기를 바랍니다. 이 청사진들을 급하게 적용하여 독립"
+"된 그리드에 지을 수 있는 외부 시설을 디자인 했습니다.\n"
+"\n"
+"이 시설은 주요 전략 지점들 주변에 추가적인 방어 요충지들을 제공합니다. 외계 "
+"비행선의 탐지와 파괴에 드러나 있지만, 적어도 이 시설에서는 미사일 발사대 때문"
+"에 기지의 위치를 드러내는 일은 없습니다.\n"
+"\n"
+"\n"
+"추천 원칙\n"
+"\n"
+"외계 비행체 요격을 위해서는, 건축 완료후 지대공 미사일 시설에 미사일 발사대"
+"를 장착해야 합니다.\n"
+"\n"
+"\n"
+"추가사항\n"
+"\n"
+"없음."
 
 #: ../base/ufos/msgid/irc.ufo:20
 msgid ""
@@ -12788,7 +13125,6 @@ msgid "The dropship has arrived at the crash site."
 msgstr "드랍쉽이 추락지점에 도착했습니다."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:23
-#, fuzzy
 msgid ""
 "The aliens penetrated your base defenses and are inside the compound. Rally "
 "the soldiers on site to eliminate the threat. Security cameras placed around "
@@ -12796,8 +13132,8 @@ msgid ""
 "inside the camera room of the Command Centre."
 msgstr ""
 "외계인들이 기지의 방어체계를 뚫고 단지내로 들어왔습니다. 주둔중인 병사들을 모"
-"아 침투자들을 제거하십시오. 보안 카메라들이 기지 여러곳에 있으므로 적군의 위"
-"치 파악을 도와줄 것입니다."
+"아 침입자들을 제거하십시오. 사령센터의 카메라실 내에 병사 한명을 두면, 기지 "
+"여러곳에 배치된 보안 카메라들이 적의 위치 파악을 도와줄 것입니다."
 
 #: ../base/ufos/msgid/news.ufo:16
 #, fuzzy
@@ -16187,6 +16523,56 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
+"좋은 아침입니다, 사령관님.\n"
+"\n"
+"외계인 활동 패턴의 해독 및 지구상 전략에 관한 작업에 관해 방대한 보고를 드리"
+"려 합니다. 우리 기록 보관소에 모든 서류가 있습니다만, 여기에 간단히 정리해 드"
+"리겠습니다.\n"
+"\n"
+"이 침공에서 발견한 가장 놀랄만한 특징은, 외계인들이 알 수 없는 이유로 인간 바"
+"이오매스를, 가끔은 인간을 통째로, 수확해오고 있다는 것입니다. 그 방식에서는 "
+"생명에 대한 아무런 존중도 찾아볼 수 없습니다; 그들은 마치 가축을 도살하듯 인"
+"간들의 살을 가르고, 그들의 블러드스파이더들이 현장에서 인간을 해부하여 흥미있"
+"는 장기나 피 한 병을 수집하도록 합니다. 그야말로 온전히 무도덕적으로 실용적입"
+"니다.\n"
+"\n"
+"유일한 예상은, 그들이 수집중인 샘플들을 일종의 연구 프로그램에 사용해 우리의 "
+"생리 기능을, 또 어쩌면 정신과 문화 또한, 조사한다는 것입니다. 그 이유는 모르"
+"지만, 흥미로운 점입니다. 그들은 우리에 대해 무언가 배우려 하고 있고, 우리가 "
+"그에 대해 어떻게 느끼는지는 신경쓰지 않습니다. 그들에게 우리는 연구 대상 물체"
+"일 뿐입니다.\n"
+"\n"
+"더 흥미로운 것은 그들의 주 목표대상입니다. 최근까지 외계인 활동 보고는 거의 "
+"항상 UFO 착륙이 쉬운 고밀도 대도시에서 들어왔기에, 인간 연구물 포획이라는 일"
+"반적 목표와 연결지을 수 있었습니다. 그러나 최근에는 그 캠페인의 중점이 바뀌었"
+"거나 그 범위가 좁혀진 듯 합니다. 흔한 대도시 침략들 이외에 병원들, 혈액 은행 "
+"및 생물학 연구소들 주위의 활동이 점점 더 자주 발견되고 있습니다. 이 활동은 목"
+"표미상의 잠입에서부터 엄중 경비 연구소들에 대한 전면적 습격에 이르기까지 다양"
+"했습니다. 이 변화가 무엇을 뜻하는지는 아직 불확실합니다만, 그런 시설들에 경비"
+"를 더 엄중히 하고 현지 병력들이 외계인 공격에 맞설 수 있도록 무장시키는 것을 "
+"UN에 공식 추천할 것입니다. 우리는 신속한 경찰의 대응을 위해 고위험 대상 목록"
+"을 제작했으며, 반외계인 전술에 관한 책자들을 배포중입니다. 목표물 변경에 대"
+"한 추가 조사도 진행중입니다.\n"
+"\n"
+"언제나처럼, 우리의 탐지 사정거리 밖에서 벌여져 민간 당국에 보고되지 않고 있"
+"는 외계인 활동이 훨씬 많습니다. 외계인들의 전략에 대한 연구의 직접적인 결과로"
+"서, DivIntel은 현재 외계인 활동의 보고하고 및 대응하는 새로운 방법들을, 그리"
+"고 UN 국가간의 더 나은 네트워킹을 통해 정확한 정보를 PHALANX로 전달하는 방법"
+"을 시험하고 있습니다. 이 테크닉들은 우리로 하여금 과거 보고되지 않았던 외계"
+"인 활동의 10% (지구상 총활동 기준 추측치) 정도를 잡아낼 수 있게 할 것으로 기"
+"대합니다.\n"
+"\n"
+"우리는 또한, 발견은 어렵지만 포착 기록이 있는 대형 비행 UFO들이 어떻게 지구"
+"로 오가는지를 조사했습니다. 레이더, 광선 레이더 및 지표면에서 녹화된 동영상들"
+"을 관찰한 결과, 대형 UFO들은 일종의 항공 모함이라는 것, 즉 광속비행이 가능한 "
+"기지선으로서 작은 UFO들을 지구로 오가며 옮긴다는 판단을 내렸습니다.\n"
+"\n"
+"이 항공체는 극도로 중요하며, 가능하면 궤도상에서 추격할 수 있는 길을 찾아야 "
+"합니다. 경계을 늦춰서는 안됩니다, 사령관님.\n"
+"\n"
+"그럼,\n"
+"\n"
+"파크랜드 대령"
 
 #: ../base/ufos/msgid/story.ufo:468
 #, fuzzy
@@ -16328,6 +16714,22 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
+"해냈습니다, 사령관님!\n"
+"\n"
+"궤도권의 UFO를 격추할 수 있는 유도탄의 도안을 완성했습니다. 이것을 발사하기 "
+"위해, UN은 과거 달의 Tranquility Base 식민지에 물자를 보내기 위해 로키산맥 내"
+"부에 지어졌던 거대한 시설을 접수했습니다.\n"
+"\n"
+"이 탄두는 목표물에 자가유도 되지만, 캐리어 UFO가 사정권에 들어와야 함에는 변"
+"화가 없습니다. 캐리어가 현재 위치를 유지하고 -- 아직 큰 움직임은 감지되지 않"
+"았습니다만 -- 24시간마다 한번씩 확실한 사격이 가능할 것으로 예상합니다.\n"
+"\n"
+"캐리어가 사정권에 들어오면 통보를 드릴테니 그 때 추격 지시를 주시기 바랍니"
+"다.\n"
+"\n"
+"이상,\n"
+"\n"
+"파크랜드 대령"
 
 #: ../base/ufos/msgid/story.ufo:516
 #, fuzzy
@@ -16499,6 +16901,28 @@ msgid ""
 "\n"
 "With kind regards, Col. Falkland"
 msgstr ""
+"좋은 아침입니다, 사령관님. 외계인 싸이(psi) 기기 잔해에 대한 보고입니다만, 좋"
+"아하실 소식은 아닙니다.\n"
+"\n"
+"사실은 난해합니다. 아직 이 물체가 정확히 무엇을 하는 건지에 대한 신빙성 있는 "
+"이론도 없습니다. 우리의 샘플이 외계인 기지 습격중에 데미지를 입었는지도 모르"
+"지만, 그 가능성은 적어 보입니다. 그것은 분명히 무언가 하고 있습니다. 무엇을 "
+"하고 있는지 알 수 없을 뿐입니다.\n"
+"\n"
+"고려중인 추측들은 흔한 것에서 터무니없는 것까지 다양합니다만, 현 단계에서 진"
+"지하게 고려할 가치가 있는 것은 하나 뿐이라 봅니다. 가장 간단한 설명은 그 기계"
+"가 일종의 통신기기라는 것입니다. 우리의 실험들에서 외계인들이 어떻게 서로 소"
+"통하는지를 파악하는 데에 실패한 것을 고려할 때, 이 장비가 이용하는 통신 방법"
+"을 감지하는 것도 불가능하다는 것도 이상하지 않습니다.\n"
+"\n"
+"그러나, 이 주장이든 실험실에 떠돌고 있는 다른 터무니없는 학설이든 뒷받침할 데"
+"이터가 없습니다. 마인드 컨트롤과 순간이동을 포함해 수많은 학설이 있습니다.\n"
+"\n"
+"사령관님, 이 학설들이 어처구니 없다고는 말씀 드렸습니다만, 분명한 정보의 부"
+"재 때문에 아직 아무것도 무시할 수는 없습니다. 추가적인 연구는 더 많은 것을 알"
+"게해주기를 바랄 뿐입니다.\n"
+"\n"
+"이상, 파크랜드 대령"
 
 #: ../base/ufos/msgid/story.ufo:540
 msgid ""
@@ -16520,6 +16944,21 @@ msgid ""
 "\n"
 "With kind regards, Col. Falkland"
 msgstr ""
+"사령관님, 아군 병사들이 적 기지 습격에서 지금 막 돌아왔습니다. 그들은 우리가 "
+"직면했던 이상한 기기의 잔해를 가지고 돌아왔습니다. 이 잔해는 즉시 DivIntel에 "
+"넘겨야 하며, 자금과 연구력을 허가해 주셔야 그 물건의 목적을 알아내고 이번 습"
+"격중에 그 내부에서 퍼져나왔던 강력한 싸이오닉 공격의 비밀을 파해쳐 볼 수 있습"
+"니다.\n"
+"\n"
+"이 기기 주변에 기지 하나를 통채로 통째로 지을 정도면, 극히 중요한 물건임이 분"
+"명합니다. 하지만 이건 무기일까요, 컴퓨터일까요, 통신기일까요, 아니면 더 불가"
+"사의한 그 무엇일까요? 그럴 일은 결코 없기를 바라지만, 외계인 기지들이 더 발견"
+"된다면, 우리는 그러한 장비들로부터 자신을 보호해야 할 것입니다.\n"
+"\n"
+"나바르 중령과 코너 박사는 이미 이 프로젝트에 대한 지원을 약속했고, 연구의 기"
+"술적인 면을 돕기로 동의했습니다. 남은 것은 귀하의 허가 뿐입니다, 사령관님.\n"
+"\n"
+"이상, 파크랜드 대령"
 
 #: ../base/ufos/msgid/story.ufo:586
 #, fuzzy
@@ -16744,6 +17183,24 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"사령관님,\n"
+"\n"
+"우리가 적을 이해하기 위해서는 외계인들을 몇 생포해야 합니다. 부검을 더 해보"
+"면 그들의 생리 기능을 이해하고 치명적이지 않은 무기들을 개발하여 그들을 무력"
+"화 할 수 있을 것입니다. 그들이 정말 무엇에 영향을 받는지를 알려면 살아있는 표"
+"본을 몇 필요로 합니다.\n"
+"\n"
+"전장에서 외계인들을 기절시키거나 무력화 시켜 산채로 외계인 수용시설이 있는 기"
+"지에 데려가면, 큰 성과를 얻을 수 있을지 모릅니다. 그들의 생물학적 유기체들이 "
+"어떻게 작용하는지를 더 잘 보고, 약점들을 조사할 수도 있습니다. 시간이 지나면 "
+"그들과 의사소통을 할 방법을 개발할 수 있을지도 모릅니다.\n"
+"\n"
+"사령관님, 그들의 생포하려면 귀하의 병사들을 큰 위험에 빠뜨려야 함을 압니다"
+"만, 이 전쟁을 이기려면 반드시 택해야할 위험입니다.\n"
+"\n"
+"이상,\n"
+"\n"
+"코너 박사"
 
 #: ../base/ufos/msgid/tips.ufo:30
 msgid ""
@@ -18335,6 +18792,21 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 규모를 줄인 하이브리드 로켓의 디자인 제작을 마쳤습니다.\n"
+"\n"
+"이 새 디자인은 우리의 비행기 미사일에서 다수의 영감을 받았습니다만, 병사 개인"
+"이 전장에서 휴대할 수 있도록 탄약 탑재량을 크게 줄여야 했습니다. 그 결과물은 "
+"아군의 폭발물 전문가들이 다뤄본 적 없는 최강의 로켓입니다.\n"
+"\n"
+"탄피는 폭발과 함께 두꺼운 파편들로 쪼개지는 외계 물질들로 만들어졌습니다. 폭"
+"발시의 폭발력이 그 단단한 덩어리들을, 인간과 외계인을 막론하고 그 어떤 방어구"
+"도 그들을 보호해줄 수 없을 속도로 공기중으로 날려 보냅니다.\n"
+"\n"
+"사령관님, 전장이 매일같이 잔혹해지고 있음을 압니다만, 시민들이 그 폭발 사정권"
+"과 거리를 두도록 병사들을 상기시켜 주시는 게 좋을 것입니다. 폭발 시점에 이것 "
+"옆에 서있을 정도로 불운한 사람은 분명히 죽거나 불구가 될 것입니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:479
 msgid ""
@@ -18364,7 +18836,6 @@ msgstr ""
 "나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:547 ../base/ufos/msgid/weapons.ufo:1537
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
 "\n"
@@ -18451,87 +18922,78 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"기술 명세서: CRC-212 산탄총\n"
+"기술명세서: CRC-212 라이엇 산탄총\n"
 "\n"
-"보안 등급: YELLOW\n"
+"기밀 등급 YELLOW\n"
 "\n"
-"PHALANX 외계생명체 대책 기구\n"
+"PHALANX 외계 생명체 대응부\n"
 "\n"
-"기술 문서, Delta Clearance\n"
+"기술 서류, 허가권 델타\n"
 "\n"
-"작성일: 20 March 2084\n"
+"제출일: 2084년 3월 20일\n"
 "\n"
-"작성자: Cdr. Paul Navarre, R&D: 생산부서, PHALANX, 대서양 작전본부\n"
+"제출자: 폴 나바르 중령, 연구개발: 엔지니어링부, PHALANX, 대서양 작전 지휘실\n"
 "\n"
 "\n"
 "\n"
 "개요\n"
 "\n"
-"The alien attack on Mumbai made our situation painfully clear. Their "
-"technology is far more advanced than ours. The complete inability of "
-"Commonwealth troops to make a dent in the Mumbai offensive revealed critical "
-"weaknesses in current military training and equipment. They lost three "
-"battalions just bringing the aliens to a standstill without inflicting "
-"significant casualties. PHALANX has to overcome these odds, and to do that "
-"we need the very best human technology has to offer.\n"
+"뭄바이에 대한 외계인 공격은 우리의 상황을 괴롭도록 분명히 했습니다. 그들의 기"
+"술은 우리것보다 크게 우월합니다. 뭄바이 진격에 대한 연방군의 무력한 대응력은 "
+"현 아군 훈련과 장비들의 치명적인 약점들을 드러냈습니다. 외계인들 측에 큰 사상"
+"자를 내지 못하고 진격을 정지상태로 만드는 과정에서만 3개 대대를 잃었습니다. "
+"PHALANX는 이러한 승산의 차이를 이겨내야 하며, 그러려면 최고의 인류 기술을 필"
+"요로 합니다.\n"
 "\n"
-"The Excalibur Program was created to find the most effective weapons on "
-"Earth by reviewing their manufacturing standards, durability, operational "
-"record, and their combat performance in the situations where we've managed "
-"to bring the aliens to battle.\n"
+"'엑스칼리버' 프로그램은 생산기준, 내구성, 운영기록, 그리고 대(對)외계인 교전"
+"에서의 전투실적을 검토하여 지구에서 가장 효과적인 무기들을 찾아내도록 만들어"
+"졌습니다.\n"
 "\n"
-"From our experiences in Mumbai and other stricken cities, we've concluded "
-"that the aliens seem to concentrate their efforts on population centres, "
-"especially dense urban areas. A majority of engagements have taken place at "
-"knife-fighting range. For the purposes of the Excalibur Program, we've "
-"chosen several high-performance weapons for our Close Range Combat package.\n"
+"뭄바이 등 공격당한 도시들에서의 경험으로 볼 때, 외계인들은 인구 밀집지역들, "
+"특히 고밀도 도심지역들에 노력을 집중한다고 결론 내렸습니다. 대부분의 교전은 "
+"칼싸움 사정거리에서 일어났습니다. 엑스칼리버 프로그램의 용도로, 아군의 '단거"
+"리 전투' 패키지를 위해 여러 고성능 무기들을 골랐습니다.\n"
 "\n"
-"Many great shotguns have come out of Italy over the past two centuries; the "
-"latest is the Rossi AAA, a semi-automatic combat shotgun developed for use "
-"by SWAT and anti-terrorist units. It features several ground-breaking "
-"technologies, but its most impressive feature is without a doubt the "
-"specially-developed 'Twist' barrel. The Twist is a new type of shotgun "
-"barrel that, with a sharp twist of the front handguard, can protrude or "
-"flatten the rifling inside the barrel. With this mechanism, the AAA can "
-"change its barrel from smoothbore to rifled and back in a tenth of a second. "
-"The barrel even adjusts its own diameter and choke to fit whatever type of "
-"shell is in the chamber. These two innovations allow the AAA to fire any "
-"kind of shotgun ammo at a moment's notice.\n"
+"지난 2세기 동안 이탈리아에서는 훌륭한 산탄총들이 많이 나왔습니다; 최근의 것"
+"은 SWAT과 반테러 유닛들을 위해 개발된 반자동 전투용 산탄총 '로씨 AAA'입니다. "
+"그것은 여러 획기적인 기술들을 선보이지만, 가장 대단한 기능은 분명 그 특수개발"
+"된 '트위스트' 배럴입니다. 트위스트는 전방 핸드가드의 날카로운 비틀림을 통해 "
+"배럴 내부에서 라이플링을 튀어나오게 하거나 납작하게 할 수 있는 신종 산탄총 배"
+"럴입니다. 이 메카니즘을 통해, AAA는 십분의 일초만에 활강총식에서 라이플식으"
+"로 배럴을 왕복시킬 수 있습니다. 그 배럴은 심지어 장전된 총탄의 종류를 막론하"
+"고 그 지름과 발사구를 자체 조정하여 맞출 수도 있습니다. 이 두가지 혁신은 AAA"
+"로 하여금 한순간에 그 어떤 산탄 총알이라도 쏠 수 있게 합니다.\n"
 "\n"
-"The most commonly used military and SWAT ammunition is the 12mm centerfire "
-"flechette shell. Each shell contains 8 tiny flechettes -- solid steel "
-"needles with fins to stabilise their flight. This ammunition has superior "
-"accuracy compared to buckshot and performs excellently against armour. The "
-"flechettes are also prone to tumble after penetration, resulting in "
-"impressive wounding capability for such a small projectile. Their drawbacks "
-"are vulnerability to wind conditions and other deflecting factors. Other "
-"types of ammo are available to deal with these situations, however -- and "
-"the AAA can fire them all.\n"
+"가장 흔하게 사용되는 군용 및 SWAT 탄약은 12mm 센터파이어(기저부 뇌관식) 플레"
+"셰트 탄피입니다. 각 탄피는 8개의 자그마한 플레셰트들을 -- 지느러미들이 달려 "
+"안정적 비행이 가능한 단단한 강철 바늘들 -- 내포합니다. 이 탄약은 녹탄에 비해 "
+"우월한 정확도를 가지며, 방탄구 상대로도 매우 효과적입니다. 플레셰트들은 관통 "
+"이후 굴러다니기 쉬워서, 작은 발사체임에도 대단한 피해를 입힙니다. 단점이라면 "
+"바람의 상태 및 다른 굴절요소들에 취약하다는 것입니다. 허나 이러한 상황에 대응"
+"하기 위해서는 쓸 수 있는 다른 탄약이 있으며, 전부 AAA로 발사할 수 있습니다.\n"
 "\n"
-"In conclusion, the Rossi AAA is a highly versatile shotgun that is among the "
-"most effective close-range weapons available. It has a longer range than the "
-"CRC-FL Flamethrower and causes more damage than the CRC-8 SMG, providing a "
-"good compromise between speed, range and stopping power.\n"
+"결론적으로, 로씨 AAA는 현존하는 단거리 무기중 가장 효과적인 다기능 산탄총입니"
+"다. CRC-FL 화염방사기보다 사정거리가 길고, CRC-8 경기관총보다 더 큰 피해를 주"
+"어, 속도, 거리, 저지력 중간의 좋은 절충안을 제공합니다.\n"
 "\n"
-"PHALANX 에서의 사용을 위해, 우리는 이 산탄총을 CRC-212 로 명명하였습니다.\n"
+"PHALANX용으로, 이 산탄총을 CRC-212로 분류했습니다.\n"
 "\n"
 "\n"
-"전술적 운용방법\n"
+"추천 원칙\n"
 "\n"
-"CRC-212는 근접전에는 매우 우수한 성능을 보이지만, 거리가 멀어질수록 파괴력은 "
-"급격히 약해집니다. Flechette shot tends to spread too far to be effective at "
-"range (though less so than ordinary buckshot), while rifled slugs suffer a "
-"pronounced projectile drop and are highly susceptible to wind conditions. "
-"Though the shotgun can shoot out to medium range, don't expect it to be very "
-"effective.\n"
+"CRC-212는 단거리에서 매우 유용하지만 거리가 늘어날수록 빠르게 힘을 잃습니다. "
+"플레셰트 사격은 (일반 녹탄보다는 덜하지만) 거리가 있을 때는 너무 많이 흩뿌려"
+"지며, 라이플식 산탄은 눈에 띄게 발사체 추락을 겪고 바람의 영향을 많이 받습니"
+"다. 산탄총은 중거리까지는 쏠 수 있지만, 크게 효과적이기를 예상하지 마십시"
+"오.\n"
 "\n"
-"Where this weapon will truly shine is in urban situations where the enemy "
-"has little cover to hide behind and can be engaged at close range. However, "
-"it can be too long to manoeuvre properly in tight spaces. The CRC-M9 Micro "
-"Shotgun may be preferable in these situations.\n"
+"이 무기가 가장 효과적일 때는, 적이 숨을 커버가 적고 단거리에서 공격할 수 있"
+"는 도심에서의 상황들입니다. 그러나, 좁은 공간에서 제대로 활용하기에는 너무 "
+"길 수도 있습니다. 이런 상황에서는 CRC-M9 초소형 산탄총이 나을 수도 있습니"
+"다.\n"
 "\n"
 "\n"
-"추가설명\n"
+"추가사항\n"
 "\n"
 "없음."
 
@@ -18731,6 +19193,18 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 전자 라이플용 반물질 플레셰트 탄환의 디자인을 완성했습니다.\n"
+"\n"
+"플레셰트는 그 화살촉에 매우 적은 양의 반물질을 포함합니다. 동역학적 충격이 내"
+"는 열과 힘은 항상 그 반물질을 폭발시키기에 충분할 것이며, 탄약의 더 작아진 크"
+"기에도 불구하고 상당한 폭발을 야기합니다.\n"
+"\n"
+"이 탄환들을 제작하는 데에 들어가는 순수 비용을 고려할 때 이것들은 추후의 결정"
+"적인 전투들을 위해 아껴야 할 겁니다. 이것의 생산은 어렵고 시간소모적이며, 다"
+"른 곳에 쓰일 수 있는 귀중한 반물질을 사용합니다. 그러나 승리가 절대로 필요할 "
+"때에, 이 무기는 스나이퍼를 살생 병기로 만들어줄 것입니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:599
 msgid ""
@@ -18756,6 +19230,24 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 반물질 무기류에 대한 연구 결과, 새 무기들을 만들어 내고 옛 무기들"
+"을 변형시킬 아이디어들을 다수 얻었습니다. 안타깝게도 이는 동시에 그 아이디어"
+"들의 심각한 한계점 또한 보여주었습니다.\n"
+"\n"
+"아군의 일반 화기들에 반물질을 -- 어느 정도의 분량이라도 -- 쓴다는 것은 불가합"
+"니다. 일반 무기들의 발사에서 오는 수많은 충격과 진동들은 우리가 막기에 무리입"
+"니다. 우리의 모든 노력은 봉쇄 실패 등의 의도되지 않은 폭발들로 이어졌습니다. "
+"그러나, 볼터 소총이라면 충분히 독창적이기 때문에 다를지 모른다는 깨달음을 얻"
+"었습니다.\n"
+"\n"
+"저희가 제안하는 것은, 반물질 기반의 새로운 탄약을 볼터용으로 제작하는 것입니"
+"다. 탄알의 중심부에 매우 적은 양의 반물질을 넣을 수 있다면, 이 반물질이 충격"
+"과 함께 용기에서 떨어져 나와 터질 수 있도록 제작할 수 있습니다. 그 폭발을 보"
+"면 외계인도 쉽사리 커버 밖으로 머리를 내밀지 않을 것입니다.\n"
+"\n"
+"언제 작업을 시작하기를 원하시는 알려주십시오, 사령관님.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:639
 #, fuzzy
@@ -20906,6 +21398,29 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 헤비 레이저 프로그램은 성공적이었습니다. 시제품을 만들었고, 지시만 "
+"내려주시면 생산을 시작할 준비를 해두었습니다. 약속된대로, 헤비레이저는 아군 "
+"병기들에 강력한 추가분이며, 일반 및 플라즈마 무기류를 이겨낼 수 있는 방어구"
+"를 착용한 유닛들에 대한 결정적인 도구가 될 것입니다.\n"
+"\n"
+"헤비 레이저가 단점이 없다는 것은 아닙니다. 한 예로, 헤비 레이저는 매우 크고 "
+"매우 무거워서, 병사가 힘이 좋아야 효과적으로 쏠 수 있습니다. 큰 크기에도 불구"
+"하고 정확도를 희생하지는 않지만, 우리가 원하는 만큼 빠르게 쏘거나 반응하지 않"
+"고, 그 탄창 소모가 굉장합니다. 30초간의 연사만으로도 불화중수소 카트리지 하나"
+"를 비워버릴 수 있습니다. 덕분에 탄창을 다수 휴대해야 하며, 헤비 레이저는 장전"
+"도 그리 빠르지 않습니다.\n"
+"\n"
+"일반인이나 PHALANX 병사들이 그 보이지 않는 광선의 진로에 서지 않도록 큰 주의"
+"가 필요합니다. 원 광선에 일순간이라도 노출되면 뼈가 그을리고 살이 녹습니다. "
+"눈에 맞으면 영원히 회복불가한 실명을 야기합니다. 훈련 및 필드 장교들에게 이"
+"에 대해 이야기 했고, 야전교범 구석구석에 안전을 강조했지만, 귀하의 직언을 통"
+"해 다시 듣는 것도 나쁘지 않을 것입니다, 사령관님.\n"
+"\n"
+"헤비 레이저를 장전하고 쓰려면 언제나 D-F 카트리지 하나를 휴대해야 할 것입니"
+"다. 총과 탄창에 대한 청사진은 작업실의 엔지니어들에게 맡겼으므로, 생산은 즉"
+"시 하셔도 됩니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:1183
 msgid ""
@@ -21540,6 +22055,24 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 외계인 플라즈마 블라스터 연구에 대한 제 보고입니다.\n"
+"\n"
+"이것은 확인된 플라즈마 무기류 가운데 가장 무거운 것이고, 더 이상 커질 리는 없"
+"어 보입니다. 플라즈마 블라스터는 극도로 두꺼운 볼트를 쏠 수 있는 강력한 플라"
+"즈마 보관실을 갖춘 두꺼운 봉쇄식 플라스틱으로 만들어져 있습니다.\n"
+"\n"
+"이 총은 플라즈마 볼트를 단발과 연사 모드로 쏠 수 있지만, 특히나 저희 사무실에"
+"서는 흔히 \"고통의 공\"이라 부르는 사격모드를 위해 디자인 되었습니다. 이는 충"
+"격과 함께 널찍이 뿌려지는 플라즈마를 담은 두꺼운 컨테이너로, 이 특별 사격 모"
+"드는 명중율을 희생해 치사율을 높일 수 있는 단거리에서 믿기 어려울 정도로 치명"
+"적일 것입니다.\n"
+"\n"
+"마지막으로, 이 무기의 전체 컨트롤 설명서를 제작했고, 첨부된 야전교범에 삼입하"
+"였습니다. 아군의 단거리 무기 전문가에게는 상당한 전력상승일 수 있으나, 중거"
+"리 교전에서 효과적일 정도로 정확하지는 않습니다. 즉시 전장배치 하시기를 추천"
+"합니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:1331
 #, fuzzy
@@ -21897,6 +22430,24 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 케이스식 플라즈마 탄약의 내역서 제작을 끝냈습니다. 돌격 소총, 기관"
+"총, 그리고 SR-1 스나이퍼 소총용 신규 탄약 카트리지들의 제작을 위한 디자인 서"
+"류들을 엔지니어들에게 제공하였습니다.\n"
+"\n"
+"케이스식 플라즈마 탄약은 기본적으로 전통적인 소총에 맞도록 소형화된 성형 폭탄"
+"입니다. 작은 플라즈마 핵, 충격과 함께 파편화 되는 끝부분과 부드러운 외부 케이"
+"싱으로 구성되어 있습니다. 총알이 목표물을 치면, 끝부분이 분열되며 작은 플라즈"
+"마 핵이 방어구와 부딪힙니다. 이 충격의 속도가 연약한 외부 케이싱을 변모시키"
+"고, 플라즈마 핵 주변으로 껍질을 밀봉 형성해 열을 가둠으로서 방어구를 태워 뚫"
+"습니다.\n"
+"\n"
+"끝부분에 들어간 플라즈마의 양은 물론 외계인들의 플라즈마 무기류에 비해 아주 "
+"적습니다. 그러나 플라즈마의 열이 목표물을 관통할 수 있으므로, 훨씬 많은 열이 "
+"전달되어, 엄청난 상처를 입힙니다.\n"
+"\n"
+"이 탄약을 최대한 빨리 야전 배치 하십시오. 후회하지 않으실 겁니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:1425
 msgid ""
@@ -21919,6 +22470,21 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 플라즈마 검에 대한 연구 결과, 아군의 전통적 무기류의 효용성을 회복"
+"시킬 수 있는 다수의 고급 탄약들에 대한 아이디어가 생겼습니다.\n"
+"\n"
+"아시다시피, 야전에서 맞서고 있는 외계인 장갑들은 특히 플라즈마 무기류로부터 "
+"몸을 보호하도록 잘 개량되어 있습니다. 플라즈마 분출이 대상을 녹여 데미지를 주"
+"기 때문에, 플라즈마 분출물이 식을 때까지 외계 물질들이 그 열을 막을 수 있도"
+"록 디자인 되어 있습니다. 허나 플라즈마 검의 엄청난 위력은 플라즈마의 열을 가"
+"두어 대상으로 다시 향하게 하는 데에서 나옵니다. 열의 방산이 불가능합니다.\n"
+"\n"
+"그보다는 작은 규모이겠지만, 아군의 돌격 소총, 기관총, 그리고 스나이퍼 소총에 "
+"맞을 탄약 카트리지용으로 같은 시도를 해보고 싶습니다. 세부사항을 정리할 시간"
+"을 저희에게 주시면, 전장에서의 능력을 크게 키울 수 있는 결과물을 내놓을 수 있"
+"을 것이라 자신합니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:1441
 #, fuzzy
@@ -22069,6 +22635,27 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"사령관님, 아군이 현재 상대하고 있는 헤비 니들러에 대한 제 보고서입니다.\n"
+"\n"
+"예상대로, 이 무기에 기술적인 진보는 거의 없습니다. 더 크고, 무겁고, 더 많은 "
+"니들(바늘)들을 더 빠른 속도로 쏘아낼 수 있습니다. 허나 그 단순함에 속지 마십"
+"시오. 이것은 놀랍도록 치명적인 무기로, 흔히 방향을 벗어나는 니들의 분사가 그 "
+"결과를 더 악화 시킵니다. 이것은 대상 뿐 아니라 교차 사격권에 포함된 불운한 이"
+"들 모두를 갈기갈기 찢어버릴 것입니다.\n"
+"\n"
+"이 무기는 너무 무거워서 아군의 가장 강한 병사들만이 효과적으로 쓸 수 있을 것"
+"입니다. 여태껏 본 그 어떤 무기보다도 무거워서, 적에게 역이용 하기가 어렵습니"
+"다. 그러나 그것을 전장에 끌고 갈 수 있는 병사를 찾을 수 있다면, 아마도 그 추"
+"가 화력에 기뻐하실 겁니다.\n"
+"\n"
+"마지막으로, 한가지만 말씀드립니다. 이 소총은 아주 최근에, 어쩌면 지난 수개월 "
+"사이에, 급속도로 개발되었다고 믿습니다. 헤비 니들러의 디자인 일부는 서둘렀다"
+"는 느낌이 듭니다. 이 무기가 개발직후 그들의 병사들에게 최대한 빨리 떠넘겨졌다"
+"는 것이 확실합니다. 이는 즉, 더 치명적인 부대를 모으는 게 아니라, 새로운 무기"
+"류를 능동적으로 개발해 전장 배치중이라는 의심을 하게 합니다. 다시 말해, 우리"
+"는 외계인 무리와 군비 확장 경쟁중이며, 이기고 있지 않다는 것입니다.\n"
+"\n"
+"나바르 중령"
 
 #: ../base/ufos/msgid/weapons.ufo:1467
 msgid ""
@@ -24146,9 +24733,8 @@ msgid "Base Facilities"
 msgstr "기지시설"
 
 #: ../base/ufos/research.ufo:115
-#, fuzzy
 msgid "Global Installations"
-msgstr "건설 중인 목록"
+msgstr "지구상 건설물들"
 
 #: ../base/ufos/research.ufo:116
 msgid "Research Reports"
@@ -24196,12 +24782,11 @@ msgstr "국가 만족지수"
 
 #: ../base/ufos/research.ufo:170
 msgid "Time Units"
-msgstr "행동력"
+msgstr "타임유닛"
 
 #: ../base/ufos/research.ufo:178
-#, fuzzy
 msgid "Reaction Fire"
-msgstr "대응사격"
+msgstr "반사적 사격"
 
 #: ../base/ufos/research.ufo:186
 msgid "Soldier Weight and Encumbrance"
@@ -24212,9 +24797,8 @@ msgid "Wounds and Healing"
 msgstr "부상 및 치료"
 
 #: ../base/ufos/research.ufo:202
-#, fuzzy
 msgid "Auxiliary Equipment"
-msgstr "%s 보조장비\n"
+msgstr "보조 장비"
 
 #: ../base/ufos/research.ufo:215
 msgid "Continuous Wave Laser Operation"
@@ -24265,9 +24849,8 @@ msgid "Electromagnetic Rifle Magazine"
 msgstr "전자기 소총탄창"
 
 #: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1823
-#, fuzzy
 msgid "Electromagnetic Rifle Antimatter Magazine"
-msgstr "전자기 소총탄창"
+msgstr "전자기 소총 반물질 탄창"
 
 #: ../base/ufos/research.ufo:1220
 msgid "Monomolecular Blades"
@@ -24501,32 +25084,27 @@ msgstr "인간 백신"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "암페타민 임플란트"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
-#, fuzzy
 msgid "Muscle Stimulant"
-msgstr "각성제"
+msgstr "근육 각성제"
 
 #: ../base/ufos/seq_credits.ufo:44
-#, fuzzy
 msgid "http://www.ufoai.org"
-msgstr "http://ufoai.sf.net"
+msgstr "http://www.ufoai.org"
 
 #: ../base/ufos/seq_credits.ufo:56
-#, fuzzy
 msgid "Project lead"
-msgstr "프로젝트 리더"
+msgstr "프로젝트 리드"
 
 #: ../base/ufos/seq_credits.ufo:66
-#, fuzzy
 msgid "Martin Gerhardy (mattn)"
-msgstr "Martin Gerhardy (mattn/tlh2000)"
+msgstr "마틴 거하디 (mattn)"
 
 #: ../base/ufos/seq_credits.ufo:77
-#, fuzzy
 msgid "Team members"
-msgstr "탑승인원:"
+msgstr "팀원들"
 
 #: ../base/ufos/seq_credits.ufo:87
 msgid "aDuke"
@@ -24573,9 +25151,8 @@ msgid "Bas Fournier (BTAxis)"
 msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:201
-#, fuzzy
 msgid "Werner Hohrer (Hoehrer)"
-msgstr "Werner Hoehrer (hoehrer)"
+msgstr "워너 호어러 (Hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:211
 msgid "Kostia Romanov (Kildor)"
@@ -24603,18 +25180,16 @@ msgid "Maciej Wierzbicki (Zenerka)"
 msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
 
 #: ../base/ufos/seq_credits.ufo:275
-#, fuzzy
 msgid "Original team"
-msgstr "기본 HUD"
+msgstr "오리지날 팀"
 
 #: ../base/ufos/seq_credits.ufo:285
 msgid "Herby"
 msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:295
-#, fuzzy
 msgid "SparXX"
-msgstr "SparX"
+msgstr "SparXX"
 
 #: ../base/ufos/seq_credits.ufo:305
 msgid "Rastaman"
@@ -24629,9 +25204,8 @@ msgid "Vanethian"
 msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:339
-#, fuzzy
 msgid "Special thanks to"
-msgstr "특별한 감사의 인사를 드릴 분들"
+msgstr "특별히 감사를 드릴 분들"
 
 #: ../base/ufos/seq_credits.ufo:349
 msgid "id Software for the Quake 2 engine"
@@ -24642,9 +25216,8 @@ msgid "NineX for hosting us"
 msgstr "우리 호스팅을 제공한 나인엑스"
 
 #: ../base/ufos/seq_credits.ufo:369
-#, fuzzy
 msgid "To the community and everyone who supported us"
-msgstr "우리를 지원해 준 사람들"
+msgstr "우리를 지원해 준 커뮤니티와 모든이에게"
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:103
 msgid "Gameplay"
@@ -24732,7 +25305,7 @@ msgstr "능력치/상태"
 
 #: ../base/ufos/seq_tutorials.ufo:497
 msgid "Stats bars: movement, health and morale"
-msgstr "상태막대: 행동력, 체력 그리고 사기"
+msgstr "상태막대: 이동, 체력 그리고 사기"
 
 #: ../base/ufos/seq_tutorials.ufo:519 ../base/ufos/ui/hud_default.ufo:874
 msgid "Inventory"
@@ -24930,13 +25503,12 @@ msgid "Use the [Shift] key to aim higher or lower at your target."
 msgstr "[쉬프트] 키를 이용해 목표를 향한 조준점을 올리거나 낮추세요."
 
 #: ../base/ufos/tips.ufo:5
-#, fuzzy
 msgid ""
 "Use [F5] key to quick save the game. Use [F9] key to quick load the game. "
 "Also, the game saves your state to the quick save before each mission."
 msgstr ""
-"[F1] 키를 누르면 빠른 저장이 됩니다. [F2] 키를 누르면 게임을 빠르게 불러옵니"
-"다. 또한, 모든 임무 전에는 게임에 의해 당시의 상태가 빠른 저장 됩니다."
+"[F5] 키를 눌러 빠른 저장을 하십시오. [F9]키를 눌러 빠른 불러오기를 하십시오. "
+"또한, 각 미션 직전에 게임은 자동으로 빠른 저장을 합니다."
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
@@ -24956,13 +25528,13 @@ msgstr ""
 "멀티플레이 시 우수한 전투원은 명단의 위쪽에 올려 두십시오. 팀원의 수보다  전"
 "투원수 제한이 적을 때는 위쪽에 있는 전투원부터 투입됩니다."
 
+# 엄폐 is not a term as commonly known or used as the English term "(take) cover." Therefore, whenever possible, translation must provide context or a typical variation to faciliate understanding.
 #: ../base/ufos/tips.ufo:8
-#, fuzzy
 msgid ""
 "Before you shoot, you may want to make sure that you will have enough Time "
 "Units (TUs) left to take cover."
 msgstr ""
-"사격할 때는 은폐/엄폐에 사용할 활동능력(TU)을 남겨두는 것을 고려하십시오."
+"사격할 때는 엄폐물 뒤에 숨을 활동능력(TU)을 남겨두는 것을 고려하십시오."
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
@@ -24992,12 +25564,12 @@ msgstr ""
 "전장에 내보내지 않도록 주의하십시오."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid ""
 "Don't forget to equip your soldiers with smoke grenades and flashbangs to "
 "keep the enemy at bay."
 msgstr ""
-"탄알이 없는 화기는 무용지물입니다. 전투원에게 충분한 탄알을 휴대시키십시오."
+"적들을 저지하기 위해, 전투원들에게 연막탄과 섬광탄들을 부여하는 것을 잊지 마"
+"십시오."
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
@@ -25016,13 +25588,12 @@ msgstr ""
 "니다."
 
 #: ../base/ufos/tips.ufo:16
-#, fuzzy
 msgid ""
 "To make a soldier face a certain direction (i.e. to turn him/her) place the "
 "cursor and press the right mouse button. This will cost you Time Units (TUs)."
 msgstr ""
-"전투원이 특정 방향을 바라보게 하려면, 그 방향에 커서를 놓고 오른쪽 클릭을 하"
-"거나, [Ctrl]을 누릅니다. 이것은 행동력을 소모시킵니다."
+"전투원이 특정 방향을 바라보게 하려면,(즉 방향 전환) 그 방향에 커서를 놓고 오"
+"른쪽 클릭을 하십시오. 이것은 타임유닛(TU)을 소모시킵니다."
 
 #: ../base/ufos/tips.ufo:17
 msgid ""
@@ -25057,9 +25628,8 @@ msgstr ""
 "에 들러주십시오."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "You need an active Command Centre to launch interceptors."
-msgstr "요격기 출격명령을 내리려면 지휘통제실이 필요합니다."
+msgstr "요격기 출격명령을 내리려면 사령센터가 필요합니다."
 
 #: ../base/ufos/tips.ufo:22
 msgid ""
@@ -25089,8 +25659,8 @@ msgid ""
 "while crouched costs more TUs than walking normally."
 msgstr ""
 "적의 사격으로부터 전투원를 보호하려면 웅크려 앉도록 지시하십시오. 하지만 앉"
-"고 일어나는 동작은 행동력을 소모하며, 웅크려 걷는 것은 보통 걸음보다 더 많은 "
-"행동력(TU)을 소비하게 됩니다."
+"고 일어나는 동작은 타임유닛을 소모하며, 웅크려 걷는 것은 보통 걸음보다 더 많"
+"은 TU를 소비하게 됩니다."
 
 #: ../base/ufos/tips.ufo:26
 #, fuzzy
@@ -25329,6 +25899,9 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"기지가 공격당하는 중에는, 사령센터의 비디오 비디오 감시실에 여분의 병사 한명"
+"을 배치하십시오. 당신의 병사가 기지 곳곳의 감시 카메라를 사용하여 적들의 위치"
+"를 파악할 것입니다."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -25394,43 +25967,36 @@ msgid "Day"
 msgstr "주간"
 
 #: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
-#, fuzzy
 msgid "Upload"
-msgstr "짐 내리기"
+msgstr "업로드"
 
 #: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
-#, fuzzy
 msgid "Delete this team"
-msgstr "바로가기 삭제"
+msgstr "이 팀을 삭제"
 
 #: ../base/ufos/ui/_menu.ufo:440
-#, fuzzy
 msgid "Currently loaded"
-msgstr "Current node:"
+msgstr "현재 장착됨"
 
 #: ../base/ufos/ui/_menu.ufo:515
-#, fuzzy
 msgid "Generate New Team"
-msgstr "새로운 임의의 팀을 작성합니다"
+msgstr "새로운 팀 생성"
 
 #: ../base/ufos/ui/_menu.ufo:596
-#, fuzzy
 msgid "Download new teams"
-msgstr "내려 받는 중 [%s]"
+msgstr "새로운 팀들을 다운로드"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "짐 내리기"
+msgstr "다운로드"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
 msgstr "현재 팀을 저장합니다"
 
 #: ../base/ufos/ui/_menu.ufo:615
-#, fuzzy
 msgid "Save Team"
-msgstr "당신의 팀을 고용하십시오."
+msgstr "팀 저장하기"
 
 #: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
@@ -25913,7 +26479,7 @@ msgstr "불러오기"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "세이브 게임 다운로드 하기"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -25997,18 +26563,16 @@ msgid "Do not quit."
 msgstr "나가지 않음."
 
 #: ../base/ufos/ui/cgame.ufo:26
-#, fuzzy
 msgid "Remove this file from the server"
-msgstr "항공기에서 전투원를 하차시킵니다"
+msgstr "서버에서 이 파일을 제거하기"
 
 #: ../base/ufos/ui/cgame.ufo:53
-#, fuzzy
 msgid "Available files:"
-msgstr "가능한 언어들"
+msgstr "이용 가능한 파일들:"
 
 #: ../base/ufos/ui/cgame.ufo:93
 msgid "No files uploaded yet"
-msgstr ""
+msgstr "아직 업로드된 파일이 없음"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -26027,9 +26591,8 @@ msgstr "오른손"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
 #: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
-#, fuzzy
 msgid "Implant"
-msgstr "이식수술"
+msgstr "임플란트"
 
 #: ../base/ufos/ui/equipment.ufo:78 ../base/ufos/ui/inventory.ufo:105
 #: ../base/ufos/ui/inventory.ufo:113 ../base/ufos/ui/team.ufo:79
@@ -26381,9 +26944,8 @@ msgid "Heavily wounded"
 msgstr "중상"
 
 #: ../base/ufos/ui/hospital.ufo:188
-#, fuzzy
 msgid "Healthy"
-msgstr "건강"
+msgstr "건강함"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -26396,7 +26958,7 @@ msgstr "사기"
 
 #: ../base/ufos/ui/hud_.ufo:54
 msgid "TUs"
-msgstr "남은 행동력: %i"
+msgstr "타임유닛"
 
 #: ../base/ufos/ui/hud_.ufo:100 ../base/ufos/ui/hud_phone.ufo:38
 msgid "Check to use this firemode for reaction fire"
@@ -26500,29 +27062,24 @@ msgid "Reserve TUs for shooting."
 msgstr "사격을 위해 TU를 예약함."
 
 #: ../base/ufos/ui/hud_default.ufo:1019
-#, fuzzy
 msgid "Disable reaction fire"
-msgstr "대응사격모드의 토글."
+msgstr "반사 사격 끄기"
 
 #: ../base/ufos/ui/hud_default.ufo:1025
-#, fuzzy
 msgid "Reaction fire (not available)"
-msgstr "대응사격 (불가능)"
+msgstr "반사 사격 (불가능)"
 
 #: ../base/ufos/ui/hud_default.ufo:1031
-#, fuzzy
 msgid "Enable reaction fire"
-msgstr "대응사격모드의 토글."
+msgstr "반사 사격 켜기"
 
 #: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
-#, fuzzy
 msgid "Target out of range"
-msgstr "공격목표를 지면으로 설정합니다"
+msgstr "목표물이 사정거리 바깥임"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
-#, fuzzy
 msgid "Target acquired"
-msgstr "목표지점이 점령되었습니다!"
+msgstr "목표물 발견"
 
 #: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
@@ -26701,20 +27258,19 @@ msgstr "메일 클라이언트를 나옵니다"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "페이스북"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "페이스북에서 '좋아요'를 눌러주세요"
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "트위터"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "트위터에서 팔로우를 해주세요"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -26855,7 +27411,7 @@ msgstr "최대 수용치"
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
-msgstr ""
+msgstr "무료"
 
 #: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
 #: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:308
@@ -27218,25 +27774,23 @@ msgstr "준비되셨습니까?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "관리자 컨트롤"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
-#, fuzzy
 msgid "Round time limit:"
-msgstr "라운드 시간 한계의 초단위:"
+msgstr "라운드 시간 한계:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Force start"
 msgstr "강제 시작"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
-msgstr "모든 팀이 참가하지 않아도 게임을 시작하기"
+msgstr "모든 팀이 준비되기 전에 게임을 시작하기"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "리모트 관리자 컨트롤"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -27510,6 +28064,8 @@ msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
+"'낮음'은 최대 256x256 픽셀 텍스쳐 해상도를 뜻함. '최대'는 최대 8192x8192 픽셀"
+"을 뜻함."
 
 #: ../base/ufos/ui/options.ufo:713 ../base/ufos/ui/options.ufo:1114
 #: ../base/ufos/ui/options.ufo:1270
@@ -27548,18 +28104,16 @@ msgid "Filtering:"
 msgstr "필터링:"
 
 #: ../base/ufos/ui/options.ufo:757
-#, fuzzy
 msgid "No filtering, no mipmaps"
-msgstr "No filtering, no mipmaps"
+msgstr "필터링 끄기, 미프맵 끄기"
 
 #: ../base/ufos/ui/options.ufo:761
 msgid "Bilinear filtering, no mipmaps"
 msgstr "바이리니어 필터링, 밉맵 없음"
 
 #: ../base/ufos/ui/options.ufo:765
-#, fuzzy
 msgid "No filtering, mipmaps"
-msgstr "No filtering, mipmaps"
+msgstr "필터링 끄기, 미프맵 켜기"
 
 #: ../base/ufos/ui/options.ufo:769
 msgid "Bilinear filtering, mipmaps"
@@ -27659,6 +28213,8 @@ msgid ""
 "Vertex Buffers are submitting extensible arrays of vertex attributes to be "
 "mapped into the GPU for fast drawing."
 msgstr ""
+"버텍스 버퍼가 광대한 배열의 버텍스 애트리뷰트를 GPU로 보내서 빠른 그림이 가능"
+"하게 합니다."
 
 #: ../base/ufos/ui/options.ufo:913
 msgid "Vertex Buffers:"
@@ -27671,6 +28227,9 @@ msgid ""
 "value '0' means that the swap will occur immediately (also known as 'v-sync "
 "off')."
 msgstr ""
+"OpenGL 멀티샘플 버퍼는 GL 프리미티브들을 안티에일이어싱 할 방법을 제공합니"
+"다. / 스왑 인터벌은 버퍼 스왑이 언제 일어나는지를 선택합니다. 값이 '0'이라면 "
+"스왑이 즉시 일어난다는 것을 뜻합니다. ('v-sync 끄기'라고도 합니다.)"
 
 #: ../base/ufos/ui/options.ufo:929
 msgid "Multisample Buffers / Swap Interval:"
@@ -27681,6 +28240,8 @@ msgid ""
 "Choose between 0-4 Multisample Buffers. Higher values will provide better "
 "antialiasing and will enhance picture quality."
 msgstr ""
+"멀티샘플 버퍼의 수를 0-4에서 고르십시오. 값이 높을수록 더 나은 안티에일리어싱"
+"과 향상된 화질을 제공합니다."
 
 #: ../base/ufos/ui/options.ufo:950
 msgid ""
@@ -27692,11 +28253,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:968
 msgid "Post-processing shader effects like glowing textures."
-msgstr ""
+msgstr "빛나는 텍스처와 같은 포스트-프로세싱 셰이더 효과들."
 
 #: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
-msgstr ""
+msgstr "포스트-프로세싱 셰이더 효과들:"
 
 #: ../base/ufos/ui/options.ufo:975
 msgid "Enable post processing shader effects."
@@ -27707,6 +28268,8 @@ msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
+"UFO:AI내 3D 세계의 실시간 조명. / 허가되는 최대치의 역동적 하드웨어 가속 광원"
+"(光源)의 수."
 
 #: ../base/ufos/ui/options.ufo:986
 msgid "Realtime Lighting / Max Dynamic Lights:"
@@ -27714,7 +28277,7 @@ msgstr "실시간 광원효과 / 최대 동적 조명:"
 
 #: ../base/ufos/ui/options.ufo:998
 msgid "Change the number of allowed hardware accelerated dynamic lights."
-msgstr ""
+msgstr "하드웨어로 가속되도록 허락된 역동적 광원(光源)의 수를 변경."
 
 #: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
@@ -27738,7 +28301,7 @@ msgstr "환경광 설정:"
 
 #: ../base/ufos/ui/options.ufo:1071
 msgid "At the moment these are just drop-shadows."
-msgstr ""
+msgstr "현재로서 이들은 그냥 드롭식 그림자입니다."
 
 #: ../base/ufos/ui/options.ufo:1072
 msgid "Shadows:"
@@ -27757,6 +28320,8 @@ msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
+"라이트맵 블럭 크리는 라이트맵의 해상도를 결정합니다. 블럭 크기가 클수록 더 상"
+"세한 라이트맵을 사용하게 됩니다."
 
 #: ../base/ufos/ui/options.ufo:1101
 msgid "Lightmap Block Size:"
@@ -27783,12 +28348,16 @@ msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
+"이 핵은 인텔 칩들의 GLSL 셰이더들을 비활성화 합니다. 고급 렌더링 기능을 켤 "
+"수 있기 위해서는 이를 끄십시오."
 
 #: ../base/ufos/ui/options.ufo:1189
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
+"플레어들은 빛의 반사 효과들을 보이는 데에 사용됩니다. 플레어 가시성은 발광 표"
+"면의 각도에 따라 계산됩니다."
 
 #: ../base/ufos/ui/options.ufo:1190
 msgid "Flares:"
@@ -27796,7 +28365,7 @@ msgstr "플레어:"
 
 #: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
-msgstr ""
+msgstr "코로나들은 부드럽고 알파-블렌드된, 둥글둥글한 폴리곤들입니다."
 
 #: ../base/ufos/ui/options.ufo:1206
 msgid "Coronas:"
@@ -28001,7 +28570,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1688
 msgid "Autostand:"
-msgstr "알아서 일어나기:"
+msgstr "자동으로 일어서기:"
 
 #: ../base/ufos/ui/options.ufo:1703
 msgid "Actor Speed:"
@@ -28073,15 +28642,15 @@ msgstr "8.00"
 
 #: ../base/ufos/ui/options.ufo:1846
 msgid "10.00"
-msgstr "100000 c"
+msgstr "10.00"
 
 #: ../base/ufos/ui/options.ufo:1851
 msgid "12.00"
-msgstr "100000 c"
+msgstr "12.00"
 
 #: ../base/ufos/ui/options.ufo:1860
 msgid "Joystick Settings"
-msgstr "조이스틱"
+msgstr "조이스틱 설정사항"
 
 #: ../base/ufos/ui/options.ufo:1870
 msgid "Enable:"
@@ -28121,12 +28690,11 @@ msgstr "메뉴"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "글로벌"
 
 #: ../base/ufos/ui/options.ufo:2034
-#, fuzzy
 msgid "Battlescape"
-msgstr "전술화면 카메라"
+msgstr "전장"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -28173,19 +28741,17 @@ msgid "Assemble a team first"
 msgstr "팀을 먼저 구성하십시오"
 
 #: ../base/ufos/ui/popup_capacity.ufo:10
-#, fuzzy
 msgid "Capacity Exceeded"
-msgstr "최대 수용치"
+msgstr "최대치 초과"
 
 #: ../base/ufos/ui/popup_capacity.ufo:14
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
-msgstr ""
+msgstr "이 기지는 더이상의 물품/인원을 수용할 수 없습니다. 공간을 비우십시오."
 
 #: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:136
-#, fuzzy
 msgid "Go to base"
-msgstr "기지로 귀환 중"
+msgstr "기지로 가기"
 
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
@@ -28271,9 +28837,8 @@ msgid "Disassembly"
 msgstr "해체"
 
 #: ../base/ufos/ui/production.ufo:192
-#, fuzzy
 msgid "Workshop space"
-msgstr "작업실 규모:"
+msgstr "작업실 공간"
 
 #: ../base/ufos/ui/production.ufo:389 ../base/ufos/ui/production.ufo:399
 msgid "Change the production amount"
@@ -28304,40 +28869,36 @@ msgid "Open UFOPaedia"
 msgstr "UFO 백과사전 열람"
 
 #: ../base/ufos/ui/research.ufo:68
-#, fuzzy
 msgid "Stop researching this project"
-msgstr "이 프로젝트에 맞는 연구 제안서가 없습니다."
+msgstr "이 프로젝트의 연구를 멈추기"
 
 #: ../base/ufos/ui/research.ufo:78
-#, fuzzy
 msgid "Assign less scientists on this project"
-msgstr "항공기에 전투원를 탑승시킵니다"
+msgstr "이 프로젝트에 투입된 과학자 수를 줄이기"
 
 #: ../base/ufos/ui/research.ufo:96
-#, fuzzy
 msgid "Assign more scientists on this project"
-msgstr "항공기에 한명 이상의 대원을 탑승시켜야 합니다."
+msgstr "이 프로젝트에 투입된 과학자 수를 늘리기"
 
 #: ../base/ufos/ui/research.ufo:106
 msgid "Assign all free scientists on this project"
-msgstr ""
+msgstr "남은 모든 과학자들을 이 프로젝트에 할당"
 
 #: ../base/ufos/ui/research.ufo:153
-#, fuzzy
 msgid "N/A"
-msgstr "없음"
+msgstr "비해당"
 
 #: ../base/ufos/ui/research.ufo:154
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr ""
+msgstr "이 주제는 물품이나 선행 조건이 충족되지 않았음"
 
 #: ../base/ufos/ui/research.ufo:162
 msgid "Expand/Collapse"
-msgstr ""
+msgstr "펼치기/접기"
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
-msgstr ""
+msgstr "주제"
 
 #: ../base/ufos/ui/research.ufo:301 client/cgame/campaign/cp_aircraft.cpp:373
 msgid "idle"
@@ -28381,7 +28942,7 @@ msgstr "<1>"
 
 #: ../base/ufos/ui/skirmish.ufo:121
 msgid "Start Game"
-msgstr "게임시작"
+msgstr "게임 시작"
 
 #: ../base/ufos/ui/skirmish.ufo:136
 msgid "Return to the main menu."
@@ -28389,7 +28950,7 @@ msgstr "메인메뉴로 나가기"
 
 #: ../base/ufos/ui/skirmish.ufo:150
 msgid "Skirmish Game Settings"
-msgstr "빠른시작 설정"
+msgstr "빠른 시작 설정"
 
 #: ../base/ufos/ui/skirmish.ufo:203
 msgid "UFO:"
@@ -28444,11 +29005,11 @@ msgstr "본 게임용 UGV - 병사 슬롯들이 충분히 비어있어야만 해
 
 #: ../base/ufos/ui/skirmish.ufo:422
 msgid "Team:"
-msgstr "팀"
+msgstr "팀:"
 
 #: ../base/ufos/ui/skirmish.ufo:425
 msgid "Select which side you want to play with."
-msgstr "Select which side you want to play with"
+msgstr "플레이 하기를 원하는 편을 선택하세요."
 
 #: ../base/ufos/ui/stats.ufo:39
 msgid "Missions"
@@ -28460,11 +29021,11 @@ msgstr "기지"
 
 #: ../base/ufos/ui/stats.ufo:77
 msgid "Installations"
-msgstr "건설 중인 목록"
+msgstr "건설물"
 
 #: ../base/ufos/ui/stats.ufo:115
 msgid "Costs"
-msgstr "비용:"
+msgstr "비용"
 
 #: ../base/ufos/ui/stats.ufo:134
 msgid "Nations"
@@ -28472,7 +29033,7 @@ msgstr "국가들"
 
 #: ../base/ufos/ui/stats.ufo:144
 msgid "Click for funding graphs"
-msgstr "투자 그래프를 보려면 클릭하시기 바랍니다"
+msgstr "투자 그래프를 보려면 클릭하세요"
 
 #: ../base/ufos/ui/stats.ufo:209
 msgid "Nation Statistics"
@@ -28499,14 +29060,12 @@ msgid "max"
 msgstr "최대"
 
 #: ../base/ufos/ui/sys_editor.ufo:12
-#, fuzzy
 msgid "Node editor"
-msgstr "Node editor"
+msgstr "노드 에디터"
 
 #: ../base/ufos/ui/sys_editor.ufo:30
-#, fuzzy
 msgid "Capture a node"
-msgstr "Capture a node"
+msgstr "노트를 탈취"
 
 #: ../base/ufos/ui/sys_editor.ufo:42
 #, fuzzy
@@ -28544,22 +29103,19 @@ msgstr "Current node:"
 
 #: ../base/ufos/ui/team.ufo:671
 msgid "Save your team"
-msgstr "당신의 팀을 고용하십시오."
+msgstr "팀을 저장"
 
 #: ../base/ufos/ui/team.ufo:714
-#, fuzzy
 msgid "Generate a team"
-msgstr "새로운 임의의 팀을 작성합니다"
+msgstr "팀 생성"
 
 #: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
-#, fuzzy
 msgid "Generate Team"
-msgstr "새로운 임의의 팀을 작성합니다"
+msgstr "팀 생성"
 
 #: ../base/ufos/ui/team.ufo:731
-#, fuzzy
 msgid "Generate a new team with the selected race"
-msgstr "선택된 항목으로 GUI를 갱신합니다"
+msgstr "선택된 종족으로 새 팀을 생성"
 
 #: ../base/ufos/ui/transfer.ufo:31
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -28573,13 +29129,11 @@ msgstr "외계인"
 
 # Assumes it's in context of item/personnel transfers. (i.e. From: LOCATION. To: LOCATION)
 #: ../base/ufos/ui/transfer.ufo:193
-#, fuzzy
 msgid "From"
 msgstr "출발지:"
 
 # Assumes it's in context of item/personnel transfers. (i.e. From: LOCATION. To: LOCATION)
 #: ../base/ufos/ui/transfer.ufo:200
-#, fuzzy
 msgid "To"
 msgstr "목적지:"
 
@@ -28598,9 +29152,8 @@ msgstr "목적지"
 
 # Source text needs context for accurate translation.
 #: ../base/ufos/ui/transfer.ufo:359
-#, fuzzy
 msgid "Building"
-msgstr "건설중"
+msgstr "건설중:"
 
 #: ../base/ufos/ui/transfer.ufo:383
 msgid "all space"
@@ -28667,12 +29220,11 @@ msgstr "요구사항:"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "로그인"
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
-msgstr "접속암호:"
+msgstr "암호"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -28696,7 +29248,7 @@ msgstr "적외선 고글"
 
 #: ../base/ufos/weapons.ufo:103
 msgid "Scan"
-msgstr "스캐닝"
+msgstr "스캔"
 
 #: ../base/ufos/weapons.ufo:113 ../base/ufos/weapons_melee.ufo:44
 #: ../base/ufos/weapons_melee.ufo:108
@@ -28705,7 +29257,7 @@ msgstr "던지기"
 
 #: ../base/ufos/weapons.ufo:137
 msgid "Frag Grenade"
-msgstr "세열 수류탄"
+msgstr "파쇄성 수류탄"
 
 #: ../base/ufos/weapons.ufo:157 ../base/ufos/weapons.ufo:235
 #: ../base/ufos/weapons.ufo:314 ../base/ufos/weapons.ufo:391
@@ -28739,7 +29291,7 @@ msgstr "외계인 가스 수류탄"
 
 #: ../base/ufos/weapons.ufo:538
 msgid "Incendiary grenade"
-msgstr "소이 수류탄"
+msgstr "화염 수류탄"
 
 #: ../base/ufos/weapons.ufo:621
 msgid "Plasma Grenade"
@@ -28800,7 +29352,7 @@ msgstr "3점사"
 #: ../base/ufos/weapons_plasma.ufo:200 ../base/ufos/weapons_plasma.ufo:431
 #: ../base/ufos/weapons_plasma.ufo:518 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
-msgstr "자동사격"
+msgstr "완자동사격"
 
 #: ../base/ufos/weapons_human.ufo:113 ../base/ufos/weapons_human.ufo:204
 #: ../base/ufos/weapons_human.ufo:410 ../base/ufos/weapons_human.ufo:501
@@ -28865,12 +29417,14 @@ msgstr "서브머신건"
 
 #: ../base/ufos/weapons_human.ufo:750
 msgid "SMG Magazine"
-msgstr "서브머신건 탄창"
+msgstr "경기관총 탄창"
 
 #: ../base/ufos/weapons_human.ufo:768 ../base/ufos/weapons_multiplayer.ufo:52
 msgid "5-Round Burst"
 msgstr "5점사"
 
+# Keep in mind that "Riot" here is not a unique noun. (i.e. Not a "name")  It is indicative of the weapon's real-world historical origin of usage in riot control by authorities. 
+# That said, the lack of any similar usage on a contrasting weapon (ex. Combat Shotgun) should justify a dictative naming for the gun. If any other such shotgun comes along, however, renaming should be required.
 #: ../base/ufos/weapons_human.ufo:820
 msgid "Riot Shotgun"
 msgstr "라이엇 산탄총"
@@ -28883,9 +29437,10 @@ msgstr "새보드 슬러그"
 msgid "Micro Shotgun"
 msgstr "초소형 산탄총"
 
+# Conventional (real-life) translation of flechette is either 플레셰트(for pronunciation) or 강철제 화살(for meaning), but the latter is specific to real-life usage that is exclusive to the items made of steel.
 #: ../base/ufos/weapons_human.ufo:910 ../base/ufos/weapons_multiplayer.ufo:151
 msgid "Flechette Shells"
-msgstr "강철화살 유탄"
+msgstr "플레셰트 유탄"
 
 #: ../base/ufos/weapons_human.ufo:985
 msgid "Flamethrower"
@@ -28897,15 +29452,15 @@ msgstr "C90 화염방사기 연료통"
 
 #: ../base/ufos/weapons_human.ufo:1026
 msgid "Candlelight"
-msgstr "약한 불"
+msgstr "캔들라이트"
 
 #: ../base/ufos/weapons_human.ufo:1047
 msgid "Inferno"
-msgstr "중간 불"
+msgstr "인퍼노"
 
 #: ../base/ufos/weapons_human.ufo:1068
 msgid "Inferno Sweep"
-msgstr "지옥불 튀김"
+msgstr "인퍼노 휩쓸기"
 
 #: ../base/ufos/weapons_human.ufo:1096
 msgid "Rocket Launcher"
@@ -28957,7 +29512,7 @@ msgstr "25mm 소이 유탄"
 
 #: ../base/ufos/weapons_human.ufo:1555
 msgid "25mm Flechette Grenades"
-msgstr "25mm 강철화살 유탄"
+msgstr "25mm 플레셰트 유탄"
 
 #: ../base/ufos/weapons_human.ufo:1597
 msgid "25mm PB Grenades"
@@ -29284,11 +29839,11 @@ msgstr "사격 예약"
 #: client/battlescape/cl_hud.cpp:422
 #, c-format
 msgid "Remaining TUs: %i"
-msgstr "남은 행동력: %i"
+msgstr "남은 타임유닛: %i"
 
 #: client/battlescape/cl_hud.cpp:425
 msgid "No remaining TUs left after shot."
-msgstr "다음 공격을 위한 행동력이 부족합니다."
+msgstr "사격 이후에 여분의 TU가 없습니다."
 
 #: client/battlescape/cl_hud.cpp:709
 msgid "No weapon."
@@ -29304,7 +29859,7 @@ msgstr "탄창이 가득 차 있어, 다시 장전할 수 없습니다."
 
 #: client/battlescape/cl_hud.cpp:735
 msgid "Not enough TUs for reloading weapon."
-msgstr "무기를 장전하기엔 행동력이 부족합니다."
+msgstr "무기를 장전하기에 TU가 부족합니다."
 
 #: client/battlescape/cl_hud.cpp:738
 msgid "No reload possible, you don't have backup ammo."
@@ -29312,21 +29867,21 @@ msgstr "보조탄약이 부족하여 장전할 수 없습니다."
 
 #: client/battlescape/cl_hud.cpp:854
 msgid "Not enough TUs for standing up."
-msgstr "일어서기에는 행동력이 부족합니다."
+msgstr "일어서기에 TU가 부족합니다."
 
 #: client/battlescape/cl_hud.cpp:857
 #, c-format
 msgid "Stand up (%i TU)"
-msgstr "일어서기 (%i 행동력)"
+msgstr "일어서기 (%i TU)"
 
 #: client/battlescape/cl_hud.cpp:863
 msgid "Not enough TUs for crouching."
-msgstr "쭈그려 앉기에는 행동력이 부족합니다.."
+msgstr "웅크려 앉기에는 TU가 부족합니다."
 
 #: client/battlescape/cl_hud.cpp:866
 #, c-format
 msgid "Crouch (%i TU)"
-msgstr "웅크리기 (%i 행동력)"
+msgstr "웅크리기 (%i TU)"
 
 #: client/battlescape/cl_hud.cpp:875
 #, c-format
@@ -29468,7 +30023,7 @@ msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
-"이 병사에게는 더이상 다음의 물품을 사용할 행동력이 남아있지 않습니다:\n"
+"이 병사에게는 다음의 물품을 사용할 TU가 더이상 남아있지 않습니다:\n"
 "\n"
 
 #: client/battlescape/cl_hud.cpp:1385 client/cl_inventory_callbacks.cpp:386
@@ -29496,7 +30051,7 @@ msgstr "진행 불가 - 이 무기는 한손으로 사용할 수 없습니다!"
 #: client/battlescape/cl_hud_callbacks.cpp:144
 #: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:622
 msgid "Can't perform action - not enough TUs!"
-msgstr "진행 불가 - TU (행동력) 부족!"
+msgstr "진행 불가 - TU 부족!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:171
 msgid "Disabled automatic crouching/standing up."
@@ -29858,7 +30413,7 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
-"이 기지에는 지휘통제실이 없습니다.\n"
+"이 기지에는 사령센터가 없습니다.\n"
 "\n"
 "항공기가 발진할 수 없습니다.\n"
 
@@ -29991,9 +30546,9 @@ msgid "Working 100%"
 msgstr "100% 동작 중"
 
 #: client/cgame/campaign/cp_base.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "Not operational, depends on %s"
-msgstr "Not operational, depends on"
+msgstr "비활성화 상태 - %s에 의존함"
 
 #: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
@@ -30518,11 +31073,11 @@ msgstr ""
 "운행 불가. %s가 필요함."
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "%3.1f일 남았음"
-msgstr[1] "%3.1f일 남았음"
+msgstr[0] "%d일 남았음"
+msgstr[1] "%d일 남았음"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -30902,13 +31457,12 @@ msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
-#, fuzzy
 msgid ""
 "No Command Centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
-"기지에 지휘통제실이 없습니다.\n"
-"격납고는 작동하지 않을 것입니다.\n"
+"기지내에 사령센터가 없음.\n"
+"격납고가 작동하지 않음.\n"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 msgid ""
@@ -31165,9 +31719,8 @@ msgid "Alien terror in %s"
 msgstr "%s에서 외계인 테러 발생"
 
 #: client/cgame/campaign/cp_missions.cpp:462
-#, fuzzy
 msgid "Alien terror"
-msgstr "%s에서 외계인 테러 발생"
+msgstr "외계인 테러"
 
 #: client/cgame/campaign/cp_missions.cpp:465
 #, c-format
@@ -31371,8 +31924,8 @@ msgid ""
 "No craft available, no pilot assigned, or no tactical teams assigned to "
 "available craft."
 msgstr ""
-"No craft available, no pilot assigned, or no tactical teams assigned to "
-"available craft."
+"이용가능한 비행선이 없거나, 조종사가 배정되지 않았거나, 이용가능한 비행선에 "
+"배정된 작전팀이 없습니다."
 
 #: client/cgame/campaign/cp_popup.cpp:401
 #, c-format
@@ -31381,11 +31934,13 @@ msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/cgame/campaign/cp_popup.cpp:423
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
-msgstr "No craft available, no pilot assigned, or no weapon or ammo equipped."
+msgstr ""
+"이용가능한 비행선이 없거나, 조종사가 배정되지 않았거나, 장착된 무기나 탄약이 "
+"없습니다."
 
 #: client/cgame/campaign/cp_popup.cpp:435
 msgid "No defence system operational or no weapon or ammo equipped."
-msgstr "No defence system operational or no weapon or ammo equipped."
+msgstr "작동중인 방어 시스템이 없거나, 무기나 탄약이 장착되지 않았습니다."
 
 #: client/cgame/campaign/cp_popup.cpp:484
 msgid ""
@@ -31394,10 +31949,10 @@ msgid ""
 "\n"
 "Aircraft cannot start.\n"
 msgstr ""
-"No Command Centre operational in homebase\n"
-"of this aircraft.\n"
+"이 비행선이 속한 기지내에\n"
+"사령센터가 없습니다.\n"
 "\n"
-"Aircraft cannot start.\n"
+"비행선 이륙이 불가합니다.\n"
 
 #: client/cgame/campaign/cp_produce.cpp:353
 #, c-format
@@ -31414,9 +31969,9 @@ msgid "Not enough credits to finish production in %s."
 msgstr "%s 기지에 생산 자금이 부족합니다."
 
 #: client/cgame/campaign/cp_produce.cpp:442
-#, fuzzy, c-format
+#, c-format
 msgid "Work on %s at %s has finished."
-msgstr "%s의 생산이 %s에서 완료되었습니다"
+msgstr "%s에 대한 작업이 %s에서 완료됨."
 
 #: client/cgame/campaign/cp_produce.cpp:443
 #: client/cgame/campaign/cp_produce.cpp:479
@@ -31434,9 +31989,9 @@ msgid "No item selected"
 msgstr "선택된 항목이 없습니다"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:270
-#, fuzzy, c-format
+#, c-format
 msgid "Cost per item\t%i c\n"
-msgstr "생산에 필요한 비용\t%i c\n"
+msgstr "아이템당 비용\t%i c\n"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:271
 #: client/cgame/campaign/cp_produce_callbacks.cpp:328
@@ -31525,7 +32080,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "%s에 대한 작업이 시작되었음"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -32099,29 +32654,29 @@ msgstr ""
 "수신일시: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:619
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr "UFO 백과사전 내용"
+msgstr "UFO 백과사전: %s (완성)"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:672
 #: client/cgame/campaign/cp_ufopedia.cpp:681
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s"
-msgstr "UFO 백과사전"
+msgstr "UFO 백과사전: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:678
 msgid "No pre-research description available."
 msgstr "선행 연구 내용이 없습니다."
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "Proposal: %s"
-msgstr "연구 제안서: "
+msgstr "연구 제안서: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "답장: "
+msgstr "답장: %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32241,14 +32796,12 @@ msgid "Error saving team. Nothing to save yet."
 msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
 
 #: client/cgame/cl_game_team.cpp:314
-#, fuzzy
 msgid "New Team"
 msgstr "새로운 팀"
 
 #: client/cgame/cl_game_team.cpp:318
-#, fuzzy
 msgid "Error saving team. Too many teams!"
-msgstr "팀을 저장할 수 없습니다. 저장할 것이 없습니다."
+msgstr "팀 저장 에러. 팀이 너무 많음!"
 
 #: client/cgame/cl_game_team.cpp:323
 msgid "Error saving team. Check free disk space!"
@@ -32283,7 +32836,7 @@ msgstr "아군 생존자:\t%i"
 
 #: client/cgame/multiplayer/mp_callbacks.cpp:212
 msgid "Select a free team or your coop team"
-msgstr "Select a free team or your coop team"
+msgstr "자유로운 팀이나 협력팀을 고르십시오"
 
 #: client/cgame/multiplayer/mp_callbacks.cpp:220
 #, c-format
@@ -32459,9 +33012,8 @@ msgid "Show/hide ufoconsole."
 msgstr "ufoconsole 보이기/숨기기."
 
 #: client/cl_inventory_callbacks.cpp:44
-#, fuzzy
 msgid "Close quarters"
-msgstr "숙소가 부족합니다"
+msgstr "단거리"
 
 #: client/cl_inventory_callbacks.cpp:48
 #, fuzzy
@@ -32473,9 +33025,8 @@ msgid "Sniper"
 msgstr "저격"
 
 #: client/cl_inventory_callbacks.cpp:52
-#, fuzzy
 msgid "Explosives"
-msgstr "폭발물:"
+msgstr "폭발물"
 
 #: client/cl_inventory_callbacks.cpp:133
 #, c-format
@@ -32521,7 +33072,7 @@ msgstr "특기:\t%s\n"
 #: client/cl_inventory_callbacks.cpp:181 client/cl_inventory_callbacks.cpp:199
 #, c-format
 msgid "Time units:\t%i\n"
-msgstr "행동력:\t%i\n"
+msgstr "타임유닛:\t%i\n"
 
 #: client/cl_inventory_callbacks.cpp:182 client/cl_inventory_callbacks.cpp:200
 #, c-format
@@ -32567,7 +33118,7 @@ msgstr "알 수 없음 - 사용할 수 없음"
 
 #: client/cl_inventory_callbacks.cpp:387
 msgid "Warning: Not enough TUs..."
-msgstr "경고: 행동력 부족..."
+msgstr "경고: TU 부족..."
 
 #: client/cl_irc.cpp:1434
 msgid "Server closed connection"
@@ -32578,57 +33129,50 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:369
-#, fuzzy
 msgid "Loading"
-msgstr "불러오기"
+msgstr "로딩중"
 
 #: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
 #: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "Connection failure"
-msgstr "대응사격"
+msgstr "연결 실패"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "제공된 암호가 틀렸습니다."
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "이 변경사항은 재시작을 해야 합니다!"
+msgstr "이 서버는 암호를 필요로 합니다."
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "장비는 정상 동작중입니다.\n"
+msgstr "이 서버는 가득 찼습니다."
 
 #: client/cl_main.cpp:417
-#, fuzzy
 msgid "You are banned on this server."
-msgstr "이 서버로 접속"
+msgstr "당신은 이 서버로의 접근이 금지 되었습니다."
 
 #: client/cl_main.cpp:420
-#, fuzzy
 msgid "The game has already started."
-msgstr "이미 사용 중 팀입니다"
+msgstr "게임이 이미 시작되었습니다."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "서버가 다른 버전의 게임을 돌리고 있습니다."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "rcon 암호 오류."
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "기입하신 rcon 암호가 틀렸습니다."
 
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "The server refused the connection."
-msgstr "서버가 접속을 끊었습니다"
+msgstr "서버가 접속을 거절했습니다."
 
 #: client/cl_main.cpp:558
 #, c-format
@@ -32658,7 +33202,7 @@ msgstr "이 변경사항은 재시작을 필요로 할 수도 있습니다."
 #: client/cl_screen.cpp:127
 #, c-format
 msgid "Downloading [%s]"
-msgstr "내려 받는 중 [%s]"
+msgstr "다운로드중 [%s]"
 
 #: client/cl_team.cpp:177
 msgid "Poor"
@@ -32686,16 +33230,15 @@ msgstr "매우 좋음"
 
 #: client/cl_team.cpp:189
 msgid "Highly Proficient"
-msgstr "숙달함"
+msgstr "매우 능숙함"
 
 #: client/cl_team.cpp:193
 msgid "Outstanding"
 msgstr "뛰어남"
 
-# Source text needs context for accurate translation.
 #: client/cl_team.cpp:195
 msgid "Impressive"
-msgstr "대단한"
+msgstr "대단함"
 
 #: client/cl_team.cpp:197
 msgid "Superhuman"
@@ -32956,15 +33499,15 @@ msgstr "%s가 심리적으로 불안합니다."
 
 #: game/g_reaction.cpp:599
 msgid "No reaction fire enabled weapon."
-msgstr "대응사격 가능한 무기가 없습니다."
+msgstr "반사사격 가능한 무기가 없습니다."
 
 #: game/g_reaction.cpp:604
 msgid "No fire mode selected for reaction fire."
-msgstr "대응사격할 방법이 선택되어 있지 않습니다."
+msgstr "반사사격할 방법이 선택되어 있지 않습니다."
 
 #: game/g_reaction.cpp:609
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "대응사격을 하기에는 남은 TU(행동력)가 부족합니다."
+msgstr "반사사격을 하기에는 남은 TU가 부족합니다."
 
 #: game/g_round.cpp:54
 msgid "4 minutes left until forced turn end."

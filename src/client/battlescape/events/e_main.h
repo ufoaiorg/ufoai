@@ -33,6 +33,7 @@ typedef struct eventTiming_s {
 	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
 					 * projectile needs some time to reach its target. */
 	bool parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
+	bool parsedShot;	/** delay as caused by shot */
 } eventTiming_t;
 
 /**
