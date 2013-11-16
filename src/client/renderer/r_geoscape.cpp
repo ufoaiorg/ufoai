@@ -37,11 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * multitexture feature is used to blend the images
  * @sa R_Draw3DGlobe
  * @param[in] p The horizontal shift of the night map
- * @param[in] cx The x texture coordinate
- * @param[in] cy The y texture coordinate
+ * @param[in] cx,cy The x/y texture coordinates
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  * @param[in] overlayNation,overlayXVI,overlayRadar Whether these overlays should be drawn or not
+ * @param[in] r_dayandnightTexture,r_xviTexture,r_radarTexture The textures used for the corresponding overlays
  */
 void R_DrawFlatGeoscape (const vec2_t nodePos, const vec2_t nodeSize, float p, float cx, float cy, float iz, const char* map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t* r_dayandnightTexture, image_t* r_xviTexture, image_t* r_radarTexture)
 {
