@@ -120,8 +120,7 @@ static int ED_AllocEntityDef (entityKeyDef_t* newKeyDefs, int numKeyDefs, int en
  */
 static entityKeyDef_t* ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char* name, int parseMode)
 {
-	int i;
-	for (i = 0; i < numDefs; i++) {
+	for (int i = 0; i < numDefs; i++) {
 		const entityKeyDef_t* keyDef = &keyDefs[i];
 		/* names equal. both abstract or both not abstract */
 		if (Q_streq(keyDef->name, name) && !((keyDef->flags ^ parseMode) & ED_ABSTRACT)) {
@@ -668,13 +667,10 @@ static int ED_ProcessRanges (void)
 	static int ibuf[32];
 	static float fbuf[32];
 
-	entityDef_t* ed;
-	for (ed = entityDefs; ed->numKeyDefs; ed++) {
-		entityKeyDef_t* kd;
-		for (kd = ed->keyDefs; kd->name; kd++) {
+	for (entityDef_t* ed = entityDefs; ed->numKeyDefs; ed++) {
+		for (entityKeyDef_t* kd = ed->keyDefs; kd->name; kd++) {
 			const int keyType = kd->flags & ED_KEY_TYPE;
-			int i;
-			for (i = 0; i < kd->numRanges ;i++) {
+			for (int i = 0; i < kd->numRanges ;i++) {
 				int numElements = 0;
 				entityKeyRange_t* kr = kd->ranges[i];
 				const char* tmpRange_p = kr->str;
@@ -835,8 +831,7 @@ void ED_Free (void)
 				free(kd->desc);
 				free(kd->defaultVal);
 				if (kd->numRanges) {
-					int i;
-					for (i = 0; i < kd->numRanges ;i++) {
+					for (int i = 0; i < kd->numRanges ;i++) {
 						entityKeyRange_t* kr = kd->ranges[i];
 						free(kr->iArr);
 						free(kr->fArr);
