@@ -322,10 +322,8 @@ int R_UploadData (const char* name, unsigned* frame, int width, int height)
 /**
  * @brief Bind and draw a texture
  * @param[in] texnum The texture id (already uploaded of course)
- * @param[in] x normalized x value on the screen
- * @param[in] y normalized y value on the screen
- * @param[in] w normalized width value
- * @param[in] h normalized height value
+ * @param[in] x,y normalized position on the screen
+ * @param[in] w,h normalized width and height values
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
