@@ -3784,6 +3784,7 @@ base/pics/ui/selectbox_disabled.png | GNU General Public License 2.0 or later | 
 base/pics/ui/selectbox_hovered.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/selectbox_red.png | GNU General Public License 2.0 or later | SparX;Rasta;MCR | Based on original menu artwork by SparX and Rasta
 base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/tab_UI2.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
