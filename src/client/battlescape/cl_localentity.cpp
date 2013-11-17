@@ -1534,7 +1534,8 @@ void LE_AddToScene (void)
 
 			if (LE_IsSelected(le) && le->clientAction != nullptr) {
 				const le_t* action = le->clientAction;
-				LE_AddEdictHighlight(action);
+				if (action->inuse && action->type > ET_NULL && action->type < ET_MAX)
+					LE_AddEdictHighlight(action);
 			}
 
 			/* call add function */
