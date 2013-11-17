@@ -453,13 +453,12 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_load@color = "1 1 1 0.5"
-		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
 		*node:root.cmp_sel.cmp_cmps@invis = false
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
 
+		call *node:root.cmp_sel.btn_download.disable
 		call *node:root.cmp_sel.btn_begin.enable
 		*node:root.cmp_sel.cmp_loads.save<cvar:sel_load_slot>@color = "0.4 0.515 0.5 1"
 		*cvar:sel_load_slot = false
@@ -469,8 +468,7 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.cmp_sel.btn_save@color = "1 1 1 0.5"
 		call *node:root.cmp_sel.btn_new.disable
-		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
+		call *node:root.cmp_sel.btn_download.disable
 		*node:root.cmp_sel.cmp_cmps@invis = true
 		*node:root.cmp_sel.cmp_loads@invis = false
 		*node:root.cmp_sel.cmp_saves@invis = true
@@ -493,8 +491,7 @@ window campaign extends cgame_download
 		cmd	"web_listcgame 0;"
 	}
 	func toggle_cmp_save {
-		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.cmp_sel.btn_download@color = "1 1 1 0.5"
+		call *node:root.cmp_sel.btn_download.disable
 		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 1"
 		*node:root.cmp_sel.btn_save@color = "0 0 0 0.9"
 		*node:root.cmp_sel.btn_load@bgcolor = "0.4 0.515 0.5 0.25"
