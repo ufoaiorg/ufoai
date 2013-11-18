@@ -335,11 +335,8 @@ void Com_FilePath (const char* in, char* out, size_t size)
  */
 unsigned int Com_HashKey (const char* name, int hashsize)
 {
-	int i;
-	unsigned int v;
-
-	v = 0;
-	for (i = 0; name[i]; i++) {
+	unsigned int v = 0;
+	for (int i = 0; name[i]; i++) {
 		const unsigned int c = name[i];
 		v = (v + i) * 37 + tolower(c);	/* case insensitivity */
 	}

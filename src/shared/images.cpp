@@ -56,7 +56,6 @@ char const* const* Img_GetImageTypes (void)
  */
 void R_WritePNG (qFILE* f, byte* buffer, int width, int height)
 {
-	int			i;
 	png_structp	png_ptr;
 	png_infop	info_ptr;
 	png_bytep	*row_pointers;
@@ -83,7 +82,7 @@ void R_WritePNG (qFILE* f, byte* buffer, int width, int height)
 	png_write_info(png_ptr, info_ptr);
 
 	row_pointers = (png_bytep*)malloc(height * sizeof(png_bytep));
-	for (i = 0; i < height; i++)
+	for (int i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
 	png_write_image(png_ptr, row_pointers);
