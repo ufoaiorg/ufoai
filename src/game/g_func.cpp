@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "g_func.h"
 #include "g_actor.h"
 #include "g_ai.h"
@@ -96,8 +95,19 @@ static bool Destroy_Breakable (Edict* self)
 	G_TouchEdicts(self, 10.0f);
 
 	/* destroy the door trigger */
-	if (self->child)
-		G_FreeEdict(self->child);
+	if (self->child) {
+		Edict* trigger = self->child;
+		/* Remove all activators and reset client actions before removing the trigger */
+		Edict* activator = trigger->touchedNext;
+		while (activator) {
+			Edict* next = activator->touchedNext;
+			G_TriggerRemoveFromList(trigger, activator);
+			if (trigger->reset != nullptr)
+				trigger->reset(trigger, activator);
+			activator = next;
+		}
+		G_FreeEdict(trigger);
+	}
 
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
