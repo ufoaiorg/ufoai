@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
  * @sa R_Draw3DGlobe
+ * @param[in] nodePos The position, normalized (1024x768)
+ * @param[in] nodeSize The dimensions, normalized (1024x768)
  * @param[in] p The horizontal shift of the night map
  * @param[in] cx,cy The x/y texture coordinates
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
@@ -221,6 +223,8 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char* mo
 
 /**
  * @brief Draw 3D Marker on the 3D geoscape.
+ * @param[in] nodePos The position, normalized (1024x768)
+ * @param[in] nodeSize The dimensions, normalized (1024x768)
  * @param[in] rotate vector giving the angles of earth rotation due to player view.
  * @param[in] pos longitude and latitude of the model to draw.
  * @param[in] direction angle giving the direction the model is heading toward.
