@@ -56,8 +56,7 @@ AABB::AABB (const Line& line)
  */
 void AABB::add (const vec3_t point)
 {
-	int i;
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		vec_t val = point[i];
 		if (val < mins[i])
 			mins[i] = val;
@@ -72,9 +71,7 @@ void AABB::add (const vec3_t point)
  */
 void AABB::add (const AABB& other)
 {
-	int i;
-
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (other.mins[i] < mins[i])
 			mins[i] = other.mins[i];
 		if (other.maxs[i] > maxs[i])
