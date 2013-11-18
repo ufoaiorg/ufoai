@@ -79,7 +79,7 @@ void G_TriggerAddToList (Edict* self, Edict* activator)
 }
 
 /**
- * @brief Removes an activator from the list or recognized edicts
+ * @brief Removes an activator from the list of recognized edicts
  * @param self The trigger self pointer
  * @param activator The activating edict (might be nullptr)
  * @return @c true if removal was successful or not needed, @c false if the activator wasn't found in the list
