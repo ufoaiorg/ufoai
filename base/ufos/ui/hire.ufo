@@ -12,250 +12,303 @@ component cmpSelect extends checkbox_ui2
 
 window employees
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
+	// Base name and container panel
+	BaseContainerPanelV2 base_container
 	{
-		src		"background/base_bg"
-	}
+		// hireand fire panel
+		panel mainBody
+		{
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Hire and Fire"
+				}
+			}
 
-	// ==================
-	// names list
-	// ==================
+            panel employees
+            {
+                /** @todo Remove me */
+                {
+                    size		"535 540"
+                } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
-	rows list_background {
-		pos			"29 170"
-		size		"370 540"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	38
-	}
 
-	panel scroll_background {
-		pos			"363 170"
-		size		"40 540"
-		bgcolor		"0 0 0 0.5"
-	}
+                // ==================
+                // tabs
+                // ==================
 
-	panel list_border {
-		pos		"13 155"
-		size	"393 565"
-		background	"ui/panel_grey_green_large2"
-	}
+                panel tab_background {
+                    pos		"14 46"
+                    size	"556 56"
+                }
 
-	/**
-	 * @brief Disable checkbox (employee is away from base)
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeedisable
-	{
-		*node:root.bt_employee<1>@current = 1
-		*node:root.bt_employee<1>@invis = false
-		*node:root.bt_employee<1>@disabled = true
-		*node:root.bt_employee<1>@tooltip = "_Employee is away"
-	}
+                tab empl_switch {
+                    {
+                        cvar		*cvar:mn_hiretype
+                        pos			"27 36"
+                        size		"528 39"
+                        onChange {
+                            cmd "employee_init <cvar:mn_hiretype>;"
+                            *node:parent.employees.employee_list@lineselected = 0
+                            *node:parent.employee_list@viewpos = 0
+                            *node:parent.employees.scroll@current = 0
+                        }
+                    }
+                    option soldier {
+                        label	"_Soldiers"
+                        value	"0"
+                        icon	"icons/smallhead_soldier"
+                    }
+                    option pilot {
+                        label	"_Pilots"
+                        value	"3"
+                        icon	"icons/smallhead_pilot"
+                    }
+                    option worker {
+                        label	"_Workers"
+                        value	"2"
+                        icon	"icons/smallhead_worker"
+                    }
+                    option scientist {
+                        label	"_Scientists"
+                        value	"1"
+                        icon	"icons/smallhead_scientist"
+                    }
+                }
 
-	/**
-	 * @brief Enable checked checkox (Employee can be fired)
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeefire
-	{
-		*node:root.bt_employee<1>@current = 1
-		*node:root.bt_employee<1>@invis = false
-		*node:root.bt_employee<1>@disabled = false
-		*node:root.bt_employee<1>@tooltip = "_Unhire - Right click to remove"
-	}
 
-	/**
-	 * @brief Enable unchecked checkox (Employee can be hired)
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeehire
-	{
-		*node:root.bt_employee<1>@current = 0
-		*node:root.bt_employee<1>@invis = false
-		*node:root.bt_employee<1>@disabled = false
-		*node:root.bt_employee<1>@tooltip = "_Hire - Right click to remove"
-	}
+                // ==================
+                // names list
+                // ==================
 
-	/**
-	 * @brief Hide checkox (Empty slot)
-	 * @param[in] <1> row of the employee in the view
-	 */
-	confunc employeehide
-	{
-		*node:root.bt_employee<1>@invis = true
-	}
+                rows list_background {
+                    pos			"29 80"
+                    size		"370 540"
+                    lineheight	38
+                }
 
-	confunc employee_equipcheck {
-		if ( *cvar:mn_hiresoldiers > 0 ) {
-			*node:root.bt_equipsoldiers@disabled = false
-		} else {
-			*node:root.bt_equipsoldiers@disabled = true
-		}
-	}
+                panel scroll_background {
+                    pos			"363 85"
+                    size		"40 540"
+                    bgcolor		"0 0 0 0.5"
+                }
 
-	cmpSelect bt_employee0
-	{
-		num 0
-		pos "325 180"
-	}
+                panel list_border {
+                    pos		        "15 75"
+                    size	        "393 565"
+                    padding		    6
+                    layout		    LAYOUT_TOP_DOWN_FLOW
+                    layoutMargin    2
+                }
 
-	cmpSelect bt_employee1
-	{
-		num 1
-		pos "325 218"
-	}
+                /**
+                 * @brief Disable checkbox (employee is away from base)
+                 * @param[in] <1> row of the employee in the view
+                 */
+                confunc employeedisable
+                {
+                    *node:parent.bt_employee<1>@current = 1
+                    *node:parent.bt_employee<1>@invis = false
+                    *node:parent.bt_employee<1>@disabled = true
+                    *node:parent.bt_employee<1>@tooltip = "_Employee is away"
+                }
 
-	cmpSelect bt_employee2
-	{
-		num 2
-		pos "325 256"
-	}
+                /**
+                 * @brief Enable checked checkox (Employee can be fired)
+                 * @param[in] <1> row of the employee in the view
+                 */
+                confunc employeefire
+                {
+                    *node:parent.bt_employee<1>@current = 1
+                    *node:parent.bt_employee<1>@invis = false
+                    *node:parent.bt_employee<1>@disabled = false
+                    *node:parent.bt_employee<1>@tooltip = "_Unhire - Right click to remove"
+                }
 
-	cmpSelect bt_employee3
-	{
-		num 3
-		pos "325 294"
-	}
+                /**
+                 * @brief Enable unchecked checkox (Employee can be hired)
+                 * @param[in] <1> row of the employee in the view
+                 */
+                confunc employeehire
+                {
+                    *node:parent.bt_employee<1>@current = 0
+                    *node:parent.bt_employee<1>@invis = false
+                    *node:parent.bt_employee<1>@disabled = false
+                    *node:parent.bt_employee<1>@tooltip = "_Hire - Right click to remove"
+                }
 
-	cmpSelect bt_employee4
-	{
-		num 4
-		pos "325 332"
-	}
+                /**
+                 * @brief Hide checkox (Empty slot)
+                 * @param[in] <1> row of the employee in the view
+                 */
+                confunc employeehide
+                {
+                    *node:parent.bt_employee<1>@invis = true
+                }
 
-	cmpSelect bt_employee5
-	{
-		num 5
-		pos "325 370"
-	}
+                confunc employee_equipcheck {
+                    if ( *cvar:mn_hiresoldiers > 0 ) {
+                        *node:parent.bt_equipsoldiers@disabled = false
+                    } else {
+                        *node:parent.bt_equipsoldiers@disabled = true
+                    }
+                }
 
-	cmpSelect bt_employee6
-	{
-		num 6
-		pos "325 408"
-	}
+                cmpSelect bt_employee0
+                {
+                    num 0
+                    pos "325 90"
+                }
 
-	cmpSelect bt_employee7
-	{
-		num 7
-		pos "325 446"
-	}
+                cmpSelect bt_employee1
+                {
+                    num 1
+                    pos "325 128"
+                }
 
-	cmpSelect bt_employee8
-	{
-		num 8
-		pos "325 484"
-	}
+                cmpSelect bt_employee2
+                {
+                    num 2
+                    pos "325 166"
+                }
 
-	cmpSelect bt_employee9
-	{
-		num 9
-		pos "325 522"
-	}
+                cmpSelect bt_employee3
+                {
+                    num 3
+                    pos "325 204"
+                }
 
-	cmpSelect bt_employee10
-	{
-		num 10
-		pos "325 560"
-	}
+                cmpSelect bt_employee4
+                {
+                    num 4
+                    pos "325 242"
+                }
 
-	cmpSelect bt_employee11
-	{
-		num 11
-		pos "325 598"
-	}
+                cmpSelect bt_employee5
+                {
+                    num 5
+                    pos "325 280"
+                }
 
-	cmpSelect bt_employee12
-	{
-		num 12
-		pos "325 636"
-	}
+                cmpSelect bt_employee6
+                {
+                    num 6
+                    pos "325 318"
+                }
 
-	cmpSelect bt_employee13
-	{
-		num 13
-		pos "325 674"
-	}
+                cmpSelect bt_employee7
+                {
+                    num 7
+                    pos "325 356"
+                }
 
-	/**
-	 * @param[in] <1> number of employee in the list
-	 */
-	confunc hire_update_number {
-		*node:root.scroll@fullsize = <1>
-	}
+                cmpSelect bt_employee8
+                {
+                    num 8
+                    pos "325 394"
+                }
 
-	confunc hire_fix_scroll {
-		*node:root.scroll@current = <1>
-		*node:root.list_background@current = <1>
-	}
+                cmpSelect bt_employee9
+                {
+                    num 9
+                    pos "325 432"
+                }
 
-	confunc hire_select {
-		*node:root.employee_list@lineselected = <1>
-	}
+                cmpSelect bt_employee10
+                {
+                    num 10
+                    pos "325 470"
+                }
 
-	textlist employee_list
-	{
-		dataid		TEXT_LIST
-		pos			"45 180"
-		width		280
-		lineheight	38
-		tabwidth	100
-		rows		"14"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		onClick			{ cmd "employee_select <lineselected>;" }
-		onViewChange	{
-			*node:root.scroll@fullsize = <fullsize>
-			*node:root.scroll@current = <viewpos>
-			*node:root.scroll@viewsize = <viewsize>
-			cmd "employee_scroll <viewpos>;"
-		}
-	}
+                cmpSelect bt_employee11
+                {
+                    num 11
+                    pos "325 508"
+                }
 
-	vscrollbar scroll
-	{
-		image		"ui/scrollbar_v_green"
-		pos			"368 185"
-		height		"514"
-		current		0
-		viewsize	15
-		fullsize	50
-		onChange	{
-			*node:root.employee_list@viewpos = <current>
-			cmd "employee_scroll <current>;"
-		}
-	}
+                cmpSelect bt_employee12
+                {
+                    num 12
+                    pos "325 546"
+                }
 
-	button bt_equipsoldiers {
-		string "_Equip soldiers"
-		pos		"110 725"
-		size	"198 35"
-		background	"ui/button_blue"
-		color	"1 1 1 0.8"
-		selectcolor "1 1 1 1"
+                cmpSelect bt_employee13
+                {
+                    num 13
+                    pos "325 594"
+                }
 
-		onClick	{
-			cmd "ui_push equipment -1;"
-		}
-	}
+                /**
+                 * @param[in] <1> number of employee in the list
+                 */
+                confunc hire_update_number {
+                    *node:parent.scroll@fullsize = <1>
+                }
+
+                confunc hire_fix_scroll {
+                    *node:parent.scroll@current = <1>
+                    *node:parent.list_background@current = <1>
+                }
+
+                confunc hire_select {
+                    *node:parent.employee_list@lineselected = <1>
+                }
+
+                textlist employee_list
+                {
+                    dataid		    TEXT_LIST
+                    pos			    "45 80"
+                    width		    280
+                    lineheight	    38
+                    tabwidth	    100
+                    rows		    "14"
+                    color		    "0.56 0.81 0.76 1"
+                    selectcolor	    "1 1 1 1"
+                    onClick			{ cmd "employee_select <lineselected>;" }
+                    onViewChange	{
+                        *node:parent.scroll@fullsize = <fullsize>
+                        *node:parent.scroll@current = <viewpos>
+                        *node:parent.scroll@viewsize = <viewsize>
+                        cmd "employee_scroll <viewpos>;"
+                    }
+                }
+
+                vscrollbar scroll
+                {
+                    image		"ui/scrollbar_v_green"
+                    pos			"368 85"
+                    height		"514"
+                    current		0
+                    viewsize	15
+                    fullsize	50
+                    onChange	{
+                        *node:parent.employee_list@viewpos = <current>
+                        cmd "employee_scroll <current>;"
+                    }
+                }
+            }
+        }
+    }
 
 	// ==================
 	// actor info
 	// ==================
 
-	panel actor_name {
+/*	panel actor_name {
 		{
-			pos		"451 300"
-			size	"448 60"
-			background	"ui/panel_grey_green"
+			pos		"741 350"
+			size	"400 60"
+		}
+	}
+*/
+
+	panel actor_info {
+		{
+			pos		"731 374"
+			size	"290 388"
 		}
 	}
 
@@ -263,35 +316,18 @@ window employees
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_name
-		pos			"465 315"
-		size		"400 32"
+        tooltip		"_Rename your unit"
+		pos			"765 375"
+		size		"290 20"
+        color		"0.56 0.81 0.76 1"
 		onChange	{ cmd "employee_changename;" }
-	}
-
-	button bt_edit
-	{
-		visiblewhen "*cvar:mn_employee_hired == 1"
-		tooltip		"_Rename employee"
-		icon		"icons/pen"
-		pos			"850 314"
-		size		"35 35"
-		padding		0
-		onClick		{ call *node:root.name@edit }
-	}
-
-	panel actor_info {
-		{
-			pos		"451 364"
-			size	"561 388"
-			background	"ui/panel_grey_green"
-		}
 	}
 
 	image	rank_img
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		src		*cvar:mn_chrrank_img
-		pos			"473 387"
+		pos			"773 397"
 	}
 
 	model body
@@ -303,7 +339,7 @@ window employees
 			anim		"stand2"
 			angles		"0 70 90"
 			scale		"6.7 6.7 6.7"
-			pos			"469 382"
+			pos			"769 392"
 			size		"200 355"
 			origin		"0 -40 0"
 		}
@@ -322,7 +358,7 @@ window employees
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_chrrank
-		pos			"473 717"
+		pos			"770 400"
 		size		"200 20"
 	}
 
@@ -330,11 +366,11 @@ window employees
 	panel soldier_info {
 		{
 			visiblewhen "*cvar:mn_show_employee == 1"
-			pos		"670 380"
+			pos		"690 400"
 			size	"330 360"
 		}
 
-		image pwr_bar_full
+/*		image pwr_bar_full
 			{
 				pos "31 21"
 				src		"ui/bar_attribute_disabled"
@@ -445,27 +481,27 @@ window employees
 			string lbl { string "_High Explosives:" }
 			string val { string *cvar:mn_texp }
 		}
-
+*/
 		cmpDefNamedTbar hp {
 			{
-				pos "5 253"
+				pos "5 263"
 			}
 			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
 			string lbl { string "_Health:" }
 			string val { string *cvar:mn_thp }
 		}
 
-		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+		string	missions_lbl { pos "50 318" size "170 20" string "_Missions Performed:" }
+		string	missions_val { pos "220 318" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
-		string	kills_lbl { pos "5 338" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+		string	kills_lbl { pos "50 338" size "170 20" string "_Enemies Killed:" }
+		string	kills_val { pos "220 338" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
 	panel pilot_info {
 		{
 			visiblewhen "*cvar:mn_show_employee == 2"
-			pos		"670 380"
+			pos		"670 390"
 			size	"330 360"
 		}
 		cmpDefNamedTbar pil {
@@ -505,20 +541,32 @@ window employees
 		}
 	}
 
+    button bt_equipsoldiers {
+        string "_Equip soldiers"
+        pos		"510 500"
+        size	"198 35"
+        background	"ui/button_blue"
+        color	"1 1 1 0.8"
+        selectcolor "1 1 1 1"
+
+        onClick	{
+            cmd "ui_push equipment -1;"
+        }
+    }
+
 	// ==================
 	// buttons
 	// ==================
 
 	panel global_info {
 		{
-			pos		"483 180"
-			size	"455 111"
-			background	"ui/panel_grey"
+			pos		"740 10"
+			size	"250 90"
 		}
-		string label_people_shadow {
+/*		string label_people_shadow {
 			string	"_Occupation"
 			font	"f_normal_bold"
-			pos		"22 28"
+			pos		"12 28"
 			size	"150 20"
 			color 	"0 0 0 0.7"
 			contentalign	ALIGN_UC
@@ -526,153 +574,234 @@ window employees
 		string number_people_shadow {
 			string	*cvar:mn_hirepeople
 			font	"f_normal_bold"
-			pos		"22 56"
+			pos		"12 56"
 			size	"150 20"
 			color	"0 0 0 0.7"
 			contentalign	ALIGN_UC
 		}
+*/
 		string label_people {
 			string	"_Occupation"
 			font	"f_normal_bold"
-			pos		"20 25"
-			size	"150 20"
+			pos		"10 08"
+			size	"140 20"
 			contentalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
 			font	"f_normal_bold"
-			pos		"20 53"
-			size	"150 20"
+			pos		"150 08"
+			size	"100 20"
 			contentalign	ALIGN_UC
 		}
 
 		button icon_soldier {
-			icon	"icons/bighead_soldier"
-			pos		"190 28"
+			icon	"icons/head_soldier"
+			pos		"10 28"
 			size	"42 42"
 		}
 		string number_soldier_shadow {
 			string	*cvar:mn_hiresoldiers
-			pos		"190 68"
+			pos		"12 68"
 			size	"44 22"
 			color 	"0 0 0 0.7"
 			contentalign	ALIGN_UR
 		}
 		string number_soldier {
 			string	*cvar:mn_hiresoldiers
-			pos		"190 68"
+			pos		"12 68"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_pilot {
-			icon	"icons/bighead_pilot"
-			pos		"250 28"
+			icon	"icons/head_pilot"
+			pos		"70 28"
 			size	"42 42"
 		}
 		string number_pilot_shadow {
 			string	*cvar:mn_hirepilots
-			pos		"250 68"
+			pos		"72 68"
 			size	"44 22"
 			color 	"0 0 0 0.7"
 			contentalign	ALIGN_UR
 		}
 		string number_pilot {
 			string	*cvar:mn_hirepilots
-			pos		"250 68"
+			pos		"72 68"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_worker {
-			icon	"icons/bighead_worker"
-			pos		"310 28"
+			icon	"icons/head_worker"
+			pos		"130 28"
 			size	"42 42"
 		}
 		string number_worker_shadow {
 			string	*cvar:mn_hireworkers
-			pos		"310 68"
+			pos		"132 68"
 			size	"44 22"
 			color 	"0 0 0 0.7"
 			contentalign	ALIGN_UR
 		}
 		string number_worker {
 			string	*cvar:mn_hireworkers
-			pos		"310 68"
+			pos		"132 68"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_scientist {
-			icon	"icons/bighead_scientist"
-			pos		"370 28"
+			icon	"icons/head_scientist"
+			pos		"190 28"
 			size	"42 42"
 		}
 		string number_scientist_shadow {
 			string	*cvar:mn_hirescientists
-			pos		"370 68"
+			pos		"192 68"
 			size	"44 22"
 			color 	"0 0 0 0.7"
 			contentalign	ALIGN_UR
 		}
 		string number_scientist {
 			string	*cvar:mn_hirescientists
-			pos		"370 68"
+			pos		"192 68"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
-	panel tab_background {
-		pos		"24 96"
-		size	"986 56"
-		background	"ui/panel_tab"
-	}
-
-	tab empl_switch {
+	// Abilities panel
+	// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
+	panel abilities
+	{
 		{
-			cvar		*cvar:mn_hiretype
-			pos			"47 106"
-			size		"938 39"
-			onChange {
-				cmd "employee_init <cvar:mn_hiretype>;"
-				*node:root.employee_list@lineselected = 0
-				*node:root.employee_list@viewpos = 0
-				*node:root.scroll@current = 0
+			pos			"740 100"
+			size		"250 125"
+			ghost		true
+		}
+		StatBarWide strength
+		{
+			{
+				pos		"0    0"
 			}
+			string label { string "_Strength" }
+			bar valuebar { current *cvar:mn_vpwr }
+			string valuenum { string *cvar:mn_tpwr }
 		}
-		option soldier {
-			label	"_Soldiers"
-			value	"0"
-			icon	"icons/smallhead_soldier"
+		StatBarWide speed
+		{
+			{
+				pos		"0 30"
+			}
+			string label { string "_Speed" }
+			bar valuebar { current *cvar:mn_vspd }
+			string valuenum { string *cvar:mn_tspd }
 		}
-		option pilot {
-			label	"_Pilots"
-			value	"3"
-			icon	"icons/smallhead_pilot"
+		StatBarWide accuracy
+		{
+			{
+				pos		"0 60"
+			}
+			string label { string "_Accuracy" }
+			bar valuebar { current *cvar:mn_vacc }
+			string valuenum { string *cvar:mn_tacc }
 		}
-		option worker {
-			label	"_Workers"
-			value	"2"
-			icon	"icons/smallhead_worker"
-		}
-		option scientist {
-			label	"_Scientists"
-			value	"1"
-			icon	"icons/smallhead_scientist"
+		StatBarWide mind
+		{
+			{
+				pos		"0 90"
+			}
+			string label { string "_Mind" }
+			bar valuebar { current *cvar:mn_vmnd }
+			string valuenum { string *cvar:mn_tmnd }
 		}
 	}
+	// Skills panel
+	panel skills
+	{
+		{
+			pos			"740 190"
+			size		"250 155"
+			ghost		true
+		}
+		StatBarWide cls
+		{
+			{
+				pos		"0 0"
+			}
+			string label { string "_CQB" tooltip "_Close Quarters Battle" }
+			bar valuebar { current *cvar:mn_vcls }
+			string valuenum { string *cvar:mn_tcls }
+		}
+		StatBarWide hvy
+		{
+			{
+				pos		"0 30"
+			}
+			string label { string "_Heavy" tooltip "_Heavy Weapons" }
+			bar valuebar { current *cvar:mn_vhvy }
+			string valuenum { string *cvar:mn_thvy }
+		}
+		StatBarWide ass
+		{
+			{
+				pos		"0 60"
+			}
+			string label { string "_Assault" }
+			bar valuebar { current *cvar:mn_vass }
+			string valuenum { string *cvar:mn_tass }
+		}
+		StatBarWide snp
+		{
+			{
+				pos		"0 90"
+			}
+			string label { string "_Sniper" }
+			bar valuebar { current *cvar:mn_vsnp }
+			string valuenum { string *cvar:mn_tsnp }
+		}
+		StatBarWide exp
+		{
+			{
+				pos		"0 120"
+			}
+			string label { string "_Explosives" }
+			bar valuebar { current *cvar:mn_vexp }
+			string valuenum { string *cvar:mn_texp }
+		}
 
-	// ==================
-	// General info
-	// ==================
-
-	cmpBaseHeader baseHeader {
 	}
+	// Health panel
+	panel health
+	{
+		{
+			pos			"740 340"
+			size		"250 30"
+			ghost		true
+		}
+// Werte über 100!!
+		StatBarWide hp
+		{
+			{
+				pos		"0 0"
+			}
+			string label { string "_Health" tooltip "_<Healthpoints" }
+			bar valuebar { current *cvar:mn_vhp }
+			string valuenum { string *cvar:mn_thp }
+		}
+/*		cmpDefNamedTbar hp {
+			{
+				pos "5 263"
+			}
+			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
+			string lbl { string "_Health:" }
+			string val { string *cvar:mn_thp }
+		}
+*/
+    }
+
 
 	// ==================
 	// init function
@@ -681,9 +810,9 @@ window employees
 	func onWindowOpened
 	{
 		*cvar:mn_lastsubmenu = "employees"
-		*node:root.employee_list@viewpos = 0
-		*node:root.employee_list@lineselected = 0
-		*node:root.scroll@current = 0
+		*node:root.base_container.mainBody.employees.employee_list@viewpos = 0
+		*node:root.base_container.mainBody.employees.employee_list@lineselected = 0
+		*node:root.base_container.mainBody.employees.scroll@current = 0
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype = 0
 		cmd "employee_update_count; employee_equipcheck;"
@@ -695,4 +824,7 @@ window employees
 		// so on can also change the button state in the base view
 		cmd "base_init;"
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
