@@ -358,7 +358,7 @@ window employees
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_chrrank
-		pos			"770 400"
+		pos			"739 696"
 		size		"200 20"
 	}
 
