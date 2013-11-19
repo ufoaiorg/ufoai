@@ -706,7 +706,7 @@ window employees
 	panel skills
 	{
 		{
-			pos			"740 190"
+			pos			"740 220"
 			size		"250 155"
 			ghost		true
 		}
@@ -719,7 +719,7 @@ window employees
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-		StatBarWide hvy
+/*		StatBarWide hvy
 		{
 			{
 				pos		"0 30"
@@ -728,10 +728,11 @@ window employees
 			bar valuebar { current *cvar:mn_vhvy }
 			string valuenum { string *cvar:mn_thvy }
 		}
+		*/
 		StatBarWide ass
 		{
 			{
-				pos		"0 60"
+				pos		"0 30"
 			}
 			string label { string "_Assault" }
 			bar valuebar { current *cvar:mn_vass }
@@ -740,7 +741,7 @@ window employees
 		StatBarWide snp
 		{
 			{
-				pos		"0 90"
+				pos		"0 60"
 			}
 			string label { string "_Sniper" }
 			bar valuebar { current *cvar:mn_vsnp }
@@ -749,7 +750,7 @@ window employees
 		StatBarWide exp
 		{
 			{
-				pos		"0 120"
+				pos		"0 90"
 			}
 			string label { string "_Explosives" }
 			bar valuebar { current *cvar:mn_vexp }
