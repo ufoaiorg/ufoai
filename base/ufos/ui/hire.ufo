@@ -300,8 +300,8 @@ window employees
 
 	panel actor_info {
 		{
-			pos		"731 374"
-			size	"290 388"
+			pos		"731 434"
+			size	"290 328"
 		}
 	}
 
@@ -310,7 +310,7 @@ window employees
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_name
         tooltip		"_Rename your unit"
-		pos			"732 375"
+		pos			"732 415"
 		size		"290 20"
         color		"0.56 0.81 0.76 1"
 		onChange	{ cmd "employee_changename;" }
@@ -320,8 +320,8 @@ window employees
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		src		*cvar:mn_chrrank_img
-		pos			"773 397"
-        size		"100 100"
+		pos			"735 440"
+        size		"110 110"
 	}
 
 	model body
@@ -332,9 +332,9 @@ window employees
 			skin		*cvar:mn_body_skin
 			anim		"stand2"
 			angles		"0 70 90"
-			scale		"5.0 5.0 5.0"
-			pos			"790 392"
-			size		"200 355"
+			scale		"5.1 5.1 5.1"
+			pos			"790 432"
+			size		"200 290"
 			origin		"0 -40 0"
 		}
 
@@ -352,7 +352,7 @@ window employees
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_chrrank
-		pos			"739 696"
+		pos			"745 696"
 		size		"200 20"
 	}
 
@@ -360,26 +360,26 @@ window employees
 	panel soldier_info {
 		{
 			visiblewhen "*cvar:mn_show_employee == 1"
-			pos		"730 400"
-			size	"285 360"
+			pos		"735 440"
+			size	"285 320"
 		}
 
 
-		string	missions_lbl { pos "10 318" size "170 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+		string	missions_lbl { pos "10 278" size "170 20" string "_Missions Performed:" }
+		string	missions_val { pos "190 278" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
-		string	kills_lbl { pos "10 338" size "170 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+		string	kills_lbl { pos "10 298" size "170 20" string "_Enemies Killed:" }
+		string	kills_val { pos "190 298" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
-    button bt_equipsoldiers {
-        string "_Equip soldiers"
-        pos		"510 500"
-        size	"198 35"
-        background	"ui/button_blue"
-        color	"1 1 1 0.8"
-        selectcolor "1 1 1 1"
-
+    MainMenu3Btn bt_equipsoldiers
+    {
+        string      "_Equip soldiers"
+        pos		    "760 375"
+        size	    "198 30"
+        font		"f_small_bold"
+        color		"0 0 0 0.9"
+        selectcolor	"0 0 0 1"
         onClick	{
             cmd "ui_push equipment -1;"
         }
