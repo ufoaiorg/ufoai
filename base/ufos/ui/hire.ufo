@@ -151,9 +151,9 @@ window employees
 
                 confunc employee_equipcheck {
                     if ( *cvar:mn_hiresoldiers > 0 ) {
-                        *node:parent.bt_equipsoldiers@disabled = false
+                        *node:employees.bt_equipsoldiers@disabled = false
                     } else {
-                        *node:parent.bt_equipsoldiers@disabled = true
+                        *node:employees.bt_equipsoldiers@disabled = true
                     }
                 }
 
@@ -310,7 +310,7 @@ window employees
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_name
         tooltip		"_Rename your unit"
-		pos			"765 375"
+		pos			"732 375"
 		size		"290 20"
         color		"0.56 0.81 0.76 1"
 		onChange	{ cmd "employee_changename;" }
@@ -321,6 +321,7 @@ window employees
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		src		*cvar:mn_chrrank_img
 		pos			"773 397"
+        size		"100 100"
 	}
 
 	model body
@@ -331,8 +332,8 @@ window employees
 			skin		*cvar:mn_body_skin
 			anim		"stand2"
 			angles		"0 70 90"
-			scale		"6.7 6.7 6.7"
-			pos			"769 392"
+			scale		"5.0 5.0 5.0"
+			pos			"790 392"
 			size		"200 355"
 			origin		"0 -40 0"
 		}
@@ -359,16 +360,16 @@ window employees
 	panel soldier_info {
 		{
 			visiblewhen "*cvar:mn_show_employee == 1"
-			pos		"690 400"
-			size	"330 360"
+			pos		"730 400"
+			size	"285 360"
 		}
 
 
-		string	missions_lbl { pos "50 318" size "170 20" string "_Missions Performed:" }
-		string	missions_val { pos "220 318" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+		string	missions_lbl { pos "10 318" size "170 20" string "_Missions Performed:" }
+		string	missions_val { pos "190 318" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
-		string	kills_lbl { pos "50 338" size "170 20" string "_Enemies Killed:" }
-		string	kills_val { pos "220 338" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+		string	kills_lbl { pos "10 338" size "170 20" string "_Enemies Killed:" }
+		string	kills_val { pos "190 338" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
     button bt_equipsoldiers {
