@@ -370,159 +370,12 @@ window employees
 			size	"330 360"
 		}
 
-/*		image pwr_bar_full
-			{
-				pos "31 21"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpDefNamedTbar pwr {
-			{
-				pos "5 3"
-			}
-			tbar bar   { current *cvar:mn_vpwr }
-			string lbl { string "_Strength:" }
-			string val { string *cvar:mn_tpwr }
-		}
-
-		image spd_bar_full
-			{
-				pos "31 51"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpDefNamedTbar spd {
-			{
-				pos "5 33"
-			}
-			tbar bar   { current *cvar:mn_vspd }
-			string lbl { string "_Speed:" }
-			string val { string *cvar:mn_tspd }
-		}
-
-		image acc_bar_full
-			{
-				pos "31 81"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpDefNamedTbar acc {
-			{
-				pos "5 63"
-			}
-			tbar bar   { current *cvar:mn_vacc }
-			string lbl { string "_Accuracy:" }
-			string val { string *cvar:mn_tacc }
-		}
-
-		image mnd_bar_full
-			{
-				pos "31 111"
-				src		"ui/bar_attribute_disabled"
-			}
-		cmpDefNamedTbar mnd {
-			{
-				pos "5 93"
-			}
-			tbar bar   { current *cvar:mn_vmnd }
-			string lbl { string "_Mind:" }
-			string val { string *cvar:mn_tmnd }
-		}
-
-		image cls_bar_full
-			{
-				pos "31 146"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpDefNamedTbar cls {
-			{
-				pos "5 128"
-			}
-			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
-			string lbl { string "_Close Combat:" }
-			string val { string *cvar:mn_tcls }
-		}
-
-		image ass_bar_full
-			{
-				pos "31 176"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpDefNamedTbar ass {
-			{
-				pos "5 158"
-			}
-			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
-			string lbl { string "_Assault Weapons:" }
-			string val { string *cvar:mn_tass }
-		}
-
-		image snp_bar_full
-			{
-				pos "31 206"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpDefNamedTbar snp  {
-			{
-				pos "5 188"
-			}
-			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
-			string lbl { string "_Sniper Rifles:" }
-			string val { string *cvar:mn_tsnp }
-		}
-
-		image exp_bar_full
-			{
-				pos "31 236"
-				src		"ui/bar_skill_disabled"
-			}
-		cmpDefNamedTbar exp  {
-			{
-				pos "5 218"
-			}
-			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
-			string lbl { string "_High Explosives:" }
-			string val { string *cvar:mn_texp }
-		}
-*/
 
 		string	missions_lbl { pos "50 318" size "170 20" string "_Missions Performed:" }
 		string	missions_val { pos "220 318" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
 		string	kills_lbl { pos "50 338" size "170 20" string "_Enemies Killed:" }
 		string	kills_val { pos "220 338" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
-	}
-
-	panel pilot_info {
-		{
-			visiblewhen "*cvar:mn_show_employee == 2"
-			pos		"670 390"
-			size	"330 360"
-		}
-		cmpDefNamedTbar pil {
-			{
-				pos "5 3"
-			}
-			tbar bar   { current *cvar:mn_vpil }
-			string lbl { string "_Piloting:" }
-			string val { string *cvar:mn_tpil }
-		}
-
-		cmpDefNamedTbar tar {
-			{
-				pos "5 33"
-			}
-			tbar bar   { current *cvar:mn_vtar }
-			string lbl { string "_Targeting:" }
-			string val { string *cvar:mn_ttar }
-		}
-
-		cmpDefNamedTbar evad {
-			{
-				pos "5 63"
-			}
-			tbar bar   { current *cvar:mn_vevad }
-			string lbl { string "_Evading:" }
-			string val { string *cvar:mn_tevad }
-		}
-
 	}
 
     button bt_equipsoldiers {
@@ -760,6 +613,43 @@ window employees
 		}
 
 	}
+	// Pilot Skills panel
+	panel skillspilot
+	{
+		{
+			visiblewhen "*cvar:mn_show_employee == 2"
+			pos			"740 250"
+			size		"250 155"
+			ghost		true
+		}
+		StatBarWide pil
+		{
+			{
+				pos		"0 0"
+			}
+			string label { string "_Piloting" }
+			bar valuebar { current *cvar:mn_vpil }
+			string valuenum { string *cvar:mn_tpil }
+		}
+		StatBarWide tar
+		{
+			{
+				pos		"0 30"
+			}
+			string label { string "_Targeting" }
+			bar valuebar { current *cvar:mn_vtar }
+			string valuenum { string *cvar:mn_ttar }
+		}
+		StatBarWide evad
+		{
+			{
+				pos		"0 60"
+			}
+			string label { string "_Evading" }
+			bar valuebar { current *cvar:mn_vevad }
+			string valuenum { string *cvar:mn_tevad }
+		}
+	}
 	// Health panel
 	panel health
 	{
@@ -769,7 +659,6 @@ window employees
 			size		"250 30"
 			ghost		true
 		}
-// Werte über 100!!
 		StatBarWide hp
 		{
 			{
