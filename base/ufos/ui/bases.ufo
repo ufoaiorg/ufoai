@@ -88,8 +88,7 @@ window bases
                     onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
 				}
 				string label { string "_Pilots" }
-				//no pilot head available
-				//button icon { icon "icons/head_pilot" }
+				button icon { icon "icons/head_pilot" }
 			}
 		}
 
