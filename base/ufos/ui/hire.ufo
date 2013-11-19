@@ -661,6 +661,7 @@ window employees
 	panel abilities
 	{
 		{
+			visiblewhen "*cvar:mn_show_employee == 1"
 			pos			"740 100"
 			size		"250 125"
 			ghost		true
@@ -706,6 +707,7 @@ window employees
 	panel skills
 	{
 		{
+			visiblewhen "*cvar:mn_show_employee == 1"
 			pos			"740 220"
 			size		"250 155"
 			ghost		true
@@ -762,6 +764,7 @@ window employees
 	panel health
 	{
 		{
+			visiblewhen "*cvar:mn_show_employee <= 2"
 			pos			"740 340"
 			size		"250 30"
 			ghost		true
