@@ -229,6 +229,8 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char* mo
  * @param[in] pos longitude and latitude of the model to draw.
  * @param[in] direction angle giving the direction the model is heading toward.
  * @param[in] earthRadius Radius of earth on screen (this include zoom).
+ * @param[in] model The name of the model of the marker.
+ * @param[in] skin Number of modelskin to draw on marker
  */
 void R_Draw3DMapMarkers (const vec2_t nodePos, const vec2_t nodeSize, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char* model, int skin)
 {
