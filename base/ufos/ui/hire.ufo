@@ -297,13 +297,6 @@ window employees
 	// actor info
 	// ==================
 
-/*	panel actor_name {
-		{
-			pos		"741 350"
-			size	"400 60"
-		}
-	}
-*/
 
 	panel actor_info {
 		{
@@ -400,23 +393,6 @@ window employees
 			pos		"740 10"
 			size	"250 90"
 		}
-/*		string label_people_shadow {
-			string	"_Occupation"
-			font	"f_normal_bold"
-			pos		"12 28"
-			size	"150 20"
-			color 	"0 0 0 0.7"
-			contentalign	ALIGN_UC
-		}
-		string number_people_shadow {
-			string	*cvar:mn_hirepeople
-			font	"f_normal_bold"
-			pos		"12 56"
-			size	"150 20"
-			color	"0 0 0 0.7"
-			contentalign	ALIGN_UC
-		}
-*/
 		string label_people {
 			string	"_Occupation"
 			font	"f_normal_bold"
@@ -437,13 +413,6 @@ window employees
 			pos		"10 28"
 			size	"42 42"
 		}
-		string number_soldier_shadow {
-			string	*cvar:mn_hiresoldiers
-			pos		"12 68"
-			size	"44 22"
-			color 	"0 0 0 0.7"
-			contentalign	ALIGN_UR
-		}
 		string number_soldier {
 			string	*cvar:mn_hiresoldiers
 			pos		"12 68"
@@ -455,13 +424,6 @@ window employees
 			icon	"icons/head_pilot"
 			pos		"70 28"
 			size	"42 42"
-		}
-		string number_pilot_shadow {
-			string	*cvar:mn_hirepilots
-			pos		"72 68"
-			size	"44 22"
-			color 	"0 0 0 0.7"
-			contentalign	ALIGN_UR
 		}
 		string number_pilot {
 			string	*cvar:mn_hirepilots
@@ -475,13 +437,6 @@ window employees
 			pos		"130 28"
 			size	"42 42"
 		}
-		string number_worker_shadow {
-			string	*cvar:mn_hireworkers
-			pos		"132 68"
-			size	"44 22"
-			color 	"0 0 0 0.7"
-			contentalign	ALIGN_UR
-		}
 		string number_worker {
 			string	*cvar:mn_hireworkers
 			pos		"132 68"
@@ -493,13 +448,6 @@ window employees
 			icon	"icons/head_scientist"
 			pos		"190 28"
 			size	"42 42"
-		}
-		string number_scientist_shadow {
-			string	*cvar:mn_hirescientists
-			pos		"192 68"
-			size	"44 22"
-			color 	"0 0 0 0.7"
-			contentalign	ALIGN_UR
 		}
 		string number_scientist {
 			string	*cvar:mn_hirescientists
@@ -574,16 +522,6 @@ window employees
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-/*		StatBarWide hvy
-		{
-			{
-				pos		"0 30"
-			}
-			string label { string "_Heavy" tooltip "_Heavy Weapons" }
-			bar valuebar { current *cvar:mn_vhvy }
-			string valuenum { string *cvar:mn_thvy }
-		}
-		*/
 		StatBarWide ass
 		{
 			{
