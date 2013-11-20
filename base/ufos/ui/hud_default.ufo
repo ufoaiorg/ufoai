@@ -269,7 +269,10 @@ window hud_default extends hud
 						pos			"0 0"
 						size		"48 48"
 						tooltip		"_Equipment"
-						onClick		{ cmd "toggle_button inventory_bg inv;ui_push inv_stats_hud;" }
+						onClick		{
+									//cmd "toggle_button inventory_bg inv;"
+									cmd "ui_push inv_stats_hud;"
+								}
 						onMouseEnter	{ *node:this@icon = "icons/inv" }
 						onMouseLeave	{ *node:this@icon = "icons/inv0" }
 					}
@@ -289,7 +292,10 @@ window hud_default extends hud
 						pos			"0 0"
 						size		"48 48"
 						tooltip		"_Stats"
-						onClick		{ cmd "toggle_button stats_bg stats;ui_push inv_stats_hud;" }
+						onClick		{
+									//cmd "toggle_button stats_bg stats;"
+									cmd "ui_push inv_stats_hud;"
+								}
 						onMouseEnter	{ *node:this@icon = "icons/stats" }
 						onMouseLeave	{ *node:this@icon = "icons/stats0"	}
 					}
@@ -304,15 +310,17 @@ window hud_default extends hud
 
 					button icon
 					{
-						icon		"icons/headgear"
-						background	"icons/circle"
+						icon		"icons/headgear0"
+						background	"icons/circle0"
 						pos			"0 0"
 						size		"48 48"
 						tooltip		"_Headgear"
+						onMouseEnter	{ *node:this@icon = "icons/headgear" }
+						onMouseLeave	{ *node:this@icon = "icons/headgear0" }
 						onClick	{
 							cmd "actor_useheadgear;"
 							*node:this@icon = "icons/headgear0"
-							*node:this@background = "icons/circle0"
+							*node:this@background = "icons/circle"
 						}
 					}
 
@@ -323,8 +331,8 @@ window hud_default extends hud
 
 					confunc deselect_headgear
 					{
-						*node:parent.icon@icon = "icons/headgear"
-						*node:parent.icon@background = "icons/circle"
+						*node:parent.icon@icon = "icons/headgear0"
+						*node:parent.icon@background = "icons/circle0"
 						*node:parent.headgear_d@invis = true
 					}
 					confunc disable_headgear
@@ -342,30 +350,27 @@ window hud_default extends hud
 
 					button icon_on
 					{
-						icon		"icons/reaction2"
+						icon		"icons/reactionon0"
 						background	"icons/circle"
 						pos			"0 0"
 						size		"48 48"
 						invis		true
-						onClick		{ cmd "hud_togglereaction;" }
-					}
-
-					button icon_single
-					{
-						icon		"icons/reaction1"
-						background	"icons/circle"
-						pos			"0 0"
-						size		"48 48"
-						onClick		{ cmd "hud_togglereaction;" }
+						tooltip			"_Toggle reaction fire."
+						onMouseEnter	{ *node:this@icon = "icons/reactionon" }
+						onMouseLeave	{ *node:this@icon = "icons/reactionon0" }
+						onClick		{ cmd "deselect_reaction; hud_togglereaction;" }
 					}
 
 					button icon_off
 					{
-						icon		"icons/reaction0"
-						background	"icons/circle"
+						icon		"icons/reactionoff0"
+						background	"icons/circle0"
 						pos			"0 0"
 						size		"48 48"
-						onClick		{ cmd "hud_togglereaction;" }
+						tooltip			"_Toggle reaction fire."
+						onMouseEnter	{ *node:this@icon = "icons/reactionoff" }
+						onMouseLeave	{ *node:this@icon = "icons/reactionoff0" }
+						onClick		{ cmd "startreaction; hud_togglereaction;" }
 					}
 
 					// Disable icon over reaction button
@@ -1247,24 +1252,15 @@ window hud_default extends hud
 	}
 
 	// Resets the reaction fire button when new soldier is selected
-	confunc startreactionmany
+	confunc startreaction
 	{
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = true
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = true
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = false
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
-	}
-	confunc startreactiononce
-	{
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = true
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = false
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = true
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
 	}
 	confunc deselect_reaction
 	{
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = false
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_single@invis = true
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = true
 		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
 	}
@@ -1326,6 +1322,7 @@ window hud_default extends hud
 	confunc endround
 	{
 		*node:root.overlay@invis = false
+		cmd "disable_stand; disable_crouch; disable_reaction; disable_headgear;"
 		cmd "hud_movemode;"
 	}
 
