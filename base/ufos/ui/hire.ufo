@@ -300,82 +300,83 @@ window employees
 
 	panel actor_info {
 		{
-			pos		"731 434"
-			size	"290 328"
-		}
-	}
-
-	textentry name
-	{
-		visiblewhen "*cvar:mn_show_employee >= 1"
-		string		*cvar:mn_name
-        tooltip		"_Rename your unit"
-		pos			"732 415"
-		size		"290 20"
-        color		"0.56 0.81 0.76 1"
-		onChange	{ cmd "employee_changename;" }
-	}
-
-	image	rank_img
-	{
-		visiblewhen "*cvar:mn_show_employee >= 1"
-		src		*cvar:mn_chrrank_img
-		pos			"735 440"
-        size		"110 110"
-	}
-
-	model body
-	{
-		{
-			visiblewhen "*cvar:mn_show_employee >= 1"
-			src			*cvar:mn_body
-			skin		*cvar:mn_body_skin
-			anim		"stand2"
-			angles		"0 70 90"
-			scale		"5.1 5.1 5.1"
-			pos			"790 432"
-			size		"200 290"
-			origin		"0 -40 0"
-		}
-
-		model head
-		{
-			visiblewhen "*cvar:mn_show_employee >= 1"
-			src			*cvar:mn_head
-			skin		*cvar:mn_head_skin
-			tag			"tag_head"
-			scale		"1.0 1.0 1.0"
-		}
-	}
-
-	string rank_lbl
-	{
-		visiblewhen "*cvar:mn_show_employee >= 1"
-		string		*cvar:mn_chrrank
-		pos			"745 696"
-		size		"200 20"
-	}
-
-
-	panel soldier_info {
-		{
-			visiblewhen "*cvar:mn_show_employee == 1"
-			pos		"735 440"
-			size	"285 320"
+			pos		"731 420"
+			size	"290 349"
 		}
 
 
-		string	missions_lbl { pos "10 278" size "170 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 278" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+        textentry name
+        {
+            visiblewhen "*cvar:mn_show_employee >= 1"
+            string		*cvar:mn_name
+            tooltip		"_Rename your unit"
+            pos			"3 0"
+            size		"290 20"
+            color		"0.56 0.81 0.76 1"
+            onChange	{ cmd "employee_changename;" }
+        }
 
-		string	kills_lbl { pos "10 298" size "170 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 298" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
-	}
+        image	rank_img
+        {
+            visiblewhen "*cvar:mn_show_employee >= 1"
+            src		*cvar:mn_chrrank_img
+            pos			"10 25"
+            size		"110 110"
+        }
+
+        model body
+        {
+            {
+                visiblewhen "*cvar:mn_show_employee >= 1"
+                src			*cvar:mn_body
+                skin		*cvar:mn_body_skin
+                anim		"stand2"
+                angles		"0 70 90"
+                scale		"5.1 5.1 5.1"
+                pos			"60 18"
+                size		"200 290"
+                origin		"0 -40 0"
+            }
+
+            model head
+            {
+                visiblewhen "*cvar:mn_show_employee >= 1"
+                src			*cvar:mn_head
+                skin		*cvar:mn_head_skin
+                tag			"tag_head"
+                scale		"1.0 1.0 1.0"
+            }
+        }
+
+        string rank_lbl
+        {
+            visiblewhen "*cvar:mn_show_employee >= 1"
+            string		*cvar:mn_chrrank
+            pos			"10 283"
+            size		"200 20"
+        }
+
+
+        panel soldier_info {
+            {
+                visiblewhen "*cvar:mn_show_employee == 1"
+                pos		"0 25"
+                size	"285 320"
+            }
+
+
+            string	missions_lbl { pos "10 278" size "170 20" string "_Missions Performed:" }
+            string	missions_val { pos "190 278" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+
+            string	kills_lbl { pos "10 298" size "170 20" string "_Enemies Killed:" }
+            string	kills_val { pos "190 298" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+        }
+    }
 
     MainMenu3Btn bt_equipsoldiers
     {
         string      "_Equip soldiers"
-        pos		    "760 375"
+        pos		    "760 380"
         size	    "198 30"
         font		"f_small_bold"
         color		"0 0 0 0.9"
