@@ -1770,7 +1770,7 @@ trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le
 	MoveClipCL clip;
 
 	if (cl_trace_debug->integer)
-		R_DrawBoundingBoxBatched(box.mins, box.maxs);
+		R_DrawBoundingBoxBatched(box);
 
 	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, traceLine, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
