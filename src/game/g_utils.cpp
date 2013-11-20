@@ -584,20 +584,19 @@ int G_TouchTriggers (Edict* ent)
  */
 int G_TouchSolids (Edict* ent, float extend)
 {
-	int i, num, usedNum = 0;
-	Edict* touch[MAX_EDICTS];
-
 	if (!G_IsLivingActor(ent))
 		return 0;
 
 	AABB absbox(ent->absBox);
 	absbox.expand(extend);
 
-	num = G_GetTouchingEdicts(absbox, touch, lengthof(touch), ent);
+	Edict* touch[MAX_EDICTS];
+	int num = G_GetTouchingEdicts(absbox, touch, lengthof(touch), ent);
 
+	int usedNum = 0;
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		Edict* hit = touch[i];
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
