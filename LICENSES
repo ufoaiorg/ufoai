@@ -3163,9 +3163,11 @@ base/pics/icons/pen_disabled.png | GNU General Public License 2.0 | MCR | based 
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/radar.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/radar0.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/reaction0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reaction1.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/reaction2.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reactionoff.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reactionoff0.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/reactionon.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/reactionon0.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/reload.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reload0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reload_disabled.png | GNU General Public License 2.0 or later | Nate Wright
