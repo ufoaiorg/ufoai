@@ -668,7 +668,7 @@ void R_DrawBoundingBoxes (void)
 	r_bbox_array.bboxes_index = 0;
 }
 
-void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
+void R_DrawBoundingBoxBatched (const AABB& absbox)
 {
 	vec3_t bbox[8];
 	const size_t max = lengthof(r_bbox_array.bboxes);
@@ -676,7 +676,7 @@ void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 	if (r_bbox_array.bboxes_index >= max)
 		return;
 
-	R_ComputeBoundingBox(absmins, absmaxs, bbox);
+	R_ComputeBoundingBox(absbox.mins, absbox.maxs, bbox);
 
 	for (int i = 0; i < 8; i++) {
 		VectorCopy(bbox[i], &r_bbox_array.bboxes[r_bbox_array.bboxes_index]);

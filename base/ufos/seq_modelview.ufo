@@ -22,14 +22,14 @@
 // .. align	(align_t)	ur, ul, uc, ...
 // .. color	(vec4_t)	RGBA
 // .. fade	(vec4_t)	RGBA
-// .. speed	(vec2_t)	speed in two directions (x,y)
+// .. speed	(vec2_t)	speed in two directions (x, y)
 
 // model NAME
 // .. tag:	(string)
 // .. anim:	(string)	see anm-file for model
 // .. skin:	(int)		skinnumber
 // .. parent:	(string)	parent model (e.g. head and body) (at head: name of the body-model)
-// .. speed	(vec3_t)	speed in all three directions (x,y,z)
+// .. speed	(vec3_t)	speed in all three directions (x, y, z)
 // .. omega:	(vec3_t)	moving
 // .. origin:	(vec3_t)	where does it start?
 // .. angles:	(vec3_t)	rotation

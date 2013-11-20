@@ -822,8 +822,8 @@ static void SP_misc_mission (Edict* ent)
 	if (ent->radius <= GRID_WIDTH) {
 		ent->radius = GRID_WIDTH * 3;
 	}
-	VectorSet(ent->absmax, ent->radius, ent->radius, PLAYER_STAND);
-	VectorSet(ent->absmin, -ent->radius, -ent->radius, PLAYER_MIN);
+	VectorSet(ent->absBox.maxs, ent->radius, ent->radius, PLAYER_STAND);
+	VectorSet(ent->absBox.mins, -ent->radius, -ent->radius, PLAYER_MIN);
 
 	if (G_ValidMessage(ent))
 		G_MissionAddVictoryMessage(ent->message);
@@ -854,8 +854,8 @@ static void SP_misc_mission_aliens (Edict* ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
-	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+	VectorSet(ent->absBox.maxs, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
+	VectorSet(ent->absBox.mins, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
@@ -876,7 +876,7 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 	vec3_t center;
 	int xDelta, yDelta, size, i, j;
 
-	AABB shiftedBox(ent->absmin, ent->absmax);
+	AABB shiftedBox(ent->absBox);
 	shiftedBox.shift(ent->origin);
 	shiftedBox.getCenter(center);
 

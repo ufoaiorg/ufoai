@@ -60,7 +60,7 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
 		if (impact) {
 			/* Direct hit */
 			const byte impactDirection = G_GetImpactDirection(target, impact);
-			const float impactHeight = impact[2] / (target->absmin[2] + target->absmax[2]);
+			const float impactHeight = impact[2] / (target->absBox.mins[2] + target->absBox.maxs[2]);
 			bodyPart = teamDef->bodyTemplate->getHitBodyPart(impactDirection, impactHeight);
 			target->chr.wounds.woundLevel[bodyPart] += damage;
 		} else {

@@ -40,13 +40,13 @@ void main(void) {
 	vec4 glow_tex = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
 	vec3 glowcolor = glow_tex.rgb * glow_tex.a * GLOWSCALE;
 
-	/* Sample the warp texture at a time-varied offset,*/
+	/* Sample the warp texture at a time-varied offset, */
 	vec4 warp = texture2D(SAMPLER_WARP, gl_TexCoord[0].xy + OFFSET.xy);
 
-	/* and derive a diffuse texcoord based on the warp data,*/
+	/* and derive a diffuse texcoord based on the warp data, */
 	vec2 coord = vec2(gl_TexCoord[0].x + warp.z, gl_TexCoord[0].y + warp.w);
 
-	/* sample the diffuse texture, factoring in primary color as well.*/
+	/* sample the diffuse texture, factoring in primary color as well. */
 	finalColor = gl_Color * texture2D(SAMPLER_DIFFUSE, coord);
 
 #if r_fog

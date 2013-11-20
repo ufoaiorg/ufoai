@@ -972,7 +972,7 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			vec3_t m[3];
 
 			/* Find the center of the extents. */
-			VectorCenterFromMinsMaxs(model->cbmBox.mins, model->cbmBox.maxs, centerVec);
+			model->cbmBox.getCenter(centerVec);
 
 			/* Find the half height and half width of the extents. */
 			VectorSubtract(model->cbmBox.maxs, centerVec, halfVec);

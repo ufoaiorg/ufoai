@@ -125,7 +125,7 @@ void SV_UnlinkEdict (edict_t* ent)
 
 /**
  * @brief Needs to be called any time an entity changes origin, mins, maxs,
- * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
+ * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absBox.maxs
  * @sa SV_CreateAreaNode
  */
 void SV_LinkEdict (edict_t* ent)
@@ -148,7 +148,7 @@ void SV_LinkEdict (edict_t* ent)
 	/* increase the linkcount - even for none solids */
 	ent->linkcount++;
 
-	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, AABB(ent->mins, ent->maxs), ent->origin, ent->absmin, ent->absmax);
+	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, AABB(ent->mins, ent->maxs), ent->origin, ent->absBox.mins, ent->absBox.maxs);
 
 	/* if not solid we have to set the abs mins/maxs above but don't really link it */
 	if (ent->solid == SOLID_NOT)
@@ -160,9 +160,9 @@ void SV_LinkEdict (edict_t* ent)
 		/* end of tree */
 		if (node->axis == LEAFNODE)
 			break;
-		if (ent->absmin[node->axis] > node->dist)
+		if (ent->absBox.mins[node->axis] > node->dist)
 			node = node->children[0];
-		else if (ent->absmax[node->axis] < node->dist)
+		else if (ent->absBox.maxs[node->axis] < node->dist)
 			node = node->children[1];
 		else
 			break;				/* crosses the node */
@@ -178,8 +178,8 @@ void SV_LinkEdict (edict_t* ent)
 
 	/* If this ent has a child, link it back in, too */
 	if (ent->child) {
-		VectorCopy(ent->absmin, ent->child->mins);
-		VectorCopy(ent->absmax, ent->child->maxs);
+		VectorCopy(ent->absBox.mins, ent->child->mins);
+		VectorCopy(ent->absBox.maxs, ent->child->maxs);
 
 		/* expand the trigger box */
 		ent->child->mins[0] -= (UNIT_SIZE / 2);
@@ -200,7 +200,7 @@ void SV_LinkEdict (edict_t* ent)
  */
 static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t* ent)
 {
-	return aabb.doesIntersect(AABB(ent->absmin,ent->absmax));
+	return aabb.doesIntersect(ent->absBox);
 }
 
 typedef struct {

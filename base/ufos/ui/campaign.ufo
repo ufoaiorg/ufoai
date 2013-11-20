@@ -447,13 +447,12 @@ window campaign extends cgame_download
 
 	// Switch display when user chooses New Campaign/Load Campaign
 	func toggle_cmp_new {
-		*node:root.cmp_sel.btn_new@bgcolor = "0.4 0.515 0.5 1"
-		*node:root.cmp_sel.btn_new@color = "0 0 0 0.9"
 		*node:root.cmp_sel.cmp_cmps@invis = false
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
 		*node:root.cmp_sel.cmp_downloads@invis = true
 
+		call *node:root.cmp_sel.btn_new.enable
 		call *node:root.cmp_sel.btn_save.disable
 		call *node:root.cmp_sel.btn_load.disable
 		call *node:root.cmp_sel.btn_download.disable
@@ -473,11 +472,10 @@ window campaign extends cgame_download
 		call *node:root.cmp_sel.btn_begin.disable
 	}
 	func toggle_cmp_download {
-		*node:root.cmp_sel.btn_download@bgcolor = "0.4 0.515 0.5 1"
-		*node:root.cmp_sel.btn_download@color = "0 0 0 0.9"
 		call *node:root.cmp_sel.btn_new.disable
 		call *node:root.cmp_sel.btn_save.disable
 		call *node:root.cmp_sel.btn_load.disable
+		call *node:root.cmp_sel.btn_download.enable
 		*node:root.cmp_sel.cmp_cmps@invis = true
 		*node:root.cmp_sel.cmp_loads@invis = true
 		*node:root.cmp_sel.cmp_saves@invis = true
@@ -487,9 +485,8 @@ window campaign extends cgame_download
 	}
 	func toggle_cmp_save {
 		call *node:root.cmp_sel.btn_download.disable
-		*node:root.cmp_sel.btn_save@bgcolor = "0.4 0.515 0.5 1"
-		*node:root.cmp_sel.btn_save@color = "0 0 0 0.9"
 		call *node:root.cmp_sel.btn_new.disable
+		call *node:root.cmp_sel.btn_save.enable
 		call *node:root.cmp_sel.btn_load.disable
 		*node:root.cmp_sel.cmp_cmps@invis = true
 		*node:root.cmp_sel.cmp_loads@invis = true

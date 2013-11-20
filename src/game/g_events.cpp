@@ -444,8 +444,8 @@ void G_EventSendEdict (const Edict& ent)
 {
 	G_EventAdd(PM_ALL, EV_ADD_EDICT, ent.number);
 	gi.WriteByte(ent.type);
-	gi.WritePos(ent.absmin);
-	gi.WritePos(ent.absmax);
+	gi.WritePos(ent.absBox.mins);
+	gi.WritePos(ent.absBox.maxs);
 	G_EventEnd();
 }
 

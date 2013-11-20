@@ -55,8 +55,8 @@ public:
 	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
-	vec3_t mins, maxs;		/**< position of min and max points - relative to origin */
-	vec3_t absmin, absmax;	/**< position of min and max points - relative to world's origin */
+	vec3_t mins, maxs;	/**< position of min and max points - relative to origin */
+	AABB absBox;		/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
 	Edict* child;			/**< e.g. the trigger for this edict */

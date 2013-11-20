@@ -112,7 +112,7 @@ Edict* G_TriggerSpawn (Edict* owner)
 	/* set the owner, e.g. link the door into the trigger */
 	trigger->owner = owner;
 
-	AABB aabb(owner->absmin, owner->absmax);
+	AABB aabb(owner->absBox);
 	aabb.expandXY(UNIT_SIZE / 2);	/* expand the trigger box */
 
 	VectorCopy(aabb.mins, trigger->mins);
@@ -158,7 +158,7 @@ void Think_NextMapTrigger (Edict* self)
 	vec3_t center;
 	pos3_t centerPos;
 
-	VectorCenterFromMinsMaxs(self->absmin, self->absmax, center);
+	VectorCenterFromMinsMaxs(self->absBox.mins, self->absBox.maxs, center);
 
 	/* spawn the particle to mark the trigger */
 	G_SpawnParticle(center, self->spawnflags, self->particle);

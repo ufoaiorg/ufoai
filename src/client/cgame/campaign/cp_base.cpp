@@ -2227,7 +2227,7 @@ void B_UpdateBaseData (void)
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 					_("Construction of %s building finished in %s."), _(building->name), base->name);
-			MSO_CheckAddNewMessage(NT_BUILDING_FINISHED,_("Building finished"), cp_messageBuffer);
+			MSO_CheckAddNewMessage(NT_BUILDING_FINISHED, _("Building finished"), cp_messageBuffer);
 		}
 	}
 }

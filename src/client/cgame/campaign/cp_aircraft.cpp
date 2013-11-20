@@ -2471,7 +2471,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 	const char* s = cgi->XML_GetString(p, SAVE_AIRCRAFT_ID);
 	const aircraft_t* crafttype = AIR_GetAircraft(s);
 
-	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+	/* Copy all datas that don't need to be saved (tpl, hangar, ...) */
 	*craft = *crafttype;
 
 	tmpInt = cgi->XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
