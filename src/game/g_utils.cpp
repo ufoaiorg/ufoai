@@ -529,7 +529,7 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Ed
 			continue;
 		if (ent == skip)
 			continue;
-		if (aabb.doesIntersect(AABB(ent->absmin,ent->absmax))) {
+		if (aabb.doesIntersect(AABB(ent->absBox.mins,ent->absBox.maxs))) {
 			list[num++] = ent;
 			if (num >= maxCount)
 				break;
@@ -552,7 +552,7 @@ int G_TouchTriggers (Edict* ent)
 	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
 		return 0;
 
-	num = G_GetTouchingEdicts(AABB(ent->absmin, ent->absmax), touched, lengthof(touched), ent);
+	num = G_GetTouchingEdicts(AABB(ent->absBox.mins, ent->absBox.maxs), touched, lengthof(touched), ent);
 
 	G_ResetTriggers(ent, touched, num);
 
@@ -592,8 +592,8 @@ int G_TouchSolids (Edict* ent, float extend)
 		return 0;
 
 	for (i = 0; i < 3; i++) {
-		absmin[i] = ent->absmin[i] - extend;
-		absmax[i] = ent->absmax[i] + extend;
+		absmin[i] = ent->absBox.mins[i] - extend;
+		absmax[i] = ent->absBox.maxs[i] + extend;
 	}
 
 	num = G_GetTouchingEdicts(AABB(absmin, absmax), touch, lengthof(touch), ent);
@@ -628,8 +628,8 @@ void G_TouchEdicts (Edict* ent, float extend)
 	const char* entName = (ent->model) ? ent->model : ent->chr.name;
 
 	for (i = 0; i < 3; i++) {
-		absmin[i] = ent->absmin[i] - extend;
-		absmax[i] = ent->absmax[i] + extend;
+		absmin[i] = ent->absBox.mins[i] - extend;
+		absmax[i] = ent->absBox.maxs[i] + extend;
 	}
 
 	num = G_GetTouchingEdicts(AABB(absmin, absmax), touched, lengthof(touched), ent);

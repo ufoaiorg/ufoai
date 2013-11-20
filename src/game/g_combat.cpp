@@ -71,7 +71,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 			while ((e = G_EdictsGetNextInUse(e))) {
 				if (!G_IsSmoke(e))
 					continue;
-				if (!RayIntersectAABB(eye, point, e->absmin, e->absmax))
+				if (!RayIntersectAABB(eye, point, e->absBox.mins, e->absBox.maxs))
 					continue;
 
 				blocked = true;
@@ -519,7 +519,7 @@ static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot
 			continue;
 
 		if (G_IsBrushModel(check) && G_IsBreakable(check))
-			VectorCenterFromMinsMaxs(check->absmin, check->absmax, center);
+			VectorCenterFromMinsMaxs(check->absBox.mins, check->absBox.maxs, center);
 		else if (G_IsLivingActor(check) || G_IsBreakable(check))
 			VectorCopy(check->origin, center);
 		else
@@ -814,8 +814,8 @@ static void DumpAllEntities (void)
 			check->inuse ? "in use" : "unused",
 			check->classname,
 			check->model,
-			(int) check->absmin[0], (int) check->absmin[1], (int) check->absmin[2],
-			(int) check->absmax[0], (int) check->absmax[1], (int) check->absmax[2],
+			(int) check->absBox.mins[0], (int) check->absBox.mins[1], (int) check->absBox.mins[2],
+			(int) check->absBox.maxs[0], (int) check->absBox.maxs[1], (int) check->absBox.maxs[2],
 			(int) check->mins[0], (int) check->mins[1], (int) check->mins[2],
 			(int) check->maxs[0], (int) check->maxs[1], (int) check->maxs[2]);
 		i++;
