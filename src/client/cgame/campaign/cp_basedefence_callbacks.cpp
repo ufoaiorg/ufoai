@@ -343,7 +343,7 @@ static void BDEF_AddItem_f (void)
 			return;
 	}
 
-	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);
+	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 
 	if (!slot) {
 		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
@@ -435,7 +435,7 @@ static void BDEF_RemoveItem_f (void)
 			return;
 	}
 
-	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);
+	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 
 	if (!slot) {
 		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");

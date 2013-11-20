@@ -252,7 +252,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, dbuffer* msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d (last cmd was: %d, eType: %i)",
+		Com_Error(ERR_DROP, "CL_ParseServerMessage: Illegal server message %d (last cmd was: %d, eType: %i)",
 				cmd, lastCmd, eType);
 	}
 
