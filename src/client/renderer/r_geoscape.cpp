@@ -353,6 +353,7 @@ static const float starFieldTexCoords[] = {
 /**
  * @brief Bind and draw starfield.
  * @param[in] texnum The texture id (already uploaded of course)
+ * @param[in] pos The earth position
  * @param[in] rotate the rotate angle of the globe
  * @param[in] timeOfDay The earth rotation (time of day) in arcseconds
  * @note We draw a skybox: the camera is inside a cube rotating at earth rotation speed
