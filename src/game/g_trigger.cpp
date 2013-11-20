@@ -112,7 +112,7 @@ Edict* G_TriggerSpawn (Edict* owner)
 	/* set the owner, e.g. link the door into the trigger */
 	trigger->owner = owner;
 
-	AABB aabb(owner->absBox.mins, owner->absBox.maxs);
+	AABB aabb(owner->absBox);
 	aabb.expandXY(UNIT_SIZE / 2);	/* expand the trigger box */
 
 	VectorCopy(aabb.mins, trigger->mins);
