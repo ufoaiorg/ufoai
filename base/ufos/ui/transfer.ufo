@@ -472,29 +472,27 @@ window transfer
 	// ==================
 	// buttons
 	// ==================
-	button bt_translist
+	MainMenuBtn bt_translist
 	{
 		string		"_List"
 		tooltip		"_List active transfers"
-		background		"ui/button_blue"
-		pos			"580 711"
-		size		"128 52"
-		color		"1 1 1 0.6"
-		selectcolor	"1 1 1 0.6"
-		font		"f_normal"
+		pos			"760 610"
+        size	    "198 30"
+        font		"f_small_bold"
+        color		"0 0 0 0.9"
+        selectcolor	"0 0 0 1"
 		onClick		{ cmd "ui_push popup_transferlist;" }
 	}
 
-	button bt_starttrans
+	MainMenuBtn bt_starttrans
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
-		background		"ui/button_blue"
-		pos			"725 711"
-		size		"128 52"
-		color		"1 1 1 0.6"
-		selectcolor	"1 1 1 0.6"
-		font		"f_normal"
+		pos			"760 660"
+        size	    "198 30"
+        font		"f_small_bold"
+        color		"0 0 0 0.9"
+        selectcolor	"0 0 0 1"
 		onClick	{
 			if ( *node:root.transfer_denied@integer == 0 ) {
 				cmd "trans_start;"
@@ -502,16 +500,15 @@ window transfer
 		}
 	}
 
-	button bt_emptycraftstorage
+	MainMenuBtn bt_emptycraftstorage
 	{
 		string		"_Clear"
 		tooltip		"_Clear cargo"
-		background		"ui/button_blue"
-		pos			"870 711"
-		size		"128 52"
-		color		"1 1 1 0.6"
-		selectcolor	"1 1 1 1"
-		font		"f_normal"
+		pos			"760 710"
+        size	    "198 30"
+        font		"f_small_bold"
+        color		"0 0 0 0.9"
+        selectcolor	"0 0 0 1"
 		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 
