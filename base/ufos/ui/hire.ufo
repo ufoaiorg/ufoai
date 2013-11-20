@@ -28,56 +28,52 @@ window employees
 				}
 			}
 
+
+            // ==================
+            // tabs
+            // ==================
+
+            tab empl_switch {
+                {
+                    cvar		*cvar:mn_hiretype
+                    pos			"0 36"
+                    size		"528 39"
+                    onChange {
+                        cmd "employee_init <cvar:mn_hiretype>;"
+                        *node:parent.employees.employee_list@lineselected = 0
+                        *node:parent.employees.employee_list@viewpos = 0
+                        *node:parent.employees.scroll@current = 0
+                    }
+                }
+                option soldier {
+                    label	"_Soldiers"
+                    value	"0"
+                    icon	"icons/smallhead_soldier"
+                }
+                option pilot {
+                    label	"_Pilots"
+                    value	"3"
+                    icon	"icons/smallhead_pilot"
+                }
+                option worker {
+                    label	"_Workers"
+                    value	"2"
+                    icon	"icons/smallhead_worker"
+                }
+                option scientist {
+                    label	"_Scientists"
+                    value	"1"
+                    icon	"icons/smallhead_scientist"
+                }
+            }
+
             panel employees
             {
                 /** @todo Remove me */
                 {
-                    size		"535 540"
+                    pos			"5 75"
+                    size		"520 460"
                 } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-
-                // ==================
-                // tabs
-                // ==================
-
-                panel tab_background {
-                    pos		"14 46"
-                    size	"556 56"
-                }
-
-                tab empl_switch {
-                    {
-                        cvar		*cvar:mn_hiretype
-                        pos			"27 36"
-                        size		"528 39"
-                        onChange {
-                            cmd "employee_init <cvar:mn_hiretype>;"
-                            *node:parent.employees.employee_list@lineselected = 0
-                            *node:parent.employee_list@viewpos = 0
-                            *node:parent.employees.scroll@current = 0
-                        }
-                    }
-                    option soldier {
-                        label	"_Soldiers"
-                        value	"0"
-                        icon	"icons/smallhead_soldier"
-                    }
-                    option pilot {
-                        label	"_Pilots"
-                        value	"3"
-                        icon	"icons/smallhead_pilot"
-                    }
-                    option worker {
-                        label	"_Workers"
-                        value	"2"
-                        icon	"icons/smallhead_worker"
-                    }
-                    option scientist {
-                        label	"_Scientists"
-                        value	"1"
-                        icon	"icons/smallhead_scientist"
-                    }
-                }
 
 
                 // ==================
@@ -85,20 +81,20 @@ window employees
                 // ==================
 
                 rows list_background {
-                    pos			"29 80"
-                    size		"370 540"
+                    pos			"5 5"
+                    size		"380 440"
                     lineheight	38
                 }
 
                 panel scroll_background {
-                    pos			"363 85"
-                    size		"40 540"
+                    pos			"333 10"
+                    size		"40 440"
                     bgcolor		"0 0 0 0.5"
                 }
 
                 panel list_border {
-                    pos		        "15 75"
-                    size	        "393 565"
+                    pos		        "5 5"
+                    size	        "393 455"
                     padding		    6
                     layout		    LAYOUT_TOP_DOWN_FLOW
                     layoutMargin    2
@@ -160,85 +156,85 @@ window employees
                 cmpSelect bt_employee0
                 {
                     num 0
-                    pos "325 90"
+                    pos "325 15"
                 }
 
                 cmpSelect bt_employee1
                 {
                     num 1
-                    pos "325 128"
+                    pos "325 53"
                 }
 
                 cmpSelect bt_employee2
                 {
                     num 2
-                    pos "325 166"
+                    pos "325 91"
                 }
 
                 cmpSelect bt_employee3
                 {
                     num 3
-                    pos "325 204"
+                    pos "325 129"
                 }
 
                 cmpSelect bt_employee4
                 {
                     num 4
-                    pos "325 242"
+                    pos "325 167"
                 }
 
                 cmpSelect bt_employee5
                 {
                     num 5
-                    pos "325 280"
+                    pos "325 205"
                 }
 
                 cmpSelect bt_employee6
                 {
                     num 6
-                    pos "325 318"
+                    pos "325 243"
                 }
 
                 cmpSelect bt_employee7
                 {
                     num 7
-                    pos "325 356"
+                    pos "325 281"
                 }
 
                 cmpSelect bt_employee8
                 {
                     num 8
-                    pos "325 394"
+                    pos "325 319"
                 }
 
                 cmpSelect bt_employee9
                 {
                     num 9
-                    pos "325 432"
+                    pos "325 357"
                 }
 
                 cmpSelect bt_employee10
                 {
                     num 10
-                    pos "325 470"
+                    pos "325 395"
                 }
 
                 cmpSelect bt_employee11
                 {
                     num 11
-                    pos "325 508"
+                    pos "325 433"
                 }
 
                 cmpSelect bt_employee12
                 {
                     num 12
-                    pos "325 546"
+                    pos "325 471"
                 }
 
                 cmpSelect bt_employee13
                 {
                     num 13
-                    pos "325 594"
+                    pos "325 519"
                 }
 
                 /**
@@ -260,7 +256,7 @@ window employees
                 textlist employee_list
                 {
                     dataid		    TEXT_LIST
-                    pos			    "45 80"
+                    pos			    "15 5"
                     width		    280
                     lineheight	    38
                     tabwidth	    100
@@ -279,7 +275,7 @@ window employees
                 vscrollbar scroll
                 {
                     image		"ui/scrollbar_v_green"
-                    pos			"368 85"
+                    pos			"368 5"
                     height		"514"
                     current		0
                     viewsize	15
