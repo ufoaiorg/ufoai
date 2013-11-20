@@ -585,18 +585,15 @@ int G_TouchTriggers (Edict* ent)
 int G_TouchSolids (Edict* ent, float extend)
 {
 	int i, num, usedNum = 0;
-	vec3_t absmin, absmax;
 	Edict* touch[MAX_EDICTS];
 
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	for (i = 0; i < 3; i++) {
-		absmin[i] = ent->absBox.mins[i] - extend;
-		absmax[i] = ent->absBox.maxs[i] + extend;
-	}
+	AABB absbox(ent->absBox);
+	absbox.expand(extend);
 
-	num = G_GetTouchingEdicts(AABB(absmin, absmax), touch, lengthof(touch), ent);
+	num = G_GetTouchingEdicts(absbox, touch, lengthof(touch), ent);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
