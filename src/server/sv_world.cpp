@@ -200,7 +200,7 @@ void SV_LinkEdict (edict_t* ent)
  */
 static bool SV_BoundingBoxesIntersect (const AABB& aabb, const edict_t* ent)
 {
-	return aabb.doesIntersect(AABB(ent->absBox.mins,ent->absBox.maxs));
+	return aabb.doesIntersect(ent->absBox);
 }
 
 typedef struct {

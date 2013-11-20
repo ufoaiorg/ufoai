@@ -529,7 +529,7 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Ed
 			continue;
 		if (ent == skip)
 			continue;
-		if (aabb.doesIntersect(AABB(ent->absBox.mins,ent->absBox.maxs))) {
+		if (aabb.doesIntersect(ent->absBox)) {
 			list[num++] = ent;
 			if (num >= maxCount)
 				break;
@@ -552,7 +552,7 @@ int G_TouchTriggers (Edict* ent)
 	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
 		return 0;
 
-	num = G_GetTouchingEdicts(AABB(ent->absBox.mins, ent->absBox.maxs), touched, lengthof(touched), ent);
+	num = G_GetTouchingEdicts(ent->absBox, touched, lengthof(touched), ent);
 
 	G_ResetTriggers(ent, touched, num);
 
