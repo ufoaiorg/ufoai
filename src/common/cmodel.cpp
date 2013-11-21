@@ -62,18 +62,13 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
  */
 static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
-	vec3_t amins, amaxs;
-	CM_CalculateBoundingBox(model, amins, amaxs);
+	AABB absbox;
+	CM_CalculateBoundingBox(model, absbox.mins, absbox.maxs);
 	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-	if ((tLine.start[0] > amaxs[0] && tLine.stop[0] > amaxs[0])
-		|| (tLine.start[1] > amaxs[1] && tLine.stop[1] > amaxs[1])
-		|| (tLine.start[2] > amaxs[2] && tLine.stop[2] > amaxs[2])
-		|| (tLine.start[0] < amins[0] && tLine.stop[0] < amins[0])
-		|| (tLine.start[1] < amins[1] && tLine.stop[1] < amins[1])
-		|| (tLine.start[2] < amins[2] && tLine.stop[2] < amins[2]))
-		return true;
+	if (!absbox.canBeHitBy(tLine))
+		return true;	/* impossible */
 
-	return false;
+	return false;		/* maybe */
 }
 
 
