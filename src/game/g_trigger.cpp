@@ -158,7 +158,7 @@ void Think_NextMapTrigger (Edict* self)
 	vec3_t center;
 	pos3_t centerPos;
 
-	VectorCenterFromMinsMaxs(self->absBox.mins, self->absBox.maxs, center);
+	self->absBox.getCenter(center);
 
 	/* spawn the particle to mark the trigger */
 	G_SpawnParticle(center, self->spawnflags, self->particle);
