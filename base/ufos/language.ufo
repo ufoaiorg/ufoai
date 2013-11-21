@@ -305,7 +305,7 @@ language th {
 
 language uk {
 	name	"_Ukrainian"
-	native	"українська"
+	native	"Українська"
 	code (
 		"uk.UTF-8"
 		"uk.utf8"
