@@ -273,8 +273,8 @@ component AlienPanel extends panel
 	data alien_num { string "" }
 }
 
-// Research item generic(items researched)
-component ResearchItemGeneric extends panel
+// Research item (items researched in base)
+component ResearchItem extends panel
 {
 	{
 		pos				"0 0"
@@ -335,87 +335,90 @@ component ResearchItemGeneric extends panel
 		contentalign	ALIGN_CL
 		ghost			true
 	}
-}
 
-// Research item (items researched in base)
-component ResearchItem extends ResearchItemGeneric
-{
-    {}
-	string progress_label {
-		pos			"640 10"
-		size		"40 15"
-		color		"0.56 0.81 0.76 1"
-		font		"f_verysmall"
-		contentalign	ALIGN_CR
-		padding		0
-		ghost		true
-	}
-	string scientists
-	{
-		pos				"560 0"
-		size			"35 28"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CL
-		ghost			true
-	}
-    button stop {
-        icon		"icons/speed_stop"
-        tooltip		"_Stop researching this project"
-        pos			"500 5"
-		size	    "18 18"
+    panel rsrc_control {
+        {
+            pos 	"480 0"
+			size	"150 32"
+        }
+        string progress_label {
+            pos			"140 10"
+            size		"40 15"
+            color		"0.56 0.81 0.76 1"
+            font		"f_verysmall"
+            contentalign	ALIGN_CR
+            padding		0
+            ghost		true
+        }
+        string scientists
+        {
+            pos				"60 0"
+            size			"35 28"
+            color			"0.56 0.81 0.76 1"
+            contentalign	ALIGN_CL
+            ghost			true
+        }
+        button stop {
+            icon		"icons/speed_stop"
+            tooltip		"_Stop researching this project"
+            pos			"0 5"
+            size	    "18 18"
 
-        onclick {
-            cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.id@string>;"
+            onclick {
+                cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.id@string>;"
+            }
         }
-    }
-    button max {
-        icon		"icons/speed_play3"
-        tooltip		"_Assign all free scientists on this project"
-        pos			"525 4"
-		size	    "18 18"
-        onclick {
-            cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.id@string>;"
+        button max {
+            icon		"icons/speed_play3"
+            tooltip		"_Assign all free scientists on this project"
+            pos			"25 4"
+            size	    "18 18"
+            onclick {
+                cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.id@string>;"
+            }
         }
-    }
-	button remove_scientist
-	{
-		icon	"icons/windowminusb"
-        tooltip	"_Assign less scientists on this project"
-		pos		"600 5"
-		size	"18 18"
-		onClick			{
-			cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> -1;"
-//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-			cmd "get_lab_space_string;"
-		}
+        button remove_scientist
+        {
+            icon	"icons/windowminusb"
+            tooltip	"_Assign less scientists on this project"
+            pos		"100 5"
+            size	"18 18"
+            onClick			{
+                cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> -1;"
+    //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
+    //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+                cmd "get_lab_space_string;"
+            }
+        }
+        button add_scientist
+        {
+            icon	"icons/windowplusb"
+            tooltip	"_Assign more scientists on this project"
+            pos		"125 5"
+            size	"18 18"
+            onClick			{
+                cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> 1;"
+    //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
+    //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+                cmd "get_lab_space_string;"
+            }
+        }
 	}
-	button add_scientist
-	{
-		icon	"icons/windowplusb"
-        tooltip	"_Assign more scientists on this project"
-		pos		"625 5"
-		size	"18 18"
-		onClick			{
-			cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> 1;"
-//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-			cmd "get_lab_space_string;"
-		}
-	}
-}
 
 // External research item (items researched in other bases)
-component ExtResearchItem extends ResearchItemGeneric
-{
-    {}
-	string base
-	{
-		pos				"560 0"
-		size			"130 28"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CL
-		ghost			true
+	panel rsrc_baselink {
+        {
+			pos 	"350 0"
+			size	"180 32"
+        }
+        string basename
+        {
+            pos				"0 0"
+            size			"130 28"
+            color			"0.56 0.81 0.76 1"
+            contentalign	ALIGN_CL
+            ghost			true
+        }
 	}
 }
 
