@@ -647,14 +647,14 @@ window research extends BaseMgmtWindow
 				button idle_scientists
 				{
 					icon	"icons/head_scientist"
-					pos		"522 10"
+					pos		"504 10"
 					size	"48 48"
 					ghost	true
 				}
 				string idle_scientists_count
 				{
 					string	"0"
-					pos		"560 19"
+					pos		"544 19"
 					size	"100 25"
 					font	"f_small_bold"
 					color	"0.56 0.81 0.76 1"
@@ -663,7 +663,7 @@ window research extends BaseMgmtWindow
 				string idle_scientists_label
 				{
 					string	"_idle scientists"
-					pos		"560 32"
+					pos		"544 32"
 					size	"100 23"
 					font	"f_verysmall"
 					color	"0.56 0.81 0.76 1"
