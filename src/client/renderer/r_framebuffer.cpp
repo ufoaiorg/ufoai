@@ -304,8 +304,8 @@ void R_ResolveMSAA (const r_framebuffer_t* buf)
 	if (!buf->samples)
 		return;
 
-	qglBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT,buf->fbo);
-	qglBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT,buf->proxyFBO);
+	qglBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, buf->fbo);
+	qglBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, buf->proxyFBO);
 	for (i = 0; i < buf->nTextures; i++)	 {
 #ifndef GL_VERSION_ES_CM_1_0
 		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT + i);

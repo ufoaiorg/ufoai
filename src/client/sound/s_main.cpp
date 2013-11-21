@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_mix.h"
 #include "s_mumble.h"
 
-#define COMPARE_VERSION(major,minor,micro) \
+#define COMPARE_VERSION(major, minor, micro) \
 	(SDL_MIXER_MAJOR_VERSION > (major) || \
 	(SDL_MIXER_MAJOR_VERSION == (major) && SDL_MIXER_MINOR_VERSION > (minor)) || \
 	(SDL_MIXER_MAJOR_VERSION == (major) && SDL_MIXER_MINOR_VERSION == (minor) && \

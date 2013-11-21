@@ -509,7 +509,7 @@ bool INS_LoadXML (xmlNode_t* p)
 		return false;
 
 	cgi->Com_RegisterConstList(saveInstallationConstants);
-	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
+	for (s = cgi->XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = cgi->XML_GetNextNode(s, n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t* ss;
 		installation_t inst;
 		const char* instID = cgi->XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
