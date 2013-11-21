@@ -365,7 +365,7 @@ component ResearchItem extends panel
             size	    "18 18"
 
             onclick {
-                cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.id@string>;"
+                cmd "ui_research_select <node:parent.parent.id@string>;ui_research_stop <node:parent.parent.id@string>;"
             }
         }
         button max {
@@ -374,7 +374,7 @@ component ResearchItem extends panel
             pos			"25 4"
             size	    "18 18"
             onclick {
-                cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.id@string>;"
+                cmd "ui_research_select <node:parent.parent.id@string>; ui_research_max <node:parent.parent.id@string>;"
             }
         }
         button remove_scientist
@@ -384,7 +384,7 @@ component ResearchItem extends panel
             pos		"100 5"
             size	"18 18"
             onClick			{
-                cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> -1;"
+                cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> -1;"
     //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
     //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
                 cmd "get_lab_space_string;"
@@ -397,7 +397,7 @@ component ResearchItem extends panel
             pos		"125 5"
             size	"18 18"
             onClick			{
-                cmd "ui_research_select <node:parent.id@string>; ui_research_change <node:parent.id@string> 1;"
+                cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> 1;"
     //			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
     //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
                 cmd "get_lab_space_string;"
@@ -409,7 +409,7 @@ component ResearchItem extends panel
 	panel rsrc_baselink {
         {
 			pos 	"350 0"
-			size	"180 32"
+			size	"120 32"
         }
         string basename
         {
