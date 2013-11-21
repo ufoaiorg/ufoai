@@ -135,6 +135,11 @@ public:
 		return !(getMinX() > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
+	/**
+	 * @brief Checks if the give line has a chance to hit our box
+	 * @param[in] line The line that might hit us
+	 * @return false - impossible; true - maybe
+	 */
 	inline bool canBeHitBy (const Line& line) const {
 		return !(  (line.start[0] > getMaxX() && line.stop[0] > getMaxX())
 				|| (line.start[1] > getMaxY() && line.stop[1] > getMaxY())
