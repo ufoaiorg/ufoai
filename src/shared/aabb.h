@@ -37,17 +37,17 @@ const float MWW = MAX_WORLD_WIDTH;
 
 class AABB {
 public:
-	/**	------------------
+	/*==================
 	 *		ctors
-	 *	------------------*/
+	 *==================*/
 	AABB ();
 	AABB (const vec3_t mini, const vec3_t maxi);
 	AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t maxX, const vec_t maxY, const vec_t maxZ);
 	AABB (const Line& line);
 
-	/** ------------------
+	/*==================
 	 *		setters
-	 *	------------------*/
+	 *==================*/
 	/**
 	 * @brief Copies the values from the given aabb
 	 * @param[in] other The other aabb
@@ -74,9 +74,9 @@ public:
 		maxs[0] = maxs[1] = maxs[2] = -99999;
 	}
 
-	/** ------------------
+	/*==================
 	 *		getters
-	 *	------------------*/
+	 *==================*/
 	inline const vec3_t& getMins () const {
 		return mins;
 	}
@@ -121,9 +121,9 @@ public:
 		VectorScale(center, 0.5, center);
 	}
 
-	/** ------------------
+	/*==================
 	 *		checkers
-	 *	------------------*/
+	 *==================*/
 	inline bool isZero () const {
 		return VectorEmpty(mins) && VectorEmpty(maxs);
 	}
@@ -154,9 +154,9 @@ public:
 			&& point[2] >= getMinZ() && point[2] <= getMaxZ() );
 	}
 
-	/** ------------------
-	 *		manipulators
-	 *	------------------*/
+	/*==================
+	 *	manipulators
+	 *==================*/
 	void add (const vec3_t point);
 	void add (const AABB& other);
 
@@ -195,9 +195,9 @@ public:
 		clipToWorld();
 	}
 
-	/** ------------------
+	/*==================
 	 *		data
-	 *	------------------*/
+	 *==================*/
 	/** we explicitly don't make them private for now, because the goal of this class is to NOT handle them separately */
 //	private:
 	vec3_t mins;
