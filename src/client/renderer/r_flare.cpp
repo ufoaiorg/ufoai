@@ -23,11 +23,7 @@
 
 void R_CreateSurfaceFlare (mBspSurface_t* surf)
 {
-	material_t* m;
-	const materialStage_t* s;
-	vec3_t span;
-
-	m = &surf->texinfo->image->material;
+	material_t* m = &surf->texinfo->image->material;
 
 	if (!(m->flags & STAGE_FLARE)) /* surface is not flared */
 		return;
@@ -38,10 +34,11 @@ void R_CreateSurfaceFlare (mBspSurface_t* surf)
 	VectorMA(surf->center, 2, surf->normal, surf->flare->origin);
 
 	/* calculate the flare radius based on surface size */
+	vec3_t span;
 	VectorSubtract(surf->mbsBox.maxs, surf->mbsBox.mins, span);
 	surf->flare->radius = VectorLength(span);
 
-	s = m->stages; /* resolve the flare stage */
+	const materialStage_t* s = m->stages; /* resolve the flare stage */
 	for (;;) {
 		if (s->flags & STAGE_FLARE)
 			break;
