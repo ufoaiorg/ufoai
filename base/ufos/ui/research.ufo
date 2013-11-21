@@ -718,10 +718,10 @@ window research extends BaseMgmtWindow
 					*node:parent.techs.tech_<1>.title@string = "<2>"
 					*node:parent.techs.tech_<1>.status@current = <4>
 
-/*					if ( <4> > 0 ) {
+				if ( <4> > 0 ) {
 						*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
 					}
-*/
+
 					if ( paramCount >= 5 ) {
 						if ( "<5>" eq "base" ) {
 							*node:parent.techs.tech_<1>.id@integer = <6>

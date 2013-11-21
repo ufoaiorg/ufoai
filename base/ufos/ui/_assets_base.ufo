@@ -327,6 +327,15 @@ component ResearchItem extends panel
 //			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
 	}
+    string progress_label {
+        pos			"615 8"
+        size		"40 15"
+        color		"0.56 0.81 0.76 1"
+        font		"f_verysmall"
+        contentalign	ALIGN_CR
+        padding		0
+        ghost		true
+    }
 	string title
 	{
 		pos				"30 0"
@@ -339,16 +348,7 @@ component ResearchItem extends panel
     panel rsrc_control {
         {
             pos 	"480 0"
-			size	"150 32"
-        }
-        string progress_label {
-            pos			"140 10"
-            size		"40 15"
-            color		"0.56 0.81 0.76 1"
-            font		"f_verysmall"
-            contentalign	ALIGN_CR
-            padding		0
-            ghost		true
+			size	"145 32"
         }
         string scientists
         {
