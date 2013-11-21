@@ -34,23 +34,18 @@ GAME RELATED TRACING USING ENTITIES
 */
 
 /**
- * @brief Calculates the bounding box for the given bsp model
+ * @brief Calculates the worst case bounding box for the given bsp model
  * @param[in] model The model to calculate the bbox for
- * @param[out] mins The maxs of the bbox
- * @param[out] maxs The mins of the bbox
+ * @param[out] box The bbox to fill
  */
-static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3_t maxs)
+static void CM_CalculateBoundingBox (const cBspModel_t* model, AABB& box)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
-	VectorAdd(model->origin, model->cbmBox.mins, mins);
-	VectorAdd(model->origin, model->cbmBox.maxs, maxs);
+	box.set(model->cbmBox);
+	box.shift(model->origin);
 	if (VectorNotEmpty(model->angles)) {
-		vec3_t acenter, aoffset;
-		const float offset = std::max(std::max(fabs(mins[0] - maxs[0]), fabs(mins[1] - maxs[1])), fabs(mins[2] - maxs[2])) / 2.0;
-		VectorCenterFromMinsMaxs(mins, maxs, acenter);
-		VectorSet(aoffset, offset, offset, offset);
-		VectorAdd(acenter, aoffset, maxs);
-		VectorSubtract(acenter, aoffset, mins);
+		const float offset = std::max(std::max(box.getWidthX(), box.getWidthY()), box.getWidthZ()) / 2.0;
+		box.expand(offset);
 	}
 }
 
@@ -63,7 +58,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
 static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
 	AABB absbox;
-	CM_CalculateBoundingBox(model, absbox.mins, absbox.maxs);
+	CM_CalculateBoundingBox(model, absbox);
 	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
 	if (!absbox.canBeHitBy(tLine))
 		return true;	/* impossible */
@@ -379,7 +374,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 
 		AABB modelBox;
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		CM_CalculateBoundingBox(model, modelBox.mins, modelBox.maxs);
+		CM_CalculateBoundingBox(model, modelBox);
 
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
 		if (!lineBox.doesIntersect(modelBox))
