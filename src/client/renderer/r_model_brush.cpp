@@ -1019,6 +1019,7 @@ static void R_SetupWorldModel (void)
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  * @param[in] name The name of the map. Relative to maps/ and without extension
+ * @param[in] mapZone The terrain type for texture replacement
  * @param[in] day Load the day lightmap
  * @param[in] sX Shift x grid units
  * @param[in] sY Shift y grid units
