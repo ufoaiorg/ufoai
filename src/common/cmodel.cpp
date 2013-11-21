@@ -58,7 +58,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
  * @brief A quick test if the trace might hit the inline model
  * @param[in] tLine The traceline
  * @param[in] model The entity to check
- * @return true - the line isn't anywhere near the model
+ * @return true - the line isn't anywhere near the model; false - we can't be sure
  */
 static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
