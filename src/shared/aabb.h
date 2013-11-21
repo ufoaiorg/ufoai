@@ -135,6 +135,14 @@ public:
 		return !(getMinX() > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
+	inline bool canBeHitBy (const Line& line) const {
+		return !(  (line.start[0] > getMaxX() && line.stop[0] > getMaxX())
+				|| (line.start[1] > getMaxY() && line.stop[1] > getMaxY())
+				|| (line.start[2] > getMaxZ() && line.stop[2] > getMaxZ())
+				|| (line.start[0] < getMinX() && line.stop[0] < getMinX())
+				|| (line.start[1] < getMinY() && line.stop[1] < getMinY())
+				|| (line.start[2] < getMinZ() && line.stop[2] < getMinZ()));
+	}
 	inline bool contains (const vec3_t point) const {
 		return (point[0] >= getMinX() && point[0] <= getMaxX()
 			&& point[1] >= getMinY() && point[1] <= getMaxY()
