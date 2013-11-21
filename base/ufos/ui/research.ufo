@@ -647,14 +647,14 @@ window research extends BaseMgmtWindow
 				button idle_scientists
 				{
 					icon	"icons/head_scientist"
-					pos		"522 10"
+					pos		"504 10"
 					size	"48 48"
 					ghost	true
 				}
 				string idle_scientists_count
 				{
 					string	"0"
-					pos		"560 19"
+					pos		"544 19"
 					size	"100 25"
 					font	"f_small_bold"
 					color	"0.56 0.81 0.76 1"
@@ -663,7 +663,7 @@ window research extends BaseMgmtWindow
 				string idle_scientists_label
 				{
 					string	"_idle scientists"
-					pos		"560 32"
+					pos		"544 32"
 					size	"100 23"
 					font	"f_verysmall"
 					color	"0.56 0.81 0.76 1"
@@ -701,12 +701,12 @@ window research extends BaseMgmtWindow
 				confunc ui_research_select {
 					if ( *node:parent.selected@string ne "" ) {
 						*node:parent.techs.tech_<node:parent.selected@string>.title@color = "0.56 0.81 0.76 1"
-						*node:parent.techs.tech_<node:parent.selected@string>.scientists@color = "0.56 0.81 0.76 1"
+						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0.56 0.81 0.76 1"
 						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0.56 0.81 0.76 1"
 					}
 					*node:parent.selected@string = "<1>"
 					*node:parent.techs.tech_<node:parent.selected@string>.title@color = "1 1 1 1"
-					*node:parent.techs.tech_<node:parent.selected@string>.scientists@color = "1 1 1 1"
+					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
 					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
 					cmd "ui_research_getdetails <1>;"
 				}
@@ -718,7 +718,7 @@ window research extends BaseMgmtWindow
 					*node:parent.techs.tech_<1>.title@string = "<2>"
 					*node:parent.techs.tech_<1>.status@current = <4>
 
-					if ( <4> > 0 ) {
+				if ( <4> > 0 ) {
 						*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
 					}
 
@@ -732,7 +732,7 @@ window research extends BaseMgmtWindow
 							*node:parent.techs.tech_<1>.rsrc_missing@invis = false
 						}
 					} else {
-						*node:parent.techs.tech_<1>.scientists@string = "<3>"
+						*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<3>"
 						*node:parent.techs.tech_<1>.rsrc_control@invis = false
 					}
 
@@ -741,7 +741,7 @@ window research extends BaseMgmtWindow
 					}
 				}
 				confunc ui_research_update_topic {
-					*node:parent.techs.tech_<1>.scientists@string = "<2>"
+					*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<2>"
 				}
 			}
 		}

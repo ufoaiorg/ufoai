@@ -95,7 +95,7 @@ void uiModelNode::draw (uiNode_t* node)
 static vec3_t nullVector = {0, 0, 0};
 
 /**
- * @brief Set the Model info view (angle,origin,scale) according to the node definition
+ * @brief Set the Model info view (angle, origin, scale) according to the node definition
  * @todo the param "model" is not used !?
  */
 static inline void UI_InitModelInfoView (uiNode_t* node, modelInfo_t* mi, uiModel_t* model)

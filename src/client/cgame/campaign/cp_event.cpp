@@ -431,7 +431,7 @@ bool CP_TriggerEventLoadXML (xmlNode_t* p)
 	if (!n)
 		return true;
 
-	for (s = cgi->XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = cgi->XML_GetNextNode(s,n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
+	for (s = cgi->XML_GetNode(n, SAVE_TRIGGEREVENTS_TRIGGEREVENT); s; s = cgi->XML_GetNextNode(s, n, SAVE_TRIGGEREVENTS_TRIGGEREVENT)) {
 		const char* id = cgi->XML_GetString(s, SAVE_TRIGGEREVENTS_NAME);
 		const bool state = cgi->XML_GetBool(s, SAVE_TRIGGEREVENTS_STATE, true);
 

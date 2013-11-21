@@ -230,7 +230,7 @@ static void MSO_BackupSettings_f (void)
 static void MSO_RestoreSettings_f (void)
 {
 	memcpy(messageSettings, backupMessageSettings, sizeof(messageSettings));
-	MSO_SetMenuState(MSO_MSTATE_REINIT,false,true);
+	MSO_SetMenuState(MSO_MSTATE_REINIT, false, true);
 }
 
 void MSO_SetMenuState (const msoMenuState_t newState, const bool callInit, const bool preserveIndex)

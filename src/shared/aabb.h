@@ -37,17 +37,17 @@ const float MWW = MAX_WORLD_WIDTH;
 
 class AABB {
 public:
-	/**	------------------
+	/*==================
 	 *		ctors
-	 *	------------------*/
+	 *==================*/
 	AABB ();
 	AABB (const vec3_t mini, const vec3_t maxi);
 	AABB (const vec_t minX, const vec_t minY, const vec_t minZ, const vec_t maxX, const vec_t maxY, const vec_t maxZ);
 	AABB (const Line& line);
 
-	/** ------------------
+	/*==================
 	 *		setters
-	 *	------------------*/
+	 *==================*/
 	/**
 	 * @brief Copies the values from the given aabb
 	 * @param[in] other The other aabb
@@ -74,9 +74,9 @@ public:
 		maxs[0] = maxs[1] = maxs[2] = -99999;
 	}
 
-	/** ------------------
+	/*==================
 	 *		getters
-	 *	------------------*/
+	 *==================*/
 	inline const vec3_t& getMins () const {
 		return mins;
 	}
@@ -121,9 +121,9 @@ public:
 		VectorScale(center, 0.5, center);
 	}
 
-	/** ------------------
+	/*==================
 	 *		checkers
-	 *	------------------*/
+	 *==================*/
 	inline bool isZero () const {
 		return VectorEmpty(mins) && VectorEmpty(maxs);
 	}
@@ -135,15 +135,28 @@ public:
 		return !(getMinX() > other.getMaxX() || getMinY() > other.getMaxY() || getMinZ() > other.getMaxZ() || getMaxX() < other.getMinX()
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
+	/**
+	 * @brief Checks if the give line has a chance to hit our box
+	 * @param[in] line The line that might hit us
+	 * @return false - impossible; true - maybe
+	 */
+	inline bool canBeHitBy (const Line& line) const {
+		return !(  (line.start[0] > getMaxX() && line.stop[0] > getMaxX())
+				|| (line.start[1] > getMaxY() && line.stop[1] > getMaxY())
+				|| (line.start[2] > getMaxZ() && line.stop[2] > getMaxZ())
+				|| (line.start[0] < getMinX() && line.stop[0] < getMinX())
+				|| (line.start[1] < getMinY() && line.stop[1] < getMinY())
+				|| (line.start[2] < getMinZ() && line.stop[2] < getMinZ()));
+	}
 	inline bool contains (const vec3_t point) const {
 		return (point[0] >= getMinX() && point[0] <= getMaxX()
 			&& point[1] >= getMinY() && point[1] <= getMaxY()
 			&& point[2] >= getMinZ() && point[2] <= getMaxZ() );
 	}
 
-	/** ------------------
-	 *		manipulators
-	 *	------------------*/
+	/*==================
+	 *	manipulators
+	 *==================*/
 	void add (const vec3_t point);
 	void add (const AABB& other);
 
@@ -182,9 +195,9 @@ public:
 		clipToWorld();
 	}
 
-	/** ------------------
+	/*==================
 	 *		data
-	 *	------------------*/
+	 *==================*/
 	/** we explicitly don't make them private for now, because the goal of this class is to NOT handle them separately */
 //	private:
 	vec3_t mins;

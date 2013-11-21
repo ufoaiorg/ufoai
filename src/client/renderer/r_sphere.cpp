@@ -34,7 +34,7 @@ sphere_t r_globeEarth;
 sphere_t r_globeMoon;
 sphere_t r_globeEarthAtmosphere;
 
-static inline float rhoSpiral (const int index, const float deltaRho,const float thetaAngle)
+static inline float rhoSpiral (const int index, const float deltaRho, const float thetaAngle)
 {
 	const float rhoAngle = (index == 0) ? 0.0f : (float) ((index - 1) * deltaRho + thetaAngle * deltaRho / (2.0f * M_PI));
 	return rhoAngle > M_PI ? M_PI : rhoAngle;

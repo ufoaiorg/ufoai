@@ -612,7 +612,7 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 		break;
 
 	/** @todo Skipping actions like that is a bad way. the function should return the next action,
-	 * or we should move IF,ELSE,ELIF... in a IF block and not interleave it with default actions
+	 * or we should move IF, ELSE, ELIF... in a IF block and not interleave it with default actions
 	 */
 	case EA_ELSE:
 	case EA_ELIF:

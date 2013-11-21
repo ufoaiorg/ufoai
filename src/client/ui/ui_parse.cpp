@@ -1049,7 +1049,7 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 	}
 
 	/* test if node already exists */
-	/* Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
+	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = UI_GetNode(parent, *token);
 

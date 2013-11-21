@@ -61,7 +61,7 @@ static bool Destroy_Breakable (Edict* self)
 	vec3_t origin;
 	const char* model = self->model;
 
-	VectorCenterFromMinsMaxs(self->absBox.mins, self->absBox.maxs, origin);
+	self->absBox.getCenter(origin);
 
 	const char* breakSound = nullptr;
 	switch (self->material) {

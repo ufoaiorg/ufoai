@@ -34,23 +34,18 @@ GAME RELATED TRACING USING ENTITIES
 */
 
 /**
- * @brief Calculates the bounding box for the given bsp model
+ * @brief Calculates the worst case bounding box for the given bsp model
  * @param[in] model The model to calculate the bbox for
- * @param[out] mins The maxs of the bbox
- * @param[out] maxs The mins of the bbox
+ * @param[out] box The bbox to fill
  */
-static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3_t maxs)
+static void CM_CalculateBoundingBox (const cBspModel_t* model, AABB& box)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
-	VectorAdd(model->origin, model->cbmBox.mins, mins);
-	VectorAdd(model->origin, model->cbmBox.maxs, maxs);
+	box.set(model->cbmBox);
+	box.shift(model->origin);
 	if (VectorNotEmpty(model->angles)) {
-		vec3_t acenter, aoffset;
-		const float offset = std::max(std::max(fabs(mins[0] - maxs[0]), fabs(mins[1] - maxs[1])), fabs(mins[2] - maxs[2])) / 2.0;
-		VectorCenterFromMinsMaxs(mins, maxs, acenter);
-		VectorSet(aoffset, offset, offset, offset);
-		VectorAdd(acenter, aoffset, maxs);
-		VectorSubtract(acenter, aoffset, mins);
+		const float offset = std::max(std::max(box.getWidthX(), box.getWidthY()), box.getWidthZ()) / 2.0;
+		box.expand(offset);
 	}
 }
 
@@ -58,22 +53,17 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
  * @brief A quick test if the trace might hit the inline model
  * @param[in] tLine The traceline
  * @param[in] model The entity to check
- * @return true - the line isn't anywhere near the model
+ * @return true - the line isn't anywhere near the model; false - we can't be sure
  */
 static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
-	vec3_t amins, amaxs;
-	CM_CalculateBoundingBox(model, amins, amaxs);
+	AABB absbox;
+	CM_CalculateBoundingBox(model, absbox);
 	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-	if ((tLine.start[0] > amaxs[0] && tLine.stop[0] > amaxs[0])
-		|| (tLine.start[1] > amaxs[1] && tLine.stop[1] > amaxs[1])
-		|| (tLine.start[2] > amaxs[2] && tLine.stop[2] > amaxs[2])
-		|| (tLine.start[0] < amins[0] && tLine.stop[0] < amins[0])
-		|| (tLine.start[1] < amins[1] && tLine.stop[1] < amins[1])
-		|| (tLine.start[2] < amins[2] && tLine.stop[2] < amins[2]))
-		return true;
+	if (!absbox.canBeHitBy(tLine))
+		return true;	/* impossible */
 
-	return false;
+	return false;		/* maybe */
 }
 
 
@@ -382,12 +372,11 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		vec3_t amins, amaxs;
+		AABB modelBox;
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		CM_CalculateBoundingBox(model, amins, amaxs);
+		CM_CalculateBoundingBox(model, modelBox);
 
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		AABB modelBox(amins, amaxs);
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 

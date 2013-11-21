@@ -994,19 +994,12 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			VectorAdd(model->cbmBox.maxs, model->origin, absmax);
 		}
 #endif
-		pos3_t min, max;
-		VecToPos(absmin, min);
-		VecToPos(absmax, max);
+		GridBox rerouteBox(absmin, absmax);
 
 		/* fit min/max into the world size */
-		max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
-		max[1] = std::min(max[1], (pos_t)(PATHFINDING_WIDTH - 1));
-		max[2] = std::min(max[2], (pos_t)(PATHFINDING_HEIGHT - 1));
-		for (int i = 0; i < 3; i++)
-			min[i] = std::max(min[i], (pos_t)0);
+		rerouteBox.clipToMaxBoundaries();
 
 		/* We now have the dimensions, call the generic rerouting function. */
-		GridBox rerouteBox(min, max);
 		Grid_RecalcBoxRouting(mapTiles, routing, rerouteBox, list);
 	} else {
 		/* use the passed box */

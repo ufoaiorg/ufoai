@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/msg.h"
 #include "../../../common/xml.h"
 
-#define FOREACH_XMLNODE(var,node,name) \
+#define FOREACH_XMLNODE(var, node, name) \
 	for (xmlNode_t* var = cgi->XML_GetNode((node), name); var; var = cgi->XML_GetNextNode(var, node, name))
 
 #define MAX_SAVESUBSYSTEMS 32

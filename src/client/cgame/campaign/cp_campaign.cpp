@@ -1415,7 +1415,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 		for (x = 0; x < numPoints; x++) {
 			const float posX = x * RASTER - 180.0 + offsetX;
 
-			Vector2Set(posT,posX,posY);
+			Vector2Set(posT, posX, posY);
 
 			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
 				num--;
