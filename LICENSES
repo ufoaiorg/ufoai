@@ -2844,7 +2844,7 @@ base/pics/banks/button_green_verysmall.png | GNU General Public License 2.0 or l
 base/pics/banks/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/banks/pack2.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/banks/pack2.png | GNU General Public License 2.0 or later | cooler_sk | based on images from MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack3.png | GNU General Public License 2.0 or later | Nate Wright | based on pack2.png images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
@@ -3165,9 +3165,9 @@ base/pics/icons/radar.png | GNU General Public License 2.0 or later | Nate Wrigh
 base/pics/icons/radar0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reaction1.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reactionoff.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/reactionoff0.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/reactionoff0.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on Nate Wright images
 base/pics/icons/reactionon.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/reactionon0.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/reactionon0.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on Nate Wright images
 base/pics/icons/reload.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reload0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/reload_disabled.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3194,7 +3194,7 @@ base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later | 
 base/pics/icons/system_expand.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_next.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_parent.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/tab_air_equipment.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/tab_air_equipment.png | GNU General Public License 2.0 | cooler_sk
 base/pics/icons/tab_air_equipment_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_aircraft.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_aircraft_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
@@ -3206,7 +3206,7 @@ base/pics/icons/tab_employees.png | GNU General Public License 2.0 | MCR | based
 base/pics/icons/tab_employees_disabled.png | GNU General Public License 2.0 | MCR | based on a MakeHuman rendering
 base/pics/icons/tab_equipment.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_equipment_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_information.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/tab_information.png | GNU General Public License 2.0 | cooler_sk
 base/pics/icons/tab_information_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_laserdefences.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_laserdefences_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
