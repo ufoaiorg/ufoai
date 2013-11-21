@@ -377,12 +377,11 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		vec3_t amins, amaxs;
+		AABB modelBox;
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		CM_CalculateBoundingBox(model, amins, amaxs);
+		CM_CalculateBoundingBox(model, modelBox.mins, modelBox.maxs);
 
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		AABB modelBox(amins, amaxs);
 		if (!lineBox.doesIntersect(modelBox))
 			continue;
 
