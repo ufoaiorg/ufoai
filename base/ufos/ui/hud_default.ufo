@@ -1522,8 +1522,8 @@ window inv_stats_hud
 	panel skills
 	{
 		{
-			pos			"370 243"
-			size		"180 175"
+			pos			"370 278"
+			size		"180 140"
 			ghost		true
 		}
 		StatBar cls
@@ -1535,19 +1535,10 @@ window inv_stats_hud
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-		StatBar hvy
-		{
-			{
-				pos		"0 35"
-			}
-			string label { string "_Heavy" tooltip "_Heavy Weapons" }
-			bar valuebar { current *cvar:mn_vhvy }
-			string valuenum { string *cvar:mn_thvy }
-		}
 		StatBar ass
 		{
 			{
-				pos		"0 70"
+				pos		"0 35"
 			}
 			string label { string "_Assault" }
 			bar valuebar { current *cvar:mn_vass }
@@ -1556,7 +1547,7 @@ window inv_stats_hud
 		StatBar snp
 		{
 			{
-				pos		"0 105"
+				pos		"0 70"
 			}
 			string label { string "_Sniper" }
 			bar valuebar { current *cvar:mn_vsnp }
@@ -1565,7 +1556,7 @@ window inv_stats_hud
 		StatBar exp
 		{
 			{
-				pos		"0 140"
+				pos		"0 105"
 			}
 			string label { string "_Explosives" }
 			bar valuebar { current *cvar:mn_vexp }

@@ -467,7 +467,7 @@ window equipment extends objectinfo
 	panel skills
 	{
 		{
-			pos			"740 600"
+			pos			"740 630"
 			size		"250 155"
 			ghost		true
 		}
@@ -480,19 +480,10 @@ window equipment extends objectinfo
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-		StatBarWide hvy
-		{
-			{
-				pos		"0 30"
-			}
-			string label { string "_Heavy" tooltip "_Heavy Weapons" }
-			bar valuebar { current *cvar:mn_vhvy }
-			string valuenum { string *cvar:mn_thvy }
-		}
 		StatBarWide ass
 		{
 			{
-				pos		"0 60"
+				pos		"0 30"
 			}
 			string label { string "_Assault" }
 			bar valuebar { current *cvar:mn_vass }
@@ -501,7 +492,7 @@ window equipment extends objectinfo
 		StatBarWide snp
 		{
 			{
-				pos		"0 90"
+				pos		"0 60"
 			}
 			string label { string "_Sniper" }
 			bar valuebar { current *cvar:mn_vsnp }
@@ -510,7 +501,7 @@ window equipment extends objectinfo
 		StatBarWide exp
 		{
 			{
-				pos		"0 120"
+				pos		"0 90"
 			}
 			string label { string "_Explosives" }
 			bar valuebar { current *cvar:mn_vexp }
