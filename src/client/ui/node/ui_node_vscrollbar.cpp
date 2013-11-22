@@ -131,7 +131,9 @@ static void UI_VScrollbarNodeRepeat (uiNode_t* node, uiTimer_t* timer)
 }
 
 /**
+ * @param[in] node Our scrollbar
  * @param[in] hoveredElement beginarrow, mid, scroll, mid, endarrow
+ * @param[in] allowCapture idk
  */
 static inline void UI_VScrollbarNodeAction (uiNode_t* node, int hoveredElement, bool allowCapture)
 {
