@@ -958,12 +958,12 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			return;
 		}
 
-		vec3_t absmin, absmax;
+		AABB absbox;
 #if 1
 		/* An attempt to fix the 'doors starting opened' bug (# 3456).
 		 * The main difference is the (missing) rotation of the halfVec.
 		 * The results are better, but do not fix the problem. */
-		CalculateMinsMaxs(model->angles, model->cbmBox, model->origin, absmin, absmax);
+		CalculateMinsMaxs(model->angles, model->cbmBox, model->origin, absbox.mins, absbox.maxs);
 #else
 		/* get the target model's dimensions */
 		if (VectorNotEmpty(model->angles)) {
@@ -986,15 +986,15 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			VectorAdd(newCenterVec, halfVec, maxVec);
 
 			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-			VectorAdd(minVec, model->origin, absmin);
-			VectorAdd(maxVec, model->origin, absmax);
+			absbox.set(minVec, maxVec);
+			absbox.shift(model->origin);
 		} else {  /* normal */
 			/* Now offset by origin then convert to position (Doors do not have 0 origins) */
-			VectorAdd(model->cbmBox.mins, model->origin, absmin);
-			VectorAdd(model->cbmBox.maxs, model->origin, absmax);
+			absbox.set(model->cbmBox);
+			absbox.shift(model->origin);
 		}
 #endif
-		GridBox rerouteBox(absmin, absmax);
+		GridBox rerouteBox(absbox);
 
 		/* fit min/max into the world size */
 		rerouteBox.clipToMaxBoundaries();
