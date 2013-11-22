@@ -549,7 +549,7 @@ void gaussrand (float* gauss1, float* gauss2)
 }
 /** @brief Calculates the bounding box in absolute coordinates, also for rotating objects.
  * WARNING: do not use this for angles other than 90, 180 or 270 !! */
-void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t origin, vec3_t absmin, vec3_t absmax)
+void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t origin, AABB& absBox)
 {
 	/* expand for rotation */
 	if (VectorNotEmpty(angles)) {
@@ -581,11 +581,11 @@ void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t or
 		maxVec[2] = std::max(tmpMinVec[2], tmpMaxVec[2]);
 
 		/* Adjust the absolute mins/maxs */
-		VectorAdd(origin, minVec, absmin);
-		VectorAdd(origin, maxVec, absmax);
+		VectorAdd(origin, minVec, absBox.mins);
+		VectorAdd(origin, maxVec, absBox.maxs);
 	} else {  /* normal */
-		VectorAdd(origin, relBox.mins, absmin);
-		VectorAdd(origin, relBox.maxs, absmax);
+		VectorAdd(origin, relBox.mins, absBox.mins);
+		VectorAdd(origin, relBox.maxs, absBox.maxs);
 	}
 }
 
@@ -1153,7 +1153,7 @@ void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 	}
 }
 
-bool RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs)
+bool RayIntersectAABB (const vec3_t start, const vec3_t end, const AABB& aabb)
 {
 	float t0 = 0.0f;
 	float t1 = 1.0f;
@@ -1168,14 +1168,14 @@ bool RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, 
 
 		if (fabs(delta[i]) < threshold) {
 			if (delta[i] > 0.0f) {
-				return !(end[i] < mins[i] || start[i] > maxs[i]);
+				return !(end[i] < aabb.mins[i] || start[i] > aabb.maxs[i]);
 			} else {
-				return !(start[i] < mins[i] || end[i] > maxs[i]);
+				return !(start[i] < aabb.mins[i] || end[i] > aabb.maxs[i]);
 			}
 		}
 
-		u0 = (mins[i] - start[i]) / delta[i];
-		u1 = (maxs[i] - start[i]) / delta[i];
+		u0 = (aabb.mins[i] - start[i]) / delta[i];
+		u1 = (aabb.maxs[i] - start[i]) / delta[i];
 
 		if (u0 > u1) {
 			const float temp = u0;

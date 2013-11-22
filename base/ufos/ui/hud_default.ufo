@@ -317,11 +317,7 @@ window hud_default extends hud
 						tooltip		"_Headgear"
 						onMouseEnter	{ *node:this@icon = "icons/headgear" }
 						onMouseLeave	{ *node:this@icon = "icons/headgear0" }
-						onClick	{
-							cmd "actor_useheadgear;"
-							*node:this@icon = "icons/headgear0"
-							*node:this@background = "icons/circle"
-						}
+						onClick	{ cmd "actor_useheadgear;" }
 					}
 
 					CircleBtnDisabled headgear_d
@@ -331,8 +327,6 @@ window hud_default extends hud
 
 					confunc deselect_headgear
 					{
-						*node:parent.icon@icon = "icons/headgear0"
-						*node:parent.icon@background = "icons/circle0"
 						*node:parent.headgear_d@invis = true
 					}
 					confunc disable_headgear
@@ -1317,7 +1311,10 @@ window hud_default extends hud
 	// ==================
 	confunc startround
 	{
+		*node:parent.stand_d@invis = true
+		*node:parent.crouch_d@invis = true
 		*node:root.overlay@invis = true
+		cmd "deselect_headgear;"
 	}
 	confunc endround
 	{
@@ -1522,8 +1519,8 @@ window inv_stats_hud
 	panel skills
 	{
 		{
-			pos			"370 243"
-			size		"180 175"
+			pos			"370 278"
+			size		"180 140"
 			ghost		true
 		}
 		StatBar cls
@@ -1535,19 +1532,10 @@ window inv_stats_hud
 			bar valuebar { current *cvar:mn_vcls }
 			string valuenum { string *cvar:mn_tcls }
 		}
-		StatBar hvy
-		{
-			{
-				pos		"0 35"
-			}
-			string label { string "_Heavy" tooltip "_Heavy Weapons" }
-			bar valuebar { current *cvar:mn_vhvy }
-			string valuenum { string *cvar:mn_thvy }
-		}
 		StatBar ass
 		{
 			{
-				pos		"0 70"
+				pos		"0 35"
 			}
 			string label { string "_Assault" }
 			bar valuebar { current *cvar:mn_vass }
@@ -1556,7 +1544,7 @@ window inv_stats_hud
 		StatBar snp
 		{
 			{
-				pos		"0 105"
+				pos		"0 70"
 			}
 			string label { string "_Sniper" }
 			bar valuebar { current *cvar:mn_vsnp }
@@ -1565,7 +1553,7 @@ window inv_stats_hud
 		StatBar exp
 		{
 			{
-				pos		"0 140"
+				pos		"0 105"
 			}
 			string label { string "_Explosives" }
 			bar valuebar { current *cvar:mn_vexp }

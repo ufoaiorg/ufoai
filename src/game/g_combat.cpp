@@ -71,7 +71,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 			while ((e = G_EdictsGetNextInUse(e))) {
 				if (!G_IsSmoke(e))
 					continue;
-				if (!RayIntersectAABB(eye, point, e->absBox.mins, e->absBox.maxs))
+				if (!RayIntersectAABB(eye, point, e->absBox))
 					continue;
 
 				blocked = true;

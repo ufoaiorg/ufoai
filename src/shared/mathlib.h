@@ -248,7 +248,7 @@ void Print3Vector(const vec3_t v, const char* text);
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
 
-void CalculateMinsMaxs(const vec3_t angles, const AABB& relBox, const vec3_t origin, vec3_t absmin, vec3_t absmax);
+void CalculateMinsMaxs(const vec3_t angles, const AABB& relBox, const vec3_t origin, AABB& absBox);
 
 void VectorCreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]);
 void VectorRotatePoint(vec3_t point, vec3_t matrix[3]);
@@ -276,4 +276,4 @@ void TangentVectors(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, v
 void Orthogonalize(vec3_t v1, const vec3_t v2);
 void MatrixTranspose(const vec3_t m[3], vec3_t t[3]);
 
-bool RayIntersectAABB(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs);
+bool RayIntersectAABB(const vec3_t start, const vec3_t end, const AABB& aabb);
