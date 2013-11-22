@@ -42,8 +42,10 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 	switch (weaponSkill) {
 	case SKILL_CLOSE:
 		return _("Close quarters");
+/*
 	case SKILL_HEAVY:
 		return _("Heavy");
+*/
 	case SKILL_ASSAULT:
 		return _("Assault");
 	case SKILL_SNIPER:
