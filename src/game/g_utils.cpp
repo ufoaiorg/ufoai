@@ -620,15 +620,12 @@ void G_TouchEdicts (Edict* trigger, float extend)
 {
 	int i, num;
 	Edict* touched[MAX_EDICTS];
-	vec3_t absmin, absmax;
+	AABB absbox(trigger->absBox);
 	const char* entName = (trigger->model) ? trigger->model : trigger->chr.name;
 
-	for (i = 0; i < 3; i++) {
-		absmin[i] = trigger->absBox.mins[i] - extend;
-		absmax[i] = trigger->absBox.maxs[i] + extend;
-	}
+	absbox.expand(extend);
 
-	num = G_GetTouchingEdicts(AABB(absmin, absmax), touched, lengthof(touched), trigger);
+	num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), trigger);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
