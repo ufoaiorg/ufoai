@@ -416,16 +416,16 @@ int SV_PointContents (const vec3_t p)
  * @param[out] cBox The resulting bounds of the trace
  * @sa SV_Trace
  */
-static void SV_TraceBounds (const vec3_t start, const AABB& objBox, const vec3_t end, AABB& cBox)
+static void SV_TraceBounds (const Line& trLine, const AABB& objBox, AABB& cBox)
 {
 	cBox.set(objBox);
 	for (int i = 0; i < 3; i++) {
-		if (end[i] > start[i]) {
-			cBox.mins[i] += start[i];
-			cBox.maxs[i] += end[i];
+		if (trLine.stop[i] > trLine.start[i]) {
+			cBox.mins[i] += trLine.start[i];
+			cBox.maxs[i] += trLine.stop[i];
 		} else {
-			cBox.mins[i] += end[i];
-			cBox.maxs[i] += start[i];
+			cBox.mins[i] += trLine.stop[i];
+			cBox.maxs[i] += trLine.start[i];
 		}
 	}
 	cBox.expand(1);	/* debug: set this to eg. 9999 to test against everything */
@@ -464,7 +464,7 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */
-	SV_TraceBounds(traceLine.start, clip.objBox, traceLine.stop, clip.clipBox);
+	SV_TraceBounds(traceLine, clip.objBox, clip.clipBox);
 
 	/* clip to other solid entities */
 	SV_ClipMoveToEntities(&clip);
