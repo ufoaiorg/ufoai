@@ -484,6 +484,7 @@ window transfer
 		onClick		{ cmd "ui_push popup_transferlist;" }
 	}
 
+//  Letters in white, should be black
 	MainMenuBtn bt_starttrans
 	{
 		string		"_Transfer"
@@ -645,8 +646,8 @@ component trListEntry extends panel
 			cvar		*cvar:none
 			pos			"0 50"
 			size		"472 100"
-			color		"0 .78 0 1"
-			selectcolor	"0 .78 0 1"
+            color	    "0.56 0.81 0.76 1"
+			selectcolor	"0.56 0.81 0.76 1"
 			lineHeight	18
 
 			// event mimic missing dynamic nodesize feature
@@ -686,15 +687,17 @@ window popup_transferlist
 		pos			"226 226"
 		size		"542 512"
 		dragbutton	true
-		background		"ui/popup_alpha_tile"
+		background	"ui/popup_alpha_tile"
+		color	    "0.56 0.81 0.76 1"
 		string		"_Actual transfers"
 		modal		true
 	}
 
 	panel tr_list {
-		pos			"20 60"
-		size		"477 380"
-		layout		LAYOUT_TOP_DOWN_FLOW
+		pos			    "20 60"
+		size		    "477 380"
+		color	        "0.56 0.81 0.76 1"
+		layout		    LAYOUT_TOP_DOWN_FLOW
 		wheelscrollable	true
 
 		onViewChange	{
@@ -713,10 +716,11 @@ window popup_transferlist
 		}
 	}
 
-	cmpPopupButton tr_close
+	MainMenu3Btn tr_close
 	{
 		string		"_Close"
 		pos			"183 450"
+        size	    "198 30"
 		onClick		{ cmd "ui_pop;" }
 	}
 
