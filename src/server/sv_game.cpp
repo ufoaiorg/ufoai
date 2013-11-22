@@ -558,7 +558,7 @@ static bool SV_TestLine (const vec3_t start, const vec3_t stop, const int levelm
 static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
 {
 	/* do the line test */
-	const bool hit = CM_EntTestLine(&sv->mapTiles, start, stop, levelmask, entlist);
+	const bool hit = CM_EntTestLine(&sv->mapTiles, Line(start, stop), levelmask, entlist);
 	return hit;
 }
 

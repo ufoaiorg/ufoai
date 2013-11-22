@@ -179,12 +179,12 @@ int32_t CM_HeadnodeForBox (MapTile& tile, const vec3_t mins, const vec3_t maxs)
  * @return true - hit something
  * @return false - hit nothing
  */
-bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist)
+bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int levelmask, const char** entlist)
 {
 	const char** name;
 
 	/* trace against world first */
-	if (TR_TestLine(mapTiles, start, stop, levelmask))
+	if (TR_TestLine(mapTiles, traceLine.start, traceLine.stop, levelmask))
 		/* We hit the world, so we didn't make it anyway... */
 		return true;
 
@@ -203,10 +203,10 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
-		if (CM_LineMissesModel(Line(start, stop), model))
+		if (CM_LineMissesModel(traceLine, model))
 			continue;
 
-		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, stop), AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine, AABB(),
 				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -229,14 +229,14 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t hit, const int levelmask, const char** entlist)
+bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, const int levelmask, const char** entlist)
 {
 	const char** name;
 	bool blocked;
 	float fraction = 2.0f;
 
 	/* trace against world first */
-	blocked = TR_TestLineDM(mapTiles, start, stop, hit, levelmask);
+	blocked = TR_TestLineDM(mapTiles, trLine.start, trLine.stop, hit, levelmask);
 	if (!entlist)
 		return blocked;
 
@@ -254,14 +254,14 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t st
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
-		if (CM_LineMissesModel(Line(start, stop), model))
+		if (CM_LineMissesModel(trLine, model))
 			continue;
 
-		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(start, hit), AABB(),
+		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], Line(trLine.start, hit), AABB(),
 				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
-			VectorCopy(start, hit);
+			VectorCopy(trLine.start, hit);
 			return true;
 		}
 		/* trace not finished */

@@ -1397,7 +1397,7 @@ void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePo
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+		CM_EntTestLineDM(cl.mapTiles, Line(from, stop), end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	}
 
 	if (groundIntersection)
@@ -1439,7 +1439,7 @@ bool CL_ActorMouseTrace (void)
 	 * we don't have to do the second Grid_Fall call at all and can save a lot
 	 * of traces */
 	pos_t restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
-	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+	CM_EntTestLineDM(cl.mapTiles, Line(pA, pB), pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	/* VecToPos strictly rounds the values down, while routing will round floors up to the next QUANT.
 	 * This makes a huge diffence when calculating the z-level:
@@ -1452,7 +1452,7 @@ bool CL_ActorMouseTrace (void)
 	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+		CM_EntTestLineDM(cl.mapTiles, Line(from, stop), end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}

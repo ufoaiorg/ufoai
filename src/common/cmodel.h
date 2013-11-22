@@ -47,6 +47,6 @@ int32_t CM_HeadnodeForBox(MapTile& tile, const vec3_t mins, const vec3_t maxs);
 trace_t CM_HintedTransformedBoxTrace(MapTile& tile, const Line& traceLine, const AABB& traceBox, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
 #define CM_TransformedBoxTrace(tile, line, box, headnode, brushmask, brushreject, origin, angles) CM_HintedTransformedBoxTrace(tile, line, box, headnode, brushmask, brushreject, origin, angles, vec3_origin, 1.0f);
 trace_t CM_EntCompleteBoxTrace(mapTiles_t* mapTiles, const Line& traceLine, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char** list);
-bool CM_EntTestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char** entlist);
-bool CM_EntTestLine(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char** entlist);
+bool CM_EntTestLineDM(mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, const int levelmask, const char** entlist);
+bool CM_EntTestLine(mapTiles_t* mapTiles, const Line& traceLine, const int levelmask, const char** entlist);
 trace_t CM_CompleteBoxTrace(mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject);
