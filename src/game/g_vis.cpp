@@ -89,8 +89,8 @@ float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool 
 
 		while ((e = G_EdictsGetNextInUse(e))) {
 			if (G_IsSmoke(e)) {
-				if (RayIntersectAABB(eyeEnt, check->absBox.mins, e->absBox.mins, e->absBox.maxs)
-				 || RayIntersectAABB(eyeEnt, check->absBox.maxs, e->absBox.mins, e->absBox.maxs)) {
+				if (RayIntersectAABB(eyeEnt, check->absBox.mins, e->absBox)
+				 || RayIntersectAABB(eyeEnt, check->absBox.maxs, e->absBox)) {
 					return ACTOR_VIS_0;
 				}
 			}

@@ -1153,7 +1153,7 @@ void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 	}
 }
 
-bool RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs)
+bool RayIntersectAABB (const vec3_t start, const vec3_t end, const AABB& aabb)
 {
 	float t0 = 0.0f;
 	float t1 = 1.0f;
@@ -1168,14 +1168,14 @@ bool RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, 
 
 		if (fabs(delta[i]) < threshold) {
 			if (delta[i] > 0.0f) {
-				return !(end[i] < mins[i] || start[i] > maxs[i]);
+				return !(end[i] < aabb.mins[i] || start[i] > aabb.maxs[i]);
 			} else {
-				return !(start[i] < mins[i] || end[i] > maxs[i]);
+				return !(start[i] < aabb.mins[i] || end[i] > aabb.maxs[i]);
 			}
 		}
 
-		u0 = (mins[i] - start[i]) / delta[i];
-		u1 = (maxs[i] - start[i]) / delta[i];
+		u0 = (aabb.mins[i] - start[i]) / delta[i];
+		u1 = (aabb.maxs[i] - start[i]) / delta[i];
 
 		if (u0 > u1) {
 			const float temp = u0;
