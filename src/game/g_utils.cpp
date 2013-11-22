@@ -613,22 +613,22 @@ int G_TouchSolids (Edict* ent, float extend)
 /**
  * @brief Call after linking a new trigger in or destroying a bmodel
  * during gameplay to force all entities it covers to immediately touch it
- * @param[in] ent The edict to check.
+ * @param[in] trigger The edict to check.
  * @param[in] extend Extend value for the bounding box
  */
-void G_TouchEdicts (Edict* ent, float extend)
+void G_TouchEdicts (Edict* trigger, float extend)
 {
 	int i, num;
 	Edict* touched[MAX_EDICTS];
 	vec3_t absmin, absmax;
-	const char* entName = (ent->model) ? ent->model : ent->chr.name;
+	const char* entName = (trigger->model) ? trigger->model : trigger->chr.name;
 
 	for (i = 0; i < 3; i++) {
-		absmin[i] = ent->absBox.mins[i] - extend;
-		absmax[i] = ent->absBox.maxs[i] + extend;
+		absmin[i] = trigger->absBox.mins[i] - extend;
+		absmax[i] = trigger->absBox.maxs[i] + extend;
 	}
 
-	num = G_GetTouchingEdicts(AABB(absmin, absmax), touched, lengthof(touched), ent);
+	num = G_GetTouchingEdicts(AABB(absmin, absmax), touched, lengthof(touched), trigger);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
@@ -637,8 +637,8 @@ void G_TouchEdicts (Edict* ent, float extend)
 		Edict* hit = touched[i];
 		if (!hit->inuse)
 			continue;
-		if (ent->touch)
-			ent->touch(ent, hit);
+		if (trigger->touch)
+			trigger->touch(trigger, hit);
 	}
 }
 
