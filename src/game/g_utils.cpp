@@ -618,19 +618,18 @@ int G_TouchSolids (Edict* ent, float extend)
  */
 void G_TouchEdicts (Edict* trigger, float extend)
 {
-	int i, num;
-	Edict* touched[MAX_EDICTS];
-	AABB absbox(trigger->absBox);
 	const char* entName = (trigger->model) ? trigger->model : trigger->chr.name;
 
+	AABB absbox(trigger->absBox);
 	absbox.expand(extend);
 
-	num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), trigger);
+	Edict* touched[MAX_EDICTS];
+	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), trigger);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		Edict* hit = touched[i];
 		if (!hit->inuse)
 			continue;
