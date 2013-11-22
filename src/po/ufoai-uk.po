@@ -450,7 +450,7 @@ msgstr "Полімерний бронежилет прибульців"
 
 #: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5589
 msgid "Alien Electronic Warfare Suite"
-msgstr "Позаземна система радіоелектронної протидиії"
+msgstr "Позаземна система РЕП"
 
 #: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5018
 msgid "Alien Astrogation"
@@ -23048,7 +23048,7 @@ msgstr "Вибір команди"
 
 #: ../base/ufos/ui/multiplayer.ufo:1232
 msgid "Team preference:"
-msgstr "Командні переваги:"
+msgstr "Налаштування команди:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1246
 msgid "Next free team"
@@ -23068,7 +23068,7 @@ msgstr "Ви готові?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr "Контроль адміністратора"
+msgstr "Налаштування адміністратора"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
 msgid "Round time limit:"
@@ -23084,7 +23084,7 @@ msgstr "Старт гри, навіть якщо не всі команди пр
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr "Віддалений контроль адміністратора"
+msgstr "Налаштування дистанційного адміністратора"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
