@@ -371,6 +371,7 @@ window employees
 
     MainMenu3Btn bt_equipsoldiers
     {
+        visiblewhen "*cvar:mn_show_employee == 1"
         string      "_Equip soldiers"
         pos		    "760 380"
         size	    "198 30"
