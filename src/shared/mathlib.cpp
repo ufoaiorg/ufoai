@@ -549,7 +549,7 @@ void gaussrand (float* gauss1, float* gauss2)
 }
 /** @brief Calculates the bounding box in absolute coordinates, also for rotating objects.
  * WARNING: do not use this for angles other than 90, 180 or 270 !! */
-void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t origin, vec3_t absmin, vec3_t absmax)
+void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t origin, AABB& absBox)
 {
 	/* expand for rotation */
 	if (VectorNotEmpty(angles)) {
@@ -581,11 +581,11 @@ void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t or
 		maxVec[2] = std::max(tmpMinVec[2], tmpMaxVec[2]);
 
 		/* Adjust the absolute mins/maxs */
-		VectorAdd(origin, minVec, absmin);
-		VectorAdd(origin, maxVec, absmax);
+		VectorAdd(origin, minVec, absBox.mins);
+		VectorAdd(origin, maxVec, absBox.maxs);
 	} else {  /* normal */
-		VectorAdd(origin, relBox.mins, absmin);
-		VectorAdd(origin, relBox.maxs, absmax);
+		VectorAdd(origin, relBox.mins, absBox.mins);
+		VectorAdd(origin, relBox.maxs, absBox.maxs);
 	}
 }
 

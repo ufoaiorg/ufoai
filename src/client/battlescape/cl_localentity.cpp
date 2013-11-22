@@ -1457,7 +1457,7 @@ static void LE_AddEdictHighlight (const le_t* le)
 	entity_t ent(RF_BOX);
 	VectorSet(ent.color, 1, 1, 1);
 	ent.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
-	CalculateMinsMaxs(le->angles, model->cbmBox, le->origin, ent.eBox.mins, ent.eBox.maxs);
+	CalculateMinsMaxs(le->angles, model->cbmBox, le->origin, ent.eBox);
 	R_AddEntity(&ent);
 }
 
