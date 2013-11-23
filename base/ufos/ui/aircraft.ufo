@@ -55,7 +55,7 @@ window iaircraft
 
 	panel aircraftlist_background1 {
 		pos		"19 88"
-		size	"433 298"
+		size	"433 158"
 		background	"ui/panel_grey_green"
 	}
 
@@ -129,7 +129,7 @@ window iaircraft
 	textlist aircraft_list
 	{
 		pos			"51 153"
-		size		"350 220"
+		size		"350 80"
 		rows		11
 		lineheight	20
 		dataid		TEXT_AIRCRAFT_LIST
@@ -148,7 +148,7 @@ window iaircraft
 	vscrollbar aircraft_list_scroll {
 		image			"ui/scrollbar_v_green"
 		pos				"413 151"
-		height			"220"
+		height			"80"
 		current			0
 		viewsize		11
 		fullsize		19
