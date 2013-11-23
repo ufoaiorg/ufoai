@@ -751,4 +751,8 @@ window popup_transferlist
 	func onWindowClosed {
 		call *node:root.tr_listclear
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
 }

@@ -276,4 +276,8 @@ window messageoptions
 		cmd "msgoptions_restore;"
 		cmd "del mn_messagetype;"
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
+
 }
