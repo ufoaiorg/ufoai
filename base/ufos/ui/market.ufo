@@ -265,7 +265,7 @@ window market  {
 				vscrollbar list_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"697 70"
-					height			"463"
+					height			"420"
 					current			0
 					viewsize		8
 					fullsize		22
