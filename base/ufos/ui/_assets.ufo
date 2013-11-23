@@ -414,4 +414,22 @@ component skillbars extends panel
         string valuenum { string *cvar:mn_texp }
     }
 }
-
+// Health panel
+component healthbar extends panel
+{
+    {
+        visiblewhen "*cvar:mn_show_employee <= 2"
+        pos			"740 340"
+        size		"250 30"
+        ghost		true
+    }
+    StatBarWide hp
+    {
+        {
+            pos		"0 0"
+        }
+        string label { string "_Health" tooltip "_<Healthpoints" }
+        bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
+        string valuenum { string *cvar:mn_thp }
+    }
+}

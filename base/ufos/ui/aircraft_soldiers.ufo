@@ -121,7 +121,7 @@ window team extends iaircraft
 	MainMenu3Btn bt_equipsoldiers {
 		string "_Equip soldiers"
 		pos		"482 129"
-		size	"198 40"
+		size	"198 30"
         font		"f_small_bold"
         color		"0 0 0 0.9"
         selectcolor	"0 0 0 1"
@@ -433,4 +433,10 @@ window team extends iaircraft
 			pos			"740 265"
 		}
 	}
+	healthbar localhealth
+	{
+		{
+			pos			"740 385"
+		}
+    }
 }
