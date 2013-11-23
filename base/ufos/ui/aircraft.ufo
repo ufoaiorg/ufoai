@@ -103,23 +103,11 @@ window iaircraft
 			value	"aircraft_equip"
 			icon	"icons/tab_air_equipment"
 		}
-/*		option tank {
-			label	"_Tanks"
-			value	"foobar"
-			disabled	true
-		}
-*/
 		option soldier {
 			label	"_Soldiers"
 			value	"team"
 			icon	"icons/smallhead_soldier"
 		}
-/*		option soldier_equipment {
-			label	"_Soldier equipment"
-			value	"foobar"
-			disabled	true
-		}
-*/
 	}
 
 	// ==================

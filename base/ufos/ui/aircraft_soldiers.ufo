@@ -132,10 +132,6 @@ window team extends iaircraft
 			cmd "ui_push equipment;"
 		}
 	}
-	todo equip_soldiers_subtab {
-		pos "463 135"
-		string "It would be nice to create a mockup and prototype to equip soldiers with another aircraft tab - should be a very nice short cut"
-	}
 
 	// ==================
 	// names list
@@ -144,14 +140,14 @@ window team extends iaircraft
 	data selected {
 	}
 
-/*	rows soldierlist_lines {
+	rows soldierlist_lines {
 		pos			"35 460"
 		size		"270 283"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
 		lineheight	25
 	}
-*/
+
 	panel soldierlist {
 		pos			    "35 460"
 		size		    "270 283"
