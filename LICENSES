@@ -3127,8 +3127,8 @@ base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heis
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/healthsml.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/healthsml0.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/healthsml.png | GNU General Public License 2.0 or later | cooler_sk | based on image by Nate Wright
+base/pics/icons/healthsml0.png | GNU General Public License 2.0 or later | cooler_sk | based on image by Nate Wright
 base/pics/icons/info.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/info0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/information.png | GNU General Public License 2.0 | Kostia "Kildor" Romanov
@@ -3186,10 +3186,10 @@ base/pics/icons/stats.png | GNU General Public License 2.0 or later | Nate Wrigh
 base/pics/icons/stats0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/system_capture.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_child.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/system_close.png | GNU General Public License 2.0 or later | bayo;MCR
-base/pics/icons/system_close_clicked.png | GNU General Public License 2.0 or later | MCR
-base/pics/icons/system_close_disabled.png | GNU General Public License 2.0 or later | MCR
-base/pics/icons/system_close_hovered.png | GNU General Public License 2.0 or later | MCR
+base/pics/icons/system_close.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/system_close_clicked.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/system_close_disabled.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/system_close_hovered.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_expand.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_next.png | GNU General Public License 2.0 or later | bayo
