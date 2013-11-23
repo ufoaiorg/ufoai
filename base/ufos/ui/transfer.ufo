@@ -553,7 +553,7 @@ window popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		background		"ui/popup_alpha_tile"
+		background	"ui/popup_alpha_tile"
 		string		"_Select base to transfer to"
 	}
 
@@ -595,7 +595,7 @@ component trListEntry extends panel
 		size		"472 150"
 		ghost		true
 		border		1
-		bordercolor	"0 .78 0 1"
+        bordercolor	"0.527 0.6 0.21 1"
 		ghost		true
 	}
 
@@ -687,7 +687,9 @@ window popup_transferlist
 		pos			"226 226"
 		size		"542 512"
 		dragbutton	true
-		background	"ui/popup_alpha_tile"
+		bgcolor	    "0 0 0 0.6"
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
 		color	    "0.56 0.81 0.76 1"
 		string		"_Actual transfers"
 		modal		true
