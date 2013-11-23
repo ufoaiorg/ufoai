@@ -33,17 +33,13 @@ component cmpMessageOptions extends panel {
 	}
 }
 
-window messageoptions
+window messageoptions extends popupUI2
 {
 	{
 		pos			"256 256"
 		size		"496 496"
-		dragbutton	true
 		closebutton	true
 		modal		true
-		bgcolor	    "0 0 0 0.6"
-        border		"2"
-		bordercolor	"0.56 0.81 0.76 1"
 		string		"_Pause/message settings"
 	}
 

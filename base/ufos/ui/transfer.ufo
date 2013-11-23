@@ -681,15 +681,11 @@ component trListEntry extends panel
 	}
 }
 
-window popup_transferlist
+window popup_transferlist extends popupUI2
 {
 	{
 		pos			"226 226"
 		size		"542 512"
-		dragbutton	true
-		bgcolor	    "0 0 0 0.6"
-        border		"2"
-		bordercolor	"0.56 0.81 0.76 1"
 		color	    "0.56 0.81 0.76 1"
 		string		"_Actual transfers"
 		modal		true
@@ -718,7 +714,7 @@ window popup_transferlist
 		}
 	}
 
-	MainMenu3Btn tr_close
+	MainMenuBtn tr_close
 	{
 		string		"_Close"
 		pos			"183 450"

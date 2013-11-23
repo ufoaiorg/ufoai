@@ -300,3 +300,12 @@ component spinner_green extends spinner
 	bottomIcon	"ui/spinner_down"
 	size "15 19"
 }
+
+//Common style for all popups
+window popupUI2
+{
+		bgcolor	    "0 0 0 0.6"
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
+		dragbutton	true
+}
