@@ -328,7 +328,6 @@ component StatBarWide extends StatBar
 component abilities extends panel
 {
     {
-        visiblewhen "*cvar:mn_show_employee == 1"
         pos			"740 100"
         size		"250 125"
         ghost		true

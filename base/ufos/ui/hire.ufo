@@ -458,6 +458,7 @@ window employees
 
     abilities hire_abilities
     {
+        visiblewhen "*cvar:mn_show_employee == 1"
     }
 
 	// Skills panel
