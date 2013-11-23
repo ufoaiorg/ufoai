@@ -143,7 +143,7 @@ TARGETING FUNCTIONS
  *
  * 2*cos^2(x) = 1 + cos(2*x)
  * 2*sin(x)*cos(x) = sin(2*x)
- * a*cos(x) + b*sin(x) = sqrt(a^2 + b^2) * cos(x - atan2(b,a))
+ * a*cos(x) + b*sin(x) = sqrt(a^2 + b^2) * cos(x - atan2(b, a))
  *
  * it is possible to show that:
  *
@@ -815,7 +815,7 @@ bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, ui
 			int maxLength = std::min(strlen(cmdBackup),strlen(cvar));
 			int idx = 0;
 			/* try to find similar content of cvar and cmd match */
-			Q_strncpyz(cmdLine,cmdBackup,sizeof(cmdLine));
+			Q_strncpyz(cmdLine, cmdBackup,sizeof(cmdLine));
 			for (; idx < maxLength; idx++) {
 				if (cmdBackup[idx] != cvar[idx]) {
 					cmdLine[idx] = '\0';

@@ -1447,7 +1447,7 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const i
 		FS_Printf(&f, "\n");
 		for (z = maxs[2]; z >= mins[2]; z--) {
 			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
-				FS_Printf(&f, "z:%i  y:%i,", z ,y);
+				FS_Printf(&f, "z:%i  y:%i,", z, y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "\"");
