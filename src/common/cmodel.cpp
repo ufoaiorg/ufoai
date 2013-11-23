@@ -169,8 +169,7 @@ int32_t CM_HeadnodeForBox (MapTile& tile, const vec3_t mins, const vec3_t maxs)
 /**
  * @brief Checks traces against the world and all inline models
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] traceLine The start/stop positions of the trace.
  * @param[in] levelmask
  * @param[in] entlist The local models list
  * @sa TR_TestLine
@@ -221,8 +220,7 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int leve
 /**
  * @brief Checks traces against the world and all inline models, gives the hit position back
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
+ * @param[in] trLine The start/stop positions of the trace.
  * @param[out] hit The position where the line hits a object or the stop position if nothing is in the line
  * @param[in] levelmask
  * @param[in] entlist The local models list
