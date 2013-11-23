@@ -427,4 +427,10 @@ window team extends iaircraft
         pos			"740 145"
     }
 
+	skillbars airsoldiers_skills
+	{
+		{
+			pos			"740 265"
+		}
+	}
 }

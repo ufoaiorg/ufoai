@@ -369,3 +369,49 @@ component abilities extends panel
         string valuenum { string *cvar:mn_tmnd }
     }
 }
+// Skillbars panel
+component skillbars extends panel
+{
+    {
+        pos			"740 220"
+        size		"250 155"
+        ghost		true
+    }
+    StatBarWide cls
+    {
+        {
+            pos		"0 0"
+        }
+        string label { string "_CQB" tooltip "_Close Quarters Battle" }
+        bar valuebar { current *cvar:mn_vcls }
+        string valuenum { string *cvar:mn_tcls }
+    }
+    StatBarWide ass
+    {
+        {
+            pos		"0 30"
+        }
+        string label { string "_Assault" }
+        bar valuebar { current *cvar:mn_vass }
+        string valuenum { string *cvar:mn_tass }
+    }
+    StatBarWide snp
+    {
+        {
+            pos		"0 60"
+        }
+        string label { string "_Sniper" }
+        bar valuebar { current *cvar:mn_vsnp }
+        string valuenum { string *cvar:mn_tsnp }
+    }
+    StatBarWide exp
+    {
+        {
+            pos		"0 90"
+        }
+        string label { string "_Explosives" }
+        bar valuebar { current *cvar:mn_vexp }
+        string valuenum { string *cvar:mn_texp }
+    }
+}
+

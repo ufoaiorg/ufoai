@@ -403,62 +403,18 @@ window equipment extends objectinfo
 		}
 	}
 
-
-
-	// Abilities panel
-	// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
 	abilities equip_abilities
 	{
 		{
 			pos			"740 465"
 		}
 	}
-	// Skills panel
-	panel skills
+	skillbars equip_skills
 	{
 		{
 			pos			"740 630"
-			size		"250 155"
-			ghost		true
-		}
-		StatBarWide cls
-		{
-			{
-				pos		"0 0"
-			}
-			string label { string "_CQB" tooltip "_Close Quarters Battle" }
-			bar valuebar { current *cvar:mn_vcls }
-			string valuenum { string *cvar:mn_tcls }
-		}
-		StatBarWide ass
-		{
-			{
-				pos		"0 30"
-			}
-			string label { string "_Assault" }
-			bar valuebar { current *cvar:mn_vass }
-			string valuenum { string *cvar:mn_tass }
-		}
-		StatBarWide snp
-		{
-			{
-				pos		"0 60"
-			}
-			string label { string "_Sniper" }
-			bar valuebar { current *cvar:mn_vsnp }
-			string valuenum { string *cvar:mn_tsnp }
-		}
-		StatBarWide exp
-		{
-			{
-				pos		"0 90"
-			}
-			string label { string "_Explosives" }
-			bar valuebar { current *cvar:mn_vexp }
-			string valuenum { string *cvar:mn_texp }
 		}
 	}
-
 
 
 	baseinventory equip		{
