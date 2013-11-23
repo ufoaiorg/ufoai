@@ -181,12 +181,12 @@ window team extends iaircraft
 
 	panel actor_background {
 	{
-		pos		"358 443"
+/*		pos		"358 443"
 		size	"663 321"
-		background	"ui/panel_grey_black"
+*/		background	"ui/panel_grey_black"
 	}
 
-	panel actormodel_background {
+/*	panel actormodel_background {
 		{
 			pos		"12 12"
 			size	"179 296"
@@ -355,7 +355,7 @@ window team extends iaircraft
 	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam contentalign ALIGN_UR }
 
 	}
-
+*/
 	}
 
 	/** @todo Activate this again - used for UGVs */
@@ -438,5 +438,8 @@ window team extends iaircraft
 		{
 			pos			"740 385"
 		}
+    }
+	actor_info local
+	{
     }
 }
