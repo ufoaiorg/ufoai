@@ -118,7 +118,7 @@ window iaircraft
 	{
 		pos			"51 153"
 		size		"350 80"
-		rows		11
+		rows		4
 		lineheight	20
 		dataid		TEXT_AIRCRAFT_LIST
 		color	"0 .78 0 1"
