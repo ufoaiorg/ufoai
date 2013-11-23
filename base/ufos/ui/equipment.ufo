@@ -25,18 +25,6 @@ component equipSoldier extends panel {
 	}
 }
 
-// StatBar was designed for hud, in equipment we need a wider bar
-component StatBarWide extends StatBar
-{
-    {
-        size	"250 25"
-    }
-	string label {size "100 15" }
-    texture bg  {  size	"250 10"}
-    bar valuebar { size "250 10" }
-    string valuenum { size	"160 0" }
-}
-
 
 window equipment extends objectinfo
 {

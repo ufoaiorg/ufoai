@@ -456,53 +456,10 @@ window employees
 		}
 	}
 
-	// Abilities panel
-	// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
-	panel abilities
-	{
-		{
-			visiblewhen "*cvar:mn_show_employee == 1"
-			pos			"740 100"
-			size		"250 125"
-			ghost		true
-		}
-		StatBarWide strength
-		{
-			{
-				pos		"0    0"
-			}
-			string label { string "_Strength" }
-			bar valuebar { current *cvar:mn_vpwr }
-			string valuenum { string *cvar:mn_tpwr }
-		}
-		StatBarWide speed
-		{
-			{
-				pos		"0 30"
-			}
-			string label { string "_Speed" }
-			bar valuebar { current *cvar:mn_vspd }
-			string valuenum { string *cvar:mn_tspd }
-		}
-		StatBarWide accuracy
-		{
-			{
-				pos		"0 60"
-			}
-			string label { string "_Accuracy" }
-			bar valuebar { current *cvar:mn_vacc }
-			string valuenum { string *cvar:mn_tacc }
-		}
-		StatBarWide mind
-		{
-			{
-				pos		"0 90"
-			}
-			string label { string "_Mind" }
-			bar valuebar { current *cvar:mn_vmnd }
-			string valuenum { string *cvar:mn_tmnd }
-		}
-	}
+    abilities hire_abilities
+    {
+    }
+
 	// Skills panel
 	panel skills
 	{
