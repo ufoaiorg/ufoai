@@ -422,4 +422,9 @@ window team extends iaircraft
 		call *node:root.reset_character_cvars
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 	}
+    abilities airsoldiers_abilities
+    {
+        pos			"740 145"
+    }
+
 }
