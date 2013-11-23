@@ -14,13 +14,32 @@ window aircraft extends iaircraft
 		background	"ui/panel_grey_green_large"
 	}
 
+	panel tab_background {
+		pos		"461 88"
+	}
+
+	tab aircraft_navigation {
+		{
+			pos		"466 93"
+			size	"938 39"
+        }
+    }
+
 	// ==================
 	// aircraft
 	// ==================
+
+	panel model_background {
+		pos		    "19 248"
+		size	    "563 298"
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
+	}
+
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"478 106"
+		pos			"47 266"
 		size		"529 261"
 		angles		"0 0 90"
 		autoscale	true
