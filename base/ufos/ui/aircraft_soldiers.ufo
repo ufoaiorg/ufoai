@@ -70,12 +70,30 @@ window team extends iaircraft
 		size	"986 56"
 		background	"ui/panel_tab"
 	}
+
+	panel tab_background {
+		pos		"461 88"
+	}
+
+	tab aircraft_navigation {
+		{
+			pos		"466 93"
+			size	"938 39"
+        }
+    }
+
 	// ==================
 	// aircraft
 	// ==================
+	panel model_background {
+		pos		    "19 248"
+		size	    "563 298"
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
+	}
 	model aircraft {
 		src			*cvar:mn_aircraft_model
-		pos			"478 106"
+		pos			"47 266"
 		size		"529 261"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
@@ -84,13 +102,13 @@ window team extends iaircraft
 
 	string team_members {
 		string	"_Team Members:"
-		pos		"480 107"
+		pos		"40 265"
 		size	"200 20"
 	}
 
 	string team_hired {
 		string		*cvar:mn_hired
-		pos			"619 107"
+		pos			"179 265"
 		size		"62 20"
 		contentalign	ALIGN_UR
 	}
@@ -100,13 +118,13 @@ window team extends iaircraft
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
 	}
 
-	button bt_equipsoldiers {
+	MainMenu3Btn bt_equipsoldiers {
 		string "_Equip soldiers"
 		pos		"482 129"
 		size	"198 40"
-		background	"ui/button_blue"
-		color	"1 1 1 0.8"
-		selectcolor "1 1 1 1"
+        font		"f_small_bold"
+        color		"0 0 0 0.9"
+        selectcolor	"0 0 0 1"
 
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
@@ -126,18 +144,20 @@ window team extends iaircraft
 	data selected {
 	}
 
-	rows soldierlist_lines {
+/*	rows soldierlist_lines {
 		pos			"35 460"
 		size		"270 283"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
 		lineheight	25
 	}
+*/
 	panel soldierlist {
-		pos			"35 460"
-		size		"270 283"
-		padding		6
-		layout		LAYOUT_TOP_DOWN_FLOW
+		pos			    "35 460"
+		size		    "270 283"
+		padding		    6
+		layout		    LAYOUT_TOP_DOWN_FLOW
+        layoutMargin	2
 		wheelscrollable	true
 
 		onViewChange {
