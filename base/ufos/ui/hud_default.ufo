@@ -90,6 +90,21 @@ window hud_default extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
+	// ============================
+	// reaction fire tracking panel
+	// parameter to display the panel
+	// ============================
+	panel reactions
+	{
+		{
+			pos		"122 62"
+			size		"210 500"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	4
+			ghost		true
+		}
+	}
+
 	// ==============
 	// SOLDIERS PANEL
 	// ==============
