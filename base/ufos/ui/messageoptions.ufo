@@ -41,22 +41,27 @@ window messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-		background		"ui/popup_alpha_tile"
+		bgcolor	    "0 0 0 0.6"
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
 		string		"_Pause/message settings"
 	}
 
-	cmpPopupButton button_apply
+	MainMenuBtn button_apply
 	{
 		string		"_Apply"
 		tooltip		"_Apply changes"
 		pos			"109 436"
+        size	    "150 30"
 		onClick		{ cmd "ui_pop;msgoptions_backup;" }
 	}
 
-	cmpCancelButton button_revert
+	MainMenuBtn button_revert
 	{
+		string		"_Cancel"
 		tooltip		"_Revert changes"
 		pos			"296 436"
+        size	    "150 30"
 		onClick		{ cmd "ui_pop;" }
 	}
 
@@ -104,8 +109,8 @@ window messageoptions
 	rows lines {
 		pos			"30 90"
 		size		"420 325"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
+//		color1		"0 0.08 0 1"
+//		color2		"0 0.16 0 1"
 		lineheight	25
 	}
 
@@ -113,8 +118,8 @@ window messageoptions
 	{
 		cvar		*cvar:mn_messagetype
 		dataid		TEXT_MESSAGEOPTIONS
-		color		"0 .78 0 1"
-		selectcolor "0 .78 0 1"
+		color		"0.56 0.81 0.76 1"
+		selectcolor "0.56 0.81 0.76 1"
 		lineheight	"25"
 		padding		0
 		pos			"30 90"
