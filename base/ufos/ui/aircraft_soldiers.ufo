@@ -69,6 +69,7 @@ window team extends iaircraft
 	// Base name and container panel
 	BaseContainerPanelV2 base_container
 	{
+		{size			"723 658"}
 		// aircraft soldier panel
 		panel mainBody
 		{
