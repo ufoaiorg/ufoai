@@ -429,42 +429,9 @@ window employees
         visiblewhen "*cvar:mn_show_employee == 1"
 	}
 
-	// Pilot Skills panel
-	panel skillspilot
+    skillspilot pilotskills
 	{
-		{
-			visiblewhen "*cvar:mn_show_employee == 2"
-			pos			"740 250"
-			size		"250 155"
-			ghost		true
-		}
-		StatBarWide pil
-		{
-			{
-				pos		"0 0"
-			}
-			string label { string "_Piloting" }
-			bar valuebar { current *cvar:mn_vpil }
-			string valuenum { string *cvar:mn_tpil }
-		}
-		StatBarWide tar
-		{
-			{
-				pos		"0 30"
-			}
-			string label { string "_Targeting" }
-			bar valuebar { current *cvar:mn_vtar }
-			string valuenum { string *cvar:mn_ttar }
-		}
-		StatBarWide evad
-		{
-			{
-				pos		"0 60"
-			}
-			string label { string "_Evading" }
-			bar valuebar { current *cvar:mn_vevad }
-			string valuenum { string *cvar:mn_tevad }
-		}
+        visiblewhen "*cvar:mn_show_employee == 2"
 	}
 
 	healthbar actorhealth
