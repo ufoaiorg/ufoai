@@ -499,7 +499,6 @@ component actor_info extends panel
 component skillspilot extends panel
 {
     {
-        visiblewhen "*cvar:mn_show_employee == 2"
         pos			"740 250"
         size		"250 155"
         ghost		true
