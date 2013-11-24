@@ -296,6 +296,7 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
  *
  * @param path Path to a node, or a node method
  * @param key The key number to use (see for example the K_* names are matched up.)
+ * @param description Textual description of what the key/cmd does (for tooltip)
  * @param inherited True if this binding is inherited from another binding.
  *
  * @todo check: only one binding per nodes
@@ -354,6 +355,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
  *
  * @param path Path to a node, or a node mathod
  * @param key The key number to use (see for example the K_* names are matched up.)
+ * @param description Textual description of what the key/cmd does (for tooltip)
  *
  * @todo check: only one binding per nodes?
  * @todo check: key per window must be unique
