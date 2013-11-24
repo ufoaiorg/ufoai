@@ -59,6 +59,31 @@ window team extends iaircraft
 	// background
 	// ==================
 
+	image background {
+		src	""
+	}
+	cmpBaseHeader baseHeader {
+        invis   true
+	}
+
+	// Base name and container panel
+	BaseContainerPanelV2 base_container
+	{
+		// aircraft soldier panel
+		panel mainBody
+		{
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Aircraft Soldier"
+				}
+			}
+        }
+    }
+
 	panel actors_background {
 		pos		"18 250"
 		size	"329 321"
