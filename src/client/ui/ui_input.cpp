@@ -334,11 +334,11 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
 
-	/* search and update windows extend node->root */
+	/* search and update windows that extend node->root */
 	for (windowId = 0; windowId < ui_global.numWindows; windowId++) {
 		uiNode_t* window = ui_global.windows[windowId];
 
-		/* skip window which are not direct extends of the main window */
+		/* skip windows which are not direct extends of the main window */
 		if (window->super != node->root)
 			continue;
 
