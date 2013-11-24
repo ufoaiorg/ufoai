@@ -282,19 +282,19 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 /**
  * @brief Set a binding from a key to a node to active.
  *
- * This command create a relation between a key and a node.
+ * This command creates a relation between a key and a node.
  *
- * The relation is stored to the node (to display the shortcut into tooltip)
- * and to parent window of the node (to faster search of all available shortcuts).
+ * The relation is stored with the node (to display the shortcut in the tooltip)
+ * and with the parent window of the node (for faster search of all available shortcuts).
  *
- * The storage on the node is not a list, then if there is more than one shortcut
- * to a node we can't display all shortcut to tooltip, but the binding will still
+ * The storage on the node is not a list, so if there is more than one shortcut
+ * to a node we can't display all shortcuts in the tooltip, but the binding will still
  * work.
  *
- * If the parent window is inherited, the binding is dup to others extend
+ * If the parent window is inherited, the binding is duped to other extended
  * windows and the relation is flagged as "inherited".
  *
- * @param path Path to a node, or a node mathod
+ * @param path Path to a node, or a node method
  * @param key The key number to use (see for example the K_* names are matched up.)
  * @param inherited True if this binding is inherited from another binding.
  *
