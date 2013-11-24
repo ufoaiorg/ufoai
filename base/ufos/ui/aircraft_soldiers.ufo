@@ -60,25 +60,21 @@ window team extends iaircraft
 	// ==================
 
 	panel actors_background {
-		pos		"18 443"
+		pos		"18 250"
 		size	"329 321"
 		background	"ui/panel_grey_green_large"
 	}
 
 	panel tab_background {
-		pos		"24 386"
-		size	"986 56"
+		pos		"18 680"
+		size	"586 56"
 		background	"ui/panel_tab"
-	}
-
-	panel tab_background {
-		pos		"461 88"
 	}
 
 	tab aircraft_navigation {
 		{
-			pos		"466 93"
-			size	"938 39"
+			pos		"23 685"
+			size	"578 39"
         }
     }
 
@@ -88,10 +84,11 @@ window team extends iaircraft
 	panel model_background {
 		pos		    "19 248"
 		size	    "563 298"
+		invis       true
         border		"2"
 		bordercolor	"0.56 0.81 0.76 1"
 	}
-	model aircraft {
+/*	model aircraft {
 		src			*cvar:mn_aircraft_model
 		pos			"47 266"
 		size		"529 261"
@@ -112,7 +109,7 @@ window team extends iaircraft
 		size		"62 20"
 		contentalign	ALIGN_UR
 	}
-
+*/
 	func listen_close_equipment {
 		cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
@@ -120,7 +117,7 @@ window team extends iaircraft
 
 	MainMenu3Btn bt_equipsoldiers {
 		string "_Equip soldiers"
-		pos		"482 129"
+		pos		"760 380"
 		size	"198 30"
         font		"f_small_bold"
         color		"0 0 0 0.9"
@@ -141,7 +138,7 @@ window team extends iaircraft
 	}
 
 	rows soldierlist_lines {
-		pos			"35 460"
+		pos			"35 265"
 		size		"270 283"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
@@ -149,7 +146,7 @@ window team extends iaircraft
 	}
 
 	panel soldierlist {
-		pos			    "35 460"
+		pos			    "35 265"
 		size		    "270 283"
 		padding		    6
 		layout		    LAYOUT_TOP_DOWN_FLOW
@@ -164,7 +161,7 @@ window team extends iaircraft
 	}
 	vscrollbar soldierlist_scroll {
 		image		"ui/scrollbar_v_green"
-		pos			"310 462"
+		pos			"310 265"
 		height		"283"
 		current		0
 		viewsize	8
@@ -192,161 +189,6 @@ window team extends iaircraft
 			size	"179 296"
 			background	"ui/panel_green"
 		}
-
-		image	rank_img {
-			pos "8 8"
-			size "50 50"
-			src *cvar:mn_chrrank_img
-		}
-
-		model body
-		{
-			{
-				src		*cvar:mn_body
-				skin	*cvar:mn_body_skin
-				anim	"stand2"
-				angles	"0 70 90"
-				scale	"5.5 5.5 5.5"
-				pos		"6 6"
-				size	"168 283"
-				origin	"0 -35 0"
-			}
-
-			model head
-			{
-				src		*cvar:mn_head
-				skin	*cvar:mn_head_skin
-				tag		"tag_head"
-				scale	"1.0 1.0 1.0"
-			}
-
-			model right_rweapon
-			{
-				src		*cvar:mn_rweapon
-				tag		"tag_rweapon"
-			}
-
-			model right_lweapon
-			{
-				src		*cvar:mn_lweapon
-				tag		"tag_lweapon"
-			}
-		}
-
-		string	name { pos "8 247" size "165 20" string *cvar:mn_name }
-		string	rank_lbl { pos "8 267" size "165 20" string *cvar:mn_chrrank }
-	}
-
-	tab actor_stat {
-		{
-			pos		"209 11"
-			size	"438 39"
-			cvar	*cvar:mn_actor_stat
-			onChange {
-				cmd "select_actor_stat <cvar:mn_actor_stat>;"
-			}
-		}
-		option phys {
-			label	"_Physical stats"
-			value	"stats_phys"
-		}
-		option missions {
-			label	"_Missions info"
-			value	"stats_missions"
-		}
-	}
-
-	panel stats_phys {
-		{
-			pos			"208 44"
-			size		"440 264"
-			background	"ui/panel_green_tab"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			padding		9
-		}
-		string padding {
-			size		"440 16"
-		}
-		cmpNamedBar pwr {
-			bar currbar { current *cvar:mn_vpwr }
-			bar initbar { current *cvar:mn_vpwri }
-			string lbl  { string "_Strength:" }
-			string val  { string *cvar:mn_tpwr }
-		}
-		cmpNamedBar spd {
-			bar currbar { current *cvar:mn_vspd }
-			bar initbar { current *cvar:mn_vspdi }
-			string lbl  { string "_Speed:" }
-			string val  { string *cvar:mn_tspd }
-		}
-		cmpNamedBar acc {
-			bar currbar { current *cvar:mn_vacc }
-			bar initbar { current *cvar:mn_vacci }
-			string lbl  { string "_Accuracy:" }
-			string val  { string *cvar:mn_tacc }
-		}
-		cmpNamedBar mnd {
-			bar currbar { current *cvar:mn_vmnd }
-			bar initbar { current *cvar:mn_vmndi }
-			string lbl  { string "_Mind:" }
-			string val  { string *cvar:mn_tmnd }
-		}
-		cmpNamedBar cls {
-			bar currbar { current *cvar:mn_vcls }
-			bar initbar { current *cvar:mn_vclsi }
-			string lbl  { string "_Close Combat:" }
-			string val  { string *cvar:mn_tcls }
-		}
-		cmpNamedBar ass {
-			bar currbar { current *cvar:mn_vass }
-			bar initbar { current *cvar:mn_vassi }
-			string lbl  { string "_Assault Weapons:" }
-			string val  { string *cvar:mn_tass }
-		}
-		cmpNamedBar snp {
-			bar currbar { current *cvar:mn_vsnp }
-			bar initbar { current *cvar:mn_vsnpi }
-			string lbl  { string "_Sniper Rifles:" }
-			string val  { string *cvar:mn_tsnp }
-		}
-		cmpNamedBar exp {
-			bar currbar { current *cvar:mn_vexp }
-			bar initbar { current *cvar:mn_vexpi }
-			string lbl  { string "_High-Explosives:" }
-			string val  { string *cvar:mn_texp }
-		}
-		cmpNamedTbar hp {
-			tbar bar   {
-				current *cvar:mn_vhp
-				max *cvar:mn_vhpmax
-				image "ui/bar_health"
-			}
-			string lbl { string "_Health:" }
-			string val { string *cvar:mn_thp }
-		}
-	}
-
-	panel stats_missions {
-	{
-		pos		"208 44"
-		size	"440 264"
-		background	"ui/panel_green_tab"
-		invis true
-	}
-
-	image	rank_img {
-		pos "195 30"
-		size "50 50"
-		src *cvar:mn_chrrank_img
-	}
-
-	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank contentalign ALIGN_UC font "f_normal_bold" }
-
-	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
-	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
-
-	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
-	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 
 	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
 	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian contentalign ALIGN_UR }
@@ -424,22 +266,23 @@ window team extends iaircraft
 	}
     abilities airsoldiers_abilities
     {
-        pos			"740 145"
     }
 
 	skillbars airsoldiers_skills
 	{
-		{
-			pos			"740 265"
-		}
 	}
 	healthbar localhealth
 	{
-		{
-			pos			"740 385"
-		}
     }
 	actor_info local
 	{
+        text name
+        {
+            string		*cvar:mn_name
+            pos			"3 0"
+            size		"290 20"
+            color		"0.56 0.81 0.76 1"
+            ghost       true
+            }
     }
 }
