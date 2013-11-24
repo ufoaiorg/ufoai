@@ -390,13 +390,8 @@ static const value_t installation_vals[] = {
  */
 void INS_ParseInstallations (const char* name, const char** text)
 {
-	installationTemplate_t* installation;
-	const char* errhead = "INS_ParseInstallations: unexpected end of file (names ";
-	const char* token;
-	int i;
-
 	/* get id list body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("INS_ParseInstallations: installation \"%s\" without body ignored\n", name);
 		return;
@@ -413,7 +408,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 		return;
 	}
 
-	for (i = 0; i < ccs.numInstallationTemplates; i++) {
+	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 		if (Q_streq(ccs.installationTemplates[i].name, name)) {
 			Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
 			return;
@@ -421,7 +416,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 	}
 
 	/* new entry */
-	installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
+	installationTemplate_t* installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
 	OBJZERO(*installation);
 	installation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 	installation->type = INSTALLATION_RADAR;
@@ -429,6 +424,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
 
 	ccs.numInstallationTemplates++;
+	const char* errhead = "INS_ParseInstallations: unexpected end of file (names ";
 	do {
 		/* get the name type */
 		token = cgi->Com_EParse(text, errhead, name);

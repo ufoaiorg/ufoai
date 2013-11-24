@@ -43,9 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 technology_t** AII_GetCraftitemTechsByType (aircraftItemType_t type)
 {
 	static technology_t* techList[MAX_TECHNOLOGIES];
-	int i, j = 0;
+	int j = 0;
 
-	for (i = 0; i < cgi->csi->numODs; i++) {
+	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
 			technology_t* tech = RS_GetTechForItem(aircraftitem);
@@ -228,7 +228,6 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
  */
 void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 {
-	int i;
 	assert(base);
 
 	/* Select the type of base defence system to destroy */
@@ -238,7 +237,7 @@ void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 		assert(base->numBatteries > 0);
 		/* look for an unequipped battery */
 		if (idx < 0) {
-			for (i = 0; i < base->numBatteries; i++) {
+			for (int i = 0; i < base->numBatteries; i++) {
 				if (!base->batteries[i].slot.item) {
 					idx = i;
 					break;
@@ -257,7 +256,7 @@ void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 		assert(base->numLasers > 0);
 		/* look for an unequipped battery */
 		if (idx < 0) {
-			for (i = 0; i < base->numLasers; i++) {
+			for (int i = 0; i < base->numLasers; i++) {
 				if (!base->lasers[i].slot.item) {
 					idx = i;
 					break;
@@ -282,9 +281,7 @@ void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
  */
 void BDEF_InitialiseBaseSlots (base_t* base)
 {
-	int i;
-
-	for (i = 0; i < MAX_BASE_SLOT; i++) {
+	for (int i = 0; i < MAX_BASE_SLOT; i++) {
 		baseWeapon_t* battery = &base->batteries[i];
 		baseWeapon_t* laser = &base->lasers[i];
 		AII_InitialiseSlot(&battery->slot, nullptr, base, nullptr, AC_ITEM_BASE_MISSILE);
@@ -302,9 +299,7 @@ void BDEF_InitialiseBaseSlots (base_t* base)
  */
 void BDEF_InitialiseInstallationSlots (installation_t* installation)
 {
-	int i;
-
-	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
+	for (int i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 		baseWeapon_t* battery = &installation->batteries[i];
 		AII_InitialiseSlot(&battery->slot, nullptr, nullptr, installation, AC_ITEM_BASE_MISSILE);
 		battery->target = nullptr;
@@ -633,11 +628,9 @@ bool AII_ReloadWeapon (aircraftSlot_t* slot)
  */
 void AII_ReloadAircraftWeapons (aircraft_t* aircraft)
 {
-	int i;
-
 	assert(aircraft);
 	/* Reload all ammos of aircraft */
-	for (i = 0; i < aircraft->maxWeapons; i++) {
+	for (int i = 0; i < aircraft->maxWeapons; i++) {
 		AII_ReloadWeapon(&aircraft->weapons[i]);
 	}
 }
@@ -652,24 +645,21 @@ void AII_ReloadAircraftWeapons (aircraft_t* aircraft)
  */
 bool AII_AddAmmoToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* slot)
 {
-	const objDef_t* ammo;
-	const objDef_t* item;
-	int k;
-
 	if (slot == nullptr || slot->item == nullptr)
 		return false;
 
 	assert(tech);
 
-	ammo = INVSH_GetItemByID(tech->provides);
+	const objDef_t* ammo = INVSH_GetItemByID(tech->provides);
 	if (!ammo) {
 		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return false;
 	}
 
-	item = (slot->nextItem) ? slot->nextItem : slot->item;
+	const objDef_t* item = (slot->nextItem) ? slot->nextItem : slot->item;
 
 	/* Is the ammo is usable with the slot */
+	int k;
 	for (k = 0; k < item->numAmmos; k++) {
 		const objDef_t* usable = item->ammos[k];
 		if (usable && ammo->idx == usable->idx)
@@ -949,8 +939,7 @@ aircraftSlot_t* BDEF_GetInstallationSlotByIDX (installation_t* installation, air
 	switch (type) {
 	case AC_ITEM_BASE_MISSILE:
 		if (idx < 0) {			/* returns the first free slot on negative */
-			int i;
-			for (i = 0; i < installation->numBatteries; i++) {
+			for (int i = 0; i < installation->numBatteries; i++) {
 				aircraftSlot_t* slot = &installation->batteries[i].slot;
 				if (!slot->item && !slot->nextItem)
 					return slot;
@@ -976,8 +965,7 @@ aircraftSlot_t* AII_GetAircraftSlotByIDX (aircraft_t* aircraft, aircraftItemType
 	switch (type) {
 	case AC_ITEM_WEAPON:
 		if (idx < 0) {			/* returns the first free slot on negative */
-			int i;
-			for (i = 0; i < aircraft->maxWeapons; i++) {
+			for (int i = 0; i < aircraft->maxWeapons; i++) {
 				aircraftSlot_t* slot = &aircraft->weapons[i];
 				if (!slot->item && !slot->nextItem)
 					return slot;
@@ -991,8 +979,7 @@ aircraftSlot_t* AII_GetAircraftSlotByIDX (aircraft_t* aircraft, aircraftItemType
 		break;
 	case AC_ITEM_ELECTRONICS:
 		if (idx < 0) {			/* returns the first free slot on negative */
-			int i;
-			for (i = 0; i < aircraft->maxElectronics; i++) {
+			for (int i = 0; i < aircraft->maxElectronics; i++) {
 				aircraftSlot_t* slot = &aircraft->electronics[i];
 				if (!slot->item && !slot->nextItem)
 					return slot;
@@ -1015,13 +1002,12 @@ aircraftSlot_t* AII_GetAircraftSlotByIDX (aircraft_t* aircraft, aircraftItemType
  */
 float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t* slot, int maxSlot)
 {
-	int i;
 	float range = 0.0f;
 
 	assert(slot);
 
 	/* We choose the usable weapon with the biggest range */
-	for (i = 0; i < maxSlot; i++) {
+	for (int i = 0; i < maxSlot; i++) {
 		const aircraftSlot_t* weapon = slot + i;
 		const objDef_t* ammo = weapon->ammo;
 
@@ -1066,14 +1052,11 @@ void AII_RepairAircraft (void)
  */
 void AII_UpdateAircraftStats (aircraft_t* aircraft)
 {
-	int i, currentStat;
-	const aircraft_t* source;
-
 	assert(aircraft);
 
-	source = aircraft->tpl;
+	const aircraft_t* source = aircraft->tpl;
 
-	for (currentStat = 0; currentStat < AIR_STATS_MAX; currentStat++) {
+	for (int currentStat = 0; currentStat < AIR_STATS_MAX; currentStat++) {
 		/* we scan all the stats except AIR_STATS_WRANGE (see below) */
 		if (currentStat == AIR_STATS_WRANGE)
 			continue;
@@ -1082,7 +1065,7 @@ void AII_UpdateAircraftStats (aircraft_t* aircraft)
 		aircraft->stats[currentStat] = source->stats[currentStat];
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
-		for (i = 0; i < aircraft->maxElectronics; i++) {
+		for (int i = 0; i < aircraft->maxElectronics; i++) {
 			const aircraftSlot_t* slot = &aircraft->electronics[i];
 			const objDef_t* item;
 			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
@@ -1096,7 +1079,7 @@ void AII_UpdateAircraftStats (aircraft_t* aircraft)
 
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
-		for (i = 0; i < aircraft->maxWeapons; i++) {
+		for (int i = 0; i < aircraft->maxWeapons; i++) {
 			const aircraftSlot_t* slot = &aircraft->weapons[i];
 			const objDef_t* item;
 			if (!AII_CheckUpdateAircraftStats(slot, currentStat))
@@ -1204,20 +1187,12 @@ bool AII_InstallationCanShoot (const installation_t* installation)
  */
 static void BDEF_AutoTarget (baseWeapon_t* weapons, int maxWeapons)
 {
-	const installation_t* inst;
-	const base_t* base;
-	aircraft_t* closestCraft = nullptr;
-	float minCraftDistance = -1;
-	aircraft_t* closestAttacker = nullptr;
-	float minAttackerDistance = -1;
-	const aircraftSlot_t* slot;
-	int i;
-	aircraft_t* ufo;
-
 	if (maxWeapons <= 0)
 		return;
 
-	slot = &weapons[0].slot;
+	const installation_t* inst;
+	const base_t* base;
+	const aircraftSlot_t* slot = &weapons[0].slot;
 	/* Check if it's a Base or an Installation */
 	if (slot->installation) {
 		inst = slot->installation;
@@ -1229,7 +1204,11 @@ static void BDEF_AutoTarget (baseWeapon_t* weapons, int maxWeapons)
 		cgi->Com_Error(ERR_DROP, "BDEF_AutoSelectTarget: slot doesn't belong to any base or installation");
 
 	/* Get closest UFO(s) */
-	ufo = nullptr;
+	aircraft_t* closestCraft = nullptr;
+	float minCraftDistance = -1;
+	aircraft_t* closestAttacker = nullptr;
+	float minAttackerDistance = -1;
+	aircraft_t* ufo = nullptr;
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
 		const float distance = GetDistanceOnGlobe(inst ? inst->pos : base->pos, ufo->pos);
 		if (minCraftDistance < 0 || minCraftDistance > distance) {
@@ -1245,7 +1224,7 @@ static void BDEF_AutoTarget (baseWeapon_t* weapons, int maxWeapons)
 	}
 
 	/* Loop weaponslots */
-	for (i = 0; i < maxWeapons; i++) {
+	for (int i = 0; i < maxWeapons; i++) {
 		baseWeapon_t* weapon  = &weapons[i];
 		slot = &weapon->slot;
 		/* skip if autofire is disabled */

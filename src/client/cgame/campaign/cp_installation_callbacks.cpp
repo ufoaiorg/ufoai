@@ -252,8 +252,7 @@ static void INS_FillTypes_f (void)
 {
 	cgi->UI_ExecuteConfunc("installationtype_clear");
 	if (INS_GetCount() < B_GetInstallationLimit()) {
-		int i;
-		for (i = 0; i < ccs.numInstallationTemplates; i++) {
+		for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 			const installationTemplate_t* tpl = &ccs.installationTemplates[i];
 			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
