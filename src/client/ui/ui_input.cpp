@@ -353,7 +353,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 /**
  * @brief Set a binding from a key to a node to active.
  *
- * @param path Path to a node, or a node mathod
+ * @param path Path to a node, or a node method
  * @param key The key number to use (see for example the K_* names are matched up.)
  * @param description Textual description of what the key/cmd does (for tooltip)
  *
