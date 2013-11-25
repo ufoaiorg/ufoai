@@ -45,7 +45,7 @@ public:
 
 	solid_t solid;		/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 
-	vec3_t mins, maxs;	/**< position of min and max points - relative to origin */
+	AABB entBox;		/**< position of min and max points - relative to origin */
 	AABB absBox;		/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 

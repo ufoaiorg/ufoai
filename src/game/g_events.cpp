@@ -45,7 +45,7 @@ void G_EventSpawnSound (playermask_t playerMask, const Edict& ent, const vec3_t 
 	if (!origin) {
 		if (ent.solid == SOLID_BSP) {
 			vec3_t origin_v;
-			VectorCenterFromMinsMaxs(ent.mins, ent.maxs, origin_v);
+			VectorCenterFromMinsMaxs(ent.entBox.mins, ent.entBox.maxs, origin_v);
 			VectorAdd(ent.origin, origin_v, origin_v);
 			gi.WritePos(origin);
 		} else {

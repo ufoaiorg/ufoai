@@ -143,12 +143,12 @@ void SV_LinkEdict (edict_t* ent)
 		return;
 
 	/* set the size */
-	VectorSubtract(ent->maxs, ent->mins, ent->size);
+	VectorSubtract(ent->entBox.maxs, ent->entBox.mins, ent->size);
 
 	/* increase the linkcount - even for none solids */
 	ent->linkcount++;
 
-	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, AABB(ent->mins, ent->maxs), ent->origin, ent->absBox);
+	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, AABB(ent->entBox.mins, ent->entBox.maxs), ent->origin, ent->absBox);
 
 	/* if not solid we have to set the abs mins/maxs above but don't really link it */
 	if (ent->solid == SOLID_NOT)
@@ -178,14 +178,14 @@ void SV_LinkEdict (edict_t* ent)
 
 	/* If this ent has a child, link it back in, too */
 	if (ent->child) {
-		VectorCopy(ent->absBox.mins, ent->child->mins);
-		VectorCopy(ent->absBox.maxs, ent->child->maxs);
+		VectorCopy(ent->absBox.mins, ent->child->entBox.mins);
+		VectorCopy(ent->absBox.maxs, ent->child->entBox.maxs);
 
 		/* expand the trigger box */
-		ent->child->mins[0] -= (UNIT_SIZE / 2);
-		ent->child->mins[1] -= (UNIT_SIZE / 2);
-		ent->child->maxs[0] += (UNIT_SIZE / 2);
-		ent->child->maxs[1] += (UNIT_SIZE / 2);
+		ent->child->entBox.mins[0] -= (UNIT_SIZE / 2);
+		ent->child->entBox.mins[1] -= (UNIT_SIZE / 2);
+		ent->child->entBox.maxs[0] += (UNIT_SIZE / 2);
+		ent->child->entBox.maxs[1] += (UNIT_SIZE / 2);
 
 		/* link child back into the world */
 		SV_LinkEdict(ent->child);
@@ -316,7 +316,7 @@ static int SV_HullForEntity (const edict_t* ent, int* tile, vec3_t rmaShift)
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	VectorCopy(vec3_origin, rmaShift);
-	return CM_HeadnodeForBox(sv->mapTiles.mapTiles[*tile], ent->mins, ent->maxs);
+	return CM_HeadnodeForBox(sv->mapTiles.mapTiles[*tile], ent->entBox.mins, ent->entBox.maxs);
 }
 
 

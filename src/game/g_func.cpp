@@ -150,8 +150,8 @@ void SP_func_breakable (Edict* ent)
 	gi.LinkEdict(ent);
 
 	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			ent->model, ent->mapNum, (int)ent->entBox.mins[0], (int)ent->entBox.mins[1], (int)ent->entBox.mins[2],
+			(int)ent->entBox.maxs[0], (int)ent->entBox.maxs[1], (int)ent->entBox.maxs[2],
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 
 	ent->destroy = Destroy_Breakable;

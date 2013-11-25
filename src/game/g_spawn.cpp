@@ -602,10 +602,10 @@ static void G_ActorSpawn (Edict* ent)
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
-	if (ent->maxs[0] == 0)
-		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-	if (ent->mins[0] == 0)
-		VectorSet(ent->mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
+	if (ent->entBox.maxs[0] == 0)
+		VectorSet(ent->entBox.maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	if (ent->entBox.mins[0] == 0)
+		VectorSet(ent->entBox.mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
 }
 
 /**
@@ -640,10 +640,10 @@ static void G_Actor2x2Spawn (Edict* ent)
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
-	if (ent->maxs[0] == 0)
-		VectorSet(ent->maxs, PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
-	if (ent->mins[0] == 0)
-		VectorSet(ent->mins, -PLAYER2x2_WIDTH, -PLAYER2x2_WIDTH, PLAYER_MIN);
+	if (ent->entBox.maxs[0] == 0)
+		VectorSet(ent->entBox.maxs, PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
+	if (ent->entBox.mins[0] == 0)
+		VectorSet(ent->entBox.mins, -PLAYER2x2_WIDTH, -PLAYER2x2_WIDTH, PLAYER_MIN);
 }
 
 /**
@@ -717,8 +717,8 @@ static void SP_2x2_start (Edict* ent)
 		ent->team = TEAM_PHALANX;
 
 	/* these units are bigger */
-	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
-	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
+	VectorSet(ent->entBox.maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
+	VectorSet(ent->entBox.mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
 	/* spawn singleplayer 2x2 unit */
 	G_Actor2x2Spawn(ent);
@@ -912,8 +912,8 @@ static void SP_misc_model (Edict* ent)
 			AABB modelAabb;
 			if (gi.LoadModelAABB(ent->model, ent->frame, modelAabb)) {
 				ent->classname = "model";
-				VectorCopy(modelAabb.maxs, ent->maxs);
-				VectorCopy(modelAabb.mins, ent->mins);
+				VectorCopy(modelAabb.maxs, ent->entBox.maxs);
+				VectorCopy(modelAabb.mins, ent->entBox.mins);
 				ent->type = ET_SOLID;
 				ent->solid = SOLID_BBOX;
 				/** @todo is fieldsize and forbidden list update really needed here? */
@@ -978,8 +978,8 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 	ent->type = type;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
 	ent->solid = solid;
-	VectorSet(ent->maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorSet(ent->mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
+	VectorSet(ent->entBox.maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
+	VectorSet(ent->entBox.mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
 	G_EdictCalcOrigin(ent);
 	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;

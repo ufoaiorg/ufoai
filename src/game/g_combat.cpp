@@ -816,8 +816,8 @@ static void DumpAllEntities (void)
 			check->model,
 			(int) check->absBox.mins[0], (int) check->absBox.mins[1], (int) check->absBox.mins[2],
 			(int) check->absBox.maxs[0], (int) check->absBox.maxs[1], (int) check->absBox.maxs[2],
-			(int) check->mins[0], (int) check->mins[1], (int) check->mins[2],
-			(int) check->maxs[0], (int) check->maxs[1], (int) check->maxs[2]);
+			(int) check->entBox.mins[0], (int) check->entBox.mins[1], (int) check->entBox.mins[2],
+			(int) check->entBox.maxs[0], (int) check->entBox.maxs[1], (int) check->entBox.maxs[2]);
 		i++;
 	}
 }

@@ -115,8 +115,8 @@ Edict* G_TriggerSpawn (Edict* owner)
 	AABB aabb(owner->absBox);
 	aabb.expandXY(UNIT_SIZE / 2);	/* expand the trigger box */
 
-	VectorCopy(aabb.mins, trigger->mins);
-	VectorCopy(aabb.maxs, trigger->maxs);
+	VectorCopy(aabb.mins, trigger->entBox.mins);
+	VectorCopy(aabb.maxs, trigger->entBox.maxs);
 
 	trigger->solid = SOLID_TRIGGER;
 	trigger->reset = nullptr;
