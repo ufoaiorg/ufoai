@@ -662,47 +662,53 @@ window hud_default extends hud
 			// Displays oweapon only if another weapon exists
 			confunc show_oweapon
 			{
-				if (*cvar:sldcurhand eq "r") {
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
 					if (*cvar:mn_lweapon eq "") {
 						*node:parent.oweapon@invis = true
 					} else {
 						*node:parent.oweapon@invis = false
 					}
+				call *node:parent.show_rhand
 				} else {
 					if (*cvar:mn_rweapon eq "") {
 						*node:parent.oweapon@invis = true
 					} else {
 						*node:parent.oweapon@invis = false
 					}
+				call *node:parent.show_lhand
 				}
 			}
-
-			func switchhands
-			{
-				if (*cvar:sldcurhand eq "r") {
-					*cvar:sldcurhand = "l"
+			func show_lhand {
 					*node:parent.right@invis = true
 					*node:parent.left@invis = false
 					*node:parent.fire_r@invis = true
 					*node:parent.fire_l@invis = false
 					*node:parent.reload_r@invis = true
 					*node:parent.reload_r_disabled@invis = true
-//					*node:parent.reload_l@invis = false
 					*node:parent.oweapon@src = *cvar:mn_rweapon
 					*node:parent.ammo_count@string = *cvar:mn_ammoleft
-				} else {
-					*cvar:sldcurhand = "r"
+
+			}
+			func show_rhand {
 					*node:parent.right@invis = false
 					*node:parent.left@invis = true
 					*node:parent.fire_r@invis = false
 					*node:parent.fire_l@invis = true
-//					*node:parent.reload_r@invis = false
 					*node:parent.reload_l@invis = true
 					*node:parent.reload_l_disabled@invis = true
 					*node:parent.oweapon@src = *cvar:mn_lweapon
 					*node:parent.ammo_count@string = *cvar:mn_ammoright
+
+			}
+			func switchhands
+			{
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
+					*cvar:sldcurhand<cvar:selected_soldier> = "l"
+					call *node:parent.show_lhand
+				} else {
+					*cvar:sldcurhand<cvar:selected_soldier> = "r"
+					call *node:parent.show_rhand
 				}
-				cmd "show_oweapon;"
 			}
 			confunc deselect_primaryleft
 			{
@@ -714,14 +720,14 @@ window hud_default extends hud
 			}
 			confunc deselect_reloadleft
 			{
-				if (*cvar:sldcurhand eq "l") {
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "l") {
 					*node:parent.reload_l@invis = false
 					*node:parent.reload_l_disabled@invis = true
 				}
 			}
 			confunc deselect_reloadright
 			{
-				if (*cvar:sldcurhand eq "r") {
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
 					*node:parent.reload_r@invis = false
 					*node:parent.reload_r_disabled@invis = true
 				}
@@ -730,14 +736,14 @@ window hud_default extends hud
 			confunc disable_primaryright { *node:parent.fire_r@invis = true }
 			confunc disable_reloadleft
 			{
-				if (*cvar:sldcurhand eq "l") {
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "l") {
 					*node:parent.reload_l@invis = true
 					*node:parent.reload_l_disabled@invis = false
 				}
 			}
 			confunc disable_reloadright
 			{
-				if (*cvar:sldcurhand eq "r") {
+				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
 					*node:parent.reload_r@invis = true
 					*node:parent.reload_r_disabled@invis = false
 				}
@@ -1303,10 +1309,6 @@ window hud_default extends hud
 		}
 		delete *cvar:i
 		*node:root.soldier.squad.sld<1>@bordercolor = "0.824 0.917 0.437 1"
-
-		// Resets the weapon display panel when soldier changes
-		*cvar:sldcurhand = "l"
-		call *node:root.soldier.weapon.switchhands
 		cmd "show_oweapon;"
 	}
 
@@ -1351,6 +1353,7 @@ window hud_default extends hud
 			*node:root.soldier.squad.sld<cvar:i>.tu@current = *cvar:mn_tu<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.morale@max = *cvar:mn_moralemax<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.morale@current = *cvar:mn_morale<cvar:i>
+			*cvar:sldcurhand<cvar:i> = "r"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
