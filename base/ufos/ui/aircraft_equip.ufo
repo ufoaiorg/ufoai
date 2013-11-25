@@ -64,10 +64,17 @@ window aircraft_equip extends iaircraft
 	// aircraft model
 	// ==================
 
+	panel model_background {
+		pos		    "19 248"
+		size	    "543 298"
+		invis       false
+        border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
+	}
 	model aircraftequip
 	{
 		src		"*cvar:mn_aircraft_model"
-		pos		"478 106"
+		pos		"47 266"
 		size	"529 261"
 		angles	"0 0 180"
 		autoscale	true
@@ -78,7 +85,7 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel item {
 		{
-			pos		"317 441"
+			pos		"740 90"
 			size	"252 319"
 			background	"ui/panel_grey_green"
 		}
@@ -182,9 +189,8 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel itemlist {
 		{
-			pos		"24 441"
-			size	"292 319"
-			background	"ui/panel_grey_green"
+			pos		"740 421"
+			size	"292 219"
 		}
 
 		string airequip_available
@@ -231,7 +237,7 @@ window aircraft_equip extends iaircraft
 			dataid		TEXT_LIST
 			cvar		*cvar:mn_aircraft_item_selected
 			pos			"15 87"
-			size		"225 215"
+			size		"225 115"
 			lineheight	"20"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -251,7 +257,7 @@ window aircraft_equip extends iaircraft
 			dataid		TEXT_LIST2
 			ghost		true
 			pos			"234 87"
-			size		"25 215"
+			size		"25 115"
 			contentalign	ALIGN_CR
 			lineheight	"20"
 			color		"0 .78 0 1"
@@ -267,7 +273,7 @@ window aircraft_equip extends iaircraft
 		vscrollbar airequip_list_scroll {
 			image		"ui/scrollbar_v_green"
 			pos			"259 87"
-			height		"215"
+			height		"115"
 			hidewhenunused	true
 			onChange {
 				*node:parent.airequip_list@viewpos = <current>
@@ -356,7 +362,7 @@ window aircraft_equip extends iaircraft
 		tooltip		"_Select this slot"
 		src		"ui/button_square"
 		mousefx		true
-		pos			"909 121"
+		pos			"478 281"
 		texl		"0 0"
 		texh		"64 64"
 		onClick		{ cmd "airequip_select slot 0;" }
@@ -364,7 +370,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot0
 	{
 		src		"*cvar:mn_aircraft_item_model_slot0"
-		pos			"911 123"
+		pos			"480 283"
 		size		"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -375,7 +381,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"909 205"
+		pos		"478 365"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 1;" }
@@ -383,7 +389,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot1
 	{
 		src	"*cvar:mn_aircraft_item_model_slot1"
-		pos		"911 207"
+		pos		"480 367"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -394,7 +400,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"909 281"
+		pos		"478 441"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 2;" }
@@ -402,7 +408,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot2
 	{
 		src	"*cvar:mn_aircraft_item_model_slot2"
-		pos		"911 283"
+		pos		"480 443"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -413,7 +419,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"709 121"
+		pos		"278 281"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 3;" }
@@ -421,7 +427,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot3
 	{
 		src	"*cvar:mn_aircraft_item_model_slot3"
-		pos		"711 123"
+		pos		"280 283"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -432,7 +438,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"709 287"
+		pos		"278 447"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 4;" }
@@ -440,7 +446,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot4
 	{
 		src	"*cvar:mn_aircraft_item_model_slot4"
-		pos		"711 289"
+		pos		"278 447"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -451,7 +457,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"509 121"
+		pos		"78 281"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 5;" }
@@ -459,7 +465,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot5
 	{
 		src	"*cvar:mn_aircraft_item_model_slot5"
-		pos		"511 123"
+		pos		"80 283"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -470,7 +476,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"509 201"
+		pos		"78 361"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 6;" }
@@ -478,7 +484,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot6
 	{
 		src	"*cvar:mn_aircraft_item_model_slot6"
-		pos		"511 203"
+		pos		"80 363"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -489,7 +495,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"509 281"
+		pos		"78 441"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 7;" }
@@ -497,11 +503,24 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot7
 	{
 		src	"*cvar:mn_aircraft_item_model_slot7"
-		pos		"511 283"
+		pos		"80 443"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
+
+	panel tab_background {
+		pos		"18 680"
+		size	"586 56"
+		background	"ui/panel_tab"
+	}
+
+	tab aircraft_navigation {
+		{
+			pos		"23 685"
+			size	"578 39"
+        }
+    }
 
 	// ==================
 	// functions
