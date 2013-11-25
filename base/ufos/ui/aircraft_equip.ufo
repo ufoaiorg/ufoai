@@ -10,13 +10,13 @@ window aircraft_equip extends iaircraft
 	// background
 	// ==================
 
-	image equipment_background {
+/*	image equipment_background {
 		pos		"575 460"
 		size	"432 293"
 		texh	"432 293"
 		src	"ui/airequip_element"
 	}
-
+*/
 	// ==================
 	// functions
 	// ==================
@@ -66,7 +66,7 @@ window aircraft_equip extends iaircraft
 
 	panel model_background {
 		pos		    "19 248"
-		size	    "543 298"
+		size	    "563 298"
 		invis       false
         border		"2"
 		bordercolor	"0.56 0.81 0.76 1"
@@ -74,7 +74,7 @@ window aircraft_equip extends iaircraft
 	model aircraftequip
 	{
 		src		"*cvar:mn_aircraft_model"
-		pos		"47 266"
+		pos		"42 266"
 		size	"529 261"
 		angles	"0 0 180"
 		autoscale	true
@@ -85,7 +85,7 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel item {
 		{
-			pos		"740 90"
+			pos		"740 305"
 			size	"252 319"
 			background	"ui/panel_grey_green"
 		}
@@ -189,7 +189,7 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel itemlist {
 		{
-			pos		"740 421"
+			pos		"740 85"
 			size	"292 219"
 		}
 
@@ -291,66 +291,76 @@ window aircraft_equip extends iaircraft
 	// Zones
 	// ==================
 
-	image airequip_zone_select1
-	{
-		tooltip	"_Select this zone"
-		pos			"654 485"
-		src		"ui/airequip_selected_element"
-		texl		"0 83"
-		texh		"458 190"
-		onClick		{ cmd "airequip_select zone1;" }
+	panel airequip1 {
+		{
+			pos		"20 550"
+			size	"346 115"
+		}
+		image airequip_zone_select1
+		{
+			tooltip	"_Select this zone"
+			pos			"5 5"
+			src		"ui/airequip_selected_element"
+			texl		"0 83"
+			texh		"338 190"
+			onClick		{ cmd "airequip_select zone1;" }
+		}
+		string airequip_header1
+		{
+			string		"_Current item in slot"
+			pos			"21 15"
+			size		"275 20"
+			font		"f_small"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CC
+			ghost		true
+		}
+		text airequip_text_zone1
+		{
+			pos			"18 50"
+			size		"304 48"
+			lineheight	"16"
+			dataid		TEXT_AIREQUIP_1
+			rows		"3"
+			ghost		true
+		}
 	}
 
-	text airequip_text_zone1
-	{
-		pos			"667 530"
-		size		"304 48"
-		lineheight	"16"
-		dataid		TEXT_AIREQUIP_1
-		rows		"3"
-		ghost		true
-	}
+	panel airequip2 {
+		{
+			pos		"360 550"
+			size	"346 115"
+		}
+		image airequip_zone_select2
+		{
+			tooltip		"_Select this zone"
+			src		"ui/airequip_selected_element"
+			pos			"5 5"
+			texl		"0 0"
+			texh		"338 82"
+			onClick	{ cmd "airequip_select zone2;" }
+		}
 
-	image airequip_zone_select2
-	{
-		tooltip		"_Select this zone"
-		src		"ui/airequip_selected_element"
-		pos			"654 648"
-		texl		"0 0"
-		texh		"458 82"
-		onClick	{ cmd "airequip_select zone2;" }
-	}
+		text airequip_text_zone2
+		{
+			dataid		TEXT_AIREQUIP_2
+			pos			"18 50"
+			size		"306 35"
+			lineheight	"16"
+			rows		"2"
+			ghost		true
+		}
 
-	text airequip_text_zone2
-	{
-		dataid		TEXT_AIREQUIP_2
-		pos			"669 689"
-		size		"306 35"
-		lineheight	"16"
-		rows		"2"
-		ghost		true
-	}
-
-	string airequip_header1
-	{
-		string		"_Current item in slot"
-		pos			"670 495"
-		size		"275 20"
-		font		"f_small"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CC
-		ghost		true
-	}
-
-	string airequip_header2
-	{
-		string		"_Ammo fitting this weapon"
-		pos			"670 659"
-		size		"275 20"
-		font		"f_small"
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CL
-		ghost		true
+		string airequip_header2
+		{
+			string		"_Ammo fitting this weapon"
+			pos			"21 15"
+			size		"275 20"
+			font		"f_small"
+			color		"0 .78 0 1"
+			contentalign	ALIGN_CL
+			ghost		true
+		}
 	}
 
 	// ==================
