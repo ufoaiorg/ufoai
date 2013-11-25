@@ -316,7 +316,7 @@ static int SV_HullForEntity (const edict_t* ent, int* tile, vec3_t rmaShift)
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	VectorCopy(vec3_origin, rmaShift);
-	return CM_HeadnodeForBox(sv->mapTiles.mapTiles[*tile], ent->entBox.mins, ent->entBox.maxs);
+	return CM_HeadnodeForBox(sv->mapTiles.mapTiles[*tile], ent->entBox);
 }
 
 

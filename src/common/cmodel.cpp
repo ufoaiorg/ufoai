@@ -145,20 +145,20 @@ trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const Line& traceLine, cons
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int32_t CM_HeadnodeForBox (MapTile& tile, const vec3_t mins, const vec3_t maxs)
+int32_t CM_HeadnodeForBox (MapTile& tile, const AABB& box)
 {
-	tile.box_planes[0].dist = maxs[0];
-	tile.box_planes[1].dist = -maxs[0];
-	tile.box_planes[2].dist = mins[0];
-	tile.box_planes[3].dist = -mins[0];
-	tile.box_planes[4].dist = maxs[1];
-	tile.box_planes[5].dist = -maxs[1];
-	tile.box_planes[6].dist = mins[1];
-	tile.box_planes[7].dist = -mins[1];
-	tile.box_planes[8].dist = maxs[2];
-	tile.box_planes[9].dist = -maxs[2];
-	tile.box_planes[10].dist = mins[2];
-	tile.box_planes[11].dist = -mins[2];
+	tile.box_planes[0].dist = box.maxs[0];
+	tile.box_planes[1].dist = -box.maxs[0];
+	tile.box_planes[2].dist = box.mins[0];
+	tile.box_planes[3].dist = -box.mins[0];
+	tile.box_planes[4].dist = box.maxs[1];
+	tile.box_planes[5].dist = -box.maxs[1];
+	tile.box_planes[6].dist = box.mins[1];
+	tile.box_planes[7].dist = -box.mins[1];
+	tile.box_planes[8].dist = box.maxs[2];
+	tile.box_planes[9].dist = -box.maxs[2];
+	tile.box_planes[10].dist = box.mins[2];
+	tile.box_planes[11].dist = -box.mins[2];
 
 	assert(tile.box_headnode < MAX_MAP_NODES);
 	return tile.box_headnode;
