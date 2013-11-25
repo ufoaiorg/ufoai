@@ -49,9 +49,9 @@ void CL_AddEdict (const eventRegister_t* self, dbuffer* msg)
 {
 	int entnum;
 	entity_type_t type;
-	vec3_t mins, maxs;
+	AABB box;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &type, &mins, &maxs);
+	NET_ReadFormat(msg, self->formatString, &entnum, &type, &box.mins, &box.maxs);
 
 	/* use an offset to ensure that we don't conflict with any other solid edict that is already spawned */
 	le_t* le = LE_Get(entnum + MAX_EDICTS);
@@ -62,7 +62,7 @@ void CL_AddEdict (const eventRegister_t* self, dbuffer* msg)
 		le->inuse = true;
 	}
 
-	le->aabb.set(mins, maxs);
+	le->aabb.set(box);
 	le->addFunc = CL_AddEdictFunc;
 	le->type = type;
 
