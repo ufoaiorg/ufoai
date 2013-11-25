@@ -826,14 +826,6 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* e
 
 			if (secondaryWeapon) {
 				hasWeapon += PackAmmoAndWeapon(chr, secondaryWeapon, missedPrimary, ed, maxWeight);
-				if (hasWeapon) {
-					const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
-															 this is the chance to get another one (between 0 and 1) */
-					/* Try to get the second akimbo pistol if no primary weapon. */
-					if (primary == WEAPON_NO_PRIMARY && !secondaryWeapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
-						PackAmmoAndWeapon(chr, secondaryWeapon, 0, ed, maxWeight);
-					}
-				}
 			}
 		} while (!hasWeapon && repeat--);
 
