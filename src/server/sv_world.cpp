@@ -410,9 +410,8 @@ int SV_PointContents (const vec3_t p)
 
 /**
  * @brief calculates the bounding box for the whole trace
- * @param[in] start The starting point of the trace
+ * @param[in] trLine Start and stop vectors of the trace
  * @param[in] objBox extents of the box we are moving through the world
- * @param[in] end The point where the trace should end
  * @param[out] cBox The resulting bounds of the trace
  * @sa SV_Trace
  */
