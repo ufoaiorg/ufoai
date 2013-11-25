@@ -1326,10 +1326,8 @@ window hud_default extends hud
 	// ==================
 	confunc startround
 	{
-		*node:parent.stand_d@invis = true
-		*node:parent.crouch_d@invis = true
 		*node:root.overlay@invis = true
-		cmd "deselect_headgear;"
+		cmd "deselect_headgear;deselect_crouch;deselect_stand;"
 	}
 	confunc endround
 	{
