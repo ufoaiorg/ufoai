@@ -140,7 +140,7 @@ void CheckEntities (void)
 			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
 
 			if (!kd) { /* make sure it has a definition */
-				Check_Printf(VERB_CHECK, false, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
+				Check_Printf(VERB_CHECK, false, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key, name);
 				continue;
 			}
 

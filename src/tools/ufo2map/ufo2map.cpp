@@ -103,7 +103,7 @@ static const usagePair_t usageArray[] = {
 	{" -micro <float>","warn if a brush has a volume lower than the specified float."},
 	{nullptr, "brushes are tested after CSG."},
 	{" -nobackclip","draw downward pointing faces. (so actors cannot see up through floors"},
-	{nullptr,"in first person view). default is to set SURF_NODRAW to downard faces."},
+	{nullptr, "in first person view). default is to set SURF_NODRAW to downard faces."},
 	{" -nocsg",""},
 	{" -gamedir", "Add another game dir to the search directories"},
 	{" -nodetail","skip detail brushes"},

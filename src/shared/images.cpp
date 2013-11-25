@@ -156,7 +156,7 @@ void R_WriteCompressedTGA (qFILE* f, const byte* buffer, int width, int height)
 						if (block_length > 1) {
 							/* write the uncompressed block */
 							rle_packet = block_length - 2;
-							FS_Write(&rle_packet,1, f);
+							FS_Write(&rle_packet, 1, f);
 							FS_Write(block_data, (block_length - 1) * TGA_CHANNELS, f);
 							block_length = 1;
 						}

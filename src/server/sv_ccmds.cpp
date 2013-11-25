@@ -395,11 +395,11 @@ static int SV_CompleteMapCommand (const char* partial, const char** match)
 		dayNightStr = strstr(partial, " ");
 	if (!dayNightStr) {
 		if (partial[0] == 'd') {
-			Q_strncpyz(dayNightMatch,"day ",sizeof(dayNightMatch));
+			Q_strncpyz(dayNightMatch, "day ", sizeof(dayNightMatch));
 			*match = dayNightMatch;
 			return 1;
 		} else if (partial[0] == 'n') {
-			Q_strncpyz(dayNightMatch,"night ",sizeof(dayNightMatch));
+			Q_strncpyz(dayNightMatch, "night ", sizeof(dayNightMatch));
 			*match = dayNightMatch;
 			return 1;
 		}
