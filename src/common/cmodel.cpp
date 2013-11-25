@@ -45,7 +45,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, AABB& box)
 	box.shift(model->origin);
 	if (VectorNotEmpty(model->angles)) {
 		const float offset = std::max(std::max(box.getWidthX(), box.getWidthY()), box.getWidthZ()) / 2.0;
-		box.expand(offset);
+		box.expand(offset);		/* expand the whole box by the highest extent we found */
 	}
 }
 
