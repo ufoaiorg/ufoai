@@ -55,26 +55,6 @@ window iaircraft
 				}
 			}
 
-	// background
-	// ==================
-
-/*	image background {
-		src	"background/base_bg"
-	}
-
-	panel horizontalline {
-		pos		"30 140"
-		size	"409 4"
-		bgcolor	"0.03 0.42 0.03 1"
-	}
-
-	// ==================
-	// base info
-	// ==================
-
-	cmpBaseHeader baseHeader {
-	}
-*/
 			tab aircraft_navigation {
 				{
 					pos		"5 30"
