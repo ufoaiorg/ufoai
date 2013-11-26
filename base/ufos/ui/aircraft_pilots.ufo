@@ -5,63 +5,6 @@
 window aircraft_pilots extends iaircraft
 {
 
-	// ==================
-	// aircraft
-	// ==================
-
-	model aircraft
-	{
-		src			*cvar:mn_aircraft_model
-		pos			"325 256"
-        border		"2"
-		bordercolor	"0.527 0.6 0.21 1"
-		size		"395 291"
-		origin		"-20 25 0"
-		angles		"160 20 -120"
-		autoscale	true
-	}
-
-	image aircraft_slot
-	{
-		src	"ui/button_square"
-		pos		"330 270"
-		size	"64 64"
-		texh	"64 64"
-	}
-
-	model assigned_pilot_body
-	{
-		{
-			src		*cvar:mn_pilot_body
-			skin	*cvar:mn_pilot_body_skin
-			anim	"stand_still"
-			angles	"0 90 90"
-			scale	"5.5 5.5 5.5"
-			pos		"330 271"
-			size	"62 62"
-			origin	"0 70 0"
-		}
-
-		model assigned_pilot_head
-		{
-			src		*cvar:mn_pilot_head
-			skin	*cvar:mn_pilot_head_skin
-			tag		"tag_head"
-		}
-	}
-
-	string assigned_pilot_name
-	{
-		string		*cvar:mn_pilot_name
-		pos			"330 340"
-		size		"200 20"
-		contentalign	ALIGN_UL
-	}
-
-
-	// ==================
-	// pilot list
-	// ==================
 
 	data selected {
 	}
@@ -80,6 +23,62 @@ window aircraft_pilots extends iaircraft
 					string			"_Pilots"
 				}
 			}
+	// ==================
+	// aircraft
+	// ==================
+
+			model aircraft
+			{
+				src			*cvar:mn_aircraft_model
+				pos			"317 221"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				size		"395 291"
+				origin		"-20 25 0"
+				angles		"160 20 -120"
+				autoscale	true
+			}
+
+			image aircraft_slot
+			{
+				src	"ui/button_square"
+				pos		"330 240"
+				size	"64 64"
+				texh	"64 64"
+			}
+
+			model assigned_pilot_body
+			{
+				{
+					src		*cvar:mn_pilot_body
+					skin	*cvar:mn_pilot_body_skin
+					anim	"stand_still"
+					angles	"0 90 90"
+					scale	"5.5 5.5 5.5"
+					pos		"330 241"
+					size	"62 62"
+					origin	"0 70 0"
+				}
+
+				model assigned_pilot_head
+				{
+					src		*cvar:mn_pilot_head
+					skin	*cvar:mn_pilot_head_skin
+					tag		"tag_head"
+				}
+			}
+
+			string assigned_pilot_name
+			{
+				string		*cvar:mn_pilot_name
+				pos			"330 310"
+				size		"200 20"
+				contentalign	ALIGN_UL
+			}
+
+			// ==================
+			// pilot list
+			// ==================
 
 			panel actors_background {
 				{
