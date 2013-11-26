@@ -498,7 +498,7 @@ window campaign extends cgame_download
 	func onWindowOpened
 	{
 		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments;"
-		call *node:root.toggle_cmp_new
+		call *node:root.toggle_cmp_load
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
