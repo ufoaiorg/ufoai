@@ -31,7 +31,7 @@ window main
 		pos			"10 720"
 		string		"_Facebook"
 		tooltip		"_Like us on facebook"
-		size		"70 20"
+		size		"80 20"
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		padding		0
@@ -40,7 +40,7 @@ window main
 
 	button twitter
 	{
-		pos			"90 720"
+		pos			"100 720"
 		string		"_Twitter"
 		tooltip		"_Follow us on twitter"
 		size		"70 20"
