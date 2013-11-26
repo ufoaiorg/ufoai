@@ -6,17 +6,7 @@ window aircraft_equip extends iaircraft
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
-	// ==================
-	// background
-	// ==================
 
-/*	image equipment_background {
-		pos		"575 460"
-		size	"432 293"
-		texh	"432 293"
-		src	"ui/airequip_element"
-	}
-*/
 	// ==================
 	// functions
 	// ==================
@@ -544,8 +534,6 @@ window aircraft_equip extends iaircraft
 		*node:root.airequip2.airequip_header2@invis = true
 		*node:root.airequip2.airequip_text_zone2@invis = true
 		*node:root.airequip2.airequip_zone_select2@invis = true
-		*node:root.equipment_background@texh = "432 160"
-		*node:root.equipment_background@size = "432 160"
 	}
 
 	confunc airequip_zone2_on
@@ -553,8 +541,6 @@ window aircraft_equip extends iaircraft
 		*node:root.airequip2.airequip_header2@invis = false
 		*node:root.airequip2.airequip_text_zone2@invis = false
 		*node:root.airequip2.airequip_zone_select2@invis = false
-		*node:root.equipment_background@texh = "432 293"
-		*node:root.equipment_background@size = "432 293"
 	}
 
 	confunc airequip_installable_item
