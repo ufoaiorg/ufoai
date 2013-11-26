@@ -358,11 +358,11 @@ window equipment extends objectinfo
 		*node:root.equip_ammo@viewpos = 0
 	}
 
-	tab equip_type1
+	tab equip_type
 	{
 		{
 			pos		"740 10"
-			size	"280 40"
+			size	"280 32"
 			cvar	*cvar:mn_equiptype
 			onChange {
 				cmd	"update_item_list;"
@@ -370,35 +370,28 @@ window equipment extends objectinfo
 		}
 
 		option primary {
-			label	"_Primary"
+			icon "icons/icon_primarysml"
+			tooltip	"_Primary"
 			value	"0"
 		}
 		option secondary {
-			label	"_Secondary"
+			icon "icons/icon_secondarysml"
+			tooltip	"_Secondary"
 			value	"1"
 		}
-	}
-	tab equip_type2
-	{
-		{
-			pos		"740 50"
-			size	"280 40"
-			cvar	*cvar:mn_equiptype
-			onChange {
-				cmd	"update_item_list;"
-			}
-		}
-
 		option heavy {
-			label	"_Heavy"
+			icon "icons/icon_heavysml"
+			tooltip	"_Heavy"
 			value	"2"
 		}
 		option misc {
-			label	"_Misc"
+			icon "icons/icon_miscsml"
+			tooltip	"_Misc"
 			value	"3"
 		}
 		option armour {
-			label	"_Armour"
+			icon "icons/icon_armoursml"
+			tooltip	"_Armour"
 			value	"4"
 		}
 	}
@@ -432,7 +425,6 @@ window equipment extends objectinfo
 		onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
 		onChange {
 			cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
-			//This should update soldier's look when changing armour
 			cmd "equipment_soldierlist_select <node:root.selected@integer>;"
 		}
 	}
