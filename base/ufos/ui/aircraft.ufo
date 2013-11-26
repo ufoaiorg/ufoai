@@ -13,7 +13,7 @@ component aircraft_teammember extends panel {
 
 	string name {
 		pos			"0 0"
-		color		"0 .78 0 1"
+		color		"0.56 0.81 0.76 1"
 		size		"230 25"
 		onClick {
 			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
@@ -106,7 +106,7 @@ window iaircraft
 					rows		4
 					lineheight	20
 					dataid		TEXT_AIRCRAFT_LIST
-					color	"0 .78 0 1"
+					color	"0.56 0.81 0.76 1"
 					selectcolor	"1 1 1 1"
 					onViewChange {
 						*node:parent.aircraft_list_scroll@fullsize = <fullsize>
@@ -168,19 +168,19 @@ window iaircraft
 	confunc aircraft_status_change { }
 
 	confunc aircraft_soldierlist_clear {
-		call *node:parent.soldierlist@removeAllChild
+		call *node:root.base_container.mainBody.actors_background.soldierlist@removeAllChild
 	}
 	confunc aircraft_soldierlist_add {
-		call *node:parent.soldierlist@createChild("member<1>", "aircraft_teammember")
-		*node:parent.soldierlist.member<1>.id@integer = <1>
-		*node:parent.soldierlist.member<1>.id@string = <2>
-		*node:parent.soldierlist.member<1>.name@string = <3>
-		*node:parent.soldierlist.member<1>.selected@current = <4>
+		call *node:root.base_container.mainBody.actors_background.soldierlist@createChild("member<1>", "aircraft_teammember")
+		*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.id@integer = <1>
+		*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.id@string = <2>
+		*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.name@string = <3>
+		*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.selected@current = <4>
 
 		if ( "<5>" ne "" ) {
-			*node:parent.soldierlist.member<1>.selected@disabled = true
-			*node:parent.soldierlist.member<1>.name@tooltip = "<5>"
-			*node:parent.soldierlist.member<1>.selected@tooltip = "<5>"
+			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.selected@disabled = true
+			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.name@tooltip = "<5>"
+			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.selected@tooltip = "<5>"
 		}
 		if ( *node:root.selected@integer < 0 ) {
 			cmd "aircraft_soldierlist_select <1>;"
@@ -189,11 +189,11 @@ window iaircraft
 	}
 	confunc aircraft_soldierlist_select {
 		if ( *node:root.selected@integer >= 0 ) {
-			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+			*node:root.base_container.mainBody.actors_background.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
 		}
 		*node:root.selected@integer = <1>
 		if ( *node:root.selected@integer >= 0 ) {
-			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
 		}
 	}

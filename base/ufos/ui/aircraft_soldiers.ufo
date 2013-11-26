@@ -56,12 +56,6 @@ component cmpNamedBar extends panel {
 window team extends iaircraft
 {
 
-	panel actors_background {
-		pos		"18 250"
-		size	"329 321"
-		background	"ui/panel_grey_green_large"
-	}
-
 	// ==================
 	// aircraft
 	// ==================
@@ -121,38 +115,57 @@ window team extends iaircraft
 	data selected {
 	}
 
-	rows soldierlist_lines {
-		pos			"35 265"
-		size		"270 283"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
+	BaseContainerPanelV2 base_container
+	{
+		panel mainBody
+		{
+			{}
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Soldiers"
+				}
+			}
 
-	panel soldierlist {
-		pos			    "35 265"
-		size		    "270 283"
-		padding		    6
-		layout		    LAYOUT_TOP_DOWN_FLOW
-        layoutMargin	2
-		wheelscrollable	true
+			panel actors_background {
+				{
+				pos		"9 221"
+				size	"304 291"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				}
 
-		onViewChange {
-			*node:parent.soldierlist_scroll@fullsize = <fullsize>
-			*node:parent.soldierlist_scroll@current = <viewpos>
-			*node:parent.soldierlist_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar soldierlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"310 265"
-		height		"283"
-		current		0
-		viewsize	8
-		fullsize	50
+				panel soldierlist {
+					pos			    "10 10"
+					size		    "270 283"
+					padding		    6
+					layout		    LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
 
-		onChange {
-			*node:parent.soldierlist@viewpos = <current>
+					onViewChange {
+						*node:parent.soldierlist_scroll@fullsize = <fullsize>
+						*node:parent.soldierlist_scroll@current = <viewpos>
+						*node:parent.soldierlist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar soldierlist_scroll {
+					image			"ui/scrollbar_v_green"
+					pos				"285 8"
+					height			"283"
+					hidewhenunused	true
+					current			0
+					viewsize		8
+					fullsize		50
+
+					onChange {
+						*node:parent.soldierlist@viewpos = <current>
+					}
+				}
+			}
 		}
 	}
 

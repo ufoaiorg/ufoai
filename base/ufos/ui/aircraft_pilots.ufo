@@ -5,28 +5,18 @@
 window aircraft_pilots extends iaircraft
 {
 
-	panel actors_background {
-		pos		"18 250"
-		size	"329 321"
-	}
-
 	// ==================
 	// aircraft
 	// ==================
-	panel model_background {
-		pos		    "335 248"
-		size	    "443 298"
-		invis       true
-        border		"2"
-		bordercolor	"0.56 0.81 0.76 1"
-	}
 
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"340 256"
-		size		"409 261"
-		origin		"-45 25 0"
+		pos			"325 256"
+        border		"2"
+		bordercolor	"0.527 0.6 0.21 1"
+		size		"395 291"
+		origin		"-20 25 0"
 		angles		"160 20 -120"
 		autoscale	true
 	}
@@ -34,7 +24,7 @@ window aircraft_pilots extends iaircraft
 	image aircraft_slot
 	{
 		src	"ui/button_square"
-		pos		"345 270"
+		pos		"330 270"
 		size	"64 64"
 		texh	"64 64"
 	}
@@ -47,7 +37,7 @@ window aircraft_pilots extends iaircraft
 			anim	"stand_still"
 			angles	"0 90 90"
 			scale	"5.5 5.5 5.5"
-			pos		"345 271"
+			pos		"330 271"
 			size	"62 62"
 			origin	"0 70 0"
 		}
@@ -63,7 +53,7 @@ window aircraft_pilots extends iaircraft
 	string assigned_pilot_name
 	{
 		string		*cvar:mn_pilot_name
-		pos			"345 340"
+		pos			"330 340"
 		size		"200 20"
 		contentalign	ALIGN_UL
 	}
@@ -76,37 +66,55 @@ window aircraft_pilots extends iaircraft
 	data selected {
 	}
 
-/*	rows soldierlist_lines {
-		pos			"35 460"
-		size		"270 283"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-*/
-	panel soldierlist {
-		pos			"35 265"
-		size		"270 283"
-		padding		6
-		layout		LAYOUT_TOP_DOWN_FLOW
-		wheelscrollable	true
+	BaseContainerPanelV2 base_container
+	{
+		panel mainBody
+		{
+			{}
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Pilots"
+				}
+			}
 
-		onViewChange {
-			*node:parent.soldierlist_scroll@fullsize = <fullsize>
-			*node:parent.soldierlist_scroll@current = <viewpos>
-			*node:parent.soldierlist_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar soldierlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"310 265"
-		height		"265"
-		current		0
-		viewsize	8
-		fullsize	50
+			panel actors_background {
+				{
+				pos		"9 221"
+				size	"304 291"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				}
+				panel soldierlist {
+					pos			"10 10"
+					size		"270 283"
+					padding		6
+					layout		LAYOUT_TOP_DOWN_FLOW
+					wheelscrollable	true
 
-		onChange {
-			*node:parent.soldierlist@viewpos = <current>
+					onViewChange {
+						*node:parent.soldierlist_scroll@fullsize = <fullsize>
+						*node:parent.soldierlist_scroll@current = <viewpos>
+						*node:parent.soldierlist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar soldierlist_scroll {
+					image			"ui/scrollbar_v_green"
+					pos				"285 8"
+					hidewhenunused	true
+					height			"283"
+					current			0
+					viewsize		8
+					fullsize		50
+
+					onChange {
+						*node:parent.soldierlist@viewpos = <current>
+					}
+				}
+			}
 		}
 	}
 
