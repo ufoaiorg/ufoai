@@ -263,7 +263,7 @@ window team extends iaircraft
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		}
-		*node:root.aircraft_list@lineselected = <1>
+		*node:root.base_container.mainBody.aircraftlist.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_aircraftinbase == 0 ) {
 			cmd "ui_pop;ui_push aircraft;"

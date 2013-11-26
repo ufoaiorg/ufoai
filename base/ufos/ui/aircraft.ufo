@@ -55,23 +55,11 @@ window iaircraft
 				}
 			}
 
-/*	// background
+	// background
 	// ==================
 
-	image background {
+/*	image background {
 		src	"background/base_bg"
-	}
-
-	panel model_background {
-		pos		"461 88"
-		size	"563 298"
-		background	"ui/panel_grey_green_large"
-	}
-
-	panel aircraftlist_background1 {
-		pos		"19 88"
-		size	"433 158"
-		background	"ui/panel_grey_green"
 	}
 
 	panel horizontalline {
@@ -89,8 +77,8 @@ window iaircraft
 */
 			tab aircraft_navigation {
 				{
-					pos		"47 40"
-					size	"578 39"
+					pos		"5 30"
+					size	"698 39"
 					cvar	*cvar:mn_aircrafttab
 					onChange {
 						cmd "ui_pop; ui_push <cvar:mn_aircrafttab>;"
@@ -123,55 +111,64 @@ window iaircraft
 			// aircraft list
 			// ==================
 
-			textlist aircraft_list
-			{
-				pos			"51 153"
-				size		"350 80"
-				rows		4
-				lineheight	20
-				dataid		TEXT_AIRCRAFT_LIST
-				color	"0 .78 0 1"
-				selectcolor	"1 1 1 1"
-				onViewChange {
-					*node:root.aircraft_list_scroll@fullsize = <fullsize>
-					*node:root.aircraft_list_scroll@viewsize = <viewsize>
-					*node:root.aircraft_list_scroll@current = <viewpos>
+			panel aircraftlist {
+				{
+				pos			"10 70"
+				size		"433 140"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
 				}
-				onClick {
-					cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
+
+				textlist aircraft_list
+				{
+					pos			"11 53"
+					size		"350 80"
+					rows		4
+					lineheight	20
+					dataid		TEXT_AIRCRAFT_LIST
+					color	"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					onViewChange {
+						*node:parent.aircraft_list_scroll@fullsize = <fullsize>
+						*node:parent.aircraft_list_scroll@viewsize = <viewsize>
+						*node:parent.aircraft_list_scroll@current = <viewpos>
+					}
+					onClick {
+						cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
+					}
 				}
-			}
 
-			vscrollbar aircraft_list_scroll {
-				image			"ui/scrollbar_v_green"
-				pos				"413 151"
-				height			"80"
-				current			0
-				viewsize		11
-				fullsize		19
-				hidewhenunused	true
-				onChange {
-					*node:root.aircraft_list@viewpos = <current>
+				vscrollbar aircraft_list_scroll {
+					image			"ui/scrollbar_v_green"
+					pos				"373 51"
+					height			"80"
+					current			0
+					viewsize		11
+					fullsize		19
+					hidewhenunused	true
+					onChange {
+						*node:parent.aircraft_list@viewpos = <current>
+					}
 				}
-			}
 
-			textentry aircraft_selected
-			{
-				string		*cvar:mn_aircraftname
-				pos			"46 114"
-				size		"317 21"
-				font		"f_normal_bold"
-				onChange	{ cmd "aircraft_namechange; ui_pop; ui_push aircraft;" }
-			}
+				textentry aircraft_selected
+				{
+					string		*cvar:mn_aircraftname
+					pos			"06 14"
+					size		"317 21"
+					font		"f_normal_bold"
+					onChange	{ cmd "aircraft_namechange; ui_pop; ui_push aircraft;" }
+				}
 
-			button air_nameedit
-			{
-				tooltip		"_Rename aircraft"
-				icon		"icons/pen"
-				pos			"380 105"
-				size		"35 35"
-				padding		0
-				onClick		{ call *node:root.aircraft_selected@edit }
+				button air_nameedit
+				{
+					tooltip		"_Rename aircraft"
+					icon		"icons/pen"
+					pos			"340 5"
+					size		"35 35"
+					padding		0
+					onClick		{ call *node:root.aircraftlist.aircraft_selected@edit }
+				}
 			}
 		}
 	}
