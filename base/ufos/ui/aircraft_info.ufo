@@ -44,20 +44,17 @@ window aircraft extends iaircraft
 	panel aircraft_info
 	{
 		{
-			pos		"200 400"
-			size	"624 368"
-		}
-		panel info_background
-		{
-			pos		"61 44"
-			size	"561 320"
-			background	"ui/panel_grey_green_large"
+			pos		"700 460"
+			size	"320 298"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
+			bgcolor		"0 0 0 1"
 		}
 
 		string aircraft_name
 		{
 			string		*cvar:mn_aircraftname
-			pos			"105 80"
+			pos			"10 10"
 			size		"317 21"
 			contentalign	ALIGN_UL
 			padding		0
@@ -66,7 +63,7 @@ window aircraft extends iaircraft
 		string aircraft_status_label
 		{
 			string		"_Status:"
-			pos			"105 110"
+			pos			"10 30"
 			size		"210 21"
 			contentalign	ALIGN_UL
 			padding		0
@@ -75,14 +72,14 @@ window aircraft extends iaircraft
 		string aircraft_status
 		{
 			string		*cvar:mn_aircraftstatus
-			pos			"370 110"
+			pos			"87 50"
 			size		"229 20"
 			contentalign	ALIGN_UL
 		}
 
 		button aircraft_return
 		{
-			pos			"326 110"
+			pos			"10 50"
 			icon		"icons/aircraft_return"
 			size		"16 16"
 		}
@@ -90,18 +87,18 @@ window aircraft extends iaircraft
 		string aircraft_health_label
 		{
 			string		"_Health:"
-			pos			"105 140"
-			size		"210 21"
+			pos			"10 80"
+			size		"200 21"
 			contentalign	ALIGN_UL
 			padding		0
 		}
 
 		image aircraft_healthbarborder {
-			pos "324 140"
+			pos "8 95"
 			src "ui/bar_border"
 		}
 		bar aircraft_healthbar {
-			pos			"326 146"
+			pos			"10 101"
 			size		"249 5"
 			min			0
 			max			196
@@ -116,7 +113,7 @@ window aircraft extends iaircraft
 		string team_members
 		{
 			string		"_Team Members:"
-			pos			"105 170"
+			pos			"10 120"
 			size		"210 20"
 			contentalign	ALIGN_CL
 			padding		0
@@ -125,7 +122,7 @@ window aircraft extends iaircraft
 		string team_hired
 		{
 			string		*cvar:mn_hired
-			pos			"322 170"
+			pos			"227 120"
 			size		"110 20"
 			contentalign	ALIGN_CL
 			padding		0
@@ -133,8 +130,8 @@ window aircraft extends iaircraft
 
 		text aircraftinfo
 		{
-			pos			"105 200"
-			size		"495 140"
+			pos			"10 150"
+			size		"315 140"
 			lineheight	20
 			tabwidth	220
 			dataid		TEXT_AIRCRAFT_INFO
