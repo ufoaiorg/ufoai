@@ -29,14 +29,14 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_select {
 		if ( <1> eq "zone1" ) {
-			*node:root.airequip_zone_select1@src = "ui/airequip_selected_element"
-			*node:root.airequip_zone_select2@src = ""
+			*node:root.airequip1.airequip_zone_select1@src = "ui/airequip_selected_element"
+			*node:root.airequip2.airequip_zone_select2@src = ""
 			*cvar:mn_aircraft_item_selected = -1
 			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
-			*node:root.airequip_zone_select1@src = ""
-			*node:root.airequip_zone_select2@src = "ui/airequip_selected_element"
+			*node:root.airequip1.airequip_zone_select1@src = ""
+			*node:root.airequip2.airequip_zone_select2@src = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
 			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
@@ -52,8 +52,8 @@ window aircraft_equip extends iaircraft
 			cmd "airequip_slot_select <2> <cvar:tmp>;"
 			delete *cvar:tmp
 		} elif ( <1> eq "item" ) {
-			*node:root.airequip_zone_select1@src = ""
-			*node:root.airequip_zone_select2@src = ""
+			*node:root.airequip1.airequip_zone_select1@src = ""
+			*node:root.airequip2.airequip_zone_select2@src = ""
 			*node:root.itemlist@background = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>;"
@@ -293,8 +293,11 @@ window aircraft_equip extends iaircraft
 
 	panel airequip1 {
 		{
-			pos		"20 550"
-			size	"346 115"
+			pos			"20 550"
+			size		"346 115"
+			bgcolor		"0 0 0 1"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
 		}
 		image airequip_zone_select1
 		{
@@ -307,18 +310,19 @@ window aircraft_equip extends iaircraft
 		}
 		string airequip_header1
 		{
-			string		"_Current item in slot"
-			pos			"21 15"
-			size		"275 20"
-			font		"f_small"
-			color		"0 .78 0 1"
+			string			"_Current item in slot"
+			pos				"-45 15"
+			size			"275 20"
+			font			"f_small"
+            color	      	"1 1 1 1"
 			contentalign	ALIGN_CC
-			ghost		true
+			ghost			true
 		}
 		text airequip_text_zone1
 		{
 			pos			"18 50"
 			size		"304 48"
+            color	    "0.56 0.81 0.76 1"
 			lineheight	"16"
 			dataid		TEXT_AIREQUIP_1
 			rows		"3"
@@ -328,8 +332,11 @@ window aircraft_equip extends iaircraft
 
 	panel airequip2 {
 		{
-			pos		"360 550"
-			size	"346 115"
+			pos			"360 550"
+			size		"346 115"
+			bgcolor		"0 0 0 1"
+			border		2"
+			bordercolor	"0.527 0.6 0.21 1"
 		}
 		image airequip_zone_select2
 		{
@@ -346,6 +353,7 @@ window aircraft_equip extends iaircraft
 			dataid		TEXT_AIREQUIP_2
 			pos			"18 50"
 			size		"306 35"
+            color	    "0.56 0.81 0.76 1"
 			lineheight	"16"
 			rows		"2"
 			ghost		true
@@ -353,13 +361,13 @@ window aircraft_equip extends iaircraft
 
 		string airequip_header2
 		{
-			string		"_Ammo fitting this weapon"
-			pos			"21 15"
-			size		"275 20"
-			font		"f_small"
-			color		"0 .78 0 1"
+			string			"_Ammo fitting this weapon"
+			pos				"18 15"
+			size			"275 20"
+			font			"f_small"
+            color	      	"1 1 1 1"
 			contentalign	ALIGN_CL
-			ghost		true
+			ghost			true
 		}
 	}
 
@@ -541,23 +549,23 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_zone2_color
 	{
-		*node:root.airequip_text_zone2@color = "<1>"
+		*node:root.airequip2.airequip_text_zone2@color = "<1>"
 	}
 
 	confunc airequip_zone2_off
 	{
-		*node:root.airequip_header2@invis = true
-		*node:root.airequip_text_zone2@invis = true
-		*node:root.airequip_zone_select2@invis = true
+		*node:root.airequip2.airequip_header2@invis = true
+		*node:root.airequip2.airequip_text_zone2@invis = true
+		*node:root.airequip2.airequip_zone_select2@invis = true
 		*node:root.equipment_background@texh = "432 160"
 		*node:root.equipment_background@size = "432 160"
 	}
 
 	confunc airequip_zone2_on
 	{
-		*node:root.airequip_header2@invis = false
-		*node:root.airequip_text_zone2@invis = false
-		*node:root.airequip_zone_select2@invis = false
+		*node:root.airequip2.airequip_header2@invis = false
+		*node:root.airequip2.airequip_text_zone2@invis = false
+		*node:root.airequip2.airequip_zone_select2@invis = false
 		*node:root.equipment_background@texh = "432 293"
 		*node:root.equipment_background@size = "432 293"
 	}
