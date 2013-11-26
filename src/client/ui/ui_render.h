@@ -31,7 +31,7 @@ const struct image_s* UI_LoadImage(const char* name);
 const struct image_s* UI_LoadWrappedImage(const char* name);
 
 void UI_DrawNormImage(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const struct image_s* image);
-const struct image_s* UI_DrawNormImageByName(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
+const image_t* UI_DrawNormImageByName(bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
 
 void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, const int panelDef[7]);
 void UI_DrawBorderedPanel (const vec2_t pos, const vec2_t size, const char* texture, int texX, int texY, int texW, int texH, int border);
