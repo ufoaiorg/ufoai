@@ -113,6 +113,7 @@ const struct image_s* UI_LoadWrappedImage (const char* name)
 
 /**
  * @brief Draw a normalized (to the screen) image
+ * @param[in] flip Flip the icon rendering (horizontal)
  * @param[in] x,y The coordinates (normalized)
  * @param[in] w The width (normalized)
  * @param[in] h The height (normalized)
@@ -186,6 +187,7 @@ void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, 
 
 /**
  * @brief Draws an image or parts of it
+ * @param[in] flip Flip the icon rendering (horizontal)
  * @param[in] x,y position to draw the image to
  * @param[in] w Width of the image
  * @param[in] h Height of the image

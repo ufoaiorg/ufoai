@@ -180,8 +180,9 @@ static const int tile_template_popup[] = {
 };
 
 /**
- * @param[in] status The state of the sprite node
+ * @param[in] flip Flip the icon rendering (horizontal)
  * @param[in] sprite Context sprite
+ * @param[in] status The state of the sprite node
  * @param[in] posX Absolute X position of the top-left corner
  * @param[in] posY Absolute Y position of the top-left corner
  * @param[in] sizeX Width of the bounded box
