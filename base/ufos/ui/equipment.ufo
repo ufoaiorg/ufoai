@@ -361,8 +361,8 @@ window equipment extends objectinfo
 	tab equip_type
 	{
 		{
-			pos		"740 10"
-			size	"280 32"
+			pos		"720 10"
+			size	"330 32"
 			cvar	*cvar:mn_equiptype
 			onChange {
 				cmd	"update_item_list;"
