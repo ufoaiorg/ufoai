@@ -45,16 +45,16 @@ typedef struct optionExtraData_s {
 	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
-	uiSprite_t* icon;	/**< Link to an icon */
-	bool flipIcon;		/**< Flip the icon rendering (horizontal) */
+	uiSprite_t* icon;		/**< Link to an icon */
+	bool flipIcon;			/**< Flip the icon rendering (horizontal) */
 
 	/* status */
-	bool collapsed;		/**< If true, child are not displayed */
+	bool collapsed;			/**< If true, child are not displayed */
 
 	/* cache */
-	bool truncated;		/**< If true, the label is not fully displayed */
+	bool truncated;			/**< If true, the label is not fully displayed */
 	int childCount;			/**< Number of visible recursive child */
-	bool hovered;		/**< true if the element is hovered. Deprecated */
+	bool hovered;			/**< true if the element is hovered. Deprecated */
 
 } optionExtraData_t;
 
