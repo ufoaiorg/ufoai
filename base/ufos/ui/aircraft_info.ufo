@@ -4,20 +4,6 @@
 
 window aircraft extends iaircraft
 {
-	// ==================
-	// background
-	// ==================
-
-	panel tab_background {
-		pos		"461 88"
-	}
-
-	tab aircraft_navigation {
-		{
-			pos		"466 93"
-			size	"938 39"
-        }
-    }
 
 	// ==================
 	// aircraft

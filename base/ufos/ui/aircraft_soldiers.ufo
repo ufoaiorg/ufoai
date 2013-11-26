@@ -91,19 +91,6 @@ window team extends iaircraft
 		background	"ui/panel_grey_green_large"
 	}
 
-	panel tab_background {
-		pos		"18 680"
-		size	"586 56"
-		background	"ui/panel_tab"
-	}
-
-	tab aircraft_navigation {
-		{
-			pos		"23 685"
-			size	"578 39"
-        }
-    }
-
 	// ==================
 	// aircraft
 	// ==================
