@@ -358,6 +358,10 @@ window equipment extends objectinfo
 		*node:root.equip_ammo@viewpos = 0
 	}
 
+	// The tooltips defined with the options below do not show up. The reason is:
+	// A tooltip is displayed only if the option text was truncated.
+	// In our case: no text->no truncation->no tooltip.
+	// Add a label to the first option and it will be displayed but the last icon will not show up.
 	tab equip_type
 	{
 		{
