@@ -1,4 +1,4 @@
-// Logic relations (dependecies) that can not be defined in their original "tech" description.
+// Logic relations (dependencies) that can not be defined in their original "tech" description.
 //
 // None of these will ever be visible to the player.
 // Some of these are triggered by the (code in the) game on certain occasions.
