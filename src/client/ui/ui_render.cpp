@@ -283,8 +283,8 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char* texture, int
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
  * @param[in] texture Texture contain the template of the panel
- * @param[in] texX Position x of the panel template into the texture
- * @param[in] texY Position y of the panel template into the texture
+ * @param[in] texX,texY Position of the panel template into the texture
+ * @param[in] texW,texH Width/height of the panel template into the texture
  * @param[in] border Size of unscalable border
  * From the first to the last: left width, mid width, right width,
  * top height, mid height, bottom height, and margin
