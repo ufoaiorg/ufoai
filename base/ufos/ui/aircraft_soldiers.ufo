@@ -55,6 +55,59 @@ component cmpNamedBar extends panel {
  */
 window team extends iaircraft
 {
+	BaseContainerPanelV2 base_container
+	{
+		panel mainBody
+		{
+			{}
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Soldiers"
+				}
+			}
+
+			panel actors_background {
+				{
+				pos		"9 221"
+				size	"304 291"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				}
+
+				panel soldierlist {
+					pos			    "10 10"
+					size		    "270 283"
+					padding		    6
+					layout		    LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.soldierlist_scroll@fullsize = <fullsize>
+						*node:parent.soldierlist_scroll@current = <viewpos>
+						*node:parent.soldierlist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar soldierlist_scroll {
+					image			"ui/scrollbar_v_green"
+					pos				"285 8"
+					height			"283"
+					hidewhenunused	true
+					current			0
+					viewsize		8
+					fullsize		50
+
+					onChange {
+						*node:parent.soldierlist@viewpos = <current>
+					}
+				}
+			}
+		}
+	}
 
 	// ==================
 	// aircraft
@@ -115,70 +168,10 @@ window team extends iaircraft
 	data selected {
 	}
 
-	BaseContainerPanelV2 base_container
-	{
-		panel mainBody
-		{
-			{}
-			// Title bar
-			panel header
-			{
-				{}
-				string title
-				{
-					string			"_Soldiers"
-				}
-			}
-
-			panel actors_background {
-				{
-				pos		"9 231"
-				size	"304 291"
-				border		"2"
-				bordercolor	"0.527 0.6 0.21 1"
-				}
-
-				panel soldierlist {
-					pos			    "10 10"
-					size		    "270 283"
-					padding		    6
-					layout		    LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
-					wheelscrollable	true
-
-					onViewChange {
-						*node:parent.soldierlist_scroll@fullsize = <fullsize>
-						*node:parent.soldierlist_scroll@current = <viewpos>
-						*node:parent.soldierlist_scroll@viewsize = <viewsize>
-					}
-				}
-				vscrollbar soldierlist_scroll {
-					image			"ui/scrollbar_v_green"
-					pos				"285 8"
-					height			"283"
-					hidewhenunused	true
-					current			0
-					viewsize		8
-					fullsize		50
-
-					onChange {
-						*node:parent.soldierlist@viewpos = <current>
-					}
-				}
-			}
-		}
-	}
 
 	// ==================
 	// actor info
 	// ==================
-
-	panel actor_background {
-	{
-/*		pos		"358 443"
-		size	"663 321"
-*/		background	"ui/panel_grey_black"
-	}
 
 /*	panel actormodel_background {
 		{
@@ -195,7 +188,6 @@ window team extends iaircraft
 
 	}
 */
-	}
 
 	/** @todo Activate this again - used for UGVs */
 	// ==================
@@ -208,20 +200,6 @@ window team extends iaircraft
 	confunc toggle_show_soldiersbutton {
 		//*node:root.bt_switch_list@tooltip	= "_Assign soldiers"
 		//*node:root.bt_switch_list@icon	= "icons/soldier"
-	}
-
-	/**
-	 * @note call when tab actor_stat changed.
-	 */
-	confunc select_actor_stat {
-		if ( <1> eq "stats_phys" ) {
-			*node:root.actor_background.stats_phys@invis = false
-			*node:root.actor_background.stats_missions@invis = true
-		}
-		elif ( <1> eq "stats_missions" ) {
-			*node:root.actor_background.stats_phys@invis = true
-			*node:root.actor_background.stats_missions@invis = false
-		}
 	}
 
 	/**
