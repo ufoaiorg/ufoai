@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-11-12 09:55+0100\n"
+"PO-Revision-Date: 2013-11-27 20:32+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -33,18 +33,16 @@ msgid "Bridge"
 msgstr "Brücke"
 
 #: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:468
-#, fuzzy
 msgid "Bridge (MP)"
-msgstr "Brücke"
+msgstr "Brücke (MP)"
 
 #: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
 msgstr "Kleiner Friedhof"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outskirt of a big city."
-msgstr "Am Rand der Stadt."
+msgstr "Am Rand einer großen Stadt."
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -191,9 +189,8 @@ msgid "Tropical UFO"
 msgstr "Tropisch, UFO"
 
 #: ../base/maps/urban.ump:310 ../base/ufos/maps.ufo:2675
-#, fuzzy
 msgid "Bomber in the City"
-msgstr "Bomber in der Stadt"
+msgstr "Bomber in der Innenstadt"
 
 #: ../base/maps/urban.ump:319 ../base/ufos/maps.ufo:2731
 #, fuzzy
@@ -2962,9 +2959,8 @@ msgid "Rural Village"
 msgstr "Ein kleines ländliches Dorf."
 
 #: ../base/ufos/maps.ufo:4372
-#, fuzzy
 msgid "Corrupter UFO Crash Site"
-msgstr "Corrupter - UFO Absturzstelle."
+msgstr "Corrupter - UFO Absturzstelle"
 
 #: ../base/ufos/maps.ufo:4420
 msgid "Hydroelectric Dam"
@@ -2987,16 +2983,14 @@ msgid "Ferry"
 msgstr "Fähre"
 
 #: ../base/ufos/maps.ufo:4667
-#, fuzzy
 msgid "Fighter UFO Crash Site"
-msgstr "UFO Absturzstelle."
+msgstr "UFO Absturzstelle"
 
 #: ../base/ufos/maps.ufo:4714
 msgid "Secret Depot"
 msgstr "Geheimes Depot"
 
 #: ../base/ufos/maps.ufo:4762
-#, fuzzy
 msgid "Port"
 msgstr "Hafen"
 
@@ -3038,9 +3032,8 @@ msgid "Wilderness"
 msgstr "Wildniss"
 
 #: ../base/ufos/maps.ufo:5351
-#, fuzzy
 msgid "City High-Rise (MP)"
-msgstr "Ein Hochhaus in der Innenstadt (MP)"
+msgstr "Hochhaus in der Innenstadt (MP)"
 
 #: ../base/ufos/maps.ufo:5379
 #, fuzzy
@@ -3053,9 +3046,8 @@ msgid "Frozen Industrial Site (MP)"
 msgstr "Eingefrorener Industriekomplex (MP)"
 
 #: ../base/ufos/maps.ufo:5420
-#, fuzzy
 msgid "A container harbour."
-msgstr "Ein lokaler Hafen."
+msgstr "Ein Containerhafen."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
 #, fuzzy
@@ -26346,7 +26338,7 @@ msgstr "Laden"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Spielstände herunterladen"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -26955,9 +26947,8 @@ msgid "Target out of range"
 msgstr "Ziele auf den Boden"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
-#, fuzzy
 msgid "Target acquired"
-msgstr "Zielzone ist besetzt!"
+msgstr "Ziel erfasst"
 
 #: ../base/ufos/ui/hud_default.ufo:1138
 msgid "Original HUD"
@@ -27138,16 +27129,15 @@ msgstr "Schließe Mailclient"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
 msgstr ""
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
@@ -27455,9 +27445,8 @@ msgid "Start"
 msgstr "Start"
 
 #: ../base/ufos/ui/missionbriefing.ufo:74
-#, fuzzy
 msgid "Start the match"
-msgstr "Spiel starten!"
+msgstr "Spiel starten"
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -27662,19 +27651,16 @@ msgid "Admin control"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
-#, fuzzy
 msgid "Round time limit:"
-msgstr "Rundenzeitbeschränkung in Sekunden:"
+msgstr "Rundenzeitbeschränkung:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Force start"
 msgstr "Erzwinge Start"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
-msgstr ""
-"Starte das Spiel - auch wenn noch nicht alle Teams bereit/verbunden sind"
+msgstr "Starte das Spiel - auch wenn noch nicht alle Teams bereit sind"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
@@ -28603,9 +28589,8 @@ msgid "Global"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:2034
-#, fuzzy
 msgid "Battlescape"
-msgstr "Tastenbelegungen (Schlachtfeld)"
+msgstr "Schlachtfeld"
 
 #: ../base/ufos/ui/physdat.ufo:368
 msgid "EKG"
@@ -28652,9 +28637,8 @@ msgid "Assemble a team first"
 msgstr "Zuerst ein Team zusammenstellen"
 
 #: ../base/ufos/ui/popup_capacity.ufo:10
-#, fuzzy
 msgid "Capacity Exceeded"
-msgstr "Kapazität"
+msgstr "Kapazität überschritten"
 
 #: ../base/ufos/ui/popup_capacity.ufo:14
 msgid ""
@@ -28662,9 +28646,8 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:136
-#, fuzzy
 msgid "Go to base"
-msgstr "Zum Lager"
+msgstr "Zur Basis"
 
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
@@ -28750,9 +28733,8 @@ msgid "Disassembly"
 msgstr "Demontage"
 
 #: ../base/ufos/ui/production.ufo:192
-#, fuzzy
 msgid "Workshop space"
-msgstr "Werkstattkapazität:"
+msgstr "Werkstattkapazität"
 
 #: ../base/ufos/ui/production.ufo:389 ../base/ufos/ui/production.ufo:399
 msgid "Change the production amount"
@@ -28812,7 +28794,7 @@ msgstr ""
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
-msgstr ""
+msgstr "Themen"
 
 #: ../base/ufos/ui/research.ufo:301 client/cgame/campaign/cp_aircraft.cpp:373
 msgid "idle"
@@ -29129,9 +29111,8 @@ msgid "Login"
 msgstr ""
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
-msgstr "Passwort:"
+msgstr "Passwort"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -29379,9 +29360,8 @@ msgid "IC Rocket"
 msgstr "Brandrakete"
 
 #: ../base/ufos/weapons_human.ufo:1208
-#, fuzzy
 msgid "Hybrid Rocket"
-msgstr "HE Rakete"
+msgstr "Hybridrakete"
 
 #: ../base/ufos/weapons_human.ufo:1255
 msgid "Grenade Launcher"
@@ -29926,12 +29906,12 @@ msgid "- Reduced %s\n"
 msgstr "- Verringert %s\n"
 
 #: client/battlescape/cl_hud.cpp:1372 client/cl_inventory_callbacks.cpp:374
-#, fuzzy
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
-"Dieser Soldat hat nicht genug ZE um die folgenden Gegenstände zu benutzen: \n"
+"Dieser Soldat hat nicht mehr genug ZE um die folgenden Gegenstände zu "
+"benutzen:\n"
 "\n"
 
 #: client/battlescape/cl_hud.cpp:1385 client/cl_inventory_callbacks.cpp:386
@@ -30464,9 +30444,9 @@ msgid "Working 100%"
 msgstr "Arbeitet: 100%"
 
 #: client/cgame/campaign/cp_base.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "Not operational, depends on %s"
-msgstr "Nicht funktionsfähig, benötigt"
+msgstr "Nicht funktionsfähig, benötigt %s"
 
 #: client/cgame/campaign/cp_base.cpp:1019
 msgid "Down"
@@ -31397,7 +31377,6 @@ msgid "Unknown weight"
 msgstr "Unbekanntes Gewicht"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
-#, fuzzy
 msgid ""
 "No Command Centre in this base.\n"
 "Hangars are not functional.\n"
@@ -31686,13 +31665,13 @@ msgid "Alien activity"
 msgstr "Ortung von Außerirdischen"
 
 #: client/cgame/campaign/cp_missions.cpp:700
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Go on a rescue mission for %s to save your soldiers, some of whom may still "
 "be alive."
 msgstr ""
-"Gehe zu einer Rettungsmission bei %s. Einige deiner Soldaten müssen "
-"überleben."
+"Gehe zu einer Rettungsmission bei %s um Deine Soldaten zu retten. Einige "
+"könnten noch am Leben sein."
 
 #: client/cgame/campaign/cp_missions.cpp:704
 #, c-format
@@ -31841,9 +31820,9 @@ msgid "Change homebase\n"
 msgstr "Wechsle Heimatbasis\n"
 
 #: client/cgame/campaign/cp_popup.cpp:238
-#, fuzzy, c-format
+#, c-format
 msgid "Mission\t%s\n"
-msgstr "Missionen"
+msgstr "Missionen\t%s\n"
 
 #: client/cgame/campaign/cp_popup.cpp:339
 #, c-format
@@ -31902,9 +31881,9 @@ msgid "Not enough credits to finish production in %s."
 msgstr "Nicht genug Kapital, um die Produktion in %s abzuschließen."
 
 #: client/cgame/campaign/cp_produce.cpp:442
-#, fuzzy, c-format
+#, c-format
 msgid "Work on %s at %s has finished."
-msgstr "Die Produktion von %s ist in %s abgeschlossen."
+msgstr "Die Produktion von %s in %s ist abgeschlossen."
 
 #: client/cgame/campaign/cp_produce.cpp:443
 #: client/cgame/campaign/cp_produce.cpp:479
@@ -31922,7 +31901,7 @@ msgid "No item selected"
 msgstr "Kein Gegenstand ausgewählt"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:270
-#, fuzzy, c-format
+#, c-format
 msgid "Cost per item\t%i c\n"
 msgstr "Stückkosten\t%i c\n"
 
@@ -32017,7 +31996,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "Die Produktion von %s hat begonnen"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -32443,9 +32422,9 @@ msgid "Our radar detected %s near %s"
 msgstr "Unser Radar hat ein neues %s nahe %s entdeckt"
 
 #: client/cgame/campaign/cp_ufo.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar has lost the tracking on %s"
-msgstr "Unser Radar hat das Signal eines UFOs verloren"
+msgstr "Unser Radar hat das Signal von %s verloren"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:136
 msgid "Cruising speed"
@@ -32595,27 +32574,27 @@ msgstr ""
 #: client/cgame/campaign/cp_ufopedia.cpp:619
 #, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr ""
+msgstr "UFOpaedia: %s (erforscht)"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:672
 #: client/cgame/campaign/cp_ufopedia.cpp:681
-#, fuzzy, c-format
+#, c-format
 msgid "UFOpaedia: %s"
-msgstr "UFOpedia"
+msgstr "UFOpedia: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:678
 msgid "No pre-research description available."
 msgstr "Keine Beschreibung vorhanden."
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "Proposal: %s"
-msgstr "Antrag:"
+msgstr "Antrag: %s"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "AW: "
+msgstr "AW:  %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32740,14 +32719,12 @@ msgid "Error saving team. Nothing to save yet."
 msgstr "Fehler beim Speichern des Teams. Bis jetzt gibt es nicht zu speichern."
 
 #: client/cgame/cl_game_team.cpp:314
-#, fuzzy
 msgid "New Team"
 msgstr "Neues Team"
 
 #: client/cgame/cl_game_team.cpp:318
-#, fuzzy
 msgid "Error saving team. Too many teams!"
-msgstr "Fehler beim Speichern des Teams. Bis jetzt gibt es nicht zu speichern."
+msgstr "Fehler beim Speichern des Teams. Zu viele Teams!"
 
 #: client/cgame/cl_game_team.cpp:323
 msgid "Error saving team. Check free disk space!"
@@ -33081,7 +33058,6 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.cpp:369
-#, fuzzy
 msgid "Loading"
 msgstr "Laden"
 
@@ -33094,7 +33070,7 @@ msgstr "Reaktionsfeuer"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "Das eingegebene Passwart war falsch."
 
 #: client/cl_main.cpp:410
 #, fuzzy
