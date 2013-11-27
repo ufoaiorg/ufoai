@@ -99,6 +99,12 @@ component MainMenuExitBtn extends button
 	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
 }
 
+component MainMenuCancelBtn extends MainMenu2Btn
+{
+	string			"_Cancel"
+	tooltip			"_Close this dialogue"
+}
+
 component MainMenuTab extends button
 {
 	{
