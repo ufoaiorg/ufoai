@@ -301,7 +301,7 @@ window aircraft_equip extends iaircraft
 		string airequip_header1
 		{
 			string			"_Current item in slot"
-			pos				"-45 15"
+			pos				"0 15"
 			size			"275 20"
 			font			"f_small"
             color	      	"1 1 1 1"
@@ -364,157 +364,163 @@ window aircraft_equip extends iaircraft
 	// ==================
 	// slots
 	// ==================
+	panel airequipslot {
+		{
+		pos		"20 250"
+		size	"550 288"
+		}
 
-	image airequip_slot0
-	{
-		tooltip		"_Select this slot"
-		src		"ui/button_square"
-		mousefx		true
-		pos			"478 281"
-		texl		"0 0"
-		texh		"64 64"
-		onClick		{ cmd "airequip_select slot 0;" }
-	}
-	model airequip_model_slot0
-	{
-		src		"*cvar:mn_aircraft_item_model_slot0"
-		pos			"480 283"
-		size		"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot0
+		{
+			tooltip		"_Select this slot"
+			src		"ui/button_square"
+			mousefx		true
+			pos			"458 31"
+			texl		"0 0"
+			texh		"64 64"
+			onClick		{ cmd "airequip_select slot 0;" }
+		}
+		model airequip_model_slot0
+		{
+			src		"*cvar:mn_aircraft_item_model_slot0"
+			pos			"460 33"
+			size		"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot1
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"478 365"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 1;" }
-	}
-	model airequip_model_slot1
-	{
-		src	"*cvar:mn_aircraft_item_model_slot1"
-		pos		"480 367"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot1
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"458 115"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 1;" }
+		}
+		model airequip_model_slot1
+		{
+			src	"*cvar:mn_aircraft_item_model_slot1"
+			pos		"460 117"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot2
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"478 441"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 2;" }
-	}
-	model airequip_model_slot2
-	{
-		src	"*cvar:mn_aircraft_item_model_slot2"
-		pos		"480 443"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot2
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"458 191"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 2;" }
+		}
+		model airequip_model_slot2
+		{
+			src	"*cvar:mn_aircraft_item_model_slot2"
+			pos		"460 193"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot3
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"278 281"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 3;" }
-	}
-	model airequip_model_slot3
-	{
-		src	"*cvar:mn_aircraft_item_model_slot3"
-		pos		"280 283"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot3
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"258 31"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 3;" }
+		}
+		model airequip_model_slot3
+		{
+			src	"*cvar:mn_aircraft_item_model_slot3"
+			pos		"260 33"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot4
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"278 447"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 4;" }
-	}
-	model airequip_model_slot4
-	{
-		src	"*cvar:mn_aircraft_item_model_slot4"
-		pos		"278 447"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot4
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"258 197"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 4;" }
+		}
+		model airequip_model_slot4
+		{
+			src	"*cvar:mn_aircraft_item_model_slot4"
+			pos		"258 197"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot5
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"78 281"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 5;" }
-	}
-	model airequip_model_slot5
-	{
-		src	"*cvar:mn_aircraft_item_model_slot5"
-		pos		"80 283"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot5
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"58 31"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 5;" }
+		}
+		model airequip_model_slot5
+		{
+			src	"*cvar:mn_aircraft_item_model_slot5"
+			pos		"60 33"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot6
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"78 361"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 6;" }
-	}
-	model airequip_model_slot6
-	{
-		src	"*cvar:mn_aircraft_item_model_slot6"
-		pos		"80 363"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
-	}
+		image airequip_slot6
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"58 111"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 6;" }
+		}
+		model airequip_model_slot6
+		{
+			src	"*cvar:mn_aircraft_item_model_slot6"
+			pos		"60 113"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 
-	image airequip_slot7
-	{
-		tooltip	"_Select this slot"
-		src		"ui/button_square"
-		mousefx	true
-		pos		"78 441"
-		texl	"0 0"
-		texh	"64 64"
-		onClick	{ cmd "airequip_select slot 7;" }
-	}
-	model airequip_model_slot7
-	{
-		src	"*cvar:mn_aircraft_item_model_slot7"
-		pos		"80 443"
-		size	"60 60"
-		autoscale	true
-		excluderect { pos	"0 0"	size	"60 60" }
+		image airequip_slot7
+		{
+			tooltip	"_Select this slot"
+			src		"ui/button_square"
+			mousefx	true
+			pos		"58 191"
+			texl	"0 0"
+			texh	"64 64"
+			onClick	{ cmd "airequip_select slot 7;" }
+		}
+		model airequip_model_slot7
+		{
+			src	"*cvar:mn_aircraft_item_model_slot7"
+			pos		"60 193"
+			size	"60 60"
+			autoscale	true
+			excluderect { pos	"0 0"	size	"60 60" }
+		}
 	}
 
 	// ==================
@@ -583,15 +589,15 @@ window aircraft_equip extends iaircraft
 	{
 		*cvar:status = <2>
 		if ( *cvar:status == 2 ) {
-			*node:root.airequip_slot<1>@invis = false
-			*node:root.airequip_slot<1>@texl = "64 0"
-			*node:root.airequip_slot<1>@texh = "128 64"
+			*node:parent.airequipslot.airequip_slot<1>@invis = false
+			*node:parent.airequipslot.airequip_slot<1>@texl = "64 0"
+			*node:parent.airequipslot.airequip_slot<1>@texh = "128 64"
 		} elif ( *cvar:status == 1 ) {
-			*node:root.airequip_slot<1>@invis = false
-			*node:root.airequip_slot<1>@texl = "0 0"
-			*node:root.airequip_slot<1>@texh = "64 64"
+			*node:parent.airequipslot.airequip_slot<1>@invis = false
+			*node:parent.airequipslot.airequip_slot<1>@texl = "0 0"
+			*node:parent.airequipslot.airequip_slot<1>@texh = "64 64"
 		} else {
-			*node:root.airequip_slot<1>@invis = true
+			*node:parent.airequipslot.airequip_slot<1>@invis = true
 		}
 		delete *cvar:status
 	}
