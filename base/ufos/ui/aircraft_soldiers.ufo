@@ -72,15 +72,15 @@ window team extends iaircraft
 
 			panel actors_background {
 				{
-				pos		"9 221"
-				size	"304 291"
+				pos		"5 226"
+				size	"304 301"
 				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"
 				}
 
 				panel soldierlist {
-					pos			    "10 10"
-					size		    "270 283"
+					pos				"5 10"
+					size			"270 293"
 					padding		    6
 					layout		    LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
@@ -107,40 +107,35 @@ window team extends iaircraft
 				}
 			}
 		}
+
+		// ==================
+		// aircraft
+		// ==================
+
+		model aircraft {
+			src			*cvar:mn_aircraft_model
+			pos			"276 568"
+			size		"395 191"
+			origin		"0 -10 10"
+			angles		"180 10 -120"
+			autoscale	true
+		}
+
+		string team_members {
+			string	"_Team Members:"
+			pos		"5 570"
+			size	"200 20"
+		}
+
+		string team_hired {
+			string			*cvar:mn_hired
+			pos				"5 590"
+			size			"200 20"
+			contentalign	ALIGN_UL
+		}
 	}
 
-	// ==================
-	// aircraft
-	// ==================
-	panel model_background {
-		pos		    "19 248"
-		size	    "563 298"
-		invis       true
-        border		"2"
-		bordercolor	"0.56 0.81 0.76 1"
-	}
-/*	model aircraft {
-		src			*cvar:mn_aircraft_model
-		pos			"47 266"
-		size		"529 261"
-		origin		"-45 25 0"
-		angles		"160 20 -120"
-		autoscale	true
-	}
 
-	string team_members {
-		string	"_Team Members:"
-		pos		"40 265"
-		size	"200 20"
-	}
-
-	string team_hired {
-		string		*cvar:mn_hired
-		pos			"179 265"
-		size		"62 20"
-		contentalign	ALIGN_UR
-	}
-*/
 	func listen_close_equipment {
 		cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
