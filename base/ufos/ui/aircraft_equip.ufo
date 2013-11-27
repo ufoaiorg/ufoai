@@ -22,13 +22,11 @@ window aircraft_equip extends iaircraft
 			*node:root.base_container.airequip1.airequip_zone_select1@src = "ui/airequip_selected_element"
 			*node:root.base_container.airequip2.airequip_zone_select2@src = ""
 			*cvar:mn_aircraft_item_selected = -1
-			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
 			*node:root.base_container.airequip1.airequip_zone_select1@src = ""
 			*node:root.base_container.airequip2.airequip_zone_select2@src = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -44,7 +42,6 @@ window aircraft_equip extends iaircraft
 		} elif ( <1> eq "item" ) {
 			*node:root.base_container.airequip1.airequip_zone_select1@src = ""
 			*node:root.base_container.airequip2.airequip_zone_select2@src = ""
-			*node:root.itemlist@background = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>;"
 		}
@@ -272,7 +269,7 @@ window aircraft_equip extends iaircraft
 			string airequip_header1
 			{
 				string			"_Current item in slot"
-				pos				"0 15"
+				pos				"-5 15"
 				size			"275 20"
 				font			"f_small"
 				color	      	"1 1 1 1"
@@ -296,13 +293,13 @@ window aircraft_equip extends iaircraft
 				pos			"360 580"
 				size		"346 115"
 				bgcolor		"0 0 0 1"
-				border		2"
+				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"
 			}
 			image airequip_zone_select2
 			{
 				tooltip		"_Select this zone"
-				src		"ui/airequip_selected_element"
+				src			"ui/airequip_selected_element"
 				pos			"5 5"
 				texl		"0 0"
 				texh		"338 82"
@@ -323,7 +320,7 @@ window aircraft_equip extends iaircraft
 			string airequip_header2
 			{
 				string			"_Ammo fitting this weapon"
-				pos				"18 15"
+				pos				"16 15"
 				size			"275 20"
 				font			"f_small"
 				color	      	"1 1 1 1"
@@ -338,17 +335,19 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel item {
 		{
-			pos		"740 305"
-			size	"252 319"
-			background	"ui/panel_grey_green"
+			pos		"730 305"
+			size	"292 319"
+			bgcolor		"0 0 0 1"
+			border		2"
+			bordercolor	"0.527 0.6 0.21 1"
 		}
 
 		string airequip_selected
 		{
 			string		"_Selected item:"
 			pos			"14 20"
-			size		"224 25"
-			font		"f_big"
+			size		"264 25"
+			font 		"f_normal_bold"
 			contentalign	ALIGN_CC
 		}
 
@@ -356,7 +355,7 @@ window aircraft_equip extends iaircraft
 		{
 			string		"*cvar:mn_itemname"
 			pos			"14 55"
-			size		"224 20"
+			size		"264 20"
 			contentalign	ALIGN_CC
 		}
 
@@ -364,7 +363,7 @@ window aircraft_equip extends iaircraft
 		{
 			src	"*cvar:mn_upmodel_top"
 			autoscale	true
-			pos		"14 76"
+			pos		"34 76"
 			size	"225 100"
 			angles	"-120 110 -25"
 		}
@@ -372,8 +371,8 @@ window aircraft_equip extends iaircraft
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
-			pos			"14 182"
-			size		"224 85"
+			pos			"24 182"
+			size		"239 85"
 			tabwidth	120
 			font		"f_verysmall"
 			onViewChange {
@@ -385,7 +384,7 @@ window aircraft_equip extends iaircraft
 
 		vscrollbar description_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"218 182"
+			pos			"258 182"
 			height		"85"
 			hidewhenunused	true
 			onChange 	{
@@ -397,7 +396,7 @@ window aircraft_equip extends iaircraft
 		{
 			string		*cvar:mn_aircraft_item_warning
 			pos			"19 269"
-			size		"215 32"
+			size		"255 32"
 			padding		0
 			contentalign	ALIGN_UC
 			font		"f_small"
@@ -406,13 +405,13 @@ window aircraft_equip extends iaircraft
 			longlines	LONGLINES_WRAP
 		}
 
-		button button_add
+		MainMenu3Btn button_add
 		{
 			string		"_Equip this item"
-			background		"ui/button_green_small"
-			pos			"26 271"
-			size		"200 25"
-			color		"0 0.5 0 1"
+			pos			"21 271"
+			size		"250 25"
+			font 		"f_small_bold"
+			color		"0 0 0 0.9"
 			onClick		{
 				cmd "airequip_add_item 1;"
 				if ( *cvar:mn_equip_itemtype eq "ammo" ) {
@@ -423,17 +422,17 @@ window aircraft_equip extends iaircraft
 			}
 		}
 
-		button button_remove
+		MainMenu3Btn button_remove
 		{
 			string		"_Remove this item"
-			background		"ui/button_green_small"
-			pos			"26 271"
-			size		"200 25"
+			pos			"21 271"
+			size		"250 25"
+			font 		"f_small_bold"
 			onClick		{
 				cmd "airequip_remove_item 1;"
 				cmd "airequip_select item -1;"
 			}
-			color		"0 0.5 0 1"
+			color		"0 0 0 0.9"
 		}
 	}
 
@@ -442,8 +441,11 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel itemlist {
 		{
-			pos		"740 85"
+			pos		"730 85"
 			size	"292 219"
+			bgcolor		"0 0 0 1"
+			border		2"
+			bordercolor	"0.527 0.6 0.21 1"
 		}
 
 		string airequip_available
@@ -451,7 +453,7 @@ window aircraft_equip extends iaircraft
 			string		"_Available equipment:"
 			pos			"14 20"
 			size		"264 25"
-			font		"f_big"
+			font 		"f_normal_bold"
 			contentalign	ALIGN_CC
 		}
 
@@ -492,7 +494,7 @@ window aircraft_equip extends iaircraft
 			pos			"15 87"
 			size		"225 115"
 			lineheight	"20"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			selectcolor	"1 1 1 1"
 			onChange		{
 				cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
@@ -513,7 +515,7 @@ window aircraft_equip extends iaircraft
 			size		"25 115"
 			contentalign	ALIGN_CR
 			lineheight	"20"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			selectcolor	"1 1 1 1"
 			onViewChange {
 				*node:parent.airequip_list_scroll@fullsize = <fullsize>
