@@ -9,18 +9,11 @@ window aircraft extends iaircraft
 	// aircraft
 	// ==================
 
-	panel model_background {
-		pos		    "19 248"
-		size	    "563 298"
-        border		"2"
-		bordercolor	"0.56 0.81 0.76 1"
-	}
-
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"47 266"
-		size		"529 261"
+		pos			"50 256"
+		size		"570 310"
 		angles		"0 0 90"
 		autoscale	true
 		rotatewithmouse	true

@@ -132,7 +132,7 @@ window team extends iaircraft
 
 			panel actors_background {
 				{
-				pos		"9 221"
+				pos		"9 231"
 				size	"304 291"
 				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"

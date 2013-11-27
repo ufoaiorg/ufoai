@@ -67,7 +67,7 @@ window aircraft_equip extends iaircraft
 			// ==================
 
 			panel model_background {
-				pos		    "10 218"
+				pos		    "10 228"
 				size	    "563 298"
 				invis       false
 				border		"2"
@@ -76,7 +76,7 @@ window aircraft_equip extends iaircraft
 			model aircraftequip
 			{
 				src		"*cvar:mn_aircraft_model"
-				pos		"33 236"
+				pos		"33 246"
 				size	"529 261"
 				angles	"0 0 180"
 				autoscale	true
@@ -87,7 +87,7 @@ window aircraft_equip extends iaircraft
 			// ==================
 			panel airequipslot {
 				{
-				pos		"10 220"
+				pos		"10 230"
 				size	"550 288"
 				}
 

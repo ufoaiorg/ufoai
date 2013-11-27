@@ -93,8 +93,8 @@ window iaircraft
 
 			panel aircraftlist {
 				{
-				pos			"10 70"
-				size		"433 140"
+				pos			"5 70"
+				size		"433 150"
 				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"
 				}
@@ -102,7 +102,7 @@ window iaircraft
 				textlist aircraft_list
 				{
 					pos			"11 53"
-					size		"350 80"
+					size		"345 95"
 					rows		4
 					lineheight	20
 					dataid		TEXT_AIRCRAFT_LIST
@@ -121,7 +121,7 @@ window iaircraft
 				vscrollbar aircraft_list_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"373 51"
-					height			"80"
+					height			"95"
 					current			0
 					viewsize		11
 					fullsize		19
@@ -134,7 +134,8 @@ window iaircraft
 				textentry aircraft_selected
 				{
 					string		*cvar:mn_aircraftname
-					pos			"06 14"
+					tooltip		"_Rename aircraft"
+					pos			"05 14"
 					size		"317 21"
 					font		"f_normal_bold"
 					onChange	{ cmd "aircraft_namechange; ui_pop; ui_push aircraft;" }
@@ -143,7 +144,7 @@ window iaircraft
 				button air_nameedit
 				{
 					tooltip		"_Rename aircraft"
-					icon		"icons/pen"
+//					icon		"icons/pen"
 					pos			"340 5"
 					size		"35 35"
 					padding		0
@@ -153,8 +154,8 @@ window iaircraft
 			panel aircraft_info
 			{
 				{
-					pos		"445 70"
-					size	"270 140"
+					pos		"440 70"
+					size	"270 150"
 					border		"2"
 					bordercolor	"0.527 0.6 0.21 1"
 					bgcolor		"0 0 0 1"
@@ -164,7 +165,7 @@ window iaircraft
 				{
 					string		*cvar:mn_aircraftname
 					pos			"10 10"
-					size		"257 21"
+					size		"262 21"
 					contentalign	ALIGN_UL
 					padding		0
 				}
@@ -182,7 +183,7 @@ window iaircraft
 				{
 					string		*cvar:mn_aircraftstatus
 					pos			"87 50"
-					size		"179 20"
+					size		"184 20"
 					contentalign	ALIGN_UL
 				}
 
@@ -197,7 +198,7 @@ window iaircraft
 				{
 					string		"_Health:"
 					pos			"10 80"
-					size		"200 21"
+					size		"205 21"
 					contentalign	ALIGN_UL
 					padding		0
 				}
@@ -208,7 +209,7 @@ window iaircraft
 				}
 				bar aircraft_healthbar {
 					pos			"10 101"
-					size		"249 5"
+					size		"254 5"
 					min			0
 					max			196
 					readonly	true
@@ -225,7 +226,7 @@ window iaircraft
 				string team_hired
 				{
 					string		*cvar:mn_hired
-					pos			"177 120"
+					pos			"182 120"
 					size		"90 20"
 					contentalign	ALIGN_CL
 					padding		0
