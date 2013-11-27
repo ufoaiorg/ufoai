@@ -245,6 +245,7 @@ window team extends iaircraft
 	{
 		cmd "ui_team_fill soldier;"
 		call *node:root.aircraft_healtbarchange
+		call *node:root.aircraft_checkbuttons
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		}
@@ -283,4 +284,7 @@ window team extends iaircraft
             ghost       true
             }
     }
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }

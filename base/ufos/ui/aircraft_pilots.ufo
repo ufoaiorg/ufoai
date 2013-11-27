@@ -126,6 +126,7 @@ window aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_change	{
 		cmd "ui_team_fill pilot;"
+		call *node:root.aircraft_checkbuttons
 		call *node:root.aircraft_healtbarchange
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"

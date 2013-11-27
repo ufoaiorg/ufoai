@@ -164,7 +164,7 @@ window iaircraft
 				{
 					string		*cvar:mn_aircraftname
 					pos			"10 10"
-					size		"267 21"
+					size		"257 21"
 					contentalign	ALIGN_UL
 					padding		0
 				}
@@ -291,6 +291,40 @@ window iaircraft
 		}
 	}
 
+	confunc aircraft_checkbuttons
+	{
+		if ( *cvar:mn_aircraftinbase > 0 ) {
+			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
+
+			if ( *cvar:mn_aircraft_model eq "drop_firebird_flying" ) { *cvar:mn_aircraft_model = "drop_firebird" }
+			elif ( *cvar:mn_aircraft_model eq "drop_herakles_flying" ) { *cvar:mn_aircraft_model = "drop_herakles" }
+			elif ( *cvar:mn_aircraft_model eq "drop_raptor_flying" ) { *cvar:mn_aircraft_model = "drop_raptor" }
+			elif ( *cvar:mn_aircraft_model eq "inter_dragon_flying" ) { *cvar:mn_aircraft_model = "inter_dragon" }
+			elif ( *cvar:mn_aircraft_model eq "inter_saracen_flying" ) { *cvar:mn_aircraft_model = "inter_saracen" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stiletto_flying" ) { *cvar:mn_aircraft_model = "inter_stiletto" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stingray_flying" ) { *cvar:mn_aircraft_model = "inter_stingray" }
+
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@tooltip = "_Start Aircraft"
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@onClick = { cmd "aircraft_start;" }
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@icon = "icons/aircraft_send"
+		} else {
+			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
+
+			if ( *cvar:mn_aircraft_model eq "drop_firebird" ) { *cvar:mn_aircraft_model = "drop_firebird_flying" }
+			elif ( *cvar:mn_aircraft_model eq "drop_herakles" ) { *cvar:mn_aircraft_model = "drop_herakles_flying" }
+			elif ( *cvar:mn_aircraft_model eq "drop_raptor" ) { *cvar:mn_aircraft_model = "drop_raptor_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_dragon" ) { *cvar:mn_aircraft_model = "inter_dragon_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_saracen" ) { *cvar:mn_aircraft_model = "inter_saracen_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stiletto" ) { *cvar:mn_aircraft_model = "inter_stiletto_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stingray" ) { *cvar:mn_aircraft_model = "inter_stingray_flying" }
+
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@tooltip = "_Call back"
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@onClick = { cmd "aircraft_return;" }
+			*node:root.base_container.mainBody.aircraft_info.aircraft_return@icon = "icons/aircraft_return"
+		}
+	}
+
+
 	/**
 	 * @brief Reset the cvars for a character.
 	 */
@@ -347,4 +381,7 @@ window iaircraft
 		*cvar:mn_vevadi = ""
 		*cvar:mn_tevad = ""
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }

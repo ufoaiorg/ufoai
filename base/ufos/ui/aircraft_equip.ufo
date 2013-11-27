@@ -629,6 +629,7 @@ window aircraft_equip extends iaircraft
 	{
 		*node:root.base_container.mainBody.aircraftlist.aircraft_list@lineselected = <1>
 		call *node:root.aircraft_healtbarchange
+		call *node:root.aircraft_checkbuttons
 		cmd "airequip_updatemenu;"
 		cmd "airequip_select zone1;"
 		// absent from base, go back to the main GUI
@@ -663,4 +664,7 @@ window aircraft_equip extends iaircraft
 		// so on can also change the button state in the base view
 		cmd "base_init;"
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }

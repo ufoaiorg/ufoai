@@ -30,131 +30,26 @@ window aircraft extends iaircraft
 	panel aircraft_info
 	{
 		{
-			pos		"700 460"
-			size	"320 298"
+			pos		"730 605"
+			size	"290 158"
 			border		"2"
 			bordercolor	"0.527 0.6 0.21 1"
-			bgcolor		"0 0 0 1"
 		}
 
-		string aircraft_name
-		{
-			string		*cvar:mn_aircraftname
-			pos			"10 10"
-			size		"312 21"
-			contentalign	ALIGN_UL
-			padding		0
-		}
-
-		string aircraft_status_label
-		{
-			string		"_Status:"
-			pos			"10 30"
-			size		"210 21"
-			contentalign	ALIGN_UL
-			padding		0
-		}
-
-		string aircraft_status
-		{
-			string		*cvar:mn_aircraftstatus
-			pos			"87 50"
-			size		"229 20"
-			contentalign	ALIGN_UL
-		}
-
-		button aircraft_return
-		{
-			pos			"10 50"
-			icon		"icons/aircraft_return"
-			size		"16 16"
-		}
-
-		string aircraft_health_label
-		{
-			string		"_Health:"
-			pos			"10 80"
-			size		"200 21"
-			contentalign	ALIGN_UL
-			padding		0
-		}
-
-		image aircraft_healthbarborder {
-			pos "8 95"
-			src "ui/bar_border"
-		}
-		bar aircraft_healthbar {
-			pos			"10 101"
-			size		"249 5"
-			min			0
-			max			196
-			readonly	true
-		}
 		//	icons below the aircraft
 
 		// ==================
 		// additional stuff
 		// ==================
 
-		string team_members
-		{
-			string		"_Team Members:"
-			pos			"10 120"
-			size		"210 20"
-			contentalign	ALIGN_CL
-			padding		0
-		}
-
-		string team_hired
-		{
-			string		*cvar:mn_hired
-			pos			"227 120"
-			size		"110 20"
-			contentalign	ALIGN_CL
-			padding		0
-		}
-
 		text aircraftinfo
 		{
-			pos			"10 150"
-			size		"315 140"
+			pos			"10 10"
+			size		"285 140"
 			lineheight	20
-			tabwidth	220
+			tabwidth	190
 			dataid		TEXT_AIRCRAFT_INFO
 			rows		7
-		}
-	}
-
-	confunc aircraft_checkbuttons
-	{
-		if ( *cvar:mn_aircraftinbase > 0 ) {
-			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
-
-			if ( *cvar:mn_aircraft_model eq "drop_firebird_flying" ) { *cvar:mn_aircraft_model = "drop_firebird" }
-			elif ( *cvar:mn_aircraft_model eq "drop_herakles_flying" ) { *cvar:mn_aircraft_model = "drop_herakles" }
-			elif ( *cvar:mn_aircraft_model eq "drop_raptor_flying" ) { *cvar:mn_aircraft_model = "drop_raptor" }
-			elif ( *cvar:mn_aircraft_model eq "inter_dragon_flying" ) { *cvar:mn_aircraft_model = "inter_dragon" }
-			elif ( *cvar:mn_aircraft_model eq "inter_saracen_flying" ) { *cvar:mn_aircraft_model = "inter_saracen" }
-			elif ( *cvar:mn_aircraft_model eq "inter_stiletto_flying" ) { *cvar:mn_aircraft_model = "inter_stiletto" }
-			elif ( *cvar:mn_aircraft_model eq "inter_stingray_flying" ) { *cvar:mn_aircraft_model = "inter_stingray" }
-
-			*node:root.aircraft_info.aircraft_return@tooltip = "_Start Aircraft"
-			*node:root.aircraft_info.aircraft_return@onClick = { cmd "aircraft_start;" }
-			*node:root.aircraft_info.aircraft_return@icon = "icons/aircraft_send"
-		} else {
-			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
-
-			if ( *cvar:mn_aircraft_model eq "drop_firebird" ) { *cvar:mn_aircraft_model = "drop_firebird_flying" }
-			elif ( *cvar:mn_aircraft_model eq "drop_herakles" ) { *cvar:mn_aircraft_model = "drop_herakles_flying" }
-			elif ( *cvar:mn_aircraft_model eq "drop_raptor" ) { *cvar:mn_aircraft_model = "drop_raptor_flying" }
-			elif ( *cvar:mn_aircraft_model eq "inter_dragon" ) { *cvar:mn_aircraft_model = "inter_dragon_flying" }
-			elif ( *cvar:mn_aircraft_model eq "inter_saracen" ) { *cvar:mn_aircraft_model = "inter_saracen_flying" }
-			elif ( *cvar:mn_aircraft_model eq "inter_stiletto" ) { *cvar:mn_aircraft_model = "inter_stiletto_flying" }
-			elif ( *cvar:mn_aircraft_model eq "inter_stingray" ) { *cvar:mn_aircraft_model = "inter_stingray_flying" }
-
-			*node:root.aircraft_info.aircraft_return@tooltip = "_Call back"
-			*node:root.aircraft_info.aircraft_return@onClick = { cmd "aircraft_return;" }
-			*node:root.aircraft_info.aircraft_return@icon = "icons/aircraft_return"
 		}
 	}
 
@@ -178,4 +73,7 @@ window aircraft extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 		*cvar:mn_lastsubmenu = "aircraft"
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	screen overlay { }
 }
