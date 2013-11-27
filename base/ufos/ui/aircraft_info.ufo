@@ -41,7 +41,7 @@ window aircraft extends iaircraft
 		{
 			string		*cvar:mn_aircraftname
 			pos			"10 10"
-			size		"317 21"
+			size		"312 21"
 			contentalign	ALIGN_UL
 			padding		0
 		}
@@ -158,17 +158,6 @@ window aircraft extends iaircraft
 		}
 	}
 
-	func aircraft_healtbarchange {
-		*node:root.aircraft_info.aircraft_healthbar@tooltip = "<cvar:mn_aircraft_health>%"
-		*node:root.aircraft_info.aircraft_healthbar@current = ( ( <cvar:mn_aircraft_health> / 100 ) * <node:root.aircraft_info.aircraft_healthbar@max> )
-		if ( *cvar:mn_aircraft_health <= 33 ) {
-			*node:root.aircraft_info.aircraft_healthbar@color = "1 .0 .0 1"
-		} elif ( *cvar:mn_aircraft_health <= 75 ) {
-			*node:root.aircraft_info.aircraft_healthbar@color = "1 .874 .0 1"
-		} else {
-			*node:root.aircraft_info.aircraft_healthbar@color = ".0 1 .0 1"
-		}
-	}
 
 	/**
 	 * @note iaircraft interface

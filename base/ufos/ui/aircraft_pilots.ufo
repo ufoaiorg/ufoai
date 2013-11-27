@@ -34,7 +34,7 @@ window aircraft_pilots extends iaircraft
 				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"
 				size		"395 291"
-				origin		"-20 25 0"
+				origin		"0 25 10"
 				angles		"160 20 -120"
 				autoscale	true
 			}
@@ -126,6 +126,7 @@ window aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_change	{
 		cmd "ui_team_fill pilot;"
+		call *node:root.aircraft_healtbarchange
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		}
