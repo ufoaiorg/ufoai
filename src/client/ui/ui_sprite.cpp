@@ -183,11 +183,8 @@ static const int tile_template_popup[] = {
  * @param[in] flip Flip the icon rendering (horizontal)
  * @param[in] sprite Context sprite
  * @param[in] status The state of the sprite node
- * @param[in] posX Absolute X position of the top-left corner
- * @param[in] posY Absolute Y position of the top-left corner
- * @param[in] sizeX Width of the bounded box
- * @param[in] sizeY Height of the bounded box
- * @todo use named const for status
+ * @param[in] posX,posY Absolute X/Y position of the top-left corner
+ * @param[in] sizeX,sizeY Width/height of the bounding box
  */
 void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
