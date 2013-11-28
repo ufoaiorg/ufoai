@@ -47,3 +47,4 @@ stderr.txt
 .autotools
 *.layout
 Thumbs.db
+*.swp
