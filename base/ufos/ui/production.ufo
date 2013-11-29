@@ -386,7 +386,7 @@ window production
 		contentalign	ALIGN_UR
 	}
 
-	spinner_blue prod_change {
+	spinner_green prod_change {
 		tooltip		"_Change the production amount"
 		pos			"810 505"
 		min			1
@@ -396,7 +396,7 @@ window production
 		onChange	{ cmd "prod_change <lastdiff>;" }
 	}
 
-	spinner_blue prod_change_10 {
+	spinner_green prod_change_10 {
 		tooltip		"_Change the production amount"
 		pos			"860 505"
 		min			1

@@ -743,7 +743,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxclients_change
+		spinner_green maxclients_change
 		{
 			current		*cvar:sv_maxclients
 			pos			"390 70"
@@ -769,7 +769,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxperplayer_change
+		spinner_green maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			pos			"390 90"
@@ -795,7 +795,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxsoldierperplayer_change
+		spinner_green maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			pos			"390 110"
@@ -821,7 +821,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxplayersperteam_change
+		spinner_green maxplayersperteam_change
 		{
 			current		*cvar:sv_maxplayersperteam
 			pos			"390 130"
@@ -847,7 +847,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue ai_multiplayeraliens_change
+		spinner_green ai_multiplayeraliens_change
 		{
 			current		*cvar:ai_multiplayeraliens
 			pos			"390 150"
@@ -873,7 +873,7 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue timelimit_change
+		spinner_green timelimit_change
 		{
 			current		*cvar:sv_roundtimelimit
 			pos			"390 170"
@@ -1310,7 +1310,7 @@ window multiplayer_wait extends levelbuttons
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxperplayer_change
+		spinner_green maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			pos			"325 60"
@@ -1333,7 +1333,7 @@ window multiplayer_wait extends levelbuttons
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue maxsoldierperplayer_change
+		spinner_green maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			pos			"325 85"
@@ -1356,7 +1356,7 @@ window multiplayer_wait extends levelbuttons
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
-		spinner_blue roundtimelimit_change
+		spinner_green roundtimelimit_change
 		{
 			current		*cvar:sv_roundtimelimit
 			pos			"325 110"
