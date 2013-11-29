@@ -57,7 +57,7 @@ window aircraft extends iaircraft
 		*node:root.base_container.mainBody.aircraftlist.aircraft_list@lineselected = <1>
 	}
 
-	func onWindowOpened
+/*	func onWindowOpened
 	{
 		*cvar:mn_aircrafttab = "aircraft"
 		cmd "aircraft_update_list;"
@@ -66,7 +66,7 @@ window aircraft extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 		*cvar:mn_lastsubmenu = "aircraft"
 	}
-
+*/
 	// Fuzzy screen effect (see assets.ufo)
 	screen overlay { }
 }

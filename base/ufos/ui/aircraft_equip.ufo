@@ -728,7 +728,10 @@ window aircraft_equip extends iaircraft
 	func onWindowOpened
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
+		*cvar:mn_aircrafttab = "aircraft_equip"
+		cmd "aircraft_update_list;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		*cvar:mn_lastsubmenu = "aircraft"
 		cmd "airequip_updatemenu 2;"
 		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
