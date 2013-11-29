@@ -310,10 +310,22 @@ component spinner_green extends spinner
 //Common style for all popups
 window popupUI2
 {
+	{
 		bgcolor	    "0 0 0 0.6"
-        border		"2"
+		border		"2"
 		bordercolor	"0.56 0.81 0.76 1"
 		dragbutton	true
+	}
+	string title
+	{
+		pos 		"0 0"
+		string		""
+		size 		"512 30"
+		contentalign	ALIGN_CL
+		font		"f_small_bold"
+		bgcolor		"0.4 0.515 0.5 0.25"
+		color		"1 1 1 0.5"
+	}
 }
 
 // StatBar was designed for hud, in equipment we need a wider bar
