@@ -113,7 +113,7 @@ window team extends iaircraft
 		// ==================
 
 		model aircraft {
-			src			*cvar:mn_aircraft_model
+			src			*cvar:mn_aircraft_model_display
 			pos			"276 568"
 			size		"395 191"
 			origin		"0 -10 10"

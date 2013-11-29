@@ -323,6 +323,7 @@ window iaircraft
 			*node:root.base_container.mainBody.aircraft_info.aircraft_return@onClick = { cmd "aircraft_return;" }
 			*node:root.base_container.mainBody.aircraft_info.aircraft_return@icon = "icons/aircraft_return"
 		}
+		*cvar:mn_aircraft_model_display = *cvar:mn_aircraft_model
 	}
 
 

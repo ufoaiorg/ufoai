@@ -68,7 +68,7 @@ window aircraft_equip extends iaircraft
 
 			model aircraftequip
 			{
-				src		"*cvar:mn_aircraft_model"
+				src		"*cvar:mn_aircraft_model_display"
 				pos		"73 246"
 				size	"529 261"
 				angles	"0 0 180"

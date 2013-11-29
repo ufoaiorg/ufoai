@@ -11,7 +11,7 @@ window aircraft extends iaircraft
 
 	model aircraft
 	{
-		src			*cvar:mn_aircraft_model
+		src			*cvar:mn_aircraft_model_display
 		pos			"50 256"
 		size		"570 310"
 		angles		"0 0 90"
