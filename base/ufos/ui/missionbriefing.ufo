@@ -30,13 +30,15 @@ window mission_briefing
 		{
 			pos			"212 134"
 			size		"600 500"
-			background	"ui/panel_green_slim_trans"
+			bgcolor		"0 0 0 0.6"
+			border		"2"
+			bordercolor	"0.56 0.81 0.76 1"
 			align		LAYOUTALIGN_MIDDLE
 		}
 
 		text name
 		{
-			pos 		"10 10"
+			pos			"10 10"
 			size		"580 20"
 			longlines	LONGLINES_PRETTYCHOP
 			font		"f_menu"
@@ -54,9 +56,9 @@ window mission_briefing
 
 		string victory_conditions
 		{
-			pos		"10 300"
-			font	"f_menu"
-			string "_Victory conditions:"
+			pos			"10 300"
+			font		"f_menu"
+			string		"_Victory conditions:"
 		}
 
 		text briefing_conditions
@@ -67,21 +69,18 @@ window mission_briefing
 			lineheight	20
 		}
 
-		button button_ready
+		MainMenuBtn button_ready
 		{
 			visiblewhen	"*cvar:cl_onbattlescape == 1"
 			string		"_Start"
 			tooltip		"_Start the match"
-			background	"ui/button_green_small"
-			pos			"380 450"
+			pos			"400 470"
 			width		"200"
-			font		"f_menu"
-			color		"0 0.5 0 1"
-			selectcolor	"1 1 1 1"
 			onClick		{
 				cmd "cl_ready 1;ui_pop;"
 			}
 		}
+	screen overlay { }
 	}
 
 	// ===================
