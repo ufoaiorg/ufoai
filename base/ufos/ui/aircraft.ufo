@@ -65,11 +65,12 @@ window iaircraft
 					}
 				}
 
-				option description {
+/*				option description {
 					label	"_Description"
 					value	"aircraft"
 					icon "icons/tab_information"
 				}
+*/
 				option pilot {
 					label	"_Pilots"
 					value	"aircraft_pilots"

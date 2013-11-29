@@ -80,10 +80,40 @@ window aircraft_equip extends iaircraft
 			// ==================
 			// slots
 			// ==================
+			panel airview {
+				{
+				pos		"50 230"
+				size	"664 303"
+				}
+				model aircraft
+				{
+					src			*cvar:mn_aircraft_model_display
+					pos			"23 16"
+					size		"529 261"
+					angles		"0 0 90"
+					autoscale	true
+					rotatewithmouse	true
+					omega		"0 10 0"
+				}
+				MainMenu3Btn button_equip
+				{
+					string		"_Equip Aircraft"
+					pos			"438 278"
+					size		"225 25"
+					font 		"f_small_bold"
+					onClick		{
+						*node:parent.parent.airequipslot@invis = false
+						*node:parent@invis = true
+					}
+					color		"0 0 0 0.9"
+				}
+
+			}
+
 			panel airequipslot {
 				{
 				pos		"50 230"
-				size	"650 303"
+				size	"664 303"
 				}
 
 /*				button pedia {
@@ -105,6 +135,19 @@ window aircraft_equip extends iaircraft
 					size	"529 261"
 					angles	"0 0 180"
 					autoscale	true
+				}
+
+				MainMenu3Btn button_view
+				{
+					string		"_View Aircraft"
+					pos			"438 278"
+					size		"225 25"
+					font 		"f_small_bold"
+					color		"0 0 0 0.9"
+					onClick		{
+						*node:parent@invis = true
+						*node:parent.parent.airview@invis = false
+					}
 				}
 
 				image airequip_slot0
