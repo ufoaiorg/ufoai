@@ -85,7 +85,7 @@ window bases
 			{
 				{
 					pos		"330 0"
-                    onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+                    onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft_equip;" }
 				}
 				string label { string "_Pilots" }
 				button icon { icon "icons/head_pilot" }
@@ -432,7 +432,7 @@ window bases
 		BaseSection aircraft
 		{
 			{
-				onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft_equip;" }
 			}
 			string label { string "_Aircraft" }
 			button icon { icon "icons/aircraft" }
@@ -573,7 +573,7 @@ window bases
 				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
 				*node:parent.sections.<1>@tooltip = ""
 				if (param1 eq "aircraft") {
-					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push aircraft;" }
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push aircraft_equip;" }
 				} elif (param1 eq "buysell") {
 					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push market;" }
 				} elif (param1 eq "research") {
@@ -653,7 +653,7 @@ window bases
 			*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
 		}
 		*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <1>
-		*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft <node:parent.aircraft_id@string>;" }
+		*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip <node:parent.aircraft_id@string>;" }
 		*node:parent.sections.aircraft.aircraft_list@invis = false
 		 /*
 			THEN ADD THIS TO AIRCRAFT onWindowOpened
