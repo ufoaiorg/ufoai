@@ -65,7 +65,7 @@ window aircraft_equip extends iaircraft
 			button pedia {
 				icon		"icons/windowinfo"
 				tooltip		"_View UFOPaedia entry"
-				pos			"25 245"
+				pos			"15 235"
 				size		"16 16"
 				padding		0
 
@@ -77,23 +77,34 @@ window aircraft_equip extends iaircraft
 			// ==================
 			// aircraft model
 			// ==================
-
-			model aircraftequip
-			{
-				src		"*cvar:mn_aircraft_model_display"
-				pos		"73 246"
-				size	"529 261"
-				angles	"0 0 180"
-				autoscale	true
-			}
-
 			// ==================
 			// slots
 			// ==================
 			panel airequipslot {
 				{
 				pos		"50 230"
-				size	"550 288"
+				size	"650 303"
+				}
+
+/*				button pedia {
+					icon		"icons/windowinfo"
+					tooltip		"_View UFOPaedia entry"
+					pos			"0 0"
+					size		"16 16"
+					padding		0
+
+					onClick	{
+						cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>"
+					}
+				}
+*/
+				model aircraftequip
+				{
+					src		"*cvar:mn_aircraft_model_display"
+					pos		"23 16"
+					size	"529 261"
+					angles	"0 0 180"
+					autoscale	true
 				}
 
 				image airequip_slot0
@@ -248,7 +259,6 @@ window aircraft_equip extends iaircraft
 					excluderect { pos	"0 0"	size	"60 60" }
 				}
 			}
-
 		}
 /*		// ==================
 		// Select item box
