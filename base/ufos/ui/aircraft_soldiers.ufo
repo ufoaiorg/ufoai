@@ -73,13 +73,18 @@ window team extends iaircraft
 			panel actors_background {
 				{
 				pos		"5 226"
-				size	"304 301"
+				size	"354 301"
 				border		"2"
 				bordercolor	"0.527 0.6 0.21 1"
 				}
 
+				image icon_soldier {
+					src	"icons/head_soldier"
+					pos		"5 15"
+					size	"42 42"
+				}
 				panel soldierlist {
-					pos				"5 10"
+					pos				"55 10"
 					size			"270 293"
 					padding		    6
 					layout		    LAYOUT_TOP_DOWN_FLOW
@@ -94,7 +99,7 @@ window team extends iaircraft
 				}
 				vscrollbar soldierlist_scroll {
 					image			"ui/scrollbar_v_green"
-					pos				"285 8"
+					pos				"335 8"
 					height			"283"
 					hidewhenunused	true
 					current			0
