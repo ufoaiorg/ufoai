@@ -319,6 +319,7 @@ int FS_CheckFile (const char* fmt, ...)
  * @param[out] buffer Pointer to memory where file contents are written to.
  * @param[in] len The length of the supplied memory area.
  * @param[in] f The file which is to be read into the memory area.
+ * @param[in] failOnEmptyRead idk Must have something to with certain readstates that can happen with removable media ?
  * @return The length of the file contents successfully read and written to
  * memory.
  * @note @c buffer is not null-terminated at the end of file reading
