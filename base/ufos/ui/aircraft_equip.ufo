@@ -728,6 +728,8 @@ window aircraft_equip extends iaircraft
 		cmd "aircraft_update_list;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*cvar:mn_lastsubmenu = "aircraft"
+		*node:root.base_container.mainBody.airequipslot@invis = true
+		*node:root.base_container.mainBody.airview@invis = false
 		cmd "airequip_updatemenu 2;"
 		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
