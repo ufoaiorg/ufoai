@@ -684,4 +684,6 @@ window BaseMgmtWindow
 	// Back to geoscape
 	Geoscape geoscape_button { }
 
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 }
