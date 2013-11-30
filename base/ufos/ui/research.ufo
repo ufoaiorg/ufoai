@@ -450,13 +450,8 @@ component cmpTechItem extends panel {
 		string		""
 	}
 
-	button pedia {
-		icon		"icons/windowinfo"
-		tooltip		"_View UFOPaedia entry"
+	UFOpediaBtn pedia {
 		pos			"5 4"
-		size		"16 16"
-		padding		0
-
 		onClick	{
 			cmd "ui_research_select <node:parent.id@string>; ui_push ufopedia <node:parent.id@string>;"
 		}
