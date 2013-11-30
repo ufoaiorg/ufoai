@@ -1,19 +1,19 @@
-window popup_cap_overload
+window popup_cap_overload extends popupUI2
 {
 	{
-		pos				"265 256"
-		size			"492 270"
-		dragbutton		true
+		pos				"305 270"
+		size			"420 240"
 		closebutton		true
 		modal			true				// we can't click out
-		background			"ui/popup_alpha_tile"
-		string			"_Capacity Exceeded"
 	}
-
+	string title {
+		string			"_Capacity Exceeded"
+		width			"420"
+	}
 	string warning {
 		string			"_There is no more room for goods/personel at this base. Free up some space."
-		pos				"30 60"
-		size			"435 60"
+		pos				"10 60"
+		size			"400 60"
 		longlines		LONGLINES_WRAP
 	}
 
@@ -24,70 +24,72 @@ window popup_cap_overload
 
 	string base_title {
 		string			"_Base:"
-		pos				"50 120"
+		pos				"20 120"
 		size			"90 20"
 		font			"f_small_bold"
 	}
 	string base {
-		pos				"140 120"
+		pos				"100 120"
 		size			"290 20"
 	}
 
 	string header_capacity {
 		string 		"_Capacity"
-		pos			"50 150"
+		pos			"20 150"
 		size		"230 20"
 		font		"f_small_bold"
 		contentalign	ALIGN_CL
 	}
 	string header_free {
 		string 		"_free"
-		pos			"275 150"
+		pos			"245 150"
 		size		"75 20"
 		font		"f_small_bold"
 		contentalign	ALIGN_CR
 	}
 	string header_all {
 		string 		"_all"
-		pos			"350 150"
+		pos			"320 150"
 		size		"75 20"
 		font		"f_small_bold"
 		contentalign	ALIGN_CR
 	}
 
 	string storage {
-		pos			"50 170"
+		pos			"20 170"
 		size		"230 20"
 		font		"f_small"
 	}
 	string free {
-		pos			"275 170"
+		pos			"245 170"
 		size		"75 20"
 		font		"f_small"
 		contentalign	ALIGN_CR
 	}
 	string all {
-		pos			"350 170"
+		pos			"320 170"
 		size		"75 20"
 		font		"f_small"
 		contentalign	ALIGN_CR
 	}
 
-	cmpPopupButton close {
+	MainMenu2Btn close {
 		string		"_Close"
-		pos			"40 210"
+		pos			"0 210"
 		onclick {
 			cmd "ui_pop;"
 		}
+		width 		"180"
 	}
-	cmpPopupButton go_to_base {
+	MainMenuBtn go_to_base {
 		string		"_Go to base"
-		pos			"280 210"
+		pos			"240 210"
 		onclick {
 			if ( *node:root.baseid@string eq "base" ) {
 				cmd		"ui_pop; mn_base_select <node:root.baseid@integer>;"
 			}
 		}
+		width		"180"
 	}
 
 	func onWindowOpened	{
@@ -108,4 +110,5 @@ window popup_cap_overload
 			}
 		}
 	}
+	screen overlay { }
 }
