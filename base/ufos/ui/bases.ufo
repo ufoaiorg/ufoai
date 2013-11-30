@@ -27,8 +27,13 @@ window bases
 	}
 
 	// Left base panel
-	BaseContainerPanel base_container
+	BaseContainerPanelV2 base_container
 	{
+		// no mainBody here
+		panel mainBody
+		{
+			invis true
+		}
 
 		// The base map
 		panel base_map_container
