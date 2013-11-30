@@ -65,7 +65,7 @@ language pl {
 
 language es {
 	name	"_Spanish"
-	native	"español"
+	native	"Español"
 	code (
 		"es.UTF-8"
 		"es_AR.UTF-8"
@@ -108,7 +108,7 @@ language es {
 
 language es_ES {
 	name	"_Spanish (Spain)"
-	native	"español (España)"
+	native	"Español (España)"
 	code (
 		"es_ES.UTF-8"
 		"es_ES.utf8"
