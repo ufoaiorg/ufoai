@@ -741,6 +741,13 @@ window research extends BaseMgmtWindow
 			}
 		}
 	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+		onClick			{ cmd "ui_pop; ui_pop;" }
+	}
+
 	// Laboratory count
 	BuildingSpace laboratoy
 	{
@@ -749,14 +756,6 @@ window research extends BaseMgmtWindow
 		button smlicon { icon	"icons/building_lab" }
 		string label { string	"_Laboratory" }
 		button alert { invis true }
-	}
-	// Back to geoscape
-	Geoscape geoscape_button
-	{
-	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
-	//	onClick			{ cmd "ui_pop; ui_close bases;" }		// works
-	//	onClick			{ cmd "ui_close research; ui_pop;" }	// works
-		onClick			{ cmd "ui_close research; ui_close bases;" }
 	}
 
     /**
