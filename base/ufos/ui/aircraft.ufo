@@ -44,7 +44,7 @@ window iaircraft
 		// Aircraft panel
 		panel mainBody
 		{
-			{ size "715 534" }
+			{ size "715 540" }
 			// Title bar
 			panel header
 			{
