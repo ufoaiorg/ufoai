@@ -809,7 +809,7 @@ window endgame
 // ========================
 // POPUP EXIT CONFIRMATION
 // ========================
-window popup_exit_confirmation
+window popup_exit_confirmation extends popupUI2
 {
 	{
 		bgcolor		"0.0784 0.1019 0.1019 1.0"
@@ -820,13 +820,7 @@ window popup_exit_confirmation
 	}
 	string title
 	{
-		pos 		"0 0"
 		string		"_EXIT CAMPAIGN CONFIRMATION"
-		size 		"512 30"
-		contentalign	ALIGN_CL
-		font		"f_small_bold"
-		bgcolor		"0.4 0.515 0.5 0.25"
-		color		"1 1 1 0.5"
 	}
 	string exit_confirmation_label
 	{
