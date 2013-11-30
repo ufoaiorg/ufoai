@@ -2118,7 +2118,7 @@ window options
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 	// Advanced Video Options Window
 	panel video_adv
@@ -2428,7 +2428,7 @@ window options
 			}
 
 			// Fuzzy screen effect (see assets.ufo)
-			screen overlay { }
+			fuzzyScreen overlay { }
 		}
 	}
 
@@ -2566,7 +2566,7 @@ window options
 			}
 
 			// Fuzzy screen effect (see assets.ufo)
-			screen overlay { }
+			fuzzyScreen overlay { }
 		}
 	}
 

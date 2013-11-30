@@ -465,5 +465,5 @@ window employees
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }

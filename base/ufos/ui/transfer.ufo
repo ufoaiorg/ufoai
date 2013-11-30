@@ -540,7 +540,7 @@ window transfer
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 }
 
@@ -749,6 +749,6 @@ window popup_transferlist extends popupUI2
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 }

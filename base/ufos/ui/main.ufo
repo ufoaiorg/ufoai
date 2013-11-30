@@ -108,7 +108,7 @@ window main
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{

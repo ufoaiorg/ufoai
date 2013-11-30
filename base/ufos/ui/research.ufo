@@ -355,7 +355,7 @@ window researchUI2
 	Geoscape geoscape_button { }
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 	/*
 	 * Concatenates the string for lab space

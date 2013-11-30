@@ -397,5 +397,5 @@ window skirmish extends cgame_download
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }

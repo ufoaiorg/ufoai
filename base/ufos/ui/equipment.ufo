@@ -483,6 +483,6 @@ window equipment extends objectinfo
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 
 }

@@ -80,7 +80,7 @@ window mission_briefing
 				cmd "cl_ready 1;ui_pop;"
 			}
 		}
-	screen overlay { }
+	fuzzyScreen overlay { }
 	}
 
 	// ===================

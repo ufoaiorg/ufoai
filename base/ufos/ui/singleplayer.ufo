@@ -137,7 +137,7 @@ window singleplayermission
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }
 
 // ========================

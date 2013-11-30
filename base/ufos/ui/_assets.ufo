@@ -5,7 +5,7 @@
 /**
  * Fuzzy screen effect
  */
-component screen extends texture
+component fuzzyScreen extends texture
 {
 	pos 		"0 0"
 	// TODO: this should be always the full screen

@@ -373,5 +373,5 @@ window iaircraft
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }

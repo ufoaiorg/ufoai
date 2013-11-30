@@ -502,7 +502,7 @@ window campaign extends cgame_download
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }
 
 window campaign_main extends campaign
@@ -843,5 +843,5 @@ window popup_exit_confirmation extends popupUI2
 		onClick	{ cmd "ui_pop;" }
 	}
 	// Fuzzy screen effect (see assets.ufo)
-	screen overlay { }
+	fuzzyScreen overlay { }
 }
