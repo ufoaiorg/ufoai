@@ -62,13 +62,9 @@ window aircraft_equip extends iaircraft
 				}
 			}
 
-			button pedia {
-				icon		"icons/windowinfo"
-				tooltip		"_View UFOPaedia entry"
+			UFOpediaBtn pedia
+			{
 				pos			"15 235"
-				size		"16 16"
-				padding		0
-
 				onClick	{
 					cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>"
 				}

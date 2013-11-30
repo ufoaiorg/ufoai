@@ -42,6 +42,16 @@ component MainMenuToolbar extends panel
 */
 }
 
+component UFOpediaBtn extends button {
+	icon		"icons/windowinfo"
+	tooltip		"_View UFOPaedia entry"
+	size		"16 16"
+	padding		0
+	onClick	{
+		cmd "ui_push ufopedia"
+	}
+}
+
 /**
  * Main button templates. Can be resized as needed
  */
