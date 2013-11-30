@@ -8,7 +8,7 @@ component Geoscape extends button
 	tooltip			"_Back"
 	onMouseEnter	{ *node:this@background = "icons/circlelrg" }
 	onMouseLeave	{ *node:this@background = "icons/circlelrg0" }
-	onClick			{ cmd "ui_pop;" }
+//	onClick			{ cmd "ui_pop;" }
 }
 
 // Main panel button for base sections
