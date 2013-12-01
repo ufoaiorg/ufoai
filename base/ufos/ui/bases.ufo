@@ -314,7 +314,6 @@ window bases
 						layout			LAYOUT_TOP_DOWN_FLOW
 						layoutMargin	0
 					}
-					data height { integer 0 }
 				}
 				// Preview of currently selected building
 				panel preview
@@ -375,7 +374,7 @@ window bases
 			{
 				call *node:parent.bld_panel.bld_space@removeAllChild
 				*node:parent.bld_panel.bld_space@size = "298 0"
-				*node:parent.bld_panel.bld_space.height@integer = 0
+				*node:parent.bld_panel.bld_space@height = 0
 				*node:parent.bld_panel@size = "298 0"
 				*node:parent.bld_panel.height@integer = 0
 				*node:parent@size = "298 48"
@@ -394,15 +393,15 @@ window bases
 			confunc show_bld_space
 			{
 				// Set the appropriate size of the panel
-				*node:parent.bld_panel.bld_space.height@integer = (<node:parent.bld_panel.bld_space.height@integer> + 30)
-				*node:parent.bld_panel.bld_space@size = "298 <node:parent.bld_panel.bld_space.height@integer>"
+				*node:parent.bld_panel.bld_space@height = (<node:parent.bld_panel.bld_space@height> + 30)
+				*node:parent.bld_panel.bld_space@size = "298 <node:parent.bld_panel.bld_space@height>"
 
 				// If showing a few facilities, don't show building preview panel
 				if (*node:parent.state@string eq "true") {
-					*node:parent.bld_panel.height@integer = <node:parent.bld_panel.bld_space.height@integer>
+					*node:parent.bld_panel.height@integer = <node:parent.bld_panel.bld_space@height>
 				// Show building preview panel for all facilities
 				} else {
-					*node:parent.bld_panel.height@integer = (<node:parent.bld_panel.bld_space.height@integer> + 185)
+					*node:parent.bld_panel.height@integer = (<node:parent.bld_panel.bld_space@height> + 185)
 				}
 				// Expand parent panels appropriately
 				*node:parent.bld_panel@size = "298 <node:parent.bld_panel.height@integer>"
