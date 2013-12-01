@@ -308,6 +308,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 }
 
 /**
+ * @param[in] model The tile-info about the bsp-file we want to slice
  * @param[in] thickness the thickness of the brushes to render to the 2d map
  */
 void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleContour, bool multipleContour)
