@@ -160,7 +160,4 @@ window aircraft_pilots extends iaircraft
             }
 		}
     }
-
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
 }
