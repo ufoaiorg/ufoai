@@ -103,21 +103,6 @@ window team extends iaircraft
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
 	}
 
-	MainMenu3Btn bt_equipsoldiers {
-		string "_Equip soldiers"
-		pos		"760 380"
-		size	"198 30"
-        font		"f_small_bold"
-        color		"0 0 0 0.9"
-        selectcolor	"0 0 0 1"
-
-		onClick	{
-			*cvar:cl_selected2 = <cvar:cl_selected>
-			cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_close_equipment;"
-			cmd "ui_push equipment;"
-		}
-	}
-
 	/** @todo Activate this again - used for UGVs */
 	// ==================
 	// additional stuff
@@ -169,25 +154,51 @@ window team extends iaircraft
 		call *node:root.reset_character_cvars
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 	}
-    abilities airsoldiers_abilities
-    {
-    }
 
-	skillbars airsoldiers_skills
-	{
+	panel team_info {
+		{
+		pos			"730 100"
+		size		"285 665"
+		}
+		abilities airsoldiers_abilities
+		{
+		pos			"10 0"
+		}
+
+		skillbars airsoldiers_skills
+		{
+		pos			"10 120"
+		}
+		healthbar localhealth
+		{
+		pos			"10 240"
+		}
+		MainMenu3Btn bt_equipsoldiers {
+			string "_Equip soldiers"
+			pos		"40 280"
+			size	"198 30"
+			font		"f_small_bold"
+			color		"0 0 0 0.9"
+			selectcolor	"0 0 0 1"
+
+			onClick	{
+				*cvar:cl_selected2 = <cvar:cl_selected>
+				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_close_equipment;"
+				cmd "ui_push equipment;"
+			}
+		}
+		text name
+		{
+			string		*cvar:mn_name
+			pos			"10 320"
+			size		"290 20"
+			color		"0.56 0.81 0.76 1"
+			ghost       true
+		}
+		actor_info local
+		{
+			pos		"01 320"
+			}
+		}
 	}
-	healthbar localhealth
-	{
-    }
-	actor_info local
-	{
-        text name
-        {
-            string		*cvar:mn_name
-            pos			"3 0"
-            size		"290 20"
-            color		"0.56 0.81 0.76 1"
-            ghost       true
-            }
-    }
 }
