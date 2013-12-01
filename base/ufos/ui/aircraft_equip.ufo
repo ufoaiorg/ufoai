@@ -76,7 +76,7 @@ window aircraft_equip extends iaircraft
 			panel airview {
 				{
 				pos		"50 230"
-				size	"664 303"
+				size	"664 308"
 				}
 				model aircraft
 				{
@@ -91,7 +91,7 @@ window aircraft_equip extends iaircraft
 				MainMenu3Btn button_equip
 				{
 					string		"_Equip Aircraft"
-					pos			"438 278"
+					pos			"438 283"
 					size		"225 25"
 					font 		"f_small_bold"
 					onClick		{
@@ -109,7 +109,7 @@ window aircraft_equip extends iaircraft
 			panel airequipslot {
 				{
 				pos		"50 230"
-				size	"664 303"
+				size	"664 308"
 				}
 
 				model aircraftequip
@@ -124,7 +124,7 @@ window aircraft_equip extends iaircraft
 				MainMenu3Btn button_view
 				{
 					string		"_View Aircraft"
-					pos			"438 278"
+					pos			"438 283"
 					size		"225 25"
 					font 		"f_small_bold"
 					color		"0 0 0 0.9"

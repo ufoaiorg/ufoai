@@ -355,6 +355,13 @@ window iaircraft
 		*cvar:mn_tevad = ""
 	}
 
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
+
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
 }
