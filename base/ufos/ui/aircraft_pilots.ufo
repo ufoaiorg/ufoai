@@ -139,25 +139,33 @@ window aircraft_pilots extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 	}
 
-    skillspilot pilotskills
-	{
-	}
-
-	healthbar actorhealth
-	{
+	panel pilot_info {
 		{
+		pos			"730 100"
+		size		"285 665"
 		}
-    }
-	actor_info local
-	{
-        text name
-        {
-            string		*cvar:mn_name
-            pos			"3 0"
-            size		"290 20"
-            color		"0.56 0.81 0.76 1"
-            ghost       true
-            }
+		skillspilot pilotskills
+		{
+		pos			"10 120"
 		}
-    }
+
+		healthbar actorhealth
+		{
+		pos			"10 240"
+		}
+		actor_info local
+		{
+			pos		"01 320"
+			}
+			text name
+			{
+				string		*cvar:mn_name
+				pos			"10 320"
+				size		"290 20"
+				color		"0.56 0.81 0.76 1"
+				ghost       true
+				}
+			}
+		}
+	}
 }

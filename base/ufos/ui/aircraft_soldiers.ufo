@@ -187,17 +187,17 @@ window team extends iaircraft
 				cmd "ui_push equipment;"
 			}
 		}
-		text name
-		{
-			string		*cvar:mn_name
-			pos			"10 320"
-			size		"290 20"
-			color		"0.56 0.81 0.76 1"
-			ghost       true
-		}
 		actor_info local
 		{
 			pos		"01 320"
+			}
+			text name
+			{
+				string		*cvar:mn_name
+				pos			"10 320"
+				size		"290 20"
+				color		"0.56 0.81 0.76 1"
+				ghost       true
 			}
 		}
 	}
