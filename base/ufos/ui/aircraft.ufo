@@ -173,9 +173,21 @@ window iaircraft
 
 				button aircraft_return
 				{
-					pos			"10 50"
-					icon		"icons/aircraft_return"
-					size		"16 16"
+					{
+						pos			"10 50"
+						size		"16 16"
+						icon		"icons/aircraft_return"
+					}
+					func setToStart {
+						*node:parent@tooltip = "_Start Aircraft"
+						*node:parent@onClick = { cmd "aircraft_start;" }
+						*node:parent@icon = "icons/aircraft_send"
+					}
+					func setToReturn {
+						*node:parent@tooltip = "_Call back"
+						*node:parent@onClick = { cmd "aircraft_return;" }
+						*node:parent@icon = "icons/aircraft_return"
+					}
 				}
 
 				string aircraft_health_label
@@ -281,19 +293,13 @@ window iaircraft
 		if ( *cvar:mn_aircraftinbase > 0 ) {
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
 
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@tooltip = "_Start Aircraft"
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@onClick = { cmd "aircraft_start;" }
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@icon = "icons/aircraft_send"
-
+			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToStart
+			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToReturn
 			*cvar:mn_aircraft_model_display = *cvar:mn_aircraft_model
 		} else {
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
 
 			*cvar:mn_aircraft_model_display = "<cvar:mn_aircraft_model>_flying"
-
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@tooltip = "_Call back"
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@onClick = { cmd "aircraft_return;" }
-			*node:root.base_container.mainBody.aircraft_info.aircraft_return@icon = "icons/aircraft_return"
 		}
 	}
 
