@@ -715,6 +715,7 @@ window geoscape
 				layoutmargin	10
 			}
 
+			// @todo This produces an error whenever we do a dock@removeAllChild (can't delete static node)
 			panel bottomMargin {
 				align		LAYOUTALIGN_BOTTOM
 				size		"280 30"
