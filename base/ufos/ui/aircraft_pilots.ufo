@@ -40,10 +40,10 @@ window aircraft_pilots extends iaircraft
 					size	"42 42"
 				}
 				panel soldierlist {
-					pos			"55 08"
-					size		"270 298"
-					padding		6
-					layout		LAYOUT_TOP_DOWN_FLOW
+					pos				"55 08"
+					size			"270 298"
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
 
@@ -56,8 +56,8 @@ window aircraft_pilots extends iaircraft
 				vscrollbar soldierlist_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"325 5"
-					hidewhenunused	true
 					height			"298"
+					hidewhenunused	true
 					current			0
 					viewsize		8
 					fullsize		50
