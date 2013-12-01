@@ -5,7 +5,6 @@
 window aircraft_pilots extends iaircraft
 {
 
-
 	data selected {
 	}
 
@@ -68,10 +67,10 @@ window aircraft_pilots extends iaircraft
 				}
 			}
 		}
-// ==================
-// aircraft
-// ==================
 
+		// ==================
+		// aircraft
+		// ==================
 		model aircraft
 		{
 			src			*cvar:mn_aircraft_model_display
@@ -82,14 +81,6 @@ window aircraft_pilots extends iaircraft
 			autoscale	true
 		}
 
-/*		image aircraft_slot
-		{
-			src	"ui/button_square"
-			pos		"20 581"
-			size	"64 64"
-			texh	"64 64"
-		}
-*/
 		model assigned_pilot_body
 		{
 			{

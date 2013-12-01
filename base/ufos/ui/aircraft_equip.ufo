@@ -73,9 +73,6 @@ window aircraft_equip extends iaircraft
 			// ==================
 			// aircraft model
 			// ==================
-			// ==================
-			// slots
-			// ==================
 			panel airview {
 				{
 				pos		"50 230"
@@ -106,24 +103,15 @@ window aircraft_equip extends iaircraft
 
 			}
 
+			// ==================
+			// slots
+			// ==================
 			panel airequipslot {
 				{
 				pos		"50 230"
 				size	"664 303"
 				}
 
-/*				button pedia {
-					icon		"icons/windowinfo"
-					tooltip		"_View UFOPaedia entry"
-					pos			"0 0"
-					size		"16 16"
-					padding		0
-
-					onClick	{
-						cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>"
-					}
-				}
-*/
 				model aircraftequip
 				{
 					src		"*cvar:mn_aircraft_model_display"
@@ -299,69 +287,6 @@ window aircraft_equip extends iaircraft
 				}
 			}
 		}
-/*		// ==================
-		// Select item box
-		// ==================
-		panel item {
-			{
-				pos		"5 565"
-				size	"292 191"
-				bgcolor		"0 0 0 1"
-//				border		2"
-//				bordercolor	"0.527 0.6 0.21 1"
-			}
-
-			string airequip_selected
-			{
-				string		"_Selected item:"
-				pos			"4 5"
-				size		"264 25"
-				font 		"f_normal_bold"
-				contentalign	ALIGN_UL
-			}
-
-			string airequip_item_name
-			{
-				string		"*cvar:mn_itemname"
-				pos			"14 55"
-				size		"264 20"
-				contentalign	ALIGN_CC
-			}
-
-			model mdl_top
-			{
-				src	"*cvar:mn_upmodel_top"
-				autoscale	true
-				pos		"34 76"
-				size	"225 100"
-				angles	"-120 110 -25"
-			}
-
-			text description
-			{
-				dataid		TEXT_ITEMDESCRIPTION
-				pos			"24 182"
-				size		"239 85"
-				tabwidth	120
-				font		"f_verysmall"
-				onViewChange {
-					*node:parent.description_scroll@fullsize = <fullsize>
-					*node:parent.description_scroll@viewsize = <viewsize>
-					*node:parent.description_scroll@current = <viewpos>
-				}
-			}
-
-			vscrollbar description_scroll {
-				image		"ui/scrollbar_v_green"
-				pos			"258 182"
-				height		"85"
-				hidewhenunused	true
-				onChange 	{
-					*node:parent.description@viewpos = <current>
-				}
-			}
-		}
-*/
         // Object description panel
         ObjectInfo details
         {

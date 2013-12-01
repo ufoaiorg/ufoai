@@ -64,13 +64,6 @@ window iaircraft
 						cmd "ui_pop; ui_push <cvar:mn_aircrafttab>;"
 					}
 				}
-
-/*				option description {
-					label	"_Description"
-					value	"aircraft"
-					icon "icons/tab_information"
-				}
-*/
 				option pilot {
 					label	"_Pilots"
 					value	"aircraft_pilots"
@@ -140,16 +133,6 @@ window iaircraft
 					size		"317 21"
 					font		"f_normal_bold"
 					onChange	{ cmd "aircraft_namechange; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
-				}
-
-				button air_nameedit
-				{
-					tooltip		"_Rename aircraft"
-//					icon		"icons/pen"
-					pos			"340 5"
-					size		"35 35"
-					padding		0
-					onClick		{ call *node:root.aircraftlist.aircraft_selected@edit }
 				}
 			}
 			panel aircraft_info

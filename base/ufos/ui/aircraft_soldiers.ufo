@@ -55,6 +55,9 @@ component cmpNamedBar extends panel {
  */
 window team extends iaircraft
 {
+	data selected {
+	}
+
 	BaseContainerPanelV2 base_container
 	{
 		panel mainBody
@@ -70,6 +73,9 @@ window team extends iaircraft
 				}
 			}
 
+			// ==================
+			// names list
+			// ==================
 			panel actors_background {
 				{
 				pos			"5 225"
@@ -127,13 +133,13 @@ window team extends iaircraft
 
 		string team_members {
 			string	"_Team Members:"
-			pos		"5 570"
+			pos		"5 580"
 			size	"200 20"
 		}
 
 		string team_hired {
 			string			*cvar:mn_hired
-			pos				"5 590"
+			pos				"5 600"
 			size			"200 20"
 			contentalign	ALIGN_UL
 		}
@@ -159,34 +165,6 @@ window team extends iaircraft
 			cmd "ui_push equipment;"
 		}
 	}
-
-	// ==================
-	// names list
-	// ==================
-
-	data selected {
-	}
-
-
-	// ==================
-	// actor info
-	// ==================
-
-/*	panel actormodel_background {
-		{
-			pos		"12 12"
-			size	"179 296"
-			background	"ui/panel_green"
-		}
-
-	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
-	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian contentalign ALIGN_UR }
-
-	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
-	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam contentalign ALIGN_UR }
-
-	}
-*/
 
 	/** @todo Activate this again - used for UGVs */
 	// ==================
