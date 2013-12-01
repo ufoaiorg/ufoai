@@ -218,11 +218,10 @@ window team extends iaircraft
 	/**
 	 * @note iaircraft interface
 	 */
-	confunc aircraft_change
-	{
+	confunc aircraft_change {
 		cmd "ui_team_fill soldier;"
-		call *node:root.aircraft_healtbarchange
 		call *node:root.aircraft_checkbuttons
+		call *node:root.aircraft_healtbarchange
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		}
