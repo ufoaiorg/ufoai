@@ -110,5 +110,5 @@ window popup_cap_overload extends popupUI2
 			}
 		}
 	}
-	screen overlay { }
+	fuzzyScreen overlay { }
 }
