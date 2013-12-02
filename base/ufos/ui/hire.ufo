@@ -263,7 +263,10 @@ window employees
                     rows		    "14"
                     color		    "0.56 0.81 0.76 1"
                     selectcolor	    "1 1 1 1"
-                    onClick			{ cmd "employee_select <lineselected>;" }
+                    onClick			{
+						cmd "employee_select <lineselected>;"
+//						call *node:root.actorhealth.hp.setValues(<cvar:mn_vhp>)
+                    }
                     onViewChange	{
                         *node:parent.scroll@fullsize = <fullsize>
                         *node:parent.scroll@current = <viewpos>
