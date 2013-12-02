@@ -178,15 +178,10 @@ void SV_LinkEdict (edict_t* ent)
 
 	/* If this ent has a child, link it back in, too */
 	if (ent->child) {
-		VectorCopy(ent->absBox.mins, ent->child->entBox.mins);
-		VectorCopy(ent->absBox.maxs, ent->child->entBox.maxs);
+		ent->child->entBox.set(ent->absBox);
 
 		/* expand the trigger box */
-		ent->child->entBox.mins[0] -= (UNIT_SIZE / 2);
-		ent->child->entBox.mins[1] -= (UNIT_SIZE / 2);
-		ent->child->entBox.maxs[0] += (UNIT_SIZE / 2);
-		ent->child->entBox.maxs[1] += (UNIT_SIZE / 2);
-
+		ent->child->entBox.expandXY(UNIT_SIZE / 2);
 		/* link child back into the world */
 		SV_LinkEdict(ent->child);
 	}
