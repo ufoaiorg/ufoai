@@ -75,11 +75,11 @@ public:
 	byte fT[MAX_FIXEDTILES];	/**< Index of used (fix) tile in mTile[] array */
 	byte fX[MAX_FIXEDTILES];	/**< x position of the used  (fix) tile in fT */
 	byte fY[MAX_FIXEDTILES];	/**< y position of the used  (fix) tile in fT */
-	int numFixed;	/**< Number of fixed tiles. Counts entries of fX, fY and fT */
-	int width, height;	/**< The width and height of the assembly. (size "<w> <h>"). This is the maximum size of
-						 * whole map that is built from all the tiles in the assembly. So if there is a single tile
-						 * that is used in the assembly and that has a greater size than the one given in the assembly
-						 * then this must fail. */
+	int numFixed;				/**< Number of fixed tiles. Counts entries of fX, fY and fT */
+	int width, height;			/**< The width and height of the assembly. (size "<w> <h>"). This is the maximum size of
+								* whole map that is built from all the tiles in the assembly. So if there is a single tile
+								* that is used in the assembly and that has a greater size than the one given in the assembly
+								* then this must fail. */
 	int size;	/**< the result of (width * height), memoized */
 	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>")
 				 * This can speed up the assembly of a map if you e.g. only have tiles of the size 2x2 you
