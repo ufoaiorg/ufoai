@@ -581,12 +581,11 @@ void CalculateMinsMaxs (const vec3_t angles, const AABB& relBox, const vec3_t or
 		maxVec[2] = std::max(tmpMinVec[2], tmpMaxVec[2]);
 
 		/* Adjust the absolute mins/maxs */
-		VectorAdd(origin, minVec, absBox.mins);
-		VectorAdd(origin, maxVec, absBox.maxs);
+		absBox.set(minVec, maxVec);
 	} else {  /* normal */
-		VectorAdd(origin, relBox.mins, absBox.mins);
-		VectorAdd(origin, relBox.maxs, absBox.maxs);
+		absBox.set(relBox);
 	}
+	absBox.shift(origin);
 }
 
 /**
