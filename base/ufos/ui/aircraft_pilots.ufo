@@ -141,21 +141,22 @@ window aircraft_pilots extends iaircraft
 
 	panel pilot_info {
 		{
-		pos			"730 100"
-		size		"285 665"
+			pos			"730 100"
+			size		"285 665"
 		}
 		skillspilot pilotskills
 		{
-		pos			"10 120"
+			pos			"10 120"
 		}
 
 		healthbar actorhealth
 		{
-		pos			"10 240"
+			pos			"10 240"
 		}
 		actor_info local
 		{
-			pos		"01 320"
+			{
+				pos		"01 320"
 			}
 			text name
 			{
@@ -164,7 +165,6 @@ window aircraft_pilots extends iaircraft
 				size		"290 20"
 				color		"0.56 0.81 0.76 1"
 				ghost       true
-				}
 			}
 		}
 	}

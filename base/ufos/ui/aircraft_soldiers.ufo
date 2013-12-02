@@ -157,21 +157,21 @@ window team extends iaircraft
 
 	panel team_info {
 		{
-		pos			"730 100"
-		size		"285 665"
+			pos			"730 100"
+			size		"285 665"
 		}
 		abilities airsoldiers_abilities
 		{
-		pos			"10 0"
+			pos			"10 0"
 		}
 
 		skillbars airsoldiers_skills
 		{
-		pos			"10 120"
+			pos			"10 120"
 		}
 		healthbar localhealth
 		{
-		pos			"10 240"
+			pos			"10 240"
 		}
 		MainMenu3Btn bt_equipsoldiers {
 			string "_Equip soldiers"
@@ -189,7 +189,8 @@ window team extends iaircraft
 		}
 		actor_info local
 		{
-			pos		"01 320"
+			{
+				pos		"01 320"
 			}
 			text name
 			{
