@@ -253,6 +253,10 @@ window employees
                     *node:parent.employee_list@lineselected = <1>
                 }
 
+				// Ugly, but this is needed to prevent the call from beeing executed before employee_select is
+				confunc set_healthbar_color {
+					call *node:root.actorhealth.hp.setValues(<cvar:mn_vhp>)
+				}
                 textlist employee_list
                 {
                     dataid		    TEXT_LIST
@@ -265,6 +269,7 @@ window employees
                     selectcolor	    "1 1 1 1"
                     onClick			{
 						cmd "employee_select <lineselected>;"
+						cmd "set_healthbar_color;"
 //						call *node:root.actorhealth.hp.setValues(<cvar:mn_vhp>)
                     }
                     onViewChange	{
