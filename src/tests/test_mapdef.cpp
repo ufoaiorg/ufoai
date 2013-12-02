@@ -220,8 +220,8 @@ static void testMapDefsMassRMA (void)
 
 #define MAP_STATISTIC 0
 #if MAP_STATISTIC
-char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+//char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+//char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
@@ -255,14 +255,15 @@ static void testMapDefStatistic (void)
 		SV_ParseUMP(p, nullptr, theMap, false);
 		theMap->asmIdx = 0;
 		/* overwrite with specified, if any */
-		if (md->params && md->params[0]) {
+		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
+		if (assName && assName[0]) {
 			for (j = 0; j < theMap->numAssemblies; j++)
-				if (Q_streq(md->params, theMap->assemblies[j].id)) {
+				if (Q_streq(assName, theMap->assemblies[j].id)) {
 					theMap->asmIdx = j;
 					break;
 				}
 			if (j == theMap->numAssemblies) {
-				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", md->params);
+				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assName);
 			}
 		}
 
@@ -276,7 +277,7 @@ static void testMapDefStatistic (void)
 			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 		}
 
-		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, md->params);
+		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, ass);
 		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
@@ -518,12 +519,12 @@ int UFO_AddMapDefTests (void)
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsFootSteps) == nullptr)
 			return CU_get_error();
 	}
+	else {
 #if MAP_STATISTIC
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == nullptr)
 		return CU_get_error();
 #else
-	else {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == nullptr)
 			return CU_get_error();
 
