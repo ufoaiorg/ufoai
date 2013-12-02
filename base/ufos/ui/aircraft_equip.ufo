@@ -636,7 +636,7 @@ window aircraft_equip extends iaircraft
 	confunc aircraft_change
 	{
 		*node:root.base_container.mainBody.aircraftlist.aircraft_list@lineselected = <1>
-		call *node:root.aircraft_healtbarchange
+		call *node:root.base_container.mainBody.aircraft_info.aircraft_healthbar.setValues(<cvar:mn_aircraft_health>)
 		call *node:root.aircraft_checkbuttons
 		cmd "airequip_updatemenu;"
 		cmd "airequip_select zone1;"

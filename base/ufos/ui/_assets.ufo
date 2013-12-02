@@ -459,6 +459,18 @@ component healthbar extends panel
         string label { string "_Health" tooltip "_<Healthpoints" }
         bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
         string valuenum { string *cvar:mn_thp }
+		// <1> health (from cvar)
+		func setValues {
+			*node:parent@tooltip = "<1>%"
+			*node:parent@current = ( ( <1> / 100 ) * <node:parent@max> )
+			if ( <1> <= 33 ) {
+				*node:parent@color = "1 .0 .0 1"
+			} elif ( <1> <= 75 ) {
+				*node:parent@color = "1 .874 .0 1"
+			} else {
+				*node:parent@color = ".0 1 .0 1"
+			}
+		}
     }
 }
 // ==================

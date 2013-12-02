@@ -136,7 +136,7 @@ window team extends iaircraft
 	confunc aircraft_change {
 		cmd "ui_team_fill soldier;"
 		call *node:root.aircraft_checkbuttons
-		call *node:root.aircraft_healtbarchange
+		call *node:root.base_container.mainBody.aircraft_info.aircraft_healthbar.setValues(<cvar:mn_aircraft_health>)
 		if ( *node:root.selected@integer >= 0 ) {
 			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
 		}

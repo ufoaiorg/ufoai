@@ -204,11 +204,25 @@ window iaircraft
 					src "ui/bar_border"
 				}
 				bar aircraft_healthbar {
-					pos			"10 101"
-					size		"254 5"
-					min			0
-					max			196
-					readonly	true
+					{
+						pos			"10 101"
+						size		"254 5"
+						min			0
+						max			196
+						readonly	true
+					}
+					// <1> aircraft health (from cvar)
+					func setValues {
+						*node:parent@tooltip = "<1>%"
+						*node:parent@current = ( ( <1> / 100 ) * <node:parent@max> )
+						if ( <1> <= 33 ) {
+							*node:parent@color = "1 .0 .0 1"
+						} elif ( <1> <= 75 ) {
+							*node:parent@color = "1 .874 .0 1"
+						} else {
+							*node:parent@color = ".0 1 .0 1"
+						}
+					}
 				}
 				string team_members
 				{
@@ -273,18 +287,6 @@ window iaircraft
 		if ( *node:root.selected@integer >= 0 ) {
 			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
-		}
-	}
-
-	func aircraft_healtbarchange {
-		*node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@tooltip = "<cvar:mn_aircraft_health>%"
-		*node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@current = ( ( <cvar:mn_aircraft_health> / 100 ) * <node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@max> )
-		if ( *cvar:mn_aircraft_health <= 33 ) {
-			*node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@color = "1 .0 .0 1"
-		} elif ( *cvar:mn_aircraft_health <= 75 ) {
-			*node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@color = "1 .874 .0 1"
-		} else {
-			*node:root.base_container.mainBody.aircraft_info.aircraft_healthbar@color = ".0 1 .0 1"
 		}
 	}
 
