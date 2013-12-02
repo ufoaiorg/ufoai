@@ -59,8 +59,6 @@ static const float MAX_CRASHEDUFO_CONDITION = 0.81f;
  */
 void BATTLE_SetVars (const battleParam_t* battleParameters)
 {
-	int i;
-
 	cgi->Cvar_SetValue("ai_singleplayeraliens", battleParameters->aliens);
 	cgi->Cvar_SetValue("ai_numcivilians", battleParameters->civilians);
 	cgi->Cvar_Set("ai_civilianteam", "%s", battleParameters->civTeam);
@@ -69,7 +67,7 @@ void BATTLE_SetVars (const battleParam_t* battleParameters)
 	/* now store the alien teams in the shared cgi->csi->struct to let the game dll
 	 * have access to this data, too */
 	cgi->csi->numAlienTeams = 0;
-	for (i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
+	for (int i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
 		cgi->csi->alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
 		cgi->csi->alienChrTemplates[i] = battleParameters->alienTeamGroup->alienChrTemplates[i];
 		cgi->csi->numAlienTeams++;
@@ -139,9 +137,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
  */
 static bool CP_IsAlienTeamForCategory (const alienTeamCategory_t* cat, const interestCategory_t missionCat)
 {
-	int i;
-
-	for (i = 0; i < cat->numMissionCategories; i++) {
+	for (int i = 0; i < cat->numMissionCategories; i++) {
 		if (missionCat == cat->missionCategories[i])
 			return true;
 	}
@@ -156,13 +152,12 @@ static bool CP_IsAlienTeamForCategory (const alienTeamCategory_t* cat, const int
  */
 static void CP_SetAlienTeamByInterest (mission_t* mission, battleParam_t* battleParameters)
 {
-	int i, j;
 	const int MAX_AVAILABLE_GROUPS = 4;
 	alienTeamGroup_t* availableGroups[MAX_AVAILABLE_GROUPS];
 	int numAvailableGroup = 0;
 
 	/* Find all available alien team groups */
-	for (i = 0; i < ccs.numAlienCategories; i++) {
+	for (int i = 0; i < ccs.numAlienCategories; i++) {
 		alienTeamCategory_t* cat = &ccs.alienCategories[i];
 
 		/* Check if this alien team category may be used */
@@ -172,7 +167,7 @@ static void CP_SetAlienTeamByInterest (mission_t* mission, battleParam_t* battle
 		/* Find all available team groups for current alien interest
 		 * use mission->initialOverallInterest and not ccs.overallInterest:
 		 * the alien team should not change depending on when you encounter it */
-		for (j = 0; j < cat->numAlienTeamGroups; j++) {
+		for (int j = 0; j < cat->numAlienTeamGroups; j++) {
 			if (cat->alienTeamGroups[j].minInterest <= mission->initialOverallInterest
 			 && cat->alienTeamGroups[j].maxInterest >= mission->initialOverallInterest)
 				availableGroups[numAvailableGroup++] = &cat->alienTeamGroups[j];
@@ -186,10 +181,10 @@ static void CP_SetAlienTeamByInterest (mission_t* mission, battleParam_t* battle
 	}
 
 	/* Pick up one group randomly */
-	i = rand() % numAvailableGroup;
+	int pick = rand() % numAvailableGroup;
 
 	/* store this group for latter use */
-	battleParameters->alienTeamGroup = availableGroups[i];
+	battleParameters->alienTeamGroup = availableGroups[pick];
 }
 
 /**
@@ -1583,7 +1578,6 @@ void CP_SpawnNewMissions (void)
 
 	if (ccs.lastMissionSpawnedDelay > spawn_delay) {
 		float nonOccurrence;
-		int newMissionNum, i;
 		/* Select the amount of missions that will be spawned in the next cycle. */
 
 		/* Each mission has a certain probability to not occur. This provides some randomness to the mission density.
@@ -1602,9 +1596,9 @@ void CP_SpawnNewMissions (void)
 		 * Note: This is a function over css.overallInterest. It looks like this:
 		 * http://www.wolframalpha.com/input/?i=Plot%5B40%2B%285-40%29%2A%28%28x-1000%29%2F%2820-1000%29%29%5E2%2C+%7Bx%2C+0%2C+1100%7D%5D
 		 */
-		newMissionNum = (int) (MAXIMUM_MISSIONS_PER_CYCLE + (MINIMUM_MISSIONS_PER_CYCLE - MAXIMUM_MISSIONS_PER_CYCLE) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
+		int newMissionNum = (int) (MAXIMUM_MISSIONS_PER_CYCLE + (MINIMUM_MISSIONS_PER_CYCLE - MAXIMUM_MISSIONS_PER_CYCLE) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
 		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
-		for (i = 0; i < newMissionNum; i++) {
+		for (int i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
 				const interestCategory_t type = CP_SelectNewMissionType();
 				CP_CreateNewMission(type, false);
@@ -1642,12 +1636,10 @@ static void MIS_SpawnNewMissions_f (void)
 {
 	interestCategory_t category;
 	int type = 0;
-	mission_t* mission;
 
 	if (cgi->Cmd_Argc() < 2) {
-		int i;
 		Com_Printf("Usage: %s <category> [<type>]\n", cgi->Cmd_Argv(0));
-		for (i = INTERESTCATEGORY_RECON; i < INTERESTCATEGORY_MAX; i++) {
+		for (int i = INTERESTCATEGORY_RECON; i < INTERESTCATEGORY_MAX; i++) {
 			category = (interestCategory_t)i;
 			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
@@ -1698,7 +1690,7 @@ static void MIS_SpawnNewMissions_f (void)
 		return;
 	}
 
-	mission = CP_CreateNewMission(category, true);
+	mission_t* mission = CP_CreateNewMission(category, true);
 	if (!mission) {
 		Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
 		return;

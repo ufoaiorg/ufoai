@@ -48,13 +48,11 @@ nation_t* NAT_GetNationByIDX (const int index)
  */
 nation_t* NAT_GetNationByID (const char* nationID)
 {
-	int i;
-
 	if (!nationID) {
 		Com_Printf("NAT_GetNationByID: nullptr nationID\n");
 		return nullptr;
 	}
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
 		if (Q_streq(nation->id, nationID))
 			return nation;
@@ -207,10 +205,9 @@ void NAT_SetHappiness (const float minhappiness, nation_t* nation, const float h
  */
 bool NAT_SaveXML (xmlNode_t* p)
 {
-	int i;
 	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_NATION_NATIONS);
 
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
 		xmlNode_t* s;
 		int j;
@@ -301,15 +298,13 @@ static const value_t nation_vals[] = {
  */
 void CL_ParseNations (const char* name, const char** text)
 {
-	nation_t* nation;
-	int i;
-
 	if (ccs.numNations >= MAX_NATIONS) {
 		Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
 		return;
 	}
 
 	/* search for nations with same name */
+	int i;
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t* n = NAT_GetNationByIDX(i);
 		if (Q_streq(name, n->id))
@@ -321,7 +316,7 @@ void CL_ParseNations (const char* name, const char** text)
 	}
 
 	/* initialize the nation */
-	nation = &ccs.nations[ccs.numNations];
+	nation_t* nation = &ccs.nations[ccs.numNations];
 	OBJZERO(*nation);
 	nation->idx = ccs.numNations;
 	nation->stats[0].inuse = true;
@@ -426,7 +421,6 @@ bool NAT_ScriptSanityCheck (void)
 				continue;
 
 			if (GEO_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, nullptr)) {
-				int i;
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
 				parametersFit = true;
 
@@ -436,7 +430,7 @@ bool NAT_ScriptSanityCheck (void)
 				}
 
 				/* loop must be backward, as we remove items */
-				for (i = numTypes - 1 ; i >= 0; i--) {
+				for (int i = numTypes - 1 ; i >= 0; i--) {
 					if (cgi->LIST_ContainsString(md->ufos, cgi->Com_UFOTypeToShortName(ufoTypes[i]))) {
 						REMOVE_ELEM(ufoTypes, i, numTypes);
 					}
@@ -452,9 +446,8 @@ bool NAT_ScriptSanityCheck (void)
 			error++;
 			Com_Printf("...... city '%s' can't be used in game: it has no map fitting parameters\n", city->id);
 			if (parametersFit) {
-				int i;
 				Com_Printf("      (No map fitting");
-				for (i = 0 ; i < numTypes; i++)
+				for (int i = 0 ; i < numTypes; i++)
 					Com_Printf(" %s", cgi->Com_UFOTypeToShortName(ufoTypes[i]));
 				Com_Printf(")\n");
 			}
@@ -613,13 +606,11 @@ static lineStrip_t colorLineStrip[MAX_NATIONS];
 static void CL_NationStatsUpdate_f (void)
 {
 	int i;
-	uiNode_t* colorNode;
-	uiNode_t* graphNode;
 	int dy = 10;
 
 	usedColPtslists = 0;
 
-	colorNode = cgi->UI_GetNodeByPath("nations.nation_graph_colors");
+	uiNode_t* colorNode = cgi->UI_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->box.size[1] / MAX_NATIONS);
 	}
@@ -671,7 +662,7 @@ static void CL_NationStatsUpdate_f (void)
 	/** @todo Display summary of nation info */
 
 	/* Display graph of nations-values so far. */
-	graphNode = cgi->UI_GetNodeByPath("nations.nation_graph_funding");
+	uiNode_t* graphNode = cgi->UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
 		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
@@ -737,8 +728,7 @@ static void NAT_ListCities_f (void)
  */
 static void NAT_NationList_f (void)
 {
-	int i;
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = &ccs.nations[i];
 		Com_Printf("Nation ID: %s\n", nation->id);
 		Com_Printf("...max-funding %i c\n", nation->maxFunding);
