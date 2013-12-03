@@ -273,7 +273,22 @@ class MoveClipSV : public MoveClip
 public:
 	trace_t trace;
 	const edict_t* passedict;
+	void calcBounds();
 };
+
+/**
+ * @brief Create the bounding box for the entire move
+ * @note Box is expanded by 1
+ */
+void MoveClipSV::calcBounds ()
+{
+	AABB endBox(objBox);			/* get the moving object */
+	endBox.shift(moveLine.stop);	/* move it to end position */
+	clipBox.set(objBox);
+	clipBox.shift(moveLine.start);	/* object in starting position */
+	clipBox.add(endBox);			/* the whole box */
+	clipBox.expand(1);
+}
 
 
 /**
@@ -404,28 +419,6 @@ int SV_PointContents (const vec3_t p)
 }
 
 /**
- * @brief calculates the bounding box for the whole trace
- * @param[in] trLine Start and stop vectors of the trace
- * @param[in] objBox extents of the box we are moving through the world
- * @param[out] cBox The resulting bounds of the trace
- * @sa SV_Trace
- */
-static void SV_TraceBounds (const Line& trLine, const AABB& objBox, AABB& cBox)
-{
-	cBox.set(objBox);
-	for (int i = 0; i < 3; i++) {
-		if (trLine.stop[i] > trLine.start[i]) {
-			cBox.mins[i] += trLine.start[i];
-			cBox.maxs[i] += trLine.stop[i];
-		} else {
-			cBox.mins[i] += trLine.stop[i];
-			cBox.maxs[i] += trLine.start[i];
-		}
-	}
-	cBox.expand(1);	/* debug: set this to eg. 9999 to test against everything */
-}
-
-/**
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
@@ -458,7 +451,7 @@ trace_t SV_Trace (const Line& traceLine, const AABB& box, const edict_t* passedi
 	clip.passedict = passedict;
 
 	/* create the bounding box for the entire path traveled by the shot */
-	SV_TraceBounds(traceLine, clip.objBox, clip.clipBox);
+	clip.calcBounds();
 
 	/* clip to other solid entities */
 	SV_ClipMoveToEntities(&clip);
