@@ -122,11 +122,11 @@ window team extends iaircraft
 	confunc aircraft_status_change
 	{
 		if ( *cvar:mn_hired_count > 0 ) {
-			*node:root.bt_equipsoldiers@disabled = false
-			*node:root.bt_equipsoldiers@tooltip = "_Equip soldiers"
+			*node:root.team.bt_equipsoldiers@disabled = false
+			*node:root.team.bt_equipsoldiers@tooltip = "_Equip soldiers"
 		} else {
-			*node:root.bt_equipsoldiers@disabled = true
-			*node:root.bt_equipsoldiers@tooltip = "_No soldiers assigned"
+			*node:root.team.bt_equipsoldiers@disabled = true
+			*node:root.team.bt_equipsoldiers@tooltip = "_No soldiers assigned"
 		}
 	}
 
