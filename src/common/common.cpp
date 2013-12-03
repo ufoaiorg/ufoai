@@ -112,6 +112,7 @@ TARGETING FUNCTIONS
 */
 
 /**
+ * @brief Calculates parabola-type shot.
  * @note Grenade Aiming Maths
  * --------------------------------------------------------------
  *
@@ -215,7 +216,6 @@ TARGETING FUNCTIONS
  *
  * as the minimum launch velocity for that angle.
  *
- * @brief Calculates parabola-type shot.
  * @param[in] from Starting position for calculations.
  * @param[in] at Ending position for calculations.
  * @param[in] speed Launch velocity.
