@@ -156,11 +156,6 @@ bool CL_DisplayHomebasePopup (aircraft_t* aircraft, bool alwaysDisplay)
  */
 static void CL_PopupChangeHomebase_f (void)
 {
-	linkedList_t* data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
-	int selectedPopupIndex;
-	int i;
-	base_t* base;
-	int baseIdx;
 	aircraft_t* aircraft = GEO_GetSelectedAircraft();
 
 	/* If popup is opened, that means an aircraft is selected */
@@ -175,21 +170,22 @@ static void CL_PopupChangeHomebase_f (void)
 	}
 
 	/* read and range check */
-	selectedPopupIndex = atoi(cgi->Cmd_Argv(1));
+	int selectedPopupIndex = atoi(cgi->Cmd_Argv(1));
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupHomebaseClick_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
 	/* Convert list index to base idx */
-	baseIdx = INVALID_BASE;
-	for (i = 0; data; data = data->next, i++) {
+	linkedList_t* data = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
+	int baseIdx = INVALID_BASE;
+	for (int i = 0; data; data = data->next, i++) {
 		if (i == selectedPopupIndex) {
 			baseIdx = *(int*)data->data;
 			break;
 		}
 	}
 
-	base = B_GetFoundedBaseByIDX(baseIdx);
+	base_t* base = B_GetFoundedBaseByIDX(baseIdx);
 	if (base == nullptr)
 		return;
 
@@ -518,11 +514,6 @@ static void CL_PopupInterceptRClick_f (void)
  */
 static void CL_PopupInterceptBaseClick_f (void)
 {
-	int num, i;
-	base_t* base;
-	installation_t* installation;
-	bool atLeastOneBase = false;
-
 	if (cgi->Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\tnum=num in base list\n", cgi->Cmd_Argv(0));
 		return;
@@ -532,9 +523,10 @@ static void CL_PopupInterceptBaseClick_f (void)
 	if (GEO_GetSelectedUFO() == nullptr)
 		return;
 
-	num = atoi(cgi->Cmd_Argv(1));
+	int num = atoi(cgi->Cmd_Argv(1));
 
-	base = nullptr;
+	base_t* base = nullptr;
+	bool atLeastOneBase = false;
 	while ((base = B_GetNext(base)) != nullptr) {
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(base)) {
@@ -545,7 +537,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		}
 	}
 
-	installation = nullptr;
+	installation_t* installation = nullptr;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
 		INS_Foreach(inst) {
 			/* Check if the installation should be displayed in base list */
@@ -571,6 +563,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	assert(base || installation);
+	int i;
 	if (installation) {
 		for (i = 0; i < installation->installationTemplate->maxBatteries; i++)
 			installation->batteries[i].target = GEO_GetSelectedUFO();

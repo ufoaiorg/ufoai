@@ -599,9 +599,7 @@ static void CP_ParseComponents (const char* name, const char** text)
  */
 components_t* CP_GetComponentsByItem (const objDef_t* item)
 {
-	int i;
-
-	for (i = 0; i < ccs.numComponents; i++) {
+	for (int i = 0; i < ccs.numComponents; i++) {
 		components_t* comp = &ccs.components[i];
 		if (comp->assemblyItem == item) {
 			Com_DPrintf(DEBUG_CLIENT, "CP_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
@@ -618,9 +616,7 @@ components_t* CP_GetComponentsByItem (const objDef_t* item)
  */
 components_t* CP_GetComponentsByID (const char* id)
 {
-	int i;
-
-	for (i = 0; i < ccs.numComponents; i++) {
+	for (int i = 0; i < ccs.numComponents; i++) {
 		components_t* comp = &ccs.components[i];
 		if (Q_streq(comp->assemblyId, id)) {
 			return comp;
@@ -712,10 +708,9 @@ static void CP_ParseScriptCampaignRelated (const campaign_t* campaign, const cha
  */
 static bool CP_ItemsSanityCheck (void)
 {
-	int i;
 	bool result = true;
 
-	for (i = 0; i < cgi->csi->numODs; i++) {
+	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* item = INVSH_GetItemByIDX(i);
 
 		/* Warn if item has no size set. */

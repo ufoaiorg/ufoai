@@ -105,15 +105,13 @@ int PR_GetProductionHours (const base_t* base, const productionData_t* prodData)
  */
 void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, const requirements_t* reqs)
 {
-	int i;
-
 	if (!base)
 		return;
 
 	if (amount == 0)
 		return;
 
-	for (i = 0; i < reqs->numLinks; i++) {
+	for (int i = 0; i < reqs->numLinks; i++) {
 		const requirement_t* req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_ITEM: {
@@ -146,10 +144,9 @@ void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, const requir
  */
 int PR_RequirementsMet (int amount, const requirements_t* reqs, base_t* base)
 {
-	int i;
 	int producibleAmount = amount;
 
-	for (i = 0; i < reqs->numLinks; i++) {
+	for (int i = 0; i < reqs->numLinks; i++) {
 		const requirement_t* req = &reqs->links[i];
 
 		switch (req->type) {
