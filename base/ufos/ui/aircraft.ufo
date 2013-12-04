@@ -67,11 +67,6 @@ window iaircraft
 						cmd "ui_pop; ui_push <cvar:mn_aircrafttab>;"
 					}
 				}
-				option pilot {
-					label	"_Pilots"
-					value	"aircraft_pilots"
-					icon	"icons/smallhead_pilot"
-				}
 				option equip {
 					label	"_Equipment"
 					value	"aircraft_equip"
