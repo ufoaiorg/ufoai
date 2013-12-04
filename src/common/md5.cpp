@@ -299,7 +299,7 @@ const char* Com_MD5File (const char* fn, int length)
 
 /**
  * @brief Compute the md5sum of the given buffer
- * @param[in] fn Filename to compute the md5 of
+ * @param[in] buf Data to compute the md5 of
  * @param[in] len Compute the md5 of the first 'length' bytes (if 0 - complete file)
  * @return the md5 sum buffer (char*)
  */
