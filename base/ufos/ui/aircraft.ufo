@@ -27,7 +27,7 @@ component aircraft_teammember extends panel {
 
 		onChange {
 			cmd "ui_team_assign_ucn <node:parent.id@integer>;"
-			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where toplace them
+			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where to place them
 			cmd "ui_team_fill \"<node:parent.id@string>\";"
 			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
 		}

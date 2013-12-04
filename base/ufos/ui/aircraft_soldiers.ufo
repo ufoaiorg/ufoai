@@ -173,13 +173,10 @@ window team extends iaircraft
 	/**
 	 * @note iaircraft interface
 	 */
-	confunc delay_setting_of_var {
-		*node:root.panelLoc@string = "pilots_background"
-	}
 	confunc aircraft_change {
-		*node:root.panelLoc@string = "actors_background"
+		cmd "set_listpanel_name \"soldier\""
 		cmd "ui_team_fill soldier;"
-		cmd "delay_setting_of_var;"
+		cmd "set_listpanel_name \"pilot\""
 		cmd "ui_team_fill pilot;"
 
 		call *node:root.aircraft_checkbuttons
