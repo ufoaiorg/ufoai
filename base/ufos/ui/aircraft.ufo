@@ -27,12 +27,7 @@ component aircraft_teammember extends panel {
 
 		onChange {
 			cmd "ui_team_assign_ucn <node:parent.id@integer>;"
-			if (<node:parent.id@string> eq "pilot" ) {
-				*node:root.panelLoc@string = "pilots_background"
-			}
-			else {
-				*node:root.panelLoc@string = "actors_background"
-			}
+			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where toplace them
 			cmd "ui_team_fill \"<node:parent.id@string>\";"
 			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
 		}
@@ -268,6 +263,15 @@ window iaircraft
 	confunc aircraft_status_change { }
 
 	data panelLoc {string ""}
+	// <1> "soldier" or "pilot"
+	confunc set_listpanel_name {
+		if (<1> eq "pilot" ) {
+			*node:root.panelLoc@string = "pilots_background"
+		}
+		else {
+			*node:root.panelLoc@string = "actors_background"
+		}
+	}
 	confunc aircraft_soldierlist_clear {
 		call *node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist@removeAllChild
 	}
@@ -290,12 +294,19 @@ window iaircraft
 		}
 	}
 	confunc aircraft_soldierlist_select {
+		if (*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.id@string eq "pilot" ) {
+			*node:root.panelLoc@string = "pilots_background"
+		}
+		else {
+			*node:root.panelLoc@string = "actors_background"
+		}
+
 		if ( *node:root.selected@integer >= 0 ) {
-			*node:root.base_container.mainBody.actors_background.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
 		}
 		*node:root.selected@integer = <1>
 		if ( *node:root.selected@integer >= 0 ) {
-			*node:root.base_container.mainBody.actors_background.soldierlist.member<1>.name@color = "1 1 1 1"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
 		}
 	}
