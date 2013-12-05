@@ -218,11 +218,6 @@ static void testMapDefsMassRMA (void)
 	}
 }
 
-#define MAP_STATISTIC 0
-#if MAP_STATISTIC
-//char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-//char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and collects some properties of the maps relevant to RMA.
@@ -281,7 +276,6 @@ static void testMapDefStatistic (void)
 		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
-#endif
 
 #define FOOTSTEPS_FULL 0
 /**
@@ -403,7 +397,6 @@ static void testMapDefsFootSteps (void)
 	}
 }
 
-#if !MAP_STATISTIC
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to load (and build in case of RMA) each map once (with a random seed).
@@ -498,7 +491,6 @@ static void testMapDefsMultiplayer (void)
 		CU_PASS(md->map);
 	}
 }
-#endif
 
 int UFO_AddMapDefTests (void)
 {
@@ -510,9 +502,14 @@ int UFO_AddMapDefTests (void)
 
 	const char* specialtest = TEST_GetStringProperty("mapspecialtest");
 //	const char* specialtest = "seed";
+//	const char* specialtest = "stats";
 //	const char* specialtest = "steps";
 	if (specialtest && Q_streq(specialtest, "seed")) {
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMassRMA) == nullptr)
+			return CU_get_error();
+	}
+	else if (specialtest && Q_streq(specialtest, "stats")) {
+		if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == nullptr)
 			return CU_get_error();
 	}
 	else if (specialtest && Q_streq(specialtest, "steps")) {
@@ -520,17 +517,12 @@ int UFO_AddMapDefTests (void)
 			return CU_get_error();
 	}
 	else {
-#if MAP_STATISTIC
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(mapDefSuite, testMapDefStatistic) == nullptr)
-		return CU_get_error();
-#else
+		/* add the tests to the suite */
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsSingleplayer) == nullptr)
 			return CU_get_error();
 
 		if (CU_ADD_TEST(mapDefSuite, testMapDefsMultiplayer) == nullptr)
 			return CU_get_error();
-#endif
 	}
 	return CUE_SUCCESS;
 }
