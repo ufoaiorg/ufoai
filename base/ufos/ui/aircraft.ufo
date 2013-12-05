@@ -269,6 +269,8 @@ window iaircraft
 	}
 	confunc aircraft_soldierlist_clear {
 		call *node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist@removeAllChild
+		*node:root.pilot_info@invis = true
+		*node:root.team_info@invis = true
 	}
 
 	confunc aircraft_soldierlist_add {
@@ -310,8 +312,12 @@ window iaircraft
 		// highlight the new selection
 		if ( *node:root.selected@integer >= 0 ) {
 			*node:root.panelLoc@string = "actors_background"
+			*node:root.pilot_info@invis = true
+			*node:root.team_info@invis = false
 			if (<2> eq "pilot" ) {
 				*node:root.panelLoc@string = "pilots_background"
+				*node:root.team_info@invis = true
+				*node:root.pilot_info@invis = false
 			}
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
