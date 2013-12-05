@@ -968,7 +968,7 @@ static void Cvar_List_f (void)
  * @brief Return a string with all cvars with bitflag given by parameter set
  * @param bit The bitflag we search the global cvar array for
  * @param info The resulting string
- * @param info The max length of the result (MAX_INFO_STRING is a good idea here)
+ * @param infoSize The max length of the result (MAX_INFO_STRING is a good idea here)
  */
 static char* Cvar_BitInfo (int bit, char* info, size_t infoSize)
 {
