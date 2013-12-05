@@ -41,6 +41,12 @@ window team extends iaircraft
 					pos		"5 15"
 					size	"42 42"
 				}
+				string hiredSoldiers {
+					pos		"15 60"
+					size	"55 20"
+					color	"0.56 0.81 0.76 1"
+					string	*cvar:mn_hired_count
+				}
 				panel soldierlist {
 					pos				"55 08"
 					size			"270 298"
@@ -80,6 +86,12 @@ window team extends iaircraft
 					src		"icons/head_pilot"
 					pos		"5 15"
 					size	"42 42"
+				}
+				string hiredPilot {
+					pos		"15 60"
+					size	"55 20"
+					color	"0.56 0.81 0.76 1"
+					string	*cvar:mn_pilotassigned
 				}
 				panel soldierlist {
 					pos				"55 08"
@@ -122,19 +134,6 @@ window team extends iaircraft
 			origin		"0 -10 10"
 			angles		"180 10 -120"
 			autoscale	true
-		}
-
-		string team_members {
-			string	"_Team Members:"
-			pos		"5 580"
-			size	"200 20"
-		}
-
-		string team_hired {
-			string			*cvar:mn_hired
-			pos				"5 600"
-			size			"200 20"
-			contentalign	ALIGN_UL
 		}
 	}
 

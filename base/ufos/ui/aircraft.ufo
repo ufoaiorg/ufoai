@@ -30,6 +30,7 @@ component aircraft_teammember extends panel {
 			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where to place them
 			cmd "ui_team_fill \"<node:parent.id@string>\";"
 			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
+//			*node:root.base_container.mainBody.actors_background.hiredSoldiers@string = "<cvar:mn_hired_count>/<cvar:mn_hirable_count>"
 		}
 	}
 }

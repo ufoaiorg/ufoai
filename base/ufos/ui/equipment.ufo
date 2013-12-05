@@ -460,7 +460,7 @@ window equipment extends objectinfo
 	}
 
 	func onWindowOpened {
-		call *node:root.actor_stats
+//		call *node:root.actor_stats
 		*cvar:mn_infotype = 0
 		*cvar:mn_equiptype = 0
 		*cvar:mn_linkname = ""
