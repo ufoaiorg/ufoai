@@ -8,6 +8,7 @@
 window team extends iaircraft
 {
 	data selected {
+		string ""
 	}
 
 	BaseContainerPanelV2 base_container

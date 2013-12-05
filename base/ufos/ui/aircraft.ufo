@@ -16,7 +16,7 @@ component aircraft_teammember extends panel {
 		color		"0.56 0.81 0.76 1"
 		size		"230 25"
 		onClick {
-			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
+			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
 		}
 	}
 
@@ -29,7 +29,7 @@ component aircraft_teammember extends panel {
 			cmd "ui_team_assign_ucn <node:parent.id@integer>;"
 			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where to place them
 			cmd "ui_team_fill \"<node:parent.id@string>\";"
-			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
+			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
 		}
 	}
 }
@@ -284,23 +284,35 @@ window iaircraft
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@tooltip = "<5>"
 		}
 		if ( *node:root.selected@integer < 0 ) {
-			cmd "aircraft_soldierlist_select <1>;"
-			*node:root.selected@integer = <1>
+		//	cmd "aircraft_soldierlist_select <1>;"
+		//	*node:root.selected@integer = <1>
 		}
 	}
 	confunc aircraft_soldierlist_select {
-		if (*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.id@string eq "pilot" ) {
-			*node:root.panelLoc@string = "pilots_background"
-		}
-		else {
+		// reset the old selection
+//		cmd "echo old type: <node:root.selected@string> nr: <node:root.selected@integer>;"
+		if ( (*node:root.selected@integer >= 0) && (*node:root.selected@string ne "") ) {
 			*node:root.panelLoc@string = "actors_background"
+			if (<node:root.selected@string> eq "pilot" ) {
+				*node:root.panelLoc@string = "pilots_background"
+			}
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+//			cmd "echo unhighlighted;"
+		}
+//		cmd "echo old done;"
+
+		// store the new selection
+		*node:root.selected@integer = <1>
+		if (<2> ne "") {
+			*node:root.selected@string = <2>
 		}
 
+		// highlight the new selection
 		if ( *node:root.selected@integer >= 0 ) {
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
-		}
-		*node:root.selected@integer = <1>
-		if ( *node:root.selected@integer >= 0 ) {
+			*node:root.panelLoc@string = "actors_background"
+			if (<2> eq "pilot" ) {
+				*node:root.panelLoc@string = "pilots_background"
+			}
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 1 1 1"
 			cmd "ui_team_select_ucn <node:root.selected@integer>;"
 		}
