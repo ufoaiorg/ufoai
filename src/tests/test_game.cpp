@@ -133,7 +133,7 @@ static void testCountSpawnpoints (void)
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->map, assName);
+		SV_Map(true, md->map, assName, false);
 
 		Com_Printf("Map: %s Spawnpoints: %i\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
 		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
