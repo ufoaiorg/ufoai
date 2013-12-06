@@ -98,20 +98,46 @@ static void testSpawnAndConnect (void)
 
 static void testCountSpawnpoints (void)
 {
-	const char* mapName = "wilderness";
-	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		/* the other tests didn't call the server shutdown function to clean up */
-		OBJZERO(*sv);
-		SV_Map(true, mapName, nullptr);
+	const char* filterId = TEST_GetStringProperty("mapdef-id");
+	const mapDef_t* md;
+	int mapCount = 0;				// the number of maps read
+	const int skipCount = 20;		// to skip the first n mapDefs
 
-		Com_Printf("Map: %s Spawnpoints: %i\n", mapName, level.num_spawnpoints[TEAM_PHALANX]);
+	/* the other tests didn't call the server shutdown function to clean up */
+	OBJZERO(*sv);
+
+	Cvar_Set("rm_drop", "+craft_drop_herakles");
+
+	MapDef_Foreach(md) {
+		if (md->map[0] == '.')
+			continue;
+		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
+			continue;
+		if (filterId && !Q_streq(filterId, md->id))
+			continue;
+
+		mapCount++;
+		if (mapCount <= skipCount)
+			continue;
+		/* use a known seed to reproduce an error */
+		unsigned int seed;
+		if (TEST_ExistsProperty("mapdef-seed")) {
+			seed = TEST_GetLongProperty("mapdef-seed");
+		} else {
+			seed = (unsigned int) time(nullptr);
+		}
+		srand(seed);
+
+		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
+
+		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
+		SV_Map(true, md->map, assName);
+
+		Com_Printf("Map: %s Spawnpoints: %i\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
 		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
-			Com_Printf("Map %s: only %i spawnpoints !\n", mapName, level.num_spawnpoints[TEAM_PHALANX]);
-
-		SV_ShutdownGameProgs();
-	} else {
-		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+			Com_Printf("Map %s: only %i spawnpoints !\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
 	}
+	SV_ShutdownGameProgs();
 }
 
 static void testDoorTrigger (void)
