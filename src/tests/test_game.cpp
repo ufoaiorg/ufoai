@@ -96,6 +96,24 @@ static void testSpawnAndConnect (void)
 	FS_FreeFile(buf);
 }
 
+static void testCountSpawnpoints (void)
+{
+	const char* mapName = "wilderness";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(true, mapName, nullptr);
+
+		Com_Printf("Map: %s Spawnpoints: %i\n", mapName, level.num_spawnpoints[TEAM_PHALANX]);
+		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
+			Com_Printf("Map %s: only %i spawnpoints !\n", mapName, level.num_spawnpoints[TEAM_PHALANX]);
+
+		SV_ShutdownGameProgs();
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
+
 static void testDoorTrigger (void)
 {
 	const char* mapName = "test_game";
@@ -388,27 +406,34 @@ int UFO_AddGameTests (void)
 	if (GameSuite == nullptr)
 		return CU_get_error();
 
+	const char* specialtest = TEST_GetStringProperty("gamespecialtest");
+//	const char* specialtest = "spawns";
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == nullptr)
-		return CU_get_error();
+	if (specialtest && Q_streq(specialtest, "spawns")) {
+		if (CU_ADD_TEST(GameSuite, testCountSpawnpoints) == nullptr)
+			return CU_get_error();
+	} else {
+		if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testDoorTrigger) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testDoorTrigger) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testShooting) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testShooting) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testVisFlags) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testVisFlags) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == nullptr)
+			return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == nullptr)
-		return CU_get_error();
+		if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == nullptr)
+			return CU_get_error();
+	}
 
 	return CUE_SUCCESS;
 }
