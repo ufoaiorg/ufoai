@@ -2045,7 +2045,7 @@ void B_BuildingOpenAfterClick (const building_t* building)
 		if (!AIR_AircraftAllowed(base)) {
 			UP_OpenWith(building->pedia);
 		} else if (AIR_BaseHasAircraft(base)) {
-			cgi->UI_PushWindow("aircraft");
+			cgi->UI_PushWindow("aircraft_equip");
 		} else {
 			cgi->UI_PushWindow("buyaircraft");
 			/* transfer is only possible when there are at least two bases */
