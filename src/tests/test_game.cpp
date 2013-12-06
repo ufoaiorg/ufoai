@@ -115,6 +115,8 @@ static void testCountSpawnpoints (void)
 			continue;
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
+		if (md->aircraft)	/* if the mapdef has a list of dropships, let's asume they bring their own spawnpoints */
+			continue;
 
 		mapCount++;
 		if (mapCount <= skipCount)
