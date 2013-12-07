@@ -672,9 +672,10 @@ window bases
 
 	/**
 	 * @brief Show a research item in the base overview (not used in default UI)
-	 * @param <1> name
-	 * @param <2> number of scientists working on it
-	 * @param <3> percent complete
+	 * @param <1> id
+	 * @param <2> name
+	 * @param <3> number of scientists working on it
+	 * @param <4> percent complete
 	 * @TODO: to work properly, research window must call base_init when it
 	 *        closes. Currently, it will not update after research changed
 	 */
@@ -687,8 +688,8 @@ window bases
 	{
 		*node:parent.sections.research@size	= "298 80"
 		call *node:parent.sections.research.research_list@createChild("<1>", "ProgressBar")
-		*node:parent.sections.research.research_list.<1>.label@string = _<1>
-		*node:parent.sections.research.research_list.<1>.data_bar@current = <3>
+		*node:parent.sections.research.research_list.<1>.label@string = _<2>
+		*node:parent.sections.research.research_list.<1>.data_bar@current = <4>
 	}
 
 	/*

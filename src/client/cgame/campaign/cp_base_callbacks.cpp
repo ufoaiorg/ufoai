@@ -420,7 +420,7 @@ static void B_BaseInit_f (void)
 			}
 		}
 		if (closestTech != nullptr)
-			cgi->UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
+			cgi->UI_ExecuteConfunc("show_research %s \"%s\" %i %3.0f", closestTech->id, closestTech->name, closestTech->scientists, finished);
 	}
 
 	/* Get the production item closest to completion in the base if it exists */
