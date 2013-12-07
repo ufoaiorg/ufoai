@@ -146,8 +146,8 @@ typedef struct technology_s {
 									 * Mostly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
 
 	requirements_t requireAND;		/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
-		requirements_t requireOR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
-		bool statusCollected;		/**< Did we loot any items of this tech?
+	requirements_t requireOR;		/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
+	bool statusCollected;			/**< Did we loot any items of this tech?
 									* This is updated from the info stored in the requireOR and requireAND lists.
 									* @see RS_CheckCollected. */
 
