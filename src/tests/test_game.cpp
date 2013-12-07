@@ -130,12 +130,13 @@ static void testCountSpawnpoints (void)
 		}
 		srand(seed);
 
-		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
+		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
 		SV_Map(true, md->map, assName, false);
 
-		Com_Printf("Map: %s Spawnpoints: %i\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
+		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->map, md->id, level.num_spawnpoints[TEAM_PHALANX]);
+	/*	Com_Printf("Map: %s Mapdef %s Seed %u Spawnpoints: %i\n", md->map, md->id, seed, level.num_spawnpoints[TEAM_PHALANX]); */
 		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
 			Com_Printf("Map %s: only %i spawnpoints !\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
 	}
