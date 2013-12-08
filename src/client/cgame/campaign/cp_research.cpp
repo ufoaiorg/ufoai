@@ -269,8 +269,6 @@ bool RS_RequirementsMet (const technology_t* tech, const base_t* base)
  */
 const char* RS_GetDescription (technologyDescriptions_t* desc)
 {
-	int i;
-
 	/* Return (unparsed) default description (0) if nothing is defined.
 	 * it is _always_ set, even if numDescriptions is zero. See RS_ParseTechnologies (standard values). */
 	if (desc->numDescriptions == 0)
@@ -282,7 +280,7 @@ const char* RS_GetDescription (technologyDescriptions_t* desc)
 
 	/* Search for useable description text (first match is returned => order is important)
 	 * The default (0) entry is skipped here. */
-	for (i = 1; i < desc->numDescriptions; i++) {
+	for (int i = 1; i < desc->numDescriptions; i++) {
 		const technology_t* tech = RS_GetTechByID(desc->tech[i]);
 		if (!tech)
 			continue;
@@ -335,10 +333,9 @@ void RS_MarkCollected (technology_t* tech)
  */
 void RS_MarkResearchable (const base_t* base, bool init)
 {
-	int i;
 	const base_t* thisBase = base;
 
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 		/* In case we loopback we need to check for already marked techs. */
 		if (tech->statusResearchable)
@@ -384,9 +381,7 @@ void RS_MarkResearchable (const base_t* base, bool init)
  */
 static void RS_AssignTechLinks (requirements_t* reqs)
 {
-	int i;
-
-	for (i = 0; i < reqs->numLinks; i++) {
+	for (int i = 0; i < reqs->numLinks; i++) {
 		requirement_t* req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_TECH:
@@ -424,9 +419,8 @@ static void RS_AssignTechLinks (requirements_t* reqs)
 void RS_RequiredLinksAssign (void)
 {
 	linkedList_t* ll = redirectedTechs;	/**< Use this so we do not change the original redirectedTechs pointer. */
-	int i;
 
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 		if (tech->requireAND.numLinks)
 			RS_AssignTechLinks(&tech->requireAND);
@@ -816,9 +810,9 @@ void RS_CheckRequirements (void)
  */
 int RS_ResearchRun (void)
 {
-	int i, newResearch = 0;
+	int newResearch = 0;
 
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 
 		if (tech->statusResearch != RS_RUNNING)
@@ -937,13 +931,13 @@ static const char* RS_TechLinkTypeToName (requirementType_t type)
  */
 static void RS_TechnologyList_f (void)
 {
-	int i, j;
-	technology_t* tech;
-	requirements_t* reqs;
-	dateLong_t date;
-
 	Com_Printf("#techs: %i\n", ccs.numTechnologies);
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
+		int j;
+		technology_t* tech;
+		requirements_t* reqs;
+		dateLong_t date;
+
 		tech = RS_GetTechByIDX(i);
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
@@ -1000,9 +994,7 @@ static void RS_TechnologyList_f (void)
  */
 static void RS_DebugMarkResearchedAll (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
@@ -1035,10 +1027,8 @@ static void RS_DebugResearchAll_f (void)
  */
 static void RS_DebugResearchableAll_f (void)
 {
-	int i;
-
 	if (cgi->Cmd_Argc() != 2) {
-		for (i = 0; i < ccs.numTechnologies; i++) {
+		for (int i = 0; i < ccs.numTechnologies; i++) {
 			technology_t* tech = RS_GetTechByIDX(i);
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
@@ -1056,9 +1046,7 @@ static void RS_DebugResearchableAll_f (void)
 
 static void RS_DebugFinishResearches_f (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			assert(tech->base);
@@ -1142,15 +1130,7 @@ static const value_t valid_techmail_vars[] = {
  */
 void RS_ParseTechnologies (const char* name, const char** text)
 {
-	technology_t* tech;
-	unsigned hash;
-	const char* errhead = "RS_ParseTechnologies: unexpected end of file.";
-	const char* token;
-	requirements_t* requiredTemp;
-	technologyDescriptions_t* descTemp;
-	int i;
-
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		if (Q_streq(ccs.technologies[i].id, name)) {
 			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
 			return;
@@ -1163,14 +1143,14 @@ void RS_ParseTechnologies (const char* name, const char** text)
 	}
 
 	/* get body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
 		return;
 	}
 
 	/* New technology (next free entry in global tech-list) */
-	tech = &ccs.technologies[ccs.numTechnologies];
+	technology_t* tech = &ccs.technologies[ccs.numTechnologies];
 	ccs.numTechnologies++;
 
 	OBJZERO(*tech);
@@ -1180,7 +1160,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 	 */
 	tech->idx = ccs.numTechnologies - 1;
 	tech->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
-	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
+	unsigned hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 
 	/* Set the default string for descriptions (available even if numDescriptions is 0) */
 	tech->description.text[0] = _("No description available.");
@@ -1203,6 +1183,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 	tech->statusResearch = RS_NONE;
 	tech->statusResearchable = false;
 
+	const char* errhead = "RS_ParseTechnologies: unexpected end of file.";
 	do {
 		/* get the name type */
 		token = cgi->Com_EParse(text, errhead, name);
@@ -1243,6 +1224,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 		} else {
 			if (Q_streq(token, "description") || Q_streq(token, "pre_description")) {
 				/* Parse the available descriptions for this tech */
+				technologyDescriptions_t* descTemp;
 
 				/* Link to correct list. */
 				if (Q_streq(token, "pre_description")) {
@@ -1308,6 +1290,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 				cgi->LIST_AddPointer(&redirectedTechs, tech);
 				cgi->LIST_AddString(&redirectedTechs, token);
 			} else if (Q_streq(token, "require_AND") || Q_streq(token, "require_OR") || Q_streq(token, "require_for_production")) {
+				requirements_t* requiredTemp;
 				/* Link to correct list. */
 				if (Q_streq(token, "require_AND")) {
 					requiredTemp = &tech->requireAND;
@@ -1468,7 +1451,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 
 				if (*token) {
 					/* find chapter */
-					for (i = 0; i < ccs.numChapters; i++) {
+					for (int i = 0; i < ccs.numChapters; i++) {
 						if (Q_streq(token, ccs.upChapters[i].id)) {
 							/* add entry to chapter */
 							tech->upChapter = &ccs.upChapters[i];
@@ -1664,15 +1647,12 @@ technology_t* RS_GetTechByProvided (const char* idProvided)
  */
 technology_t* RS_GetTechWithMostScientists (const struct base_s* base)
 {
-	technology_t* tech;
-	int i, max;
-
 	if (!base)
 		return nullptr;
 
-	tech = nullptr;
-	max = 0;
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	technology_t* tech = nullptr;
+	int max = 0;
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech_temp = RS_GetTechByIDX(i);
 		if (tech_temp->statusResearch == RS_RUNNING && tech_temp->base == base) {
 			if (tech_temp->scientists > max) {
@@ -1711,9 +1691,9 @@ int RS_GetTechIdxByName (const char* name)
  */
 int RS_CountScientistsInBase (const base_t* base)
 {
-	int i, counter = 0;
+	int counter = 0;
 
-	for (i = 0; i < ccs.numTechnologies; i++) {
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		const technology_t* tech = &ccs.technologies[i];
 		if (tech->base == base) {
 			/* Get a free lab from the base. */
@@ -1748,13 +1728,9 @@ void RS_RemoveScientistsExceedingCapacity (base_t* base)
  */
 bool RS_SaveXML (xmlNode_t* parent)
 {
-	int i;
-	xmlNode_t* node;
-
 	cgi->Com_RegisterConstList(saveResearchConstants);
-	node = cgi->XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
-	for (i = 0; i < ccs.numTechnologies; i++) {
-		int j;
+	xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_RESEARCH_RESEARCH);
+	for (int i = 0; i < ccs.numTechnologies; i++) {
 		const technology_t* t = RS_GetTechByIDX(i);
 
 		xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_RESEARCH_TECH);
@@ -1772,7 +1748,7 @@ bool RS_SaveXML (xmlNode_t* parent)
 
 		/* save which techMails were read */
 		/** @todo this should be handled by the mail system */
-		for (j = 0; j < TECHMAIL_MAX; j++) {
+		for (int j = 0; j < TECHMAIL_MAX; j++) {
 			if (t->mail[j].read) {
 				xmlNode_t* ssnode = cgi->XML_AddNode(snode, SAVE_RESEARCH_MAIL);
 				cgi->XML_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);

@@ -189,7 +189,6 @@ static void PR_UpdateProductionList (const base_t* base)
 static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs) {
 	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-	int i;
 	uiNode_t* req_root = nullptr;
 	uiNode_t* req_items = nullptr;
 #if 0
@@ -202,7 +201,7 @@ static void PR_RequirementsInfo (const base_t* base, const requirements_t* reqs)
 	if (!reqs->numLinks)
 		return;
 
-	for (i = 0; i < reqs->numLinks; i++) {
+	for (int i = 0; i < reqs->numLinks; i++) {
 		const requirement_t* req = &reqs->links[i];
 
 		switch (req->type) {
@@ -287,7 +286,6 @@ static void PR_ItemProductionInfo (const base_t* base, const objDef_t* od, int r
 static void PR_DisassemblyInfo (const storedUFO_t* ufo, int remainingHours)
 {
 	static char productionInfo[512];
-	int i;
 
 	assert(ufo);
 	assert(ufo->ufoTemplate);
@@ -297,7 +295,7 @@ static void PR_DisassemblyInfo (const storedUFO_t* ufo, int remainingHours)
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Disassembly time: %ih\n"), remainingHours);
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Components:\n"));
 	/* Print components. */
-	for (i = 0; i < ufo->comp->numItemtypes; i++) {
+	for (int i = 0; i < ufo->comp->numItemtypes; i++) {
 		const objDef_t* compOd = ufo->comp->items[i];
 		const int amount = (ufo->condition < 1 && ufo->comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? ufo->comp->itemAmount2[i] : round(ufo->comp->itemAmount[i] * ufo->condition);
 

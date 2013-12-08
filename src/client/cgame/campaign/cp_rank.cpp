@@ -76,7 +76,6 @@ void CL_ParseRanks (const char* name, const char** text)
 	rank_t* rank;
 	const char* errhead = "CL_ParseRanks: unexpected end of file (medal/rank ";
 	const char* token;
-	int i;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -86,7 +85,7 @@ void CL_ParseRanks (const char* name, const char** text)
 		return;
 	}
 
-	for (i = 0; i < ccs.numRanks; i++) {
+	for (int i = 0; i < ccs.numRanks; i++) {
 		if (Q_streq(name, ccs.ranks[i].name)) {
 			Com_Printf("CL_ParseRanks: Rank with same name '%s' already loaded.\n", name);
 			return;

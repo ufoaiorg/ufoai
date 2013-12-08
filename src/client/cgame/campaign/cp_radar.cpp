@@ -136,9 +136,7 @@ void RADAR_DeactivateRadarOverlay (void)
  */
 static bool RADAR_IsUFOSensored (const radar_t* radar, const aircraft_t* ufo)
 {
-	int i;
-
-	for (i = 0; i < radar->numUFOs; i++)
+	for (int i = 0; i < radar->numUFOs; i++)
 		if (radar->ufos[i] == ufo)
 			return true;
 
@@ -195,9 +193,7 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
  */
 static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t* ufo, bool destroyed)
 {
-	int i;
-
-	for (i = 0; i < radar->numUFOs; i++)
+	for (int i = 0; i < radar->numUFOs; i++)
 		if (radar->ufos[i] == ufo) {
 			radar->numUFOs--;
 			radar->ufos[i] = radar->ufos[radar->numUFOs];
