@@ -315,9 +315,9 @@ static void AddBrushBevels (mapbrush_t* b)
 				VectorClear(normal);
 				normal[axis] = dir;
 				if (dir == 1)
-					dist = b->maxs[axis];
+					dist = b->mbBox.maxs[axis];
 				else
-					dist = -b->mins[axis];
+					dist = -b->mbBox.mins[axis];
 				s->planenum = FindOrCreateFloatPlane(normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
 				s->contentFlags = b->original_sides[0].contentFlags;
@@ -441,7 +441,7 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 	int i, j;
 	side_t* side;
 
-	ClearBounds(brush->mins, brush->maxs);
+	ClearBounds(brush->mbBox.mins, brush->mbBox.maxs);
 
 	for (i = 0; i < brush->numsides; i++) {
 		const plane_t* plane = &mapplanes[brush->original_sides[i].planenum];
@@ -463,18 +463,18 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 		if (w) {
 			side->visible = true;
 			for (j = 0; j < w->numpoints; j++)
-				AddPointToBounds(w->p[j], brush->mins, brush->maxs);
+				AddPointToBounds(w->p[j], brush->mbBox.mins, brush->mbBox.maxs);
 		}
 	}
 
 	for (i = 0; i < 3; i++) {
-		if (brush->mins[0] < -MAX_WORLD_WIDTH || brush->maxs[0] > MAX_WORLD_WIDTH)
+		if (brush->mbBox.mins[0] < -MAX_WORLD_WIDTH || brush->mbBox.maxs[0] > MAX_WORLD_WIDTH)
 			Com_Printf("entity %i, brush %i: bounds out of world range (%f:%f)\n",
-				brush->entitynum, brush->brushnum, brush->mins[0], brush->maxs[0]);
-		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH) {
+				brush->entitynum, brush->brushnum, brush->mbBox.mins[0], brush->mbBox.maxs[0]);
+		if (brush->mbBox.mins[0] > MAX_WORLD_WIDTH || brush->mbBox.maxs[0] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
-			VectorClear(brush->mins);
-			VectorClear(brush->maxs);
+			VectorClear(brush->mbBox.mins);
+			VectorClear(brush->mbBox.maxs);
 		}
 	}
 
@@ -789,8 +789,8 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 	MakeBrushWindings(b);
 
 	Verb_Printf(VERB_DUMP, "Brush %i mins (%f %f %f) maxs (%f %f %f)\n", nummapbrushes,
-		b->mins[0], b->mins[1], b->mins[2],
-		b->maxs[0], b->maxs[1], b->maxs[2]);
+		b->mbBox.mins[0], b->mbBox.mins[1], b->mbBox.mins[2],
+		b->mbBox.maxs[0], b->mbBox.maxs[1], b->mbBox.maxs[2]);
 
 	/* origin brushes are removed, but they set
 	 * the rotation origin for the rest of the brushes (like func_door)
@@ -806,7 +806,7 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 			return;
 		}
 
-		VectorCenterFromMinsMaxs(b->mins, b->maxs, origin);
+		VectorCenterFromMinsMaxs(b->mbBox.mins, b->mbBox.maxs, origin);
 
 		Com_sprintf(string, sizeof(string), "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);
@@ -1247,10 +1247,10 @@ void LoadMapFile (const char* filename)
 
 	ClearBounds(map_mins, map_maxs);
 	for (i = 0; i < entities[0].numbrushes; i++) {
-		if (mapbrushes[i].mins[0] > MAX_WORLD_WIDTH)
+		if (mapbrushes[i].mbBox.mins[0] > MAX_WORLD_WIDTH)
 			continue;	/* no valid points */
-		AddPointToBounds(mapbrushes[i].mins, map_mins, map_maxs);
-		AddPointToBounds(mapbrushes[i].maxs, map_mins, map_maxs);
+		AddPointToBounds(mapbrushes[i].mbBox.mins, map_mins, map_maxs);
+		AddPointToBounds(mapbrushes[i].mbBox.maxs, map_mins, map_maxs);
 	}
 
 	/* save a copy of the brushes */

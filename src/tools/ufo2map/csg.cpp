@@ -284,15 +284,15 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 
 		/* check the bounds */
 		for (j = 0; j < 3; j++)
-			if (b->mins[j] < clipmins[j]
-			 || b->maxs[j] > clipmaxs[j])
+			if (b->mbBox.mins[j] < clipmins[j]
+			 || b->mbBox.maxs[j] > clipmaxs[j])
 			break;
 		if (j != 3)
 			continue;
 
 		num++;
-		AddPointToBounds(b->mins, mins, maxs);
-		AddPointToBounds(b->maxs, mins, maxs);
+		AddPointToBounds(b->mbBox.mins, mins, maxs);
+		AddPointToBounds(b->mbBox.maxs, mins, maxs);
 	}
 
 	return num;
@@ -346,7 +346,7 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 
 		/* if the brush is outside the clip area, skip it */
 		for (j = 0; j < 3; j++)
-			if (mb->mins[j] < clip.mins[j] || mb->maxs[j] > clip.maxs[j])
+			if (mb->mbBox.mins[j] < clip.mins[j] || mb->mbBox.maxs[j] > clip.maxs[j])
 				break;
 		if (j != 3)
 			continue;
@@ -365,8 +365,8 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 			if (side->surfaceFlags & SURF_HINT)
 				side->visible = true; /* hints are always visible */
 		}
-		VectorCopy(mb->mins, newbrush->mins);
-		VectorCopy(mb->maxs, newbrush->maxs);
+		VectorCopy(mb->mbBox.mins, newbrush->mins);
+		VectorCopy(mb->mbBox.maxs, newbrush->maxs);
 
 		/* carve off anything outside the clip box */
 		newbrush = ClipBrushToBox(newbrush, clip.mins, clip.maxs);

@@ -78,7 +78,7 @@ typedef struct mapbrush_s {
 
 	uint32_t	contentFlags;
 
-	vec3_t	mins, maxs;
+	AABB	mbBox;
 
 	int		numsides;
 	struct side_s	*original_sides;

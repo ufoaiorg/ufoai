@@ -280,9 +280,9 @@ void EmitBrushes (void)
 				VectorCopy(vec3_origin, normal);
 				normal[x] = (float)s;
 				if (s == -1)
-					dist = -b->mins[x];
+					dist = -b->mbBox.mins[x];
 				else
-					dist = b->maxs[x];
+					dist = b->mbBox.maxs[x];
 				planenum = FindOrCreateFloatPlane(normal, dist);
 				for (i = 0; i < b->numsides; i++)
 					if (b->original_sides[i].planenum == planenum)
@@ -383,8 +383,8 @@ void BeginModel (int entityNum)
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
 			continue;
-		AddPointToBounds(b->mins, mins, maxs);
-		AddPointToBounds(b->maxs, mins, maxs);
+		AddPointToBounds(b->mbBox.mins, mins, maxs);
+		AddPointToBounds(b->mbBox.maxs, mins, maxs);
 	}
 
 	VectorCopy(mins, mod->mins);

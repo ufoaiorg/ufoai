@@ -282,7 +282,7 @@ static bool Check_BoundingBoxIntersects (const mapbrush_t* a, const mapbrush_t* 
 	int i;
 
 	for (i = 0; i < 3; i++)
-		if (a->mins[i] - CH_DIST_EPSILON >= b->maxs[i] || a->maxs[i] <= b->mins[i] - CH_DIST_EPSILON)
+		if (a->mbBox.mins[i] - CH_DIST_EPSILON >= b->mbBox.maxs[i] || a->mbBox.maxs[i] <= b->mbBox.mins[i] - CH_DIST_EPSILON)
 			return false;
 
 	return true;
