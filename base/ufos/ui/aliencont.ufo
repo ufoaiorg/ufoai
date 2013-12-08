@@ -5,9 +5,13 @@
 // ===========================
 // Aliencontainment Component
 // ===========================
-component cmpAlienContainment extends image {
+component cmpAlienContainment extends panel {
 	{
-		src		"ui/hosp_button_green"
+//		src		"ui/hosp_button_green"
+		size 			"705 78"
+		border			"2"
+		bordercolor		"0.56 0.81 0.76 1"
+		bgcolor			"0.56 0.81 0.76 0.1"
 		onClick {
 			cmd "ui_aliencont_select <node:this.team_id@string>;"
 		}
@@ -17,12 +21,12 @@ component cmpAlienContainment extends image {
 		}
 		onMouseEnter {
 			if ( exists *node:this ) {
-				*node:this@src = "ui/hosp_button_light"
+				*node:this@bgcolor = "0.56 0.81 0.76 0.15"
 			}
 		}
 		onMouseLeave {
 			if ( exists *node:this ) {
-				*node:this@src = "ui/hosp_button_green"
+				*node:this@bgcolor = "0.56 0.81 0.76 0.1"
 			}
 		}
 	}
@@ -107,7 +111,7 @@ component cmpAlienContainment extends image {
 	bar tech_progress {
 		pos			"22 65"
 		size		"257 6"
-		color		"0 .8 0 1"
+		color		"0.56 0.81 0.76 1"
 		max			"100"
 		disabled	true
 	}
@@ -117,7 +121,7 @@ window aliencont
 {
 	BaseContainerPanelV2 base_container
 	{
-		// Aircraft panel
+		// Alien Containment panel
 		panel mainBody
 		{
 			{ size "715 727" }
@@ -234,18 +238,18 @@ window aliencont
 
 			panel ac {
 				{
-					pos "11 195"
-					size "670 513"
-					background	"ui/panel_grey_green_large"
+					pos 			"5 195"
+					size 			"705 525"
+					border			"2"
+					bordercolor		"0.527 0.6 0.21 1"
 				}
 
 				panel species {
-					pos 		"20 20"
-					size		"610 473"
-					layout		LAYOUT_COLUMN
-					layoutColumns	2
-					layoutMargin	5
-					padding		2
+					pos 			"5 3"
+					size			"670 520"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	10
+					padding			2
 					wheelscrollable	true
 
 					onViewChange	{
@@ -256,8 +260,8 @@ window aliencont
 				}
 				vscrollbar species_scroll {
 					image		"ui/scrollbar_v_green"
-					pos			"630 20"
-					height		"473"
+					pos			"680 5"
+					height		"510"
 					onChange	{
 						*node:parent.species@viewpos = <current>
 					}
