@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-11-27 20:32+0100\n"
+"PO-Revision-Date: 2013-12-02 20:39+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -193,9 +193,8 @@ msgid "Bomber in the City"
 msgstr "Bomber in der Innenstadt"
 
 #: ../base/maps/urban.ump:319 ../base/ufos/maps.ufo:2731
-#, fuzzy
 msgid "Urban Disco"
-msgstr "Stadt"
+msgstr "Städtische Disco"
 
 #: ../base/maps/urban.ump:328 ../base/ufos/maps.ufo:2785
 msgid "Community Centre"
@@ -412,7 +411,6 @@ msgid "Particle Beam Weapon"
 msgstr "Partikelstrahlwaffe"
 
 #: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5411
-#, fuzzy
 msgid "Alien Launcher"
 msgstr "Alien Granatwerfer"
 
@@ -441,9 +439,8 @@ msgid "Alien Aircraft Plating"
 msgstr "Alien-Flugzeugpanzerung"
 
 #: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4976
-#, fuzzy
 msgid "Alien Polymer Armour"
-msgstr "Körperrüstung eines Außerirdischen"
+msgstr "Polymer Rüstung eines Außerirdischen"
 
 #: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5589
 msgid "Alien Electronic Warfare Suite"
@@ -458,9 +455,8 @@ msgid "Alien Propulsion"
 msgstr "Außerirdischer Antrieb"
 
 #: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5094
-#, fuzzy
 msgid "Advanced Alien Propulsion"
-msgstr "Außerirdischer Antrieb"
+msgstr "Fortgeschrittener außerirdischer Antrieb"
 
 #: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5133
 msgid "Alien Detection"
@@ -2467,23 +2463,20 @@ msgid "Campaign Start"
 msgstr "Kampagne starten"
 
 #: ../base/ufos/equipment.ufo:340
-#, fuzzy
 msgid "Campaign Start (Market)"
-msgstr "Starte Kampagne (Market)"
+msgstr "Starte Kampagne (Markt)"
 
 #: ../base/ufos/equipment.ufo:395
 msgid "Asymptotic Market"
 msgstr "Asymptotischer Markt"
 
 #: ../base/ufos/equipment.ufo:418
-#, fuzzy
 msgid "Alien Campaign Start (Alien Campaign)"
 msgstr "Starte Alien Kampagne (Alien Kampagne)"
 
 #: ../base/ufos/equipment.ufo:440
-#, fuzzy
 msgid "Alien Campaign Start (Market)"
-msgstr "Starte Alien Kampagne (Market)"
+msgstr "Starte Alien Kampagne (Markt)"
 
 #: ../base/ufos/events.ufo:34
 msgid "Good Luck"
@@ -2779,9 +2772,8 @@ msgstr "Afrikanisches Dorf"
 
 #: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
 #: ../base/ufos/maps.ufo:332
-#, fuzzy
 msgid "African Desert"
-msgstr "Afrikanisches Dorf"
+msgstr "Afrikanisches Einöde"
 
 #: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
@@ -2854,7 +2846,6 @@ msgstr "Abgestürzter Kundschafter"
 
 #: ../base/ufos/maps.ufo:2516 ../base/ufos/maps.ufo:2556
 #: ../base/ufos/maps.ufo:2599
-#, fuzzy
 msgid "Tropical Jungle"
 msgstr "Tropischer Dschungel"
 
@@ -2881,9 +2872,8 @@ msgstr "Haus"
 #: ../base/ufos/maps.ufo:3192 ../base/ufos/maps.ufo:3231
 #: ../base/ufos/maps.ufo:3269 ../base/ufos/maps.ufo:3307
 #: ../base/ufos/maps.ufo:5256
-#, fuzzy
 msgid "Suburban City"
-msgstr "Ein vorstädtischer Bezirk."
+msgstr "Ein vorstädtischer Bezirk"
 
 #: ../base/ufos/maps.ufo:3354 ../base/ufos/maps.ufo:3390
 #: ../base/ufos/maps.ufo:5555
@@ -2903,7 +2893,6 @@ msgid "Construction Site"
 msgstr "Baustelle"
 
 #: ../base/ufos/maps.ufo:3567
-#, fuzzy
 msgid "Tropical Jungle Estate"
 msgstr "Tropischer Dschungel - Anwesen"
 
@@ -2920,9 +2909,8 @@ msgid "Luxury House"
 msgstr "Luxuriöses Haus"
 
 #: ../base/ufos/maps.ufo:3829
-#, fuzzy
 msgid "Military Convoy Ambush Site"
-msgstr "Militärkonvoy Angriffsstelle"
+msgstr "Militärkonvoy Angriff aus dem Hinterhalt"
 
 #: ../base/ufos/maps.ufo:3930
 #, fuzzy
@@ -2942,9 +2930,8 @@ msgid "Warehouse"
 msgstr "Warenlager"
 
 #: ../base/ufos/maps.ufo:4184
-#, fuzzy
 msgid "Village 2"
-msgstr "Dorf"
+msgstr "Dorf 2"
 
 #: ../base/ufos/maps.ufo:4230
 msgid "Military Bunker"
@@ -24214,7 +24201,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1997
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle "
 "beams. It's more deadly than anything we've seen -- an extremely nasty new "
@@ -24227,8 +24213,8 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Herr Kommandant, wir haben ein Gewehr geborgen, das einen hochenergetischen "
-"Partikelstrahl abfeuert. Es ist tödlicher als Laser, zielgenauer als "
-"Plasmawaffen und eine äußerst gemeine Bedrohung für unsere Soldaten auf dem "
+"Partikelstrahl abfeuert. Es ist tödlicher als als alles, was wir bisher "
+"kennen - eine äußerst gemeine Bedrohung für unsere Soldaten auf dem "
 "Schlachtfeld. Vorläufige Tests an unseren Rüstungen haben ergeben, dass die "
 "Außerirdischen ihre Waffen weiterentwickelt haben. Wir müssen diese Waffen "
 "sofort erforschen.\n"
@@ -24527,7 +24513,6 @@ msgid "Base Facilities"
 msgstr "Basiseinrichtung"
 
 #: ../base/ufos/research.ufo:115
-#, fuzzy
 msgid "Global Installations"
 msgstr "Externe Einrichtungen"
 
@@ -24594,9 +24579,8 @@ msgid "Wounds and Healing"
 msgstr "Gesundheit"
 
 #: ../base/ufos/research.ufo:202
-#, fuzzy
 msgid "Auxiliary Equipment"
-msgstr "%s Gegenstand\n"
+msgstr "Sonstige Ausrüstung"
 
 #: ../base/ufos/research.ufo:215
 msgid "Continuous Wave Laser Operation"
@@ -24683,9 +24667,8 @@ msgid "Alien Artifact - Plasma Rifle"
 msgstr "Außerirdisches Artefakt - Plasmagewehr"
 
 #: ../base/ufos/research.ufo:2094
-#, fuzzy
 msgid "Encased Plasma Rounds"
-msgstr "Umhüllte Plasma Patronen"
+msgstr "Gekapselte Plasma Patronen"
 
 #: ../base/ufos/research.ufo:2213 ../base/ufos/research.ufo:2303
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -24883,12 +24866,11 @@ msgstr "Menschliches Serum"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "Amphetamine Implantat"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
-#, fuzzy
 msgid "Muscle Stimulant"
-msgstr "Stimulanzien"
+msgstr "Muskelstimulanz"
 
 #: ../base/ufos/seq_credits.ufo:44
 msgid "http://www.ufoai.org"
@@ -25227,21 +25209,21 @@ msgid ""
 "You should connect to the lobby and wait for invitations or start your own "
 "server"
 msgstr ""
-"Du solltest dich zur Lobby verbinden und auf Einladungen warten, oder aber "
-"deinen eigenen Server starten."
+"Sie sollten sich zur Lobby verbinden und auf Einladungen warten, oder aber "
+"Ihren eigenen Server starten."
 
 #: ../base/ufos/seq_tutorials.ufo:1079
 msgid ""
 "While you are connected to the lobby you can play singleplayer until someone "
 "invites you"
 msgstr ""
-"Während du in der Lobby auf Einladungen wartest kannst du ganz normal in "
-"deiner Kampagne weiterspielen"
+"Während Sie in der Lobby auf Einladungen warten können Sie ganz normal in "
+"IhrerKampagne weiterspielen"
 
 #: ../base/ufos/seq_tutorials.ufo:1088
 msgid "As a server admin you should consider setting a round time limit."
 msgstr ""
-"Als Administrator eines Servers solltest du in Erwägung ziehen die "
+"Als Administrator eines Servers sollten Sie in Erwägung ziehen die "
 "Beschränkung für die Rundenzeit zu setzen."
 
 #: ../base/ufos/team_aliens.ufo:10
@@ -25393,13 +25375,12 @@ msgstr ""
 "Runde zu wegzunehmen."
 
 #: ../base/ufos/tips.ufo:16
-#, fuzzy
 msgid ""
 "To make a soldier face a certain direction (i.e. to turn him/her) place the "
 "cursor and press the right mouse button. This will cost you Time Units (TUs)."
 msgstr ""
 "Um einen Soldaten in eine bestimmte Richtung schauen zu lassen (also um ihn/"
-"sie zu drehen), muss der Cursor in der Richtung platziert werden und die "
+"sie zu drehen), muss der Cursor in die Richtung platziert werden und die "
 "rechte Maustaste oder die [Strg]-Taste gedrückt werden. Das kostet "
 "Zeiteinheiten."
 
@@ -25436,11 +25417,10 @@ msgstr ""
 "Chat #ufoai auf irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "You need an active Command Centre to launch interceptors."
 msgstr ""
-"Denken Sie daran, dass Sie eine aktive Kommandozentrale benötigen, bevor Sie "
-"Abfangjäger starten können."
+"Sie benötigen eine aktive Kommandozentrale bevor Sie Abfangjäger starten "
+"können."
 
 #: ../base/ufos/tips.ufo:22
 msgid ""
@@ -25459,14 +25439,13 @@ msgstr ""
 "einem Bereich vor ihnen sehen."
 
 #: ../base/ufos/tips.ufo:24
-#, fuzzy
 msgid ""
 "To store and disassemble UFOs you will need a workshop in your base and a "
 "UFO Yard. You can build a UFO Yard by accessing the installations button on "
 "the global view."
 msgstr ""
-"Um UFOs zu zerlegen und aufbewahren, brauchst du eine Werkstatt und einen "
-"UFO Hangar in deiner Basis. Du kannst einen UFO Hangar bauen, indem du in "
+"Um UFOs zu zerlegen und aufbewahren, brauchst du eine Werkstatt in deiner "
+"Basis und einen UFO Hangar. Du kannst einen UFO Hangar bauen, indem du in "
 "der Global-Ansicht auf das Installationspanel klickst."
 
 #: ../base/ufos/tips.ufo:25
@@ -25481,14 +25460,13 @@ msgstr ""
 "benötigt als das normale Laufen. "
 
 #: ../base/ufos/tips.ufo:26
-#, fuzzy
 msgid ""
 "Have your soldiers crouch when they can. Crouching makes some weapons "
 "considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
-"Benutzen Sie [c], um zwischen Kriechen und Laufen umzuschalten. Beim "
-"Kriechen sind einige Waffen deutlich effektiver. Außerdem gibt ein "
-"kriechender Soldat ein kleineres Ziel ab."
+"Lassen Sie Ihre Soldaten kriechen [c], wenn es geht. Beim Kriechen sind "
+"einige Waffen deutlich effektiver. Außerdem gibt ein kriechender Soldat ein "
+"kleineres Ziel ab."
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
@@ -25499,13 +25477,12 @@ msgstr ""
 "Mission zu heilen."
 
 #: ../base/ufos/tips.ufo:28
-#, fuzzy
 msgid ""
 "Keep soldiers close so that they can support each other. A lone gunner is "
 "easily killed."
 msgstr ""
-"Lassen Sie ihre Soldaten zusammen so das sie sich gegenseitig helfen, Ein "
-"einsamer Krieger ist leichter getötet."
+"Lassen Sie ihre Soldaten zusammen, so dass sie sich gegenseitig helfen "
+"können, Ein einsamer Krieger ist leichter getötet."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
@@ -25526,7 +25503,6 @@ msgstr ""
 "zuerst erforschen müssen!"
 
 #: ../base/ufos/tips.ufo:31
-#, fuzzy
 msgid ""
 "The Grenade Launcher's Impact fire mode will explode when it reaches its "
 "target, useful for hitting enemies at the edge of the map or on a ledge."
@@ -25536,7 +25512,6 @@ msgstr ""
 "Vorsprüngen nützlich sein."
 
 #: ../base/ufos/tips.ufo:32
-#, fuzzy
 msgid ""
 "When throwing grenades, try to avoid throwing straight along the grid. With "
 "a little bit of an angle, it's less likely to bounce back at you if your aim "
@@ -25560,7 +25535,6 @@ msgid "Grenades don't bounce well on sand or dirt."
 msgstr "Granaten springen nicht gut auf sandigem oder matschigen Untergrund."
 
 #: ../base/ufos/tips.ufo:35
-#, fuzzy
 msgid ""
 "You can create your own maps or customize your campaigns. Learn more at "
 "ufoai.org."
@@ -25580,13 +25554,12 @@ msgstr ""
 "Rüsten Sie Ihre Abfangjäger mit Waffen aus, bevor Sie sie starten lassen."
 
 #: ../base/ufos/tips.ufo:38
-#, fuzzy
 msgid ""
 "Some items will slow an aircraft down. Read the equipment specs closely when "
 "equipping your interceptors."
 msgstr ""
-"Einige Gegenstände verlangsamen ein Flugzeug. Beachte die Equipment "
-"Spezifikationen genau beim ausrüsten deines Flugzeugs"
+"Einige Gegenstände verlangsamen ein Flugzeug. Beachte die Ausrüstungs-"
+"Spezifikationen genau beim Ausrüsten Ihres Flugzeugs"
 
 #: ../base/ufos/tips.ufo:39
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -25594,7 +25567,6 @@ msgstr ""
 "Bauen Sie eine Quarantänestation um lebendige Aliens gefangen zu halten."
 
 #: ../base/ufos/tips.ufo:40
-#, fuzzy
 msgid ""
 "Spotted enemies: While on a ground mission you can press [Space] to cycle "
 "through all spotted enemies."
@@ -25605,7 +25577,6 @@ msgstr ""
 "Soldaten."
 
 #: ../base/ufos/tips.ufo:41
-#, fuzzy
 msgid ""
 "You can use the right mouse button in the soldier equipment screen to equip "
 "or unequip weapons, ammo and armour. This won't work during a ground battle, "
@@ -25617,51 +25588,45 @@ msgstr ""
 "kosten würde."
 
 #: ../base/ufos/tips.ufo:42
-#, fuzzy
 msgid ""
 "Don't let too many civilians die during battles. If you don't keep the "
 "nations happy they could pull the plug on your program."
 msgstr ""
 "Lassen Sie nicht zu viele Zivilisten während des Kampfes sterben. Wenn Sie "
-"die Nationen nicht glücklich machen, könnten Sie den Stecker ziehen."
+"die Nationen nicht glücklich machen, könnten Sie die Förderung Ihres "
+"Programms beenden."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid ""
 "You should never kill civilians. Soldiers who kill civilians will not be "
 "promoted to high ranks."
 msgstr ""
-"Vermeiden Sie es, Zivilisten zu töten. Soldaten mit Zivilisten-Kills werden "
-"nicht weit befördert werden."
+"Vermeiden Sie es, Zivilisten zu töten. Soldaten mit Zivilisten-Tötungen "
+"werden nicht in höhere Dienstgrade befördert."
 
 #: ../base/ufos/tips.ufo:44
-#, fuzzy
 msgid ""
 "Consider launching interceptors to catch a faster UFO when it's close to "
 "your base to avoid a lengthy chase."
 msgstr ""
 "Wenn Sie Abfangjäger gegen schnellere UFOs starten, sollten Sie dies tun, "
 "wenn es sich dicht bei der Basis befindet. So vermeiden Sie eine lange "
-"Verfolgungsjagd und sind vielleicht unmittelbar nach dem Start schon in "
-"Schussreichweite."
+"Verfolgungsjagd."
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid ""
 "Consider stunning the civilians to keep them from running around. Aliens "
 "seem to ignore unconscious civilians."
 msgstr ""
-"Ziehen Sie in Erwägung, in Terror-Missionen Zivilisten zu betäuben, damit "
-"sie nicht umherlaufen. Aliens scheinen sich lieber auf sich bewegende Ziele "
-"zu stürzen."
+"Ziehen Sie in Erwägung,  Zivilisten zu betäuben, damit sie nicht "
+"umherlaufen. Aliens scheinen bewußtlose Zivilisten zu ignorieren."
 
 #: ../base/ufos/tips.ufo:46
-#, fuzzy
 msgid ""
 "Don't forget to install missile launchers and missiles in your missile "
 "batteries."
 msgstr ""
-"Vergessen Sie nicht, Raketenwerfer und Raketen in Ihre Raketenbatterien zu "
+"Vergessen Sie nicht, Raketenwerfer und Raketen in Ihren Raketenbatterien zu "
 "installieren."
 
 #: ../base/ufos/tips.ufo:47
@@ -25678,17 +25643,16 @@ msgstr ""
 "über die Pfeile und rollen das Mausrad."
 
 #: ../base/ufos/tips.ufo:49
-#, fuzzy
 msgid ""
 "Beware of friendly fire! Lobbing a grenade among your own troops will do the "
 "aliens' work for them. The same can be said for bullets. Make sure you're "
 "not hitting your own troops behind your target."
 msgstr ""
-"Vorsicht vor dem eigenen Feuer! Wenn Sie eine Granate auf einen Feind "
-"feuern, der sich an Ihre Truppen herangeschlichen hat, kann das ein leichter "
-"Sieg sein - aber eventuell erledigen Sie auch nur die Arbeit der Aliens. Das "
-"gleiche gilt für Geschosse, achten Sie darauf, dass Sie nicht auf Ihre "
-"eigenen Leute hinter dem Gegner schießen, nachdem dieser tot ist."
+"Vorsicht vor dem Beschuß durch eigene Gruppen! Wenn Sie eine Granate auf "
+"einen Feind feuern, der sich an Ihre Truppen herangeschlichen hat, kann das "
+"ein leichter Sieg sein - aber eventuell erledigen Sie auch nur die Arbeit "
+"der Aliens. Das gleiche gilt für Geschosse, achten Sie darauf, dass Sie "
+"nicht auf Ihre eigenen Leute hinter dem Gegner schießen."
 
 #: ../base/ufos/tips.ufo:50
 msgid ""
@@ -25735,14 +25699,13 @@ msgstr ""
 "gefangenzunehmen. Es wird sich eine bessere Möglichkeit ergeben."
 
 #: ../base/ufos/tips.ufo:55
-#, fuzzy
 msgid ""
 "Wounded aliens are easier to stun. If an alien has been already attacked "
 "with a stun rod or electrolaser, lethal weapons may just knock it "
 "unconscious."
 msgstr ""
 "Verwundete Aliens sind leichter zu betäuben. Außerdem können normalerweise "
-"tödliche Waffen ein Alien betäuben, wenn es bereits mit Betäubungswaffen "
+"tödliche Waffen einen Alien betäuben, wenn es bereits mit Betäubungswaffen "
 "angegriffen wurde."
 
 #: ../base/ufos/tips.ufo:56
@@ -25751,6 +25714,9 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"Platzieren Sie einen freien Soldaten in den Videoüberwachungsraum der "
+"Kommandozentrale während eines Angriffs auf die Basis. Ihr Soldat kann die "
+"Überwachungskameras um die Basis benutzen, um Feinde zu orten."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -25816,14 +25782,12 @@ msgid "Day"
 msgstr "Tag"
 
 #: ../base/ufos/ui/_menu.ufo:344 ../base/ufos/ui/_menu.ufo:399
-#, fuzzy
 msgid "Upload"
-msgstr "Nachladen"
+msgstr "Hochladen"
 
 #: ../base/ufos/ui/_menu.ufo:352 ../base/ufos/ui/_menu.ufo:407
-#, fuzzy
 msgid "Delete this team"
-msgstr "Entferne aus den Favoriten"
+msgstr "Lösche dieses Team"
 
 #: ../base/ufos/ui/_menu.ufo:440
 #, fuzzy
@@ -25850,7 +25814,6 @@ msgid "Save the current team"
 msgstr "Aktuelles Team speichern"
 
 #: ../base/ufos/ui/_menu.ufo:615
-#, fuzzy
 msgid "Save Team"
 msgstr "Team speichern"
 
@@ -26399,9 +26362,8 @@ msgid "Click to continue"
 msgstr "Mausklick zum Fortfahren"
 
 #: ../base/ufos/ui/campaign.ufo:536
-#, fuzzy
 msgid "Thank you for playing UFO: Alien Invasion"
-msgstr "Danke, dass Sie UFO:Alien Invasion gespielt haben"
+msgstr "Danke, dass Sie UFO: Alien Invasion gespielt haben"
 
 #: ../base/ufos/ui/campaign.ufo:604 ../base/ufos/ui/singleplayer.ufo:159
 msgid "Exit Campaign Confirmation"
@@ -26424,18 +26386,16 @@ msgid "Do not quit."
 msgstr "Nicht beenden."
 
 #: ../base/ufos/ui/cgame.ufo:26
-#, fuzzy
 msgid "Remove this file from the server"
-msgstr "Soldaten aus diesem Flugzeug entfernen"
+msgstr "Entfernen Sie diese Datei vom Server"
 
 #: ../base/ufos/ui/cgame.ufo:53
-#, fuzzy
 msgid "Available files:"
-msgstr "Verfügbare Sprachen"
+msgstr "Verfügbare Dateien:"
 
 #: ../base/ufos/ui/cgame.ufo:93
 msgid "No files uploaded yet"
-msgstr ""
+msgstr "Bisher keine Datei hochgeladen"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -26454,7 +26414,6 @@ msgstr "Rechte Hand"
 
 #: ../base/ufos/ui/equipment.ufo:69 ../base/ufos/ui/inventory.ufo:88
 #: ../base/ufos/ui/inventory.ufo:96 ../base/ufos/ui/team.ufo:70
-#, fuzzy
 msgid "Implant"
 msgstr "Implantat"
 
@@ -26808,9 +26767,8 @@ msgid "Heavily wounded"
 msgstr "Schwer verwundet"
 
 #: ../base/ufos/ui/hospital.ufo:188
-#, fuzzy
 msgid "Healthy"
-msgstr "Vitalität"
+msgstr "Gesund"
 
 #: ../base/ufos/ui/hud_.ufo:40 ../base/ufos/ui/physdat.ufo:358
 msgid "Health"
@@ -26915,9 +26873,8 @@ msgid "Chat messages"
 msgstr "Chatnachrichten"
 
 #: ../base/ufos/ui/hud_default.ufo:887
-#, fuzzy
 msgid "Please wait"
-msgstr "Erfreut"
+msgstr "Bitte warten"
 
 #: ../base/ufos/ui/hud_default.ufo:989
 msgid "Hide rescue zone"
@@ -26928,24 +26885,20 @@ msgid "Reserve TUs for shooting."
 msgstr "Reserviere ZE zum Schießen."
 
 #: ../base/ufos/ui/hud_default.ufo:1019
-#, fuzzy
 msgid "Disable reaction fire"
-msgstr "Reaktionsfeuer umschalten."
+msgstr "Reaktionsfeuer ausschalten"
 
 #: ../base/ufos/ui/hud_default.ufo:1025
-#, fuzzy
 msgid "Reaction fire (not available)"
 msgstr "Reaktionsfeuer (nicht möglich)"
 
 #: ../base/ufos/ui/hud_default.ufo:1031
-#, fuzzy
 msgid "Enable reaction fire"
-msgstr "Reaktionsfeuer umschalten."
+msgstr "Reaktionsfeuer ermöglichen"
 
 #: ../base/ufos/ui/hud_default.ufo:1066 ../base/ufos/ui/hud_default.ufo:1108
-#, fuzzy
 msgid "Target out of range"
-msgstr "Ziele auf den Boden"
+msgstr "Ziel außerhalb der Reichweite"
 
 #: ../base/ufos/ui/hud_default.ufo:1071 ../base/ufos/ui/hud_default.ufo:1113
 msgid "Target acquired"
@@ -27134,7 +27087,7 @@ msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Facebook Gefällt mir"
 
 #: ../base/ufos/ui/main.ufo:26
 msgid "Twitter"
@@ -27142,7 +27095,7 @@ msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Folge uns auf twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -28145,9 +28098,8 @@ msgid "Post-Processing Shader Effects:"
 msgstr "Schattierungs-Nachbearbeitungs-Effekte:"
 
 #: ../base/ufos/ui/options.ufo:975
-#, fuzzy
 msgid "Enable post processing shader effects."
-msgstr "Schattierungs-Nachbearbeitungs-Effekte:"
+msgstr "Schattierungs-Nachbearbeitungs-Effekte aktivieren"
 
 #: ../base/ufos/ui/options.ufo:985
 msgid ""
@@ -28587,7 +28539,7 @@ msgstr "Menü"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Allgemein"
 
 #: ../base/ufos/ui/options.ufo:2034
 msgid "Battlescape"
@@ -28645,6 +28597,8 @@ msgstr "Kapazität überschritten"
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
+"Es gibt keinen Platz mehr für Güter/Personal auf dieser Basis. Schaffen Sie "
+"Platz."
 
 #: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:136
 msgid "Go to base"
@@ -28783,11 +28737,11 @@ msgstr "Alle verfügbaren Wissenschafter diesem Projekt zuweisen"
 
 #: ../base/ufos/ui/research.ufo:153
 msgid "N/A"
-msgstr ""
+msgstr "nicht verfügbar"
 
 #: ../base/ufos/ui/research.ufo:154
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr ""
+msgstr "Ein Artefakt oder eine Vorbedingung fehlt für dieses Thema"
 
 #: ../base/ufos/ui/research.ufo:162
 msgid "Expand/Collapse"
@@ -29109,7 +29063,7 @@ msgstr "Anforderungen:"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Anmeldung"
 
 #: ../base/ufos/ui/web.ufo:37
 msgid "Password"
@@ -29672,7 +29626,6 @@ msgid "Confirm the current action"
 msgstr "Aktuelle Aktion bestätigten"
 
 #: client/battlescape/cl_actor.cpp:2582
-#, fuzzy
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Wechsle zum nächsten sichtbaren Außerirdischen des gewählten Akteurs."
 
@@ -31469,9 +31422,8 @@ msgid "aircraft_cannotrefuel"
 msgstr "Kann Flugzeug nicht auftanken"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:40
-#, fuzzy
 msgid "aircraft_arrivedhome"
-msgstr "<TODO>"
+msgstr "Flugzeug_zuhause angekommen"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:41
 msgid "installation_build_started"
@@ -31542,9 +31494,8 @@ msgid "transfer_aliens_defered"
 msgstr "Transfer des Ausseridischen verschoben"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:58
-#, fuzzy
 msgid "transfer_uforecovery_finished"
-msgstr "<TODO>"
+msgstr "Überführung_UFO Bergung_beendet"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:59
 msgid "ufo_spotted"
@@ -31631,9 +31582,8 @@ msgid "Alien terror in %s"
 msgstr "Außerirdischer Terror in %s"
 
 #: client/cgame/campaign/cp_missions.cpp:462
-#, fuzzy
 msgid "Alien terror"
-msgstr "Außerirdischer Terror in %s"
+msgstr "Außerirdischer Terror"
 
 #: client/cgame/campaign/cp_missions.cpp:465
 #, fuzzy, c-format
@@ -32711,9 +32661,8 @@ msgid "Attack the UFO-Carrier now"
 msgstr "Den UFO - Transporter jetzt angreifen"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
-#, fuzzy
 msgid "Launch"
-msgstr "Granatwerfer"
+msgstr "Start"
 
 #: client/cgame/cl_game_team.cpp:308
 msgid "Error saving team. Nothing to save yet."
@@ -32941,9 +32890,8 @@ msgid "Show/hide ufoconsole."
 msgstr "Konsole zeigen/verbergen"
 
 #: client/cl_inventory_callbacks.cpp:44
-#, fuzzy
 msgid "Close quarters"
-msgstr "Nicht genug Quartiere"
+msgstr "Nahkampf"
 
 #: client/cl_inventory_callbacks.cpp:48
 #, fuzzy
@@ -33065,37 +33013,32 @@ msgstr "Laden"
 #: client/cl_main.cpp:407 client/cl_main.cpp:410 client/cl_main.cpp:414
 #: client/cl_main.cpp:417 client/cl_main.cpp:420 client/cl_main.cpp:423
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "Connection failure"
-msgstr "Reaktionsfeuer"
+msgstr "Verbindungsfehler"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
 msgstr "Das eingegebene Passwart war falsch."
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "Diese Änderung benötigt einen Neustart des Spiels!"
+msgstr "Dieser Server benötigt ein Passwort"
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "Gegenstand ist einsatzbereit.\n"
+msgstr "Dieser Server ist "
 
 #: client/cl_main.cpp:417
-#, fuzzy
 msgid "You are banned on this server."
-msgstr "Verbindung aufbauen"
+msgstr "Du sind auf diesem Server gesperrt."
 
 #: client/cl_main.cpp:420
-#, fuzzy
 msgid "The game has already started."
-msgstr "Team ist bereits in Benutzung"
+msgstr "Das Spiel ist bereits gestartet."
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "Auf dem Server ist eine andere Version dieses Spiels."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
@@ -33106,9 +33049,8 @@ msgid "The rcon password you specified was wrong."
 msgstr ""
 
 #: client/cl_main.cpp:429
-#, fuzzy
 msgid "The server refused the connection."
-msgstr "Server hat die Verbindung geschlossen"
+msgstr "Server verbindet nicht."
 
 #: client/cl_main.cpp:558
 #, c-format
