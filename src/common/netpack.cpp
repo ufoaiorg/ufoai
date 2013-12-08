@@ -414,6 +414,7 @@ void NET_ReadDir (dbuffer* buf, vec3_t dir)
  * @sa SV_ReadFormat
  * @param[in] buf The buffer we read the data from
  * @param[in] format The format string may not be nullptr
+ * @param ap The variadic function argument list corresponding to the format string
  */
 void NET_vReadFormat (dbuffer* buf, const char* format, va_list ap)
 {
