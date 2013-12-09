@@ -519,7 +519,7 @@ static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot
 			continue;
 
 		if (G_IsBrushModel(check) && G_IsBreakable(check))
-			VectorCenterFromMinsMaxs(check->absBox.mins, check->absBox.maxs, center);
+			check->absBox.getCenter(center);
 		else if (G_IsLivingActor(check) || G_IsBreakable(check))
 			VectorCopy(check->origin, center);
 		else

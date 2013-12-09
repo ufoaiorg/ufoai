@@ -806,7 +806,7 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 			return;
 		}
 
-		VectorCenterFromMinsMaxs(b->mbBox.mins, b->mbBox.maxs, origin);
+		b->mbBox.getCenter(origin);
 
 		Com_sprintf(string, sizeof(string), "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);
