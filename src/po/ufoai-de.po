@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-12-02 20:39+0100\n"
+"PO-Revision-Date: 2013-12-09 23:09+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -2913,7 +2913,6 @@ msgid "Military Convoy Ambush Site"
 msgstr "Militärkonvoy Angriff aus dem Hinterhalt"
 
 #: ../base/ufos/maps.ufo:3930
-#, fuzzy
 msgid "Military Shelter"
 msgstr "Militärischer Schutzraum"
 
@@ -3037,9 +3036,8 @@ msgid "A container harbour."
 msgstr "Ein Containerhafen."
 
 #: ../base/ufos/maps.ufo:5450 ../base/ufos/maps.ufo:5488
-#, fuzzy
 msgid "Village MP (2v2)"
-msgstr "Dorf"
+msgstr "Dorf MP (2v2)"
 
 #: ../base/ufos/maps.ufo:5533
 msgid "Alien Base"
@@ -12094,6 +12092,12 @@ msgid ""
 "most of Earth's people, the Second Cold War is a dark shadow from the past, "
 "much like the World Wars were to the children of the late 20th."
 msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut "
+"sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. "
+"Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so "
+"weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten "
+"Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, "
+"so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:6
 msgid ""
@@ -12113,10 +12117,26 @@ msgid ""
 "they could safely fight. For the first time in the history of mankind, there "
 "is law and order across more than three quarters of the world."
 msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem "
+"Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt "
+"verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten "
+"Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer "
+"noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten "
+"bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf "
+"das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte "
+"Vertretung in der UN garantiert ist und der globale Lebensstandard auch in "
+"den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich "
+"um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen "
+"der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst "
+"verängstigt durch die starken Machtblöcke um China und die Europäische "
+"Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um "
+"dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen "
+"könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und "
+"Ordnung auf mehr als einem dreiviertel der Erde."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr ""
+msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12131,6 +12151,16 @@ msgid ""
 "their craft and vanish back into orbit, leaving only the ravaged streets of "
 "Mumbai as evidence."
 msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs "
+"erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen "
+"Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in "
+"der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine "
+"Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone "
+"Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor "
+"eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch "
+"aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu "
+"ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der "
+"einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:18
 msgid ""
@@ -12144,6 +12174,16 @@ msgid ""
 "but concrete and blood. All the UFOs disappear without a trace -- but no one "
 "doubts they'll be back."
 msgstr ""
+"Eine Krisensitzung der UN ergibt keine schlüssige Richtung. Die Einfälle der "
+"Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, "
+"Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und "
+"schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die "
+"das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden "
+"sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, "
+"als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die "
+"Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, "
+"ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie "
+"zurückkehren werden."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:22
 msgid ""
@@ -12152,6 +12192,9 @@ msgid ""
 "alien attackers to the best of their ability. They score precious few "
 "successes."
 msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den "
+"Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe "
+"abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:26
 msgid ""
@@ -12161,6 +12204,12 @@ msgid ""
 "resurrected under a new UN banner. Its sworn duty is to combat the alien "
 "threat, and to ensure the survival of the human race at all costs."
 msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung "
+"wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr "
+"bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- "
+"entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die "
+"Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen "
+"Umständen zu sichern."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:30
 msgid ""
@@ -12169,6 +12218,10 @@ msgid ""
 "first and only line of defence. It can't afford to fail; because if it does, "
 "humanity doesn't stand a chance."
 msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der "
+"besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese "
+"Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf "
+"nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:45
 #, fuzzy
@@ -24574,9 +24627,8 @@ msgid "Soldier Weight and Encumbrance"
 msgstr "Soldaten- und Lastengewicht"
 
 #: ../base/ufos/research.ufo:194
-#, fuzzy
 msgid "Wounds and Healing"
-msgstr "Gesundheit"
+msgstr "Wunden und Heilung"
 
 #: ../base/ufos/research.ufo:202
 msgid "Auxiliary Equipment"
@@ -24866,7 +24918,7 @@ msgstr "Menschliches Serum"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr "Amphetamine Implantat"
+msgstr "Amphetamin Implantat"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
 msgid "Muscle Stimulant"
@@ -25329,7 +25381,7 @@ msgstr ""
 msgid ""
 "Choose which fire mode to use in reaction fire by ticking the button on the "
 "fire mode panel. Quick fire modes will react faster."
-msgstr " "
+msgstr ""
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
@@ -25790,24 +25842,20 @@ msgid "Delete this team"
 msgstr "Lösche dieses Team"
 
 #: ../base/ufos/ui/_menu.ufo:440
-#, fuzzy
 msgid "Currently loaded"
-msgstr "Aktive Node:"
+msgstr "Derzeit geladen"
 
 #: ../base/ufos/ui/_menu.ufo:515
-#, fuzzy
 msgid "Generate New Team"
-msgstr "Neues zufälliges Team anlegen"
+msgstr "Neues Team generieren"
 
 #: ../base/ufos/ui/_menu.ufo:596
-#, fuzzy
 msgid "Download new teams"
-msgstr "lade herunter [%s]"
+msgstr "Neue Teams herunterladen"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "lade herunter [%s]"
+msgstr "Herunterladen"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
@@ -28087,11 +28135,8 @@ msgstr ""
 "höher um den V-Sync einzuschalten (bessere Qualität)."
 
 #: ../base/ufos/ui/options.ufo:968
-#, fuzzy
 msgid "Post-processing shader effects like glowing textures."
-msgstr ""
-"Schattierungs-Nachbearbeitungs-Effekte wie glühende Texturen (nur verfügbar "
-"wenn GLSL Schattierer aktiviert sind)."
+msgstr "Schattierungs-Nachbearbeitungs-Effekte wie glühende Texturen."
 
 #: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
@@ -28114,11 +28159,9 @@ msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Echtzeitbeleuchtung / Maximale dynamische Lichtquellen:"
 
 #: ../base/ufos/ui/options.ufo:998
-#, fuzzy
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
-"Ändere die Anzahl der hardware-beschleunigten dynamischen Lichtquellen. "
-"ACHTUNG: Echtzeit-Lichtquellen müssen aktiviert sein."
+"Ändere die Anzahl der hardware-beschleunigten dynamischen Lichtquellen."
 
 #: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
@@ -28186,14 +28229,12 @@ msgid "Intel Graphics Hardware Hack:"
 msgstr "Intel Grafik Hardware Hack:"
 
 #: ../base/ufos/ui/options.ufo:1156
-#, fuzzy
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
-"Dieser \"hack\" aktiviert Texturen Kompression und deaktiviert GLSL Schatten "
-"bei Intel Chips.Deaktiviere diesen hack um erweiterte Redering Optionen zu "
-"aktivieren."
+"Dieser \"hack\" deaktiviert GLSL Schatten bei Intel Chips. Deaktiviere "
+"diesen hack um erweiterte Rendering Optionen zu aktivieren."
 
 #: ../base/ufos/ui/options.ufo:1189
 msgid ""
@@ -28951,14 +28992,12 @@ msgid "Save your team"
 msgstr "Team speichern"
 
 #: ../base/ufos/ui/team.ufo:714
-#, fuzzy
 msgid "Generate a team"
-msgstr "Neues zufälliges Team anlegen"
+msgstr "Ein Team generieren"
 
 #: ../base/ufos/ui/team.ufo:730 ../base/ufos/ui/team.ufo:736
-#, fuzzy
 msgid "Generate Team"
-msgstr "Neues zufälliges Team anlegen"
+msgstr "Team generieren"
 
 #: ../base/ufos/ui/team.ufo:731
 #, fuzzy
@@ -30944,11 +30983,11 @@ msgstr ""
 "nicht einsatzfähig, benötigt %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "%3.1f Tag übrig"
-msgstr[1] "%3.1f Tage übrig"
+msgstr[0] "%d Tag übrig"
+msgstr[1] "%d Tage übrig"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -31127,13 +31166,12 @@ msgid "UFO Sighting"
 msgstr "UFO - Sichtung"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1493
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Name: %s\n"
 "Objective: %s"
 msgstr ""
-"Ort: %s\n"
-"Art: %s\n"
+"Name: %s\n"
 "Aufgabe: %s"
 
 #: client/cgame/campaign/cp_geoscape.cpp:1509
