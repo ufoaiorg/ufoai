@@ -422,6 +422,8 @@ CASSERT(lengthof(eventNames) == EV_NUM_EVENTS);
 /**
  * @sa gi.AddEvent
  * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
+ * @param[in] eType The event type
+ * @param[in] entnum The entity number
  */
 static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 {
@@ -457,6 +459,8 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 /**
  * @sa gi.QueueEvent
  * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
+ * @param[in] eType The event type
+ * @param[in] entnum The entity number
  */
 static void SV_QueueEvent (unsigned int mask, int eType, int entnum)
 {
