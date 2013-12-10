@@ -365,6 +365,16 @@ window aliencont
 		}
 	}
 
+	// Aliencontainment count
+	BuildingSpace Aliencontainment
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_aliencontainment" }
+		string label { string	"_Alien Containment" }
+		button alert { invis true }
+	}
+
 	// ==========================
 	// Right Panel (Alien image)
 	// ==========================
