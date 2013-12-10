@@ -130,13 +130,13 @@ component cmpAlienContainment extends panel {
 	}
 	string txt_alc_dead	{
 		string		"_Dead:"
-		pos			"350 24"
+		pos			"350 35"
 		size		"100 20"
 		font		"f_small"
 	}
 	string dead2	{
 		string		"0"
-		pos			"460 24"
+		pos			"460 35"
 		size		"125 20"
 		font		"f_small"
 		contentalign	ALIGN_UR
@@ -165,7 +165,7 @@ window aliencont
 			// kill living aliens button
 			button bt_alc_killaliens {
 				tooltip		"_Kill all aliens in this base"
-				pos			"275 115"
+				pos			"10 35"
 				size		"64 64"
 				icon		"icons/killalien"
 				disabled	true
@@ -181,13 +181,13 @@ window aliencont
 
 			panel ac {
 				{
-					pos 			"5 195"
-					size 			"705 525"
+					pos 			"5 95"
+					size 			"705 625"
 				}
 
 				panel species {
 					pos 			"5 3"
-					size			"670 520"
+					size			"670 620"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	10
 					padding			2
@@ -200,10 +200,11 @@ window aliencont
 					}
 				}
 				vscrollbar species_scroll {
-					image		"ui/scrollbar_v_green"
-					pos			"680 5"
-					height		"515"
-					onChange	{
+					image			"ui/scrollbar_v_green"
+					pos				"680 5"
+					hidewhenunused	true
+					height			"615"
+					onChange		{
 						*node:parent.species@viewpos = <current>
 					}
 				}
