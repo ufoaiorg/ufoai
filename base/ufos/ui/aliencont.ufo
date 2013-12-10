@@ -240,8 +240,6 @@ window aliencont
 				{
 					pos 			"5 195"
 					size 			"705 525"
-					border			"2"
-					bordercolor		"0.527 0.6 0.21 1"
 				}
 
 				panel species {
@@ -261,7 +259,7 @@ window aliencont
 				vscrollbar species_scroll {
 					image		"ui/scrollbar_v_green"
 					pos			"680 5"
-					height		"510"
+					height		"515"
 					onChange	{
 						*node:parent.species@viewpos = <current>
 					}
@@ -394,4 +392,14 @@ window aliencont
 		cmd "ui_aliencont_init;"
 		*cvar:mn_lastsubmenu = "aliencont"
 	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 }
