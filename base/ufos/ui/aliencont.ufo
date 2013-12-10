@@ -135,48 +135,6 @@ window aliencont
 				}
 			}
 
-
-			// info window (top left)
-			panel baseinfo {
-				{
-					pos		"11 43"
-					size	"333 145"
-					background	"ui/panel_grey_green_large"
-				}
-
-				// base info (aliencont capacity)
-				string txt_base_info {
-					string		"_Live Alien Containment Info"
-					pos			"19 25"
-					size		"296 20"
-					font		"f_small_bold"
-					contentalign	ALIGN_CC
-				}
-				string txt_alc_limit_prefix {
-					string		"_Base capacity:"
-					pos			"37 49"
-					size		"265 20"
-					font		"f_small"
-					contentalign	ALIGN_CL
-				}
-				string txt_alc_limit {
-					pos			"37 49"
-					size		"265 20"
-					font		"f_small"
-					contentalign	ALIGN_CR
-				}
-				image alc_img {
-					pos			"40 66"
-					src			"ui/bar_rahmen"
-				}
-				bar alc_bar {
-					pos			"50 71"
-					size		"236 6"
-					color		"0 .8 0 1"
-					readonly	true
-				}
-			}
-
 			// kill living aliens button
 			button bt_alc_killaliens {
 				tooltip		"_Kill all aliens in this base"
@@ -194,7 +152,8 @@ window aliencont
 				{
 					pos		"347 43"
 					size	"333 145"
-					background	"ui/panel_grey_green_large"
+					border		"2"
+					bordercolor	"0.56 0.81 0.76 1"
 				}
 
 				string txt_race_info {
@@ -354,14 +313,14 @@ window aliencont
 	 * @param[in] <2> Maximal capacity
 	 */
 	confunc ui_aliencont_cap {
-		*node:root.base_container.mainBody.baseinfo.txt_alc_limit@string = "<1> / <2>"
-		*node:root.base_container.mainBody.baseinfo.alc_bar@max = <2>
+		*node:root.Aliencontainment.data@string = "<1> / <2>"
+		*node:root.Aliencontainment.data_bar@max = <2>
 		if ( <1> <= <2>) {
-			*node:root.base_container.mainBody.baseinfo.alc_bar@current = <1>
-			*node:root.base_container.mainBody.baseinfo.alc_bar@color = "0 .8 0 1"
+			*node:root.Aliencontainment.data_bar@current = <1>
+			*node:root.Aliencontainment.data_bar@color = "0.56 0.81 0.76 1"
 		} else {
-			*node:root.base_container.mainBody.baseinfo.alc_bar@current = <2>
-			*node:root.base_container.mainBody.baseinfo.alc_bar@color = "1 0 0 1"
+			*node:root.Aliencontainment.data_bar@current = <2>
+			*node:root.Aliencontainment.data_bar@color = "1 0 0 1"
 		}
 	}
 
