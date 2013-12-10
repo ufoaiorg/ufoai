@@ -115,6 +115,33 @@ component cmpAlienContainment extends panel {
 		max			"100"
 		disabled	true
 	}
+	string txt_alc_alive {
+		string		"_Alive:"
+		pos			"350 10"
+		size		"100 20"
+		font		"f_small"
+	}
+	string alive2 {
+		string		"0"
+		pos			"460 10"
+		size		"125 20"
+		font		"f_small"
+		contentalign	ALIGN_UR
+	}
+	string txt_alc_dead	{
+		string		"_Dead:"
+		pos			"350 24"
+		size		"100 20"
+		font		"f_small"
+	}
+	string dead2	{
+		string		"0"
+		pos			"460 24"
+		size		"125 20"
+		font		"f_small"
+		contentalign	ALIGN_UR
+	}
+
 }
 
 window aliencont
@@ -144,49 +171,6 @@ window aliencont
 				disabled	true
 				onClick {
 					cmd "ui_aliencont_killall;"
-				}
-			}
-
-			// alien info window (top right)
-			panel raceinfo {
-				{
-					pos		"347 43"
-					size	"333 145"
-					border		"2"
-					bordercolor	"0.56 0.81 0.76 1"
-				}
-
-				string txt_race_info {
-					pos			"19 25"
-					size		"296 20"
-					font		"f_small_bold"
-					contentalign	ALIGN_CC
-				}
-				string txt_alc_alive {
-					string		"_Alive:"
-					pos			"50 49"
-					size		"100 20"
-					font		"f_small"
-				}
-				string alive {
-					string		"0"
-					pos			"160 49"
-					size		"125 20"
-					font		"f_small"
-					contentalign	ALIGN_UR
-				}
-				string txt_alc_dead	{
-					string		"_Dead:"
-					pos			"50 74"
-					size		"100 20"
-					font		"f_small"
-				}
-				string dead	{
-					string		"0"
-					pos			"160 74"
-					size		"125 20"
-					font		"f_small"
-					contentalign	ALIGN_UR
 				}
 			}
 
@@ -249,9 +233,9 @@ window aliencont
 			*node:root.base_container.mainBody.raceinfo.txt_race_info@string = "<cvar:ui_aliencont_select_temp>"
 			// Alive / dead counts
 			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer
-			*node:root.base_container.mainBody.raceinfo.alive@string = "<cvar:ui_aliencont_select_temp>"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.alive2@string = "<cvar:ui_aliencont_select_temp>"
 			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.dead@integer
-			*node:root.base_container.mainBody.raceinfo.dead@string = "<cvar:ui_aliencont_select_temp>"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.dead2@string = "<cvar:ui_aliencont_select_temp>"
 			// Update alien image
 			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.tech_image@string
 			*node:root.alc_alien_panel.ai@src = "<cvar:ui_aliencont_select_temp>"
@@ -287,6 +271,8 @@ window aliencont
 		*node:root.base_container.mainBody.ac.species.alien_<1>.tech_progress@current = <6>
 		*node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer = <7>
 		*node:root.base_container.mainBody.ac.species.alien_<1>.dead@integer = <8>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.alive2@string = <7>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.dead2@string = <8>
 		/* if there is any alive aliens, enable killing them */
 		if ( *node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer > 0 ) {
 			*node:root.base_container.mainBody.bt_alc_killaliens@disabled = false
