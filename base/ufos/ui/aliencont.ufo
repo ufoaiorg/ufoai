@@ -115,28 +115,16 @@ component cmpAlienContainment extends panel {
 		max			"100"
 		disabled	true
 	}
-	string txt_alc_alive {
-		string		"_Alive:"
-		pos			"350 10"
-		size		"100 20"
-		font		"f_small"
-	}
 	string alive2 {
 		string		"0"
-		pos			"460 10"
+		pos			"395 10"
 		size		"125 20"
 		font		"f_small"
 		contentalign	ALIGN_UR
 	}
-	string txt_alc_dead	{
-		string		"_Dead:"
-		pos			"350 35"
-		size		"100 20"
-		font		"f_small"
-	}
 	string dead2	{
 		string		"0"
-		pos			"460 35"
+		pos			"525 10"
 		size		"125 20"
 		font		"f_small"
 		contentalign	ALIGN_UR
@@ -162,10 +150,42 @@ window aliencont
 				}
 			}
 
+			// AlienContainment headings
+			panel list_header
+			{
+				{
+					pos			"10 35"
+					size		"713 32"
+				}
+				string race
+				{
+					string			"_Race"
+					pos				"15 5"
+					size			"80 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+				string condition1
+				{
+					string			"_Alive"
+					pos				"486 5"
+					size			"100 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+				string condition2
+				{
+					string			"_Dead"
+					pos				"606 5"
+					size			"100 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+			}
 			// kill living aliens button
 			button bt_alc_killaliens {
 				tooltip		"_Kill all aliens in this base"
-				pos			"10 35"
+				pos			"250 25"
 				size		"64 64"
 				icon		"icons/killalien"
 				disabled	true
@@ -181,12 +201,12 @@ window aliencont
 
 			panel ac {
 				{
-					pos 			"5 95"
+					pos 			"5 90"
 					size 			"705 625"
 				}
 
 				panel species {
-					pos 			"5 3"
+					pos 			"5 0"
 					size			"670 620"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	10
@@ -201,9 +221,9 @@ window aliencont
 				}
 				vscrollbar species_scroll {
 					image			"ui/scrollbar_v_green"
-					pos				"680 5"
+					pos				"680 2"
 					hidewhenunused	true
-					height			"615"
+					height			"620"
 					onChange		{
 						*node:parent.species@viewpos = <current>
 					}
@@ -231,7 +251,6 @@ window aliencont
 			/** @todo temp-cvar magic was required for a simple assignment as "<foo<bar>>" isn't supported */
 			// Alien name
 			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.name@string
-			*node:root.base_container.mainBody.raceinfo.txt_race_info@string = "<cvar:ui_aliencont_select_temp>"
 			// Alive / dead counts
 			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer
 			*node:root.base_container.mainBody.ac.species.alien_<1>.alive2@string = "<cvar:ui_aliencont_select_temp>"
@@ -242,9 +261,6 @@ window aliencont
 			*node:root.alc_alien_panel.ai@src = "<cvar:ui_aliencont_select_temp>"
 			delete *cvar:ui_aliencont_select_temp
 		} else {
-			*node:root.base_container.mainBody.raceinfo.txt_race_info@string = ""
-			*node:root.base_container.mainBody.raceinfo.alive@string = "0"
-			*node:root.base_container.mainBody.raceinfo.dead@string = "0"
 			*node:root.alc_alien_panel.ai@src = ""
 		}
 	}
