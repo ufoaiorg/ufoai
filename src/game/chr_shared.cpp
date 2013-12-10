@@ -179,6 +179,7 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
  * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp
+ * @param[in] templateId Specifies the template to be used for non-MP
  * @note mulitplayer is a special case here
  * @todo Add modifiers for difficulty setting here!
  */
