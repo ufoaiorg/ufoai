@@ -8,7 +8,7 @@
 component cmpAlienContainment extends panel {
 	{
 //		src		"ui/hosp_button_green"
-		size 			"705 78"
+		size 			"705 63"
 		border			"2"
 		bordercolor		"0.56 0.81 0.76 1"
 		bgcolor			"0.56 0.81 0.76 0.1"
@@ -47,12 +47,12 @@ component cmpAlienContainment extends panel {
 	}
 
 	button icon {
-		pos		"247 11"
+		pos		"317 11"
 		size	"40 40"
 		padding	0
 	}
 	zone kill_zone		{
-		pos			"247 11"
+		pos			"317 11"
 		size		"40 40"
 		tooltip		"_Kill this alien"
 		invis		true
@@ -71,7 +71,7 @@ component cmpAlienContainment extends panel {
 		}
 	}
 	zone autopsy_zone {
-		pos			"247  11"
+		pos			"317  11"
 		size		"40 40"
 		tooltip		"_Start autopsy"
 		invis		true
@@ -108,10 +108,17 @@ component cmpAlienContainment extends panel {
 		size		"220 16"
 		ghost		true
 	}
+	texture data_bg
+	{
+		pos			"15 35"
+		size		"257 16"
+		src			"ui/bar_bg"
+		ghost		true
+	}
 	bar tech_progress {
-		pos			"22 65"
-		size		"257 6"
-		color		"0.56 0.81 0.76 1"
+		pos			"15 35"
+		size		"257 16"
+		color		"0.56 0.81 0.76 0.5"
 		max			"100"
 		disabled	true
 	}
@@ -185,7 +192,7 @@ window aliencont
 			// kill living aliens button
 			button bt_alc_killaliens {
 				tooltip		"_Kill all aliens in this base"
-				pos			"250 25"
+				pos			"320 25"
 				size		"64 64"
 				icon		"icons/killalien"
 				disabled	true
