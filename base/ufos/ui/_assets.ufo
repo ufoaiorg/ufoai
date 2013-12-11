@@ -357,6 +357,7 @@ component StatBarWide extends StatBar
 	string label {size "100 15" }
     texture bg  {  size	"250 10"}
     bar valuebar { size "250 10" }
+    bar initbar { size "250 10" }
     string valuenum { size	"160 0" }
 }
 
