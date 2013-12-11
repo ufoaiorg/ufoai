@@ -526,6 +526,16 @@ component actor_info extends panel
             tag			"tag_head"
             scale		"1.0 1.0 1.0"
         }
+        model right_weapon
+        {
+            src			*cvar:mn_rweapon
+            tag			"tag_rweapon"
+        }
+        model left_weapon
+        {
+            src			*cvar:mn_lweapon
+            tag			"tag_lweapon"
+        }
     }
 
     string rank_lbl
