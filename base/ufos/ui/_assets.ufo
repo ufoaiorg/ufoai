@@ -171,6 +171,16 @@ component StatBar extends panel
 	{
 		pos			"0 14"
 		size		"180 10"
+		color		".1875 .65625 .164 0.8"
+		max			100
+		disabled	true
+		nohover		true
+	}
+	//shows initial values
+	bar initbar
+	{
+		pos			"0 14"
+		size		"180 10"
 		color		".1875 .65625 .164 1"
 		max			100
 		disabled	true
@@ -367,6 +377,7 @@ component abilities extends panel
         }
         string label { string "_Strength" }
         bar valuebar { current *cvar:mn_vpwr }
+        bar initbar { current *cvar:mn_vpwri }
         string valuenum { string *cvar:mn_tpwr }
     }
     StatBarWide speed
@@ -376,6 +387,7 @@ component abilities extends panel
         }
         string label { string "_Speed" }
         bar valuebar { current *cvar:mn_vspd }
+        bar initbar { current *cvar:mn_vspdi }
         string valuenum { string *cvar:mn_tspd }
     }
     StatBarWide accuracy
@@ -385,6 +397,7 @@ component abilities extends panel
         }
         string label { string "_Accuracy" }
         bar valuebar { current *cvar:mn_vacc }
+        bar initbar { current *cvar:mn_vacci }
         string valuenum { string *cvar:mn_tacc }
     }
     StatBarWide mind
@@ -394,6 +407,7 @@ component abilities extends panel
         }
         string label { string "_Mind" }
         bar valuebar { current *cvar:mn_vmnd }
+        bar initbar { current *cvar:mn_vmndi }
         string valuenum { string *cvar:mn_tmnd }
     }
 }
@@ -412,6 +426,7 @@ component skillbars extends panel
         }
         string label { string "_CQB" tooltip "_Close Quarters Battle" }
         bar valuebar { current *cvar:mn_vcls }
+        bar initbar { current *cvar:mn_vclsi }
         string valuenum { string *cvar:mn_tcls }
     }
     StatBarWide ass
@@ -421,6 +436,7 @@ component skillbars extends panel
         }
         string label { string "_Assault" }
         bar valuebar { current *cvar:mn_vass }
+        bar initbar { current *cvar:mn_vassi }
         string valuenum { string *cvar:mn_tass }
     }
     StatBarWide snp
@@ -430,6 +446,7 @@ component skillbars extends panel
         }
         string label { string "_Sniper" }
         bar valuebar { current *cvar:mn_vsnp }
+        bar initbar { current *cvar:mn_vsnpi }
         string valuenum { string *cvar:mn_tsnp }
     }
     StatBarWide exp
@@ -439,6 +456,7 @@ component skillbars extends panel
         }
         string label { string "_Explosives" }
         bar valuebar { current *cvar:mn_vexp }
+        bar initbar { current *cvar:mn_vexpi }
         string valuenum { string *cvar:mn_texp }
     }
 }
