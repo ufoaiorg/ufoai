@@ -70,7 +70,8 @@ static const vidmode_t vid_modes[] =
 	{ 1400, 1050, 20 }, /* samsung x20 */
 	{ 1440,  900, 21 },
 	{ 1024,  600, 22 }, /* EEE PC */
-	{  800,  480, 23 }  /* OpenPandora */
+	{  800,  480, 23 }, /* OpenPandora */
+	{ 1920, 1080, 24 }  /* 1080p */
 };
 
 /**
