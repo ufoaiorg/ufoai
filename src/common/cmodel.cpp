@@ -38,7 +38,7 @@ GAME RELATED TRACING USING ENTITIES
  * @param[in] model The model to calculate the bbox for
  * @param[out] box The bbox to fill
  */
-static void CM_CalculateBoundingBox (const cBspModel_t* model, AABB& box)
+static void CM_CalculateWidestBoundingBox (const cBspModel_t* model, AABB& box)
 {
 	/* Quickly calculate the bounds of this model to see if they can overlap. */
 	box.set(model->cbmBox);
@@ -58,7 +58,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, AABB& box)
 static bool CM_LineMissesModel (const Line& tLine, const cBspModel_t* model)
 {
 	AABB absbox;
-	CM_CalculateBoundingBox(model, absbox);
+	CM_CalculateWidestBoundingBox(model, absbox);
 	/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
 	if (!absbox.canBeHitBy(tLine))
 		return true;	/* impossible */
@@ -372,7 +372,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 
 		AABB modelBox;
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
-		CM_CalculateBoundingBox(model, modelBox);
+		CM_CalculateWidestBoundingBox(model, modelBox);
 
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
 		if (!lineBox.doesIntersect(modelBox))
