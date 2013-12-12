@@ -71,17 +71,15 @@ const char* CP_SecondConvert (int second)
   */
 void CP_DateConvertLong (const date_t* date, dateLong_t* dateLong)
 {
-	byte i;
-	int d;
-	size_t length = lengthof(monthLength);
-
 	/* Get the year */
 	dateLong->year = date->day / DAYS_PER_YEAR;
 
 	/* Get the days in the year. */
-	d = date->day % DAYS_PER_YEAR;
+	int d = date->day % DAYS_PER_YEAR;
 
 	/* Subtract days until no full month is left. */
+	byte i;
+	size_t length = lengthof(monthLength);
 	for (i = 0; i < length; i++) {
 		if (d < monthLength[i])
 			break;

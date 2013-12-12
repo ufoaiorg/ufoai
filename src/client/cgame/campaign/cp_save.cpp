@@ -127,9 +127,6 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
 bool SAV_GameLoad (const char* file, const char** error)
 {
 	char filename[MAX_OSPATH];
-	int i, clen;
-	xmlNode_t* topNode, *node;
-	saveFileHeader_t header;
 
 	/* open file */
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
@@ -142,12 +139,13 @@ bool SAV_GameLoad (const char* file, const char** error)
 		return false;
 	}
 
-	clen = FS_FileLength(&f);
+	int clen = FS_FileLength(&f);
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen + 1 /* for '\0' if not compressed */, cp_campaignPool);
 	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	Com_Printf("Loading savegame xml (size %d)\n", clen);
 
+	saveFileHeader_t header;
 	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */
 	header.compressed = LittleLong(header.compressed);
@@ -168,6 +166,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 			"...xml Size: %i, compressed? %c\n",
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 
+	xmlNode_t* topNode;
 	if (header.compressed) {
 		uLongf      len = header.xmlSize + 1 /* for '\0' */;
 		byte* const buf = Mem_PoolAllocTypeN(byte, len /* sic, old savegames contain one (garbage) byte more than the header says. */, cp_campaignPool);
@@ -202,7 +201,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 
 	/* doing a subsystem run */
 	GAME_ReloadMode();
-	node = cgi->XML_GetNode(topNode, SAVE_ROOTNODE);
+	xmlNode_t* node = cgi->XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		mxmlDelete(topNode);
@@ -211,7 +210,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 	}
 
 	Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsAmount);
-	for (i = 0; i < saveSubsystemsAmount; i++) {
+	for (int i = 0; i < saveSubsystemsAmount; i++) {
 		if (!saveSubsystems[i].load)
 			continue;
 		Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
@@ -247,18 +246,6 @@ bool SAV_GameLoad (const char* file, const char** error)
  */
 static bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
-	xmlNode_t* topNode, *node;
-	char savegame[MAX_OSPATH];
-	int res;
-	int requiredBufferLength;
-	uLongf bufLen;
-	saveFileHeader_t header;
-	char dummy[2];
-	int i;
-	dateLong_t date;
-	char message[30];
-	char timeStampBuffer[32];
-
 	if (!CP_IsRunning()) {
 		*error = _("No campaign active.");
 		Com_Printf("Error: No campaign active.\n");
@@ -271,11 +258,16 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 		return false;
 	}
 
+	char savegame[MAX_OSPATH];
+	dateLong_t date;
+	char message[30];
+	char timeStampBuffer[32];
+
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	cgi->GetRelativeSavePath(savegame, sizeof(savegame));
 	Q_strcat(savegame, sizeof(savegame), "%s.%s", filename, SAVEGAME_EXTENSION);
-	topNode = mxmlNewXML("1.0");
-	node = cgi->XML_AddNode(topNode, SAVE_ROOTNODE);
+	xmlNode_t* topNode = mxmlNewXML("1.0");
+	xmlNode_t* node = cgi->XML_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
 	cgi->XML_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
 	cgi->XML_AddString(node, SAVE_COMMENT, comment);
@@ -287,7 +279,7 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 	cgi->XML_AddString(node, SAVE_GAMEDATE, message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
-	for (i = 0; i < saveSubsystemsAmount; i++) {
+	for (int i = 0; i < saveSubsystemsAmount; i++) {
 		if (!saveSubsystems[i].save)
 			continue;
 		if (!saveSubsystems[i].save(node))
@@ -297,6 +289,7 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 	}
 
 	/* calculate the needed buffer size */
+	saveFileHeader_t header;
 	OBJZERO(header);
 	header.compressed = LittleLong(save_compressed->integer);
 	header.version = LittleLong(SAVE_FILE_VERSION);
@@ -308,7 +301,8 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	Q_strncpyz(header.realDate, timeStampBuffer, sizeof(header.realDate));
 
-	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
+	char dummy[2];
+	int requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 
 	header.xmlSize = LittleLong(requiredBufferLength);
 	byte* const buf = Mem_PoolAllocTypeN(byte, requiredBufferLength + 1, cp_campaignPool);
@@ -318,10 +312,11 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return false;
 	}
-	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	int res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
+	uLongf bufLen;
 	if (header.compressed)
 		bufLen = compressBound(requiredBufferLength);
 	else
