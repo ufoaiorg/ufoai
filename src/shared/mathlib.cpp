@@ -1037,19 +1037,6 @@ float AngleNormalize180 (float angle)
 }
 
 /**
- * @brief Calculates the center of a bounding box
- * @param[in] mins The lower end of the bounding box
- * @param[in] maxs The upper end of the bounding box
- * @param[out] center The target center vector calculated from @c mins and @c maxs
- * @note If the mins/maxs come from an AABB, use getCenter() instead
- */
-void VectorCenterFromMinsMaxs (const vec3_t mins, const vec3_t maxs, vec3_t center)
-{
-	VectorAdd(mins, maxs, center);
-	VectorScale(center, 0.5, center);
-}
-
-/**
  * @brief Calculates a bounding box from a center and a size
  * @param[in] center The center vector
  * @param[in] size The size vector to calculate the bbox
