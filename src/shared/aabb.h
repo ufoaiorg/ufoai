@@ -66,6 +66,12 @@ public:
 	inline void setMaxs (const vec3_t maxi) {
 		VectorCopy(maxi, maxs);
 	}
+	inline void setMins (int x, int y, int z) {
+		VectorSet(mins, x, y, z);
+	}
+	inline void setMaxs (int x, int y, int z) {
+		VectorSet(maxs, x, y, z);
+	}
 	/**
 	 * @brief Sets mins and maxs to their starting points before using addPoint
 	 */
