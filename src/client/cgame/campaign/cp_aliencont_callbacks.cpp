@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Alien containment menu init function.
- * @note Command to call this: aliencont_init
+ * @note Command to call this: ui_aliencont_init
  * @note Should be called whenever the alien containment menu gets active.
  */
 static void AC_Init_f (void)
