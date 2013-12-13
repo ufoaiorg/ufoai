@@ -183,16 +183,15 @@ tree_t* BuildTree (bspbrush_t* brushlist, const vec3_t mins, const vec3_t maxs)
 {
 	node_t* node;
 	tree_t* tree;
-	vec3_t blmins, blmaxs;
+	AABB blBox;
 
 	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
 
 	tree = AllocTree();
 
-	ClearBounds(blmins, blmaxs);
-	BrushlistCalcStats(brushlist, blmins, blmaxs);
-	tree->aabb.add(blmins);
-	tree->aabb.add(blmaxs);
+	blBox.clearBounds();
+	BrushlistCalcStats(brushlist, blBox);
+	tree->aabb.add(blBox);
 
 	c_nodes = 0;
 	c_nonvis = 0;

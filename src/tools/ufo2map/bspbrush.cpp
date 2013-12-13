@@ -773,7 +773,7 @@ void SplitBrushList (bspbrush_t* brushes, uint16_t planenum, bspbrush_t** front,
 /**
  * @brief Counts the faces and calculate the aabb
  */
-void BrushlistCalcStats (bspbrush_t* brushlist, vec3_t mins, vec3_t maxs)
+void BrushlistCalcStats (bspbrush_t* brushlist, AABB& blBox)
 {
 	bspbrush_t* b;
 	int c_faces = 0, c_nonvisfaces = 0, c_brushes = 0;
@@ -804,8 +804,8 @@ void BrushlistCalcStats (bspbrush_t* brushlist, vec3_t mins, vec3_t maxs)
 				c_nonvisfaces++;
 		}
 
-		AddPointToBounds(b->mins, mins, maxs);
-		AddPointToBounds(b->maxs, mins, maxs);
+		blBox.add(b->mins);
+		blBox.add(b->maxs);
 	}
 
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);
