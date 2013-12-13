@@ -1733,29 +1733,9 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
 	}
 }
 
-
-/**
- * @brief Create the bounding box for the entire move
- * @param[in] trLine Start and stop vectors of the trace
- * @param[in] objBox Bounding box used for tracing
- * @param[out] cBox The resulting box
- * @sa CL_Trace
- * @note Box is expanded by 1
- */
-static inline void CL_TraceBounds (const Line& trLine, const AABB& objBox, AABB& cBox)
-{
-	AABB endBox(objBox);		/* get the object */
-	endBox.shift(trLine.stop);	/* move it to end position */
-	cBox.set(objBox);
-	cBox.shift(trLine.start);	/* object in starting position */
-	cBox.add(endBox);			/* the whole box */
-	cBox.expand(1);
-}
-
 /**
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
- * @sa CL_TraceBounds
  * @sa CL_ClipMoveToLEs
  * @sa SV_Trace
  * @param[in] traceLine Start and end vector of the trace
@@ -1785,7 +1765,7 @@ trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le
 	clip.passle2 = passle2;
 
 	/* create the bounding box of the entire move */
-	CL_TraceBounds(traceLine, box, clip.clipBox);
+	clip.calcBounds();
 
 	/* clip to other solid entities */
 	CL_ClipMoveToLEs(&clip);

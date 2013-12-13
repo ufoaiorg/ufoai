@@ -273,22 +273,7 @@ class MoveClipSV : public MoveClip
 public:
 	trace_t trace;
 	const edict_t* passedict;
-	void calcBounds();
 };
-
-/**
- * @brief Create the bounding box for the entire move
- * @note Box is expanded by 1
- */
-void MoveClipSV::calcBounds ()
-{
-	AABB endBox(objBox);			/* get the moving object */
-	endBox.shift(moveLine.stop);	/* move it to end position */
-	clipBox.set(objBox);
-	clipBox.shift(moveLine.start);	/* object in starting position */
-	clipBox.add(endBox);			/* the whole box */
-	clipBox.expand(1);
-}
 
 
 /**

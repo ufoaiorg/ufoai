@@ -37,4 +37,20 @@ public:
 	AABB objBox;				/**< size of the moving object */
 	Line moveLine;				/**< the line along which the object moves */
 	int contentmask;			/**< search these in your trace - see MASK_* */
+
+	void calcBounds();
 };
+
+/**
+ * @brief Create the bounding box for the entire move
+ * @note Box is expanded by 1
+ */
+inline void MoveClip::calcBounds ()
+{
+	AABB endBox(objBox);			/* get the moving object */
+	endBox.shift(moveLine.stop);	/* move it to end position */
+	clipBox.set(objBox);
+	clipBox.shift(moveLine.start);	/* object in starting position */
+	clipBox.add(endBox);			/* the whole box */
+	clipBox.expand(1);
+}
