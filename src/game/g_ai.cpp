@@ -1497,6 +1497,7 @@ void AI_Run (void)
 /**
  * @brief Initializes the actor's stats like morals, strength and so on.
  * @param ent Actor to set the stats for.
+ * @param team Phalanx, civilian or alien ?
  */
 static void AI_SetStats (Edict* ent, int team)
 {
