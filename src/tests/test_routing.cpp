@@ -232,7 +232,7 @@ static void testMoveEntities (void)
 	G_CompleteRecalcRouting();
 
 	{
-		edict_t* ent = nullptr;
+		Edict* ent = nullptr;
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			/* Dead 2x2 unit will stop walking, too. */
 			if (ent->type == ET_SOLID) {

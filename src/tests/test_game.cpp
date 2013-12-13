@@ -70,7 +70,7 @@ static void testSpawnAndConnect (void)
 	byte* buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &buf);
-	edict_t* e = nullptr;
+	Edict* e = nullptr;
 	int cnt = 0;
 
 	CU_ASSERT_NOT_EQUAL_FATAL(size, -1);
@@ -147,7 +147,7 @@ static void testDoorTrigger (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* e = nullptr;
+		Edict* e = nullptr;
 		int cnt = 0;
 		int doors = 0;
 
@@ -197,7 +197,7 @@ static void testShooting (void)
 	}
 }
 
-static int GAMETEST_GetItemCount (const edict_t* ent, containerIndex_t container)
+static int GAMETEST_GetItemCount (const Edict* ent, containerIndex_t container)
 {
 	const Item* invlist = ent->getContainer(container);
 	int count = 0;
@@ -213,7 +213,7 @@ static void testVisFlags (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* ent;
+		Edict* ent;
 		int num;
 
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -244,9 +244,9 @@ static void testInventoryForDiedAlien (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* diedEnt;
-		edict_t* ent;
-		edict_t* floorItems;
+		Edict* diedEnt;
+		Edict* ent;
+		Edict* floorItems;
 		Item* invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -308,10 +308,10 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* diedEnt;
-		edict_t* diedEnt2;
-		edict_t* ent;
-		edict_t* floorItems;
+		Edict* diedEnt;
+		Edict* diedEnt2;
+		Edict* ent;
+		Edict* floorItems;
 		Item* invlist;
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -388,7 +388,7 @@ static void testInventoryTempContainerLinks (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		edict_t* ent;
+		Edict* ent;
 		int nr;
 
 		/* the other tests didn't call the server shutdown function to clean up */
