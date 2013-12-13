@@ -92,7 +92,6 @@ static bool B_IsCoherent (const base_t* base)
 {
 	int found[MAX_BUILDINGS];
 	linkedList_t* queue = nullptr;
-	linkedList_t* neighbours;
 	building_t* bldg = nullptr;
 
 	OBJZERO(found);
@@ -108,7 +107,7 @@ static bool B_IsCoherent (const base_t* base)
 		found[bldg->idx] = 1;
 		cgi->LIST_RemoveEntry(&queue, queue);
 
-		neighbours = B_GetNeighbours(bldg);
+		linkedList_t* neighbours = B_GetNeighbours(bldg);
 		LIST_Foreach(neighbours, building_t, bldg) {
 			if (found[bldg->idx] == 0) {
 				found[bldg->idx] = 1;
