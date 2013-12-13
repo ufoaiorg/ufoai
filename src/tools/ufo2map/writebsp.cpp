@@ -361,7 +361,6 @@ void BeginModel (int entityNum)
 	int start, end;
 	int j;
 	const entity_t* e;
-	vec3_t mins, maxs;
 
 	if (curTile->nummodels == MAX_MAP_MODELS)
 		Sys_Error("MAX_MAP_MODELS (%i)", curTile->nummodels);
@@ -376,19 +375,19 @@ void BeginModel (int entityNum)
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;
-	ClearBounds(mins, maxs);
+	AABB modBox;
+	modBox.clearBounds();
 
 	for (j = start; j < end; j++) {
 		const mapbrush_t* b = &mapbrushes[j];
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
 			continue;
-		AddPointToBounds(b->mbBox.mins, mins, maxs);
-		AddPointToBounds(b->mbBox.maxs, mins, maxs);
+		modBox.add(b->mbBox);
 	}
 
-	VectorCopy(mins, mod->mins);
-	VectorCopy(maxs, mod->maxs);
+	VectorCopy(modBox.mins, mod->mins);
+	VectorCopy(modBox.maxs, mod->maxs);
 }
 
 
