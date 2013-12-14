@@ -222,56 +222,6 @@ component EmployeeCount extends panel
 	}
 }
 
-// Alien in alien containment
-component AlienPanel extends panel
-{
-	{
-		size 			"425 64"
-		border			"2"
-		bordercolor		"0.56 0.81 0.76 1"
-		bgcolor			"0.56 0.81 0.76 0.1"
-		onClick			{ cmd "aliencont_click <node:this.alien_num@string>; select_alien <node:this.alien_num@string>;" }
-	}
-	button action
-	{
-		pos				"366 6"
-		size			"48 48"
-	}
-	string label
-	{
-		pos				"6 6"
-		size			"360 20"
-		color			"0.56 0.81 0.76 1"
-		font			"f_small_bold"
-		contentalign	ALIGN_CL
-		ghost			true
-	}
-	string status
-	{
-		pos				"6 26"
-		size			"360 20"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CL
-		ghost			true
-	}
-	texture data_bg
-	{
-		pos			"8 48"
-		size		"409 8"
-		src			"ui/bar_bg"
-		ghost		true
-	}
-	bar data_bar
-	{
-		pos			"8 48"
-		size		"408 8"
-		color		"0.56 0.81 0.76 1"
-		current		0
-		max			100
-		ghost		true
-	}
-	data alien_num { string "" }
-}
 
 // Research item (items researched in base)
 component ResearchItem extends panel
