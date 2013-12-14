@@ -84,6 +84,7 @@ void G_EventActorTurn (const Edict& ent)
 /**
  * @brief Announce the actor die event for the clients that are seeing the actor
  * @param[in] ent The actor that is dying
+ * @param[in] attacker Whether the actor was killed or just died
  */
 void G_EventActorDie (const Edict& ent, bool attacker)
 {
