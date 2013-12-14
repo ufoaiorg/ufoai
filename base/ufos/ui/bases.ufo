@@ -572,8 +572,9 @@ window bases
 
 	/*
 	 * @brief Show the production item closest to completion in the base overview (not used in default UI)
-	 * @param <1> name
-	 * @param <2> percent complete
+	 * @param <1> id
+	 * @param <2> name
+	 * @param <3> percent complete
 	 */
 	confunc clear_production
 	{
@@ -584,8 +585,8 @@ window bases
 	{
 		*node:parent.sections.production@size	= "298 80"
 		call *node:parent.sections.production.production_list@createChild("<1>", "ProgressBar")
-		*node:parent.sections.production.production_list.<1>.label@string = _<1>
-		*node:parent.sections.production.production_list.<1>.data_bar@current = <2>
+		*node:parent.sections.production.production_list.<1>.label@string = _<2>
+		*node:parent.sections.production.production_list.<1>.data_bar@current = <3>
 	}
 
 	/**

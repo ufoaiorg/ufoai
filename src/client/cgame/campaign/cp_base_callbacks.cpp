@@ -429,7 +429,7 @@ static void B_BaseInit_f (void)
 		const production_queue_t* queue = PR_GetProductionForBase(base);
 		if (queue->numItems > 0) {
 			const production_t* production = &queue->items[0];
-			cgi->UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
+			cgi->UI_ExecuteConfunc("show_production %i \"%s\" %3.0f", production->idx, PR_GetName(&production->data), PR_GetProgress(production) * 100);
 		}
 	}
 }
