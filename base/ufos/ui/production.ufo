@@ -3,105 +3,228 @@
 // ==================
 window production
 {
+/*	cmpBaseHeader baseHeader {
+	}
+*/
+	BaseContainerPanelV2 base_container
 	{
-		background	"background/base_bg"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// ==================
-	// tab
-	// ==================
-
-	panel tab_background {
-		pos		"24 96"
-		size	"986 56"
-		background	"ui/panel_tab"
-	}
-
-	tab market_navigation {
+		// Production panel
+		panel mainBody
 		{
-			pos		"47 106"
-			size	"938 39"
-			cvar	*cvar:mn_itemtype
-			onChange {
-				cmd "prod_type <cvar:mn_itemtype>;"
+			{ size "715 727" }
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Production"
+				}
+			}
+			// ==================
+			// tab
+			// ==================
+
+			tab market_navigation {
+				{
+					pos		"5 30"
+					size	"538 39"
+					cvar	*cvar:mn_itemtype
+					onChange {
+						cmd "prod_type <cvar:mn_itemtype>;"
+					}
+				}
+
+				option primary {
+					label	"_Primary"
+					value	"primary"
+				}
+				option secondary {
+					label	"_Secondary"
+					value	"secondary"
+				}
+				option description {
+					label	"_Heavy"
+					value	"heavy"
+				}
+				option misc {
+					label	"_Misc"
+					value	"misc"
+				}
+				option armour {
+					label	"_Armour"
+					value	"armour"
+				}
+			}
+			tab market_navigation2 {
+				{
+					pos		"5 70"
+					size	"538 39"
+					cvar	*cvar:mn_itemtype
+					onChange {
+						cmd "prod_type <cvar:mn_itemtype>;"
+					}
+				}
+				option craftitem {
+					label	"_Craft items"
+					value	"craftitem"
+				}
+				option aircraft {
+					label	"_Aircraft"
+					value	"aircraft"
+				}
+				option ugvitem {
+					label	"_UGV items"
+					value	"ugvitem"
+				}
+				option dummy {
+					label	"_Other"
+					value	"dummy"
+				}
+				option disassembly {
+					label	"_Disassembly"
+					value	"disassembly"
+				}
+			}
+
+			// ==================
+			// lists
+			// ==================
+
+			rows lines {
+				pos			"28 125"
+				size		"530 568"
+				color1		"0 0.08 0 1"
+				color2		"0 0.16 0 1"
+				lineheight	25
+			}
+
+			panel scroll_bg {
+				pos			"421 125"
+				size		"31 568"
+				bgcolor		"0 0 0 0.5"
+			}
+
+			panel verticalline {
+				pos		"451 125"
+				size	"4 565"
+				bgcolor	"0.03 0.42 0.03 1"
+			}
+
+			panel itemlist {
+				pos		"12 110"
+				size	"553 597"
+				background	"ui/panel_grey_green_large2"
+			}
+
+
+			// ==================
+			// list
+			// ==================
+			textlist prodlist
+			{
+				dataid		TEXT_PRODUCTION_LIST
+				color		"0 .78 0 1"
+				rows		"22"
+				lineheight	"25"
+				pos			"55 180"
+				size		"250 550"
+				longlines	LONGLINES_PRETTYCHOP
+				onClick		{
+					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					cmd "prodlist_click <lineselected>;"
+				}
+				onRClick	{
+					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					cmd "prodlist_rclick <lineselected>;"
+				}
+				onViewChange	{
+					*node:root.prodlist_scroll@fullsize = <fullsize>
+					*node:root.prodlist_scroll@current = <viewpos>
+					*node:root.prodlist_scroll@viewsize = <viewsize>
+					*node:root.prodlist_amount@viewpos = <viewpos>
+					*node:root.prodlist_queued@viewpos = <viewpos>
+				}
+			}
+
+			textlist prodlist_amount
+			{
+				dataid		TEXT_PRODUCTION_AMOUNT
+				color		"0 .78 0 1"
+				contentalign	ALIGN_CR
+				pos			"310 180"
+				rows		"22"
+				size		"60 550"
+				lineheight	"25"
+				onClick		{
+					*node:root.prodlist@lineselected = <node:this@lineselected>
+					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					cmd "prodlist_click <lineselected>;"
+				}
+				onRClick	{
+					*node:root.prodlist@lineselected = <node:this@lineselected>
+					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					cmd "prodlist_rclick <lineselected>;"
+				}
+				onViewChange	{
+					*node:root.prodlist_scroll@fullsize = <fullsize>
+					*node:root.prodlist_scroll@current = <viewpos>
+					*node:root.prodlist_scroll@viewsize = <viewsize>
+					*node:root.prodlist@viewpos = <viewpos>
+					*node:root.prodlist_queued@viewpos = <viewpos>
+				}
+			}
+
+			textlist prodlist_queued
+			{
+				dataid		TEXT_PRODUCTION_QUEUED
+				pos			"465 180"
+				size		"60 550"
+				color		"0 .78 0 1"
+				lineheight	"25"
+				rows		"22"
+				onClick		{
+					*node:root.prodlist@lineselected = <node:this@lineselected>
+					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+					cmd "prodlist_click <lineselected>;"
+				}
+				onRClick	{
+					*node:root.prodlist@lineselected = <node:this@lineselected>
+					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					cmd "prodlist_rclick <lineselected>;"
+				}
+				onViewChange	{
+					*node:root.prodlist_scroll@fullsize = <fullsize>
+					*node:root.prodlist_scroll@current = <viewpos>
+					*node:root.prodlist_scroll@viewsize = <viewsize>
+					*node:root.prodlist_amount@viewpos = <viewpos>
+					*node:root.prodlist@viewpos = <viewpos>
+				}
+			}
+
+			vscrollbar prodlist_scroll {
+				image		"ui/scrollbar_v_green"
+				pos			"428 180"
+				height		"556"
+				current		0
+				viewsize	30
+				fullsize	30
+				onChange	{
+					*node:root.prodlist@viewpos = <current>
+					*node:root.prodlist_amount@viewpos = <current>
+					*node:root.prodlist_queued@viewpos = <current>
+				}
+			}
+
+			confunc prod_selectline {
+				*node:root.prodlist@lineselected = <1>
+				*node:root.prodlist_amount@lineselected = <1>
+				*node:root.prodlist_queued@lineselected = <1>
 			}
 		}
-
-		option primary {
-			label	"_Primary"
-			value	"primary"
-		}
-		option secondary {
-			label	"_Secondary"
-			value	"secondary"
-		}
-		option description {
-			label	"_Heavy"
-			value	"heavy"
-		}
-		option misc {
-			label	"_Misc"
-			value	"misc"
-		}
-		option armour {
-			label	"_Armour"
-			value	"armour"
-		}
-		option craftitem {
-			label	"_Craft items"
-			value	"craftitem"
-		}
-		option aircraft {
-			label	"_Aircraft"
-			value	"aircraft"
-		}
-		option ugvitem {
-			label	"_UGV items"
-			value	"ugvitem"
-		}
-		option dummy {
-			label	"_Other"
-			value	"dummy"
-		}
-		option disassembly {
-			label	"_Disassembly"
-			value	"disassembly"
-		}
 	}
-
-	// ==================
-	// lists
-	// ==================
-
-	rows lines {
-		pos			"28 175"
-		size		"530 568"
-		color1		"0 0.08 0 1"
-		color2		"0 0.16 0 1"
-		lineheight	25
-	}
-
-	panel scroll_bg {
-		pos			"421 175"
-		size		"31 568"
-		bgcolor		"0 0 0 0.5"
-	}
-
-	panel verticalline {
-		pos		"451 175"
-		size	"4 565"
-		bgcolor	"0.03 0.42 0.03 1"
-	}
-
-	panel itemlist {
-		pos		"12 160"
-		size	"553 597"
-		background	"ui/panel_grey_green_large2"
-	}
-
 	// ==================
 	// info panel
 	// ==================
@@ -223,112 +346,6 @@ window production
 			}
 		}
 
-	}
-
-	// ==================
-	// list
-	// ==================
-	textlist prodlist
-	{
-		dataid		TEXT_PRODUCTION_LIST
-		color		"0 .78 0 1"
-		rows		"22"
-		lineheight	"25"
-		pos			"55 180"
-		size		"250 550"
-		longlines	LONGLINES_PRETTYCHOP
-		onClick		{
-			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
-			cmd "prodlist_click <lineselected>;"
-		}
-		onRClick	{
-			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
-			cmd "prodlist_rclick <lineselected>;"
-		}
-		onViewChange	{
-			*node:root.prodlist_scroll@fullsize = <fullsize>
-			*node:root.prodlist_scroll@current = <viewpos>
-			*node:root.prodlist_scroll@viewsize = <viewsize>
-			*node:root.prodlist_amount@viewpos = <viewpos>
-			*node:root.prodlist_queued@viewpos = <viewpos>
-		}
-	}
-
-	textlist prodlist_amount
-	{
-		dataid		TEXT_PRODUCTION_AMOUNT
-		color		"0 .78 0 1"
-		contentalign	ALIGN_CR
-		pos			"310 180"
-		rows		"22"
-		size		"60 550"
-		lineheight	"25"
-		onClick		{
-			*node:root.prodlist@lineselected = <node:this@lineselected>
-			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
-			cmd "prodlist_click <lineselected>;"
-		}
-		onRClick	{
-			*node:root.prodlist@lineselected = <node:this@lineselected>
-			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
-			cmd "prodlist_rclick <lineselected>;"
-		}
-		onViewChange	{
-			*node:root.prodlist_scroll@fullsize = <fullsize>
-			*node:root.prodlist_scroll@current = <viewpos>
-			*node:root.prodlist_scroll@viewsize = <viewsize>
-			*node:root.prodlist@viewpos = <viewpos>
-			*node:root.prodlist_queued@viewpos = <viewpos>
-		}
-	}
-
-	textlist prodlist_queued
-	{
-		dataid		TEXT_PRODUCTION_QUEUED
-		pos			"465 180"
-		size		"60 550"
-		color		"0 .78 0 1"
-		lineheight	"25"
-		rows		"22"
-		onClick		{
-			*node:root.prodlist@lineselected = <node:this@lineselected>
-			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
-			cmd "prodlist_click <lineselected>;"
-		}
-		onRClick	{
-			*node:root.prodlist@lineselected = <node:this@lineselected>
-			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
-			cmd "prodlist_rclick <lineselected>;"
-		}
-		onViewChange	{
-			*node:root.prodlist_scroll@fullsize = <fullsize>
-			*node:root.prodlist_scroll@current = <viewpos>
-			*node:root.prodlist_scroll@viewsize = <viewsize>
-			*node:root.prodlist_amount@viewpos = <viewpos>
-			*node:root.prodlist@viewpos = <viewpos>
-		}
-	}
-
-	vscrollbar prodlist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"428 180"
-		height		"556"
-		current		0
-		viewsize	30
-		fullsize	30
-		onChange	{
-			*node:root.prodlist@viewpos = <current>
-			*node:root.prodlist_amount@viewpos = <current>
-			*node:root.prodlist_queued@viewpos = <current>
-		}
-	}
-
-	confunc prod_selectline {
-		*node:root.prodlist@lineselected = <1>
-		*node:root.prodlist_amount@lineselected = <1>
-		*node:root.prodlist_queued@lineselected = <1>
 	}
 	// ==================
 	// item
@@ -623,4 +640,13 @@ window production
 		// so on can also change the button state in the base view
 		cmd "base_init;"
 	}
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+	//	onClick			{ cmd "ui_pop; ui_pop;" }				// doesn't work, takes you to campaign exit confirm
+		onClick			{ cmd "ui_pop; ui_close bases;" }		// works
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 }
