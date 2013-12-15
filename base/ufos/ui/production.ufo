@@ -127,25 +127,25 @@ window production
 				color		"0 .78 0 1"
 				rows		"22"
 				lineheight	"25"
-				pos			"55 180"
+				pos			"55 130"
 				size		"250 550"
 				longlines	LONGLINES_PRETTYCHOP
 				onClick		{
-					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
-					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
 					cmd "prodlist_click <lineselected>;"
 				}
 				onRClick	{
-					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
-					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
 					cmd "prodlist_rclick <lineselected>;"
 				}
 				onViewChange	{
-					*node:root.prodlist_scroll@fullsize = <fullsize>
-					*node:root.prodlist_scroll@current = <viewpos>
-					*node:root.prodlist_scroll@viewsize = <viewsize>
-					*node:root.prodlist_amount@viewpos = <viewpos>
-					*node:root.prodlist_queued@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
+					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
+					*node:root.base_container.mainBody.prodlist_amount@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist_queued@viewpos = <viewpos>
 				}
 			}
 
@@ -154,74 +154,74 @@ window production
 				dataid		TEXT_PRODUCTION_AMOUNT
 				color		"0 .78 0 1"
 				contentalign	ALIGN_CR
-				pos			"310 180"
+				pos			"310 130"
 				rows		"22"
 				size		"60 550"
 				lineheight	"25"
 				onClick		{
-					*node:root.prodlist@lineselected = <node:this@lineselected>
-					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
 					cmd "prodlist_click <lineselected>;"
 				}
 				onRClick	{
-					*node:root.prodlist@lineselected = <node:this@lineselected>
-					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
 					cmd "prodlist_rclick <lineselected>;"
 				}
 				onViewChange	{
-					*node:root.prodlist_scroll@fullsize = <fullsize>
-					*node:root.prodlist_scroll@current = <viewpos>
-					*node:root.prodlist_scroll@viewsize = <viewsize>
-					*node:root.prodlist@viewpos = <viewpos>
-					*node:root.prodlist_queued@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
+					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
+					*node:root.base_container.mainBody.prodlist@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist_queued@viewpos = <viewpos>
 				}
 			}
 
 			textlist prodlist_queued
 			{
 				dataid		TEXT_PRODUCTION_QUEUED
-				pos			"465 180"
+				pos			"465 130"
 				size		"60 550"
 				color		"0 .78 0 1"
 				lineheight	"25"
 				rows		"22"
 				onClick		{
-					*node:root.prodlist@lineselected = <node:this@lineselected>
-					*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
 					cmd "prodlist_click <lineselected>;"
 				}
 				onRClick	{
-					*node:root.prodlist@lineselected = <node:this@lineselected>
-					*node:root.prodlist_queued@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
+					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
 					cmd "prodlist_rclick <lineselected>;"
 				}
 				onViewChange	{
-					*node:root.prodlist_scroll@fullsize = <fullsize>
-					*node:root.prodlist_scroll@current = <viewpos>
-					*node:root.prodlist_scroll@viewsize = <viewsize>
-					*node:root.prodlist_amount@viewpos = <viewpos>
-					*node:root.prodlist@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
+					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
+					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
+					*node:root.base_container.mainBody.prodlist_amount@viewpos = <viewpos>
+					*node:root.base_container.mainBody.prodlist@viewpos = <viewpos>
 				}
 			}
 
 			vscrollbar prodlist_scroll {
 				image		"ui/scrollbar_v_green"
-				pos			"428 180"
+				pos			"428 130"
 				height		"556"
 				current		0
 				viewsize	30
 				fullsize	30
 				onChange	{
-					*node:root.prodlist@viewpos = <current>
-					*node:root.prodlist_amount@viewpos = <current>
-					*node:root.prodlist_queued@viewpos = <current>
+					*node:root.base_container.mainBody.prodlist@viewpos = <current>
+					*node:root.base_container.mainBody.prodlist_amount@viewpos = <current>
+					*node:root.base_container.mainBody.prodlist_queued@viewpos = <current>
 				}
 			}
 
 			confunc prod_selectline {
-				*node:root.prodlist@lineselected = <1>
-				*node:root.prodlist_amount@lineselected = <1>
-				*node:root.prodlist_queued@lineselected = <1>
+				*node:root.base_container.mainBody.prodlist@lineselected = <1>
+				*node:root.base_container.mainBody.prodlist_amount@lineselected = <1>
+				*node:root.base_container.mainBody.prodlist_queued@lineselected = <1>
 			}
 		}
 	}
@@ -230,7 +230,7 @@ window production
 	// ==================
 	panel basedescription {
 		{
-			pos		"588 160"
+			pos		"620 160"
 			size	"410 135"
 			background	"ui/panel_grey_green"
 		}
