@@ -353,19 +353,110 @@ window production
 
 	panel itempanel {
 		{
-			pos		"610 310"
-			size	"420 447"
-			background	"ui/panel_grey_green_large"
+			pos		"690 310"
+			size	"330 447"
 		}
 
 		item itemmodel
 		{
 			src			*cvar:mn_item
-			pos			"17 17"
-			size		"386 152"
+			pos			"0 17"
+			size		"325 152"
 			angles		"0 180 90"
 			omega		"0 10 0"
 			autoscale	true
+		}
+
+		string prod_amount {
+			string		*cvar:mn_production_amount
+			pos			"5 190"
+			size		"40 20"
+			color		"0 .78 0 1"
+			font		"f_small"
+			contentalign	ALIGN_UR
+		}
+
+		string label_1 {
+			string		"x1"
+			pos			"61 190"
+			size		"24 20"
+			color		"0 .78 0 1"
+			font		"f_small"
+			contentalign	ALIGN_UR
+		}
+
+		string label_10 {
+			string		"x10"
+			pos			"99 190"
+			size		"36 20"
+			color		"0 .78 0 1"
+			font		"f_small"
+			contentalign	ALIGN_UR
+		}
+
+		spinner_green prod_change {
+			tooltip		"_Change the production amount"
+			pos			"85 190"
+			min			1
+			current		*cvar:mn_production_amount
+			max			1000
+			delta		1
+			onChange	{ cmd "prod_change <lastdiff>;" }
+		}
+
+		spinner_green prod_change_10 {
+			tooltip		"_Change the production amount"
+			pos			"135 190"
+			min			1
+			current		*cvar:mn_production_amount
+			max			1000
+			delta		10
+			onChange	{ cmd "prod_change <lastdiff>;" }
+		}
+
+		button prod_new
+		{
+			string		"_Start this production"
+			background		"ui/button_green_small"
+			pos			"40 160"
+			size		"250 32"
+			font		"f_small"
+			color		"0 .78 0 1"
+			onClick		{ cmd "prod_inc;" }
+		}
+
+		button prod_stop
+		{
+			tooltip		"_Stop production"
+			icon		"icons/bordered_cross"
+			pos			"175 190"
+			size		"16 16"
+			padding		0
+			onClick		{ cmd "prod_stop;" }
+		}
+
+		button prod_up
+		{
+			tooltip		"_Increase priority"
+			icon		"icons/arrow_top"
+			pos			"245 190"
+			size		"16 16"
+			padding		"0"
+			onClick		{ cmd "prod_up;" }
+			onWheelUp	{ cmd "prod_up;" }
+			onWheelDown	{ cmd "prod_down;" }
+		}
+
+		button prod_down
+		{
+			tooltip		"_Decrease priority"
+			icon		"icons/arrow_bottom"
+			pos			"275 185"
+			size		"16 16"
+			padding		0
+			onClick		{ cmd "prod_down;" }
+			onWheelUp	{ cmd "prod_up;" }
+			onWheelDown	{ cmd "prod_down;" }
 		}
 
 		// ==================
@@ -375,8 +466,8 @@ window production
 
 		panel requirement {
 			{
-				pos		"30 300"
-				size	"346 120"
+				pos		"5 300"
+				size	"325 120"
 			}
 
 			string label {
@@ -416,8 +507,8 @@ window production
 
 		panel proddesc {
 			{
-				pos			"30 218"
-				size		"346 80"
+				pos			"5 218"
+				size		"325 80"
 				layout		LAYOUT_BORDER
 			}
 
@@ -452,117 +543,20 @@ window production
 		}
 	}
 
-	// ==================
-	// info
-	// @todo move it into the item panel
-	// ==================
-
-	string prod_amount {
-		string		*cvar:mn_production_amount
-		pos			"730 505"
-		size		"40 20"
-		color		"0 .78 0 1"
-		font		"f_small"
-		contentalign	ALIGN_UR
-	}
-
-	string label_1 {
-		string		"x1"
-		pos			"786 505"
-		size		"24 20"
-		color		"0 .78 0 1"
-		font		"f_small"
-		contentalign	ALIGN_UR
-	}
-
-	string label_10 {
-		string		"x10"
-		pos			"824 505"
-		size		"36 20"
-		color		"0 .78 0 1"
-		font		"f_small"
-		contentalign	ALIGN_UR
-	}
-
-	spinner_green prod_change {
-		tooltip		"_Change the production amount"
-		pos			"810 505"
-		min			1
-		current		*cvar:mn_production_amount
-		max			1000
-		delta		1
-		onChange	{ cmd "prod_change <lastdiff>;" }
-	}
-
-	spinner_green prod_change_10 {
-		tooltip		"_Change the production amount"
-		pos			"860 505"
-		min			1
-		current		*cvar:mn_production_amount
-		max			1000
-		delta		10
-		onChange	{ cmd "prod_change <lastdiff>;" }
-	}
-
-	button prod_new
-	{
-		string		"_Start this production"
-		background		"ui/button_green_small"
-		pos			"670 480"
-		size		"250 32"
-		font		"f_small"
-		color		"0 .78 0 1"
-		onClick		{ cmd "prod_inc;" }
-	}
-
-	button prod_stop
-	{
-		tooltip		"_Stop production"
-		icon		"icons/bordered_cross"
-		pos			"900 505"
-		size		"16 16"
-		padding		0
-		onClick		{ cmd "prod_stop;" }
-	}
-
-	button prod_up
-	{
-		tooltip		"_Increase priority"
-		icon		"icons/arrow_top"
-		pos			"615 400"
-		size		"16 16"
-		padding		"0"
-		onClick		{ cmd "prod_up;" }
-		onWheelUp	{ cmd "prod_up;" }
-		onWheelDown	{ cmd "prod_down;" }
-	}
-
-	button prod_down
-	{
-		tooltip		"_Decrease priority"
-		icon		"icons/arrow_bottom"
-		pos			"615 420"
-		size		"16 16"
-		padding		0
-		onClick		{ cmd "prod_down;" }
-		onWheelUp	{ cmd "prod_up;" }
-		onWheelDown	{ cmd "prod_down;" }
-	}
-
 	/**
 	 * @brief nothing is selected
 	 */
 	confunc prod_nothingselected
 	{
-		*node:root.prod_stop@invis = true
-		*node:root.prod_down@invis = true
-		*node:root.prod_up@invis = true
-		*node:root.prod_change@invis = true
-		*node:root.prod_change_10@invis = true
-		*node:root.prod_new@invis = true
-		*node:root.prod_amount@invis = true
-		*node:root.label_1@invis = true
-		*node:root.label_10@invis = true
+		*node:root.itempanel.prod_stop@invis = true
+		*node:root.itempanel.prod_down@invis = true
+		*node:root.itempanel.prod_up@invis = true
+		*node:root.itempanel.prod_change@invis = true
+		*node:root.itempanel.prod_change_10@invis = true
+		*node:root.itempanel.prod_new@invis = true
+		*node:root.itempanel.prod_amount@invis = true
+		*node:root.itempanel.label_1@invis = true
+		*node:root.itempanel.label_10@invis = true
 	}
 
 	/**
@@ -570,15 +564,15 @@ window production
 	 */
 	confunc prod_availableselected
 	{
-		*node:root.prod_stop@invis = true
-		*node:root.prod_down@invis = true
-		*node:root.prod_up@invis = true
-		*node:root.prod_change@invis = true
-		*node:root.prod_change_10@invis = true
-		*node:root.prod_amount@invis = true
-		*node:root.prod_new@invis = false
-		*node:root.label_1@invis = true
-		*node:root.label_10@invis = true
+		*node:root.itempanel.prod_stop@invis = true
+		*node:root.itempanel.prod_down@invis = true
+		*node:root.itempanel.prod_up@invis = true
+		*node:root.itempanel.prod_change@invis = true
+		*node:root.itempanel.prod_change_10@invis = true
+		*node:root.itempanel.prod_amount@invis = true
+		*node:root.itempanel.prod_new@invis = false
+		*node:root.itempanel.label_1@invis = true
+		*node:root.itempanel.label_10@invis = true
 	}
 
 	/**
@@ -586,15 +580,15 @@ window production
 	 */
 	confunc prod_taskselected
 	{
-		*node:root.prod_stop@invis = false
-		*node:root.prod_down@invis = false
-		*node:root.prod_up@invis = false
-		*node:root.prod_change@invis = false
-		*node:root.prod_change_10@invis = false
-		*node:root.prod_amount@invis = false
-		*node:root.prod_new@invis = true
-		*node:root.label_1@invis = false
-		*node:root.label_10@invis = false
+		*node:root.itempanel.prod_stop@invis = false
+		*node:root.itempanel.prod_down@invis = false
+		*node:root.itempanel.prod_up@invis = false
+		*node:root.itempanel.prod_change@invis = false
+		*node:root.itempanel.prod_change_10@invis = false
+		*node:root.itempanel.prod_amount@invis = false
+		*node:root.itempanel.prod_new@invis = true
+		*node:root.itempanel.label_1@invis = false
+		*node:root.itempanel.label_10@invis = false
 	}
 
 
@@ -618,11 +612,11 @@ window production
 	confunc amountsetter {
 		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "disable" ) {
-			*node:root.prod_change@disabled = true
-			*node:root.prod_change_10@disabled = true
+			*node:root.itempanel.prod_change@disabled = true
+			*node:root.itempanel.prod_change_10@disabled = true
 		} else {
-			*node:root.prod_change@disabled = false
-			*node:root.prod_change_10@disabled = false
+			*node:root.itempanel.prod_change@disabled = false
+			*node:root.itempanel.prod_change_10@disabled = false
 		}
 		delete *cvar:tmp
 	}
