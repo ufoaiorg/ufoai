@@ -728,6 +728,7 @@ void Key_WriteBindings (const char* filename)
 		Com_Printf("Wrote %s\n", filename);
 	else
 		/* error in writing the keys.cfg - remove the file again */
+		FS_CloseFile(&f);
 		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
 }
 
