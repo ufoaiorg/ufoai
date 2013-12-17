@@ -49,17 +49,17 @@ component cmp_installation_type extends panel {
 	}
 }
 
-window popup_newinstallation_type
+window popup_newinstallation_type extends popupUI2
 {
 	{
 		pos			"264 262"
 		size		"485 247"
-		dragbutton	true
 		closebutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_New installation"
 	}
-
+	string title {
+		string		"_New installation"
+		width		"485"
+	}
 	string type_label
 	{
 		string		"_Type"
@@ -126,31 +126,34 @@ window popup_newinstallation_type
 
 	}
 
-	cmpPopupButton bt_close {
+	MainMenu2Btn bt_close {
 		string		"_Close"
-		pos			"287 188"
+		pos			"305 217"
 		onClick		{
 			cmd "ui_pop;"
 		}
+		width		"180"
 	}
 
 	func onWindowOpened {
 		cmd "ui_fill_installationtypes;"
 	}
+	fuzzyScreen overlay { }
 }
 
 
 // Popup new base
-window popup_newbase {
+window popup_newbase extends popupUI2 {
 	{
 		pos			"264 262"
-		size		"400 210"
+		size		"400 180"
 		dragbutton	true
 		modal		true
-		background	"ui/popup_alpha_tile"
-		string		"_New base"
 	}
-
+	string title {
+		string		"_New base"
+		width		"400"
+	}
 	string name_label {
 		string		"_Name:"
 		pos			"25 50"
@@ -161,11 +164,12 @@ window popup_newbase {
 		string		*cvar:mn_base_title
 		pos			"25 75"
 		size		"330 25"
+		background	"ui/textentry"
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 0.9"
 		font		"f_big"
-		background	"ui/button_green_verysmall"
 		contentalign	ALIGN_CL
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
+		padding 	8
 	}
 
 	button bt_nameedit {
@@ -191,20 +195,23 @@ window popup_newbase {
 		size		"100 25"
 	}
 
-	cmpPopupButton bt_build {
+	MainMenuBtn bt_build {
 		string		"_Build"
 		tooltip		"_Build the base"
-		pos			"21 150"
+		pos			"28 150"
 		onClick	{
 			cmd "ui_pop;mn_base_build;"
 		}
+		width		"180"
 	}
-	cmpCancelButton bt_cancel {
-		pos			"205 150"
+	MainMenuCancelBtn bt_cancel {
+		pos			"220 150"
 		onClick	{
 			cmd "ui_pop;mn_mapaction_reset;"
 		}
+		width "180"
 	}
+	fuzzyScreen overlay { }
 }
 
 // Installation popup windows
@@ -213,7 +220,7 @@ component cmp_ufoyard_entry extends panel {
 	{
 		size		"250 40"
 		border		0
-		bordercolor	"0 0.5 0 1"
+		bordercolor	"1 1 1 1"
 
 		onClick {
 			cmd "ufolist_select <node:this.id@integer> <node:this.id@string>;"
@@ -249,7 +256,7 @@ component cmp_ufotransfer_entry extends panel {
 	{
 		size		"420 40"
 		border		0
-		bordercolor	"0 0.5 0 1"
+		bordercolor	"1 1 1 1"
 
 		onClick {
 			cmd "ufotransferlist_selectyard <node:this.id@integer>;"
@@ -307,7 +314,7 @@ component cmp_ufotransfer_entry extends panel {
 		pos			"280 47"
 		size		"110 26"
 		contentalign	ALIGN_CC
-		bordercolor	"0 .5 0 1"
+		bordercolor	"0.56 0.81 0.76 1"
 		border		1
 
 		onMouseEnter {
@@ -317,7 +324,7 @@ component cmp_ufotransfer_entry extends panel {
 		}
 		onMouseLeave {
 			if ( *node:this@disabled != true ) {
-				*node:this@bordercolor = "0 .5 0 1"
+				*node:this@bordercolor = "0.56 0.81 0.76 1"
 			}
 		}
 		onClick {
@@ -330,7 +337,7 @@ component cmp_ufotransfer_ufoentry extends panel {
 	{
 		size		"40 40"
 		border		0
-		bordercolor	"0 0.5 0 1"
+		bordercolor	"1 1 1 1"
 	}
 
 	model ufomodel {
@@ -342,16 +349,18 @@ component cmp_ufotransfer_ufoentry extends panel {
 	}
 }
 
-window popup_ufoyards {
+window popup_ufoyards extends popupUI2 {
 	{
-		string		"_UFO Yards"
-		background		"ui/popup_alpha_tile"
 		pos			"64 250"
 		size		"768 370"
 		dragbutton	true
 		closebutton	true
 	}
 
+	string title {
+		string		"_UFO Yards"
+		width		"768"
+	}
 	data selected {
 		integer		0
 		string		""
@@ -390,18 +399,18 @@ window popup_ufoyards {
 	// this should only be a vertical line...
 	bar separator {
 		pos			"293 92"
-		size		"4 255"
+		size		"3 255"
 		readonly	true
 		nohover		true
-		color		"0 0.4 0 1"
+		color		"0.56 0.81 0.76 1"
 		max			1
 		current		1
 	}
 
 	tab ufoyardtabs {
 		{
-			pos		"300 50"
-			size	"450 35"
+			pos		"295 50"
+			size	"470 35"
 			cvar	*cvar:ufoyard_tab
 
 			onChange {
@@ -488,8 +497,11 @@ window popup_ufoyards {
 			string		*cvar:mn_installation_title
 			pos			"150 35"
 			size		"265 25"
-			border		3
-			bordercolor	"0 0.5 0 1"
+			background	"ui/textentry"
+			color		"1 1 1 0.5"
+			selectcolor	"1 1 1 0.9"
+			contentalign	ALIGN_CL
+			padding 	8
 
 			onChange {
 				cmd "mn_installation_changename;"
@@ -564,11 +576,11 @@ window popup_ufoyards {
 			size		"20 20"
 			current		0
 		}
-		cmpPopupButton destroy {
+		MainMenuExitBtn destroy {
 			string		"_Destroy"
 			tooltip		"_Destroy installation"
 			pos			"170 215"
-			size		"200 32"
+			size		"180 30"
 			font		"f_menu"
 
 			onClick {
@@ -646,11 +658,11 @@ window popup_ufoyards {
 			contentalign	ALIGN_UR
 		}
 
-		cmpPopupButton transfer {
+		MainMenuBtn transfer {
 			string		"_Transfer"
 			tooltip		"_Transfer UFO"
 			pos			"170 180"
-			size		"200 32"
+			size		"180 30"
 			font		"f_menu"
 
 			onClick {
@@ -664,11 +676,11 @@ window popup_ufoyards {
 			size		"20 20"
 			current		0
 		}
-		cmpPopupButton destroy {
+		MainMenuExitBtn destroy {
 			string		"_Destroy"
 			tooltip		"_Destroy UFO"
 			pos			"170 215"
-			size		"200 32"
+			size		"180 30"
 			font		"f_menu"
 
 			onClick {
@@ -787,7 +799,7 @@ window popup_ufoyards {
 		if ( *node:parent.list.ufo<1>.id@string eq "transferring" ) {
 			*node:parent.list.ufo<1>@bgcolor = ".3 .3 .3 .3"
 		} elif ( *node:parent.list.ufo<1>.id@string eq "disassembling" ) {
-			*node:parent.list.ufo<1>@bgcolor = "0 .3 0 .3"
+			*node:parent.list.ufo<1>@bgcolor = "0.56 0.81 0.7 0.2"
 		}
 
 		*node:parent.list.ufo<1>.id@integer = <1>
@@ -914,4 +926,5 @@ window popup_ufoyards {
 	}
 	func onWindowClosed {
 	}
+	fuzzyScreen overlay { }
 }
