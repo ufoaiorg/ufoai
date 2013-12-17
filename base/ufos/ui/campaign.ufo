@@ -47,7 +47,7 @@ component LoadSlot extends panel
 	{
 		size		"34 34"
 		icon 		"icons/delete"
-		tooltip		"_Delete this team"
+		tooltip		"_Delete this savegame"
 	}
 }
 
@@ -338,10 +338,11 @@ window campaign extends cgame_download
 		//*node:root.cmp_sel.cmp_loads.save<1>.delete@onClick = {}
 		if ( "<5>" ne "" ) {
 			*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = false
+			*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = false
 		} else {
 			*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = true
+			*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = true
 		}
-		*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = true
 
 		// The save part
 		//call *node:root.cmp_sel.cmp_saves@createChild("save<1>", "cmpSaveSlotPanel")
@@ -376,7 +377,7 @@ window campaign extends cgame_download
 		}
 		//*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {}
 		*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = false
-		*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = true
+		*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = false
 	}
 
 	/**
@@ -830,15 +831,15 @@ window popup_exit_confirmation extends popupUI2
 	}
 	MainMenuExitBtn btn_back
 	{
-		size 	"200 30"
-		pos 	"312 226"
+		size 	"180 30"
+		pos 	"332 226"
 		string	"_QUIT"
 		onClick	{ cmd "ui_pop;game_exit;" }
 	}
 	MainMenu2Btn bt_dontquit
 	{
-		size 	"200 30"
-		pos		"100 226"
+		size 	"180 30"
+		pos		"140 226"
 		string	"_BACK"
 		onClick	{ cmd "ui_pop;" }
 	}
