@@ -225,6 +225,41 @@ window production
 			}
 		}
 	}
+
+	// Basinfo count
+	BuildingSpace storage
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_storage" }
+		string label { string	"_Storage" }
+		button alert { invis true }
+	}
+	BuildingSpace intercept
+	{
+		{ pos "739 25" }
+
+		button smlicon { icon	"icons/building_intercept" }
+		string label { string	"_Interceptor Hangar" }
+		button alert { invis true }
+	}
+	BuildingSpace dropship
+	{
+		{ pos "739 50" }
+
+		button smlicon { icon	"icons/building_hangar" }
+		string label { string	"_Dropship Hangar" }
+		button alert { invis true }
+	}
+	BuildingSpace workshop
+	{
+		{ pos "739 75" }
+
+		button smlicon { icon	"icons/building_workshop" }
+		string label { string	"_Workshop" }
+		button alert { invis true }
+	}
+
 	// ==================
 	// info panel
 	// ==================
@@ -418,7 +453,7 @@ window production
 		{
 			string		"_Start this production"
 			background		"ui/button_green_small"
-			pos			"40 160"
+			pos			"20 160"
 			size		"250 32"
 			font		"f_small"
 			color		"0 .78 0 1"
