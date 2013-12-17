@@ -188,22 +188,24 @@ window draw extends lost
 // ==================================
 // POPUP FOR UFO RECOVERY (Base/sell)
 // ==================================
-window uforecovery
+window uforecovery extends popupUI2
 {
 	{
 		pos			"100 150"
-		size		"700 435"
-		dragbutton	true
+		size		"680 420"
 		modal		true
 		preventtypingescape true		// we can't use ESC
-		background		"ui/popup_alpha_tile"
+	}
+
+	string title {
 		string		"_UFO recovery"
+		width		"700"
 	}
 
 	tab uforecovery_navigation {
 		{
-			pos		"17 125"
-			size	"667 38"
+			pos		"0 125"
+			size	"700 38"
 			cvar	*cvar:mn_uforecovery_tab
 			onChange {
 				cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
@@ -239,8 +241,8 @@ window uforecovery
 		rows lines {
 			pos			"25 50"
 			size		"590 128"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
+			color1		"0 0 0 0.6"
+			color2		"0 0 0 0.8"
 			lineheight	16
 		}
 
@@ -314,12 +316,13 @@ window uforecovery
 			}
 		}
 
-		cmpPopupButton bt_basesel
+		MainMenuBtn bt_basesel
 		{
 			string		"_Recover"
 			tooltip		"_Begin UFO recovery process"
-			pos			"242 210"
+			pos			"480 225"
 			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.ur_ufoyards@lineselected>; ui_pop;" }
+			width		"180"
 		}
 	}
 
@@ -340,7 +343,6 @@ window uforecovery
 			pos			"25 30"
 			size		"250 20"
 			font		"f_small_bold"
-			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort nation;" }
 		}
 
@@ -351,7 +353,6 @@ window uforecovery
 			pos			"275 30"
 			size		"125 20"
 			font		"f_small_bold"
-			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort price;" }
 		}
 
@@ -362,15 +363,14 @@ window uforecovery
 			pos			"450 30"
 			size		"175 20"
 			font		"f_small_bold"
-			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort happiness;" }
 		}
 
 		rows lines {
 			pos			"25 50"
 			size		"590 128"
-			color1		"0 0.08 0 1"
-			color2		"0 0.16 0 1"
+			color1		"0 0 0 0.6"
+			color2		"0 0 0 0.9"
 			lineheight	16
 		}
 
@@ -419,12 +419,13 @@ window uforecovery
 			size		"360 20"
 		}
 
-		cmpPopupButton bt_natsel
+		MainMenuBtn bt_natsel
 		{
 			string		"_Sell"
 			tooltip		"_Begin UFO sell process"
-			pos			"242 210"
+			pos			"480 225"
 			onClick		{ cmd "cp_uforecovery_sell_start; ui_pop;" }
+			width		"180"
 		}
 	}
 
@@ -486,4 +487,5 @@ window uforecovery
 		delete *cvar:mn_uforecovery_tab
 		delete *cvar:mn_uforecovery_actualufo
 	}
+	fuzzyScreen overlay { }
 }
