@@ -353,15 +353,15 @@ window production
 
 	panel itempanel {
 		{
-			pos		"690 310"
-			size	"330 447"
+			pos		"730 310"
+			size	"290 447"
 		}
 
 		item itemmodel
 		{
 			src			*cvar:mn_item
 			pos			"0 17"
-			size		"325 152"
+			size		"290 152"
 			angles		"0 180 90"
 			omega		"0 10 0"
 			autoscale	true
@@ -466,13 +466,13 @@ window production
 
 		panel requirement {
 			{
-				pos		"5 300"
-				size	"325 120"
+				pos		"0 300"
+				size	"290 120"
 			}
 
 			string label {
 				pos "5 5"
-				size "336 20"
+				size "280 20"
 				font	"f_verysmall"
 				string "_Requirements"
 			}
@@ -482,7 +482,7 @@ window production
 				cvar		*cvar:ui_prreq
 				dataid		OPTION_PRODUCTION_REQUIREMENTS
 				pos			"5 26"
-				size		"320 92"
+				size		"280 92"
 				font		"f_verysmall"
 				color		"0 .78 0 1"
 				selectcolor	"0 .78 0 1"
@@ -495,7 +495,7 @@ window production
 
 			vscrollbar prodreq_scroll {
 				image		"ui/scrollbar_v_green"
-				pos			"326 26"
+				pos			"286 26"
 				height		"92"
 				current		0
 				viewsize	6
@@ -508,16 +508,17 @@ window production
 		panel proddesc {
 			{
 				pos			"5 218"
-				size		"325 80"
+				size		"285 80"
 				layout		LAYOUT_BORDER
 			}
 
 			text description
 			{
+				font		"f_verysmall"
 				dataid		TEXT_PRODUCTION_INFO
 				align		LAYOUTALIGN_MIDDLE
 				lineheight	20
-				tabwidth	260
+				tabwidth	210
 				rows		4
 				onChange
 				{
