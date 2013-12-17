@@ -366,6 +366,19 @@ window production
 		}
 
 		confunc ui_prod_update_caps {
+			*node:root.storage.data_bar@current = <1>
+			*node:root.storage.data_bar@max = <2>
+			*node:root.storage.data@string = <1>/<2>
+			*node:root.intercept.data_bar@current = <3>
+			*node:root.intercept.data_bar@max = <4>
+			*node:root.intercept.data@string = <3>/<4>
+			*node:root.dropship.data_bar@current = <5>
+			*node:root.dropship.data_bar@max = <6>
+			*node:root.dropship.data@string = <5>/<6>
+			*node:root.workshop.data_bar@current = <7>
+			*node:root.workshop.data_bar@max = <8>
+			*node:root.workshop.data@string = <7>/<8>
+
 			*node:parent.storage_free@string = "<1>"
 			*node:parent.storage_all@string = "<2>"
 			*node:parent.interceptor_free@string = "<3>"
