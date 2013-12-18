@@ -71,6 +71,8 @@ void INV_ItemDescription (const objDef_t* od)
 	int count;
 
 	currentDisplayedObject = od;
+	Cvar_Set("mn_firemodename", "");
+	Cvar_Set("mn_linkname", "");
 
 	if (!od) {	/* If nothing selected return */
 		Cvar_Set("mn_itemname", "");
