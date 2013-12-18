@@ -139,7 +139,7 @@ static const char* UP_AircraftStatToName (int stat)
 	case AIR_STATS_SHIELD:
 		return _("Armour");
 	case AIR_STATS_ECM:
-		return _("ECM");
+		return _("Evasion");
 	case AIR_STATS_DAMAGE:
 		return _("Aircraft damage");
 	case AIR_STATS_ACCURACY:
