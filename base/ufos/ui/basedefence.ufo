@@ -1,19 +1,21 @@
-window basedefence extends objectinfo
+window basedefence extends popupUI2
 {
 	{
 		pos			"100 150"
 		size		"824 435"
-		dragbutton	true
 		closebutton	true
 		modal		true
-		background		"ui/popup_alpha_tile"
+	}
+
+	string title {
 		string		"_Equip Defence Weapons"
+		width		"824"
 	}
 
 	tab defencetype {
 		{
-			pos		"17 75"
-			size	"791 38"
+			pos		"0 75"
+			size	"824 38"
 			cvar	*cvar:mn_bdef_type
 			onChange {
 				if ( *cvar:mn_bdef_type ne "info" ) {
@@ -114,8 +116,8 @@ window basedefence extends objectinfo
 			rows slotback {
 				pos			"5 30"
 				size		"400 80"
-				color1		"0 0.08 0 1"
-				color2		"0 0.16 0 1"
+				color1		"0 0 0 0.6"
+				color2		"0 0 0 0.9"
 				lineheight	20
 			}
 
@@ -154,24 +156,22 @@ window basedefence extends objectinfo
 			}
 		}
 
-		button bt_add
+		MainMenu2Btn bt_add
 		{
 			icon		"icons/varrow_swap"
 			string		"_Add"
 			tooltip		"_Equip the selected slot with this weapon"
-			background		"ui/button_green_small"
 			pos			"10 130"
 			size		"200 32"
 			onClick		{
 				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
 			}
 		}
-		button bt_remove
+		MainMenuBtn bt_remove
 		{
 			icon		"icons/varrow_top_bottom"
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
-			background		"ui/button_green_small"
 			pos			"230 130"
 			size		"200 32"
 			onClick		{
@@ -195,8 +195,8 @@ window basedefence extends objectinfo
 			rows storeback {
 				pos			"5 30"
 				size		"400 80"
-				color1		"0 0.08 0 1"
-				color2		"0 0.16 0 1"
+				color1		"0 0 0 0.6"
+				color2		"0 0 0 0.9"
 				lineheight	20
 			}
 			textlist storelist
@@ -235,7 +235,8 @@ window basedefence extends objectinfo
 			{
 				pos		"455 5"
 				size	"334 285"
-				background	"ui/panel_green"
+				border	3
+				bordercolor	"0.56 0.81 0.76 1"
 			}
 
 			string description_title
@@ -294,7 +295,7 @@ window basedefence extends objectinfo
 	panel infopanel {
 		{
 			pos			"15 115"
-			size		"794 305"
+			size		"809 320"
 		}
 
 		string infopanel_title
@@ -317,9 +318,9 @@ window basedefence extends objectinfo
 			string		*cvar:mn_installation_title
 			pos			"310 90"
 			size		"256 34"
-			background		"ui/button_green_verysmall"
-			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
+			background		"ui/textentry"
+			color		"1 1 1 0.5"
+			selectcolor	"1 1 1 0.9"
 			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
@@ -368,25 +369,21 @@ window basedefence extends objectinfo
 			onChange	{ cmd "basedef_autofire <current>;" }
 		}
 
-		button destroy
+		MainMenuExitBtn destroy
 		{
 			string		"_Destroy"
 			tooltip		"_Destroy installation"
-			color		"0 0.5 0 1"
 			font		"f_menu"
-			background		"ui/button_green_small"
-			pos			"50 250"
-			size		"200 32"
+			pos			"437 290"
+			size		"180 30"
 			onClick		{ cmd "ui_pop; mn_installation_destroy;" }
 		}
-		button close
+		MainMenu2Btn close
 		{
 			string		"_Close"
-			color		"0 0.5 0 1"
 			font		"f_menu"
-			background		"ui/button_green_small"
-			pos			"549 250"
-			size		"200 32"
+			pos			"629 290"
+			size		"180 30"
 			onClick		{ cmd "ui_pop;" }
 		}
 
@@ -432,4 +429,5 @@ window basedefence extends objectinfo
 		cmd "basedef_updatemenu info;"
 		call *node:root.equippanel.update_buttons
 	}
+	fuzzyScreen overlay { }
 }
