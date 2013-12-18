@@ -124,7 +124,7 @@ window production
 			textlist prodlist
 			{
 				dataid		TEXT_PRODUCTION_LIST
-				color		"0 .78 0 1"
+				color		"0.56 0.81 0.76 1"
 				rows		"22"
 				lineheight	"25"
 				pos			"55 130"
@@ -152,7 +152,7 @@ window production
 			textlist prodlist_amount
 			{
 				dataid		TEXT_PRODUCTION_AMOUNT
-				color		"0 .78 0 1"
+				color		"0.56 0.81 0.76 1"
 				contentalign	ALIGN_CR
 				pos			"310 130"
 				rows		"22"
@@ -182,7 +182,7 @@ window production
 				dataid		TEXT_PRODUCTION_QUEUED
 				pos			"465 130"
 				size		"60 550"
-				color		"0 .78 0 1"
+				color		"0.56 0.81 0.76 1"
 				lineheight	"25"
 				rows		"22"
 				onClick		{
@@ -419,7 +419,7 @@ window production
 			string		*cvar:mn_production_amount
 			pos			"5 190"
 			size		"40 20"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			font		"f_small"
 			contentalign	ALIGN_UR
 		}
@@ -428,7 +428,7 @@ window production
 			string		"x1"
 			pos			"61 190"
 			size		"24 20"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			font		"f_small"
 			contentalign	ALIGN_UR
 		}
@@ -437,7 +437,7 @@ window production
 			string		"x10"
 			pos			"99 190"
 			size		"36 20"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			font		"f_small"
 			contentalign	ALIGN_UR
 		}
@@ -469,7 +469,7 @@ window production
 			pos			"20 160"
 			size		"250 32"
 			font		"f_small"
-			color		"0 .78 0 1"
+			color		"0.56 0.81 0.76 1"
 			onClick		{ cmd "prod_inc;" }
 		}
 
@@ -532,8 +532,8 @@ window production
 				pos			"5 26"
 				size		"280 92"
 				font		"f_verysmall"
-				color		"0 .78 0 1"
-				selectcolor	"0 .78 0 1"
+				color		"0.56 0.81 0.76 1"
+				selectcolor	"0.56 0.81 0.76 1"
 				onViewChange	{
 					*node:parent.prodreq_scroll@fullsize = <fullsize>
 					*node:parent.prodreq_scroll@current = <viewpos>
@@ -566,7 +566,7 @@ window production
 				dataid		TEXT_PRODUCTION_INFO
 				align		LAYOUTALIGN_MIDDLE
 				lineheight	20
-				tabwidth	210
+				tabwidth	200
 				rows		4
 				onChange
 				{
