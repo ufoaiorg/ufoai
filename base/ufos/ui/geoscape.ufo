@@ -358,7 +358,7 @@ window geoscape
 			fullsize	8
 			hidewhenunused	true
 			onChange {
-				*node:parent.description@viewpos = <current>
+				*node:parent.description@viewpos	 = <current>
 			}
 		}
 
@@ -514,7 +514,7 @@ window geoscape
 
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
-            color	    "0.56 0.81 0.76 1"
+            		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			pos			"41 595"
 			flash		true
@@ -531,12 +531,12 @@ window geoscape
 
 			string		"_Mailclient"
 			tooltip		"_INBOX"
-            color	    "0.56 0.81 0.76 1"
+            		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			background		"ui/button_geoscape"
+			background	"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push mailclient;" }
 		}
@@ -547,10 +547,10 @@ window geoscape
 			tooltip		"_Organisation statistics"
 			pos			"41 630"
 			size		"175 34"
-            color	    "0.56 0.81 0.76 1"
+            		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			background		"ui/button_geoscape"
+			background	"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push stats;" }
 		}
@@ -560,10 +560,10 @@ window geoscape
 			string		"_UFOpaedia"
 			pos			"41 665"
 			size		"175 34"
-            color	    "0.56 0.81 0.76 1"
+            		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			background		"ui/button_geoscape"
+			background	"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push ufopedia;" }
 		}
@@ -571,12 +571,12 @@ window geoscape
 		button bt_installation
 		{
 			string		"_Create installation"
-            color	    "0.56 0.81 0.76 1"
+            		color		"0.56 0.81 0.76 1"
 			pos			"41 700"
 			size		"175 34"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			background		"ui/button_geoscape"
+			background	"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push popup_newinstallation_type;" }
 		}
@@ -607,7 +607,7 @@ window geoscape
 
 		button bt_show_xvi
 		{
-			visiblewhen "*cvar:mn_xvimap == 1"
+			visiblewhen	"*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
 			background	"buttons/blue3"
 			icon		"icons/geo_xvi"
@@ -676,7 +676,7 @@ window geoscape
 				fullsize	50
 				hidewhenunused true
 				onChange	{
-					*node:parent.message@viewpos = <current>
+					*node:parent.message@viewpos	 = <current>
 				}
 			}
 
@@ -741,17 +741,17 @@ window geoscape
 // ======================
 // POPUP INTERCEPT READY
 // ======================
-window popup_intercept_ready
+window popup_intercept_ready extends popupUI2
 {
 	{
 		pos			"264 262"
-		size		"496 247"
-		dragbutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Ready"
+		size		"496 218"
 		modal		true
 	}
-
+	string title {
+		string 		"_Ready"
+		width		"496"
+	}
 	string craftname_label {
 		string		"_Aircraft:"
 		pos			"26 58"
@@ -785,27 +785,30 @@ window popup_intercept_ready
 		*node:parent.missionname@string = <2>
 	}
 
-	cmpCancelButton bt_cancel {
-		pos			"259 188"
+	MainMenuCancelBtn bt_cancel {
+		width		"180"
+		pos			"124 188"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 
 	/**
 	 * @todo move the button on middle if cp_mission_autogo_available==0
 	 */
-	cmpPopupButton bt_go
+	MainMenuBtn bt_go
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		pos			"66 145"
+		pos			"316 188"
+		width 		"180"
 		onClick		{ cmd "game_go;" }
 	}
 
-	cmpPopupButton bt_auto_go
+	MainMenuBtn bt_auto_go
 	{
 		string		"_Auto mission"
 		tooltip		"_Automatically finish mission"
-		pos			"259 145"
+		pos			"316 153"
+		width		"180"
 		onClick		{ cmd "cp_mission_autogo;" }
 	}
 
@@ -824,27 +827,25 @@ window popup_intercept_ready
 	{
 		cmd "cp_missionauto_check;popup_intercept_ready_update"
 	}
+
+	fuzzyScreen overlay { }
 }
 
 // ==================
 // POPUP NEW INSTALLATION
 // ==================
-window popup_newinstallation
+window popup_newinstallation extends popupUI2
 {
 	{
 		pos			"256 284"
 		size		"512 300"
-		dragbutton	true
 		closebutton	true
 		modal		true
-		background		"ui/popup_alpha_tile"
 	}
 
 	string title
 	{
-		pos			"26 18"
-		size		"420 25"
-		font		"f_big"
+		width		"512"
 	}
 
 	string name_label
@@ -860,8 +861,12 @@ window popup_newinstallation
 		pos			"150 60"
 		size		"330 25"
 		border		3
-		bordercolor	"0 0.5 0 1"
 		font		"f_normal"
+		background	"ui/textentry"
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 0.9"
+		contentalign	ALIGN_CL
+		padding		8
 	}
 
 	string cost_label
@@ -893,7 +898,7 @@ window popup_newinstallation
 	{
 		dataid		TEXT_BUILDING_INFO
 		pos			"100 140"
-		size		"350 80"
+		size		"350 118"
 		lineheight	20
 		onViewChange {
 			*node:parent.description_scroll@fullsize = <fullsize>
@@ -905,24 +910,26 @@ window popup_newinstallation
 	{
 		image		"ui/scrollbar_v_green"
 		pos			"470 140"
-		height		"80"
+		height		"110"
 		current		0
 		viewsize	4
 		fullsize	4
 		hidewhenunused	true
-		onChange	{ *node:parent.description@viewpos = <current> }
+		onChange	{ *node:parent.description@viewpos	 = <current> }
 	}
 
-	cmpCancelButton bt_cancel
+	MainMenuCancelBtn bt_cancel
 	{
-		pos			"294 240"
+		pos			"140 270"
 		onClick		{ cmd "ui_pop;" }
+		width		"180"
 	}
-	cmpPopupButton bt_build
+	MainMenuBtn bt_build
 	{
 		string		"_Build"
-		pos			"109 240"
+		pos			"332 270"
 		onClick		{ cmd "ui_pop; mn_installation_build *cvar:mn_installation_type;" }
+		width		"180"
 	}
 
 	func onWindowClosed
@@ -933,18 +940,21 @@ window popup_newinstallation
 	func onWindowOpened
 	{
 	}
+
+	fuzzyScreen overlay { }
 }
 
-window popup_installationstatus
+window popup_installationstatus extends popupUI2
 {
 	{
 		pos			"264 262"
-		size		"496 220"
-		dragbutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Installation Status"
+		size		"496 180"
 	}
 
+	string title {
+		string 		"_Installation Status"
+		width		"496"
+	}
 	string name_label
 	{
 		string		"_Name:"
@@ -958,9 +968,13 @@ window popup_installationstatus
 		pos			"150 60"
 		size		"310 25"
 		border		3
-		bordercolor	"0 0.5 0 1"
 		font		"f_normal"
 		onChange	{ cmd "mn_installation_changename;" }
+		background	"ui/textentry"
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 0.9"
+		contentalign	ALIGN_CL
+		padding		8
 	}
 
 	string buildtime_label
@@ -976,27 +990,30 @@ window popup_installationstatus
 		size		"150 20"
 	}
 
-	cmpPopupButton bt_back
+	MainMenu2Btn bt_back
 	{
 		string		"_Close"
-		pos			"295 150"
+		pos			"316 150"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
+		width		"180"
 	}
-	cmpPopupButton bt_enter
+	MainMenuBtn bt_enter
 	{
 		string		"_Manage"
 		tooltip		"_Manage installation"
-		pos			"295 110"
+		pos			"316 115"
 		invis		true
 		onClick		{ cmd "ui_pop; ui_push *cvar:mn_installation_type;" }
+		width		"180"
 	}
 
-	cmpPopupButton bt_destroy
+	MainMenuExitBtn bt_destroy
 	{
 		string		"_Destroy"
 		tooltip		"_Destroy installation"
-		pos			"25 150"
+		pos			"124 150"
 		onClick		{ cmd "ui_pop; mn_installation_destroy;" }
+		width		"180"
 	}
 
 	func onWindowOpened
@@ -1021,27 +1038,30 @@ window popup_installationstatus
 			*node:root.bt_destroy@invis = false
 		}
 	}
+	fuzzyScreen overlay { }
 }
 
 // ====================
 // POPUP INTERCEPT BASE
 // ====================
 
-window popup_intercept
+window popup_intercept extends popupUI2
 {
 
 	{
 		pos			"124 192"
-		size		"548 459"
-		dragbutton	true
-		background		"ui/popup_alpha_tile"
+		size		"526 432"
+	}
+
+	string title {
 		string		"_Anti-UFO defence"
+		width		"526"
 	}
 
 	tab defence_navigation {
 		{
-			pos		"18 55"
-			size	"515 40"
+			pos		"0 55"
+			size	"548 40"
 			cvar	*cvar:mn_defencetab
 			onChange {
 				cmd "popup_intercept_update;"
@@ -1114,7 +1134,7 @@ window popup_intercept
 			fullsize	19
 			hidewhenunused	true
 			onChange {
-				*node:parent.ships@viewpos = <current>
+				*node:parent.ships@viewpos	 = <current>
 			}
 		}
 	}
@@ -1159,15 +1179,16 @@ window popup_intercept
 			fullsize	19
 			hidewhenunused	true
 			onChange {
-				*node:parent.bases@viewpos = <current>
+				*node:parent.bases@viewpos	 = <current>
 			}
 		}
 	}
 
-	cmpCancelButton bt_cancel
+	MainMenuCancelBtn bt_cancel
 	{
 		pos			"346 402"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
+		width		"180"
 	}
 
 	confunc popup_intercept_update {
@@ -1189,23 +1210,26 @@ window popup_intercept
 	func onWindowClosed {
 		cmd "del mn_defencetab;"
 	}
+	fuzzyScreen overlay { }
 }
 
 // ===================
 // POPUP MISSION
 // ===================
 
-window popup_mission
+window popup_mission extends popupUI2
 {
 
 	{
 		pos			"124 192"
-		size		"777 402"
-		dragbutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Select aircraft"
+		size		"746 368"
 	}
 
+	string title
+	{
+		string		"_Select aircraft"
+		width		"746"
+	}
 	string name_label
 	{
 		string		"_Name:"
@@ -1248,26 +1272,30 @@ window popup_mission
 		onRClick	{ cmd "ships_rclick <lineselected>;" }
 	}
 
-	cmpCancelButton bt_cancel
+	MainMenuCancelBtn bt_cancel
 	{
 		pos			"566 338"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
+		width		"180"
 	}
+	fuzzyScreen overlay { }
 }
 
 // =====================
 // POPUP MULTI SELECTION
 // =====================
 
-window popup_multi_selection
+window popup_multi_selection extends popupUI2
 {
 	{
 		pos			"264 262"
-		size		"496 247"
-		dragbutton	true
+		size		"496 218"
 		modal		true
-		background		"ui/popup_alpha_tile"
+	}
+
+	string title {
 		string		"_Select item"
+		width		"496"
 	}
 
 	string type_label
@@ -1309,17 +1337,19 @@ window popup_multi_selection
 		current		0
 		viewsize	8
 		fullsize	8
-		hidewhenunused true
+		hidewhenunused	true
 		onChange	{
-			*node:root.multi_select@viewpos = <current>
+			*node:root.multi_select@viewpos	 = <current>
 		}
 	}
 
-	cmpCancelButton bt_cancel
+	MainMenuCancelBtn bt_cancel
 	{
-		pos			"266 188"
+		pos			"316 188"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
+		width		"180"
 	}
+	fuzzyScreen overlay { }
 }
 
 
@@ -1327,16 +1357,18 @@ window popup_multi_selection
 // POPUP AIRCRAFT
 // =====================
 
-window popup_aircraft
+window popup_aircraft extends popupUI2
 {
 	{
 		pos			"264 262"
-		size		"496 247"
+		size		"496 221"
 		dragbutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Aircraft"
 	}
 
+	string title {
+		string		"_Aircraft"
+		width		"496"
+	}
 	string action_label
 	{
 		string		"_Action:"
@@ -1378,15 +1410,17 @@ window popup_aircraft
 		fullsize	8
 		hidewhenunused true
 		onChange	{
-			*node:root.popup_aircraft_action@viewpos = <current>
+			*node:root.popup_aircraft_action@viewpos	 = <current>
 		}
 	}
 
-	cmpCancelButton	bt_cancel
+	MainMenuCancelBtn bt_cancel
 	{
-		pos			"297 191"
+		pos			"316 191"
 		onClick		{ cmd "ui_pop;" }
+		width		"180"
 	}
+	fuzzyScreen overlay { }
 }
 
 // ==================
@@ -1395,16 +1429,18 @@ window popup_aircraft
 
 // TODO: Use this menu or remove it
 
-window geoscape_options {
+window geoscape_options extends popupUI2
+{
 	{
 		pos			"256 256"
 		size		"350 300"
 		dragbutton	true
 		closebutton	true
-		background		"ui/popup_alpha_tile"
-		string		"_Geoscape options"
 	}
-
+	string title {
+		string		"_Geoscape options"
+		width		"350"
+	}
 	panel option1 {
 		{
 			pos			"30 100"
@@ -1500,4 +1536,5 @@ window geoscape_options {
 	func onWindowOpened {
 		*cvar:cl_geoscape_overlay_fooooo = 0
 	}
+	fuzzyScreen overlay { }
 }
