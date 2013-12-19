@@ -1324,7 +1324,7 @@ static const value_t aircraft_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-/** @brief Valid radar definition values for an airtcraft from script files. */
+/** @brief Valid radar definition values for an aircraft from script files. */
 static const value_t aircraft_radar_vals[] = {
 	{"range", V_INT, offsetof(aircraft_t, radar.range), MEMBER_SIZEOF(aircraft_t, radar.range)},
 	{"trackingrange", V_INT, offsetof(aircraft_t, radar.trackingRange), MEMBER_SIZEOF(aircraft_t, radar.trackingRange)},
