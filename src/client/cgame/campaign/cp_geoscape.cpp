@@ -704,13 +704,13 @@ static void GEO_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t cen
 	PerpendicularVector(rotationAxis, centerPos);
 	RotatePointAroundVector(initialVector, rotationAxis, centerPos, angle);
 
+	bool draw = false;
+	bool oldDraw = false;
 	const mapExtraData_t& data = UI_MAPEXTRADATACONST(node);
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (int i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		int xCircle, yCircle;
 		vec2_t posCircle;
-		bool draw = false;
-		bool oldDraw = false;
 		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
