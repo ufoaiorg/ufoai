@@ -75,15 +75,17 @@ component cmp_soldierentry extends panel {
 	}
 }
 
-window popup_assembleteam
+window popup_assembleteam extends popupUI2
 {
 	{
 		pos				"0 256"
 		size			"1024 445"
-		dragbutton		true
 		closebutton		true
 		modal			true				// we can't click out
-		background			"ui/popup_alpha_tile"
+	}
+
+	string title {
+		width			"1024"
 		string			"_Assemble Team"
 	}
 
@@ -93,8 +95,8 @@ window popup_assembleteam
 	rows soldierlist_lines {
 		pos				"35 66"
 		size			"310 299"
-		color1			"0 0.08 0 1"
-		color2			"0 0.16 0 1"
+		color1			"0 0 0 0.6"
+		color2			"0 0 0 0.9"
 		lineheight		25
 	}
 	panel soldierlist {
@@ -126,7 +128,8 @@ window popup_assembleteam
 		{
 			pos		"375 70"
 			size	"179 300"
-			background	"ui/panel_green"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
 		}
 
 		image	rank_img {
@@ -213,7 +216,8 @@ window popup_assembleteam
 			{
 				pos		"0 33"
 				size	"440 267"
-				background	"ui/panel_green_tab"
+				border	2
+				bordercolor	"0.56 0.81 0.76 1"
 			}
 			cmpNamedBar pwr {
 				{
@@ -336,7 +340,7 @@ window popup_assembleteam
 		}
 	}
 
-	cmpPopupButton equip {
+	MainMenuBtn equip {
 		string		"_Equip"
 		pos			"350 380"
 		disabled	true
@@ -344,15 +348,17 @@ window popup_assembleteam
 		onClick {
 			cmd "ui_push equipment;"
 		}
+		width "180"
 	}
 
-	cmpPopupButton close {
+	MainMenu2Btn close {
 		string		"_Close"
 		pos			"550 380"
 
 		onClick {
 			cmd "ui_pop;"
 		}
+		width 		"180"
 	}
 
 	confunc soldierlist_clear {
@@ -398,21 +404,22 @@ window popup_assembleteam
 	func onWindowClosed {
 		cmd "popbaseattack_upd;"
 	}
+	fuzzyScreen overlay { }
 }
 
 
-window popup_baseattack
+window popup_baseattack extends popupUI2
 {
 	{
 		pos			"264 256"
 		size		"496 230"
-		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-		background		"ui/popup_alpha_tile"
-		string		"_Base is under attack"
 	}
-
+	string title {
+		string		"_Base is under attack"
+		width		"496"
+	}
 	text description {
 		pos			"26 65"
 		dataid		TEXT_POPUP
@@ -464,7 +471,7 @@ window popup_baseattack
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
 	}
 
-	cmpPopupButton bt_assign {
+	MainMenuBtn bt_assign {
 		string		"_Team"
 		tooltip		"_Assemble defend team"
 		pos			"290 120"
@@ -472,9 +479,10 @@ window popup_baseattack
 		onClick {
 			cmd "ui_push popup_assembleteam;"
 		}
+		width		"180"
 	}
 
-	cmpPopupButton bt_go {
+	MainMenuBtn bt_go {
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
 		pos			"290 160"
@@ -492,6 +500,7 @@ window popup_baseattack
 			}
 			cmd "game_go;"
 		}
+		width		"180"
 	}
 
 	confunc popbaseattack_upd {
@@ -509,4 +518,5 @@ window popup_baseattack
 		cmd	"cp_missionauto_check;"
 		cmd "popbaseattack_upd;"
 	}
+	fuzzyScreen overlay { }
 }
