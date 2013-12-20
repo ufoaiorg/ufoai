@@ -260,136 +260,16 @@ window production
 		button alert { invis true }
 	}
 
-	// ==================
-	// info panel
-	// ==================
-	panel basedescription {
-		{
-			pos		"620 160"
-			size	"410 135"
-			background	"ui/panel_grey_green"
-		}
 
-		string header_capacity {
-			string 		"_Capacity"
-			pos			"15 20"
-			size		"230 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CL
-		}
-		string header_free {
-			string 		"_free"
-			pos			"245 20"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-		string header_all {
-			string 		"_all"
-			pos			"320 20"
-			size		"75 20"
-			font		"f_small_bold"
-			contentalign	ALIGN_CR
-		}
-
-		string storage_caption {
-			string 		"_Storage"
-			pos			"15 40"
-			size		"230 20"
-			font		"f_small"
-		}
-		string storage_free {
-			pos			"245 40"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string storage_all {
-			pos			"320 40"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string interceptor_caption {
-			string 		"_Interceptor Hangar"
-			pos			"15 60"
-			size		"230 20"
-			font		"f_small"
-		}
-		string interceptor_free {
-			pos			"245 60"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string interceptor_all {
-			pos			"320 60"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string dropship_caption {
-			string 		"_Dropship Hangar"
-			pos			"15 80"
-			size		"230 20"
-			font		"f_small"
-		}
-		string dropship_free {
-			pos			"245 80"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string dropship_all {
-			pos			"320 80"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string workshop_caption {
-			string 		"_Workshop space"
-			pos			"15 100"
-			size		"230 20"
-			font		"f_small"
-		}
-		string workshop_free {
-			pos			"245 100"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-		string workshop_all {
-			pos			"320 100"
-			size		"75 20"
-			font		"f_small"
-			contentalign	ALIGN_CR
-		}
-
-		// <1> free space
-		// <2> max space
-		// <3> through <8> the same for the other three bars
-		confunc ui_prod_update_caps {
-			// we want the bar to display the 'used' value, so calculate it
-			call *node:root.storage.set( (<2> - <1>), <2> )
-			call *node:root.intercept.set( (<4> - <3>), <4> )
-			call *node:root.dropship.set( (<6> - <5>), <6> )
-			call *node:root.workshop.set( (<8> - <7>), <8> )
-
-			*node:parent.storage_free@string = "<1>"
-			*node:parent.storage_all@string = "<2>"
-			*node:parent.interceptor_free@string = "<3>"
-			*node:parent.interceptor_all@string = "<4>"
-			*node:parent.dropship_free@string = "<5>"
-			*node:parent.dropship_all@string = "<6>"
-			*node:parent.workshop_free@string = "<7>"
-			*node:parent.workshop_all@string = "<8>"
-			if ( <7> < 0 ) {
-				*node:parent.workshop_free@color = "1 0 0 1"
-			} else {
-				*node:parent.workshop_free@color = "1 1 1 1"
-			}
-		}
-
+	// <1> free space
+	// <2> max space
+	// <3> through <8> the same for the other three bars
+	confunc ui_prod_update_caps {
+		// we want the bar to display the 'used' value, so calculate it
+		call *node:root.storage.set( (<2> - <1>), <2> )
+		call *node:root.intercept.set( (<4> - <3>), <4> )
+		call *node:root.dropship.set( (<6> - <5>), <6> )
+		call *node:root.workshop.set( (<8> - <7>), <8> )
 	}
 	// ==================
 	// item
@@ -397,14 +277,14 @@ window production
 
 	panel itempanel {
 		{
-			pos		"730 310"
-			size	"290 447"
+			pos		"730 270"
+			size	"290 467"
 		}
 
 		item itemmodel
 		{
 			src			*cvar:mn_item
-			pos			"0 17"
+			pos			"0 10"
 			size		"290 152"
 			angles		"0 180 90"
 			omega		"0 10 0"
@@ -413,7 +293,7 @@ window production
 
 		string prod_amount {
 			string		*cvar:mn_production_amount
-			pos			"5 190"
+			pos			"5 210"
 			size		"40 20"
 			color		"0.56 0.81 0.76 1"
 			font		"f_small"
@@ -422,7 +302,7 @@ window production
 
 		string label_1 {
 			string		"x1"
-			pos			"61 190"
+			pos			"61 210"
 			size		"24 20"
 			color		"0.56 0.81 0.76 1"
 			font		"f_small"
@@ -431,7 +311,7 @@ window production
 
 		string label_10 {
 			string		"x10"
-			pos			"99 190"
+			pos			"99 210"
 			size		"36 20"
 			color		"0.56 0.81 0.76 1"
 			font		"f_small"
@@ -440,7 +320,7 @@ window production
 
 		spinner_green prod_change {
 			tooltip		"_Change the production amount"
-			pos			"85 190"
+			pos			"85 210"
 			min			1
 			current		*cvar:mn_production_amount
 			max			1000
@@ -450,7 +330,7 @@ window production
 
 		spinner_green prod_change_10 {
 			tooltip		"_Change the production amount"
-			pos			"135 190"
+			pos			"135 210"
 			min			1
 			current		*cvar:mn_production_amount
 			max			1000
@@ -458,24 +338,23 @@ window production
 			onChange	{ cmd "prod_change <lastdiff>;" }
 		}
 
-		button prod_new
+		MainMenu3Btn prod_new
 		{
 			string		"_Start this production"
-			background		"ui/button_green_small"
-			pos			"20 160"
+			pos			"20 170"
 			size		"250 32"
 			font		"f_small"
-			color		"0.56 0.81 0.76 1"
+			color		"0 0 0 0.9"
 			onClick		{ cmd "prod_inc;" }
 		}
 
-		button prod_stop
+		MainMenu3Btn prod_stop
 		{
-			tooltip		"_Stop production"
-			icon		"icons/bordered_cross"
-			pos			"175 190"
-			size		"16 16"
-			padding		0
+			string		"_Stop production"
+			pos			"20 170"
+			size		"250 32"
+			font		"f_small"
+			color		"0 0 0 0.9"
 			onClick		{ cmd "prod_stop;" }
 		}
 
@@ -483,7 +362,7 @@ window production
 		{
 			tooltip		"_Increase priority"
 			icon		"icons/arrow_top"
-			pos			"245 190"
+			pos			"235 210"
 			size		"16 16"
 			padding		"0"
 			onClick		{ cmd "prod_up;" }
@@ -495,7 +374,7 @@ window production
 		{
 			tooltip		"_Decrease priority"
 			icon		"icons/arrow_bottom"
-			pos			"275 185"
+			pos			"265 205"
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "prod_down;" }
@@ -510,7 +389,7 @@ window production
 
 		panel requirement {
 			{
-				pos		"0 300"
+				pos		"0 310"
 				size	"290 120"
 			}
 
@@ -551,7 +430,7 @@ window production
 
 		panel proddesc {
 			{
-				pos			"5 218"
+				pos			"5 248"
 				size		"285 80"
 				layout		LAYOUT_BORDER
 			}
@@ -566,8 +445,8 @@ window production
 				rows		4
 				onChange
 				{
-					*node:root.proddesc.description_scroll@current = 0
-					*node:root.proddesc.description@viewpos = 0
+					*node:root.itempanel.proddesc.description_scroll@current = 0
+					*node:root.itempanel.proddesc.description@viewpos = 0
 				}
 				onViewChange	{
 					*node:root.itempanel.proddesc.description_scroll@fullsize = <fullsize>
