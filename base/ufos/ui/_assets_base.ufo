@@ -124,6 +124,13 @@ component BuildingSpace extends panel
 //		onClick			{ cmd "buildings_click <node:parent.id@string>;" }
 		ghost		true
 	}
+	// <1> the used part
+	// <2> the max space/capacity
+	func set {
+			*node:parent.data_bar@current = <1>
+			*node:parent.data_bar@max = <2>
+			*node:parent.data@string = <1>/<2>
+	}
 }
 
 // Small base selector layout
