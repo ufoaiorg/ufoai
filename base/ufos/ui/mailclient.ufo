@@ -2,7 +2,7 @@
 // MAILCLIENT MENU
 // ==================
 
-window mail
+window mail extends popupUI2
 {
 	// ==================
 	// background
@@ -11,10 +11,14 @@ window mail
 	{
 		pos			"10 20"
 		size		"1000 700"
-		dragbutton	true
+		bgcolor		"0 0 0 0.95"
 		closebutton	true
-		background		"ui/popup_alpha_tile"
+	}
+
+	string title
+	{
 		string		"*cvar:mn_mail_subject"
+		width		"1000"
 	}
 
 	// ==================
@@ -43,26 +47,19 @@ window mail
 		onChange	{ *node:root.mail@viewpos = <current> }
 	}
 
-
-	image sender_slot
-	{
-		src	"ui/button_square"
-		pos		"62 82"
-		size	"64 64"
-		texh	"64 64"
-	}
-
 	model sender_body
 	{
 		{
 			visiblewhen "*cvar:mn_mail_sender_head ne \"\""
-			src	"civilians/male/body01"
-			anim	"stand_still"
-			angles	"0 85 90"
-			scale	"7.5 7.5 7.5"
-			pos		"63 83"
-			size	"62 62"
-			origin	"5 125 0"
+			src			"civilians/male/body01"
+			anim		"stand_still"
+			angles		"0 85 90"
+			scale		"7.5 7.5 7.5"
+			pos			"63 83"
+			size		"62 62"
+			origin		"5 125 0"
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
 		}
 
 		model sender_head
@@ -82,19 +79,15 @@ window mail
 		font		"f_small_bold"
 	}
 
-	/*
-	string date {
-		pos		"63 175"
-		size	"300 25"
-		string	"*cvar:mn_mail_date"
-	}
-	*/
-
 	func onWindowOpened
 	{
 		*node:root.mail@viewpos = 0
 		*node:root.mail_scroll@current = 0
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
 }
 
 component mailheader extends panel
