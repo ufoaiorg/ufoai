@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 #include "r_lightmap.h"
 #include "r_grass.h"
+#include "r_weather.h"
 #include "r_main.h"
 #include "r_geoscape.h"
 #include "r_misc.h"
@@ -51,8 +52,11 @@ image_t* r_noTexture;			/* use for bad textures */
 image_t* r_warpTexture;
 image_t* r_dummyTexture; /* 1x1 pixel white texture to be used when texturing is required, but texture is not available */
 
+Weather r_battlescapeWeather;
+
 static cvar_t* r_maxtexres;
 
+cvar_t* r_weather;
 cvar_t* r_drawentities;
 cvar_t* r_drawworld;
 cvar_t* r_nocull;
@@ -294,6 +298,12 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
+	static int lastFrame = 0;
+	int deltaMsec = cl.time - lastFrame;
+	lastFrame = cl.time;
+
+	r_battlescapeWeather.update(deltaMsec); /* could do that in separate thread */
+
 	R_Setup3D();
 
 	/* activate wire mode */
@@ -344,6 +354,8 @@ void R_RenderFrame (void)
 		R_RenderBlendBspRRefs();
 		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+
+		r_battlescapeWeather.render();
 
 		R_EnableFog(true);
 		R_RenderFlareBspRRefs();
@@ -545,11 +557,25 @@ static bool R_CvarCheckMultisample (cvar_t* cvar)
 	return Cvar_AssertValue(cvar, 0, 4, true);
 }
 
+static bool R_CvarCheckWeather (cvar_t* cvar)
+{
+	return Cvar_AssertValue(cvar, (float)Weather::WEATHER_CLEAN, (float)Weather::WEATHER_MAX, true);
+}
+
+static void R_UpdateWeather (const char* cvarName, const char* oldValue, const char* newValue, void* data)
+{
+	r_battlescapeWeather.changeTo((Weather::weatherTypes)atoi(newValue)); /** @todo Some better way? */
+}
+
+
 static void R_RegisterSystemVars (void)
 {
 	const cmdList_t* commands;
 
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
+	r_weather = Cvar_Get("r_weather", "0", 0, "Current battlescape weather effect");
+	Cvar_SetCheckFunction("r_weather", R_CvarCheckWeather);
+	Cvar_RegisterChangeListener("r_weather", R_UpdateWeather);
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
@@ -1278,6 +1304,7 @@ bool R_Init (void)
 	R_FontInit();
 	R_InitFBObjects();
 	R_UpdateDefaultMaterial("","","", nullptr);
+	r_battlescapeWeather.setDefaults();
 
 	R_CheckError();
 

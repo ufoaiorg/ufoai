@@ -622,6 +622,8 @@
 		<Unit filename="../../src/client/renderer/r_surface.cpp" />
 		<Unit filename="../../src/client/renderer/r_thread.cpp" />
 		<Unit filename="../../src/client/renderer/r_thread.h" />
+		<Unit filename="../../src/client/renderer/r_weather.cpp" />
+		<Unit filename="../../src/client/renderer/r_weather.h" />
 		<Unit filename="../../src/client/sound/s_local.h" />
 		<Unit filename="../../src/client/sound/s_main.cpp" />
 		<Unit filename="../../src/client/sound/s_main.h" />
