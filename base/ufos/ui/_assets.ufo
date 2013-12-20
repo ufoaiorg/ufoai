@@ -344,7 +344,7 @@ window popupUI2
 		contentalign	ALIGN_CL
 		font		"f_small_bold"
 		bgcolor		"0.4 0.515 0.5 0.25"
-		color		"1 1 1 0.5"
+		color		"0.56 0.81 0.76 1"
 	}
 }
 
