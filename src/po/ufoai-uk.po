@@ -323,11 +323,11 @@ msgstr "Руйнівник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4065
 msgid "UFO - Supply Ship"
-msgstr "НЛО - «Перевізник»"
+msgstr "НЛО - «Постачальник»"
 
 #: ../base/ufos/aircraftmanagement.ufo:648
 msgid "Supply U"
-msgstr "Перевізник Н"
+msgstr "Постачальник Н"
 
 # Канонірка?..
 # Артилерист
@@ -357,11 +357,11 @@ msgstr "Спустошувач Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4108
 msgid "UFO - Carrier"
-msgstr "НЛО - «Носій»"
+msgstr "НЛО - «Перевізник»"
 
 #: ../base/ufos/aircraftmanagement.ufo:855
 msgid "Carrier U"
-msgstr "Носій Н"
+msgstr "Перевізник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4364
 msgid "UFO - Mothership"
