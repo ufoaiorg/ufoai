@@ -415,8 +415,8 @@ window equipment extends objectinfo
 
 
 	baseinventory equip		{
-		pos						"740 90"
-		size					"257 360"
+		pos						"750 50"
+		size					"257 400"
 		displayweapon			true
 		displayammoofweapon		true
 		displayunavailableitem	true
@@ -435,7 +435,7 @@ window equipment extends objectinfo
 
 	vscrollbar equip_scroll {
 		image	"ui/scrollbar_v_green"
-		pos "980 90"	height	"360"
+		pos "990 50"	height	"400"
 		hidewhenunused true
 		onChange {
 			*node:root.equip@viewpos = <current>
