@@ -292,7 +292,7 @@ window production
 
 	panel itempanel {
 		{
-			pos		"730 270"
+			pos		"730 170"
 			size	"290 467"
 		}
 
@@ -404,7 +404,7 @@ window production
 
 		panel requirement {
 			{
-				pos		"0 310"
+				pos		"0 320"
 				size	"290 120"
 			}
 
