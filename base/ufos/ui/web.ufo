@@ -1,14 +1,16 @@
-window webauth
+window webauth extends popupUI2
 {
 	{
 		pos			"264 262"
-		size		"360 240"
-		dragbutton	true
+		size		"360 210"
 		closebutton	true
-		background		"ui/popup_alpha_tile"
-		color		"1.0 0.75 0 1"
-		string		"_Login"
 		modal		true
+	}
+
+	string title
+	{
+		string		"_Login"
+		width		"360"
 	}
 
 	string webusernamestr
@@ -17,14 +19,13 @@ window webauth
 		pos			"30 60"
 		size		"110 34"
 		contentalign	ALIGN_CL
-		color		"1.0 0.75 0 1"
 	}
 	textentry webusername
 	{
 		string		*cvar:web_username
-		background		"ui/button_green_verysmall"
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
+		background		"ui/textentry"
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 0.9"
 		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
@@ -38,14 +39,13 @@ window webauth
 		pos			"30 110"
 		size		"110 34"
 		contentalign	ALIGN_CL
-		color		"1.0 0.75 0 1"
 	}
 	textentry webpassword
 	{
 		string		*cvar:web_password
-		background		"ui/button_green_verysmall"
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
+		background		"ui/textentry"
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 0.9"
 		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
@@ -57,17 +57,16 @@ window webauth
 		}
 	}
 
-	button login
+	MainMenuBtn login
 	{
-		pos			"50 180"
-		size		"256 30"
+		pos			"0 180"
+		size		"360 30"
 		string		"_Login"
 		onClick		{ cmd "web_auth <cvar:web_username> <cvar:web_password>;" }
 		font	"f_menusmall"
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		background	"ui/button_green_small"
 	}
+
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{
