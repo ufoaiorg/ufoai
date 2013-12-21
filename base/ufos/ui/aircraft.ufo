@@ -244,6 +244,23 @@ window iaircraft
 		}
 	}
 
+	BuildingSpace dropship
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_hangar" }
+		string label { string	"_Dropship Hangar" }
+		button alert { invis true }
+	}
+	BuildingSpace intercept
+	{
+		{ pos "739 25" }
+
+		button smlicon { icon	"icons/building_intercept" }
+		string label { string	"_Interceptor Hangar" }
+		button alert { invis true }
+	}
+
 	// ==================
 	// aircraft list callback
 	// ==================
