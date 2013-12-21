@@ -91,35 +91,28 @@ window production
 			// lists
 			// ==================
 
-			rows lines {
-				pos			"8 135"
-				size		"695 598"
-				color1		"0.56 0.81 0.76 0.15"
-				color2		"0.56 0.81 0.76 0.1"
-				lineheight	25
-			}
-
-			panel scroll_bg {
-				pos			"421 135"
-				size		"31 598"
-				bgcolor		"0 0 0 0.5"
-			}
-
 			panel itemlist {
 				{
 				pos		"5 106"
 				size	"702 618"
 				}
+				rows lines {
+					pos			"0 28"
+					size		"695 598"
+					color1		"0.56 0.81 0.76 0.15"
+					color2		"0.56 0.81 0.76 0.1"
+					lineheight	25
+				}
 				string itemname {
 					string		"_Item"
-					pos			"48 5"
+					pos			"50 5"
 					size		"100 20"
 					contentalign	ALIGN_CL
 					font		"f_small_bold"
 				}
 				string storage {
 					string		"_Stored"
-					pos			"275 5"
+					pos			"290 5"
 					size		"100 20"
 					contentalign	ALIGN_CR
 					font		"f_small_bold"
@@ -131,113 +124,113 @@ window production
 					contentalign	ALIGN_CL
 					font		"f_small_bold"
 				}
+				// ==================
+				// list
+				// ==================
+				textlist prodlist
+				{
+					dataid		TEXT_PRODUCTION_LIST
+					color		"0.56 0.81 0.76 1"
+					rows		"22"
+					lineheight	"25"
+					pos			"55 30"
+					size		"250 580"
+					longlines	LONGLINES_PRETTYCHOP
+					onClick		{
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <node:this@lineselected>
+						cmd "prodlist_click <lineselected>;"
+					}
+					onRClick	{
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <node:this@lineselected>
+						cmd "prodlist_rclick <lineselected>;"
+					}
+					onViewChange	{
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@fullsize = <fullsize>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@current = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@viewsize = <viewsize>
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@viewpos = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@viewpos = <viewpos>
+					}
+				}
+
+				textlist prodlist_amount
+				{
+					dataid		TEXT_PRODUCTION_AMOUNT
+					color		"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CR
+					pos			"310 30"
+					rows		"22"
+					size		"60 580"
+					lineheight	"25"
+					onClick		{
+						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <node:this@lineselected>
+						cmd "prodlist_click <lineselected>;"
+					}
+					onRClick	{
+						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <node:this@lineselected>
+						cmd "prodlist_rclick <lineselected>;"
+					}
+					onViewChange	{
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@fullsize = <fullsize>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@current = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@viewsize = <viewsize>
+						*node:root.base_container.mainBody.itemlist.prodlist@viewpos = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@viewpos = <viewpos>
+					}
+				}
+
+				textlist prodlist_queued
+				{
+					dataid		TEXT_PRODUCTION_QUEUED
+					pos			"495 30"
+					size		"60 580"
+					color		"0.56 0.81 0.76 1"
+					lineheight	"25"
+					rows		"22"
+					onClick		{
+						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <node:this@lineselected>
+						cmd "prodlist_click <lineselected>;"
+					}
+					onRClick	{
+						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <node:this@lineselected>
+						cmd "prodlist_rclick <lineselected>;"
+					}
+					onViewChange	{
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@fullsize = <fullsize>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@current = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist_scroll@viewsize = <viewsize>
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@viewpos = <viewpos>
+						*node:root.base_container.mainBody.itemlist.prodlist@viewpos = <viewpos>
+					}
+				}
+
+				vscrollbar prodlist_scroll {
+					image		"ui/scrollbar_v_green"
+					pos			"678 30"
+					height		"586"
+					current		0
+					viewsize	30
+					fullsize	30
+					onChange	{
+						*node:root.base_container.mainBody.itemlist.prodlist@viewpos = <current>
+						*node:root.base_container.mainBody.itemlist.prodlist_amount@viewpos = <current>
+						*node:root.base_container.mainBody.itemlist.prodlist_queued@viewpos = <current>
+					}
+				}
+
+				confunc prod_selectline {
+					*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <1>
+					*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <1>
+					*node:root.base_container.mainBody.itemlist.prodlist_queued@lineselected = <1>
+				}
 			}
 
-			// ==================
-			// list
-			// ==================
-			textlist prodlist
-			{
-				dataid		TEXT_PRODUCTION_LIST
-				color		"0.56 0.81 0.76 1"
-				rows		"22"
-				lineheight	"25"
-				pos			"55 140"
-				size		"250 580"
-				longlines	LONGLINES_PRETTYCHOP
-				onClick		{
-					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
-					cmd "prodlist_click <lineselected>;"
-				}
-				onRClick	{
-					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
-					cmd "prodlist_rclick <lineselected>;"
-				}
-				onViewChange	{
-					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
-					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
-					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
-					*node:root.base_container.mainBody.prodlist_amount@viewpos = <viewpos>
-					*node:root.base_container.mainBody.prodlist_queued@viewpos = <viewpos>
-				}
-			}
-
-			textlist prodlist_amount
-			{
-				dataid		TEXT_PRODUCTION_AMOUNT
-				color		"0.56 0.81 0.76 1"
-				contentalign	ALIGN_CR
-				pos			"310 140"
-				rows		"22"
-				size		"60 580"
-				lineheight	"25"
-				onClick		{
-					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
-					cmd "prodlist_click <lineselected>;"
-				}
-				onRClick	{
-					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
-					cmd "prodlist_rclick <lineselected>;"
-				}
-				onViewChange	{
-					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
-					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
-					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
-					*node:root.base_container.mainBody.prodlist@viewpos = <viewpos>
-					*node:root.base_container.mainBody.prodlist_queued@viewpos = <viewpos>
-				}
-			}
-
-			textlist prodlist_queued
-			{
-				dataid		TEXT_PRODUCTION_QUEUED
-				pos			"465 140"
-				size		"60 580"
-				color		"0.56 0.81 0.76 1"
-				lineheight	"25"
-				rows		"22"
-				onClick		{
-					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_amount@lineselected = <node:this@lineselected>
-					cmd "prodlist_click <lineselected>;"
-				}
-				onRClick	{
-					*node:root.base_container.mainBody.prodlist@lineselected = <node:this@lineselected>
-					*node:root.base_container.mainBody.prodlist_queued@lineselected = <node:this@lineselected>
-					cmd "prodlist_rclick <lineselected>;"
-				}
-				onViewChange	{
-					*node:root.base_container.mainBody.prodlist_scroll@fullsize = <fullsize>
-					*node:root.base_container.mainBody.prodlist_scroll@current = <viewpos>
-					*node:root.base_container.mainBody.prodlist_scroll@viewsize = <viewsize>
-					*node:root.base_container.mainBody.prodlist_amount@viewpos = <viewpos>
-					*node:root.base_container.mainBody.prodlist@viewpos = <viewpos>
-				}
-			}
-
-			vscrollbar prodlist_scroll {
-				image		"ui/scrollbar_v_green"
-				pos			"428 140"
-				height		"586"
-				current		0
-				viewsize	30
-				fullsize	30
-				onChange	{
-					*node:root.base_container.mainBody.prodlist@viewpos = <current>
-					*node:root.base_container.mainBody.prodlist_amount@viewpos = <current>
-					*node:root.base_container.mainBody.prodlist_queued@viewpos = <current>
-				}
-			}
-
-			confunc prod_selectline {
-				*node:root.base_container.mainBody.prodlist@lineselected = <1>
-				*node:root.base_container.mainBody.prodlist_amount@lineselected = <1>
-				*node:root.base_container.mainBody.prodlist_queued@lineselected = <1>
-			}
 		}
 	}
 
