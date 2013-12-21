@@ -259,14 +259,10 @@ component cmpMapSlot extends panel
 		size "315 35"
 	}
 
-	textentry slot_map
+	UI2TextEntry slot_map
 	{
-		background		"ui/button_green_verysmall"
-		color 		"0 .78 0 1"
 		string		*cvar:mn_svmapname
-		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
-		padding		8
 		font		"f_small"
 		pos			"32 0"
 		size		"256 34"

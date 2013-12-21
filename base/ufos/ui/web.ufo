@@ -20,14 +20,10 @@ window webauth extends popupUI2
 		size		"110 34"
 		contentalign	ALIGN_CL
 	}
-	textentry webusername
+
+	UI2TextEntry webusername
 	{
 		string		*cvar:web_username
-		background		"ui/textentry"
-		color		"1 1 1 0.5"
-		selectcolor	"1 1 1 0.9"
-		contentalign	ALIGN_CL
-		padding		8
 		font		"f_verysmall"
 		pos			"150 60"
 		size		"180 34"
@@ -40,14 +36,10 @@ window webauth extends popupUI2
 		size		"110 34"
 		contentalign	ALIGN_CL
 	}
-	textentry webpassword
+
+	UI2TextEntry webpassword
 	{
 		string		*cvar:web_password
-		background		"ui/textentry"
-		color		"1 1 1 0.5"
-		selectcolor	"1 1 1 0.9"
-		contentalign	ALIGN_CL
-		padding		8
 		font		"f_verysmall"
 		pos			"150 110"
 		size		"180 34"

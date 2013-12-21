@@ -313,16 +313,11 @@ window basedefence extends popupUI2
 			size		"250 25"
 			font		"f_small_bold"
 		}
-		textentry name
+		UI2TextEntry name
 		{
 			string		*cvar:mn_installation_title
 			pos			"310 90"
 			size		"256 34"
-			background		"ui/textentry"
-			color		"1 1 1 0.5"
-			selectcolor	"1 1 1 0.9"
-			contentalign	ALIGN_CL
-			padding		8
 			font		"f_verysmall"
 			onChange	{ }
 			clickoutabort	true

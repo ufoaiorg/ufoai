@@ -201,16 +201,11 @@ window options
 					size			"256 20"
 					color			"1 1 1 0.5"
 				}
-				textentry slot_name
+				UI2TextEntry slot_name
 				{
 					string			*cvar:cl_name
 					pos				"292 5"
 					size			"200 20"
-					background			"ui/textentry"
-					color			"1 1 1 0.5"
-					selectcolor		"1 1 1 0.9"
-					contentalign	ALIGN_CL
-					padding			8
 				}
 			}
 

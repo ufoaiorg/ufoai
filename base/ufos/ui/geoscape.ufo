@@ -855,18 +855,13 @@ window popup_newinstallation extends popupUI2
 		size		"120 25"
 		contentalign	ALIGN_CL
 	}
-	textentry name
+	UI2TextEntry name
 	{
 		string		*cvar:mn_installation_title
 		pos			"150 60"
 		size		"330 25"
 		border		3
 		font		"f_normal"
-		background	"ui/textentry"
-		color		"1 1 1 0.5"
-		selectcolor	"1 1 1 0.9"
-		contentalign	ALIGN_CL
-		padding		8
 	}
 
 	string cost_label
@@ -962,7 +957,7 @@ window popup_installationstatus extends popupUI2
 		size		"120 25"
 		contentalign	ALIGN_CL
 	}
-	textentry name
+	UI2TextEntry name
 	{
 		string		*cvar:mn_installation_title
 		pos			"150 60"
@@ -970,11 +965,6 @@ window popup_installationstatus extends popupUI2
 		border		3
 		font		"f_normal"
 		onChange	{ cmd "mn_installation_changename;" }
-		background	"ui/textentry"
-		color		"1 1 1 0.5"
-		selectcolor	"1 1 1 0.9"
-		contentalign	ALIGN_CL
-		padding		8
 	}
 
 	string buildtime_label
