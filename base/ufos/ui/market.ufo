@@ -63,8 +63,8 @@ window market  {
 				panel list
 				{
 					{
-						pos				"1 70"
-						size			"713 463"
+						pos				"1 30"
+						size			"713 503"
 						layout			LAYOUT_TOP_DOWN_FLOW
 						layoutMargin	2
 						onViewChange	{
@@ -264,8 +264,8 @@ window market  {
 				}
 				vscrollbar list_scroll {
 					image			"ui/scrollbar_v_green"
-					pos				"697 70"
-					height			"420"
+					pos				"697 32"
+					height			"459"
 					current			0
 					viewsize		8
 					fullsize		22
