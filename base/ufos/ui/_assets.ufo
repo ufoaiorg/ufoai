@@ -233,12 +233,9 @@ component ObjectInfo extends panel
 			size		"713 32"
 			bgcolor		"0.527 0.6 0.21 0.2"
 		}
-		button ufopedia
+		UFOpediaBtn ufopedia
 		{
-			icon		"icons/bordered_magnifying_glass"
-			tooltip		"_View UFOpaedia entry"
 			pos			"10 9"
-			size		"16 16"
 			onClick		{ cmd "market_openpedia;" }
 		}
 		string title
