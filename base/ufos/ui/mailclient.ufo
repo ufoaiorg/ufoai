@@ -107,7 +107,9 @@ component mailheader extends panel
 	panel header
 	{
 		{
-			size	"900 28"
+			size		"850 28"
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
 		}
 
 		data index
@@ -115,11 +117,14 @@ component mailheader extends panel
 			integer		-1
 		}
 
-		image background
-		{
-			src		"ui/mail_button"
-			texl	"0 0"
-			texh	"852 28"
+		bar separator {
+			pos			"650 3"
+			size		"2 22"
+			readonly	true
+			nohover		true
+			color		"0.56 0.81 0.76 1"
+			max			1
+			current		1
 		}
 
 		string headline
@@ -134,7 +139,7 @@ component mailheader extends panel
 		{
 			string		""
 			pos			"690 2"
-			size		"100 24"
+			size		"200 24"
 			font		"f_small"
 		}
 	}
@@ -144,15 +149,6 @@ window mailclient
 {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
-	{
-		src		"background/mail_bg"
-	}
 
 	// ==================
 	// text and info
@@ -251,8 +247,7 @@ window mailclient
 		*node:root.mails.mail<1>.header.date@string = <5>
 		*node:root.mails.mail<1>.icon@src = <3>
 		if ( <4> eq 0 ) {
-			*node:root.mails.mail<1>.header.background@texl = "0 28"
-			*node:root.mails.mail<1>.header.background@texh	= "852 56"
+			*node:root.mails.mail<1>.header@bgcolor	= "0.56 0.81 0.76 0.6"
 		}
 	}
 
@@ -278,15 +273,14 @@ window mailclient
 		}
 	}
 
-	button button_exit
-	{
-		tooltip		"_Leave mailclient"
-		background	"buttons/large_blue"
-		pos			"920 720"
-		size		"64 37"
-		icon		"icons/return"
-		onClick		{ cmd "ui_pop;" }
+	// Back to geoscape
+	Geoscape geoscape_button {
+		onClick { cmd "ui_pop"}
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
 
 	func onWindowOpened
 	{
@@ -297,4 +291,5 @@ window mailclient
 	{
 		cmd "ufopedia_openmail;"
 	}
+
 }
