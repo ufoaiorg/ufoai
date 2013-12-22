@@ -95,8 +95,8 @@ window popup_assembleteam extends popupUI2
 	rows soldierlist_lines {
 		pos				"35 66"
 		size			"310 299"
-		color1			"0 0 0 0.6"
-		color2			"0 0 0 0.9"
+		color1			"0.56 0.81 0.76 0.15"
+		color2			"0.56 0.81 0.76 0.1"
 		lineheight		25
 	}
 	panel soldierlist {

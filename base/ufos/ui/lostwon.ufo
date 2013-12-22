@@ -241,8 +241,8 @@ window uforecovery extends popupUI2
 		rows lines {
 			pos			"25 50"
 			size		"590 128"
-			color1		"0 0 0 0.6"
-			color2		"0 0 0 0.8"
+			color1		"0.56 0.81 0.76 0.15"
+			color2		"0.56 0.81 0.76 0.1"
 			lineheight	16
 		}
 
@@ -369,8 +369,8 @@ window uforecovery extends popupUI2
 		rows lines {
 			pos			"25 50"
 			size		"590 128"
-			color1		"0 0 0 0.6"
-			color2		"0 0 0 0.9"
+			color1		"0.56 0.81 0.76 0.15"
+			color2		"0.56 0.81 0.76 0.1"
 			lineheight	16
 		}
 
