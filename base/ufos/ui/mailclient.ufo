@@ -93,9 +93,12 @@ window mail extends popupUI2
 component mailheader extends panel
 {
 	{
-		size			"890 28"
+		size			"670 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.15" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 		layout			LAYOUT_LEFT_RIGHT_FLOW
-		layoutMargin	10
+		layoutMargin	2
 	}
 
 	image icon
@@ -107,9 +110,7 @@ component mailheader extends panel
 	panel header
 	{
 		{
-			size		"850 28"
-			border		2
-			bordercolor	"0.56 0.81 0.76 1"
+			size		"670 28"
 		}
 
 		data index
@@ -117,29 +118,21 @@ component mailheader extends panel
 			integer		-1
 		}
 
-		bar separator {
-			pos			"650 3"
-			size		"2 22"
-			readonly	true
-			nohover		true
-			color		"0.56 0.81 0.76 1"
-			max			1
-			current		1
-		}
-
 		string headline
 		{
 			string	""
-			pos		"10 2"
-			size	"660 24"
+			pos		"10 5"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CL
+			size	"510 21"
 			font	"f_small"
 		}
 
 		string date
 		{
 			string		""
-			pos			"690 2"
-			size		"200 24"
+			pos			"520 5"
+			size		"200 21"
 			font		"f_small"
 		}
 	}
@@ -147,86 +140,132 @@ component mailheader extends panel
 
 window mailclient
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// text and info
-	// ==================
-
-	string mailclienthead
-	{
-		string		"_Mailclient"
-		pos			"355 30"
-		size		"290 30"
-		contentalign	ALIGN_CC
-		color		"0 .78 0 1"
-		font		"f_big"
-	}
-
-	string timehead
-	{
-		string		"_Time:"
-		pos			"710 36"
-		size		"100 20"
-		color		"0 .78 0 1"
-		font		"f_normal"
-	}
-	string time
-	{
-		string		*cvar:mn_maptime
-		pos			"820 36"
-		size		"150 20"
-		color		"0 .9 0 1"
-		font		"f_normal"
-		contentalign	ALIGN_CC
-	}
-
-	string datehead
-	{
-		string		"_Date:"
-		pos			"710 56"
-		size		"100 20"
-		color		"0 .78 0 1"
-		font		"f_normal"
-	}
-	string date
-	{
-		string		*cvar:mn_mapdate
-		pos			"820 56"
-		size		"150 20"
-		color		"0 .9 0 1"
-		font		"f_normal"
-		contentalign	ALIGN_CC
-	}
-
-	button mail_allread
-	{
-		icon		"icons/mail_read"
-		tooltip		"_Mark all messages read"
-		pos			"50 50"
-		size		"32 32"
-		padding		0
-		onClick		{ cmd "mn_mail_readall 0;" }
-	}
-
-	panel mails
+	panel maillist
 	{
 		{
-			pos				"50 130"
-			size			"890 570"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	10
-			ghost			true
-			wheelscrollable	true
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
 
-			onViewChange {
-				*node:root.mailclient_scroll@fullsize = <fullsize>
-				*node:root.mailclient_scroll@current = <viewpos>
-				*node:root.mailclient_scroll@viewsize = <viewsize>
+		string mailclienthead
+		{
+			string			"_Mailclient"
+			pos				"0 0"
+			size			"723 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"715 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+/*
+				string datehead
+				{
+					string			"_Date:"
+					pos				"90 1"
+					size			"70 32"
+					font			"f_normal"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+*/
+				string date
+				{
+					string			*cvar:mn_mapdate
+					pos				"1 1"
+					size			"220 32"
+					font			"f_normal"
+					contentalign	ALIGN_CR
+					color			"0.56 0.81 0.76 1"
+				}
+/*
+				string timehead
+				{
+					string			"_Time:"
+					pos				"362 1"
+					size			"100 32"
+					font			"f_normal"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+*/
+				string time
+				{
+					string			*cvar:mn_maptime
+					pos				"230 1"
+					size			"200 32"
+					font			"f_normal"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+
+
+				button mail_allread
+				{
+					icon		"icons/mail_read"
+					tooltip		"_Mark all messages read"
+					pos			"654 1"
+					size		"32 32"
+					padding		0
+					onClick		{ cmd "mn_mail_readall 0;" }
+				}
+			}
+
+			panel mails
+			{
+				{
+					pos				"6 50"
+					size			"680 660"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					ghost			true
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.mail_scroll@fullsize = <fullsize>
+						*node:parent.mail_scroll@current = <viewpos>
+						*node:parent.mail_scroll@viewsize = <viewsize>
+					}
+				}
+			}
+
+			vscrollbar mail_scroll {
+				image			"ui/scrollbar_v_green"
+				pos				"697 50"
+				height			"660"
+				current			0
+				viewsize		22
+				fullsize		32
+				hidewhenunused	true
+				onChange		{
+					*node:parent.mails@viewpos = <current>
+				}
 			}
 		}
 	}
+	// Back to geoscape
+	Geoscape geoscape_button {
+		onClick { cmd "ui_pop"}
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 
 	/**
 	 * @brief Adds a new mail header entry to the mail panel
@@ -238,16 +277,16 @@ window mailclient
 	 */
 	confunc add_mail
 	{
-		call *node:root.mails@createChild("mail<1>", "mailheader")
-		*node:root.mails.mail<1>.header.index@integer = <1>
+		call *node:root.maillist.mainBody.mails@createChild("mail<1>", "mailheader")
+		*node:root.maillist.mainBody.mails.mail<1>.header.index@integer = <1>
 
-		*node:root.mails.mail<1>.header.headline@string = <2>
-		*node:root.mails.mail<1>.header.headline@onClick = { cmd "mailclient_click <node:this.parent.index@integer>;" }
+		*node:root.maillist.mainBody.mails.mail<1>.header.headline@string = <2>
+		*node:root.maillist.mainBody.mails.mail<1>.header.headline@onClick = { cmd "mailclient_click <node:this.parent.index@integer>;" }
 
-		*node:root.mails.mail<1>.header.date@string = <5>
-		*node:root.mails.mail<1>.icon@src = <3>
+		*node:root.maillist.mainBody.mails.mail<1>.header.date@string = <5>
+		*node:root.maillist.mainBody.mails.mail<1>.icon@src = <3>
 		if ( <4> eq 0 ) {
-			*node:root.mails.mail<1>.header@bgcolor	= "0.56 0.81 0.76 0.6"
+			*node:root.maillist.mainBody.mails.mail<1>.header@bgcolor	= "0.56 0.81 0.76 0.6"
 		}
 	}
 
@@ -256,30 +295,8 @@ window mailclient
 	 */
 	confunc clear_mails
 	{
-		call *node:root.mails@removeAllChild
+		call *node:root.maillist.mainBody.mails@removeAllChild
 	}
-
-	vscrollbar mailclient_scroll
-	{
-		image		"ui/scrollbar_v_green"
-		pos			"950 125"
-		height		560
-		current		0
-		viewsize	15
-		fullsize	50
-		hidewhenunused true
-		onChange		{
-			*node:root.mails@viewpos = <current>
-		}
-	}
-
-	// Back to geoscape
-	Geoscape geoscape_button {
-		onClick { cmd "ui_pop"}
-	}
-
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
 
 
 	func onWindowOpened
