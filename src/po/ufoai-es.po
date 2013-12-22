@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-11-30 14:49+0000\n"
-"PO-Revision-Date: 2013-11-30 18:15+0100\n"
+"PO-Revision-Date: 2013-12-06 20:25+0100\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -26339,7 +26339,7 @@ msgstr "Máximo de VTNT"
 
 #: ../base/ufos/ui/_assets_squad.ufo:274
 msgid "Selected squad name here"
-msgstr "Nombre del escuadrón seleccionado aquí"
+msgstr "Escuadrón seleccionado aquí"
 
 #: ../base/ufos/ui/_assets_squad.ufo:288 ../base/ufos/ui/campaign.ufo:93
 #: ../base/ufos/ui/campaign.ufo:564
@@ -26705,7 +26705,7 @@ msgstr "OVNI Objetivo:"
 #: ../base/ufos/ui/geoscape.ufo:967
 #: ../base/ufos/ui/popup_installations.ufo:524
 msgid "Time to build:"
-msgstr "Tiempo de construcción:"
+msgstr "Tiempo estimado:"
 
 #: ../base/ufos/ui/basedefence.ufo:358
 msgid "Autofire"
@@ -26978,7 +26978,7 @@ msgstr "Intervalo de tiempo: 5 días"
 
 #: ../base/ufos/ui/geoscape.ufo:499
 msgid "Message settings"
-msgstr "Opciones de mensajes"
+msgstr "Notificaciones"
 
 #: ../base/ufos/ui/geoscape.ufo:500
 msgid "Change message and pause settings"
@@ -27138,7 +27138,7 @@ msgstr "Descripción:"
 
 #: ../base/ufos/ui/geoscape.ufo:1404
 msgid "Geoscape options"
-msgstr "Opciones del mapa terrestre"
+msgstr "Opciones del mapamundi"
 
 #: ../base/ufos/ui/geoscape.ufo:1416
 msgid "Geoscape projection mode:"
@@ -27897,7 +27897,7 @@ msgstr "Añadir el servidor a los marcadores"
 
 #: ../base/ufos/ui/multiplayer.ufo:304 ../base/ufos/ui/options.ufo:631
 msgid "All"
-msgstr "Total"
+msgstr "Todo"
 
 #: ../base/ufos/ui/multiplayer.ufo:306
 msgid "Free"
@@ -28183,7 +28183,7 @@ msgstr "Consejos emergentes del cursor"
 
 #: ../base/ufos/ui/options.ufo:328
 msgid "Main menu tips"
-msgstr "Consejo del menú"
+msgstr "Consejos del menú principal"
 
 #: ../base/ufos/ui/options.ufo:354
 msgid "Pre-cache menu models"
@@ -28195,7 +28195,7 @@ msgstr "Aumenta la velocidad de los menús del juego"
 
 #: ../base/ufos/ui/options.ufo:375
 msgid "Geoscape Options"
-msgstr "Opciones del Mapa Terrestre"
+msgstr "Opciones del Mapamundi"
 
 #: ../base/ufos/ui/options.ufo:396
 msgid "3D geoscape"
@@ -28203,16 +28203,16 @@ msgstr "Mapa en 3D"
 
 #: ../base/ufos/ui/options.ufo:397
 msgid "View the geoscape as a 3D globe"
-msgstr "Ver el mapa terrestre como un globo en 3D"
+msgstr "Ver el mapamundi como un globo en 3D"
 
 #: ../base/ufos/ui/options.ufo:423
 msgid "Camera zoom"
-msgstr "Acercamiento de la cámara"
+msgstr "Acercamiento"
 
 #: ../base/ufos/ui/options.ufo:431 ../base/ufos/ui/options.ufo:1627
 #: ../base/ufos/ui/options.ufo:1759
 msgid "Min"
-msgstr "Mínimo"
+msgstr "Mín."
 
 #: ../base/ufos/ui/options.ufo:474
 msgid "1.0"
@@ -28221,7 +28221,7 @@ msgstr "1.0"
 #: ../base/ufos/ui/options.ufo:481 ../base/ufos/ui/options.ufo:1686
 #: ../base/ufos/ui/options.ufo:1817
 msgid "Max"
-msgstr "Máximo"
+msgstr "Máx."
 
 #: ../base/ufos/ui/options.ufo:497
 msgid "2"
@@ -28257,7 +28257,7 @@ msgstr "Mostrar el número de cuadros renderizados por segundo"
 
 #: ../base/ufos/ui/options.ufo:567
 msgid "Skip Intro Video"
-msgstr "Omitir el Video de Introducción"
+msgstr "Omitir el Video inicial"
 
 #: ../base/ufos/ui/options.ufo:568
 msgid "Don't play the video when loading the game."
@@ -28269,7 +28269,7 @@ msgstr "Resolución"
 
 #: ../base/ufos/ui/options.ufo:613
 msgid "Ratio"
-msgstr "Proporción"
+msgstr "Razón"
 
 #: ../base/ufos/ui/options.ufo:623
 msgid "Display resolutions in this ratio"
@@ -28301,11 +28301,11 @@ msgstr "Gamma / Brillo"
 
 #: ../base/ufos/ui/options.ufo:772
 msgid "Geoscape sunlight"
-msgstr "Iluminación del mapa terrestre"
+msgstr "Iluminación del mapamundi"
 
 #: ../base/ufos/ui/options.ufo:773
 msgid "Brightness of sunlight on the geoscape"
-msgstr "Brillo del sol en el mapa terrestre"
+msgstr "Brillo del sol en el mapamundi"
 
 #: ../base/ufos/ui/options.ufo:805
 msgid "Screenshot format"
@@ -28357,11 +28357,11 @@ msgstr "Efectos como refracción y luz reflejada"
 
 #: ../base/ufos/ui/options.ufo:1010 ../base/ufos/ui/options.ufo:2454
 msgid "Advanced OpenGL options"
-msgstr "Opciones Avanzadas de OpenGL"
+msgstr "Otras Opciones de OpenGL"
 
 #: ../base/ufos/ui/options.ufo:1032
 msgid "Real-time lighting effects"
-msgstr "Efectos de iluminación en tiempo real"
+msgstr "Iluminación en tiempo real"
 
 #: ../base/ufos/ui/options.ufo:1061
 msgid "Max dynamic lights"
@@ -28426,7 +28426,7 @@ msgstr "Desempeño gráfico"
 
 #: ../base/ufos/ui/options.ufo:1262
 msgid "Advanced Video Options"
-msgstr "Opciones Avanzadas de Video"
+msgstr "Otras Opciones de Video"
 
 #: ../base/ufos/ui/options.ufo:1295
 msgid "Enable audio"
@@ -28470,7 +28470,7 @@ msgstr "48000 kHz"
 
 #: ../base/ufos/ui/options.ufo:1447
 msgid "Apply Sample Rate"
-msgstr "Aplicar Frecuencia de Muestreo"
+msgstr "Aplicar la Frecuencia"
 
 #: ../base/ufos/ui/options.ufo:1500
 msgid "Battlescape view configuration"
@@ -28571,11 +28571,11 @@ msgstr "Interface de combate"
 
 #: ../base/ufos/ui/options.ufo:2142
 msgid "Advanced Video options"
-msgstr "Opciones Avanzadas de Video"
+msgstr "Otras Opciones de Video"
 
 #: ../base/ufos/ui/options.ufo:2163
 msgid "Max texture resolution"
-msgstr "Resolución máxima de las texturas"
+msgstr "Resolución de las texturas"
 
 #: ../base/ufos/ui/options.ufo:2177 ../base/ufos/ui/options.ufo:2372
 msgid "256"
@@ -28634,7 +28634,7 @@ msgstr "Bilineal/Trilineal y mapas MIP"
 
 #: ../base/ufos/ui/options.ufo:2267
 msgid "Texture compression"
-msgstr "Compresión de las texturas"
+msgstr "Compresión de texturas"
 
 #: ../base/ufos/ui/options.ufo:2268
 msgid "Improves memory performance but reduces visual quality"
@@ -29253,7 +29253,7 @@ msgstr "Iniciar Sesión"
 
 #: ../base/ufos/ui/web.ufo:37
 msgid "Password"
-msgstr "Contraseña:"
+msgstr "Contraseña"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
