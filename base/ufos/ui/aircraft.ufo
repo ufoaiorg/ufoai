@@ -348,11 +348,11 @@ window iaircraft
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
 
 			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToStart
-			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToReturn
 			*cvar:mn_aircraft_model_display = *cvar:mn_aircraft_model
 		} else {
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
 
+			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToReturn
 			*cvar:mn_aircraft_model_display = "<cvar:mn_aircraft_model>_flying"
 		}
 	}
