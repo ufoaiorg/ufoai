@@ -123,26 +123,18 @@ window geoscape
 
 	panel control {
 		{
-			pos		"768 0"
-			size	"256 768"
-			align	LAYOUTALIGN_RIGHT
+			pos			"788 20"
+			size		"216 728"
+			border		"2"
+			bordercolor	"0.56 0.81 0.76 1"
 		}
-
-		// ====================
-		// background and deco
-		// ====================
-
-		image back_deco
-		{
-			src		"ui/geo_menu_deco"
-			pos			"0 0"
-			visiblewhen	"*cvar:mn_geoscape_deco == 1"
-		}
-
-		image back_mini
-		{
-			src		"ui/geo_menu_inside"
-			pos			"0 0"
+		panel border {
+			{
+				pos			"0 70"
+				size		"216 465"
+				border		"2"
+				bordercolor	"0.56 0.81 0.76 1"
+			}
 		}
 
 		// =====================
@@ -175,7 +167,7 @@ window geoscape
 		string date
 		{
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
-			pos			"31 32"
+			pos			"11 12"
 			size		"195 20"
 			contentalign	ALIGN_UC
 			color		"1 1 1 1"
@@ -189,7 +181,7 @@ window geoscape
 		string txt_credits_caption
 		{
 			string		"_CREDITS"
-			pos			"31 58"
+			pos			"11 38"
 			size		"97 25"
 			font		"f_small"
 			contentalign	ALIGN_CC
@@ -199,7 +191,7 @@ window geoscape
 		{
 			string		*cvar:mn_credits
 			tooltip		"_Organisation capital"
-			pos			"129 58"
+			pos			"109 38"
 			size		"97 25"
 			font		"f_small"
 			contentalign	ALIGN_CC
@@ -211,8 +203,8 @@ window geoscape
 
 		panel time_panel {
 			{
-				pos		"0 90"
-				size	"254 55"
+				pos		"0 70"
+				size	"214 55"
 			}
 
 			func faster {
@@ -229,7 +221,7 @@ window geoscape
 				tooltip		"_Pause"
 				cvar		*cvar:mn_timelapse_id	value "0"
 				icon		"icons/speed_stop"
-				pos			"48 10"
+				pos			"28 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ *cvar:mn_fastexit = 0; cmd "game_timefast;" }
@@ -241,7 +233,7 @@ window geoscape
 				tooltip		"_Time lapse: 5 seconds"
 				cvar		*cvar:mn_timelapse_id	value "1"
 				icon		"icons/speed_dot"
-				pos			"68 10"
+				pos			"48 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -253,7 +245,7 @@ window geoscape
 				tooltip		"_Time lapse: 5 minutes"
 				cvar		*cvar:mn_timelapse_id	value "2"
 				icon		"icons/speed_play1"
-				pos			"88 10"
+				pos			"68 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -265,7 +257,7 @@ window geoscape
 				tooltip		"_Time lapse: 20 minutes"
 				cvar		*cvar:mn_timelapse_id	value "3"
 				icon		"icons/speed_dot"
-				pos			"108 10"
+				pos			"88 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -277,7 +269,7 @@ window geoscape
 				tooltip		"_Time lapse: 1 hour"
 				cvar		*cvar:mn_timelapse_id	value "4"
 				icon		"icons/speed_play2"
-				pos			"128 10"
+				pos			"108 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -289,7 +281,7 @@ window geoscape
 				tooltip		"_Time lapse: 12 hours"
 				cvar		*cvar:mn_timelapse_id	value "5"
 				icon		"icons/speed_dot"
-				pos			"148 10"
+				pos			"128 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -301,7 +293,7 @@ window geoscape
 				tooltip		"_Time lapse: 1 day"
 				cvar		*cvar:mn_timelapse_id	value "6"
 				icon		"icons/speed_dot"
-				pos			"168 10"
+				pos			"148 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -313,7 +305,7 @@ window geoscape
 				tooltip		"_Time lapse: 5 days"
 				cvar		*cvar:mn_timelapse_id	value "7"
 				icon		"icons/speed_play3"
-				pos			"188 10"
+				pos			"168 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
@@ -323,8 +315,8 @@ window geoscape
 			string timelapse
 			{
 				string		    *cvar:mn_timelapse
-				pos			    "31 32"
-				size		    "195 20"
+				pos			    "1 32"
+				size		    "205 20"
 				contentalign	ALIGN_UC
                 color	        "0.56 0.81 0.76 1"
 			}
@@ -337,7 +329,7 @@ window geoscape
 		text description
 		{
 			dataid		TEXT_STANDARD
-			pos			"32 154"
+			pos			"22 134"
 			size		"172 144"
 			lineheight	18
 			tabwidth	70
@@ -351,7 +343,7 @@ window geoscape
 
 		vscrollbar description_scroll {
 			image		"ui/scrollbar_v_green"
-			pos			"205 151"
+			pos			"185 131"
 			height		"144"
 			current		0
 			viewsize	8
@@ -369,7 +361,7 @@ window geoscape
 		string daytime
 		{
 			string		*cvar:mn_mapdaytime
-			pos			"31 306"
+			pos			"11 286"
 			size		"195 20"
 			contentalign	ALIGN_UC
 		}
@@ -380,7 +372,7 @@ window geoscape
 
 		panel geoscape_control {
 			{
-				pos		"43 342"
+				pos		"23 322"
 				size	"170 170"
 			}
 
@@ -500,7 +492,7 @@ window geoscape
 			tooltip		"_Change message and pause settings"
             color	    "0.56 0.81 0.76 1"
 			font	 	"f_small"
-			pos			"41 560"
+			pos			"21 540"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			background		"ui/button_geoscape"
@@ -516,7 +508,7 @@ window geoscape
 			tooltip		"_INBOX (with unread mails)"
             		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
-			pos			"41 595"
+			pos			"21 575"
 			flash		true
 			size		"175 34"
 			selectcolor	"1 1 1 1"
@@ -533,7 +525,7 @@ window geoscape
 			tooltip		"_INBOX"
             		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
-			pos			"41 595"
+			pos			"21 575"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
@@ -545,7 +537,7 @@ window geoscape
 		{
 			string		"_Statistics"
 			tooltip		"_Organisation statistics"
-			pos			"41 630"
+			pos			"21 610"
 			size		"175 34"
             		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
@@ -558,7 +550,7 @@ window geoscape
 		button bt_ufopedia
 		{
 			string		"_UFOpaedia"
-			pos			"41 665"
+			pos			"21 645"
 			size		"175 34"
             		color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
@@ -572,7 +564,7 @@ window geoscape
 		{
 			string		"_Create installation"
             		color		"0.56 0.81 0.76 1"
-			pos			"41 700"
+			pos			"21 680"
 			size		"175 34"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
@@ -590,7 +582,7 @@ window geoscape
 			tooltip		"_Highlight nation borders"
 			background	"buttons/blue3"
 			icon		"icons/geo_nations"
-			pos			"40 515"
+			pos			"20 495"
 			size		"32 32"
 			onClick		{ cmd "map_overlay nations;" }
 		}
@@ -600,7 +592,7 @@ window geoscape
 			tooltip		"_Show radar range"
 			background	"buttons/blue3"
 			icon		"icons/geo_radar"
-			pos			"70 515"
+			pos			"50 495"
 			size		"32 32"
 			onClick		{ cmd "map_overlay radar;" }
 		}
@@ -611,7 +603,7 @@ window geoscape
 			tooltip		"_Show XVI map"
 			background	"buttons/blue3"
 			icon		"icons/geo_xvi"
-			pos			"100 515"
+			pos			"80 495"
 			size		"32 32"
 			onClick		{ cmd "map_overlay xvi;" }
 		}
@@ -621,7 +613,7 @@ window geoscape
 			tooltip		"_Center objects on the map"
 			background	"buttons/blue3"
 			icon		"icons/geo_center"
-			pos			"145 520"
+			pos			"125 500"
 			size		"28 25"
 			onClick		{ cmd "map_center;" }
 		}
@@ -631,7 +623,7 @@ window geoscape
 			tooltip		"_Go to Options"
 			background	"buttons/blue3"
 			icon		"icons/geo_option"
-			pos			"190 520"
+			pos			"170 500"
 			size		"28 25"
 			onClick		{ cmd "ui_pop;" }
 		}
