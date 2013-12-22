@@ -40,6 +40,11 @@ window messageoptions extends popupUI2
 		size		"496 496"
 		closebutton	true
 		modal		true
+	}
+
+	string title
+	{
+		width		"496"
 		string		"_Pause/message settings"
 	}
 
@@ -52,9 +57,8 @@ window messageoptions extends popupUI2
 		onClick		{ cmd "ui_pop;msgoptions_backup;" }
 	}
 
-	MainMenuBtn button_revert
+	MainMenuCancelBtn button_revert
 	{
-		string		"_Cancel"
 		tooltip		"_Revert changes"
 		pos			"296 436"
         size	    "150 30"
@@ -105,8 +109,8 @@ window messageoptions extends popupUI2
 	rows lines {
 		pos			"30 90"
 		size		"420 325"
-//		color1		"0 0.08 0 1"
-//		color2		"0 0.16 0 1"
+		color1		"0.56 0.81 0.76 0.15"
+		color2		"0.56 0.81 0.76 0.1"
 		lineheight	25
 	}
 
