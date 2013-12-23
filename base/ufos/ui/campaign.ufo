@@ -51,6 +51,59 @@ component LoadSlot extends panel
 	}
 }
 
+component SaveSlot extends panel
+{
+	{
+		size		"320 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
+	}
+
+	data filename
+	{
+		string		""
+	}
+
+	data title
+	{
+		string		""
+	}
+
+	data date
+	{
+		string		""
+	}
+
+	data index
+	{
+		integer		-1
+	}
+
+	textentry name
+	{
+		color		"1 1 1 0.5"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CL
+		padding		8
+		size		"250 34"
+		clickoutabort   true
+	}
+
+	button upload
+	{
+		background	"icons/upload"
+		tooltip		"_Upload"
+		size		"34 34"
+	}
+
+	button delete
+	{
+		size		"34 34"
+		icon 		"icons/delete"
+		tooltip		"_Delete this team"
+	}
+}
+
 window campaign extends cgame_download
 {
 	{
@@ -224,28 +277,28 @@ window campaign extends cgame_download
 				invis			true
 			}
 
-			cmpSaveSlotPanel save0 {
+			SaveSlot save0 {
 			}
 
-			cmpSaveSlotPanel save1 {
+			SaveSlot save1 {
 			}
 
-			cmpSaveSlotPanel save2 {
+			SaveSlot save2 {
 			}
 
-			cmpSaveSlotPanel save3 {
+			SaveSlot save3 {
 			}
 
-			cmpSaveSlotPanel save4 {
+			SaveSlot save4 {
 			}
 
-			cmpSaveSlotPanel save5 {
+			SaveSlot save5 {
 			}
 
-			cmpSaveSlotPanel save6 {
+			SaveSlot save6 {
 			}
 
-			cmpSaveSlotPanel save7 {
+			SaveSlot save7 {
 			}
 		}
 		// List of available downloads
@@ -345,7 +398,7 @@ window campaign extends cgame_download
 		}
 
 		// The save part
-		//call *node:root.cmp_sel.cmp_saves@createChild("save<1>", "cmpSaveSlotPanel")
+		//call *node:root.cmp_sel.cmp_saves@createChild("save<1>", "SaveSlot")
 		*node:root.cmp_sel.cmp_saves.save<1>.filename@string = <5>
 		*node:root.cmp_sel.cmp_saves.save<1>.title@string = <2>
 		*node:root.cmp_sel.cmp_saves.save<1>.date@string = <3>
@@ -617,15 +670,18 @@ window campaign_main extends campaign
 // QUICK LOAD MENU
 // ==================
 
-window quickload
+window quickload extends popupUI2
 {
 	{
-		string		"_Reload campaign"
 		pos			"264 262"
 		size		"496 247"
-		background		"ui/popup_alpha_tile"
-		dragbutton	true
 		closebutton	true
+	}
+
+	string title
+	{
+		string		"_Reload campaign"
+		width		"496"
 	}
 
 	string name_label
@@ -636,12 +692,15 @@ window quickload
 		longlines	LONGLINES_WRAP
 	}
 
-	cmpPopupButton button_go
+	MainMenuBtn button_go
 	{
 		string		"_Load"
 		pos			"266 188"
+		width		"180"
 		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
 	}
+
+	fuzzyScreen overlay { }
 }
 
 // ==================
