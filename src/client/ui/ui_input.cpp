@@ -432,8 +432,10 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 	int lastWindowId;
 
 	if (UI_DNDIsDragging()) {
-		if (key == K_ESCAPE)
+		if (key == K_ESCAPE) {
 			UI_DNDAbort();
+			return true;
+		}
 		return false;
 	}
 
