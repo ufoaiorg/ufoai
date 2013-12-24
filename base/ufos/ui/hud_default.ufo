@@ -954,6 +954,7 @@ window hud_default extends hud
 
 	confunc startround
 	{
+		call *node:root.reactions@removeAllChild
 		*node:root.next.bt_nextround@disabled = false
 		*node:root.overlay@invis = true
 	}
@@ -1128,6 +1129,7 @@ window hud_default extends hud
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
+		call *node:root.reactions@removeAllChild
 
 		// Hide the rescue zone on startup
 		*cvar:cl_map_draw_rescue_zone = 0
