@@ -409,10 +409,15 @@ window equipment extends objectinfo
 	skillbars equip_skills
 	{
 		{
-			pos			"740 630"
+			pos			"740 590"
 		}
 	}
-
+	healthbar equip_health
+	{
+		{
+			pos			"740 710"
+		}
+    }
 
 	baseinventory equip		{
 		pos						"750 50"
