@@ -112,14 +112,14 @@ window equipment extends objectinfo
                 {
                     pos			"310 40"
                     size		"400 418"
-                    bgcolor		"0 0.15 0.1 0.7"
+                    bgcolor		"0.56 0.81 0.76 0.1"
                     bordercolor	"0.58 0.81 0.758 0.7"
                     border		"2"
                     onMouseEnter	{
-                        *node:this@bgcolor = "0 0.21 0.158 0.7"
+                        *node:this@bgcolor = "0.56 0.81 0.76 0.15"
                     }
                     onMouseLeave	{
-                        *node:this@bgcolor = "0 0.15 0.1 0.7"
+                        *node:this@bgcolor = "0.56 0.81 0.76 0.1"
                     }
                 }
 
@@ -403,19 +403,19 @@ window equipment extends objectinfo
 	abilities equip_abilities
 	{
 		{
-			pos			"740 465"
+			pos			"740 475"
 		}
 	}
 	skillbars equip_skills
 	{
 		{
-			pos			"740 590"
+			pos			"740 600"
 		}
 	}
 	healthbar equip_health
 	{
 		{
-			pos			"740 710"
+			pos			"740 720"
 		}
     }
 
