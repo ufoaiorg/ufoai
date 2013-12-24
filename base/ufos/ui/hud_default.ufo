@@ -1328,6 +1328,7 @@ window hud_default extends hud
 	// ==================
 	confunc startround
 	{
+		call *node:root.reactions@removeAllChild
 		*node:root.overlay@invis = true
 		cmd "deselect_headgear;deselect_crouch;deselect_stand;"
 	}
@@ -1341,6 +1342,7 @@ window hud_default extends hud
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
+		call *node:root.reactions@removeAllChild
 
 		// Input soldier information squad selection
 		*cvar:i = 0;
