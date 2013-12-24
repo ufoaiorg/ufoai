@@ -353,74 +353,84 @@ window employees
         }
     }
 
-	// ==================
-	// buttons
-	// ==================
+/*	BuildingSpace quarters
+	{
+		{ pos "739 0" }
 
-	panel global_info {
-		{
-			pos		"740 10"
-			size	"250 90"
-		}
+		button smlicon { icon	"icons/building_quarters" }
+		string label { string	"_Living Quarters" }
+		button alert { invis true }
+	}
+*/
 		string label_people {
 			string	"_Occupation"
 			font	"f_normal_bold"
-			pos		"10 08"
+			pos		"740 08"
 			size	"140 20"
 			contentalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
 			font	"f_normal_bold"
-			pos		"150 08"
+			pos		"880 08"
 			size	"100 20"
 			contentalign	ALIGN_UC
 		}
 
+	// ==================
+	// buttons
+	// ==================
+
+	panel global_info {
+		{
+			pos		"740 30"
+			size	"250 70"
+		}
+
 		button icon_soldier {
 			icon	"icons/head_soldier"
-			pos		"10 28"
+			pos		"10 8"
 			size	"42 42"
 		}
 		string number_soldier {
 			string	*cvar:mn_hiresoldiers
-			pos		"12 68"
+			pos		"12 48"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_pilot {
 			icon	"icons/head_pilot"
-			pos		"70 28"
+			pos		"70 8"
 			size	"42 42"
 		}
 		string number_pilot {
 			string	*cvar:mn_hirepilots
-			pos		"72 68"
+			pos		"72 48"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_worker {
 			icon	"icons/head_worker"
-			pos		"130 28"
+			pos		"130 8"
 			size	"42 42"
 		}
 		string number_worker {
 			string	*cvar:mn_hireworkers
-			pos		"132 68"
+			pos		"132 48"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
 
 		button icon_scientist {
 			icon	"icons/head_scientist"
-			pos		"190 28"
+			pos		"190 8"
 			size	"42 42"
 		}
 		string number_scientist {
 			string	*cvar:mn_hirescientists
-			pos		"192 68"
+			pos		"192 48"
 			size	"42 20"
 			contentalign	ALIGN_UR
 		}
