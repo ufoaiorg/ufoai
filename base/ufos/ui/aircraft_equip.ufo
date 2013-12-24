@@ -575,31 +575,45 @@ window aircraft_equip extends iaircraft
 
 	confunc airequip_installable_item
 	{
-		// display the "add" button
-		*node:root.warning@invis = true
-		*node:root.button_add@invis = false
-		*node:root.button_remove@invis = true
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display the "add" button
+			*node:root.warning@invis = true
+			*node:root.button_add@invis = false
+			*node:root.button_remove@invis = true
+		}
 	}
 
 	confunc airequip_installed_item
 	{
-		// display the "remove" button
-		*node:root.warning@invis = true
-		*node:root.button_add@invis = true
-		*node:root.button_remove@invis = false
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display the "remove" button
+			*node:root.warning@invis = true
+			*node:root.button_add@invis = true
+			*node:root.button_remove@invis = false
+		}
 	}
 
 	confunc airequip_noinstallable_item
 	{
-		// display warning
-		*node:root.warning@invis = false
-		*node:root.button_add@invis = true
-		*node:root.button_remove@invis = true
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display warning
+			*node:root.warning@invis = false
+			*node:root.button_add@invis = true
+			*node:root.button_remove@invis = true
+		}
 	}
 
 	confunc airequip_no_item
 	{
-		// display warning
 		*node:root.warning@invis = true
 		*node:root.button_add@invis = true
 		*node:root.button_remove@invis = true
@@ -640,10 +654,6 @@ window aircraft_equip extends iaircraft
 		call *node:root.aircraft_checkbuttons
 		cmd "airequip_updatemenu;"
 		cmd "airequip_select zone1;"
-		// absent from base, go back to the main GUI
-		if ( *cvar:mn_aircraftinbase == 0 ) {
-//			cmd "ui_pop; ui_push aircraft_equip;"
-		}
 	}
 
 	func onWindowOpened
