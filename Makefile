@@ -39,6 +39,12 @@ INSTALL_DIR     ?= $(INSTALL) -d
 INSTALL_MAN     ?= $(INSTALL) -m 444
 INSTALL_DATA    ?= $(INSTALL) -m 444
 
+ifeq ($(USE_CCACHE),1)
+CCACHE := ccache
+else
+CCACHE :=
+endif
+
 .PHONY: all
 ifeq ($(TARGET_OS),android)
 all: android
@@ -108,19 +114,19 @@ endif
 $($(1)_FILE): $(BUILDDIR)/$(1)/.dirs build/modules/$(1).mk $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
 	@echo '===> LD [$$@]'
 	$(Q)mkdir -p $(dir $($(1)_FILE))
-	$(Q)$(CROSS)$($(1)_LINKER) $($(1)_OBJS) $($(1)_LDFLAGS) $(LDFLAGS) -o $($(1)_FILE)
+	$(Q)$(CCACHE) $(CROSS)$($(1)_LINKER) $($(1)_OBJS) $($(1)_LDFLAGS) $(LDFLAGS) -o $($(1)_FILE)
 
 $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
-	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+	$(Q)$(CCACHE) $(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
-	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+	$(Q)$(CCACHE) $(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.mm.o: $(SRCDIR)/%.mm $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
-	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+	$(Q)$(CCACHE) $(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> WINDRES [$(1)] $$<'
@@ -128,11 +134,11 @@ $(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 
 $(BUILDDIR)/$(1)/%.cc.o: $(SRCDIR)/%.cc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
-	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+	$(Q)$(CCACHE) $(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
-	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+	$(Q)$(CCACHE) $(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/.dirs: $(TARGET_OS)-config.h
 	$(Q)mkdir -p $(foreach i,$($(1)_OBJS),$(dir $(i)))
