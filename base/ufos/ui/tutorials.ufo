@@ -4,57 +4,63 @@
 
 window tutorials
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/main_bg"
+		background		"ui/main_bg"
 	}
 
 	string headline
 	{
-		string  "_Tutorials"
-		pos             "630 170"
-		font "f_big"
+		string			"_TUTORIALS"
+		size			"500 50"
+		pos				"262 50"
+		font			"f_title"
+		color			"0.59 0.78 0.56 1"
+		contentalign	ALIGN_CC
 	}
 
-	cmpMenuButton button_back
-	{
-		pos	"640 520"
-		onClick	{ cmd "ui_pop;" }
-		string	"_Back"
-	}
+	panel buttons {
+		{
+			pos			"312 250"
+			size		"400 720"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+		}
 
-	textlist tutoriallist
-	{
-		dataid		TEXT_LIST
-		pos			"640 220"
-		size		"240 280"
-		lineheight	"20"
-		rows		"14"
-		onClick		{ cmd "tutoriallist_click <lineselected>;" }
-		onViewChange	{
-			*node:root.tutoriallist_scroll@fullsize = <fullsize>
-			*node:root.tutoriallist_scroll@current = <viewpos>
-			*node:root.tutoriallist_scroll@viewsize = <viewsize>
+		textlist tutoriallist
+		{
+			contentalign	ALIGN_CC
+			dataid			TEXT_LIST
+			pos				"0 0"
+			size			"380 280"
+			lineheight		"20"
+			rows			"16"
+			onClick		{ cmd "tutoriallist_click <lineselected>;" }
+			onViewChange	{
+	/*			*node:parent.tutoriallist_scroll@fullsize = <fullsize>
+				*node:parent.tutoriallist_scroll@current = <viewpos>
+				*node:parent.tutoriallist_scroll@viewsize = <viewsize>
+	*/		}
+		}
+
+	/*	vscrollbar tutoriallist_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"380 0"
+			height		"280"
+			current		0
+			viewsize	14
+			fullsize	16
+			hidewhenunused true
+			onChange	{ *node:parent.tutoriallist@viewpos = <current> }
+		}
+	*/
+		MainMenuExitBtn button_back
+		{
+			onClick	{ cmd "ui_pop;" }
+			string	"_BACK"
 		}
 	}
 
-	vscrollbar tutoriallist_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"885 220"
-		height		"280"
-		current		0
-		viewsize	14
-		fullsize	14
-		hidewhenunused true
-		onChange	{ *node:root.tutoriallist@viewpos = <current> }
-	}
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{
