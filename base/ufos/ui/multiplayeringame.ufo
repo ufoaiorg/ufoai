@@ -4,16 +4,11 @@
 
 window multiplayerInGame
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/main_bg"
+		fill		true
+		starlayout	true
+		bgcolor		"0 0 0 0.5"
+		background	"ui/main_bg"
 	}
 
 	string version
@@ -22,36 +17,49 @@ window multiplayerInGame
 		pos		"10 744"
 	}
 
-	// ==================
-	// buttons
-	// ==================
-
-	cmpMenuButton button_continue
+	panel buttons
 	{
-		pos	"640 170"
-		onClick	{ cmd "ui_pop;" }
-		string	"_Continue"
+		{
+			size			"400 700"
+			align			LAYOUTALIGN_TOP
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+			contentalign	LAYOUTALIGN_MIDDLE
+		}
+
+		panel spacer
+		{
+			{
+				size	"0 235"
+			}
+		}
+
+		MainMenuBtn btn_continue
+		{
+			tooltip	"_Leave this menu and continue playing."
+			onClick	{ cmd "ui_pop;" }
+			string	"_CONTINUE"
+		}
+
+		MainMenu2Btn btn_irc
+		{
+			visiblewhen "exists *cvar:irc_defaultChannel"
+			onClick	{ cmd "ui_push irc;" }
+			string	"_LOBBY"
+		}
+
+		MainMenu2Btn btn_options
+		{
+			onClick	{ cmd "ui_push options;" }
+			string	"_OPTIONS"
+		}
+
+		MainMenuExitBtn btn_abort
+		{
+			onClick	{ cmd "game_exit;ui_pop;" }
+			string	"_ABORT GAME"
+		}
 	}
 
-	cmpMenuButton button_options
-	{
-		pos	"640 240"
-		onClick	{ cmd "ui_push options;" }
-		string	"_Options"
-	}
-
-	cmpMenuButton button_irc
-	{
-		visiblewhen "exists *cvar:irc_defaultChannel"
-		pos	"640 310"
-		onClick	{ cmd "ui_push irc;" }
-		string	"_Lobby"
-	}
-
-	cmpMenuButton button_abort
-	{
-		pos	"640 520"
-		onClick	{ cmd "game_exit;ui_pop;" }
-		string	"_Abort Game"
-	}
+	fuzzyScreen overlay { }
 }
