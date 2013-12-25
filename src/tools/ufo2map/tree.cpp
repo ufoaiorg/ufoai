@@ -93,7 +93,7 @@ tree_t* AllocTree (void)
 {
 	tree_t* tree = Mem_AllocType(tree_t);
 
-	tree->aabb.clearBounds();
+	tree->aabb.setNegativeVolume();
 
 	return tree;
 }
@@ -189,7 +189,7 @@ tree_t* BuildTree (bspbrush_t* brushlist, const vec3_t mins, const vec3_t maxs)
 
 	tree = AllocTree();
 
-	blBox.clearBounds();
+	blBox.setNegativeVolume();
 	BrushlistCalcStats(brushlist, blBox);
 	tree->aabb.add(blBox);
 

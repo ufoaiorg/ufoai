@@ -75,7 +75,7 @@ public:
 	/**
 	 * @brief Sets mins and maxs to their starting points before using addPoint
 	 */
-	inline void clearBounds () {
+	inline void setNegativeVolume () {
 		mins[0] = mins[1] = mins[2] = 99999;
 		maxs[0] = maxs[1] = maxs[2] = -99999;
 	}

@@ -376,7 +376,7 @@ void BeginModel (int entityNum)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 	AABB modBox;
-	modBox.clearBounds();
+	modBox.setNegativeVolume();
 
 	for (j = start; j < end; j++) {
 		const mapbrush_t* b = &mapbrushes[j];

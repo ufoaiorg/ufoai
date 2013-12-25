@@ -599,7 +599,7 @@ bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 	OBJZERO(*mod);
 	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
 	mod->frame = frame;
-	mod->aabb.clearBounds();
+	mod->aabb.setNegativeVolume();
 
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned* ) buf)) {

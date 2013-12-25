@@ -80,7 +80,7 @@ static int32_t BuildNodeChildren (const int n[3])
 			/* store the valid node */
 			node = n[i];
 
-			aabb.clearBounds();
+			aabb.setNegativeVolume();
 			VectorCopy(curTile->nodes[node].mins, aabb.mins);
 			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 		} else {
@@ -96,7 +96,7 @@ static int32_t BuildNodeChildren (const int n[3])
 			newnode->firstface = 0;
 			newnode->numfaces = 0;
 
-			aabb.clearBounds();
+			aabb.setNegativeVolume();
 			VectorCopy(curTile->nodes[node].mins, aabb.mins);
 			VectorCopy(curTile->nodes[node].maxs, aabb.maxs);
 			VectorCopy(curTile->nodes[n[i]].mins, addvec);
