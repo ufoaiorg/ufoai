@@ -1408,6 +1408,10 @@ ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* c
 	return event;
 }
 
+/**
+ * @brief Delay the following events and return the amount of events delayed
+ * @param[in,out] The event queue iterator to start the delaying from
+ */
 static size_t Delay_Events (int now, EventPriorityQueue::iterator i)
 {
 	ScheduleEventPtr event = *i;
