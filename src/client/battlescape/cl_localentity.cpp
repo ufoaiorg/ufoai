@@ -1739,7 +1739,7 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
  * @sa CL_ClipMoveToLEs
  * @sa SV_Trace
  * @param[in] traceLine Start and end vector of the trace
- * @param[in] box Bounding box used for tracing
+ * @param[in] box The box we move through the world
  * @param[in] passle Ignore this local entity in the trace (might be nullptr)
  * @param[in] passle2 Ignore this local entity in the trace (might be nullptr)
  * @param[in] contentmask Searched content the trace should watch for
