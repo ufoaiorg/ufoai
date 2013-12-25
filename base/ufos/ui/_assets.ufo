@@ -560,11 +560,11 @@ component actor_info extends panel
         }
 
 
-        string	missions_lbl { pos "10 278" size "170 20" string "_Missions Performed:" }
-        string	missions_val { pos "190 278" size "90 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+        string	missions_lbl { pos "10 278" size "180 20" string "_Missions Performed:" }
+        string	missions_val { pos "200 278" size "80 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
-        string	kills_lbl { pos "10 298" size "170 20" string "_Enemies Killed:" }
-        string	kills_val { pos "190 298" size "90 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+        string	kills_lbl { pos "10 298" size "180 20" string "_Enemies Killed:" }
+        string	kills_val { pos "200 298" size "80 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
     }
 }
 // Pilot Skills panel
