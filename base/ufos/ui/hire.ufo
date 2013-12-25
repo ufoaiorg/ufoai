@@ -36,8 +36,8 @@ window employees
             tab empl_switch {
                 {
                     cvar		*cvar:mn_hiretype
-                    pos			"0 36"
-                    size		"528 39"
+                    pos			"1 36"
+                    size		"713 39"
                     onChange {
                         cmd "employee_init <cvar:mn_hiretype>;"
                         *node:parent.employees.employee_list@lineselected = 0
@@ -293,6 +293,21 @@ window employees
                     }
                 }
             }
+
+			panel placeholder
+            {
+                {
+                    pos			"530 75"
+                    size		"183 460"
+					contentalign	ALIGN_CC
+                }
+
+				string pltext
+				{
+					string		"Placeholder"
+					align		LAYOUTALIGN_MIDDLE
+				}
+			}
         }
     }
 
