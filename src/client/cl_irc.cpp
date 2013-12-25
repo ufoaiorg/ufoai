@@ -643,8 +643,11 @@ static bool Irc_AppendToBuffer (const char* const msg, ...)
 	}
 
 	Q_strcat(irc_buffer, sizeof(irc_buffer), "%s\n", appendString);
-	if (irc_logConsole->integer)
-		Com_Printf("IRC: %s\n", appendString);
+	if (irc_logConsole->integer) {
+		char appendStringCut[1000];
+		Q_strncpyz(appendStringCut, appendString, lengthof(appendStringCut));
+		Com_Printf("IRC: %s\n", appendStringCut);
+	}
 
 	UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	UI_TextScrollEnd("irc.irc_data");
