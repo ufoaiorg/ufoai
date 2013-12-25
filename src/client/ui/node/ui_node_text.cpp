@@ -86,12 +86,12 @@ void UI_TextScrollEnd (const char* nodePath)
 {
 	uiNode_t* node = UI_GetNodeByPath(nodePath);
 	if (!node) {
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodePath);
+		Com_DPrintf(DEBUG_CLIENT, "UI_TextScrollEnd: Node '%s' could not be found\n", nodePath);
 		return;
 	}
 
 	if (!UI_NodeInstanceOf(node, "text")) {
-		Com_Printf("UI_TextScrollBottom: '%s' node is not an 'text'.\n", Cmd_Argv(1));
+		Com_Printf("UI_TextScrollEnd: '%s' node is no instance of 'text'.\n", Cmd_Argv(1));
 		return;
 	}
 
