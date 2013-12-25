@@ -1459,8 +1459,8 @@ ScheduleEventPtr Dequeue_Event (int now)
 				if (event->notifyDelay != nullptr) {
 					event->notifyDelay(now, event->notifyDelayUserData, event->delayFollowing);
 				}
+				break;
 			}
-			break;
 		}
 	}
 	return ScheduleEventPtr();
