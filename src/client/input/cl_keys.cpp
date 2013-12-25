@@ -671,8 +671,7 @@ static void Key_Bind_f (void)
 void Key_WriteBindings (const char* filename)
 {
 	int i;
-	/* this gets true in case of an error */
-	bool deleteFile = false;
+	bool writeError = false;
 	int cnt = 0;
 
 	ScopedFile f;
@@ -688,22 +687,22 @@ void Key_WriteBindings (const char* filename)
 	FS_Printf(&f, "unbindall\n");
 	FS_Printf(&f, "unbindallbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
-	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
+	for (i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (menuKeyBindings[i] && menuKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menuKeyBindings[i]) < 0)
-				deleteFile = true;
+				writeError = true;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
+	for (i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (keyBindings[i] && keyBindings[i][0]) {
 			if (FS_Printf(&f, "bind %s \"%s\"\n", Key_KeynumToString(i), keyBindings[i]) < 0)
-				deleteFile = true;
+				writeError = true;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
+	for (i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battleKeyBindings[i]) < 0)
-				deleteFile = true;
+				writeError = true;
 			cnt++;
 		}
 
@@ -721,15 +720,16 @@ void Key_WriteBindings (const char* filename)
 			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
 		if (FS_Printf(&f, "bindui %s \"%s\" \"%s\"\n", Key_KeynumToString(binding->key), path, binding->description ? binding->description : "") < 0)
-			deleteFile = true;
+			writeError = true;
 	}
 
-	if (!deleteFile && cnt)
+	FS_CloseFile(&f);
+	if (!writeError && cnt > 0) {
 		Com_Printf("Wrote %s\n", filename);
-	else
+	} else {
 		/* error in writing the keys.cfg - remove the file again */
-		FS_CloseFile(&f);
 		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
+	}
 }
 
 /**
