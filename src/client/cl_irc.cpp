@@ -650,7 +650,7 @@ static bool Irc_AppendToBuffer (const char* const msg, ...)
 	}
 
 	UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
-	UI_TextScrollEnd("irc.irc_data");
+	UI_TextScrollEnd("irc.chat.mainBody.irc_data");
 
 	if (irc_showIfNotInMenu->integer && !Q_streq(UI_GetActiveWindowName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
