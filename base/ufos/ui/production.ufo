@@ -131,10 +131,10 @@ window production
 				{
 					dataid		TEXT_PRODUCTION_LIST
 					color		"0.56 0.81 0.76 1"
-					rows		"22"
+					rows		"23"
 					lineheight	"25"
 					pos			"55 30"
-					size		"250 580"
+					size		"250 575"
 					longlines	LONGLINES_PRETTYCHOP
 					onClick		{
 						*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <node:this@lineselected>
@@ -161,8 +161,8 @@ window production
 					color		"0.56 0.81 0.76 1"
 					contentalign	ALIGN_CR
 					pos			"310 30"
-					rows		"22"
-					size		"60 580"
+					rows		"23"
+					size		"60 575"
 					lineheight	"25"
 					onClick		{
 						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
@@ -187,10 +187,10 @@ window production
 				{
 					dataid		TEXT_PRODUCTION_QUEUED
 					pos			"495 30"
-					size		"60 580"
+					size		"60 575"
 					color		"0.56 0.81 0.76 1"
 					lineheight	"25"
-					rows		"22"
+					rows		"23"
 					onClick		{
 						*node:root.base_container.mainBody.itemlist.prodlist@lineselected = <node:this@lineselected>
 						*node:root.base_container.mainBody.itemlist.prodlist_amount@lineselected = <node:this@lineselected>

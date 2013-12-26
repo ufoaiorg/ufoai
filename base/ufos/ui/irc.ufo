@@ -71,7 +71,7 @@ window irc
 			{
 				string		*cvar:irc_topic
 				pos			"0 33"
-				size		"715 40"
+				size		"715 32"
 				contentalign	ALIGN_CC
 				font		"f_normal"
 				color		"0.56 0.81 0.76 1"
@@ -79,9 +79,9 @@ window irc
 
 			text irc_data
 			{
-				pos			"2 73"
-				size		"679 610"
-				rows		"24"
+				pos			"2 67"
+				size		"679 616"
+				rows		"28"
 				lineheight  "22"
 				dataid		TEXT_IRCCONTENT
 				onViewChange {
@@ -96,8 +96,8 @@ window irc
 				pos			"697 75"
 				height		"610"
 				current		0
-				viewsize	24
-				fullsize	24
+				viewsize	22
+				fullsize	22
 				onChange	{ *node:parent.irc_data@viewpos = <current> }
 			}
 
@@ -152,10 +152,10 @@ window irc
 		textlist irc_userlist
 		{
 			pos			"11 40"
-			size		"240 619"
+			size		"240 616"
 			lineheight	22
 			dataid		TEXT_IRCUSERS
-			rows		"27"
+			rows		"28"
 			onClick		{ cmd "irc_userlist_click <lineselected>;" }
 			onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
 			onViewChange {
@@ -170,8 +170,8 @@ window irc
 			pos			"241 40"
 			height		"619"
 			current		0
-			viewsize	27
-			fullsize	27
+			viewsize	22
+			fullsize	22
 			hidewhenunused	true
 			onChange		{ *node:parent.irc_userlist@viewpos = <current> }
 		}
