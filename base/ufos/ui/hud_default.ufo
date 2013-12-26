@@ -1028,7 +1028,7 @@ window hud_default extends hud
 			}
 			string levelnum
 			{
-				string			*cvar:cl_worldlevel
+				string			""
 				pos				"27 3"
 				size			"30 25"
 				font			"f_normal_bold"
@@ -1065,9 +1065,13 @@ window hud_default extends hud
 				if (param1 eq "1") {
 					if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 						*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-					}
+						*cvar:i = (*cvar:cl_worldlevel + 1)
+						*node:parent.levelnum@string = <cvar:i>
+						delete *cvar:i
+						}
 				} else {
 					if (*cvar:cl_worldlevel > "0") {
+						*node:parent.levelnum@string = <cvar:cl_worldlevel>
 						*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
 					}
 				}
@@ -1360,6 +1364,7 @@ window hud_default extends hud
 		}
 		delete *cvar:i
 
+		cmd "lvlchange 0;"
 		// Select the current soldier and update the squad selection
 		cmd "hudselect 0;"
 
