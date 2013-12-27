@@ -888,9 +888,9 @@ window hud_default extends hud
 		color	"1 0 0 1"
 		font	"f_verybig_bold"
 		ghost	true
-		pos		"0 0"
-		size	"1024 768"
-		contentalign	ALIGN_CC
+		pos		"0 60"
+		size	"1024 708"
+		contentalign	ALIGN_UC
 	}
 
 	// ==================
