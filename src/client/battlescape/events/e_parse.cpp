@@ -134,6 +134,18 @@ static void CL_NotifyBattlescapeEventDelay (int now, void* data, int delay)
 	eventTiming->impactTime += delay;
 	eventTiming->nextTime += delay;
 	eventTiming->shootTime += delay;
+	le_t* le = nullptr;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingActor(le)) {
+			leStep_t* stepList = le->stepList;
+			if (stepList == nullptr)
+				continue;
+			for (int i = 0; i < le->stepIndex; i++) {
+				stepList = stepList->next;
+			}
+			stepList->lastMoveTime += delay;
+		}
+	}
 }
 
 /**
