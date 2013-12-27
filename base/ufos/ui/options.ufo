@@ -715,7 +715,7 @@ window options
 
 				checkbox_ui2 stretch_opt
 				{
-					current		*cvar:vid_strech
+					current		*cvar:vid_stretch
 					pos			"472 6"
 					size		"20 18"
 				}
