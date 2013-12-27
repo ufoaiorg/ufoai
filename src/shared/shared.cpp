@@ -474,16 +474,14 @@ void Q_strncpyz (char* dest, const char* src, size_t destsize)
  */
 void Q_strcat (char* dest, size_t destsize, const char* format, ...)
 {
-	va_list argptr;
-	char text[1024];
-	va_start(argptr, format);
-	Q_vsnprintf(text, sizeof(text), format, argptr);
-	va_end(argptr);
-
 	const size_t dest_length = strlen(dest);
 	if (dest_length >= destsize)
 		Sys_Error("Q_strcat: already overflowed");
-	Q_strncpyz(dest + dest_length, text, destsize - dest_length);
+
+	va_list argptr;
+	va_start(argptr, format);
+	Q_vsnprintf(dest + dest_length, destsize - dest_length, format, argptr);
+	va_end(argptr);
 }
 
 /**

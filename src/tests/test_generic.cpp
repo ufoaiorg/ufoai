@@ -572,6 +572,11 @@ static void testStringFunctions (void)
 	/* exactly fill the buffer using single-byte char */
 	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 10, 1, (int)'s'), 1);
 	CU_ASSERT_STRING_EQUAL(buf, "ms\xD0\x86nopqr");
+
+	char catBuf[32] = "";
+	Q_strcat(catBuf, sizeof(catBuf), "foo");
+	Q_strcat(catBuf, sizeof(catBuf), "bar");
+	CU_ASSERT_STRING_EQUAL(catBuf, "foobar");
 }
 
 static void testHttpHelperFunctions (void)
