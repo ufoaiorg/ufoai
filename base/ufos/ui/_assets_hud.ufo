@@ -91,3 +91,78 @@ component SoldierSelect extends panel
 		nohover		true
 	}
 }
+
+component WorldLevel extends panel
+{
+	{
+		size		"100 40"
+		ghost		true
+	}
+
+	button icon
+	{
+		pos		"4 3"
+		size	"19 19"
+		icon	"icons/levels"
+		tooltip	"_current level"
+	}
+	string levelnum
+	{
+		string			1
+		pos				"27 3"
+		size			"30 25"
+		font			"f_normal_bold"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+
+	button up
+	{
+		pos		"57 2"
+		size	"18 10"
+		icon	"icons/arrow_up"
+		tooltip	"_raise the level"
+		onclick	{ cmd "lvlchange 1;" }
+	}
+
+	button down
+	{
+		pos		"57 16"
+		size	"18 10"
+		icon	"icons/arrow_down"
+		tooltip	"_lower the level"
+		onclick	{ cmd "lvlchange 0;" }
+	}
+
+	// raise/lower the level
+	// param1: direction (0 = down, 1 = up)
+	confunc lvlchange
+	{
+		if (param1 eq "1") {
+			if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+				*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				*cvar:i = (*cvar:cl_worldlevel + 1)
+				*node:parent.levelnum@string = <cvar:i>
+				delete *cvar:i
+				}
+		} else {
+			if (*cvar:cl_worldlevel > "0") {
+				*node:parent.levelnum@string = <cvar:cl_worldlevel>
+				*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+			}
+		}
+		// change icon if we're at top or bottom level
+		if (*cvar:cl_worldlevel eq "0") {
+			*node:parent.down@icon = "icons/arrow_down_off"
+			*node:parent.up@icon = "icons/arrow_up"
+		} elif (*cvar:cl_worldlevel eq *cvar:cl_maxworldlevel) {
+			*node:parent.up@icon = "icons/arrow_up_off"
+			*node:parent.down@icon = "icons/arrow_down"
+		} else {
+			*node:parent.down@icon = "icons/arrow_down"
+			*node:parent.up@icon = "icons/arrow_up"
+		}
+	}
+}
