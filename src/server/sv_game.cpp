@@ -456,6 +456,7 @@ static void SV_AddEvent (unsigned int mask, int eType, int entnum)
 	if (entnum != -1)
 		NET_WriteShort(p->buf, entnum);
 }
+
 /**
  * @sa gi.QueueEvent
  * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
@@ -466,6 +467,15 @@ static void SV_QueueEvent (unsigned int mask, int eType, int entnum)
 {
 	if (sv->eventQueuePos > lengthof(sv->eventQueue))
 		Com_Error(ERR_DROP, "overflow in SV_QueueEvent");
+
+	const int rawType = eType &~ EVENT_INSTANTLY;
+
+	if (rawType >= EV_NUM_EVENTS || rawType < 0)
+		Com_Error(ERR_DROP, "SV_QueueEvent: invalid event %i", rawType);
+
+	const char* eventName = eventNames[rawType].name;
+	Com_DPrintf(DEBUG_EVENTSYS, "Queued event type: %s (%i - %i) (mask %s) (entnum: %i)\n", eventName,
+			rawType, eType, Com_UnsignedIntToBinary(mask), entnum);
 
 	pending_event_t& p = sv->eventQueue[sv->eventQueuePos++];
 
