@@ -72,7 +72,7 @@ window main
 		MainMenuBtn btn_multiplayer {
 			string		"_MULTIPLAYER"
 			onClick {
-				cmd "mn_push_multiplayer;"
+				cmd "ui_push multiplayer;"
 			}
 		}
 		MainMenu2Btn btn_options {
