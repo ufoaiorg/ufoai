@@ -414,11 +414,21 @@ component currentTeamMember extends panel
 		size		"260 25"
 	}
 
+	panel head_placeholder
+	{
+		{
+			size		"25 25"
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
+			pos			"0 0"
+		}
+	}
+
 	string name
 	{
-		pos			"20 0"
-		color		"0 .78 0 1"
-		size		"260 25"
+		pos			"51 0"
+		color		"1 1 1 1"
+		size		"209 25"
 		contentalign	ALIGN_CL
 	}
 
@@ -428,25 +438,28 @@ component currentTeamMember extends panel
 component cmpCurrentLoadedTeamPanel extends panel
 {
 	{
-		size	"210 216"
+		size	"504 375"
 	}
 
 	string title
 	{
 		pos				"0 0"
-		color			"0 .78 0 1"
-		size			"170 18"
+		color			"0.56 0.81 0.76 1"
+		bgcolor			"0.527 0.6 0.21 0.2"
+		size			"504 32"
 		contentalign	ALIGN_CC
 		string			"_Currently loaded"
+		font	"f_menubig"
 	}
 
 	panel soldierlist
 	{
-		pos				"0 26"
-		size			"170 190"
-		padding			4
+		pos				"0 44"
+		size			"486 331"
+		padding			6
 		layout			LAYOUT_TOP_DOWN_FLOW
 		wheelscrollable	true
+		contentalign	ALIGN_CC
 		onViewChange
 		{
 			*node:parent.soldierlist_scroll@fullsize = <fullsize>
@@ -457,12 +470,12 @@ component cmpCurrentLoadedTeamPanel extends panel
 
 	vscrollbar soldierlist_scroll
 	{
-		image		"ui/scrollbar_v_green"
-		pos			"190 26"
-		height		"190"
-		current		0
-		viewsize	4
-		fullsize	25
+		image			"ui/scrollbar_v_green"
+		pos				"486 26"
+		height			"331"
+		current			0
+		viewsize		4
+		fullsize		25
 		hidewhenunused	true
 		onChange
 		{
@@ -492,7 +505,7 @@ component cmpCurrentLoadedTeamPanel extends panel
 		call *node:parent.soldierlist@removeAllChild
 	}
 }
-
+/*
 component cmpTeamPanel extends panel
 {
 	{
@@ -615,7 +628,7 @@ component cmpTeamPanel extends panel
 		string	"_Save Team"
 	}
 }
-
+*/
 component spinner_blue extends spinner
 {
 	topIcon	"ui/spinner_blue_up"
