@@ -46,7 +46,7 @@ component LoadSlot extends panel
 	button delete
 	{
 		size		"34 34"
-		icon 		"icons/delete"
+		background	"icons/delete"
 		tooltip		"_Delete this savegame"
 	}
 }
@@ -98,9 +98,9 @@ component SaveSlot extends panel
 
 	button delete
 	{
+		background 	"icons/delete"
 		size		"34 34"
-		icon 		"icons/delete"
-		tooltip		"_Delete this team"
+		tooltip		"_Delete this savegame"
 	}
 }
 
@@ -409,6 +409,9 @@ window campaign extends cgame_download
 		} else {
 			*cvar:mn_slot<1> = "<2>"
 		}
+		if ( <5> eq "" ) {
+			*cvar:mn_slot<1> = "_Click here to save game"
+		}
 		*node:root.cmp_sel.cmp_saves.save<1>.name@tooltip = <4>
 		*node:root.cmp_sel.cmp_saves.save<1>.name@onClick = {
 			*cvar:mn_slot<node:this.parent.index@integer> = <node:this.parent.title@string>
@@ -418,6 +421,10 @@ window campaign extends cgame_download
 				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string> <node:this.parent.date@string>"
 			} else {
 				*cvar:mn_slot<node:this.parent.index@integer> = "<node:this.parent.title@string>"
+			}
+			if (<node:this.parent.filename@string> eq "") {
+				cmd "echo <node:this.parent.filename@string>;"
+				*cvar:mn_slot<node:this.parent.index@integer> = "_Click here to save game"
 			}
 		}
 		*node:root.cmp_sel.cmp_saves.save<1>.name@onChange = {
@@ -429,8 +436,13 @@ window campaign extends cgame_download
 			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
 		}
 		//*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {}
-		*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = false
-		*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = false
+		if ( <5> eq "" ) {
+			*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = true
+			*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = true
+		} else {
+			*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = false
+			*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = false
+		}
 	}
 
 	/**
