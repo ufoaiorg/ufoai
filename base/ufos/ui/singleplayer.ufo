@@ -2,7 +2,7 @@
 // SINGLE PLAYER MENU
 // ==================
 
-component cmpGameModeButton extends cmpMenuButton
+component cmpGameModeButton extends MainMenuBtn
 {
 	{
 		pos		"0 0"
@@ -63,7 +63,7 @@ window singleplayer
 		}
 	}
 
-	cmpMenuButton button_back
+	MainMenuBtn button_back
 	{
 		string		"_Back"
 		tooltip		"_Back to the main menu."
@@ -159,14 +159,14 @@ window popup_exit_campaign_confirmation
 		pos			"26 58"
 		size		"450 60"
 	}
-	cmpPopupButton bt_quit
+	MainMenuBtn bt_quit
 	{
 		tooltip		"_Exit current campaign and return to main menu."
 		string		"_Quit"
 		pos			"28 188"
 		onClick		{ cmd "game_exit;" }
 	}
-	cmpCancelButton bt_dontquit
+	MainMenuCancelBtn bt_dontquit
 	{
 		tooltip		"_Do not quit."
 		pos			"285 188"
