@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief UFOAI web interface management. Authentification as well as
+ * @brief UFOAI web interface management. Authentication as well as
  * uploading/downloading stuff to and from your account is done here.
  */
 

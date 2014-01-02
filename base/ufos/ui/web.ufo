@@ -67,11 +67,11 @@ window webauth extends popupUI2
 	}
 
 	confunc web_authsuccessful {
-		cmd "echo \"Authentification successful\";ui_pop;"
+		cmd "echo \"Authentication successful\";ui_pop;"
 	}
 
 	confunc web_authfailed {
 		*cvar:web_password = ""
-		cmd "echo \"Authentification failed\";"
+		cmd "echo \"Authentication failed\";"
 	}
 }
