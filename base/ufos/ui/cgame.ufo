@@ -6,13 +6,8 @@ component downloadentry extends panel {
 		layoutMargin	1
 	}
 
-	button download
+	TextBtn download
 	{
-		background		"ui/button_green_verysmall"
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		contentalign	ALIGN_CC
-		font		"f_verysmall"
 		pos			"0 0"
 		size		"190 34"
 		string		""
