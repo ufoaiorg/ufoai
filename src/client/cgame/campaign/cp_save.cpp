@@ -384,6 +384,24 @@ static void SAV_GameSave_f (void)
 }
 
 /**
+ * @brief Removes savegame file
+ */
+void SAV_GameDelete_f (void)
+{
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+		return;
+	}
+	const char* savegame = Cmd_Argv(1);
+	char buf[MAX_OSPATH];
+
+	cgi->GetAbsoluteSavePath(buf, sizeof(buf));
+	Q_strcat(buf, sizeof(buf), "%s.%s", savegame, SAVEGAME_EXTENSION);
+
+	FS_RemoveFile(buf);
+}
+
+/**
  * @brief Init menu cvar for one savegame slot given by actual index.
  * @param[in] idx the savegame slot to retrieve gamecomment for
  * @sa SAV_GameReadGameComments_f
@@ -648,6 +666,7 @@ void SAV_Init (void)
 	cgi->Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Load the game from the quick save slot.");
 	cgi->Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	cgi->Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
+	cgi->Cmd_AddCommand("game_delete", SAV_GameDelete_f, "Deletes a given filename");
 	cgi->Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
 	cgi->Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
 	save_compressed = cgi->Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
