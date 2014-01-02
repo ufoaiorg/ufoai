@@ -713,7 +713,7 @@ window research extends BaseMgmtWindow
 					*node:parent.techs.tech_<1>.title@string = "<2>"
 					*node:parent.techs.tech_<1>.status@current = <4>
 
-				if ( <4> > 0 ) {
+					if ( <4> > 0 ) {
 						*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
 					}
 
