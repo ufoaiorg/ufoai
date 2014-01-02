@@ -388,7 +388,18 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_loads.save<1>.upload@onClick = {
 			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
 		}
-		//*node:root.cmp_sel.cmp_loads.save<1>.delete@onClick = {}
+		*node:root.cmp_sel.cmp_loads.save<1>.delete@onClick = {
+
+			cmd "game_delete \"slot<node:this.parent.index@integer>\";"
+
+			*node:this.parent.filename@string	=	""
+			*node:this.parent.button@string		=	""
+			*node:this.parent.button@tooltip	=	""
+			*node:this.parent.button@onClick	=	{ }
+			*node:this.parent.index@integer		=	-1
+			*node:this.parent.upload@invis		=	true
+			*node:this.parent.delete@invis		=	true
+		}
 		if ( "<5>" ne "" ) {
 			*node:root.cmp_sel.cmp_loads.save<1>.upload@invis = false
 			*node:root.cmp_sel.cmp_loads.save<1>.delete@invis = false
@@ -435,7 +446,18 @@ window campaign extends cgame_download
 		*node:root.cmp_sel.cmp_saves.save<1>.upload@onClick = {
 			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
 		}
-		//*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {}
+		*node:root.cmp_sel.cmp_saves.save<1>.delete@onClick = {
+
+			cmd "game_delete \"slot<node:this.parent.index@integer>\";"
+
+			*node:this.parent.filename@string	=	""
+			*cvar:mn_slot<node:this.parent.index@integer> = "_Click here to save game"
+			*node:this.parent.name@tooltip		=	""
+			*node:this.parent.title@string		=	""
+			*node:this.parent.date@string		=	""
+			*node:this.parent.upload@invis		=	true
+			*node:this.parent.delete@invis		=	true
+		}
 		if ( <5> eq "" ) {
 			*node:root.cmp_sel.cmp_saves.save<1>.upload@invis = true
 			*node:root.cmp_sel.cmp_saves.save<1>.delete@invis = true
@@ -890,16 +912,20 @@ window popup_exit_confirmation extends popupUI2
 		dragbutton	true
 		closebutton	true
 	}
+
 	string title
 	{
+		width		"512"
 		string		"_EXIT CAMPAIGN CONFIRMATION"
 	}
+
 	string exit_confirmation_label
 	{
 		string		"_You will lose all your campaign progress."
 		pos			"26 58"
 		size		"450 60"
 	}
+
 	MainMenuExitBtn btn_back
 	{
 		size 	"180 30"
@@ -907,6 +933,7 @@ window popup_exit_confirmation extends popupUI2
 		string	"_QUIT"
 		onClick	{ cmd "ui_pop;game_exit;" }
 	}
+
 	MainMenu2Btn bt_dontquit
 	{
 		size 	"180 30"
@@ -914,6 +941,7 @@ window popup_exit_confirmation extends popupUI2
 		string	"_BACK"
 		onClick	{ cmd "ui_pop;" }
 	}
+
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
 }
