@@ -138,8 +138,8 @@ window transfer
 
             tab trans_navigation {
                 {
-                    pos		"10 30"
-                    size	"667 39"
+                    pos		"1 30"
+                    size	"714 39"
                     cvar	*cvar:mn_itemtype
                     onChange	{
                         cmd "ui_trans_fill <cvar:mn_itemtype>;"
