@@ -15,8 +15,105 @@ component cmpAdr extends panel {
 	}
 }
 
+component currentTeamMember extends panel
+{
+	{
+		size		"260 25"
+	}
 
-window multiplayer
+	panel head_placeholder
+	{
+		{
+			size		"25 25"
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
+			pos			"0 0"
+		}
+	}
+
+	string name
+	{
+		pos			"51 0"
+		color		"1 1 1 1"
+		size		"209 25"
+		contentalign	ALIGN_CL
+	}
+
+	// TODO: head and skin
+}
+
+component cmpCurrentLoadedTeamPanel extends panel
+{
+	{
+		size	"504 375"
+	}
+
+	string title
+	{
+		pos				"0 0"
+		color			"0.56 0.81 0.76 1"
+		bgcolor			"0.527 0.6 0.21 0.2"
+		size			"504 32"
+		contentalign	ALIGN_CC
+		string			"_Currently loaded"
+		font	"f_menubig"
+	}
+
+	panel soldierlist
+	{
+		pos				"0 44"
+		size			"486 331"
+		padding			6
+		layout			LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+		contentalign	ALIGN_CC
+		onViewChange
+		{
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar soldierlist_scroll
+	{
+		image			"ui/scrollbar_v_green"
+		pos				"486 26"
+		height			"331"
+		current			0
+		viewsize		4
+		fullsize		25
+		hidewhenunused	true
+		onChange
+		{
+			*node:parent.soldierlist@viewpos = <current>
+		}
+	}
+
+	/**
+	 * @brief Adds a member to the current loaded team list
+	 * @param <1> id
+	 * @param <2> Name
+	 * @param <3> Head model
+	 * @param <4> Head skin
+	 */
+	confunc team_memberadd
+	{
+		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
+		*node:parent.soldierlist.member<1>.name@string = <2>
+		// TODO: head and skin
+	}
+
+	/**
+	 * @brief Removes all entries from the current team list.
+	 */
+	confunc team_membersclear
+	{
+		call *node:parent.soldierlist@removeAllChild
+	}
+}
+
+window multiplayer extends cgame_download
 {
 	{
 		background "ui/main_bg"
@@ -529,7 +626,7 @@ window multiplayer
 				size	"510 30"
 				bgcolor	"0.527 0.6 0.21 0.2"
 				color	"0.56 0.81 0.75 1"
-				string	"Teams"
+				string	"_Teams"
 				font	"f_menubig"
 				contentalign	ALIGN_CC
 			}
@@ -541,7 +638,7 @@ window multiplayer
 			{
 				{
 					pos		"1 30"
-					size	"500 360"
+					size	"500 324"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
@@ -556,12 +653,25 @@ window multiplayer
 
 			vscrollbar slots_scroll {
 				image		"ui/scrollbar_v_green"
-				pos			"485 0"
-				height		"360"
+				pos			"485 30"
+				height		"324"
 				hidewhenunused	true
 				onChange {
 					*node:parent.slots@viewpos = <current>
 				}
+			}
+
+			MainMenuBtn button_download
+			{
+				pos	"260 362"
+				size "250 30"
+				tooltip	"_Download new teams"
+				onClick	{
+					cmd "web_listcgame 0;"
+					*node:root.rightpan.mp_team_slots@invis = true
+					*node:root.rightpan.mp_remote_teams@invis = false
+			 	}
+				string	"_DOWNLOAD"
 			}
 
 			MainMenuBtn button_new
@@ -577,7 +687,7 @@ window multiplayer
 			}
 
 			/**
-			 * @brief adds a new entry to the left slot
+			 * @brief adds a new entry to the right slot
 			 * @param <1> the id
 			 * @param <2> the file name
 			 * @param <3> the slot name
@@ -596,13 +706,7 @@ window multiplayer
 //					*node:root.leftpan.mp_team_list.button_save@disabled = false
 				}
 
-				*node:this.parent.slots.slot<1>.button@width = "420"
-				/*
-				*node:this.parent.slots.slot<1>.upload@pos = true
-
-				*node:this.parent.slots.slot<1>.delete@pos = true
-				*node:this.parent.slots.slot<1>.delete@pos = true
-				*/
+				*node:this.parent.slots.slot<1>.button@width = "410"
 				*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
 				*node:this.parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
 				if (<5> == 0) {
@@ -616,6 +720,59 @@ window multiplayer
 				call *node:this.parent.slots@removeAllChild
 			}
 		}
+
+		panel mp_remote_teams
+		{
+			{
+				invis	true
+				pos		"0 0"
+				size	"510 435"
+			}
+
+			// ================
+			// save team slots
+			// ================
+			panel slots
+			{
+				{
+					pos		"1 30"
+					size	"500 324"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.slots_scroll@fullsize = <fullsize>
+						*node:parent.slots_scroll@current = <viewpos>
+						*node:parent.slots_scroll@viewsize = <viewsize>
+					}
+				}
+			}
+
+			vscrollbar slots_scroll {
+				image		"ui/scrollbar_v_green"
+				pos			"485 30"
+				height		"324"
+				hidewhenunused	true
+				onChange {
+					*node:parent.slots@viewpos = <current>
+				}
+			}
+
+			MainMenuBtn button_close
+			{
+				pos	"260 405"
+				size "250 30"
+				onClick	{
+					*node:root.rightpan.mp_remote_teams@invis	=	true
+					*node:root.rightpan.mp_team_slots@invis		=	false
+					cmd "game_teamcomments;"
+				}
+				tooltip	"_Close web panel"
+				string	"_CLOSE"
+			}
+		}
+
 
 		panel mp_servers
 		{
@@ -782,6 +939,8 @@ window multiplayer
 		*node:root.rightpan.mp_team_slots@invis	=	true
 		*node:root.rightpan.mp_servers@invis	=	true
 
+		*node:root.rightpan.mp_remote_teams@invis =	true
+
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_init_ui;mn_getmaps;"
 	//	cmd "ui_resetdata TEXT_STANDARD;"
@@ -807,6 +966,8 @@ window multiplayer
 		*node:root.rightpan.mp_team_slots@invis	=	false
 		*node:root.rightpan.mp_servers@invis	=	true
 
+		*node:root.rightpan.mp_remote_teams@invis =	true
+
 		cmd "game_teamcomments;"
 	}
 
@@ -828,6 +989,8 @@ window multiplayer
 		*node:root.rightpan.mp_game_opts@invis	=	true
 		*node:root.rightpan.mp_team_slots@invis	=	true
 		*node:root.rightpan.mp_servers@invis	=	false
+
+		*node:root.rightpan.mp_remote_teams@invis =	true
 
 		cmd "check_bookmarks;"
 		*cvar:cl_serverlist = 0
@@ -874,6 +1037,75 @@ window multiplayer
 		cmd	"game_teamcomments;define cl_teamdef phalanx;"
 		call *node:root.mp_join_toggle
 	}
+
+	/**
+	 * @brief Add a server stored file to the list of downloadable files
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 * @param <4> The file name
+	 * @param <5> The title
+	 * @param <6> Own file = 1, other users file = 0
+	 */
+	confunc cgamefiles_add
+	{
+		call *node:root.rightpan.mp_remote_teams.slots@createChild("download<1>-<2>-<3>", "downloadentry")
+		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.category@integer = <2>
+		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.userid@integer = <3>
+		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.filename@string = <4>
+		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.download@string = <5>
+		if ( <6> == 1 ) {
+			*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.delete@invis = false
+		} else {
+			*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.delete@invis = true
+		}
+	}
+
+	confunc cgamefiles_nofilesfound
+	{
+		call *node:root.rightpan.mp_remote_teams.slots@createChild("nofiles", "string")
+		*node:root.rightpan.mp_remote_teams.slots.nofiles@string = "_No files uploaded yet"
+	}
+
+	/**
+	 * @brief Called when a file download was successful
+	 * @param <1> the filename of the newly available file
+	 */
+	confunc cgame_downloadsuccessful
+	{
+	}
+
+	confunc cgame_downloadduplicate
+	{
+	}
+
+	confunc cgame_uploadsuccessful
+	{
+	}
+
+	confunc cgame_uploadfailed
+	{
+	}
+
+	/**
+	 * @param <1> The file id (string)
+	 * @param <2> The category
+	 * @param <3> The user id of the owner
+	 */
+	confunc cgame_deletesuccessful
+	{
+		call *node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>@delete
+	}
+
+	confunc cgame_deletefailed
+	{
+	}
+
+	confunc cgamefiles_clear
+	{
+		call *node:root.rightpan.mp_remote_teams.slots@removeAllChild
+	}
+
 
 }
 
@@ -1195,16 +1427,6 @@ window multiplayer_wait
 		}
 	}
 
-	MainMenuBtn invite_players {
-		string		"_Invite others"
-		tooltip		"_Invite players that are online in the lobby"
-		pos			"50 650"
-		size		"150 40"
-		onClick {
-			cmd "irc_invite;"
-		}
-	}
-
 	/**
 	 * @param <1> player ID/line
 	 * @param <2> 0: not ready, 1: ready
@@ -1271,39 +1493,124 @@ window serverinfo
 		bgcolor 	"0 0 0 0.9"
 	}
 
-
-	text server_info
+	panel server_info
 	{
-		dataid		TEXT_STANDARD
-		pos			"500 175"
-		size		"440 490"
-		lineheight	20
-		tabwidth	270
-		rows		"24"
+		{
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string title
+		{
+			string		"_Server Info"
+			pos				"0 0"
+			size			"723 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"715 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+
+				string mapstring
+				{
+					string		*cvar:mn_svmapname
+					pos			"0 0"
+					size		"713 32"
+					contentalign	ALIGN_CC
+					font		"f_normal"
+					color		"0.56 0.81 0.76 1"
+				}
+
+			}
+
+			image mappic1
+			{
+				src			*cvar:mn_mappic
+				pos			"82 33"
+				texl		"0 0"
+				texh		"128 96"
+			}
+
+			image mappic2
+			{
+				src			*cvar:mn_mappic2
+				pos			"292 33"
+				texl		"0 0"
+				texh		"128 96"
+			}
+
+			image mappic3
+			{
+				src			*cvar:mn_mappic3
+				pos			"420 33"
+				texl		"0 0"
+				texh		"128 96"
+			}
+
+
+			text server_info
+			{
+				dataid		TEXT_STANDARD
+				pos			"13 175"
+				size		"700 490"
+				lineheight	20
+				tabwidth	350
+				rows		"24"
+			}
+
+		}
 	}
 
-	string user_list_str
+	panel userlist
 	{
-		string		"_Userlist"
-		pos			"50 115"
-		size		"300 20"
-		color		"1 1 1 1"
-		font		"f_normal_bold"
-		contentalign	ALIGN_CC
-	}
+		{
+			pos		"739 35"
+			size	"285 728"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string users_list_str
+		{
+			string		"_Userlist"
+			pos			"0 0"
+			size		"285 40"
+			bgcolor		"0.527 0.6 0.21 0.2"
+			contentalign	ALIGN_CC
+			font		"f_small"
+		}
+
 	panel user_list_header
 	{
 		{
 			bgcolor	"0.527 0.6 0.21 0.2"
-			pos		"49 175"
-			size	"302 20"
+			pos		"0 53"
+			size	"285 20"
 		}
 
 		string user_list_head1
 		{
 			string		"_Name"
 			pos			"1 0"
-			size		"150 20"
+			size		"140 20"
 			color		"1 1 1 1"
 			font		"f_verysmall"
 			contentalign	ALIGN_UL
@@ -1312,51 +1619,33 @@ window serverinfo
 		string user_list_head2
 		{
 			string		"_Team"
-			pos			"152 0"
-			size		"150 20"
+			pos			"145 0"
+			size		"140 20"
 			color		"1 1 1 1"
 			font		"f_verysmall"
 			contentalign	ALIGN_UL
 		}
 	}
-	text user_list
-	{
-		dataid	TEXT_LIST
-		pos			"50 195"
-		size		"300 380"
-		lineheight	20
-		tabwidth	150
-		font		"f_verysmall"
-		mousefx		true
-		border		2
-		bordercolor	"0.56 0.81 0.76 1"
-		padding		10
-		bgcolor		"0.3 0.3 0.3 0.4"
-		rows		"19"
-	}
-
-	string mapstring
-	{
-		string		*cvar:mn_svmapname
-		font		"f_menubig"
-		color		"1 1 1 1"
-		pos			"500 110"
-		size		"300 35"
-	}
-
-	image mappic
-	{
-		src			*cvar:mn_mappic
-		pos			"770 62"
-		texl		"0 0"
-		texh		"128 96"
-	}
-
-	MainMenuBtn button_connect
+		text user_list
+		{
+			dataid	TEXT_LIST
+			pos			"0 75"
+			size		"285 380"
+			lineheight	20
+			tabwidth	140
+			font		"f_verysmall"
+			mousefx		true
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
+			padding		10
+			bgcolor		"0.3 0.3 0.3 0.4"
+			rows		"19"
+		}
+		MainMenuBtn button_connect
 	{
 		string		"_Connect"
-		pos			"50 580"
-		width		"300"
+		pos			"0 580"
+		width		"285"
 		onClick		{ cmd "connect *cvar:mn_server_ip;" }
 	}
 
@@ -1364,10 +1653,12 @@ window serverinfo
 	{
 		string		"_Bookmark"
 		tooltip		"_Add server to bookmarks"
-		pos			"50 625"
-		width		"300"
+		pos			"0 625"
+		width		"285"
 		onClick		{ cmd "bookmark_add;" }
 	}
+}
+
 
 	Geoscape geoscape_button
 	{
