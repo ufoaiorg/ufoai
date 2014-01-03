@@ -3221,18 +3221,18 @@ base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later | 
 base/pics/icons/system_expand.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by bayo
 base/pics/icons/system_next.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/system_parent.png | GNU General Public License 2.0 or later | bayo
-base/pics/icons/tab_air_equipment.png | GNU General Public License 2.0 | cooler_sk
-base/pics/icons/tab_air_equipment_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_aircraft.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_aircraft_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_aliens.png | GNU General Public License 2.0 | MCR | based on original UFO:AI artwork
-base/pics/icons/tab_aliens_disabled.png | GNU General Public License 2.0 | MCR | based on original UFO:AI artwork
+base/pics/icons/tab_air_equipment.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_air_equipment_disabled.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_aircraft.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_aircraft_disabled.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_aliens.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_aliens_disabled.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/tab_bigpicture.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_description.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_employees.png | GNU General Public License 2.0 | MCR | based on a MakeHuman rendering
-base/pics/icons/tab_employees_disabled.png | GNU General Public License 2.0 | MCR | based on a MakeHuman rendering
-base/pics/icons/tab_equipment.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/icons/tab_equipment_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/tab_employees.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_employees_disabled.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_equipment.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/tab_equipment_disabled.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/tab_information.png | GNU General Public License 2.0 | cooler_sk
 base/pics/icons/tab_information_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/tab_laserdefences.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
