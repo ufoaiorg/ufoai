@@ -308,3 +308,255 @@ window irc_popup extends popupUI2
 
 	fuzzyScreen overlay { }
 }
+
+
+window hud_chat
+{
+	{
+		pos				"200 500"
+		size			"800 250"
+		background	"ui/popup_alpha_tile"
+		dragbutton	true
+		closebutton	true
+		string	"_Chat"
+		ghost true
+	}
+
+	panel allchats {
+		{
+			pos				"0 50"
+			size			"800 200"
+			layout			LAYOUT_BORDER
+			padding	18
+		}
+
+	MainMenuBtn invite_players {
+		invis		true
+		string		"_Invite others"
+		tooltip		"_Invite players that are online in the lobby"
+		pos			"50 650"
+		size		"150 40"
+		onClick {
+			cmd "irc_invite;"
+		}
+	}
+
+
+		tab selectchat {
+			{
+				align	LAYOUTALIGN_TOP
+				height	40
+				cvar	*cvar:mn_chatselect
+				onChange {
+					if ( *cvar:mn_chatselect eq "irc" ) {
+						*node:parent.ircscreen@invis = false
+						*node:parent.chatscreen@invis = true
+						cmd "irc_connect;"
+						call *node:root.hud_activate_chat_textentry
+					}
+					if ( *cvar:mn_chatselect eq "chat" ) {
+						*node:parent.ircscreen@invis = true
+						*node:parent.chatscreen@invis = false
+						call *node:root.hud_activate_chat_textentry
+					}
+				}
+			}
+
+			option chat {
+				label	"_Party chat"
+				value	"chat"
+			}
+			option irc {
+				label	"_Global lobby (IRC)"
+				value	"irc"
+			}
+		}
+
+		panel ircscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+				invis			true
+			}
+
+			panel users {
+				{
+					width			"200"
+					layout			LAYOUT_BORDER
+					align			LAYOUTALIGN_RIGHT
+					layoutMargin	5
+					padding			0
+				}
+
+				textlist list
+				{
+					lineheight	22
+					dataid		TEXT_IRCUSERS
+					rows		"27"
+					onClick		{ cmd "irc_userlist_click <lineselected>;" }
+					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
+					onViewChange {
+						*node:parent.scroll@fullsize = <fullsize>
+						*node:parent.scroll@current = <viewpos>
+						*node:parent.scroll@viewsize = <viewsize>
+					}
+				}
+
+				vscrollbar scroll {
+					image		"ui/scrollbar_v_green"
+					align		LAYOUTALIGN_RIGHT
+					onChange 	{
+						*node:parent.list@viewpos = <current>
+					}
+				}
+			}
+
+			text irc
+			{
+				dataid		TEXT_IRCCONTENT
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.irc_scroll@fullsize = <fullsize>
+					*node:parent.irc_scroll@viewsize = <viewsize>
+					*node:parent.irc_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar irc_scroll {
+				image		"ui/scrollbar_v_green"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.irc@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					background		"ui/button_green_verysmall"
+					string		*cvar:irc_send_buffer
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CL
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						cmd "irc_chanmsg;"
+						call *node:root.hud_activate_chat_textentry
+					}
+				}
+			}
+		}
+
+		panel chatscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+			}
+
+			text chat
+			{
+				dataid		TEXT_CHAT_WINDOW
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.chat_scroll@fullsize = <fullsize>
+					*node:parent.chat_scroll@viewsize = <viewsize>
+					*node:parent.chat_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar chat_scroll {
+				image		"ui/scrollbar_v_green"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.chat@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+				checkbox_ui2 chat_team
+				{
+					width		"20"
+					pos			"0 4"
+					current		*cvar:mn_chat_team
+					align		LAYOUTALIGN_LEFT
+					tooltip		"_Team chat"
+				}
+
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					background		"ui/button_green_verysmall"
+					string		*cvar:mn_entry
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CL
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						if ( *cvar:mn_chat_team eq "1" ) {
+							cmd "say_team \"<node:this@string>\";"
+						} else {
+							cmd "say \"<node:this@string>\";"
+						}
+						*cvar:mn_entry = ""
+						call *node:root.hud_activate_chat_textentry
+					}
+				}
+			}
+		}
+	}
+
+	func hud_activate_chat_textentry {
+		call *node:root.allchats.chatscreen.input.say@edit
+	}
+
+	func hud_activate_irc_textentry {
+		call *node:root.allchats.ircscreen.input.say@edit
+	}
+
+	func onWindowOpened {
+		*cvar:mn_chatselect = "chat"
+		call *node:root.hud_activate_chat_textentry
+	}
+}
