@@ -92,8 +92,7 @@ static void TR_TransferStart_f (void)
  */
 static transferType_t TR_GetTransferType (const char* id)
 {
-	int i;
-	for (i = 0; i < TRANS_TYPE_MAX; i++) {
+	for (int i = 0; i < TRANS_TYPE_MAX; i++) {
 		if (Q_streq(transferTypeIDs[i], id))
 			return (transferType_t)i;
 	}
@@ -598,13 +597,12 @@ static void TR_Add_f (void)
  */
 static void TR_TransferListClear_f (void)
 {
-	int i;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	for (i = 0; i < cgi->csi->numODs; i++) {	/* Return items. */
+	for (int i = 0; i < cgi->csi->numODs; i++) {	/* Return items. */
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {

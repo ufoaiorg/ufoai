@@ -106,9 +106,7 @@ const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
  */
 const aircraft_t* UFO_GetByType (const ufoType_t type)
 {
-	int i;
-
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+	for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		aircraft_t* ufo = &ccs.aircraftTemplates[i];
 		if (ufo->ufotype == type)
 			return ufo;
@@ -239,9 +237,7 @@ static int UFO_IsTargetOfBase (const aircraft_t* ufo, const base_t* base)
  */
 static int UFO_IsTargetOfInstallation (const aircraft_t* ufo, const installation_t* installation)
 {
-	int i;
-
-	for (i = 0; i < installation->numBatteries; i++) {
+	for (int i = 0; i < installation->numBatteries; i++) {
 		if (installation->batteries[i].target == ufo)
 			return UFO_IS_TARGET_OF_MISSILE;
 	}

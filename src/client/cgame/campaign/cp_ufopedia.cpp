@@ -170,8 +170,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 	if (required->numLinks <= 0)
 		cgi->LIST_AddString(&upTechtree, _("No requirements"));
 	else {
-		int i;
-		for (i = 0; i < required->numLinks; i++) {
+		for (int i = 0; i < required->numLinks; i++) {
 			const requirement_t* req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
 				const technology_t* techRequired = req->link.tech;
@@ -252,7 +251,6 @@ void UP_AircraftItemDescription (const objDef_t* item)
 
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
-		int i;
 		const objDef_t* ammo = nullptr;
 
 		switch (item->craftitem.type) {
@@ -292,7 +290,7 @@ void UP_AircraftItemDescription (const objDef_t* item)
 				AIR_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE));
 
 		/* we scan all stats except weapon range */
-		for (i = 0; i < AIR_STATS_MAX; i++) {
+		for (int i = 0; i < AIR_STATS_MAX; i++) {
 			const char* statsName = UP_AircraftStatToName(i);
 			if (i == AIR_STATS_WRANGE)
 				continue;
@@ -328,8 +326,7 @@ void UP_AircraftDescription (const technology_t* tech)
 
 	if (RS_IsResearched_ptr(tech)) {
 		const aircraft_t* aircraft = AIR_GetAircraft(tech->provides);
-		int i;
-		for (i = 0; i < AIR_STATS_MAX; i++) {
+		for (int i = 0; i < AIR_STATS_MAX; i++) {
 			switch (i) {
 			case AIR_STATS_SPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
@@ -615,7 +612,6 @@ static void UP_Article (technology_t* tech, eventMail_t* mail)
 		/* Reset itemdescription */
 		cgi->UI_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
-			int i;
 			cgi->Cvar_Set("mn_uptitle", _("UFOpaedia: %s (complete)"), _(tech->name));
 			/* If researched -> display research text */
 			cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
@@ -638,7 +634,7 @@ static void UP_Article (technology_t* tech, eventMail_t* mail)
 			switch (tech->type) {
 			case RS_ARMOUR:
 			case RS_WEAPON:
-				for (i = 0; i < cgi->csi->numODs; i++) {
+				for (int i = 0; i < cgi->csi->numODs; i++) {
 					const objDef_t* od = INVSH_GetItemByIDX(i);
 					if (Q_streq(tech->provides, od->id)) {
 						cgi->INV_ItemDescription(od);
@@ -803,13 +799,12 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t* parentChapter)
  */
 static void UP_GenerateSummary (void)
 {
-	int i;
 	uiNode_t* chapters = nullptr;
 	int num = 0;
 
 	numChaptersDisplayList = 0;
 
-	for (i = 0; i < ccs.numChapters; i++) {
+	for (int i = 0; i < ccs.numChapters; i++) {
 		/* hide chapters without name */
 		pediaChapter_t* chapter = &ccs.upChapters[i];
 		if (chapter->name == nullptr)
@@ -890,30 +885,26 @@ static void UP_Click_f (void)
  */
 static void UP_TechTreeClick_f (void)
 {
-	int num;
-	int i;
-	const requirements_t* required_AND;
-	const technology_t* techRequired;
-
 	if (cgi->Cmd_Argc() < 2)
 		return;
-	num = atoi(cgi->Cmd_Argv(1));
+
+	int num = atoi(cgi->Cmd_Argv(1));
 
 	if (!upCurrentTech)
 		return;
 
-	required_AND = &upCurrentTech->requireAND;
+	const requirements_t* required_AND = &upCurrentTech->requireAND;
 	if (num < 0 || num >= required_AND->numLinks)
 		return;
 
 	/* skip every tech which have not been displayed in techtree */
-	for (i = 0; i <= num; i++) {
+	for (int i = 0; i <= num; i++) {
 		const requirement_t* r = &required_AND->links[i];
 		if (r->type != RS_LINK_TECH && r->type != RS_LINK_TECH_NOT)
 			num++;
 	}
 
-	techRequired = required_AND->links[num].link.tech;
+	const technology_t* techRequired = required_AND->links[num].link.tech;
 	if (!techRequired)
 		cgi->Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
 
