@@ -10,7 +10,7 @@ component cmpGeoscapeDocklet extends panel {
 	}
 
 	image bg {
-		src			"geoscape/docklet_bg"
+		src				"geoscape/docklet_bg"
 		size			"280 60"
 		onMouseEnter	{ *node:this@src = "geoscape/docklet_bg_hovered" }
 		onMouseLeave	{ *node:this@src = "geoscape/docklet_bg" }
@@ -167,8 +167,8 @@ window geoscape
 		string date
 		{
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
-			pos			"11 12"
-			size		"195 20"
+			pos			"28 12"
+			size		"161 20"
 			contentalign	ALIGN_UC
 			color		"1 1 1 1"
 			font		"f_small"
@@ -491,7 +491,7 @@ window geoscape
 			string		"_Message settings"
 			tooltip		"_Change message and pause settings"
 			color		"0.56 0.81 0.76 1"
-			font	 	"f_small"
+			font		"f_small"
 			pos			"21 540"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
@@ -507,7 +507,7 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
 			color		"0.56 0.81 0.76 1"
-			font	 	"f_small"
+			font		"f_small"
 			pos			"21 575"
 			flash		true
 			size		"175 34"
@@ -524,7 +524,7 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX"
 			color		"0.56 0.81 0.76 1"
-			font	 	"f_small"
+			font		"f_small"
 			pos			"21 575"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
@@ -540,7 +540,7 @@ window geoscape
 			pos			"21 610"
 			size		"175 34"
 					color		"0.56 0.81 0.76 1"
-			font	 	"f_small"
+			font		"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
 
@@ -553,7 +553,7 @@ window geoscape
 			pos			"21 645"
 			size		"175 34"
 			color		"0.56 0.81 0.76 1"
-			font	 	"f_small"
+			font		"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
 
@@ -566,7 +566,7 @@ window geoscape
 			color		"0.56 0.81 0.76 1"
 			pos			"21 680"
 			size		"175 34"
-			font	 	"f_small"
+			font		"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
 
@@ -580,51 +580,67 @@ window geoscape
 		button bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			background	"buttons/blue3"
 			icon		"icons/geo_nations"
 			pos			"20 495"
 			size		"32 32"
-			onClick		{ cmd "map_overlay nations;" }
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick		{
+							cmd "map_overlay nations;"
+			}
 		}
 
 		button bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			background	"buttons/blue3"
 			icon		"icons/geo_radar"
 			pos			"50 495"
 			size		"32 32"
-			onClick		{ cmd "map_overlay radar;" }
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick	{
+				cmd "map_overlay radar;"
+			}
 		}
 
 		button bt_show_xvi
 		{
 			visiblewhen	"*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			background	"buttons/blue3"
 			icon		"icons/geo_xvi"
 			pos			"80 495"
 			size		"32 32"
-			onClick		{ cmd "map_overlay xvi;" }
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick		{
+				cmd "map_overlay xvi;"
+			}
 		}
 
 		button bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			background	"buttons/blue3"
 			icon		"icons/geo_center"
 			pos			"125 500"
 			size		"28 25"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
 			onClick		{ cmd "map_center;" }
 		}
 
 		button bt_menu
 		{
 			tooltip		"_Go to Options"
-			background	"buttons/blue3"
-			icon		"icons/geo_option"
+			icon		"icons/geo_options"
 			pos			"170 500"
 			size		"28 25"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
 			onClick		{ cmd "ui_pop;" }
 		}
 
@@ -741,7 +757,7 @@ window popup_intercept_ready extends popupUI2
 		modal		true
 	}
 	string title {
-		string 		"_Ready"
+		string		"_Ready"
 		width		"496"
 	}
 	string craftname_label {
@@ -791,7 +807,7 @@ window popup_intercept_ready extends popupUI2
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
 		pos			"316 188"
-		width 		"180"
+		width		"180"
 		onClick		{ cmd "game_go;" }
 	}
 
@@ -939,7 +955,7 @@ window popup_installationstatus extends popupUI2
 	}
 
 	string title {
-		string 		"_Installation Status"
+		string		"_Installation Status"
 		width		"496"
 	}
 	string name_label
