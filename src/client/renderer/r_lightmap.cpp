@@ -318,26 +318,21 @@ void R_EndBuildingLightmaps (void)
  */
 void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 {
-	vec3_t mins, maxs;
-	float frac;
-	int i;
-
 	r_locals.tracenum++;
 
 	if (r_locals.tracenum > 0xffff)  /* avoid overflows */
 		r_locals.tracenum = 0;
 
-	VectorSet(mins, -size, -size, -size);
-	VectorSet(maxs, size, size, size);
-	AABB box(mins, maxs);
+	AABB box;
+	box.expand(size);
 
 	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, Line(start, end), box, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	refdef.traceEntity = nullptr;
 
-	frac = refdef.trace.fraction;
+	float frac = refdef.trace.fraction;
 
 	/* check bsp models */
-	for (i = 0; i < refdef.numEntities; i++) {
+	for (int i = 0; i < refdef.numEntities; i++) {
 		entity_t* ent = R_GetEntity(i);
 		const model_t* m = ent->model;
 
