@@ -53,7 +53,7 @@ window messageoptions extends popupUI2
 		string		"_Apply"
 		tooltip		"_Apply changes"
 		pos			"276 436"
-        size	    "180 30"
+		size		"180 30"
 		onClick		{ cmd "ui_pop;msgoptions_backup;" }
 	}
 
@@ -61,7 +61,7 @@ window messageoptions extends popupUI2
 	{
 		tooltip		"_Revert changes"
 		pos			"83 436"
-        size	    "180 30"
+		size		"180 30"
 		onClick		{ cmd "ui_pop;" }
 	}
 

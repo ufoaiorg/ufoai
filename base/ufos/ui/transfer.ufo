@@ -3,7 +3,7 @@
 // ==================
 component cmp_t_storage extends panel {
 	{
-		size		    "260 20"
+		size			"260 20"
 		bgcolor			"0.56 0.81 0.76 0.1"
 		onClick {
 			cmd "ui_trans_add <node:this.id@string> 1;"
@@ -17,34 +17,34 @@ component cmp_t_storage extends panel {
 	}
 
 	string name {
-		pos			    "0 0"
-		size		    "285 20"
-		color	        "0.56 0.81 0.76 1"
-		ghost		    true
+		pos				"0 0"
+		size			"285 20"
+		color			"0.56 0.81 0.76 1"
+		ghost			true
 		contentalign	ALIGN_CL
 	}
 	string src_store {
-		pos			    "250 0"
-		size		    "100 20"
-		color	        "0.56 0.81 0.76 1"
+		pos				"250 0"
+		size			"100 20"
+		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
-		ghost		    true
+		ghost			true
 	}
 	spinner_green spinner {
-		tooltip		        "_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-		pos			        "352 0"
-		size		    "   20 20"
+		tooltip				"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
+		pos					"352 0"
+		size			"   20 20"
 		shiftincreasefactor	100.0
 		onChange {
 			cmd "ui_trans_add <node:parent.id@string> <lastdiff>;"
 		}
 	}
 	string dst_store {
-		pos			    "375 0"
-		size		    "100 20"
-		color	        "0.56 0.81 0.76 1"
+		pos				"375 0"
+		size			"100 20"
+		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
-		ghost		    true
+		ghost			true
 	}
 }
 
@@ -59,18 +59,18 @@ component cmp_t_cargo extends panel {
 	data id {
 	}
 	string name {
-		pos			    "0 0"
-		size		    "270 20"
-		color	        "0.56 0.81 0.76 1"
-		ghost		    true
+		pos				"0 0"
+		size			"270 20"
+		color			"0.56 0.81 0.76 1"
+		ghost			true
 		contentalign	ALIGN_CL
 	}
 	string amount {
-		pos			    "248 0"
-		size		    "100 20"
-		color	        "0.56 0.81 0.76 1"
+		pos				"248 0"
+		size			"100 20"
+		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
-		ghost		    true
+		ghost			true
 	}
 }
 
@@ -81,26 +81,26 @@ component cmp_t_capacity extends panel {
 	string name {
 		pos			"0 0"
 		size		"150 20"
-        font			"f_verysmall"
+		font			"f_verysmall"
 		contentalign	ALIGN_CL
 	}
 	string free {
 		pos			"150 0"
 		size		"60 20"
-        font			"f_verysmall"
+		font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
 	string separator {
 		string		"/"
 		pos			"210 0"
 		size		"20 20"
-        font			"f_verysmall"
+		font			"f_verysmall"
 		contentalign	ALIGN_CC
 	}
 	string max {
 		pos			"230 0"
 		size		"60 20"
-        font			"f_verysmall"
+		font			"f_verysmall"
 		contentalign	ALIGN_CR
 	}
 }
@@ -127,149 +127,149 @@ window transfer
 					string			"_Transfer"
 				}
 			}
-            // ==================
-            // tab
-            // ==================
+			// ==================
+			// tab
+			// ==================
 
-            panel tab_background {
-                pos		"10 30"
-                size	"700 50"
-            }
+			panel tab_background {
+				pos		"10 30"
+				size	"700 50"
+			}
 
-            tab trans_navigation {
-                {
-                    pos		"1 30"
-                    size	"714 39"
-                    cvar	*cvar:mn_itemtype
-                    onChange	{
-                        cmd "ui_trans_fill <cvar:mn_itemtype>;"
-                        if ( *cvar:mn_itemtype eq "item" ) {
-                            *cvar:mn_itemtype_name = "_Equipment"
-                        } elif ( *cvar:mn_itemtype eq "employee" ) {
-                            *cvar:mn_itemtype_name = "_Employees"
-                        } elif ( *cvar:mn_itemtype eq "alien" ) {
-                            *cvar:mn_itemtype_name = "_Aliens"
-                        } elif ( *cvar:mn_itemtype eq "aircraft" ) {
-                            *cvar:mn_itemtype_name = "_Aircraft"
-                        }
-                    }
-                }
-                option item {
-                    label	"_Equipment"
-                    value	"item"
-                    icon	"icons/tab_equipment"
-                }
-                option employee {
-                    label	"_Employees"
-                    value	"employee"
-                    icon	"icons/tab_employees"
-                }
-                option alien {
-                    label	"_Aliens"
-                    value	"alien"
-                    icon	"icons/tab_aliens"
-                }
-                option aircraft {
-                    label	"_Aircraft"
-                    value	"aircraft"
-                    icon	"icons/tab_aircraft"
-                }
-            }
-            // ==================
-            // lists
-            // ==================
+			tab trans_navigation {
+				{
+					pos		"1 30"
+					size	"714 39"
+					cvar	*cvar:mn_itemtype
+					onChange	{
+						cmd "ui_trans_fill <cvar:mn_itemtype>;"
+						if ( *cvar:mn_itemtype eq "item" ) {
+							*cvar:mn_itemtype_name = "_Equipment"
+						} elif ( *cvar:mn_itemtype eq "employee" ) {
+							*cvar:mn_itemtype_name = "_Employees"
+						} elif ( *cvar:mn_itemtype eq "alien" ) {
+							*cvar:mn_itemtype_name = "_Aliens"
+						} elif ( *cvar:mn_itemtype eq "aircraft" ) {
+							*cvar:mn_itemtype_name = "_Aircraft"
+						}
+					}
+				}
+				option item {
+					label	"_Equipment"
+					value	"item"
+					icon	"icons/tab_equipment"
+				}
+				option employee {
+					label	"_Employees"
+					value	"employee"
+					icon	"icons/tab_employees"
+				}
+				option alien {
+					label	"_Aliens"
+					value	"alien"
+					icon	"icons/tab_aliens"
+				}
+				option aircraft {
+					label	"_Aircraft"
+					value	"aircraft"
+					icon	"icons/tab_aircraft"
+				}
+			}
+			// ==================
+			// lists
+			// ==================
 
-            panel itemlist {
-                {
-                    pos			"12 80"
-                    size		"552 450"
-                }
+			panel itemlist {
+				{
+					pos			"12 80"
+					size		"552 450"
+				}
 
-                rows lines {
-                    pos			"16 16"
-                    size		"520 40"
-                    lineheight	20
-                }
+				rows lines {
+					pos			"16 16"
+					size		"520 40"
+					lineheight	20
+				}
 
-                string title_name {
-                    string		*cvar:mn_itemtype_name
-                    pos			"25 0"
-                    size		"250 20"
-                    contentalign	ALIGN_CL
-                    font		"f_small_bold"
-                }
+				string title_name {
+					string		*cvar:mn_itemtype_name
+					pos			"25 0"
+					size		"250 20"
+					contentalign	ALIGN_CL
+					font		"f_small_bold"
+				}
 
-                string title_src_store {
-                    string		"_From"
-                    pos			"275 0"
-                    size		"100 20"
-                    contentalign	ALIGN_CR
-                    font		"f_small_bold"
-                }
-                string dst_store {
-                    string		"_To"
-                    pos			"400 0"
-                    size		"100 20"
-                    contentalign	ALIGN_CR
-                    font		"f_small_bold"
-                }
+				string title_src_store {
+					string		"_From"
+					pos			"275 0"
+					size		"100 20"
+					contentalign	ALIGN_CR
+					font		"f_small_bold"
+				}
+				string dst_store {
+					string		"_To"
+					pos			"400 0"
+					size		"100 20"
+					contentalign	ALIGN_CR
+					font		"f_small_bold"
+				}
 
-                panel translist {
-                    pos			    "25 30"
-                    size		    "475 416"
-                    layout		    LAYOUT_TOP_DOWN_FLOW
-                    layoutMargin	2
-                    wheelscrollable	true
+				panel translist {
+					pos				"25 30"
+					size			"475 416"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
 
-                    onViewChange {
-                        *node:parent.translist_scroll@fullsize = <fullsize>
-                        *node:parent.translist_scroll@current = <viewpos>
-                        *node:parent.translist_scroll@viewsize = <viewsize>
-                    }
-                }
-                vscrollbar translist_scroll {
-                    image		"ui/scrollbar_v_green"
-                    pos			"510 30"
-                    height		"416"
-                    hidewhenunused	true
-                    onChange	{
-                        *node:parent.translist@viewpos = <current>
-                    }
-                }
+					onViewChange {
+						*node:parent.translist_scroll@fullsize = <fullsize>
+						*node:parent.translist_scroll@current = <viewpos>
+						*node:parent.translist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar translist_scroll {
+					image		"ui/scrollbar_v_green"
+					pos			"510 30"
+					height		"416"
+					hidewhenunused	true
+					onChange	{
+						*node:parent.translist@viewpos = <current>
+					}
+				}
 
-                confunc ui_translist_clear {
-                    call *node:parent.translist@removeAllchild
-                }
+				confunc ui_translist_clear {
+					call *node:parent.translist@removeAllchild
+				}
 
-                confunc ui_translist_add {
-                    call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
+				confunc ui_translist_add {
+					call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
 
-                    *node:parent.translist.trans_<1>.id@string = <1>
-                    *node:parent.translist.trans_<1>.name@string = <2>
-                    *node:parent.translist.trans_<1>.src_store@string = <3>
-                    if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
-                        *node:parent.translist.trans_<1>.src_store@invis = true
-                    } else {
-                        *node:parent.translist.trans_<1>.src_store@invis = false
-                    }
-                    *node:parent.translist.trans_<1>.dst_store@string = <4>
-                    if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
-                        *node:parent.translist.trans_<1>.dst_store@invis = true
-                    } else {
-                        *node:parent.translist.trans_<1>.dst_store@invis = false
-                    }
-                    *node:parent.translist.trans_<1>.spinner@min = <5>
-                    *node:parent.translist.trans_<1>.spinner@current = <6>
-                    *node:parent.translist.trans_<1>.spinner@max = <7>
-                    if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
-                        *node:parent.translist.trans_<1>.spinner@invis = true
-                    } else {
-                        *node:parent.translist.trans_<1>.spinner@invis = false
-                    }
-                }
-            }
-        }
-    }
+					*node:parent.translist.trans_<1>.id@string = <1>
+					*node:parent.translist.trans_<1>.name@string = <2>
+					*node:parent.translist.trans_<1>.src_store@string = <3>
+					if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
+						*node:parent.translist.trans_<1>.src_store@invis = true
+					} else {
+						*node:parent.translist.trans_<1>.src_store@invis = false
+					}
+					*node:parent.translist.trans_<1>.dst_store@string = <4>
+					if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
+						*node:parent.translist.trans_<1>.dst_store@invis = true
+					} else {
+						*node:parent.translist.trans_<1>.dst_store@invis = false
+					}
+					*node:parent.translist.trans_<1>.spinner@min = <5>
+					*node:parent.translist.trans_<1>.spinner@current = <6>
+					*node:parent.translist.trans_<1>.spinner@max = <7>
+					if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
+						*node:parent.translist.trans_<1>.spinner@invis = true
+					} else {
+						*node:parent.translist.trans_<1>.spinner@invis = false
+					}
+				}
+			}
+		}
+	}
 
 
 
@@ -289,29 +289,29 @@ window transfer
 		}
 */
 		string title_name {
-			string		    "_Cargo"
-			pos			    "26 16"
-			size		    "268 20"
+			string			"_Cargo"
+			pos				"26 16"
+			size			"268 20"
 			contentalign	ALIGN_CL
-			font		    "f_small_bold"
-            color	        "0.7 0.7 0.7 1"
+			font			"f_small_bold"
+			color			"0.7 0.7 0.7 1"
 		}
 
 		string title_amount {
-			string		    "_Amount"
-			pos			    "275 16"
-			size		    "100 20"
+			string			"_Amount"
+			pos				"275 16"
+			size			"100 20"
 			contentalign	ALIGN_CR
-			font		    "f_small_bold"
-            color	        "0.7 0.7 0.7 1"
+			font			"f_small_bold"
+			color			"0.7 0.7 0.7 1"
 		}
 
 		panel cargolist {
-			pos			    "26 36"
-			size		    "358 135"
-            layout		    LAYOUT_TOP_DOWN_FLOW
-            layoutMargin	2
-            wheelscrollable	true
+			pos				"26 36"
+			size			"358 135"
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	2
+			wheelscrollable	true
 
 			onViewChange {
 				*node:parent.cargolist_scroll@fullsize = <fullsize>
@@ -320,9 +320,9 @@ window transfer
 			}
 		}
 		vscrollbar cargolist_scroll {
-			image		    "ui/scrollbar_v_green"
-			pos			    "384 36"
-			height		    "135"
+			image			"ui/scrollbar_v_green"
+			pos				"384 36"
+			height			"135"
 			hidewhenunused	true
 			onChange	{
 				*node:parent.cargolist@viewpos = <current>
@@ -347,17 +347,17 @@ window transfer
 	// ==================
 	panel infopanel {
 		{
-			pos		    "726 160"
-			size	    "295 260"
+			pos			"726 160"
+			size		"295 260"
 		}
 
 		string s_current_base {
-			string		    "_Destination base"
-			pos			    "0 22"
-			size		    "280 20"
+			string			"_Destination base"
+			pos				"0 22"
+			size			"280 20"
 			contentalign	ALIGN_UC
-            color	        "0.7 0.7 0.7 1"
-			font		    "f_small_bold"
+			color			"0.7 0.7 0.7 1"
+			font			"f_small_bold"
 		}
 
 		selectbox destination_base 	{
@@ -372,42 +372,42 @@ window transfer
 		}
 
 		string s_cap_building {
-			string		    "_Building"
-			pos			    "5 90"
-			size		    "150 20"
+			string			"_Building"
+			pos				"5 90"
+			size			"150 20"
 			contentalign	ALIGN_UL
-            color	        "0.7 0.7 0.7 1"
-            font			"f_verysmall"
+			color			"0.7 0.7 0.7 1"
+			font			"f_verysmall"
 		}
 		string s_cap_freespace {
-			string		    "_free"
-			pos			    "145 90"
-			size		    "70 20"
+			string			"_free"
+			pos				"145 90"
+			size			"70 20"
 			contentalign	ALIGN_UR
-            color	        "0.7 0.7 0.7 1"
-            font			"f_verysmall"
+			color			"0.7 0.7 0.7 1"
+			font			"f_verysmall"
 		}
 		string s_cap_per {
-			string		    "/"
-			pos			    "215 90"
-			size		    "20 20"
+			string			"/"
+			pos				"215 90"
+			size			"20 20"
 			contentalign	ALIGN_UC
-            color	        "0.7 0.7 0.7 1"
-            font			"f_verysmall"
+			color			"0.7 0.7 0.7 1"
+			font			"f_verysmall"
 		}
 		string s_cap_allspace {
-			string		    "_all space"
-			pos			    "225 90"
-			size		    "70 20"
+			string			"_all space"
+			pos				"225 90"
+			size			"70 20"
 			contentalign	ALIGN_UR
-            color	        "0.7 0.7 0.7 1"
-            font			"f_verysmall"
+			color			"0.7 0.7 0.7 1"
+			font			"f_verysmall"
 		}
 		panel capacities {
-			pos			    "5 115"
-			size		    "290 125"
-            color	        "0.56 0.81 0.76 1"
-			layout		    LAYOUT_TOP_DOWN_FLOW
+			pos				"5 115"
+			size			"290 125"
+			color			"0.56 0.81 0.76 1"
+			layout			LAYOUT_TOP_DOWN_FLOW
 			onViewChange {
 				*node:parent.t_baseinfo_scroll@fullsize = <fullsize>
 				*node:parent.t_baseinfo_scroll@current = <viewpos>
@@ -477,10 +477,10 @@ window transfer
 		string		"_List"
 		tooltip		"_List active transfers"
 		pos			"760 610"
-        size	    "198 30"
-        font		"f_small_bold"
-        color		"0 0 0 0.9"
-        selectcolor	"0 0 0 1"
+		size		"198 30"
+		font		"f_small_bold"
+		color		"0 0 0 0.9"
+		selectcolor	"0 0 0 1"
 		onClick		{ cmd "ui_push popup_transferlist;" }
 	}
 
@@ -489,8 +489,8 @@ window transfer
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
 		pos			"760 660"
-        size	    "198 30"
-        font		"f_small_bold"
+		size		"198 30"
+		font		"f_small_bold"
 		color		"0 0 0 0.9"
 		selectcolor	"0 0 0 1"
 		onClick	{
@@ -505,10 +505,10 @@ window transfer
 		string		"_Clear"
 		tooltip		"_Clear cargo"
 		pos			"760 710"
-        size	    "198 30"
-        font		"f_small_bold"
-        color		"0 0 0 0.9"
-        selectcolor	"0 0 0 1"
+		size		"198 30"
+		font		"f_small_bold"
+		color		"0 0 0 0.9"
+		selectcolor	"0 0 0 1"
 		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 
@@ -600,7 +600,7 @@ component trListEntry extends panel
 		size		"472 150"
 		ghost		true
 		border		1
-        bordercolor	"0.527 0.6 0.21 1"
+		bordercolor	"0.527 0.6 0.21 1"
 		ghost		true
 	}
 
@@ -651,7 +651,7 @@ component trListEntry extends panel
 			cvar		*cvar:none
 			pos			"0 50"
 			size		"472 100"
-            color	    "0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			selectcolor	"0.56 0.81 0.76 1"
 			lineHeight	18
 
@@ -691,7 +691,7 @@ window popup_transferlist extends popupUI2
 	{
 		pos			"256 96"
 		size		"512 512"
-		color	    "0.56 0.81 0.76 1"
+		color		"0.56 0.81 0.76 1"
 		modal		true
 	}
 
@@ -702,10 +702,10 @@ window popup_transferlist extends popupUI2
 	}
 
 	panel tr_list {
-		pos			    "13 58"
-		size		    "478 414"
-		color	        "0.56 0.81 0.76 1"
-		layout		    LAYOUT_TOP_DOWN_FLOW
+		pos				"13 58"
+		size			"478 414"
+		color			"0.56 0.81 0.76 1"
+		layout			LAYOUT_TOP_DOWN_FLOW
 		wheelscrollable	true
 
 		onViewChange	{
@@ -728,7 +728,7 @@ window popup_transferlist extends popupUI2
 	{
 		string		"_Close"
 		pos			"332 482"
-        size	    "180 30"
+		size		"180 30"
 		onClick		{ cmd "ui_pop;" }
 	}
 

@@ -208,8 +208,8 @@ component StatBar extends panel
 
 component checkbox_ui2 extends checkbox
 {
-	iconChecked      "icons/checkbox_ui2_checked"
-	iconUnchecked    "icons/checkbox_ui2_unchecked"
+	iconChecked	  "icons/checkbox_ui2_checked"
+	iconUnchecked	"icons/checkbox_ui2_unchecked"
 	iconIndeterminate "icons/checkbox_ui2_indeterminate"
 	size "20 20"
 }
@@ -337,7 +337,7 @@ component spinner_green extends spinner
 window popupUI2
 {
 	{
-		bgcolor	    "0 0 0 0.6"
+		bgcolor		"0 0 0 0.6"
 		border		"2"
 		bordercolor	"0.56 0.81 0.76 1"
 		dragbutton	true
@@ -357,14 +357,14 @@ window popupUI2
 // StatBar was designed for hud, in equipment we need a wider bar
 component StatBarWide extends StatBar
 {
-    {
-        size	"250 25"
-    }
+	{
+		size	"250 25"
+	}
 	string label {size "100 15" }
-    texture bg  {  size	"250 10"}
-    bar valuebar { size "250 10" }
-    bar initbar { size "250 10" }
-    string valuenum { size	"160 0" }
+	texture bg  {  size	"250 10"}
+	bar valuebar { size "250 10" }
+	bar initbar { size "250 10" }
+	string valuenum { size	"160 0" }
 }
 
 
@@ -372,118 +372,118 @@ component StatBarWide extends StatBar
 // @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
 component abilities extends panel
 {
-    {
-        pos			"740 100"
-        size		"250 125"
-        ghost		true
-    }
-    StatBarWide strength
-    {
-        {
-            pos		"0    0"
-        }
-        string label { string "_Strength" }
-        bar valuebar { current *cvar:mn_vpwr }
-        bar initbar { current *cvar:mn_vpwri }
-        string valuenum { string *cvar:mn_tpwr }
-    }
-    StatBarWide speed
-    {
-        {
-            pos		"0 30"
-        }
-        string label { string "_Speed" }
-        bar valuebar { current *cvar:mn_vspd }
-        bar initbar { current *cvar:mn_vspdi }
-        string valuenum { string *cvar:mn_tspd }
-    }
-    StatBarWide accuracy
-    {
-        {
-            pos		"0 60"
-        }
-        string label { string "_Accuracy" }
-        bar valuebar { current *cvar:mn_vacc }
-        bar initbar { current *cvar:mn_vacci }
-        string valuenum { string *cvar:mn_tacc }
-    }
-    StatBarWide mind
-    {
-        {
-            pos		"0 90"
-        }
-        string label { string "_Mind" }
-        bar valuebar { current *cvar:mn_vmnd }
-        bar initbar { current *cvar:mn_vmndi }
-        string valuenum { string *cvar:mn_tmnd }
-    }
+	{
+		pos			"740 100"
+		size		"250 125"
+		ghost		true
+	}
+	StatBarWide strength
+	{
+		{
+			pos		"0	0"
+		}
+		string label { string "_Strength" }
+		bar valuebar { current *cvar:mn_vpwr }
+		bar initbar { current *cvar:mn_vpwri }
+		string valuenum { string *cvar:mn_tpwr }
+	}
+	StatBarWide speed
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Speed" }
+		bar valuebar { current *cvar:mn_vspd }
+		bar initbar { current *cvar:mn_vspdi }
+		string valuenum { string *cvar:mn_tspd }
+	}
+	StatBarWide accuracy
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Accuracy" }
+		bar valuebar { current *cvar:mn_vacc }
+		bar initbar { current *cvar:mn_vacci }
+		string valuenum { string *cvar:mn_tacc }
+	}
+	StatBarWide mind
+	{
+		{
+			pos		"0 90"
+		}
+		string label { string "_Mind" }
+		bar valuebar { current *cvar:mn_vmnd }
+		bar initbar { current *cvar:mn_vmndi }
+		string valuenum { string *cvar:mn_tmnd }
+	}
 }
 // Skillbars panel
 component skillbars extends panel
 {
-    {
-        pos			"740 220"
-        size		"250 155"
-        ghost		true
-    }
-    StatBarWide cls
-    {
-        {
-            pos		"0 0"
-        }
-        string label { string "_CQB" tooltip "_Close Quarters Battle" }
-        bar valuebar { current *cvar:mn_vcls }
-        bar initbar { current *cvar:mn_vclsi }
-        string valuenum { string *cvar:mn_tcls }
-    }
-    StatBarWide ass
-    {
-        {
-            pos		"0 30"
-        }
-        string label { string "_Assault" }
-        bar valuebar { current *cvar:mn_vass }
-        bar initbar { current *cvar:mn_vassi }
-        string valuenum { string *cvar:mn_tass }
-    }
-    StatBarWide snp
-    {
-        {
-            pos		"0 60"
-        }
-        string label { string "_Sniper" }
-        bar valuebar { current *cvar:mn_vsnp }
-        bar initbar { current *cvar:mn_vsnpi }
-        string valuenum { string *cvar:mn_tsnp }
-    }
-    StatBarWide exp
-    {
-        {
-            pos		"0 90"
-        }
-        string label { string "_Explosives" }
-        bar valuebar { current *cvar:mn_vexp }
-        bar initbar { current *cvar:mn_vexpi }
-        string valuenum { string *cvar:mn_texp }
-    }
+	{
+		pos			"740 220"
+		size		"250 155"
+		ghost		true
+	}
+	StatBarWide cls
+	{
+		{
+			pos		"0 0"
+		}
+		string label { string "_CQB" tooltip "_Close Quarters Battle" }
+		bar valuebar { current *cvar:mn_vcls }
+		bar initbar { current *cvar:mn_vclsi }
+		string valuenum { string *cvar:mn_tcls }
+	}
+	StatBarWide ass
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Assault" }
+		bar valuebar { current *cvar:mn_vass }
+		bar initbar { current *cvar:mn_vassi }
+		string valuenum { string *cvar:mn_tass }
+	}
+	StatBarWide snp
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Sniper" }
+		bar valuebar { current *cvar:mn_vsnp }
+		bar initbar { current *cvar:mn_vsnpi }
+		string valuenum { string *cvar:mn_tsnp }
+	}
+	StatBarWide exp
+	{
+		{
+			pos		"0 90"
+		}
+		string label { string "_Explosives" }
+		bar valuebar { current *cvar:mn_vexp }
+		bar initbar { current *cvar:mn_vexpi }
+		string valuenum { string *cvar:mn_texp }
+	}
 }
 // Health panel
 component healthbar extends panel
 {
-    {
-        visiblewhen "*cvar:mn_show_employee <= 2"
-        pos			"740 340"
-        size		"250 30"
-        ghost		true
-    }
-    StatBarWide hp
-    {
-        {
-            pos		"0 0"
-        }
-        string label { string "_Health" tooltip "_<Healthpoints" }
-        bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
-        string valuenum { string *cvar:mn_thp }
+	{
+		visiblewhen "*cvar:mn_show_employee <= 2"
+		pos			"740 340"
+		size		"250 30"
+		ghost		true
+	}
+	StatBarWide hp
+	{
+		{
+			pos		"0 0"
+		}
+		string label { string "_Health" tooltip "_<Healthpoints" }
+		bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
+		string valuenum { string *cvar:mn_thp }
 		func setColour {
 			if ( ( *node:parent.valuebar@current / *node:parent.valuebar@max ) <= 0.33 ) {
 				*node:parent.valuebar@color = "1 .0 .0 1"
@@ -493,7 +493,7 @@ component healthbar extends panel
 				*node:parent.valuebar@color = ".1875 .65625 .164 1"
 			}
 		}
-    }
+	}
 }
 // ==================
 // actor info
@@ -501,105 +501,105 @@ component healthbar extends panel
 
 component actor_info extends panel
 {
-    {
-        pos		"731 420"
-        size	"290 349"
-    }
+	{
+		pos		"731 420"
+		size	"290 349"
+	}
 
-    image	rank_img
-    {
-        src		*cvar:mn_chrrank_img
-        pos			"10 25"
-        size		"110 110"
-    }
+	image	rank_img
+	{
+		src		*cvar:mn_chrrank_img
+		pos			"10 25"
+		size		"110 110"
+	}
 
-    model body
-    {
-        {
-            src			*cvar:mn_body
-            skin		*cvar:mn_body_skin
-            anim		"stand2"
-            angles		"0 70 90"
-            scale		"5.1 5.1 5.1"
-            pos			"60 18"
-            size		"200 290"
-            origin		"0 -40 0"
-        }
+	model body
+	{
+		{
+			src			*cvar:mn_body
+			skin		*cvar:mn_body_skin
+			anim		"stand2"
+			angles		"0 70 90"
+			scale		"5.1 5.1 5.1"
+			pos			"60 18"
+			size		"200 290"
+			origin		"0 -40 0"
+		}
 
-        model head
-        {
-            src			*cvar:mn_head
-            skin		*cvar:mn_head_skin
-            tag			"tag_head"
-            scale		"1.0 1.0 1.0"
-        }
-        model right_weapon
-        {
-            src			*cvar:mn_rweapon
-            tag			"tag_rweapon"
-        }
-        model left_weapon
-        {
-            src			*cvar:mn_lweapon
-            tag			"tag_lweapon"
-        }
-    }
+		model head
+		{
+			src			*cvar:mn_head
+			skin		*cvar:mn_head_skin
+			tag			"tag_head"
+			scale		"1.0 1.0 1.0"
+		}
+		model right_weapon
+		{
+			src			*cvar:mn_rweapon
+			tag			"tag_rweapon"
+		}
+		model left_weapon
+		{
+			src			*cvar:mn_lweapon
+			tag			"tag_lweapon"
+		}
+	}
 
-    string rank_lbl
-    {
-        string		*cvar:mn_chrrank
-        pos			"10 283"
-        size		"200 20"
-    }
-
-
-    panel soldier_info {
-        {
-            pos		"0 25"
-            size	"285 320"
-        }
+	string rank_lbl
+	{
+		string		*cvar:mn_chrrank
+		pos			"10 283"
+		size		"200 20"
+	}
 
 
-        string	missions_lbl { pos "10 278" size "180 20" string "_Missions Performed:" }
-        string	missions_val { pos "200 278" size "80 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+	panel soldier_info {
+		{
+			pos		"0 25"
+			size	"285 320"
+		}
 
-        string	kills_lbl { pos "10 298" size "180 20" string "_Enemies Killed:" }
-        string	kills_val { pos "200 298" size "80 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
-    }
+
+		string	missions_lbl { pos "10 278" size "180 20" string "_Missions Performed:" }
+		string	missions_val { pos "200 278" size "80 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+
+		string	kills_lbl { pos "10 298" size "180 20" string "_Enemies Killed:" }
+		string	kills_val { pos "200 298" size "80 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+	}
 }
 // Pilot Skills panel
 component skillspilot extends panel
 {
-    {
-        pos			"740 250"
-        size		"250 155"
-        ghost		true
-    }
-    StatBarWide pil
-    {
-        {
-            pos		"0 0"
-        }
-        string label { string "_Piloting" }
-        bar valuebar { current *cvar:mn_vpil }
-        string valuenum { string *cvar:mn_tpil }
-    }
-    StatBarWide tar
-    {
-        {
-            pos		"0 30"
-        }
-        string label { string "_Targeting" }
-        bar valuebar { current *cvar:mn_vtar }
-        string valuenum { string *cvar:mn_ttar }
-    }
-    StatBarWide evad
-    {
-        {
-            pos		"0 60"
-        }
-        string label { string "_Evading" }
-        bar valuebar { current *cvar:mn_vevad }
-        string valuenum { string *cvar:mn_tevad }
-    }
+	{
+		pos			"740 250"
+		size		"250 155"
+		ghost		true
+	}
+	StatBarWide pil
+	{
+		{
+			pos		"0 0"
+		}
+		string label { string "_Piloting" }
+		bar valuebar { current *cvar:mn_vpil }
+		string valuenum { string *cvar:mn_tpil }
+	}
+	StatBarWide tar
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Targeting" }
+		bar valuebar { current *cvar:mn_vtar }
+		string valuenum { string *cvar:mn_ttar }
+	}
+	StatBarWide evad
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Evading" }
+		bar valuebar { current *cvar:mn_vevad }
+		string valuenum { string *cvar:mn_tevad }
+	}
 }

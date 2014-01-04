@@ -287,15 +287,15 @@ window aircraft_equip extends iaircraft
 				}
 			}
 		}
-        // Object description panel
-        ObjectInfo details
-        {
-            {
-                pos				"4 574"
-                border			"2"
-                bordercolor		"0.527 0.6 0.21 1"
-            }
-        }
+		// Object description panel
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
 	}
 
 	panel aircraft_info
@@ -488,7 +488,7 @@ window aircraft_equip extends iaircraft
 			pos				"-5 15"
 			size			"275 20"
 			font			"f_small"
-			color	      	"1 1 1 1"
+			color		  	"1 1 1 1"
 			contentalign	ALIGN_CC
 			ghost			true
 		}
@@ -496,7 +496,7 @@ window aircraft_equip extends iaircraft
 		{
 			pos			"7 50"
 			size		"292 70"
-			color	    "0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			lineheight	"16"
 			dataid		TEXT_AIREQUIP_1
 			rows		"3"
@@ -527,7 +527,7 @@ window aircraft_equip extends iaircraft
 			dataid		TEXT_AIREQUIP_2
 			pos			"7 50"
 			size		"292 35"
-			color	    "0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			lineheight	"16"
 			rows		"2"
 			ghost		true
@@ -539,7 +539,7 @@ window aircraft_equip extends iaircraft
 			pos				"5 15"
 			size			"275 20"
 			font			"f_small"
-			color	      	"1 1 1 1"
+			color		  	"1 1 1 1"
 			contentalign	ALIGN_CL
 			ghost			true
 		}

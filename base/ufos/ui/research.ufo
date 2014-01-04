@@ -504,7 +504,7 @@ component cmpTechItem extends panel {
 		}
 		button less {
 			tooltip		"_Assign less scientists on this project"
-            icon	    "icons/windowminusb"
+			icon		"icons/windowminusb"
 			pos			"25 4"
 			size		"25 25"
 
@@ -522,7 +522,7 @@ component cmpTechItem extends panel {
 		}
 		button more {
 			tooltip		"_Assign more scientists on this project"
-            icon	    "icons/windowplusb"
+			icon		"icons/windowplusb"
 			pos			"75 4"
 			size		"25 25"
 
@@ -666,9 +666,9 @@ window research extends BaseMgmtWindow
 				}
 
 				panel techs {
-					pos			    "5 50"
-					size		    "700 480"
-					layout		    LAYOUT_TOP_DOWN_FLOW
+					pos				"5 50"
+					size			"700 480"
+					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
 					onViewChange {
@@ -758,20 +758,20 @@ window research extends BaseMgmtWindow
 		button alert { invis true }
 	}
 
-    /**
-     * @brief Passes information on capacity scientiets and laboratory space
-     * @param <1> scientists free
-     * @param <2> scientists all
-     * @param <3> labspace free
-     * @param <4> labspace all
-     */
-    confunc ui_research_update_caps {
-        // a little hack for now
-        *node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
-        *node:root.laboratoy.data_bar@current = (<4> - <3>)
-        *node:root.laboratoy.data_bar@max = <4>
-        *node:root.laboratoy.data@string = <node:root.laboratoy.data_bar@current>/<4>
-    }
+	/**
+	 * @brief Passes information on capacity scientiets and laboratory space
+	 * @param <1> scientists free
+	 * @param <2> scientists all
+	 * @param <3> labspace free
+	 * @param <4> labspace all
+	 */
+	confunc ui_research_update_caps {
+		// a little hack for now
+		*node:root.base_container.mainBody.techlist_border.idle_scientists_count@string = "<1>"
+		*node:root.laboratoy.data_bar@current = (<4> - <3>)
+		*node:root.laboratoy.data_bar@max = <4>
+		*node:root.laboratoy.data@string = <node:root.laboratoy.data_bar@current>/<4>
+	}
 
 	// Research info box (bottom right)
 	panel researchinfo {

@@ -84,7 +84,7 @@ window bases
 			{
 				{
 					pos		"330 0"
-                    onClick		{ cmd "show_facility false; ui_push aircraft_equip;" }
+					onClick		{ cmd "show_facility false; ui_push aircraft_equip;" }
 				}
 				string label { string "_Pilots" }
 				button icon { icon "icons/head_pilot" }
@@ -130,7 +130,7 @@ window bases
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
-                onClick		    { cmd "ui_push ufopedia;" }
+				onClick			{ cmd "ui_push ufopedia;" }
 			}
 			button options
 			{
@@ -141,7 +141,7 @@ window bases
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
-                onClick	        { cmd "ui_push options;" }
+				onClick			{ cmd "ui_push options;" }
 			}
 		}
 
@@ -549,7 +549,7 @@ window bases
 	 * @param <3> number of scientists working on it
 	 * @param <4> percent complete
 	 * @TODO: to work properly, research window must call base_init when it
-	 *        closes. Currently, it will not update after research changed
+	 *		closes. Currently, it will not update after research changed
 	 */
 	confunc clear_research
 	{

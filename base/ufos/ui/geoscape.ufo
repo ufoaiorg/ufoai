@@ -314,11 +314,11 @@ window geoscape
 
 			string timelapse
 			{
-				string		    *cvar:mn_timelapse
-				pos			    "1 32"
-				size		    "205 20"
+				string			*cvar:mn_timelapse
+				pos				"1 32"
+				size			"205 20"
 				contentalign	ALIGN_UC
-                color	        "0.56 0.81 0.76 1"
+				color			"0.56 0.81 0.76 1"
 			}
 		}
 
@@ -490,7 +490,7 @@ window geoscape
 		{
 			string		"_Message settings"
 			tooltip		"_Change message and pause settings"
-            color	    "0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			pos			"21 540"
 			size		"175 34"
@@ -506,7 +506,7 @@ window geoscape
 
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
-            		color		"0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			pos			"21 575"
 			flash		true
@@ -523,7 +523,7 @@ window geoscape
 
 			string		"_Mailclient"
 			tooltip		"_INBOX"
-            		color		"0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			pos			"21 575"
 			size		"175 34"
@@ -539,7 +539,7 @@ window geoscape
 			tooltip		"_Organisation statistics"
 			pos			"21 610"
 			size		"175 34"
-            		color		"0.56 0.81 0.76 1"
+					color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
@@ -552,7 +552,7 @@ window geoscape
 			string		"_UFOpaedia"
 			pos			"21 645"
 			size		"175 34"
-            		color		"0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"
@@ -563,7 +563,7 @@ window geoscape
 		button bt_installation
 		{
 			string		"_Create installation"
-            		color		"0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			pos			"21 680"
 			size		"175 34"
 			font	 	"f_small"

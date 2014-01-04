@@ -9,10 +9,10 @@
  * - Currently selected firemode name on weapon panel
  * - Second weapon panel
  * -- Reload button disappears when full, but it would
- *    be great to have full/not-full/empty icons
+ *	be great to have full/not-full/empty icons
  * -- Need to figure out grenades, and sometimes pistols
- *    they say can't be fired two-handed, and reload btn
- *    doesn't appear. Try to figure out when this happens.
+ *	they say can't be fired two-handed, and reload btn
+ *	doesn't appear. Try to figure out when this happens.
  * - Fire weapon seems off: sometimes no line of fire is drawn
  * - Soldier models don't always update
  * - Inventory/Stats windows
@@ -437,7 +437,7 @@ window hud_default extends hud
 				{
 					{
 						pos			"250 0"
-                        tooltip		"_Crouched"
+						tooltip		"_Crouched"
 						invis		true
 					}
 
@@ -465,7 +465,7 @@ window hud_default extends hud
 				{
 					{
 						pos			"220 0"
-                        tooltip		"_Standing"
+						tooltip		"_Standing"
 						invis		false
 					}
 
@@ -1249,11 +1249,11 @@ window hud_default extends hud
 	{
 		string  "_Please wait"
 		color   "1 0 0 1"
-		font    "f_verybig_bold"
+		font	"f_verybig_bold"
 		ghost   true
-		pos             "0 0"
-		size    "1024 768"
-		contentalign    ALIGN_UC
+		pos			 "0 0"
+		size	"1024 768"
+		contentalign	ALIGN_UC
 	}
 
 	// ==================
@@ -1353,7 +1353,7 @@ window inv_stats_hud
 	{
 		pos		"0 0"
 		size	"560 40"
-    }
+	}
 	button close
 	{
 		icon			"icons/windowclose"

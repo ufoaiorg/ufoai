@@ -50,8 +50,8 @@ window team extends iaircraft
 				panel soldierlist {
 					pos				"55 08"
 					size			"270 298"
-					padding		    6
-					layout		    LAYOUT_TOP_DOWN_FLOW
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
 
@@ -96,8 +96,8 @@ window team extends iaircraft
 				panel soldierlist {
 					pos				"55 08"
 					size			"270 298"
-					padding		    6
-					layout		    LAYOUT_TOP_DOWN_FLOW
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					wheelscrollable	true
 
@@ -242,7 +242,7 @@ window team extends iaircraft
 				pos			"10 5"
 				size		"290 20"
 				color		"0.56 0.81 0.76 1"
-				ghost       true
+				ghost	   true
 			}
 		}
 	}
@@ -271,7 +271,7 @@ window team extends iaircraft
 				pos			"10 5"
 				size		"290 20"
 				color		"0.56 0.81 0.76 1"
-				ghost       true
+				ghost	   true
 			}
 		}
 	}

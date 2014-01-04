@@ -27,9 +27,9 @@ window radar
 	}
 	controls drag
 	{
-		pos        "0 0"
-		size       "520 40"
-    }
+		pos		"0 0"
+		size	"520 40"
+	}
 	button close
 	{
 		icon			"icons/windowclose"
