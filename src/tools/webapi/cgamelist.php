@@ -17,6 +17,6 @@ foreach ( $files as $file ) {
 		continue;
 	}
 	$name = $type->getName();
-	echo "{userid \"" . $userId . "\" file \"" . $file . "\" name \"" . $name . "\" category \"" . $category . "\"}";
+	echo "{userid \"" . $userId . "\" file \"" . basename($file) . "\" name \"" . $name . "\" category \"" . $category . "\"}";
 }
 echo "}";
