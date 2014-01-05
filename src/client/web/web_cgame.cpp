@@ -228,7 +228,7 @@ static void WEB_ListCGameFilesCallback (const char* responseBuf, void* userdata)
 	struct entry_s {
 		int userId;
 		int category;
-		char file[MAX_QPATH];
+		char file[MAX_OSPATH];
 		char name[MAX_VAR];
 	};
 
