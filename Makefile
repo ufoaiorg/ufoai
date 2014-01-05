@@ -113,7 +113,7 @@ endif
 
 $($(1)_FILE): $(BUILDDIR)/$(1)/.dirs build/modules/$(1).mk $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
 	@echo '===> LD [$$@]'
-	$(Q)mkdir -p $(dir $($(1)_FILE))
+	$(Q)mkdir -p $$(dir $($(1)_FILE))
 	$(Q)$(CCACHE) $(CROSS)$($(1)_LINKER) $($(1)_OBJS) $($(1)_LDFLAGS) $(LDFLAGS) -o $($(1)_FILE)
 
 $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
