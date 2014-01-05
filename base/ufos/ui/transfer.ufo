@@ -408,23 +408,7 @@ window transfer
 			size			"290 125"
 			color			"0.56 0.81 0.76 1"
 			layout			LAYOUT_TOP_DOWN_FLOW
-			onViewChange {
-				*node:parent.t_baseinfo_scroll@fullsize = <fullsize>
-				*node:parent.t_baseinfo_scroll@current = <viewpos>
-				*node:parent.t_baseinfo_scroll@viewsize = <viewsize>
-			}
 		}
-
-/*		vscrollbar t_baseinfo_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"363 115"
-			height		"125"
-			hidewhenunused	true
-			onChange	{
-				*node:parent.capacities@viewpos = <current>
-			}
-		}
-*/
 
 		confunc ui_t_capacities_clear {
 			call *node:parent.capacities@removeAllchild
