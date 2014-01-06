@@ -3655,6 +3655,7 @@ tech rs_installation_ufo_yard
 
 	provides	ufoyard
 	time	0
+	model		"geoscape/ufoyard"
 }
 tech rs_installation_sam_site
 {
