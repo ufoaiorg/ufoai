@@ -310,65 +310,82 @@ window irc_popup extends popupUI2
 }
 
 
-window hud_chat
+window hud_chat extends popupUI2
 {
 	{
-		pos				"200 500"
-		size			"800 250"
-		background	"ui/popup_alpha_tile"
-		dragbutton	true
+		pos			"112 518"
+		size		"800 250"
 		closebutton	true
-		string	"_Chat"
-		ghost true
+		ghost		true
+	}
+
+	string title
+	{
+		string		"_Chat"
+		size 		"800 30"
 	}
 
 	panel allchats {
 		{
-			pos				"0 50"
-			size			"800 200"
+			pos				"0 30"
+			size			"800 220"
 			layout			LAYOUT_BORDER
 			padding	18
 		}
 
-	MainMenuBtn invite_players {
-		invis		true
-		string		"_Invite others"
-		tooltip		"_Invite players that are online in the lobby"
-		pos			"50 650"
-		size		"150 40"
-		onClick {
-			cmd "irc_invite;"
-		}
-	}
-
-
-		tab selectchat {
+		panel tabs {
 			{
-				align	LAYOUTALIGN_TOP
-				height	40
-				cvar	*cvar:mn_chatselect
-				onChange {
-					if ( *cvar:mn_chatselect eq "irc" ) {
-						*node:parent.ircscreen@invis = false
-						*node:parent.chatscreen@invis = true
-						cmd "irc_connect;"
-						call *node:root.hud_activate_chat_textentry
-					}
-					if ( *cvar:mn_chatselect eq "chat" ) {
-						*node:parent.ircscreen@invis = true
-						*node:parent.chatscreen@invis = false
-						call *node:root.hud_activate_chat_textentry
-					}
+				pos				"0 0"
+				size			"800 40"
+				layoutMargin	5
+				layout			LAYOUT_LEFT_RIGHT_FLOW
+				align			LAYOUTALIGN_TOP
+			}
+
+			MainMenuTab chat {
+				string	"_Party chat"
+				width	"180"
+				onClick {
+					*node:parent.parent.ircscreen@invis = true
+					*node:parent.invite@invis = true
+					*node:parent.parent.chatscreen@invis = false
+
+					*node:this@bgcolor			=	"0.4 0.515 0.5 1"
+					*node:this@color			=	"0 0 0 0.9"
+
+					*node:parent.irc@bgcolor	=	"0.4 0.515 0.5 0.25"
+					*node:parent.irc@color		=	"1 1 1 0.5"
+
+					call *node:root.hud_activate_chat_textentry
 				}
 			}
 
-			option chat {
-				label	"_Party chat"
-				value	"chat"
+			MainMenuTab irc {
+				string	"_Global lobby (IRC)"
+				width	"180"
+				onClick {
+					*node:parent.parent.ircscreen@invis = false
+					*node:parent.invite@invis = false
+
+					*node:parent.parent.chatscreen@invis = true
+
+					*node:this@bgcolor			=	"0.4 0.515 0.5 1"
+					*node:this@color			=	"0 0 0 0.9"
+
+					*node:parent.chat@bgcolor	=	"0.4 0.515 0.5 0.25"
+					*node:parent.chat@color		=	"1 1 1 0.5"
+					cmd "irc_connect;"
+					call *node:root.hud_activate_chat_textentry
+				}
 			}
-			option irc {
-				label	"_Global lobby (IRC)"
-				value	"irc"
+			MainMenuTab invite {
+				invis			true
+				string			"_Invite others"
+				tooltip			"_Invite players that are online in the lobby"
+				size			"180 40"
+				onClick {
+					cmd "irc_invite;"
+				}
 			}
 		}
 
@@ -446,20 +463,14 @@ window hud_chat
 
 				string say_label {
 					align		LAYOUTALIGN_LEFT
-					width		"50"
+					width		"100"
 					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
 
-				textentry say {
+				UI2TextEntry say {
 					align		LAYOUTALIGN_FILL
-					background		"ui/button_green_verysmall"
 					string		*cvar:irc_send_buffer
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					contentalign	ALIGN_CL
-					padding		8
-					font		"f_verysmall"
 					clickoutabort	true
 					onChange	{
 						cmd "irc_chanmsg;"
@@ -510,7 +521,7 @@ window hud_chat
 
 				string say_label {
 					align		LAYOUTALIGN_LEFT
-					width		"50"
+					width		"100"
 					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
@@ -523,15 +534,9 @@ window hud_chat
 					tooltip		"_Team chat"
 				}
 
-				textentry say {
+				UI2TextEntry say {
 					align		LAYOUTALIGN_FILL
-					background		"ui/button_green_verysmall"
 					string		*cvar:mn_entry
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					contentalign	ALIGN_CL
-					padding		8
-					font		"f_verysmall"
 					clickoutabort	true
 					onChange	{
 						if ( *cvar:mn_chat_team eq "1" ) {
@@ -547,6 +552,8 @@ window hud_chat
 		}
 	}
 
+	fuzzyScreen overlay { }
+
 	func hud_activate_chat_textentry {
 		call *node:root.allchats.chatscreen.input.say@edit
 	}
@@ -557,6 +564,6 @@ window hud_chat
 
 	func onWindowOpened {
 		*cvar:mn_chatselect = "chat"
-		call *node:root.hud_activate_chat_textentry
+		call *node:root.allchats.tabs.chat@onClick
 	}
 }
