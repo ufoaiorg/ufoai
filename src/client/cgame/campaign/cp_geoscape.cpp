@@ -1712,9 +1712,10 @@ void GEO_DrawMarkers (const uiNode_t* node)
 	}
 
 	const bool showXVI = CP_IsXVIVisible();
-	static char buffer[512] = "";
+	static char buffer[512];
 
 	/* Draw nation names */
+	buffer[0] = 0;
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		int x, y;
