@@ -37,30 +37,6 @@ component cmp_model_head extends model
 	ghost		true
 }
 
-// Components for the soldier status bars
-
-component cmp_bar_health extends bar
-{
-	size		"66 6"
-	color		".8 0 0 0.7"
-	disabled	true
-	tooltip		"_Health"
-}
-component cmp_bar_morale extends bar
-{
-	size		"66 6"
-	color		".8 .8 0 0.7"
-	disabled	true
-	tooltip		"_Morale"
-}
-component cmp_bar_time extends bar
-{
-	size		"66 6"
-	color		".2 .2 1 0.9"
-	disabled	true
-	tooltip		"_TUs"
-}
-
 // Component for the spotted enemies string (used by altHUD and defaultHUD)
 
 component cmp_str_numspotted extends string

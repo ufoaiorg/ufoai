@@ -174,17 +174,7 @@ window mailclient
 					size		"713 32"
 					bgcolor		"0.527 0.6 0.21 0.2"
 				}
-/*
-				string datehead
-				{
-					string			"_Date:"
-					pos				"90 1"
-					size			"70 32"
-					font			"f_normal"
-					contentalign	ALIGN_CL
-					color			"0.56 0.81 0.76 1"
-				}
-*/
+
 				string date
 				{
 					string			*cvar:mn_mapdate
@@ -194,17 +184,7 @@ window mailclient
 					contentalign	ALIGN_CR
 					color			"0.56 0.81 0.76 1"
 				}
-/*
-				string timehead
-				{
-					string			"_Time:"
-					pos				"362 1"
-					size			"100 32"
-					font			"f_normal"
-					contentalign	ALIGN_CL
-					color			"0.56 0.81 0.76 1"
-				}
-*/
+
 				string time
 				{
 					string			*cvar:mn_maptime
