@@ -127,6 +127,7 @@ window geoscape
 			size		"216 728"
 			border		"2"
 			bordercolor	"0.56 0.81 0.76 1"
+			bgcolor		"0 0 0 0.6"
 		}
 		panel border {
 			{
