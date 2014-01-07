@@ -3643,6 +3643,7 @@ tech rs_installation_radar
 
 	provides	radar_tower
 	time	0
+	model		"geoscape/radar"
 }
 tech rs_installation_ufo_yard
 {
@@ -3668,6 +3669,7 @@ tech rs_installation_sam_site
 
 	provides	samsite
 	time	0
+	model		"geoscape/samlauncher"
 }
 tech rs_installation_orbital_launcher
 {
