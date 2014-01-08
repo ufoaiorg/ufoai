@@ -27,16 +27,17 @@ sequence developers
 	}
 	obj2d ufoai_logo
 	{
-		image	"pics/ufoai"
+		text	"_UFO: ALIEN INVASION"
+		font	"f_title"
+		color	"0.59 0.78 0.56 1"
 		align	"uc"
-		pos		"384 0"
-		color	"1 1 1 1"
+		pos		"512 7"
 		speed	"0 0"
 	}
 	obj2d background_world
 	{
 		pos		"768 0"
-		image	"pics/background/world_bg"
+		image	"pics/background/dev_bg"
 		inbackground	true
 	}
 	obj2d ufoai_url
@@ -44,7 +45,7 @@ sequence developers
 		text	"_http://www.ufoai.org"
 		pos		"512 64"
 		align	"uc"
-		color	"0 1 0 0"
+		color	"1 1 1 0"
 		fade	"0 0 0 1"
 	}
 
@@ -56,7 +57,7 @@ sequence developers
 		text	"_Project lead"
 		pos		"512 768"
 		align	"uc"
-		color	"0 1 0 1"
+		color	"0.56 0.81 0.76 1"
 		speed	"0 -60"
 		inbackground	true
 	}
@@ -77,7 +78,7 @@ sequence developers
 		text	"_Team members"
 		pos		"512 768"
 		align	"uc"
-		color	"0 1 0 1"
+		color	"0.56 0.81 0.76 1"
 		speed	"0 -60"
 		inbackground	true
 	}
@@ -181,7 +182,7 @@ sequence developers
 		text	"_Other contributors"
 		pos		"512 768"
 		align	"uc"
-		color	"0 1 0 1"
+		color	"0.56 0.81 0.76 1"
 		speed	"0 -60"
 		inbackground	true
 	}
@@ -275,7 +276,7 @@ sequence developers
 		text	"_Original team"
 		pos		"512 768"
 		align	"uc"
-		color	"0 1 0 1"
+		color	"0.56 0.81 0.76 1"
 		speed	"0 -60"
 		inbackground	true
 	}
@@ -339,7 +340,7 @@ sequence developers
 		text	"_Special thanks to"
 		pos		"512 768"
 		align	"uc"
-		color	"0 1 0 1"
+		color	"0.56 0.81 0.76 1"
 		speed	"0 -60"
 		inbackground	true
 	}
