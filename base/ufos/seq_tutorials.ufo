@@ -1,6 +1,6 @@
 tutorial gameplay
 {
-	name		"_Gameplay"
+	name		"_GAMEPLAY"
 	sequence	tut_gameplay
 }
 
@@ -323,7 +323,7 @@ sequence tut_gameplay
 
 tutorial tacticalmission
 {
-	name	"_Tactical mission"
+	name	"_TACTICAL MISSION"
 	sequence	tut_tacticalmission
 }
 
@@ -771,7 +771,7 @@ sequence tut_tacticalmission
 
 tutorial skirmish
 {
-	name "_How to play skirmish"
+	name "_HOW TO PLAY SKIRMISH"
 	sequence tut_skirmish
 }
 
@@ -1043,7 +1043,7 @@ sequence tut_skirmish
 
 tutorial multiplayer
 {
-	name	"_How to play multiplayer"
+	name	"_HOW TO PLAY MULTIPLAYER"
 	sequence	tut_multiplayer
 }
 

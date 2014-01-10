@@ -38,13 +38,12 @@ static int numTutorials;
 
 static void TUT_GetTutorials_f (void)
 {
-	linkedList_t* tutorialList = nullptr;
+	UI_ExecuteConfunc("tutorialsListClear");
 
 	for (int i = 0; i < numTutorials; i++) {
 		const tutorial_t* t = &tutorials[i];
-		LIST_AddString(&tutorialList, va("%s", _(t->name)));
+		UI_ExecuteConfunc("tutorialsListAdd %i \"%s\"",i, _(t->name));
 	}
-	UI_RegisterLinkedListText(TEXT_LIST, tutorialList);
 }
 
 static void TUT_List_f (void)
