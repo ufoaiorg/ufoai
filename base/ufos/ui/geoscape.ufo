@@ -138,9 +138,14 @@ window geoscape
 			}
 		}
 
-		// =====================
-		// messagesystem button
-		// =====================
+		string date {
+			string		"*cvar:mn_mapdate *cvar:mn_maptime"
+			pos		"18 12"
+			size		"181 20"
+			contentalign	ALIGN_UC
+			color		"1 1 1 1"
+			font		"f_small"
+		}
 
 		button bt_messagesystem
 		{
@@ -159,20 +164,6 @@ window geoscape
 				*cvar:mn_messagesystem = 3
 				cmd "messagesystem_changemode"
 			}
-		}
-
-		// =====================
-		// time and date string
-		// =====================
-
-		string date
-		{
-			string		"*cvar:mn_mapdate *cvar:mn_maptime"
-			pos			"28 12"
-			size		"161 20"
-			contentalign	ALIGN_UC
-			color		"1 1 1 1"
-			font		"f_small"
 		}
 
 		// ==================
