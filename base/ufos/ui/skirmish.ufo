@@ -30,6 +30,13 @@ component cmpMapPreviewButton extends radiobutton
 		ghost	true
 	}
 
+	image frameOverlay {
+		pos		"2 2"
+		size	"128 96"
+		src		"maps/shots/map_ico_overlay"
+		ghost	true
+	}
+
 	string name {
 		string			""
 		contentalign	ALIGN_CC
