@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @todo use the font height? */
 static const int LINEHEIGHT	= 20;
 
-static const int DATETIME_COLUUI_SIZE = 180;
+static const int DATETIME_COLUUI_SIZE = 200;
 
 /* Used for drag&drop-like scrolling */
 static int mouseScrollX;
