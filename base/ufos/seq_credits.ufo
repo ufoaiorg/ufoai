@@ -172,6 +172,26 @@ sequence developers
 		speed	"0 -60"
 		inbackground	true
 	}
+	wait 0.7
+	obj2d internecivus_text
+	{
+		text	"_Igor Gritsenko (Internecivus)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d cooler_sk_text
+	{
+		text	"_cooler_sk"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
 
 	// ========================
 	// CONTRIBUTORS
