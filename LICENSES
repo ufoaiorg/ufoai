@@ -2816,6 +2816,10 @@ base/pics/armour/ortnok_medium.png | GNU General Public License 2.0
 base/pics/armour/power.png | GNU General Public License 2.0 | Pawel Michalkiewicz
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
+base/pics/icons/arrow_left.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/arrow_left_on.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/arrow_right.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/arrow_right_on.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/conback.jpg | GNU General Public License 2.0
 base/pics/background/dev_bg.png | GNU General Public License 2.0 or later | cooler_sk
