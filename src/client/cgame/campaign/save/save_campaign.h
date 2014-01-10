@@ -35,7 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_ALIENSKILLED "aliensKilled"
 
 #define SAVE_CAMPAIGN_MAP "map"
+
+/* Compatibility for savegames */
 #define SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY "r_geoscape_overlay"
+
+#define SAVE_CAMPAIGN_GEO_OVERLAY_RADAR "geoRadarOverlay"
+#define SAVE_CAMPAIGN_GEO_OVERLAY_NATION "geoNationOverlay"
+#define SAVE_CAMPAIGN_GEO_OVERLAY_XVI "geoXviOverlay"
 #define SAVE_CAMPAIGN_RADAROVERLAYWASSET "radarOverlayWasSet"
 #define SAVE_CAMPAIGN_XVISTARTED "XVIShowmap"
 
@@ -66,6 +72,9 @@ DTD:
 	angles1						CDATA	'0'
 	zoom						CDATA	'0'
 	r_geoscape_overlay			CDATA	'0'
+	geoRadarOverlay				CDATA	'0'
+	geoNationOverlay			CDATA	'0'
+	geoXviOverlay				CDATA	'0'
 	radarOverlayWasSet			CDATA	'false'
 	XVIShowmap					CDATA	'false'
 >

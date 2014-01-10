@@ -235,17 +235,17 @@ static void GEO_MultiSelectExecuteAction_f (void)
 
 bool GEO_IsRadarOverlayActivated (void)
 {
-	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_RADAR;
+	return cgi->Cvar_GetInteger("geo_overlay_radar");
 }
 
 static inline bool GEO_IsNationOverlayActivated (void)
 {
-	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_NATION;
+	return cgi->Cvar_GetInteger("geo_overlay_nation");
 }
 
 static inline bool GEO_IsXVIOverlayActivated (void)
 {
-	return cgi->Cvar_GetInteger("cl_geoscape_overlay") & OVERLAY_XVI;
+	return cgi->Cvar_GetInteger("geo_overlay_xvi");
 }
 
 /**
@@ -1824,7 +1824,7 @@ void GEO_ResetAction (void)
 	GEO_SetSelectedUFO(nullptr);
 
 	if (!radarOverlayWasSet)
-		GEO_DeactivateOverlay("radar");
+		GEO_SetOverlay("radar", 0);
 }
 
 /**
@@ -2330,14 +2330,14 @@ void GEO_NotifyUFODisappear (const aircraft_t* ufo)
 }
 
 /**
- * @brief Switch overlay (turn on / off)
+ * @brief Turn overlay on/off
  * @param[in] overlayID Name of the overlay you want to switch.
+ * @param[in] status On/Off status to set
  */
-void GEO_SetOverlay (const char* overlayID)
+void GEO_SetOverlay (const char* overlayID, int status)
 {
-	const int value = cgi->Cvar_GetInteger("cl_geoscape_overlay");
-	if (Q_streq(overlayID, "nations")) {
-		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_NATION);
+	if (Q_streq(overlayID, "nation")) {
+		cgi->Cvar_SetValue("geo_overlay_nation", status);
 		return;
 	}
 
@@ -2346,9 +2346,10 @@ void GEO_SetOverlay (const char* overlayID)
 		return;
 
 	if (Q_streq(overlayID, "xvi")) {
-		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_XVI);
-	} else if (Q_streq(overlayID, "radar")) {
-		cgi->Cvar_SetValue("cl_geoscape_overlay", value ^ OVERLAY_RADAR);
+		cgi->Cvar_SetValue("geo_overlay_xvi", status);
+	}
+	if (Q_streq(overlayID, "radar")) {
+		cgi->Cvar_SetValue("geo_overlay_radar", status);
 		if (GEO_IsRadarOverlayActivated())
 			RADAR_UpdateWholeRadarOverlay();
 	}
@@ -2359,53 +2360,21 @@ void GEO_SetOverlay (const char* overlayID)
  */
 static void GEO_SetOverlay_f (void)
 {
-	const char* arg;
+	const char* overlay;
+	int status;
 
-	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <nation|xvi|radar> <1|0>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	arg = cgi->Cmd_Argv(1);
-	GEO_SetOverlay(arg);
+	overlay = cgi->Cmd_Argv(1);
+	status = atoi(cgi->Cmd_Argv(2));
+	GEO_SetOverlay(overlay, status);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
-	if (Q_streq(arg, "radar"))
+	if (Q_streq(overlay, "radar"))
 		radarOverlayWasSet = GEO_IsRadarOverlayActivated();
-}
-
-/**
- * @brief Remove overlay.
- * @param[in] overlayID Name of the overlay you want to turn off.
- */
-void GEO_DeactivateOverlay (const char* overlayID)
-{
-	if (Q_streq(overlayID, "nations")) {
-		if (GEO_IsNationOverlayActivated())
-			GEO_SetOverlay("nations");
-	} else if (Q_streq(overlayID, "xvi")) {
-		if (GEO_IsXVIOverlayActivated())
-			GEO_SetOverlay("xvi");
-	} else if (Q_streq(overlayID, "radar")) {
-		if (GEO_IsRadarOverlayActivated())
-			GEO_SetOverlay("radar");
-	}
-}
-
-/**
- * @brief Console command to call GEO_DeactivateOverlay.
- */
-static void GEO_DeactivateOverlay_f (void)
-{
-	const char* arg;
-
-	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nations|xvi|radar>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	arg = cgi->Cmd_Argv(1);
-	GEO_DeactivateOverlay(arg);
 }
 
 /**
@@ -2414,8 +2383,7 @@ static void GEO_DeactivateOverlay_f (void)
 void GEO_InitStartup (void)
 {
 	cgi->Cmd_AddCommand("multi_select_click", GEO_MultiSelectExecuteAction_f, nullptr);
-	cgi->Cmd_AddCommand("map_overlay", GEO_SetOverlay_f, "Set the geoscape overlay");
-	cgi->Cmd_AddCommand("map_deactivateoverlay", GEO_DeactivateOverlay_f, "Deactivate overlay");
+	cgi->Cmd_AddCommand("geo_setoverlay", GEO_SetOverlay_f, "Set the geoscape overlay");
 	cgi->Cmd_AddCommand("map_selectobject", GEO_SelectObject_f, "Select an object and center on it");
 	cgi->Cmd_AddCommand("mn_mapaction_reset", GEO_ResetAction, nullptr);
 

@@ -764,7 +764,7 @@ void UFO_DetectNewUFO (aircraft_t* ufocraft)
 
 	/* If this is the first UFO on geoscape, activate radar */
 	if (!GEO_IsRadarOverlayActivated())
-		GEO_SetOverlay("radar");
+		GEO_SetOverlay("radar", 1);
 
 	CP_TriggerEvent(UFO_DETECTION, cgi->Com_UFOTypeToShortName(ufocraft->ufotype));
 

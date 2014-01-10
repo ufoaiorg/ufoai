@@ -1724,7 +1724,7 @@ void B_SelectBase (const base_t* base)
 		if (B_GetCount() < MAX_BASES) {
 			/* show radar overlay (if not already displayed) */
 			if (!GEO_IsRadarOverlayActivated())
-				GEO_SetOverlay("radar");
+				GEO_SetOverlay("radar", 1);
 			ccs.mapAction = MA_NEWBASE;
 		} else {
 			ccs.mapAction = MA_NONE;

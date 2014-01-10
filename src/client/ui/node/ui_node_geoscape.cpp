@@ -88,7 +88,6 @@ static cvar_t* cl_3dmap;						/**< 3D geoscape or flat geoscape */
 static cvar_t* cl_3dmapAmbient;
 static cvar_t* cl_mapzoommax;
 static cvar_t* cl_mapzoommin;
-static cvar_t* cl_geoscape_overlay;
 
 // FIXME: don't make this static
 static uiNode_t* geoscapeNode;
@@ -228,7 +227,9 @@ void uiGeoscapeNode::draw (uiNode_t* node)
 
 	geoscapeNode = node;
 	UI_MAPEXTRADATA(node).flatgeoscape = cl_3dmap->integer == 0;
-	UI_MAPEXTRADATA(node).overlayMask = cl_geoscape_overlay->integer;
+	UI_MAPEXTRADATA(node).radarOverlay = Cvar_GetValue("geo_overlay_radar");
+	UI_MAPEXTRADATA(node).nationOverlay = Cvar_GetValue("geo_overlay_nation");
+	UI_MAPEXTRADATA(node).xviOverlay = Cvar_GetValue("geo_overlay_xvi");
 	UI_MAPEXTRADATA(node).ambientLightFactor = cl_3dmapAmbient->value;
 	UI_MAPEXTRADATA(node).mapzoommin = cl_mapzoommin->value;
 	UI_MAPEXTRADATA(node).mapzoommax = cl_mapzoommax->value;
@@ -285,8 +286,8 @@ void uiGeoscapeNode::draw (uiNode_t* node)
 
 		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, date.day, date.sec,
 				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
-				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_NATION,
-				UI_MAPEXTRADATA(node).overlayMask & OVERLAY_XVI, UI_MAPEXTRADATA(node).overlayMask & OVERLAY_RADAR, r_xviTexture, r_radarTexture,
+				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).nationOverlay,
+				UI_MAPEXTRADATA(node).xviOverlay, UI_MAPEXTRADATA(node).radarOverlay, r_xviTexture, r_radarTexture,
 				true);
 
 		GAME_DrawMapMarkers(node);
@@ -723,5 +724,4 @@ void UI_RegisterGeoscapeNode (uiBehaviour_t* behaviour)
 	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
-	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 }

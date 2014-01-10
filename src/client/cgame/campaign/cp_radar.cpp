@@ -128,7 +128,7 @@ void RADAR_DeactivateRadarOverlay (void)
 	}
 
 	if (GEO_IsRadarOverlayActivated())
-		GEO_SetOverlay("radar");
+		GEO_SetOverlay("radar", 0);
 }
 
 /**

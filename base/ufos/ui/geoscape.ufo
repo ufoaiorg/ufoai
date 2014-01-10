@@ -578,17 +578,20 @@ window geoscape
 		// small buttons
 		// ==================
 
-		button bt_show_overlay
-		{
+		button bt_show_overlay {
 			tooltip		"_Highlight nation borders"
 			icon		"icons/geo_nations"
-			pos			"20 495"
+			pos		"20 495"
 			size		"32 32"
 			background	"icons/geo_button"
 			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
 			onMouseLeave { *node:this@background = "icons/geo_button" }
-			onClick		{
-							cmd "map_overlay nations;"
+			onClick {
+				if ( *cvar:geo_overlay_nation > 0 ) {
+					cmd "geo_setoverlay nation 0;"
+				} else {
+					cmd "geo_setoverlay nation 1;"
+				}
 			}
 		}
 
@@ -602,7 +605,11 @@ window geoscape
 			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
 			onMouseLeave { *node:this@background = "icons/geo_button" }
 			onClick	{
-				cmd "map_overlay radar;"
+				if ( *cvar:geo_overlay_radar > 0 ) {
+					cmd "geo_setoverlay radar 0;"
+				} else {
+					cmd "geo_setoverlay radar 1;"
+				}
 			}
 		}
 
@@ -617,7 +624,29 @@ window geoscape
 			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
 			onMouseLeave { *node:this@background = "icons/geo_button" }
 			onClick		{
-				cmd "map_overlay xvi;"
+				if ( *cvar:geo_overlay_xvi > 0 ) {
+					cmd "geo_setoverlay xvi 0;"
+				} else {
+					cmd "geo_setoverlay xvi 1;"
+				}
+			}
+		}
+
+		confunc ui_update_overlay_buttons {
+			if ( *cvar:geo_overlay_radar > 0 ) {
+				*node:parent.bt_show_radar@icon = "icons/geo_radar_on"
+			} else {
+				*node:parent.bt_show_radar@icon = "icons/geo_radar"
+			}
+			if ( *cvar:geo_overlay_nation > 0 ) {
+				*node:parent.bt_show_overlay@icon = "icons/geo_nations_on"
+			} else {
+				*node:parent.bt_show_overlay@icon = "icons/geo_nations"
+			}
+			if ( *cvar:geo_overlay_xvi > 0 ) {
+				*node:parent.bt_show_xvi@icon = "icons/geo_xvi_on"
+			} else {
+				*node:parent.bt_show_xvi@icon = "icons/geo_xvi"
 			}
 		}
 
@@ -732,15 +761,25 @@ window geoscape
 		}
 	}
 
-	func onWindowOpened
-	{
-		cmd	"music_change geoscape;"
+	func onWindowOpened {
+		cmd "music_change geoscape;"
+
 		if ( not exists *cvar:mn_messagesystem ) {
 			*cvar:mn_messagesystem = 0
 			cmd "messagesystem_changemode;"
 		}
+
+		cmd "ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_radar ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_nation ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_xvi ui_update_overlay_buttons;"
 	}
 
+	func onWindowClosed {
+		cmd "ui_removecvarlistener geo_overlay_radar ui_update_overlay_buttons;"
+		cmd "ui_removecvarlistener geo_overlay_nation ui_update_overlay_buttons;"
+		cmd "ui_removecvarlistener geo_overlay_xvi ui_update_overlay_buttons;"
+	}
 }
 
 // ========================================================================

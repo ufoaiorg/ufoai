@@ -242,7 +242,7 @@ static void B_BuildBase_f (void)
 		B_SelectBase(base);
 	} else {
 		if (GEO_IsRadarOverlayActivated())
-			GEO_SetOverlay("radar");
+			GEO_SetOverlay("radar", 0);
 
 		CP_PopupList(_("Notice"), _("Not enough credits to set up a new base."));
 	}

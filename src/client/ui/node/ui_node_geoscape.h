@@ -89,7 +89,9 @@ typedef struct mapExtraData_s {
 	float mapzoommin;
 	float mapzoommax;
 	float paddingRight;
-	int32_t overlayMask;
+	int radarOverlay;
+	int nationOverlay;
+	int xviOverlay;
 	geoscapeData_t* geoscapeData;
 	byte* r_dayandnightAlpha;
 } mapExtraData_t;

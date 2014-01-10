@@ -783,11 +783,22 @@ bool CP_LoadXML (xmlNode_t* parent)
 
 	/* read map view */
 	mapNode = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
-	/* restore the overlay.
-	* do not use cgi->Cvar_SetValue, because this function check if value->string are equal to skip calculation
-	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
-	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
-	cgi->Cvar_SetValue("cl_geoscape_overlay", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0));
+
+	/* Compatibility code for savegames */
+	int oldOverlayStatus = cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, -1);
+	if (oldOverlayStatus >= 0) {
+		const int overlayNation = 1 << 0;
+		const int overlayXvi = 1 << 1;
+		const int overlayRadar = 1 << 2;
+
+		cgi->Cvar_SetValue("geo_overlay_radar", oldOverlayStatus & overlayRadar);
+		cgi->Cvar_SetValue("geo_overlay_nation", oldOverlayStatus & overlayNation);
+		cgi->Cvar_SetValue("geo_overlay_xvi", oldOverlayStatus & overlayXvi);
+	} else {
+		cgi->Cvar_SetValue("geo_overlay_radar", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_GEO_OVERLAY_RADAR, 0));
+		cgi->Cvar_SetValue("geo_overlay_nation", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_GEO_OVERLAY_NATION, 0));
+		cgi->Cvar_SetValue("geo_overlay_xvi", cgi->XML_GetInt(mapNode, SAVE_CAMPAIGN_GEO_OVERLAY_XVI, 0));
+	}
 	radarOverlayWasSet = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
 	ccs.startXVI = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISTARTED, false);
 	CP_UpdateXVIMapButton();
@@ -842,7 +853,9 @@ bool CP_SaveXML (xmlNode_t* parent)
 
 	/* Map and user interface */
 	map = cgi->XML_AddNode(campaign, SAVE_CAMPAIGN_MAP);
-	cgi->XML_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cgi->Cvar_GetInteger("cl_geoscape_overlay"));
+	cgi->XML_AddShort(map, SAVE_CAMPAIGN_GEO_OVERLAY_RADAR, cgi->Cvar_GetInteger("geo_overlay_radar"));
+	cgi->XML_AddShort(map, SAVE_CAMPAIGN_GEO_OVERLAY_NATION, cgi->Cvar_GetInteger("geo_overlay_nation"));
+	cgi->XML_AddShort(map, SAVE_CAMPAIGN_GEO_OVERLAY_XVI, cgi->Cvar_GetInteger("geo_overlay_xvi"));
 	cgi->XML_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	cgi->XML_AddBool(map, SAVE_CAMPAIGN_XVISTARTED, CP_IsXVIStarted());
 
@@ -1243,9 +1256,10 @@ void CP_Shutdown (void)
 			cgi->LIST_Delete(&alienCat->equipment);
 		}
 
-		cgi->Cvar_SetValue("cl_geoscape_overlay", 0);
+		cgi->Cvar_SetValue("geo_overlay_radar", 0);
+		cgi->Cvar_SetValue("geo_overlay_nations", 0);
+		cgi->Cvar_SetValue("geo_overlay_xvi", 0);
 		/* singleplayer commands are no longer available */
-		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
 	}
 

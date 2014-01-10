@@ -46,10 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 
-#define OVERLAY_NATION		(1<<0)
-#define OVERLAY_XVI			(1<<1)
-#define OVERLAY_RADAR		(1<<2)
-
 #define XVI_WIDTH		512
 #define XVI_HEIGHT		256
 #define RADAR_WIDTH		512

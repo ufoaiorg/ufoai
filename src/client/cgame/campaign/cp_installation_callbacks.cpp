@@ -120,7 +120,7 @@ static void INS_BuildInstallation_f (void)
 	} else {
 		if (installationTemplate->type == INSTALLATION_RADAR) {
 			if (GEO_IsRadarOverlayActivated())
-					GEO_SetOverlay("radar");
+					GEO_SetOverlay("radar", 1);
 		}
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
@@ -308,7 +308,7 @@ static void INS_SelectType_f (void)
 
 	/* show radar overlay (if not already displayed) */
 	if (tpl->type == INSTALLATION_RADAR && !GEO_IsRadarOverlayActivated())
-		GEO_SetOverlay("radar");
+		GEO_SetOverlay("radar", 1);
 
 	INS_SetInstallationTitle(tpl->type);
 	cgi->Cvar_Set("mn_installation_type", "%s", tpl->id);
