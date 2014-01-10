@@ -416,10 +416,6 @@ static void US_ListStoredUFOs_f (void)
 static void US_StoreUFO_f (void)
 {
 	char ufoId[MAX_VAR];
-	int installationIDX;
-	installation_t* installation;
-	aircraft_t* ufoType = nullptr;
-	int i;
 
 	if (cgi->Cmd_Argc() <= 2) {
 		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", cgi->Cmd_Argv(0));
@@ -427,21 +423,22 @@ static void US_StoreUFO_f (void)
 	}
 
 	Q_strncpyz(ufoId, cgi->Cmd_Argv(1), sizeof(ufoId));
-	installationIDX = atoi(cgi->Cmd_Argv(2));
+	int installationIDX = atoi(cgi->Cmd_Argv(2));
 
 	/* Get The UFO Yard */
 	if (installationIDX < 0) {
 		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
 		return;
 	}
-	installation = INS_GetByIDX(installationIDX);
+	installation_t* installation = INS_GetByIDX(installationIDX);
 	if (!installation) {
 		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
 		return;
 	}
 
 	/* Get UFO Type */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+	aircraft_t* ufoType = nullptr;
+	for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		if (strstr(ccs.aircraftTemplates[i].id, ufoId)) {
 			ufoType = &ccs.aircraftTemplates[i];
 			break;

@@ -205,10 +205,9 @@ static void UR_DialogStartStore_f (void)
  */
 static void UR_DialogFillNations (void)
 {
-	int i;
 	linkedList_t* nationList = nullptr;
 
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = ufoRecovery.ufoNations[i].nation;
 		if (!nation)
 			continue;
@@ -282,13 +281,9 @@ static int UR_CompareByHappiness (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b
  */
 static void UR_SortNations (COMP_FUNCTION comp, bool order)
 {
-	int i;
-
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		bool swapped = false;
-		int j;
-
-		for (j = 0; j < ccs.numNations - 1; j++) {
+		for (int j = 0; j < ccs.numNations - 1; j++) {
 			int value = (*comp)(&ufoRecovery.ufoNations[j], &ufoRecovery.ufoNations[j + 1]);
 			ufoRecoveryNation_t tmp;
 
@@ -332,8 +327,6 @@ static COMP_FUNCTION UR_GetSortFunctionByColumn (ufoRecoveryNationOrder_t column
  */
 static void UR_DialogInitSell_f (void)
 {
-	int i;
-
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
 		return;
@@ -341,7 +334,7 @@ static void UR_DialogInitSell_f (void)
 	if (!ufoRecovery.ufoTemplate)
 		return;
 
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		int price;
@@ -363,9 +356,7 @@ static void UR_DialogInitSell_f (void)
  */
 static int UR_DialogGetCurrentNationIndex (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numNations; i++)
+	for (int i = 0; i < ccs.numNations; i++)
 		if (ufoRecovery.ufoNations[i].nation == ufoRecovery.nation)
 			return i;
 	return -1;
@@ -458,17 +449,12 @@ static void UR_DialogSelectSellNation_f (void)
  */
 static void UR_DialogStartSell_f (void)
 {
-	int price = -1;
-	const nation_t* nation;
-	int i;
-
 	if (!ufoRecovery.nation)
 		return;
 
-	nation = ufoRecovery.nation;
-
-	i = UR_DialogGetCurrentNationIndex();
-	price = ufoRecovery.ufoNations[i].price;
+	const nation_t* nation = ufoRecovery.nation;
+	int i = UR_DialogGetCurrentNationIndex();
+	int price = ufoRecovery.ufoNations[i].price;
 
 	assert(price >= 0);
 #if 0

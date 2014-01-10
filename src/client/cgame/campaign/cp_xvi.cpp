@@ -159,13 +159,11 @@ void CP_UpdateNationXVIInfection (void)
  */
 int CP_GetAverageXVIRate (void)
 {
-	int xviRate = 0;
-	int i;
-
 	assert(ccs.numNations);
 
 	/* check for XVI infection rate */
-	for (i = 0; i < ccs.numNations; i++) {
+	int xviRate = 0;
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		xviRate += stats->xviInfection;
@@ -278,7 +276,7 @@ bool XVI_LoadXML (xmlNode_t* p)
  */
 void CP_StartXVISpreading_f (void)
 {
-	int i, numAlienBases;
+	int numAlienBases;
 	const campaign_t* campaign = ccs.curCampaign;
 
 	ccs.startXVI = true;
@@ -291,7 +289,7 @@ void CP_StartXVISpreading_f (void)
 	else
 		numAlienBases = 2;
 
-	for (i = 0; i < numAlienBases; i++)
+	for (int i = 0; i < numAlienBases; i++)
 		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, false);
 }
 
