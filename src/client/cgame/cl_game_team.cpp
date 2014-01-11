@@ -221,10 +221,8 @@ static void GAME_LoadTeamInfo (xmlNode_t* p)
  */
 static bool GAME_SaveTeam (const char* filename, const char* name)
 {
-	int requiredBufferLength;
 	teamSaveFileHeader_t header;
 	char dummy[2];
-	int i;
 	xmlNode_t* topNode, *node, *snode;
 	equipDef_t* ed = GAME_GetEquipmentDefinition();
 
@@ -239,7 +237,7 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 	GAME_SaveTeamInfo(snode);
 
 	snode = XML_AddNode(node, SAVE_TEAM_EQUIPMENT);
-	for (i = 0; i < csi.numODs; i++) {
+	for (int i = 0; i < csi.numODs; i++) {
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 		if (ed->numItems[od->idx] || ed->numItemsLoose[od->idx]) {
 			xmlNode_t* ssnode = XML_AddNode(snode, SAVE_TEAM_ITEM);
@@ -248,7 +246,7 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 			XML_AddIntValue(ssnode, SAVE_TEAM_NUMLOOSE, ed->numItemsLoose[od->idx]);
 		}
 	}
-	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
+	int requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
 	header.xmlSize = LittleLong(requiredBufferLength);
 

@@ -535,11 +535,10 @@ void GAME_MP_PingServers_f (void)
 
 	/* refresh the list */
 	if (cgi->Cmd_Argc() == 2) {
-		int i;
 		/* reset current list */
 		serverText[0] = 0;
 		serversAlreadyQueried = false;
-		for (i = 0; i < serverListLength; i++) {
+		for (int i = 0; i < serverListLength; i++) {
 			cgi->Free(serverList[i].node);
 			cgi->Free(serverList[i].service);
 		}

@@ -123,12 +123,11 @@ static const char* cgameMenu;
 const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 {
 	const size_t len = lengthof(gameTypeList);
-	int i;
 
 	if (cgameMenu == nullptr)
 		return nullptr;
 
-	for (i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) {
 		const cgame_api_t list = gameTypeList[i];
 		const cgame_export_t* cgame = list(import);
 		if (Q_streq(cgame->menu, cgameMenu)) {
@@ -231,8 +230,6 @@ void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipD
 
 void GAME_GenerateTeam (const char* teamDefID, const equipDef_t* ed, int teamMembers)
 {
-	int i;
-
 	if (teamMembers > GAME_GetCharacterArraySize())
 		Com_Error(ERR_DROP, "More than the allowed amount of team members");
 
@@ -241,7 +238,7 @@ void GAME_GenerateTeam (const char* teamDefID, const equipDef_t* ed, int teamMem
 
 	GAME_ResetCharacters();
 
-	for (i = 0; i < teamMembers; i++)
+	for (int i = 0; i < teamMembers; i++)
 		GAME_AppendTeamMember(i, teamDefID, ed);
 }
 
@@ -1092,7 +1089,6 @@ static const value_t cgame_vals[] = {
 
 void GAME_ParseModes (const char* name, const char** text)
 {
-	cgameType_t* cgame;
 	int i;
 
 	/* search for equipments with same name */
@@ -1109,7 +1105,7 @@ void GAME_ParseModes (const char* name, const char** text)
 		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded");
 
 	/* initialize the equipment definition */
-	cgame = &cgameTypes[numCGameTypes++];
+	cgameType_t* cgame = &cgameTypes[numCGameTypes++];
 	OBJZERO(*cgame);
 
 	Q_strncpyz(cgame->id, name, sizeof(cgame->id));
@@ -1199,8 +1195,6 @@ static const cgame_export_t* GAME_GetCGameAPI_ (const cgameType_t* t)
 static void GAME_SetMode_f (void)
 {
 	const char* modeName;
-	int i;
-
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
 	else
@@ -1209,7 +1203,7 @@ static void GAME_SetMode_f (void)
 	if (modeName[0] == '\0')
 		return;
 
-	for (i = 0; i < numCGameTypes; i++) {
+	for (int i = 0; i < numCGameTypes; i++) {
 		cgameType_t* t = &cgameTypes[i];
 		if (Q_streq(t->window, modeName)) {
 			const cgame_export_t* gametype;
@@ -1472,14 +1466,12 @@ void GAME_InitMissionBriefing (const char* title)
  */
 static void GAME_InitializeBattlescape (linkedList_t* team)
 {
-	int i;
 	const size_t size = lengthof(cl.teamList);
-	const cgame_export_t* list = GAME_GetCurrentType();
-
-	for (i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->InitializeBattlescape) {
 		dbuffer* msg = list->InitializeBattlescape(team);
 		if (msg != nullptr) {
@@ -1775,10 +1767,8 @@ const equipDef_t* GAME_ChangeEquip (const linkedList_t* equipmentList, changeEqu
  */
 void GAME_InitUIData (void)
 {
-	int i;
-
 	Com_Printf("----------- game modes -------------\n");
-	for (i = 0; i < numCGameTypes; i++) {
+	for (int i = 0; i < numCGameTypes; i++) {
 		const cgameType_t* t = &cgameTypes[i];
 		const cgame_export_t* e = GAME_GetCGameAPI_(t);
 		if (e == nullptr)

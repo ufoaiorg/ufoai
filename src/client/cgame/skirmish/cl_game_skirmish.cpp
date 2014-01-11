@@ -60,8 +60,6 @@ static inline const char* GAME_SK_GetRandomMapAssemblyNameForCraft (const char* 
  */
 static void GAME_SK_SetMissionParameters (const mapDef_t* md)
 {
-	int i;
-
 	cgi->Cvar_SetValue("ai_numcivilians", 8);
 	if (md->civTeam != nullptr)
 		cgi->Cvar_Set("ai_civilianteam", "%s", md->civTeam);
@@ -73,7 +71,7 @@ static void GAME_SK_SetMissionParameters (const mapDef_t* md)
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
 	cgi->csi->numAlienTeams = 0;
-	for (i = 0; i < cgi->csi->numTeamDefs; i++) {
+	for (int i = 0; i < cgi->csi->numTeamDefs; i++) {
 		const teamDef_t* td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
 			cgi->csi->alienTeams[cgi->csi->numAlienTeams++] = td;
@@ -87,14 +85,11 @@ static void GAME_SK_SetMissionParameters (const mapDef_t* md)
  */
 static void GAME_SK_Start_f (void)
 {
-	const mapDef_t* md;
-
 	if (cgi->GAME_IsTeamEmpty()) {
 		cgi->GAME_LoadDefaultTeam(false);
 	}
 
 	if (cgi->GAME_IsTeamEmpty()) {
-		unsigned int i;
 		/** @todo make the teamdef configurable */
 		const char* ugvTeamDefID = "phalanx_ugv_phoenix";
 		const char* name = cgi->Cvar_GetString("cl_equip");
@@ -109,13 +104,13 @@ static void GAME_SK_Start_f (void)
 		ugvs = std::min(ugvs, (uint32_t)(size - maxSoldiers));
 		cgi->Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
 		cgi->GAME_AutoTeam(name, maxSoldiers);
-		for (i = 0; i < ugvs; i++)
+		for (unsigned int i = 0; i < ugvs; i++)
 			cgi->GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
 	} else {
 		cgi->Com_Printf("Using already loaded team\n");
 	}
 
-	md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t* md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md)
 		return;
 
