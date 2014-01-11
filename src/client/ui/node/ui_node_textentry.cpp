@@ -285,13 +285,11 @@ void uiTextEntryNode::draw (uiNode_t* node)
 {
 	const float* textColor;
 	vec2_t pos;
-	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	const char* font = UI_GetFontFromNode(node);
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 
 	if (node->disabled) {
-		/** @todo need custom color when node is disabled */
-		textColor = disabledColor;
+		textColor = node->disabledColor;
 		iconStatus = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->color;
@@ -353,6 +351,7 @@ void uiTextEntryNode::onLoading (uiNode_t* node)
 	node->contentAlign = ALIGN_CL;
 	Vector4Set(node->color, 1, 1, 1, 1);
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
+	Vector4Set(node->disabledColor, 0.5, 0.5, 0.5, 1.0);
 }
 
 void UI_RegisterTextEntryNode (uiBehaviour_t* behaviour)

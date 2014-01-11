@@ -360,6 +360,8 @@ void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
 	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_BOOL, uiNode_t, invis);
 	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
 	UI_RegisterNodeProperty(behaviour, "disabled", V_BOOL, uiNode_t, disabled);
+	/* Text color the node will use when something is disabled. */
+	UI_RegisterNodeProperty(behaviour, "disabledcolor", V_COLOR, uiNode_t, disabledColor);
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
 	UI_RegisterNodeProperty(behaviour, "ghost", V_BOOL, uiNode_t, ghost);
 	/* Flashing effect. */

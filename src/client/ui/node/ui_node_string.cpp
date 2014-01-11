@@ -62,7 +62,6 @@ void uiStringNode::draw (uiNode_t* node)
 	vec2_t nodepos;
 	const char* font = UI_GetFontFromNode(node);
 	const char* ref = UI_GetReferenceString(node, node->text);
-	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	vec_t* color;
 
 	if (!ref)
@@ -70,7 +69,7 @@ void uiStringNode::draw (uiNode_t* node)
 	UI_GetNodeAbsPos(node, nodepos);
 
 	if (node->disabled)
-		color = disabledColor;
+		color = node->disabledColor;
 	else
 		color = node->color;
 
@@ -116,6 +115,7 @@ void uiStringNode::onLoading (uiNode_t* node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
+	Vector4Set(node->disabledColor, 0.5, 0.5, 0.5, 1.0);
 	EXTRADATA(node).longlines = LONGLINES_PRETTYCHOP;
 }
 

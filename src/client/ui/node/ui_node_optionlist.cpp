@@ -82,7 +82,6 @@ void uiOptionListNode::draw (uiNode_t* node)
 	vec2_t pos;
 	int currentY;
 	const float* textColor;
-	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
@@ -126,7 +125,7 @@ void uiOptionListNode::draw (uiNode_t* node)
 		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled || option->disabled) {
-			textColor = disabledColor;
+			textColor = node->disabledColor;
 		} else if (option->color[3] == 0.0f) {
 			textColor = node->color;
 		} else {
@@ -255,6 +254,7 @@ bool uiOptionListNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 void uiOptionListNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
+	Vector4Set(node->disabledColor, 0.5, 0.5, 0.5, 1.0);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }

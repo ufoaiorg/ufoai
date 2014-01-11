@@ -97,6 +97,7 @@ struct uiNode_t {
 	struct uiKeyBinding_s* key;	/**< key bindings - used as tooltip */
 	bool invis;					/**< true if the node is invisible */
 	bool disabled;				/**< true if the node is inactive */
+	vec4_t disabledColor;			/**< rgba The color to draw when the node is disabled. */
 	bool invalidated;			/**< true if we need to update the layout */
 	bool ghost;					/**< true if the node is not tangible */
 	bool state;					/**< is node hovered */

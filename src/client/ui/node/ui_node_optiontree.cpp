@@ -117,7 +117,6 @@ void uiOptionTreeNode::draw (uiNode_t* node)
 	int currentY;
 	int currentDecY = 0;
 	const float* textColor;
-	vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 	uiOptionIterator_t iterator;
 
@@ -169,7 +168,7 @@ void uiOptionTreeNode::draw (uiNode_t* node)
 		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled || option->disabled) {
-			textColor = disabledColor;
+			textColor = node->disabledColor;
 		} else if (option->color[3] == 0.0f) {
 			textColor = node->color;
 		} else {
@@ -298,6 +297,7 @@ bool uiOptionTreeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 void uiOptionTreeNode::onLoading (uiNode_t* node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
+	Vector4Set(node->disabledColor, 0.5, 0.5, 0.5, 1.0);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
