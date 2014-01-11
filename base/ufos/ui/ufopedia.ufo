@@ -341,15 +341,17 @@ window ufopedia extends objectinfo
 			{
 				string	"_With:"
 				pos		"10 0"
-				size	"100 16"
+				size	"100 30"
 				font	"f_small"
 			}
 
 			button action_dec
 			{
-				pos		"120 0"
-				icon	"icons/prev"
-				size	"16 16"
+				pos		"120 4"
+				icon	"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
+				size	"24 24"
 				onClick	{ cmd "mn_decreaseitem;" }
 			}
 
@@ -357,16 +359,18 @@ window ufopedia extends objectinfo
 			{
 				string	*cvar:mn_linkname
 				pos		"140 0"
-				size	"190 16"
+				size	"180 30"
 				contentalign	ALIGN_CC
 				font	"f_small"
 			}
 
 			button action_inc
 			{
-				pos		"334 0"
-				icon	"icons/next"
-				size	"16 16"
+				pos		"326 4"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
+				size	"24 24"
 				onClick	{ cmd "mn_increaseitem;" }
 			}
 
@@ -377,25 +381,27 @@ window ufopedia extends objectinfo
 			string header_firemode
 			{
 				string	"_Firemode:"
-				pos		"10 20"
-				size	"100 16"
+				pos		"10 30"
+				size	"100 30"
 				font	"f_small"
 			}
 
 			button firemode_dec
 			{
 				tooltip "_Previous firemode"
-				pos		"120 20"
-				icon	"icons/prev"
-				size	"16 16"
+				pos		"120 32"
+				icon	"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
+				size	"24 24"
 				onClick	{ cmd "mn_decreasefiremode;" }
 			}
 
 			string firemode_name
 			{
 				string	*cvar:mn_firemodename
-				pos		"140 20"
-				size	"190 16"
+				pos		"140 30"
+				size	"180 30"
 				contentalign	ALIGN_CC
 				font	"f_small"
 			}
@@ -403,9 +409,11 @@ window ufopedia extends objectinfo
 			button firemode_inc
 			{
 				tooltip "_Next firemode"
-				pos		"334 20"
-				icon	"icons/next"
-				size	"16 16"
+				pos		"326 32"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
+				size	"24 24"
 				onClick	{ cmd "mn_increasefiremode;" }
 			}
 		}

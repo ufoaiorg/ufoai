@@ -808,7 +808,9 @@ window multiplayer extends cgame_download
 			{
 				pos			"455 7"
 				size		"16 16"
-				icon		"icons/prev"
+				icon		"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
 				onClick		{
 					*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 3)
 					if ( *cvar:cl_serverlist < 0 ) {
@@ -823,7 +825,9 @@ window multiplayer extends cgame_download
 			{
 				pos			"470 7"
 				size		"16 16"
-				icon		"icons/next"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
 				onClick		{
 					*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 3)
 					call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
@@ -1253,7 +1257,9 @@ window multiplayer_wait
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
-			icon		"icons/next"
+			icon	"icons/arrow_right"
+			onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+			onMouseLeave { *node:this@icon = "icons/arrow_right" }
 			pos			"298 82"
 			size		"16 16"
 			padding		0
@@ -1264,7 +1270,9 @@ window multiplayer_wait
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
-			icon		"icons/prev"
+			icon		"icons/arrow_left"
+			onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+			onMouseLeave { *node:this@icon = "icons/arrow_left" }
 			pos			"222 82"
 			size		"16 16"
 			padding		0

@@ -275,7 +275,9 @@ component cmpMapSlot extends panel
 	{
 		pos			"0 0"
 		size		"35 35"
-		icon		"icons/prev"
+		icon		"icons/arrow_left"
+		onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_left" }
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		onClick		{ cmd "mn_prevmap;" }
@@ -284,7 +286,9 @@ component cmpMapSlot extends panel
 	{
 		pos			"285 0"
 		size		"35 35"
-		icon		"icons/next"
+		icon	"icons/arrow_right"
+		onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_right" }
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		onClick		{ cmd "mn_nextmap;" }

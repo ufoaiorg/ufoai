@@ -369,8 +369,10 @@ window production
 		button prod_up
 		{
 			tooltip		"_Increase priority"
-			icon		"icons/arrow_top"
-			pos			"235 210"
+			icon		"icons/arrow_up_off"
+			onMouseEnter { *node:this@icon = "icons/arrow_up" }
+			onMouseLeave { *node:this@icon = "icons/arrow_up_off" }
+			pos			"235 208"
 			size		"16 16"
 			padding		"0"
 			onClick		{ cmd "prod_up;" }
@@ -381,8 +383,10 @@ window production
 		button prod_down
 		{
 			tooltip		"_Decrease priority"
-			icon		"icons/arrow_bottom"
-			pos			"265 205"
+			icon		"icons/arrow_down_off"
+			onMouseEnter { *node:this@icon = "icons/arrow_down" }
+			onMouseLeave { *node:this@icon = "icons/arrow_down_off" }
+			pos			"255 208"
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "prod_down;" }

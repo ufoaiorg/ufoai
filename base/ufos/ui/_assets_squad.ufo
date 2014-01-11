@@ -47,7 +47,9 @@ component EnemyEquip extends panel
 	{
 		pos			"225 0"
 		size		"35 35"
-		icon		"icons/prev"
+		icon		"icons/arrow_left"
+		onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_left" }
 		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 		onClick		{ cmd "sk_prevequip ai_equipment;" }
@@ -56,7 +58,9 @@ component EnemyEquip extends panel
 	{
 		pos			"460 0"
 		size		"35 35"
-		icon		"icons/next"
+		icon		"icons/arrow_right"
+		onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_right" }
 		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 		onClick		{ cmd "sk_nextequip ai_equipment;" }
