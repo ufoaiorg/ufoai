@@ -313,6 +313,8 @@
 		<Unit filename="../../src/client/renderer/r_state.cpp" />
 		<Unit filename="../../src/client/renderer/r_surface.cpp" />
 		<Unit filename="../../src/client/renderer/r_thread.cpp" />
+		<Unit filename="../../src/client/renderer/r_weather.cpp" />
+		<Unit filename="../../src/client/renderer/r_weather.h" />
 		<Unit filename="../../src/client/sound/s_main.cpp" />
 		<Unit filename="../../src/client/sound/s_mix.cpp" />
 		<Unit filename="../../src/client/sound/s_mumble.cpp" />
