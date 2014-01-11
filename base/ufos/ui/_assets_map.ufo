@@ -309,7 +309,7 @@ component MapOptions extends panel
 	MapImage mappic
 	{
 		src		*cvar:mn_mappic
-		pos			"20 0"
+		pos		"20 0"
 	}
 	image frameOverlay1 {
 		pos		"20 0"
@@ -320,7 +320,7 @@ component MapOptions extends panel
 	MapImage mappic2
 	{
 		src		*cvar:mn_mappic2
-		pos			"175 0"
+		pos		"175 0"
 	}
 	image frameOverlay2 {
 		pos		"175 0"
@@ -331,7 +331,7 @@ component MapOptions extends panel
 	MapImage mappic3
 	{
 		src		*cvar:mn_mappic3
-		pos			"330 0"
+		pos		"330 0"
 	}
 	image frameOverlay3 {
 		pos		"330 0"
