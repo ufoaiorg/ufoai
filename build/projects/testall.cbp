@@ -86,6 +86,7 @@
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-ggdb" />
+			<Add option="-I../../src/libs/lua" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
 			<Add option="-Wno-long-long" />
