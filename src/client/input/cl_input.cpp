@@ -941,8 +941,7 @@ void IN_Frame (void)
 #else
 			SDL_WM_GrabInput(SDL_GRAB_OFF);
 #endif
-		/* don't allow grabbing the input in fullscreen mode */
-		} else if (!vid_fullscreen->integer) {
+		} else  {
 			/* grab the pointer */
 			Com_Printf("Switch grab input on\n");
 #if SDL_VERSION_ATLEAST(2,0,0)
@@ -950,9 +949,6 @@ void IN_Frame (void)
 #else
 			SDL_WM_GrabInput(SDL_GRAB_ON);
 #endif
-		} else {
-			Com_Printf("No input grabbing in fullscreen mode!\n");
-			Cvar_SetValue("vid_grabmouse", 0);
 		}
 	}
 
