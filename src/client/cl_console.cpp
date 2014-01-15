@@ -78,10 +78,9 @@ const int con_fontShift = 3;
 
 static void Con_Clear (void)
 {
-	unsigned int i;
 	const size_t size = lengthof(con.text);
 
-	for (i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
 }
 
@@ -92,8 +91,7 @@ static void Con_Clear (void)
  */
 static void Con_DrawText (const short* text, int x, int y, size_t width)
 {
-	unsigned int xPos;
-	for (xPos = 0; xPos < width; xPos++) {
+	for (unsigned int xPos = 0; xPos < width; xPos++) {
 		const int currentColor = (text[xPos] >> 8) & 7;
 		R_DrawChar(x + ((xPos + 1) << con_fontShift), y, text[xPos], g_color_table[currentColor]);
 	}
@@ -186,23 +184,22 @@ void Con_Scroll (int scroll)
  */
 void Con_CheckResize (void)
 {
-	int i, j, oldWidth, oldTotalLines, numLines, numChars;
 	short tbuf[CON_TEXTSIZE];
 	const int width = (viddef.context.width >> con_fontShift);
 
 	if (width < 1 || width == con.lineWidth)
 		return;
 
-	oldWidth = con.lineWidth;
+	int oldWidth = con.lineWidth;
 	con.lineWidth = width;
-	oldTotalLines = con.totalLines;
+	int oldTotalLines = con.totalLines;
 	con.totalLines = CON_TEXTSIZE / con.lineWidth;
-	numLines = oldTotalLines;
+	int numLines = oldTotalLines;
 
 	if (con.totalLines < numLines)
 		numLines = con.totalLines;
 
-	numChars = oldWidth;
+	int numChars = oldWidth;
 
 	if (con.lineWidth < numChars)
 		numChars = con.lineWidth;
@@ -210,8 +207,8 @@ void Con_CheckResize (void)
 	memcpy(tbuf, con.text, sizeof(tbuf));
 	Con_Clear();
 
-	for (i = 0; i < numLines; i++) {
-		for (j = 0; j < numChars; j++) {
+	for (int i = 0; i < numLines; i++) {
+		for (int j = 0; j < numChars; j++) {
 			con.text[(con.totalLines - 1 - i) * con.lineWidth + j] = tbuf[((con.currentLine - i + oldTotalLines) % oldTotalLines) * oldWidth + j];
 		}
 	}
@@ -253,9 +250,6 @@ void Con_LoadConsoleHistory (void)
  */
 void Con_SaveConsoleHistory (void)
 {
-	int i;
-	const char* lastLine = nullptr;
-
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)
 		return;
@@ -267,7 +261,8 @@ void Con_SaveConsoleHistory (void)
 		return;
 	}
 
-	for (i = 0; i < historyLine; i++) {
+	const char* lastLine = nullptr;
+	for (int i = 0; i < historyLine; i++) {
 		if (lastLine && !strncmp(lastLine, &(keyLines[i][1]), MAXCMDLINE - 1))
 			continue;
 
@@ -306,14 +301,12 @@ void Con_Init (void)
 
 static void Con_Linefeed (void)
 {
-	int i;
-
 	con.pos = 0;
 	if (con.displayLine == con.currentLine)
 		con.displayLine++;
 	con.currentLine++;
 
-	for (i = 0; i < con.lineWidth; i++)
+	for (int i = 0; i < con.lineWidth; i++)
 		con.text[(con.currentLine % con.totalLines) * con.lineWidth + i] = (CON_COLOR_WHITE << 8) | ' ';
 }
 
@@ -409,7 +402,6 @@ void Con_Close (void)
  */
 static void Con_DrawInput (void)
 {
-	int y;
 	unsigned int i;
 	short editlinecopy[MAXCMDLINE], *text;
 	const size_t size = lengthof(editlinecopy);
@@ -417,7 +409,7 @@ static void Con_DrawInput (void)
 	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
-	y = 0;
+	int y = 0;
 	for (i = 0; i < size; i++) {
 		editlinecopy[i] = (CON_COLOR_WHITE << 8) | keyLines[editLine][i];
 		if (keyLines[editLine][i] == '\0')
@@ -452,12 +444,9 @@ static void Con_DrawInput (void)
  */
 void Con_DrawConsole (float frac)
 {
-	int i, x, y;
-	int rows, row;
-	unsigned int lines;
-	char consoleMessage[128];
+	int x, y;
 
-	lines = viddef.context.height * frac;
+	unsigned int lines = viddef.context.height * frac;
 	if (lines == 0)
 		return;
 
@@ -468,6 +457,7 @@ void Con_DrawConsole (float frac)
 	if (con_background->integer)
 		R_DrawStretchImage(0, viddef.virtualHeight * (frac - 1) , viddef.virtualWidth, viddef.virtualHeight, R_FindImage("pics/background/conback", it_pic));
 
+	char consoleMessage[128];
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{
 		const int len = strlen(consoleMessage);
@@ -482,7 +472,7 @@ void Con_DrawConsole (float frac)
 	/* draw the text */
 	con.visLines = lines;
 
-	rows = (lines - con_fontHeight * 2) >> con_fontShift;	/* rows of text to draw */
+	int rows = (lines - con_fontHeight * 2) >> con_fontShift;	/* rows of text to draw */
 
 	y = lines - con_fontHeight * 3;
 
@@ -497,8 +487,8 @@ void Con_DrawConsole (float frac)
 		rows--;
 	}
 
-	row = con.displayLine;
-	for (i = 0; i < rows; i++, y -= con_fontHeight, row--) {
+	int row = con.displayLine;
+	for (int i = 0; i < rows; i++, y -= con_fontHeight, row--) {
 		if (row < 0)
 			break;
 		if (con.currentLine - row >= con.totalLines)

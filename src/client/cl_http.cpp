@@ -107,14 +107,10 @@ static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double
  */
 static void CL_EscapeHTTPPath (const char* filePath, char* escaped)
 {
-	int		i;
-	size_t	len;
-	char	*p;
+	char *p = escaped;
 
-	p = escaped;
-
-	len = strlen(filePath);
-	for (i = 0; i < len; i++) {
+	size_t len = strlen(filePath);
+	for (int i = 0; i < len; i++) {
 		if (!isalnum(filePath[i]) && filePath[i] != ';' && filePath[i] != '/' &&
 			filePath[i] != '?' && filePath[i] != ':' && filePath[i] != '@' && filePath[i] != '&' &&
 			filePath[i] != '=' && filePath[i] != '+' && filePath[i] != '$' && filePath[i] != ',' &&
@@ -276,9 +272,7 @@ void CL_CancelHTTPDownloads (bool permKill)
  */
 static dlhandle_t* CL_GetFreeDLHandle (void)
 {
-	int i;
-
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		dlhandle_t* dl = &cls.HTTPHandles[i];
 		if (!dl->queueEntry || dl->queueEntry->state == DLQ_STATE_DONE)
 			return dl;
@@ -545,9 +539,7 @@ static void CL_ReVerifyHTTPQueue (void)
  */
 void CL_HTTP_Cleanup (void)
 {
-	int i;
-
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		dlhandle_t* dl = &cls.HTTPHandles[i];
 
 		if (dl->file) {

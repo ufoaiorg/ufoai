@@ -38,9 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 const equipDef_t* INV_GetEquipmentDefinitionByID (const char* name)
 {
-	int i;
-
-	for (i = 0; i < csi.numEDs; i++) {
+	for (int i = 0; i < csi.numEDs; i++) {
 		const equipDef_t* ed = &csi.eds[i];
 		if (Q_streq(name, ed->id))
 			return ed;
@@ -160,9 +158,7 @@ bool INV_UnloadWeapon (Item* weapon, Inventory* inv, const invDef_t* container)
  */
 static void INV_InventoryList_f (void)
 {
-	int i;
-
-	for (i = 0; i < csi.numODs; i++) {
+	for (int i = 0; i < csi.numODs; i++) {
 		int j;
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 
@@ -191,11 +187,11 @@ static void INV_InventoryList_f (void)
  */
 static bool INV_EquipmentDefSanityCheck (void)
 {
-	int i, j;
+	int j;
 	int sum;
 	bool result = true;
 
-	for (i = 0; i < csi.numEDs; i++) {
+	for (int i = 0; i < csi.numEDs; i++) {
 		const equipDef_t* const ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
 		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
@@ -410,8 +406,6 @@ CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
  */
 itemFilterTypes_t INV_GetFilterTypeID (const char*  filterTypeID)
 {
-	int i;
-
 	if (!filterTypeID)
 		return MAX_FILTERTYPES;
 
@@ -419,7 +413,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char*  filterTypeID)
 	if (filterTypeID[0] == '\0')
 		return FILTER_S_PRIMARY;
 
-	for (i = 0; i < MAX_FILTERTYPES; i++) {
+	for (int i = 0; i < MAX_FILTERTYPES; i++) {
 		const char* fileTypeName = filterTypeNames[i];
 		if (fileTypeName && Q_streq(fileTypeName, filterTypeID))
 			return (itemFilterTypes_t)i;
