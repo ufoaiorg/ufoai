@@ -4,173 +4,195 @@
 
 window stats
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/stats_bg"
+		bgcolor "0 0 0 1"
 	}
 
-	button button_exit
+	panel finances
 	{
-		background	"buttons/large_blue"
-		pos			"950 720"
-		size		"64 37"
-		icon		"icons/return"
-		onClick		{ cmd "ui_pop;" }
+		{
+			pos				"5 5"
+			size			"924 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string title
+		{
+			string			"_Statistics"
+			pos				"0 0"
+			size			"924 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"916 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+
+			panel header
+			{
+				pos			"1 1"
+				size		"914 32"
+				bgcolor		"0.527 0.6 0.21 0.2"
+			}
+
+			string costs_string
+			{
+				string		"_Costs"
+				pos			"6 40"
+				size		"470 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+
+			text costs_stats
+			{
+				dataid		TEXT_STATS_COSTS
+				pos			"6 63"
+				size		"470 396"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight	22
+				tabwidth	340
+				rows		18
+			}
+
+			string nations_string
+			{
+				string		"_Nations"
+				pos			"6 467"
+				size		"470 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+
+			/* textlist using tabbed text */
+			text nation_stats
+			{
+				tooltip		"_Click for funding graphs"
+				dataid		TEXT_STATS_NATIONS
+				pos			"6 490"
+				size		"470 220"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight  22
+				tabwidth	360
+				rows		10
+				mousefx		true
+				onClick		{ cmd "nation_stats_click <lineselected>;" }
+			}
+
+			string campaign_string
+			{
+				string		"_Campaign"
+				pos			"490 467"
+				size		"413 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+			text campaign_stats
+			{
+				dataid		TEXT_GENERIC
+				pos			"490 490"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				size		"413 110"
+				lineheight	22
+				tabwidth	360
+				rows		5
+			}
+
+			string mission_string
+			{
+				string		"_Missions"
+				pos			"490 40"
+				size		"200 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+			text mission_stats
+			{
+				dataid		TEXT_STATS_MISSION
+				pos			"490 63"
+				size		"200 140"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight	22
+				tabwidth	170
+				rows		6
+			}
+
+			string base_string
+			{
+				string		"_Bases"
+				pos			"490 216"
+				size		"200 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+
+			text base_stats
+			{
+				dataid		TEXT_STATS_BASES
+				pos			"490 244"
+				size		"200 140"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight	22
+				tabwidth	170
+				rows		6
+			}
+
+			string ins_string
+			{
+				string		"_Installations"
+				pos			"703 216"
+				size		"200 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+
+			text ins_stats
+			{
+				dataid		TEXT_STATS_INSTALLATIONS
+				pos			"703 244"
+				size		"200 140"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight	22
+				tabwidth	170
+				rows		6
+			}
+
+			string empl_string
+			{
+				string		"_Employees"
+				pos			"703 40"
+				size		"200 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+
+			text empl_stats
+			{
+				dataid		TEXT_STATS_EMPLOYEES
+				pos			"703 63"
+				size		"200 140"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				lineheight	22
+				tabwidth	170
+				rows		6
+			}
+		}
 	}
 
-	string title
-	{
-		string		"_Statistics"
-		pos			"55 25"
-		size		"915 35"
-		contentalign	ALIGN_CC
-		font		"f_big"
+
+	// Back to geoscape
+	Geoscape geoscape_button {
+		onClick { cmd "ui_pop"}
 	}
 
-	string mission_string
-	{
-		string		"_Missions"
-		pos			"40 86"
-		size		"200 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text mission_stats
-	{
-		dataid		TEXT_STATS_MISSION
-		pos			"40 110"
-		size		"200 140"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight	22
-		tabwidth	170
-		rows		6
-	}
-
-	string base_string
-	{
-		string		"_Bases"
-		pos			"250 86"
-		size		"200 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text base_stats
-	{
-		dataid		TEXT_STATS_BASES
-		pos			"250 110"
-		size		"200 140"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight	22
-		tabwidth	170
-		rows		6
-	}
-
-	string ins_string
-	{
-		string		"_Installations"
-		pos			"460 86"
-		size		"200 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text ins_stats
-	{
-		dataid		TEXT_STATS_INSTALLATIONS
-		pos			"460 110"
-		size		"200 140"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight	22
-		tabwidth	170
-		rows		6
-	}
-
-	string empl_string
-	{
-		string		"_Employees"
-		pos			"670 86"
-		size		"200 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text empl_stats
-	{
-		dataid		TEXT_STATS_EMPLOYEES
-		pos			"670 110"
-		size		"200 140"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight	22
-		tabwidth	170
-		rows		6
-	}
-
-	string costs_string
-	{
-		string		"_Costs"
-		pos			"40 260"
-		size		"470 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text costs_stats
-	{
-		dataid		TEXT_STATS_COSTS
-		pos			"40 284"
-		size		"470 400"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight	22
-		tabwidth	340
-		rows		18
-	}
-
-	string nations_string
-	{
-		string		"_Nations"
-		pos			"518 260"
-		size		"470 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-
-	/* textlist using tabbed text */
-	text nation_stats
-	{
-		tooltip		"_Click for funding graphs"
-		dataid		TEXT_STATS_NATIONS
-		pos			"518 284"
-		size		"470 240"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		lineheight  22
-		tabwidth	360
-		rows		10
-		mousefx		true
-		onClick		{ cmd "nation_stats_click <lineselected>;" }
-	}
-
-	string campaign_string
-	{
-		string		"_Campaign"
-		pos			"518 550"
-		size		"470 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	text campaign_stats
-	{
-		dataid		TEXT_GENERIC
-		pos			"518 574"
-		bgcolor		"0.5 0.5 0.5 0.2"
-		size		"470 110"
-		lineheight	22
-		tabwidth	360
-		rows		5
-	}
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{
@@ -183,170 +205,286 @@ window stats
 
 window nations
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src		"background/stats_bg"
+		bgcolor "0 0 0 1"
 	}
 
-	button button_exit
+	panel natgraph
 	{
-		background	"buttons/large_blue"
-		pos			"950 720"
-		size		"64 37"
-		icon		"icons/return"
-		onClick		{ cmd "ui_pop;" }
-	}
+		{
+			pos				"5 5"
+			size			"924 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
 
-	string title
-	{
-		string		"_Nation Statistics"
-		pos			"55 25"
-		size		"915 35"
-		contentalign	ALIGN_CC
-		font		"f_big"
-	}
+		string title
+		{
+			string		"_Nation Statistics"
+			pos			"0 0"
+			size		"924 30"
+			contentalign	ALIGN_CC
+			font		"f_big"
+		}
 
-	/**
-	 * @brief select a nation
-	 * @param <1> nationid
-	 * @SA MAX_NATIONS
-	 * @note: Number of nations (0-7) defined by MAX_NATIONS
-	 */
-	confunc nation_marksel {
-		*node:parent.nation<1>@invis	= false
-		*node:parent.nation<1>@color	= "1 1 1 1"
-		*node:parent.nat_fund<1>@invis	= false
-		*node:parent.nat_fund<1>@color	= "1 1 1 1"
-	}
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"916 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
 
-	/**
-	 * @brief deselect a nation
-	 * @param <1> nationid
-	 * @SA MAX_NATIONS
-	 */
-	confunc nation_markdesel {
-		*node:parent.nation<1>@invis	= false
-		*node:parent.nation<1>@color	= "0 .78 0 1"
-		*node:parent.nat_fund<1>@invis	= false
-		*node:parent.nat_fund<1>@color	= "0 .78 0 1"
-	}
 
-	/**
-	 * @brief hide a nation
-	 * @param <1> nationid
-	 * @SA MAX_NATIONS
-	 */
-	confunc nation_hide {
-		*node:parent.nation<1>@invis	= true
-		*node:parent.nat_fund<1>@invis	= true
-	}
+			/**
+			 * @brief select a nation
+			 * @param <1> nationid
+			 * @SA MAX_NATIONS
+			 * @note: Number of nations (0-7) defined by MAX_NATIONS
+			 */
+			confunc nation_marksel {
+				*node:parent.nation<1>@invis	= false
+				*node:parent.nation<1>@color	= "1 1 1 1"
+				*node:parent.nat_fund<1>@invis	= false
+				*node:parent.nat_fund<1>@color	= "1 1 1 1"
+			}
 
-	string nation {
-		string		"_Nation"
-		pos			"40  90"
-		size		"260 20"
-	}
+			/**
+			 * @brief deselect a nation
+			 * @param <1> nationid
+			 * @SA MAX_NATIONS
+			 */
+			confunc nation_markdesel {
+				*node:parent.nation<1>@invis	= false
+				*node:parent.nation<1>@color	= "0.56 0.81 0.76 1"
+				*node:parent.nat_fund<1>@invis	= false
+				*node:parent.nat_fund<1>@color	= "0.56 0.81 0.76 1"
+			}
 
-	string nation0 {
-		string		*cvar:mn_nat_name0
-		pos			"40 115"
-		size		"260 20"
-		onClick		{ cmd "nation_select 0;" }
-	}
-	string nation1 {
-		string		*cvar:mn_nat_name1
-		pos			"40 140"
-		size		"260 20"
-		onClick		{ cmd "nation_select 1;" }
-	}
-	string nation2 {
-		string		*cvar:mn_nat_name2
-		pos			"40 165"
-		size		"260 20"
-		onClick		{ cmd "nation_select 2;" }
-	}
-	string nation3 {
-		string		*cvar:mn_nat_name3
-		pos			"40 190"
-		size		"260 20"
-		onClick		{ cmd "nation_select 3;" }
-	}
-	string nation4 {
-		string		*cvar:mn_nat_name4
-		pos			"40 215"
-		size		"260 20"
-		onClick		{ cmd "nation_select 4;" }
-	}
-	string nation5 {
-		string		*cvar:mn_nat_name5
-		pos			"40 240"
-		size		"260 20"
-		onClick		{ cmd "nation_select 5;" }
-	}
-	string nation6 {
-		string		*cvar:mn_nat_name6
-		pos			"40 265"
-		size		"260 20"
-		onClick		{ cmd "nation_select 6;" }
-	}
-	string nation7 {
-		string		*cvar:mn_nat_name7
-		pos			"40 290"
-		size		"260 20"
-		onClick		{ cmd "nation_select 7;" }
-	}
+			/**
+			 * @brief hide a nation
+			 * @param <1> nationid
+			 * @SA MAX_NATIONS
+			 */
+			confunc nation_hide {
+				*node:parent.nation<1>@invis	= true
+				*node:parent.nat_fund<1>@invis	= true
+			}
 
-	string nat_fund {
-		string		"_Current Funding"
-		pos			"340 90"
-		size		"175 20"
-	}
-	string nat_fund0 {
-		string		*cvar:mn_nat_fund0
-		pos			"340 115"
-		size		"100 20"
-	}
-	string nat_fund1 {
-		string		*cvar:mn_nat_fund1
-		pos			"340 140"
-		size		"100 20"
-	}
-	string nat_fund2 {
-		string		*cvar:mn_nat_fund2
-		pos			"340 165"
-		size		"100 20"
-	}
-	string nat_fund3 {
-		string		*cvar:mn_nat_fund3
-		pos			"340 190"
-		size		"100 20"
-	}
-	string nat_fund4 {
-		string		*cvar:mn_nat_fund4
-		pos			"340 215"
-		size		"100 20"
-	}
-	string nat_fund5 {
-		string		*cvar:mn_nat_fund5
-		pos			"340 240"
-		size		"100 20"
-	}
-	string nat_fund6 {
-		string		*cvar:mn_nat_fund6
-		pos			"340 265"
-		size		"100 20"
-	}
-	string nat_fund7 {
-		string		*cvar:mn_nat_fund7
-		pos			"340 290"
-		size		"100 20"
+			string nation {
+				string		"_Nation"
+				pos			"40  55"
+				size		"260 20"
+			}
+
+			string nation0 {
+				string		*cvar:mn_nat_name0
+				pos			"40 80"
+				size		"260 20"
+				onClick		{ cmd "nation_select 0;" }
+			}
+			string nation1 {
+				string		*cvar:mn_nat_name1
+				pos			"40 105"
+				size		"260 20"
+				onClick		{ cmd "nation_select 1;" }
+			}
+			string nation2 {
+				string		*cvar:mn_nat_name2
+				pos			"40 130"
+				size		"260 20"
+				onClick		{ cmd "nation_select 2;" }
+			}
+			string nation3 {
+				string		*cvar:mn_nat_name3
+				pos			"40 155"
+				size		"260 20"
+				onClick		{ cmd "nation_select 3;" }
+			}
+			string nation4 {
+				string		*cvar:mn_nat_name4
+				pos			"40 180"
+				size		"260 20"
+				onClick		{ cmd "nation_select 4;" }
+			}
+			string nation5 {
+				string		*cvar:mn_nat_name5
+				pos			"40 205"
+				size		"260 20"
+				onClick		{ cmd "nation_select 5;" }
+			}
+			string nation6 {
+				string		*cvar:mn_nat_name6
+				pos			"40 230"
+				size		"260 20"
+				onClick		{ cmd "nation_select 6;" }
+			}
+			string nation7 {
+				string		*cvar:mn_nat_name7
+				pos			"40 255"
+				size		"260 20"
+				onClick		{ cmd "nation_select 7;" }
+			}
+
+			string nat_fund {
+				string		"_Current Funding"
+				pos			"340 55"
+				size		"175 20"
+			}
+			string nat_fund0 {
+				string		*cvar:mn_nat_fund0
+				pos			"340 80"
+				size		"100 20"
+			}
+			string nat_fund1 {
+				string		*cvar:mn_nat_fund1
+				pos			"340 105"
+				size		"100 20"
+			}
+			string nat_fund2 {
+				string		*cvar:mn_nat_fund2
+				pos			"340 130"
+				size		"100 20"
+			}
+			string nat_fund3 {
+				string		*cvar:mn_nat_fund3
+				pos			"340 155"
+				size		"100 20"
+			}
+			string nat_fund4 {
+				string		*cvar:mn_nat_fund4
+				pos			"340 180"
+				size		"100 20"
+			}
+			string nat_fund5 {
+				string		*cvar:mn_nat_fund5
+				pos			"340 205"
+				size		"100 20"
+			}
+			string nat_fund6 {
+				string		*cvar:mn_nat_fund6
+				pos			"340 230"
+				size		"100 20"
+			}
+			string nat_fund7 {
+				string		*cvar:mn_nat_fund7
+				pos			"340 255"
+				size		"100 20"
+			}
+
+			string graph_time {
+				string		"_Month (Relative to current)"
+				pos			"600 295"
+				size		"300 20"
+				contentalign	ALIGN_UC
+				font		"f_small"
+			}
+			/** @todo better display of real month-text (year+month?) */
+			string graph_month0	{
+				string		"0"
+				pos			"600 265"
+				size		"30 20"
+				font "f_small"
+			}
+			string graph_month1	{
+				string		"-1"
+				pos			"625 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month2	{
+				string		"-2"
+				pos			"650 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month3	{
+				string		"-3"
+				pos			"675 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month4	{
+				string		"-4"
+				pos			"700 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month5	{
+				string		"-5"
+				pos			"725 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month6	{
+				string		"-6"
+				pos			"750 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month7	{
+				string		"-7"
+				pos			"775 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month8	{
+				string		"-8"
+				pos			"800 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month9	{
+				string		"-9"
+				pos			"825 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month10	{
+				string		"-10"
+				pos			"850 265"
+				size		"30 20"
+				font		"f_small"
+			}
+			string graph_month11	{
+				string		"-11"
+				pos			"875 265"
+				size		"30 20"
+				font		"f_small"
+			}
+
+			string graph_funding {
+				string		"_Funding"
+				pos			"450 165"
+				size		"140 20"
+				contentalign	ALIGN_UR
+				font		"f_small"
+			}
+			string graph_funding_zero {
+				string		"0"				/** @todo *cvar:mn_nat_fund_zero */
+				pos			"550 255"
+				size		"40 20"
+				contentalign	ALIGN_UR
+				font		"f_small"
+			}
+			string graph_funding_max {
+				string		"_max"			/*< @todo *cvar:mn_nat_fund_max */
+				pos			"550 65"
+				size		"40 20"
+				contentalign	ALIGN_LR
+				font		"f_small"
+			}
+
+			image nation_symbol
+			{
+				src		*cvar:mn_nat_symbol
+				pos			"269 355"
+				size		"486 300"
+				preventratio	true
+			}
+		}
+
 	}
 
 	linechart nation_graph_colors
@@ -365,117 +503,11 @@ window nations
 		axescolor	"1 1 1 0.5"
 	}
 
-	string graph_time {
-		string		"_Month (Relative to current)"
-		pos			"600 330"
-		size		"300 20"
-		contentalign	ALIGN_UC
-		font		"f_small"
-	}
-	/** @todo better display of real month-text (year+month?) */
-	string graph_month0	{
-		string		"0"
-		pos			"600 300"
-		size		"30 20"
-		font "f_small"
-	}
-	string graph_month1	{
-		string		"-1"
-		pos			"625 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month2	{
-		string		"-2"
-		pos			"650 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month3	{
-		string		"-3"
-		pos			"675 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month4	{
-		string		"-4"
-		pos			"700 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month5	{
-		string		"-5"
-		pos			"725 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month6	{
-		string		"-6"
-		pos			"750 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month7	{
-		string		"-7"
-		pos			"775 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month8	{
-		string		"-8"
-		pos			"800 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month9	{
-		string		"-9"
-		pos			"825 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month10	{
-		string		"-10"
-		pos			"850 300"
-		size		"30 20"
-		font		"f_small"
-	}
-	string graph_month11	{
-		string		"-11"
-		pos			"875 300"
-		size		"30 20"
-		font		"f_small"
+	Geoscape geoscape_button {
+		onClick { cmd "ui_pop"}
 	}
 
-	string graph_funding {
-		string		"_Funding"
-		pos			"450 200"
-		size		"140 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string graph_funding_zero {
-		string		"0"				/** @todo *cvar:mn_nat_fund_zero */
-		pos			"550 290"
-		size		"40 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string graph_funding_max {
-		string		"_max"			/*< @todo *cvar:mn_nat_fund_max */
-		pos			"550 100"
-		size		"40 20"
-		contentalign	ALIGN_LR
-		font		"f_small"
-	}
-
-	image nation_symbol
-	{
-		src		*cvar:mn_nat_symbol
-		pos			"269 390"
-		size		"486 300"
-		preventratio	true
-	}
-
+	fuzzyScreen overlay { }
 	func onWindowOpened
 	{
 		cmd "nation_update;"
