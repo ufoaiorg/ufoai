@@ -326,7 +326,6 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 		return;
 
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	int oldState = oldHP = oldSTUN = 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
@@ -363,6 +362,7 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	G_EventEnd();
 
+	int oldState = oldHP = oldSTUN = 0;
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
 		byte* stepAmount = nullptr;

@@ -575,7 +575,7 @@ static int AIL_print (lua_State* L)
 static int AIL_see (lua_State* L)
 {
 	int vision, team;
-	int i, j, k, n, cur;
+	int i, j, k, n;
 	Edict* check = nullptr;
 	aiActor_t target;
 	Edict* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
@@ -629,7 +629,7 @@ static int AIL_see (lua_State* L)
 
 	/* Sort by distance - nearest first. */
 	for (i = 0; i < n; i++) { /* Until we fill sorted */
-		cur = -1;
+		int cur = -1;
 		for (j = 0; j < n; j++) { /* Check for closest */
 			/* Is shorter then current minimum? */
 			if (cur < 0 || distLookup[j] < distLookup[cur]) {
@@ -717,8 +717,8 @@ static int AIL_morale (lua_State* L)
  */
 static int AIL_reactionfire (lua_State* L)
 {
-	int reactionState = 0;
 	if (lua_gettop(L) > 0) {
+		int reactionState = 0;
 
 		if (lua_isstring(L, 1)) {
 			/* get reaction fire mode */

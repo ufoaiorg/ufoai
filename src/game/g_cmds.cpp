@@ -64,14 +64,12 @@ static void G_Players_f (const Player& player)
  */
 static bool G_CheckFlood (Player& player)
 {
-	int i;
-
 	if (flood_msgs->integer) {
 		if (level.time < player.pers.flood_locktill) {
 			G_ClientPrintf(player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player.pers.flood_locktill - level.time));
 			return true;
 		}
-		i = player.pers.flood_whenhead - flood_msgs->value + 1;
+		int i = player.pers.flood_whenhead - flood_msgs->value + 1;
 		if (i < 0)
 			i = (sizeof(player.pers.flood_when)/sizeof(player.pers.flood_when[0])) + i;
 		if (player.pers.flood_when[i] && level.time - player.pers.flood_when[i] < flood_persecond->value) {

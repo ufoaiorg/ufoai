@@ -68,7 +68,7 @@ static int numipfilters;
 static bool StringToFilter (const char* s, ipfilter_t* f)
 {
 	char num[128];
-	int i, j;
+	int i;
 	byte b[4];
 	byte m[4];
 
@@ -84,7 +84,7 @@ static bool StringToFilter (const char* s, ipfilter_t* f)
 			return false;
 		}
 
-		j = 0;
+		int j = 0;
 		while (isdigit(*s)) {
 			num[j++] = *s++;
 		}

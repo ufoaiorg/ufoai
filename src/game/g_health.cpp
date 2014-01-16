@@ -65,7 +65,6 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
 			target->chr.wounds.woundLevel[bodyPart] += damage;
 		} else {
 			/* No direct hit (splash damage) */
-			int bodyPart;
 			for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 				target->chr.wounds.woundLevel[bodyPart] += teamDef->bodyTemplate->getArea(bodyPart) * damage;
 		}
