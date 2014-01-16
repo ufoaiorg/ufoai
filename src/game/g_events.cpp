@@ -306,6 +306,13 @@ void G_EventReactionFireTargetUpdate (const Edict& shooter, const Edict& target,
 	gi.QueueWriteByte(step);
 }
 
+void G_EventReactionFireAbortShot (const Edict& shooter, const Edict& target, int step)
+{
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREABORTSHOT, shooter.number);
+	gi.QueueWriteShort(target.number);
+	gi.QueueWriteByte(step);
+}
+
 /**
  * @brief Spawn a new particle for the client
  * @param[in] playerMask A bit mask. One bit for each affected player

@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actorreactionfireaddtarget.h"
 #include "event/actor/e_event_actorreactionfireremovetarget.h"
 #include "event/actor/e_event_actorreactionfiretargetupdate.h"
+#include "event/actor/e_event_actorreactionfireabortshot.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
 #include "event/actor/e_event_actorrevitalised.h"
@@ -114,6 +115,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_REACTIONFIREADDTARGET), "ssbb", CL_ActorReactionFireAddTarget, CL_ActorReactionFireAddTargetTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIREREMOVETARGET), "ssb", CL_ActorReactionFireRemoveTarget, CL_ActorReactionFireRemoveTargetTime, nullptr},
 	{E(EV_ACTOR_REACTIONFIRETARGETUPDATE), "ssbb", CL_ActorReactionFireTargetUpdate, CL_ActorReactionFireTargetUpdateTime, nullptr},
+	{E(EV_ACTOR_REACTIONFIREABORTSHOT), "ssb", CL_ActorReactionFireAbortShot, CL_ActorReactionFireAbortShotTime, nullptr},
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, nullptr},
 	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, nullptr}, /**< @sa NET_WriteDir */

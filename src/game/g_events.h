@@ -86,3 +86,4 @@ void G_EventActorWound(const Edict& ent, const int bodyPart);
 void G_EventReactionFireAddTarget(const Edict& shooter, const Edict& target, int tusG_EventReactionFireAddTarget, int step);
 void G_EventReactionFireRemoveTarget(const Edict& shooter, const Edict& target, int step);
 void G_EventReactionFireTargetUpdate(const Edict& shooter, const Edict& target, int tus, int step);
+void G_EventReactionFireAbortShot(const Edict& shooter, const Edict& target, int step);

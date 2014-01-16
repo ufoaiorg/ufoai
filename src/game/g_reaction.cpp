@@ -132,6 +132,7 @@ public:
 	void create(const Edict* shooter);
 	void resetTargetList(const Edict* shooter);
 	void notifyClientOnShot(const Edict* target, int step);
+	void notifyClientRFAborted(const Edict* shooter, const Edict* target, int step);
 
 private:
 	ReactionFireTargetList rfData[MAX_RF_DATA];
@@ -212,6 +213,19 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool 
 			}
 		}
 	}
+}
+
+void ReactionFireTargets::notifyClientRFAborted (const Edict* shooter, const Edict* target, int step)
+{
+		ReactionFireTargetList* rfts = find(shooter);
+		assert(rfts);
+
+		for (int i = 0; i < rfts->count; i++) {
+			ReactionFireTarget& t = rfts->targets[i];
+			if (t.target != target)
+				continue;
+			G_EventReactionFireAbortShot(*shooter, *target, step);
+		}
 }
 
 /**
@@ -416,7 +430,7 @@ private:
 	bool isPossible(Edict* shooter, const Edict* target) const;
 public:
 	void notifyClientOnStep(const Edict* target, int step);
-	bool checkExecution(const Edict* target);
+	bool checkExecution(const Edict* target, int step);
 	void updateAllTargets(const Edict* target);
 	bool tryToShoot(Edict* shooter, const Edict* target);
 	bool isInWeaponRange(const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
@@ -832,7 +846,7 @@ void ReactionFire::notifyClientOnStep (const Edict* target, int step)
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
  */
-bool ReactionFire::checkExecution (const Edict* target)
+bool ReactionFire::checkExecution (const Edict* target, int step)
 {
 	Edict* shooter = nullptr;
 	bool fired = false;
@@ -845,8 +859,10 @@ bool ReactionFire::checkExecution (const Edict* target)
 			continue;
 		if (!rft.hasExpired(shooter, target, 0))
 			continue;
-		if (!rf.tryToShoot(shooter, target))
+		if (!rf.tryToShoot(shooter, target)) {
+			G_ReactionFireNofityClientRFAborted(shooter, target, step);
 			continue;
+		}
 		rft.advance(shooter, tus);
 		fired |= true;
 	}
@@ -899,7 +915,7 @@ bool G_ReactionFireOnMovement (Edict* target, int step)
 	rf.notifyClientOnStep(target, step);
 
 	/* Check to see whether this resolves any reaction fire */
-	const bool fired = rf.checkExecution(target);
+	const bool fired = rf.checkExecution(target, step);
 
 	/* Check to see whether this triggers any reaction fire */
 	rf.updateAllTargets(target);
@@ -945,8 +961,10 @@ void G_ReactionFirePreShot (const Edict* target, const int fdTime)
 				continue;
 			if (!rft.hasExpired(shooter, target, fdTime))
 				continue;
-			if (!rf.tryToShoot(shooter, target))
+			if (!rf.tryToShoot(shooter, target)) {
+				G_ReactionFireNofityClientRFAborted(shooter, target, MAX_ROUTE);
 				continue;
+			}
 			repeat = true;
 			rft.advance(shooter, fdTime);
 		}
@@ -973,7 +991,7 @@ void G_ReactionFirePostShot (Edict* target)
 {
 	/* Check to see whether this resolves any reaction fire */
 	rf.notifyClientOnShot(target, 0);
-	rf.checkExecution(target);
+	rf.checkExecution(target, MAX_ROUTE);
 	G_ReactionFireNofityClientEndShot(target);
 }
 
@@ -1011,4 +1029,9 @@ void G_ReactionFireNofityClientStartMove (const Edict* target)
 void G_ReactionFireNofityClientEndMove (const Edict* target)
 {
 	rft.notifyClientMove(target, target->moveinfo.steps - 1, false);
+}
+
+void G_ReactionFireNofityClientRFAborted (const Edict* shooter, const Edict* target, int step)
+{
+	rft.notifyClientRFAborted(shooter, target, step);
 }

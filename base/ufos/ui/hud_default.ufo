@@ -1199,6 +1199,18 @@ window hud_default extends hud
 		}
 	}
 
+	/**
+	 * @brief Called when the reaction fire has been aborted.
+	 * This might e.g. happen if the chance to hit the target is too low.
+	 * @param <1> shooter entity number
+	 * @param <2> target entity number
+	 */
+	confunc reactionfire_shotaborted {
+		*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
+		*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
+		*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Aborting fire!"
+	}
+
 	// Resets the reaction fire button when new soldier is selected
 	confunc startreaction
 	{
