@@ -2373,20 +2373,19 @@ int B_ItemInBase (const objDef_t* item, const base_t* base)
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
 {
-	int capacity = 0;
-
 	switch (cap) {
-	case CAP_ALIENS:		/**< Update Aliens capacity in base. */
-	case CAP_EMPLOYEES:		/**< Update employees capacity in base. */
-	case CAP_LABSPACE:		/**< Update laboratory space capacity in base. */
-	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
-	case CAP_ITEMS:			/**< Update items capacity in base. */
+	case CAP_ALIENS:			/**< Update Aliens capacity in base. */
+	case CAP_EMPLOYEES:			/**< Update employees capacity in base. */
+	case CAP_LABSPACE:			/**< Update laboratory space capacity in base. */
+	case CAP_WORKSPACE:			/**< Update workshop space capacity in base. */
+	case CAP_ITEMS:				/**< Update items capacity in base. */
 	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 	{
 		int buildingTemplateIDX = -1;
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
+		int capacity = 0;
 
 		/* Reset given capacity in current base. */
 		CAP_SetMax(base, cap, 0);
