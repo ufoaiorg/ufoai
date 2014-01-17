@@ -370,6 +370,9 @@ void G_ClientMove (const Player &player, int visTeam, Edict* ent, const pos3_t t
 		ent->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
 
+		if (ent->team != TEAM_CIVILIAN)
+			G_EventMoveCameraTo(G_VisToPM(ent->visflags & ~G_TeamToVisMask(ent->team)), ent->pos);
+
 		ent->moveinfo.steps = 0;
 		G_ReactionFireNofityClientStartMove(ent);
 		while (numdv > 0) {
