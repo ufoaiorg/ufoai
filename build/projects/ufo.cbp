@@ -267,6 +267,8 @@
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorendshot.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireabortshot.cpp" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireabortshot.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireaddtarget.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireaddtarget.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.cpp" />

@@ -144,6 +144,7 @@
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actordie.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorendshot.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actormove.cpp" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireabortshot.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireaddtarget.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfireremovetarget.cpp" />
