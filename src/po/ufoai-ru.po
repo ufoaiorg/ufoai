@@ -25969,7 +25969,7 @@ msgstr "ОБОРУДОВАТЬ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:331
 msgid "Squad settings"
-msgstr "Настройки отряда"
+msgstr "Настройки команды"
 
 #: ../base/ufos/ui/_assets_squad.ufo:338
 msgid "DEFAULT"
@@ -25977,11 +25977,11 @@ msgstr "ПО УМОЛЧАНИЮ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:349
 msgid "CUSTOM"
-msgstr "СОБСТВЕННЫЙ"
+msgstr "СОБСТВЕННАЯ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:413 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
-msgstr "НОВЫЙ"
+msgstr "НОВАЯ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:429 ../base/ufos/ui/campaign.ufo:154
 #: ../base/ufos/ui/campaign.ufo:638
@@ -26346,7 +26346,7 @@ msgstr "Удалить это сохранение"
 #: ../base/ufos/ui/campaign.ufo:166 ../base/ufos/ui/multiplayer.ufo:674
 #: ../base/ufos/ui/skirmish.ufo:175
 msgid "DOWNLOAD"
-msgstr "ЗАНГРУЗИТЬ"
+msgstr "ЗАГРУЗИТЬ"
 
 #: ../base/ufos/ui/campaign.ufo:174 ../base/ufos/ui/skirmish.ufo:186
 msgid "BEGIN"
@@ -28492,7 +28492,7 @@ msgstr "КАРТА"
 
 #: ../base/ufos/ui/skirmish.ufo:164
 msgid "SQUAD"
-msgstr "ОТРЯД"
+msgstr "КОМАНДА"
 
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
