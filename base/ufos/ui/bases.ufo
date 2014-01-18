@@ -426,7 +426,7 @@ window bases
 				*node:parent.sections.soldiers@onMouseEnter = { }
 				*node:parent.sections.soldiers@onMouseLeave = { }
 				*node:parent.sections.soldiers@onClick = { }
-				*node:parent.sections.soldiers@tooltip = "_<3>"
+				*node:parent.sections.soldiers@tooltip = "<3>"
 			} elif (param1 eq "hospital") {
 			} elif (param1 eq "transfer") {
 			} else {
@@ -434,7 +434,7 @@ window bases
 				*node:parent.sections.<1>@onMouseEnter = { }
 				*node:parent.sections.<1>@onMouseLeave = { }
 				*node:parent.sections.<1>@onClick = { }
-				*node:parent.sections.<1>@tooltip = "_<3>"
+				*node:parent.sections.<1>@tooltip = "<3>"
 			}
 		} else {
 			if (param1 eq "hire") {

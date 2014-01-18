@@ -431,7 +431,11 @@ component skillbars extends panel
 		{
 			pos		"0 0"
 		}
-		string label { string "_CQB" tooltip "_Close Quarters Battle" }
+		string label
+		{
+			string "_CQB"
+			tooltip "_Close Quarters Battle"
+		}
 		bar valuebar { current *cvar:mn_vcls }
 		bar initbar { current *cvar:mn_vclsi }
 		string valuenum { string *cvar:mn_tcls }
@@ -481,7 +485,11 @@ component healthbar extends panel
 		{
 			pos		"0 0"
 		}
-		string label { string "_Health" tooltip "_<Healthpoints" }
+		string label
+		{
+			string "_Health"
+			tooltip "_Healthpoints"
+		}
 		bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
 		string valuenum { string *cvar:mn_thp }
 		func setColour {
