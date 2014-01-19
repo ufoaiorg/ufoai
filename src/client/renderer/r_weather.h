@@ -38,6 +38,9 @@ class Weather {
 		float windTurbulence; /** < variety of wind strength and direction in units per second */
 		float fallingSpeed; /** < how fast particles fall */
 
+		int splashTime; /** < how long splash effect is being played, in milliseconds */
+		float splashSize; /** < final particle size */
+
 		Weather(void);
 		Weather(weatherTypes weather);
 		virtual ~Weather();
@@ -57,7 +60,7 @@ class Weather {
 
 		struct particle {
 			GLfloat x, y, z; /** < position */
-			GLfloat vx, vy, vz; /** < current velocity */
+			GLfloat vx, vy, vz; /** < current velocity; vz == 0 indicates a splash particle */
 			int timeout; /** < milliseconds to physics update */
 			int ttl; /** < time to live in milliseconds */
 		};

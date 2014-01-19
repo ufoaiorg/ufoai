@@ -79,6 +79,9 @@ void Weather::setDefaults (void)
 	smearLength = 0.1f; /* 100 msec is the typical duration of the human eye motion blur */
 	particleSize = 1.0f; /* 1x scale by default */
 
+	splashTime = 0.0f;
+	splashSize = 1.0f;
+
 	color[0] = 1.0f; color[1] = 1.0f; color[2] = 1.0f; color[3] = 0.6f;
 }
 
@@ -96,6 +99,8 @@ void Weather::changeTo (weatherTypes weather)
 			weatherStrength = frand() * 0.8f + 0.2f;
 			windStrength = frand() * 20;
 			fallingSpeed = 500;
+			splashTime = 500;
+			splashSize = particleSize * 4.0f;
 			color[0] = 0.6f; color[1] = 0.6f; color[2] = 0.6f; color[3] = 0.6f;
 			break;
 		case WEATHER_SNOW:
@@ -105,6 +110,8 @@ void Weather::changeTo (weatherTypes weather)
 			fallingSpeed = 50;
 			smearLength = 0;
 			particleSize = 1.5f;
+			splashTime = 1500;
+			splashSize = particleSize;
 			break;
 		case WEATHER_SANDSTORM:
 			weatherStrength = frand() * 0.1f + 0.9f;
@@ -167,8 +174,15 @@ void Weather::update(int milliseconds)
 		} else { /** @todo creates vanishing-before-impact particles at low framerates -- should improve that somehow */
 			int restOfLife = prt.ttl -= milliseconds;
 			if (restOfLife < 0) {
-				dead++;
-				continue;
+				if (fabs(prt.vz) < 0.001f || splashTime < 1) {
+					/* either no splash or is a splash particle dying */
+					dead++;
+					continue;
+				}
+				/* convert it into splash particle */
+				/* technically, we should complete the last frame of movement, but with current particle types it looks good even without it */
+				prt.vz = 0; prt.vx = 0; prt.vy = 0;
+				prt.ttl += splashTime;
 			}
 		}
 		/* if we got so far, particle is alive and probably needs a physics update */
@@ -238,6 +252,7 @@ void Weather::render(void)
 	GLfloat prtPos[3 * 4 * Weather::MAX_PARTICLES];
 	GLfloat prtTexcoord[2 * 4 * Weather::MAX_PARTICLES];
 	size_t prtCount = 0;
+	const float splashTimeScale = 0.001f / splashTime; /* from msec to 1/sec units, so division is done only once per frame */
 	/** @todo shadowcasting at least for the sunlight */
 #if 0 // disabled because of bizarre colors
 	vec4_t prtColor = {color[0] * (refdef.ambientColor[0] + refdef.sunDiffuseColor[0]),
@@ -258,9 +273,19 @@ void Weather::render(void)
 		/* if particle is alive, construct a camera-facing quad */
 		GLfloat x, y, z;
 		GLfloat dx, dy, dz;
+		GLfloat thisParticleSize = particleSize;
+		if (prt.vz == 0 && splashTime > 0) {
+			/* splash particle, do zoom and other things */
+			/** @todo alpha decay */
+			float splashFactor = prt.ttl / 500.0f;//1.0f - prt.ttl * splashTimeScale;
+			thisParticleSize *= (splashSize - 1.0f) * splashFactor  + 1.0f;
+			dx = dy = thisParticleSize;
+		} else {
+			dx = i & 1 ? thisParticleSize* 2 : thisParticleSize; dy = i & 1 ? thisParticleSize : thisParticleSize * 2 ; /** @todo make a proper projection instead of this hack */
+		}
+
 		x = prt.x; y = prt.y; z = prt.z;
 		dz = smearLength * prt.vz * 0.5; /** @todo should use proper velocity vector ... or maybe not */
-		dx = i & 1 ? particleSize* 2 : particleSize; dy = i & 1 ? particleSize : particleSize * 2 ; /** @todo make a proper projection instead of this hack */
 		/* construct a particle geometry; */
 		GLfloat *pos = &prtPos[3 * 4 * prtCount];
 		GLfloat *texcoord = &prtTexcoord[2 * 4 * prtCount];
