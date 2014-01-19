@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2013-12-28 19:20+0100\n"
+"PO-Revision-Date: 2014-01-11 13:32+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -4589,6 +4589,17 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, zabezpieczyliśmy  nowy typ UFO, które czeka na pełne badania i "
+"analizę. \n"
+"\n"
+"To największe UFO jakie zabezpieczyliśmy. Wczesne oceny nie dają nam żadnych "
+"wskazówek co do zastosowania tego latającego obiektu. Jest tak duży, że musi "
+"być przeznaczony do najazdów naziemnych, ale i również  do walki z  wrogiem "
+"w powietrzu. \n"
+"\n"
+"Zbadajmy ten statek jak najszybciej. \n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:366
 #, fuzzy
@@ -5501,6 +5512,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, skończyliśmy analizę nowej obcej zbroi i posiadamy wiedzę na temat "
+"kilku nowych ulepszeń, które możemy zastosować do naszych własnych celów, "
+"czyli produkcji bardziej trwałej zbroi samolotu. \n"
+"\n"
+"Najważniejszą innowacją jest  sposób w  jaki materiały tkane są razem, mimo "
+"wielowarstwowości są niezwykle cienkie, ale i bardzo trwałe. Poprawi to "
+"główną wadę naszej obecnej zbroi, która jest tak ciężka, że samoloty tracą "
+"na sterowności i prędkości. \n"
+"\n"
+"Zacznij wytwarzanie nowej zbroi  jak najszybciej, Sir. Zapewni to "
+"dramatyczny skok w obronie naszych samolotów .  \n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:152
 msgid ""
@@ -5832,6 +5856,15 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódca, gdy nasi inżynierowie wykonywali ostatni demontaż UFO, zauważyli "
+"to, co wydawało się być pewne: modyfikacje mechanizmów napędowych. \n"
+"\n"
+"Jeśli kosmici ulepszają  swoje silniki antymaterii, musimy dowiedzieć się "
+"jak możemy się od nich nauczyć nowej technologi. \n"
+"\n"
+"To może być klucz do zwycięstwa w walce o dominację w naszym niebie. \n"
+"\n"
+" Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
 msgid ""
@@ -9069,7 +9102,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/armour.ufo:38
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Armour\n"
 "\n"
@@ -9182,7 +9214,7 @@ msgstr ""
 "słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
 "Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
 "powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
-"poważniejszych strat.Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
+"poważniejszych strat.Zadaniem nowo tworzonych sił PHALANX będzie zmiana tych "
 "statystyk na naszą korzyść; do czego potrzebne będzie wszystko, co "
 "dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
@@ -9216,7 +9248,7 @@ msgstr ""
 "pajęczej na skalę masową.\n"
 "\n"
 "Pierwszy pancerz bojowy, którego konstrukcja oparta była na włóknach sieci "
-"pajęczej, trafił do ewkipunku NATO w 2023 roku, po serii testów pokazujących "
+"pajęczej, trafił do ekwipunku NATO w 2023 roku, po serii testów pokazujących "
 "kompletną nieprzydatność kamizelek i pancerzy kevlarowych wszelkiego typu w "
 "ochronie przed nowoczesną amunicją wprowadzoną do użytku przez armię Chin."
 "Jego budowa opiera się na szeregu przeplatających się warstw włókien sieci "
@@ -9258,7 +9290,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/armour.ufo:54
-#, fuzzy
 msgid ""
 "Commander, I would like to report the success of our nanocomposite "
 "production research!\n"
@@ -9344,13 +9375,12 @@ msgstr ""
 "\n"
 "Zastosowanie nowego pancerza na polu walki zwiększy bojową skuteczność "
 "naszych żołnierzy. Ochrona, którą zapewnia, przy jego relatywnej lekkości, "
-"predestynuje go jako pancerz szczególnie odpowiedni dla żolnierzy walczących "
+"predestynuje go jako pancerz szczególnie odpowiedni dla żołnierzy walczących "
 "w pierwszej linii.\n"
 "\n"
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:66
-#, fuzzy
 msgid ""
 "Our examination of the alien body armour has led us to many interesting "
 "realisations. Obviously, the key to creating more effective mobile armour "
@@ -9377,7 +9407,7 @@ msgid ""
 msgstr ""
 "Wstępne badanie pancerza osobistego wykorzystywanego przez obcych przyniosło "
 "kilkanaście ważnych obserwacji, z których najważniejszą jest ta, iż kluczem "
-"do jego nadzwyczajnej efektywności jest wykorzystanie nanokompozytów."
+"do jego nadzwyczajnej efektywności jest wykorzystanie nanokompozytów. "
 "Jesteśmy w stanie skopiować rozwiązania tej technologii, do czego "
 "potrzebować będziemy dużych ilości węglowych nanorurek.\n"
 "\n"
@@ -9387,7 +9417,7 @@ msgstr ""
 "pokrywania niewielkich powierzchni najbardziej zaawansowanych technicznie "
 "samolotów i czołgów, praktycznie bez dalszych prób ich specyficznego "
 "kształtowania.Dla kontrastu, nanorurki, które znalazły się w zbroi obcych, "
-"skoncentowane są w wielu warstwach i noszą ślady niespotykanych sposobów "
+"skoncentrowane są w wielu warstwach i noszą ślady niespotykanych sposobów "
 "formowania.Nasze metody wytwarzania węglowych nanorurek powinny ulec "
 "znaczącym modyfikacjom.\n"
 "\n"
@@ -10316,7 +10346,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:178
-#, fuzzy
 msgid ""
 "Blueprints -- Missile Battery\n"
 "\n"
@@ -10492,7 +10521,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:222
-#, fuzzy
 msgid ""
 "Blueprints -- Large Hangar\n"
 "\n"
@@ -10647,7 +10675,6 @@ msgstr ""
 "Brak"
 
 #: ../base/ufos/msgid/buildings.ufo:264
-#, fuzzy
 msgid ""
 "Blueprints -- Hospital\n"
 "\n"
@@ -10802,7 +10829,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:308
-#, fuzzy
 msgid ""
 "Blueprints -- Small Hangar\n"
 "\n"
@@ -10956,7 +10982,6 @@ msgstr ""
 "Brak"
 
 #: ../base/ufos/msgid/buildings.ufo:352
-#, fuzzy
 msgid ""
 "Blueprints -- Laboratory\n"
 "\n"
@@ -11120,7 +11145,6 @@ msgstr ""
 "unowocześnieniu wyposażenia."
 
 #: ../base/ufos/msgid/buildings.ufo:392
-#, fuzzy
 msgid ""
 "Blueprints -- Power Plant\n"
 "\n"
@@ -11232,10 +11256,10 @@ msgstr ""
 "\n"
 "Nasze elektrownie korzystają z niemieckiego reaktora HEFR (High-Energy "
 "Fission Reactor), projektu wysoko efektywnego wzmacniacza energii. Jest to "
-"reaktor podkrytyczny - wywołuje rozszczepienie bez osiągania ciągłej reakcji "
-"łańcuchowej. Zamiast tego korzysta z zewnętrznego źródła neutronów, w tym "
-"wypadku generatora cząstek, do rozpoczęcia i podtrzymywania rozpadu. Ta "
-"metoda uwalnia wystarczającą ilość energii, aby podtrzymać pracę "
+"reaktor pod krytyczny - wywołuje rozszczepienie bez osiągania ciągłej "
+"reakcji łańcuchowej. Zamiast tego korzysta z zewnętrznego źródła neutronów, "
+"w tym wypadku generatora cząstek, do rozpoczęcia i podtrzymywania rozpadu. "
+"Ta metoda uwalnia wystarczającą ilość energii, aby podtrzymać pracę "
 "akceleratora cząstek, a nadwyżka zostaje przekierowana do zasilania "
 "pozostałych kompleksów bazy.\n"
 "\n"
@@ -11290,7 +11314,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:432
-#, fuzzy
 msgid ""
 "Blueprints -- Living Quarters\n"
 "\n"
@@ -11635,7 +11658,6 @@ msgstr ""
 "--mjr Paul Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:530
-#, fuzzy
 msgid ""
 "Blueprints -- Storage\n"
 "\n"
@@ -11787,7 +11809,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:568
-#, fuzzy
 msgid ""
 "Blueprints -- Workshop\n"
 "\n"
@@ -11902,8 +11923,8 @@ msgstr ""
 "Warsztat jest strefą silnie zabezpieczoną, ze względu na realizację w nim "
 "delikatnych i często tajnych projektów. Używane do produkcji różnorodne, "
 "niebezpieczne i często lotne substancje tworzą z niego strefę zagrożenia. Z "
-"pewnością warszat będzie celem ataku obcych podczas szturmu na bazę - czy to "
-"głównym, czy drugorzędnym. Wyłączenie naszej produkcji na dowolny okres "
+"pewnością warsztat będzie celem ataku obcych podczas szturmu na bazę - czy "
+"to głównym, czy drugorzędnym. Wyłączenie naszej produkcji na dowolny okres "
 "będzie oznaczało zwycięstwo dla pozaziemskich najeźdźców, zwłaszcza jeśli "
 "uda im się zniszczyć jakiś duży projekt w trakcie realizacji, np. budowę "
 "nowego statku powietrznego.\n"
@@ -11921,7 +11942,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/buildings.ufo:598
-#, fuzzy
 msgid ""
 "Overview\n"
 "\n"
@@ -12734,7 +12754,6 @@ msgstr ""
 "Atlantyckich"
 
 #: ../base/ufos/msgid/mails.ufo:40
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -12759,12 +12778,12 @@ msgstr ""
 "Do Dowódcy, \n"
 "\n"
 "Obawiam się, że mam złą wiadomość. Pomimo naszych wysiłków, okazy obcych "
-"pozyskane w naszej ostatniej misji przeterminowały sie w Kwarantannie. "
+"pozyskane w naszej ostatniej misji przeterminowały się w Kwarantannie. "
 "Jesteśmy niezdolni do stabilizacji ich funkcji życiowych, aby zdążyć "
-"dowiedzieć się czegos wartościowego.\n"
+"dowiedzieć się czegoś wartościowego.\n"
 "\n"
-"Zewnętrzne symptomy wskazuja na przyczynę śmierci, jest nią nagłe i "
-"śmiertelne uduszenie. Wydaje sie że obcy mogą żyć w naszej atmosferze "
+"Zewnętrzne symptomy wskazują na przyczynę śmierci, jest nią nagłe i "
+"śmiertelne uduszenie. Wydaje się że obcy mogą żyć w naszej atmosferze "
 "ograniczony czas nim się uduszą. Nie wykonaliśmy pełnych badań ciał, czekamy "
 "jedynie na Twoją autoryzację w celu wykonania silnie zalecanej sekcji zwłok. "
 "Musimy znaleźć sposób na utrzymanie ich przy życia dłużej, bez tego nie "
@@ -12849,7 +12868,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/news.ufo:16
-#, fuzzy
 msgid ""
 "In the year 2084, Earth is in better shape than it has been for more than a "
 "century. Perhaps for the first time, peace and cooperation are the norm "
@@ -12962,10 +12980,10 @@ msgstr ""
 "tego nie zaaprobowało.\n"
 "\n"
 "Wybuchła wojna domowa, jakiej Ziemia wcześniej nie widziała. Oficerowie "
-"często odnosili się do niej jako bastarda Wietnamu i I Wojny Światowej. "
-"Miały miejsce bombardowania całych populacji, masowe egzekucje więźniów "
-"wojennych, uderzenia nuklearne na kilka miast – łącznie z Szanghajem, Seulem "
-"i New Delhi – 7 czerwca 2034 r. siły rządowe zrzuciły łącznie sześć 50-"
+"często odnosili się do niej jako bękarta Wietnamu i I Wojny Światowej. Miały "
+"miejsce bombardowania całych populacji, masowe egzekucje więźniów wojennych, "
+"uderzenia nuklearne na kilka miast – łącznie z Szanghajem, Seulem i New "
+"Delhi – 7 czerwca 2034 r. siły rządowe zrzuciły łącznie sześć 50-"
 "kilotonowych bomb na dobrze bronione pozycje rebeliantów, zabijając także "
 "ochranianych przez nich cywilów.\n"
 "\n"
@@ -12976,7 +12994,6 @@ msgstr ""
 "Oceanu Indyjskiego. To wydarzenie oficjalnie zakończyło II Zimną Wojnę."
 
 #: ../base/ufos/msgid/news.ufo:128
-#, fuzzy
 msgid ""
 "The Asian Republic:\n"
 "\n"
@@ -14175,7 +14192,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:24
-#, fuzzy
 msgid ""
 "Commander, based on the extremely interesting findings we've made during our "
 "examination of the UFO we dismantled, I'd like your permission to use some "
@@ -14208,7 +14224,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:38
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14270,7 +14285,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:52
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14313,7 +14327,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:76
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14434,7 +14447,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:90
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14490,7 +14502,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:108
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14579,7 +14590,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:122
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14624,7 +14634,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:146
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -15234,7 +15243,6 @@ msgstr ""
 "dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:278
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15337,7 +15345,7 @@ msgstr ""
 "zarejestrowanych blisko Ziemi w okresie tuż poprzedzającym pojawienie się "
 "UFO w atmosferze naszej planety.\n"
 "\n"
-"Okazało się, że jeden z naszych teleskopów (właściwie spektografów) "
+"Okazało się, że jeden z naszych teleskopów (właściwie spektrografów) "
 "operujących w widmie bliskiej podczerwieni nagrał sekwencję wydarzeń "
 "związanych z pojawieniem się UFO w bezpośredniej bliskości Ziemi. Jak "
 "dziwnie to zabrzmi, zarejestrował on około 10 tysięcy km od Ziemi ni mniej, "
@@ -15349,9 +15357,9 @@ msgstr ""
 "\n"
 "Nie jest do końca wykluczone, że statki obcych korzystają z niesłychanie "
 "zaawansowanego systemu maskowania, ale jest to po prostu mało prawdopodobne."
-"Nasuwająca się automatycznie odpowiedź, że obcy dysponują napędem "
-"ponadświetlnym, wydaje się, w świetle obserwowanych faktów (i naszej "
-"znajomości fizyki), równie logiczna, co trudna do zaakceptowania.\n"
+"Nasuwająca się automatycznie odpowiedź, że obcy dysponują napędem ponad "
+"świetlnym, wydaje się, w świetle obserwowanych faktów (i naszej znajomości "
+"fizyki), równie logiczna, co trudna do zaakceptowania.\n"
 "\n"
 "Spekulacje nad tym, jak to możliwe, sugeruję jednak odłożyć do czasu, gdy "
 "uda nam się zdobyć nieuszkodzony statek obcych wyposażony w taką "
@@ -15365,7 +15373,6 @@ msgstr ""
 "--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:294
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15435,7 +15442,6 @@ msgstr ""
 "--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:316
-#, fuzzy
 msgid ""
 "Commander, my team and I have finished our analysis of the UFO we captured. "
 "It's a real miracle of engineering, and we're all looking forward to getting "
@@ -15577,7 +15583,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:324
-#, fuzzy
 msgid ""
 "Commander, we've captured our first UFO of the war. I don't have to tell you "
 "that this is a unique research opportunity. However, before we can begin to "
@@ -15608,7 +15613,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:340
-#, fuzzy
 msgid ""
 "Commander, I think we've uncovered the secret to the alien materials. After "
 "some modifications to our Workshop equipment, we should now be able to use "
@@ -15664,7 +15668,7 @@ msgstr ""
 "Przyłożone w różnych miejscach kadłuba UFO napięcie może powodować "
 "błyskawiczną zmianę kształtu określonego fragmentu poszycia, zaś odłączenie "
 "prądu – powrót do stanu początkowego. Jeśli dodamy do tego zaawansowaną "
-"elektronikę nadzorującą te procesy, niezwykła manewrowność i sterowność "
+"elektronikę nadzorującą te procesy, niezwykła manewrowość i sterowność "
 "powietrznych pojazdów obcych przestaje dziwić.\n"
 "\n"
 "Możliwości, jakie otwierają się przed nami, jeśli chodzi o potencjalne "
@@ -15684,7 +15688,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:348
-#, fuzzy
 msgid ""
 "Commander, as I mentioned in my previous report, the UFO we recovered was "
 "plated with a highly interesting alloy which blends plastic and metal "
@@ -15714,7 +15717,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/story.ufo:374
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -15895,7 +15897,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/story.ufo:414
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15995,7 +15996,6 @@ msgstr ""
 "--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:430 ../base/ufos/msgid/story.ufo:602
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16128,7 +16128,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/story.ufo:468
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16224,7 +16223,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/story.ufo:516
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -16448,7 +16446,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/story.ufo:586
-#, fuzzy
 msgid ""
 "Technical Specifications: MG12 Machine Gun\n"
 "\n"
@@ -16555,9 +16552,9 @@ msgstr ""
 "słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. "
 "Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie "
 "powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi "
-"poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych "
-"statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza "
-"ziemska technologia ma do zaoferowania.\n"
+"poważniejszych strat. Zadaniem nowo tworzonych sił PHALANX będzie zmiana "
+"tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co "
+"dzisiejsza ziemska technologia ma do zaoferowania.\n"
 "\n"
 "Powołanie do życia programu \"Excalibur\" miało na celu wyselekcjonowanie "
 "najlepszych na Ziemi broni oraz innych środków nowoczesnego pola walki. "
@@ -16592,7 +16589,7 @@ msgstr ""
 "zaporowego, odpierając całe oddziały obcych w kombinacji z odpowiednim "
 "ukształtowaniem terenu.\n"
 "\n"
-"SA-3000 ładowany jest popularną amunicją bezłuskową 4,7 mm, która używana "
+"SA-3000 ładowany jest popularną amunicją bez łuskową 4,7 mm, która używana "
 "jest również w karabinie szturmowym AR-80. Niestety, odmienna konstrukcja "
 "mechanizmu ładującego uniemożliwia wymianę magazynków między tymi "
 "karabinami.\n"
@@ -16656,7 +16653,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -16685,16 +16681,14 @@ msgstr ""
 "ich zachowań wymagane są żywe okazy tych kreatur.\n"
 "\n"
 "Jeśli zdołasz ogłuszyć obcego w walce a następnie dostarczyć go do bazy z "
-"instalacja Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej "
+"instalacją Kwarantanny, będziemy mieli o wiele więcej do powiedzenia. Lepiej "
 "poznamy jak funkcjonuje ich biologiczny organizm i posiądziemy wiedzę o ich "
-"słabościach. W miarę czasu moglibyśmy nawet rozwinąc metodę porozumiewania "
-"sie z nimi.\n"
+"słabościach. W miarę czasu moglibyśmy nawet rozwinąć metodę porozumiewania "
+"się z nimi.\n"
 "\n"
-"Wiem że to wielkie ryzyko dla żołnierzy schwytać żywego przeciwnika, jednak "
+"Wiem, że to wielkie ryzyko dla żołnierzy schwytać żywego przeciwnika, jednak "
 "jest to ryzyko którego będziemy musieli się podjąć jeśli chcemy wygrać tę "
-"wojnę. Wysyłaj swych ludzi wyposażonych w granaty ogłuszające i upewnij się "
-"że będą ich używali.\n"
-"\n"
+"wojnę. \n"
 "\n"
 "Z poważaniem,\n"
 "\n"
@@ -17398,7 +17392,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/weapons.ufo:232
-#, fuzzy
 msgid ""
 "Technical Specifications: AR-80 Assault Rifle\n"
 "\n"
@@ -17519,7 +17512,7 @@ msgstr ""
 "przedniej części karabinu) pozwalająca na zmniejszenie jego wagi; "
 "ponadprzeciętny zasięg skutecznego ognia, pojemny magazynek (mieszczący 30 "
 "naboi) i duża siła penetracji wystrzeliwanych pocisków decydują wspólnie o "
-"dużej uniwersalności tego karabinu. FAA-191 używa bezłuskowej amunicji "
+"dużej uniwersalności tego karabinu. FAA-191 używa bez łuskowej amunicji "
 "kalibru 4.7 mm, z wolframowym rdzeniem, o wysokich parametrach penetracji na "
 "bliskich i średnich dystansach - do takich broń została zaprojektowana i "
 "przy takich spisuje się znakomicie. Nie jest natomiast polecane używanie "
@@ -18379,7 +18372,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:565
-#, fuzzy
 msgid ""
 "The EM rifle project has been a resounding success! For the first time in "
 "human history, we've created a viable man-portable electromagnetic weapon. "
@@ -18450,7 +18442,7 @@ msgstr ""
 "konstrukcja opiera się na wykorzystaniu dwóch szyn, do których przykładane "
 "jest przeciwnie skierowane napięcie. Wykonany z ferromagnetyka pocisk styka "
 "obie szyny; przepływający przez nie prąd wywołuje powstanie pola "
-"magnetycznego oddziaływującego na prąd płynący przez pocisk. Wywołana w ten "
+"magnetycznego oddziaływającego na prąd płynący przez pocisk. Wywołana w ten "
 "sposób siła (definiowana jako siła Lorentza, stąd nazwa broni) rozpędza "
 "pocisk do olbrzymiej prędkości, dużo większej niż prędkości nabojów osiągane "
 "dzięki spalaniu gazów prochowych.\n"
@@ -18464,7 +18456,7 @@ msgstr ""
 "możliwym rozważania o konstrukcji relatywnie małego i przenośnego działa. "
 "Innym poważnym problemem był fakt szybkiego zużywania się szyn, które po "
 "oddaniu zaledwie jednego-dwóch strzałów ulegały miejscowym nadtopieniom i "
-"mikroodkształceniom, co przekładało się dalej na zaburzenia w przepływie "
+"mikro-odkształceniom, co przekładało się dalej na zaburzenia w przepływie "
 "prądu, a to z kolei utrudniało prawidłowe rozpędzenie pocisku, w sytuacjach "
 "ekstremalnych grożąc wręcz zniszczeniem broni i zagrożeniem dla jej "
 "obsługi.\n"
@@ -18493,7 +18485,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:577
-#, fuzzy
 msgid ""
 "Commander, please read this proposal for a new long-range weapon that we "
 "believe will be a crucial counter to the new alien armour we're "
@@ -18598,7 +18589,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:639
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Knife\n"
 "\n"
@@ -18743,7 +18733,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/weapons.ufo:653
-#, fuzzy
 msgid ""
 "Commander, I'm hereby reporting our success in the creation of alien blade "
 "materials. We've loaded the production specs into our Workshop machinery and "
@@ -18828,7 +18817,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:667
-#, fuzzy
 msgid ""
 "Commander, now that we've had a good look at the alien blade technology from "
 "several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're "
@@ -18884,7 +18872,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:713
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-FL Flamethrower\n"
 "\n"
@@ -20435,7 +20422,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1129
-#, fuzzy
 msgid ""
 "Commander, I apologise in advance if my typing isn't up to standard in this "
 "message. We've had a lot of sleepless nights down here in DivEngine working "
@@ -20523,7 +20509,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1139
-#, fuzzy
 msgid ""
 "Our notes have produced a lot of designs, and this is possibly the most "
 "difficult one to bring into reality: a deuterium-fluoride laser weapon the "
@@ -20562,7 +20547,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1153
-#, fuzzy
 msgid ""
 "It's done, Commander. We are now the proud owners of a working laser rifle, "
 "with full production plans loaded into our computers. We've eliminated "
@@ -20640,7 +20624,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1163
-#, fuzzy
 msgid ""
 "The laser rifle is the flagship design of our proposed deuterium-fluoride "
 "laser family, our best theory for punching through alien armour effective "
@@ -20737,7 +20720,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1201
-#, fuzzy
 msgid ""
 "Commander, I'd like to report that we've successfully prototyped the new "
 "electrolaser design and have approved final plans for a production model. We "
@@ -20836,7 +20818,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1213
-#, fuzzy
 msgid ""
 "Commander, I have a new research proposal for you, something you might find "
 "interesting. Please hear me out.\n"
@@ -20881,7 +20862,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1225
-#, fuzzy
 msgid ""
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges "
 "and they're now ready for mass production. They'll be expensive to make and "
@@ -21173,7 +21153,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/weapons.ufo:1301
-#, fuzzy
 msgid ""
 "When the aliens need a sidearm, they don't screw around.\n"
 "\n"
@@ -21276,7 +21255,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1311
-#, fuzzy
 msgid ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't "
 "need to tell you how important this is. The alien armaments are highly-"
@@ -21338,7 +21316,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1331
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien plasma blaster from the field. This is "
 "an extremely powerful new plasma weapon that warrants immediate research.\n"
@@ -21358,7 +21335,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1349
-#, fuzzy
 msgid ""
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the "
 "news is not good.\n"
@@ -21451,7 +21427,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1357
-#, fuzzy
 msgid ""
 "Commander, our last tactical mission brought back a strange alien weapon in "
 "the form of a plasma chamber with a handle. At least, we assume it's a "
@@ -21475,7 +21450,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1371
-#, fuzzy
 msgid ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all "
 "the alien weapons, it's very nasty and very dangerous.\n"
@@ -21553,7 +21527,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1381
-#, fuzzy
 msgid ""
 "Commander, our last tac mission has brought back an alien plasma grenade. "
 "This is a highly powerful grenade-type weapon that, once thrown, explodes in "
@@ -21570,7 +21543,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Dowódco, podczas ostatniej akcji bojowej udało nam się pozyskać granat "
-"używany przez obcych. Jego detonacja, powodująca rozprysk supergorącej "
+"używany przez obcych. Jego detonacja, powodująca rozprysk super-gorącej "
 "plazmy, jest w stanie zamienić w kupkę popiołu każdy organiczny obiekt w "
 "bezpośredniej bliskości epicentrum eksplozji.Wygląda na to, że jest to broń "
 "bez porównania groźniejsza niż jakikolwiek granat używany przez naszych "
@@ -21581,7 +21554,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1397
-#, fuzzy
 msgid ""
 "Commander, here's my report on our alien plasma rifle research.\n"
 "\n"
@@ -23763,7 +23735,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:2027
-#, fuzzy
 msgid ""
 "Commander, we've decided that more research is badly needed on the particle "
 "beam weaponry, especially their mysterious power source, the magazines which "
@@ -23787,10 +23758,10 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Dowódco, jak już informowałem uprzednio, podczas badań broni cząsteczkowej "
-"używanej przez obcych napotkaliśmy pewne trudności podczas prób deaktywacji "
+"używanej przez obcych napotkaliśmy pewne trudności podczas prób dezaktywacji "
 "ogniwa zasilającego różne rodzaje tego uzbrojenia. Tradycyjne podejście w "
 "stosunku do tej nadzwyczaj skomplikowanej baterii wydaje się mało sensowne – "
-"z tego też powodu chcę zaproponować bardziej nietypową próbę deaktywacji "
+"z tego też powodu chcę zaproponować bardziej nietypową próbę dezaktywacji "
 "wspomnianego ogniwa.\n"
 "\n"
 "Działanie brutalną siłą rzadko przynosi oczekiwane efekty, jednak (wystarczy "
@@ -27292,6 +27263,7 @@ msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
+"Ustawia maksymalny rozmiar tekstur i  rozdzielczości wyższych niż ta wartość."
 
 #: ../base/ufos/ui/options.ufo:700
 msgid "Resolution Cap:"
@@ -27302,6 +27274,8 @@ msgid ""
 "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to "
 "8192x8192 pixel."
 msgstr ""
+"Poziom niski oznacza, że maksymalnie rozdzielczość tekstur wynosi 256x256 "
+"pikseli. Poziom wysoki oznacza maksymalnie 8192x8192 pikseli."
 
 #: ../base/ufos/ui/options.ufo:713 ../base/ufos/ui/options.ufo:1114
 #: ../base/ufos/ui/options.ufo:1270
@@ -27345,23 +27319,23 @@ msgstr "Brak filtrowania, brak mipmaps"
 
 #: ../base/ufos/ui/options.ufo:761
 msgid "Bilinear filtering, no mipmaps"
-msgstr ""
+msgstr "Filtrowanie dwuliniowe, bez mipmap`ów"
 
 #: ../base/ufos/ui/options.ufo:765
 msgid "No filtering, mipmaps"
-msgstr ""
+msgstr "Bez filtrowania , ale z mipmapami"
 
 #: ../base/ufos/ui/options.ufo:769
 msgid "Bilinear filtering, mipmaps"
-msgstr ""
+msgstr "Filtrowanie dwuliniowe, z mipmap`ami"
 
 #: ../base/ufos/ui/options.ufo:773
 msgid "Trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Trójliniowe filtrowanie , z mipmapami"
 
 #: ../base/ufos/ui/options.ufo:777
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Filtrowanie dwuliniowe, trójliniowe, z mipmap`ami"
 
 #: ../base/ufos/ui/options.ufo:787
 msgid ""
@@ -27425,11 +27399,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:857
 msgid "GLSL Shaders:"
-msgstr ""
+msgstr "Cieniowanie GLSL:"
 
 #: ../base/ufos/ui/options.ufo:864
 msgid "Set the OpenGL shader quality - or disable them."
-msgstr ""
+msgstr "Ustaw jakość cieniowania OpenGL - lub je wyłącz"
 
 #: ../base/ufos/ui/options.ufo:874
 msgid "Disabled"
@@ -27455,7 +27429,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:913
 msgid "Vertex Buffers:"
-msgstr ""
+msgstr "Buforowanie Verteksowe:"
 
 #: ../base/ufos/ui/options.ufo:928
 msgid ""
@@ -27474,25 +27448,28 @@ msgid ""
 "Choose between 0-4 Multisample Buffers. Higher values will provide better "
 "antialiasing and will enhance picture quality."
 msgstr ""
+"Multisample Buffers wybierz pomiędzy 0-4 . Im większa wartość tym lepsza "
+"jakość obrazu, antialiasing lepiej wygładzi kontury grafiki."
 
 #: ../base/ufos/ui/options.ufo:950
 msgid ""
 "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync "
 "on (better quality)."
 msgstr ""
+"Ustaw \"0\" aby wyłączyć v-sync(przyspieszenie). Ustaw \"1\" lub więcej aby "
+"uruchomić v-sync (lepsza jakość)"
 
 #: ../base/ufos/ui/options.ufo:968
 msgid "Post-processing shader effects like glowing textures."
-msgstr ""
+msgstr "Pod-procesorowe cieniowanie efektu błyszczących tekstur."
 
 #: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
-msgstr ""
+msgstr "Pod-procesorowe cieniowanie:"
 
 #: ../base/ufos/ui/options.ufo:975
-#, fuzzy
 msgid "Enable post processing shader effects."
-msgstr "Włącz efekty pogody."
+msgstr "Włącz efekty  cieniowania pod-procesorowe "
 
 #: ../base/ufos/ui/options.ufo:985
 msgid ""
@@ -27563,11 +27540,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1149
 msgid "Enabled by default for compatibility reasons."
-msgstr ""
+msgstr "Domyślnie włączono z powodu polepszenia kompatybilności"
 
 #: ../base/ufos/ui/options.ufo:1150
 msgid "Intel Graphics Hardware Hack:"
-msgstr ""
+msgstr "Intel Graphics Hardware Hack:"
 
 #: ../base/ufos/ui/options.ufo:1156
 msgid ""
@@ -28114,7 +28091,7 @@ msgstr ""
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
-msgstr ""
+msgstr "Tematy"
 
 #: ../base/ufos/ui/research.ufo:301 client/cgame/campaign/cp_aircraft.cpp:373
 msgid "idle"
@@ -28297,7 +28274,7 @@ msgstr "Wybierz następny węzeł"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
-msgstr ""
+msgstr "Rozszerz okno"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
@@ -28368,8 +28345,8 @@ msgid "all space"
 msgstr "cała przestrzeń"
 
 #: ../base/ufos/ui/transfer.ufo:426
-msgid "Capacity overload\";"
-msgstr "Przeładowano\";"
+msgid "Capacity overload"
+msgstr "Przeładowano"
 
 #: ../base/ufos/ui/transfer.ufo:445 ../base/ufos/ui/transfer.ufo:473
 msgid "Start the transfer"
