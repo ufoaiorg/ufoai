@@ -618,15 +618,13 @@ void CL_RequestNextDownload (void)
 
 	CL_ViewLoadMedia();
 
-	{
-		dbuffer msg(7);
-		/* send begin */
-		/* this will activate the render process (see client state ca_active) */
-		NET_WriteByte(&msg, clc_stringcmd);
-		/* see CL_StartGame */
-		NET_WriteString(&msg, NET_STATE_BEGIN "\n");
-		NET_WriteMsg(cls.netStream, msg);
-	}
+	dbuffer msg(7);
+	/* send begin */
+	/* this will activate the render process (see client state ca_active) */
+	NET_WriteByte(&msg, clc_stringcmd);
+	/* see CL_StartGame */
+	NET_WriteString(&msg, NET_STATE_BEGIN "\n");
+	NET_WriteMsg(cls.netStream, msg);
 
 	cls.waitingForStart = CL_Milliseconds();
 
