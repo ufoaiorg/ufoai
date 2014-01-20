@@ -152,7 +152,7 @@ void G_MissionThink (Edict* self)
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
-		G_SpawnParticle(self->origin, self->spawnflags, self->particle);
+		self->link = G_SpawnParticle(self->origin, self->spawnflags, self->particle);
 
 		/* This is automatically freed on map shutdown */
 		self->particle = nullptr;
@@ -222,13 +222,13 @@ void G_MissionThink (Edict* self)
 				}
 			}
 		}
-		if (chain->particle != nullptr) {
-			/** @todo not yet working - particle stays active */
+		if (chain->link != nullptr) {
 			Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != nullptr) {
 				G_AppearPerishEvent(PM_ALL, false, *particle, nullptr);
 				G_FreeEdict(particle);
 			}
+			chain->link = nullptr;
 		}
 
 		ent = chain->groupChain;
