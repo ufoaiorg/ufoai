@@ -785,15 +785,13 @@ static int Key_CompleteKeyName (const char* partial, const char** match)
 
 void Key_Init (void)
 {
-	int i;
-
 	OBJZERO(keyBindings);
 	OBJZERO(menuKeyBindings);
 	OBJZERO(battleKeyBindings);
 
 	OBJZERO(keyDown);
 
-	for (i = 0; i < MAXKEYLINES; i++) {
+	for (int i = 0; i < MAXKEYLINES; i++) {
 		keyLines[i][0] = CONSOLE_PROMPT_CHAR;
 		keyLines[i][1] = 0;
 	}
@@ -876,7 +874,6 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 	/* track if any key is down for BUTTON_ANY */
 	keyDown[key] = down;
 	if (!down) {
-		int i;
 		/* key up events only generate commands if the game key binding is
 		 * a button command (leading + sign).  These will occur even in console mode,
 		 * to keep the character from continuing an action started before a console
@@ -884,7 +881,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 		 * downs can be matched with ups */
 		const char* kb = menuKeyBindings[key];
 		/* this loop ensures, that every down event reaches it's proper kbutton_t */
-		for (i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (kb && kb[0] == '+') {
 				/* '-' means we have released the key
 				 * the key number is used to determine whether the kbutton_t is really

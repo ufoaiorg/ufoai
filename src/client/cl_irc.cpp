@@ -1243,8 +1243,7 @@ static bool Irc_Proto_ParseServerMsg (const char* txt, size_t txt_len, irc_serve
 		if (c < end && *c >= '0' && *c <= '9') {
 			/* numeric command */
 			char command[4];
-			int i;
-			for (i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i) {
 				if (c < end && *c >= '0' && *c <= '9')
 					command[i] = *c++;
 				else
@@ -1509,10 +1508,9 @@ static const char* Irc_Logic_GetChannelTopic (const irc_channel_t* channel)
  */
 static void Irc_Logic_AddChannelName (irc_channel_t* channel, irc_nick_prefix_t prefix, const char* nick)
 {
-	int i;
 	/* first one */
 	irc_user_t* user = channel->user;
-	for (i = 0; user && i < channel->users; i++, user = user->next) {
+	for (int i = 0; user && i < channel->users; i++, user = user->next) {
 		if (!strncmp(&(user->key[1]), nick, MAX_VAR - 1))
 			return;
 	}
@@ -1532,11 +1530,10 @@ static void Irc_Logic_AddChannelName (irc_channel_t* channel, irc_nick_prefix_t 
  */
 static void Irc_Logic_RemoveChannelName (irc_channel_t* channel, const char* nick)
 {
-	int i;
 	/* first one */
 	irc_user_t* user = channel->user;
 	irc_user_t* predecessor = nullptr;
-	for (i = 0; user && i < channel->users; i++, user = user->next) {
+	for (int i = 0; user && i < channel->users; i++, user = user->next) {
 		if (!strncmp(&(user->key[1]), nick, sizeof(user->key))) {
 			/* delete the first user from the list */
 			if (!predecessor)

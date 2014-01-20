@@ -292,9 +292,6 @@ void IN_JoystickInitMenu (void)
  */
 void IN_StartupJoystick (void)
 {
-	int i = 0;
-	int total = 0;
-
 	in_joystick = Cvar_Get("in_joystick", "0", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
 	in_joystickNo = Cvar_Get("in_joystickNo", "0", CVAR_ARCHIVE, "Joystick to use - 0 is the first - 1 is the second ...");
 	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
@@ -317,9 +314,9 @@ void IN_StartupJoystick (void)
 		Com_DPrintf(DEBUG_CLIENT, "SDL_Init(SDL_INIT_JOYSTICK) passed.\n");
 	}
 
-	total = SDL_NumJoysticks();
+	int total = SDL_NumJoysticks();
 	Com_Printf("%d possible joysticks\n", total);
-	for (i = 0; i < total; i++)
+	for (int i = 0; i < total; i++)
 		Com_DPrintf(DEBUG_CLIENT, "[%d] %s\n", i, SDL_JoystickName(i));
 
 	if (in_joystickNo->integer < 0 || in_joystickNo->integer >= total)

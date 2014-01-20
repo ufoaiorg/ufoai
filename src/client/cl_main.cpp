@@ -696,8 +696,7 @@ static void CL_VideoInitMenu (void)
 	if (option != nullptr) {
 		return;
 	}
-	int i;
-	for (i = 0; i < VID_GetModeNums(); i++) {
+	for (int i = 0; i < VID_GetModeNums(); i++) {
 		vidmode_t vidmode;
 		if (VID_GetModeInfo(i, &vidmode))
 			UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
@@ -871,9 +870,7 @@ static void CL_CheckCvars_f (void)
  */
 static void CL_ShowConfigstrings_f (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+	for (int i = 0; i < MAX_CONFIGSTRINGS; i++) {
 		const char* configString;
 		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 		 * so don't print the middle parts */
