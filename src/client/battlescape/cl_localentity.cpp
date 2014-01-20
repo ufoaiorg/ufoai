@@ -92,7 +92,7 @@ void CL_CompleteRecalcRouting (void)
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		CL_GridRecalcRouting(le);
 
-	Com_Printf("Rerouted for LEs in %5.1fs\n", time(nullptr) - start);
+	Com_Printf("Rerouted for %i LEs in %5.2fs\n", i, time(nullptr) - start);
 }
 
 /**
