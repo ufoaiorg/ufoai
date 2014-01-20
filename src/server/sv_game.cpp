@@ -149,8 +149,7 @@ static void SV_SetModel (edict_t* ent, const char* name)
 	if (name[0] == '*') {
 		const cBspModel_t* mod = CM_InlineModel(&sv->mapTiles, name);
 		/* Copy model mins and maxs to entity */
-		VectorCopy(mod->cbmBox.mins, ent->entBox.mins);
-		VectorCopy(mod->cbmBox.maxs, ent->entBox.maxs);
+		ent->entBox.set(mod->cbmBox);
 		/* This is to help the entity collision code out */
 		/* Copy entity origin and angles to model*/
 		CM_SetInlineModelOrientation(&sv->mapTiles, name, ent->origin, ent->angles);

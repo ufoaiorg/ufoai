@@ -60,8 +60,7 @@ void G_InitCamera (Edict* ent, camera_type_t cameraType, float angle, bool rotat
 
 	AABB modelAabb;
 	if (gi.LoadModelAABB(ent->model, 0, modelAabb)) {
-		VectorCopy(modelAabb.maxs, ent->entBox.maxs);
-		VectorCopy(modelAabb.mins, ent->entBox.mins);
+		ent->entBox.set(modelAabb);
 
 		ent->camera.cameraType = cameraType;
 		ent->camera.rotate = rotate;

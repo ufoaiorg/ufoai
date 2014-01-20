@@ -912,8 +912,7 @@ static void SP_misc_model (Edict* ent)
 			AABB modelAabb;
 			if (gi.LoadModelAABB(ent->model, ent->frame, modelAabb)) {
 				ent->classname = "model";
-				VectorCopy(modelAabb.maxs, ent->entBox.maxs);
-				VectorCopy(modelAabb.mins, ent->entBox.mins);
+				ent->entBox.set(modelAabb);
 				ent->type = ET_SOLID;
 				ent->solid = SOLID_BBOX;
 				/** @todo is fieldsize and forbidden list update really needed here? */
