@@ -470,11 +470,14 @@ void G_CompleteRecalcRouting (void)
 	double start = time(nullptr);	/* stopwatch */
 
 	Edict* ent = nullptr;
+	int i = 0;
 	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (IS_BMODEL(ent))
+		if (IS_BMODEL(ent)) {
+			i++;
 			G_RecalcRouting(ent->model, GridBox::EMPTY);
+		}
 
-	Com_Printf("Rerouted for Edicts in %5.1fs\n", time(nullptr) - start);
+	Com_Printf("Rerouted for %i Edicts in %5.2fs\n", i, time(nullptr) - start);
 }
 
 /**
