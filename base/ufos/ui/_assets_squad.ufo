@@ -163,7 +163,7 @@ component SetSquadCount extends panel
 	confunc squad_count
 	{
 		if (param1 eq "up") {
-			if (*cvar:sv_maxsoldiersperplayer < 8) {
+			if (*cvar:sv_maxsoldiersperplayer < 12) {
 				*cvar:sv_maxsoldiersperplayer = (*cvar:sv_maxsoldiersperplayer + 1)
 			}
 		} else {
