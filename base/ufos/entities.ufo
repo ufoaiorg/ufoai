@@ -683,7 +683,7 @@ entity trigger_rescue {
 }
 
 entity misc_message {
-	description	"A message that is send to the client when the edict get executed (e.g. by trigger_touch)."
+	description	"A message that is sent to the client when the edict gets executed (e.g. by trigger_touch)."
 	color		".3 .3 1"
 	size		"-16 -16 -16 16 16 16"
 	spawnflags	"once"
@@ -694,7 +694,7 @@ entity misc_message {
 	}
 
 	mandatory {
-		message	"The message that is send to the client - should contain an underscore as first character to be translatable"
+		message	"The message that is sent to the client - should contain an underscore as first character to be translatable"
 	}
 }
 
