@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2014-01-21 17:22+0100\n"
+"PO-Revision-Date: 2014-01-21 17:55+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: English\n"
 "Language: en_US\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -3059,43 +3060,31 @@ msgstr "Coin"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:168
 #: client/cgame/campaign/cp_employee.cpp:179
-#, fuzzy
 msgid "Scientist"
 msgid_plural "Scientists"
-msgstr[0] ""
-"#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  ufoai.ufo.po  #-#-#-#-#\n"
-msgstr[1] "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr[0] "Scientist"
+msgstr[1] "Scientists"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:236
 #: client/cgame/campaign/cp_employee.cpp:183
-#, fuzzy
 msgid "Pilot"
 msgid_plural "Pilots"
-msgstr[0] ""
-"#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  ufoai.ufo.po  #-#-#-#-#\n"
-msgstr[1] "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr[0] "Pilot"
+msgstr[1] "Pilots"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_names.ufo:660
 #: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:185
-#, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
-msgstr[0] ""
-"#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  ufoai.ufo.po  #-#-#-#-#\n"
-msgstr[1] "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr[0] "UGV"
+msgstr[1] "UGVs"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:295
 #: client/cgame/campaign/cp_employee.cpp:181
-#, fuzzy
 msgid "Worker"
 msgid_plural "Workers"
-msgstr[0] ""
-"#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  ufoai.ufo.po  #-#-#-#-#\n"
-msgstr[1] "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr[0] "Worker"
+msgstr[1] "Workers"
 
 #: ../base/ufos/medals.ufo:66
 msgid "Rifleman"
