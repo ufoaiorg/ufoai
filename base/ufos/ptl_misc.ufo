@@ -1030,7 +1030,7 @@ particle stunnedactor
 			style  rotated
 			angles  "0 90 0"
 			size    "16 16"
-			life   0.0001
+			tps	0.0001
 		}
 }
 
