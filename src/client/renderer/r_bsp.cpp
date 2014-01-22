@@ -114,8 +114,7 @@ bool R_CullBspModel (const entity_t* e)
 		return true;
 
 	if (e->isOriginBrushModel) {
-		int i;
-		for (i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			mins[i] = e->origin[i] - e->model->radius;
 			maxs[i] = e->origin[i] + e->model->radius;
 		}
@@ -138,9 +137,6 @@ WORLD MODEL
  */
 void R_DrawBspNormals (int tile)
 {
-	int i, j, k;
-	const mBspSurface_t* surf;
-	const mBspModel_t* bsp;
 	const vec4_t color = {1.0, 0.0, 0.0, 1.0};
 
 	if (!r_shownormals->integer)
@@ -152,10 +148,10 @@ void R_DrawBspNormals (int tile)
 
 	R_Color(color);
 
-	k = 0;
-	bsp = &r_mapTiles[tile]->bsp;
-	surf = bsp->surfaces;
-	for (i = 0; i < bsp->numsurfaces; i++, surf++) {
+	int k = 0;
+	const mBspModel_t* bsp = &r_mapTiles[tile]->bsp;
+	const mBspSurface_t* surf = bsp->surfaces;
+	for (int i = 0; i < bsp->numsurfaces; i++, surf++) {
 		if (surf->frame != r_locals.frame)
 			continue; /* not visible */
 
@@ -173,7 +169,7 @@ void R_DrawBspNormals (int tile)
 			refdef.batchCount++;
 		}
 
-		for (j = 0; j < surf->numedges; j++) {
+		for (int j = 0; j < surf->numedges; j++) {
 			vec3_t end;
 			const GLfloat* vertex = &bsp->verts[(surf->index + j) * 3];
 			const GLfloat* normal = &bsp->normals[(surf->index + j) * 3];
@@ -234,15 +230,11 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t* node, int tile)
  */
 static void R_RecursiveWorldNode (const mBspNode_t* node, int tile)
 {
-	int i;
-	int cullState;
-	mBspSurface_t* surf;
-
 	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
 		return;
 
-	cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
+	int cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
 
 	if (cullState == PSIDE_BACK)
 		return;					/* culled out */
@@ -250,8 +242,8 @@ static void R_RecursiveWorldNode (const mBspNode_t* node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
-	for (i = 0; i < node->numsurfaces; i++, surf++)
+	mBspSurface_t* surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	for (int i = 0; i < node->numsurfaces; i++, surf++)
 		surf->frame = r_locals.frame;
 
 	/* recurse down the children */

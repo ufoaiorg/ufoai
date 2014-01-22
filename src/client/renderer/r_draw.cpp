@@ -423,14 +423,13 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 {
 	vec3_t points[16];
 	const size_t steps = lengthof(points);
-	unsigned int i;
 
 	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(thickness);
 
 	R_Color(color);
 
-	for (i = 0; i < steps; i++) {
+	for (unsigned int i = 0; i < steps; i++) {
 		const float a = 2.0f * M_PI * (float) i / (float) steps;
 		VectorSet(points[i], shift[0] + radius * cos(a), shift[1] + radius * sin(a), shift[2]);
 	}

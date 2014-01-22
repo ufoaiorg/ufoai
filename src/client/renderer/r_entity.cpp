@@ -207,7 +207,6 @@ static image_t* actorIndicator;
  */
 void R_DrawEntityEffects (void)
 {
-	int i;
 	const int mask = r_stencilshadows->integer ? RF_BLOOD : (RF_SHADOW | RF_BLOOD);
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
@@ -219,7 +218,7 @@ void R_DrawEntityEffects (void)
 		actorIndicator = R_FindImage("pics/sfx/actor", it_effect);
 	}
 
-	for (i = 0; i < refdef.numEntities; i++) {
+	for (int i = 0; i < refdef.numEntities; i++) {
 		const entity_t* e = &r_entities[i];
 
 		if (e->flags <= RF_BOX)

@@ -68,21 +68,13 @@ void R_CreateSurfaceFlare (mBspSurface_t* surf)
  */
 void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr)
 {
-	const image_t* image;
-	int i, j, k, l, m;
-	vec3_t view, verts[4];
-	vec3_t right, up, upright, downright;
-	float dot, dist, scale, alpha;
-	bool visible;
-	bool oldblend;
-
 	if (!r_flares->integer)
 		return;
 
 	if (!surfs->count)
 		return;
 
-	oldblend = r_state.blend_enabled;
+	bool oldblend = r_state.blend_enabled;
 
 	R_EnableColorArray(true);
 
@@ -93,11 +85,16 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 	R_EnableBlend(true);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-	image = r_flaretextures[0];
+	const image_t* image = r_flaretextures[0];
 	R_BindTexture(image->texnum);
 
+	int i, j, k, l, m;
 	j = k = l = 0;
 	for (i = 0; i < surfs->count; i++) {
+		vec3_t view, verts[4];
+		vec3_t right, up, upright, downright;
+		float dot, dist, scale, alpha;
+		bool visible;
 		mBspSurface_t* surf = surfs->surfaces[i];
 		mBspFlare_t* f;
 
