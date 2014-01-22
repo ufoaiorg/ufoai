@@ -866,6 +866,7 @@ static void SP_misc_mission_aliens (Edict* ent)
 }
 
 /**
+ * @brief Create a list of the grid positions the edict occupies and store it with the edict
  * @note This is only working for one z-level. But our models should be
  * split for each level anyway.
  * @param ent The edict to fill the forbidden list for
