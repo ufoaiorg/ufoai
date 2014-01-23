@@ -484,8 +484,8 @@ window employees
 		*node:root.base_container.mainBody.employees.employee_list@viewpos = 0
 		*node:root.base_container.mainBody.employees.employee_list@lineselected = 0
 		*node:root.base_container.mainBody.employees.scroll@current = 0
-		cmd "employee_init 0;"
-		*cvar:mn_hiretype = 0
+		cmd "employee_init <1>;"
+		*cvar:mn_hiretype = <1>
 		cmd "employee_update_count; employee_equipcheck;"
 	}
 

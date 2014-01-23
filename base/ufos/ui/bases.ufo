@@ -57,7 +57,7 @@ window bases
 			{
 				{
 					pos		"0 0"
-					onClick { cmd "show_facility false; ui_push research;" }
+					onClick { cmd "show_facility false; ui_push employees 1;" }
 				}
 				string label { string "_Scientists" }
 				button icon { icon "icons/head_scientist" }
@@ -66,7 +66,7 @@ window bases
 			{
 				{
 					pos		"110 0"
-					onClick { cmd "show_facility false; ui_push production;" }
+					onClick { cmd "show_facility false; ui_push employees 2;" }
 				}
 				string label { string "_Engineers" }
 				button icon { icon "icons/head_worker" }
@@ -75,7 +75,7 @@ window bases
 			{
 				{
 					pos		"220 0"
-					onClick { cmd "show_facility false; ui_push equipment -1;" }
+					onClick { cmd "show_facility false;ui_push employees 0;" }
 				}
 				string label { string "_Soldiers" }
 				button icon { icon "icons/head_soldier" }
@@ -84,7 +84,7 @@ window bases
 			{
 				{
 					pos		"330 0"
-					onClick		{ cmd "show_facility false; ui_push aircraft_equip;" }
+					onClick		{ cmd "show_facility false; ui_push employees 3;" }
 				}
 				string label { string "_Pilots" }
 				button icon { icon "icons/head_pilot" }
