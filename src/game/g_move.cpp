@@ -314,8 +314,6 @@ pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t t
 void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t to)
 {
 	pos3_t pos;
-	int oldHP;
-	int oldSTUN;
 	bool autoCrouchRequired = false;
 
 	if (VectorCompare(ent->pos, to))
@@ -362,9 +360,11 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	G_EventEnd();
 
-	int oldState = oldHP = oldSTUN = 0;
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
+		int oldHP = 0;
+		int oldSTUN = 0;
+		int oldState = 0;
 		byte* stepAmount = nullptr;
 		int usedTUs = 0;
 		/* no floor inventory at this point */
