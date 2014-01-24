@@ -1171,7 +1171,7 @@ static bool Irc_Proto_ProcessServerMsg (const irc_server_msg_t* msg)
 			Irc_AppendToBuffer("%s : %s", msg->params, msg->trailing);
 			return true;
 		default:
-			Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s\n", msg->prefix, cmd.id.string, msg->params, msg->trailing);
+			Com_DPrintf(DEBUG_CLIENT, "<%s> [%i] %s : %s\n", msg->prefix, cmd.id.numeric, msg->params, msg->trailing);
 			return true;
 		} /* switch */
 		break;
