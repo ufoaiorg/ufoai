@@ -120,12 +120,10 @@ void R_FontSetTruncationMarker (const char* marker)
  */
 void R_FontCleanCache (void)
 {
-	int i;
-
 	R_CheckError();
 
 	/* free the surfaces */
-	for (i = 0; i < numChunks; i++) {
+	for (int i = 0; i < numChunks; i++) {
 		if (!chunkCache[i].texnum)
 			continue;
 		glDeleteTextures(1, &(chunkCache[i].texnum));
@@ -145,11 +143,9 @@ void R_FontCleanCache (void)
  */
 void R_FontShutdown (void)
 {
-	int i;
-
 	R_FontCleanCache();
 
-	for (i = 0; i < numFonts; i++)
+	for (int i = 0; i < numFonts; i++)
 		if (fonts[i].font) {
 			TTF_CloseFont(fonts[i].font);
 			Mem_Free(fonts[i].buffer);
@@ -212,9 +208,7 @@ static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyl
  */
 font_t* R_GetFont (const char* name)
 {
-	int i;
-
-	for (i = 0; i < numFonts; i++)
+	for (int i = 0; i < numFonts; i++)
 		if (Q_streq(name, fonts[i].name))
 			return &fonts[i];
 
@@ -232,14 +226,12 @@ font_t* R_GetFont (const char* name)
  */
 void R_FontListCache_f (void)
 {
-	int i;
-	int collSum = 0;
-
 	Com_Printf("Font cache info\n========================\n");
 	Com_Printf("...wrap cache size: %i - used %i\n", MAX_WRAP_CACHE, numWraps);
 	Com_Printf("...chunk cache size: %i - used %i\n", MAX_CHUNK_CACHE, numChunks);
 
-	for (i = 0; i < numWraps; i++) {
+	int collSum = 0;
+	for (int i = 0; i < numWraps; i++) {
 		const wrapCache_t* wrap = &wrapCache[i];
 		int collCount = 0;
 		while (wrap->next) {
@@ -546,9 +538,8 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
 	const wrapCache_t* wrap = R_FontWrapText(font, text, maxWidth, method);
 
 	if (width) {
-		int i;
 		*width = 0;
-		for (i = 0; i < wrap->numChunks; i++) {
+		for (int i = 0; i < wrap->numChunks; i++) {
 			if (chunkCache[wrap->chunkIdx + i].width > *width)
 				*width = chunkCache[wrap->chunkIdx + i].width;
 		}
@@ -712,17 +703,14 @@ int R_FontDrawString (const char* fontId, align_t align, int x, int y, int absX,
 		int lineHeight, const char* c, int boxHeight, int scrollPos, int* curLine, longlines_t method)
 {
 	const font_t* font = R_GetFont(fontId);
-	const wrapCache_t* wrap;
-	int i;
 	const align_t horizontalAlign = (align_t)(align % 3); /* left, center, right */
-	int xalign = 0;
-
-	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), method);
+	const wrapCache_t* wrap = R_FontWrapText(font, c, maxWidth - (x - absX), method);
 
 	if (boxHeight <= 0)
 		boxHeight = wrap->numLines;
 
-	for (i = 0; i < wrap->numChunks; i++) {
+	for (int i = 0; i < wrap->numChunks; i++) {
+		int xalign = 0;
 		chunkCache_t* chunk = &chunkCache[wrap->chunkIdx + i];
 		int linenum = chunk->linenum;
 
@@ -779,8 +767,7 @@ void R_FontRegister (const char* name, int size, const char* path, const char* s
 	int renderstyle = TTF_STYLE_NORMAL;		/* NORMAL is standard */
 
 	if (style && style[0] != '\0') {
-		int i;
-		for (i = 0; i < NUM_FONT_STYLES; i++)
+		for (int i = 0; i < NUM_FONT_STYLES; i++)
 			if (!Q_strcasecmp(fontStyle[i].name, style)) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
