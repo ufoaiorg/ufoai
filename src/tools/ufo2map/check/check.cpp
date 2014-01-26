@@ -800,7 +800,8 @@ static float Check_SidesOverlap (const side_t* s1, const side_t* s2)
 		if (overlapArea > OVERLAP_AREA_TOL) {
 			int i;
 			for (i = 0; i < numVert; i++) {
-				Print3Vector(vertbuf[i]);
+				vec3_t* v = &vertbuf[i];
+				Com_Printf("(%f, %f, %f)\n", v[0], v[1], v[2]);
 			}
 		}
 #endif
