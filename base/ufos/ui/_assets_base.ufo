@@ -365,18 +365,44 @@ component ResearchItem extends panel
 // External research item (items researched in other bases)
 	panel rsrc_baselink {
 		{
-			pos 	"350 0"
-			size	"120 32"
+			pos 	"480 0"
+			size	"145 32"
 		}
 		string basename
 		{
 			pos				"0 0"
-			size			"130 28"
-			color			"0.56 0.81 0.76 1"
+			tooltip			"_Currently in research on another base"
+			size			"145 28"
+			color			"1 0.874 0.294 1"
 			contentalign	ALIGN_CL
 			ghost			true
 		}
 	}
+
+	panel rsrc_missing {
+		{
+			pos 	"480 0"
+			size	"145 32"
+			invis	true
+		}
+		string note {
+			string		"_N/A"
+			tooltip		"_An artifact or prerequisite is missing for this topic"
+			pos			"0 0"
+			size		"145 28"
+			color		"1 0.874 0.294 1"
+			contentalign	ALIGN_CL
+
+		}
+		button show {
+			tooltip		"_Expand/Collapse"
+			icon		"icons/scroll_bottom"
+			pos			"120 4"
+			size		"25 25"
+			invis		true
+		}
+	}
+	/** @TODO implement research requirements listing */
 }
 
 // Market category label

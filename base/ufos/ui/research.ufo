@@ -529,12 +529,10 @@ window research extends BaseMgmtWindow
 					if ( *node:parent.selected@string ne "" ) {
 						*node:parent.techs.tech_<node:parent.selected@string>.title@color = "0.56 0.81 0.76 1"
 						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0.56 0.81 0.76 1"
-						*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "0.56 0.81 0.76 1"
 					}
 					*node:parent.selected@string = "<1>"
 					*node:parent.techs.tech_<node:parent.selected@string>.title@color = "1 1 1 1"
 					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
-					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_baselink.basename@color = "1 1 1 1"
 					cmd "ui_research_getdetails <1>;"
 				}
 				confunc ui_techlist_add {
@@ -553,9 +551,11 @@ window research extends BaseMgmtWindow
 							*node:parent.techs.tech_<1>.id@integer = <6>
 							*node:parent.techs.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
 							*node:parent.techs.tech_<1>.rsrc_baselink@invis = false
+							*node:parent.techs.tech_<1>.rsrc_control@invis = true
 						}
 						if ( "<5>" eq "missing" ) {
 							*node:parent.techs.tech_<1>.rsrc_missing@invis = false
+							*node:parent.techs.tech_<1>.rsrc_control@invis = true
 						}
 					} else {
 						*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<3>"
