@@ -5,9 +5,12 @@
 #include "shared.h"
 #include "../common/filesys.h"
 
-/*
+/**
 ==============================================================
 MAP CONFIGURATION
+
+Note that the cBspXYZ types are used by UFO.exe,
+while the dBspXYZ types are for ufo2map.exe
 ==============================================================
 */
 
