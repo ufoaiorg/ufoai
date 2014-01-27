@@ -1030,13 +1030,6 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
 
 		VectorAdd(astart, amaxs, traceData.absmaxs);
 		VectorAdd(astart, amins, traceData.absmins);
-		/* Removed because if creates a buffer- is this needed?
-		for (i = 0; i < 3; i++) {
-			/ * expand the box by 1 * /
-			traceData.absmins[i] -= 1;
-			traceData.absmaxs[i] += 1;
-		}
-		*/
 
 		numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
