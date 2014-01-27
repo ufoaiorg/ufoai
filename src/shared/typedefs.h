@@ -61,8 +61,8 @@ typedef struct cBspLeaf_s {
 typedef struct cBspBrush_s {
 	uint32_t contentFlags;			/**< the CONTENTS_* mask */
 	int numsides;					/**< number of sides for this models - start to count from firstbrushside */
-		int firstbrushside;			/**< first brush in the list of this model */
-		int checkcount;				/**< to avoid repeated testings */
+	int firstbrushside;				/**< first brush in the list of this model */
+	int checkcount;					/**< to avoid repeated testings */
 } cBspBrush_t;
 
 /**
