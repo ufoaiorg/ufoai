@@ -363,14 +363,29 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const vec3_t start, const vec
  */
 trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line &traceLine, const AABB *traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
+	AABB lineBox(*traceBox);
+	lineBox.shift(traceLine.start);		/* the traceBox in starting position */
+	AABB lineBoxTemp(*traceBox);
+	lineBoxTemp.shift(traceLine.stop);	/* in end position */
+	lineBox.add(lineBoxTemp);			/* bounding box for the whole trace */
+	/* Now lineBox specifies the whole volume to be traced through. */
+
+	/* reconstruct a levelmask */
+	vec_t minZ = lineBox.mins[2];
+	vec_t maxZ = lineBox.maxs[2];
+	int newLevelMask = 0x100;			/* this bit is for the cliplevels */
+	for (int i = 0; i < 8; i++) {
+		vec_t lower = i * UNIT_HEIGHT;	/* the height bounds of the level */
+		vec_t upper = (i + 1) * UNIT_HEIGHT;
+		if (minZ > upper || maxZ < lower)
+			continue;
+		newLevelMask |= (1 << i);
+	}
+
 	/* trace against world first */
-	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, levelmask, brushmask, brushreject);
+	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine.start, traceLine.stop, *traceBox, newLevelMask, brushmask, brushreject);
 	if (!list || tr.fraction == 0.0)
 		return tr;
-
-	AABB lineBox(traceLine);	/* Find the original bounding box for the tracing line. */
-	lineBox.add(*traceBox);		/* Now increase the bounding box by traceBox in both directions. */
-	/* Now lineBox specifies the whole volume to be traced through. */
 
 	trace_t trace = tr;
 	for (const char** name = list; *name; name++) {
