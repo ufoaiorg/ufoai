@@ -863,6 +863,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 {
 	actorSizeEnum_t actorSize;
 	int x, y, z, dir;
+	int cols = 0;
 	double start, end;	/* stopwatch */
 
 	start = time(nullptr);
@@ -902,6 +903,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				if (mapData->reroute[actorSize][y][x] == ROUTING_NOT_REACHABLE) {
+					cols++;
 					for (z = rBox.getMaxZ(); z >= rBox.getMinZ(); z--) {
 						const int newZ = RT_CheckCell(mapTiles, mapData->routing, actorSize + 1, x, y, z, nullptr);
 						assert(newZ <= z);
@@ -935,7 +937,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 		}
 	}
 	end = time(nullptr);
-	Com_Printf("Rerouted for RMA in %5.1fs\n", end - start);
+	Com_Printf("Rerouted %i cols for RMA in %5.1fs\n", cols, end - start);
 }
 
 /**
