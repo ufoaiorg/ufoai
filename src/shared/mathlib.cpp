@@ -908,16 +908,6 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 }
 
 /**
- * @brief Print a 2D vector
- * @param[in] v The vector to be printed
- * @param[out] text The resulting string. Must be pre-allocated !
- */
-void Print2Vector (const vec2_t v, const char* text)
-{
-	Com_Printf("%s (%f, %f)\n", text, v[0], v[1]);
-}
-
-/**
  * @brief Converts longitude and latitude to a 3D vector in Euclidean
  * coordinates
  * @param[in] a The longitude and latitude in a 2D vector

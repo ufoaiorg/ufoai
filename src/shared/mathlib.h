@@ -241,8 +241,6 @@ float VectorAngleBetween(const vec3_t vec1, const vec3_t vec2);
 
 void VecToAngles(const vec3_t vec, vec3_t angles);
 
-void Print2Vector(const vec2_t v, const char* text);
-
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
 
