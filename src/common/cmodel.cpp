@@ -348,17 +348,29 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
  */
 trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
-	/* trace against world first */
-	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine, *traceBox, levelmask, brushmask, brushreject);
-	if (!list || tr.fraction == 0.0)
-		return tr;
-
 	AABB lineBox(*traceBox);
 	lineBox.shift(traceLine.start);		/* the traceBox in starting position */
 	AABB lineBoxTemp(*traceBox);
 	lineBoxTemp.shift(traceLine.stop);	/* in end position */
 	lineBox.add(lineBoxTemp);			/* bounding box for the whole trace */
 	/* Now lineBox specifies the whole volume to be traced through. */
+
+	/* reconstruct a levelmask */
+	vec_t minZ = lineBox.getMinZ();
+	vec_t maxZ = lineBox.getMaxZ();
+	int newLevelMask = 0x100;			/* this bit is for the cliplevels */
+	for (int i = 0; i < 8; i++) {
+		vec_t lower = i * UNIT_HEIGHT;	/* the height bounds of the level */
+		vec_t upper = (i + 1) * UNIT_HEIGHT;
+		if (minZ > upper || maxZ < lower)
+			continue;
+		newLevelMask |= (1 << i);
+	}
+
+	/* trace against world first */
+	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine, *traceBox, newLevelMask, brushmask, brushreject);
+	if (!list || tr.fraction == 0.0)
+		return tr;
 
 	trace_t trace = tr;
 	for (const char** name = list; *name; name++) {
