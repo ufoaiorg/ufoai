@@ -367,6 +367,7 @@ component ResearchItem extends panel
 		{
 			pos 	"480 0"
 			size	"145 32"
+			invis	true
 		}
 		string basename
 		{
