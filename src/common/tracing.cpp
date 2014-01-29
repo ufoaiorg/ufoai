@@ -43,16 +43,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 /** @note all the above types are declared in typedefs.h */
 
-void boxtrace_s::init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject) {
+void boxtrace_s::init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject, const float fraction)
+{
 	trace.init();
 	trace.surface = nullptr;
 	contents = contentmask;
 	rejects = brushreject;
 	tile = _tile;
+	trace.fraction = std::min(fraction, 1.0f);
 }
 
 /* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
-void boxtrace_s::setLineAndBox(const Line& line, const AABB& box) {
+void boxtrace_s::setLineAndBox(const Line& line, const AABB& box)
+{
 	/* Calculate the offset needed to center the trace about the line */
 	box.getCenter(offset);
 
@@ -992,9 +995,6 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 	assert(headnode < traceData.tile->numnodes + 6); /* +6 => bbox */
 #endif
 
-	/* fill in a default trace */
-	traceData.trace.fraction = std::min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
-
 	if (!traceData.tile->numnodes)		/* map not loaded */
 		return traceData.trace;
 
@@ -1066,7 +1066,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 	tr.fraction = 2.0f;
 
 	boxtrace_t traceData;
-	traceData.init(myTile, brushmask, brushreject);
+	traceData.init(myTile, brushmask, brushreject, tr.fraction);
 	/* trace against all loaded map tiles */
 	for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
 		/* This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255

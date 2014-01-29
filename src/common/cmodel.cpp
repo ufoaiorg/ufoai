@@ -122,7 +122,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const Line& traceLine, cons
 
 	/* sweep the box through the model */
 	boxtrace_t traceData;
-	traceData.init(&tile, contentmask, brushrejects);
+	traceData.init(&tile, contentmask, brushrejects, fraction);
 	trace_t trace = TR_BoxTrace(traceData, Line(start_l, end_l), traceBox, headnode, fraction);
 	trace.mapTile = tile.idx;
 

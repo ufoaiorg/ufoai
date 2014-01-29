@@ -99,7 +99,7 @@ typedef struct boxtrace_s {
 
 	TR_TILE_TYPE* tile;			/** The Tile to check (normally 0 - except in assembled maps) */
 
-	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject);
+	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject, const float fraction);
 	void setLineAndBox(const Line& line, const AABB& box);
 } boxtrace_t;
 
