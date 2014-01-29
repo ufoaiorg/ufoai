@@ -358,8 +358,8 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 	/* reconstruct a levelmask */
 	vec_t minZ = lineBox.getMinZ();
 	vec_t maxZ = lineBox.getMaxZ();
-	int newLevelMask = 0x100;			/* this bit is for the cliplevels */
-	for (int i = 0; i < 8; i++) {
+	int newLevelMask = TL_FLAG_ACTORCLIP;	/* this bit is for the cliplevels */
+	for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 		vec_t lower = i * UNIT_HEIGHT;	/* the height bounds of the level */
 		vec_t upper = (i + 1) * UNIT_HEIGHT;
 		if (minZ > upper || maxZ < lower)
