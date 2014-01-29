@@ -400,8 +400,6 @@ static void R_DrawSurfaceStage (mBspSurface_t* surf, materialStage_t* stage)
  */
 void R_DrawMaterialSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPtr)
 {
-	int i;
-
 	if (!r_materials->integer || r_wire->integer)
 		return;
 
@@ -430,7 +428,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* inde
 
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
 
-	for (i = 0; i < surfs->count; i++) {
+	for (int i = 0; i < surfs->count; i++) {
 		materialStage_t* s;
 		mBspSurface_t* surf = surfs->surfaces[i];
 		material_t* m = &surf->texinfo->image->material;
@@ -507,9 +505,7 @@ static GLenum R_ConstByName (const char* c)
 
 static void R_CreateMaterialData_ (model_t* mod)
 {
-	int i;
-
-	for (i = 0; i < mod->bsp.numsurfaces; i++) {
+	for (int i = 0; i < mod->bsp.numsurfaces; i++) {
 		mBspSurface_t* surf = &mod->bsp.surfaces[i];
 		/* create flare */
 		R_CreateSurfaceFlare(surf);
@@ -529,16 +525,14 @@ static void R_CreateMaterialData (void)
 
 static int R_LoadAnimImages (materialStage_t* s)
 {
-	char name[MAX_QPATH];
-	int i, j;
-
 	if (!s->image) {
 		Com_Printf("R_LoadAnimImages: Texture not defined in anim stage.\n");
 		return -1;
 	}
 
+	char name[MAX_QPATH];
 	Q_strncpyz(name, s->image->name, sizeof(name));
-	j = strlen(name);
+	int j = strlen(name);
 
 	if (name[j - 1] != '0') {
 		Com_Printf("R_LoadAnimImages: Texture name does not end in 0: %s\n", name);
@@ -552,7 +546,7 @@ static int R_LoadAnimImages (materialStage_t* s)
 	name[j - 1] = 0;
 
 	/* now load the rest */
-	for (i = 0; i < s->anim.num_frames; i++) {
+	for (int i = 0; i < s->anim.num_frames; i++) {
 		const char* c = va("%s%d", name, i);
 		image_t* image = R_FindImage(c, it_material);
 		s->anim.images[i] = image;

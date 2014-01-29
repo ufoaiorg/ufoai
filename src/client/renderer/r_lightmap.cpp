@@ -95,9 +95,6 @@ static void R_UploadLightmapPage (void)
  */
 static bool R_AllocLightmapBlock (int w, int h, int* x, int* y)
 {
-	int i, j;
-	int best;
-
 	if (!r_lightmaps.incomplete_atlas) {
 		r_lightmaps.incomplete_atlas = true;
 		glGenTextures(1, &r_lightmaps.lightmap_texnums[++r_lightmaps.lightmap_count]);
@@ -105,10 +102,12 @@ static bool R_AllocLightmapBlock (int w, int h, int* x, int* y)
 	}
 
 	/* the height to store the data in the atlas */
-	best = r_lightmaps.size;
+	int best = r_lightmaps.size;
 
+	int i;
 	for (i = 0; i < r_lightmaps.size - w; i++) {
 		int best2 = 0;
+		int j;
 
 		for (j = 0; j < w; j++) {
 			if (r_lightmaps.allocated[i + j] >= best)

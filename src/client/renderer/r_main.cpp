@@ -114,10 +114,9 @@ static void R_PrintInfo (const char* pre, const char* msg)
 	char buf[4096];
 	const size_t length = sizeof(buf);
 	const size_t maxLength = strlen(msg);
-	int i;
 
 	Com_Printf("%s: ", pre);
-	for (i = 0; i < maxLength; i += length) {
+	for (int i = 0; i < maxLength; i += length) {
 		Q_strncpyz(buf, msg + i, sizeof(buf));
 		Com_Printf("%s", buf);
 	}

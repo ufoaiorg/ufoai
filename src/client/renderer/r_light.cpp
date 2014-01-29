@@ -57,11 +57,9 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
  */
 void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, float sustain)
 {
-	sustain_t* s;
+	sustain_t* s = r_sustainArray;
+
 	int i;
-
-	s = r_sustainArray;
-
 	for (i = 0; i < MAX_GL_LIGHTS; i++, s++)
 		if (!s->sustain)
 			break;
@@ -284,10 +282,9 @@ void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 /* If glow was enabled, disable it before calling this function, or rendering state will become incoherent */
 void R_DisableLights (void)
 {
-	int i;
 	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	for (i = 0; i < MAX_GL_LIGHTS; i++) {
+	for (int i = 0; i < MAX_GL_LIGHTS; i++) {
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
 		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, blackColor);
