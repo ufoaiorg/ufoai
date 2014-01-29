@@ -696,7 +696,8 @@ static void CL_VideoInitMenu (void)
 	if (option != nullptr) {
 		return;
 	}
-	for (int i = 0; i < VID_GetModeNums(); i++) {
+	const int length = VID_GetModeNums();
+	for (int i = 0; i < length; i++) {
 		vidmode_t vidmode;
 		if (VID_GetModeInfo(i, &vidmode))
 			UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
