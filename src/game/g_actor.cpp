@@ -264,12 +264,11 @@ int G_ActorDoTurn (Edict* ent, byte dir)
  */
 void G_ActorSetMaxs (Edict* ent)
 {
+	ent->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (G_IsCrouched(ent))
-		VectorSet(ent->entBox.maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
+		ent->entBox.setMaxZ(PLAYER_CROUCH);
 	else if (G_IsDead(ent) && !CHRSH_IsTeamDefRobot(ent->chr.teamDef))
-		VectorSet(ent->entBox.maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
-	else
-		VectorSet(ent->entBox.maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+		ent->entBox.setMaxZ(PLAYER_DEAD);
 
 	/* Link it. */
 	gi.LinkEdict(ent);
