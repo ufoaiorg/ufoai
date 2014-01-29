@@ -49,6 +49,7 @@ typedef struct boxtrace_s {
 	vec3_t mins, maxs;
 	vec3_t absmins, absmaxs;
 	vec3_t extents;
+	vec3_t offset;
 
 	trace_t trace;
 	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
@@ -63,6 +64,19 @@ typedef struct boxtrace_s {
 		contents = contentmask;
 		rejects = brushreject;
 		tile = _tile;
+	}
+
+	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
+	void setLineAndBox(const Line& line, const AABB& box) {
+		/* Calculate the offset needed to center the trace about the line */
+		box.getCenter(offset);
+
+		/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
+		 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+		VectorSubtract(box.mins, offset, this->mins);
+		VectorSubtract(box.maxs, offset, this->maxs);
+		VectorAdd(line.start, offset, this->start);
+		VectorAdd(line.stop, offset, this->end);
 	}
 } boxtrace_t;
 
@@ -990,7 +1004,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  */
 trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
-	vec3_t offset, amins, amaxs, astart, aend;
+//	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
 
 	checkcount++;	/* for multi-check avoidance */
@@ -1010,30 +1024,17 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const Line& traceLine, const AABB& trac
 		return traceData.trace;
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
-	/* Calculate the offset needed to center the trace about the line */
-	traceBox.getCenter(offset);
-
-	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
-	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
-	VectorSubtract(traceBox.mins, offset, amins);
-	VectorSubtract(traceBox.maxs, offset, amaxs);
-	VectorAdd(traceLine.start, offset, astart);
-	VectorAdd(traceLine.stop, offset, aend);
-
-	VectorCopy(astart, traceData.start);
-	VectorCopy(aend, traceData.end);
-	VectorCopy(amins, traceData.mins);
-	VectorCopy(amaxs, traceData.maxs);
+	traceData.setLineAndBox(traceLine, traceBox);
 
 	/* check for position test special case */
-	if (VectorEqual(astart, aend)) {
+	if (VectorEqual(traceData.start, traceData.end)) {
 		int32_t leafs[MAX_LEAFS];
 		int numleafs;
 		int32_t topnode;
 		int i;
 
-		VectorAdd(astart, amaxs, traceData.absmaxs);
-		VectorAdd(astart, amins, traceData.absmins);
+		VectorAdd(traceData.start, traceData.maxs, traceData.absmaxs);
+		VectorAdd(traceData.start, traceData.mins, traceData.absmins);
 
 		numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
@@ -1046,25 +1047,25 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const Line& traceLine, const AABB& trac
 	}
 
 	/* check for point special case */
-	if (VectorEmpty(amins) && VectorEmpty(amaxs)) {
+	if (VectorEmpty(traceData.mins) && VectorEmpty(traceData.maxs)) {
 		traceData.ispoint = true;
 		VectorClear(traceData.extents);
 	} else {
 		traceData.ispoint = false;
-		VectorCopy(amaxs, traceData.extents);
+		VectorCopy(traceData.maxs, traceData.extents);
 	}
 
 	/* general sweeping through world */
 	/** @todo Would Interpolating aend to traceData.fraction and passing traceData.fraction instead of 1.0 make this faster? */
-	TR_RecursiveHullCheck(&traceData, headnode, 0.0, 1.0, astart, aend);
+	TR_RecursiveHullCheck(&traceData, headnode, 0.0, 1.0, traceData.start, traceData.end);
 
 	if (traceData.trace.fraction >= 1.0) {
-		VectorCopy(aend, traceData.trace.endpos);
+		VectorCopy(traceData.end, traceData.trace.endpos);
 	} else {
 		VectorInterpolation(traceData.start, traceData.end, traceData.trace.fraction, traceData.trace.endpos);
 	}
 	/* Now un-offset the end position. */
-	VectorSubtract(traceData.trace.endpos, offset, traceData.trace.endpos);
+	VectorSubtract(traceData.trace.endpos, traceData.offset, traceData.trace.endpos);
 	return traceData.trace;
 }
 
