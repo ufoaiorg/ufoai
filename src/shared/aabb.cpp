@@ -83,7 +83,7 @@ void AABB::add (const AABB& other)
  * @brief Rotates AABB around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
  * @note Not fully verified so far
  */
-void AABB::rotateAround (vec3_t origin, vec3_t angles) {
+void AABB::rotateAround (const vec3_t origin, const vec3_t angles) {
 	/* reject non-rotations */
 	if VectorEmpty(angles)
 		return;

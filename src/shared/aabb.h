@@ -170,7 +170,7 @@ public:
 	 * @brief Rotates bounding box around given origin point; note that it will expand the box unless all angles are multiples of 90 degrees
 	 * @note Not fully verified so far
 	 */
-	void rotateAround(vec3_t origin, vec3_t angles);
+	void rotateAround(const vec3_t origin, const vec3_t angles);
 
 	/** @brief clip the box to the maximum boundaries */
 	inline void clipToWorld () {
