@@ -97,7 +97,7 @@ typedef struct boxtrace_s {
 	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
 	bool ispoint;				/* optimized case */
 
-	TR_TILE_TYPE* tile;
+	TR_TILE_TYPE* tile;			/** The Tile to check (normally 0 - except in assembled maps) */
 
 	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject);
 	void setLineAndBox(const Line& line, const AABB& box);

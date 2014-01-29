@@ -975,16 +975,11 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * and maxs offset from start is examined for any brushes that meet the criteria.  The first brush found inside
  * the bounding box is returned.
  * There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
- * @param[in] start trace start vector
- * @param[in] end trace end vector
+ * @param[in] traceData All parameters of the trace; also stores some intermediate results
+ * @param[in] traceLine The trace start and end vector
  * @param[in] traceBox The box we shove through the world
- * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
- * @param[in] contentmask brushes the trace should stop at (see MASK_*)
- * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @param[in] fraction The furthest distance needed to trace before we stop.
- * @sa TR_RecursiveHullCheck
- * @sa TR_BoxLeafnums_headnode
  */
 trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& traceBox, const int headnode, const float fraction)
 {
