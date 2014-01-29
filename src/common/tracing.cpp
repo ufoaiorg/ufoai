@@ -43,42 +43,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 /** @note all the above types are declared in typedefs.h */
 
-/* This attempts to make the box tracing code thread safe. */
-typedef struct boxtrace_s {
-	vec3_t start, end;
-	vec3_t mins, maxs;
-	vec3_t absmins, absmaxs;
-	vec3_t extents;
-	vec3_t offset;
+void boxtrace_s::init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject) {
+	trace.init();
+	trace.surface = nullptr;
+	contents = contentmask;
+	rejects = brushreject;
+	tile = _tile;
+}
 
-	trace_t trace;
-	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
-	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
-	bool ispoint;				/* optimized case */
+/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
+void boxtrace_s::setLineAndBox(const Line& line, const AABB& box) {
+	/* Calculate the offset needed to center the trace about the line */
+	box.getCenter(offset);
 
-	TR_TILE_TYPE* tile;
-
-	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject) {
-		trace.init();
-		trace.surface = nullptr;
-		contents = contentmask;
-		rejects = brushreject;
-		tile = _tile;
-	}
-
-	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
-	void setLineAndBox(const Line& line, const AABB& box) {
-		/* Calculate the offset needed to center the trace about the line */
-		box.getCenter(offset);
-
-		/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
-		 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
-		VectorSubtract(box.mins, offset, this->mins);
-		VectorSubtract(box.maxs, offset, this->maxs);
-		VectorAdd(line.start, offset, this->start);
-		VectorAdd(line.stop, offset, this->end);
-	}
-} boxtrace_t;
+	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin of the line)
+	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+	VectorSubtract(box.mins, offset, this->mins);
+	VectorSubtract(box.maxs, offset, this->maxs);
+	VectorAdd(line.start, offset, this->start);
+	VectorAdd(line.stop, offset, this->end);
+}
 
 /** @note For multi-check avoidance.
  * @todo not thread safe */

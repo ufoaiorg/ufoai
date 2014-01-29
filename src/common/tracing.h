@@ -84,6 +84,25 @@ typedef struct mapTiles_s {
 BOX AND LINE TRACING
 ==============================================================*/
 
+/* This attempts to make the box tracing code thread safe. */
+typedef struct boxtrace_s {
+	vec3_t start, end;
+	vec3_t mins, maxs;
+	vec3_t absmins, absmaxs;
+	vec3_t extents;
+	vec3_t offset;
+
+	trace_t trace;
+	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
+	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
+	bool ispoint;				/* optimized case */
+
+	TR_TILE_TYPE* tile;
+
+	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject);
+	void setLineAndBox(const Line& line, const AABB& box);
+} boxtrace_t;
+
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE* plane);
 
 void TR_BuildTracingNode_r(TR_TILE_TYPE* tile, tnode_t** tnode, int32_t nodenum, int level);
