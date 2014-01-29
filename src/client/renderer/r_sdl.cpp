@@ -227,7 +227,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 	uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 	if (context->fullscreen)
-		flags |= SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS;
+		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_BORDERLESS;
 
 	const int videoDrivers = SDL_GetNumVideoDrivers();
 	for (int i = 0; i < videoDrivers; ++i) {
