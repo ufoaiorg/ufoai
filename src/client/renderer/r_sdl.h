@@ -29,6 +29,9 @@ typedef int rect_t[2];
 typedef struct r_sdl_config_s {
 	rect_t* modes;
 	int numModes;
+
+	int desktopWidth;
+	int desktopHeight;
 } r_sdl_config_t;
 
 extern r_sdl_config_t r_sdl_config;

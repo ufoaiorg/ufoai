@@ -92,7 +92,10 @@ bool Rimp_Init (void)
 	}
 
 	SDL_VERSION(&version)
-	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
+	Com_Printf("I: SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
+
+	r_sdl_config.desktopWidth = 1024;
+	r_sdl_config.desktopHeight = 768;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 	int screen = 0;
@@ -105,6 +108,18 @@ bool Rimp_Init (void)
 			r_sdl_config.modes[i][0] = displayMode.w;
 			r_sdl_config.modes[i][1] = displayMode.h;
 		}
+	}
+
+	SDL_DisplayMode displayMode;
+	if (SDL_GetDesktopDisplayMode(0, &displayMode) == -1) {
+		const char* name = SDL_GetPixelFormatName(displayMode.format);
+		Com_Printf("I: current desktop mode: %dx%d@%dHz (%s)\n",
+				displayMode.w, displayMode.h, displayMode.refresh_rate, name);
+		Com_Printf("I: video driver: %s\n", SDL_GetCurrentVideoDriver());
+		r_sdl_config.desktopWidth = displayMode.w;
+		r_sdl_config.desktopHeight = displayMode.h;
+	} else {
+		Com_Printf("E: failed to get the desktop mode\n");
 	}
 #else
 	const SDL_VideoInfo* info = SDL_GetVideoInfo();
