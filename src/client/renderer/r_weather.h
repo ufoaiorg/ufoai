@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef WEATHER_H
-#define WEATHER_H
+#pragma once
 
 class Weather {
 	public:
@@ -67,5 +66,3 @@ class Weather {
 
 		particle particles[MAX_PARTICLES];
 };
-
-#endif // WEATHER_H

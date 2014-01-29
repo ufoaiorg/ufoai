@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_weather.h"
 
 /* wp stands for "weather particle */
-static uint8_t wpImage[8][8] = {
+static const uint8_t wpImage[8][8] = {
 	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,},
 	{0x00, 0x00, 0x20, 0x40, 0x40, 0x20, 0x00, 0x00,},
 	{0x00, 0x20, 0xa0, 0xc0, 0xc0, 0xa0, 0x20, 0x00,},
@@ -42,9 +42,9 @@ static uint8_t wpImage[8][8] = {
 };
 
 /**
- @brief Gives handle to (and uploads if needed) weather particle texture; also binds it to the active texture unit
- @return OpenGL handle of texture object
- @note alas, image_t does not support anything but RGB(A) textures, so we've got to reinvent the wheel
+ * @brief Gives handle to (and uploads if needed) weather particle texture; also binds it to the active texture unit
+ * @return OpenGL handle of texture object
+ * @note alas, image_t does not support anything but RGB(A) textures, so we've got to reinvent the wheel
  */
 static GLuint wpTexture (void)
 {
@@ -66,7 +66,7 @@ static GLuint wpTexture (void)
 }
 
 /**
- @brief Sets clean weather, but generate some prameters useable for easily changing it into the worse varieties
+ * @brief Sets clean weather, but generate some parameters usable for easily changing it into the worse varieties
  */
 void Weather::setDefaults (void)
 {
@@ -86,7 +86,7 @@ void Weather::setDefaults (void)
 }
 
 /**
- @brief changes to weather of given type; parameters are randomized
+ * @brief changes to weather of given type; parameters are randomized
  */
 void Weather::changeTo (weatherTypes weather)
 {
@@ -117,7 +117,7 @@ void Weather::changeTo (weatherTypes weather)
 			weatherStrength = frand() * 0.1f + 0.9f;
 			windStrength = frand() * 500 + 1000;
 			windTurbulence = 23;
-			fallingSpeed = 200; /* in a sandstorm, sand is blown mostly horisontally */
+			fallingSpeed = 200; /* in a sandstorm, sand is blown mostly horizontally */
 			particleSize = 5.0f;
 			color[0] = 1.0f; color[1] = 0.7f; color[2] = 0.25f; color[3] = 0.6f;
 			break;
@@ -127,7 +127,7 @@ void Weather::changeTo (weatherTypes weather)
 }
 
 /**
- @brief Just a shared methods for ctors to initialize the weather
+ * @brief Just a shared methods for ctors to initialize the weather
  */
 void Weather::clearParticles (void)
 {
@@ -137,7 +137,7 @@ void Weather::clearParticles (void)
 }
 
 /**
- @brief make a default (clean) weather
+ * @brief make a default (clean) weather
  */
 Weather::Weather (void)
 {
@@ -146,7 +146,7 @@ Weather::Weather (void)
 }
 
 /**
- @brief make a weather of given type
+ * @brief make a weather of given type
  */
 Weather::Weather (weatherTypes weather)
 {
@@ -159,9 +159,9 @@ Weather::~Weather ()
 }
 
 /**
- @brief Updates weather for the time passed; handles particle cretion/removal automatically
+ * @brief Updates weather for the time passed; handles particle creation/removal automatically
  */
-void Weather::update(int milliseconds)
+void Weather::update (int milliseconds)
 {
 	size_t dead = 0;
 	int debugCreated = 0;
@@ -186,8 +186,8 @@ void Weather::update(int milliseconds)
 			}
 		}
 		/* if we got so far, particle is alive and probably needs a physics update */
-		int timeAfterUpdate = prt.timeout -= milliseconds;
-		float moveDuration = milliseconds * 0.001f;
+		const int timeAfterUpdate = prt.timeout -= milliseconds;
+		const float moveDuration = milliseconds * 0.001f;
 
 		prt.x += prt.vx * moveDuration; prt.y += prt.vy * moveDuration; prt.z += prt.vz * moveDuration;
 
@@ -245,14 +245,14 @@ void Weather::update(int milliseconds)
 }
 
 /**
- @brief Draws weather effects
+ * @brief Draws weather effects
  */
-void Weather::render(void)
+void Weather::render (void)
 {
 	GLfloat prtPos[3 * 4 * Weather::MAX_PARTICLES];
 	GLfloat prtTexcoord[2 * 4 * Weather::MAX_PARTICLES];
 	size_t prtCount = 0;
-	const float splashTimeScale = 0.001f / splashTime; /* from msec to 1/sec units, so division is done only once per frame */
+	//const float splashTimeScale = 0.001f / splashTime; /* from msec to 1/sec units, so division is done only once per frame */
 	/** @todo shadowcasting at least for the sunlight */
 #if 0 // disabled because of bizarre colors
 	vec4_t prtColor = {color[0] * (refdef.ambientColor[0] + refdef.sunDiffuseColor[0]),
@@ -277,7 +277,7 @@ void Weather::render(void)
 		if (prt.vz == 0 && splashTime > 0) {
 			/* splash particle, do zoom and other things */
 			/** @todo alpha decay */
-			float splashFactor = prt.ttl / 500.0f;//1.0f - prt.ttl * splashTimeScale;
+			const float splashFactor = prt.ttl / 500.0f;//1.0f - prt.ttl * splashTimeScale;
 			thisParticleSize *= (splashSize - 1.0f) * splashFactor  + 1.0f;
 			dx = dy = thisParticleSize;
 		} else {
