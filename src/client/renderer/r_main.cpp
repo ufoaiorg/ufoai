@@ -718,6 +718,8 @@ bool R_SetMode (void)
 	if (!VID_GetModeInfo(newCtx.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		Cvar_Set("vid_mode", "-1");
+		Cvar_Set("vid_width", "-1");
+		Cvar_Set("vid_height", "-1");
 		return false;
 	}
 	Com_Printf("I: try to get display with %ix%i\n", vidmode.width, vidmode.height);

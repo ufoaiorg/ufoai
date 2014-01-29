@@ -89,6 +89,10 @@ bool VID_GetModeInfo (int modeIndex, vidmode_t* modeInfo)
 	if (modeIndex < 0) {
 		modeInfo->width = vid_width->integer;
 		modeInfo->height = vid_height->integer;
+		if (modeInfo->width <= 0 || modeInfo->height <= 0) {
+			modeInfo->width = r_sdl_config.desktopWidth;
+			modeInfo->height = r_sdl_config.desktopHeight;
+		}
 	} else if (modeIndex < VID_GetModeNums()) {
 		int width, height;
 		if (r_sdl_config.numModes > 0) {
@@ -159,8 +163,8 @@ void VID_Init (void)
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");
 	vid_ignoregamma = Cvar_Get("vid_ignoregamma", "0", CVAR_ARCHIVE, "Don't control the gamma settings if set to 1");
 	Cvar_SetCheckFunction("vid_gamma", CL_CvarCheckVidGamma);
-	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
-	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
+	vid_height = Cvar_Get("vid_height", "-1", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
+	vid_width = Cvar_Get("vid_width", "-1", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
 
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
 	Cmd_AddCommand("vid_minimize", VID_Minimize, "Minimize the game window");
