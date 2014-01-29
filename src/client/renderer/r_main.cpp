@@ -720,6 +720,7 @@ bool R_SetMode (void)
 		Cvar_Set("vid_mode", "-1");
 		return false;
 	}
+	Com_Printf("I: try to get display with %ix%i\n", vidmode.width, vidmode.height);
 	newCtx.width = vidmode.width;
 	newCtx.height = vidmode.height;
 	result = R_InitGraphics(&newCtx);

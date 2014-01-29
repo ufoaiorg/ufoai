@@ -79,7 +79,7 @@ bool Rimp_Init (void)
 	OBJZERO(r_sdl_config);
 
 	if (r_driver->string[0] != '\0') {
-		Com_Printf("using driver: %s\n", r_driver->string);
+		Com_Printf("I: using driver: %s\n", r_driver->string);
 		SDL_GL_LoadLibrary(r_driver->string);
 	}
 
@@ -190,9 +190,6 @@ bool Rimp_Init (void)
  */
 bool R_InitGraphics (const viddefContext_t* context)
 {
-	uint32_t flags;
-	int i;
-
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -209,10 +206,10 @@ bool R_InitGraphics (const viddefContext_t* context)
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 	/* valid values are between -1 and 1 */
-	i = std::min(1, std::max(-1, context->swapinterval));
+	const int i = std::min(1, std::max(-1, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
 	SDL_GL_SetSwapInterval(i);
-	flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+	uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 	if (context->fullscreen)
 		flags |= SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS;
@@ -246,7 +243,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (!cls.window) {
 		const char* error = SDL_GetError();
-		Com_Printf("SDL SDL_CreateWindow failed: %s\n", error);
+		Com_Printf("SDL_CreateWindow failed: %s\n", error);
 		SDL_ClearError();
 		return -1;
 	}
@@ -254,10 +251,10 @@ bool R_InitGraphics (const viddefContext_t* context)
 	cls.context = SDL_GL_CreateContext(cls.window);
 #else
 	/* valid values are between 0 and 2 */
-	i = std::min(2, std::max(0, context->swapinterval));
+	const int i = std::min(2, std::max(0, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
-	flags = SDL_OPENGL;
+	uint32_t flags = SDL_OPENGL;
 	if (context->fullscreen)
 		flags |= SDL_FULLSCREEN;
 	/*flags |= SDL_NOFRAME;*/
