@@ -738,9 +738,7 @@ static void R_Blur (r_framebuffer_t* source, r_framebuffer_t* dest, int tex, int
  */
 static void R_BlurStack (int levels, r_framebuffer_t** sources, r_framebuffer_t** dests)
 {
-	int i;
-
-	for (i = 0; i < levels; i++) {
+	for (int i = 0; i < levels; i++) {
 		const int l = levels - i - 1;
 
 		R_UseProgram(i == 0 ? default_program : r_state.combine2_program);

@@ -64,10 +64,6 @@ static void R_FreeFBOTexture (int texnum)
 
 void R_InitFBObjects (void)
 {
-	unsigned int filters[2];
-	float scales[DOWNSAMPLE_PASSES];
-	int i;
-
 	if (!r_config.frameBufferObject || !r_programs->integer)
 		return;
 
@@ -77,6 +73,8 @@ void R_InitFBObjects (void)
 
 	r_state.frameBufferObjectsInitialized = true;
 
+	float scales[DOWNSAMPLE_PASSES];
+	int i;
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++)
 		scales[i] = powf(DOWNSAMPLE_SCALE, i + 1);
 
@@ -97,6 +95,7 @@ void R_InitFBObjects (void)
 	for (i = 0; i < r_config.maxDrawBuffers; i++)
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
 
+	unsigned int filters[2];
 	filters[0] = GL_NEAREST;
 	filters[1] = GL_LINEAR_MIPMAP_LINEAR;
 
@@ -131,8 +130,7 @@ void R_DeleteFBObject (r_framebuffer_t* buf)
 	buf->depth = 0;
 
 	if (buf->textures) {
-		int i;
-		for (i = 0; i < buf->nTextures; i++)
+		for (int i = 0; i < buf->nTextures; i++)
 			R_FreeFBOTexture(buf->textures[i]);
 		Mem_Free(buf->textures);
 	}
@@ -149,12 +147,10 @@ void R_DeleteFBObject (r_framebuffer_t* buf)
  */
 void R_ShutdownFBObjects (void)
 {
-	int i;
-
 	if (!r_state.frameBufferObjectsInitialized)
 		return;
 
-	for (i = 0; i < frameBufferObjectCount; i++)
+	for (int i = 0; i < frameBufferObjectCount; i++)
 		R_DeleteFBObject(&frameBufferObjects[i]);
 
 	R_UseFramebuffer(&screenBuffer);
@@ -299,14 +295,12 @@ r_framebuffer_t* R_CreateFramebuffer (int width, int height, int ntextures, bool
  */
 void R_ResolveMSAA (const r_framebuffer_t* buf)
 {
-	int i;
-
 	if (!buf->samples)
 		return;
 
 	qglBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, buf->fbo);
 	qglBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, buf->proxyFBO);
-	for (i = 0; i < buf->nTextures; i++)	 {
+	for (int i = 0; i < buf->nTextures; i++)	 {
 #ifndef GL_VERSION_ES_CM_1_0
 		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT + i);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0_EXT + i);

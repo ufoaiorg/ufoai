@@ -260,13 +260,13 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 #else
 	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 #endif
-	int i, c;
+	int i;
 	const byte* scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const bool clamp = R_IsClampedImageType(image->type);
 
 	/* scan the texture for any non-255 alpha */
-	c = width * height;
+	int c = width * height;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((const byte*) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
@@ -641,7 +641,6 @@ const image_t* R_FindPics (const char* name)
 bool R_ImageExists (const char* pname, ...)
 {
 	char const* const* const types = Img_GetImageTypes();
-	int i;
 	char filename[MAX_QPATH];
 	va_list ap;
 
@@ -649,7 +648,7 @@ bool R_ImageExists (const char* pname, ...)
 	Q_vsnprintf(filename, sizeof(filename), pname, ap);
 	va_end(ap);
 
-	for (i = 0; types[i]; i++) {
+	for (int i = 0; types[i]; i++) {
 		if (FS_CheckFile("%s.%s", filename, types[i]) != -1)
 			return true;
 	}
@@ -830,12 +829,8 @@ static const glTextureMode_t gl_texture_modes[] = {
 void R_TextureMode (const char* string)
 {
 	int i;
-	image_t* image;
-	imageArray_t* images;
 	const size_t size = lengthof(gl_texture_modes);
-	const glTextureMode_t* mode;
-
-	mode = nullptr;
+	const glTextureMode_t* mode = nullptr;
 	for (i = 0; i < size; i++) {
 		mode = &gl_texture_modes[i];
 		if (!Q_strcasecmp(mode->name, string))
@@ -851,6 +846,8 @@ void R_TextureMode (const char* string)
 	r_config.gl_filter_max = mode->maximize;
 
 	/* Wicked for()-loop (tm) */
+	image_t* image;
+	imageArray_t* images;
 	FOR_EACH_IMAGE(i, image, images) {
 		if (image->type == it_pic || image->type == it_worldrelated || image->type == it_chars)
 			continue; /* no mipmaps */
@@ -893,10 +890,9 @@ static const gltmode_t gl_alpha_modes[] = {
 
 void R_TextureAlphaMode (const char* string)
 {
-	int i;
 	const size_t size = lengthof(gl_alpha_modes);
 
-	for (i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		const gltmode_t* mode = &gl_alpha_modes[i];
 		if (!Q_strcasecmp(mode->name, string)) {
 			r_config.gl_alpha_format = mode->mode;
@@ -929,10 +925,9 @@ static const gltmode_t gl_solid_modes[] = {
 
 void R_TextureSolidMode (const char* string)
 {
-	int i;
 	const size_t size = lengthof(gl_solid_modes);
 
-	for (i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		const gltmode_t* mode = &gl_solid_modes[i];
 		if (!Q_strcasecmp(mode->name, string)) {
 			r_config.gl_solid_format = mode->mode;
