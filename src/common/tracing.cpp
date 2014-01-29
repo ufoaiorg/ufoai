@@ -986,7 +986,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& traceBox, const int headnode, const float fraction)
 {
 //	vec3_t offset, amins, amaxs, astart, aend;
 
@@ -1084,7 +1084,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		const trace_t newtr = TR_BoxTrace(traceData, traceLine, aabb, h->cnode, brushmask, brushreject, tr.fraction);
+		const trace_t newtr = TR_BoxTrace(traceData, traceLine, aabb, h->cnode, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
