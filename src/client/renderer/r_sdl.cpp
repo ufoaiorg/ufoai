@@ -110,8 +110,11 @@ bool Rimp_Init (void)
 		}
 	}
 
+	const int displays = SDL_GetNumVideoDisplays();
+	Com_Printf("I: found %i display(s)\n", displays);
+
 	SDL_DisplayMode displayMode;
-	if (SDL_GetDesktopDisplayMode(0, &displayMode) == -1) {
+	if (SDL_GetDesktopDisplayMode(0, &displayMode) != -1) {
 		const char* name = SDL_GetPixelFormatName(displayMode.format);
 		Com_Printf("I: current desktop mode: %dx%d@%dHz (%s)\n",
 				displayMode.w, displayMode.h, displayMode.refresh_rate, name);
@@ -121,6 +124,15 @@ bool Rimp_Init (void)
 	} else {
 		Com_Printf("E: failed to get the desktop mode\n");
 	}
+
+	const int videoDrivers = SDL_GetNumVideoDrivers();
+	for (int i = 0; i < videoDrivers; ++i) {
+		Com_Printf("I: available driver: %s\n", SDL_GetVideoDriver(i));
+	}
+	Com_Printf("I: driver: %s\n", SDL_GetCurrentVideoDriver());
+
+	SDL_SetModState(KMOD_NONE);
+	SDL_StopTextInput();
 #else
 	const SDL_VideoInfo* info = SDL_GetVideoInfo();
 	if (info != nullptr) {
@@ -229,32 +241,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 	if (context->fullscreen)
 		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_BORDERLESS;
 
-	const int videoDrivers = SDL_GetNumVideoDrivers();
-	for (int i = 0; i < videoDrivers; ++i) {
-		Com_Printf("I: available driver: %s\n", SDL_GetVideoDriver(i));
-	}
-
-	SDL_DisplayMode displayMode;
-	SDL_GetDesktopDisplayMode(0, &displayMode);
-	const char* name = SDL_GetPixelFormatName(displayMode.format);
-	Com_Printf("I: current desktop mode: %dx%d@%dHz (%s)\n",
-			displayMode.w, displayMode.h, displayMode.refresh_rate, name);
-
-	SDL_SetModState(KMOD_NONE);
-	SDL_StopTextInput();
-
-	Com_Printf("I: driver: %s\n", SDL_GetCurrentVideoDriver());
-	const int displays = SDL_GetNumVideoDisplays();
-	Com_Printf("I: found %i display(s)\n", displays);
-	int width = context->width;
-	int height = context->height;
-	if (context->fullscreen && displays > 1) {
-		width = displayMode.w;
-		height = displayMode.h;
-		Com_Printf("I: use fake fullscreen for the first display: %i:%i\n", width, height);
-	}
-
-	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, context->width, context->height, flags);
 	if (!cls.window) {
 		const char* error = SDL_GetError();
 		Com_Printf("E: SDL_CreateWindow failed: %s\n", error);
