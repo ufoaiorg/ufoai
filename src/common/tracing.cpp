@@ -983,8 +983,6 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  */
 trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& traceBox, const int headnode, const float fraction)
 {
-//	vec3_t offset, amins, amaxs, astart, aend;
-
 	checkcount++;	/* for multi-check avoidance */
 
 #ifdef COMPILE_UFO
@@ -1033,7 +1031,7 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 	}
 
 	/* general sweeping through world */
-	/** @todo Would Interpolating aend to traceData.fraction and passing traceData.fraction instead of 1.0 make this faster? */
+	/** @todo Would Interpolating traceData.end to traceData.fraction and passing traceData.fraction instead of 1.0 make this faster? */
 	TR_RecursiveHullCheck(&traceData, headnode, 0.0, 1.0, traceData.start, traceData.end);
 
 	if (traceData.trace.fraction >= 1.0) {
