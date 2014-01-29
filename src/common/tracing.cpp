@@ -56,6 +56,14 @@ typedef struct boxtrace_s {
 	bool ispoint;				/* optimized case */
 
 	TR_TILE_TYPE* tile;
+
+	void init (TR_TILE_TYPE* _tile, const int contentmask, const int brushreject) {
+		trace.init();
+		trace.surface = nullptr;
+		contents = contentmask;
+		rejects = brushreject;
+		tile = _tile;
+	}
 } boxtrace_t;
 
 /** @note For multi-check avoidance.
@@ -995,9 +1003,8 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
 #endif
 
 	/* fill in a default trace */
-	traceData.trace.init();
+	traceData.init(tile, contentmask, brushreject);
 	traceData.trace.fraction = std::min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
-	traceData.trace.surface = nullptr;
 
 	if (!tile->numnodes)		/* map not loaded */
 		return traceData.trace;
@@ -1013,9 +1020,6 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
 	VectorAdd(start, offset, astart);
 	VectorAdd(end, offset, aend);
 
-	traceData.contents = contentmask;
-	traceData.rejects = brushreject;
-	traceData.tile = tile;
 	VectorCopy(astart, traceData.start);
 	VectorCopy(aend, traceData.end);
 	VectorCopy(amins, traceData.mins);
