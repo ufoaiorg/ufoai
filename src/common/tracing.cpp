@@ -986,25 +986,23 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 //	vec3_t offset, amins, amaxs, astart, aend;
-	boxtrace_t traceData;
 
 	checkcount++;	/* for multi-check avoidance */
 
 #ifdef COMPILE_UFO
-	if (headnode >= tile->numnodes + 6)
-		Com_Error(ERR_DROP, "headnode (%i) is out of bounds: %i", headnode, tile->numnodes + 6);
+	if (headnode >= traceData.tile->numnodes + 6)
+		Com_Error(ERR_DROP, "headnode (%i) is out of bounds: %i", headnode, traceData.tile->numnodes + 6);
 #else
-	assert(headnode < tile->numnodes + 6); /* +6 => bbox */
+	assert(headnode < traceData.tile->numnodes + 6); /* +6 => bbox */
 #endif
 
 	/* fill in a default trace */
-	traceData.init(tile, contentmask, brushreject);
 	traceData.trace.fraction = std::min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
 
-	if (!tile->numnodes)		/* map not loaded */
+	if (!traceData.tile->numnodes)		/* map not loaded */
 		return traceData.trace;
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
@@ -1074,6 +1072,8 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 	/* ensure that the first trace is set in every case */
 	tr.fraction = 2.0f;
 
+	boxtrace_t traceData;
+	traceData.init(myTile, brushmask, brushreject);
 	/* trace against all loaded map tiles */
 	for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
 		/* This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
@@ -1084,7 +1084,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		const trace_t newtr = TR_BoxTrace(myTile, traceLine, aabb, h->cnode, brushmask, brushreject, tr.fraction);
+		const trace_t newtr = TR_BoxTrace(traceData, traceLine, aabb, h->cnode, brushmask, brushreject, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
