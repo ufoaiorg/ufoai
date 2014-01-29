@@ -998,9 +998,6 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 	if (!traceData.tile->numnodes)		/* map not loaded */
 		return traceData.trace;
 
-	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
-	traceData.setLineAndBox(traceLine, traceBox);
-
 	/* check for position test special case */
 	if (VectorEqual(traceData.start, traceData.end)) {
 		int32_t leafs[MAX_LEAFS];
@@ -1067,6 +1064,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 
 	boxtrace_t traceData;
 	traceData.init(myTile, brushmask, brushreject, tr.fraction);
+	traceData.setLineAndBox(traceLine, aabb);
 	/* trace against all loaded map tiles */
 	for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
 		/* This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
