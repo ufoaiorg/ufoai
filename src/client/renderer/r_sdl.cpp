@@ -231,34 +231,33 @@ bool R_InitGraphics (const viddefContext_t* context)
 
 	const int videoDrivers = SDL_GetNumVideoDrivers();
 	for (int i = 0; i < videoDrivers; ++i) {
-		Com_Printf("available driver: %s\n", SDL_GetVideoDriver(i));
+		Com_Printf("I: available driver: %s\n", SDL_GetVideoDriver(i));
 	}
 
 	SDL_DisplayMode displayMode;
 	SDL_GetDesktopDisplayMode(0, &displayMode);
 	const char* name = SDL_GetPixelFormatName(displayMode.format);
-	Com_Printf("current desktop mode: %dx%d@%dHz (%s)\n",
+	Com_Printf("I: current desktop mode: %dx%d@%dHz (%s)\n",
 			displayMode.w, displayMode.h, displayMode.refresh_rate, name);
 
-	SDL_VideoInit(nullptr);
 	SDL_SetModState(KMOD_NONE);
 	SDL_StopTextInput();
 
-	Com_Printf("driver: %s\n", SDL_GetCurrentVideoDriver());
+	Com_Printf("I: driver: %s\n", SDL_GetCurrentVideoDriver());
 	const int displays = SDL_GetNumVideoDisplays();
-	Com_Printf("found %i display(s)\n", displays);
+	Com_Printf("I: found %i display(s)\n", displays);
 	int width = context->width;
 	int height = context->height;
 	if (context->fullscreen && displays > 1) {
 		width = displayMode.w;
 		height = displayMode.h;
-		Com_Printf("use fake fullscreen for the first display: %i:%i\n", width, height);
+		Com_Printf("I: use fake fullscreen for the first display: %i:%i\n", width, height);
 	}
 
 	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (!cls.window) {
 		const char* error = SDL_GetError();
-		Com_Printf("SDL_CreateWindow failed: %s\n", error);
+		Com_Printf("E: SDL_CreateWindow failed: %s\n", error);
 		SDL_ClearError();
 		return -1;
 	}

@@ -90,6 +90,8 @@ bool VID_GetModeInfo (int modeIndex, vidmode_t* modeInfo)
 		modeInfo->width = vid_width->integer;
 		modeInfo->height = vid_height->integer;
 		if (modeInfo->width <= 0 || modeInfo->height <= 0) {
+			Com_Printf("I: using the desktop resolution because vid_mode, vid_height and vid_width are set to -1 (%ix%i)\n",
+					r_sdl_config.desktopWidth, r_sdl_config.desktopHeight);
 			modeInfo->width = r_sdl_config.desktopWidth;
 			modeInfo->height = r_sdl_config.desktopHeight;
 		}
