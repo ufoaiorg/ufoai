@@ -988,7 +988,7 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const Line& traceLine, const AABB& traceBox, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
@@ -1017,8 +1017,8 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
 	VectorSubtract(traceBox.mins, offset, amins);
 	VectorSubtract(traceBox.maxs, offset, amaxs);
-	VectorAdd(start, offset, astart);
-	VectorAdd(end, offset, aend);
+	VectorAdd(traceLine.start, offset, astart);
+	VectorAdd(traceLine.stop, offset, aend);
 
 	VectorCopy(astart, traceData.start);
 	VectorCopy(aend, traceData.end);
@@ -1041,7 +1041,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, c
 			if (traceData.trace.allsolid)
 				break;
 		}
-		VectorCopy(start, traceData.trace.endpos);
+		VectorCopy(traceLine.start, traceData.trace.endpos);
 		return traceData.trace;
 	}
 
@@ -1084,6 +1084,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 	int i;
 	cBspHead_t* h;
 	trace_t tr;
+	Line traceLine(start, end);
 
 	/* ensure that the first trace is set in every case */
 	tr.fraction = 2.0f;
@@ -1098,7 +1099,7 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 			continue;
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
-		const trace_t newtr = TR_BoxTrace(myTile, start, end, aabb, h->cnode, brushmask, brushreject, tr.fraction);
+		const trace_t newtr = TR_BoxTrace(myTile, traceLine, aabb, h->cnode, brushmask, brushreject, tr.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
