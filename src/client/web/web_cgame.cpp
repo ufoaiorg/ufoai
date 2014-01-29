@@ -99,6 +99,7 @@ static const char* WEB_CGameGetURL (char* out, size_t outSize, const char* url, 
  * @brief Uploads a file to the server.
  * @param[in] cgameId The cgame id that is used to upload the file.
  * @param[in] category The category of the cgame.
+ * @param[in] filename The filename part below the gamedir
  * @note The current authenticated user will be taken.
  * @note Files can only get uploaded from within the user directory. You can't upload game provided content.
  * @return @c true if the upload of the file was successful, @c false otherwise.
@@ -145,6 +146,7 @@ bool WEB_CGameUpload (const char* cgameId, int category, const char* filename)
  * @brief Deletes a user owned file on the server.
  * @param[in] cgameId The cgame id that is used to get the file.
  * @param[in] category The category of the cgame.
+ * @param[in] filename The filename to replace in the URL.
  * @note The current authenticated user will be taken.
  * @return @c true if the deletion of the file was successful, @c false otherwise.
  */
@@ -178,6 +180,7 @@ bool WEB_CGameDelete (const char* cgameId, int category, const char* filename)
  * @brief Downloads a file from the server and store it in the user directory.
  * @param[in] cgameId The cgame id that is used to get the file.
  * @param[in] category The category of the cgame.
+ * @param[in] filename The filename to replace in the URL.
  * @param[in] userId The user id to get the file for. If this is @c -1 (the default), the current
  * authenticated user will be taken.
  * @return @c true if the download of the file was successful, @c false otherwise.
