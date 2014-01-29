@@ -2293,7 +2293,7 @@ static void CL_DebugPath_f (void)
 	long time = Sys_Milliseconds();
 	RT_UpdateConnectionColumn(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 	time = (Sys_Milliseconds() - time);
-	Com_Printf("RT_UpdateConnectionColumn needed %i milliseconds\n", time);
+	Com_Printf("RT_UpdateConnectionColumn needed %i milliseconds\n", (int)time);
 
 	RT_DebugPathDisplay(cl.mapData->routing, actorSize, x, y, z);
 
