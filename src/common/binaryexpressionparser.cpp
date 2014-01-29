@@ -153,6 +153,7 @@ public:
 	BinaryExpressionParser (const char* expr, BEPEvaluteCallback_t varFuncParam, const void* userdataPtr) :
 		binaryExpressionParserError(BEPERR_NONE), varFunc(varFuncParam), userdata(userdataPtr)
 	{
+		varName[0] = 0;
 		const char* str = expr;
 		result = CheckOR(&str);
 		/* check for no end error */
