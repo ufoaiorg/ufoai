@@ -3288,6 +3288,10 @@ base/pics/maps/shots/africa_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/alienbase.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/alienbase_2.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/alienbase_3.png | GNU General Public License 2.0 or later
+base/pics/maps/shots/baseattack.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/baseattack_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/baseattack_3.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/beach.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3297,6 +3301,9 @@ base/pics/maps/shots/bunker_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/cemetery.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/cemetery_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/cemetery_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/city2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city2_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city2_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/city_industry.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/city_industry_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/city_industry_3.jpg | GNU General Public License 2.0 or later | MCR
@@ -3377,12 +3384,18 @@ base/pics/maps/shots/japan.jpg | GNU General Public License 2.0 or later | Marti
 base/pics/maps/shots/japan_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/japan_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/map_ico_overlay.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/maps/shots/mansion1.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/mansion1_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/mansion1_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/military_convoy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/military_convoy_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/military_convoy_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/mine.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/neighbourhood.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/neighbourhood_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/neighbourhood_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/office.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/office_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/office_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3395,6 +3408,9 @@ base/pics/maps/shots/oriental_mosque_3.jpg | GNU General Public License 2.0 or l
 base/pics/maps/shots/pipes_const.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_3.jpg | GNU General Public License 2.0 or later | MCR
+base/pics/maps/shots/rescue.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/rescue_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/rescue_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/resort.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3452,6 +3468,9 @@ base/pics/maps/shots/urban_9.jpg | GNU General Public License 2.0 or later | | b
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/village2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/village2_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/village2_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/wilderness.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/wilderness_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/wilderness_3.jpg | GNU General Public License 2.0 or later
