@@ -592,7 +592,10 @@ static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check
 }
 
 /**
+ * @brief Fill a list of leafnodes that the trace touches
  * @param[in] traceData both parameters and results of the trace
+ * @param[out] list The list to fill
+ * @param[in] listsize Maximum size of that list
  * @param[in] headnode if < 0 we are in a leaf node
  */
 static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int listsize, int32_t headnode, int32_t* topnode)
