@@ -71,7 +71,8 @@ bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 	return td->robot;
 }
 
-const chrTemplate_t* CHRSH_GetTemplateByID (const teamDef_t* teamDef, const char* templateId) {
+const chrTemplate_t* CHRSH_GetTemplateByID (const teamDef_t* teamDef, const char* templateId)
+{
 	if (!Q_strnull(templateId))
 		for (int i = 0; i < teamDef->numTemplates; i++)
 			if (Q_streq(teamDef->characterTemplates[i]->id, templateId))
