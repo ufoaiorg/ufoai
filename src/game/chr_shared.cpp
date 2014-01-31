@@ -373,9 +373,9 @@ short BodyData::getHitBodyPart (const byte direction, const float height) const
 	const float rnd = frand();
 	short bodyPart;
 	float curRand = 0;
-	vec4_t shape;
 
 	for (bodyPart = 0; bodyPart < _numBodyParts; ++bodyPart) {
+		vec4_t shape;
 		Vector4Copy(_bodyParts[bodyPart].shape, shape);
 		if (height <= shape[3] || height > shape[2] + shape[3])
 			continue;
