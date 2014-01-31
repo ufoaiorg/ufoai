@@ -415,10 +415,11 @@ Edict* G_FindRadius (Edict* from, const vec3_t org, float rad, entity_type_t typ
 	Edict* ent = from;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		int j;
 		vec3_t eorg;
-		for (j = 0; j < 3; j++)
-			eorg[j] = org[j] - (ent->origin[j] + (ent->entBox.mins[j] + ent->entBox.maxs[j]) * 0.5);
+		vec3_t center;
+		ent->entBox.getCenter(center);
+		for (int j = 0; j < 3; j++)
+			eorg[j] = org[j] - (ent->origin[j] + center[j]);
 		if (VectorLength(eorg) > rad)
 			continue;
 		if (type != ET_NULL && ent->type != type)
