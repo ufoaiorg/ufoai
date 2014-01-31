@@ -1242,10 +1242,8 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 	case V_TRANSLATION_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
-		if (b == nullptr)
-			return "(null)";
-		else
-			return (const char*) b;
+		assert(b);	/* this should never happen. let's see */
+		return (const char*) b;
 
 	case V_ALIGN:
 		assert(*(const align_t*)b < ALIGN_LAST);
