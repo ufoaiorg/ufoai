@@ -172,8 +172,7 @@ static bool R_LoadModel (model_t* mod, const char* filename)
 bool R_ModelExists (const char* name)
 {
 	if (Com_GetExtension(name) == nullptr) {
-		int i;
-		for (i = 0; mod_extensions[i] != nullptr; i++) {
+		for (int i = 0; mod_extensions[i] != nullptr; i++) {
 			if (FS_CheckFile("models/%s.%s", name, mod_extensions[i]) != -1) {
 				return true;
 			}
@@ -294,22 +293,21 @@ model_t* R_GetModel (const char* name)
  */
 void R_SwitchModelMemPoolTag (void)
 {
-	int i, j, k;
-	model_t* mod;
-
 	r_numModelsStatic = r_numModels;
 	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
 
 	/* mark the static model textures as it_static, thus R_FreeWorldImages
 	 * won't free them */
+	int i;
+	model_t* mod;
 	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
 		if (!mod->alias.num_meshes)
 			Com_Printf("Model '%s' has no meshes\n", mod->name);
-		for (j = 0; j < mod->alias.num_meshes; j++) {
+		for (int j = 0; j < mod->alias.num_meshes; j++) {
 			mAliasMesh_t* mesh = &mod->alias.meshes[j];
 			if (!mesh->num_skins)
 				Com_Printf("Model '%s' has no skins\n", mod->name);
-			for (k = 0; k < mesh->num_skins; k++) {
+			for (int k = 0; k < mesh->num_skins; k++) {
 				mAliasSkin_t* modelSkin = &mesh->skins[k];
 				if (modelSkin->skin != r_noTexture)
 					modelSkin->skin->type = it_static;
@@ -354,7 +352,6 @@ static const char* R_GetActorSkin (int id)
  */
 void R_LoadActorSkinsFromModel (mAliasMesh_t* outMesh, image_t* defaultSkin)
 {
-	int i;
 	assert(outMesh);
 
 	outMesh->num_skins = r_numActorSkinName;
@@ -363,7 +360,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t* outMesh, image_t* defaultSkin)
 	if (defaultSkin == r_noTexture)
 		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);
 
-	for (i = 0; i < outMesh->num_skins; i++) {
+	for (int i = 0; i < outMesh->num_skins; i++) {
 		mAliasSkin_t* modelSkin = &outMesh->skins[i];
 		if (i == 0) {
 			modelSkin->skin = defaultSkin;

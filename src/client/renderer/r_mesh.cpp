@@ -221,24 +221,21 @@ void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrien
 		return;
 	}
 
-	{
-		mAliasTagOrientation_t tag;
-		int i;
-		const float frontLerp = 1.0 - backLerp;
+	mAliasTagOrientation_t tag;
+	const float frontLerp = 1.0 - backLerp;
 
-		/* interpolate */
-		for (i = 0; i < 3; i++) {
-			tag.origin[i] = old->origin[i] * backLerp + current->origin[i] * frontLerp;
-			tag.axis[0][i] = old->axis[0][i] * backLerp + current->axis[0][i] * frontLerp;
-			tag.axis[1][i] = old->axis[1][i] * backLerp + current->axis[1][i] * frontLerp;
-			tag.axis[2][i] = old->axis[2][i] * backLerp + current->axis[2][i] * frontLerp;
-		}
-		VectorNormalizeFast(tag.axis[0]);
-		VectorNormalizeFast(tag.axis[1]);
-		VectorNormalizeFast(tag.axis[2]);
-
-		R_ComputeGLMatrixFromTag(interpolated, &tag);
+	/* interpolate */
+	for (int i = 0; i < 3; i++) {
+		tag.origin[i] = old->origin[i] * backLerp + current->origin[i] * frontLerp;
+		tag.axis[0][i] = old->axis[0][i] * backLerp + current->axis[0][i] * frontLerp;
+		tag.axis[1][i] = old->axis[1][i] * backLerp + current->axis[1][i] * frontLerp;
+		tag.axis[2][i] = old->axis[2][i] * backLerp + current->axis[2][i] * frontLerp;
 	}
+	VectorNormalizeFast(tag.axis[0]);
+	VectorNormalizeFast(tag.axis[1]);
+	VectorNormalizeFast(tag.axis[2]);
+
+	R_ComputeGLMatrixFromTag(interpolated, &tag);
 }
 
 /**
@@ -249,8 +246,6 @@ void R_InterpolateTransform (float backLerp, int numframes, const mAliasTagOrien
  */
 int R_GetTagIndexByName (const model_t* mod, const char* tagName)
 {
-	int i;
-
 	if (!mod)
 		return -1;
 
@@ -260,7 +255,7 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
 	assert(tagName);
 
 	/* find the right tag in the first frame - the index is the same in every other frame */
-	for (i = 0; i < mod->alias.num_tags; i++) {
+	for (int i = 0; i < mod->alias.num_tags; i++) {
 		const mAliasTag_t* tag = &mod->alias.tags[i];
 		if (Q_streq(tag->name, tagName)) {
 			return i;
@@ -498,10 +493,9 @@ bool R_CullMeshModel (const entity_t* e)
 
 	for (i = 0; i < 8; i++) {
 		int mask = 0;
-		int j;
 		const int size = lengthof(r_locals.frustum);
 
-		for (j = 0; j < size; j++) {
+		for (int j = 0; j < size; j++) {
 			const cBspPlane_t* bspPlane = &r_locals.frustum[j];
 			/* get the distance between the frustum normal vector and the
 			 * current vector of the bounding box */
@@ -550,16 +544,14 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 
 static void R_DrawAliasTags (const mAliasModel_t* mod)
 {
-	int i;
 	const uint32_t color[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
 	glEnable(GL_LINE_SMOOTH);
 	R_EnableTexture(&texunit_diffuse, false);
 	R_EnableColorArray(true);
 
-	for (i = 0; i < mod->num_tags; i++) {
-		int j;
+	for (int i = 0; i < mod->num_tags; i++) {
 		const mAliasTag_t* tag = &mod->tags[i];
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			vec3_t out;
 			const mAliasTagOrientation_t* o = &tag->orient[mod->curFrame];
 			VectorMA(o->origin, 5, o->axis[j], out);

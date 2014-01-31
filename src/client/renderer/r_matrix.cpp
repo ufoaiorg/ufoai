@@ -514,25 +514,22 @@ void Matrix4x4_Invert_Simple (matrix4x4_t* out, const matrix4x4_t* in1)
 
 void Matrix4x4_Interpolate (matrix4x4_t* out, matrix4x4_t* in1, matrix4x4_t* in2, double frac)
 {
-	int i, j;
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; j++)
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
 			out->m[i][j] = in1->m[i][j] + frac * (in2->m[i][j] - in1->m[i][j]);
 }
 
 void Matrix4x4_Clear (matrix4x4_t* out)
 {
-	int i, j;
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; j++)
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
 			out->m[i][j] = 0;
 }
 
 void Matrix4x4_Accumulate (matrix4x4_t* out, matrix4x4_t* in, double weight)
 {
-	int i, j;
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; j++)
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
 			out->m[i][j] += in->m[i][j] * weight;
 }
 
@@ -547,11 +544,10 @@ void Matrix4x4_Normalize (matrix4x4_t* out, matrix4x4_t* in1)
 
 void Matrix4x4_Normalize3 (matrix4x4_t* out, matrix4x4_t* in1)
 {
-	int i;
 	/* scale each rotation matrix vector to a length of 1
 	 * intended for use after Matrix4x4_Interpolate or Matrix4x4_Accumulate */
 	*out = *in1;
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		double scale;
 #ifdef MATRIX4x4_OPENGLORIENTATION
 		scale = sqrt(in1->m[i][0] * in1->m[i][0] + in1->m[i][1] * in1->m[i][1] + in1->m[i][2] * in1->m[i][2]);
@@ -573,7 +569,6 @@ void Matrix4x4_Normalize3 (matrix4x4_t* out, matrix4x4_t* in1)
 
 void Matrix4x4_Reflect (matrix4x4_t* out, double normalx, double normaly, double normalz, double dist, double axisscale)
 {
-	int i;
 	double p[4], p2[4];
 	p[0] = normalx;
 	p[1] = normaly;
@@ -583,7 +578,7 @@ void Matrix4x4_Reflect (matrix4x4_t* out, double normalx, double normaly, double
 	p2[1] = p[1] * axisscale;
 	p2[2] = p[2] * axisscale;
 	p2[3] = 0;
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		double d;
 #ifdef MATRIX4x4_OPENGLORIENTATION
 		d = out->m[i][0] * p[0] + out->m[i][1] * p[1] + out->m[i][2] * p[2] + out->m[i][3] * p[3];
