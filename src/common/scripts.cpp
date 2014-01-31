@@ -1807,8 +1807,8 @@ struct parseItemWeapon_t {
 
 static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char** text)
 {
-	const char* token;
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+		const char* token;
 		/* get it's body */
 		token = Com_Parse(text);
 		if (!*text || *token != '{') {
