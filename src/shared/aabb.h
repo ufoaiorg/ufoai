@@ -29,11 +29,13 @@ Copyright (C) 2002-2013 UFO: Alien Invasion.
 #include "line.h"
 #include "defines.h"	/* for MAX_WORLD_WIDTH */
 #include <algorithm>
+#include "stdio.h"
 
 /**
  * @brief Axis-aligned bounding box
  */
 const float MWW = MAX_WORLD_WIDTH;
+#define AABB_STRING 64
 
 class AABB {
 public:
@@ -128,6 +130,15 @@ public:
 	inline void getCenter (vec3_t center) const {
 		VectorAdd(mins, maxs, center);
 		VectorScale(center, 0.5, center);
+	}
+	/**
+	 * @brief Prints a representation of the box
+	 * @param[out] str The output string, expected to be at least AABB_STRING wide
+	 */
+	inline void asIntString (char* str) {
+		sprintf(str, "(%i, %i, %i) (%i, %i, %i)",
+			(int) mins[0], (int) mins[1], (int) mins[2],
+			(int) maxs[0], (int) maxs[1], (int) maxs[2]	);
 	}
 
 	/*==================

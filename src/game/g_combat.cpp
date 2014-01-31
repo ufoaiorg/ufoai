@@ -810,14 +810,16 @@ static void DumpAllEntities (void)
 	Edict* check = nullptr;
 
 	while ((check = G_EdictsGetNext(check))) {
-		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
+		char absBoxStr[AABB_STRING];
+		char entBoxStr[AABB_STRING];
+		check->absBox.asIntString(absBoxStr);
+		check->absBox.asIntString(entBoxStr);
+		Com_DPrintf(DEBUG_GAME, "%i %s %s %s %s %s\n", i,
 			check->inuse ? "in use" : "unused",
 			check->classname,
 			check->model,
-			(int) check->absBox.mins[0], (int) check->absBox.mins[1], (int) check->absBox.mins[2],
-			(int) check->absBox.maxs[0], (int) check->absBox.maxs[1], (int) check->absBox.maxs[2],
-			(int) check->entBox.mins[0], (int) check->entBox.mins[1], (int) check->entBox.mins[2],
-			(int) check->entBox.maxs[0], (int) check->entBox.maxs[1], (int) check->entBox.maxs[2]);
+			absBoxStr,
+			entBoxStr);
 		i++;
 	}
 }
