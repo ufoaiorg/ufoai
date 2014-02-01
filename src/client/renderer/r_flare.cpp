@@ -35,7 +35,7 @@ void R_CreateSurfaceFlare (mBspSurface_t* surf)
 
 	/* calculate the flare radius based on surface size */
 	vec3_t span;
-	VectorSubtract(surf->mbsBox.maxs, surf->mbsBox.mins, span);
+	surf->mbsBox.getDiagonal(span);
 	surf->flare->radius = VectorLength(span);
 
 	const materialStage_t* s = m->stages; /* resolve the flare stage */

@@ -54,7 +54,7 @@ static worldSector_t* SV_CreateWorldSector (int depth, const AABB& sBox)
 	}
 
 	vec3_t size;
-	VectorSubtract(sBox.maxs, sBox.mins, size);
+	sBox.getDiagonal(size);
 	if (size[0] > size[1])
 		anode->axis = PLANE_X;
 	else
@@ -143,7 +143,7 @@ void SV_LinkEdict (edict_t* ent)
 		return;
 
 	/* set the size */
-	VectorSubtract(ent->entBox.maxs, ent->entBox.mins, ent->size);
+	ent->entBox.getDiagonal(ent->size);
 
 	/* increase the linkcount - even for none solids */
 	ent->linkcount++;

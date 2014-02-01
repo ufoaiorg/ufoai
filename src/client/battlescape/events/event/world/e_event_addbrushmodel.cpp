@@ -80,7 +80,7 @@ void CL_AddBrushModel (const eventRegister_t* self, dbuffer* msg)
 
 	/* Transfer model mins and maxs to entity */
 	le->aabb.set(model->cbmBox);
-	VectorSubtract(le->aabb.maxs, le->aabb.mins, le->size);
+	le->aabb.getDiagonal(le->size);
 	VecToPos(le->origin, le->pos);
 
 	/* to allow tracing against this le */
