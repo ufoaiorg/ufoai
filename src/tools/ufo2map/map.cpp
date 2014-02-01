@@ -441,7 +441,7 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 	int i, j;
 	side_t* side;
 
-	ClearBounds(brush->mbBox.mins, brush->mbBox.maxs);
+	brush->mbBox.setNegativeVolume();
 
 	for (i = 0; i < brush->numsides; i++) {
 		const plane_t* plane = &mapplanes[brush->original_sides[i].planenum];
