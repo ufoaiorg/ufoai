@@ -135,6 +135,9 @@ public:
 		VectorAdd(mins, maxs, center);
 		VectorScale(center, 0.5, center);
 	}
+	inline void getDiagonal (vec3_t diagonal) const {
+		VectorSubtract(maxs, mins, diagonal);
+	}
 	/**
 	 * @brief Prints a representation of the box
 	 * @param[out] str The output string, expected to be at least AABB_STRING wide
