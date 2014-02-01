@@ -534,37 +534,30 @@ int G_ActorGetContentFlags (const vec3_t origin)
  */
 bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
 {
-	Edict* floor;
-	bool newFloor;
-	Item* tc;
-	playermask_t mask;
-	inventory_action_t ia;
-	Item fromItemBackup, toItemBackup;
-	int fx, fy;
-	int originalTU, reservedTU = 0;
-	Player& player = actor->getPlayer();
-
 	assert(fItem);
 	assert(fItem->def());
 
 	/* Store the location/item of 'from' BEFORE actually moving items with moveInInventory. */
-	fromItemBackup = *fItem;
+	Item fromItemBackup = *fItem;
 
 	/* Store the location of 'to' BEFORE actually moving items with moveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = actor->chr.inv.getItemAtPos(toContType, tx, ty);
+	Item* tc = actor->chr.inv.getItemAtPos(toContType, tx, ty);
+	Item toItemBackup;
 	if (tc)
 		toItemBackup = *tc;
 	else
 		toItemBackup = *fItem;
 
 	/* Get first used bit in item. */
+	int fx, fy;
 	fItem->getFirstShapePosition(&fx, &fy);
 	fx += fItem->getX();
 	fy += fItem->getY();
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
+	Player& player = actor->getPlayer();
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, actor, 1))
 		return false;
 
@@ -574,7 +567,8 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	}
 
 	/* "get floor ready" - searching for existing floor-edict */
-	floor = G_GetFloorItems(actor);
+	Edict* floor = G_GetFloorItems(actor);
+	bool newFloor;
 	if (toContType->isFloorDef() && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(actor->pos);
@@ -601,11 +595,12 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
 	/* Because moveInInventory don't know anything about character_t and it updates actor->TU,
 	 * we need to save original actor->TU for the sake of checking TU reservations. */
-	originalTU = actor->TU;
-	reservedTU = G_ActorGetReservedTUs(actor);
+	int originalTU = actor->TU;
+	int reservedTU = G_ActorGetReservedTUs(actor);
 	/* Temporary decrease actor->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(actor, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid actor->TU. */
+	inventory_action_t ia;
 	ia = game.i.moveInInventory(&actor->chr.inv, fromContType, fItem, toContType, tx, ty, checkaction ? &actor->TU : nullptr, &item2);
 	/* Now restore the original actor->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(actor, originalTU - (originalTU - reservedTU - actor->TU));
@@ -656,6 +651,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 
 	assert(item2);
 	Item item = *item2;
+	playermask_t mask;
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
