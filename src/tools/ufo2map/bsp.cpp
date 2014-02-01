@@ -76,8 +76,8 @@ static void ProcessSubModel (int entityNum)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-	aabb.mins[0] = aabb.mins[1] = aabb.mins[2] = -MAX_WORLD_WIDTH;
-	aabb.maxs[0] = aabb.maxs[1] = aabb.maxs[2] = MAX_WORLD_WIDTH;
+	aabb.reset();
+	aabb.expand(MAX_WORLD_WIDTH);
 
 	/* every level (-1) */
 	list = MakeBspBrushList(start, end, -1, aabb);
