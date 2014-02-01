@@ -77,6 +77,10 @@ public:
 	inline void setMaxZ (float zVal) {
 		maxs[2] = zVal;
 	}
+	inline void reset () {
+		mins[0] = mins[1] = mins[2] = 0;
+		maxs[0] = maxs[1] = maxs[2] = 0;
+	}
 	/**
 	 * @brief Sets mins and maxs to their starting points before using addPoint
 	 */

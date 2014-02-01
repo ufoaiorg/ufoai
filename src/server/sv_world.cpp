@@ -573,8 +573,7 @@ bool SV_LoadModelAABB (const char* model, int frame, AABB& aabb)
 		sv->numSVModels++;
 	}
 
-	VectorCopy(vec3_origin, aabb.mins);
-	VectorCopy(vec3_origin, aabb.maxs);
+	aabb.reset();
 
 	/* load the file */
 	if (Com_GetExtension(model) == nullptr) {
