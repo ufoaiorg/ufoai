@@ -854,13 +854,6 @@ void AIR_MoveAircraftIntoNewHomebase (aircraft_t* aircraft, base_t* base)
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
-	/* Is aircraft being transfered? */
-	if (aircraft->status == AIR_TRANSFER) {
-		/* Move the aircraft to the new base to avoid fuel problems */
-		VectorCopy(base->pos, aircraft->pos);
-		aircraft->status = AIR_HOME;
-	}
-
 	oldBase = aircraft->homebase;
 	assert(oldBase);
 
