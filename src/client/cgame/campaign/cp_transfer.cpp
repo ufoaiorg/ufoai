@@ -112,12 +112,17 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 		transfer->alienCargo = nullptr;
 	}
 
-	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
-		TR_ForeachAircraft(aircraft, transfer) {
-			AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
+	TR_ForeachAircraft(aircraft, transfer) {
+		if (success) {
+			VectorCopy(destination->pos, aircraft->pos);
+			aircraft->status = AIR_HOME;
+			if (!destination->aircraftCurrent)
+				destination->aircraftCurrent = aircraft;
+		} else {
+			AIR_DeleteAircraft(aircraft);
 		}
-		cgi->LIST_Delete(&transfer->aircraft);
 	}
+	cgi->LIST_Delete(&transfer->aircraft);
 }
 
 /**
@@ -214,10 +219,21 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 
 	/* Aircraft */
 	LIST_Foreach(transData.aircraft, aircraft_t, aircraft) {
+		const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
+		aircraft->homebase = transData.transferBase;
 		transfer.hasAircraft = true;
 		cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
+		if (srcBase->aircraftCurrent == aircraft)
+			srcBase->aircraftCurrent = AIR_GetFirstFromBase(srcBase);
+		CAP_AddCurrent(srcBase, capacity, -1);
+
+		/* This should happen in TR_EmptyTransferCargo but on loading capacities are
+			calculated based on aircraft->homebase. aircraft->homebase cannot be null yet
+			there are hidden tests on that. */
+		CAP_AddCurrent(transData.transferBase, capacity, 1);
+
 		count++;
 	}
 
