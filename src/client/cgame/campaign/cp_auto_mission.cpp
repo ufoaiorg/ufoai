@@ -561,6 +561,7 @@ static autoUnit_t* AM_GetRandomActiveUnit (autoMissionBattle_t* battle, int curr
  * @brief Check and do attack on a team
  * @param[in, out] battle The battle we fight
  * @param[in] currUnit Soldier idx who attacks
+ * @param[in] eUnit The enemy
  * @param[in] effective Effectiveness of the attack
  */
 static bool AM_CheckFire (autoMissionBattle_t* battle, autoUnit_t* currUnit, autoUnit_t* eUnit, const double effective)
