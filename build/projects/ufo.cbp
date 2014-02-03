@@ -165,8 +165,6 @@
 		<Unit filename="../../base/ufos/ui/_objectinfo.ufo" />
 		<Unit filename="../../base/ufos/ui/aircraft.ufo" />
 		<Unit filename="../../base/ufos/ui/aircraft_equip.ufo" />
-		<Unit filename="../../base/ufos/ui/aircraft_info.ufo" />
-		<Unit filename="../../base/ufos/ui/aircraft_pilots.ufo" />
 		<Unit filename="../../base/ufos/ui/aircraft_soldiers.ufo" />
 		<Unit filename="../../base/ufos/ui/aliencont.ufo" />
 		<Unit filename="../../base/ufos/ui/basedefence.ufo" />
