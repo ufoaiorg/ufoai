@@ -74,7 +74,7 @@ window iaircraft
 					icon	"icons/tab_air_equipment"
 				}
 				option soldier {
-					label	"_Soldiers"
+					label	"_Soldiers & Pilots"
 					value	"team"
 					icon	"icons/smallhead_soldier"
 				}
