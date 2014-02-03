@@ -149,9 +149,10 @@ void SP_func_breakable (Edict* ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 
-	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->entBox.mins[0], (int)ent->entBox.mins[1], (int)ent->entBox.mins[2],
-			(int)ent->entBox.maxs[0], (int)ent->entBox.maxs[1], (int)ent->entBox.maxs[2],
+	char boxStr[AABB_STRING];
+	ent->entBox.asIntString(boxStr);
+	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i %s origin: %i %i %i\n",
+			ent->model, ent->mapNum, boxStr,
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 
 	ent->destroy = Destroy_Breakable;

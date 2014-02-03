@@ -602,10 +602,10 @@ static void G_ActorSpawn (Edict* ent)
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
-	if (ent->entBox.maxs[0] == 0)
-		VectorSet(ent->entBox.maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-	if (ent->entBox.mins[0] == 0)
-		VectorSet(ent->entBox.mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
+	if (ent->entBox.getMaxX() == 0)
+		ent->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	if (ent->entBox.getMinX() == 0)
+		ent->entBox.setMins(-PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
 }
 
 /**
@@ -640,10 +640,10 @@ static void G_Actor2x2Spawn (Edict* ent)
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
-	if (ent->entBox.maxs[0] == 0)
-		VectorSet(ent->entBox.maxs, PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
-	if (ent->entBox.mins[0] == 0)
-		VectorSet(ent->entBox.mins, -PLAYER2x2_WIDTH, -PLAYER2x2_WIDTH, PLAYER_MIN);
+	if (ent->entBox.getMaxX() == 0)
+		ent->entBox.setMaxs(PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
+	if (ent->entBox.getMinX() == 0)
+		ent->entBox.setMins(-PLAYER2x2_WIDTH, -PLAYER2x2_WIDTH, PLAYER_MIN);
 }
 
 /**
@@ -717,8 +717,8 @@ static void SP_2x2_start (Edict* ent)
 		ent->team = TEAM_PHALANX;
 
 	/* these units are bigger */
-	VectorSet(ent->entBox.maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
-	VectorSet(ent->entBox.mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
+	ent->entBox.setMaxs(PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
+	ent->entBox.setMins(-(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
 	/* spawn singleplayer 2x2 unit */
 	G_Actor2x2Spawn(ent);
@@ -978,8 +978,8 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 	ent->type = type;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
 	ent->solid = solid;
-	VectorSet(ent->entBox.maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorSet(ent->entBox.mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
+	ent->entBox.setMaxs(UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
+	ent->entBox.setMins(-UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
 	G_EdictCalcOrigin(ent);
 	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;
