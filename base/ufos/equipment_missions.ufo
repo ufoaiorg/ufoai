@@ -104,7 +104,7 @@ equipment alien_workers1
 	// Primary
 
 	// Secondary
-	item (plaspistol		100)
+	item (plaspistol		85)
 	item (plaspistol_ammo	1)
 
 	// Misc
@@ -117,9 +117,9 @@ equipment alien_workers2
 	maxinterest		109
 
 	// Primary
-	item (plasrifle			50)
+	item (plasrifle			45)
 	item (plasrifle_ammo	1)
-	item (plasblaster		50)
+	item (plasblaster		45)
 	item (plasblaster_ammo	1)
 
 	// Misc
@@ -210,7 +210,7 @@ equipment alien_soldiers1
 	// Primary
 
 	// Secondary
-	item (plaspistol		100)
+	item (plaspistol		85)
 	item (plaspistol_ammo	1)
 
 	// Misc
