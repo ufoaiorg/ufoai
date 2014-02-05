@@ -42,10 +42,10 @@ static Inventory game_inventory;
 static bool characterActive[MAX_ACTIVETEAM];
 
 typedef struct teamSaveFileHeader_s {
-	uint32_t version; /**< which savegame version */
-	uint32_t soldiercount; /** the number of soldiers stored in this savegame */
-	char name[32]; /**< savefile name */
-	uint32_t xmlSize; /** needed, if we store compressed */
+	uint32_t version;		/**< which savegame version */
+	uint32_t soldiercount;	/** the number of soldiers stored in this savegame */
+	char name[32];			/**< savefile name */
+	uint32_t xmlSize;		/** needed, if we store compressed */
 } teamSaveFileHeader_t;
 
 static void GAME_UpdateActiveTeamList (void)
