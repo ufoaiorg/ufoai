@@ -596,7 +596,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 	} else if (!weapon->isReloadable()) {
-		item.setAmmoDef(item.def());	/* no ammo needed, so fire definitions are in item */
+		item.setAmmoDef(weapon);	/* no ammo needed, so fire definitions are in item */
 	} else {
 		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 		 * weapon in equipment definition) */
@@ -656,6 +656,8 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 		packed = tryAddToInventory(inv, &item, &csi->ids[CID_BELT]);
 	if (!packed)
 		packed = tryAddToInventory(inv, &item, &csi->ids[CID_HOLSTER]);
+	if (!packed)
+		packed = tryAddToInventory(inv, &item, &csi->ids[CID_BACKPACK]);
 	if (!packed)
 		return 0;
 
