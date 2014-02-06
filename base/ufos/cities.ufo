@@ -730,6 +730,12 @@ city douglas_isle_of_man
 	pos "4.4833 54.1333"
 }
 
+city dresden_germany
+{
+	name "_Dresden"
+	pos "-13.7383 51.0492"
+}
+
 city dublin
 {
 	name "_Dublin"
