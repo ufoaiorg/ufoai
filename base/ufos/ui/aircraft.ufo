@@ -124,6 +124,9 @@ window iaircraft
 					layoutMargin	2
 					invis			true
 				}
+				confunc ui_aircraft_clear {
+					call *node:parent.aircraftlistNew@removeAllchild
+				}
 				confunc ui_aircraft_select {
 					if ( *node:parent.selected@string ne "" ) {
 						*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
