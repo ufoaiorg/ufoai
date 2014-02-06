@@ -7,13 +7,17 @@ component aircraftListItem extends panel
 	{
 		size		"120 25"
 	}
+	data idx
+	{
+		string		""
+	}
 	string name
 	{
 		pos			"0 0"
 		color		"0.56 0.81 0.76 1"
 		size		"120 25"
 		onClick {
-//			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
+			cmd "mn_select_aircraft <node:parent.idx@string>; ui_aircraft_select <node:parent.idx@string>"
 		}
 	}
 }
@@ -108,6 +112,10 @@ window iaircraft
 				bordercolor	"0.527 0.6 0.21 1"
 				}
 
+				data selected
+				{
+					string		""
+				}
 				panel aircraftlistNew
 				{
 					pos				"300 50"
@@ -116,10 +124,17 @@ window iaircraft
 					layoutMargin	2
 					invis			true
 				}
+				confunc ui_aircraft_select {
+					if ( *node:parent.selected@string ne "" ) {
+						*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
+					}
+					*node:parent.selected@string = "<1>"
+					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
+				}
 				textlist aircraft_list
 				{
 					pos			"11 53"
-					size		"345 95"
+					size		"280 95"
 					rows		4
 					lineheight	20
 					dataid		TEXT_AIRCRAFT_LIST
@@ -289,11 +304,13 @@ window iaircraft
 	// aircraft list callback
 	// ==================
 
-	// <1> the aircraft name
+	// <1> the aircraft index in the base
+	// <2> the aircraft name
 	confunc ui_aircraft_add {
-		cmd "echo <1>"
+//		cmd "echo <1> <2>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew@createChild("<1>", "aircraftListItem")
-		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<1>"
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.idx@string = "<1>"
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"
 	}
 	/**
 	 * @brief Callback to update the GUI after an aircraft change
