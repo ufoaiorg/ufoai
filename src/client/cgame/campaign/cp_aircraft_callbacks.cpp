@@ -231,6 +231,14 @@ static void AIR_AircraftUpdateList_f (void)
 
 	cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
+static void AIR_AircraftFillList_f (void)
+{
+	base_t* base = B_GetCurrentSelectedBase();
+
+	AIR_ForeachFromBase(aircraft, base) {
+		cgi->UI_ExecuteConfunc("ui_aircraft_add %s", _(aircraft->name));
+	}
+}
 
 /**
  * @brief Creates console command to change the name of an aircraft.
@@ -286,6 +294,7 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
 	cgi->Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, nullptr);
 	cgi->Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
+	cgi->Cmd_AddCommand("ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft.");
 }
 
 void AIR_ShutdownCallbacks (void)
@@ -295,4 +304,5 @@ void AIR_ShutdownCallbacks (void)
 	cgi->Cmd_RemoveCommand("mn_select_aircraft");
 	cgi->Cmd_RemoveCommand("aircraft_return");
 	cgi->Cmd_RemoveCommand("aircraft_update_list");
+	cgi->Cmd_RemoveCommand("ui_aircraft_fill");
 }

@@ -265,6 +265,10 @@ window iaircraft
 	// aircraft list callback
 	// ==================
 
+	// <1> the aircraft name
+	confunc ui_aircraft_add {
+		cmd "echo <1>"
+	}
 	/**
 	 * @brief Callback to update the GUI after an aircraft change
 	 */
