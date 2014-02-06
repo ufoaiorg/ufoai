@@ -33,19 +33,14 @@ MD2 ALIAS MODELS
 
 static void R_ModLoadTags (model_t* mod, void* buffer, int bufSize)
 {
-	dMD2tag_t* pintag;
-	int version;
-	int i, j;
-	float* inmat;
-	dMD2tag_t pheader;
+	dMD2tag_t* pintag = (dMD2tag_t*) buffer;
 
-	pintag = (dMD2tag_t*) buffer;
-
-	version = LittleLong(pintag->version);
+	int version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag has wrong version number (%i should be %i)", version, TAG_VERSION);
 
 	/* byte swap the header fields and sanity check */
+	dMD2tag_t pheader;
 	pheader.ident = LittleLong(pintag->ident);
 	pheader.version = LittleLong(pintag->version);
 	pheader.num_tags = LittleLong(pintag->num_tags);
@@ -62,7 +57,7 @@ static void R_ModLoadTags (model_t* mod, void* buffer, int bufSize)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file for %s has no frames", mod->name);
 
 	/* load tag matrices */
-	inmat = (float*) ((byte*) pintag + pheader.ofs_tags);
+	float* inmat = (float*) ((byte*) pintag + pheader.ofs_tags);
 
 	if (bufSize != pheader.ofs_end)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i",
@@ -86,12 +81,11 @@ static void R_ModLoadTags (model_t* mod, void* buffer, int bufSize)
 	mod->alias.num_tags = pheader.num_tags;
 	mAliasTag_t* pouttag = mod->alias.tags = Mem_PoolAllocTypeN(mAliasTag_t, mod->alias.num_tags, vid_modelPool);
 
-	for (j = 0; j < pheader.num_tags; j++, pouttag++) {
+	for (int j = 0; j < pheader.num_tags; j++, pouttag++) {
 		mAliasTagOrientation_t* pouttagorient = mod->alias.tags[j].orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, pheader.num_frames, vid_modelPool);
 		memcpy(pouttag->name, (char*) pintag + pheader.ofs_names + j * MD2_MAX_SKINNAME, sizeof(pouttag->name));
-		for (i = 0; i < pheader.num_frames; i++, pouttagorient++) {
-			int k;
-			for (k = 0; k < 3; k++) {
+		for (int i = 0; i < pheader.num_frames; i++, pouttagorient++) {
+			for (int k = 0; k < 3; k++) {
 				pouttagorient->axis[k][0] = LittleFloat(*inmat++);
 				pouttagorient->axis[k][1] = LittleFloat(*inmat++);
 				pouttagorient->axis[k][2] = LittleFloat(*inmat++);

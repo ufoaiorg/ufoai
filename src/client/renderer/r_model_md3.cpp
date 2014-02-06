@@ -37,15 +37,8 @@ MD3 ALIAS MODELS
  */
 void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 {
-	int version, i, j, l;
-	const dmd3_t* md3;
-	const dmd3frame_t* pinframe;
-	const dmd3mesh_t* pinmesh;
-	const dmd3vertex_t* pinvert;
-	float lat, lng;
-
-	md3 = (dmd3_t*)buffer;
-	version = LittleLong(md3->version);
+	const dmd3_t* md3 = (dmd3_t*)buffer;
+	int version = LittleLong(md3->version);
 
 	if (version != MD3_ALIAS_VERSION) {
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)",
@@ -74,12 +67,13 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 		Com_Error(ERR_DROP, "model %s has too many meshes", mod->name);
 
 	/* load the frames */
-	pinframe = (const dmd3frame_t*)((const byte*)md3 + LittleLong(md3->ofs_frames));
+	const dmd3frame_t* pinframe = (const dmd3frame_t*)((const byte*)md3 + LittleLong(md3->ofs_frames));
 	mAliasFrame_t* poutframe = mod->alias.frames = Mem_PoolAllocTypeN(mAliasFrame_t, mod->alias.num_frames, vid_modelPool);
 
 	mod->radius = 0;
 	mod->modBox.setNegativeVolume();
 
+	int i, j, l;
 	for (i = 0; i < mod->alias.num_frames; i++, pinframe++, poutframe++) {
 		for (j = 0; j < 3; j++) {
 			poutframe->fBox.mins[j] = LittleFloat(pinframe->mins[j]);
@@ -113,7 +107,7 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 	}
 
 	/* load the meshes */
-	pinmesh = (const dmd3mesh_t*)((const byte*)md3 + LittleLong(md3->ofs_meshes));
+	const dmd3mesh_t* pinmesh = (const dmd3mesh_t*)((const byte*)md3 + LittleLong(md3->ofs_meshes));
 	mAliasMesh_t* poutmesh = mod->alias.meshes = Mem_PoolAllocTypeN(mAliasMesh_t, mod->alias.num_meshes, vid_modelPool);
 
 	for (i = 0; i < mod->alias.num_meshes; i++, poutmesh++) {
@@ -173,11 +167,13 @@ void R_ModLoadAliasMD3Model (model_t* mod, byte* buffer, int bufSize)
 		}
 
 		/* load the vertexes and normals */
-		pinvert = (const dmd3vertex_t*)((const byte*)pinmesh + LittleLong(pinmesh->ofs_verts));
+		const dmd3vertex_t* pinvert = (const dmd3vertex_t*)((const byte*)pinmesh + LittleLong(pinmesh->ofs_verts));
 		mAliasVertex_t* poutvert = poutmesh->vertexes = Mem_PoolAllocTypeN(mAliasVertex_t, mod->alias.num_frames * poutmesh->num_verts, vid_modelPool);
 
 		for (l = 0; l < mod->alias.num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {
+				float lat, lng;
+
 				poutvert->point[0] = LittleShort(pinvert->point[0]) * MD3_XYZ_SCALE;
 				poutvert->point[1] = LittleShort(pinvert->point[1]) * MD3_XYZ_SCALE;
 				poutvert->point[2] = LittleShort(pinvert->point[2]) * MD3_XYZ_SCALE;
