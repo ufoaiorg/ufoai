@@ -2,6 +2,22 @@
 // INTERFACE FOR ALL AIRCRAFT MENUS
 // =================================
 
+component aircraftListItem extends panel
+{
+	{
+		size		"120 25"
+	}
+	string name
+	{
+		pos			"0 0"
+		color		"0.56 0.81 0.76 1"
+		size		"120 25"
+		onClick {
+//			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
+		}
+	}
+}
+
 component aircraft_teammember extends panel {
 	{
 		size		"260 25"
@@ -92,6 +108,14 @@ window iaircraft
 				bordercolor	"0.527 0.6 0.21 1"
 				}
 
+				panel aircraftlistNew
+				{
+					pos				"300 50"
+					size			"120 90"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					invis			true
+				}
 				textlist aircraft_list
 				{
 					pos			"11 53"
@@ -268,6 +292,8 @@ window iaircraft
 	// <1> the aircraft name
 	confunc ui_aircraft_add {
 		cmd "echo <1>"
+		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew@createChild("<1>", "aircraftListItem")
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<1>"
 	}
 	/**
 	 * @brief Callback to update the GUI after an aircraft change

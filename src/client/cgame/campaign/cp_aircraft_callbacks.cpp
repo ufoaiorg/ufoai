@@ -236,7 +236,7 @@ static void AIR_AircraftFillList_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	AIR_ForeachFromBase(aircraft, base) {
-		cgi->UI_ExecuteConfunc("ui_aircraft_add %s", _(aircraft->name));
+		cgi->UI_ExecuteConfunc("ui_aircraft_add \"%s\"", _(aircraft->name));
 	}
 }
 
