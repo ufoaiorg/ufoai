@@ -118,11 +118,11 @@ window iaircraft
 				}
 				panel aircraftlistNew
 				{
-					pos				"300 50"
-					size			"120 90"
+					pos				"11 53"
+					size			"280 95"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
-					invis			true
+//					invis			true
 				}
 				confunc ui_aircraft_clear {
 					call *node:parent.aircraftlistNew@removeAllchild
@@ -134,7 +134,7 @@ window iaircraft
 					*node:parent.selected@string = <1>
 					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
 				}
-				textlist aircraft_list
+/*				textlist aircraft_list
 				{
 					pos			"11 53"
 					size		"280 95"
@@ -152,7 +152,6 @@ window iaircraft
 						cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
 					}
 				}
-
 				vscrollbar aircraft_list_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"373 51"
@@ -165,6 +164,7 @@ window iaircraft
 						*node:parent.aircraft_list@viewpos = <current>
 					}
 				}
+*/
 
 				textentry aircraft_selected
 				{
