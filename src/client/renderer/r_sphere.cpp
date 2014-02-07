@@ -55,8 +55,6 @@ void R_SphereGenerate (sphere_t* sphere, const int tris, const float radius)
 	 * otherwise it goes wrong when tris is an odd number */
 	const float dtheta = 2.0f * M_PI / tris; /**< angle around the equator, from y-axis */
 
-	int i, j;
-
 	int vertspos = 0;
 	int texespos = 0;
 
@@ -67,9 +65,9 @@ void R_SphereGenerate (sphere_t* sphere, const int tris, const float radius)
 	sphere->normals = Mem_PoolAllocTypeN(float, (tris + 1) * (tris + 2) * 6, vid_genericPool);
 
 	/* must be i <= tris, as one loop is wasted, because of the spiral */
-	for (i = 0; i <= tris; i++) { /* loop through rho, from pole to pole */
+	for (int i = 0; i <= tris; i++) { /* loop through rho, from pole to pole */
 		/* must be j <= tris, so it meets up again */
-		for (j = 0; j <= tris ; j++) { /* loop through theta, around equator */
+		for (int j = 0; j <= tris ; j++) { /* loop through theta, around equator */
 			const float theta = j * dtheta;
 			const float stheta = (float) (-sin(theta));
 			const float ctheta = (float) (cos(theta));

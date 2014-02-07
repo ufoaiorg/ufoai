@@ -857,8 +857,6 @@ void R_Setup2D (void)
 
 void R_SetDefaultState (void)
 {
-	int i;
-
 	r_state.shell_enabled = false;
 	r_state.blend_enabled = false;
 	r_state.color_array_enabled = false;
@@ -909,7 +907,7 @@ void R_SetDefaultState (void)
 	R_CheckError();
 
 	/* setup texture units */
-	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
+	for (int i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t* tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
 		tex->enabled = false;

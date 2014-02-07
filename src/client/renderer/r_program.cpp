@@ -264,15 +264,13 @@ static void R_ShutdownProgram (r_program_t* prog)
 
 void R_ShutdownPrograms (void)
 {
-	int i;
-
 	if (!qglDeleteProgram)
 		return;
 
 	if (!r_programs->integer)
 		return;
 
-	for (i = 0; i < MAX_PROGRAMS; i++) {
+	for (int i = 0; i < MAX_PROGRAMS; i++) {
 		if (!r_state.programs[i].id)
 			continue;
 
@@ -968,14 +966,13 @@ static void R_InitConvolveProgram (r_program_t* prog)
  */
 static void R_UseConvolveProgram (r_program_t* prog)
 {
-	int i;
 	const float* userdata= (float*)prog->userdata;
 	float offsets[FILTER_SIZE * 2];
 	const float halfWidth = (FILTER_SIZE - 1) * 0.5;
 	const float offset = 1.2f / userdata[0];
 	const float x = userdata[1] * offset;
 
-	for (i = 0; i < FILTER_SIZE; i++) {
+	for (int i = 0; i < FILTER_SIZE; i++) {
 		const float y = (float)i - halfWidth;
 		const float z = x * y;
 		offsets[i * 2 + 0] = offset * y - z;
