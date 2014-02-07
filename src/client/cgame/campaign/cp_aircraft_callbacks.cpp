@@ -219,19 +219,8 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 }
 
 /**
- * @brief Update TEXT_AIRCRAFT_LIST with the current base aircraft names
+ * @brief Update aircraft selection list with the current base aircraft names
  */
-static void AIR_AircraftUpdateList_f (void)
-{
-	linkedList_t* list = nullptr;
-	base_t* base = B_GetCurrentSelectedBase();
-
-	AIR_ForeachFromBase(aircraft, base) {
-		cgi->LIST_AddString(&list, _(aircraft->name));
-	}
-
-	cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
-}
 static void AIR_AircraftFillList_f (void)
 {
 	base_t* base = B_GetCurrentSelectedBase();
@@ -296,7 +285,6 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft, popup_transferbaselist */
 	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	cgi->Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, nullptr);
 	cgi->Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 	cgi->Cmd_AddCommand("ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft.");
 }
@@ -307,6 +295,5 @@ void AIR_ShutdownCallbacks (void)
 	cgi->Cmd_RemoveCommand("aircraft_start");
 	cgi->Cmd_RemoveCommand("ui_aircraft_select");
 	cgi->Cmd_RemoveCommand("aircraft_return");
-	cgi->Cmd_RemoveCommand("aircraft_update_list");
 	cgi->Cmd_RemoveCommand("ui_aircraft_fill");
 }
