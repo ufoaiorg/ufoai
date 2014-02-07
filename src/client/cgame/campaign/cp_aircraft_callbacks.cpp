@@ -214,6 +214,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	cgi->Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
+	cgi->UI_ExecuteConfunc("ui_aircraft_select %i", id);
 	cgi->UI_ExecuteConfunc("aircraft_change %i", id);
 }
 
