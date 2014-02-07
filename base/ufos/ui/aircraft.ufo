@@ -106,10 +106,10 @@ window iaircraft
 
 			panel aircraftlist {
 				{
-				pos			"5 70"
-				size		"433 150"
-				border		"2"
-				bordercolor	"0.527 0.6 0.21 1"
+					pos			"5 70"
+					size		"433 150"
+					border		"2"
+					bordercolor	"0.527 0.6 0.21 1"
 				}
 
 				data selected
@@ -138,20 +138,6 @@ window iaircraft
 					*node:parent.selected@string = <1>
 					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
 				}
-/*				textlist aircraft_list
-				{
-					pos			"11 53"
-					size		"280 95"
-					rows		4
-					lineheight	20
-					dataid		TEXT_AIRCRAFT_LIST
-					color	"0.56 0.81 0.76 1"
-					selectcolor	"1 1 1 1"
-					onClick {
-						cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
-					}
-				}
-*/
 				vscrollbar aircraftlistNew_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"373 51"
