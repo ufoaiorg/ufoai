@@ -122,7 +122,11 @@ window iaircraft
 					size			"280 95"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
-//					invis			true
+					onViewChange {
+						*node:parent.aircraftlistNew_scroll@fullsize = <fullsize>
+						*node:parent.aircraftlistNew_scroll@viewsize = <viewsize>
+						*node:parent.aircraftlistNew_scroll@current = <viewpos>
+					}
 				}
 				confunc ui_aircraft_clear {
 					call *node:parent.aircraftlistNew@removeAllchild
@@ -143,16 +147,12 @@ window iaircraft
 					dataid		TEXT_AIRCRAFT_LIST
 					color	"0.56 0.81 0.76 1"
 					selectcolor	"1 1 1 1"
-					onViewChange {
-						*node:parent.aircraft_list_scroll@fullsize = <fullsize>
-						*node:parent.aircraft_list_scroll@viewsize = <viewsize>
-						*node:parent.aircraft_list_scroll@current = <viewpos>
-					}
 					onClick {
 						cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
 					}
 				}
-				vscrollbar aircraft_list_scroll {
+*/
+				vscrollbar aircraftlistNew_scroll {
 					image			"ui/scrollbar_v_green"
 					pos				"373 51"
 					height			"95"
@@ -161,10 +161,9 @@ window iaircraft
 					fullsize		19
 					hidewhenunused	true
 					onChange {
-						*node:parent.aircraft_list@viewpos = <current>
+						*node:parent.aircraftlistNew@viewpos = <current>
 					}
 				}
-*/
 
 				textentry aircraft_selected
 				{
