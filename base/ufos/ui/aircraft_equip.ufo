@@ -658,7 +658,7 @@ window aircraft_equip extends iaircraft
 		*cvar:mn_aircrafttab = "aircraft_equip"
 		cmd "aircraft_update_list;"
 		cmd "ui_aircraft_fill;"
-		cmd "mn_select_aircraft <1>"
+		cmd "ui_aircraft_select <1>"
 		*cvar:mn_lastsubmenu = "aircraft"
 		*node:root.base_container.mainBody.airequipslot@invis = true
 		*node:root.base_container.mainBody.airview@invis = false

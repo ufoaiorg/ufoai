@@ -537,7 +537,7 @@ window bases
 			THEN ADD THIS TO AIRCRAFT onWindowOpened
 			if (<1> ne "") {
 				*cvar:mn_aircraft_id = <1>
-				cmd "mn_select_aircraft \"<1>\";"
+				cmd "ui_aircraft_select \"<1>\";"
 			}
 		 */
 	}

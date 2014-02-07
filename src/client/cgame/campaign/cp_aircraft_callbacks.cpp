@@ -214,7 +214,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	cgi->Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
-	cgi->UI_ExecuteConfunc("ui_aircraft_select %i", id);
+	cgi->UI_ExecuteConfunc("ui_aircraft_selected %i", id);
 	cgi->UI_ExecuteConfunc("aircraft_change %i", id);
 }
 
@@ -292,7 +292,7 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft */
 	cgi->Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, nullptr);
 	/* menu aircraft_equip, aircraft */
-	cgi->Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, nullptr);
+	cgi->Cmd_AddCommand("ui_aircraft_select", AIM_SelectAircraft_f, nullptr);
 	/* menu aircraft, popup_transferbaselist */
 	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
@@ -305,7 +305,7 @@ void AIR_ShutdownCallbacks (void)
 {
 	cgi->Cmd_RemoveCommand("aircraft_namechange");
 	cgi->Cmd_RemoveCommand("aircraft_start");
-	cgi->Cmd_RemoveCommand("mn_select_aircraft");
+	cgi->Cmd_RemoveCommand("ui_aircraft_select");
 	cgi->Cmd_RemoveCommand("aircraft_return");
 	cgi->Cmd_RemoveCommand("aircraft_update_list");
 	cgi->Cmd_RemoveCommand("ui_aircraft_fill");
