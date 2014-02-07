@@ -285,13 +285,13 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft, popup_transferbaselist */
 	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	cgi->Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
+	cgi->Cmd_AddCommand("ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 	cgi->Cmd_AddCommand("ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft.");
 }
 
 void AIR_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("aircraft_namechange");
+	cgi->Cmd_RemoveCommand("ui_aircraft_changename");
 	cgi->Cmd_RemoveCommand("aircraft_start");
 	cgi->Cmd_RemoveCommand("ui_aircraft_select");
 	cgi->Cmd_RemoveCommand("aircraft_return");

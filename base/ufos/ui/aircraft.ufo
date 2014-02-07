@@ -158,7 +158,7 @@ window iaircraft
 					pos			"05 14"
 					size		"317 21"
 					font		"f_normal_bold"
-					onChange	{ cmd "aircraft_namechange; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
+					onChange	{ cmd "ui_aircraft_changename; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
 				}
 			}
 			panel aircraft_info
