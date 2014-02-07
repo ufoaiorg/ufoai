@@ -47,8 +47,8 @@ static cvar_t* cl_showactors;
 
 /* public */
 le_t* selActor;
-pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
-pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
+pos3_t truePos;		/**< The cell at the current worldlevel under the mouse cursor. */
+pos3_t mousePos;	/**< The cell that an actor will move to when directed to move. */
 static vec3_t mouseDraggingPos; /**< The world pos, which we "grab" to scroll the world in touchscreen mode. */
 
 /**

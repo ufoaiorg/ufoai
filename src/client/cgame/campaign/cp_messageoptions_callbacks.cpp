@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_messageoptions_callbacks.h"
 
 static msoMenuState_t msoMenuState = MSO_MSTATE_REINIT;
-static int messageList_size = 0; /**< actual messageSettings list size */
-static int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */
-static int visibleMSOEntries = 0; /**< actual visible entry count */
+static int messageList_size = 0;	/**< actual messageSettings list size */
+static int messageList_scroll = 0;	/**< actual messageSettings list begin index due to scrolling */
+static int visibleMSOEntries = 0;	/**< actual visible entry count */
 messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
 
 /**

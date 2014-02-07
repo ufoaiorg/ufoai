@@ -47,11 +47,11 @@ typedef void (*localEntityThinkFunc_t) (struct le_s*  le);
 
 #define LE_CHECK_LEVELFLAGS		0x0001
 #define LE_ALWAYS_VISIBLE		0x0002
-#define LE_LOCKED				0x0004 /**< if there is an event going on involving
-			 * this le_t.  Used to limit to one event per le_t struct at any time. */
-#define LE_REMOVE_NEXT_FRAME	0x0008 /**< will set the inuse value to false in the next frame */
+#define LE_LOCKED				0x0004	/**< if there is an event going on involving
+										 * this le_t.  Used to limit to one event per le_t struct at any time. */
+#define LE_REMOVE_NEXT_FRAME	0x0008	/**< will set the inuse value to false in the next frame */
 #define LE_INVISIBLE			0x0010
-#define LE_SELECTED				0x0020 /**< used for actors - for the current selected actor this is true */
+#define LE_SELECTED				0x0020	/**< used for actors - for the current selected actor this is true */
 
 typedef struct leStep_s {
 	int steps;

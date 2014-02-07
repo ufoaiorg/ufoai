@@ -113,10 +113,10 @@ static const value_t valid_building_vars[] = {
 	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
 
 	/*event handler functions */
-	{"onconstruct", V_HUNK_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
-	{"ondestroy", V_HUNK_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
-	{"onenable", V_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
-	{"ondisable", V_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
+	{"onconstruct", V_HUNK_STRING, offsetof(building_t, onConstruct), 0},	/**< Event handler. */
+	{"ondestroy", V_HUNK_STRING, offsetof(building_t, onDestroy), 0},		/**< Event handler. */
+	{"onenable", V_HUNK_STRING, offsetof(building_t, onEnable), 0},			/**< Event handler. */
+	{"ondisable", V_HUNK_STRING, offsetof(building_t, onDisable), 0},		/**< Event handler. */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{nullptr, V_NULL, 0, 0}
 };

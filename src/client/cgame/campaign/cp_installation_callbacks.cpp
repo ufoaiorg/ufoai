@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_uforecovery_callbacks.h"
 
- /**
+/**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
  * @note it also assigns description text
  */

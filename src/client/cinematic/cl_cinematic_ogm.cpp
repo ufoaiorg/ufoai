@@ -40,13 +40,13 @@ typedef struct
 {
 	qFILE ogmFile;
 
-	ogg_sync_state oy; /**< sync and verify incoming physical bitstream */
+	ogg_sync_state oy;		/**< sync and verify incoming physical bitstream */
 	ogg_stream_state os_audio;
 	ogg_stream_state os_video;
 
-	vorbis_dsp_state vd; /**< central working state for the packet->PCM decoder */
-	vorbis_info vi; /**< struct that stores all the static vorbis bitstream settings */
-	vorbis_comment vc; /**< struct that stores all the bitstream user comments */
+	vorbis_dsp_state vd;	/**< central working state for the packet->PCM decoder */
+	vorbis_info vi;			/**< struct that stores all the static vorbis bitstream settings */
+	vorbis_comment vc;		/**< struct that stores all the bitstream user comments */
 
 	/** @todo atm there isn't really a check for this (all "video" streams are handled
 	 * as xvid, because xvid support more than one "subtype") */
@@ -67,10 +67,10 @@ typedef struct
 	unsigned* outputBuffer;
 	int outputWidth;
 	int outputHeight;
-	int outputBufferSize; /**< in pixel (so "real bytesize" = outputBufferSize * 4) */
-	int videoFrameCount; /**< output video-stream */
+	int outputBufferSize;	/**< in pixel (so "real bytesize" = outputBufferSize * 4) */
+	int videoFrameCount;	/**< output video-stream */
 	ogg_int64_t Vtime_unit;
-	int currentTime; /**< input from run-function */
+	int currentTime;		/**< input from run-function */
 	int startTime;
 
 	musicStream_t musicStream;
