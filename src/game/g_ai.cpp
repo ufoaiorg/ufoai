@@ -801,7 +801,6 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
 			continue;
 
 		/* shooting */
-		maxDmg = 0.0;
 		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 			const bool freeHand = AI_IsHandForForShootTypeFree(shootType, ent);
 			const Item* item = freeHand ? grenade : AI_GetItemForShootType(shootType, ent);
