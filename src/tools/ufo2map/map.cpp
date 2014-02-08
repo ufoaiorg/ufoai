@@ -463,7 +463,7 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 		if (w) {
 			side->visible = true;
 			for (j = 0; j < w->numpoints; j++)
-				AddPointToBounds(w->p[j], brush->mbBox.mins, brush->mbBox.maxs);
+				brush->mbBox.add(w->p[j]);
 		}
 	}
 
