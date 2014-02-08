@@ -116,6 +116,16 @@ window iaircraft
 				{
 					string		""
 				}
+
+				textentry aircraft_selected
+				{
+					string		*cvar:mn_aircraftname
+					tooltip		"_Rename aircraft"
+					pos			"05 14"
+					size		"317 21"
+					font		"f_normal_bold"
+					onChange	{ cmd "ui_aircraft_changename; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
+				}
 				panel aircraftlistNew
 				{
 					pos				"11 53"
@@ -127,16 +137,6 @@ window iaircraft
 						*node:parent.aircraftlistNew_scroll@viewsize = <viewsize>
 						*node:parent.aircraftlistNew_scroll@current = <viewpos>
 					}
-				}
-				confunc ui_aircraft_clear {
-					call *node:parent.aircraftlistNew@removeAllchild
-				}
-				confunc ui_aircraft_selected {
-					if ( *node:parent.selected@string ne "" ) {
-						*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
-					}
-					*node:parent.selected@string = <1>
-					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
 				}
 				vscrollbar aircraftlistNew_scroll {
 					image			"ui/scrollbar_v_green"
@@ -150,15 +150,15 @@ window iaircraft
 						*node:parent.aircraftlistNew@viewpos = <current>
 					}
 				}
-
-				textentry aircraft_selected
-				{
-					string		*cvar:mn_aircraftname
-					tooltip		"_Rename aircraft"
-					pos			"05 14"
-					size		"317 21"
-					font		"f_normal_bold"
-					onChange	{ cmd "ui_aircraft_changename; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
+				confunc ui_aircraft_clear {
+					call *node:parent.aircraftlistNew@removeAllchild
+				}
+				confunc ui_aircraft_selected {
+					if ( *node:parent.selected@string ne "" ) {
+						*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
+					}
+					*node:parent.selected@string = <1>
+					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
 				}
 			}
 			panel aircraft_info
