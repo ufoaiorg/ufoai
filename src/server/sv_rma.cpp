@@ -443,6 +443,7 @@ static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* m
 
 /**
  * @brief Tries to extract a tile name from a cvar - the cvar value must start with a '+'
+ * @param[in,out] map All we know about the map to assemble
  * @param a the assembly
  * @param token The cvar name
  * @param filename The ump filename
