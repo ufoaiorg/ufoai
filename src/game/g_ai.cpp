@@ -108,21 +108,22 @@ void AI_Init (void)
  */
 static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, float radius)
 {
-	Edict* check = nullptr;
-	vec3_t dtarget, dcheck, back;
-	float cosSpread;
-
 	/* spread data */
 	if (spread < 1.0)
 		spread = 1.0;
 	spread *= torad;
-	cosSpread = cos(spread);
+
+	float cosSpread = cos(spread);
+	vec3_t dtarget;
 	VectorSubtract(target, ent->origin, dtarget);
 	VectorNormalizeFast(dtarget);
+	vec3_t back;
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
+	Edict* check = nullptr;
 	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
 		if (ent != check) {
+			vec3_t dcheck;
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -389,12 +390,12 @@ static bool AI_CheckPosition (const Edict* const ent)
  */
 bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
 {
-	const int distance = std::min(tuLeft, HIDE_DIST * 2);
-
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
 		hidePathingTable = (pathing_t*) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
+
 	/* search hiding spot */
+	const int distance = std::min(tuLeft, HIDE_DIST * 2);
 	G_MoveCalcLocal(hidePathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HIDE_DIST, 0);
@@ -443,15 +444,13 @@ bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
  */
 bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, int tu)
 {
-	const int distance = std::min(tu, HERD_DIST * 2);
-	vec_t bestlength = 0.0f;
-	pos3_t bestpos;
-	Edict* next = nullptr;
-	Edict* enemy = nullptr;
-
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
+
 	/* find the nearest enemy actor to the target*/
+	vec_t bestlength = 0.0f;
+	Edict* next = nullptr;
+	Edict* enemy = nullptr;
 	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
@@ -462,6 +461,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 	assert(enemy);
 
 	/* calculate move table */
+	const int distance = std::min(tu, HERD_DIST * 2);
 	G_MoveCalcLocal(herdPathingTable, 0, ent, from, distance);
 	ent->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HERD_DIST, 0);
@@ -470,7 +470,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 	const byte maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
 
 	/* search the location */
-	VectorCopy(from, bestpos);
+	pos3_t bestpos = {from[0], from[1], from[2]};
 	bestlength = VectorDistSqr(target, ent->origin);
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
@@ -1259,7 +1259,7 @@ static aiAction_t AI_PrepBestAction (const Player& player, Edict* ent)
 		for (to[1] = yl; to[1] < yh; ++to[1]) {
 			for (to[0] = xl; to[0] < xh; ++to[0]) {
 				const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
-				if (move && move >= ROUTING_NOT_REACHABLE)
+				if (move >= ROUTING_NOT_REACHABLE)
 					continue;
 				if (move > G_ActorUsableTUs(ent))
 					continue;
@@ -1379,8 +1379,6 @@ static void AI_TryToReloadWeapon (Edict* ent, containerIndex_t containerID)
  */
 void AI_ActorThink (Player& player, Edict* ent)
 {
-	aiAction_t bestAia;
-
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item* rightH = ent->getRightHandItem();
 	Item* leftH = ent->getLeftHandItem();
@@ -1397,7 +1395,7 @@ void AI_ActorThink (Player& player, Edict* ent)
 	if (!ent->getLeftHandItem() && !ent->getRightHandItem())
 		G_ClientGetWeaponFromInventory(ent);
 
-	bestAia = AI_PrepBestAction(player, ent);
+	aiAction_t bestAia = AI_PrepBestAction(player, ent);
 
 	/* shoot and hide */
 	if (bestAia.target) {
