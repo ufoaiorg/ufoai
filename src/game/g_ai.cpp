@@ -1219,7 +1219,6 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, aiAction
 	return bestActionScore;
 }
 
-#define AI_MAX_DIST	30
 /**
  * @brief Attempts to find the best action for an alien. Moves the alien
  * into the starting position for that action and returns the action.
