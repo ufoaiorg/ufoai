@@ -934,6 +934,7 @@ entity_t* FindTargetEntity (const char* target)
  * @brief Parsed map entites and brushes
  * @sa ParseBrush
  * @param[in] filename The map filename
+ * @param[in] entityString The body of the entity we are parsing
  */
 static bool ParseMapEntity (const char* filename, const char* entityString)
 {
