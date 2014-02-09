@@ -697,7 +697,7 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 	}
 }
 
-static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
+static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
 {
 	if (ent == target)
 		return false;
@@ -708,9 +708,18 @@ static inline bool AI_IsValidTarget (const Edict* ent, const Edict* target)
 	if (target->team == ent->team)
 		return false;
 
-	/* don't shoot civs in multiplayer */
-	if (G_IsMultiPlayer() || (g_aihumans->integer && !G_IsAI(ent)))
+	switch (ent->team) {
+	/* Aliens: Don't shoot civs in multiplayer (but hostile to everyone otherwise) */
+	case TEAM_ALIEN:
+		return !(G_IsMultiPlayer() && G_IsCivilian(target));
+	/* Civilians: Only hostile to aliens (until XVI is implemented) */
+	case TEAM_CIVILIAN:
+		return G_IsAlien(target);
+	/* PHALANX and MP teams: Hostile to aliens and rival teams
+	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
+	default:
 		return !G_IsCivilian(target);
+	}
 
 	return true;
 }
@@ -797,7 +806,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
 	Edict* check = nullptr;
 
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (G_EdictPosIsSameAs(check, to) || !AI_IsValidTarget(ent, check))
+		if (G_EdictPosIsSameAs(check, to) || !AI_IsHostile(ent, check))
 			continue;
 
 		/* shooting */
