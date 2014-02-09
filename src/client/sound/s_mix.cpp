@@ -40,9 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int S_AllocChannel (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_CHANNELS; i++) {
+	for (int i = 0; i < MAX_CHANNELS; i++) {
 		if (!s_env.channels[i].sample)
 			return i;
 	}
@@ -137,14 +135,12 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
  */
 void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float attenuation)
 {
-	s_channel_t* ch;
-	int i;
-
 	if (!sample || !sample->chunk)
 		return;
 
-	ch = nullptr;
+	s_channel_t* ch = nullptr;
 
+	int i;
 	for (i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
 		if (s_env.channels[i].sample == sample) {
 			vec3_t delta;
@@ -161,8 +157,6 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
 
 		VectorMix(ch->org, org, 1.0 / ch->count, ch->org);
 	} else {  /* or allocate a new one */
-		float volume;
-
 		if ((i = S_AllocChannel()) == -1)
 			return;
 
@@ -174,7 +168,7 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
 		ch->atten = attenuation;
 		ch->sample = sample;
 
-		volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
+		float volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
 		Mix_VolumeChunk(ch->sample->chunk, volume);
 		Mix_PlayChannel(i, ch->sample->chunk, 0);
 	}

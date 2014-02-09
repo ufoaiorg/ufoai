@@ -169,16 +169,14 @@ void S_FreeSamples (void)
  */
 void S_PrecacheSamples (void)
 {
-	int i, j, k;
-
 	if (!s_env.initialized)
 		return;
 
 	/* load weapon sounds */
-	for (i = 0; i < csi.numODs; i++) { /* i = obj */
+	for (int i = 0; i < csi.numODs; i++) { /* i = obj */
 		const objDef_t* od = INVSH_GetItemByIDX(i);
-		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
+		for (int j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
+			for (int k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
 				const fireDef_t* fd = &od->fd[j][k];
 				if (fd->fireSound != nullptr)
 					S_LoadSample(fd->fireSound);

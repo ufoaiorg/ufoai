@@ -80,18 +80,14 @@ void S_Frame (void)
 	M_Frame();
 
 	if (CL_OnBattlescape()) {
-		int i;
-		s_channel_t* ch;
-		le_t* le;
-
 		/* update right angle for stereo panning */
 		VectorCopy(cl.cam.axis[AXIS_RIGHT], s_env.right);
 		S_MumbleUpdate(cl.cam.camorg, cl.cam.axis[AXIS_FORWARD], cl.cam.axis[AXIS_RIGHT], cl.cam.axis[AXIS_UP]);
 
 		/* update spatialization for current sounds */
-		ch = s_env.channels;
+		s_channel_t* ch = s_env.channels;
 
-		for (i = 0; i < MAX_CHANNELS; i++, ch++) {
+		for (int i = 0; i < MAX_CHANNELS; i++, ch++) {
 			if (!ch->sample)
 				continue;
 
@@ -102,7 +98,7 @@ void S_Frame (void)
 		}
 
 		/* ambient sounds */
-		le = nullptr;
+		le_t* le = nullptr;
 		while ((le = LE_GetNextInUse(le))) {
 			if (le->type == ET_SOUND) {
 				s_sample_t* sample = S_GetSample(le->sampleIdx);
