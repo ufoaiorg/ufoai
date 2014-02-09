@@ -295,8 +295,9 @@ window iaircraft
 	// <1> the aircraft index in the base
 	// <2> the aircraft name
 	// <3> the aircraft health in percent
+	// <4> the aircraft status string
 	confunc ui_aircraft_add {
-//		cmd "echo <1> <2> <3>"
+//		cmd "echo <1> <2> <3> <4>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew@createChild("<1>", "aircraftListItem")
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.idx@string = "<1>"
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"

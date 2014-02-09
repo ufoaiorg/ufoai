@@ -229,7 +229,7 @@ static void AIR_AircraftFillList_f (void)
 	int idx = 0;
 	AIR_ForeachFromBase(aircraft, base) {
 		float health = aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0;
-		cgi->UI_ExecuteConfunc("ui_aircraft_add %i \"%s\" %3.0f", idx, _(aircraft->name), health);
+		cgi->UI_ExecuteConfunc("ui_aircraft_add %i \"%s\" %3.0f \"%s\"", idx, _(aircraft->name), health, AIR_AircraftStatusToName(aircraft));
 		idx++;
 	}
 }
