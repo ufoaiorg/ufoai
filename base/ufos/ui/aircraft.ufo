@@ -46,6 +46,41 @@ component aircraftListItem extends panel
 			}
 		}
 	}
+
+	string aircraft_status
+	{
+//		string		*cvar:mn_aircraftstatus
+		pos			"247 0"
+		size		"184 20"
+		contentalign	ALIGN_UL
+	}
+
+	button aircraft_return
+	{
+		{
+			pos			"432 0"
+			size		"16 16"
+			icon		"icons/aircraft_return"
+		}
+		func setToStart {
+			*node:parent@tooltip = "_Start Aircraft"
+			*node:parent@onClick = { cmd "aircraft_start;" }
+			*node:parent@icon = "icons/aircraft_send"
+		}
+		func setToReturn {
+			*node:parent@tooltip = "_Call back"
+			*node:parent@onClick = { cmd "aircraft_return;" }
+			*node:parent@icon = "icons/aircraft_return"
+		}
+	}
+	string team_hired
+	{
+		string		*cvar:mn_hired
+		pos			"470 120"
+		size		"90 20"
+		contentalign	ALIGN_CL
+		padding		0
+	}
 }
 
 component aircraft_teammember extends panel {
@@ -132,8 +167,8 @@ window iaircraft
 
 			panel aircraftlist {
 				{
-					pos			"5 70"
-					size		"433 150"
+					pos			"4 70"
+					size		"707 150"
 					border		"2"
 					bordercolor	"0.527 0.6 0.21 1"
 				}
@@ -155,7 +190,7 @@ window iaircraft
 				panel aircraftlistNew
 				{
 					pos				"11 53"
-					size			"280 95"
+					size			"690 95"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					onViewChange {
@@ -196,72 +231,36 @@ window iaircraft
 					padding		0
 				}
 
-			}
-			panel aircraft_info
-			{
-				{
-					pos		"440 70"
-					size	"270 150"
-					border		"2"
-					bordercolor	"0.527 0.6 0.21 1"
-					bgcolor		"0 0 0 1"
-				}
-
 				string aircraft_status_label
 				{
 					string		"_Status:"
-					pos			"10 30"
+					pos			"260 35"
 					size		"210 21"
 					contentalign	ALIGN_UL
 					padding		0
 				}
 
-				string aircraft_status
-				{
-					string		*cvar:mn_aircraftstatus
-					pos			"87 50"
-					size		"184 20"
-					contentalign	ALIGN_UL
-				}
-
-				button aircraft_return
-				{
-					{
-						pos			"10 50"
-						size		"16 16"
-						icon		"icons/aircraft_return"
-					}
-					func setToStart {
-						*node:parent@tooltip = "_Start Aircraft"
-						*node:parent@onClick = { cmd "aircraft_start;" }
-						*node:parent@icon = "icons/aircraft_send"
-					}
-					func setToReturn {
-						*node:parent@tooltip = "_Call back"
-						*node:parent@onClick = { cmd "aircraft_return;" }
-						*node:parent@icon = "icons/aircraft_return"
-					}
-				}
-
 				string team_members
 				{
-					string		"_Team Members:"
-					pos			"10 120"
-					size		"160 20"
-					contentalign	ALIGN_CL
-					padding		0
-				}
-
-				string team_hired
-				{
-					string		*cvar:mn_hired
-					pos			"182 120"
+					string		"_Team:"
+					pos			"480 35"
 					size		"90 20"
 					contentalign	ALIGN_CL
 					padding		0
 				}
 			}
-		}
+/*			panel aircraft_info
+			{
+				{
+					pos		"540 70"
+					size	"170 150"
+					border		"2"
+					bordercolor	"0.527 0.6 0.21 1"
+					bgcolor		"0 0 0 1"
+				}
+
+			}
+*/		}
 	}
 
 	BuildingSpace dropship
@@ -295,6 +294,8 @@ window iaircraft
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.idx@string = "<1>"
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_healthbar.setValues(<3>)
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_status@string = "<4>"
+		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToStart
 	}
 	/**
 	 * @brief Callback to update the GUI after an aircraft change
