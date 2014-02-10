@@ -171,15 +171,6 @@ window iaircraft
 					bgcolor		"0 0 0 1"
 				}
 
-				string aircraft_name
-				{
-					string		*cvar:mn_aircraftname
-					pos			"10 10"
-					size		"262 21"
-					contentalign	ALIGN_UL
-					padding		0
-				}
-
 				string aircraft_status_label
 				{
 					string		"_Status:"
