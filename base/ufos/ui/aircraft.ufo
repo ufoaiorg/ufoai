@@ -15,19 +15,19 @@ component aircraftListItem extends panel
 	{
 		pos			"0 0"
 		color		"0.56 0.81 0.76 1"
-		size		"120 25"
+		size		"150 25"
 		onClick {
 			cmd "ui_aircraft_select <node:parent.idx@string>;"
 		}
 	}
 	image aircraft_healthbarborder {
-		pos 	"130 5"
+		pos 	"160 5"
 		size	"106 7"
 		src 	"ui/bar_border"
 	}
 	bar aircraft_healthbar {
 		{
-			pos			"131 6"
+			pos			"161 6"
 			size		"104 5"
 			min			0
 			max			196
@@ -49,15 +49,15 @@ component aircraftListItem extends panel
 
 	string aircraft_status
 	{
-		pos			"247 0"
-		size		"184 20"
+		pos			"277 0"
+		size		"250 20"
 		contentalign	ALIGN_UL
 	}
 
 	button aircraft_return
 	{
 		{
-			pos			"432 0"
+			pos			"540 0"
 			size		"16 16"
 			icon		"icons/aircraft_return"
 		}
@@ -74,7 +74,7 @@ component aircraftListItem extends panel
 	}
 	string team_hired
 	{
-		pos			"470 0"
+		pos			"570 0"
 		size		"90 20"
 		contentalign	ALIGN_CL
 		padding		0
@@ -188,7 +188,7 @@ window iaircraft
 				panel aircraftlistNew
 				{
 					pos				"11 53"
-					size			"690 95"
+					size			"670 95"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 					onViewChange {
@@ -199,7 +199,7 @@ window iaircraft
 				}
 				vscrollbar aircraftlistNew_scroll {
 					image			"ui/scrollbar_v_green"
-					pos				"373 51"
+					pos				"681 51"
 					height			"95"
 					current			0
 					viewsize		11
@@ -223,7 +223,7 @@ window iaircraft
 				string aircraft_health_label
 				{
 					string		"_Health:"
-					pos			"140 35"
+					pos			"170 35"
 					size		"106 21"
 					contentalign	ALIGN_UL
 					padding		0
@@ -232,7 +232,7 @@ window iaircraft
 				string aircraft_status_label
 				{
 					string		"_Status:"
-					pos			"260 35"
+					pos			"290 35"
 					size		"210 21"
 					contentalign	ALIGN_UL
 					padding		0
@@ -241,9 +241,9 @@ window iaircraft
 				string team_members
 				{
 					string		"_Team:"
-					pos			"480 35"
+					pos			"580 35"
 					size		"90 20"
-					contentalign	ALIGN_CL
+					contentalign	ALIGN_UL
 					padding		0
 				}
 			}
@@ -373,12 +373,10 @@ window iaircraft
 		if ( *cvar:mn_aircraftinbase > 0 ) {
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
 
-			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToStart
 			*cvar:mn_aircraft_model_display = *cvar:mn_aircraft_model
 		} else {
 			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
 
-			call *node:root.base_container.mainBody.aircraft_info.aircraft_return.setToReturn
 			*cvar:mn_aircraft_model_display = "<cvar:mn_aircraft_model>_flying"
 		}
 	}
