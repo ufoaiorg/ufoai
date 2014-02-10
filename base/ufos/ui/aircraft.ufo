@@ -49,7 +49,6 @@ component aircraftListItem extends panel
 
 	string aircraft_status
 	{
-//		string		*cvar:mn_aircraftstatus
 		pos			"247 0"
 		size		"184 20"
 		contentalign	ALIGN_UL
@@ -75,8 +74,7 @@ component aircraftListItem extends panel
 	}
 	string team_hired
 	{
-		string		*cvar:mn_hired
-		pos			"470 120"
+		pos			"470 0"
 		size		"90 20"
 		contentalign	ALIGN_CL
 		padding		0
@@ -249,18 +247,7 @@ window iaircraft
 					padding		0
 				}
 			}
-/*			panel aircraft_info
-			{
-				{
-					pos		"540 70"
-					size	"170 150"
-					border		"2"
-					bordercolor	"0.527 0.6 0.21 1"
-					bgcolor		"0 0 0 1"
-				}
-
-			}
-*/		}
+		}
 	}
 
 	BuildingSpace dropship
@@ -297,7 +284,12 @@ window iaircraft
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_healthbar.setValues(<3>)
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_status@string = "<5>"
-		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToStart
+		if ( <4> > 0 ) {
+			call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToStart
+		} else {
+			call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToReturn
+		}
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.team_hired@string = "<6>"
 	}
 	/**
 	 * @brief Callback to update the GUI after an aircraft change
