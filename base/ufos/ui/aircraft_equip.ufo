@@ -299,14 +299,14 @@ window aircraft_equip extends iaircraft
 	{
 		{
 			pos		"730 105"
-			size	"290 150"
+			size	"292 150"
 			border		"2"
 			bordercolor	"0.527 0.6 0.21 1"
 		}
 
 		text aircraftinfo
 		{
-			pos			"10 10"
+			pos			"7 10"
 			size		"285 140"
 			lineheight	20
 			tabwidth	190
@@ -320,9 +320,8 @@ window aircraft_equip extends iaircraft
 	// ==================
 	panel itemlist {
 		{
-			pos		"730 255"
-			size	"292 219"
-			bgcolor		"0 0 0 1"
+			pos			"730 255"
+			size		"292 219"
 			border		2"
 			bordercolor	"0.527 0.6 0.21 1"
 		}
