@@ -264,7 +264,7 @@ typedef int32_t shoot_types_t;
 #define STATE_PANIC			0x0008
 
 #define STATE_RAGE			0x0010	/**< pretty self-explaining */
-#define STATE_INSANE		0x0030
+#define STATE_INSANE		0x0020
 #define STATE_STUN			0x0043	/**< stunned - includes death */
 #define STATE_DAZED			0x0080	/**< dazed and unable to move */
 

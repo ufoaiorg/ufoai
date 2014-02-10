@@ -35,12 +35,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (Edict* ent, bool sanity)
+static void G_MoralePanic (Edict* ent)
 {
 	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
 	/* drop items in hands */
-	if (!sanity && ent->chr.teamDef->weapons) {
+	if (G_IsInsane(ent) && ent->chr.teamDef->weapons) {
 		if (ent->getRightHandItem())
 			G_ActorInvMove(ent, INVDEF(CID_RIGHT), ent->getRightHandItem(),
 					INVDEF(CID_FLOOR), NONE, NONE, true);
@@ -78,12 +78,13 @@ static void G_MoralePanic (Edict* ent, bool sanity)
  */
 static void G_MoraleStopPanic (Edict* ent)
 {
+	G_RemoveInsane(ent);
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
 		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->number);
 		G_EventSendState(G_VisToPM(ent->visflags), *ent);
 	} else {
-		G_MoralePanic(ent, true);
+		G_MoralePanic(ent);
 	}
 }
 
@@ -93,14 +94,13 @@ static void G_MoraleStopPanic (Edict* ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleRage (Edict* ent, bool sanity)
+static void G_MoraleRage (Edict* ent)
 {
-	if (sanity) {
-		G_SetRage(ent);
+	G_SetRage(ent);
+	if (!G_IsInsane(ent)) {
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), ent->chr.name);
 		G_PrintStats("%s is on a rampage (entnum %i).", ent->chr.name, ent->number);
 	} else {
-		G_SetInsane(ent);
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), ent->chr.name);
 		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->number);
 	}
@@ -120,12 +120,14 @@ static void G_MoraleRage (Edict* ent, bool sanity)
  */
 static void G_MoraleStopRage (Edict* ent)
 {
+	 /* regains sanity */
+	G_RemoveInsane(ent);
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
-		G_RemoveInsane(ent);
+		G_RemoveRage(ent);
 		G_EventSendState(G_VisToPM(ent->visflags), *ent);
 		G_PrintStats("%s is no longer insane (entnum %i).", ent->chr.name, ent->number);
 	} else {
-		G_MoralePanic(ent, true); /* regains sanity */
+		G_MoralePanic(ent);
 	}
 }
 
@@ -171,10 +173,12 @@ void G_MoraleBehaviour (int team)
 			if (ent->morale <= mor_panic->integer) {
 				const float ratio = (float) ent->morale / mor_panic->value;
 				const bool sanity = ratio > (m_sanity->value * frand());
+				if (!sanity)
+					G_SetInsane(ent);
 				if (ratio > (m_rage->value * frand()))
-					G_MoralePanic(ent, sanity);
+					G_MoralePanic(ent);
 				else
-					G_MoraleRage(ent, sanity);
+					G_MoraleRage(ent);
 				/* if shaken, well .. be shaken; */
 			} else if (ent->morale <= mor_shaken->integer) {
 				/* shaken is later reset along with reaction fire */
