@@ -229,7 +229,10 @@ static void AIR_AircraftFillList_f (void)
 	int idx = 0;
 	AIR_ForeachFromBase(aircraft, base) {
 		float health = aircraft->stats[AIR_STATS_DAMAGE] > 0 ? (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE] : 0;
-		cgi->UI_ExecuteConfunc("ui_aircraft_add %i \"%s\" %3.0f \"%s\"", idx, _(aircraft->name), health, AIR_AircraftStatusToName(aircraft));
+		const char* inBase = AIR_IsAircraftInBase(aircraft) ? "1" : "0";
+		char teamStr[MAX_VAR];
+		sprintf(teamStr, _("%i of %i"), AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
+		cgi->UI_ExecuteConfunc("ui_aircraft_add %i \"%s\" %3.0f %s \"%s\" \"%s\"", idx, _(aircraft->name), health, inBase, AIR_AircraftStatusToName(aircraft), teamStr);
 		idx++;
 	}
 }

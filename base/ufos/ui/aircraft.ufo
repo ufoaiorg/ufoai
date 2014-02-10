@@ -287,14 +287,16 @@ window iaircraft
 	// <1> the aircraft index in the base
 	// <2> the aircraft name
 	// <3> the aircraft health in percent
-	// <4> the aircraft status string
+	// <4> the aircraft ia in the base = 1, else 0
+	// <5> the aircraft status string
+	// <6> the aircraft team string
 	confunc ui_aircraft_add {
-//		cmd "echo <1> <2> <3> <4>"
+//		cmd "echo <1> <2> <3> <4> <5> <6>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew@createChild("<1>", "aircraftListItem")
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.idx@string = "<1>"
 		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_healthbar.setValues(<3>)
-		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_status@string = "<4>"
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_status@string = "<5>"
 		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToStart
 	}
 	/**
