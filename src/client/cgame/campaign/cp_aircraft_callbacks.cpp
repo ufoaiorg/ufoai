@@ -181,7 +181,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	assert(aircraft->homebase == base);
 	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
-	cgi->Cvar_Set("mn_aircraftstatus", "%s", AIR_AircraftStatusToName(aircraft));
 	cgi->Cvar_Set("mn_aircraftinbase", "%s", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	cgi->Cvar_Set("mn_aircraftname", "%s", aircraft->name);
 	if (!aircraft->tech)
