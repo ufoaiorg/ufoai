@@ -200,16 +200,14 @@ void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char* format, ...)
 	if (AbortPrint(msgVerbLevel))
 		return;
 
-	{
-		char out_buffer[4096];
-		va_list argptr;
+	char out_buffer[4096];
+	va_list argptr;
 
-		va_start(argptr, format);
-		Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
-		va_end(argptr);
+	va_start(argptr, format);
+	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+	va_end(argptr);
 
-		printf("%s", out_buffer);
-	}
+	printf("%s", out_buffer);
 }
 
 /**
