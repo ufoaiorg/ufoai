@@ -6842,11 +6842,13 @@ base/textures/tex_ufo/ufo1_01_nm.png | GNU General Public License 2.0 or later |
 base/textures/tex_ufo/ufo1_02.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_03.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_03_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo1_03.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_04.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_04_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_05.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_05_glow.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_05_glow_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo1_05_glow.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_05_glow_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_05_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_01.png | GNU General Public License 2.0 | "SparX" Beyeler
@@ -6860,14 +6862,18 @@ base/textures/tex_ufo/ufo2_04_nm.png | GNU General Public License 2.0 or later |
 base/textures/tex_ufo/ufo2_05.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_06.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_06.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_06_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_07.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_08.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_09_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_11.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
 base/textures/tex_ufo/ufo2_11_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6881,21 +6887,28 @@ base/textures/tex_ufo/ufo2_12.png | GNU General Public License 2.0 or later | "S
 base/textures/tex_ufo/ufo2_12_glow.png | GNU General Public License 2.0 or later | Holger "ShipIt" Gellrich | base/textures/tex_ufo/ufo2_12.png
 base/textures/tex_ufo/ufo2_12_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_13.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_13_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_13.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_13_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_14.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_14_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_14.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_14_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_15.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_15_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_15.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_15_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_16.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_16_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_16.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_16_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_17.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_17_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_17.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_17_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_18.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/textures/tex_ufo/ufo2_light.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/textures/tex_ufo/ufo2_light_glow.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/textures/tex_ufo/ufo2_light_gm.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/textures/tex_ufo/ufo2_medic01.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic01_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_medic01.png by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic02_gm.png | GNU General Public License 2.0 | Holger 'ShipIt' Gellrich | ufo2_medic02.png by "SparX" Beyeler
 base/textures/tex_vehicles/car_a.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_c.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/car_d.png | GNU General Public License 2.0 or later | Nate Wright
