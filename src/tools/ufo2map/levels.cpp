@@ -124,7 +124,7 @@ static int32_t BuildNodeChildren (const int n[3])
  * @sa ProcessLevel
  * @return The node num
  */
-static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs, int entityNum)
+static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, int entityNum)
 {
 	bspbrush_t* list;
 	tree_t* tree;
@@ -135,11 +135,11 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	int i;
 
 	/* calculate bounds, stop if no brushes are available */
-	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
+	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox.mins, partBox.maxs, bmins, bmaxs))
 		return LEAFNODE;
 
 	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
-		cmins[0], cmins[1], cmins[2], cmaxs[0], cmaxs[1], cmaxs[2]);
+		partBox.mins[0], partBox.mins[1], partBox.mins[2], partBox.maxs[0], partBox.maxs[1], partBox.maxs[2]);
 
 	for (i = 0; i < SPLIT_COORDS; i++) {
 		tmins[i] = ((int)floor(bmins[i])) >> SPLIT_AT_POW2;
@@ -147,14 +147,13 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	}
 
 	Verb_Printf(VERB_DUMP, "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, tmaxs[0] - tmins[0], tmaxs[1] - tmins[1],
-		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
+		(int)partBox.mins[0], (int)partBox.mins[1], (int)partBox.maxs[0], (int)partBox.maxs[1],
 		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]);
 
 	/** @todo better algo to chose a split position - could force all splits to make continuous grid, for example */
 	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >= 2) {
 		/* continue subdivision */
 		/* split the remaining hull at pow2 pos about the middle of the longer axis */
-		vec3_t nmins, nmaxs;
 		int n;
 		int32_t splitAt;
 
@@ -163,20 +162,19 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 		else
 			n = 0;
 
-		VectorCopy(bmins, nmins);
-		VectorCopy(bmaxs, nmaxs);
+		AABB newPartBox(bmins, bmaxs);		/* bounding box of the partition */
 
 		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1)) << SPLIT_AT_POW2;
-		nmaxs[n] = splitAt;
+		newPartBox.maxs[n] = splitAt;
 
-		Verb_Printf(VERB_DUMP, "Chlid 0:  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
-		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
+		Verb_Printf(VERB_DUMP, "Chlid 0:  (%i %i) (%i %i)\n", (int)newPartBox.mins[0], (int)newPartBox.mins[1], (int)newPartBox.maxs[0], (int)newPartBox.maxs[1]);
+		nn[0] = ConstructLevelNodes_r(levelnum, newPartBox, entityNum);
 
-		VectorCopy(bmaxs, nmaxs);
+		newPartBox.setMaxs(bmaxs);
+		newPartBox.mins[n] = splitAt;
 
-		nmins[n] = splitAt;
-		Verb_Printf(VERB_DUMP, "Child 1:  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]);
-		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
+		Verb_Printf(VERB_DUMP, "Child 1:  (%i %i) (%i %i)\n", (int)newPartBox.mins[0], (int)newPartBox.mins[1], (int)newPartBox.maxs[0], (int)newPartBox.maxs[1]);
+		nn[1] = ConstructLevelNodes_r(levelnum, newPartBox, entityNum);
 	} else {
 		/* no children */
 		nn[0] = LEAFNODE;
@@ -255,6 +253,7 @@ void ProcessLevel (unsigned int levelnum)
 	maxs[0] = (config.block_xh + 1.0) * 512.0 - 1.0;
 	maxs[1] = (config.block_yh + 1.0) * 512.0 - 1.0f;
 	maxs[2] = MAX_WORLD_WIDTH - 1.0;
+	const AABB partBox(mins, maxs);		/* bounding box of the level */
 
 	Verb_Printf(VERB_EXTRA, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
 
@@ -269,7 +268,7 @@ void ProcessLevel (unsigned int levelnum)
 
 	/* Store face number for later use */
 	dm->firstface = curTile->numfaces;
-	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs, entityNum);
+	dm->headnode = ConstructLevelNodes_r(levelnum, partBox, entityNum);
 	/* This here replaces the calls to EndModel */
 	dm->numfaces = curTile->numfaces - dm->firstface;
 
