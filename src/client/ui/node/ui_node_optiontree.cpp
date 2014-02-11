@@ -308,25 +308,21 @@ void uiOptionTreeNode::onLoaded (uiNode_t* node)
 
 static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
 {
-	uiOptionIterator_t iterator;
-	uiNode_t* option;
-	uiNode_t* firstOption;
-	const char* value;
-	int pos, i;
-
 	if (UI_GetParamNumber(context) != 1) {
 		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
 		return;
 	}
 
-	value = UI_GetParam(context, 1);
+	const char* value = UI_GetParam(context, 1);
 
 	/* is the option exists */
-	firstOption = UI_OptionTreeNodeGetFirstOption(node);
+	uiNode_t* firstOption = UI_OptionTreeNodeGetFirstOption(node);
+
+	uiOptionIterator_t iterator;
 	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
 	/** @todo merge that into the Init iterator function */
 	iterator.skipCollapsed = false;
-	option = UI_FindOptionByValue(&iterator, value);
+	uiNode_t* option = UI_FindOptionByValue(&iterator, value);
 
 	/* update the selection */
 	if (option) {
@@ -337,7 +333,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t
 	}
 
 	/* expend parents */
-	for (i = 0; i < iterator.depthPos; i++)
+	for (int i = 0; i < iterator.depthPos; i++)
 		OPTIONEXTRADATA(iterator.depthCache[i]).collapsed = false;
 	UI_OptionTreeNodeUpdateCache(node);
 	UI_OptionTreeNodeUpdateScroll(node);
@@ -345,7 +341,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t
 	/* fix scroll bar */
 	firstOption = UI_OptionTreeNodeGetFirstOption(node);
 	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
-	pos = UI_FindOptionPosition(&iterator, option);
+	int pos = UI_FindOptionPosition(&iterator, option);
 	if (pos == -1)
 		return;
 

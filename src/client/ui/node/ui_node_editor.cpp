@@ -289,18 +289,17 @@ static void UI_EditorNodeSelectFirstChild (uiNode_t* node, const uiCallContext_t
 
 static void UI_EditorNodeExtractNode (qFILE* file, uiNode_t* node, int depth)
 {
-	int i;
-	char tab[16];
-	uiNode_t* child;
 	assert(depth < 16);
 
+	int i;
+	char tab[16];
 	for (i = 0; i < depth; i++) {
 		tab[i] = '\t';
 	}
 	tab[i] = '\0';
 
 	FS_Printf(file, "%s%s %s {\n", tab, node->behaviour->name, node->name);
-	child = node->firstChild;
+	uiNode_t* child = node->firstChild;
 
 	/* properties */
 	if (child) {

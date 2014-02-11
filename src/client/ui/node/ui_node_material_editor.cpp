@@ -88,10 +88,9 @@ static materialStage_t* UI_MaterialEditorGetStage (material_t* material, int sta
  */
 static int UI_MaterialEditorNodeGetImageCount (uiNode_t* node)
 {
-	int i;
 	int cnt = 0;
 
-	for (i = 0; i < r_numImages; i++) {
+	for (int i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
 		const image_t* image = R_GetImageAtIndex(i);
 		/* filter */
@@ -128,10 +127,6 @@ void uiMaterialEditorNode::updateView (uiNode_t* node, bool reset)
  */
 void uiMaterialEditorNode::draw (uiNode_t* node)
 {
-	int i;
-	vec2_t pos;
-	int cnt = 0;
-	int cntView = 0;
 	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 
 	if (isSizeChange(node))
@@ -141,10 +136,13 @@ void uiMaterialEditorNode::draw (uiNode_t* node)
 	if (imagesPerLine <= 0)
 		return;
 
+	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 
 	/* display images */
-	for (i = 0; i < r_numImages; i++) {
+	int cnt = 0;
+	int cntView = 0;
+	for (int i = 0; i < r_numImages; i++) {
 		image_t* image = R_GetImageAtIndex(i);
 		vec2_t imagepos;
 
@@ -189,14 +187,8 @@ void uiMaterialEditorNode::draw (uiNode_t* node)
  */
 static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t* node, int x, int y)
 {
-	int i;
-	vec2_t pos;
-	int cnt = 0;
-	int cntView = 0;
 	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 	const int imagesPerColumn = (node->box.size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
-	int columnRequested;
-	int lineRequested;
 
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
@@ -206,17 +198,20 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t* node, int x, int y
 		return -1;
 
 	/* get column and line of the image */
-	columnRequested = x / (IMAGE_WIDTH + node->padding);
-	lineRequested = y / (IMAGE_WIDTH + node->padding);
+	int columnRequested = x / (IMAGE_WIDTH + node->padding);
+	int lineRequested = y / (IMAGE_WIDTH + node->padding);
 
 	/* have we click outside? */
 	if (columnRequested >= imagesPerLine || lineRequested >= imagesPerColumn)
 		return -1;
 
+	vec2_t pos;
+	int cnt = 0;
+	int cntView = 0;
 	UI_GetNodeAbsPos(node, pos);
 
 	/* check images */
-	for (i = 0; i < r_numImages; i++) {
+	for (int i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
 		/* filter */
 		image_t* image = R_GetImageAtIndex(i);
@@ -281,7 +276,6 @@ static void UI_MaterialEditorUpdate (image_t* image, materialStage_t* materialSt
 	if (!image->material.num_stages) {
 		UI_ExecuteConfunc("hidestages true");
 	} else {
-		int i;
 		if (materialStage) {
 			const char* stageType = Cvar_GetString("me_stagetype");
 			if (stageType[0] == '\0')
@@ -289,7 +283,7 @@ static void UI_MaterialEditorUpdate (image_t* image, materialStage_t* materialSt
 			UI_ExecuteConfunc("hidestages false %s", stageType);
 		} else
 			Cvar_Set("me_stage_id", "-1");
-		for (i = 0; i < image->material.num_stages; i++) {
+		for (int i = 0; i < image->material.num_stages; i++) {
 			const materialStage_t* stage = UI_MaterialEditorGetStage(&image->material, i);
 			char stageName[MAX_VAR] = "stage ";
 			if (stage == materialStage) {

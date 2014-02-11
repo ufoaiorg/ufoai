@@ -58,9 +58,7 @@ static const uiBehaviour_t* localBehaviour;
  */
 uiModel_t* UI_GetUIModel (const char* modelName)
 {
-	int i;
-
-	for (i = 0; i < ui_global.numModels; i++) {
+	for (int i = 0; i < ui_global.numModels; i++) {
 		uiModel_t* m = &ui_global.models[i];
 		if (Q_streq(m->id, modelName))
 			return m;
@@ -70,11 +68,9 @@ uiModel_t* UI_GetUIModel (const char* modelName)
 
 static void UI_ListUIModels_f (void)
 {
-	int i;
-
 	/* search for UI models with same name */
 	Com_Printf("UI models: %i\n", ui_global.numModels);
-	for (i = 0; i < ui_global.numModels; i++) {
+	for (int i = 0; i < ui_global.numModels; i++) {
 		const uiModel_t* m = &ui_global.models[i];
 		const char* need = m->next != nullptr ? m->next->id : "none";
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);

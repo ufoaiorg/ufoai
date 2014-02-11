@@ -304,12 +304,11 @@ void uiGeoscapeNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
 	{
-		int i;
 		const float zoom = 0.5 / UI_MAPEXTRADATACONST(node).zoom;
 		/* shift the map */
 		UI_MAPEXTRADATA(node).center[0] -= (float) (mousePosX - oldMousePosX) / (node->box.size[0] * UI_MAPEXTRADATACONST(node).zoom);
 		UI_MAPEXTRADATA(node).center[1] -= (float) (mousePosY - oldMousePosY) / (node->box.size[1] * UI_MAPEXTRADATACONST(node).zoom);
-		for (i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			/* clamp to min/max values */
 			while (UI_MAPEXTRADATACONST(node).center[i] < 0.0)
 				UI_MAPEXTRADATA(node).center[i] += 1.0;
@@ -687,11 +686,10 @@ static void UI_GeoscapeNodeScroll_f (void)
 		UI_MAPEXTRADATA(node).smoothDeltaZoom = 0.0f;
 		UI_MAPEXTRADATA(node).smoothRotation = true;
 	} else {
-		int i;
 		/* shift the map */
 		UI_MAPEXTRADATA(node).center[0] -= (float) (scrollX) / (UI_MAPEXTRADATACONST(node).mapSize[0] * UI_MAPEXTRADATACONST(node).zoom);
 		UI_MAPEXTRADATA(node).center[1] -= (float) (scrollY) / (UI_MAPEXTRADATACONST(node).mapSize[1] * UI_MAPEXTRADATACONST(node).zoom);
-		for (i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			while (UI_MAPEXTRADATACONST(node).center[i] < 0.0)
 				UI_MAPEXTRADATA(node).center[i] += 1.0;
 			while (UI_MAPEXTRADATACONST(node).center[i] > 1.0)

@@ -80,12 +80,10 @@ static hudRadar_t radar;
 
 static void UI_FreeRadarImages (void)
 {
-	int i, j;
-
-	for (i = 0; i < radar.numImages; i++) {
+	for (int i = 0; i < radar.numImages; i++) {
 		hudRadarImage_t* image = &radar.images[i];
 		Mem_Free(image->name);
-		for (j = 0; j < image->maxlevel; j++)
+		for (int j = 0; j < image->maxlevel; j++)
 			Mem_Free(image->path[j]);
 	}
 	OBJZERO(radar);
@@ -107,10 +105,8 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 
 	/* load tiles */
 	while (tiles) {
-		int i;
 		vec3_t sh;
 		char name[MAX_VAR];
-		hudRadarImage_t* image;
 		/* get tile name */
 		const char* token = Com_Parse(&tiles);
 		if (!tiles) {
@@ -129,7 +125,7 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 			token++;
 		Com_sprintf(name, sizeof(name), "%s%s", radar.base, token);
 
-		image = &radar.images[radar.numImages++];
+		hudRadarImage_t* image = &radar.images[radar.numImages++];
 		image->name = Mem_StrDup(name);
 
 		image->isTile = pos && pos[0];
@@ -138,7 +134,7 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
 			return;
 
 		/* get grid position and add a tile */
-		for (i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			token = Com_Parse(&pos);
 			if (!pos)
 				Com_Error(ERR_DROP, "UI_BuildRadarImageList: invalid positions\n");
@@ -519,8 +515,6 @@ static void UI_RadarNodeDrawActor (const le_t* le, const vec3_t pos)
  */
 void uiRadarNode::draw (uiNode_t* node)
 {
-	le_t* le;
-	int i;
 	vec2_t pos;
 	vec2_t screenPos;
 #ifdef RADARSIZE_DEBUG
@@ -571,7 +565,7 @@ void uiRadarNode::draw (uiNode_t* node)
 #endif
 
 	/* draw background */
-	for (i = 0; i < radar.numImages; i++) {
+	for (int i = 0; i < radar.numImages; i++) {
 		vec2_t imagePos;
 		hudRadarImage_t* tile = &radar.images[i];
 		int maxlevel = cl_worldlevel->integer;
@@ -598,7 +592,7 @@ void uiRadarNode::draw (uiNode_t* node)
 	UI_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
 #endif
 
-	le = nullptr;
+	le_t* le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		vec3_t itempos;
 		if (LE_IsInvisible(le))

@@ -97,7 +97,6 @@ static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
  */
 void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t* ed)
 {
-	int i;
 	/* make a copy, because we are not really using these items,
 	 * but only putting them into a temp container */
 	int* const numItems = Mem_Dup(int, ed->numItems, lengthof(ed->numItems));
@@ -107,7 +106,7 @@ void UI_ContainerNodeUpdateEquipment (Inventory* inv, const equipDef_t* ed)
 	 * it is valid only due to the following property: */
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
-	for (i = 0; i < csi.numODs; i++) {
+	for (int i = 0; i < csi.numODs; i++) {
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 		/* Don't allow to show unuseable items. */
 		if (!GAME_ItemIsUseable(od))
@@ -267,10 +266,9 @@ void UI_GetItemTooltip (const Item& item, char* tooltipText, size_t stringMaxLen
 		} else if (item.def()->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(item.def()->numWeapons == 1 && item.def()->weapons[0] == item.def())) {
-				int i;
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, stringMaxLength, _("Usable in:\n"));
-				for (i = 0; i < item.def()->numWeapons; i++) {
+				for (int i = 0; i < item.def()->numWeapons; i++) {
 					const objDef_t* weapon = item.def()->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, stringMaxLength, "* %s\n", _(weapon->name));
@@ -711,8 +709,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 			/* Finally try left and right hand. There is no other place to put it now. */
 			const containerIndex_t idxArray[] = { CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT, CID_RIGHT };
 			const size_t size = lengthof(idxArray);
-			unsigned int i;
-			for (i = 0; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				target = idxArray[i];
 				packed = UI_ContainerNodeAddItem(container, ic, target, nullptr);
 				if (packed)
@@ -730,8 +727,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 			const containerIndex_t idxArray[] = { CID_RIGHT, CID_BELT, CID_HOLSTER, CID_BACKPACK, CID_LEFT };
 			const size_t size = lengthof(idxArray);
 			Item* tItem = nullptr;
-			unsigned int i;
-			for (i = 0; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				target = idxArray[i];
 				packed = UI_ContainerNodeAddItem(container, ic, target, &tItem);
 				if (packed) {
