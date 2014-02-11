@@ -624,6 +624,7 @@ void Check_BrushIntersection (void)
  * @brief finds point of intersection of two finite lines, if one exists
  * @param[in] e1p1 first point defining line 1
  * @param[in] e1p2 second point defining line 1
+ * @param[in] e2p1,e1p2 The points defining line 2
  * @param[out] intersection will be set to the point of intersection, if one exists
  * @return true if the lines intersect between the given points
  * @note http://mathworld.wolfram.com/Line-LineDistance.html
