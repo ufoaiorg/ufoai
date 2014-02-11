@@ -63,12 +63,12 @@ component aircraftListItem extends panel
 		}
 		func setToStart {
 			*node:parent@tooltip = "_Start Aircraft"
-			*node:parent@onClick = { cmd "aircraft_start;" }
+			*node:parent@onClick = { cmd "ui_aircraft_select <node:parent.idx@string>; aircraft_start;" }
 			*node:parent@icon = "icons/aircraft_send"
 		}
 		func setToReturn {
 			*node:parent@tooltip = "_Call back"
-			*node:parent@onClick = { cmd "aircraft_return;" }
+			*node:parent@onClick = { cmd "ui_aircraft_select <node:parent.idx@string>; aircraft_return;" }
 			*node:parent@icon = "icons/aircraft_return"
 		}
 	}
