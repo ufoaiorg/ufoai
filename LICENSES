@@ -3328,11 +3328,8 @@ base/pics/maps/shots/beach.jpg | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/bridge.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bridge_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/bunker.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bunker.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/bunker_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bunker_2.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/bunker_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bunker_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/cemetery.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/cemetery_2.png | GNU General Public License 2.0 or later
@@ -3377,14 +3374,11 @@ base/pics/maps/shots/estate_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/farm2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm2_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm2_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/farm_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm_2.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/farm_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/farm_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/ferry.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/ferry_2.jpg | GNU General Public License 2.0 or later
@@ -3392,18 +3386,12 @@ base/pics/maps/shots/ferry_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/fighter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/forest.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/forest.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/forest_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/forest_2.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/forest_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/forest_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/frozen.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/frozen_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/frozen_3.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/frozen_4.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/frozen_5.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/frozen_6.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/gasstation_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/gasstation_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3505,17 +3493,8 @@ base/pics/maps/shots/ufocrash.jpg | GNU General Public License 2.0 or later | MC
 base/pics/maps/shots/ufocrash_2.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/ufocrash_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/urban.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/urban_10.jpg | GNU General Public License 2.0 or later | base/pics/maps/shots/community_centre.jpg
-base/pics/maps/shots/urban_11.jpg | GNU General Public License 2.0 or later | base/pics/maps/shots/community_centre_2.jpg
-base/pics/maps/shots/urban_12.jpg | GNU General Public License 2.0 or later | base/pics/maps/shots/community_centre_3.jpg
 base/pics/maps/shots/urban_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/urban_3.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/urban_4.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/urban_5.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/urban_6.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/urban_7.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory.jpg
-base/pics/maps/shots/urban_8.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory_2.jpg
-base/pics/maps/shots/urban_9.jpg | GNU General Public License 2.0 or later | | base/pics/maps/shots/laboratory_3.jpg
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/village2_2.png | GNU General Public License 2.0 or later | Duke
