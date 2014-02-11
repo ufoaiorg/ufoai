@@ -118,7 +118,7 @@ void* Cmd_GetUserdata (const char* cmd_name);
  * @param[out] match      The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @param[in]  candidate  A completion candidate.
  * @param[in]  partial    The prefix a candidate must have to be considered a match.
- * @returns    true iff the candidate matches partial.
+ * @returns    true if the candidate matches partial.
  */
 bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, char const** match);
 
