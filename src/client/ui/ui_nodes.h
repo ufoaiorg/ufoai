@@ -78,7 +78,7 @@ struct uiNode_t {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
 	uiBehaviour_t* behaviour;
-	uiNode_t const* super;      /**< Node inherited, else nullptr */
+	uiNode_t const* super;		/**< Node inherited, else nullptr */
 	bool dynamic;				/** If true, it use dynamic memory */
 	bool indexed;				/** If true, the node name indexed into his window */
 

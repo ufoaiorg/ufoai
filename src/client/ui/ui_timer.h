@@ -37,7 +37,7 @@ typedef struct uiTimer_s {
 	struct uiTimer_s* prev;		/**< previous timer in the ordered list of active timers */
 	int nextTime;				/**< next time we must call the callback function. Must node be edited, it used to sort linkedlist of timers */
 
-	uiNode_t* owner;            /**< owner node of the timer */
+	uiNode_t* owner;			/**< owner node of the timer */
 	timerCallback_t callback;	/**< function called every delay */
 	int calledTime;				/**< time we call the function. For the first call the value is 1 */
 

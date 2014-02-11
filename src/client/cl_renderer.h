@@ -131,7 +131,7 @@ typedef struct ptl_s {
 
 	struct ptl_s* children;	/**< list of children */
 	struct ptl_s* next;		/**< next peer in list */
-	struct ptl_s* parent;   /**< pointer to parent */
+	struct ptl_s* parent;	/**< pointer to parent */
 
 	/* private */
 	ptlDef_t* ctrl;			/**< pointer to the particle definition */

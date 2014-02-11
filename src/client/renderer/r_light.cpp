@@ -395,11 +395,11 @@ static lighting_t fakeLightingData; /**< To return if no actual lighting data is
 void R_UpdateLightList (entity_t* ent)
 {
 	int i;
-	vec_t* pos; /**< Worldspace position for which lighting is calculated */
-	entity_t* rootEnt; /**< The root entitity of tagent tree, which holds the lighting data (af any) */
-	lighting_t* ltng; /**< Lighting data for the entity being processed */
-	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
-	float diameter; /** < value of this entity's diameter (approx) */
+	vec_t* pos;				/**< Worldspace position for which lighting is calculated */
+	entity_t* rootEnt;		/**< The root entitity of tagent tree, which holds the lighting data (af any) */
+	lighting_t* ltng;		/**< Lighting data for the entity being processed */
+	vec3_t diametralVec;	/**< conservative estimate of entity's bounding sphere diameter, in vector form */
+	float diameter;			/**< value of this entity's diameter (approx) */
 	bool cached = false;
 
 	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,

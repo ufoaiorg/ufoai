@@ -70,20 +70,20 @@ public:
 
 typedef struct mapExtraData_s {
 	/* Smoothing variables */
-	bool smoothRotation; /**< @c true if the rotation of 3D geoscape must me smooth */
-	vec3_t smoothFinalGlobeAngle; /**< value of final angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+	bool smoothRotation;			/**< @c true if the rotation of 3D geoscape must me smooth */
+	vec3_t smoothFinalGlobeAngle;	/**< value of final angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 	vec2_t smoothFinal2DGeoscapeCenter; /**< value of center for a smooth change of position (see MAP_CenterOnPoint) */
-	float smoothDeltaLength; /**< angle/position difference that we need to change when smoothing */
-	float smoothFinalZoom; /**< value of final zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
-	float smoothDeltaZoom; /**< zoom difference that we need to change when smoothing */
-	float curZoomSpeed; /**< The current zooming speed. Used for smooth zooming. */
-	float curRotationSpeed; /**< The current rotation speed. Used for smooth rotating.*/
+	float smoothDeltaLength;		/**< angle/position difference that we need to change when smoothing */
+	float smoothFinalZoom;			/**< value of final zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+	float smoothDeltaZoom;			/**< zoom difference that we need to change when smoothing */
+	float curZoomSpeed;				/**< The current zooming speed. Used for smooth zooming. */
+	float curRotationSpeed;			/**< The current rotation speed. Used for smooth rotating.*/
 
 	vec2_t mapSize;
 	vec2_t mapPos;
-	vec3_t angles; /**< 3d geoscape rotation */
-	vec2_t center; /**< latitude and longitude of the point we're looking at on earth */
-	float zoom; /**< zoom used when looking at earth */
+	vec3_t angles;	/**< 3d geoscape rotation */
+	vec2_t center;	/**< latitude and longitude of the point we're looking at on earth */
+	float zoom;		/**< zoom used when looking at earth */
 	bool flatgeoscape;
 	float ambientLightFactor;
 	float mapzoommin;

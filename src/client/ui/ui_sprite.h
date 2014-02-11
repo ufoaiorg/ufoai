@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo use a more generic name and move it to main ui
  */
 enum uiSpriteStatus_t {
-	SPRITE_STATUS_NORMAL = 0,  /**< ICON_STATUS_NORMAL */
-	SPRITE_STATUS_HOVER = 1,   /**< ICON_STATUS_HOVER */
-	SPRITE_STATUS_DISABLED = 2,/**< ICON_STATUS_DISABLED */
-	SPRITE_STATUS_CLICKED = 3, /**< ICON_STATUS_CLICKED */
+	SPRITE_STATUS_NORMAL = 0,	/**< ICON_STATUS_NORMAL */
+	SPRITE_STATUS_HOVER = 1,	/**< ICON_STATUS_HOVER */
+	SPRITE_STATUS_DISABLED = 2,	/**< ICON_STATUS_DISABLED */
+	SPRITE_STATUS_CLICKED = 3,	/**< ICON_STATUS_CLICKED */
 
-	SPRITE_STATUS_MAX          /**< ICON_STATUS_MAX */
+	SPRITE_STATUS_MAX			/**< ICON_STATUS_MAX */
 };
 
 struct uiSprite_t {
