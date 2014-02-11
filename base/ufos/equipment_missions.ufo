@@ -108,7 +108,7 @@ equipment alien_workers1
 	item (plaspistol_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
+	item (kerrblade			085)
 }
 
 equipment alien_workers2
@@ -123,7 +123,7 @@ equipment alien_workers2
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
+	item (kerrblade			060)
 }
 
 equipment alien_workers3
@@ -138,7 +138,7 @@ equipment alien_workers3
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
+	item (kerrblade			035)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -156,8 +156,8 @@ equipment alien_workers4
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
-	item (plasblade		150)
+	item (kerrblade			025)
+	item (plasblade			150)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -175,8 +175,8 @@ equipment alien_workers5
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
-	item (plasblade		150)
+	item (kerrblade			015)
+	item (plasblade			175)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -194,9 +194,9 @@ equipment alien_workers6
 	item (plasblaster_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (kerrblade			015)
+	item (plasblade			190)
+	item (plasmagrenade		150)
 
 	// Armour
 	item (armour_medium_alien	100)
@@ -214,7 +214,7 @@ equipment alien_soldiers1
 	item (plaspistol_ammo	1)
 
 	// Misc
-	item (kerrblade		100)
+	item (kerrblade			075)
 }
 
 equipment alien_soldiers2
@@ -227,6 +227,10 @@ equipment alien_soldiers2
 	item (plasrifle_ammo	1)
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
+
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
 }
 
 equipment alien_soldiers3
@@ -240,8 +244,12 @@ equipment alien_soldiers3
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
 
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
+
 	// Misc
-	item (plasmagrenade		100)
+	item (plasmagrenade		120)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -258,9 +266,13 @@ equipment alien_soldiers4
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
 
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
+
 	// Misc
-	item (plasmagrenade	100)
-	item (plasblade		150)
+	item (plasmagrenade		175)
+	item (plasblade			075)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -279,9 +291,13 @@ equipment alien_soldiers5
 	item (needlergun		40)
 	item (needlergun_ammo	1)
 
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
+
 	// Misc
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (plasmagrenade		199)
+	item (plasblade			099)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -305,8 +321,8 @@ equipment alien_soldiers6
 	item (pbeampistol_ammo	1)
 
 	// Misc
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (plasmagrenade		220)
+	item (plasblade			120)
 
 	// Armour
 	item (armour_medium_alien	100)
@@ -323,9 +339,13 @@ equipment alien_base1
 	item (plasblaster		50)
 	item (plasblaster_ammo	1)
 
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
+
 	// Misc
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (plasmagrenade		205)
+	item (plasblade			120)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -344,9 +364,13 @@ equipment alien_base2
 	item (needlergun		40)
 	item (needlergun_ammo	1)
 
+	// Secondary
+	item (plaspistol		50)
+	item (plaspistol_ammo	1)
+
 	// Misc
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (plasmagrenade		225)
+	item (plasblade			199)
 
 	// Armour
 	item (armour_light_alien	100)
@@ -370,8 +394,8 @@ equipment alien_base3
 	item (pbeampistol_ammo	1)
 
 	// Misc
-	item (plasblade		150)
-	item (plasmagrenade	100)
+	item (plasmagrenade		315)
+	item (plasblade			250)
 
 	// Armour
 	item (armour_medium_alien	100)
@@ -387,28 +411,28 @@ equipment phalanx_initial
 {
 	// Primary
 	item (assault				25)
-	item (assault_ammo		1)
+	item (assault_ammo			1)
 	item (sniper				25)
 	item (sniper_ammo			1)
-	item (shotgun2			15)
+	item (shotgun2				15)
 	item (shotgun2_slug_ammo	2)
 	item (flamer				15)
 	item (flamer_ammo			2)
 	item (rpg				    10)
-	item (rpg_ammo			1)
-	item (grenl				10)
+	item (rpg_ammo				1)
+	item (grenl					10)
 	item (grenl_ammo			2)
 
 	// Secondary
 	item (pistol				60)
 	item (pistol_ammo			1)
 	item (smg					40)
-	item (smg_ammo			1)
+	item (smg_ammo				1)
 
 	// Misc
-	item (fraggrenade				150)
+	item (fraggrenade			150)
 	item (knife					30)
-	item (medikit					40)
+	item (medikit				40)
 	item (irgoggles				15)
 	item (smokegrenade			40)
 
@@ -470,21 +494,21 @@ equipment civilian_antiterrorist
 	maxinterest			10000
 
 	item (assault				5)
-	item (assault_ammo		12)
+	item (assault_ammo			12)
 	item (sniper				15)
 	item (sniper_ammo			35)
-	item (rpg				    1)
-	item (rpg_ammo			3)
+	item (rpg					1)
+	item (rpg_ammo				3)
 	item (pistol				2)
 	item (pistol_ammo			3)
-	item (smg 				15)
-	item (smg_ammo			50)
+	item (smg 					15)
+	item (smg_ammo				50)
 	item (shotgun				5)
-	item (shotgun_ammo		12)
+	item (shotgun_ammo			12)
 	item (fraggrenade			25)
-	item (smokegrenade		20)
-	item (knife				40)
-	item (armour_light		35)
+	item (smokegrenade			20)
+	item (knife					40)
+	item (armour_light			35)
 }
 
 equipment civilian_army
@@ -493,17 +517,17 @@ equipment civilian_army
 	maxinterest			10000
 
 	item (assault				25)
-	item (assault_ammo		35)
+	item (assault_ammo			35)
 	item (sniper				1)
 	item (sniper_ammo			2)
 	item (pistol				15)
 	item (pistol_ammo			25)
 	item (flamer				2)
 	item (flamer_ammo			3)
-	item (rpg  				3)
-	item (rpg_ammo			7)
+	item (rpg  					3)
+	item (rpg_ammo				7)
 	item (fraggrenade			55)
-	item (smokegrenade		20)
-	item (knife				40)
-	item (armour_light		15)
+	item (smokegrenade			20)
+	item (knife					40)
+	item (armour_light			15)
 }
