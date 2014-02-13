@@ -25,46 +25,6 @@
  * - Rescue zone button
  */
 
-component ReactionFireShooter extends panel
-{
-	{
-		size	"210 35"
-		bgcolor "0 0 0 0.7"
-		border	1
-		bordercolor		"1 1 1 0.2"
-	}
-	model head_shooter
-	{
-		src		""
-		skin	""
-		angles	"0 60 90"
-		autoscale	true
-		pos		"5 5"
-		size	"25 25"
-		origin	"0 0 0"
-		ghost	true
-	}
-	bar timeremaining
-	{
-		pos		"35 22"
-		size	"170 8"
-		current	0
-		max		0
-		disabled	true
-		border	1
-		bordercolor	"1 1 1 0.2"
-		ghost	true
-	}
-	string rfnotice
-	{
-		string	""
-		size	"170 17"
-		pos		"35 5"
-		ghost	true
-		font	"f_verysmall"
-	}
-}
-
 window hud_default extends hud
 {
 	{
