@@ -1523,4 +1523,42 @@ window inv_stats_hud
 			string valuenum { string *cvar:mn_texp }
 		}
 	}
+
+	// ======
+	// wounds
+	// ======
+	panel wounds
+	{
+		pos		"370 200"
+		size		"180 100"
+	}
+
+	// <1> Body part type (id)
+	// <2> Severity of bleeding, if 0 all wounds are treated
+	// (Note: Robots don't bleed, this just means they have serious damage in this part)
+	// <3> Tooltip
+	confunc actor_wounds {
+		call *node:root.wounds@createChild("wound_<1>", "cmpW<1>")
+		if (<2> > 0) {
+			*node:root.wounds.wound_<1>.wound_icon@icon = "icons/<1>_wound"
+		} else {
+			*node:root.wounds.wound_<1>.wound_icon@icon = "icons/<1>_wound_treated"
+		}
+		*node:root.wounds.wound_<1>.wound_string@string = "<3>"
+		*node:root.wounds.wound_<1>@tooltip = "<3>"
+	}
+
+	confunc updateactorwounds {
+		call *node:root.wounds@removeAllchild
+		cmd "hud_updateactorwounds;"
+	}
+
+	func onWindowOpened {
+		cmd "ui_addcvarlistener cl_selected updateactorwounds;"
+		cmd "updateactorwounds;"
+	}
+
+	func onWindowClosed {
+		cmd "ui_removecvarlistener cl_selected updateactorwounds;"
+	}
 }
