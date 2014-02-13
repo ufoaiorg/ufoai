@@ -293,22 +293,15 @@ window hud extends levelbuttons {
 	// confuncs to show/hide inventory, physdat and radar windows
 	confunc show_hide_inventory
 	{
-		// a second click will close the inventory window again
-		if ( *cvar:inventory_window_open == 1 ) {
-			cmd "ui_close hudinv;"
-		} else {
-			cmd "ui_push hudinv;"
-		}
+		cmd "show_inventory;"
 	}
 	confunc show_hide_physdat
 	{
-		// a second click will close the physdat window again
-		if ( *cvar:physdat_window_open == 1 ) {
-			cmd "ui_close hudphysdat;"
-		} else {
-			cmd "ui_push hudphysdat;"
-		}
+		cmd "show_physdat;"
 	}
+
+	confunc show_inventory { }
+	confunc show_physdat { }
 
 	/**
 	 * @param <1> the id of the soldier (starting at 0)

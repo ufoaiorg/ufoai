@@ -78,11 +78,6 @@ window hud_default extends hud
 		cmd "add_hud_name <path:root> \"_Default\""
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	battlescape render
 	{
 		pos			"0 0"
@@ -286,12 +281,14 @@ window hud_default extends hud
 						tooltip		"_Equipment"
 						onClick		{
 									//cmd "toggle_button inventory_bg inv;"
-									cmd "ui_push inv_stats_hud;"
+									cmd "show_inventory;"
 								}
 						onMouseEnter	{ *node:this@icon = "icons/inv" }
 						onMouseLeave	{ *node:this@icon = "icons/inv0" }
 					}
 				}
+
+				confunc show_inventory { cmd "show_hide_inv_stats;" }
 
 				// Soldier stats button
 				CircleBtn stats_bg
@@ -309,12 +306,14 @@ window hud_default extends hud
 						tooltip		"_Stats"
 						onClick		{
 									//cmd "toggle_button stats_bg stats;"
-									cmd "ui_push inv_stats_hud;"
+									cmd "show_physdat;"
 								}
 						onMouseEnter	{ *node:this@icon = "icons/stats" }
 						onMouseLeave	{ *node:this@icon = "icons/stats0"	}
 					}
 				}
+
+				confunc show_physdat { cmd "show_hide_inv_stats;" }
 
 				// Headgear button
 				CircleBtn headgear_bg
@@ -1553,12 +1552,24 @@ window inv_stats_hud
 		cmd "hud_updateactorwounds;"
 	}
 
+
+	confunc show_hide_inv_stats
+	{
+		if ( *cvar:inv_stats_window_open == 1 ) {
+			cmd "ui_close inv_stats_hud;"
+		} else {
+			cmd "ui_push inv_stats_hud;"
+		}
+	}
+
 	func onWindowOpened {
+		*cvar:inv_stats_window_open = 1
 		cmd "ui_addcvarlistener cl_selected updateactorwounds;"
 		cmd "updateactorwounds;"
 	}
 
 	func onWindowClosed {
 		cmd "ui_removecvarlistener cl_selected updateactorwounds;"
+		delete *cvar:inv_stats_window_open
 	}
 }
