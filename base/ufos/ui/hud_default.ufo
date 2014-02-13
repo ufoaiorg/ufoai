@@ -1524,27 +1524,4 @@ window inv_stats_hud
 			string valuenum { string *cvar:mn_texp }
 		}
 	}
-
-	// Select the next soldier
-	confunc nextsoldier
-	{
-		if ( *cvar:selected_soldier eq "11" ) {
-			cmd "hudselect 0;"
-		} else {
-			*cvar:next_soldier = ( *cvar:selected_soldier + 1 )
-			cmd "hudselect <*cvar:next_soldier>;"
-			delete *cvar:next_soldier
-		}
-	}
-	// Select the previous soldier
-	confunc prevsoldier
-	{
-		if ( *cvar:selected_soldier eq "0" ) {
-			cmd "hudselect 11;"
-		} else {
-			*cvar:prev_soldier = ( *cvar:selected_soldier - 1 )
-			cmd "hudselect <*cvar:prev_soldier>;"
-			delete *cvar:prev_soldier
-		}
-	}
 }
