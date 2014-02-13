@@ -1381,7 +1381,7 @@ window inv_stats_hud
 		tooltip			"_Next soldier"
 		pos				"506 10"
 		size			"18	18"
-		onClick			{ cmd "nextsoldier;" }
+		onClick			{ cmd "actor_next;" }
 	}
 	button prev
 	{
@@ -1389,7 +1389,7 @@ window inv_stats_hud
 		tooltip			"_Previous soldier"
 		pos				"482 10"
 		size			"18	18"
-		onClick			{ cmd "prevsoldier;" }
+		onClick			{ cmd "actor_prev;" }
 	}
 	// Inventory area
 	image rank_img
