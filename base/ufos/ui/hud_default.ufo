@@ -662,7 +662,7 @@ window hud_default extends hud
 			// Displays oweapon only if another weapon exists
 			confunc show_oweapon
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
 					if (*cvar:mn_lweapon eq "") {
 						*node:parent.oweapon@invis = true
 					} else {
@@ -702,11 +702,11 @@ window hud_default extends hud
 			}
 			func switchhands
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
-					*cvar:sldcurhand<cvar:selected_soldier> = "l"
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
+					*cvar:sldcurhand<cvar:cl_selected> = "l"
 					call *node:parent.show_lhand
 				} else {
-					*cvar:sldcurhand<cvar:selected_soldier> = "r"
+					*cvar:sldcurhand<cvar:cl_selected> = "r"
 					call *node:parent.show_rhand
 				}
 			}
@@ -720,14 +720,14 @@ window hud_default extends hud
 			}
 			confunc deselect_reloadleft
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "l") {
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "l") {
 					*node:parent.reload_l@invis = false
 					*node:parent.reload_l_disabled@invis = true
 				}
 			}
 			confunc deselect_reloadright
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
 					*node:parent.reload_r@invis = false
 					*node:parent.reload_r_disabled@invis = true
 				}
@@ -736,14 +736,14 @@ window hud_default extends hud
 			confunc disable_primaryright { *node:parent.fire_r@invis = true }
 			confunc disable_reloadleft
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "l") {
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "l") {
 					*node:parent.reload_l@invis = true
 					*node:parent.reload_l_disabled@invis = false
 				}
 			}
 			confunc disable_reloadright
 			{
-				if (*cvar:sldcurhand<cvar:selected_soldier> eq "r") {
+				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
 					*node:parent.reload_r@invis = true
 					*node:parent.reload_r_disabled@invis = false
 				}
@@ -1246,7 +1246,6 @@ window hud_default extends hud
 	// Select the soldier from the squad selection
 	confunc hudselect
 	{
-		*cvar:selected_soldier = <1>
 		*cvar:i = 0;
 		while ( *cvar:i < 12 ) {
 			*node:root.soldier.squad.sld<cvar:i>@bordercolor = "0.527 0.6 0.21 1"
