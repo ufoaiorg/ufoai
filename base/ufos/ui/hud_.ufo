@@ -62,6 +62,7 @@ component cmpFiremodeEntry extends panel {
 		align			LAYOUTALIGN_TOP
 		onMouseEnter	{ *node:this@bgcolor = "0 0.21 0.158 0.7" }
 		onMouseLeave	{ *node:this@bgcolor = "0 0.15 0.1 0.7"	}
+		onRClick		{ cmd "ui_close <path:root>;" }
 		onClick	{
 			cmd "ui_close <path:root>;"
 			cmd "hud_executeaction <node:this.actionid@string>;"
