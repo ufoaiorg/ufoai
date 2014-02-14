@@ -167,11 +167,10 @@ component WorldLevel extends panel
 	}
 }
 
-component cmpWhumanoid_head extends panel {
+component cmpWound extends panel {
 
 	{
-		pos			"0 0"
-		size		"181 16"
+		size		"180 16"
 	}
 
 	button wound_icon {
@@ -181,92 +180,7 @@ component cmpWhumanoid_head extends panel {
 
 	string wound_string {
 		pos		"20 0"
-		font	"f_small"
-		color			"0.56 0.81 0.76 1"
-		longlines		LONGLINES_CHOP
-		contentalign	ALIGN_UL
-	}
-}
-
-component cmpWhumanoid_torso extends panel {
-
-	{
-		pos			"0 20"
-		size		"181 16"
-	}
-
-	button wound_icon {
-		color	"1 0 0 1"
-		size	"16 16"
-	}
-
-	string wound_string {
-		pos		"20 0"
-		font	"f_small"
-		color			"0.56 0.81 0.76 1"
-		longlines		LONGLINES_CHOP
-		contentalign	ALIGN_UL
-	}
-}
-
-component cmpWhumanoid_arms extends panel {
-
-	{
-		pos			"0 40"
-		size		"181 16"
-	}
-
-	button wound_icon {
-		color	"1 0 0 1"
-		size	"16 16"
-	}
-
-	string wound_string {
-		pos		"20 0"
-		font	"f_small"
-		color			"0.56 0.81 0.76 1"
-		longlines		LONGLINES_CHOP
-		contentalign	ALIGN_UL
-	}
-}
-
-component cmpWhumanoid_legs extends panel {
-
-
-	{
-		pos			"0 60"
-		size		"181 16"
-	}
-
-	button wound_icon {
-		color	"1 0 0 1"
-		size	"16 16"
-	}
-
-	string wound_string {
-		pos		"20 0"
-		font	"f_small"
-		color			"0.56 0.81 0.76 1"
-		longlines		LONGLINES_CHOP
-		contentalign	ALIGN_UL
-	}
-}
-
-component cmpWdefault_body extends panel {
-
-	{
-		pos			"0 80"
-		size		"181 16"
-	}
-
-	button wound_icon {
-		color	"1 0 0 1"
-		size	"16 16"
-	}
-
-	string wound_string {
-		pos		"20 0"
-		font	"f_small"
+		font		"f_small"
 		color			"0.56 0.81 0.76 1"
 		longlines		LONGLINES_CHOP
 		contentalign	ALIGN_UL

@@ -1490,6 +1490,7 @@ window inv_stats_hud
 	{
 		pos		"370 200"
 		size		"180 100"
+		layout		LAYOUT_TOP_DOWN_FLOW
 	}
 
 	// <1> Body part type (id)
@@ -1497,7 +1498,7 @@ window inv_stats_hud
 	// (Note: Robots don't bleed, this just means they have serious damage in this part)
 	// <3> Tooltip
 	confunc actor_wounds {
-		call *node:root.wounds@createChild("wound_<1>", "cmpW<1>")
+		call *node:root.wounds@createChild("wound_<1>", "cmpWound")
 		if (<2> > 0) {
 			*node:root.wounds.wound_<1>.wound_icon@icon = "icons/<1>_wound"
 		} else {
