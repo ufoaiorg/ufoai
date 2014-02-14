@@ -1391,6 +1391,27 @@ window inv_stats_hud
 	container holster	{ pos "285 204" }
 	container floor		{ pos "10 282" }
 
+	button bt_load
+	{
+		pos "255 35"
+		contentalign ALIGN_CL
+		string  "_0/0 Kg"
+		color "0.56 0.81 0.76 1"
+		flashcolor "1 0 0 1"
+		size "106 25"
+		onClick { cmd "hud_updateactorload;" }
+	}
+
+	confunc inv_actorload {
+		*node:root.bt_load@string = "<1>"
+		*node:root.bt_load@tooltip = "<2>"
+		if ( <3> > 0 ) { *node:root.bt_load@color = "0 1 0 1" }
+		elif ( <3> < 0 ) { *node:root.bt_load@color = "1 1 0 1" }
+		else { *node:root.bt_load@color = "0.56 0.81 0.76 1" }
+		if ( <4> > 0 ) { *node:root.bt_load@flash = true }
+		else { *node:root.bt_load@flash = false }
+	}
+
 	// Abilities panel
 	// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
 	panel abilities
@@ -1508,9 +1529,10 @@ window inv_stats_hud
 		*node:root.wounds.wound_<1>@tooltip = "<3>"
 	}
 
-	confunc updateactorwounds {
+	confunc update_actor_state {
 		call *node:root.wounds@removeAllchild
 		cmd "hud_updateactorwounds;"
+		cmd "hud_updateactorload;"
 	}
 
 
@@ -1525,12 +1547,12 @@ window inv_stats_hud
 
 	func onWindowOpened {
 		*cvar:inv_stats_window_open = 1
-		cmd "ui_addcvarlistener cl_selected updateactorwounds;"
+		cmd "ui_addcvarlistener cl_selected update_actor_state;"
 		cmd "updateactorwounds;"
 	}
 
 	func onWindowClosed {
-		cmd "ui_removecvarlistener cl_selected updateactorwounds;"
+		cmd "ui_removecvarlistener cl_selected update_actor_state;"
 		delete *cvar:inv_stats_window_open
 	}
 }
