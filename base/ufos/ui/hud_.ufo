@@ -82,8 +82,6 @@ component cmpFiremodeEntry extends panel {
 		size	"15 15"
 		icon	"icons/firemodesml0"
 		tooltip	"_Use this firemode for reaction fire"
-		onMouseEnter { if (*node:this@icon eq "icons/firemodesml0") { *node:this@icon = "icons/firemodesmlhover" } }
-		onMouseLeave { if (*node:this@icon eq "icons/firemodesmlhover") { *node:this@icon = "icons/firemodesml0" } }
 		onClick	{ cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.index@string>;" }
 	}
 	button tu_icon
