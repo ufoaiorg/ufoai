@@ -163,6 +163,16 @@ window hud_default extends hud
 					disabled	true
 					nohover		true
 				}
+				bar tureserved
+				{
+					pos			"0 23"
+					size		"300 8"
+					color		"0 0 0 .3"
+					current		*cvar:mn_tureserved
+					max			*cvar:mn_tumax
+					disabled	true
+					nohover		true
+				}
 				string tu_count
 				{
 					string			*cvar:mn_tu
