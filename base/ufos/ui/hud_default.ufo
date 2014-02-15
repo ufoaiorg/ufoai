@@ -16,7 +16,7 @@
  * - Fire weapon seems off: sometimes no line of fire is drawn
  * - Soldier models don't always update
  * - Inventory/Stats windows
- * -- Turn it into panel so i can use next/prev soldier confuncs
+ * -- Turn it into panel?
  * - Chat windows, and other MP-specific needs
  * - Message panel (log lines use old style)
  * - Show keys
@@ -1342,7 +1342,6 @@ window inv_stats_hud
 		size			"18	18"
 		onClick			{ cmd "ui_pop;" }
 	}
-	// @TODO: make next/prev soldier btns work
 	button next
 	{
 		icon			"icons/windownext"
