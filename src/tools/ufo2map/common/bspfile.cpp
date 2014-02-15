@@ -190,7 +190,7 @@ static void SwapBSPFile (void)
 		dBspBrush_t* dbrush = &curTile->dbrushes[i];
 		dbrush->firstbrushside = LittleLong(dbrush->firstbrushside);
 		dbrush->numsides = LittleLong(dbrush->numsides);
-		dbrush->contentFlags = LittleLong(dbrush->contentFlags);
+		dbrush->brushContentFlags = LittleLong(dbrush->brushContentFlags);
 	}
 
 	/* brushes */
@@ -198,7 +198,7 @@ static void SwapBSPFile (void)
 		cBspBrush_t* cbrush = &curTile->brushes[i];
 		cbrush->firstbrushside = LittleLong(cbrush->firstbrushside);
 		cbrush->numsides = LittleLong(cbrush->numsides);
-		cbrush->contentFlags = LittleLong(cbrush->contentFlags);
+		cbrush->brushContentFlags = LittleLong(cbrush->brushContentFlags);
 	}
 
 	/* brushsides */
@@ -278,7 +278,7 @@ dMapTile_t* LoadBSPFile (const char* filename)
 		cBspBrush_t* brush = &curTile->brushes[i];
 		brush->firstbrushside = dbrush->firstbrushside;
 		brush->numsides = dbrush->numsides;
-		brush->contentFlags = dbrush->contentFlags;
+		brush->brushContentFlags = dbrush->brushContentFlags;
 	}
 
 	/* everything has been copied out */

@@ -762,7 +762,7 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 #ifdef COMPILE_UFO
 			traceData->trace.surface = leadside->surface;
 #endif
-			traceData->trace.contentFlags = brush->contentFlags;
+			traceData->trace.contentFlags = brush->brushContentFlags;
 			traceData->trace.leafnum = leaf - myTile->leafs;
 		}
 	}
@@ -811,7 +811,7 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 	/* inside this brush */
 	traceData->trace.startsolid = traceData->trace.allsolid = true;
 	traceData->trace.fraction = 0;
-	traceData->trace.contentFlags = brush->contentFlags;
+	traceData->trace.contentFlags = brush->brushContentFlags;
 }
 
 
@@ -849,7 +849,7 @@ static void TR_TraceToLeaf (boxtrace_t* traceData, int32_t leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (traceData->contents != MASK_ALL && (!(b->contentFlags & traceData->contents) || (b->contentFlags & traceData->rejects)))
+		if (traceData->contents != MASK_ALL && (!(b->brushContentFlags & traceData->contents) || (b->brushContentFlags & traceData->rejects)))
 			continue;
 
 		TR_ClipBoxToBrush(traceData, b, leaf);
@@ -884,7 +884,7 @@ static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(traceData->contents && (b->contentFlags & traceData->contents)) || (b->contentFlags & traceData->rejects))
+		if (!(traceData->contents && (b->brushContentFlags & traceData->contents)) || (b->brushContentFlags & traceData->rejects))
 			continue;
 		TR_TestBoxInBrush(traceData, b);
 		if (!traceData->trace.fraction)

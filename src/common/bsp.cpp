@@ -208,7 +208,7 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
 	for (i = 0; i < count; i++, out++, in++) {
 		out->firstbrushside = LittleLong(in->firstbrushside);
 		out->numsides = LittleLong(in->numsides);
-		out->contentFlags = LittleLong(in->contentFlags);
+		out->brushContentFlags = LittleLong(in->brushContentFlags);
 	}
 }
 
@@ -711,7 +711,7 @@ static void CM_InitBoxHull (MapTile& tile)
 	tile.box_brush = &tile.brushes[tile.numbrushes];
 	tile.box_brush->numsides = 6;
 	tile.box_brush->firstbrushside = tile.numbrushsides;
-	tile.box_brush->contentFlags = CONTENTS_WEAPONCLIP;
+	tile.box_brush->brushContentFlags = CONTENTS_WEAPONCLIP;
 
 	tile.box_leaf = &tile.leafs[tile.numleafs];
 	tile.box_leaf->contentFlags = CONTENTS_WEAPONCLIP;

@@ -255,10 +255,10 @@ void EmitBrushes (void)
 		dBspBrush_t* db = &curTile->dbrushes[bnum];
 		cBspBrush_t* cb = &curTile->brushes[bnum];
 
-		db->contentFlags = b->contentFlags;
+		db->brushContentFlags = b->contentFlags;
 		db->firstbrushside = curTile->numbrushsides;
 		db->numsides = b->numsides;
-		cb->contentFlags = b->contentFlags;
+		cb->brushContentFlags = b->contentFlags;
 		cb->firstbrushside = curTile->numbrushsides;
 		cb->numsides = b->numsides;
 		cb->checkcount = 0;
