@@ -479,17 +479,9 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	Routing* tempMap = static_cast<Routing*>(Mem_Alloc(sizeof(Routing)));
-	const byte* source;
-	int length;
-	int x, y, z;
-	actorSizeEnum_t size;
-	int minX, minY, minZ;
-	int maxX, maxY, maxZ;
-	unsigned int i;
-	double start, end;
 	const int targetLength = sizeof(tile.wpMins) + sizeof(tile.wpMaxs) + sizeof(Routing);
 
-	start = time(nullptr);
+	double start = time(nullptr);
 
 	if (!lump)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: No lump given");
@@ -501,20 +493,17 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
-	source = base + lump->fileofs;
+	const byte* source = base + lump->fileofs;
 
-	i = CMod_DeCompressRouting(&source, (byte*)tile.wpMins);
-	length = i;
-	i = CMod_DeCompressRouting(&source, (byte*)tile.wpMaxs);
-	length += i;
-	i = CMod_DeCompressRouting(&source, (byte*)tempMap);
-	length += i;
+	int length = CMod_DeCompressRouting(&source, (byte*)tile.wpMins);
+	length += CMod_DeCompressRouting(&source, (byte*)tile.wpMaxs);
+	length += CMod_DeCompressRouting(&source, (byte*)tempMap);
 
 	if (length != targetLength)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has BAD routing lump; expected %i got %i", targetLength, length);
 
 	/* endian swap possibly necessary */
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		tile.wpMins[i] = LittleLong(tile.wpMins[i]);
 		tile.wpMaxs[i] = LittleLong(tile.wpMaxs[i]);
 	}
@@ -541,12 +530,12 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 	 * model data is adjacent to a cell with existing model data. */
 
 	/* Copy the routing information into our master table */
-	minX = std::max(tile.wpMins[0], 0);
-	minY = std::max(tile.wpMins[1], 0);
-	minZ = std::max(tile.wpMins[2], 0);
-	maxX = std::min(tile.wpMaxs[0], PATHFINDING_WIDTH - 1);
-	maxY = std::min(tile.wpMaxs[1], PATHFINDING_WIDTH - 1);
-	maxZ = std::min(tile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
+	int minX = std::max(tile.wpMins[0], 0);
+	int minY = std::max(tile.wpMins[1], 0);
+	int minZ = std::max(tile.wpMins[2], 0);
+	int maxX = std::min(tile.wpMaxs[0], PATHFINDING_WIDTH - 1);
+	int maxY = std::min(tile.wpMaxs[1], PATHFINDING_WIDTH - 1);
+	int maxZ = std::min(tile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
 	assert(minX <= maxX);
 	assert(minY <= maxY);
@@ -556,14 +545,14 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 	Com_DPrintf(DEBUG_ROUTING, "Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX - sX, minY - sY, minZ - sZ,
 			maxX - sX, maxY - sY, maxZ - sZ);
 
-	for (size = 0; size < ACTOR_MAX_SIZE; size++)
+	for (actorSizeEnum_t size = 0; size < ACTOR_MAX_SIZE; size++)
 		/* Adjust starting x and y by size to catch large actor cell overlap. */
-		for (y = minY - size; y <= maxY; y++)
-			for (x = minX - size; x <= maxX; x++) {
+		for (int y = minY - size; y <= maxY; y++)
+			for (int x = minX - size; x <= maxX; x++) {
 				/* Just incase x or y start negative. */
 				if (x < 0 || y < 0)
 					continue;
-				for (z = minZ; z <= maxZ; z++) {
+				for (int z = minZ; z <= maxZ; z++) {
 					mapData->routing.copyPosData(*tempMap, size + 1, x, y, z, sX, sY, sZ);
 				}
 				/* Update the reroute table */
@@ -576,7 +565,7 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 
 	Com_DPrintf(DEBUG_ROUTING, "Done copying data.\n");
 
-	end = time(nullptr);
+	double end = time(nullptr);
 	Com_DPrintf(DEBUG_ROUTING, "Loaded routing for tile %s in %5.1fs\n", name, end - start);
 
 	Mem_Free(tempMap);
