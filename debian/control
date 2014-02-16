@@ -22,8 +22,10 @@ Section: games
 Priority: optional
 Architecture: any
 Conflicts: ufoai-server, ufoai-data
-Depends: ${shlibs:Depends}, ttf-freefont, ttf-dejavu, ttf-thai-tlwg,
- ttf-wqy-zenhei, ttf-unfonts-core, ttf-unfonts-extra, ttf-umefont
+Depends: ${shlibs:Depends}, ttf-freefont | fonts-freefont-ttf, ttf-dejavu,
+ ttf-thai-tlwg | fonts-thai-tlwg, ttf-wqy-zenhei | fonts-wqy-zenhei,
+ ttf-unfonts-core | fonts-unfonts-core, ttf-unfonts-extra | fonts-unfonts-extra,
+ ttf-umefont | fonts-horai-umefont
 Suggests: blender, ufoai-uforadiant
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
