@@ -79,9 +79,6 @@ typedef struct tnode_s {
 typedef struct chead_s {
 	int cnode;
 	int level;
-#if defined(COMPILE_UFO)
-	int hasContents;
-#endif
 } cBspHead_t;
 
 /**

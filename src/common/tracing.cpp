@@ -121,42 +121,6 @@ static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t no
 }
 
 /**
- * @brief Figure out if the subtree behind the node has any relevant brushes
- * @note Another attempt to speed up boxtracing. The idea behind it is as follows:
- *	We have 258 entrypoints to the BSP-tree, called 'cheads'. 256 and higher are reserved for clips.
- *	0-255 are the 'level-nodes', where each bit represents one level (0x1, 2, 4, 8,...).
- *	So chead 4 should contain only brushes that *only* exist in level 3 and chead 8 only those in level 4.
- *	A brush that extends from level 3 to level 4 will be in chead (4+8) = 12. So far, so good.
- *	So chead 5 should be empty because no brush can exist in only level 1 and 3 (without level 2 in between).
- *	And the same applies to many (80%) of the cheads, so we could mark them as empty and skip them.
- *	That was the idea. But ...
- *	1. I found brushes with only level 1 and 3 set
- *	2. I also found nodes in the subtree with xFF as the level and NO contents
- *	Fortunately, this little check does not significantly slow things down, so I'm leaving it in while investigating. (Duke)
- */
-static bool TR_NodeHasContents_r(TR_TILE_TYPE* myTile, int node)
-{
-	if (node < 0) {	/* is it a leaf ? */
-		if (myTile->leafs[LEAFNODE - node].contentFlags) {
-//			TR_LEAF_TYPE* leaf = &myTile->leafs[LEAFNODE - node];
-//			const int brushnum = myTile->leafbrushes[leaf->firstleafbrush];
-//			cBspBrush_t* brush = &myTile->brushes[brushnum];
-
-			return true;
-		}
-		else
-			return false;
-	}
-	else {
-		if (TR_NodeHasContents_r(myTile, myTile->nodes[node].children[0]))
-			return true;
-		if (TR_NodeHasContents_r(myTile, myTile->nodes[node].children[1]))
-			return true;
-	}
-	return false;
-}
-
-/**
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
@@ -227,9 +191,6 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenu
 		/* Make a lookup table */
 		tile->cheads[tile->numcheads].cnode = nodenum;
 		tile->cheads[tile->numcheads].level = level;
-#if defined(COMPILE_UFO)
-		tile->cheads[tile->numcheads].hasContents = -1;
-#endif
 		tile->numcheads++;
 		assert(tile->numcheads <= MAX_MAP_NODES);
 		/* Make the tracing node. */
@@ -1115,13 +1076,6 @@ trace_t TR_TileBoxTrace (TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t 
 		 * examined. */
 		if (h->level && h->level <= LEVEL_LASTVISIBLE && levelmask && !(h->level & levelmask))
 			continue;
-
-#if defined(COMPILE_UFO)
-		if (h->hasContents < 0)		/* not set yet, so figure it out */
-			h->hasContents = TR_NodeHasContents_r(myTile, h->cnode);
-		if (h->hasContents == 0)	/* no contents here */
-			continue;
-#endif
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
 		const trace_t newtr = TR_BoxTrace(traceData, traceLine, aabb, h->cnode, tr.fraction);
