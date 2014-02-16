@@ -680,7 +680,7 @@ window hud_default extends hud
 			tooltip	*cvar:mn_shot_reservation_tt
 			src "hud/button_reserve_shot"
 			pos		"11 32"
-			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
+			texl	"64 32"	// Initial pic - will be overwritten once the game's completely started.
 			texh	"115 64"
 			mousefx	true
 			onClick	{ cmd "hud_shotreservationpopup;" }
@@ -691,7 +691,7 @@ window hud_default extends hud
 		{
 			src	"hud/button_guard"
 			pos		"11 74"
-			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
+			texl	"0 32"	// Initial pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
 			mousefx	true
 			onClick	{ cmd "hud_togglereaction;" }
