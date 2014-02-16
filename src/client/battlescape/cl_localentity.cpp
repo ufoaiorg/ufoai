@@ -73,9 +73,9 @@ static void CL_GridRecalcRouting (const le_t* le)
 	}
 	AABB absBox(model->cbmBox);
 	absBox.shift(model->origin);
-	GridBox reroute(absBox);
+	GridBox rerouteBox(absBox);
 
-	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, reroute, cl.leInlineModelList);
+	Grid_RecalcRouting(cl.mapTiles, cl.mapData->routing, le->inlineModelName, rerouteBox, cl.leInlineModelList);
 }
 
 /**
