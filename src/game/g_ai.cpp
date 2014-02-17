@@ -697,6 +697,33 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 	}
 }
 
+static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
+{
+	const bool entControlled = G_IsState(ent, STATE_XVI);
+	const bool checkControlled = G_IsState(check, STATE_XVI);
+	if (check->team == ent->team)
+		return entControlled ? !checkControlled : checkControlled;
+
+	bool opponent = true;
+	switch (ent->team) {
+	/* Aliens: hostile to everyone */
+	case TEAM_ALIEN:
+		opponent = !checkControlled;
+		break;
+	/* Civilians: Only hostile to aliens */
+	case TEAM_CIVILIAN:
+		opponent = G_IsAlien(check) || checkControlled;
+		break;
+	/* PHALANX and MP teams: Hostile to aliens and rival teams
+	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
+	default:
+		opponent = !G_IsCivilian(check) || checkControlled;
+		break;
+	}
+
+	return entControlled ? !opponent : opponent;
+}
+
 static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
 {
 	if (ent == target)
@@ -705,21 +732,12 @@ static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
 	if (G_IsInsane(ent))
 		return true;
 
-	if (target->team == ent->team)
+	if (!AI_IsOpponent(ent, target))
 		return false;
 
-	switch (ent->team) {
-	/* Aliens: Don't shoot civs in multiplayer (but hostile to everyone otherwise) */
-	case TEAM_ALIEN:
-		return !(G_IsMultiPlayer() && G_IsCivilian(target));
-	/* Civilians: Only hostile to aliens (until XVI is implemented) */
-	case TEAM_CIVILIAN:
-		return G_IsAlien(target);
-	/* PHALANX and MP teams: Hostile to aliens and rival teams
-	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
-	default:
+	/* don't shoot civs in multiplayer */
+	if (G_IsMultiPlayer())
 		return !G_IsCivilian(target);
-	}
 
 	return true;
 }
