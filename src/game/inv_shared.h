@@ -43,7 +43,7 @@ typedef enum {
 } humanAircraftType_t;
 
 /* this is the absolute max for now */
-#define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
+#define MAX_OBJDEFS		130
 #define MAX_IMPLANTS	16
 #define MAX_MAPDEFS		256
 #define MAX_WEAPONS_PER_OBJDEF 4
