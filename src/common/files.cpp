@@ -1652,7 +1652,7 @@ void FS_Shutdown (void)
 	fs_blocklist = nullptr;
 
 #ifdef COMPILE_UFO
-	FS_RemoveCommands();
+//	FS_RemoveCommands();
 #endif
 
 	Mem_FreePool(com_fileSysPool);
