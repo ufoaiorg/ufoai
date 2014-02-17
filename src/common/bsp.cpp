@@ -849,7 +849,7 @@ static void CMod_GetTilesAt (const mapTiles_t* mapTiles, int x ,int y, byte& fro
 {
 	for (int i = 0; i < mapTiles->numTiles; i++) {
 		if ( mapTiles->mapTiles[i].wpMins[0] > x
-		  || mapTiles->mapTiles[i].wpMaxs[0] - 1 < x
+		  || mapTiles->mapTiles[i].wpMaxs[0] - 1 < x	/* the -1 is a temporary fix for wpMaxs being off by 1 */
 		  || mapTiles->mapTiles[i].wpMins[1] > y
 		  || mapTiles->mapTiles[i].wpMaxs[1] - 1 < y)
 			continue;
@@ -859,7 +859,7 @@ static void CMod_GetTilesAt (const mapTiles_t* mapTiles, int x ,int y, byte& fro
 		else if (!fromTile2)
 			fromTile2 = mapTiles->mapTiles[i].idx + 1;	/* tile number, not index */
 		else
-			fromTile3 = 99;
+			fromTile3 = 99;								/* stacking of more than two tiles is not supported */
 	}
 }
 static void CMod_GetTileOverlap (const mapTiles_t* mapTiles, const byte tile1, const byte tile2, int& minZ, int& maxZ) {
@@ -869,9 +869,9 @@ static void CMod_GetTileOverlap (const mapTiles_t* mapTiles, const byte tile1, c
 	int highZ2 = mapTiles->mapTiles[tile2 - 1].wpMaxs[2];
 	minZ = std::max(lowZ1, lowZ2);
 	if (minZ > 0)
-		minZ--;
+		minZ--;			/* routing needs to start one level below the actual overlap */
 	maxZ = std::min(highZ1, highZ2);
-	maxZ++;
+	maxZ++;				/* ... and one level above */
 }
 /**
  * @brief Recalculate the seams of the tiles after an RMA
