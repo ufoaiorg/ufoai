@@ -954,7 +954,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						CMod_GetTilesAt(mapTiles, dx ,dy, toTile1, toTile2, toTile3);
 
 						int minZ = 0;
-						int maxZ = PATHFINDING_HEIGHT;
+						int maxZ = PATHFINDING_HEIGHT - 1;
 						if (!toTile1)
 							continue;	/* no tile at destination, so skip this dir */
 						if (fromTile1 == toTile1) {		/* same tile */
