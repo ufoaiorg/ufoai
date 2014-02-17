@@ -845,6 +845,34 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	mapData->mapChecksum += checksum;
 }
 
+static void CMod_GetTilesAt (const mapTiles_t* mapTiles, int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3)
+{
+	for (int i = 0; i < mapTiles->numTiles; i++) {
+		if ( mapTiles->mapTiles[i].wpMins[0] > x
+		  || mapTiles->mapTiles[i].wpMaxs[0] - 1 < x
+		  || mapTiles->mapTiles[i].wpMins[1] > y
+		  || mapTiles->mapTiles[i].wpMaxs[1] - 1 < y)
+			continue;
+		/* this tile exists at x/y, so store it */
+		if (!fromTile1)
+			fromTile1 = mapTiles->mapTiles[i].idx + 1;	/* tile number, not index */
+		else if (!fromTile2)
+			fromTile2 = mapTiles->mapTiles[i].idx + 1;	/* tile number, not index */
+		else
+			fromTile3 = 99;
+	}
+}
+static void CMod_GetTileOverlap (const mapTiles_t* mapTiles, const byte tile1, const byte tile2, int& minZ, int& maxZ) {
+	int lowZ1 = mapTiles->mapTiles[tile1 - 1].wpMins[2];
+	int lowZ2 = mapTiles->mapTiles[tile2 - 1].wpMins[2];
+	int highZ1 = mapTiles->mapTiles[tile1 - 1].wpMaxs[2];
+	int highZ2 = mapTiles->mapTiles[tile2 - 1].wpMaxs[2];
+	minZ = std::max(lowZ1, lowZ2);
+	if (minZ > 0)
+		minZ--;
+	maxZ = std::min(highZ1, highZ2);
+	maxZ++;
+}
 /**
  * @brief Recalculate the seams of the tiles after an RMA
  */
@@ -909,17 +937,43 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				const byte tile = mapData->reroute[actorSize][y][x];
 				if (tile) {
+					byte fromTile1 = 0;
+					byte fromTile2 = 0;
+					byte fromTile3 = 0;
+					CMod_GetTilesAt(mapTiles, x ,y, fromTile1, fromTile2, fromTile3);
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						const int dx = x + dvecs[dir][0];
 						const int dy = y + dvecs[dir][1];
 						/* Skip if the destination is out of bounds. */
 						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 							continue;
+#if 1
+						byte toTile1 = 0;
+						byte toTile2 = 0;
+						byte toTile3 = 0;
+						CMod_GetTilesAt(mapTiles, dx ,dy, toTile1, toTile2, toTile3);
+
+						int minZ = 0;
+						int maxZ = PATHFINDING_HEIGHT;
+						if (!toTile1)
+							continue;	/* no tile at destination, so skip this dir */
+						if (fromTile1 == toTile1) {		/* same tile */
+							if (!fromTile2 && !toTile2)	/* and no stacked tiles */
+								continue;				/* so nothing to do */
+							else {
+								if (fromTile2 == toTile2) {	/* the stacked tiles are also the same */
+									CMod_GetTileOverlap(mapTiles, toTile1, toTile2, minZ, maxZ);
+								}
+							}
+						}
+						RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir, nullptr, minZ, maxZ);
+#else
 						const int tile2 = mapData->reroute[actorSize][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
 							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir);
 						}
+#endif // 1
 					}
 				}
 			}
