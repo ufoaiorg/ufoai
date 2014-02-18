@@ -620,6 +620,16 @@ void Cmd_TokenizeString (const char* text, bool macroExpand, bool replaceWhitesp
 	}
 }
 
+static cmd_function_t* Cmd_TableFind (const char* cmdName)
+{
+	unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
+	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+		if (Q_streq(cmdName, cmd->name))
+			return cmd;
+	}
+	return nullptr;
+}
+
 /**
  * @brief Returns the command description for a given command
  * @param[in] cmd_name Command id in global command array
@@ -839,15 +849,9 @@ void Cmd_RemoveCommand (const char* cmd_name)
  */
 bool Cmd_Exists (const char* cmd_name)
 {
-	cmd_function_t* cmd;
-	unsigned int hash;
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
-
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmd_name, cmd->name))
-			return true;
-	}
-
+	cmd_function_t* cmd = Cmd_TableFind(cmd_name);
+	if (cmd)
+		return true;
 	return false;
 }
 
