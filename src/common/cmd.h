@@ -35,14 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/cxx.h"
 #include <stdarg.h>
 
-/**
- * @brief allocates an initial text buffer that will grow as needed
- */
 void Cbuf_Init(void);
 void Cbuf_Shutdown(void);
-
-/* as new commands are generated from the console or keyBindings,
- * the text is added to the end of the command buffer. */
 void Cbuf_AddText(const char* format, ...) __attribute__((format(__printf__, 1, 2)));
 
 /**

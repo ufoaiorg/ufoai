@@ -101,7 +101,7 @@ static byte cmd_text_buf[CMD_BUFFER_SIZE];
 static char defer_text_buf[CMD_BUFFER_SIZE];
 
 /**
- * @note The initial buffer will grow as needed.
+ * @brief allocates an initial text buffer that will grow as needed
  */
 void Cbuf_Init (void)
 {
