@@ -632,11 +632,11 @@ static cmd_function_t* Cmd_TableFind (const char* cmdName)
 
 /**
  * @brief Returns the command description for a given command
- * @param[in] cmd_name Command id in global command array
+ * @param[in] cmdName Command id in global command array
  * @note never returns a nullptr pointer
  * @todo - search alias, too
  */
-const char* Cmd_GetCommandDesc (const char* cmd_name)
+const char* Cmd_GetCommandDesc (const char* cmdName)
 {
 	cmd_function_t* cmd;
 	char* sep = nullptr;
@@ -644,7 +644,7 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 	char searchName[MAX_VAR];
 
 	/* remove parameters */
-	Q_strncpyz(searchName, cmd_name, sizeof(searchName));
+	Q_strncpyz(searchName, cmdName, sizeof(searchName));
 	sep = strstr(searchName, " ");
 	if (sep)
 		*sep = '\0';
@@ -687,22 +687,22 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 }
 
 /**
- * @param[in] cmd_name The name the command we want to add the complete function
+ * @param[in] cmdName The name the command we want to add the complete function
  * @param[in] function The complete function pointer
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  */
-void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const char* partial, const char** match))
+void Cmd_AddParamCompleteFunction (const char* cmdName, int (*function)(const char* partial, const char** match))
 {
 	cmd_function_t* cmd;
 	unsigned int hash;
 
-	if (!cmd_name || !cmd_name[0])
+	if (!cmdName || !cmdName[0])
 		return;
 
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmd_name, cmd->name)) {
+		if (Q_streq(cmdName, cmd->name)) {
 			cmd->completeParam = function;
 			return;
 		}
@@ -711,53 +711,53 @@ void Cmd_AddParamCompleteFunction (const char* cmd_name, int (*function)(const c
 
 /**
  * @brief Fetches the userdata for a console command.
- * @param[in] cmd_name The name the command we want to add edit
+ * @param[in] cmdName The name the command we want to add edit
  * @return @c nullptr if no userdata was set or the command wasn't found, the userdata
  * pointer if it was found and set
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_AddUserdata
  */
-void* Cmd_GetUserdata (const char* cmd_name)
+void* Cmd_GetUserdata (const char* cmdName)
 {
 	cmd_function_t* cmd;
 	unsigned int hash;
 
-	if (!cmd_name || !cmd_name[0]) {
+	if (!cmdName || !cmdName[0]) {
 		Com_Printf("Cmd_GetUserdata: Invalide parameter\n");
 		return nullptr;
 	}
 
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmd_name, cmd->name)) {
+		if (Q_streq(cmdName, cmd->name)) {
 			return cmd->userdata;
 		}
 	}
 
-	Com_Printf("Cmd_GetUserdata: '%s' not found\n", cmd_name);
+	Com_Printf("Cmd_GetUserdata: '%s' not found\n", cmdName);
 	return nullptr;
 }
 
 /**
  * @brief Adds userdata to the console command.
- * @param[in] cmd_name The name the command we want to add edit
+ * @param[in] cmdName The name the command we want to add edit
  * @param[in] userdata for this function
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  * @sa Cmd_GetUserdata
  */
-void Cmd_AddUserdata (const char* cmd_name, void* userdata)
+void Cmd_AddUserdata (const char* cmdName, void* userdata)
 {
 	cmd_function_t* cmd;
 	unsigned int hash;
 
-	if (!cmd_name || !cmd_name[0])
+	if (!cmdName || !cmdName[0])
 		return;
 
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmd_name, cmd->name)) {
+		if (Q_streq(cmdName, cmd->name)) {
 			cmd->userdata = userdata;
 			return;
 		}
@@ -804,23 +804,23 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 
 /**
  * @brief Removes a command from script interface
- * @param[in] cmd_name The script interface function name to remove
+ * @param[in] cmdName The script interface function name to remove
  * @sa Cmd_AddCommand
  */
-void Cmd_RemoveCommand (const char* cmd_name)
+void Cmd_RemoveCommand (const char* cmdName)
 {
 	cmd_function_t* cmd, **back;
 	unsigned int hash;
-	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	back = &cmd_functions_hash[hash];
 
 	while (1) {
 		cmd = *back;
 		if (!cmd) {
-			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
+			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
 		}
-		if (!Q_strcasecmp(cmd_name, cmd->name)) {
+		if (!Q_strcasecmp(cmdName, cmd->name)) {
 			*back = cmd->hash_next;
 			break;
 		}
@@ -831,10 +831,10 @@ void Cmd_RemoveCommand (const char* cmd_name)
 	while (1) {
 		cmd = *back;
 		if (!cmd) {
-			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
+			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
 		}
-		if (Q_streq(cmd_name, cmd->name)) {
+		if (Q_streq(cmdName, cmd->name)) {
 			*back = cmd->next;
 			Mem_Free(cmd);
 			return;
@@ -845,11 +845,11 @@ void Cmd_RemoveCommand (const char* cmd_name)
 
 /**
  * @brief Checks whether a function exists already
- * @param[in] cmd_name The script interface function name to search for
+ * @param[in] cmdName The script interface function name to search for
  */
-bool Cmd_Exists (const char* cmd_name)
+bool Cmd_Exists (const char* cmdName)
 {
-	cmd_function_t* cmd = Cmd_TableFind(cmd_name);
+	cmd_function_t* cmd = Cmd_TableFind(cmdName);
 	if (cmd)
 		return true;
 	return false;
