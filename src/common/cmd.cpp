@@ -638,21 +638,16 @@ static cmd_function_t* Cmd_TableFind (const char* cmdName)
  */
 const char* Cmd_GetCommandDesc (const char* cmdName)
 {
-	cmd_function_t* cmd;
-	char* sep = nullptr;
-	unsigned int hash;
 	char searchName[MAX_VAR];
 
 	/* remove parameters */
 	Q_strncpyz(searchName, cmdName, sizeof(searchName));
-	sep = strstr(searchName, " ");
+	char* sep = strstr(searchName, " ");
 	if (sep)
 		*sep = '\0';
 
-	hash = Com_HashKey(searchName, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_streq(searchName, cmd->name))
-			continue;
+	cmd_function_t* cmd = Cmd_TableFind(searchName);
+	if (cmd) {
 		if (cmd->description)
 			return cmd->description;
 		return "";
@@ -693,18 +688,13 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
  */
 void Cmd_AddParamCompleteFunction (const char* cmdName, int (*function)(const char* partial, const char** match))
 {
-	cmd_function_t* cmd;
-	unsigned int hash;
-
 	if (!cmdName || !cmdName[0])
 		return;
 
-	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmdName, cmd->name)) {
-			cmd->completeParam = function;
-			return;
-		}
+	cmd_function_t* cmd = Cmd_TableFind(cmdName);
+	if (cmd) {
+		cmd->completeParam = function;
+		return;
 	}
 }
 
@@ -719,19 +709,14 @@ void Cmd_AddParamCompleteFunction (const char* cmdName, int (*function)(const ch
  */
 void* Cmd_GetUserdata (const char* cmdName)
 {
-	cmd_function_t* cmd;
-	unsigned int hash;
-
 	if (!cmdName || !cmdName[0]) {
 		Com_Printf("Cmd_GetUserdata: Invalide parameter\n");
 		return nullptr;
 	}
 
-	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmdName, cmd->name)) {
-			return cmd->userdata;
-		}
+	cmd_function_t* cmd = Cmd_TableFind(cmdName);
+	if (cmd) {
+		return cmd->userdata;
 	}
 
 	Com_Printf("Cmd_GetUserdata: '%s' not found\n", cmdName);
@@ -748,18 +733,13 @@ void* Cmd_GetUserdata (const char* cmdName)
  */
 void Cmd_AddUserdata (const char* cmdName, void* userdata)
 {
-	cmd_function_t* cmd;
-	unsigned int hash;
-
 	if (!cmdName || !cmdName[0])
 		return;
 
-	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmdName, cmd->name)) {
-			cmd->userdata = userdata;
-			return;
-		}
+	cmd_function_t* cmd = Cmd_TableFind(cmdName);
+	if (cmd) {
+		cmd->userdata = userdata;
+		return;
 	}
 }
 
@@ -783,12 +763,10 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 	}
 
 	/* fail if the command already exists */
-	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmdName, cmd->name)) {
-			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmdName);
-			return;
-		}
+	cmd_function_t* cmdOld = Cmd_TableFind(cmdName);
+	if (cmdOld) {
+		Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmdName);
+		return;
 	}
 
 	cmd_function_t* const cmd = Mem_PoolAllocType(cmd_function_t, com_cmdSysPool);
@@ -796,6 +774,8 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 	cmd->description = desc;
 	cmd->function = function;
 	cmd->completeParam = nullptr;
+
+	unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	HASH_Add(cmd_functions_hash, cmd, hash);
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
