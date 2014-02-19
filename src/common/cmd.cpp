@@ -829,6 +829,12 @@ void Cmd_RemoveCommand (const char* cmdName)
 	}
 }
 
+void Cmd_TableRemoveList (const cmdList_t* cmdList)
+{
+	for (const cmdList_t* cmd = cmdList; cmd->name; cmd++)
+		Cmd_RemoveCommand(cmd->name);
+}
+
 /**
  * @brief Checks whether a function exists already
  * @param[in] cmdName The script interface function name to search for

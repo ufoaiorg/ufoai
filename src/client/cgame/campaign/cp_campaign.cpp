@@ -1166,10 +1166,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 
 static void CP_RemoveCampaignCommands (void)
 {
-	const cmdList_t* commands;
-
-	for (commands = game_commands; commands->name; commands++)
-		cgi->Cmd_RemoveCommand(commands->name);
+	Cmd_TableRemoveList(game_commands);
 
 	CP_RemoveCampaignCallbackCommands();
 }

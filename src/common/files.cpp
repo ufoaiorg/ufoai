@@ -893,10 +893,7 @@ static const cmdList_t fs_commands[] = {
 
 static void FS_RemoveCommands (void)
 {
-	const cmdList_t* commands;
-
-	for (commands = fs_commands; commands->name; commands++)
-		Cmd_RemoveCommand(commands->name);
+	Cmd_TableRemoveList(fs_commands);
 }
 
 static void FS_InitCommandsAndCvars (void)

@@ -1318,10 +1318,7 @@ bool R_Init (void)
  */
 void R_Shutdown (void)
 {
-	const cmdList_t* commands;
-
-	for (commands = r_commands; commands->name; commands++)
-		Cmd_RemoveCommand(commands->name);
+	Cmd_TableRemoveList(r_commands);
 
 	R_ShutdownThreads();
 
