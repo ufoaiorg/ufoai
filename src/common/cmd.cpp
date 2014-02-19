@@ -492,6 +492,10 @@ typedef struct cmd_function_s {
 	xcommand_t function;
 	int (*completeParam) (const char* partial, const char** match);
 	void* userdata;
+
+	inline const char* getName() const {
+		return name;
+	}
 } cmd_function_t;
 
 static int cmd_argc;
@@ -624,7 +628,7 @@ static cmd_function_t* Cmd_TableFind (const char* cmdName)
 {
 	unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (Q_streq(cmdName, cmd->name))
+		if (Q_streq(cmdName, cmd->getName()))
 			return cmd;
 	}
 	return nullptr;
@@ -802,7 +806,7 @@ void Cmd_RemoveCommand (const char* cmdName)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
 		}
-		if (Q_streq(cmdName, cmd->name)) {
+		if (Q_streq(cmdName, cmd->getName())) {
 			*back = cmd->hash_next;
 			break;
 		}
@@ -816,7 +820,7 @@ void Cmd_RemoveCommand (const char* cmdName)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
 		}
-		if (Q_streq(cmdName, cmd->name)) {
+		if (Q_streq(cmdName, cmd->getName())) {
 			*back = cmd->next;
 			Mem_Free(cmd);
 			return;
@@ -853,7 +857,7 @@ int Cmd_CompleteCommandParameters (const char* command, const char* partial, con
 	/* check for partial matches in commands */
 	hash = Com_HashKey(command, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcasecmp(command, cmd->name)) {
+		if (!Q_strcasecmp(command, cmd->getName())) {
 			if (!cmd->completeParam)
 				return 0;
 			return cmd->completeParam(partial, match);
@@ -878,8 +882,8 @@ int Cmd_CompleteCommand (const char* partial, const char** match)
 
 	/* check for partial matches in commands */
 	for (cmd_function_t const* cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (Cmd_GenericCompleteFunction(cmd->name, partial, match)) {
-			Com_Printf("[cmd] %s\n", cmd->name);
+		if (Cmd_GenericCompleteFunction(cmd->getName(), partial, match)) {
+			Com_Printf("[cmd] %s\n", cmd->getName());
 			if (cmd->description)
 				Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
 			++n;
@@ -922,7 +926,7 @@ void Cmd_vExecuteString (const char* fmt, va_list ap)
 	/* check functions */
 	hash = Com_HashKey(str, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcasecmp(str, cmd->name)) {
+		if (!Q_strcasecmp(str, cmd->getName())) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString("cmd %s", text);
 			} else {
@@ -985,11 +989,11 @@ static void Cmd_List_f (void)
 	}
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
-		if (c == 2 && strncmp(cmd->name, token, l)) {
+		if (c == 2 && strncmp(cmd->getName(), token, l)) {
 			i--;
 			continue;
 		}
-		Com_Printf("[cmd] %s\n", cmd->name);
+		Com_Printf("[cmd] %s\n", cmd->getName());
 		if (cmd->description)
 			Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
 	}
@@ -1042,8 +1046,8 @@ static void Cmd_Test_f (void)
 	cmd_function_t* cmd;
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!Q_streq(cmd->name, "quit"))
-			Cmd_ExecuteString("%s", cmd->name);
+		if (!Q_streq(cmd->getName(), "quit"))
+			Cmd_ExecuteString("%s", cmd->getName());
 	}
 }
 
@@ -1055,8 +1059,8 @@ void Cmd_PrintDebugCommands (void)
 
 	Com_Printf("Debug commands:\n");
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (Q_strstart(cmd->name, "debug_"))
-			Com_Printf(" * %s\n   %s\n", cmd->name, cmd->description);
+		if (Q_strstart(cmd->getName(), "debug_"))
+			Com_Printf(" * %s\n   %s\n", cmd->getName(), cmd->description);
 	}
 
 	Com_Printf("Other useful commands:\n");
