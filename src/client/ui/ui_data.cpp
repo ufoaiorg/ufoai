@@ -519,8 +519,7 @@ static void UI_ResetData_f (void)
 		else
 			UI_ResetData(id);
 	} else {
-		int i;
-		for (i = 0; i < UI_MAX_DATAID; i++)
+		for (int i = 0; i < UI_MAX_DATAID; i++)
 			UI_ResetData(i);
 	}
 }

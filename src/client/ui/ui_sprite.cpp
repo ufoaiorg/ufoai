@@ -98,8 +98,7 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
  */
 static bool UI_SpriteExists (const char* name)
 {
-	int i;
-	for (i = 0; i < ui_global.numSprites; i++) {
+	for (int i = 0; i < ui_global.numSprites; i++) {
 		if (strncmp(name, ui_global.sprites[i].name, MEMBER_SIZEOF(uiSprite_t, name)) != 0)
 			continue;
 		return true;
@@ -115,8 +114,7 @@ static bool UI_SpriteExists (const char* name)
  */
 uiSprite_t* UI_GetSpriteByName (const char* name)
 {
-	int i;
-	for (i = 0; i < ui_global.numSprites; i++) {
+	for (int i = 0; i < ui_global.numSprites; i++) {
 		if (Q_streq(name, ui_global.sprites[i].name))
 			return &ui_global.sprites[i];
 	}

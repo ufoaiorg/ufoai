@@ -91,8 +91,7 @@ static void UI_ExecuteActions(const uiAction_t* firstAction, uiCallContext_t* co
  */
 static void UI_CheckActionTokenTypeSanity (void)
 {
-	int i;
-	for (i = 0; i < lengthof(actionTokens) - 1; i++) {
+	for (int i = 0; i < lengthof(actionTokens) - 1; i++) {
 		const char* a = actionTokens[i].token;
 		const char* b = actionTokens[i + 1].token;
 		if (strcmp(a, b) >= 0) {
@@ -547,10 +546,9 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 
 	case EA_POPVARS:
 		{
-			int i;
 			const int number = action->d.terminal.d1.integer;
 			assert(number <= context->varNumber);
-			for (i = 0; i < number; i++) {
+			for (int i = 0; i < number; i++) {
 				const int varId = context->varPosition + context->varNumber - i - 1;
 				UI_ReleaseVariable(&(ui_global.variableStack[varId]));
 			}

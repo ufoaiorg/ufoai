@@ -123,10 +123,9 @@ void UI_HandleTimers (void)
 uiTimer_t* UI_AllocTimer (uiNode_t* node, int firstDelay, timerCallback_t callback)
 {
 	uiTimer_t* timer = nullptr;
-	int i;
 
 	/* search empty slot */
-	for (i = 0; i < UI_TIMER_SLOT_NUMBER; i++) {
+	for (int i = 0; i < UI_TIMER_SLOT_NUMBER; i++) {
 		if (ui_timerSlots[i].callback != nullptr)
 			continue;
 		timer = ui_timerSlots + i;

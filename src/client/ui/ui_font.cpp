@@ -156,9 +156,7 @@ const char* UI_GetFontFromNode (const uiNode_t* const node)
  */
 const uiFont_t* UI_GetFontByID (const char* name)
 {
-	int i;
-
-	for (i = 0; i < numFonts; i++)
+	for (int i = 0; i < numFonts; i++)
 		if (Q_streq(fonts[i].name, name))
 			return &fonts[i];
 
@@ -178,10 +176,8 @@ int UI_FontGetHeight (const char* fontID)
  */
 void UI_InitFonts (void)
 {
-	int i;
-
 	Com_Printf("...registering %i fonts\n", numFonts);
-	for (i = 0; i < numFonts; i++)
+	for (int i = 0; i < numFonts; i++)
 		UI_RegisterFont(&fonts[i]);
 }
 

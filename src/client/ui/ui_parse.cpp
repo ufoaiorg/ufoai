@@ -1099,13 +1099,10 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
  */
 bool UI_ParseUIModel (const char* name, const char** text)
 {
-	uiModel_t* model;
-	const char* token;
-	int i;
 	const char* errhead = "UI_ParseUIModel: unexpected end of file (names ";
 
 	/* search for a UI models with same name */
-	for (i = 0; i < ui_global.numModels; i++)
+	for (int i = 0; i < ui_global.numModels; i++)
 		if (Q_streq(ui_global.models[i].id, name)) {
 			Com_Printf("UI_ParseUIModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return false;
@@ -1117,7 +1114,7 @@ bool UI_ParseUIModel (const char* name, const char** text)
 	}
 
 	/* initialize the model */
-	model = &ui_global.models[ui_global.numModels];
+	uiModel_t* model = &ui_global.models[ui_global.numModels];
 	OBJZERO(*model);
 
 	Vector4Set(model->color, 1, 1, 1, 1);
@@ -1126,7 +1123,7 @@ bool UI_ParseUIModel (const char* name, const char** text)
 	Com_DPrintf(DEBUG_CLIENT, "Found UI model %s (%i)\n", model->id, ui_global.numModels);
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || token[0] != '{') {
 		Com_Printf("UI_ParseUIModel: Model \"%s\" without body ignored\n", model->id);

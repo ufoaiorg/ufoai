@@ -148,17 +148,14 @@ void UI_Reinit (void)
  */
 void UI_Shutdown (void)
 {
-	int i;
-	const uiBehaviour_t* confunc;
-
 	/* MN is not yet initialized */
 	if (ui_global.adata == nullptr)
 		return;
 
-	confunc = UI_GetNodeBehaviour("confunc");
+	const uiBehaviour_t* confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
-	for (i = 0; i < ui_global.numWindows; i++) {
+	for (int i = 0; i < ui_global.numWindows; i++) {
 		uiNode_t* node = ui_global.windows[i];
 		while (node) {
 
