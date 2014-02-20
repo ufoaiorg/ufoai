@@ -36,16 +36,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../shared/shared.h"
 
-#define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
-#define CVAR_USERINFO   2       /**< added to userinfo  when changed */
-#define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
-#define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
-#define CVAR_LATCH      16      /**< save changes until server restart */
-#define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
-#define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
-#define CVAR_R_IMAGES   128     /**< effects image filtering */
-#define CVAR_R_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
-#define CVAR_R_PROGRAMS 512		/**< if changed, shaders are restarted */
+#define CVAR_ARCHIVE	1		/**< set to cause it to be saved to vars.rc */
+#define CVAR_USERINFO	2		/**< added to userinfo  when changed */
+#define CVAR_SERVERINFO	4		/**< added to serverinfo when changed */
+#define CVAR_NOSET		8		/**< don't allow change from console at all, but can be set from the command line */
+#define CVAR_LATCH		16		/**< save changes until server restart */
+#define CVAR_DEVELOPER	32		/**< set from commandline (not from within the game) and hide from console */
+#define CVAR_CHEAT		64		/**< clamp to the default value when cheats are off */
+#define CVAR_R_IMAGES	128		/**< effects image filtering */
+#define CVAR_R_CONTEXT	256		/**< vid shutdown if such a cvar was modified */
+#define CVAR_R_PROGRAMS	512		/**< if changed, shaders are restarted */
 
 #define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
 
