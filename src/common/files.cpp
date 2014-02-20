@@ -898,10 +898,7 @@ static void FS_RemoveCommands (void)
 
 static void FS_InitCommandsAndCvars (void)
 {
-	const cmdList_t* commands;
-
-	for (commands = fs_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function, commands->description);
+	Cmd_TableAddList(fs_commands);
 }
 #endif
 

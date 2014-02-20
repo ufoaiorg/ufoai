@@ -1134,11 +1134,7 @@ static void CP_AddCampaignCallbackCommands (void)
 
 static void CP_AddCampaignCommands (void)
 {
-	const cmdList_t* commands;
-
-	for (commands = game_commands; commands->name; commands++)
-		cgi->Cmd_AddCommand(commands->name, commands->function, commands->description);
-
+	Cmd_TableAddList(game_commands);
 	CP_AddCampaignCallbackCommands();
 }
 

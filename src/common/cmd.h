@@ -100,6 +100,7 @@ void Cmd_Shutdown(void);
 void Cmd_AddCommand(const char* cmd_name, xcommand_t function, const char* desc = nullptr);
 
 void Cmd_RemoveCommand(const char* cmd_name);
+void Cmd_TableAddList(const cmdList_t* cmdList);
 void Cmd_TableRemoveList(const cmdList_t* cmdList);
 
 void Cmd_AddParamCompleteFunction(const char* cmd_name, int (*function)(const char* partial, const char** match));

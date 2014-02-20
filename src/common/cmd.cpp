@@ -829,6 +829,12 @@ void Cmd_RemoveCommand (const char* cmdName)
 	}
 }
 
+void Cmd_TableAddList (const cmdList_t* cmdList)
+{
+	for (const cmdList_t* cmd = cmdList; cmd->name; cmd++)
+		Cmd_AddCommand(cmd->name, cmd->function, cmd->description);
+}
+
 void Cmd_TableRemoveList (const cmdList_t* cmdList)
 {
 	for (const cmdList_t* cmd = cmdList; cmd->name; cmd++)

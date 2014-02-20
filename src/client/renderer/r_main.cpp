@@ -569,8 +569,6 @@ static void R_UpdateWeather (const char* cvarName, const char* oldValue, const c
 
 static void R_RegisterSystemVars (void)
 {
-	const cmdList_t* commands;
-
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_weather = Cvar_Get("r_weather", "0", 0, "Current battlescape weather effect");
 	Cvar_SetCheckFunction("r_weather", R_CvarCheckWeather);
@@ -633,8 +631,7 @@ static void R_RegisterSystemVars (void)
 	r_particles = Cvar_Get("r_particles", "1", 0, "Activate or deactivate particle rendering");
 	r_drawtags = Cvar_Get("r_drawtags", "0", 0, "Activate or deactivate tag rendering");
 
-	for (commands = r_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function, commands->description);
+	Cmd_TableAddList(r_commands);
 }
 
 /**
