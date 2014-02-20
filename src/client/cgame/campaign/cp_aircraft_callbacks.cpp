@@ -278,25 +278,21 @@ static void AIR_ChangeAircraftName_f (void)
 	Q_strncpyz(aircraft->name, newName, sizeof(aircraft->name));
 }
 
+static const cmdList_t aircraftCallbacks[] = {
+	{"aircraft_start", AIM_AircraftStart_f, nullptr},
+	{"ui_aircraft_select", AIM_SelectAircraft_f, nullptr},
+	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase."},
+	{"ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft."},
+	{"ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft."},
+	{nullptr, nullptr, nullptr}
+};
 
 void AIR_InitCallbacks (void)
 {
-	/* menu aircraft */
-	cgi->Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, nullptr);
-	/* menu aircraft_equip, aircraft */
-	cgi->Cmd_AddCommand("ui_aircraft_select", AIM_SelectAircraft_f, nullptr);
-	/* menu aircraft, popup_transferbaselist */
-	cgi->Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
-	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	cgi->Cmd_AddCommand("ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
-	cgi->Cmd_AddCommand("ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft.");
+	Cmd_TableAddList(aircraftCallbacks);
 }
 
 void AIR_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_aircraft_changename");
-	cgi->Cmd_RemoveCommand("aircraft_start");
-	cgi->Cmd_RemoveCommand("ui_aircraft_select");
-	cgi->Cmd_RemoveCommand("aircraft_return");
-	cgi->Cmd_RemoveCommand("ui_aircraft_fill");
+	Cmd_TableRemoveList(aircraftCallbacks);
 }
