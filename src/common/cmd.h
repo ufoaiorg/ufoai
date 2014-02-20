@@ -141,7 +141,7 @@ const char* Cmd_Args(void);
 void* Cmd_Userdata(void);
 
 /**
- * @brief Takes a null terminated string.  Does not need to be /n terminated.
+ * @brief Takes a null terminated string. Does not need to be \n terminated.
  * breaks the string up into arg tokens.
  */
 void Cmd_TokenizeString(const char* text, bool macroExpand, bool replaceWhitespaces = true);
