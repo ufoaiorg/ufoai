@@ -697,6 +697,14 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
 	}
 }
 
+/**
+ * @brief Check if given actors are enemies.
+ * @param[in] ent The actor that makes the check.
+ * @param[in] check The actor which is a possible opponent.
+ * @returns @c true if enemies. @false otherwise
+ * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
+ * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
+ */
 static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
 {
 	const bool entControlled = G_IsState(ent, STATE_XVI);
@@ -724,6 +732,13 @@ static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
 	return entControlled ? !opponent : opponent;
 }
 
+/**
+ * @brief Check if @c ent perceives @c target as hostile.
+ * @note Takes lose of sanity in consideration.
+ * @param[in] ent The actor that checks for hostiles.
+ * @param[in] target The possible hostile actor.
+ * @returns @c true if ent perceives target as hostile
+ */
 static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
 {
 	if (ent == target)
