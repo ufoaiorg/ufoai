@@ -467,8 +467,8 @@ void Q_strncpyz (char* dest, const char* src, size_t destsize)
 /**
  * @brief Safely (without overflowing the destination buffer) concatenates two strings.
  * @param[in] dest the destination string.
- * @param[in] src the source string.
  * @param[in] destsize the total size of the destination buffer.
+ * @param[in] format the format or simple source string.
  * @return pointer destination string.
  * never goes past bounds or leaves without a terminating 0
  */
