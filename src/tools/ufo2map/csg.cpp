@@ -345,10 +345,7 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 				vis++;
 
 		/* if the brush is outside the clip area, skip it */
-		for (j = 0; j < 3; j++)
-			if (mb->mbBox.mins[j] < clip.mins[j] || mb->mbBox.maxs[j] > clip.maxs[j])
-				break;
-		if (j != 3)
+		if (!clip.contains(mb->mbBox))
 			continue;
 
 		mb->finished = true;

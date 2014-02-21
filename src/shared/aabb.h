@@ -180,6 +180,11 @@ public:
 			&& point[1] >= getMinY() && point[1] <= getMaxY()
 			&& point[2] >= getMinZ() && point[2] <= getMaxZ() );
 	}
+	inline bool contains (const AABB& other) const {
+		return (other.getMinX() >= getMinX() && other.getMaxX() <= getMaxX()
+			&& other.getMinY() >= getMinY() && other.getMaxY() <= getMaxY()
+			&& other.getMinZ() >= getMinZ() && other.getMaxZ() <= getMaxZ() );
+	}
 
 	/*==================
 	 *	manipulators
