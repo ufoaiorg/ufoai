@@ -829,6 +829,33 @@ void Cmd_RemoveCommand (const char* cmdName)
 	}
 }
 
+/**
+ * @brief Check both the functiontable and the associated hashteble for in valid entries.
+ * A helper function to hunt the 'crash on exit' bug when trying to remove the "fs_restart" cmd.
+ */
+void Cmd_TableCheck (void)
+{
+	int cmdCount = 0;
+	for (cmd_function_t* cmd = cmd_functions; cmd; cmd = cmd->next) {
+		cmdCount++;
+		if (Q_streq("hugo", cmd->getName())) {
+			Com_Printf("Cmd_TableCheck: found bad entry\n");
+			return;
+		}
+	}
+	int hashCount = 0;
+	for (int i = 0; i < CMD_HASH_SIZE; i++) {
+		for (cmd_function_t* cmd = cmd_functions_hash[i]; cmd; cmd = cmd->hash_next) {
+			hashCount++;
+			if (Q_streq("hugo", cmd->getName())) {
+				Com_Printf("Cmd_TableCheck: found bad hash entry\n");
+				return;
+			}
+		}
+	}
+	Com_Printf("cmdCount: %i hashCount: %i\n", cmdCount, hashCount);
+}
+
 void Cmd_TableAddList (const cmdList_t* cmdList)
 {
 	for (const cmdList_t* cmd = cmdList; cmd->name; cmd++)

@@ -893,6 +893,7 @@ static const cmdList_t fs_commands[] = {
 
 static void FS_RemoveCommands (void)
 {
+	Cmd_TableCheck();
 	Cmd_TableRemoveList(fs_commands);
 }
 
