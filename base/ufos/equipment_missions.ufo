@@ -83,6 +83,17 @@
 // If you get in equipment definition weapon1 with ammo1 and weapon2 with ammo2, when ammo2 can fit ammo1, note
 //    that you will be able to get ammo1 OR ammo2 for weapon1.
 //
+// Here is a shortcut from DarkRain about the procedure:
+//    Equipment is assigned in six stages:
+//    A) Primary: weapon + firetwohanded + is_primary
+//    B) Secondary: weapon + reload + NOT deplete + is_secondary
+//    C) Misc (1): is_misc OR (weapon + is_secondary + (deplete OR NOT reload))
+//    D) Blade (only if no weapon was equipped so far): weapon + is_secondary + NOT reload
+//    D) Armour
+//    E) Misc (2): is_misc + NOT weapon
+//    * Note: If someone makes a one-handed primary weapon it won't be equipped at all, as it doesn't fit any category.
+//    * Note: is_misc items are looked at twice and each stage interprets the probability number differently.
+//
 // Notes:
 //  * There are different types of alien equipment. The one that will be used is the one which name starts with the
 //    equipment name defined in alientype_missions.ufo.
