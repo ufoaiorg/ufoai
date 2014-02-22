@@ -203,20 +203,21 @@ static void RS_FillTechnologyList_f (void)
 	}
 }
 
+static const cmdList_t research_commands[] = {
+	{"ui_research_fill", RS_FillTechnologyList_f, "Fill research screen with list of researchable technologies"},
+	{"ui_research_getdetails", RS_GetDetails_f, "Show technology image/model in reseach screen"},
+	{"ui_research_stop", RS_Stop_f, "Stops the research"},
+	{"ui_research_change", RS_Change_f, "Change number of scientists working on the research"},
+	{"ui_research_max", RS_Max_f, "Allocates as many scientists on the research as possible"},
+	{nullptr, nullptr, nullptr}
+};
+
 void RS_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("ui_research_fill", RS_FillTechnologyList_f, "Fill research screen with list of researchable technologies");
-	cgi->Cmd_AddCommand("ui_research_getdetails", RS_GetDetails_f, "Show technology image/model in reseach screen");
-	cgi->Cmd_AddCommand("ui_research_stop", RS_Stop_f, "Stops the research");
-	cgi->Cmd_AddCommand("ui_research_change", RS_Change_f, "Change number of scientists working on the research");
-	cgi->Cmd_AddCommand("ui_research_max", RS_Max_f, "Allocates as many scientists on the research as possible");
+	Cmd_TableAddList(research_commands);
 }
 
 void RS_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_research_fill");
-	cgi->Cmd_RemoveCommand("ui_research_getdetails");
-	cgi->Cmd_RemoveCommand("ui_research_stop");
-	cgi->Cmd_RemoveCommand("ui_research_change");
-	cgi->Cmd_RemoveCommand("ui_research_max");
+	Cmd_TableRemoveList(research_commands);
 }
