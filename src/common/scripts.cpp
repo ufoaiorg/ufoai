@@ -1805,63 +1805,63 @@ struct parseItemWeapon_t {
 
 static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char** text)
 {
-	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-		const char* token;
-		/* get it's body */
-		token = Com_Parse(text);
-		if (!*text || *token != '{') {
-			Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" without body ignored\n", name);
-			return;
-		}
+	assert(od->numWeapons < MAX_WEAPONS_PER_OBJDEF);
 
-		/* get weapon property */
-		token = Com_Parse(text);
-		if (!*text || !Q_streq(token, "weapon")) {
-			Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" weapon as first element expected.\n", name);
-			return;
-		}
-
-		/* Save the weapon id. */
-		token = Com_Parse(text);
-		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
-		parseItemWeapon_t parse;
-		parse.od = od;
-		parse.numWeapons = od->numWeapons;
-		parse.token = Mem_StrDup(token);
-		LIST_Add(&parseItemWeapons, parse);
-
-		/* For each firedef entry for this weapon.  */
-		do {
-			const char* errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
-			token = Com_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			if (*token == '}')
-				break;
-
-			if (Q_streq(token, "firedef")) {
-				const weaponFireDefIndex_t weapFdsIdx = od->numWeapons;
-				if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
-					const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
-					fireDef_t* fd = &od->fd[weapFdsIdx][fdIdx];
-					fd->fireAttenuation = SOUND_ATTN_NORM;
-					fd->impactAttenuation = SOUND_ATTN_NORM;
-					/* Parse firemode into fd[IDXweapon][IDXfiremode] */
-					Com_ParseFire(name, text, fd);
-					/* Self-link fd */
-					fd->fdIdx = fdIdx;
-					/* Self-link weapon_mod */
-					fd->weapFdsIdx = weapFdsIdx;
-					od->numFiredefs[od->numWeapons]++;
-				} else {
-					Com_Printf("Com_ParseFireDefinition: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
-				}
-			} else {
-				Com_Printf("Unknown token '%s' - expected firedef\n", token);
-			}
-		} while (*text);
-		od->numWeapons++;
+	const char* token;
+	/* get it's body */
+	token = Com_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" without body ignored\n", name);
+		return;
 	}
+
+	/* get weapon property */
+	token = Com_Parse(text);
+	if (!*text || !Q_streq(token, "weapon")) {
+		Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" weapon as first element expected.\n", name);
+		return;
+	}
+
+	/* Save the weapon id. */
+	token = Com_Parse(text);
+	/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+	parseItemWeapon_t parse;
+	parse.od = od;
+	parse.numWeapons = od->numWeapons;
+	parse.token = Mem_StrDup(token);
+	LIST_Add(&parseItemWeapons, parse);
+
+	/* For each firedef entry for this weapon.  */
+	do {
+		const char* errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			return;
+		if (*token == '}')
+			break;
+
+		if (Q_streq(token, "firedef")) {
+			const weaponFireDefIndex_t weapFdsIdx = od->numWeapons;
+			if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
+				const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
+				fireDef_t* fd = &od->fd[weapFdsIdx][fdIdx];
+				fd->fireAttenuation = SOUND_ATTN_NORM;
+				fd->impactAttenuation = SOUND_ATTN_NORM;
+				/* Parse firemode into fd[IDXweapon][IDXfiremode] */
+				Com_ParseFire(name, text, fd);
+				/* Self-link fd */
+				fd->fdIdx = fdIdx;
+				/* Self-link weapon_mod */
+				fd->weapFdsIdx = weapFdsIdx;
+				od->numFiredefs[od->numWeapons]++;
+			} else {
+				Com_Printf("Com_ParseFireDefinition: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
+			}
+		} else {
+			Com_Printf("Unknown token '%s' - expected firedef\n", token);
+		}
+	} while (*text);
+	od->numWeapons++;
 }
 
 static void Com_ParseObjDefEffect (objDef_t* od, const char* name, const char** text)
