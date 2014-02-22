@@ -1810,7 +1810,7 @@ static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char*
 		/* get it's body */
 		token = Com_Parse(text);
 		if (!*text || *token != '{') {
-			Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
+			Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" without body ignored\n", name);
 			return;
 		}
 
