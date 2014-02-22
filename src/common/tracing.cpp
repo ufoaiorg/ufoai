@@ -598,7 +598,7 @@ static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check
  * @param[in] listsize Maximum size of that list
  * @param[in] headnode if < 0 we are in a leaf node
  */
-static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int listsize, int32_t headnode, int32_t* topnode)
+static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int listsize, int32_t headnode)
 {
 	leaf_check_t lc;
 	lc.leaf_list = list;
@@ -608,9 +608,6 @@ static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int li
 
 	assert(headnode < traceData->tile->numnodes + 6); /* +6 => bbox */
 	TR_BoxLeafnums_r(traceData, headnode, &lc);
-
-	if (topnode)
-		*topnode = lc.leaf_topnode;
 
 	return lc.leaf_count;
 }
@@ -1005,13 +1002,12 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 	if (VectorEqual(traceData.start, traceData.end)) {
 		int32_t leafs[MAX_LEAFS];
 		int numleafs;
-		int32_t topnode;
 		int i;
 
 		VectorAdd(traceData.start, traceData.maxs, traceData.absmaxs);
 		VectorAdd(traceData.start, traceData.mins, traceData.absmins);
 
-		numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode, &topnode);
+		numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode);
 		for (i = 0; i < numleafs; i++) {
 			TR_TestInLeaf(&traceData, leafs[i]);
 			if (traceData.trace.allsolid)
