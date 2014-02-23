@@ -1796,7 +1796,8 @@ struct parseItemWeapon_t {
 
 static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char** text)
 {
-	assert(od->numWeapons < MAX_WEAPONS_PER_OBJDEF);
+	if (od->numWeapons >= MAX_WEAPONS_PER_OBJDEF)
+		Sys_Error("max weapons per objdef exceeded");
 
 	const char* token;
 	/* get it's body */
