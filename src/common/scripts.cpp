@@ -493,6 +493,16 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 	return UFO_MAX;
 }
 
+static const char* Com_GetUfoIdStr (ufoType_t idNum)
+{
+	assert(sizeof(ufoIdsTable)/sizeof(ufoIds_t) == UFO_MAX);
+	for (int i = 0; i < UFO_MAX; i++)
+		if (idNum == ufoIdsTable[i].idNum)
+			return ufoIdsTable[i].idStr;
+
+	return nullptr;
+}
+
 /**
  * @brief Parse a value from a string
  * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
@@ -1098,6 +1108,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
+	const char* ufoIdStr = nullptr;
 	const byte* b;
 
 	b = (const byte*) base + ofs;
@@ -1164,30 +1175,11 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		}
 
 	case V_UFO:
-		switch (*(const ufoType_t*) b) {
-		case UFO_BOMBER:
-			return "craft_ufo_bomber";
-		case UFO_CARRIER:
-			return "craft_ufo_carrier";
-		case UFO_CORRUPTER:
-			return "craft_ufo_corrupter";
-		case UFO_FIGHTER:
-			return "craft_ufo_fighter";
-		case UFO_HARVESTER:
-			return "craft_ufo_harvester";
-		case UFO_SCOUT:
-			return "craft_ufo_scout";
-		case UFO_SUPPLY:
-			return "craft_ufo_supply";
-		case UFO_GUNBOAT:
-			return "craft_ufo_gunboat";
-		case UFO_RIPPER:
-			return "craft_ufo_ripper";
-		case UFO_MOTHERSHIP:
-			return "craft_ufo_mothership";
-		default:
+		ufoIdStr = Com_GetUfoIdStr(*(const ufoType_t*) b);
+		if (ufoIdStr)
+			return ufoIdStr;
+		else
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
-		}
 
 	case V_UFOCRASHED:
 		switch (*(const ufoType_t*) b) {
