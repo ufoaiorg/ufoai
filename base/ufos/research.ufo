@@ -5544,7 +5544,7 @@ tech rs_craft_ammo_hybrid_missile
 
 	require_for_production
 	{
-	    item (alienmaterials 20)
+		item (alienmaterials 20)
 	}
 
 	time		5000
