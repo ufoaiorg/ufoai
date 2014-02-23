@@ -50,16 +50,13 @@ MAP LOADING
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
-	const dBspModel_t* in;
-	int i, j, count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const dBspModel_t*) (base + l->fileofs);
+	const dBspModel_t* in = (const dBspModel_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", l->filelen, sizeof(*in));
-	count = l->filelen / sizeof(*in);
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...submodels: %i\n", count);
 
 	if (count < 1)
@@ -71,11 +68,11 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
 	tile.models = out;
 	tile.nummodels = count;
 
-	for (i = 0; i < count; i++, in++, out++) {
+	for (int i = 0; i < count; i++, in++, out++) {
 		/* Record the shift in case we need to undo it. */
 		VectorCopy(shift, out->shift);
 		/* spread the mins / maxs by a pixel */
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			out->cbmBox.mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->cbmBox.maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
 		}
@@ -93,16 +90,14 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* l)
 {
-	const dBspTexinfo_t* in;
-	int i, count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const dBspTexinfo_t*) (base + l->fileofs);
+	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(*in);
+
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...surfaces: %i\n", count);
 
 	if (count < 1)
@@ -115,7 +110,7 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* l)
 	tile.surfaces = out;
 	tile.numtexinfo = count;
 
-	for (i = 0; i < count; i++, in++, out++) {
+	for (int i = 0; i < count; i++, in++, out++) {
 		Q_strncpyz(out->name, in->texture, sizeof(out->name));
 		out->surfaceFlags = LittleLong(in->surfaceFlags);
 		out->value = LittleLong(in->value);
@@ -133,17 +128,14 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* l)
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
-	const dBspNode_t* in;
-	int child;
-	int i, j, count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const dBspNode_t*) (base + l->fileofs);
+	const dBspNode_t* in = (const dBspNode_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(*in);
+
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...nodes: %i\n", count);
 
 	if (count < 1)
@@ -157,20 +149,21 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* l, co
 	tile.numnodes = count;
 	tile.nodes = out;
 
-	for (i = 0; i < count; i++, out++, in++) {
+	for (int i = 0; i < count; i++, out++, in++) {
 		if (LittleLong(in->planenum) == PLANENUM_LEAF)
 			out->plane = nullptr;
 		else
 			out->plane = tile.planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
+		int j;
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleShort(in->mins[j]) + shift[j];
 			out->maxs[j] = LittleShort(in->maxs[j]) + shift[j];
 		}
 
 		for (j = 0; j < 2; j++) {
-			child = LittleLong(in->children[j]);
+			int child = LittleLong(in->children[j]);
 			out->children[j] = child;
 		}
 	}
@@ -184,16 +177,14 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* l, co
  */
 static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
 {
-	const dBspBrush_t* in;
-	int i, count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const dBspBrush_t*) (base + l->fileofs);
+	const dBspBrush_t* in = (const dBspBrush_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(*in);
+
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...brushes: %i\n", count);
 
 	if (count > MAX_MAP_BRUSHES)
@@ -205,7 +196,7 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
 	tile.numbrushes = count;
 	tile.brushes = out;
 
-	for (i = 0; i < count; i++, out++, in++) {
+	for (int i = 0; i < count; i++, out++, in++) {
 		out->firstbrushside = LittleLong(in->firstbrushside);
 		out->numsides = LittleLong(in->numsides);
 		out->brushContentFlags = LittleLong(in->brushContentFlags);
@@ -220,17 +211,14 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
  */
 static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
 {
-	int i;
-	const dBspLeaf_t* in;
-	int count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const dBspLeaf_t*) (base + l->fileofs);
+	const dBspLeaf_t* in = (const dBspLeaf_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(*in);
+
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...leafs: %i\n", count);
 
 	if (count < 1)
@@ -244,6 +232,8 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
 
 	tile.numleafs = count;
 	tile.leafs = out;
+
+	int i;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->contentFlags = LittleLong(in->contentFlags);
@@ -274,17 +264,14 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
  */
 static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
 {
-	int i, j;
-	const dBspPlane_t* in;
-	int count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const dBspPlane_t*) (base + l->fileofs);
+	const dBspPlane_t* in = (const dBspPlane_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(*in);
+
+	int count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...planes: %i\n", count);
 
 	if (count < 1)
@@ -299,12 +286,12 @@ static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* l, c
 	tile.numplanes = count;
 	tile.planes = out;
 
-	for (i = 0; i < count; i++, in++, out++) {
+	for (int i = 0; i < count; i++, in++, out++) {
 		out->dist = LittleFloat(in->dist);
 		out->type = LittleLong(in->type);
 
 		/* load normals and shift (map assembly) */
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			out->normal[j] = LittleFloat(in->normal[j]);
 			out->dist += out->normal[j] * shift[j];
 		}
@@ -319,17 +306,14 @@ static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* l, c
  */
 static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t* l)
 {
-	int i;
-	const unsigned short* in;
-	int count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const unsigned short*) (base + l->fileofs);
+	const unsigned short* in = (const unsigned short*) (base + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(unsigned short);
+
+	int count = l->filelen / sizeof(unsigned short);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...leafbrushes: %i\n", count);
 
 	/* add some for the box */
@@ -344,7 +328,7 @@ static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t*
 	tile.numleafbrushes = count;
 	tile.leafbrushes = out;
 
-	for (i = 0; i < count; i++, in++, out++)
+	for (int i = 0; i < count; i++, in++, out++)
 		*out = LittleShort(*in);
 }
 
@@ -356,17 +340,14 @@ static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t*
  */
 static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* l)
 {
-	int i;
-	const dBspBrushSide_t* in;
-	int count;
-
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const dBspBrushSide_t*) (base + l->fileofs);
+	const dBspBrushSide_t* in = (const dBspBrushSide_t*) (base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dBspBrushSide_t);
+
+	int count = l->filelen / sizeof(dBspBrushSide_t);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...brushsides: %i\n", count);
 
 	/* need to save space for box planes */
@@ -379,7 +360,7 @@ static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* 
 	tile.numbrushsides = count;
 	tile.brushsides = out;
 
-	for (i = 0; i < count; i++, in++, out++) {
+	for (int i = 0; i < count; i++, in++, out++) {
 		const int num = LittleShort(in->planenum);
 		const int j = LittleShort(in->texinfo);
 		if (j >= tile.numtexinfo)
@@ -397,14 +378,12 @@ static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* 
  */
 static int CMod_DeCompressRouting (const byte**  source, byte*  dataStart)
 {
-	int i, c;
-	byte* data_p;
-	const byte* src;
-
-	data_p = dataStart;
-	src = *source;
+	byte* data_p = dataStart;
+	const byte* src = *source;
 
 	while (*src) {
+		int i, c;
+
 		if (*src & 0x80) {
 			/* repetitions */
 			c = *src++ & ~0x80;
@@ -440,14 +419,12 @@ TRACING NODES
  */
 static void CM_MakeTracingNodes (MapTile& tile)
 {
-	int i;
-
 	tnode_t* tnode = tile.tnodes = Mem_PoolAllocTypeN(tnode_t, tile.numnodes + 6, com_cmodelSysPool);
 
 	tile.numtheads = 0;
 	tile.numcheads = 0;
 
-	for (i = 0; i < tile.nummodels; i++) {
+	for (int i = 0; i < tile.nummodels; i++) {
 		if (tile.models[i].headnode == LEAFNODE || tile.models[i].headnode >= tile.numnodes + 6)
 			continue;
 
@@ -685,8 +662,6 @@ static void CMod_LoadLighting (MapTile& tile, const byte* base, const lump_t* l)
  */
 static void CM_InitBoxHull (MapTile& tile)
 {
-	int i;
-
 	tile.box_headnode = tile.numnodes;
 	tile.box_planes = &tile.planes[tile.numplanes];
 	/* sanity check if you only use one maptile => no map assembly */
@@ -710,19 +685,16 @@ static void CM_InitBoxHull (MapTile& tile)
 	tile.leafbrushes[tile.numleafbrushes] = tile.numbrushes;
 
 	/* each side */
-	for (i = 0; i < 6; i++) {
+	for (int i = 0; i < 6; i++) {
 		const int side = i & 1;
-		cBspNode_t* c;
-		cBspPlane_t* p;
-		cBspBrushSide_t* s;
 
 		/* brush sides */
-		s = &tile.brushsides[tile.numbrushsides + i];
+		cBspBrushSide_t* s = &tile.brushsides[tile.numbrushsides + i];
 		s->plane = tile.planes + (tile.numplanes + i * 2 + side);
 		s->surface = &nullSurface;
 
 		/* nodes */
-		c = &tile.nodes[tile.box_headnode + i];
+		cBspNode_t* c = &tile.nodes[tile.box_headnode + i];
 		c->plane = tile.planes + (tile.numplanes + i * 2);
 		c->children[side] = -1 - tile.emptyleaf;
 		if (i != 5)
@@ -731,7 +703,7 @@ static void CM_InitBoxHull (MapTile& tile)
 			c->children[side ^ 1] = LEAFNODE - tile.numleafs;
 
 		/* planes */
-		p = &tile.box_planes[i * 2];
+		cBspPlane_t* p = &tile.box_planes[i * 2];
 		p->type = i >> 1;
 		VectorClear(p->normal);
 		p->normal[i >> 1] = 1;
@@ -1001,7 +973,6 @@ void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entit
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	int i;
 
 	Mem_FreePool(com_cmodelSysPool);
 
@@ -1040,7 +1011,7 @@ void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entit
 		if (pos && pos[0]) {
 			ipos3_t sh;
 			/* get position and add a tile */
-			for (i = 0; i < 3; i++) {
+			for (int i = 0; i < 3; i++) {
 				token = Com_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
@@ -1072,18 +1043,16 @@ void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entit
  */
 cBspModel_t* CM_InlineModel (const mapTiles_t* mapTiles, const char* name)
 {
-	int i, num;
-
 	/* we only want inline models here */
 	if (!name || name[0] != '*')
 		Com_Error(ERR_DROP, "CM_InlineModel: bad name: '%s'", name ? name : "");
 	/* skip the '*' character and get the inline model number */
-	num = atoi(name + 1) - 1;
+	int num = atoi(name + 1) - 1;
 	if (num < 0 || num >= MAX_MODELS)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number %i - max inline models are %i", num, MAX_MODELS);
 
 	/* search all the loaded tiles for the given inline model */
-	for (i = 0; i < mapTiles->numTiles; i++) {
+	for (int i = 0; i < mapTiles->numTiles; i++) {
 		const int models = mapTiles->mapTiles[i].nummodels - NUM_REGULAR_MODELS;
 		assert(models >= 0);
 
@@ -1136,9 +1105,7 @@ void CM_GetInlineModelAABB (mapTiles_t* mapTiles, const char* name, AABB& aabb)
  */
 float CM_GetVisibility (const mapTiles_t* mapTiles, const pos3_t position)
 {
-	int i;
-
-	for (i = 0; i < mapTiles->numTiles; i++) {
+	for (int i = 0; i < mapTiles->numTiles; i++) {
 		const MapTile& tile = mapTiles->mapTiles[i];
 		if (VectorInside(position, tile.wpMins, tile.wpMaxs)) {
 			if (tile.lightdata == nullptr)
