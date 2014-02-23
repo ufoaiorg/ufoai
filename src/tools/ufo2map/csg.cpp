@@ -258,16 +258,15 @@ static inline bool BrushGE (bspbrush_t* b1, bspbrush_t* b2)
  * @param[in] startbrush the index of the first brush to check.
  * @param[in] endbrush the index after the last brush to check.
  * @param[in] level the level that we are searching for brushes in. -1 for skipping the levelflag check.
- * @param[in] clipmins the absolute lowest boundary to allow for brushes.
- * @param[in] clipmaxs the absolute highest boundary to allow for brushes.
+ * @param[in] clipBox the absolute lowest and highest boundaries to allow for brushes.
  * @param[out] mins the lowest boundary for all accepted brushes within the clipped bounds.
  * @param[out] maxs the highest boundary for all accepted brushes within the clipped bounds.
  * @sa ProcessSubModel
  * @sa IsInLevel
  */
-int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
+int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const AABB& clipBox, vec3_t mins, vec3_t maxs)
 {
-	int i, j, num;
+	int i, num;
 
 	ClearBounds(mins, maxs);
 	num = 0;
@@ -283,11 +282,7 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 			continue;
 
 		/* check the bounds */
-		for (j = 0; j < 3; j++)
-			if (b->mbBox.mins[j] < clipmins[j]
-			 || b->mbBox.maxs[j] > clipmaxs[j])
-			break;
-		if (j != 3)
+		if (!clipBox.contains(b->mbBox))
 			continue;
 
 		num++;

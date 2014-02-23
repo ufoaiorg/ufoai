@@ -135,7 +135,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 	int i;
 
 	/* calculate bounds, stop if no brushes are available */
-	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox.mins, partBox.maxs, bmins, bmaxs))
+	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox, bmins, bmaxs))
 		return LEAFNODE;
 
 	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
