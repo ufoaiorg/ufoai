@@ -482,10 +482,10 @@ const ufoIds_t ufoIdsTable[] = {
 	{UFO_RIPPER,	"craft_ufo_ripper"},
 	{UFO_MOTHERSHIP,"craft_ufo_mothership"}
 };
+CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
 static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
-	assert(sizeof(ufoIdsTable)/sizeof(ufoIds_t) == UFO_MAX);
 	for (int i = 0; i < UFO_MAX; i++)
 		if (Q_streq(idString, ufoIdsTable[i].idStr))
 			return ufoIdsTable[i].idNum;
@@ -495,7 +495,6 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 
 static const char* Com_GetUfoIdStr (ufoType_t idNum)
 {
-	assert(sizeof(ufoIdsTable)/sizeof(ufoIds_t) == UFO_MAX);
 	for (int i = 0; i < UFO_MAX; i++)
 		if (idNum == ufoIdsTable[i].idNum)
 			return ufoIdsTable[i].idStr;
