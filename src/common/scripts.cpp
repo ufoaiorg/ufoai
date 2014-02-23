@@ -462,6 +462,38 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
 }
 
 /**
+ * @brief Ufoai uses two types of ids for ufos: the string is used for references in the scripts,
+ * the numeric/enum type in the code. This table and the following functions convert these ids
+ */
+typedef struct ufoIds_s {
+	ufoType_t idNum;
+	const char* idStr;
+} ufoIds_t;
+
+const ufoIds_t ufoIdsTable[] = {
+	{UFO_BOMBER,	"craft_ufo_bomber"},
+	{UFO_CARRIER,	"craft_ufo_carrier"},
+	{UFO_CORRUPTER,	"craft_ufo_corrupter"},
+	{UFO_FIGHTER,	"craft_ufo_fighter"},
+	{UFO_HARVESTER,	"craft_ufo_harvester"},
+	{UFO_SCOUT,		"craft_ufo_scout"},
+	{UFO_SUPPLY,	"craft_ufo_supply"},
+	{UFO_GUNBOAT,	"craft_ufo_gunboat"},
+	{UFO_RIPPER,	"craft_ufo_ripper"},
+	{UFO_MOTHERSHIP,"craft_ufo_mothership"}
+};
+
+static ufoType_t Com_GetUfoIdNum (const char* idString)
+{
+	assert(sizeof(ufoIdsTable)/sizeof(ufoIds_t) == UFO_MAX);
+	for (int i = 0; i < UFO_MAX; i++)
+		if (Q_streq(idString, ufoIdsTable[i].idStr))
+			return ufoIdsTable[i].idNum;
+
+	return UFO_MAX;
+}
+
+/**
  * @brief Parse a value from a string
  * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
  * @param[in] token The data which should be parsed
@@ -481,6 +513,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 	resultStatus_t status = RESULT_OK;
 	b = (byte*) base + ofs;
 	*writtenBytes = 0;
+	ufoType_t ufoType = UFO_MAX;
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type))
@@ -569,26 +602,9 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_UFO:
-		if (Q_streq(token, "craft_ufo_bomber"))
-			*(ufoType_t*) b = UFO_BOMBER;
-		else if (Q_streq(token, "craft_ufo_carrier"))
-			*(ufoType_t*) b = UFO_CARRIER;
-		else if (Q_streq(token, "craft_ufo_corrupter"))
-			*(ufoType_t*) b = UFO_CORRUPTER;
-		else if (Q_streq(token, "craft_ufo_fighter"))
-			*(ufoType_t*) b = UFO_FIGHTER;
-		else if (Q_streq(token, "craft_ufo_harvester"))
-			*(ufoType_t*) b = UFO_HARVESTER;
-		else if (Q_streq(token, "craft_ufo_scout"))
-			*(ufoType_t*) b = UFO_SCOUT;
-		else if (Q_streq(token, "craft_ufo_supply"))
-			*(ufoType_t*) b = UFO_SUPPLY;
-		else if (Q_streq(token, "craft_ufo_gunboat"))
-			*(ufoType_t*) b = UFO_GUNBOAT;
-		else if (Q_streq(token, "craft_ufo_ripper"))
-			*(ufoType_t*) b = UFO_RIPPER;
-		else if (Q_streq(token, "craft_ufo_mothership"))
-			*(ufoType_t*) b = UFO_MOTHERSHIP;
+		ufoType = Com_GetUfoIdNum(token);
+		if (ufoType != UFO_MAX)
+			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
 		*writtenBytes = sizeof(ufoType_t);
