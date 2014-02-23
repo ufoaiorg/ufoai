@@ -10,7 +10,7 @@
 // }
 //
 // <ufo_name>
-//	The id of the aircraft in witch the components definition must be used
+//	The id of the aircraft in which the components definition must be used
 // 	See also aircraftmanagement.ufo and research.ufo for more uses of these names.
 // <time>
 //	The time until the disassembly is finished. The values are given in "hours", buuut....
