@@ -34,9 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief decides wether to proceed with output based on verbosity and ufo2map's mode: check/fix/compile
- * @param change true if there will an automatic change on -fix
- * @param brushnum the brush that the report is about. send NUM_NONE, if the report only regards an entity
+ * @param msgVerbLevel The level of importance of the message to be compared to the -v value
+ * @param change true if there will be an automatic change on -fix
  * @param entnum the entity the brush is from.send NUM_NONE if the report is a summary, not regarding a specific entity or brush
+ * @param brushnum the brush that the report is about. send NUM_NONE, if the report only regards an entity
+ * @param format A printf type formatting string
  * @note for brushnum and entnum send NUM_SAME in multi-call messages to indicate that the message still regards the same brush or entity
  * @note the start of a report on a particular item (eg brush) is specially prefixed. The function notes newlines in the previous
  * call, and prefixes this message with a string depending on wether the message indicates a change and the entity and brush number.
