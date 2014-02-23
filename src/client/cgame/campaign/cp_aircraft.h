@@ -150,13 +150,13 @@ typedef struct aircraft_s {
 						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
 	struct aircraft_s* tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char* id;			/**< Internal id from script file. */
-	char name[MAX_VAR];			/**< Aircraft name (user can change this). */
+	char name[MAX_VAR];	/**< Aircraft name (user can change this). */
 	char* defaultName;	/**< Translatable default name for aircraft. */
 	char* image;		/**< Image on geoscape. */
 	char* model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
-	aircraftStatus_t status;			/**< Status of this aircraft, see aircraftStatus_t. */
+	aircraftStatus_t status;	/**< Status of this aircraft, see aircraftStatus_t. */
 
 	int price;			/**< Price of this aircraft type at game start, it's evolving on the market. */
 	int productionCost;	/**< Production costs of this aircraft type. */
@@ -171,15 +171,15 @@ typedef struct aircraft_s {
 	int time;			/**< Elapsed seconds since aircraft started it's new route */
 
 	int maxTeamSize;	/**< Max amount of soldiers onboard. */
-	linkedList_t* acTeam;			/**< List of employees. i.e. current team for this aircraft */
+	linkedList_t* acTeam;	/**< List of employees. i.e. current team for this aircraft */
 
-	Employee* pilot;			/**< Current Pilot assigned to the aircraft. */
+	Employee* pilot;	/**< Current Pilot assigned to the aircraft. */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
-	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft (empty or not) */
-	aircraftSlot_t shield;			/**< Armour assigned to aircraft (1 maximum) */
-	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
-	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft  (empty or not) */
+	int maxWeapons;						/**< Total number of weapon slots aboard this aircraft (empty or not) */
+	aircraftSlot_t shield;				/**< Armour assigned to aircraft (1 maximum) */
+	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];	/**< Electronics assigned to aircraft */
+	int maxElectronics;					/**< Total number of electronics slots aboard this aircraft  (empty or not) */
 
 	struct base_s* homebase;			/**< Pointer to homebase for faster access. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
@@ -191,21 +191,21 @@ typedef struct aircraft_s {
 								 * The mission the UFO is involved if this is a UFO */
 	char* missionID;			/**< aircraft loaded before missions, we need this temporary as reference
 								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
-	struct aircraft_s* aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
+	struct aircraft_s* aircraftTarget;	/**< Target of the aircraft (ufo or phalanx) */
 	bool leader;				/**< try to follow this aircraft */
-	struct radar_s radar;				/**< Radar to track ufos */
+	struct radar_s radar;		/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
 								 * @note As this is an int, wrange is multiplied by 1000 */
 
-	technology_t* tech;		/**< link to the aircraft tech */
+	technology_t* tech;			/**< link to the aircraft tech */
 
 	bool notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
 
-	bool detected;		/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to true
+	bool detected;			/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to true
 							 * and @c visible set to false: we can't see it on geoscape) */
-	bool landed;		/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
+	bool landed;			/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
 							 * @c detected and @c visible set to true to be actually seen on geoscape) */
-	bool notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
+	bool notOnGeoscape;		/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
