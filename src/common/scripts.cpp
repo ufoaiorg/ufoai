@@ -904,6 +904,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 {
 	byte* b;
 	int len;
+	ufoType_t ufoType = UFO_MAX;
 
 	b = (byte*) base + ofs;
 
@@ -975,26 +976,9 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return sizeof(humanAircraftType_t);
 
 	case V_UFO:
-		if (Q_streq((const char*)set, "craft_ufo_bomber"))
-			*(ufoType_t*) b = UFO_BOMBER;
-		else if (Q_streq((const char*)set, "craft_ufo_carrier"))
-			*(ufoType_t*) b = UFO_CARRIER;
-		else if (Q_streq((const char*)set, "craft_ufo_corrupter"))
-			*(ufoType_t*) b = UFO_CORRUPTER;
-		else if (Q_streq((const char*)set, "craft_ufo_fighter"))
-			*(ufoType_t*) b = UFO_FIGHTER;
-		else if (Q_streq((const char*)set, "craft_ufo_harvester"))
-			*(ufoType_t*) b = UFO_HARVESTER;
-		else if (Q_streq((const char*)set, "craft_ufo_scout"))
-			*(ufoType_t*) b = UFO_SCOUT;
-		else if (Q_streq((const char*)set, "craft_ufo_supply"))
-			*(ufoType_t*) b = UFO_SUPPLY;
-		else if (Q_streq((const char*)set, "craft_ufo_gunboat"))
-			*(ufoType_t*) b = UFO_GUNBOAT;
-		else if (Q_streq((const char*)set, "craft_ufo_ripper"))
-			*(ufoType_t*) b = UFO_RIPPER;
-		else if (Q_streq((const char*)set, "craft_ufo_mothership"))
-			*(ufoType_t*) b = UFO_MOTHERSHIP;
+		ufoType = Com_GetUfoIdNum((const char*)set);
+		if (ufoType != UFO_MAX)
+			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
