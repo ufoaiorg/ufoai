@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 
 struct linkedList_t {
-	void*         data;
+	void* data;
 	linkedList_t* next;
-	bool      ptr; /**< don't call Mem_Free for data if this is @c true */
+	bool ptr; /**< don't call Mem_Free for data if this is @c true */
 };
 
 typedef int (*linkedListSort_t) (linkedList_t* entry1, linkedList_t* entry2, const void* userData);

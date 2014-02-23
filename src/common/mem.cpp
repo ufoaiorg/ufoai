@@ -33,36 +33,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MEM_HASH         11
 
 struct memBlockFoot_t {
-	uint32_t sentinel; /**< For memory integrity checking */
+	uint32_t sentinel;		/**< For memory integrity checking */
 };
 
 struct memBlock_t {
 	memBlock_t* next;
 
-	uint32_t topSentinel; /**< For memory integrity checking */
+	uint32_t topSentinel;	/**< For memory integrity checking */
 
-	memPool_t* pool; /**< Owner pool */
-	int tagNum; /**< For group free */
+	memPool_t* pool;		/**< Owner pool */
+	int tagNum;				/**< For group free */
 
-	char const* allocFile; /**< File the memory was allocated in */
-	int allocLine; /**< Line the memory was allocated at */
+	char const* allocFile;	/**< File the memory was allocated in */
+	int allocLine;			/**< Line the memory was allocated at */
 
-	size_t memSize; /**< Size minus the header */
+	size_t memSize;			/**< Size minus the header */
 
-	uint32_t botSentinel; /**< For memory integrity checking */
+	uint32_t botSentinel;	/**< For memory integrity checking */
 };
 
 struct memPool_t {
 	char name[MEM_MAX_POOLNAME]; /**< Name of pool */
-	bool inUse; /**< Slot in use? */
+	bool inUse;				/**< Slot in use? */
 
 	memBlock_t* blocks[MEM_HASH]; /**< Allocated blocks */
 
-	uint32_t blockCount; /**< Total allocated blocks */
-	uint32_t byteCount; /**< Total allocated bytes */
+	uint32_t blockCount;	/**< Total allocated blocks */
+	uint32_t byteCount;		/**< Total allocated bytes */
 
 	char const* createFile; /**< File this pool was created on */
-	int createLine; /**< Line this pool was created on */
+	int createLine;			/**< Line this pool was created on */
 };
 
 #define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
