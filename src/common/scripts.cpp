@@ -999,26 +999,9 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return sizeof(ufoType_t);
 
 	case V_UFOCRASHED:
-		if (Q_streq((const char*)set, "craft_crash_bomber"))
-			*(ufoType_t*) b = UFO_BOMBER;
-		else if (Q_streq((const char*)set, "craft_crash_carrier"))
-			*(ufoType_t*) b = UFO_CARRIER;
-		else if (Q_streq((const char*)set, "craft_crash_corrupter"))
-			*(ufoType_t*) b = UFO_CORRUPTER;
-		else if (Q_streq((const char*)set, "craft_crash_fighter"))
-			*(ufoType_t*) b = UFO_FIGHTER;
-		else if (Q_streq((const char*)set, "craft_crash_harvester"))
-			*(ufoType_t*) b = UFO_HARVESTER;
-		else if (Q_streq((const char*)set, "craft_crash_scout"))
-			*(ufoType_t*) b = UFO_SCOUT;
-		else if (Q_streq((const char*)set, "craft_crash_supply"))
-			*(ufoType_t*) b = UFO_SUPPLY;
-		else if (Q_streq((const char*)set, "craft_crash_gunboat"))
-			*(ufoType_t*) b = UFO_GUNBOAT;
-		else if (Q_streq((const char*)set, "craft_crash_ripper"))
-			*(ufoType_t*) b = UFO_RIPPER;
-		else if (Q_streq((const char*)set, "craft_crash_mothership"))
-			*(ufoType_t*) b = UFO_MOTHERSHIP;
+		ufoType = Com_GetCrashedUfoIdNum((const char*)set);
+		if (ufoType != UFO_MAX)
+			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
 		return sizeof(ufoType_t);
