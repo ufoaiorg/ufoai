@@ -701,7 +701,7 @@ static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check
  * @brief Check if given actors are enemies.
  * @param[in] ent The actor that makes the check.
  * @param[in] check The actor which is a possible opponent.
- * @returns @c true if enemies. @false otherwise
+ * @returns @c true if enemies. @c false otherwise
  * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
  * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
  */
