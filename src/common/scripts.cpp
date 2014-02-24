@@ -525,6 +525,15 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 	return UFO_MAX;
 }
 
+static const char* Com_GetCrashedUfoIdStr (ufoType_t idNum)
+{
+	for (int i = 0; i < UFO_MAX; i++)
+		if (idNum == ufoCrashedIdsTable[i].idNum)
+			return ufoCrashedIdsTable[i].idStr;
+
+	return nullptr;
+}
+
 /**
  * @brief Parse a value from a string
  * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
@@ -1170,30 +1179,11 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 
 	case V_UFOCRASHED:
-		switch (*(const ufoType_t*) b) {
-		case UFO_BOMBER:
-			return "craft_crash_bomber";
-		case UFO_CARRIER:
-			return "craft_crash_carrier";
-		case UFO_CORRUPTER:
-			return "craft_crash_corrupter";
-		case UFO_FIGHTER:
-			return "craft_crash_fighter";
-		case UFO_HARVESTER:
-			return "craft_crash_harvester";
-		case UFO_SCOUT:
-			return "craft_crash_scout";
-		case UFO_SUPPLY:
-			return "craft_crash_supply";
-		case UFO_GUNBOAT:
-			return "craft_crash_gunboat";
-		case UFO_RIPPER:
-			return "craft_crash_ripper";
-		case UFO_MOTHERSHIP:
-			return "craft_crash_mothership";
-		default:
+		ufoIdStr = Com_GetCrashedUfoIdStr(*(const ufoType_t*) b);
+		if (ufoIdStr)
+			return ufoIdStr;
+		else
 			Sys_Error("Unknown crashed ufo type: '%i'", *(const ufoType_t*) b);
-		}
 
 	case V_INT:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(const int*) b);
