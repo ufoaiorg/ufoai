@@ -968,6 +968,28 @@ static void B_MakeBaseMapShot_f (void)
 }
 
 /** Init/Shutdown functions */
+static const cmdList_t baseCallbacks[] = {
+	{"basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles"},
+	{"mn_base_prev", B_PrevBase_f, "Go to the previous base"},
+	{"mn_base_next", B_NextBase_f, "Go to the next base"},
+	{"mn_base_select", B_SelectBase_f, "Select a founded base by index"},
+	{"mn_base_build", B_BuildBase_f, nullptr},
+	{"mn_set_base_title", B_SetBaseTitle_f, nullptr},
+	{"base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name"},
+	{"base_init", B_BaseInit_f, nullptr},
+	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
+	{"base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base"},
+	{"building_init", B_BuildingInit_f, nullptr},
+	{"building_status", B_BuildingStatus_f, nullptr},
+	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
+	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
+	{"building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building"},
+	{"check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button"},
+	{"buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode"},
+	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
+	{"basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base"},
+	{nullptr, nullptr, nullptr}
+};
 
 /** @todo unify the names into mn_base_* */
 void B_InitCallbacks (void)
@@ -978,48 +1000,14 @@ void B_InitCallbacks (void)
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	cgi->Cvar_SetValue("mn_base_max", MAX_BASES);
 
-	cgi->Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
-	cgi->Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
-	cgi->Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
-	cgi->Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
-	cgi->Cmd_AddCommand("mn_base_build", B_BuildBase_f, nullptr);
-	cgi->Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, nullptr);
-	cgi->Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
-	cgi->Cmd_AddCommand("base_init", B_BaseInit_f, nullptr);
-	cgi->Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	cgi->Cmd_AddCommand("base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base");
-	cgi->Cmd_AddCommand("building_init", B_BuildingInit_f, nullptr);
-	cgi->Cmd_AddCommand("building_status", B_BuildingStatus_f, nullptr);
-	cgi->Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
-	cgi->Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
-	cgi->Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
-	cgi->Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
-	cgi->Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
-	cgi->Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, nullptr);
-	cgi->Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
+	Cmd_TableAddList(baseCallbacks);
 }
 
 /** @todo unify the names into mn_base_* */
 void B_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("basemapshot");
-	cgi->Cmd_RemoveCommand("basesummary_selectbase");
-	cgi->Cmd_RemoveCommand("mn_base_prev");
-	cgi->Cmd_RemoveCommand("mn_base_next");
-	cgi->Cmd_RemoveCommand("mn_base_select");
-	cgi->Cmd_RemoveCommand("mn_base_build");
-	cgi->Cmd_RemoveCommand("base_changename");
-	cgi->Cmd_RemoveCommand("mn_set_base_title");
-	cgi->Cmd_RemoveCommand("base_init");
-	cgi->Cmd_RemoveCommand("base_assemble");
-	cgi->Cmd_RemoveCommand("base_building_space");
-	cgi->Cmd_RemoveCommand("building_init");
-	cgi->Cmd_RemoveCommand("building_status");
-	cgi->Cmd_RemoveCommand("building_destroy");
-	cgi->Cmd_RemoveCommand("building_ufopedia");
-	cgi->Cmd_RemoveCommand("check_building_status");
-	cgi->Cmd_RemoveCommand("buildings_click");
-	cgi->Cmd_RemoveCommand("reset_building_current");
+	Cmd_TableRemoveList(baseCallbacks);
+
 	cgi->Cvar_Delete("mn_base_max");
 	cgi->Cvar_Delete("mn_base_cost");
 	cgi->Cvar_Delete("mn_base_title");
