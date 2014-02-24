@@ -484,6 +484,20 @@ const ufoIds_t ufoIdsTable[] = {
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
+const ufoIds_t ufoCrashedIdsTable[] = {
+	{UFO_BOMBER,	"craft_crash_bomber"},
+	{UFO_CARRIER,	"craft_crash_carrier"},
+	{UFO_CORRUPTER,	"craft_crash_corrupter"},
+	{UFO_FIGHTER,	"craft_crash_fighter"},
+	{UFO_HARVESTER,	"craft_crash_harvester"},
+	{UFO_SCOUT,		"craft_crash_scout"},
+	{UFO_SUPPLY,	"craft_crash_supply"},
+	{UFO_GUNBOAT,	"craft_crash_gunboat"},
+	{UFO_RIPPER,	"craft_crash_ripper"},
+	{UFO_MOTHERSHIP,"craft_crash_mothership"}
+};
+CASSERT(lengthof(ufoCrashedIdsTable) == UFO_MAX);
+
 static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
 	for (int i = 0; i < UFO_MAX; i++)
@@ -500,6 +514,15 @@ static const char* Com_GetUfoIdStr (ufoType_t idNum)
 			return ufoIdsTable[i].idStr;
 
 	return nullptr;
+}
+
+static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
+{
+	for (int i = 0; i < UFO_MAX; i++)
+		if (Q_streq(idString, ufoCrashedIdsTable[i].idStr))
+			return ufoCrashedIdsTable[i].idNum;
+
+	return UFO_MAX;
 }
 
 /**
@@ -620,26 +643,9 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_UFOCRASHED:
-		if (Q_streq(token, "craft_crash_bomber"))
-			*(ufoType_t*) b = UFO_BOMBER;
-		else if (Q_streq(token, "craft_crash_carrier"))
-			*(ufoType_t*) b = UFO_CARRIER;
-		else if (Q_streq(token, "craft_crash_corrupter"))
-			*(ufoType_t*) b = UFO_CORRUPTER;
-		else if (Q_streq(token, "craft_crash_fighter"))
-			*(ufoType_t*) b = UFO_FIGHTER;
-		else if (Q_streq(token, "craft_crash_harvester"))
-			*(ufoType_t*) b = UFO_HARVESTER;
-		else if (Q_streq(token, "craft_crash_scout"))
-			*(ufoType_t*) b = UFO_SCOUT;
-		else if (Q_streq(token, "craft_crash_supply"))
-			*(ufoType_t*) b = UFO_SUPPLY;
-		else if (Q_streq(token, "craft_crash_gunboat"))
-			*(ufoType_t*) b = UFO_GUNBOAT;
-		else if (Q_streq(token, "craft_crash_ripper"))
-			*(ufoType_t*) b = UFO_RIPPER;
-		else if (Q_streq(token, "craft_crash_mothership"))
-			*(ufoType_t*) b = UFO_MOTHERSHIP;
+		ufoType = Com_GetCrashedUfoIdNum(token);
+		if (ufoType != UFO_MAX)
+			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
 		*writtenBytes = sizeof(ufoType_t);
