@@ -288,7 +288,7 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, con
  */
 trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject)
 {
-	int tile, i;
+	int tile;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
 	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
@@ -296,7 +296,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 	tr.fraction = 2.0f;
 
 	/* Prep the mins and maxs */
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		smin[i] = trLine.start[i] + std::min(box.mins[i], box.maxs[i]);
 		smax[i] = trLine.start[i] + std::max(box.mins[i], box.maxs[i]);
 		emin[i] = trLine.stop[i] + std::min(box.mins[i], box.maxs[i]);

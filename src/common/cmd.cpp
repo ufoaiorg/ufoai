@@ -211,13 +211,13 @@ void Cbuf_InsertFromDefer (void)
  */
 void Cbuf_Execute (void)
 {
-	unsigned int i;
-	char line[1024];
-
 	/* don't allow infinite alias loops */
 	alias_count = 0;
 
 	while (cmd_text.cursize) {
+		unsigned int i;
+		char line[1024];
+
 		/* find a \n or ; line break */
 		char* text = (char*) cmd_text.data;
 		int quotes = 0;
@@ -464,9 +464,8 @@ void Cmd_WriteAliases (qFILE* f)
 
 	for (a = cmd_alias; a; a = a->next)
 		if (a->archive) {
-			int i;
 			FS_Printf(f, "aliasa %s \"", a->name);
-			for (i = 0; i < strlen(a->value); i++) {
+			for (int i = 0; i < strlen(a->value); i++) {
 				if (a->value[i] == '"')
 					FS_Printf(f, "\\\"");
 				else
@@ -552,10 +551,8 @@ void* Cmd_Userdata (void)
  */
 void Cmd_BufClear (void)
 {
-	int i;
-
 	/* clear the args from the last string */
-	for (i = 0; i < cmd_argc; i++) {
+	for (int i = 0; i < cmd_argc; i++) {
 		Mem_Free(cmd_argv[i]);
 		cmd_argv[i] = nullptr;
 	}

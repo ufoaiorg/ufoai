@@ -606,31 +606,27 @@ static void Com_InitArgv (int argc, char** argv)
  */
 const char* Com_MacroExpandString (const char* text)
 {
-	int i, j, count, len;
-	bool inquote;
-	const char* scan;
 	static char expanded[MAX_STRING_CHARS];
-	const char* token, *start, *cvarvalue;
-	char* pos;
 
-	inquote = false;
-	scan = text;
+	const char* scan = text;
 	if (!text || !*text)
 		return nullptr;
 
-	len = strlen(scan);
+	int len = strlen(scan);
 	if (len >= MAX_STRING_CHARS) {
 		Com_Printf("Line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
 		return nullptr;
 	}
 
-	count = 0;
+	bool inquote = false;
+	int count = 0;
 	OBJZERO(expanded);
-	pos = expanded;
+	char* pos = expanded;
 
 	/* also the \0 */
 	assert(scan[len] == '\0');
-	for (i = 0; i <= len; i++) {
+	for (int i = 0; i <= len; i++) {
+		const char* token, *start, *cvarvalue;
 		if (scan[i] == '"')
 			inquote ^= 1;
 		/* don't expand inside quotes */
@@ -657,7 +653,7 @@ const char* Com_MacroExpandString (const char* text)
 			return nullptr;
 		}
 
-		j = strlen(cvarvalue);
+		int j = strlen(cvarvalue);
 		if (strlen(pos) + j >= MAX_STRING_CHARS) {
 			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
 			return nullptr;
@@ -869,10 +865,8 @@ void Com_SetGameType (void)
 
 static void Com_GameTypeList_f (void)
 {
-	int i;
-
 	Com_Printf("Available gametypes:\n");
-	for (i = 0; i < csi.numGTs; i++) {
+	for (int i = 0; i < csi.numGTs; i++) {
 		int j;
 		const gametype_t* gt = &csi.gts[i];
 		const cvarlist_t* list;
@@ -1364,7 +1358,6 @@ static void tick_timer (int now, void* data)
 static void Schedule_Timer (cvar_t* freq, event_func* func, event_check_func* check, void* data)
 {
 	struct timer* const timer = Mem_PoolAllocType(struct timer, com_genericPool);
-	int i;
 	timer->min_freq = freq;
 	timer->interval = 1000 / freq->integer;
 	timer->next_lateness = 0;
@@ -1374,7 +1367,7 @@ static void Schedule_Timer (cvar_t* freq, event_func* func, event_check_func* ch
 	timer->checks_low = 0;
 	timer->func = func;
 	timer->data = data;
-	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
+	for (int i = 0; i < TIMER_LATENESS_HISTORY; i++)
 		timer->recent_lateness[i] = 0;
 
 	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, nullptr, timer);

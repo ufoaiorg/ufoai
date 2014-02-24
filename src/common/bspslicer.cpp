@@ -313,7 +313,6 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
  */
 void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleContour, bool multipleContour)
 {
-	int i;
 	/** @todo remove these values once the mins/maxs calculation works */
 	vec3_t mins = {-MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, 0};
 	vec3_t maxs = {MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, (PATHFINDING_HEIGHT - 1) * UNIT_HEIGHT};
@@ -321,7 +320,7 @@ void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool si
 	if (model == nullptr)
 		return;
 
-	for (i = 0; i < model->nummodels; i++) {
+	for (int i = 0; i < model->nummodels; i++) {
 		const dBspModel_t* d = &model->models[i];
 		AddPointToBounds(d->mins, mins, maxs);
 		AddPointToBounds(d->maxs, mins, maxs);
