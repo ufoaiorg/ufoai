@@ -174,16 +174,25 @@ public:
 	bool active;				/** only used by camera */
 
 
+	/*==================
+	 *		ctors
+	 *==================*/
 	inline void init () {
 		OBJZERO(*this);
 		chr.inv.init();
 	}
+	/*==================
+	 *		setters
+	 *==================*/
 	inline void setActive() {
 		active = true;
 	}
 	inline void toggleActive() {
 		active ^= true;
 	}
+	/*==================
+	 *		getters
+	 *==================*/
 	inline int getIdNum() const {
 		return number;
 	}
@@ -221,4 +230,10 @@ public:
 	inline Player& getPlayer () const {
 		return game.players[this->pnum];
 	}
+	/*==================
+	 *		checkers
+	 *==================*/
+	/*==================
+	 *	manipulators
+	 *==================*/
 };
