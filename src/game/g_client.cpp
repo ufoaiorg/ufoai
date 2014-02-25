@@ -83,7 +83,7 @@ Player* G_PlayerGetNextHuman (Player* lastPlayer)
  */
 Player* G_PlayerGetNextAI (Player* lastPlayer)
 {
-	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
+	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];	/* two teams */
 	Player* player;
 
 	if (!game.sv_maxplayersperteam)
@@ -91,7 +91,7 @@ Player* G_PlayerGetNextAI (Player* lastPlayer)
 
 	if (!lastPlayer)
 		return &game.players[game.sv_maxplayersperteam];
-	assert(lastPlayer >= &game.players[game.sv_maxplayersperteam]);
+	assert(lastPlayer >= &game.players[game.sv_maxplayersperteam]);	/* AI players are in the upper half of the players array */
 	assert(lastPlayer < endOfPlayers);
 
 	player = lastPlayer;
