@@ -904,6 +904,7 @@ static void G_ReactionFirePrintSituation (Edict* target)
 /**
  * @brief Called when 'target' moves, possibly triggering or resolving reaction fire
  * @param[in] target The target entity
+ * @param[in] step The number of the step in the move we are checking reactions for
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
