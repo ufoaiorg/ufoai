@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * the actors, the misc_models, the weapons and so on.
  */
 #define INH 0
+/* This is an attempt to inherit Edict from the part known to the server.
+ * This fails because the server knows about parent/child relations between Edicts. */
 #if INH
 #include "srvedict.h"
 class Edict : public SrvEdict {
