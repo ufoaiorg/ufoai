@@ -233,6 +233,9 @@ public:
 	/*==================
 	 *		checkers
 	 *==================*/
+	inline bool isSameAs (const Edict* other) const {
+		return this->getIdNum() == other->getIdNum();
+	}
 	/*==================
 	 *	manipulators
 	 *==================*/
