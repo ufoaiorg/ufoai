@@ -1481,25 +1481,41 @@ void AI_ActorThink (Player& player, Edict* ent)
 	}
 }
 
+#if 0
+#include "g_ai2.cpp"
+#else
+static bool AI_TeamThink (Player& player)
+{
+	return false;
+}
+#endif
+
 static void AI_PlayerRun (Player& player)
 {
 	if (level.activeTeam != player.getTeam() || player.roundDone)
 		return;
 
-	/* find next actor to handle */
-	Edict* ent = player.pers.last;
+	/** Duke's playground for a completely new AI. While in developement, it is only available to Phalanx */
+	if (player.getTeam() == TEAM_PHALANX && g_aihumans->integer == 2) {
+		if (AI_TeamThink(player))
+			return;		/* did some thinking, come back next frame */
+		/* finished thinking, end round */
+	}
+	else {
+		/* find next actor to handle */
+		Edict* ent = player.pers.last;
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
+			const int beforeTUs = ent->TU;
+			if (beforeTUs > 0) {
+				if (g_ailua->integer)
+					AIL_ActorThink(player, ent);
+				else
+					AI_ActorThink(player, ent);
+				player.pers.last = ent;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
-		const int beforeTUs = ent->TU;
-		if (beforeTUs > 0) {
-			if (g_ailua->integer)
-				AIL_ActorThink(player, ent);
-			else
-				AI_ActorThink(player, ent);
-			player.pers.last = ent;
-
-			if (beforeTUs > ent->TU)
-				return;
+				if (beforeTUs > ent->TU)
+					return;
+			}
 		}
 	}
 
