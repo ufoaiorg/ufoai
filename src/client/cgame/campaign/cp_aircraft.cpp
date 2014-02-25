@@ -2997,17 +2997,22 @@ void AIR_AssignInitial (aircraft_t* aircraft)
 	}
 }
 
+static const cmdList_t aircraftDebugCmds[] = {
+#ifdef DEBUG
+	{"debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console"},
+	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
+	{"debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
+
 /**
  * @brief Init actions for aircraft-subsystem
  */
 void AIR_InitStartup (void)
 {
 	AIR_InitCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
-	cgi->Cmd_AddCommand("debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases");
-	cgi->Cmd_AddCommand("debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes");
-#endif
+	Cmd_TableAddList(aircraftDebugCmds);
 }
 
 /**
@@ -3025,9 +3030,5 @@ void AIR_Shutdown (void)
 	cgi->LIST_Delete(&ccs.aircraft);
 
 	AIR_ShutdownCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_listaircraftsample");
-	cgi->Cmd_RemoveCommand("debug_listaircraft");
-	cgi->Cmd_RemoveCommand("debug_listaircraftidx");
-#endif
+	Cmd_TableRemoveList(aircraftDebugCmds);
 }
