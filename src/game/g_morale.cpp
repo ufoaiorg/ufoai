@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void G_MoralePanic (Edict* ent)
 {
 	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
-	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->number);
+	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->getIdNum());
 	/* drop items in hands */
 	if (G_IsInsane(ent) && ent->chr.teamDef->weapons) {
 		if (ent->getRightHandItem())
@@ -81,7 +81,7 @@ static void G_MoraleStopPanic (Edict* ent)
 	G_RemoveInsane(ent);
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
 		G_RemovePanic(ent);
-		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->number);
+		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->getIdNum());
 		G_EventSendState(G_VisToPM(ent->visflags), *ent);
 	} else {
 		G_MoralePanic(ent);
@@ -99,10 +99,10 @@ static void G_MoraleRage (Edict* ent)
 	G_SetRage(ent);
 	if (!G_IsInsane(ent)) {
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), ent->chr.name);
-		G_PrintStats("%s is on a rampage (entnum %i).", ent->chr.name, ent->number);
+		G_PrintStats("%s is on a rampage (entnum %i).", ent->chr.name, ent->getIdNum());
 	} else {
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), ent->chr.name);
-		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->number);
+		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->getIdNum());
 	}
 	G_EventSendState(G_VisToPM(ent->visflags), *ent);
 	G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
@@ -125,7 +125,7 @@ static void G_MoraleStopRage (Edict* ent)
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		G_RemoveRage(ent);
 		G_EventSendState(G_VisToPM(ent->visflags), *ent);
-		G_PrintStats("%s is no longer insane (entnum %i).", ent->chr.name, ent->number);
+		G_PrintStats("%s is no longer insane (entnum %i).", ent->chr.name, ent->getIdNum());
 	} else {
 		G_MoralePanic(ent);
 	}
@@ -187,7 +187,7 @@ void G_MoraleBehaviour (int team)
 				G_EventSendState(G_VisToPM(ent->visflags), *ent);
 				G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
 						ent->chr.name);
-				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->number);
+				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->getIdNum());
 			}
 		} else {
 			if (G_IsPanicked(ent))

@@ -227,7 +227,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
-		G_EventAdd(PM_ALL, EV_ACTOR_MOVE, ent->number);
+		G_EventAdd(PM_ALL, EV_ACTOR_MOVE, ent->getIdNum());
 	}
 
 	if (ent->moveinfo.steps >= MAX_ROUTE) {

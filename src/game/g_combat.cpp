@@ -171,7 +171,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
  */
 static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edict* struck, int damage)
 {
-	assert(struck->number != shooter->number || mock->allow_self);
+	assert(struck->getIdNum() != shooter->getIdNum() || mock->allow_self);
 
 	if (damage <= 0)
 		return;

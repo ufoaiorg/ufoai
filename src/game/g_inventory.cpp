@@ -271,10 +271,10 @@ void G_InventoryToFloor (Edict* ent)
 			assert(item.getAmount() == 1);
 			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->def()->id, container, ent->number);
+						ic->def()->id, container, ent->getIdNum());
 			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == nullptr)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->def()->id, container, ent->number);
+						ic->def()->id, container, ent->getIdNum());
 #ifdef ADJACENT
 			G_InventoryPlaceItemAdjacent(ent);
 #endif

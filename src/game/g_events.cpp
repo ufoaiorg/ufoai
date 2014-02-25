@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_EventSpawnSound (playermask_t playerMask, const Edict& ent, const vec3_t origin, const char* sound)
 {
-	G_EventAdd(playerMask, EV_SOUND, ent.number);
+	G_EventAdd(playerMask, EV_SOUND, ent.getIdNum());
 
 	/* use the entity origin unless it is a bmodel or explicitly specified */
 	if (!origin) {
@@ -62,7 +62,7 @@ void G_EventSpawnSound (playermask_t playerMask, const Edict& ent, const vec3_t 
 void G_EventSpawnFootstepSound (const Edict& ent, const char* sound)
 {
 	const playermask_t playerMask = ~G_VisToPM(ent.visflags);
-	gi.QueueEvent(playerMask, EV_SOUND, ent.number);
+	gi.QueueEvent(playerMask, EV_SOUND, ent.getIdNum());
 	gi.QueueWritePos(ent.origin);
 	gi.QueueWriteByte(ent.moveinfo.steps);
 	gi.QueueWriteString(sound);
@@ -76,7 +76,7 @@ void G_EventSpawnFootstepSound (const Edict& ent, const char* sound)
  */
 void G_EventActorTurn (const Edict& ent)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_TURN, ent.number);
+	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_TURN, ent.getIdNum());
 	gi.WriteByte(ent.dir);
 	G_EventEnd();
 }
@@ -88,7 +88,7 @@ void G_EventActorTurn (const Edict& ent)
  */
 void G_EventActorDie (const Edict& ent, bool attacker)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_DIE, ent.number);
+	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_DIE, ent.getIdNum());
 	gi.WriteShort(ent.state);
 	gi.WriteByte(ent.pnum);
 	gi.WriteByte(attacker);
@@ -101,7 +101,7 @@ void G_EventActorDie (const Edict& ent, bool attacker)
  */
 void G_EventActorRevitalise (const Edict& ent)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_REVITALISED, ent.number);
+	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_REVITALISED, ent.getIdNum());
 	gi.WriteShort(ent.state);
 	G_EventEnd();
 }
@@ -112,7 +112,7 @@ void G_EventActorRevitalise (const Edict& ent)
  */
 void G_EventActorSendReservations (const Edict& ent)
 {
-	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_RESERVATIONCHANGE, ent.number);
+	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_RESERVATIONCHANGE, ent.getIdNum());
 	const chrReservations_t& reservedTUs = ent.chr.reservedTus;
 	gi.WriteShort(reservedTUs.reaction);
 	gi.WriteShort(reservedTUs.shot);
@@ -130,7 +130,7 @@ void G_EventActorSendReservations (const Edict& ent)
  */
 void G_EventInventoryDelete (const Edict& ent, playermask_t playerMask, const containerIndex_t containerId, int x, int y)
 {
-	G_EventAdd(playerMask, EV_INV_DEL, ent.number);
+	G_EventAdd(playerMask, EV_INV_DEL, ent.getIdNum());
 	gi.WriteByte(containerId);
 	gi.WriteByte(x);
 	gi.WriteByte(y);
@@ -146,7 +146,7 @@ void G_EventInventoryDelete (const Edict& ent, playermask_t playerMask, const co
  */
 void G_EventInventoryAdd (const Edict& ent, playermask_t playerMask, int itemAmount)
 {
-	G_EventAdd(playerMask, EV_INV_ADD, ent.number);
+	G_EventAdd(playerMask, EV_INV_ADD, ent.getIdNum());
 	gi.WriteShort(itemAmount);
 	/* do not end the pending events here - this is just a header, the items are following */
 }
@@ -167,7 +167,7 @@ void G_EventPerish (const Edict& ent)
 void G_EventDestroyEdict (const Edict& ent)
 {
 	assert(ent.inuse);
-	G_EventAdd(PM_ALL, EV_ENT_DESTROY, ent.number);
+	G_EventAdd(PM_ALL, EV_ENT_DESTROY, ent.getIdNum());
 	G_EventEnd();
 }
 
@@ -180,7 +180,7 @@ void G_EventDestroyEdict (const Edict& ent)
  */
 void G_EventInventoryAmmo (const Edict& ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_INV_AMMO, ent.number);
+	G_EventAdd(G_VisToPM(ent.visflags), EV_INV_AMMO, ent.getIdNum());
 	gi.WriteByte(amount);
 	gi.WriteByte(ammo->idx);
 	if (IS_SHOT_RIGHT(shootType))
@@ -202,7 +202,7 @@ void G_EventInventoryAmmo (const Edict& ent, const objDef_t* ammo, int amount, s
  */
 void G_EventStartShoot (const Edict& ent, teammask_t teamMask, shoot_types_t shootType, const pos3_t at)
 {
-	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_START_SHOOT, ent.number);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_START_SHOOT, ent.getIdNum());
 	gi.WriteByte(shootType);
 	gi.WriteGPos(ent.pos);
 	gi.WriteGPos(at);
@@ -216,7 +216,7 @@ void G_EventStartShoot (const Edict& ent, teammask_t teamMask, shoot_types_t sho
  */
 void G_EventEndShoot (const Edict &ent, teammask_t teamMask)
 {
-	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_END_SHOOT, ent.number);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_END_SHOOT, ent.getIdNum());
 	G_EventEnd();
 }
 
@@ -252,9 +252,9 @@ void G_EventShoot (const Edict& ent, teammask_t teamMask, const fireDef_t* fd, b
 {
 	const Edict* targetEdict = G_EdictsGetByNum(trace->entNum);	/* the ent possibly hit by the trace */
 
-	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_SHOOT, ent.number);
+	G_EventAdd(G_VisToPM(teamMask), EV_ACTOR_SHOOT, ent.getIdNum());
 	if (targetEdict && G_IsBreakable(targetEdict))
-		gi.WriteShort(targetEdict->number);
+		gi.WriteShort(targetEdict->getIdNum());
 	else
 		gi.WriteShort(SKIP_LOCAL_ENTITY);
 	gi.WriteByte(firstShoot ? 1 : 0);
@@ -275,7 +275,7 @@ void G_EventReactionFireChange (const Edict& ent)
 	const FiremodeSettings& fireMode = ent.chr.RFmode;
 	const objDef_t* od = fireMode.getWeapon();
 
-	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_REACTIONFIRECHANGE, ent.number);
+	G_EventAdd(G_PlayerToPM(ent.getPlayer()), EV_ACTOR_REACTIONFIRECHANGE, ent.getIdNum());
 	gi.WriteByte(fireMode.getFmIdx());
 	gi.WriteByte(fireMode.getHand());
 	gi.WriteShort(od ? od->idx : NONE);
@@ -285,31 +285,31 @@ void G_EventReactionFireChange (const Edict& ent)
 
 void G_EventReactionFireAddTarget (const Edict& shooter, const Edict& target, int tus, int step)
 {
-	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.number);
-	gi.QueueWriteShort(target.number);
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREADDTARGET, shooter.getIdNum());
+	gi.QueueWriteShort(target.getIdNum());
 	gi.QueueWriteByte(tus);
 	gi.QueueWriteByte(step);
 }
 
 void G_EventReactionFireRemoveTarget (const Edict& shooter, const Edict& target, int step)
 {
-	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.number);
-	gi.QueueWriteShort(target.number);
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREREMOVETARGET, shooter.getIdNum());
+	gi.QueueWriteShort(target.getIdNum());
 	gi.QueueWriteByte(step);
 }
 
 void G_EventReactionFireTargetUpdate (const Edict& shooter, const Edict& target, int tus, int step)
 {
-	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIRETARGETUPDATE, shooter.number);
-	gi.QueueWriteShort(target.number);
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIRETARGETUPDATE, shooter.getIdNum());
+	gi.QueueWriteShort(target.getIdNum());
 	gi.QueueWriteByte(tus);
 	gi.QueueWriteByte(step);
 }
 
 void G_EventReactionFireAbortShot (const Edict& shooter, const Edict& target, int step)
 {
-	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREABORTSHOT, shooter.number);
-	gi.QueueWriteShort(target.number);
+	gi.QueueEvent(G_PlayerToPM(shooter.getPlayer()), EV_ACTOR_REACTIONFIREABORTSHOT, shooter.getIdNum());
+	gi.QueueWriteShort(target.getIdNum());
 	gi.QueueWriteByte(step);
 }
 
@@ -335,7 +335,7 @@ void G_EventParticleSpawn (playermask_t playerMask, const char* name, int levelF
 
 void G_EventActorFall (const Edict& ent)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_MOVE, ent.number);
+	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_MOVE, ent.getIdNum());
 	gi.WriteByte(1);
 	gi.WriteByte(ent.pos[0]);
 	gi.WriteByte(ent.pos[1]);
@@ -357,8 +357,8 @@ void G_EventSetClientAction (const Edict& ent)
 	assert(ent.clientAction->flags & FL_CLIENTACTION);
 
 	/* tell the hud to show the door buttons */
-	G_EventAdd(G_TeamToPM(ent.team), EV_CLIENT_ACTION, ent.number);
-	gi.WriteShort(ent.clientAction->number);
+	G_EventAdd(G_TeamToPM(ent.team), EV_CLIENT_ACTION, ent.getIdNum());
+	gi.WriteShort(ent.clientAction->getIdNum());
 	G_EventEnd();
 }
 
@@ -370,13 +370,13 @@ void G_EventSetClientAction (const Edict& ent)
 void G_EventResetClientAction (const Edict& ent)
 {
 	const int playerMask = G_PlayerToPM(ent.getPlayer());
-	G_EventAdd(playerMask, EV_RESET_CLIENT_ACTION, ent.number);
+	G_EventAdd(playerMask, EV_RESET_CLIENT_ACTION, ent.getIdNum());
 	G_EventEnd();
 }
 
 void G_EventActorStats (const Edict& ent, playermask_t playerMask)
 {
-	G_EventAdd(playerMask, EV_ACTOR_STATS, ent.number);
+	G_EventAdd(playerMask, EV_ACTOR_STATS, ent.getIdNum());
 	gi.WriteByte(ent.TU);
 	gi.WriteShort(ent.HP);
 	gi.WriteByte(ent.STUN);
@@ -393,7 +393,7 @@ void G_EventActorStats (const Edict& ent, playermask_t playerMask)
 void G_EventActorWound (const Edict& ent, const int bodyPart)
 {
 	const int mask = G_PlayerToPM(ent.getPlayer());
-	G_EventAdd(mask, EV_ACTOR_WOUND, ent.number);
+	G_EventAdd(mask, EV_ACTOR_WOUND, ent.getIdNum());
 	gi.WriteByte(bodyPart);
 	const woundInfo_t& wounds = ent.chr.wounds;
 	gi.WriteByte(wounds.woundLevel[bodyPart]);
@@ -414,7 +414,7 @@ void G_EventEndRound (void)
 
 void G_EventInventoryReload (const Edict& ent, playermask_t playerMask, const Item* item, const invDef_t* invDef, const Item* ic)
 {
-	G_EventAdd(playerMask, EV_INV_RELOAD, ent.number);
+	G_EventAdd(playerMask, EV_INV_RELOAD, ent.getIdNum());
 	gi.WriteByte(item->def()->ammo);
 	gi.WriteByte(item->ammoDef()->idx);
 	gi.WriteByte(invDef->id);
@@ -450,7 +450,7 @@ void G_EventThrow (teammask_t teamMask, const fireDef_t* fd, float dt, byte flag
  */
 void G_EventSendEdict (const Edict& ent)
 {
-	G_EventAdd(PM_ALL, EV_ADD_EDICT, ent.number);
+	G_EventAdd(PM_ALL, EV_ADD_EDICT, ent.getIdNum());
 	gi.WriteByte(ent.type);
 	gi.WritePos(ent.absBox.mins);
 	gi.WritePos(ent.absBox.maxs);
@@ -461,7 +461,7 @@ void G_EventSendState (playermask_t playerMask, const Edict& ent)
 {
 	G_EventActorStateChange(playerMask & G_TeamToPM(ent.team), ent);
 
-	G_EventAdd(playerMask & ~G_TeamToPM(ent.team), EV_ACTOR_STATECHANGE, ent.number);
+	G_EventAdd(playerMask & ~G_TeamToPM(ent.team), EV_ACTOR_STATECHANGE, ent.getIdNum());
 	gi.WriteShort(ent.state & STATE_PUBLIC);
 	G_EventEnd();
 }
@@ -504,7 +504,7 @@ void G_EventMoveCameraTo (playermask_t playerMask, const pos3_t pos)
  */
 void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_ACTOR_ADD, ent.number);
+	G_EventAdd(playerMask, EV_ACTOR_ADD, ent.getIdNum());
 	gi.WriteByte(ent.team);
 	gi.WriteByte(ent.chr.teamDef ? ent.chr.teamDef->idx : NONE);
 	gi.WriteByte(ent.chr.gender);
@@ -522,7 +522,7 @@ void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
  */
 void G_EventSendParticle (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_PARTICLE_APPEAR, ent.number);
+	G_EventAdd(playerMask, EV_PARTICLE_APPEAR, ent.getIdNum());
 	gi.WriteShort(ent.spawnflags);
 	gi.WritePos(ent.origin);
 	gi.WriteString(ent.particle);
@@ -536,7 +536,7 @@ void G_EventSendParticle (playermask_t playerMask, const Edict& ent)
  */
 void G_EventCameraAppear (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent.number);
+	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent.getIdNum());
 	gi.WritePos(ent.origin);
 	gi.WriteByte(ent.team);
 	gi.WriteByte(ent.dir);
@@ -556,7 +556,7 @@ void G_EventCameraAppear (playermask_t playerMask, const Edict& ent)
  */
 void G_EventEdictAppear (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_ENT_APPEAR, ent.number);
+	G_EventAdd(playerMask, EV_ENT_APPEAR, ent.getIdNum());
 	gi.WriteByte(ent.type);
 	gi.WriteGPos(ent.pos);
 	G_EventEnd();
@@ -567,8 +567,8 @@ void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edic
 	const int mask = G_TeamToPM(check.team) & playerMask;
 
 	/* parsed in CL_ActorAppear */
-	G_EventAdd(playerMask, EV_ACTOR_APPEAR, check.number);
-	gi.WriteShort(ent && ent->number > 0 ? ent->number : SKIP_LOCAL_ENTITY);
+	G_EventAdd(playerMask, EV_ACTOR_APPEAR, check.getIdNum());
+	gi.WriteShort(ent && ent->getIdNum() > 0 ? ent->getIdNum() : SKIP_LOCAL_ENTITY);
 	gi.WriteByte(check.team);
 	gi.WriteByte(check.chr.teamDef ? check.chr.teamDef->idx : NONE);
 	gi.WriteByte(check.chr.gender);
@@ -618,21 +618,21 @@ void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edic
 void G_EventEdictPerish (playermask_t playerMask, const Edict& ent)
 {
 	assert(ent.inuse);
-	G_EventAdd(playerMask, EV_ENT_PERISH, ent.number);
+	G_EventAdd(playerMask, EV_ENT_PERISH, ent.getIdNum());
 	gi.WriteByte(ent.type);
 	G_EventEnd();
 }
 
 void G_EventActorStateChange (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_ACTOR_STATECHANGE, ent.number);
+	G_EventAdd(playerMask, EV_ACTOR_STATECHANGE, ent.getIdNum());
 	gi.WriteShort(ent.state);
 	G_EventEnd();
 }
 
 void G_EventAddBrushModel (playermask_t playerMask, const Edict& ent)
 {
-	G_EventAdd(playerMask, EV_ADD_BRUSH_MODEL, ent.number);
+	G_EventAdd(playerMask, EV_ADD_BRUSH_MODEL, ent.getIdNum());
 	gi.WriteByte(ent.type);
 	gi.WriteShort(ent.modelindex);
 	/* strip the higher bits - only send levelflags */
@@ -670,20 +670,20 @@ void G_EventReset (const Player& player, int activeTeam)
 
 void G_EventDoorOpen (const Edict& door)
 {
-	G_EventAdd(PM_ALL, EV_DOOR_OPEN, door.number);
+	G_EventAdd(PM_ALL, EV_DOOR_OPEN, door.getIdNum());
 	G_EventEnd();
 }
 
 void G_EventDoorClose (const Edict& door)
 {
-	G_EventAdd(PM_ALL, EV_DOOR_CLOSE, door.number);
+	G_EventAdd(PM_ALL, EV_DOOR_CLOSE, door.getIdNum());
 	G_EventEnd();
 }
 
 void G_EventModelExplodeTriggered (const Edict& ent, const char* sound)
 {
 	assert(ent.inuse);
-	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED, ent.number);
+	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED, ent.getIdNum());
 	gi.WriteString(sound);
 	G_EventEnd();
 }
@@ -691,7 +691,7 @@ void G_EventModelExplodeTriggered (const Edict& ent, const char* sound)
 void G_EventModelExplode (const Edict& ent, const char* sound)
 {
 	assert(ent.inuse);
-	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE, ent.number);
+	G_EventAdd(PM_ALL, EV_MODEL_EXPLODE, ent.getIdNum());
 	gi.WriteString(sound);
 	G_EventEnd();
 }

@@ -184,6 +184,9 @@ public:
 	inline void toggleActive() {
 		active ^= true;
 	}
+	inline int getIdNum() const {
+		return number;
+	}
 	inline Item* getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer2(idx);
 	}

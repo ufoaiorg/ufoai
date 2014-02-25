@@ -236,7 +236,7 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict* shooter)
 {
 	for (int i = 0; i < MAX_RF_DATA; i++) {
 		ReactionFireTargetList* rfts = &rfData[i];
-		if (rfts->entnum == shooter->number) {
+		if (rfts->entnum == shooter->getIdNum()) {
 			return rfts;
 		}
 	}
@@ -259,7 +259,7 @@ void ReactionFireTargets::create (const Edict* shooter)
 		ReactionFireTargetList& data = rfData[i];
 		if (data.entnum != RF_NO_ENTNUM)
 			continue;
-		data.entnum = shooter->number;
+		data.entnum = shooter->getIdNum();
 		return;
 	}
 
@@ -698,7 +698,7 @@ bool ReactionFire::canReact (Edict* shooter, const Edict* target) const
 	if (!shooter->getHandItem(shooter->chr.RFmode.getHand())) {
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
-				shooter->chr.name, shooter->number, shooter->chr.RFmode.getHand(), shooter->chr.RFmode.getFmIdx());
+				shooter->chr.name, shooter->getIdNum(), shooter->chr.RFmode.getHand(), shooter->chr.RFmode.getFmIdx());
 		G_RemoveReaction(shooter);
 		return false;
 	}
