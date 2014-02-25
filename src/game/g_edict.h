@@ -190,6 +190,15 @@ public:
 	inline void toggleActive() {
 		active ^= true;
 	}
+	inline void resetContainer (const containerIndex_t idx) {
+		chr.inv.resetContainer(idx);
+	}
+	inline void setFloor (const Edict* other) {
+		chr.inv.setFloorContainer(other->getFloor());
+	}
+	inline void resetFloor () {
+		chr.inv.setFloorContainer(nullptr);
+	}
 	/*==================
 	 *		getters
 	 *==================*/
@@ -198,9 +207,6 @@ public:
 	}
 	inline Item* getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer2(idx);
-	}
-	inline void resetContainer (const containerIndex_t idx) {
-		chr.inv.resetContainer(idx);
 	}
 	inline Item* getArmour () const {
 		return chr.inv.getArmour();
@@ -220,12 +226,6 @@ public:
 	}
 	inline Item* getFloor () const {
 		return chr.inv.getFloorContainer();
-	}
-	inline void setFloor (const Edict* other) {
-		chr.inv.setFloorContainer(other->getFloor());
-	}
-	inline void resetFloor () {
-		chr.inv.setFloorContainer(nullptr);
 	}
 	inline Player& getPlayer () const {
 		return game.players[this->pnum];
