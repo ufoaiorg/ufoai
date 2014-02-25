@@ -223,9 +223,8 @@ static inline int NET_StreamGetLength (struct net_stream* s)
 static int NET_StreamGetFree (void)
 {
 	static int start = 0;
-	int i;
 
-	for (i = 0; i < MAX_STREAMS; i++) {
+	for (int i = 0; i < MAX_STREAMS; i++) {
 		const int pos = (i + start) % MAX_STREAMS;
 		if (streams[pos] == nullptr) {
 			start = (pos + 1) % MAX_STREAMS;
@@ -242,9 +241,8 @@ static int NET_StreamGetFree (void)
 static int NET_DatagramFindFreeSocket (void)
 {
 	static int start = 0;
-	int i;
 
-	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
+	for (int i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
 		const int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
 		if (datagram_sockets[pos] == nullptr) {
 			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
@@ -283,11 +281,10 @@ static struct net_stream* NET_StreamNew (int index)
 
 static void NET_ShowStreams_f (void)
 {
-	int i;
 	char buf[256];
 	int cnt = 0;
 
-	for (i = 0; i < MAX_STREAMS; i++) {
+	for (int i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] == nullptr)
 			continue;
 		Com_Printf("Steam %i is opened: %s on socket %i (closed: %i, finished: %i, outbound: " UFO_SIZE_T ", inbound: " UFO_SIZE_T ")\n", i,

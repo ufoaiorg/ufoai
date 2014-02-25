@@ -395,9 +395,7 @@ float NET_ReadAngle16 (dbuffer* buf)
 
 void NET_ReadData (dbuffer* buf, void* data, int len)
 {
-	int i;
-
-	for (i = 0; i < len; i++)
+	for (int i = 0; i < len; i++)
 		((byte*) data)[i] = NET_ReadByte(buf);
 }
 
@@ -457,14 +455,12 @@ void NET_vReadFormat (dbuffer* buf, const char* format, va_list ap)
 		}
 		case '*':
 			{
-				int i;
-				byte* p;
 				const int n = NET_ReadShort(buf);
 
 				*va_arg(ap, int*) = n;
-				p = va_arg(ap, byte*);
+				byte* p = va_arg(ap, byte*);
 
-				for (i = 0; i < n; i++)
+				for (int i = 0; i < n; i++)
 					*p++ = NET_ReadByte(buf);
 			}
 			break;
