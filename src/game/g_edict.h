@@ -177,8 +177,9 @@ public:
 	/*==================
 	 *		ctors
 	 *==================*/
-	inline void init () {
+	inline void init (int idx) {
 		OBJZERO(*this);
+		number = idx;
 		chr.inv.init();
 	}
 	/*==================

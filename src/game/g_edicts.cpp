@@ -48,7 +48,7 @@ Edict* G_EdictsConstruct (void)
 void G_EdictsInit (void)
 {
 	for (int i = 0; i < game.sv_maxentities; i++)
-		g_edicts[i].init();
+		g_edicts[i].init(i);
 }
 
 /**
