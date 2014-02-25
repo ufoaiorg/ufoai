@@ -246,10 +246,9 @@ static void ED_ParseField (const char* key, const char* value, Edict* ent)
  */
 static const char* ED_ParseEdict (const char* data, Edict* ent)
 {
-	bool init;
 	char keyname[MAX_VAR];
 
-	init = false;
+	bool reset = true;
 	OBJZERO(spawnTemp);
 
 	/* go through all the dictionary pairs */
@@ -271,7 +270,7 @@ static const char* ED_ParseEdict (const char* data, Edict* ent)
 		if (c[0] == '}')
 			gi.Error("ED_ParseEntity: closing brace without data");
 
-		init = true;
+		reset = false;
 
 		/* keynames with a leading underscore are used for utility comments,
 		 * and are immediately discarded by ufo */
@@ -281,8 +280,8 @@ static const char* ED_ParseEdict (const char* data, Edict* ent)
 		ED_ParseField(keyname, c, ent);
 	}
 
-	if (!init)
-		ent->init();
+	if (reset)
+		ent->nativeReset();
 
 	return data;
 }
