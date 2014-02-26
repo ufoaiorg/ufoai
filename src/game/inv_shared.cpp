@@ -803,7 +803,7 @@ int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const
 				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 
 			Com_DPrintf(DEBUG_SHARED, "canHoldItem: INFO: Moving to 'single' container but item would not fit normally.\n");
-			return INV_FITS; /**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
+			return INV_FITS;	/**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
 

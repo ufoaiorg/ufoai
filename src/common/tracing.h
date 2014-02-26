@@ -56,7 +56,7 @@ typedef struct trace_s {
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;				/**< final position along line */
 	TR_PLANE_TYPE plane;		/**< surface plane at impact - normal is in there */
-	cBspSurface_t* surface;	    /**< surface hit */
+	cBspSurface_t* surface;		/**< surface hit */
 	int planenum;				/**< index of the plane hit, used for map debugging */
 	uint32_t contentFlags;		/**< contents on other side of surface hit */
 	int32_t leafnum;

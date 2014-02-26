@@ -329,11 +329,11 @@ typedef struct teamDef_s {
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefinitions */
 
-	actorSizeEnum_t size;			/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR];		/**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
-	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
+	actorSizeEnum_t size;				/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	char hitParticle[MAX_VAR];			/**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
+	char deathTextureName[MAX_VAR];		/**< texture name for death of any member of this team */
 
-	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
+	short resistance[MAX_DAMAGETYPES];	/**< Resistance to damage */
 
 	const chrTemplate_t* characterTemplates[MAX_TEMPLATES_PER_TEAM];
 	int numTemplates;

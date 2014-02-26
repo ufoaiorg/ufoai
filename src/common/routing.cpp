@@ -1088,8 +1088,8 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 	/* Initialize stepup. */
 	current_h = bases[steps];
 	highest_h = -1;
-	highest_i = steps - 1; /**< Note that for this part of the code, this is the LOWEST i. */
-	opening->invstepup = 0; /**<  Was originally -CELL_HEIGHT, but stepup is needed to go UP, not down. */
+	highest_i = steps - 1;	/**< Note that for this part of the code, this is the LOWEST i. */
+	opening->invstepup = 0;	/**<  Was originally -CELL_HEIGHT, but stepup is needed to go UP, not down. */
 	skipped = 0;
 	for (i = steps - 1; i >= 0; i--) {
 		if (debugTrace)
