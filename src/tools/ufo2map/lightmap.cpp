@@ -471,6 +471,7 @@ void BuildLights (void)
  * @brief Checks traces against a single-tile map, optimized for ufo2map. This trace is only for visible levels.
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
+ * @param[in,out] headhint The t-head where the previous trace found an obstacle.
  * @sa TR_TestLine
  * @sa GatherSampleLight
  * @return false if not blocked
