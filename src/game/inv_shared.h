@@ -424,100 +424,88 @@ public:
 	/*==================
 	 *		ctors
 	 *==================*/
+	Item ();
+	Item (const objDef_t* _itemDef, const objDef_t* ammo = nullptr, int ammoLeft = 0);
+
 	/*==================
 	 *		setters
 	 *==================*/
+	inline void setNext (Item* nx) {
+		_next = nx;
+	}
+	inline void setX (const int val) {
+		_x = val;
+	}
+	inline void setY (const int val) {
+		_y = val;
+	}
 	inline void setAmmoDef (const objDef_t* od) {
 		_ammoDef = od;
 	}
 	inline void setAmount (int value) {
 		_amount = value;
 	}
+	inline void setAmmoLeft (int value) {
+		_ammoLeft = value;
+	}
+	inline void setDef(const objDef_t* objDef) {
+		_itemDef = objDef;
+	}
+
 	/*==================
 	 *		getters
 	 *==================*/
+	inline Item* getNext () const {
+		return _next;
+	}
+	inline int getX () const {
+		return _x;
+	}
+	inline int getY () const {
+		return _y;
+	}
 	inline const objDef_t* ammoDef (void) const {
 		return _ammoDef;
 	}
 	inline int getAmount () const {
 		return _amount;
 	}
-	/*==================
-	 *		checkers
-	 *==================*/
-	/*==================
-	 *	manipulators
-	 *==================*/
-
-	inline void addAmount (int value) {
-		_amount += value;
-	}
-
 	inline int getAmmoLeft () const {
 		return _ammoLeft;
 	}
-
-	inline void setAmmoLeft (int value) {
-		_ammoLeft = value;
-	}
-
-	inline Item* getNext () const {
-		return _next;
-	}
-
-	inline void setNext (Item* nx) {
-		_next = nx;
-	}
-
-	Item ();
-	Item (const objDef_t* _itemDef, const objDef_t* ammo = nullptr, int ammoLeft = 0);
-
-	inline int getX () const {
-		return _x;
-	}
-
-	inline void setX (const int val) {
-		_x = val;
-	}
-
-	inline int getY () const {
-		return _y;
-	}
-
-	inline void setY (const int val) {
-		_y = val;
-	}
-
-	inline void setDef(const objDef_t* objDef) {
-		_itemDef = objDef;
-	}
-
 	inline const objDef_t* def (void) const {
 		return _itemDef;
 	}
 
+	/*==================
+	 *		checkers
+	 *==================*/
 	inline bool isHeldTwoHanded() const {
 		return _itemDef->holdTwoHanded;
 	}
-
 	inline bool isReloadable() const {
 		return _itemDef->getReloadTime() > 0;
 	}
-
 	/** @todo is !mustReload() equivalent to 'usable' ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
 	inline bool mustReload() const {
 		return isReloadable() && getAmmoLeft() <= 0;
 	}
-
 	inline bool isWeapon() const {
 		return _itemDef->weapon;
 	}
-
 	inline bool isArmour() const {
 		return _itemDef->isArmour();
 	}
-
 	bool isSameAs (const Item* const other) const;
+
+	/*==================
+	 *	manipulators
+	 *==================*/
+	inline void addAmount (int value) {
+		_amount += value;
+	}
+
+
 	float getWeight () const;
 	void getFirstShapePosition (int* const x, int* const y) const;
 	const objDef_t* getReactionFireWeaponType () const;
