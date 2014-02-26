@@ -421,21 +421,33 @@ public:
 					 * parsing functions are expecting this to be at least 4 bytes */
 
 
-	inline const objDef_t* ammoDef (void) const {
-		return _ammoDef;
-	}
-
+	/*==================
+	 *		ctors
+	 *==================*/
+	/*==================
+	 *		setters
+	 *==================*/
 	inline void setAmmoDef (const objDef_t* od) {
 		_ammoDef = od;
 	}
-
-	inline int getAmount () const {
-		return _amount;
-	}
-
 	inline void setAmount (int value) {
 		_amount = value;
 	}
+	/*==================
+	 *		getters
+	 *==================*/
+	inline const objDef_t* ammoDef (void) const {
+		return _ammoDef;
+	}
+	inline int getAmount () const {
+		return _amount;
+	}
+	/*==================
+	 *		checkers
+	 *==================*/
+	/*==================
+	 *	manipulators
+	 *==================*/
 
 	inline void addAmount (int value) {
 		_amount += value;
