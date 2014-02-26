@@ -679,26 +679,23 @@ static void BDEF_ChangeAutoFire (void)
 	}
 }
 
+static const cmdList_t baseDefenseCmds[] = {
+	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
+	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
+	{"basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu"},
+	{"basedef_selectitem", BDEF_SelectItem_f, nullptr},
+	{"basedef_additem", BDEF_AddItem_f, "Add item to slot"},
+	{"basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot"},
+	{"basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system"},
+	{"basedef_updatebatteries", BDEF_UpdateActiveBattery_f, "Updates the active defence systems counters"},
+	{nullptr, nullptr, nullptr}
+};
 void BDEF_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
-	cgi->Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
-	cgi->Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
-	cgi->Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, nullptr);
-	cgi->Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
-	cgi->Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
-	cgi->Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");
-	cgi->Cmd_AddCommand("basedef_updatebatteries", BDEF_UpdateActiveBattery_f, "Updates the active defence systems counters");
+	Cmd_TableAddList(baseDefenseCmds);
 }
 
 void BDEF_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("add_battery");
-	cgi->Cmd_RemoveCommand("remove_battery");
-	cgi->Cmd_RemoveCommand("basedef_updatebatteries");
-	cgi->Cmd_RemoveCommand("basedef_updatemenu");
-	cgi->Cmd_RemoveCommand("basedef_selectitem");
-	cgi->Cmd_RemoveCommand("basedef_additem");
-	cgi->Cmd_RemoveCommand("basedef_removeitem");
-	cgi->Cmd_RemoveCommand("basedef_autofire");
+	Cmd_TableRemoveList(baseDefenseCmds);
 }
