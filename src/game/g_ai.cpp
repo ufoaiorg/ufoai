@@ -39,10 +39,10 @@ typedef struct aiAction_s {
 	pos3_t to;			/**< grid pos to walk to for performing the action */
 	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
 	shoot_types_t shootType;	/**< the shoot type */
-	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
+	byte shots;			/**< how many shots can this actor do - only set this if the target is an actor */
 	Edict* target;		/**< the target edict */
 	const fireDef_t* fd;/**< the firemode to use for shooting */
-	int z_align;		/**< the z-align for every shoot */
+	int z_align;		/**< the z-align for every shot */
 
 	inline void reset() {
 		OBJZERO(*this);
