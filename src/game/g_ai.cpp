@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_vis.h"
 #include "g_reaction.h"
 
-typedef struct aiAction_s {
+class AiAction {
+public:
 	pos3_t to;			/**< grid pos to walk to for performing the action */
 	pos3_t stop;		/**< grid pos to end turn at (e.g. hiding spots) */
 	shoot_types_t shootType;	/**< the shoot type */
@@ -47,7 +48,7 @@ typedef struct aiAction_s {
 	inline void reset() {
 		OBJZERO(*this);
 	}
-} aiAction_t;
+};
 
 #define SCORE_HIDE			60
 #define SCORE_CLOSE_IN		20
@@ -586,7 +587,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (aiAction_t* aia, const Edict* ent, Edict* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Edict* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -813,7 +814,7 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict* ent)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
+static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	int tu = G_ActorUsableTUs(ent) - move;
@@ -944,7 +945,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, aiAction_t*
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
+static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -1059,7 +1060,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, aiAction_t
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, aiAction_t* aia)
+static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -1170,7 +1171,7 @@ static bool AI_FindMissionLocation (Edict* ent, const pos3_t to)
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const Player& player, Edict* ent, aiAction_t* aia)
+static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction* aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	int actionScore;
@@ -1267,7 +1268,7 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, aiAction
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (const Player& player, Edict* ent)
+static AiAction AI_PrepBestAction (const Player& player, Edict* ent)
 {
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
@@ -1294,7 +1295,7 @@ static aiAction_t AI_PrepBestAction (const Player& player, Edict* ent)
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
 	float bestActionScore, best = AI_ACTION_NOTHING_FOUND;
-	aiAction_t aia, bestAia;
+	AiAction aia, bestAia;
 	pos3_t to;
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; ++to[2]) {
 		for (to[1] = yl; to[1] < yh; ++to[1]) {
@@ -1436,7 +1437,7 @@ void AI_ActorThink (Player& player, Edict* ent)
 	if (!ent->getLeftHandItem() && !ent->getRightHandItem())
 		G_ClientGetWeaponFromInventory(ent);
 
-	aiAction_t bestAia = AI_PrepBestAction(player, ent);
+	AiAction bestAia = AI_PrepBestAction(player, ent);
 
 	/* shoot and hide */
 	if (bestAia.target) {
