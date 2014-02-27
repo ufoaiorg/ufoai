@@ -567,7 +567,7 @@ void Cmd_BufClear (void)
  * @note @c cmd_argv and @c cmd_argv are filled and set here
  * @note *cvars will be expanded unless they are in a quoted token
  * @sa Com_MacroExpandString
- * @param[in] text The text to parse and tokenize
+ * @param[in] text The text to parse and tokenize. Must be null terminated. Does not need to be \n terminated.
  * @param[in] macroExpand expand cvar string with their values
  * @param[in] replaceWhitespaces Replace \\t and \\n to \t and \n
  */
