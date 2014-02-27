@@ -243,10 +243,9 @@ void Com_RegisterConstInt (const char* name, int value)
  */
 bool Com_UnregisterConstList (const constListEntry_t constList[])
 {
-	int i;
 	bool state = true;
 
-	for (i = 0; constList[i].name != nullptr; i++)
+	for (int i = 0; constList[i].name != nullptr; i++)
 		state &= Com_UnregisterConstVariable(constList[i].name);
 
 	return state;
@@ -260,9 +259,7 @@ bool Com_UnregisterConstList (const constListEntry_t constList[])
  */
 void Com_RegisterConstList (const constListEntry_t constList[])
 {
-	int i;
-
-	for (i = 0; constList[i].name != nullptr; i++)
+	for (int i = 0; constList[i].name != nullptr; i++)
 		Com_RegisterConstInt(constList[i].name, constList[i].value);
 }
 
@@ -272,8 +269,7 @@ void Com_RegisterConstList (const constListEntry_t constList[])
  */
 static int Com_FindNameType (const char* nameType)
 {
-	int i;
-	for (i = 0; i < NAME_NUM_TYPES; i++) {
+	for (int i = 0; i < NAME_NUM_TYPES; i++) {
 		if (Q_streq(nameType, name_strings[i])) {
 			return i;
 		}
@@ -287,9 +283,7 @@ static int Com_FindNameType (const char* nameType)
  */
 const char* Com_EParse (const char** text, const char* errhead, const char* errinfo, char* target, size_t size)
 {
-	const char* token;
-
-	token = Com_Parse(text, target, size);
+	const char* token = Com_Parse(text, target, size);
 	if (!*text) {
 		if (errinfo)
 			Com_Printf("%s \"%s\")\n", errhead, errinfo);
@@ -1706,11 +1700,9 @@ static bool Com_ParseFire (const char* name, const char** text, fireDef_t* fd)
 static void Com_ParseArmourOrResistance (const char* name, const char** text, short* ad, bool rating)
 {
 	const char* errhead = "Com_ParseArmourOrResistance: unexpected end of file";
-	const char* token;
-	int i;
 
 	/* get its body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseArmourOrResistance: armour definition \"%s\" without body ignored\n", name);
@@ -1718,6 +1710,7 @@ static void Com_ParseArmourOrResistance (const char* name, const char** text, sh
 	}
 
 	do {
+		int i;
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			return;
@@ -1858,11 +1851,6 @@ static void Com_ParseObjDefEffect (objDef_t* od, const char* name, const char** 
  */
 static void Com_ParseItem (const char* name, const char** text)
 {
-	const char* errhead = "Com_ParseItem: unexpected end of file (weapon ";
-	objDef_t* od;
-	const char* token;
-	int i;
-
 	/* search for items with same name */
 	if (INVSH_GetItemByIDSilent(name) != nullptr) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
@@ -1875,7 +1863,7 @@ static void Com_ParseItem (const char* name, const char** text)
 	Com_DPrintf(DEBUG_SHARED, "...found item: '%s' (%i)\n", name, csi.numODs);
 
 	/* initialize the object definition */
-	od = &csi.ods[csi.numODs++];
+	objDef_t* od = &csi.ods[csi.numODs++];
 	OBJZERO(*od);
 
 	/* default is no craftitem */
@@ -1891,13 +1879,16 @@ static void Com_ParseItem (const char* name, const char** text)
 	od->idx = csi.numODs - 1;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" without body ignored\n", name);
 		csi.numODs--;
 		return;
 	}
+
+	const char* errhead = "Com_ParseItem: unexpected end of file (weapon ";
+	int i;
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -2357,10 +2348,8 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
  */
 const teamDef_t* Com_GetTeamDefinitionByID (const char* team)
 {
-	int i;
-
 	/* get team definition */
-	for (i = 0; i < csi.numTeamDefs; i++) {
+	for (int i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t* t = &csi.teamDef[i];
 		if (Q_streq(team, t->id))
 			return t;
@@ -2607,11 +2596,10 @@ static void Com_ParseActorModels (const char* name, const char** text, teamDef_t
 static void Com_ParseActorSounds (const char* name, const char** text, teamDef_t* td)
 {
 	const char* const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
-	const char* token;
 	int i;
 
 	/* get name list body body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorSounds: actorsounds def \"%s\" without body ignored\n", name);
@@ -2828,13 +2816,11 @@ static void Com_ParseTeam (const char* name, const char** text)
  */
 const chrTemplate_t* Com_GetCharacterTemplateByID (const char* chrTemplate)
 {
-	int i;
-
 	if (Q_strnull(chrTemplate))
 		return nullptr;
 
 	/* get character template */
-	for (i = 0; i < csi.numChrTemplates; i++)
+	for (int i = 0; i < csi.numChrTemplates; i++)
 		if (Q_streq(chrTemplate, csi.chrTemplates[i].id))
 			return &csi.chrTemplates[i];
 
@@ -2858,10 +2844,7 @@ static const value_t ugvValues[] = {
  */
 static void Com_ParseUGVs (const char* name, const char** text)
 {
-	ugv_t* ugv;
-	int i;
-
-	for (i = 0; i < csi.numUGV; i++) {
+	for (int i = 0; i < csi.numUGV; i++) {
 		if (Q_streq(name, csi.ugvs[i].id)) {
 			Com_Printf("Com_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
 			return;
@@ -2874,7 +2857,7 @@ static void Com_ParseUGVs (const char* name, const char** text)
 	}
 
 	/* parse ugv */
-	ugv = &csi.ugvs[csi.numUGV];
+	ugv_t* ugv = &csi.ugvs[csi.numUGV];
 	OBJZERO(*ugv);
 
 	if (Com_ParseBlock(name, text, ugv, ugvValues, nullptr)) {
@@ -3398,11 +3381,10 @@ const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
  */
 const ugv_t* Com_GetUGVByIDSilent (const char* ugvID)
 {
-	int i;
-
 	if (!ugvID)
 		return nullptr;
-	for (i = 0; i < csi.numUGV; i++) {
+
+	for (int i = 0; i < csi.numUGV; i++) {
 		const ugv_t* ugv = &csi.ugvs[i];
 		if (Q_streq(ugv->id, ugvID)) {
 			return ugv;

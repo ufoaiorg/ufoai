@@ -206,11 +206,8 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
  */
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
-	AABB box;
 	vec3_t normal, origin;
 	pos3_t start, end, test;
-	trace_t trace;
-	int i;
 
 	/* Initialize start, end, and normal */
 	VectorClear(start);
@@ -218,7 +215,9 @@ void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
 	VectorClear(origin);
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
+		AABB box;
+		trace_t trace;
 		/* Lower positive boundary */
 		while (end[i] > start[i]) {
 			/* Adjust ceiling */
@@ -283,18 +282,15 @@ bool RT_CanActorStandHere (const Routing& routing, const int actorSize, const po
  */
 void RT_GetMapSize (mapTiles_t* mapTiles, vec3_t map_min, vec3_t map_max)
 {
-	AABB box;
 	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 	pos3_t start, end, test;
-	vec3_t origin;
-	int i;
 
 	/* Initialize start, end, and normal */
 	VectorSet(start, 0, 0, 0);
 	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
-	VectorCopy(vec3_origin, origin);
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
+		AABB box;
 		/* Lower positive boundary */
 		while (end[i] > start[i]) {
 			/* Adjust ceiling */
@@ -361,13 +357,11 @@ NEW MAP TRACING FUNCTIONS
  */
 bool RT_AllCellsBelowAreFilled (const Routing& routing, const int actorSize, const pos3_t pos)
 {
-	int i;
-
 	/* the -1 level is considered solid ground */
 	if (pos[2] == 0)
 		return true;
 
-	for (i = 0; i < pos[2]; i++) {
+	for (int i = 0; i < pos[2]; i++) {
 		if (routing.getCeiling(actorSize, pos[0], pos[1], i) != 0)
 			return false;
 	}
