@@ -82,14 +82,10 @@ TRACING NODES
  */
 static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenum)
 {
-	tnode_t* t;				/* the tracing node to build */
+	tnode_t* t = (*tnode)++;		/* the tracing node to build */
+	TR_NODE_TYPE* node = tile->nodes + nodenum;		/* the node we are investigating */
+
 	TR_PLANE_TYPE* plane;
-	int i;
-	TR_NODE_TYPE* node;		/* the node we are investigating */
-
-	t = (*tnode)++;
-
-	node = tile->nodes + nodenum;
 #ifdef COMPILE_UFO
 	plane = node->plane;
 #else
@@ -100,7 +96,7 @@ static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t no
 	VectorCopy(plane->normal, t->normal);
 	t->dist = plane->dist;
 
-	for (i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {	/* is it a leaf ? */
 			const int32_t leafnum = -(node->children[i]) - 1;
 			const TR_LEAF_TYPE* leaf = &tile->leafs[leafnum];
@@ -124,7 +120,7 @@ static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t no
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenum, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t** tnode, int32_t nodenum, int level)
 {
 	assert(nodenum < tile->numnodes + 6); /* +6 => bbox */
 
@@ -137,15 +133,10 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenu
 #else
 	if (tile->nodes[nodenum].planenum == PLANENUM_LEAF) {
 #endif
-		TR_NODE_TYPE* n;
-		tnode_t* t;
-		vec3_t c0maxs, c1mins;
-		int i;
-
-		n = &tile->nodes[nodenum];
+		TR_NODE_TYPE* n = &tile->nodes[nodenum];
 
 		/* alloc new node */
-		t = (*tnode)++;
+		tnode_t* t = (*tnode)++;
 
 		/* no leafs here */
 		if (n->children[0] < 0 || n->children[1] < 0)
@@ -155,6 +146,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenu
 			Sys_Error("Unexpected leaf");
 #endif
 
+		vec3_t c0maxs, c1mins;
 		VectorCopy(tile->nodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(tile->nodes[n->children[1]].mins, c1mins);
 
@@ -166,6 +158,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t nodenu
 			(int)tile->nodes[n->children[1]].maxs[0], (int)tile->nodes[n->children[1]].maxs[1]);
 #endif
 
+		int i;
 		for (i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
 				/* create a separation plane */
@@ -289,10 +282,9 @@ int TR_TestLine_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, cons
 static bool TR_TileTestLine (TR_TILE_TYPE* tile, const vec3_t start, const vec3_t end, const int levelmask)
 {
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
-	int i;
 
 	/* loop over all theads */
-	for (i = 0; i < tile->numtheads; i++) {
+	for (int i = 0; i < tile->numtheads; i++) {
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & corelevels))
 			continue;
@@ -431,12 +423,10 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE* tile, const vec3_t start, const vec
 #ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 #endif
-	vec3_t tr_end;
-	int i;
 
 	VectorCopy(end, hit);
 
-	for (i = 0; i < tile->numtheads; i++) {
+	for (int i = 0; i < tile->numtheads; i++) {
 #ifdef COMPILE_MAP
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & levelmask))
@@ -448,6 +438,7 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE* tile, const vec3_t start, const vec
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 #endif
+		vec3_t tr_end;
 		if (TR_TestLineDist_r(tile, tile->thead[i], start, end, tr_end))
 			if (VectorNearer(tr_end, hit, start))
 				VectorCopy(tr_end, hit);
@@ -505,9 +496,7 @@ BOX TRACING
  */
 int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE* plane)
 {
-	int side, i;
-	vec3_t corners[2];
-	vec_t dist1, dist2;
+	int side;
 
 	/* axial planes are easy */
 	if (AXIAL(plane)) {
@@ -521,7 +510,8 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 
 	/* create the proper leading and trailing verts for the box */
 
-	for (i = 0; i < 3; i++) {
+	vec3_t corners[2];
+	for (int i = 0; i < 3; i++) {
 		if (plane->normal[i] < 0) {
 			corners[0][i] = mins[i];
 			corners[1][i] = maxs[i];
@@ -531,8 +521,8 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 		}
 	}
 
-	dist1 = DotProduct(plane->normal, corners[0]) - plane->dist;
-	dist2 = DotProduct(plane->normal, corners[1]) - plane->dist;
+	vec_t dist1 = DotProduct(plane->normal, corners[0]) - plane->dist;
+	vec_t dist2 = DotProduct(plane->normal, corners[1]) - plane->dist;
 	side = 0;
 	if (dist1 >= PLANESIDE_EPSILON)
 		side = PSIDE_FRONT;
@@ -623,30 +613,25 @@ static int TR_BoxLeafnums_headnode (boxtrace_t* traceData, int32_t* list, int li
  */
 static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEAF_TYPE* leaf)
 {
-	int i, j;
-	TR_PLANE_TYPE* clipplane;
-	int clipplanenum;
-	float dist;
-	float enterfrac, leavefrac;
-	vec3_t ofs;
-	bool getout, startout;
+	if (!brush || !brush->numsides)
+		return;
+
 #ifdef COMPILE_UFO
 	TR_BRUSHSIDE_TYPE* leadside = nullptr;
 #endif
 	TR_TILE_TYPE* myTile = traceData->tile;
 
-	enterfrac = -1.0;
-	leavefrac = 1.0;
-	clipplane = nullptr;
+	float enterfrac = -1.0;
+	float leavefrac = 1.0;
+	bool getout = false;
+	bool startout = false;
 
-	if (!brush || !brush->numsides)
-		return;
+	TR_PLANE_TYPE* clipplane = nullptr;
+	int clipplanenum = 0;
 
-	getout = false;
-	startout = false;
-	clipplanenum = 0;
-
-	for (i = 0; i < brush->numsides; i++) {
+	float dist;
+	vec3_t ofs;
+	for (int i = 0; i < brush->numsides; i++) {
 		TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		TR_PLANE_TYPE* plane = side->plane;
@@ -657,7 +642,7 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 		/** @todo special case for axial */
 		if (!traceData->ispoint) {	/* general box case */
 			/* push the plane out appropriately for mins/maxs */
-			for (j = 0; j < 3; j++) {
+			for (int j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
 					ofs[j] = traceData->maxs[j];
 				else
@@ -731,7 +716,6 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
  */
 static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 {
-	int i, j;
 	TR_PLANE_TYPE* plane;
 	vec3_t ofs;
 	TR_TILE_TYPE* myTile = traceData->tile;
@@ -739,7 +723,7 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 	if (!brush || !brush->numsides)
 		return;
 
-	for (i = 0; i < brush->numsides; i++) {
+	for (int i = 0; i < brush->numsides; i++) {
 		TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		plane = side->plane;
@@ -750,7 +734,7 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 		/** @todo special case for axial */
 		/* general box case */
 		/* push the plane out appropriately for mins/maxs */
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
 				ofs[j] = traceData->maxs[j];
 			else
@@ -1001,14 +985,12 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 	/* check for position test special case */
 	if (VectorEqual(traceData.start, traceData.end)) {
 		int32_t leafs[MAX_LEAFS];
-		int numleafs;
-		int i;
 
 		VectorAdd(traceData.start, traceData.maxs, traceData.absmaxs);
 		VectorAdd(traceData.start, traceData.mins, traceData.absmins);
 
-		numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode);
-		for (i = 0; i < numleafs; i++) {
+		int numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode);
+		for (int i = 0; i < numleafs; i++) {
 			TR_TestInLeaf(&traceData, leafs[i]);
 			if (traceData.trace.allsolid)
 				break;
