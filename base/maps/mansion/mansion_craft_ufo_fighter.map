@@ -1952,29 +1952,6 @@
 }
 // entity 24
 {
-"classname" "func_door"
-"spawnflags" "252"
-// brush 0
-{
-( 354 929 188 ) ( 352 929 188 ) ( 354 929 132 ) tex_doors/door006 0 182.8572 0 0.125 0.109375 64512 0 0
-( 352 927 132 ) ( 352 927 188 ) ( 354 927 132 ) tex_doors/door006 0 182.8572 0 0.125 0.109375 64512 0 0
-( 352 927 132 ) ( 352 929 132 ) ( 352 927 188 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 384 896 64 ) ( 384 960 -64 ) ( 384 896 -64 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 354 929 188 ) ( 354 927 188 ) ( 352 929 188 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 352 512 132 ) ( 320 512 132 ) ( 352 448 132 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-}
-// brush 1
-{
-( 354 929 188 ) ( 354 927 188 ) ( 352 929 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 354 929 188 ) ( 352 929 188 ) ( 354 929 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 354 929 188 ) ( 354 929 132 ) ( 354 927 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 512 132 ) ( 320 512 132 ) ( 352 448 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 927 132 ) ( 352 927 188 ) ( 354 927 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 927 132 ) ( 352 929 132 ) ( 352 927 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-}
-}
-// entity 25
-{
 "classname" "func_group"
 // brush 0
 {
@@ -1995,7 +1972,7 @@
 ( 362 1099 324 ) ( 362 1099 334 ) ( 362 1091 334 ) tex_material/metall002 0 0 0 0.015625 0.5 63488 1024 0
 }
 }
-// entity 26
+// entity 25
 {
 "classname" "func_group"
 // brush 0
@@ -2536,21 +2513,21 @@
 ( 674 407 160 ) ( 670 399 153 ) ( 670 407 160 ) tex_common/weaponclip 0 0 0 0.25 0.25 33618944 0 0
 }
 }
-// entity 27
+// entity 26
 {
 "classname" "info_2x2_start"
 "origin" "160 640 156"
 "angle" "180"
 "team" "2"
 }
-// entity 28
+// entity 27
 {
 "classname" "info_2x2_start"
 "origin" "352 1216 156"
 "angle" "180"
 "team" "2"
 }
-// entity 29
+// entity 28
 {
 "classname" "misc_model"
 "origin" "256 352 172"
@@ -2558,7 +2535,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
 "angles" "0 90 0"
 }
-// entity 30
+// entity 29
 {
 "classname" "misc_model"
 "origin" "256 352 172"
@@ -2566,7 +2543,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
 "angles" "0 90 0"
 }
-// entity 31
+// entity 30
 {
 "classname" "misc_model"
 "origin" "256 352 172"
@@ -2574,7 +2551,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
 "angles" "0 90 0"
 }
-// entity 32
+// entity 31
 {
 "classname" "misc_model"
 "origin" "256 352 172"
@@ -2582,7 +2559,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
 "angles" "0 90 0"
 }
-// entity 33
+// entity 32
 {
 "classname" "misc_model"
 "origin" "256 352 172"
@@ -2590,14 +2567,14 @@
 "spawnflags" "248"
 "angles" "0 90 0"
 }
-// entity 34
+// entity 33
 {
 "classname" "light"
 "origin" "256 310 197"
 "_color" "1 0.2 0"
 "light" "80"
 }
-// entity 35
+// entity 34
 {
 "classname" "light"
 "light" "200"
@@ -2605,7 +2582,7 @@
 "origin" "104 312 236"
 "spawnflags" "1"
 }
-// entity 36
+// entity 35
 {
 "classname" "light"
 "origin" "408 312 236"
@@ -2613,7 +2590,7 @@
 "light" "200"
 "spawnflags" "1"
 }
-// entity 37
+// entity 36
 {
 "classname" "light"
 "origin" "256 536 236"
@@ -2621,7 +2598,7 @@
 "light" "200"
 "spawnflags" "1"
 }
-// entity 38
+// entity 37
 {
 "classname" "light"
 "light" "200"
@@ -2629,7 +2606,7 @@
 "origin" "488 192 236"
 "spawnflags" "1"
 }
-// entity 39
+// entity 38
 {
 "classname" "light"
 "light" "200"
@@ -2637,7 +2614,7 @@
 "origin" "40 200 236"
 "spawnflags" "1"
 }
-// entity 40
+// entity 39
 {
 "classname" "func_group"
 // brush 0
@@ -3437,7 +3414,7 @@
 ( 232 156 178 ) ( 207.25 240 200 ) ( 304.75 240 200 ) tex_common/weaponclip 0 0 0 1 1 33618944 0 0
 }
 }
-// entity 41
+// entity 40
 {
 "classname" "func_group"
 // brush 0

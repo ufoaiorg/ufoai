@@ -809,29 +809,6 @@
 }
 // entity 3
 {
-"classname" "func_door"
-"spawnflags" "1"
-// brush 0
-{
-( 985 918 60 ) ( 857 898 60 ) ( 857 918 60 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-( 256 491.375 159.375 ) ( 256 490.25 158.25 ) ( 256 494.25 155.125 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-( 248 511 8 ) ( 248 511 4 ) ( 300 511 8 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-( 352 540 4 ) ( 340 544 4 ) ( 340 536 4 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-( 258 509 4 ) ( 258 509 60 ) ( 258 511 4 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-( 300 509 4 ) ( 248 509 4 ) ( 300 509 8 ) tex_common/origin 0 0 0 0.5 0.5 16777472 0 0
-}
-// brush 1
-{
-( 248 511 8 ) ( 248 511 4 ) ( 300 511 8 ) tex_doors/door002 0 475.4286 180 0.125 0.109375 256 0 0
-( 352 540 4 ) ( 340 544 4 ) ( 340 536 4 ) tex_doors/door002 0 0 -180 1 1 256 0 0
-( 300 509 4 ) ( 248 509 4 ) ( 300 509 8 ) tex_doors/door002 0 475.4286 180 0.125 0.109375 256 0 0
-( 256 491.375 159.375 ) ( 256 490.25 158.25 ) ( 256 494.25 155.125 ) tex_material/metall013 0 0 0 0.1 0.1 256 0 0
-( 288 491.375 159.375 ) ( 288 492.875 154.375 ) ( 288 490.25 158.25 ) tex_material/metall013 0 0 0 0.1 0.1 256 0 0
-( 985 918 60 ) ( 857 898 60 ) ( 857 918 60 ) tex_material/metall013 0 0 0 0.1 0.1 256 0 0
-}
-}
-// entity 4
-{
 "classname" "func_group"
 // brush 0
 {
@@ -1368,7 +1345,7 @@
 ( 82 413 125 ) ( 102 413 97 ) ( 102 370.5 97 ) tex_common/nodraw 0 16 0 0.25 0.25 327168 0 0
 }
 }
-// entity 5
+// entity 4
 {
 "classname" "func_group"
 // brush 0
@@ -2218,7 +2195,7 @@
 ( 368 413 68 ) ( 358 370.5 97 ) ( 348 413 68 ) tex_common/nodraw 0 0 0 0.25 0.25 327168 0 0
 }
 }
-// entity 6
+// entity 5
 {
 "classname" "func_group"
 // brush 0
@@ -2418,7 +2395,7 @@
 ( 64 251 -28 ) ( 64 317 -28 ) ( 32 282.5 48 ) tex_common/nodraw 0 0 0 0.15 0.15 65280 0 0
 }
 }
-// entity 7
+// entity 6
 {
 "classname" "func_group"
 // brush 0
@@ -2618,7 +2595,7 @@
 ( 320 251 -28 ) ( 320 317 -28 ) ( 288 282.5 48 ) tex_common/nodraw 0 0 0 0.15 0.15 65280 0 0
 }
 }
-// entity 8
+// entity 7
 {
 "classname" "func_group"
 // brush 0
@@ -2649,13 +2626,13 @@
 ( 256 491.375 159.375 ) ( 256 490.25 158.25 ) ( 256 494.25 155.125 ) tex_common/nodraw 0 0 0 0.15 0.15 256 0 0
 }
 }
-// entity 9
+// entity 8
 {
 "classname" "info_alien_start"
 "origin" "272 688 156"
 "angle" "90"
 }
-// entity 10
+// entity 9
 {
 "classname" "func_group"
 // brush 0
@@ -2677,7 +2654,7 @@
 ( 432 624 64 ) ( 432 688 64 ) ( 444 612 64 ) tex_mattn/wall079 0 11 90 0.22 0.26 256 0 0
 }
 }
-// entity 11
+// entity 10
 {
 "classname" "func_group"
 // brush 0
@@ -2951,7 +2928,7 @@
 ( 736 413 133 ) ( 736 413 132 ) ( 608 413 133 ) tex_mattn/wall079 0 11 0 0.22 0.26 64512 0 0
 }
 }
-// entity 12
+// entity 11
 {
 "classname" "func_group"
 // brush 0
@@ -3600,7 +3577,7 @@
 ( 111.6175 496.4975 159.8212 ) ( 110.7006 528.2141 155.5364 ) ( 111.7037 528.2563 155.9005 ) tex_material/metall005 61.40869 0 0 0.05 -0.05 64512 0 0
 }
 }
-// entity 13
+// entity 12
 {
 "classname" "func_group"
 // brush 0
@@ -3874,7 +3851,7 @@
 ( 736 413 133 ) ( 736 413 132 ) ( 608 413 133 ) tex_mattn/wall079 0 11 0 0.22 0.26 64512 0 0
 }
 }
-// entity 14
+// entity 13
 {
 "classname" "func_group"
 // brush 0
@@ -4004,7 +3981,7 @@
 ( 163.125 565.625 154 ) ( 187.25 552.75 154 ) ( 168.75 571.25 154 ) tex_common/nodraw 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 15
+// entity 14
 {
 "classname" "func_group"
 // brush 0
@@ -4164,7 +4141,7 @@
 ( 78.5 513.259 138.9821 ) ( 78 514.125 139.25 ) ( 79 514.125 138.9821 ) tex_material/metall002 0 0 0 0.25 0.25 64512 1024 0
 }
 }
-// entity 16
+// entity 15
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -4172,7 +4149,7 @@
 "model" "models/objects/vegi/pino/pino3_leaves.md2"
 "skin" "0"
 }
-// entity 17
+// entity 16
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -4180,7 +4157,7 @@
 "model" "models/objects/vegi/pino/pino2_leaves.md2"
 "skin" "0"
 }
-// entity 18
+// entity 17
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -4188,7 +4165,7 @@
 "model" "models/objects/vegi/pino/pino1.md2"
 "skin" "0"
 }
-// entity 19
+// entity 18
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -4196,7 +4173,7 @@
 "model" "models/objects/vegi/pino/pino3.md2"
 "skin" "0"
 }
-// entity 20
+// entity 19
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -4204,7 +4181,7 @@
 "model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 }
-// entity 21
+// entity 20
 {
 "classname" "func_group"
 // brush 0
@@ -4345,7 +4322,7 @@
 ( 397.375 704.375 372.625 ) ( 389.375 709.5 376 ) ( 385.375 704.375 383.75 ) tex_common/lightclip 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 22
+// entity 21
 {
 "classname" "func_group"
 // brush 0

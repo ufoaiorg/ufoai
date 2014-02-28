@@ -3147,30 +3147,6 @@
 }
 // entity 8
 {
-"classname" "func_door"
-"spawnflags" "254"
-"health" "300"
-// brush 0
-{
-( -96 509 124 ) ( -96 553 124 ) ( 32 509 124 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-( 640 544 -64 ) ( 672 544 -64 ) ( 640 544 64 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-( 639 480 68 ) ( 639 576 128 ) ( 639 576 68 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-( 1041.125 1808 68 ) ( 1080 1741 68 ) ( 1079.75 1792 68 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-( 672 542 -64 ) ( 608 542 -64 ) ( 672 542 64 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-( 637 481 68 ) ( 637 529 68 ) ( 637 481 72 ) tex_common/origin 0 0 0 0.15 0.15 16777728 0 0
-}
-// brush 1
-{
-( 639 480 68 ) ( 639 576 128 ) ( 639 576 68 ) tex_doors/door002 0 109.7144 0 0.125 0.109375 512 0 0
-( 1041.125 1808 68 ) ( 1080 1741 68 ) ( 1079.75 1792 68 ) tex_doors/door002 0 0 0 1 1 512 0 0
-( 637 481 68 ) ( 637 529 68 ) ( 637 481 72 ) tex_doors/door002 0 109.7144 0 0.125 0.109375 512 0 0
-( 640 544 -64 ) ( 672 544 -64 ) ( 640 544 64 ) tex_doors/door002 0 0 0 1 1 512 0 0
-( 672 512 -64 ) ( 608 512 -64 ) ( 672 512 64 ) tex_doors/door002 0 0 0 1 1 512 0 0
-( -96 509 124 ) ( -96 553 124 ) ( 32 509 124 ) tex_doors/door002 0 -18 0 1 1 512 0 0
-}
-}
-// entity 9
-{
 "classname" "func_group"
 // brush 0
 {
@@ -3200,7 +3176,7 @@
 ( 672 1886 168 ) ( 672 1886 192 ) ( 672 1882 168 ) tex_common/nodraw 0 0 0 0.15 0.15 768 0 0
 }
 }
-// entity 10
+// entity 9
 {
 "classname" "func_group"
 // brush 0
@@ -3231,7 +3207,7 @@
 ( 642 640 262 ) ( 641 640 262 ) ( 642 640 285 ) tex_common/nodraw 0 0 0 0.15 0.15 256 0 0
 }
 }
-// entity 11
+// entity 10
 {
 "classname" "func_group"
 // brush 0
@@ -3262,7 +3238,7 @@
 ( 672 464 -20 ) ( 672 448 -20 ) ( 672 464 108 ) tex_common/nodraw 0 0 0 0.15 0.15 256 0 0
 }
 }
-// entity 12
+// entity 11
 {
 "classname" "func_group"
 // brush 0
@@ -5718,7 +5694,7 @@
 ( -224 456 136 ) ( -224 432 136 ) ( -96 456 136 ) tex_common/nodraw 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 13
+// entity 12
 {
 "classname" "func_group"
 // brush 0
@@ -5749,13 +5725,13 @@
 ( -232 464 140 ) ( -232 448 140 ) ( -104 464 140 ) tex_common/nodraw 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 14
+// entity 13
 {
 "classname" "info_alien_start"
 "origin" "624 656 156"
 "angle" "90"
 }
-// entity 15
+// entity 14
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/bush/bush01.md2"

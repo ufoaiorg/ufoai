@@ -1666,29 +1666,6 @@
 }
 // entity 21
 {
-"classname" "func_door"
-"spawnflags" "252"
-// brush 0
-{
-( 354 929 188 ) ( 352 929 188 ) ( 354 929 132 ) tex_doors/door006 0 182.8572 0 0.125 0.109375 64512 0 0
-( 352 927 132 ) ( 352 927 188 ) ( 354 927 132 ) tex_doors/door006 0 182.8572 0 0.125 0.109375 64512 0 0
-( 352 927 132 ) ( 352 929 132 ) ( 352 927 188 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 384 896 64 ) ( 384 960 -64 ) ( 384 896 -64 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 354 929 188 ) ( 354 927 188 ) ( 352 929 188 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-( 352 512 132 ) ( 320 512 132 ) ( 352 448 132 ) tex_doors/door006 0 0 0 1 1 64512 0 0
-}
-// brush 1
-{
-( 354 929 188 ) ( 354 927 188 ) ( 352 929 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 354 929 188 ) ( 352 929 188 ) ( 354 929 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 354 929 188 ) ( 354 929 132 ) ( 354 927 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 512 132 ) ( 320 512 132 ) ( 352 448 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 927 132 ) ( 352 927 188 ) ( 354 927 132 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-( 352 927 132 ) ( 352 929 132 ) ( 352 927 188 ) tex_common/origin 0 0 0 0.25 0.25 64512 0 0
-}
-}
-// entity 22
-{
 "classname" "func_group"
 // brush 0
 {
@@ -1709,7 +1686,7 @@
 ( 362 1099 324 ) ( 362 1099 334 ) ( 362 1091 334 ) tex_material/metall002 0 0 0 0.015625 0.5 63488 1024 0
 }
 }
-// entity 23
+// entity 22
 {
 "classname" "func_group"
 // brush 0
@@ -2250,117 +2227,117 @@
 ( 674 407 160 ) ( 670 399 153 ) ( 670 407 160 ) tex_common/weaponclip 0 0 0 0.25 0.25 33618944 0 0
 }
 }
-// entity 24
+// entity 23
 {
 "classname" "info_human_start"
 "origin" "80 240 156"
 "angle" "180"
 }
-// entity 25
+// entity 24
 {
 "classname" "info_human_start"
 "origin" "48 336 156"
 "angle" "180"
 }
-// entity 26
+// entity 25
 {
 "classname" "info_human_start"
 "origin" "80 528 156"
 "angle" "180"
 }
-// entity 27
+// entity 26
 {
 "classname" "info_human_start"
 "origin" "112 624 156"
 "angle" "180"
 }
-// entity 28
+// entity 27
 {
 "classname" "info_human_start"
 "origin" "304 784 156"
 "angle" "180"
 }
-// entity 29
+// entity 28
 {
 "classname" "info_human_start"
 "origin" "112 144 156"
 "angle" "180"
 }
-// entity 30
+// entity 29
 {
 "classname" "info_human_start"
 "origin" "48 432 156"
 "angle" "180"
 }
-// entity 31
+// entity 30
 {
 "classname" "info_human_start"
 "origin" "208 720 156"
 "angle" "180"
 }
-// entity 32
+// entity 31
 {
 "classname" "info_alien_start"
 "origin" "-176 592 28"
 "angle" "180"
 }
-// entity 33
+// entity 32
 {
 "classname" "info_alien_start"
 "origin" "-272 624 92"
 }
-// entity 34
+// entity 33
 {
 "classname" "info_alien_start"
 "origin" "-1136 592 92"
 "angle" "-90"
 }
-// entity 35
+// entity 34
 {
 "classname" "info_alien_start"
 "origin" "-1264 496 156"
 }
-// entity 36
+// entity 35
 {
 "classname" "info_alien_start"
 "origin" "-1424 912 156"
 "angle" "90"
 }
-// entity 37
+// entity 36
 {
 "classname" "info_alien_start"
 "origin" "-976 976 28"
 "angle" "180"
 }
-// entity 38
+// entity 37
 {
 "classname" "info_alien_start"
 "origin" "-1488 688 156"
 "angle" "90"
 }
-// entity 39
+// entity 38
 {
 "classname" "info_alien_start"
 "origin" "-944 48 156"
 }
-// entity 40
+// entity 39
 {
 "classname" "info_alien_start"
 "origin" "144 176 92"
 }
-// entity 41
+// entity 40
 {
 "classname" "info_alien_start"
 "origin" "144 592 28"
 "angle" "180"
 }
-// entity 42
+// entity 41
 {
 "classname" "info_alien_start"
 "origin" "624 1104 28"
 "angle" "-90"
 }
-// entity 43
+// entity 42
 {
 "classname" "misc_model"
 "origin" "384 374 177"
@@ -2368,7 +2345,7 @@
 "model" "models/aircraft/drop_firebird/firebird_top.md2"
 "angles" "0 90 0"
 }
-// entity 44
+// entity 43
 {
 "classname" "misc_model"
 "origin" "384 374 177"
@@ -2376,7 +2353,7 @@
 "spawnflags" "252"
 "angles" "0 90 0"
 }
-// entity 45
+// entity 44
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -2391,7 +2368,7 @@
 ( 320 448 128 ) ( 448 448 128 ) ( 320 448 224 ) tex_common/trigger 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 46
+// entity 45
 {
 "classname" "func_group"
 // brush 0
@@ -3194,7 +3171,7 @@
 ( 382 640 144 ) ( 386 640 144 ) ( 382 640 164 ) tex_common/actorclip 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 47
+// entity 46
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -3209,7 +3186,7 @@
 ( 192 384 128 ) ( 320 384 128 ) ( 192 384 224 ) tex_common/trigger 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 48
+// entity 47
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -3224,91 +3201,91 @@
 ( 416 384 128 ) ( 544 384 128 ) ( 416 384 224 ) tex_common/trigger 0 0 0 0.25 0.25 64512 0 0
 }
 }
-// entity 49
+// entity 48
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1360 656 156"
 "angle" "90"
 }
-// entity 50
+// entity 49
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1424 656 156"
 "angle" "90"
 }
-// entity 51
+// entity 50
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1488 656 156"
 "angle" "90"
 }
-// entity 52
+// entity 51
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1488 528 156"
 "angle" "-90"
 }
-// entity 53
+// entity 52
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1424 528 156"
 "angle" "-90"
 }
-// entity 54
+// entity 53
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1360 528 156"
 "angle" "-90"
 }
-// entity 55
+// entity 54
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1424 592 156"
 "angle" "180"
 }
-// entity 56
+// entity 55
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1488 592 156"
 "angle" "180"
 }
-// entity 57
+// entity 56
 {
 "classname" "info_2x2_start"
 "origin" "-1472 768 156"
 "angle" "-90"
 "team" "2"
 }
-// entity 58
+// entity 57
 {
 "classname" "info_2x2_start"
 "origin" "-1344 768 156"
 "angle" "90"
 "team" "2"
 }
-// entity 59
+// entity 58
 {
 "classname" "info_2x2_start"
 "origin" "288 640 156"
 "angle" "180"
 "team" "1"
 }
-// entity 60
+// entity 59
 {
 "classname" "info_2x2_start"
 "origin" "192 288 156"
 "angle" "180"
 "team" "1"
 }
-// entity 61
+// entity 60
 {
 "classname" "info_2x2_start"
 "origin" "384 1184 156"
