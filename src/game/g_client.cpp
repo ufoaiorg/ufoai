@@ -562,16 +562,16 @@ bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
 }
 
 /**
- * @brief Retrieve or collect weapon from any linked container for the actor's right hand
+ * @brief Retrieve or collect a loaded weapon from any linked container for the actor's right hand
  * @note This function will also collect items from floor containers when the actor
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (Edict* ent)
+bool G_ClientGetWeaponFromInventory (Edict* ent)
 {
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
-		return;
+		return false;
 
 	/* search for weapons and select the one that is available easily */
 	const invDef_t* bestContainer = nullptr;
@@ -597,8 +597,11 @@ void G_ClientGetWeaponFromInventory (Edict* ent)
 
 	/* send request */
 	const invDef_t* invDef = INVDEF(CID_RIGHT);
-	if (bestContainer)
+	if (bestContainer) {
 		G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
+		return true;
+	}
+	return false;	/* no weapon found */
 }
 
 /**
