@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void G_MoveCalc(int team, const Edict* movingActor, const pos3_t from, int distance);
 void G_MoveCalcLocal(pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance);
+void G_FindPath(int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs = 999999);
 void G_ActorFall(Edict* ent);
 pos_t G_ActorMoveLength(const Edict* ent, const pathing_t* path, const pos3_t to, bool stored);
 void G_ClientMove(const Player& player, int visTeam, Edict* ent, const pos3_t to);

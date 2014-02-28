@@ -118,6 +118,12 @@ void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const p
 	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
 }
 
+void G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs)
+{
+	G_BuildForbiddenList(team, movingActor);
+	gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, G_IsCrouched(movingActor), maxTUs, forbiddenList, forbiddenListLength);
+}
+
 /**
  * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
  * @param[in,out] ent The actor that should fall down
