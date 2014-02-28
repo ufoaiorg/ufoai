@@ -374,24 +374,23 @@ static void E_EmployeeSelect_f (void)
 	E_EmployeeSelect(E_GetEmployeeByMenuIndex(num));
 }
 
+static const cmdList_t employeeCmds[] = {
+	{"employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI"},
+	{"employee_init", E_EmployeeList_f, "Init function for employee hire menu"},
+	{"employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list"},
+	{"employee_hire", E_EmployeeHire_f, nullptr},
+	{"employee_select", E_EmployeeSelect_f, nullptr},
+	{"employee_changename", E_ChangeName_f, "Change the name of an employee"},
+	{"employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list"},
+	{nullptr, nullptr, nullptr}
+};
+
 void E_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
-	cgi->Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
-	cgi->Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
-	cgi->Cmd_AddCommand("employee_hire", E_EmployeeHire_f, nullptr);
-	cgi->Cmd_AddCommand("employee_select", E_EmployeeSelect_f, nullptr);
-	cgi->Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
-	cgi->Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
+	Cmd_TableAddList(employeeCmds);
 }
 
 void E_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("employee_update_count");
-	cgi->Cmd_RemoveCommand("employee_init");
-	cgi->Cmd_RemoveCommand("employee_delete");
-	cgi->Cmd_RemoveCommand("employee_hire");
-	cgi->Cmd_RemoveCommand("employee_select");
-	cgi->Cmd_RemoveCommand("employee_changename");
-	cgi->Cmd_RemoveCommand("employee_scroll");
+	Cmd_TableRemoveList(employeeCmds);
 }
