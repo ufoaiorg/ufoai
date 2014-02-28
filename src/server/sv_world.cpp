@@ -177,13 +177,13 @@ void SV_LinkEdict (edict_t* ent)
 	sv_ent->ent = ent;
 
 	/* If this ent has a child, link it back in, too */
-	if (ent->child) {
-		ent->child->entBox.set(ent->absBox);
+	if (ent->child()) {
+		ent->child()->entBox.set(ent->absBox);
 
 		/* expand the trigger box */
-		ent->child->entBox.expandXY(UNIT_SIZE / 2);
+		ent->child()->entBox.expandXY(UNIT_SIZE / 2);
 		/* link child back into the world */
-		SV_LinkEdict(ent->child);
+		SV_LinkEdict(ent->child());
 	}
 }
 

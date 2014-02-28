@@ -49,12 +49,15 @@ public:
 	AABB absBox;		/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	SrvEdict* child;	/**< e.g. the trigger for this edict */
+	SrvEdict* _child;	/**< e.g. the trigger for this edict */
 	SrvEdict* owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 
 	const char* classname;
 
+	inline SrvEdict* child () {	/* only needed for SV_LinkEdict */
+		return _child;
+	}
 	inline bool isSameAs (const SrvEdict* other) const {
 		if (!other)
 			return false;
