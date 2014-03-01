@@ -932,24 +932,22 @@ static void AIM_AircraftItemtypeByName_f (void)
 	cgi->Cmd_ExecuteString("airequip_updatemenu %d", airequipID);
 }
 
+static const cmdList_t airequipCmds[] = {
+	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
+	{"airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI"},
+	{"airequip_list_click", AIM_AircraftEquipMenuClick_f, nullptr},
+	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, nullptr},
+	{"airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot"},
+	{"airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot"},
+	{"airequip_zone_select", AIM_AircraftEquipZoneSelect_f, nullptr},
+	{nullptr, nullptr, nullptr}
+};
 void AIM_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
-	cgi->Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
-	cgi->Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, nullptr);
-	cgi->Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, nullptr);
-	cgi->Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
-	cgi->Cmd_AddCommand("airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot");
-	cgi->Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, nullptr);
+	Cmd_TableAddList(airequipCmds);
 }
 
 void AIM_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("airequip_updatemenu");
-	cgi->Cmd_RemoveCommand("airequip_selectcategory");
-	cgi->Cmd_RemoveCommand("airequip_list_click");
-	cgi->Cmd_RemoveCommand("airequip_slot_select");
-	cgi->Cmd_RemoveCommand("airequip_add_item");
-	cgi->Cmd_RemoveCommand("airequip_remove_item");
-	cgi->Cmd_RemoveCommand("airequip_zone_select");
+	Cmd_TableRemoveList(airequipCmds);
 }
