@@ -50,7 +50,7 @@ private:
 	D _deleter;
 };
 
-/**
+/*
  * A simple shared pointer implementation modeled after boost.
  *
  * This object keeps track of the assigned pointer and automatically
