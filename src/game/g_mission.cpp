@@ -234,8 +234,8 @@ void G_MissionThink (Edict* self)
 
 		ent = chain->groupChain;
 		/* free the trigger */
-		if (chain->child)
-			G_FreeEdict(chain->child);
+		if (chain->child())
+			G_FreeEdict(chain->child());
 		/* free the group chain */
 		G_FreeEdict(chain);
 		chain = ent;

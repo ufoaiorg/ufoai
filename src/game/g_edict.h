@@ -61,7 +61,7 @@ public:
 	AABB absBox;		/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	Edict* child;		/**< e.g. the trigger for this edict */
+	Edict* _child;		/**< e.g. the trigger for this edict */
 	Edict* owner;		/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 	const char* classname;
@@ -185,6 +185,9 @@ public:
 	/*==================
 	 *		setters
 	 *==================*/
+	inline void setChild (Edict* child) {
+		_child = child;
+	}
 	inline void nativeReset () {	/* strange name, but there is also a complex function named 'reset' */
 		int idx = this->number;
 		OBJZERO(*this);				/* zero everything, but ... */
@@ -211,6 +214,9 @@ public:
 	 *==================*/
 	inline int getIdNum() const {
 		return number;
+	}
+	inline Edict* child () {
+		return _child;
 	}
 	inline Item* getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer2(idx);

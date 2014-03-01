@@ -95,8 +95,8 @@ static bool Destroy_Breakable (Edict* self)
 	G_TouchEdicts(self, 10.0f);
 
 	/* destroy the door trigger */
-	if (self->child) {
-		Edict* trigger = self->child;
+	if (self->child()) {
+		Edict* trigger = self->child();
 		/* Remove all activators and reset client actions before removing the trigger */
 		Edict* activator = trigger->touchedNext;
 		while (activator) {
@@ -348,7 +348,7 @@ void SP_func_door (Edict* ent)
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
 	other->reset = Reset_DoorTrigger;
-	ent->child = other;
+	ent->setChild(other);
 
 	G_ActorSetTU(ent, TU_DOOR_ACTION);
 	if (!ent->speed)

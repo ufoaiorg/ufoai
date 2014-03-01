@@ -202,7 +202,7 @@ void SP_trigger_nextmap (Edict* ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->reset = nullptr;
-	ent->child = nullptr;
+	ent->setChild(nullptr);
 
 	gi.LinkEdict(ent);
 }
@@ -253,7 +253,7 @@ void SP_trigger_hurt (Edict* ent)
 
 	ent->touch = Touch_HurtTrigger;
 	ent->reset = nullptr;
-	ent->child = nullptr;
+	ent->setChild(nullptr);
 
 	gi.LinkEdict(ent);
 }
@@ -320,7 +320,7 @@ void SP_trigger_touch (Edict* ent)
 
 	ent->touch = Touch_TouchTrigger;
 	ent->reset = Reset_TouchTrigger;
-	ent->child = nullptr;
+	ent->setChild(nullptr);
 
 	gi.LinkEdict(ent);
 }
@@ -371,7 +371,7 @@ void SP_trigger_rescue (Edict* ent)
 		ent->spawnflags |= 0xFF;
 	ent->touch = Touch_RescueTrigger;
 	ent->reset = Reset_RescueTrigger;
-	ent->child = nullptr;
+	ent->setChild(nullptr);
 
 	gi.LinkEdict(ent);
 }

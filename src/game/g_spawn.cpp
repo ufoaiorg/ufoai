@@ -832,7 +832,7 @@ static void SP_misc_mission (Edict* ent)
 	other->touch = G_MissionTouch;
 	if (ent->target)
 		ent->use = G_MissionUse;
-	ent->child = other;
+	ent->setChild(other);
 
 	gi.LinkEdict(ent);
 }
@@ -859,7 +859,7 @@ static void SP_misc_mission_aliens (Edict* ent)
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
 	other->touch = G_MissionTouch;
-	ent->child = other;
+	ent->setChild(other);
 
 	gi.LinkEdict(ent);
 }
