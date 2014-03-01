@@ -85,7 +85,7 @@ bool G_InventoryRemoveItemByID (const char* itemID, Edict* ent, containerIndex_t
 		const objDef_t* item = ic->def();
 		if (item != nullptr && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
-			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
+			if (!game.invi.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->def()->id, container);
 			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), container, ic->getX(), ic->getY());
@@ -120,7 +120,7 @@ static bool G_InventoryDropToFloorCheck (Edict* ent, containerIndex_t container)
 		if (ic->def()->isVirtual) {
 			Item* next = ic->getNext();
 			/* remove the virtual item to update the inventory lists */
-			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
+			if (!game.invi.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove virtual item '%s' from inventory %i",
 						ic->def()->id, container);
 			ic = next;
@@ -154,7 +154,7 @@ bool G_AddItemToFloor (const pos3_t pos, const char* itemID)
 		floor = G_SpawnFloor(pos);
 
 	Item item(od);
-	return game.i.tryAddToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR));
+	return game.invi.tryAddToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR));
 }
 
 /** @brief Move items to adjacent locations if the containers on the current
@@ -269,10 +269,10 @@ void G_InventoryToFloor (Edict* ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.getAmount() == 1);
-			if (!game.i.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
+			if (!game.invi.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->def()->id, container, ent->getIdNum());
-			if (game.i.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == nullptr)
+			if (game.invi.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == nullptr)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->def()->id, container, ent->getIdNum());
 #ifdef ADJACENT

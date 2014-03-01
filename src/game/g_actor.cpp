@@ -594,7 +594,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	G_ActorUseTU(actor, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid actor->TU. */
 	inventory_action_t ia;
-	ia = game.i.moveInInventory(&actor->chr.inv, fromContType, fItem, toContType, tx, ty, checkaction ? &actor->TU : nullptr, &item2);
+	ia = game.invi.moveInInventory(&actor->chr.inv, fromContType, fItem, toContType, tx, ty, checkaction ? &actor->TU : nullptr, &item2);
 	/* Now restore the original actor->TU and decrease it for TU used for inventory move. */
 	G_ActorSetTU(actor, originalTU - (originalTU - reservedTU - actor->TU));
 

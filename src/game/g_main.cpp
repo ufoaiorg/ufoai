@@ -262,7 +262,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	game.i.initInventory("game", gi.csi, &inventoryImport);
+	game.invi.initInventory("game", gi.csi, &inventoryImport);
 
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
@@ -291,7 +291,7 @@ static void G_Shutdown (void)
 	G_FreeTags(TAG_GAME);
 	G_FreeAllInventory();
 
-	Com_Printf("Used inventory slots in game on shutdown: %i\n", game.i.GetUsedSlots());
+	Com_Printf("Used inventory slots in game on shutdown: %i\n", game.invi.GetUsedSlots());
 }
 
 /**

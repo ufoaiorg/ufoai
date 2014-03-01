@@ -73,7 +73,7 @@ typedef struct game_locals_s {
 	int sv_maxplayersperteam;
 	int sv_maxentities;
 
-	InventoryInterface i;
+	InventoryInterface invi;
 } game_locals_t;
 
 /** @brief this structure is cleared as each map is entered */
