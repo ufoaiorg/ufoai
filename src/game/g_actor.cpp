@@ -734,7 +734,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
  * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (Edict* ent, const invDef_t* invDef)
+bool G_ActorReload (Edict* ent, const invDef_t* invDef)
 {
 	const objDef_t* weapon;
 
@@ -745,7 +745,7 @@ void G_ActorReload (Edict* ent, const invDef_t* invDef)
 		invDef = INVDEF(CID_RIGHT);
 		weapon = ent->getRightHandItem()->def();
 	} else
-		return;
+		return false;
 
 	assert(weapon);
 
@@ -779,7 +779,9 @@ void G_ActorReload (Edict* ent, const invDef_t* invDef)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
+		return G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
+	/* No ammo found */
+	return false;
 }
 
 int G_ActorGetModifiedTimeForFiredef (const Edict* const ent, const fireDef_t* const fd, const bool reaction)
