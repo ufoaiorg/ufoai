@@ -50,13 +50,16 @@ public:
 	vec3_t size;
 
 	SrvEdict* _child;	/**< e.g. the trigger for this edict */
-	SrvEdict* owner;	/**< e.g. the door model in case of func_door */
+	SrvEdict* _owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 
 	const char* classname;
 
 	inline SrvEdict* child () {	/* only needed for SV_LinkEdict */
 		return _child;
+	}
+	inline SrvEdict* owner () const { /* only used in isParentship, which is only used in SV_ClipMoveToEntities, called only by SV_Trace */
+		return _owner;
 	}
 	inline bool isSameAs (const SrvEdict* other) const {
 		if (!other)
@@ -65,9 +68,9 @@ public:
 	}
 	inline bool isParentship (const SrvEdict* other) const {
 		if (other) {
-			if (other->owner && other->owner->isSameAs(this))
+			if (other->owner() && other->owner()->isSameAs(this))
 				return true;
-			if (this->owner && this->owner->isSameAs(other))
+			if (this->owner() && this->owner()->isSameAs(other))
 				return true;
 		}
 		return false;
