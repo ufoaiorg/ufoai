@@ -874,7 +874,6 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 {
 	pos3_t mins, maxs, origin;
 	vec3_t center;
-	int xDelta, yDelta, size, i, j;
 
 	AABB shiftedBox(ent->absBox);
 	shiftedBox.shift(ent->origin);
@@ -884,15 +883,15 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 	VecToPos(shiftedBox.maxs, maxs);
 	VecToPos(center, origin);
 
-	xDelta = std::max(1, maxs[0] - mins[0]);
-	yDelta = std::max(1, maxs[1] - mins[1]);
+	int xDelta = std::max(1, maxs[0] - mins[0]);
+	int yDelta = std::max(1, maxs[1] - mins[1]);
 
-	size = xDelta * yDelta;
+	int size = xDelta * yDelta;
 	ent->forbiddenListPos = (pos3_t*)G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
 	ent->forbiddenListSize = size;
 
-	for (i = 0; i < xDelta; i++) {
-		for (j = 0; j < yDelta; j++) {
+	for (int i = 0; i < xDelta; i++) {
+		for (int j = 0; j < yDelta; j++) {
 			const pos_t x = mins[0] + i;
 			const pos_t y = mins[1] + j;
 			const pos_t z = origin[2];

@@ -346,12 +346,10 @@ void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int delt
 	}
 #if 0
 	{
-		int i;
-
 		Com_Printf("num_spawned: %i\n", spawned);
 
 		if (attacker)
-		for (i = 0; i < MAX_TEAMS; i++) {
+		for (int i = 0; i < MAX_TEAMS; i++) {
 			int j;
 
 			if (i == victim->team) {

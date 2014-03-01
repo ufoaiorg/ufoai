@@ -769,10 +769,6 @@ void ReactionFire::resetTargets (const Edict* shooter)
  */
 bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
-	const int minhit = 30;
-	shot_mock_t mock;
-	int i;
-	const Player& player = shooter->getPlayer();
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
@@ -789,7 +785,10 @@ bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, f
 
 	/* calculate the mock values - e.g. how many friendly units we would hit
 	 * when opening the reaction fire */
-	for (i = 0; i < 100; i++)
+	const int minhit = 30;
+	shot_mock_t mock;
+	const Player& player = shooter->getPlayer();
+	for (int i = 0; i < 100; i++)
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
 			break;
 

@@ -162,8 +162,7 @@ void G_BleedWounds (const int team)
  */
 void G_SendWoundStats (Edict* const ent)
 {
-	int i;
-	for (i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
+	for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i) {
 		/* Sanity checks */
 		woundInfo_t& wounds = ent->chr.wounds;
 		wounds.woundLevel[i] = std::max(0, wounds.woundLevel[i]);

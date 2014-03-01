@@ -1179,7 +1179,6 @@ static void G_ClientReadCharacter (Edict* ent)
  */
 static void G_ClientSkipActorInfo (void)
 {
-	int i, n;
 	Edict ent;
 	invDef_t container;
 	Item item;
@@ -1189,8 +1188,8 @@ static void G_ClientSkipActorInfo (void)
 	G_ClientReadCharacter(&ent);
 
 	/* skip inventory */
-	n = gi.ReadShort();
-	for (i = 0; i < n; i++) {
+	int n = gi.ReadShort();
+	for (int i = 0; i < n; i++) {
 		G_ReadItem(&item, &c, &x, &y);
 	}
 }
@@ -1228,9 +1227,8 @@ static void G_ClientAssignDefaultActorValues (Edict* ent)
 void G_ClientInitActorStates (const Player& player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
-	int i;
 
-	for (i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		int saveTU;
 		actorHands_t hand;
@@ -1262,9 +1260,8 @@ void G_ClientInitActorStates (const Player& player)
 void G_ClientTeamInfo (const Player& player)
 {
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
-	int i;
 
-	for (i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++) {
 		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
 		if (player.getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player.getTeam()))

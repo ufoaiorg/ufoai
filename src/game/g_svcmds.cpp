@@ -166,20 +166,19 @@ static void SVCmd_AddIP_f (void)
  */
 static void SVCmd_RemoveIP_f (void)
 {
-	ipfilter_t f;
-	int i, j;
-
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
+	ipfilter_t f;
+
 	if (!StringToFilter(gi.Cmd_Argv(2), &f))
 		return;
 
-	for (i = 0; i < numipfilters; i++)
+	for (int i = 0; i < numipfilters; i++)
 		if (ipfilters[i].mask == f.mask && ipfilters[i].compare == f.compare) {
-			for (j = i + 1; j < numipfilters; j++)
+			for (int j = i + 1; j < numipfilters; j++)
 				ipfilters[j - 1] = ipfilters[j];
 			numipfilters--;
 			gi.DPrintf("Removed.\n");
@@ -193,11 +192,9 @@ static void SVCmd_RemoveIP_f (void)
  */
 static void SVCmd_ListIP_f (void)
 {
-	int i;
-	byte b[4];
-
 	gi.DPrintf("Filter list:\n");
-	for (i = 0; i < numipfilters; i++) {
+	for (int i = 0; i < numipfilters; i++) {
+		byte b[4];
 		*(unsigned* ) b = ipfilters[i].compare;
 		gi.DPrintf("%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
 	}
@@ -208,16 +205,13 @@ static void SVCmd_ListIP_f (void)
  */
 static void SVCmd_WriteIP_f (void)
 {
-	FILE* f;
 	char name[MAX_OSPATH];
-	byte b[4];
-	int i;
 
 	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
 	gi.DPrintf("Writing %s.\n", name);
 
-	f = fopen(name, "wb");
+	FILE* f = fopen(name, "wb");
 	if (!f) {
 		gi.DPrintf("Couldn't open %s\n", name);
 		return;
@@ -225,7 +219,8 @@ static void SVCmd_WriteIP_f (void)
 
 	fprintf(f, "set sv_filterban %d\n", sv_filterban->integer);
 
-	for (i = 0; i < numipfilters; i++) {
+	for (int i = 0; i < numipfilters; i++) {
+		byte b[4];
 		*(unsigned* ) b = ipfilters[i].compare;
 		fprintf(f, "sv addip %i.%i.%i.%i\n", b[0], b[1], b[2], b[3]);
 	}
