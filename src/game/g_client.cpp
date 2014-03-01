@@ -598,8 +598,7 @@ bool G_ClientGetWeaponFromInventory (Edict* ent)
 	/* send request */
 	const invDef_t* invDef = INVDEF(CID_RIGHT);
 	if (bestContainer) {
-		G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
-		return true;
+		return G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
 	}
 	return false;	/* no weapon found */
 }
