@@ -61,18 +61,18 @@ public:
 	AABB absBox;		/**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	Edict* child;			/**< e.g. the trigger for this edict */
-	Edict* owner;			/**< e.g. the door model in case of func_door */
-	int modelindex;			/**< inline model index */
+	Edict* child;		/**< e.g. the trigger for this edict */
+	Edict* owner;		/**< e.g. the door model in case of func_door */
+	int modelindex;		/**< inline model index */
 	const char* classname;
 #endif
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
 
-	int mapNum;			/**< entity number in the map file */
-	const char* model;	/**< inline model (start with * and is followed by the model numberer)
-						 * or misc_model model name (e.g. md2) */
+	int mapNum;					/**< entity number in the map file */
+	const char* model;			/**< inline model (start with * and is followed by the model numberer)
+								 * or misc_model model name (e.g. md2) */
 
 	/** only used locally in game, not by server */
 
