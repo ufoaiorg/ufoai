@@ -1403,8 +1403,7 @@ void AI_TurnIntoDirection (Edict* ent, const pos3_t pos)
 static bool AI_TryToReloadWeapon (Edict* ent, containerIndex_t containerID)
 {
 	if (G_ClientCanReload(ent, containerID)) {
-		G_ActorReload(ent, INVDEF(containerID));
-		return true;
+		return G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), ent->getContainer(containerID), INVDEF(CID_FLOOR), NONE, NONE, true);
 		G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(), ent->chr.RFmode.getWeapon());
