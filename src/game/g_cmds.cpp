@@ -321,7 +321,7 @@ void G_InvList_f (const Player& player)
 		const int tus = GET_TU(ent->chr.score.skills[ABILITY_SPEED], penalty);
 		const int tuPenalty = tus - normalTU;
 		const char* penaltyStr = 1.0f - penalty < WEIGHT_NORMAL_PENALTY ? "'Light weight'" : (1.0f - penalty < WEIGHT_HEAVY_PENALTY ? "'Normal weight'" : "'Encumbered'");
-		Com_Printf("Weight: %g/%i, Encumbrance: %s (%g%%), TU's: %i (normal: %i, penalty/bonus: %+i)\n", invWeight, maxWeight, penaltyStr, invWeight / maxWeight * 100.0f, tus, normalTU, tuPenalty);
+		Com_Printf("Weight: %g/%i, Encumbrance: %s (%.0f%%), TU's: %i (normal: %i, penalty/bonus: %+i)\n", invWeight, maxWeight, penaltyStr, invWeight / maxWeight * 100.0f, tus, normalTU, tuPenalty);
 	}
 }
 
