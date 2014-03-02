@@ -628,6 +628,21 @@ const fireDef_t* Item::getSlowestFireDef () const
 
 	return &fdArray[slowest];
 }
+const fireDef_t* Item::getFastestFireDef () const
+{
+	const fireDef_t* fdArray = getFiredefs();
+	int fdCount = getNumFiredefs();
+	int fastest = 999;
+
+	if (fdArray == nullptr)
+		return nullptr;
+
+	for (int i = 0; i < fdCount; ++i)
+		if (fdArray[i].time < fdArray[fastest].time)
+			fastest = i;
+
+	return &fdArray[fastest];
+}
 
 /**
  * @brief Checks whether this item is a reaction fire enabled weapon.

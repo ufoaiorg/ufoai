@@ -512,6 +512,7 @@ public:
 	const fireDef_t* getFiredefs() const;
 	int getNumFiredefs() const;
 	const fireDef_t* getSlowestFireDef() const;
+	const fireDef_t* getFastestFireDef() const;
 };
 
 class Container
