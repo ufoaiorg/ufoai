@@ -244,18 +244,19 @@ static void HOS_EmployeeInit_f (void)
 	HOS_UpdateCharacterImplantList(echr);
 }
 
+static const cmdList_t hospitalCmds[] = {
+	{"hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu"},
+	{"hosp_init", HOS_Init_f, "Init function for hospital menu"},
+	{"hosp_implant_change", HOS_ImplantChange_f, "Assign or remove an implant to an employee"},
+	{"hosp_implant_details", HOS_ImplantDetails_f, "Print details for an implant"},
+	{nullptr, nullptr, nullptr}
+};
 void HOS_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
-	cgi->Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
-	cgi->Cmd_AddCommand("hosp_implant_change", HOS_ImplantChange_f, "Assign or remove an implant to an employee");
-	cgi->Cmd_AddCommand("hosp_implant_details", HOS_ImplantDetails_f, "Print details for an implant");
+	Cmd_TableAddList(hospitalCmds);
 }
 
 void HOS_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("hosp_empl_init");
-	cgi->Cmd_RemoveCommand("hosp_init");
-	cgi->Cmd_RemoveCommand("hosp_implant_change");
-	cgi->Cmd_RemoveCommand("hosp_implant_details");
+	Cmd_TableRemoveList(hospitalCmds);
 }
