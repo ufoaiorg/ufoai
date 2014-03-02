@@ -506,11 +506,12 @@ public:
 	}
 
 
-	float getWeight () const;
-	void getFirstShapePosition (int* const x, int* const y) const;
-	const objDef_t* getReactionFireWeaponType () const;
-	const fireDef_t* getFiredefs () const;
-	const fireDef_t* getSlowestFireDef () const;
+	float getWeight() const;
+	void getFirstShapePosition(int* const x, int* const y) const;
+	const objDef_t* getReactionFireWeaponType() const;
+	const fireDef_t* getFiredefs() const;
+	int getNumFiredefs() const;
+	const fireDef_t* getSlowestFireDef() const;
 };
 
 class Container

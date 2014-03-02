@@ -601,6 +601,15 @@ const fireDef_t* Item::getFiredefs () const
 	return nullptr;
 }
 
+int Item::getNumFiredefs () const
+{
+	const fireDef_t* fdArray = getFiredefs();
+	if (!fdArray)
+		return 0;
+	const objDef_t* ammodef = this->def()->numWeapons > 0 ? def() : ammoDef();
+	return ammodef->numFiredefs[fdArray->weapFdsIdx];
+}
+
 /**
  * @brief Get the firedef that uses the most TU for this item.
  * @return The firedef that uses the most TU for this item or @c nullptr.
