@@ -257,7 +257,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 	ent->moveinfo.steps++;
 }
 
-static int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos)
+int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos)
 {
 	int dvec;
 	int numdv = 0;

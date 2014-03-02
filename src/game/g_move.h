@@ -30,5 +30,6 @@ void G_MoveCalc(int team, const Edict* movingActor, const pos3_t from, int dista
 void G_MoveCalcLocal(pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance);
 bool G_FindPath(int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs = 999999);
 void G_ActorFall(Edict* ent);
+int G_FillDirectionTable(dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos);
 pos_t G_ActorMoveLength(const Edict* ent, const pathing_t* path, const pos3_t to, bool stored);
 void G_ClientMove(const Player& player, int visTeam, Edict* ent, const pos3_t to);
