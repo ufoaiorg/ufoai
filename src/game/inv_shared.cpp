@@ -593,9 +593,9 @@ const fireDef_t* Item::getFiredefs () const
 	if (!ammodef)
 		return nullptr;
 
-	for (int i = 0; i < ammodef->numWeapons; ++i) {
-		if (weapon == ammodef->weapons[i])
-			return &ammodef->fd[i][0];
+	for (int i = 0; i < ammodef->numWeapons; ++i) {		/* search the weapons that this ammo supports */
+		if (weapon == ammodef->weapons[i])				/* found it ! */
+			return &ammodef->fd[i][0];					/* return the relevant part of the ammo's fireDef table */
 	}
 
 	return nullptr;
