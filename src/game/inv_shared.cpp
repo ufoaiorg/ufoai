@@ -98,15 +98,13 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
  */
 static bool INVSH_CheckShapeCollision (const uint32_t* shape, const uint32_t itemShape, const int x, const int y)
 {
-	int i;
-
 	/* Negative positions not allowed (all items are supposed to have at least one bit set in the first row and column) */
 	if (x < 0 || y < 0) {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_CheckShapeCollision: x or y value negative: x=%i y=%i!\n", x, y);
 		return true;
 	}
 
-	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++) {
+	for (int i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++) {
 		/* 0xFF is the length of one row in a "small shape" i.e. SHAPE_SMALL_MAX_WIDTH */
 		const int itemRow = (itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF;
 		/* Result has to be limited to 32bit (SHAPE_BIG_MAX_WIDTH) */
@@ -360,15 +358,13 @@ const invDef_t* INVSH_GetInventoryDefinitionByID (const char* id)
  */
 bool objDef_t::isLoadableInWeapon (const objDef_t* weapon) const
 {
-	int i;
-
 	assert(weapon);
 
 	/* check whether the weapon is only linked to itself. */
 	if (this->numWeapons == 1 && this->weapons[0] == this)
 		return false;
 
-	for (i = 0; i < this->numWeapons; i++)
+	for (int i = 0; i < this->numWeapons; i++)
 		if (weapon == this->weapons[i])
 			return true;
 

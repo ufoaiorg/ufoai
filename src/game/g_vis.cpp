@@ -75,9 +75,6 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
  */
 float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool full)
 {
-	vec3_t test, dir;
-	float delta;
-	int i, n;
 	const float distance = VectorDist(check->origin, ent->origin);
 
 	/* units that are very close are visible in the smoke */
@@ -97,6 +94,8 @@ float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool 
 		}
 	}
 
+	vec3_t test, dir;
+	float delta;
 	/* start on eye height */
 	VectorCopy(check->origin, test);
 	if (G_IsDead(check)) {
@@ -118,8 +117,8 @@ float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool 
 	VectorMA(test, -7, dir, test);
 
 	/* do 3 tests */
-	n = 0;
-	for (i = 0; i < 3; i++) {
+	int n = 0;
+	for (int i = 0; i < 3; i++) {
 		if (!G_LineVis(from, test)) {
 			if (full)
 				n++;

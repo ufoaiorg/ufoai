@@ -147,15 +147,13 @@ bool G_UseEdict (Edict* ent, Edict* activator)
  */
 static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 {
-	int i, j, k;
-
 	/* For each object ... */
-	for (i = 0; i < gi.csi->numODs; i++) {
+	for (int i = 0; i < gi.csi->numODs; i++) {
 		const objDef_t* od = &gi.csi->ods[i];
 		/* For each weapon-entry in the object ... */
-		for (j = 0; j < od->numWeapons; j++) {
+		for (int j = 0; j < od->numWeapons; j++) {
 			/* For each fire-definition in the weapon entry  ... */
-			for (k = 0; k < od->numFiredefs[j]; k++) {
+			for (int k = 0; k < od->numFiredefs[j]; k++) {
 				const fireDef_t* csiFD = &od->fd[j][k];
 				if (csiFD == fd)
 					return od;
@@ -550,19 +548,19 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Ed
  */
 int G_TouchTriggers (Edict* ent)
 {
-	int i, num, usedNum = 0;
 	Edict* touched[MAX_EDICTS];
 
 	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
 		return 0;
 
-	num = G_GetTouchingEdicts(ent->absBox, touched, lengthof(touched), ent);
+	int num = G_GetTouchingEdicts(ent->absBox, touched, lengthof(touched), ent);
 
 	G_ResetTriggers(ent, touched, num);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
-	for (i = 0; i < num; i++) {
+	int usedNum = 0;
+	for (int i = 0; i < num; i++) {
 		Edict* hit = touched[i];
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
@@ -648,8 +646,7 @@ void G_TouchEdicts (Edict* trigger, float extend)
 uint32_t G_GetLevelFlagsFromPos (const pos3_t pos)
 {
 	uint32_t levelflags = 0;
-	int i;
-	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+	for (int i = 0; i < PATHFINDING_HEIGHT; i++) {
 		if (i >= pos[2]) {
 			levelflags |= (1 << i);
 		}
