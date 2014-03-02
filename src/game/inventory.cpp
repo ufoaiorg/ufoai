@@ -552,7 +552,7 @@ float InventoryInterface::GetInventoryState (const Inventory* inventory, int& sl
 		for (Item* ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
 			weight += ic->getWeight();
-			const fireDef_t* fireDef = (*ic).getSlowestFireDef();
+			const fireDef_t* fireDef = ic->getSlowestFireDef();
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
 		}
