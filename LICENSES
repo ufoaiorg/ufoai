@@ -3130,7 +3130,7 @@ base/pics/icons/fire.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/fire0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/firemodesml.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/firemodesml0.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/firemodesmlhover.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/firemodesml0_hovered.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/geo_button.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/geo_button_hvrd.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/geo_center.png | GNU General Public License 2.0 or later | cooler_sk
@@ -3337,24 +3337,25 @@ base/pics/maps/shots/cemetery_3.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/city2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/city2_2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/city2_3.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/city_industry.jpg | GNU General Public License 2.0 or later | MCR
-base/pics/maps/shots/city_industry_2.jpg | GNU General Public License 2.0 or later | MCR
-base/pics/maps/shots/city_industry_3.jpg | GNU General Public License 2.0 or later | MCR
-base/pics/maps/shots/city_train.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/city_train_2.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/city_train_3.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/construction.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/construction_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/construction_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/corrupter_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/corrupter_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/city3.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_industry.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_industry_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_industry_3.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_train.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_train_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/city_train_3.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/construction.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/construction_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/construction_3.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/corrupter_crash.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/corrupter_crash_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/corrupter_crash_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/country.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/country_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/country_3.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/dam_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/dam_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/dam.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/dam_2.png | GNU General Public License 2.0 or later | Duke
+base/pics/maps/shots/dam_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/default.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/maps/shots/desert.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/desert_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
