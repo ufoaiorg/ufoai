@@ -22,13 +22,11 @@ void SV_NextMapcycle (void)
 	const char* map = nullptr, *gameType = nullptr;
 	bool day = true;
 	char expanded[MAX_QPATH];
-	mapcycle_t* mapcycle;
+	mapcycle_t* mapcycle = mapcycleList;
 
-	mapcycle = mapcycleList;
 	if (sv->name[0]) {
-		int i;
 		Com_Printf("current map: %s\n", sv->name);
-		for (i = 0; i < mapcycleCount; i++) {
+		for (int i = 0; i < mapcycleCount; i++) {
 			/* random maps may have a theme - but that's not stored in sv->name
 			 * but in sv->assembly */
 			if (mapcycle->map[0] == '+') {
@@ -138,11 +136,9 @@ void SV_NextMapcycle (void)
  */
 void SV_MapcycleClear (void)
 {
-	int i;
-	mapcycle_t* mapcycle;
+	mapcycle_t* mapcycle = mapcycleList;
 
-	mapcycle = mapcycleList;
-	for (i = 0; i < mapcycleCount; i++) {
+	for (int i = 0; i < mapcycleCount; i++) {
 		mapcycle_t* oldMapcycle = mapcycle;
 		mapcycle = mapcycle->next;
 		Mem_Free(oldMapcycle->type);
@@ -231,12 +227,10 @@ static void SV_ParseMapcycle (void)
 
 static void SV_MapcycleList_f (void)
 {
-	int i;
-	const mapcycle_t* mapcycle;
+	const mapcycle_t* mapcycle = mapcycleList;
 
-	mapcycle = mapcycleList;
 	Com_Printf("current mapcycle has %i entries\n", mapcycleCount);
-	for (i = 0; i < mapcycleCount; i++) {
+	for (int i = 0; i < mapcycleCount; i++) {
 		Com_Printf(" %s (%s)\n", mapcycle->map, mapcycle->type);
 		mapcycle = mapcycle->next;
 	}

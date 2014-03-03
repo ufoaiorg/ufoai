@@ -439,11 +439,9 @@ static int SV_CompleteMapCommand (const char* partial, const char** match)
  */
 static void SV_ListMaps_f (void)
 {
-	int i;
-
 	FS_GetMaps(true);
 
-	for (i = 0; i <= fs_numInstalledMaps; i++)
+	for (int i = 0; i <= fs_numInstalledMaps; i++)
 		Com_Printf("%s\n", fs_maps[i]);
 	Com_Printf("-----\n %i installed maps\n+name means random map assembly\n", fs_numInstalledMaps + 1);
 }
@@ -495,9 +493,7 @@ static int SV_CompleteServerCommand (const char* partial, const char** match)
  */
 static void SV_PrintConfigStrings_f (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+	for (int i = 0; i < MAX_CONFIGSTRINGS; i++) {
 		const char* configString;
 		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 		 * so don't send the middle parts again. */

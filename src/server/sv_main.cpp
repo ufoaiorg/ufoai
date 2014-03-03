@@ -901,8 +901,6 @@ static void Master_Shutdown (void)
  */
 void SV_UserinfoChanged (client_t* cl)
 {
-	unsigned int i;
-
 	/* call prog code to allow overrides */
 	{
 		const ScopedMutex scopedMutex(svs.serverMutex);
@@ -912,7 +910,7 @@ void SV_UserinfoChanged (client_t* cl)
 	/* name of the player */
 	Q_strncpyz(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name));
 	/* mask off high bit */
-	for (i = 0; i < sizeof(cl->name); i++)
+	for (int i = 0; i < sizeof(cl->name); i++)
 		cl->name[i] &= 127;
 
 	/* msg command */
@@ -1024,8 +1022,6 @@ void SV_Clear (void)
  */
 void SV_Shutdown (const char* finalmsg, bool reconnect)
 {
-	unsigned int i;
-
 	if (!svs.initialized)
 		return;
 
@@ -1040,7 +1036,7 @@ void SV_Shutdown (const char* finalmsg, bool reconnect)
 	NET_DatagramSocketClose(svs.netDatagramSocket);
 	SV_Stop();
 
-	for (i = 0; i < sv->numSVModels; i++) {
+	for (int i = 0; i < sv->numSVModels; i++) {
 		sv_model_t* model = &sv->svModels[i];
 		Mem_Free(model->name);
 	}

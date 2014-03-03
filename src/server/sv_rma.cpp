@@ -276,9 +276,7 @@ static void SV_RmaPrintMap (const MapInfo* map)
 
 static const TileSet* SV_GetMapTileSet (const MapInfo* map, const char* tileSetName)
 {
-	int i;
-
-	for (i = 0; i < map->numTileSets; i++) {
+	for (int i = 0; i < map->numTileSets; i++) {
 		const TileSet* tileSet = &map->tileSets[i];
 		if (Q_streq(tileSetName, tileSet->id))
 			return tileSet;
@@ -289,9 +287,7 @@ static const TileSet* SV_GetMapTileSet (const MapInfo* map, const char* tileSetN
 
 static inline const Tile* SV_GetMapTile (const MapInfo* map, const char* tileName)
 {
-	int i;
-
-	for (i = 0; i < map->numTiles; i++) {
+	for (int i = 0; i < map->numTiles; i++) {
 		const Tile* tile = &map->mTile[i];
 		if (Q_streq(tileName, tile->id))
 			return tile;
@@ -368,13 +364,11 @@ static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo
 static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* map, bool inherit)
 {
 	const char* errhead = "SV_ParseMapTile: Unexpected end of file (";
-	const char* token;
-	int x, y, i;
 	Tile* target = &map->mTile[map->numTiles];
 	target->area = 0;
 
 	/* get tile name */
-	token = Com_EParse(text, errhead, filename);
+	const char* token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return false;
 
@@ -415,8 +409,8 @@ static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* m
 	}
 
 	/* get tile specs */
-	for (y = target->h - 1; y >= 0; y--)
-		for (x = 0; x < target->w; x++) {
+	for (int y = target->h - 1; y >= 0; y--)
+		for (int x = 0; x < target->w; x++) {
 			token = Com_EParse(text, errhead, filename);
 			if (!*text || *token == '}') {
 				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", target->id);
@@ -424,7 +418,7 @@ static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* m
 				return 0;
 			}
 			target->spec[y][x] = 0UL;
-			for (i = 0; token[i]; i++) {
+			for (int i = 0; token[i]; i++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
 			if (IS_SOLID(target->spec[y][x]))
@@ -1012,11 +1006,9 @@ static void SV_RemoveTile (MapInfo* map, int* idx, int* pos)
  */
 static void SV_BuildMapStrings (const MapInfo* map, char* asmTiles, char* asmPos, bool print)
 {
-	int i;
-	const Assembly* mAsm;
-	mAsm = map->getCurrentAssembly();
+	const Assembly* mAsm = map->getCurrentAssembly();
 
-	for (i = 0; i < map->numPlaced; i++) {
+	for (int i = 0; i < map->numPlaced; i++) {
 		const mPlaced_t* pl = &map->mPlaced[i];
 
 		if (sv_dumpmapassembly->integer)
@@ -1303,8 +1295,7 @@ static bool SV_GapListBuild (MapInfo* map, int tilePosListCnt)
 	}
 
 	/* check how well the tiles can cover the gaps */
-	int i;
-	for (i = 0; i < tilePosListCnt; i++) {
+	for (int i = 0; i < tilePosListCnt; i++) {
 		const int pos = posTileList[0][i] / TCM;
 		const int ti = posTileList[0][i] % TCM;
 		x = pos % mapW;
@@ -1699,13 +1690,12 @@ static bool SV_AddMapTiles (MapInfo* map)
  */
 void SV_PrepareTilesToPlace (MapInfo* map)
 {
-	int i;
 	const Assembly* mAsm = map->getCurrentAssembly();
 
 	map->numToPlace = 0;
 	OBJZERO(map->mToPlace);
 
-	for (i = 0; i < map->numTiles; i++) {
+	for (int i = 0; i < map->numTiles; i++) {
 		if (mAsm->max[i]) {
 			map->mToPlace[map->numToPlace].tile = &map->mTile[i];
 			map->mToPlace[map->numToPlace].min = mAsm->min[i];
@@ -1959,7 +1949,6 @@ static int cmpTileAreaSize (const void*  a, const void*  b)
 
 static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmTiles, char* asmPos, const unsigned int seed, bool print)
 {
-	int i;
 	const Assembly* mAsm = map->getCurrentAssembly();
 
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
@@ -1982,7 +1971,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmT
 	SV_ClearMap(map);
 
 	/* place fixed parts - defined in ump via fix parameter */
-	for (i = 0; i < mAsm->numFixed; i++)
+	for (int i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
 	if (sv_threads->integer && sv_rma->integer == 1) {

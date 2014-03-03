@@ -322,15 +322,12 @@ static int SV_HullForEntity (const edict_t* ent, int* tile, vec3_t rmaShift)
  */
 static void SV_ClipMoveToEntities (MoveClipSV* clip)
 {
-	int i;
 	edict_t* touchlist[MAX_EDICTS];
-	const float* angles;
-	int headnode = 0;
 	const int num = SV_AreaEdicts(clip->clipBox, touchlist, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		vec3_t rmaShift;
 		edict_t* touch = touchlist[i];
 		int tile = 0;
@@ -349,10 +346,11 @@ static void SV_ClipMoveToEntities (MoveClipSV* clip)
 		}
 
 		/* might intersect, so do an exact clip */
-		headnode = SV_HullForEntity(touch, &tile, rmaShift);
+		int headnode = SV_HullForEntity(touch, &tile, rmaShift);
 		if (headnode >= MAX_MAP_NODES)
 			continue;
 
+		const float* angles;
 		if (touch->solid != SOLID_BSP)
 			angles = vec3_origin;	/* boxes don't rotate */
 		else
