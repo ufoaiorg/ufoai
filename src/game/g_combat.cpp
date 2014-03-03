@@ -684,7 +684,6 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	int bounce = 0;
 	byte flags = SF_BOUNCING;
 	vec3_t newPos;
-	vec3_t temp;
 
 	VectorMA(oldPos, GRENADE_DT, curV, newPos);
 	newPos[2] -= 0.5f * GRAVITY * GRENADE_DT * GRENADE_DT;
@@ -768,6 +767,7 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 
 			/* bounce */
 			VectorScale(curV, fd->bounceFac * bounceFraction, curV);
+			vec3_t temp;
 			VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, curV), temp);
 			VectorAdd(temp, curV, startV);
 			VectorAdd(temp, startV, curV);
