@@ -685,6 +685,19 @@ static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* f
 	byte flags = SF_BOUNCING;
 	vec3_t newPos;
 	vec3_t temp;
+
+	VectorMA(oldPos, GRENADE_DT, curV, newPos);
+	newPos[2] -= 0.5f * GRAVITY * GRENADE_DT * GRENADE_DT;
+	trace_t tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
+	if (tr.fraction < 1.0f) {
+	const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
+		if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
+			dt += GRENADE_DT;
+			VectorCopy(newPos, oldPos);
+			VectorCopy(newPos, impact);
+		}
+	}
+
 	for (;;) {
 		/* kinematics */
 		VectorMA(oldPos, GRENADE_DT, curV, newPos);
@@ -692,17 +705,10 @@ static void G_ShootGrenade (const Player &player, Edict* ent, const fireDef_t* f
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
-		trace_t tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
-		if (tr.fraction < 1.0 || time + dt > 4.0) {
+		tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
+		if (tr.fraction < 1.0f || time + dt > 4.0f) {
 			/* the ent possibly hit by the trace */
 			const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
-			if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
-				dt += GRENADE_DT;
-				VectorCopy(newPos, oldPos);
-				VectorCopy(newPos, impact);
-				continue;
-			}
-
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			int i;
 
