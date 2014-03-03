@@ -50,7 +50,7 @@ private:
 	D _deleter;
 };
 
-/*
+/**
  * A simple shared pointer implementation modeled after boost.
  *
  * This object keeps track of the assigned pointer and automatically
@@ -85,7 +85,7 @@ private:
  * The class has implicit upcast support, so if you got a class B derived
  * from class A, you can assign a pointer to B without any problems to a
  * SharedPtr object with template parameter A. The very same applies to
- * assignment of a SharedPtr<B> object to a SharedPtr<A> object.
+ * assignment of a "SharedPtr<B>" object to a "SharedPtr<A>" object.
  *
  * There are also operators != and == to compare two SharedPtr objects
  * with compatible pointers. Comparison between a SharedPtr object and
