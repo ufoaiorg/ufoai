@@ -832,30 +832,25 @@ static void PR_ProductionDown_f (void)
 	PR_UpdateProductionList(base);
 }
 
+static const cmdList_t productionCallbacks[] = {
+	{"prod_init", PR_ProductionList_f, nullptr},
+	{"prod_type", PR_ProductionType_f, nullptr},
+	{"prod_up", PR_ProductionUp_f, "Move production item up in the queue"},
+	{"prod_down", PR_ProductionDown_f, "Move production item down in the queue"},
+	{"prod_change", PR_ProductionChange_f, "Change production amount"},
+	{"prod_inc", PR_ProductionIncrease_f, "Increase production amount"},
+	{"prod_dec", PR_ProductionDecrease_f, "Decrease production amount"},
+	{"prod_stop", PR_ProductionStop_f, "Stop production"},
+	{"prodlist_rclick", PR_ProductionListRightClick_f, nullptr},
+	{"prodlist_click", PR_ProductionListClick_f, nullptr},
+	{nullptr, nullptr, nullptr}
+};
 void PR_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("prod_init", PR_ProductionList_f, nullptr);
-	cgi->Cmd_AddCommand("prod_type", PR_ProductionType_f, nullptr);
-	cgi->Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
-	cgi->Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
-	cgi->Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
-	cgi->Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
-	cgi->Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
-	cgi->Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	cgi->Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, nullptr);
-	cgi->Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, nullptr);
+	Cmd_TableAddList(productionCallbacks);
 }
 
 void PR_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("prod_init");
-	cgi->Cmd_RemoveCommand("prod_type");
-	cgi->Cmd_RemoveCommand("prod_up");
-	cgi->Cmd_RemoveCommand("prod_down");
-	cgi->Cmd_RemoveCommand("prod_change");
-	cgi->Cmd_RemoveCommand("prod_inc");
-	cgi->Cmd_RemoveCommand("prod_dec");
-	cgi->Cmd_RemoveCommand("prod_stop");
-	cgi->Cmd_RemoveCommand("prodlist_rclick");
-	cgi->Cmd_RemoveCommand("prodlist_click");
+	Cmd_TableRemoveList(productionCallbacks);
 }
