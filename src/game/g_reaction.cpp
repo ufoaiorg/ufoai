@@ -841,6 +841,7 @@ void ReactionFire::notifyClientOnStep (const Edict* target, int step)
 /**
  * @brief Check all entities to see whether target has caused reaction fire to resolve.
  * @param[in] target The entity that might be resolving reaction fire
+ * @param[in] step The number of the step in the move we are checking reactions for
  * @returns whether any entity fired (or would fire) upon target
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
