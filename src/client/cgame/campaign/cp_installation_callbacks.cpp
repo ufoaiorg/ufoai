@@ -314,17 +314,20 @@ static void INS_SelectType_f (void)
 	cgi->Cvar_Set("mn_installation_type", "%s", tpl->id);
 }
 
+static const cmdList_t installationCallbacks[] = {
+	{"mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one."},
+	{"mn_installation_build", INS_BuildInstallation_f, nullptr},
+	{"mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name"},
+	{"mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation"},
+	{"mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit"},
+	{"ui_fill_installationtypes", INS_FillTypes_f, "Fills create installation / installation type selection popup"},
+	{"ui_build_installationtype", INS_SelectType_f, "Selects installation type to build"},
+	{"ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data"},
+	{nullptr, nullptr, nullptr}
+};
 void INS_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	cgi->Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, nullptr);
-	cgi->Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
-	cgi->Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
-	cgi->Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
-
-	cgi->Cmd_AddCommand("ui_fill_installationtypes", INS_FillTypes_f, "Fills create installation / installation type selection popup");
-	cgi->Cmd_AddCommand("ui_build_installationtype", INS_SelectType_f, "Selects installation type to build");
-	cgi->Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
+	Cmd_TableAddList(installationCallbacks);
 
 	cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
 	cgi->Cvar_Set("mn_installation_title", "");
@@ -334,15 +337,8 @@ void INS_InitCallbacks (void)
 
 void INS_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_build_installationtype");
-	cgi->Cmd_RemoveCommand("ui_fill_installationtypes");
-	cgi->Cmd_RemoveCommand("ui_fillufoyards");
+	Cmd_TableRemoveList(installationCallbacks);
 
-	cgi->Cmd_RemoveCommand("mn_installation_select");
-	cgi->Cmd_RemoveCommand("mn_installation_build");
-	cgi->Cmd_RemoveCommand("mn_installation_changename");
-	cgi->Cmd_RemoveCommand("mn_installation_destroy");
-	cgi->Cmd_RemoveCommand("mn_installation_update_max_count");
 	cgi->Cvar_Delete("mn_installation_count");
 	cgi->Cvar_Delete("mn_installation_title");
 	cgi->Cvar_Delete("mn_installation_max");
