@@ -59,9 +59,8 @@ static void testRange (void)
 
 static void testEvents (void)
 {
-	int i;
 	const event_t events[] = {EV_RESET, EV_START, EV_ENDROUND, EV_ENDROUNDANNOUNCE};
-	for (i = 0; i < lengthof(events); i++) {
+	for (int i = 0; i < lengthof(events); i++) {
 		dbuffer buf;
 		NET_WriteByte(&buf, events[i]);
 		CL_ParseEvent(&buf);

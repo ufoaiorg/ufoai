@@ -105,14 +105,13 @@ static void testDBuffer (void)
 
 static void testDBufferBigData (void)
 {
-	int i;
 	int count = 100;
 	byte* data;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &data);
 	dbuffer buf;
 
-	for (i = 0; i < count; i++) {
+	for (int i = 0; i < count; i++) {
 		buf.add((char*)data, size);
 	}
 

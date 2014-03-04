@@ -349,11 +349,9 @@ void GLMatrixAssemble (const vec3_t origin, const vec3_t angles, float* matrix)
  */
 void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 {
-	int i, j;
-
-	for (j = 0; j < 4; j++) {
+	for (int j = 0; j < 4; j++) {
 		int k = j * 4;
-		for (i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++)
 			c[i + k] = a[i] * b[k] + a[i + 4] * b[k + 1] + a[i + 8] * b[k + 2] + a[i + 12] * b[k + 3];
 	}
 }
@@ -367,9 +365,7 @@ void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
  */
 void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 {
-	int i;
-
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 		out[i] = m[i] * in[0] + m[i + 4] * in[1] + m[i + 8] * in[2] + m[i + 12] * in[3];
 }
 
@@ -383,9 +379,7 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
  */
 void GLPositionTransform (const float m[16], const vec3_t in, vec3_t out)
 {
-	int i;
-
-	for (i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 		out[i] = m[i] * in[0] + m[i + 4] * in[1] + m[i + 8] * in[2] + m[i + 12];
 }
 
@@ -859,7 +853,6 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 	float zrot[3][3];
 	float tmpmat[3][3];
 	float rot[3][3];
-	int i;
 	vec3_t vr, vup, vf;
 
 	vf[0] = dir[0];
@@ -902,7 +895,7 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 	R_ConcatRotations(m, zrot, tmpmat);
 	R_ConcatRotations(tmpmat, im, rot);
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		dst[i] = DotProduct(rot[i], point);
 	}
 }
@@ -1025,9 +1018,7 @@ float AngleNormalize180 (float angle)
  */
 void VectorCalcMinsMaxs (const vec3_t center, const vec3_t size, vec3_t mins, vec3_t maxs)
 {
-	int i;
-
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		const vec_t length = abs(size[i]) / 2;
 		mins[i] = center[i] - length;
 		maxs[i] = center[i] + length;
@@ -1050,8 +1041,7 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
  */
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
-	int i;
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		vec_t val = v[i];
 		if (val < mins[i])
 			mins[i] = val;
@@ -1110,10 +1100,8 @@ void Orthogonalize (vec3_t out, const vec3_t in)
  */
 void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 {
-	int i, j;
-
-	for (i = 0; i < 3; i++) {
-		for(j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; i++) {
+		for(int j = 0; j < 3; j++) {
 			t[i][j] = m[j][i];
 		}
 	}
@@ -1124,11 +1112,10 @@ bool RayIntersectAABB (const vec3_t start, const vec3_t end, const AABB& aabb)
 	float t0 = 0.0f;
 	float t1 = 1.0f;
 	vec3_t delta;
-	int i;
 
 	VectorSubtract(end, start, delta);
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		const float threshold = 1.0e-6f;
 		float u0, u1;
 

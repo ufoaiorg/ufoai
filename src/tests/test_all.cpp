@@ -354,16 +354,13 @@ static void TEST_vPrintfLog (const char* fmt, va_list ap)
  */
 int main (int argc, char** argv)
 {
-	int i;
-	int failures;
-
 	Sys_InitSignals();
 
 	/* initialize the CUnit test registry */
 	if (CU_initialize_registry() != CUE_SUCCESS)
 		return CU_get_error();
 
-	for (i = 0; i < NUMBER_OF_TESTS - 1; i++) {
+	for (int i = 0; i < NUMBER_OF_TESTS - 1; i++) {
 		if (testSuites[i]() != CUE_SUCCESS)
 			return fatalError();
 	}
@@ -401,7 +398,7 @@ int main (int argc, char** argv)
 		Sys_Error("There was a Com_Error or Com_Drop call during the execution of this test");
 	}
 
-	failures = CU_get_number_of_failures();
+	int failures = CU_get_number_of_failures();
 	CU_cleanup_registry();
 
 	if (logFile)

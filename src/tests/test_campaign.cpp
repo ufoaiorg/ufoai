@@ -322,21 +322,18 @@ static void testEmployeeHandling (void)
 
 static void testBaseBuilding (void)
 {
-	vec2_t pos = {0, 0};
-	base_t* base;
-	int i;
-
 	ResetCampaignData();
 
 	ccs.credits = 10000000;
 
-	base = CreateBase("unittestcreatebase", pos);
+	vec2_t pos = {0, 0};
+	base_t* base = CreateBase("unittestcreatebase", pos);
 
 	CU_ASSERT_EQUAL(B_GetInstallationLimit(), MAX_INSTALLATIONS_PER_BASE);
 
 	B_Destroy(base);
 
-	for (i = 0; i < MAX_EMPL; i++) {
+	for (int i = 0; i < MAX_EMPL; i++) {
 		employeeType_t type = (employeeType_t)i;
 		CU_ASSERT_EQUAL(E_CountHired(base, type), 0);
 	}
@@ -998,26 +995,22 @@ static void testLoadMassEmployees (void)
 
 static void testCampaignRun (void)
 {
-	int i;
-	int startDay;
-	campaign_t* campaign;
-	base_t* base;
 	const vec2_t destination = { 10, 10 };
 	const int days = 10;
 	const int seconds = days * SECONDS_PER_DAY;
 
 	ResetCampaignData();
 
-	base = CreateBase("unittestcampaignrun", destination);
+	base_t* base = CreateBase("unittestcampaignrun", destination);
 
-	campaign = GetCampaign();
+	campaign_t* campaign = GetCampaign();
 
 	RS_InitTree(campaign, false);
 
 	BS_InitMarket(campaign);
 
-	startDay = ccs.date.day;
-	for (i = 0; i < seconds; i++) {
+	int startDay = ccs.date.day;
+	for (int i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
 		CP_CampaignRun(campaign, 1);
 	}
