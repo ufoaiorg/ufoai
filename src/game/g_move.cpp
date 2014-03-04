@@ -257,7 +257,7 @@ static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const in
 	ent->moveinfo.steps++;
 }
 
-int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_t pos)
+int G_FillDirectionTable (dvec_t* dvtab, size_t dvtabSize, byte crouchingState, pos3_t pos)
 {
 	int dvec;
 	int numdv = 0;
@@ -269,7 +269,7 @@ int G_FillDirectionTable (dvec_t* dvtab, size_t size, byte crouchingState, pos3_
 		PosSubDV(pos, crouchingState, dvec);
 		/* Replace the z portion of the DV value so we can get back to where we were. */
 		dvtab[numdv++] = setDVz(dvec, oldZ);
-		if (numdv >= size)
+		if (numdv >= dvtabSize)
 			break;
 	}
 
