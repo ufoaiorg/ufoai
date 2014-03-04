@@ -632,16 +632,19 @@ const fireDef_t* Item::getFastestFireDef () const
 {
 	const fireDef_t* fdArray = getFiredefs();
 	int fdCount = getNumFiredefs();
-	int fastest = 999;
+	int fastestTime = 999;
+	int fastest = -1;
 
 	if (fdArray == nullptr)
 		return nullptr;
 
 	for (int i = 0; i < fdCount; ++i)
-		if (fdArray[i].time < fdArray[fastest].time)
+		if (fastestTime > fdArray[i].time) {
+			fastestTime = fdArray[i].time;
 			fastest = i;
+		}
 
-	return &fdArray[fastest];
+	return fastest == -1 ? nullptr : &fdArray[fastest];
 }
 
 /**
