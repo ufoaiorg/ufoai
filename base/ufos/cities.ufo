@@ -10,12 +10,6 @@
 //		East and South have negative values.
 // ==============================================
 
-city _zmir
-{
-	name		"_Izmir"
-	pos			"-27.15 38.4333"
-}
-
 city aarhus
 {
 	name		"_Aarhus"
@@ -334,7 +328,7 @@ city boston_massachusetts
 	pos			"71.0500 42.3500"
 }
 
-city bras_lia_distrito_federal
+city brasilia_distrito_federal
 {
 	name		"_Brasilia"
 	pos			"47.9000 -15.8"
@@ -400,12 +394,6 @@ city busan
 	pos			"-129.0333 35.1000"
 }
 
-city c_rdoba
-{
-	name		"_Cordoba"
-	pos			"64.1833 -31.4"
-}
-
 city cairns_queensland
 {
 	name		"_Cairns"
@@ -430,7 +418,7 @@ city calgary_alberta
 	pos			"114.0500 51.0333"
 }
 
-city campinas_s_o_paulo
+city campinas_sao_paulo
 {
 	name		"_Campinas"
 	pos			"47.0500 -22.9"
@@ -442,7 +430,7 @@ city canberra_australian_capital_territory
 	pos			"-149.1167 -35.3"
 }
 
-city cannes_provence_alpes_c_te_d_azur
+city cannes_provence_alpes_cote_d_azur
 {
 	name		"_Cannes"
 	pos			"-7 43.5500"
@@ -490,12 +478,6 @@ city chennai_tamil_nadu
 	pos			"-80.2667 13.0833"
 }
 
-city chi_in_u
-{
-	name		"_Chisinau"
-	pos			"-28.8667 47.0000"
-}
-
 city chiang_mai
 {
 	name		"_Chiang Mai"
@@ -512,6 +494,12 @@ city chihuahua_chihuahua
 {
 	name		"_Chihuahua"
 	pos			"106.0000 28.1000"
+}
+
+city chisinau
+{
+	name		"_Chisinau"
+	pos			"-28.8667 47.0000"
 }
 
 city chittagong
@@ -580,6 +568,12 @@ city copenhagen
 	pos			"-12.5667 55.6667"
 }
 
+city cordoba
+{
+	name		"_Cordoba"
+	pos			"64.1833 -31.4"
+}
+
 city cork
 {
 	name		"_Cork"
@@ -596,12 +590,6 @@ city cusco
 {
 	name		"_Cusco"
 	pos			"71.9667 -13.5"
-}
-
-city d_sseldorf_north_rhine_westphalia
-{
-	name		"_Dusseldorf"
-	pos			"-6.7833 51.2333"
 }
 
 city da_nang
@@ -728,6 +716,12 @@ city dublin
 {
 	name		"_Dublin"
 	pos			"6.2667 53.3333"
+}
+
+city duesseldorf_north_rhine_westphalia
+{
+	name		"_Duesseldorf"
+	pos			"-6.7833 51.2333"
 }
 
 city durango_durango
@@ -1066,6 +1060,12 @@ city istanbul
 	pos			"-28.9667 41.0000"
 }
 
+city izmir
+{
+	name		"_Izmir"
+	pos			"-27.15 38.4333"
+}
+
 city jacksonville_florida
 {
 	name		"_Jacksonville"
@@ -1246,7 +1246,7 @@ city koulikoro
 	pos			"7.5667 12.9833"
 }
 
-city krak_w
+city krakow
 {
 	name		"_Krakow"
 	pos			"-19.9333 50.0500"
@@ -1354,7 +1354,7 @@ city lobamba
 	pos			"-31.2 -26.4667"
 }
 
-city lom_
+city lome
 {
 	name		"_Lome"
 	pos			"-1.2 6.1333"
@@ -1426,25 +1426,13 @@ city lviv
 	pos			"-24.0167 49.8500"
 }
 
-city lyon_rh_ne_alpes
+city lyon_rhine_alpes
 {
 	name		"_Lyon"
 	pos			"-4.8333 45.7667"
 }
 
-city m_laga
-{
-	name		"_Malaga"
-	pos			"4.4167 36.7167"
-}
-
-city m_rida_yucat_n
-{
-	name		"_Merida"
-	pos			"89.6167 20.9667"
-}
-
-city macap_amap_
+city macapa_amapa
 {
 	name		"_Macapa"
 	pos			"51.3333 0.0333"
@@ -1486,13 +1474,19 @@ city malacca_town_malacca
 	pos			"-102.3833 2.1833"
 }
 
+city malaga
+{
+	name		"_Malaga"
+	pos			"4.4167 36.7167"
+}
+
 city malang
 {
 	name		"_Malang"
 	pos			"-112.6167 -7.9667"
 }
 
-city malm_
+city malmo
 {
 	name		"_Malmo"
 	pos			"-13.0333 55.5833"
@@ -1546,7 +1540,7 @@ city marrakech
 	pos			"8.0000 31.6333"
 }
 
-city marseille_provence_alpes_c_te_d_azur
+city marseille_provence_alpes_cote_d_azur
 {
 	name		"_Marseille"
 	pos			"-5.3667 43.3000"
@@ -1594,6 +1588,12 @@ city mendoza
 	pos			"68.8167 -32.8833"
 }
 
+city merida_yucatan
+{
+	name		"_Merida"
+	pos			"89.6167 20.9667"
+}
+
 city mexicali_baja_california
 {
 	name		"_Mexicali"
@@ -1636,7 +1636,7 @@ city monaco
 	pos			"-7.4 43.7333"
 }
 
-city monterrey_nuevo_le_n
+city monterrey_nuevo_leon
 {
 	name		"_Monterrey"
 	pos			"100.3000 25.6667"
@@ -1780,7 +1780,7 @@ city niamey
 	pos			"-2.1 13.5167"
 }
 
-city nice_provence_alpes_c_te_d_azur
+city nice_provence_alpes_cote_d_azur
 {
 	name		"_Nice"
 	pos			"-7.2667 43.7000"
@@ -1798,7 +1798,7 @@ city norilsk
 	pos			"-88.2 69.3500"
 }
 
-city noum_a_new_caledonia
+city noumea_new_caledonia
 {
 	name		"_Noumea"
 	pos			"-166.45 -22.2667"
@@ -2092,18 +2092,6 @@ city rosario
 	pos			"60.6667 -32.95"
 }
 
-city s_o_jos_dos_campos_s_o_paulo
-{
-	name		"_Sao Jose dos Campos"
-	pos			"45.8667 -23.1833"
-}
-
-city s_o_paulo_s_o_paulo
-{
-	name		"_Sao Paulo"
-	pos			"46.6333 -23.55"
-}
-
 city sabha
 {
 	name		"_Sabha"
@@ -2204,6 +2192,18 @@ city santo_domingo
 {
 	name		"_Santo Domingo"
 	pos			"69.9167 18.4833"
+}
+
+city sao_jose_dos_campos_sao_paulo
+{
+	name		"_Sao Jose dos Campos"
+	pos			"45.8667 -23.1833"
+}
+
+city sao_paulo_sao_paulo
+{
+	name		"_Sao Paulo"
+	pos			"46.6333 -23.55"
 }
 
 city sarajevo
@@ -2344,7 +2344,7 @@ city strasbourg_alsace
 	pos			"-7.75 48.5833"
 }
 
-city stuttgart_baden_w_rttemberg
+city stuttgart_baden_wuerttemberg
 {
 	name		"_Stuttgart"
 	pos			"-9.1667 48.7667"
@@ -2512,7 +2512,7 @@ city toronto_ontario
 	pos			"79.3833 43.6500"
 }
 
-city toulouse_midi_pyr_n_es
+city toulouse_midi_pyrenees
 {
 	name		"_Toulouse"
 	pos			"-1.4333 43.6000"
@@ -2590,7 +2590,7 @@ city vilnius
 	pos			"-25.2833 54.6833"
 }
 
-city vit_ria_esp_rito_santo
+city vitoria_esporito_santo
 {
 	name		"_Vitoria"
 	pos			"40.3333 -20.3167"
@@ -2722,12 +2722,6 @@ city yokohama
 	pos			"-139.6333 35.4500"
 }
 
-city z_rich
-{
-	name		"_Zurich"
-	pos			"-8.55 47.3667"
-}
-
 city zagreb
 {
 	name		"_Zagreb"
@@ -2750,4 +2744,10 @@ city zhengzhou_henan
 {
 	name		"_Zhengzhou"
 	pos			"-113.6333 34.7500"
+}
+
+city zurich
+{
+	name		"_Zurich"
+	pos			"-8.55 47.3667"
 }
