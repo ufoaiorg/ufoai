@@ -123,7 +123,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 
 	Edict* check = nullptr;
 	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
-		if (ent != check) {
+		if (!ent->isSameAs(check)) {
 			vec3_t dcheck;
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
