@@ -604,19 +604,25 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 	}
 }
 
-void G_CalcEffectiveSpread (const Edict* ent, const fireDef_t* fd, vec2_t effSpread)
+/**
+ * @brief Calculate the effective spread for the given actor and firemode.
+ * @param[in] shooter The shooting actor
+ * @param[in] fd The firedefinition the actor is shooting with
+ * @param[out] effSpread The adjusted spread
+ */
+void G_CalcEffectiveSpread (const Edict* shooter, const fireDef_t* fd, vec2_t effSpread)
 {
 	/* Get accuracy value for this attacker. */
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY);
 	effSpread[PITCH] = fd->spread[0] * commonfactor;
 	effSpread[YAW] = fd->spread[1] * commonfactor;
 
 	/* If the attacker is crouched this modifier is included as well. */
-	if (G_IsCrouched(ent) && fd->crouch > 0.0f) {
+	if (G_IsCrouched(shooter) && fd->crouch > 0.0f) {
 		effSpread[PITCH] *= fd->crouch;
 		effSpread[YAW] *= fd->crouch;
 	}
