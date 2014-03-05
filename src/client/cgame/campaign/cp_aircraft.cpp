@@ -2259,7 +2259,6 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 {
 	xmlNode_t* node;
 	xmlNode_t* subnode;
-	int l;
 	const Employee* pilot;
 
 	cgi->Com_RegisterConstList(saveAircraftConstants);
@@ -2314,16 +2313,16 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 	}
 
 	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
-	for (l = 0; l < AIR_STATS_MAX; l++) {
+	for (int i = 0; i < AIR_STATS_MAX; i++) {
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
-		if (!(isUfo && l == AIR_STATS_DAMAGE) && aircraft->stats[l] < 0)
-			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, l, aircraft->stats[l]);
+		if (!(isUfo && i == AIR_STATS_DAMAGE) && aircraft->stats[i] < 0)
+			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, i, aircraft->stats[i]);
 #endif
-		if (aircraft->stats[l] != 0) {
+		if (aircraft->stats[i] != 0) {
 			xmlNode_t* statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
-			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, cgi->Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
-			cgi->XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
+			cgi->XML_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, cgi->Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, i));
+			cgi->XML_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[i]);
 		}
 	}
 
@@ -2348,11 +2347,11 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 
 	/* itemcargo */
 	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_CARGO);
-	for (l = 0; l < aircraft->itemTypes; l++) {
+	for (int j = 0; j < aircraft->itemTypes; j++) {
 		xmlNode_t* ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
-		assert(aircraft->itemcargo[l].item);
-		cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[l].item->id);
-		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[l].amount);
+		assert(aircraft->itemcargo[j].item);
+		cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[j].item->id);
+		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[j].amount);
 	}
 
 	/* aliencargo */
@@ -2459,7 +2458,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 	const char* statusId;
 	/* vars, if aircraft wasn't found */
 	int tmpInt;
-	int l, status;
+	int status;
 	const char* s = cgi->XML_GetString(p, SAVE_AIRCRAFT_ID);
 	const aircraft_t* crafttype = AIR_GetAircraft(s);
 
@@ -2578,21 +2577,22 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 
 	/* itemcargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
-	for (l = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < MAX_CARGO && ssnode;
-			l++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
+	int i;
+	for (i = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); i < MAX_CARGO && ssnode;
+			i++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
 		const char* const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
 		const objDef_t* od = INVSH_GetItemByID(str);
 
 		if (!od) {
 			Com_Printf("AIR_LoadAircraftXML: Could not find aircraftitem '%s'\n", str);
-			l--;
+			i--;
 			continue;
 		}
 
-		craft->itemcargo[l].item = od;
-		craft->itemcargo[l].amount = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
+		craft->itemcargo[i].item = od;
+		craft->itemcargo[i].amount = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
 	}
-	craft->itemTypes = l;
+	craft->itemTypes = i;
 
 	/* aliencargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
