@@ -604,6 +604,24 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 	}
 }
 
+void G_CalcEffectiveSpread (Edict* ent, const fireDef_t* fd, vec2_t effSpread)
+{
+	/* Get accuracy value for this attacker. */
+	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+
+	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
+	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
+	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+	effSpread[PITCH] = fd->spread[0] * commonfactor;
+	effSpread[YAW] = fd->spread[1] * commonfactor;
+
+	/* If the attacker is crouched this modifier is included as well. */
+	if (G_IsCrouched(ent) && fd->crouch > 0.0f) {
+		effSpread[PITCH] *= fd->crouch;
+		effSpread[YAW] *= fd->crouch;
+	}
+}
+
 #define GRENADE_DT			0.1f
 #define GRENADE_STOPSPEED	60.0f
 /**
@@ -656,21 +674,18 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	/* add random effects and get new dir */
 	vec3_t angles;
 	VecToAngles(startV, angles);
-	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Get 2 gaussian distributed random values */
 	float gauss1;
 	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY);
-	if (G_IsCrouched(shooter) && fd->crouch > 0.0f) {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
-	} else {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
-	}
+	vec2_t effSpread;
+	G_CalcEffectiveSpread(shooter, fd, effSpread);
+
+	angles[PITCH] += gauss1 * effSpread[0];
+	angles[YAW] += gauss2 * effSpread[1];
+
 	AngleVectors(angles, startV, nullptr, nullptr);
 	VectorScale(startV, speed, startV);
 
@@ -872,25 +887,18 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 	vec3_t angles;
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
-	/* Get accuracy value for this attacker. */
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
-
 	/* Get 2 gaussian distributed random values */
 	float gauss1;
 	float gauss2;
 	gaussrand(&gauss1, &gauss2);
 
-	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
-	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
-	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
-	if (G_IsCrouched(ent) && fd->crouch > 0.0f) {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
-	} else {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
-	}
+	vec2_t effSpread;
+	G_CalcEffectiveSpread(ent, fd, effSpread);
+
+	/* Modify the angles with the accuracy modifier as a randomizer-range. */
+	angles[PITCH] += gauss1 * effSpread[0];
+	angles[YAW] += gauss2 * effSpread[1];
+
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, nullptr, nullptr);
 
