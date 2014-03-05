@@ -661,29 +661,24 @@ static void testStringCheckFunctions (void)
 static void testEntitiesDef (void)
 {
 	byte* fileBuffer;
-	const char* buf;
-	int i;
-	bool worldSpawnFound;
 
 	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
 
-	buf = (const char*) fileBuffer;
+	const char* buf = (const char*) fileBuffer;
 	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
 
 	CU_ASSERT_TRUE(numEntityDefs > 0);
 
-	worldSpawnFound = false;
-	for (i = 0; i < numEntityDefs; i++) {
+	bool worldSpawnFound = false;
+	for (int i = 0; i < numEntityDefs; i++) {
 		const entityDef_t* e = &entityDefs[i];
 
 		CU_ASSERT_PTR_NOT_NULL(e);
 		if (Q_streq(e->classname, "worldspawn")) {
-			int j;
-
 			worldSpawnFound = true;
 
 			CU_ASSERT_TRUE(e->numKeyDefs > 10);
-			for (j = 0; j < e->numKeyDefs; j++) {
+			for (int j = 0; j < e->numKeyDefs; j++) {
 				const entityKeyDef_t* keyDef = &e->keyDefs[j];
 				CU_ASSERT_PTR_NOT_NULL(keyDef);
 			}

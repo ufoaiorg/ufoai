@@ -239,21 +239,16 @@ static bool testAddSingle (Inventory* inv, const objDef_t* od, const invDef_t* c
 
 static void testItemMassActions (void)
 {
-	Inventory inv;
-	const objDef_t* od;
-	const invDef_t* container;
-	bool addedItem;
-	int i;
-
 	ResetInventoryList();
 
-	od = INVSH_GetItemByIDSilent("assault");
+	const objDef_t* od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
 
-	container = INVSH_GetInventoryDefinitionByID("right");
+	const invDef_t* container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
-	addedItem = testAddSingle(&inv, od, container);
+	Inventory inv;
+	bool addedItem = testAddSingle(&inv, od, container);
 	CU_ASSERT(addedItem == true);
 
 	/* second try should fail as the right container is a single container */
@@ -272,8 +267,7 @@ static void testItemMassActions (void)
 	container = INVSH_GetInventoryDefinitionByID("equip");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
-	for (i = 0; i < csi.numODs; i++) {
-		int j;
+	for (int i = 0; i < csi.numODs; i++) {
 		od = INVSH_GetItemByIDX(i);
 		/* every item should be placable on the ground container and there should really be enough space */
 		addedItem = testAddSingle(&inv, od, container);
@@ -282,7 +276,7 @@ static void testItemMassActions (void)
 		CU_ASSERT(addedItem == true);
 		addedItem = testAddSingle(&inv, od, container);
 		CU_ASSERT(addedItem == true);
-		for (j = 0; j < od->numAmmos; j++) {
+		for (int j = 0; j < od->numAmmos; j++) {
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);

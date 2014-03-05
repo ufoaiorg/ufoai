@@ -123,17 +123,13 @@ static bool TEST_CheckParticle (const char* particleID)
 
 static void testTeamDefs (void)
 {
-	int i;
-
-	for (i = 0; i < csi.numTeamDefs; i++) {
+	for (int i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t* teamDef = &csi.teamDef[i];
-		int k;
 
 		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id));
 
-		for (k = 0; k < SND_MAX; k++) {
-			int l;
-			for (l = 0; l < NAME_LAST; l++) {
+		for (int k = 0; k < SND_MAX; k++) {
+			for (int l = 0; l < NAME_LAST; l++) {
 				LIST_Foreach(teamDef->sounds[k][l], char, soundFile) {
 					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(soundFile), va("sound %s does not exist (team %s)", soundFile, teamDef->id));
 				}
@@ -144,16 +140,14 @@ static void testTeamDefs (void)
 
 static void testTeamDefsModelScriptData (void)
 {
-	int i;
 	linkedList_t* armourPaths = nullptr;
 
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		int j;
+	for (int i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t* teamDef = &csi.teamDef[i];
 		if (!teamDef->armour)
 			continue;
 
-		for (j = 0; j < csi.numODs; j++) {
+		for (int j = 0; j < csi.numODs; j++) {
 			const objDef_t* od = INVSH_GetItemByIDX(j);
 			if (!od->isArmour())
 				continue;
@@ -170,9 +164,7 @@ static void testTeamDefsModelScriptData (void)
 				teamDef->id));
 
 		LIST_Foreach(armourPaths, char const, armourPath) {
-			int l;
-
-			for (l = NAME_NEUTRAL; l < NAME_LAST; l++) {
+			for (int l = NAME_NEUTRAL; l < NAME_LAST; l++) {
 				/* no models for this gender */
 				if (!teamDef->numModels[l])
 					continue;
@@ -201,12 +193,8 @@ static void testTeamDefsModelScriptData (void)
 
 static void testItems (void)
 {
-	int j;
-
-	for (j = 0; j < csi.numODs; j++) {
+	for (int j = 0; j < csi.numODs; j++) {
 		const objDef_t* od = INVSH_GetItemByIDX(j);
-		int i;
-
 		if (od->isVirtual || od->isDummy)
 			continue;
 
@@ -214,10 +202,8 @@ static void testItems (void)
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(od->model), va("model %s does not exist (item %s)", od->model, od->id));
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(od->image), va("image %s does not exist (item %s)", od->image, od->id));
 
-		for (i = 0; i < od->numWeapons; i++) {
-			int k;
-
-			for (k = 0; k < od->numFiredefs[i]; k++) {
+		for (int i = 0; i < od->numWeapons; i++) {
+			for (int k = 0; k < od->numFiredefs[i]; k++) {
 				const fireDef_t* fd = &od->fd[i][k];
 				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->bounceSound), va("sound %s does not exist (firedef %s for item %s)", fd->bounceSound, fd->name, od->id));
 				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->fireSound), va("sound %s does not exist (firedef %s for item %s)", fd->fireSound, fd->name, od->id));
@@ -233,9 +219,7 @@ static void testItems (void)
 
 static void testNations (void)
 {
-	int i;
-
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nat = NAT_GetNationByIDX(i);
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(va("nations/%s", nat->id)), va("nation %s has no image", nat->id));
 		CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(nat->id));
@@ -252,10 +236,9 @@ static void testAircraft (void)
 
 static void testMapDef (void)
 {
-	int i;
 	const mapDef_t* md;
 
-	i = 0;
+	int i = 0;
 	MapDef_Foreach(md) {
 		if (md->civTeam != nullptr)
 			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));

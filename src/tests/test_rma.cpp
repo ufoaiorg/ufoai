@@ -84,11 +84,10 @@ static void testAssembly (void)
 /* timeout version */
 static void testMassAssemblyTimeout (void)
 {
-	int i;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 1;
-	for (i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
@@ -104,11 +103,10 @@ static void testMassAssemblyTimeout (void)
 
 static void testMassAssemblyParallel (void)
 {
-	int i;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 2;
-	for (i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
@@ -125,11 +123,10 @@ static void testMassAssemblyParallel (void)
 /* sequential version */
 static void testMassAssemblySequential (void)
 {
-	int i;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
-	for (i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		srand(i);
 		long time = Sys_Milliseconds();
 		MapInfo* randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, i, true);
@@ -189,14 +186,13 @@ static void testSeedlists (void)
  */
 static void testNewSeedlists (void)
 {
-	int i;
 	long time, timeSum = 0;
 	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_rmadisplaythemap->integer = 1;	/* print out the RMA analysis */
 	sv_threads->integer = 0;
-	for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
+	for (int i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);

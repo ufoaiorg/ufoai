@@ -146,8 +146,7 @@ static void testMapDefsMassRMA (void)
 
 					Com_Printf("\nDrop: %s Ufo: %s", craft, ufo);
 					Com_Printf("\nSeed:");
-					int i;
-					for (i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
+					for (int i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
 						ass = nullptr;
 						srand(i);
 						long time = Sys_Milliseconds();

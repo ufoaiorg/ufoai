@@ -127,8 +127,6 @@ static void UFO_AnalyseTestWindow (const char* windowName)
  */
 static void UFO_ExecuteTestWindow (const char* windowName)
 {
-	int i;
-
 	/* look and feed */
 	Com_Printf("\n");
 
@@ -137,7 +135,7 @@ static void UFO_ExecuteTestWindow (const char* windowName)
 	Cmd_ExecuteString("ui_push %s", windowName);
 
 	/* while the execution buffer is not empty */
-	for (i = 0; i < 20; i++) {
+	for (int i = 0; i < 20; i++) {
 		Cbuf_Execute();
 	}
 
