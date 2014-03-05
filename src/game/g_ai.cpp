@@ -164,7 +164,9 @@ static bool AI_FighterCheckShoot (const Edict* ent, const Edict* check, const fi
 		return false;
 
 	/* check FF */
-	if (AI_CheckFF(ent, check->origin, fd->spread[0], fd->splrad))
+	vec2_t effSpread;
+	G_CalcEffectiveSpread(ent, fd, effSpread);
+	if (AI_CheckFF(ent, check->origin, effSpread[0], fd->splrad))
 		return false;
 
 	return true;
