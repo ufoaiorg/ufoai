@@ -604,7 +604,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 	}
 }
 
-void G_CalcEffectiveSpread (Edict* ent, const fireDef_t* fd, vec2_t effSpread)
+void G_CalcEffectiveSpread (const Edict* ent, const fireDef_t* fd, vec2_t effSpread)
 {
 	/* Get accuracy value for this attacker. */
 	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
