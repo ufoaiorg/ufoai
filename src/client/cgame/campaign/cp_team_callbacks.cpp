@@ -373,21 +373,25 @@ static void CP_TEAM_ChangeSkin_f (void)
 	soldier->chr.bodySkin = bodySkinIdx;
 }
 
+static const cmdList_t teamCallbacks[] = {
+	{"ui_team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN"},
+	{"ui_team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft"},
+	{"ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee"},
+	{"ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence"},
+	{"ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory"},
+	{"ui_team_deequip", CP_TEAM_DeEquipActor_f, "De-equip soldier"},
+	{"ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier"},
+#ifdef DEBUG
+	{"debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Function that registers team (UI) callbacks
  */
 void CP_TEAM_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("ui_team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN");
-	cgi->Cmd_AddCommand("ui_team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft");
-	cgi->Cmd_AddCommand("ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee");
-	cgi->Cmd_AddCommand("ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence");
-	cgi->Cmd_AddCommand("ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory");
-	cgi->Cmd_AddCommand("ui_team_deequip", CP_TEAM_DeEquipActor_f, "De-equip soldier");
-	cgi->Cmd_AddCommand("ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier");
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
-#endif
+	Cmd_TableAddList(teamCallbacks);
 }
 
 /**
@@ -395,14 +399,5 @@ void CP_TEAM_InitCallbacks (void)
  */
 void CP_TEAM_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_team_changeskin");
-	cgi->Cmd_RemoveCommand("ui_team_deequip");
-	cgi->Cmd_RemoveCommand("ui_team_fillequip");
-	cgi->Cmd_RemoveCommand("ui_team_fillbdef");
-	cgi->Cmd_RemoveCommand("ui_team_fill");
-	cgi->Cmd_RemoveCommand("ui_team_assign_ucn");
-	cgi->Cmd_RemoveCommand("ui_team_select_ucn");
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_teamlist");
-#endif
+	Cmd_TableRemoveList(teamCallbacks);
 }
