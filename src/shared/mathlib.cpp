@@ -691,7 +691,7 @@ bool FrustumVis (const vec3_t origin, int dir, const vec3_t point)
  */
 static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
 {
-	float distance; /**< closest distance from the point to the plane */
+	float distance;	/**< closest distance from the point to the plane */
 
 #if 0
 	vec3_t n;

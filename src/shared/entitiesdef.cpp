@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ED_MAX_TOKEN_LEN 512
 #define ED_MAX_ERR_LEN 512
 
-static char lastErr[ED_MAX_ERR_LEN]; /**< for storing last error message */
-static char lastErrExtra[ED_MAX_ERR_LEN]; /**< temporary storage for extra information to be added to lastErr */
+static char lastErr[ED_MAX_ERR_LEN];		/**< for storing last error message */
+static char lastErrExtra[ED_MAX_ERR_LEN];	/**< temporary storage for extra information to be added to lastErr */
 
 int numEntityDefs;
 entityDef_t entityDefs[ED_MAX_DEFS + 1];
