@@ -42,8 +42,11 @@ static const float FALLING_DAMAGE_FACTOR = 10.0f;
  * @brief The forbidden list is a list of entity positions that are occupied by an entity.
  * This list is checked everytime an actor wants to walk there.
  */
-static pos_t* forbiddenList[MAX_FORBIDDENLIST];
-static int forbiddenListLength;
+typedef struct forbiddenList_s {
+	pos_t* fbList[MAX_FORBIDDENLIST];
+	int fbListLength;
+} forbiddenList_t;
+static forbiddenList_t forbiddenList;
 
 /**
  * @brief Build the forbidden list for the pathfinding (server side).
@@ -59,7 +62,7 @@ static int forbiddenListLength;
  */
 static void G_BuildForbiddenList (int team, const Edict* movingActor)
 {
-	forbiddenListLength = 0;
+	forbiddenList.fbListLength = 0;
 
 	/* team visibility */
 	teammask_t teamMask;
@@ -72,17 +75,17 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & teamMask))) {
-			forbiddenList[forbiddenListLength++] = ent->pos;
-			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
+			forbiddenList.fbList[forbiddenList.fbListLength++] = ent->pos;
+			forbiddenList.fbList[forbiddenList.fbListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
 			for (int j = 0; j < ent->forbiddenListSize; j++) {
-				forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
-				forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
+				forbiddenList.fbList[forbiddenList.fbListLength++] = ent->forbiddenListPos[j];
+				forbiddenList.fbList[forbiddenList.fbListLength++] = (byte*) &ent->fieldSize;
 			}
 		}
 	}
 
-	if (forbiddenListLength > MAX_FORBIDDENLIST)
+	if (forbiddenList.fbListLength > MAX_FORBIDDENLIST)
 		gi.Error("G_BuildForbiddenList: list too long\n");
 }
 
@@ -115,13 +118,13 @@ void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int dist
 void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
-	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList, forbiddenListLength);
+	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList.fbList, forbiddenList.fbListLength);
 }
 
 bool G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs)
 {
 	G_BuildForbiddenList(team, movingActor);
-	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, G_IsCrouched(movingActor), maxTUs, forbiddenList, forbiddenListLength);
+	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, G_IsCrouched(movingActor), maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
 }
 
 /**
