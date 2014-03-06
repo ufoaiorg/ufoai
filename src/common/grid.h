@@ -55,7 +55,7 @@ GRID ORIENTED MOVEMENT AND SCANNING
 void Grid_RecalcRouting(mapTiles_t* mapTiles, Routing& routing, const char* name, const GridBox& box, const char** list);
 void Grid_RecalcBoxRouting(mapTiles_t* mapTiles, Routing& routing, const GridBox& box, const char** list);
 void Grid_CalcPathing(const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, byte**  fb_list, int fb_length);
-bool Grid_FindPath(const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length);
+bool Grid_FindPath(const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList);
 void Grid_MoveStore(pathing_t* path);
 pos_t Grid_MoveLength(const pathing_t* path, const pos3_t to, byte crouchingState, bool stored);
 int Grid_MoveNext(const pathing_t* path, const pos3_t toPos, byte crouchingState);

@@ -603,7 +603,7 @@ static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, cons
 
 static bool SV_GridFindPath (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList)
 {
-	return Grid_FindPath(sv->mapData.routing, actorSize, path, from, targetPos, crouchingState, maxTUs, forbiddenList->fbList, forbiddenList->fbListLength);
+	return Grid_FindPath(sv->mapData.routing, actorSize, path, from, targetPos, crouchingState, maxTUs, forbiddenList);
 }
 
 static bool SV_CanActorStandHere (const int actorSize, const pos3_t pos)

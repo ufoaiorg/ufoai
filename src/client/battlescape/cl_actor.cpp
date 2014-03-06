@@ -2279,7 +2279,7 @@ static void CL_DebugPath_f (void)
 	int dir = 3;
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 
-	bool found = Grid_FindPath(cl.mapData->routing, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, nullptr, nullptr);
+	bool found = Grid_FindPath(cl.mapData->routing, actorSize, &cl.pathMap, selActor->pos, mousePos, 0, 600, nullptr);
 	if (found)
 		Com_Printf("found the path !\n");
 	{

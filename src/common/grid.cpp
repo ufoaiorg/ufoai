@@ -605,7 +605,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  */
-bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, byte**  fb_list, int fb_length)
+bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList)
 {
 	bool found = false;
 	int count;
@@ -622,8 +622,10 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
-	path->fblist = fb_list;
-	path->fblength = fb_length;
+	if (forbiddenList) {
+		path->fblist = forbiddenList->fbList;
+		path->fblength = forbiddenList->fbListLength;
+	}
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
