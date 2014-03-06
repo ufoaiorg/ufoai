@@ -2664,11 +2664,11 @@ bool B_LoadXML (xmlNode_t* parent)
 		FOREACH_XMLNODE(snode, node, SAVE_BASES_BUILDING) {
 			/** @todo save it as vec2t if needed, also it's opposite */
 			const int k = cgi->XML_GetInt(snode, SAVE_BASES_X, 0);
-			const int l = cgi->XML_GetInt(snode, SAVE_BASES_Y, 0);
-			baseBuildingTile_t* tile = &b->map[k][l];
+			const int i = cgi->XML_GetInt(snode, SAVE_BASES_Y, 0);
+			baseBuildingTile_t* tile = &b->map[k][i];
 			buildingIdx = cgi->XML_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
 
-			tile->posX = l;
+			tile->posX = i;
 			tile->posY = k;
 			if (buildingIdx != -1)
 				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
