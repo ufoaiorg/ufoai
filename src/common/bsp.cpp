@@ -42,21 +42,21 @@ MAP LOADING
  * @brief Loads brush entities like func_door and func_breakable
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l The lump to load the data from
+ * @param[in] lump The lump to load the data from
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	if (!l)
+	if (!lump)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	const dBspModel_t* in = (const dBspModel_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", l->filelen, sizeof(*in));
-	int count = l->filelen / sizeof(*in);
+	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
+	if (lump->filelen % sizeof(*in))
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", lump->filelen, sizeof(*in));
+	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...submodels: %i\n", count);
 
 	if (count < 1)
@@ -85,19 +85,19 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!l)
+	if (!lump)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
+	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
+	if (lump->filelen % sizeof(*in))
+		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", lump->filelen);
 
-	int count = l->filelen / sizeof(*in);
+	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...surfaces: %i\n", count);
 
 	if (count < 1)
