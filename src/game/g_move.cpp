@@ -42,10 +42,6 @@ static const float FALLING_DAMAGE_FACTOR = 10.0f;
  * @brief The forbidden list is a list of entity positions that are occupied by an entity.
  * This list is checked everytime an actor wants to walk there.
  */
-typedef struct forbiddenList_s {
-	pos_t* fbList[MAX_FORBIDDENLIST];
-	int fbListLength;
-} forbiddenList_t;
 static forbiddenList_t forbiddenList;
 
 /**
@@ -124,7 +120,7 @@ void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const p
 bool G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs)
 {
 	G_BuildForbiddenList(team, movingActor);
-	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, G_IsCrouched(movingActor), maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
+	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, G_IsCrouched(movingActor), maxTUs, &forbiddenList);
 }
 
 /**

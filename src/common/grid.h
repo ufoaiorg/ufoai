@@ -25,6 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+typedef struct forbiddenList_s {
+	pos_t* fbList[MAX_FORBIDDENLIST];
+	int fbListLength;
+} forbiddenList_t;
+
 typedef struct pathing_s {
 	/* TUs needed to move to this cell for the current actor */
 	byte area[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
