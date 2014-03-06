@@ -915,32 +915,26 @@ static void TR_DestinationCapacityList_f (void)
 	}
 }
 
+static const cmdList_t transferCallbacks[] = {
+	{"trans_list", TR_List_f, "Assembles the transferlist"},
+	{"trans_init", TR_Init_f, "Init function for Transfer menu"},
+	{"trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu"},
+	{"trans_start", TR_TransferStart_f, "Starts the transfer"},
+	{"trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base"},
+	{"trans_selectbase", TR_SelectBase_f, "Callback for selecting a base"},
+	{"ui_trans_caplist", TR_DestinationCapacityList_f, "Update destination base capacity list"},
+	{"ui_trans_fill", TR_Fill_f, "Fill itemlists for transfer"},
+	{"ui_trans_add", TR_Add_f, "Add/Remove items to transfercargo"},
+	{nullptr, nullptr, nullptr}
+};
 void TR_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("trans_list", TR_List_f, "Assembles the transferlist");
-	cgi->Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
-	cgi->Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
-	cgi->Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the transfer");
-	cgi->Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
-	cgi->Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
-
-	cgi->Cmd_AddCommand("ui_trans_caplist", TR_DestinationCapacityList_f, "Update destination base capacity list");
-	cgi->Cmd_AddCommand("ui_trans_fill", TR_Fill_f, "Fill itemlists for transfer");
-	cgi->Cmd_AddCommand("ui_trans_add", TR_Add_f, "Add/Remove items to transfercargo");
+	Cmd_TableAddList(transferCallbacks);
 }
 
 void TR_ShutdownCallbacks (void)
 {
 	TR_ClearTempCargo();
 
-	cgi->Cmd_RemoveCommand("ui_trans_caplist");
-	cgi->Cmd_RemoveCommand("ui_trans_fill");
-	cgi->Cmd_RemoveCommand("ui_trans_add");
-
-	cgi->Cmd_RemoveCommand("trans_list");
-	cgi->Cmd_RemoveCommand("trans_init");
-	cgi->Cmd_RemoveCommand("trans_close");
-	cgi->Cmd_RemoveCommand("trans_start");
-	cgi->Cmd_RemoveCommand("trans_emptyairstorage");
-	cgi->Cmd_RemoveCommand("trans_selectbase");
+	Cmd_TableRemoveList(transferCallbacks);
 }
