@@ -71,12 +71,10 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & teamMask))) {
-			forbiddenList.fbList[forbiddenList.fbListLength++] = ent->pos;
-			forbiddenList.fbList[forbiddenList.fbListLength++] = (byte*) &ent->fieldSize;
+			forbiddenList.add(ent->pos, (byte*) &ent->fieldSize);
 		} else if (ent->type == ET_SOLID) {
 			for (int j = 0; j < ent->forbiddenListSize; j++) {
-				forbiddenList.fbList[forbiddenList.fbListLength++] = ent->forbiddenListPos[j];
-				forbiddenList.fbList[forbiddenList.fbListLength++] = (byte*) &ent->fieldSize;
+				forbiddenList.add(ent->forbiddenListPos[j], (byte*) &ent->fieldSize);
 			}
 		}
 	}
