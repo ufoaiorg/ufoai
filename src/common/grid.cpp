@@ -670,12 +670,11 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 			}
 
 			/* Test for forbidden (by other entities) areas. */
-			/* Do NOT check the forbiddenList. We might find a multi-turn path. */
-#if 0
-			if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
-				continue;		/* That spot is occupied. */
-			}
-#endif
+			/* Optionally check the forbiddenList. We might want to find a multi-turn path. */
+			if (forbiddenList)
+				if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+					continue;		/* That spot is occupied. */
+				}
 
 			/* Store move in pathing table. */
 			Grid_SetMoveData(path, step.toPos, step.crouchingState, step.TUsAfter, step.dir, step.fromPos[2]);
