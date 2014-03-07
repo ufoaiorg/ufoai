@@ -228,7 +228,7 @@ item kerrblade
 	scale			1.0
 	price			1200
 	size			40
-	is_secondary	true
+	is_primary		true
 	thrown			true
 	dmgtype			"normal"
 	weight			3.0
