@@ -47,16 +47,18 @@
 // 3. If alien has no weapon at this stage, there is 40% chance that we go back to 2.
 //    to increase the probability to get a secondary weapon.
 //
-// 4. Get misc items and secondary weapons without reload: (that includes kerrblades or plasblade)
+// 4. Get misc items and secondary weapons without reload:
 // 4a. select an item:
 //    If several misc items are available, item is randomly chosen with the relative probability given
-//    by the last 2 numbers. If there is at least one item in the equipment definition, you will have an item.
+//    by the last 2 digits. If there is at least one item in the equipment definition, you will have an item.
 //    Example: item1 125	item2 250.
 //             item1 has 25/(25+50)*100 = 33 % probability to be selected.
 //             item2 has 50/(25+50)*100 = 67% probability to be selected.
+//    Example: item3 100	item3 150
+//             item3 has no chance to be selected
 // 4b. get the number of items:
-//    there is a probability given by the last 2 numbers to get one item, plus
-//    the first number of the probability number.
+//    there is a probability given by the last 2 digits to get one item, plus
+//    the first digit of the probability number.
 //    Example : with previous values,
 //            you'll have 25% to have 2 item1 (else only 1 item1)
 //            you'll have 50% to have 3 item2 (else only 2 item2)
@@ -65,17 +67,16 @@
 // 5. If alien has no primary nor secondary weapon at this stage, there is 40% chance
 //    that we go back to 4 to increase number of misc items.
 //
-// 6. If alien has no weapon at this stage, the most expensive secondary weapon without reload (ie knife)
+// 6. If alien has no weapon at this stage, the most expensive secondary weapon without reload
 //    will be selected.
 //
 // 7. Get an armour:
 //    Same procedure as for primary weapons. The probability to get an armour is increased if alien has
 //    no primary weapon.
 //
-// For a given weapon category (except blades), the total probability should never exceed 100. (this is not true
-//    for misc items).
-// Note that a weapon can be added only if alien has still room to get it. An alien with primary and
-//    secondary weapon won't probably get any Kerr Blade.
+// For a given weapon category, the total probability should never exceed 100 (this is not true
+//    for misc items and secondary weapons without reload, see 4.).
+// Note that a weapon can be added only if alien has still room to get it.
 // Note also that you can't use the same item twice in the same equipment definition: only the last one will be
 //    taken into account.
 //    That implies that if weapon1 and weapon2 uses the same ammo, you must define ammo only once (and therefore
