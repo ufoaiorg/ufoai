@@ -602,8 +602,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
  * @param[in] targetPos The position where we want to end up.
  * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @param[in] fb_list Forbidden list (entities are standing at those points)
- * @param[in] fb_length Length of forbidden list
+ * @param[in] forbiddenList Forbidden list (entities are standing at those points)
  */
 bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList)
 {
