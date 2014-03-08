@@ -495,7 +495,7 @@ window aircraft_equip extends iaircraft
 			color		"0.56 0.81 0.76 1"
 			lineheight	"16"
 			dataid		TEXT_AIREQUIP_1
-			rows		"3"
+			rows		"4"
 			ghost		true
 		}
 	}

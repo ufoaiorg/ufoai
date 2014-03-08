@@ -669,16 +669,6 @@ window campaign_main extends campaign
 		}
 	}
 
-	// TODO: This should be a general cgame method
-	confunc check_if_in_campaign_mode
-	{
-		if ( *cvar:mn_base_count > 0 ) {
-			cmd "ui_push popup_exit_campaign_confirmation;"
-		} else {
-			cmd "game_exit;"
-		}
-	}
-
 	func onWindowActivate
 	{
 		*node:root.cmp_sel@invis = true
