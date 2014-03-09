@@ -646,36 +646,27 @@ static void US_TransferUFO_f (void)
 	US_TransferUFO(ufo, ins);
 }
 
+static const cmdList_t ufoRecoveryCallbacks[] = {
+	{"cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event"},
+	{"cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation."},
+	{"cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base."},
+	{"cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list."},
+	{"cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing."},
+	{"cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing."},
+	{"cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state."},
+	{"ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI"},
+	{"ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO"},
+	{"ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations"},
+	{"ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard"},
+	{"ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard"},
+	{nullptr, nullptr, nullptr}
+};
 void UR_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
-	cgi->Cmd_AddCommand("cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation.");
-	cgi->Cmd_AddCommand("cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base.");
-	cgi->Cmd_AddCommand("cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list.");
-	cgi->Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
-	cgi->Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
-	cgi->Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
-
-	cgi->Cmd_AddCommand("ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI");
-	cgi->Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO");
-	cgi->Cmd_AddCommand("ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations");
-	cgi->Cmd_AddCommand("ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard");
-	cgi->Cmd_AddCommand("ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard");
+	Cmd_TableAddList(ufoRecoveryCallbacks);
 }
 
 void UR_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_transferufo");
-	cgi->Cmd_RemoveCommand("ui_selecttransferyard");
-	cgi->Cmd_RemoveCommand("ui_fill_ufotransfer");
-	cgi->Cmd_RemoveCommand("ui_destroystoredufo");
-	cgi->Cmd_RemoveCommand("ui_selectstoredufo");
-
-	cgi->Cmd_RemoveCommand("cp_uforecovery_init");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_sell_init");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_store_init");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_nationlist_click");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_store_start");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_sell_start");
-	cgi->Cmd_RemoveCommand("cp_uforecovery_sort");
+	Cmd_TableRemoveList(ufoRecoveryCallbacks);
 }
