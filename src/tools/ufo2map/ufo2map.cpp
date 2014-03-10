@@ -52,11 +52,11 @@ static char mapFilename[MAX_OSPATH];
 memPool_t* com_genericPool;
 memPool_t* com_fileSysPool;
 
-char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
+char baseFilename[MAX_OSPATH];	/**< This is used for extra file output functions */
 
 typedef struct usagePair_s {
-	const char* flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be nullptr */
-	const char* desc;/**< a description of the functionality provided by the flag, or nullptr if the flags is actually a full line  */
+	const char* flags;			/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be nullptr */
+	const char* desc;			/**< a description of the functionality provided by the flag, or nullptr if the flags is actually a full line  */
 } usagePair_t;
 
 static const usagePair_t usageArray[] = {

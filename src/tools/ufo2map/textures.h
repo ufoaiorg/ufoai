@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char	name[MAX_TEXPATH];
-	bool	footstepMarked; /**< only print it once to the footsteps file */
-	bool	materialMarked; /**< only print it once to the material file */
+	bool	footstepMarked;		/**< only print it once to the footsteps file */
+	bool	materialMarked;		/**< only print it once to the material file */
 } textureref_t;
 
 extern textureref_t textureref[MAX_MAP_TEXTURES];
