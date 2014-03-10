@@ -1008,6 +1008,15 @@ void Cmd_ExecuteString (const char* text, ...)
 }
 
 /**
+ * @brief Display some help about cmd and cvar usage
+ */
+static void Cmd_Help_f (void)
+{
+	Com_Printf(S_COLOR_GREEN "      Use cmdlist and cvarlist. Both accept a partial name.\n");
+	Com_Printf(S_COLOR_GREEN "      Note that both lists can vary depending on where in the game you are.\n");
+}
+
+/**
  * @brief List all available script interface functions
  */
 static void Cmd_List_f (void)
@@ -1117,6 +1126,7 @@ void Cmd_PrintDebugCommands (void)
 void Cmd_Init (void)
 {
 	/* register our commands */
+	Cmd_AddCommand("help", Cmd_Help_f, "Display some help about cmd and cvar usage");
 	Cmd_AddCommand("cmdlist", Cmd_List_f, "List all commands to game console");
 	Cmd_AddCommand("exec", Cmd_Exec_f, "Execute a script file");
 	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
