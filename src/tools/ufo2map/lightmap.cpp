@@ -642,6 +642,8 @@ static inline void NudgeSamplePosition (const vec3_t in, const vec3_t normal, co
 
 /**
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
+ * @param[in] vert The index of the vertex to check
+ * @param[out] faces The index table of the faces found
  * @param[out] nfaces The number of dBspFace_t's referencing edge
  */
 static void FacesWithVert (int vert, int* faces, int* nfaces)
