@@ -68,9 +68,8 @@ void PopInfo (void)
 static int32_t BuildNodeChildren (const int n[3])
 {
 	int32_t node = LEAFNODE;
-	int i;
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		AABB aabb(vec3_origin, vec3_origin);
 
 		if (n[i] == LEAFNODE)
@@ -132,7 +131,6 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 	int32_t tmins[SPLIT_COORDS], tmaxs[SPLIT_COORDS];
 	int32_t nn[3];
 	node_t* node;
-	int i;
 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox, bmins, bmaxs))
@@ -141,7 +139,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
 		partBox.mins[0], partBox.mins[1], partBox.mins[2], partBox.maxs[0], partBox.maxs[1], partBox.maxs[2]);
 
-	for (i = 0; i < SPLIT_COORDS; i++) {
+	for (int i = 0; i < SPLIT_COORDS; i++) {
 		tmins[i] = ((int)floor(bmins[i])) >> SPLIT_AT_POW2;
 		tmaxs[i] = ((int)ceil(bmaxs[i])) >> SPLIT_AT_POW2;
 	}

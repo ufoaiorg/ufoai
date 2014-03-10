@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MakeTracingNodes (int levels)
 {
-	int i;
-
 	/* Release any memory we have for existing tnodes, just in case. */
 	CloseTracingNodes();
 
@@ -46,7 +44,7 @@ void MakeTracingNodes (int levels)
 	tnode_t* tnode = curTile->tnodes = Mem_AllocTypeN(tnode_t, curTile->numnodes + 1);
 	curTile->numtheads = 0;
 
-	for (i = 0; i < levels; i++) {
+	for (int i = 0; i < levels; i++) {
 		const dBspModel_t* model = &curTile->models[i];
 		if (!model->numfaces && i != LEVEL_LIGHTCLIP && i != LEVEL_ACTORCLIP)
 			continue;

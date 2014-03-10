@@ -130,9 +130,7 @@ void ASE_Load (const char* filename, bool verbose)
 
 void ASE_Free (void)
 {
-	int i;
-
-	for (i = 0; i < ase.currentObject; i++)
+	for (int i = 0; i < ase.currentObject; i++)
 		ASE_FreeGeomObject(i);
 }
 
@@ -203,12 +201,9 @@ polyset_t* ASE_GetSurfaceAnimation (int whichSurface)
 
 static void ASE_FreeGeomObject (int ndx)
 {
-	aseGeomObject_t* pObject;
-	int i;
+	aseGeomObject_t* pObject = &ase.objects[ndx];
 
-	pObject = &ase.objects[ndx];
-
-	for (i = 0; i < pObject->anim.numFrames; i++) {
+	for (int i = 0; i < pObject->anim.numFrames; i++) {
 		Mem_Free(pObject->anim.frames[i].vertexes);
 		Mem_Free(pObject->anim.frames[i].tvertexes);
 		Mem_Free(pObject->anim.frames[i].faces);
@@ -596,10 +591,9 @@ static void ConcatenateObjects (aseGeomObject_t* pObjA, aseGeomObject_t* pObjB)
 
 static void CollapseObjects (void)
 {
-	int i;
 	int numObjects = ase.currentObject;
 
-	for (i = 0; i < numObjects; i++) {
+	for (int i = 0; i < numObjects; i++) {
 		int j;
 
 		/* skip tags */

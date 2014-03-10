@@ -75,9 +75,8 @@ static bool Check_TargetExists (const epair_t* kvp)
 	const char* thisKey = kvp->key;
 	const char* value = kvp->value;
 	const char* otherKey = Q_streq("target", thisKey) ? "targetname" : "target";
-	int i;
 
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const entity_t* e = &entities[i];
 		const char* searchVal = ValueForKey(e, otherKey);
 
@@ -112,11 +111,9 @@ static void Check_EntityWithBrushes (entity_t* e, const char* classname, int ent
  */
 void CheckEntities (void)
 {
-	int i;
-
 	Check_InitEntityDefs();
 
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		entity_t* e = &entities[i];
 		const char* name = ValueForKey(e, "classname");
 		const entityDef_t* ed = ED_GetEntityDef(name);
@@ -183,7 +180,7 @@ void CheckEntities (void)
  */
 void Check_Stats(void) {
 	vec3_t worldSize;
-	int i, j;
+	int j;
 	int* entNums;
 
 	Check_InitEntityDefs();
@@ -200,7 +197,7 @@ void Check_Stats(void) {
 	Verb_Printf(VERB_NORMAL, "       Number of entities: %i\n", num_entities);
 
 	/* count number of each type of entity */
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const char* name = ValueForKey(&entities[i], "classname");
 
 		for (j = 0; j < numEntityDefs; j++)
@@ -211,7 +208,6 @@ void Check_Stats(void) {
 		if (j == numEntityDefs) {
 			Com_Printf("Check_Stats: entity '%s' not recognised\n", name);
 		}
-
 	}
 
 	/* print number of each type of entity */
@@ -229,19 +225,18 @@ void Check_Stats(void) {
  */
 static void Check_MapSize (vec3_t mapSize)
 {
-	int i, bi, vi;
 	vec3_t mins, maxs;
 
 	VectorSet(mins, 0, 0, 0);
 	VectorSet(maxs, 0, 0, 0);
 
-	for (i = 0; i < nummapbrushes; i++) {
+	for (int i = 0; i < nummapbrushes; i++) {
 		const mapbrush_t* brush = &mapbrushes[i];
 
-		for (bi = 0; bi < brush->numsides; bi++) {
+		for (int bi = 0; bi < brush->numsides; bi++) {
 			const winding_t* winding = brush->original_sides[bi].winding;
 
-			for (vi = 0; vi < winding->numpoints; vi++)
+			for (int vi = 0; vi < winding->numpoints; vi++)
 				AddPointToBounds(winding->p[vi], mins, maxs);
 		}
 	}
