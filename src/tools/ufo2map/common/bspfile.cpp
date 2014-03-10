@@ -230,8 +230,6 @@ static uint32_t CopyLump (const dBspHeader_t* header, int lumpIdx, void* dest, s
  */
 dMapTile_t* LoadBSPFile (const char* filename)
 {
-	int size;
-	unsigned int i;
 	dBspHeader_t* header;
 
 	/* Create this shortcut to mapTiles[0] */
@@ -240,7 +238,7 @@ dMapTile_t* LoadBSPFile (const char* filename)
 	mapTiles.numTiles = 1;
 
 	/* load the file header */
-	size = FS_LoadFile(filename, (byte**)&header);
+	int size = FS_LoadFile(filename, (byte**)&header);
 	if (size == -1)
 		Sys_Error("'%s' doesn't exist", filename);
 
@@ -273,7 +271,7 @@ dMapTile_t* LoadBSPFile (const char* filename)
 	/* Because the tracing functions use cBspBrush_t and not dBspBrush_t,
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
 	OBJZERO(curTile->brushes);
-	for (i = 0; i < curTile->numbrushes; i++) {
+	for (int i = 0; i < curTile->numbrushes; i++) {
 		dBspBrush_t* dbrush = &curTile->dbrushes[i];
 		cBspBrush_t* brush = &curTile->brushes[i];
 		brush->firstbrushside = dbrush->firstbrushside;

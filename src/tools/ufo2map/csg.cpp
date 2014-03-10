@@ -55,13 +55,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static bspbrush_t* SubtractBrush (bspbrush_t* a, const bspbrush_t* b)
 {
 	/* a - b = out (list) */
-	int i;
 	bspbrush_t* front, *back, *out;
 	bspbrush_t* in;
 
 	in = a;
 	out = nullptr;
-	for (i = 0; i < b->numsides && in; i++) {
+	for (int i = 0; i < b->numsides && in; i++) {
 		SplitBrush(in, b->sides[i].planenum, &front, &back);
 		if (in != a)
 			FreeBrush(in);
@@ -86,7 +85,7 @@ static bspbrush_t* SubtractBrush (bspbrush_t* a, const bspbrush_t* b)
  */
 static bool BrushesDisjoint (bspbrush_t* a, bspbrush_t* b)
 {
-	int i, j;
+	int i;
 
 	/* check bounding boxes */
 	for (i = 0; i < 3; i++)
@@ -95,7 +94,7 @@ static bool BrushesDisjoint (bspbrush_t* a, bspbrush_t* b)
 
 	/* check for opposing planes */
 	for (i = 0; i < a->numsides; i++) {
-		for (j = 0; j < b->numsides; j++) {
+		for (int j = 0; j < b->numsides; j++) {
 			if (a->sides[i].planenum == (b->sides[j].planenum ^ 1))
 				return true;	/* opposite planes, so not touching */
 		}
@@ -113,10 +112,9 @@ static uint16_t maxplanenums[2];
  */
 static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, const vec3_t clipmaxs)
 {
-	int i, j;
 	bspbrush_t* front, *back;
 
-	for (j = 0; j < 2; j++) {
+	for (int j = 0; j < 2; j++) {
 		if (brush->maxs[j] > clipmaxs[j]) {
 			SplitBrush(brush, maxplanenums[j], &front, &back);
 			FreeBrush(brush);
@@ -138,7 +136,7 @@ static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, con
 	}
 
 	/* remove any colinear faces */
-	for (i = 0; i < brush->numsides; i++) {
+	for (int i = 0; i < brush->numsides; i++) {
 		side_t* side = &brush->sides[i];
 		const int p = side->planenum & ~1;
 		if (p == maxplanenums[0] || p == maxplanenums[1]

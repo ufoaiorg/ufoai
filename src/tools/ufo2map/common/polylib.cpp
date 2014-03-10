@@ -54,11 +54,11 @@ void FreeWinding (winding_t* w)
 
 void RemoveColinearPoints (winding_t* w)
 {
-	int i, nump = 0;
+	int nump = 0;
 	vec3_t v1, v2;
 	vec3_t p[MAX_POINTS_ON_WINDING];
 
-	for (i = 0; i < w->numpoints; i++) {
+	for (int i = 0; i < w->numpoints; i++) {
 		const int j = (i + 1) % w->numpoints;
 		const int k = (i + w->numpoints - 1) % w->numpoints;
 		VectorSubtract(w->p[j], w->p[i], v1);
@@ -96,12 +96,10 @@ vec_t WindingArea (const winding_t* w)
 
 void WindingBounds (const winding_t* w, vec3_t mins, vec3_t maxs)
 {
-	int i, j;
-
 	ClearBounds(mins, maxs);
 
-	for (i = 0; i < w->numpoints; i++) {
-		for (j = 0; j < 3; j++) {
+	for (int i = 0; i < w->numpoints; i++) {
+		for (int j = 0; j < 3; j++) {
 			const vec_t v = w->p[i][j];
 			if (v < mins[j])
 				mins[j] = v;
@@ -113,28 +111,24 @@ void WindingBounds (const winding_t* w, vec3_t mins, vec3_t maxs)
 
 void WindingCenter (const winding_t* w, vec3_t center)
 {
-	int i;
-	vec_t scale;
-
 	VectorCopy(vec3_origin, center);
-	for (i = 0; i < w->numpoints; i++)
+	for (int i = 0; i < w->numpoints; i++)
 		VectorAdd(w->p[i], center, center);
 
-	scale = 1.0 / w->numpoints;
+	vec_t scale = 1.0 / w->numpoints;
 	VectorScale(center, scale, center);
 }
 
 winding_t* BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 {
-	int i, x;
 	vec_t max, v;
 	vec3_t org, vright, vup;
 	winding_t* w;
 
 	/* find the major axis */
 	max = -BOGUS_RANGE;
-	x = -1;
-	for (i = 0; i < 3; i++) {
+	int x = -1;
+	for (int i = 0; i < 3; i++) {
 		v = fabs(normal[i]);
 		if (v > max) {
 			x = i;
@@ -204,10 +198,9 @@ winding_t* CopyWinding (const winding_t* w)
 
 winding_t* ReverseWinding (const winding_t* w)
 {
-	int i;
 	winding_t* c = AllocWinding(w->numpoints);
 
-	for (i = 0; i < w->numpoints; i++) {
+	for (int i = 0; i < w->numpoints; i++) {
 		VectorCopy(w->p[w->numpoints - 1 - i], c->p[i]);
 	}
 	c->numpoints = w->numpoints;
@@ -423,12 +416,10 @@ winding_t* ChopWinding (winding_t* in, vec3_t normal, vec_t dist)
  */
 bool WindingIsTiny (winding_t* w)
 {
-	int i, edges;
-	vec3_t delta;
-
-	edges = 0;
-	for (i = 0; i < w->numpoints; i++) {
+	int edges = 0;
+	for (int i = 0; i < w->numpoints; i++) {
 		const int j = ((i == w->numpoints - 1) ? 0 : i) + 1;
+		vec3_t delta;
 		VectorSubtract(w->p[j], w->p[i], delta);
 		vec_t len = VectorLength(delta);
 		if (len > EDGE_LENGTH) {
@@ -445,10 +436,8 @@ bool WindingIsTiny (winding_t* w)
  */
 bool WindingIsHuge (const winding_t* w)
 {
-	int i, j;
-
-	for (i = 0; i < w->numpoints; i++) {
-		for (j = 0; j < 3; j++)
+	for (int i = 0; i < w->numpoints; i++) {
+		for (int j = 0; j < 3; j++)
 			if (w->p[i][j] < -MAX_WORLD_WIDTH || w->p[i][j] > MAX_WORLD_WIDTH)
 				return true;
 	}
@@ -463,14 +452,12 @@ bool WindingIsHuge (const winding_t* w)
  */
 static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 {
-	int i;
-
 	/* dummy check */
 	if (a == nullptr || b == nullptr || out == nullptr)
 		return;
 
 	/* do each element */
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		/* round to integer */
 		const double ai = rint(a[i]);
 		const double bi = rint(a[i]);
@@ -500,21 +487,17 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
  */
 bool FixWinding (winding_t* w)
 {
-	bool valid;
-	int i, k;
-
 	/* dummy check */
 	if (!w)
 		return false;
 
-	valid = true;
+	bool valid = true;
 
 	/* check all verts */
-	for (i = 0; i < w->numpoints; i++) {
+	for (int i = 0; i < w->numpoints; i++) {
 		/* get second point index */
 		const int j = (i + 1) % w->numpoints;
 		vec3_t vec;
-		float dist;
 
 		/* don't remove points if winding is a triangle */
 		if (w->numpoints == 3)
@@ -522,7 +505,7 @@ bool FixWinding (winding_t* w)
 
 		/* degenerate edge? */
 		VectorSubtract(w->p[i], w->p[j], vec);
-		dist = VectorLength(vec);
+		float dist = VectorLength(vec);
 		if (dist < ON_EPSILON) {
 			valid = false;
 
@@ -531,7 +514,7 @@ bool FixWinding (winding_t* w)
 			VectorCopy(vec, w->p[i]);
 
 			/* move the remaining verts */
-			for (k = i + 2; k < w->numpoints; k++)
+			for (int k = i + 2; k < w->numpoints; k++)
 				VectorCopy(w->p[k], w->p[k - 1]);
 
 			w->numpoints--;
