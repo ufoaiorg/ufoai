@@ -218,8 +218,7 @@ static void testMoveEntities (void)
 	pos3_t pos;
 	vec3_t vec;
 	pathing_t* path = Mem_AllocType(pathing_t);
-	pos_t* forbiddenList[MAX_FORBIDDENLIST];
-	int forbiddenListLength = 0;
+	forbiddenList_t forbiddenList;
 	const byte crouchingState = 0;
 	const int maxTUs = MAX_ROUTE_TUS;
 
@@ -238,8 +237,7 @@ static void testMoveEntities (void)
 			if (ent->type == ET_SOLID) {
 				int j;
 				for (j = 0; j < ent->forbiddenListSize; j++) {
-					forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
-					forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
+					forbiddenList.add(ent->forbiddenListPos[j], (byte*) &ent->fieldSize);
 				}
 			}
 		}
@@ -249,7 +247,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
 		Grid_MoveStore(path);
 
 		/* walk onto the func_breakable */
@@ -286,7 +284,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
 		Grid_MoveStore(path);
 
 		/* walk through the opened door */
