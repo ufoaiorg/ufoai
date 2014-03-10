@@ -225,10 +225,9 @@ void Check_Stats(void) {
  */
 static void Check_MapSize (vec3_t mapSize)
 {
-	vec3_t mins, maxs;
+	AABB mapBox;
 
-	VectorSet(mins, 0, 0, 0);
-	VectorSet(maxs, 0, 0, 0);
+	mapBox.setNegativeVolume();
 
 	for (int i = 0; i < nummapbrushes; i++) {
 		const mapbrush_t* brush = &mapbrushes[i];
@@ -237,11 +236,10 @@ static void Check_MapSize (vec3_t mapSize)
 			const winding_t* winding = brush->original_sides[bi].winding;
 
 			for (int vi = 0; vi < winding->numpoints; vi++)
-				AddPointToBounds(winding->p[vi], mins, maxs);
+				mapBox.add(winding->p[vi]);
 		}
 	}
-
-	VectorSubtract(maxs, mins, mapSize);
+	mapBox.getDiagonal(mapSize);
 }
 
 /**
