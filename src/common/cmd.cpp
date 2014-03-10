@@ -1023,18 +1023,18 @@ static void Cmd_List_f (void)
 {
 	const cmd_function_t* cmd;
 	const cmd_alias_t* alias;
-	int i = 0, j = 0, c, l = 0;
+	int i = 0, j = 0, c, len = 0;
 	const char* token = nullptr;
 
 	c = Cmd_Argc();
 
 	if (c == 2) {
 		token = Cmd_Argv(1);
-		l = strlen(token);
+		len = strlen(token);
 	}
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
-		if (c == 2 && strncmp(cmd->getName(), token, l)) {
+		if (c == 2 && strncmp(cmd->getName(), token, len)) {
 			i--;
 			continue;
 		}
@@ -1044,7 +1044,7 @@ static void Cmd_List_f (void)
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {
-		if (c == 2 && strncmp(alias->name, token, l)) {
+		if (c == 2 && strncmp(alias->name, token, len)) {
 			j--;
 			continue;
 		}
