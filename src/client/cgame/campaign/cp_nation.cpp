@@ -893,18 +893,22 @@ void NAT_BackupMonthlyData (void)
 	}
 }
 
+static const cmdList_t nationCmds[] = {
+	{"nation_stats_click", CP_NationStatsClick_f, nullptr},
+	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
+	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
+#ifdef DEBUG
+	{"debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game."},
+	{"debug_listnations", NAT_NationList_f, "List all nations on the game console"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init actions for nation-subsystem
  */
 void NAT_InitStartup (void)
 {
-	cgi->Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, nullptr);
-	cgi->Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
-	cgi->Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game.");
-	cgi->Cmd_AddCommand("debug_listnations", NAT_NationList_f, "List all nations on the game console");
-#endif
+	Cmd_TableAddList(nationCmds);
 }
 
 /**
@@ -914,11 +918,5 @@ void NAT_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.cities);
 
-	cgi->Cmd_RemoveCommand("nation_stats_click");
-	cgi->Cmd_RemoveCommand("nation_update");
-	cgi->Cmd_RemoveCommand("nation_select");
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_listcities");
-	cgi->Cmd_RemoveCommand("debug_listnations");
-#endif
+	Cmd_TableRemoveList(nationCmds);
 }
