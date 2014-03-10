@@ -1119,21 +1119,25 @@ static void UP_SetAllMailsRead_f (void)
 	UP_OpenMail_f();
 }
 
+static const cmdList_t ufopediaCmds[] = {
+	{"mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters"},
+	{"mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article"},
+	{"ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article"},
+	{"ufopedia_click", UP_Click_f, nullptr},
+	{"mailclient_click", UP_MailClientClick_f, nullptr},
+	{"mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read"},
+	{"ufopedia_openmail", UP_OpenMail_f, "Start the mailclient"},
+	{"techtree_click", UP_TechTreeClick_f, nullptr},
+	{"mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, nullptr},
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @sa cgi->UI_InitStartup
  */
 void UP_InitStartup (void)
 {
 	/* add commands and cvars */
-	cgi->Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
-	cgi->Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
-	cgi->Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
-	cgi->Cmd_AddCommand("ufopedia_click", UP_Click_f, nullptr);
-	cgi->Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, nullptr);
-	cgi->Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
-	cgi->Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
-	cgi->Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, nullptr);
-	cgi->Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, nullptr);
+	Cmd_TableAddList(ufopediaCmds);
 
 	mn_uppretext = cgi->Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = cgi->Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
@@ -1147,15 +1151,7 @@ void UP_InitStartup (void)
 void UP_Shutdown (void)
 {
 	/* add commands and cvars */
-	cgi->Cmd_RemoveCommand("mn_upcontent");
-	cgi->Cmd_RemoveCommand("mn_upupdate");
-	cgi->Cmd_RemoveCommand("ufopedia");
-	cgi->Cmd_RemoveCommand("ufopedia_click");
-	cgi->Cmd_RemoveCommand("mailclient_click");
-	cgi->Cmd_RemoveCommand("mn_mail_readall");
-	cgi->Cmd_RemoveCommand("ufopedia_openmail");
-	cgi->Cmd_RemoveCommand("techtree_click");
-	cgi->Cmd_RemoveCommand("mn_upgotoresearchedlink");
+	Cmd_TableRemoveList(ufopediaCmds);
 
 	cgi->Cvar_Delete("mn_uppretext");
 	cgi->Cvar_Delete("mn_uppreavailable");
