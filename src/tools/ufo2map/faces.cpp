@@ -71,21 +71,20 @@ static unsigned HashVec (const vec3_t vec)
  */
 static int GetVertexnum (const vec3_t in)
 {
-	int h, i, vnum;
 	vec3_t vert;
 
 	c_totalverts++;
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (fabs(in[i] - Q_rint(in[i])) < INTEGRAL_EPSILON)
 			vert[i] = Q_rint(in[i]);
 		else
 			vert[i] = in[i];
 	}
 
-	h = HashVec(vert);
+	int h = HashVec(vert);
 
-	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
+	for (int vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
 		const float* p = curTile->vertexes[vnum].point;
 		if (fabs(p[0] - vert[0]) < POINT_EPSILON
 		 && fabs(p[1] - vert[1]) < POINT_EPSILON
@@ -184,14 +183,11 @@ static void FaceFromSuperverts (node_t* node, face_t* f, int base)
 
 static void EmitFaceVertexes (node_t* node, face_t* f)
 {
-	winding_t* w;
-	int i;
-
 	if (f->merged || f->split[0] || f->split[1])
 		return;
 
-	w = f->w;
-	for (i = 0; i < w->numpoints; i++) {
+	winding_t* w = f->w;
+	for (int i = 0; i < w->numpoints; i++) {
 		/* make every point unique */
 		if (config.noweld) {
 			if (curTile->numvertexes == MAX_MAP_VERTS)
@@ -213,16 +209,13 @@ static void EmitFaceVertexes (node_t* node, face_t* f)
 
 static void EmitVertexes_r (node_t* node)
 {
-	int i;
-	face_t* f;
-
 	if (node->planenum == PLANENUM_LEAF)
 		return;
 
-	for (f = node->faces; f; f = f->next)
+	for (face_t* f = node->faces; f; f = f->next)
 		EmitFaceVertexes(node, f);
 
-	for (i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
 		EmitVertexes_r(node->children[i]);
 }
 
@@ -360,16 +353,13 @@ static void FixFaceEdges (node_t* node, face_t* f)
 
 static void FixEdges_r (node_t* node)
 {
-	int i;
-	face_t* f;
-
 	if (node->planenum == PLANENUM_LEAF)
 		return;
 
-	for (f = node->faces; f; f = f->next)
+	for (face_t* f = node->faces; f; f = f->next)
 		FixFaceEdges(node, f);
 
-	for (i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
 		FixEdges_r(node->children[i]);
 }
 
@@ -610,29 +600,25 @@ static void MergeNodeFaces (node_t* node)
  */
 static void SubdivideFace (node_t* node, face_t* f)
 {
-	int axis, i;
-	const dBspTexinfo_t* tex;
-	vec3_t temp;
-	vec_t dist;
-
 	if (f->merged)
 		return;
 
 	/* special (non-surface cached) faces don't need subdivision */
-	tex = &curTile->texinfo[f->texinfo];
+	const dBspTexinfo_t* tex = &curTile->texinfo[f->texinfo];
 	if (tex->surfaceFlags & SURF_WARP)
 		return;
 
-	for (axis = 0; axis < 2; axis++) {
+	for (int axis = 0; axis < 2; axis++) {
 		while (1) {
 			const winding_t* w = f->w;
 			winding_t* frontw, *backw;
 			float mins = 999999;
 			float maxs = -999999;
+			vec3_t temp;
 			vec_t v;
 
 			VectorCopy(tex->vecs[axis], temp);
-			for (i = 0; i < w->numpoints; i++) {
+			for (int i = 0; i < w->numpoints; i++) {
 				v = DotProduct(w->p[i], temp);
 				if (v < mins)
 					mins = v;
@@ -649,7 +635,7 @@ static void SubdivideFace (node_t* node, face_t* f)
 
 			v = VectorNormalize(temp);
 
-			dist = (mins + config.subdivideSize - 16) / v;
+			vec_t dist = (mins + config.subdivideSize - 16) / v;
 
 			ClipWindingEpsilon(w, temp, dist, ON_EPSILON, &frontw, &backw);
 			if (!frontw || !backw)
