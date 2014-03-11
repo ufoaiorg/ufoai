@@ -112,7 +112,7 @@ void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int dist
 void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
-	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, forbiddenList.fbList, forbiddenList.fbListLength);
+	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, &forbiddenList);
 }
 
 bool G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs)

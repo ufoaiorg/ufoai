@@ -596,9 +596,9 @@ static bool SV_GridIsOnMap (const vec3_t vec)
 	return sv->mapData.mapBox.contains(vec);
 }
 
-static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, pos_t** forbiddenList, int forbiddenListLength)
+static void SV_GridCalcPathing (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int distance, forbiddenList_t* forbiddenList)
 {
-	Grid_CalcPathing(sv->mapData.routing, actorSize, path, from, distance, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing(sv->mapData.routing, actorSize, path, from, distance, forbiddenList->fbList, forbiddenList->fbListLength);
 }
 
 static bool SV_GridFindPath (actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList)
