@@ -553,6 +553,7 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
  * @note Transforms coordinates and stuff for assembled maps
  * @param[in] mapData The loaded data is stored here.
  * @param[in] tile Stores the data of the map tile
+ * @param[in] entityString If not empty, this is added to mapEntityString
  * @param[in] base The start of the data loaded from the file.
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
@@ -731,6 +732,7 @@ void CM_LoadBsp (MapTile& tile, const dBspHeader_t& header, const vec3_t shift, 
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
+ * @param[in] entityString If not empty, this is added to mapEntityString by CMod_LoadEntityString
  * @param[in] day whether the lighting for day or night should be loaded.
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
