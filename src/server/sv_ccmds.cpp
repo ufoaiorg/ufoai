@@ -410,7 +410,7 @@ static int SV_CompleteMapCommand (const char* partial, const char** match)
 		*match = dayNightMatch;
 		return 2;
 	} else {
-		if (Q_streq(partial, "day ") || Q_streq(partial, "night ")) {
+		if (!Q_strncasecmp(partial, "day ", 4) || !Q_strncasecmp(partial, "night ", 6)) {
 			/* dayNightStr is correct, use it */
 			partial = dayNightStr + 1;
 		} else {
