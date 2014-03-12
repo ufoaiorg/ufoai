@@ -383,6 +383,7 @@ static void SV_ServerCommand_f (void)
 
 /**
  * @brief Autocomplete function for the map command
+ * @param[in] partial The list of params entered, starting at the first non-blank char.
  * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cmd_AddParamCompleteFunction
  */
