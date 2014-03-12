@@ -258,8 +258,7 @@ int G_FillDirectionTable (dvec_t* dvtab, size_t dvtabSize, byte crouchingState, 
 {
 	int dvec;
 	int numdv = 0;
-	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState))
-			!= ROUTING_UNREACHABLE) {
+	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
 		/* dvec indicates the direction traveled to get to the new cell and the original cell height. */
 		/* We are going backwards to the origin. */
