@@ -236,7 +236,7 @@ component ObjectInfo extends panel
 		UFOpediaBtn ufopedia
 		{
 			pos			"10 9"
-			onClick		{ cmd "market_openpedia;" }
+			onClick		{ cmd "ui_market_openpedia;" }
 		}
 		string title
 		{

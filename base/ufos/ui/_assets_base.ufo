@@ -455,7 +455,7 @@ component MarketItem extends panel
 		size			"18	18"
 		onClick			{
 			cmd "ui_market_showinfo \"<node:parent.id@string>\";"
-			cmd "market_openpedia;"
+			cmd "ui_market_openpedia;"
 		}
 	}
 	string name

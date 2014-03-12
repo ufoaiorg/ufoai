@@ -52,7 +52,7 @@ static void BS_MarketAircraftDescription (const aircraft_t* aircraftTemplate)
 
 /**
  * @brief Opens the UFOpedia for the current selected item/aircraft/ugv.
- * @note called by market_openpedia
+ * @note called by ui_market_openpedia
  */
 static void BS_MarketInfoClick_f (void)
 {
@@ -445,7 +445,7 @@ static void BS_FillMarket_f (void)
 }
 
 static const cmdList_t marketCallbacks[] = {
-	{"market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item"},
+	{"ui_market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item"},
 	{"ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market"},
 	{"ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market"},
 	{"ui_market_showinfo", BS_ShowInfo_f, "Show information about item/aircaft/ugv in the market"},
