@@ -180,7 +180,7 @@ public:
 /** @brief  The direction vector tells us where the actor came from (in his previous step).
  * The pathing table holds about a million of these dvecs, so we save quite some memory by squeezing
  * three pieces of information into a short value:
- * - the direction where he came from
+ * - the direction he took to get here
  * - the z-level he came from
  * - *how* he moved. There are three special crouching conditions
  * -- autocrouch: standing upright in the previous cell, now crouch and stay crouched
