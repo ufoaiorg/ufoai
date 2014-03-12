@@ -132,7 +132,6 @@ static void CalcLightinfoExtents (lightinfo_t* l)
 	const dBspSurface_t* s;
 	float* stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
-	int i;
 	const int luxelScale = (1 << config.lightquant);
 
 	s = l->face;
@@ -140,7 +139,7 @@ static void CalcLightinfoExtents (lightinfo_t* l)
 	stmins = face_extents[s - curTile->faces].stmins;
 	stmaxs = face_extents[s - curTile->faces].stmaxs;
 
-	for (i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++) {
 		lm_mins[i] = floor(stmins[i] / luxelScale);
 		lm_maxs[i] = ceil(stmaxs[i] / luxelScale);
 
@@ -478,7 +477,6 @@ void BuildLights (void)
  */
 static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int* headhint)
 {
-	int i;
 	static int shared_lastthead = 0;
 	int lastthead = *headhint;
 
@@ -496,7 +494,7 @@ static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int* h
 		&& TR_TestLine_r(curTile, curTile->thead[lastthead], start, stop))
 		return true;
 
-	for (i = 0; i < curTile->numtheads; i++) {
+	for (int i = 0; i < curTile->numtheads; i++) {
 		const int level = curTile->theadlevel[i];
 		if (i == lastthead)
 			continue;
@@ -648,10 +646,8 @@ static inline void NudgeSamplePosition (const vec3_t in, const vec3_t normal, co
  */
 static void FacesWithVert (int vert, int* faces, int* nfaces)
 {
-	int i, j, k;
-
-	k = 0;
-	for (i = 0; i < curTile->numfaces; i++) {
+	int k = 0;
+	for (int i = 0; i < curTile->numfaces; i++) {
 		const dBspSurface_t* face = &curTile->faces[i];
 		const dBspTexinfo_t* tex = &curTile->texinfo[face->texinfo];
 
@@ -659,7 +655,7 @@ static void FacesWithVert (int vert, int* faces, int* nfaces)
 		if (!(tex->surfaceFlags & SURF_PHONG))
 			continue;
 
-		for (j = 0; j < face->numedges; j++) {
+		for (int j = 0; j < face->numedges; j++) {
 			const int e = curTile->surfedges[face->firstedge + j];
 			const int v = e >= 0 ? curTile->edges[e].v[0] : curTile->edges[-e].v[1];
 
@@ -684,27 +680,25 @@ void BuildVertexNormals (void)
 {
 	int vert_faces[MAX_VERT_FACES];
 	int num_vert_faces;
-	vec3_t norm, delta;
-	float scale;
-	int i, j;
 
 	BuildFaceExtents();
 
-	for (i = 0; i < curTile->numvertexes; i++) {
+	for (int i = 0; i < curTile->numvertexes; i++) {
 		VectorClear(curTile->normals[i].normal);
 
 		FacesWithVert(i, vert_faces, &num_vert_faces);
 		if (!num_vert_faces)  /* rely on plane normal only */
 			continue;
 
-		for (j = 0; j < num_vert_faces; j++) {
+		for (int j = 0; j < num_vert_faces; j++) {
 			const dBspSurface_t* face = &curTile->faces[vert_faces[j]];
 			const dBspPlane_t* plane = &curTile->planes[face->planenum];
 			extents_t* extends = &face_extents[vert_faces[j]];
 
 			/* scale the contribution of each face based on size */
+			vec3_t norm, delta;
 			VectorSubtract(extends->maxs, extends->mins, delta);
-			scale = VectorLength(delta);
+			float scale = VectorLength(delta);
 
 			if (face->side)
 				VectorScale(plane->normal, -scale, norm);
@@ -725,22 +719,21 @@ void BuildVertexNormals (void)
  */
 static void SampleNormal (const lightinfo_t* l, const vec3_t pos, vec3_t normal)
 {
-	vec3_t temp;
 	float dist[MAX_VERT_FACES];
-	float nearest;
-	int i, v, nearv;
 
-	nearest = 9999.0;
-	nearv = 0;
+	float nearest = 9999.0;
+	int nearv = 0;
 
 	/* calculate the distance to each vertex */
-	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
+	for (int i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
+		int v;
 		const int e = curTile->surfedges[l->face->firstedge + i];
 		if (e >= 0)
 			v = curTile->edges[e].v[0];
 		else
 			v = curTile->edges[-e].v[1];
 
+		vec3_t temp;
 		VectorSubtract(pos, curTile->vertexes[v].point, temp);
 		dist[i] = VectorLength(temp);
 		if (dist[i] < nearest) {
