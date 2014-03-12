@@ -33,6 +33,19 @@ typedef struct forbiddenList_s {
 		fbList[fbListLength++] = pos;
 		fbList[fbListLength++] = entSize;
 	}
+#ifdef DEBUG
+	/* this is NOT equivalent to Grid_CheckForbidden() !! Just for debugging purposes */
+	inline bool contains(const pos3_t pos) {
+		pos_t** p = fbList;
+		pos_t** pEnd = fbList + fbListLength;
+		while (p < pEnd) {
+			if (VectorCompare((*p), pos))
+				return true;
+			p += 2;
+		}
+		return false;
+	}
+#endif
 } forbiddenList_t;
 
 typedef struct pathing_s {
