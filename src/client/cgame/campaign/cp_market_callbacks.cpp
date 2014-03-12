@@ -444,17 +444,20 @@ static void BS_FillMarket_f (void)
 		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG), CAP_GetMax(base, CAP_AIRCRAFT_BIG));
 }
 
+static const cmdList_t marketCallbacks[] = {
+	{"market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item"},
+	{"ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market"},
+	{"ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market"},
+	{"ui_market_showinfo", BS_ShowInfo_f, "Show information about item/aircaft/ugv in the market"},
+	{"ui_market_fill", BS_FillMarket_f, "Fill market item list"},
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Function registers the callbacks of the maket UI and do initializations
  */
 void BS_InitCallbacks(void)
 {
-	cgi->Cmd_AddCommand("market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item");
-
-	cgi->Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
-	cgi->Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
-	cgi->Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show information about item/aircaft/ugv in the market");
-	cgi->Cmd_AddCommand("ui_market_fill", BS_FillMarket_f, "Fill market item list");
+	Cmd_TableAddList(marketCallbacks);
 }
 
 /**
@@ -462,10 +465,5 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
-	cgi->Cmd_RemoveCommand("ui_market_fill");
-	cgi->Cmd_RemoveCommand("ui_market_showinfo");
-	cgi->Cmd_RemoveCommand("ui_market_buy");
-	cgi->Cmd_RemoveCommand("ui_market_setautosell");
-
-	cgi->Cmd_RemoveCommand("market_openpedia");
+	Cmd_TableRemoveList(marketCallbacks);
 }
