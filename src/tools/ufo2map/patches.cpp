@@ -40,7 +40,7 @@ TEXTURE LIGHT VALUES
  */
 void CalcTextureReflectivity (void)
 {
-	int i, j, texels = 0;
+	int j, texels = 0;
 	char path[MAX_QPATH];
 	int color[3];
 	SDL_Surface* surf;
@@ -50,7 +50,7 @@ void CalcTextureReflectivity (void)
 
 	VectorSet(color, 0, 0, 0);
 
-	for (i = 0; i < curTile->numtexinfo; i++) {
+	for (int i = 0; i < curTile->numtexinfo; i++) {
 		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
 			if (Q_streq(curTile->texinfo[i].texture, curTile->texinfo[j].texture)) {
@@ -94,14 +94,12 @@ void CalcTextureReflectivity (void)
 
 static winding_t* WindingFromFace (const dBspSurface_t* f)
 {
-	int i, v;
-	winding_t* w;
-
-	w = AllocWinding(f->numedges);
+	winding_t* w = AllocWinding(f->numedges);
 	w->numpoints = f->numedges;
 
-	for (i = 0; i < f->numedges; i++) {
+	for (int i = 0; i < f->numedges; i++) {
 		const int se = curTile->surfedges[f->firstedge + i];
+		int v;
 		if (se < 0)
 			v = curTile->edges[-se].v[1];
 		else
@@ -179,12 +177,11 @@ static void BuildPatch (int fn, winding_t* w)
 
 static entity_t* EntityForModel (int modnum)
 {
-	int i;
 	char name[16];
 
 	Com_sprintf(name, sizeof(name), "*%i", modnum);
 	/* search the entities for one using modnum */
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const char* s = ValueForKey(&entities[i], "model");
 		if (Q_streq(s, name))
 			return &entities[i];
@@ -200,24 +197,19 @@ static entity_t* EntityForModel (int modnum)
  */
 void BuildPatches (void)
 {
-	int i;
-
 	OBJZERO(face_patches);
 
-	for (i = 0; i < curTile->nummodels; i++) {
+	for (int i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t* mod = &curTile->models[i];
 		const entity_t* ent = EntityForModel(i);
 		vec3_t origin;
-		int j;
 		/* bmodels with origin brushes (like func_door) need to be offset into their
 		 * in-use position */
 		GetVectorForKey(ent, "origin", origin);
 
-		for (j = 0; j < mod->numfaces; j++) {
+		for (int j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
 			dBspSurface_t* f = &curTile->faces[facenum];
-			winding_t* w;
-			int k;
 
 			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);
@@ -225,9 +217,9 @@ void BuildPatches (void)
 			if (!HasLight(f))  /* no light */
 				continue;
 
-			w = WindingFromFace(f);
+			winding_t* w = WindingFromFace(f);
 
-			for (k = 0; k < w->numpoints; k++)
+			for (int k = 0; k < w->numpoints; k++)
 				VectorAdd(w->p[k], origin, w->p[k]);
 
 			BuildPatch(facenum, w);
@@ -319,9 +311,7 @@ static void SubdividePatch(patch_t* patch)
  */
 void SubdividePatches (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_MAP_FACES; i++) {
+	for (int i = 0; i < MAX_MAP_FACES; i++) {
 		patch_t* p = face_patches[i];
 
 		if (p)  /* break it up */
@@ -334,9 +324,7 @@ void SubdividePatches (void)
  */
 void FreePatches (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_MAP_FACES; i++) {
+	for (int i = 0; i < MAX_MAP_FACES; i++) {
 		patch_t* p = face_patches[i];
 		while (p) {
 			patch_t* pnext = p->next;

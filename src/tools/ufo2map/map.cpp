@@ -163,9 +163,7 @@ static uint16_t CreateNewFloatPlane (vec3_t normal, vec_t dist)
  */
 static inline bool SnapVector (vec3_t normal)
 {
-	int i;
-
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (fabs(normal[i] - 1) < NORMAL_EPSILON) {
 			VectorClear(normal);
 			normal[i] = 1;
@@ -607,9 +605,7 @@ static void GenerateFootstepList (const char* filename, int mipTexIndex)
  */
 static void ParseBrush (entity_t* mapent, const char* filename)
 {
-	mapbrush_t* b;
-	int i, j, k, m;
-	side_t* side;
+	int j, k, m;
 	brush_texture_t td;
 	vec3_t planepts[3];
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
@@ -617,7 +613,7 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
 
-	b = &mapbrushes[nummapbrushes];
+	mapbrush_t* b = &mapbrushes[nummapbrushes];
 	OBJZERO(*b);
 	b->original_sides = &brushsides[nummapbrushsides];
 	b->entitynum = num_entities - 1;
@@ -631,10 +627,10 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 
 		if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
 			Sys_Error("nummapbrushsides == MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
-		side = &brushsides[nummapbrushsides];
+		side_t* side = &brushsides[nummapbrushsides];
 
 		/* read the three point plane definition */
-		for (i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (i != 0)
 				GetToken();
 			if (*parsedToken != '(')
@@ -875,11 +871,9 @@ static void MoveBrushesToWorld (entity_t* mapent)
  */
 static void AdjustBrushesForOrigin (const entity_t* ent)
 {
-	int i, j;
-
-	for (i = 0; i < ent->numbrushes; i++) {
+	for (int i = 0; i < ent->numbrushes; i++) {
 		mapbrush_t* b = &mapbrushes[ent->firstbrush + i];
-		for (j = 0; j < b->numsides; j++) {
+		for (int j = 0; j < b->numsides; j++) {
 			side_t* s = &b->original_sides[j];
 			const ptrdiff_t index = s - brushsides;
 			const vec_t newdist = mapplanes[s->planenum].dist -
@@ -919,9 +913,7 @@ static inline bool IsInlineModelEntity (const char* entName)
  */
 entity_t* FindTargetEntity (const char* target)
 {
-	int i;
-
-	for (i = 0; i < num_entities; i++) {
+	for (int i = 0; i < num_entities; i++) {
 		const char* n = ValueForKey(&entities[i], "targetname");
 		if (Q_streq(n, target))
 			return &entities[i];
@@ -1206,8 +1198,6 @@ static const char* GetUMPName (const char* mapFilename)
  */
 void LoadMapFile (const char* filename)
 {
-	int i, subdivide;
-
 	Verb_Printf(VERB_EXTRA, "--- LoadMapFile ---\n");
 
 	LoadScriptFile(filename);
@@ -1235,7 +1225,7 @@ void LoadMapFile (const char* filename)
 
 	while (ParseMapEntity(filename, entityString));
 
-	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
+	int subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
 	if (subdivide >= 256 && subdivide <= 2048) {
 		Verb_Printf(VERB_EXTRA, "Using subdivide %d from worldspawn.\n", subdivide);
 		config.subdivideSize = subdivide;
@@ -1247,7 +1237,7 @@ void LoadMapFile (const char* filename)
 		Com_Printf("Generated material file with %i entries\n", materialsCnt);
 
 	ClearBounds(map_mins, map_maxs);
-	for (i = 0; i < entities[0].numbrushes; i++) {
+	for (int i = 0; i < entities[0].numbrushes; i++) {
 		if (mapbrushes[i].mbBox.mins[0] > MAX_WORLD_WIDTH)
 			continue;	/* no valid points */
 		AddPointToBounds(mapbrushes[i].mbBox.mins, map_mins, map_maxs);

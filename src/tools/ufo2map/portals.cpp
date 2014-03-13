@@ -140,9 +140,7 @@ static void MakeHeadnodePortals (tree_t* tree)
 	int i, j;
 	portal_t* portals[6];
 	plane_t bplanes[6];
-	node_t* node;
-
-	node = tree->headnode;
+	node_t* node = tree->headnode;
 
 	/* pad with some space so there will never be null volume leafs */
 	for (i = 0; i < 3; i++) {
@@ -354,7 +352,7 @@ static void SplitNodePortals (node_t* node)
 static void CalcNodeBounds (node_t* node)
 {
 	portal_t* p;
-	int s, i;
+	int s;
 
 	/* calc mins/maxs for both leafs and nodes */
 	ClearBounds(node->mins, node->maxs);
@@ -362,7 +360,7 @@ static void CalcNodeBounds (node_t* node)
 		s = (p->nodes[1] == node);
 		if (!p->winding)
 			continue;
-		for (i = 0; i < p->winding->numpoints; i++)
+		for (int i = 0; i < p->winding->numpoints; i++)
 			AddPointToBounds(p->winding->p[i], node->mins, node->maxs);
 	}
 }
@@ -370,14 +368,12 @@ static void CalcNodeBounds (node_t* node)
 
 static void MakeTreePortals_r (node_t* node)
 {
-	int i;
-
 	CalcNodeBounds(node);
 	if (node->mins[0] >= node->maxs[0]) {
 		Com_Printf("WARNING: node without a volume\n");
 	}
 
-	for (i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (node->mins[i] < -MAX_WORLD_WIDTH || node->maxs[i] > MAX_WORLD_WIDTH) {
 			Com_Printf("WARNING: node with unbounded volume %i\n", (int)node->mins[i]);
 			break;
