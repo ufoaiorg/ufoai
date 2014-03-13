@@ -244,23 +244,24 @@ void MSO_SetMenuState (const msoMenuState_t newState, const bool callInit, const
 		MSOCB_Init();
 }
 
+static const cmdList_t msgOptionsCallbacks[] = {
+	{"msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category"},
+	{"msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text"},
+	{"msgoptions_init", MSO_Init_f, "Initializes message options menu"},
+	{"msgoptions_backup", MSO_BackupSettings_f, "Backup message settings"},
+	{"msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup"},
+	{nullptr, nullptr, nullptr}
+};
 void MSO_InitCallbacks (void)
 {
 	OBJSET(backupMessageSettings, 1);
-	cgi->Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
-	cgi->Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
-	cgi->Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
-	cgi->Cmd_AddCommand("msgoptions_backup", MSO_BackupSettings_f, "Backup message settings");
-	cgi->Cmd_AddCommand("msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup");
 
+	Cmd_TableAddList(msgOptionsCallbacks);
 }
 
 void MSO_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("msgoptions_toggle");
-	cgi->Cmd_RemoveCommand("msgoptions_scroll");
-	cgi->Cmd_RemoveCommand("msgoptions_init");
-	cgi->Cmd_RemoveCommand("msgoptions_backup");
-	cgi->Cmd_RemoveCommand("msgoptions_restore");
+	Cmd_TableRemoveList(msgOptionsCallbacks);
+
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 }
