@@ -618,13 +618,7 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-static pos_t* forbiddenList[MAX_FORBIDDENLIST];
-/**
- * @brief Current length of fb_list.
- * @note all byte pointers in the fb_list list (pos + fieldSize)
- * @see fb_list
- */
-static int forbiddenListLength;
+static forbiddenList_t forbiddenList;
 
 /**
  * @brief Builds a list of locations that cannot be moved to (client side).
@@ -638,15 +632,14 @@ static void CL_BuildForbiddenList (void)
 {
 	le_t* le = nullptr;
 
-	forbiddenListLength = 0;
+	forbiddenList.fbListLength = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsInvisible(le))
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || (!LE_IsStunned(le) && LE_IsLivingAndVisibleActor(le))) {
-			forbiddenList[forbiddenListLength++] = le->pos;
-			forbiddenList[forbiddenListLength++] = (byte*)&le->fieldSize;
+			forbiddenList.add(le->pos, (byte*)&le->fieldSize);
 		}
 	}
 
@@ -717,7 +710,7 @@ void CL_ActorConditionalMoveCalc (le_t* le)
 {
 	CL_BuildForbiddenList();
 	if (le && LE_IsSelected(le)) {
-		Grid_CalcPathing(cl.mapData->routing, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+		Grid_CalcPathing(cl.mapData->routing, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, forbiddenList.fbList, forbiddenList.fbListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -2232,7 +2225,7 @@ static void CL_DumpMoveMark_f (void)
 		return;
 
 	CL_BuildForbiddenList();
-	Grid_CalcPathing(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, forbiddenList, forbiddenListLength);
+	Grid_CalcPathing(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, forbiddenList.fbList, forbiddenList.fbListLength);
 
 	CL_ActorConditionalMoveCalc(selActor);
 	developer->integer = temp;
