@@ -350,7 +350,8 @@ typedef struct woundInfo_s {
 	int treatmentLevel[BODYPART_MAXTYPE];
 
 	inline woundInfo_s () {
-		OBJZERO(*this);
+		OBJZERO(woundLevel);
+		OBJZERO(treatmentLevel);
 	}
 } woundInfo_t;
 
