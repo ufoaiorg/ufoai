@@ -310,6 +310,8 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 /**
  * @param[in] model The tile-info about the bsp-file we want to slice
  * @param[in] thickness the thickness of the brushes to render to the 2d map
+ * @param[in] scale The scale of the png as passed via -s param. eg. 4 means: 1/4 or 1 pixels = 4 mapunits
+ * @param[in] singleContour Put everything in one file. If false, create one file per level. As given by the -c param or the config default
  */
 void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleContour, bool multipleContour)
 {
