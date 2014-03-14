@@ -555,6 +555,8 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->Cmd_Argv = Cmd_Argv;
 		cgi->Cmd_ExecuteString = Cmd_ExecuteString;
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
+		cgi->Cmd_TableAddList = Cmd_TableAddList;
+		cgi->Cmd_TableRemoveList = Cmd_TableRemoveList;
 		cgi->Cmd_AddParamCompleteFunction = Cmd_AddParamCompleteFunction;
 		cgi->Cmd_GenericCompleteFunction = Cmd_GenericCompleteFunction;
 		cgi->Com_GetMapDefinitionByID = Com_GetMapDefinitionByID;
