@@ -307,7 +307,7 @@ void GAME_MP_CallbacksInit (const cgame_import_t* import)
 	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
 	cl_roundtimelimit = cgi->Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 
-	Cmd_TableAddList(mpCallbacks);
+	cgi->Cmd_TableAddList(mpCallbacks);
 	cgi->Cmd_AddParamCompleteFunction("connect", GAME_MP_CompleteNetworkAddress);
 	cgi->Cmd_AddParamCompleteFunction("rcon", GAME_MP_CompleteNetworkAddress);
 
@@ -317,7 +317,7 @@ void GAME_MP_CallbacksInit (const cgame_import_t* import)
 
 void GAME_MP_CallbacksShutdown (void)
 {
-	Cmd_TableRemoveList(mpCallbacks);
+	cgi->Cmd_TableRemoveList(mpCallbacks);
 
 	cgi->Cvar_Delete("rcon_address");
 }
