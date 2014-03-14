@@ -284,6 +284,19 @@ static void GAME_MP_InitUI_f (void)
 	cgi->UI_RegisterOption(TEXT_LIST, gameTypes);
 }
 
+static const cmdList_t mpCallbacks[] = {
+	{"mp_selectteam_init", GAME_MP_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team"},
+	{"mp_init_ui", GAME_MP_InitUI_f, nullptr},
+	{"teamnum_dec", GAME_MP_TeamNum_f, "Decrease the preferred teamnum"},
+	{"teamnum_inc", GAME_MP_TeamNum_f, "Increase the preferred teamnum"},
+	{"pingservers", GAME_MP_PingServers_f, "Ping all servers in local network to get the serverlist"},
+	{"disconnect", GAME_MP_Disconnect_f, "Disconnect from the current server"},
+	{"connect", GAME_MP_Connect_f, "Connect to given ip"},
+	{"reconnect", GAME_MP_Reconnect_f, "Reconnect to last server"},
+	{"rcon", GAME_MP_Rcon_f, "Execute a rcon command - see rcon_password"},
+	{"cl_startgame", GAME_MP_StartGame_f, "Forces a gamestart if you are the admin"},
+	{nullptr, nullptr, nullptr}
+};
 void GAME_MP_CallbacksInit (const cgame_import_t* import)
 {
 	cgi = import;
@@ -293,17 +306,9 @@ void GAME_MP_CallbacksInit (const cgame_import_t* import)
 	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
 	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
 	cl_roundtimelimit = cgi->Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
-	cgi->Cmd_AddCommand("mp_selectteam_init", GAME_MP_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	cgi->Cmd_AddCommand("mp_init_ui", GAME_MP_InitUI_f, nullptr);
-	cgi->Cmd_AddCommand("teamnum_dec", GAME_MP_TeamNum_f, "Decrease the preferred teamnum");
-	cgi->Cmd_AddCommand("teamnum_inc", GAME_MP_TeamNum_f, "Increase the preferred teamnum");
-	cgi->Cmd_AddCommand("pingservers", GAME_MP_PingServers_f, "Ping all servers in local network to get the serverlist");
-	cgi->Cmd_AddCommand("disconnect", GAME_MP_Disconnect_f, "Disconnect from the current server");
-	cgi->Cmd_AddCommand("connect", GAME_MP_Connect_f, "Connect to given ip");
+
+	Cmd_TableAddList(mpCallbacks);
 	cgi->Cmd_AddParamCompleteFunction("connect", GAME_MP_CompleteNetworkAddress);
-	cgi->Cmd_AddCommand("reconnect", GAME_MP_Reconnect_f, "Reconnect to last server");
-	cgi->Cmd_AddCommand("rcon", GAME_MP_Rcon_f, "Execute a rcon command - see rcon_password");
-	cgi->Cmd_AddCommand("cl_startgame", GAME_MP_StartGame_f, "Forces a gamestart if you are the admin");
 	cgi->Cmd_AddParamCompleteFunction("rcon", GAME_MP_CompleteNetworkAddress);
 
 	cl_maxsoldiersperteam->modified = false;
@@ -312,15 +317,7 @@ void GAME_MP_CallbacksInit (const cgame_import_t* import)
 
 void GAME_MP_CallbacksShutdown (void)
 {
-	cgi->Cmd_RemoveCommand("mp_selectteam_init");
-	cgi->Cmd_RemoveCommand("mp_init_ui");
-	cgi->Cmd_RemoveCommand("teamnum_dec");
-	cgi->Cmd_RemoveCommand("teamnum_inc");
-	cgi->Cmd_RemoveCommand("rcon");
-	cgi->Cmd_RemoveCommand("pingservers");
-	cgi->Cmd_RemoveCommand("disconnect");
-	cgi->Cmd_RemoveCommand("connect");
-	cgi->Cmd_RemoveCommand("reconnect");
+	Cmd_TableRemoveList(mpCallbacks);
 
 	cgi->Cvar_Delete("rcon_address");
 }
