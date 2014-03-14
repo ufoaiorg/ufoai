@@ -38,6 +38,13 @@ MAP LOADING
 ===============================================================================
 */
 
+static int CMod_ValidateLump (const lump_t* lump, const char* functionName)
+{
+	if (!lump)
+		Com_Error(ERR_DROP, "%s: No lump given", functionName);
+	return 0;
+}
+
 /**
  * @brief Loads brush entities like func_door and func_breakable
  * @param[in] tile Stores the data of the map tile
@@ -50,8 +57,7 @@ MAP LOADING
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	if (!lump)
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
+	CMod_ValidateLump(lump, __FUNCTION__);
 
 	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
 	if (lump->filelen % sizeof(*in))
@@ -90,8 +96,7 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!lump)
-		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
+	CMod_ValidateLump(lump, __FUNCTION__);
 
 	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
 	if (lump->filelen % sizeof(*in))
@@ -128,8 +133,7 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	if (!lump)
-		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
+	CMod_ValidateLump(lump, __FUNCTION__);
 
 	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
 	if (lump->filelen % sizeof(*in))
