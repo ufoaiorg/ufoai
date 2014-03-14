@@ -35,13 +35,13 @@ static int c_active_brushes;
  */
 static void BoundBrush (bspbrush_t* brush)
 {
-	ClearBounds(brush->brBox.mins, brush->brBox.maxs);
+	brush->brBox.setNegativeVolume();
 	for (int i = 0; i < brush->numsides; i++) {
 		winding_t* w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (int j = 0; j < w->numpoints; j++)
-			AddPointToBounds(w->p[j], brush->brBox.mins, brush->brBox.maxs);
+			brush->brBox.add(w->p[j]);
 	}
 }
 
@@ -786,8 +786,7 @@ void BrushlistCalcStats (bspbrush_t* brushlist, AABB& blBox)
 				c_nonvisfaces++;
 		}
 
-		blBox.add(b->brBox.mins);
-		blBox.add(b->brBox.maxs);
+		blBox.add(b->brBox);
 	}
 
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);

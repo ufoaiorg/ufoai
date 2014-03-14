@@ -355,8 +355,7 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 			if (side->surfaceFlags & SURF_HINT)
 				side->visible = true; /* hints are always visible */
 		}
-		VectorCopy(mb->mbBox.mins, newbrush->brBox.mins);
-		VectorCopy(mb->mbBox.maxs, newbrush->brBox.maxs);
+		newbrush->brBox.set(mb->mbBox);
 
 		/* carve off anything outside the clip box */
 		newbrush = ClipBrushToBox(newbrush, clip.mins, clip.maxs);
