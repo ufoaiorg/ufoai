@@ -31,14 +31,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct bspbrush_s;
 typedef struct bspbrush_s bspbrush_t;
 #else
+#define STANDARD_NUMBER_OF_BRUSHSIDES 6
 typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
-	vec3_t	mins, maxs;
+	AABB	brBox;
 	int		side;		/**< side of node during construction */
 	int		testside;
 	struct mapbrush_s	*original;
 	int		numsides;
-	side_t	sides[6];			/**< variably sized */
+	side_t	sides[STANDARD_NUMBER_OF_BRUSHSIDES];			/**< variably sized */
 } bspbrush_t;
 #endif
 

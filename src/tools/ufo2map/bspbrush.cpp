@@ -35,13 +35,13 @@ static int c_active_brushes;
  */
 static void BoundBrush (bspbrush_t* brush)
 {
-	ClearBounds(brush->mins, brush->maxs);
+	ClearBounds(brush->brBox.mins, brush->brBox.maxs);
 	for (int i = 0; i < brush->numsides; i++) {
 		winding_t* w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (int j = 0; j < w->numpoints; j++)
-			AddPointToBounds(w->p[j], brush->mins, brush->maxs);
+			AddPointToBounds(w->p[j], brush->brBox.mins, brush->brBox.maxs);
 	}
 }
 
@@ -165,7 +165,7 @@ int CountBrushList (bspbrush_t* brushes)
  */
 bspbrush_t* AllocBrush (int numsides)
 {
-	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * numsides;
+	const size_t size = sizeof(bspbrush_t) + sizeof(side_t) * (numsides - STANDARD_NUMBER_OF_BRUSHSIDES);
 
 	if (threadstate.numthreads == 1)
 		c_active_brushes++;
@@ -206,7 +206,7 @@ void FreeBrushList (bspbrush_t* brushes)
  */
 bspbrush_t* CopyBrush (const bspbrush_t* brush)
 {
-	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * brush->numsides;
+	const size_t size = sizeof(bspbrush_t) + sizeof(side_t) * (brush->numsides - STANDARD_NUMBER_OF_BRUSHSIDES);
 
 	bspbrush_t* newbrush = AllocBrush(brush->numsides);
 	memcpy(newbrush, brush, size);
@@ -250,7 +250,7 @@ static int TestBrushToPlanenum (bspbrush_t* brush, uint16_t planenum,
 	VectorCopy(plane->normal, plane2.normal);
 	plane2.dist = plane->dist;
 	plane2.type = plane->type;
-	s = TR_BoxOnPlaneSide(brush->mins, brush->maxs, &plane2);
+	s = TR_BoxOnPlaneSide(brush->brBox.mins, brush->brBox.maxs, &plane2);
 
 	if (s != PSIDE_BOTH)
 		return s;
@@ -637,7 +637,7 @@ void SplitBrush (const bspbrush_t* brush, uint16_t planenum, bspbrush_t** front,
 	for (i = 0; i < 2; i++) {
 		BoundBrush(b[i]);
 		for (j = 0; j < 3; j++) {
-			if (b[i]->mins[j] < -MAX_WORLD_WIDTH || b[i]->maxs[j] > MAX_WORLD_WIDTH) {
+			if (b[i]->brBox.mins[j] < -MAX_WORLD_WIDTH || b[i]->brBox.maxs[j] > MAX_WORLD_WIDTH) {
 				/** @todo Print brush and entnum either of the brush that was split
 				 * or the plane that was used as splitplane */
 				Verb_Printf(VERB_EXTRA, "bogus brush after clip\n");
@@ -786,8 +786,8 @@ void BrushlistCalcStats (bspbrush_t* brushlist, AABB& blBox)
 				c_nonvisfaces++;
 		}
 
-		blBox.add(b->mins);
-		blBox.add(b->maxs);
+		blBox.add(b->brBox.mins);
+		blBox.add(b->brBox.maxs);
 	}
 
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);

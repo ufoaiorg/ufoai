@@ -89,7 +89,7 @@ static bool BrushesDisjoint (bspbrush_t* a, bspbrush_t* b)
 
 	/* check bounding boxes */
 	for (i = 0; i < 3; i++)
-		if (a->mins[i] >= b->maxs[i] || a->maxs[i] <= b->mins[i])
+		if (a->brBox.mins[i] >= b->brBox.maxs[i] || a->brBox.maxs[i] <= b->brBox.mins[i])
 			return true;	/* bounding boxes don't overlap */
 
 	/* check for opposing planes */
@@ -115,7 +115,7 @@ static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, con
 	bspbrush_t* front, *back;
 
 	for (int j = 0; j < 2; j++) {
-		if (brush->maxs[j] > clipmaxs[j]) {
+		if (brush->brBox.maxs[j] > clipmaxs[j]) {
 			SplitBrush(brush, maxplanenums[j], &front, &back);
 			FreeBrush(brush);
 			if (front)
@@ -124,7 +124,7 @@ static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, con
 			if (!brush)
 				return nullptr;
 		}
-		if (brush->mins[j] < clipmins[j]) {
+		if (brush->brBox.mins[j] < clipmins[j]) {
 			SplitBrush(brush, minplanenums[j], &front, &back);
 			FreeBrush(brush);
 			if (back)
@@ -355,8 +355,8 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 			if (side->surfaceFlags & SURF_HINT)
 				side->visible = true; /* hints are always visible */
 		}
-		VectorCopy(mb->mbBox.mins, newbrush->mins);
-		VectorCopy(mb->mbBox.maxs, newbrush->maxs);
+		VectorCopy(mb->mbBox.mins, newbrush->brBox.mins);
+		VectorCopy(mb->mbBox.maxs, newbrush->brBox.maxs);
 
 		/* carve off anything outside the clip box */
 		newbrush = ClipBrushToBox(newbrush, clip.mins, clip.maxs);
