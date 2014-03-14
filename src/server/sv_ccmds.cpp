@@ -425,9 +425,10 @@ static int SV_CompleteMapCommand (const char* partial, const char** match)
 	FS_GetMaps(false);
 
 	int n = 0;
-	for (char* const* i = fs_maps, * const* const end = i + fs_numInstalledMaps; i != end; ++i) {
-		if (Cmd_GenericCompleteFunction(*i, partial, match)) {
-			Com_Printf("%s\n", *i);
+	const char* const* endOfMaps = fs_maps + fs_numInstalledMaps + 1;	/* bug: fs_numInstalledMaps is off by one */
+	for (const char* const* mapName = fs_maps; mapName < endOfMaps; mapName++) {
+		if (Cmd_GenericCompleteFunction(*mapName, partial, match)) {
+			Com_Printf("%s\n", *mapName);
 			++n;
 		}
 	}
