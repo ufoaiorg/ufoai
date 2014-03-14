@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct pediaChapter_s {
 	int idx;				/**< self-link */
-	char	*id;			/**< script file id */
-	char	*name;			/**< translatable chapter names */
+	char* id;				/**< script file id */
+	char* name;			/**< translatable chapter names */
 	struct technology_s* first;
 	struct technology_s* last;
 } pediaChapter_t;

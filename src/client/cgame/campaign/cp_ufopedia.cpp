@@ -40,7 +40,7 @@ static cvar_t* mn_uppreavailable;
 static pediaChapter_t* upChaptersDisplayList[MAX_PEDIACHAPTERS];
 static int numChaptersDisplayList;
 
-static technology_t	*upCurrentTech;
+static technology_t* upCurrentTech;
 static pediaChapter_t* currentChapter;
 
 #define MAX_UPTEXT 4096

@@ -392,10 +392,10 @@ bool CL_CheckOrDownloadFile (const char* filename)
  */
 static void CL_CheckAndQueueDownload (char* path)
 {
-	size_t		length;
-	const char	*ext;
-	bool	pak;
-	bool	gameLocal;
+	size_t length;
+	const char* ext;
+	bool pak;
+	bool gameLocal;
 
 	StripHighBits(path);
 

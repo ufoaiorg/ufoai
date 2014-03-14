@@ -213,7 +213,7 @@ static const char* CL_GetLocaleID (const char* fullLocale)
 void CL_ParseLanguages (const char* name, const char** text)
 {
 	const char* errhead = "CL_ParseLanguages: unexpected end of file (language ";
-	const char	*token;
+	const char* token;
 
 	if (!*text) {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);

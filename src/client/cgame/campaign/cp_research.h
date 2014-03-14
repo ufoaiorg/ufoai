@@ -164,7 +164,7 @@ typedef struct technology_s {
 	char* finishedResearchEvent;	/**< nullptr or string with scriptable commands that are executed after the tech was successfully researched */
 	bool announce;					/**< if this is true the ufopedia will be opened on finishing the research */
 
-	struct base_s	*base;			/**< The base this tech is researched in. */
+	struct base_s* base;			/**< The base this tech is researched in. */
 	int scientists;					/**< How many scientists (from "base") are researching this tech. */
 
 	char* image;					/**< Image to display in the Ufopedia and other menus for this tech.

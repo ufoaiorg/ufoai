@@ -1522,9 +1522,9 @@ void RS_ParseTechnologies (const char* name, const char** text)
 		tech->hashProvidedNext = techHashProvided[hash];
 		/* set the techHashProvided pointer to the current tech */
 		/* if there were already others in techHashProvided at position hash, they are now
-		* accessable via tech->next - loop until tech->next is null (the first tech
-		* at that position)
-		*/
+		 * accessable via tech->next - loop until tech->next is null (the first tech
+		 * at that position)
+		 */
 		techHashProvided[hash] = tech;
 	} else {
 		if (tech->type == RS_WEAPON || tech->type == RS_ARMOUR) {

@@ -58,7 +58,7 @@ typedef struct mAliasFrame_s {
 	vec3_t	translate;
 	vec3_t	scale;
 	float	radius;
-	mAliasBoneMatrix_t	*boneMatrix;
+	mAliasBoneMatrix_t* boneMatrix;
 } mAliasFrame_t;
 
 /**
@@ -100,8 +100,8 @@ typedef struct mIndexList_s {
 typedef	struct mAliasMesh_s {
 	int32_t	num_verts;
 	char	name[MODEL_MAX_PATH];
-	mAliasVertex_t	*vertexes;
-	mAliasCoord_t	*stcoords;
+	mAliasVertex_t* vertexes;
+	mAliasCoord_t* stcoords;
 
 	/* static meshes have vertex arrays */
 	vec_t* verts;
@@ -113,17 +113,17 @@ typedef	struct mAliasMesh_s {
 	vec_t* next_tangents;
 
 	int	num_tris;
-	int32_t	*indexes;
+	int32_t* indexes;
 	int32_t num_indexes;
 	mIndexList_t* revIndexes;
 
 	int		num_bones;
-	mAliasBoneVertex_t	*bonesVertexes;
+	mAliasBoneVertex_t* bonesVertexes;
 
 	int		num_skins;
 	int		skinHeight;
 	int		skinWidth;
-	mAliasSkin_t	*skins;
+	mAliasSkin_t* skins;
 } mAliasMesh_t;
 
 #define MAX_ANIMS		128
@@ -144,20 +144,20 @@ typedef struct mAliasBone_s {
 
 typedef	struct	mAliasModel_s {
 	int		num_frames;
-	mAliasFrame_t	*frames;
+	mAliasFrame_t* frames;
 	int		curFrame;
 	int		oldFrame;
 
 	/** amount of different tags for the model */
 	int		num_tags;
 	/** a list of tags */
-	mAliasTag_t	*tags;
+	mAliasTag_t* tags;
 
 	int		num_meshes;
-	mAliasMesh_t	*meshes;
+	mAliasMesh_t* meshes;
 
 	int		num_bones;
-	mAliasBone_t	*bones;
+	mAliasBone_t* bones;
 
 	/** animation data */
 	int num_anims;

@@ -1617,7 +1617,7 @@ bool CL_AddActor (le_t* le, entity_t* ent)
 
 	/** Add actor special effects.
 	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */
-	/** @todo Better value for this?	*/
+	/** @todo Better value for this? */
 	if (LE_IsStunned(le) && le->HP <= le->maxHP / 2)
 		ent->flags |= RF_BLOOD;
 	else if (LE_IsDead(le))
