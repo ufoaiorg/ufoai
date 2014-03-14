@@ -710,7 +710,7 @@ void CL_ActorConditionalMoveCalc (le_t* le)
 {
 	CL_BuildForbiddenList();
 	if (le && LE_IsSelected(le)) {
-		Grid_CalcPathing(cl.mapData->routing, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, forbiddenList.fbList, forbiddenList.fbListLength);
+		Grid_CalcPathing(cl.mapData->routing, le->fieldSize, &cl.pathMap, le->pos, MAX_ROUTE_TUS, &forbiddenList);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -2225,7 +2225,7 @@ static void CL_DumpMoveMark_f (void)
 		return;
 
 	CL_BuildForbiddenList();
-	Grid_CalcPathing(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, forbiddenList.fbList, forbiddenList.fbListLength);
+	Grid_CalcPathing(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), &cl.pathMap, truePos, MAX_ROUTE_TUS, &forbiddenList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 	developer->integer = temp;

@@ -500,11 +500,10 @@ bool Step::isPossible (const pathing_t* path)
  * @param[in] from The position to start the calculation from.
  * @param[in] maxTUs The maximum TUs away from 'from' to calculate move-information for
  * @param[in] fb_list Forbidden list (entities are standing at those points)
- * @param[in] fb_length Length of forbidden list
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, byte**  fb_list, int fb_length)
+void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, forbiddenList_t*  fb_list)
 {
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
@@ -519,8 +518,8 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
-	path->fblist = fb_list;
-	path->fblength = fb_length;
+	path->fblist = fb_list->fbList;
+	path->fblength = fb_list->fbListLength;
 
 	maxTUs = std::min(maxTUs, MAX_ROUTE_TUS);
 

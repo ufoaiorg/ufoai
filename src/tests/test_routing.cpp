@@ -108,7 +108,7 @@ static void testMove (void)
 		VectorSet(vec, 80, 80, 32);
 		VecToPos(vec, pos);
 
-		Grid_CalcPathing(mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, nullptr, 0);
+		Grid_CalcPathing(mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, nullptr);
 		Grid_MoveStore(path);
 
 		/* move downwards */
@@ -248,7 +248,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, &forbiddenList);
 		Grid_MoveStore(path);
 
 		/* walk onto the func_breakable */
@@ -285,7 +285,7 @@ static void testMoveEntities (void)
 		int lengthStored;
 		pos3_t to;
 
-		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, forbiddenList.fbList, forbiddenList.fbListLength);
+		Grid_CalcPathing(sv->mapData.routing, ACTOR_SIZE_NORMAL, path, pos, maxTUs, &forbiddenList);
 		Grid_MoveStore(path);
 
 		/* walk through the opened door */
