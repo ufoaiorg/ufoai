@@ -227,7 +227,6 @@ static model_t* LoadModel (const char* name)
 
 static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const char* fileName)
 {
-	int i;
 	uint32_t version = MDX_VERSION;
 	int32_t numIndexes, numVerts;
 
@@ -249,7 +248,7 @@ static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const cha
 	FS_Write(&numVerts, sizeof(numVerts), &f);
 	FS_Write(&numIndexes, sizeof(numIndexes), &f);
 
-	for (i = 0; i < mesh->num_tris * 3; i++) {
+	for (int i = 0; i < mesh->num_tris * 3; i++) {
 		const int32_t idx = LittleLong(mesh->indexes[i]);
 		FS_Write(&idx, sizeof(idx), &f);
 	}
@@ -258,8 +257,6 @@ static void WriteToFile (const model_t* mod, const mAliasMesh_t* mesh, const cha
 static int PrecalcNormalsAndTangents (const char* filename)
 {
 	char mdxFileName[MAX_QPATH];
-	model_t* mod;
-	int i;
 	int cntCalculated = 0;
 
 	Com_Printf("- model '%s'\n", filename);
@@ -272,13 +269,13 @@ static int PrecalcNormalsAndTangents (const char* filename)
 		return 0;
 	}
 
-	mod = LoadModel(filename);
+	model_t* mod = LoadModel(filename);
 	if (!mod)
 		Com_Error(ERR_DROP, "Could not load %s", filename);
 
 	Com_Printf("  \\ - # meshes '%i', # frames '%i'\n", mod->alias.num_meshes, mod->alias.num_frames);
 
-	for (i = 0; i < mod->alias.num_meshes; i++) {
+	for (int i = 0; i < mod->alias.num_meshes; i++) {
 		mAliasMesh_t* mesh = &mod->alias.meshes[i];
 		R_ModCalcUniqueNormalsAndTangents(mesh, mod->alias.num_frames, config.smoothness);
 		/** @todo currently md2 models only have one mesh - for
@@ -432,18 +429,15 @@ static void ModelWorker (modelWorker_t worker, const char* fileName, void* userD
 
 static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
-	const char* md2Path;
-	uint32_t numSkins;
-	int i;
 	const dMD2Model_t* md2 = (const dMD2Model_t*)buf;
 	byte* model = nullptr;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
-	numSkins = LittleLong(md2->num_skins);
+	const char* md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
+	uint32_t numSkins = LittleLong(md2->num_skins);
 
-	for (i = 0; i < numSkins; i++) {
+	for (int i = 0; i < numSkins; i++) {
 		const char* extension;
 		int errors = 0;
 		const char* name = md2Path + i * MD2_MAX_SKINNAME;
@@ -497,18 +491,15 @@ static void MD2SkinFix (const byte* buf, const char* fileName, int bufSize, void
 
 static void MD2Check (const byte* buf, const char* fileName, int bufSize, void* userData)
 {
-	const char* md2Path;
-	uint32_t numSkins;
-	int i;
 	bool headline = false;
 	const dMD2Model_t* md2 = (const dMD2Model_t*)buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
 
-	md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
-	numSkins = LittleLong(md2->num_skins);
+	const char* md2Path = (const char*) md2 + LittleLong(md2->ofs_skins);
+	uint32_t numSkins = LittleLong(md2->num_skins);
 
-	for (i = 0; i < numSkins; i++) {
+	for (int i = 0; i < numSkins; i++) {
 		const char* extension;
 		int errors = 0;
 		const char* name = md2Path + i * MD2_MAX_SKINNAME;

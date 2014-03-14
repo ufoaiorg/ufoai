@@ -40,10 +40,9 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
  */
 void EmitPlanes (void)
 {
-	int i;
 	const plane_t* mp = mapplanes;
 
-	for (i = 0; i < nummapplanes; i++, mp++) {
+	for (int i = 0; i < nummapplanes; i++, mp++) {
 		dBspPlane_t* dp = &curTile->planes[curTile->numplanes];
 		VectorCopy(mp->normal, dp->normal);
 		dp->dist = mp->dist;
@@ -101,9 +100,6 @@ static void EmitLeaf (const node_t* node)
  */
 static void EmitFace (const face_t* f)
 {
-	dBspSurface_t* df;
-	int i;
-
 	if (f->numpoints < 3) {
 		return;		/* degenerated */
 	}
@@ -113,7 +109,7 @@ static void EmitFace (const face_t* f)
 
 	if (curTile->numfaces >= MAX_MAP_FACES)
 		Sys_Error("numfaces >= MAX_MAP_FACES (%i)", curTile->numfaces);
-	df = &curTile->faces[curTile->numfaces];
+	dBspSurface_t* df = &curTile->faces[curTile->numfaces];
 	curTile->numfaces++;
 
 	df->planenum = f->planenum & (~1);
@@ -122,6 +118,7 @@ static void EmitFace (const face_t* f)
 	df->firstedge = curTile->numsurfedges;
 	df->numedges = f->numpoints;
 	df->texinfo = f->texinfo;
+	int i;
 	for (i = 0; i < f->numpoints; i++) {
 		const int e = GetEdge(f->vertexnums[i], f->vertexnums[(i + 1) % f->numpoints], f);
 		if (curTile->numsurfedges >= MAX_MAP_SURFEDGES)
@@ -129,7 +126,7 @@ static void EmitFace (const face_t* f)
 		curTile->surfedges[curTile->numsurfedges] = e;
 		curTile->numsurfedges++;
 	}
-	for (i = 0; i < LIGHTMAP_MAX; i++)
+	for (int i = 0; i < LIGHTMAP_MAX; i++)
 		df->lightofs[i] = -1;
 }
 
@@ -140,9 +137,6 @@ static void EmitFace (const face_t* f)
 static int EmitDrawNode_r (node_t* node)
 {
 	const char* side[2] = {"front", "back"};
-	dBspNode_t* n;
-	const face_t* f;
-	int i;
 
 	if (node->planenum == PLANENUM_LEAF) {
 		Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating singleton leaf.\n");
@@ -153,7 +147,7 @@ static int EmitDrawNode_r (node_t* node)
 	/* emit a node	 */
 	if (curTile->numnodes >= MAX_MAP_NODES)
 		Sys_Error("MAX_MAP_NODES (%i)", curTile->numnodes);
-	n = &curTile->nodes[curTile->numnodes];
+	dBspNode_t* n = &curTile->nodes[curTile->numnodes];
 	Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating bsp node %i\n", curTile->numnodes);
 	curTile->numnodes++;
 
@@ -170,13 +164,14 @@ static int EmitDrawNode_r (node_t* node)
 	else
 		c_facenodes++;
 
+	const face_t* f;
 	for (f = node->faces; f; f = f->next)
 		EmitFace(f);
 
 	n->numfaces = curTile->numfaces - n->firstface;
 
 	/* recursively output the other nodes */
-	for (i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; i++) {
 		if (node->children[i]->planenum == PLANENUM_LEAF) {
 			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating child leaf for %s of bsp node " UFO_SIZE_T ".\n", side[i], n - curTile->nodes);
 			n->children[i] = -(curTile->numleafs + 1);

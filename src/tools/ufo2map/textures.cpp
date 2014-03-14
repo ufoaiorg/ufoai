@@ -64,16 +64,13 @@ static const vec3_t baseaxis[18] =
 
 static void TextureAxisFromPlane (plane_t* pln, vec3_t xv, vec3_t yv, bool isTerrain)
 {
-	int bestaxis, numaxis, i;
-	vec_t best;
-
 	/* Knightmare- terrain support, use floor/ceiling axis only */
-	numaxis = (isTerrain) ? 2 : 6;
+	int numaxis = (isTerrain) ? 2 : 6;
 
-	best = 0;
-	bestaxis = 0;
+	vec_t best = 0;
+	int bestaxis = 0;
 
-	for (i = 0; i < numaxis; i++) {
+	for (int i = 0; i < numaxis; i++) {
 		const vec_t dot = DotProduct(pln->normal, baseaxis[i * 3]);
 		if (dot > best) {
 			best = dot;
