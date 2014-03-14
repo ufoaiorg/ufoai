@@ -121,21 +121,21 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	if (!l)
+	if (!lump)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	const dBspNode_t* in = (const dBspNode_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
+	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
+	if (lump->filelen % sizeof(*in))
+		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", lump->filelen);
 
-	int count = l->filelen / sizeof(*in);
+	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...nodes: %i\n", count);
 
 	if (count < 1)
