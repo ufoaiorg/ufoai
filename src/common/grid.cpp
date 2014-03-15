@@ -518,8 +518,11 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
-	path->fblist = fb_list->fbList;
-	path->fblength = fb_list->fbListLength;
+	path->fblength = 0;
+	if (fb_list) {
+		path->fblist = fb_list->fbList;
+		path->fblength = fb_list->fbListLength;
+	}
 
 	maxTUs = std::min(maxTUs, MAX_ROUTE_TUS);
 
