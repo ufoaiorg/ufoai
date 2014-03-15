@@ -38,10 +38,12 @@ MAP LOADING
 ===============================================================================
 */
 
-static int CMod_ValidateLump (const lump_t* lump, const char* functionName)
+static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size_t elementSize)
 {
 	if (!lump)
 		Com_Error(ERR_DROP, "%s: No lump given", functionName);
+	if (lump->filelen % elementSize)
+		Com_Error(ERR_DROP, "%s: funny lump size (%i => " UFO_SIZE_T ")", functionName, lump->filelen, elementSize);
 	return 0;
 }
 
@@ -57,11 +59,9 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName)
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	CMod_ValidateLump(lump, __FUNCTION__);
+	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t));
 
 	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
-	if (lump->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", lump->filelen, sizeof(*in));
 	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...submodels: %i\n", count);
 
@@ -96,11 +96,9 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	CMod_ValidateLump(lump, __FUNCTION__);
+	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t));
 
 	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
-	if (lump->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", lump->filelen);
 
 	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...surfaces: %i\n", count);
@@ -133,11 +131,9 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	CMod_ValidateLump(lump, __FUNCTION__);
+	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t));
 
 	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
-	if (lump->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", lump->filelen);
 
 	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...nodes: %i\n", count);
@@ -179,16 +175,13 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
+	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t));
 
-	const dBspBrush_t* in = (const dBspBrush_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
+	const dBspBrush_t* in = (const dBspBrush_t*) (base + lump->fileofs);
 
-	int count = l->filelen / sizeof(*in);
+	int count = lump->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...brushes: %i\n", count);
 
 	if (count > MAX_MAP_BRUSHES)
