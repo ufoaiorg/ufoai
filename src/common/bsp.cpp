@@ -38,13 +38,15 @@ MAP LOADING
 ===============================================================================
 */
 
-static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size_t elementSize)
+static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size_t elementSize, const char* elementName)
 {
 	if (!lump)
 		Com_Error(ERR_DROP, "%s: No lump given", functionName);
 	if (lump->filelen % elementSize)
 		Com_Error(ERR_DROP, "%s: funny lump size (%i => " UFO_SIZE_T ")", functionName, lump->filelen, elementSize);
-	return 0;
+	int count = lump->filelen / elementSize;
+	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...%s: %i\n", elementName, count);
+	return count;
 }
 
 /**
@@ -59,11 +61,9 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t));
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t), "models");
 
 	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
-	int count = lump->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...submodels: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no models");
@@ -96,12 +96,9 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t));
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t), "surfaces");
 
 	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
-
-	int count = lump->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...surfaces: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no surfaces");
@@ -131,12 +128,9 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t));
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t), "nodes");
 
 	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
-
-	int count = lump->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...nodes: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map has no nodes");
@@ -177,12 +171,9 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
  */
 static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t));
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t), "brushes");
 
 	const dBspBrush_t* in = (const dBspBrush_t*) (base + lump->fileofs);
-
-	int count = lump->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...brushes: %i\n", count);
 
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error(ERR_DROP, "Map has too many brushes");
@@ -206,17 +197,11 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lum
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspLeaf_t), "leafs");
 
-	const dBspLeaf_t* in = (const dBspLeaf_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
-
-	int count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...leafs: %i\n", count);
+	const dBspLeaf_t* in = (const dBspLeaf_t*) (base + lump->fileofs);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no leafs");
@@ -259,17 +244,11 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* l)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* l, const vec3_t shift)
+static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspPlane_t), "planes");
 
-	const dBspPlane_t* in = (const dBspPlane_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
-
-	int count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...planes: %i\n", count);
+	const dBspPlane_t* in = (const dBspPlane_t*) (base + lump->fileofs);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
