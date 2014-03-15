@@ -236,7 +236,7 @@ typedef struct routing_s {
 /* A special bit mask indicating that the stepup causes the actor to rise a cell. */
 #define	PATHFINDING_BIG_STEPUP		0x80
 /* A special bit mask indicating that the stepup causes the actor to walk down a cell. */
-#define	PATHFINDING_BIG_STEPDOWN		0x40
+#define	PATHFINDING_BIG_STEPDOWN	0x40
 
 class Routing
 {
@@ -247,7 +247,7 @@ public:
 		init();
 	}
 	inline void init () {
-		OBJZERO(*this);
+		OBJZERO(routes);
 	}
 	inline void setFloor (const int actorSize, const int x, const int y, const int z, const int val) {
 		routes[actorSize - 1].setFloor(x, y, z, val);
