@@ -2029,6 +2029,16 @@ bool MIS_LoadXML (xmlNode_t* parent)
 	return true;
 }
 
+static const cmdList_t debugMissionCmds[] = {
+#ifdef DEBUG
+	{"debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission"},
+	{"debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission"},
+	{"debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array"},
+	{"debug_missiondelete", MIS_DeleteMission_f, "Remove mission by a given name"},
+	{"debug_missionlist", MIS_MissionList_f, "Debug function to show all missions"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init actions for missions-subsystem
  * @sa UI_InitStartup
@@ -2036,13 +2046,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 void MIS_InitStartup (void)
 {
 	MIS_InitCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
-	cgi->Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
-	cgi->Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
-	cgi->Cmd_AddCommand("debug_missiondelete", MIS_DeleteMission_f, "Remove mission by a given name");
-	cgi->Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
-#endif
+	Cmd_TableAddList(debugMissionCmds);
 }
 
 /**
@@ -2053,11 +2057,5 @@ void MIS_Shutdown (void)
 	cgi->LIST_Delete(&ccs.missions);
 
 	MIS_ShutdownCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_missionsetmap");
-	cgi->Cmd_RemoveCommand("debug_missionadd");
-	cgi->Cmd_RemoveCommand("debug_missiondeleteall");
-	cgi->Cmd_RemoveCommand("debug_missiondelete");
-	cgi->Cmd_RemoveCommand("debug_missionlist");
-#endif
+	Cmd_TableRemoveList(debugMissionCmds);
 }
