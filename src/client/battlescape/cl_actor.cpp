@@ -660,7 +660,6 @@ static void CL_BuildForbiddenList (void)
 static void CL_DisplayBlockedPaths_f (void)
 {
 	le_t* le = nullptr;
-	int j;
 	ptl_t* ptl;
 	vec3_t s;
 
@@ -688,7 +687,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		ptl->t = 0;
 		if (le->fieldSize == ACTOR_SIZE_2x2) {
 			/* If this actor blocks 4 fields draw them as well. */
-			for (j = 0; j < 3; j++) {
+			for (int j = 0; j < 3; j++) {
 				ptl_t* ptl2 = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
 				ptl2->rounds = ptl->rounds;
 				ptl2->roundsCnt = ptl->roundsCnt;

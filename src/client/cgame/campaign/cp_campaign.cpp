@@ -394,8 +394,8 @@ void CP_CheckLostCondition (const campaign_t* campaign)
 			endCampaign = true;
 		} else {
 			/* check for nation happiness */
-			int j, nationBelowLimit = 0;
-			for (j = 0; j < ccs.numNations; j++) {
+			int nationBelowLimit = 0;
+			for (int j = 0; j < ccs.numNations; j++) {
 				const nation_t* nation = NAT_GetNationByIDX(j);
 				const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 				if (stats->happiness < campaign->minhappiness) {
@@ -1316,22 +1316,19 @@ void CP_ResetCampaignData (void)
  */
 static void CP_DebugChangeCharacterStats_f (void)
 {
-	int j;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
 	E_Foreach(EMPL_SOLDIER, employee) {
-		character_t* chr;
-
 		if (!employee->isHiredInBase(base))
 			continue;
 
-		chr = &(employee->chr);
+		character_t* chr = &(employee->chr);
 		assert(chr);
 
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
+		for (int j = 0; j < KILLED_NUM_TYPES; j++)
 			chr->score.kills[j]++;
 	}
 	if (base->aircraftCurrent)

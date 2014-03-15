@@ -137,13 +137,10 @@ void CP_CheckCampaignEvents (campaign_t* campaign)
  */
 const campaignEvents_t* CP_GetEventsByID (const char* name)
 {
-	int i;
-
-	for (i = 0; i < ccs.numCampaignEventDefinitions; i++) {
+	for (int i = 0; i < ccs.numCampaignEventDefinitions; i++) {
 		const campaignEvents_t* events = &ccs.campaignEvents[i];
 		if (Q_streq(events->id, name)) {
-			int j;
-			for (j = 0; j < events->numCampaignEvents; j++) {
+			for (int j = 0; j < events->numCampaignEvents; j++) {
 				const campaignEvent_t* event = &events->campaignEvents[j];
 				if (!RS_GetTechByID(event->tech))
 					Sys_Error("Illegal tech '%s' given in events '%s'", event->tech, events->id);
@@ -231,8 +228,8 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		if (sscanf(type, "[%i]", &nationAmount) != 1)
 			return -1;
 
-		int j, nationBelowLimit = 0;
-		for (j = 0; j < ccs.numNations; j++) {
+		int nationBelowLimit = 0;
+		for (int j = 0; j < ccs.numNations; j++) {
 			const nation_t* nation = NAT_GetNationByIDX(j);
 			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->happiness < ccs.curCampaign->minhappiness) {

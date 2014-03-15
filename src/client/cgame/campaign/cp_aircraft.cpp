@@ -2221,12 +2221,9 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t* slot, int maxSlot, float*
  */
 static void AIR_SaveRouteXML (xmlNode_t* node, const mapline_t* route)
 {
-	int j;
-	xmlNode_t* subnode;
-
-	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ROUTE);
+	xmlNode_t* subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_ROUTE);
 	cgi->XML_AddFloatValue(subnode, SAVE_AIRCRAFT_ROUTE_DISTANCE, route->distance);
-	for (j = 0; j < route->numPoints; j++) {
+	for (int j = 0; j < route->numPoints; j++) {
 		cgi->XML_AddPos2(subnode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[j]);
 	}
 }
