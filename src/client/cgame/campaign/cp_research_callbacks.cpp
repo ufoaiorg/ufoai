@@ -164,6 +164,7 @@ static void RS_FillTechnologyList_f (void)
 	cgi->UI_ExecuteConfunc("ui_research_update_caps %d %d %d %d", E_CountUnassigned(base, EMPL_SCIENTIST),
 		E_CountHired(base, EMPL_SCIENTIST), CAP_GetFreeCapacity(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
 	cgi->UI_ExecuteConfunc("ui_techlist_clear");
+	cgi->UI_ExecuteConfunc("ui_research_details \"\" \"\" \"\"");
 	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
