@@ -378,12 +378,12 @@ static void testMapDefsFootSteps (void)
 			}
 		}
 		if (!texNames[0][0]) {
-			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, md->params);
+			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, ass);
 		} else {
 			++badMapCount;
 			for (int i = 0; i < texCountMax; ++i) {
 				if (texNames[i][0]) {
-					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, md->params, texNames[i]);
+					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, ass, texNames[i]);
 				}
 			}
 		}
