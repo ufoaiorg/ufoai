@@ -221,7 +221,7 @@ static void testMoveEntities (void)
 	forbiddenList_t forbiddenList;
 	const byte crouchingState = 0;
 	const int maxTUs = MAX_ROUTE_TUS;
-	forbiddenList.fbListLength = 0;
+	forbiddenList.reset();
 
 	SV_Map(true, mapName, nullptr);
 

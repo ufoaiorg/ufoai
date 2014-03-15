@@ -38,6 +38,9 @@ typedef struct forbiddenList_s {
 		fbList[fbListLength++] = pos;
 		fbList[fbListLength++] = entSize;
 	}
+	inline void reset() {
+		fbListLength = 0;
+	}
 #ifdef DEBUG
 	/* this is NOT equivalent to Grid_CheckForbidden() !! Just for debugging purposes */
 	inline bool contains(const pos3_t pos) {

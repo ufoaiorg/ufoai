@@ -632,7 +632,7 @@ static void CL_BuildForbiddenList (void)
 {
 	le_t* le = nullptr;
 
-	forbiddenList.fbListLength = 0;
+	forbiddenList.reset();
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsInvisible(le))

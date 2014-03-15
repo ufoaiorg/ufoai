@@ -58,7 +58,7 @@ static forbiddenList_t forbiddenList;
  */
 static void G_BuildForbiddenList (int team, const Edict* movingActor)
 {
-	forbiddenList.fbListLength = 0;
+	forbiddenList.reset();
 
 	/* team visibility */
 	teammask_t teamMask;
