@@ -110,12 +110,12 @@ static uint16_t maxplanenums[2];
  * @brief Any planes shared with the box edge will be set to no texinfo
  * @note not thread safe
  */
-static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, const vec3_t clipmaxs)
+static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const AABB& clipBox)
 {
 	bspbrush_t* front, *back;
 
 	for (int j = 0; j < 2; j++) {
-		if (brush->brBox.maxs[j] > clipmaxs[j]) {
+		if (brush->brBox.maxs[j] > clipBox.maxs[j]) {
 			SplitBrush(brush, maxplanenums[j], &front, &back);
 			FreeBrush(brush);
 			if (front)
@@ -124,7 +124,7 @@ static bspbrush_t* ClipBrushToBox (bspbrush_t* brush, const vec3_t clipmins, con
 			if (!brush)
 				return nullptr;
 		}
-		if (brush->brBox.mins[j] < clipmins[j]) {
+		if (brush->brBox.mins[j] < clipBox.mins[j]) {
 			SplitBrush(brush, minplanenums[j], &front, &back);
 			FreeBrush(brush);
 			if (back)
@@ -358,7 +358,7 @@ bspbrush_t* MakeBspBrushList (int startbrush, int endbrush, int level, const AAB
 		newbrush->brBox.set(mb->mbBox);
 
 		/* carve off anything outside the clip box */
-		newbrush = ClipBrushToBox(newbrush, clip.mins, clip.maxs);
+		newbrush = ClipBrushToBox(newbrush, clip);
 		if (!newbrush) {
 			Verb_Printf(VERB_DUMP, "Rejected brush %i: cannot clip to box.\n", i);
 			continue;
