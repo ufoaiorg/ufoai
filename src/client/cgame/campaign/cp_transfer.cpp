@@ -318,9 +318,8 @@ static void TR_ListTransfers_f (void)
 
 		/* ItemCargo */
 		if (transfer->hasItems) {
-			int j;
 			Com_Printf("...ItemCargo:\n");
-			for (j = 0; j < cgi->csi->numODs; j++) {
+			for (int j = 0; j < cgi->csi->numODs; j++) {
 				const objDef_t* od = INVSH_GetItemByIDX(j);
 				if (transfer->itemAmount[od->idx])
 					Com_Printf("......%s: %i\n", od->id, transfer->itemAmount[od->idx]);

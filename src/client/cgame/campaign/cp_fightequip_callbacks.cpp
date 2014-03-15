@@ -243,7 +243,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t* aircraft)
 
 	for (i = 0; i < AIR_POSITIONS_MAX; i++) {
 		const aircraftSlot_t* slot;
-		int max, j;
+		int max;
 
 		/* Default value */
 		cgi->UI_ExecuteConfunc("airequip_display_slot %i 0", i);
@@ -263,7 +263,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t* aircraft)
 		default:
 			continue;
 		}
-		for (j = 0; j < max; j++, slot++) {
+		for (int j = 0; j < max; j++, slot++) {
 			/* check if one of the aircraft slots is at this position */
 			if (slot->pos == i) {
 				/* draw in white if this is the selected slot */

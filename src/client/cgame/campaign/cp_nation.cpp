@@ -209,22 +209,19 @@ bool NAT_SaveXML (xmlNode_t* p)
 
 	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
-		xmlNode_t* s;
-		int j;
 
 		if (!nation)
 			continue;
 
-		s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
+		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
 		cgi->XML_AddString(s, SAVE_NATION_ID, nation->id);
-		for (j = 0; j < MONTHS_PER_YEAR; j++) {
+		for (int j = 0; j < MONTHS_PER_YEAR; j++) {
 			const nationInfo_t* stats = &nation->stats[j];
-			xmlNode_t* ss;
 
 			if (!stats->inuse)
 				continue;
 
-			ss = cgi->XML_AddNode(s, SAVE_NATION_MONTH);
+			xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_NATION_MONTH);
 			cgi->XML_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
 			cgi->XML_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
 			cgi->XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);

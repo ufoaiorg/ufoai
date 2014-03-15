@@ -672,13 +672,12 @@ bool PR_SaveXML (xmlNode_t* p)
 	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		const production_queue_t* pq = PR_GetProductionForBase(base);
-		int j;
 
 		xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_PRODUCE_QUEUE);
 		/** @todo this should not be the base index */
 		cgi->XML_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
 
-		for (j = 0; j < pq->numItems; j++) {
+		for (int j = 0; j < pq->numItems; j++) {
 			const production_t* prod = &pq->items[j];
 			xmlNode_t* ssnode = cgi->XML_AddNode(snode, SAVE_PRODUCE_ITEM);
 			if (PR_IsItem(prod))

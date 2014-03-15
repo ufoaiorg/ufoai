@@ -756,10 +756,8 @@ static void TR_List_f (void)
 
 		/* Items */
 		if (transfer->hasItems) {
-			int j;
-
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
-			for (j = 0; j < cgi->csi->numODs; j++) {
+			for (int j = 0; j < cgi->csi->numODs; j++) {
 				const objDef_t* od = INVSH_GetItemByIDX(j);
 
 				if (transfer->itemAmount[od->idx] <= 0)
