@@ -181,7 +181,7 @@ typedef struct chrReservations_s {
 	int reaction;	/**< Did the player activate RF with a usable firemode?
 					 * (And at the same time storing the TU-costs of this firemode) */
 
-	/* Crouch reservation (for current turn)	*/
+	/* Crouch reservation (for current turn) */
 	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
 
 	/* Shot reservation (for current turn) */

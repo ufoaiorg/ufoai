@@ -58,7 +58,7 @@ void R_WritePNG (qFILE* f, byte* buffer, int width, int height)
 {
 	png_structp	png_ptr;
 	png_infop	info_ptr;
-	png_bytep	*row_pointers;
+	png_bytep*	row_pointers;
 
 	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 	if (!png_ptr) {

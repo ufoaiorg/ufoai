@@ -38,21 +38,21 @@ typedef enum {
 } dlq_state;
 
 typedef struct dlqueue_s {
-	struct dlqueue_s	*next;
+	struct dlqueue_s*	next;
 	char				ufoPath[MAX_QPATH];
 	dlq_state			state;
 } dlqueue_t;
 
 typedef struct dlhandle_s {
-	CURL		*curl;
+	CURL*		curl;
 	char		filePath[MAX_OSPATH];
-	FILE		*file;
-	dlqueue_t	*queueEntry;
+	FILE*		file;
+	dlqueue_t*	queueEntry;
 	size_t		fileSize;
 	size_t		position;
 	double		speed;
 	char		URL[576];
-	char		*tempBuffer;
+	char*		tempBuffer;
 } dlhandle_t;
 #endif
 

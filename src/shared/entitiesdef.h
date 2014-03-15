@@ -53,17 +53,17 @@ typedef union int_float_u {
 } int_float_tu;
 
 typedef struct entityKeyRange_s {
-	char	*str;		/**< the range string is stored here until the whole ent def is parsed */
-	int		*iArr;		/**< this is used if the key is V_INT */
-	float	*fArr;		/**< this is used if the key is V_FLOAT */
+	char*	str;		/**< the range string is stored here until the whole ent def is parsed */
+	int*	iArr;		/**< this is used if the key is V_INT */
+	float*	fArr;		/**< this is used if the key is V_FLOAT */
 	int		numElements;/**< number of discrete options for the value, or two for continuous ranges */
 	int		continuous;	/**< boolean. two elements in the array, Arr[0] <= val <= Arr[1] */
 } entityKeyRange_t;
 
 typedef struct entityKeyDef_s {
-	char	*name;		/**< the name of the key (eg classname) */
-	char	*desc;		/**< a description or value for the key (eg worldspawn) */
-	char	*defaultVal;/**< a default value that may be provided by ufo2map -fix */
+	char*	name;		/**< the name of the key (eg classname) */
+	char*	desc;		/**< a description or value for the key (eg worldspawn) */
+	char*	defaultVal;/**< a default value that may be provided by ufo2map -fix */
 	int		flags;		/**< optional, mandatory, etc, see @sa ED_OPTIONAL, ED_MANDATORY, ED_ABSTRACT */
 	int		vLen;		/**< for numeric types that may be vectors, the number of elements */
 	entityKeyRange_t** ranges; /**< store allowed values for this key. may be a different range for each element */
@@ -71,8 +71,8 @@ typedef struct entityKeyDef_s {
 } entityKeyDef_t;
 
 typedef struct entityDef_s {
-	char 			*classname;
-	entityKeyDef_t 	*keyDefs;
+	char*			classname;
+	entityKeyDef_t*	keyDefs;
 	int 			numKeyDefs;
 } entityDef_t;
 
