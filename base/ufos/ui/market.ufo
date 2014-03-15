@@ -56,6 +56,7 @@ component cmpMarketItem extends panel {
 	spinner_blue buysell {
 		tooltip		"_Buy and sell item"
 		pos			"346 0"
+		shiftincreasefactor	10.0
 		onChange {
 			if ( ( ( <node:parent.storage@string> + <node:parent.market@string> ) + <lastdiff> ) < 1 ) {
 				*node:root.selected@string = ""
@@ -70,15 +71,8 @@ component cmpMarketItem extends panel {
 }
 
 window market extends objectinfo {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background {
-		src		"background/base_bg"
+	{
+		background	"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {

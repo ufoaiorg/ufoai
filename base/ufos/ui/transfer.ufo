@@ -31,7 +31,7 @@ component cmp_t_storage extends panel {
 		tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 		pos			"352 0"
 		size		"20 20"
-		shiftincreasefactor	100.0
+		shiftincreasefactor	10.0
 		onChange {
 			cmd "ui_trans_add <node:parent.id@string> <lastdiff>;"
 		}
