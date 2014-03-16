@@ -166,7 +166,7 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
 static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lump)
@@ -194,7 +194,7 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lum
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
 static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
@@ -239,7 +239,7 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
