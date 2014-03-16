@@ -91,8 +91,6 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] distance The distance in TUs to calculate the move for.
  * @param[in] movingActor The actor to calculate the move for
- * @sa G_BuildForbiddenList
- * @sa G_MoveCalcLocal
  */
 void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int distance)
 {
@@ -106,8 +104,6 @@ void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int dist
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] distance The distance in TUs to calculate the move for.
  * @param[in] movingActor The actor to calculate the move for
- * @sa G_MoveCalc
- * @sa G_BuildForbiddenList
  */
 void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const pos3_t from, int distance)
 {
