@@ -358,10 +358,8 @@ static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned c
 		int height, int y_stride, int uv_stride, int yWShift, int uvWShift, int yHShift, int uvHShift,
 		uint32_t* output)
 {
-	int i, j;
-
-	for (j = 0; j < height; ++j) {
-		for (i = 0; i < width; ++i) {
+	for (int j = 0; j < height; ++j) {
+		for (int i = 0; i < width; ++i) {
 			const long YY = (long) (ogmCin_yuvTable.yy[(y[(i >> yWShift) + (j >> yHShift) * y_stride])]);
 			const int uvI = (i >> uvWShift) + (j >> uvHShift) * uv_stride;
 

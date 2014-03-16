@@ -159,7 +159,6 @@ bool INV_UnloadWeapon (Item* weapon, Inventory* inv, const invDef_t* container)
 static void INV_InventoryList_f (void)
 {
 	for (int i = 0; i < csi.numODs; i++) {
-		int j;
 		const objDef_t* od = INVSH_GetItemByIDX(i);
 
 		Com_Printf("Item: %s\n", od->id);
@@ -171,7 +170,7 @@ static void INV_InventoryList_f (void)
 		Com_Printf("... firetwohanded -> %i\n", od->fireTwoHanded);
 		Com_Printf("... thrown        -> %i\n", od->thrown);
 		Com_Printf("... usable for weapon (if type is ammo):\n");
-		for (j = 0; j < od->numWeapons; j++) {
+		for (int j = 0; j < od->numWeapons; j++) {
 			if (od->weapons[j])
 				Com_Printf("    ... %s\n", od->weapons[j]->name);
 		}
@@ -187,11 +186,11 @@ static void INV_InventoryList_f (void)
  */
 static bool INV_EquipmentDefSanityCheck (void)
 {
-	int j;
 	int sum;
 	bool result = true;
 
 	for (int i = 0; i < csi.numEDs; i++) {
+		int j;
 		const equipDef_t* const ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
 		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))

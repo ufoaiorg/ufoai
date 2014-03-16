@@ -171,14 +171,13 @@ void R_LoadImage (const char* name, byte** pic, int* width, int* height)
 
 void R_ScaleTexture (const unsigned* in, int inwidth, int inheight, unsigned* out, int outwidth, int outheight)
 {
-	int i, j;
-	unsigned frac;
+	int i;
 	unsigned p1[MAX_TEXTURE_SIZE], p2[MAX_TEXTURE_SIZE];
 	const unsigned fracstep = inwidth * 0x10000 / outwidth;
 
 	assert(outwidth <= MAX_TEXTURE_SIZE);
 
-	frac = fracstep >> 2;
+	unsigned frac = fracstep >> 2;
 	for (i = 0; i < outwidth; i++) {
 		p1[i] = 4 * (frac >> 16);
 		frac += fracstep;
@@ -198,7 +197,7 @@ void R_ScaleTexture (const unsigned* in, int inwidth, int inheight, unsigned* ou
 		assert(index < inwidth * inheight);
 		assert(index2 < inwidth * inheight);
 
-		for (j = 0; j < outwidth; j++) {
+		for (int j = 0; j < outwidth; j++) {
 			const byte* pix1 = (const byte*) inrow + p1[j];
 			const byte* pix2 = (const byte*) inrow + p2[j];
 			const byte* pix3 = (const byte*) inrow2 + p1[j];

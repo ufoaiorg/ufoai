@@ -83,9 +83,8 @@ void R_ModModellist_f (void)
 			break;
 		}
 		if (mod->alias.num_meshes) {
-			int j;
 			Com_Printf(" | %5i | %7i | %7i | %s (skins: %i)\n", i, mod->alias.num_meshes, mod->alias.meshes[0].num_tris, mod->name, mod->alias.meshes[0].num_skins);
-			for (j = 0; j < mod->alias.meshes[0].num_skins; j++) {
+			for (int j = 0; j < mod->alias.meshes[0].num_skins; j++) {
 				mAliasSkin_t* skin = &mod->alias.meshes[0].skins[j];
 				Com_Printf("     \\-- skin %i: '%s' (texnum %i and image type %i)\n", j + 1, skin->name, skin->skin->texnum, skin->skin->type);
 			}

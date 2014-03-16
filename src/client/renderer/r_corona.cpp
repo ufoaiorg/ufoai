@@ -40,9 +40,6 @@ void R_AddCorona (const vec3_t org, float radius, const vec3_t color)
 
 void R_DrawCoronas (void)
 {
-	int i, j, k;
-	vec3_t v;
-
 	if (!r_coronas->integer)
 		return;
 
@@ -57,7 +54,7 @@ void R_DrawCoronas (void)
 
 	R_BlendFunc(GL_ONE, GL_ONE);
 
-	for (k = 0; k < refdef.numCoronas; k++) {
+	for (int k = 0; k < refdef.numCoronas; k++) {
 		const corona_t* c = &refdef.coronas[k];
 		int verts, vertind;
 
@@ -76,10 +73,11 @@ void R_DrawCoronas (void)
 		memcpy(&r_state.vertex_array_3d[0], c->org, sizeof(vec3_t));
 		vertind = 3; /* and the origin */
 
-		for (i = verts; i >= 0; i--) { /* now draw the corners */
+		for (int i = verts; i >= 0; i--) { /* now draw the corners */
 			const float a = (M_PI * 2 / verts) * i;
+			vec3_t v;
 
-			for (j = 0; j < 3; j++)
+			for (int j = 0; j < 3; j++)
 				v[j] = c->org[j] + r_locals.right[j] * (float) cos(a) * c->radius + r_locals.up[j] * (float) sin(a)
 						* c->radius;
 
