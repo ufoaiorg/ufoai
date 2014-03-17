@@ -177,7 +177,6 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 	pictureBuffer = Mem_AllocTypeN(unsigned char, width * height * DEPTH);
 
 	for (sliceIndex = 0; sliceIndex < numberOfSlices; sliceIndex++) {
-		int j;
 		const float zHeight = minZ + (sliceIndex * stepsize);
 		zDistance[2] = zHeight;
 
@@ -186,7 +185,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 			memset(pictureBuffer, 0, width * height * DEPTH);
 
 		/* loop through all the faces of the BSP file... */
-		for (j = 0; j < tile->nummodels; j++) {
+		for (int j = 0; j < tile->nummodels; j++) {
 			const dBspModel_t* model = &tile->models[j];
 			for (int faceIndex = 0; faceIndex < model->numfaces; faceIndex++) {
 				const dBspSurface_t* face = &tile->faces[model->firstface + faceIndex];

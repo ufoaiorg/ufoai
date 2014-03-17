@@ -245,13 +245,11 @@ void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
  */
 void _Mem_FreeTag (memPool_t* pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	memBlock_t* mem, *next;
-	int j = 0;
-
 	if (!pool)
 		return;
 
-	for (j = 0; j < MEM_HASH; j++) {
+	for (int j = 0; j < MEM_HASH; j++) {
+		memBlock_t* mem, *next;
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
 			if (mem->tagNum == tagNum)
@@ -268,13 +266,11 @@ void _Mem_FreeTag (memPool_t* pool, const int tagNum, const char* fileName, cons
  */
 void _Mem_FreePool (memPool_t* pool, const char* fileName, const int fileLine)
 {
-	memBlock_t* mem, *next;
-	int j = 0;
-
 	if (!pool)
 		return;
 
-	for (j = 0; j < MEM_HASH; j++) {
+	for (int j = 0; j < MEM_HASH; j++) {
+		memBlock_t* mem, *next;
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
 			_Mem_Free(Mem_BlockToPtr(mem), fileName, fileLine);
@@ -446,14 +442,13 @@ uint32_t _Mem_ChangeTag (memPool_t* pool, const int tagFrom, const int tagTo)
 {
 	memBlock_t* mem;
 	uint32_t numChanged;
-	int j = 0;
 
 	if (!pool)
 		return 0;
 
 	numChanged = 0;
 
-	for (j = 0; j < MEM_HASH; j++) {
+	for (int j = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; mem = mem->next) {
 			if (mem->tagNum == tagFrom) {
 				mem->tagNum = tagTo;

@@ -161,7 +161,6 @@ static void UI_BuildRadarImageList (const char* tiles, const char* pos)
  */
 static void UI_GetRadarWidth (const uiNode_t* node, vec2_t gridSize)
 {
-	int j;
 	int tileWidth[2];		/**< Contains the width of the first and the last tile of the first line (in screen unit) */
 	int tileHeight[2];		/**< Contains the height of the first and the last tile of the first column  (in screen unit)*/
 	int secondTileGridX;	/**< Contains the grid X position of 2nd tiles in first line */
@@ -183,7 +182,7 @@ static void UI_GetRadarWidth (const uiNode_t* node, vec2_t gridSize)
 	Vector2Set(tileWidth, 0, 0);
 	Vector2Set(tileHeight, 0, 0);
 
-	for (j = 0; j < radar.numImages; j++) {
+	for (int j = 0; j < radar.numImages; j++) {
 		const hudRadarImage_t* image = &radar.images[j];
 
 		assert(image->gridX >= radar.gridMin[0]);
