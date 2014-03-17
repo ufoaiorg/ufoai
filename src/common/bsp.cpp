@@ -897,7 +897,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						/* Skip if the destination is out of bounds. */
 						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 							continue;
-#if 1
+#if 0	// this causes problems eg. at baseattack entrance (see bug 5292). Disabled until the underlying problem is found
 						byte toTile1 = 0;
 						byte toTile2 = 0;
 						byte toTile3 = 0;
