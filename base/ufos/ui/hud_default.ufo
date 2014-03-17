@@ -1077,6 +1077,25 @@ window hud_default extends hud
 				onMouseLeave	{ *node:this@icon = "icons/radar0"	}
 			}
 		}
+		// Show rescue button
+		CircleBtn show_rescue
+		{
+			{
+				pos			"145 225"
+			}
+
+			button icon
+			{
+				icon		"icons/rescue0"
+				background	"icons/circle0"
+				pos			"0 0"
+				size		"48 48"
+				tooltip		"_Show rescue zone"
+				onClick			{ cmd "toggle_rescuezone;" }
+				onMouseEnter	{ *node:this@icon = "icons/rescue" }
+				onMouseLeave	{ *node:this@icon = "icons/rescue0"	}
+			}
+		}
 
 		// Chat window
 		// @TODO: Add button to show chat
@@ -1251,6 +1270,31 @@ window hud_default extends hud
 		cmd "disable_stand; disable_crouch; disable_reaction; disable_headgear;"
 		cmd "hud_movemode;"
 	}
+
+	//This is called when a rescuezone is available in the given map
+	confunc enable_rescuezone
+	{
+		*node:root.game_controls.show_rescue@invis = false
+	}
+
+	//This is called when no rescuezone is available in the given map
+	confunc disable_rescuezone
+	{
+		*node:root.game_controls.show_rescue@invis = true
+	}
+
+	//This is called by the button to show or hide the rescue zone
+	confunc toggle_rescuezone
+	{
+		if (*cvar:cl_map_draw_rescue_zone eq 0) {
+			*cvar:cl_map_draw_rescue_zone = 2
+			*node:root.game_controls.show_rescue.icon@tooltip = "_Hide rescue zone"
+		} else {
+			*cvar:cl_map_draw_rescue_zone = 0
+			*node:root.game_controls.show_rescue.icon@tooltip = "_Show rescue zone"
+		}
+	}
+
 
 	func onWindowOpened
 	{
