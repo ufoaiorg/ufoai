@@ -532,7 +532,7 @@ static void Grid_DumpServerRoutes_f (void)
 	ipos3_t wpMins, wpMaxs;
 	VecToPos(sv->mapData.mapBox.mins, wpMins);
 	VecToPos(sv->mapData.mapBox.maxs, wpMaxs);
-	RT_WriteCSVFiles(sv->mapData.routing, "ufoaiserver", wpMins, wpMaxs);
+	RT_WriteCSVFiles(sv->mapData.routing, "ufoaiserver", GridBox(wpMins, wpMaxs));
 }
 #endif
 

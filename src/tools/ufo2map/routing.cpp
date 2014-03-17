@@ -181,7 +181,7 @@ void DoRouting (void)
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {
-		RT_WriteCSVFiles(Nmap, baseFilename, wpMins, wpMaxs);
+		RT_WriteCSVFiles(Nmap, baseFilename, GridBox(wpMins, wpMaxs));
 	}
 
 	/* store the data */

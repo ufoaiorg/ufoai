@@ -1395,7 +1395,7 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const in
 	}
 }
 
-void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const GridBox& box)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	int x, y, z;
@@ -1410,13 +1410,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const i
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
+		for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = maxs[2]; z >= mins[2]; z--) {
-			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
+		for (z = box.maxs[2]; z >= box.mins[2]; z--) {
+			for (y = box.maxs[1]; y >= box.mins[1] - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
-				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
+				for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "h:%i c:%i,", routing.getFloor(i, x, y, z), routing.getCeiling(i, x, y, z));
 				}
@@ -1436,13 +1436,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const i
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
+		for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = maxs[2]; z >= mins[2]; z--) {
-			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
+		for (z = box.maxs[2]; z >= box.mins[2]; z--) {
+			for (y = box.maxs[1]; y >= box.mins[1] - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z, y);
-				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
+				for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "\"");
 

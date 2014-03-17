@@ -131,4 +131,4 @@ void RT_DumpWholeMap(mapTiles_t* mapTiles, const Routing& routing);
 int RT_DebugSpecial(mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list);
 void RT_DebugPathDisplay (Routing& routing, const int actorSize, int x, int y, int z);
 #endif
-void RT_WriteCSVFiles(const Routing& routing, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
+void RT_WriteCSVFiles(const Routing& routing, const char* baseFilename, const GridBox& box);
