@@ -510,8 +510,10 @@ void mapTiles_s::printTilesAt (int x ,int y)
 	byte fromTile2 = 0;
 	byte fromTile3 = 0;
 	getTilesAt(x ,y, fromTile1, fromTile2, fromTile3);
-	if (fromTile1)
-		Com_Printf("Tilenames: %s", mapTiles[fromTile1 - 1].name);
+	if (fromTile1) {
+		const MapTile& tile = mapTiles[fromTile1 - 1];
+		Com_Printf("Tilenames: %s (%i %i) (%i %i)", tile.name, tile.wpMins[0], tile.wpMins[1], tile.wpMaxs[0], tile.wpMaxs[1]);
+	}
 	if (fromTile2)
 		Com_Printf(", %s", mapTiles[fromTile2 - 1].name);
 	if (fromTile3)
