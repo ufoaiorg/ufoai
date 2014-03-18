@@ -647,12 +647,16 @@ const char* GAME_CP_GetItemModel (const char* string)
 	}
 }
 
+static const cmdList_t cgameCallbacks[] = {
+	{"cp_results", GAME_CP_Results_f, "Parses and shows the game results"},
+	{"cp_getdescription", GAME_CP_CampaignDescription_f, nullptr},
+	{"cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns"},
+	{"cp_start", GAME_CP_Start_f, "Start the new campaign"},
+	{nullptr, nullptr, nullptr}
+};
 void GAME_CP_InitStartup (void)
 {
-	cgi->Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	cgi->Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, nullptr);
-	cgi->Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	cgi->Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
+	Cmd_TableAddList(cgameCallbacks);
 
 	CP_InitStartup();
 
@@ -668,10 +672,7 @@ void GAME_CP_InitStartup (void)
 
 void GAME_CP_Shutdown (void)
 {
-	cgi->Cmd_RemoveCommand("cp_results");
-	cgi->Cmd_RemoveCommand("cp_getdescription");
-	cgi->Cmd_RemoveCommand("cp_getcampaigns");
-	cgi->Cmd_RemoveCommand("cp_start");
+	Cmd_TableRemoveList(cgameCallbacks);
 
 	CP_Shutdown();
 
