@@ -749,23 +749,6 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	mapData->mapChecksum += checksum;
 }
 
-static void CMod_GetTilesAt (const mapTiles_t* mapTiles, int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3)
-{
-	for (int i = 0; i < mapTiles->numTiles; i++) {
-		if ( mapTiles->mapTiles[i].wpMins[0] > x
-		  || mapTiles->mapTiles[i].wpMaxs[0] - 1 < x	/* the -1 is a temporary fix for wpMaxs being off by 1 */
-		  || mapTiles->mapTiles[i].wpMins[1] > y
-		  || mapTiles->mapTiles[i].wpMaxs[1] - 1 < y)
-			continue;
-		/* this tile exists at x/y, so store it */
-		if (!fromTile1)
-			fromTile1 = mapTiles->mapTiles[i].idx + 1;	/* tile number, not index */
-		else if (!fromTile2)
-			fromTile2 = mapTiles->mapTiles[i].idx + 1;	/* tile number, not index */
-		else
-			fromTile3 = 99;								/* stacking of more than two tiles is not supported */
-	}
-}
 static void CMod_GetTileOverlap (const mapTiles_t* mapTiles, const byte tile1, const byte tile2, int& minZ, int& maxZ) {
 	int lowZ1 = mapTiles->mapTiles[tile1 - 1].wpMins[2];
 	int lowZ2 = mapTiles->mapTiles[tile2 - 1].wpMins[2];
@@ -844,7 +827,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 					byte fromTile1 = 0;
 					byte fromTile2 = 0;
 					byte fromTile3 = 0;
-					CMod_GetTilesAt(mapTiles, x ,y, fromTile1, fromTile2, fromTile3);
+					mapTiles->getTilesAt(x ,y, fromTile1, fromTile2, fromTile3);
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						const int dx = x + dvecs[dir][0];
 						const int dy = y + dvecs[dir][1];
@@ -855,7 +838,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						byte toTile1 = 0;
 						byte toTile2 = 0;
 						byte toTile3 = 0;
-						CMod_GetTilesAt(mapTiles, dx ,dy, toTile1, toTile2, toTile3);
+						mapTiles->getTilesAt(dx ,dy, toTile1, toTile2, toTile3);
 
 						int minZ = 0;
 						int maxZ = PATHFINDING_HEIGHT - 1;

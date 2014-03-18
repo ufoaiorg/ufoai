@@ -483,6 +483,25 @@ bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, 
 		return true;
 }
 
+void mapTiles_s::getTilesAt (int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3)
+{
+#if defined(COMPILE_UFO)
+	for (int i = 0; i < numTiles; i++) {
+		if ( mapTiles[i].wpMins[0] > x
+		  || mapTiles[i].wpMaxs[0] - 1 < x	/* the -1 is a temporary fix for wpMaxs being off by 1 */
+		  || mapTiles[i].wpMins[1] > y
+		  || mapTiles[i].wpMaxs[1] - 1 < y)
+			continue;
+		/* this tile exists at x/y, so store it */
+		if (!fromTile1)
+			fromTile1 = mapTiles[i].idx + 1;	/* tile number, not index */
+		else if (!fromTile2)
+			fromTile2 = mapTiles[i].idx + 1;	/* tile number, not index */
+		else
+			fromTile3 = 99;								/* stacking of more than two tiles is not supported */
+	}
+#endif
+}
 
 /*
 ===============================================================================

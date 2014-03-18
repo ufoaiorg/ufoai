@@ -78,6 +78,8 @@ typedef struct mapTiles_s {
 
 	/** @note number of loaded map tiles (map assembly) */
 	int numTiles;
+
+	void getTilesAt(int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3);
 } mapTiles_t;
 
 /*==============================================================
