@@ -38,7 +38,7 @@ MAP LOADING
 ===============================================================================
 */
 
-static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size_t elementSize, const char* elementName)
+static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size_t elementSize, const char* elementName, int elementMaxCount)
 {
 	if (!lump)
 		Com_Error(ERR_DROP, "%s: No lump given", functionName);
@@ -46,6 +46,12 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size
 		Com_Error(ERR_DROP, "%s: funny lump size (%i => " UFO_SIZE_T ")", functionName, lump->filelen, elementSize);
 	int count = lump->filelen / elementSize;
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...%s: %i\n", elementName, count);
+
+	if (count < 1)
+		Com_Error(ERR_DROP, "Map with no %s", elementName);
+	if (count > elementMaxCount)
+		Com_Error(ERR_DROP, "Map has too many %s: %i", elementName, count);
+
 	return count;
 }
 
@@ -61,14 +67,9 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t), "models");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t), "models", MAX_MAP_MODELS);
 
 	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map with no models");
-	if (count > MAX_MAP_MODELS)
-		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
 	cBspModel_t* out = Mem_PoolAllocTypeN(cBspModel_t, count + 6, com_cmodelSysPool);
 	tile.models = out;
@@ -96,14 +97,9 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t), "surfaces");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t), "surfaces", MAX_MAP_TEXINFO);
 
 	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map with no surfaces");
-	if (count > MAX_MAP_TEXINFO)
-		Com_Error(ERR_DROP, "Map has too many surfaces");
 
 	cBspSurface_t* out = Mem_PoolAllocTypeN(cBspSurface_t, count, com_cmodelSysPool);
 
@@ -128,14 +124,9 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t), "nodes");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t), "nodes", MAX_MAP_NODES);
 
 	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map has no nodes");
-	if (count > MAX_MAP_NODES)
-		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
 	cBspNode_t* out = Mem_PoolAllocTypeN(cBspNode_t, count + 6, com_cmodelSysPool);
@@ -171,12 +162,9 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
  */
 static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t), "brushes");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t), "brushes", MAX_MAP_BRUSHES);
 
 	const dBspBrush_t* in = (const dBspBrush_t*) (base + lump->fileofs);
-
-	if (count > MAX_MAP_BRUSHES)
-		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
 	cBspBrush_t* out = Mem_PoolAllocTypeN(cBspBrush_t, count + 1, com_cmodelSysPool);
@@ -199,15 +187,9 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lum
  */
 static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspLeaf_t), "leafs");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspLeaf_t), "leafs", MAX_MAP_LEAFS);
 
 	const dBspLeaf_t* in = (const dBspLeaf_t*) (base + lump->fileofs);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map with no leafs");
-	/* need to save space for box planes */
-	if (count > MAX_MAP_LEAFS)
-		Com_Error(ERR_DROP, "Map has too many leafs");
 
 	/* add some for the box */
 	cBspLeaf_t* out = Mem_PoolAllocTypeN(cBspLeaf_t, count + 1, com_cmodelSysPool);
@@ -246,15 +228,9 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
  */
 static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspPlane_t), "planes");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspPlane_t), "planes", MAX_MAP_PLANES);
 
 	const dBspPlane_t* in = (const dBspPlane_t*) (base + lump->fileofs);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map with no planes");
-	/* need to save space for box planes */
-	if (count > MAX_MAP_PLANES)
-		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
 	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count + 12, com_cmodelSysPool);
@@ -277,29 +253,17 @@ static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* lump
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(unsigned short), "leafbrushes", MAX_MAP_LEAFBRUSHES);
 
-	const unsigned short* in = (const unsigned short*) (base + l->fileofs);
-	if (l->filelen % sizeof(unsigned short))
-		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
-
-	int count = l->filelen / sizeof(unsigned short);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...leafbrushes: %i\n", count);
+	const unsigned short* in = (const unsigned short*) (base + lump->fileofs);
 
 	/* add some for the box */
 	unsigned short* out = Mem_PoolAllocTypeN(unsigned short, count + 1, com_cmodelSysPool);
-
-	if (count < 1)
-		Com_Error(ERR_DROP, "Map with no planes");
-	/* need to save space for box planes */
-	if (count >= MAX_MAP_LEAFBRUSHES)
-		Com_Error(ERR_DROP, "Map has too many leafbrushes");
 
 	tile.numleafbrushes = count;
 	tile.leafbrushes = out;
@@ -311,24 +275,14 @@ static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t*
 /**
  * @param[in] tile Stores the data of the map tile
  * @param[in] base The start of the data loaded from the file.
- * @param[in] l descriptor of the data block we are working on
+ * @param[in] lump descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (!l)
-		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
+	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrushSide_t), "brushsides", MAX_MAP_BRUSHSIDES);
 
-	const dBspBrushSide_t* in = (const dBspBrushSide_t*) (base + l->fileofs);
-	if (l->filelen % sizeof(dBspBrushSide_t))
-		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
-
-	int count = l->filelen / sizeof(dBspBrushSide_t);
-	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...brushsides: %i\n", count);
-
-	/* need to save space for box planes */
-	if (count > MAX_MAP_BRUSHSIDES)
-		Com_Error(ERR_DROP, "Map has too many brushsides");
+	const dBspBrushSide_t* in = (const dBspBrushSide_t*) (base + lump->fileofs);
 
 	/* add some for the box */
 	cBspBrushSide_t* out = Mem_PoolAllocTypeN(cBspBrushSide_t, count + 6, com_cmodelSysPool);
