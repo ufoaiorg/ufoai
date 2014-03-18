@@ -417,7 +417,7 @@ static inline bool IsInvalidEntityToken (const char* token)
 
 epair_t* AddEpair (const char* key, const char* value, int entNum)
 {
-	epair_t	*e = Mem_AllocType(epair_t);
+	epair_t* e = Mem_AllocType(epair_t);
 
 	if (IsInvalidEntityToken(value) || IsInvalidEntityToken(key))
 		Sys_Error("Invalid entity %i found with key '%s' and value '%s'", entNum, key, value);

@@ -42,24 +42,24 @@ extern mapTiles_t mapTiles;
 typedef struct node_s {
 	/** both leafs and nodes */
 	int32_t			planenum;	/**< -1 = leaf node */
-	struct node_s	*parent;
+	struct node_s*	parent;
 	vec3_t			mins, maxs;	/**< valid after portalization */
-	bspbrush_t		*volume;	/**< one for each leaf/node */
+	bspbrush_t*		volume;		/**< one for each leaf/node */
 
 	/** nodes only */
-	side_t			*side;		/**< the side that created the node */
-	struct node_s	*children[2];
-	face_t			*faces;
+	side_t*			side;		/**< the side that created the node */
+	struct node_s*	children[2];
+	face_t*			faces;
 
 	/** leafs only */
-	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
+	bspbrush_t*		brushlist;	/**< fragments of all brushes in this leaf */
 	int32_t			contentFlags;	/**< OR of all brush contents */
 	int				area;		/**< for areaportals - @todo not used, remove it when we change the bsp version the next time */
-	struct portal_s	*portals;	/**< also on nodes during construction */
+	struct portal_s* portals;	/**< also on nodes during construction */
 } node_t;
 
 typedef struct tree_s {
-	struct node_s	*headnode;
+	struct node_s*	headnode;
 	struct node_s	outside_node;
 	AABB			aabb;
 } tree_t;

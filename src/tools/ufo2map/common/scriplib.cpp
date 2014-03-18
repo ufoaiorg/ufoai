@@ -34,8 +34,8 @@ PARSING STUFF
 */
 
 typedef struct {
-	char	filename[MAX_OSPATH];
-	char	*buffer;
+	char filename[MAX_OSPATH];
+	char* buffer;
 	const char* script_p;
 	const char* end_p;
 } script_t;

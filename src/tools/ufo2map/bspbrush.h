@@ -33,11 +33,11 @@ typedef struct bspbrush_s bspbrush_t;
 #else
 #define STANDARD_NUMBER_OF_BRUSHSIDES 6
 typedef struct bspbrush_s {
-	struct bspbrush_s	*next;
+	struct bspbrush_s* next;
 	AABB	brBox;
 	int		side;		/**< side of node during construction */
 	int		testside;
-	struct mapbrush_s	*original;
+	struct mapbrush_s* original;
 	int		numsides;
 	side_t	sides[STANDARD_NUMBER_OF_BRUSHSIDES];			/**< variably sized */
 } bspbrush_t;
