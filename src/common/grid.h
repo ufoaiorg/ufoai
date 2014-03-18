@@ -65,8 +65,7 @@ typedef struct pathing_s {
 	dvec_t areaFrom[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 	/* forbidden list */
-	pos_t** fblist;	/**< pointer to forbidden list (entities are standing here) */
-	int fblength;	/**< length of forbidden list (amount of entries) */
+	forbiddenList_t* fbList;	/**< pointer to forbidden list (entities are standing here) */
 } pathing_t;
 
 /*==========================================================

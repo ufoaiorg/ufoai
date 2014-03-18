@@ -99,7 +99,10 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 	int i;
 	actorSizeEnum_t size;
 
-	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
+	if (!path->fbList)
+		return false;	/* no fbList, no intersection. We're done. */
+
+	for (i = 0, p = path->fbList->fbList; i < path->fbList->fbListLength / 2; i++, p += 2) {
 		/* Skip initial position. */
 		if (VectorCompare((*p), exclude)) {
 			continue;
@@ -518,11 +521,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	/* reset move data */
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
-	path->fblength = 0;
-	if (fb_list) {
-		path->fblist = fb_list->fbList;
-		path->fblength = fb_list->fbListLength;
-	}
+	path->fbList = fb_list;
 
 	maxTUs = std::min(maxTUs, MAX_ROUTE_TUS);
 
@@ -624,8 +623,7 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
 	if (forbiddenList) {
-		path->fblist = forbiddenList->fbList;
-		path->fblength = forbiddenList->fbListLength;
+		path->fbList = forbiddenList;
 	}
 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
