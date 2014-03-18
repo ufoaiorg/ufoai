@@ -117,6 +117,9 @@ class GridBox {
 public:
 	static const GridBox EMPTY;
 
+	/*==================
+	 *		ctors
+	 *==================*/
 	GridBox(const ipos3_t mini, const ipos3_t maxi) {
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
@@ -125,12 +128,17 @@ public:
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
 	}
-
 	GridBox(const AABB& aabb) {
 		VecToPos(aabb.getMins(), mins);
 		VecToPos(aabb.getMaxs(), maxs);
 	}
 
+	/*==================
+	 *		setters
+	 *==================*/
+	/*==================
+	 *		getters
+	 *==================*/
 	inline pos_t getMinX () const {
 		return mins[0];
 	}
@@ -149,9 +157,17 @@ public:
 	inline pos_t getMaxZ () const {
 		return maxs[2];
 	}
+
+	/*==================
+	 *		checkers
+	 *==================*/
 	inline bool isZero() const {
 		return VectorIntZero(mins) && VectorIntZero(maxs);
 	}
+
+	/*==================
+	 *	manipulators
+	 *==================*/
 	/** @brief expand the box in four directions, but clip them to the maximum boundaries
 	 * @note this is pretty much nonsense with the current setting of PATHFINDING_WIDTH
 	 * and the data type of pos3_t, but who knows the future... */
@@ -172,6 +188,9 @@ public:
 		VectorCopy(maxi, maxs);
 	}
 
+	/*==================
+	 *		data
+	 *==================*/
 	pos3_t mins;
 	pos3_t maxs;
 };
