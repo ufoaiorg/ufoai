@@ -126,11 +126,6 @@ public:
 		VectorCopy(maxi, maxs);
 	}
 
-	GridBox(const vec3_t mini, const vec3_t maxi) {
-		VecToPos(mini, mins);
-		VecToPos(maxi, maxs);
-	}
-
 	GridBox(const AABB& aabb) {
 		VecToPos(aabb.getMins(), mins);
 		VecToPos(aabb.getMaxs(), maxs);
