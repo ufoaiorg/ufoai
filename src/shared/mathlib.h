@@ -120,6 +120,10 @@ public:
 	/*==================
 	 *		ctors
 	 *==================*/
+	GridBox() {
+		VectorCopy(vec3_origin, mins);
+		VectorCopy(vec3_origin, maxs);
+	}
 	GridBox(const ipos3_t mini, const ipos3_t maxi) {
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
