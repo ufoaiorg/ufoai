@@ -128,17 +128,32 @@ public:
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
 	}
+#if 1
 	GridBox(const AABB& aabb) {
 		VecToPos(aabb.getMins(), mins);
 		VecToPos(aabb.getMaxs(), maxs);
 	}
-
+#endif
 	/*==================
 	 *		setters
 	 *==================*/
 	inline void set(const pos3_t mini, const pos3_t maxi) {
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
+	}
+
+	/**
+	 * @brief Set the box correctly if the maxs value is the upper corner of a cell.
+	 * VecToPos considers the upper bounds of a cell as belonging to the next cell.
+	 * If this is not compensated, boxes derived from a map bounding box have one
+	 * surplus cell in each direction.
+	 */
+	inline void setFromMapBounds(const vec3_t mini, const vec3_t maxi) {
+		VecToPos(mini, mins);
+		VecToPos(maxi, maxs);
+		maxs[0]--;
+		maxs[1]--;
+		maxs[2]--;
 	}
 
 	/*==================
