@@ -261,7 +261,6 @@ static int TestBrushToPlanenum (bspbrush_t* brush, uint16_t planenum,
 	for (i = 0; i < brush->numsides; i++) {
 		const side_t* side = &brush->sides[i];
 		const winding_t* w;
-		int j;
 		if (side->texinfo == TEXINFO_NODE)
 			continue;		/* on node, don't worry about splits */
 		if (!side->visible)
@@ -270,7 +269,7 @@ static int TestBrushToPlanenum (bspbrush_t* brush, uint16_t planenum,
 		if (!w)
 			continue;
 		front = back = 0;
-		for (j = 0; j < w->numpoints; j++) {
+		for (int j = 0; j < w->numpoints; j++) {
 			const vec_t d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > d_front)
 				d_front = d;
@@ -416,10 +415,9 @@ static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t* volume)
  */
 side_t* SelectSplitSide (bspbrush_t* brushes, bspbrush_t* volume)
 {
-	int value, bestvalue;
+	int value;
 	bspbrush_t* brush, *test;
-	side_t* bestside;
-	int i, j, pass, numpasses;
+	int i, pass;
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
 	bool hintsplit;
@@ -427,8 +425,8 @@ side_t* SelectSplitSide (bspbrush_t* brushes, bspbrush_t* volume)
 	if (!volume)
 		return nullptr; /* can't split empty brush */
 
-	bestside = nullptr;
-	bestvalue = -99999;
+	side_t* bestside = nullptr;
+	int bestvalue = -99999;
 
 	/**
 	 * the search order goes: visible-structural, visible-detail,
@@ -436,7 +434,7 @@ side_t* SelectSplitSide (bspbrush_t* brushes, bspbrush_t* volume)
 	 * If any valid plane is available in a pass, no further
 	 * passes will be tried.
 	 */
-	numpasses = 4;
+	int numpasses = 4;
 	for (pass = 0; pass < numpasses; pass++) {
 		for (brush = brushes; brush; brush = brush->next) {
 			if ((pass & 1) && !(brush->original->contentFlags & CONTENTS_DETAIL))
@@ -485,7 +483,7 @@ side_t* SelectSplitSide (bspbrush_t* brushes, bspbrush_t* volume)
 					 * testing that facenum as a splitter again */
 					if (s & PSIDE_FACING) {
 						facing++;
-						for (j = 0; j < test->numsides; j++) {
+						for (int j = 0; j < test->numsides; j++) {
 							if ((test->sides[j].planenum &~ 1) == pnum)
 								test->sides[j].tested = true;
 						}

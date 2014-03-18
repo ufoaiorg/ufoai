@@ -477,12 +477,11 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte* buffer)
 	const int frameSize = LittleLong(md2->framesize);
 	const dMD2Frame_t* frame = (const dMD2Frame_t*) ((const byte*) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
 	vec3_t scale, mins, maxs;
-	int j;
 
 	if (mod->frame > num_frames)
 		return;
 
-	for (j = 0; j < 3; j++) {
+	for (int j = 0; j < 3; j++) {
 		scale[j] = LittleFloat(frame->scale[j]);
 		mins[j] = LittleFloat(frame->translate[j]);
 	}
@@ -503,13 +502,12 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte* buffer)
 	const dmd3frame_t* frame = (const dmd3frame_t*)((const byte*)md3 + LittleLong(md3->ofs_frames));
 	const int num_frames = LittleLong(md3->num_frames);
 	vec3_t mins, maxs;
-	int j;
 
 	if (mod->frame > num_frames)
 		return;
 
 	frame += mod->frame;
-	for (j = 0; j < 3; j++) {
+	for (int j = 0; j < 3; j++) {
 		mins[j] = LittleFloat(frame->mins[j]);
 		maxs[j] = LittleFloat(frame->maxs[j]);
 	}

@@ -236,8 +236,7 @@ static void testMoveEntities (void)
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			/* Dead 2x2 unit will stop walking, too. */
 			if (ent->type == ET_SOLID) {
-				int j;
-				for (j = 0; j < ent->forbiddenListSize; j++) {
+				for (int j = 0; j < ent->forbiddenListSize; j++) {
 					forbiddenList.add(ent->forbiddenListPos[j], (byte*) &ent->fieldSize);
 				}
 			}

@@ -286,8 +286,7 @@ static int ED_CheckRange (const entityKeyDef_t* keyDef, const int type, const in
 				parsedNumber.f, kr->str, keyDef->name);
 			return ED_OK;
 		} else {
-			int j;
-			for (j = 0; j < kr->numElements; j++)
+			for (int j = 0; j < kr->numElements; j++)
 				if (fabs(parsedNumber.f - kr->fArr[j]) < discreteFloatEpsilon)
 					return ED_OK;
 		}
@@ -299,8 +298,7 @@ static int ED_CheckRange (const entityKeyDef_t* keyDef, const int type, const in
 				parsedNumber.i, kr->str, keyDef->name);
 			return ED_OK;
 		} else {
-			int j;
-			for (j = 0; j < kr->numElements; j++)
+			for (int j = 0; j < kr->numElements; j++)
 				if (kr->iArr[j] == parsedNumber.i)
 					return ED_OK;
 		}
