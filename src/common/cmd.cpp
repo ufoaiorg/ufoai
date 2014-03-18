@@ -135,14 +135,14 @@ void Cbuf_AddText (const char* format, ...)
 		}
 	}
 
-	const int l = strlen(text);
+	const int len = strlen(text);
 
-	if (cmd_text.cursize + l >= cmd_text.maxsize) {
+	if (cmd_text.cursize + len >= cmd_text.maxsize) {
 		Com_Printf("Cbuf_AddText: overflow (%i) (%s)\n", cmd_text.maxsize, text);
 		Com_Printf("buffer content: %s\n", cmd_text_buf);
 		return;
 	}
-	SZ_Write(&cmd_text, text, l);
+	SZ_Write(&cmd_text, text, len);
 }
 
 
