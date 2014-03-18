@@ -2280,14 +2280,15 @@ static void CL_DebugPath_f (void)
 //	GridBox myBox(boxmin, boxmax);
 //	Grid_RecalcBoxRouting(cl.mapTiles, cl.mapData->routing, myBox, cl.leInlineModelList);
 	}
-#endif
 	int dir = 0;
 	long time = Sys_Milliseconds();
 	RT_UpdateConnectionColumn(cl.mapTiles, cl.mapData->routing, actorSize, x, y, dir, cl.leInlineModelList);
 	time = (Sys_Milliseconds() - time);
 	Com_Printf("RT_UpdateConnectionColumn needed %i milliseconds\n", (int)time);
+#endif
 
 	RT_DebugPathDisplay(cl.mapData->routing, actorSize, x, y, z);
+	cl.mapTiles->printTilesAt(x, y);
 
 	GridBox mbox;
 	mbox.setFromMapBounds(cl.mapData->mapBox.mins, cl.mapData->mapBox.maxs);

@@ -80,6 +80,7 @@ typedef struct mapTiles_s {
 	int numTiles;
 
 	void getTilesAt(int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3);
+	void printTilesAt(int x ,int y);
 } mapTiles_t;
 
 /*==============================================================

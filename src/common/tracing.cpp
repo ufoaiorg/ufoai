@@ -503,6 +503,23 @@ void mapTiles_s::getTilesAt (int x ,int y, byte& fromTile1, byte& fromTile2, byt
 #endif
 }
 
+void mapTiles_s::printTilesAt (int x ,int y)
+{
+#if defined(COMPILE_UFO)
+	byte fromTile1 = 0;		/* tile number, not index */
+	byte fromTile2 = 0;
+	byte fromTile3 = 0;
+	getTilesAt(x ,y, fromTile1, fromTile2, fromTile3);
+	if (fromTile1)
+		Com_Printf("Tilenames: %s", mapTiles[fromTile1 - 1].name);
+	if (fromTile2)
+		Com_Printf(", %s", mapTiles[fromTile2 - 1].name);
+	if (fromTile3)
+		Com_Printf(", %s", mapTiles[fromTile3 - 1].name);
+	Com_Printf("\n");
+#endif
+}
+
 /*
 ===============================================================================
 BOX TRACING
