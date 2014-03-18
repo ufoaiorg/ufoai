@@ -153,9 +153,8 @@ static bool INVSH_CheckToInventory_shape (const Inventory* const inv, const invD
 		return false;
 
 	if (!cacheCheckToInventory) {
-		int j;
 		/* extract shape info */
-		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
+		for (int j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			mask[j] = ~container->shape[j];
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */

@@ -46,7 +46,7 @@ void PQueueInitialise (priorityQueue_t* pq, uint32_t maxElements)
 
 void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r)
 {
-	uint32_t i, j;
+	uint32_t i;
 	uint32_t currentSize = pq->currentSize;
 
 	if (currentSize == pq->maxSize) {
@@ -70,7 +70,7 @@ void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r
 	}
 
 	/* then add the element at the space we created. */
-	for (j = 0; j < 4; j++)
+	for (int j = 0; j < 4; j++)
 		pq->elements[i].item[j] = item[j];
 
 	pq->elements[i].rating = r;
@@ -91,7 +91,7 @@ void PQueueFree (priorityQueue_t* pq)
  */
 void PQueuePop (priorityQueue_t* pq, pos4_t item)
 {
-	uint32_t i, j;
+	uint32_t i;
 	uint32_t child;
 	priorityQueueElement_t* elements = pq->elements;
 	uint32_t currentSize = pq->currentSize;
@@ -106,7 +106,7 @@ void PQueuePop (priorityQueue_t* pq, pos4_t item)
 	/* get pointer to last element in tree */
 	pLastElement = elements[currentSize--];
 
-	for (j = 0; j < 4; j++)
+	for (int j = 0; j < 4; j++)
 		item[j] = pMaxElement.item[j];
 
 	for (i = PQ_FIRST_ENTRY; (child = PQ_LEFT_CHILD_INDEX(i)) <= currentSize; i = child) {

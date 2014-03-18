@@ -350,15 +350,13 @@ void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int delt
 
 		if (attacker)
 		for (int i = 0; i < MAX_TEAMS; i++) {
-			int j;
-
 			if (i == victim->team) {
 				Com_Printf("^2num_alive (team %i): %i\n", i, level.num_alive[i]);
 			} else {
 				Com_Printf("num_alive (team %i): %i\n", i, level.num_alive[i]);
 			}
 
-			for (j = 0; j < MAX_TEAMS; j++) {
+			for (int j = 0; j < MAX_TEAMS; j++) {
 				if (j == victim->team) {
 					Com_Printf("^2num_kills (team %i killed  %i): %i\n", i, j, level.num_kills[i][j]);
 					Com_Printf("^2num_stuns (team %i stunned %i): %i\n", i, j, level.num_stuns[i][j]);

@@ -2249,7 +2249,6 @@ NAME AND TEAM DEFINITION INTERPRETER
 static const char* Com_GiveName (int gender, const teamDef_t* td)
 {
 	int j, name = 0;
-	linkedList_t* list;
 
 #ifdef DEBUG
 	for (j = 0; j < NAME_NUM_TYPES; j++)
@@ -2267,7 +2266,7 @@ static const char* Com_GiveName (int gender, const teamDef_t* td)
 	name = rand() % td->numNames[gender];
 
 	/* skip names */
-	list = td->names[gender];
+	linkedList_t* list = td->names[gender];
 	for (j = 0; j < name; j++) {
 		assert(list);
 		list = list->next;
@@ -2314,9 +2313,6 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t* td)
  */
 const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
-	int random, j;
-	linkedList_t* list;
-
 	if (!td)
 		return nullptr;
 
@@ -2329,9 +2325,9 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 		return nullptr;
 	}
 
-	random = rand() % td->numSounds[soundType][gender];
-	list = td->sounds[soundType][gender];
-	for (j = 0; j < random; j++) {
+	int random = rand() % td->numSounds[soundType][gender];
+	linkedList_t* list = td->sounds[soundType][gender];
+	for (int j = 0; j < random; j++) {
 		assert(list);
 		list = list->next;
 	}
