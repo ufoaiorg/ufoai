@@ -995,7 +995,8 @@ void Grid_RecalcRouting (mapTiles_t* mapTiles, Routing& routing, const char* nam
 			absbox.shift(model->origin);
 		}
 #endif
-		GridBox rerouteBox(absbox);
+		GridBox rerouteBox;
+		rerouteBox.set(absbox);
 
 		/* fit min/max into the world size */
 		rerouteBox.clipToMaxBoundaries();

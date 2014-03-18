@@ -145,6 +145,10 @@ public:
 		VectorCopy(mini, mins);
 		VectorCopy(maxi, maxs);
 	}
+	inline void set(const AABB& aabb) {
+		VecToPos(aabb.getMins(), mins);
+		VecToPos(aabb.getMaxs(), maxs);
+	}
 
 	/**
 	 * @brief Set the box correctly if the maxs value is the upper corner of a cell.

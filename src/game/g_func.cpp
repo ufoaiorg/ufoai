@@ -114,7 +114,8 @@ static bool Destroy_Breakable (Edict* self)
 
 	AABB oldAABB(vec3_origin, vec3_origin);
 	gi.GetInlineModelAABB(model, oldAABB);
-	GridBox rerouteOldBox(oldAABB);
+	GridBox rerouteOldBox;
+	rerouteOldBox.set(oldAABB);
 	G_RecalcRouting(model, rerouteOldBox);
 
 	return true;
@@ -227,7 +228,8 @@ static bool Door_Use (Edict* door, Edict* activator)
 	/* remember the old location */
 	AABB oldAABB;
 	gi.GetInlineModelAABB(door->model, oldAABB);
-	GridBox rerouteOldBox(oldAABB);
+	GridBox rerouteOldBox;
+	rerouteOldBox.set(oldAABB);
 
 	/* change rotation and relink */
 	if (door->type == ET_DOOR) {
@@ -256,7 +258,8 @@ static bool Door_Use (Edict* door, Edict* activator)
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
 	AABB newAabb;
 	gi.GetInlineModelAABB(door->model, newAabb);
-	GridBox rerouteNewBox(newAabb);
+	GridBox rerouteNewBox;
+	rerouteNewBox.set(newAabb);
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
 	/* Update path finding table for the new location of the model */
