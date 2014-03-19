@@ -140,7 +140,12 @@ void DoRouting (void)
 	/* Com_Printf("Vectors: (%f, %f, %f) to (%f, %f, %f)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]); */
 	VecToPos(mins, wpMins);
 	VecToPos(maxs, wpMaxs);
-
+#if 0
+	/* wpMaxs is on a 32 boundary. This causes VecToPos to calculate a pos *above* wpMAxs. We have to compensate. */
+	wpMaxs[0]--;
+	wpMaxs[1]--;
+	wpMaxs[2]--;
+#endif
 	/* Verify the world extents are not lopsided. */
 	assert(wpMins[0] <= wpMaxs[0]);
 	assert(wpMins[1] <= wpMaxs[1]);
