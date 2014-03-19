@@ -213,9 +213,8 @@ void ClipWindingEpsilon (const winding_t* in, const vec3_t normal, const vec_t d
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	int i, j;
+	int i;
 	winding_t* f, *b;
-	int maxpts;
 
 	VectorClear(counts);
 
@@ -246,7 +245,7 @@ void ClipWindingEpsilon (const winding_t* in, const vec3_t normal, const vec_t d
 	}
 
 	/* can't use counts[0] + 2 because of floating point grouping errors */
-	maxpts = in->numpoints + 4;
+	int maxpts = in->numpoints + 4;
 
 	*front = f = AllocWinding(maxpts);
 	*back = b = AllocWinding(maxpts);
@@ -282,7 +281,7 @@ void ClipWindingEpsilon (const winding_t* in, const vec3_t normal, const vec_t d
 
 		dot = dists[i] / (dists[i] - dists[i + 1]);
 		/* avoid round off error when possible */
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			if (normal[j] == 1)
 				mid[j] = dist;
 			else if (normal[j] == -1)
@@ -305,17 +304,13 @@ void ClipWindingEpsilon (const winding_t* in, const vec3_t normal, const vec_t d
 
 void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
-	winding_t* in;
 	/** @todo Why + 4? */
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	int i, j;
-	vec3_t mid;
-	winding_t* f;
-	int maxpts;
+	int i;
 
-	in = *inout;
+	winding_t* in = *inout;
 	VectorClear(counts);
 
 	/* determine sides for each point */
@@ -343,9 +338,9 @@ void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dis
 		return;		/* inout stays the same */
 
 	/* cant use counts[0] + 2 because of fp grouping errors */
-	maxpts = in->numpoints + 4;
+	int maxpts = in->numpoints + 4;
 
-	f = AllocWinding(maxpts);
+	winding_t* f = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
 		const vec_t* p1 = in->p[i];
@@ -371,7 +366,8 @@ void ChopWindingInPlace (winding_t** inout, const vec3_t normal, const vec_t dis
 
 		dot = dists[i] / (dists[i] - dists[i + 1]);
 		/* avoid round off error when possible */
-		for (j = 0; j < 3; j++) {
+		vec3_t mid;
+		for (int j = 0; j < 3; j++) {
 			if (normal[j] == 1)
 				mid[j] = dist;
 			else if (normal[j] == -1)

@@ -744,7 +744,7 @@ static float Check_LongestEdge (const winding_t* w)
 static float Check_SidesOverlap (const side_t* s1, const side_t* s2)
 {
 	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
-	int numVert = 0, i, j, k;
+	int numVert = 0, i;
 	winding_t* w[2];
 	mapbrush_t* b[2];
 
@@ -754,7 +754,7 @@ static float Check_SidesOverlap (const side_t* s1, const side_t* s2)
 	/* test if points from first winding are in (or on) brush that is parent of second winding
 	 * and vice - versa. i ^ 1 toggles */
 	for (i = 0; i < 2; i++) {
-		for (j = 0; j < w[i]->numpoints ; j++) {
+		for (int j = 0; j < w[i]->numpoints ; j++) {
 			if (Check_IsPointInsideBrush(w[i]->p[j], b[i ^ 1], PIB_INCL_SURF)) {
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
 					Check_Printf(VERB_CHECK, false, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
@@ -769,7 +769,7 @@ static float Check_SidesOverlap (const side_t* s1, const side_t* s2)
 	/* test for intersections between windings*/
 	for (i = 0; i < w[0]->numpoints; i++) {
 		const int pointIndex = (i + 1) % w[0]->numpoints;
-		for (k = 0; k < w[1]->numpoints; k++) {
+		for (int k = 0; k < w[1]->numpoints; k++) {
 			const int pointIndex2 = (k + 1) % w[1]->numpoints;
 			if (Check_EdgeEdgeIntersection(w[0]->p[i], w[0]->p[pointIndex], w[1]->p[k], w[1]->p[pointIndex2], vertbuf[numVert])) {
 				numVert++; /* if intersection, keep it */
@@ -1227,12 +1227,11 @@ void CheckNodraws (void)
  */
 static bool Check_DuplicateBrushPlanes (const mapbrush_t* b)
 {
-	int i, j;
 	const side_t* sides = b->original_sides;
 
-	for (i = 1; i < b->numsides; i++) {
+	for (int i = 1; i < b->numsides; i++) {
 		/* check for duplication and mirroring */
-		for (j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 			if (sides[i].planenum == sides[j].planenum) {
 				/* remove the second duplicate */
 				Check_Printf(VERB_CHECK, false, b->entitynum, b->brushnum, "mirrored or duplicated\n");
