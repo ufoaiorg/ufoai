@@ -206,17 +206,15 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
  */
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
-	vec3_t normal;
+	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 	pos3_t start, end, test;
 
 	/* Initialize start, end, and normal */
 	VectorClear(start);
 	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
-	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
 
 	for (int i = 0; i < 3; i++) {
 		AABB box;
-		trace_t trace;
 		/* Lower positive boundary */
 		while (end[i] > start[i]) {
 			/* Adjust ceiling */
@@ -228,7 +226,7 @@ void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -246,7 +244,7 @@ void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -285,7 +283,7 @@ void RT_GetMapSize (mapTiles_t* mapTiles, vec3_t map_min, vec3_t map_max)
 	pos3_t start, end, test;
 
 	/* Initialize start, end, and normal */
-	VectorSet(start, 0, 0, 0);
+	VectorClear(start);
 	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
 
 	for (int i = 0; i < 3; i++) {
