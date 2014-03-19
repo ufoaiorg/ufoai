@@ -40,19 +40,19 @@ typedef struct brush_texture_s {
 } brush_texture_t;
 
 typedef struct face_s {
-	struct face_s	*next;		/**< on node */
+	struct face_s*	next;		/**< on node */
 
 	/** the chain of faces off of a node can be merged or split,
 	 * but each face_t along the way will remain in the chain
 	 * until the entire tree is freed */
-	struct face_s	*merged;	/**< if set, this face isn't valid anymore */
-	struct face_s	*split[2];	/**< if set, this face isn't valid anymore */
+	struct face_s*	merged;	/**< if set, this face isn't valid anymore */
+	struct face_s*	split[2];	/**< if set, this face isn't valid anymore */
 
-	struct portal_s	*portal;
+	struct portal_s* portal;
 	int				texinfo;
 	uint16_t		planenum;
 	uint32_t		contentFlags;	/**< faces in different contents can't merge */
-	winding_t		*w;
+	winding_t*		w;
 	int				numpoints;
 	int				vertexnums[MAXEDGES];
 } face_t;
@@ -60,8 +60,8 @@ typedef struct face_s {
 typedef struct side_s {
 	uint16_t	planenum;
 	int			texinfo;
-	winding_t	*winding;
-	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
+	winding_t*	winding;
+	struct side_s* original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
 	uint32_t	contentFlags;	/**< from miptex */
 	uint32_t	surfaceFlags;	/**< from miptex */
 	bool	visible;			/**< choose visible planes first */
@@ -81,7 +81,7 @@ typedef struct mapbrush_s {
 	AABB	mbBox;
 
 	int		numsides;
-	struct side_s	*original_sides;
+	struct side_s* original_sides;
 
 	/**list of brushes that are near to this one.
 	 * not necessarily initialised. call Check_NearList() to make sure it has been initialised
@@ -104,7 +104,7 @@ typedef struct plane_s {
 							 * the distance of a point from the plane.)*/
 	int		type;
 	vec3_t	planeVector[3]; /**< 3 points on the plane, from the map file */
-	struct plane_s	*hash_chain;
+	struct plane_s* hash_chain;
 } plane_t;
 
 typedef struct portal_s {
@@ -112,7 +112,7 @@ typedef struct portal_s {
 	struct node_s* onnode;		/**< nullptr = outside box */
 	struct node_s* nodes[2];	/**< [0] = front side of plane */
 	struct portal_s* next[2];
-	winding_t	*winding;
+	winding_t*	winding;
 
 	bool sidefound;				/**< false if ->side hasn't been checked */
 	struct side_s* side;		/**< nullptr = non-visible */

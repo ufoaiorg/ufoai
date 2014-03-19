@@ -120,7 +120,7 @@ static face_t* AllocFace (void)
 
 static face_t* NewFaceFromFace (const face_t* f)
 {
-	face_t	*newf;
+	face_t* newf;
 
 	newf = AllocFace();
 	*newf = *f;

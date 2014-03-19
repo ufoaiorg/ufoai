@@ -39,7 +39,7 @@ typedef struct {
 	vec3_t	facenormal;
 
 	int		numsurfpt;
-	vec3_t	*surfpt;
+	vec3_t*	surfpt;
 
 	vec3_t	modelorg;		/**< for origined bmodels */
 
@@ -52,7 +52,7 @@ typedef struct {
 
 	int		step;			/**< step between samples in tex2world units */
 
-	dBspSurface_t	*face;
+	dBspSurface_t* face;
 } lightinfo_t;
 
 /** @brief face extents */
@@ -1004,7 +1004,7 @@ void FinalLightFace (unsigned int facenum)
 	byte* dest;
 
 	dBspSurface_t* f = &curTile->faces[facenum];
-	facelight_t	*fl = &facelight[config.compile_for_day][facenum];
+	facelight_t* fl = &facelight[config.compile_for_day][facenum];
 
 	/* none-lit texture */
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)

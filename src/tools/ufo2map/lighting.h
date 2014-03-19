@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_PATCHES	65000			/* larger will cause 32 bit overflows */
 
 typedef struct patch_s {
-	dBspSurface_t 		*face;
-	winding_t		*winding;
+	dBspSurface_t*	face;
+	winding_t*		winding;
 
 	vec3_t			origin;
 	vec3_t			normal;
@@ -40,7 +40,7 @@ typedef struct patch_s {
 	float			area;
 	vec3_t			light;		/**< emissive surface light */
 
-	struct patch_s	*next;		/**< next in face */
+	struct patch_s*	next;		/**< next in face */
 } patch_t;
 
 extern patch_t* face_patches[MAX_MAP_FACES];
