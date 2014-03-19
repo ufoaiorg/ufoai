@@ -220,15 +220,19 @@ static void INT_SetAlienInterest_f (void)
 }
 #endif
 
+static const cmdList_t debugInterestCmds[] = {
+#ifdef DEBUG
+	{"debug_interestlist", INT_AlienInterestList_f, "Debug function to show alien interest values"},
+	{"debug_interestset", INT_SetAlienInterest_f, "Set overall interest level."},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init actions for alien interests-subsystem
  */
 void INT_InitStartup (void)
 {
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_interestlist", INT_AlienInterestList_f, "Debug function to show alien interest values");
-	cgi->Cmd_AddCommand("debug_interestset", INT_SetAlienInterest_f, "Set overall interest level.");
-#endif
+	Cmd_TableAddList(debugInterestCmds);
 }
 
 /**
@@ -236,8 +240,5 @@ void INT_InitStartup (void)
  */
 void INT_Shutdown (void)
 {
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_interestlist");
-	cgi->Cmd_RemoveCommand("debug_interestset");
-#endif
+	Cmd_TableRemoveList(debugInterestCmds);
 }

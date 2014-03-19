@@ -399,16 +399,20 @@ bool AB_SaveXML (xmlNode_t* p)
 	return true;
 }
 
+static const cmdList_t debugAlienBaseCmds[] = {
+#ifdef DEBUG
+	{"debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console"},
+	{"debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init actions for alienbase-subsystem
  * @sa UI_InitStartup
  */
 void AB_InitStartup (void)
 {
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
-	cgi->Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
-#endif
+	Cmd_TableAddList(debugAlienBaseCmds);
 }
 
 /**
@@ -418,8 +422,5 @@ void AB_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.alienBases);
 
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_listalienbase");
-	cgi->Cmd_RemoveCommand("debug_alienbasevisible");
-#endif
+	Cmd_TableRemoveList(debugAlienBaseCmds);
 }
