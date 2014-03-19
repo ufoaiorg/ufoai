@@ -206,14 +206,13 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
  */
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
-	vec3_t normal, origin;
+	vec3_t normal;
 	pos3_t start, end, test;
 
 	/* Initialize start, end, and normal */
 	VectorClear(start);
 	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
 	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorClear(origin);
 
 	for (int i = 0; i < 3; i++) {
 		AABB box;
