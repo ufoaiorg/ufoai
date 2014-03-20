@@ -503,6 +503,21 @@ void mapTiles_s::getTilesAt (int x ,int y, byte& fromTile1, byte& fromTile2, byt
 #endif
 }
 
+void mapTiles_s::getTileOverlap (const byte tile1, const byte tile2, int& minZ, int& maxZ)
+{
+#if defined(COMPILE_UFO)
+	int lowZ1 = mapTiles[tile1 - 1].wpMins[2];
+	int lowZ2 = mapTiles[tile2 - 1].wpMins[2];
+	int highZ1 = mapTiles[tile1 - 1].wpMaxs[2];
+	int highZ2 = mapTiles[tile2 - 1].wpMaxs[2];
+	minZ = std::max(lowZ1, lowZ2);
+	if (minZ > 0)
+		minZ--;			/* routing needs to start one level below the actual overlap */
+	maxZ = std::min(highZ1, highZ2);
+	maxZ++;				/* ... and one level above */
+#endif
+}
+
 void mapTiles_s::printTilesAt (int x ,int y)
 {
 #if defined(COMPILE_UFO)

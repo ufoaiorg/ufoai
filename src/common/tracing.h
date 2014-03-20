@@ -82,6 +82,7 @@ typedef struct mapTiles_s {
 	int numTiles;
 
 	void getTilesAt(int x ,int y, byte& fromTile1, byte& fromTile2, byte& fromTile3);
+	void getTileOverlap(const byte tile1, const byte tile2, int& minZ, int& maxZ);
 	void printTilesAt(int x ,int y);
 } mapTiles_t;
 

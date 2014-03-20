@@ -749,17 +749,6 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	mapData->mapChecksum += checksum;
 }
 
-static void CMod_GetTileOverlap (const mapTiles_t* mapTiles, const byte tile1, const byte tile2, int& minZ, int& maxZ) {
-	int lowZ1 = mapTiles->mapTiles[tile1 - 1].wpMins[2];
-	int lowZ2 = mapTiles->mapTiles[tile2 - 1].wpMins[2];
-	int highZ1 = mapTiles->mapTiles[tile1 - 1].wpMaxs[2];
-	int highZ2 = mapTiles->mapTiles[tile2 - 1].wpMaxs[2];
-	minZ = std::max(lowZ1, lowZ2);
-	if (minZ > 0)
-		minZ--;			/* routing needs to start one level below the actual overlap */
-	maxZ = std::min(highZ1, highZ2);
-	maxZ++;				/* ... and one level above */
-}
 /**
  * @brief Recalculate the seams of the tiles after an RMA
  */
@@ -849,7 +838,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 								continue;				/* so nothing to do */
 							else {
 								if (fromTile2 == toTile2) {	/* the stacked tiles are also the same */
-									CMod_GetTileOverlap(mapTiles, toTile1, toTile2, minZ, maxZ);
+									mapTiles->getTileOverlap(toTile1, toTile2, minZ, maxZ);
 								}
 							}
 						}
