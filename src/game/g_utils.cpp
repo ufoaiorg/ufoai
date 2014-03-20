@@ -227,7 +227,7 @@ void G_TakeDamage (Edict* ent, int damage)
 static inline void G_TraceDraw (const Line& traceLine)
 {
 	if (g_drawtraces->integer)
-		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, traceLine.start, traceLine.stop, vec3_origin);
+		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACE_ALL_LEVELS, traceLine.start, traceLine.stop, vec3_origin);
 }
 
 /**

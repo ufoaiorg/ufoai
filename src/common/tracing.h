@@ -47,7 +47,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * mask to trace against all the different visible levels (1-8) (resp. (1<<[0-7])
  */
-#define TRACING_ALL_VISIBLE_LEVELS 0x1FF
+#define TRACE_VISIBLE_LEVELS	0x0FF
+#define TRACE_CLIP_LEVELS		0x100
+#define TRACE_ALL_LEVELS		0x1FF
 
 /** a trace is returned when a box is swept through the world */
 typedef struct trace_s {

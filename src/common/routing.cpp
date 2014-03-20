@@ -62,12 +62,12 @@ static const AABB actor2x2Box(-half2x2Width, -half2x2Width, 0, half2x2Width, hal
 ==========================================================
 */
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			TR_SingleTileBoxTrace((mapTiles), Line(), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	TR_SingleTileBoxTrace((mapTiles), (line), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			TR_SingleTileBoxTrace((mapTiles), Line(), (b), TRACE_ALL_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	TR_SingleTileBoxTrace((mapTiles), (line), (b), TRACE_ALL_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			CM_EntCompleteBoxTrace((mapTiles), Line(), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	CM_EntCompleteBoxTrace((mapTiles), (line), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			CM_EntCompleteBoxTrace((mapTiles), Line(), (b), TRACE_ALL_LEVELS, MASK_ALL, 0, (list))
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	CM_EntCompleteBoxTrace((mapTiles), (line), (b), TRACE_ALL_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
