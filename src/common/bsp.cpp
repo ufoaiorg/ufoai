@@ -823,33 +823,29 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						/* Skip if the destination is out of bounds. */
 						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 							continue;
-#if 0	// this causes problems eg. at baseattack entrance (see bug 5292). Disabled until the underlying problem is found
-						byte toTile1 = 0;
-						byte toTile2 = 0;
-						byte toTile3 = 0;
-						mapTiles->getTilesAt(dx ,dy, toTile1, toTile2, toTile3);
-
-						int minZ = 0;
-						int maxZ = PATHFINDING_HEIGHT - 1;
-						if (!toTile1)
-							continue;	/* no tile at destination, so skip this dir */
-						if (fromTile1 == toTile1) {		/* same tile */
-							if (!fromTile2 && !toTile2)	/* and no stacked tiles */
-								continue;				/* so nothing to do */
-							else {
-								if (fromTile2 == toTile2) {	/* the stacked tiles are also the same */
-									mapTiles->getTileOverlap(toTile1, toTile2, minZ, maxZ);
-								}
-							}
-						}
-						RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir, nullptr, minZ, maxZ);
-#else
 						const int tile2 = mapData->reroute[actorSize][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
+#if 0	// this causes problems eg. at baseattack entrance (see bug 5292). Disabled until the underlying problem is found
+							byte toTile1 = 0;
+							byte toTile2 = 0;
+							byte toTile3 = 0;
+							mapTiles->getTilesAt(dx ,dy, toTile1, toTile2, toTile3);
+
+							int minZ = 0;
+							int maxZ = PATHFINDING_HEIGHT - 1;
+							if (fromTile1 == toTile1) {			/* same tile */
+								if (fromTile2 && toTile2) {		/* and there are stacked tiles */
+									if (fromTile2 == toTile2) {	/* the stacked tiles are also the same */
+										mapTiles->getTileOverlap(toTile1, toTile2, minZ, maxZ);	/* reduce the z-range to reroute */
+									}
+								}
+							}
+							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir, nullptr, minZ, maxZ);
+#else
 							RT_UpdateConnectionColumn(mapTiles, mapData->routing, actorSize + 1, x, y, dir);
-						}
 #endif // 1
+						}
 					}
 				}
 			}
