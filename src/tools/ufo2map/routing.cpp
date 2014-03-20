@@ -116,7 +116,6 @@ void DoRouting (void)
 {
 	int i;
 	byte* data;
-	vec3_t mins, maxs;
 	pos3_t pos;
 
 	/* Turn on trace debugging if requested. */
@@ -136,10 +135,10 @@ void DoRouting (void)
 	Nmap.init();
 
 	/* get world bounds for optimizing */
-	RT_GetMapSize(&mapTiles, mins, maxs);
-	/* Com_Printf("Vectors: (%f, %f, %f) to (%f, %f, %f)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]); */
-	VecToPos(mins, wpMins);
-	VecToPos(maxs, wpMaxs);
+	AABB tileBox;
+	RT_GetMapSize(&mapTiles, tileBox.mins, tileBox.maxs);
+	VecToPos(tileBox.mins, wpMins);
+	VecToPos(tileBox.maxs, wpMaxs);
 #if 0
 	/* wpMaxs is on a 32 boundary. This causes VecToPos to calculate a pos *above* wpMAxs. We have to compensate. */
 	wpMaxs[0]--;
