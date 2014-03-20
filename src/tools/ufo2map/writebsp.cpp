@@ -235,17 +235,12 @@ void SetModelNumbers (void)
  */
 void EmitBrushes (void)
 {
-	int i, j, bnum, s, x;
-	vec3_t normal;
-	vec_t dist;
-	int planenum;
-
 	curTile->numbrushsides = 0;
 	curTile->numbrushes = nummapbrushes;
 	/* Clear out curTile->brushes */
 	OBJZERO(curTile->brushes);
 
-	for (bnum = 0; bnum < nummapbrushes; bnum++) {
+	for (int bnum = 0; bnum < nummapbrushes; bnum++) {
 		const mapbrush_t* b = &mapbrushes[bnum];
 		dBspBrush_t* db = &curTile->dbrushes[bnum];
 		cBspBrush_t* cb = &curTile->brushes[bnum];
@@ -257,7 +252,7 @@ void EmitBrushes (void)
 		cb->firstbrushside = curTile->numbrushsides;
 		cb->numsides = b->numsides;
 		cb->checkcount = 0;
-		for (j = 0; j < b->numsides; j++) {
+		for (int j = 0; j < b->numsides; j++) {
 			if (curTile->numbrushsides == MAX_MAP_BRUSHSIDES) {
 				Sys_Error("MAX_MAP_BRUSHSIDES (%i)", curTile->numbrushsides);
 			} else {
@@ -269,16 +264,21 @@ void EmitBrushes (void)
 		}
 
 		/* add any axis planes not contained in the brush to bevel off corners */
-		for (x = 0; x < 3; x++)
-			for (s = -1; s <= 1; s += 2) {
+		for (int x = 0; x < 3; x++)
+			for (int s = -1; s <= 1; s += 2) {
 				/* add the plane */
+				vec3_t normal;
 				VectorCopy(vec3_origin, normal);
 				normal[x] = (float)s;
+
+				vec_t dist;
 				if (s == -1)
 					dist = -b->mbBox.mins[x];
 				else
 					dist = b->mbBox.maxs[x];
-				planenum = FindOrCreateFloatPlane(normal, dist);
+				int planenum = FindOrCreateFloatPlane(normal, dist);
+
+				int i;
 				for (i = 0; i < b->numsides; i++)
 					if (b->original_sides[i].planenum == planenum)
 						break;

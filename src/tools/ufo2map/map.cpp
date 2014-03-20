@@ -290,7 +290,7 @@ byte GetLevelFlagsFromBrush (const mapbrush_t* brush)
 static void AddBrushBevels (mapbrush_t* b)
 {
 	int axis, dir;
-	int i, j, l, order;
+	int i, l, order;
 	vec3_t normal;
 
 	/* add the axial planes */
@@ -349,7 +349,7 @@ static void AddBrushBevels (mapbrush_t* b)
 		if (!w)
 			continue;
 
-		for (j = 0; j < w->numpoints; j++) {
+		for (int j = 0; j < w->numpoints; j++) {
 			int k = (j + 1) % w->numpoints;
 			vec3_t vec;
 
@@ -437,7 +437,6 @@ static void AddBrushBevels (mapbrush_t* b)
 static bool MakeBrushWindings (mapbrush_t* brush)
 {
 	int i, j;
-	side_t* side;
 
 	brush->mbBox.setNegativeVolume();
 
@@ -456,7 +455,7 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 
-		side = &brush->original_sides[i];
+		side_t* side = &brush->original_sides[i];
 		side->winding = w;
 		if (w) {
 			side->visible = true;

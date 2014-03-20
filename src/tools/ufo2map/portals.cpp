@@ -400,31 +400,25 @@ void MakeTreePortals (tree_t* tree)
  */
 static void FindPortalSide (portal_t* p)
 {
-	uint32_t viscontents;
-	bspbrush_t* bb;
-	int i, j, planenum;
-	side_t* bestside;
-	float bestdot;
-
 	/* decide which content change is strongest
 	 * solid > water, etc */
-	viscontents = VisibleContents(p->nodes[0]->contentFlags ^ p->nodes[1]->contentFlags);
+	uint32_t viscontents = VisibleContents(p->nodes[0]->contentFlags ^ p->nodes[1]->contentFlags);
 	if (!viscontents)
 		return;
 
-	planenum = p->onnode->planenum;
-	bestside = nullptr;
-	bestdot = 0;
+	int planenum = p->onnode->planenum;
+	side_t* bestside = nullptr;
+	float bestdot = 0;
 
-	for (j = 0; j < 2; j++) {
+	for (int j = 0; j < 2; j++) {
 		const node_t* n = p->nodes[j];
 		const plane_t* p1 = &mapplanes[p->onnode->planenum];
-		for (bb = n->brushlist; bb; bb = bb->next) {
+		for (bspbrush_t* bb = n->brushlist; bb; bb = bb->next) {
 			const mapbrush_t* brush = bb->original;
 
 			if (!(brush->contentFlags & viscontents))
 				continue;
-			for (i = 0; i < brush->numsides; i++) {
+			for (int i = 0; i < brush->numsides; i++) {
 				side_t* side = &brush->original_sides[i];
 				float dot;
 				const plane_t* p2;
@@ -488,17 +482,13 @@ static void MarkVisibleSides_r (node_t* node)
 
 void MarkVisibleSides (tree_t* tree, int startbrush, int endbrush)
 {
-	int i;
-
 	Verb_Printf(VERB_EXTRA, "--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
-	for (i = startbrush; i < endbrush; i++) {
+	for (int i = startbrush; i < endbrush; i++) {
 		mapbrush_t* mb = &mapbrushes[i];
 		const int numsides = mb->numsides;
-		int j;
-
-		for (j = 0; j < numsides; j++)
+		for (int j = 0; j < numsides; j++)
 			mb->original_sides[j].visible = false;
 	}
 
