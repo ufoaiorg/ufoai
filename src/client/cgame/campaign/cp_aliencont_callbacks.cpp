@@ -132,16 +132,18 @@ static void AC_KillOne_f (void)
 	cgi->Cmd_ExecuteString("ui_aliencont_init");
 }
 
+static const cmdList_t alienContCallbacks[] = {
+	{"ui_aliencont_init", AC_Init_f, "Init function for alien containment menu"},
+	{"ui_aliencont_killall", AC_KillAll_f, "Kills all aliens in current base"},
+	{"ui_aliencont_killone", AC_KillOne_f, "Kills one alien of a given type"},
+	{nullptr, nullptr, nullptr}
+};
 void AC_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("ui_aliencont_init", AC_Init_f, "Init function for alien containment menu");
-	cgi->Cmd_AddCommand("ui_aliencont_killall", AC_KillAll_f, "Kills all aliens in current base");
-	cgi->Cmd_AddCommand("ui_aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
+	Cmd_TableAddList(alienContCallbacks);
 }
 
 void AC_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("ui_aliencont_init");
-	cgi->Cmd_RemoveCommand("ui_aliencont_killall");
-	cgi->Cmd_RemoveCommand("ui_aliencont_killone");
+	Cmd_TableRemoveList(alienContCallbacks);
 }
