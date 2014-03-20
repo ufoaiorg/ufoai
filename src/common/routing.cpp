@@ -218,14 +218,13 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
  */
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
-	vec3_t mapMin;
-	vec3_t mapMax;
-	RT_GetMapSize(mapTiles, mapMin, mapMax);
+	AABB mapBox;
+	RT_GetMapSize(mapTiles, mapBox.mins, mapBox.maxs);
 
 	/* convert the coords */
 	pos3_t start, end;
-	VecToPos(mapMin, start);
-	VecToPos(mapMax, end);
+	VecToPos(mapBox.mins, start);
+	VecToPos(mapBox.maxs, end);
 	start[0]--;
 	start[1]--;
 
