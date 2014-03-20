@@ -231,30 +231,25 @@ static void CalcLightinfoVectors (lightinfo_t* l)
  */
 static void CalcPoints (lightinfo_t* l, float sofs, float tofs)
 {
-	int s, t, j;
-	int w, h, step;
-	vec_t starts, startt;
-	vec_t* surf;
-
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
 	 * to help avoid edge cases just inside walls */
-	surf = l->surfpt[0];
+	vec_t* surf = l->surfpt[0];
 
-	h = l->texsize[1];
-	w = l->texsize[0];
+	int h = l->texsize[1];
+	int w = l->texsize[0];
 
-	step = l->step;
-	starts = l->texmins[0] * step;
-	startt = l->texmins[1] * step;
+	int step = l->step;
+	vec_t starts = l->texmins[0] * step;
+	vec_t startt = l->texmins[1] * step;
 
-	for (t = 0; t < h; t++) {
-		for (s = 0; s < w; s++, surf += 3) {
+	for (int t = 0; t < h; t++) {
+		for (int s = 0; s < w; s++, surf += 3) {
 			const vec_t us = starts + (s + sofs) * step;
 			const vec_t ut = startt + (t + tofs) * step;
 
 			/* calculate texture point */
-			for (j = 0; j < 3; j++)
+			for (int j = 0; j < 3; j++)
 				surf[j] = l->texorg[j] + l->textoworld[0][j] * us +
 						l->textoworld[1][j] * ut;
 		}
@@ -758,44 +753,32 @@ static const float sampleofs[2][MAX_SAMPLES][2] = {
  */
 void BuildFacelights (unsigned int facenum)
 {
-	dBspSurface_t* face;
-	dBspPlane_t* plane;
-	dBspTexinfo_t* tex;
-	float* center;
-	float* sdir, *tdir;
-	vec3_t normal, binormal;
-	vec4_t tangent;
-	lightinfo_t li;
-	float scale;
-	int i, j, numsamples;
-	facelight_t* fl;
-	int* headhints;
-	const int grid_type = config.soft ? 1 : 0;
-
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
 		return;
 	}
 
-	face = &curTile->faces[facenum];
-	plane = &curTile->planes[face->planenum];
-	tex = &curTile->texinfo[face->texinfo];
+	dBspSurface_t* face = &curTile->faces[facenum];
+	dBspPlane_t* plane = &curTile->planes[face->planenum];
+	dBspTexinfo_t* tex = &curTile->texinfo[face->texinfo];
 
 	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
-	sdir = tex->vecs[0];
-	tdir = tex->vecs[1];
+	float* sdir = tex->vecs[0];
+	float* tdir = tex->vecs[1];
 
 	/* lighting -extra antialiasing */
+	int numsamples;
 	if (config.extrasamples)
 		numsamples = config.soft ? SOFT_SAMPLES : MAX_SAMPLES;
 	else
 		numsamples = 1;
 
+	lightinfo_t li;
 	OBJZERO(li);
 
-	scale = 1.0 / numsamples; /* each sample contributes this much */
+	float scale = 1.0 / numsamples; /* each sample contributes this much */
 
 	li.face = face;
 	li.facedist = plane->dist;
@@ -818,20 +801,24 @@ void BuildFacelights (unsigned int facenum)
 	/* now generate all of the sample points */
 	CalcPoints(&li, 0, 0);
 
-	fl = &facelight[config.compile_for_day][facenum];
+	facelight_t* fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = li.numsurfpt;
 	fl->samples    = Mem_AllocTypeN(vec3_t, fl->numsamples);
 	fl->directions = Mem_AllocTypeN(vec3_t, fl->numsamples);
 
-	center = face_extents[facenum].center;  /* center of the face */
+	float* center = face_extents[facenum].center;  /* center of the face */
 
 	/* Also setup the hints.  Each hint is specific to each light source, including sunlight. */
-	headhints = Mem_AllocTypeN(int, (numlights[config.compile_for_day] + 1));
+	int* headhints = Mem_AllocTypeN(int, (numlights[config.compile_for_day] + 1));
+
 
 	/* calculate light for each sample */
+	int i;
 	for (i = 0; i < fl->numsamples; i++) {
 		float* const sample    = fl->samples[i];    /* accumulate lighting here */
 		float* const direction = fl->directions[i]; /* accumulate direction here */
+		vec3_t normal, binormal;
+		vec4_t tangent;
 
 		if (tex->surfaceFlags & SURF_PHONG)
 			/* interpolated normal */
@@ -840,7 +827,8 @@ void BuildFacelights (unsigned int facenum)
 			/* or just plane normal */
 			VectorCopy(li.facenormal, normal);
 
-		for (j = 0; j < numsamples; j++) {  /* with antialiasing */
+		const int grid_type = config.soft ? 1 : 0;
+		for (int j = 0; j < numsamples; j++) {  /* with antialiasing */
 			vec3_t pos;
 
 			/* add offset for supersampling */
@@ -999,10 +987,6 @@ static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
  */
 void FinalLightFace (unsigned int facenum)
 {
-	int j, k;
-	vec3_t dir, intensity;
-	byte* dest;
-
 	dBspSurface_t* f = &curTile->faces[facenum];
 	facelight_t* fl = &facelight[config.compile_for_day][facenum];
 
@@ -1025,9 +1009,10 @@ void FinalLightFace (unsigned int facenum)
 	ThreadUnlock();
 
 	/* write it out */
-	dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
+	byte* dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
-	for (j = 0; j < fl->numsamples; j++) {
+	for (int j = 0; j < fl->numsamples; j++) {
+		int k;
 		vec3_t temp;
 
 		/* start with raw sample data */
@@ -1073,6 +1058,7 @@ void FinalLightFace (unsigned int facenum)
 		/* apply saturation */
 		float d = DotProduct(temp, luminosity);
 
+		vec3_t intensity;
 		VectorSet(intensity, d, d, d);
 		VectorMix(intensity, temp, config.saturation, temp);
 
@@ -1088,6 +1074,7 @@ void FinalLightFace (unsigned int facenum)
 		}
 
 		/* also write the directional data */
+		vec3_t dir;
 		VectorCopy(fl->directions[j], dir);
 		for (k = 0; k < 3; k++)
 			*dest++ = (byte)((dir[k] + 1.0f) * 127.0f);
