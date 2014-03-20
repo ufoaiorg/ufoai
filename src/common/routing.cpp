@@ -609,14 +609,11 @@ static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, co
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
 	if (cz < z) {
 		/* We can't go this way. */
-		RT_ConnSetNoGo(rtd, x, y, z, dir);
-		if (debugTrace)
-			Com_Printf("Passage found but below current cell, opening_base=%i, opening_top=%i, z = %i, cz = %i.\n", openingBase, openingTop, z, cz);
+		RT_ConnSetNoGo(rtd, x, y, z, dir);	/* Passage found but below current cell */
 		return z;
 	}
 
-	if (debugTrace)
-		Com_Printf("Passage found, opening_base=%i, opening_size=%i, opening_top=%i, stepup=%i. (%i to %i)\n", openingBase, openingSize, openingTop, stepup, fz, cz);
+	/* Passage found */
 
 	assert(fz <= z && z <= cz);
 
@@ -630,15 +627,9 @@ static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, co
 		rtd->routing.setConn(rtd->actorSize, x, y, i, dir, oh);
 		/* The stepup is 0 for all cells that are not at the floor. */
 		RT_StepupSet(rtd, x, y, i, dir, 0);
-		if (debugTrace) {
-			Com_Printf("getConn for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, rtd->actorSize, dir, rtd->routing.getConn(rtd->actorSize, x, y, i, dir));
-		}
 	}
 
 	RT_StepupSet(rtd, x, y, z, dir, stepup);
-	if (debugTrace) {
-		Com_Printf("Final STEPUP for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, z, rtd->actorSize, dir, stepup);
-	}
 
 	/*
 	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
@@ -692,9 +683,6 @@ static int RT_FindOpeningFloorFrac (const RoutingData* rtd, const vec3_t start, 
 
 	const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
 
-	if (debugTrace)
-		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
-
 	/* OK, now we have the floor height value in tr.endpos[2].
 	 * Divide by QUANT and round up.
 	 */
@@ -723,9 +711,6 @@ static int RT_FindOpeningCeilingFrac (const RoutingData* rtd, const vec3_t start
 	mend[2] = UNIT_HEIGHT * PATHFINDING_HEIGHT + QUANT;  /* Set above the model. */
 
 	const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(mstart, mend), box, rtd->list);
-
-	if (debugTrace)
-		Com_Printf("Brush found at %f.\n", tr.endpos[2]);
 
 	/* OK, now we have the floor height value in tr.endpos[2].
 	 * Divide by QUANT and round down. */
@@ -817,14 +802,10 @@ static int RT_CalcNewZ (const RoutingData* rtd, const int ax, const int ay, cons
 	 * the top.
 	 */
 	if (adj_lo >= 0 && top - adj_lo >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-		if (debugTrace)
-			Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
-		return floorf(adj_lo / CELL_HEIGHT);
+		return floorf(adj_lo / CELL_HEIGHT);	/* Found floor in destination cell */
 	}
-	if (debugTrace)
-		Com_Printf("Skipping found floor in destination cell- not enough opening: %i (%i).\n", adj_lo, temp_z);
 
-	return RT_NO_OPENING;
+	return RT_NO_OPENING;	/* Skipping found floor in destination cell- not enough opening */
 }
 
 
