@@ -144,10 +144,10 @@ static void CL_ForwardToServer_f (void)
 
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
-		const int l = strlen(Cmd_Args()) + 1;
-		dbuffer msg(l + 1);
+		const int len = strlen(Cmd_Args()) + 1;
+		dbuffer msg(len + 1);
 		NET_WriteByte(&msg, clc_stringcmd);
-		msg.add(Cmd_Args(), l);
+		msg.add(Cmd_Args(), len);
 		NET_WriteMsg(cls.netStream, msg);
 	}
 }
