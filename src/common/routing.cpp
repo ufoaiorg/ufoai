@@ -230,7 +230,7 @@ void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 	start[1]--;
 
 	/* Dump the client map */
-	RT_DumpMap(routing, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
+	RT_DumpMap(routing, ACTOR_SIZE_NORMAL, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
 #endif
 
