@@ -218,51 +218,16 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
  */
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
-	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
-	pos3_t start, end, test;
+	vec3_t map_min;
+	vec3_t map_max;
+	RT_GetMapSize(mapTiles, map_min, map_max);
 
-	/* Initialize start, end, and normal */
-	VectorClear(start);
-	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
-
-	for (int i = 0; i < 3; i++) {
-		AABB box;
-		/* Lower positive boundary */
-		while (end[i] > start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(start, test);
-			test[i] = end[i] - 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(test, box.mins);
-			VectorSubtract(box.mins, normal, box.mins);
-			PosToVec(end, box.maxs);
-			VectorAdd(box.maxs, normal, box.maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, lower the boundary. */
-			end[i]--;
-		}
-
-		/* Raise negative boundary */
-		while (end[i] > start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(end, test);
-			test[i] = start[i] + 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(start, box.mins);
-			VectorSubtract(box.mins, normal, box.mins);
-			PosToVec(test, box.maxs);
-			VectorAdd(box.maxs, normal, box.maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, raise the boundary. */
-			start[i]++;
-		}
-	}
+	/* convert the coords */
+	pos3_t start, end;
+	VecToPos(map_min, start);
+	VecToPos(map_max, end);
+	start[0]--;
+	start[1]--;
 
 	/* Dump the client map */
 	RT_DumpMap(routing, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
