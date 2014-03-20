@@ -30,17 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*==============================================================
 GLOBAL TYPES
 ==============================================================*/
-#if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			TR_SingleTileBoxTrace((mapTiles), Line(), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	TR_SingleTileBoxTrace((mapTiles), (line), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
-
-#elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			CM_EntCompleteBoxTrace((mapTiles), Line(), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
-  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	CM_EntCompleteBoxTrace((mapTiles), (line), (b), TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
-
-#else
-  #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
-#endif
 
 /* Decide whether we are doing uni- or bidirectional conclusions from our traces.
  * This constant is used in both a boolean and an integer way,
