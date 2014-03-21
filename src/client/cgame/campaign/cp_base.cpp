@@ -2457,8 +2457,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t* weapons, const int numWeapons, xmlN
  */
 bool B_SaveStorageXML (xmlNode_t* parent, const equipDef_t& equip)
 {
-	int k;
-	for (k = 0; k < cgi->csi->numODs; k++) {
+	for (int k = 0; k < cgi->csi->numODs; k++) {
 		const objDef_t* od = INVSH_GetItemByIDX(k);
 		if (equip.numItems[k] || equip.numItemsLoose[k]) {
 			xmlNode_t* node = cgi->XML_AddNode(parent, SAVE_BASES_ITEM);

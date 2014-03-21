@@ -348,7 +348,6 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
  */
 void R_SoftenTexture (byte* in, int width, int height, int bpp)
 {
-	int i, j, k;
 	const int size = width * height * bpp;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
@@ -358,8 +357,8 @@ void R_SoftenTexture (byte* in, int width, int height, int bpp)
 
 	memcpy(out, in, size);
 
-	for (i = 1; i < height - 1; i++) {
-		for (j = 1; j < width - 1; j++) {
+	for (int i = 1; i < height - 1; i++) {
+		for (int j = 1; j < width - 1; j++) {
 			const byte* src = in + ((i * width) + j) * bpp;  /* current input pixel */
 
 			const byte* u = (src - (width * bpp));  /* and it's neighbors */
@@ -369,7 +368,7 @@ void R_SoftenTexture (byte* in, int width, int height, int bpp)
 
 			byte* dest = out + ((i * width) + j) * bpp;  /* current output pixel */
 
-			for (k = 0; k < bpp; k++)
+			for (int k = 0; k < bpp; k++)
 				dest[k] = (u[k] + d[k] + l[k] + r[k]) / 4;
 		}
 	}

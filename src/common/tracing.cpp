@@ -823,20 +823,18 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
  */
 static void TR_TraceToLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
-	int k;
-	TR_LEAF_TYPE* leaf;
 	TR_TILE_TYPE* myTile = traceData->tile;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= myTile->numleafs);
 
-	leaf = &myTile->leafs[leafnum];
+	TR_LEAF_TYPE* leaf = &myTile->leafs[leafnum];
 
 	if (traceData->contents != MASK_ALL && (!(leaf->contentFlags & traceData->contents) || (leaf->contentFlags & traceData->rejects)))
 		return;
 
 	/* trace line against all brushes in the leaf */
-	for (k = 0; k < leaf->numleafbrushes; k++) {
+	for (int k = 0; k < leaf->numleafbrushes; k++) {
 		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
 		cBspBrush_t* b = &myTile->brushes[brushnum];
 
@@ -859,20 +857,18 @@ static void TR_TraceToLeaf (boxtrace_t* traceData, int32_t leafnum)
  */
 static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
 {
-	int k;
-	const TR_LEAF_TYPE* leaf;
 	TR_TILE_TYPE* myTile = traceData->tile;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= myTile->numleafs);
 
-	leaf = &myTile->leafs[leafnum];
+	const TR_LEAF_TYPE* leaf = &myTile->leafs[leafnum];
 	/* If this leaf contains no flags we need to look for, then skip it. */
 	if (!(leaf->contentFlags & traceData->contents)) /* || (leaf->contentFlags & traceData->rejects) */
 		return;
 
 	/* trace line against all brushes in the leaf */
-	for (k = 0; k < leaf->numleafbrushes; k++) {
+	for (int k = 0; k < leaf->numleafbrushes; k++) {
 		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
 		cBspBrush_t* b = &myTile->brushes[brushnum];
 		if (b->checkcount == checkcount)

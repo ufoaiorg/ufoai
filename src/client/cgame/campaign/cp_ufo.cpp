@@ -506,10 +506,8 @@ void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t* ufo, aircraft_t
  */
 void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 {
-	int ufoIdx, k;
-
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
-	for (ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
+	for (int ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
 		aircraft_t* ufo = UFO_GetByIDX(ufoIdx);
 		/* don't run a landed ufo */
 		if (ufo->landed)
@@ -544,7 +542,7 @@ void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
 
 		/* Update delay to launch next projectile */
-		for (k = 0; k < ufo->maxWeapons; k++) {
+		for (int k = 0; k < ufo->maxWeapons; k++) {
 			aircraftSlot_t* slot = &ufo->weapons[k];
 			if (slot->delayNextShot > 0)
 				slot->delayNextShot -= deltaTime;
@@ -573,7 +571,6 @@ static void UFO_DestroyUFOs_f (void)
 static void UFO_ListOnGeoscape_f (void)
 {
 	aircraft_t* ufo;
-	int k;
 
 	Com_Printf("There are %i UFOs in game\n", ccs.numUFOs);
 	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
@@ -584,7 +581,7 @@ static void UFO_ListOnGeoscape_f (void)
 		Com_Printf("... UFO is %s and %s\n", ufo->landed ? "landed" : "flying", ufo->detected ? "detected" : "undetected");
 		Com_Printf("... damage: %i\n", ufo->damage);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
-		for (k = 0; k < ufo->maxWeapons; k++) {
+		for (int k = 0; k < ufo->maxWeapons; k++) {
 			aircraftSlot_t const* const w = &ufo->weapons[k];
 			if (w->item) {
 				char const* const state = w->ammo && w->ammoLeft > 0 ?

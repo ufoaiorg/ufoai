@@ -1137,8 +1137,6 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverla
 
 	/* Run each aircraft */
 	AIR_Foreach(aircraft) {
-		int k;
-
 		if (aircraft->status == AIR_CRASHED)
 			continue;
 
@@ -1168,7 +1166,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverla
 			AIRFIGHT_ExecuteActions(campaign, aircraft, aircraft->aircraftTarget);
 		}
 
-		for (k = 0; k < aircraft->maxWeapons; k++) {
+		for (int k = 0; k < aircraft->maxWeapons; k++) {
 			aircraftSlot_t* slot = &aircraft->weapons[k];
 			/* Update delay to launch next projectile */
 			if (AIR_IsAircraftOnGeoscape(aircraft) && slot->delayNextShot > 0)
