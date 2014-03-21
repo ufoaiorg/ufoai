@@ -139,12 +139,12 @@ void DoRouting (void)
 	RT_GetMapSize(&mapTiles, tileBox);
 	VecToPos(tileBox.mins, wpMins);
 	VecToPos(tileBox.maxs, wpMaxs);
-#if 0
+
 	/* wpMaxs is on a 32 boundary. This causes VecToPos to calculate a pos *above* wpMAxs. We have to compensate. */
 	wpMaxs[0]--;
 	wpMaxs[1]--;
 	wpMaxs[2]--;
-#endif
+
 	/* Verify the world extents are not lopsided. */
 	assert(wpMins[0] <= wpMaxs[0]);
 	assert(wpMins[1] <= wpMaxs[1]);
