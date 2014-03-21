@@ -63,11 +63,11 @@ static const AABB actor2x2Box(-half2x2Width, -half2x2Width, 0, half2x2Width, hal
 ==========================================================
 */
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			TR_SingleTileBoxTrace((mapTiles), Line(), (b), TRACE_ALL_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list, lvl)		TR_SingleTileBoxTrace((mapTiles), Line(), (b), (lvl), MASK_ALL, 0)
   #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	TR_SingleTileBoxTrace((mapTiles), (line), (b), TRACE_ALL_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list)			CM_EntCompleteBoxTrace((mapTiles), Line(), (b), TRACE_ALL_LEVELS, MASK_ALL, 0, (list))
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles, b, list, lvl)		CM_EntCompleteBoxTrace((mapTiles), Line(), (b), (lvl), MASK_ALL, 0, (list))
   #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, line, b, list)	CM_EntCompleteBoxTrace((mapTiles), (line), (b), TRACE_ALL_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
 
 #else
@@ -275,7 +275,7 @@ void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_ALL_LEVELS);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -293,7 +293,7 @@ void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_ALL_LEVELS);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
