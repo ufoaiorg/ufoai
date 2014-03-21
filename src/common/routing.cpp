@@ -275,7 +275,7 @@ void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_ALL_LEVELS);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_VISIBLE_LEVELS);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -293,7 +293,7 @@ void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_ALL_LEVELS);
+			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_VISIBLE_LEVELS);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
