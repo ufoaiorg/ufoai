@@ -652,7 +652,6 @@ static void CL_BuildForbiddenList (void)
 #ifdef DEBUG
 /**
  * @brief Draws a marker for all blocked map-positions.
- * @note currently uses basically the same code as CL_BuildForbiddenList
  * @note usage in console: "debug_drawblocked"
  * @todo currently the particles stay a _very_ long time ... so everybody has to stand still in order for the display to be correct.
  * @sa CL_BuildForbiddenList
