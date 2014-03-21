@@ -1078,6 +1078,13 @@ void E_RemoveInventoryFromStorage (Employee* employee)
 	}
 }
 
+static const cmdList_t debugEmployeeCmds[] = {
+#ifdef DEBUG
+	{"debug_listhired", E_ListHired_f, "Debug command to list all hired employee"},
+	{"debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
@@ -1085,10 +1092,7 @@ void E_RemoveInventoryFromStorage (Employee* employee)
 void E_InitStartup (void)
 {
 	E_InitCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
-	cgi->Cmd_AddCommand("debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type");
-#endif
+	Cmd_TableAddList(debugEmployeeCmds);
 }
 
 /**
@@ -1096,16 +1100,11 @@ void E_InitStartup (void)
  */
 void E_Shutdown (void)
 {
-	int i;
-
-	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+	for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		cgi->LIST_Delete(&ccs.employees[emplType]);
 	}
 
 	E_ShutdownCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_listhired");
-	cgi->Cmd_RemoveCommand("debug_addemployees");
-#endif
+	Cmd_TableRemoveList(debugEmployeeCmds);
 }
