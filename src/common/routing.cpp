@@ -287,12 +287,15 @@ void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 			/* Adjust ceiling */
 			VectorCopy(end, test);
 			test[i] = start[i];
+
 			/* Prep boundary box */
 			PosToVec(start, box.mins);
 			VectorSubtract(box.mins, normal, box.mins);
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
+			box.maxs[i] -= DIST_EPSILON;			/* stay away from the upper bound just a little bit, so we don't catch a touching brush */
+
+			/* Test for stuff in the box, if there is something then exit while */
 			const trace_t trace = RT_COMPLETEBOXTRACE_SIZE(mapTiles, &box, nullptr, TRACE_VISIBLE_LEVELS);
 			if (trace.fraction < 1.0)
 				break;
