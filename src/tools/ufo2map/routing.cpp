@@ -136,7 +136,7 @@ void DoRouting (void)
 
 	/* get world bounds for optimizing */
 	AABB tileBox;
-	RT_GetMapSize(&mapTiles, tileBox.mins, tileBox.maxs);
+	RT_GetMapSize(&mapTiles, tileBox);
 	VecToPos(tileBox.mins, wpMins);
 	VecToPos(tileBox.maxs, wpMaxs);
 #if 0

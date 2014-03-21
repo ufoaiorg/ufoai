@@ -742,7 +742,7 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapTiles, mapData->mapBox.mins, mapData->mapBox.maxs);
+	RT_GetMapSize(mapTiles, mapData->mapBox);
 
 	FS_FreeFile(buf);
 

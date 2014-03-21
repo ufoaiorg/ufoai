@@ -219,7 +219,7 @@ static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int l
 void RT_DumpWholeMap (mapTiles_t* mapTiles, const Routing& routing)
 {
 	AABB mapBox;
-	RT_GetMapSize(mapTiles, mapBox.mins, mapBox.maxs);
+	RT_GetMapSize(mapTiles, mapBox);
 
 	/* convert the coords */
 	pos3_t start, end;
@@ -253,7 +253,7 @@ bool RT_CanActorStandHere (const Routing& routing, const int actorSize, const po
  * @sa CMod_LoadRouting
  * @sa DoRouting
  */
-void RT_GetMapSize (mapTiles_t* mapTiles, vec3_t map_min, vec3_t map_max)
+void RT_GetMapSize (mapTiles_t* mapTiles, AABB& mapBox)
 {
 	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 	pos3_t start, end, test;
@@ -304,12 +304,12 @@ void RT_GetMapSize (mapTiles_t* mapTiles, vec3_t map_min, vec3_t map_max)
 	/* Com_Printf("Extents: (%i, %i, %i) to (%i, %i, %i)\n", start[0], start[1], start[2], end[0], end[1], end[2]); */
 
 	/* convert to vectors */
-	PosToVec(start, map_min);
-	PosToVec(end, map_max);
+	PosToVec(start, mapBox.mins);
+	PosToVec(end, mapBox.maxs);
 
 	/* Stretch to the exterior edges of our extents */
-	VectorSubtract(map_min, normal, map_min);
-	VectorAdd(map_max, normal, map_max);
+	VectorSubtract(mapBox.mins, normal, mapBox.mins);
+	VectorAdd(mapBox.maxs, normal, mapBox.maxs);
 }
 
 
