@@ -294,6 +294,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 
 	trace_t tr;
 	tr.fraction = 2.0f;
+	VectorCopy(trLine.stop, tr.endpos);	/* optimistically set the endpos just in case we are outside of ALL the tiles, so TR_TileBoxTrace won't do it */
 
 	/* Prep the mins and maxs */
 	for (int i = 0; i < 3; i++) {
