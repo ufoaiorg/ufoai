@@ -248,8 +248,7 @@ bool RT_CanActorStandHere (const Routing& routing, const int actorSize, const po
  * @brief Calculate the map size via model data and store grid size
  * in map_min and map_max. This is done with every new map load
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
- * @param[out] map_min The lower extents of the current map.
- * @param[out] map_max The upper extents of the current map.
+ * @param[out] mapBox The lower and upper extents of the current map.
  * @sa CMod_LoadRouting
  * @sa DoRouting
  */
