@@ -826,7 +826,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 						const int tile2 = mapData->reroute[actorSize][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
-#if 0	// this causes problems eg. at baseattack entrance (see bug 5292). Disabled until the underlying problem is found
+#if 1	// this causes problems eg. at baseattack entrance (see bug 5292). Disabled until the underlying problem is found
 							byte toTile1 = 0;
 							byte toTile2 = 0;
 							byte toTile3 = 0;
