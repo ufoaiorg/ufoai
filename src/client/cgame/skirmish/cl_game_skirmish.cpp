@@ -328,14 +328,14 @@ static void GAME_SK_InitStartup (void)
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
 	cl_equip = cgi->Cvar_Get("cl_equip", "multiplayer_initial", 0, "Equipment that is used for skirmish mode games");
 
-	Cmd_TableAddList(skirmishCmds);
+	cgi->Cmd_TableAddList(skirmishCmds);
 
 	GAME_InitMenuOptions();
 }
 
 static void GAME_SK_Shutdown (void)
 {
-	Cmd_TableRemoveList(skirmishCmds);
+	cgi->Cmd_TableRemoveList(skirmishCmds);
 
 	cgi->UI_ResetData(OPTION_DROPSHIPS);
 	cgi->UI_ResetData(OPTION_UFOS);
