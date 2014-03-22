@@ -223,7 +223,7 @@ static void testMapDefsMassRMA (void)
  */
 static void testMapDefStatistic (void)
 {
-	int j, k;
+	int j;
 	int required, solids;
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
@@ -266,7 +266,7 @@ static void testMapDefStatistic (void)
 
 		required = 0;
 		solids = 0;
-		for (k = 0; k < theMap->numToPlace; k++) {
+		for (int k = 0; k < theMap->numToPlace; k++) {
 			required += theMap->mToPlace[k].min;
 			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 		}

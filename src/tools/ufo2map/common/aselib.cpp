@@ -178,9 +178,7 @@ polyset_t* ASE_GetSurfaceAnimation (int whichSurface)
 		ps->numtriangles = pObject->anim.frames[i].numFaces;
 
 		for (t = 0; t < pObject->anim.frames[i].numFaces; t++) {
-			int k;
-
-			for (k = 0; k < 3; k++) {
+			for (int k = 0; k < 3; k++) {
 				triangle_t* tri = &ps->triangles[t];
 				const int vIdx = pMesh->faces[t][k];
 				aseVertex_t* v = &pMesh->vertexes[vIdx];

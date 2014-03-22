@@ -86,7 +86,7 @@ byte* CompressRouting (byte* dataStart, byte* destStart, int l)
  */
 static void SwapBSPFile (void)
 {
-	int i, j, k;
+	int i, j;
 
 	/* models */
 	for (i = 0; i < curTile->nummodels; i++) {
@@ -123,7 +123,7 @@ static void SwapBSPFile (void)
 	for (i = 0; i < curTile->numtexinfo; i++) {
 		dBspTexinfo_t* texinfo = &curTile->texinfo[i];
 		for (j = 0; j < 2; j++)
-			for (k = 0; k < 4; k++)
+			for (int k = 0; k < 4; k++)
 				texinfo->vecs[j][k] = LittleFloat(texinfo->vecs[j][k]);
 		texinfo->surfaceFlags = LittleLong(texinfo->surfaceFlags);
 		texinfo->value = LittleLong(texinfo->value);
