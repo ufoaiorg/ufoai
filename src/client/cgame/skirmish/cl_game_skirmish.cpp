@@ -315,27 +315,27 @@ static void GAME_InitMenuOptions (void)
 	cgi->UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
+static const cmdList_t skirmishCmds[] = {
+	{"sk_start", GAME_SK_Start_f, "Start the new skirmish game"},
+	{"sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition"},
+	{"sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition"},
+	{"sk_initequip", GAME_SK_ChangeEquip_f, "Init equipment definition"},
+	{"game_go", GAME_SK_Restart_f, "Restart the skirmish mission"},
+	{nullptr, nullptr, nullptr}
+};
 static void GAME_SK_InitStartup (void)
 {
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
 	cl_equip = cgi->Cvar_Get("cl_equip", "multiplayer_initial", 0, "Equipment that is used for skirmish mode games");
 
-	cgi->Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
-	cgi->Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
-	cgi->Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
-	cgi->Cmd_AddCommand("sk_initequip", GAME_SK_ChangeEquip_f, "Init equipment definition");
-	cgi->Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
+	Cmd_TableAddList(skirmishCmds);
 
 	GAME_InitMenuOptions();
 }
 
 static void GAME_SK_Shutdown (void)
 {
-	cgi->Cmd_RemoveCommand("sk_start");
-	cgi->Cmd_RemoveCommand("sk_nextequip");
-	cgi->Cmd_RemoveCommand("sk_prevequip");
-	cgi->Cmd_RemoveCommand("sk_initequip");
-	cgi->Cmd_RemoveCommand("game_go");
+	Cmd_TableRemoveList(skirmishCmds);
 
 	cgi->UI_ResetData(OPTION_DROPSHIPS);
 	cgi->UI_ResetData(OPTION_UFOS);
