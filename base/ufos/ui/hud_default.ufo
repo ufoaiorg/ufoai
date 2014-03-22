@@ -1588,7 +1588,6 @@ window inv_stats_hud
 		cmd "hud_updateactorload;"
 	}
 
-
 	confunc show_hide_inv_stats
 	{
 		if ( *cvar:inv_stats_window_open == 1 ) {
@@ -1601,7 +1600,7 @@ window inv_stats_hud
 	func onWindowOpened {
 		*cvar:inv_stats_window_open = 1
 		cmd "ui_addcvarlistener cl_selected update_actor_state;"
-		cmd "updateactorwounds;"
+		cmd "update_actor_state;"
 	}
 
 	func onWindowClosed {
