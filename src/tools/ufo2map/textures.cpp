@@ -92,7 +92,7 @@ int TexinfoForBrushTexture (plane_t* plane, brush_texture_t* bt, const vec3_t or
 	int sv, tv;
 	vec_t ang, sinv, cosv;
 	dBspTexinfo_t tx, *tc;
-	int i, j, k;
+	int i, j;
 	float shift[2];
 	vec3_t scaledOrigin;
 
@@ -180,7 +180,7 @@ int TexinfoForBrushTexture (plane_t* plane, brush_texture_t* bt, const vec3_t or
 		if (!Q_streq(tc->texture, tx.texture))
 			continue;
 		for (j = 0; j < 2; j++) {
-			for (k = 0; k < 4; k++) {
+			for (int k = 0; k < 4; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
 					goto skip;
 			}

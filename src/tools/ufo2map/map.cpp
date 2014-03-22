@@ -1029,9 +1029,8 @@ static inline void WriteMapEntities (qFILE* f, const epair_t* e)
  */
 static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE* f)
 {
-	int k = 0;
 	FS_Printf(f, "// brush %i\n{\n", j);
-	for (k = 0; k < brush->numsides; k++) {
+	for (int k = 0; k < brush->numsides; k++) {
 		const side_t* side = &brush->original_sides[k];
 		const ptrdiff_t index = side - brushsides;
 		const brush_texture_t* t = &side_brushtextures[index];

@@ -71,9 +71,7 @@ static extents_t face_extents[MAX_MAP_FACES];
  */
 static void BuildFaceExtents (void)
 {
-	int k;
-
-	for (k = 0; k < curTile->numfaces; k++) {
+	for (int k = 0; k < curTile->numfaces; k++) {
 		const dBspSurface_t* s = &curTile->faces[k];
 		const dBspTexinfo_t* tex = &curTile->texinfo[s->texinfo];
 
