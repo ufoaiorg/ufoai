@@ -1035,10 +1035,9 @@ static void WriteMapBrush (const mapbrush_t* brush, const int j, qFILE* f)
 		const ptrdiff_t index = side - brushsides;
 		const brush_texture_t* t = &side_brushtextures[index];
 		const plane_t* p = &mapplanes[side->planenum];
-		int l;
 
-		for (l = 0; l < 3; l++)
-			FS_Printf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
+		for (int i = 0; i < 3; i++)
+			FS_Printf(f, "( %.7g %.7g %.7g ) ", p->planeVector[i][0], p->planeVector[i][1], p->planeVector[i][2]);
 		FS_Printf(f, "%s ", t->name);
 		FS_Printf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
 		FS_Printf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
