@@ -24,7 +24,7 @@ typedef struct slicerConfig_s {
 	char filename[MAX_QPATH];
 } slicerConfig_t;
 
-static slicerConfig_t config = {8.0, 1, true, true, ""};
+static slicerConfig_t config = {8.0, 1, false, false, ""};
 
 static void Usage (void)
 {
