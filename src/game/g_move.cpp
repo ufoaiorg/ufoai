@@ -111,11 +111,10 @@ void G_MoveCalcLocal (pathing_t* pt, int team, const Edict* movingActor, const p
 	gi.GridCalcPathing(movingActor->fieldSize, pt, from, distance, &forbiddenList);
 }
 
-bool G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, int maxTUs)
+bool G_FindPath (int team, const Edict* movingActor, const pos3_t from, const pos3_t targetPos, bool crouched, int maxTUs)
 {
 	G_BuildForbiddenList(team, movingActor);
-	bool crouchFlag = G_IsCrouched(movingActor);	/* other than the name implies, G_IsCrouched returns 4 if crouched !! It's just a stupid macro. */
-	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, crouchFlag, maxTUs, &forbiddenList);
+	return gi.GridFindPath(movingActor->fieldSize, level.pathingMap, from, targetPos, crouched, maxTUs, &forbiddenList);
 }
 
 /**
