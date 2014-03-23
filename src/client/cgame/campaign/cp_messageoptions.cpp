@@ -477,16 +477,19 @@ void MSO_ParseMessageSettings (const char* name, const char** text)
 
 }
 
+static const cmdList_t msgOptionsCmds[] = {
+	{"msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories"},
+	{"msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category"},
+	{nullptr, nullptr, nullptr}
+};
 void MSO_Init (void)
 {
-	cgi->Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
-	cgi->Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
+	Cmd_TableAddList(msgOptionsCmds);
 	MSO_InitCallbacks();
 }
 
 void MSO_Shutdown (void)
 {
-	cgi->Cmd_RemoveCommand("msgoptions_setall");
-	cgi->Cmd_RemoveCommand("msgoptions_set");
+	Cmd_TableRemoveList(msgOptionsCmds);
 	MSO_ShutdownCallbacks();
 }

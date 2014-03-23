@@ -323,15 +323,19 @@ installation_t* INS_GetFirstUFOYard (bool free)
 	return nullptr;
 }
 
+static const cmdList_t debugInstallationCmds[] = {
+#ifdef DEBUG
+	{"debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console"},
+	{"debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Resets console commands.
  */
 void INS_InitStartup (void)
 {
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
-	cgi->Cmd_AddCommand("debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation");
-#endif
+	Cmd_TableAddList(debugInstallationCmds);
 }
 
 /**
@@ -340,10 +344,7 @@ void INS_InitStartup (void)
 void INS_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.installations);
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_listinstallation");
-	cgi->Cmd_RemoveCommand("debug_finishinstallation");
-#endif
+	Cmd_TableRemoveList(debugInstallationCmds);
 }
 
 /**
