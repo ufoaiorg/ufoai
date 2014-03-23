@@ -136,7 +136,7 @@ static bool SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vector, c
 /**
  * @brief slice the world in Z planes going from min_z to max_z by stepsize...
  */
-static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleContour, bool multipleContour)
+static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleFile, bool multipleContour)
 {
 	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
@@ -181,7 +181,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 		zDistance[2] = zHeight;
 
 		/* if not doing a contour map then clear the buffer each pass... */
-		if (!singleContour && !multipleContour)
+		if (!singleFile && !multipleContour)
 			memset(pictureBuffer, 0, width * height * DEPTH);
 
 		/* loop through all the faces of the BSP file... */
@@ -290,14 +290,14 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 			}
 		}
 
-		if (!singleContour) {
+		if (!singleFile) {
 			Com_sprintf(filename, sizeof(filename), "out%d.png", sliceIndex + 1);
 			Com_Printf("creating %s...\n", filename);
 			SL_CreatePNGFile(filename, pictureBuffer, width, height);
 		}
 	}
 
-	if (singleContour) {
+	if (singleFile) {
 		Q_strncpyz(filename, "out.png", sizeof(filename));
 		Com_Printf("creating %s...\n", filename);
 		SL_CreatePNGFile(filename, pictureBuffer, width, height);
@@ -310,9 +310,9 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
  * @param[in] model The tile-info about the bsp-file we want to slice
  * @param[in] thickness the thickness of the brushes to render to the 2d map
  * @param[in] scale The scale of the png as passed via -s param. eg. 4 means: 1/4 or 1 pixels = 4 mapunits
- * @param[in] singleContour Put everything in one file. If false, create one file per level. As given by the -c param or the config default
+ * @param[in] singleFile Put everything in one file. If false, create one file per level. As given by the -c param or the config default
  */
-void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleContour, bool multipleContour)
+void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool singleFile, bool multipleContour)
 {
 	/** @todo remove these values once the mins/maxs calculation works */
 	vec3_t mins = {-MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, 0};
@@ -334,7 +334,7 @@ void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool si
 	mins[2] = (float) floor(mins[2]) + 0.01f;
 	maxs[2] = (float) floor(maxs[2]) + 0.01f;
 
-	SL_SliceTheWorld(model, mins, maxs, thickness, scale, singleContour, multipleContour);
+	SL_SliceTheWorld(model, mins, maxs, thickness, scale, singleFile, multipleContour);
 }
 
 #endif
