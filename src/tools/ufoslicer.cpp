@@ -32,15 +32,15 @@ static void Usage (void)
 	Com_Printf("\n");
 	Com_Printf(" -t N      = use slice thickness of N units.\n");
 	Com_Printf(" -s N      = use scale factor of N.\n");
-	Com_Printf(" -c        = create a single contour map.\n");
 	Com_Printf(" -m        = create multiple contour maps.\n");
+	Com_Printf(" -c        = combine the contours in a single file. Implies -m.\n");
 	Com_Printf(" -h|--help = show this help screen.\n");
 	Com_Printf("\n");
 	Com_Printf("For example: ./ufoslicer -t 64 -s 8 maps/farm\n");
 	Com_Printf("would slice the map \"farm.bsp\", moving by 64 units between slices and\n");
 	Com_Printf("would create a 1/8th scale bitmap file.\n");
 	Com_Printf("\n");
-	Com_Printf("The default for -t is 64 units.\n");
+	Com_Printf("The default for -t is 8 units.\n");
 
 	Mem_Shutdown();
 
