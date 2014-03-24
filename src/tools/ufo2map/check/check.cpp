@@ -406,7 +406,7 @@ static bool Check_SidesTouch (side_t* a, side_t* b)
 static void Check_FindCompositeSides (void)
 {
 	static bool done = false;
-	int i, is, j, k, l, m, numMembers, numDone = 0, numTodo;
+	int i, j, k, l, numMembers, numDone = 0, numTodo;
 
 	/* store pointers to sides here and then malloc them when we know how many.
 	 * divide by 4 becuase, the minimum number of sides for a brush is 4, so if
@@ -430,7 +430,7 @@ static void Check_FindCompositeSides (void)
 			continue; /* skip clips etc */
 
 		/* check each side, iSide, of iBrush for being the seed of a composite face */
-		for (is = 0; is < iBrush->numsides; is++) {
+		for (int is = 0; is < iBrush->numsides; is++) {
 			side_t* iSide = &iBrush->original_sides[is];
 
 			/* do not find the same composite again. no nodraws
@@ -484,7 +484,7 @@ static void Check_FindCompositeSides (void)
 									/* only add them to the todo list if they are not on the done list
 									 * as a brush cannot have parallel sides, this also ensures the same side
 									 * is not added to a composite more than once */
-									for (m = 0; m < numDone; m++) {
+									for (int m = 0; m < numDone; m++) {
 										if (nearListBrush == bDone[m])
 											goto skip_add_brush_to_todo_list;
 									}
@@ -983,7 +983,7 @@ static void Check_SetNodraw (side_t* s)
  */
 void CheckNodraws (void)
 {
-	int i, j, k, l, m, n, is, js;
+	int i, j, k, l, n, is, js;
 	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
 	/* Initialise compositeSides[].. Note that this function
@@ -1148,7 +1148,7 @@ void CheckNodraws (void)
 					for (l = 0; l < composite->numMembers; l++) {
 						const winding_t* mWinding = composite->memberSides[l]->winding;
 
-						for (m = 0; m < mWinding->numpoints; m++) {
+						for (int m = 0; m < mWinding->numpoints; m++) {
 							bool intersects = Check_EdgeEdgeIntersection(
 								iWinding->p[k], iWinding->p[(k + 1) % iWinding->numpoints],
 								mWinding->p[m], mWinding->p[(m + 1) % mWinding->numpoints],
@@ -1619,10 +1619,9 @@ void CheckTexturesBasedOnFlags (void)
 void CheckPropagateParserContentFlags(mapbrush_t* b)
 {
 	int notInformedMixedFace = 1;
-	int m;
 	int transferFlags = (CONTENTS_DETAIL | CONTENTS_TRANSLUCENT);
 
-	for (m = 0; m < b->numsides; m++) {
+	for (int m = 0; m < b->numsides; m++) {
 		int contentFlagDiff = (b->original_sides[m].contentFlags ^ b->contentFlags) & transferFlags;
 		if (contentFlagDiff) {
 			/* only tell them once per brush */

@@ -88,7 +88,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 	const image_t* image = r_flaretextures[0];
 	R_BindTexture(image->texnum);
 
-	int i, j, k, l, m;
+	int i, j, k, l;
 	j = k = l = 0;
 	for (i = 0; i < surfs->count; i++) {
 		vec3_t view, verts[4];
@@ -161,7 +161,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 		VectorAdd(f->origin, downright, verts[2]);
 		VectorSubtract(f->origin, upright, verts[3]);
 
-		for (m = 0; m < 4; m++) { /* duplicate color data to all 4 verts */
+		for (int m = 0; m < 4; m++) { /* duplicate color data to all 4 verts */
 			memcpy(&r_state.color_array[j], f->color, sizeof(vec3_t));
 			r_state.color_array[j + 3] = alpha;
 			j += 4;

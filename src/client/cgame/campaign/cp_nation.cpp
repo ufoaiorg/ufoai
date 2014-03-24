@@ -506,12 +506,11 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  */
 static int CL_NationsMaxFunding (void)
 {
-	int m, n;
 	int max = 0;
 
-	for (n = 0; n < ccs.numNations; n++) {
+	for (int n = 0; n < ccs.numNations; n++) {
 		const nation_t* nation = NAT_GetNationByIDX(n);
-		for (m = 0; m < MONTHS_PER_YEAR; m++) {
+		for (int m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				const int funding = NAT_GetFunding(nation, m);
 				if (max < funding)
@@ -540,8 +539,6 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  */
 static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStrip_t* funding, int maxFunding, int color)
 {
-	int width, height, dx;
-	int m;
 	int minFunding = 0;
 	int ptsNumber = 0;
 	float dy;
@@ -550,9 +547,9 @@ static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStri
 		return;
 
 	/** @todo should be into the chart node code */
-	width	= (int)node->box.size[0];
-	height	= (int)node->box.size[1];
-	dx = (int)(width / MONTHS_PER_YEAR);
+	int width	= (int)node->box.size[0];
+	int height	= (int)node->box.size[1];
+	int dx = (int)(width / MONTHS_PER_YEAR);
 
 	if (minFunding != maxFunding)
 		dy = (float) height / (maxFunding - minFunding);
@@ -561,7 +558,7 @@ static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStri
 
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
-	for (m = 0; m < MONTHS_PER_YEAR; m++) {
+	for (int m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
 			const int fund = NAT_GetFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = (m * dx);

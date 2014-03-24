@@ -604,7 +604,7 @@ static void GenerateFootstepList (const char* filename, int mipTexIndex)
  */
 static void ParseBrush (entity_t* mapent, const char* filename)
 {
-	int j, k, m;
+	int j, k;
 	brush_texture_t td;
 	vec3_t planepts[3];
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
@@ -760,7 +760,7 @@ static void ParseBrush (entity_t* mapent, const char* filename)
 	b->contentFlags = BrushContents(b);
 
 	/* copy all set face contentflags to the brush contentflags */
-	for (m = 0; m < b->numsides; m++)
+	for (int m = 0; m < b->numsides; m++)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
 	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any.
