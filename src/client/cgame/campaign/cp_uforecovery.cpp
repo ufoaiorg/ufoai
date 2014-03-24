@@ -472,6 +472,14 @@ static void US_RemoveStoredUFO_f (void)
 }
 #endif
 
+static const cmdList_t debugStoredUfosCmds[] = {
+#ifdef DEBUG
+	{"debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars."},
+	{"debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars."},
+	{"debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars."},
+#endif
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init actions for ufostoring-subsystem
  * @sa UI_InitStartup
@@ -479,11 +487,7 @@ static void US_RemoveStoredUFO_f (void)
 void UR_InitStartup (void)
 {
 	UR_InitCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
-	cgi->Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
-	cgi->Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
-#endif
+	Cmd_TableAddList(debugStoredUfosCmds);
 }
 
 /**
@@ -494,9 +498,5 @@ void UR_Shutdown (void)
 	cgi->LIST_Delete(&ccs.storedUFOs);
 
 	UR_ShutdownCallbacks();
-#ifdef DEBUG
-	cgi->Cmd_RemoveCommand("debug_liststoredufos");
-	cgi->Cmd_RemoveCommand("debug_storeufo");
-	cgi->Cmd_RemoveCommand("debug_removestoredufo");
-#endif
+	Cmd_TableRemoveList(debugStoredUfosCmds);
 }
