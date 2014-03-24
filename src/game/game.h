@@ -222,7 +222,7 @@ typedef struct game_import_s {
 	void (IMPORT* MoveStore) (pathing_t* path);
 	pos_t (IMPORT* MoveLength) (const pathing_t* path, const pos3_t to, byte crouchingState, bool stored);
 	int (IMPORT* MoveNext) (const pathing_t* path, const pos3_t from, byte crouchingState);
-	int (IMPORT* GetTUsForDirection) (int dir, int crouched);
+	int (IMPORT* GetTUsForDirection) (int dir, bool crouched);
 	pos_t (IMPORT* GridFall) (actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT* GridPosToVec) (actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	bool (IMPORT* isOnMap) (const vec3_t vec);

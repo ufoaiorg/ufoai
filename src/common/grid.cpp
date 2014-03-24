@@ -785,7 +785,7 @@ int Grid_Floor (const Routing& routing, const actorSizeEnum_t actorSize, const p
  * @param[in] crouched The crouching state of the actor
  * @return The TUs needed to move there.
  */
-int Grid_GetTUsForDirection (const int dir, const int crouched)
+int Grid_GetTUsForDirection (const int dir, bool crouched)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 	if (crouched && dir < CORE_DIRECTIONS)
