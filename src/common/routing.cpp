@@ -418,6 +418,14 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 	 *      restart below the current floor.
 	 */
 	for (;;) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
+
+		/* Check if a previous iteration has brought us too close to the bottom of the model. */
+		if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
+			/* There is no useable brush underneath this starting point. */
+			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
+			return 0;									/* return (a z-value of)0 to indicate we just scanned the model bottom. */
+		}
+
 		trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(mapTiles, Line(start, end), &footBox, list);
 		if (tr.fraction >= 1.0) {						/* If there is no brush underneath this starting point, */
 			routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
@@ -446,12 +454,6 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 			 * So start at that point.
 			 */
 			start[2] = bottom - QuantToModel(PATHFINDING_MIN_OPENING);
-			/* Check in case we are trying to scan too close to the bottom of the model. */
-			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
-				/* There is no useable brush underneath this starting point. */
-				routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
-				return 0;									/* return (a z-value of)0 to indicate we just scanned the model bottom. */
-			}
 			/* Restart  with the new start[] value */
 			continue;
 		}
@@ -468,12 +470,6 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 			 * So start at that point.
 			 */
 			start[2] = bottom - QuantToModel(PATHFINDING_MIN_OPENING);
-			/* Check in case we are trying to scan too close to the bottom of the model. */
-			if (start[2] <= QuantToModel(PATHFINDING_MIN_OPENING)) {
-				/* There is no useable brush underneath this starting point. */
-				routing.setFilled(actorSize, x, y, 0, z);	/* mark all cells to the model base as filled. */
-				return 0;									/* return 0 to indicate we just scanned the model bottom. */
-			}
 			/* Restart */
 			continue;
 		}
