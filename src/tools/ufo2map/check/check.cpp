@@ -983,7 +983,7 @@ static void Check_SetNodraw (side_t* s)
  */
 void CheckNodraws (void)
 {
-	int i, j, k, l, n, is, js;
+	int i, j, k, l, is, js;
 	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
 	/* Initialise compositeSides[].. Note that this function
@@ -1157,7 +1157,7 @@ void CheckNodraws (void)
 							if (intersects) {
 								bool coincident = false;
 								/* check for coincident intersections */
-								for (n = 0; n < numIntsct; n++) {
+								for (int n = 0; n < numIntsct; n++) {
 									float distSq = VectorDistSqr(intersection, intersections[n]);
 									if (CH_DIST_EPSILON_SQR > distSq) {
 										paired[n] = true;

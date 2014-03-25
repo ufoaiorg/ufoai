@@ -212,20 +212,17 @@ void CP_XVIInit (void)
  */
 bool XVI_SaveXML (xmlNode_t* p)
 {
-	int y;
 	int width;
 	int height;
-	xmlNode_t* n;
 
 	CP_GetXVIMapDimensions(&width, &height);
 
-	n = cgi->XML_AddNode(p, SAVE_XVI_XVI);
+	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_XVI_XVI);
 	cgi->XML_AddInt(n, SAVE_XVI_WIDTH, width);
 	cgi->XML_AddInt(n, SAVE_XVI_HEIGHT, height);
 
-	for (y = 0; y < height; y++) {
-		int x;
-		for (x = 0; x < width; x++) {
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
 			const int xviLevel = CP_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {

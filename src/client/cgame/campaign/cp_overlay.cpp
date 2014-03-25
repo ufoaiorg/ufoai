@@ -236,10 +236,9 @@ static void CP_IncreaseXVILevel (const vec2_t pos, int xCenter, int yCenter, flo
  */
 void CP_DecreaseXVILevelEverywhere (void)
 {
-	int x, y;									/**< current position (in pixel) */
-
-	for (y = 0; y < XVI_HEIGHT; y++) {
-		for (x = 0; x < XVI_WIDTH; x++) {
+	/** x,y: current position (in pixel) */
+	for (int y = 0; y < XVI_HEIGHT; y++) {
+		for (int x = 0; x < XVI_WIDTH; x++) {
 			const int xviLevel = CP_GetXVILevel(x, y);
 			if (xviLevel > 0)
 				CP_SetXVILevel(x, y, xviLevel - 1);

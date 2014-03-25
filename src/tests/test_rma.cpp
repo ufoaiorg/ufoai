@@ -142,10 +142,6 @@ static void testMassAssemblySequential (void)
 /* test the maps that have seedlists */
 static void testSeedlists (void)
 {
-	int i, n;
-	long time, timeSum = 0;
-	MapInfo* randomMap;
-	size_t length;
 	const char* assNames[][2] = {
 		{"farm", "medium"},
 		{"farm", "large"},
@@ -155,16 +151,17 @@ static void testSeedlists (void)
 		{"village", "commercial"},
 		{"village", "small"}
 	};
-	length = sizeof(assNames) / (2 * sizeof(char*));
+	size_t length = sizeof(assNames) / (2 * sizeof(char*));
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_threads->integer = 0;
-	for (n = 0; n < length; n++) {
-		for (i = 1; i < 20; i++) {
+	long timeSum = 0;
+	for (int n = 0; n < length; n++) {
+		for (int i = 1; i < 20; i++) {
 			srand(i);
-			time = Sys_Milliseconds();
+			int time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
-			randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
+			MapInfo* randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
 			CU_ASSERT(randomMap != nullptr);
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
