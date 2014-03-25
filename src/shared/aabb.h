@@ -88,6 +88,16 @@ public:
 		mins[0] = mins[1] = mins[2] = 99999;
 		maxs[0] = maxs[1] = maxs[2] = -99999;
 	}
+	/**
+	 * @brief Set from another box and a (trace)Line
+	 */
+	inline void set (const AABB& trBox, const Line& trLine) {
+		AABB endBox(trBox);			/* get the moving object */
+		endBox.shift(trLine.stop);	/* move it to end position */
+		set(trBox);
+		shift(trLine.start);		/* object in starting position */
+		add(endBox);				/* the whole box */
+	}
 
 	/*==================
 	 *		getters

@@ -47,10 +47,6 @@ public:
  */
 inline void MoveClip::calcBounds ()
 {
-	AABB endBox(objBox);			/* get the moving object */
-	endBox.shift(moveLine.stop);	/* move it to end position */
-	clipBox.set(objBox);
-	clipBox.shift(moveLine.start);	/* object in starting position */
-	clipBox.add(endBox);			/* the whole box */
+	clipBox.set(objBox, moveLine);
 	clipBox.expand(1);
 }
