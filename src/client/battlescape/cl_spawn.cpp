@@ -107,118 +107,6 @@ static const value_t localEntityValues[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
-static void SP_worldspawn(const localEntityParse_t* entData);
-static void SP_misc_model(const localEntityParse_t* entData);
-static void SP_misc_particle(const localEntityParse_t* entData);
-static void SP_misc_sound(const localEntityParse_t* entData);
-static void SP_light(const localEntityParse_t* entData);
-
-typedef struct {
-	const char* name;
-	void (*spawn) (const localEntityParse_t* entData);
-} spawn_t;
-
-static const spawn_t spawns[] = {
-	{"worldspawn", SP_worldspawn},
-	{"misc_model", SP_misc_model},
-	{"misc_particle", SP_misc_particle},
-	{"misc_sound", SP_misc_sound},
-	{"light", SP_light},
-
-	{nullptr, nullptr}
-};
-
-/**
- * @brief Finds the spawn function for the entity and calls it
- */
-static void CL_SpawnCall (const localEntityParse_t* entData)
-{
-	const spawn_t* s;
-
-	if (entData->classname[0] == '\0')
-		return;
-
-	/* check normal spawn functions */
-	for (s = spawns; s->name; s++) {
-		/* found it */
-		if (Q_streq(s->name, entData->classname)) {
-			s->spawn(entData);
-			return;
-		}
-	}
-}
-
-/**
- * @brief Parse the map entity string and spawns those entities that are client-side only
- * @sa G_SendEdictsAndBrushModels
- * @sa CL_AddBrushModel
- */
-void CL_SpawnParseEntitystring (void)
-{
-	const char* es = cl.mapData->mapEntityString;
-	int entnum = 0, maxLevel;
-
-	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
-		maxLevel = cl.mapMaxLevel;
-	else
-		maxLevel = PATHFINDING_HEIGHT;
-
-	/* vid restart? */
-	if (cl.numMapParticles || cl.numLMs)
-		return;
-
-	/* parse ents */
-	while (1) {
-		localEntityParse_t entData;
-		/* parse the opening brace */
-		const char* entityToken = Com_Parse(&es);
-		/* memorize the start */
-		if (!es)
-			break;
-
-		if (entityToken[0] != '{')
-			Com_Error(ERR_DROP, "V_ParseEntitystring: found %s when expecting {", entityToken);
-
-		/* initialize */
-		OBJZERO(entData);
-		VectorSet(entData.scale, 1, 1, 1);
-		entData.volume = SND_VOLUME_DEFAULT;
-		entData.maxLevel = maxLevel;
-		entData.entStringPos = es;
-		entData.entnum = entnum;
-		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;
-		entData.attenuation = SOUND_ATTN_IDLE;
-
-		/* go through all the dictionary pairs */
-		while (1) {
-			const value_t* v;
-			/* parse key */
-			entityToken = Com_Parse(&es);
-			if (entityToken[0] == '}')
-				break;
-			if (!es)
-				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
-
-			for (v = localEntityValues; v->string; v++)
-				if (Q_streq(entityToken, v->string)) {
-					/* found a definition */
-					entityToken = Com_Parse(&es);
-					if (!es)
-						Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
-					Com_EParseValue(&entData, entityToken, v->type, v->ofs, v->size);
-					break;
-				}
-		}
-		CL_SpawnCall(&entData);
-
-		entnum++;
-	}
-
-	/* after we have parsed all the entities we can resolve the target, targetname
-	 * connections for the misc_model entities */
-	LM_Think();
-}
-
 #define MIN_AMBIENT_COMPONENT 0.1
 #define MIN_AMBIENT_SUM 0.50
 
@@ -381,4 +269,110 @@ static void SP_light (const localEntityParse_t* entData)
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY)))) {
 		R_AddStaticLight(entData->origin, entData->light, entData->color);
 	}
+}
+
+typedef struct {
+	const char* name;
+	void (*spawn) (const localEntityParse_t* entData);
+} spawn_t;
+
+static const spawn_t spawns[] = {
+	{"worldspawn", SP_worldspawn},
+	{"misc_model", SP_misc_model},
+	{"misc_particle", SP_misc_particle},
+	{"misc_sound", SP_misc_sound},
+	{"light", SP_light},
+
+	{nullptr, nullptr}
+};
+
+/**
+ * @brief Finds the spawn function for the entity and calls it
+ */
+static void CL_SpawnCall (const localEntityParse_t* entData)
+{
+	const spawn_t* s;
+
+	if (entData->classname[0] == '\0')
+		return;
+
+	/* check normal spawn functions */
+	for (s = spawns; s->name; s++) {
+		/* found it */
+		if (Q_streq(s->name, entData->classname)) {
+			s->spawn(entData);
+			return;
+		}
+	}
+}
+
+/**
+ * @brief Parse the map entity string and spawns those entities that are client-side only
+ * @sa G_SendEdictsAndBrushModels
+ * @sa CL_AddBrushModel
+ */
+void CL_SpawnParseEntitystring (void)
+{
+	const char* es = cl.mapData->mapEntityString;
+	int entnum = 0, maxLevel;
+
+	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
+		maxLevel = cl.mapMaxLevel;
+	else
+		maxLevel = PATHFINDING_HEIGHT;
+
+	/* vid restart? */
+	if (cl.numMapParticles || cl.numLMs)
+		return;
+
+	/* parse ents */
+	while (1) {
+		localEntityParse_t entData;
+		/* parse the opening brace */
+		const char* entityToken = Com_Parse(&es);
+		/* memorize the start */
+		if (!es)
+			break;
+
+		if (entityToken[0] != '{')
+			Com_Error(ERR_DROP, "V_ParseEntitystring: found %s when expecting {", entityToken);
+
+		/* initialize */
+		OBJZERO(entData);
+		VectorSet(entData.scale, 1, 1, 1);
+		entData.volume = SND_VOLUME_DEFAULT;
+		entData.maxLevel = maxLevel;
+		entData.entStringPos = es;
+		entData.entnum = entnum;
+		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;
+		entData.attenuation = SOUND_ATTN_IDLE;
+
+		/* go through all the dictionary pairs */
+		while (1) {
+			const value_t* v;
+			/* parse key */
+			entityToken = Com_Parse(&es);
+			if (entityToken[0] == '}')
+				break;
+			if (!es)
+				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
+
+			for (v = localEntityValues; v->string; v++)
+				if (Q_streq(entityToken, v->string)) {
+					/* found a definition */
+					entityToken = Com_Parse(&es);
+					if (!es)
+						Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
+					Com_EParseValue(&entData, entityToken, v->type, v->ofs, v->size);
+					break;
+				}
+		}
+		CL_SpawnCall(&entData);
+
+		entnum++;
+	}
+
+	/* after we have parsed all the entities we can resolve the target, targetname
+	 * connections for the misc_model entities */
+	LM_Think();
 }
