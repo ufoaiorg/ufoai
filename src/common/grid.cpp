@@ -95,20 +95,18 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  */
 static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t* path, int x, int y, int z)
 {
-	pos_t** p;
-	int i;
-	actorSizeEnum_t size;
-
 	if (!path->fbList)
 		return false;	/* no fbList, no intersection. We're done. */
 
-	for (i = 0, p = path->fbList->fbList; i < path->fbList->fbListLength / 2; i++, p += 2) {
+	pos_t** p = nullptr;
+	while ((p = path->fbList->getNext(p))) {
 		/* Skip initial position. */
 		if (VectorCompare((*p), exclude)) {
 			continue;
 		}
 
 		/* extract the forbidden coordinates */
+		actorSizeEnum_t size;
 		byte* forbiddenSize = *(p + 1);
 		memcpy(&size, forbiddenSize, sizeof(size));
 		const int fx = (*p)[0];

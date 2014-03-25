@@ -41,15 +41,21 @@ typedef struct forbiddenList_s {
 	inline void reset() {
 		fbListLength = 0;
 	}
+	inline pos_t** getNext(pos_t** prev) {
+		if (!prev)
+			return fbList;
+		prev += 2;
+		if (prev >= fbList + fbListLength)
+			return nullptr;
+		return prev;
+	}
 #ifdef DEBUG
 	/* this is NOT equivalent to Grid_CheckForbidden() !! Just for debugging purposes */
 	inline bool contains(const pos3_t pos) {
-		pos_t** p = fbList;
-		pos_t** pEnd = fbList + fbListLength;
-		while (p < pEnd) {
+		pos_t** p = nullptr;
+		while ((p = getNext(p))) {
 			if (VectorCompare((*p), pos))
 				return true;
-			p += 2;
 		}
 		return false;
 	}
