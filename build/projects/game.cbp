@@ -67,6 +67,7 @@
 		</Compiler>
 		<Unit filename="../../base/ai/alien.lua" />
 		<Unit filename="../../base/ai/civilian.lua" />
+		<Unit filename="../../src/common/grid.h" />
 		<Unit filename="../../src/common/tracing.h" />
 		<Unit filename="../../src/game/chr_shared.cpp" />
 		<Unit filename="../../src/game/chr_shared.h" />
