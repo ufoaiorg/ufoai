@@ -46,7 +46,6 @@ int nummapplanes;
 #define	PLANE_HASHES	1024
 static plane_t* planehash[PLANE_HASHES];
 
-static vec3_t map_mins, map_maxs;
 static int c_boxbevels = 0;
 static int c_edgebevels = 0;
 
@@ -1233,6 +1232,7 @@ void LoadMapFile (const char* filename)
 	if (materialsCnt)
 		Com_Printf("Generated material file with %i entries\n", materialsCnt);
 
+	vec3_t map_mins, map_maxs;
 	ClearBounds(map_mins, map_maxs);
 	for (int i = 0; i < entities[0].numbrushes; i++) {
 		if (mapbrushes[i].mbBox.mins[0] > MAX_WORLD_WIDTH)
