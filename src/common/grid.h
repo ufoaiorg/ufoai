@@ -42,6 +42,8 @@ typedef struct forbiddenList_s {
 		fbListLength = 0;
 	}
 	inline pos_t** getNext(pos_t** prev) {
+		if (!fbListLength)
+			return nullptr;
 		if (!prev)
 			return fbList;
 		prev += 2;
