@@ -346,12 +346,11 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t* node, Inventory* inv)
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
 		bool showTUs = true;
-		int x, y;
 
 		OBJZERO(free);
 
-		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
+		for (int y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
+			for (int x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */

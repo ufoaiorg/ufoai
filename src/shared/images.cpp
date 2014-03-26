@@ -109,9 +109,6 @@ void R_WriteCompressedTGA (qFILE* f, const byte* buffer, int width, int height)
 	byte header[18];
 	char footer[26];
 
-	int y;
-	size_t x;
-
 	OBJZERO(header);
 	OBJZERO(footer);
 
@@ -132,8 +129,8 @@ void R_WriteCompressedTGA (qFILE* f, const byte* buffer, int width, int height)
 	/* write header */
 	FS_Write(header, sizeof(header), f);
 
-	for (y = height - 1; y >= 0; y--) {
-		for (x = 0; x < width; x++) {
+	for (int y = height - 1; y >= 0; y--) {
+		for (size_t x = 0; x < width; x++) {
 			const size_t index = y * width * TGA_CHANNELS + x * TGA_CHANNELS;
 			pixel_data[0] = buffer[index + 2];
 			pixel_data[1] = buffer[index + 1];
