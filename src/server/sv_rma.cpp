@@ -1520,10 +1520,9 @@ static bool SV_AddMissingTiles (MapInfo* map)
 
 #if 0
 		/* print the gapList */
-		int x, y;
 		Com_Printf("\n");
-		for (x = 0; x < mAsm->width + 1; x++){
-			for (y = 0; y < mAsm->height + 1; y++){
+		for (int x = 0; x < mAsm->width + 1; x++){
+			for (int y = 0; y < mAsm->height + 1; y++){
 				int cnt = gapList[x][y][0];
 				Com_Printf("x:%i y:%i cnt:%i ", x, y, cnt);
 				for (j = 0; j <= cnt + 3; j++) {
