@@ -465,10 +465,10 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 	}
 
 	for (i = 0; i < 3; i++) {
-		if (brush->mbBox.mins[0] < -MAX_WORLD_WIDTH || brush->mbBox.maxs[0] > MAX_WORLD_WIDTH)
+		if (brush->mbBox.mins[i] < -MAX_WORLD_WIDTH || brush->mbBox.maxs[i] > MAX_WORLD_WIDTH)
 			Com_Printf("entity %i, brush %i: bounds out of world range (%f:%f)\n",
-				brush->entitynum, brush->brushnum, brush->mbBox.mins[0], brush->mbBox.maxs[0]);
-		if (brush->mbBox.mins[0] > MAX_WORLD_WIDTH || brush->mbBox.maxs[0] < -MAX_WORLD_WIDTH) {
+				brush->entitynum, brush->brushnum, brush->mbBox.mins[i], brush->mbBox.maxs[i]);
+		if (brush->mbBox.mins[i] > MAX_WORLD_WIDTH || brush->mbBox.maxs[i] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
 			VectorClear(brush->mbBox.mins);
 			VectorClear(brush->mbBox.maxs);
