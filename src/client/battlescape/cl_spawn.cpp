@@ -257,7 +257,7 @@ static void SP_misc_sound (const localEntityParse_t* entData)
 }
 
 /**
- * @param entData
+ * @param entData The structure that holds the data we parsed from the script
  */
 static void SP_light (const localEntityParse_t* entData)
 {
