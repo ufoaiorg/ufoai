@@ -3444,7 +3444,7 @@ static void Com_AddObjectLinks (void)
 				const objDef_t* weapon = INVSH_GetItemByIDX(n);
 				for (int m = 0; m < weapon->numWeapons; m++) {
 					if (weapon->weapons[m] == od) {
-						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
+						assert(od->numAmmos < MAX_AMMOS_PER_OBJDEF);
 						od->ammos[od->numAmmos++] = weapon;
 						Com_DPrintf(DEBUG_SHARED, "link ammo %s to weapon: %s\n", weapon->id, od->id);
 					}
