@@ -576,6 +576,14 @@ void GAME_MP_PingServers_f (void)
 	}
 }
 
+static const cmdList_t serverListCmds[] = {
+	{"bookmark_add", GAME_MP_BookmarkAdd_f, "Add a new bookmark - see adrX cvars"},
+	{"server_info", GAME_MP_ServerInfo_f, nullptr},
+	{"serverlist", GAME_MP_PrintServerList_f, nullptr},
+	/* text id is servers in menu_multiplayer.ufo */
+	{"servers_click", GAME_MP_ServerListClick_f, nullptr},
+	{nullptr, nullptr, nullptr}
+};
 void GAME_MP_ServerListInit (const cgame_import_t* import)
 {
 	cgi = import;
@@ -584,19 +592,12 @@ void GAME_MP_ServerListInit (const cgame_import_t* import)
 		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
-	cgi->Cmd_AddCommand("bookmark_add", GAME_MP_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-	cgi->Cmd_AddCommand("server_info", GAME_MP_ServerInfo_f, nullptr);
-	cgi->Cmd_AddCommand("serverlist", GAME_MP_PrintServerList_f, nullptr);
-	/* text id is servers in menu_multiplayer.ufo */
-	cgi->Cmd_AddCommand("servers_click", GAME_MP_ServerListClick_f, nullptr);
+	Cmd_TableAddList(serverListCmds);
 }
 
 void GAME_MP_ServerListShutdown (void)
 {
-	cgi->Cmd_RemoveCommand("bookmark_add");
-	cgi->Cmd_RemoveCommand("server_info");
-	cgi->Cmd_RemoveCommand("serverlist");
-	cgi->Cmd_RemoveCommand("servers_click");
+	Cmd_TableRemoveList(serverListCmds);
 
 	cgi->NET_DatagramSocketClose(netDatagramSocket);
 	netDatagramSocket = nullptr;
