@@ -592,12 +592,12 @@ void GAME_MP_ServerListInit (const cgame_import_t* import)
 		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
-	Cmd_TableAddList(serverListCmds);
+	cgi->Cmd_TableAddList(serverListCmds);
 }
 
 void GAME_MP_ServerListShutdown (void)
 {
-	Cmd_TableRemoveList(serverListCmds);
+	cgi->Cmd_TableRemoveList(serverListCmds);
 
 	cgi->NET_DatagramSocketClose(netDatagramSocket);
 	netDatagramSocket = nullptr;
