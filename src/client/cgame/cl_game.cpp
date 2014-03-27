@@ -1192,7 +1192,7 @@ static const cgame_export_t* GAME_GetCGameAPI_ (const cgameType_t* t)
 }
 
 /**
- * @brief Decides with game mode should be set - takes the menu as reference
+ * @brief Decides which game mode should be set - takes the menu as reference
  */
 static void GAME_SetMode_f (void)
 {
