@@ -352,12 +352,9 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
  */
 trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, const AABB* traceBox, int levelmask, int brushmask, int brushreject, const char** list)
 {
-	AABB lineBox(*traceBox);
-	lineBox.shift(traceLine.start);		/* the traceBox in starting position */
-	AABB lineBoxTemp(*traceBox);
-	lineBoxTemp.shift(traceLine.stop);	/* in end position */
-	lineBox.add(lineBoxTemp);			/* bounding box for the whole trace */
-	/* Now lineBox specifies the whole volume to be traced through. */
+	AABB lineBox;
+	lineBox.set(*traceBox, traceLine);
+	/* Now lineBox specifies the whole volume involved in the trace. */
 
 	/* reconstruct a levelmask */
 	const vec_t minZ = lineBox.getMinZ();
