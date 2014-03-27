@@ -31,7 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @see CL_BuildForbiddenList
  */
 typedef struct forbiddenList_s {
+private:
 	pos_t* fbList[MAX_FORBIDDENLIST];
+public:
 	int fbListLength;	/**< Current length of fbList. */
 
 	inline void add(pos3_t pos, byte* entSize) {
