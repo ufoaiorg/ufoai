@@ -124,11 +124,9 @@ int CL_ActorMoveMode (const le_t* le)
  */
 int CL_ActorGetNumber (const le_t* le)
 {
-	int actorIdx;
-
 	assert(le);
 
-	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
+	for (int actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 		if (cl.teamList[actorIdx] == le)
 			return actorIdx;
 	}
@@ -309,11 +307,10 @@ float CL_ActorInjuryModifier (const le_t* le, const modifier_types_t type)
 
 	if (le) {
 		const character_t* chr = CL_ActorGetChr(le);
-		int bodyPart;
 		if (!chr)
 			return 0;
 		const BodyData* bodyTemplate = chr->teamDef->bodyTemplate;
-		for (bodyPart = 0; bodyPart < bodyTemplate->numBodyParts(); ++bodyPart) {
+		for (int bodyPart = 0; bodyPart < bodyTemplate->numBodyParts(); ++bodyPart) {
 			const int threshold = le->maxHP * bodyTemplate->woundThreshold(bodyPart);
 			const int injury = (le->wounds.woundLevel[bodyPart] + le->wounds.treatmentLevel[bodyPart] * 0.5);
 			if (injury > threshold)
@@ -2235,19 +2232,17 @@ static void CL_DumpMoveMark_f (void)
  */
 static void CL_DumpTUs_f (void)
 {
-	int x, y, crouchingState;
-	pos3_t pos, loc;
-
 	if (!selActor)
 		return;
 
-	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+	int crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+	pos3_t pos, loc;
 	VectorCopy(selActor->pos, pos);
 
 	Com_Printf("TUs around (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	for (y = std::max(0, pos[1] - 8); y <= std::min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
-		for (x = std::max(0, pos[0] - 8); x <= std::min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
+	for (int y = std::max(0, pos[1] - 8); y <= std::min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
+		for (int x = std::max(0, pos[0] - 8); x <= std::min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
 			Com_Printf("%3i ", Grid_MoveLength(&cl.pathMap, loc, crouchingState, false));
 		}

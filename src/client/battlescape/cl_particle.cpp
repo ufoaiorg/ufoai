@@ -782,11 +782,9 @@ ptl_t* CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
  */
 void CL_ParticleFree (ptl_t* p)
 {
-	ptl_t* c;
-
 	p->inuse = false;
 	p->invis = true;
-	for (c = p->children; c; c = c->next) {
+	for (ptl_t* c = p->children; c; c = c->next) {
 		CL_ParticleFree(c);
 	}
 }

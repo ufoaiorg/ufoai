@@ -291,15 +291,13 @@ static const spawn_t spawns[] = {
  */
 static void CL_SpawnCall (const localEntityParse_t* entData)
 {
-	const spawn_t* s;
-
 	if (entData->classname[0] == '\0')
 		return;
 
 	/* check normal spawn functions */
-	for (s = spawns; s->name; s++) {
-		/* found it */
+	for (const spawn_t* s = spawns; s->name; s++) {
 		if (Q_streq(s->name, entData->classname)) {
+			/* found it */
 			s->spawn(entData);
 			return;
 		}
@@ -349,7 +347,6 @@ void CL_SpawnParseEntitystring (void)
 
 		/* go through all the dictionary pairs */
 		while (1) {
-			const value_t* v;
 			/* parse key */
 			entityToken = Com_Parse(&es);
 			if (entityToken[0] == '}')
@@ -357,7 +354,7 @@ void CL_SpawnParseEntitystring (void)
 			if (!es)
 				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
 
-			for (v = localEntityValues; v->string; v++)
+			for (const value_t* v = localEntityValues; v->string; v++)
 				if (Q_streq(entityToken, v->string)) {
 					/* found a definition */
 					entityToken = Com_Parse(&es);

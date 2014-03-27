@@ -1311,23 +1311,21 @@ static void HUD_ActorWoundData_f (void)
 	if (!selActor)
 		return;
 
-	int bodyPart;
 	woundInfo_t* wounds = &selActor->wounds;
 	const character_t* chr = CL_ActorGetChr(selActor);
 	const BodyData* bodyData = chr->teamDef->bodyTemplate;
 
-	for (bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
+	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 		const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
 
 		if (wounds->woundLevel[bodyPart] + wounds->treatmentLevel[bodyPart] * 0.5 > woundThreshold) {
 			const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
 								 ? bodyData->bleedingFactor(bodyPart) : 0);
 			char text[256];
-			int penalty;
 
 			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
 					_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
-			for (penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
+			for (int penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
 				if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
 					Q_strcat(text, lengthof(text), _("- Reduced %s\n"), HUD_GetPenaltyString(penalty));
 			UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
