@@ -244,7 +244,7 @@ static void testMapDef (void)
 			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));
 
 		CU_ASSERT_FALSE(md->maxAliens <= 0);
-		CU_ASSERT_PTR_NOT_NULL(md->map);
+		CU_ASSERT_PTR_NOT_NULL(md->mapTheme);
 		CU_ASSERT_PTR_NOT_NULL(md->description);
 		i++;
 	}

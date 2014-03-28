@@ -116,9 +116,9 @@ static void GAME_SK_Start_f (void)
 
 	GAME_SK_SetMissionParameters(md);
 
-	assert(md->map);
+	assert(md->mapTheme);
 
-	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
+	cgi->Cbuf_AddText("map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->mapTheme, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
 }
 
 static void GAME_SK_Restart_f (void)
@@ -278,10 +278,10 @@ static const mapDef_t* GAME_SK_MapInfo (int step)
 
 	cgi->Cvar_SetValue("ai_singleplayeraliens", md->maxAliens);
 
-	if (md->map[0] == '.')
+	if (md->mapTheme[0] == '.')
 		return nullptr;
 
-	if (md->map[0] == '+') {
+	if (md->mapTheme[0] == '+') {
 		GAME_SK_HideUFOs(md->ufos);
 		GAME_SK_HideDropships(md->aircraft);
 	} else {

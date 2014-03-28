@@ -95,7 +95,7 @@ static void testMapDefsMassRMA (void)
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
@@ -105,7 +105,7 @@ static void testMapDefsMassRMA (void)
 			continue;
 
 		{
-			char* p = md->map;
+			char* p = md->mapTheme;
 
 			if (*p == '+')
 				p++;
@@ -231,7 +231,7 @@ static void testMapDefStatistic (void)
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
@@ -240,7 +240,7 @@ static void testMapDefStatistic (void)
 
 		MapInfo* theMap = Mem_AllocType(MapInfo);
 		char mapAssName[80];
-		const char* p = md->map;
+		const char* p = md->mapTheme;
 
 		if (*p == '+')
 			p++;
@@ -302,7 +302,7 @@ static void testMapDefsFootSteps (void)
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
@@ -325,7 +325,7 @@ static void testMapDefsFootSteps (void)
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* ass = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->map, ass);
+		SV_Map(true, md->mapTheme, ass);
 
 		/* now that we have loaded the map, check all cells for walkable places */
 		GridBox mBox(sv->mapData.mapBox);	// test ALL the cells
@@ -378,18 +378,18 @@ static void testMapDefsFootSteps (void)
 			}
 		}
 		if (!texNames[0][0]) {
-			Com_Printf("In map %s, ass %s: Nothing detected\n", md->map, ass);
+			Com_Printf("In map %s, ass %s: Nothing detected\n", md->mapTheme, ass);
 		} else {
 			++badMapCount;
 			for (int i = 0; i < texCountMax; ++i) {
 				if (texNames[i][0]) {
-					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->map, ass, texNames[i]);
+					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->mapTheme, ass, texNames[i]);
 				}
 			}
 		}
 		OBJZERO(texNames);
 		SV_ShutdownGameProgs();
-		CU_PASS(md->map);
+		CU_PASS(md->mapTheme);
 
 		if (done || mapCount >= mapCountMax || badMapCount >= badMapCountMax)
 			break;
@@ -408,7 +408,7 @@ static void testMapDefsSingleplayer (void)
 	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
@@ -426,16 +426,16 @@ static void testMapDefsSingleplayer (void)
 
 		Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
 		if (LIST_IsEmpty(md->params)) {
-			SV_Map(true, md->map, nullptr);
+			SV_Map(true, md->mapTheme, nullptr);
 			SV_ShutdownGameProgs();
 		} else {
 			LIST_Foreach(md->params, const char, param) {
 				Com_Printf("testMapDefsSingleplayer: Mapdef %s (param %s)\n", md->id, param);
-				SV_Map(true, md->map, param);
+				SV_Map(true, md->mapTheme, param);
 				SV_ShutdownGameProgs();
 			}
 		}
-		CU_PASS(md->map);
+		CU_PASS(md->mapTheme);
 	}
 }
 
@@ -468,7 +468,7 @@ static void testMapDefsMultiplayer (void)
 
 		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 		if (LIST_IsEmpty(md->params)) {
-			SV_Map(true, md->map, nullptr);
+			SV_Map(true, md->mapTheme, nullptr);
 
 			player = PLAYER_NUM(0);
 			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
@@ -478,7 +478,7 @@ static void testMapDefsMultiplayer (void)
 		} else {
 			LIST_Foreach(md->params, const char, param) {
 				Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
-				SV_Map(true, md->map, param);
+				SV_Map(true, md->mapTheme, param);
 
 				player = PLAYER_NUM(0);
 				Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");

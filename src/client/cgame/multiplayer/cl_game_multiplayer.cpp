@@ -84,7 +84,7 @@ static void GAME_MP_StartServer_f (void)
 	md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md || !md->multiplayer)
 		return;
-	assert(md->map);
+	assert(md->mapTheme);
 
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
 	cgi->Cvar_Set("rm_drop", "");
@@ -96,7 +96,7 @@ static void GAME_MP_StartServer_f (void)
 	else
 		cgi->Cvar_SetValue("sv_maxteams", 2);
 
-	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
+	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->mapTheme, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
 
 	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame");
 }

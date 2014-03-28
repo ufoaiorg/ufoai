@@ -921,12 +921,12 @@ static void UI_MapInfoGetNext (int step)
 		if (ref == cls.currentSelectedMap)
 			break;
 		/* special purpose maps are not startable without the specific context */
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 
-		if (md->map[0] != '+' && FS_CheckFile("maps/%s.bsp", md->map) != -1)
+		if (md->mapTheme[0] != '+' && FS_CheckFile("maps/%s.bsp", md->mapTheme) != -1)
 			break;
-		if (md->map[0] == '+' && FS_CheckFile("maps/%s.ump", md->map + 1) != -1)
+		if (md->mapTheme[0] == '+' && FS_CheckFile("maps/%s.ump", md->mapTheme + 1) != -1)
 			break;
 	}
 }
@@ -952,14 +952,14 @@ static void UI_MapInfo (int step)
 	if (!md)
 		return;
 
-	mapname = md->map;
+	mapname = md->mapTheme;
 	/* skip random map char. */
 	Cvar_Set("mn_svmapid", "%s", md->id);
 	if (mapname[0] == '+') {
-		Cvar_Set("mn_svmapname", "%s %s", md->map, md->params ? (const char*)LIST_GetRandom(md->params) : "");
+		Cvar_Set("mn_svmapname", "%s %s", md->mapTheme, md->params ? (const char*)LIST_GetRandom(md->params) : "");
 		mapname++;
 	} else {
-		Cvar_Set("mn_svmapname", "%s", md->map);
+		Cvar_Set("mn_svmapname", "%s", md->mapTheme);
 	}
 
 	if (R_ImageExists("pics/maps/shots/%s", mapname))
@@ -1000,16 +1000,16 @@ static void UI_RequestMapList_f (void)
 		const char* preview;
 
 		/* special purpose maps are not startable without the specific context */
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 
 		/* do we have the map file? */
-		if (md->map[0] != '+' && FS_CheckFile("maps/%s.bsp", md->map) == -1)
+		if (md->mapTheme[0] != '+' && FS_CheckFile("maps/%s.bsp", md->mapTheme) == -1)
 			continue;
-		if (md->map[0] == '+' && FS_CheckFile("maps/%s.ump", md->map + 1) == -1)
+		if (md->mapTheme[0] == '+' && FS_CheckFile("maps/%s.ump", md->mapTheme + 1) == -1)
 			continue;
 
-		preview = md->map;
+		preview = md->mapTheme;
 		if (preview[0] == '+')
 			preview++;
 		if (!R_ImageExists("pics/maps/shots/%s", preview))
@@ -1060,7 +1060,7 @@ static void UI_SelectMap_f (void)
 
 	MapDef_Foreach(md) {
 		i++;
-		if (!Q_streq(md->map, mapname))
+		if (!Q_streq(md->mapTheme, mapname))
 			continue;
 		cls.currentSelectedMap = i - 1;
 		UI_MapInfo(0);

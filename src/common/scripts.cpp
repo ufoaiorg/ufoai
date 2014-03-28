@@ -3459,7 +3459,7 @@ static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
 	{"victorycondition", V_TRANSLATION_STRING, offsetof(mapDef_t, victoryCondition), 0},
 	{"missionbriefing", V_TRANSLATION_STRING, offsetof(mapDef_t, missionBriefing), 0},
-	{"map", V_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"map", V_HUNK_STRING, offsetof(mapDef_t, mapTheme), 0},
 	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},
 	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
 
@@ -3528,7 +3528,7 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 		}
 	} while (*text);
 
-	if (!md->map) {
+	if (!md->mapTheme) {
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
 		csi.numMDs--;
 	}

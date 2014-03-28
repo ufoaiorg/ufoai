@@ -87,7 +87,7 @@ void BATTLE_SetVars (const battleParam_t* battleParameters)
  */
 void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
 {
-	assert(mission->mapDef->map);
+	assert(mission->mapDef->mapTheme);
 
 	/* set the mapZone - this allows us to replace the ground texture
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
@@ -106,7 +106,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
 	cgi->Cvar_Set("r_overridematerial", "");
 
 	/* base attack maps starts with a dot */
-	if (mission->mapDef->map[0] == '.') {
+	if (mission->mapDef->mapTheme[0] == '.') {
 		const base_t* base = mission->data.base;
 
 		if (mission->category != INTERESTCATEGORY_BASE_ATTACK)
@@ -126,7 +126,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
 
 	const char* param = battleParameters->param ? battleParameters->param : (const char*)cgi->LIST_GetRandom(mission->mapDef->params);
 	cgi->Cbuf_AddText("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
-		mission->mapDef->map, param ? param : "");
+		mission->mapDef->mapTheme, param ? param : "");
 }
 
 /**
@@ -345,7 +345,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 		if (mission->crashed) {
 			shortUFOType = cgi->Com_UFOCrashedTypeToShortName(ufo->ufotype);
 			/* Set random map UFO if this is a random map */
-			if (mission->mapDef->map[0] == '+') {
+			if (mission->mapDef->mapTheme[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (Q_streq(mission->mapDef->id, "ufocrash"))
 					param->param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
@@ -358,14 +358,14 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 
 		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", ufo->id, ufoCondition);
 		/* Set random map UFO if this is a random map */
-		if (mission->mapDef->map[0] == '+' && !cgi->LIST_IsEmpty(mission->mapDef->ufos)) {
+		if (mission->mapDef->mapTheme[0] == '+' && !cgi->LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */
 			cgi->Cvar_Set("rm_ufo", "%s", cgi->Com_GetRandomMapAssemblyNameForCraft(shortUFOType));
 		}
 	}
 
 	/* Set random map aircraft if this is a random map */
-	if (mission->mapDef->map[0] == '+') {
+	if (mission->mapDef->mapTheme[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			cgi->Cvar_Set("rm_crashed", "%s", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}

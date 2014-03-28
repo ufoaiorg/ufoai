@@ -341,7 +341,7 @@ typedef struct gametype_s {
 typedef struct mapDef_s {
 	/* general */
 	char* id;				/**< script file id */
-	char* map;				/**< bsp or ump base filename (without extension and day or night char) */
+	char* mapTheme;			/**< bsp or ump base filename (without extension and day or night char) */
 	linkedList_t* params;	/**< in case of ump file, the assembly to use */
 	char* description;		/**< the description to show in the menus */
 	char* victoryCondition;	/**< the mission briefing victory condition */

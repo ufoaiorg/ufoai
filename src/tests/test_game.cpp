@@ -109,7 +109,7 @@ static void testCountSpawnpoints (void)
 	Cvar_Set("rm_drop", "+craft_drop_herakles");
 
 	MapDef_Foreach(md) {
-		if (md->map[0] == '.')
+		if (md->mapTheme[0] == '.')
 			continue;
 		if (md->nocunit)	/* map is WIP and therefore excluded from the tests */
 			continue;
@@ -133,12 +133,12 @@ static void testCountSpawnpoints (void)
 		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->map, assName, false);
+		SV_Map(true, md->mapTheme, assName, false);
 
-		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->map, md->id, level.num_spawnpoints[TEAM_PHALANX]);
-	/*	Com_Printf("Map: %s Mapdef %s Seed %u Spawnpoints: %i\n", md->map, md->id, seed, level.num_spawnpoints[TEAM_PHALANX]); */
+		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, level.num_spawnpoints[TEAM_PHALANX]);
+	/*	Com_Printf("Map: %s Mapdef %s Seed %u Spawnpoints: %i\n", md->mapTheme, md->id, seed, level.num_spawnpoints[TEAM_PHALANX]); */
 		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
-			Com_Printf("Map %s: only %i spawnpoints !\n", md->map, level.num_spawnpoints[TEAM_PHALANX]);
+			Com_Printf("Map %s: only %i spawnpoints !\n", md->mapTheme, level.num_spawnpoints[TEAM_PHALANX]);
 	}
 	SV_ShutdownGameProgs();
 }
