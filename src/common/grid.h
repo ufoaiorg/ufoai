@@ -39,6 +39,9 @@ public:
 	inline void add(pos3_t pos, byte* entSize) {
 		fbList[fbListLength++] = pos;
 		fbList[fbListLength++] = entSize;
+
+		if (fbListLength > MAX_FORBIDDENLIST)
+			Sys_Error("ForbiddenList.add: list too long\n");
 	}
 	inline void reset() {
 		fbListLength = 0;

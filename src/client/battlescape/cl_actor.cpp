@@ -639,11 +639,6 @@ static void CL_BuildForbiddenList (void)
 			forbiddenList.add(le->pos, (byte*)&le->fieldSize);
 		}
 	}
-
-#ifdef PARANOID
-	if (forbiddenListLength > MAX_FORBIDDENLIST)
-		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long!");
-#endif
 }
 
 #ifdef DEBUG

@@ -78,9 +78,6 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
 			}
 		}
 	}
-
-	if (forbiddenList.fbListLength > MAX_FORBIDDENLIST)
-		gi.Error("G_BuildForbiddenList: list too long\n");
 }
 
 /**
