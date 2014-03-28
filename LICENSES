@@ -116,6 +116,7 @@ base/maps/city2/c2_craft_drop_raptor.map | GNU General Public License 2.0 or lat
 base/maps/city2/c2_main.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city2/c2_mp_team_4.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3.ump | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_bld_a.map | GNU General Public License 2.0 or later | Nate Wright, Holger 'ShipIt' Gellrich
 base/maps/city3/c3_bld_abandoned.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_bld_parking.map | GNU General Public License 2.0 or later | Nate Wright, Holger 'ShipIt' Gellrich | maps/city/citybldl_4x4_2a.map
 base/maps/city3/c3_common.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
@@ -124,6 +125,15 @@ base/maps/city3/c3_common_b.map | GNU General Public License 2.0 or later | Holg
 base/maps/city3/c3_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_centre.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_ne.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_nw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/city3/c3_dummy_w.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_junction_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_junction_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city3/c3_junction_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich

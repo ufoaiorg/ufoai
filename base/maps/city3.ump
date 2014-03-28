@@ -58,7 +58,7 @@ tile +junction_e
 {
 4 4
 0		v		0		0
-a		+vh		+h		h
+a1234	+vh		+h		h
 0		+v		+a		0
 0		v		0		0
 }
@@ -70,14 +70,14 @@ tile +junction_n
 0		0		v		0
 0		+a		+v		0
 h		+h		+hv		h
-0		0		a		0
+0		0		a1234	0
 }
 
 tile +junction_s
 	// ¯|¯
 {
 4 4
-0		a		0		0
+0		a1234	0		0
 h		+hv		+h		h
 0		+v		+a		0
 0		v		0		0
@@ -89,7 +89,7 @@ tile +junction_w
 4 4
 0		0		v		0
 0		+a		+v		0
-h		+h		+vh		a
+h		+h		+vh		a1234
 0		0		v		0
 }
 
@@ -123,8 +123,20 @@ tile +common_b
 
 /* buildings ------------------------------------------------------*/
 
+tile +bld_a
+{
+6 7
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		h		+h		h
+0		0		0		0		0		0
+}
+
 tile +bld_abandoned
-	// an abandoned building, inhabited by homless people
+	// an abandoned building, inhabited by homeless people
 {
 5 6
 0		0		0		0		0
@@ -140,9 +152,9 @@ tile +bld_parking
 8 6
 0		0		0		0		0		0		0		0
 0		v		0		+a		+a		+a		+a		0
-a		+v		+a		+a		+a		+a		+a		0
-a		+v		+a		+a		+a		+a		+a		0
-a		+v		+a		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
 0		v		0		0		0		0		0		0
 }
 
@@ -178,10 +190,91 @@ tile +craft_drop_raptor
 
 /* ufo tiles ------------------------------------------------------*/
 
+/* dummy tiles ----------------------------------------------------*/
+
+tile +dummy_ne
+{
+4 4
+0		ach		ach		0
+1		+a2		+a		acv
+1		+2		+a2		acv
+0		3		3		0
+}
+
+tile +dummy_nw
+{
+4 4
+0		ach		ach		0
+acv		+a		+a1		2
+acv		+a1		+1		2
+0		4		4		0
+}
+
+tile +dummy_se
+{
+4 4
+0		2		2		0
+4		+3		+a3		acv
+4		+a3		+a3		acv
+0		ach		ach		0
+}
+
+tile +dummy_sw
+{
+4 4
+0		1		1		0
+acv		+a4		+4		3
+acv		+a4		+a4		3
+0		ach		ach		0
+}
+
+tile +dummy_centre
+{
+3 3
+0		12		0
+14		+x		23
+0		34		0
+}
+
+tile +dummy_e
+{
+4 3
+0		2		2		0
+x		+23		+a23	acv
+0		3		3		0
+}
+
+tile +dummy_n
+{
+3 4
+0		ach		0
+1		+a12	2
+1		+12		2
+0		x		0
+}
+
+tile +dummy_s
+{
+3 4
+0		x		0
+4		+34		3
+4		+a34	3
+0		ach		0
+}
+
+tile +dummy_w
+{
+4 3
+0		1		1		0
+acv		+a14	+14		x
+0		4		4		0
+}
+
 /* tilesets -------------------------------------------------------*/
 
 tileset buildings
 	{
+		+bld_a
 		+bld_abandoned
 		+bld_parking
 	}
@@ -197,7 +290,7 @@ tileset tunnels
 assembly small_noufo
 {
 title		"_The outskirt of a big city."
-size "6 7"
+size "7 7"
 tileset buildings	"1 1"
 tileset tunnels		"0 1"
 +common				"0 10"
@@ -207,7 +300,16 @@ tileset tunnels		"0 1"
 +junction_n			"0 1"
 +junction_s			"0 1"
 +junction_w			"0 1"
-+street_h_1			"0 15"
-+street_v_1			"0 15"
-*rm_drop +craft_drop_firebird "1 1"
++street_h_1			"0 5"
++street_v_1			"0 5"
++dummy_centre		"0 1"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 1"
++dummy_n			"0 1"
++dummy_s			"0 1"
++dummy_w			"0 1"
+*rm_drop +craft_drop_raptor "1 1"
 }
