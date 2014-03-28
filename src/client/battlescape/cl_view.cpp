@@ -119,16 +119,15 @@ void CL_ViewLoadMedia (void)
  */
 static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
-	teamDef_t* td;
-	int i, j;
 	const float percent = 40.0f;
 
 	if (!cl_precache->integer)
 		return 0;
 
 	/* search the name */
-	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
+	teamDef_t* td = csi.teamDef;
+	for (int i = 0; i < csi.numTeamDefs; i++, td++)
+		for (int j = NAME_NEUTRAL; j < NAME_LAST; j++) {
 			/* search one of the model definitions */
 			for (linkedList_t const* list = td->models[j]; list; list = list->next) {
 				teamDef_t::model_t const& m = *static_cast<teamDef_t::model_t const*>(list->data);

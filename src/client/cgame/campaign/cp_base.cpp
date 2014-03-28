@@ -922,8 +922,6 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t* base)
  */
 void B_Destroy (base_t* base)
 {
-	int buildingIdx;
-
 	assert(base);
 	base->baseStatus = BASE_DESTROYED;
 
@@ -931,7 +929,7 @@ void B_Destroy (base_t* base)
 	B_MoveAircraftOnGeoscapeToOtherBases(base);
 
 	/* do a reverse loop as buildings are going to be destroyed */
-	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
+	for (int buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
 		building_t* building = B_GetBuildingByIDX(base->idx, buildingIdx);
 		B_BuildingDestroy(building);
 	}

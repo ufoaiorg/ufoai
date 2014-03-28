@@ -697,17 +697,14 @@ static void AM_DoFight (autoMissionBattle_t* battle)
 	bool combatActive = true;
 
 #ifdef DEBUG
-	int teamID;
-
 	Com_Printf("Auto battle started\n");
-	for (teamID = 0; teamID < AUTOMISSION_TEAM_TYPE_MAX; teamID++) {
+	for (int teamID = 0; teamID < AUTOMISSION_TEAM_TYPE_MAX; teamID++) {
 		Com_Printf("Team %d Units: %d\n", teamID, battle->nUnits[teamID]);
 	}
 #endif
 
 	while (combatActive) {
-		int team;
-		for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
+		for (int team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 			int aliveUnits;
 			int currentUnit;
 
@@ -804,14 +801,12 @@ static void AM_MoveCharacterInventoryIntoItemCargo (aircraft_t* aircraft, charac
  */
 static void AM_AlienCollect (aircraft_t* aircraft, const autoMissionBattle_t* battle)
 {
-	int unitIDX;
-	int collected = 0;
-
 	assert(aircraft);
 	assert(battle);
 
 	/* Aliens */
-	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
+	int collected = 0;
+	for (int unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
 		const autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 		if (AM_IsUnitActive(unit))

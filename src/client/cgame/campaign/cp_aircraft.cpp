@@ -96,18 +96,16 @@ void AIR_ListAircraft_f (void)
 	}
 
 	AIR_Foreach(aircraft) {
-		int k;
-
 		if (base && aircraft->homebase != base)
 			continue;
 
 		Com_Printf("Aircraft %s\n", aircraft->name);
 		Com_Printf("...idx global %i\n", aircraft->idx);
 		Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
-		for (k = 0; k < aircraft->maxWeapons; k++) {
-			aircraftSlot_t* slot = &aircraft->weapons[k];
+		for (int i = 0; i < aircraft->maxWeapons; i++) {
+			aircraftSlot_t* slot = &aircraft->weapons[i];
 			if (slot->item) {
-				Com_Printf("...weapon slot %i contains %s", k, slot->item->id);
+				Com_Printf("...weapon slot %i contains %s", i, slot->item->id);
 
 				if (!slot->installationTime) {
 					Com_Printf(" (functional)\n");
@@ -127,7 +125,7 @@ void AIR_ListAircraft_f (void)
 					Com_Printf("......this weapon isn't loaded with ammo\n");
 				}
 			} else {
-				Com_Printf("...weapon slot %i is empty\n", k);
+				Com_Printf("...weapon slot %i is empty\n", i);
 			}
 		}
 
@@ -144,10 +142,10 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("...armour slot is empty\n");
 		}
 
-		for (k = 0; k < aircraft->maxElectronics; k++) {
-			aircraftSlot_t* slot = &aircraft->weapons[k];
+		for (int j = 0; j < aircraft->maxElectronics; j++) {
+			aircraftSlot_t* slot = &aircraft->weapons[j];
 			if (slot->item) {
-				Com_Printf("...electronics slot %i contains %s", k, slot->item->id);
+				Com_Printf("...electronics slot %i contains %s", j, slot->item->id);
 
 				if (!slot->installationTime) {
 					Com_Printf(" (functional)\n");
@@ -157,7 +155,7 @@ void AIR_ListAircraft_f (void)
 					Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
 				}
 			} else {
-				Com_Printf("...electronics slot %i is empty\n", k);
+				Com_Printf("...electronics slot %i is empty\n", j);
 			}
 		}
 
@@ -170,7 +168,7 @@ void AIR_ListAircraft_f (void)
 
 		Com_Printf("...damage: %i\n", aircraft->damage);
 		Com_Printf("...stats: ");
-		for (k = 0; k < AIR_STATS_MAX; k++) {
+		for (int k = 0; k < AIR_STATS_MAX; k++) {
 			if (k == AIR_STATS_WRANGE) {
 				Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
 			} else {
