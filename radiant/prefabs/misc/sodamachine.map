@@ -1,41 +1,40 @@
-
 // entity 0
 {
 "classname" "worldspawn"
 // brush 0
 {
-( 33.25 14.75 55.25 ) ( 33.25 -1 55.25 ) ( 0 14.75 55.25 ) tex_common/actorclip 0 61.5 0 0.5 0.5
-( 33.25 16 0.25 ) ( 0 16 0.25 ) ( 33.25 16 0 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 33.25 16 0.25 ) ( 33.25 16 0 ) ( 33.25 0.25 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 0 0.25 0 ) ( 33.25 0.25 0 ) ( 0 16 0 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 0 0.25 0 ) ( 0 0.25 0.25 ) ( 33.25 0.25 0 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 0 0.25 0 ) ( 0 16 0 ) ( 0 0.25 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 16 64 ) ( 33 0 64 ) ( 0 0 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 32 55 ) ( 33 32 0 ) ( 33 32 55 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 32 16 55 ) ( 32 0 0 ) ( 32 0 55 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 33 16 0 ) ( 0 0 0 ) ( 33 0 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 33 0 0 ) ( 0 0 55 ) ( 33 0 55 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 0 55 ) ( 0 16 0 ) ( 0 16 55 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
 }
 // brush 1
 {
-( 33.25 16 55.25 ) ( 33.25 1 55.25 ) ( 0 16 55.25 ) tex_common/weaponclip 0 0 0 0.5 0.5
-( 33.25 16 55.25 ) ( 0 16 55.25 ) ( 33.25 16 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
-( 33.25 16 55.25 ) ( 33.25 16 0 ) ( 33.25 1 55.25 ) tex_common/weaponclip 0 0 0 0.5 0.5
-( 0 1 0 ) ( 33.25 1 0 ) ( 0 16 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
-( 0 0 0 ) ( 0 0 55.25 ) ( 33.25 0 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
-( 0 1 0 ) ( 0 16 0 ) ( 0 1 55.25 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 33.25 20 59.25 ) ( 33.25 5 59.25 ) ( 0 20 59.25 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 33.25 20 59.25 ) ( 0 20 59.25 ) ( 33.25 20 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 33.25 20 59.25 ) ( 33.25 20 4 ) ( 33.25 5 59.25 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 0 5 4 ) ( 33.25 5 4 ) ( 0 20 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 0 4 4 ) ( 0 4 59.25 ) ( 33.25 4 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 0 5 4 ) ( 0 20 4 ) ( 0 5 59.25 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 }
 // brush 2
 {
-( 33.25 16 55.25 ) ( 33.25 1 55.25 ) ( 0 16 55.25 ) tex_common/lightclip 0 0 0 0.5 0.5
-( 33.25 16 55.25 ) ( 0 16 55.25 ) ( 33.25 16 0 ) tex_common/lightclip 0 0 0 0.5 0.5
-( 33.25 16 55.25 ) ( 33.25 16 0 ) ( 33.25 1 55.25 ) tex_common/lightclip 0 0 0 0.5 0.5
-( 0 1 0 ) ( 33.25 1 0 ) ( 0 16 0 ) tex_common/lightclip 0 0 0 0.5 0.5
-( 0 1 0 ) ( 0 1 55.25 ) ( 33.25 1 0 ) tex_common/lightclip 0 0 0 0.5 0.5
-( 0 1 0 ) ( 0 16 0 ) ( 0 1 55.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 33.25 19 59.25 ) ( 33.25 4 59.25 ) ( 0 19 59.25 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 33.25 20 59.25 ) ( 0 20 59.25 ) ( 33.25 20 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 33.25 19 59.25 ) ( 33.25 19 4 ) ( 33.25 4 59.25 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 4 4 ) ( 33.25 4 4 ) ( 0 19 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 4 4 ) ( 0 4 59.25 ) ( 33.25 4 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 4 4 ) ( 0 19 4 ) ( 0 4 59.25 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
 // entity 1
 {
 "classname" "misc_model"
 "model" "models/objects/furniture/automat/sodamachine.md2"
-"origin" "16.75 8.5 0"
+"origin" "16.25 11.5 4"
 "spawnflags" "255"
 "skin" "0"
-"angles" "0 -90 0"
+"angles" "0 90 0"
 }
