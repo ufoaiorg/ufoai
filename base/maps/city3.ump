@@ -93,6 +93,23 @@ h		+h		+vh		a1234
 0		0		v		0
 }
 
+tile +subwaycam_v
+{
+4 3
+0		v		0		0
+a1234	+v		+a		0
+0		v		0		0
+}
+
+tile +subwaycam_h
+{
+3 4
+0		a1234	0
+h		+h		h
+0		+a		0
+0		0		0
+}
+
 /* common tiles ---------------------------------------------------*/
 
 tile +common
@@ -162,8 +179,9 @@ a1234	+v		+a		+a		+a		+a		+a		0
 
 tile +craft_drop_firebird
 {
-5 4
+5 5
 0		0		0		0		0
+0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		0		0		0		0
@@ -171,11 +189,12 @@ tile +craft_drop_firebird
 
 tile +craft_drop_herakles
 {
-6 4
-0		0		0		0		0		0
-0		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		0
-0		0		0		0		0		0
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +craft_drop_raptor
@@ -285,6 +304,13 @@ tileset tunnels
 		+street_v_9_a
 	}
 
+tileset subwaycam
+	{
+		+subwaycam_v
+		+subwaycam_h
+	}
+
+
 /* map assemblies -------------------------------------------------*/
 
 assembly small_noufo
@@ -292,6 +318,7 @@ assembly small_noufo
 title		"_The outskirt of a big city."
 size "7 7"
 tileset buildings	"1 1"
+tileset subwaycam	"0 1"
 tileset tunnels		"0 1"
 +common				"0 10"
 +common_a			"0 1"

@@ -26,6 +26,14 @@
 
 /* Textures Used On Dropship Tiles --------------------------------*/
 
+{
+	material tex_base/screenp001
+	{
+		texture tex_base/screenp001
+		scroll.t 0.25
+	}
+}
+
 // Grass texture
 {
 	material tex_nature/grass
