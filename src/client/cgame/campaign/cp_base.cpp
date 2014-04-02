@@ -1653,9 +1653,7 @@ void B_ParseBaseTemplate (const char* name, const char** text)
  */
 base_t* B_GetFirstUnfoundedBase (void)
 {
-	int baseIdx;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (int baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t* base = B_GetBaseByIDX(baseIdx);
 		if (!base->founded)
 			return base;

@@ -443,10 +443,9 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	/* reset the used flag */
 	OBJZERO(used);
 
-	int baseRow, baseCol;
-	for (baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
+	for (int baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
 		const char* image = nullptr;
-		for (baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
+		for (int baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
 			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
 			const building_t* building;
 			/* base tile */

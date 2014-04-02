@@ -100,20 +100,16 @@ typedef struct autoMissionBattle_s {
  */
 static void AM_ClearBattle (autoMissionBattle_t* battle)
 {
-	int team;
-
 	assert(battle != nullptr);
 
 	OBJZERO(*battle);
 
-	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
-		int otherTeam;
-
+	for (int team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		battle->scoreTeamDifficulty[team] = 0.5;
 		battle->scoreTeamEquipment[team] = 0.5;
 		battle->scoreTeamSkill[team] = 0.5;
 
-		for (otherTeam = 0; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
+		for (int otherTeam = 0; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
 			/* If you forget to set this and run a battle, everyone will just kill each other by default */
 			battle->isHostile[team][otherTeam] = true;
 		}
@@ -262,8 +258,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t* battle, const batt
 	if (missionParams->aliens > 0) {
 		const equipDef_t* ed = cgi->INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
 		const alienTeamGroup_t* alienTeamGroup = missionParams->alienTeamGroup;
-		int unitIDX;
-		for (unitIDX = 0; unitIDX < missionParams->aliens; unitIDX++) {
+		for (int unitIDX = 0; unitIDX < missionParams->aliens; unitIDX++) {
 			const teamDef_t* teamDef = alienTeamGroup->alienTeams[rand() % alienTeamGroup->numAlienTeams];
 			autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
@@ -279,8 +274,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t* battle, const batt
 	battle->actUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	if (missionParams->civilians > 0) {
 		const teamDef_t* teamDef = cgi->Com_GetTeamDefinitionByID(missionParams->civTeam);
-		int unitIDX;
-		for (unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
+		for (int unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
 			autoUnit_t* unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
 			AM_CreateUnitChr(unit, teamDef, nullptr);
@@ -359,7 +353,6 @@ static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 	/* Ratios */
 	double teamRatioHealthyUnits[AUTOMISSION_TEAM_TYPE_MAX];
 	double teamRatioHealthTotal[AUTOMISSION_TEAM_TYPE_MAX];
-	int currentUnit;
 
 	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		unitTotal += battle->nUnits[team];
@@ -407,7 +400,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 			double skillAdjCalc;
 			double skillAdjCalcAbs;
 
-			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
+			for (int currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				autoUnit_t* unit = AM_GetUnit(battle, team, currentUnit);
 				const character_t* chr = unit->chr;
 
@@ -706,7 +699,6 @@ static void AM_DoFight (autoMissionBattle_t* battle)
 	while (combatActive) {
 		for (int team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 			int aliveUnits;
-			int currentUnit;
 
 			/** @todo Drop this if and implement correct weapon/attack strength checks */
 			if (team == AUTOMISSION_TEAM_TYPE_CIVILIAN)
@@ -717,7 +709,7 @@ static void AM_DoFight (autoMissionBattle_t* battle)
 
 			aliveUnits = 0;
 			/* Is this unit still alive (has any health left?) */
-			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
+			for (int currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
 				autoUnit_t* unit = AM_GetUnit(battle, team, currentUnit);
 				character_t* chr = unit->chr;
 				/* Wounded units don't fight quite as well */

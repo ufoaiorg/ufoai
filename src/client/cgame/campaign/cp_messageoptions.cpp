@@ -223,11 +223,10 @@ uiMessageListNodeMessage_t* MSO_CheckAddNewMessage (const notify_t messagecatego
  */
 bool MSO_SaveXML (xmlNode_t* p)
 {
-	int type;
 	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
-	for (type = 0; type < NT_NUM_NOTIFYTYPE; ++type) {
+	for (int type = 0; type < NT_NUM_NOTIFYTYPE; ++type) {
 		messageSettings_t actualSetting = messageSettings[type];
 		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
 
