@@ -207,8 +207,8 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 
 	/* correct bounds */
 	node = tree->headnode;
-	VectorAdd(bmins, v_epsilon, node->mins);
-	VectorSubtract(bmaxs, v_epsilon, node->maxs);
+	VectorAdd(bmins, v_epsilon, node->nBox.mins);
+	VectorSubtract(bmaxs, v_epsilon, node->nBox.maxs);
 
 	/* finish model */
 	nn[2] = WriteBSP(tree->headnode);

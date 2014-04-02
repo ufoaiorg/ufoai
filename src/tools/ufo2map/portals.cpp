@@ -355,13 +355,13 @@ static void CalcNodeBounds (node_t* node)
 	int s;
 
 	/* calc mins/maxs for both leafs and nodes */
-	ClearBounds(node->mins, node->maxs);
+	ClearBounds(node->nBox.mins, node->nBox.maxs);
 	for (p = node->portals; p; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 		if (!p->winding)
 			continue;
 		for (int i = 0; i < p->winding->numpoints; i++)
-			AddPointToBounds(p->winding->p[i], node->mins, node->maxs);
+			AddPointToBounds(p->winding->p[i], node->nBox.mins, node->nBox.maxs);
 	}
 }
 
@@ -369,13 +369,13 @@ static void CalcNodeBounds (node_t* node)
 static void MakeTreePortals_r (node_t* node)
 {
 	CalcNodeBounds(node);
-	if (node->mins[0] >= node->maxs[0]) {
+	if (node->nBox.mins[0] >= node->nBox.maxs[0]) {
 		Com_Printf("WARNING: node without a volume\n");
 	}
 
 	for (int i = 0; i < 3; i++) {
-		if (node->mins[i] < -MAX_WORLD_WIDTH || node->maxs[i] > MAX_WORLD_WIDTH) {
-			Com_Printf("WARNING: node with unbounded volume %i\n", (int)node->mins[i]);
+		if (node->nBox.mins[i] < -MAX_WORLD_WIDTH || node->nBox.maxs[i] > MAX_WORLD_WIDTH) {
+			Com_Printf("WARNING: node with unbounded volume %i\n", (int)node->nBox.mins[i]);
 			break;
 		}
 	}

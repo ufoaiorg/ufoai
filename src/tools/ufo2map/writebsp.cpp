@@ -71,8 +71,8 @@ static void EmitLeaf (const node_t* node)
 	leaf_p->area = node->area;
 
 	/* write bounding box info */
-	VectorCopy(node->mins, leaf_p->mins);
-	VectorCopy(node->maxs, leaf_p->maxs);
+	VectorCopy(node->nBox.mins, leaf_p->mins);
+	VectorCopy(node->nBox.maxs, leaf_p->maxs);
 
 	/* write the leafbrushes */
 	leaf_p->firstleafbrush = curTile->numleafbrushes;
@@ -151,8 +151,8 @@ static int EmitDrawNode_r (node_t* node)
 	Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating bsp node %i\n", curTile->numnodes);
 	curTile->numnodes++;
 
-	VectorCopy(node->mins, n->mins);
-	VectorCopy(node->maxs, n->maxs);
+	VectorCopy(node->nBox.mins, n->mins);
+	VectorCopy(node->nBox.maxs, n->maxs);
 
 	if (node->planenum & 1)
 		Sys_Error("EmitDrawNode_r: odd planenum: %i", node->planenum);

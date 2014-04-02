@@ -43,7 +43,7 @@ typedef struct node_s {
 	/** both leafs and nodes */
 	int32_t			planenum;	/**< -1 = leaf node */
 	struct node_s*	parent;
-	vec3_t			mins, maxs;	/**< valid after portalization */
+	AABB			nBox;		/**< valid after portalization */
 	bspbrush_t*		volume;		/**< one for each leaf/node */
 
 	/** nodes only */
