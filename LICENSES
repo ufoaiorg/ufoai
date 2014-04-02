@@ -2853,7 +2853,7 @@ base/pics/banks/button_geoscape.png | GNU General Public License 2.0 or later | 
 base/pics/banks/button_green_big.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/button_green_small.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
-base/pics/banks/checkbox.png  | Public Domain | Nate Wright | mods/ui2/pics/banks/checkbox.png by Nate Wright
+base/pics/banks/checkbox.png | Public Domain | Nate Wright | mods/ui2/pics/banks/checkbox.png by Nate Wright
 base/pics/banks/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
@@ -2863,9 +2863,9 @@ base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/pack_wounds.png | Public Domain | DarkRain | from original images  by Pavel Yakushevich, (see http://ufoai.org/forum/index.php/topic,6511.msg59758.html#msg59758)
-base/pics/banks/spinner.png  | Public Domain | Nate Wright | mods/ui2/pics/banks/spinner.png by Nate Wright
+base/pics/banks/spinner.png | Public Domain | Nate Wright | mods/ui2/pics/banks/spinner.png by Nate Wright
 base/pics/banks/spinner_blue.png | GNU General Public License 2.0 or later | bayo;MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/banks/textentry.png  | Public Domain | Nate Wright | mods/ui2/pics/banks/textentry.png by Nate Wright
+base/pics/banks/textentry.png | Public Domain | Nate Wright | mods/ui2/pics/banks/textentry.png by Nate Wright
 base/pics/base/aliencont.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/antimatter.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/commando.png | GNU General Public License 2.0 or later | MCR
@@ -3066,20 +3066,20 @@ base/pics/icons/aliens.png | GNU General Public License 2.0 or later | Nate Wrig
 base/pics/icons/ammosml.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/arrow_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/arrow_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/arrow_down.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_down.png by Nate Wright
-base/pics/icons/arrow_down_off.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_down_off.png by Nate Wright
+base/pics/icons/arrow_down.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_down.png by Nate Wright
+base/pics/icons/arrow_down_off.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_down_off.png by Nate Wright
 base/pics/icons/arrow_left.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/arrow_left_on.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/icons/arrow_lft.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_lft.png by Nate Wright
-base/pics/icons/arrow_lft_off.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_lft_off.png by Nate Wright
-base/pics/icons/arrow_rgt.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_rgt.png by Nate Wright
-base/pics/icons/arrow_rgt_off.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_rgt_off.png by Nate Wright
+base/pics/icons/arrow_lft.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_lft.png by Nate Wright
+base/pics/icons/arrow_lft_off.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_lft_off.png by Nate Wright
+base/pics/icons/arrow_rgt.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_rgt.png by Nate Wright
+base/pics/icons/arrow_rgt_off.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_rgt_off.png by Nate Wright
 base/pics/icons/arrow_right.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/arrow_right_on.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/arrow_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/arrow_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/icons/arrow_up.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_up.png by Nate Wright
-base/pics/icons/arrow_up_off.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_up_off.png by Nate Wright
+base/pics/icons/arrow_up.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_up.png by Nate Wright
+base/pics/icons/arrow_up_off.png | Public Domain | Nate Wright | mods/ui2/pics/icons/arrow_up_off.png by Nate Wright
 base/pics/icons/arrowtext_lft.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/arrowtext_lft0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/arrowtext_rgt.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3091,21 +3091,21 @@ base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later | Mi
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_soldier.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
 base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);MCR
-base/pics/icons/building_aliencontainment.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_aliencontainment.png by Nate Wright
-base/pics/icons/building_amstorage.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_amstorage.png by Nate Wright
-base/pics/icons/building_command.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_command.png by Nate Wright
-base/pics/icons/building_hangar.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_hangar.png by Nate Wright
-base/pics/icons/building_hospital.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_hospital.png by Nate Wright
-base/pics/icons/building_intercept.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_intercept.png by Nate Wright
-base/pics/icons/building_lab.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_lab.png by Nate Wright
-base/pics/icons/building_laser.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_laser.png by Nate Wright
-base/pics/icons/building_missile.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_missile.png by Nate Wright
-base/pics/icons/building_powerplant.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_powerplant.png by Nate Wright
-base/pics/icons/building_quarters.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_quarters.png by Nate Wright
-base/pics/icons/building_radar.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_radar.png by Nate Wright
-base/pics/icons/building_radar_adv.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_radar_adv.png by Nate Wright
-base/pics/icons/building_storage.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_storage.png by Nate Wright
-base/pics/icons/building_workshop.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/building_workshop.png by Nate Wright
+base/pics/icons/building_aliencontainment.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_aliencontainment.png by Nate Wright
+base/pics/icons/building_amstorage.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_amstorage.png by Nate Wright
+base/pics/icons/building_command.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_command.png by Nate Wright
+base/pics/icons/building_hangar.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_hangar.png by Nate Wright
+base/pics/icons/building_hospital.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_hospital.png by Nate Wright
+base/pics/icons/building_intercept.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_intercept.png by Nate Wright
+base/pics/icons/building_lab.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_lab.png by Nate Wright
+base/pics/icons/building_laser.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_laser.png by Nate Wright
+base/pics/icons/building_missile.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_missile.png by Nate Wright
+base/pics/icons/building_powerplant.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_powerplant.png by Nate Wright
+base/pics/icons/building_quarters.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_quarters.png by Nate Wright
+base/pics/icons/building_radar.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_radar.png by Nate Wright
+base/pics/icons/building_radar_adv.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_radar_adv.png by Nate Wright
+base/pics/icons/building_storage.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_storage.png by Nate Wright
+base/pics/icons/building_workshop.png | Public Domain | Nate Wright | mods/ui2/pics/icons/building_workshop.png by Nate Wright
 base/pics/icons/circle.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/circle0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/circle_disabled0.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3131,7 +3131,7 @@ base/pics/icons/craft_inter_stingray.png | GNU General Public License 2.0 or lat
 base/pics/icons/craft_inter_stingray_off.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/crouch.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/crouch0.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/day.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/day.png by Nate Wright
+base/pics/icons/day.png | Public Domain | Nate Wright | mods/ui2/pics/icons/day.png by Nate Wright
 base/pics/icons/dblarrowrgt.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/dblarrowrgt0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/delete.png | GNU General Public License 2.0 or later | cooler_sk
@@ -3203,14 +3203,14 @@ base/pics/icons/mail_read.png | GNU General Public License 2.0 or later | Igor G
 base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by Christian "Crystan" Hoffmann | Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/map_prev.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev.png by Nate Wright
-base/pics/icons/map_prev_clicked.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev_clicked.png by Nate Wright
+base/pics/icons/map_prev.png | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev.png by Nate Wright
+base/pics/icons/map_prev_clicked.png | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev_clicked.png by Nate Wright
 base/pics/icons/mapselection.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/mapselection_clicked.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/market.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/moralesml.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
 base/pics/icons/moralesml0.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
-base/pics/icons/night.png  | Public Domain | Nate Wright | mods/ui2/pics/icons/night.png by Nate Wright
+base/pics/icons/night.png | Public Domain | Nate Wright | mods/ui2/pics/icons/night.png by Nate Wright
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later | cooler_sk
@@ -3324,8 +3324,8 @@ base/pics/icons/windowup.png | GNU General Public License 2.0 or later | Nate Wr
 base/pics/icons/windowup_hovered.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/wrench.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/wrench0.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/implants/implant_amphetamine.png  | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/implants/implant_muscular.png  | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/implants/implant_amphetamine.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/implants/implant_muscular.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3786,7 +3786,7 @@ base/pics/techs/taman_dead.jpg | Creative Commons Attribution-Share Alike 3.0 | 
 base/pics/techs/ufo_theory.jpg | GNU General Public License 2.0 or later
 base/pics/techs/universal_serum.jpg | Creative Commons Attribution-Share Alike 3.0 | Patrick "El Zoido" Then | taman.jpg
 base/pics/techs/xvi.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
-base/pics/tiled/panel.png  | Public Domain | Nate Wright | mods/ui2/pics/tiled/panel.png by Nate Wright
+base/pics/tiled/panel.png | Public Domain | Nate Wright | mods/ui2/pics/tiled/panel.png by Nate Wright
 base/pics/tiled/panel_green.png | GNU General Public License 2.0 or later | bayo
 base/pics/tiled/panel_green_slim.png | GNU General Public License 2.0 or later | bayo
 base/pics/tiled/panel_green_slim_trans.png | GNU General Public License 2.0 or later | bayo, Martin Gerhardy
@@ -3830,7 +3830,7 @@ base/pics/ui/airequip_no_weapon.png | GNU General Public License 2.0 or later | 
 base/pics/ui/airequip_selected_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_attribute.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_attribute_disabled.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_bg.png  | Public Domain | Nate Wright | mods/ui2/pics/ui/bar_bg.png by Nate Wright
+base/pics/ui/bar_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/bar_bg.png by Nate Wright
 base/pics/ui/bar_border.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_health.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -3856,17 +3856,17 @@ base/pics/ui/geo_miniglobe_w.png | GNU General Public License 2.0 or later | MCR
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
-base/pics/ui/inv_bg.png  | Public Domain | Nate Wright | mods/ui2/pics/ui/inv_bg.png by Nate Wright
+base/pics/ui/inv_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/inv_bg.png by Nate Wright
 base/pics/ui/inv_bg_nofloor.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
-base/pics/ui/main_bg.png  | Public Domain | Nate Wright | mods/ui2/pics/ui/main_bg.png by Nate Wright
+base/pics/ui/main_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/main_bg.png by Nate Wright
 base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/popup_button_hl.png | GNU General Public License 2.0 or later
 base/pics/ui/radar.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/screen.png  | Public Domain | Nate Wright | mods/ui2/pics/ui/screen.png by Nate Wright
+base/pics/ui/screen.png | Public Domain | Nate Wright | mods/ui2/pics/ui/screen.png by Nate Wright
 base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later | bayo;MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -3878,7 +3878,7 @@ base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/tab_UI2.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/save/multiplayer/team00.mpt  | GNU General Public License 2.0 or later | Martin Gerhardy | base/save/team0.mpt by Martin Gerhardy
+base/save/multiplayer/team00.mpt | GNU General Public License 2.0 or later | Martin Gerhardy | base/save/team0.mpt by Martin Gerhardy
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
