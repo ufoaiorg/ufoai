@@ -141,9 +141,11 @@ public:
 
 	int retryCnt;								/**< amount of retries in case the assembly didn't assemble and we are using the defined seeds */
 
-	inline const Assembly* getCurrentAssembly () const
-	{
+	inline const Assembly* getCurrentAssembly () const {
 		return &assemblies[asmIdx];
+	}
+	inline const char* getCurrentAssemblyTitle () const {
+		return assemblies[asmIdx].title;
 	}
 };
 

@@ -45,14 +45,14 @@ static const char* SV_GetMapTitle (const MapInfo* map, const char* const mapname
 	assert(mapname);
 
 	if (mapname[0] == '+') {
-		const Assembly* mAsm = map->getCurrentAssembly();
-		if (mAsm && mAsm->title[0]) {
+		const char* asmTitle = map->getCurrentAssemblyTitle();
+		if (asmTitle && asmTitle[0]) {
 			/* return the assembly title itself - must be translated client side */
-			if (mAsm->title[0] == '_')
-				return mAsm->title + 1;
+			if (asmTitle[0] == '_')
+				return asmTitle + 1;
 			else {
-				Com_Printf("The assembly title '%s' is not marked as translatable\n", mAsm->title);
-				return mAsm->title;
+				Com_Printf("The assembly title '%s' is not marked as translatable\n", asmTitle);
+				return asmTitle;
 			}
 		}
 	}
