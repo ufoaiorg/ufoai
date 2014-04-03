@@ -116,8 +116,8 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 {
 	int i;
 	unsigned checksum = 0;
-	char* map = SV_GetConfigString(CS_TILES);
-	char* pos = SV_GetConfigString(CS_POSITIONS);
+	char* tileString = SV_GetConfigString(CS_TILES);
+	char* posString = SV_GetConfigString(CS_POSITIONS);
 	char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
 	MapInfo* randomMap = nullptr;
 	client_t* cl;
@@ -165,7 +165,7 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 
 	/* assemble and load the map */
 	if (levelstring[0] == '+') {
-		randomMap = SV_AssembleMap(levelstring + 1, assembly, map, pos, entityString, 0, verbose);
+		randomMap = SV_AssembleMap(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose);
 		if (!randomMap) {
 			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
 			return;
@@ -176,7 +176,7 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 		SV_SetConfigString(CS_ENTITYSTRING, "");
 	}
 
-	CM_LoadMap(map, day, pos, entityString, &sv->mapData, &sv->mapTiles);
+	CM_LoadMap(tileString, day, posString, entityString, &sv->mapData, &sv->mapTiles);
 
 	Com_Printf("checksum for the map '%s': %u\n", levelstring, sv->mapData.mapChecksum);
 	SV_SetConfigString(CS_MAPCHECKSUM, sv->mapData.mapChecksum);
