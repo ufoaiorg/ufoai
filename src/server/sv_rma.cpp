@@ -1658,10 +1658,10 @@ static bool SV_AddMapTiles (MapInfo* map)
 			if (start == map->numPlaced) {
 				if (mAsm->numSeeds == 0 || map->retryCnt > 2) {
 					Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
-							map->name, mAsm->id ? mAsm->id : "");
+							map->getName(), mAsm->id ? mAsm->id : "");
 				} else {
 					Com_Printf("SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s' - retry with another seed\n",
-							map->name, mAsm->id ? mAsm->id : "");
+							map->getName(), mAsm->id ? mAsm->id : "");
 					return false;
 				}
 			}
@@ -2064,14 +2064,14 @@ MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTil
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!", map->name);
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", map->getName());
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
 #endif
 
 	if (!map->numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", map->name);
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", map->getName());
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);

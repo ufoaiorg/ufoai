@@ -144,6 +144,9 @@ public:
 	inline const Assembly* getCurrentAssembly () const {
 		return &assemblies[asmIdx];
 	}
+	inline const char* getName () const {
+		return name;
+	}
 	inline const char* getCurrentAssemblyTitle () const {
 		return assemblies[asmIdx].title;
 	}
