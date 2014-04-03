@@ -2037,7 +2037,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmT
  * @brief Assembles a "random" map
  * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
  * For a more detailed description of the whole algorithm see SV_AddMapTiles.
- * @param[in] mapName The name of the map (ump) file to parse
+ * @param[in] mapTheme The name of the map (ump) file to parse
  * @param[in] assembly The random map assembly that should be used from the given rma
  * @param[out] asmTiles The output string of the random map assembly that contains all the
  * map tiles that should be assembled. The order is the same as in the @c asmPos string.
@@ -2053,14 +2053,14 @@ static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmT
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap (const char* mapName, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
+MapInfo* SV_AssembleMap (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
 {
 	MapInfo* map;
 
 	map = Mem_AllocType(MapInfo);
-	Q_strncpyz(map->name, mapName, sizeof(map->name));
+	Q_strncpyz(map->name, mapTheme, sizeof(map->name));
 
-	SV_ParseUMP(mapName, entityString, map, false);
+	SV_ParseUMP(mapTheme, entityString, map, false);
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
