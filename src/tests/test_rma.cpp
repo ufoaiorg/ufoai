@@ -61,24 +61,20 @@ static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 static void testUMPExtends (void)
 {
-	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	randomMap = SV_AssembleMap("test_extends", "default", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(randomMap != nullptr);
-	Mem_Free(randomMap);
+	int numPlaced = SV_AssembleMap("test_extends", "default", mapStr, posStr, entityString, 0, true);
+	CU_ASSERT(numPlaced != 0);
 }
 
 static void testAssembly (void)
 {
-	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(randomMap != nullptr);
-	Mem_Free(randomMap);
+	int numPlaced = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
+	CU_ASSERT(numPlaced != 0);
 }
 
 /* timeout version */
@@ -92,13 +88,12 @@ static void testMassAssemblyTimeout (void)
 		srand(i);
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
-		MapInfo* randomMap = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(randomMap != nullptr);
+		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		CU_ASSERT(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
-		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
-		Mem_Free(randomMap);
+		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
 
@@ -112,13 +107,12 @@ static void testMassAssemblyParallel (void)
 		srand(i);
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
-		MapInfo* randomMap = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(randomMap != nullptr);
+		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		CU_ASSERT(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
-		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
-		Mem_Free(randomMap);
+		Com_Printf("%i: %i %li\n", i, numPlaced, time); fflush(stdout);
 	}
 }
 
@@ -132,13 +126,12 @@ static void testMassAssemblySequential (void)
 		srand(i);
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
-		MapInfo* randomMap = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT_PTR_NOT_NULL(randomMap);
+		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		CU_ASSERT(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
-		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
-		Mem_Free(randomMap);
+		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
 
@@ -164,15 +157,14 @@ static void testSeedlists (void)
 			srand(i);
 			int time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
-			MapInfo* randomMap = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
-			CU_ASSERT(randomMap != nullptr);
+			int numPlaced = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
+			CU_ASSERT(numPlaced != 0);
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
 			UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 					va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", assNames[n][0], i, time));
 			if (time > 10000)
-				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
-			Mem_Free(randomMap);
+				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
 		}
 	}
 	Com_Printf("TotalTime: %li\n", timeSum);
@@ -187,7 +179,6 @@ static void testSeedlists (void)
 static void testNewSeedlists (void)
 {
 	long time, timeSum = 0;
-	MapInfo* randomMap;
 	char entityString[MAX_TOKEN_CHARS];
 
 	sv_rmadisplaythemap->integer = 1;	/* print out the RMA analysis */
@@ -205,15 +196,14 @@ static void testNewSeedlists (void)
 		mapTheme = "village"; asmName = "large";
 		mapTheme = "desert"; asmName = "large";
 #endif
-		randomMap = SV_AssembleMap(mapTheme, asmName, mapStr, posStr, entityString, i, false);
-		CU_ASSERT(randomMap != nullptr);
+		int numPlaced = SV_AssembleMap(mapTheme, asmName, mapStr, posStr, entityString, i, false);
+		CU_ASSERT(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
 		timeSum += time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
 				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
 		if (time > 10000)
-			Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
-		Mem_Free(randomMap);
+			Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
 	}
 	Com_Printf("TotalTime: %li\n", timeSum);
 }

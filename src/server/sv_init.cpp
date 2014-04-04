@@ -163,7 +163,7 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 
 	/* assemble and load the map */
 	if (levelstring[0] == '+') {
-		randomMap = SV_AssembleMap(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose);
+		randomMap = SV_AssembleMap_(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose);
 		if (!randomMap) {
 			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
 			return;

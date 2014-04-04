@@ -198,13 +198,12 @@ static void testMapDefsMassRMA (void)
 
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
-						MapInfo* randomMap = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i, false);
-						CU_ASSERT(randomMap != nullptr);
+						int numPlaced = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i, false);
+						CU_ASSERT(numPlaced != 0);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
-							Com_Printf("\nMap: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, randomMap->numPlaced, time);
-						Mem_Free(randomMap);
+							Com_Printf("\nMap: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, numPlaced, time);
 					}
 					didItOnce = true;
 					if (!iterUfo)
