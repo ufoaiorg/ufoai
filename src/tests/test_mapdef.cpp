@@ -271,7 +271,7 @@ static void testMapDefStatistic (void)
 			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 		}
 
-		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, ass);
+		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, assName);
 		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
