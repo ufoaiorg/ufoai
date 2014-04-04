@@ -112,8 +112,8 @@ static void testMapDefsMassRMA (void)
 			else
 				continue;
 
-			const char* ass = (const char*)LIST_GetByIdx(md->params, 0);
-			Com_Printf("\nMap: %s Assembly: %s AssNr: %i\n", p, ass, mapCount);
+			const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
+			Com_Printf("\nMap: %s Assembly: %s AssNr: %i\n", p, asmName, mapCount);
 
 			sv_threads->integer = 0;
 
@@ -147,7 +147,7 @@ static void testMapDefsMassRMA (void)
 					Com_Printf("\nDrop: %s Ufo: %s", craft, ufo);
 					Com_Printf("\nSeed:");
 					for (int i = 0; i < RMA_HIGHEST_SUPPORTED_SEED; i++) {
-						ass = nullptr;
+						asmName = nullptr;
 						srand(i);
 						long time = Sys_Milliseconds();
 						Com_Printf(" %i", i);
@@ -192,18 +192,18 @@ static void testMapDefsMassRMA (void)
 #endif
 						/* for ufocrash map, the ufoname is the assemblyame */
 						if (Q_streq(p, "ufocrash"))
-							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
+							asmName = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
-							ass = (const char*)LIST_GetByIdx(md->params, 0);
+							asmName = (const char*)LIST_GetByIdx(md->params, 0);
 
 
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
-						int numPlaced = SV_AssembleMap(p, ass, mapStr, posStr, entityString, i, false);
+						int numPlaced = SV_AssembleMap(p, asmName, mapStr, posStr, entityString, i, false);
 						CU_ASSERT(numPlaced != 0);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
 						if (time > 10000)
-							Com_Printf("\nMap: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, ass, i, numPlaced, time);
+							Com_Printf("\nMap: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, asmName, i, numPlaced, time);
 					}
 					didItOnce = true;
 					if (!iterUfo)
@@ -261,7 +261,7 @@ static void testMapDefStatistic (void)
 		}
 
 		SV_PrepareTilesToPlace(theMap);
-		const Assembly* ass = theMap->getCurrentAssembly();
+		const Assembly* assembly = theMap->getCurrentAssembly();
 
 		required = 0;
 		solids = 0;
@@ -271,7 +271,7 @@ static void testMapDefStatistic (void)
 		}
 
 		Com_sprintf(mapAsmName, sizeof(mapAsmName), "%s %s", p, asmName);
-		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAsmName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
+		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAsmName, theMap->numTiles, theMap->numToPlace, required, assembly->numSeeds, assembly->size, solids);
 	}
 }
 
@@ -323,8 +323,8 @@ static void testMapDefsFootSteps (void)
 		int count = 0;
 		Com_Printf("testMapDefsFootSteps: Mapdef %s (seed %u)\n", md->id, seed);
 
-		const char* ass = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->mapTheme, ass);
+		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
+		SV_Map(true, md->mapTheme, asmName);
 
 		/* now that we have loaded the map, check all cells for walkable places */
 		GridBox mBox(sv->mapData.mapBox);	// test ALL the cells
@@ -377,12 +377,12 @@ static void testMapDefsFootSteps (void)
 			}
 		}
 		if (!texNames[0][0]) {
-			Com_Printf("In map %s, ass %s: Nothing detected\n", md->mapTheme, ass);
+			Com_Printf("In map %s, asm %s: Nothing detected\n", md->mapTheme, asmName);
 		} else {
 			++badMapCount;
 			for (int i = 0; i < texCountMax; ++i) {
 				if (texNames[i][0]) {
-					Com_Printf("In map %s, ass %s: No sound for: %s\n", md->mapTheme, ass, texNames[i]);
+					Com_Printf("In map %s, asm %s: No sound for: %s\n", md->mapTheme, asmName, texNames[i]);
 				}
 			}
 		}
