@@ -346,7 +346,7 @@ static void testMapDefsFootSteps (void)
 					if (floor < 0)						// if we have a floor in that cell
 						continue;
 					const AABB noBox(vec3_origin, vec3_origin);	// we're doing a point-trace
-					const pos3_t cellPos = {x, y, z};			// the cell inquestion
+					const pos3_t cellPos = {x, y, z};			// the cell in question
 					vec3_t from, to;
 					PosToVec(cellPos, from);			// the center of the cell
 					VectorCopy(from, to);				// also base for the endpoint of the trace
