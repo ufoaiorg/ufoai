@@ -57,17 +57,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RMA2_MAX_TILEPOS 1700
 /** @brief tile code multiplier. For the various debug printfs we want a number that we can easily divide through (20, 50, 100,...) */
 #define TCM 50
-/** @brief the # of different tiles we can store for a gap */
-#define GAPS 25
 /** @brief array of working random tile positions, 50 recursions */
 static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
+
+/** @brief the # of different tiles we can store for a gap */
+#define GAPS 25
+#define MAX_RANDOM_MAP_WIDTH 32
+#define MAX_RANDOM_MAP_HEIGHT 32
 /** @brief for every x/y we can store the tiles that can cover that place here */
 static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
+
 static int minMissingSolids;
 static SDL_sem* mapSem;
 static SDL_cond* mapCond;
 static SDL_mutex* mapLock;
 static Uint32 threadID;
+
+#define MAX_MAPASSEMBLIES 32
+/** note: MAX_TILETYPES mostly limits the # of tiles that can be *parsed*.
+ * The # *used* in an assemly is roughly limited to RMA2_MAX_REC (+fixed + required tiles). */
+#define MAX_TILETYPES 128
+#define MAX_TILESETS 16
+#define MAX_TILESETTILES 16
+#define MAX_TILESIZE 16
+#define MAX_FIXEDTILES 64
 
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 class Tile {
