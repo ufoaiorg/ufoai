@@ -699,7 +699,6 @@ static void B_BuildingStatus_f (void)
 
 /**
  * @brief Builds a base map for tactical combat.
- * @sa SV_AssembleMap
  * @sa CP_BaseAttackChooseBase
  */
 static void B_AssembleMap_f (void)

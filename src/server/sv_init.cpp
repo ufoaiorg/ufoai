@@ -107,7 +107,6 @@ static void SV_InitGame (void)
 /**
  * @brief Change the server to a new map, taking all connected clients along with it.
  * @note the full syntax is: @code map [day|night] [+]<map> [<assembly>] @endcode
- * @sa SV_AssembleMap
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */

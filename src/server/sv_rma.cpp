@@ -299,7 +299,6 @@ static inline const Tile* SV_GetMapTile (const MapInfo* map, const char* tileNam
 /**
  * @brief Parsed a tileset definition out of the ump-files
  * @sa SV_ParseAssembly
- * @sa SV_AssembleMap
  */
 static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo* map, bool inherit)
 {
@@ -359,7 +358,6 @@ static bool SV_ParseMapTileSet (const char* filename, const char** text, MapInfo
 /**
  * @brief Parsed a tile definition out of the ump-files
  * @sa SV_ParseAssembly
- * @sa SV_AssembleMap
  */
 static bool SV_ParseMapTile (const char* filename, const char** text, MapInfo* map, bool inherit)
 {
@@ -594,7 +592,6 @@ static void SV_GetTilesFromTileSet (const MapInfo* map, const char* filename, co
  * @param[in] filename The name of the .UMP file, used in error messages
  * @param[out] a Pointer to the assembly to be initialized, must be allocated.
  * @param[in] text The text of the ump file to parse
- * @sa SV_AssembleMap
  * @sa SV_ParseMapTile
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
@@ -764,7 +761,6 @@ static bool SV_ParseAssembly (MapInfo* map, const char* filename, const char** t
  * @brief Combines the alternatives/connection info of a map with a tile and sets the rating
  * @param[in,out] mapAlts Pointer to the alternatives info field of the map which will be updated.
  * @param[in] tileAlts Pointer to the alternatives info field of the tile.
- * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
 static void SV_CombineAlternatives (unsigned long* mapAlts, const unsigned long tileAlts)
@@ -849,7 +845,6 @@ static bool SV_FitTile (const MapInfo* map, const Tile*  tile, const int x, cons
 /**
  * @brief Checks if the map is completely filled.
  * @return @c true if the map is filled, @c false if the map has still empty fields
- * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
 static bool SV_TestFilled (const MapInfo* map)
@@ -902,7 +897,6 @@ static void SV_DumpPlaced (const MapInfo* map, int pl)
  * @param[in] x,y The position in the map where the tile should be placed.
  * @param[in] idx The index of the placement algorithm.
  * @param[in] pos The position of the placement algorithm.
- * @sa SV_AssembleMap
  * @sa SV_FitTile
  */
 static void SV_AddTile (MapInfo* map, const Tile* tile, int x, int y, int idx, int pos)
@@ -947,7 +941,6 @@ static void SV_AddTile (MapInfo* map, const Tile* tile, int x, int y, int idx, i
  * @param[in,out] map All we know about the map to assemble
  * @param[out] idx Pointer to the location to store the index field of the removed tile
  * @param[out] pos Pointer to the location to store the position field of the removed tile
- * @sa SV_AssembleMap
  * @sa SV_AddTile
  * @sa SV_FitTile
  */
@@ -1684,7 +1677,6 @@ static bool SV_AddMapTiles (MapInfo* map)
 
 /**
  * @brief Prepare the list of tiles to place
- * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
 void SV_PrepareTilesToPlace (MapInfo* map)
