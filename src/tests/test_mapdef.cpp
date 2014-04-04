@@ -257,7 +257,7 @@ static void testMapDefStatistic (void)
 					break;
 				}
 			if (j == theMap->numAssemblies) {
-				Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assName);
+				Com_Printf("testMapDefStatistic: Map assembly '%s' not found\n", assName);
 			}
 		}
 
