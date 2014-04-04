@@ -1679,7 +1679,7 @@ static bool SV_AddMapTiles (MapInfo* map)
  * @brief Prepare the list of tiles to place
  * @sa SV_AddTile
  */
-void SV_PrepareTilesToPlace (MapInfo* map)
+static void SV_PrepareTilesToPlace (MapInfo* map)
 {
 	const Assembly* mAsm = map->getCurrentAssembly();
 
@@ -1844,7 +1844,7 @@ static int SV_ParallelSearch (MapInfo* map)
  * @param[out] entityString An entity string that is used for all map tiles. Parsed from the ump.
  * from another ump file (no assemblies)
  */
-void SV_ParseUMP (const char* name, char* entityString, MapInfo* map, bool inherit)
+static void SV_ParseUMP (const char* name, char* entityString, MapInfo* map, bool inherit)
 {
 	char filename[MAX_QPATH];
 	byte* buf;
