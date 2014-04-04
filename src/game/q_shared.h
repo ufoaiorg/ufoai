@@ -320,8 +320,6 @@ typedef int32_t shoot_types_t;
 #define CS_GENERAL			(CS_PLAYERNAMES+MAX_CLIENTS)
 #define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 
-#define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
-
 /** game types */
 #define MAX_GAMETYPES 16
 

@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
+
 /**
  * @brief A list of locations that cannot be moved to.
  * @note Pointer to le->pos or edict->pos followed by pointer to le->fieldSize or edict->fieldSize
