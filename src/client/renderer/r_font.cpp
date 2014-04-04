@@ -352,14 +352,12 @@ static int R_FontFindFit (const font_t* font, char* text, int maxlen, int maxWid
 static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, int maxWidth, bool mark, int* widthp)
 {
 	char buf[BUF_SIZE];
-	int width;
-	int len;
-	int breaklen;
 
-	breaklen = 0;
+	int breaklen = 0;
 	*widthp = 0;
 
-	for (len = 1; len < maxlen; len++) {
+	for (int len = 1; len < maxlen; len++) {
+		int width;
 		buf[len - 1] = text[len - 1];
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
@@ -565,7 +563,6 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
  */
 static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCache_t* chunk)
 {
-	int w, h;
 	SDL_Surface* textSurface;
 	SDL_Surface* openGLSurface;
 	SDL_Rect rect = {0, 0, 0, 0};
@@ -612,6 +609,7 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	}
 
 	/* copy text to a surface of suitable size for a texture (power of two) */
+	int w, h;
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 

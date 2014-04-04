@@ -853,9 +853,7 @@ static cvarList_t checkcvar[] = {
  */
 static void CL_CheckCvars_f (void)
 {
-	cvarList_t* c;
-
-	for (c = checkcvar; c->name != nullptr; c++) {
+	for (cvarList_t* c = checkcvar; c->name != nullptr; c++) {
 		cvar_t* var = Cvar_Get(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
@@ -1198,8 +1196,6 @@ static void CL_RImagesCvarChange (const char* cvarName, const char* oldValue, co
  */
 void CL_Init (void)
 {
-	const cvar_t* var;
-
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
 	cvar_t* fs_i18ndir;
@@ -1250,7 +1246,7 @@ void CL_Init (void)
 	CL_ClearState();
 
 	/* cvar feedback */
-	for (var = Cvar_GetFirst(); var; var = var->next) {
+	for (const cvar_t* var = Cvar_GetFirst(); var; var = var->next) {
 		if (var->flags & CVAR_R_CONTEXT)
 			Cvar_RegisterChangeListener(var->name, CL_RContextCvarChange);
 		if (var->flags & CVAR_R_IMAGES)
@@ -1272,8 +1268,6 @@ int CL_Milliseconds (void)
  */
 void CL_Shutdown (void)
 {
-	const cvar_t* var;
-
 	if (isdown) {
 		printf("recursive shutdown\n");
 		return;
@@ -1281,7 +1275,7 @@ void CL_Shutdown (void)
 	isdown = true;
 
 	/* remove cvar feedback */
-	for (var = Cvar_GetFirst(); var; var = var->next) {
+	for (const cvar_t* var = Cvar_GetFirst(); var; var = var->next) {
 		if (var->flags & CVAR_R_CONTEXT)
 			Cvar_UnRegisterChangeListener(var->name, CL_RContextCvarChange);
 		if (var->flags & CVAR_R_IMAGES)

@@ -39,14 +39,12 @@ material_t defaultMaterial = {0, 0.0f, DEFAULT_BUMP, DEFAULT_PARALLAX, DEFAULT_H
  */
 static void R_UpdateMaterial (material_t* m)
 {
-	materialStage_t* s;
-
 	if (refdef.time - m->time < UPDATE_THRESHOLD)
 		return;
 
 	m->time = refdef.time;
 
-	for (s = m->stages; s; s = s->next) {
+	for (materialStage_t* s = m->stages; s; s = s->next) {
 		if (s->flags & STAGE_PULSE) {
 			float phase = refdef.time * s->pulse.hz;
 			float moduloPhase = phase - floor(phase); /* extract fractional part of phase */
@@ -429,7 +427,6 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* inde
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
 
 	for (int i = 0; i < surfs->count; i++) {
-		materialStage_t* s;
 		mBspSurface_t* surf = surfs->surfaces[i];
 		material_t* m = &surf->texinfo->image->material;
 		int j = -1;
@@ -439,7 +436,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* inde
 
 		R_UpdateMaterial(m);
 
-		for (s = m->stages; s; s = s->next, j--) {
+		for (materialStage_t* s = m->stages; s; s = s->next, j--) {
 			if (!(s->flags & STAGE_RENDER))
 				continue;
 

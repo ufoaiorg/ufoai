@@ -404,7 +404,7 @@ void R_UpdateLightList (entity_t* ent)
 
 	/* Find the root of tagent tree which actually owns the lighting data; it is assumed that there is no loops,
 	 * since R_CalcTransform calls Com_Error on those */
-	 for (rootEnt = ent; rootEnt->tagent; rootEnt = ent->tagent)
+	for (rootEnt = ent; rootEnt->tagent; rootEnt = ent->tagent)
 		;
 
 	ltng = ent->lighting = rootEnt->lighting;
