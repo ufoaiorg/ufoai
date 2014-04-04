@@ -238,7 +238,7 @@ static void testMapDefStatistic (void)
 			continue;
 
 		MapInfo* theMap = Mem_AllocType(MapInfo);
-		char mapAssName[80];
+		char mapAsmName[80];
 		const char* p = md->mapTheme;
 
 		if (*p == '+')
@@ -248,15 +248,15 @@ static void testMapDefStatistic (void)
 		SV_ParseUMP(p, nullptr, theMap, false);
 		theMap->asmIdx = 0;
 		/* overwrite with specified, if any */
-		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
-		if (assName && assName[0]) {
+		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
+		if (asmName && asmName[0]) {
 			for (j = 0; j < theMap->numAssemblies; j++)
-				if (Q_streq(assName, theMap->assemblies[j].id)) {
+				if (Q_streq(asmName, theMap->assemblies[j].id)) {
 					theMap->asmIdx = j;
 					break;
 				}
 			if (j == theMap->numAssemblies) {
-				Com_Printf("testMapDefStatistic: Map assembly '%s' not found\n", assName);
+				Com_Printf("testMapDefStatistic: Map assembly '%s' not found\n", asmName);
 			}
 		}
 
@@ -270,8 +270,8 @@ static void testMapDefStatistic (void)
 			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
 		}
 
-		Com_sprintf(mapAssName, sizeof(mapAssName), "%s %s", p, assName);
-		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAssName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
+		Com_sprintf(mapAsmName, sizeof(mapAsmName), "%s %s", p, asmName);
+		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAsmName, theMap->numTiles, theMap->numToPlace, required, ass->numSeeds, ass->size, solids);
 	}
 }
 

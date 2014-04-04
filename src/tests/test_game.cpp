@@ -132,8 +132,8 @@ static void testCountSpawnpoints (void)
 
 		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
-		const char* assName = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->mapTheme, assName, false);
+		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
+		SV_Map(true, md->mapTheme, asmName, false);
 
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, level.num_spawnpoints[TEAM_PHALANX]);
 	/*	Com_Printf("Map: %s Mapdef %s Seed %u Spawnpoints: %i\n", md->mapTheme, md->id, seed, level.num_spawnpoints[TEAM_PHALANX]); */
