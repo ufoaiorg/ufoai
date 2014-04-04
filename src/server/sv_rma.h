@@ -112,8 +112,8 @@ typedef struct mPlaced_s {
 
 class MapInfo
 {
-public:
 	char name[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+public:
 	/** @brief Stores the alternatives information for the assembled map */
 	unsigned long curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
