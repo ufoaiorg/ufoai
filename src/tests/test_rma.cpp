@@ -198,17 +198,19 @@ static void testNewSeedlists (void)
 		Com_Printf("Seed: %i\n", i);
 		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft("craft_drop_herakles"));
 		Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft("craft_ufo_fighter"));
-		randomMap = SV_AssembleMap("industrial", "medium", mapStr, posStr, entityString, i, false);
+		const char* mapTheme = "industrial";
+		const char* asmName = "medium";
 #if 0
-		randomMap = SV_AssembleMap("tropic", "river", mapStr, posStr, entityString, i, false);
-		randomMap = SV_AssembleMap("village", "large", mapStr, posStr, entityString, i, false);
-		randomMap = SV_AssembleMap("desert", "large", mapStr, posStr, entityString, i, false);
+		mapTheme = "tropic"; asmName = "river";
+		mapTheme = "village"; asmName = "large";
+		mapTheme = "desert"; asmName = "large";
 #endif
+		randomMap = SV_AssembleMap(mapTheme, asmName, mapStr, posStr, entityString, i, false);
 		CU_ASSERT(randomMap != nullptr);
 		time = Sys_Milliseconds() - time;
 		timeSum += time;
 		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", randomMap->name, i, time));
+				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
 		if (time > 10000)
 			Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
 		Mem_Free(randomMap);
