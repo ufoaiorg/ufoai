@@ -222,8 +222,6 @@ static void testMapDefsMassRMA (void)
  */
 static void testMapDefStatistic (void)
 {
-	int j;
-	int required, solids;
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 
@@ -237,41 +235,8 @@ static void testMapDefStatistic (void)
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
-		MapInfo* theMap = Mem_AllocType(MapInfo);
-		char mapAsmName[80];
-		const char* p = md->mapTheme;
-
-		if (*p == '+')
-			p++;
-		else
-			continue;
-		SV_ParseUMP(p, nullptr, theMap, false);
-		theMap->asmIdx = 0;
-		/* overwrite with specified, if any */
 		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
-		if (asmName && asmName[0]) {
-			for (j = 0; j < theMap->numAssemblies; j++)
-				if (Q_streq(asmName, theMap->assemblies[j].id)) {
-					theMap->asmIdx = j;
-					break;
-				}
-			if (j == theMap->numAssemblies) {
-				Com_Printf("testMapDefStatistic: Map assembly '%s' not found\n", asmName);
-			}
-		}
-
-		SV_PrepareTilesToPlace(theMap);
-		const Assembly* assembly = theMap->getCurrentAssembly();
-
-		required = 0;
-		solids = 0;
-		for (int k = 0; k < theMap->numToPlace; k++) {
-			required += theMap->mToPlace[k].min;
-			solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
-		}
-
-		Com_sprintf(mapAsmName, sizeof(mapAsmName), "%s %s", p, asmName);
-		Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAsmName, theMap->numTiles, theMap->numToPlace, required, assembly->numSeeds, assembly->size, solids);
+		SV_PrintAssemblyStats(md->mapTheme, asmName);
 	}
 }
 

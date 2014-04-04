@@ -2097,3 +2097,43 @@ int SV_AssembleMap (const char* mapTheme, const char* assembly, char* asmTiles, 
 	Mem_Free(map);
 	return num;
 }
+
+void SV_PrintAssemblyStats (const char* mapTheme, const char* asmName)
+{
+	MapInfo* theMap = Mem_AllocType(MapInfo);
+	char mapAsmName[80];
+	const char* p = mapTheme;
+
+	if (*p == '+')
+		p++;
+	else
+		return;
+
+	SV_ParseUMP(p, nullptr, theMap, false);
+	theMap->asmIdx = 0;
+	/* overwrite with specified, if any */
+	if (asmName && asmName[0]) {
+		int j;
+		for (j = 0; j < theMap->numAssemblies; j++)
+			if (Q_streq(asmName, theMap->assemblies[j].id)) {
+				theMap->asmIdx = j;
+				break;
+			}
+		if (j == theMap->numAssemblies) {
+			Com_Printf("testMapDefStatistic: Map assembly '%s' not found\n", asmName);
+		}
+	}
+
+	SV_PrepareTilesToPlace(theMap);
+	const Assembly* assembly = theMap->getCurrentAssembly();
+
+	int required = 0;
+	int solids = 0;
+	for (int k = 0; k < theMap->numToPlace; k++) {
+		required += theMap->mToPlace[k].min;
+		solids += theMap->mToPlace[k].max * theMap->mToPlace[k].tile->area;
+	}
+
+	Com_sprintf(mapAsmName, sizeof(mapAsmName), "%s %s", p, asmName);
+	Com_Printf("%22.22s %2.i %2.i %2.i %2.i %3.i %3.i \n", mapAsmName, theMap->numTiles, theMap->numToPlace, required, assembly->numSeeds, assembly->size, solids);
+}

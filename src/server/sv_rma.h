@@ -161,3 +161,4 @@ int SV_AssembleMap(const char* name, const char* assembly, char* asmMap, char* a
 /* the next two functions are only exported for cunits tests */
 void SV_ParseUMP(const char* name, char* entityString, MapInfo* map, bool inherit);
 void SV_PrepareTilesToPlace(MapInfo* map);
+void SV_PrintAssemblyStats(const char* mapTheme, const char* asmName);
