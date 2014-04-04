@@ -186,7 +186,9 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
 	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
-	const char* asmTitle = randomMap->getCurrentAssemblyTitle();
+	const char* asmTitle = nullptr;
+	if (randomMap)
+		asmTitle = randomMap->getCurrentAssemblyTitle();
 	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(asmTitle, levelstring));
 	if (Q_strstart(SV_GetConfigString(CS_MAPTITLE), "b/")) {
 		/* For base attack, CS_MAPTITLE contains too many chars */
