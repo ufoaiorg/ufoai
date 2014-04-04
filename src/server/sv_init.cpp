@@ -117,7 +117,6 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	char* tileString = SV_GetConfigString(CS_TILES);
 	char* posString = SV_GetConfigString(CS_POSITIONS);
 	char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
-	MapInfo* randomMap = nullptr;
 	client_t* cl;
 
 	/* any partially connected client will be restarted */
@@ -162,9 +161,11 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	}
 
 	/* assemble and load the map */
+	const char* asmTitle = nullptr;
+	int numPlaced = 0;
 	if (levelstring[0] == '+') {
-		randomMap = SV_AssembleMap_(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose);
-		if (!randomMap) {
+		numPlaced = SV_AssembleMapAndTitle(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose, &asmTitle);
+		if (!numPlaced) {
 			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
 			return;
 		}
@@ -185,19 +186,12 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
 	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
-	const char* asmTitle = nullptr;
-	if (randomMap)
-		asmTitle = randomMap->getCurrentAssemblyTitle();
 	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(asmTitle, levelstring));
 	if (Q_strstart(SV_GetConfigString(CS_MAPTITLE), "b/")) {
 		/* For base attack, CS_MAPTITLE contains too many chars */
 		SV_SetConfigString(CS_MAPTITLE, "Base attack");
 		SV_SetConfigString(CS_NAME, ".baseattack");
 	}
-
-	/* clear random-map assembly data */
-	Mem_Free(randomMap);
-	randomMap = nullptr;
 
 	/* clear physics interaction links */
 	SV_ClearWorld();

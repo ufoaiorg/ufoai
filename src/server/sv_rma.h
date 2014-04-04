@@ -155,8 +155,8 @@ public:
 	}
 };
 
-MapInfo* SV_AssembleMap_(const char* name, const char* assembly, char* asmMap, char* asmPos, char* entityString, const unsigned int seed, bool print);
 int SV_AssembleMap(const char* name, const char* assembly, char* asmMap, char* asmPos, char* entityString, const unsigned int seed, bool print);
+int SV_AssembleMapAndTitle(const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, const char** asmTitle);
 
 /* the next function is only exported for cunits tests */
 void SV_PrintAssemblyStats(const char* mapTheme, const char* asmName);

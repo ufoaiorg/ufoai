@@ -2045,7 +2045,7 @@ static MapInfo* SV_DoMapAssemble (MapInfo* map, const char* assembly, char* asmT
  * @sa SV_ParseMapTile
  * @note Make sure to free the returned pointer
  */
-MapInfo* SV_AssembleMap_ (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
+static MapInfo* SV_AssembleMap_ (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print)
 {
 	MapInfo* map;
 
@@ -2094,6 +2094,15 @@ int SV_AssembleMap (const char* mapTheme, const char* assembly, char* asmTiles, 
 {
 	MapInfo* map = SV_AssembleMap_ (mapTheme, assembly, asmTiles, asmPos, entityString, seed, print);
 	int num = map->numPlaced;
+	Mem_Free(map);
+	return num;
+}
+
+int SV_AssembleMapAndTitle (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, const char** asmTitle)
+{
+	MapInfo* map = SV_AssembleMap_ (mapTheme, assembly, asmTiles, asmPos, entityString, seed, print);
+	int num = map->numPlaced;
+	*asmTitle = map->getCurrentAssemblyTitle();
 	Mem_Free(map);
 	return num;
 }
