@@ -40,12 +40,11 @@ serverInstanceGame_t* sv;			/* local server */
  * @note the title string must be translated client side
  * @return Never nullptr - mapname or maptitle (if defined in assembly)
  */
-static const char* SV_GetMapTitle (const MapInfo* map, const char* const mapname)
+static const char* SV_GetMapTitle (const char* asmTitle, const char* const mapname)
 {
 	assert(mapname);
 
 	if (mapname[0] == '+') {
-		const char* asmTitle = map->getCurrentAssemblyTitle();
 		if (asmTitle && asmTitle[0]) {
 			/* return the assembly title itself - must be translated client side */
 			if (asmTitle[0] == '_')
@@ -187,7 +186,8 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
 	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
-	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, levelstring));
+	const char* asmTitle = randomMap->getCurrentAssemblyTitle();
+	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(asmTitle, levelstring));
 	if (Q_strstart(SV_GetConfigString(CS_MAPTITLE), "b/")) {
 		/* For base attack, CS_MAPTITLE contains too many chars */
 		SV_SetConfigString(CS_MAPTITLE, "Base attack");
