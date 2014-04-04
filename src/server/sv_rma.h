@@ -144,6 +144,9 @@ public:
 	inline const Assembly* getCurrentAssembly () const {
 		return &assemblies[asmIdx];
 	}
+	inline void setName (const char* mapTheme) {
+		Q_strncpyz(this->name, mapTheme, sizeof(this->name));
+	}
 	inline const char* getName () const {
 		return name;
 	}

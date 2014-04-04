@@ -2058,7 +2058,7 @@ MapInfo* SV_AssembleMap (const char* mapTheme, const char* assembly, char* asmTi
 	MapInfo* map;
 
 	map = Mem_AllocType(MapInfo);
-	Q_strncpyz(map->name, mapTheme, sizeof(map->name));
+	map->setName(mapTheme);
 
 	SV_ParseUMP(mapTheme, entityString, map, false);
 
