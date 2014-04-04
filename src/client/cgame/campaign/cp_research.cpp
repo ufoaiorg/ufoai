@@ -1599,14 +1599,11 @@ technology_t* RS_GetTechByIDX (int techIdx)
  */
 technology_t* RS_GetTechByID (const char* id)
 {
-	unsigned hash;
-	technology_t* tech;
-
 	if (Q_strnull(id))
 		return nullptr;
 
-	hash = Com_HashKey(id, TECH_HASH_SIZE);
-	for (tech = techHash[hash]; tech; tech = tech->hashNext)
+	unsigned hash = Com_HashKey(id, TECH_HASH_SIZE);
+	for (technology_t* tech = techHash[hash]; tech; tech = tech->hashNext)
 		if (!Q_strcasecmp(id, tech->id))
 			return tech;
 
@@ -1621,17 +1618,14 @@ technology_t* RS_GetTechByID (const char* id)
  */
 technology_t* RS_GetTechByProvided (const char* idProvided)
 {
-	unsigned hash;
-	technology_t* tech;
-
 	if (!idProvided)
 		return nullptr;
 	/* catch empty strings */
 	if (idProvided[0] == '\0')
 		return nullptr;
 
-	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
-	for (tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
+	unsigned hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
+	for (technology_t* tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
 		if (!Q_strcasecmp(idProvided, tech->provides))
 			return tech;
 
@@ -1672,10 +1666,9 @@ technology_t* RS_GetTechWithMostScientists (const struct base_s* base)
  */
 int RS_GetTechIdxByName (const char* name)
 {
-	technology_t* tech;
 	const unsigned hash = Com_HashKey(name, TECH_HASH_SIZE);
 
-	for (tech = techHash[hash]; tech; tech = tech->hashNext)
+	for (technology_t* tech = techHash[hash]; tech; tech = tech->hashNext)
 		if (!Q_strcasecmp(name, tech->id))
 			return tech->idx;
 

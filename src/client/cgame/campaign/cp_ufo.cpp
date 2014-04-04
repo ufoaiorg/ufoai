@@ -570,10 +570,8 @@ static void UFO_DestroyUFOs_f (void)
  */
 static void UFO_ListOnGeoscape_f (void)
 {
-	aircraft_t* ufo;
-
 	Com_Printf("There are %i UFOs in game\n", ccs.numUFOs);
-	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
+	for (aircraft_t* ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
 				ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
@@ -879,11 +877,9 @@ bool UFO_CampaignCheckEvents (void)
  */
 void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t* const aircraft)
 {
-	int ufoIdx;
-
 	assert(aircraft);
 
-	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
+	for (int ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
 		aircraft_t* ufo = UFO_GetByIDX(ufoIdx);
 
 		if (ufo->aircraftTarget == aircraft)

@@ -184,8 +184,6 @@ static void CP_CleanupContainerWeapons (equipDef_t* ed, containerIndex_t contain
  */
 void CP_CleanupTeam (base_t* base, equipDef_t* ed)
 {
-	containerIndex_t container;
-
 	assert(base);
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
@@ -206,7 +204,7 @@ void CP_CleanupTeam (base_t* base, equipDef_t* ed)
 		}
 	}
 
-	for (container = 0; container < CID_MAX; container++) {
+	for (containerIndex_t container = 0; container < CID_MAX; container++) {
 		E_Foreach(EMPL_SOLDIER, employee) {
 			if (!employee->isHiredInBase(base))
 				continue;
@@ -240,11 +238,9 @@ void CP_CleanupTeam (base_t* base, equipDef_t* ed)
  */
 void CP_CleanupAircraftTeam (aircraft_t* aircraft, equipDef_t* ed)
 {
-	containerIndex_t container;
-
 	assert(aircraft);
 
-	for (container = 0; container < CID_MAX; container++) {
+	for (containerIndex_t container = 0; container < CID_MAX; container++) {
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t* chr = &employee->chr;
 
