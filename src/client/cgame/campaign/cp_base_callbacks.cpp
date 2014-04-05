@@ -581,6 +581,11 @@ static void B_MarkBuildingDestroy (building_t* building)
 	baseCapacities_t cap;
 	base_t* base = building->base;
 
+	if (building == nullptr) {
+		Com_Printf("B_MarkBuildingDestroy: Trying to destroy non-existing building");
+		return;
+	}
+
 	/* you can't destroy buildings if base is under attack */
 	if (B_IsUnderAttack(base)) {
 		CP_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
@@ -610,7 +615,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			if (CAP_GetFreeCapacity(base, cap) <= 0) {
 				cgi->UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop; building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -620,7 +625,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				cgi->UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop; building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -630,7 +635,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				cgi->UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop; building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -643,7 +648,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 
 	cgi->UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
 		nullptr, nullptr, nullptr,
-		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+		va("ui_pop; building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 		nullptr, nullptr, nullptr);
 }
 
@@ -668,14 +673,11 @@ static void B_BuildingDestroy_f (void)
 		building = &ccs.buildings[baseID][buildingID];
 	}
 
-	if (!base || !building)
+	if (base == nullptr || building == nullptr)
 		return;
 
 	if (cgi->Cmd_Argc() == 4 && Q_streq(cgi->Cmd_Argv(3), "confirmed")) {
-		/** @todo why not use the local building pointer here - we should
-		 * reduce the access to these 'current' pointers */
-		B_BuildingDestroy(base->buildingCurrent);
-
+		B_BuildingDestroy(building);
 		B_ResetBuildingCurrent(base);
 		B_BuildingInit(base);
 	} else {
