@@ -87,13 +87,13 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize width of the actor in cells
  * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] x,y,z Grid position of the cell
+ * @param[in] chkPos Grid position of the cell
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList
  * @return true if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t* path, int x, int y, int z)
+static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t* path, pos3_t chkPos)
 {
 	if (!path->fbList)
 		return false;	/* no fbList, no intersection. We're done. */
@@ -113,11 +113,11 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 		const int fy = (*p)[1];
 		const int fz = (*p)[2];
 
-		if (fx + size <= x || x + actorSize <= fx)
+		if (fx + size <= chkPos[0] || chkPos[0] + actorSize <= fx)
 			continue; /* x bounds do not intersect */
-		if (fy + size <= y || y + actorSize <= fy)
+		if (fy + size <= chkPos[1] || chkPos[1] + actorSize <= fy)
 			continue; /* y bounds do not intersect */
-		if (z == fz)
+		if (chkPos[2] == fz)
 			return true; /* confirmed intersection */
 	}
 	return false;
@@ -567,8 +567,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 					}
 
 					/* Test for forbidden (by other entities) areas. */
-					if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0],
-							step.toPos[1], step.toPos[2])) {
+					if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos)) {
 						continue; /* That spot is occupied. */
 					}
 
@@ -670,7 +669,7 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 			/* Optionally check the forbiddenList. We might want to find a multi-turn path. */
 			if (forbiddenList)
 				if (!VectorCompare(step.toPos, targetPos))	/* but exclude the target position */
-					if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos[0], step.toPos[1], step.toPos[2])) {
+					if (Grid_CheckForbidden(excludeFromForbiddenList, step.actorSize, path, step.toPos)) {
 						continue;		/* That spot is occupied. */
 					}
 
