@@ -58,6 +58,12 @@ public:
 			return nullptr;
 		return prev;
 	}
+	inline actorSizeEnum_t getEntSize(pos_t** current) {
+		actorSizeEnum_t entSize;
+		byte* forbiddenSize = *(current + 1);
+		memcpy(&entSize, forbiddenSize, sizeof(entSize));
+		return entSize;
+	}
 #ifdef DEBUG
 	/* this is NOT equivalent to Grid_CheckForbidden() !! Just for debugging purposes */
 	inline bool contains(const pos3_t pos) {

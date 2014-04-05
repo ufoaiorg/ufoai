@@ -106,16 +106,14 @@ static bool Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t act
 		}
 
 		/* extract the forbidden coordinates */
-		actorSizeEnum_t size;
-		byte* forbiddenSize = *(p + 1);
-		memcpy(&size, forbiddenSize, sizeof(size));
+		actorSizeEnum_t entSize = path->fbList->getEntSize(p);
 		const int fx = (*p)[0];
 		const int fy = (*p)[1];
 		const int fz = (*p)[2];
 
-		if (fx + size <= chkPos[0] || chkPos[0] + actorSize <= fx)
+		if (fx + entSize <= chkPos[0] || chkPos[0] + actorSize <= fx)
 			continue; /* x bounds do not intersect */
-		if (fy + size <= chkPos[1] || chkPos[1] + actorSize <= fy)
+		if (fy + entSize <= chkPos[1] || chkPos[1] + actorSize <= fy)
 			continue; /* y bounds do not intersect */
 		if (chkPos[2] == fz)
 			return true; /* confirmed intersection */
