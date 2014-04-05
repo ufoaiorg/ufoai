@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2012-11-09 02:56+0100\n"
-"Last-Translator: profantibus <spam.profantibus@gmail.com>\n"
+"PO-Revision-Date: 2014-04-03 19:28+0100\n"
+"Last-Translator: Alessio Grassi <posta.alessiograssi@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ../\n"
 
@@ -36,18 +36,16 @@ msgid "Bridge"
 msgstr "Ponte"
 
 #: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:468
-#, fuzzy
 msgid "Bridge (MP)"
-msgstr "Ponte"
+msgstr "Ponte (MP)"
 
 #: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
 msgstr "Cimitero Piccolo"
 
 #: ../base/maps/city3.ump:199
-#, fuzzy
 msgid "The outskirt of a big city."
-msgstr "Un ospedale nella periferia di una città."
+msgstr "La periferia di una grande città."
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -84,7 +82,7 @@ msgstr "Piccolo bungalo nella foresta"
 #: ../base/maps/frozen.ump:734 ../base/maps/frozen.ump:756
 #: ../base/maps/frozen.ump:826
 msgid "Frozen"
-msgstr ""
+msgstr "Congelato"
 
 #: ../base/maps/frozen.ump:781
 msgid "Multiplayer Coop"
@@ -105,7 +103,7 @@ msgstr "Porto"
 
 #: ../base/maps/harbour2.ump:534
 msgid "Pier"
-msgstr ""
+msgstr "Molo"
 
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:572
@@ -457,7 +455,7 @@ msgstr "Armatura Aliena"
 
 #: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5589
 msgid "Alien Electronic Warfare Suite"
-msgstr ""
+msgstr "Suite per guerra elettronica aliena"
 
 #: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5018
 msgid "Alien Astrogation"
@@ -570,9 +568,8 @@ msgstr "Alloggi"
 
 #: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/market.ufo:371
 #: ../base/ufos/ui/production.ufo:174
-#, fuzzy
 msgid "Dropship Hangar"
-msgstr "Demolisci hangar"
+msgstr "Hangar nave da sbarco"
 
 #: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/market.ufo:353
 #: ../base/ufos/ui/production.ufo:156
@@ -2486,15 +2483,15 @@ msgstr "Inizia una nuova campagna, solo"
 
 #: ../base/ufos/equipment.ufo:395
 msgid "Asymptotic Market"
-msgstr ""
+msgstr "Mercato asintotico"
 
 #: ../base/ufos/equipment.ufo:418
 msgid "Alien Campaign Start (Alien Campaign)"
-msgstr ""
+msgstr "Inizio Campagna Aliena"
 
 #: ../base/ufos/equipment.ufo:440
 msgid "Alien Campaign Start (Market)"
-msgstr ""
+msgstr "Inizio Campagna Aliena (Mercato)"
 
 #: ../base/ufos/events.ufo:34
 msgid "Good Luck"
@@ -2666,6 +2663,9 @@ msgid ""
 "which is capable of launching a heavy payload beyond earth's atmosphere to "
 "knock down an orbiting UFO."
 msgstr ""
+"Il Lanciarazzi orbitale è una grande installazione costruita nel terreno che "
+"è in grado di lanciare un elevato carico esplosivo al di là dell'atmosfera "
+"terrestre al fine di abbattere un UFO in orbita."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -2786,7 +2786,7 @@ msgstr "Nessuna lingua"
 #: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:122
 #: ../base/ufos/maps.ufo:177
 msgid "African Village"
-msgstr ""
+msgstr "Villaggio africano"
 
 #: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
 #: ../base/ufos/maps.ufo:332
@@ -2796,11 +2796,11 @@ msgstr "Africa"
 
 #: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
-msgstr ""
+msgstr "Sito costiero di caduta"
 
 #: ../base/ufos/maps.ufo:519
 msgid "Urban Periphery"
-msgstr ""
+msgstr "Periferia urbana"
 
 #: ../base/ufos/maps.ufo:561 ../base/ufos/maps.ufo:649
 #: ../base/ufos/maps.ufo:698
@@ -2815,7 +2815,7 @@ msgstr "Alcune case nel deserto"
 #: ../base/ufos/maps.ufo:749 ../base/ufos/maps.ufo:791
 #: ../base/ufos/maps.ufo:832 ../base/ufos/maps.ufo:876
 msgid "Farm"
-msgstr ""
+msgstr "Campagna"
 
 #: ../base/ufos/maps.ufo:928 ../base/ufos/maps.ufo:968
 #: ../base/ufos/maps.ufo:1008 ../base/ufos/maps.ufo:1048
@@ -2837,28 +2837,28 @@ msgstr "Neve"
 
 #: ../base/ufos/maps.ufo:1351
 msgid "Snowy Logging Site"
-msgstr ""
+msgstr "Sito di disboscamento innevato"
 
 #: ../base/ufos/maps.ufo:1647 ../base/ufos/maps.ufo:1691
 #: ../base/ufos/maps.ufo:1733
 msgid "Suburban Housing"
-msgstr ""
+msgstr "Area residenziale periferica"
 
 #: ../base/ufos/maps.ufo:1780 ../base/ufos/maps.ufo:1819
 #: ../base/ufos/maps.ufo:1862
 msgid "Frozen Landscape"
-msgstr ""
+msgstr "Paesaggio gelido"
 
 #: ../base/ufos/maps.ufo:2083 ../base/ufos/maps.ufo:2131
 #: ../base/ufos/maps.ufo:3772
 msgid "East Asian Village"
-msgstr ""
+msgstr "Villaggio asiatico dell'est"
 
 #: ../base/ufos/maps.ufo:2337 ../base/ufos/maps.ufo:2378
 #: ../base/ufos/maps.ufo:2419 ../base/ufos/maps.ufo:3878
 #: ../base/ufos/maps.ufo:4951
 msgid "Middle Eastern Suburb"
-msgstr ""
+msgstr "Periferia del Medio Oriente"
 
 #: ../base/ufos/maps.ufo:2474
 #, fuzzy
@@ -2872,9 +2872,8 @@ msgid "Tropical Jungle"
 msgstr "Droga tropicale"
 
 #: ../base/ufos/maps.ufo:2646
-#, fuzzy
 msgid "UFO Crash Site"
-msgstr "Sito UFO Crash."
+msgstr "Sito di caduta dell'UFO."
 
 #: ../base/ufos/maps.ufo:2947
 #, fuzzy
@@ -2883,7 +2882,7 @@ msgstr "Sovrumano"
 
 #: ../base/ufos/maps.ufo:2997
 msgid "Basketball Stadium"
-msgstr ""
+msgstr "Stadio del basket"
 
 #: ../base/ufos/maps.ufo:3102
 #, fuzzy
@@ -2915,7 +2914,7 @@ msgstr "Cimitero Piccolo"
 
 #: ../base/ufos/maps.ufo:3472
 msgid "City High-Rise"
-msgstr ""
+msgstr "Città con grattacieli"
 
 #: ../base/ufos/maps.ufo:3512
 #, fuzzy
@@ -2929,7 +2928,7 @@ msgstr "Droga tropicale"
 
 #: ../base/ufos/maps.ufo:3627
 msgid "Mountain Estate"
-msgstr ""
+msgstr "Residenza montana"
 
 #: ../base/ufos/maps.ufo:3669
 #, fuzzy
@@ -2938,7 +2937,7 @@ msgstr "Distributore"
 
 #: ../base/ufos/maps.ufo:3718
 msgid "Luxury House"
-msgstr ""
+msgstr "Abitazione di lusso"
 
 #: ../base/ufos/maps.ufo:3829
 #, fuzzy
@@ -2947,7 +2946,7 @@ msgstr "Convoglio militare"
 
 #: ../base/ufos/maps.ufo:3930
 msgid "Military Shelter"
-msgstr ""
+msgstr "Ricovero militare "
 
 #: ../base/ufos/maps.ufo:3985
 #, fuzzy
@@ -2956,11 +2955,11 @@ msgstr "Generatore"
 
 #: ../base/ufos/maps.ufo:4079 ../base/ufos/maps.ufo:4905
 msgid "Office Complex"
-msgstr ""
+msgstr "Complesso di uffici"
 
 #: ../base/ufos/maps.ufo:4134
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
 
 #: ../base/ufos/maps.ufo:4184
 #, fuzzy
@@ -2974,7 +2973,7 @@ msgstr "Convoglio militare"
 
 #: ../base/ufos/maps.ufo:4279
 msgid "Urban Warehouse"
-msgstr ""
+msgstr "Magazzino di città"
 
 #: ../base/ufos/maps.ufo:4324
 #, fuzzy
@@ -2982,13 +2981,12 @@ msgid "Rural Village"
 msgstr "Un piccolo villaggio."
 
 #: ../base/ufos/maps.ufo:4372
-#, fuzzy
 msgid "Corrupter UFO Crash Site"
-msgstr "Sito UFO Crash."
+msgstr "Sito di caduta dell'UFO Corrupter."
 
 #: ../base/ufos/maps.ufo:4420
 msgid "Hydroelectric Dam"
-msgstr ""
+msgstr "Diga idroelettrica"
 
 #: ../base/ufos/maps.ufo:4473
 #, fuzzy
@@ -3002,7 +3000,7 @@ msgstr "Ruota"
 
 #: ../base/ufos/maps.ufo:4567
 msgid "Archaeological Dig"
-msgstr ""
+msgstr "Scavo archeologico"
 
 #: ../base/ufos/maps.ufo:4617
 #, fuzzy
@@ -3010,22 +3008,20 @@ msgid "Ferry"
 msgstr "Un traghetto."
 
 #: ../base/ufos/maps.ufo:4667
-#, fuzzy
 msgid "Fighter UFO Crash Site"
-msgstr "Sito UFO Crash."
+msgstr "Sito di caduta del caccia UFO."
 
 #: ../base/ufos/maps.ufo:4714
 msgid "Secret Depot"
-msgstr ""
+msgstr "Deposito segreto"
 
 #: ../base/ufos/maps.ufo:4762
-#, fuzzy
 msgid "Port"
-msgstr "Portland"
+msgstr "Porto"
 
 #: ../base/ufos/maps.ufo:4808
 msgid "Old Mine"
-msgstr ""
+msgstr "Vecchia miniera"
 
 #: ../base/ufos/maps.ufo:4861
 #, fuzzy
@@ -3044,7 +3040,7 @@ msgstr "Un lussuoso villaggio vacanze."
 
 #: ../base/ufos/maps.ufo:5091
 msgid "Old Town Center"
-msgstr ""
+msgstr "Centro storico"
 
 #: ../base/ufos/maps.ufo:5143
 #, fuzzy
@@ -3053,27 +3049,27 @@ msgstr "Piccolo"
 
 #: ../base/ufos/maps.ufo:5176
 msgid "Small Suburban Street"
-msgstr ""
+msgstr "Piccola strada di periferia"
 
 #: ../base/ufos/maps.ufo:5209
 msgid "Subway Station"
-msgstr ""
+msgstr "Stazione metropolitana"
 
 #: ../base/ufos/maps.ufo:5302
 msgid "Wilderness"
-msgstr ""
+msgstr "Area selvatica"
 
 #: ../base/ufos/maps.ufo:5351
 msgid "City High-Rise (MP)"
-msgstr ""
+msgstr "Città con grattacieli (MP)"
 
 #: ../base/ufos/maps.ufo:5379
 msgid "Frozen Industrial Site (Coop)"
-msgstr ""
+msgstr "Sito industriale gelido (Coop)"
 
 #: ../base/ufos/maps.ufo:5397
 msgid "Frozen Industrial Site (MP)"
-msgstr ""
+msgstr "Sito industriale (MP) "
 
 #: ../base/ufos/maps.ufo:5420
 #, fuzzy
@@ -3092,7 +3088,7 @@ msgstr "Base aliena"
 
 #: ../base/ufos/maps.ufo:5568
 msgid "PHALANX Craft Crash Site"
-msgstr ""
+msgstr "Sito di caduta del veicolo PHALANX "
 
 #: ../base/ufos/maps.ufo:5597
 msgid "Training Zone: Alpha"
@@ -3236,7 +3232,6 @@ msgid "Col"
 msgstr "L12"
 
 #: ../base/ufos/msgid/aircraft.ufo:40
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
 "\n"
@@ -3316,7 +3311,7 @@ msgid ""
 msgstr ""
 "Specifiche Velivolo -- nave da sbarco Firebird \n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -3435,11 +3430,32 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Comandante, sono soddisfatto di presentarle gli schemi del cargo pesante "
-"Herakles.\n"
+"Comandante, sono lieto di presentarle il progetto del Sollevatore pesante di "
+"classe Heracles.\n"
 "\n"
-"Per velocizzare lo sviluppo di questa nave da sbarco, abbiamo adattato il "
-"progetto di un cargo "
+"Per accelerare lo sviluppo di questa nave da sbarco, abbiamo adattato il "
+"progetto di un veicolo per il sollevamento in volo di tipo civile usato per "
+"movimentare carichi molto pesanti.  Il mezzo consiste in un veicolo per il "
+"sollevamento e un modulo passivo, un container da trasporto che abbiamo "
+"trasformato in spazio per 12 truppe.\n"
+"\n"
+"Il veicolo ha capacità di decollo verticale, ma abbiamo migliorato l'unità "
+"propulsiva per raggiungere velocità di crociera maggiori. Abbiamo anche "
+"previsto per il veicolo e il pod una corazza avanzata con rivestimento "
+"basato su materie umane per contenere i costi. L'Herakles dovrebbe spostare "
+"le truppe più velocemente e in modo più sicuro i nostri soldati rispetto al "
+"Firebird.\n"
+"\n"
+"Come per il Firebird, lo abbiamo dotato di un punto di ancoraggio nella prua "
+"per un sistema d'armi leggero, ma si tratta di una soluzione di ultima "
+"difesa. L'Herakles è idoneo per il trasporto truppe e dovrebbe essere difeso "
+"da qualsiasi UFO armato. \n"
+"\n"
+"Dovremmo costruirne almeno uno quanto prima.  Non avremo bisogno di grandi "
+"forze d'assalto in ogni missione, ma se dovremo attaccare un'installazione "
+"aliena avremo bisogno di una potenza di fuoco ampia.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:64
 msgid ""
@@ -3456,6 +3472,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, sto presentando questa proposta per la ricerca e sviluppo di una "
+"nuova nave da sbarco dopo aver appreso lo scopo del Supply UFO.\n"
+"\n"
+"Se gli alieni stanno accumulando risorse e personale sulla superficie "
+"terrestre, avremo bisogno di impegnare un numero maggiore di squadre "
+"d'assalto. Stiamo elaborando un nuovo progetto preliminare per un veicolo "
+"pesante di trasporto truppe che ci permetterebbe di espandere la dimensione "
+"delle squadre da impiegare in cobattimento.\n"
+"\n"
+"Mi fornisca le competenze intellettuali e il tempo per concretizzare questo "
+"progetto. I suoi soldati avranno bisogno di un supporto ulteriore sul "
+"campo.\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:76
 msgid ""
@@ -3483,6 +3512,32 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, ho allegato le illustrazioni del nostro mezzo di trasporto da "
+"combattimento di classe Raptor.\n"
+"\n"
+"Questo mezzo è il risultato di quanto appreso dall'adattamento della "
+"tecnologia aliena ai nostri caccia e dall'analisi di come la cannoniera "
+"abbia elaborato una grande unità aliena in un UFO progettato per la "
+"superiorità aerea. Abbiamo rivestito l'aereo con materiali alieni per "
+"un'eccellente resistenza agli esplosivi. Non potrà resistere agli attacchi "
+"che i nostri intercettori sostengono contro gli UFO più potenti, ma può "
+"cacciare e distruggere UFO leggeri. Per questo tipo di attacchi, abbiamo "
+"progettato un punto di ancoraggio per armi di media categoria su ogni ala e "
+"un punto di ancoraggio sulla prua.\n"
+"\n"
+"Il Raptor può ospitare in modo sicuro fino a 10 soldati nel suo scafo, ma "
+"devono essere allacciati per resistere alla pressione del combattimento "
+"aereo. L'uscita per i soldati è sotto l'aereo, il quale è sollevato da un "
+"carrello di atterraggio particolarmente elevato, dunque non si potrà usare "
+"il mezzo come punto di difesa una volta atterrati.\n"
+"\v\n"
+"Si tratta della prima nave da sbarco che sfrutta il motore antimateria "
+"alieno, quindi è necessario dotarsi di materia di scorta per rifornire "
+"questo mezzo. Il nostro team ne ha costruito uno in una delle nostre basi "
+"più affollate. Rappresenterà un mezzo con il quale affrontare le minaccie "
+"importanti.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:86
 msgid ""
@@ -3501,9 +3556,22 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la prego di considerare questa proposta di ricerca e sviluppo di "
+"una nuova nave da trasporto armata.\n"
+"\n"
+"I nostri maggiori sforzi per adattare la tecnologia aliena sono stati "
+"diretti sul caccia. Per questo le nostre navi da sbarco sono rimaste lente e "
+"vulnerabili. Vorrei risolvere tale problema sviluppando un nuovo veicolo da "
+"sbarco ibrido, capace di inseguire e abbattere piccoli ufo e di spostare "
+"velocemente truppe sul campo.\n"
+"\n"
+"É un obiettivo ambiguo, date le grandi differenze tra veicoli caccia e il "
+"trasporto di truppe ma crediamo di poter creare un mezzo di valore in più "
+"per la nostra flotta.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:138
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
 "\n"
@@ -3612,7 +3680,7 @@ msgid ""
 msgstr ""
 "Specifiche Velivolo -- Intercettore Classe Stiletto\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -3626,7 +3694,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"Introduzione\n"
+"Quadro generale\n"
 "\n"
 "\n"
 "Sono molto felice di affermare che il primo esemplare di serie del nostro "
@@ -3744,7 +3812,6 @@ msgstr ""
 "spazio per armatura"
 
 #: ../base/ufos/msgid/aircraft.ufo:180
-#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
 "\n"
@@ -3831,7 +3898,7 @@ msgid ""
 msgstr ""
 "Specifiche Velivolo -- Intercettore Classe Saraceno\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -4190,6 +4257,29 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, il lavoro è terminato. Lasciate che vi presenti la massima "
+"conquista della mia carriera: il caccia Stingray ad alto carico esplosivo.\n"
+"La prima cosa che salta all'occhio è la sua forma distintiva e il "
+"rivestimento protettivo. So che alcuni dei piloti che avevano visto i "
+"disegni iniziali erano dubbiosi nel dover pilotare qualcosa che appare così "
+"alieno, ma posso assicurare che ogni centimetro di questo aereo ha una sua "
+"ragion d'essere. Ci siamo liberati di ogni assunto e iniziato a ripensare a "
+"ciò che stavamo realizzando. Sono lieto di affermare che il risultato di ciò "
+"è un'aereo più leggero, più veloce  e con una dotazione d'armi pesanti "
+"superiore ad ogni altro mezzo di cui disponiamo.\n"
+"Le ali a freccia dello Stingray forniscono un'eccellente stabilità alle "
+"elevate velocità che può raggiungere. Grazie al modo in cui diamo forma ai "
+"materiali alieni per la massima coesione, siamo stati in grado di ottenere "
+"la resistenza dell'involucro esterno e liberarci dei tradizionali sistemi di "
+"rafforzamento interno della corazza. Il risultato è che possiamo disporre "
+"postazioni armate più grandi rispetto ad un mezzo comparabile costruito "
+"secondo criteri tradizionali.\n"
+"\n"
+"Ciò dovrebbe significare qualcosa con cui poter affrontare i nuovi temibili "
+"Ufo presenti nel nostro cielo. Il mio consiglio è di impiegare al più presto "
+"gli Stingray.\n"
+"\n"
+"Com. Navarre         "
 
 #: ../base/ufos/msgid/aircraft.ufo:246
 msgid ""
@@ -4211,6 +4301,24 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, nel corso della nostra ricerca sull'UFO è divenuto terribilmente "
+"chiaro che abbiamo bisogno di un intercettore più potente. Gli ultimi "
+"intercettori progettati ci hanno realmente aiutato a ristabilire gli "
+"equilibri sul campo di battaglia, e penso che possiamo farlo di nuovo.\n"
+"\n"
+"La corazza della Cannoniera rappresenta un progress tecnologico importante, "
+"che consentirà di predisporre ottenere maggiore protezione da rivestimenti "
+"più leggeri. Ecco perché la Cannoniera è così rapida e agile. \vCredo di "
+"poter riprodurre questo aspetto nei nostri progetti. Se ci riusciremo, "
+"diporremo di un intercettore straordinarimante veloce, capace di montare un "
+"carico d'armi più pesante rispetto agli intercettori precedenti.\n"
+"\n"
+"Mi dia il tempo necessario per il laboratorio e credo di poterle fornire il "
+"miglior caccia che i nostri piloti mai piloteranno. Ne abbiamo bisogno per "
+"restare nei cieli se continuano a inviare le loro cannoniere contro di noi. "
+"gainst us.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:264
 #, fuzzy
@@ -4583,6 +4691,35 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo appena terminato la nostra indagine sul nuovo UFO, che "
+"abbiamo chiamato Bomber.\n"
+" \n"
+"Abbiamo studiato a fondo questo mezzo relativamente al ruolo che di solito "
+"immaginiamo possa avere un UFO, ma non abbiamo trovato riscontri. Nessuna "
+"attrezzatura di laboratorio, nessuna struttura medica. Il Bomber è dotato "
+"della più spessa corazza mai vista, di tecnologia di bordo e di armi più "
+"avanzate rispetto agli altri UFO. Ma benchè si tratti di un caccia pesante, "
+"sono riusciti a realizzare un  veicolo più piccolo e veloce.\n"
+"\n"
+"Alla fine, è stata la dimesione e gli spazi vuoti che ci hanno diretti verso "
+"l'unica conclusione che potevamo immaginare: il ruolo  dell'UFO è il "
+"trasporto di truppe da combattimento. E secondo le nostre stime, può "
+"trasportare comodamente e in sicurezza sul campo di battaglia un numero "
+"doppio di alieni ben armati rispetto agli UFO che abbiamo visto in "
+"precedenza. Si tratta di una scatola distruttrice volante. Non abbiamo "
+"individuato altri ruoli al di fuori di questo.\n"
+"\n"
+"É uno sviluppo preoccupante. È stato terribile apprendere che gli alieni "
+"stavano tentando di infettarci con il XVI, ma ciò significa che una vasta "
+"popolazione umana vivente rappresenta per loro una risorsa. Se hanno deciso "
+"di volersi sbarazzare di noi, potremmo entrare in una guerra all'ultimo "
+"sangue.\n"
+"\n"
+"Non abbiamo certezze sulle loro intenzioni e se queste sono cambiate, ma la "
+"necessità di conoscere la loro origine e il modo in cui fargli del male "
+"rappresenta l'urgenza assoluta.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:350
 msgid ""
@@ -4598,6 +4735,17 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo recuperato un nuovo UFO che è in attesa di essere "
+"studiato.\n"
+"\n"
+"Si tratta dell'UFO più grande mai recuperato. Le prime valutazioni non ci "
+"forniscono indicazioni sul suo impiego. É  troppo grande per le incursioni a "
+"terra, come si è potuto ascoltare dalle relazioni successive all'azione, è "
+"una temibile minaccia anche in volo.\n"
+"\n"
+"Studiamo questo veicolo quanto prima.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:366
 #, fuzzy
@@ -5081,8 +5229,8 @@ msgid ""
 msgstr ""
 "Specifiche: Unità ECM \"Raven\"\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Sigma -- Solo Visione del Comandante\n"
@@ -5169,6 +5317,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo recuperato alcuni interessanti sistemi elettronici da "
+"uno dei nostri UFO disassemblati. Dai prim esami, sembra che si tratti di un "
+"sistema di guerra elettronica.\n"
+"\v\n"
+"Si tratta di un ritrovamento importante, Comandante. Se siamo in grado di "
+"decifrare come opera l'elettronica aliena, potremmo migliorare di molto i "
+"nostri sistemi di rilevamento e di identificazione. Questo significherebbe "
+"un enorme passo avanti nella capacità di sopravvivenza dei nostri aerei nei "
+"confronti degli UFO se adatteremo tali sistemi per i nostri scopi.\n"
+"\n"
+"Comandante, la invito ad approvare quanto prima questo progetto.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:60
 msgid ""
@@ -5209,9 +5370,43 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, sono felice di comunicarle che abbiamo decifrato il codice. Ora "
+"disponiamo di un elenco di frequenze primarie di guerra elettronica usate "
+"dagli alieni, e di una buona conoscenza di come questo sistema si comporta.\n"
+"\n"
+"Certamente, prima di festeggiare, sottolineo che non abbiamo trovato una "
+"strada spianata attraverso le difese aliene. A prescindere da quanto "
+"ottenuto da questo studio, la guerra non si avvia alla fine e non renderemo "
+"gli UFO meno pericolosi. Questo perché la funzione principale dell'EW  "
+"dispone di un'intelligenza a bordo indipendente  che si adatta allo scenario "
+"di combattimento.\n"
+"\n"
+"This intelligence is continually experimenting, trying to keep enemy systems "
+"off-balance, changing its methods and deviating from its preferred "
+"frequencies to try ones that might be more difficult to work with but could "
+"bypass enemy jamming. We even believe that, when patched into a UFO's main "
+"computer, this suite will hook into other onboard systems to make efficiency-"
+"increasing adjustments based on enemy EW activity. Particularly to the "
+"targeting computers.\n"
+"\n"
+"Besides the intelligent computer at its heart, the suite has projectors of "
+"every kind, capable of saturating virtually any frequency in the "
+"electromagnetic spectrum, even several frequencies at a time. It is also "
+"capable of 'throwing' heat several metres away from the craft, causing "
+"thermal spikes on infrared sensors that can fool missiles and draw them away "
+"from the real target. Lastly the suite comes with a set of decoys that can "
+"emulate practically any sensor signature, deployed as and when the computer "
+"thinks it's necessary.\n"
+"\n"
+"With some modifications, we've been able to make the suite work with our "
+"current aircraft electronics. Our main success has been in developing a set "
+"of software upgrades which patch the alien EW suite into the onboard "
+"intelligence systems of our aircraft. It's a hack if there ever was one, but "
+"it will do for now.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:100
-#, fuzzy
 msgid ""
 "Technical Specifications: Polymer Aircraft Armour\n"
 "\n"
@@ -5284,7 +5479,7 @@ msgid ""
 msgstr ""
 "Specifiche: Blindatura Polimerica per Velivoli\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -5506,6 +5701,16 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la superficie della corazza che ricopre la cannoniera UFO "
+"studiata ci ha suggerito diverse innovazioni che potremmo introdurre nel "
+"nostro aereo. Non era solo più spessa delle corazze aliene più aggiornate. "
+"Era più leggera e resistente di qualsiasi altra vista prima.\n"
+"\n"
+"Ci dia del tempo per l'attività di laboratorio, signore, forse potremmo "
+"creare nuove tecniche di produzione delle corazze derivate da questo UFO per "
+"allestire il nostro nuovo velivolo.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:144
 msgid ""
@@ -5524,6 +5729,23 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo concluso la nostra indagine sulla nuova corazza aliena e "
+"abbiamo individuato numerosi miglioramenti da introdurre nelle nostre "
+"tecniche produttive e per creare una corazza più resistente per i nostri "
+"aerei.\n"
+"\n"
+"Le innovazioni chiave risiedono nel modo in cui i materiali sono "
+"stratificati e intrecciati l'un l'altro, rendendo le applicazioni molto "
+"sottili e resistenti. Ciò ci permetterà di migliorare il punto debole della "
+"nostra attuale corazza, che è così pesante da aver dovuto sacrificare la "
+"protezione in favore della velocità aerea.\n"
+" \n"
+"\vAvvii al più presto la produzione in officina di questa nuova corazza. Ci "
+"farà compiere un grande passo in avanti nella difesa dei nostri aerei "
+"rispetto alle attuali soluzioni di corazzamento senza aumentare la "
+"resistenza aerodinamica degli aerei.\n"
+"\n"
+"Com. Navarre "
 
 #: ../base/ufos/msgid/aircraftitems.ufo:152
 #, fuzzy
@@ -5838,6 +6060,16 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, quando i nostri ingegneri stavano operando l'ultimo "
+"disassemblaggio dell'UFO, hanno notato la presenza di alcune modifiche nei "
+"meccanismi di propulsione. Se gli alieni stanno sviluppando i loro motori ad "
+"antimateria, abbiamo bisogno di comprendere il più possibile tali "
+"soluzioni.\n"
+"\n"
+"Faccio richiesta di avviare uno studio più approfondito. Potrebbe essere la "
+"chiave per raggiungere la supremazia dei nostri cieli.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:220
 msgid ""
@@ -5864,6 +6096,31 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo dato uno sguardo agli avanzati sistemi di propulsione "
+"alieni e abbiamo preparato una relazione per lei.\n"
+"\n"
+"Come  sospettavamo, questi motori sono stati modificati. In pratica, sono "
+"aggiornati all'interno ma la struttura esterna è invariata. Gran parte delle "
+"modifiche hanno riguardato l'espansione della capacità della camera di "
+"reazione, che consente loro di trasmettere maggiore forza attraverso la "
+"parte posteriore del motore. Hanno anche intelligentemente ridisegnato il "
+"meccanismo di alimentazione per ottenere maggiori tassi di annichilimento "
+"materia.\n"
+"\n"
+"La natura specifica dei cambiamenti suggerisce che gli alieni stanno "
+"adattando la loro tecnologia. La propulsione maggiorata è stata "
+"probabilmente progettata per permettere alle navi UFO pesanti di restare in "
+"volo nell'atmosfera terrestre.\n"
+"\n"
+"Penso che possiamo adattare queste caratteristiche per la progettazione di "
+"un più potente meccanismo di propulsione, ma il rischio di un cedimento "
+"strutturale dell'aereo è così grande che dovremo progettare un nuovo aereo "
+"in grado di ospitarlo. Ho presentato una proposta di ricerca nella sua lista "
+"per un nuovo intercettore avanzato che impiegherà le conoscenze apprese su "
+"questi motori avanzati e quelle relative al nostro progetto di intercettore "
+"Dragon. La prego di leggerla al più presto.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:230
 #, fuzzy
@@ -6032,6 +6289,20 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Il Cannone laser aereo potrebbe essere il laser più difficile da costruire. "
+"I livelli di potenza di cui abbiamo bisogno sono stati raggiunti in "
+"precedenza con imponenti batterie su jumbo jet, ma mai in un blocco "
+"abbastanza contenuto per realizzare un cannone idoneo per i caccia.\n"
+"\n"
+"Il prodotto finito dovrebbe essere in grado di ingaggiare gli UFO con un "
+"preciso centro del bersaglio per fornire una più efficace arma da fuoco "
+"diretto. Riteniamo che la capacità di mantenere un fuoco e una pressione "
+"costante sul veicolo nemico sarà importante nei giorni a venire.\n"
+"\n"
+"La prego di approvare appena possibile i tempi di laboratorio e i fondi per "
+"questo programma. Comandante.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:274
 #, fuzzy
@@ -6102,7 +6373,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:316
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
 "\n"
@@ -6184,7 +6454,7 @@ msgid ""
 msgstr ""
 "Specifiche: Cannon Rotante SHIVA\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6267,7 +6537,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:352
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
 "\n"
@@ -6322,7 +6591,7 @@ msgid ""
 msgstr ""
 "Specifiche: SHIVA 20mm API Rounds\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6381,7 +6650,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:388
-#, fuzzy
 msgid ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
 "\n"
@@ -6438,7 +6706,7 @@ msgid ""
 msgstr ""
 "Specifiche: SHIVA 20mm HEI Rounds\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6499,7 +6767,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:432
-#, fuzzy
 msgid ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
 "\n"
@@ -6581,7 +6848,7 @@ msgid ""
 msgstr ""
 "Specifiche: Batteria Missili AA \"Sparviero\"\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6676,7 +6943,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:470
-#, fuzzy
 msgid ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
 "\n"
@@ -6740,7 +7006,7 @@ msgid ""
 msgstr ""
 "Specifiche: Missile \"Sparviero\"\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6815,7 +7081,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:508
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket Pod\n"
 "\n"
@@ -6887,7 +7152,7 @@ msgid ""
 msgstr ""
 "Specifiche: Appendice Razzi TR-20\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -6973,7 +7238,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:546
-#, fuzzy
 msgid ""
 "Technical Specifications: TR-20 Rocket\n"
 "\n"
@@ -7036,7 +7300,7 @@ msgid ""
 msgstr ""
 "Specifiche: Razzo TR-20\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -7467,6 +7731,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la nostra ricerca sul lanciatore alieno e sul missile "
+"antimateria ha reso evidente quanto siano deboli i nostri attuali sistemi "
+"missilistici. Nell'opporci ad UFO più forti e meglio equipaggiati, stiamo "
+"arretrando nella battaglia per liberare i nostri cieli dai nemici.\n"
+"Il nuovo lanciatore alieno che abbiamo visto è in grado di lanciare i suoi "
+"missili ad una tale velocità che i nostri piloti hanno pochissimo tempo per "
+"eseguire manovre evasive. Ma il missile antimateria è costoso e non possiamo "
+"permetterci di dotare ogni aereo con esso. La invito caldamente ad avviare "
+"una ricerca su un nuovo sistema di missili che possa operare sul lanciatore "
+"alieno. Sono fiducioso di poter raggiungere velocità e un impatto cinetico "
+"maggiori rispetto agli altri sistemi missilistici in uso.\n"
+"\n"
+"Com. Navarre."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:634
 msgid ""
@@ -7490,9 +7767,27 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo completato la progettazione di un nuovo missile ibrido.\n"
+"\n"
+"Come per il missile antimateria alieno, abbiamo creato un involucro ibrido "
+"in materiali alieni resistenti quasi quanto la struttura esterna degli scafi "
+"degli UFO che abbiamo già visto. Quando l'involucro si apre durante "
+"l'impatto, i frammenti proiettati ad alta velocità penetreranno la "
+"blindatura di ogni tipo di UFO che conosciamo. Anche un colpo di striscio "
+"produrrà un'esplosione ad alto potenziale capace di aprire un lungo nello "
+"scafo dell'Ufo.\n"
+"\n"
+"Abbiamo perso un po' di velocità e di pura forza cinetica rinunciando alla "
+"propulsione ad antimateria usata nel missile alieno. Questo missile non sarà "
+"così potente ma saremo in grado di produrlo in maggiori quantità. Senza "
+"dubbio, questa è l'arma aria aria più potente di cui disponiamo nel nostro "
+"arsenale oltre ai missili antimateria.\n"
+"\n"
+"Avviamo la produzione di missili, signore, e riprendiamo l'iniziativa.\n"
+".\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:670
-#, fuzzy
 msgid ""
 "Technical Specifications: Targeting Computer\n"
 "\n"
@@ -7548,7 +7843,7 @@ msgid ""
 msgstr ""
 "Specifiche: Sistema di Puntamento\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -7611,7 +7906,6 @@ msgstr ""
 "del Comandante."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:704
-#, fuzzy
 msgid ""
 "Technical Specifications: Fuel Pod\n"
 "\n"
@@ -7661,7 +7955,7 @@ msgid ""
 msgstr ""
 "Specifiche: Serbatoio Aggiuntivo\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -9225,9 +9519,36 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"Comandante,\n"
+"\n"
+"Il mio team ha concluso le analisi sulla creatura aliena recuperata.\n"
+"\n"
+"Abbiamo chiamato l'alieno Combat Hovernet, una conferma delle qualità "
+"meccaniche aumentate orientate al combattimento. Ha una ridotta biomassa, "
+"che comprende un sorta di \"cervello\", che si trova nel suo nucleo, la "
+"quale sembra controllare la macchina.\n"
+"\n"
+"L'intera creatura è stata rivestita da una blindatura avanzata e gli "
+"stabilizzatori che la mantengono a galla e sul bersaglio, sono più potenti "
+"di quanto prevedessimo in un ruolo non di combattimento. Gli armamenti al "
+"plasma installati sull'alieno sono in grado di sparare scariche di tre colpi "
+"con un'accuratezza a cui non siamo abituati rispetto ai proiettili "
+"irregolari. Questi ragazzi non saranno facili da uccidere, finché non li "
+"distruggiamo, saranno una seria minaccia per le nostre truppe.\n"
+"\n"
+"Grazie alla corazza aliena di cui sono dotate le altre unità, sono "
+"resistenti alle armi convenzionali e al plasma. Ma condividono anche la "
+"vulnerabilità delle corazze rispetto alle armi laser e a quelle basate sul "
+"fuoco pesante.\n"
+"\n"
+"Non saremo in grado di abbattere questi ragazzi a prima vista. Aspettare il "
+"momento in cui sono più vicini, potrebbe essere troppo tardi.\n"
+"\n"
+"Cordialmente,\n"
+"\n"
+"Dott. Connor"
 
 #: ../base/ufos/msgid/armour.ufo:38
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Armour\n"
 "\n"
@@ -9319,7 +9640,7 @@ msgid ""
 msgstr ""
 "Specifiche: Armatura da Combattimento\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -10074,7 +10395,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:62
-#, fuzzy
 msgid ""
 "Blueprints -- Alien Containment Facility\n"
 "\n"
@@ -10152,7 +10472,7 @@ msgid ""
 msgstr ""
 "Progetto -- Contenimento Alieni\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -10230,7 +10550,6 @@ msgstr ""
 "funzionare per ciò per cui è stata progettata."
 
 #: ../base/ufos/msgid/buildings.ufo:102
-#, fuzzy
 msgid ""
 "Blueprints -- Command Centre\n"
 "\n"
@@ -10297,8 +10616,8 @@ msgid ""
 msgstr ""
 "Progetto -- Centro di Comando\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Costruzioni Precis, Salvacondotto: Sigma -- Riservato: Solo Visione del "
@@ -10362,7 +10681,7 @@ msgstr ""
 "\n"
 "Addenda\n"
 "\n"
-"Aggiunta, Ufficiale Esecutivo Abel S. Howard, 18 Marzo 2084:\n"
+"Addendum, Ufficiale Esecutivo Abel S. Howard, 18 Marzo 2084:\n"
 "\n"
 "I vecchi piani per il CC sono stati aggiornati dai nostri ingegneri per "
 "rimpiazzare l'antico mainframe H-9000 con stazioni di lavoro olografiche "
@@ -10370,7 +10689,6 @@ msgstr ""
 "gli altri componenti sono ancora utilizzabili ed efficaci."
 
 #: ../base/ufos/msgid/buildings.ufo:134
-#, fuzzy
 msgid ""
 "Blueprints -- Entrance\n"
 "\n"
@@ -10422,7 +10740,7 @@ msgid ""
 msgstr ""
 "Progetto -- Ingresso\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -10464,7 +10782,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:178
-#, fuzzy
 msgid ""
 "Blueprints -- Missile Battery\n"
 "\n"
@@ -10552,7 +10869,7 @@ msgid ""
 msgstr ""
 "Progetto -- Batteria Missilistica SAM\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -10647,7 +10964,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:222
-#, fuzzy
 msgid ""
 "Blueprints -- Large Hangar\n"
 "\n"
@@ -10726,7 +11042,7 @@ msgid ""
 msgstr ""
 "Progetto -- Hangar Grande\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -10809,7 +11125,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:264
-#, fuzzy
 msgid ""
 "Blueprints -- Hospital\n"
 "\n"
@@ -10890,8 +11205,8 @@ msgid ""
 msgstr ""
 "Progetto -- Ospedale\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Costruzioni Precis, Salvacondotto: Sigma -- Riservato: Solo Visione del "
@@ -10899,8 +11214,8 @@ msgstr ""
 "\n"
 "Data: 19 marzo 2084\n"
 "\n"
-"Da: Capo Chirurgo Helen Floydd, Divisione Medica, PHALANX, Comando Operativo "
-"dell'Atlantico\n"
+"Da: Capo Chirurgo Helen Floydd, Divisione Medica, PHALANX, Comando "
+"Operazioni Atlantiche \n"
 "\n"
 "\n"
 "\n"
@@ -10967,7 +11282,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:308
-#, fuzzy
 msgid ""
 "Blueprints -- Small Hangar\n"
 "\n"
@@ -11045,7 +11359,7 @@ msgid ""
 msgstr ""
 "Progetto -- Hangar Piccolo\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -11130,7 +11444,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:352
-#, fuzzy
 msgid ""
 "Blueprints -- Laboratory\n"
 "\n"
@@ -11212,8 +11525,8 @@ msgid ""
 msgstr ""
 "Progetto -- Laboratorio di Ricerca e Sviluppo\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Costruzioni Precis, Salvacondotto: Sigma -- Riservato: Solo Visione del "
@@ -11222,7 +11535,7 @@ msgstr ""
 "Data: 02 Ottobre 2021\n"
 "\n"
 "Da: Dr. Richard Strohm, R&S: Divisione Bio & Contenimento, PHALANX, Comando "
-"Operativo dell'Atlantico\n"
+"Operazioni Atlantiche \n"
 "\n"
 "\n"
 "\n"
@@ -11293,7 +11606,6 @@ msgstr ""
 "aggiornamenti dell'equipaggiamento."
 
 #: ../base/ufos/msgid/buildings.ufo:392
-#, fuzzy
 msgid ""
 "Blueprints -- Power Plant\n"
 "\n"
@@ -11378,8 +11690,8 @@ msgid ""
 msgstr ""
 "Progetto -- Generatore\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Costruzioni Precis, Salvacondotto: Sigma -- Riservato: Solo Visione del "
@@ -11464,7 +11776,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:432
-#, fuzzy
 msgid ""
 "Blueprints -- Living Quarters\n"
 "\n"
@@ -11533,7 +11844,7 @@ msgid ""
 msgstr ""
 "Progetto -- Aree Residenziali\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -11596,7 +11907,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:478
-#, fuzzy
 msgid ""
 "Blueprints -- Radar\n"
 "\n"
@@ -11682,7 +11992,7 @@ msgid ""
 msgstr ""
 "Progetto -- Radar\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -11805,7 +12115,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:530
-#, fuzzy
 msgid ""
 "Blueprints -- Storage\n"
 "\n"
@@ -11880,7 +12189,7 @@ msgid ""
 msgstr ""
 "Progetto -- Magazzino\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -11948,7 +12257,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/buildings.ufo:568
-#, fuzzy
 msgid ""
 "Blueprints -- Workshop\n"
 "\n"
@@ -12016,7 +12324,7 @@ msgid ""
 msgstr ""
 "Progetto -- Officine\n"
 "\n"
-"RISERVATO: LIVELLO NERO\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -12352,8 +12660,8 @@ msgid ""
 "This campaign lets you play the game from the other side - play the aliens "
 "and invade the earth. "
 msgstr ""
-"Questa campagna è attualmente disponibile solo per prova. Edifici e roba del "
-"genere è tutto umanoide. Si avrà solo soldati alieni per missioni atm."
+"Questa campagna che permette di giocare con l'altro schieramento, guida  gli "
+"alieni e invadi la Terra."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:2
 msgid ""
@@ -12363,6 +12671,12 @@ msgid ""
 "most of Earth's people, the Second Cold War is a dark shadow from the past, "
 "much like the World Wars were to the children of the late 20th."
 msgstr ""
+"É l'anno 2084. La Terra, da sempre un luogo tra i meno stabili, gode un "
+"periodo di pace relativa. Il violento inizio del 21º secolo è ormai lontano; "
+"i lontani ricordi, non sono così lontani da essere stati dimenticati. Per la "
+"maggior parte della popolazione terrestre la Seconda Guerra Fredda è "
+"un'ombra oscura del passato, come lo sono state le guerre mondiali per i "
+"bambini del tardo 20º secolo."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:6
 msgid ""
@@ -12382,10 +12696,26 @@ msgid ""
 "they could safely fight. For the first time in the history of mankind, there "
 "is law and order across more than three quarters of the world."
 msgstr ""
+"I conflitti sono divenati meno frequenti alla fine del secolo, da quando le "
+"nuove tecnologie e la sanità globale si sono diffuse nel terzo mondo.  Anche "
+"i fuochi del terrorismo si sono placati con l'arrivo della Seconda guerra "
+"fredda, con i suoi orrori e disumanità ancora vivi nei cuori della gente, "
+"dai vecchi Stati Uniti al distrutto subcontinente indiano. Le classi sociali "
+"lottano per l'ascesa nella battaglia politica ora che ogni nazione è "
+"rappresentata all'ONU, e lo standard di qualità globale della vita è in "
+"leggero miglioramento negli angoli più poveri del pianeta. Gli stati si sono "
+"rafforzati e consolidati attraverso la stabilità di una riformata ONU e le "
+"positive politiche di governo. Frammentati gruppi di piccole nazioni, "
+"spaventati dagli ampi blocchi di potere che si sono accumulati intorno alla "
+"Cina e all'Unione Europea, si sono legati in potenti organizzazioni "
+"politiche, in assenza di realtà vicine da combattere in modo sicuro. Per la "
+"prima volta nella storia del genere umano c'è una legge e un ordine "
+"rispettato in più di tre quarti del territorio mondiale. "
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
 msgstr ""
+"Per molti cittadini della terra l'impressione è che le cose vadano bene."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12400,6 +12730,16 @@ msgid ""
 "their craft and vanish back into orbit, leaving only the ravaged streets of "
 "Mumbai as evidence."
 msgstr ""
+"Il primo attacco colpisce la città di Mumbai il 3 marzo 2084. Sei piccoli "
+"Ufo appaiono dal nulla giungendo dall'orbita tra le urla, senza essere "
+"rilevati dalle imponenti installazioni radar che coprono i cieli di Mumbai, "
+"atterrano nella città più densamente popolata della Terra. Non comunicano "
+"avvertimenti né forniscono spiegazioni. Ventimila civili innocenti e tre "
+"battaglioni di forze di elite vengono massacrate nel corso di 20 ore feroci "
+"prima che l'intero esercito del Commonwealth riesca a fermare l'avanzata "
+"degli alieni.  Quindi, così come erano giunti, in modo improvviso, si sono "
+"ritirati nei loro veicoli e sono svaniti nell'orbita, lasciando come prova "
+"solo le strade distrutte della città di Mumbai."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:18
 msgid ""
@@ -12413,6 +12753,16 @@ msgid ""
 "but concrete and blood. All the UFOs disappear without a trace -- but no one "
 "doubts they'll be back."
 msgstr ""
+"Una riunione di emergenza dell'Onu non ha prodotto una decisione conclusiva. "
+"Le incursioni continuano più veloci, più vaste e più violente di prima, ora "
+"a Bonn, Johannesburg e Bangkok. Alcune nazioni cercano la strada "
+"diplomatica, inviando messaggi in migliaia di lingue diverse agli alieni che "
+"stanno distruggendo le campagne. Le loro parole sono inascoltate. In poche "
+"ore, tutte e tre le città rimangono senza vita. L'attacco è terminato nel "
+"momento in cui le forze militari hanno ricevuto il permesso di "
+"contrattaccare. Gli alieni lasciano il nulla dietro di loro se non sangue e "
+"macerie. Tutti gli ufo scompaiono senza lasciare tracce, ma non ci sono "
+"dubbi che torneranno. "
 
 #: ../base/ufos/msgid/campaigntexts.ufo:22
 msgid ""
@@ -12421,6 +12771,10 @@ msgid ""
 "alien attackers to the best of their ability. They score precious few "
 "successes."
 msgstr ""
+"87 ore dopo il primo attacco su Mumbai, la Terra scende in guerra. Per due "
+"settimane, gli eserciti umani cercano di respingere i misteriosi attacchi "
+"alieni al meglio delle proprie possibilità. Riescono ad ottenere pochi "
+"preziosi successi."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:26
 msgid ""
@@ -12430,6 +12784,12 @@ msgid ""
 "resurrected under a new UN banner. Its sworn duty is to combat the alien "
 "threat, and to ensure the survival of the human race at all costs."
 msgstr ""
+"Avendo solo un'alternativa, l'ONU passa all'azione. I vecchi equipaggiamenti "
+"vengono rispolverati, alcuni di essi hanno un centinaio di anni, insieme "
+"alla defunta agenzia antiextraterrestre dei vecchi Stati uniti, Phalanx, "
+"rinasce sotto lo stemma dell'Onu. Il suo compito giurato è quello di "
+"combattere la minaccia aliena e assicurare la sopravvivenza della razza "
+"umana a tutti i costi."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:30
 msgid ""
@@ -12438,6 +12798,10 @@ msgid ""
 "first and only line of defence. It can't afford to fail; because if it does, "
 "humanity doesn't stand a chance."
 msgstr ""
+"Fondata da tutti gli otto poteri politici, reclutando i propri soldati "
+"dall'elite dei propri eserciti, Phalanx è il meglio del meglio. È la "
+"migliore e unica linea di difesa terrestre. Non può permettersi di fallire; "
+"perché se lo fa, l'umanità non ha alcuna possibilità di sopravvivenza."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:45
 #, fuzzy
@@ -12498,6 +12862,23 @@ msgid ""
 "it may be stored at a different base or you may need to research another "
 "project before it can be adequately studied."
 msgstr ""
+"Phalanx dovrà condurre un ampio programma di ricerca per combattere la "
+"superiore tecnologia aliena. I nostri scienziati studieranno ogni reperto "
+"recuperato da missioni di combattimento di successo e fornire nuove proposte "
+"di ricerca attraverso il client di posta elettronica.\n"
+"\n"
+"Per sviluppare il programma di ricerca, costruisci nuove strutture di "
+"laboratorio, impiega più scienziati einvitali a lavorare su specifici "
+"programmi di ricerca. Con un po' di fortuna saremo in grado di migliorare "
+"ciò che abbiamo appreso per impiegarlo in battaglia e forse un giorno "
+"sconfiggeremo il nemico.\n"
+"\n"
+"Appendice\n"
+"\n"
+"I reperti devono essere conservati nella stessa base in cui si eseguono le "
+"ricerche. Se un progetto non può essere eseguito in una base  specifica, "
+"potrebbero essere conservati in una parte diversa o potresti dover avviare "
+"un progetto diverso prima che possa essere adeguatamente studiato. "
 
 #: ../base/ufos/msgid/concepts.ufo:15
 msgid ""
@@ -12509,6 +12890,14 @@ msgid ""
 "pace of production we'll need to build additional workshops, hire more "
 "engineers and set them to work on something."
 msgstr ""
+"Potremmo essere in grado di elaborare la tecnologia aliena per l'uso "
+"militare, ma Phalanx avrà bisogno di produrre la propria tecnologia avanzata "
+"Terran e i propri aerei\n"
+"\n"
+"La nostra base iniziale dispone di uno spazio per l'officina con alcuni "
+"ingegneri, ma per migliorare il passo della produzione avremo bisogno di "
+"costruire nuove officine, impiegare più ingegneri e metterli  al lavoro su "
+"qualcosa."
 
 #: ../base/ufos/msgid/concepts.ufo:29
 msgid ""
@@ -12533,6 +12922,29 @@ msgid ""
 "doesn't reach and the funding nations will be angry when PHALANX fails to "
 "respond to these attacks."
 msgstr ""
+"Non possiamo aspettare che gli alieni bussino alla porta. Dobbiamo "
+"individuare la nave aliena e abbatterla appena ne abbiamo la possibilità. La "
+"base iniziale di Phalanx comprende una potente struttura radar, ma abbiamo "
+"bisogno di costruire torri radar lontane dal sito per coprire maggiori aree "
+"del cielo.\n"
+"\n"
+"Una volta che un ufo è stato identificato, dobbiamo comunicarlo ai nostri "
+"più vicini intercettori per cercare di abbatterlo. La nostra potenza di "
+"fuoco in volo è molto inferiore, quindi dovremmo inviare numerosi di laddove "
+"possibile.\n"
+"\n"
+"Appendice\n"
+"\n"
+"Le torri radar distaccate hanno un ridotto raggio di rilevamento rispetto "
+"alle installazioni nelle basi.\n"
+"\n"
+"I modelli di ufo sconosciuti dovranno essere avvicinati con cautela fintanto "
+"che i nostri scienziati e ingegneri non saranno in grado di stabilire le "
+"loro capacità di combattimento.\n"
+" \n"
+"Spesso l'attività aliena non verrà rilevata in aree dove non c'è la "
+"copertura radar e le nazioni fondanti dimostreranno il loro disappunto "
+"quando Phalanx non risponderà a tali attacchi. "
 
 #: ../base/ufos/msgid/concepts.ufo:39
 msgid ""
@@ -12550,6 +12962,21 @@ msgid ""
 "materials, they'll need the complete technical readout from the research "
 "teams."
 msgstr ""
+"Smontare un ufo catturato sarà vitale nella battaglia per scoprire i segreti "
+"della tecnologia aliena. Phalanx necessiterà di un piazzale per ufo, una "
+"struttura esterna alla base per ospitare i veicoli recuperati, il più presto "
+"possibile.\n"
+"\n"
+"I nostri ingegneri avranno bisogno di viaggiare verso il sito di stoccaggio "
+"e trasportare con sé i componenti per la loro officina, quindi i piazzali "
+"degli ufo dovranno essere costruiti vicino alla base dove si eseguirà il "
+"lavoro.\n"
+"\n"
+"Appendice\n"
+"\n"
+"Prima che i nostri ingegneri possano smontare un ufo in modo da poter "
+"ricavare materiali utilizzabili, avranno bisogno di completare la lettura "
+"tecnica dei team di ricerca."
 
 #: ../base/ufos/msgid/concepts.ufo:45
 msgid ""
@@ -12563,6 +12990,15 @@ msgid ""
 "organisation can cover as much of the globe as possible and confront alien "
 "attacks all around the world."
 msgstr ""
+"Phalanx è un organizzazione dell'Onu autorizzata e fondata dal supporto "
+"unanime degli Stati membri. Se trascuriamo la difesa e la sicurezza di uno "
+"dei nostri sostenitori, presto perderanno fiducia nelle nostre capacità e "
+"ritireranno i loro finanziamenti. Se il rapporto si deteriora per lungo "
+"tempo potrebbero decidere la chiusura delle operazioni.\n"
+"\n"
+"Per mantenere alta la soddisfazione relativa all'attività di Phalanx, "
+"assicurati che l'organizzazione possa coprire la maggior parte del globo e "
+"confrontarsi con gli alieni in ogni sua area."
 
 #: ../base/ufos/msgid/concepts.ufo:55
 msgid ""
@@ -12580,6 +13016,22 @@ msgid ""
 "TUs are refreshed each turn, but if an enemy flashbang goes off in front of "
 "a soldier they will lose all of their TUs for the next turn."
 msgstr ""
+"Un soldato può fare questo in un singolo turno. Ogni soldato ha un numero "
+"limitato di Unità di tempo da utilizzare in ogni turno per spostarsi, "
+"accovacciarsi, guardarsi intorno e fare fuoco. Si muove velocemente quando è "
+"in piedi e impiega più Unità di tempo camminando in una posizione "
+"accovacciata.\n"
+"\n"
+"Controlla attentamente le unità di tempo del soldato, ad esempio i colpi "
+"mirati e il fuoco automatico richiedono più unità di tempo rispetto ad altre "
+"azioni. Essere a corto di tempo nel posto sbagliato può essere un errore "
+"mortale.\n"
+"\n"
+"Appendice\n"
+"\n"
+"Le Unità di tempo sono aggiornate ogni turno, ma se  una granata stordente "
+"finisce di fronte a un soldato, andranno perse tutte le Unità di tempo per "
+"il turno successivo."
 
 #: ../base/ufos/msgid/concepts.ufo:69
 msgid ""
@@ -12609,6 +13061,34 @@ msgid ""
 "reaction fire counter will be reset. A unit must spend enough TUs "
 "consecutively in view of a unit to receive reaction fire."
 msgstr ""
+"Lei unità possono sparare i nemici quando si trovano nello spazio visivo "
+"durante il turno avversario. I soldati reagiranno con le armi quando "
+"un'unità nemica impiega più unità di tempo nel proprio campo visivo rispetto "
+"al costo del fuoco di reazione.\n"
+"\n"
+"Ciò significa che un'unità impostata per eseguire un fuoco di reazione che "
+"costa otto unità di tempo effettuerà il colpo dopo che il nemico abbia "
+"trascorso nove o più unità di tempo all'interno del suo spazio visivo. "
+"Presta attenzione, gli alieni possono reagire al fuoco allo stesso modo dei "
+"soldati del Phalanx.\n"
+"\n"
+"I soldati che dispongono di armi che impiegano poche unità di tempo "
+"eseguiranno più colpi di reazione, ricevendo minori risposte al fuoco del "
+"nemico, rispetto a soldati che dispongono di armi che richiedono maggiori "
+"unità di tempo.\n"
+"\n"
+"Appendice\n"
+"Un soldato non eseguirà il fuoco di reazione finché questo non è abilitato "
+"nel pannello di controllo del soldato. Quando esso è abilitato, un soldato "
+"non sarà in grado di impiegare le unità di tempo richieste per sparare una "
+"volta durante il turno avversario. I comandanti possono scegliere la "
+"modalità di fuoco che il soldato dovrà usare per il fuoco di reazione nella "
+"finestra di selezione della la modalità di fuoco.\n"
+"\n"
+"Se un'unità nemica si aggira fuori dal campo visivo di un'unità, anche solo "
+"per un momento, il contatore del fuoco di reazione sarà azzerato. Un'unità "
+"deve impiegare abbastanza unità di tempo consecutivamente nello spazio "
+"visivo di un'unità per ricevere il fuoco di reazione."
 
 #: ../base/ufos/msgid/concepts.ufo:77
 msgid ""
@@ -12624,6 +13104,17 @@ msgid ""
 "may not be able to use all of his fire modes. If he is carrying less than 20 "
 "per cent of his maximum capacity, he'll gain extra TUs."
 msgstr ""
+"I soldati devono essere in grado di combattere velocemente ed efficacemente. "
+"Se li carichi di un equipaggiamento abbondante risulteranno lenti, riducendo "
+"il numero delle unità di tempo che devono usare in ogni turno. I soldati "
+"beneficeranno di una velocità maggiore se sono equipaggiati in modo leggero\n"
+"\n"
+"Appendice\n"
+"Controlla  con cura  il carico del soldato nella schermata relativa "
+"all'equipaggiamento. Se trasporta più del 50% della sua capacità massima, "
+"perderà unità di tempo e potrebbe non essere in grado di usare tutte le "
+"modalità di fuoco. Se trasporta meno del 20% della sua massima capacità, "
+"guadagnerà unità di tempo extra."
 
 #: ../base/ufos/msgid/concepts.ufo:85
 msgid ""
@@ -12641,6 +13132,21 @@ msgid ""
 "to recover once they've returned to the base. Build a hospital facility to "
 "greatly increase their recovery times."
 msgstr ""
+"I nostri soldati possono essere feriti se colpiti dal fuoco nemico. Queste "
+"ferite possono influenzare la loro capacità di mira, la velocità di fuoco e "
+"di movimento. Gli infortuni abbassano il livello di salute del soldato in "
+"ogni turno e possono portare alla morte se non sono curati con un kit "
+"medico. Una squadra Phalanx dovrebbe portare con sé una grande quantità di "
+"kit medici per provvedere alla cura delle vittime di guerra.\n"
+"\n"
+"Appendice\n"
+"\n"
+"Le ferite possono essere controllate nella finestra relativa alle "
+"statistiche dei personaggi. Un kit medico può guarire le ferite ed evitare "
+"la morte del soldato sul campo di battaglia ma farà recuperare solo un "
+"livello minimo di salute. Una volta ritornati alla base, i soldati avranno "
+"bisogno di tempo per recuperare. Costruisci una struttura ospedaliera per "
+"aumentare di molto i tempi di recupero."
 
 #: ../base/ufos/msgid/concepts.ufo:103
 msgid ""
@@ -12677,6 +13183,34 @@ msgid ""
 "Incendiary fields cause a small amount of damage to units which pass through "
 "them."
 msgstr ""
+"Gli  alieni impiegano potenti armamenti per avere un effetto devastante sul "
+"campo di battaglia. Se li ingaggi in uno scontro a fuoco in spazio aperto, "
+"sicuramente saremo uccisi velocemente, quindi i soldati Phalanx devono "
+"essere esperti nell'usare l'equipaggiamento ausiliare per superare le forze "
+"extraterrestri su un campo di battaglia.\n"
+"\n"
+"Se un soldato si trova faccia a faccia con gli alieni non è in grado di "
+"abbatterlo senza subire un fuoco di azione mortale, il fuoco indiretto come "
+"le granate, lanciate a mano o con lanciagranate, dovrebbe essere impiegato "
+"per stanare il nemico da una posizione sicura.\n"
+"\n"
+"Avremo sempre bisogno di armi convenzionali in battaglia, ma gli armamenti "
+"ausiliari impiegati per la difesa avranno un'importanza chiave per superare "
+"il dominio tecnologico alieno sul campo.\n"
+"\n"
+"Appendice\n"
+"\n"
+"Le barriere di fumo limiteranno il raggio visivo sul campo di battaglia.\n"
+"\n"
+"Le granate stordenti azzereranno le unità di tempo quando impiegate "
+"efficacemente. Un'unità che è stata già colpita da una granata stordente "
+"perderà ogni unità di tempo in possesso al momento dell'esplosione e non "
+"riceverà altre unità di tempo nel turno successivo. Le granate stordenti "
+"sono efficaci solo quando esplodono in prossimità dell'obbiettivo e "
+"all'interno del suo campo visivo.\n"
+"\n"
+"I campi incendiari causano una piccola quantità di danno alle unità che vi "
+"passano attraverso."
 
 #: ../base/ufos/msgid/installations.ufo:34
 msgid ""
@@ -12725,6 +13259,49 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"Progetto-- Torre radar\n"
+"\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
+"\v\n"
+"Unità d'intervento extraterrestre Phalanx\n"
+"\n"
+"Sommario costruzione, Autorizzazione Sigma-- Solo Visione del Comandante\n"
+"Archiviato il 18 marzo 2084\n"
+"\n"
+"\n"
+"\n"
+"Informazioni generali\n"
+"Oltre ai progetti delle strutture radar della base che ho presentato oggi, "
+"vorrei mostrare questi progetti per un'installazione distaccata più piccola. "
+"Le nostre strutture all'interno della base non saranno mai in grado di "
+"coprire l'intero globo, quindi avremo bisogno di costruire alcune torri "
+"radar per servire le aree non coperte.\n"
+" \n"
+"I progetti forniscono dettagli sulla costruzione di una struttura minore. "
+"Questo siginifica che ogni torre coprirà solo un raggio minimo, ma possono "
+"essere erette velocemente e con costi ridotti per accrescere rapidamente le "
+"nostre capacità operative.\n"
+"\n"
+"\n"
+"Dottrina consigliata\n"
+"\n"
+"La torre radar ha un raggio limitato rispetto alle strutture che abbiamo "
+"progettato all'interno delle basi Phalanx, quindi avranno bisogno di essere "
+"costruite velocemente e in numero elevato per espandere la nostra copertura "
+"radar a livello mondiale.\n"
+"\n"
+"Dovremo impegnarci nel coprire quanto più possibile lo spazio terrestre, ma "
+"rilevare gli ufo non ha senso se non possiamo abbatterli. Dovremmo "
+"concentrare le costruzioni prevalentemente su aree comprese nel raggio dei "
+"nostri intercettori.\n"
+"La mimetizzazione delle torri non è molto efficace. I veicoli alieni possono "
+"identificare la scansione attiva e tentare di distruggere la torre una volta "
+"identificata.\n"
+"\n"
+"\n"
+"Appendice\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/msgid/installations.ufo:68
 msgid ""
@@ -12771,6 +13348,48 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"Progetti-- Piazzale Ufo\n"
+"\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
+"\n"
+"Corpo Contromisure Extraterrestri Phalanx\n"
+"\n"
+"\vSommario costruzione, Autorizzazione Sigma-- Solo Visione del Comandante\n"
+"\v\n"
+"Archiviato il 17 marzo 2084\n"
+"\n"
+"Da: Com. Navarre, R&D: Divisione Ingegneria, Phalanx, Comando Operazioni "
+"Atlantiche \n"
+"\n"
+"\n"
+"\n"
+"Informazioni generali\n"
+"\n"
+"Se intendiamo sopravvivere a questa guerra, non avremo solo bisogno di "
+"individuare e abbattere gli Ufo. Dovremo recuperare i loro mezzi e avviare "
+"programmi di ricerca sulla tecnologia aliena da impiegare nei nostri aerei.\n"
+"\n"
+"Per fare questo, avremo bisogno di un magazzino dedicato, uno che sia troppo "
+"ampio da ospitare nelle nostre basi. La prego di valutare i progetti "
+"allegati, i quali descrivono i piani relativi al modo in cui conservare in "
+"sicurezza e camuffare ogni mezzo alieno che riusciamo a recuperare. Saremo "
+"in grado di trasportare i mezzi recuperati presso queste strutture per "
+"condurre le necessarie ricerche.\n"
+"\n"
+"\n"
+"Dottrina consigliata\n"
+"Gli ufo conservati in un piazzale ufo possono essere studiati e smontati da "
+"qualsiasi base Phalanx con strutture appropriate, ma queste attività "
+"procedono più lentamente all'aumentare della distanza dei piazzali ufo dalle "
+"nostre basi. I piazzali ufo dovrebbero essere costruiti in prossimità delle "
+"basi che richiederanno l'accesso.\n"
+"\n"
+"Gli ufo possono essere trasferiti tra i vari piazzali.\n"
+"\n"
+"\n"
+"Appendice\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/msgid/installations.ufo:100
 msgid ""
@@ -12812,6 +13431,45 @@ msgid ""
 "\n"
 "None."
 msgstr ""
+"Progetti -- Sito SAM\n"
+"\n"
+"LIVELLO DI CLASSIFICAZIONE NERO\n"
+"\n"
+"Corpo contromisure extraterrestri Phalanx\n"
+"\n"
+"Sommario costruzione, Autorizzazione Sigma -- Solo Visione del Comandante\n"
+"\v\n"
+"Archiviato il 18 Marzo 2084\n"
+"\n"
+"Da: Com. Paul Navarre, R&D: Divisione Ingegneria, Phalanx, Comando "
+"Operazioni Atlantiche\n"
+"\n"
+"  \v\n"
+"\n"
+"Quadro generale\n"
+"\n"
+"Spero che abbia avuto la possibilità di leggere i progetti presentati oggi "
+"per una struttura di difesa missilistica terra aria che possiamo costruire "
+"nelle basi Phalanx. Abbiamo adattato alla svelta quei progetti per "
+"progettare un'installazione distaccata che può operare autonomamente sulla "
+"propria rete.\n"
+"\n"
+"Questa struttura può fornire ulteriori stazioni missilistiche difensive "
+"intorno a punti strategici. Sebbene rimangano vulnerabili al rilevamento e "
+"al fuoco dei veicoli alieni, forniscono una sicurezza addizionale per il "
+"fatto che tali stazioni missilistiche non renderanno nota la posizione delle "
+"nostre basi.\n"
+"\n"
+"\n"
+"Dottrina consigliata\n"
+"\v\n"
+"\vUna volta costrutia sarà necessario equipaggiare la stazione SAM con "
+"batterie di missili prima affinché possa ingaggiare gli obbiettivi alieni.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Nessuna.\v"
 
 #: ../base/ufos/msgid/irc.ufo:20
 msgid ""
@@ -12840,6 +13498,32 @@ msgid ""
 "For help with setting up multiplayer games, see http://ufoai.org/wiki/index."
 "php/Multiplayer"
 msgstr ""
+"Benvenuto in UFO: sala d'attesa multigiocatore di Alien Invasion.\n"
+"Se stai cercando degli utenti, assicurati di essere connesso.\n"
+"NON tutti quelli che vedi nell'elenco sono giocatori!\n"
+"Cerca gli utenti che si presentano con il client del gioco.\n"
+"\n"
+"VIETATO:\n"
+"- Messaggi indesiderati\n"
+"-  Linguaggio offensivo.\n"
+"- Usare una lingua diversa dall'inglese.\n"
+"- Esprimere impazienza. Per qualcuno potrebbero essere necessari alcuni "
+"minuti per rispondere.\n"
+"\n"
+"Puoi chiudere questa finestra e ritornare ad essa premendo in ogni momento "
+"F10, anche durante una missione in modalità giocatore singolo.\n"
+"Puoi anche inviare messaggi a giocatori direttamente nel gioco quando "
+"aggiungi il nome del giocatore all'inizio del messaggio.\n"
+"Se un giocatore ti invia un messaggio, esso apparirà in una finestra "
+"sovrapposta.\n"
+"\n"
+"Se vuoi ospitare una partita, assicurati che la porta TCP 27910 sia aperta "
+"nel tuo firewall.\n"
+"Se vuoi unirti al canale con il client IRC, connettiti a irc.freenode.net "
+"and entra in #ufoai\n"
+"\n"
+"Per assistenza sulla configurazione della modalità multigiocatore, vai su "
+"http://ufoai.org/wiki/index.php/Multiplayer"
 
 #: ../base/ufos/msgid/mails.ufo:2
 msgid "SecGen. Mahouf Serra, United Nations, New York City"
@@ -12847,10 +13531,9 @@ msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 
 #: ../base/ufos/msgid/mails.ufo:6
 msgid "Base Commander, PHALANX, Atlantic Operations Command"
-msgstr "Comandante in Capo, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr "Comandante in Capo, PHALANX, Comando Operazioni Atlantiche "
 
 #: ../base/ufos/msgid/mails.ufo:20
-#, fuzzy
 msgid ""
 "Welcome to your new post, Commander. You now have full command over the "
 "PHALANX Extraterrestrial Response Unit. Your mission is to protect the "
@@ -12881,7 +13564,7 @@ msgstr ""
 "Corpo Contromisure Extraterrestri PHALANX. La vostra missione è di "
 "proteggere i cittadini della Terra e fermare la minaccia aliena a qualunque "
 "costo. Come raggiungere questo obiettivo sta a voi; Il nostro unico "
-"requisito è che riusciate.\n"
+"requisito è che abbiate successo.\n"
 "\n"
 "Il vostro primo ordine del giorno è quello di istituire un quartier "
 "generale. L'ONU ha accesso a basi militari in tutto il mondo, quindi potete "
@@ -12943,6 +13626,26 @@ msgid ""
 "\n"
 "Sincerely, Dr. Connor"
 msgstr ""
+"Comandante,\n"
+"\n"
+"Mi dispiace doverle comunicare alcune cattive notizie. Nonostante gli sforzi "
+"profusi, i campioni alieni recuperati dalla nostra ultima missione tattica "
+"sono morti in isolamento. Non siamo stati in grado fino all'ultimo di "
+"stabilire la loro condizione medica per ricavarne qualche informazione "
+"utile.\n"
+"\n"
+"I segnali esteriori indicano che la causa della morte è stata un'improvvisa "
+"e fatale asfissia. Sembra che gli alieni possano vivere nella nostra "
+"atmosfera per un periodo limitato prima del soffocamento. Non abbiamo "
+"eseguito un esame completo sul corpo, senza la sua autorizzazione, ma le "
+"raccomando vivamente di procedere a questo punto con l'autopsia. Dobbiamo "
+"ricercare un modo per mantenerli in vita più a lungo, altrimenti non saremo "
+"in gradio di condurre alcuna ricerca significativa su di loro.\n"
+"\n"
+"La mia richiesta di autopsia dovrebbe attendere nella lista R&D per la sua "
+"approvazione. Grazie, Comandante.\n"
+"\n"
+"\vDistinti saluti, Dott. Connor"
 
 #: ../base/ufos/msgid/mails.ufo:44
 msgid ""
@@ -12957,18 +13660,22 @@ msgid ""
 "installation on Earth. This installation represents a serious threat to "
 "PHALANX and to humanity at large, we must take it out ASAP."
 msgstr ""
+"Signore, i nostri uomini hanno scoperto la posizione di una grande "
+"installazione aliena sulla Terra. Questa installazione rappresenta una seria "
+"minaccia per Phalanx e per l'intera umanità, dobbiamo prenderla al più "
+"presto."
 
 #: ../base/ufos/msgid/mails.ufo:56
 msgid ""
 "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations "
 "Command"
 msgstr ""
-"Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle "
-"Operazioni Atlantiche"
+"Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando Operazioni "
+"Atlantiche "
 
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
-msgstr ""
+msgstr "Buona fortuna comandante. Riporti i nostri soldati sani e salvi."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
 #, fuzzy
@@ -12980,10 +13687,14 @@ msgid ""
 "The aliens have barricaded themselves inside this fuel dump. Find a bomb "
 "nearby to destroy the gate and gain entry."
 msgstr ""
+"Gli alieni sono barricati all'interno di questo deposito di carburante. "
+"Trova una bomba nelle vicinanze per distruggere l'ingresso ed entrare."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:11
 msgid "Kill all the aliens or hold the point in the fuel depot for some time."
 msgstr ""
+"Uccidi tutti gli alieni e mantieni per un po' di tempo la posizione nel "
+"deposito di carburante."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:14
 msgid ""
@@ -12992,6 +13703,11 @@ msgid ""
 "you'll need to clear out the alien presence so that our analysts can "
 "investigate the technology on-site."
 msgstr ""
+"Abbiamo individuato un punto di ingresso nella base aliena, sembra essere "
+"una struttura ampia costruita sotto terra. Una volta che gli uomini si "
+"saranno introdotti nel condotto di aerazione sarà necessario annientare la "
+"presenza aliena in modo che i nostri analisti possano investigare la "
+"tecnologia presente sul posto."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:17
 #, fuzzy
@@ -13000,7 +13716,7 @@ msgstr "Uccidi tutti gli alieni in questa base"
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
 msgid "The dropship has arrived at the crash site."
-msgstr ""
+msgstr "La nave da sbarco è giunta sul sito di caduta."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:23
 msgid ""
@@ -13009,6 +13725,11 @@ msgid ""
 "the base will help you track their locations as long as a soldier remains "
 "inside the camera room of the Command Centre."
 msgstr ""
+"Gli alieni hanno penetrato le difese della tua base e sono all'interno del "
+"comlpesso.  Raduna i soldati sul posto per eliminare la minaccia. Le "
+"telecamere di sicurezza presenti intorno alla base ti aiuteranno a "
+"monitorare la loro posizione finché un soldato rimarrà nella stanza del "
+"Centro di comando."
 
 #: ../base/ufos/msgid/news.ufo:16
 #, fuzzy
@@ -14247,6 +14968,9 @@ msgid ""
 "Determines a soldier's accuracy with any weapon. Soldiers will increase "
 "their accuracy when they use weapons effectively in battle."
 msgstr ""
+"Determina la precisione di un soldato con qualsiasi arma. I soldati "
+"miglioreranno la loro precisione quando useranno efficacemente le armi in "
+"combattimento."
 
 #: ../base/ufos/msgid/skills.ufo:5
 msgid ""
@@ -14254,6 +14978,9 @@ msgid ""
 "their assault proficiency when they use assault weapons effectively in "
 "battle."
 msgstr ""
+"Determina la precisione del soldato con le armi di assalto. I soldati "
+"aumenteranno la loro capacità di assalto quando useranno efficacemente le "
+"armi di assalto in combattimento."
 
 #: ../base/ufos/msgid/skills.ufo:8
 msgid ""
@@ -14261,6 +14988,9 @@ msgid ""
 "increase their close proficiency when they use close-quarters weapons "
 "effectively in battle."
 msgstr ""
+"Determina la precisione del soldato con armi da fuoco ravvicinato. I soldati "
+"miglioreranno la propria capacità in spazi ristretti quando useranno "
+"efficacemente armi da fuoco ravvicinato in combattimento."
 
 #: ../base/ufos/msgid/skills.ufo:11
 msgid ""
@@ -14268,6 +14998,9 @@ msgid ""
 "increase their explosive proficiency when they use explosive weapons "
 "effectively in battle."
 msgstr ""
+"Determina la precisione di un soldato con armi esplosive. I soldati "
+"miglioreranno a loro efficacia con gli esplosivi quando useranno "
+"efficacemente in combattimento le armi esplosive."
 
 #: ../base/ufos/msgid/skills.ufo:14
 msgid ""
@@ -14275,6 +15008,9 @@ msgid ""
 "increase their mental strength when they engage in effective combat "
 "operations."
 msgstr ""
+"Determina la resistenza e le prestazioni mentali del soldato. I soldati "
+"miglioreranno la propria forza mentale quando saranno coinvolti attivamente "
+"in operazioni di combattimento."
 
 #: ../base/ufos/msgid/skills.ufo:17
 msgid ""
@@ -14282,12 +15018,18 @@ msgid ""
 "battlefield. Soldiers will increase their strength on the battlefield and "
 "will do so more quickly if they carry more weight in battle."
 msgstr ""
+"Determina il peso trasportabile da un soldato prima che possa appesantirlo "
+"in battaglia. I soldati miglioreranno la loro forza nel combattimento e lo "
+"faranno più rapidamente se trasportano pesi maggiori in combattimento."
 
 #: ../base/ufos/msgid/skills.ufo:20
 msgid ""
 "Determines a soldier's accuracy with sniper weapons. Soldiers will increase "
 "their sniper proficiency when they use sniper weapons effectively in battle."
 msgstr ""
+"Determina la precisione del soldato con armi da cecchino. I soldati "
+"miglioreranno la loro efficacia come cecchino quando useranno efficacemente "
+"in combattimento le armi da cecchino."
 
 #: ../base/ufos/msgid/skills.ufo:23
 msgid ""
@@ -14295,6 +15037,9 @@ msgid ""
 "increase their speed engaging in standard fire and movement procedures on "
 "the battlefield."
 msgstr ""
+"Determina la quantità di unità di tempo che un soldato possiede in ogni "
+"turno. I soldati miglioreranno la loro velocità di ingaggio nel fuoco "
+"ordinario e nelle tattiche di spostamento sul campo di battaglia."
 
 #: ../base/ufos/msgid/story.ufo:16
 #, fuzzy
@@ -16196,6 +16941,31 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"Comandante,\n"
+"\n"
+"La mia squadra ed io siamo profondamente turbati dalle recenti relazioni sul "
+"supporto degli umani nei confronti degli alieni, e sono sicuro che lo sia "
+"anche lei. La situazione continua a peggiorare. Prima di tutto dobbiamo "
+"valutare ciò che sappiamo.\n"
+"\n"
+"Gli alieni hanno generato simpatie sulla Terra? Si.\n"
+"\n"
+"Gli alieni stanno fornendo supporto a tali persone al loro servizio? É "
+"possibile.\n"
+"\n"
+"I servitori rappresentano un pericolo? Assolutamente. Forse maggiore "
+"rispetto alla stessa minaccia aliena.\n"
+"\n"
+"Abbiamo bisogno di indagare a fondo su cosa trasformi queste persone in "
+"parassiti. Vorremmo studiare almeno un prigioniero umano fornito dal "
+"servizio di ricerca nazionale che sta operando in una situazione di panico "
+"crescente per la minaccia umana. Se gli alieni hanno alterato il corpo di "
+"queste persone oltre ad addestrarle e a fornirle  supporto, vorremmo "
+"verificarlo.\n"
+"\n"
+"Saluti,\n"
+"\n"
+"Dott. Connor"
 
 #: ../base/ufos/msgid/story.ufo:414
 #, fuzzy
@@ -16426,6 +17196,68 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
+"Buongiorno Signore, ho un ampio rapporto per lei riguardo alla decodifica "
+"dei modelli dell'attività aliena e alla loro strategia generale sulla Terra. "
+"Può trovare il rapporto completo nei nostri archivi, ma le fornirò un rapido "
+"riassunto.\n"
+"\n"
+"\n"
+"L'aspetto che più colpisce dell'invasione è che gli alieni stanno "
+"raccogliendo biomassa umana, a volte anche le persone, per i loro oscuri "
+"scopi. Lo fanno in un modo piuttosto orrendo che non mostra alcun rispetto "
+"per la vita; tagliano gli uomini come se fossero carne da macello e i loro "
+"Bloodspider dissezionano l'individuo sul posto per un particolare organo a "
+"cui sono interessati o una tazza di sangue. É un metodo totalmente pratico e "
+"amorale.\n"
+"\v\n"
+"Possiamo solo ritenere che usano le loro cavie per qualche tipo di programma "
+"di ricerca, studi sulla nostra psicologia e forse anche cultura. Non "
+"conosciamo le ragioni di ciò, ma è qualcosa di interessante. Cercano di "
+"apprendere qualcosa di noi, e non hanno interesse dei nostri sentimenti. Per "
+"loro, siamo solo oggetto di studio.\n"
+"\n"
+"Di uleriore interesse sono i loro obiettivi principali. Finora i rapporti "
+"sulla recente attività aliena sono pervenuti quasi esclusivamente da centri "
+"densamente popolati con luoghi di atterraggio facilemente accessibili per "
+"gli \vUfo, che si collega con l'obiettivo generale di catturare materiale "
+"umano per la ricerca. Comunque, di recente l'obiettivo della campagna sembra "
+"essere cambiato o ristretto. Sono state rilevate attività sempre più "
+"frequenti vicino ad ospedali, banche del sangue e centri di ricerca "
+"biologica oltre ai consueti raid sui centri cittadini. L'attività ha "
+"riguardato l'infiltrazione silenziosa per scopi socnosciuti fino agli "
+"attacchi su larga scala su laboratori di alta sicurezza. Non siamo sicuri "
+"ancora di cosa possa siginificare questo cambiamento, ma stiamo fornendo "
+"delle raccomandazioni all'Onu per rafforzare la  sicurezza in queste "
+"strutture e per armare le forze locali al fine di respingere gli attacchi "
+"alieni. Abbiamo stilato una lista di obiettivi ad alto rischio per una "
+"pronta risposta della polizia ed è in corso la distribuzione di manuali "
+"tattici contro gli alieni. Sono in corso ulteriori ricerche sul cambio di "
+"obiettivi.\n"
+"\n"
+"Come sempre, c'è un'ampia attività aliena fuori dal nostro raggio di "
+"rilevazione che avviene senza essere segnalato dai civili. DivIntel sta "
+"sperimentando nuovi modi per produrre rapporti e rispondere all'attività "
+"aliena così come una migliore rete di comunicazione tra le nazioni dell'Onu "
+"per inviare più rapidamente le informazioni rilevanti a Phalanx, le quali "
+"sono il diretto risultato della nostra ricerca sulla strategia aliena. "
+"Prevediamo che tali tecniche ci consentiranno di  ottenere un'attività "
+"aliena stimata del 10% (al di fuori di quella stimata sulla Terra) che in "
+"precedenza sarebbe passata inosservata.\n"
+"\n"
+"Abbiamo osservato anche come gli Ufo si spostano da e verso la Terra, a "
+"dispetto dei nostri problemi abbiamo trovato e seguito il veicolo più grande "
+"e sfuggente visto finora. Dopo aver controllato i radar, le registrazioni "
+"eseguite negli osservatori sulla superficie terrestre, crediamo che gli Ufo "
+"più grandi siano delle specie di aerei da trasporto; semplicemente navi "
+"equipaggiate per il trasporto di Ufo più piccoli da e verso la Terra.\n"
+"\n"
+"Questo tipo di veicolo è di estrema importanza e dobbiamo trovare il modo "
+"per abbatterlo dall'orbita se possibile. Dovremmo mantenere una stretta "
+"sorveglianza, Comandante.\n"
+"\n"
+"Cordiali saluti,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:468
 #, fuzzy
@@ -16565,6 +17397,24 @@ msgid ""
 "\n"
 "Col. Falkland"
 msgstr ""
+"Abbiamo terminato signore!\n"
+"\n"
+"Abbiamo completato il progetto per una carica esplosiva guidata capace di "
+"abbattere un ufo orbitante. Per lanciare quest'arma, l'Onu ha requisito una "
+"vasta struttura costruita nelle Montagne Rocciose che è stata usata per "
+"inviare rifornimenti alla colonia Tranquility Base sulla luna.\n"
+"\n"
+"La carica esplosiva si dirige autonomamente sull'obiettivo ma l'Ufo Vettore "
+"deve ancora entrare nel raggio di tiro. Se il Vettore mantiene la posizione "
+"attuale-- e fino ad ora non abbiamo rilevato ulteriori spostamenti-- "
+"prevediamo un lancio regolare al bersaglio ogni 24 ore.\n"
+"\v\n"
+"Le comunicherò quando il Vettore è a distanza di tiro, signore, e l'ordine "
+"potrà essere dato per abbattere quell'oggetto.\n"
+"\n"
+"Cordiali saluti,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:516
 #, fuzzy
@@ -16740,6 +17590,30 @@ msgid ""
 "\n"
 "With kind regards, Col. Falkland"
 msgstr ""
+"Buongiorno, signore. Ho una relazione per lei sul relitto dello strumento "
+"psi, ma non le piacerà.\n"
+"\n"
+"In verità siamo perplessi. Non disponiamo di una teoria affidabile sulla "
+"funzione di questo oggetto. Il nostro esemplare potrebbe essere stato "
+"danneggiato nell'attacco alla base aliena ma non è sicuro. Sicuramente serve "
+"a qualcosa. Non riusciamo ad immaginare cosa.\n"
+"\n"
+"Le teorie vanno da quelle ordinarie a quelle più ridicole, ma penso che solo "
+"una di queste sia da considerare seriamente a questo punto. La spiegazione "
+"più semplice è che la macchina sia uno strumento di comunicazione. Dato che "
+"non abbiamo compreso il modo in cui gli alieni comunicano tra di loro con i "
+"nostri test di laboratorio, è probabile che non saremo in grado di "
+"determinare i metodi di comunicazione forniti da questo strumento.\n"
+"\n"
+"Comunque, non abbiamo dati a sostegno di questa o quella teoria, altre "
+"teorie ridicole stanno ancora rimbalzando  nel laboratorio. Essi comprendono "
+"ogni cosa dal controllo mentale allo spostamento istantaneo.\n"
+"\n"
+"Ho detto che queste teorie sono ridicole, signore, ma in mancanza di "
+"informazioni consistenti non trascuriamo nessuna ipotesi. Si spera di "
+"apprendere qualcos'altro con ulteriori ricerche.\n"
+"\n"
+"Cordiali saluti, Col. Falkland"
 
 #: ../base/ufos/msgid/story.ufo:540
 msgid ""
@@ -16761,9 +17635,26 @@ msgid ""
 "\n"
 "With kind regards, Col. Falkland"
 msgstr ""
+"Signore, le nostre truppe sono appena tornate dall'attacco alla base aliena "
+"e hanno riportato il relitto di uno strano strumento trovato. Ho bisogno che "
+"il relitto venga inviato immediatamente a DivIntel, oltre che di alcuni "
+"fondi e del tempo necessario, in modo da poter ricercare la sua funzione e "
+"svelare il mistero dei potenti attacchi psionici da esso lanciati durante "
+"l'attacco.\n"
+"\n"
+"Lo strumento deve essere molto importante per essere protetto dall'intera "
+"base. Ma non sappiamo se è un'arma, un computer, uno strumento di "
+"comunicazione, o qualcosa di più misterioso. Se troveremo nuove basi aliene, "
+"potremmo difenderci da altri strumenti simili, sebbene spero che non sia "
+"questo il caso.\n"
+"\n"
+"Il Com. Navarre e il Dott. Connor hanno prestato il loro supporto al "
+"progetto, ed entrambi sono concordi nel fornirci l'assistenza tecnica in "
+"questa ricerca. Abbiamo bisogno solo della sua approvazione, Comandante.\n"
+"\n"
+"Cordiali saluti, Col. Falkland "
 
 #: ../base/ufos/msgid/story.ufo:586
-#, fuzzy
 msgid ""
 "Technical Specifications: MG12 Machine Gun\n"
 "\n"
@@ -16849,7 +17740,7 @@ msgid ""
 msgstr ""
 "Specifiche: Mitragliatore MG12\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -16955,6 +17846,23 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la nostra ultima missione ha riportato l'uccisione "
+"dell'equipaggio dell'ufo ma ora dobbiamo inviare al deposito il veicolo. "
+"L'ufo è troppo grande per ospitarlo all'interno della nostra base di "
+"ingegneria e di ricerca. Dovrebbe costruire quanto prima un Piazzale Ufo "
+"così da poter ospitare i veicoli alieni in una struttura distaccata. Non "
+"potremo condurre alcuna ricerca sui veicoli finché non potremo conservarli "
+"in sicurezza.\n"
+"\n"
+"Una volta che disporremo di un deposito per gli ufo, i nostri scienziati "
+"potranno avviare le loro ricerche. Una volta completato, i nostri ingegneri "
+"saranno in grado di smontare gli ufo per raccogliere materiali e parti.\n"
+"\n"
+"ll lavoro sugli ufo costringerà i nostri scienziati ed ingegneri a spostarsi "
+"avanti e indietro dalla base al piazzale ufo, quindi costruisca il sito il "
+"più vicino possibile alla base in cui il lavoro viene condotto.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/tips.ufo:22
 msgid ""
@@ -16978,6 +17886,24 @@ msgid ""
 "\n"
 "Dr. Connor"
 msgstr ""
+"Comandante,\n"
+"\n"
+"Abbiamo bisogno di catturare alcuni alieni vivi se vogliamo comprendere il "
+"nostro nemico. Eseguire più autopsie ci aiuterà a comprendere la loro "
+"biologia e a sviluppare strumenti non letali per renderli inabili. Abbiamo "
+"bisogno di esemplari per apprendere il modo in cui queste cose funzionano.\n"
+"\n"
+"Se possiamo stordire gli alieni in battaglia e portarli vivi alla base "
+"dotata di strutture di isolamento, nessuno potrà dire cosa potremo "
+"comprendere. Potremmo capire meglio le funzioni biologiche dei loro "
+"organismi e mettere alla prova la loro debolezza. Col tempo potremmo perfino "
+"essere in grado di sviluppare un modo per comunicare con loro.\n"
+"\v\n"
+"Sono consapevole del rischio per i suoi soldati nel doverli catturare vivi, "
+"signore, ma è un rischio che dovremo prendere se vogliamo vincere questa "
+"guerra.\n"
+"\n"
+"Distinti salutiDott. Connor"
 
 #: ../base/ufos/msgid/tips.ufo:30
 msgid ""
@@ -16989,6 +17915,13 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante,\n"
+"\n"
+"Il sito SAM è pronto ed operativo ma non dispone ancora di munizioni. "
+"Provveda alla dotazione di un lanciamissili il più presto possibile così da "
+"poter scacciare gli alieni fuori dai nostri cieli.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:16
 #, fuzzy
@@ -17149,7 +18082,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:76
-#, fuzzy
 msgid ""
 "Technical Specifications: P-12 Pistol\n"
 "\n"
@@ -17246,7 +18178,7 @@ msgid ""
 msgstr ""
 "Specifiche: Pistola P-12\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -17342,7 +18274,6 @@ msgstr ""
 "tanto bene contro gli obiettivi robotici."
 
 #: ../base/ufos/msgid/weapons.ufo:108
-#, fuzzy
 msgid ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
 "\n"
@@ -17389,9 +18320,9 @@ msgid ""
 msgstr ""
 "Specifiche: Caricatore Pistola 7.62mm\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
-"Unità di Risposta Extraterrestre PHALANX Foglio Tecnico, Salvacondotto: "
+"Corpo Contromisure Extraterrestri PHALANX Foglio Tecnico, Salvacondotto: "
 "Delta\n"
 "\n"
 "Archiviato: 20 Marzo 2084\n"
@@ -17433,7 +18364,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:154
-#, fuzzy
 msgid ""
 "Technical Specifications: MP-699 Machine Pistol\n"
 "\n"
@@ -17527,7 +18457,7 @@ msgid ""
 msgstr ""
 "Specifiche: Pistola Automatica MP-699\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -17623,7 +18553,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:186
-#, fuzzy
 msgid ""
 "Technical Specifications: 4.2mm MP Magazine\n"
 "\n"
@@ -17665,7 +18594,7 @@ msgid ""
 msgstr ""
 "Specifiche: Caricatore 4.2mm MP \n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -17704,7 +18633,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:232
-#, fuzzy
 msgid ""
 "Technical Specifications: AR-80 Assault Rifle\n"
 "\n"
@@ -17787,7 +18715,7 @@ msgid ""
 msgstr ""
 "Specifiche: Fucile d'Assalto AR-80\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -17868,7 +18796,6 @@ msgstr ""
 "allo scopo appena sarà possibile farlo."
 
 #: ../base/ufos/msgid/weapons.ufo:264
-#, fuzzy
 msgid ""
 "Technical Specifications: Assault Rifle Magazine\n"
 "\n"
@@ -17910,7 +18837,7 @@ msgid ""
 msgstr ""
 "Specifiche: Caricatore per Fucile d'Assalto\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -17950,7 +18877,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/weapons.ufo:308
-#, fuzzy
 msgid ""
 "Technical Specifications: MG12 Machine Gun\n"
 "\n"
@@ -18029,7 +18955,7 @@ msgid ""
 msgstr ""
 "Specifiche: Mitragliatore MG12\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -18117,7 +19043,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:342
-#, fuzzy
 msgid ""
 "Technical Specifications: Machine Gun Drum\n"
 "\n"
@@ -18161,7 +19086,7 @@ msgid ""
 msgstr ""
 "Specifiche: Caricatore a Tamburo per Mitragliatore\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -18204,7 +19129,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:388
-#, fuzzy
 msgid ""
 "Technical Specifications: HPML Rocket Launcher\n"
 "\n"
@@ -18293,7 +19217,7 @@ msgid ""
 msgstr ""
 "Specifiche: Lanciarazzi HPML\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -18389,7 +19313,6 @@ msgstr ""
 "umane standard ad essere pienamente efficaci contro alieni robotici."
 
 #: ../base/ufos/msgid/weapons.ufo:422
-#, fuzzy
 msgid ""
 "Technical Specifications: HE Rocket\n"
 "\n"
@@ -18439,7 +19362,7 @@ msgid ""
 msgstr ""
 "Specifiche: Razzo Esplodente\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -18487,7 +19410,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:458
-#, fuzzy
 msgid ""
 "Technical Specifications: IC Rocket\n"
 "\n"
@@ -18540,7 +19462,7 @@ msgid ""
 msgstr ""
 "Specifiche: Razzo Incendiario\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -18614,6 +19536,26 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo completato il progetto per un missile ibrido su scala "
+"ridotta.\n"
+"\n"
+"Il nuovo progetto si ispira al missile in dotazione al nostro aereo, ma "
+"chiaramente abbiamo dovuto ridurre drasticamente il carico esplosivo così "
+"che un soldato possa trasportarlo in battaglia. Il risultato è il razzo più "
+"potente che i nostri esperti di esplosivi abbiano mai creato.\n"
+"\n"
+"Il guscio è costruito con materiali alieni che si frammentano in scheggie "
+"spesse in seguito alla detonazione. La forza esplosiva della detonazione "
+"proietta questi pezzi resistenti in aria ad una tale velocità che nessuna "
+"protezione indossabile da parte di un uomo o alieno può bloccarli.\n"
+"\n"
+"Capisco che il campo di battaglia sta diventando ancora più insanguinato, "
+"signore, ma vorrete ricordare ai vostri soldati l'importanza di mantenere i "
+"civili lontano dal raggio di esplosione. Qualsiasi individuo che "
+"sfortunatamente si trovi nei pressi dell'esplosione di una di queste armi "
+"andrebbe incontro alla morte oppure sarebbe orrendamente menomato.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:479
 msgid ""
@@ -18631,6 +19573,19 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, le raccomando di avviare la ricerca di un nuovo proiettile per "
+"il nostro lanciamissili.\n"
+"\n"
+"Abbiamo avuto un grande successo nello sviluppo del Missile ibrido per il "
+"nostro aereo. I materiali alieni si frantumano in potenti schegge che "
+"possono penetrare pesanti corazze. Vorrei tentare di adattare tale "
+"tecnologia al nostro lanciarazzi a spalla.\n"
+"\n"
+"Tutti i pezzi sono disponibili per una versione in scala ridotta del razzo "
+"che aiuterà le squadre di assalto terrestri nell'attacco alle forze aliene "
+"pesantemente corazzate.\n"
+"\n"
+"Com. Navarre."
 
 #: ../base/ufos/msgid/weapons.ufo:547 ../base/ufos/msgid/weapons.ufo:1537
 #, fuzzy
@@ -18925,6 +19880,22 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo completato il progetto per un proiettile Flechette "
+"antimateria per il Fucile elettromagnetico.\n"
+"\n"
+"Le Flechette contengono una sottile quantità di antimateria all'interno "
+"della punta. Il calore e la forza dell'impatto cinetico dovrebbero essere "
+"sempre sufficienti per causare la detonazione dell'antimateria, producendo "
+"un'esplosione significativa nonostante le ridotte dimensioni del "
+"proiettile.\n"
+"\n"
+"Il costo elevato per la creazione di questi proiettili ci induce ad un loro "
+"utilizzo in battaglie decisive. Sono difficili da produrre e richiedono "
+"tempo, sfruttano la preziosa antimateria che potrebbe essere necessaria per "
+"qualche altro impiego. Ma quando avremo bisogno di una vittoria a tutti i "
+"costi, quest'arma trasformerà ogni cecchino in una macchina di morte.\n"
+"\n"
+"Com. Navarre "
 
 #: ../base/ufos/msgid/weapons.ufo:599
 msgid ""
@@ -18950,9 +19921,31 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la nostra ricerca sugli armamenti ad antimateria ha prodotto "
+"molte nuove idee per la creazione di nuove armi e per la modifica di quelle "
+"vecchie. Sfortunatamente ha evidenziato le pesanti limitazioni di molte di "
+"queste idee.\n"
+"Usare l'antimateria nelle nostre armi da fuoco convenzionali, di qualsiasi "
+"tipo, è fuori questione. Si verificano troppi impatti e vibrazioni legati "
+"allo sparo mediante armi convenzionali ai quali porre rimedio. Tutti i "
+"tentativi che abbiamo condotto hanno riportato dei fallimenti di "
+"contenimento e altri piccoli incidenti relativi all'esplosione. Tuttavia, il "
+"nostro Fucile Bolter potrebbe essere abbastanza anticonvenzionale per i "
+"nostri scopi.\n"
+"\n"
+"Ciò che proponiamo è creare un nuovo tipo di munizione per il Bolter usando "
+"l'antimateria come componente primario. Se siamo in grado di inserire una "
+"piccola quantità di antimateria nel cuore del proiettile, possiamo studiare "
+"il modo per cui l'antimateria si liberi del suo contenuto esplodendo "
+"all'impatto. Questo dovrebbe creare un'esplosione piccola e potente che "
+"indurrebbe ogni alieno a pensare due volte se esporre la propria testa allo "
+"scoperto\n"
+"\n"
+"La prego di comunicarmi quando vorrà avviare questo lavoro, Comandante.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:639
-#, fuzzy
 msgid ""
 "Technical Specifications: Combat Knife\n"
 "\n"
@@ -19024,7 +20017,7 @@ msgid ""
 msgstr ""
 "Specifiche: Pugnale da Combattimento\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -19246,7 +20239,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:713
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-FL Flamethrower\n"
 "\n"
@@ -19333,7 +20325,7 @@ msgid ""
 msgstr ""
 "Specifiche: Lanciafiamme \n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -19426,7 +20418,6 @@ msgstr ""
 "nelle vicinanze del bersaglio."
 
 #: ../base/ufos/msgid/weapons.ufo:745
-#, fuzzy
 msgid ""
 "Technical Specifications: C90 Canister\n"
 "\n"
@@ -19473,9 +20464,9 @@ msgid ""
 msgstr ""
 "Specifiche: Serbatoio C90\n"
 "\n"
-"ClASSFICAZIONE LIVELLO: GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
-"Unità Risposta Extraterrestre PHALANX\n"
+"Corpo Contromisure Extraterrestri  PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
 "\n"
@@ -19520,7 +20511,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:787
-#, fuzzy
 msgid ""
 "Technical Specifications: Flashbang\n"
 "\n"
@@ -19608,7 +20598,7 @@ msgid ""
 msgstr ""
 "Specifiche: Granata Stordente\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -19696,7 +20686,6 @@ msgstr ""
 "e orecchie organiche."
 
 #: ../base/ufos/msgid/weapons.ufo:827
-#, fuzzy
 msgid ""
 "Technical Specifications: Fragmentation Grenade\n"
 "\n"
@@ -19777,8 +20766,8 @@ msgid ""
 msgstr ""
 "Specifiche: Granata a Frammentazione\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -19861,7 +20850,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/weapons.ufo:869
-#, fuzzy
 msgid ""
 "Technical Specifications: Incendiary Grenade\n"
 "\n"
@@ -19939,7 +20927,7 @@ msgid ""
 msgstr ""
 "Specifiche: Granata Incendiaria\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
 "\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
@@ -20016,7 +21004,6 @@ msgstr ""
 "Nessuna."
 
 #: ../base/ufos/msgid/weapons.ufo:915
-#, fuzzy
 msgid ""
 "Technical Specifications: HPGL Grenade Launcher\n"
 "\n"
@@ -20098,8 +21085,8 @@ msgid ""
 msgstr ""
 "Specifiche: Lanciagranate HPGL\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -20206,7 +21193,6 @@ msgstr ""
 "standard di armi umane ad essere pienamente efficaci contro alieni robotici."
 
 #: ../base/ufos/msgid/weapons.ufo:947
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm HIT Grenades\n"
 "\n"
@@ -20248,8 +21234,8 @@ msgid ""
 msgstr ""
 "Specifiche: Granate 25mm HIT\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -20288,7 +21274,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:979
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm Flechette Grenades\n"
 "\n"
@@ -20328,8 +21313,8 @@ msgid ""
 msgstr ""
 "Specifiche: Granate 25mm HIT\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -20368,7 +21353,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1011
-#, fuzzy
 msgid ""
 "Technical Specifications: 25mm IC Grenades\n"
 "\n"
@@ -20411,8 +21395,8 @@ msgid ""
 msgstr ""
 "Specifiche: Granate 25mm IC\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -20547,7 +21531,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1081
-#, fuzzy
 msgid ""
 "Technical Specifications: IR Goggles\n"
 "\n"
@@ -20638,8 +21621,8 @@ msgid ""
 msgstr ""
 "Specifiche: Visore a Infrarossi\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -21173,6 +22156,35 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, il nostro programma di laser pesante è stato un successo. "
+"Abbiamo un prototipo pronto per essere avviato alla produzione con il suo "
+"permesso. Come promesso, il laser pesante è un arma in più nel nostro "
+"arsenale e riteniamo che sia un elemento chiave contro le unità corazzate "
+"che sono in grado di resistere agli armamenti convenzionali e al plasma.\n"
+"\n"
+"Ciò non esclude che il laser pesante non presenti degli svantaggi. Il primo "
+"è il grande ingombro e peso, e richiede uomini forti per essere impiegati "
+"efficacemente. Non sacrifica la precisione nonostante il peso, ma è meno "
+"rapido allo sparo o alla reazione di quanto vorremmo, e il suo consumo di "
+"proiettili è impressionante. Può masticare un intero caricatore di floruro "
+"di deuterio in trenta secondi di fuoco continuo. Questo richiede un grande "
+"numero di depositi a disposizione e il laser pesante non è molto veloce "
+"nella ricarica.\n"
+"\n"
+"É importante che nessun passante o truppa Phalanx si trovi sul percorso di "
+"tiro del raggio invisibile. Anche un'esposizione breve ad un raggio nono "
+"ostacolato può bruciare le ossa e sciogliere la carne. Un colpo agli occhi "
+"produce cecità permanente e irreparabile. Ne abbiamo parlato con i nostri "
+"ufficiali addestratori e di campo e abbiamo evidenziato gli aspetti legati "
+"alla sicurezza  nel nostro manuale operativo, ma farà bene a ricordarlo "
+"ancora alle sue truppe, Comandante.\n"
+"\n"
+"É necessario disporre di almeno una cartuccia D-F  in ogni momento per poter "
+"caricare e impiegare il laser pesante. I progetti per l'arma e le munizioni "
+"si trovano presso le officine con gli ingegneri, quindi può avviare la "
+"produzione da subito.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1183
 msgid ""
@@ -21187,6 +22199,16 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Gli armamenti laser sono sempre un compromesso tra dimensioni e potenza. Per "
+"tale motivo, sto presentando una proposta per un laser pesante di fanteria. "
+"Non sarà mobile e flessibile come vorrebbero i nostri assaltatori, ma ma "
+"rappresentano un potente colpo per quei soldati forti abbastanza da usarlo "
+"efficacemente in guerra.\n"
+"\n"
+"Considerata la debolezza della corazza aliena rispetto alle armi laser, vale "
+"la pena sicuramente puntarci sopra, Comandante.\n"
+"\n"
+"Com. Navarre   "
 
 #: ../base/ufos/msgid/weapons.ufo:1201
 #, fuzzy
@@ -21340,7 +22362,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1225
-#, fuzzy
 msgid ""
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges "
 "and they're now ready for mass production. They'll be expensive to make and "
@@ -21368,7 +22389,7 @@ msgid ""
 msgstr ""
 "Comandante, abbiamo terminato il progetto dei Caricatori al deuterio-"
 "fluoruro e adesso siamo pronti per la produzione di massa. Saranno costosi "
-"da fare ed usare, ma abbiamo fatto tutto il possibile per tenere bassi i "
+"da produrre ed usare, ma abbiamo fatto tutto il possibile per tenere bassi i "
 "costi.\n"
 "\n"
 "Il caricatore essenzialmente è un guscio plastico duro diviso in cinque "
@@ -21384,7 +22405,7 @@ msgstr ""
 "perdite durante uno scontro è stata ridotta ad una frazione di punto "
 "percentuale.\n"
 "\n"
-"Qualunque materiale rimasto in una cartuccia usata verrà ri-pompato nel "
+"Qualunque materiale rimasto in una cartuccia usata verrà ripompato nel "
 "magazzino della base dopo il rientro del velivolo. Comunque, una volta "
 "usati, i caricatori vanno smaltiti da un gruppo di persone addestrate al "
 "rischio chimico e i ricambi andranno prodotti da zero: Non si possono "
@@ -21444,7 +22465,6 @@ msgstr ""
 "-- Comandante Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1283
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -21551,16 +22571,16 @@ msgid ""
 msgstr ""
 "Specifiche: Strumentazione Medica\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
 "\n"
 "Archiviato: 19 Marzo 2084\n"
 "\n"
-"Da: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic "
-"Operations Command\n"
+"Da: Chirurgo -Capitano Helen Floydd, Divisione medica,, PHALANX, Comando "
+"Operazioni Atlantiche \n"
 "\n"
 "\n"
 "\n"
@@ -21826,6 +22846,29 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, ecco il mio rapporto sulla ricerca del fucile al plasma.\n"
+"\n"
+"È il membro più pesante della famiglia dei fucili al plasma che abbiamo "
+"visto, sembra improbabile che possano disporre di uno più grande. Il fucile "
+"al plasma è realizzato con materiali di plastica spessa che ospitano una "
+"camera al plasma ad alta resistenza capace di sparare proiettili "
+"estremamente spessi.\n"
+"\n"
+"Può sparare proiettili al plasma in modalità singola o scariche, e embra "
+"essere progettato in modo speciale per sparare ciò che il nostro ufficio "
+"chiama la Sfera del Male. Uno spesso contenitore di plasma che all'impatto "
+"si diffonde in ampiezza, questa speciale modalità di fuoco risulterà "
+"incredibilmente mortale nei combattimenti ravvicinati, dove la precisione "
+"può essere trascurata per la pura capacità di uccidere.\n"
+"\n"
+"In conclusione, abbiamo realizzato uno schema per il controllo completo "
+"dell'arma, documentato nel manuale operativo allegato. Questo potrebbe "
+"rappresentare un passo in avanti significativo in potenza per i nostri "
+"specialisti di armi da fuoco ravvicinato, ma non è probabilmente abbastanza "
+"preciso da essere efficace nei combattimenti a media distanza. Ne raccomando "
+"l'impiego immediato.\n"
+"\n"
+"Com. Navarre "
 
 #: ../base/ufos/msgid/weapons.ufo:1331
 #, fuzzy
@@ -22192,6 +23235,29 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo redattto le specifiche delle Munizioni al Plasma "
+"Rivestite. Disponiamo di progetti per i suoi ingegneri per costruire nuovi "
+"caricatori di munizioni per il Fucile d'assalto, Mitragliatrice SR-1 Fucile "
+"da Cecchino.\n"
+"\n"
+"Il proiettile al plasma rivestito è essenzialmente una carica dalla forma "
+"ridotta per essere impiegato in un fucile tradizionale. Consiste di un "
+"piccolo nucleo al plasma, una punta che si frammenta all'impatto e un corpo "
+"esterno morbido. Quando il proiettile colpisce il bersaglio, la punta si "
+"frammenta e il nucleo al plasma sbatte contro la corazza. La velocità del "
+"colpo deforma il corpo esterno creando un guscio sigillato intorno al nucleo "
+"al plasma che intrappola il calore producendo una combustione attraverso la "
+"corazza.\n"
+"\n"
+"La quantità di plasma nella punta è infatti molto minore di quella contenuta "
+"dalle armi al plasma aliene. Ma siccome il calore del plasma è in grado di "
+"penetrare il proprio obiettivo, la gran parte del suo calore  si "
+"trasferisce, causando tremende ferite.\n"
+"\v\n"
+"Introduca immediatamente queste munizioni in battaglia, signore. Non se ne "
+"pentirà.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1425
 msgid ""
@@ -22214,6 +23280,25 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, la nostra ricerca sulla lama al plasma ci ha fornito un'idea su "
+"una serie di munizioni avanzate che potrebbero recuperare la potenza "
+"frenante dei nostri armamenti tradizionali.\n"
+"\n"
+"Come lei sa, la corazza aliena che stiamo affrontando in combattimento è "
+"molto adatta a prottegere contro gli armamenti al plasma. Dato che le "
+"esplosioni infliggono il loro danno fondendo l'obbiettivo, i materiali "
+"alieni sono progettati per deviare il calore abbastanza da far esaurire le "
+"esplosioni al plasma. Ma l'enorme potenza della lama al plasma risiede nella "
+"capacità di racchiudere il calore del plasma e indirizzarlo sull'obiettivo. "
+"Non può diffondersi.\n"
+"\n"
+"Vogliamo fare lo stesso -- su una scala molto risotta -- per cartucce che "
+"sarebbero compatibili con i nostri fucili d'assalto, mitragliatrici e fucili "
+"da cecchino. Ci dia del tempo per lavorare sui dettagli, signore, e credo "
+"che potremo ritornare con uno sviluppo interessante per le nostre capacità "
+"di combattimento.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1441
 #, fuzzy
@@ -22370,6 +23455,32 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, ecco la mia relazione sul nuovo Needler Pesante di cui siamo "
+"venuti a conoscenza.\n"
+"\n"
+"Come sospettavamo, ci sono degli aggioramenti tecnologici in quest'arma. É "
+"più larga, più pesante, e capace di sparare più aghi, più velocemente. Ma "
+"non si lasci ingannare dalla sua semplicità. É un'arma straordinariamente "
+"letale, accresciuta dal getto di aghi spesso fuori misura. Può lacerare "
+"l'obiettivo e probabilmente chiunque abbastanza sfortunato da capitare nel "
+"fuoco incrociato.\n"
+"\n"
+"Quest'arma è così pesante che solo i nostri soldati più forti potranno "
+"usarla efficacemente. Il suo peso è superiore a quello di qualsiasi altra "
+"arma conosciuta, il problema vero per noi è usarla contro il nemico. Ma se "
+"troverà uomini in grado di portarla in battaglia, si rallegrerà per la sua "
+"potenza straordinaria.\n"
+"\n"
+"\vAlla fine, vorrei menzionare un'altra cosa. Crediamo che questo fucile sia "
+"stato sviluppato di recente , forse perfino negli ultimi mesi. Alcune parti "
+"del Needler Pesante sembrano realizzate di fretta. Sembra chiaro che "
+"quest'arma è stata sviluppata nel minor tempo possibile insieme ai loro "
+"caccia.  Questo ci induce a sospettare che stanno sviluppando e introducendo "
+"nuovi prototipi di armi e non soltanto impegando quelle più letali. In poche "
+"parole, siamo coinvolti in una corsa agli armamenti con l'orda aliena e non "
+"stiamo vincendo.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1467
 msgid ""
@@ -22378,6 +23489,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Comandante, abbiamo recuperato una nuova arma aliena che sembra essere una "
+"versione maggiorata del Needler. La prego di autorizzare i miei uomini ad "
+"esaminarla quanto prima.\n"
+"\n"
+"Com. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1481
 #, fuzzy
@@ -22519,7 +23635,6 @@ msgstr ""
 "--C.te Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1569
-#, fuzzy
 msgid ""
 "Technical Specifications: Saboted Slugs\n"
 "\n"
@@ -22563,8 +23678,8 @@ msgid ""
 msgstr ""
 "Specifiche: Cartucce a Pallettoni\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -22605,7 +23720,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1617
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
 "\n"
@@ -22698,8 +23812,8 @@ msgid ""
 msgstr ""
 "Specifiche: Fucile Mozzo CRC-M9\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -22792,7 +23906,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1651
-#, fuzzy
 msgid ""
 "Technical Specifications: Flechette Shells\n"
 "\n"
@@ -22840,8 +23953,8 @@ msgid ""
 msgstr ""
 "Specifiche: Cartucce Flechette \n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -22886,7 +23999,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1695
-#, fuzzy
 msgid ""
 "Technical Specifications: CRC-8 SMG\n"
 "\n"
@@ -22971,8 +24083,8 @@ msgid ""
 msgstr ""
 "Specifiche: Mitra CRC-8\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -23041,7 +24153,6 @@ msgstr ""
 "Addenda"
 
 #: ../base/ufos/msgid/weapons.ufo:1727
-#, fuzzy
 msgid ""
 "Technical Specifications: SMG Magazine\n"
 "\n"
@@ -23084,8 +24195,8 @@ msgid ""
 msgstr ""
 "Specifiche: SMG Magazine\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -23124,7 +24235,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1767
-#, fuzzy
 msgid ""
 "Technical Specifications: Smoke Grenade\n"
 "\n"
@@ -23195,8 +24305,8 @@ msgid ""
 msgstr ""
 "Specifiche: Granata Fumogena\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -23264,7 +24374,6 @@ msgstr ""
 "Nessuna"
 
 #: ../base/ufos/msgid/weapons.ufo:1811
-#, fuzzy
 msgid ""
 "Technical Specifications: S-1 Sniper Rifle\n"
 "\n"
@@ -23351,8 +24460,8 @@ msgid ""
 msgstr ""
 "Specifiche: Fucile di Precisione S-1\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -23441,7 +24550,6 @@ msgstr ""
 "standard ad essere pienamente efficaci contro alieni robotici."
 
 #: ../base/ufos/msgid/weapons.ufo:1843
-#, fuzzy
 msgid ""
 "Technical Specifications: Sniper Rifle Magazine\n"
 "\n"
@@ -23482,8 +24590,8 @@ msgid ""
 msgstr ""
 "Specifiche: Caricatore S-1\n"
 "\n"
-"RISERVATO: LIVELLO GIALLO\n"
-"\n"
+"LIVELLO DI CLASSIFICAZIONE GIALLO\n"
+"\v\n"
 "Corpo Contromisure Extraterrestri PHALANX\n"
 "\n"
 "Foglio Tecnico, Salvacondotto: Delta\n"
@@ -23690,7 +24798,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1883
 msgid "stungren_alien_txt"
-msgstr ""
+msgstr "stungren_alien_txt"
 
 #: ../base/ufos/msgid/weapons.ufo:1909
 #, fuzzy
@@ -24454,7 +25562,7 @@ msgstr "Pugnala"
 
 #: ../base/ufos/otheritems.ufo:101
 msgid "Hovernet Plasma Weapon"
-msgstr ""
+msgstr "L'Hovernet Plasma"
 
 #: ../base/ufos/otheritems.ufo:122
 msgid "Single Shot"
@@ -24462,7 +25570,7 @@ msgstr "Colpo Singolo"
 
 #: ../base/ufos/otheritems.ufo:147
 msgid "Combat Hovernet Plasma Weapon"
-msgstr ""
+msgstr "Arma Hovernet Plasma da combattimento"
 
 #: ../base/ufos/otheritems.ufo:168 ../base/ufos/weapons_plasma.ufo:67
 msgid "Burst"
@@ -24470,15 +25578,15 @@ msgstr "Raffica"
 
 #: ../base/ufos/research.ufo:33
 msgid "gettext_text2"
-msgstr ""
+msgstr "gettext_text2"
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Concetti di base (Campagna)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Concetti di base (Campagna terrestre)"
 
 #: ../base/ufos/research.ufo:111
 #, fuzzy
@@ -24565,11 +25673,11 @@ msgstr "Fuoco di reazione"
 
 #: ../base/ufos/research.ufo:186
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Peso del soldato e responsabilità"
 
 #: ../base/ufos/research.ufo:194
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Ferite e cure"
 
 #: ../base/ufos/research.ufo:202
 #, fuzzy
@@ -24663,7 +25771,7 @@ msgstr "Artefatto Alieno - Fucile al Plasma"
 
 #: ../base/ufos/research.ufo:2094
 msgid "Encased Plasma Rounds"
-msgstr ""
+msgstr "Cartucce di plasma"
 
 #: ../base/ufos/research.ufo:2213 ../base/ufos/research.ufo:2303
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -24793,7 +25901,7 @@ msgstr "Autopsia Aliena - Hovernet"
 
 #: ../base/ufos/research.ufo:4710
 msgid "Alien Autopsy - Combat Hovernet"
-msgstr "Autopsia Aliena - Hovernet combattente"
+msgstr "Autopsia Aliena - Combat Hovernet"
 
 #: ../base/ufos/research.ufo:4772 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
@@ -24861,7 +25969,7 @@ msgstr "Vaccino umano"
 
 #: ../base/ufos/research.ufo:5971 ../base/ufos/weapons_implants.ufo:5
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "Impianto di anfetamina"
 
 #: ../base/ufos/research.ufo:5995 ../base/ufos/weapons_implants.ufo:48
 #, fuzzy
@@ -24890,23 +25998,23 @@ msgstr "Membri della Squadra:"
 
 #: ../base/ufos/seq_credits.ufo:87
 msgid "aDuke"
-msgstr ""
+msgstr "aDuke"
 
 #: ../base/ufos/seq_credits.ufo:97
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:107
 msgid "bayo"
-msgstr ""
+msgstr "bayo"
 
 #: ../base/ufos/seq_credits.ufo:117
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "DarkRain"
-msgstr ""
+msgstr "DarkRain"
 
 #: ../base/ufos/seq_credits.ufo:137
 msgid "Tamas Fehervari (geever)"
@@ -24914,19 +26022,19 @@ msgstr "Tamas Fehervari alias geever"
 
 #: ../base/ufos/seq_credits.ufo:147
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
 msgid "Other contributors"
-msgstr ""
+msgstr "Altri collaboratori"
 
 #: ../base/ufos/seq_credits.ufo:191
 msgid "Bas Fournier (BTAxis)"
@@ -24943,7 +26051,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:221
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Forest Hale (LordHavoc)"
@@ -24951,7 +26059,7 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:251
 msgid "Ryan A. Span. (Winter)"
@@ -24995,11 +26103,11 @@ msgstr "Ringraziamenti Particolari per"
 
 #: ../base/ufos/seq_credits.ufo:349
 msgid "id Software for the Quake 2 engine"
-msgstr ""
+msgstr "id Software per il motore grafico di Quake 2"
 
 #: ../base/ufos/seq_credits.ufo:359
 msgid "NineX for hosting us"
-msgstr ""
+msgstr "NineX per averci ospitato"
 
 #: ../base/ufos/seq_credits.ufo:369
 #, fuzzy
@@ -25259,7 +26367,7 @@ msgstr "Hovernet"
 
 #: ../base/ufos/team_aliens.ufo:467
 msgid "Combat Hovernet"
-msgstr "Hovernet combattente"
+msgstr "Combat Hovernet"
 
 #: ../base/ufos/team_humans.ufo:54
 msgid "Phalanx"
@@ -25271,19 +26379,19 @@ msgstr "Ares W"
 
 #: ../base/ufos/team_templates.ufo:232
 msgid "Body"
-msgstr ""
+msgstr "Corpo"
 
 #: ../base/ufos/team_templates.ufo:241
 msgid "Torso"
-msgstr ""
+msgstr "Busto"
 
 #: ../base/ufos/team_templates.ufo:248
 msgid "Legs"
-msgstr ""
+msgstr "Gambe"
 
 #: ../base/ufos/team_templates.ufo:255
 msgid "Arms"
-msgstr ""
+msgstr "Braccia"
 
 #: ../base/ufos/team_templates.ufo:263
 msgid "Head"
@@ -25292,6 +26400,7 @@ msgstr "Elmetto"
 #: ../base/ufos/tips.ufo:4
 msgid "Use the [Shift] key to aim higher or lower at your target."
 msgstr ""
+"Usa il tasto [Shift] per mirare più in alto o più in basso sul tuo obiettivo."
 
 #: ../base/ufos/tips.ufo:5
 #, fuzzy
@@ -25338,6 +26447,9 @@ msgid ""
 "Choose which fire mode to use in reaction fire by ticking the button on the "
 "fire mode panel. Quick fire modes will react faster."
 msgstr ""
+"Scegli la modalità di fuoco da impiegare per il fuoco di reazione spuntando "
+"il tasto sul pannello delle modalità di fuoco. Le modalità di fuoco rapido "
+"saranno più reattive."
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
@@ -25369,6 +26481,8 @@ msgid ""
 "Soldiers can pull an item from their belt or holster very quickly, so equip "
 "grenades and other emergency items there."
 msgstr ""
+"I soldati possono prendere velocemente un oggetto dalla propria cintura o "
+"fondina, quindi equipaggiali  con granate e altri articoli di emergenza."
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
@@ -25394,6 +26508,8 @@ msgid ""
 "When a soldier is standing next to a door, you can open it by clicking on "
 "the soldier. Move the cursor over the soldier and a hand icon will appear."
 msgstr ""
+"Quando un soldato è in piedi vicino ad una porta, puoi aprirla facendo clic "
+"sul soldato. Muovi cursore sul soldato e apparirà l'icona della mano."
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
@@ -25449,6 +26565,9 @@ msgid ""
 "UFO Yard. You can build a UFO Yard by accessing the installations button on "
 "the global view."
 msgstr ""
+"Per conservare e smontare gli Ufo avrai bisogno di un'officina nella tua "
+"base e un piazzale per l'Ufo. Puoi costruire un piazzale per l'Ufo "
+"attracerso il tasto strutture nella schermata generale."
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
@@ -25483,12 +26602,16 @@ msgid ""
 "Keep soldiers close so that they can support each other. A lone gunner is "
 "easily killed."
 msgstr ""
+"Mantieni i soldati vicini così che ognuno sia di supporto all'altro. Un "
+"mitragliere isolato può essere facilmente abbattuto."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
 "Life is precious, but some lives are more precious than others. Always keep "
 "a disposable soldier or two to handle very risky situations."
 msgstr ""
+"La vita è preziosa, ma alcune vite sono più preziose di altre. Conserva un "
+"soldato o due per gestire situazioni particolarmente rischiose."
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
@@ -25536,6 +26659,8 @@ msgid ""
 "You can create your own maps or customize your campaigns. Learn more at "
 "ufoai.org."
 msgstr ""
+"Puoi creare le tue mappe o personalizzare le tue campagne. Leggi ulteriori "
+"informazioni su ufoai.irg"
 
 #: ../base/ufos/tips.ufo:36
 msgid "You can use [space] to cycle between all geoscape items."
@@ -25552,6 +26677,8 @@ msgid ""
 "Some items will slow an aircraft down. Read the equipment specs closely when "
 "equipping your interceptors."
 msgstr ""
+"Alcuni oggetti rallentano l'aereo. Leggi attentamente le specifiche di "
+"equipaggiamento quando provvedi all'equipaggiamento dei tuoi intercettori. "
 
 #: ../base/ufos/tips.ufo:39
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -25584,6 +26711,9 @@ msgid ""
 "Don't let too many civilians die during battles. If you don't keep the "
 "nations happy they could pull the plug on your program."
 msgstr ""
+"Non lasciare che troppi civili muoiano durante le battaglie. Se le tue "
+"nazioni non rimarranno abbastanza felici potrebbero staccare la spina del "
+"tuo programma."
 
 #: ../base/ufos/tips.ufo:43
 #, fuzzy
@@ -25710,6 +26840,10 @@ msgid ""
 "video surveillance room. Your soldier will be able to use the security "
 "cameras around the base to locate enemies."
 msgstr ""
+"Durante gli attacchi alla nostra base, posiziona alcuni soldati di scorta "
+"nella stanza di video sorveglianza del Centro Di Comando. Il tuo soldato "
+"potrà usare le telecamere di sicurezza attorno alla base per identificare i "
+"nemici."
 
 #: ../base/ufos/ui/_menu.ufo:122 ../base/ufos/ui/geoscape.ufo:191
 msgid "CREDITS"
@@ -26019,7 +27153,7 @@ msgstr "Compagni uccisi:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:350
 msgid "Assign tanks"
-msgstr ""
+msgstr "Assegna carri armati"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:354
 msgid "Assign soldiers"
@@ -26299,7 +27433,7 @@ msgstr "Carica"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Scarica salvataggi"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -26396,7 +27530,7 @@ msgstr "Ligue disponibili:"
 
 #: ../base/ufos/ui/cgame.ufo:93
 msgid "No files uploaded yet"
-msgstr ""
+msgstr "Nessun file caricato"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -26495,7 +27629,7 @@ msgstr "Rinomina la tua unità"
 #: ../base/ufos/ui/equipment.ufo:683 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:616
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:709 ../base/ufos/ui/team.ufo:633
 msgid "Done"
@@ -26627,7 +27761,7 @@ msgstr "Missione automatica"
 
 #: ../base/ufos/ui/geoscape.ufo:818
 msgid "This kind of mission cannot be done automatically"
-msgstr ""
+msgstr "Questo tipo di missione non può essere eseguito automaticamente"
 
 #: ../base/ufos/ui/geoscape.ufo:868
 #: ../base/ufos/ui/popup_installations.ufo:183
@@ -26752,7 +27886,7 @@ msgstr "Puntando:"
 
 #: ../base/ufos/ui/hire.ufo:494
 msgid "Evading:"
-msgstr ""
+msgstr "Evasione:"
 
 #: ../base/ufos/ui/hire.ufo:519 ../base/ufos/ui/hire.ufo:535
 msgid "Occupation"
@@ -26799,7 +27933,7 @@ msgstr "TU:"
 
 #: ../base/ufos/ui/hud_.ufo:155 ../base/ufos/ui/hud_phone.ufo:100
 msgid "Shots:"
-msgstr ""
+msgstr "Colpi:"
 
 #: ../base/ufos/ui/hud_.ufo:607
 msgid "Chat"
@@ -27092,11 +28226,11 @@ msgstr "Esci dal client email"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Esprimi il tou Mi piace su facebook"
 
 #: ../base/ufos/ui/main.ufo:26
 #, fuzzy
@@ -27105,7 +28239,7 @@ msgstr "Sitters"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Seguici su Twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -27121,7 +28255,7 @@ msgstr "Tutorials"
 
 #: ../base/ufos/ui/main.ufo:91
 msgid "Developers"
-msgstr ""
+msgstr "Sviluppatori"
 
 #: ../base/ufos/ui/main.ufo:127
 msgid "Initial settings"
@@ -27216,11 +28350,11 @@ msgstr "Numero di questi oggetti nella base"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
-msgstr ""
+msgstr "Mercato"
 
 #: ../base/ufos/ui/market.ufo:190
 msgid "Number of such items on the market"
-msgstr ""
+msgstr "Numero di tali articoli sul mercato"
 
 #: ../base/ufos/ui/market.ufo:197
 msgid "Price"
@@ -27246,7 +28380,7 @@ msgstr "Capacità:"
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
-msgstr ""
+msgstr "Libero"
 
 #: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
 #: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:308
@@ -27255,7 +28389,7 @@ msgstr "tutto"
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
-msgstr ""
+msgstr "Editor materiale"
 
 #: ../base/ufos/ui/material_editor.ufo:71
 msgid "Hardness:"
@@ -27263,15 +28397,15 @@ msgstr "Durezza:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
-msgstr ""
+msgstr "Bump:"
 
 #: ../base/ufos/ui/material_editor.ufo:117
 msgid "Specular:"
-msgstr ""
+msgstr "Speculare:"
 
 #: ../base/ufos/ui/material_editor.ufo:140
 msgid "Parallax:"
-msgstr ""
+msgstr "Parallasse:"
 
 #: ../base/ufos/ui/material_editor.ufo:241
 msgid "+"
@@ -27613,7 +28747,7 @@ msgstr "Sei pronto?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "Controllo amministratore"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
 #, fuzzy
@@ -27632,7 +28766,7 @@ msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Contro l'amministratore remoto"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -27724,15 +28858,15 @@ msgstr "Ligue disponibili:"
 
 #: ../base/ufos/ui/options.ufo:203
 msgid "Mods"
-msgstr ""
+msgstr "Mod"
 
 #: ../base/ufos/ui/options.ufo:210
 msgid "Available game modifications"
-msgstr ""
+msgstr "Modifiche del gioco disponibili"
 
 #: ../base/ufos/ui/options.ufo:239
 msgid "Activate mod"
-msgstr ""
+msgstr "Mod attivata"
 
 #: ../base/ufos/ui/options.ufo:250
 msgid "Several Tips"
@@ -27740,19 +28874,19 @@ msgstr "Suggerimenti Vari"
 
 #: ../base/ufos/ui/options.ufo:260
 msgid "Show cursor tooltips in menus."
-msgstr ""
+msgstr "Mostra cursore di descrizione comando nei menù."
 
 #: ../base/ufos/ui/options.ufo:261
 msgid "Tooltips (menu):"
-msgstr ""
+msgstr "Descrizione comando (menù):"
 
 #: ../base/ufos/ui/options.ufo:277
 msgid "Show cursor tooltips in tactical mode."
-msgstr ""
+msgstr "Mostra cursore di descrizione comando nella modalità tattica."
 
 #: ../base/ufos/ui/options.ufo:278
 msgid "Tooltips (battlescape):"
-msgstr ""
+msgstr "Descrizione comando (battlescape)"
 
 #: ../base/ufos/ui/options.ufo:293
 msgid "Show 'Tip of the Day':"
@@ -27824,11 +28958,12 @@ msgstr "Forza lo schermo con rapporto 4:3:"
 
 #: ../base/ufos/ui/options.ufo:506
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Impedisci al puntatore mouse di lasciare la finestra di gioco."
 
 #: ../base/ufos/ui/options.ufo:507
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
 msgstr ""
+"Suggerimento: premi CTRL +G per prendere/rilasciare il puntatore mouse."
 
 #: ../base/ufos/ui/options.ufo:518
 msgid "Calibrate your display here."
@@ -27895,6 +29030,8 @@ msgid ""
 "Sets the maximum size for textures and caps resolutions higher than that "
 "value."
 msgstr ""
+"Imposta la dimensione massima delle texture e delle schermate ad un valore "
+"superiore."
 
 #: ../base/ufos/ui/options.ufo:700
 msgid "Resolution Cap:"
@@ -27985,6 +29122,8 @@ msgid ""
 "Texture Level-of-Detail. Enabling this might result in some blurry textures "
 "if you zoom out a little bit."
 msgstr ""
+"Livello di dettaglio delle texture. Attivando questa opzione si potrebbero "
+"osservare alcune texture offuscate se si esegue un ridotto zoom all'indietro."
 
 #: ../base/ufos/ui/options.ufo:804
 msgid "LoD:"
@@ -28034,7 +29173,7 @@ msgstr "GLSL Shaders:"
 
 #: ../base/ufos/ui/options.ufo:864
 msgid "Set the OpenGL shader quality - or disable them."
-msgstr ""
+msgstr "Imposta il livello di qualità degli shader OpenGL - o disattiva."
 
 #: ../base/ufos/ui/options.ufo:874
 msgid "Disabled"
@@ -28042,7 +29181,7 @@ msgstr "Disailitato"
 
 #: ../base/ufos/ui/options.ufo:879
 msgid "Low quality"
-msgstr ""
+msgstr "Qualità bassa"
 
 #: ../base/ufos/ui/options.ufo:884
 msgid "Medium quality"
@@ -28078,7 +29217,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:929
 msgid "Multisample Buffers / Swap Interval:"
-msgstr ""
+msgstr "Buffer multicampione / Intervallo di Swap"
 
 #: ../base/ufos/ui/options.ufo:935
 msgid ""
@@ -28098,21 +29237,23 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:968
 msgid "Post-processing shader effects like glowing textures."
-msgstr ""
+msgstr "Effetti shader di post-elaborazione come le texture di luce."
 
 #: ../base/ufos/ui/options.ufo:969
 msgid "Post-Processing Shader Effects:"
-msgstr ""
+msgstr "Post-elaborazione effetti shader"
 
 #: ../base/ufos/ui/options.ufo:975
 msgid "Enable post processing shader effects."
-msgstr ""
+msgstr "Attiva effetti shader di post-elaborazione."
 
 #: ../base/ufos/ui/options.ufo:985
 msgid ""
 "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic "
 "hardware accelerated lights allowed."
 msgstr ""
+"Illuminazione in tempo reale del mondo tridimensionale di UFO:AI. Numero "
+"massimo consentito di luci dinamiche con accelerazione hardware."
 
 #: ../base/ufos/ui/options.ufo:986
 msgid "Realtime Lighting / Max Dynamic Lights:"
@@ -28121,6 +29262,7 @@ msgstr "Sorgenti di luce e illuminazione:"
 #: ../base/ufos/ui/options.ufo:998
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
+"Cambia il numero consentito di luci dinamiche con accelerazione hardware."
 
 #: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
@@ -28128,11 +29270,11 @@ msgstr "Altrimenti noto come bumpmapping."
 
 #: ../base/ufos/ui/options.ufo:1028
 msgid "Texture Normalmapping:"
-msgstr ""
+msgstr "Normal mapping delle texture:"
 
 #: ../base/ufos/ui/options.ufo:1034
 msgid "Enable normal-/bumpmapping."
-msgstr ""
+msgstr "Attiva il normal-/ bump mapping."
 
 #: ../base/ufos/ui/options.ufo:1045
 msgid "Amount of light emitting from the sun and shining on the earth."
@@ -28140,11 +29282,11 @@ msgstr "Quantità di luce emessa dal sole e riflessa sulla terra."
 
 #: ../base/ufos/ui/options.ufo:1046
 msgid "Geo Ambient Lighting:"
-msgstr ""
+msgstr "Illuminazione di geoambientale:"
 
 #: ../base/ufos/ui/options.ufo:1071
 msgid "At the moment these are just drop-shadows."
-msgstr ""
+msgstr "Ora sono presenti solo effetti di ombra."
 
 #: ../base/ufos/ui/options.ufo:1072
 msgid "Shadows:"
@@ -28163,36 +29305,45 @@ msgid ""
 "The lightmap block size defines the resolution of the lightmap. Higher block "
 "size means using more detailed lightmaps."
 msgstr ""
+"La dimensione blocco della lightmap definisce la risoluzione della lightmap. "
+"Una dimensione maggiore comporta l'uso di lightmap più dettagliate."
 
 #: ../base/ufos/ui/options.ufo:1101
 msgid "Lightmap Block Size:"
-msgstr ""
+msgstr "Dimensione blocco della lightmap"
 
 #: ../base/ufos/ui/options.ufo:1108
 msgid ""
 "Low means a maximum lightmap resolution of 512x512 pixel. High means up to "
 "2048x2048 pixel."
 msgstr ""
+"Basso significa una risoluzione massima della lightmap di 512x512 pixel. "
+"Alto significa fino al 2048 x 2048 pixel."
 
 #: ../base/ufos/ui/options.ufo:1149
 msgid "Enabled by default for compatibility reasons."
-msgstr ""
+msgstr "Attivo come predefinito per ragioni di incompatibilità."
 
 #: ../base/ufos/ui/options.ufo:1150
 msgid "Intel Graphics Hardware Hack:"
-msgstr ""
+msgstr "Intel Graphics Hardware Hack:"
 
 #: ../base/ufos/ui/options.ufo:1156
 msgid ""
 "This hack deactivates GLSL shaders on Intel chips. Disable it to be able to "
 "turn on advanced rendering features."
 msgstr ""
+"Questa modifica disattiva gli shadet GLSL sui chip Intel. Disattiva per "
+"poter attivare le caratteristiche di rendering avanzate. "
 
 #: ../base/ufos/ui/options.ufo:1189
 msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
+"I razzi luminosi sono impiegati per mostrare gli effetti di riflessione "
+"della luce. La visibilità di tali razzi è calcolata in base all'angolo della "
+"superficie che emette la luce. "
 
 #: ../base/ufos/ui/options.ufo:1190
 msgid "Flares:"
@@ -28200,7 +29351,7 @@ msgstr "Lampeggi:"
 
 #: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
-msgstr ""
+msgstr "Le corone sono morbidi poligoni arrotondati con fusione alfa."
 
 #: ../base/ufos/ui/options.ufo:1206
 msgid "Coronas:"
@@ -28233,10 +29384,14 @@ msgid ""
 "through applying special material properties like specularity or hardness to "
 "defined textures."
 msgstr ""
+"Il materiale di sistema serve a mostrare le animazioni delle texture, gli "
+"effetti come la rotazione, l'allungamento o lo scorrimento delle texture e "
+"per manipolare il rendering applicando le proprietà specifiche dei materiali "
+"come la specularità o la durezza di determinate texture.  "
 
 #: ../base/ufos/ui/options.ufo:1254
 msgid "Material System:"
-msgstr ""
+msgstr "Materiale di sistema:"
 
 #: ../base/ufos/ui/options.ufo:1267
 msgid "Switch to low video settings"
@@ -28286,7 +29441,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1450
 msgid "Audio Sample Rate:"
-msgstr ""
+msgstr "Frequenza di campionamento audio:"
 
 #: ../base/ufos/ui/options.ufo:1484
 msgid "Restart the sound-engine and apply your settings."
@@ -28350,7 +29505,7 @@ msgstr "Impostazioni di gioco in modalità tattica"
 
 #: ../base/ufos/ui/options.ufo:1639
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
+msgstr "Seleziona il visore HUD per la modalità tattica."
 
 #: ../base/ufos/ui/options.ufo:1640
 msgid "HUD Design:"
@@ -28431,11 +29586,11 @@ msgstr "Geoscape 3D:"
 
 #: ../base/ufos/ui/options.ufo:1753
 msgid "Show/Hide the panel decoration on the geoscape."
-msgstr ""
+msgstr "Mostra/Nascondi il pannello grafico sul mappamondo. "
 
 #: ../base/ufos/ui/options.ufo:1754
 msgid "Show decoration:"
-msgstr ""
+msgstr "Mostra decorazione:"
 
 #: ../base/ufos/ui/options.ufo:1769
 msgid "The minimum/maximum zoom of the geoscape camera"
@@ -28443,7 +29598,7 @@ msgstr "Minimo/Massimo zoom della visuale Geoscape"
 
 #: ../base/ufos/ui/options.ufo:1770
 msgid "Min/Max Geo-Cam Zoom:"
-msgstr ""
+msgstr "Min/Max Ingrandimento della Geo-Cam:"
 
 #: ../base/ufos/ui/options.ufo:1777
 msgid "Minimum zoom level of the geoscape camera"
@@ -28495,7 +29650,7 @@ msgstr "Joystick o Joypad:"
 
 #: ../base/ufos/ui/options.ufo:1908
 msgid "Available game controllers."
-msgstr ""
+msgstr "Dispositivi di gioco disponibili."
 
 #: ../base/ufos/ui/options.ufo:1919
 msgid ""
@@ -28523,7 +29678,7 @@ msgstr "Menu"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Globale"
 
 #: ../base/ufos/ui/options.ufo:2034
 #, fuzzy
@@ -28583,6 +29738,7 @@ msgstr "Capacità:"
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
+"Non c'è più spazio per risorse/persone in questa base. Libera altro spazio. "
 
 #: ../base/ufos/ui/popup_capacity.ufo:84 ../base/ufos/ui/research.ufo:136
 #, fuzzy
@@ -28632,7 +29788,7 @@ msgstr "Capacità:"
 
 #: ../base/ufos/ui/popup_installations.ufo:550
 msgid "Free Space:"
-msgstr ""
+msgstr "Spazio disponibile:"
 
 #: ../base/ufos/ui/popup_installations.ufo:562
 #: ../base/ufos/ui/popup_installations.ufo:662
@@ -28713,7 +29869,7 @@ msgstr "Nessuna proposta di ricerca per questo progetto."
 
 #: ../base/ufos/ui/research.ufo:78
 msgid "Assign less scientists on this project"
-msgstr ""
+msgstr "Assegna meno scienziati a questo progetto"
 
 #: ../base/ufos/ui/research.ufo:96
 #, fuzzy
@@ -28722,23 +29878,23 @@ msgstr "Assegna qualche soldato al velivolo prima."
 
 #: ../base/ufos/ui/research.ufo:106
 msgid "Assign all free scientists on this project"
-msgstr ""
+msgstr "Assegna questo progetto a tutti gli scenziati non impegnati "
 
 #: ../base/ufos/ui/research.ufo:153
 msgid "N/A"
-msgstr ""
+msgstr "Non disponibile"
 
 #: ../base/ufos/ui/research.ufo:154
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr ""
+msgstr "Un artefatto o un prerequisito è mancante per questo argomento"
 
 #: ../base/ufos/ui/research.ufo:162
 msgid "Expand/Collapse"
-msgstr ""
+msgstr "Espandi/Riduci"
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
-msgstr ""
+msgstr "Argomenti"
 
 #: ../base/ufos/ui/research.ufo:301 client/cgame/campaign/cp_aircraft.cpp:373
 msgid "idle"
@@ -28809,7 +29965,9 @@ msgstr "Nave da Sbarco:"
 msgid ""
 "Select the dropship that should be used (only possible if available for that "
 "map)."
-msgstr "Seleziona UFO da usare (solo se disponibile per la mappa attuale)."
+msgstr ""
+"Seleziona la nave da sbarco da usare (solo se disponibile per la mappa "
+"attuale)."
 
 #: ../base/ufos/ui/skirmish.ufo:249
 msgid "Equipment of your team."
@@ -28974,12 +30132,12 @@ msgstr "A:"
 
 #: ../base/ufos/ui/transfer.ufo:279
 msgid "Cargo"
-msgstr ""
+msgstr "Carico"
 
 #: ../base/ufos/ui/transfer.ufo:287
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
 msgid "Amount"
-msgstr ""
+msgstr "Quantità"
 
 #: ../base/ufos/ui/transfer.ufo:339
 msgid "Destination base"
@@ -28991,11 +30149,11 @@ msgstr "Strutture"
 
 #: ../base/ufos/ui/transfer.ufo:383
 msgid "all space"
-msgstr ""
+msgstr "Tutto lo spazio"
 
 #: ../base/ufos/ui/transfer.ufo:426
 msgid "Capacity overload\";"
-msgstr ""
+msgstr "Sovraccarico\";"
 
 #: ../base/ufos/ui/transfer.ufo:445 ../base/ufos/ui/transfer.ufo:473
 msgid "Start the transfer"
@@ -29011,11 +30169,11 @@ msgstr "Elenco dei trasferimenti"
 
 #: ../base/ufos/ui/transfer.ufo:489
 msgid "Clear"
-msgstr ""
+msgstr "Rimuovi"
 
 #: ../base/ufos/ui/transfer.ufo:490
 msgid "Clear cargo"
-msgstr ""
+msgstr "Rimuovi carico"
 
 #: ../base/ufos/ui/transfer.ufo:530
 msgid "Select base to transfer to"
@@ -29052,7 +30210,7 @@ msgstr "Prerequisiti:"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Accesso"
 
 #: ../base/ufos/ui/web.ufo:37
 #, fuzzy
@@ -29065,7 +30223,7 @@ msgstr "Kit Medico"
 
 #: ../base/ufos/weapons.ufo:28
 msgid "First Aid"
-msgstr ""
+msgstr "Primo soccorso"
 
 #: ../base/ufos/weapons.ufo:44
 msgid "Stimulants"
@@ -29073,7 +30231,7 @@ msgstr "Stimolanti"
 
 #: ../base/ufos/weapons.ufo:60
 msgid "Antipsychotics"
-msgstr ""
+msgstr "Antipsicotici"
 
 #: ../base/ufos/weapons.ufo:82
 msgid "IR Goggles"
@@ -29540,11 +30698,11 @@ msgstr "Caricatore Fucile da Cecchino"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 msgid "ugv_ares_w"
-msgstr ""
+msgstr "ugv_ares_w"
 
 #: ../base/ufos/weapons_ugv.ufo:31
 msgid "ugv_phoenix"
-msgstr ""
+msgstr "ugv_phoenix"
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
@@ -29574,7 +30732,7 @@ msgstr "Non puoi ricaricare questo oggetto sconosciuto."
 #: client/battlescape/cl_actor.cpp:1060 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
-msgstr ""
+msgstr "Questo soldato non può trasportare nient'altro."
 
 #: client/battlescape/cl_actor.cpp:1060 client/battlescape/cl_hud.cpp:1381
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
@@ -29823,7 +30981,7 @@ msgstr "velocità di scatto"
 
 #: client/battlescape/cl_hud.cpp:1295
 msgid "movement speed"
-msgstr ""
+msgstr "Velocità di movimento"
 
 #: client/battlescape/cl_hud.cpp:1297
 msgid "sight range"
@@ -29840,27 +30998,30 @@ msgstr "UT"
 #: client/battlescape/cl_hud.cpp:1331
 #, c-format
 msgid "Damaged %s (deterioration: %i)\n"
-msgstr ""
+msgstr "Danno %s (Deterioramento: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1331
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
-msgstr ""
+msgstr "Ferito %s (sanguinamento: %i)\n"
 
 #: client/battlescape/cl_hud.cpp:1334
 #, c-format
 msgid "- Reduced %s\n"
-msgstr ""
+msgstr "- Ridotto %s\n"
 
 #: client/battlescape/cl_hud.cpp:1372 client/cl_inventory_callbacks.cpp:374
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
+"Questo soldato non ha più unità di tempo sufficienti per usare i seguenti "
+"elementi:\n"
+"\n"
 
 #: client/battlescape/cl_hud.cpp:1385 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 # # in game
 #: client/battlescape/cl_hud.cpp:1404
@@ -29913,7 +31074,7 @@ msgstr "Arma nella mano sinistra ricaricata."
 
 #: client/battlescape/cl_hud_callbacks.cpp:304
 msgid "Right hand weapon reloaded."
-msgstr ""
+msgstr "Arma nella mano destra ricaricata."
 
 #: client/battlescape/cl_hud_callbacks.cpp:345
 msgid "Set selected actor to move mode (it cancels the fire mode)."
@@ -30708,16 +31869,16 @@ msgstr "Costruisci un %s prima."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "Nessun rapporto"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Percento"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Quantità"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
@@ -31183,12 +32344,12 @@ msgstr "UFO a portata del radar\n"
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:43
 #, c-format
 msgid "Damaged %s (damage: %i)"
-msgstr ""
+msgstr "Danneggiato %s (danno: %i)"
 
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:44
 #, c-format
 msgid "Wounded %s (damage: %i)"
-msgstr ""
+msgstr "Ferito %s (danno: %i)"
 
 #: client/cgame/campaign/cp_installation.cpp:189
 #, c-format
@@ -31250,7 +32411,7 @@ msgstr "Lascia perdere"
 #: client/cgame/campaign/cp_installation_callbacks.cpp:241
 #, c-format
 msgid "Condition: %3.0f%%"
-msgstr ""
+msgstr "Condizione: %3.0f%%"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:262
 msgid "day"
@@ -31377,7 +32538,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:383
 msgid "UGV is away from home"
-msgstr ""
+msgstr "UGV è lontano da casa"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:426
 msgid "Aircraft is away from home"
@@ -31508,7 +32669,7 @@ msgstr "%i %s %02i, %02i:%02i ->"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 msgid "Your dropship is not near the landing zone"
-msgstr "Le nave trasporto non è vicina alla zona d'atterraggio"
+msgstr "Le nave da sbarco non è vicina alla zona d'atterraggio"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
 msgid "Aliens killed"
@@ -31932,7 +33093,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "Lavoro iniziato il %s"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -32512,7 +33673,7 @@ msgstr ""
 #: client/cgame/campaign/cp_ufopedia.cpp:619
 #, c-format
 msgid "UFOpaedia: %s (complete)"
-msgstr ""
+msgstr "UFOpaedia: %s (completo)"
 
 # #ufopedia
 #: client/cgame/campaign/cp_ufopedia.cpp:672
@@ -32635,7 +33796,7 @@ msgstr "Base '%s' sotto attacco!"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:63
 msgid "The Carrier UFO is in range. Should we launch the payload?"
-msgstr "La "
+msgstr "L'Ufo vettore è nel raggio di tiro. Lanciamo il carico esplosivo?"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
 msgid "Don't attack the UFO-Carrier yet"
@@ -33017,7 +34178,7 @@ msgstr "Fuoco di reazione"
 
 #: client/cl_main.cpp:407
 msgid "The password you specified was wrong."
-msgstr ""
+msgstr "La password specificata è errata."
 
 #: client/cl_main.cpp:410
 #, fuzzy
@@ -33041,15 +34202,15 @@ msgstr "Squadra già in uso"
 
 #: client/cl_main.cpp:423
 msgid "The server is running a different version of the game."
-msgstr ""
+msgstr "Il server ha avviato una versione diversa del gioco."
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "rcon password errato"
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "La password rcon specificata non è valida"
 
 #: client/cl_main.cpp:429
 #, fuzzy
@@ -33423,7 +34584,7 @@ msgstr "La squadra attualmente attiva ha raggiunto il tempo massimo per turno."
 
 #: game/g_trigger.cpp:139
 msgid "Switching map!"
-msgstr "Scambiando mappa!"
+msgstr "Cambio mappa in corso!"
 
 #: game/g_trigger.cpp:168
 msgid "You are now ready to switch the map."
