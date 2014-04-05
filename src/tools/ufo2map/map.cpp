@@ -1214,7 +1214,7 @@ void LoadMapFile (const char* filename)
 	/* Set the number of tiles to 1. This is fix for ufo2map right now. */
 	mapTiles.numTiles = 1;
 
-	char entityString[MAX_TOKEN_CHARS];
+	char entityString[2 * MAX_TOKEN_CHARS];
 	const char* ump = GetUMPName(filename);
 	if (ump != nullptr)
 		ParseUMP(ump, entityString, false);
