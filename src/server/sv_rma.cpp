@@ -2224,11 +2224,11 @@ int SV_AssembleMap (const char* mapTheme, const char* assembly, char* asmTiles, 
 	return num;
 }
 
-int SV_AssembleMapAndTitle (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, const char** asmTitle)
+int SV_AssembleMapAndTitle (const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, char* asmTitle)
 {
 	MapInfo* map = SV_AssembleMap_ (mapTheme, assembly, asmTiles, asmPos, entityString, seed, print);
 	int num = map->numPlaced;
-	*asmTitle = map->getCurrentAssemblyTitle();
+	strcpy(asmTitle, map->getCurrentAssemblyTitle());
 	Mem_Free(map);
 	return num;
 }

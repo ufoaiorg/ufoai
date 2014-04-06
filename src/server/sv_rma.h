@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RMA_HIGHEST_SUPPORTED_SEED 50
 
 int SV_AssembleMap(const char* name, const char* assembly, char* asmMap, char* asmPos, char* entityString, const unsigned int seed, bool print);
-int SV_AssembleMapAndTitle(const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, const char** asmTitle);
+int SV_AssembleMapAndTitle(const char* mapTheme, const char* assembly, char* asmTiles, char* asmPos, char* entityString, const unsigned int seed, bool print, char* asmTitle);
 
 /* the next function is only exported for cunits tests */
 void SV_PrintAssemblyStats(const char* mapTheme, const char* asmName);

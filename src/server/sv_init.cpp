@@ -161,10 +161,10 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	}
 
 	/* assemble and load the map */
-	const char* asmTitle = nullptr;
+	char asmTitle[MAX_VAR];
 	int numPlaced = 0;
 	if (levelstring[0] == '+') {
-		numPlaced = SV_AssembleMapAndTitle(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose, &asmTitle);
+		numPlaced = SV_AssembleMapAndTitle(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose, asmTitle);
 		if (!numPlaced) {
 			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
 			return;
