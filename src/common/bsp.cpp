@@ -578,13 +578,13 @@ static void CMod_LoadEntityString (MapTile& tile, const char* entityString, mapD
  * @brief Loads the lightmap for server side visibility lookup
  * @todo Implement this
  */
-static void CMod_LoadLighting (MapTile& tile, const byte* base, const lump_t* l)
+static void CMod_LoadLighting (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	if (l->filelen == 0)
+	if (lump->filelen == 0)
 		return;
 
-	tile.lightdata = Mem_PoolAllocTypeN(byte, l->filelen, com_cmodelSysPool);
-	memcpy(tile.lightdata, base + l->fileofs, l->filelen);
+	tile.lightdata = Mem_PoolAllocTypeN(byte, lump->filelen, com_cmodelSysPool);
+	memcpy(tile.lightdata, base + lump->fileofs, lump->filelen);
 }
 
 /**
