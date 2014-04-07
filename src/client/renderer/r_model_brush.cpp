@@ -268,20 +268,17 @@ static void R_SetSurfaceExtents (mBspSurface_t* surf, const model_t* mod)
 
 static void R_ModLoadSurfaces (bool day, const lump_t* l)
 {
-	const dBspSurface_t* in;
-	int count, surfnum;
-
-	in = (const dBspSurface_t*) (mod_base + l->fileofs);
+	const dBspSurface_t* in = (const dBspSurface_t*) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
-	count = l->filelen / sizeof(*in);
+	int count = l->filelen / sizeof(*in);
 	mBspSurface_t* out = Mem_PoolAllocTypeN(mBspSurface_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
 
 	r_worldmodel->bsp.surfaces = out;
 	r_worldmodel->bsp.numsurfaces = count;
 
-	for (surfnum = 0; surfnum < count; surfnum++, in++, out++) {
+	for (int surfnum = 0; surfnum < count; surfnum++, in++, out++) {
 		uint16_t planenum;
 		int16_t side;
 		int ti;
@@ -954,14 +951,13 @@ static void R_SetupSubmodels (void)
 static void R_SetupWorldModel (void)
 {
 	int surfCount = r_worldmodel->bsp.numsurfaces;
-	/* first NUM_REGULAR_MODELS submodels are the models of the different levels, don't care about them */
-	int i = NUM_REGULAR_MODELS;
 
 #ifdef DEBUG
 	/* validate surface allocation by submodels by checking the surface array range they are using */
 	/* start with inverted range to simplify code */
 	int first = surfCount, last = -1; /* @note range is [,) */
-	for (; i < r_worldmodel->bsp.numsubmodels; i++) {
+	/* first NUM_REGULAR_MODELS submodels are the models of the different levels, don't care about them */
+	for (int i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
 		const mBspHeader_t* sub = &r_worldmodel->bsp.submodels[i];
 		int firstFace = sub->firstface;
 		int lastFace = firstFace + sub->numfaces;

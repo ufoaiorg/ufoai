@@ -46,10 +46,9 @@ s_sample_t* stdSoundPool[MAX_SOUNDIDS];
  */
 static s_sample_t* S_FindByName (const char* name)
 {
-	s_sample_t* sample;
 	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 
-	for (sample = sampleHash[hash]; sample; sample = sample->hashNext)
+	for (s_sample_t* sample = sampleHash[hash]; sample; sample = sample->hashNext)
 		if (Q_streq(name, sample->name))
 			return sample;
 

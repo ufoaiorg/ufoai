@@ -510,8 +510,7 @@ static size_t R_PreprocessShaderR (const char* name, const char** inPtr, char* o
 				}
 				if (out) {
 					for (int j = 0; j < z; j++) {
-						int l = 0;
-						for (; l < subLength; l++) {
+						for (int l = 0; l < subLength; l++) {
 							if (buffer[l] == '$') {
 								byte insertedLen = (j / 10) + 1;
 								if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", j))
