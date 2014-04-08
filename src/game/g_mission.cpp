@@ -215,8 +215,7 @@ void G_MissionThink (Edict* self)
 			Edict* item = G_GetEdictFromPos(chain->pos, ET_ITEM);
 			if (item != nullptr) {
 				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
-					Com_Printf("Could not remove item '%s' from floor edict %i\n",
-							chain->item, item->getIdNum());
+					Com_Printf("Could not remove item '%s' from floor edict %i\n", chain->item, item->getIdNum());
 				} else if (!item->getFloor()) {
 					G_EventPerish(*item);
 					G_FreeEdict(item);
