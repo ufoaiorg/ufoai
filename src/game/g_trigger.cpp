@@ -110,7 +110,7 @@ Edict* G_TriggerSpawn (Edict* owner)
 	Edict* trigger = G_Spawn("trigger");
 	trigger->type = ET_TRIGGER;
 	/* set the owner, e.g. link the door into the trigger */
-	trigger->owner = owner;
+	trigger->_owner = owner;
 
 	AABB aabb(owner->absBox);
 	aabb.expandXY(UNIT_SIZE / 2);	/* expand the trigger box */
@@ -269,22 +269,22 @@ static bool Touch_TouchTrigger (Edict* self, Edict* activator)
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
 
-	self->owner = G_EdictsFindTargetEntity(self->target);
-	if (!self->owner) {
+	self->_owner = G_EdictsFindTargetEntity(self->target);
+	if (!self->owner()) {
 		gi.DPrintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
 		G_FreeEdict(self);
 		return false;
 	}
 
-	if (self->owner->flags & FL_CLIENTACTION) {
-		G_ActorSetClientAction(activator, self->owner);
+	if (self->owner()->flags & FL_CLIENTACTION) {
+		G_ActorSetClientAction(activator, self->owner());
 	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == nullptr) {
-		if (!self->owner->use) {
+		if (!self->owner()->use) {
 			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 			G_FreeEdict(self);
 			return false;
 		}
-		G_UseEdict(self->owner, activator);
+		G_UseEdict(self->owner(), activator);
 	}
 
 	return false;
@@ -293,10 +293,10 @@ static bool Touch_TouchTrigger (Edict* self, Edict* activator)
 static void Reset_TouchTrigger (Edict* self, Edict* activator)
 {
 	/* fire the use function on leaving the trigger area */
-	if (activator != nullptr && (self->owner->flags & FL_CLIENTACTION))
+	if (activator != nullptr && (self->owner()->flags & FL_CLIENTACTION))
 		G_ActorSetClientAction(activator, nullptr);
 	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == nullptr)
-		G_UseEdict(self->owner, activator);
+		G_UseEdict(self->owner(), activator);
 }
 
 /**

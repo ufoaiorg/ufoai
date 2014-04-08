@@ -49,10 +49,10 @@ void G_MissionAddVictoryMessage (const char* message)
  */
 bool G_MissionTouch (Edict* self, Edict* activator)
 {
-	if (!self->owner)
+	if (!self->owner())
 		return false;
 
-	switch (self->owner->team) {
+	switch (self->owner()->team) {
 	case TEAM_ALIEN:
 		if (G_IsAlien(activator)) {
 			if (!self->count) {
@@ -66,16 +66,16 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		}
 	/* general case that also works for multiplayer teams */
 	default:
-		if (activator->team != self->owner->team) {
+		if (activator->team != self->owner()->team) {
 			/* reset king of the hill counter */
 			self->count = 0;
 			return false;
 		}
-		if (self->owner->count)
+		if (self->owner()->count)
 			return false;
 
-		self->owner->count = level.actualRound;
-		if (!self->owner->item) {
+		self->owner()->count = level.actualRound;
+		if (!self->owner()->item) {
 			gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
 			return true;
 		}
@@ -88,13 +88,13 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 			while ((item = cont->getNextItem(item))) {
 				const objDef_t* od = item->def();
 				/* check whether we found the searched item in the actor's inventory */
-				if (!Q_streq(od->id, self->owner->item))
+				if (!Q_streq(od->id, self->owner()->item))
 					continue;
 
 				/* drop the weapon - even if out of TUs */
 				G_ActorInvMove(activator, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
 				gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
-				self->owner->count = level.actualRound;
+				self->owner()->count = level.actualRound;
 				return true;
 			}
 		}

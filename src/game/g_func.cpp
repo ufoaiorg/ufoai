@@ -286,18 +286,18 @@ static bool Door_Use (Edict* door, Edict* activator)
  */
 static bool Touch_DoorTrigger (Edict* self, Edict* activator)
 {
-	if (self->owner && self->owner->inuse) {
+	if (self->owner() && self->owner()->inuse) {
 		if (G_IsAI(activator)) {
 			/* let the ai interact with the door */
 			if (self->flags & FL_GROUPSLAVE)
 				self = self->groupMaster;
-			if (AI_CheckUsingDoor(activator, self->owner))
-				G_ActorUseDoor(activator, self->owner);
+			if (AI_CheckUsingDoor(activator, self->owner()))
+				G_ActorUseDoor(activator, self->owner());
 			/* we don't want the client action stuff to be send for ai actors */
 			return false;
 		} else {
 			/* prepare for client action */
-			G_ActorSetClientAction(activator, self->owner);
+			G_ActorSetClientAction(activator, self->owner());
 			return true;
 		}
 	}
@@ -311,7 +311,7 @@ static bool Touch_DoorTrigger (Edict* self, Edict* activator)
  */
 static void Reset_DoorTrigger (Edict* self, Edict* activator)
 {
-	if (activator->clientAction == self->owner)
+	if (activator->clientAction == self->owner())
 		G_ActorSetClientAction(activator, nullptr);
 }
 

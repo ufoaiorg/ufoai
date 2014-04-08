@@ -62,7 +62,7 @@ public:
 	vec3_t size;
 
 	Edict* _child;		/**< e.g. the trigger for this edict */
-	Edict* owner;		/**< e.g. the door model in case of func_door */
+	Edict* _owner;		/**< e.g. the door model in case of func_door */
 	int modelindex;		/**< inline model index */
 	const char* classname;
 #endif
@@ -217,6 +217,9 @@ public:
 	}
 	inline Edict* child () {
 		return _child;
+	}
+	inline Edict* owner () {
+		return _owner;
 	}
 	inline Item* getContainer (const containerIndex_t idx) const {
 		return chr.inv.getContainer2(idx);
