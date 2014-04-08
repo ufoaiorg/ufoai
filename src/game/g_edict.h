@@ -158,7 +158,7 @@ public:
 
 	/** flags will have FL_GROUPSLAVE set when the edict is part of a chain,
 	 * but not the master - you can use the groupChain pointer to get all the
-	 * edicts in the particular chain - and start out for the on that doesn't
+	 * edicts in the particular chain - and start out for the one that doesn't
 	 * have the above mentioned flag set.
 	 * @sa G_FindEdictGroups */
 	Edict* groupChain;
