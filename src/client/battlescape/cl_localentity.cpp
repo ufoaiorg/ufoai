@@ -973,7 +973,6 @@ bool LE_BrushModelAction (le_t* le, entity_t* ent)
 	case ET_BREAKABLE:
 		break;
 	case ET_TRIGGER_RESCUE: {
-		float x, y, z, xmax;
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
 
 		if (!((1 << cl_worldlevel->integer) & le->levelflags))
@@ -994,15 +993,13 @@ bool LE_BrushModelAction (le_t* le, entity_t* ent)
 		if (!(drawFlags & DRAW_CIRCLES))
 			return false;
 
-		/* There should be an easier way than calculating the grid coords back from the world coords */
-		z = roundf(le->aabb.getMinZ() / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
-		xmax = roundf(le->aabb.getMaxX() / UNIT_SIZE) * UNIT_SIZE - 0.1f;
-		for (x = roundf(le->aabb.getMinX() / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
-			const float ymax = roundf(le->aabb.getMaxY() / UNIT_SIZE) * UNIT_SIZE - 0.1f;
-			for (y = roundf(le->aabb.getMinY() / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
-				const vec3_t pos = {x + UNIT_SIZE / 4.0f, y + UNIT_SIZE / 4.0f, z};
+		/* The triggerbox seems to be 'off-by-one'. The '- UNIT_SIZE' compensates for that. */
+		for (vec_t x = le->aabb.getMinX(); x < le->aabb.getMaxX() - UNIT_SIZE; x += UNIT_SIZE) {
+			for (vec_t y = le->aabb.getMinY(); y < le->aabb.getMaxY() - UNIT_SIZE; y += UNIT_SIZE) {
+				const vec3_t center = {x + UNIT_SIZE / 2, y + UNIT_SIZE / 2, le->aabb.getMinZ()};
+
 				entity_t circle(RF_PATH);
-				VectorCopy(pos, circle.origin);
+				VectorCopy(center, circle.origin);
 				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE / 2.0f;
 				VectorCopy(ent->color, circle.color);
 				circle.alpha = ent->alpha;
