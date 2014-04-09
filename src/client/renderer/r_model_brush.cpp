@@ -982,8 +982,8 @@ static void R_SetupWorldModel (void)
 		Com_Printf("Warning: %i surfaces are lost, some world geometry could be missing as a result\n", r_worldmodel->bsp.numsurfaces - last);
 #else
 	/* take a shortcut: assume that first submodel surfaces begin exactly after world model ones */
-	if (i < r_worldmodel->bsp.numsubmodels)
-		surfCount = r_worldmodel->bsp.submodels[i].firstface;
+	if (NUM_REGULAR_MODELS < r_worldmodel->bsp.numsubmodels)
+		surfCount = r_worldmodel->bsp.submodels[NUM_REGULAR_MODELS].firstface;
 #endif
 	Com_DPrintf(DEBUG_RENDERER, "World model, range 0..%i\n", surfCount - 1);
 
