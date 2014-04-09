@@ -2,17 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"saturation" "0.1"
-"contrast" "0.7"
-"ambient_night" "0.05 0.0025 0.0025"
-"color_day" "1.0 0.55 0.55"
-"light_day" "100"
-"light_night" "40"
-"angles_day" "-90 100"
-"angles_night" "-90 220"
-"ambient_day" "0.1 0.055 0.055"
-"color_night" "1.0 0.3 0.3"
-"brightness" "1.1"
 // brush 0
 {
 ( 768 768 64 ) ( 768 0 64 ) ( 0 768 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
