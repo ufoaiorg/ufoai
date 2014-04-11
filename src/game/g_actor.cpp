@@ -429,6 +429,7 @@ void G_ActorCheckRevitalise (Edict* ent)
 
 		G_ActorRevitalise(ent);
 		G_EventActorRevitalise(*ent);
+		G_EventActorStateChange(~G_VisToPM(ent->visflags), *ent);
 		G_SendStats(*ent);
 	}
 }
@@ -483,6 +484,7 @@ bool G_ActorDieOrStun (Edict* ent, Edict* attacker)
 
 	/* send death */
 	G_EventActorDie(*ent, attacker != nullptr);
+	G_EventActorStateChange(~G_VisToPM(ent->visflags), *ent);
 
 	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);
