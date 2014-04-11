@@ -37,14 +37,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_MAPS 400
 
 /* max length of the ufo virtual filesystem */
-#define MAX_QPATH           64
+#define MAX_QPATH			64
 
 /* max length of a filesystem pathname
  * windows + linux 256, macosx 32 */
-#define	MAX_OSPATH          256
+#define	MAX_OSPATH			256
 
 /* max files in a directory */
-#define	MAX_FILES           512
+#define	MAX_FILES			512
 
 /*
 ==============================================================

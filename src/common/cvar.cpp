@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/infostring.h"
 #include <vector>
 
-#define CVAR_HASH_SIZE          64
+#define CVAR_HASH_SIZE 64
 
 static cvar_t* cvarVarsHash[CVAR_HASH_SIZE];
 
@@ -940,14 +940,14 @@ static void Cvar_List_f (void)
 			continue;
 #endif
 
-		Com_Printf(var->flags & CVAR_ARCHIVE    ? "A" : " ");
-		Com_Printf(var->flags & CVAR_USERINFO   ? "U" : " ");
+		Com_Printf(var->flags & CVAR_ARCHIVE	? "A" : " ");
+		Com_Printf(var->flags & CVAR_USERINFO	? "U" : " ");
 		Com_Printf(var->flags & CVAR_SERVERINFO ? "S" : " ");
-		Com_Printf(var->modified                ? "M" : " ");
-		Com_Printf(var->flags & CVAR_DEVELOPER  ? "D" : " ");
-		Com_Printf(var->flags & CVAR_R_IMAGES   ? "I" : " ");
-		Com_Printf(var->flags & CVAR_NOSET      ? "-" :
-		           var->flags & CVAR_LATCH      ? "L" : " ");
+		Com_Printf(var->modified				? "M" : " ");
+		Com_Printf(var->flags & CVAR_DEVELOPER	? "D" : " ");
+		Com_Printf(var->flags & CVAR_R_IMAGES	? "I" : " ");
+		Com_Printf(var->flags & CVAR_NOSET		? "-" :
+		           var->flags & CVAR_LATCH		? "L" : " ");
 		Com_Printf(" %-20s \"%s\"\n", var->name, var->string);
 		if (var->description)
 			Com_Printf(S_COLOR_GREEN "        %s\n", var->description);

@@ -669,7 +669,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 		*match = matchString;
 	} else {
 		/* Subsequent match, determine common prefix with previous match(es). */
-		char*       dst = matchString;
+		char*		dst = matchString;
 		char const* src = candidate;
 		while (*dst == *src) {
 			++dst;

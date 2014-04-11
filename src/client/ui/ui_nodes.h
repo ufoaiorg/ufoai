@@ -85,9 +85,9 @@ struct uiNode_t {
 	/* common navigation */
 	uiNode_t* firstChild; 		/**< first element of linked list of child */
 	uiNode_t* lastChild;  		/**< last element of linked list of child */
-	uiNode_t* next;      		/**< Next element into linked list */
-	uiNode_t* parent;     		/**< Parent window, else nullptr */
-	uiNode_t* root;       		/**< Shortcut to the root node */
+	uiNode_t* next;				/**< Next element into linked list */
+	uiNode_t* parent;			/**< Parent window, else nullptr */
+	uiNode_t* root;				/**< Shortcut to the root node */
 
 	/* common pos */
 	uiBox_t box;

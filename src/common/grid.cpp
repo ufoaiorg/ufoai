@@ -478,7 +478,7 @@ bool Step::isPossible (const pathing_t* path)
 	/* OK, at this point we are certain of a few things:
 	 * There is not a wall obstructing access to the destination cell.
 	 * If the actor is not a flier, the actor will not rise more than actor_stepup_height or fall more than
-	 *    falling_height, unless climbing.
+	 * falling_height, unless climbing.
 	 *
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
 	 * There are no floor difference restrictions for fliers, only obstructions. */
@@ -515,7 +515,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	assert((from[2]) < PATHFINDING_HEIGHT);
 
 	/* reset move data */
-	OBJSET(path->area,     ROUTING_NOT_REACHABLE);
+	OBJSET(path->area, ROUTING_NOT_REACHABLE);
 	OBJSET(path->areaFrom, ROUTING_NOT_REACHABLE);
 	path->fbList = fb_list;
 
