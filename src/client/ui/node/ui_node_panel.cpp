@@ -227,7 +227,6 @@ static void UI_BorderLayout (uiNode_t* node, int margin)
  */
 static void UI_PackLayout (uiNode_t* node, int margin)
 {
-	uiNode_t* child;
 	vec2_t newSize;
 	int minX = node->padding;
 	int maxX = node->box.size[0] - node->padding;
@@ -235,7 +234,7 @@ static void UI_PackLayout (uiNode_t* node, int margin)
 	int maxY = node->box.size[1] - node->padding;
 
 	/* top */
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		if (child->invis)
 			continue;
 		switch (child->align) {
@@ -294,8 +293,7 @@ static void UI_PackLayout (uiNode_t* node, int margin)
  */
 void UI_StarLayout (uiNode_t* node)
 {
-	uiNode_t* child;
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		if (child->align <= LAYOUTALIGN_NONE)
 			continue;
 
@@ -325,9 +323,7 @@ static void UI_ClientLayout (uiNode_t* node)
 {
 	int width = 0;
 	int height = 0;
-	uiNode_t* child;
-	bool updated;
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		int value;
 		value = child->box.pos[0] + child->box.size[0];
 		if (value > width)
@@ -340,7 +336,7 @@ static void UI_ClientLayout (uiNode_t* node)
 	width += node->padding;
 	height += node->padding;
 
-	updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
+	bool updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
 	updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
 	if (updated && EXTRADATA(node).super.onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);

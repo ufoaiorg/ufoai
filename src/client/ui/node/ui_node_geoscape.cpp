@@ -186,7 +186,6 @@ void uiGeoscapeNode::smoothTranslate (uiNode_t* node)
  */
 void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t* node, float q)
 {
-	int x;
 	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
 	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
 	const float sin_q = sin(q);
@@ -194,7 +193,7 @@ void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t* node, float q)
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
 	byte* px;
 
-	for (x = 0; x < DAN_WIDTH; x++) {
+	for (int x = 0; x < DAN_WIDTH; x++) {
 		const float phi = x * dphi - q;
 		sin_phi[x] = sin(phi);
 		cos_phi[x] = cos(phi);
@@ -205,7 +204,7 @@ void uiGeoscapeNode::calcAndUploadDayAndNightTexture (uiNode_t* node, float q)
 	for (int y = 0; y < DAN_HEIGHT; y++) {
 		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
 		const float root = sqrt(1 - a * a);
-		for (x = 0; x < DAN_WIDTH; x++) {
+		for (int x = 0; x < DAN_WIDTH; x++) {
 			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
 
 			if (pos >= DAWN)

@@ -155,11 +155,10 @@ void uiNode::onActivate (uiNode_t* node)
  */
 void uiLocatedNode::doLayout (uiNode_t* node)
 {
-	uiNode_t* child;
 	if (!node->invalidated)
 		return;
 
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		UI_Node_DoLayout(child);
 	}
 
@@ -168,24 +167,21 @@ void uiLocatedNode::doLayout (uiNode_t* node)
 
 void uiNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
-	uiNode_t* child;
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		UI_Node_WindowOpened(child, nullptr);
 	}
 }
 
 void uiNode::onWindowClosed (uiNode_t* node)
 {
-	uiNode_t* child;
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		UI_Node_WindowClosed(child);
 	}
 }
 
 void uiNode::onWindowActivate (uiNode_t* node)
 {
-	uiNode_t* child;
-	for (child = node->firstChild; child; child = child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		UI_Node_WindowActivate(child);
 	}
 }

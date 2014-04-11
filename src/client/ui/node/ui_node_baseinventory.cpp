@@ -333,8 +333,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t* node, const objDef_t* highli
 
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
-			int ammoIdx;
-			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
+			for (int ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
 				tempItem.setDef(obj->ammos[ammoIdx]);
 
 				/* skip weapos that are their own ammo -- oneshot and such */
@@ -534,8 +533,7 @@ static Item* UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX
 
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
-			int ammoIdx;
-			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
+			for (int ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
 				const objDef_t* objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */

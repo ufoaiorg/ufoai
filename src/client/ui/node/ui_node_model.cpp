@@ -358,9 +358,8 @@ void UI_DrawModelNode (uiNode_t* node, const char* source)
 
 	/* draw all children */
 	if (node->firstChild) {
-		uiNode_t* child;
 		modelInfo_t pmi = mi;
-		for (child = node->firstChild; child; child = child->next) {
+		for (uiNode_t* child = node->firstChild; child; child = child->next) {
 			const char* tag;
 			char childSource[MAX_VAR];
 			const char* childRef;
