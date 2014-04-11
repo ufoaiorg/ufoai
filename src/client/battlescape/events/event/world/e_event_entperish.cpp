@@ -62,6 +62,10 @@ void CL_EntPerish (const eventRegister_t* self, dbuffer* msg)
 		if (!cls.isOurRound() && le->team != TEAM_CIVILIAN)
 			LE_CenterView(le);
 		cls.i.destroyInventory(&le->inv);
+		if (le->ptl) {
+			CL_ParticleFree(le->ptl);
+			le->ptl = nullptr;
+		}
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:
