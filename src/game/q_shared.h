@@ -294,10 +294,10 @@ typedef int32_t shoot_types_t;
 	do { const bool reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);
 
 /* 25 - bases are 5*5 - see BASE_SIZE*/
-#define	MAX_TILESTRINGS     25
-#define	MAX_CLIENTS         256		/* absolute limit */
-#define	MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
-#define	MAX_ENTITYSTRINGS	2
+#define	MAX_TILESTRINGS			25
+#define	MAX_CLIENTS				256		/* absolute limit */
+#define	MAX_GENERAL				(MAX_CLIENTS*2) /* general config strings */
+#define	MAX_ENTITYSTRINGS		2
 
 /**
  * config strings are a general means of communication from
@@ -305,28 +305,28 @@ typedef int32_t shoot_types_t;
  * Each config string can usually be at most MAX_TOKEN_CHARS characters,
  * but some of them (eg. CS_TILES) can span a multiple of that.
  */
-#define CS_NAME				0
-#define CS_MAPTITLE			1		/**< display map title string - translated client side */
-#define CS_MAXCLIENTS		2
-#define CS_MAPCHECKSUM		3		/**< for catching cheater maps */
+#define CS_NAME					0
+#define CS_MAPTITLE				1		/**< display map title string - translated client side */
+#define CS_MAXCLIENTS			2
+#define CS_MAPCHECKSUM			3		/**< for catching cheater maps */
 #define CS_MAXSOLDIERSPERTEAM	4	/**< max soldiers per team */
 #define CS_MAXSOLDIERSPERPLAYER	5	/**< max soldiers per player when in teamplay mode */
-#define CS_ENABLEMORALE		6		/**< enable the morale states in multiplayer */
-#define CS_MAXTEAMS			7		/**< how many multiplayer teams for this map */
-#define CS_PLAYERCOUNT		8		/**< amount of already connected players */
-#define CS_VERSION			9		/**< what is the servers version */
-#define CS_UFOCHECKSUM		10		/**< checksum of ufo files */
-#define CS_OBJECTAMOUNT		11		/**< amount of defined objects in the script files */
-#define CS_LIGHTMAP			12		/**< which lightmap to use */
-#define CS_MAPZONE			13		/**< for terrain texture replacement */
+#define CS_ENABLEMORALE			6		/**< enable the morale states in multiplayer */
+#define CS_MAXTEAMS				7		/**< how many multiplayer teams for this map */
+#define CS_PLAYERCOUNT			8		/**< amount of already connected players */
+#define CS_VERSION				9		/**< what is the servers version */
+#define CS_UFOCHECKSUM			10		/**< checksum of ufo files */
+#define CS_OBJECTAMOUNT			11		/**< amount of defined objects in the script files */
+#define CS_LIGHTMAP				12		/**< which lightmap to use */
+#define CS_MAPZONE				13		/**< for terrain texture replacement */
 #define CS_VICTORY_CONDITIONS	14	/**< a list of msgids seperated by , */
-#define CS_ENTITYSTRING		15		/**< additional worldspawn settings */
-#define CS_TILES			(CS_ENTITYSTRING+MAX_ENTITYSTRINGS)
-#define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
-#define CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)
-#define CS_PLAYERNAMES		(CS_MODELS+MAX_MODELS)
-#define CS_GENERAL			(CS_PLAYERNAMES+MAX_CLIENTS)
-#define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
+#define CS_ENTITYSTRING			15		/**< additional worldspawn settings */
+#define CS_TILES				(CS_ENTITYSTRING+MAX_ENTITYSTRINGS)
+#define CS_POSITIONS			(CS_TILES+MAX_TILESTRINGS)
+#define CS_MODELS				(CS_POSITIONS+MAX_TILESTRINGS)
+#define CS_PLAYERNAMES			(CS_MODELS+MAX_MODELS)
+#define CS_GENERAL				(CS_PLAYERNAMES+MAX_CLIENTS)
+#define MAX_CONFIGSTRINGS		(CS_GENERAL+MAX_GENERAL)
 
 /** game types */
 #define MAX_GAMETYPES 16
