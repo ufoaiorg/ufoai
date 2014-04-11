@@ -2022,7 +2022,7 @@ static void SV_ParseUMP (const char* name, char* entityString, MapInfo* map, boo
 			} else {
 				const int worldSpawnLength = SV_GetConfigStringLength(CS_ENTITYSTRING);
 				if (length >= worldSpawnLength)
-					Com_Printf("worldspawn is too big - only %i characters are allowed", worldSpawnLength);
+					Com_Printf("SV_ParseUMP: worldspawn is too big - only %i characters are allowed", worldSpawnLength);
 				else
 					Q_strncpyz(entityString, start, length);
 			}
