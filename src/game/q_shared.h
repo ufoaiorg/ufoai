@@ -309,8 +309,8 @@ typedef int32_t shoot_types_t;
 #define CS_MAPTITLE				1		/**< display map title string - translated client side */
 #define CS_MAXCLIENTS			2
 #define CS_MAPCHECKSUM			3		/**< for catching cheater maps */
-#define CS_MAXSOLDIERSPERTEAM	4	/**< max soldiers per team */
-#define CS_MAXSOLDIERSPERPLAYER	5	/**< max soldiers per player when in teamplay mode */
+#define CS_MAXSOLDIERSPERTEAM	4		/**< max soldiers per team */
+#define CS_MAXSOLDIERSPERPLAYER	5		/**< max soldiers per player when in teamplay mode */
 #define CS_ENABLEMORALE			6		/**< enable the morale states in multiplayer */
 #define CS_MAXTEAMS				7		/**< how many multiplayer teams for this map */
 #define CS_PLAYERCOUNT			8		/**< amount of already connected players */
@@ -319,7 +319,7 @@ typedef int32_t shoot_types_t;
 #define CS_OBJECTAMOUNT			11		/**< amount of defined objects in the script files */
 #define CS_LIGHTMAP				12		/**< which lightmap to use */
 #define CS_MAPZONE				13		/**< for terrain texture replacement */
-#define CS_VICTORY_CONDITIONS	14	/**< a list of msgids seperated by , */
+#define CS_VICTORY_CONDITIONS	14		/**< a list of msgids seperated by , */
 #define CS_ENTITYSTRING			15		/**< additional worldspawn settings */
 #define CS_TILES				(CS_ENTITYSTRING+MAX_ENTITYSTRINGS)
 #define CS_POSITIONS			(CS_TILES+MAX_TILESTRINGS)
