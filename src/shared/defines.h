@@ -95,13 +95,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_TEXPATH         32		/**< max length of filename relative to gamedir, any longer makes the bsp files unnecessarily long */
 
 /* per-level limits */
-/* 25 - bases are 5*5 - see BASE_SIZE*/
-#define	MAX_TILESTRINGS     25
 #define	MAX_TEAMS           8
-#define	MAX_CLIENTS         256		/* absolute limit */
 #define	MAX_EDICTS          1024	/* must change protocol to increase more */
 #define	MAX_MODELS          256		/* these are sent over the net as bytes */
-#define	MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
 #define	INITIAL_HP 100
 
