@@ -96,7 +96,7 @@ void G_EventActorDie (const Edict& ent, bool attacker)
 }
 
 /**
- * @brief Announce the actor die event for the clients that are seeing the actor
+ * @brief Announce the actor revitalize event for the clients that are seeing the actor
  * @param[in] ent The actor that was healed and woke up again
  */
 void G_EventActorRevitalise (const Edict& ent)

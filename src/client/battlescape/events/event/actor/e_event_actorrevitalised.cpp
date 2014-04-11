@@ -29,8 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_actorrevitalised.h"
 
 /**
- * @brief Kills an actor (all that is needed is the local entity state set to STATE_DEAD).
- * @note Also changes the animation to a random death sequence and appends the dead animation
+ * @brief Revitalizes a stunned actor (all that is needed is the local entity state set).
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
@@ -59,7 +58,7 @@ void CL_ActorRevitalised (const eventRegister_t* self, dbuffer* msg)
 	/* play animation */
 	LE_SetThink(le, LET_StartIdle);
 
-	/* Print some info about the death or stun. */
+	/* Print some info. */
 	if (le->team == cls.team) {
 		const character_t* chr = CL_ActorGetChr(le);
 		if (chr) {
