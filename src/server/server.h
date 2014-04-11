@@ -181,6 +181,7 @@ void SV_InitOperatorCommands(void);
 void SV_UserinfoChanged(client_t* cl);
 void SV_ReadPacket(struct net_stream* s);
 char* SV_GetConfigString(int index);
+int SV_GetConfigStringLength(int index);
 int SV_GetConfigStringInteger(int index);
 char* SV_SetConfigString(int index, ...);
 /* ensure that always two parameters are used */

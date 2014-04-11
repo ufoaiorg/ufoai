@@ -82,6 +82,27 @@ char* SV_GetConfigString (int index)
 	return sv->configstrings[index];
 }
 
+int SV_GetConfigStringLength (int index)
+{
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
+
+	switch (index) {
+	case CS_TILES:
+		return MAX_TOKEN_CHARS * MAX_TILESTRINGS;
+	case CS_POSITIONS:
+		return MAX_TOKEN_CHARS * MAX_TILESTRINGS;
+	case CS_MODELS:
+		return MAX_TOKEN_CHARS * MAX_MODELS;
+	case CS_PLAYERNAMES:
+		return MAX_TOKEN_CHARS * MAX_CLIENTS;
+	case CS_GENERAL:
+		return MAX_TOKEN_CHARS * MAX_GENERAL;
+	default:
+		return MAX_TOKEN_CHARS;
+	}
+}
+
 int SV_GetConfigStringInteger (int index)
 {
 	return atoi(SV_GetConfigString(index));

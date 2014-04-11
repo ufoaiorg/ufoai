@@ -2020,8 +2020,9 @@ static void SV_ParseUMP (const char* name, char* entityString, MapInfo* map, boo
 			if (length == -1) {
 				Com_Printf("SV_ParseUMP: Not a valid worldspawn block in '%s'\n", filename);
 			} else {
-				if (length >= MAX_TOKEN_CHARS)
-					Com_Printf("worldspawn is too big - only %i characters are allowed", MAX_TOKEN_CHARS);
+				const int worldSpawnLength = SV_GetConfigStringLength(CS_ENTITYSTRING);
+				if (length >= worldSpawnLength)
+					Com_Printf("worldspawn is too big - only %i characters are allowed", worldSpawnLength);
 				else
 					Q_strncpyz(entityString, start, length);
 			}
