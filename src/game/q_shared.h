@@ -301,7 +301,7 @@ typedef int32_t shoot_types_t;
 /**
  * config strings are a general means of communication from
  * the server to all connected clients.
- * Each config string can be at most MAX_QPATH characters. */
+ * Each config string can be at most MAX_TOKEN_CHARS characters. */
 #define CS_NAME				0
 #define CS_MAPTITLE			1		/**< display map title string - translated client side */
 #define CS_MAXCLIENTS		2
