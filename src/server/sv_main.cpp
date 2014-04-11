@@ -88,6 +88,8 @@ int SV_GetConfigStringLength (int index)
 		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
 
 	switch (index) {
+	case CS_ENTITYSTRING:
+		return MAX_TOKEN_CHARS * MAX_ENTITYSTRINGS;
 	case CS_TILES:
 		return MAX_TOKEN_CHARS * MAX_TILESTRINGS;
 	case CS_POSITIONS:

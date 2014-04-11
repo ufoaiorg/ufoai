@@ -297,6 +297,7 @@ typedef int32_t shoot_types_t;
 #define	MAX_TILESTRINGS     25
 #define	MAX_CLIENTS         256		/* absolute limit */
 #define	MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
+#define	MAX_ENTITYSTRINGS	2
 
 /**
  * config strings are a general means of communication from
@@ -318,7 +319,7 @@ typedef int32_t shoot_types_t;
 #define CS_MAPZONE			13		/**< for terrain texture replacement */
 #define CS_VICTORY_CONDITIONS	14	/**< a list of msgids seperated by , */
 #define CS_ENTITYSTRING		15		/**< additional worldspawn settings */
-#define CS_TILES			16
+#define CS_TILES			(CS_ENTITYSTRING+MAX_ENTITYSTRINGS)
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
 #define CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)
 #define CS_PLAYERNAMES		(CS_MODELS+MAX_MODELS)
