@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
 #include "../../../cl_parse.h"
+#include "../../../cl_particle.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actordie.h"
 
@@ -147,6 +148,10 @@ void CL_ActorDie (const eventRegister_t* self, dbuffer* msg)
 	le->aabb.setMaxs(player_dead_maxs);
 	if (!LE_IsStunned(le))
 		le->contents = CONTENTS_DEADACTOR;
+	if (le->ptl) {
+		CL_ParticleFree(le->ptl);
+		le->ptl = nullptr;
+	}
 	CL_ActorRemoveFromTeamList(le);
 
 	/* update pathing as we maybe can walk onto the dead actor now */
