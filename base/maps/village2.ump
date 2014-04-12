@@ -224,6 +224,14 @@ tile +sc_ne01
 	0		0		0
 }
 
+tile +sc_nw01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
 tile +sc_sw01
 {
 	3 3
@@ -443,7 +451,42 @@ tileset sv
 
 // Assemblies ------------------------------------------------------*
 
-assembly default
+assembly sp_sml_01
+{
+	size "8 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +sc_ne01						"2 0"
+	fix tileset sh						"3 0"
+	fix +sc_nw01						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +sv1x1_01						"5 1"
+	fix tileset sh						"0 2"
+	fix +st_west01						"2 2"
+	fix +st_east01						"5 2"
+	fix *rm_drop +craft_drop_firebird	"6 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"5 3"
+	fix tileset sh						"0 5"
+	fix +sx_01							"2 5"
+	fix tileset sh						"3 5"
+	fix +sx_01							"5 5"
+	fix tileset sh						"6 5"
+	fix tileset sv						"2 6"
+	fix tileset sv						"5 6"
+
+	// Buildings and UFOs
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"6 0"
+	fix *rm_ufo +craft_ufo_scout		"3 1"
+	fix tileset 2x2						"0 3"
+	fix tileset 2x2						"6 3"
+	fix tileset 2x2						"0 6"
+	fix tileset 2x2						"3 6"
+	fix tileset 2x2						"6 6"
+}
+
+assembly sp_sml_02
 {
 	size "9 8"
 
@@ -478,7 +521,6 @@ assembly default
 	fix tileset 4x4						"4 4"
 	fix tileset 2x2						"1 6"
 }
-
 
 assembly mp2p_01
 {

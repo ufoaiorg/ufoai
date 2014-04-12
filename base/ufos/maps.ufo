@@ -3343,10 +3343,54 @@ mapdef village_small
 // VILLAGE 2 MAPS //
 ////////////////////
 
-mapdef vil2_dev
+mapdef vil2_sp_sml_01
 {
 	map				"+village2"
-	params			("default")
+	params			("sp_sml_01")
+	description		"_Village 2"
+	multiplayer		false
+	campaign		false
+	maxaliens		30
+
+	aircraft
+	(
+		craft_drop_firebird
+	)
+
+	ufos
+	(
+		craft_ufo_scout
+		craft_ufo_fighter
+	)
+
+	terrains
+	(
+		"cold"
+		"mountain"
+		"tropical"
+		"grass"
+		"coast"
+	)
+
+	cultures
+	(
+		"western"
+		"eastern"
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef vil2_sp_sml_02
+{
+	map				"+village2"
+	params			("sp_sml_02")
 	description		"_Village 2"
 	multiplayer		false
 	campaign		false
