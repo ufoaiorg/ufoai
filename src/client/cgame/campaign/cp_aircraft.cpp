@@ -2121,7 +2121,7 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 		baseProbability /= 3.0f;
 	}
 
-	/* Crash over tropical or fertile are: This is the good life :) */
+	/* Crash over tropical or fertile area: This is the good life :) */
 	if (MapIsGrass(color) || MapIsTropical(color)) {
 		baseProbability *= 2.5f;
 	}
