@@ -293,8 +293,8 @@ typedef int32_t shoot_types_t;
 #define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \
 	do { const bool reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);
 
-/* 25 - bases are 5*5 - see BASE_SIZE*/
-#define	MAX_TILESTRINGS			25
+/* For a RMA with 50 tiles we need about 1k. So let's take 2k */
+#define	MAX_TILESTRINGS			8
 #define	MAX_CLIENTS				256		/* absolute limit */
 #define	MAX_GENERAL				(MAX_CLIENTS*2) /* general config strings */
 #define	MAX_ENTITYSTRINGS		2
