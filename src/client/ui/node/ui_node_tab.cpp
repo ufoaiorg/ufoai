@@ -66,24 +66,20 @@ static const int TILE_SIZE = 40;
  */
 static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t* node, int x, int y)
 {
-	const char* font;
-	uiNode_t* option;
-	uiNode_t* prev = nullptr;
-	int allowedWidth;
-
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
+	int allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
 
 	/* Bounded box test (shound not need, but there are problem) */
 	if (x < 0 || y < 0 || x >= node->box.size[0] || y >= node->box.size[1])
 		return nullptr;
 
-	font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 
 	/* Text box test */
-	for (option = node->firstChild; option; option = option->next) {
+	uiNode_t* prev = nullptr;
+	for (uiNode_t* option = node->firstChild; option; option = option->next) {
 		int tabWidth;
 		assert(option->behaviour == ui_optionBehaviour);
 

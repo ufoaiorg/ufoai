@@ -73,9 +73,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void uiSelectBoxNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 {
-	uiNode_t* option;
-	int posy;
-
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* test bounded box */
@@ -83,8 +80,8 @@ void uiSelectBoxNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 		return;
 	}
 
-	posy = node->box.size[1];
-	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	int posy = node->box.size[1];
+	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		OPTIONEXTRADATA(option).hovered = (posy <= y && y < posy + node->box.size[1]);
@@ -94,29 +91,23 @@ void uiSelectBoxNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 
 void uiSelectBoxNode::draw (uiNode_t* node)
 {
-	uiNode_t* option;
-	int selBoxX, selBoxY;
-	const char* ref;
-	const char* font;
 	vec2_t nodepos;
-	const char* imageName;
-	const image_t* image;
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
-	imageName = UI_GetReferenceString(node, node->image);
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName)
 		imageName = "ui/selectbox";
 
-	image = UI_LoadImage(imageName);
+	const image_t* image = UI_LoadImage(imageName);
 
-	font = UI_GetFontFromNode(node);
-	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
-	selBoxY = nodepos[1] + SELECTBOX_SPACER;
+	const char* font = UI_GetFontFromNode(node);
+	int selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
+	int selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	/* left border */
 	UI_DrawNormImage(false, nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->box.size[1],
@@ -129,7 +120,7 @@ void uiSelectBoxNode::draw (uiNode_t* node)
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
-	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (!Q_streq(OPTIONEXTRADATA(option).value, ref))
 			continue;
 
@@ -154,28 +145,22 @@ void uiSelectBoxNode::draw (uiNode_t* node)
 
 void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
 {
-	uiNode_t* option;
-	int selBoxX, selBoxY;
-	const char* ref;
-	const char* font;
-	vec2_t nodepos;
-	const char* imageName;
-	const image_t* image;
-
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
+	vec2_t nodepos;
 	UI_GetNodeAbsPos(node, nodepos);
-	imageName = UI_GetReferenceString(node, node->image);
+
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName)
 		imageName = "ui/selectbox";
 
-	image = UI_LoadImage(imageName);
+	const image_t* image = UI_LoadImage(imageName);
 
-	font = UI_GetFontFromNode(node);
-	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
-	selBoxY = nodepos[1] + SELECTBOX_SPACER;
+	const char* font = UI_GetFontFromNode(node);
+	int selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
+	int selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	selBoxY += node->box.size[1];
 
@@ -194,7 +179,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
 
 	/* now draw all available options for this selectbox */
 	int check = 0;
-	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
@@ -238,18 +223,15 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
  */
 void uiSelectBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 {
-	uiNode_t* option;
-	int clickedAtOption;
-	vec2_t pos;
-
 	/* dropdown the node */
 	if (UI_GetMouseCapture() == nullptr) {
 		UI_SetMouseCapture(node);
 		return;
 	}
 
+	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
-	clickedAtOption = (y - pos[1]);
+	int clickedAtOption = (y - pos[1]);
 
 	/* we click outside */
 	if (x < pos[0] || y < pos[1] || x >= pos[0] + node->box.size[0] || y >= pos[1] + node->box.size[1] * (EXTRADATA(node).count + 1)) {
@@ -271,7 +253,7 @@ void uiSelectBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 		return;
 
 	/* select the right option */
-	option = UI_AbstractOptionGetFirstOption(node);
+	uiNode_t* option = UI_AbstractOptionGetFirstOption(node);
 	for (; option; option = option->next) {
 		if (option->invis)
 			continue;

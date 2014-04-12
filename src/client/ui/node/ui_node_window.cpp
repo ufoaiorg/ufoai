@@ -54,11 +54,8 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
  */
 uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
 {
-	node_index_t* a;
-	unsigned int hash;
-
-	hash = Com_HashKey(childName, INDEXEDCHILD_HASH_SIZE);
-	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
+	unsigned int hash = Com_HashKey(childName, INDEXEDCHILD_HASH_SIZE);
+	for (node_index_t* a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
 		if (Q_streq(childName, a->node->name)) {
 			return a->node;
 		}
@@ -72,9 +69,7 @@ uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
 bool UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	node_index_t* a;
-	unsigned int hash;
-
-	hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
+	unsigned int hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
 	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
 		if (Q_streq(child->name, a->node->name)) {
 			/** @todo display a warning, we must not override a node name here */
