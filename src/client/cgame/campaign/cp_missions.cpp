@@ -336,6 +336,12 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
 	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
+	const float rainChance = 0.5;	/* @todo get this value from terrain and scripts. 50% is for test and demo only. */
+	if (frand() < rainChance)
+		cgi->Cvar_Set("r_weather", "1");
+	else
+		cgi->Cvar_Set("r_weather", "0");
+
 	/* Is there a UFO to recover ? */
 	if (mission->ufo) {
 		const aircraft_t* ufo = mission->ufo;
