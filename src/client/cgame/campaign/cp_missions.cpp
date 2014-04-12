@@ -336,7 +336,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
 	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
-	const float rainChance = 0.5;	/* @todo get this value from terrain and scripts. 50% is for test and demo only. */
+	const float rainChance = GEO_GetRainChance(color);
 	if (frand() < rainChance)
 		cgi->Cvar_Set("r_weather", "1");
 	else

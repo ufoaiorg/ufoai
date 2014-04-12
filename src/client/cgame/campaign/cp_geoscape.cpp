@@ -1929,7 +1929,6 @@ nation_t* GEO_GetNation (const vec2_t pos)
 	return nullptr;
 }
 
-
 /**
  * @brief Translate color value to terrain type
  * @sa GEO_GetColor
@@ -1955,6 +1954,32 @@ const char* GEO_GetTerrainType (const byte* const color)
 	else if (MapIsWasted(color))
 		return "wasted";
 	return "grass";
+}
+
+/**
+ * @brief Translate color value terrain type and then to rain probability
+ * @sa GEO_GetColor
+ * @param[in] color the color value from the terrain mask
+ * @return the probability for rain
+ * @todo get this value from the scripts.
+ */
+float GEO_GetRainChance (const byte* const color)
+{
+	if (MapIsDesert(color))
+		return 0.0;
+	else if (MapIsArctic(color))
+		return 0.0;
+	else if (MapIsWater(color))
+		return 0.0;		/* we have no battles there */
+	else if (MapIsMountain(color))
+		return 0.1;
+	else if (MapIsTropical(color))
+		return 0.3;
+	else if (MapIsCold(color))
+		return 0.0;
+	else if (MapIsWasted(color))
+		return 0.05;
+	return 0.2;			/* "grass" */
 }
 
 /**
