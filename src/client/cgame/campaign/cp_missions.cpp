@@ -337,9 +337,16 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	const float rainChance = GEO_GetRainChance(color);
-	if (frand() < rainChance)
-		cgi->Cvar_Set("r_weather", "1");
-	else
+	const float snowChance = 0.1;
+	const float weatherChance = rainChance + snowChance;
+	if (frand() < weatherChance) {
+		/* we have weather today */
+		if (snowChance == 0.0 || frand() < rainChance / weatherChance)
+			cgi->Cvar_Set("r_weather", "1");	/* rain */
+		else
+			cgi->Cvar_Set("r_weather", "2");	/* snow */
+	}
+	else	/* clear blue sky */
 		cgi->Cvar_Set("r_weather", "0");
 
 	/* Is there a UFO to recover ? */
