@@ -337,7 +337,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	zoneType = GEO_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	const float rainChance = GEO_GetRainChance(color);
-	const float snowChance = 0.1;
+	const float snowChance = GEO_GetSnowChance(color);
 	const float weatherChance = rainChance + snowChance;
 	if (frand() < weatherChance) {
 		/* we have weather today */

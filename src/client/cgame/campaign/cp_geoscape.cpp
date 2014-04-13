@@ -1953,6 +1953,7 @@ static const terrainDef_s terrainDefTable[] = {
 
 class TerrainDefs
 {
+public:
 	inline float getSnowChance(const byte* const color) const {
 		const terrainDef_s* p = terrainDefTable;
 		while (p->terrainName) {
@@ -1963,9 +1964,9 @@ class TerrainDefs
 		return p->snowChance;
 	}
 };
-/*
+
 static TerrainDefs terrainDefs;
-*/
+
 /**
  * @brief Translate color value to terrain type
  * @sa GEO_GetColor
@@ -1991,6 +1992,18 @@ const char* GEO_GetTerrainType (const byte* const color)
 	else if (MapIsWasted(color))
 		return "wasted";
 	return "grass";
+}
+
+/**
+ * @brief Translate color value terrain type and then to snow probability
+ * @sa GEO_GetColor
+ * @param[in] color the color value from the terrain mask
+ * @return the probability for snow
+ * @todo get this value from the scripts.
+ */
+float GEO_GetSnowChance (const byte* const color)
+{
+	return terrainDefs.getSnowChance(color);
 }
 
 /**
