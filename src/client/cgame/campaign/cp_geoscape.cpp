@@ -1929,6 +1929,43 @@ nation_t* GEO_GetNation (const vec2_t pos)
 	return nullptr;
 }
 
+struct terrainDef_s
+{
+	byte rgbRed;
+	byte rgbGreen;
+	byte rgbBlue;
+	const char* terrainName;
+	float rainChance;
+	float snowChance;
+};
+
+static const terrainDef_s terrainDefTable[] = {
+	{255, 128, 0,	"desert",	0.0, 0.0},
+	{128, 255, 255, "arctic",	0.0, 0.4},
+	{0,		0, 64,	"water",	0.0, 0.0},
+	{255,	0, 0,	"mountain",	0.0, 0.3},
+	{128, 128, 255,	"tropical",	0.0, 0.0},
+	{0,		0, 255,	"cold",		0.0, 0.3},
+	{128,	0, 128,	"wasted",	0.0, 0.0},
+	{128, 255, 0,	"grass",	0.0, 0.1},
+	{0,		0, 0,	nullptr,	0.0, 0.0}
+};
+
+class TerrainDefs
+{
+	inline float getSnowChance(const byte* const color) const {
+		const terrainDef_s* p = terrainDefTable;
+		while (p->terrainName) {
+			if (p->rgbRed == color[0] && p->rgbGreen == color[1] && p->rgbBlue == color[2])
+				break;
+			p++;
+		}
+		return p->snowChance;
+	}
+};
+/*
+static TerrainDefs terrainDefs;
+*/
 /**
  * @brief Translate color value to terrain type
  * @sa GEO_GetColor
