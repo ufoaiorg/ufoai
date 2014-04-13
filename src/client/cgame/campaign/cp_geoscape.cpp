@@ -1929,6 +1929,10 @@ nation_t* GEO_GetNation (const vec2_t pos)
 	return nullptr;
 }
 
+/**
+ * Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
+ * It is a map of the world where the different terrainTypes are drawn in different colors.
+ */
 struct terrainDef_s
 {
 	byte rgbRed;
