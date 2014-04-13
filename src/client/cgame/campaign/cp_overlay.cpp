@@ -302,6 +302,7 @@ void CP_InitializeRadarOverlay (bool source)
  * @brief Draw radar overlay for a given latitude between 2 longitudes.
  * @param[in] latMin,latMax Minimum and maximum latitude.
  * @param[in] y current row in radar overlay.
+ * @param[in] alpha The value for the alpha channel (creates the different look).
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
  * @pre We assume latMax - latMin <= 360 degrees.
  */
