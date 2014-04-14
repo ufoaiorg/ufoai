@@ -321,6 +321,10 @@ typedef struct cgame_import_s {
 	bool (IMPORT* Com_GetConstInt) (const char* name, int* value);
 	const char* (IMPORT* Com_EParse) (const char** text, const char* errhead, const char* errinfo);
 	int (IMPORT* Com_EParseValue) (void* base, const char* token, valueTypes_t type, int ofs, size_t size);
+	bool (IMPORT* Com_ParseBoolean) (const char* token);
+	bool (IMPORT* Com_ParseList) (const char** text, linkedList_t** list);
+	bool (IMPORT* Com_ParseBlock) (const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool);
+	bool (IMPORT* Com_ParseBlockToken) (const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool, const char* token);
 	const char* (IMPORT* Com_ValueToStr) (const void* base, const valueTypes_t type, const int ofs);
 	const teamDef_t* (IMPORT* Com_GetTeamDefinitionByID) (const char* team);
 	ufoType_t (IMPORT* Com_UFOShortNameToID) (const char* token);

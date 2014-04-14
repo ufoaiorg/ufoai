@@ -676,6 +676,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->Com_GetConstInt = Com_GetConstInt;
 		cgi->Com_EParse = Com_EParse_;
 		cgi->Com_EParseValue = Com_EParseValue;
+		cgi->Com_ParseBoolean = Com_ParseBoolean;
+		cgi->Com_ParseList = Com_ParseList;
+		cgi->Com_ParseBlock = Com_ParseBlock;
+		cgi->Com_ParseBlockToken = Com_ParseBlockToken;
 		cgi->Com_ValueToStr = Com_ValueToStr;
 		cgi->Com_GetTeamDefinitionByID = Com_GetTeamDefinitionByID;
 		cgi->Com_UFOShortNameToID = Com_UFOShortNameToID;
