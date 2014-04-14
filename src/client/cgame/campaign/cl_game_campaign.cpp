@@ -35,6 +35,19 @@ extern void GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 CGAME_HARD_LINKED_FUNCTIONS
 
 #ifndef HARD_LINKED_CGAME
+linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
+{
+	return cgi->LIST_Add(listDest, data, length);
+}
+void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void* userData)
+{
+	cgi->LIST_Sort(list, sorter, userData);
+}
+linkedList_t* LIST_CopyStructure (linkedList_t* src)
+{
+	return cgi->LIST_CopyStructure(src);
+}
+
 const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 #else
 const cgame_export_t* GetCGameCampaignAPI (const cgame_import_t* import)
