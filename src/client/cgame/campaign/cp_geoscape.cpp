@@ -1930,10 +1930,13 @@ nation_t* GEO_GetNation (const vec2_t pos)
 }
 
 /**
+ * @brief Terrain property table
  * Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
  * It is a map of the world where the different terrainTypes are drawn in different colors.
+ * @sa GEO_GetColor
+ * @todo get these values from the scripts.
  */
-struct terrainDef_s
+struct terrainDef_s		/* a single entry in the table */
 {
 	byte rgbRed;
 	byte rgbGreen;
@@ -1997,7 +2000,6 @@ static TerrainDefs terrainDefs;
 
 /**
  * @brief Translate color value to terrain type
- * @sa GEO_GetColor
  * @param[in] color the color value from the terrain mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
@@ -2009,11 +2011,9 @@ const char* GEO_GetTerrainType (const byte* const color)
 }
 
 /**
- * @brief Translate color value terrain type and then to snow probability
- * @sa GEO_GetColor
+ * @brief Translate color value to terrain type and then to snow probability
  * @param[in] color the color value from the terrain mask
  * @return the probability for snow
- * @todo get this value from the scripts.
  */
 float GEO_GetSnowChance (const byte* const color)
 {
@@ -2021,11 +2021,9 @@ float GEO_GetSnowChance (const byte* const color)
 }
 
 /**
- * @brief Translate color value terrain type and then to rain probability
- * @sa GEO_GetColor
+ * @brief Translate color value to terrain type and then to rain probability
  * @param[in] color the color value from the terrain mask
  * @return the probability for rain
- * @todo get this value from the scripts.
  */
 float GEO_GetRainChance (const byte* const color)
 {
@@ -2033,7 +2031,7 @@ float GEO_GetRainChance (const byte* const color)
 }
 
 /**
- * @brief Translate color value terrain type and then to survival probability
+ * @brief Translate color value to terrain type and then to survival probability
  * @param[in] color the color value from the terrain mask
  * @return the relative probability for survival (of pilots) in such a terrain
  */
