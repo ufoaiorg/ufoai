@@ -1944,6 +1944,13 @@ struct terrainDef_s
 	float snowChance;
 };
 
+/*
+ * Thoughts about (pilot) survival rates:
+ * Crash over water: chances for survival are very bad
+ * Crash over arctic or wasted terrain; fare a little better
+ * Crash over mountain, desert or cold terrain: survive a little longer
+ * Crash over tropical or fertile area: This is the good life :)
+ */
 static const terrainDef_s terrainDefTable[] = {
 	{255, 128, 0,	"desert",	0.33, 0.0, 0.0},
 	{128, 255, 255, "arctic",	0.12, 0.0, 0.4},

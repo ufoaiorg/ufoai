@@ -2106,22 +2106,18 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 	float baseProbability = (float) pilotSkill;
 
 	const byte* color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
-	/* Crash over water: chances for survival are very bad */
 	if (MapIsWater(color)) {
 		baseProbability /= 10.0f;
 	}
 
-	/* Crash over arctic or wasted terrain; fare a little better */
 	if (MapIsArctic(color) || MapIsWasted(color)) {
 		baseProbability /= 8.0f;
 	}
 
-	/* Crash over mountain, desert or cold terrain: survive a little longer */
 	if (MapIsCold(color) || MapIsDesert(color) || MapIsMountain(color)) {
 		baseProbability /= 3.0f;
 	}
 
-	/* Crash over tropical or fertile area: This is the good life :) */
 	if (MapIsGrass(color) || MapIsTropical(color)) {
 		baseProbability *= 2.5f;
 	}
