@@ -388,11 +388,11 @@ static void SAV_GameSave_f (void)
  */
 void SAV_GameDelete_f (void)
 {
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+	if (cgi->Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <filename>\n", cgi->Cmd_Argv(0));
 		return;
 	}
-	const char* savegame = Cmd_Argv(1);
+	const char* savegame = cgi->Cmd_Argv(1);
 	char buf[MAX_OSPATH];
 
 	cgi->GetAbsoluteSavePath(buf, sizeof(buf));
@@ -449,7 +449,7 @@ static void SAV_GameReadGameComment (const int idx)
 static void SAV_GameReadGameComments_f (void)
 {
 	if (cgi->Cmd_Argc() < 1) {
-		Com_Printf("usage: %s {id}\n", Cmd_Argv(0));
+		Com_Printf("usage: %s {id}\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
