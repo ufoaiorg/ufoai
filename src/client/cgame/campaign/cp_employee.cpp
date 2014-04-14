@@ -1092,7 +1092,7 @@ static const cmdList_t debugEmployeeCmds[] = {
 void E_InitStartup (void)
 {
 	E_InitCallbacks();
-	Cmd_TableAddList(debugEmployeeCmds);
+	cgi->Cmd_TableAddList(debugEmployeeCmds);
 }
 
 /**
@@ -1106,5 +1106,5 @@ void E_Shutdown (void)
 	}
 
 	E_ShutdownCallbacks();
-	Cmd_TableRemoveList(debugEmployeeCmds);
+	cgi->Cmd_TableRemoveList(debugEmployeeCmds);
 }

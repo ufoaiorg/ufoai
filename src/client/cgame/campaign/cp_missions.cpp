@@ -2059,7 +2059,7 @@ static const cmdList_t debugMissionCmds[] = {
 void MIS_InitStartup (void)
 {
 	MIS_InitCallbacks();
-	Cmd_TableAddList(debugMissionCmds);
+	cgi->Cmd_TableAddList(debugMissionCmds);
 }
 
 /**
@@ -2070,5 +2070,5 @@ void MIS_Shutdown (void)
 	cgi->LIST_Delete(&ccs.missions);
 
 	MIS_ShutdownCallbacks();
-	Cmd_TableRemoveList(debugMissionCmds);
+	cgi->Cmd_TableRemoveList(debugMissionCmds);
 }

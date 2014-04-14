@@ -253,10 +253,10 @@ static const cmdList_t hospitalCmds[] = {
 };
 void HOS_InitCallbacks (void)
 {
-	Cmd_TableAddList(hospitalCmds);
+	cgi->Cmd_TableAddList(hospitalCmds);
 }
 
 void HOS_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(hospitalCmds);
+	cgi->Cmd_TableRemoveList(hospitalCmds);
 }

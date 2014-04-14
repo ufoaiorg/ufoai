@@ -232,7 +232,7 @@ static const cmdList_t debugInterestCmds[] = {
  */
 void INT_InitStartup (void)
 {
-	Cmd_TableAddList(debugInterestCmds);
+	cgi->Cmd_TableAddList(debugInterestCmds);
 }
 
 /**
@@ -240,5 +240,5 @@ void INT_InitStartup (void)
  */
 void INT_Shutdown (void)
 {
-	Cmd_TableRemoveList(debugInterestCmds);
+	cgi->Cmd_TableRemoveList(debugInterestCmds);
 }

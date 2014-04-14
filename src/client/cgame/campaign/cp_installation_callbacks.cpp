@@ -327,7 +327,7 @@ static const cmdList_t installationCallbacks[] = {
 };
 void INS_InitCallbacks (void)
 {
-	Cmd_TableAddList(installationCallbacks);
+	cgi->Cmd_TableAddList(installationCallbacks);
 
 	cgi->Cvar_SetValue("mn_installation_count", INS_GetCount());
 	cgi->Cvar_Set("mn_installation_title", "");
@@ -337,7 +337,7 @@ void INS_InitCallbacks (void)
 
 void INS_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(installationCallbacks);
+	cgi->Cmd_TableRemoveList(installationCallbacks);
 
 	cgi->Cvar_Delete("mn_installation_count");
 	cgi->Cvar_Delete("mn_installation_title");

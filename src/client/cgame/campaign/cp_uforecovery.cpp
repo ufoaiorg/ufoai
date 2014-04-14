@@ -487,7 +487,7 @@ static const cmdList_t debugStoredUfosCmds[] = {
 void UR_InitStartup (void)
 {
 	UR_InitCallbacks();
-	Cmd_TableAddList(debugStoredUfosCmds);
+	cgi->Cmd_TableAddList(debugStoredUfosCmds);
 }
 
 /**
@@ -498,5 +498,5 @@ void UR_Shutdown (void)
 	cgi->LIST_Delete(&ccs.storedUFOs);
 
 	UR_ShutdownCallbacks();
-	Cmd_TableRemoveList(debugStoredUfosCmds);
+	cgi->Cmd_TableRemoveList(debugStoredUfosCmds);
 }

@@ -391,7 +391,7 @@ static const cmdList_t teamCallbacks[] = {
  */
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_TableAddList(teamCallbacks);
+	cgi->Cmd_TableAddList(teamCallbacks);
 }
 
 /**
@@ -399,5 +399,5 @@ void CP_TEAM_InitCallbacks (void)
  */
 void CP_TEAM_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(teamCallbacks);
+	cgi->Cmd_TableRemoveList(teamCallbacks);
 }

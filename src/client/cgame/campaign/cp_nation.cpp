@@ -902,7 +902,7 @@ static const cmdList_t nationCmds[] = {
  */
 void NAT_InitStartup (void)
 {
-	Cmd_TableAddList(nationCmds);
+	cgi->Cmd_TableAddList(nationCmds);
 }
 
 /**
@@ -912,5 +912,5 @@ void NAT_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.cities);
 
-	Cmd_TableRemoveList(nationCmds);
+	cgi->Cmd_TableRemoveList(nationCmds);
 }

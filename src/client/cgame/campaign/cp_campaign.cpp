@@ -1134,7 +1134,7 @@ static void CP_AddCampaignCallbackCommands (void)
 
 static void CP_AddCampaignCommands (void)
 {
-	Cmd_TableAddList(game_commands);
+	cgi->Cmd_TableAddList(game_commands);
 	CP_AddCampaignCallbackCommands();
 }
 
@@ -1162,7 +1162,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 
 static void CP_RemoveCampaignCommands (void)
 {
-	Cmd_TableRemoveList(game_commands);
+	cgi->Cmd_TableRemoveList(game_commands);
 
 	CP_RemoveCampaignCallbackCommands();
 }

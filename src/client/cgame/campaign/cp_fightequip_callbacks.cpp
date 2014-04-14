@@ -944,10 +944,10 @@ static const cmdList_t airequipCmds[] = {
 };
 void AIM_InitCallbacks (void)
 {
-	Cmd_TableAddList(airequipCmds);
+	cgi->Cmd_TableAddList(airequipCmds);
 }
 
 void AIM_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(airequipCmds);
+	cgi->Cmd_TableRemoveList(airequipCmds);
 }

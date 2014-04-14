@@ -412,7 +412,7 @@ static const cmdList_t debugAlienBaseCmds[] = {
  */
 void AB_InitStartup (void)
 {
-	Cmd_TableAddList(debugAlienBaseCmds);
+	cgi->Cmd_TableAddList(debugAlienBaseCmds);
 }
 
 /**
@@ -422,5 +422,5 @@ void AB_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.alienBases);
 
-	Cmd_TableRemoveList(debugAlienBaseCmds);
+	cgi->Cmd_TableRemoveList(debugAlienBaseCmds);
 }

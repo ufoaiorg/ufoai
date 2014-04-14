@@ -457,7 +457,7 @@ static const cmdList_t marketCallbacks[] = {
  */
 void BS_InitCallbacks(void)
 {
-	Cmd_TableAddList(marketCallbacks);
+	cgi->Cmd_TableAddList(marketCallbacks);
 }
 
 /**
@@ -465,5 +465,5 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
-	Cmd_TableRemoveList(marketCallbacks);
+	cgi->Cmd_TableRemoveList(marketCallbacks);
 }

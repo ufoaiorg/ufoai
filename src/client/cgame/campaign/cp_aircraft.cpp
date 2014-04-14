@@ -2988,7 +2988,7 @@ static const cmdList_t aircraftDebugCmds[] = {
 void AIR_InitStartup (void)
 {
 	AIR_InitCallbacks();
-	Cmd_TableAddList(aircraftDebugCmds);
+	cgi->Cmd_TableAddList(aircraftDebugCmds);
 }
 
 /**
@@ -3006,5 +3006,5 @@ void AIR_Shutdown (void)
 	cgi->LIST_Delete(&ccs.aircraft);
 
 	AIR_ShutdownCallbacks();
-	Cmd_TableRemoveList(aircraftDebugCmds);
+	cgi->Cmd_TableRemoveList(aircraftDebugCmds);
 }

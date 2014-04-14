@@ -655,7 +655,7 @@ static const cmdList_t cgameCallbacks[] = {
 };
 void GAME_CP_InitStartup (void)
 {
-	Cmd_TableAddList(cgameCallbacks);
+	cgi->Cmd_TableAddList(cgameCallbacks);
 
 	CP_InitStartup();
 
@@ -671,7 +671,7 @@ void GAME_CP_InitStartup (void)
 
 void GAME_CP_Shutdown (void)
 {
-	Cmd_TableRemoveList(cgameCallbacks);
+	cgi->Cmd_TableRemoveList(cgameCallbacks);
 
 	CP_Shutdown();
 

@@ -927,12 +927,12 @@ static const cmdList_t transferCallbacks[] = {
 };
 void TR_InitCallbacks (void)
 {
-	Cmd_TableAddList(transferCallbacks);
+	cgi->Cmd_TableAddList(transferCallbacks);
 }
 
 void TR_ShutdownCallbacks (void)
 {
 	TR_ClearTempCargo();
 
-	Cmd_TableRemoveList(transferCallbacks);
+	cgi->Cmd_TableRemoveList(transferCallbacks);
 }

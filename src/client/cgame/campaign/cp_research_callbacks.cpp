@@ -214,10 +214,10 @@ static const cmdList_t research_commands[] = {
 
 void RS_InitCallbacks (void)
 {
-	Cmd_TableAddList(research_commands);
+	cgi->Cmd_TableAddList(research_commands);
 }
 
 void RS_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(research_commands);
+	cgi->Cmd_TableRemoveList(research_commands);
 }

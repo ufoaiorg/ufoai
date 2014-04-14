@@ -335,7 +335,7 @@ static const cmdList_t debugInstallationCmds[] = {
  */
 void INS_InitStartup (void)
 {
-	Cmd_TableAddList(debugInstallationCmds);
+	cgi->Cmd_TableAddList(debugInstallationCmds);
 }
 
 /**
@@ -344,7 +344,7 @@ void INS_InitStartup (void)
 void INS_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.installations);
-	Cmd_TableRemoveList(debugInstallationCmds);
+	cgi->Cmd_TableRemoveList(debugInstallationCmds);
 }
 
 /**

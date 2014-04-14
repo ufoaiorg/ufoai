@@ -663,10 +663,10 @@ static const cmdList_t ufoRecoveryCallbacks[] = {
 };
 void UR_InitCallbacks (void)
 {
-	Cmd_TableAddList(ufoRecoveryCallbacks);
+	cgi->Cmd_TableAddList(ufoRecoveryCallbacks);
 }
 
 void UR_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(ufoRecoveryCallbacks);
+	cgi->Cmd_TableRemoveList(ufoRecoveryCallbacks);
 }

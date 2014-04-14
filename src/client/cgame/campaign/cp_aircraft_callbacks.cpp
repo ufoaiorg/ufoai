@@ -289,10 +289,10 @@ static const cmdList_t aircraftCallbacks[] = {
 
 void AIR_InitCallbacks (void)
 {
-	Cmd_TableAddList(aircraftCallbacks);
+	cgi->Cmd_TableAddList(aircraftCallbacks);
 }
 
 void AIR_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(aircraftCallbacks);
+	cgi->Cmd_TableRemoveList(aircraftCallbacks);
 }

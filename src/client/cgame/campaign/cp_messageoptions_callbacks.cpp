@@ -256,12 +256,12 @@ void MSO_InitCallbacks (void)
 {
 	OBJSET(backupMessageSettings, 1);
 
-	Cmd_TableAddList(msgOptionsCallbacks);
+	cgi->Cmd_TableAddList(msgOptionsCallbacks);
 }
 
 void MSO_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(msgOptionsCallbacks);
+	cgi->Cmd_TableRemoveList(msgOptionsCallbacks);
 
 	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 }

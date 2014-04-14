@@ -483,12 +483,12 @@ static const cmdList_t msgOptionsCmds[] = {
 };
 void MSO_Init (void)
 {
-	Cmd_TableAddList(msgOptionsCmds);
+	cgi->Cmd_TableAddList(msgOptionsCmds);
 	MSO_InitCallbacks();
 }
 
 void MSO_Shutdown (void)
 {
-	Cmd_TableRemoveList(msgOptionsCmds);
+	cgi->Cmd_TableRemoveList(msgOptionsCmds);
 	MSO_ShutdownCallbacks();
 }

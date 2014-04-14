@@ -847,10 +847,10 @@ static const cmdList_t productionCallbacks[] = {
 };
 void PR_InitCallbacks (void)
 {
-	Cmd_TableAddList(productionCallbacks);
+	cgi->Cmd_TableAddList(productionCallbacks);
 }
 
 void PR_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(productionCallbacks);
+	cgi->Cmd_TableRemoveList(productionCallbacks);
 }

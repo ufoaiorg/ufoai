@@ -999,13 +999,13 @@ void B_InitCallbacks (void)
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	cgi->Cvar_SetValue("mn_base_max", MAX_BASES);
 
-	Cmd_TableAddList(baseCallbacks);
+	cgi->Cmd_TableAddList(baseCallbacks);
 }
 
 /** @todo unify the names into mn_base_* */
 void B_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(baseCallbacks);
+	cgi->Cmd_TableRemoveList(baseCallbacks);
 
 	cgi->Cvar_Delete("mn_base_max");
 	cgi->Cvar_Delete("mn_base_cost");

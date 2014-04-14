@@ -387,10 +387,10 @@ static const cmdList_t employeeCmds[] = {
 
 void E_InitCallbacks (void)
 {
-	Cmd_TableAddList(employeeCmds);
+	cgi->Cmd_TableAddList(employeeCmds);
 }
 
 void E_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(employeeCmds);
+	cgi->Cmd_TableRemoveList(employeeCmds);
 }

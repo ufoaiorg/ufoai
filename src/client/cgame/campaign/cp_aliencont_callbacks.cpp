@@ -140,10 +140,10 @@ static const cmdList_t alienContCallbacks[] = {
 };
 void AC_InitCallbacks (void)
 {
-	Cmd_TableAddList(alienContCallbacks);
+	cgi->Cmd_TableAddList(alienContCallbacks);
 }
 
 void AC_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(alienContCallbacks);
+	cgi->Cmd_TableRemoveList(alienContCallbacks);
 }

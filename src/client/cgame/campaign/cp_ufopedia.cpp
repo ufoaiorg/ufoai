@@ -1137,7 +1137,7 @@ static const cmdList_t ufopediaCmds[] = {
 void UP_InitStartup (void)
 {
 	/* add commands and cvars */
-	Cmd_TableAddList(ufopediaCmds);
+	cgi->Cmd_TableAddList(ufopediaCmds);
 
 	mn_uppretext = cgi->Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = cgi->Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
@@ -1151,7 +1151,7 @@ void UP_InitStartup (void)
 void UP_Shutdown (void)
 {
 	/* add commands and cvars */
-	Cmd_TableRemoveList(ufopediaCmds);
+	cgi->Cmd_TableRemoveList(ufopediaCmds);
 
 	cgi->Cvar_Delete("mn_uppretext");
 	cgi->Cvar_Delete("mn_uppreavailable");

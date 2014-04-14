@@ -692,10 +692,10 @@ static const cmdList_t baseDefenseCmds[] = {
 };
 void BDEF_InitCallbacks (void)
 {
-	Cmd_TableAddList(baseDefenseCmds);
+	cgi->Cmd_TableAddList(baseDefenseCmds);
 }
 
 void BDEF_ShutdownCallbacks (void)
 {
-	Cmd_TableRemoveList(baseDefenseCmds);
+	cgi->Cmd_TableRemoveList(baseDefenseCmds);
 }
