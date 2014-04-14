@@ -1947,11 +1947,11 @@ static const terrainDef_s terrainDefTable[] = {
 	{255, 128, 0,	"desert",	0.0, 0.0},
 	{128, 255, 255, "arctic",	0.0, 0.4},
 	{0,		0, 64,	"water",	0.0, 0.0},
-	{255,	0, 0,	"mountain",	0.0, 0.3},
-	{128, 128, 255,	"tropical",	0.0, 0.0},
+	{255,	0, 0,	"mountain",	0.1, 0.3},
+	{128, 128, 255,	"tropical",	0.3, 0.0},
 	{0,		0, 255,	"cold",		0.0, 0.3},
-	{128,	0, 128,	"wasted",	0.0, 0.0},
-	{128, 255, 0,	"grass",	0.0, 0.1},
+	{128,	0, 128,	"wasted",	0.1, 0.0},
+	{128, 255, 0,	"grass",	0.2, 0.1},
 	{0,		0, 0,	nullptr,	0.0, 0.0}
 };
 
@@ -1967,6 +1967,10 @@ class TerrainDefs
 		return nullptr;
 	}
 public:
+	inline float getRainChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->rainChance : 0.0;
+	}
 	inline float getSnowChance(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->snowChance : 0.0;
@@ -2023,21 +2027,7 @@ float GEO_GetSnowChance (const byte* const color)
  */
 float GEO_GetRainChance (const byte* const color)
 {
-	if (MapIsDesert(color))
-		return 0.0;
-	else if (MapIsArctic(color))
-		return 0.0;
-	else if (MapIsWater(color))
-		return 0.0;		/* we have no battles there */
-	else if (MapIsMountain(color))
-		return 0.1;
-	else if (MapIsTropical(color))
-		return 0.3;
-	else if (MapIsCold(color))
-		return 0.0;
-	else if (MapIsWasted(color))
-		return 0.05;
-	return 0.2;			/* "grass" */
+	return terrainDefs.getRainChance(color);
 }
 
 /**
