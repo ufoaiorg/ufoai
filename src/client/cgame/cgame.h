@@ -205,8 +205,12 @@ typedef struct cgame_import_s {
 
 	dbuffer* (IMPORT* NET_ReadMsg)  (struct net_stream* s);
 	int (IMPORT* NET_ReadByte)  (dbuffer* buf);
+	int (IMPORT* NET_ReadShort)  (dbuffer* buf);
+	int (IMPORT* NET_ReadLong)  (dbuffer* buf);
 	int (IMPORT* NET_ReadStringLine)  (dbuffer* buf, char* string, size_t length);
 	int (IMPORT* NET_ReadString)  (dbuffer* buf, char* string, size_t length);
+	void (IMPORT* NET_WriteByte)  (dbuffer* buf, byte c);
+	void (IMPORT* NET_WriteShort)  (dbuffer* buf, int c);
 	struct net_stream* (IMPORT* NET_Connect)  (const char* node, const char* service, stream_onclose_func* onclose);
 	void (IMPORT* NET_StreamSetCallback)  (struct net_stream* s, stream_callback_func* func);
 	void (IMPORT* NET_OOB_Printf) (struct net_stream* s, const char* format, ...) __attribute__((format(__printf__,2,3)));

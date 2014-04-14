@@ -640,6 +640,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->NET_ReadString = NET_ReadString;
 		cgi->NET_ReadStringLine = NET_ReadStringLine;
 		cgi->NET_ReadByte = NET_ReadByte;
+		cgi->NET_ReadShort = NET_ReadShort;
+		cgi->NET_ReadLong = NET_ReadLong;
+		cgi->NET_WriteByte = NET_WriteByte;
+		cgi->NET_WriteShort = NET_WriteShort;
 		cgi->NET_ReadMsg = NET_ReadMsg;
 		cgi->NET_StreamGetData = NET_StreamGetData;
 		cgi->NET_StreamSetData = NET_StreamSetData;
