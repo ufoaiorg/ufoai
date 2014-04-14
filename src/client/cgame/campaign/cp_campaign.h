@@ -69,15 +69,6 @@ struct campaign_s;
 /* blue value is 64 */
 #define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)
 
-/* terrain types */
-#define MapIsArctic(color)       (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsDesert(color)       (color[0] == 255 && color[1] == 128 && color[2] ==   0)
-#define MapIsMountain(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
-#define MapIsTropical(color)     (color[0] == 128 && color[1] == 128 && color[2] == 255)
-#define MapIsGrass(color)        (color[0] == 128 && color[1] == 255 && color[2] ==   0)
-#define MapIsWasted(color)       (color[0] == 128 && color[1] ==   0 && color[2] == 128)
-#define MapIsCold(color)         (color[0] ==   0 && color[1] ==   0 && color[2] == 255)
-
 /* culture types */
 #define MapIsWestern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
 #define MapIsEastern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
