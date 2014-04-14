@@ -435,7 +435,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 			break;
 
 		/* check for some standard values */
-		if (!Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
+		if (!cgi->Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
 			/* other values */
 			if (Q_streq(token, "type")) {
 				token = cgi->Com_EParse(text, errhead, name);

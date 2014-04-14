@@ -199,7 +199,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 					if (!*text)
 						return;
 				} else {
-					if (!Com_ParseBlockToken(name, text, building, valid_building_vars, cp_campaignPool, token))
+					if (!cgi->Com_ParseBlockToken(name, text, building, valid_building_vars, cp_campaignPool, token))
 						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 				}
 			}

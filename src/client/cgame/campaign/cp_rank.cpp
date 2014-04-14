@@ -111,7 +111,7 @@ void CL_ParseRanks (const char* name, const char** text)
 		if (*token == '}')
 			break;
 
-		if (Com_ParseBlockToken(name, text, rank, rankValues, cp_campaignPool, token)) {
+		if (cgi->Com_ParseBlockToken(name, text, rank, rankValues, cp_campaignPool, token)) {
 			continue;
 		} else if (Q_streq(token, "type")) {
 			/* employeeType_t */

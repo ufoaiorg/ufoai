@@ -1424,7 +1424,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 				if (*token == '}')
 					break;
 
-				if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_radar_vals, cp_campaignPool, token))
+				if (!cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_radar_vals, cp_campaignPool, token))
 					Com_Printf("AIR_ParseAircraft: Ignoring unknown radar value '%s'\n", token);
 			} while (*text); /* dummy condition */
 			continue;
@@ -1557,7 +1557,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 				continue;
 			}
 			/* check for some standard values */
-			if (Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_vals, cp_campaignPool, token))
+			if (cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_vals, cp_campaignPool, token))
 				continue;
 
 			if (Q_streq(token, "type")) {
@@ -1603,7 +1603,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
-						if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
+						if (!cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
 							Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 					}
 				} while (*text); /* dummy condition */

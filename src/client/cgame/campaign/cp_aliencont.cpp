@@ -163,7 +163,7 @@ static void AC_AddOne_f (void)
 
 	bool updateAlive = true;
 	if (cgi->Cmd_Argc() == 3)
-		updateAlive = Com_ParseBoolean(cgi->Cmd_Argv(2));
+		updateAlive = cgi->Com_ParseBoolean(cgi->Cmd_Argv(2));
 
 	if (updateAlive)
 		base->alienContainment->add(alienName, 1, 0);

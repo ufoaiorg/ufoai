@@ -318,7 +318,7 @@ void CL_ParseNations (const char* name, const char** text)
 	nation->idx = ccs.numNations;
 	nation->stats[0].inuse = true;
 
-	if (Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
+	if (cgi->Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
 		ccs.numNations++;
 
 		Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
@@ -377,7 +377,7 @@ void CITY_Parse (const char* name, const char** text)
 	OBJZERO(newCity);
 	newCity.idx = ccs.numCities;
 
-	if (Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
+	if (cgi->Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
 		ccs.numCities++;
 		newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		/* Add city to the list */

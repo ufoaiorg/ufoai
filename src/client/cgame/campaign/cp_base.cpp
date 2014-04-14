@@ -1592,7 +1592,7 @@ void B_ParseBaseTemplate (const char* name, const char** text)
 		}
 
 		linkedList_t* list;
-		if (!Com_ParseList(text, &list)) {
+		if (!cgi->Com_ParseList(text, &list)) {
 			cgi->Com_Error(ERR_DROP, "B_ParseBaseTemplate: error while reading building tuple");
 		}
 

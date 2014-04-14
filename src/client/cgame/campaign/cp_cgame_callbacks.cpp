@@ -54,7 +54,7 @@ static void GAME_CP_Results_f (void)
 	}
 
 	/* check for retry */
-	if (cgi->Cmd_Argc() >= 3 && Com_ParseBoolean(cgi->Cmd_Argv(2))) {
+	if (cgi->Cmd_Argc() >= 3 && cgi->Com_ParseBoolean(cgi->Cmd_Argv(2))) {
 		if (bp->retriable) {
 			/* don't collect things and update stats --- we retry the mission */
 			CP_StartSelectedMission();
@@ -64,7 +64,7 @@ static void GAME_CP_Results_f (void)
 		}
 	}
 
-	CP_MissionEnd(ccs.curCampaign, mission, bp, Com_ParseBoolean(cgi->Cmd_Argv(1)));
+	CP_MissionEnd(ccs.curCampaign, mission, bp, cgi->Com_ParseBoolean(cgi->Cmd_Argv(1)));
 }
 
 /**

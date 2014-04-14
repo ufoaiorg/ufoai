@@ -1254,7 +1254,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 						token = cgi->Com_EParse(text, errhead, name);
 						cgi->LIST_AddString(&list, token);
 					} else if (Q_streq(token, "extra")) {
-						if (!Com_ParseList(text, &list)) {
+						if (!cgi->Com_ParseList(text, &list)) {
 							cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading extra description tuple");
 						}
 						if (cgi->LIST_Count(list) != 2) {
@@ -1335,7 +1335,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 						/* Defines what items need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							linkedList_t* list;
-							if (!Com_ParseList(text, &list)) {
+							if (!cgi->Com_ParseList(text, &list)) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
@@ -1384,7 +1384,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							}
 
 							linkedList_t* list;
-							if (!Com_ParseList(text, &list)) {
+							if (!cgi->Com_ParseList(text, &list)) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required alien tuple");
 							}
 
@@ -1408,7 +1408,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 						/* Defines what ufos need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							linkedList_t* list;
-							if (!Com_ParseList(text, &list)) {
+							if (!cgi->Com_ParseList(text, &list)) {
 								cgi->Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
 							}
 
@@ -1498,7 +1498,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 				if (!*text || *token == '}')
 					return;
 				do {
-					Com_ParseBlockToken(name, text, mail, valid_techmail_vars, cp_campaignPool, token);
+					cgi->Com_ParseBlockToken(name, text, mail, valid_techmail_vars, cp_campaignPool, token);
 
 					/* grab the next entry */
 					token = cgi->Com_EParse(text, errhead, name);
@@ -1509,7 +1509,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 				if (mail->model == nullptr)
 					mail->model = "characters/navarre";
 			} else {
-				if (!Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
+				if (!cgi->Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}

@@ -310,7 +310,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 			if (status != nullptr) {
 				Com_Printf("MSO_ParseOption: status already defined. Previous definition ignored.\n");
 				cgi->LIST_Delete(&status);
-			} else if (!Com_ParseList(text, &status)) {
+			} else if (!cgi->Com_ParseList(text, &status)) {
 				Com_Printf("MSO_ParseOption: error while parsing option status.\n");
 				return -1;
 			}

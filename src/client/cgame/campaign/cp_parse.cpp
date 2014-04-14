@@ -115,12 +115,12 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 
 		if (Q_streq(token, "equipment")) {
 			linkedList_t** list = &alienCategory->equipment;
-			if (!Com_ParseList(text, list)) {
+			if (!cgi->Com_ParseList(text, list)) {
 				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing equipment list", name);
 			}
 		} else if (Q_streq(token, "category")) {
 			linkedList_t* list;
-			if (!Com_ParseList(text, &list)) {
+			if (!cgi->Com_ParseList(text, &list)) {
 				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
 			}
 			for (linkedList_t* element = list; element != nullptr; element = element->next) {
@@ -152,13 +152,13 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 			do {
 				token = cgi->Com_EParse(text, errhead, name);
 
-				if (!Com_ParseBlockToken(name, text, group, alien_group_vals, cp_campaignPool, token)) {
+				if (!cgi->Com_ParseBlockToken(name, text, group, alien_group_vals, cp_campaignPool, token)) {
 					if (!*text || *token == '}')
 						break;
 
 					if (Q_streq(token, "team")) {
 						linkedList_t* list;
-						if (!Com_ParseList(text, &list)) {
+						if (!cgi->Com_ParseList(text, &list)) {
 							cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing team list", name);
 						}
 						for (linkedList_t* element = list; element != nullptr; element = element->next) {
@@ -333,7 +333,7 @@ static const value_t salary_vals[] = {
  */
 static void CP_ParseSalary (const char* name, const char** text, salary_t* s)
 {
-	Com_ParseBlock(name, text, s, salary_vals, cp_campaignPool);
+	cgi->Com_ParseBlock(name, text, s, salary_vals, cp_campaignPool);
 }
 
 /* =========================================================== */
@@ -447,7 +447,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 			break;
 
 		/* check for some standard values */
-		if (Com_ParseBlockToken(name, text, cp, campaign_vals, nullptr, token)) {
+		if (cgi->Com_ParseBlockToken(name, text, cp, campaign_vals, nullptr, token)) {
 			continue;
 		} else if (Q_streq(token, "salary")) {
 			CP_ParseSalary(token, text, s);
@@ -552,7 +552,7 @@ static void CP_ParseComponents (const char* name, const char** text)
 				/* Parse block */
 				component_type_data_t itemTokens;
 				OBJZERO(itemTokens);
-				if (Com_ParseBlock ("item", text, &itemTokens, components_type_vals, nullptr)) {
+				if (cgi->Com_ParseBlock ("item", text, &itemTokens, components_type_vals, nullptr)) {
 					if (itemTokens.id[0] == '\0')
 						cgi->Com_Error(ERR_DROP, "CP_ParseComponents: \"item\" token id is missing.\n");
 					if (itemTokens.amount[0] == '\0')

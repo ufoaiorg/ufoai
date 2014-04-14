@@ -106,7 +106,7 @@ void CL_ParseEventMails (const char* name, const char** text)
 
 	eventMail->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
-	Com_ParseBlock(name, text, eventMail, eventMail_vals, cp_campaignPool);
+	cgi->Com_ParseBlock(name, text, eventMail, eventMail_vals, cp_campaignPool);
 }
 
 void CP_CheckCampaignEvents (campaign_t* campaign)
@@ -394,7 +394,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 			break;
 		if (*token == '}')
 			break;
-		if (!Com_ParseBlockToken(name, text, event, event_vals, cp_campaignPool, token)) {
+		if (!cgi->Com_ParseBlockToken(name, text, event, event_vals, cp_campaignPool, token)) {
 			Com_Printf("CP_ParseEventTrigger: Ignoring unknown event value '%s'\n", token);
 		}
 	} while (*text);
