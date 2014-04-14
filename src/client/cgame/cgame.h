@@ -263,9 +263,14 @@ typedef struct cgame_import_s {
 	xmlNode_t*  (IMPORT* XML_GetNextNode) (xmlNode_t* current, xmlNode_t* parent, const char* name);
 
 	/* filesystem functions */
+	int (IMPORT* FS_OpenFile) (const char* filename, qFILE* file, filemode_t mode);
 	int (IMPORT* FS_LoadFile) (const char* path, byte** buffer);
+	void (IMPORT* FS_CloseFile) (qFILE*  f);
 	void (IMPORT* FS_FreeFile) (void* buffer);
 	int (IMPORT* FS_CheckFile) (const char* fmt, ...) __attribute__((format(__printf__, 1, 2)));
+	int (IMPORT* FS_WriteFile) (const void* buffer, size_t len, const char* filename);
+	void (IMPORT* FS_RemoveFile) (const char* osPath);
+	int (IMPORT* FS_Read) (void* buffer, int len, qFILE*  f);
 	int (IMPORT* FS_BuildFileList) (const char* files);
 	const char* (IMPORT* FS_NextFileFromFileList) (const char* files);
 	char* (IMPORT* FS_NextScriptHeader) (const char* files, const char** name, const char** text);

@@ -592,9 +592,14 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->Cvar_GetString = Cvar_GetString;
 		cgi->Cvar_ForceSet = Cvar_ForceSet;
 
+		cgi->FS_CloseFile = FS_CloseFile;
 		cgi->FS_FreeFile = FS_FreeFile;
+		cgi->FS_OpenFile = FS_OpenFile;
 		cgi->FS_LoadFile = FS_LoadFile;
 		cgi->FS_CheckFile = FS_CheckFile;
+		cgi->FS_WriteFile = FS_WriteFile;
+		cgi->FS_RemoveFile = FS_RemoveFile;
+		cgi->FS_Read = FS_Read;
 		cgi->FS_BuildFileList = FS_BuildFileList;
 		cgi->FS_NextFileFromFileList = FS_NextFileFromFileList;
 		cgi->FS_NextScriptHeader = FS_NextScriptHeader;
