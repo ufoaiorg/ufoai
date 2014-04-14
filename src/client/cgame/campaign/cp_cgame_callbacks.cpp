@@ -593,15 +593,15 @@ dbuffer* GAME_CP_InitializeBattlescape (const linkedList_t* team)
 	const int teamSize = cgi->LIST_Count(team);
 	dbuffer* msg = new dbuffer(2 + teamSize * 10);
 
-	NET_WriteByte(msg, clc_initactorstates);
-	NET_WriteByte(msg, teamSize);
+	cgi->NET_WriteByte(msg, clc_initactorstates);
+	cgi->NET_WriteByte(msg, teamSize);
 
 	LIST_Foreach(team, character_t, chr) {
-		NET_WriteShort(msg, chr->ucn);
-		NET_WriteShort(msg, chr->state);
-		NET_WriteShort(msg, chr->RFmode.getHand());
-		NET_WriteShort(msg, chr->RFmode.getFmIdx());
-		NET_WriteShort(msg, chr->RFmode.getWeapon() != nullptr ? chr->RFmode.getWeapon()->idx : NONE);
+		cgi->NET_WriteShort(msg, chr->ucn);
+		cgi->NET_WriteShort(msg, chr->state);
+		cgi->NET_WriteShort(msg, chr->RFmode.getHand());
+		cgi->NET_WriteShort(msg, chr->RFmode.getFmIdx());
+		cgi->NET_WriteShort(msg, chr->RFmode.getWeapon() != nullptr ? chr->RFmode.getWeapon()->idx : NONE);
 	}
 
 	return msg;

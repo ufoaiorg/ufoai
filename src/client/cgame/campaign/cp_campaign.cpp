@@ -189,8 +189,8 @@ void CP_ParseCharacterData (dbuffer* msg, linkedList_t** updateCharacters)
 	for (int i = 0; i < num; i++) {
 		updateCharacter_t c;
 		OBJZERO(c);
-		c.ucn = NET_ReadShort(msg);
-		c.HP = NET_ReadShort(msg);
+		c.ucn = cgi->NET_ReadShort(msg);
+		c.HP = cgi->NET_ReadShort(msg);
 		c.STUN = cgi->NET_ReadByte(msg);
 		c.morale = cgi->NET_ReadByte(msg);
 
@@ -199,12 +199,12 @@ void CP_ParseCharacterData (dbuffer* msg, linkedList_t** updateCharacters)
 			c.wounds.treatmentLevel[j] = cgi->NET_ReadByte(msg);
 
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			c.chrscore.experience[j] = NET_ReadLong(msg);
+			c.chrscore.experience[j] = cgi->NET_ReadLong(msg);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			c.chrscore.kills[j] = NET_ReadShort(msg);
+			c.chrscore.kills[j] = cgi->NET_ReadShort(msg);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			c.chrscore.stuns[j] = NET_ReadShort(msg);
-		c.chrscore.assignedMissions = NET_ReadShort(msg);
+			c.chrscore.stuns[j] = cgi->NET_ReadShort(msg);
+		c.chrscore.assignedMissions = cgi->NET_ReadShort(msg);
 		LIST_Add(updateCharacters, c);
 	}
 }
