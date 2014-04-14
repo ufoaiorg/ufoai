@@ -68,6 +68,7 @@ void GEO_NotifyAircraftRemoved(const aircraft_t* aircraft);
 void GEO_NotifyUFODisappear(const aircraft_t* ufo);
 void GEO_InitStartup(void);
 const char* GEO_GetTerrainType(const byte* color);
+float GEO_GetSurvivalChance(const byte* const color);
 float GEO_GetRainChance(const byte* const color);
 float GEO_GetSnowChance(const byte* const color);
 int GEO_GetCivilianNumberByPosition(const vec2_t pos);

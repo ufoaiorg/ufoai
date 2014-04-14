@@ -1939,20 +1939,21 @@ struct terrainDef_s
 	byte rgbGreen;
 	byte rgbBlue;
 	const char* terrainName;
+	float survivalChance;
 	float rainChance;
 	float snowChance;
 };
 
 static const terrainDef_s terrainDefTable[] = {
-	{255, 128, 0,	"desert",	0.0, 0.0},
-	{128, 255, 255, "arctic",	0.0, 0.4},
-	{0,		0, 64,	"water",	0.0, 0.0},
-	{255,	0, 0,	"mountain",	0.1, 0.3},
-	{128, 128, 255,	"tropical",	0.3, 0.0},
-	{0,		0, 255,	"cold",		0.0, 0.3},
-	{128,	0, 128,	"wasted",	0.1, 0.0},
-	{128, 255, 0,	"grass",	0.2, 0.1},
-	{0,		0, 0,	nullptr,	0.0, 0.0}
+	{255, 128, 0,	"desert",	0.33, 0.0, 0.0},
+	{128, 255, 255, "arctic",	0.12, 0.0, 0.4},
+	{0,		0, 64,	"water",	0.10, 0.0, 0.0},
+	{255,	0, 0,	"mountain",	0.33, 0.1, 0.3},
+	{128, 128, 255,	"tropical",	2.50, 0.3, 0.0},
+	{0,		0, 255,	"cold",		0.33, 0.0, 0.3},
+	{128,	0, 128,	"wasted",	0.12, 0.1, 0.0},
+	{128, 255, 0,	"grass",	2.50, 0.2, 0.1},
+	{0,		0, 0,	nullptr,	0.00, 0.0, 0.0}
 };
 
 class TerrainDefs
@@ -1967,6 +1968,10 @@ class TerrainDefs
 		return nullptr;
 	}
 public:
+	inline float getSurvivalChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->survivalChance : 0.0;
+	}
 	inline float getRainChance(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->rainChance : 0.0;
@@ -2018,6 +2023,16 @@ float GEO_GetSnowChance (const byte* const color)
 float GEO_GetRainChance (const byte* const color)
 {
 	return terrainDefs.getRainChance(color);
+}
+
+/**
+ * @brief Translate color value terrain type and then to survival probability
+ * @param[in] color the color value from the terrain mask
+ * @return the relative probability for survival (of pilots) in such a terrain
+ */
+float GEO_GetSurvivalChance (const byte* const color)
+{
+	return terrainDefs.getSurvivalChance(color);
 }
 
 /**
