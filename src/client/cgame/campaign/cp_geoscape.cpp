@@ -1975,6 +1975,10 @@ public:
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->snowChance : 0.0;
 	}
+	inline const char* getTerrainName(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->terrainName : "grass";
+	}
 };
 
 static TerrainDefs terrainDefs;
@@ -1989,21 +1993,7 @@ static TerrainDefs terrainDefs;
  */
 const char* GEO_GetTerrainType (const byte* const color)
 {
-	if (MapIsDesert(color))
-		return "desert";
-	else if (MapIsArctic(color))
-		return "arctic";
-	else if (MapIsWater(color))
-		return "water";
-	else if (MapIsMountain(color))
-		return "mountain";
-	else if (MapIsTropical(color))
-		return "tropical";
-	else if (MapIsCold(color))
-		return "cold";
-	else if (MapIsWasted(color))
-		return "wasted";
-	return "grass";
+	return terrainDefs.getTerrainName(color);
 }
 
 /**
