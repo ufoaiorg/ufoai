@@ -132,16 +132,15 @@ bool SAV_GameLoad (const char* file, const char** error)
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "%s.%s", file, SAVEGAME_EXTENSION);
 	ScopedFile f;
-	FS_OpenFile(filename, &f, FILE_READ);
+	const int clen = cgi->FS_OpenFile(filename, &f, FILE_READ);
 	if (!f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		*error = "File not found";
 		return false;
 	}
 
-	int clen = FS_FileLength(&f);
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen + 1 /* for '\0' if not compressed */, cp_campaignPool);
-	if (FS_Read(cbuf, clen, &f) != clen)
+	if (cgi->FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	Com_Printf("Loading savegame xml (size %d)\n", clen);
 
@@ -341,7 +340,7 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 	}
 
 	/* last step - write data */
-	FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
+	cgi->FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
 
 	return true;
@@ -398,7 +397,7 @@ void SAV_GameDelete_f (void)
 	cgi->GetAbsoluteSavePath(buf, sizeof(buf));
 	Q_strcat(buf, sizeof(buf), "%s.%s", savegame, SAVEGAME_EXTENSION);
 
-	FS_RemoveFile(buf);
+	cgi->FS_RemoveFile(buf);
 }
 
 /**
@@ -413,14 +412,14 @@ static void SAV_GameReadGameComment (const int idx)
 	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
 
 	ScopedFile f;
-	FS_OpenFile(filename, &f, FILE_READ);
+	cgi->FS_OpenFile(filename, &f, FILE_READ);
 	if (!f) {
 		cgi->UI_ExecuteConfunc("update_game_info %i \"\" \"\" \"\" \"\"", idx);
 		return;
 	}
 
 	saveFileHeader_t header;
-	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
+	if (cgi->FS_Read(&header, sizeof(header), &f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
 
 	header.compressed = LittleLong(header.compressed);
@@ -554,11 +553,7 @@ static void SAV_GameQuickLoadInit_f (void)
 
 	char buf[MAX_OSPATH];
 	cgi->GetRelativeSavePath(buf, sizeof(buf));
-	Q_strcat(buf, sizeof(buf), "slotquick.%s", SAVEGAME_EXTENSION);
-
-	ScopedFile f;
-	FS_OpenFile(buf, &f, FILE_READ);
-	if (f) {
+	if (cgi->FS_CheckFile("%sslotquick.%s", buf, SAVEGAME_EXTENSION) > 0) {
 		cgi->UI_PushWindow("quickload");
 	}
 }
