@@ -527,7 +527,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t* nation, const u
 
 	Employee employee(type, nation, ugvType);
 
-	teamID = GAME_GetTeamDef();
+	teamID = GAME_CP_GetTeamDef();
 
 	/* Generate character stats, models & names. */
 	switch (type) {
