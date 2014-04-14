@@ -1957,15 +1957,19 @@ static const terrainDef_s terrainDefTable[] = {
 
 class TerrainDefs
 {
-public:
-	inline float getSnowChance(const byte* const color) const {
+	inline const terrainDef_s* findByColor(const byte* const color) const {
 		const terrainDef_s* p = terrainDefTable;
 		while (p->terrainName) {
 			if (p->rgbRed == color[0] && p->rgbGreen == color[1] && p->rgbBlue == color[2])
-				break;
+				return p;
 			p++;
 		}
-		return p->snowChance;
+		return nullptr;
+	}
+public:
+	inline float getSnowChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->snowChance : 0.0;
 	}
 };
 
