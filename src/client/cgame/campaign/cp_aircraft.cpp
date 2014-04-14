@@ -2106,21 +2106,8 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 	float baseProbability = (float) pilotSkill;
 
 	const byte* color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
-	if (MapIsWater(color)) {
-		baseProbability /= 10.0f;
-	}
 
-	if (MapIsArctic(color) || MapIsWasted(color)) {
-		baseProbability /= 8.0f;
-	}
-
-	if (MapIsCold(color) || MapIsDesert(color) || MapIsMountain(color)) {
-		baseProbability /= 3.0f;
-	}
-
-	if (MapIsGrass(color) || MapIsTropical(color)) {
-		baseProbability *= 2.5f;
-	}
+	baseProbability *= GEO_GetSurvivalChance(color);
 
 	/* Add a random factor to our probability */
 	float randomProbability = crand() * (float) pilotSkill;
