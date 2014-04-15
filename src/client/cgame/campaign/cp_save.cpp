@@ -199,7 +199,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 	}
 
 	/* doing a subsystem run */
-	GAME_ReloadMode();
+	cgi->GAME_ReloadMode();
 	xmlNode_t* node = cgi->XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");

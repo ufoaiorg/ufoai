@@ -290,7 +290,7 @@ bool MS_LoadXML (xmlNode_t* p)
 		/* event and not mail means, dynamic mail - we don't save or load them */
 		if (mtype == MSG_EVENT && !mail)
 			continue;
-		if (mtype == MSG_DEBUG && developer->integer == 0)
+		if (mtype == MSG_DEBUG && cgi->Cvar_GetInteger("developer") == 0)
 			continue;
 
 		Q_strncpyz(id, cgi->XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));

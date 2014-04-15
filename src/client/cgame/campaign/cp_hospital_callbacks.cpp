@@ -238,7 +238,7 @@ static void HOS_EmployeeInit_f (void)
 	const int n = lengthof(list);
 	for (int i = 0; i < n; i++) {
 		cgi->UI_ExecuteConfunc("hospital_employee_set_values %i %i \"%s\"",
-				i, score.skills[i], CL_ActorGetSkillString(score.skills[i]));
+				i, score.skills[i], cgi->CL_ActorGetSkillString(score.skills[i]));
 	}
 
 	HOS_UpdateCharacterImplantList(echr);
