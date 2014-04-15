@@ -717,6 +717,8 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->GAME_ReloadMode = GAME_ReloadMode;
 		cgi->GAME_SetServerInfo = GAME_SetServerInfo;
 		cgi->GAME_GetChrMaxLoad = GAME_GetChrMaxLoad;
+		cgi->GAME_LoadCharacter = GAME_LoadCharacter;
+		cgi->GAME_SaveCharacter = GAME_SaveCharacter;
 
 		cgi->Free = GAME_Free;
 
@@ -739,6 +741,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 
 		cgi->CL_GenerateCharacter = CL_GenerateCharacter;
 		cgi->CL_OnBattlescape = CL_OnBattlescape;
+
+		cgi->CL_ActorGetSkillString = CL_ActorGetSkillString;
+		cgi->CL_UpdateCharacterValues = CL_UpdateCharacterValues;
 
 		cgi->SetNextUniqueCharacterNumber = GAME_SetNextUniqueCharacterNumber;
 		cgi->GetNextUniqueCharacterNumber = GAME_GetNextUniqueCharacterNumber;

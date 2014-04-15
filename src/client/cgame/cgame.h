@@ -182,6 +182,8 @@ typedef struct cgame_import_s {
 	void (IMPORT* GAME_AppendTeamMember) (int memberIndex, const char* teamDefID, const equipDef_t* ed);
 	void (IMPORT* GAME_ReloadMode) (void);
 	int (IMPORT* GAME_GetChrMaxLoad) (const character_t* chr);
+	bool (IMPORT* GAME_LoadCharacter) (xmlNode_t* p, character_t* chr);
+	bool (IMPORT* GAME_SaveCharacter) (xmlNode_t* p, const character_t* chr);
 	void (IMPORT* Free) (void* ptr);
 
 	/* sound functions */
@@ -336,6 +338,9 @@ typedef struct cgame_import_s {
 
 	void (IMPORT* CL_GenerateCharacter) (character_t* chr, const char* teamDefName);
 	bool (IMPORT* CL_OnBattlescape) (void);
+
+	const char* (IMPORT* CL_ActorGetSkillString) (const int skill);
+	void (IMPORT* CL_UpdateCharacterValues) (const character_t* chr);
 
 	void (IMPORT* SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT* GetNextUniqueCharacterNumber) (void);
