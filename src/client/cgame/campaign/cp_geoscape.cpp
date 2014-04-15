@@ -1933,6 +1933,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
  * @brief Terrain property table
  * Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
  * It is a map of the world where the different terrainTypes are drawn in different colors.
+ * The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
  * @sa GEO_GetColor
  * @todo get these values from the scripts.
  */
