@@ -321,7 +321,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 			continue;
 
 		if (event->active) {
-			if (!BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata))
+			if (!cgi->BEP_Evaluate(event->require, CP_CheckTriggerEvent, userdata))
 				continue;
 			if (Q_strvalid(event->command)) {
 				CP_CampaignTriggerFunctions(true);
@@ -333,7 +333,7 @@ void CP_TriggerEvent (campaignTriggerEventType_t type, const void* userdata)
 				event->active = false;
 			}
 		} else {
-			event->active = BEP_Evaluate(event->reactivate, CP_CheckTriggerEvent, userdata);
+			event->active = cgi->BEP_Evaluate(event->reactivate, CP_CheckTriggerEvent, userdata);
 		}
 	}
 }

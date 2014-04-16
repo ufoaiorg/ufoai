@@ -79,7 +79,7 @@ static void MSO_UpdateVisibleButtons (void)
 	uiOptionIterator_t iterator;
 	uiNode_t* messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
-	UI_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
+	cgi->UI_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
 	/* update visible button lines based on current displayed values */
 	for (visible = 0; visible < messageList_size; visible++) {
@@ -105,7 +105,7 @@ static void MSO_UpdateVisibleButtons (void)
 				entry->settings->doNotify, entry->settings->doSound);
 		}
 
-		UI_OptionIteratorNextOption(&iterator);
+		cgi->UI_OptionIteratorNextOption(&iterator);
 	}
 
 	for (; visible < messageList_size; visible++)
@@ -164,7 +164,7 @@ static void MSO_Toggle_f (void)
 		int type;
 		uiNode_t* messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
-		UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
+		cgi->UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)
 			return;
 

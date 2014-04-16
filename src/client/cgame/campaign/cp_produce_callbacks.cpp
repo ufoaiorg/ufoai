@@ -168,7 +168,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			tech = RS_GetTechForItem(od);
 			/* We will not show items that are not producible.
 			 * We can only produce what was researched before. */
-			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && cgi->INV_ItemMatchesFilter(od, produceCategory)) {
 				cgi->LIST_AddPointer(&productionItemList, od);
 
 				cgi->LIST_AddString(&productionList, va("%s", _(od->name)));
@@ -436,7 +436,7 @@ static void PR_ProductionListRightClick_f (void)
 			const technology_t* tech = RS_GetTechForItem(od);
 
 			/* Open up UFOpaedia for this entry. */
-			if (RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && cgi->INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, od);
 				UP_OpenWith(tech->id);
@@ -511,7 +511,7 @@ static void PR_ProductionListClick_f (void)
 			const technology_t* tech = RS_GetTechForItem(od);
 
 			/* We can only produce items that fulfill the following conditions... */
-			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && cgi->INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, od);
 				PR_ProductionInfo(base);
@@ -533,7 +533,7 @@ static void PR_ProductionType_f (void)
 		return;
 	}
 
-	cat = INV_GetFilterTypeID(cgi->Cmd_Argv(1));
+	cat = cgi->INV_GetFilterTypeID(cgi->Cmd_Argv(1));
 
 	/* Check if the given category index is valid. */
 	if (cat == MAX_FILTERTYPES)
@@ -544,7 +544,7 @@ static void PR_ProductionType_f (void)
 		return;
 
 	produceCategory = cat;
-	cgi->Cvar_Set("mn_itemtype", "%s", INV_GetFilterType(produceCategory));
+	cgi->Cvar_Set("mn_itemtype", "%s", cgi->INV_GetFilterType(produceCategory));
 
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(base);

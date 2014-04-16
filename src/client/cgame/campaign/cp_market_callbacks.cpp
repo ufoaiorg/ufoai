@@ -368,7 +368,7 @@ static void BS_FillMarket_f (void)
 		return;
 	}
 
-	type = INV_GetFilterTypeID(cgi->Cmd_Argv(1));
+	type = cgi->INV_GetFilterTypeID(cgi->Cmd_Argv(1));
 	cgi->UI_ExecuteConfunc("ui_market_clear");
 	switch (type) {
 	case FILTER_UGVITEM:
@@ -415,7 +415,7 @@ static void BS_FillMarket_f (void)
 				continue;
 			if (B_ItemInBase(od, base) + BS_GetItemOnMarket(od) <= 0)
 				continue;
-			if (type != MAX_FILTERTYPES && !INV_ItemMatchesFilter(od, type))
+			if (type != MAX_FILTERTYPES && !cgi->INV_ItemMatchesFilter(od, type))
 				continue;
 			cgi->UI_ExecuteConfunc("ui_market_add %s \"%s\" %d %d %d %d %s -", od->id, _(od->name), B_ItemInBase(od, base), BS_GetItemOnMarket(od), BS_GetItemBuyingPrice(od), BS_GetItemSellingPrice(od), RS_IsResearched_ptr(tech) ? va("%d", ccs.eMarket.autosell[i]) : "-");
 		}
