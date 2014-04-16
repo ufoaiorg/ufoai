@@ -2002,6 +2002,28 @@ static TerrainDefs terrainDefs;
 /**
  * @brief Translate color value to terrain type
  * @param[in] color the color value from the terrain mask
+ * @return returns the weather code as a string. "0"= sunny, "1" = rain,...
+ * @note never may return a null pointer or an empty string
+ */
+const char* GEO_GetWeather (const byte* const color)
+{
+	const float rainChance = GEO_GetRainChance(color);
+	const float snowChance = GEO_GetSnowChance(color);
+	const float weatherChance = rainChance + snowChance;
+	if (frand() < weatherChance) {
+		/* we have weather today */
+		if (snowChance == 0.0 || frand() < rainChance / weatherChance)
+			return "1";	/* rain */
+		else
+			return "2";	/* snow */
+	}
+	else	/* clear blue sky */
+		return "0";
+}
+
+/**
+ * @brief Translate color value to terrain type
+ * @param[in] color the color value from the terrain mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
