@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/xml.h"
 #include "../../common/http.h"
 
+#include "../cl_inventory.h"
+#include "../../common/binaryexpressionparser.h"
+
 struct cgame_import_s;
 
 typedef struct cgame_export_s {
@@ -122,6 +125,8 @@ typedef struct cgame_import_s {
 	void (IMPORT* HUD_DisplayMessage) (const char* text);
 	uiNode_t* (IMPORT* UI_GetOption) (int dataId);
 	void (IMPORT* UI_SortOptions) (uiNode_t** first);
+	uiNode_t* (IMPORT* UI_InitOptionIteratorAtIndex) (int index, uiNode_t* option, uiOptionIterator_t* iterator);
+	uiNode_t* (IMPORT* UI_OptionIteratorNextOption) (uiOptionIterator_t* iterator);
 	int (IMPORT* UI_DrawString) (const char* fontID, align_t align, int x, int y, const char* c);
 	const char*  (IMPORT* UI_GetFontFromNode) (const uiNode_t*  const node);
 	void (IMPORT* UI_DrawNormImageByName) (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char* name);
@@ -362,6 +367,9 @@ typedef struct cgame_import_s {
 	bool (IMPORT* INV_RemoveFromInventory) (Inventory* const i, const invDef_t*  container, Item* fItem);
 
 	void (IMPORT* INV_ItemDescription) (const objDef_t* od);
+	bool (IMPORT* INV_ItemMatchesFilter) (const objDef_t* obj, const itemFilterTypes_t filterType);
+	const char* (IMPORT* INV_GetFilterType) (itemFilterTypes_t id);
+	itemFilterTypes_t (IMPORT* INV_GetFilterTypeID) (const char*  filterTypeID);
 
 	void (IMPORT* WEB_Upload) (int category, const char* filename);
 	void (IMPORT* WEB_Delete) (int category, const char* filename);
@@ -371,6 +379,7 @@ typedef struct cgame_import_s {
 	const char* (IMPORT* GetRelativeSavePath) (char* buf, size_t bufSize);
 	const char* (IMPORT* GetAbsoluteSavePath) (char* buf, size_t bufSize);
 
+	bool (IMPORT* BEP_Evaluate) (const char* expr, BEPEvaluteCallback_t varFuncParam, const void* userdata);
 	/** @todo: remove me */
 	byte* r_xviAlpha;
 	byte* r_radarPic;

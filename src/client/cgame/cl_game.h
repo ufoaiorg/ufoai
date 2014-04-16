@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../cl_shared.h"
-#include "../ui/ui_nodes.h"
+#include "../ui/ui_main.h"
 
 #include "cgame.h"
 

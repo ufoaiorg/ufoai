@@ -637,6 +637,8 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
 		cgi->UI_GetOption = UI_GetOption;
 		cgi->UI_SortOptions = UI_SortOptions;
+		cgi->UI_InitOptionIteratorAtIndex = UI_InitOptionIteratorAtIndex;
+		cgi->UI_OptionIteratorNextOption = UI_OptionIteratorNextOption;
 		cgi->UI_DrawString = UI_DrawString_;
 		cgi->UI_GetFontFromNode = UI_GetFontFromNode;
 		cgi->UI_DrawNormImageByName = UI_DrawNormImageByName_;
@@ -778,6 +780,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->INV_ItemDescription = INV_ItemDescription;
+		cgi->INV_ItemMatchesFilter = INV_ItemMatchesFilter;
+		cgi->INV_GetFilterType = INV_GetFilterType;
+		cgi->INV_GetFilterTypeID = INV_GetFilterTypeID;
 
 		cgi->WEB_Upload = GAME_WebUpload;
 		cgi->WEB_Delete = GAME_WebDelete;
@@ -786,6 +791,8 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 
 		cgi->GetRelativeSavePath = GAME_GetRelativeSavePath;
 		cgi->GetAbsoluteSavePath = GAME_GetAbsoluteSavePath;
+
+		cgi->BEP_Evaluate = BEP_Evaluate;
 
 		cgi->Sys_Error = Sys_Error;
 
