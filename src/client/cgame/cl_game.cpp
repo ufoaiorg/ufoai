@@ -390,7 +390,22 @@ static void GAME_Free (void* ptr)
 	Mem_Free(ptr);
 }
 
-static void GAME_DestroyInventory (Inventory*  const inv)
+static memPool_t* GAME_CreatePool (const char* name)
+{
+	return Mem_CreatePool(name);
+}
+
+static void GAME_FreePool (memPool_t* pool)
+{
+	Mem_FreePool(pool);
+}
+
+static char* GAME_PoolStrDup (const char* in, memPool_t* pool, const int tagNum)
+{
+	return Mem_PoolStrDup(in, pool, tagNum);
+}
+
+static void GAME_DestroyInventory (Inventory* const inv)
 {
 	cls.i.destroyInventory(inv);
 }
@@ -720,7 +735,11 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->GAME_LoadCharacter = GAME_LoadCharacter;
 		cgi->GAME_SaveCharacter = GAME_SaveCharacter;
 
+		cgi->Alloc = _Mem_Alloc;
 		cgi->Free = GAME_Free;
+		cgi->CreatePool = GAME_CreatePool;
+		cgi->FreePool = GAME_FreePool;
+		cgi->PoolStrDup = GAME_PoolStrDup;
 
 		cgi->R_LoadImage = R_LoadImage;
 		cgi->R_SoftenTexture = R_SoftenTexture;

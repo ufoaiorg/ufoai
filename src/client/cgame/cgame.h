@@ -184,7 +184,13 @@ typedef struct cgame_import_s {
 	int (IMPORT* GAME_GetChrMaxLoad) (const character_t* chr);
 	bool (IMPORT* GAME_LoadCharacter) (xmlNode_t* p, character_t* chr);
 	bool (IMPORT* GAME_SaveCharacter) (xmlNode_t* p, const character_t* chr);
+
+	/* Mem functions */
+	void* (IMPORT* Alloc) (size_t size, bool zeroFill, memPool_t* pool, const int tagNum, const char* fileName, const int fileLine);
 	void (IMPORT* Free) (void* ptr);
+	memPool_t* (IMPORT* CreatePool) (const char* name);
+	void (IMPORT* FreePool) (memPool_t* pool);
+	char* (IMPORT* PoolStrDup) (const char* in, memPool_t* pool, const int tagNum);
 
 	/* sound functions */
 	void (IMPORT* S_StartLocalSample) (const char* s, float volume);
