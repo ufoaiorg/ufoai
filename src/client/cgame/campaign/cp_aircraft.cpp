@@ -1362,7 +1362,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		aircraftTemplate->tpl = aircraftTemplate;
-		aircraftTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+		aircraftTemplate->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
 		aircraftTemplate->ufotype = UFO_MAX;
@@ -2479,7 +2479,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 	Q_strncpyz(craft->name, s, sizeof(craft->name));
 
 	s = cgi->XML_GetString(p, SAVE_AIRCRAFT_MISSIONID);
-	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
+	craft->missionID = cgi->PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
 		/* detection id and time */
@@ -2671,7 +2671,7 @@ static bool AIR_PostLoadInitMissions (void)
 			if (aircraft->status == AIR_MISSION)
 				AIR_AircraftReturnToBase(aircraft);
 		}
-		Mem_Free(aircraft->missionID);
+		cgi->Free(aircraft->missionID);
 		aircraft->missionID = nullptr;
 	}
 
@@ -2694,7 +2694,7 @@ static bool AIR_PostLoadInitMissions (void)
 			continue;
 		}
 		ufo->mission->ufo = ufo;
-		Mem_Free(ufo->missionID);
+		cgi->Free(ufo->missionID);
 		ufo->missionID = nullptr;
 		prevUfo = ufo;
 	}

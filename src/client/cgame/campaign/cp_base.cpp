@@ -1571,7 +1571,7 @@ void B_ParseBaseTemplate (const char* name, const char** text)
 
 	/* create new Template */
 	baseTemplate = &ccs.baseTemplates[ccs.numBaseTemplates];
-	baseTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	baseTemplate->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingNums for checking moreThanOne constraint */
 	OBJZERO(map);

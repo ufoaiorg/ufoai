@@ -321,7 +321,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	CP_CreateCivilianTeam(mission, param);
 
 	/* Reset parameters */
-	Mem_Free(param->param);
+	cgi->Free(param->param);
 	param->param = nullptr;
 	param->retriable = true;
 
@@ -346,7 +346,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 			if (mission->mapDef->mapTheme[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (Q_streq(mission->mapDef->id, "ufocrash"))
-					param->param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
+					param->param = cgi->PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
 			ufoCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
 		} else {

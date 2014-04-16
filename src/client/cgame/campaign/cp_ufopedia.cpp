@@ -1176,7 +1176,7 @@ void UP_ParseChapter (const char* name, const char** text)
 
 	pediaChapter_t chapter;
 	OBJZERO(chapter);
-	chapter.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	chapter.id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	chapter.idx = ccs.numChapters;	/* set self-link */
 
 	/* get begin block */
@@ -1200,7 +1200,7 @@ void UP_ParseChapter (const char* name, const char** text)
 			}
 			if (*token == '_')
 				token++;
-			chapter.name = Mem_PoolStrDup(token, cp_campaignPool, 0);
+			chapter.name = cgi->PoolStrDup(token, cp_campaignPool, 0);
 		} else {
 			cgi->Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": token \"%s\" not expected.\n", name, token);
 		}

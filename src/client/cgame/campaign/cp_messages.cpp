@@ -128,7 +128,7 @@ uiMessageListNodeMessage_t* MS_AddNewMessage (const char* title, const char* tex
 	mess->date = ccs.date;
 
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
-	mess->text = Mem_PoolStrDup(text, cp_campaignPool, 0);
+	mess->text = cgi->PoolStrDup(text, cp_campaignPool, 0);
 
 	/* get formatted date text */
 	MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
@@ -313,7 +313,7 @@ bool MS_LoadXML (xmlNode_t* p)
 			CP_DateConvertLong(&mess->date, &date);
 			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 				date.year, Date_GetMonthName(date.month - 1), date.day);
-			mail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
+			mail->date = cgi->PoolStrDup(dateBuf, cp_campaignPool, 0);
 		}
 	}
 	cgi->Com_UnregisterConstList(saveMessageConstants);

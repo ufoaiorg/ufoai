@@ -539,17 +539,17 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 				if (Q_streq(tech->provides, item->id)) {
 					found = true;
 					if (!tech->name)
-						tech->name = Mem_PoolStrDup(item->name, cp_campaignPool, 0);
+						tech->name = cgi->PoolStrDup(item->name, cp_campaignPool, 0);
 					if (!tech->mdl)
-						tech->mdl = Mem_PoolStrDup(item->model, cp_campaignPool, 0);
+						tech->mdl = cgi->PoolStrDup(item->model, cp_campaignPool, 0);
 					if (!tech->image)
-						tech->image = Mem_PoolStrDup(item->image, cp_campaignPool, 0);
+						tech->image = cgi->PoolStrDup(item->image, cp_campaignPool, 0);
 					break;
 				}
 			}
 			/* No id found in cgi->csi->ods */
 			if (!found) {
-				tech->name = Mem_PoolStrDup(tech->id, cp_campaignPool, 0);
+				tech->name = cgi->PoolStrDup(tech->id, cp_campaignPool, 0);
 				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n",
 						tech->id, tech->provides);
 			}
@@ -562,14 +562,14 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 				if (Q_streq(tech->provides, building->id)) {
 					found = true;
 					if (!tech->name)
-						tech->name = Mem_PoolStrDup(building->name, cp_campaignPool, 0);
+						tech->name = cgi->PoolStrDup(building->name, cp_campaignPool, 0);
 					if (!tech->image)
-						tech->image = Mem_PoolStrDup(building->image, cp_campaignPool, 0);
+						tech->image = cgi->PoolStrDup(building->image, cp_campaignPool, 0);
 					break;
 				}
 			}
 			if (!found) {
-				tech->name = Mem_PoolStrDup(tech->id, cp_campaignPool, 0);
+				tech->name = cgi->PoolStrDup(tech->id, cp_campaignPool, 0);
 				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n",
 						tech->id, tech->provides);
 			}
@@ -584,9 +584,9 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 				if (Q_streq(tech->provides, aircraftTemplate->id)) {
 					found = true;
 					if (!tech->name)
-						tech->name = Mem_PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
+						tech->name = cgi->PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
 					if (!tech->mdl) {	/* DEBUG testing */
-						tech->mdl = Mem_PoolStrDup(aircraftTemplate->model, cp_campaignPool, 0);
+						tech->mdl = cgi->PoolStrDup(aircraftTemplate->model, cp_campaignPool, 0);
 						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", aircraftTemplate->model);
 					}
 					aircraftTemplate->tech = tech;
@@ -1159,7 +1159,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 	 * Set standard values
 	 */
 	tech->idx = ccs.numTechnologies - 1;
-	tech->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	tech->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	unsigned hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 
 	/* Set the default string for descriptions (available even if numDescriptions is 0) */
@@ -1270,13 +1270,13 @@ void RS_ParseTechnologies (const char* name, const char** text)
 						const char* description = (char*)list->next->data;
 
 						/* Copy tech string into entry. */
-						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(id, cp_campaignPool, 0);
+						descTemp->tech[descTemp->numDescriptions] = cgi->PoolStrDup(id, cp_campaignPool, 0);
 
 						/* skip translation marker */
 						if (description[0] == '_')
 							description++;
 
-						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(description, cp_campaignPool, 0);
+						descTemp->text[descTemp->numDescriptions] = cgi->PoolStrDup(description, cp_campaignPool, 0);
 						descTemp->numDescriptions++;
 					} else {
 						Com_Printf("skipped description for tech '%s'\n", tech->id);
@@ -1323,7 +1323,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 
 							/* Set requirement-name (id). */
 							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(token, cp_campaignPool, 0);
 
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech' or 'tech_not')- %s\n", requiredTemp->links[requiredTemp->numLinks].id);
 
@@ -1349,7 +1349,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
@@ -1396,7 +1396,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							const char* amountToken = (char*)list->next->data;
 
 							/* Set requirement-name (id). */
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							requiredTemp->numLinks++;
@@ -1422,7 +1422,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_UFO;
 							/* Set requirement-name (id). */
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);

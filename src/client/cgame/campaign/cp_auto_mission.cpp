@@ -239,7 +239,7 @@ static void AM_CreateUnitChr (autoUnit_t* unit, const teamDef_t* teamDef, const 
 static void AM_DestroyUnitChr (autoUnit_t* unit)
 {
 	cgi->INV_DestroyInventory(&unit->chr->inv);
-	Mem_Free(unit->chr);
+	cgi->Free(unit->chr);
 }
 
 /**

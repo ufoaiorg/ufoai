@@ -229,7 +229,7 @@ static void CP_ParseResearchedCampaignItems (const campaign_t* campaign, const c
 			if (Q_streq(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = true;
-				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cp_campaignPool, 0);
+				tech->markResearched.campaign[tech->markResearched.numDefinitions] = cgi->PoolStrDup(name, cp_campaignPool, 0);
 				tech->markResearched.numDefinitions++;
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;

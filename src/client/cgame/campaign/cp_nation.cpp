@@ -322,7 +322,7 @@ void CL_ParseNations (const char* name, const char** text)
 		ccs.numNations++;
 
 		Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
-		nation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+		nation->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	}
 }
 
@@ -379,7 +379,7 @@ void CITY_Parse (const char* name, const char** text)
 
 	if (cgi->Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
 		ccs.numCities++;
-		newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+		newCity.id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 		/* Add city to the list */
 		LIST_Add(&ccs.cities, newCity);
 	}

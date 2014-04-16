@@ -154,7 +154,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 	if (!SAV_VerifyHeader(&header)) {
 		/* our header is not valid, we MUST abort loading the game! */
 		Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
-		Mem_Free(cbuf);
+		cgi->Free(cbuf);
 		*error = "Corrupted header";
 		return false;
 	}
@@ -172,25 +172,25 @@ bool SAV_GameLoad (const char* file, const char** error)
 		/* uncompress data, skipping comment header */
 		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
 		buf[header.xmlSize] = '\0'; /* Ensure '\0' termination. */
-		Mem_Free(cbuf);
+		cgi->Free(cbuf);
 
 		if (res != Z_OK) {
-			Mem_Free(buf);
+			cgi->Free(buf);
 			*error = _("Error decompressing data");
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return false;
 		}
 		topNode = cgi->XML_Parse((const char*)buf);
 		if (!topNode) {
-			Mem_Free(buf);
+			cgi->Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
 			*error = "Corrupted xml data";
 			return false;
 		}
-		Mem_Free(buf);
+		cgi->Free(buf);
 	} else {
 		topNode = cgi->XML_Parse((const char*)(cbuf + sizeof(header)));
-		Mem_Free(cbuf);
+		cgi->Free(cbuf);
 		if (!topNode) {
 			Com_Printf("Error: Failure in loading the xml data!\n");
 			*error = "Corrupted xml data";
@@ -326,22 +326,22 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength);
-		Mem_Free(buf);
+		cgi->Free(buf);
 
 		if (res != Z_OK) {
-			Mem_Free(fbuf);
+			cgi->Free(fbuf);
 			*error = _("Memory error compressing save-game data - set save_compressed cvar to 0");
 			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return false;
 		}
 	} else {
 		memcpy(fbuf + sizeof(header), buf, requiredBufferLength);
-		Mem_Free(buf);
+		cgi->Free(buf);
 	}
 
 	/* last step - write data */
 	cgi->FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
-	Mem_Free(fbuf);
+	cgi->Free(fbuf);
 
 	return true;
 }

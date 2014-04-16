@@ -403,7 +403,7 @@ CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
  * @brief Searches for a filter type name (as used in console functions) and returns the matching itemFilterTypes_t enum.
  * @param[in] filterTypeID Filter type name so search for. @sa filterTypeNames.
  */
-itemFilterTypes_t INV_GetFilterTypeID (const char*  filterTypeID)
+itemFilterTypes_t INV_GetFilterTypeID (const char* filterTypeID)
 {
 	if (!filterTypeID)
 		return MAX_FILTERTYPES;

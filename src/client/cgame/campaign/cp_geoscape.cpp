@@ -2359,16 +2359,16 @@ bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTyp
 
 void GEO_Shutdown (void)
 {
-	Mem_Free(terrainPic);
+	cgi->Free(terrainPic);
 	terrainPic = nullptr;
 
-	Mem_Free(culturePic);
+	cgi->Free(culturePic);
 	culturePic = nullptr;
 
-	Mem_Free(populationPic);
+	cgi->Free(populationPic);
 	populationPic = nullptr;
 
-	Mem_Free(nationsPic);
+	cgi->Free(nationsPic);
 	nationsPic = nullptr;
 }
 

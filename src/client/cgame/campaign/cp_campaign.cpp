@@ -1294,7 +1294,7 @@ void CP_ResetCampaignData (void)
 	/* cleanup dynamic mails */
 	CP_FreeDynamicEventMail();
 
-	Mem_FreePool(cp_campaignPool);
+	cgi->FreePool(cp_campaignPool);
 
 	/* called to flood the hash list - because the parse tech function
 	 * was maybe already called */
@@ -1487,7 +1487,7 @@ int CP_GetSalaryUpKeepBase (const salary_t* salary, const base_t* base)
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
-	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
+	cp_campaignPool = cgi->CreatePool("Client: Local (per game)");
 
 	SAV_Init();
 

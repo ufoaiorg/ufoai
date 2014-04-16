@@ -35,10 +35,16 @@ extern void GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 CGAME_HARD_LINKED_FUNCTIONS
 
 #ifndef HARD_LINKED_CGAME
+/* These are here to allow common code to link */
 linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
 	return cgi->LIST_Add(listDest, data, length);
 }
+void FS_CloseFile (qFILE*  f)
+{
+	cgi->FS_CloseFile(f);
+}
+/* Used by macros */
 void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void* userData)
 {
 	cgi->LIST_Sort(list, sorter, userData);
@@ -46,6 +52,10 @@ void LIST_Sort (linkedList_t** list, linkedListSort_t sorter, const void* userDa
 linkedList_t* LIST_CopyStructure (linkedList_t* src)
 {
 	return cgi->LIST_CopyStructure(src);
+}
+void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum, const char* fileName, const int fileLine)
+{
+	return cgi->Alloc(size, zeroFill, pool, tagNum, fileName, fileLine);
 }
 
 const cgame_export_t* GetCGameAPI (const cgame_import_t* import)

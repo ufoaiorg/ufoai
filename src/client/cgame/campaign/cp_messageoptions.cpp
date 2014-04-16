@@ -421,7 +421,7 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 			if (token[0] == '_') {
 				token++;
 			}
-			category->name = Mem_PoolStrDup(token, cp_campaignPool, 0);
+			category->name = cgi->PoolStrDup(token, cp_campaignPool, 0);
 			categoryEntry->notifyType = category->name;
 		} else {
 			cgi->Com_Error(ERR_DROP, "MSO_ParseMessageSettings: token \"%s\" in \"%s\" not expected.\n", token, blockName);

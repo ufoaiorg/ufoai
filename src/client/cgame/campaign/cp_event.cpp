@@ -104,7 +104,7 @@ void CL_ParseEventMails (const char* name, const char** text)
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
 
-	eventMail->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	eventMail->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
 	cgi->Com_ParseBlock(name, text, eventMail, eventMail_vals, cp_campaignPool);
 }
@@ -386,7 +386,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
 	ccs.numCampaignTriggerEvents++;
 	event->active = true;
-	event->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	event->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
 	do {
 		token = cgi->Com_EParse(text, errhead, name);
@@ -472,7 +472,7 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 	events = &ccs.campaignEvents[ccs.numCampaignEventDefinitions];
 	OBJZERO(*events);
 	Com_DPrintf(DEBUG_CLIENT, "...found events %s\n", name);
-	events->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	events->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	ccs.numCampaignEventDefinitions++;
 
 	do {
@@ -492,7 +492,7 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 		event = &events->campaignEvents[events->numCampaignEvents++];
 		OBJZERO(*event);
 
-		Mem_PoolStrDupTo(token, (char**) ((char*)event + (int)offsetof(campaignEvent_t, tech)), cp_campaignPool, 0);
+		event->tech = cgi->PoolStrDup(token, cp_campaignPool, 0);
 
 		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text)
@@ -532,7 +532,7 @@ void CL_EventAddMail (const char* eventMailId)
 		CP_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 			date.year, Date_GetMonthName(date.month - 1), date.day);
-		eventMail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
+		eventMail->date = cgi->PoolStrDup(dateBuf, cp_campaignPool, 0);
 	}
 
 	eventMail->sent = true;

@@ -100,7 +100,7 @@ void CL_ParseRanks (const char* name, const char** text)
 
 	rank = &ccs.ranks[ccs.numRanks++];
 	OBJZERO(*rank);
-	rank->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	rank->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	rank->level = -1;
 
 	do {

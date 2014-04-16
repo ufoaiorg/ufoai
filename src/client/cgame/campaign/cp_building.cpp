@@ -160,7 +160,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 		/* new entry */
 		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
 		OBJZERO(*building);
-		building->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+		building->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 

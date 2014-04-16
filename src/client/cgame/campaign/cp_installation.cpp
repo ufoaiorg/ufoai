@@ -419,7 +419,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 	/* new entry */
 	installationTemplate_t* installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
 	OBJZERO(*installation);
-	installation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	installation->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	installation->type = INSTALLATION_RADAR;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);

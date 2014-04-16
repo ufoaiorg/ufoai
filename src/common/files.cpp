@@ -377,7 +377,7 @@ int FS_Read2 (void* buffer, int len, qFILE* f, bool failOnEmptyRead)
 	return len;
 }
 
-int FS_Read (void* buffer, int len, qFILE*  f)
+int FS_Read (void* buffer, int len, qFILE* f)
 {
 	return FS_Read2(buffer, len, f, true);
 }
