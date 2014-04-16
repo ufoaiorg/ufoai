@@ -314,9 +314,6 @@ static void CP_CreateCivilianTeam (const mission_t* mission, battleParam_t* para
  */
 void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const aircraft_t* aircraft)
 {
-	const char* zoneType;
-	const byte* color;
-
 	assert(mission->posAssigned);
 	assert(mission->mapDef);
 
@@ -333,9 +330,8 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	cgi->Cvar_Set("rm_crashed", "");
 
 	param->mission = mission;
-	color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
-	zoneType = GEO_GetTerrainType(color);
-	param->zoneType = zoneType; /* store to terrain type for texture replacement */
+	const byte* color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
+	param->zoneType = GEO_GetTerrainType(color); /* store to terrain type for texture replacement */
 	cgi->Cvar_Set("r_weather", GEO_GetWeather(color));
 
 	/* Is there a UFO to recover ? */
