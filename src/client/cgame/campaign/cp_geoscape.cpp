@@ -2007,8 +2007,8 @@ static TerrainDefs terrainDefs;
  */
 const char* GEO_GetWeather (const byte* const color)
 {
-	const float rainChance = GEO_GetRainChance(color);
-	const float snowChance = GEO_GetSnowChance(color);
+	const float rainChance = terrainDefs.getRainChance(color);
+	const float snowChance = terrainDefs.getSnowChance(color);
 	const float weatherChance = rainChance + snowChance;
 	if (frand() < weatherChance) {
 		/* we have weather today */
@@ -2031,26 +2031,6 @@ const char* GEO_GetWeather (const byte* const color)
 const char* GEO_GetTerrainType (const byte* const color)
 {
 	return terrainDefs.getTerrainName(color);
-}
-
-/**
- * @brief Translate color value to terrain type and then to snow probability
- * @param[in] color the color value from the terrain mask
- * @return the probability for snow
- */
-float GEO_GetSnowChance (const byte* const color)
-{
-	return terrainDefs.getSnowChance(color);
-}
-
-/**
- * @brief Translate color value to terrain type and then to rain probability
- * @param[in] color the color value from the terrain mask
- * @return the probability for rain
- */
-float GEO_GetRainChance (const byte* const color)
-{
-	return terrainDefs.getRainChance(color);
 }
 
 /**

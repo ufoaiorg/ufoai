@@ -70,8 +70,6 @@ void GEO_InitStartup(void);
 const char* GEO_GetTerrainType(const byte* color);
 const char* GEO_GetWeather(const byte* const color);
 float GEO_GetSurvivalChance(const byte* const color);
-float GEO_GetRainChance(const byte* const color);
-float GEO_GetSnowChance(const byte* const color);
 int GEO_GetCivilianNumberByPosition(const vec2_t pos);
 void GEO_PrintParameterStringByPos(const vec2_t pos);
 void GEO_CheckPositionBoundaries(float* pos);
