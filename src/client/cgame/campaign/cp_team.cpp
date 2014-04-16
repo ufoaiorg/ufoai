@@ -162,7 +162,7 @@ static void CP_CleanupContainerWeapons (equipDef_t* ed, containerIndex_t contain
 			CP_AddWeaponAmmo(ed, ic);
 		} else {
 			/* Drop ammo used for reloading and sold carried weapons. */
-			if (!cgi->INV_RemoveFromInventory(&chr->inv, INVDEF(container), ic))
+			if (!cgi->INV_RemoveFromInventory(&chr->inv, chr->inv.getContainer(container).def(), ic))
 				cgi->Com_Error(ERR_DROP, "Could not remove item from inventory");
 		}
 	}
