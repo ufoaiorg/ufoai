@@ -203,7 +203,7 @@ clean-android:
 	$(Q)cd android-project && ant clean
 
 .PHONY: android-update-project
-android-update-project: clean-android
+android-update-project:
 	@echo "===> ANDROID [update project]"
 	$(Q)cd android-project && android update project -p . -t android-13
 
@@ -215,7 +215,7 @@ android-copy-assets: clean-android pk3
 	$(Q)for i in hdpi ldpi mdpi xhdpi; do mkdir -p android-project/res/drawable-$${i}; cp contrib/installer/ufoai.png android-project/res/drawable-$${i}/icon.png; done
 
 .PHONY: android
-android: android-update-project android-copy-assets
+android: android-update-project clean-android android-copy-assets
 	$(Q)ln -sf ../../src/libs/SDL android-project/jni/SDL
 	$(Q)ln -sf ../../src/libs/SDL_mixer android-project/jni/SDL_mixer
 	$(Q)ln -sf ../../src/libs/SDL_ttf android-project/jni/SDL_ttf
