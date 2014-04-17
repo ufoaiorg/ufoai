@@ -132,6 +132,15 @@ tile +b2x2_house08
 	0		0		0		0
 }
 
+tile +b2x2_house09
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
 // Commercial Buildings --------------------------------------------*
 
 tile +b2x4_station01
@@ -409,6 +418,7 @@ tileset 2x2
 	+b2x2_house03
 	+b2x2_house05
 	+b2x2_house08
+	+b2x2_house09
 	+p2x2_garden01
 	+p2x2_playground01
 	+p2x2_playground02
