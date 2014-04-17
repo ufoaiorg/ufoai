@@ -94,7 +94,6 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 		vec3_t view, verts[4];
 		vec3_t right, up, upright, downright;
 		float dot, dist, scale, alpha;
-		bool visible;
 		mBspSurface_t* surf = surfs->surfaces[i];
 		mBspFlare_t* f;
 
@@ -120,7 +119,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 				f->alpha = 0;
 
 			R_Trace(refdef.viewOrigin, f->origin, 0, MASK_SOLID);
-			visible = refdef.trace.fraction == 1.0;
+			bool visible = refdef.trace.fraction == 1.0;
 
 			f->alpha += (visible ? 0.03 : -0.15); /* ramp */
 
