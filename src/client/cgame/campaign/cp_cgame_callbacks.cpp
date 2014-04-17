@@ -652,6 +652,9 @@ static const cmdList_t cgameCallbacks[] = {
 };
 void GAME_CP_InitStartup (void)
 {
+#ifndef HARD_LINKED_CGAME
+	INVSH_InitCSI(cgi->csi);
+#endif
 	cgi->Cmd_TableAddList(cgameCallbacks);
 
 	CP_InitStartup();
