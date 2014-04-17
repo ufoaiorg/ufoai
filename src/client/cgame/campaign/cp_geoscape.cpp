@@ -1937,16 +1937,6 @@ nation_t* GEO_GetNation (const vec2_t pos)
  * @sa GEO_GetColor
  * @todo get these values from the scripts.
  */
-struct terrainDef_s		/* a single entry in the table */
-{
-	byte rgbRed;
-	byte rgbGreen;
-	byte rgbBlue;
-	const char* terrainName;
-	float survivalChance;
-	float rainChance;
-	float snowChance;
-};
 
 /*
  * Thoughts about (pilot) survival rates:

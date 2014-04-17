@@ -344,6 +344,25 @@ typedef struct gametype_s {
 	int num_cvars;
 } gametype_t;
 
+/**
+ * @brief Terrain property table entry
+ * Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
+ * It is a map of the world where the different terrainTypes are drawn in different colors.
+ * The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
+ * @sa GEO_GetColor
+ * @todo get these values from the scripts.
+ */
+struct terrainDef_s		/* a single entry in the table */
+{
+	byte rgbRed;
+	byte rgbGreen;
+	byte rgbBlue;
+	const char* terrainName;
+	float survivalChance;
+	float rainChance;
+	float snowChance;
+};
+
 typedef struct mapDef_s {
 	/* general */
 	char* id;				/**< script file id */
