@@ -40,45 +40,30 @@ private:
 	const char* _keyStr;
 	const char* _valStr;
 public:
-	KeyValuePair (const char* keyStr, const char* valStr)
-	{
+	KeyValuePair (const char* keyStr, const char* valStr) {
 		_keyStr = keyStr;
 		_valStr = valStr;
 	}
-
-	inline void set (const char* keyStr, const char* valStr)
-	{
+	inline void set (const char* keyStr, const char* valStr) {
 		_keyStr = keyStr;
 		_valStr = valStr;
 	}
-
-	inline bool isKey(const char* name) const
-	{
+	inline bool isKey(const char* name) const {
 		return !strcmp(_keyStr, name);
 	}
-
-	inline float asFloat () const
-	{
+	inline float asFloat () const {
 		return atof(_valStr);
 	}
-
-	inline int asInt () const
-	{
+	inline int asInt () const {
 		return atoi(_valStr);
 	}
-
-	inline bool asBool () const
-	{
+	inline bool asBool () const {
 		return asInt() != 0 ? true : false;
 	}
-
-	inline const char* asString () const
-	{
+	inline const char* asString () const {
 		return _valStr;
 	}
-
-	void asVec3 (vec3_t vec) const
-	{
+	void asVec3 (vec3_t vec) const {
 		if (sscanf(_valStr, "%f %f %f", &vec[0], &vec[1], &vec[2]) != 3)
 			VectorCopy(vec3_origin, vec);
 	}
