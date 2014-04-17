@@ -1321,6 +1321,9 @@ static const value_t aircraft_radar_vals[] = {
 	{nullptr, V_NULL, 0, 0}
 };
 
+const char* const air_slot_type_strings[] = AIR_SLOT_TYPE_STRINGS;
+CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
+
 /**
  * @brief Parses all aircraft that are defined in our UFO-scripts.
  * @sa CL_ParseClientData

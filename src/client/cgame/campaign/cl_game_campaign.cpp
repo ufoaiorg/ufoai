@@ -57,6 +57,14 @@ void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum,
 {
 	return cgi->Alloc(size, zeroFill, pool, tagNum, fileName, fileLine);
 }
+int Com_GetMapDefNumber (void)
+{
+	return cgi->csi->numMDs;
+}
+mapDef_t* Com_GetMapDefByIDX (int index)
+{
+	return &cgi->csi->mds[index];
+}
 
 const cgame_export_t* GetCGameAPI (const cgame_import_t* import)
 #else

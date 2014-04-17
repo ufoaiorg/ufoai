@@ -166,7 +166,17 @@ extern const char* const blend_names[];
 extern const char* const style_names[];
 extern const char* const fade_names[];
 extern const char* const longlines_names[];
-extern const char* const air_slot_type_strings[];
+#define AIR_SLOT_TYPE_STRINGS { \
+"base_missile", \
+"base_laser", \
+"weapon", \
+"shield", \
+"electronics", \
+"pilot", \
+"ammo", \
+"base_ammo_missile", \
+"base_ammo_laser" \
+}
 
 /** used e.g. in our parsers */
 typedef struct value_s {

@@ -385,10 +385,11 @@ typedef struct mapDef_s {
 } mapDef_t;
 
 #define MapDef_ForeachCondition(var, condition) \
-	for (int var##__loopvar = 0; (var) = nullptr, var##__loopvar < csi.numMDs; var##__loopvar++) \
-		if ((var) = &csi.mds[var##__loopvar], !(condition)) {} else
+	for (int var##__loopvar = 0; (var) = nullptr, var##__loopvar < Com_GetMapDefNumber(); var##__loopvar++) \
+		if ((var) = Com_GetMapDefByIDX(var##__loopvar), !(condition)) {} else
 
 #define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
+int Com_GetMapDefNumber(void);
 mapDef_t* Com_GetMapDefByIDX(int index);
 mapDef_t* Com_GetMapDefinitionByID(const char* mapDefID);
 

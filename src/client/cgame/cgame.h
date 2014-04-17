@@ -63,7 +63,7 @@ typedef struct cgame_export_s {
 	/** called on errors */
 	void (EXPORT* Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	dbuffer* (EXPORT* InitializeBattlescape) (const linkedList_t* team);
+	void (EXPORT* InitializeBattlescape) (dbuffer* msg, const linkedList_t* team);
 	/** callback that is executed every frame */
 	void (EXPORT* RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT* HandleBaseClick) (int baseIdx, int key, int col, int row);

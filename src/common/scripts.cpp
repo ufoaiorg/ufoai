@@ -1741,17 +1741,7 @@ static void Com_ParseArmourOrResistance (const char* name, const char** text, sh
  * @brief List of valid strings for slot types
  * @note slot names are the same as the item types (and must be in the same order)
  */
-const char* const air_slot_type_strings[] = {
-	"base_missile",
-	"base_laser",
-	"weapon",
-	"shield",
-	"electronics",
-	"pilot",
-	"ammo",
-	"base_ammo_missile",
-	"base_ammo_laser"
-};
+const char* const air_slot_type_strings[] = AIR_SLOT_TYPE_STRINGS;
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 /**
@@ -3548,6 +3538,11 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 		Com_DPrintf(DEBUG_SHARED, "Com_ParseMapDefinition: mapdef \"%s\" is skipped because hwclass doesn't match\n", name);
 		csi.numMDs--;
 	}
+}
+
+int Com_GetMapDefNumber (void)
+{
+	return csi.numMDs;
 }
 
 mapDef_t* Com_GetMapDefByIDX (int index)

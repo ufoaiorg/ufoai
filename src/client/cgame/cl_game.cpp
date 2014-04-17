@@ -1519,11 +1519,9 @@ static void GAME_InitializeBattlescape (linkedList_t* team)
 
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->InitializeBattlescape) {
-		dbuffer* msg = list->InitializeBattlescape(team);
-		if (msg != nullptr) {
-			NET_WriteMsg(cls.netStream, *msg);
-			delete msg;
-		}
+		dbuffer msg;
+		list->InitializeBattlescape(&msg, team);
+		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
