@@ -103,6 +103,7 @@ public:
 	ReactionFireTarget targets[MAX_RF_TARGETS];
 
 	ReactionFireTargetList () {
+		OBJZERO(targets);
 		init();
 	}
 
