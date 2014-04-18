@@ -53,6 +53,16 @@
 // * missionbriefing		the text to be shown in the mission briefing window, e.g. "*msgid:mission_briefing_fueldump"
 // * victorycondition		the text to be shown in the mission briefing window, e.g. "*msgid:victory_condition_fueldump"
 
+terraindef mountain
+{
+	rgbred			255
+	rgbgreen		0
+	rgbblue			0
+	survivalchance	2.5
+	rainchance		0.1
+	snowchance		0.3
+}
+
 // ================== //
 // RMA MAPS WITH UFOS //
 // ================== //
