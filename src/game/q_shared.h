@@ -361,6 +361,8 @@ struct terrainDef_s		/* a single entry in the table */
 	float survivalChance;
 	float rainChance;
 	float snowChance;
+
+	terrainDef_s() : rgbRed(128), rgbGreen(255), rgbBlue(0), terrainName("grass"), survivalChance(2.5), rainChance(0.2), snowChance(0.1) {}
 };
 
 typedef struct mapDef_s {
