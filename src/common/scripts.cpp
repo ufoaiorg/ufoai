@@ -25,6 +25,7 @@ Copyright (C) 2002-2014 UFO: Alien Invasion.
 
 #include "scripts.h"
 #include "../shared/parse.h"
+#include "../shared/keyvaluepair.h"
 #include "../game/inventory.h"
 #include "../client/cl_screen.h"
 
@@ -3540,6 +3541,55 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 	}
 }
 
+static void Com_ParseTerrainDefinition (const char* name, const char** text)
+{
+	const char* errhead = "Com_ParseTerrainDefinition: unexpected end of file (terraindef ";
+	struct terrainDef_s tDef;
+
+	/* get it's body */
+	const char* token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseTerrainDefinition: mapdef \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		tDef.terrainName = Mem_PoolStrDup(name, com_genericPool, 0);
+		char key[MAX_VAR];
+		strcpy(key, token);
+		token = Com_EParse(text, errhead, name);
+		KeyValuePair kvp(key, token);
+
+		if (kvp.isKey("rgbred"))
+			tDef.rgbRed = kvp.asInt();
+		else if (kvp.isKey("rgbgreen"))
+			tDef.rgbGreen = kvp.asInt();
+		else if (kvp.isKey("rgbblue"))
+			tDef.rgbBlue = kvp.asInt();
+		else if (kvp.isKey("survivalchance"))
+			tDef.survivalChance = kvp.asFloat();
+		else if (kvp.isKey("rainchance"))
+			tDef.rainChance = kvp.asFloat();
+		else if (kvp.isKey("snowchance"))
+			tDef.snowChance = kvp.asFloat();
+		else {
+			Com_Printf("Com_ParseTerrainDefinition: unknown token \"%s\" ignored (terraindef %s)\n", token, name);
+		}
+	} while (*text);
+
+	if (!tDef.terrainName[0]) {
+		Com_Printf("Com_ParseTerrainDefinition: terraindef \"%s\" with no name\n", name);
+	}
+	/* We intentionally do not use the stuff we just parsed yet. */
+}
+
 int Com_GetMapDefNumber (void)
 {
 	return csi.numMDs;
@@ -3612,6 +3662,8 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseUGVs(name, &text);
 		else if (Q_streq(type, "chrtemplate"))
 			Com_ParseCharacterTemplate(name, &text);
+		else if (Q_streq(type, "terraindef"))
+			Com_ParseTerrainDefinition(name, &text);
 		else if (Q_streq(type, "mapdef"))
 			Com_ParseMapDefinition(name, &text);
 		else if (Q_streq(type, "bodydef"))
