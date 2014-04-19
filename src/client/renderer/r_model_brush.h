@@ -171,7 +171,7 @@ typedef enum {
 typedef struct mBspNode_s {
 	/* common with leaf */
 	int contents;				/**< -1, to differentiate from leafs */
-	float minmaxs[6];			/**< for bounding box culling */
+	AABB minmaxs;				/**< for bounding box culling */
 
 	struct mBspNode_s* parent;
 
@@ -188,7 +188,7 @@ typedef struct mBspNode_s {
 typedef struct mBspLeaf_s {
 	/* common with mBspNode_t */
 	int contents;				/**< will be a negative contents number */
-	float minmaxs[6];			/**< for bounding box culling */
+	AABB minmaxs;				/**< for bounding box culling */
 
 	mBspNode_t* parent;
 

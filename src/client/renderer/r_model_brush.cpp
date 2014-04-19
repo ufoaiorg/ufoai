@@ -368,8 +368,8 @@ static void R_ModLoadNodes (const lump_t* l)
 		}
 
 		for (j = 0; j < 3; j++) {
-			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
-			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + (float)shift[j];
+			out->minmaxs.mins[j] = LittleShort(in->mins[j]) + (float)shift[j];
+			out->minmaxs.maxs[j] = LittleShort(in->maxs[j]) + (float)shift[j];
 		}
 
 		out->firstsurface = LittleShort(in->firstface);
@@ -403,8 +403,8 @@ static void R_ModLoadLeafs (const lump_t* l)
 
 	for (int i = 0; i < count; i++, in++, out++) {
 		for (int j = 0; j < 3; j++) {
-			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
-			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + (float)shift[j];
+			out->minmaxs.mins[j] = LittleShort(in->mins[j]) + (float)shift[j];
+			out->minmaxs.maxs[j] = LittleShort(in->maxs[j]) + (float)shift[j];
 		}
 
 		out->contents = LittleLong(in->contentFlags);

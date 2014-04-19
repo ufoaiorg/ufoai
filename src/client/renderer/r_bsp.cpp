@@ -234,7 +234,7 @@ static void R_RecursiveWorldNode (const mBspNode_t* node, int tile)
 	if (node->contents > CONTENTS_NODE)
 		return;
 
-	int cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
+	int cullState = R_CullBox(node->minmaxs.mins, node->minmaxs.maxs);
 
 	if (cullState == PSIDE_BACK)
 		return;					/* culled out */
