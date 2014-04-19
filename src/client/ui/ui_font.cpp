@@ -67,10 +67,7 @@ static void UI_RegisterFont (const uiFont_t* font)
  */
 bool UI_ParseFont (const char* name, const char** text)
 {
-	uiFont_t* font;
 	const char* errhead = "UI_ParseFont: unexpected end of file (font";
-	const char* token;
-	const value_t* v = nullptr;
 
 	/* search for font with same name */
 	if (UI_GetFontByID(name)) {
@@ -84,7 +81,7 @@ bool UI_ParseFont (const char* name, const char** text)
 	}
 
 	/* initialize the UI */
-	font = &fonts[numFonts];
+	uiFont_t* font = &fonts[numFonts];
 	OBJZERO(*font);
 
 	font->name = Mem_PoolStrDup(name, ui_sysPool, 0);
@@ -92,7 +89,7 @@ bool UI_ParseFont (const char* name, const char** text)
 	Com_DPrintf(DEBUG_CLIENT, "...found font %s (%i)\n", font->name, numFonts);
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("UI_ParseFont: font \"%s\" without body ignored\n", name);
@@ -109,6 +106,7 @@ bool UI_ParseFont (const char* name, const char** text)
 		if (*token == '}')
 			break;
 
+		const value_t* v;
 		for (v = fontValues; v->string; v++)
 			if (Q_streq(token, v->string)) {
 				/* found a definition */

@@ -125,8 +125,7 @@ CASSERT(lengthof(ui_sharedDataIDNames) == UI_MAX_DATAID);
  */
 int UI_GetDataIDByName (const char* name)
 {
-	int num;
-	for (num = 0; num < UI_MAX_DATAID; num++)
+	for (int num = 0; num < UI_MAX_DATAID; num++)
 		if (Q_streq(name, ui_sharedDataIDNames[num]))
 			return num;
 

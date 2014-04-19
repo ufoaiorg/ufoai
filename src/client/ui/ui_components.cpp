@@ -60,21 +60,19 @@ uiNode_t* UI_GetComponent (const char* name)
  */
 void UI_InsertComponent(uiNode_t* component)
 {
-	int pos = 0;
-	int i;
-
 	if (ui_global.numComponents >= UI_MAX_COMPONENTS)
 		Com_Error(ERR_FATAL, "UI_InsertComponent: hit MAX_COMPONENTS");
 
 	/* search the insertion position */
-	for (pos = 0; pos < ui_global.numComponents; pos++) {
+	int pos = 0;
+	for (; pos < ui_global.numComponents; pos++) {
 		const uiNode_t* node = ui_global.components[pos];
 		if (strcmp(component->name, node->name) < 0)
 			break;
 	}
 
 	/* create the space */
-	for (i = ui_global.numComponents - 1; i >= pos; i--)
+	for (int i = ui_global.numComponents - 1; i >= pos; i--)
 		ui_global.components[i + 1] = ui_global.components[i];
 
 	/* insert */

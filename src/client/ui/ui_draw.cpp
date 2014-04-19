@@ -106,12 +106,11 @@ static void UI_HighlightNode (const uiNode_t* node, const vec4_t color)
 
 	/* exclude rect */
 	if (node->firstExcludeRect) {
-		uiExcludeRect_t* current;
 		vec4_t trans = {1, 1, 1, 1};
 		Vector4Copy(color, trans);
 		trans[3] = trans[3] / 2;
 
-		for (current = node->firstExcludeRect; current != nullptr; current = current->next) {
+		for (uiExcludeRect_t* current = node->firstExcludeRect; current != nullptr; current = current->next) {
 			const int x = pos[0] + current->pos[0];
 			const int y = pos[1] + current->pos[1];
 			UI_DrawFill(x, y, current->size[0], current->size[1], trans);
@@ -131,8 +130,6 @@ static void UI_DrawDebugNodeNames (void)
 	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
 	static const vec4_t white = {1, 1.0, 1.0, 1.0};
 	static const vec4_t background = {0.0, 0.0, 0.0, 0.5};
-	uiNode_t* hoveredNode;
-	int stackPosition;
 
 	debugTextPositionY = 100;
 
@@ -164,14 +161,14 @@ static void UI_DrawDebugNodeNames (void)
 	R_Color(white);
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "window stack:", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	for (stackPosition = 0; stackPosition < ui_global.windowStackPos; stackPosition++) {
+	for (int stackPosition = 0; stackPosition < ui_global.windowStackPos; stackPosition++) {
 		uiNode_t* window = ui_global.windowStack[stackPosition];
 		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, window->name, 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
 
 	/* hovered node */
-	hoveredNode = UI_GetHoveredNode();
+	uiNode_t* hoveredNode = UI_GetHoveredNode();
 	if (hoveredNode) {
 		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
