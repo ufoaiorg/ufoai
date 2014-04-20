@@ -26778,7 +26778,7 @@ msgstr "Наведение:"
 
 #: ../base/ufos/ui/hire.ufo:494
 msgid "Evading:"
-msgstr "Укланение:"
+msgstr "Уклонение:"
 
 #: ../base/ufos/ui/hire.ufo:519 ../base/ufos/ui/hire.ufo:535
 msgid "Occupation"
