@@ -173,7 +173,7 @@ public:
 				|| getMaxY() < other.getMinY() || getMaxZ() < other.getMinZ());
 	}
 	/**
-	 * @brief Checks if the give line has a chance to hit our box
+	 * @brief Checks if the given line has a chance to hit our box
 	 * @param[in] line The line that might hit us
 	 * @return false - impossible; true - maybe
 	 */
