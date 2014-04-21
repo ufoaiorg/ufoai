@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 
 
-const vec3_t v_epsilon = { 1, 1, 1 };
 int brush_start, brush_end;
 
 static int oldmodels, oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnormals, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
@@ -179,9 +178,8 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 		nn[1] = LEAFNODE;
 	}
 
-	/* add v_epsilon to avoid clipping errors */
-	VectorSubtract(bBox.mins, v_epsilon, bBox.mins);
-	VectorAdd(bBox.maxs, v_epsilon, bBox.maxs);
+	/* add one unit to avoid clipping errors */
+	bBox.expand(1);
 
 	/* Call BeginModel only to initialize brush pointers */
 	BeginModel(entityNum);
@@ -207,8 +205,8 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 
 	/* correct bounds */
 	node = tree->headnode;
-	VectorAdd(bBox.mins, v_epsilon, node->nBox.mins);
-	VectorSubtract(bBox.maxs, v_epsilon, node->nBox.maxs);
+	bBox.expand(-1);
+	node->nBox.set(bBox);
 
 	/* finish model */
 	nn[2] = WriteBSP(tree->headnode);
