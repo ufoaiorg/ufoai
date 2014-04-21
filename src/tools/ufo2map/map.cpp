@@ -1231,13 +1231,12 @@ void LoadMapFile (const char* filename)
 	if (materialsCnt)
 		Com_Printf("Generated material file with %i entries\n", materialsCnt);
 
-	vec3_t map_mins, map_maxs;
-	ClearBounds(map_mins, map_maxs);
+	AABB mapBox;
+	mapBox.setNegativeVolume();
 	for (int i = 0; i < entities[0].numbrushes; i++) {
 		if (mapbrushes[i].mbBox.mins[0] > MAX_WORLD_WIDTH)
 			continue;	/* no valid points */
-		AddPointToBounds(mapbrushes[i].mbBox.mins, map_mins, map_maxs);
-		AddPointToBounds(mapbrushes[i].mbBox.maxs, map_mins, map_maxs);
+		mapBox.add(mapbrushes[i].mbBox);
 	}
 
 	/* save a copy of the brushes */
@@ -1249,6 +1248,7 @@ void LoadMapFile (const char* filename)
 	Verb_Printf(VERB_EXTRA, "%5i edgebevels\n", c_edgebevels);
 	Verb_Printf(VERB_EXTRA, "%5i entities\n", num_entities);
 	Verb_Printf(VERB_EXTRA, "%5i planes\n", nummapplanes);
-	Verb_Printf(VERB_EXTRA, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
-		map_mins[0], map_mins[1], map_mins[2], map_maxs[0], map_maxs[1], map_maxs[2]);
+	char sizeStr[AABB_STRING];
+	mapBox.asIntString(sizeStr);
+	Verb_Printf(VERB_EXTRA, "size: %s\n", sizeStr);
 }
