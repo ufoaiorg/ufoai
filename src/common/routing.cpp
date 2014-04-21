@@ -1362,13 +1362,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const G
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++)
+		for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = box.maxs[2]; z >= box.mins[2]; z--) {
-			for (y = box.maxs[1]; y >= box.mins[1] - i + 1; y--) {
+		for (z = box.getMaxZ(); z >= box.getMinZ(); z--) {
+			for (y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
-				for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++) {
+				for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "h:%i c:%i,", routing.getFloor(i, x, y, z), routing.getCeiling(i, x, y, z));
 				}
@@ -1388,13 +1388,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const G
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++)
+		for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = box.maxs[2]; z >= box.mins[2]; z--) {
-			for (y = box.maxs[1]; y >= box.mins[1] - i + 1; y--) {
+		for (z = box.getMaxZ(); z >= box.getMinZ(); z--) {
+			for (y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z, y);
-				for (x = box.mins[0]; x <= box.maxs[0] - i + 1; x++) {
+				for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "\"");
 
