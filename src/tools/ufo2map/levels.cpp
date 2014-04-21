@@ -127,26 +127,26 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 {
 	bspbrush_t* list;
 	tree_t* tree;
-	vec3_t bmins, bmaxs;
+	AABB bBox;		/* bounding box for all brushes inside partBox */
 	int32_t tmins[SPLIT_COORDS], tmaxs[SPLIT_COORDS];
 	int32_t nn[3];
 	node_t* node;
 
 	/* calculate bounds, stop if no brushes are available */
-	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox, bmins, bmaxs))
+	if (!MapBrushesBounds(brush_start, brush_end, levelnum, partBox, bBox.mins, bBox.maxs))
 		return LEAFNODE;
 
 	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
 		partBox.mins[0], partBox.mins[1], partBox.mins[2], partBox.maxs[0], partBox.maxs[1], partBox.maxs[2]);
 
 	for (int i = 0; i < SPLIT_COORDS; i++) {
-		tmins[i] = ((int)floor(bmins[i])) >> SPLIT_AT_POW2;
-		tmaxs[i] = ((int)ceil(bmaxs[i])) >> SPLIT_AT_POW2;
+		tmins[i] = ((int)floor(bBox.mins[i])) >> SPLIT_AT_POW2;
+		tmaxs[i] = ((int)ceil(bBox.maxs[i])) >> SPLIT_AT_POW2;
 	}
 
 	Verb_Printf(VERB_DUMP, "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, tmaxs[0] - tmins[0], tmaxs[1] - tmins[1],
 		(int)partBox.mins[0], (int)partBox.mins[1], (int)partBox.maxs[0], (int)partBox.maxs[1],
-		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]);
+		(int)bBox.mins[0], (int)bBox.mins[1], (int)bBox.maxs[0], (int)bBox.maxs[1]);
 
 	/** @todo better algo to chose a split position - could force all splits to make continuous grid, for example */
 	if (tmaxs[1] - tmins[1] >= 2 || tmaxs[0] - tmins[0] >= 2) {
@@ -160,7 +160,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 		else
 			n = 0;
 
-		AABB newPartBox(bmins, bmaxs);		/* bounding box of the partition */
+		AABB newPartBox(bBox);		/* bounding box of the partition */
 
 		splitAt = (tmins[n] + ((tmaxs[n] - tmins[n]) >> 1)) << SPLIT_AT_POW2;
 		newPartBox.maxs[n] = splitAt;
@@ -168,7 +168,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 		Verb_Printf(VERB_DUMP, "Chlid 0:  (%i %i) (%i %i)\n", (int)newPartBox.mins[0], (int)newPartBox.mins[1], (int)newPartBox.maxs[0], (int)newPartBox.maxs[1]);
 		nn[0] = ConstructLevelNodes_r(levelnum, newPartBox, entityNum);
 
-		newPartBox.setMaxs(bmaxs);
+		newPartBox.setMaxs(bBox.maxs);
 		newPartBox.mins[n] = splitAt;
 
 		Verb_Printf(VERB_DUMP, "Child 1:  (%i %i) (%i %i)\n", (int)newPartBox.mins[0], (int)newPartBox.mins[1], (int)newPartBox.maxs[0], (int)newPartBox.maxs[1]);
@@ -180,13 +180,13 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 	}
 
 	/* add v_epsilon to avoid clipping errors */
-	VectorSubtract(bmins, v_epsilon, bmins);
-	VectorAdd(bmaxs, v_epsilon, bmaxs);
+	VectorSubtract(bBox.mins, v_epsilon, bBox.mins);
+	VectorAdd(bBox.maxs, v_epsilon, bBox.maxs);
 
 	/* Call BeginModel only to initialize brush pointers */
 	BeginModel(entityNum);
 
-	list = MakeBspBrushList(brush_start, brush_end, levelnum, AABB(bmins, bmaxs));
+	list = MakeBspBrushList(brush_start, brush_end, levelnum, bBox);
 	if (!list) {
 		nn[2] = LEAFNODE;
 		return BuildNodeChildren(nn);
@@ -196,7 +196,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 		list = ChopBrushes(list);
 
 	/* begin model creation now */
-	tree = BuildTree(list, bmins, bmaxs);
+	tree = BuildTree(list, bBox.mins, bBox.maxs);
 	MakeTreePortals(tree);
 	MarkVisibleSides(tree, brush_start, brush_end);
 	MakeFaces(tree->headnode);
@@ -207,8 +207,8 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const AABB& partBox, i
 
 	/* correct bounds */
 	node = tree->headnode;
-	VectorAdd(bmins, v_epsilon, node->nBox.mins);
-	VectorSubtract(bmaxs, v_epsilon, node->nBox.maxs);
+	VectorAdd(bBox.mins, v_epsilon, node->nBox.mins);
+	VectorSubtract(bBox.maxs, v_epsilon, node->nBox.maxs);
 
 	/* finish model */
 	nn[2] = WriteBSP(tree->headnode);
