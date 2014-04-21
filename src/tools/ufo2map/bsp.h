@@ -84,7 +84,7 @@ uint16_t FindOrCreateFloatPlane(vec3_t normal, vec_t dist);
 /*============================================================================= */
 
 /* csg.c */
-int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const AABB& clipBox, vec3_t mins, vec3_t maxs);
+int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const AABB& clipBox, AABB& bBox);
 bspbrush_t* MakeBspBrushList(int startbrush, int endbrush, int level, const AABB& clip);
 bspbrush_t* ChopBrushes(bspbrush_t* head);
 

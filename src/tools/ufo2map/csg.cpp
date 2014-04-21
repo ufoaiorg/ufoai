@@ -262,11 +262,11 @@ static inline bool BrushGE (bspbrush_t* b1, bspbrush_t* b2)
  * @sa ProcessSubModel
  * @sa IsInLevel
  */
-int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const AABB& clipBox, vec3_t mins, vec3_t maxs)
+int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const AABB& clipBox, AABB& bBox)
 {
 	int i, num;
 
-	ClearBounds(mins, maxs);
+	bBox.setNegativeVolume();
 	num = 0;
 
 	for (i = startbrush; i < endbrush; i++) {
@@ -284,8 +284,7 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 			continue;
 
 		num++;
-		AddPointToBounds(b->mbBox.mins, mins, maxs);
-		AddPointToBounds(b->mbBox.maxs, mins, maxs);
+		bBox.add(b->mbBox);
 	}
 
 	return num;
