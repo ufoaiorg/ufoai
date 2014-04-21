@@ -469,8 +469,7 @@ static bool MakeBrushWindings (mapbrush_t* brush)
 				brush->entitynum, brush->brushnum, brush->mbBox.mins[i], brush->mbBox.maxs[i]);
 		if (brush->mbBox.mins[i] > MAX_WORLD_WIDTH || brush->mbBox.maxs[i] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
-			VectorClear(brush->mbBox.mins);
-			VectorClear(brush->mbBox.maxs);
+			brush->mbBox.reset();
 		}
 	}
 
