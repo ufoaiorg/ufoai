@@ -141,13 +141,17 @@ void MIS_InitResultScreen (const missionResults_t* results)
 	cgi->UI_RegisterLinkedListText(TEXT_LIST2, list);
 }
 
+static const cmdList_t missionCallbacks[] = {
+	{"cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically"},
+	{"cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically"},
+	{nullptr, nullptr, nullptr}
+};
 /**
  * @brief Init UI callbacks for missions-subsystem
  */
 void MIS_InitCallbacks (void)
 {
-	cgi->Cmd_AddCommand("cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically");
-	cgi->Cmd_AddCommand("cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically");
+	cgi->Cmd_TableAddList(missionCallbacks);
 }
 
 /**
@@ -155,6 +159,5 @@ void MIS_InitCallbacks (void)
  */
 void MIS_ShutdownCallbacks (void)
 {
-	cgi->Cmd_RemoveCommand("cp_missionauto_check");
-	cgi->Cmd_RemoveCommand("cp_mission_autogo");
+	cgi->Cmd_TableRemoveList(missionCallbacks);
 }
