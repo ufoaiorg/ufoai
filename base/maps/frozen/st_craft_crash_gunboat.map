@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -2054,146 +2055,13 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "384 1152 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 2
-{
-"classname" "misc_particle"
-"origin" "640 1152 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 3
-{
-"classname" "misc_particle"
-"origin" "384 1408 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 4
-{
-"classname" "misc_particle"
-"origin" "640 1408 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 5
-{
-"classname" "misc_particle"
-"origin" "384 896 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 6
-{
-"classname" "misc_particle"
-"origin" "640 896 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 7
-{
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 8
-{
-"classname" "misc_particle"
-"origin" "640 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 9
-{
-"classname" "misc_particle"
-"origin" "384 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 10
-{
-"classname" "misc_particle"
-"origin" "640 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 11
-{
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 12
-{
-"classname" "misc_particle"
-"origin" "640 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 13
-{
-"classname" "misc_particle"
-"origin" "896 896 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 14
-{
-"classname" "misc_particle"
-"origin" "896 1408 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 15
-{
-"classname" "misc_particle"
-"origin" "896 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 16
-{
-"classname" "misc_particle"
-"origin" "128 1152 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 17
-{
-"classname" "misc_particle"
-"origin" "128 896 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 18
-{
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 19
-{
-"classname" "misc_particle"
-"origin" "128 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 20
-{
 "classname" "light"
 "origin" "488 968 100"
 "_color" "1 0.2 0"
 "light" "100"
 "spawnflags" "1"
 }
-// entity 21
+// entity 2
 {
 "classname" "light"
 "light" "180"
@@ -2201,14 +2069,14 @@
 "origin" "512 1056 100"
 "spawnflags" "1"
 }
-// entity 22
+// entity 3
 {
 "classname" "light"
 "origin" "244 840 90"
 "_color" "0 1 0"
 "light" "120"
 }
-// entity 23
+// entity 4
 {
 "classname" "misc_model"
 "spawnflags" "2"
@@ -2216,7 +2084,7 @@
 "model" "models/objects/alien/seat/seat.md2"
 "angles" "0 -90 0"
 }
-// entity 24
+// entity 5
 {
 "classname" "misc_model"
 "spawnflags" "2"
@@ -2224,7 +2092,7 @@
 "origin" "510 1060 87"
 "angles" "0 -90 0"
 }
-// entity 25
+// entity 6
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2234,7 +2102,7 @@
 "angles" "0 90 0"
 "modelscale_vec" "2.0736 2.0736 2.0736"
 }
-// entity 26
+// entity 7
 {
 "classname" "misc_model"
 "spawnflags" "514"
@@ -2242,7 +2110,7 @@
 "angles" "0 -180 0"
 "model" "models/objects/alien/battery/battery.md2"
 }
-// entity 27
+// entity 8
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2252,7 +2120,7 @@
 "angles" "0 90 0"
 "modelscale_vec" "2.0736 2.0736 2.0736"
 }
-// entity 28
+// entity 9
 {
 "classname" "light"
 "origin" "626 812 90"
@@ -2260,7 +2128,7 @@
 "light" "120"
 "spawnflags" "1"
 }
-// entity 29
+// entity 10
 {
 "classname" "misc_model"
 "spawnflags" "514"
@@ -2268,7 +2136,7 @@
 "angles" "0 -180 0"
 "model" "models/objects/alien/battery/battery.md2"
 }
-// entity 30
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "514"
@@ -2276,38 +2144,38 @@
 "angles" "0 -180 0"
 "model" "models/objects/alien/battery/battery.md2"
 }
-// entity 31
+// entity 12
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "535 749 152"
 }
-// entity 32
+// entity 13
 {
 "classname" "info_alien_start"
 "origin" "528 624 92"
 "angle" "-90"
 }
-// entity 33
+// entity 14
 {
 "classname" "info_alien_start"
 "origin" "528 752 92"
 "angle" "-90"
 }
-// entity 34
+// entity 15
 {
 "classname" "info_alien_start"
 "origin" "464 688 92"
 "angle" "-90"
 }
-// entity 35
+// entity 16
 {
 "classname" "info_alien_start"
 "origin" "368 528 28"
 "angle" "-90"
 }
-// entity 36
+// entity 17
 {
 "classname" "misc_model"
 "spawnflags" "767"
@@ -2317,7 +2185,7 @@
 "angles" "1.00179e-005 90 -180"
 "modelscale_vec" "2.75 2.75 2.75"
 }
-// entity 37
+// entity 18
 {
 "classname" "light"
 "origin" "440 736 92"
@@ -2325,7 +2193,7 @@
 "light" "120"
 "spawnflags" "1"
 }
-// entity 38
+// entity 19
 {
 "classname" "light"
 "origin" "584 640 92"
@@ -2333,7 +2201,7 @@
 "light" "120"
 "spawnflags" "1"
 }
-// entity 39
+// entity 20
 {
 "classname" "light"
 "origin" "440 640 92"
@@ -2341,7 +2209,7 @@
 "light" "120"
 "spawnflags" "1"
 }
-// entity 40
+// entity 21
 {
 "classname" "light"
 "light" "120"
@@ -2349,7 +2217,7 @@
 "origin" "543 897 104"
 "spawnflags" "1"
 }
-// entity 41
+// entity 22
 {
 "classname" "light"
 "light" "450"
@@ -2357,39 +2225,39 @@
 "origin" "511 432 104"
 "spawnflags" "1"
 }
-// entity 42
+// entity 23
 {
 "classname" "info_alien_start"
 "origin" "528 1008 92"
 "angle" "-90"
 }
-// entity 43
+// entity 24
 {
 "classname" "info_alien_start"
 "origin" "464 1040 92"
 "angle" "-90"
 }
-// entity 44
+// entity 25
 {
 "classname" "info_alien_start"
 "origin" "496 912 92"
 "angle" "-90"
 }
-// entity 45
+// entity 26
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "480 973 149"
 }
-// entity 46
+// entity 27
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "535 973 152"
 }
-// entity 47
+// entity 28
 {
 "classname" "light"
 "light" "150"
@@ -2397,35 +2265,35 @@
 "origin" "558 505 101"
 "spawnflags" "1"
 }
-// entity 48
+// entity 29
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "480 749 149"
 }
-// entity 49
+// entity 30
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "480 973 149"
 }
-// entity 50
+// entity 31
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "412 397 181"
 }
-// entity 51
+// entity 32
 {
 "classname" "light"
 "light" "120"
 "_color" "0 1 0"
 "origin" "480 749 149"
 }
-// entity 52
+// entity 33
 {
 "classname" "light"
 "light" "150"
@@ -2433,7 +2301,7 @@
 "origin" "464 503 101"
 "spawnflags" "1"
 }
-// entity 53
+// entity 34
 {
 "classname" "light"
 "light" "450"
@@ -2441,7 +2309,7 @@
 "origin" "511 816 104"
 "spawnflags" "1"
 }
-// entity 54
+// entity 35
 {
 "classname" "light"
 "light" "150"
@@ -2449,7 +2317,7 @@
 "origin" "488 671 101"
 "spawnflags" "1"
 }
-// entity 55
+// entity 36
 {
 "classname" "light"
 "light" "150"
@@ -2457,7 +2325,7 @@
 "origin" "534 673 101"
 "spawnflags" "1"
 }
-// entity 56
+// entity 37
 {
 "classname" "misc_particle"
 "particle" "crashsite_fire"
@@ -2465,7 +2333,7 @@
 "spawnflags" "252"
 "targetname" "-4"
 }
-// entity 57
+// entity 38
 {
 "classname" "misc_particle"
 "particle" "crashsite_fire"
@@ -2473,7 +2341,7 @@
 "spawnflags" "252"
 "targetname" "-5"
 }
-// entity 58
+// entity 39
 {
 "classname" "misc_particle"
 "particle" "white_smoke"
@@ -2481,7 +2349,7 @@
 "spawnflags" "254"
 "targetname" "-4"
 }
-// entity 59
+// entity 40
 {
 "classname" "misc_particle"
 "particle" "smoke2"
@@ -2489,7 +2357,7 @@
 "spawnflags" "254"
 "targetname" "-6"
 }
-// entity 60
+// entity 41
 {
 "classname" "misc_particle"
 "particle" "white_smoke"
@@ -2497,7 +2365,7 @@
 "spawnflags" "254"
 "targetname" "-7"
 }
-// entity 61
+// entity 42
 {
 "classname" "func_group"
 // brush 0
@@ -2563,7 +2431,7 @@
 ( 432 911 64 ) ( 416 911 64 ) ( 429 914 56 ) tex_common/lightclip 0 0 0 0.5 0.5 524288 0 0
 }
 }
-// entity 62
+// entity 43
 {
 "classname" "func_group"
 // brush 0
@@ -2629,7 +2497,7 @@
 ( 432 911 64 ) ( 416 911 64 ) ( 429 914 56 ) tex_common/lightclip 0 0 0 0.5 0.5 524288 0 0
 }
 }
-// entity 63
+// entity 44
 {
 "classname" "func_group"
 // brush 0
@@ -2650,7 +2518,7 @@
 ( 604 513 -64 ) ( 604 515 -64 ) ( 604 513 64 ) tex_common/nodraw 0 0 0 -0.25 0.25 65024 0 0
 }
 }
-// entity 64
+// entity 45
 {
 "classname" "func_group"
 // brush 0
@@ -2932,7 +2800,7 @@
 ( 420 522 -64 ) ( 420 515 -64 ) ( 420 522 64 ) tex_common/nodraw 0 0 0 -0.25 0.25 65024 0 0
 }
 }
-// entity 65
+// entity 46
 {
 "classname" "misc_particle"
 "particle" "smokefield"

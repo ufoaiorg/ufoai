@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -4061,77 +4062,35 @@
 // entity 25
 {
 "classname" "misc_particle"
-"origin" "480 192 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 26
-{
-"classname" "misc_particle"
-"origin" "480 576 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 27
-{
-"classname" "misc_particle"
-"origin" "160 192 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 28
-{
-"classname" "misc_particle"
-"origin" "160 576 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 29
-{
-"classname" "misc_particle"
 "particle" "green_smoke"
 "origin" "155 118 42"
 "spawnflags" "255"
 }
-// entity 30
+// entity 26
 {
 "classname" "misc_particle"
 "particle" "smoke2"
 "origin" "665 494 154"
 "spawnflags" "255"
 }
-// entity 31
+// entity 27
 {
 "classname" "misc_particle"
 "particle" "smoke2"
 "origin" "486 506 106"
 "spawnflags" "255"
 }
-// entity 32
-{
-"classname" "misc_particle"
-"origin" "800 192 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 33
-{
-"classname" "misc_particle"
-"origin" "800 576 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 34
+// entity 28
 {
 "classname" "info_alien_start"
 "origin" "656 624 28"
 }
-// entity 35
+// entity 29
 {
 "classname" "info_alien_start"
 "origin" "144 304 28"
 }
-// entity 36
+// entity 30
 {
 "classname" "info_alien_start"
 "origin" "848 144 28"

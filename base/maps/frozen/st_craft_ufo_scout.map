@@ -405,31 +405,3 @@
 "skin" "1"
 "origin" "80 368 8"
 }
-// entity 14
-{
-"classname" "misc_particle"
-"origin" "56 368 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 15
-{
-"classname" "misc_particle"
-"origin" "440 368 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 16
-{
-"classname" "misc_particle"
-"origin" "56 48 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 17
-{
-"classname" "misc_particle"
-"origin" "440 48 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}

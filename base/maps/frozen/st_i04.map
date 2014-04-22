@@ -1725,68 +1725,40 @@
 }
 // entity 24
 {
-"classname" "misc_particle"
-"origin" "480 64 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 25
-{
-"classname" "misc_particle"
-"origin" "480 448 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 26
-{
-"classname" "misc_particle"
-"origin" "160 64 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 27
-{
-"classname" "misc_particle"
-"origin" "160 448 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 28
-{
 "classname" "info_alien_start"
 "origin" "144 400 92"
 "angle" "180"
 }
-// entity 29
+// entity 25
 {
 "classname" "info_alien_start"
 "origin" "144 176 28"
 "angle" "180"
 }
-// entity 30
+// entity 26
 {
 "classname" "info_alien_start"
 "origin" "304 112 28"
 "angle" "-90"
 }
-// entity 31
+// entity 27
 {
 "classname" "info_alien_start"
 "origin" "432 176 28"
 "angle" "90"
 }
-// entity 32
+// entity 28
 {
 "classname" "info_alien_start"
 "origin" "336 432 28"
 }
-// entity 33
+// entity 29
 {
 "classname" "info_alien_start"
 "origin" "304 496 28"
 "angle" "180"
 }
-// entity 34
+// entity 30
 {
 "classname" "info_alien_start"
 "origin" "112 16 28"

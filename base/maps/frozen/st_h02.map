@@ -1035,32 +1035,18 @@
 }
 // entity 20
 {
-"classname" "misc_particle"
-"origin" "96 448 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 21
-{
-"classname" "misc_particle"
-"origin" "96 64 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 22
-{
 "classname" "info_alien_start"
 "origin" "176 80 28"
 "angle" "45"
 }
-// entity 23
+// entity 21
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "origin" "624 336 4"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 }
-// entity 24
+// entity 22
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -1069,7 +1055,7 @@
 "skin" "1"
 "angles" "0 -30 0"
 }
-// entity 25
+// entity 23
 {
 "classname" "func_group"
 // brush 0
@@ -1414,14 +1400,14 @@
 ( 465.2649 339.6274 28 ) ( 465.2649 339.6274 4 ) ( 459.6081 339.6274 28 ) tex_common/nodraw 30.89085 17 0 -0.3535534 0.234375 65280 128 0
 }
 }
-// entity 26
+// entity 24
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "624 80 4"
 "spawnflags" "255"
 }
-// entity 27
+// entity 25
 {
 "classname" "misc_model"
 "angles" "0 -140 0"
@@ -1430,7 +1416,7 @@
 "origin" "624 80 4"
 "spawnflags" "255"
 }
-// entity 28
+// entity 26
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -1439,7 +1425,7 @@
 "skin" "1"
 "angles" "0 -180 0"
 }
-// entity 29
+// entity 27
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1448,41 +1434,41 @@
 "skin" "1"
 "angles" "0 -180 0"
 }
-// entity 30
+// entity 28
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "origin" "640 192 0"
 "model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 29
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "640 192 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 30
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "640 192 0"
+"model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 "angles" "0 -180 0"
 }
 // entity 31
 {
 "classname" "misc_model"
-"spawnflags" "252"
-"origin" "640 192 0"
-"model" "models/objects/vegi/pino/pino3.md2"
-"skin" "0"
-"angles" "0 -180 0"
-}
-// entity 32
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"origin" "640 192 0"
-"model" "models/objects/vegi/pino/pino2.md2"
-"skin" "0"
-"angles" "0 -180 0"
-}
-// entity 33
-{
-"classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "368 336 4"
 "spawnflags" "255"
 }
-// entity 34
+// entity 32
 {
 "classname" "misc_model"
 "angles" "0 -140 0"
@@ -1491,7 +1477,7 @@
 "origin" "368 336 4"
 "spawnflags" "255"
 }
-// entity 35
+// entity 33
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -1500,7 +1486,7 @@
 "skin" "1"
 "angles" "0 -180 0"
 }
-// entity 36
+// entity 34
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1509,7 +1495,7 @@
 "skin" "1"
 "angles" "0 -180 0"
 }
-// entity 37
+// entity 35
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -1518,7 +1504,7 @@
 "skin" "0"
 "angles" "0 -180 0"
 }
-// entity 38
+// entity 36
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -1527,7 +1513,7 @@
 "skin" "0"
 "angles" "0 -180 0"
 }
-// entity 39
+// entity 37
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1536,14 +1522,14 @@
 "skin" "0"
 "angles" "0 -180 0"
 }
-// entity 40
+// entity 38
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "592 80 4"
 "spawnflags" "255"
 }
-// entity 41
+// entity 39
 {
 "classname" "misc_model"
 "angles" "0 -140 0"
@@ -1552,13 +1538,31 @@
 "origin" "592 80 4"
 "spawnflags" "255"
 }
-// entity 42
+// entity 40
 {
 "classname" "misc_model"
 "spawnflags" "252"
 "origin" "608 192 0"
 "model" "models/objects/vegi/pino/pino3_leaves.md2"
 "skin" "1"
+"angles" "0 -180 0"
+}
+// entity 41
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "608 192 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+"angles" "0 -180 0"
+}
+// entity 42
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "608 192 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
 "angles" "0 -180 0"
 }
 // entity 43
@@ -1566,122 +1570,76 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "origin" "608 192 0"
-"model" "models/objects/vegi/pino/pino2_leaves.md2"
-"skin" "1"
-"angles" "0 -180 0"
-}
-// entity 44
-{
-"classname" "misc_model"
-"spawnflags" "252"
-"origin" "608 192 0"
-"model" "models/objects/vegi/pino/pino3.md2"
-"skin" "0"
-"angles" "0 -180 0"
-}
-// entity 45
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"origin" "608 192 0"
 "model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 "angles" "0 -180 0"
 }
-// entity 46
+// entity 44
 {
 "classname" "info_alien_start"
 "origin" "464 400 28"
 "angle" "45"
 }
-// entity 47
+// entity 45
 {
 "classname" "info_alien_start"
 "origin" "48 336 28"
 "angle" "-135"
 }
-// entity 48
+// entity 46
 {
 "classname" "info_alien_start"
 "origin" "528 16 28"
 "angle" "45"
 }
-// entity 49
+// entity 47
 {
 "classname" "info_alien_start"
 "origin" "720 112 28"
 "angle" "45"
 }
-// entity 50
+// entity 48
 {
 "classname" "info_alien_start"
 "origin" "560 176 28"
 "angle" "-135"
 }
-// entity 51
+// entity 49
 {
 "classname" "info_alien_start"
 "origin" "720 464 28"
 "angle" "45"
 }
-// entity 52
+// entity 50
 {
 "classname" "info_alien_start"
 "origin" "528 336 28"
 }
-// entity 53
+// entity 51
 {
 "classname" "info_alien_start"
 "origin" "624 432 28"
 "angle" "-90"
 }
-// entity 54
+// entity 52
 {
 "classname" "info_alien_start"
 "origin" "336 496 28"
 "angle" "-90"
 }
-// entity 55
+// entity 53
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "720 272 4"
 "spawnflags" "255"
 }
-// entity 56
+// entity 54
 {
 "classname" "misc_model"
 "angles" "0 -140 0"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "origin" "720 272 4"
-"spawnflags" "255"
-}
-// entity 57
-{
-"classname" "misc_particle"
-"origin" "352 448 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 58
-{
-"classname" "misc_particle"
-"origin" "352 64 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 59
-{
-"classname" "misc_particle"
-"origin" "608 448 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 60
-{
-"classname" "misc_particle"
-"origin" "608 64 368"
-"particle" "weather_snow"
 "spawnflags" "255"
 }

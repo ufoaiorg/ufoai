@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -1755,32 +1756,4 @@
 {
 "classname" "info_alien_start"
 "origin" "432 48 28"
-}
-// entity 33
-{
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 34
-{
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 35
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 36
-{
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
 }

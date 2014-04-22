@@ -14,168 +14,161 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 2
-{
 "classname" "info_human_start"
 "origin" "48 144 28"
 "angle" "180"
 }
-// entity 3
+// entity 2
 {
 "classname" "info_human_start"
 "origin" "48 112 28"
 "angle" "180"
 }
-// entity 4
+// entity 3
 {
 "classname" "info_human_start"
 "origin" "80 144 28"
 "angle" "180"
 }
-// entity 5
+// entity 4
 {
 "classname" "info_human_start"
 "origin" "80 112 28"
 "angle" "180"
 }
-// entity 6
+// entity 5
 {
 "classname" "info_human_start"
 "origin" "112 144 28"
 "angle" "180"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_human_start"
 "origin" "112 112 28"
 "angle" "180"
 }
-// entity 8
+// entity 7
 {
 "classname" "info_human_start"
 "origin" "144 144 28"
 "angle" "180"
 }
-// entity 9
+// entity 8
 {
 "classname" "info_human_start"
 "origin" "144 112 28"
 "angle" "180"
 }
-// entity 10
+// entity 9
 {
 "classname" "info_human_start"
 "origin" "176 144 28"
 "angle" "180"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_human_start"
 "origin" "176 112 28"
 "angle" "180"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_human_start"
 "origin" "208 144 28"
 "angle" "180"
 }
-// entity 13
+// entity 12
 {
 "classname" "info_human_start"
 "origin" "208 112 28"
 "angle" "180"
 }
-// entity 14
+// entity 13
 {
 "classname" "info_2x2_start"
 "origin" "32 224 28"
 "team" "1"
 "angle" "180"
 }
-// entity 15
+// entity 14
 {
 "classname" "info_2x2_start"
 "origin" "224 224 28"
 "team" "1"
 "angle" "180"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_2x2_start"
 "origin" "224 32 28"
 "team" "1"
 "angle" "180"
 }
-// entity 17
+// entity 16
 {
 "classname" "info_2x2_start"
 "origin" "32 32 28"
 "team" "1"
 "angle" "180"
 }
-// entity 18
+// entity 17
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 144 28"
 "angle" "180"
 }
-// entity 19
+// entity 18
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "80 112 28"
 "angle" "180"
 }
-// entity 20
+// entity 19
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "112 144 28"
 "angle" "180"
 }
-// entity 21
+// entity 20
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "112 112 28"
 "angle" "180"
 }
-// entity 22
+// entity 21
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "144 144 28"
 "angle" "180"
 }
-// entity 23
+// entity 22
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "144 112 28"
 "angle" "180"
 }
-// entity 24
+// entity 23
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 144 28"
 "angle" "180"
 }
-// entity 25
+// entity 24
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 112 28"
 "angle" "180"
 }
-// entity 26
+// entity 25
 {
 "classname" "trigger_rescue"
 "team" "1"

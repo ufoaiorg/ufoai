@@ -713,10 +713,3 @@
 ( 194 224 32 ) ( 194 226 32 ) ( 150 226 26 ) tex_material/s_wood002 64 72 90 0.5 0.5 65280 0 0
 }
 }
-// entity 10
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}

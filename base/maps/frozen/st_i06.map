@@ -481,30 +481,16 @@
 }
 // entity 3
 {
-"classname" "misc_particle"
-"origin" "480 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 4
-{
-"classname" "misc_particle"
-"origin" "160 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 5
-{
 "classname" "info_alien_start"
 "origin" "112 176 28"
 }
-// entity 6
+// entity 4
 {
 "classname" "info_alien_start"
 "origin" "432 208 28"
 "angle" "-90"
 }
-// entity 7
+// entity 5
 {
 "classname" "info_alien_start"
 "origin" "336 48 28"

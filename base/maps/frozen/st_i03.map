@@ -1271,82 +1271,47 @@
 }
 // entity 12
 {
-"classname" "misc_particle"
-"particle" "smoke3"
-"origin" "416 404 196"
-"spawnflags" "252"
-}
-// entity 13
-{
-"classname" "misc_particle"
-"particle" "smoke3"
-"origin" "352 404 196"
-"spawnflags" "252"
-}
-// entity 14
-{
-"classname" "misc_particle"
-"origin" "480 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 15
-{
-"classname" "misc_particle"
-"origin" "480 448 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 16
-{
-"classname" "misc_particle"
-"origin" "160 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 17
-{
 "classname" "misc_model"
 "model" "models/objects/firehose/firehose.md2"
 "origin" "75.5 196 8"
 "spawnflags" "1"
 "skin" "0"
 }
-// entity 18
+// entity 13
 {
 "classname" "info_alien_start"
 "origin" "240 48 28"
 }
-// entity 19
+// entity 14
 {
 "classname" "info_alien_start"
 "origin" "496 144 28"
 "angle" "90"
 }
-// entity 20
+// entity 15
 {
 "classname" "info_alien_start"
 "origin" "496 368 28"
 }
-// entity 21
+// entity 16
 {
 "classname" "info_alien_start"
 "origin" "400 464 28"
 "angle" "180"
 }
-// entity 22
+// entity 17
 {
 "classname" "info_alien_start"
 "origin" "208 240 28"
 "angle" "180"
 }
-// entity 23
+// entity 18
 {
 "classname" "info_alien_start"
 "origin" "208 144 28"
 "angle" "180"
 }
-// entity 24
+// entity 19
 {
 "classname" "info_alien_start"
 "origin" "432 176 28"

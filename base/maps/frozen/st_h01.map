@@ -1714,31 +1714,3 @@
 ( 141 482 20 ) ( 141 420 20 ) ( 139 420 24 ) tex_nature/tree001 448 36 0 0.0625 0.0719605 65282 0 0
 }
 }
-// entity 23
-{
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 24
-{
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 25
-{
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 26
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}

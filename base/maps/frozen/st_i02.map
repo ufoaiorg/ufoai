@@ -1880,42 +1880,28 @@
 }
 // entity 11
 {
-"classname" "misc_particle"
-"origin" "160 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 12
-{
-"classname" "misc_particle"
-"origin" "160 448 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 13
-{
 "classname" "info_alien_start"
 "origin" "208 144 28"
 }
-// entity 14
+// entity 12
 {
 "classname" "info_alien_start"
 "origin" "48 144 28"
 "angle" "-90"
 }
-// entity 15
+// entity 13
 {
 "classname" "info_alien_start"
 "origin" "112 496 28"
 "angle" "180"
 }
-// entity 16
+// entity 14
 {
 "classname" "info_alien_start"
 "origin" "144 464 92"
 "angle" "180"
 }
-// entity 17
+// entity 15
 {
 "classname" "info_alien_start"
 "origin" "176 368 156"

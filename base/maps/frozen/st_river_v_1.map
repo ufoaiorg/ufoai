@@ -783,10 +783,3 @@
 ( 192 96 0 ) ( 180 128 4 ) ( 180 128 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 }
 }
-// entity 2
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}

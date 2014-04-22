@@ -1833,85 +1833,43 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
+"classname" "misc_model"
+"origin" "304 240 73"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
+"spawnflags" "254"
+"modelscale_vec" "1 1 2"
+"angles" "0 -90 0"
 }
 // entity 2
 {
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
+"classname" "misc_model"
+"origin" "304 240 73"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"spawnflags" "254"
+"skin" "1"
+"modelscale_vec" "1 1 2"
+"angles" "0 -90 0"
 }
 // entity 3
 {
-"classname" "misc_particle"
-"origin" "128 640 368"
-"particle" "weather_snow"
+"classname" "misc_model"
+"origin" "144 656 6"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "spawnflags" "255"
+"modelscale_vec" "1 1 2"
+"angles" "0 -90 0"
 }
 // entity 4
 {
-"classname" "misc_particle"
-"origin" "384 640 368"
-"particle" "weather_snow"
+"classname" "misc_model"
+"origin" "144 656 6"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "spawnflags" "255"
+"skin" "1"
+"modelscale_vec" "1 1 2"
+"angles" "0 -90 0"
 }
 // entity 5
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 6
-{
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 7
-{
-"classname" "misc_model"
-"origin" "304 240 73"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
-"spawnflags" "254"
-"modelscale_vec" "1 1 2"
-"angles" "0 -90 0"
-}
-// entity 8
-{
-"classname" "misc_model"
-"origin" "304 240 73"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"spawnflags" "254"
-"skin" "1"
-"modelscale_vec" "1 1 2"
-"angles" "0 -90 0"
-}
-// entity 9
-{
-"classname" "misc_model"
-"origin" "144 656 6"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
-"spawnflags" "255"
-"modelscale_vec" "1 1 2"
-"angles" "0 -90 0"
-}
-// entity 10
-{
-"classname" "misc_model"
-"origin" "144 656 6"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"spawnflags" "255"
-"skin" "1"
-"modelscale_vec" "1 1 2"
-"angles" "0 -90 0"
-}
-// entity 11
 {
 "classname" "func_group"
 // brush 0
@@ -1998,12 +1956,12 @@
 ( 68 544 0 ) ( -60 396 76 ) ( -60 544 0 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
-// entity 12
+// entity 6
 {
 "classname" "info_alien_start"
 "origin" "48 80 35"
 }
-// entity 13
+// entity 7
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -2013,7 +1971,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 0.5"
 }
-// entity 14
+// entity 8
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -2023,7 +1981,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "1.25 1.25 0.55"
 }
-// entity 15
+// entity 9
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -2033,7 +1991,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 0.5"
 }
-// entity 16
+// entity 10
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -2043,7 +2001,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "1.25 1.25 0.55"
 }
-// entity 17
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2053,7 +2011,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 1"
 }
-// entity 18
+// entity 12
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -2063,7 +2021,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 0.5"
 }
-// entity 19
+// entity 13
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -2073,7 +2031,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "1.25 1.25 0.55"
 }
-// entity 20
+// entity 14
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -2083,7 +2041,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 0.5"
 }
-// entity 21
+// entity 15
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -2093,7 +2051,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "1.25 1.25 0.55"
 }
-// entity 22
+// entity 16
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2103,25 +2061,25 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 1"
 }
-// entity 23
+// entity 17
 {
 "classname" "info_alien_start"
 "origin" "48 656 35"
 "angle" "-90"
 }
-// entity 24
+// entity 18
 {
 "classname" "info_alien_start"
 "origin" "464 688 67"
 "angle" "180"
 }
-// entity 25
+// entity 19
 {
 "classname" "info_alien_start"
 "origin" "464 80 67"
 "angle" "-90"
 }
-// entity 26
+// entity 20
 {
 "classname" "info_alien_start"
 "origin" "400 304 107"

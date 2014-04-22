@@ -1739,48 +1739,6 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 2
-{
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 3
-{
-"classname" "misc_particle"
-"origin" "384 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 4
-{
-"classname" "misc_particle"
-"origin" "128 640 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 5
-{
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 6
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 7
-{
 "classname" "func_group"
 // brush 0
 {
@@ -1866,12 +1824,12 @@
 ( 572 544 0 ) ( 572 396 76 ) ( 444 544 0 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
-// entity 8
+// entity 2
 {
 "classname" "info_alien_start"
 "origin" "368 528 33"
 }
-// entity 9
+// entity 3
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1879,7 +1837,7 @@
 "origin" "224 160 81"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 10
+// entity 4
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1888,7 +1846,7 @@
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 11
+// entity 5
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1896,7 +1854,7 @@
 "origin" "64 288 79"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 12
+// entity 6
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1905,7 +1863,7 @@
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 13
+// entity 7
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1915,7 +1873,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "2 2 1.5"
 }
-// entity 14
+// entity 8
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -1925,7 +1883,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "3.5 3.5 1.55"
 }
-// entity 15
+// entity 9
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -1935,7 +1893,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "2 2 1.5"
 }
-// entity 16
+// entity 10
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -1945,7 +1903,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "3.5 3.5 1.55"
 }
-// entity 17
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -1955,7 +1913,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "2 2 1.5"
 }
-// entity 18
+// entity 12
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -1963,7 +1921,7 @@
 "origin" "320 384 29"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 19
+// entity 13
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -1972,18 +1930,18 @@
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 20
+// entity 14
 {
 "classname" "info_alien_start"
 "origin" "48 80 37"
 }
-// entity 21
+// entity 15
 {
 "classname" "info_alien_start"
 "origin" "176 240 101"
 "angle" "-90"
 }
-// entity 22
+// entity 16
 {
 "classname" "info_alien_start"
 "origin" "80 688 51"

@@ -2408,98 +2408,56 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "384 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 2
-{
-"classname" "misc_particle"
-"origin" "384 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 3
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 4
-{
-"classname" "misc_particle"
-"origin" "128 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 5
-{
-"classname" "misc_particle"
-"origin" "640 128 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 6
-{
-"classname" "misc_particle"
-"origin" "640 384 368"
-"particle" "weather_snow"
-"spawnflags" "255"
-}
-// entity 7
-{
 "classname" "info_alien_start"
 "origin" "560 48 28"
 }
-// entity 8
+// entity 2
 {
 "classname" "info_alien_start"
 "origin" "144 464 28"
 }
-// entity 9
+// entity 3
 {
 "classname" "info_alien_start"
 "origin" "464 464 28"
 "angle" "-90"
 }
-// entity 10
+// entity 4
 {
 "classname" "info_alien_start"
 "origin" "144 80 28"
 "angle" "-90"
 }
-// entity 11
+// entity 5
 {
 "classname" "info_alien_start"
 "origin" "720 272 28"
 "angle" "-90"
 }
-// entity 12
+// entity 6
 {
 "classname" "info_alien_start"
 "origin" "560 208 124"
 "angle" "180"
 }
-// entity 13
+// entity 7
 {
 "classname" "info_alien_start"
 "origin" "304 208 124"
 }
-// entity 14
+// entity 8
 {
 "classname" "info_alien_start"
 "origin" "80 272 28"
 "angle" "180"
 }
-// entity 15
+// entity 9
 {
 "classname" "info_alien_start"
 "origin" "400 336 60"
 "angle" "-90"
 }
-// entity 16
+// entity 10
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2507,7 +2465,7 @@
 "origin" "96 96 5"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 17
+// entity 11
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2516,7 +2474,7 @@
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 18
+// entity 12
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -2524,12 +2482,63 @@
 "origin" "672 64 5"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 19
+// entity 13
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "672 64 5"
+"skin" "1"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 14
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
+"origin" "224 160 74"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 15
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"origin" "224 160 74"
+"skin" "1"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 16
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
+"origin" "256 288 75"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 17
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"origin" "256 288 75"
+"skin" "1"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 18
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
+"origin" "384 160 77"
+"modelscale_vec" "0.95 0.95 1"
+}
+// entity 19
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"origin" "384 160 77"
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
@@ -2538,7 +2547,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "224 160 74"
+"origin" "608 288 77"
 "modelscale_vec" "0.95 0.95 1"
 }
 // entity 21
@@ -2546,7 +2555,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"origin" "224 160 74"
+"origin" "608 288 77"
 "skin" "1"
 "modelscale_vec" "0.95 0.95 1"
 }
@@ -2555,61 +2564,10 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "256 288 75"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 23
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"origin" "256 288 75"
-"skin" "1"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 24
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "384 160 77"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 25
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"origin" "384 160 77"
-"skin" "1"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 26
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
-"origin" "608 288 77"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 27
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_a.md2"
-"origin" "608 288 77"
-"skin" "1"
-"modelscale_vec" "0.95 0.95 1"
-}
-// entity 28
-{
-"classname" "misc_model"
-"spawnflags" "254"
-"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "640 192 80"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 29
+// entity 23
 {
 "classname" "misc_model"
 "spawnflags" "254"

@@ -674,20 +674,6 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "384 128 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 2
-{
-"classname" "misc_particle"
-"origin" "128 128 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 3
-{
 "classname" "misc_model"
 "origin" "368 80 6"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
@@ -695,7 +681,7 @@
 "modelscale_vec" "1 1 2"
 "angles" "0 -90 0"
 }
-// entity 4
+// entity 2
 {
 "classname" "misc_model"
 "origin" "368 80 6"
@@ -705,7 +691,7 @@
 "modelscale_vec" "1 1 2"
 "angles" "0 -90 0"
 }
-// entity 5
+// entity 3
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -715,7 +701,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.75 0.75 0.75"
 }
-// entity 6
+// entity 4
 {
 "classname" "misc_model"
 "spawnflags" "252"
@@ -725,7 +711,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.75 0.75 0.75"
 }
-// entity 7
+// entity 5
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -735,7 +721,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "0.75 0.75 1"
 }
-// entity 8
+// entity 6
 {
 "classname" "misc_model"
 "spawnflags" "254"
@@ -745,7 +731,7 @@
 "angles" "0 -180 0"
 "modelscale_vec" "1.75 1.75 0.75"
 }
-// entity 9
+// entity 7
 {
 "classname" "misc_model"
 "spawnflags" "252"

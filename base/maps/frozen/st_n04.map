@@ -254,20 +254,13 @@
 }
 // entity 1
 {
-"classname" "misc_particle"
-"origin" "160 64 368"
-"spawnflags" "255"
-"particle" "weather_snow"
-}
-// entity 2
-{
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "128 160 18"
 "modelscale_vec" "0.95 0.95 1"
 }
-// entity 3
+// entity 2
 {
 "classname" "misc_model"
 "spawnflags" "255"
