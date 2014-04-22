@@ -373,8 +373,7 @@ void UI_Node_DebugCountWidget (uiNode_t* node, int count)
  */
 bool UI_NodeInstanceOf (const uiNode_t* node, const char* behaviourName)
 {
-	const uiBehaviour_t* behaviour;
-	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
+	for (const uiBehaviour_t* behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		if (Q_streq(behaviour->name, behaviourName))
 			return true;
 	}
@@ -389,8 +388,7 @@ bool UI_NodeInstanceOf (const uiNode_t* node, const char* behaviourName)
  */
 bool UI_NodeInstanceOfPointer (const uiNode_t* node, const uiBehaviour_t* behaviour)
 {
-	const uiBehaviour_t* b;
-	for (b = node->behaviour; b; b = b->super) {
+	for (const uiBehaviour_t* b = node->behaviour; b; b = b->super) {
 		if (b == behaviour)
 			return true;
 	}

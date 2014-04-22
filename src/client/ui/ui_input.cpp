@@ -306,10 +306,7 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 static void UI_SetKeyBindingEx (const char* path, int key, const char* description, bool inherited)
 {
 	uiNode_t* node;
-	uiKeyBinding_t* binding;
 	const value_t* property = nullptr;
-	int windowId;
-	char newPath[256];
 
 	UI_ReadNodePath(path, nullptr, &node, &property);
 	if (node == nullptr) {
@@ -321,7 +318,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 		Com_Error(ERR_FATAL, "UI_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
 
 	/* init and link the keybinding */
-	binding = UI_AllocStaticKeyBinding();
+	uiKeyBinding_t* binding = UI_AllocStaticKeyBinding();
 	binding->node = node;
 	binding->property = property;
 	binding->key = key;
@@ -336,7 +333,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
 
 	/* search and update windows that extend node->root */
-	for (windowId = 0; windowId < ui_global.numWindows; windowId++) {
+	for (int windowId = 0; windowId < ui_global.numWindows; windowId++) {
 		uiNode_t* window = ui_global.windows[windowId];
 
 		/* skip windows which are not direct extends of the main window */
@@ -344,6 +341,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 			continue;
 
 		/* create a new patch from the new windows */
+		char newPath[256];
 		newPath[0] = '\0';
 		Q_strcat(newPath, sizeof(newPath), "%s%s", window->name, path + strlen(node->root->name));
 		UI_SetKeyBindingEx(newPath, key, description, true);
@@ -428,9 +426,6 @@ bool UI_KeyRelease (unsigned int key, unsigned short unicode)
  */
 bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 {
-	int windowId;
-	int lastWindowId;
-
 	if (UI_DNDIsDragging()) {
 		if (key == K_ESCAPE) {
 			UI_DNDAbort();
@@ -471,12 +466,12 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 		return true;
 	}
 
-	lastWindowId = UI_GetLastFullScreenWindow();
+	int lastWindowId = UI_GetLastFullScreenWindow();
 	if (lastWindowId < 0)
 		return false;
 
 	/* check "active" window from top to down */
-	for (windowId = ui_global.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
+	for (int windowId = ui_global.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
 		const uiNode_t* window = ui_global.windowStack[windowId];
 		if (!window)
 			return false;

@@ -138,7 +138,6 @@ static bool SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vector, c
  */
 static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleFile, bool multipleContour)
 {
-	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
 	const vec3_t zNormal = { 0.0f, 0.0f, 1.0f };
 	vec3_t v[2];
@@ -176,7 +175,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE* tile, const vec3_t mins, const
 
 	pictureBuffer = Mem_AllocTypeN(unsigned char, width * height * DEPTH);
 
-	for (sliceIndex = 0; sliceIndex < numberOfSlices; sliceIndex++) {
+	for (int sliceIndex = 0; sliceIndex < numberOfSlices; sliceIndex++) {
 		const float zHeight = minZ + (sliceIndex * stepsize);
 		zDistance[2] = zHeight;
 

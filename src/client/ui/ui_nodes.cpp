@@ -373,8 +373,6 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
  */
 static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
 {
-	uiNode_t* find;
-
 	if (node->invis || UI_Node_IsVirtual(node) || !UI_CheckVisibility(node))
 		return nullptr;
 
@@ -387,9 +385,8 @@ static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
 		return nullptr;
 
 	/** @todo we should improve the loop (last-to-first) */
-	find = nullptr;
+	uiNode_t* find = nullptr;
 	if (node->firstChild) {
-		uiNode_t* child;
 		vec2_t clientPosition = {0, 0};
 
 		if (UI_Node_IsScrollableContainer(node))
@@ -398,7 +395,7 @@ static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
 		rx -= clientPosition[0];
 		ry -= clientPosition[1];
 
-		for (child = node->firstChild; child; child = child->next) {
+		for (uiNode_t* child = node->firstChild; child; child = child->next) {
 			uiNode_t* tmp;
 			tmp = UI_GetNodeInTreeAtPosition(child, rx, ry);
 			if (tmp)
@@ -413,13 +410,12 @@ static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
 
 	/* disable ghost/excluderect in debug mode 2 */
 	if (UI_DebugMode() != 2) {
-		uiExcludeRect_t* excludeRect;
 		/* is the node tangible */
 		if (node->ghost)
 			return nullptr;
 
 		/* check excluded box */
-		for (excludeRect = node->firstExcludeRect; excludeRect != nullptr; excludeRect = excludeRect->next) {
+		for (uiExcludeRect_t* excludeRect = node->firstExcludeRect; excludeRect != nullptr; excludeRect = excludeRect->next) {
 			if (rx >= excludeRect->pos[0]
 			 && rx < excludeRect->pos[0] + excludeRect->size[0]
 			 && ry >= excludeRect->pos[1]
@@ -437,10 +433,8 @@ static uiNode_t* UI_GetNodeInTreeAtPosition (uiNode_t* node, int rx, int ry)
  */
 uiNode_t* UI_GetNodeAtPosition (int x, int y)
 {
-	int pos;
-
 	/* find the first window under the mouse */
-	for (pos = ui_global.windowStackPos - 1; pos >= 0; pos--) {
+	for (int pos = ui_global.windowStackPos - 1; pos >= 0; pos--) {
 		uiNode_t* window = ui_global.windowStack[pos];
 		uiNode_t* find;
 
@@ -530,8 +524,6 @@ static void UI_BeforeDeletingNode (const uiNode_t* node)
  */
 void UI_DeleteNode (uiNode_t* node)
 {
-	uiBehaviour_t* behaviour;
-
 	if (!node->dynamic) {
 		Com_Printf("UI_DeleteNode: Can't delete the static node '%s'\n", UI_GetPath(node));
 		return;
@@ -549,7 +541,7 @@ void UI_DeleteNode (uiNode_t* node)
 		UI_RemoveNode(node->parent, node);
 
 	/* delete all allocated properties */
-	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
+	for (uiBehaviour_t* behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		const value_t** property = behaviour->localProperties;
 		if (property == nullptr)
 			continue;
@@ -607,8 +599,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursiv
 
 	/* clone child */
 	if (recursive) {
-		uiNode_t* childNode;
-		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
+		for (uiNode_t* childNode = node->firstChild; childNode; childNode = childNode->next) {
 			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
 			UI_AppendNode(newNode, newChildNode);
 		}
