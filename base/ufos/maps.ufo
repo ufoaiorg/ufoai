@@ -53,14 +53,88 @@
 // * missionbriefing		the text to be shown in the mission briefing window, e.g. "*msgid:mission_briefing_fueldump"
 // * victorycondition		the text to be shown in the mission briefing window, e.g. "*msgid:victory_condition_fueldump"
 
+// Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
+// It is a map of the world where the different terrainTypes are drawn in different colors.
+// The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
+
+terraindef desert
+{
+	rgbred			255
+	rgbgreen		128
+	rgbblue			0
+	survivalchance	0.33
+	rainchance		0.0
+	snowchance		0.0
+}
+
+terraindef arctic
+{
+	rgbred			128
+	rgbgreen		255
+	rgbblue			255
+	survivalchance	0.12
+	rainchance		0.0
+	snowchance		0.4
+}
+
+terraindef water
+{
+	rgbred			0
+	rgbgreen		0
+	rgbblue			64
+	survivalchance	0.10
+	rainchance		0.0
+	snowchance		0.0
+}
+
 terraindef mountain
 {
 	rgbred			255
 	rgbgreen		0
 	rgbblue			0
-	survivalchance	2.5
+	survivalchance	0.33
 	rainchance		0.1
 	snowchance		0.3
+}
+
+terraindef tropical
+{
+	rgbred			128
+	rgbgreen		128
+	rgbblue			255
+	survivalchance	2.5
+	rainchance		0.3
+	snowchance		0.0
+}
+
+terraindef cold
+{
+	rgbred			0
+	rgbgreen		0
+	rgbblue			255
+	survivalchance	0.33
+	rainchance		0.0
+	snowchance		0.3
+}
+
+terraindef wasted
+{
+	rgbred			128
+	rgbgreen		0
+	rgbblue			128
+	survivalchance	0.12
+	rainchance		0.1
+	snowchance		0.0
+}
+
+terraindef grass
+{
+	rgbred			128
+	rgbgreen		255
+	rgbblue			0
+	survivalchance	2.5
+	rainchance		0.2
+	snowchance		0.1
 }
 
 // ================== //
