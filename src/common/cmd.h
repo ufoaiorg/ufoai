@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "filesys.h"
 #include "../shared/cxx.h"
+#include "../shared/sharedptr.h"
 #include <stdarg.h>
 
 void Cbuf_Init(void);
@@ -87,6 +88,19 @@ typedef struct cmdList_s {
 	const char* description;
 } cmdList_t;
 
+/**
+ * @brief Listener for command changes
+ * @param cmdName The name of the command that was created.
+ */
+class CmdListener {
+public:
+	virtual ~CmdListener() {}
+	virtual void onAdd (const char* cmdName) = 0;
+	virtual void onRemove (const char* cmdName) = 0;
+};
+
+typedef SharedPtr<CmdListener> CmdListenerPtr;
+
 void Cmd_Init(void);
 void Cmd_Shutdown(void);
 
@@ -123,6 +137,18 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
  * @brief used by the cvar code to check for cvar / command name overlap
  */
 bool Cmd_Exists(const char* cmd_name);
+
+/**
+ * @brief Registers a command listener
+ * @param listener The listener callback to register
+ */
+void Cmd_RegisterCmdListener(CmdListenerPtr listener);
+
+/**
+ * @brief Unregisters a command listener
+ * @param listener The listener callback to unregister
+ */
+void Cmd_UnRegisterCmdListener(CmdListenerPtr listener);
 
 /**
  * @brief attempts to match a partial command for automatic command line completion

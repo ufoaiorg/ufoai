@@ -102,7 +102,45 @@ public:
 	}
 };
 
+class GAMECmdListener: public CmdListener
+{
+private:
+	typedef std::set<const char* > GameCmds;
+	GameCmds _cmds;
+public:
+	~GAMECmdListener ()
+	{
+		_cmds.clear();
+	}
+
+	void onAdd (const char* cmdName)
+	{
+		const cgame_export_t* list = GAME_GetCurrentType();
+		if (list) {
+			_cmds.insert(cmdName);
+		}
+	}
+
+	void onRemove (const char* cmdName)
+	{
+		_cmds.erase(cmdName);
+	}
+
+	void onGameModeChange ()
+	{
+		GameCmds copy = _cmds;
+		for (GameCmds::const_iterator i = copy.begin(); i != copy.end(); ++i) {
+			const char* cmdName = *i;
+			const cgame_export_t* list = GAME_GetCurrentType();
+			Com_DPrintf(DEBUG_COMMANDS, "Remove command %s because it was created in the context of the cgame %s\n",
+					cmdName, list ? list->name : "none");
+			Cmd_RemoveCommand(cmdName);
+		}
+	}
+};
+
 static SharedPtr<GAMECvarListener> cvarListener(new GAMECvarListener());
+static SharedPtr<GAMECmdListener> cmdListener(new GAMECmdListener());
 
 /* @todo: remove me - this should be per geoscape node data */
 geoscapeData_t geoscapeData;
@@ -929,6 +967,7 @@ void GAME_SetMode (const cgame_export_t* gametype)
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->Shutdown();
 		cvarListener->onGameModeChange();
+		cmdListener->onGameModeChange();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
@@ -1850,6 +1889,7 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command.");
 
 	Cvar_RegisterCvarListener(cvarListener);
+	Cmd_RegisterCmdListener(cmdListener);
 }
 
 void GAME_Shutdown (void)
@@ -1860,4 +1900,5 @@ void GAME_Shutdown (void)
 	OBJZERO(characters);
 
 	Cvar_UnRegisterCvarListener(cvarListener);
+	Cmd_UnRegisterCmdListener(cmdListener);
 }

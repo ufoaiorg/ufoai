@@ -49,6 +49,9 @@ typedef struct cmd_alias_s {
 	struct cmd_alias_s* next;
 } cmd_alias_t;
 
+typedef std::vector<CmdListenerPtr> CmdListeners;
+
+static CmdListeners cmdListeners;
 static cmd_alias_t* cmd_alias;
 static cmd_alias_t* cmd_alias_hash[ALIAS_HASH_SIZE];
 static bool cmdWait;
@@ -783,6 +786,10 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 	/* ... and to the cmd table */
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
+
+	for (CmdListeners::const_iterator i = cmdListeners.begin(); i != cmdListeners.end(); ++i) {
+		(*i)->onAdd(cmdName);
+	}
 }
 
 /**
@@ -820,6 +827,9 @@ void Cmd_RemoveCommand (const char* cmdName)
 		if (Q_streq(cmdName, cmd->getName())) {
 			*back = cmd->next;
 			Mem_Free(cmd);
+			for (CmdListeners::const_iterator i = cmdListeners.begin(); i != cmdListeners.end(); ++i) {
+				(*i)->onRemove(cmdName);
+			}
 			return;
 		}
 		back = &cmd->next;
@@ -863,6 +873,24 @@ void Cmd_TableRemoveList (const cmdList_t* cmdList)
 {
 	for (const cmdList_t* cmd = cmdList; cmd->name; cmd++)
 		Cmd_RemoveCommand(cmd->name);
+}
+
+/**
+ * @brief Registers a command listener
+ * @param listener The listener callback to register
+ */
+void Cmd_RegisterCmdListener (CmdListenerPtr listener)
+{
+	cmdListeners.push_back(listener);
+}
+
+/**
+ * @brief Unregisters a command listener
+ * @param listener The listener callback to unregister
+ */
+void Cmd_UnRegisterCmdListener (CmdListenerPtr listener)
+{
+	cmdListeners.erase(std::remove(cmdListeners.begin(), cmdListeners.end(), listener), cmdListeners.end());
 }
 
 /**
