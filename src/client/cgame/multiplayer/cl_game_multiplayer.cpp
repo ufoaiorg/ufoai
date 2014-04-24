@@ -219,22 +219,25 @@ static bool GAME_MP_HandleServerCommand (const char* command, dbuffer* msg)
 	return false;
 }
 
+static const cmdList_t multiplayerCmds[] = {
+	{"mp_startserver", GAME_MP_StartServer_f, nullptr},
+	{"mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values"},
+	{nullptr, nullptr, nullptr}
+};
 static void GAME_MP_InitStartup (void)
 {
 	cgi->Cvar_ForceSet("sv_maxclients", "2");
 	/** @todo make equipment configurable for multiplayer */
 	cgi->Cvar_Set("cl_equip", "multiplayer_initial");
 
-	cgi->Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, nullptr);
-	cgi->Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
+	cgi->Cmd_TableAddList(multiplayerCmds);
 	GAME_MP_CallbacksInit(cgi);
 	GAME_MP_ServerListInit(cgi);
 }
 
 static void GAME_MP_Shutdown (void)
 {
-	cgi->Cmd_RemoveCommand("mp_startserver");
-	cgi->Cmd_RemoveCommand("mp_updategametype");
+	cgi->Cmd_TableRemoveList(multiplayerCmds);
 	GAME_MP_CallbacksShutdown();
 	GAME_MP_ServerListShutdown();
 
