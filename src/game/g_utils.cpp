@@ -550,7 +550,7 @@ int G_TouchTriggers (Edict* ent)
 {
 	Edict* touched[MAX_EDICTS];
 
-	if (!G_IsLivingActor(ent) || G_IsStunned(ent))
+	if (!G_IsLivingActor(ent))
 		return 0;
 
 	int num = G_GetTouchingEdicts(ent->absBox, touched, lengthof(touched), ent);
@@ -565,6 +565,8 @@ int G_TouchTriggers (Edict* ent)
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
 		if (!hit->touch)
+			continue;
+		if (hit->dmg == 0 && G_IsStunned(ent))
 			continue;
 		if (hit->touch(hit, ent))
 			usedNum++;

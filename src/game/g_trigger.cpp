@@ -220,7 +220,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	const bool isRobot = activator->chr.teamDef->robot;
 
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	if (G_IsDead(activator))
+	if (!G_IsLivingActor(activator))
 		return false;
 
 	if (stunEl || (stunGas && !isRobot)) {
@@ -230,6 +230,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	} else {
 		G_TakeDamage(activator, damage);
 	}
+	G_CheckDeathOrKnockout(activator, nullptr, nullptr, damage);
 
 	return true;
 }
