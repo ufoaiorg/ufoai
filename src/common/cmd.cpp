@@ -767,7 +767,7 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 	}
 
 	/* fail if the command already exists */
-	cmd_function_t* cmdOld = Cmd_TableFind(cmdName);
+	const cmd_function_t* const cmdOld = Cmd_TableFind(cmdName);
 	if (cmdOld) {
 		Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmdName);
 		return;
@@ -781,7 +781,7 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 	cmd->completeParam = nullptr;
 
 	/* ... add it to the hashtable */
-	unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	HASH_Add(cmd_functions_hash, cmd, hash);
 	/* ... and to the cmd table */
 	cmd->next = cmd_functions;
@@ -800,8 +800,7 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
 void Cmd_RemoveCommand (const char* cmdName)
 {
 	cmd_function_t* cmd, **back;
-	unsigned int hash;
-	hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	back = &cmd_functions_hash[hash];
 
 	while (1) {
