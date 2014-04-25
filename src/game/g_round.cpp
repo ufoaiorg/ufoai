@@ -132,7 +132,7 @@ static void G_UpdateStunState (int team)
 }
 
 /**
- * @brief Uudates the weight carried for each team member.
+ * @brief Updates the weight carried for each team member.
  * @param[in] team The index of the team to update the values for.
  */
 static void G_UpdateCarriedWeight (int team)
