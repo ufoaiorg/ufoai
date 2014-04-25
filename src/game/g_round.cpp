@@ -146,6 +146,15 @@ static void G_UpdateCarriedWeight (int team)
 	}
 }
 
+static void G_RoundTouchTriggers (int team)
+{
+	Edict* ent = nullptr;
+
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+		G_TouchTriggers(ent);
+	}
+}
+
 /**
  * @brief Get the next active team
  */
@@ -254,6 +263,8 @@ void G_ClientEndRound (Player& player)
 
 	/* Wounded team members bleed */
 	G_BleedWounds(level.activeTeam);
+
+	G_RoundTouchTriggers(level.activeTeam);
 
 	/* Update the state of stuned team-members. The actual statistics are sent below! */
 	G_UpdateStunState(level.activeTeam);
