@@ -257,8 +257,7 @@ static inline bool BrushGE (bspbrush_t* b1, bspbrush_t* b2)
  * @param[in] endbrush the index after the last brush to check.
  * @param[in] level the level that we are searching for brushes in. -1 for skipping the levelflag check.
  * @param[in] clipBox the absolute lowest and highest boundaries to allow for brushes.
- * @param[out] mins the lowest boundary for all accepted brushes within the clipped bounds.
- * @param[out] maxs the highest boundary for all accepted brushes within the clipped bounds.
+ * @param[out] bBox the max boundaries for all accepted brushes within the clipped bounds.
  * @sa ProcessSubModel
  * @sa IsInLevel
  */
