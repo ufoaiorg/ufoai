@@ -399,11 +399,6 @@ static void Cmd_Echo_f (void)
 static void Cmd_Alias_f (void)
 {
 	cmd_alias_t* a;
-	char cmd[MAX_STRING_CHARS];
-	size_t len;
-	unsigned int hash;
-	int i, c;
-	const char* s;
 
 	if (Cmd_Argc() == 1) {
 		Com_Printf("Current alias commands:\n");
@@ -412,8 +407,8 @@ static void Cmd_Alias_f (void)
 		return;
 	}
 
-	s = Cmd_Argv(1);
-	len = strlen(s);
+	const char* s = Cmd_Argv(1);
+	const size_t len = strlen(s);
 	if (len == 0)
 		return;
 
@@ -423,7 +418,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	/* if the alias already exists, reuse it */
-	hash = Com_HashKey(s, ALIAS_HASH_SIZE);
+	unsigned int hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (Q_streq(s, a->name)) {
 			Mem_Free(a->value);
@@ -442,9 +437,10 @@ static void Cmd_Alias_f (void)
 	Q_strncpyz(a->name, s, sizeof(a->name));
 
 	/* copy the rest of the command line */
+	char cmd[MAX_STRING_CHARS];
 	cmd[0] = 0;					/* start out with a null string */
-	c = Cmd_Argc();
-	for (i = 2; i < c; i++) {
+	int c = Cmd_Argc();
+	for (int i = 2; i < c; i++) {
 		Q_strcat(cmd, sizeof(cmd), "%s", Cmd_Argv(i));
 		if (i != (c - 1))
 			Q_strcat(cmd, sizeof(cmd), " ");
@@ -463,9 +459,7 @@ static void Cmd_Alias_f (void)
  */
 void Cmd_WriteAliases (qFILE* f)
 {
-	cmd_alias_t* a;
-
-	for (a = cmd_alias; a; a = a->next)
+	for (cmd_alias_t* a = cmd_alias; a; a = a->next)
 		if (a->archive) {
 			FS_Printf(f, "aliasa %s \"", a->name);
 			for (int i = 0; i < strlen(a->value); i++) {
@@ -914,12 +908,9 @@ bool Cmd_Exists (const char* cmdName)
  */
 int Cmd_CompleteCommandParameters (const char* command, const char* partial, const char** match)
 {
-	const cmd_function_t* cmd;
-	unsigned int hash;
-
 	/* check for partial matches in commands */
-	hash = Com_HashKey(command, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+	unsigned int hash = Com_HashKey(command, CMD_HASH_SIZE);
+	for (const cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(command, cmd->getName())) {
 			if (!cmd->completeParam)
 				return 0;
@@ -967,13 +958,7 @@ int Cmd_CompleteCommand (const char* partial, const char** match)
 void Cmd_vExecuteString (const char* fmt, va_list ap)
 {
 	char text[1024];
-
 	Q_vsnprintf(text, sizeof(text), fmt, ap);
-
-	const cmd_function_t* cmd;
-	const cmd_alias_t* a;
-	const char* str;
-	unsigned int hash;
 
 	Com_DPrintf(DEBUG_COMMANDS, "ExecuteString: '%s'\n", text);
 
@@ -984,11 +969,11 @@ void Cmd_vExecuteString (const char* fmt, va_list ap)
 		/* no tokens */
 		return;
 
-	str = Cmd_Argv(0);
+	const char* str = Cmd_Argv(0);
 
 	/* check functions */
-	hash = Com_HashKey(str, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+	unsigned int hash = Com_HashKey(str, CMD_HASH_SIZE);
+	for (const cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->getName())) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString("cmd %s", text);
@@ -1002,7 +987,7 @@ void Cmd_vExecuteString (const char* fmt, va_list ap)
 
 	/* check alias */
 	hash = Com_HashKey(str, ALIAS_HASH_SIZE);
-	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
+	for (const cmd_alias_t* a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (!Q_strcasecmp(str, a->name)) {
 			if (++alias_count == ALIAS_LOOP_COUNT) {
 				Com_Printf("ALIAS_LOOP_COUNT\n");
@@ -1115,9 +1100,7 @@ void Cmd_Dummy_f (void)
  */
 static void Cmd_Test_f (void)
 {
-	cmd_function_t* cmd;
-
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	for (cmd_function_t* cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_streq(cmd->getName(), "quit"))
 			Cmd_ExecuteString("%s", cmd->getName());
 	}
@@ -1125,12 +1108,11 @@ static void Cmd_Test_f (void)
 
 void Cmd_PrintDebugCommands (void)
 {
-	const cmd_function_t* cmd;
 	const char* otherCommands[] = {"mem_stats", "cl_configstrings", "cl_userinfo", "devmap"};
 	int num = lengthof(otherCommands);
 
 	Com_Printf("Debug commands:\n");
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+	for (const cmd_function_t* cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (Q_strstart(cmd->getName(), "debug_"))
 			Com_Printf(" * %s\n   %s\n", cmd->getName(), cmd->description);
 	}
