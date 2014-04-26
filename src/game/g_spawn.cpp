@@ -520,9 +520,9 @@ static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, 
  * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
  * @param[in] radius The max distance of a cell from the center to get a particle
  */
-void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, vec_t radius)
+void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	G_SpawnFieldGroup(ET_SMOKE, vec, particle, rounds, 0, radius);
+	G_SpawnFieldGroup(ET_SMOKE, vec, particle, rounds, damage, radius);
 }
 
 void G_SpawnFireField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
@@ -993,7 +993,9 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 
 static void SP_misc_smoke (Edict* ent)
 {
-	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_NOT);
+	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_TRIGGER);
+	ent->dmgtype = gi.csi->damStunGas;
+	ent->touch = Touch_HurtTrigger;
 	G_CheckVis(nullptr);
 }
 

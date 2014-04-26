@@ -1335,8 +1335,9 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 		/* Ignore off-map impacts when spawning fire, smoke, etc fields */
 		if (gi.isOnMap(impact)) {
 			if (fd->obj->dmgtype == gi.csi->damSmoke) {
+				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);
-				G_SpawnSmokeField(impact, "smokefield", rounds, fd->splrad);
+				G_SpawnSmokeField(impact, "smokefield", rounds, damage, fd->splrad);
 			} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
 				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);

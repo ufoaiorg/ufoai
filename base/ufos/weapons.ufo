@@ -329,6 +329,7 @@ item smokegrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"5 1"	//Smoke field damage
 			spldmg	"1 1"
 			splrad	3
 			dmgweight "normal_light"
@@ -355,6 +356,7 @@ item smokegrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"5 1"	//Smoke field damage
 			spldmg	"1 1"
 			splrad	3
 			dmgweight "normal_light"
