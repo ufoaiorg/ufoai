@@ -114,6 +114,9 @@ typedef struct entity_s {
 		init();
 		flags = flag;
 	}
+	inline void setScale(const vec3_t scale_) {
+		VectorCopy(scale_, scale);
+	}
 } entity_t;
 
 /* entity chains for rendering */

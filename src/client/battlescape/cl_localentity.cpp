@@ -137,7 +137,7 @@ static void LM_AddToSceneOrder (bool parents)
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
 		ent.lighting = &lm->lighting;
-		VectorCopy(lm->scale, ent.scale);
+		ent.setScale(lm->scale);
 
 		if (lm->parent) {
 			/** @todo what if the tagent is not rendered due to different level flags? */
