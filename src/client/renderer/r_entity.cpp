@@ -524,7 +524,7 @@ void R_TransformForEntity (const entity_t* e, const vec3_t in, vec3_t out)
 	matrix4x4_t tmp, mat;
 
 	Matrix4x4_CreateFromQuakeEntity(&tmp, e->origin[0], e->origin[1], e->origin[2], e->angles[0], e->angles[1],
-			e->angles[2], e->scale[0]);
+			e->angles[2], e->getScaleX());
 
 	Matrix4x4_Invert_Simple(&mat, &tmp);
 	Matrix4x4_Transform(&mat, in, out);
