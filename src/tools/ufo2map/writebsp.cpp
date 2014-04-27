@@ -376,8 +376,7 @@ void BeginModel (int entityNum)
 		modBox.add(b->mbBox);
 	}
 
-	VectorCopy(modBox.mins, mod->dbmBox.mins);
-	VectorCopy(modBox.maxs, mod->dbmBox.maxs);
+	mod->dbmBox.set(modBox);
 }
 
 
