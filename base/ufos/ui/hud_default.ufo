@@ -129,6 +129,16 @@ window hud_default extends hud
 					disabled	true
 					nohover		true
 				}
+				bar stun
+				{
+					pos			"0 6"
+					size		"300 8"
+					color		".3 .3 .3 .9"
+					current		*cvar:mn_stun
+					max			*cvar:mn_hpmax
+					disabled	true
+					nohover		true
+				}
 				string health_count
 				{
 					string			*cvar:mn_hp
