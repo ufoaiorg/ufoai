@@ -97,8 +97,8 @@ static void SwapBSPFile (void)
 		d->headnode = LittleLong(d->headnode);
 
 		for (j = 0; j < 3; j++) {
-			d->mins[j] = LittleFloat(d->mins[j]);
-			d->maxs[j] = LittleFloat(d->maxs[j]);
+			d->dbmBox.mins[j] = LittleFloat(d->dbmBox.mins[j]);
+			d->dbmBox.maxs[j] = LittleFloat(d->dbmBox.maxs[j]);
 			d->origin[j] = LittleFloat(d->origin[j]);
 		}
 	}

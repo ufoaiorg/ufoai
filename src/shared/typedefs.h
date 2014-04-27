@@ -345,7 +345,7 @@ typedef struct mapData_s {
 } mapData_t;
 
 typedef struct {
-	vec3_t mins, maxs;
+	AABB dbmBox;
 	vec3_t origin;				/**< for sounds or lights */
 	int32_t headnode;
 	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
