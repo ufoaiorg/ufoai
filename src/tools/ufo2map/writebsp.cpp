@@ -352,28 +352,23 @@ extern int firstmodeledge;
  */
 void BeginModel (int entityNum)
 {
-	dBspModel_t* mod;
-	int start, end;
-	int j;
-	const entity_t* e;
-
 	if (curTile->nummodels == MAX_MAP_MODELS)
 		Sys_Error("MAX_MAP_MODELS (%i)", curTile->nummodels);
-	mod = &curTile->models[curTile->nummodels];
 
+	dBspModel_t* mod = &curTile->models[curTile->nummodels];
 	mod->firstface = curTile->numfaces;
 
 	firstmodeledge = curTile->numedges;
 
 	/* bound the brushes */
-	e = &entities[entityNum];
+	const entity_t* e = &entities[entityNum];
 
-	start = e->firstbrush;
-	end = start + e->numbrushes;
+	int start = e->firstbrush;
+	int end = start + e->numbrushes;
 	AABB modBox;
 	modBox.setNegativeVolume();
 
-	for (j = start; j < end; j++) {
+	for (int j = start; j < end; j++) {
 		const mapbrush_t* b = &mapbrushes[j];
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
