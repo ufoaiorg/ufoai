@@ -230,6 +230,10 @@ typedef struct localModel_s {
 	void (*think) (struct localModel_s*  localModel);
 
 	model_t* model;
+
+	inline void setScale(const vec3_t scale_) {
+		VectorCopy(scale_, scale);
+	}
 } localModel_t;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };

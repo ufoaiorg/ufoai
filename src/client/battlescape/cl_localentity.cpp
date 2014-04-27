@@ -318,7 +318,7 @@ localModel_t* LM_AddModel (const char* model, const vec3_t origin, const vec3_t 
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
 	lm->inuse = true;
-	VectorCopy(scale, lm->scale);
+	lm->setScale(scale);
 
 	return lm;
 }
