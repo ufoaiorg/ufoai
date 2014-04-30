@@ -1538,8 +1538,6 @@ static inline bool CL_AddActorWeapon (int objID)
  */
 bool CL_AddActor (le_t* le, entity_t* ent)
 {
-	entity_t add(RF_NONE);
-
 	if (!cl_showactors->integer)
 		return false;
 
@@ -1555,54 +1553,54 @@ bool CL_AddActor (le_t* le, entity_t* ent)
 		const bool addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
 		if (addLeftHandWeapon) {
-			add.init();
+			entity_t leftHand(RF_NONE);
 
-			add.model = cls.modelPool[le->left];
-			if (!add.model)
+			leftHand.model = cls.modelPool[le->left];
+			if (!leftHand.model)
 				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
-			add.tagent = R_GetFreeEntity() + delta + addRightHandWeapon;
-			add.tagname = "tag_lweapon";
+			leftHand.tagent = R_GetFreeEntity() + delta + addRightHandWeapon;
+			leftHand.tagname = "tag_lweapon";
 
-			R_AddEntity(&add);
+			R_AddEntity(&leftHand);
 		}
 
 		/* add right hand weapon */
 		if (addRightHandWeapon) {
-			add.init();
+			entity_t rightHand(RF_NONE);
 
-			add.alpha = le->alpha;
-			add.model = cls.modelPool[le->right];
-			if (!add.model)
+			rightHand.alpha = le->alpha;
+			rightHand.model = cls.modelPool[le->right];
+			if (!rightHand.model)
 				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
-			add.tagent = R_GetFreeEntity() + delta;
-			add.tagname = "tag_rweapon";
+			rightHand.tagent = R_GetFreeEntity() + delta;
+			rightHand.tagname = "tag_rweapon";
 
-			R_AddEntity(&add);
+			R_AddEntity(&rightHand);
 		}
 	}
 
 	if (hasTagHead) {
 		/* add head */
-		add.init();
+		entity_t head(RF_NONE);
 
-		add.alpha = le->alpha;
-		add.model = le->model2;
-		if (!add.model)
+		head.alpha = le->alpha;
+		head.model = le->model2;
+		if (!head.model)
 			Com_Error(ERR_DROP, "Actor model wasn't found!");
-		add.skinnum = le->headSkin;
+		head.skinnum = le->headSkin;
 
 		/* point to the body ent which will be added last */
-		add.tagent = R_GetFreeEntity() + 1;
-		add.tagname = "tag_head";
+		head.tagent = R_GetFreeEntity() + 1;
+		head.tagname = "tag_head";
 
 		if (le->team != cls.team)
-			add.flags |= RF_IRGOGGLES;
+			head.flags |= RF_IRGOGGLES;
 
-		R_AddEntity(&add);
+		R_AddEntity(&head);
 	}
 
 	/** Add actor special effects.
