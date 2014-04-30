@@ -107,11 +107,8 @@ typedef struct entity_s {
 
 	struct entity_s* next;		/**< for chaining */
 
-	inline void init () {
-		OBJZERO(*this);
-	}
 	inline entity_s (int flag = RF_NONE) {
-		init();
+		OBJZERO(*this);
 		flags = flag;
 	}
 	inline void setScale(const vec3_t scale_) {
