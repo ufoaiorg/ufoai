@@ -518,6 +518,7 @@ static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, 
  * @param[in] particle The id of the particle (see ptl_*.ufo script files in base/ufos)
  * @param[in] rounds The number of rounds the particle will last
  * @todo Does '2 rounds' mean: created in player's turn, last through the aliens turn, vanish before the 2nd player's turn ??
+ * @param[in] damage The amount of damage this field will cause when touched by an actor.
  * @param[in] radius The max distance of a cell from the center to get a particle
  */
 void G_SpawnSmokeField (const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
