@@ -1946,15 +1946,15 @@ nation_t* GEO_GetNation (const vec2_t pos)
  * Crash over tropical or fertile area: This is the good life :)
  */
 static const terrainDef_s terrainDefTable[] = {
-	{255, 128, 0,	"desert",	0.33, 0.0, 0.0},
-	{128, 255, 255, "arctic",	0.12, 0.0, 0.4},
-	{0,		0, 64,	"water",	0.10, 0.0, 0.0},
-	{255,	0, 0,	"mountain",	0.33, 0.1, 0.3},
-	{128, 128, 255,	"tropical",	2.50, 0.3, 0.0},
-	{0,		0, 255,	"cold",		0.33, 0.0, 0.3},
-	{128,	0, 128,	"wasted",	0.12, 0.1, 0.0},
-	{128, 255, 0,	"grass",	2.50, 0.2, 0.1},
-	{0,		0, 0,	nullptr,	0.00, 0.0, 0.0}
+	{255, 128, 0,	"desert",	0.33f, 0.0f, 0.0f},
+	{128, 255, 255, "arctic",	0.12f, 0.0f, 0.4f},
+	{0,		0, 64,	"water",	0.10f, 0.0f, 0.0f},
+	{255,	0, 0,	"mountain",	0.33f, 0.1f, 0.3f},
+	{128, 128, 255,	"tropical",	2.50f, 0.3f, 0.0f},
+	{0,		0, 255,	"cold",		0.33f, 0.0f, 0.3f},
+	{128,	0, 128,	"wasted",	0.12f, 0.1f, 0.0f},
+	{128, 255, 0,	"grass",	2.50f, 0.2f, 0.1f},
+	{0,		0, 0,	nullptr,	0.00f, 0.0f, 0.0f}
 };
 
 class TerrainDefs
