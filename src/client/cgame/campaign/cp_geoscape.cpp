@@ -1956,19 +1956,27 @@ static const terrainDef_s terrainDefTable[] = {
 	{128, 255, 0,	"grass",	2.50f, 0.2f, 0.1f},
 	{0,		0, 0,	nullptr,	0.00f, 0.0f, 0.0f}
 };
-
+#define MAX_TERRAINDEFS 16
 class TerrainDefs
 {
+	const terrainDef_s* terrainDefTable2[MAX_TERRAINDEFS];
+
 	inline const terrainDef_s* findByColor(const byte* const color) const {
-		const terrainDef_s* p = terrainDefTable;
-		while (p->terrainName) {
+		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
+			const terrainDef_s* p = terrainDefTable2[i];
+			if (!p)
+				break;
 			if (p->rgbRed == color[0] && p->rgbGreen == color[1] && p->rgbBlue == color[2])
 				return p;
-			p++;
 		}
 		return nullptr;
 	}
 public:
+	TerrainDefs() {
+		for (int i = 0; i < 8; i++)
+			terrainDefTable2[i] = &terrainDefTable[i];
+		terrainDefTable2[8] = nullptr;
+	}
 	inline float getSurvivalChance(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->survivalChance : 0.0;
