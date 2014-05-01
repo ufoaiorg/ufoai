@@ -3563,7 +3563,7 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 			break;
 
 		char key[MAX_VAR];
-		strcpy(key, token);
+		Q_strncpyz(key, token, sizeof(key));
 		token = Com_EParse(text, errhead, name);
 		KeyValuePair kvp(key, token);
 
