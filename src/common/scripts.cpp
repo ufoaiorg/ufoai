@@ -3544,8 +3544,9 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 static void Com_ParseTerrainDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseTerrainDefinition: unexpected end of file (terraindef ";
-	struct terrainDef_s tDef;
-	tDef.terrainName = Mem_PoolStrDup(name, com_genericPool, 0);
+	struct terrainDef_s tDefDummy;
+	struct terrainDef_s* tDef = &tDefDummy;
+	tDef->terrainName = Mem_PoolStrDup(name, com_genericPool, 0);
 
 	/* get it's body */
 	const char* token = Com_Parse(text);
@@ -3568,23 +3569,23 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 		KeyValuePair kvp(key, token);
 
 		if (kvp.isKey("rgbred"))
-			tDef.rgbRed = kvp.asInt();
+			tDef->rgbRed = kvp.asInt();
 		else if (kvp.isKey("rgbgreen"))
-			tDef.rgbGreen = kvp.asInt();
+			tDef->rgbGreen = kvp.asInt();
 		else if (kvp.isKey("rgbblue"))
-			tDef.rgbBlue = kvp.asInt();
+			tDef->rgbBlue = kvp.asInt();
 		else if (kvp.isKey("survivalchance"))
-			tDef.survivalChance = kvp.asFloat();
+			tDef->survivalChance = kvp.asFloat();
 		else if (kvp.isKey("rainchance"))
-			tDef.rainChance = kvp.asFloat();
+			tDef->rainChance = kvp.asFloat();
 		else if (kvp.isKey("snowchance"))
-			tDef.snowChance = kvp.asFloat();
+			tDef->snowChance = kvp.asFloat();
 		else {
 			Com_Printf("Com_ParseTerrainDefinition: unknown token \"%s\" ignored (terraindef %s)\n", token, name);
 		}
 	} while (*text);
 
-	if (!tDef.terrainName[0]) {
+	if (!tDef->terrainName[0]) {
 		Com_Printf("Com_ParseTerrainDefinition: terraindef \"%s\" with no name\n", name);
 	}
 	/* We intentionally do not use the stuff we just parsed yet. */
