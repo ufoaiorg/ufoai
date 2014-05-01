@@ -323,8 +323,8 @@ void SL_BSPSlice (const TR_TILE_TYPE* model, float thickness, int scale, bool si
 
 	for (int i = 0; i < model->nummodels; i++) {
 		const dBspModel_t* d = &model->models[i];
-		AddPointToBounds(d->mins, mins, maxs);
-		AddPointToBounds(d->maxs, mins, maxs);
+		AddPointToBounds(d->dbmBox.mins, mins, maxs);
+		AddPointToBounds(d->dbmBox.maxs, mins, maxs);
 	}
 
 	/* don't start or end on exact multiples of the Z slice thickness
