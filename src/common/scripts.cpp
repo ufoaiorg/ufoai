@@ -3544,8 +3544,7 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 static void Com_ParseTerrainDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseTerrainDefinition: unexpected end of file (terraindef ";
-	struct terrainDef_s tDefDummy;
-	struct terrainDef_s* tDef = &tDefDummy;
+	struct terrainDef_s* tDef = new terrainDef_s;
 	tDef->terrainName = Mem_PoolStrDup(name, com_genericPool, 0);
 
 	/* get it's body */
@@ -3589,6 +3588,7 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 		Com_Printf("Com_ParseTerrainDefinition: terraindef \"%s\" with no name\n", name);
 	}
 	/* We intentionally do not use the stuff we just parsed yet. */
+	delete tDef;
 }
 
 int Com_GetMapDefNumber (void)
