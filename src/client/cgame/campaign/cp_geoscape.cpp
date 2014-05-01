@@ -2002,13 +2002,12 @@ const char* GEO_GetWeather (const byte* const color)
 	const float weatherChance = rainChance + snowChance;
 	if (frand() < weatherChance) {
 		/* we have weather today */
-		if (snowChance == 0.0 || frand() < rainChance / weatherChance)
+		if (snowChance < EQUAL_EPSILON || frand() < rainChance / weatherChance)
 			return "1";	/* rain */
-		else
-			return "2";	/* snow */
+		return "2";	/* snow */
 	}
-	else	/* clear blue sky */
-		return "0";
+	/* clear blue sky */
+	return "0";
 }
 
 /**
