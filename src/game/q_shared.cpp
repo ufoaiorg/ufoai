@@ -65,11 +65,6 @@ static const terrainDef_s terrainDefTable[] = {
 	{0,		0, 0,	nullptr,	0.00f, 0.0f, 0.0f}
 };
 
-TerrainDefs::TerrainDefs() {
-	for (int i = 0; i < 2; i++)
-		add(&terrainDefTable[i]);
-}
-
 bool TerrainDefs::add(const terrainDef_s* tdef) {
 	if (findByColor(tdef->rgbRed, tdef->rgbGreen, tdef->rgbBlue))
 		return false;

@@ -412,7 +412,10 @@ class TerrainDefs
 		return nullptr;
 	}
 public:
-	TerrainDefs();
+	TerrainDefs() {
+		terrainDefTable2[0] = nullptr;
+	}
+
 	bool add(const terrainDef_s* tdef);
 
 /**
