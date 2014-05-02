@@ -342,14 +342,19 @@ void M_Frame (void)
 	}
 }
 
+static const cmdList_t musicCmds[] = {
+	{"music_play", M_Play_f, "Plays a music track."},
+	{"music_change", M_Change_f, "Changes the music theme (valid values:battlescape/geoscape/main/aircombat)."},
+	{"music_stop", M_Stop, "Stops currently playing music track."},
+	{"music_randomtrack", M_RandomTrack_f, "Plays a random music track."},
+	{nullptr, nullptr, nullptr}
+};
+
 void M_Init (void)
 {
 	if (Cmd_Exists("music_change"))
 		Cmd_RemoveCommand("music_change");
-	Cmd_AddCommand("music_play", M_Play_f, "Plays a music track.");
-	Cmd_AddCommand("music_change", M_Change_f, "Changes the music theme (valid values:battlescape/geoscape/main/aircombat).");
-	Cmd_AddCommand("music_stop", M_Stop, "Stops currently playing music track.");
-	Cmd_AddCommand("music_randomtrack", M_RandomTrack_f, "Plays a random music track.");
+	Cmd_TableAddList(musicCmds);
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
@@ -368,10 +373,7 @@ void M_Shutdown (void)
 	OBJZERO(musicArrayLength);
 	OBJZERO(music);
 
-	Cmd_RemoveCommand("music_play");
-	Cmd_RemoveCommand("music_change");
-	Cmd_RemoveCommand("music_stop");
-	Cmd_RemoveCommand("music_randomtrack");
+	Cmd_TableRemoveList(musicCmds);
 }
 
 static void M_MusicStreamCallback (musicStream_t* userdata, byte* stream, int length)
