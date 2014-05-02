@@ -57,6 +57,12 @@
 // It is a map of the world where the different terrainTypes are drawn in different colors.
 // The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
 
+// Thoughts about (pilot-) survival rates:
+// Crash over water: chances for survival are very bad
+// Crash over arctic or wasted terrain; fare a little better
+// Crash over mountain, desert or cold terrain: survive a little longer
+// Crash over tropical or fertile area: This is the good life :)
+
 terraindef desert
 {
 	rgbred			255
