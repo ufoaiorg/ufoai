@@ -413,22 +413,8 @@ class TerrainDefs
 	}
 public:
 	TerrainDefs();
-	inline bool add(const terrainDef_s* tdef) {
-		if (findByColor(tdef->rgbRed, tdef->rgbGreen, tdef->rgbBlue))
-			return false;
+	bool add(const terrainDef_s* tdef);
 
-		if (findByName(tdef->terrainName))
-			return false;
-
-		for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
-			if (!terrainDefTable2[i]) {
-				terrainDefTable2[i] = tdef;
-				terrainDefTable2[i + 1] = nullptr;
-				return true;
-			}
-		}
-		return false;
-	}
 /**
  * @brief Translate color value to terrain type and then to survival probability
  * @param[in] color the color value from the terrain mask
@@ -446,6 +432,7 @@ public:
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->snowChance : 0.0;
 	}
+
 /**
  * @brief Translate color value to terrain type
  * @param[in] color the color value from the terrain mask

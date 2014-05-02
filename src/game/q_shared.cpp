@@ -70,4 +70,21 @@ TerrainDefs::TerrainDefs() {
 		add(&terrainDefTable[i]);
 }
 
+bool TerrainDefs::add(const terrainDef_s* tdef) {
+	if (findByColor(tdef->rgbRed, tdef->rgbGreen, tdef->rgbBlue))
+		return false;
+
+	if (findByName(tdef->terrainName))
+		return false;
+
+	for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
+		if (!terrainDefTable2[i]) {
+			terrainDefTable2[i] = tdef;
+			terrainDefTable2[i + 1] = nullptr;
+			return true;
+		}
+	}
+	return false;
+}
+
 TerrainDefs terrainDefs;
