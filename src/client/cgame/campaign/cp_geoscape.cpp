@@ -1951,16 +1951,6 @@ const char* GEO_GetWeather (const byte* const color)
 }
 
 /**
- * @brief Translate color value to terrain type and then to survival probability
- * @param[in] color the color value from the terrain mask
- * @return the relative probability for survival (of pilots) in such a terrain
- */
-float GEO_GetSurvivalChance (const byte* const color)
-{
-	return terrainDefs.getSurvivalChance(color);
-}
-
-/**
  * @brief Translate color value to culture type
  * @sa GEO_GetColor
  * @param[in] color the color value from the culture mask

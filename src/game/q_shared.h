@@ -429,6 +429,11 @@ public:
 		}
 		return false;
 	}
+/**
+ * @brief Translate color value to terrain type and then to survival probability
+ * @param[in] color the color value from the terrain mask
+ * @return the relative probability for survival (of pilots) in such a terrain
+ */
 	inline float getSurvivalChance(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->survivalChance : 0.0;
