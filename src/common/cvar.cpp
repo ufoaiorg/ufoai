@@ -96,10 +96,9 @@ static bool Cvar_InfoValidate (const char* s)
  */
 cvar_t* Cvar_FindVar (const char* varName)
 {
-	cvar_t* var;
 	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 
-	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
+	for (cvar_t* var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (Q_streq(varName, var->name))
 			return var;
 	}
@@ -694,9 +693,7 @@ void Cvar_SetValue (const char* varName, float value)
  */
 void Cvar_UpdateLatchedVars (void)
 {
-	cvar_t* var;
-
-	for (var = cvarVars; var; var = var->next) {
+	for (cvar_t* var = cvarVars; var; var = var->next) {
 		if (!var->latchedString)
 			continue;
 		var->oldString = var->string;
@@ -721,10 +718,8 @@ void Cvar_UpdateLatchedVars (void)
  */
 bool Cvar_Command (void)
 {
-	cvar_t* v;
-
 	/* check variables */
-	v = Cvar_FindVar(Cmd_Argv(0));
+	cvar_t* v = Cvar_FindVar(Cmd_Argv(0));
 	if (!v)
 		return false;
 
@@ -877,9 +872,7 @@ static void Cvar_Copy_f (void)
  */
 void Cvar_WriteVariables (qFILE* f)
 {
-	const cvar_t* var;
-
-	for (var = cvarVars; var; var = var->next) {
+	for (const cvar_t* var = cvarVars; var; var = var->next) {
 		if (var->flags & CVAR_ARCHIVE)
 			FS_Printf(f, "set %s \"%s\" a\n", var->name, var->string);
 	}
@@ -892,9 +885,7 @@ void Cvar_WriteVariables (qFILE* f)
  */
 bool Cvar_PendingCvars (int flags)
 {
-	const cvar_t* var;
-
-	for (var = cvarVars; var; var = var->next) {
+	for (const cvar_t* var = cvarVars; var; var = var->next) {
 		if ((var->flags & flags) && var->modified)
 			return true;
 	}
@@ -904,9 +895,7 @@ bool Cvar_PendingCvars (int flags)
 
 void Cvar_ClearVars (int flags)
 {
-	cvar_t* var;
-
-	for (var = cvarVars; var; var = var->next) {
+	for (cvar_t* var = cvarVars; var; var = var->next) {
 		if (var->flags & flags)
 			var->modified = false;
 	}
@@ -917,7 +906,6 @@ void Cvar_ClearVars (int flags)
  */
 static void Cvar_List_f (void)
 {
-	cvar_t* var;
 	int i, c, l = 0;
 	const char* token = nullptr;
 
@@ -929,7 +917,7 @@ static void Cvar_List_f (void)
 	}
 
 	i = 0;
-	for (var = cvarVars; var; var = var->next, i++) {
+	for (cvar_t* var = cvarVars; var; var = var->next, i++) {
 		if (token && strncmp(var->name, token, l)) {
 			i--;
 			continue;
@@ -1065,12 +1053,10 @@ static void Cvar_Mod_f (void)
  */
 void Cvar_FixCheatVars (void)
 {
-	cvar_t* var;
-
 	if (!(Com_ServerState() && !Cvar_GetInteger("sv_cheats")))
 		return;
 
-	for (var = cvarVars; var; var = var->next) {
+	for (cvar_t* var = cvarVars; var; var = var->next) {
 		if (!(var->flags & CVAR_CHEAT))
 			continue;
 
@@ -1097,10 +1083,8 @@ void Cvar_FixCheatVars (void)
 #ifdef DEBUG
 void Cvar_PrintDebugCvars (void)
 {
-	const cvar_t* var;
-
 	Com_Printf("Debug cvars:\n");
-	for (var = cvarVars; var; var = var->next) {
+	for (const cvar_t* var = cvarVars; var; var = var->next) {
 		if ((var->flags & CVAR_DEVELOPER) || !strncmp(var->name, "debug_", 6))
 			Com_Printf(" * %s (%s)\n   %s\n", var->name, var->string, var->description ? var->description : "");
 	}

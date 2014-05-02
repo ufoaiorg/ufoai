@@ -1031,10 +1031,10 @@ void Com_SetRandomSeed (unsigned int seed)
 const char* Com_ByteToBinary (byte x)
 {
 	static char buf[9];
-	int cnt, mask = 1 << 7;
+	int mask = 1 << 7;
 	char* b = buf;
 
-	for (cnt = 1; cnt <= 8; ++cnt) {
+	for (int cnt = 1; cnt <= 8; ++cnt) {
 		*b++ = ((x & mask) == 0) ? '0' : '1';
 		x <<= 1;
 		if (cnt == 8)
@@ -1047,10 +1047,10 @@ const char* Com_ByteToBinary (byte x)
 const char* Com_UnsignedIntToBinary (uint32_t x)
 {
 	static char buf[37];
-	int cnt, mask = 1 << 31;
+	int mask = 1 << 31;
 	char* b = buf;
 
-	for (cnt = 1; cnt <= 32; ++cnt) {
+	for (int cnt = 1; cnt <= 32; ++cnt) {
 		*b++ = ((x & mask) == 0) ? '0' : '1';
 		x <<= 1;
 		if (cnt % 8 == 0 && cnt != 32)

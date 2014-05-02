@@ -183,8 +183,6 @@ int32_t CM_HeadnodeForBox (MapTile& tile, const AABB& box)
  */
 bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int levelmask, const char** entlist)
 {
-	const char** name;
-
 	/* trace against world first */
 	if (TR_TestLine(mapTiles, traceLine.start, traceLine.stop, levelmask))
 		/* We hit the world, so we didn't make it anyway... */
@@ -194,7 +192,7 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int leve
 	if (!entlist)
 		return false;
 
-	for (name = entlist; *name; name++) {
+	for (const char** name = entlist; *name; name++) {
 		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
@@ -232,16 +230,14 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int leve
  */
 bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, const int levelmask, const char** entlist)
 {
-	const char** name;
-	bool blocked;
 	float fraction = 2.0f;
 
 	/* trace against world first */
-	blocked = TR_TestLineDM(mapTiles, trLine.start, trLine.stop, hit, levelmask);
+	bool blocked = TR_TestLineDM(mapTiles, trLine.start, trLine.stop, hit, levelmask);
 	if (!entlist)
 		return blocked;
 
-	for (name = entlist; *name; name++) {
+	for (const char** name = entlist; *name; name++) {
 		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
@@ -288,7 +284,6 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, con
  */
 trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject)
 {
-	int tile;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
 	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
@@ -305,7 +300,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 	}
 
 	/* trace against all loaded map tiles */
-	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+	for (int tile = 0; tile < mapTiles->numTiles; tile++) {
 		MapTile& myTile = mapTiles->mapTiles[tile];
 		PosToVec(myTile.wpMins, wpmins);
 		VectorSubtract(wpmins, offset, wpmins);
