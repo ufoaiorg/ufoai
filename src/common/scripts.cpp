@@ -3589,7 +3589,7 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 	}
 	/* Now add the stuff we just parsed to the table. */
 	if (!terrainDefs.add(tDef))
-		Com_Printf("Com_ParseTerrainDefinition: could not add terraindef \"%s\"\n", name);
+		Com_Printf("Com_ParseTerrainDefinition: could not add terraindef \"%s\". Duplicate colors or name.\n", name);
 }
 
 int Com_GetMapDefNumber (void)
