@@ -1974,8 +1974,17 @@ class TerrainDefs
 public:
 	TerrainDefs() {
 		for (int i = 0; i < 8; i++)
-			terrainDefTable2[i] = &terrainDefTable[i];
-		terrainDefTable2[8] = nullptr;
+			add(&terrainDefTable[i]);
+	}
+	inline bool add(const terrainDef_s* tdef) {
+		for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
+			if (!terrainDefTable2[i]) {
+				terrainDefTable2[i] = tdef;
+				terrainDefTable2[i + 1] = nullptr;
+				return true;
+			}
+		}
+		return false;
 	}
 	inline float getSurvivalChance(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
