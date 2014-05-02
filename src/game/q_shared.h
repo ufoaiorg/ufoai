@@ -422,6 +422,13 @@ public:
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->snowChance : 0.0;
 	}
+/**
+ * @brief Translate color value to terrain type
+ * @param[in] color the color value from the terrain mask
+ * @return returns the zone name
+ * @note never may return a null pointer or an empty string
+ * @note Make sure that there are textures with the same name in base/textures/tex_terrain
+ */
 	inline const char* getTerrainName(const byte* const color) const {
 		const terrainDef_s* p = findByColor(color);
 		return p ? p->terrainName : "grass";

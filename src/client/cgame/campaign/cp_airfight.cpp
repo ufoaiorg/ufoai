@@ -480,7 +480,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t* shoo
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", GEO_GetTerrainType(color), color[0], color[1], color[2]);
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", terrainDefs.getTerrainName(color), color[0], color[1], color[2]);
 			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."));
 			CP_MissionIsOverByUFO(aircraft);
 		}

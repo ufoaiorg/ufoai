@@ -331,7 +331,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 
 	param->mission = mission;
 	const byte* color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
-	param->zoneType = GEO_GetTerrainType(color); /* store to terrain type for texture replacement */
+	param->zoneType = terrainDefs.getTerrainName(color); /* store to terrain type for texture replacement */
 	cgi->Cvar_Set("r_weather", "%s", GEO_GetWeather(color));
 
 	/* Is there a UFO to recover ? */

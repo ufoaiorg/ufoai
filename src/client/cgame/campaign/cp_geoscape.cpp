@@ -1951,18 +1951,6 @@ const char* GEO_GetWeather (const byte* const color)
 }
 
 /**
- * @brief Translate color value to terrain type
- * @param[in] color the color value from the terrain mask
- * @return returns the zone name
- * @note never may return a null pointer or an empty string
- * @note Make sure that there are textures with the same name in base/textures/tex_terrain
- */
-const char* GEO_GetTerrainType (const byte* const color)
-{
-	return terrainDefs.getTerrainName(color);
-}
-
-/**
  * @brief Translate color value to terrain type and then to survival probability
  * @param[in] color the color value from the terrain mask
  * @return the relative probability for survival (of pilots) in such a terrain
@@ -2026,7 +2014,7 @@ static const char* GEO_GetPopulationType (const byte* color)
 static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool* coast)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_TERRAIN, coast);
-	return GEO_GetTerrainType(color);
+	return terrainDefs.getTerrainName(color);
 }
 
 /**
