@@ -389,11 +389,14 @@ class TerrainDefs
 	const terrainDef_s* terrainDefTable2[MAX_TERRAINDEFS];
 
 	inline const terrainDef_s* findByColor(const byte* const color) const {
+		return findByColor(color[0], color[1], color[2]);
+	}
+	inline const terrainDef_s* findByColor(byte red, byte green, byte blue) const {
 		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
 			const terrainDef_s* p = terrainDefTable2[i];
 			if (!p)
 				break;
-			if (p->rgbRed == color[0] && p->rgbGreen == color[1] && p->rgbBlue == color[2])
+			if (p->rgbRed == red && p->rgbGreen == green && p->rgbBlue == blue)
 				return p;
 		}
 		return nullptr;
@@ -411,6 +414,9 @@ class TerrainDefs
 public:
 	TerrainDefs();
 	inline bool add(const terrainDef_s* tdef) {
+		if (findByColor(tdef->rgbRed, tdef->rgbGreen, tdef->rgbBlue))
+			return false;
+
 		if (findByName(tdef->terrainName))
 			return false;
 
