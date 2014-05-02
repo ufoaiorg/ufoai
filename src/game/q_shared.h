@@ -398,9 +398,22 @@ class TerrainDefs
 		}
 		return nullptr;
 	}
+	inline const terrainDef_s* findByName(const char* tname) const {
+		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
+			const terrainDef_s* p = terrainDefTable2[i];
+			if (!p)
+				break;
+			if (Q_streq(p->terrainName, tname))
+				return p;
+		}
+		return nullptr;
+	}
 public:
 	TerrainDefs();
 	inline bool add(const terrainDef_s* tdef) {
+		if (findByName(tdef->terrainName))
+			return false;
+
 		for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
 			if (!terrainDefTable2[i]) {
 				terrainDefTable2[i] = tdef;
