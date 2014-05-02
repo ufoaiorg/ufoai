@@ -118,11 +118,10 @@ int FS_FileLength (qFILE*  f)
 void FS_CreatePath (const char* path)
 {
 	char pathCopy[MAX_OSPATH];
-	char* ofs;
 
 	Q_strncpyz(pathCopy, path, sizeof(pathCopy));
 
-	for (ofs = pathCopy + 1; *ofs; ofs++) {
+	for (char* ofs = pathCopy + 1; *ofs; ofs++) {
 		/* create the directory */
 		if (*ofs == '/') {
 			*ofs = 0;
@@ -184,8 +183,7 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 	Q_strncpyz(file->name, filename, sizeof(file->name));
 
 	/* check for links first */
-	filelink_t* link;
-	for (link = fs_links; link; link = link->next) {
+	for (filelink_t* link = fs_links; link; link = link->next) {
 		if (!strncmp(filename, link->from, link->fromlength)) {
 			int length;
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
@@ -198,8 +196,7 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 	}
 
 	/* search through the path, one element at a time */
-	searchpath_t* search;
-	for (search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
 			/* look through all the pak file elements */
@@ -624,14 +621,11 @@ char** FS_ListFiles (const char* findname, int* numfiles, unsigned musthave, uns
  */
 const char* FS_NextPath (const char* prevpath)
 {
-	searchpath_t* s;
-	char* prev;
-
 	if (!prevpath)
 		return FS_Gamedir();
 
-	prev = nullptr;
-	for (s = fs_searchpaths; s; s = s->next) {
+	char* prev = nullptr;
+	for (searchpath_t* s = fs_searchpaths; s; s = s->next) {
 		if (s->pack)
 			continue;
 		if (prev && Q_streq(prevpath, prev))
@@ -743,11 +737,9 @@ static void FS_Mod_f (void)
  */
 void FS_ExecAutoexec (void)
 {
-	char name[MAX_QPATH];
-	searchpath_t* s;
-
 	/* search through all the paths for an autoexec.cfg file */
-	for (s = fs_searchpaths; s != nullptr; s = s->next) {
+	for (searchpath_t* s = fs_searchpaths; s != nullptr; s = s->next) {
+		char name[MAX_QPATH];
 		snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename);
 
 		if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) {
@@ -767,15 +759,13 @@ void FS_ExecAutoexec (void)
  */
 static void FS_Link_f (void)
 {
-	filelink_t** prev;
-
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <from> <to>\n", Cmd_Argv(0));
 		return;
 	}
 
 	/* see if the link already exists */
-	prev = &fs_links;
+	filelink_t** prev = &fs_links;
 	for (filelink_t* l = fs_links; l; l = l->next) {
 		if (Q_streq(l->from, Cmd_Argv(1))) {
 			Mem_Free(l->to);
@@ -850,20 +840,17 @@ static void FS_List_f (void)
  */
 static void FS_Info_f (void)
 {
-	searchpath_t* search;
-	filelink_t* l;
-
 	Com_Printf("Filesystem information\n");
 	Com_Printf("...write dir: '%s'\n", FS_Gamedir());
 
-	for (search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		if (search->pack == nullptr)
 			Com_Printf("...path: '%s'\n", search->filename);
 		else
 			Com_Printf("...pakfile: '%s' (%i files)\n", search->pack->filename, search->pack->numfiles);
 	}
 
-	for (l = fs_links; l; l = l->next)
+	for (filelink_t* l = fs_links; l; l = l->next)
 		Com_Printf("...link: %s : %s\n", l->from, l->to);
 }
 
@@ -1014,8 +1001,7 @@ int FS_BuildFileList (const char* fileList)
 
 	/* search through the path, one element at a time */
 	char findname[1024];
-	searchpath_t* search;
-	for (search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
 			const char* ext = strrchr(files, '.');
@@ -1406,8 +1392,7 @@ void FS_GetMaps (bool reset)
 
 	/* search through the path, one element at a time */
 	char findname[MAX_OSPATH];
-	searchpath_t* search;
-	for (search = fs_searchpaths; search; search = search->next) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
 			/* look through all the pak file elements */
