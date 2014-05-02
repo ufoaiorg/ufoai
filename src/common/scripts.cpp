@@ -3587,8 +3587,9 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 	if (!tDef->terrainName[0]) {
 		Com_Printf("Com_ParseTerrainDefinition: terraindef \"%s\" with no name\n", name);
 	}
-	/* We intentionally do not use the stuff we just parsed yet. */
-	delete tDef;
+	/* Now add the stuff we just parsed to the table. */
+	if (!terrainDefs.add(tDef))
+		Com_Printf("Com_ParseTerrainDefinition: could not add terraindef \"%s\"\n", name);
 }
 
 int Com_GetMapDefNumber (void)

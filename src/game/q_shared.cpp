@@ -66,7 +66,7 @@ static const terrainDef_s terrainDefTable[] = {
 };
 
 TerrainDefs::TerrainDefs() {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 2; i++)
 		add(&terrainDefTable[i]);
 }
 
