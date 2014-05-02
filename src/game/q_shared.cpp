@@ -82,4 +82,25 @@ bool TerrainDefs::add(const terrainDef_s* tdef) {
 	return false;
 }
 
+/**
+ * @brief Translate color value to terrain type to random weather code
+ * @param[in] color The color value from the terrain mask
+ * @return returns The weather code as a string. "0"= sunny, "1" = rain,...
+ * @note never may return a null pointer or an empty string
+ */
+const char* TerrainDefs::getWeather (const byte* const color)
+{
+	const float rainChance = terrainDefs.getRainChance(color);
+	const float snowChance = terrainDefs.getSnowChance(color);
+	const float weatherChance = rainChance + snowChance;
+	if (frand() < weatherChance) {
+		/* we have weather today */
+		if (snowChance < EQUAL_EPSILON || frand() < rainChance / weatherChance)
+			return "1";	/* rain */
+		return "2";	/* snow */
+	}
+	/* clear blue sky */
+	return "0";
+}
+
 TerrainDefs terrainDefs;

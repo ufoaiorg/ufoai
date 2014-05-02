@@ -417,6 +417,7 @@ public:
 	}
 
 	bool add(const terrainDef_s* tdef);
+	const char* getWeather (const byte* const color);
 
 /**
  * @brief Translate color value to terrain type and then to survival probability

@@ -67,7 +67,6 @@ void GEO_NotifyUFORemoved(const aircraft_t* ufo, bool destroyed);
 void GEO_NotifyAircraftRemoved(const aircraft_t* aircraft);
 void GEO_NotifyUFODisappear(const aircraft_t* ufo);
 void GEO_InitStartup(void);
-const char* GEO_GetWeather(const byte* const color);
 int GEO_GetCivilianNumberByPosition(const vec2_t pos);
 void GEO_PrintParameterStringByPos(const vec2_t pos);
 void GEO_CheckPositionBoundaries(float* pos);
