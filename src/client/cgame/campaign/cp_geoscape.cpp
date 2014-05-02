@@ -1955,7 +1955,7 @@ const char* GEO_GetWeather (const byte* const color)
  * @param[in] color the color value from the terrain mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
- * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
+ * @note Make sure that there are textures with the same name in base/textures/tex_terrain
  */
 const char* GEO_GetTerrainType (const byte* const color)
 {
