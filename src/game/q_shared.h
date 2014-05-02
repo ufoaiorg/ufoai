@@ -374,6 +374,62 @@ struct terrainDef_s		/* a single entry in the table */
 	}
 };
 
+/**
+ * @brief Terrain property table
+ * Terrain is defined by the file map_earth_terrain.png in pics/geoscape.
+ * It is a map of the world where the different terrainTypes are drawn in different colors.
+ * The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
+ * @sa GEO_GetColor
+ * @todo get these values from the scripts.
+ */
+
+#define MAX_TERRAINDEFS 16
+class TerrainDefs
+{
+	const terrainDef_s* terrainDefTable2[MAX_TERRAINDEFS];
+
+	inline const terrainDef_s* findByColor(const byte* const color) const {
+		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
+			const terrainDef_s* p = terrainDefTable2[i];
+			if (!p)
+				break;
+			if (p->rgbRed == color[0] && p->rgbGreen == color[1] && p->rgbBlue == color[2])
+				return p;
+		}
+		return nullptr;
+	}
+public:
+	TerrainDefs();
+	inline bool add(const terrainDef_s* tdef) {
+		for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
+			if (!terrainDefTable2[i]) {
+				terrainDefTable2[i] = tdef;
+				terrainDefTable2[i + 1] = nullptr;
+				return true;
+			}
+		}
+		return false;
+	}
+	inline float getSurvivalChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->survivalChance : 0.0;
+	}
+	inline float getRainChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->rainChance : 0.0;
+	}
+	inline float getSnowChance(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->snowChance : 0.0;
+	}
+	inline const char* getTerrainName(const byte* const color) const {
+		const terrainDef_s* p = findByColor(color);
+		return p ? p->terrainName : "grass";
+	}
+};
+
+extern TerrainDefs terrainDefs;
+
 typedef struct mapDef_s {
 	/* general */
 	char* id;				/**< script file id */
