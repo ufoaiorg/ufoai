@@ -350,7 +350,6 @@ typedef struct gametype_s {
  * It is a map of the world where the different terrainTypes are drawn in different colors.
  * The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
  * @sa GEO_GetColor
- * @todo get these values from the scripts.
  */
 struct terrainDef_s		/* a single entry in the table */
 {
