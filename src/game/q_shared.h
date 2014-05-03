@@ -416,6 +416,12 @@ public:
 	TerrainDefs() {
 		terrainDefTable[0] = nullptr;
 	}
+	~TerrainDefs() {
+		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
+			if (terrainDefTable[i])
+				delete terrainDefTable[i];
+		}
+	}
 
 	bool add(const TerrainDef* tdef);
 	const char* getWeather (const byte* const color);
