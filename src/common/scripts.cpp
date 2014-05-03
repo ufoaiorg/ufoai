@@ -3545,7 +3545,8 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseTerrainDefinition: unexpected end of file (terraindef ";
 	struct terrainDef_s* tDef = new terrainDef_s;
-	tDef->terrainName = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	strcpy(tDef->terrainName, name);
 
 	/* get it's body */
 	const char* token = Com_Parse(text);

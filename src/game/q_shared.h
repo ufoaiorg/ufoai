@@ -356,17 +356,19 @@ struct terrainDef_s		/* a single entry in the table */
 	byte rgbRed;
 	byte rgbGreen;
 	byte rgbBlue;
-	const char* terrainName;
+	char terrainName[20];
 	float survivalChance;
 	float rainChance;
 	float snowChance;
 
-	terrainDef_s() : rgbRed(128), rgbGreen(255), rgbBlue(0), terrainName("grass"), survivalChance(2.5f), rainChance(0.2f), snowChance(0.1f) {}
+	terrainDef_s() : rgbRed(128), rgbGreen(255), rgbBlue(0), survivalChance(2.5f), rainChance(0.2f), snowChance(0.1f) {
+		strcpy(terrainName, "grass");
+	}
 	terrainDef_s(byte _rgbRed, byte _rgbGreen, byte _rgbBlue, const char* _terrainName, float _survivalChance, float _rainChance, float _snowChance) {
 		rgbRed = _rgbRed;
 		rgbGreen = _rgbGreen;
 		rgbBlue = _rgbBlue;
-		terrainName = _terrainName;
+		strcpy(terrainName, _terrainName);
 		survivalChance = _survivalChance;
 		rainChance = _rainChance;
 		snowChance = _snowChance;
