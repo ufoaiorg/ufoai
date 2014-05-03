@@ -507,7 +507,6 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
-	int amst; /* acronym for actor movement state */
 	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
 	pos3_t excludeFromForbiddenList;
 
@@ -524,7 +523,8 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
 
-	for (amst = 0; amst < ACTOR_MAX_STATES; amst++) {
+	/* amst is the acronym for actor movement state */
+	for (int amst = 0; amst < ACTOR_MAX_STATES; amst++) {
 		/* set starting position to 0 TUs.*/
 		RT_AREA_POS(path, from, amst) = 0;
 
@@ -534,7 +534,6 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 
 		int count = 0;
 		while (!PQueueIsEmpty(&pqueue)) {
-			int dir;
 			PQueuePop(&pqueue, epos);
 			VectorCopy(epos, pos);
 			count++;
@@ -545,7 +544,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 			if (usedTUs >= maxTUs)
 				continue;
 
-			for (dir = 0; dir < PATHFINDING_DIRECTIONS; ++dir) {
+			for (int dir = 0; dir < PATHFINDING_DIRECTIONS; ++dir) {
 				Step step(routing, pos, actorSize, amst, dir);
 				/* Directions 12, 14, and 15 are currently undefined. */
 				if (dir == 12 || dir == 14 || dir == 15)
@@ -870,7 +869,7 @@ void Grid_PosToVec (const Routing& routing, const actorSizeEnum_t actorSize, con
  */
 void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBox& box, const char** list)
 {
-	int x, y, z, actorSize, dir;
+	int x, y, z, actorSize;
 
 	/* check unit heights */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
@@ -898,7 +897,7 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 		rBox.addOneZ();
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
-				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+				for (int dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/* for places outside the model box, skip dirs that can not be affected by the model */
 					if (x > box.getMaxX() && dir != 1 && dir != 5 && dir != 6)
 						continue;

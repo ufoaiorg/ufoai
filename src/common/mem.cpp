@@ -440,16 +440,13 @@ uint32_t _Mem_PoolSize (memPool_t* pool)
 
 uint32_t _Mem_ChangeTag (memPool_t* pool, const int tagFrom, const int tagTo)
 {
-	memBlock_t* mem;
-	uint32_t numChanged;
-
 	if (!pool)
 		return 0;
 
-	numChanged = 0;
+	uint32_t numChanged = 0;
 
 	for (int j = 0; j < MEM_HASH; j++) {
-		for (mem = pool->blocks[j]; mem; mem = mem->next) {
+		for (memBlock_t* mem = pool->blocks[j]; mem; mem = mem->next) {
 			if (mem->tagNum == tagFrom) {
 				mem->tagNum = tagTo;
 				numChanged++;
@@ -463,7 +460,6 @@ uint32_t _Mem_ChangeTag (memPool_t* pool, const int tagFrom, const int tagTo)
 
 static void _Mem_CheckPoolIntegrity (memPool_t* pool, const char* fileName, const int fileLine)
 {
-	memBlock_t* mem;
 	uint32_t blocks;
 	uint32_t size;
 	int j = 0;
@@ -474,7 +470,7 @@ static void _Mem_CheckPoolIntegrity (memPool_t* pool, const char* fileName, cons
 
 	/* Check sentinels */
 	for (j = 0, blocks = 0, size = 0; j < MEM_HASH; j++) {
-		for (mem = pool->blocks[j]; mem; blocks++, mem = mem->next) {
+		for (memBlock_t* mem = pool->blocks[j]; mem; blocks++, mem = mem->next) {
 			size += Mem_BlockRawSize(mem);
 			_Mem_CheckSentinels(mem, fileName, fileLine);
 		}
@@ -507,13 +503,11 @@ void _Mem_CheckGlobalIntegrity (const char* fileName, const int fileLine)
  */
 bool _Mem_AllocatedInPool (memPool_t* pool, const void* pointer)
 {
-	memBlock_t* mem;
-
 	if (!pool)
 		return false;
 
 	/* if it's in the pool, it must be in THIS block */
-	mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];
+	memBlock_t* mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];
 	/* Cycle through the blocks */
 	for ( ; mem; mem = mem->next) {
 		if (Mem_BlockToPtr(mem) == pointer)
