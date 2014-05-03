@@ -351,8 +351,9 @@ typedef struct gametype_s {
  * The colors used in that map must have the exact RGB values as in the table, or they won't be recognized.
  * @sa GEO_GetColor
  */
-struct terrainDef_s		/* a single entry in the table */
+class TerrainDef		/* a single entry in the table */
 {
+public:
 	byte rgbRed;
 	byte rgbGreen;
 	byte rgbBlue;
@@ -361,10 +362,10 @@ struct terrainDef_s		/* a single entry in the table */
 	float rainChance;
 	float snowChance;
 
-	terrainDef_s() : rgbRed(128), rgbGreen(255), rgbBlue(0), survivalChance(2.5f), rainChance(0.2f), snowChance(0.1f) {
+	TerrainDef() : rgbRed(128), rgbGreen(255), rgbBlue(0), survivalChance(2.5f), rainChance(0.2f), snowChance(0.1f) {
 		strcpy(terrainName, "grass");
 	}
-	terrainDef_s(byte _rgbRed, byte _rgbGreen, byte _rgbBlue, const char* _terrainName, float _survivalChance, float _rainChance, float _snowChance) {
+	TerrainDef(byte _rgbRed, byte _rgbGreen, byte _rgbBlue, const char* _terrainName, float _survivalChance, float _rainChance, float _snowChance) {
 		rgbRed = _rgbRed;
 		rgbGreen = _rgbGreen;
 		rgbBlue = _rgbBlue;
@@ -386,14 +387,14 @@ struct terrainDef_s		/* a single entry in the table */
 #define MAX_TERRAINDEFS 16
 class TerrainDefs
 {
-	const terrainDef_s* terrainDefTable[MAX_TERRAINDEFS];
+	const TerrainDef* terrainDefTable[MAX_TERRAINDEFS];
 
-	inline const terrainDef_s* findByColor(const byte* const color) const {
+	inline const TerrainDef* findByColor(const byte* const color) const {
 		return findByColor(color[0], color[1], color[2]);
 	}
-	inline const terrainDef_s* findByColor(byte red, byte green, byte blue) const {
+	inline const TerrainDef* findByColor(byte red, byte green, byte blue) const {
 		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
-			const terrainDef_s* p = terrainDefTable[i];
+			const TerrainDef* p = terrainDefTable[i];
 			if (!p)
 				break;
 			if (p->rgbRed == red && p->rgbGreen == green && p->rgbBlue == blue)
@@ -401,9 +402,9 @@ class TerrainDefs
 		}
 		return nullptr;
 	}
-	inline const terrainDef_s* findByName(const char* tname) const {
+	inline const TerrainDef* findByName(const char* tname) const {
 		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
-			const terrainDef_s* p = terrainDefTable[i];
+			const TerrainDef* p = terrainDefTable[i];
 			if (!p)
 				break;
 			if (Q_streq(p->terrainName, tname))
@@ -416,7 +417,7 @@ public:
 		terrainDefTable[0] = nullptr;
 	}
 
-	bool add(const terrainDef_s* tdef);
+	bool add(const TerrainDef* tdef);
 	const char* getWeather (const byte* const color);
 
 /**
@@ -425,15 +426,15 @@ public:
  * @return the relative probability for survival (of pilots) in such a terrain
  */
 	inline float getSurvivalChance(const byte* const color) const {
-		const terrainDef_s* p = findByColor(color);
+		const TerrainDef* p = findByColor(color);
 		return p ? p->survivalChance : 0.0;
 	}
 	inline float getRainChance(const byte* const color) const {
-		const terrainDef_s* p = findByColor(color);
+		const TerrainDef* p = findByColor(color);
 		return p ? p->rainChance : 0.0;
 	}
 	inline float getSnowChance(const byte* const color) const {
-		const terrainDef_s* p = findByColor(color);
+		const TerrainDef* p = findByColor(color);
 		return p ? p->snowChance : 0.0;
 	}
 
@@ -445,7 +446,7 @@ public:
  * @note Make sure that there are textures with the same name in base/textures/tex_terrain
  */
 	inline const char* getTerrainName(const byte* const color) const {
-		const terrainDef_s* p = findByColor(color);
+		const TerrainDef* p = findByColor(color);
 		return p ? p->terrainName : "grass";
 	}
 };

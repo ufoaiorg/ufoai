@@ -3544,7 +3544,7 @@ static void Com_ParseMapDefinition (const char* name, const char** text)
 static void Com_ParseTerrainDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseTerrainDefinition: unexpected end of file (terraindef ";
-	struct terrainDef_s* tDef = new terrainDef_s;
+	TerrainDef* tDef = new TerrainDef;
 
 	strcpy(tDef->terrainName, name);
 
