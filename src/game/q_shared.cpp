@@ -46,10 +46,16 @@ const char* pa_format[] =
 };
 CASSERT(lengthof(pa_format) == PA_NUM_EVENTS);
 
+/**
+ * @brief Translate color value to terrain type to random weather code
+ * @param[in] tdef The terrain definition to add
+ */
 bool TerrainDefs::add(const terrainDef_s* tdef) {
+	/* check for duplicate color code */
 	if (findByColor(tdef->rgbRed, tdef->rgbGreen, tdef->rgbBlue))
 		return false;
 
+	/* check for duplicate name */
 	if (findByName(tdef->terrainName))
 		return false;
 
