@@ -54,9 +54,9 @@ bool TerrainDefs::add(const terrainDef_s* tdef) {
 		return false;
 
 	for (int i = 0; i < MAX_TERRAINDEFS - 1; i++) {
-		if (!terrainDefTable2[i]) {
-			terrainDefTable2[i] = tdef;
-			terrainDefTable2[i + 1] = nullptr;
+		if (!terrainDefTable[i]) {
+			terrainDefTable[i] = tdef;
+			terrainDefTable[i + 1] = nullptr;
 			return true;
 		}
 	}

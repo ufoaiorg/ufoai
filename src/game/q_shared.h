@@ -384,14 +384,14 @@ struct terrainDef_s		/* a single entry in the table */
 #define MAX_TERRAINDEFS 16
 class TerrainDefs
 {
-	const terrainDef_s* terrainDefTable2[MAX_TERRAINDEFS];
+	const terrainDef_s* terrainDefTable[MAX_TERRAINDEFS];
 
 	inline const terrainDef_s* findByColor(const byte* const color) const {
 		return findByColor(color[0], color[1], color[2]);
 	}
 	inline const terrainDef_s* findByColor(byte red, byte green, byte blue) const {
 		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
-			const terrainDef_s* p = terrainDefTable2[i];
+			const terrainDef_s* p = terrainDefTable[i];
 			if (!p)
 				break;
 			if (p->rgbRed == red && p->rgbGreen == green && p->rgbBlue == blue)
@@ -401,7 +401,7 @@ class TerrainDefs
 	}
 	inline const terrainDef_s* findByName(const char* tname) const {
 		for (int i = 0; i < MAX_TERRAINDEFS; i++) {
-			const terrainDef_s* p = terrainDefTable2[i];
+			const terrainDef_s* p = terrainDefTable[i];
 			if (!p)
 				break;
 			if (Q_streq(p->terrainName, tname))
@@ -411,7 +411,7 @@ class TerrainDefs
 	}
 public:
 	TerrainDefs() {
-		terrainDefTable2[0] = nullptr;
+		terrainDefTable[0] = nullptr;
 	}
 
 	bool add(const terrainDef_s* tdef);
