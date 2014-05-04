@@ -431,6 +431,10 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
+/**
+ * @brief Converts a string to lowercase
+ * @param[in,out] str The string that is converted to lowercase
+ */
 char* Q_strlwr (char* str)
 {
 	char* origs = str;
@@ -554,6 +558,12 @@ int Q_vsnprintf (char* str, size_t size, const char* format, va_list ap)
 	return len;
 }
 
+/**
+ * @brief Checks in case insensitive manner whether @c str contains @c substr
+ * @param[in] str The source string
+ * @param[in] substr The string to search in the source string
+ * @return The start pointer where substr begins, or @c null if @c substr is no part of @c str
+ */
 const char* Q_stristr (const char* str, const char* substr)
 {
 	const size_t sublen = strlen(substr);
