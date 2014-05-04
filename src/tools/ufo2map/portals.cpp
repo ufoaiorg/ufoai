@@ -351,17 +351,16 @@ static void SplitNodePortals (node_t* node)
 
 static void CalcNodeBounds (node_t* node)
 {
-	portal_t* p;
 	int s;
 
 	/* calc mins/maxs for both leafs and nodes */
-	ClearBounds(node->nBox.mins, node->nBox.maxs);
-	for (p = node->portals; p; p = p->next[s]) {
+	node->nBox.setNegativeVolume();
+	for (portal_t* p = node->portals; p; p = p->next[s]) {
 		s = (p->nodes[1] == node);
 		if (!p->winding)
 			continue;
 		for (int i = 0; i < p->winding->numpoints; i++)
-			AddPointToBounds(p->winding->p[i], node->nBox.mins, node->nBox.maxs);
+			node->nBox.add(p->winding->p[i]);
 	}
 }
 
