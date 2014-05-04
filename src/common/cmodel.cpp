@@ -284,39 +284,21 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, con
  */
 trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject)
 {
-	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
-
 	trace_t tr;
 	tr.fraction = 2.0f;
 	VectorCopy(trLine.stop, tr.endpos);	/* optimistically set the endpos just in case we are outside of ALL the tiles, so TR_TileBoxTrace won't do it */
 
-	/* Prep the mins and maxs */
-	for (int i = 0; i < 3; i++) {
-		smin[i] = trLine.start[i] + std::min(box.mins[i], box.maxs[i]);
-		smax[i] = trLine.start[i] + std::max(box.mins[i], box.maxs[i]);
-		emin[i] = trLine.stop[i] + std::min(box.mins[i], box.maxs[i]);
-		emax[i] = trLine.stop[i] + std::max(box.mins[i], box.maxs[i]);
-	}
+	/* create a box that covers the whole volume of the trace */
+	AABB moveBox;
+	moveBox.set(box, trLine);
 
 	/* trace against all loaded map tiles */
 	for (int tile = 0; tile < mapTiles->numTiles; tile++) {
 		MapTile& myTile = mapTiles->mapTiles[tile];
 		AABB tileBox;
 		myTile.getTileBox(tileBox);
-		VectorCopy(tileBox.mins, wpmins);	/* temporary. */
-		VectorCopy(tileBox.maxs, wpmaxs);
 		/* If the trace is completely outside of the tile, then skip it. */
-		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
-			continue;
-		if (smax[1] < wpmins[1] && emax[1] < wpmins[1])
-			continue;
-		if (smax[2] < wpmins[2] && emax[2] < wpmins[2])
-			continue;
-		if (smin[0] > wpmaxs[0] && emin[0] > wpmaxs[0])
-			continue;
-		if (smin[1] > wpmaxs[1] && emin[1] > wpmaxs[1])
-			continue;
-		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
+		if (!moveBox.doesIntersect(tileBox))
 			continue;
 		trace_t newtr = TR_TileBoxTrace(&myTile, trLine.start, trLine.stop, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
