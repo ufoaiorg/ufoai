@@ -79,10 +79,9 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
 		/* Record the shift in case we need to undo it. */
 		VectorCopy(shift, out->shift);
 		/* spread the mins / maxs by a pixel */
-		for (int j = 0; j < 3; j++) {
-			out->cbmBox.mins[j] = LittleFloat(in->dbmBox.mins[j]) - 1 + shift[j];
-			out->cbmBox.maxs[j] = LittleFloat(in->dbmBox.maxs[j]) + 1 + shift[j];
-		}
+		out->cbmBox.setFromLittleFloat(in->dbmBox);
+		out->cbmBox.expand(1);
+		out->cbmBox.shift(shift);
 		out->headnode = LittleLong(in->headnode);
 		out->tile = tile.idx; /* backlink to the loaded map tile */
 	}

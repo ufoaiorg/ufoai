@@ -27,6 +27,7 @@ Copyright (C) 2002-2014 UFO: Alien Invasion.
 #include "ufotypes.h"
 #include "vector.h"
 #include "line.h"
+#include "byte.h"
 #include "defines.h"	/* for MAX_WORLD_WIDTH */
 #include <algorithm>
 #include "stdio.h"
@@ -80,6 +81,14 @@ public:
 	inline void reset () {
 		mins[0] = mins[1] = mins[2] = 0;
 		maxs[0] = maxs[1] = maxs[2] = 0;
+	}
+	inline void setFromLittleFloat (const AABB& other) {
+		mins[0] = LittleFloat(other.mins[0]);
+		mins[1] = LittleFloat(other.mins[1]);
+		mins[2] = LittleFloat(other.mins[2]);
+		maxs[0] = LittleFloat(other.maxs[0]);
+		maxs[1] = LittleFloat(other.maxs[1]);
+		maxs[2] = LittleFloat(other.maxs[2]);
 	}
 	/**
 	 * @brief Sets mins and maxs to their starting points before using addPoint
