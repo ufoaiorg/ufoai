@@ -118,7 +118,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t* surfs, glElementIndex_t* indexPt
 			if (refdef.time - f->time > 0.5) /* reset old flares */
 				f->alpha = 0;
 
-			R_Trace(refdef.viewOrigin, f->origin, 0, MASK_SOLID);
+			R_Trace(Line(refdef.viewOrigin, f->origin), 0, MASK_SOLID);
 			bool visible = refdef.trace.fraction == 1.0;
 
 			f->alpha += (visible ? 0.03 : -0.15); /* ramp */

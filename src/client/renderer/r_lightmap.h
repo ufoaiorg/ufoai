@@ -37,7 +37,7 @@ void R_CreateSurfaceLightmap(mBspSurface_t* surf);
 void R_EndBuildingLightmaps(void);
 void R_BeginBuildingLightmaps(void);
 
-void R_Trace(const vec3_t start, const vec3_t end, float size, int contentmask);
+void R_Trace(const Line& trLine, float size, int contentmask);
 
 typedef struct lightmaps_s {
 	GLuint lightmap_texnums[MAX_GL_LIGHTMAPS];

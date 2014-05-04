@@ -441,7 +441,7 @@ void R_UpdateLightList (entity_t* ent)
 		if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
 			vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
 			VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
-			R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
+			R_Trace(Line(pos, fakeSunPos), 0, MASK_SOLID);
 			ltng->inShadow = refdef.trace.fraction != 1.0;
 		} else {
 			ltng->inShadow = false;
@@ -460,7 +460,7 @@ void R_UpdateLightList (entity_t* ent)
 			if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 				continue;
 
-			R_Trace(pos, light->origin, 0, MASK_SOLID);
+			R_Trace(Line(pos, light->origin), 0, MASK_SOLID);
 
 			if (refdef.trace.fraction == 1.0)
 				R_AddLightToEntity(pos, ltng, light, distSqr);
@@ -484,7 +484,7 @@ void R_UpdateLightList (entity_t* ent)
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 			continue;
 
-		R_Trace(pos, light->origin, 0, MASK_SOLID);
+		R_Trace(Line(pos, light->origin), 0, MASK_SOLID);
 
 		if (refdef.trace.fraction == 1.0)
 			R_AddLightToEntity(pos, ltng, light, distSqr);

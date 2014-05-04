@@ -310,12 +310,11 @@ void R_EndBuildingLightmaps (void)
 
 /**
  * @brief Moves the given mins/maxs volume through the world from start to end.
- * @param[in] start Start vector to start the trace from
- * @param[in] end End vector to stop the trace at
+ * @param[in] trLine Start and end vectors of the trace
  * @param[in] size Bounding box size used for tracing
  * @param[in] contentmask Searched content the trace should watch for
  */
-void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
+void R_Trace (const Line& trLine, float size, int contentmask)
 {
 	r_locals.tracenum++;
 
@@ -325,7 +324,7 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 	AABB box;
 	box.expand(size);
 
-	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, Line(start, end), box, TRACE_ALL_LEVELS, contentmask, 0);
+	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, trLine, box, TRACE_ALL_LEVELS, contentmask, 0);
 	refdef.traceEntity = nullptr;
 
 	float frac = refdef.trace.fraction;
@@ -338,7 +337,7 @@ void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 		if (!m || m->type != mod_bsp_submodel)
 			continue;
 
-		trace_t tr = CM_TransformedBoxTrace(refdef.mapTiles->mapTiles[m->bsp.maptile], Line(start, end), box, m->bsp.firstnode,
+		trace_t tr = CM_TransformedBoxTrace(refdef.mapTiles->mapTiles[m->bsp.maptile], trLine, box, m->bsp.firstnode,
 				contentmask, 0, ent->origin, ent->angles);
 
 		if (tr.fraction < frac) {

@@ -616,7 +616,7 @@ static bool R_UpdateShadowOrigin (entity_t* e)
 	end[2] = start[2] - MESH_SHADOW_MAX_DISTANCE;
 
 	/* do the trace */
-	R_Trace(start, end, 0.0, MASK_SOLID);
+	R_Trace(Line(start, end), 0.0, MASK_SOLID);
 
 	/* resolve the shadow origin and direction */
 	if (refdef.trace.leafnum) {
