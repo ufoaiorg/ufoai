@@ -317,13 +317,13 @@ check_compiler() {
 	echo "use c compiler: ${CROSS}${CC}"
 	echo "use c++ compiler: ${CROSS}${CXX}"
 
-	${CROSS}${CC} --help > /dev/null 2>&1
+	${CROSS}${CC} --help 2>> config.log >> config.log
 	if [ $? -ne 0 ]; then
-		error "Could not find the c compiler: ${CROSS}${CC}"
+		error "Could not find the c compiler: ${CROSS}${CC} in your path: ${PATH}"
 	fi
-	${CROSS}${CXX} --help > /dev/null 2>&1
+	${CROSS}${CXX} --help 2>> config.log >> config.log
 	if [ $? -ne 0 ]; then
-		error "Could not find the c++ compiler: ${CROSS}${CXX}"
+		error "Could not find the c++ compiler: ${CROSS}${CXX} in your path: ${PATH}"
 	fi
 }
 
