@@ -1983,7 +1983,7 @@ static const char* GEO_GetPopulationType (const byte* color)
 static inline const char* GEO_GetTerrainTypeByPos (const vec2_t pos, bool* coast)
 {
 	const byte* color = GEO_GetColor(pos, MAPTYPE_TERRAIN, coast);
-	return terrainDefs.getTerrainName(color);
+	return csi.terrainDefs.getTerrainName(color);
 }
 
 /**

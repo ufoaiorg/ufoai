@@ -457,8 +457,6 @@ public:
 	}
 };
 
-extern TerrainDefs terrainDefs;
-
 typedef struct mapDef_s {
 	/* general */
 	char* id;				/**< script file id */
@@ -571,6 +569,8 @@ typedef struct csi_s {
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];
 	int numMDs;
+
+	TerrainDefs terrainDefs;
 } csi_t;
 
 extern csi_t csi;

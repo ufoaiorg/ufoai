@@ -89,5 +89,3 @@ const char* TerrainDefs::getWeather (const byte* const color)
 	/* clear blue sky */
 	return "0";
 }
-
-TerrainDefs terrainDefs;

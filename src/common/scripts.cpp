@@ -3589,7 +3589,7 @@ static void Com_ParseTerrainDefinition (const char* name, const char** text)
 		Com_Printf("Com_ParseTerrainDefinition: terraindef \"%s\" with no name\n", name);
 	}
 	/* Now add the stuff we just parsed to the table. */
-	if (!terrainDefs.add(tDef))
+	if (!csi.terrainDefs.add(tDef))
 		Com_Printf("Com_ParseTerrainDefinition: could not add terraindef \"%s\". Duplicate colors or name.\n", name);
 }
 

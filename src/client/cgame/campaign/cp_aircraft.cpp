@@ -2110,7 +2110,7 @@ bool AIR_PilotSurvivedCrash (const aircraft_t* aircraft)
 
 	const byte* color = GEO_GetColor(aircraft->pos, MAPTYPE_TERRAIN, nullptr);
 
-	baseProbability *= terrainDefs.getSurvivalChance(color);
+	baseProbability *= csi.terrainDefs.getSurvivalChance(color);
 
 	/* Add a random factor to our probability */
 	float randomProbability = crand() * (float) pilotSkill;
