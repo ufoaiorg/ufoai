@@ -134,6 +134,15 @@ public:
 
 	byte lightquant;
 	byte* lightdata;
+
+/** @brief Calculate the bounding box for the tile (in mapunits) */
+	inline void getTileBox(AABB& box) {
+		const vec3_t halfBox = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
+		PosToVec(wpMins, box.mins);
+		VectorSubtract(box.mins, halfBox, box.mins);
+		PosToVec(wpMaxs, box.maxs);
+		VectorAdd(box.maxs, halfBox, box.maxs);
+	}
 };
 
 /**

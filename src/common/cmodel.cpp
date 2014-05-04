@@ -285,7 +285,6 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, con
 trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AABB& box, int levelmask, int brushmask, int brushreject)
 {
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
-	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
 	trace_t tr;
 	tr.fraction = 2.0f;
@@ -302,10 +301,10 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 	/* trace against all loaded map tiles */
 	for (int tile = 0; tile < mapTiles->numTiles; tile++) {
 		MapTile& myTile = mapTiles->mapTiles[tile];
-		PosToVec(myTile.wpMins, wpmins);
-		VectorSubtract(wpmins, offset, wpmins);
-		PosToVec(myTile.wpMaxs, wpmaxs);
-		VectorAdd(wpmaxs, offset, wpmaxs);
+		AABB tileBox;
+		myTile.getTileBox(tileBox);
+		VectorCopy(tileBox.mins, wpmins);	/* temporary. */
+		VectorCopy(tileBox.maxs, wpmaxs);
 		/* If the trace is completely outside of the tile, then skip it. */
 		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
 			continue;
