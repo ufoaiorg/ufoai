@@ -77,8 +77,8 @@ bool TerrainDefs::add(const TerrainDef* tdef) {
  */
 const char* TerrainDefs::getWeather (const byte* const color)
 {
-	const float rainChance = terrainDefs.getRainChance(color);
-	const float snowChance = terrainDefs.getSnowChance(color);
+	const float rainChance = getRainChance(color);
+	const float snowChance = getSnowChance(color);
 	const float weatherChance = rainChance + snowChance;
 	if (frand() < weatherChance) {
 		/* we have weather today */
