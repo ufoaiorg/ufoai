@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "xml.h"
 #include "../shared/cxx.h"
+#include "../shared/shared.h"
 
 /**
  * @brief add a String attribute to the XML Node
@@ -47,8 +48,9 @@ void XML_AddString (xmlNode_t* parent, const char* name, const char* value)
  */
 void XML_AddStringValue (xmlNode_t* parent, const char* name, const char* value)
 {
-	if (value && value[0] != '\0')
-		mxmlElementSetAttr(parent, name, value);
+	if (Q_strnull(value))
+		return;
+	XML_AddString(parent, name, value);
 }
 
 /**
@@ -71,8 +73,9 @@ void XML_AddBool (xmlNode_t* parent, const char* name, bool value)
  */
 void XML_AddBoolValue (xmlNode_t* parent, const char* name, bool value)
 {
-	if (value)
-		mxmlElementSetAttr(parent, name, "true");
+	if (!value)
+		return;
+	XML_AddBool(parent, name, value);
 }
 
 /**
@@ -121,9 +124,7 @@ void XML_AddDouble (xmlNode_t* parent, const char* name, double value)
 void XML_AddDoubleValue (xmlNode_t* parent, const char* name, double value)
 {
 	if (value) {
-		char txt[50];
-		snprintf(txt, sizeof(txt), "%f", value);
-		mxmlElementSetAttr(parent, name, txt);
+		XML_AddDouble(parent, name, value);
 	}
 }
 
@@ -218,11 +219,9 @@ void XML_AddLong (xmlNode_t* parent, const char* name, long value)
  */
 void XML_AddLongValue (xmlNode_t* parent, const char* name, long value)
 {
-	if (value) {
-		char txt[50];
-		snprintf(txt, sizeof(txt), "%ld", value);
-		mxmlElementSetAttr(parent, name, txt);
-	}
+	if (!value)
+		return;
+	XML_AddLong(parent, name, value);
 }
 
 /**
@@ -312,8 +311,7 @@ bool XML_GetBool (xmlNode_t* parent, const char* name, const bool defaultval)
  */
 int XML_GetInt (xmlNode_t* parent, const char* name, const int defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atoi(txt);
@@ -327,8 +325,7 @@ int XML_GetInt (xmlNode_t* parent, const char* name, const int defaultval)
  */
 short XML_GetShort (xmlNode_t* parent, const char* name, const short defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atoi(txt);
@@ -342,8 +339,7 @@ short XML_GetShort (xmlNode_t* parent, const char* name, const short defaultval)
  */
 long XML_GetLong (xmlNode_t* parent, const char* name, const long defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atol(txt);
@@ -371,8 +367,7 @@ const char*  XML_GetString (xmlNode_t* parent, const char* name)
  */
 float XML_GetFloat (xmlNode_t* parent, const char* name, const float defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atof(txt);
@@ -386,8 +381,7 @@ float XML_GetFloat (xmlNode_t* parent, const char* name, const float defaultval)
  */
 double XML_GetDouble (xmlNode_t* parent, const char* name, const double defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atof(txt);
@@ -530,8 +524,7 @@ static mxml_type_t mxml_ufo_type_cb (xmlNode_t* node)
 		return MXML_OPAQUE;
 	else if (!strcmp(type, "double"))
 		return MXML_REAL;
-	else
-		return MXML_TEXT;
+	return MXML_TEXT;
 }
 
 xmlNode_t* XML_Parse (const char* buffer)
