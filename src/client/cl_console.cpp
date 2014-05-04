@@ -319,7 +319,7 @@ static void Con_Linefeed (void)
 void Con_Print (const char* txt)
 {
 	int y;
-	int c, l;
+	int c, len;
 	static bool cr;
 	int color;
 
@@ -337,12 +337,12 @@ void Con_Print (const char* txt)
 		}
 
 		/* count word length */
-		for (l = 0; l < con.lineWidth; l++)
-			if (txt[l] <= ' ')
+		for (len = 0; len < con.lineWidth; len++)
+			if (txt[len] <= ' ')
 				break;
 
 		/* word wrap */
-		if (l != con.lineWidth && (con.pos + l > con.lineWidth))
+		if (len != con.lineWidth && (con.pos + len > con.lineWidth))
 			con.pos = 0;
 
 		txt += charLength;

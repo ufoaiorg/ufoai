@@ -163,25 +163,21 @@ static void CP_TEAM_DeEquipActor_f (void)
  */
 static void CP_TeamListDebug_f (void)
 {
-	base_t* base;
-	aircraft_t* aircraft;
-	linkedList_t* l;
-
-	aircraft = GEO_GetSelectedAircraft();
+	aircraft_t* aircraft = GEO_GetSelectedAircraft();
 	if (!aircraft) {
 		Com_Printf("Buy/build an aircraft first.\n");
 		return;
 	}
 
-	base = aircraft->homebase;
+	base_t* base = aircraft->homebase;
 	if (!base) {
 		Com_Printf("Build and select a base first\n");
 		return;
 	}
 
 	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
-	for (l = aircraft->acTeam; l != nullptr; l = l->next) {
-		const Employee* employee = (const Employee*)l->data;
+	for (linkedList_t* list = aircraft->acTeam; list != nullptr; list = list->next) {
+		const Employee* employee = (const Employee*)list->data;
 		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
 }

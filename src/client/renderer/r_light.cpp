@@ -260,7 +260,6 @@ void R_EnableModelLights (const light_t** lights, int numLights, bool inShadow, 
  */
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
-	light_t* l;
 	if (refdef.numStaticLights >= MAX_STATIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
@@ -271,12 +270,12 @@ void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 		origin[0], origin[1], origin[2],
 		radius);
 
-	l = &refdef.staticLights[refdef.numStaticLights++];
+	light_t* light = &refdef.staticLights[refdef.numStaticLights++];
 
-	VectorCopy(origin, l->origin);
-	VectorCopy(color, l->color);
-	l->color[3] = 1.0; /* needed if we pass this light as parameter to glLightxxx() */
-	l->radius = radius;
+	VectorCopy(origin, light->origin);
+	VectorCopy(color, light->color);
+	light->color[3] = 1.0; /* needed if we pass this light as parameter to glLightxxx() */
+	light->radius = radius;
 }
 
 /* If glow was enabled, disable it before calling this function, or rendering state will become incoherent */
