@@ -121,4 +121,4 @@ trace_t TR_BoxTrace(boxtrace_t& traceData, const Line& traceLine, const AABB& tr
 
 bool TR_TestLine(mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const int levelmask);
 bool TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask);
-trace_t TR_TileBoxTrace(TR_TILE_TYPE* myTile, const vec3_t start, const vec3_t end, const AABB& aabb, const int levelmask, const int brushmask, const int brushreject);
+trace_t TR_TileBoxTrace(TR_TILE_TYPE* myTile, const Line& traceLine, const AABB& aabb, const int levelmask, const int brushmask, const int brushreject);

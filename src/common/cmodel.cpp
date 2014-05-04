@@ -300,7 +300,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 		/* If the trace is completely outside of the tile, then skip it. */
 		if (!moveBox.doesIntersect(tileBox))
 			continue;
-		trace_t newtr = TR_TileBoxTrace(&myTile, trLine.start, trLine.stop, box, levelmask, brushmask, brushreject);
+		trace_t newtr = TR_TileBoxTrace(&myTile, trLine, box, levelmask, brushmask, brushreject);
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
