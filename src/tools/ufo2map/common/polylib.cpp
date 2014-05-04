@@ -99,13 +99,7 @@ void WindingBounds (const winding_t* w, vec3_t mins, vec3_t maxs)
 	ClearBounds(mins, maxs);
 
 	for (int i = 0; i < w->numpoints; i++) {
-		for (int j = 0; j < 3; j++) {
-			const vec_t v = w->p[i][j];
-			if (v < mins[j])
-				mins[j] = v;
-			if (v > maxs[j])
-				maxs[j] = v;
-		}
+		AddPointToBounds(w->p[i], mins, maxs);
 	}
 }
 
