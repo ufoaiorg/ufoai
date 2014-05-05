@@ -1075,8 +1075,7 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
  * @brief Traces all submodels in the specified tile.  Provides for a short
  *   circuit if the trace tries to move past fraction to save time.
  * @param[in] myTile The tile being traced
- * @param[in] start trace start vector
- * @param[in] end trace end vector
+ * @param[in] traceLine The trace start and end vectors
  * @param[in] aabb The box we are moving through the world
  * @param[in] levelmask Selects which submodels get scanned.
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
