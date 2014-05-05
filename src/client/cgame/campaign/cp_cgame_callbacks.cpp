@@ -587,6 +587,7 @@ void GAME_CP_InitMissionBriefing (const char** title, linkedList_t** victoryCond
 /**
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
+ * @param msg The message buffer to write the states to
  */
 void GAME_CP_InitializeBattlescape (dbuffer* msg, const linkedList_t* team)
 {
