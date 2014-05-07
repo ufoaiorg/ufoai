@@ -113,6 +113,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 	float cosSpread;
 
 	/* spread data */
+	spread *= 2;
 	if (spread < 1.0)
 		spread = 1.0;
 	spread *= torad;
