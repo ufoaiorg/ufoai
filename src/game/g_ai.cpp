@@ -110,6 +110,7 @@ void AI_Init (void)
 static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, float radius)
 {
 	/* spread data */
+	spread *= 2;
 	if (spread < 1.0)
 		spread = 1.0;
 	spread *= torad;
