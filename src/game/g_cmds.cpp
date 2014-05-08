@@ -134,7 +134,6 @@ static void G_KillTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict* ent = nullptr;
 	int amount = -1;
 
 	/* with a parameter we will be able to kill a specific team */
@@ -146,8 +145,9 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
+	Actor* ent = nullptr;
 	if (teamToKill >= 0) {
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, teamToKill))) {
 			if (amount == 0)
 				break;
 			/* die */
@@ -173,14 +173,14 @@ static void G_StunTeam_f (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1;
-	Edict* ent = nullptr;
 
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
 	if (teamToKill >= 0) {
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+		Actor* ent = nullptr;
+		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, teamToKill))) {
 			/* stun */
 			G_ActorDieOrStun(ent, nullptr);
 

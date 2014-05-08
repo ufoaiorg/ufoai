@@ -224,9 +224,9 @@ void G_ClientPrintf (const Player& player, int printLevel, const char* fmt, ...)
  */
 void G_GiveTimeUnits (int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
 		G_ActorGiveTimeUnits(ent);
 		G_SendStats(*ent);
 	}
