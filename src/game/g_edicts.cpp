@@ -205,6 +205,21 @@ Edict* G_EdictsGetNextLivingActor (Edict* lastEnt)
 	return ent;
 }
 
+Actor* G_EdictsGetNextLivingActor2 (Actor* lastEnt)
+{
+	Edict* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsLivingActor(ent)) {
+			Actor* actor = static_cast<Actor*>(ent);
+			if (actor)
+				return actor;
+			Sys_Error("dynamic_cast to Actor failed.");
+		}
+	}
+	return nullptr;
+}
+
 /**
  * @brief Iterate through the living actor entities of the given team
  * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning

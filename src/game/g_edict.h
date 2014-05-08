@@ -256,3 +256,12 @@ public:
 	 *	manipulators
 	 *==================*/
 };
+
+/**
+ * @brief An Edict of type Actor
+ * @note Let's try to split the 'god-class' Edict into smaller chunks. Class Actor is intended to receive
+ * members and functions from Edict that are only used with actors.
+ * There will be other classes (eg. Trigger, Field, Item,...) in the future.
+ */
+class Actor : public Edict {
+};
