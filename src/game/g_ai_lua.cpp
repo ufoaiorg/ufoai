@@ -576,7 +576,7 @@ static int AIL_see (lua_State* L)
 {
 	int vision, team;
 	int i, j, k, n;
-	Edict* check = nullptr;
+	Actor* check = nullptr;
 	aiActor_t target;
 	Edict* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
@@ -617,7 +617,7 @@ static int AIL_see (lua_State* L)
 
 	n = 0;
 	/* Get visible things. */
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		if (AIL_ent == check)
 			continue;
 		if (vision == 0 && (team == TEAM_ALL || check->team == team) /* Check for team match if needed. */

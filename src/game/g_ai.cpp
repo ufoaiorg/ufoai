@@ -200,10 +200,10 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 	switch (ent->team) {
 	case TEAM_ALIEN: {
 		/* only use the door when there is no civilian or phalanx to kill */
-		Edict* check = nullptr;
+		Actor* check = nullptr;
 
 		/* see if there are enemies */
-		while ((check = G_EdictsGetNextLivingActor(check))) {
+		while ((check = G_EdictsGetNextLivingActor2(check))) {
 			/* don't check for aliens */
 			if (check->team == ent->team)
 				continue;
@@ -240,10 +240,10 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
  */
 static bool AI_CheckCrouch (const Edict* ent)
 {
-	Edict* check = nullptr;
+	Actor* check = nullptr;
 
 	/* see if we are very well visible by an enemy */
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		/* don't check for civilians or aliens */
 		if (check->team == ent->team || G_IsCivilian(check))
 			continue;
@@ -273,9 +273,9 @@ static bool AI_HideNeeded (const Edict* ent)
 	if (ent->morale <= mor_brave->integer)
 		return true;
 
-	Edict* from = nullptr;
+	Actor* from = nullptr;
 	/* test if ent is visible */
-	while ((from = G_EdictsGetNextLivingActor(from))) {
+	while ((from = G_EdictsGetNextLivingActor2(from))) {
 		if (from->team == ent->team)
 			continue;
 
@@ -974,8 +974,8 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, AiAction* 
 	float minDist, minDistCivilian, minDistFighter;
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
 
-	Edict* check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	Actor* check = nullptr;
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		float dist;
 		if (ent == check)
 			continue;
@@ -1029,7 +1029,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, AiAction* 
 	/* try to hide */
 	float reactionTrap = 0.0;
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		if (ent == check)
 			continue;
 		if (!(G_IsAlien(check) || G_IsInsane(ent)))
@@ -1081,8 +1081,8 @@ static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia
 	float minDistFriendly, minDistOthers;
 	minDistFriendly = minDistOthers = RUN_AWAY_DIST * UNIT_SIZE;
 
-	Edict* check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	Actor* check = nullptr;
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		float dist;
 		if (ent == check)
 			continue;
@@ -1107,7 +1107,7 @@ static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia
 
 	/* try to hide */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		if (ent == check)
 			continue;
 		if (G_IsInsane(ent))
@@ -1239,8 +1239,8 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction
 
 				G_EdictCalcOrigin(ent);
 				/* Don't cluster everybody in the same place */
-				Edict* check = nullptr;
-				while ((check = G_EdictsGetNextLivingActor(check))) {
+				Actor* check = nullptr;
+				while ((check = G_EdictsGetNextLivingActor2(check))) {
 					const float dist = VectorDist(ent->origin, check->origin);
 					if (dist < MISSION_HOLD_DIST) {
 						if (check->team == ent->team)

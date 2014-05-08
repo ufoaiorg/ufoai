@@ -738,10 +738,10 @@ bool ReactionFire::canSee (const Edict* shooter, const Edict* target) const
  */
 void ReactionFire::updateAllTargets (const Edict* target)
 {
-	Edict* shooter = nullptr;
+	Actor* shooter = nullptr;
 
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS) */
 		if (isPossible(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
@@ -849,11 +849,11 @@ void ReactionFire::notifyClientOnStep (const Edict* target, int step)
  */
 bool ReactionFire::checkExecution (const Edict* target, int step)
 {
-	Edict* shooter = nullptr;
+	Actor* shooter = nullptr;
 	bool fired = false;
 
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target);
 		/* indicates an RF weapon is there */
 		if (tus <= 1)
@@ -882,9 +882,9 @@ static void G_ReactionFirePrintSituation (Edict* target)
 
 	Com_Printf("Alien %i at %i/%i/%i TU:%i\n", target->number, target->pos[0], target->pos[1], target->pos[2], target->TU);
 
-	Edict* shooter = nullptr;
+	Actor* shooter = nullptr;
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
 			continue;
 		char msgHdr[100];
@@ -953,10 +953,10 @@ void G_ReactionFirePreShot (const Edict* target, const int fdTime)
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
-		Edict* shooter = nullptr;
+		Actor* shooter = nullptr;
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
-		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+		while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
 			/* indicates an RF weapon is there */
 			if (entTUs <= 1)

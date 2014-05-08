@@ -202,7 +202,7 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
@@ -213,7 +213,7 @@ static void G_ListMissionScore_f (void)
 		return;
 	}
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
 		if (team >= 0 && ent->team != team)
 			continue;
 
