@@ -87,8 +87,8 @@ public:
 #define SPREAD_FACTOR		8.0f
 #define	SPREAD_NORM(x)		((x) > 0 ? SPREAD_FACTOR/((x)*torad) : 0)
 /** @brief distance for (ai) hiding in grid tiles */
-#define HIDE_DIST			7
-#define HERD_DIST			7
+#define HIDE_DIST			25
+#define HERD_DIST			25
 #define HOLD_DIST			3
 
 #define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
@@ -884,7 +884,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (!G_IsRaged(actor)) {
 		const int hidingTeam = AI_GetHidingTeam(actor);
 		/* hide */
-		if (!AI_HideNeeded(actor) || !(G_TestVis(hidingTeam, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)) {
+		if (!(G_TestVis(hidingTeam, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES) && !AI_HideNeeded(actor)) {
 			/* is a hiding spot */
 			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN + SCORE_REACTION_FEAR_FACTOR : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
