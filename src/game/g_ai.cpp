@@ -58,8 +58,10 @@ public:
 #define SCORE_REACTION_FEAR_FACTOR 20
 #define SCORE_NONHIDING_PLACE_PENALTY 25
 #define SCORE_RAGE			40
-#define SCORE_CIV_FACTOR	0.25
-#define SCORE_DISABLED_FACTOR 0.25
+#define SCORE_DAMAGE		100.0f
+#define SCORE_DAMAGE_FACTOR	1.25f
+#define SCORE_CIV_FACTOR	0.25f
+#define SCORE_DISABLED_FACTOR 0.25f
 
 #define SCORE_CIV_RANDOM	10
 #define SCORE_RUN_AWAY		50
@@ -75,14 +77,14 @@ public:
 #define SCORE_MISSION_HOLD		25
 #define MISSION_HOLD_DIST		96
 
-#define SCORE_PANIC_RUN_TO_FRIENDS 300.0
-#define SCORE_PANIC_FLEE_FROM_STRANGERS 500.0
-#define SCORE_PANIC_RANDOM 25.0
+#define SCORE_PANIC_RUN_TO_FRIENDS 300.0f
+#define SCORE_PANIC_FLEE_FROM_STRANGERS 500.0f
+#define SCORE_PANIC_RANDOM 25.0f
 
-#define AI_ACTION_NOTHING_FOUND -10000.0
+#define AI_ACTION_NOTHING_FOUND -10000.0f
 
-#define CLOSE_IN_DIST		1200.0
-#define SPREAD_FACTOR		8.0
+#define CLOSE_IN_DIST		1200.0f
+#define SPREAD_FACTOR		8.0f
 #define	SPREAD_NORM(x)		((x) > 0 ? SPREAD_FACTOR/((x)*torad) : 0)
 /** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
@@ -642,8 +644,12 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Edict* check, 
 			/* take into account armour */
 			if (check->getArmour()) {
 				const objDef_t* ad = check->getArmour()->def();
-				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
+				dmg -= ad->protection[fd->dmgweight] * fd->shots * shots;
+				dmg = std::max(0.0f, dmg);
 			}
+
+			/* It is said that there is no kill like overkill but... */
+			dmg = std::min(dmg, check->HP * SCORE_DAMAGE_FACTOR) * SCORE_DAMAGE / check->HP;
 
 			if (dmg > check->HP && G_IsReaction(check))
 				/* reaction shooters eradication bonus */
@@ -678,7 +684,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Edict* check, 
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (!fd->gravity && (fd->splrad > 0.0 || G_IsStunned(check)))
+				if (!fd->gravity && (fd->splrad > 0.0f || G_IsStunned(check)))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;
