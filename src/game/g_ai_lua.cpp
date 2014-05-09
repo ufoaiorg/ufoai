@@ -92,14 +92,14 @@ static int AIL_toTeamInt (const char* team)
  * @brief Wrapper around edict.
  */
 typedef struct aiActor_s {
-	Edict* ent; /**< Actual actor. */
+	Actor* ent; /**< Actual actor. */
 } aiActor_t;
 
 
 /*
  * Current AI Actor.
  */
-static Edict* AIL_ent; /**< Actor currently running the Lua AI. */
+static Actor* AIL_ent; /**< Actor currently running the Lua AI. */
 static Player* AIL_player; /**< Player currently running the Lua AI. */
 
 
@@ -578,7 +578,7 @@ static int AIL_see (lua_State* L)
 	int i, j, k, n;
 	Actor* check = nullptr;
 	aiActor_t target;
-	Edict* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
+	Actor* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
 
 	/* Defaults. */
