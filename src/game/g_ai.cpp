@@ -1402,13 +1402,13 @@ void AI_TurnIntoDirection (Edict* ent, const pos3_t pos)
 /**
  * @brief if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it
  */
-static bool AI_TryToReloadWeapon (Edict* ent, containerIndex_t containerID)
+static bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
 {
-	if (G_ClientCanReload(ent, containerID)) {
-		return G_ActorReload(ent, INVDEF(containerID));
+	if (G_ClientCanReload(actor, containerID)) {
+		return G_ActorReload(actor, INVDEF(containerID));
 	} else {
-		G_ActorInvMove(ent, INVDEF(containerID), ent->getContainer(containerID), INVDEF(CID_FLOOR), NONE, NONE, true);
-		G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(), ent->chr.RFmode.getWeapon());
+		G_ActorInvMove(actor, INVDEF(containerID), actor->getContainer(containerID), INVDEF(CID_FLOOR), NONE, NONE, true);
+		G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(), actor->chr.RFmode.getWeapon());
 	}
 	return false;
 }
