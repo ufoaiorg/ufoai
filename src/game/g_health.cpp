@@ -137,7 +137,7 @@ void G_BleedWounds (const int team)
 {
 	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
 		const teamDef_t* const teamDef = ent->chr.teamDef;

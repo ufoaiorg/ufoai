@@ -226,7 +226,7 @@ void G_GiveTimeUnits (int team)
 {
 	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_ActorGiveTimeUnits(ent);
 		G_SendStats(*ent);
 	}

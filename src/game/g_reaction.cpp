@@ -1017,7 +1017,7 @@ void G_ReactionFireReset (int team)
 {
 	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		G_RemoveShaken(ent);
 	}
 }

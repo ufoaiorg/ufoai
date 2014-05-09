@@ -147,7 +147,7 @@ static void G_KillTeam_f (void)
 
 	Actor* ent = nullptr;
 	if (teamToKill >= 0) {
-		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, teamToKill))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
 			if (amount == 0)
 				break;
 			/* die */
@@ -180,7 +180,7 @@ static void G_StunTeam_f (void)
 
 	if (teamToKill >= 0) {
 		Actor* ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, teamToKill))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
 			/* stun */
 			G_ActorDieOrStun(ent, nullptr);
 
@@ -297,7 +297,7 @@ void G_InvList_f (const Player& player)
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
 
 	Actor* ent = nullptr;
-	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, player.getTeam()))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
 		const Container* cont = nullptr;

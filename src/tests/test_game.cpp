@@ -221,7 +221,7 @@ static void testVisFlags (void)
 
 		num = 0;
 		Actor* ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, TEAM_ALIEN))) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
 			const teammask_t teamMask = G_TeamToVisMask(ent->team);
 			const bool visible = ent->visflags & teamMask;
 			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
@@ -254,14 +254,14 @@ static void testInventoryForDiedAlien (void)
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		diedEnt = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
 		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, nullptr));
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* now try to collect the inventory with a second alien */
-		ent = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
@@ -319,14 +319,14 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		diedEnt = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		diedEnt = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
 		G_ActorDieOrStun(diedEnt, nullptr);
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* second alien that should die and drop its inventory */
-		diedEnt2 = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		diedEnt2 = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt2);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
@@ -340,7 +340,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt2));
 
 		/* now try to collect the inventory with a third alien */
-		ent = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
 
 		player = ent->getPlayer();
@@ -393,7 +393,7 @@ static void testInventoryTempContainerLinks (void)
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		Actor* ent = G_EdictsGetNextLivingActorOfTeam2(nullptr, TEAM_ALIEN);
+		Actor* ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		int nr = 0;
 		const Container* cont = nullptr;
 		while ((cont = ent->chr.inv.getNextCont(cont, true))) {

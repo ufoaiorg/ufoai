@@ -286,7 +286,7 @@ static void SVCmd_ShowAll_f (void)
 static void SVCmd_AddItem_f (void)
 {
 	const int team = TEAM_DEFAULT;
-	Actor* ent = G_EdictsGetNextLivingActorOfTeam2(nullptr, team);
+	Actor* ent = G_EdictsGetNextLivingActorOfTeam(nullptr, team);
 
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));

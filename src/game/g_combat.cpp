@@ -54,7 +54,7 @@ static bool G_TeamPointVis (int team, const vec3_t point)
 	vec3_t eye;
 
 	/* test if point is visible from team */
-	while ((from = G_EdictsGetNextLivingActorOfTeam2(from, team))) {
+	while ((from = G_EdictsGetNextLivingActorOfTeam(from, team))) {
 		if (!G_FrustumVis(from, point))
 			continue;
 		/* get viewers eye height */

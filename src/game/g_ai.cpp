@@ -122,7 +122,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
 	Actor* check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam2(check, ent->team))) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
 		if (!ent->isSameAs(check)) {
 			vec3_t dcheck;
 			/* found ally */
@@ -454,7 +454,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 	vec_t bestlength = 0.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
-	while ((next = G_EdictsGetNextLivingActorOfTeam2(next, AI_GetHidingTeam(ent)))) {
+	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
 			enemy = next;
@@ -930,7 +930,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* a
 
 	/* penalize herding */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam2(check, ent->team))) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
 		const float dist = VectorDist(ent->origin, check->origin);
 		if (dist < HERD_THRESHOLD)
 			bestActionScore -= SCORE_HERDING_PENALTY;
@@ -1205,7 +1205,7 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction
 					G_EdictCalcOrigin(ent);
 					/* Don't walk to enemy ambush */
 					Actor* check = nullptr;
-					while ((check = G_EdictsGetNextLivingActorOfTeam2(check, TEAM_ALIEN))) {
+					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
 						const float dist = VectorDist(ent->origin, check->origin);
 						/* @todo add visibility check here? */
 						if (dist < RUN_AWAY_DIST)
@@ -1508,7 +1508,7 @@ static void AI_PlayerRun (Player& player)
 	else {
 		/* find next actor to handle */
 		Actor* actor = player.pers.getLastActor();
-		while ((actor = G_EdictsGetNextLivingActorOfTeam2(actor, player.getTeam()))) {
+		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, player.getTeam()))) {
 			const int beforeTUs = actor->getTus();
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
