@@ -432,6 +432,7 @@
 		<Unit filename="../../src/game/g_combat.cpp" />
 		<Unit filename="../../src/game/g_edict.h" />
 		<Unit filename="../../src/game/g_edicts.cpp" />
+		<Unit filename="../../src/game/g_edicts.h" />
 		<Unit filename="../../src/game/g_events.cpp" />
 		<Unit filename="../../src/game/g_func.cpp" />
 		<Unit filename="../../src/game/g_health.cpp" />
