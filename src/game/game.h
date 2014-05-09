@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*=============================================================== */
 
 class Edict;
+class Actor;
 class SrvEdict;
 
 #ifndef GAME_INCLUDE
@@ -82,16 +83,16 @@ typedef struct client_persistent_s {
 	bool ai;				/**< client controlled by ai */
 
 	/** ai specific data */
-	Edict* _last;			/**< set to the last actor edict that was handled for the ai in their think function */
+	Actor* _last;			/**< set to the last actor edict that was handled for the ai in their think function */
 
 	float	flood_locktill;	/**< locked from talking */
 	float	flood_when[10];	/**< when messages were said */
 	int		flood_whenhead;	/**< head pointer for when said */
 
-	inline void setLastActor(Edict* lastActor) {
+	inline void setLastActor(Actor* lastActor) {
 		_last = lastActor;
 	}
-	inline Edict* getLastActor() {
+	inline Actor* getLastActor() {
 		return _last;
 	}
 } client_persistent_t;

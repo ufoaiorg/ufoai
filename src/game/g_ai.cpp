@@ -1507,8 +1507,8 @@ static void AI_PlayerRun (Player& player)
 	}
 	else {
 		/* find next actor to handle */
-		Edict* ent = player.pers.getLastActor();
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
+		Actor* ent = player.pers.getLastActor();
+		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, player.getTeam()))) {
 			const int beforeTUs = ent->TU;
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
