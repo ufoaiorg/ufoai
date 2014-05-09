@@ -1507,7 +1507,7 @@ static void AI_PlayerRun (Player& player)
 	}
 	else {
 		/* find next actor to handle */
-		Edict* ent = player.pers.last;
+		Edict* ent = player.pers.getLastActor();
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
 			const int beforeTUs = ent->TU;
 			if (beforeTUs > 0) {
@@ -1515,7 +1515,7 @@ static void AI_PlayerRun (Player& player)
 					AIL_ActorThink(player, ent);
 				else
 					AI_ActorThink(player, ent);
-				player.pers.last = ent;
+				player.pers.setLastActor(ent);
 
 				if (beforeTUs > ent->TU)
 					return;
@@ -1525,7 +1525,7 @@ static void AI_PlayerRun (Player& player)
 
 	/* nothing left to do, request endround */
 	G_ClientEndRound(player);
-	player.pers.last = nullptr;
+	player.pers.setLastActor(nullptr);
 }
 
 /**
