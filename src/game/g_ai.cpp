@@ -839,9 +839,9 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* a
 	float maxDmg = 0.0;
 	float bestActionScore = 0.0;
 	int bestTime = -1;
-	Edict* check = nullptr;
+	Actor* check = nullptr;
 
-	while ((check = G_EdictsGetNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		if (G_EdictPosIsSameAs(check, to) || !AI_IsHostile(ent, check))
 			continue;
 
@@ -916,7 +916,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* a
 		/* reward closing in */
 		float minDist = CLOSE_IN_DIST;
 		check = nullptr;
-		while ((check = G_EdictsGetNextLivingActor(check))) {
+		while ((check = G_EdictsGetNextLivingActor2(check))) {
 			if (check->team != ent->team) {
 				const float dist = VectorDist(ent->origin, check->origin);
 				minDist = std::min(dist, minDist);
@@ -930,7 +930,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* a
 
 	/* penalize herding */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam2(check, ent->team))) {
 		const float dist = VectorDist(ent->origin, check->origin);
 		if (dist < HERD_THRESHOLD)
 			bestActionScore -= SCORE_HERDING_PENALTY;
