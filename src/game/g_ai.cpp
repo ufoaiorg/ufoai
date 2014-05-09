@@ -121,8 +121,8 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 	vec3_t back;
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	Edict* check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+	Actor* check = nullptr;
+	while ((check = G_EdictsGetNextLivingActorOfTeam2(check, ent->team))) {
 		if (!ent->isSameAs(check)) {
 			vec3_t dcheck;
 			/* found ally */
@@ -452,9 +452,9 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 
 	/* find the nearest enemy actor to the target*/
 	vec_t bestlength = 0.0f;
-	Edict* next = nullptr;
-	Edict* enemy = nullptr;
-	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
+	Actor* next = nullptr;
+	Actor* enemy = nullptr;
+	while ((next = G_EdictsGetNextLivingActorOfTeam2(next, AI_GetHidingTeam(ent)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
 			enemy = next;
@@ -1204,8 +1204,8 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction
 
 					G_EdictCalcOrigin(ent);
 					/* Don't walk to enemy ambush */
-					Edict* check = nullptr;
-					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
+					Actor* check = nullptr;
+					while ((check = G_EdictsGetNextLivingActorOfTeam2(check, TEAM_ALIEN))) {
 						const float dist = VectorDist(ent->origin, check->origin);
 						/* @todo add visibility check here? */
 						if (dist < RUN_AWAY_DIST)

@@ -50,11 +50,11 @@ typedef enum {
  */
 static bool G_TeamPointVis (int team, const vec3_t point)
 {
-	Edict* from = nullptr;
+	Actor* from = nullptr;
 	vec3_t eye;
 
 	/* test if point is visible from team */
-	while ((from = G_EdictsGetNextLivingActorOfTeam(from, team))) {
+	while ((from = G_EdictsGetNextLivingActorOfTeam2(from, team))) {
 		if (!G_FrustumVis(from, point))
 			continue;
 		/* get viewers eye height */

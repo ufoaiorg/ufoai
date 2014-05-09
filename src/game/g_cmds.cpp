@@ -294,10 +294,10 @@ static void G_ListMissionScore_f (void)
  */
 void G_InvList_f (const Player& player)
 {
-	Edict* ent = nullptr;
-
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
+
+	Actor* ent = nullptr;
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, player.getTeam()))) {
 		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
 		const Container* cont = nullptr;

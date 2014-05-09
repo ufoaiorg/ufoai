@@ -135,9 +135,9 @@ void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, con
  */
 void G_BleedWounds (const int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
 		int bodyPart, damage = 0;
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
