@@ -1233,7 +1233,7 @@ void G_ClientInitActorStates (const Player& player)
 		int saveTU;
 		actorHands_t hand;
 		int fmIdx, objIdx;
-		Edict* ent = G_EdictsGetActorByUCN(ucn, player.getTeam());
+		Actor* ent = G_EdictsGetActorByUCN(ucn, player.getTeam());
 		if (!ent)
 			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
 

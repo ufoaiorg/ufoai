@@ -263,7 +263,7 @@ Actor* G_EdictsGetNextActor (Actor* lastEnt)
  * @param[in] team The team to get the actor with the ucn from
  * @return The actor edict if found, otherwise @c nullptr
  */
-Edict* G_EdictsGetActorByUCN (const int ucn, const int team)
+Actor* G_EdictsGetActorByUCN (const int ucn, const int team)
 {
 	Actor* ent = nullptr;
 
