@@ -186,13 +186,13 @@ static void G_SendCharacterData (const Edict* ent)
  */
 static void G_MatchSendResults (int team, bool nextmap)
 {
-	Edict* ent, *attacker;
+	Edict* attacker;
 	int i, j = 0;
 
 	attacker = nullptr;
-	ent = nullptr;
+	Actor* ent = nullptr;
 	/* Calculate new scores/skills for the soldiers. */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
 		if (!G_IsAI(ent))
 			G_UpdateCharacterExperience(ent);
 		else if (ent->team == team)
@@ -202,7 +202,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	/* if aliens won, make sure every soldier that is not in the rescue zone dies */
 	if (team == TEAM_ALIEN) {
 		ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActor(ent)))
+		while ((ent = G_EdictsGetNextLivingActor2(ent)))
 			if (ent->team != team && !G_ActorIsInRescueZone(ent)) {
 				ent->HP = 0;
 				G_ActorDieOrStun(ent, attacker);
@@ -233,7 +233,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	/* how many actors */
 	j = 0;
 	ent = nullptr;
-	while ((ent = G_EdictsGetNextActor(ent)))
+	while ((ent = G_EdictsGetNextActor2(ent)))
 		if (!G_IsAI(ent))
 			j++;
 
@@ -242,7 +242,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 
 	if (j) {
 		ent = nullptr;
-		while ((ent = G_EdictsGetNextActor(ent))) {
+		while ((ent = G_EdictsGetNextActor2(ent))) {
 			if (!G_IsAI(ent)) {
 				G_SendCharacterData(ent);
 			}
