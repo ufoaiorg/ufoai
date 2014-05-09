@@ -167,7 +167,7 @@ static void G_KillTeam_f (void)
 }
 
 /**
- * @brief Stun all members of a giben team.
+ * @brief Stun all members of a given team.
  */
 static void G_StunTeam_f (void)
 {
