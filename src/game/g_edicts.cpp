@@ -265,11 +265,11 @@ Actor* G_EdictsGetNextActor (Actor* lastEnt)
  */
 Actor* G_EdictsGetActorByUCN (const int ucn, const int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextActor(ent)))
-		if (team == ent->team && ent->chr.ucn == ucn)
-			return ent;
+	while ((actor = G_EdictsGetNextActor(actor)))
+		if (team == actor->team && actor->chr.ucn == ucn)
+			return actor;
 
 	return nullptr;
 }
@@ -281,13 +281,13 @@ Actor* G_EdictsGetActorByUCN (const int ucn, const int team)
  */
 Actor* G_EdictsGetLivingActorFromPos (const pos3_t pos)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (!VectorCompare(pos, ent->pos))
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (!VectorCompare(pos, actor->pos))
 			continue;
 
-		return ent;
+		return actor;
 	}
 	/* nothing found at this pos */
 	return nullptr;
