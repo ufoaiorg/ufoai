@@ -1270,29 +1270,29 @@ static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static AiAction AI_PrepBestAction (const Player& player, Edict* ent)
+static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 {
 	/* check if the actor is in crouched state and try to stand up before doing the move */
-	if (G_IsCrouched(ent))
-		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+	if (G_IsCrouched(actor))
+		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 
 	/* calculate move table */
-	G_MoveCalc(0, ent, ent->pos, G_ActorUsableTUs(ent));
+	G_MoveCalc(0, actor, actor->pos, G_ActorUsableTUs(actor));
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (G_ActorUsableTUs(ent) + 1) / 2;
-	const int xl = std::max((int) ent->pos[0] - dist, 0);
-	const int yl = std::max((int) ent->pos[1] - dist, 0);
-	const int xh = std::min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
-	const int yh = std::min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
+	const int dist = (G_ActorUsableTUs(actor) + 1) / 2;
+	const int xl = std::max((int) actor->pos[0] - dist, 0);
+	const int yl = std::max((int) actor->pos[1] - dist, 0);
+	const int xh = std::min((int) actor->pos[0] + dist, PATHFINDING_WIDTH);
+	const int yh = std::min((int) actor->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
 	pos3_t oldPos;
 	vec3_t oldOrigin;
-	VectorCopy(ent->pos, oldPos);
-	VectorCopy(ent->origin, oldOrigin);
+	VectorCopy(actor->pos, oldPos);
+	VectorCopy(actor->origin, oldOrigin);
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
@@ -1302,18 +1302,18 @@ static AiAction AI_PrepBestAction (const Player& player, Edict* ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; ++to[2]) {
 		for (to[1] = yl; to[1] < yh; ++to[1]) {
 			for (to[0] = xl; to[0] < xh; ++to[0]) {
-				const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
+				const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
 				if (move >= ROUTING_NOT_REACHABLE)
 					continue;
-				if (move > G_ActorUsableTUs(ent))
+				if (move > G_ActorUsableTUs(actor))
 					continue;
 
-				if (G_IsCivilian(ent))
-					bestActionScore = AI_CivilianCalcActionScore(ent, to, &aia);
-				else if (G_IsPanicked(ent))
-					bestActionScore = AI_PanicCalcActionScore(ent, to, &aia);
+				if (G_IsCivilian(actor))
+					bestActionScore = AI_CivilianCalcActionScore(actor, to, &aia);
+				else if (G_IsPanicked(actor))
+					bestActionScore = AI_PanicCalcActionScore(actor, to, &aia);
 				else
-					bestActionScore = AI_FighterCalcActionScore(ent, to, &aia);
+					bestActionScore = AI_FighterCalcActionScore(actor, to, &aia);
 
 				if (bestActionScore > best) {
 					bestAia = aia;
@@ -1323,14 +1323,14 @@ static AiAction AI_PrepBestAction (const Player& player, Edict* ent)
 		}
 	}
 
-	bestActionScore = AI_CheckForMissionTargets(player, ent, &aia);
+	bestActionScore = AI_CheckForMissionTargets(player, actor, &aia);
 	if (bestActionScore > best) {
 		bestAia = aia;
 		best = bestActionScore;
 	}
 
-	VectorCopy(oldPos, ent->pos);
-	VectorCopy(oldOrigin, ent->origin);
+	VectorCopy(oldPos, actor->pos);
+	VectorCopy(oldOrigin, actor->origin);
 
 	/* nothing found to do */
 	if (best == AI_ACTION_NOTHING_FOUND) {
@@ -1340,25 +1340,25 @@ static AiAction AI_PrepBestAction (const Player& player, Edict* ent)
 
 	/* do the move */
 	for (;;) {
-		if (G_IsDead(ent))
+		if (G_IsDead(actor))
 			break;
-		G_ClientMove(player, 0, ent, bestAia.to);
-		if (G_EdictPosIsSameAs(ent, bestAia.to))
+		G_ClientMove(player, 0, actor, bestAia.to);
+		if (G_EdictPosIsSameAs(actor, bestAia.to))
 			break;
-		const pos_t length = G_ActorMoveLength(ent, level.pathingMap, bestAia.to, false);
-		if (length > G_ActorUsableTUs(ent) || length >= ROUTING_NOT_REACHABLE)
+		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, bestAia.to, false);
+		if (length > G_ActorUsableTUs(actor) || length >= ROUTING_NOT_REACHABLE)
 			break;
 	}
 	/* test for possible death during move. reset bestAia due to dead status */
-	if (G_IsDead(ent))
+	if (G_IsDead(actor))
 		bestAia.reset();
 
 	/* if we are throwing a grenade from the inventory grab it now */
-	if (bestAia.target && AI_IsHandForForShootTypeFree(bestAia.shootType, ent)) {
+	if (bestAia.target && AI_IsHandForForShootTypeFree(bestAia.shootType, actor)) {
 		Item* grenade = nullptr;
-		const invDef_t* fromCont = AI_SearchGrenade(ent, &grenade);
+		const invDef_t* fromCont = AI_SearchGrenade(actor, &grenade);
 		const invDef_t* toCont = INVDEF_FOR_SHOOTTYPE(bestAia.shootType);
-		if (!grenade || !fromCont || !toCont || !G_ActorInvMove(ent, fromCont, grenade, toCont, NONE, NONE, true))
+		if (!grenade || !fromCont || !toCont || !G_ActorInvMove(actor, fromCont, grenade, toCont, NONE, NONE, true))
 			bestAia.target = nullptr;
 	}
 
