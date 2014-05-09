@@ -388,7 +388,7 @@ static int actorL_team (lua_State* L)
 
 	target = lua_toactor(L, 1);
 	assert(target != nullptr);
-	team = AIL_toTeamString(target->ent->team);
+	team = AIL_toTeamString(target->ent->getTeam());
 	lua_pushstring(L, team);
 	return 1;
 }
@@ -620,8 +620,8 @@ static int AIL_see (lua_State* L)
 	while ((check = G_EdictsGetNextLivingActor2(check))) {
 		if (AIL_ent == check)
 			continue;
-		if (vision == 0 && (team == TEAM_ALL || check->team == team) /* Check for team match if needed. */
-		 && G_Vis(AIL_ent->team, AIL_ent, check, VT_NOFRUSTUM)) {
+		if (vision == 0 && (team == TEAM_ALL || check->getTeam() == team) /* Check for team match if needed. */
+		 && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM)) {
 			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}

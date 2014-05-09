@@ -214,7 +214,7 @@ static void G_ListMissionScore_f (void)
 	}
 
 	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (team >= 0 && ent->team != team)
+		if (team >= 0 && ent->getTeam() != team)
 			continue;
 
 		assert(ent->chr.scoreMission);
@@ -426,7 +426,7 @@ static void G_StateChange_f (void)
 		e->morale = 0;
 	}
 
-	G_MoraleBehaviour(e->team);
+	G_MoraleBehaviour(e->getTeam());
 }
 #endif
 

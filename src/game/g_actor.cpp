@@ -240,7 +240,7 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 	for (int i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
-		status |= G_CheckVisTeamAll(ent->team, 0, ent);
+		status |= G_CheckVisTeamAll(ent->getTeam(), 0, ent);
 	}
 
 	if (status & VIS_STOP) {

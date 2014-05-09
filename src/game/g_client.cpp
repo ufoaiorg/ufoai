@@ -311,7 +311,7 @@ void G_SendInvisible (const Player& player)
 	Actor* ent = nullptr;
 	/* check visibility */
 	while ((ent = G_EdictsGetNextActor(ent))) {
-		if (ent->team == team)
+		if (ent->getTeam() == team)
 			continue;
 		/* not visible for this team - so add the le only */
 		if (!G_IsVisibleForTeam(ent, team)) {
@@ -357,7 +357,7 @@ static bool G_ActionCheck (const Player& player, Edict* ent)
 		return false;
 	}
 
-	if (ent->team != player.getTeam()) {
+	if (ent->getTeam() != player.getTeam()) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!"));
 		return false;
 	}
@@ -454,7 +454,7 @@ static void G_ClientStateChangeUpdate (Edict& ent)
 	G_CheckVis(&ent);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeamAll(ent.team, 0, &ent);
+	G_CheckVisTeamAll(ent.getTeam(), 0, &ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
@@ -978,7 +978,7 @@ static Edict* G_ClientGetFreeSpawnPoint (const Player& player, int spawnType)
 
 	if (level.noRandomSpawn) {
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player.getTeam() == ent->team) {
+			if (ent->type == spawnType && player.getTeam() == ent->getTeam()) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				return ent;
@@ -987,7 +987,7 @@ static Edict* G_ClientGetFreeSpawnPoint (const Player& player, int spawnType)
 		Edict* list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNextInUse(ent)))
-			if (ent->type == spawnType && player.getTeam() == ent->team) {
+			if (ent->type == spawnType && player.getTeam() == ent->getTeam()) {
 				if (G_EdictsGetLivingActorFromPos(ent->pos))
 					continue;
 				list[count++] = ent;

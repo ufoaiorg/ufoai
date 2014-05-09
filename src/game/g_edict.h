@@ -246,6 +246,10 @@ public:
 	inline Player& getPlayer () const {
 		return game.players[this->pnum];
 	}
+	/* also used by camera ! */
+	inline int getTeam() const {
+		return team;
+	}
 	/*==================
 	 *		checkers
 	 *==================*/
@@ -264,4 +268,5 @@ public:
  * There will be other classes (eg. Trigger, Field, Item,...) in the future.
  */
 class Actor : public Edict {
+public:
 };
