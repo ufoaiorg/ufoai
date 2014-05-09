@@ -213,7 +213,6 @@ static void testVisFlags (void)
 {
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		Edict* ent;
 		int num;
 
 		/* the other tests didn't call the server shutdown function to clean up */
@@ -221,8 +220,8 @@ static void testVisFlags (void)
 		SV_Map(true, mapName, nullptr);
 
 		num = 0;
-		ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
+		Actor* ent = nullptr;
+		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, TEAM_ALIEN))) {
 			const teammask_t teamMask = G_TeamToVisMask(ent->team);
 			const bool visible = ent->visflags & teamMask;
 			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));

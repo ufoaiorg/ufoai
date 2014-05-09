@@ -116,10 +116,10 @@ static int G_PlayerSoldiersCount (const Player& player)
  */
 static void G_UpdateStunState (int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 	const int regen = 1;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
 		if (ent->STUN > 0) {
 			if (regen > ent->STUN)
 				ent->STUN = 0;
@@ -137,9 +137,9 @@ static void G_UpdateStunState (int team)
  */
 static void G_UpdateCarriedWeight (int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
 		if (ent->chr.scoreMission) {
 			ent->chr.scoreMission->carriedWeight += ent->chr.inv.getWeight();
 		}
@@ -148,9 +148,9 @@ static void G_UpdateCarriedWeight (int team)
 
 static void G_RoundTouchTriggers (int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
 		G_TouchTriggers(ent);
 	}
 }

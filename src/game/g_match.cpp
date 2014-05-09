@@ -298,10 +298,10 @@ void G_MatchEndCheck (void)
 
 	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++) {
-		Edict* ent = nullptr;
+		Actor* ent = nullptr;
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, i)) != nullptr) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, i)) != nullptr) {
 			if (!G_IsStunned(ent)) {
 				last = i;
 				activeTeams++;
