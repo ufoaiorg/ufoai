@@ -35,37 +35,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (Actor* ent)
+static void G_MoralePanic (Actor* actor)
 {
-	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
-	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->getIdNum());
+	G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s panics!"), actor->chr.name);
+	G_PrintStats("%s panics (entnum %i).", actor->chr.name, actor->getIdNum());
 	/* drop items in hands */
-	if (G_IsInsane(ent) && ent->chr.teamDef->weapons) {
-		if (ent->getRightHandItem())
-			G_ActorInvMove(ent, INVDEF(CID_RIGHT), ent->getRightHandItem(),
+	if (G_IsInsane(actor) && actor->chr.teamDef->weapons) {
+		if (actor->getRightHandItem())
+			G_ActorInvMove(actor, INVDEF(CID_RIGHT), actor->getRightHandItem(),
 					INVDEF(CID_FLOOR), NONE, NONE, true);
-		if (ent->getLeftHandItem())
-			G_ActorInvMove(ent, INVDEF(CID_LEFT), ent->getLeftHandItem(),
+		if (actor->getLeftHandItem())
+			G_ActorInvMove(actor, INVDEF(CID_LEFT), actor->getLeftHandItem(),
 					INVDEF(CID_FLOOR), NONE, NONE, true);
-		G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
+		G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
 	}
 
 	/* get up */
-	G_RemoveCrouched(ent);
-	G_ActorSetMaxs(ent);
+	G_RemoveCrouched(actor);
+	G_ActorSetMaxs(actor);
 
 	/* send panic */
-	G_SetPanic(ent);
-	G_EventSendState(G_VisToPM(ent->visflags), *ent);
+	G_SetPanic(actor);
+	G_EventSendState(G_VisToPM(actor->visflags), *actor);
 
 	/* center view */
-	G_EventCenterView(*ent);
+	G_EventCenterView(*actor);
 
 	/* move around a bit, try to avoid opponents */
-	AI_ActorThink(ent->getPlayer(), ent);
+	AI_ActorThink(actor->getPlayer(), actor);
 
 	/* kill TUs */
-	G_ActorSetTU(ent, 0);
+	G_ActorSetTU(actor, 0);
 }
 
 /**
@@ -76,15 +76,15 @@ static void G_MoralePanic (Actor* ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopPanic (Actor* ent)
+static void G_MoraleStopPanic (Actor* actor)
 {
-	G_RemoveInsane(ent);
-	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
-		G_RemovePanic(ent);
-		G_PrintStats("%s is no longer panicked (entnum %i).", ent->chr.name, ent->getIdNum());
-		G_EventSendState(G_VisToPM(ent->visflags), *ent);
+	G_RemoveInsane(actor);
+	if (actor->morale / mor_panic->value > m_panic_stop->value * frand()) {
+		G_RemovePanic(actor);
+		G_PrintStats("%s is no longer panicked (entnum %i).", actor->chr.name, actor->getIdNum());
+		G_EventSendState(G_VisToPM(actor->visflags), *actor);
 	} else {
-		G_MoralePanic(ent);
+		G_MoralePanic(actor);
 	}
 }
 
@@ -94,20 +94,20 @@ static void G_MoraleStopPanic (Actor* ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleRage (Actor* ent)
+static void G_MoraleRage (Actor* actor)
 {
-	G_SetRage(ent);
-	if (!G_IsInsane(ent)) {
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), ent->chr.name);
-		G_PrintStats("%s is on a rampage (entnum %i).", ent->chr.name, ent->getIdNum());
+	G_SetRage(actor);
+	if (!G_IsInsane(actor)) {
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), actor->chr.name);
+		G_PrintStats("%s is on a rampage (entnum %i).", actor->chr.name, actor->getIdNum());
 	} else {
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), ent->chr.name);
-		G_PrintStats("%s is consumed by mad rage (entnum %i).", ent->chr.name, ent->getIdNum());
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), actor->chr.name);
+		G_PrintStats("%s is consumed by mad rage (entnum %i).", actor->chr.name, actor->getIdNum());
 	}
-	G_EventSendState(G_VisToPM(ent->visflags), *ent);
-	G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
+	G_EventSendState(G_VisToPM(actor->visflags), *actor);
+	G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
 
-	AI_ActorThink(ent->getPlayer(), ent);
+	AI_ActorThink(actor->getPlayer(), actor);
 }
 
 /**
@@ -118,16 +118,16 @@ static void G_MoraleRage (Actor* ent)
  * @sa G_MoraleStopPanic
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopRage (Actor* ent)
+static void G_MoraleStopRage (Actor* actor)
 {
 	 /* regains sanity */
-	G_RemoveInsane(ent);
-	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
-		G_RemoveRage(ent);
-		G_EventSendState(G_VisToPM(ent->visflags), *ent);
-		G_PrintStats("%s is no longer insane (entnum %i).", ent->chr.name, ent->getIdNum());
+	G_RemoveInsane(actor);
+	if (actor->morale / mor_panic->value > m_rage_stop->value * frand()) {
+		G_RemoveRage(actor);
+		G_EventSendState(G_VisToPM(actor->visflags), *actor);
+		G_PrintStats("%s is no longer insane (entnum %i).", actor->chr.name, actor->getIdNum());
 	} else {
-		G_MoralePanic(ent);
+		G_MoralePanic(actor);
 	}
 }
 
@@ -162,51 +162,51 @@ void G_MoraleBehaviour (int team)
 	if (!enabled)
 		return;
 
-	Actor* ent = nullptr;
-	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team)) != nullptr) {
+	Actor* actor = nullptr;
+	while ((actor = G_EdictsGetNextLivingActorOfTeam2(actor, team)) != nullptr) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
-		if (ent->type != ET_ACTOR || CHRSH_IsTeamDefRobot(ent->chr.teamDef))
+		if (actor->type != ET_ACTOR || CHRSH_IsTeamDefRobot(actor->chr.teamDef))
 			continue;
 
 		/* if panic, determine what kind of panic happens: */
-		if (!G_IsPanicked(ent) && !G_IsRaged(ent)) {
-			if (ent->morale <= mor_panic->integer) {
-				const float ratio = (float) ent->morale / mor_panic->value;
+		if (!G_IsPanicked(actor) && !G_IsRaged(actor)) {
+			if (actor->morale <= mor_panic->integer) {
+				const float ratio = (float) actor->morale / mor_panic->value;
 				const bool sanity = ratio > (m_sanity->value * frand());
 				if (!sanity)
-					G_SetInsane(ent);
+					G_SetInsane(actor);
 				if (ratio > (m_rage->value * frand()))
-					G_MoralePanic(ent);
+					G_MoralePanic(actor);
 				else
-					G_MoraleRage(ent);
+					G_MoraleRage(actor);
 				/* if shaken, well .. be shaken; */
-			} else if (ent->morale <= mor_shaken->integer) {
+			} else if (actor->morale <= mor_shaken->integer) {
 				/* shaken is later reset along with reaction fire */
-				G_SetShaken(ent);
-				G_ClientStateChange(ent->getPlayer(), ent, STATE_REACTION, false);
-				G_EventSendState(G_VisToPM(ent->visflags), *ent);
-				G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
-						ent->chr.name);
-				G_PrintStats("%s is shaken (entnum %i).", ent->chr.name, ent->getIdNum());
+				G_SetShaken(actor);
+				G_ClientStateChange(actor->getPlayer(), actor, STATE_REACTION, false);
+				G_EventSendState(G_VisToPM(actor->visflags), *actor);
+				G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
+						actor->chr.name);
+				G_PrintStats("%s is shaken (entnum %i).", actor->chr.name, actor->getIdNum());
 			}
 		} else {
-			if (G_IsPanicked(ent))
-				G_MoraleStopPanic(ent);
-			else if (G_IsRaged(ent))
-				G_MoraleStopRage(ent);
+			if (G_IsPanicked(actor))
+				G_MoraleStopPanic(actor);
+			else if (G_IsRaged(actor))
+				G_MoraleStopRage(actor);
 		}
 
-		G_ActorSetMaxs(ent);
+		G_ActorSetMaxs(actor);
 
 		/* morale-regeneration, capped at max: */
-		int newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
-		const int maxMorale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+		int newMorale = actor->morale + MORALE_RANDOM(mor_regeneration->value);
+		const int maxMorale = GET_MORALE(actor->chr.score.skills[ABILITY_MIND]);
 		if (newMorale > maxMorale)
-			ent->morale = maxMorale;
+			actor->morale = maxMorale;
 		else
-			ent->morale = newMorale;
+			actor->morale = newMorale;
 
 		/* send phys data and state: */
-		G_SendStats(*ent);
+		G_SendStats(*actor);
 	}
 }
