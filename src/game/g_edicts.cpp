@@ -251,7 +251,7 @@ Actor* G_EdictsGetNextLivingActorOfTeam2 (Actor* lastEnt, const int team)
  * @brief Iterate through the actor entities (even the dead!)
  * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
-Actor* G_EdictsGetNextActor2 (Actor* lastEnt)
+Actor* G_EdictsGetNextActor (Actor* lastEnt)
 {
 	Edict* ent = lastEnt;
 
@@ -278,7 +278,7 @@ Edict* G_EdictsGetActorByUCN (const int ucn, const int team)
 {
 	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextActor2(ent)))
+	while ((ent = G_EdictsGetNextActor(ent)))
 		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 

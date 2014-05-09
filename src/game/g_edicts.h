@@ -40,7 +40,7 @@ Edict* G_EdictsGetByNum(const int num);
 Edict* G_EdictsGetFirst(void);
 Edict* G_EdictsGetNext(Edict* lastEnt);
 Edict* G_EdictsGetNextInUse(Edict* lastEnt);
-Actor* G_EdictsGetNextActor2(Actor* lastEnt);
+Actor* G_EdictsGetNextActor(Actor* lastEnt);
 Edict* G_EdictsGetNextLivingActor(Edict* lastEnt);
 Actor* G_EdictsGetNextLivingActor2(Actor* lastEnt);
 Edict* G_EdictsGetNextLivingActorOfTeam(Edict* lastEnt, const int team);

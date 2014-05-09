@@ -233,7 +233,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	/* how many actors */
 	j = 0;
 	ent = nullptr;
-	while ((ent = G_EdictsGetNextActor2(ent)))
+	while ((ent = G_EdictsGetNextActor(ent)))
 		if (!G_IsAI(ent))
 			j++;
 
@@ -242,7 +242,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 
 	if (j) {
 		ent = nullptr;
-		while ((ent = G_EdictsGetNextActor2(ent))) {
+		while ((ent = G_EdictsGetNextActor(ent))) {
 			if (!G_IsAI(ent)) {
 				G_SendCharacterData(ent);
 			}

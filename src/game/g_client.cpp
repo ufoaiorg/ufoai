@@ -310,7 +310,7 @@ void G_SendInvisible (const Player& player)
 
 	Actor* ent = nullptr;
 	/* check visibility */
-	while ((ent = G_EdictsGetNextActor2(ent))) {
+	while ((ent = G_EdictsGetNextActor(ent))) {
 		if (ent->team == team)
 			continue;
 		/* not visible for this team - so add the le only */

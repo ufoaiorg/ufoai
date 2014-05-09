@@ -227,7 +227,7 @@ void G_ClientEndRound (Player& player)
 	if (!G_IsAIPlayer(&player)) {
 		if (g_lastseen->integer > 0) {
 			Actor* ent = nullptr;
-			while ((ent = G_EdictsGetNextActor2(ent))) {
+			while ((ent = G_EdictsGetNextActor(ent))) {
 				if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
 					player.lastSeen = level.actualRound;
 					break;

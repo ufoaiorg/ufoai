@@ -1074,6 +1074,6 @@ void AIL_Cleanup (void)
 {
 	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextActor2(ent)))
+	while ((ent = G_EdictsGetNextActor(ent)))
 		AIL_CleanupActor(ent);
 }
