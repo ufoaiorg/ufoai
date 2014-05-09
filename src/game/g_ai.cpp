@@ -1422,7 +1422,7 @@ static bool AI_TryToReloadWeapon (Edict* ent, containerIndex_t containerID)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (Player& player, Edict* ent)
+void AI_ActorThink (Player& player, Actor* ent)
 {
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item* rightH = ent->getRightHandItem();
