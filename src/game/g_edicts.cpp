@@ -264,6 +264,23 @@ Edict* G_EdictsGetNextActor (Edict* lastEnt)
 	return ent;
 }
 
+Actor* G_EdictsGetNextActor2 (Actor* lastEnt)
+{
+	Edict* ent = lastEnt;
+
+	assert(lastEnt < &g_edicts[globals.num_edicts]);
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsActor(ent)) {
+			Actor* actor = static_cast<Actor*>(ent);
+			if (actor)
+				return actor;
+			Sys_Error("dynamic_cast to Actor failed.");
+		}
+	}
+	return nullptr;
+}
+
 /**
  * @brief Searches an actor by a unique character number
  * @param[in] ucn The unique character number
@@ -272,9 +289,9 @@ Edict* G_EdictsGetNextActor (Edict* lastEnt)
  */
 Edict* G_EdictsGetActorByUCN (const int ucn, const int team)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextActor(ent)))
+	while ((ent = G_EdictsGetNextActor2(ent)))
 		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 

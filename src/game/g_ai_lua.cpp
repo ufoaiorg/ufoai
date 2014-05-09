@@ -1072,8 +1072,8 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextActor(ent)))
+	while ((ent = G_EdictsGetNextActor2(ent)))
 		AIL_CleanupActor(ent);
 }

@@ -308,9 +308,9 @@ void G_SendInvisible (const Player& player)
 	if (!level.num_alive[team])
 		return;
 
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 	/* check visibility */
-	while ((ent = G_EdictsGetNextActor(ent))) {
+	while ((ent = G_EdictsGetNextActor2(ent))) {
 		if (ent->team == team)
 			continue;
 		/* not visible for this team - so add the le only */

@@ -48,9 +48,9 @@ void G_SendStats (Edict& ent)
  */
 void G_SendPlayerStats (const Player& player)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextActor(ent)))
+	while ((ent = G_EdictsGetNextActor2(ent)))
 		if (ent->team == player.getTeam()) {
 			G_EventActorStats(*ent, G_PlayerToPM(player));
 			G_SendWoundStats(ent);
