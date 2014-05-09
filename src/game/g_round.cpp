@@ -96,9 +96,9 @@ void G_CheckForceEndRound (void)
 static int G_PlayerSoldiersCount (const Player& player)
 {
 	int cnt = 0;
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
 		if (ent->pnum == player.getNum())
 			cnt++;
 	}

@@ -327,7 +327,7 @@ void G_InvList_f (const Player& player)
 
 static void G_TouchEdict_f (void)
 {
-	Edict* e, *ent;
+	Edict* e;
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
@@ -345,7 +345,7 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	ent = G_EdictsGetNextLivingActor(nullptr);
+	Actor* ent = G_EdictsGetNextLivingActor2(nullptr);
 	if (!ent)
 		return;	/* didn't find any */
 
