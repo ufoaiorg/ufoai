@@ -278,9 +278,9 @@ static bool AI_HideNeeded (const Edict* ent)
 		if (G_IsCivilian(from))
 			continue;
 
-		const Item* item = ent->getRightHandItem();
+		const Item* item = from->getRightHandItem();
 		if (!item)
-			item = ent->getLeftHandItem();
+			item = from->getLeftHandItem();
 		if (!item)
 			continue;
 
