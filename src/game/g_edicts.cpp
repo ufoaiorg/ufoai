@@ -194,17 +194,6 @@ Edict* G_EdictsGetTriggerNextMaps (Edict* lastEnt)
  * @brief Iterate through the living actor entities
  * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
-Edict* G_EdictsGetNextLivingActor (Edict* lastEnt)
-{
-	Edict* ent = lastEnt;
-
-	while ((ent = G_EdictsGetNextInUse(ent))) {
-		if (G_IsLivingActor(ent))
-			break;
-	}
-	return ent;
-}
-
 Actor* G_EdictsGetNextLivingActor2 (Actor* lastEnt)
 {
 	Edict* ent = lastEnt;
