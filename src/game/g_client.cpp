@@ -567,7 +567,7 @@ bool G_ClientCanReload (Actor* actor, containerIndex_t containerID)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-bool G_ClientGetWeaponFromInventory (Edict* ent)
+bool G_ClientGetWeaponFromInventory (Actor* ent)
 {
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)

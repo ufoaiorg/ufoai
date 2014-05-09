@@ -763,7 +763,7 @@ static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
 /**
  * @brief Search the edict's inventory for a grenade or other one-use weapon.
  */
-static const invDef_t* AI_SearchGrenade (const Edict* ent, Item** ip)
+static const invDef_t* AI_SearchGrenade (const Actor* ent, Item** ip)
 {
 	/* search for grenades and select the one that is available easily */
 	const Container* cont = nullptr;
@@ -796,7 +796,7 @@ static const invDef_t* AI_SearchGrenade (const Edict* ent, Item** ip)
  * @returns @c true if shoot type uses a hand and it is free, @c false if hand isn't free
  * or shoot type doesn't use a hand.
  */
-static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict* ent)
+static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Actor* ent)
 {
 	if (IS_SHOT_RIGHT(shootType)) {
 		const Item* item = ent->getRightHandItem();
@@ -816,7 +816,7 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Edict* ent)
  * @todo fill z_align values
  * @todo optimize this
  */
-static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
+static float AI_FighterCalcActionScore (Actor* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	int tu = G_ActorUsableTUs(ent) - move;
@@ -947,7 +947,7 @@ static float AI_FighterCalcActionScore (Edict* ent, const pos3_t to, AiAction* a
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
+static float AI_CivilianCalcActionScore (Actor* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -1062,7 +1062,7 @@ static float AI_CivilianCalcActionScore (Edict* ent, const pos3_t to, AiAction* 
  * @sa AI_ActorThink
  * @note Panicking units will run away from everyone other than their own team (e.g. aliens will run away even from civilians)
  */
-static float AI_PanicCalcActionScore (Edict* ent, const pos3_t to, AiAction* aia)
+static float AI_PanicCalcActionScore (Actor* ent, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(ent, level.pathingMap, to, true);
 	const int tu = G_ActorUsableTUs(ent) - move;
@@ -1173,7 +1173,7 @@ static bool AI_FindMissionLocation (Edict* ent, const pos3_t to)
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (const Player& player, Edict* ent, AiAction* aia)
+static int AI_CheckForMissionTargets (const Player& player, Actor* ent, AiAction* aia)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	int actionScore;
