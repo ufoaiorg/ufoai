@@ -51,7 +51,7 @@ const Item* AI_GetItemForShootType(shoot_types_t shootType, const Edict* ent);
 /*
  * LUA functions
  */
-void AIL_ActorThink(Player& player, Edict* ent);
+void AIL_ActorThink(Player& player, Actor* ent);
 int AIL_InitActor(Edict* ent, const char* type, const char* subtype);
 void AIL_Cleanup(void);
 void AIL_Init(void);

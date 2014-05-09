@@ -956,21 +956,21 @@ static int AIL_distance (lua_State* L)
 /**
  * @brief The think function for the ai controlled aliens
  * @param[in] player
- * @param[in] ent
+ * @param[in] actor
  * @sa AI_FighterCalcBestAction
  * @sa AI_CivilianCalcBestAction
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AIL_ActorThink (Player& player, Edict* ent)
+void AIL_ActorThink (Player& player, Actor* actor)
 {
 	lua_State* L;
 
 	/* The Lua State we will work with. */
-	L = ent->AI.L;
+	L = actor->AI.L;
 
 	/* Set the global player and edict */
-	AIL_ent = ent;
+	AIL_ent = actor;
 	AIL_player = &player;
 
 	/* Try to run the function. */
