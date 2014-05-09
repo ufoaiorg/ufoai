@@ -35,7 +35,7 @@ void AI_CheckRespawn(int team);
 extern Edict* ai_waypointList;
 void G_AddToWayPointList(Edict* ent);
 void AI_Run(void);
-void AI_ActorThink(Player& player, Actor* ent);
+void AI_ActorThink(Player& player, Actor* actor);
 Player* AI_CreatePlayer(int team);
 bool AI_CheckUsingDoor(const Edict* ent, const Edict* door);
 
@@ -51,7 +51,7 @@ const Item* AI_GetItemForShootType(shoot_types_t shootType, const Edict* ent);
 /*
  * LUA functions
  */
-void AIL_ActorThink(Player& player, Actor* ent);
+void AIL_ActorThink(Player& player, Actor* actor);
 int AIL_InitActor(Edict* ent, const char* type, const char* subtype);
 void AIL_Cleanup(void);
 void AIL_Init(void);

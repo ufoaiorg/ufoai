@@ -1416,72 +1416,72 @@ static bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
 /**
  * @brief The think function for the ai controlled aliens or panicked humans
  * @param[in] player The AI or human player object
- * @param[in] ent The ai controlled edict or the human actor edict
+ * @param[in] actor The ai controlled edict or the human actor edict
  * @sa AI_FighterCalcActionScore
  * @sa AI_CivilianCalcActionScore
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink (Player& player, Actor* ent)
+void AI_ActorThink (Player& player, Actor* actor)
 {
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	Item* rightH = ent->getRightHandItem();
-	Item* leftH = ent->getLeftHandItem();
-	if (!G_IsPanicked(ent)) {
+	Item* rightH = actor->getRightHandItem();
+	Item* leftH = actor->getLeftHandItem();
+	if (!G_IsPanicked(actor)) {
 		if (rightH && rightH->mustReload())
-			AI_TryToReloadWeapon(ent, CID_RIGHT);
+			AI_TryToReloadWeapon(actor, CID_RIGHT);
 		if (leftH && leftH->mustReload())
-			AI_TryToReloadWeapon(ent, CID_LEFT);
+			AI_TryToReloadWeapon(actor, CID_LEFT);
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
 	/** @note we need to re-check the items here because they may have been dropped in the previous step */
-	if (!ent->getLeftHandItem() && !ent->getRightHandItem())
-		G_ClientGetWeaponFromInventory(ent);
+	if (!actor->getLeftHandItem() && !actor->getRightHandItem())
+		G_ClientGetWeaponFromInventory(actor);
 
-	AiAction bestAia = AI_PrepBestAction(player, ent);
+	AiAction bestAia = AI_PrepBestAction(player, actor);
 
 	/* shoot and hide */
 	if (bestAia.target) {
 		const fireDefIndex_t fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, nullptr, true, bestAia.z_align);
+			G_ClientShoot(player, actor, bestAia.target->pos, bestAia.shootType, fdIdx, nullptr, true, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
-			if (G_IsDead(ent))
+			if (G_IsDead(actor))
 				return;
 			/* check for target's death */
 			if (G_IsDead(bestAia.target)) {
 				/* search another target now */
-				bestAia = AI_PrepBestAction(player, ent);
+				bestAia = AI_PrepBestAction(player, actor);
 				/* no other target found - so no need to hide */
 				if (!bestAia.target)
 					return;
 			}
 		}
-		ent->hiding = true;
+		actor->hiding = true;
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, ent->team, ent, bestAia.stop);
+		G_ClientMove(player, actor->team, actor, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
 		/* decide whether the actor wants to crouch */
-		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+		if (AI_CheckCrouch(actor))
+			G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
-		AI_TurnIntoDirection(ent, bestAia.target->pos);
+		AI_TurnIntoDirection(actor, bestAia.target->pos);
 
 		/** @todo If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
-		/* G_ClientStateChange(player, ent->number, STATE_REACTION_ONCE, true); */
+		/* G_ClientStateChange(player, actor->number, STATE_REACTION_ONCE, true); */
 
-		ent->hiding = false;
+		actor->hiding = false;
 	}
 }
 

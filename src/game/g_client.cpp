@@ -224,11 +224,11 @@ void G_ClientPrintf (const Player& player, int printLevel, const char* fmt, ...)
  */
 void G_GiveTimeUnits (int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		G_ActorGiveTimeUnits(ent);
-		G_SendStats(*ent);
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		G_ActorGiveTimeUnits(actor);
+		G_SendStats(*actor);
 	}
 }
 
@@ -308,14 +308,14 @@ void G_SendInvisible (const Player& player)
 	if (!level.num_alive[team])
 		return;
 
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 	/* check visibility */
-	while ((ent = G_EdictsGetNextActor(ent))) {
-		if (ent->getTeam() == team)
+	while ((actor = G_EdictsGetNextActor(actor))) {
+		if (actor->getTeam() == team)
 			continue;
 		/* not visible for this team - so add the le only */
-		if (!G_IsVisibleForTeam(ent, team)) {
-			G_EventActorAdd(G_PlayerToPM(player), *ent);
+		if (!G_IsVisibleForTeam(actor, team)) {
+			G_EventActorAdd(G_PlayerToPM(player), *actor);
 		}
 	}
 }
@@ -1495,10 +1495,10 @@ void G_ClientDisconnect (Player& player)
 
 #if 0
 	/* now let's remove all the edicts that belongs to this player */
-	Actor* ent = nullptr;
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (ent->pnum == player.num)
-			G_ActorDie(ent, STATE_DEAD, nullptr);
+	Actor* actor = nullptr;
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (actor->pnum == player.num)
+			G_ActorDie(actor, STATE_DEAD, nullptr);
 	}
 	G_MatchEndCheck();
 #endif

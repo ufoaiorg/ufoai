@@ -145,14 +145,14 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 	if (teamToKill >= 0) {
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, teamToKill))) {
 			if (amount == 0)
 				break;
 			/* die */
-			ent->HP = 0;
-			G_ActorDieOrStun(ent, nullptr);
+			actor->HP = 0;
+			G_ActorDieOrStun(actor, nullptr);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_kills[TEAM_PHALANX][TEAM_ALIEN]++;
@@ -179,10 +179,10 @@ static void G_StunTeam_f (void)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
 	if (teamToKill >= 0) {
-		Actor* ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+		Actor* actor = nullptr;
+		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, teamToKill))) {
 			/* stun */
-			G_ActorDieOrStun(ent, nullptr);
+			G_ActorDieOrStun(actor, nullptr);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
