@@ -1481,10 +1481,6 @@ bool G_ClientConnect (Player* player, char* userinfo, size_t userinfoSize)
  */
 void G_ClientDisconnect (Player& player)
 {
-#if 0
-	Edict* ent = nullptr;
-#endif
-
 	/* only if the player already sent his began */
 	if (player.began) {
 		level.numplayers--;
@@ -1499,8 +1495,9 @@ void G_ClientDisconnect (Player& player)
 
 #if 0
 	/* now let's remove all the edicts that belongs to this player */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->pnum == player->num)
+	Actor* ent = nullptr;
+	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
+		if (ent->pnum == player.num)
 			G_ActorDie(ent, STATE_DEAD, nullptr);
 	}
 	G_MatchEndCheck();
