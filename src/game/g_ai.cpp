@@ -1509,7 +1509,7 @@ static void AI_PlayerRun (Player& player)
 		/* find next actor to handle */
 		Actor* actor = player.pers.getLastActor();
 		while ((actor = G_EdictsGetNextLivingActorOfTeam2(actor, player.getTeam()))) {
-			const int beforeTUs = actor->TU;
+			const int beforeTUs = actor->getTus();
 			if (beforeTUs > 0) {
 				if (g_ailua->integer)
 					AIL_ActorThink(player, actor);
@@ -1517,7 +1517,7 @@ static void AI_PlayerRun (Player& player)
 					AI_ActorThink(player, actor);
 				player.pers.setLastActor(actor);
 
-				if (beforeTUs > actor->TU)
+				if (beforeTUs > actor->getTus())
 					return;
 			}
 		}

@@ -269,6 +269,9 @@ public:
  */
 class Actor : public Edict {
 public:
+	inline int getTus() const {
+		return TU;
+	}
 	inline int getMorale() const {
 		return morale;
 	}
