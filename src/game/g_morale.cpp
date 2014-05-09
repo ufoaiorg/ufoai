@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (Edict* ent)
+static void G_MoralePanic (Actor* ent)
 {
 	G_ClientPrintf(ent->getPlayer(), PRINT_HUD, _("%s panics!"), ent->chr.name);
 	G_PrintStats("%s panics (entnum %i).", ent->chr.name, ent->getIdNum());
@@ -76,7 +76,7 @@ static void G_MoralePanic (Edict* ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopPanic (Edict* ent)
+static void G_MoraleStopPanic (Actor* ent)
 {
 	G_RemoveInsane(ent);
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand()) {
@@ -94,7 +94,7 @@ static void G_MoraleStopPanic (Edict* ent)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleRage (Edict* ent)
+static void G_MoraleRage (Actor* ent)
 {
 	G_SetRage(ent);
 	if (!G_IsInsane(ent)) {
@@ -118,7 +118,7 @@ static void G_MoraleRage (Edict* ent)
  * @sa G_MoraleStopPanic
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopRage (Edict* ent)
+static void G_MoraleStopRage (Actor* ent)
 {
 	 /* regains sanity */
 	G_RemoveInsane(ent);
