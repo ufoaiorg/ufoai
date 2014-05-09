@@ -225,17 +225,6 @@ Actor* G_EdictsGetNextLivingActor2 (Actor* lastEnt)
  * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  * @param team The team we are looking for
  */
-Edict* G_EdictsGetNextLivingActorOfTeam (Edict* lastEnt, const int team)
-{
-	Edict* ent = lastEnt;
-
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->team == team)
-			break;
-	}
-	return ent;
-}
-
 Actor* G_EdictsGetNextLivingActorOfTeam2 (Actor* lastEnt, const int team)
 {
 	Actor* ent = lastEnt;
