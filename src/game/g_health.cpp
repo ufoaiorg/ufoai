@@ -90,11 +90,11 @@ void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, con
 
 	/* Treat wounds */
 	if (fd->dmgweight == gi.csi->damNormal) {
-		int bodyPart, mostWounded = 0;
+		int mostWounded = 0;
 		woundInfo_t* wounds = &target->chr.wounds;
 
 		/* Find the worst not treated wound */
-		for (bodyPart = 0; bodyPart < target->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+		for (int bodyPart = 0; bodyPart < target->chr.teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds->woundLevel[bodyPart] > wounds->woundLevel[mostWounded])
 				mostWounded = bodyPart;
 
@@ -138,12 +138,12 @@ void G_BleedWounds (const int team)
 	Actor* ent = nullptr;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam2(ent, team))) {
-		int bodyPart, damage = 0;
 		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
 			continue;
 		const teamDef_t* const teamDef = ent->chr.teamDef;
 		woundInfo_t& wounds = ent->chr.wounds;
-		for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+		int damage = 0;
+		for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
 				damage += wounds.woundLevel[bodyPart] * teamDef->bodyTemplate->bleedingFactor(bodyPart);
 		if (damage > 0) {
@@ -182,11 +182,10 @@ void G_SendWoundStats (Edict* const ent)
  */
 float G_ActorGetInjuryPenalty (const Edict* const ent, const modifier_types_t type)
 {
-	int bodyPart;
 	float penalty = 0;
 
 	const teamDef_t* const teamDef = ent->chr.teamDef;
-	for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
+	for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart) {
 		const int threshold = ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart);
 		const int injury = (ent->chr.wounds.woundLevel[bodyPart] + ent->chr.wounds.treatmentLevel[bodyPart] * 0.5);
 		if (injury > threshold)
