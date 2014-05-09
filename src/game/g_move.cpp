@@ -164,11 +164,10 @@ static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t* 
 		VectorCopy(ent->pos, pos);
 		while (max >= 0) {
 			int tmp = 0;
-			const Edict* blockEdict;
 
 			PosAddDV(pos, tmp, dvtab[max]);
 			max--;
-			blockEdict = G_EdictsGetLivingActorFromPos(pos);
+			const Actor* blockEdict = G_EdictsGetLivingActorFromPos(pos);
 
 			if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
 				const bool visible = G_IsVisibleForTeam(blockEdict, ent->team);

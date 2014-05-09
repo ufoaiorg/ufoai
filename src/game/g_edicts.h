@@ -48,6 +48,6 @@ Edict* G_EdictsGetNextLivingActorOfTeam(Edict* lastEnt, const int team);
 Actor* G_EdictsGetNextLivingActorOfTeam2(Actor* lastEnt, const int team);
 Edict* G_EdictsGetActorByUCN(const int ucn, const int team);
 Edict* G_EdictsGetTriggerNextMaps(Edict* lastEnt);
-Edict* G_EdictsGetLivingActorFromPos(const pos3_t pos);
+Actor* G_EdictsGetLivingActorFromPos(const pos3_t pos);
 Edict* G_EdictsFindTargetEntity(const char* target);
 void G_EdictsThink(void);

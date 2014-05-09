@@ -303,11 +303,11 @@ Edict* G_EdictsGetActorByUCN (const int ucn, const int team)
  * @param pos The grid location to look for an edict.
  * @return @c nullptr if nothing was found, otherwise the actor located at the given grid position.
  */
-Edict* G_EdictsGetLivingActorFromPos (const pos3_t pos)
+Actor* G_EdictsGetLivingActorFromPos (const pos3_t pos)
 {
-	Edict* ent = nullptr;
+	Actor* ent = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
 		if (!VectorCompare(pos, ent->pos))
 			continue;
 

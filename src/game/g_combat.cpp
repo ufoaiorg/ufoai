@@ -586,7 +586,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 		if (!game.invi.tryAddToInventory(&floor->chr.inv, item, INVDEF(CID_FLOOR))) {
 			G_FreeEdict(floor);
 		} else {
-			Edict* actor = G_EdictsGetLivingActorFromPos(pos);
+			Actor* actor = G_EdictsGetLivingActorFromPos(pos);
 
 			/* send the inventory */
 			G_CheckVis(floor);
@@ -1162,7 +1162,7 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return false;
-	const Edict* targetEnt = nullptr;
+	const Actor* targetEnt = nullptr;
 	if (FIRESH_IsMedikit(fd)) {
 		targetEnt = G_EdictsGetLivingActorFromPos(at);
 		if (!targetEnt)
