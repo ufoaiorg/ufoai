@@ -135,21 +135,21 @@ void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, con
  */
 void G_BleedWounds (const int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		if (CHRSH_IsTeamDefRobot(ent->chr.teamDef))
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		if (CHRSH_IsTeamDefRobot(actor->chr.teamDef))
 			continue;
-		const teamDef_t* const teamDef = ent->chr.teamDef;
-		woundInfo_t& wounds = ent->chr.wounds;
+		const teamDef_t* const teamDef = actor->chr.teamDef;
+		woundInfo_t& wounds = actor->chr.wounds;
 		int damage = 0;
 		for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
-			if (wounds.woundLevel[bodyPart] > ent->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
+			if (wounds.woundLevel[bodyPart] > actor->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))
 				damage += wounds.woundLevel[bodyPart] * teamDef->bodyTemplate->bleedingFactor(bodyPart);
 		if (damage > 0) {
-			G_PrintStats("%s is bleeding (damage: %i)", ent->chr.name, damage);
-			G_TakeDamage(ent, damage);
-			G_CheckDeathOrKnockout(ent, nullptr, nullptr, damage);
+			G_PrintStats("%s is bleeding (damage: %i)", actor->chr.name, damage);
+			G_TakeDamage(actor, damage);
+			G_CheckDeathOrKnockout(actor, nullptr, nullptr, damage);
 		}
 	}
 	/* Maybe the last team member bled to death */

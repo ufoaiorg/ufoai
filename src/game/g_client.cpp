@@ -567,10 +567,10 @@ bool G_ClientCanReload (Actor* actor, containerIndex_t containerID)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-bool G_ClientGetWeaponFromInventory (Actor* ent)
+bool G_ClientGetWeaponFromInventory (Actor* actor)
 {
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
-	if (!ent->chr.teamDef->weapons)
+	if (!actor->chr.teamDef->weapons)
 		return false;
 
 	/* search for weapons and select the one that is available easily */
@@ -578,7 +578,7 @@ bool G_ClientGetWeaponFromInventory (Actor* ent)
 	Item* theWeapon = nullptr;
 	int tu = 100;
 	const Container* cont = nullptr;
-	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+	while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= tu)
 			continue;
 		Item* item = nullptr;
@@ -598,7 +598,7 @@ bool G_ClientGetWeaponFromInventory (Actor* ent)
 	/* send request */
 	const invDef_t* invDef = INVDEF(CID_RIGHT);
 	if (bestContainer) {
-		return G_ActorInvMove(ent, bestContainer, theWeapon, invDef, 0, 0, true);
+		return G_ActorInvMove(actor, bestContainer, theWeapon, invDef, 0, 0, true);
 	}
 	return false;	/* no weapon found */
 }

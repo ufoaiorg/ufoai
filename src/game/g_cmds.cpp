@@ -202,7 +202,6 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	Actor* ent = nullptr;
 	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
@@ -213,33 +212,34 @@ static void G_ListMissionScore_f (void)
 		return;
 	}
 
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (team >= 0 && ent->getTeam() != team)
+	Actor* actor = nullptr;
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (team >= 0 && actor->getTeam() != team)
 			continue;
 
-		assert(ent->chr.scoreMission);
+		assert(actor->chr.scoreMission);
 
-		gi.DPrintf("Soldier: %s\n", ent->chr.name);
+		gi.DPrintf("Soldier: %s\n", actor->chr.name);
 
 		/* ===================== */
-		gi.DPrintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+		gi.DPrintf("  Move: Normal=%i Crouched=%i\n", actor->chr.scoreMission->movedNormal, actor->chr.scoreMission->movedCrouched);
 
 		gi.DPrintf("  Kills:");
 		for (i = 0; i < KILLED_NUM_TYPES; i++) {
-			gi.DPrintf(" %i", ent->chr.scoreMission->kills[i]);
+			gi.DPrintf(" %i", actor->chr.scoreMission->kills[i]);
 		}
 		gi.DPrintf("\n");
 
 		gi.DPrintf("  Stuns:");
 		for (i = 0; i < KILLED_NUM_TYPES; i++) {
-			gi.DPrintf(" %i", ent->chr.scoreMission->stuns[i]);
+			gi.DPrintf(" %i", actor->chr.scoreMission->stuns[i]);
 		}
 		gi.DPrintf("\n");
 
 		/* ===================== */
 		gi.DPrintf("  Fired:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.DPrintf(" %i", ent->chr.scoreMission->fired[i]);
+			gi.DPrintf(" %i", actor->chr.scoreMission->fired[i]);
 		}
 		gi.DPrintf("\n");
 
@@ -247,7 +247,7 @@ static void G_ListMissionScore_f (void)
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.DPrintf(" %i", ent->chr.scoreMission->hits[i][j]);
+				gi.DPrintf(" %i", actor->chr.scoreMission->hits[i][j]);
 			}
 			gi.DPrintf("\n");
 		}
@@ -255,7 +255,7 @@ static void G_ListMissionScore_f (void)
 		/* ===================== */
 		gi.DPrintf("  Fired Splash:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.DPrintf(" %i", ent->chr.scoreMission->firedSplash[i]);
+			gi.DPrintf(" %i", actor->chr.scoreMission->firedSplash[i]);
 		}
 		gi.DPrintf("\n");
 
@@ -263,7 +263,7 @@ static void G_ListMissionScore_f (void)
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.DPrintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+				gi.DPrintf(" %i", actor->chr.scoreMission->hitsSplash[i][j]);
 			}
 			gi.DPrintf("\n");
 		}
@@ -272,7 +272,7 @@ static void G_ListMissionScore_f (void)
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.DPrintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+				gi.DPrintf(" %i", actor->chr.scoreMission->hitsSplashDamage[i][j]);
 			}
 			gi.DPrintf("\n");
 		}
@@ -280,12 +280,12 @@ static void G_ListMissionScore_f (void)
 		/* ===================== */
 		gi.DPrintf("  Kills per skill:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.DPrintf(" %i", ent->chr.scoreMission->skillKills[i]);
+			gi.DPrintf(" %i", actor->chr.scoreMission->skillKills[i]);
 		}
 		gi.DPrintf("\n");
 
 		/* ===================== */
-		gi.DPrintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+		gi.DPrintf("  Heal (received): %i\n", actor->chr.scoreMission->heal);
 	}
 }
 
@@ -296,12 +296,12 @@ void G_InvList_f (const Player& player)
 {
 	gi.DPrintf("Print inventory for '%s'\n", player.pers.netname);
 
-	Actor* ent = nullptr;
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player.getTeam()))) {
-		gi.DPrintf("actor: '%s'\n", ent->chr.name);
+	Actor* actor = nullptr;
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, player.getTeam()))) {
+		gi.DPrintf("actor: '%s'\n", actor->chr.name);
 
 		const Container* cont = nullptr;
-		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 			Com_Printf("Container: %i\n", cont->id);
 			Item* item = nullptr;
 			while ((item = cont->getNextItem(item))) {
@@ -314,11 +314,11 @@ void G_InvList_f (const Player& player)
 					Com_Printf(".... ammo:   %s (%i)\n", item->ammoDef()->id, item->getAmmoLeft());
 			}
 		}
-		const float invWeight = ent->chr.inv.getWeight();
-		const int maxWeight = ent->chr.score.skills[ABILITY_POWER];
+		const float invWeight = actor->chr.inv.getWeight();
+		const int maxWeight = actor->chr.score.skills[ABILITY_POWER];
 		const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, maxWeight);
-		const int normalTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
-		const int tus = GET_TU(ent->chr.score.skills[ABILITY_SPEED], penalty);
+		const int normalTU = GET_TU(actor->chr.score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
+		const int tus = GET_TU(actor->chr.score.skills[ABILITY_SPEED], penalty);
 		const int tuPenalty = tus - normalTU;
 		const char* penaltyStr = 1.0f - penalty < WEIGHT_NORMAL_PENALTY ? "'Light weight'" : (1.0f - penalty < WEIGHT_HEAVY_PENALTY ? "'Normal weight'" : "'Encumbered'");
 		Com_Printf("Weight: %g/%i, Encumbrance: %s (%.0f%%), TU's: %i (normal: %i, penalty/bonus: %+i)\n", invWeight, maxWeight, penaltyStr, invWeight / maxWeight * 100.0f, tus, normalTU, tuPenalty);
@@ -345,12 +345,12 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	Actor* ent = G_EdictsGetNextLivingActor2(nullptr);
-	if (!ent)
+	Actor* actor = G_EdictsGetNextLivingActor2(nullptr);
+	if (!actor)
 		return;	/* didn't find any */
 
 	gi.DPrintf("Call touch function for %s\n", e->classname);
-	e->touch(e, ent);
+	e->touch(e, actor);
 }
 
 static void G_UseEdict_f (void)

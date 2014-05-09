@@ -216,13 +216,13 @@ Actor* G_EdictsGetNextLivingActor2 (Actor* lastEnt)
  */
 Actor* G_EdictsGetNextLivingActorOfTeam (Actor* lastEnt, const int team)
 {
-	Actor* ent = lastEnt;
+	Actor* actor = lastEnt;
 
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (ent->team == team)
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (actor->team == team)
 			break;
 	}
-	return ent;
+	return actor;
 }
 
 /**
