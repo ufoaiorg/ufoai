@@ -728,20 +728,20 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 
 /**
  * @brief Reload weapon with actor.
- * @param[in] ent Pointer to an actor reloading weapon.
+ * @param[in] actor Pointer to an actor reloading weapon.
  * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-bool G_ActorReload (Edict* ent, const invDef_t* invDef)
+bool G_ActorReload (Actor* actor, const invDef_t* invDef)
 {
 	const objDef_t* weapon;
 
-	if (ent->getContainer(invDef->id)) {
-		weapon = ent->getContainer(invDef->id)->def();
-	} else if (invDef->isLeftDef() && ent->getRightHandItem()->isHeldTwoHanded()) {
+	if (actor->getContainer(invDef->id)) {
+		weapon = actor->getContainer(invDef->id)->def();
+	} else if (invDef->isLeftDef() && actor->getRightHandItem()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(CID_RIGHT);
-		weapon = ent->getRightHandItem()->def();
+		weapon = actor->getRightHandItem()->def();
 	} else
 		return false;
 
@@ -757,7 +757,7 @@ bool G_ActorReload (Edict* ent, const invDef_t* invDef)
 	Item* ammoItem = nullptr;
 	int tu = 100;
 	const Container* cont = nullptr;
-	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+	while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 		if (cont->def()->out >= tu)
 			continue;
 		/* Once we've found at least one clip, there's no point
@@ -777,7 +777,7 @@ bool G_ActorReload (Edict* ent, const invDef_t* invDef)
 
 	/* send request */
 	if (bestContainer)
-		return G_ActorInvMove(ent, bestContainer, ammoItem, invDef, 0, 0, true);
+		return G_ActorInvMove(actor, bestContainer, ammoItem, invDef, 0, 0, true);
 	/* No ammo found */
 	return false;
 }

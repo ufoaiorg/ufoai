@@ -535,15 +535,15 @@ void G_ClientStateChange (const Player& player, Edict* ent, int reqState, bool c
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
+bool G_ClientCanReload (Actor* actor, containerIndex_t containerID)
 {
 	const objDef_t* weapon;
 
-	if (ent->getContainer(containerID)) {
-		weapon = ent->getContainer(containerID)->def();
-	} else if (containerID == CID_LEFT && ent->getRightHandItem()->isHeldTwoHanded()) {
+	if (actor->getContainer(containerID)) {
+		weapon = actor->getContainer(containerID)->def();
+	} else if (containerID == CID_LEFT && actor->getRightHandItem()->isHeldTwoHanded()) {
 		/* Check for two-handed weapon */
-		weapon = ent->getRightHandItem()->def();
+		weapon = actor->getRightHandItem()->def();
 	} else
 		return false;
 
@@ -551,7 +551,7 @@ bool G_ClientCanReload (Edict* ent, containerIndex_t containerID)
 
 	/* also try the temp containers */
 	const Container* cont = nullptr;
-	while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+	while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 		Item* item = nullptr;
 		while ((item = cont->getNextItem(item))) {
 			if (item->def()->isLoadableInWeapon(weapon))

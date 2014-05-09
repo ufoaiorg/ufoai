@@ -1382,20 +1382,20 @@ void G_AddToWayPointList (Edict* ent)
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
  * to the given location
- * @param[in] ent The actor to turn
+ * @param[in] actor The actor to turn
  * @param[in] pos The position to set the direction for
  */
-void AI_TurnIntoDirection (Edict* ent, const pos3_t pos)
+void AI_TurnIntoDirection (Actor* actor, const pos3_t pos)
 {
-	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	G_MoveCalc(ent->team, ent, pos, G_ActorUsableTUs(ent));
+	const byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
+	G_MoveCalc(actor->team, actor, pos, G_ActorUsableTUs(actor));
 
 	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dvec);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
-			G_ActorDoTurn(ent, dir & (CORE_DIRECTIONS - 1));
+			G_ActorDoTurn(actor, dir & (CORE_DIRECTIONS - 1));
 	}
 }
 
