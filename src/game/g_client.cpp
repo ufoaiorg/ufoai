@@ -639,27 +639,19 @@ bool G_ClientUseEdict (const Player& player, Edict* actor, Edict* edict)
  */
 int G_ClientAction (Player& player)
 {
-	player_action_t action;
-	int num;
 	pos3_t pos;
 	int i;
-	fireDefIndex_t firemode;
-	int from, fx, fy, to, tx, ty;
-	actorHands_t hand;
-	int fmIdx, objIdx;
-	int resCrouch, resShot;
-	Edict* ent;
-	const char* format;
+	int from;
 
 	/* read the header */
-	action = (player_action_t)gi.ReadByte();
-	num = gi.ReadShort();
+	player_action_t action = (player_action_t)gi.ReadByte();
+	int num = gi.ReadShort();
 
-	ent = G_EdictsGetByNum(num);
+	Edict* ent = G_EdictsGetByNum(num);
 	if (ent == nullptr)
 		return action;
 
-	format = pa_format[action];
+	const char* format = pa_format[action];
 
 	switch (action) {
 	case PA_NULL:
@@ -682,11 +674,13 @@ int G_ClientAction (Player& player)
 		break;
 
 	case PA_SHOOT:
+		fireDefIndex_t firemode;
 		gi.ReadFormat(format, &pos, &i, &firemode, &from);
 		G_ClientShoot(player, ent, pos, i, firemode, nullptr, true, from);
 		break;
 
 	case PA_INVMOVE:
+		int fx, fy, to, tx, ty;
 		gi.ReadFormat(format, &from, &fx, &fy, &to, &tx, &ty);
 
 		if (!isValidContId(from) || !isValidContId(to)) {
@@ -702,13 +696,11 @@ int G_ClientAction (Player& player)
 
 	case PA_USE:
 		if (ent->clientAction) {
-			Edict* actionEnt;
-
 			/* read the door the client wants to open */
 			gi.ReadFormat(format, &i);
 
 			/* get the door edict */
-			actionEnt = G_EdictsGetByNum(i);
+			Edict* actionEnt = G_EdictsGetByNum(i);
 
 			/* maybe the door is no longer 'alive' because it was destroyed */
 			if (actionEnt && ent->clientAction == actionEnt) {
@@ -720,11 +712,14 @@ int G_ClientAction (Player& player)
 		break;
 
 	case PA_REACT_SELECT:
+		actorHands_t hand;
+		int fmIdx, objIdx;
 		gi.ReadFormat(format, &hand, &fmIdx, &objIdx);
 		G_ReactionFireSettingsUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
+		int resCrouch, resShot;
 		gi.ReadFormat(format, &resShot, &resCrouch);
 
 		G_ActorReserveTUs(ent, ent->chr.reservedTus.reaction, resShot, resCrouch);
