@@ -427,13 +427,13 @@ private:
 	bool isEnemy(const Edict* shooter, const Edict* target) const;
 	bool canReact(Edict* shooter, const Edict* target) const;
 	bool canSee(const Edict* shooter, const Edict* target) const;
-	bool shoot(Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
+	bool shoot(Actor* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
 	bool isPossible(Edict* shooter, const Edict* target) const;
 public:
 	void notifyClientOnStep(const Edict* target, int step);
 	bool checkExecution(const Edict* target, int step);
 	void updateAllTargets(const Edict* target);
-	bool tryToShoot(Edict* shooter, const Edict* target);
+	bool tryToShoot(Actor* shooter, const Edict* target);
 	bool isInWeaponRange(const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
 	const fireDef_t* getFireDef(const Edict* shooter) const;
 	void resetTargets(const Edict* shooter);
@@ -768,7 +768,7 @@ void ReactionFire::resetTargets (const Edict* shooter)
  * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @sa G_ClientShoot
  */
-bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
+bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
@@ -806,7 +806,7 @@ bool ReactionFire::shoot (Edict* shooter, const pos3_t at, shoot_types_t type, f
  * @param[in] target The victim of the reaction fire
  * @return true if the entity fired, false otherwise
  */
-bool ReactionFire::tryToShoot (Edict* shooter, const Edict* target)
+bool ReactionFire::tryToShoot (Actor* shooter, const Edict* target)
 {
 	/* check for valid target */
 	assert(target);
