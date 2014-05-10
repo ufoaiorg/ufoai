@@ -350,7 +350,7 @@ static void G_TouchEdict_f (void)
 		return;	/* didn't find any */
 
 	gi.DPrintf("Call touch function for %s\n", e->classname);
-	e->callTouch(e, actor);
+	e->callTouch(actor);
 }
 
 static void G_UseEdict_f (void)

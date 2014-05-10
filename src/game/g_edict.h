@@ -307,8 +307,8 @@ public:
 	inline bool hasTouch() const {
 		return _touch;
 	}
-	inline bool callTouch(Edict* self, Edict* activator) {
-		return _touch(self, activator);
+	inline bool callTouch(Edict* activator) {
+		return _touch(this, activator);
 	}
 /**
  * @brief Calculates the amount of all currently reserved TUs
