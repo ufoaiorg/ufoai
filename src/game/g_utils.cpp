@@ -594,14 +594,14 @@ int G_TouchSolids (Edict* ent, float extend)
 	AABB absbox(ent->absBox);
 	absbox.expand(extend);
 
-	Edict* touch[MAX_EDICTS];
-	int num = G_GetTouchingEdicts(absbox, touch, lengthof(touch), ent);
+	Edict* touched[MAX_EDICTS];
+	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), ent);
 
 	int usedNum = 0;
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (int i = 0; i < num; i++) {
-		Edict* hit = touch[i];
+		Edict* hit = touched[i];
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
 		if (!hit->inuse)
