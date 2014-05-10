@@ -286,19 +286,19 @@ static void SVCmd_ShowAll_f (void)
 static void SVCmd_AddItem_f (void)
 {
 	const int team = TEAM_DEFAULT;
-	Actor* ent = G_EdictsGetNextLivingActorOfTeam(nullptr, team);
+	Actor* actor = G_EdictsGetNextLivingActorOfTeam(nullptr, team);
 
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
-	if (!ent) {
+	if (!actor) {
 		gi.DPrintf("Could not add item, no living members of team %i left\n", team);
 		return;
 	}
 
-	G_AddItemToFloor(ent->pos, gi.Cmd_Argv(2));
+	G_AddItemToFloor(actor->pos, gi.Cmd_Argv(2));
 }
 
 /**

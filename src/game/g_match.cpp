@@ -190,22 +190,22 @@ static void G_MatchSendResults (int team, bool nextmap)
 	int i, j = 0;
 
 	attacker = nullptr;
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 	/* Calculate new scores/skills for the soldiers. */
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (!G_IsAI(ent))
-			G_UpdateCharacterExperience(ent);
-		else if (ent->team == team)
-			attacker = ent;
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (!G_IsAI(actor))
+			G_UpdateCharacterExperience(actor);
+		else if (actor->team == team)
+			attacker = actor;
 	}
 
 	/* if aliens won, make sure every soldier that is not in the rescue zone dies */
 	if (team == TEAM_ALIEN) {
-		ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActor2(ent)))
-			if (ent->team != team && !G_ActorIsInRescueZone(ent)) {
-				ent->HP = 0;
-				G_ActorDieOrStun(ent, attacker);
+		actor = nullptr;
+		while ((actor = G_EdictsGetNextLivingActor2(actor)))
+			if (actor->team != team && !G_ActorIsInRescueZone(actor)) {
+				actor->HP = 0;
+				G_ActorDieOrStun(actor, attacker);
 			}
 	}
 
@@ -232,19 +232,19 @@ static void G_MatchSendResults (int team, bool nextmap)
 
 	/* how many actors */
 	j = 0;
-	ent = nullptr;
-	while ((ent = G_EdictsGetNextActor(ent)))
-		if (!G_IsAI(ent))
+	actor = nullptr;
+	while ((actor = G_EdictsGetNextActor(actor)))
+		if (!G_IsAI(actor))
 			j++;
 
 	/* number of soldiers */
 	gi.WriteByte(j);
 
 	if (j) {
-		ent = nullptr;
-		while ((ent = G_EdictsGetNextActor(ent))) {
-			if (!G_IsAI(ent)) {
-				G_SendCharacterData(ent);
+		actor = nullptr;
+		while ((actor = G_EdictsGetNextActor(actor))) {
+			if (!G_IsAI(actor)) {
+				G_SendCharacterData(actor);
 			}
 		}
 	}
@@ -298,11 +298,11 @@ void G_MatchEndCheck (void)
 
 	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++) {
-		Actor* ent = nullptr;
+		Actor* actor = nullptr;
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, i)) != nullptr) {
-			if (!G_IsStunned(ent)) {
+		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, i)) != nullptr) {
+			if (!G_IsStunned(actor)) {
 				last = i;
 				activeTeams++;
 				break;

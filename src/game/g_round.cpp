@@ -96,10 +96,10 @@ void G_CheckForceEndRound (void)
 static int G_PlayerSoldiersCount (const Player& player)
 {
 	int cnt = 0;
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActor2(ent))) {
-		if (ent->pnum == player.getNum())
+	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+		if (actor->pnum == player.getNum())
 			cnt++;
 	}
 
@@ -116,17 +116,17 @@ static int G_PlayerSoldiersCount (const Player& player)
  */
 static void G_UpdateStunState (int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 	const int regen = 1;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		if (ent->STUN > 0) {
-			if (regen > ent->STUN)
-				ent->STUN = 0;
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		if (actor->STUN > 0) {
+			if (regen > actor->STUN)
+				actor->STUN = 0;
 			else
-				ent->STUN -= regen;
+				actor->STUN -= regen;
 
-			G_ActorCheckRevitalise(ent);
+			G_ActorCheckRevitalise(actor);
 		}
 	}
 }
@@ -137,21 +137,21 @@ static void G_UpdateStunState (int team)
  */
 static void G_UpdateCarriedWeight (int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		if (ent->chr.scoreMission) {
-			ent->chr.scoreMission->carriedWeight += ent->chr.inv.getWeight();
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		if (actor->chr.scoreMission) {
+			actor->chr.scoreMission->carriedWeight += actor->chr.inv.getWeight();
 		}
 	}
 }
 
 static void G_RoundTouchTriggers (int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		G_TouchTriggers(ent);
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		G_TouchTriggers(actor);
 	}
 }
 
@@ -226,9 +226,9 @@ void G_ClientEndRound (Player& player)
 
 	if (!G_IsAIPlayer(&player)) {
 		if (g_lastseen->integer > 0) {
-			Actor* ent = nullptr;
-			while ((ent = G_EdictsGetNextActor(ent))) {
-				if (G_IsAI(ent) && G_IsVisibleForTeam(ent, level.activeTeam)) {
+			Actor* actor = nullptr;
+			while ((actor = G_EdictsGetNextActor(actor))) {
+				if (G_IsAI(actor) && G_IsVisibleForTeam(actor, level.activeTeam)) {
 					player.lastSeen = level.actualRound;
 					break;
 				}

@@ -1015,10 +1015,10 @@ void G_ReactionFireOnEndTurn (void)
  */
 void G_ReactionFireReset (int team)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		G_RemoveShaken(ent);
+	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
+		G_RemoveShaken(actor);
 	}
 }
 

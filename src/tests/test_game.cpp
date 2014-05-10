@@ -220,13 +220,13 @@ static void testVisFlags (void)
 		SV_Map(true, mapName, nullptr);
 
 		num = 0;
-		Actor* ent = nullptr;
-		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
-			const teammask_t teamMask = G_TeamToVisMask(ent->team);
-			const bool visible = ent->visflags & teamMask;
-			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
+		Actor* actor = nullptr;
+		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, TEAM_ALIEN))) {
+			const teammask_t teamMask = G_TeamToVisMask(actor->team);
+			const bool visible = actor->visflags & teamMask;
+			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(actor->visflags));
 			char* teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
-			CU_ASSERT_EQUAL(ent->team, TEAM_ALIEN);
+			CU_ASSERT_EQUAL(actor->team, TEAM_ALIEN);
 			UFO_CU_ASSERT_TRUE_MSG(visible, va("visflags: %s, teamMask: %s", visFlagsBuf, teamMaskBuf));
 			Mem_Free(visFlagsBuf);
 			Mem_Free(teamMaskBuf);
@@ -244,7 +244,7 @@ static void testInventoryForDiedAlien (void)
 	const char* mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		Actor* diedEnt;
-		Actor* ent;
+		Actor* actor;
 		Edict* floorItems;
 		Item* invlist;
 		int count;
@@ -261,38 +261,38 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* now try to collect the inventory with a second alien */
-		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
-		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
+		actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(actor);
 
 		/* move to the location of the first died alien to drop the inventory into the same floor container */
-		Player& player = ent->getPlayer();
+		Player& player = actor->getPlayer();
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
-		G_ClientMove(player, 0, ent, diedEnt->pos);
-		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
+		G_ClientMove(player, 0, actor, diedEnt->pos);
+		CU_ASSERT_TRUE_FATAL(VectorCompare(actor->pos, diedEnt->pos));
 
-		floorItems = G_GetFloorItems(ent);
+		floorItems = G_GetFloorItems(actor);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
-		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), ent->getFloor());
+		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), actor->getFloor());
 
 		/* drop everything to floor to make sure we have space in the backpack */
-		G_InventoryToFloor(ent);
-		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, CID_BACKPACK), 0);
+		G_InventoryToFloor(actor);
+		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(actor, CID_BACKPACK), 0);
 
-		invlist = ent->getContainer(CID_BACKPACK);
+		invlist = actor->getContainer(CID_BACKPACK);
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
-		count = GAMETEST_GetItemCount(ent, CID_FLOOR);
+		count = GAMETEST_GetItemCount(actor, CID_FLOOR);
 		if (count > 0) {
-			Item* entryToMove = ent->getFloor();
+			Item* entryToMove = actor->getFloor();
 			int tx, ty;
-			ent->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
+			actor->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
-				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, CID_FLOOR), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
+				CU_ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
 				Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, CID_BACKPACK), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
 				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
-				invlist = ent->getContainer(CID_BACKPACK);
+				invlist = actor->getContainer(CID_BACKPACK);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
 		}
@@ -309,7 +309,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		Actor* diedEnt;
 		Actor* diedEnt2;
-		Actor* ent;
+		Actor* actor;
 		Edict* floorItems;
 		Item* invlist;
 		int count;
@@ -340,39 +340,39 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt2));
 
 		/* now try to collect the inventory with a third alien */
-		ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
-		CU_ASSERT_PTR_NOT_NULL_FATAL(ent);
+		actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
+		CU_ASSERT_PTR_NOT_NULL_FATAL(actor);
 
-		player = ent->getPlayer();
+		player = actor->getPlayer();
 		CU_ASSERT_TRUE_FATAL(G_IsAIPlayer(&player));
 
-		G_ClientMove(player, 0, ent, diedEnt->pos);
-		CU_ASSERT_TRUE_FATAL(VectorCompare(ent->pos, diedEnt->pos));
+		G_ClientMove(player, 0, actor, diedEnt->pos);
+		CU_ASSERT_TRUE_FATAL(VectorCompare(actor->pos, diedEnt->pos));
 
-		floorItems = G_GetFloorItems(ent);
+		floorItems = G_GetFloorItems(actor);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(floorItems);
-		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), ent->getFloor());
+		CU_ASSERT_PTR_EQUAL(floorItems->getFloor(), actor->getFloor());
 
 		/* drop everything to floor to make sure we have space in the backpack */
-		G_InventoryToFloor(ent);
-		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(ent, CID_BACKPACK), 0);
+		G_InventoryToFloor(actor);
+		CU_ASSERT_EQUAL(GAMETEST_GetItemCount(actor, CID_BACKPACK), 0);
 
-		invlist = ent->getContainer(CID_BACKPACK);
+		invlist = actor->getContainer(CID_BACKPACK);
 		CU_ASSERT_PTR_NULL_FATAL(invlist);
 
-		count = GAMETEST_GetItemCount(ent, CID_FLOOR);
+		count = GAMETEST_GetItemCount(actor, CID_FLOOR);
 		if (count > 0) {
-			Item* entryToMove = ent->getFloor();
+			Item* entryToMove = actor->getFloor();
 			int tx, ty;
-			ent->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
+			actor->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
-				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, CID_FLOOR), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
+				CU_ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
 				Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
-				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, CID_BACKPACK), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
+				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->def()->name));
 				Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
-				invlist = ent->getContainer(CID_BACKPACK);
+				invlist = actor->getContainer(CID_BACKPACK);
 				CU_ASSERT_PTR_NOT_NULL_FATAL(invlist);
 			}
 		}
@@ -393,24 +393,24 @@ static void testInventoryTempContainerLinks (void)
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
-		Actor* ent = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
+		Actor* actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
 		int nr = 0;
 		const Container* cont = nullptr;
-		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 			if (cont->id == CID_ARMOUR || cont->id == CID_FLOOR)
 				continue;
 			nr += cont->countItems();
 		}
 		CU_ASSERT_TRUE(nr > 0);
 
-		CU_ASSERT_PTR_NULL(ent->getFloor());
-		G_InventoryToFloor(ent);
-		CU_ASSERT_PTR_NOT_NULL(ent->getFloor());
-		CU_ASSERT_PTR_EQUAL(G_GetFloorItemFromPos(ent->pos)->getFloor(), ent->getFloor());
+		CU_ASSERT_PTR_NULL(actor->getFloor());
+		G_InventoryToFloor(actor);
+		CU_ASSERT_PTR_NOT_NULL(actor->getFloor());
+		CU_ASSERT_PTR_EQUAL(G_GetFloorItemFromPos(actor->pos)->getFloor(), actor->getFloor());
 
 		nr = 0;
 		cont = nullptr;
-		while ((cont = ent->chr.inv.getNextCont(cont, true))) {
+		while ((cont = actor->chr.inv.getNextCont(cont, true))) {
 			if (cont->id == CID_ARMOUR || cont->id == CID_FLOOR)
 				continue;
 			nr += cont->countItems();
