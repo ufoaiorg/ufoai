@@ -417,13 +417,13 @@ static void G_StateChange_f (void)
 
 	const char* state = gi.Cmd_Argv(2);
 	if (Q_strcasecmp(state, "panic")) {
-		e->morale = mor_panic->integer / 2;
+		e->setMorale(mor_panic->integer / 2);
 	} else if (Q_strcasecmp(state, "shaken")) {
-		e->morale = mor_shaken->integer / 2;
+		e->setMorale(mor_shaken->integer / 2);
 	} else if (Q_strcasecmp(state, "rage")) {
-		e->morale = m_rage->integer / 2;
+		e->setMorale(m_rage->integer / 2);
 	} else {
-		e->morale = 0;
+		e->setMorale(0);
 	}
 
 	G_MoraleBehaviour(e->getTeam());

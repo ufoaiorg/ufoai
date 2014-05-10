@@ -124,7 +124,7 @@ void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, con
 
 	/* Increase morale */
 	if (fd->dmgweight == gi.csi->damShock)
-		target->morale = std::min(GET_MORALE(target->chr.score.skills[ABILITY_MIND]), target->morale - heal);
+		target->setMorale(std::min(GET_MORALE(target->chr.score.skills[ABILITY_MIND]), target->morale - heal));
 
 	G_SendWoundStats(target);
 }

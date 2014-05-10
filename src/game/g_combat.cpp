@@ -149,11 +149,11 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
 		const int newMorale = ent->morale + (int) (MORALE_RANDOM(mod) + 0.9);
 		if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
-			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+			ent->setMorale(GET_MORALE(ent->chr.score.skills[ABILITY_MIND]));
 		else if (newMorale < 0)
-			ent->morale = 0;
+			ent->setMorale(0);
 		else
-			ent->morale = newMorale;
+			ent->setMorale(newMorale);
 
 		/* send phys data */
 		G_SendStats(*ent);

@@ -1572,7 +1572,7 @@ static void AI_SetStats (Edict* ent, int team)
 	CHRSH_CharGenAbilitySkills(&ent->chr, G_IsMultiPlayer(), templateId);
 
 	ent->HP = ent->chr.HP;
-	ent->morale = ent->chr.morale;
+	ent->setMorale(ent->chr.morale);
 	ent->STUN = 0;
 
 	/* hurt aliens in ufo crash missions (5%: almost dead, 10%: wounded, 15%: stunned)  */

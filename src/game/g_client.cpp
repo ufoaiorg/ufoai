@@ -1063,7 +1063,7 @@ Edict* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 			Edict* copy = G_EdictDuplicate(ent);
 			if (copy != nullptr) {
 				copy->type = ET_ACTOR2x2;
-				copy->morale = 100;
+				copy->setMorale(100);
 			}
 			ent = copy;
 		}
@@ -1208,10 +1208,10 @@ static void G_ClientAssignDefaultActorValues (Edict* ent)
 
 	/* set initial vital statistics */
 	ent->HP = ent->chr.HP;
-	ent->morale = ent->chr.morale;
+	ent->setMorale(ent->chr.morale);
 
 	/** @todo for now, heal fully upon entering mission */
-	ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+	ent->setMorale(GET_MORALE(ent->chr.score.skills[ABILITY_MIND]));
 
 	/* set models */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
