@@ -1049,6 +1049,7 @@ Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
+			/* preserve the spawpoint so we can later spawn more (alien rush) */
 			Edict* copy = G_EdictDuplicate(ent);
 			if (copy != nullptr)
 				copy->type = ET_ACTOR;
