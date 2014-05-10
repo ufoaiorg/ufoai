@@ -307,6 +307,8 @@ public:
 	inline bool hasTouch() const {
 		return _touch;
 	}
+	/* This is usually called with an Actor* as a param, except for G_TouchEdicts().
+	 * The various touch-functions seem to expect an actor, but are not protected against something else. */
 	inline bool callTouch(Edict* activator) {
 		return _touch(this, activator);
 	}
