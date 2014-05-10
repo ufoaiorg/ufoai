@@ -259,9 +259,6 @@ void G_SendPlayerStats(const Player& player);
 void G_ServerCommand(void);
 bool SV_FilterPacket(const char* from);
 
-/** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
-void G_EdictSetOrigin(Edict* ent, const pos3_t newPos);
-
 #include "g_events.h"
 
 /*============================================================================ */

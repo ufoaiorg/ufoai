@@ -215,6 +215,15 @@ public:
 	inline void calcOrigin () {
 		gi.GridPosToVec(fieldSize, pos, origin);
 	}
+/**
+ * @brief Set the edict's pos and origin vector to the given grid position
+ * @param newPos The new grid position
+ */
+	inline void setOrigin (const pos3_t newPos) {
+		VectorCopy(newPos, pos);
+		calcOrigin();
+	}
+
 
 	/*==================
 	 *		getters

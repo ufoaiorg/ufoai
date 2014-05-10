@@ -302,17 +302,6 @@ Edict* G_EdictsFindTargetEntity (const char* target)
 }
 
 /**
- * @brief Set the edict's pos and origin vector to the given grid position
- * @param ent The entity
- * @param newPos The new grid position
- */
-void G_EdictSetOrigin (Edict* ent, const pos3_t newPos)
-{
-	VectorCopy(newPos, ent->pos);
-	gi.GridPosToVec(ent->fieldSize, ent->pos, ent->origin);
-}
-
-/**
  * @brief Called every frame to let the edicts tick
  */
 void G_EdictsThink (void)

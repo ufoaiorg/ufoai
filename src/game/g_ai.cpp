@@ -829,7 +829,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	G_EdictSetOrigin(actor, to);
+	actor->setOrigin(to);
 
 	/* pre-find a grenade */
 	Item* grenade = nullptr;
@@ -892,7 +892,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 
 			if (!AI_FindHidingLocation(hidingTeam, actor, to, tu)) {
 				/* nothing found */
-				G_EdictSetOrigin(actor, to);
+				actor->setOrigin(to);
 			} else {
 				/* found a hiding spot */
 				VectorCopy(actor->pos, aia->stop);
@@ -960,7 +960,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	G_EdictSetOrigin(actor, to);
+	actor->setOrigin(to);
 
 	/* check whether this civilian can use weapons */
 	if (actor->chr.teamDef) {
@@ -1075,7 +1075,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	G_EdictSetOrigin(actor, to);
+	actor->setOrigin(to);
 
 	/* run away */
 	float minDistFriendly, minDistOthers;

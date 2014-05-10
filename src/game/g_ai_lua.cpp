@@ -901,7 +901,7 @@ static int AIL_positionhide (lua_State* L)
 	} else {
 		lua_pushboolean(L, 0);
 	}
-	G_EdictSetOrigin(AIL_ent, save);
+	AIL_ent->setOrigin(save);
 	return 1;
 }
 
@@ -930,7 +930,7 @@ static int AIL_positionherd (lua_State* L)
 	} else {
 		lua_pushboolean(L, 0);
 	}
-	G_EdictSetOrigin(AIL_ent, save);
+	AIL_ent->setOrigin(save);
 	return 1;
 }
 
