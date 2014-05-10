@@ -413,27 +413,27 @@ bool G_ActionCheckForReaction (const Player& player, Edict* ent, int TU)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (Player& player, Actor* ent, dvec_t dvec)
+static void G_ClientTurn (Player& player, Actor* actor, dvec_t dvec)
 {
 	const int dir = getDVdir(dvec);
 
 	/* check if action is possible */
-	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
+	if (!G_ActionCheckForCurrentTeam(player, actor, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
-	if (ent->dir == dir)
+	if (actor->dir == dir)
 		return;
 
 	/* do the turn */
-	G_ActorDoTurn(ent, dir);
-	G_ActorUseTU(ent, TU_TURN);
+	G_ActorDoTurn(actor, dir);
+	G_ActorUseTU(actor, TU_TURN);
 
 	/* send the turn */
-	G_EventActorTurn(*ent);
+	G_EventActorTurn(*actor);
 
 	/* send the new TUs */
-	G_SendStats(*ent);
+	G_SendStats(*actor);
 
 	/* end the event */
 	G_EventEnd();
@@ -1266,16 +1266,16 @@ void G_ClientTeamInfo (const Player& player)
 		if (player.getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player.getTeam()))
 			G_ClientSkipActorInfo();
 		else {
-			Actor* ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
-			if (ent) {
-				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), ent->team, ent->fieldSize);
+			Actor* actor = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
+			if (actor) {
+				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), actor->team, actor->fieldSize);
 
-				G_ClientReadCharacter(ent);
-				G_ClientReadInventory(ent);
-				G_ClientAssignDefaultActorValues(ent);
-				G_ActorGiveTimeUnits(ent);
-				G_TouchTriggers(ent);
-				ent->contentFlags = G_ActorGetContentFlags(ent->origin);
+				G_ClientReadCharacter(actor);
+				G_ClientReadInventory(actor);
+				G_ClientAssignDefaultActorValues(actor);
+				G_ActorGiveTimeUnits(actor);
+				G_TouchTriggers(actor);
+				actor->contentFlags = G_ActorGetContentFlags(actor->origin);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player.getTeam(), actorFieldSize);
 

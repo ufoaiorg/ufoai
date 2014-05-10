@@ -300,45 +300,45 @@ pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t t
  * position that is not reachable because an invisible actor is standing there would not result in
  * a single step - as the movement is aborted before. For AI movement this is in general @c 0 - but
  * not if they e.g. hide.
- * @param[in] ent Edict to move
+ * @param[in] actor Edict to move
  * @param[in] to The grid position to walk to
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t to)
+void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t to)
 {
 	pos3_t pos;
 	bool autoCrouchRequired = false;
 
-	if (VectorCompare(ent->pos, to))
+	if (VectorCompare(actor->pos, to))
 		return;
 
 	/* check if action is possible */
-	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
+	if (!G_ActionCheckForCurrentTeam(player, actor, TU_MOVE_STRAIGHT))
 		return;
 
-	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
+	G_MoveCalc(visTeam, actor, actor->pos, actor->TU);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player.autostand) {
 		/* ...and if this is a long walk... */
-		if (gi.CanActorStandHere(ent->fieldSize, ent->pos)
+		if (gi.CanActorStandHere(actor->fieldSize, actor->pos)
 			&& gi.GridShouldUseAutostand(level.pathingMap, to)) {
 			/* ...make them stand first. If the player really wants them to walk a long
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
 			 * fewer TU than just crawling while crouched. */
-			G_ClientStateChange(player, ent, STATE_CROUCHED, true); /* change to stand state */
-			crouchingState = G_IsCrouched(ent) ? 1 : 0;
+			G_ClientStateChange(player, actor, STATE_CROUCHED, true); /* change to stand state */
+			crouchingState = G_IsCrouched(actor) ? 1 : 0;
 			if (!crouchingState)
 				autoCrouchRequired = true;
 		}
 	}
 
-	const pos_t length = std::min(G_ActorMoveLength(ent, level.pathingMap, to, false)
+	const pos_t length = std::min(G_ActorMoveLength(actor, level.pathingMap, to, false)
 				+ (autoCrouchRequired ? TU_CROUCH : 0), ROUTING_NOT_REACHABLE);
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
@@ -346,7 +346,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t t
 
 	/* assemble dvec-encoded move data */
 	VectorCopy(to, pos);
-	const int initTU = ent->TU;
+	const int initTU = actor->TU;
 
 	dvec_t dvtab[MAX_ROUTE];
 	byte numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
@@ -355,26 +355,26 @@ void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t t
 	G_EventEnd();
 
 	/* everything ok, found valid route? */
-	if (VectorCompare(pos, ent->pos)) {
+	if (VectorCompare(pos, actor->pos)) {
 		int oldHP = 0;
 		int oldSTUN = 0;
 		int oldState = 0;
 		byte* stepAmount = nullptr;
 		int usedTUs = 0;
 		/* no floor inventory at this point */
-		ent->resetFloor();
-		const int movingModifier = G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT);
+		actor->resetFloor();
+		const int movingModifier = G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT);
 
-		if (ent->team != TEAM_CIVILIAN)
-			G_EventMoveCameraTo(G_VisToPM(ent->visflags & ~G_TeamToVisMask(ent->team)), ent->pos);
+		if (actor->team != TEAM_CIVILIAN)
+			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->team)), actor->pos);
 
-		ent->moveinfo.steps = 0;
-		G_ReactionFireNofityClientStartMove(ent);
+		actor->moveinfo.steps = 0;
+		G_ReactionFireNofityClientStartMove(actor);
 		while (numdv > 0) {
-			int step = ent->moveinfo.steps;
+			int step = actor->moveinfo.steps;
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
-			const byte oldDir = ent->dir;
+			const byte oldDir = actor->dir;
 
 			/* get next dvec */
 			numdv--;
@@ -383,7 +383,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t t
 			const int dir = getDVdir(dvec);
 
 			/* turn around first */
-			int status = G_ActorDoTurn(ent, dir);
+			int status = G_ActorDoTurn(actor, dir);
 			if ((status & VIS_STOP) && visTeam != 0) {
 				autoCrouchRequired = false;
 				if (step == 0) {
@@ -392,22 +392,22 @@ void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t t
 				break;
 			}
 
-			if (visTeam != 0 && G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
+			if (visTeam != 0 && G_ActorShouldStopInMidMove(actor, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = false;
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
 				 * send the turn event if this is our first step */
-				if (oldDir != ent->dir && step == 0) {
-					G_EventActorTurn(*ent);
+				if (oldDir != actor->dir && step == 0) {
+					G_EventActorTurn(*actor);
 					usedTUs += TU_TURN;
 				}
 				break;
 			}
 
 			/* decrease TUs */
-			const float div = gi.GetTUsForDirection(dir, G_IsCrouched(ent));
+			const float div = gi.GetTUsForDirection(dir, G_IsCrouched(actor));
 			const int stepTUs = div + movingModifier;
-			if (usedTUs + stepTUs > ent->TU)
+			if (usedTUs + stepTUs > actor->TU)
 				break;
 			usedTUs += stepTUs;
 
@@ -416,112 +416,112 @@ void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t t
 			crouchFlag = 0;
 			/* Calculate the new position after the decrease in TUs, otherwise the game
 			 * remembers the false position if the time runs out */
-			PosAddDV(ent->pos, crouchFlag, dvec);
+			PosAddDV(actor->pos, crouchFlag, dvec);
 
 			/* slower if crouched */
-			if (G_IsCrouched(ent))
-				ent->speed = ACTOR_SPEED_CROUCHED;
+			if (G_IsCrouched(actor))
+				actor->speed = ACTOR_SPEED_CROUCHED;
 			else
-				ent->speed = ACTOR_SPEED_NORMAL;
-			ent->speed *= g_actorspeed->value;
+				actor->speed = ACTOR_SPEED_NORMAL;
+			actor->speed *= g_actorspeed->value;
 
 			if (crouchFlag == 0) { /* No change in crouch */
-				ent->calcOrigin();
+				actor->calcOrigin();
 
-				const int contentFlags = G_ActorGetContentFlags(ent->origin);
+				const int contentFlags = G_ActorGetContentFlags(actor->origin);
 
 				/* link it at new position - this must be done for every edict
 				 * movement - to let the server know about it. */
-				gi.LinkEdict(ent);
+				gi.LinkEdict(actor);
 
 				/* Only the PHALANX team has these stats right now. */
-				if (ent->chr.scoreMission) {
+				if (actor->chr.scoreMission) {
 					float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
-					if (G_IsCrouched(ent))
-						ent->chr.scoreMission->movedCrouched += truediv;
+					if (G_IsCrouched(actor))
+						actor->chr.scoreMission->movedCrouched += truediv;
 					else
-						ent->chr.scoreMission->movedNormal += truediv;
+						actor->chr.scoreMission->movedNormal += truediv;
 				}
 				/* write the step to the net */
-				G_WriteStep(ent, &stepAmount, dvec, contentFlags);
+				G_WriteStep(actor, &stepAmount, dvec, contentFlags);
 
 				status = 0;
 
-				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-				G_ActorSetTU(ent, initTU - usedTUs);
+				/* Set actor->TU because the reaction code relies on actor->TU being accurate. */
+				G_ActorSetTU(actor, initTU - usedTUs);
 
-				Edict* clientAction = ent->clientAction;
-				oldState = ent->state;
-				oldHP = ent->HP;
-				oldSTUN = ent->STUN;
+				Edict* clientAction = actor->clientAction;
+				oldState = actor->state;
+				oldHP = actor->HP;
+				oldSTUN = actor->STUN;
 				/* check triggers at new position */
-				if (G_TouchTriggers(ent)) {
+				if (G_TouchTriggers(actor)) {
 					if (!clientAction)
 						status |= VIS_STOP;
 				}
 
 				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent);
+				G_CheckVis(actor);
 
 				/* check for anything appearing, seen by "the moving one" */
-				status |= G_CheckVisTeamAll(ent->team, 0, ent);
+				status |= G_CheckVisTeamAll(actor->team, 0, actor);
 
-				G_TouchSolids(ent, 10.0f);
+				G_TouchSolids(actor, 10.0f);
 
 				/* state has changed - maybe we walked on a trigger_hurt */
-				if (oldState != ent->state || oldHP != ent->HP || oldSTUN != ent->STUN)
+				if (oldState != actor->state || oldHP != actor->HP || oldSTUN != actor->STUN)
 					status |= VIS_STOP;
 			} else if (crouchFlag == 1) {
 				/* Actor is standing */
-				G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+				G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 			} else if (crouchFlag == -1) {
 				/* Actor is crouching and should stand up */
-				G_ClientStateChange(player, ent, STATE_CROUCHED, false);
+				G_ClientStateChange(player, actor, STATE_CROUCHED, false);
 			}
 
 			/* check for reaction fire */
-			if (G_ReactionFireOnMovement(ent, step)) {
+			if (G_ReactionFireOnMovement(actor, step)) {
 				status |= VIS_STOP;
 
 				autoCrouchRequired = false;
 			}
 
 			/* check for death */
-			if (((oldHP != 0 && (oldHP != ent->HP || oldSTUN != ent->STUN)) || (oldState != ent->state)) && !G_IsDazed(ent)) {
+			if (((oldHP != 0 && (oldHP != actor->HP || oldSTUN != actor->STUN)) || (oldState != actor->state)) && !G_IsDazed(actor)) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
-				if (!G_IsDead(ent)) {
-					G_CheckDeathOrKnockout(ent, nullptr, nullptr, (oldHP - ent->HP) + (ent->STUN - oldSTUN));
+				if (!G_IsDead(actor)) {
+					G_CheckDeathOrKnockout(actor, nullptr, nullptr, (oldHP - actor->HP) + (actor->STUN - oldSTUN));
 				}
 				G_MatchEndCheck();
 				autoCrouchRequired = false;
 				break;
 			}
 
-			if (visTeam != 0 && G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
+			if (visTeam != 0 && G_ActorShouldStopInMidMove(actor, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = false;
 				break;
 			}
 
-			/* Restore ent->TU because the movement code relies on it not being modified! */
-			G_ActorSetTU(ent, initTU);
+			/* Restore actor->TU because the movement code relies on it not being modified! */
+			G_ActorSetTU(actor, initTU);
 		}
 
 		/* submit the TUs / round down */
-		G_ActorSetTU(ent, initTU - usedTUs);
+		G_ActorSetTU(actor, initTU - usedTUs);
 
-		G_SendStats(*ent);
+		G_SendStats(*actor);
 
 		/* end the move */
-		G_GetFloorItems(ent);
+		G_GetFloorItems(actor);
 		G_EventEnd();
 	}
 
 	if (autoCrouchRequired) {
 		/* toggle back to crouched state */
-		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
+		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 	}
 
-	G_ReactionFireNofityClientEndMove(ent);
+	G_ReactionFireNofityClientEndMove(actor);
 }

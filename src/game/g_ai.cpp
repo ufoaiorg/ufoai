@@ -1706,22 +1706,22 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 
 static Actor* G_SpawnAIPlayer (const Player& player, const equipDef_t* ed)
 {
-	Actor* ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
-	if (!ent) {
+	Actor* actor = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
+	if (!actor) {
 		gi.DPrintf("Not enough spawn points for team %i\n", player.getTeam());
 		return nullptr;
 	}
 
 	/* initialize the new actor */
-	AI_InitPlayer(player, ent, ed);
+	AI_InitPlayer(player, actor, ed);
 
-	G_TouchTriggers(ent);
+	G_TouchTriggers(actor);
 
-	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", ent->team, ent->getIdNum(), ent->chr.name);
-	G_CheckVis(ent, VT_PERISHCHK | VT_NEW);
-	G_CheckVisTeamAll(ent->team, 0, ent);
+	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", actor->team, actor->getIdNum(), actor->chr.name);
+	G_CheckVis(actor, VT_PERISHCHK | VT_NEW);
+	G_CheckVisTeamAll(actor->team, 0, actor);
 
-	return ent;
+	return actor;
 }
 
 /**
@@ -1764,13 +1764,13 @@ void AI_CheckRespawn (int team)
 
 	while (diff > 0) {
 		const Player* player = G_GetPlayerForTeam(team);
-		Actor* ent = G_SpawnAIPlayer(*player, ed);
-		if (ent == nullptr)
+		Actor* actor = G_SpawnAIPlayer(*player, ed);
+		if (actor == nullptr)
 			break;
 
-		const playermask_t playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(playerMask, true, *ent, nullptr);
-		G_EventActorAdd(~playerMask, *ent);
+		const playermask_t playerMask = G_VisToPM(actor->visflags);
+		G_AppearPerishEvent(playerMask, true, *actor, nullptr);
+		G_EventActorAdd(~playerMask, *actor);
 
 		diff--;
 	}
