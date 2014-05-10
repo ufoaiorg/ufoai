@@ -71,7 +71,7 @@ public:
 	/*================================ */
 
 	int mapNum;					/**< entity number in the map file */
-	const char* model;			/**< inline model (start with * and is followed by the model numberer)
+	const char* model;			/**< inline model (start with * and is followed by the model number)
 								 * or misc_model model name (e.g. md2) */
 
 	/** only used locally in game, not by server */
