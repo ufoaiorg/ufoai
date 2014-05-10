@@ -282,6 +282,10 @@ public:
 	inline void setMorale(int mor) {
 		morale = mor;
 	}
+	/* only Actors should have TUs */
+	inline void setTus(int tus) {
+		TU = tus;
+	}
 };
 
 /**

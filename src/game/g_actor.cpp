@@ -293,11 +293,11 @@ void G_ActorSetTU (Edict* ent, int tus)
 {
 	if (tus > 0 && tus < ent->TU) {
 		if (g_notu != nullptr && g_notu->integer) {
-			ent->TU = G_ActorCalculateMaxTU(ent);
+			ent->setTus(G_ActorCalculateMaxTU(ent));
 			return;
 		}
 	}
-	ent->TU = std::max(tus, 0);
+	ent->setTus(std::max(tus, 0));
 }
 
 void G_ActorUseTU (Edict* ent, int tus)
