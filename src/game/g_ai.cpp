@@ -842,7 +842,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	Actor* check = nullptr;
 
 	while ((check = G_EdictsGetNextLivingActor2(check))) {
-		if (G_EdictPosIsSameAs(check, to) || !AI_IsHostile(actor, check))
+		if (check->isSamePosAs(to) || !AI_IsHostile(actor, check))
 			continue;
 
 		/* shooting */
@@ -1343,7 +1343,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 		if (G_IsDead(actor))
 			break;
 		G_ClientMove(player, 0, actor, bestAia.to);
-		if (G_EdictPosIsSameAs(actor, bestAia.to))
+		if (actor->isSamePosAs(bestAia.to))
 			break;
 		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, bestAia.to, false);
 		if (length > G_ActorUsableTUs(actor) || length >= ROUTING_NOT_REACHABLE)

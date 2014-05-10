@@ -1016,7 +1016,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 				if (fd->ammo && !fd->splrad && weapon->def()->thrown && !weapon->def()->deplete) {
 					pos3_t drop;
 
-					if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
+					if (ent->isSamePosAs(at)) { /* throw under his own feet */
 						VectorCopy(at, drop);
 					} else {
 						impact[2] -= 20.0f; /* a hack: no-gravity items are flying high */
@@ -1160,7 +1160,7 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 	}
 
 	/* Don't allow to shoot yourself */
-	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
+	if (!fd->irgoggles && ent->isSamePosAs(at))
 		return false;
 	const Actor* targetEnt = nullptr;
 	if (FIRESH_IsMedikit(fd)) {
@@ -1249,7 +1249,7 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 	const int prevDir = mock ? ent->dir : 0;
 	vec3_t dir;
 
-	if (!G_EdictPosIsSameAs(ent, at)) {
+	if (!ent->isSamePosAs(at)) {
 		VectorSubtract(at, ent->pos, dir);
 		ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
 		assert(ent->dir < CORE_DIRECTIONS);

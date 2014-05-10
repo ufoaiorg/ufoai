@@ -322,17 +322,6 @@ void G_EdictSetOrigin (Edict* ent, const pos3_t newPos)
 }
 
 /**
- * @brief Check whether the edict is on the given position
- * @param ent The entity
- * @param cmpPos The grid position to compare to
- * @return true if positions are equal
- */
-bool G_EdictPosIsSameAs (const Edict* ent, const pos3_t cmpPos)
-{
-	return VectorCompare(cmpPos, ent->pos);
-}
-
-/**
  * @brief Called every frame to let the edicts tick
  */
 void G_EdictsThink (void)

@@ -256,6 +256,15 @@ public:
 	inline bool isSameAs (const Edict* other) const {
 		return this->getIdNum() == other->getIdNum();
 	}
+/**
+ * @brief Check whether the edict is on the given position
+ * @param cmpPos The grid position to compare to
+ * @return true if positions are equal
+ */
+	inline bool isSamePosAs (const pos3_t cmpPos) {
+		return VectorCompare(cmpPos, this->pos);
+	}
+
 	/*==================
 	 *	manipulators
 	 *==================*/
