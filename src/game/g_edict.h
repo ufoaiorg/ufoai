@@ -288,6 +288,9 @@ public:
 	/*
 	 *	A set of unsorted functions that are to be moved to class Actor later
 	 */
+	inline void setStun(int stu) {
+		STUN = stu;
+	}
 	inline void setMorale(int mor) {
 		morale = mor;
 	}

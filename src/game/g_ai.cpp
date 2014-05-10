@@ -1571,7 +1571,7 @@ static void AI_SetStats (Edict* ent, int team)
 
 	ent->HP = ent->chr.HP;
 	ent->setMorale(ent->chr.morale);
-	ent->STUN = 0;
+	ent->setStun(0);
 
 	/* hurt aliens in ufo crash missions (5%: almost dead, 10%: wounded, 15%: stunned)  */
 	if (level.hurtAliens && CHRSH_IsTeamDefAlien(ent->chr.teamDef)) {
@@ -1587,7 +1587,7 @@ static void AI_SetStats (Edict* ent, int team)
 		}
 		ent->HP -= damage;
 		if (!CHRSH_IsTeamDefRobot(ent->chr.teamDef))
-			ent->STUN = stun;
+			ent->setStun(stun);
 
 		for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
 			ent->chr.wounds.treatmentLevel[ent->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
