@@ -209,6 +209,13 @@ public:
 	inline void resetFloor () {
 		chr.inv.setFloorContainer(nullptr);
 	}
+/**
+ * @brief Calculate the edict's origin vector from it's grid position
+ */
+	inline void calcOrigin () {
+		gi.GridPosToVec(fieldSize, pos, origin);
+	}
+
 	/*==================
 	 *		getters
 	 *==================*/

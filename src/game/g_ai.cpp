@@ -416,7 +416,7 @@ bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
 				continue;
 
 			/* If enemies see this position, it doesn't qualify as hiding spot */
-			G_EdictCalcOrigin(ent);
+			ent->calcOrigin();
 			if (G_TestVis(team, ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 				continue;
 
@@ -486,7 +486,7 @@ bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, in
 			if (!AI_CheckPosition(ent))
 				continue;
 
-			G_EdictCalcOrigin(ent);
+			ent->calcOrigin();
 			const vec_t length = VectorDistSqr(ent->origin, target);
 			if (length < bestlength) {
 				vec3_t vfriend, venemy;
@@ -896,7 +896,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 			} else {
 				/* found a hiding spot */
 				VectorCopy(actor->pos, aia->stop);
-				G_EdictCalcOrigin(actor);
+				actor->calcOrigin();
 				bestActionScore += SCORE_HIDE;
 				/** @todo also add bonus for fleeing from reaction fire
 				 * and a huge malus if more than 1 move under reaction */
@@ -1202,7 +1202,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 					/* test for time and distance */
 					actionScore = SCORE_MISSION_TARGET + length;
 
-					G_EdictCalcOrigin(actor);
+					actor->calcOrigin();
 					/* Don't walk to enemy ambush */
 					Actor* check = nullptr;
 					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
@@ -1237,7 +1237,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 					actionScore = SCORE_MISSION_OPPONENT_TARGET;
 				}
 
-				G_EdictCalcOrigin(actor);
+				actor->calcOrigin();
 				/* Don't cluster everybody in the same place */
 				Actor* check = nullptr;
 				while ((check = G_EdictsGetNextLivingActor2(check))) {

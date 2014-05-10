@@ -378,7 +378,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 
 		/* if this entity is an bbox (e.g. actor), then center its origin based on its position */
 		if (ent->solid == SOLID_BBOX)
-			G_EdictCalcOrigin(ent);
+			ent->calcOrigin();
 	}
 
 	/* spawn ai players, if needed */
@@ -453,7 +453,7 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
 
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
-		G_EdictCalcOrigin(ent);		/* although vec is supposed to be the origin, calc origin from pos. That's safer. */
+		ent->calcOrigin();		/* although vec is supposed to be the origin, calc origin from pos. That's safer. */
 		ent->dmg = damage;
 		ent->particle = particle;
 		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
@@ -550,7 +550,7 @@ Edict* G_SpawnFloor (const pos3_t pos)
 	floorItem->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floorItem->pos);
 	floorItem->pos[2] = gi.GridFall(floorItem->fieldSize, floorItem->pos);
-	G_EdictCalcOrigin(floorItem);
+	floorItem->calcOrigin();
 	return floorItem;
 }
 
@@ -594,7 +594,7 @@ static void G_ActorSpawn (Edict* ent)
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.DPrintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
-	G_EdictCalcOrigin(ent);
+	ent->calcOrigin();
 
 	/* link it for collision detection */
 	ent->dir = AngleToDir(ent->angle);
@@ -632,7 +632,7 @@ static void G_Actor2x2Spawn (Edict* ent)
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.DPrintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
-	G_EdictCalcOrigin(ent);
+	ent->calcOrigin();
 
 	/* link it for collision detection */
 	ent->dir = AngleToDir(ent->angle);
@@ -785,7 +785,7 @@ static void SP_civilian_target (Edict* ent)
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
-	G_EdictCalcOrigin(ent);
+	ent->calcOrigin();
 }
 
 /**
@@ -979,7 +979,7 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 	ent->solid = solid;
 	ent->entBox.setMaxs(UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
 	ent->entBox.setMins(-UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
-	G_EdictCalcOrigin(ent);
+	ent->calcOrigin();
 	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;
 	ent->time = level.actualRound;

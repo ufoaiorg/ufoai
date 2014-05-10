@@ -134,7 +134,7 @@ void G_ActorFall (Edict* ent)
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
 
-	G_EdictCalcOrigin(ent);
+	ent->calcOrigin();
 	gi.LinkEdict(ent);
 
 	G_CheckVis(ent);
@@ -426,7 +426,7 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 			ent->speed *= g_actorspeed->value;
 
 			if (crouchFlag == 0) { /* No change in crouch */
-				G_EdictCalcOrigin(ent);
+				ent->calcOrigin();
 
 				const int contentFlags = G_ActorGetContentFlags(ent->origin);
 
