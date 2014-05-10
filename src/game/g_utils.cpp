@@ -552,10 +552,11 @@ int G_TouchTriggers (Edict* ent)
 
 	if (!G_IsLivingActor(ent))
 		return 0;
+	Actor* actor = makeActor(ent);
 
-	int num = G_GetTouchingEdicts(ent->absBox, touched, lengthof(touched), ent);
+	int num = G_GetTouchingEdicts(actor->absBox, touched, lengthof(touched), actor);
 
-	G_ResetTriggers(ent, touched, num);
+	G_ResetTriggers(actor, touched, num);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
@@ -566,9 +567,9 @@ int G_TouchTriggers (Edict* ent)
 			continue;
 		if (!hit->hasTouch())
 			continue;
-		if (hit->dmg == 0 && G_IsStunned(ent))
+		if (hit->dmg == 0 && G_IsStunned(actor))
 			continue;
-		if (hit->callTouch(ent))
+		if (hit->callTouch(actor))
 			usedNum++;
 		/* now after the use function was executed, we can add the ent to
 		 * the touched list of the trigger. We do this because we want to be
@@ -576,7 +577,7 @@ int G_TouchTriggers (Edict* ent)
 		 * the added entity. We have to do this after the use function was
 		 * called, because there are triggers that may only be triggered once
 		 * if someone touches it. */
-		G_TriggerAddToList(hit, ent);
+		G_TriggerAddToList(hit, actor);
 	}
 	return usedNum;
 }
@@ -590,12 +591,13 @@ int G_TouchSolids (Edict* ent, float extend)
 {
 	if (!G_IsLivingActor(ent))
 		return 0;
+	Actor* actor = makeActor(ent);
 
-	AABB absbox(ent->absBox);
+	AABB absbox(actor->absBox);
 	absbox.expand(extend);
 
 	Edict* touched[MAX_EDICTS];
-	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), ent);
+	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), actor);
 
 	int usedNum = 0;
 	/* be careful, it is possible to have an entity in this
@@ -608,7 +610,7 @@ int G_TouchSolids (Edict* ent, float extend)
 			continue;
 		if (!hit->hasTouch())
 			continue;
-		hit->callTouch(ent);
+		hit->callTouch(actor);
 		usedNum++;
 	}
 	return usedNum;
