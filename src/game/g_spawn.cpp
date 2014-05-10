@@ -830,7 +830,7 @@ static void SP_misc_mission (Edict* ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = G_MissionTouch;
+	other->setTouch(G_MissionTouch);
 	if (ent->target)
 		ent->use = G_MissionUse;
 	ent->setChild(other);
@@ -859,7 +859,7 @@ static void SP_misc_mission_aliens (Edict* ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = G_MissionTouch;
+	other->setTouch(G_MissionTouch);
 	ent->setChild(other);
 
 	gi.LinkEdict(ent);
@@ -996,7 +996,7 @@ static void SP_misc_smoke (Edict* ent)
 {
 	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damStunGas;
-	ent->touch = Touch_HurtTrigger;
+	ent->setTouch(Touch_HurtTrigger);
 	G_CheckVis(nullptr);
 }
 
@@ -1004,14 +1004,14 @@ static void SP_misc_fire (Edict* ent)
 {
 	G_SpawnField(ent, "fire", ET_FIRE, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damIncendiary;
-	ent->touch = Touch_HurtTrigger;
+	ent->setTouch(Touch_HurtTrigger);
 }
 
 static void SP_misc_smokestun (Edict* ent)
 {
 	G_SpawnField(ent, "stunsmoke", ET_SMOKESTUN, SOLID_TRIGGER);
 	ent->dmgtype = gi.csi->damStunGas;
-	ent->touch = Touch_HurtTrigger;
+	ent->setTouch(Touch_HurtTrigger);
 }
 
 static void SP_misc_message (Edict* ent)

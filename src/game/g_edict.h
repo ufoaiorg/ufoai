@@ -301,6 +301,9 @@ public:
 	inline int getTus() const {
 		return TU;
 	}
+	inline void setTouch(bool (*touch_)(Edict* self, Edict* activator)) {
+		touch = touch_;
+	}
 /**
  * @brief Calculates the amount of all currently reserved TUs
  * @param ent The actor to calculate the reserved TUs for

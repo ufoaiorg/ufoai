@@ -158,7 +158,7 @@ void SP_func_breakable (Edict* ent)
 
 	ent->destroy = Destroy_Breakable;
 	ent->use = Use_Breakable;
-	ent->touch = Touch_Breakable;
+	ent->setTouch(Touch_Breakable);
 }
 
 /*
@@ -349,7 +349,7 @@ void SP_func_door (Edict* ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = Touch_DoorTrigger;
+	other->setTouch(Touch_DoorTrigger);
 	other->reset = Reset_DoorTrigger;
 	ent->setChild(other);
 

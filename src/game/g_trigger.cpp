@@ -166,7 +166,7 @@ void Think_NextMapTrigger (Edict* self)
 
 	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map."));
 
-	self->touch = Touch_NextMapTrigger;
+	self->setTouch(Touch_NextMapTrigger);
 	self->think = nullptr;
 }
 
@@ -252,7 +252,7 @@ void SP_trigger_hurt (Edict* ent)
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
 
-	ent->touch = Touch_HurtTrigger;
+	ent->setTouch(Touch_HurtTrigger);
 	ent->reset = nullptr;
 	ent->setChild(nullptr);
 
@@ -319,7 +319,7 @@ void SP_trigger_touch (Edict* ent)
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
 
-	ent->touch = Touch_TouchTrigger;
+	ent->setTouch(Touch_TouchTrigger);
 	ent->reset = Reset_TouchTrigger;
 	ent->setChild(nullptr);
 
@@ -370,7 +370,7 @@ void SP_trigger_rescue (Edict* ent)
 
 	if (ent->spawnflags == 0)
 		ent->spawnflags |= 0xFF;
-	ent->touch = Touch_RescueTrigger;
+	ent->setTouch(Touch_RescueTrigger);
 	ent->reset = Reset_RescueTrigger;
 	ent->setChild(nullptr);
 
