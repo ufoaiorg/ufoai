@@ -1496,7 +1496,7 @@ void G_ClientDisconnect (Player& player)
 #if 0
 	/* now let's remove all the edicts that belongs to this player */
 	Actor* actor = nullptr;
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (actor->pnum == player.num)
 			G_ActorDie(actor, STATE_DEAD, nullptr);
 	}

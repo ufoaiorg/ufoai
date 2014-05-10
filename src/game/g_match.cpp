@@ -192,7 +192,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	attacker = nullptr;
 	Actor* actor = nullptr;
 	/* Calculate new scores/skills for the soldiers. */
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (!G_IsAI(actor))
 			G_UpdateCharacterExperience(actor);
 		else if (actor->team == team)
@@ -202,7 +202,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	/* if aliens won, make sure every soldier that is not in the rescue zone dies */
 	if (team == TEAM_ALIEN) {
 		actor = nullptr;
-		while ((actor = G_EdictsGetNextLivingActor2(actor)))
+		while ((actor = G_EdictsGetNextLivingActor(actor)))
 			if (actor->team != team && !G_ActorIsInRescueZone(actor)) {
 				actor->HP = 0;
 				G_ActorDieOrStun(actor, attacker);

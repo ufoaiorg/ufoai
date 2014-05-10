@@ -98,7 +98,7 @@ static int G_PlayerSoldiersCount (const Player& player)
 	int cnt = 0;
 	Actor* actor = nullptr;
 
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (actor->pnum == player.getNum())
 			cnt++;
 	}

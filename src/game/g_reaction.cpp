@@ -741,7 +741,7 @@ void ReactionFire::updateAllTargets (const Edict* target)
 	Actor* shooter = nullptr;
 
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS) */
 		if (isPossible(shooter, target)) {
 			const int TUs = G_ReactionFireGetTUsForItem(shooter, target);
@@ -853,7 +853,7 @@ bool ReactionFire::checkExecution (const Edict* target, int step)
 	bool fired = false;
 
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target);
 		/* indicates an RF weapon is there */
 		if (tus <= 1)
@@ -884,7 +884,7 @@ static void G_ReactionFirePrintSituation (Edict* target)
 
 	Actor* shooter = nullptr;
 	/* check all possible shooters */
-	while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		if (G_IsAlien(shooter) || G_IsCivilian(shooter))
 			continue;
 		char msgHdr[100];
@@ -956,7 +956,7 @@ void G_ReactionFirePreShot (const Edict* target, const int fdTime)
 		Actor* shooter = nullptr;
 		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
-		while ((shooter = G_EdictsGetNextLivingActor2(shooter))) {
+		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
 			/* indicates an RF weapon is there */
 			if (entTUs <= 1)

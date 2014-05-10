@@ -41,7 +41,7 @@ Edict* G_EdictsGetFirst(void);
 Edict* G_EdictsGetNext(Edict* lastEnt);
 Edict* G_EdictsGetNextInUse(Edict* lastEnt);
 Actor* G_EdictsGetNextActor(Actor* lastEnt);
-Actor* G_EdictsGetNextLivingActor2(Actor* lastEnt);
+Actor* G_EdictsGetNextLivingActor(Actor* lastEnt);
 Actor* G_EdictsGetNextLivingActorOfTeam(Actor* lastEnt, const int team);
 Actor* G_EdictsGetActorByUCN(const int ucn, const int team);
 Edict* G_EdictsGetTriggerNextMaps(Edict* lastEnt);

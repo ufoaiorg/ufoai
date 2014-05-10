@@ -617,7 +617,7 @@ static int AIL_see (lua_State* L)
 
 	n = 0;
 	/* Get visible things. */
-	while ((check = G_EdictsGetNextLivingActor2(check))) {
+	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
 		if (vision == 0 && (team == TEAM_ALL || check->getTeam() == team) /* Check for team match if needed. */

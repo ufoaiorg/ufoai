@@ -194,7 +194,7 @@ Edict* G_EdictsGetTriggerNextMaps (Edict* lastEnt)
  * @brief Iterate through the living actor entities
  * @param lastEnt The entity found in the previous iteration; if nullptr, we start at the beginning
  */
-Actor* G_EdictsGetNextLivingActor2 (Actor* lastEnt)
+Actor* G_EdictsGetNextLivingActor (Actor* lastEnt)
 {
 	Edict* ent = lastEnt;
 
@@ -218,7 +218,7 @@ Actor* G_EdictsGetNextLivingActorOfTeam (Actor* lastEnt, const int team)
 {
 	Actor* actor = lastEnt;
 
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (actor->team == team)
 			break;
 	}
@@ -272,7 +272,7 @@ Actor* G_EdictsGetLivingActorFromPos (const pos3_t pos)
 {
 	Actor* actor = nullptr;
 
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (!VectorCompare(pos, actor->pos))
 			continue;
 

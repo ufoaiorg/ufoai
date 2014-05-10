@@ -213,7 +213,7 @@ static void G_ListMissionScore_f (void)
 	}
 
 	Actor* actor = nullptr;
-	while ((actor = G_EdictsGetNextLivingActor2(actor))) {
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (team >= 0 && actor->getTeam() != team)
 			continue;
 
@@ -345,7 +345,7 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	Actor* actor = G_EdictsGetNextLivingActor2(nullptr);
+	Actor* actor = G_EdictsGetNextLivingActor(nullptr);
 	if (!actor)
 		return;	/* didn't find any */
 
