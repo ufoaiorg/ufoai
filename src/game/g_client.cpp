@@ -651,6 +651,9 @@ int G_ClientAction (Player& player)
 	if (ent == nullptr)
 		return action;
 
+	/* we expext this ent to be an Actor */
+	Actor* actor = makeActor(ent);
+
 	const char* format = pa_format[action];
 
 	switch (action) {
@@ -665,7 +668,7 @@ int G_ClientAction (Player& player)
 
 	case PA_MOVE:
 		gi.ReadFormat(format, &pos);
-		G_ClientMove(player, player.getTeam(), ent, pos);
+		G_ClientMove(player, player.getTeam(), actor, pos);
 		break;
 
 	case PA_STATE:
