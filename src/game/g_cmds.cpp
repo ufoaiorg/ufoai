@@ -340,7 +340,7 @@ static void G_TouchEdict_f (void)
 		return;
 
 	e = G_EdictsGetByNum(i);
-	if (!e->touch) {
+	if (!e->hasTouch()) {
 		gi.DPrintf("No touch function for entity %s\n", e->classname);
 		return;
 	}
@@ -350,7 +350,7 @@ static void G_TouchEdict_f (void)
 		return;	/* didn't find any */
 
 	gi.DPrintf("Call touch function for %s\n", e->classname);
-	e->touch(e, actor);
+	e->callTouch(e, actor);
 }
 
 static void G_UseEdict_f (void)

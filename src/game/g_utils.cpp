@@ -564,11 +564,11 @@ int G_TouchTriggers (Edict* ent)
 		Edict* hit = touched[i];
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
-		if (!hit->touch)
+		if (!hit->hasTouch())
 			continue;
 		if (hit->dmg == 0 && G_IsStunned(ent))
 			continue;
-		if (hit->touch(hit, ent))
+		if (hit->callTouch(hit, ent))
 			usedNum++;
 		/* now after the use function was executed, we can add the ent to
 		 * the touched list of the trigger. We do this because we want to be
@@ -606,9 +606,9 @@ int G_TouchSolids (Edict* ent, float extend)
 			continue;
 		if (!hit->inuse)
 			continue;
-		if (!hit->touch)
+		if (!hit->hasTouch())
 			continue;
-		hit->touch(hit, ent);
+		hit->callTouch(hit, ent);
 		usedNum++;
 	}
 	return usedNum;
@@ -637,8 +637,8 @@ void G_TouchEdicts (Edict* trigger, float extend)
 		Edict* hit = touched[i];
 		if (!hit->inuse)
 			continue;
-		if (trigger->touch)
-			trigger->touch(trigger, hit);
+		if (trigger->hasTouch())
+			trigger->callTouch(trigger, hit);
 	}
 }
 

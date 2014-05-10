@@ -140,7 +140,7 @@ public:
 
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
-	bool (*touch)(Edict* self, Edict* activator);
+	bool (*_touch)(Edict* self, Edict* activator);
 	/** reset function that is called before the touch triggers are called */
 	void (*reset)(Edict* self, Edict* activator);
 	float nextthink;
@@ -302,7 +302,13 @@ public:
 		return TU;
 	}
 	inline void setTouch(bool (*touch_)(Edict* self, Edict* activator)) {
-		touch = touch_;
+		_touch = touch_;
+	}
+	inline bool hasTouch() const {
+		return _touch;
+	}
+	inline bool callTouch(Edict* self, Edict* activator) {
+		return _touch(self, activator);
 	}
 /**
  * @brief Calculates the amount of all currently reserved TUs
