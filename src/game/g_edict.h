@@ -303,3 +303,5 @@ public:
 		return morale;
 	}
 };
+
+Actor* makeActor (Edict* ent);Actor* makeActor (Edict* ent);

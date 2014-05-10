@@ -805,7 +805,7 @@ static int AIL_positionshoot (lua_State* L)
 {
 	pos3_t to, bestPos;
 	vec3_t check;
-	Edict* ent;
+	Actor* ent;
 	int dist;
 	int xl, yl, xh, yh;
 	int min_tu;

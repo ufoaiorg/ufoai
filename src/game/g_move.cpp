@@ -89,7 +89,7 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
  * @param[in] distance The distance in TUs to calculate the move for.
  * @param[in] movingActor The actor to calculate the move for
  */
-void G_MoveCalc (int team, const Edict* movingActor, const pos3_t from, int distance)
+void G_MoveCalc (int team, const Actor* movingActor, const pos3_t from, int distance)
 {
 	G_MoveCalcLocal(level.pathingMap, team, movingActor, from, distance);
 }
@@ -320,7 +320,7 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
+	G_MoveCalc(visTeam, makeActor(ent), ent->pos, ent->TU);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player.autostand) {

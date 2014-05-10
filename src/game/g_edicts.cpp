@@ -332,3 +332,18 @@ void G_EdictsThink (void)
 		ent->think(ent);
 	}
 }
+
+/**
+ * @brief Convert an Edict pointer into an Actor pointer
+ */
+Actor* makeActor (Edict* ent)
+{
+	if (G_IsActor(ent)) {
+		/* should be a dynamic_cast one fine day */
+		Actor* actor = static_cast<Actor*>(ent);
+		if (actor)
+			return actor;
+	}
+	Sys_Error("Unexpected non-Actor Edict found.");
+	return nullptr;
+}
