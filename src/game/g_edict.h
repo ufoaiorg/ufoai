@@ -321,7 +321,6 @@ public:
 		const chrReservations_t* res = &chr.reservedTus;
 		return res->reaction + res->shot + res->crouch;
 	}
-
 };
 
 /**
@@ -334,6 +333,13 @@ class Actor : public Edict {
 public:
 	inline int getMorale() const {
 		return morale;
+	}
+/**
+ * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
+ * @return The amount of usable TUs for the given actor edict
+ */
+	inline int getUsableTUs () const {
+		return getTus() - getReservedTUs();
 	}
 };
 

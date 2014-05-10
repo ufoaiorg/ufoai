@@ -819,7 +819,7 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Actor* actor)
 static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
-	int tu = G_ActorUsableTUs(actor) - move;
+	int tu = actor->getUsableTUs() - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -950,7 +950,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
-	const int tu = G_ActorUsableTUs(actor) - move;
+	const int tu = actor->getUsableTUs() - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -1065,7 +1065,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
 	const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
-	const int tu = G_ActorUsableTUs(actor) - move;
+	const int tu = actor->getUsableTUs() - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -1196,7 +1196,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 					if (!AI_FindMissionLocation(actor, checkPoint->pos))
 						continue;
 
-					const int length = G_ActorUsableTUs(actor) - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
+					const int length = actor->getUsableTUs() - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
 					i++;
 
 					/* test for time and distance */
@@ -1277,12 +1277,12 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 
 	/* calculate move table */
-	G_MoveCalc(0, actor, actor->pos, G_ActorUsableTUs(actor));
+	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (G_ActorUsableTUs(actor) + 1) / 2;
+	const int dist = (actor->getUsableTUs() + 1) / 2;
 	const int xl = std::max((int) actor->pos[0] - dist, 0);
 	const int yl = std::max((int) actor->pos[1] - dist, 0);
 	const int xh = std::min((int) actor->pos[0] + dist, PATHFINDING_WIDTH);
@@ -1305,7 +1305,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 				const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
 				if (move >= ROUTING_NOT_REACHABLE)
 					continue;
-				if (move > G_ActorUsableTUs(actor))
+				if (move > actor->getUsableTUs())
 					continue;
 
 				if (G_IsCivilian(actor))
@@ -1346,7 +1346,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 		if (actor->isSamePosAs(bestAia.to))
 			break;
 		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, bestAia.to, false);
-		if (length > G_ActorUsableTUs(actor) || length >= ROUTING_NOT_REACHABLE)
+		if (length > actor->getUsableTUs() || length >= ROUTING_NOT_REACHABLE)
 			break;
 	}
 	/* test for possible death during move. reset bestAia due to dead status */
@@ -1388,7 +1388,7 @@ void G_AddToWayPointList (Edict* ent)
 void AI_TurnIntoDirection (Actor* actor, const pos3_t pos)
 {
 	const byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
-	G_MoveCalc(actor->team, actor, pos, G_ActorUsableTUs(actor));
+	G_MoveCalc(actor->team, actor, pos, actor->getUsableTUs());
 
 	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {

@@ -319,7 +319,7 @@ static int actorL_shoot (lua_State* L)
 
 		tu = (int) lua_tonumber(L, 2);
 	} else {
-		tu = G_ActorUsableTUs(AIL_ent);
+		tu = AIL_ent->getUsableTUs();
 	}
 
 	shootType = ST_RIGHT;
@@ -495,7 +495,7 @@ static int pos3L_goto (lua_State* L)
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
-	G_MoveCalc(0, AIL_ent, AIL_ent->pos, G_ActorUsableTUs(AIL_ent));
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
 	gi.MoveStore(level.pathingMap);
 
 	/* Move. */
@@ -817,10 +817,10 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* Make things more simple. */
 	ent = AIL_ent;
-	dist = G_ActorUsableTUs(ent);
+	dist = ent->getUsableTUs();
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent, ent->pos, G_ActorUsableTUs(ent));
+	G_MoveCalc(0, ent, ent->pos, ent->getUsableTUs());
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
@@ -846,7 +846,7 @@ static int AIL_positionshoot (lua_State* L)
 				/* Can we see the target? */
 				gi.GridPosToVec(ent->fieldSize, to, check);
 				const pos_t tu = G_ActorMoveLength(ent, level.pathingMap, to, true);
-				if (tu > G_ActorUsableTUs(ent) || tu == ROUTING_NOT_REACHABLE)
+				if (tu > ent->getUsableTUs() || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
@@ -858,7 +858,7 @@ static int AIL_positionshoot (lua_State* L)
 			}
 
 	/* No position found in range. */
-	if (min_tu > G_ActorUsableTUs(ent)) {
+	if (min_tu > ent->getUsableTUs()) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -876,7 +876,7 @@ static int AIL_positionshoot (lua_State* L)
 static int AIL_positionhide (lua_State* L)
 {
 	pos3_t save;
-	int tus = G_ActorUsableTUs(AIL_ent);
+	int tus = AIL_ent->getUsableTUs();
 	int hidingTeam;
 
 	VectorCopy(AIL_ent->pos, save);
@@ -925,7 +925,7 @@ static int AIL_positionherd (lua_State* L)
 
 	VectorCopy(AIL_ent->pos, save);
 	target = lua_toactor(L, 1);
-	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, G_ActorUsableTUs(AIL_ent))) {
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, AIL_ent->getUsableTUs())) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);
