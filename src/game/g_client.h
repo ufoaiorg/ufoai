@@ -51,7 +51,7 @@ bool G_SetTeamForPlayer(Player& player, const int team);
 int G_ClientGetTeamNum(const Player& player);
 int G_ClientGetTeamNumPref(const Player& player);
 bool G_ClientIsReady(const Player* player);
-Edict* G_ClientGetFreeSpawnPointForActorSize(const Player& player, const actorSizeEnum_t actorSize);
+Actor* G_ClientGetFreeSpawnPointForActorSize(const Player& player, const actorSizeEnum_t actorSize);
 void G_ClientInitActorStates(const Player& player);
 void G_ClientTeamInfo(const Player& player);
 bool G_ClientBegin(Player& player);

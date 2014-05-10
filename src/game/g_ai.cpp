@@ -1697,9 +1697,9 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	return ed;
 }
 
-static Edict* G_SpawnAIPlayer (const Player& player, const equipDef_t* ed)
+static Actor* G_SpawnAIPlayer (const Player& player, const equipDef_t* ed)
 {
-	Edict* ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
+	Actor* ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 	if (!ent) {
 		gi.DPrintf("Not enough spawn points for team %i\n", player.getTeam());
 		return nullptr;
@@ -1757,7 +1757,7 @@ void AI_CheckRespawn (int team)
 
 	while (diff > 0) {
 		const Player* player = G_GetPlayerForTeam(team);
-		Edict* ent = G_SpawnAIPlayer(*player, ed);
+		Actor* ent = G_SpawnAIPlayer(*player, ed);
 		if (ent == nullptr)
 			break;
 

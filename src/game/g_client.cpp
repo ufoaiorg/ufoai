@@ -1041,7 +1041,7 @@ static void G_ThinkActorGoCrouch (Edict* ent)
  * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c nullptr if no free spawning point was found
  */
-Edict* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorSizeEnum_t actorSize)
+Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorSizeEnum_t actorSize)
 {
 	Edict* ent;
 
@@ -1097,7 +1097,7 @@ Edict* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 
 	G_ReactionFireTargetsCreate(ent);
 
-	return ent;
+	return makeActor(ent);
 }
 
 /**
@@ -1265,7 +1265,7 @@ void G_ClientTeamInfo (const Player& player)
 		if (player.getTeam() == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player.getTeam()))
 			G_ClientSkipActorInfo();
 		else {
-			Edict* ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
+			Actor* ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 			if (ent) {
 				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), ent->team, ent->fieldSize);
 
