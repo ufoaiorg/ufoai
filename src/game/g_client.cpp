@@ -403,7 +403,7 @@ bool G_ActionCheckForCurrentTeam (const Player& player, Edict* ent, int TU)
  */
 bool G_ActionCheckForReaction (const Player& player, Edict* ent, int TU)
 {
-	if (TU > ent->TU) {
+	if (TU > ent->getTus()) {
 		return false;
 	}
 
@@ -1238,7 +1238,7 @@ void G_ClientInitActorStates (const Player& player)
 			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
 
 		/* these state changes are not consuming any TUs */
-		saveTU = actor->TU;
+		saveTU = actor->getTus();
 		G_ClientStateChange(player, actor, gi.ReadShort(), false);
 		hand = (actorHands_t)gi.ReadShort();
 		fmIdx = gi.ReadShort();

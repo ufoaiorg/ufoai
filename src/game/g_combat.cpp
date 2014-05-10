@@ -1362,7 +1362,7 @@ bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_typ
 
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
-			G_ActorSetTU(ent, ent->TU - tusNeeded);
+			G_ActorSetTU(ent, ent->getTus() - tusNeeded);
 			G_SendStats(*ent);
 		}
 

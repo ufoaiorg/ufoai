@@ -286,6 +286,9 @@ public:
 	inline void setTus(int tus) {
 		TU = tus;
 	}
+	inline int getTus() const {
+		return TU;
+	}
 };
 
 /**
@@ -296,9 +299,6 @@ public:
  */
 class Actor : public Edict {
 public:
-	inline int getTus() const {
-		return TU;
-	}
 	inline int getMorale() const {
 		return morale;
 	}

@@ -138,7 +138,7 @@ int G_ActorUsableTUs (const Edict* ent)
 	if (!ent)
 		return 0;
 
-	return ent->TU - G_ActorGetReservedTUs(ent);
+	return ent->getTus() - G_ActorGetReservedTUs(ent);
 }
 
 /**
@@ -169,7 +169,7 @@ int G_ActorGetTUForReactionFire (const Edict* ent)
  */
 void G_ActorReserveTUs (Edict* ent, int resReaction, int resShot, int resCrouch)
 {
-	if (ent->TU >= resReaction + resShot + resCrouch) {
+	if (ent->getTus() >= resReaction + resShot + resCrouch) {
 		ent->chr.reservedTus.reaction = resReaction;
 		ent->chr.reservedTus.shot = resShot;
 		ent->chr.reservedTus.crouch = resCrouch;
@@ -291,7 +291,7 @@ void G_ActorGiveTimeUnits (Edict* ent)
 
 void G_ActorSetTU (Edict* ent, int tus)
 {
-	if (tus > 0 && tus < ent->TU) {
+	if (tus > 0 && tus < ent->getTus()) {
 		if (g_notu != nullptr && g_notu->integer) {
 			ent->setTus(G_ActorCalculateMaxTU(ent));
 			return;
@@ -302,7 +302,7 @@ void G_ActorSetTU (Edict* ent, int tus)
 
 void G_ActorUseTU (Edict* ent, int tus)
 {
-	G_ActorSetTU(ent, ent->TU - tus);
+	G_ActorSetTU(ent, ent->getTus() - tus);
 }
 
 static bool G_ActorStun (Edict* ent, const Edict* attacker)
@@ -588,7 +588,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
 	/* Because moveInInventory don't know anything about character_t and it updates actor->TU,
 	 * we need to save original actor->TU for the sake of checking TU reservations. */
-	int originalTU = actor->TU;
+	int originalTU = actor->getTus();
 	int reservedTU = G_ActorGetReservedTUs(actor);
 	/* Temporary decrease actor->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(actor, reservedTU);
@@ -596,7 +596,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	inventory_action_t ia;
 	ia = game.invi.moveInInventory(&actor->chr.inv, fromContType, fItem, toContType, tx, ty, checkaction ? &actor->TU : nullptr, &item2);
 	/* Now restore the original actor->TU and decrease it for TU used for inventory move. */
-	G_ActorSetTU(actor, originalTU - (originalTU - reservedTU - actor->TU));
+	G_ActorSetTU(actor, originalTU - (originalTU - reservedTU - actor->getTus()));
 
 	switch (ia) {
 	case IA_NONE:

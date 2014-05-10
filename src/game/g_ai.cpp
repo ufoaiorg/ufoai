@@ -1046,8 +1046,8 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	/* add laziness */
-	if (actor->TU)
-		bestActionScore += SCORE_CIV_LAZINESS * tu / actor->TU;
+	if (actor->getTus())
+		bestActionScore += SCORE_CIV_LAZINESS * tu / actor->getTus();
 	/* add random effects */
 	bestActionScore += SCORE_CIV_RANDOM * frand();
 
