@@ -957,10 +957,6 @@ static int AIL_distance (lua_State* L)
  * @brief The think function for the ai controlled aliens
  * @param[in] player
  * @param[in] actor
- * @sa AI_FighterCalcBestAction
- * @sa AI_CivilianCalcBestAction
- * @sa G_ClientMove
- * @sa G_ClientShoot
  */
 void AIL_ActorThink (Player& player, Actor* actor)
 {

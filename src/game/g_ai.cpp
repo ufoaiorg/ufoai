@@ -1419,8 +1419,6 @@ static bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
  * @param[in] actor The ai controlled edict or the human actor edict
  * @sa AI_FighterCalcActionScore
  * @sa AI_CivilianCalcActionScore
- * @sa G_ClientMove
- * @sa G_ClientShoot
  */
 void AI_ActorThink (Player& player, Actor* actor)
 {
