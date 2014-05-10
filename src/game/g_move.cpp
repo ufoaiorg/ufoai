@@ -305,7 +305,7 @@ pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t t
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t to)
+void G_ClientMove (const Player& player, int visTeam, Actor* ent, const pos3_t to)
 {
 	pos3_t pos;
 	bool autoCrouchRequired = false;
@@ -320,7 +320,7 @@ void G_ClientMove (const Player& player, int visTeam, Edict* ent, const pos3_t t
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, makeActor(ent), ent->pos, ent->TU);
+	G_MoveCalc(visTeam, ent, ent->pos, ent->TU);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player.autostand) {
