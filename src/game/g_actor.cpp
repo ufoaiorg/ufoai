@@ -117,17 +117,6 @@ void G_ActorSetClientAction (Edict* actor, Edict* ent)
 }
 
 /**
- * @brief Calculates the amount of all currently reserved TUs
- * @param ent The actor to calculate the reserved TUs for
- * @return The amount of reserved TUs for reaction, shooting and crouching
- */
-int G_ActorGetReservedTUs (const Edict* ent)
-{
-	const chrReservations_t* res = &ent->chr.reservedTus;
-	return res->reaction + res->shot + res->crouch;
-}
-
-/**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
  * @param[in] ent The actor to calculate the amount of usable TUs for. If @c ent is @c nullptr, we
  * return zero here
@@ -138,7 +127,7 @@ int G_ActorUsableTUs (const Edict* ent)
 	if (!ent)
 		return 0;
 
-	return ent->getTus() - G_ActorGetReservedTUs(ent);
+	return ent->getTus() - ent->getReservedTUs();
 }
 
 /**
@@ -589,7 +578,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	/* Because moveInInventory don't know anything about character_t and it updates actor->TU,
 	 * we need to save original actor->TU for the sake of checking TU reservations. */
 	int originalTU = actor->getTus();
-	int reservedTU = G_ActorGetReservedTUs(actor);
+	int reservedTU = actor->getReservedTUs();
 	/* Temporary decrease actor->TU to make moveInInventory do what expected. */
 	G_ActorUseTU(actor, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid actor->TU. */

@@ -67,7 +67,6 @@ void G_ActorUseDoor(Edict* actor, Edict* door);
 bool G_ActorIsInRescueZone(const Edict* actor);
 void G_ActorSetInRescueZone(Edict* actor, bool inRescueZone);
 void G_ActorSetClientAction(Edict* actor, Edict* ent);
-int G_ActorGetReservedTUs(const Edict* ent);
 int G_ActorUsableTUs(const Edict* ent);
 int G_ActorGetTUForReactionFire(const Edict* ent);
 void G_ActorReserveTUs(Edict* ent, int resReaction, int resShot, int resCrouch);
