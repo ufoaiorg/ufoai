@@ -87,7 +87,7 @@ public:
 
 	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */
 	int HP;						/**< remaining healthpoints */
-	int STUN;					/**< The stun damage received in a mission. */
+	int _STUN;					/**< The stun damage received in a mission. */
 	int morale;					/**< the current morale value */
 
 	int state;					/**< the player state - dead, shaken.... */
@@ -289,13 +289,13 @@ public:
 	 *	A set of unsorted functions that are to be moved to class Actor later
 	 */
 	inline void setStun(int stu) {
-		STUN = stu;
+		_STUN = stu;
 	}
 	inline void addStun(int stu) {
-		STUN += stu;
+		_STUN += stu;
 	}
 	inline int getStun() const {
-		return STUN;
+		return _STUN;
 	}
 	inline void setMorale(int mor) {
 		morale = mor;

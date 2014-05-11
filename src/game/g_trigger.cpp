@@ -224,7 +224,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 		return false;
 
 	if (stunEl || (stunGas && !isRobot)) {
-		activator->STUN += damage;
+		activator->addStun(damage);
 	} else if (shock) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {

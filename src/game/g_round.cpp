@@ -122,9 +122,9 @@ static void G_UpdateStunState (int team)
 	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
 		if (actor->getStun() > 0) {
 			if (regen > actor->getStun())
-				actor->STUN = 0;
+				actor->setStun(0);
 			else
-				actor->STUN -= regen;
+				actor->addStun(-regen);
 
 			G_ActorCheckRevitalise(actor);
 		}
