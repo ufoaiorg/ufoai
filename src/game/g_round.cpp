@@ -116,9 +116,9 @@ static int G_PlayerSoldiersCount (const Player& player)
  */
 static void G_UpdateStunState (int team)
 {
-	Actor* actor = nullptr;
 	const int regen = 1;
 
+	Actor* actor = nullptr;
 	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
 		if (actor->STUN > 0) {
 			if (regen > actor->STUN)

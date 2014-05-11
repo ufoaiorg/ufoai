@@ -396,7 +396,7 @@ static void G_ActorRevitalise (Edict* ent)
 	G_PrintStats("%s is revitalized.", ent->chr.name);
 }
 
-void G_ActorCheckRevitalise (Edict* ent)
+void G_ActorCheckRevitalise (Actor* ent)
 {
 	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
 		/* check that we could move after we stood up */

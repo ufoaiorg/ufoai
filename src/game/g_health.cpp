@@ -84,7 +84,7 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
  * @param[in] heal The value of the damage to heal.
  * @param[in] healerTeam The index of the team of the healer.
  */
-void G_TreatActor (Edict* target, const fireDef_t* const fd, const int heal, const int healerTeam)
+void G_TreatActor (Actor* target, const fireDef_t* const fd, const int heal, const int healerTeam)
 {
 	assert(target->chr.teamDef);
 
