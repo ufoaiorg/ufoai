@@ -403,10 +403,10 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, victim, damage);
 		} else if (stunEl) {
-			victim->STUN += damage;
+			victim->addStun(damage);
 		} else if (stunGas) {
 			if (!isRobot) /* Can't stun robots with gas */
-				victim->STUN += damage;
+				victim->addStun(damage);
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should have known that there was a flashbang coming. */
 			if (!isRobot && victim->team != attacker->team) {
