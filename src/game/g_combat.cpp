@@ -447,7 +447,7 @@ void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t* fd
 	/* Sanity check */
 	target->HP = std::min(std::max(target->HP, 0), target->chr.maxHP);
 	/* Check death/knockout. */
-	if (target->HP == 0 || target->HP <= target->STUN) {
+	if (target->HP == 0 || target->HP <= target->getStun()) {
 		G_SendStats(*target);
 
 		if (G_ActorDieOrStun(target, attacker)) {

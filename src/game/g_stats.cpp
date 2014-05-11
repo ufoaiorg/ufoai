@@ -36,7 +36,7 @@ void G_SendStats (Edict& ent)
 	/* extra sanity checks */
 	assert(ent.TU >= 0);
 	ent.HP = std::max(ent.HP, 0);
-	ent.STUN = std::min(ent.STUN, 255);
+	ent.STUN = std::min(ent.getStun(), 255);
 	ent.morale = std::max(ent.morale, 0);
 
 	G_EventActorStats(ent, G_TeamToPM(ent.team));

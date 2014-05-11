@@ -291,6 +291,9 @@ public:
 	inline void setStun(int stu) {
 		STUN = stu;
 	}
+	inline int getStun() const {
+		return STUN;
+	}
 	inline void setMorale(int mor) {
 		morale = mor;
 	}

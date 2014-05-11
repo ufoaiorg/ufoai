@@ -379,7 +379,7 @@ void G_EventActorStats (const Edict& ent, playermask_t playerMask)
 	G_EventAdd(playerMask, EV_ACTOR_STATS, ent.getIdNum());
 	gi.WriteByte(ent.TU);
 	gi.WriteShort(ent.HP);
-	gi.WriteByte(ent.STUN);
+	gi.WriteByte(ent.getStun());
 	gi.WriteByte(ent.morale);
 	G_EventEnd();
 }

@@ -398,7 +398,7 @@ static void G_ActorRevitalise (Edict* ent)
 
 void G_ActorCheckRevitalise (Actor* ent)
 {
-	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
+	if (G_IsStunned(ent) && ent->getStun() < ent->HP) {
 		/* check that we could move after we stood up */
 		Edict* otherActor = nullptr;
 		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {

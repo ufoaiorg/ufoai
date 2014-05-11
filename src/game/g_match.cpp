@@ -161,7 +161,7 @@ static void G_SendCharacterData (const Actor* ent)
 	gi.WriteShort(ent->chr.ucn);
 
 	gi.WriteShort(ent->HP);
-	gi.WriteByte(ent->STUN);
+	gi.WriteByte(ent->getStun());
 	gi.WriteByte(ent->morale);
 
 	for (k = 0; k < BODYPART_MAXTYPE; ++k)

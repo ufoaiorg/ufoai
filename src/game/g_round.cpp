@@ -120,8 +120,8 @@ static void G_UpdateStunState (int team)
 
 	Actor* actor = nullptr;
 	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
-		if (actor->STUN > 0) {
-			if (regen > actor->STUN)
+		if (actor->getStun() > 0) {
+			if (regen > actor->getStun())
 				actor->STUN = 0;
 			else
 				actor->STUN -= regen;
