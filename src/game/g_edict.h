@@ -314,7 +314,6 @@ public:
 	}
 /**
  * @brief Calculates the amount of all currently reserved TUs
- * @param ent The actor to calculate the reserved TUs for
  * @return The amount of reserved TUs for reaction, shooting and crouching
  */
 	inline int getReservedTUs () const {
