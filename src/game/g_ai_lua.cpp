@@ -229,13 +229,11 @@ static int actorL_register (lua_State* L)
  */
 static int lua_isactor (lua_State* L, int index)
 {
-	int ret;
-
 	if (lua_getmetatable(L, index) == 0)
 		return 0;
 	lua_getfield(L, LUA_REGISTRYINDEX, ACTOR_METATABLE);
 
-	ret = 0;
+	int ret = 0;
 	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
 		ret = 1;
 
@@ -260,8 +258,7 @@ static aiActor_t* lua_toactor (lua_State* L, int index)
  */
 static aiActor_t* lua_pushactor (lua_State* L, aiActor_t* actor)
 {
-	aiActor_t* a;
-	a = (aiActor_t*) lua_newuserdata(L, sizeof(*a));
+	aiActor_t* a = (aiActor_t*) lua_newuserdata(L, sizeof(aiActor_t));
 	*a = *actor;
 	luaL_getmetatable(L, ACTOR_METATABLE);
 	lua_setmetatable(L, -2);
@@ -273,12 +270,11 @@ static aiActor_t* lua_pushactor (lua_State* L, aiActor_t* actor)
  */
 static int actorL_tostring (lua_State* L)
 {
-	aiActor_t* target;
 	char buf[MAX_VAR];
 
 	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 	Com_sprintf(buf, sizeof(buf), "Actor( %s )", target->ent->chr.name);
 
 	lua_pushstring(L, buf);
@@ -290,11 +286,9 @@ static int actorL_tostring (lua_State* L)
  */
 static int actorL_pos (lua_State* L)
 {
-	aiActor_t* target;
-
 	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 	lua_pushpos3(L, &target->ent->pos);
 	return 1;
 }
@@ -304,25 +298,20 @@ static int actorL_pos (lua_State* L)
  */
 static int actorL_shoot (lua_State* L)
 {
-	int tu, shots;
-	shoot_types_t shootType;
-	const fireDef_t* fdArray;
-
 	assert(lua_isactor(L, 1));
 
 	/* Target */
-	aiActor_t* target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 
 	/* Number of TU to spend shooting, fire mode will adjust to that. */
+	int tu = AIL_ent->getUsableTUs();
 	if (lua_gettop(L) > 1) {
 		assert(lua_isnumber(L, 2)); /* Must be a number. */
 
 		tu = (int) lua_tonumber(L, 2);
-	} else {
-		tu = AIL_ent->getUsableTUs();
 	}
 
-	shootType = ST_RIGHT;
+	shoot_types_t shootType = ST_RIGHT;
 	const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
 	if (item == nullptr) {
 		shootType = ST_LEFT;
@@ -336,14 +325,14 @@ static int actorL_shoot (lua_State* L)
 	}
 
 	/** @todo Choose fire mode based on TU available - currently the first one is used. */
-	fdArray = item->getFiredefs();
+	const fireDef_t* fdArray = item->getFiredefs();
 	if (fdArray == nullptr) {
 		/* Failure - no weapon. */
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
-	shots = tu / G_ActorGetModifiedTimeForFiredef(AIL_ent, fdArray, false);
+	int shots = tu / G_ActorGetModifiedTimeForFiredef(AIL_ent, fdArray, false);
 
 	while (shots > 0) {
 		shots--;
@@ -362,12 +351,10 @@ static int actorL_shoot (lua_State* L)
  */
 static int actorL_face (lua_State* L)
 {
-	aiActor_t* target;
-
 	assert(lua_isactor(L, 1));
 
 	/* Target */
-	target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 
 	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
 
@@ -381,14 +368,11 @@ static int actorL_face (lua_State* L)
  */
 static int actorL_team (lua_State* L)
 {
-	const aiActor_t* target;
-	const char* team;
-
 	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 	assert(target != nullptr);
-	team = AIL_toTeamString(target->ent->getTeam());
+	const char* team = AIL_toTeamString(target->ent->getTeam());
 	lua_pushstring(L, team);
 	return 1;
 }
@@ -429,13 +413,11 @@ static int pos3L_register (lua_State* L)
  */
 static int lua_ispos3 (lua_State* L, int index)
 {
-	int ret;
-
 	if (lua_getmetatable(L, index) == 0)
 		return 0;
 	lua_getfield(L, LUA_REGISTRYINDEX, POS3_METATABLE);
 
-	ret = 0;
+	int ret = 0;
 	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
 		ret = 1;
 
@@ -460,8 +442,7 @@ static pos3_t* lua_topos3 (lua_State* L, int index)
  */
 static pos3_t* lua_pushpos3 (lua_State* L, pos3_t* pos)
 {
-	pos3_t* p;
-	p = (pos3_t*) lua_newuserdata(L, sizeof(*p));
+	pos3_t* p = (pos3_t*) lua_newuserdata(L, sizeof(pos3_t));
 	memcpy(p, pos, sizeof(*p));
 	luaL_getmetatable(L, POS3_METATABLE);
 	lua_setmetatable(L, -2);
@@ -473,12 +454,11 @@ static pos3_t* lua_pushpos3 (lua_State* L, pos3_t* pos)
  */
 static int pos3L_tostring (lua_State* L)
 {
-	pos3_t* p;
 	char buf[MAX_VAR];
 
 	assert(lua_ispos3(L, 1));
 
-	p = lua_topos3(L, 1);
+	const pos3_t* p = lua_topos3(L, 1);
 	Com_sprintf(buf, sizeof(buf), "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
 
 	lua_pushstring(L, buf);
@@ -490,8 +470,6 @@ static int pos3L_tostring (lua_State* L)
  */
 static int pos3L_goto (lua_State* L)
 {
-	pos3_t* pos;
-
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
@@ -499,7 +477,7 @@ static int pos3L_goto (lua_State* L)
 	gi.MoveStore(level.pathingMap);
 
 	/* Move. */
-	pos = lua_topos3(L, 1);
+	const pos3_t* pos = lua_topos3(L, 1);
 	G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
 
 	lua_pushboolean(L, 1);
@@ -511,11 +489,9 @@ static int pos3L_goto (lua_State* L)
  */
 static int pos3L_face (lua_State* L)
 {
-	pos3_t* pos;
-
 	assert(lua_ispos3(L, 1));
 
-	pos = lua_topos3(L, 1);
+	const pos3_t* pos = lua_topos3(L, 1);
 	AI_TurnIntoDirection(AIL_ent, *pos);
 
 	lua_pushboolean(L, 1);
@@ -530,10 +506,9 @@ static int pos3L_face (lua_State* L)
  */
 static int AIL_print (lua_State* L)
 {
-	int i;
 	const int n = lua_gettop(L);  /* number of arguments */
 
-	for (i = 1; i <= n; i++) {
+	for (int i = 1; i <= n; i++) {
 		const char* s;
 		bool meta = false;
 
@@ -574,16 +549,9 @@ static int AIL_print (lua_State* L)
  */
 static int AIL_see (lua_State* L)
 {
-	int vision, team;
-	int i, j, k, n;
-	Actor* check = nullptr;
-	aiActor_t target;
-	Actor* sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
-	float distLookup[MAX_EDICTS];
-
 	/* Defaults. */
-	team = TEAM_ALL;
-	vision = 0;
+	int team = TEAM_ALL;
+	int vision = 0;
 
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
@@ -615,7 +583,10 @@ static int AIL_see (lua_State* L)
 		}
 	}
 
-	n = 0;
+	int n = 0;
+	Actor* check = nullptr;
+	Actor* unsorted[MAX_EDICTS];
+	float distLookup[MAX_EDICTS];
 	/* Get visible things. */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
@@ -627,12 +598,14 @@ static int AIL_see (lua_State* L)
 		}
 	}
 
+	Actor* sorted[MAX_EDICTS];
 	/* Sort by distance - nearest first. */
-	for (i = 0; i < n; i++) { /* Until we fill sorted */
+	for (int i = 0; i < n; i++) { /* Until we fill sorted */
 		int cur = -1;
-		for (j = 0; j < n; j++) { /* Check for closest */
+		for (int j = 0; j < n; j++) { /* Check for closest */
 			/* Is shorter then current minimum? */
 			if (cur < 0 || distLookup[j] < distLookup[cur]) {
+				int k;
 				/* Check if not already in sorted. */
 				for (k = 0; k < i; k++)
 					if (sorted[k] == unsorted[j])
@@ -649,8 +622,9 @@ static int AIL_see (lua_State* L)
 
 	/* Now save it in a Lua table. */
 	lua_newtable(L);
-	for (i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		lua_pushnumber(L, i + 1); /* index, starts with 1 */
+		aiActor_t target;
 		target.ent = sorted[i];
 		lua_pushactor(L, &target); /* value */
 		lua_rawset(L, -3); /* store the value in the table */
@@ -745,14 +719,14 @@ static int AIL_reactionfire (lua_State* L)
 static int AIL_roundsleft (lua_State* L)
 {
 	/* Right hand */
-	Item* rightHand = AIL_ent->getRightHandItem();
+	const Item* rightHand = AIL_ent->getRightHandItem();
 	if (rightHand && rightHand->isReloadable())
 		lua_pushnumber(L, rightHand->getAmmoLeft());
 	else
 		lua_pushnil(L);
 
 	/* Left hand */
-	Item* leftHand = AIL_ent->getLeftHandItem();
+	const Item* leftHand = AIL_ent->getLeftHandItem();
 	if (leftHand && leftHand->isReloadable())
 		lua_pushnumber(L, leftHand->getAmmoLeft());
 	else
@@ -775,7 +749,7 @@ static int AIL_canreload (lua_State* L)
  */
 static int AIL_reload (lua_State* L)
 {
-	containerIndex_t container;
+	containerIndex_t container = CID_RIGHT; /* Default to right hand. */
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {
@@ -791,8 +765,7 @@ static int AIL_reload (lua_State* L)
 			AIL_invalidparameter(1);
 			return 0;
 		}
-	} else
-		container = CID_RIGHT; /* Default to right hand. */
+	}
 
 	G_ActorReload(AIL_ent, INVDEF(container));
 	return 0;
@@ -803,47 +776,41 @@ static int AIL_reload (lua_State* L)
  */
 static int AIL_positionshoot (lua_State* L)
 {
-	pos3_t to, bestPos;
-	vec3_t check;
-	Actor* ent;
-	int dist;
-	int xl, yl, xh, yh;
-	int min_tu;
-	aiActor_t* target;
-
 	/* We need a target. */
 	assert(lua_isactor(L, 1));
-	target = lua_toactor(L, 1);
+	aiActor_t* target = lua_toactor(L, 1);
 
 	/* Make things more simple. */
-	ent = AIL_ent;
-	dist = ent->getUsableTUs();
+	Actor* ent = AIL_ent;
+	const int dist = ent->getUsableTUs();
 
 	/* Calculate move table. */
 	G_MoveCalc(0, ent, ent->pos, ent->getUsableTUs());
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	xl = (int) ent->pos[0] - dist;
+	int xl = (int) ent->pos[0] - dist;
 	if (xl < 0)
 		xl = 0;
-	yl = (int) ent->pos[1] - dist;
+	int yl = (int) ent->pos[1] - dist;
 	if (yl < 0)
 		yl = 0;
-	xh = (int) ent->pos[0] + dist;
+	int xh = (int) ent->pos[0] + dist;
 	if (xh > PATHFINDING_WIDTH)
 		xl = PATHFINDING_WIDTH;
-	yh = (int) ent->pos[1] + dist;
+	int yh = (int) ent->pos[1] + dist;
 	if (yh > PATHFINDING_WIDTH)
 		yh = PATHFINDING_WIDTH;
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
-	min_tu = INT_MAX;
+	int min_tu = INT_MAX;
+	pos3_t to, bestPos;
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				/* Can we see the target? */
+				vec3_t check;
 				gi.GridPosToVec(ent->fieldSize, to, check);
 				const pos_t tu = G_ActorMoveLength(ent, level.pathingMap, to, true);
 				if (tu > ent->getUsableTUs() || tu == ROUTING_NOT_REACHABLE)
@@ -875,13 +842,7 @@ static int AIL_positionshoot (lua_State* L)
  */
 static int AIL_positionhide (lua_State* L)
 {
-	pos3_t save;
-	int tus = AIL_ent->getUsableTUs();
-	int hidingTeam;
-
-	VectorCopy(AIL_ent->pos, save);
-
-	hidingTeam = AI_GetHidingTeam(AIL_ent);
+	int hidingTeam = AI_GetHidingTeam(AIL_ent);
 
 	/* parse parameter */
 	if (lua_gettop(L)) {
@@ -894,6 +855,10 @@ static int AIL_positionhide (lua_State* L)
 			AIL_invalidparameter(1);
 		}
 	}
+
+	const int tus = AIL_ent->getUsableTUs();
+	pos3_t save;
+	VectorCopy(AIL_ent->pos, save);
 
 	if (AI_FindHidingLocation(hidingTeam, AIL_ent, AIL_ent->pos, tus)) {
 		/* Return the spot. */
@@ -913,9 +878,6 @@ static int AIL_positionhide (lua_State* L)
  */
 static int AIL_positionherd (lua_State* L)
 {
-	pos3_t save;
-	aiActor_t* target;
-
 	/* check parameter */
 	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
 		AIL_invalidparameter(1);
@@ -923,8 +885,9 @@ static int AIL_positionherd (lua_State* L)
 		return 1;
 	}
 
+	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
-	target = lua_toactor(L, 1);
+	const aiActor_t* target = lua_toactor(L, 1);
 	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, AIL_ent->getUsableTUs())) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
@@ -940,15 +903,13 @@ static int AIL_positionherd (lua_State* L)
  */
 static int AIL_distance (lua_State* L)
 {
-	vec_t dist;
-	aiActor_t* target;
 
 	/* check parameter */
 	assert(lua_gettop(L) && lua_isactor(L, 1));
 
 	/* calculate distance */
-	target = lua_toactor(L, 1);
-	dist = VectorDist(AIL_ent->origin, target->ent->origin);
+	const aiActor_t* target = lua_toactor(L, 1);
+	const vec_t dist = VectorDist(AIL_ent->origin, target->ent->origin);
 	lua_pushnumber(L, dist);
 	return 1;
 }
@@ -960,10 +921,8 @@ static int AIL_distance (lua_State* L)
  */
 void AIL_ActorThink (Player& player, Actor* actor)
 {
-	lua_State* L;
-
 	/* The Lua State we will work with. */
-	L = actor->AI.L;
+	lua_State* L = actor->AI.L;
 
 	/* Set the global player and edict */
 	AIL_ent = actor;
@@ -991,13 +950,8 @@ void AIL_ActorThink (Player& player, Actor* actor)
  */
 int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 {
-	AI_t* AI;
-	int size;
-	char path[MAX_VAR];
-	char* fbuf;
-
 	/* Prepare the AI */
-	AI = &ent->AI;
+	AI_t* AI = &ent->AI;
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
 	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
 
@@ -1016,8 +970,10 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	luaL_register(AI->L, AI_METATABLE, AIL_methods);
 
 	/* Load the AI */
+	char path[MAX_VAR];
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
-	size = gi.FS_LoadFile(path, (byte**) &fbuf);
+	char* fbuf;
+	const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
 	if (size == 0) {
 		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
 		return -1;
