@@ -44,5 +44,5 @@ typedef struct shot_mock_s {
 int G_ApplyProtection(const Edict* target, const byte dmgWeight, int damage);
 void G_CheckDeathOrKnockout(Edict* target, Edict* attacker, const fireDef_t* fd, int damage);
 void G_GetShotOrigin(const Edict* shooter, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin);
-bool G_ClientShoot(const Player& player, Edict* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align);
+bool G_ClientShoot(const Player& player, Actor* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align);
 void G_CalcEffectiveSpread(const Edict* ent, const fireDef_t* fd, vec2_t effSpread);

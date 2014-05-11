@@ -272,7 +272,7 @@ int G_FillDirectionTable (dvec_t* dvtab, size_t dvtabSize, byte crouchingState, 
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-pos_t G_ActorMoveLength (const Edict* ent, const pathing_t* path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const Actor* ent, const pathing_t* path, const pos3_t to, bool stored)
 {
 	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);

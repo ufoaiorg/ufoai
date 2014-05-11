@@ -1131,7 +1131,7 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-bool G_ClientShoot (const Player& player, Edict* ent, const pos3_t at, shoot_types_t shootType,
+bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align)
 {
 	/* just in 'test-whether-it's-possible'-mode or the player is an

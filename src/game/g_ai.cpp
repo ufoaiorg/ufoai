@@ -394,7 +394,7 @@ static bool AI_CheckPosition (const Edict* const ent)
  * @param[in] team The team from which actor tries to hide
  * @return @c true if hiding is possible, @c false otherwise
  */
-bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
+bool AI_FindHidingLocation (int team, Actor* ent, const pos3_t from, int tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
@@ -448,7 +448,7 @@ bool AI_FindHidingLocation (int team, Edict* ent, const pos3_t from, int tuLeft)
  * @param[in] target Tries to find the nearest position to this location
  * @param[in] tu The available TUs of the actor
  */
-bool AI_FindHerdLocation (Edict* ent, const pos3_t from, const vec3_t target, int tu)
+bool AI_FindHerdLocation (Actor* ent, const pos3_t from, const vec3_t target, int tu)
 {
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
@@ -1140,7 +1140,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @param[in] to The target position.
  * @return @c true if hiding is possible, @c false otherwise
  */
-static bool AI_FindMissionLocation (Edict* ent, const pos3_t to)
+static bool AI_FindMissionLocation (Actor* ent, const pos3_t to)
 {
 	const byte minX = std::max(to[0] - HOLD_DIST, 0);
 	const byte minY = std::max(to[1] - HOLD_DIST, 0);
