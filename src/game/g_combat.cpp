@@ -370,14 +370,16 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 	/* Actors don't die again. */
 	if (!G_IsLivingActor(target))
 		return;
+	/* Now we know that the target is an actor */
+	Actor* victim = makeActor(target);
 
 	/* only actors after this point - and they must have a teamdef */
-	assert(target->chr.teamDef);
-	isRobot = CHRSH_IsTeamDefRobot(target->chr.teamDef);
+	assert(victim->chr.teamDef);
+	isRobot = CHRSH_IsTeamDefRobot(victim->chr.teamDef);
 
 	/* Apply armour effects. */
 	if (damage > 0) {
-		damage = G_ApplyProtection(target, fd->dmgweight, damage);
+		damage = G_ApplyProtection(victim, fd->dmgweight, damage);
 	} else if (damage < 0) {
 		/* Robots can't be healed. */
 		if (isRobot)
@@ -387,49 +389,49 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 
 	/* Apply difficulty settings. */
 	if (G_IsSinglePlayer()) {
-		if (G_IsAlien(attacker) && !G_IsAlien(target))
+		if (G_IsAlien(attacker) && !G_IsAlien(victim))
 			damage *= pow(1.18, g_difficulty->value);
-		else if (!G_IsAlien(attacker) && G_IsAlien(target))
+		else if (!G_IsAlien(attacker) && G_IsAlien(victim))
 			damage *= pow(1.18, -g_difficulty->value);
 	}
 
 	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);
-	assert(target->team >= 0 && target->team < MAX_TEAMS);
+	assert(victim->team >= 0 && victim->team < MAX_TEAMS);
 
 	if (g_nodamage != nullptr && !g_nodamage->integer) {
 		/* hit */
 		if (mock) {
-			G_UpdateShotMock(mock, attacker, target, damage);
+			G_UpdateShotMock(mock, attacker, victim, damage);
 		} else if (stunEl) {
-			target->STUN += damage;
+			victim->STUN += damage;
 		} else if (stunGas) {
 			if (!isRobot) /* Can't stun robots with gas */
-				target->STUN += damage;
+				victim->STUN += damage;
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should have known that there was a flashbang coming. */
-			if (!isRobot && target->team != attacker->team) {
+			if (!isRobot && victim->team != attacker->team) {
 				/** @todo there should be a possible protection, too */
 				/* dazed entity wont reaction fire */
-				G_RemoveReaction(target);
-				G_ActorReserveTUs(target, 0, target->chr.reservedTus.shot, target->chr.reservedTus.crouch);
+				G_RemoveReaction(victim);
+				G_ActorReserveTUs(victim, 0, victim->chr.reservedTus.shot, victim->chr.reservedTus.crouch);
 				/* flashbangs kill TUs */
-				G_ActorSetTU(target, 0);
-				G_SendStats(*target);
+				G_ActorSetTU(victim, 0);
+				G_SendStats(*victim);
 				/* entity is dazed */
-				G_SetDazed(target);
-				G_ClientPrintf(target->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
+				G_SetDazed(victim);
+				G_ClientPrintf(victim->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
 				return;
 			}
 		} else {
 			if (damage < 0) {
-				/* The 'attacker' is healing the target. */
-				G_TreatActor(target, fd, damage, attacker->team);
+				/* The 'attacker' is healing the victim. */
+				G_TreatActor(victim, fd, damage, attacker->team);
 			} else {
 				/* Real damage was dealt. */
-				G_DamageActor(target, damage, impact);
+				G_DamageActor(victim, damage, impact);
 				/* Update overall splash damage for stats/score. */
 				if (!mock && damage > 0 && fd->splrad) /**< Check for >0 and splrad to not count this as direct hit. */
-					G_UpdateHitScore(attacker, target, fd, damage);
+					G_UpdateHitScore(attacker, victim, fd, damage);
 			}
 		}
 	}
@@ -437,7 +439,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 	if (mock)
 		return;
 
-	G_CheckDeathOrKnockout(target, attacker, fd, damage);
+	G_CheckDeathOrKnockout(victim, attacker, fd, damage);
 }
 
 void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t* fd, int damage)
