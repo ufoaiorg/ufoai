@@ -270,7 +270,7 @@ static bool AI_CheckCrouch (const Edict* ent)
  * @param[in] ent The alien edict that should (maybe) hide
  * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static bool AI_HideNeeded (const Edict* ent)
+static bool AI_HideNeeded (const Actor* ent)
 {
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
 	if (ent->morale <= mor_brave->integer)

@@ -97,12 +97,10 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  */
 static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* attacker, int param)
 {
-	Edict* ent = nullptr;
-	while ((ent = G_EdictsGetNextInUse(ent))) {
+	Actor* ent = nullptr;
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
 		if (ent->type != ET_ACTOR)
-			continue;
-		if (G_IsDead(ent))
 			continue;
 		if (ent->team == TEAM_CIVILIAN)
 			continue;
