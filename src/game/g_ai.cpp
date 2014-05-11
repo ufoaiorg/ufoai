@@ -1562,7 +1562,7 @@ void AI_Run (void)
  * @param ent Actor to set the stats for.
  * @param team Phalanx, civilian or alien ?
  */
-static void AI_SetStats (Edict* ent, int team)
+static void AI_SetStats (Actor* ent, int team)
 {
 	const char* templateId = "";
 	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams) {
@@ -1659,7 +1659,7 @@ static void AI_SetEquipment (Edict* ent, const equipDef_t* ed)
  * @param[in,out] ent Pointer to Edict representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c nullptr.
  */
-static void AI_InitPlayer (const Player& player, Edict* ent, const equipDef_t* ed)
+static void AI_InitPlayer (const Player& player, Actor* ent, const equipDef_t* ed)
 {
 	const int team = player.getTeam();
 
