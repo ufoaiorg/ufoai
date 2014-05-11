@@ -682,7 +682,7 @@ static int AIL_HP (lua_State* L)
  */
 static int AIL_morale (lua_State* L)
 {
-	lua_pushnumber(L, AIL_ent->morale);
+	lua_pushnumber(L, AIL_ent->getMorale());
 	return 1;
 }
 
