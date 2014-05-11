@@ -267,19 +267,19 @@ static bool AI_CheckCrouch (const Edict* ent)
 /**
  * @brief Checks whether the given alien should try to hide because there are enemies close
  * enough to shoot the alien.
- * @param[in] ent The alien edict that should (maybe) hide
+ * @param[in] actor The alien edict that should (maybe) hide
  * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static bool AI_HideNeeded (const Actor* ent)
+static bool AI_HideNeeded (const Actor* actor)
 {
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
-	if (ent->morale <= mor_brave->integer)
+	if (actor->morale <= mor_brave->integer)
 		return true;
 
 	Actor* from = nullptr;
-	/* test if ent is visible */
+	/* test if actor is visible */
 	while ((from = G_EdictsGetNextLivingActor(from))) {
-		if (from->team == ent->team)
+		if (from->team == actor->team)
 			continue;
 
 		if (G_IsCivilian(from))
@@ -293,13 +293,13 @@ static bool AI_HideNeeded (const Actor* ent)
 
 		const fireDef_t* fd = item->getFiredefs();
 		/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
-		if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
+		if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(actor->origin, from->origin)) {
 			const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
 			const int damage = std::max(0, damageRand);
-			if (damage >= ent->HP / 3) {
-				const int hidingTeam = AI_GetHidingTeam(ent);
+			if (damage >= actor->HP / 3) {
+				const int hidingTeam = AI_GetHidingTeam(actor);
 				/* now check whether this enemy is visible for this alien */
-				if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
+				if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM))
 					return true;
 			}
 		}
@@ -387,14 +387,14 @@ static bool AI_CheckPosition (const Edict* const ent)
 
 /**
  * @brief Tries to search a hiding spot
- * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
+ * @param[out] actor The actor edict. The position of the actor is updated here to perform visibility checks
  * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
  * @param[in,out] tuLeft The amount of left TUs to find a hiding spot. The TUs needed to walk to the grid position
  * is subtracted. May not be @c nullptr.
  * @param[in] team The team from which actor tries to hide
  * @return @c true if hiding is possible, @c false otherwise
  */
-bool AI_FindHidingLocation (int team, Actor* ent, const pos3_t from, int tuLeft)
+bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
@@ -402,8 +402,8 @@ bool AI_FindHidingLocation (int team, Actor* ent, const pos3_t from, int tuLeft)
 
 	/* search hiding spot */
 	const int distance = std::min(tuLeft, HIDE_DIST * 2);
-	G_MoveCalcLocal(hidePathingTable, 0, ent, from, distance);
-	ent->pos[2] = from[2];
+	G_MoveCalcLocal(hidePathingTable, 0, actor, from, distance);
+	actor->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HIDE_DIST, 0);
 	const byte minY = std::max(from[1] - HIDE_DIST, 0);
 	const byte maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
@@ -411,44 +411,44 @@ bool AI_FindHidingLocation (int team, Actor* ent, const pos3_t from, int tuLeft)
 
 	int bestScore = AI_ACTION_NOTHING_FOUND;
 	pos3_t bestPos = {from[0], from[1], from[2]};
-	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
-		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
+	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
+		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
 			/* Don't have TUs  to walk there */
-			const pos_t delta = G_ActorMoveLength(ent, hidePathingTable, ent->pos, false);
+			const pos_t delta = G_ActorMoveLength(actor, hidePathingTable, actor->pos, false);
 			if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
 			/* If enemies see this position, it doesn't qualify as hiding spot */
-			ent->calcOrigin();
-			if (G_TestVis(team, ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
+			actor->calcOrigin();
+			if (G_TestVis(team, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 				continue;
 
 			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(ent))
+			if (!AI_CheckPosition(actor))
 				continue;
 			const int score = tuLeft - delta;
 			if (score > bestScore) {
 				bestScore = score;
-				VectorCopy(ent->pos, bestPos);
+				VectorCopy(actor->pos, bestPos);
 			}
 		}
 	}
 
 	if (!VectorCompare(from, bestPos))
-		VectorCopy(bestPos, ent->pos);
+		VectorCopy(bestPos, actor->pos);
 	return bestScore != AI_ACTION_NOTHING_FOUND;
 }
 
 /**
  * @brief Tries to search a spot where actor will be more closer to the target and
  * behind the target from enemy
- * @param[in] ent The actor edict.
+ * @param[in] actor The actor edict.
  * @param[in] from The grid position the actor is (theoretically) standing at and
  * searching the nearest location from
  * @param[in] target Tries to find the nearest position to this location
  * @param[in] tu The available TUs of the actor
  */
-bool AI_FindHerdLocation (Actor* ent, const pos3_t from, const vec3_t target, int tu)
+bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, int tu)
 {
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
@@ -457,7 +457,7 @@ bool AI_FindHerdLocation (Actor* ent, const pos3_t from, const vec3_t target, in
 	vec_t bestlength = 0.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
-	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
+	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(actor)))) {
 		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
 			enemy = next;
@@ -468,8 +468,8 @@ bool AI_FindHerdLocation (Actor* ent, const pos3_t from, const vec3_t target, in
 
 	/* calculate move table */
 	const int distance = std::min(tu, HERD_DIST * 2);
-	G_MoveCalcLocal(herdPathingTable, 0, ent, from, distance);
-	ent->pos[2] = from[2];
+	G_MoveCalcLocal(herdPathingTable, 0, actor, from, distance);
+	actor->pos[2] = from[2];
 	const byte minX = std::max(from[0] - HERD_DIST, 0);
 	const byte minY = std::max(from[1] - HERD_DIST, 0);
 	const byte maxX = std::min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
@@ -477,37 +477,37 @@ bool AI_FindHerdLocation (Actor* ent, const pos3_t from, const vec3_t target, in
 
 	/* search the location */
 	pos3_t bestpos = {from[0], from[1], from[2]};
-	bestlength = VectorDistSqr(target, ent->origin);
-	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
-		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
+	bestlength = VectorDistSqr(target, actor->origin);
+	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
+		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
 			/* time */
-			const pos_t delta = G_ActorMoveLength(ent, herdPathingTable, ent->pos, false);
+			const pos_t delta = G_ActorMoveLength(actor, herdPathingTable, actor->pos, false);
 			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
 			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(ent))
+			if (!AI_CheckPosition(actor))
 				continue;
 
-			ent->calcOrigin();
-			const vec_t length = VectorDistSqr(ent->origin, target);
+			actor->calcOrigin();
+			const vec_t length = VectorDistSqr(actor->origin, target);
 			if (length < bestlength) {
 				vec3_t vfriend, venemy;
 				/* check this position to locate behind target from enemy */
-				VectorSubtract(target, ent->origin, vfriend);
+				VectorSubtract(target, actor->origin, vfriend);
 				VectorNormalizeFast(vfriend);
-				VectorSubtract(enemy->origin, ent->origin, venemy);
+				VectorSubtract(enemy->origin, actor->origin, venemy);
 				VectorNormalizeFast(venemy);
 				if (DotProduct(vfriend, venemy) > 0.5) {
 					bestlength = length;
-					VectorCopy(ent->pos, bestpos);
+					VectorCopy(actor->pos, bestpos);
 				}
 			}
 		}
 	}
 
 	if (!VectorCompare(from, bestpos)) {
-		VectorCopy(bestpos, ent->pos);
+		VectorCopy(bestpos, actor->pos);
 		return true;
 	}
 
@@ -1136,11 +1136,11 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 
 /**
  * @brief Try to go close to a mission edict
- * @param[in,out] ent The actor edict.
+ * @param[in,out] actor The actor edict.
  * @param[in] to The target position.
  * @return @c true if hiding is possible, @c false otherwise
  */
-static bool AI_FindMissionLocation (Actor* ent, const pos3_t to)
+static bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 {
 	const byte minX = std::max(to[0] - HOLD_DIST, 0);
 	const byte minY = std::max(to[1] - HOLD_DIST, 0);
@@ -1149,27 +1149,27 @@ static bool AI_FindMissionLocation (Actor* ent, const pos3_t to)
 	int bestDist = ROUTING_NOT_REACHABLE;
 	pos3_t bestPos = {to[0], to[1], to[2]};
 
-	ent->pos[2] = to[2];
-	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ++ent->pos[1]) {
-		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ++ent->pos[0]) {
+	actor->pos[2] = to[2];
+	for (actor->pos[1] = minY; actor->pos[1] <= maxY; ++actor->pos[1]) {
+		for (actor->pos[0] = minX; actor->pos[0] <= maxX; ++actor->pos[0]) {
 			/* Can't walk there */
-			if (G_ActorMoveLength(ent, level.pathingMap, ent->pos, true) == ROUTING_NOT_REACHABLE)
+			if (G_ActorMoveLength(actor, level.pathingMap, actor->pos, true) == ROUTING_NOT_REACHABLE)
 				continue;
 			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(ent))
+			if (!AI_CheckPosition(actor))
 				continue;
 
-			const int distX = std::abs(ent->pos[0] - to[0]);
-			const int distY = std::abs(ent->pos[1] - to[1]);
+			const int distX = std::abs(actor->pos[0] - to[0]);
+			const int distY = std::abs(actor->pos[1] - to[1]);
 			const int dist = distX + distY + std::max(distX, distY);
 			if (dist < bestDist) {
 				bestDist = dist;
-				VectorCopy(ent->pos, bestPos);
+				VectorCopy(actor->pos, bestPos);
 			}
 		}
 	}
 	if (!VectorCompare(to, bestPos))
-		VectorCopy(bestPos, ent->pos);
+		VectorCopy(bestPos, actor->pos);
 
 	return bestDist < ROUTING_NOT_REACHABLE;
 }

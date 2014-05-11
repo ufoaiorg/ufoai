@@ -396,22 +396,22 @@ static void G_ActorRevitalise (Edict* ent)
 	G_PrintStats("%s is revitalized.", ent->chr.name);
 }
 
-void G_ActorCheckRevitalise (Actor* ent)
+void G_ActorCheckRevitalise (Actor* actor)
 {
-	if (G_IsStunned(ent) && ent->getStun() < ent->HP) {
+	if (G_IsStunned(actor) && actor->getStun() < actor->HP) {
 		/* check that we could move after we stood up */
 		Edict* otherActor = nullptr;
 		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {
-			if (!VectorCompare(ent->pos, otherActor->pos))
+			if (!VectorCompare(actor->pos, otherActor->pos))
 				continue;
 			if (G_IsBlockingMovementActor(otherActor))
 				return;
 		}
 
-		G_ActorRevitalise(ent);
-		G_EventActorRevitalise(*ent);
-		G_EventActorStateChange(~G_VisToPM(ent->visflags), *ent);
-		G_SendStats(*ent);
+		G_ActorRevitalise(actor);
+		G_EventActorRevitalise(*actor);
+		G_EventActorStateChange(~G_VisToPM(actor->visflags), *actor);
+		G_SendStats(*actor);
 	}
 }
 

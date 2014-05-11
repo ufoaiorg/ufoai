@@ -97,12 +97,12 @@ static bool G_TeamPointVis (int team, const vec3_t point)
  */
 static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* attacker, int param)
 {
-	Actor* ent = nullptr;
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	Actor* actor = nullptr;
+	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
-		if (ent->type != ET_ACTOR)
+		if (actor->type != ET_ACTOR)
 			continue;
-		if (ent->team == TEAM_CIVILIAN)
+		if (actor->team == TEAM_CIVILIAN)
 			continue;
 
 		/* morale damage depends on the damage */
@@ -111,9 +111,9 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		if (type == ML_DEATH)
 			mod += mob_death->value;
 		/* seeing how someone gets shot increases the morale change */
-		if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, false)))
+		if (actor == victim || (G_FrustumVis(actor, victim->origin) && G_ActorVis(actor->origin, actor, victim, false)))
 			mod *= mof_watching->value;
-		if (attacker != nullptr && ent->team == attacker->team) {
+		if (attacker != nullptr && actor->team == attacker->team) {
 			/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 			/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
 			if (victim->team == attacker->team)
@@ -125,15 +125,15 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		if (G_IsCivilian(victim))
 			mod *= mof_civilian->value;
 		/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-		if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && G_IsSinglePlayer()))
+		if (victim->team == actor->team || (G_IsCivilian(victim) && actor->team != TEAM_ALIEN && G_IsSinglePlayer()))
 			mod *= -1;
 		if (attacker != nullptr) {
 			/* if you stand near to the attacker or the victim, the morale change is higher. */
-			mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
-				* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
+			mod *= mor_default->value + pow(0.5, VectorDist(actor->origin, victim->origin) / mor_distance->value)
+				* mor_victim->value + pow(0.5, VectorDist(actor->origin, attacker->origin) / mor_distance->value)
 				* mor_attacker->value;
 		} else {
-			mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
+			mod *= mor_default->value + pow(0.5, VectorDist(actor->origin, victim->origin) / mor_distance->value)
 				* mor_victim->value;
 		}
 		/* morale damage depends on the number of living allies */
@@ -141,20 +141,20 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 			+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
 			/ (level.num_alive[victim->team] + 1);
 		/* being hit isn't fun */
-		if (ent == victim)
+		if (actor == victim)
 			mod *= mor_pain->value;
 		/* clamp new morale */
 		/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
-		const int newMorale = ent->morale + (int) (MORALE_RANDOM(mod) + 0.9);
-		if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
-			ent->setMorale(GET_MORALE(ent->chr.score.skills[ABILITY_MIND]));
+		const int newMorale = actor->morale + (int) (MORALE_RANDOM(mod) + 0.9);
+		if (newMorale > GET_MORALE(actor->chr.score.skills[ABILITY_MIND]))
+			actor->setMorale(GET_MORALE(actor->chr.score.skills[ABILITY_MIND]));
 		else if (newMorale < 0)
-			ent->setMorale(0);
+			actor->setMorale(0);
 		else
-			ent->setMorale(newMorale);
+			actor->setMorale(newMorale);
 
 		/* send phys data */
-		G_SendStats(*ent);
+		G_SendStats(*actor);
 	}
 }
 
@@ -1119,7 +1119,7 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
 /**
  * @brief Setup for shooting, either real or mock
  * @param[in] player The player this action belongs to (i.e. either the ai or the player)
- * @param[in] ent the edict that is doing the shot
+ * @param[in] actor the edict that is doing the shot
  * @param[in] at Position to fire on.
  * @param[in] shootType What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon.
@@ -1131,7 +1131,7 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_types_t shootType,
+bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t* mock, bool allowReaction, int z_align)
 {
 	/* just in 'test-whether-it's-possible'-mode or the player is an
@@ -1141,7 +1141,7 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 	Item* weapon = nullptr;
 	const fireDef_t* fd = nullptr;
 	containerIndex_t container = 0;
-	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
+	if (!G_PrepareShot(actor, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!"));
 		return false;
@@ -1150,17 +1150,17 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
-	const int tusNeeded = G_ActorGetModifiedTimeForFiredef(ent, fd, false);
+	const int tusNeeded = G_ActorGetModifiedTimeForFiredef(actor, fd, false);
 	if (allowReaction) {
-		if (!G_ActionCheckForCurrentTeam(player, ent, tusNeeded))
+		if (!G_ActionCheckForCurrentTeam(player, actor, tusNeeded))
 			return false;
 	} else {
-		if (!G_ActionCheckForReaction(player, ent, tusNeeded))
+		if (!G_ActionCheckForReaction(player, actor, tusNeeded))
 			return false;
 	}
 
 	/* Don't allow to shoot yourself */
-	if (!fd->irgoggles && ent->isSamePosAs(at))
+	if (!fd->irgoggles && actor->isSamePosAs(at))
 		return false;
 	const Actor* targetEnt = nullptr;
 	if (FIRESH_IsMedikit(fd)) {
@@ -1175,7 +1175,7 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 	}
 
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (weapon->def()->fireTwoHanded && ent->getLeftHandItem()) {
+	if (weapon->def()->fireTwoHanded && actor->getLeftHandItem()) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!"));
 		return false;
@@ -1191,32 +1191,32 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 
 	/* check target is not out of range */
 	vec3_t target;
-	gi.GridPosToVec(ent->fieldSize, at, target);
-	if (fd->range < VectorDist(ent->origin, target)) {
+	gi.GridPosToVec(actor->fieldSize, at, target);
+	if (fd->range < VectorDist(actor->origin, target)) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - target out of range!"));
 		return false;
 	}
 
 	/* Count for stats if it's no mock-shot and it's a Phalanx soldier (aliens do not have this info yet). */
-	if (!mock && ent->chr.scoreMission) {
+	if (!mock && actor->chr.scoreMission) {
 		/* Count this start of the shooting for stats/score. */
 		/** @todo check for direct shot / splash damage shot? */
 		if (fd->splrad > 0.0) {
 			/* Splash damage */
-			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += tusNeeded;
-			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
+			actor->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += tusNeeded;
+			actor->chr.scoreMission->firedSplash[fd->weaponSkill]++;
 			for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
-				ent->chr.scoreMission->firedSplashHit[i] = false;
+				actor->chr.scoreMission->firedSplashHit[i] = false;
 			}
 		} else {
 			/* Direct hits */
-			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += tusNeeded;
-			ent->chr.scoreMission->fired[fd->weaponSkill]++;
+			actor->chr.scoreMission->firedTUs[fd->weaponSkill] += tusNeeded;
+			actor->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
-				ent->chr.scoreMission->firedHit[i] = false;
+				actor->chr.scoreMission->firedHit[i] = false;
 			}
 		}
 	}
@@ -1246,28 +1246,28 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 	}
 
 	/* rotate the player */
-	const int prevDir = mock ? ent->dir : 0;
+	const int prevDir = mock ? actor->dir : 0;
 	vec3_t dir;
 
-	if (!ent->isSamePosAs(at)) {
-		VectorSubtract(at, ent->pos, dir);
-		ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
-		assert(ent->dir < CORE_DIRECTIONS);
+	if (!actor->isSamePosAs(at)) {
+		VectorSubtract(at, actor->pos, dir);
+		actor->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
+		assert(actor->dir < CORE_DIRECTIONS);
 
 		if (!mock) {
-			G_CheckVisTeamAll(ent->team, 0, ent);
-			G_EventActorTurn(*ent);
+			G_CheckVisTeamAll(actor->team, 0, actor);
+			G_EventActorTurn(*actor);
 		}
 	}
 
 	/* calculate visibility */
 	target[2] -= z_align;
-	VectorSubtract(target, ent->origin, dir);
+	VectorSubtract(target, actor->origin, dir);
 	vec3_t center;
-	VectorMA(ent->origin, 0.5, dir, center);
+	VectorMA(actor->origin, 0.5, dir, center);
 	int mask = 0;
 	for (int i = 0; i < MAX_TEAMS; i++)
-		if (G_IsVisibleForTeam(ent, i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
+		if (G_IsVisibleForTeam(actor, i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
 			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
@@ -1276,8 +1276,8 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactionFirePreShot(ent, tusNeeded);  /* if commented out,  this disables the 'draw' situation */
-			if (G_IsDead(ent))
+			G_ReactionFirePreShot(actor, tusNeeded);  /* if commented out,  this disables the 'draw' situation */
+			if (G_IsDead(actor))
 				/* dead men can't shoot */
 				return false;
 		}
@@ -1286,7 +1286,7 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 			return false;
 
 		/* start shoot */
-		G_EventStartShoot(*ent, mask, shootType, at);
+		G_EventStartShoot(*actor, mask, shootType, at);
 
 		/* send shot sound to the others */
 		G_EventShootHidden(mask, fd, true);
@@ -1294,16 +1294,16 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 		/* ammo... */
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->def()->thrown) {
-				G_EventInventoryAmmo(*ent, weapon->ammoDef(), ammo, shootType);
+				G_EventInventoryAmmo(*actor, weapon->ammoDef(), ammo, shootType);
 				weapon->setAmmoLeft(ammo);
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t* invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = true;	/* for assert only */
-				game.invi.emptyContainer(&ent->chr.inv, invDef->id);
-				G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
-				G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(),
-						ent->chr.RFmode.getWeapon());
+				game.invi.emptyContainer(&actor->chr.inv, invDef->id);
+				G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
+				G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(),
+						actor->chr.RFmode.getWeapon());
 			}
 		}
 
@@ -1313,23 +1313,23 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 			if (itemAlreadyRemoved)
 				gi.Error("Item %s is already removed", weapon->def()->id);
 			assert(invDef->single);
-			game.invi.emptyContainer(&ent->chr.inv, invDef->id);
-			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), invDef->id, 0, 0);
-			G_ReactionFireSettingsUpdate(ent, ent->chr.RFmode.getFmIdx(), ent->chr.RFmode.getHand(),
-					ent->chr.RFmode.getWeapon());
+			game.invi.emptyContainer(&actor->chr.inv, invDef->id);
+			G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
+			G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(),
+					actor->chr.RFmode.getWeapon());
 		}
 	}
 
 	vec3_t shotOrigin;
-	G_GetShotOrigin(ent, fd, dir, shotOrigin);
+	G_GetShotOrigin(actor, fd, dir, shotOrigin);
 
 	/* Fire all shots. */
 	vec3_t impact;
 	for (int i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
+			G_ShootGrenade(player, actor, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
 		else
-			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
+			G_ShootSingle(actor, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
 		/* Ignore off-map impacts when spawning fire, smoke, etc fields */
@@ -1360,13 +1360,13 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 			G_TouchTriggers(closeActor);
 		}
 
-		/* send TUs if ent still alive */
-		if (ent->inuse && !G_IsDead(ent)) {
-			G_ActorSetTU(ent, ent->getTus() - tusNeeded);
-			G_SendStats(*ent);
+		/* send TUs if actor still alive */
+		if (actor->inuse && !G_IsDead(actor)) {
+			G_ActorSetTU(actor, actor->getTus() - tusNeeded);
+			G_SendStats(*actor);
 		}
 
-		G_EventEndShoot(*ent, mask);
+		G_EventEndShoot(*actor, mask);
 
 		/* end events */
 		G_EventEnd();
@@ -1376,10 +1376,10 @@ bool G_ClientShoot (const Player& player, Actor* ent, const pos3_t at, shoot_typ
 
 		/* check for Reaction fire against the shooter */
 		if (allowReaction)
-			G_ReactionFirePostShot(ent);
+			G_ReactionFirePostShot(actor);
 	} else {
-		ent->dir = prevDir;
-		assert(ent->dir < CORE_DIRECTIONS);
+		actor->dir = prevDir;
+		assert(actor->dir < CORE_DIRECTIONS);
 	}
 	return true;
 }

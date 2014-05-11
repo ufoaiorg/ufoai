@@ -78,7 +78,7 @@ void G_ActorSetTU(Edict* ent, int tus);
 void G_ActorUseTU(Edict* ent, int tus);
 void G_ActorModifyCounters(const Edict* attacker, const Edict* victim, int deltaAlive, int deltaKills, int deltaStuns);
 void G_ActorGetEyeVector(const Edict* actor, vec3_t eye);
-void G_ActorCheckRevitalise(Actor* ent);
+void G_ActorCheckRevitalise(Actor* actor);
 bool G_ActorDieOrStun(Edict* ent, Edict* attacker);
 int G_ActorGetContentFlags(const vec3_t origin);
 bool G_ActorInvMove(Edict* ent, const invDef_t* from, Item* fItem, const invDef_t* to, int tx, int ty, bool checkaction);

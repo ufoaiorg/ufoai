@@ -266,15 +266,15 @@ int G_FillDirectionTable (dvec_t* dvtab, size_t dvtabSize, byte crouchingState, 
 
 /**
 * @brief Return the needed TUs to walk to a given position
-* @param ent Edict to calculate move length for
+* @param actor Edict to calculate move length for
 * @param path Pointer to pathing table
 * @param to Position to walk to
 * @param stored Use the stored mask (the cached move) of the routing data
 * @return ROUTING_NOT_REACHABLE if the move isn't possible, length of move otherwise (TUs)
 */
-pos_t G_ActorMoveLength (const Actor* ent, const pathing_t* path, const pos3_t to, bool stored)
+pos_t G_ActorMoveLength (const Actor* actor, const pathing_t* path, const pos3_t to, bool stored)
 {
-	byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
 
 	if (!length || length == ROUTING_NOT_REACHABLE)
@@ -289,7 +289,7 @@ pos_t G_ActorMoveLength (const Actor* ent, const pathing_t* path, const pos3_t t
 	}
 
 	return std::min(ROUTING_NOT_REACHABLE, length + static_cast<int>(numSteps *
-			G_ActorGetInjuryPenalty(ent, MODIFIER_MOVEMENT)));
+			G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT)));
 }
 
 /**

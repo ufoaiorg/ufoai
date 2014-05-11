@@ -145,36 +145,36 @@ void G_MatchEndTrigger (int team, int timeGap)
 
 /**
  * @brief Sends character stats like assigned missions and kills back to client
- * @param[in] ent The edict to send the data for
+ * @param[in] actor The edict to send the data for
  * @note first short is the ucn to allow the client to identify the character
  * @note parsed in GAME_CP_Results
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @note you also have to update the pascal string size in G_MatchSendResults if you change the buffer here
  */
-static void G_SendCharacterData (const Actor* ent)
+static void G_SendCharacterData (const Actor* actor)
 {
 	int k;
 
-	assert(ent);
+	assert(actor);
 
 	/* write character number */
-	gi.WriteShort(ent->chr.ucn);
+	gi.WriteShort(actor->chr.ucn);
 
-	gi.WriteShort(ent->HP);
-	gi.WriteByte(ent->getStun());
-	gi.WriteByte(ent->morale);
+	gi.WriteShort(actor->HP);
+	gi.WriteByte(actor->getStun());
+	gi.WriteByte(actor->morale);
 
 	for (k = 0; k < BODYPART_MAXTYPE; ++k)
-		gi.WriteByte(ent->chr.wounds.woundLevel[k] + ent->chr.wounds.treatmentLevel[k]);
+		gi.WriteByte(actor->chr.wounds.woundLevel[k] + actor->chr.wounds.treatmentLevel[k]);
 
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.WriteLong(ent->chr.score.experience[k]);
+		gi.WriteLong(actor->chr.score.experience[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.WriteShort(ent->chr.score.kills[k]);
+		gi.WriteShort(actor->chr.score.kills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.WriteShort(ent->chr.score.stuns[k]);
-	gi.WriteShort(ent->chr.score.assignedMissions);
+		gi.WriteShort(actor->chr.score.stuns[k]);
+	gi.WriteShort(actor->chr.score.assignedMissions);
 }
 
 /**
