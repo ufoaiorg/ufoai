@@ -332,7 +332,7 @@ static void SVCmd_ListEdicts_f (void)
 		else
 			model = "no mdl";
 		Com_sprintf(buf, sizeof(buf), "#%5i | #%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | %14s | %21s | %i:%i:%i",
-				i, ent->getIdNum(), ent->mapNum, ent->type, ent->inuse, ent->pnum, ent->team, ent->fieldSize,
+				i, ent->getIdNum(), ent->mapNum, ent->type, ent->inuse, ent->getPlayerNum(), ent->team, ent->fieldSize,
 				ent->HP, ent->state, ent->classname, model, ent->pos[0], ent->pos[1], ent->pos[2]);
 		Com_Printf("%s\n", buf);
 		i++;

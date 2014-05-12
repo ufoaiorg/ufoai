@@ -341,9 +341,9 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 	char buffer[512];
 
 	if (attacker != nullptr && fd != nullptr) {
-		if (victim->pnum != attacker->pnum) {
-			const char* victimName = G_GetPlayerName(victim->pnum);
-			const char* attackerName = G_GetPlayerName(attacker->pnum);
+		if (victim->getPlayerNum() != attacker->getPlayerNum()) {
+			const char* victimName = G_GetPlayerName(victim->getPlayerNum());
+			const char* attackerName = G_GetPlayerName(attacker->getPlayerNum());
 			if (victimName[0] == '\0') { /* empty string */
 				switch (victim->team) {
 				case TEAM_CIVILIAN:
@@ -382,13 +382,13 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->getIdNum());
 			}
 		} else {
-			const char* attackerName = G_GetPlayerName(attacker->pnum);
+			const char* attackerName = G_GetPlayerName(attacker->getPlayerNum());
 			Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s (entnum: %i)",
 				attackerName, (victim->HP == 0 ? "kills" : "stuns"),
 				victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->getIdNum());
 		}
 	} else {
-		const char* victimName = G_GetPlayerName(victim->pnum);
+		const char* victimName = G_GetPlayerName(victim->getPlayerNum());
 		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s (entnum: %i)",
 			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"), victim->getIdNum());
 	}

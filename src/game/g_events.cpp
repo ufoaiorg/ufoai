@@ -90,7 +90,7 @@ void G_EventActorDie (const Edict& ent, bool attacker)
 {
 	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_DIE, ent.getIdNum());
 	gi.WriteShort(ent.state);
-	gi.WriteByte(ent.pnum);
+	gi.WriteByte(ent.getPlayerNum());
 	gi.WriteByte(attacker);
 	G_EventEnd();
 }
@@ -508,7 +508,7 @@ void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
 	gi.WriteByte(ent.team);
 	gi.WriteByte(ent.chr.teamDef ? ent.chr.teamDef->idx : NONE);
 	gi.WriteByte(ent.chr.gender);
-	gi.WriteByte(ent.pnum);
+	gi.WriteByte(ent.getPlayerNum());
 	gi.WriteGPos(ent.pos);
 	gi.WriteShort(ent.state & STATE_PUBLIC);
 	gi.WriteByte(ent.fieldSize);
@@ -573,7 +573,7 @@ void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edic
 	gi.WriteByte(check.chr.teamDef ? check.chr.teamDef->idx : NONE);
 	gi.WriteByte(check.chr.gender);
 	gi.WriteShort(check.chr.ucn);
-	gi.WriteByte(check.pnum);
+	gi.WriteByte(check.getPlayerNum());
 	gi.WriteGPos(check.pos);
 	gi.WriteByte(check.dir);
 	if (check.getRightHandItem()) {

@@ -362,7 +362,7 @@ static bool G_ActionCheck (const Player& player, Edict* ent)
 		return false;
 	}
 
-	if (ent->pnum != player.getNum()) {
+	if (ent->getPlayerNum() != player.getNum()) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
 		return false;
 	}
@@ -1075,7 +1075,7 @@ Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 		return nullptr;
 
 	level.num_spawned[ent->team]++;
-	ent->pnum = player.getNum();
+	ent->setPlayerNum(player.getNum());
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
 	ent->flags |= FL_DESTROYABLE;

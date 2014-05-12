@@ -93,7 +93,9 @@ public:
 	int state;					/**< the player state - dead, shaken.... */
 
 	int team;					/**< player of which team? */
+protected:
 	int pnum;					/**< the actual player slot */
+public:
 	/** the model indices */
 	unsigned int body;
 	unsigned int head;
@@ -185,6 +187,9 @@ public:
 	/*==================
 	 *		setters
 	 *==================*/
+	inline void setPlayerNum(int num) {
+		pnum = num;
+	}
 	inline void setChild (Edict* child) {
 		_child = child;
 	}
@@ -230,6 +235,9 @@ public:
 	 *==================*/
 	inline int getIdNum() const {
 		return number;
+	}
+	inline int getPlayerNum() const {
+		return pnum;
 	}
 	inline Edict* child () {
 		return _child;
