@@ -138,8 +138,8 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		}
 		/* morale damage depends on the number of living allies */
 		mod *= (1 - mon_teamfactor->value)
-			+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
-			/ (level.num_alive[victim->team] + 1);
+			+ mon_teamfactor->value * (level.num_spawned[victim->getTeam()] + 1)
+			/ (level.num_alive[victim->getTeam()] + 1);
 		/* being hit isn't fun */
 		if (actor == victim)
 			mod *= mor_pain->value;
@@ -177,7 +177,7 @@ static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edi
 	if (!struck->inuse || G_IsDead(struck))
 		return;
 
-	if (!G_IsVisibleForTeam(struck, shooter->team))
+	if (!G_IsVisibleForTeam(struck, shooter->getTeam()))
 		return;
 
 	if (G_IsCivilian(struck))
@@ -215,7 +215,7 @@ static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, co
 	if (!scoreMission)
 		return;
 
-	switch (target->team) {
+	switch (target->getTeam()) {
 	case TEAM_ALIEN:
 		type = KILLED_ENEMIES;
 		if (fd) {
@@ -261,7 +261,7 @@ static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDe
 		return;
 
 	killtypes_t type;
-	switch (target->team) {
+	switch (target->getTeam()) {
 		case TEAM_CIVILIAN:
 			type = KILLED_CIVILIANS;
 			break;
@@ -357,7 +357,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 			target->destroy(target);
 
 			/* maybe the attacker is seeing something new? */
-			G_CheckVisTeamAll(attacker->team, 0, attacker);
+			G_CheckVisTeamAll(attacker->getTeam(), 0, attacker);
 
 			/* check if attacker appears/perishes for any other team */
 			G_CheckVis(attacker);
@@ -395,8 +395,8 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 			damage *= pow(1.18, -g_difficulty->value);
 	}
 
-	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);
-	assert(victim->team >= 0 && victim->team < MAX_TEAMS);
+	assert(attacker->getTeam() >= 0 && attacker->getTeam() < MAX_TEAMS);
+	assert(victim->getTeam() >= 0 && victim->getTeam() < MAX_TEAMS);
 
 	if (g_nodamage != nullptr && !g_nodamage->integer) {
 		/* hit */
@@ -536,7 +536,7 @@ static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot
 				/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 				if (G_FrustumVis(ent, check->origin)) {
 					if (!mock) {
-						const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
+						const unsigned int playerMask = G_TeamToPM(ent->getTeam()) ^ G_VisToPM(check->visflags);
 						G_AppearPerishEvent(playerMask, true, *check, ent);
 						G_VisFlagsAdd(*check, G_PMToVis(playerMask));
 					}

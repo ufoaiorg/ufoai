@@ -125,7 +125,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
 	Actor* check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->getTeam()))) {
 		if (!ent->isSameAs(check)) {
 			vec3_t dcheck;
 			/* found ally */
@@ -200,7 +200,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 		return true;
 
 	/* aliens and civilians need different handling */
-	switch (ent->team) {
+	switch (ent->getTeam()) {
 	case TEAM_ALIEN: {
 		/* only use the door when there is no civilian or phalanx to kill */
 		Actor* check = nullptr;
@@ -229,7 +229,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 		 * try to hide behind the door when there is an alien */
 		break;
 	default:
-		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n", ent->team, ent->type);
+		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n", ent->getTeam(), ent->type);
 		break;
 	}
 	return true;
@@ -364,7 +364,7 @@ int AI_GetHidingTeam (const Edict* ent)
 {
 	if (G_IsCivilian(ent))
 		return TEAM_ALIEN;
-	return -ent->team;
+	return -ent->getTeam();
 }
 
 /**
@@ -722,7 +722,7 @@ static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
 		return entControlled ? !checkControlled : checkControlled;
 
 	bool opponent = true;
-	switch (ent->team) {
+	switch (ent->getTeam()) {
 	/* Aliens: hostile to everyone */
 	case TEAM_ALIEN:
 		opponent = !checkControlled;
@@ -936,7 +936,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 
 	/* penalize herding */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->team))) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->getTeam()))) {
 		const float dist = VectorDist(actor->origin, check->origin);
 		if (dist < HERD_THRESHOLD)
 			bestActionScore -= SCORE_HERDING_PENALTY;
@@ -989,7 +989,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 		/* if we are trying to walk to a position that is occupied by another actor already we just return */
 		if (!dist)
 			return AI_ACTION_NOTHING_FOUND;
-		switch (check->team) {
+		switch (check->getTeam()) {
 		case TEAM_ALIEN:
 			if (dist < minDist)
 				minDist = dist;
@@ -1236,7 +1236,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 			if (mission->type == ET_MISSION) {
 				if (!AI_FindMissionLocation(actor, mission->pos))
 					continue;
-				if (player.getTeam() == mission->team) {
+				if (player.getTeam() == mission->getTeam()) {
 					actionScore = SCORE_MISSION_TARGET;
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
@@ -1394,7 +1394,7 @@ void G_AddToWayPointList (Edict* ent)
 void AI_TurnIntoDirection (Actor* actor, const pos3_t pos)
 {
 	const byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
-	G_MoveCalc(actor->team, actor, pos, actor->getUsableTUs());
+	G_MoveCalc(actor->getTeam(), actor, pos, actor->getUsableTUs());
 
 	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);
 	if (dvec != ROUTING_UNREACHABLE) {
@@ -1469,7 +1469,7 @@ void AI_ActorThink (Player& player, Actor* actor)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, actor->team, actor, bestAia.stop);
+		G_ClientMove(player, actor->getTeam(), actor, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
@@ -1716,9 +1716,9 @@ static Actor* G_SpawnAIPlayer (const Player& player, const equipDef_t* ed)
 
 	G_TouchTriggers(actor);
 
-	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", actor->team, actor->getIdNum(), actor->chr.name);
+	gi.DPrintf("Spawned ai player for team %i with entnum %i (%s)\n", actor->getTeam(), actor->getIdNum(), actor->chr.name);
 	G_CheckVis(actor, VT_PERISHCHK | VT_NEW);
-	G_CheckVisTeamAll(actor->team, 0, actor);
+	G_CheckVisTeamAll(actor->getTeam(), 0, actor);
 
 	return actor;
 }
