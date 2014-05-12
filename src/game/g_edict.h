@@ -190,6 +190,9 @@ public:
 	inline void setPlayerNum(int num) {
 		pnum = num;
 	}
+	inline void setTeam(int team_) {
+		team = team_;
+	}
 	inline void setChild (Edict* child) {
 		_child = child;
 	}
