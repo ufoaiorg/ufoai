@@ -208,7 +208,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 		/* see if there are enemies */
 		while ((check = G_EdictsGetNextLivingActor(check))) {
 			/* don't check for aliens */
-			if (check->team == ent->team)
+			if (check->isSameTeamAs(ent))
 				continue;
 			/* check whether the origin of the enemy is inside the
 			 * AI actors view frustum */
@@ -229,8 +229,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 		 * try to hide behind the door when there is an alien */
 		break;
 	default:
-		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
-			ent->team, ent->type);
+		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n", ent->team, ent->type);
 		break;
 	}
 	return true;
@@ -248,7 +247,7 @@ static bool AI_CheckCrouch (const Edict* ent)
 	/* see if we are very well visible by an enemy */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		/* don't check for civilians or aliens */
-		if (check->team == ent->team || G_IsCivilian(check))
+		if (check->isSameTeamAs(ent) || G_IsCivilian(check))
 			continue;
 		/* check whether the origin of the enemy is inside the
 		 * AI actors view frustum */
@@ -279,7 +278,7 @@ static bool AI_HideNeeded (const Actor* actor)
 	Actor* from = nullptr;
 	/* test if actor is visible */
 	while ((from = G_EdictsGetNextLivingActor(from))) {
-		if (from->team == actor->team)
+		if (from->isSameTeamAs(actor))
 			continue;
 
 		if (G_IsCivilian(from))
@@ -719,7 +718,7 @@ static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
 {
 	const bool entControlled = G_IsState(ent, STATE_XVI);
 	const bool checkControlled = G_IsState(check, STATE_XVI);
-	if (check->team == ent->team)
+	if (check->isSameTeamAs(ent))
 		return entControlled ? !checkControlled : checkControlled;
 
 	bool opponent = true;
@@ -924,7 +923,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 		float minDist = CLOSE_IN_DIST;
 		check = nullptr;
 		while ((check = G_EdictsGetNextLivingActor(check))) {
-			if (check->team != actor->team) {
+			if (!check->isSameTeamAs(actor)) {
 				const float dist = VectorDist(actor->origin, check->origin);
 				minDist = std::min(dist, minDist);
 			}
@@ -1097,7 +1096,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 		/* if we are trying to walk to a position that is occupied by another actor already we just return */
 		if (!dist)
 			return AI_ACTION_NOTHING_FOUND;
-		if (check->team == actor->team) {
+		if (check->isSameTeamAs(actor)) {
 			if (dist < minDistFriendly)
 				minDistFriendly = dist;
 		} else {
@@ -1250,7 +1249,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 				while ((check = G_EdictsGetNextLivingActor(check))) {
 					const float dist = VectorDist(actor->origin, check->origin);
 					if (dist < MISSION_HOLD_DIST) {
-						if (check->team == actor->team)
+						if (check->isSameTeamAs(actor))
 							actionScore -= SCORE_MISSION_HOLD;
 						else
 							/* @todo add a visibility check here? */

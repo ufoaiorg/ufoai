@@ -283,6 +283,9 @@ public:
 	inline bool isSameAs (const Edict* other) const {
 		return this->getIdNum() == other->getIdNum();
 	}
+	inline bool isSameTeamAs (const Edict* other) const {
+		return this->getTeam() == other->getTeam();
+	}
 /**
  * @brief Check whether the edict is on the given position
  * @param cmpPos The grid position to compare to

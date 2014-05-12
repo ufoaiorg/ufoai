@@ -145,7 +145,7 @@ extern game_export_t globals;
 #define G_IsMultiPlayer()		(sv_maxclients->integer > 1)
 #define G_IsSinglePlayer()		(!G_IsMultiPlayer())
 /** @note check for actor first */
-#define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
+#define G_IsCivilian(ent)		((ent)->getTeam() == TEAM_CIVILIAN)
 #define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
