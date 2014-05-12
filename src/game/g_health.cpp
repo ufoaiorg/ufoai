@@ -113,7 +113,7 @@ void G_TreatActor (Actor* target, const fireDef_t* const fd, const int heal, con
 
 	/* Treat stunned actors */
 	if (fd->dmgweight == gi.csi->damStunElectro && G_IsStunned(target)) {
-		if (CHRSH_IsTeamDefAlien(target->chr.teamDef) && target->team != healerTeam)
+		if (CHRSH_IsTeamDefAlien(target->chr.teamDef) && target->getTeam() != healerTeam)
 			/** @todo According to specs it should only be possible to use the medikit to keep an alien sedated when
 			 * 'live alien' is researched, is it possible to find if a tech is researched here? */
 			target->setStun(std::min(255, target->getStun() - heal));

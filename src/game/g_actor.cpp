@@ -289,25 +289,26 @@ static bool G_ActorStun (Edict* ent, const Edict* attacker)
 
 void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int deltaAlive, int deltaKills, int deltaStuns)
 {
-	const int spawned = level.num_spawned[victim->team];
-	const int attackerTeam = (attacker != nullptr ? attacker->team : MAX_TEAMS);
+	const int victimTeam = victim->getTeam();
+	const int spawned = level.num_spawned[victimTeam];
+	const int attackerTeam = (attacker != nullptr ? attacker->getTeam() : MAX_TEAMS);
 	byte* alive = level.num_alive;
 
-	alive[victim->team] += deltaAlive;
-	if (alive[victim->team] > spawned)
+	alive[victimTeam] += deltaAlive;
+	if (alive[victimTeam] > spawned)
 		gi.Error("alive counter out of sync");
 
 	if (deltaStuns != 0) {
 		byte* stuns = level.num_stuns[attackerTeam];
-		stuns[victim->team] += deltaStuns;
-		if (stuns[victim->team] > spawned)
+		stuns[victimTeam] += deltaStuns;
+		if (stuns[victimTeam] > spawned)
 			gi.Error("stuns counter out of sync");
 	}
 
 	if (deltaKills != 0) {
 		byte* kills = level.num_kills[attackerTeam];
-		kills[victim->team] += deltaKills;
-		if (kills[victim->team] > spawned)
+		kills[victimTeam] += deltaKills;
+		if (kills[victimTeam] > spawned)
 			gi.Error("kills counter out of sync");
 	}
 #if 0
@@ -316,14 +317,14 @@ void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int delt
 
 		if (attacker)
 		for (int i = 0; i < MAX_TEAMS; i++) {
-			if (i == victim->team) {
+			if (i == victimTeam) {
 				Com_Printf("^2num_alive (team %i): %i\n", i, level.num_alive[i]);
 			} else {
 				Com_Printf("num_alive (team %i): %i\n", i, level.num_alive[i]);
 			}
 
 			for (int j = 0; j < MAX_TEAMS; j++) {
-				if (j == victim->team) {
+				if (j == victimTeam) {
 					Com_Printf("^2num_kills (team %i killed  %i): %i\n", i, j, level.num_kills[i][j]);
 					Com_Printf("^2num_stuns (team %i stunned %i): %i\n", i, j, level.num_stuns[i][j]);
 				} else if (i == attacker->team) {
@@ -368,7 +369,7 @@ static void G_ActorRevitalise (Edict* ent)
 	G_CheckVis(ent);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, 0, ent);
+	G_CheckVisTeamAll(ent->getTeam(), 0, ent);
 
 	G_PrintStats("%s is revitalized.", ent->chr.name);
 }
@@ -456,7 +457,7 @@ bool G_ActorDieOrStun (Edict* ent, Edict* attacker)
 		G_CheckVis(attacker);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, 0, attacker);
+	G_CheckVisTeamAll(ent->getTeam(), 0, attacker);
 
 	/* unlink the floor container */
 	ent->resetFloor();
@@ -602,7 +603,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), fromContType->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryDelete(*actor, G_TeamToPM(actor->team), fromContType->id, fx, fy);
+		G_EventInventoryDelete(*actor, G_TeamToPM(actor->getTeam()), fromContType->id, fx, fy);
 	}
 
 	/* send tu's */
@@ -617,7 +618,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 		if (toContType->isFloorDef())
 			mask = G_VisToPM(floor->visflags);
 		else
-			mask = G_TeamToPM(actor->team);
+			mask = G_TeamToPM(actor->getTeam());
 
 		G_EventInventoryReload(toContType->isFloorDef() ? *floor : *actor, mask, &item, toContType, item2);
 
@@ -669,7 +670,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 				G_EventInventoryDelete(*floor, G_VisToPM(floor->visflags), fromContType->id, fx, fy);
 		}
 	} else {
-		G_EventInventoryAdd(*actor, G_TeamToPM(actor->team), 1);
+		G_EventInventoryAdd(*actor, G_TeamToPM(actor->getTeam()), 1);
 		G_WriteItem(item, toContType->id, tx, ty);
 		G_EventEnd();
 	}
@@ -677,7 +678,7 @@ bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, co
 	G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(), actor->chr.RFmode.getWeapon());
 
 	/* Other players receive weapon info only. */
-	mask = G_VisToPM(actor->visflags) & ~G_TeamToPM(actor->team);
+	mask = G_VisToPM(actor->visflags) & ~G_TeamToPM(actor->getTeam());
 	if (mask) {
 		if (fromContType->isRightDef() || fromContType->isLeftDef()) {
 			G_EventInventoryDelete(*actor, mask, fromContType->id, fx, fy);

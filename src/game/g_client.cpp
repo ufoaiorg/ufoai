@@ -1074,7 +1074,7 @@ Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 	if (!ent)
 		return nullptr;
 
-	level.num_spawned[ent->team]++;
+	level.num_spawned[ent->getTeam()]++;
 	ent->setPlayerNum(player.getNum());
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
@@ -1268,7 +1268,7 @@ void G_ClientTeamInfo (const Player& player)
 		else {
 			Actor* actor = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 			if (actor) {
-				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), actor->team, actor->fieldSize);
+				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player.getNum(), actor->getTeam(), actor->fieldSize);
 
 				G_ClientReadCharacter(actor);
 				G_ClientReadInventory(actor);

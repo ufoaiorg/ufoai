@@ -425,7 +425,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 		} else {
 			if (damage < 0) {
 				/* The 'attacker' is healing the victim. */
-				G_TreatActor(victim, fd, damage, attacker->team);
+				G_TreatActor(victim, fd, damage, attacker->getTeam());
 			} else {
 				/* Real damage was dealt. */
 				G_DamageActor(victim, damage, impact);
@@ -968,7 +968,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 
 		/* victims see shots */
 		if (trEnt && G_IsActor(trEnt))
-			mask |= G_TeamToVisMask(trEnt->team);
+			mask |= G_TeamToVisMask(trEnt->getTeam());
 
 		if (!mock) {
 			/* send shot */
@@ -1255,7 +1255,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		assert(actor->dir < CORE_DIRECTIONS);
 
 		if (!mock) {
-			G_CheckVisTeamAll(actor->team, 0, actor);
+			G_CheckVisTeamAll(actor->getTeam(), 0, actor);
 			G_EventActorTurn(*actor);
 		}
 	}

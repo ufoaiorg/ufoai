@@ -271,7 +271,7 @@ static bool Door_Use (Edict* door, Edict* activator)
 		G_CheckVis(activator);
 
 		/* Calc new vis for the activator. */
-		G_CheckVisTeamAll(activator->team, 0, activator);
+		G_CheckVisTeamAll(activator->getTeam(), 0, activator);
 	}
 
 	return true;

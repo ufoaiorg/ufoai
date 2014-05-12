@@ -357,7 +357,7 @@ void G_EventSetClientAction (const Edict& ent)
 	assert(ent.clientAction->flags & FL_CLIENTACTION);
 
 	/* tell the hud to show the door buttons */
-	G_EventAdd(G_TeamToPM(ent.team), EV_CLIENT_ACTION, ent.getIdNum());
+	G_EventAdd(G_TeamToPM(ent.getTeam()), EV_CLIENT_ACTION, ent.getIdNum());
 	gi.WriteShort(ent.clientAction->getIdNum());
 	G_EventEnd();
 }
@@ -459,9 +459,9 @@ void G_EventSendEdict (const Edict& ent)
 
 void G_EventSendState (playermask_t playerMask, const Edict& ent)
 {
-	G_EventActorStateChange(playerMask & G_TeamToPM(ent.team), ent);
+	G_EventActorStateChange(playerMask & G_TeamToPM(ent.getTeam()), ent);
 
-	G_EventAdd(playerMask & ~G_TeamToPM(ent.team), EV_ACTOR_STATECHANGE, ent.getIdNum());
+	G_EventAdd(playerMask & ~G_TeamToPM(ent.getTeam()), EV_ACTOR_STATECHANGE, ent.getIdNum());
 	gi.WriteShort(ent.state & STATE_PUBLIC);
 	G_EventEnd();
 }
@@ -505,7 +505,7 @@ void G_EventMoveCameraTo (playermask_t playerMask, const pos3_t pos)
 void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_ACTOR_ADD, ent.getIdNum());
-	gi.WriteByte(ent.team);
+	gi.WriteByte(ent.getTeam());
 	gi.WriteByte(ent.chr.teamDef ? ent.chr.teamDef->idx : NONE);
 	gi.WriteByte(ent.chr.gender);
 	gi.WriteByte(ent.getPlayerNum());
@@ -538,7 +538,7 @@ void G_EventCameraAppear (playermask_t playerMask, const Edict& ent)
 {
 	G_EventAdd(playerMask, EV_CAMERA_APPEAR, ent.getIdNum());
 	gi.WritePos(ent.origin);
-	gi.WriteByte(ent.team);
+	gi.WriteByte(ent.getTeam());
 	gi.WriteByte(ent.dir);
 	gi.WriteByte(ent.camera.cameraType);
 	/* strip the higher bits - only send levelflags */
@@ -564,12 +564,12 @@ void G_EventEdictAppear (playermask_t playerMask, const Edict& ent)
 
 void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edict* ent)
 {
-	const int mask = G_TeamToPM(check.team) & playerMask;
+	const int mask = G_TeamToPM(check.getTeam()) & playerMask;
 
 	/* parsed in CL_ActorAppear */
 	G_EventAdd(playerMask, EV_ACTOR_APPEAR, check.getIdNum());
 	gi.WriteShort(ent && ent->getIdNum() > 0 ? ent->getIdNum() : SKIP_LOCAL_ENTITY);
-	gi.WriteByte(check.team);
+	gi.WriteByte(check.getTeam());
 	gi.WriteByte(check.chr.teamDef ? check.chr.teamDef->idx : NONE);
 	gi.WriteByte(check.chr.gender);
 	gi.WriteShort(check.chr.ucn);
