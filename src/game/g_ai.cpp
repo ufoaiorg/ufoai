@@ -1229,7 +1229,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		/* reset the count value for this civilian to restart the search */
 		if (!i)
 			actor->count = 100;
-	} else if (actor->team == TEAM_ALIEN) {
+	} else if (G_IsAlien(actor)) {
 		/* search for a mission edict */
 		Edict* mission = nullptr;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
