@@ -64,8 +64,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 bool G_IsLivingActor(const Edict* ent) __attribute__((nonnull));
 void G_ActorUseDoor(Edict* actor, Edict* door);
-bool G_ActorIsInRescueZone(const Edict* actor);
-void G_ActorSetInRescueZone(Edict* actor, bool inRescueZone);
 void G_ActorSetClientAction(Edict* actor, Edict* ent);
 int G_ActorUsableTUs(const Edict* ent);
 int G_ActorGetTUForReactionFire(const Edict* ent);
