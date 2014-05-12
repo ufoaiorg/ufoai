@@ -113,10 +113,10 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		/* seeing how someone gets shot increases the morale change */
 		if (actor == victim || (G_FrustumVis(actor, victim->origin) && G_ActorVis(actor->origin, actor, victim, false)))
 			mod *= mof_watching->value;
-		if (attacker != nullptr && actor->team == attacker->team) {
+		if (attacker != nullptr && actor->isSameTeamAs(attacker)) {
 			/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 			/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
-			if (victim->team == attacker->team)
+			if (victim->isSameTeamAs(attacker))
 				mod *= mof_teamkill->value;
 			else
 				mod *= mof_enemy->value;
@@ -125,7 +125,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		if (G_IsCivilian(victim))
 			mod *= mof_civilian->value;
 		/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-		if (victim->team == actor->team || (G_IsCivilian(victim) && actor->team != TEAM_ALIEN && G_IsSinglePlayer()))
+		if (victim->isSameTeamAs(actor) || (G_IsCivilian(victim) && actor->team != TEAM_ALIEN && G_IsSinglePlayer()))
 			mod *= -1;
 		if (attacker != nullptr) {
 			/* if you stand near to the attacker or the victim, the morale change is higher. */
@@ -182,7 +182,7 @@ static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edi
 
 	if (G_IsCivilian(struck))
 		mock->civilian += 1;
-	else if (struck->team == shooter->team)
+	else if (struck->isSameTeamAs(shooter))
 		mock->friendCount += 1;
 	else if (G_IsActor(struck))
 		mock->enemyCount += 1;
@@ -273,7 +273,7 @@ static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDe
 	}
 
 	if (splashDamage) {
-		if (attacker->team == target->team) {
+		if (attacker->isSameTeamAs(target)) {
 			/* Increase friendly fire counter. */
 			score->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
 			if (!score->firedSplashHit[KILLED_TEAM]) {
@@ -288,7 +288,7 @@ static void G_UpdateHitScore (Edict* attacker, const Edict* target, const fireDe
 			score->firedSplashHit[type] = true;
 		}
 	} else {
-		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
+		if (attacker->isSameTeamAs(target) && !score->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
 			score->hits[fd->weaponSkill][KILLED_TEAM]++;
 			score->firedHit[KILLED_TEAM] = true;
@@ -409,7 +409,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 				victim->addStun(damage);
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should have known that there was a flashbang coming. */
-			if (!isRobot && victim->team != attacker->team) {
+			if (!isRobot && !victim->isSameTeamAs(attacker)) {
 				/** @todo there should be a possible protection, too */
 				/* dazed entity wont reaction fire */
 				G_RemoveReaction(victim);
@@ -711,7 +711,7 @@ static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_
 	trace_t tr = G_Trace(Line(oldPos, newPos), shooter, MASK_SHOT);
 	if (tr.fraction < 1.0f) {
 	const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
-		if (trEnt && (trEnt->team == shooter->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
+		if (trEnt && (trEnt->isSameTeamAs(shooter) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
 			dt += GRENADE_DT;
 			VectorCopy(newPos, oldPos);
 			VectorCopy(newPos, impact);
@@ -924,7 +924,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	trace_t tr = G_Trace(Line(cur_loc, impact), ent, MASK_SHOT);
 	Edict* trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
-	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
+	if (trEnt && (trEnt->isSameTeamAs(ent) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4f, dir, cur_loc);
 
 	vec3_t tracefrom;	/* sum */

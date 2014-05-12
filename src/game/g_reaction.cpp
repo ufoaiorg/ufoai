@@ -673,7 +673,7 @@ bool ReactionFire::isEnemy (const Edict* shooter, const Edict* target) const
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
-	if (G_IsCivilian(target) || target->team == shooter->team)
+	if (G_IsCivilian(target) || target->isSameTeamAs(shooter))
 		if (!G_IsShaken(shooter) || (float) shooter->morale / mor_shaken->value > frand())
 			return false;
 

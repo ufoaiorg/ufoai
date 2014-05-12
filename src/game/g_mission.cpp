@@ -66,7 +66,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		}
 	/* general case that also works for multiplayer teams */
 	default:
-		if (activator->team != self->owner()->team) {
+		if (!activator->isSameTeamAs(self->owner())) {
 			/* reset king of the hill counter */
 			self->count = 0;
 			return false;
