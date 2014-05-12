@@ -335,8 +335,11 @@ static bool Touch_RescueTrigger (Edict* self, Edict* activator)
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
 
-	if (self->team == activator->team)
-		G_ActorSetInRescueZone(activator, true);
+	if (G_IsActor(activator)) {
+		Actor* actor = makeActor(activator);
+		if (self->team == actor->team)
+			G_ActorSetInRescueZone(actor, true);
+	}
 
 	return false;
 }
