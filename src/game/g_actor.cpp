@@ -75,29 +75,6 @@ void G_ActorUseDoor (Edict* actor, Edict* door)
 }
 
 /**
- * @brief Checks whether the given actor is currently standing in a rescue zone
- * @param[in] actor The actor to check
- * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
- */
-bool G_ActorIsInRescueZone (const Edict* actor)
-{
-	return actor->inRescueZone;
-}
-
-/**
- * @brief Set the rescue zone data
- * @param[out] actor The actor to set the rescue zone flag for
- * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
- */
-void G_ActorSetInRescueZone (Edict* actor, bool inRescueZone)
-{
-	if (inRescueZone == G_ActorIsInRescueZone(actor))
-		return;
-
-	actor->inRescueZone = inRescueZone;
-}
-
-/**
  * @brief Handles the client actions (interaction with the world)
  * @param actor The actors' edict
  * @param ent The edict that can be used by the actor

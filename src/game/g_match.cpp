@@ -203,7 +203,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	if (team == TEAM_ALIEN) {
 		actor = nullptr;
 		while ((actor = G_EdictsGetNextLivingActor(actor)))
-			if (actor->team != team && !G_ActorIsInRescueZone(actor)) {
+			if (actor->team != team && !actor->isInRescueZone()) {
 				actor->HP = 0;
 				G_ActorDieOrStun(actor, attacker);
 			}

@@ -103,10 +103,10 @@ public:
 								 * e.g. for two-part-doors - set the group to the same
 								 * string for each door part and they will open both
 								 * if you open one */
-
+protected:
 	bool inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
 								 * when the mission is aborted the actor will not die */
-
+public:
 	/** client actions - interact with the world */
 	Edict* clientAction;
 
@@ -346,6 +346,24 @@ public:
 	inline int getUsableTUs () const {
 		return getTus() - getReservedTUs();
 	}
+/**
+ * @brief Checks whether the given actor is currently standing in a rescue zone
+ * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
+ */
+	inline bool isInRescueZone () const {
+		return inRescueZone;
+	}
+/**
+ * @brief Set the rescue zone flag
+ * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
+ */
+	inline void setInRescueZone (bool inRescueZone_) {
+		if (inRescueZone_ == isInRescueZone())
+			return;
+
+		inRescueZone = inRescueZone_;
+	}
+
 };
 
 Actor* makeActor (Edict* ent);

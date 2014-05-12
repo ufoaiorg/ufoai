@@ -338,7 +338,7 @@ static bool Touch_RescueTrigger (Edict* self, Edict* activator)
 	if (G_IsActor(activator)) {
 		Actor* actor = makeActor(activator);
 		if (self->team == actor->team)
-			G_ActorSetInRescueZone(actor, true);
+			actor->setInRescueZone(true);
 	}
 
 	return false;
@@ -349,7 +349,7 @@ static void Reset_RescueTrigger (Edict* self, Edict* activator)
 	if (G_IsActor(activator)) {
 		Actor* actor = makeActor(activator);
 		if (self->team == actor->team)
-			G_ActorSetInRescueZone(actor, false);
+			actor->setInRescueZone(false);
 	}
 }
 
