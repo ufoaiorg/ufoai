@@ -1187,7 +1187,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 	/* reset any previous given action set */
 	aia->reset();
 
-	if (actor->team == TEAM_CIVILIAN) {
+	if (G_IsCivilian(actor)) {
 		Edict* checkPoint = nullptr;
 		int i = 0;
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk

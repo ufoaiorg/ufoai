@@ -365,7 +365,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 		actor->resetFloor();
 		const int movingModifier = G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT);
 
-		if (actor->team != TEAM_CIVILIAN)
+		if (!G_IsCivilian(actor))
 			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->team)), actor->pos);
 
 		actor->moveinfo.steps = 0;

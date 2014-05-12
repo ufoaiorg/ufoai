@@ -102,7 +102,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
 		if (actor->type != ET_ACTOR)
 			continue;
-		if (actor->team == TEAM_CIVILIAN)
+		if (G_IsCivilian(actor))
 			continue;
 
 		/* morale damage depends on the damage */
